@@ -63,7 +63,7 @@ const SupporterListItem: React.FC<SupporterListItemProps> = ({
 
         {/* Bio preview */}
         {supporter.bio && (
-          <p className="text-sm text-white/60 line-clamp-1 mt-0.5">{supporter.bio}</p>
+          <p className="text-sm text-white line-clamp-1 mt-0.5">{supporter.bio}</p>
         )}
 
         {/* Topics preview - larger touch targets */}
@@ -72,13 +72,13 @@ const SupporterListItem: React.FC<SupporterListItemProps> = ({
             {topics.slice(0, 2).map((topic) => (
               <span
                 key={topic}
-                className="text-xs px-2.5 py-1 rounded-full bg-white/5 text-white/50"
+                className="text-xs px-2.5 py-1 rounded-full bg-white/5 text-white"
               >
                 {topic}
               </span>
             ))}
             {topics.length > 2 && (
-              <span className="text-xs px-2 py-1 text-white/40">+{topics.length - 2}</span>
+              <span className="text-xs px-2 py-1 text-white">+{topics.length - 2}</span>
             )}
           </div>
         )}

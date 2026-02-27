@@ -101,7 +101,7 @@ const SignIn = () => {
         <div className="flex items-center justify-between max-w-md mx-auto">
           <Link
             to="/"
-            className="flex items-center gap-1 text-white/70 hover:text-white transition-colors p-2 -ml-2 rounded-xl"
+            className="flex items-center gap-1 text-white hover:text-white transition-colors p-2 -ml-2 rounded-xl"
           >
             <ChevronLeft className="h-5 w-5" />
             <span className="text-[15px] font-medium">Back</span>
@@ -143,7 +143,7 @@ const SignIn = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="text-[15px] text-white/50"
+              className="text-[15px] text-white"
             >
               Sign in to continue to Elec-Mate
             </motion.p>
@@ -211,14 +211,14 @@ const SignIn = () => {
           >
             {/* Email field */}
             <div className="space-y-2">
-              <label className="block text-[13px] font-medium text-white/70 ml-1">
+              <label className="block text-[13px] font-medium text-white ml-1">
                 Email address
               </label>
               <div className="relative">
                 <div
                   className={cn(
                     'absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200',
-                    focusedField === 'email' ? 'text-elec-yellow' : 'text-white/40'
+                    focusedField === 'email' ? 'text-elec-yellow' : 'text-white'
                   )}
                 >
                   <Mail className="h-5 w-5" />
@@ -262,12 +262,12 @@ const SignIn = () => {
 
             {/* Password field */}
             <div className="space-y-2">
-              <label className="block text-[13px] font-medium text-white/70 ml-1">Password</label>
+              <label className="block text-[13px] font-medium text-white ml-1">Password</label>
               <div className="relative">
                 <div
                   className={cn(
                     'absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200',
-                    focusedField === 'password' ? 'text-elec-yellow' : 'text-white/40'
+                    focusedField === 'password' ? 'text-elec-yellow' : 'text-white'
                   )}
                 >
                   <Lock className="h-5 w-5" />
@@ -296,7 +296,7 @@ const SignIn = () => {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-2 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 active:text-white transition-colors h-11 w-11 flex items-center justify-center touch-manipulation rounded-xl"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-white hover:text-white active:text-white transition-colors h-11 w-11 flex items-center justify-center touch-manipulation rounded-xl"
                 >
                   {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
@@ -352,7 +352,7 @@ const SignIn = () => {
             className="flex items-center gap-4 my-5 sm:my-8"
           >
             <div className="flex-1 h-px bg-white/10" />
-            <span className="text-[12px] text-white/30 uppercase tracking-wider">or</span>
+            <span className="text-[12px] text-white uppercase tracking-wider">or</span>
             <div className="flex-1 h-px bg-white/10" />
           </motion.div>
 
@@ -363,7 +363,7 @@ const SignIn = () => {
             transition={{ delay: 0.7 }}
             className="text-center"
           >
-            <p className="text-[14px] text-white/40 mb-4">Don't have an account?</p>
+            <p className="text-[14px] text-white mb-4">Don't have an account?</p>
             <Link to="/auth/signup" className="block">
               <Button
                 variant="outline"
@@ -394,7 +394,7 @@ const SignIn = () => {
         className="relative px-6 pb-6 z-10"
       >
         <div className="max-w-md mx-auto">
-          <div className="flex items-center justify-center gap-4 text-[11px] text-white/30">
+          <div className="flex items-center justify-center gap-4 text-[11px] text-white">
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="h-3.5 w-3.5 text-green-500/70" />
               Secure Login

@@ -200,7 +200,7 @@ export default function PasmaModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-3">
@@ -225,7 +225,7 @@ export default function PasmaModule3Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Pre-Assembly Planning
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Everything that must happen before the first component leaves the vehicle — site survey,
             ground checks, hazard assessment, and team briefing
           </p>
@@ -302,7 +302,7 @@ export default function PasmaModule3Section1() {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-elec-yellow mb-3">Site Survey Checklist</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -370,7 +370,7 @@ export default function PasmaModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Recording the Survey</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A site survey record should include: the date and time of the survey, the name of
                   the person carrying it out, the proposed tower position, all hazards identified,
                   the ground condition assessment, overhead clearance measurements, and any control
@@ -384,7 +384,7 @@ export default function PasmaModule3Section1() {
                   <Search className="h-5 w-5 text-elec-yellow" />
                   <p className="text-sm font-medium text-white">What Changes Between Visits?</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Ground conditions after rain, frost, or excavation works</span>
@@ -429,7 +429,7 @@ export default function PasmaModule3Section1() {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-elec-yellow mb-3">Ground Requirements</p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <p>
                     <strong className="text-white">Firm:</strong> The ground must not compress or
                     yield under the concentrated loads at the base plates or castors. Soft ground,
@@ -453,7 +453,7 @@ export default function PasmaModule3Section1() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Sole Board Requirements</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Used to spread the load on soft or sensitive ground</span>
@@ -478,7 +478,7 @@ export default function PasmaModule3Section1() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Indoor Floor Considerations</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Raised access floors may not support concentrated loads</span>
@@ -510,7 +510,7 @@ export default function PasmaModule3Section1() {
                     Identifying Soft or Unstable Ground
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Signs of unsuitable ground include: footprints sinking when you walk across it,
                   visible waterlogging or standing water, recently backfilled trenches or
                   excavations, cracked or uneven tarmac suggesting subsidence, and any ground that
@@ -530,7 +530,7 @@ export default function PasmaModule3Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Ground Assessment for Moving Towers
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If the tower will be moved during the work (on its castors), the entire route must
                   be assessed. Every surface the tower will travel over must be firm, level, and
                   free from obstructions. Thresholds, expansion joints, drainage channels, and
@@ -543,7 +543,7 @@ export default function PasmaModule3Section1() {
                 <p className="text-sm font-medium text-elec-yellow mb-2">
                   Ground Condition Red Flags
                 </p>
-                <div className="grid sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-3 text-sm text-white">
                   <div>
                     <p className="font-medium text-white mb-1">Outdoor</p>
                     <ul className="space-y-1">
@@ -616,12 +616,12 @@ export default function PasmaModule3Section1() {
                     Power Lines — 15-Metre Exclusion Zone
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Overhead power lines present an extreme electrocution hazard. You do not need to
                   touch a power line to receive a fatal shock &mdash; electricity can arc across a
                   gap, particularly in damp conditions or when conductive materials are present.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -657,7 +657,7 @@ export default function PasmaModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Other Overhead Hazards</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -722,7 +722,7 @@ export default function PasmaModule3Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Overhead Hazard Decision Flowchart
                 </p>
-                <div className="space-y-1 text-sm text-white/80">
+                <div className="space-y-1 text-sm text-white">
                   <p className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -776,7 +776,7 @@ export default function PasmaModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Establishing an Exclusion Zone
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -816,7 +816,7 @@ export default function PasmaModule3Section1() {
                   <p className="text-sm font-medium text-white mb-2">
                     Coordination with Other Trades
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Inform other trades of the assembly activity</span>
@@ -841,7 +841,7 @@ export default function PasmaModule3Section1() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Permit-to-Work Situations</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Required near live electrical equipment</span>
@@ -909,7 +909,7 @@ export default function PasmaModule3Section1() {
                   <FileText className="h-5 w-5 text-elec-yellow" />
                   <p className="text-sm font-medium text-elec-yellow">Method Statement Contents</p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Sequence of work:</strong> Step-by-step assembly
                     procedure from base setup through to completion, including each lift level and
@@ -952,7 +952,7 @@ export default function PasmaModule3Section1() {
                     Common Method Statement Failures
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Using a generic template without site-specific detail</span>
@@ -984,7 +984,7 @@ export default function PasmaModule3Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   The Method Statement Must Also Cover:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>The tower configuration required (height, width, platform type)</span>
@@ -1054,7 +1054,7 @@ export default function PasmaModule3Section1() {
                       Required PPE During Assembly
                     </p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1090,7 +1090,7 @@ export default function PasmaModule3Section1() {
                   <p className="text-sm font-medium text-white mb-3">
                     Pre-Assembly Component Inspection
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1136,7 +1136,7 @@ export default function PasmaModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Reject Criteria</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Any component that is bent, cracked, heavily corroded, has damaged welds, missing
                   locking pins, or non-functional moving parts must be taken out of service
                   immediately. Tag it as defective and do not use it. Using damaged components
@@ -1154,7 +1154,7 @@ export default function PasmaModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Component Storage on Site</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Tower components awaiting assembly should be stored in a secure, organised area
                   near the assembly position. Lay components out in the order they will be used to
                   speed up the assembly process and reduce the risk of picking up the wrong item. Do
@@ -1204,7 +1204,7 @@ export default function PasmaModule3Section1() {
                   <Users className="h-5 w-5 text-elec-yellow" />
                   <p className="text-sm font-medium text-elec-yellow">Team Briefing Must Cover</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1247,7 +1247,7 @@ export default function PasmaModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Roles During Assembly</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Assembly lead:</strong> The competent person who
                     directs the assembly sequence and makes decisions on site. Must hold a valid
@@ -1271,7 +1271,7 @@ export default function PasmaModule3Section1() {
                   <p className="text-sm font-medium text-white mb-2">
                     Communication During Assembly
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Agree standard verbal commands before starting</span>
@@ -1296,7 +1296,7 @@ export default function PasmaModule3Section1() {
                 </div>
                 <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-green-400 mb-2">Stop-Work Authority</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Every team member can stop work if unsafe</span>
@@ -1342,7 +1342,7 @@ export default function PasmaModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">After the Briefing</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Once the briefing is complete and all team members are satisfied, the assembly can
                   begin. If conditions change during the work &mdash; unexpected hazards,
                   deteriorating weather, changes to the site layout &mdash; a further briefing must
@@ -1362,7 +1362,7 @@ export default function PasmaModule3Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1376,7 +1376,7 @@ export default function PasmaModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-3">

@@ -286,7 +286,7 @@ const Level3Module6Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section1">
@@ -441,7 +441,7 @@ const Level3Module6Section1_3 = () => {
               accurate pricing without requiring further clarification.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> Rather than specifying "MCB suitable for circuit", specify
               "Type B MCB, 32A, 6kA breaking capacity, to BS EN 60898-1, single pole with switched
               neutral for RCD-protected circuit". This leaves no room for interpretation.
@@ -529,31 +529,31 @@ const Level3Module6Section1_3 = () => {
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Written Specification</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Describes standards, materials, workmanship requirements
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Design Drawings</p>
-                <p className="text-white/90 text-xs">Layouts, schematics, containment routes</p>
+                <p className="text-white text-xs">Layouts, schematics, containment routes</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Schedules</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Distribution boards, circuits, equipment lists
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Calculations</p>
-                <p className="text-white/90 text-xs">Cable sizing, voltage drop, fault levels</p>
+                <p className="text-white text-xs">Cable sizing, voltage drop, fault levels</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Data Sheets</p>
-                <p className="text-white/90 text-xs">Equipment specifications, cut sheets</p>
+                <p className="text-white text-xs">Equipment specifications, cut sheets</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Compliance Matrix</p>
-                <p className="text-white/90 text-xs">Shows how requirements are met</p>
+                <p className="text-white text-xs">Shows how requirements are met</p>
               </div>
             </div>
 
@@ -564,7 +564,7 @@ const Level3Module6Section1_3 = () => {
               installation from outdated information.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Best Practice:</strong> Use a document register to track all specification
               documents, their current revision, and their approval status. Issue documents formally
               with transmittal records showing what was sent, when, and to whom.
@@ -644,7 +644,7 @@ const Level3Module6Section1_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -692,7 +692,7 @@ const Level3Module6Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section1">

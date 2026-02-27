@@ -201,7 +201,7 @@ const Level3Module3Section2_6 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section2">
@@ -220,7 +220,7 @@ const Level3Module3Section2_6 = () => {
         <h1 className="text-2xl md:text-3xl font-bold text-white mb-6">
           2.6 Resonance in AC Circuits
         </h1>
-        <p className="text-xl text-white/70 mb-8">
+        <p className="text-xl text-white mb-8">
           Understanding the phenomenon of resonance, where energy oscillates between inductance and
           capacitance at a specific frequency
         </p>
@@ -231,7 +231,7 @@ const Level3Module3Section2_6 = () => {
             <Zap className="w-5 h-5" />
             Quick Summary
           </h3>
-          <ul className="text-white/80 space-y-2">
+          <ul className="text-white space-y-2">
             <li>Resonance occurs when XL = XC, at frequency f0 = 1 / (2 x pi x sqrt(LC))</li>
             <li>Series resonance: minimum impedance (Z = R), maximum current - acceptor circuit</li>
             <li>Parallel resonance: maximum impedance, minimum current - rejector circuit</li>
@@ -243,7 +243,7 @@ const Level3Module3Section2_6 = () => {
         {/* Learning Outcomes */}
         <div className="bg-blue-900/30 border border-blue-500/50 rounded-lg p-6 mb-8">
           <h3 className="text-lg font-semibold text-blue-400 mb-3">Learning Outcomes</h3>
-          <ul className="text-white/80 space-y-2">
+          <ul className="text-white space-y-2">
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 mt-1 text-green-400 flex-shrink-0" />
               Explain the conditions required for resonance to occur in AC circuits
@@ -283,7 +283,7 @@ const Level3Module3Section2_6 = () => {
               The Resonance Phenomenon
             </h2>
             <div className="bg-[#242424] rounded-lg p-6 border border-white/10">
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 <strong>Resonance</strong> is a special condition in AC circuits containing both
                 inductance and capacitance where the inductive reactance (XL) equals the capacitive
                 reactance (XC). At this specific frequency, energy continuously oscillates between
@@ -297,22 +297,22 @@ const Level3Module3Section2_6 = () => {
                 <p className="text-green-400 font-mono text-lg mb-2">
                   f0 = 1 / (2 x pi x sqrt(L x C))
                 </p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Where f0 = resonant frequency (Hz), L = inductance (H), C = capacitance (F)
                 </p>
               </div>
 
-              <p className="text-white/80 mb-4">This formula is derived from setting XL = XC:</p>
+              <p className="text-white mb-4">This formula is derived from setting XL = XC:</p>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   At resonance: 2 x pi x f x L = 1 / (2 x pi x f x C)
                 </p>
-                <p className="text-white/80 mb-2">Rearranging: (2 x pi x f)^2 = 1 / (L x C)</p>
-                <p className="text-white/80">Therefore: f = 1 / (2 x pi x sqrt(LC))</p>
+                <p className="text-white mb-2">Rearranging: (2 x pi x f)^2 = 1 / (L x C)</p>
+                <p className="text-white">Therefore: f = 1 / (2 x pi x sqrt(LC))</p>
               </div>
 
-              <p className="text-white/80 mb-4">Key characteristics of resonance:</p>
-              <ul className="text-white/80 space-y-2 mb-4">
+              <p className="text-white mb-4">Key characteristics of resonance:</p>
+              <ul className="text-white space-y-2 mb-4">
                 <li>Resonant frequency depends only on L and C values, not on resistance</li>
                 <li>At resonance, voltage and current are in phase (unity power factor)</li>
                 <li>
@@ -341,7 +341,7 @@ const Level3Module3Section2_6 = () => {
               Series Resonance - Acceptor Circuits
             </h2>
             <div className="bg-[#242424] rounded-lg p-6 border border-white/10">
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 In a <strong>series RLC circuit</strong> at resonance, the inductive and capacitive
                 reactances cancel each other out (XL - XC = 0), leaving only the resistance to limit
                 current flow.
@@ -353,24 +353,24 @@ const Level3Module3Section2_6 = () => {
               <div className="grid md:grid-cols-2 gap-4 mb-4">
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Impedance Minimum</h5>
-                  <p className="text-white/70 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     Z = sqrt(R^2 + (XL - XC)^2) = sqrt(R^2 + 0) = R
                   </p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Impedance equals resistance only - its minimum possible value.
                   </p>
                 </div>
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Current Maximum</h5>
-                  <p className="text-white/70 text-sm mb-2">I = V / Z = V / R</p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm mb-2">I = V / Z = V / R</p>
+                  <p className="text-white text-sm">
                     Current is limited only by R, reaching its maximum value.
                   </p>
                 </div>
               </div>
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Voltage Magnification</h4>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 At series resonance, the voltage across the inductor or capacitor can be much
                 greater than the supply voltage. This is called{' '}
                 <strong>voltage magnification</strong>.
@@ -379,14 +379,14 @@ const Level3Module3Section2_6 = () => {
                 <p className="text-green-400 font-mono mb-2">
                   VL = VC = I x XL = (V/R) x XL = Q x V
                 </p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Where Q = XL/R is the magnification factor (Q-factor)
                 </p>
               </div>
 
               <div className="bg-yellow-900/30 border border-yellow-500/50 rounded-lg p-4 mb-4">
                 <h5 className="font-semibold text-yellow-400 mb-2">Warning: High Voltage Hazard</h5>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   With a Q-factor of 100 and a 230V supply, the voltage across L or C could reach
                   23,000V! Components must be rated for these magnified voltages, not just the
                   supply voltage.
@@ -394,7 +394,7 @@ const Level3Module3Section2_6 = () => {
               </div>
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Why "Acceptor Circuit"?</h4>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 Series resonant circuits are called <strong>acceptor circuits</strong> because they
                 have minimum impedance at the resonant frequency, allowing maximum current to flow -
                 they "accept" the resonant frequency while impeding others. This property is used in
@@ -419,7 +419,7 @@ const Level3Module3Section2_6 = () => {
               Parallel Resonance - Rejector Circuits
             </h2>
             <div className="bg-[#242424] rounded-lg p-6 border border-white/10">
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 In a <strong>parallel resonant circuit</strong> (also called a tank circuit), the
                 inductor and capacitor are connected in parallel. At resonance, the behaviour is
                 opposite to series resonance - impedance is maximum and line current is minimum.
@@ -431,22 +431,22 @@ const Level3Module3Section2_6 = () => {
               <div className="grid md:grid-cols-2 gap-4 mb-4">
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Impedance Maximum</h5>
-                  <p className="text-white/70 text-sm mb-2">Dynamic Impedance Zd = L / (C x R)</p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm mb-2">Dynamic Impedance Zd = L / (C x R)</p>
+                  <p className="text-white text-sm">
                     Impedance reaches its maximum value at resonance.
                   </p>
                 </div>
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Line Current Minimum</h5>
-                  <p className="text-white/70 text-sm mb-2">IL = V / Zd (minimum)</p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm mb-2">IL = V / Zd (minimum)</p>
+                  <p className="text-white text-sm">
                     Current drawn from supply is minimum at resonance.
                   </p>
                 </div>
               </div>
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Circulating Current</h4>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 Although line current is minimum, a large <strong>circulating current</strong> flows
                 between the inductor and capacitor. This current can be Q times the line current:
               </p>
@@ -454,13 +454,13 @@ const Level3Module3Section2_6 = () => {
                 <p className="text-green-400 font-mono mb-2">
                   Circulating current = Q x Line current
                 </p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Energy oscillates between L and C without being drawn from the supply
                 </p>
               </div>
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Why "Rejector Circuit"?</h4>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 Parallel resonant circuits are called <strong>rejector circuits</strong> because
                 they have maximum impedance at the resonant frequency, blocking or rejecting current
                 at that frequency while allowing other frequencies to pass. They are used in filters
@@ -470,18 +470,18 @@ const Level3Module3Section2_6 = () => {
               <h4 className="text-lg font-semibold text-green-400 mb-3">
                 Practical Parallel Resonant Circuit
               </h4>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 In practical circuits, the inductor has resistance that affects the resonant
                 behaviour. For a practical parallel circuit with inductor resistance r:
               </p>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Dynamic impedance:</strong> Zd = L / (C x r)
                 </p>
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Resonant frequency:</strong> f0 = (1 / 2pi) x sqrt(1/LC - r^2/L^2)
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   When r is small compared to sqrt(L/C), the simple formula f0 = 1/(2pi x sqrt(LC))
                   applies
                 </p>
@@ -505,7 +505,7 @@ const Level3Module3Section2_6 = () => {
               Q-Factor and Bandwidth
             </h2>
             <div className="bg-[#242424] rounded-lg p-6 border border-white/10">
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 The <strong>Quality factor (Q)</strong> of a resonant circuit indicates its
                 selectivity - how sharply it responds to frequencies near resonance. A high Q
                 circuit has a narrow, sharp response; a low Q circuit has a broad, flat response.
@@ -513,27 +513,27 @@ const Level3Module3Section2_6 = () => {
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Q-Factor Formulas</h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Series resonant circuit:</strong>
                 </p>
                 <p className="text-green-400 font-mono mb-3">
                   Q = XL / R = (2 x pi x f0 x L) / R = (1 / R) x sqrt(L / C)
                 </p>
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Parallel resonant circuit:</strong>
                 </p>
                 <p className="text-green-400 font-mono">Q = R / XL = R x sqrt(C / L)</p>
               </div>
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Bandwidth</h4>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 <strong>Bandwidth (BW)</strong> is the range of frequencies between the two
                 half-power points - where the power falls to half its maximum value (or
                 current/voltage to 0.707 of maximum):
               </p>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4 text-center">
                 <p className="text-green-400 font-mono text-lg mb-2">Bandwidth = f0 / Q</p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Also: BW = f2 - f1 where f1 and f2 are the half-power frequencies
                 </p>
               </div>
@@ -541,7 +541,7 @@ const Level3Module3Section2_6 = () => {
               <div className="grid md:grid-cols-2 gap-4 mb-4">
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">High Q (Sharp Tuning)</h5>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>Narrow bandwidth</li>
                     <li>High selectivity</li>
                     <li>High voltage/current magnification</li>
@@ -551,7 +551,7 @@ const Level3Module3Section2_6 = () => {
                 </div>
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Low Q (Broad Tuning)</h5>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>Wide bandwidth</li>
                     <li>Low selectivity</li>
                     <li>Lower magnification</li>
@@ -563,14 +563,14 @@ const Level3Module3Section2_6 = () => {
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Half-Power Frequencies</h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-2">For a series resonant circuit:</p>
+                <p className="text-white mb-2">For a series resonant circuit:</p>
                 <p className="text-green-400 font-mono mb-2">
                   f1 = f0 - BW/2 (lower half-power frequency)
                 </p>
                 <p className="text-green-400 font-mono mb-2">
                   f2 = f0 + BW/2 (upper half-power frequency)
                 </p>
-                <p className="text-white/80 text-sm mt-3">
+                <p className="text-white text-sm mt-3">
                   At f1 and f2: Current = 0.707 x I(max), Power = 0.5 x P(max)
                 </p>
               </div>
@@ -591,7 +591,7 @@ const Level3Module3Section2_6 = () => {
               <h4 className="text-lg font-semibold text-yellow-400 mb-3">
                 Applications and Hazards
               </h4>
-              <ul className="text-white/80 space-y-2">
+              <ul className="text-white space-y-2">
                 <li>
                   <strong>Radio/TV tuning:</strong> Variable capacitor adjusts resonant frequency to
                   select stations. Series resonance for maximum signal at desired frequency.
@@ -626,7 +626,7 @@ const Level3Module3Section2_6 = () => {
               {faqItems.map((faq, index) => (
                 <div key={index} className="bg-[#242424] rounded-lg p-4 border border-white/10">
                   <h4 className="font-semibold text-white mb-2">{faq.question}</h4>
-                  <p className="text-white/70 text-sm">{faq.answer}</p>
+                  <p className="text-white text-sm">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -639,7 +639,7 @@ const Level3Module3Section2_6 = () => {
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <h4 className="font-semibold text-green-400 mb-3">Essential Formulas</h4>
-                  <ul className="text-white/70 text-sm space-y-2 font-mono">
+                  <ul className="text-white text-sm space-y-2 font-mono">
                     <li>f0 = 1 / (2 x pi x sqrt(LC))</li>
                     <li>At resonance: XL = XC</li>
                     <li>Q = XL / R (series)</li>
@@ -650,7 +650,7 @@ const Level3Module3Section2_6 = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-green-400 mb-3">Key Comparisons</h4>
-                  <table className="text-white/70 text-sm w-full">
+                  <table className="text-white text-sm w-full">
                     <thead>
                       <tr>
                         <th className="text-left pb-2">Property</th>
@@ -690,7 +690,7 @@ const Level3Module3Section2_6 = () => {
         {/* Quiz Section */}
         <div className="mb-12">
           <h2 className="text-xl font-semibold text-white mb-4">Test Your Knowledge</h2>
-          <p className="text-white/70 mb-4">
+          <p className="text-white mb-4">
             Complete this quiz to check your understanding of resonance in AC circuits:
           </p>
           <Quiz questions={quizQuestions} moduleId="L3M3S2.6" />

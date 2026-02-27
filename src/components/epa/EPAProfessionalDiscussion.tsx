@@ -633,7 +633,7 @@ export function EPAProfessionalDiscussion({
                   value={responseText}
                   onChange={(e) => setResponseText(e.target.value)}
                   placeholder="Type or speak your response. Aim for 3-5 paragraphs covering your experience, reasoning, and reflection..."
-                  className="w-full min-h-[200px] p-4 rounded-xl bg-elec-gray border border-white/10 text-sm text-white placeholder:text-white/90 focus:border-purple-500/40 focus:ring-1 focus:ring-purple-500/20 touch-manipulation resize-none"
+                  className="w-full min-h-[200px] p-4 rounded-xl bg-elec-gray border border-white/10 text-sm text-white placeholder:text-white focus:border-purple-500/40 focus:ring-1 focus:ring-purple-500/20 touch-manipulation resize-none"
                   disabled={isScoring}
                 />
 

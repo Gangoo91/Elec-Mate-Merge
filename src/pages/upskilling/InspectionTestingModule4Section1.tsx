@@ -199,7 +199,7 @@ const InspectionTestingModule4Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-4">
@@ -221,7 +221,7 @@ const InspectionTestingModule4Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Principles of Insulation Testing
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understand why insulation resistance testing is essential and the physics behind IR
             measurements
           </p>
@@ -300,7 +300,7 @@ const InspectionTestingModule4Section1 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Key Principle</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Perfect insulation would have infinite resistance. In reality, all insulating
                 materials allow some tiny current to pass - this is normal. Problems occur when this
                 leakage becomes excessive.
@@ -641,7 +641,7 @@ const InspectionTestingModule4Section1 = () => {
               ≥ 1.0 MΩ
             </text>
           </svg>
-          <p className="text-xs text-white/40 mt-3">
+          <p className="text-xs text-white mt-3">
             Three test configurations for insulation resistance: L-N, L-E, and N-E. Main switch off,
             all MCBs/fuses on. Disconnect voltage-sensitive equipment before testing.
           </p>
@@ -698,7 +698,7 @@ const InspectionTestingModule4Section1 = () => {
               ].map((item, i) => (
                 <div key={i} className="text-sm">
                   <p className="text-elec-yellow/80 font-medium">{item.factor}</p>
-                  <p className="text-white/80">{item.effect}</p>
+                  <p className="text-white">{item.effect}</p>
                 </div>
               ))}
             </div>
@@ -714,7 +714,7 @@ const InspectionTestingModule4Section1 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/10 text-center">
               <p className="text-2xl font-mono text-elec-yellow mb-2">Minimum: 1.0 MΩ</p>
-              <p className="text-white/60 text-sm">Required insulation resistance per BS 7671</p>
+              <p className="text-white text-sm">Required insulation resistance per BS 7671</p>
             </div>
 
             <p>
@@ -722,7 +722,7 @@ const InspectionTestingModule4Section1 = () => {
               achieve readings significantly higher than 1 MΩ - typically 100 MΩ or more.
             </p>
 
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong className="text-elec-yellow">Note:</strong> The 1 MΩ minimum is measured with
               all equipment disconnected. With equipment connected, readings may be lower due to
               electronic components.
@@ -778,7 +778,7 @@ const InspectionTestingModule4Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -824,7 +824,7 @@ const InspectionTestingModule4Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-3/section-6">

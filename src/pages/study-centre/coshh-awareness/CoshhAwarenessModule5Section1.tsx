@@ -201,7 +201,7 @@ export default function CoshhAwarenessModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-5">
@@ -226,7 +226,7 @@ export default function CoshhAwarenessModule5Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Workplace Monitoring
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Air monitoring techniques, surface sampling, biological monitoring, interpreting results
             against Workplace Exposure Limits, and the record-keeping requirements of COSHH
             Regulation 10
@@ -322,7 +322,7 @@ export default function CoshhAwarenessModule5Section1() {
                     COSHH Regulation 10 &mdash; Key Requirements
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -353,7 +353,7 @@ export default function CoshhAwarenessModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">When Monitoring Is Required</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -424,7 +424,7 @@ export default function CoshhAwarenessModule5Section1() {
               {/* Personal Sampling */}
               <div className="bg-violet-500/10 border border-violet-500/30 p-4 rounded-lg">
                 <p className="text-sm font-bold text-violet-400 mb-2">1. Personal Sampling</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The <strong className="text-white">gold standard</strong> for assessing individual
                   worker exposure. A small{' '}
                   <strong className="text-white">battery-powered pump</strong> is worn on the
@@ -433,7 +433,7 @@ export default function CoshhAwarenessModule5Section1() {
                   the lapel within the <strong className="text-white">breathing zone</strong>{' '}
                   (approximately 30 cm from the nose and mouth).
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-300 flex-shrink-0" />
                     <span>
@@ -465,13 +465,13 @@ export default function CoshhAwarenessModule5Section1() {
               {/* Static (Area) Sampling */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-bold text-white mb-2">2. Static (Area) Sampling</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   A sampling device is placed at a{' '}
                   <strong className="text-white">fixed point</strong> in the workplace &mdash;
                   typically at breathing-zone height (approximately 1.5 metres) near the source of
                   contamination or in the general work area.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -502,13 +502,13 @@ export default function CoshhAwarenessModule5Section1() {
                 <p className="text-sm font-bold text-white mb-2">
                   3. Real-Time / Direct-Reading Instruments
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   These instruments give{' '}
                   <strong className="text-white">immediate, continuous readings</strong> of
                   contaminant concentration. They are invaluable for identifying peak exposures and
                   confirming the effectiveness of controls in real time.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -539,12 +539,12 @@ export default function CoshhAwarenessModule5Section1() {
               {/* Grab Sampling */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-bold text-white mb-2">4. Grab Sampling</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   A <strong className="text-white">short-duration sample</strong> taken at a
                   specific moment &mdash; a snapshot of conditions rather than an average over a
                   full shift.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -592,7 +592,7 @@ export default function CoshhAwarenessModule5Section1() {
                 </div>
                 <p className="text-violet-400 text-base font-bold">Personal Sampling</p>
               </div>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>Pump worn on belt, filter on lapel</li>
                 <li>8-hour TWA measurement</li>
                 <li>Best for: WEL compliance</li>
@@ -608,7 +608,7 @@ export default function CoshhAwarenessModule5Section1() {
                 </div>
                 <p className="text-white text-base font-bold">Static Sampling</p>
               </div>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>Fixed point at 1.5m height</li>
                 <li>Background/area levels</li>
                 <li>Best for: trend analysis</li>
@@ -624,7 +624,7 @@ export default function CoshhAwarenessModule5Section1() {
                 </div>
                 <p className="text-white text-base font-bold">Real-Time Instruments</p>
               </div>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>PIDs, dust monitors, gas detectors</li>
                 <li>Immediate continuous readings</li>
                 <li>Best for: peak detection, LEV checks</li>
@@ -640,7 +640,7 @@ export default function CoshhAwarenessModule5Section1() {
                 </div>
                 <p className="text-white text-base font-bold">Grab Sampling</p>
               </div>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>Detector tubes, syringe samples</li>
                 <li>Snapshot reading at one moment</li>
                 <li>Best for: quick screening</li>
@@ -672,7 +672,7 @@ export default function CoshhAwarenessModule5Section1() {
                 <p className="text-sm font-bold text-white mb-2">
                   Dust (Including Respirable Crystalline Silica)
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -706,7 +706,7 @@ export default function CoshhAwarenessModule5Section1() {
               {/* Gases and Vapours */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-bold text-white mb-2">Gases and Vapours</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -743,7 +743,7 @@ export default function CoshhAwarenessModule5Section1() {
               {/* Biological Agents */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-bold text-white mb-2">Biological Agents</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -802,7 +802,7 @@ export default function CoshhAwarenessModule5Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Comparison to Workplace Exposure Limits (WELs)
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -840,12 +840,12 @@ export default function CoshhAwarenessModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Trend Analysis</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Individual results tell you the exposure at a point in time.{' '}
                   <strong className="text-white">Trend analysis</strong> compares results over
                   weeks, months, or years to identify:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -866,7 +866,7 @@ export default function CoshhAwarenessModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Action Levels</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Many employers set internal <strong className="text-white">action levels</strong>{' '}
                   below the WEL &mdash; typically at{' '}
                   <strong className="text-white">50% of the WEL</strong>. If monitoring shows
@@ -882,7 +882,7 @@ export default function CoshhAwarenessModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">WEL Exceedance</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If monitoring reveals that a WEL has been exceeded, the employer must take{' '}
                   <strong className="text-white">immediate action</strong>: identify and remedy the
                   cause, reassess the risk, review and improve control measures, and carry out
@@ -921,7 +921,7 @@ export default function CoshhAwarenessModule5Section1() {
                       <p className="text-sm font-medium text-white">
                         Personal Exposure Records &mdash; 40 Years
                       </p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Records identifying individual employees and their measured exposure levels
                         must be retained for at least 40 years from the date of the last entry
                       </p>
@@ -935,7 +935,7 @@ export default function CoshhAwarenessModule5Section1() {
                       <p className="text-sm font-medium text-white">
                         Non-Personal Records &mdash; 5 Years
                       </p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Static monitoring results, area surveys, and general workplace assessments
                         that do not identify specific individuals must be kept for at least 5 years
                       </p>
@@ -946,7 +946,7 @@ export default function CoshhAwarenessModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">What Records Must Include</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1025,7 +1025,7 @@ export default function CoshhAwarenessModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Wipe Sampling</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1056,7 +1056,7 @@ export default function CoshhAwarenessModule5Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Why Surface Monitoring Matters
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1125,7 +1125,7 @@ export default function CoshhAwarenessModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">How It Works</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   When a hazardous substance enters the body, the liver and other organs metabolise
                   it into breakdown products called{' '}
                   <strong className="text-white">metabolites</strong>. These metabolites are
@@ -1146,7 +1146,7 @@ export default function CoshhAwarenessModule5Section1() {
                       <p className="text-sm font-medium text-white">
                         Mandelic Acid &rarr; Styrene Exposure
                       </p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Measured in urine. Indicates total styrene uptake from all routes. Common in
                         fibreglass/composite manufacturing
                       </p>
@@ -1160,7 +1160,7 @@ export default function CoshhAwarenessModule5Section1() {
                       <p className="text-sm font-medium text-white">
                         Hippuric Acid &rarr; Toluene Exposure
                       </p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Measured in urine. Toluene is a common solvent in paints, adhesives, and
                         cleaning agents
                       </p>
@@ -1174,7 +1174,7 @@ export default function CoshhAwarenessModule5Section1() {
                       <p className="text-sm font-medium text-white">
                         Cotinine &rarr; Environmental Tobacco Smoke
                       </p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Measured in urine or saliva. A metabolite of nicotine, used to assess
                         passive smoking exposure
                       </p>
@@ -1188,7 +1188,7 @@ export default function CoshhAwarenessModule5Section1() {
                       <p className="text-sm font-medium text-white">
                         Blood Lead Level &rarr; Lead Exposure
                       </p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Measured in blood. Lead is a cumulative toxin found in old paint, lead
                         soldering, and some industrial processes
                       </p>
@@ -1201,7 +1201,7 @@ export default function CoshhAwarenessModule5Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Biological Guidance Values (BGVs)
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1232,7 +1232,7 @@ export default function CoshhAwarenessModule5Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   When Biological Monitoring Is Needed
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1291,7 +1291,7 @@ export default function CoshhAwarenessModule5Section1() {
                 </div>
                 <p className="text-violet-400 text-base font-bold">Risk Assessment</p>
               </div>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Does the COSHH assessment identify a risk of exposure to hazardous substances? Could
                 failure of controls cause serious health effects? Could WELs be exceeded?
               </p>
@@ -1313,7 +1313,7 @@ export default function CoshhAwarenessModule5Section1() {
                 </div>
                 <p className="text-white text-base font-bold">Select Monitoring Type</p>
               </div>
-              <ul className="text-sm text-white/80 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>Inhalation risk &rarr; Air monitoring (personal/static)</li>
                 <li>Skin contact risk &rarr; Surface wipe sampling</li>
                 <li>Multiple routes &rarr; Biological monitoring</li>
@@ -1337,7 +1337,7 @@ export default function CoshhAwarenessModule5Section1() {
                 </div>
                 <p className="text-white text-base font-bold">Carry Out Monitoring</p>
               </div>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Competent person (occupational hygienist) selects validated method, calibrates
                 equipment, conducts sampling under representative conditions, and sends samples for
                 analysis.
@@ -1360,7 +1360,7 @@ export default function CoshhAwarenessModule5Section1() {
                 </div>
                 <p className="text-white text-base font-bold">Interpret Results</p>
               </div>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Compare to WELs/BGVs, analyse trends, determine if action level has been reached.
                 Consider measurement uncertainty.
               </p>
@@ -1378,7 +1378,7 @@ export default function CoshhAwarenessModule5Section1() {
             <div className="grid sm:grid-cols-2 gap-3">
               <div className="bg-green-500/15 border-2 border-green-500/40 rounded-xl p-4 sm:p-5">
                 <p className="text-green-400 text-sm font-bold mb-2">Below WEL / Action Level</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Record results</li>
                   <li>Continue current controls</li>
                   <li>Schedule next monitoring round</li>
@@ -1387,7 +1387,7 @@ export default function CoshhAwarenessModule5Section1() {
               </div>
               <div className="bg-red-500/15 border-2 border-red-500/40 rounded-xl p-4 sm:p-5">
                 <p className="text-red-400 text-sm font-bold mb-2">At or Above WEL</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Immediate action to reduce exposure</li>
                   <li>Review and improve controls</li>
                   <li>Re-monitor to confirm reduction</li>
@@ -1417,7 +1417,7 @@ export default function CoshhAwarenessModule5Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Who Should Carry Out Monitoring?
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1463,12 +1463,12 @@ export default function CoshhAwarenessModule5Section1() {
                         Concrete Chasing on a Refurbishment Site
                       </p>
                     </div>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       An electrician spends 3 hours per shift chasing concrete walls to install new
                       cable routes. The employer commissions personal air monitoring for respirable
                       crystalline silica (RCS).
                     </p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       <strong className="text-white">Method:</strong> Personal sampling pump with
                       cyclone and filter, running for the full shift. Filter analysed by X-ray
                       diffraction at a UKAS laboratory. Result compared to the RCS WEL of 0.1
@@ -1486,12 +1486,12 @@ export default function CoshhAwarenessModule5Section1() {
                         Solvent Use in a Confined Plant Room
                       </p>
                     </div>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       An electrician uses a solvent-based cleaning agent to degrease cable
                       terminations in a small plant room with limited ventilation. The supervisor is
                       concerned about vapour build-up.
                     </p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       <strong className="text-white">Method:</strong> Quick screening with a PID
                       (photoionisation detector) to check real-time VOC levels. If elevated,
                       followed by personal sampling with sorbent tubes for the specific solvent.
@@ -1509,12 +1509,12 @@ export default function CoshhAwarenessModule5Section1() {
                         Working Near Welding Operations
                       </p>
                     </div>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       An electrician installs lighting in a fabrication workshop where welding is
                       ongoing. Although the electrician is not welding, they may be exposed to
                       welding fume as a bystander.
                     </p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       <strong className="text-white">Method:</strong> Personal sampling for total
                       inhalable dust and specific metals (manganese, chromium, nickel) depending on
                       the welding process. Static monitoring may also be placed near the
@@ -1533,11 +1533,11 @@ export default function CoshhAwarenessModule5Section1() {
                         Lead Paint Disturbance During Rewire
                       </p>
                     </div>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       During a domestic rewire of a Victorian property, an electrician disturbs
                       layers of old lead-based paint while lifting floorboards and chasing walls.
                     </p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       <strong className="text-white">Method:</strong> Personal air monitoring for
                       airborne lead dust. Surface wipe sampling on work surfaces and tools.
                       Biological monitoring (blood lead level) if the assessment indicates
@@ -1572,7 +1572,7 @@ export default function CoshhAwarenessModule5Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1590,7 +1590,7 @@ export default function CoshhAwarenessModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-4-section-4">

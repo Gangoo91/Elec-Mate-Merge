@@ -252,7 +252,7 @@ const RenewableEnergyModule8Section2 = () => {
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
           Building Regulations Compliance
         </h1>
-        <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+        <p className="text-white text-sm sm:text-base max-w-xl mx-auto">
           Part L, Part P, and structural requirements for renewable energy installations
         </p>
       </div>
@@ -300,7 +300,7 @@ const RenewableEnergyModule8Section2 = () => {
           ].map((outcome, index) => (
             <div key={index} className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
-              <span className="text-white/80 text-sm">{outcome}</span>
+              <span className="text-white text-sm">{outcome}</span>
             </div>
           ))}
         </div>
@@ -313,7 +313,7 @@ const RenewableEnergyModule8Section2 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">01</span>
             <h2 className="text-xl font-semibold text-white">Part L - Energy Efficiency</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Part L of the Building Regulations addresses conservation of fuel and power, setting
               minimum energy efficiency standards for buildings. These requirements have become
@@ -354,7 +354,7 @@ const RenewableEnergyModule8Section2 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">02</span>
             <h2 className="text-xl font-semibold text-white">Part P - Electrical Safety</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Part P of the Building Regulations applies to electrical installations in dwellings,
               requiring that work is designed and installed to protect persons from fire and injury.
@@ -397,7 +397,7 @@ const RenewableEnergyModule8Section2 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">03</span>
             <h2 className="text-xl font-semibold text-white">Structural Considerations</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Part A of the Building Regulations addresses structural integrity. While most
               residential roofs can accommodate solar panel installations without structural
@@ -440,7 +440,7 @@ const RenewableEnergyModule8Section2 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">04</span>
             <h2 className="text-xl font-semibold text-white">Fire Safety - Part B</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Part B of the Building Regulations addresses fire safety. Battery storage
               installations particularly require careful consideration of fire safety requirements
@@ -482,7 +482,7 @@ const RenewableEnergyModule8Section2 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">05</span>
             <h2 className="text-xl font-semibold text-white">Documentation and Certification</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Comprehensive documentation demonstrates compliance with Building Regulations and
               provides essential records for customers, future maintenance, and property
@@ -528,7 +528,7 @@ const RenewableEnergyModule8Section2 = () => {
             <Zap className="w-4 h-4 text-elec-yellow" />
             Practical Guidance
           </h3>
-          <div className="space-y-2 text-white/80 text-sm">
+          <div className="space-y-2 text-white text-sm">
             <p>
               <span className="text-white font-medium">Early assessment:</span> Assess regulatory
               requirements at the survey stage. Identify any planning constraints, structural
@@ -557,7 +557,7 @@ const RenewableEnergyModule8Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <h3 className="text-white font-medium mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>

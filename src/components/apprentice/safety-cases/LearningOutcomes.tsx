@@ -37,7 +37,7 @@ const LearningOutcomes = () => {
               <div className="p-1.5 rounded-lg bg-green-500/20 flex-shrink-0 mt-0.5">
                 <CheckCircle className="h-3.5 w-3.5 text-green-400" />
               </div>
-              <span className="text-sm text-white/80">{outcome}</span>
+              <span className="text-sm text-white">{outcome}</span>
             </div>
           ))}
         </div>

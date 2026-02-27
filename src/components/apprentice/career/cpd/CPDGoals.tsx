@@ -105,7 +105,7 @@ const CPDGoals = () => {
           </div>
           <div>
             <h2 className="text-2xl font-bold text-white">CPD Goals</h2>
-            <p className="text-white/70 text-sm">
+            <p className="text-white text-sm">
               Set and track your professional development goals
             </p>
           </div>
@@ -139,7 +139,7 @@ const CPDGoals = () => {
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                   placeholder="e.g., Advanced Testing Qualification"
-                  className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40"
+                  className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white"
                 />
               </div>
 
@@ -155,7 +155,7 @@ const CPDGoals = () => {
                     value={formData.targetHours}
                     onChange={(e) => setFormData({ ...formData, targetHours: e.target.value })}
                     placeholder="20"
-                    className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40"
+                    className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white"
                   />
                 </div>
 
@@ -229,7 +229,7 @@ const CPDGoals = () => {
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   placeholder="Optional description of this goal..."
-                  className="bg-white/5 border-white/20 text-white placeholder:text-white/40 min-h-[80px]"
+                  className="bg-white/5 border-white/20 text-white placeholder:text-white min-h-[80px]"
                 />
               </div>
 
@@ -262,7 +262,7 @@ const CPDGoals = () => {
               <Target className="h-8 w-8 text-elec-yellow" />
             </div>
             <h3 className="text-lg font-semibold text-white mb-2">No goals set yet</h3>
-            <p className="text-white/70 mb-6 max-w-md mx-auto">
+            <p className="text-white mb-6 max-w-md mx-auto">
               Create your first CPD goal to start tracking your professional development progress
               and stay on track with your career objectives.
             </p>
@@ -307,7 +307,7 @@ const CPDGoals = () => {
                       onClick={() => handleEdit(goal)}
                       className="h-9 w-9 p-0 hover:bg-elec-yellow/20 touch-manipulation"
                     >
-                      <Edit className="h-4 w-4 text-white/70" />
+                      <Edit className="h-4 w-4 text-white" />
                     </Button>
                     <Button
                       size="sm"
@@ -325,26 +325,26 @@ const CPDGoals = () => {
                 {/* Progress */}
                 <div className="space-y-2 p-3 rounded-lg bg-white/5 border border-white/10">
                   <div className="flex justify-between text-sm">
-                    <span className="text-white/70">Progress</span>
+                    <span className="text-white">Progress</span>
                     <span className="text-elec-yellow font-medium">
                       {goal.currentHours} / {goal.targetHours} hours
                     </span>
                   </div>
                   <Progress value={(goal.currentHours / goal.targetHours) * 100} className="h-2" />
-                  <div className="text-xs text-white/60">
+                  <div className="text-xs text-white">
                     {Math.round((goal.currentHours / goal.targetHours) * 100)}% complete
                   </div>
                 </div>
 
                 {/* Details */}
                 <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-sm text-white/80">
+                  <div className="flex items-center gap-2 text-sm text-white">
                     <Calendar className="h-4 w-4 text-elec-yellow" />
                     <span>Due: {new Date(goal.deadline).toLocaleDateString()}</span>
                   </div>
 
                   {goal.description && (
-                    <p className="text-white/60 text-sm line-clamp-2">{goal.description}</p>
+                    <p className="text-white text-sm line-clamp-2">{goal.description}</p>
                   )}
                 </div>
 

@@ -67,13 +67,13 @@ const JobRow = ({ job, index }: { job: LatestJob; index: number }) => {
 
             {/* Company & Location */}
             <div className="flex items-center gap-2 mt-1.5">
-              <span className="flex items-center gap-1 text-[12px] text-white/80">
-                <Building2 className="h-3 w-3 flex-shrink-0 text-white/60" />
+              <span className="flex items-center gap-1 text-[12px] text-white">
+                <Building2 className="h-3 w-3 flex-shrink-0 text-white" />
                 <span className="truncate max-w-[120px]">{company}</span>
               </span>
               <span className="w-1 h-1 rounded-full bg-white/30" />
-              <span className="flex items-center gap-1 text-[12px] text-white/80">
-                <MapPin className="h-3 w-3 flex-shrink-0 text-white/60" />
+              <span className="flex items-center gap-1 text-[12px] text-white">
+                <MapPin className="h-3 w-3 flex-shrink-0 text-white" />
                 {location}
               </span>
             </div>
@@ -87,7 +87,7 @@ const JobRow = ({ job, index }: { job: LatestJob; index: number }) => {
           </div>
 
           {/* Arrow */}
-          <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0 mt-2" />
+          <ChevronRight className="h-4 w-4 text-white flex-shrink-0 mt-2" />
         </div>
       </Link>
     </motion.div>
@@ -110,7 +110,7 @@ export const LatestJobsWidget = () => {
           <h2 className="text-base font-bold text-white">Latest Electrical Jobs</h2>
         </div>
         {jobs && jobs.length > 0 && (
-          <span className="text-xs text-white/60 bg-white/[0.05] px-2.5 py-1 rounded-full">
+          <span className="text-xs text-white bg-white/[0.05] px-2.5 py-1 rounded-full">
             {jobs.length} new
           </span>
         )}
@@ -140,9 +140,9 @@ export const LatestJobsWidget = () => {
       ) : (
         <div className="text-center py-10 rounded-2xl bg-white/[0.02] border border-white/[0.06]">
           <div className="w-14 h-14 rounded-2xl bg-white/[0.05] flex items-center justify-center mx-auto mb-4">
-            <Zap className="h-7 w-7 text-white/40" />
+            <Zap className="h-7 w-7 text-white" />
           </div>
-          <p className="text-white/70 text-sm mb-4">No electrical jobs found</p>
+          <p className="text-white text-sm mb-4">No electrical jobs found</p>
           <Link to="/electrician/job-vacancies">
             <motion.button
               whileTap={{ scale: 0.98 }}

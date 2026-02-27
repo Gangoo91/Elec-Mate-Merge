@@ -223,7 +223,7 @@ const AsbestosModule2Section1 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Control of Asbestos Regulations 2012
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding the primary UK legislation that governs all work with asbestos &mdash; who
             it applies to, what it requires, and how it is enforced
           </p>
@@ -497,7 +497,7 @@ const AsbestosModule2Section1 = () => {
             <span className="text-orange-400/80 text-sm font-normal">04</span>
             UK Asbestos Legislation Timeline
           </h2>
-          <p className="text-white/80 mb-6 text-sm">
+          <p className="text-white mb-6 text-sm">
             The UK&rsquo;s approach to regulating asbestos has evolved over more than 80 years. Each
             step built on the last, culminating in the comprehensive framework we have today under
             CAR 2012.
@@ -526,7 +526,7 @@ const AsbestosModule2Section1 = () => {
                               <p className="text-orange-400 font-bold text-sm leading-none mb-1">
                                 {evt.year}
                               </p>
-                              <p className="text-white/70 text-[10px] leading-tight">{evt.label}</p>
+                              <p className="text-white text-[10px] leading-tight">{evt.label}</p>
                             </div>
                           </div>
                           {/* Vertical connector + dot */}
@@ -544,7 +544,7 @@ const AsbestosModule2Section1 = () => {
                               <p className="text-orange-400 font-bold text-sm leading-none mb-1">
                                 {evt.year}
                               </p>
-                              <p className="text-white/70 text-[10px] leading-tight">{evt.label}</p>
+                              <p className="text-white text-[10px] leading-tight">{evt.label}</p>
                             </div>
                           </div>
                         </>
@@ -556,7 +556,7 @@ const AsbestosModule2Section1 = () => {
             </div>
           </div>
 
-          <p className="text-white/50 text-xs text-centre mt-2 italic">
+          <p className="text-white text-xs text-centre mt-2 italic">
             Scroll horizontally to view the full timeline
           </p>
         </section>
@@ -584,7 +584,7 @@ const AsbestosModule2Section1 = () => {
                   1. Licensed Work &mdash; Highest Risk
                 </h3>
                 <div className="space-y-2 text-sm">
-                  <p className="text-white/80">
+                  <p className="text-white">
                     Licensed work involves the most dangerous ACMs and activities. It requires:
                   </p>
                   <ul className="text-white space-y-2">
@@ -614,7 +614,7 @@ const AsbestosModule2Section1 = () => {
                       </div>
                     </li>
                   </ul>
-                  <p className="text-white/60 mt-2 text-xs">
+                  <p className="text-white mt-2 text-xs">
                     Examples: sprayed coatings, pipe lagging, asbestos insulating board (AIB)
                     removal, loose-fill insulation.
                   </p>
@@ -627,7 +627,7 @@ const AsbestosModule2Section1 = () => {
                   2. Notifiable Non-Licensed Work (NNLW) &mdash; Medium Risk
                 </h3>
                 <div className="space-y-2 text-sm">
-                  <p className="text-white/80">
+                  <p className="text-white">
                     NNLW covers brief, sporadic, low-intensity work with certain ACMs. It requires:
                   </p>
                   <ul className="text-white space-y-2">
@@ -658,7 +658,7 @@ const AsbestosModule2Section1 = () => {
                       </div>
                     </li>
                   </ul>
-                  <p className="text-white/60 mt-2 text-xs">
+                  <p className="text-white mt-2 text-xs">
                     Examples: textured coating removal, asbestos cement work with power tools,
                     certain AIB work meeting specific low-risk criteria.
                   </p>
@@ -671,7 +671,7 @@ const AsbestosModule2Section1 = () => {
                   3. Non-Licensed Work &mdash; Lowest Risk
                 </h3>
                 <div className="space-y-2 text-sm">
-                  <p className="text-white/80">
+                  <p className="text-white">
                     Non-licensed work covers low-risk activities where fibre release is minimal. It
                     requires:
                   </p>
@@ -701,7 +701,7 @@ const AsbestosModule2Section1 = () => {
                       </div>
                     </li>
                   </ul>
-                  <p className="text-white/60 mt-2 text-xs">
+                  <p className="text-white mt-2 text-xs">
                     Examples: asbestos cement removal by hand, textured coating removal using wet
                     methods and hand scraping, floor tile removal.
                   </p>
@@ -713,7 +713,7 @@ const AsbestosModule2Section1 = () => {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Important</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Even non-licensed work must be carried out with proper controls. There is{' '}
                   <strong className="text-white">
                     no category of asbestos work that can be done without any precautions
@@ -750,7 +750,7 @@ const AsbestosModule2Section1 = () => {
                     4-Hour TWA Control Limit
                   </p>
                   <p className="text-3xl sm:text-4xl font-bold text-white mb-1">0.1 f/cm&sup3;</p>
-                  <p className="text-white/60 text-sm">
+                  <p className="text-white text-sm">
                     fibres per cm&sup3; averaged over a continuous 4-hour period
                   </p>
                 </div>
@@ -759,7 +759,7 @@ const AsbestosModule2Section1 = () => {
                     Short-Term Exposure Limit
                   </p>
                   <p className="text-3xl sm:text-4xl font-bold text-white mb-1">0.6 f/cm&sup3;</p>
-                  <p className="text-white/60 text-sm">
+                  <p className="text-white text-sm">
                     fibres per cm&sup3; averaged over any continuous 10-minute period
                   </p>
                 </div>
@@ -772,7 +772,7 @@ const AsbestosModule2Section1 = () => {
                     The Control Limit Is NOT a Safe Level
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The control limit of 0.1 f/cm&sup3; does{' '}
                   <strong className="text-white">not</strong> represent a safe level of exposure.
                   There is no known threshold below which asbestos exposure is completely safe. The
@@ -889,7 +889,7 @@ const AsbestosModule2Section1 = () => {
 
               <div className="bg-white/5 border border-orange-500/30 p-4 rounded-lg">
                 <h3 className="text-orange-400 font-medium mb-3">Who Needs Training?</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Asbestos awareness training is required for anyone whose work could foreseeably
                   disturb asbestos-containing materials. This includes (but is not limited to):
                 </p>
@@ -965,7 +965,7 @@ const AsbestosModule2Section1 = () => {
                   <Scale className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Electricians &amp; Asbestos</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   As an electrician, you are in one of the trades most likely to encounter
                   asbestos-containing materials. Chasing cables into walls, lifting floorboards,
                   accessing ceiling voids, working in older consumer unit locations, and drilling
@@ -998,7 +998,7 @@ const AsbestosModule2Section1 = () => {
               <div className="space-y-3">
                 <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg">
                   <h3 className="text-amber-400 font-semibold mb-2">Improvement Notice</h3>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     An improvement notice requires the duty holder to{' '}
                     <strong className="text-white">
                       take specific action within a stated timeframe
@@ -1011,7 +1011,7 @@ const AsbestosModule2Section1 = () => {
 
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <h3 className="text-red-400 font-semibold mb-2">Prohibition Notice</h3>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     A prohibition notice{' '}
                     <strong className="text-white">stops work immediately</strong> where the HSE
                     inspector believes there is, or is likely to be, a serious risk of personal
@@ -1022,7 +1022,7 @@ const AsbestosModule2Section1 = () => {
 
                 <div className="bg-red-500/15 border border-red-500/40 p-4 rounded-lg">
                   <h3 className="text-red-300 font-semibold mb-2">Prosecution</h3>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     For serious breaches, the HSE can prosecute in the criminal courts. Penalties
                     include:
                   </p>
@@ -1084,7 +1084,7 @@ const AsbestosModule2Section1 = () => {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Real-World Consequences</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The HSE regularly prosecutes businesses and individuals for asbestos-related
                   offences. Recent cases have resulted in fines of hundreds of thousands of pounds
                   for organisations, and custodial sentences for individuals who knowingly exposed
@@ -1160,7 +1160,7 @@ const AsbestosModule2Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1176,7 +1176,7 @@ const AsbestosModule2Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-1-section-4">

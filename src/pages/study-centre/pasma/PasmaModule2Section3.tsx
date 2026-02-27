@@ -200,11 +200,11 @@ const PasmaModule2Section3 = () => {
           </div>
           <div className="inline-block bg-elec-yellow/10 border border-elec-yellow/20 px-3 py-1 rounded-full text-sm font-semibold mb-4 ml-0">
             <span className="text-elec-yellow">MODULE 2</span>
-            <span className="text-white/40 mx-2">&middot;</span>
-            <span className="text-white/60">SECTION 3</span>
+            <span className="text-white mx-2">&middot;</span>
+            <span className="text-white">SECTION 3</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">Safety Components</h1>
-          <p className="text-white/70 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding the safety-critical components that protect operatives from falls, falling
             objects, and tower instability
           </p>
@@ -214,7 +214,7 @@ const PasmaModule2Section3 = () => {
         <div className="grid sm:grid-cols-2 gap-4 mb-10">
           <div className="rounded-lg p-4 bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -246,7 +246,7 @@ const PasmaModule2Section3 = () => {
           </div>
           <div className="rounded-lg p-4 bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="font-semibold text-elec-yellow/90 mb-2">On Site</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -281,7 +281,7 @@ const PasmaModule2Section3 = () => {
         {/* Learning Outcomes */}
         <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4">By the end of this section, you will be able to:</p>
+          <p className="text-white mb-4">By the end of this section, you will be able to:</p>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
               'State the minimum guardrail height and explain where guardrails must be fitted',
@@ -293,7 +293,7 @@ const PasmaModule2Section3 = () => {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </div>
             ))}
           </div>
@@ -308,7 +308,7 @@ const PasmaModule2Section3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Guardrails
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Guardrails are the primary fall-prevention measure on a mobile access tower. They
                 form a protective barrier around the platform edge, preventing operatives from
@@ -323,12 +323,12 @@ const PasmaModule2Section3 = () => {
                   <div>
                     <p className="text-white font-medium">Minimum Height</p>
                     <p className="text-elec-yellow text-2xl font-bold">950mm</p>
-                    <p className="text-white/60">above the platform surface</p>
+                    <p className="text-white">above the platform surface</p>
                   </div>
                   <div>
                     <p className="text-white font-medium">Required On</p>
                     <p className="text-elec-yellow text-lg font-bold">All exposed sides</p>
-                    <p className="text-white/60">any side not against a structure</p>
+                    <p className="text-white">any side not against a structure</p>
                   </div>
                 </div>
               </div>
@@ -338,7 +338,7 @@ const PasmaModule2Section3 = () => {
                 <div className="grid sm:grid-cols-2 gap-4 text-sm">
                   <div>
                     <p className="text-white font-medium mb-1">Single Guardrail</p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       A single rail at the top edge of the platform. Provides a basic barrier but
                       leaves a gap between the rail and the platform surface. A mid-rail must be
                       fitted to close this gap.
@@ -346,7 +346,7 @@ const PasmaModule2Section3 = () => {
                   </div>
                   <div>
                     <p className="text-white font-medium mb-1">Double Guardrail</p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       Two rails — a top rail at 950mm minimum and an intermediate (mid) rail at
                       approximately 470mm. This is the standard configuration on most modern tower
                       systems.
@@ -357,7 +357,7 @@ const PasmaModule2Section3 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">How Guardrails Are Secured</h3>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -403,7 +403,7 @@ const PasmaModule2Section3 = () => {
               <span className="text-purple-400/80 text-sm font-normal">02</span>
               Mid-Rails & Intermediate Protection
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 A guardrail alone leaves a significant gap between the top rail and the platform
                 surface. Without intermediate protection, a person could slip beneath the guardrail
@@ -412,7 +412,7 @@ const PasmaModule2Section3 = () => {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-elec-yellow">Key Definition: Mid-Rail</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   A <strong className="text-white">mid-rail</strong> (also called an intermediate
                   rail) is a horizontal bar positioned approximately{' '}
                   <strong className="text-white">470mm</strong> above the platform surface — roughly
@@ -423,7 +423,7 @@ const PasmaModule2Section3 = () => {
 
               <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
                 <h3 className="text-purple-300 font-medium mb-2">Mid-Rail Requirements</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -474,7 +474,7 @@ const PasmaModule2Section3 = () => {
               <span className="text-teal-400/80 text-sm font-normal">03</span>
               Toeboards
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Toeboards are low barriers fitted around the perimeter of the working platform at
                 floor level. Their primary purpose is to prevent tools, materials, and debris from
@@ -488,12 +488,12 @@ const PasmaModule2Section3 = () => {
                   <div>
                     <p className="text-white font-medium">Minimum Height</p>
                     <p className="text-elec-yellow text-2xl font-bold">150mm</p>
-                    <p className="text-white/60">above the platform surface</p>
+                    <p className="text-white">above the platform surface</p>
                   </div>
                   <div>
                     <p className="text-white font-medium">Required On</p>
                     <p className="text-elec-yellow text-lg font-bold">All open sides</p>
-                    <p className="text-white/60">with no gap at the base</p>
+                    <p className="text-white">with no gap at the base</p>
                   </div>
                 </div>
               </div>
@@ -501,7 +501,7 @@ const PasmaModule2Section3 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-teal-400/30 p-4 rounded-lg">
                   <h3 className="text-teal-300 font-medium mb-2">Integral Toeboards</h3>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Built into the platform or guardrail frame as part of the design. These are the
                     preferred type — they cannot be accidentally omitted because they form part of
                     the structural assembly. Most modern tower systems use integral toeboards.
@@ -509,7 +509,7 @@ const PasmaModule2Section3 = () => {
                 </div>
                 <div className="bg-white/5 border border-teal-400/30 p-4 rounded-lg">
                   <h3 className="text-teal-300 font-medium mb-2">Clip-On Toeboards</h3>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Separate boards that clip onto the platform edge or guardrail posts. These must
                     be fitted as a conscious step during assembly. There is a risk of them being
                     forgotten — always check toeboard presence as part of the pre-use inspection.
@@ -522,7 +522,7 @@ const PasmaModule2Section3 = () => {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Falling Object Hazard</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A 500g spanner dropped from just 3 metres hits the ground with the same force as a
                   5kg weight dropped from table height. From 10 metres, the impact can be fatal.
                   Toeboards are not optional — they are a critical safety component that protects
@@ -541,7 +541,7 @@ const PasmaModule2Section3 = () => {
               <span className="text-red-400/80 text-sm font-normal">04</span>
               Stabilisers & Outriggers
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 When a tower needs additional stability — particularly at greater heights or in
                 outdoor conditions — stabilisers or outriggers are fitted to increase the effective
@@ -551,7 +551,7 @@ const PasmaModule2Section3 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-red-400/30 p-4 rounded-lg">
                   <h3 className="text-red-300 font-medium mb-2">Stabilisers</h3>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                       <span>Diagonal braces extending from the tower to ground level</span>
@@ -572,7 +572,7 @@ const PasmaModule2Section3 = () => {
                 </div>
                 <div className="bg-white/5 border border-red-400/30 p-4 rounded-lg">
                   <h3 className="text-red-300 font-medium mb-2">Outriggers</h3>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                       <span>Horizontal extensions from the base of the tower</span>
@@ -595,7 +595,7 @@ const PasmaModule2Section3 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">Important Considerations</h3>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -644,7 +644,7 @@ const PasmaModule2Section3 = () => {
               <span className="text-cyan-400/80 text-sm font-normal">05</span>
               Tie-In Points & Anchoring
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 When a tower is built beyond the manufacturer's specified maximum freestanding
                 height, it must be tied to an adjacent structure to prevent overturning. Ties
@@ -656,7 +656,7 @@ const PasmaModule2Section3 = () => {
                   <Anchor className="h-4 w-4" />
                   When Ties Are Required
                 </h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-cyan-400 mt-2 flex-shrink-0"></div>
                     <div>Tower height exceeds the manufacturer's maximum freestanding limit</div>
@@ -680,11 +680,11 @@ const PasmaModule2Section3 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">Tie Patterns</h3>
-                <p className="text-white/70 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   Ties should be fitted at regular vertical intervals as specified by the
                   manufacturer. Typical patterns include:
                 </p>
-                <ul className="text-white/60 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>First tie at the lowest point specified by the manufacturer</span>
@@ -710,11 +710,11 @@ const PasmaModule2Section3 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">Suitable Anchor Points</h3>
-                <p className="text-white/70 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   A suitable anchor point must be structurally capable of resisting the tie forces.
                   Acceptable anchors include:
                 </p>
-                <ul className="text-white/60 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -737,7 +737,7 @@ const PasmaModule2Section3 = () => {
                     <span>Purpose-designed anchor points fitted to the building structure</span>
                   </li>
                 </ul>
-                <p className="text-white/50 text-xs mt-2 italic">
+                <p className="text-white text-xs mt-2 italic">
                   Never tie to pipework, cable trays, suspended ceilings, window frames, or
                   non-structural elements.
                 </p>
@@ -753,7 +753,7 @@ const PasmaModule2Section3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Access Systems
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Safe access to the working platform is a critical consideration. Operatives must be
                 able to reach the platform safely, and the access method must not create additional
@@ -762,12 +762,12 @@ const PasmaModule2Section3 = () => {
 
               <div className="bg-white/5 border border-elec-yellow/30 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-3">Internal Ladder Access</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The standard access method is via the internal ladder formed by the end frame
                   rungs (transoms). The operative climbs up inside the tower, passing through
                   trapdoor platforms at each level.
                 </p>
-                <ul className="text-white/60 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -802,7 +802,7 @@ const PasmaModule2Section3 = () => {
                 <h3 className="font-semibold mb-2 text-elec-yellow">
                   Key Rule: Three-Point Contact
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The <strong className="text-white">three-point contact rule</strong> requires the
                   climber to maintain contact with the ladder at three points simultaneously: either
                   two hands and one foot, or two feet and one hand. Only one limb moves at a time.
@@ -813,12 +813,12 @@ const PasmaModule2Section3 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">Stairway Access Alternative</h3>
-                <p className="text-white/70 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   For frequent access, extended-duration tasks, or when carrying tools and
                   materials, a stairway tower provides a safer and more practical access route.
                   Benefits include:
                 </p>
-                <ul className="text-white/60 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Walking upright instead of climbing vertically</span>
@@ -843,7 +843,7 @@ const PasmaModule2Section3 = () => {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Never Climb the Outside</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Climbing the outside of a tower is extremely dangerous. There is no fall
                   protection — if you lose grip, there is nothing to prevent a fall to the ground.
                   External climbing also exerts lateral forces on the tower that it is not designed
@@ -864,7 +864,7 @@ const PasmaModule2Section3 = () => {
               <span className="text-purple-400/80 text-sm font-normal">07</span>
               Personal Protective Equipment
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Personal Protective Equipment (PPE) is the last line of defence in the hierarchy of
                 controls. For tower work, PPE supplements the collective protection provided by the
@@ -876,7 +876,7 @@ const PasmaModule2Section3 = () => {
                   <HardHat className="h-4 w-4" />
                   PPE for Tower Assembly
                 </h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -916,7 +916,7 @@ const PasmaModule2Section3 = () => {
                   <Lock className="h-4 w-4" />
                   Harness Use During Assembly (AGR Method)
                 </h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The <strong className="text-white">Advance Guard Rail (AGR)</strong> method is the
                   preferred assembly technique because it provides collective fall protection at
                   every stage of the build — no harness is needed. However, if an alternative
@@ -927,7 +927,7 @@ const PasmaModule2Section3 = () => {
                   <p className="text-white font-medium text-sm mb-1">
                     When a Harness May Be Required:
                   </p>
-                  <ul className="text-white/60 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Assembly without the AGR method</span>
@@ -960,7 +960,7 @@ const PasmaModule2Section3 = () => {
                 <h3 className="text-elec-yellow font-medium mb-2">
                   PPE Inspection and Maintenance
                 </h3>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1004,7 +1004,7 @@ const PasmaModule2Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1020,7 +1020,7 @@ const PasmaModule2Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-2-section-2">

@@ -224,7 +224,7 @@ const HNCModule2Section5_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section5">
@@ -246,7 +246,7 @@ const HNCModule2Section5_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Heat Gains and Losses
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Internal gains from occupants, equipment and lighting, plus external fabric heat flows
           </p>
         </header>
@@ -412,7 +412,7 @@ const HNCModule2Section5_2 = () => {
               <p className="font-mono text-center text-sm mb-2">
                 Q<sub>occ</sub> = N × q × D
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where N = number of occupants, q = heat emission (W/person), D = diversity factor
               </p>
             </div>
@@ -556,7 +556,7 @@ const HNCModule2Section5_2 = () => {
               <p className="font-mono text-center text-sm mb-2">
                 Q = U × A × (T<sub>i</sub> - T<sub>o</sub>)
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where U = thermal transmittance (W/m²K), A = area (m²), T = temperatures (°C)
               </p>
             </div>
@@ -742,7 +742,7 @@ const HNCModule2Section5_2 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Practical tip:</strong> Use steady-state for initial sizing and feasibility,
               then validate with dynamic simulation for detailed design. This saves time while
               ensuring accuracy.
@@ -769,14 +769,14 @@ const HNCModule2Section5_2 = () => {
                 open-plan office with 20 occupants (sedentary), LED lighting at 12 W/m², and
                 equipment at 22 W/m².
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Occupant gains = 20 × 130W = 2600W</p>
                 <p>Lighting gains = 200m² × 12 W/m² = 2400W</p>
                 <p>Equipment gains = 200m² × 22 W/m² = 4400W</p>
                 <p className="mt-2">
                   Total = 2600 + 2400 + 4400 = <strong>9400W = 9.4kW</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Heat gain density = 9400/200 = 47 W/m² (typical for modern office)
                 </p>
               </div>
@@ -790,7 +790,7 @@ const HNCModule2Section5_2 = () => {
                 <strong>Question:</strong> Apply typical diversity factors to the above example:
                 occupancy 0.85, lighting 0.90, equipment 0.70.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Occupant gains = 2600W × 0.85 = 2210W</p>
                 <p>Lighting gains = 2400W × 0.90 = 2160W</p>
                 <p>Equipment gains = 4400W × 0.70 = 3080W</p>
@@ -811,7 +811,7 @@ const HNCModule2Section5_2 = () => {
                 <strong>Question:</strong> A room has 15m² external wall (U=0.25), 8m² double
                 glazing (U=1.4), and 25m² roof (U=0.18). Calculate heat loss at Ti=21°C, To=-3°C.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>ΔT = 21 - (-3) = 24K</p>
                 <p className="mt-2">Wall loss = 0.25 × 15 × 24 = 90W</p>
                 <p>Glazing loss = 1.4 × 8 × 24 = 269W</p>
@@ -819,7 +819,7 @@ const HNCModule2Section5_2 = () => {
                 <p className="mt-2">
                   Total fabric loss = 90 + 269 + 108 = <strong>467W</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Note: Glazing dominates despite smaller area (high U-value)
                 </p>
               </div>
@@ -833,7 +833,7 @@ const HNCModule2Section5_2 = () => {
                 <strong>Question:</strong> A gym has 30 people exercising (200W sensible, 250W
                 latent each). What are the sensible and total cooling loads from occupants?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Sensible load = 30 × 200W = <strong>6000W = 6kW sensible</strong>
                 </p>
@@ -841,7 +841,7 @@ const HNCModule2Section5_2 = () => {
                 <p className="mt-2">
                   Total = 6 + 7.5 = <strong>13.5kW total</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Sensible Heat Ratio = 6/13.5 = 0.44 (very low, needs dehumidification)
                 </p>
               </div>
@@ -926,7 +926,7 @@ const HNCModule2Section5_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -972,7 +972,7 @@ const HNCModule2Section5_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section5-1">

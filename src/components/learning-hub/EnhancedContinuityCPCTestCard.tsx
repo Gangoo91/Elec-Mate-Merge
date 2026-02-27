@@ -237,19 +237,19 @@ const EnhancedContinuityCPCTestCard = () => {
                                 </div>
                                 <div className="grid grid-cols-2 md:grid-cols-3 gap-2 text-sm">
                                   <div>
-                                    <span className="text-white/80">Reading:</span>
+                                    <span className="text-white">Reading:</span>
                                     <span className="text-foreground ml-1">
                                       {test.r1r2Reading}Ω
                                     </span>
                                   </div>
                                   <div>
-                                    <span className="text-white/80">Max:</span>
+                                    <span className="text-white">Max:</span>
                                     <span className="text-foreground ml-1">
                                       {test.maxPermissible}Ω
                                     </span>
                                   </div>
                                   <div>
-                                    <span className="text-white/80">Status:</span>
+                                    <span className="text-white">Status:</span>
                                     <span
                                       className={`ml-1 ${test.result === 'pass' ? 'text-green-400' : 'text-red-400'}`}
                                     >
@@ -258,7 +258,7 @@ const EnhancedContinuityCPCTestCard = () => {
                                   </div>
                                 </div>
                                 {test.notes && (
-                                  <div className="mt-2 text-sm text-white/80">
+                                  <div className="mt-2 text-sm text-white">
                                     Notes: {test.notes}
                                   </div>
                                 )}

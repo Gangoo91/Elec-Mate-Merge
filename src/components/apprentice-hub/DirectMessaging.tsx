@@ -220,7 +220,7 @@ export function DirectMessaging({ open, onOpenChange }: DirectMessagingProps) {
           <div className="space-y-3">
             {messages.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-8 text-center">
-                <User className="h-12 w-12 text-white/20 mb-3" />
+                <User className="h-12 w-12 text-white mb-3" />
                 <p className="text-sm text-white">No messages yet. Start the conversation!</p>
               </div>
             ) : (

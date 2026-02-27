@@ -259,7 +259,7 @@ const Level3Module1Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section1">
@@ -384,7 +384,7 @@ const Level3Module1Section1_2 = () => {
                   "All systems shall at all times be of such construction as to prevent, so far as
                   is reasonably practicable, danger."
                 </p>
-                <p className="text-sm text-white/70 mt-2">
+                <p className="text-sm text-white mt-2">
                   This means electrical installations must be designed and built to prevent danger.
                   For electricians, this requires compliance with BS 7671 (the Wiring Regulations)
                   and appropriate selection of equipment for the environment.
@@ -398,7 +398,7 @@ const Level3Module1Section1_2 = () => {
                   "All systems shall at all times be maintained so as to prevent, so far as is
                   reasonably practicable, danger."
                 </p>
-                <p className="text-sm text-white/70 mt-2">
+                <p className="text-sm text-white mt-2">
                   Maintenance includes periodic inspection and testing (EICR), routine checks, and
                   responsive repairs. The frequency depends on the installation type and use - a
                   construction site requires more frequent inspection than an office.
@@ -413,14 +413,14 @@ const Level3Module1Section1_2 = () => {
                   be carried out in such a manner as not to give rise, so far as is reasonably
                   practicable, to danger."
                 </p>
-                <p className="text-sm text-white/70 mt-2">
+                <p className="text-sm text-white mt-2">
                   This covers how work is performed - using safe systems of work, appropriate tools
                   and equipment, and following established procedures.
                 </p>
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> Installing a new distribution board in a dusty workshop.
               Under 4(1), select an IP-rated enclosure suitable for the environment. Under 4(2),
               establish an inspection schedule. Under 4(3), follow safe isolation procedures during
@@ -468,7 +468,7 @@ const Level3Module1Section1_2 = () => {
                   "Adequate precautions shall be taken to prevent electrical equipment which has
                   been made dead from becoming electrically charged during any work activity."
                 </p>
-                <p className="text-sm text-white/70 mt-2">
+                <p className="text-sm text-white mt-2">
                   This is why we use lock-off devices, danger tags, and clear communication
                   procedures.
                 </p>
@@ -652,7 +652,7 @@ const Level3Module1Section1_2 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> An apprentice in their first year should not work
               unsupervised on any electrical system. A qualified electrician may be competent for
               domestic work but require supervision for industrial high-voltage systems they have
@@ -780,7 +780,7 @@ const Level3Module1Section1_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -828,7 +828,7 @@ const Level3Module1Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section1">

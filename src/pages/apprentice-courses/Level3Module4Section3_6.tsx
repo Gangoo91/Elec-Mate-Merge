@@ -256,7 +256,7 @@ const Level3Module4Section3_6 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="../section3">
@@ -280,7 +280,7 @@ const Level3Module4Section3_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
             Overheating and Insulation Breakdown
           </h1>
-          <p className="text-lg text-white/70">
+          <p className="text-lg text-white">
             Identifying thermal faults and insulation failures in electrical systems - understanding
             the mechanisms, detection methods, and remediation strategies for preventing fire
             hazards and system failures.
@@ -301,7 +301,7 @@ const Level3Module4Section3_6 = () => {
               'Implement appropriate remediation strategies for thermal faults',
               'Relate overheating risks to BS 7671 cable selection and installation requirements',
             ].map((outcome, index) => (
-              <li key={index} className="flex items-start gap-3 text-white/80">
+              <li key={index} className="flex items-start gap-3 text-white">
                 <span className="text-elec-yellow mt-1">-</span>
                 {outcome}
               </li>
@@ -318,7 +318,7 @@ const Level3Module4Section3_6 = () => {
               <h2 className="text-xl font-semibold text-white">Causes of Electrical Overheating</h2>
             </div>
 
-            <div className="space-y-6 text-white/80">
+            <div className="space-y-6 text-white">
               <p>
                 Electrical overheating represents one of the most significant fire risks in
                 installations. Understanding the thermal mechanisms allows electricians to identify
@@ -479,7 +479,7 @@ const Level3Module4Section3_6 = () => {
               </h2>
             </div>
 
-            <div className="space-y-6 text-white/80">
+            <div className="space-y-6 text-white">
               <p>
                 Insulation degradation is a progressive process that reduces the dielectric strength
                 separating live conductors from earth and each other. Understanding degradation
@@ -632,7 +632,7 @@ const Level3Module4Section3_6 = () => {
                     </tbody>
                   </table>
                 </div>
-                <p className="text-sm mt-4 text-white/60">
+                <p className="text-sm mt-4 text-white">
                   Note: Temperature significantly affects readings. Cool, damp conditions produce
                   lower readings than warm, dry conditions. Apply temperature correction factors for
                   accurate comparison between tests performed in different conditions.
@@ -660,7 +660,7 @@ const Level3Module4Section3_6 = () => {
               </h2>
             </div>
 
-            <div className="space-y-6 text-white/80">
+            <div className="space-y-6 text-white">
               <p>
                 Thermal imaging (infrared thermography) has revolutionised electrical fault
                 detection. It allows non-contact, non-invasive identification of hot spots that
@@ -820,7 +820,7 @@ const Level3Module4Section3_6 = () => {
                   <AlertTriangle className="w-5 h-5" />
                   Safety Considerations for Thermal Surveys
                 </h3>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-amber-400">-</span>
                     <span>
@@ -873,7 +873,7 @@ const Level3Module4Section3_6 = () => {
               </h2>
             </div>
 
-            <div className="space-y-6 text-white/80">
+            <div className="space-y-6 text-white">
               <p>
                 Effective remediation addresses both the immediate fault and underlying causes.
                 Prevention strategies embedded in installation practice and maintenance procedures
@@ -946,7 +946,7 @@ const Level3Module4Section3_6 = () => {
                     <span className="text-elec-yellow font-bold">1.</span>
                     <div>
                       <span className="text-white font-medium">Measure actual load current</span>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Use clamp meter over representative period - single reading may not capture
                         peak demand
                       </p>
@@ -958,7 +958,7 @@ const Level3Module4Section3_6 = () => {
                       <span className="text-white font-medium">
                         Verify cable selection was correct
                       </span>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Check original design against BS 7671 requirements for route, grouping,
                         ambient
                       </p>
@@ -970,7 +970,7 @@ const Level3Module4Section3_6 = () => {
                       <span className="text-white font-medium">
                         Identify load changes since installation
                       </span>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Additional equipment or higher-rated replacements may have exceeded original
                         capacity
                       </p>
@@ -980,7 +980,7 @@ const Level3Module4Section3_6 = () => {
                     <span className="text-elec-yellow font-bold">4.</span>
                     <div>
                       <span className="text-white font-medium">Propose appropriate solution</span>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Redistribute loads, upgrade cable, add circuits, or reduce connected load
                       </p>
                     </div>
@@ -1097,10 +1097,10 @@ const Level3Module4Section3_6 = () => {
 
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-5">
                 <h3 className="text-blue-300 font-medium mb-3">BS 7671 Requirements</h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The Wiring Regulations address thermal protection through several chapters:
                 </p>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-blue-400">-</span>
                     <span>
@@ -1150,7 +1150,7 @@ const Level3Module4Section3_6 = () => {
               Practical Guidance: Thermal Fault Investigation
             </h2>
 
-            <div className="space-y-6 text-white/80">
+            <div className="space-y-6 text-white">
               <div>
                 <h3 className="text-white font-medium mb-3">
                   Scenario: Consumer Unit Running Warm
@@ -1223,19 +1223,19 @@ const Level3Module4Section3_6 = () => {
                 <div className="grid gap-4 md:grid-cols-3 text-sm">
                   <div>
                     <span className="text-elec-yellow font-medium">Cooking Circuit</span>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       Hob and oven connections - high current, often problematic
                     </p>
                   </div>
                   <div>
                     <span className="text-elec-yellow font-medium">Shower Circuit</span>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       High current flow - check cable size matches shower rating
                     </p>
                   </div>
                   <div>
                     <span className="text-elec-yellow font-medium">Neutral Bar</span>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       All return currents pass through - often overlooked connection point
                     </p>
                   </div>
@@ -1261,11 +1261,11 @@ const Level3Module4Section3_6 = () => {
                     {openFAQ === index ? (
                       <ChevronUp className="w-5 h-5 text-elec-yellow flex-shrink-0" />
                     ) : (
-                      <ChevronDown className="w-5 h-5 text-white/50 flex-shrink-0" />
+                      <ChevronDown className="w-5 h-5 text-white flex-shrink-0" />
                     )}
                   </button>
                   {openFAQ === index && (
-                    <div className="px-4 pb-4 text-white/70 text-sm">{faq.answer}</div>
+                    <div className="px-4 pb-4 text-white text-sm">{faq.answer}</div>
                   )}
                 </div>
               ))}
@@ -1292,7 +1292,7 @@ const Level3Module4Section3_6 = () => {
                         <th className="text-left py-2 text-white">Action Required</th>
                       </tr>
                     </thead>
-                    <tbody className="text-white/70">
+                    <tbody className="text-white">
                       <tr className="border-b border-white/5">
                         <td className="py-2">1-10°C</td>
                         <td className="py-2 text-green-400">Low</td>
@@ -1323,25 +1323,25 @@ const Level3Module4Section3_6 = () => {
                 <div className="grid gap-3 md:grid-cols-2">
                   <div className="bg-white/5 rounded p-3">
                     <span className="text-white font-medium">Consumer Unit:</span>
-                    <p className="text-sm text-white/60">
+                    <p className="text-sm text-white">
                       Main switch connections, neutral bar, busbar joints, MCB terminals
                     </p>
                   </div>
                   <div className="bg-white/5 rounded p-3">
                     <span className="text-white font-medium">Socket Outlets:</span>
-                    <p className="text-sm text-white/60">
+                    <p className="text-sm text-white">
                       Terminal screws, ring final connections, spur fused connection units
                     </p>
                   </div>
                   <div className="bg-white/5 rounded p-3">
                     <span className="text-white font-medium">Lighting:</span>
-                    <p className="text-sm text-white/60">
+                    <p className="text-sm text-white">
                       Ceiling rose terminals, switch terminals, loop-in connections
                     </p>
                   </div>
                   <div className="bg-white/5 rounded p-3">
                     <span className="text-white font-medium">Fixed Equipment:</span>
-                    <p className="text-sm text-white/60">
+                    <p className="text-sm text-white">
                       Isolator switches, connection units, cooker connections
                     </p>
                   </div>
@@ -1355,15 +1355,15 @@ const Level3Module4Section3_6 = () => {
                 <div className="grid gap-3 md:grid-cols-3">
                   <div className="bg-green-500/10 border border-green-500/30 rounded p-3 text-center">
                     <span className="text-green-400 font-bold text-lg">&gt;200 MΩ</span>
-                    <p className="text-sm text-white/60 mt-1">Excellent - new installation</p>
+                    <p className="text-sm text-white mt-1">Excellent - new installation</p>
                   </div>
                   <div className="bg-yellow-500/10 border border-yellow-500/30 rounded p-3 text-center">
                     <span className="text-yellow-400 font-bold text-lg">2-200 MΩ</span>
-                    <p className="text-sm text-white/60 mt-1">Good - normal aging</p>
+                    <p className="text-sm text-white mt-1">Good - normal aging</p>
                   </div>
                   <div className="bg-red-500/10 border border-red-500/30 rounded p-3 text-center">
                     <span className="text-red-400 font-bold text-lg">&lt;2 MΩ</span>
-                    <p className="text-sm text-white/60 mt-1">Investigate - approaching limits</p>
+                    <p className="text-sm text-white mt-1">Investigate - approaching limits</p>
                   </div>
                 </div>
               </div>

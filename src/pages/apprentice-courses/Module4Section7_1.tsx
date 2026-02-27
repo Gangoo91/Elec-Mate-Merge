@@ -204,7 +204,7 @@ const Module4Section7_1 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -222,13 +222,13 @@ const Module4Section7_1 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 7.1</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 7.1</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Safe Manual Handling of Equipment and Materials
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master safe lifting techniques and manual handling practices to prevent workplace
               injuries.
             </p>
@@ -240,7 +240,7 @@ const Module4Section7_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="grid md:grid-cols-2 gap-4 text-white/80">
+            <div className="grid md:grid-cols-2 gap-4 text-white">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
@@ -285,7 +285,7 @@ const Module4Section7_1 = () => {
               Learning Outcomes
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <ul className="list-disc pl-6 space-y-2 text-white/80">
+              <ul className="list-disc pl-6 space-y-2 text-white">
                 <li>Explain the risks associated with poor manual handling.</li>
                 <li>Apply correct lifting techniques to reduce injury risk.</li>
                 <li>Use handling aids and equipment where appropriate.</li>
@@ -301,7 +301,7 @@ const Module4Section7_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Risks of Poor Manual Handling
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Manual handling injuries represent one of the most significant safety risks in
                 electrical work, affecting thousands of workers annually and causing substantial
@@ -341,7 +341,7 @@ const Module4Section7_1 = () => {
                   <p className="mb-2">
                     <strong>HSE statistics:</strong>
                   </p>
-                  <p className="text-white/70">
+                  <p className="text-white">
                     Manual handling accounts for over 40% of all workplace injuries reported under
                     RIDDOR. In the construction industry, including electrical work, back injuries
                     alone result in an average of 12 days lost per incident, with severe cases
@@ -366,7 +366,7 @@ const Module4Section7_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               The Legal Framework
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Manual handling safety is governed by comprehensive legislation that places specific
                 duties on both employers and employees:
@@ -407,7 +407,7 @@ const Module4Section7_1 = () => {
                   <p className="mb-2">
                     <strong>MHOR hierarchy of control:</strong>
                   </p>
-                  <ul className="text-white/70 list-disc pl-4 space-y-1">
+                  <ul className="text-white list-disc pl-4 space-y-1">
                     <li>
                       <strong>Avoid</strong> - eliminate manual handling where reasonably
                       practicable
@@ -441,7 +441,7 @@ const Module4Section7_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Correct Lifting Technique
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Proper lifting technique is fundamental to preventing injury and forms the basis of
                 all safe manual handling practices:
@@ -480,7 +480,7 @@ const Module4Section7_1 = () => {
                   <p className="mb-2">
                     <strong>The kinetic lifting chain:</strong>
                   </p>
-                  <ul className="text-white/70 list-disc pl-4 space-y-1">
+                  <ul className="text-white list-disc pl-4 space-y-1">
                     <li>
                       <strong>Feet</strong> - provide stable base, positioned to avoid overreaching
                     </li>
@@ -519,7 +519,7 @@ const Module4Section7_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Handling Electrical Materials
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Electrical installations involve specific materials and equipment that require
                 specialised handling techniques:
@@ -563,7 +563,7 @@ const Module4Section7_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Mechanical Aids and Assistance
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 The use of mechanical aids and team lifting techniques can eliminate most manual
                 handling risks:
@@ -602,7 +602,7 @@ const Module4Section7_1 = () => {
                   <p className="mb-2">
                     <strong>Team lifting protocols:</strong>
                   </p>
-                  <p className="text-white/70">
+                  <p className="text-white">
                     Successful team lifting requires a designated leader, clear communication
                     signals, matching personnel by height and strength where possible, and
                     coordinated movement with agreed signals for lift, move, and lower commands.
@@ -624,7 +624,7 @@ const Module4Section7_1 = () => {
                   <HardHat className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <h4 className="font-medium text-white mb-2">PPE and Protection</h4>
-                    <ul className="text-sm text-white/70 space-y-1 list-disc ml-4">
+                    <ul className="text-sm text-white space-y-1 list-disc ml-4">
                       <li>
                         Always wear appropriate gloves when handling sharp-edged trunking, cable
                         trays, or metalwork
@@ -646,7 +646,7 @@ const Module4Section7_1 = () => {
                   <Target className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <h4 className="font-medium text-white mb-2">Route Planning and Environment</h4>
-                    <ul className="text-sm text-white/70 space-y-1 list-disc ml-4">
+                    <ul className="text-sm text-white space-y-1 list-disc ml-4">
                       <li>
                         Use rope or lifting slings to move materials up scaffolding instead of
                         carrying them
@@ -668,7 +668,7 @@ const Module4Section7_1 = () => {
                   <Users className="w-5 h-5 text-purple-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <h4 className="font-medium text-white mb-2">Communication and Coordination</h4>
-                    <ul className="text-sm text-white/70 space-y-1 list-disc ml-4">
+                    <ul className="text-sm text-white space-y-1 list-disc ml-4">
                       <li>
                         When moving long conduit runs through a building, communicate clearly with
                         your partner before turning corners
@@ -699,7 +699,7 @@ const Module4Section7_1 = () => {
                     <h3 className="font-medium text-white mb-2">
                       Case Study 1: The Cable Drum Incident
                     </h3>
-                    <p className="text-sm text-white/70 mb-3">
+                    <p className="text-sm text-white mb-3">
                       On a commercial site, an experienced electrician attempted to carry a full
                       drum of 6mm² SWA cable up a staircase alone. The 45kg drum was awkward to grip
                       and the electrician lost balance on the third step.
@@ -719,7 +719,7 @@ const Module4Section7_1 = () => {
                     <h3 className="font-medium text-white mb-2">
                       Case Study 2: The Successful Team Approach
                     </h3>
-                    <p className="text-sm text-white/70 mb-3">
+                    <p className="text-sm text-white mb-3">
                       A data centre installation required moving 200+ metres of heavy cable tray
                       through a complex route. The contractor implemented a coordinated team
                       approach with designated roles.
@@ -744,7 +744,7 @@ const Module4Section7_1 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h3 className="font-medium text-white mb-2">Q: {faq.question}</h3>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     <strong>A:</strong> {faq.answer}
                   </p>
                 </div>
@@ -809,7 +809,7 @@ const Module4Section7_1 = () => {
               Recap (What You've Learned)
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <ul className="list-disc pl-6 space-y-2 text-white/80">
+              <ul className="list-disc pl-6 space-y-2 text-white">
                 <li>
                   You now understand the serious health and safety risks associated with poor manual
                   handling practices.

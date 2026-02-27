@@ -233,7 +233,7 @@ const ConfinedSpacesModule5Section3 = () => {
             MODULE 5 &middot; SECTION 3
           </span>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">Casualty Retrieval</h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding the rescue preference hierarchy, non-entry and entry rescue procedures,
             communication failure protocols, first aid priorities after extraction, and the dangers
             of unplanned rescue
@@ -247,7 +247,7 @@ const ConfinedSpacesModule5Section3 = () => {
               <CheckCircle className="h-5 w-5" />
               Learning Outcomes
             </h2>
-            <p className="text-white/70 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               By the end of this section you should be able to:
             </p>
             <ul className="text-white space-y-2 text-sm">
@@ -313,7 +313,7 @@ const ConfinedSpacesModule5Section3 = () => {
               <h3 className="text-cyan-400 font-medium mb-2 text-center text-sm uppercase tracking-wider">
                 Rescue Priority Hierarchy
               </h3>
-              <p className="text-white/50 text-xs text-center mb-5">
+              <p className="text-white text-xs text-center mb-5">
                 Always work from top to bottom &mdash; only move to the next level if the previous
                 option is not possible
               </p>
@@ -329,7 +329,7 @@ const ConfinedSpacesModule5Section3 = () => {
                   </div>
                   <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3 sm:p-4 flex-1 mb-2">
                     <p className="font-semibold text-base text-green-400 mb-1">Self-Rescue</p>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Entrant exits under their own power. <strong>Fastest method</strong>, lowest
                       risk. Triggered by alarm, change in conditions, or instruction from the top
                       person. Requires a clear egress route and prior training.
@@ -350,7 +350,7 @@ const ConfinedSpacesModule5Section3 = () => {
                   </div>
                   <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 sm:p-4 flex-1 mb-2">
                     <p className="font-semibold text-base text-amber-400 mb-1">Non-Entry Rescue</p>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Retrieval from outside using a winch and lifeline.{' '}
                       <strong>No rescuer enters the space</strong>. Significantly reduces risk to
                       rescuers. Requires a pre-rigged lifeline and harness attached before entry.
@@ -372,7 +372,7 @@ const ConfinedSpacesModule5Section3 = () => {
                     <p className="font-semibold text-base text-red-400 mb-1">
                       Entry Rescue &mdash; LAST RESORT
                     </p>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       A trained rescue team physically enters the space.{' '}
                       <strong>Highest risk</strong>. Requires BA/RPE, own atmospheric monitoring,
                       own communication system, and own lifeline. Must be planned and rehearsed in
@@ -393,7 +393,7 @@ const ConfinedSpacesModule5Section3 = () => {
                   Critical Rule: NEVER Attempt Unplanned Entry Rescue
                 </h3>
               </div>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 The <strong className="text-white">&ldquo;cascade effect&rdquo;</strong> occurs when
                 an untrained person enters a confined space to rescue a casualty, becomes overcome
                 by the same hazard, and then another person enters to rescue both &mdash; creating a
@@ -464,7 +464,7 @@ const ConfinedSpacesModule5Section3 = () => {
                     Requirements for Effective Self-Rescue
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Self-rescue is only effective if the entrant has a{' '}
                   <strong className="text-white">clear egress route</strong> that has been confirmed
                   before entry, has received{' '}
@@ -552,7 +552,7 @@ const ConfinedSpacesModule5Section3 = () => {
                       </div>
                       <div className="flex-1 mb-2">
                         <p className="text-cyan-300 font-medium text-sm">{item.label}</p>
-                        <p className="text-white/60 text-xs mt-0.5">{item.detail}</p>
+                        <p className="text-white text-xs mt-0.5">{item.detail}</p>
                       </div>
                     </div>
                   ))}
@@ -564,7 +564,7 @@ const ConfinedSpacesModule5Section3 = () => {
                   <AlertTriangle className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-amber-300">Pre-Rigging Is Essential</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Non-entry rescue is only possible if the entrant was{' '}
                   <strong className="text-white">wearing a harness connected to a lifeline</strong>{' '}
                   before they entered the space, and the lifeline is attached to a winch or manual
@@ -701,7 +701,7 @@ const ConfinedSpacesModule5Section3 = () => {
                     Entry Rescue Must Be Planned and Rehearsed
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Entry rescue must <strong className="text-white">never</strong> be improvised. It
                   must be part of the pre-entry rescue plan, the rescue team must be trained and
                   competent, and the procedure must have been rehearsed. An unplanned entry rescue
@@ -721,7 +721,7 @@ const ConfinedSpacesModule5Section3 = () => {
             <Radio className="h-5 w-5 text-cyan-400" />
             Non-Entry vs Entry Rescue Comparison
           </h2>
-          <p className="text-white/80 mb-6 text-sm">
+          <p className="text-white mb-6 text-sm">
             The diagram below compares non-entry and entry rescue across key factors. Non-entry
             rescue is almost always preferable where it is feasible.
           </p>
@@ -731,7 +731,7 @@ const ConfinedSpacesModule5Section3 = () => {
               {/* Header Row */}
               <div className="grid grid-cols-3 gap-2 mb-2">
                 <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
-                  <p className="text-white/60 text-xs font-semibold uppercase tracking-wider">
+                  <p className="text-white text-xs font-semibold uppercase tracking-wider">
                     Factor
                   </p>
                 </div>
@@ -785,17 +785,17 @@ const ConfinedSpacesModule5Section3 = () => {
                     <p className="text-white font-medium text-xs">{row.factor}</p>
                   </div>
                   <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-2.5">
-                    <p className="text-white/80 text-xs">{row.nonEntry}</p>
+                    <p className="text-white text-xs">{row.nonEntry}</p>
                   </div>
                   <div className="bg-red-500/5 border border-red-500/20 rounded-lg p-2.5">
-                    <p className="text-white/80 text-xs">{row.entry}</p>
+                    <p className="text-white text-xs">{row.entry}</p>
                   </div>
                 </div>
               ))}
             </div>
           </div>
 
-          <p className="text-white/50 text-xs text-center mt-4 italic">
+          <p className="text-white text-xs text-center mt-4 italic">
             Non-entry rescue compared with entry rescue across key operational factors
           </p>
         </section>
@@ -859,7 +859,7 @@ const ConfinedSpacesModule5Section3 = () => {
                     Never Enter to &ldquo;Check&rdquo;
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Do <strong className="text-white">NOT</strong> enter the space to check on the
                   entrant. This is the exact scenario that triggers the cascade effect. The
                   communication loss may be caused by the same hazard that has incapacitated the
@@ -961,7 +961,7 @@ const ConfinedSpacesModule5Section3 = () => {
                     Suspension Trauma &mdash; Critical Warning
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   If the casualty has been{' '}
                   <strong className="text-white">
                     suspended in a harness for a prolonged period
@@ -1030,7 +1030,7 @@ const ConfinedSpacesModule5Section3 = () => {
                     <div className="w-2 h-2 rounded-full bg-cyan-500 mt-2 flex-shrink-0"></div>
                     <div>
                       <h3 className="text-cyan-400 font-semibold mb-1">Decontamination</h3>
-                      <p className="text-white/80 text-sm">
+                      <p className="text-white text-sm">
                         If the casualty was exposed to{' '}
                         <strong>chemicals, biological agents, or other contaminants</strong> inside
                         the confined space, decontamination must be carried out as soon as safely
@@ -1047,7 +1047,7 @@ const ConfinedSpacesModule5Section3 = () => {
                     <div className="w-2 h-2 rounded-full bg-cyan-500 mt-2 flex-shrink-0"></div>
                     <div>
                       <h3 className="text-cyan-400 font-semibold mb-1">Hospital Notification</h3>
-                      <p className="text-white/80 text-sm">
+                      <p className="text-white text-sm">
                         The receiving hospital must be{' '}
                         <strong>notified of the specific hazards</strong> involved. This includes
                         the type of gas, chemical, or substance the casualty was exposed to, the
@@ -1064,7 +1064,7 @@ const ConfinedSpacesModule5Section3 = () => {
                     <div className="w-2 h-2 rounded-full bg-cyan-500 mt-2 flex-shrink-0"></div>
                     <div>
                       <h3 className="text-cyan-400 font-semibold mb-1">Scene Preservation</h3>
-                      <p className="text-white/80 text-sm">
+                      <p className="text-white text-sm">
                         The confined space and the surrounding area must be{' '}
                         <strong>preserved for investigation</strong>. Do not enter the space to
                         &ldquo;tidy up&rdquo; or retrieve equipment. Cordon off the area and prevent
@@ -1083,7 +1083,7 @@ const ConfinedSpacesModule5Section3 = () => {
                       <h3 className="text-cyan-400 font-semibold mb-1">
                         Welfare of Rescue Personnel
                       </h3>
-                      <p className="text-white/80 text-sm">
+                      <p className="text-white text-sm">
                         Rescuers and witnesses may be <strong>psychologically affected</strong> by
                         the incident. Ensure that all personnel involved are offered support,
                         debriefing, and access to occupational health or counselling services. Do
@@ -1180,7 +1180,7 @@ const ConfinedSpacesModule5Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1196,7 +1196,7 @@ const ConfinedSpacesModule5Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-5-section-2">

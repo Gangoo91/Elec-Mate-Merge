@@ -200,7 +200,7 @@ export default function CoshhAwarenessModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-3">
@@ -225,7 +225,7 @@ export default function CoshhAwarenessModule3Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Electrical Trade Hazards
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Hazardous substances specific to the electrical trade &mdash; PVC fumes, soldering flux,
             cable jointing compounds, cleaning agents, battery acid, SF6 gas, insulating oils, and
             fire-resistant materials
@@ -313,7 +313,7 @@ export default function CoshhAwarenessModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Toxic Fume Hazard</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The <strong className="text-white">primary hazardous gas</strong> released from
                   heated PVC is <strong className="text-white">hydrogen chloride (HCl)</strong>.
                   This is a severe respiratory irritant that attacks the eyes, nose, throat, and
@@ -329,7 +329,7 @@ export default function CoshhAwarenessModule3Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   When Does PVC Become Hazardous?
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -376,7 +376,7 @@ export default function CoshhAwarenessModule3Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Control Measures for PVC Fumes
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400/60 flex-shrink-0" />
                     <span>
@@ -453,7 +453,7 @@ export default function CoshhAwarenessModule3Section2() {
               <div className="space-y-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Epoxy Resin Systems</p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -493,7 +493,7 @@ export default function CoshhAwarenessModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Polyurethane Compounds</p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -526,7 +526,7 @@ export default function CoshhAwarenessModule3Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     Hot-Melt Adhesives and Mastics
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -561,7 +561,7 @@ export default function CoshhAwarenessModule3Section2() {
                     Critical: Epoxy Skin Sensitisation
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Epoxy sensitisation is the{' '}
                   <strong className="text-white">most common occupational skin disease</strong>{' '}
                   among cable jointers. It typically develops after weeks to months of repeated
@@ -603,7 +603,7 @@ export default function CoshhAwarenessModule3Section2() {
                     Colophony (Rosin) &mdash; Respiratory Sensitiser
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">Colophony</strong> (also called rosin) is the
                   primary component of most traditional soldering fluxes. When heated during
                   soldering, it produces a complex fume containing aldehydes and organic acids.
@@ -621,7 +621,7 @@ export default function CoshhAwarenessModule3Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Solder Types and Their Hazards
                 </p>
-                <ul className="text-sm text-white/80 space-y-3">
+                <ul className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -661,7 +661,7 @@ export default function CoshhAwarenessModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Brazing and Silver Soldering</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -693,7 +693,7 @@ export default function CoshhAwarenessModule3Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Ventilation Requirements for Soldering
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400/60 flex-shrink-0" />
                     <span>
@@ -774,7 +774,7 @@ export default function CoshhAwarenessModule3Section2() {
               <div className="space-y-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Contact Cleaners</p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -812,7 +812,7 @@ export default function CoshhAwarenessModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Degreasers</p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -847,7 +847,7 @@ export default function CoshhAwarenessModule3Section2() {
                       Legacy Hazard: Trichloroethylene (TCE)
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Trichloroethylene was once widely used as an electrical degreaser and cleaning
                     agent. It is now classified as a{' '}
                     <strong className="text-white">category 1B carcinogen</strong> (causes kidney
@@ -864,7 +864,7 @@ export default function CoshhAwarenessModule3Section2() {
                     <AlertTriangle className="h-5 w-5 text-red-400" />
                     <p className="text-sm font-medium text-red-400">Brake Cleaner Misuse</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     <strong className="text-white">
                       Brake cleaner is NOT suitable for electrical cleaning.
                     </strong>{' '}
@@ -882,7 +882,7 @@ export default function CoshhAwarenessModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Ventilation in Confined Areas</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400/60 flex-shrink-0" />
                     <span>
@@ -940,7 +940,7 @@ export default function CoshhAwarenessModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Cable Pulling Lubricants</p>
-                <ul className="text-sm text-white/80 space-y-3">
+                <ul className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -982,7 +982,7 @@ export default function CoshhAwarenessModule3Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Insulating Oils (Transformer and Switchgear Oil)
                 </p>
-                <ul className="text-sm text-white/80 space-y-3">
+                <ul className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1026,7 +1026,7 @@ export default function CoshhAwarenessModule3Section2() {
                     SF6 (Sulphur Hexafluoride) &mdash; Decomposition Hazard
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     SF6 is a synthetic gas used as an insulating and arc-quenching medium in
                     high-voltage switchgear, circuit breakers, and gas-insulated substations (GIS).{' '}
@@ -1126,7 +1126,7 @@ export default function CoshhAwarenessModule3Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     Lead-Acid Batteries &mdash; Sulphuric Acid
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1176,7 +1176,7 @@ export default function CoshhAwarenessModule3Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     Lithium Batteries &mdash; Electrolyte Hazards
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1219,7 +1219,7 @@ export default function CoshhAwarenessModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Battery Acid Spill Response</p>
-                <ol className="text-sm text-white/80 space-y-2">
+                <ol className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 w-6 h-6 rounded-full bg-violet-500/20 border border-violet-500/40 flex items-center justify-center flex-shrink-0 text-xs font-bold text-violet-400">
                       1
@@ -1285,7 +1285,7 @@ export default function CoshhAwarenessModule3Section2() {
                     Never Add Water to Concentrated Acid
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Adding water to concentrated sulphuric acid causes a{' '}
                   <strong className="text-white">violent exothermic reaction</strong> that can cause
                   the acid to boil and spatter. Always add acid to water (when diluting), never
@@ -1323,7 +1323,7 @@ export default function CoshhAwarenessModule3Section2() {
               <div className="space-y-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Intumescent Coatings</p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1364,7 +1364,7 @@ export default function CoshhAwarenessModule3Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     Fire-Stop Compounds and Pillows
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1397,7 +1397,7 @@ export default function CoshhAwarenessModule3Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     Cutting Fire-Resistant Boards
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1431,7 +1431,7 @@ export default function CoshhAwarenessModule3Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     Resin Casting and Potting Compounds
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1506,21 +1506,21 @@ export default function CoshhAwarenessModule3Section2() {
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b border-white/10">
-                        <th className="text-left text-white/60 py-2 pr-3 font-medium min-w-[120px]">
+                        <th className="text-left text-white py-2 pr-3 font-medium min-w-[120px]">
                           Substance
                         </th>
-                        <th className="text-left text-white/60 py-2 pr-3 font-medium min-w-[140px]">
+                        <th className="text-left text-white py-2 pr-3 font-medium min-w-[140px]">
                           Primary Hazard
                         </th>
-                        <th className="text-left text-white/60 py-2 pr-3 font-medium min-w-[100px]">
+                        <th className="text-left text-white py-2 pr-3 font-medium min-w-[100px]">
                           Route
                         </th>
-                        <th className="text-left text-white/60 py-2 font-medium min-w-[160px]">
+                        <th className="text-left text-white py-2 font-medium min-w-[160px]">
                           Key Control
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="text-white/80">
+                    <tbody className="text-white">
                       <tr className="border-b border-white/5">
                         <td className="py-2 pr-3">PVC fumes (HCl)</td>
                         <td className="py-2 pr-3">
@@ -1683,14 +1683,14 @@ export default function CoshhAwarenessModule3Section2() {
                         </span>
                         <div>
                           <p className="text-sm font-semibold text-white mb-1">{item.title}</p>
-                          <p className="text-sm text-white/80">{item.examples}</p>
+                          <p className="text-sm text-white">{item.examples}</p>
                         </div>
                       </div>
                     </div>
                   ))}
                 </div>
                 <div className="mt-4 text-center">
-                  <p className="text-xs text-white/40">
+                  <p className="text-xs text-white">
                     Always start at the top (eliminate) and work downwards. PPE/RPE is the LAST
                     resort, not the first.
                   </p>
@@ -1699,7 +1699,7 @@ export default function CoshhAwarenessModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Practical On-Site Checklist</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-violet-400/70 mt-0.5 flex-shrink-0" />
                     <span>
@@ -1792,7 +1792,7 @@ export default function CoshhAwarenessModule3Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1806,7 +1806,7 @@ export default function CoshhAwarenessModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-3-section-1">

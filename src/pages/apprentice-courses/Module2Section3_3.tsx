@@ -177,7 +177,7 @@ export default function Module2Section3_3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -199,7 +199,7 @@ export default function Module2Section3_3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Parallel Circuits - Current and Voltage
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding how current divides and voltage remains constant across parallel branches
           </p>
         </header>
@@ -281,21 +281,21 @@ export default function Module2Section3_3() {
                 <p className="text-elec-yellow text-xs">
                   V<sub>branch</sub> = V<sub>supply</sub>
                 </p>
-                <p className="text-white/70 text-xs mt-1">Each branch sees full supply voltage</p>
+                <p className="text-white text-xs mt-1">Each branch sees full supply voltage</p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-1">Current Rule</p>
                 <p className="text-elec-yellow text-xs">
                   I<sub>total</sub> = I<sub>1</sub> + I<sub>2</sub> + I<sub>3</sub>...
                 </p>
-                <p className="text-white/70 text-xs mt-1">Currents add at junctions</p>
+                <p className="text-white text-xs mt-1">Currents add at junctions</p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-1">Resistance Rule</p>
                 <p className="text-elec-yellow text-xs">
                   1/R<sub>eq</sub> = 1/R<sub>1</sub> + 1/R<sub>2</sub>...
                 </p>
-                <p className="text-white/70 text-xs mt-1">Total resistance decreases</p>
+                <p className="text-white text-xs mt-1">Total resistance decreases</p>
               </div>
             </div>
 
@@ -352,7 +352,7 @@ export default function Module2Section3_3() {
 
             <div className="p-4 rounded-lg bg-white/5">
               <p className="font-medium text-white mb-2">Worked Example: Three Branch Circuit</p>
-              <p className="text-white/70 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 Given: 24V supply, R1=120Ω, R2=80Ω, R3=240Ω in parallel
               </p>
               <ul className="text-sm text-white space-y-1">
@@ -478,7 +478,7 @@ export default function Module2Section3_3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -501,19 +501,19 @@ export default function Module2Section3_3() {
                 <p className="text-elec-yellow">
                   V<sub>branch</sub> = V<sub>supply</sub>
                 </p>
-                <p className="text-white/70">Same across all branches</p>
+                <p className="text-white">Same across all branches</p>
               </div>
               <div>
                 <p className="font-medium text-white mb-1">Current</p>
                 <p className="text-elec-yellow">
                   I<sub>T</sub> = I<sub>1</sub> + I<sub>2</sub> + I<sub>3</sub>...
                 </p>
-                <p className="text-white/70">Branch currents add</p>
+                <p className="text-white">Branch currents add</p>
               </div>
               <div>
                 <p className="font-medium text-white mb-1">Resistance</p>
                 <p className="text-elec-yellow">(R₁×R₂)/(R₁+R₂)</p>
-                <p className="text-white/70">Always less than smallest R</p>
+                <p className="text-white">Always less than smallest R</p>
               </div>
             </div>
           </div>
@@ -529,7 +529,7 @@ export default function Module2Section3_3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level2/module2/section3/3-2">

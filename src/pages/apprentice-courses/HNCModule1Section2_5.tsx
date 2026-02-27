@@ -268,7 +268,7 @@ const HNCModule1Section2_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section2">
@@ -290,7 +290,7 @@ const HNCModule1Section2_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Safe Systems of Work
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Developing, implementing and maintaining formal procedures to protect people from
             workplace hazards
           </p>
@@ -487,7 +487,7 @@ const HNCModule1Section2_5 = () => {
               <div className="space-y-3">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-elec-yellow mb-1">Stage 1: Task Analysis</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Break the job into individual steps or phases</li>
                     <li className="pl-1">Consider the sequence of operations</li>
                     <li className="pl-1">
@@ -500,7 +500,7 @@ const HNCModule1Section2_5 = () => {
                   <p className="font-medium text-elec-yellow mb-1">
                     Stage 2: Hazard Identification
                   </p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">For each step, identify what could cause harm</li>
                     <li className="pl-1">
                       Consider physical, chemical, biological, ergonomic and psychological hazards
@@ -511,7 +511,7 @@ const HNCModule1Section2_5 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-elec-yellow mb-1">Stage 3: Risk Evaluation</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Assess likelihood of harm occurring</li>
                     <li className="pl-1">Evaluate potential severity of harm</li>
                     <li className="pl-1">Consider who might be affected and how</li>
@@ -522,7 +522,7 @@ const HNCModule1Section2_5 = () => {
                   <p className="font-medium text-elec-yellow mb-1">
                     Stage 4: Control Selection (Hierarchy)
                   </p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">
                       <strong>Eliminate:</strong> Remove the hazard entirely
                     </li>
@@ -543,7 +543,7 @@ const HNCModule1Section2_5 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-elec-yellow mb-1">Stage 5: Documentation</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Record the SSOW in appropriate format</li>
                     <li className="pl-1">
                       Include risk assessment, method statement, permits if required
@@ -567,7 +567,7 @@ const HNCModule1Section2_5 = () => {
                       <p className="text-sm font-medium text-green-400">
                         Eliminate - Most effective
                       </p>
-                      <p className="text-xs text-white/70">Remove the hazard completely</p>
+                      <p className="text-xs text-white">Remove the hazard completely</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -576,7 +576,7 @@ const HNCModule1Section2_5 = () => {
                     </div>
                     <div className="flex-1 p-2 rounded bg-lime-500/10 border border-lime-500/30">
                       <p className="text-sm font-medium text-lime-400">Substitute</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Replace with less hazardous alternative
                       </p>
                     </div>
@@ -587,7 +587,7 @@ const HNCModule1Section2_5 = () => {
                     </div>
                     <div className="flex-1 p-2 rounded bg-yellow-500/10 border border-yellow-500/30">
                       <p className="text-sm font-medium text-yellow-400">Engineering Controls</p>
-                      <p className="text-xs text-white/70">Isolate people from the hazard</p>
+                      <p className="text-xs text-white">Isolate people from the hazard</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -596,7 +596,7 @@ const HNCModule1Section2_5 = () => {
                     </div>
                     <div className="flex-1 p-2 rounded bg-orange-500/10 border border-orange-500/30">
                       <p className="text-sm font-medium text-orange-400">Administrative Controls</p>
-                      <p className="text-xs text-white/70">Change the way people work</p>
+                      <p className="text-xs text-white">Change the way people work</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
@@ -605,7 +605,7 @@ const HNCModule1Section2_5 = () => {
                     </div>
                     <div className="flex-1 p-2 rounded bg-red-500/10 border border-red-500/30">
                       <p className="text-sm font-medium text-red-400">PPE - Last resort</p>
-                      <p className="text-xs text-white/70">Protect the individual worker</p>
+                      <p className="text-xs text-white">Protect the individual worker</p>
                     </div>
                   </div>
                 </div>
@@ -772,7 +772,7 @@ const HNCModule1Section2_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Active (Proactive) Monitoring</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Regular safety tours and inspections</li>
                     <li className="pl-1">Observations of work practices</li>
                     <li className="pl-1">Checking equipment and PPE</li>
@@ -782,7 +782,7 @@ const HNCModule1Section2_5 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Reactive Monitoring</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Investigating accidents and incidents</li>
                     <li className="pl-1">Analysing near-miss reports</li>
                     <li className="pl-1">Reviewing ill-health records</li>
@@ -904,7 +904,7 @@ const HNCModule1Section2_5 = () => {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">Identify</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Identify the circuit to be worked on from drawings, labels and tracing
                     </p>
                   </div>
@@ -915,7 +915,7 @@ const HNCModule1Section2_5 = () => {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">Isolate</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Switch off at the point of supply using suitable means of isolation
                     </p>
                   </div>
@@ -926,7 +926,7 @@ const HNCModule1Section2_5 = () => {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">Lock Off</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Secure isolation with personal safety lock - keep the key on your person
                     </p>
                   </div>
@@ -937,7 +937,7 @@ const HNCModule1Section2_5 = () => {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">Prove Dead</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Test with approved voltage indicator (proved on known live source before AND
                       after)
                     </p>
@@ -949,7 +949,7 @@ const HNCModule1Section2_5 = () => {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">Post Warning Notices</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Display 'Danger - Do Not Switch On' signs at isolation point
                     </p>
                   </div>
@@ -1027,7 +1027,7 @@ const HNCModule1Section2_5 = () => {
               </div>
               <div className="p-3 rounded bg-black/30">
                 <p className="text-xs font-medium text-white mb-2">Essential PTW Elements:</p>
-                <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-5">
+                <ul className="text-xs text-white space-y-1 list-disc list-outside ml-5">
                   <li className="pl-1">Clear description of work to be done and location</li>
                   <li className="pl-1">Time limits (start/finish, shift handover procedures)</li>
                   <li className="pl-1">Hazards identified and precautions required</li>
@@ -1054,7 +1054,7 @@ const HNCModule1Section2_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-2">Energy Sources to Isolate</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Electrical supply</li>
                     <li className="pl-1">Pneumatic (compressed air)</li>
                     <li className="pl-1">Hydraulic (pressurised fluid)</li>
@@ -1065,7 +1065,7 @@ const HNCModule1Section2_5 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-2">LOTO Key Points</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Each worker applies own lock</li>
                     <li className="pl-1">Tags identify lock owner and purpose</li>
                     <li className="pl-1">All energy sources must be addressed</li>
@@ -1162,7 +1162,7 @@ const HNCModule1Section2_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1210,7 +1210,7 @@ const HNCModule1Section2_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section2-4">

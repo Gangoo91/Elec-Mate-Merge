@@ -136,7 +136,7 @@ const TaxFinancesCalculator = () => {
             variant="ghost"
             size="icon"
             onClick={() => navigate(-1)}
-            className="text-white/70 hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
+            className="text-white hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
           >
             <ChevronLeft className="h-6 w-6" />
           </Button>
@@ -145,7 +145,7 @@ const TaxFinancesCalculator = () => {
             variant="ghost"
             size="icon"
             onClick={resetCalculator}
-            className="text-white/70 hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
+            className="text-white hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
           >
             <RotateCcw className="h-5 w-5" />
           </Button>
@@ -164,7 +164,7 @@ const TaxFinancesCalculator = () => {
           <div className="relative space-y-4">
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">
+                <p className="text-ios-caption-1 text-white uppercase tracking-wide">
                   Net Income
                 </p>
                 <p className="text-3xl sm:text-4xl font-bold text-green-400 mt-1 tabular-nums">
@@ -172,7 +172,7 @@ const TaxFinancesCalculator = () => {
                 </p>
               </div>
               <div className="text-right">
-                <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">
+                <p className="text-ios-caption-1 text-white uppercase tracking-wide">
                   Total Tax
                 </p>
                 <p className="text-2xl font-bold text-red-400 mt-1 tabular-nums">
@@ -182,17 +182,17 @@ const TaxFinancesCalculator = () => {
             </div>
             <div className="grid grid-cols-3 gap-2 pt-2">
               <div className="bg-white/10 rounded-xl p-2 text-center">
-                <p className="text-ios-caption-2 text-white/50">Monthly</p>
+                <p className="text-ios-caption-2 text-white">Monthly</p>
                 <p className="text-ios-body font-semibold text-white">£{monthlyNet.toFixed(0)}</p>
               </div>
               <div className="bg-white/10 rounded-xl p-2 text-center">
-                <p className="text-ios-caption-2 text-white/50">Expenses</p>
+                <p className="text-ios-caption-2 text-white">Expenses</p>
                 <p className="text-ios-body font-semibold text-white">
                   £{totalExpenses.toLocaleString()}
                 </p>
               </div>
               <div className="bg-white/10 rounded-xl p-2 text-center">
-                <p className="text-ios-caption-2 text-white/50">Profit</p>
+                <p className="text-ios-caption-2 text-white">Profit</p>
                 <p className="text-ios-body font-semibold text-white">
                   £{taxableProfit.toLocaleString()}
                 </p>
@@ -204,20 +204,20 @@ const TaxFinancesCalculator = () => {
         {/* Tax Breakdown Stats */}
         <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
           <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[120px] border border-white/10">
-            <p className="text-ios-caption-1 text-white/50">Income Tax</p>
+            <p className="text-ios-caption-1 text-white">Income Tax</p>
             <p className="text-ios-title-3 font-semibold text-white mt-1">
               £{incomeTax.toFixed(0)}
             </p>
           </div>
           <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[120px] border border-white/10">
-            <p className="text-ios-caption-1 text-white/50">NI</p>
+            <p className="text-ios-caption-1 text-white">NI</p>
             <p className="text-ios-title-3 font-semibold text-white mt-1">
               £{nationalInsurance.toFixed(0)}
             </p>
           </div>
           {inputs.vatRegistered && (
             <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[120px] border border-white/10">
-              <p className="text-ios-caption-1 text-white/50">VAT Due</p>
+              <p className="text-ios-caption-1 text-white">VAT Due</p>
               <p className="text-ios-title-3 font-semibold text-white mt-1">£{vatDue.toFixed(0)}</p>
             </div>
           )}
@@ -230,7 +230,7 @@ const TaxFinancesCalculator = () => {
                   : 'bg-red-500/10 border-red-500/30'
             }`}
           >
-            <p className="text-ios-caption-1 text-white/50">Save Rate</p>
+            <p className="text-ios-caption-1 text-white">Save Rate</p>
             <p
               className={`text-ios-title-3 font-semibold mt-1 ${
                 savingsRate > 20
@@ -247,7 +247,7 @@ const TaxFinancesCalculator = () => {
 
         {/* Revenue Input */}
         <section>
-          <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+          <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-3">
             Revenue
           </p>
           <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10">
@@ -268,14 +268,14 @@ const TaxFinancesCalculator = () => {
             onClick={() => toggleSection('expenses')}
             className="w-full flex items-center justify-between px-1 mb-3 touch-manipulation active:scale-[0.99]"
           >
-            <p className="text-ios-footnote text-white/50 uppercase tracking-wide">
+            <p className="text-ios-footnote text-white uppercase tracking-wide">
               Business Expenses
             </p>
             <motion.div
               animate={{ rotate: expandedSections.expenses ? 180 : 0 }}
               transition={{ duration: 0.2 }}
             >
-              <ChevronDown className="h-4 w-4 text-white/50" />
+              <ChevronDown className="h-4 w-4 text-white" />
             </motion.div>
           </button>
           <AnimatePresence>
@@ -334,14 +334,14 @@ const TaxFinancesCalculator = () => {
             onClick={() => toggleSection('setup')}
             className="w-full flex items-center justify-between px-1 mb-3 touch-manipulation active:scale-[0.99]"
           >
-            <p className="text-ios-footnote text-white/50 uppercase tracking-wide">
+            <p className="text-ios-footnote text-white uppercase tracking-wide">
               Business Setup & Goals
             </p>
             <motion.div
               animate={{ rotate: expandedSections.setup ? 180 : 0 }}
               transition={{ duration: 0.2 }}
             >
-              <ChevronDown className="h-4 w-4 text-white/50" />
+              <ChevronDown className="h-4 w-4 text-white" />
             </motion.div>
           </button>
           <AnimatePresence>
@@ -371,14 +371,14 @@ const TaxFinancesCalculator = () => {
                           className={`h-5 w-5 mx-auto mb-1 ${
                             inputs.businessType === type.value
                               ? 'text-elec-yellow'
-                              : 'text-white/50'
+                              : 'text-white'
                           }`}
                         />
                         <p
                           className={`text-ios-caption-1 ${
                             inputs.businessType === type.value
                               ? 'text-elec-yellow'
-                              : 'text-white/70'
+                              : 'text-white'
                           }`}
                         >
                           {type.label}
@@ -393,7 +393,7 @@ const TaxFinancesCalculator = () => {
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-ios-body font-medium text-white">VAT Registered</p>
-                      <p className="text-ios-caption-1 text-white/50">Turnover &gt;£85,000</p>
+                      <p className="text-ios-caption-1 text-white">Turnover &gt;£85,000</p>
                     </div>
                     <Switch
                       checked={inputs.vatRegistered}
@@ -435,7 +435,7 @@ const TaxFinancesCalculator = () => {
             onClick={() => toggleSection('insights')}
             className="w-full flex items-center justify-between px-1 mb-3 touch-manipulation active:scale-[0.99]"
           >
-            <p className="text-ios-footnote text-white/50 uppercase tracking-wide flex items-center gap-2">
+            <p className="text-ios-footnote text-white uppercase tracking-wide flex items-center gap-2">
               <Lightbulb className="h-4 w-4" />
               Tax Tips & Insights
             </p>
@@ -443,7 +443,7 @@ const TaxFinancesCalculator = () => {
               animate={{ rotate: expandedSections.insights ? 180 : 0 }}
               transition={{ duration: 0.2 }}
             >
-              <ChevronDown className="h-4 w-4 text-white/50" />
+              <ChevronDown className="h-4 w-4 text-white" />
             </motion.div>
           </button>
           <AnimatePresence>
@@ -462,14 +462,14 @@ const TaxFinancesCalculator = () => {
                     <p className="text-ios-title-3 font-semibold text-white mt-1">
                       £{(incomeTax * 0.2).toFixed(0)}
                     </p>
-                    <p className="text-ios-caption-2 text-white/50 mt-1">Potential tax saved</p>
+                    <p className="text-ios-caption-2 text-white mt-1">Potential tax saved</p>
                   </div>
                   <div className="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-4">
                     <p className="text-ios-caption-1 text-amber-400">Emergency Fund</p>
                     <p className="text-ios-title-3 font-semibold text-white mt-1">
                       £{(monthlyNet * 3).toFixed(0)}
                     </p>
-                    <p className="text-ios-caption-2 text-white/50 mt-1">3 months target</p>
+                    <p className="text-ios-caption-2 text-white mt-1">3 months target</p>
                   </div>
                 </div>
 
@@ -486,7 +486,7 @@ const TaxFinancesCalculator = () => {
                       { date: 'Quarterly', event: 'VAT returns due' },
                     ].map((item, i) => (
                       <div key={i} className="flex justify-between items-center">
-                        <span className="text-ios-caption-1 text-white/70">{item.event}</span>
+                        <span className="text-ios-caption-1 text-white">{item.event}</span>
                         <span className="text-ios-caption-1 font-medium text-elec-yellow">
                           {item.date}
                         </span>

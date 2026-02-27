@@ -141,7 +141,7 @@ const Module6Section2_1 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -159,13 +159,13 @@ const Module6Section2_1 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.2.1</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.2.1</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               What to Look for During Visual Checks
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Comprehensive guide to visual inspection procedures and identifying defects in
               electrical installations
             </p>
@@ -177,7 +177,7 @@ const Module6Section2_1 = () => {
               <Target className="w-5 h-5 text-elec-yellow" />
               <h2 className="font-semibold text-white">Spot it in 30 Seconds</h2>
             </div>
-            <div className="grid sm:grid-cols-2 gap-4 text-sm text-white/80">
+            <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
               <div>
                 <p className="font-medium text-elec-yellow mb-2">Key Points</p>
                 <ul className="list-disc pl-5 space-y-1">
@@ -211,7 +211,7 @@ const Module6Section2_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Visual inspection is the first stage of ensuring an electrical installation is safe,
                 compliant, and fit for use. Before any testing is carried out, installers must
@@ -230,7 +230,7 @@ const Module6Section2_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <div className="text-white/80 space-y-3 leading-relaxed">
+            <div className="text-white space-y-3 leading-relaxed">
               <p>By the end of this subsection, learners will be able to:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Identify the main elements to check during a visual inspection</li>
@@ -248,7 +248,7 @@ const Module6Section2_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Condition of Equipment and Accessories
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 The first priority during visual inspection is checking the physical condition of
                 all electrical equipment and accessories. This includes examining sockets, switches,
@@ -304,7 +304,7 @@ const Module6Section2_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Integrity of Cables and Conductors
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Cable integrity is fundamental to electrical safety. During visual inspection,
                 particular attention must be paid to the condition of cable insulation, sheathing,
@@ -360,7 +360,7 @@ const Module6Section2_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Correct Selection and Installation
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Visual inspection must verify that all components are correctly selected for their
                 intended application and installed according to manufacturer instructions and BS
@@ -399,7 +399,7 @@ const Module6Section2_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Earthing and Bonding
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Effective earthing and bonding systems are critical for electrical safety. Visual
                 inspection must confirm that all earthing and bonding connections are present,
@@ -463,7 +463,7 @@ const Module6Section2_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Safe Cable Routes and Zones
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 BS 7671 specifies safe zones for cable installation to reduce the risk of
                 inadvertent damage during building work. Visual inspection must verify compliance
@@ -517,7 +517,7 @@ const Module6Section2_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">08</span>
               Signs of Poor Workmanship
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Poor workmanship can compromise both safety and compliance. Visual inspection should
                 identify installation practices that do not meet professional standards.
@@ -558,7 +558,7 @@ const Module6Section2_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">09</span>
               Presence of Safety Devices
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Modern electrical installations include various safety devices mandated by BS 7671.
                 Visual inspection must confirm these devices are present and correctly installed.
@@ -586,7 +586,7 @@ const Module6Section2_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-2">Essential Safety Checks</p>
-                  <ul className="space-y-1 text-white/80">
+                  <ul className="space-y-1 text-white">
                     <li>✅ Exposed live parts - immediate danger</li>
                     <li>✅ Damaged accessories and equipment</li>
                     <li>✅ Cable damage and strain relief</li>
@@ -596,7 +596,7 @@ const Module6Section2_1 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-2">Compliance Verification</p>
-                  <ul className="space-y-1 text-white/80">
+                  <ul className="space-y-1 text-white">
                     <li>✅ Safe zone compliance (150mm rule)</li>
                     <li>✅ IP ratings for environment</li>
                     <li>✅ RCD protection where required</li>
@@ -614,7 +614,7 @@ const Module6Section2_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">10</span>
               Recap
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 <strong>Key Learning Points:</strong>
               </p>
@@ -665,7 +665,7 @@ const Module6Section2_1 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="..">

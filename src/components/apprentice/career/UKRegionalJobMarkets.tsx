@@ -43,7 +43,7 @@ const UKRegionalJobMarkets = () => {
             </div>
             UK Regional Job Markets for Electricians
           </CardTitle>
-          <p className="text-sm sm:text-base text-white/80">
+          <p className="text-sm sm:text-base text-white">
             Comprehensive 2025 regional analysis of job opportunities, pay rates, and growth sectors
             across the UK
           </p>

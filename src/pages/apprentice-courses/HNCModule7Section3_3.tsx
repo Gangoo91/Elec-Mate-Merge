@@ -239,7 +239,7 @@ const HNCModule7Section3_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section3">
@@ -261,7 +261,7 @@ const HNCModule7Section3_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Point-by-Point Method
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Inverse square law, cosine corrections, point calculations, and computer-aided lighting
             design
           </p>
@@ -347,7 +347,7 @@ const HNCModule7Section3_3 = () => {
                 Basic Inverse Square Law Formula
               </p>
               <div className="font-mono text-lg text-center py-3 text-white">E = I / d²</div>
-              <div className="text-sm text-white/80 mt-2">
+              <div className="text-sm text-white mt-2">
                 <p>
                   <strong>Where:</strong>
                 </p>
@@ -463,7 +463,7 @@ const HNCModule7Section3_3 = () => {
                 <div className="font-mono text-lg text-center py-3 text-white">
                   E = I × cos³θ / h²
                 </div>
-                <div className="text-sm text-white/80 mt-2">
+                <div className="text-sm text-white mt-2">
                   <p>
                     <strong>Where:</strong>
                   </p>
@@ -479,7 +479,7 @@ const HNCModule7Section3_3 = () => {
                 <div className="font-mono text-lg text-center py-3 text-white">
                   E = I × cos²θ × sinθ / h²
                 </div>
-                <div className="text-sm text-white/80 mt-2">
+                <div className="text-sm text-white mt-2">
                   <p>
                     <strong>Where:</strong>
                   </p>
@@ -547,8 +547,8 @@ const HNCModule7Section3_3 = () => {
                 Worked Calculation Example
               </p>
               <div className="text-sm space-y-2 font-mono">
-                <p className="text-white/60">Given: Luminaire at 4m height, I = 1500 cd</p>
-                <p className="text-white/60">
+                <p className="text-white">Given: Luminaire at 4m height, I = 1500 cd</p>
+                <p className="text-white">
                   Find: Illuminance 3m horizontally from directly below
                 </p>
                 <p className="mt-3">Step 1: Find the angle θ</p>
@@ -675,7 +675,7 @@ const HNCModule7Section3_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
                 <div>
                   <p className="font-medium mb-1">Room Parameters</p>
-                  <ul className="space-y-0.5 text-white/80">
+                  <ul className="space-y-0.5 text-white">
                     <li>Accurate room geometry (dimensions)</li>
                     <li>Surface reflectances (ceiling, walls, floor)</li>
                     <li>Workplane height (typically 0.85m)</li>
@@ -684,7 +684,7 @@ const HNCModule7Section3_3 = () => {
                 </div>
                 <div>
                   <p className="font-medium mb-1">Luminaire Data</p>
-                  <ul className="space-y-0.5 text-white/80">
+                  <ul className="space-y-0.5 text-white">
                     <li>Photometric file (IES/LDT)</li>
                     <li>Lamp/LED lumen output</li>
                     <li>Luminaire efficiency (LOR)</li>
@@ -842,15 +842,15 @@ const HNCModule7Section3_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Grid Spacing Requirements (BS EN 12464-1 Annex A)
               </p>
-              <div className="text-sm text-white/90">
+              <div className="text-sm text-white">
                 <p className="mb-2">Maximum grid cell size for accurate uniformity calculations:</p>
                 <div className="font-mono bg-black/30 p-3 rounded mb-2">
                   p = 0.2 × 5<sup>log₁₀(d)</sup>
                 </div>
-                <p className="text-white/70">Where d is the longer room dimension in metres.</p>
+                <p className="text-white">Where d is the longer room dimension in metres.</p>
                 <div className="mt-3">
                   <p className="font-medium mb-1">Example grid sizes:</p>
-                  <ul className="space-y-0.5 text-white/80">
+                  <ul className="space-y-0.5 text-white">
                     <li>5m room: p ≤ 0.5m grid spacing</li>
                     <li>10m room: p ≤ 1.0m grid spacing</li>
                     <li>20m room: p ≤ 2.0m grid spacing</li>
@@ -860,7 +860,7 @@ const HNCModule7Section3_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Commissioning requirement:</strong> Calculated values should be verified by
               on-site measurements at representative points. A ±20% variance from calculated values
               is generally acceptable, accounting for construction tolerances and actual surface
@@ -887,8 +887,8 @@ const HNCModule7Section3_3 = () => {
                 <strong>Scenario:</strong> Two identical luminaires (I = 1200 cd at nadir) mounted
                 at 3m height, 4m apart. Calculate illuminance at the midpoint.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">The midpoint is 2m from each luminaire horizontally</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">The midpoint is 2m from each luminaire horizontally</p>
                 <p className="mt-2">For each luminaire:</p>
                 <p className="ml-4">tan θ = 2/3, θ = 33.69°</p>
                 <p className="ml-4">cos θ = 0.832, cos³θ = 0.576</p>
@@ -900,7 +900,7 @@ const HNCModule7Section3_3 = () => {
                 <p className="ml-4 text-green-400">
                   E<sub>total</sub> = 153.6 lux
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Note: Point-by-point method sums contributions from all luminaires
                 </p>
               </div>
@@ -914,8 +914,8 @@ const HNCModule7Section3_3 = () => {
                 <strong>Scenario:</strong> Calculate the illuminance on a wall 2m from directly
                 below a luminaire (I = 800 cd, h = 2.5m).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">
                   Using vertical surface formula: E = I × cos²θ × sinθ / h²
                 </p>
                 <p className="mt-2">Step 1: Find angle θ</p>
@@ -939,8 +939,8 @@ const HNCModule7Section3_3 = () => {
                 <strong>Scenario:</strong> Verify that an emergency luminaire (I = 150 cd) at 2.8m
                 provides the required 1 lux minimum at 4m horizontal distance on an escape route.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">
                   Emergency lighting requires minimum 1 lux on centre line of escape routes
                 </p>
                 <p className="mt-2">Calculate illuminance at 4m horizontal:</p>
@@ -948,7 +948,7 @@ const HNCModule7Section3_3 = () => {
                 <p className="ml-4">cos θ = 0.574, cos³θ = 0.189</p>
                 <p className="ml-4">E = 150 × 0.189 / 7.84</p>
                 <p className="ml-4 text-green-400">E = 3.6 lux ✓ Exceeds 1 lux requirement</p>
-                <p className="mt-2 text-white/60">Maximum spacing between luminaires:</p>
+                <p className="mt-2 text-white">Maximum spacing between luminaires:</p>
                 <p className="ml-4">At 4m each direction = 8m total spacing</p>
                 <p className="ml-4 text-orange-400">
                   Verify uniformity ratio ≥ 40:1 max/min also achieved
@@ -1057,7 +1057,7 @@ const HNCModule7Section3_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1105,7 +1105,7 @@ const HNCModule7Section3_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section3">

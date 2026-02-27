@@ -103,7 +103,7 @@ const VATSchemeComparison: React.FC = () => {
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 VAT Scheme Comparison
               </h1>
-              <p className="text-sm text-white/70">Compare Standard vs Flat Rate VAT</p>
+              <p className="text-sm text-white">Compare Standard vs Flat Rate VAT</p>
             </div>
           </div>
           <SmartBackButton />
@@ -241,7 +241,7 @@ const VATSchemeComparison: React.FC = () => {
                 'flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation',
                 isValid && vatRegistered
                   ? 'text-black'
-                  : 'bg-white/10 text-white/30 cursor-not-allowed'
+                  : 'bg-white/10 text-white cursor-not-allowed'
               )}
               style={
                 isValid && vatRegistered
@@ -387,7 +387,7 @@ const VATSchemeComparison: React.FC = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      'h-4 w-4 text-white/80 transition-transform duration-200',
+                      'h-4 w-4 text-white transition-transform duration-200',
                       showBreakdown && 'rotate-180'
                     )}
                   />
@@ -402,13 +402,13 @@ const VATSchemeComparison: React.FC = () => {
                       </h4>
                       <div className="space-y-2 text-sm">
                         <div className="flex justify-between items-center py-1 border-b border-white/10">
-                          <span className="text-white/80">Output VAT charged</span>
+                          <span className="text-white">Output VAT charged</span>
                           <span className="text-white font-mono">
                             {currency(standardOutputVat)}
                           </span>
                         </div>
                         <div className="flex justify-between items-center py-1 border-b border-white/10">
-                          <span className="text-white/80">Input VAT reclaimable</span>
+                          <span className="text-white">Input VAT reclaimable</span>
                           <span className="text-green-400 font-mono">
                             -{currency(standardInputVat)}
                           </span>
@@ -429,13 +429,13 @@ const VATSchemeComparison: React.FC = () => {
                       </h4>
                       <div className="space-y-2 text-sm">
                         <div className="flex justify-between items-center py-1 border-b border-white/10">
-                          <span className="text-white/80">VAT-inc turnover</span>
+                          <span className="text-white">VAT-inc turnover</span>
                           <span className="text-white font-mono">
                             {currency(vatInclusiveTurnover)}
                           </span>
                         </div>
                         <div className="flex justify-between items-center py-1 border-b border-white/10">
-                          <span className="text-white/80">Flat rate ({flatRateNum}%)</span>
+                          <span className="text-white">Flat rate ({flatRateNum}%)</span>
                           <span className="text-white font-mono">×{flatRateNum}%</span>
                         </div>
                         <div className="flex justify-between items-center py-1 font-medium">
@@ -449,13 +449,13 @@ const VATSchemeComparison: React.FC = () => {
                   <div className="mt-4 pt-4 border-t border-white/10">
                     <div className="p-3 rounded-lg bg-white/5">
                       {diff > 0 ? (
-                        <p className="text-sm text-white/80">
+                        <p className="text-sm text-white">
                           <strong className="text-green-400">Standard VAT</strong> is better because
                           you can reclaim {currency(standardInputVat)} in input VAT on materials,
                           saving you {currency(annualSaving)} annually compared to Flat Rate.
                         </p>
                       ) : (
-                        <p className="text-sm text-white/80">
+                        <p className="text-sm text-white">
                           <strong className="text-blue-400">Flat Rate VAT</strong> is better because
                           despite not reclaiming input VAT, you save {currency(annualSaving)}{' '}
                           annually with simplified accounting and the lower flat rate percentage.
@@ -493,7 +493,7 @@ const VATSchemeComparison: React.FC = () => {
               </div>
               <ChevronDown
                 className={cn(
-                  'h-4 w-4 text-white/80 transition-transform duration-200',
+                  'h-4 w-4 text-white transition-transform duration-200',
                   showReference && 'rotate-180'
                 )}
               />

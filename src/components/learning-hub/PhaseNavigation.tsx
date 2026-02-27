@@ -23,12 +23,12 @@ const PhaseNavigation = ({ currentPhase }: PhaseNavigationProps) => {
           {phases.map(({ phase, label, icon: Icon }, index) => (
             <div key={phase} className="flex items-center gap-2">
               <div
-                className={`p-2 rounded-lg ${currentPhase === phase ? 'bg-elec-yellow text-black' : 'bg-muted text-white/80'}`}
+                className={`p-2 rounded-lg ${currentPhase === phase ? 'bg-elec-yellow text-black' : 'bg-muted text-white'}`}
               >
                 <Icon className="h-4 w-4" />
               </div>
               <span
-                className={`text-sm font-medium ${currentPhase === phase ? 'text-elec-yellow' : 'text-white/80'}`}
+                className={`text-sm font-medium ${currentPhase === phase ? 'text-elec-yellow' : 'text-white'}`}
               >
                 {label}
               </span>

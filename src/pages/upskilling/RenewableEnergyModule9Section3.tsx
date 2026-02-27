@@ -253,7 +253,7 @@ const RenewableEnergyModule9Section3 = () => {
           <span className="text-elec-yellow text-sm font-medium">Module 9 - Section 3</span>
         </div>
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Cost-Benefit Analysis</h1>
-        <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+        <p className="text-white text-sm sm:text-base max-w-xl mx-auto">
           Comparing domestic and commercial renewable energy investments
         </p>
       </div>
@@ -301,7 +301,7 @@ const RenewableEnergyModule9Section3 = () => {
           ].map((outcome, index) => (
             <div key={index} className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
-              <span className="text-white/80 text-sm">{outcome}</span>
+              <span className="text-white text-sm">{outcome}</span>
             </div>
           ))}
         </div>
@@ -314,7 +314,7 @@ const RenewableEnergyModule9Section3 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">01</span>
             <h2 className="text-xl font-semibold text-white">Domestic System Economics</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Domestic solar installations typically range from 2-6kW, designed to suit available
               roof space and household consumption. The economics are relatively straightforward but
@@ -355,7 +355,7 @@ const RenewableEnergyModule9Section3 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">02</span>
             <h2 className="text-xl font-semibold text-white">Commercial System Economics</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Commercial installations offer different economic characteristics. Larger systems,
               professional decision-making, and different consumption patterns all affect the
@@ -395,7 +395,7 @@ const RenewableEnergyModule9Section3 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">03</span>
             <h2 className="text-xl font-semibold text-white">Commercial Tax Considerations</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Commercial installations can benefit from tax advantages not available to domestic
               customers, significantly improving the effective return on investment.
@@ -435,7 +435,7 @@ const RenewableEnergyModule9Section3 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">04</span>
             <h2 className="text-xl font-semibold text-white">Load Profile Analysis</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Accurate load profile analysis is essential for sizing commercial systems optimally
               and providing realistic financial projections.
@@ -475,7 +475,7 @@ const RenewableEnergyModule9Section3 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">05</span>
             <h2 className="text-xl font-semibold text-white">Commercial Financing Options</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Commercial customers have access to a wider range of financing options than domestic,
               enabling investment even without significant capital reserves.
@@ -517,7 +517,7 @@ const RenewableEnergyModule9Section3 = () => {
             <Zap className="w-4 h-4 text-elec-yellow" />
             Practical Guidance
           </h3>
-          <div className="space-y-2 text-white/80 text-sm">
+          <div className="space-y-2 text-white text-sm">
             <p>
               <span className="text-white font-medium">Understand the decision-maker:</span>{' '}
               Domestic decisions are often emotional and practical. Commercial decisions typically
@@ -545,7 +545,7 @@ const RenewableEnergyModule9Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <h3 className="text-white font-medium mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>

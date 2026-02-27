@@ -270,7 +270,7 @@ const HNCModule5Section4_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section4">
@@ -292,7 +292,7 @@ const HNCModule5Section4_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Testing and Verification
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Test procedures, acceptance criteria, and compliance demonstration for building services
             systems
           </p>
@@ -817,7 +817,7 @@ const HNCModule5Section4_5 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Industry guidance:</strong> CIBSE Commissioning Codes and BSRIA guides provide
               detailed acceptance criteria templates for common building services systems.
             </p>
@@ -1005,7 +1005,7 @@ const HNCModule5Section4_5 = () => {
                 <strong>Scenario:</strong> Plan the testing programme for a new office building
                 distribution system.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Phase 1 - Pre-energisation:</strong>
                 </p>
@@ -1037,7 +1037,7 @@ const HNCModule5Section4_5 = () => {
                 <strong>Scenario:</strong> An AHU delivers 4,200 l/s against design requirement of
                 5,000 l/s. How should this be managed?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Analysis:</strong>
                 </p>
@@ -1071,7 +1071,7 @@ const HNCModule5Section4_5 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Document a witnessed generator load test.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>TEST RECORD - Generator Load Bank Test</strong>
                 </p>
@@ -1185,7 +1185,7 @@ const HNCModule5Section4_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1235,7 +1235,7 @@ const HNCModule5Section4_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section4">

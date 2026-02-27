@@ -178,7 +178,7 @@ const DiagramBuilderPage = () => {
                 <Button
                   variant="outline"
                   size="icon"
-                  className="h-8 w-8 md:h-9 md:w-9 border-white/20 text-white/70 hover:text-white hover:bg-white/10 touch-manipulation"
+                  className="h-8 w-8 md:h-9 md:w-9 border-white/20 text-white hover:text-white hover:bg-white/10 touch-manipulation"
                 >
                   <ArrowLeft className="h-4 w-4" />
                 </Button>
@@ -188,7 +188,7 @@ const DiagramBuilderPage = () => {
               </div>
               <div>
                 <h1 className="text-base md:text-xl font-bold text-white">Diagram Builder</h1>
-                <p className="text-[10px] md:text-xs text-white/60 hidden sm:block">
+                <p className="text-[10px] md:text-xs text-white hidden sm:block">
                   BS 7671 compliant symbols
                 </p>
               </div>

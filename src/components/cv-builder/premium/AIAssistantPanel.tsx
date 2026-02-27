@@ -146,14 +146,14 @@ const AIAssistantPanel = ({
                 </div>
                 <div>
                   <h2 className="font-bold text-white">AI Assistant</h2>
-                  <p className="text-xs text-white/50">{sectionContext}</p>
+                  <p className="text-xs text-white">{sectionContext}</p>
                 </div>
               </div>
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={onClose}
-                className="h-8 w-8 rounded-lg text-white/60 hover:text-white"
+                className="h-8 w-8 rounded-lg text-white hover:text-white"
               >
                 <X className="h-5 w-5" />
               </Button>
@@ -163,7 +163,7 @@ const AIAssistantPanel = ({
             <div className="flex-1 overflow-y-auto p-4 space-y-4">
               {/* Quick Actions */}
               <div className="space-y-2">
-                <label className="text-xs font-medium text-white/60">Quick Actions</label>
+                <label className="text-xs font-medium text-white">Quick Actions</label>
                 <div className="grid grid-cols-2 gap-2">
                   {QUICK_PROMPTS.map((prompt) => {
                     const Icon = prompt.icon;
@@ -185,12 +185,12 @@ const AIAssistantPanel = ({
 
               {/* Custom Prompt */}
               <div className="space-y-2">
-                <label className="text-xs font-medium text-white/60">Custom Request</label>
+                <label className="text-xs font-medium text-white">Custom Request</label>
                 <Textarea
                   value={customPrompt}
                   onChange={(e) => setCustomPrompt(e.target.value)}
                   placeholder="Describe what you want AI to help with..."
-                  className="min-h-[80px] bg-white/5 border-white/10 text-white placeholder:text-white/30 resize-none"
+                  className="min-h-[80px] bg-white/5 border-white/10 text-white placeholder:text-white resize-none"
                 />
                 <Button
                   onClick={() => handleGenerate(customPrompt)}
@@ -214,9 +214,9 @@ const AIAssistantPanel = ({
               {/* Current Content Preview */}
               {currentContent && (
                 <div className="space-y-2">
-                  <label className="text-xs font-medium text-white/60">Current Content</label>
+                  <label className="text-xs font-medium text-white">Current Content</label>
                   <div className="p-3 rounded-xl bg-white/5 border border-white/10">
-                    <p className="text-sm text-white/70 line-clamp-4">{currentContent}</p>
+                    <p className="text-sm text-white line-clamp-4">{currentContent}</p>
                   </div>
                 </div>
               )}
@@ -247,7 +247,7 @@ const AIAssistantPanel = ({
                     className="space-y-3"
                   >
                     <div className="flex items-center justify-between">
-                      <label className="text-xs font-medium text-white/60">AI Suggestion</label>
+                      <label className="text-xs font-medium text-white">AI Suggestion</label>
                       <Badge className="bg-purple-500/20 border-purple-500/30 text-purple-300 text-[10px]">
                         <Sparkles className="h-3 w-3 mr-1" />
                         AI Generated
@@ -297,9 +297,9 @@ const AIAssistantPanel = ({
               <div className="p-4 rounded-xl bg-white/[0.02] border border-white/5">
                 <div className="flex items-center gap-2 mb-2">
                   <Lightbulb className="h-4 w-4 text-amber-400" />
-                  <span className="text-xs font-medium text-white/60">Pro Tips</span>
+                  <span className="text-xs font-medium text-white">Pro Tips</span>
                 </div>
-                <ul className="space-y-1.5 text-xs text-white/50">
+                <ul className="space-y-1.5 text-xs text-white">
                   <li className="flex items-center gap-2">
                     <ChevronRight className="h-3 w-3 text-purple-400" />
                     Use action verbs to describe achievements

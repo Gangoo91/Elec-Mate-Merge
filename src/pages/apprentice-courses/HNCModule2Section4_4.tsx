@@ -222,7 +222,7 @@ const HNCModule2Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section4">
@@ -244,7 +244,7 @@ const HNCModule2Section4_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Sound Fundamentals
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Frequency, wavelength, decibels, and the physics of sound for building services
             acoustics
           </p>
@@ -347,10 +347,10 @@ const HNCModule2Section4_4 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Wave Equation</p>
               <p className="font-mono text-center text-lg mb-2">c = f × λ</p>
-              <div className="text-xs text-white/70 text-center mt-2">
+              <div className="text-xs text-white text-center mt-2">
                 Speed (m/s) = Frequency (Hz) × Wavelength (m)
               </div>
-              <p className="text-xs text-white/70 text-center mt-2">
+              <p className="text-xs text-white text-center mt-2">
                 Rearranged: λ = c/f (wavelength = 343/frequency in air)
               </p>
             </div>
@@ -485,7 +485,7 @@ const HNCModule2Section4_4 = () => {
               <p className="font-mono text-sm text-center text-elec-yellow">
                 31.5 | 63 | 125 | 250 | 500 | 1k | 2k | 4k | 8k | 16k Hz
               </p>
-              <p className="text-xs text-white/60 mt-2 text-center">
+              <p className="text-xs text-white mt-2 text-center">
                 Each band covers frequencies from 0.707× to 1.414× the centre frequency
               </p>
             </div>
@@ -518,7 +518,7 @@ const HNCModule2Section4_4 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 L<sub>p</sub> = 20 log₁₀(p / p<sub>ref</sub>) dB
               </p>
-              <div className="text-xs text-white/70 text-center mt-2">
+              <div className="text-xs text-white text-center mt-2">
                 Where p<sub>ref</sub> = 20 μPa (threshold of hearing at 1 kHz)
               </div>
             </div>
@@ -628,25 +628,25 @@ const HNCModule2Section4_4 = () => {
                 L<sub>total</sub> = 10 log₁₀(10<sup>L₁/10</sup> + 10<sup>L₂/10</sup> + ...)
               </p>
               <div className="mt-3">
-                <p className="text-sm text-white/70 mb-2">
+                <p className="text-sm text-white mb-2">
                   Quick addition guide (add to higher value):
                 </p>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs text-center">
                   <div className="p-2 rounded bg-black/30">
                     <p className="text-elec-yellow font-bold">Diff 0-1 dB</p>
-                    <p className="text-white/70">Add 3 dB</p>
+                    <p className="text-white">Add 3 dB</p>
                   </div>
                   <div className="p-2 rounded bg-black/30">
                     <p className="text-elec-yellow font-bold">Diff 2-3 dB</p>
-                    <p className="text-white/70">Add 2 dB</p>
+                    <p className="text-white">Add 2 dB</p>
                   </div>
                   <div className="p-2 rounded bg-black/30">
                     <p className="text-elec-yellow font-bold">Diff 4-9 dB</p>
-                    <p className="text-white/70">Add 1 dB</p>
+                    <p className="text-white">Add 1 dB</p>
                   </div>
                   <div className="p-2 rounded bg-black/30">
                     <p className="text-elec-yellow font-bold">Diff 10+ dB</p>
-                    <p className="text-white/70">Add 0 dB</p>
+                    <p className="text-white">Add 0 dB</p>
                   </div>
                 </div>
               </div>
@@ -657,24 +657,24 @@ const HNCModule2Section4_4 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 L<sub>2</sub> = L<sub>1</sub> - 20 log₁₀(r₂/r₁)
               </p>
-              <p className="text-xs text-white/70 text-center mt-2">
+              <p className="text-xs text-white text-center mt-2">
                 For point source in free field: each doubling of distance = -6 dB
               </p>
               <div className="mt-3 grid grid-cols-4 gap-2 text-xs text-center">
                 <div className="p-2 rounded bg-black/30">
-                  <p className="text-white/70">1m</p>
+                  <p className="text-white">1m</p>
                   <p className="text-elec-yellow font-bold">80 dB</p>
                 </div>
                 <div className="p-2 rounded bg-black/30">
-                  <p className="text-white/70">2m</p>
+                  <p className="text-white">2m</p>
                   <p className="text-elec-yellow font-bold">74 dB</p>
                 </div>
                 <div className="p-2 rounded bg-black/30">
-                  <p className="text-white/70">4m</p>
+                  <p className="text-white">4m</p>
                   <p className="text-elec-yellow font-bold">68 dB</p>
                 </div>
                 <div className="p-2 rounded bg-black/30">
-                  <p className="text-white/70">8m</p>
+                  <p className="text-white">8m</p>
                   <p className="text-elec-yellow font-bold">62 dB</p>
                 </div>
               </div>
@@ -744,13 +744,13 @@ const HNCModule2Section4_4 = () => {
                 <strong>Question:</strong> Calculate the wavelength of fan noise at 250 Hz in air at
                 20°C.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using λ = c / f</p>
                 <p>λ = 343 / 250</p>
                 <p>
                   λ = <strong>1.37 metres</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This long wavelength explains why low frequency noise is hard to attenuate with
                   thin barriers
                 </p>
@@ -765,7 +765,7 @@ const HNCModule2Section4_4 = () => {
                 <strong>Question:</strong> A plant room has three pumps producing 72 dB(A), 70
                 dB(A), and 68 dB(A). What is the combined sound level?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Method: Start with highest, add others sequentially</p>
                 <p>
                   72 + 70 dB: difference = 2, add 2 → <strong>74 dB</strong>
@@ -789,7 +789,7 @@ const HNCModule2Section4_4 = () => {
                 <strong>Question:</strong> A cooling tower produces 85 dB(A) at 5m. What level would
                 be expected at 40m in open conditions?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using inverse square law:</p>
                 <p>L₂ = L₁ - 20 log(r₂/r₁)</p>
                 <p>L₂ = 85 - 20 log(40/5)</p>
@@ -798,7 +798,7 @@ const HNCModule2Section4_4 = () => {
                 <p>
                   L₂ = <strong>67 dB(A)</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Alternative: 5m→10m→20m→40m = 3 doublings = 3×6 = 18 dB reduction
                 </p>
               </div>
@@ -881,7 +881,7 @@ const HNCModule2Section4_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -927,7 +927,7 @@ const HNCModule2Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section4-3">

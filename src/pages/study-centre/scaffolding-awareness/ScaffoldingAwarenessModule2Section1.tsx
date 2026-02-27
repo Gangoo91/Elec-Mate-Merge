@@ -296,7 +296,7 @@ const ScaffoldingAwarenessModule2Section1 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Work at Height Regulations 2005
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             How the WAH Regulations apply specifically to scaffolding &mdash; Schedule requirements,
             inspection duties, competent person obligations, and the collective protection hierarchy
           </p>
@@ -482,21 +482,21 @@ const ScaffoldingAwarenessModule2Section1 = () => {
                     Top Guard Rail
                   </p>
                   <p className="text-3xl sm:text-4xl font-bold text-white mb-1">950 mm</p>
-                  <p className="text-white/60 text-sm">minimum height above platform edge</p>
+                  <p className="text-white text-sm">minimum height above platform edge</p>
                 </div>
                 <div className="bg-slate-500/15 border border-slate-500/30 p-4 rounded-lg text-center">
                   <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Max Unprotected Gap
                   </p>
                   <p className="text-3xl sm:text-4xl font-bold text-white mb-1">470 mm</p>
-                  <p className="text-white/60 text-sm">between guard rails / toe board</p>
+                  <p className="text-white text-sm">between guard rails / toe board</p>
                 </div>
                 <div className="bg-slate-500/15 border border-slate-500/30 p-4 rounded-lg text-center">
                   <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Toe Board Height
                   </p>
                   <p className="text-3xl sm:text-4xl font-bold text-white mb-1">150 mm</p>
-                  <p className="text-white/60 text-sm">minimum height from platform surface</p>
+                  <p className="text-white text-sm">minimum height from platform surface</p>
                 </div>
               </div>
 
@@ -505,7 +505,7 @@ const ScaffoldingAwarenessModule2Section1 = () => {
                   <AlertTriangle className="h-5 w-5 text-slate-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-slate-300">Practical Note</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   These are <strong className="text-white">minimum requirements</strong>. Many
                   principal contractors and scaffold design specifications exceed these minimums.
                   For example, TG20 compliance guidance and NASC best practice may specify higher
@@ -586,7 +586,7 @@ const ScaffoldingAwarenessModule2Section1 = () => {
                   <ShieldCheck className="h-5 w-5 text-slate-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-slate-300">On-Site Reality</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Schedule 1 requirements are often breached when scaffold users make unauthorised
                   modifications &mdash; removing boards, taking out ties, overloading platforms with
                   materials, or continuing to use the scaffold in high winds. If you notice that a
@@ -705,7 +705,7 @@ const ScaffoldingAwarenessModule2Section1 = () => {
                       </span>
                     </div>
                     {/* Dimension label */}
-                    <div className="text-centre text-xs text-white/60 py-1">&le; 470 mm gap</div>
+                    <div className="text-centre text-xs text-white py-1">&le; 470 mm gap</div>
                     {/* Intermediate guard rail */}
                     <div className="flex items-center gap-3 py-2">
                       <div className="w-full h-1 bg-slate-400/60 rounded" />
@@ -714,7 +714,7 @@ const ScaffoldingAwarenessModule2Section1 = () => {
                       </span>
                     </div>
                     {/* Dimension label */}
-                    <div className="text-centre text-xs text-white/60 py-1">&le; 470 mm gap</div>
+                    <div className="text-centre text-xs text-white py-1">&le; 470 mm gap</div>
                     {/* Toe board */}
                     <div className="flex items-center gap-3 py-2">
                       <div className="w-full h-3 bg-slate-500/80 rounded" />
@@ -725,7 +725,7 @@ const ScaffoldingAwarenessModule2Section1 = () => {
                     {/* Platform */}
                     <div className="flex items-center gap-3 py-2">
                       <div className="w-full h-2 bg-white/20 rounded" />
-                      <span className="text-white/60 text-xs font-semibold whitespace-nowrap">
+                      <span className="text-white text-xs font-semibold whitespace-nowrap">
                         Platform
                       </span>
                     </div>
@@ -816,7 +816,7 @@ const ScaffoldingAwarenessModule2Section1 = () => {
                   <AlertTriangle className="h-5 w-5 text-slate-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-slate-300">Board Overhang</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Scaffold boards must be supported at centres that prevent excessive deflection and
                   must not overhang their support by more than{' '}
                   <strong className="text-white">four times the board thickness</strong> (typically
@@ -863,7 +863,7 @@ const ScaffoldingAwarenessModule2Section1 = () => {
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-slate-300 font-semibold text-sm">{item.trigger}</p>
-                        <p className="text-white/70 text-sm mt-0.5">{item.detail}</p>
+                        <p className="text-white text-sm mt-0.5">{item.detail}</p>
                       </div>
                     </div>
                   ))}
@@ -937,7 +937,7 @@ const ScaffoldingAwarenessModule2Section1 = () => {
                 <h3 className="text-slate-400 font-medium mb-3">
                   Inspection Report Contents (Schedule 7)
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Schedule 7 of the Work at Height Regulations specifies what every scaffold
                   inspection report must include:
                 </p>
@@ -983,7 +983,7 @@ const ScaffoldingAwarenessModule2Section1 = () => {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Common Inspection Failures</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The HSE frequently identifies the following failures during scaffold inspections:{' '}
                   <strong className="text-white">missing or incomplete inspection reports</strong>,{' '}
                   <strong className="text-white">inspections not carried out within 7 days</strong>,{' '}
@@ -1020,7 +1020,7 @@ const ScaffoldingAwarenessModule2Section1 = () => {
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-slate-400 font-medium mb-3">The Competent Person</h3>
                 <div className="space-y-3 text-sm">
-                  <p className="text-white/80">
+                  <p className="text-white">
                     A competent person for scaffold inspection must possess:
                   </p>
                   <div className="flex items-start gap-3">
@@ -1102,7 +1102,7 @@ const ScaffoldingAwarenessModule2Section1 = () => {
                 <h3 className="text-slate-300 font-semibold mb-4">
                   Hierarchy of Control for Work at Height
                 </h3>
-                <p className="text-white/80 text-sm mb-4">
+                <p className="text-white text-sm mb-4">
                   Regulation 6 establishes a strict hierarchy that must be followed when planning
                   and managing work at height. Each level must be considered in order &mdash; you
                   cannot skip to personal protection without first showing that collective
@@ -1118,7 +1118,7 @@ const ScaffoldingAwarenessModule2Section1 = () => {
                       </span>
                       <div>
                         <p className="text-green-300 font-semibold text-sm">Avoid Work at Height</p>
-                        <p className="text-white/70 text-xs mt-0.5">
+                        <p className="text-white text-xs mt-0.5">
                           Can the work be done at ground level? Prefabricate components, use
                           extending tools, design out the need for height.
                         </p>
@@ -1136,7 +1136,7 @@ const ScaffoldingAwarenessModule2Section1 = () => {
                         <p className="text-blue-300 font-semibold text-sm">
                           Prevent Falls &mdash; Collective Protection
                         </p>
-                        <p className="text-white/70 text-xs mt-0.5">
+                        <p className="text-white text-xs mt-0.5">
                           Guard rails, working platforms, scaffold edge protection, safety nets.
                           Protects everyone in the area without relying on individual behaviour.
                         </p>
@@ -1154,7 +1154,7 @@ const ScaffoldingAwarenessModule2Section1 = () => {
                         <p className="text-amber-300 font-semibold text-sm">
                           Minimise Consequences &mdash; Collective Then Personal
                         </p>
-                        <p className="text-white/70 text-xs mt-0.5">
+                        <p className="text-white text-xs mt-0.5">
                           Safety nets and airbags (collective) before harnesses and lanyards
                           (personal). Personal fall protection is always the last resort.
                         </p>
@@ -1171,7 +1171,7 @@ const ScaffoldingAwarenessModule2Section1 = () => {
                     Why Collective Protection Comes First
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Collective protection (such as scaffold guard rails and working platforms) is
                   always prioritised because it protects{' '}
                   <strong className="text-white">every person</strong> in the area without relying
@@ -1261,7 +1261,7 @@ const ScaffoldingAwarenessModule2Section1 = () => {
                     Statutory Minimum Retention
                   </p>
                   <p className="text-2xl sm:text-3xl font-bold text-white mb-1">3 Months</p>
-                  <p className="text-white/60 text-sm">
+                  <p className="text-white text-sm">
                     or until next inspection report, whichever is later
                   </p>
                 </div>
@@ -1270,7 +1270,7 @@ const ScaffoldingAwarenessModule2Section1 = () => {
                     Report Delivery Deadline
                   </p>
                   <p className="text-2xl sm:text-3xl font-bold text-white mb-1">24 Hours</p>
-                  <p className="text-white/60 text-sm">from completion of the inspection</p>
+                  <p className="text-white text-sm">from completion of the inspection</p>
                 </div>
               </div>
             </div>
@@ -1356,7 +1356,7 @@ const ScaffoldingAwarenessModule2Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1372,7 +1372,7 @@ const ScaffoldingAwarenessModule2Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-2">

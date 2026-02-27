@@ -239,7 +239,7 @@ const Module2Section6_6: React.FC = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Real‑Life Applications (Energy Bills, Load Monitoring, Smart Tech)
           </h1>
-          <p className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-white max-w-2xl mx-auto">
             Turn the ideas into action: understand your bill, measure what matters and use smart
             control to reduce costs while staying safe.
           </p>
@@ -707,7 +707,7 @@ const Module2Section6_6: React.FC = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5"
+            className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white hover:text-white hover:bg-white/5"
             asChild
           >
             <Link to="/study-centre/apprentice/level2/module2/section6/6-5">

@@ -212,13 +212,13 @@ const CdmRegulationsModule4Section2 = () => {
           </div>
           <div className="inline-block bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-full text-sm font-semibold mb-4 ml-0">
             <span className="text-blue-400">MODULE 4</span>
-            <span className="text-white/40 mx-2">&middot;</span>
-            <span className="text-white/60">SECTION 2</span>
+            <span className="text-white mx-2">&middot;</span>
+            <span className="text-white">SECTION 2</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Risk Assessment in Design
           </h1>
-          <p className="text-white/70 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             How designers identify, evaluate, and manage risks created by their design decisions
             &mdash; from hazard identification techniques to the legal test of reasonable
             practicability
@@ -229,7 +229,7 @@ const CdmRegulationsModule4Section2 = () => {
         <div className="grid sm:grid-cols-2 gap-4 mb-10">
           <div className="rounded-lg p-4 bg-blue-500/5 border-l-2 border-blue-500/50">
             <p className="font-semibold text-blue-400 mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -263,7 +263,7 @@ const CdmRegulationsModule4Section2 = () => {
           </div>
           <div className="rounded-lg p-4 bg-blue-500/5 border-l-2 border-blue-500/50">
             <p className="font-semibold text-blue-400/90 mb-2">On Site</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -299,7 +299,7 @@ const CdmRegulationsModule4Section2 = () => {
         {/* Learning Outcomes */}
         <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4">By the end of this section, you will be able to:</p>
+          <p className="text-white mb-4">By the end of this section, you will be able to:</p>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
               'Explain what a design risk assessment is and how it differs from a construction risk assessment',
@@ -313,7 +313,7 @@ const CdmRegulationsModule4Section2 = () => {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-blue-400/70 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </div>
             ))}
           </div>
@@ -328,7 +328,7 @@ const CdmRegulationsModule4Section2 = () => {
               <span className="text-blue-400/80 text-sm font-normal">01</span>
               Design Risk Assessment
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 A <strong className="text-white">design risk assessment</strong> is a systematic
                 process through which designers identify hazards created or influenced by their
@@ -343,7 +343,7 @@ const CdmRegulationsModule4Section2 = () => {
                 <h3 className="font-semibold mb-2 text-blue-400">
                   Design Risk vs. Construction Risk
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   A <strong className="text-white">design risk assessment</strong> focuses on
                   hazards that are{' '}
                   <strong className="text-white">
@@ -373,7 +373,7 @@ const CdmRegulationsModule4Section2 = () => {
                 <h3 className="text-blue-300 font-medium mb-2">
                   Why Design Risk Assessment Matters
                 </h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -419,7 +419,7 @@ const CdmRegulationsModule4Section2 = () => {
               <span className="text-cyan-400/80 text-sm font-normal">02</span>
               Identifying Hazards in Design
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Hazard identification is the foundation of design risk assessment. Designers must
                 systematically consider what could go wrong &mdash; during construction,
@@ -429,12 +429,12 @@ const CdmRegulationsModule4Section2 = () => {
 
               <div className="bg-white/5 border border-cyan-400/30 p-4 rounded-lg">
                 <h3 className="text-cyan-300 font-medium mb-3">Design Review Meetings</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Regular, structured reviews of the design at key stage gateways. These bring
                   together the design team, construction professionals, and (where appropriate) the
                   client to examine the design for buildability and safety issues.
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-cyan-400 mt-2 flex-shrink-0"></div>
                     <div>Review each element of the design against a hazard checklist</div>
@@ -455,7 +455,7 @@ const CdmRegulationsModule4Section2 = () => {
 
               <div className="bg-white/5 border border-cyan-400/30 p-4 rounded-lg">
                 <h3 className="text-cyan-300 font-medium mb-3">Constructability Reviews</h3>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A constructability review examines whether the design can be built safely,
                   efficiently, and practically. It considers access for plant and materials,
                   sequencing of work, temporary works requirements, and whether the design creates
@@ -468,12 +468,12 @@ const CdmRegulationsModule4Section2 = () => {
                 <h3 className="text-cyan-300 font-medium mb-3">
                   HAZOP & HAZID for Complex Projects
                 </h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   For complex projects &mdash; particularly those involving process engineering, M&E
                   systems, or unusual structural forms &mdash; formal hazard identification
                   techniques provide a rigorous framework:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-cyan-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -495,7 +495,7 @@ const CdmRegulationsModule4Section2 = () => {
 
               <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-blue-400">Lessons from Previous Projects</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   One of the most valuable sources of hazard information is{' '}
                   <strong className="text-white">experience from previous projects</strong>.
                   Designers should review accident reports, near-miss data, and lessons-learned
@@ -518,7 +518,7 @@ const CdmRegulationsModule4Section2 = () => {
               <span className="text-purple-400/80 text-sm font-normal">03</span>
               Risk Evaluation
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Once hazards have been identified, the next step is to{' '}
                 <strong className="text-white">evaluate</strong> the associated risks. Risk
@@ -530,7 +530,7 @@ const CdmRegulationsModule4Section2 = () => {
                 <h3 className="text-purple-300 font-medium mb-3">
                   Likelihood &times; Severity Matrix
                 </h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The most widely used method for risk evaluation is a matrix that combines{' '}
                   <strong className="text-white">likelihood</strong> (how probable is the hazardous
                   event?) with <strong className="text-white">severity</strong> (how serious would
@@ -541,7 +541,7 @@ const CdmRegulationsModule4Section2 = () => {
                 <div className="space-y-3 text-sm">
                   <div>
                     <p className="text-purple-300 font-medium mb-1">Likelihood Scale</p>
-                    <ul className="text-white/70 space-y-1">
+                    <ul className="text-white space-y-1">
                       <li className="flex items-center gap-2">
                         <span className="text-white font-mono w-4">1</span>
                         Very unlikely &mdash; could happen but almost never does
@@ -566,7 +566,7 @@ const CdmRegulationsModule4Section2 = () => {
                   </div>
                   <div>
                     <p className="text-purple-300 font-medium mb-1">Severity Scale</p>
-                    <ul className="text-white/70 space-y-1">
+                    <ul className="text-white space-y-1">
                       <li className="flex items-center gap-2">
                         <span className="text-white font-mono w-4">1</span>
                         Negligible &mdash; first aid only, no lost time
@@ -594,26 +594,26 @@ const CdmRegulationsModule4Section2 = () => {
 
               <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
                 <h3 className="text-purple-300 font-medium mb-3">Risk Banding</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Once calculated, risk scores are grouped into bands that determine the required
                   response:
                 </p>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm">
                   <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-2 text-center">
                     <p className="text-green-400 font-semibold">1&ndash;4</p>
-                    <p className="text-white/60 text-xs">Low</p>
+                    <p className="text-white text-xs">Low</p>
                   </div>
                   <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-2 text-center">
                     <p className="text-yellow-400 font-semibold">5&ndash;9</p>
-                    <p className="text-white/60 text-xs">Medium</p>
+                    <p className="text-white text-xs">Medium</p>
                   </div>
                   <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-2 text-center">
                     <p className="text-orange-400 font-semibold">10&ndash;16</p>
-                    <p className="text-white/60 text-xs">High</p>
+                    <p className="text-white text-xs">High</p>
                   </div>
                   <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-2 text-center">
                     <p className="text-red-400 font-semibold">17&ndash;25</p>
-                    <p className="text-white/60 text-xs">Very High</p>
+                    <p className="text-white text-xs">Very High</p>
                   </div>
                 </div>
               </div>
@@ -636,7 +636,7 @@ const CdmRegulationsModule4Section2 = () => {
               <span className="text-teal-400/80 text-sm font-normal">04</span>
               Design Risk Register
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The <strong className="text-white">design risk register</strong> is the central
                 document for recording and managing design risks throughout the project. It captures
@@ -648,7 +648,7 @@ const CdmRegulationsModule4Section2 = () => {
                 <h3 className="text-teal-300 font-medium mb-3">
                   Contents of a Design Risk Register
                 </h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-teal-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -698,11 +698,11 @@ const CdmRegulationsModule4Section2 = () => {
 
               <div className="bg-teal-500/10 border border-teal-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-teal-400">Alignment with RIBA Stages</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The design risk register should be reviewed and updated at each RIBA stage
                   gateway:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-teal-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -756,7 +756,7 @@ const CdmRegulationsModule4Section2 = () => {
               <span className="text-amber-400/80 text-sm font-normal">05</span>
               The &ldquo;So Far As Reasonably Practicable&rdquo; Test
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 CDM 2015 requires designers to eliminate foreseeable risks{' '}
                 <strong className="text-white">so far as is reasonably practicable</strong>{' '}
@@ -766,7 +766,7 @@ const CdmRegulationsModule4Section2 = () => {
 
               <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-amber-400">Legal Definition</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   &ldquo;Reasonably practicable&rdquo; is a narrower term than &ldquo;physically
                   possible&rdquo;. It allows a duty holder to balance the{' '}
                   <strong className="text-white">quantum of risk</strong> (the severity and
@@ -781,12 +781,12 @@ const CdmRegulationsModule4Section2 = () => {
                 <h3 className="text-amber-300 font-medium mb-3">
                   Edwards v National Coal Board [1949]
                 </h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The leading case on SFAIRP is{' '}
                   <strong className="text-white">Edwards v National Coal Board [1949]</strong>, in
                   which Lord Justice Asquith stated:
                 </p>
-                <blockquote className="border-l-2 border-amber-400/40 pl-4 italic text-white/60 text-sm">
+                <blockquote className="border-l-2 border-amber-400/40 pl-4 italic text-white text-sm">
                   &ldquo;Reasonably practicable is a narrower term than physically possible, and
                   seems to me to imply that a computation must be made by the owner in which the
                   quantum of risk is placed on one side and the sacrifice involved in the measures
@@ -795,7 +795,7 @@ const CdmRegulationsModule4Section2 = () => {
                   them &mdash; the risk being insignificant in relation to the sacrifice &mdash; the
                   defendants discharge the onus on them.&rdquo;
                 </blockquote>
-                <p className="text-white/70 text-sm mt-3">
+                <p className="text-white text-sm mt-3">
                   Crucially, the <strong className="text-white">burden of proof</strong> lies with
                   the duty holder. It is for the designer (or employer) to demonstrate that further
                   risk reduction would be grossly disproportionate &mdash; not for the regulator or
@@ -807,7 +807,7 @@ const CdmRegulationsModule4Section2 = () => {
                 <h3 className="text-amber-300 font-medium mb-3">
                   Applying SFAIRP in Design Practice
                 </h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-amber-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -854,7 +854,7 @@ const CdmRegulationsModule4Section2 = () => {
               <span className="text-sky-400/80 text-sm font-normal">06</span>
               Designers&rsquo; Information Requirements
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Effective design risk assessment depends on the flow of information between the{' '}
                 <strong className="text-white">client</strong>, the{' '}
@@ -868,11 +868,11 @@ const CdmRegulationsModule4Section2 = () => {
                 <h3 className="text-sky-300 font-medium mb-3">
                   What Designers Need from Clients: Pre-Construction Information (PCI)
                 </h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Under Regulation 4, the client must provide pre-construction information that is
                   relevant to the design and construction of the project. This includes:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-sky-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -918,11 +918,11 @@ const CdmRegulationsModule4Section2 = () => {
                 <h3 className="text-sky-300 font-medium mb-3">
                   What Designers Provide to Contractors: Residual Risk Information
                 </h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Where a designer cannot eliminate a hazard, they must provide information about
                   the residual risk to those who need it. This information should be:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-sky-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -959,7 +959,7 @@ const CdmRegulationsModule4Section2 = () => {
 
               <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-blue-400">The Information Chain</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   CDM 2015 creates a continuous information chain:{' '}
                   <strong className="text-white">
                     Client &rarr; Designer &rarr; Contractor &rarr; Health &amp; Safety File
@@ -984,7 +984,7 @@ const CdmRegulationsModule4Section2 = () => {
               <span className="text-indigo-400/80 text-sm font-normal">07</span>
               Tools &amp; Techniques
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 A range of tools and techniques support designers in carrying out effective risk
                 assessment under CDM 2015. The choice of tool depends on the scale and complexity of
@@ -996,12 +996,12 @@ const CdmRegulationsModule4Section2 = () => {
                 <h3 className="text-indigo-300 font-medium mb-3">
                   CDM Design Risk Assessment Forms
                 </h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Standardised forms provide a structured template for recording design risks. Many
                   professional bodies and industry organisations publish their own versions. A good
                   form typically includes:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-indigo-400 mt-2 flex-shrink-0"></div>
                     <div>Drawing or element reference</div>
@@ -1030,11 +1030,11 @@ const CdmRegulationsModule4Section2 = () => {
 
               <div className="bg-white/5 border border-indigo-400/30 p-4 rounded-lg">
                 <h3 className="text-indigo-300 font-medium mb-3">BIM Integration</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Building Information Modelling (BIM) provides a powerful platform for embedding
                   risk information directly into the digital model of a building:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-indigo-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1072,11 +1072,11 @@ const CdmRegulationsModule4Section2 = () => {
 
               <div className="bg-white/5 border border-indigo-400/30 p-4 rounded-lg">
                 <h3 className="text-indigo-300 font-medium mb-3">Hazard Elimination Checklists</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Checklists provide a systematic prompt for designers to consider common hazards.
                   Examples include:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-indigo-400/60 mt-0.5 flex-shrink-0" />
                     <span>
@@ -1114,7 +1114,7 @@ const CdmRegulationsModule4Section2 = () => {
 
               <div className="bg-indigo-500/10 border border-indigo-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-indigo-400">Design for Safety Toolkits</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Several organisations publish design-for-safety toolkits that collate guidance,
                   case studies, and practical examples. These include the{' '}
                   <strong className="text-white">ICE Design for Safety guidance</strong>, the{' '}
@@ -1137,7 +1137,7 @@ const CdmRegulationsModule4Section2 = () => {
               <span className="text-rose-400/80 text-sm font-normal">08</span>
               Common Design Risks by Discipline
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Different engineering and architectural disciplines create characteristic hazard
                 profiles. Understanding these common risks helps designers target their risk
@@ -1146,7 +1146,7 @@ const CdmRegulationsModule4Section2 = () => {
 
               <div className="bg-white/5 border border-rose-400/30 p-4 rounded-lg">
                 <h3 className="text-rose-300 font-medium mb-3">Structural Engineering</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-rose-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1179,7 +1179,7 @@ const CdmRegulationsModule4Section2 = () => {
 
               <div className="bg-white/5 border border-rose-400/30 p-4 rounded-lg">
                 <h3 className="text-rose-300 font-medium mb-3">Architecture</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-rose-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1215,7 +1215,7 @@ const CdmRegulationsModule4Section2 = () => {
                 <h3 className="text-rose-300 font-medium mb-3">
                   Mechanical &amp; Electrical (M&amp;E)
                 </h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-rose-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1260,7 +1260,7 @@ const CdmRegulationsModule4Section2 = () => {
 
               <div className="bg-white/5 border border-rose-400/30 p-4 rounded-lg">
                 <h3 className="text-rose-300 font-medium mb-3">Civil Engineering</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-rose-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1300,7 +1300,7 @@ const CdmRegulationsModule4Section2 = () => {
                     Remember: Designers Cannot Pass the Buck
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A common misconception is that designers can simply list risks and leave them for
                   the contractor to manage. CDM 2015 requires designers to{' '}
                   <strong className="text-white">
@@ -1326,7 +1326,7 @@ const CdmRegulationsModule4Section2 = () => {
           <div className="flex justify-center mb-3">
             <div className="bg-blue-500/15 border-2 border-blue-500/40 rounded-xl px-5 py-3 text-center max-w-sm">
               <p className="text-white font-semibold text-sm">Design Element or Decision</p>
-              <p className="text-white/60 text-xs mt-1">
+              <p className="text-white text-xs mt-1">
                 Structural form, material choice, services route, access provision, etc.
               </p>
             </div>
@@ -1341,7 +1341,7 @@ const CdmRegulationsModule4Section2 = () => {
           <div className="flex justify-center mb-3">
             <div className="bg-cyan-500/15 border-2 border-cyan-500/40 rounded-xl px-5 py-3 text-center max-w-sm">
               <p className="text-cyan-300 font-semibold text-sm">Identify Hazards</p>
-              <p className="text-white/60 text-xs mt-1">
+              <p className="text-white text-xs mt-1">
                 Design review, constructability review, HAZOP/HAZID, lessons learned
               </p>
             </div>
@@ -1356,7 +1356,7 @@ const CdmRegulationsModule4Section2 = () => {
           <div className="flex justify-center mb-3">
             <div className="bg-purple-500/15 border-2 border-purple-500/40 rounded-xl px-5 py-3 text-center max-w-sm">
               <p className="text-purple-300 font-semibold text-sm">Evaluate Risk</p>
-              <p className="text-white/60 text-xs mt-1">
+              <p className="text-white text-xs mt-1">
                 Likelihood &times; severity matrix &mdash; score and rank each risk
               </p>
             </div>
@@ -1385,11 +1385,11 @@ const CdmRegulationsModule4Section2 = () => {
               </div>
               <div className="w-0.5 h-4 bg-green-400/30"></div>
               <div className="bg-green-500/10 border border-green-500/20 rounded-lg px-3 py-2 text-center w-full">
-                <p className="text-white/80 text-xs">Redesign to remove the hazard entirely</p>
+                <p className="text-white text-xs">Redesign to remove the hazard entirely</p>
               </div>
               <div className="w-0.5 h-4 bg-green-400/30"></div>
               <div className="bg-green-500/10 border border-green-500/20 rounded-lg px-3 py-2 text-center w-full">
-                <p className="text-white/80 text-xs">Update risk register &mdash; hazard closed</p>
+                <p className="text-white text-xs">Update risk register &mdash; hazard closed</p>
               </div>
             </div>
 
@@ -1400,11 +1400,11 @@ const CdmRegulationsModule4Section2 = () => {
               </div>
               <div className="w-0.5 h-4 bg-amber-400/30"></div>
               <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg px-3 py-2 text-center w-full">
-                <p className="text-white/80 text-xs">Reduce risk through design changes (SFAIRP)</p>
+                <p className="text-white text-xs">Reduce risk through design changes (SFAIRP)</p>
               </div>
               <div className="w-0.5 h-4 bg-amber-400/30"></div>
               <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg px-3 py-2 text-center w-full">
-                <p className="text-white/80 text-xs">Communicate residual risk to contractor</p>
+                <p className="text-white text-xs">Communicate residual risk to contractor</p>
               </div>
             </div>
           </div>
@@ -1418,7 +1418,7 @@ const CdmRegulationsModule4Section2 = () => {
           <div className="flex justify-center">
             <div className="bg-blue-500/15 border-2 border-blue-500/40 rounded-xl px-5 py-3 text-center max-w-sm">
               <p className="text-white font-semibold text-sm">Record in Design Risk Register</p>
-              <p className="text-white/60 text-xs mt-1">
+              <p className="text-white text-xs mt-1">
                 Hazard, evaluation, design response, residual risk, and information for others
               </p>
             </div>
@@ -1437,31 +1437,31 @@ const CdmRegulationsModule4Section2 = () => {
               <div className="grid grid-cols-6 gap-1 mb-1">
                 <div className="p-1"></div>
                 <div className="bg-white/5 rounded p-1 text-center">
-                  <p className="text-white/60 text-[10px] sm:text-xs leading-tight">
+                  <p className="text-white text-[10px] sm:text-xs leading-tight">
                     1<br />
                     Negligible
                   </p>
                 </div>
                 <div className="bg-white/5 rounded p-1 text-center">
-                  <p className="text-white/60 text-[10px] sm:text-xs leading-tight">
+                  <p className="text-white text-[10px] sm:text-xs leading-tight">
                     2<br />
                     Minor
                   </p>
                 </div>
                 <div className="bg-white/5 rounded p-1 text-center">
-                  <p className="text-white/60 text-[10px] sm:text-xs leading-tight">
+                  <p className="text-white text-[10px] sm:text-xs leading-tight">
                     3<br />
                     Moderate
                   </p>
                 </div>
                 <div className="bg-white/5 rounded p-1 text-center">
-                  <p className="text-white/60 text-[10px] sm:text-xs leading-tight">
+                  <p className="text-white text-[10px] sm:text-xs leading-tight">
                     4<br />
                     Major
                   </p>
                 </div>
                 <div className="bg-white/5 rounded p-1 text-center">
-                  <p className="text-white/60 text-[10px] sm:text-xs leading-tight">
+                  <p className="text-white text-[10px] sm:text-xs leading-tight">
                     5<br />
                     Catastrophic
                   </p>
@@ -1471,7 +1471,7 @@ const CdmRegulationsModule4Section2 = () => {
               {/* Row 5: Almost certain */}
               <div className="grid grid-cols-6 gap-1 mb-1">
                 <div className="bg-white/5 rounded p-1 flex items-center">
-                  <p className="text-white/60 text-[10px] sm:text-xs leading-tight">
+                  <p className="text-white text-[10px] sm:text-xs leading-tight">
                     5 Almost certain
                   </p>
                 </div>
@@ -1495,7 +1495,7 @@ const CdmRegulationsModule4Section2 = () => {
               {/* Row 4: Likely */}
               <div className="grid grid-cols-6 gap-1 mb-1">
                 <div className="bg-white/5 rounded p-1 flex items-center">
-                  <p className="text-white/60 text-[10px] sm:text-xs leading-tight">4 Likely</p>
+                  <p className="text-white text-[10px] sm:text-xs leading-tight">4 Likely</p>
                 </div>
                 <div className="bg-green-500/20 border border-green-500/30 rounded p-1 text-center">
                   <p className="text-green-300 text-xs font-bold">4</p>
@@ -1517,7 +1517,7 @@ const CdmRegulationsModule4Section2 = () => {
               {/* Row 3: Possible */}
               <div className="grid grid-cols-6 gap-1 mb-1">
                 <div className="bg-white/5 rounded p-1 flex items-center">
-                  <p className="text-white/60 text-[10px] sm:text-xs leading-tight">3 Possible</p>
+                  <p className="text-white text-[10px] sm:text-xs leading-tight">3 Possible</p>
                 </div>
                 <div className="bg-green-500/20 border border-green-500/30 rounded p-1 text-center">
                   <p className="text-green-300 text-xs font-bold">3</p>
@@ -1539,7 +1539,7 @@ const CdmRegulationsModule4Section2 = () => {
               {/* Row 2: Unlikely */}
               <div className="grid grid-cols-6 gap-1 mb-1">
                 <div className="bg-white/5 rounded p-1 flex items-center">
-                  <p className="text-white/60 text-[10px] sm:text-xs leading-tight">2 Unlikely</p>
+                  <p className="text-white text-[10px] sm:text-xs leading-tight">2 Unlikely</p>
                 </div>
                 <div className="bg-green-500/20 border border-green-500/30 rounded p-1 text-center">
                   <p className="text-green-300 text-xs font-bold">2</p>
@@ -1561,7 +1561,7 @@ const CdmRegulationsModule4Section2 = () => {
               {/* Row 1: Very unlikely */}
               <div className="grid grid-cols-6 gap-1">
                 <div className="bg-white/5 rounded p-1 flex items-center">
-                  <p className="text-white/60 text-[10px] sm:text-xs leading-tight">
+                  <p className="text-white text-[10px] sm:text-xs leading-tight">
                     1 Very unlikely
                   </p>
                 </div>
@@ -1586,26 +1586,26 @@ const CdmRegulationsModule4Section2 = () => {
               <div className="mt-4 flex flex-wrap justify-center gap-3 text-xs">
                 <div className="flex items-center gap-1.5">
                   <div className="w-3 h-3 rounded bg-green-500/30 border border-green-500/40"></div>
-                  <span className="text-white/60">Low (1&ndash;4)</span>
+                  <span className="text-white">Low (1&ndash;4)</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-3 h-3 rounded bg-yellow-500/30 border border-yellow-500/40"></div>
-                  <span className="text-white/60">Medium (5&ndash;9)</span>
+                  <span className="text-white">Medium (5&ndash;9)</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-3 h-3 rounded bg-orange-500/30 border border-orange-500/40"></div>
-                  <span className="text-white/60">High (10&ndash;16)</span>
+                  <span className="text-white">High (10&ndash;16)</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-3 h-3 rounded bg-red-500/30 border border-red-500/40"></div>
-                  <span className="text-white/60">Very High (17&ndash;25)</span>
+                  <span className="text-white">Very High (17&ndash;25)</span>
                 </div>
               </div>
             </div>
           </div>
 
           <div className="mt-4 bg-white/5 border border-white/10 rounded-lg p-3 max-w-2xl mx-auto">
-            <p className="text-white/60 text-xs text-center">
+            <p className="text-white text-xs text-center">
               Risks scoring <strong className="text-white">10 or above</strong> (high and very high)
               require a <strong className="text-white">design response</strong> &mdash; either
               elimination of the hazard or significant reduction with clear communication of the
@@ -1625,7 +1625,7 @@ const CdmRegulationsModule4Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1641,7 +1641,7 @@ const CdmRegulationsModule4Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-4-section-1">

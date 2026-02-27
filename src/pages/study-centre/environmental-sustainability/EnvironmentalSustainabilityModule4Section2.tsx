@@ -218,13 +218,13 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
           </div>
           <div className="inline-block bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full text-sm font-semibold mb-4 ml-0">
             <span className="text-emerald-400">MODULE 4</span>
-            <span className="text-white/40 mx-2">&middot;</span>
-            <span className="text-white/60">SECTION 2</span>
+            <span className="text-white mx-2">&middot;</span>
+            <span className="text-white">SECTION 2</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Water Pollution Prevention
           </h1>
-          <p className="text-white/70 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding the sources of water pollution on construction sites, the legal framework,
             control measures for silt, oil, and cement, emergency spill response, and sustainable
             drainage systems
@@ -235,7 +235,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
         <div className="grid sm:grid-cols-2 gap-4 mb-10">
           <div className="rounded-lg p-4 bg-emerald-500/5 border-l-2 border-emerald-500/50">
             <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -268,7 +268,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
           </div>
           <div className="rounded-lg p-4 bg-emerald-500/5 border-l-2 border-emerald-500/50">
             <p className="font-semibold text-emerald-400/90 mb-2">On Site</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -304,7 +304,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
         {/* Learning Outcomes */}
         <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4">By the end of this section, you will be able to:</p>
+          <p className="text-white mb-4">By the end of this section, you will be able to:</p>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
               'Identify the main sources of water pollution from construction sites and explain why each is harmful',
@@ -318,7 +318,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-emerald-400/70 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </div>
             ))}
           </div>
@@ -333,7 +333,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
               <span className="text-emerald-400/80 text-sm font-normal">01</span>
               Water Pollution from Construction
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Construction sites are one of the{' '}
                 <strong className="text-white">most significant sources of water pollution</strong>{' '}
@@ -345,7 +345,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
 
               <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-emerald-400">Key Principle</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   It is{' '}
                   <strong className="text-white">
                     always cheaper to prevent pollution than to clean it up
@@ -361,7 +361,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                 <h3 className="text-emerald-400 font-medium mb-3">
                   Main Sources of Water Pollution on Construction Sites
                 </h3>
-                <ul className="text-white/70 space-y-3 text-sm">
+                <ul className="text-white space-y-3 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -432,7 +432,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                     Surface Water Drains Go Directly to Watercourses
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Many workers assume that all drains go to a sewage treatment works. They do not.{' '}
                   <strong className="text-white">
                     Surface water drains (often marked with a round cover) discharge directly to
@@ -455,7 +455,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
               <span className="text-teal-400/80 text-sm font-normal">02</span>
               Legal Framework
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Water pollution is taken extremely seriously by regulators in England and Wales. The
                 legal framework provides the Environment Agency with{' '}
@@ -470,11 +470,11 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                     Water Resources Act 1991 — Section 85
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Section 85 of the Water Resources Act 1991 creates the principal offence of water
                   pollution. It is an offence to:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm ml-4">
+                <ul className="text-white space-y-2 text-sm ml-4">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -490,7 +490,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                     </span>
                   </li>
                 </ul>
-                <p className="text-white/70 text-sm mt-3">
+                <p className="text-white text-sm mt-3">
                   <strong className="text-white">Controlled waters</strong> include rivers, streams,
                   lakes, ponds, canals, estuaries, coastal waters, and{' '}
                   <strong className="text-white">groundwater</strong>. The penalties are{' '}
@@ -509,7 +509,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Water Resources Act 1991</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         The principal Act covering pollution of controlled waters. Section 85
                         creates the offence of causing or knowingly permitting pollution. Section
                         161 gives the EA power to carry out remedial works and recover costs from
@@ -525,7 +525,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                       <p className="text-white font-medium">
                         Environmental Permitting Regulations 2016
                       </p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Require an environmental permit for any discharge to controlled waters or
                         groundwater. Operating without a permit where one is required is a criminal
                         offence with unlimited fines.
@@ -540,7 +540,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                       <p className="text-white font-medium">
                         Environmental Damage Regulations 2015
                       </p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Require those responsible for environmental damage to take preventive and
                         remedial action. The polluter pays principle — the cost of clean-up falls on
                         the person or company that caused the pollution.
@@ -553,7 +553,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Oil Storage Regulations 2001</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Specific regulations covering the storage of oil on commercial and
                         industrial premises, including mandatory bunding requirements, container
                         standards, and maintenance obligations.
@@ -568,7 +568,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                   <AlertTriangle className="h-5 w-5 text-emerald-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-emerald-300">Strict Liability</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   The offence of &ldquo;causing&rdquo; water pollution is a{' '}
                   <strong className="text-white">strict liability offence</strong> — the prosecution
                   does not need to prove that you intended to cause pollution or were negligent. If
@@ -592,7 +592,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
               <span className="text-cyan-400/80 text-sm font-normal">03</span>
               GPP5: Works and Maintenance in or Near Water
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">GPP5</strong> (Guidance for Pollution Prevention 5)
                 is published by the Environment Agency and provides practical guidance for anyone
@@ -603,7 +603,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
 
               <div className="bg-white/5 border border-cyan-400/30 p-4 rounded-lg">
                 <h3 className="text-cyan-300 font-medium mb-3">Key GPP5 Principles</h3>
-                <ul className="text-white/70 space-y-3 text-sm">
+                <ul className="text-white space-y-3 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-cyan-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -667,7 +667,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                 <h3 className="font-semibold mb-2 text-emerald-400">
                   Practical Tip: Before You Start
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Before starting any work near a watercourse, contact the{' '}
                   <strong className="text-white">Environment Agency</strong> for advice on permits,
                   restrictions, and pollution prevention measures specific to that watercourse. It
@@ -687,7 +687,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
               <span className="text-amber-400/80 text-sm font-normal">04</span>
               Silt & Sediment Control
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Silt and sediment are the{' '}
                 <strong className="text-white">most common cause of water pollution</strong> from
@@ -707,7 +707,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Silt Fences</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Geotextile fabric barriers staked into the ground along the contour,
                         typically downslope of disturbed areas. Water passes through the fabric
                         while sediment is trapped on the uphill side. Effective for sheet flow over
@@ -723,7 +723,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Settlement Lagoons and Tanks</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Excavated ponds or prefabricated tanks that slow water flow sufficiently for
                         suspended sediment to settle out under gravity. The clarified water is then
                         discharged (subject to permit requirements). Settlement lagoons must be
@@ -741,7 +741,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                       <p className="text-white font-medium">
                         Silt Busters (Active Treatment Systems)
                       </p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Mechanical treatment units that use flocculants and settlement chambers to
                         remove very fine sediment from pumped water. Used where passive settlement
                         alone cannot achieve acceptable discharge quality, such as dewatering
@@ -756,7 +756,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Straw Bale Barriers</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Straw bales staked into the ground across drainage channels or around drain
                         inlets to filter sediment from runoff water. Simple and cheap but limited in
                         effectiveness — suitable only for low-flow situations and as a secondary
@@ -770,7 +770,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Geotextile Wraps and Drain Covers</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Geotextile fabric wrapped around drainage outlet pipes or placed over drain
                         gullies to filter sediment before water enters the drainage system. Must be
                         monitored frequently as they can block and cause flooding if not maintained.
@@ -784,7 +784,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Surface Water Management</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Diverting clean surface water away from disturbed areas using cut-off
                         ditches, bunds, and diversion channels prevents it from becoming
                         contaminated with sediment. Keep clean water clean — it is far easier than
@@ -801,7 +801,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                   <AlertTriangle className="h-5 w-5 text-emerald-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-emerald-300">Maintenance Is Critical</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Silt controls are only effective if they are{' '}
                   <strong className="text-white">regularly inspected and maintained</strong>. A silt
                   fence that has fallen over, a settlement lagoon that is full of sludge, or a
@@ -824,7 +824,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
               <span className="text-orange-400/80 text-sm font-normal">05</span>
               Oil & Fuel Storage
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The <strong className="text-white">Oil Storage Regulations 2001</strong> set out
                 mandatory requirements for storing oil on commercial and industrial premises,
@@ -853,7 +853,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                             Bund capacity = <span className="text-orange-300">110%</span> of
                             container
                           </p>
-                          <p className="text-white/60 text-xs mt-1">
+                          <p className="text-white text-xs mt-1">
                             Example: 1,000L tank requires 1,100L bund capacity
                           </p>
                         </div>
@@ -878,10 +878,10 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                         <div className="flex-1">
                           <p className="text-white font-medium text-sm">
                             Bund capacity = <span className="text-teal-300">110%</span> of largest
-                            container <span className="text-white/50">OR</span>{' '}
+                            container <span className="text-white">OR</span>{' '}
                             <span className="text-teal-300">25%</span> of total capacity
                           </p>
-                          <p className="text-white/60 text-xs mt-1">Whichever is GREATER</p>
+                          <p className="text-white text-xs mt-1">Whichever is GREATER</p>
                         </div>
                       </div>
                     </div>
@@ -902,7 +902,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                 <h3 className="text-orange-300 font-medium mb-3">
                   Oil Storage and Refuelling Requirements
                 </h3>
-                <ul className="text-white/70 space-y-3 text-sm">
+                <ul className="text-white space-y-3 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -955,7 +955,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
 
               <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-emerald-400">Daily Checks</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Inspect all oil and fuel storage daily. Check containers for damage, leaks, and
                   corrosion. Check bunds for cracks, standing water, and contamination. Check
                   valves, connections, and sight gauges for drips. Check that drip trays are in
@@ -975,7 +975,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
               <span className="text-rose-400/80 text-sm font-normal">06</span>
               Concrete & Cement Washout
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Concrete and cement washout is one of the{' '}
                 <strong className="text-white">most dangerous pollutants</strong> found on
@@ -992,7 +992,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                     NEVER Wash Cement Into Drains or Watercourses
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   This cannot be overstated:{' '}
                   <strong className="text-white">
                     NEVER wash cement, concrete, mortar, or grout into any drain, ditch,
@@ -1009,7 +1009,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                 <h3 className="text-rose-300 font-medium mb-3">
                   Managing Concrete and Cement Washout
                 </h3>
-                <ul className="text-white/70 space-y-3 text-sm">
+                <ul className="text-white space-y-3 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-rose-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1066,7 +1066,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
 
               <div className="bg-white/5 border border-emerald-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-emerald-400">Understanding the pH Scale</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The pH scale runs from 0 (strongly acidic) to 14 (strongly alkaline). Clean water
                   is pH 7 (neutral). Most aquatic life requires a pH between 6 and 9 to survive.
                   Cement washout at pH 11-13 is{' '}
@@ -1090,7 +1090,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
               <span className="text-purple-400/80 text-sm font-normal">07</span>
               Emergency Spill Response
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Despite the best preventive measures, spills can and do occur on construction sites.
                 The difference between a contained incident and an environmental catastrophe often
@@ -1112,7 +1112,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                       <p className="text-emerald-300 font-bold text-xs sm:text-sm">
                         STEP 1: SOURCE CONTROL
                       </p>
-                      <p className="text-white/60 text-xs mt-1">
+                      <p className="text-white text-xs mt-1">
                         Prevent pollution at the source — bunding, drip trays, designated washout
                         areas, covered storage
                       </p>
@@ -1127,7 +1127,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                       <p className="text-teal-300 font-bold text-xs sm:text-sm">
                         STEP 2: PATHWAY CONTROL
                       </p>
-                      <p className="text-white/60 text-xs mt-1">
+                      <p className="text-white text-xs mt-1">
                         Block routes to water — silt fences, drain covers, cut-off ditches, buffer
                         zones
                       </p>
@@ -1142,7 +1142,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                       <p className="text-cyan-300 font-bold text-xs sm:text-sm">
                         STEP 3: TREATMENT
                       </p>
-                      <p className="text-white/60 text-xs mt-1">
+                      <p className="text-white text-xs mt-1">
                         Remove pollutants before discharge — settlement lagoons, silt busters, pH
                         neutralisation
                       </p>
@@ -1157,7 +1157,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                       <p className="text-red-300 font-bold text-xs sm:text-sm">
                         STEP 4: EMERGENCY RESPONSE
                       </p>
-                      <p className="text-white/60 text-xs mt-1">
+                      <p className="text-white text-xs mt-1">
                         If controls fail — spill kits, containment booms, EA notification on 0800 80
                         70 60
                       </p>
@@ -1175,7 +1175,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
 
               <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
                 <h3 className="text-purple-300 font-medium mb-3">Spill Kit Contents and Use</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1232,7 +1232,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                     <div className="w-6 h-6 rounded-full bg-red-500/20 border border-red-400/30 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-red-300 text-xs font-bold">1</span>
                     </div>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       <strong className="text-white">STOP</strong> the source — turn off the tap,
                       close the valve, right the container, plug the leak
                     </p>
@@ -1241,7 +1241,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                     <div className="w-6 h-6 rounded-full bg-red-500/20 border border-red-400/30 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-red-300 text-xs font-bold">2</span>
                     </div>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       <strong className="text-white">CONTAIN</strong> the spill — use booms and
                       absorbent socks to surround the spill and block drains
                     </p>
@@ -1250,7 +1250,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                     <div className="w-6 h-6 rounded-full bg-red-500/20 border border-red-400/30 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-red-300 text-xs font-bold">3</span>
                     </div>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       <strong className="text-white">NOTIFY</strong> your site manager and the
                       Environment Agency on <strong className="text-white">0800 80 70 60</strong>{' '}
                       immediately
@@ -1260,7 +1260,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                     <div className="w-6 h-6 rounded-full bg-red-500/20 border border-red-400/30 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-red-300 text-xs font-bold">4</span>
                     </div>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       <strong className="text-white">CLEAN UP</strong> using absorbent pads,
                       granules, and booms. Collect all contaminated material for proper disposal
                     </p>
@@ -1269,7 +1269,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                     <div className="w-6 h-6 rounded-full bg-red-500/20 border border-red-400/30 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-red-300 text-xs font-bold">5</span>
                     </div>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       <strong className="text-white">RECORD</strong> the incident — what was
                       spilled, the quantity, the cause, the response actions taken, and any
                       environmental impact observed
@@ -1279,7 +1279,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                     <div className="w-6 h-6 rounded-full bg-red-500/20 border border-red-400/30 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-red-300 text-xs font-bold">6</span>
                     </div>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       <strong className="text-white">INVESTIGATE</strong> the root cause and
                       implement corrective actions to prevent recurrence
                     </p>
@@ -1294,7 +1294,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                     Never Use Detergent to Disperse Oil Spills
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A common mistake is to use washing-up liquid or detergent to &ldquo;clean
                   up&rdquo; an oil spill. This does <strong className="text-white">NOT</strong>{' '}
                   remove the oil — it disperses it into the water, making it invisible but still
@@ -1315,7 +1315,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
               <span className="text-green-400/80 text-sm font-normal">08</span>
               Sustainable Drainage Systems (SuDS)
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">Sustainable Drainage Systems (SuDS)</strong> are
                 designed to manage surface water in a way that mimics natural drainage processes.
@@ -1329,25 +1329,25 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                 <div className="grid grid-cols-2 gap-3 text-sm mt-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-emerald-300 font-bold text-xs mb-1">WATER QUANTITY</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Reduce flood risk by slowing runoff and reducing peak flow rates
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-emerald-300 font-bold text-xs mb-1">WATER QUALITY</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Remove pollutants through filtration, settlement, and biological treatment
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-emerald-300 font-bold text-xs mb-1">AMENITY</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Create attractive, usable spaces that benefit people and communities
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-emerald-300 font-bold text-xs mb-1">BIODIVERSITY</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Support wildlife habitats and ecological connectivity
                     </p>
                   </div>
@@ -1361,7 +1361,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                     <p className="text-white font-medium mb-2">
                       Temporary SuDS (Construction Phase)
                     </p>
-                    <ul className="text-white/60 space-y-1.5">
+                    <ul className="text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                         <span>Silt fences, settlement lagoons, temporary swales</span>
@@ -1384,7 +1384,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                     <p className="text-white font-medium mb-2">
                       Permanent SuDS (Operational Phase)
                     </p>
-                    <ul className="text-white/60 space-y-1.5">
+                    <ul className="text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                         <span>Permeable paving, rain gardens, green roofs</span>
@@ -1408,7 +1408,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-emerald-400 font-medium mb-3">The Treatment Train</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The <strong className="text-white">treatment train</strong> is a fundamental SuDS
                   principle where surface water passes through a series of progressive treatment
                   stages:
@@ -1420,7 +1420,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Source Control</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Manage rainfall where it falls — green roofs, permeable paving, rainwater
                         harvesting. Prevents runoff being generated in the first place.
                       </p>
@@ -1432,7 +1432,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Local Management</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Manage runoff close to its source — rain gardens, filter strips, swales, and
                         bioretention areas that filter, infiltrate, and attenuate water at a local
                         level.
@@ -1445,7 +1445,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Regional Management</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Manage larger volumes — detention basins, constructed wetlands, attenuation
                         ponds. These provide storage, further treatment, and controlled release of
                         water into watercourses.
@@ -1457,7 +1457,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
 
               <div className="bg-white/5 border border-green-400/30 p-4 rounded-lg">
                 <h3 className="text-green-300 font-medium mb-3">Key SuDS Concepts</h3>
-                <ul className="text-white/70 space-y-3 text-sm">
+                <ul className="text-white space-y-3 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-green-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1494,7 +1494,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
                 <h3 className="font-semibold mb-2 text-emerald-400">
                   Why SuDS Matter for Electricians
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   As an electrician working on construction sites, you may not design SuDS, but you
                   need to understand them. You will encounter temporary SuDS on site that you must
                   not damage or obstruct. You may install electrical services (lighting, pumps,
@@ -1521,7 +1521,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1537,7 +1537,7 @@ const EnvironmentalSustainabilityModule4Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-4-section-1">

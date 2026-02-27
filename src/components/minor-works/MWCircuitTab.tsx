@@ -443,7 +443,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                   </div>
                   <div className="p-4 space-y-4">
                     <div className="space-y-1.5">
-                      <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                      <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                         BS (EN) Standard
                       </label>
                       <Select
@@ -460,7 +460,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                           <SelectItem value="BS EN 61008">
                             <div className="flex flex-col">
                               <span>BS EN 61008</span>
-                              <span className="text-xs text-white/50">
+                              <span className="text-xs text-white">
                                 RCDs without overcurrent protection
                               </span>
                             </div>
@@ -468,13 +468,13 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                           <SelectItem value="BS EN 61009">
                             <div className="flex flex-col">
                               <span>BS EN 61009</span>
-                              <span className="text-xs text-white/50">RCBOs</span>
+                              <span className="text-xs text-white">RCBOs</span>
                             </div>
                           </SelectItem>
                           <SelectItem value="BS EN 62423">
                             <div className="flex flex-col">
                               <span>BS EN 62423</span>
-                              <span className="text-xs text-white/50">Type F and Type B RCDs</span>
+                              <span className="text-xs text-white">Type F and Type B RCDs</span>
                             </div>
                           </SelectItem>
                         </SelectContent>
@@ -482,7 +482,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                     </div>
                     <div className="grid grid-cols-2 gap-3">
                       <div className="space-y-1.5">
-                        <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                        <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                           Type
                         </label>
                         <Select
@@ -505,7 +505,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                         </Select>
                       </div>
                       <div className="space-y-1.5">
-                        <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                        <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                           Rating (A)
                         </label>
                         <Input
@@ -518,7 +518,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                       </div>
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                      <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                         IΔn (mA)
                       </label>
                       <Select
@@ -552,7 +552,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                   </div>
                   <div className="p-4 space-y-4">
                     <div className="space-y-1.5">
-                      <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                      <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                         BS (EN) Standard
                       </label>
                       <Select
@@ -569,7 +569,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                           <SelectItem value="BS EN 62606">
                             <div className="flex flex-col">
                               <span>BS EN 62606</span>
-                              <span className="text-xs text-white/50">
+                              <span className="text-xs text-white">
                                 Arc Fault Detection Devices
                               </span>
                             </div>
@@ -578,7 +578,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                       </Select>
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                      <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                         Rating (A)
                       </label>
                       <Input
@@ -601,7 +601,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                   </div>
                   <div className="p-4 space-y-4">
                     <div className="space-y-1.5">
-                      <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                      <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                         BS (EN) Standard
                       </label>
                       <Select
@@ -618,7 +618,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                           <SelectItem value="BS EN 61643-11">
                             <div className="flex flex-col">
                               <span>BS EN 61643-11</span>
-                              <span className="text-xs text-white/50">
+                              <span className="text-xs text-white">
                                 Surge Protective Devices
                               </span>
                             </div>
@@ -627,7 +627,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                       </Select>
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                      <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                         Type
                       </label>
                       <Select
@@ -644,7 +644,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                           <SelectItem value="1">
                             <div className="flex flex-col">
                               <span>Type 1</span>
-                              <span className="text-xs text-white/50">
+                              <span className="text-xs text-white">
                                 Lightning current arrestor
                               </span>
                             </div>
@@ -652,7 +652,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                           <SelectItem value="2">
                             <div className="flex flex-col">
                               <span>Type 2</span>
-                              <span className="text-xs text-white/50">
+                              <span className="text-xs text-white">
                                 Overvoltage limiting device
                               </span>
                             </div>
@@ -660,19 +660,19 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                           <SelectItem value="3">
                             <div className="flex flex-col">
                               <span>Type 3</span>
-                              <span className="text-xs text-white/50">Equipment protection</span>
+                              <span className="text-xs text-white">Equipment protection</span>
                             </div>
                           </SelectItem>
                           <SelectItem value="1+2">
                             <div className="flex flex-col">
                               <span>Type 1+2</span>
-                              <span className="text-xs text-white/50">Combined Type 1 and 2</span>
+                              <span className="text-xs text-white">Combined Type 1 and 2</span>
                             </div>
                           </SelectItem>
                           <SelectItem value="2+3">
                             <div className="flex flex-col">
                               <span>Type 2+3</span>
-                              <span className="text-xs text-white/50">Combined Type 2 and 3</span>
+                              <span className="text-xs text-white">Combined Type 2 and 3</span>
                             </div>
                           </SelectItem>
                         </SelectContent>
@@ -812,7 +812,7 @@ const MWCircuitTab: React.FC<MWCircuitTabProps> = ({ formData, onUpdate, isMobil
                           <div className="flex flex-col">
                             <span>{opt.label}</span>
                             {opt.description && (
-                              <span className="text-xs text-white/50">{opt.description}</span>
+                              <span className="text-xs text-white">{opt.description}</span>
                             )}
                           </div>
                         </SelectItem>

@@ -271,7 +271,7 @@ const PublicBriefingSign = () => {
       <div className="min-h-screen bg-[#0a0e17] flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-yellow-400" />
-          <p className="text-white/60 text-sm">Loading briefing...</p>
+          <p className="text-white text-sm">Loading briefing...</p>
         </div>
       </div>
     );
@@ -286,7 +286,7 @@ const PublicBriefingSign = () => {
             <AlertTriangle className="h-8 w-8 text-red-400" />
           </div>
           <h1 className="text-xl font-bold text-white mb-2">Link Not Valid</h1>
-          <p className="text-white/50 text-sm">
+          <p className="text-white text-sm">
             {error || 'This signing link is invalid or has expired.'}
           </p>
         </div>
@@ -312,11 +312,11 @@ const PublicBriefingSign = () => {
             <CheckCircle className="h-10 w-10 text-emerald-400" />
           </motion.div>
           <h1 className="text-2xl font-bold text-white mb-2">Signed Successfully</h1>
-          <p className="text-white/50 text-sm mb-6">
+          <p className="text-white text-sm mb-6">
             Thank you, {signerName}. Your signature for &quot;{briefing.briefing_name}&quot; has
             been recorded.
           </p>
-          <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-sm text-white/40">
+          <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-sm text-white">
             You can close this page now.
           </div>
         </motion.div>
@@ -379,16 +379,16 @@ const PublicBriefingSign = () => {
           <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4 space-y-3">
             <div className="flex items-center gap-3 text-sm">
               <div className="w-7 h-7 rounded-lg bg-white/[0.06] flex items-center justify-center shrink-0">
-                <MapPin className="h-3.5 w-3.5 text-white/50" />
+                <MapPin className="h-3.5 w-3.5 text-white" />
               </div>
-              <span className="text-white/70 truncate min-w-0">{briefing.location}</span>
+              <span className="text-white truncate min-w-0">{briefing.location}</span>
             </div>
             <div className="flex items-center gap-3 text-sm flex-wrap">
               <div className="flex items-center gap-3 shrink-0">
                 <div className="w-7 h-7 rounded-lg bg-white/[0.06] flex items-center justify-center shrink-0">
-                  <Calendar className="h-3.5 w-3.5 text-white/50" />
+                  <Calendar className="h-3.5 w-3.5 text-white" />
                 </div>
-                <span className="text-white/70 whitespace-nowrap">
+                <span className="text-white whitespace-nowrap">
                   {new Date(briefing.briefing_date + 'T00:00:00').toLocaleDateString('en-GB', {
                     day: 'numeric',
                     month: 'short',
@@ -396,20 +396,20 @@ const PublicBriefingSign = () => {
                   })}
                 </span>
               </div>
-              <span className="text-white/20 hidden sm:inline">|</span>
+              <span className="text-white hidden sm:inline">|</span>
               <div className="flex items-center gap-3 shrink-0">
                 <div className="w-7 h-7 rounded-lg bg-white/[0.06] flex items-center justify-center shrink-0">
-                  <Clock className="h-3.5 w-3.5 text-white/50" />
+                  <Clock className="h-3.5 w-3.5 text-white" />
                 </div>
-                <span className="text-white/70 whitespace-nowrap">{briefing.briefing_time}</span>
+                <span className="text-white whitespace-nowrap">{briefing.briefing_time}</span>
               </div>
             </div>
             {briefing.created_by_name && (
               <div className="flex items-center gap-3 text-sm">
                 <div className="w-7 h-7 rounded-lg bg-white/[0.06] flex items-center justify-center shrink-0">
-                  <User className="h-3.5 w-3.5 text-white/50" />
+                  <User className="h-3.5 w-3.5 text-white" />
                 </div>
-                <span className="text-white/70 truncate min-w-0">
+                <span className="text-white truncate min-w-0">
                   Presented by {briefing.created_by_name}
                 </span>
               </div>
@@ -420,8 +420,8 @@ const PublicBriefingSign = () => {
           {briefing.identified_hazards && briefing.identified_hazards.length > 0 && (
             <div className="space-y-2.5">
               <div className="flex items-center gap-2">
-                <ShieldAlert className="h-3.5 w-3.5 text-white/40" />
-                <span className="text-xs font-semibold text-white/40 uppercase tracking-wider">
+                <ShieldAlert className="h-3.5 w-3.5 text-white" />
+                <span className="text-xs font-semibold text-white uppercase tracking-wider">
                   Identified Hazards
                 </span>
               </div>
@@ -454,12 +454,12 @@ const PublicBriefingSign = () => {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <Users className="h-3.5 w-3.5 text-white/40" />
-                  <span className="text-xs font-semibold text-white/40 uppercase tracking-wider">
+                  <Users className="h-3.5 w-3.5 text-white" />
+                  <span className="text-xs font-semibold text-white uppercase tracking-wider">
                     Attendees
                   </span>
                 </div>
-                <span className="text-xs text-white/50">
+                <span className="text-xs text-white">
                   {signedCount} of {totalExpected} signed
                 </span>
               </div>
@@ -499,7 +499,7 @@ const PublicBriefingSign = () => {
                       )}
                     >
                       <div className="flex items-center gap-3 min-w-0 flex-1">
-                        <span className="text-xs text-white/30 w-5 text-right shrink-0">
+                        <span className="text-xs text-white w-5 text-right shrink-0">
                           {idx + 1}.
                         </span>
                         {isSigned ? (
@@ -511,18 +511,18 @@ const PublicBriefingSign = () => {
                           <span
                             className={cn(
                               'text-sm truncate block',
-                              isSigned ? 'text-white/80' : 'text-white/70'
+                              isSigned ? 'text-white' : 'text-white'
                             )}
                           >
                             {name}
                           </span>
                           {attendee.role && (
-                            <span className="text-xs text-white/30">{attendee.role}</span>
+                            <span className="text-xs text-white">{attendee.role}</span>
                           )}
                         </div>
                       </div>
                       {isSigned ? (
-                        <span className="text-xs text-white/30 shrink-0 whitespace-nowrap">
+                        <span className="text-xs text-white shrink-0 whitespace-nowrap">
                           {sig?.signed_at
                             ? new Date(sig.signed_at).toLocaleTimeString('en-GB', {
                                 hour: '2-digit',
@@ -557,7 +557,7 @@ const PublicBriefingSign = () => {
                   }, 100);
                 }
               }}
-              className="w-full flex items-center justify-center gap-2 py-3 text-sm text-white/40 hover:text-white/60 transition-colors touch-manipulation min-h-[44px]"
+              className="w-full flex items-center justify-center gap-2 py-3 text-sm text-white hover:text-white transition-colors touch-manipulation min-h-[44px]"
             >
               <span>Not on the list? Sign as a guest</span>
               <ChevronDown
@@ -586,16 +586,16 @@ const PublicBriefingSign = () => {
                   <h2 className="text-sm font-bold text-white">Sign This Briefing</h2>
                 </div>
 
-                <p className="text-xs text-white/40 -mt-2">
+                <p className="text-xs text-white -mt-2">
                   By signing below you confirm you have read and understood this briefing and its
                   safety requirements.
                 </p>
 
                 {/* Name input */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-white/60">Your Full Name *</label>
+                  <label className="text-xs font-medium text-white">Your Full Name *</label>
                   <div className="relative">
-                    <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                     <input
                       type="text"
                       value={signerName}
@@ -614,9 +614,9 @@ const PublicBriefingSign = () => {
 
                 {/* Company input */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-white/60">Company (optional)</label>
+                  <label className="text-xs font-medium text-white">Company (optional)</label>
                   <div className="relative">
-                    <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
+                    <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                     <input
                       type="text"
                       value={signerCompany}
@@ -636,12 +636,12 @@ const PublicBriefingSign = () => {
                 {/* Signature pad */}
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <label className="text-xs font-medium text-white/60">Your Signature *</label>
+                    <label className="text-xs font-medium text-white">Your Signature *</label>
                     {hasDrawn && (
                       <button
                         type="button"
                         onClick={clearSignature}
-                        className="flex items-center gap-1.5 text-sm text-white/40 hover:text-white/60 touch-manipulation min-h-[44px] px-2"
+                        className="flex items-center gap-1.5 text-sm text-white hover:text-white touch-manipulation min-h-[44px] px-2"
                       >
                         <RotateCcw className="h-3.5 w-3.5" />
                         Clear
@@ -686,7 +686,7 @@ const PublicBriefingSign = () => {
                     'w-full h-14 rounded-xl flex items-center justify-center gap-2',
                     'text-base font-semibold transition-all touch-manipulation',
                     submitting || !signerName.trim() || !hasDrawn
-                      ? 'bg-white/10 text-white/30 cursor-not-allowed'
+                      ? 'bg-white/10 text-white cursor-not-allowed'
                       : 'bg-emerald-500 text-white hover:bg-emerald-600 active:scale-[0.98] shadow-lg shadow-emerald-500/20'
                   )}
                 >
@@ -709,7 +709,7 @@ const PublicBriefingSign = () => {
 
         {/* Footer */}
         <div className="px-5 pb-8 text-center">
-          <p className="text-xs text-white/20">
+          <p className="text-xs text-white">
             Powered by Elec-Mate | Secure Digital Briefing Sign-Off
           </p>
         </div>

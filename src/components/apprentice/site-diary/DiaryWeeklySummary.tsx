@@ -227,7 +227,7 @@ export function DiaryWeeklySummary({
                   className={`px-2 py-1 rounded-lg text-[10px] font-medium border ${
                     m.reached
                       ? 'bg-orange-500/15 border-orange-500/30 text-orange-400'
-                      : 'bg-white/[0.03] border-white/[0.06] text-white/30'
+                      : 'bg-white/[0.03] border-white/[0.06] text-white'
                   }`}
                 >
                   {m.icon} {m.label}
@@ -256,13 +256,13 @@ export function DiaryWeeklySummary({
             )}
 
             {/* Motivational message */}
-            <p className="text-[11px] text-white/70 italic">{streakMessage}</p>
+            <p className="text-[11px] text-white italic">{streakMessage}</p>
           </div>
 
           {/* AI weekly summary */}
           {aiSummary && (
             <div className="pt-1 border-t border-white/[0.06]">
-              <p className="text-[11px] text-white/80 leading-relaxed">{aiSummary}</p>
+              <p className="text-[11px] text-white leading-relaxed">{aiSummary}</p>
             </div>
           )}
         </div>

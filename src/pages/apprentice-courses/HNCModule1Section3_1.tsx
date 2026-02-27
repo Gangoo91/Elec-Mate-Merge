@@ -262,7 +262,7 @@ const HNCModule1Section3_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section3">
@@ -284,7 +284,7 @@ const HNCModule1Section3_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Safety Policy and Organisation
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             The foundation of effective safety management in building services organisations
           </p>
         </header>
@@ -725,7 +725,7 @@ const HNCModule1Section3_1 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Two-way communication:</strong> Employees must have the opportunity to raise
               concerns and provide feedback. This consultation is a legal requirement under the
               Safety Representatives and Safety Committees Regulations or the Health and Safety
@@ -752,7 +752,7 @@ const HNCModule1Section3_1 = () => {
                 <strong>Scenario:</strong> A 12-person electrical contracting company needs to
                 develop their safety policy.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p>
                   <strong>Statement of Intent:</strong>
                 </p>
@@ -784,7 +784,7 @@ const HNCModule1Section3_1 = () => {
                 <strong>Scenario:</strong> How to ensure all workers understand safety requirements
                 on a large commercial project.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p>
                   <strong>Communication Strategy:</strong>
                 </p>
@@ -871,7 +871,7 @@ const HNCModule1Section3_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -917,7 +917,7 @@ const HNCModule1Section3_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section3">

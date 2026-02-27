@@ -267,7 +267,7 @@ const HNCModule7Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section4">
@@ -289,7 +289,7 @@ const HNCModule7Section4_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Daylight Harvesting
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Photocell types, closed-loop control, sensor placement and integration with artificial
             lighting
           </p>
@@ -762,7 +762,7 @@ const HNCModule7Section4_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">1. Safety Functions</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Emergency lighting activation</li>
                     <li>Fire alarm response (full on)</li>
                     <li>Evacuation lighting modes</li>
@@ -770,7 +770,7 @@ const HNCModule7Section4_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">2. Occupancy Control</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Lights off when unoccupied</li>
                     <li>Auto-on or manual-on selection</li>
                     <li>Timeout period management</li>
@@ -778,7 +778,7 @@ const HNCModule7Section4_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">3. Daylight Harvesting</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Continuous dimming control</li>
                     <li>Target lux maintenance</li>
                     <li>Zone-by-zone adjustment</li>
@@ -786,7 +786,7 @@ const HNCModule7Section4_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">4. User Override</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Manual scene selection</li>
                     <li>Temporary level adjustment</li>
                     <li>Timed override restoration</li>
@@ -896,7 +896,7 @@ const HNCModule7Section4_3 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>BMS integration:</strong> Provide BACnet or Modbus connection points for
               energy monitoring, alarm reporting, and schedule coordination. The BMS should not
               directly control dimming levels but can provide global overrides and energy data
@@ -923,8 +923,8 @@ const HNCModule7Section4_3 = () => {
                 <strong>Scenario:</strong> Open-plan office, 15m deep from south-facing curtain
                 wall, 500 lux target.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Zone Layout Design:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Zone Layout Design:</p>
                 <p className="mt-2">Zone A: 0-4m from window (perimeter)</p>
                 <p className="ml-4">- Full daylight harvesting</p>
                 <p className="ml-4">- Often at minimum output during daylight</p>
@@ -954,7 +954,7 @@ const HNCModule7Section4_3 = () => {
                 <strong>Scenario:</strong> Commission DALI daylight harvesting in Zone B (4-8m from
                 window).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Night-time calibration</p>
                 <p className="ml-4">- Blinds fully closed, no daylight</p>
                 <p className="ml-4">- Set luminaires to 100% output</p>
@@ -983,7 +983,7 @@ const HNCModule7Section4_3 = () => {
                 <strong>Scenario:</strong> Calculate annual savings for daylight harvesting in 500m²
                 office.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Baseline lighting load:</p>
                 <p className="ml-4">- 500m² @ 10 W/m² = 5,000W installed</p>
                 <p className="ml-4">- Operating hours: 2,500 hrs/year</p>
@@ -1083,7 +1083,7 @@ const HNCModule7Section4_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1129,7 +1129,7 @@ const HNCModule7Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section4">

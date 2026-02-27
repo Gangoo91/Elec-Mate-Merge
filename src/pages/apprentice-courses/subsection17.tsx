@@ -150,7 +150,7 @@ const Section4_4 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-foreground active:text-foreground p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -173,7 +173,7 @@ const Section4_4 = () => {
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
                 Manual Handling and Tool Safety
               </h1>
-              <p className="text-xl text-white/80 max-w-4xl mt-2">
+              <p className="text-xl text-white max-w-4xl mt-2">
                 Safe lifting techniques and responsible tool use for electrical work
               </p>
             </div>
@@ -228,7 +228,7 @@ const Section4_4 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
             Learning Outcomes
           </h2>
-          <p className="text-white/80 mb-4">By the end of this section, you'll be able to:</p>
+          <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-foreground">
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
@@ -274,7 +274,7 @@ const Section4_4 = () => {
                   <Package className="h-4 w-4 text-elec-yellow" />
                   Common Electrical Examples
                 </h4>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Moving 25kg cable drums</li>
                   <li>• Carrying ladders through buildings</li>
                   <li>• Lifting distribution boards onto walls</li>
@@ -419,7 +419,7 @@ const Section4_4 = () => {
                   </span>
                   Plan Your Lift
                 </h4>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Clear the route and check destination</li>
                   <li>• Test the weight - lift one corner first</li>
                   <li>• Decide if you need help or equipment</li>
@@ -434,7 +434,7 @@ const Section4_4 = () => {
                   </span>
                   Position Yourself
                 </h4>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Stand close to the load</li>
                   <li>• Feet shoulder-width apart</li>
                   <li>• One foot slightly ahead of the other</li>
@@ -449,7 +449,7 @@ const Section4_4 = () => {
                   </span>
                   Get a Good Grip
                 </h4>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Use both hands with secure hold</li>
                   <li>• Hook grip is stronger than fingertips</li>
                   <li>• Get as close to the load as possible</li>
@@ -464,7 +464,7 @@ const Section4_4 = () => {
                   </span>
                   Lift Smoothly
                 </h4>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Keep back straight, bend knees</li>
                   <li>• Lift with leg muscles, not back</li>
                   <li>• Rise smoothly without jerking</li>
@@ -479,7 +479,7 @@ const Section4_4 = () => {
                   </span>
                   Move and Place
                 </h4>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Move feet, don't twist spine</li>
                   <li>• Take small steps if needed</li>
                   <li>• Put load down by reversing lift</li>
@@ -494,7 +494,7 @@ const Section4_4 = () => {
                   </span>
                   After Lifting
                 </h4>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Straighten up slowly</li>
                   <li>• Check for any discomfort</li>
                   <li>• Report any strain or pain</li>
@@ -523,7 +523,7 @@ const Section4_4 = () => {
                   <Eye className="h-4 w-4 text-elec-yellow" />
                   Before Use
                 </h4>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Inspect tools for damage or wear</li>
                   <li>• Check guards and safety features</li>
                   <li>• Ensure proper working order</li>
@@ -537,7 +537,7 @@ const Section4_4 = () => {
                   <Settings className="h-4 w-4 text-elec-yellow" />
                   During Use
                 </h4>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Use the right tool for the job</li>
                   <li>• Maintain proper grip and control</li>
                   <li>• Keep tools away from live circuits</li>
@@ -551,7 +551,7 @@ const Section4_4 = () => {
                   <Wrench className="h-4 w-4 text-elec-yellow" />
                   After Use
                 </h4>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Clean tools before storing</li>
                   <li>• Store in designated locations</li>
                   <li>• Report any damage immediately</li>
@@ -565,7 +565,7 @@ const Section4_4 = () => {
                   <AlertCircle className="h-4 w-4 text-elec-yellow" />
                   Red Flags
                 </h4>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Damaged or frayed electrical cords</li>
                   <li>• Missing safety guards or shields</li>
                   <li>• Excessive vibration or noise</li>
@@ -755,7 +755,7 @@ const Section4_4 = () => {
                   <AlertTriangle className="h-4 w-4 text-elec-yellow" />
                   Back Injuries
                 </h4>
-                <ul className="text-sm text-white/80 space-y-1 mb-2">
+                <ul className="text-sm text-white space-y-1 mb-2">
                   <li>• Muscle strains from poor lifting</li>
                   <li>• Disc problems from twisting</li>
                   <li>• Cumulative damage from repetition</li>
@@ -770,7 +770,7 @@ const Section4_4 = () => {
                   <AlertTriangle className="h-4 w-4 text-elec-yellow" />
                   Shoulder/Arm Injuries
                 </h4>
-                <ul className="text-sm text-white/80 space-y-1 mb-2">
+                <ul className="text-sm text-white space-y-1 mb-2">
                   <li>• Rotator cuff strains</li>
                   <li>• Tennis elbow from repetitive actions</li>
                   <li>• Wrist injuries from awkward grips</li>
@@ -785,7 +785,7 @@ const Section4_4 = () => {
                   <AlertTriangle className="h-4 w-4 text-elec-yellow" />
                   Crush Injuries
                 </h4>
-                <ul className="text-sm text-white/80 space-y-1 mb-2">
+                <ul className="text-sm text-white space-y-1 mb-2">
                   <li>• Fingers caught between objects</li>
                   <li>• Foot injuries from dropped items</li>
                   <li>• Hand injuries from poor grip</li>
@@ -800,7 +800,7 @@ const Section4_4 = () => {
                   <AlertTriangle className="h-4 w-4 text-elec-yellow" />
                   Cuts and Lacerations
                 </h4>
-                <ul className="text-sm text-white/80 space-y-1 mb-2">
+                <ul className="text-sm text-white space-y-1 mb-2">
                   <li>• Sharp edges on materials</li>
                   <li>• Damaged tool handles</li>
                   <li>• Metal burrs and splinters</li>
@@ -837,7 +837,7 @@ const Section4_4 = () => {
                   <Settings className="h-4 w-4 text-elec-yellow" />
                   Common Mechanical Aids
                 </h4>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Sack trucks for cable drums</li>
                   <li>• Trolleys for heavy equipment</li>
                   <li>• Cable pulling systems</li>
@@ -851,7 +851,7 @@ const Section4_4 = () => {
                   <Package className="h-4 w-4 text-elec-yellow" />
                   Team Lifting Guidelines
                 </h4>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Designate one person as leader</li>
                   <li>• Ensure all team members are similar height</li>
                   <li>• Use clear verbal commands</li>
@@ -865,7 +865,7 @@ const Section4_4 = () => {
                   <CheckCircle className="h-4 w-4 text-elec-yellow" />
                   Benefits of Mechanical Aids
                 </h4>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Reduces physical strain on workers</li>
                   <li>• Increases efficiency and speed</li>
                   <li>• Prevents damage to materials</li>
@@ -879,7 +879,7 @@ const Section4_4 = () => {
                   <Clipboard className="h-4 w-4 text-elec-yellow" />
                   When to Use Aids
                 </h4>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Items over 25kg for most people</li>
                   <li>• Bulky or awkward shaped objects</li>
                   <li>• Repetitive lifting tasks</li>
@@ -901,7 +901,7 @@ const Section4_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-border pb-4 last:border-b-0">
                 <h3 className="font-semibold mb-2 text-elec-yellow">{faq.question}</h3>
-                <p className="text-white/80 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>

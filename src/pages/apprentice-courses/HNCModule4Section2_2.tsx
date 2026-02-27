@@ -217,7 +217,7 @@ const HNCModule4Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section2">
@@ -239,7 +239,7 @@ const HNCModule4Section2_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Voltage Drop Calculations
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Ensuring adequate voltage at the load through proper cable sizing and route planning
           </p>
         </header>
@@ -362,21 +362,21 @@ const HNCModule4Section2_2 = () => {
               <div className="grid sm:grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">Sub-main</p>
-                  <p className="text-white/70">Origin to DB</p>
+                  <p className="text-white">Origin to DB</p>
                   <p className="text-lg mt-1">2-3%</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">+</p>
-                  <p className="text-white/70 opacity-0">spacer</p>
+                  <p className="text-white opacity-0">spacer</p>
                   <p className="text-lg mt-1">&nbsp;</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">Final Circuit</p>
-                  <p className="text-white/70">DB to load</p>
+                  <p className="text-white">DB to load</p>
                   <p className="text-lg mt-1">2-3%</p>
                 </div>
               </div>
-              <p className="text-xs text-white/60 mt-2 text-center">
+              <p className="text-xs text-white mt-2 text-center">
                 Combined total must not exceed 5% (power) or 3% (lighting)
               </p>
             </div>
@@ -409,12 +409,12 @@ const HNCModule4Section2_2 = () => {
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">Single-Phase</p>
                   <p className="font-mono">Vd = (mV/A/m × I × L) / 1000</p>
-                  <p className="text-white/70 text-xs mt-1">Result in Volts</p>
+                  <p className="text-white text-xs mt-1">Result in Volts</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">Three-Phase</p>
                   <p className="font-mono">Vd = (mV/A/m × I × L) / 1000</p>
-                  <p className="text-white/70 text-xs mt-1">Use 3φ column values</p>
+                  <p className="text-white text-xs mt-1">Use 3φ column values</p>
                 </div>
               </div>
             </div>
@@ -512,7 +512,7 @@ const HNCModule4Section2_2 = () => {
                   Vd = (mV/A/m<sub>3φ</sub> × I<sub>L</sub> × L) / 1000
                 </p>
               </div>
-              <p className="text-xs text-white/60 mt-2 text-center">
+              <p className="text-xs text-white mt-2 text-center">
                 Where IL is the line current and L is the cable length in metres
               </p>
             </div>
@@ -551,7 +551,7 @@ const HNCModule4Section2_2 = () => {
               <div className="bg-black/30 p-3 rounded text-center font-mono text-sm">
                 <p>mV/A/m = (r × cos φ) + (x × sin φ)</p>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Where cos φ is the power factor. For pf = 0.85: sin φ = 0.527
               </p>
             </div>
@@ -663,7 +663,7 @@ const HNCModule4Section2_2 = () => {
                   <strong>DOL start (7× FLC):</strong> Vd = (3.8 × 182 × 50) / 1000 ={' '}
                   <span className="text-orange-400">34.6V (8.7%)</span>
                 </p>
-                <p className="mt-2 text-white/70">
+                <p className="mt-2 text-white">
                   → Running voltage drop acceptable; consider soft starter or VSD for starting
                 </p>
               </div>
@@ -695,7 +695,7 @@ const HNCModule4Section2_2 = () => {
                 <strong>Question:</strong> A 32A radial circuit uses 4mm² cable for a 35m run.
                 Calculate voltage drop and check compliance.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>mV/A/m for 4mm² 2-core = 11</p>
                 <p className="mt-2">Vd = (11 × 32 × 35) / 1000</p>
                 <p>
@@ -721,7 +721,7 @@ const HNCModule4Section2_2 = () => {
                 <strong>Question:</strong> A lighting circuit serves luminaires 45m from the DB.
                 Maximum current 8A. What cable size?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Lighting limit: 3% of 230V = 6.9V maximum</p>
                 <p className="mt-2">Try 1.5mm² (mV/A/m = 29):</p>
                 <p>
@@ -733,7 +733,7 @@ const HNCModule4Section2_2 = () => {
                   Vd = (18 × 8 × 45) / 1000 = <strong>6.5V (2.8%)</strong>
                 </p>
                 <p className="text-green-400">✓ Within 3% limit</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → 2.5mm² required despite 1.5mm² having adequate current capacity
                 </p>
               </div>
@@ -747,7 +747,7 @@ const HNCModule4Section2_2 = () => {
                 <strong>Question:</strong> Size a 3-phase sub-main for 80A balanced load, 60m
                 length, allocated 2.5% drop.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Maximum Vd = 2.5% of 400V = <strong>10V</strong>
                 </p>
@@ -843,7 +843,7 @@ const HNCModule4Section2_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -889,7 +889,7 @@ const HNCModule4Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section2-1">

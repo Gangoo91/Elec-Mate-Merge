@@ -30,7 +30,7 @@ const QuoteInvoiceDashboard = () => {
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 Quote & Invoice Dashboard
               </h1>
-              <p className="text-sm text-white/60">Manage quotes and track invoices</p>
+              <p className="text-sm text-white">Manage quotes and track invoices</p>
             </div>
           </div>
           <SmartBackButton />
@@ -41,7 +41,7 @@ const QuoteInvoiceDashboard = () => {
           <Link to="/electrician/invoices">
             <Button
               variant="outline"
-              className="border-white/20 text-white/80 hover:text-white hover:bg-white/10 gap-2 h-10 px-4 touch-manipulation"
+              className="border-white/20 text-white hover:text-white hover:bg-white/10 gap-2 h-10 px-4 touch-manipulation"
             >
               <List className="h-4 w-4" />
               All Invoices

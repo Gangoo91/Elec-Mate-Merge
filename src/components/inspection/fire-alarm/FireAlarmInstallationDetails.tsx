@@ -203,7 +203,7 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.metadata && 'rotate-180'
                   )}
                 />
@@ -342,7 +342,7 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.client && 'rotate-180'
                   )}
                 />
@@ -445,7 +445,7 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.premises && 'rotate-180'
                   )}
                 />
@@ -588,7 +588,7 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.system && 'rotate-180'
                   )}
                 />
@@ -831,7 +831,7 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                         variant="ghost"
                         size="icon"
                         onClick={clearSerialPhoto}
-                        className="ml-auto h-6 w-6 text-white/40 hover:text-white hover:bg-white/10"
+                        className="ml-auto h-6 w-6 text-white hover:text-white hover:bg-white/10"
                       >
                         <X className="h-3 w-3" />
                       </Button>
@@ -881,7 +881,7 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.power && 'rotate-180'
                   )}
                 />
@@ -986,7 +986,7 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.certification && 'rotate-180'
                   )}
                 />
@@ -1095,7 +1095,7 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.fra && 'rotate-180'
                   )}
                 />
@@ -1207,7 +1207,7 @@ const FireAlarmInstallationDetails: React.FC<FireAlarmInstallationDetailsProps> 
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.monitoring && 'rotate-180'
                   )}
                 />

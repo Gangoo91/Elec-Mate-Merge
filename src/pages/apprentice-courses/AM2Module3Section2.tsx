@@ -551,15 +551,15 @@ const AM2Module3Section2 = () => {
 
       {/* Ring Final Circuit */}
       <AM2ContentCard title="1. Ring Final Circuit" icon={Zap} accent>
-        <div className="space-y-4 text-xs sm:text-sm text-white/80">
+        <div className="space-y-4 text-xs sm:text-sm text-white">
           <div>
-            <h3 className="font-medium text-white/90 mb-2">Typical Specification</h3>
+            <h3 className="font-medium text-white mb-2">Typical Specification</h3>
             <p>2.5mm² twin & earth cable, 32A MCB protection. Must form a complete closed loop.</p>
           </div>
 
           <div>
-            <h3 className="font-medium text-white/90 mb-2">Critical Testing Requirements</h3>
-            <ul className="space-y-1 text-white/70">
+            <h3 className="font-medium text-white mb-2">Critical Testing Requirements</h3>
+            <ul className="space-y-1 text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 End-to-end continuity (Line, Neutral, CPC)
@@ -580,8 +580,8 @@ const AM2Module3Section2 = () => {
           </div>
 
           <div>
-            <h3 className="font-medium text-white/90 mb-2">Assessor Focus Points</h3>
-            <ul className="space-y-1 text-white/70">
+            <h3 className="font-medium text-white mb-2">Assessor Focus Points</h3>
+            <ul className="space-y-1 text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Ring continuity completely intact
@@ -611,10 +611,10 @@ const AM2Module3Section2 = () => {
 
       {/* Radial Circuit */}
       <AM2ContentCard title="2. Radial Circuit" icon={Target}>
-        <div className="space-y-4 text-xs sm:text-sm text-white/80">
+        <div className="space-y-4 text-xs sm:text-sm text-white">
           <div>
-            <h3 className="font-medium text-white/90 mb-2">Typical Specifications</h3>
-            <ul className="space-y-1 text-white/70">
+            <h3 className="font-medium text-white mb-2">Typical Specifications</h3>
+            <ul className="space-y-1 text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 2.5mm² on 20A MCB for standard loads
@@ -631,8 +631,8 @@ const AM2Module3Section2 = () => {
           </div>
 
           <div>
-            <h3 className="font-medium text-white/90 mb-2">Assessor Focus Points</h3>
-            <ul className="space-y-1 text-white/70">
+            <h3 className="font-medium text-white mb-2">Assessor Focus Points</h3>
+            <ul className="space-y-1 text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Correct cable size as specified on drawings
@@ -660,9 +660,9 @@ const AM2Module3Section2 = () => {
 
       {/* Cooker Circuit */}
       <AM2ContentCard title="3. Cooker Circuit" icon={Settings}>
-        <div className="space-y-4 text-xs sm:text-sm text-white/80">
+        <div className="space-y-4 text-xs sm:text-sm text-white">
           <div>
-            <h3 className="font-medium text-white/90 mb-2">Typical Specification</h3>
+            <h3 className="font-medium text-white mb-2">Typical Specification</h3>
             <p>
               6mm² twin & earth cable, 32-40A MCB, connected through cooker control unit and outlet
               plate.
@@ -670,8 +670,8 @@ const AM2Module3Section2 = () => {
           </div>
 
           <div>
-            <h3 className="font-medium text-white/90 mb-2">Assessor Focus Points</h3>
-            <ul className="space-y-1 text-white/70">
+            <h3 className="font-medium text-white mb-2">Assessor Focus Points</h3>
+            <ul className="space-y-1 text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Correct cable size as per specification
@@ -696,7 +696,7 @@ const AM2Module3Section2 = () => {
           </div>
 
           <div className="bg-white/5 border border-amber-500/30 rounded-xl p-4">
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               <strong className="text-amber-400">Common Error:</strong> Over-stripping cable sheath
               leaving bare conductors visible at outlet plate. This is the most frequent reason for
               losing marks on cooker circuits.
@@ -709,9 +709,9 @@ const AM2Module3Section2 = () => {
 
       {/* Motor Circuit */}
       <AM2ContentCard title="4. Motor Circuit" icon={Wrench}>
-        <div className="space-y-4 text-xs sm:text-sm text-white/80">
+        <div className="space-y-4 text-xs sm:text-sm text-white">
           <div>
-            <h3 className="font-medium text-white/90 mb-2">Typical Configuration</h3>
+            <h3 className="font-medium text-white mb-2">Typical Configuration</h3>
             <p>
               Usually wired in SWA or flex, feeding a DOL (Direct-On-Line) starter. May include
               start/stop control circuit.
@@ -719,8 +719,8 @@ const AM2Module3Section2 = () => {
           </div>
 
           <div>
-            <h3 className="font-medium text-white/90 mb-2">Assessor Focus Points</h3>
-            <ul className="space-y-1 text-white/70">
+            <h3 className="font-medium text-white mb-2">Assessor Focus Points</h3>
+            <ul className="space-y-1 text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Correct SWA gland termination with earth continuity
@@ -749,7 +749,7 @@ const AM2Module3Section2 = () => {
           </div>
 
           <div className="bg-white/5 border border-elec-yellow/30 rounded-xl p-4">
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               <strong className="text-elec-yellow">Professional Tip:</strong> Practice SWA glanding
               until it's second nature. Use a checklist: gland tight, banjo fitted, earth
               continuous, cable strain relief adequate.
@@ -765,54 +765,54 @@ const AM2Module3Section2 = () => {
         title="5. General Assessor Expectations (All Power Circuits)"
         icon={CheckCircle}
       >
-        <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white/80">
+        <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-xs sm:text-sm text-white">
           <div>
-            <h3 className="font-medium text-white/90 mb-3">Technical Requirements</h3>
+            <h3 className="font-medium text-white mb-3">Technical Requirements</h3>
             <ul className="space-y-2">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 <span>
-                  <strong className="text-white/90">Specification compliance:</strong> Cable sizes,
+                  <strong className="text-white">Specification compliance:</strong> Cable sizes,
                   routes, protective devices exactly as shown
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 <span>
-                  <strong className="text-white/90">Safety:</strong> CPC sleeved and connected, no
+                  <strong className="text-white">Safety:</strong> CPC sleeved and connected, no
                   exposed copper
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 <span>
-                  <strong className="text-white/90">Testing:</strong> All tests completed before
+                  <strong className="text-white">Testing:</strong> All tests completed before
                   energisation
                 </span>
               </li>
             </ul>
           </div>
           <div>
-            <h3 className="font-medium text-white/90 mb-3">Workmanship Standards</h3>
+            <h3 className="font-medium text-white mb-3">Workmanship Standards</h3>
             <ul className="space-y-2">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 <span>
-                  <strong className="text-white/90">Installation quality:</strong> Straight runs,
+                  <strong className="text-white">Installation quality:</strong> Straight runs,
                   level accessories, neat terminations
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 <span>
-                  <strong className="text-white/90">Professional finish:</strong> Conduits/trunking
+                  <strong className="text-white">Professional finish:</strong> Conduits/trunking
                   aligned, cables not twisted
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 <span>
-                  <strong className="text-white/90">Protection integrity:</strong> No damage to
+                  <strong className="text-white">Protection integrity:</strong> No damage to
                   cable insulation
                 </span>
               </li>
@@ -827,7 +827,7 @@ const AM2Module3Section2 = () => {
           <div className="space-y-3">
             <div className="p-3 bg-white/5 border border-red-500/30 rounded-xl">
               <h4 className="font-medium text-red-400 text-sm">Critical Errors (Fail)</h4>
-              <ul className="text-sm text-white/80 mt-2 space-y-1">
+              <ul className="text-sm text-white mt-2 space-y-1">
                 <li className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>
                   Wrong cable size installed
@@ -852,7 +852,7 @@ const AM2Module3Section2 = () => {
               <h4 className="font-medium text-amber-400 text-sm">
                 Workmanship Issues (Marks Lost)
               </h4>
-              <ul className="text-sm text-white/80 mt-2 space-y-1">
+              <ul className="text-sm text-white mt-2 space-y-1">
                 <li className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 bg-amber-400 rounded-full mt-2 flex-shrink-0"></div>
                   Cooker cable sheath not fully enclosed
@@ -879,35 +879,35 @@ const AM2Module3Section2 = () => {
 
       {/* Practical Guidance */}
       <AM2ContentCard title="7. Practical Guidance" icon={Clock}>
-        <div className="space-y-4 text-xs sm:text-sm text-white/80">
+        <div className="space-y-4 text-xs sm:text-sm text-white">
           <div>
-            <h3 className="font-medium text-white/90 mb-2">Time Management Strategies</h3>
+            <h3 className="font-medium text-white mb-2">Time Management Strategies</h3>
             <ul className="space-y-2">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 <span>
-                  <strong className="text-white/90">Ring circuits:</strong> Lay out both ends before
+                  <strong className="text-white">Ring circuits:</strong> Lay out both ends before
                   terminating to ensure continuity
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 <span>
-                  <strong className="text-white/90">Radials:</strong> Mark clearly where the circuit
+                  <strong className="text-white">Radials:</strong> Mark clearly where the circuit
                   ends to avoid confusion
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 <span>
-                  <strong className="text-white/90">Cooker circuits:</strong> Pre-shape large cables
+                  <strong className="text-white">Cooker circuits:</strong> Pre-shape large cables
                   before termination
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 <span>
-                  <strong className="text-white/90">Motors:</strong> Have SWA glanding checklist
+                  <strong className="text-white">Motors:</strong> Have SWA glanding checklist
                   ready
                 </span>
               </li>
@@ -915,7 +915,7 @@ const AM2Module3Section2 = () => {
           </div>
 
           <div>
-            <h3 className="font-medium text-white/90 mb-2">Professional Techniques</h3>
+            <h3 className="font-medium text-white mb-2">Professional Techniques</h3>
             <ul className="space-y-2">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
@@ -943,7 +943,7 @@ const AM2Module3Section2 = () => {
         <div className="grid gap-4 text-xs sm:text-sm">
           <div className="p-4 bg-white/5 border border-red-500/30 rounded-xl">
             <h4 className="font-medium text-red-400 mb-2">Example 1: Ring Final Failure</h4>
-            <p className="text-white/80">
+            <p className="text-white">
               Candidate installed ring final but left one leg disconnected in consumer unit. Failed
               continuity test - section fail. Always verify complete loop before termination.
             </p>
@@ -951,7 +951,7 @@ const AM2Module3Section2 = () => {
 
           <div className="p-4 bg-white/5 border border-red-500/30 rounded-xl">
             <h4 className="font-medium text-red-400 mb-2">Example 2: Cooker Circuit Workmanship</h4>
-            <p className="text-white/80">
+            <p className="text-white">
               Cooker circuit wired with sheath stripped back too far. Exposed cable insulation
               visible at outlet plate = significant marks lost for poor workmanship.
             </p>
@@ -959,7 +959,7 @@ const AM2Module3Section2 = () => {
 
           <div className="p-4 bg-white/5 border border-amber-500/30 rounded-xl">
             <h4 className="font-medium text-amber-400 mb-2">Example 3: Motor Circuit Incomplete</h4>
-            <p className="text-white/80">
+            <p className="text-white">
               Motor circuit wired correctly but overload protection not set for motor FLC. Assessor
               flagged incomplete installation - lost marks for attention to detail.
             </p>
@@ -967,7 +967,7 @@ const AM2Module3Section2 = () => {
 
           <div className="p-4 bg-white/5 border border-amber-500/30 rounded-xl">
             <h4 className="font-medium text-amber-400 mb-2">Example 4: Terminal Damage</h4>
-            <p className="text-white/80">
+            <p className="text-white">
               Candidate over-tightened terminals on 6mm² cooker cable, crushing insulation. Lost
               significant workmanship marks for poor technique.
             </p>
@@ -977,9 +977,9 @@ const AM2Module3Section2 = () => {
 
       {/* FAQ Section */}
       <AM2ContentCard title="9. Frequently Asked Questions" icon={BookOpen}>
-        <div className="space-y-4 text-xs sm:text-sm text-white/80">
+        <div className="space-y-4 text-xs sm:text-sm text-white">
           <div>
-            <h3 className="font-medium text-white/90 mb-2">
+            <h3 className="font-medium text-white mb-2">
               Q1: Do I need to calculate cable sizes in AM2?
             </h3>
             <p>
@@ -989,7 +989,7 @@ const AM2Module3Section2 = () => {
           </div>
 
           <div>
-            <h3 className="font-medium text-white/90 mb-2">
+            <h3 className="font-medium text-white mb-2">
               Q2: Will the assessor open socket outlets and accessories?
             </h3>
             <p>
@@ -999,7 +999,7 @@ const AM2Module3Section2 = () => {
           </div>
 
           <div>
-            <h3 className="font-medium text-white/90 mb-2">
+            <h3 className="font-medium text-white mb-2">
               Q3: Can I energise a circuit before completing all tests?
             </h3>
             <p>
@@ -1009,7 +1009,7 @@ const AM2Module3Section2 = () => {
           </div>
 
           <div>
-            <h3 className="font-medium text-white/90 mb-2">
+            <h3 className="font-medium text-white mb-2">
               Q4: What if I accidentally damage cable insulation?
             </h3>
             <p>
@@ -1019,7 +1019,7 @@ const AM2Module3Section2 = () => {
           </div>
 
           <div>
-            <h3 className="font-medium text-white/90 mb-2">
+            <h3 className="font-medium text-white mb-2">
               Q5: How important is neatness compared to correctness?
             </h3>
             <p>
@@ -1034,7 +1034,7 @@ const AM2Module3Section2 = () => {
 
       {/* Summary */}
       <AM2ContentCard title="10. Summary" icon={CheckCircle} accent>
-        <div className="space-y-4 text-sm text-white/80">
+        <div className="space-y-4 text-sm text-white">
           <p>
             In AM2, power circuits must be installed to specification, neatly, and safely. Assessors
             check:
@@ -1043,28 +1043,28 @@ const AM2Module3Section2 = () => {
             <li className="flex items-start gap-2">
               <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
               <span>
-                <strong className="text-white/90">Technical accuracy:</strong> Ring continuity,
+                <strong className="text-white">Technical accuracy:</strong> Ring continuity,
                 correct radial wiring, proper cooker cable termination
               </span>
             </li>
             <li className="flex items-start gap-2">
               <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
               <span>
-                <strong className="text-white/90">Motor circuits:</strong> Overloads set correctly,
+                <strong className="text-white">Motor circuits:</strong> Overloads set correctly,
                 SWA glanded properly with earth continuity
               </span>
             </li>
             <li className="flex items-start gap-2">
               <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
               <span>
-                <strong className="text-white/90">Professional standards:</strong> CPCs sleeved,
+                <strong className="text-white">Professional standards:</strong> CPCs sleeved,
                 terminations secure, accessories level
               </span>
             </li>
             <li className="flex items-start gap-2">
               <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
               <span>
-                <strong className="text-white/90">Safety compliance:</strong> No unsafe shortcuts,
+                <strong className="text-white">Safety compliance:</strong> No unsafe shortcuts,
                 circuits tested fully before energisation
               </span>
             </li>

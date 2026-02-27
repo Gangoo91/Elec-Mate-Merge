@@ -209,7 +209,7 @@ const InspectionTestingModule4Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-4">
@@ -231,7 +231,7 @@ const InspectionTestingModule4Section5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Interpreting IR Results
           </h1>
-          <p className="text-white/80">Understand what IR readings mean and when to take action</p>
+          <p className="text-white">Understand what IR readings mean and when to take action</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -306,12 +306,12 @@ const InspectionTestingModule4Section5 = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/20">
-                    <th className="text-left py-2 text-white/60">Circuit Type</th>
-                    <th className="text-center py-2 text-white/60">Test V</th>
-                    <th className="text-right py-2 text-white/60">Min IR</th>
+                    <th className="text-left py-2 text-white">Circuit Type</th>
+                    <th className="text-center py-2 text-white">Test V</th>
+                    <th className="text-right py-2 text-white">Min IR</th>
                   </tr>
                 </thead>
-                <tbody className="text-white/80">
+                <tbody className="text-white">
                   <tr className="border-b border-white/10">
                     <td className="py-3">SELV/PELV</td>
                     <td className="text-center font-mono">250V</td>
@@ -348,25 +348,25 @@ const InspectionTestingModule4Section5 = () => {
             <div className="space-y-3 my-6">
               <div className="p-3 rounded-lg bg-emerald-500/10">
                 <p className="text-emerald-400 font-medium text-sm">New Installation</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   &gt;100 MΩ or OL (Over Limit). Modern cables have excellent insulation when new.
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-blue-500/10">
                 <p className="text-blue-400 font-medium text-sm">5-10 Years Old</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   20-100 MΩ typical. Some degradation is normal with age.
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-amber-500/10">
                 <p className="text-amber-400 font-medium text-sm">15-25 Years Old</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   5-50 MΩ typical. Monitor for continued decline.
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-red-500/10">
                 <p className="text-red-400 font-medium text-sm">&gt;25 Years / Poor Environment</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   May approach minimum values. Consider replacement if declining.
                 </p>
               </div>
@@ -387,11 +387,11 @@ const InspectionTestingModule4Section5 = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/20">
-                    <th className="text-left py-2 text-white/60">Reading</th>
-                    <th className="text-left py-2 text-white/60">Assessment</th>
+                    <th className="text-left py-2 text-white">Reading</th>
+                    <th className="text-left py-2 text-white">Assessment</th>
                   </tr>
                 </thead>
-                <tbody className="text-white/80">
+                <tbody className="text-white">
                   <tr className="border-b border-white/10">
                     <td className="py-2 font-mono">&gt;100 MΩ / OL</td>
                     <td className="py-2 text-emerald-400">Excellent - no action needed</td>
@@ -436,12 +436,12 @@ const InspectionTestingModule4Section5 = () => {
               ].map((item, i) => (
                 <div key={i} className="text-sm">
                   <p className="text-elec-yellow/80 font-medium">{item.factor}</p>
-                  <p className="text-white/80">{item.effect}</p>
+                  <p className="text-white">{item.effect}</p>
                 </div>
               ))}
             </div>
 
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong className="text-elec-yellow">Note:</strong> Consider all factors when
               assessing results. A 10 MΩ reading on a 200m industrial circuit is very different from
               10 MΩ on a 10m domestic circuit.
@@ -463,26 +463,26 @@ const InspectionTestingModule4Section5 = () => {
             <div className="space-y-4 my-6">
               <div className="border-l-2 border-elec-yellow pl-4">
                 <p className="text-elec-yellow font-medium text-sm">L-E Fails</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Phase insulation to earth compromised. Risk of earth leakage and shock.
                 </p>
               </div>
               <div className="border-l-2 border-blue-400 pl-4">
                 <p className="text-blue-400 font-medium text-sm">N-E Fails</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Neutral to earth insulation problem. May indicate N-E fault or shared neutral
                   issue.
                 </p>
               </div>
               <div className="border-l-2 border-purple-400 pl-4">
                 <p className="text-purple-400 font-medium text-sm">L-N Fails</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Conductor-to-conductor breakdown. High risk of short circuit if energised.
                 </p>
               </div>
               <div className="border-l-2 border-red-400 pl-4">
                 <p className="text-red-400 font-medium text-sm">All Three Fail</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Severe insulation breakdown or contamination. Likely water ingress or major
                   damage.
                 </p>
@@ -512,7 +512,7 @@ const InspectionTestingModule4Section5 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/10">
               <p className="text-elec-yellow text-sm font-semibold">Trending</p>
-              <p className="text-white/70 text-sm mt-1">
+              <p className="text-white text-sm mt-1">
                 Comparing IR values between periodic inspections reveals degradation trends and
                 helps predict when replacement will be needed.
               </p>
@@ -565,7 +565,7 @@ const InspectionTestingModule4Section5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -611,7 +611,7 @@ const InspectionTestingModule4Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-4/section-4">

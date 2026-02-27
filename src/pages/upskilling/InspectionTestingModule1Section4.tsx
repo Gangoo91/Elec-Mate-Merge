@@ -216,7 +216,7 @@ const InspectionTestingModule1Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-1">
@@ -238,7 +238,7 @@ const InspectionTestingModule1Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Safety During Testing
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding electrical hazards and implementing safe systems of work
           </p>
         </header>
@@ -323,28 +323,28 @@ const InspectionTestingModule1Section4 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-red-400 font-semibold text-sm mb-1">Electric Shock</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Current passing through the body causing injury or death. Severity depends on
                     current magnitude, path, and duration.
                   </p>
                 </div>
                 <div>
                   <p className="text-orange-400 font-semibold text-sm mb-1">Arc Flash</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Explosive release of energy when current arcs through air. Causes severe burns,
                     blast injuries, and can ignite clothing.
                   </p>
                 </div>
                 <div>
                   <p className="text-yellow-400 font-semibold text-sm mb-1">Electrical Burns</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Burns from current passing through tissue or from arc flash heat. Internal burns
                     may not be immediately visible.
                   </p>
                 </div>
                 <div>
                   <p className="text-purple-400 font-semibold text-sm mb-1">Secondary Injuries</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Falls from height after shock, injuries from sudden muscle contraction,
                     panic-related accidents.
                   </p>
@@ -361,10 +361,10 @@ const InspectionTestingModule1Section4 = () => {
                   <thead>
                     <tr className="border-b border-white/10">
                       <th className="text-left py-2 text-white">Current (mA)</th>
-                      <th className="text-left py-2 text-white/80">Effect at 50Hz AC</th>
+                      <th className="text-left py-2 text-white">Effect at 50Hz AC</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/5">
                       <td className="py-2 text-elec-yellow">1</td>
                       <td>Perception threshold - tingling sensation</td>
@@ -407,7 +407,7 @@ const InspectionTestingModule1Section4 = () => {
 
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20 my-6">
               <p className="text-white font-semibold">GS38 Golden Rule</p>
-              <p className="text-white/80 mt-2 italic">
+              <p className="text-white mt-2 italic">
                 "Always assume circuits are live until proven dead, and proven to remain dead."
               </p>
             </div>
@@ -473,21 +473,21 @@ const InspectionTestingModule1Section4 = () => {
               <div className="space-y-3">
                 <div>
                   <p className="text-white font-semibold text-sm">Safety Glasses/Goggles</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Protection from arc flash, flying debris, and particles when working in
                     enclosures
                   </p>
                 </div>
                 <div>
                   <p className="text-white font-semibold text-sm">Class 0 Insulating Gloves</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     1000V AC rated for low voltage work. Must be tested before each use and free
                     from damage.
                   </p>
                 </div>
                 <div>
                   <p className="text-white font-semibold text-sm">Safety Footwear</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Insulated safety boots with non-conductive soles. Protect against crush hazards
                     and provide stability.
                   </p>
@@ -517,7 +517,7 @@ const InspectionTestingModule1Section4 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Glove Testing</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Before each use, insulating gloves must be inspected:
               </p>
               <ul className="text-sm text-white space-y-1 ml-4 mt-2">
@@ -548,7 +548,7 @@ const InspectionTestingModule1Section4 = () => {
                 <strong>Regulation 14:</strong> "No person shall be engaged in any work activity on
                 or so near any live conductor... that danger may arise unless:
               </p>
-              <ul className="mt-2 ml-4 text-white/80 text-sm">
+              <ul className="mt-2 ml-4 text-white text-sm">
                 <li>(a) it is unreasonable in all the circumstances for it to be dead; and</li>
                 <li>
                   (b) it is reasonable in all the circumstances for work to be done on or near it
@@ -610,26 +610,26 @@ const InspectionTestingModule1Section4 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-white font-semibold text-sm mb-1">Lock-Off Procedures</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Physical locks preventing re-energisation. Personal padlocks - one person, one
                     lock.
                   </p>
                 </div>
                 <div>
                   <p className="text-white font-semibold text-sm mb-1">Warning Signs</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Labels identifying isolated equipment and prohibition of switching on.
                   </p>
                 </div>
                 <div>
                   <p className="text-white font-semibold text-sm mb-1">Permits to Work</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Formal written authorisation for high-risk activities.
                   </p>
                 </div>
                 <div>
                   <p className="text-white font-semibold text-sm mb-1">Supervision</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Appropriate level of supervision based on risk and competence.
                   </p>
                 </div>
@@ -638,7 +638,7 @@ const InspectionTestingModule1Section4 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Permit to Work Systems</p>
-              <p className="text-sm text-white/80">Permits are formal documents that specify:</p>
+              <p className="text-sm text-white">Permits are formal documents that specify:</p>
               <ul className="text-sm text-white space-y-1 ml-4 mt-2">
                 <li>The work to be done and its location</li>
                 <li>Hazards identified and controls implemented</li>
@@ -665,7 +665,7 @@ const InspectionTestingModule1Section4 = () => {
 
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20 my-6">
               <p className="text-white font-semibold mb-2">If Someone Receives an Electric Shock</p>
-              <ol className="text-sm text-white/80 space-y-2 ml-4">
+              <ol className="text-sm text-white space-y-2 ml-4">
                 <li>
                   <span className="text-red-400 font-bold">1.</span>{' '}
                   <strong>DON'T TOUCH THEM</strong> until you've broken the contact
@@ -692,7 +692,7 @@ const InspectionTestingModule1Section4 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">RIDDOR Reporting</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Under <strong>RIDDOR</strong> (Reporting of Injuries, Diseases and Dangerous
                 Occurrences Regulations), you must report:
               </p>
@@ -776,7 +776,7 @@ const InspectionTestingModule1Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -800,7 +800,7 @@ const InspectionTestingModule1Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-1/section-3">

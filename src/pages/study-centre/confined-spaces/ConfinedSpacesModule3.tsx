@@ -50,7 +50,7 @@ export default function ConfinedSpacesModule3() {
             <Button
               variant="ghost"
               size="lg"
-              className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+              className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../confined-spaces-course">
@@ -67,15 +67,15 @@ export default function ConfinedSpacesModule3() {
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 mb-3">
               <span className="text-cyan-400 text-xs font-semibold">MODULE 3</span>
-              <span className="text-white/40 text-xs">&bull;</span>
-              <span className="text-white/60 text-xs">4 Sections</span>
-              <span className="text-white/40 text-xs">&bull;</span>
-              <span className="text-white/60 text-xs">30 mins</span>
+              <span className="text-white text-xs">&bull;</span>
+              <span className="text-white text-xs">4 Sections</span>
+              <span className="text-white text-xs">&bull;</span>
+              <span className="text-white text-xs">30 mins</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
               Hazards & Atmospheric Monitoring
             </h1>
-            <p className="text-white/60 text-sm sm:text-base">
+            <p className="text-white text-sm sm:text-base">
               Explore every hazard category found in confined spaces, from toxic and flammable
               atmospheres to physical dangers. Learn how four-gas monitors work and how to ventilate
               a space safely before and during entry.

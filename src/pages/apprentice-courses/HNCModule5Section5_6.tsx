@@ -240,7 +240,7 @@ const HNCModule5Section5_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section5">
@@ -262,7 +262,7 @@ const HNCModule5Section5_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Handover Documentation
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             O&M manuals, as-built drawings, training delivery, and building log book compilation for
             successful project handover
           </p>
@@ -553,7 +553,7 @@ const HNCModule5Section5_6 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Real-world example:</strong> A hospital electrical upgrade required as-built
               drawings showing exact cable routes through ceiling voids. Without these records, a
               subsequent ward refurbishment accidentally severed theatre supply cables, causing
@@ -584,28 +584,28 @@ const HNCModule5Section5_6 = () => {
               <div className="space-y-3">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-1">Level 1: Awareness Training</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     For all building users - fire alarm response, emergency procedures, reporting
                     faults. Duration: 30-60 minutes.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-1">Level 2: Operational Training</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     For facilities staff - BMS operation, lighting controls, adjusting setpoints,
                     acknowledging alarms. Duration: 4-8 hours.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-1">Level 3: Technical Training</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     For maintenance technicians - fault diagnosis, BMS programming, testing
                     procedures, equipment maintenance. Duration: 2-3 days.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-1">Level 4: Specialist Training</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Manufacturer-specific training for complex systems - UPS, generators, fire
                     suppression, specialist controls. Duration: varies.
                   </p>
@@ -711,7 +711,7 @@ const HNCModule5Section5_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Design Information</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Building performance targets</li>
                     <li>Design assumptions (occupancy, hours)</li>
                     <li>U-values and air permeability</li>
@@ -721,7 +721,7 @@ const HNCModule5Section5_6 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Operational Records</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Monthly energy consumption data</li>
                     <li>Sub-metering readings</li>
                     <li>Maintenance activities completed</li>
@@ -832,7 +832,7 @@ const HNCModule5Section5_6 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Real-world impact:</strong> A university building implementing Soft Landings
               achieved 15% energy savings in Year 1 through seasonal commissioning adjustments that
               would not have been identified without extended aftercare involvement. The performance
@@ -859,7 +859,7 @@ const HNCModule5Section5_6 = () => {
                 <strong>Scenario:</strong> 10,000m² office building with complex M&E systems.
                 Practical completion target: Week 40.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p className="font-medium mb-2">Recommended Programme:</p>
                 <p>Week 1-4: Issue O&M specification to subcontractors</p>
                 <p>Week 20: First draft submissions from major packages</p>
@@ -882,7 +882,7 @@ const HNCModule5Section5_6 = () => {
                 <strong>Scenario:</strong> New hospital wing with BMS-controlled HVAC, lighting
                 controls, and standby generator.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p className="font-medium mb-2">Training Schedule:</p>
                 <p>
                   <strong>Day 1:</strong> BMS Overview (8 hours)
@@ -913,7 +913,7 @@ const HNCModule5Section5_6 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Month 6 review visit for commercial office building.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p className="font-medium mb-2">Visit Agenda (Half Day):</p>
                 <p>09:00 - FM team briefing and issues review</p>
                 <p>09:30 - BMS trend analysis (energy, temperatures)</p>
@@ -1011,7 +1011,7 @@ const HNCModule5Section5_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1060,7 +1060,7 @@ const HNCModule5Section5_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section5">

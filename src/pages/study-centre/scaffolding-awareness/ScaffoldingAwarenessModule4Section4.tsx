@@ -203,7 +203,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-4">
@@ -228,7 +228,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Inspection Records &amp; Reporting
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             WAH Regs Schedule&nbsp;7 report requirements, record retention, scaffold registers,
             reporting to site management, HSE enforcement, and digital inspection records
           </p>
@@ -318,7 +318,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Prescribed Report Content (Schedule 7)
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -433,7 +433,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
                       <span className="text-[9px] text-slate-400 block mb-0.5 font-semibold">
                         CLIENT / DUTY HOLDER
                       </span>
-                      <span className="text-[10px] sm:text-xs text-white/60">
+                      <span className="text-[10px] sm:text-xs text-white">
                         Name &amp; address of person for whom inspection carried out
                       </span>
                     </div>
@@ -441,7 +441,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
                       <span className="text-[9px] text-slate-400 block mb-0.5 font-semibold">
                         SITE / PROJECT
                       </span>
-                      <span className="text-[10px] sm:text-xs text-white/60">
+                      <span className="text-[10px] sm:text-xs text-white">
                         Site name, address, and project reference
                       </span>
                     </div>
@@ -461,7 +461,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
                     <span className="text-[9px] text-slate-400 block mb-0.5 font-semibold">
                       LOCATION
                     </span>
-                    <span className="text-[10px] sm:text-xs text-white/60">
+                    <span className="text-[10px] sm:text-xs text-white">
                       Building, elevation, grid ref
                     </span>
                   </div>
@@ -469,7 +469,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
                     <span className="text-[9px] text-slate-400 block mb-0.5 font-semibold">
                       SCAFFOLD TYPE
                     </span>
-                    <span className="text-[10px] sm:text-xs text-white/60">
+                    <span className="text-[10px] sm:text-xs text-white">
                       Independent, putlog, system, etc.
                     </span>
                   </div>
@@ -477,7 +477,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
                     <span className="text-[9px] text-slate-400 block mb-0.5 font-semibold">
                       HEIGHT / LIFTS
                     </span>
-                    <span className="text-[10px] sm:text-xs text-white/60">
+                    <span className="text-[10px] sm:text-xs text-white">
                       Overall height, number of lifts
                     </span>
                   </div>
@@ -485,7 +485,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
                     <span className="text-[9px] text-slate-400 block mb-0.5 font-semibold">
                       TAG No. / REF
                     </span>
-                    <span className="text-[10px] sm:text-xs text-white/60">
+                    <span className="text-[10px] sm:text-xs text-white">
                       Unique scaffold identifier
                     </span>
                   </div>
@@ -505,7 +505,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
                       <span className="text-[9px] text-slate-400 block mb-0.5 font-semibold">
                         DATE &amp; TIME
                       </span>
-                      <span className="text-[10px] sm:text-xs text-white/60">
+                      <span className="text-[10px] sm:text-xs text-white">
                         Actual date and time of inspection
                       </span>
                     </div>
@@ -513,7 +513,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
                       <span className="text-[9px] text-slate-400 block mb-0.5 font-semibold">
                         REASON FOR INSPECTION
                       </span>
-                      <span className="text-[10px] sm:text-xs text-white/60">
+                      <span className="text-[10px] sm:text-xs text-white">
                         7-day, post-weather, post-alteration, etc.
                       </span>
                     </div>
@@ -522,7 +522,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
                     <span className="text-[9px] text-slate-400 block mb-0.5 font-semibold">
                       CONDITION FOUND
                     </span>
-                    <span className="text-[10px] sm:text-xs text-white/60">
+                    <span className="text-[10px] sm:text-xs text-white">
                       General condition of scaffold: foundations, standards, ledgers, bracing, ties,
                       platforms, guardrails, toe boards, access
                     </span>
@@ -542,7 +542,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
                     <span className="text-[9px] text-red-400 block mb-0.5 font-semibold">
                       DEFECTS IDENTIFIED
                     </span>
-                    <span className="text-[10px] sm:text-xs text-white/60">
+                    <span className="text-[10px] sm:text-xs text-white">
                       Specific description of each defect with location
                     </span>
                   </div>
@@ -550,7 +550,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
                     <span className="text-[9px] text-red-400 block mb-0.5 font-semibold">
                       ACTIONS TAKEN
                     </span>
-                    <span className="text-[10px] sm:text-xs text-white/60">
+                    <span className="text-[10px] sm:text-xs text-white">
                       Corrective actions for each defect (repaired, replaced, out of service)
                     </span>
                   </div>
@@ -558,7 +558,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
                     <span className="text-[9px] text-red-400 block mb-0.5 font-semibold">
                       FURTHER ACTION NEEDED
                     </span>
-                    <span className="text-[10px] sm:text-xs text-white/60">
+                    <span className="text-[10px] sm:text-xs text-white">
                       Outstanding actions, monitoring, next steps
                     </span>
                   </div>
@@ -577,7 +577,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
                     <span className="text-[9px] text-slate-400 block mb-0.5 font-semibold">
                       NAME &amp; POSITION
                     </span>
-                    <span className="text-[10px] sm:text-xs text-white/60">
+                    <span className="text-[10px] sm:text-xs text-white">
                       Inspector name, job title, employer
                     </span>
                   </div>
@@ -585,7 +585,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
                     <span className="text-[9px] text-slate-400 block mb-0.5 font-semibold">
                       SIGNATURE
                     </span>
-                    <span className="text-[10px] sm:text-xs text-white/60">
+                    <span className="text-[10px] sm:text-xs text-white">
                       Handwritten or electronic signature
                     </span>
                   </div>
@@ -596,11 +596,11 @@ export default function ScaffoldingAwarenessModule4Section4() {
               <div className="mt-4 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
                 <div className="flex items-center gap-1.5">
                   <div className="w-2.5 h-2.5 rounded-sm bg-slate-500/30 border border-slate-400/50" />
-                  <span className="text-[9px] text-white/50">Standard fields</span>
+                  <span className="text-[9px] text-white">Standard fields</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-2.5 h-2.5 rounded-sm bg-red-500/20 border border-red-400/40" />
-                  <span className="text-[9px] text-white/50">Defect &amp; action fields</span>
+                  <span className="text-[9px] text-white">Defect &amp; action fields</span>
                 </div>
               </div>
             </div>
@@ -676,11 +676,11 @@ export default function ScaffoldingAwarenessModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Best Practice Retention</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   The statutory minimum is the legal floor, not the recommended standard. Many
                   employers and industry bodies advise keeping records for significantly longer:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -732,26 +732,26 @@ export default function ScaffoldingAwarenessModule4Section4() {
                 <div className="flex justify-between items-start relative">
                   {/* Point 1: Inspection date */}
                   <div className="flex flex-col items-center text-center w-1/4">
-                    <span className="text-[9px] sm:text-[10px] text-white/50 mb-2 h-6 flex items-end">
+                    <span className="text-[9px] sm:text-[10px] text-white mb-2 h-6 flex items-end">
                       Report date
                     </span>
                     <div className="w-4 h-4 rounded-full bg-slate-400 border-2 border-slate-300 z-10" />
                     <span className="text-[10px] sm:text-xs font-bold text-slate-300 mt-2">
                       10 Jan
                     </span>
-                    <span className="text-[9px] text-white/40 mt-0.5">Inspection carried out</span>
+                    <span className="text-[9px] text-white mt-0.5">Inspection carried out</span>
                   </div>
 
                   {/* Point 2: Next inspection */}
                   <div className="flex flex-col items-center text-center w-1/4">
-                    <span className="text-[9px] sm:text-[10px] text-white/50 mb-2 h-6 flex items-end">
+                    <span className="text-[9px] sm:text-[10px] text-white mb-2 h-6 flex items-end">
                       Next inspection
                     </span>
                     <div className="w-4 h-4 rounded-full bg-amber-400 border-2 border-amber-300 z-10" />
                     <span className="text-[10px] sm:text-xs font-bold text-amber-300 mt-2">
                       17 Jan
                     </span>
-                    <span className="text-[9px] text-white/40 mt-0.5">7-day cycle</span>
+                    <span className="text-[9px] text-white mt-0.5">7-day cycle</span>
                   </div>
 
                   {/* Point 3: 3-month mark */}
@@ -763,7 +763,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
                     <span className="text-[10px] sm:text-xs font-bold text-red-300 mt-2">
                       10 Apr
                     </span>
-                    <span className="text-[9px] text-white/40 mt-0.5">3 months later</span>
+                    <span className="text-[9px] text-white mt-0.5">3 months later</span>
                   </div>
 
                   {/* Point 4: Best practice */}
@@ -775,7 +775,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
                     <span className="text-[10px] sm:text-xs font-bold text-green-300 mt-2">
                       Project end + 3&ndash;6 yrs
                     </span>
-                    <span className="text-[9px] text-white/40 mt-0.5">Full protection</span>
+                    <span className="text-[9px] text-white mt-0.5">Full protection</span>
                   </div>
                 </div>
 
@@ -822,7 +822,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Who Must Receive or Have Access to Reports
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -877,7 +877,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Where to Keep Records</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -930,7 +930,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   What the Register Should Include
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1036,7 +1036,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Reporting Workflow</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 w-5 h-5 rounded-full bg-slate-500/20 border border-slate-500/40 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-slate-400">
                       1
@@ -1090,7 +1090,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Defects</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If a scaffold inspection reveals a defect that poses an{' '}
                   <strong className="text-white">immediate risk to health and safety</strong>, the
                   scaffold must be{' '}
@@ -1124,7 +1124,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   HSE Powers Regarding Scaffold Records
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1181,7 +1181,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">No Records = No Defence</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If an HSE inspector asks to see scaffold inspection records and they{' '}
                   <strong className="text-white">
                     do not exist, are incomplete, or cannot be produced
@@ -1196,11 +1196,11 @@ export default function ScaffoldingAwarenessModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">After an Accident</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   When the HSE investigates a scaffold-related accident, the following records will
                   typically be requested:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>All scaffold inspection reports for the scaffold involved</span>
@@ -1260,7 +1260,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Advantages of Digital Records</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1327,7 +1327,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Common Digital Platforms</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1391,7 +1391,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Common Recording Errors</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1444,7 +1444,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Setting Up a Site Record-Keeping System
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 w-5 h-5 rounded-full bg-slate-500/20 border border-slate-500/40 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-slate-400">
                       1
@@ -1528,7 +1528,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1544,7 +1544,7 @@ export default function ScaffoldingAwarenessModule4Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-4">

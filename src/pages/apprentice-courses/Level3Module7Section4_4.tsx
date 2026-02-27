@@ -263,7 +263,7 @@ const Level3Module7Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section4">
@@ -403,7 +403,7 @@ const Level3Module7Section4_4 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A balanced CPD portfolio might include: 18th Edition update
               course (8 hours), monthly IET webinars (12 hours), reading Wiring Matters quarterly (8
               hours), product training from manufacturers (4 hours), and mentoring an apprentice (8
@@ -497,15 +497,15 @@ const Level3Module7Section4_4 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Assess</p>
-                <p className="text-white/90 text-xs">Identify current skills and gaps</p>
+                <p className="text-white text-xs">Identify current skills and gaps</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Plan</p>
-                <p className="text-white/90 text-xs">Set goals and select activities</p>
+                <p className="text-white text-xs">Set goals and select activities</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Review</p>
-                <p className="text-white/90 text-xs">Evaluate learning and adjust</p>
+                <p className="text-white text-xs">Evaluate learning and adjust</p>
               </div>
             </div>
 
@@ -524,7 +524,7 @@ const Level3Module7Section4_4 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> Career goal: specialise in EV charging. CPD plan: C&G 2919
               course (formal), manufacturer training from 2 suppliers (product knowledge), reading
               OLEV grant guidance (regulatory), shadowing experienced installer (practical).
@@ -596,7 +596,7 @@ const Level3Module7Section4_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -644,7 +644,7 @@ const Level3Module7Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section4-3">

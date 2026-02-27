@@ -248,7 +248,7 @@ const HNCModule2Section5_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section5">
@@ -270,7 +270,7 @@ const HNCModule2Section5_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Building Fabric Performance
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Condensation analysis, moisture control, and regulatory compliance for building
             envelopes
           </p>
@@ -585,10 +585,10 @@ const HNCModule2Section5_6 = () => {
               <p className="font-mono text-center text-sm mb-2">
                 f<sub>Rsi</sub> = (T<sub>si</sub> - T<sub>e</sub>) / (T<sub>i</sub> - T<sub>e</sub>)
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where Tsi = internal surface temp, Ti = internal air, Te = external air
               </p>
-              <p className="text-xs text-white/70 text-center mt-2">
+              <p className="text-xs text-white text-center mt-2">
                 Required: fRsi ≥ 0.75 (dwellings), ≥ 0.80 (high humidity spaces)
               </p>
             </div>
@@ -763,7 +763,7 @@ const HNCModule2Section5_6 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Future proofing:</strong> Consider Part O assessment with future weather files
               (2050s) to ensure homes remain comfortable as climate warms. Adaptation measures may
               be needed.
@@ -789,13 +789,13 @@ const HNCModule2Section5_6 = () => {
                 <strong>Question:</strong> Room air is at 20°C and 50% RH. What is the minimum
                 surface temperature to avoid condensation?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>At 20°C, saturation vapour pressure ≈ 2340 Pa</p>
                 <p>Actual vapour pressure = 50% × 2340 = 1170 Pa</p>
                 <p className="mt-2">
                   Dew point (where 1170 Pa = saturation) ≈ <strong>9.3°C</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Any surface below 9.3°C will experience condensation
                 </p>
               </div>
@@ -809,7 +809,7 @@ const HNCModule2Section5_6 = () => {
                 <strong>Question:</strong> At a window reveal, surface temperature is 12°C when
                 internal air is 20°C and external is -5°C. Calculate fRsi and assess mould risk.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>fRsi = (Tsi - Te) / (Ti - Te)</p>
                 <p>
                   fRsi = (12 - (-5)) / (20 - (-5)) = 17 / 25 = <strong>0.68</strong>
@@ -817,7 +817,7 @@ const HNCModule2Section5_6 = () => {
                 <p className="mt-2 text-red-400">
                   FAIL: fRsi = 0.68 &lt; 0.75 required for dwellings
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   High mould risk at this junction - needs improved detail
                 </p>
               </div>
@@ -831,13 +831,13 @@ const HNCModule2Section5_6 = () => {
                 <strong>Question:</strong> A house has perimeter junctions totalling 80m with ψ =
                 0.12 W/mK, and total envelope area 300m². Calculate the y-value contribution.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Thermal bridge loss = Σ(ψ × L) = 0.12 × 80 = 9.6 W/K</p>
                 <p>
                   y-value = Σ(ψ × L) / ΣA = 9.6 / 300 = <strong>0.032 W/m²K</strong>
                 </p>
                 <p className="mt-2 text-green-400">GOOD: Well below default 0.15 W/m²K</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Good junction detailing significantly improves overall fabric performance
                 </p>
               </div>
@@ -851,7 +851,7 @@ const HNCModule2Section5_6 = () => {
                 <strong>Question:</strong> A cavity wall has U-value 0.24 W/m²K. Does it meet Part L
                 2021 for a new dwelling?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Part L limiting U-value for walls = 0.26 W/m²K</p>
                 <p>Part L notional building value = 0.18 W/m²K</p>
                 <p className="mt-2">
@@ -860,7 +860,7 @@ const HNCModule2Section5_6 = () => {
                 <p className="mt-2">
                   0.24 &gt; 0.18 → Worse than notional - must compensate elsewhere
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Increase insulation to 0.18 or improve other elements
                 </p>
               </div>
@@ -945,7 +945,7 @@ const HNCModule2Section5_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -991,7 +991,7 @@ const HNCModule2Section5_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section5-5">

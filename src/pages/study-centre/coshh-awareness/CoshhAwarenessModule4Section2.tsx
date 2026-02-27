@@ -221,11 +221,11 @@ export default function CoshhAwarenessModule4Section2() {
           </div>
           <div className="inline-block bg-violet-500/10 border border-violet-500/20 px-3 py-1 rounded-full text-sm font-semibold mb-4 ml-0">
             <span className="text-violet-400">MODULE 4</span>
-            <span className="text-white/40 mx-2">&middot;</span>
-            <span className="text-white/60">SECTION 2</span>
+            <span className="text-white mx-2">&middot;</span>
+            <span className="text-white">SECTION 2</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">Engineering Controls</h1>
-          <p className="text-white/70 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Physical and mechanical measures that control exposure to hazardous substances at or
             near the source — including LEV, ventilation, enclosure, segregation, and on-tool
             extraction
@@ -236,7 +236,7 @@ export default function CoshhAwarenessModule4Section2() {
         <div className="grid sm:grid-cols-2 gap-4 mb-10">
           <div className="rounded-lg p-4 bg-violet-500/5 border-l-2 border-violet-500/50">
             <p className="font-semibold text-violet-400 mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -269,7 +269,7 @@ export default function CoshhAwarenessModule4Section2() {
           </div>
           <div className="rounded-lg p-4 bg-violet-500/5 border-l-2 border-violet-500/50">
             <p className="font-semibold text-violet-400/90 mb-2">On Site</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -305,7 +305,7 @@ export default function CoshhAwarenessModule4Section2() {
         {/* Learning Outcomes */}
         <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4">By the end of this section, you will be able to:</p>
+          <p className="text-white mb-4">By the end of this section, you will be able to:</p>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
               'Define engineering controls and explain their position in the hierarchy of control for hazardous substances',
@@ -319,7 +319,7 @@ export default function CoshhAwarenessModule4Section2() {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-violet-400/70 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </div>
             ))}
           </div>
@@ -336,7 +336,7 @@ export default function CoshhAwarenessModule4Section2() {
               <span className="text-violet-400/80 text-sm font-normal">01</span>
               What Are Engineering Controls?
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">Engineering controls</strong> are physical or
                 mechanical measures that control exposure to hazardous substances at or near the
@@ -351,7 +351,7 @@ export default function CoshhAwarenessModule4Section2() {
                 <h3 className="font-semibold mb-2 text-violet-400">
                   Key Definition: Engineering Controls
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Engineering controls are{' '}
                   <strong className="text-white">
                     physical changes to the workplace, process, or equipment
@@ -375,7 +375,7 @@ export default function CoshhAwarenessModule4Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-violet-400 font-medium mb-2">Types of Engineering Controls</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -435,7 +435,7 @@ export default function CoshhAwarenessModule4Section2() {
                     Why Engineering Controls Come Before PPE
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Engineering controls are inherently more reliable than PPE because they work{' '}
                   <strong className="text-white">independently of the worker</strong>. An LEV system
                   extracts fumes whether or not the worker remembers to switch it on (if interlocked
@@ -459,7 +459,7 @@ export default function CoshhAwarenessModule4Section2() {
               <span className="text-purple-400/80 text-sm font-normal">02</span>
               Local Exhaust Ventilation (LEV)
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">Local exhaust ventilation (LEV)</strong> is the most
                 widely used engineering control for hazardous substances. It works by capturing
@@ -487,7 +487,7 @@ export default function CoshhAwarenessModule4Section2() {
                           </div>
                           <div>
                             <p className="text-violet-300 font-bold text-sm">HOOD / ENCLOSURE</p>
-                            <p className="text-white/60 text-xs">
+                            <p className="text-white text-xs">
                               Capture point — positioned at or around the source of contamination
                             </p>
                           </div>
@@ -509,7 +509,7 @@ export default function CoshhAwarenessModule4Section2() {
                           </div>
                           <div>
                             <p className="text-purple-300 font-bold text-sm">DUCTING</p>
-                            <p className="text-white/60 text-xs">
+                            <p className="text-white text-xs">
                               Transports contaminated air from hood to air cleaner — must be
                               airtight with smooth internal surfaces
                             </p>
@@ -534,7 +534,7 @@ export default function CoshhAwarenessModule4Section2() {
                             <p className="text-fuchsia-300 font-bold text-sm">
                               AIR CLEANER / FILTER
                             </p>
-                            <p className="text-white/60 text-xs">
+                            <p className="text-white text-xs">
                               Removes contaminants from the airstream — HEPA filter, activated
                               carbon, wet scrubber, or cyclone
                             </p>
@@ -557,7 +557,7 @@ export default function CoshhAwarenessModule4Section2() {
                           </div>
                           <div>
                             <p className="text-pink-300 font-bold text-sm">FAN (AIR MOVER)</p>
-                            <p className="text-white/60 text-xs">
+                            <p className="text-white text-xs">
                               Creates negative pressure that draws air through the entire system —
                               positioned after the filter to protect fan blades
                             </p>
@@ -578,7 +578,7 @@ export default function CoshhAwarenessModule4Section2() {
                           </div>
                           <div>
                             <p className="text-rose-300 font-bold text-sm">DISCHARGE POINT</p>
-                            <p className="text-white/60 text-xs">
+                            <p className="text-white text-xs">
                               Exhausts cleaned air safely — positioned away from air intakes,
                               windows, and occupied areas
                             </p>
@@ -614,7 +614,7 @@ export default function CoshhAwarenessModule4Section2() {
                       </div>
                       <p className="text-green-300 font-bold text-sm">TOTAL ENCLOSURE</p>
                     </div>
-                    <p className="text-white/70 text-xs mb-2">
+                    <p className="text-white text-xs mb-2">
                       Completely surrounds the source. Highest level of containment.
                     </p>
                     <div className="bg-white/5 rounded p-2">
@@ -628,7 +628,7 @@ export default function CoshhAwarenessModule4Section2() {
                         ></div>
                       </div>
                     </div>
-                    <p className="text-white/50 text-[11px] mt-2">
+                    <p className="text-white text-[11px] mt-2">
                       Examples: glove boxes, fume cupboards, enclosed spray booths
                     </p>
                   </div>
@@ -641,7 +641,7 @@ export default function CoshhAwarenessModule4Section2() {
                       </div>
                       <p className="text-blue-300 font-bold text-sm">PARTIAL ENCLOSURE</p>
                     </div>
-                    <p className="text-white/70 text-xs mb-2">
+                    <p className="text-white text-xs mb-2">
                       Surrounds most of the source but has openings for access. Very effective when
                       well designed.
                     </p>
@@ -656,7 +656,7 @@ export default function CoshhAwarenessModule4Section2() {
                         ></div>
                       </div>
                     </div>
-                    <p className="text-white/50 text-[11px] mt-2">
+                    <p className="text-white text-[11px] mt-2">
                       Examples: paint spray booths with open front, welding extraction booths
                     </p>
                   </div>
@@ -669,7 +669,7 @@ export default function CoshhAwarenessModule4Section2() {
                       </div>
                       <p className="text-yellow-300 font-bold text-sm">RECEPTOR HOOD</p>
                     </div>
-                    <p className="text-white/70 text-xs mb-2">
+                    <p className="text-white text-xs mb-2">
                       Positioned to receive contaminants that move naturally towards it (e.g. hot
                       fumes rising).
                     </p>
@@ -684,7 +684,7 @@ export default function CoshhAwarenessModule4Section2() {
                         ></div>
                       </div>
                     </div>
-                    <p className="text-white/50 text-[11px] mt-2">
+                    <p className="text-white text-[11px] mt-2">
                       Examples: canopy hoods over hot processes, slot hoods on welding benches
                     </p>
                   </div>
@@ -697,7 +697,7 @@ export default function CoshhAwarenessModule4Section2() {
                       </div>
                       <p className="text-orange-300 font-bold text-sm">CAPTOR HOOD</p>
                     </div>
-                    <p className="text-white/70 text-xs mb-2">
+                    <p className="text-white text-xs mb-2">
                       Positioned away from the source — must actively pull contaminants towards it.
                       Least effective type.
                     </p>
@@ -712,7 +712,7 @@ export default function CoshhAwarenessModule4Section2() {
                         ></div>
                       </div>
                     </div>
-                    <p className="text-white/50 text-[11px] mt-2">
+                    <p className="text-white text-[11px] mt-2">
                       Examples: flexible arm extractors, on-tool extraction nozzles
                     </p>
                   </div>
@@ -732,7 +732,7 @@ export default function CoshhAwarenessModule4Section2() {
 
               <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
                 <h3 className="text-purple-300 font-medium mb-3">Capture Velocity Requirements</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The airspeed at the point of capture must be sufficient to overcome the natural
                   movement of the contaminant and any competing air currents. Required capture
                   velocities vary by hazard:
@@ -784,12 +784,12 @@ export default function CoshhAwarenessModule4Section2() {
                     COSHH Regulation 9: Examination and Testing
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Under COSHH Regulation 9, every LEV system must be{' '}
                   <strong className="text-white">thoroughly examined and tested (TExT)</strong> by a
                   competent person:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <span>
@@ -834,7 +834,7 @@ export default function CoshhAwarenessModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Hood too far from source</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Capture velocity drops rapidly with distance. Always position the hood as
                         close to the source as physically possible. Even an extra 100 mm can
                         significantly reduce effectiveness.
@@ -847,7 +847,7 @@ export default function CoshhAwarenessModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Blocked or clogged filters</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Restricts airflow through the entire system. Check filter indicators daily
                         and replace filters on schedule — not just when they appear visibly dirty.
                       </p>
@@ -859,7 +859,7 @@ export default function CoshhAwarenessModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Leaking or damaged ducting</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Gaps, cracks, or loose joints in ducting allow contaminated air to escape
                         into the workplace and reduce suction at the hood. Inspect ducting regularly
                         for damage, particularly at joints and bends.
@@ -872,7 +872,7 @@ export default function CoshhAwarenessModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Cross-draughts deflecting capture</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Open doors, windows, fans, and passing traffic can create cross-draughts
                         that push contaminated air away from the hood. Identify and control
                         competing air movements in the work area.
@@ -885,7 +885,7 @@ export default function CoshhAwarenessModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Fan worn or undersized</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         A worn fan delivers less airflow than when new. Ensure the fan is correctly
                         sized for the system at the design stage, and monitor performance over time.
                         Fan belts, bearings, and impellers all degrade with use.
@@ -909,7 +909,7 @@ export default function CoshhAwarenessModule4Section2() {
               <span className="text-teal-400/80 text-sm font-normal">03</span>
               General Ventilation
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">General ventilation</strong> (also called dilution
                 ventilation) works by supplying fresh air to a workspace and exhausting contaminated
@@ -929,7 +929,7 @@ export default function CoshhAwarenessModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Mechanical Ventilation</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Uses fans, ductwork, and air handling units to supply and extract air at a
                         controlled rate. The air change rate can be specified, measured, and
                         adjusted. Mechanical ventilation is{' '}
@@ -945,7 +945,7 @@ export default function CoshhAwarenessModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Natural Ventilation</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Relies on wind pressure and thermal buoyancy (the stack effect) to move air
                         through openings such as windows, doors, louvres, and passive vents. Natural
                         ventilation is{' '}
@@ -962,12 +962,12 @@ export default function CoshhAwarenessModule4Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-teal-400 font-medium mb-2">Air Change Rates</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The <strong className="text-white">air change rate</strong> is the number of times
                   the entire volume of air in a room is replaced per hour. Different environments
                   require different rates:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-teal-400 mt-2 flex-shrink-0"></div>
                     <span>
@@ -1006,10 +1006,10 @@ export default function CoshhAwarenessModule4Section2() {
                     Limitations of Dilution Ventilation
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   General ventilation is <strong className="text-white">NOT suitable</strong> when:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                     <span>
@@ -1051,7 +1051,7 @@ export default function CoshhAwarenessModule4Section2() {
                 <h3 className="font-semibold mb-2 text-violet-400">
                   When Is General Ventilation Appropriate?
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   General ventilation can be effective for{' '}
                   <strong className="text-white">
                     low-toxicity substances released at low, uniform rates
@@ -1077,7 +1077,7 @@ export default function CoshhAwarenessModule4Section2() {
               <span className="text-emerald-400/80 text-sm font-normal">04</span>
               Process Enclosure
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">Process enclosure</strong> involves completely
                 containing the hazardous process within a sealed or partially sealed structure so
@@ -1096,7 +1096,7 @@ export default function CoshhAwarenessModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Glove Boxes</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Totally enclosed chambers with built-in glove ports. The operator works
                         through the gloves without direct contact with the substance. Maintained at
                         negative pressure so any leakage is inward. Used for handling highly toxic
@@ -1110,7 +1110,7 @@ export default function CoshhAwarenessModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Total Enclosure Systems</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         The entire process is contained within a sealed system — for example, a
                         closed reaction vessel, a sealed conveyor, or an enclosed blending system.
                         The operator monitors and controls the process from outside. All transfers
@@ -1125,7 +1125,7 @@ export default function CoshhAwarenessModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Interlocked Systems</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Enclosures fitted with{' '}
                         <strong className="text-white">interlock switches</strong> that prevent the
                         process from operating unless all access panels are closed and sealed. If
@@ -1141,7 +1141,7 @@ export default function CoshhAwarenessModule4Section2() {
                 <h3 className="font-semibold mb-2 text-violet-400">
                   Electrician Context: Enclosed Electrical Processes
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   While you may not work with glove boxes directly, the principle of enclosure
                   applies to electrical work. For example, SF6 (sulphur hexafluoride) switchgear is
                   a sealed, enclosed system specifically designed to prevent the gas escaping into
@@ -1164,7 +1164,7 @@ export default function CoshhAwarenessModule4Section2() {
               <span className="text-cyan-400/80 text-sm font-normal">05</span>
               Process Modification & Segregation
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">Process modification</strong> means changing the way
                 a task is carried out so that less hazardous substance is released.{' '}
@@ -1183,7 +1183,7 @@ export default function CoshhAwarenessModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Closed Transfer Systems</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Transferring hazardous liquids or powders through sealed pipework, pumps, or
                         coupling systems instead of pouring from open containers. Eliminates vapour
                         release during transfer and prevents spills. Common in chemical dosing for
@@ -1198,7 +1198,7 @@ export default function CoshhAwarenessModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Vacuum Conveying</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Moving dry powders or granular materials through enclosed pipework using
                         vacuum pressure rather than open conveyor belts or manual scooping. Prevents
                         dust becoming airborne during transfer.
@@ -1211,7 +1211,7 @@ export default function CoshhAwarenessModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Wet Methods</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Adding water to a process to prevent dust becoming airborne. Wet cutting,
                         wet drilling, wet sweeping, and damping down surfaces before disturbing
                         them. Water binds dust particles so they cannot become respirable. Critical
@@ -1225,7 +1225,7 @@ export default function CoshhAwarenessModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Automated Dispensing</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Using automated or semi-automated systems to weigh, measure, and dispense
                         hazardous substances instead of manual handling. Reduces worker proximity to
                         the substance and eliminates variability in dispensing quantities.
@@ -1280,7 +1280,7 @@ export default function CoshhAwarenessModule4Section2() {
                 <h3 className="font-semibold mb-2 text-violet-400">
                   Practical Tip: Segregation on Site
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   On a typical construction site, if one trade is carrying out dusty work (chasing
                   walls, cutting concrete, grinding welds), other trades should not be working
                   immediately alongside. Use temporary barriers, coordinate scheduling, and
@@ -1304,7 +1304,7 @@ export default function CoshhAwarenessModule4Section2() {
               <span className="text-amber-400/80 text-sm font-normal">06</span>
               On-Tool Extraction for Power Tools
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">On-tool extraction</strong> is an engineering control
                 built into or attached directly to the power tool. It captures dust and fumes at the
@@ -1327,7 +1327,7 @@ export default function CoshhAwarenessModule4Section2() {
                       <p className="text-white font-medium">
                         Angle Grinders (Cutting & Grinding Discs)
                       </p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Fit a dust/fume extraction shroud that encloses the disc and connects to an
                         M-class (for general dusts) or H-class (for silica and other high-hazard
                         dusts) vacuum extractor. The shroud must be matched to the disc size. Never
@@ -1342,7 +1342,7 @@ export default function CoshhAwarenessModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Wall Chasers</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Modern wall chasers have built-in extraction ports designed to connect
                         directly to a compatible vacuum extractor. The dual-blade design with an
                         enclosing shroud captures the vast majority of dust at the cutting point.
@@ -1357,7 +1357,7 @@ export default function CoshhAwarenessModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">SDS Drills with Dust Extraction</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Hollow-drill-bit extraction systems draw dust through the centre of the
                         drill bit and into an attached vacuum. Alternatively, a dust extraction
                         nozzle can be fitted around the drill point. Overhead drilling is
@@ -1372,7 +1372,7 @@ export default function CoshhAwarenessModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Core Drills</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Core drilling through concrete and masonry generates large quantities of
                         dust if done dry. Water suppression (wet coring) is the primary control — a
                         water feed through the core bit cools the bit and binds the dust into a
@@ -1389,7 +1389,7 @@ export default function CoshhAwarenessModule4Section2() {
                       <p className="text-white font-medium">
                         Circular Saws (for Cable Trunking, Metal Cutting)
                       </p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Extraction ports on circular saws connect to a vacuum to capture metal
                         filings and dust. When cutting fibre-cement cable trunking or similar
                         materials, extraction is essential due to the potential for respirable fibre
@@ -1405,10 +1405,10 @@ export default function CoshhAwarenessModule4Section2() {
                   <AlertTriangle className="h-5 w-5 text-violet-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-violet-300">Vacuum Extractor Classification</h3>
                 </div>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The vacuum extractor must be matched to the hazard:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <span>
@@ -1446,7 +1446,7 @@ export default function CoshhAwarenessModule4Section2() {
               <span className="text-sky-400/80 text-sm font-normal">07</span>
               Water Suppression
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">Water suppression</strong> is an engineering control
                 that uses water to prevent dust from becoming airborne during cutting, drilling, or
@@ -1499,11 +1499,11 @@ export default function CoshhAwarenessModule4Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-sky-400 font-medium mb-2">Slurry Management</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Water suppression creates a <strong className="text-white">slurry</strong> — a wet
                   mixture of water and dust. This slurry must be managed properly:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-sky-400 mt-2 flex-shrink-0"></div>
                     <span>
@@ -1543,7 +1543,7 @@ export default function CoshhAwarenessModule4Section2() {
                     Water Suppression Near Electrical Equipment
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   As an electrician, you must be particularly careful when using water suppression
                   near electrical installations. Water and electricity create a{' '}
                   <strong className="text-white">potentially fatal combination</strong>. Before
@@ -1569,7 +1569,7 @@ export default function CoshhAwarenessModule4Section2() {
               <span className="text-rose-400/80 text-sm font-normal">08</span>
               Maintenance of Engineering Controls
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 An engineering control is only effective if it is{' '}
                 <strong className="text-white">
@@ -1587,11 +1587,11 @@ export default function CoshhAwarenessModule4Section2() {
                     COSHH Regulation 8: Duty to Maintain
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   <strong className="text-white">COSHH Regulation 8</strong> places a clear legal
                   duty on employers:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <span>
@@ -1637,7 +1637,7 @@ export default function CoshhAwarenessModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Daily User Checks (Before Each Use)</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         The operator checks: does the system start? Is there airflow at the hood?
                         Are there any visible blockages, damaged ducting, unusual noises, or warning
                         indicators? Is the filter gauge in the normal range? These are quick, simple
@@ -1653,7 +1653,7 @@ export default function CoshhAwarenessModule4Section2() {
                       <p className="text-white font-medium">
                         Scheduled Maintenance (Weekly/Monthly)
                       </p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         A more detailed inspection by a supervisor or maintenance technician:
                         checking capture velocity with smoke tubes, verifying filter condition,
                         inspecting duct joints for leaks, checking fan belt tension, and cleaning or
@@ -1670,7 +1670,7 @@ export default function CoshhAwarenessModule4Section2() {
                       <p className="text-white font-medium">
                         Thorough Examination and Test — TExT (COSHH Reg 9)
                       </p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Carried out by a <strong className="text-white">competent person</strong> at
                         least every 14 months (or 6 months for specified processes). Includes
                         airflow measurements at every hood and branch, capture velocity testing,
@@ -1684,8 +1684,8 @@ export default function CoshhAwarenessModule4Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-violet-400 font-medium mb-2">Record Keeping</h3>
-                <p className="text-white/70 text-sm mb-3">Employers must keep records of:</p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <p className="text-white text-sm mb-3">Employers must keep records of:</p>
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <span>
@@ -1721,7 +1721,7 @@ export default function CoshhAwarenessModule4Section2() {
                 <h3 className="font-semibold mb-2 text-violet-400">
                   Practical Examples for Electricians
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   As an electrician, engineering controls are directly relevant to your daily work:
                 </p>
                 <div className="space-y-3 text-sm">
@@ -1774,7 +1774,7 @@ export default function CoshhAwarenessModule4Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1790,7 +1790,7 @@ export default function CoshhAwarenessModule4Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-4-section-1">

@@ -265,7 +265,7 @@ const Level3Module4Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section2">
@@ -359,7 +359,7 @@ const Level3Module4Section2_2 = () => {
               the transformer. The RCD sees this as an imbalance and trips.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Site example:</strong> Testing a bathroom circuit RCD at 1x rated current
               (30mA), the tester displays 26ms. At 5x (150mA), it displays 18ms. Both results are
               well within limits, confirming the RCD provides effective shock protection. You also
@@ -451,7 +451,7 @@ const Level3Module4Section2_2 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Temperature Correction:</p>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 Measurements taken on cold circuits must be adjusted to account for conductor
                 temperature rise under fault conditions:
               </p>
@@ -462,7 +462,7 @@ const Level3Module4Section2_2 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Site example:</strong> Testing a socket circuit protected by a 32A Type B MCB,
               you measure Zs = 1.10 ohms. BS 7671 Table 41.3 maximum is 1.44 ohms. Applying the 0.8
               factor: 1.44 x 0.8 = 1.15 ohms. Your reading of 1.10 ohms is below this, so the
@@ -516,25 +516,25 @@ const Level3Module4Section2_2 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Verify DNO Value</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Measured Ze should not exceed the DNO's declared maximum
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Use for Calculations</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Ze + (R1+R2) should equal measured Zs at circuit end
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Record on Certificate</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Ze is required on both EIC and EICR schedules
                 </p>
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Site example:</strong> The DNO declares Ze maximum of 0.35 ohms for this PME
               supply. You measure 0.28 ohms - within the declared value. You record this on the EIC.
               Later, Zs measurements at various points can be verified: if R1+R2 from continuity
@@ -614,7 +614,7 @@ const Level3Module4Section2_2 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Site example:</strong> At a domestic consumer unit, your tester shows PFC of
               2.1 kA. The installed MCBs are rated at 6 kA breaking capacity - well above the
               prospective fault current, so they're suitable. However, if you measured 8 kA at a
@@ -696,7 +696,7 @@ const Level3Module4Section2_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -741,7 +741,7 @@ const Level3Module4Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section2-1">

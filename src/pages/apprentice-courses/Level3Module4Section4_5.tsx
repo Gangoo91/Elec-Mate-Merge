@@ -278,7 +278,7 @@ const Level3Module4Section4_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section4">
@@ -432,7 +432,7 @@ const Level3Module4Section4_5 = () => {
               test, it must be replaced - there is no adjustment or repair possible.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> Testing a 30mA Type A RCD protecting kitchen sockets. At
               15mA (50%) - no trip (pass). At 30mA (100%) - trips in 28ms (pass, under 300ms). At
               150mA (5x) - trips in 12ms (pass, well under 40ms). All results recorded and RCD
@@ -519,21 +519,21 @@ const Level3Module4Section4_5 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">EV Charging</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Test RCD (Type B or A with DC detection), control pilot, earth monitoring,
                   connection locking
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Solar PV</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Verify isolator operation, DC polarity, inverter function, G98/G99 compliance
                   settings
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Lighting Controls</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Test dimmers, PIR sensors, photocells, time switches, and DALI/DMX systems
                 </p>
               </div>
@@ -546,7 +546,7 @@ const Level3Module4Section4_5 = () => {
               detailed system testing.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> Commissioning an EV charge point. Functional tests include:
               RCD trip time at all test currents, control pilot signal verification, earth
               continuity monitoring light/indicator, cable lock operation, and charge session
@@ -615,7 +615,7 @@ const Level3Module4Section4_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -660,7 +660,7 @@ const Level3Module4Section4_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section4-4">

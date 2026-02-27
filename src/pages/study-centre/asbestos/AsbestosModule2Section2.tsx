@@ -218,13 +218,13 @@ const AsbestosModule2Section2 = () => {
           </div>
           <div className="inline-block bg-orange-500/10 border border-orange-500/20 px-3 py-1 rounded-full text-sm font-semibold mb-4 ml-0">
             <span className="text-orange-400">MODULE 2</span>
-            <span className="text-white/40 mx-2">&middot;</span>
-            <span className="text-white/60">SECTION 2</span>
+            <span className="text-white mx-2">&middot;</span>
+            <span className="text-white">SECTION 2</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             The Duty to Manage (Regulation 4)
           </h1>
-          <p className="text-white/70 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding who is responsible for managing asbestos in non-domestic premises, what
             the law requires, and the consequences of non-compliance
           </p>
@@ -234,7 +234,7 @@ const AsbestosModule2Section2 = () => {
         <div className="grid sm:grid-cols-2 gap-4 mb-10">
           <div className="rounded-lg p-4 bg-orange-500/5 border-l-2 border-orange-500/50">
             <p className="font-semibold text-orange-400 mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -267,7 +267,7 @@ const AsbestosModule2Section2 = () => {
           </div>
           <div className="rounded-lg p-4 bg-orange-500/5 border-l-2 border-orange-500/50">
             <p className="font-semibold text-orange-400/90 mb-2">On Site</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -303,7 +303,7 @@ const AsbestosModule2Section2 = () => {
         {/* Learning Outcomes */}
         <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4">By the end of this section, you will be able to:</p>
+          <p className="text-white mb-4">By the end of this section, you will be able to:</p>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
               'Explain the purpose and scope of Regulation 4 of the Control of Asbestos Regulations 2012',
@@ -315,7 +315,7 @@ const AsbestosModule2Section2 = () => {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-orange-400/70 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </div>
             ))}
           </div>
@@ -330,7 +330,7 @@ const AsbestosModule2Section2 = () => {
               <span className="text-orange-400/80 text-sm font-normal">01</span>
               What Is the Duty to Manage?
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">Regulation 4</strong> of the Control of Asbestos
                 Regulations 2012 (CAR 2012) places a legal duty on{' '}
@@ -344,7 +344,7 @@ const AsbestosModule2Section2 = () => {
                 <h3 className="font-semibold mb-2 text-orange-400">
                   Key Definition: Duty to Manage
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The <strong className="text-white">duty to manage</strong> is the legal obligation
                   on dutyholders to take reasonable steps to find out if asbestos-containing
                   materials (ACMs) are present in non-domestic premises, to assess their condition,
@@ -359,7 +359,7 @@ const AsbestosModule2Section2 = () => {
                 <h3 className="text-orange-400 font-medium mb-2">
                   Premises Covered by Regulation 4
                 </h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -396,7 +396,7 @@ const AsbestosModule2Section2 = () => {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Domestic Dwellings</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Regulation 4 does <strong className="text-white">NOT</strong> apply to private
                   domestic dwellings (individual houses and flats). However, the HSE strongly
                   recommends that homeowners take the same approach to managing asbestos in their
@@ -425,7 +425,7 @@ const AsbestosModule2Section2 = () => {
               <span className="text-amber-400/80 text-sm font-normal">02</span>
               Who Is the Dutyholder?
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The person or organisation with the obligation to manage asbestos is the{' '}
                 <strong className="text-white">&ldquo;dutyholder&rdquo;</strong>. In practice, the
@@ -439,7 +439,7 @@ const AsbestosModule2Section2 = () => {
                 could be:
               </p>
 
-              <ul className="text-white/70 space-y-2 text-sm pl-1">
+              <ul className="text-white space-y-2 text-sm pl-1">
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 rounded-full bg-amber-400 mt-2 flex-shrink-0"></div>
                   <div>
@@ -506,7 +506,7 @@ const AsbestosModule2Section2 = () => {
                     </div>
                     <div className="w-0.5 h-4 bg-orange-400/30"></div>
                     <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg px-3 py-2 text-center w-full">
-                      <p className="text-white/80 text-xs">Owner is the dutyholder</p>
+                      <p className="text-white text-xs">Owner is the dutyholder</p>
                     </div>
                   </div>
 
@@ -518,7 +518,7 @@ const AsbestosModule2Section2 = () => {
                     </div>
                     <div className="w-0.5 h-4 bg-orange-400/30"></div>
                     <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg px-3 py-2 text-center w-full">
-                      <p className="text-white/80 text-xs">Tenant is dutyholder for leased areas</p>
+                      <p className="text-white text-xs">Tenant is dutyholder for leased areas</p>
                     </div>
                   </div>
 
@@ -528,7 +528,7 @@ const AsbestosModule2Section2 = () => {
                     </div>
                     <div className="w-0.5 h-4 bg-orange-400/30"></div>
                     <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg px-3 py-2 text-center w-full">
-                      <p className="text-white/80 text-xs">
+                      <p className="text-white text-xs">
                         Agent acts as dutyholder on behalf of owner
                       </p>
                     </div>
@@ -542,7 +542,7 @@ const AsbestosModule2Section2 = () => {
                     </div>
                     <div className="w-0.5 h-4 bg-orange-400/30"></div>
                     <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg px-3 py-2 text-center w-full">
-                      <p className="text-white/80 text-xs">
+                      <p className="text-white text-xs">
                         Person with greatest control is the dutyholder
                       </p>
                     </div>
@@ -560,7 +560,7 @@ const AsbestosModule2Section2 = () => {
                     <p className="text-orange-400 font-semibold text-sm mb-2 text-center">
                       Dutyholder Responsibilities
                     </p>
-                    <ul className="text-white/70 text-xs space-y-1">
+                    <ul className="text-white text-xs space-y-1">
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-3.5 w-3.5 text-orange-400/60 mt-0.5 flex-shrink-0" />
                         <span>Find ACMs (survey or presume)</span>
@@ -602,7 +602,7 @@ const AsbestosModule2Section2 = () => {
               <span className="text-teal-400/80 text-sm font-normal">03</span>
               The Dutyholder&rsquo;s Responsibilities
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Regulation 4 sets out a clear list of responsibilities that the dutyholder must
                 fulfil. These are not optional — they are legal requirements, and failure to carry
@@ -618,7 +618,7 @@ const AsbestosModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Find ACMs</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Take reasonable steps to find out whether asbestos-containing materials are
                         present — either by commissioning a management survey or by presuming that
                         materials contain asbestos.
@@ -631,7 +631,7 @@ const AsbestosModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Presume Asbestos</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         If you cannot confirm whether a material contains asbestos, you must presume
                         that it does unless there is strong evidence to the contrary.
                       </p>
@@ -643,7 +643,7 @@ const AsbestosModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Record and Register</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Make and keep an up-to-date written record of the location and condition of
                         all ACMs — this is the{' '}
                         <strong className="text-white">asbestos register</strong>.
@@ -656,7 +656,7 @@ const AsbestosModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Assess the Risk</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Carry out a material assessment (condition of the ACM) and a priority
                         assessment (likelihood of disturbance) for each ACM found.
                       </p>
@@ -668,7 +668,7 @@ const AsbestosModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Prepare a Management Plan</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Create a written plan that sets out how ACMs will be managed — including
                         actions to be taken, timescales, responsibilities, and monitoring
                         arrangements.
@@ -681,7 +681,7 @@ const AsbestosModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Manage the Risk</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Take steps to manage ACMs — this could mean leaving them in situ and
                         monitoring, encapsulating, enclosing, or removing them depending on the risk
                         assessment.
@@ -694,7 +694,7 @@ const AsbestosModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Review and Monitor</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Regularly review and monitor the condition of ACMs. The HSE recommends
                         re-inspection at least every 6 to 12 months, and more frequently if ACMs are
                         in poor condition or in high-traffic areas.
@@ -707,7 +707,7 @@ const AsbestosModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Provide Information</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Give information about ACM locations and condition to anyone who may disturb
                         them — including contractors, maintenance workers, and building occupants.
                       </p>
@@ -719,7 +719,7 @@ const AsbestosModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Update the Plan</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Ensure the management plan is reviewed and updated whenever circumstances
                         change — for example, after ACM removal, deterioration, changes to building
                         use, or new survey findings.
@@ -733,7 +733,7 @@ const AsbestosModule2Section2 = () => {
                 <h3 className="font-semibold mb-2 text-orange-400">
                   Key Principle: Presume Asbestos
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   One of the most important aspects of the duty to manage is the{' '}
                   <strong className="text-white">presumption principle</strong>: if you cannot
                   confirm whether a material contains asbestos, you must presume that it does and
@@ -753,7 +753,7 @@ const AsbestosModule2Section2 = () => {
               <span className="text-purple-400/80 text-sm font-normal">04</span>
               Informing Workers and Contractors
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The dutyholder <strong className="text-white">MUST</strong> provide information
                 about known or presumed ACMs to anyone who might disturb them. This is not a
@@ -764,7 +764,7 @@ const AsbestosModule2Section2 = () => {
 
               <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
                 <h3 className="text-purple-300 font-medium mb-3">Who Must Be Informed?</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -807,7 +807,7 @@ const AsbestosModule2Section2 = () => {
                 <h3 className="font-semibold mb-2 text-orange-400">
                   Information Must Be Provided BEFORE Work Begins
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Workers must be shown the{' '}
                   <strong className="text-white">asbestos register</strong> and the relevant parts
                   of the <strong className="text-white">management plan</strong> before they start
@@ -825,7 +825,7 @@ const AsbestosModule2Section2 = () => {
                     Discovering Suspected ACMs During Work
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   If a contractor discovers suspected ACMs during the course of their work — for
                   example, an electrician finds lagging around pipework while chasing cables — they
                   must <strong className="text-white">stop work immediately</strong>, leave the area
@@ -848,7 +848,7 @@ const AsbestosModule2Section2 = () => {
               <span className="text-cyan-400/80 text-sm font-normal">05</span>
               Overlap with CDM 2015
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The Construction (Design and Management) Regulations 2015 (CDM 2015) place
                 additional duties on <strong className="text-white">clients</strong> who commission
@@ -859,7 +859,7 @@ const AsbestosModule2Section2 = () => {
 
               <div className="bg-white/5 border border-cyan-400/30 p-4 rounded-lg">
                 <h3 className="text-cyan-300 font-medium mb-3">Client Duties Under CDM 2015</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-cyan-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -896,7 +896,7 @@ const AsbestosModule2Section2 = () => {
 
               <div className="bg-orange-500/10 border border-orange-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-orange-400">Practical Example</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   A building owner (dutyholder under CAR 2012) commissions a refurbishment of an
                   office floor. Under CDM 2015, the owner (as the client) must provide the principal
                   contractor with pre-construction information including the asbestos register and
@@ -918,7 +918,7 @@ const AsbestosModule2Section2 = () => {
               <span className="text-red-400/80 text-sm font-normal">06</span>
               Penalties for Non-Compliance
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Failure to comply with Regulation 4 is a{' '}
                 <strong className="text-white">criminal offence</strong>. The consequences are
@@ -935,7 +935,7 @@ const AsbestosModule2Section2 = () => {
                     <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                     <div>
                       <p className="text-white font-medium">Enforcement Notices</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         The HSE can issue{' '}
                         <strong className="text-white">improvement notices</strong> (requiring
                         action within a specified timeframe) or{' '}
@@ -948,7 +948,7 @@ const AsbestosModule2Section2 = () => {
                     <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                     <div>
                       <p className="text-white font-medium">Unlimited Fines for Organisations</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Organisations convicted of failing to comply with Regulation 4 face{' '}
                         <strong className="text-white">unlimited fines</strong>. The courts take
                         into account the size of the organisation, the seriousness of the breach,
@@ -960,7 +960,7 @@ const AsbestosModule2Section2 = () => {
                     <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                     <div>
                       <p className="text-white font-medium">Personal Liability</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Individual directors, managers, and other persons responsible can face{' '}
                         <strong className="text-white">personal fines</strong> and up to{' '}
                         <strong className="text-white">2 years&rsquo; imprisonment</strong>.
@@ -971,7 +971,7 @@ const AsbestosModule2Section2 = () => {
                     <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                     <div>
                       <p className="text-white font-medium">Civil Liability</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Employers and dutyholders may also be{' '}
                         <strong className="text-white">sued for compensation</strong> by workers or
                         building occupants who develop asbestos-related diseases as a result of
@@ -983,7 +983,7 @@ const AsbestosModule2Section2 = () => {
                     <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                     <div>
                       <p className="text-white font-medium">Insurance Requirements</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Employers&rsquo; liability insurance is mandatory. Failure to manage
                         asbestos properly may affect insurance cover and could result in insurers
                         refusing to pay claims.
@@ -995,7 +995,7 @@ const AsbestosModule2Section2 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-orange-400 font-medium mb-2">Recent Prosecution Examples</h3>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   The HSE regularly prosecutes dutyholders who fail to manage asbestos. Common
                   scenarios include: landlords who failed to carry out a management survey before
                   allowing contractors to work; school governors who had no asbestos register or
@@ -1013,7 +1013,7 @@ const AsbestosModule2Section2 = () => {
                     Remember: Ignorance Is No Defence
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A dutyholder cannot avoid liability by claiming they did not know about the
                   presence of asbestos. The duty is to take{' '}
                   <strong className="text-white">reasonable steps</strong> to find out. Failing to
@@ -1037,7 +1037,7 @@ const AsbestosModule2Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1053,7 +1053,7 @@ const AsbestosModule2Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-2-section-1">

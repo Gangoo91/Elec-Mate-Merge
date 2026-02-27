@@ -80,7 +80,7 @@ const QuizReviewInterface: React.FC<QuizReviewInterfaceProps> = ({
       case 'Advanced':
         return 'bg-red-500/20 text-red-400 border-red-500/50';
       default:
-        return 'bg-gray-500/20 text-white/80 border-gray-500/50';
+        return 'bg-gray-500/20 text-white border-gray-500/50';
     }
   };
 

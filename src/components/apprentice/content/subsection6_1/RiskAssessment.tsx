@@ -23,7 +23,7 @@ const RiskAssessment = () => {
       <div className="bg-white/10 border border-elec-yellow/20 rounded-lg overflow-hidden">
         <div className="bg-gradient-to-r from-elec-yellow/10 to-transparent p-4 border-b border-elec-yellow/20">
           <h4 className="font-semibold text-lg text-elec-yellow">Risk Assessment Process</h4>
-          <p className="text-sm mt-1 text-white/80">
+          <p className="text-sm mt-1 text-white">
             A systematic approach to identifying hazards and implementing controls
           </p>
         </div>
@@ -182,7 +182,7 @@ const RiskAssessment = () => {
                       </span>
                       Elimination
                     </div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Remove the hazard completely (e.g., redesign the job)
                     </p>
                   </div>
@@ -194,7 +194,7 @@ const RiskAssessment = () => {
                       </span>
                       Substitution
                     </div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Replace the hazard with something less hazardous
                     </p>
                   </div>
@@ -206,7 +206,7 @@ const RiskAssessment = () => {
                       </span>
                       Engineering Controls
                     </div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Isolate people from the hazard (e.g., machine guards)
                     </p>
                   </div>
@@ -218,7 +218,7 @@ const RiskAssessment = () => {
                       </span>
                       Administrative Controls
                     </div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Change the way people work (e.g., procedures, training)
                     </p>
                   </div>
@@ -230,7 +230,7 @@ const RiskAssessment = () => {
                       </span>
                       Personal Protective Equipment
                     </div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Protect the worker with personal protective equipment
                     </p>
                   </div>

@@ -222,7 +222,7 @@ const QuizPassCelebration: React.FC<QuizPassCelebrationProps> = ({ score, onCont
         </div>
 
         {/* Tap to skip hint */}
-        <p className="text-white/50 text-sm">Tap anywhere to continue</p>
+        <p className="text-white text-sm">Tap anywhere to continue</p>
       </div>
     </div>
   );

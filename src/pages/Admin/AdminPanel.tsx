@@ -187,7 +187,7 @@ export default function AdminPanel() {
       <div className="px-4 pt-4 safe-top">
         <Button
           variant="ghost"
-          className="text-white/70 hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
           onClick={() => navigate('/dashboard')}
         >
           <ArrowLeft className="mr-2 h-5 w-5" />

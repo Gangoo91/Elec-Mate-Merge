@@ -195,7 +195,7 @@ export default function CoshhAwarenessModule4Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-4">
@@ -220,7 +220,7 @@ export default function CoshhAwarenessModule4Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Storage, Handling &amp; Disposal
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             DSEAR requirements, chemical segregation, safe storage and handling procedures, spill
             response, and hazardous waste disposal obligations
           </p>
@@ -303,7 +303,7 @@ export default function CoshhAwarenessModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Key DSEAR Requirements</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -350,7 +350,7 @@ export default function CoshhAwarenessModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   DSEAR Zone Classification (Gases &amp; Vapours)
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="text-violet-400 font-bold min-w-[52px]">Zone 0</span>
                     <span>
@@ -416,7 +416,7 @@ export default function CoshhAwarenessModule4Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Must-Separate Combinations</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 w-5 h-5 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-red-400">
                       &times;
@@ -465,7 +465,7 @@ export default function CoshhAwarenessModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Segregation Methods</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -649,15 +649,15 @@ export default function CoshhAwarenessModule4Section4() {
               <div className="mt-4 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
                 <div className="flex items-center gap-1.5">
                   <span className="text-green-400 font-bold text-xs">&#10003;</span>
-                  <span className="text-[9px] text-white/50">May store together</span>
+                  <span className="text-[9px] text-white">May store together</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className="text-amber-400 font-bold text-[10px]">Caution</span>
-                  <span className="text-[9px] text-white/50">Check SDS first</span>
+                  <span className="text-[9px] text-white">Check SDS first</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className="text-red-400 font-bold text-xs">&#10007;</span>
-                  <span className="text-[9px] text-white/50">Must segregate</span>
+                  <span className="text-[9px] text-white">Must segregate</span>
                 </div>
               </div>
 
@@ -692,7 +692,7 @@ export default function CoshhAwarenessModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Labelling Requirements (CLP Regulation)
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -742,7 +742,7 @@ export default function CoshhAwarenessModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Secondary Containment (Bunding)
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -778,7 +778,7 @@ export default function CoshhAwarenessModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Storage Cabinets</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -844,7 +844,7 @@ export default function CoshhAwarenessModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Decanting Safely</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -892,7 +892,7 @@ export default function CoshhAwarenessModule4Section4() {
                     Mixing Chemicals &mdash; Critical Precautions
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400/60 flex-shrink-0" />
                     <span>
@@ -930,7 +930,7 @@ export default function CoshhAwarenessModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Transportation on Site</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -967,7 +967,7 @@ export default function CoshhAwarenessModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Personal Hygiene</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1016,7 +1016,7 @@ export default function CoshhAwarenessModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Spill Kit Contents</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1081,7 +1081,7 @@ export default function CoshhAwarenessModule4Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">When to Evacuate</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400/60 flex-shrink-0" />
                     <span>
@@ -1150,7 +1150,7 @@ export default function CoshhAwarenessModule4Section4() {
                   </div>
                   <div className="flex-1 bg-red-500/10 border border-red-500/30 rounded-lg p-3 mb-1">
                     <p className="text-xs font-bold text-red-400 mb-0.5">ALERT &amp; EVACUATE</p>
-                    <p className="text-[10px] sm:text-xs text-white/70">
+                    <p className="text-[10px] sm:text-xs text-white">
                       Warn others. Evacuate if toxic, flammable, or unknown. Call emergency services
                       if necessary.
                     </p>
@@ -1167,7 +1167,7 @@ export default function CoshhAwarenessModule4Section4() {
                   </div>
                   <div className="flex-1 bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 mb-1">
                     <p className="text-xs font-bold text-amber-400 mb-0.5">VENTILATE</p>
-                    <p className="text-[10px] sm:text-xs text-white/70">
+                    <p className="text-[10px] sm:text-xs text-white">
                       Open windows/doors to ventilate the area. Switch off ignition sources if safe
                       to do so.
                     </p>
@@ -1184,7 +1184,7 @@ export default function CoshhAwarenessModule4Section4() {
                   </div>
                   <div className="flex-1 bg-blue-500/10 border border-blue-500/30 rounded-lg p-3 mb-1">
                     <p className="text-xs font-bold text-blue-400 mb-0.5">DON PPE</p>
-                    <p className="text-[10px] sm:text-xs text-white/70">
+                    <p className="text-[10px] sm:text-xs text-white">
                       Put on chemical-resistant gloves, goggles, and apron from the spill kit before
                       approaching.
                     </p>
@@ -1201,7 +1201,7 @@ export default function CoshhAwarenessModule4Section4() {
                   </div>
                   <div className="flex-1 bg-violet-500/10 border border-violet-500/30 rounded-lg p-3 mb-1">
                     <p className="text-xs font-bold text-violet-400 mb-0.5">CONTAIN</p>
-                    <p className="text-[10px] sm:text-xs text-white/70">
+                    <p className="text-[10px] sm:text-xs text-white">
                       Place absorbent socks around the spill perimeter to prevent further spread to
                       drains or soil.
                     </p>
@@ -1218,7 +1218,7 @@ export default function CoshhAwarenessModule4Section4() {
                   </div>
                   <div className="flex-1 bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-3 mb-1">
                     <p className="text-xs font-bold text-cyan-400 mb-0.5">ABSORB</p>
-                    <p className="text-[10px] sm:text-xs text-white/70">
+                    <p className="text-[10px] sm:text-xs text-white">
                       Apply absorbent pads, pillows, or granules onto the contained spill.
                       Neutralise acids/alkalis if appropriate.
                     </p>
@@ -1234,7 +1234,7 @@ export default function CoshhAwarenessModule4Section4() {
                   </div>
                   <div className="flex-1 bg-green-500/10 border border-green-500/30 rounded-lg p-3">
                     <p className="text-xs font-bold text-green-400 mb-0.5">CLEAN &amp; DISPOSE</p>
-                    <p className="text-[10px] sm:text-xs text-white/70">
+                    <p className="text-[10px] sm:text-xs text-white">
                       Collect all contaminated absorbent material into hazardous waste bags. Clean
                       the area. Complete an incident report.
                     </p>
@@ -1271,7 +1271,7 @@ export default function CoshhAwarenessModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   European Waste Catalogue (EWC) Codes
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1309,7 +1309,7 @@ export default function CoshhAwarenessModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Duty of Care &mdash; Waste Producer Responsibilities
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 w-5 h-5 rounded-full bg-violet-500/20 border border-violet-500/40 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-violet-400">
                       1
@@ -1393,7 +1393,7 @@ export default function CoshhAwarenessModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Correct Disposal Procedure</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 w-5 h-5 rounded-full bg-violet-500/20 border border-violet-500/40 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-violet-400">
                       1
@@ -1448,7 +1448,7 @@ export default function CoshhAwarenessModule4Section4() {
                     Never Reuse Without Decontamination
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Empty containers must{' '}
                   <strong className="text-white">NEVER be reused for a different chemical</strong>{' '}
                   without proper decontamination and re-labelling. Residual traces of the original
@@ -1481,7 +1481,7 @@ export default function CoshhAwarenessModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">What Must Be Recorded</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1561,7 +1561,7 @@ export default function CoshhAwarenessModule4Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1575,7 +1575,7 @@ export default function CoshhAwarenessModule4Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-4-section-3">

@@ -266,7 +266,7 @@ const HNCModule7Section1_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section1">
@@ -288,7 +288,7 @@ const HNCModule7Section1_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Discrimination Studies
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Time-current curves, discrimination margins, cascading, backup protection, and
             coordination software for protective device selectivity
           </p>
@@ -575,19 +575,19 @@ const HNCModule7Section1_4 = () => {
               </p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Upstream:</span>{' '}
+                  <span className="text-white">Upstream:</span>{' '}
                   <span className="text-white">
                     63A Type C MCB (magnetic trip 5-10 x In = 315-630A)
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">Downstream:</span>{' '}
+                  <span className="text-white">Downstream:</span>{' '}
                   <span className="text-white">
                     32A Type B MCB (magnetic trip 3-5 x In = 96-160A)
                   </span>
                 </p>
                 <p className="mt-2">
-                  <span className="text-white/60">Analysis:</span>
+                  <span className="text-white">Analysis:</span>
                 </p>
                 <p className="text-white">Thermal region: 32A curve is left of 63A - OK</p>
                 <p className="text-white">
@@ -625,22 +625,22 @@ const HNCModule7Section1_4 = () => {
               </p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">HRC Fuses (gG):</span>{' '}
+                  <span className="text-white">HRC Fuses (gG):</span>{' '}
                   <span className="text-white">Ratio &gt; 1.6:1 (upstream:downstream rating)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">MCBs same type:</span>{' '}
+                  <span className="text-white">MCBs same type:</span>{' '}
                   <span className="text-white">Ratio &gt; 2:1 often needed for thermal region</span>
                 </p>
                 <p>
-                  <span className="text-white/60">MCCB to MCB:</span>{' '}
+                  <span className="text-white">MCCB to MCB:</span>{' '}
                   <span className="text-white">Use manufacturer coordination tables</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Time delay relays:</span>{' '}
+                  <span className="text-white">Time delay relays:</span>{' '}
                   <span className="text-white">Minimum 0.3-0.4s grading margin</span>
                 </p>
-                <p className="mt-2 text-white/60 text-xs">
+                <p className="mt-2 text-white text-xs">
                   Note: Always verify with manufacturer data - these are indicative only
                 </p>
               </div>
@@ -721,7 +721,7 @@ const HNCModule7Section1_4 = () => {
                 Calculation Example: Fuse Discrimination
               </p>
               <div className="font-mono text-sm space-y-1">
-                <p className="text-white/60">Given:</p>
+                <p className="text-white">Given:</p>
                 <p>
                   <span className="text-white">
                     Upstream: 100A gG fuse, I²t let-through = 15,000 A²s at 10kA
@@ -732,7 +732,7 @@ const HNCModule7Section1_4 = () => {
                     Downstream: 63A gG fuse, Pre-arcing I²t = 8,000 A²s at 10kA
                   </span>
                 </p>
-                <p className="mt-2 text-white/60">Verification:</p>
+                <p className="mt-2 text-white">Verification:</p>
                 <p>
                   <span className="text-white">
                     Upstream total I²t (15,000) &gt; Downstream pre-arcing I²t (8,000)
@@ -741,7 +741,7 @@ const HNCModule7Section1_4 = () => {
                 <p className="text-green-400 mt-1">
                   Result: Discrimination achieved at 10kA fault level
                 </p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Rating ratio: 100/63 = 1.59:1 (close to 1.6:1 guideline)
                 </p>
               </div>
@@ -885,19 +885,19 @@ const HNCModule7Section1_4 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cascading Example</p>
               <div className="font-mono text-sm space-y-1">
-                <p className="text-white/60">Installation conditions:</p>
+                <p className="text-white">Installation conditions:</p>
                 <p>
                   <span className="text-white">
                     Prospective fault current at distribution board: 25kA
                   </span>
                 </p>
-                <p className="mt-2 text-white/60">Without cascading:</p>
+                <p className="mt-2 text-white">Without cascading:</p>
                 <p>
                   <span className="text-white">
                     MCB required breaking capacity: ≥25kA (expensive, limited options)
                   </span>
                 </p>
-                <p className="mt-2 text-white/60">With cascading (manufacturer-verified):</p>
+                <p className="mt-2 text-white">With cascading (manufacturer-verified):</p>
                 <p>
                   <span className="text-white">
                     MCCB upstream: 50kA breaking capacity (current limiting)
@@ -911,11 +911,11 @@ const HNCModule7Section1_4 = () => {
                     Combined enhanced rating: 25kA (from coordination tables)
                   </span>
                 </p>
-                <p className="text-white/60 mt-2">Result: Compliant and more economical solution</p>
+                <p className="text-white mt-2">Result: Compliant and more economical solution</p>
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Design decision:</strong> When specifying cascading, consider whether
               discrimination is also required. If both upstream and downstream devices operate,
               supply to all downstream circuits is lost - this may or may not be acceptable.
@@ -942,7 +942,7 @@ const HNCModule7Section1_4 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
                 <div>
                   <p className="font-medium mb-1">Manufacturer-Specific</p>
-                  <ul className="space-y-0.5 text-white/80">
+                  <ul className="space-y-0.5 text-white">
                     <li>ABB DOC (Coordination software)</li>
                     <li>Schneider Electric Ecodial</li>
                     <li>Siemens SIMARIS design</li>
@@ -952,7 +952,7 @@ const HNCModule7Section1_4 = () => {
                 </div>
                 <div>
                   <p className="font-medium mb-1">Independent/Multi-vendor</p>
-                  <ul className="space-y-0.5 text-white/80">
+                  <ul className="space-y-0.5 text-white">
                     <li>ETAP (Enterprise power analysis)</li>
                     <li>SKM PowerTools</li>
                     <li>EasyPower</li>
@@ -967,26 +967,26 @@ const HNCModule7Section1_4 = () => {
               <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Coordination Study Process
               </h3>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Step 1: System modelling</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Step 1: System modelling</p>
                 <p className="ml-4">- Import single-line diagram</p>
                 <p className="ml-4">- Define transformer impedances</p>
                 <p className="ml-4">- Enter cable data (length, CSA, material)</p>
                 <p className="ml-4">- Configure source fault level</p>
-                <p className="mt-2 text-white/60">Step 2: Fault calculations</p>
+                <p className="mt-2 text-white">Step 2: Fault calculations</p>
                 <p className="ml-4">- Calculate Ipf at each protection point</p>
                 <p className="ml-4">- Determine minimum and maximum fault currents</p>
                 <p className="ml-4">- Consider motor contribution where applicable</p>
-                <p className="mt-2 text-white/60">Step 3: Device selection</p>
+                <p className="mt-2 text-white">Step 3: Device selection</p>
                 <p className="ml-4">- Select protective devices from libraries</p>
                 <p className="ml-4">- Configure settings (Ir, Im, time delays)</p>
                 <p className="ml-4">- Import time-current characteristics</p>
-                <p className="mt-2 text-white/60">Step 4: Coordination analysis</p>
+                <p className="mt-2 text-white">Step 4: Coordination analysis</p>
                 <p className="ml-4">- Plot overlaid time-current curves</p>
                 <p className="ml-4">- Identify discrimination limits (I_s)</p>
                 <p className="ml-4">- Check for curve crossings</p>
                 <p className="ml-4">- Verify cascading combinations</p>
-                <p className="mt-2 text-white/60">Step 5: Documentation</p>
+                <p className="mt-2 text-white">Step 5: Documentation</p>
                 <p className="ml-4">- Generate coordination reports</p>
                 <p className="ml-4">- Export settings schedules</p>
                 <p className="ml-4">- Archive for design verification</p>
@@ -1063,15 +1063,15 @@ const HNCModule7Section1_4 = () => {
                 <strong>Scenario:</strong> Verify discrimination between 100A Type C MCB (upstream)
                 and 32A Type B MCB (downstream).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Device characteristics:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Device characteristics:</p>
                 <p>Upstream: 100A Type C</p>
                 <p className="ml-4">- Thermal trip: Per BS EN 60898 (inverse time)</p>
                 <p className="ml-4">- Magnetic trip: 5-10 x In = 500-1000A</p>
                 <p className="mt-2">Downstream: 32A Type B</p>
                 <p className="ml-4">- Thermal trip: Per BS EN 60898 (inverse time)</p>
                 <p className="ml-4">- Magnetic trip: 3-5 x In = 96-160A</p>
-                <p className="mt-2 text-white/60">Analysis at different fault levels:</p>
+                <p className="mt-2 text-white">Analysis at different fault levels:</p>
                 <p className="mt-1">At 96A (1 x upstream magnetic threshold minimum):</p>
                 <p className="ml-4 text-green-400">
                   Downstream trips (magnetic), upstream not activated
@@ -1084,7 +1084,7 @@ const HNCModule7Section1_4 = () => {
                 <p className="ml-4 text-orange-400">
                   Both in magnetic region - potential simultaneous trip
                 </p>
-                <p className="mt-2 text-white/60">Result:</p>
+                <p className="mt-2 text-white">Result:</p>
                 <p className="text-green-400">Discrimination limit (I_s) ≈ 500A</p>
                 <p>Partial discrimination - acceptable if Ipf &lt; 500A at downstream</p>
               </div>
@@ -1098,21 +1098,21 @@ const HNCModule7Section1_4 = () => {
                 <strong>Scenario:</strong> Verify discrimination between 160A and 100A gG HRC fuses
                 at 20kA fault level.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given data (from manufacturer curves at 20kA):</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given data (from manufacturer curves at 20kA):</p>
                 <p>160A fuse: Pre-arcing I²t = 65,000 A²s</p>
                 <p>160A fuse: Total operating I²t = 120,000 A²s</p>
                 <p>100A fuse: Pre-arcing I²t = 22,000 A²s</p>
                 <p>100A fuse: Total operating I²t = 48,000 A²s</p>
-                <p className="mt-2 text-white/60">Discrimination check:</p>
+                <p className="mt-2 text-white">Discrimination check:</p>
                 <p>Upstream total I²t (160A): 120,000 A²s</p>
                 <p>Downstream pre-arcing I²t (100A): 22,000 A²s</p>
                 <p className="mt-1">120,000 &gt; 22,000 ✓</p>
                 <p className="mt-2 text-green-400">Result: Full discrimination achieved at 20kA</p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Rating ratio: 160/100 = 1.6:1 (meets guideline)
                 </p>
-                <p className="text-white/60">Also check at other fault current levels</p>
+                <p className="text-white">Also check at other fault current levels</p>
               </div>
             </div>
 
@@ -1124,16 +1124,16 @@ const HNCModule7Section1_4 = () => {
                 <strong>Scenario:</strong> Set time delays for 400A and 250A MCCBs to achieve
                 discrimination.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">System requirements:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">System requirements:</p>
                 <p>Maximum Ipf at downstream MCCB: 15kA</p>
                 <p>Downstream 250A MCCB clearing time at 15kA: 50ms (instantaneous)</p>
-                <p className="mt-2 text-white/60">Grading margin calculation:</p>
+                <p className="mt-2 text-white">Grading margin calculation:</p>
                 <p>Minimum grading margin for MCCBs: 100ms (manufacturer recommendation)</p>
                 <p className="mt-1">Upstream 400A MCCB time delay required:</p>
                 <p>= Downstream time + Grading margin + Safety factor</p>
                 <p>= 50ms + 100ms + 50ms = 200ms</p>
-                <p className="mt-2 text-white/60">Settings:</p>
+                <p className="mt-2 text-white">Settings:</p>
                 <p>Downstream 250A: Instantaneous (no intentional delay)</p>
                 <p>Upstream 400A: Short-time delay = 200ms at Isd</p>
                 <p className="mt-2 text-green-400">Result: Time-graded discrimination achieved</p>
@@ -1240,7 +1240,7 @@ const HNCModule7Section1_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1286,7 +1286,7 @@ const HNCModule7Section1_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section1">

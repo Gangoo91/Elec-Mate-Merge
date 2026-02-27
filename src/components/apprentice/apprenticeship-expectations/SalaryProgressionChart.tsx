@@ -126,7 +126,7 @@ const SalaryProgressionChart = () => {
           {payload.map((entry: any, index: number) => (
             <div key={index} className="flex items-center gap-2 text-sm">
               <div className="w-2 h-2 rounded-full" style={{ backgroundColor: entry.color }} />
-              <span className="text-white/70">{entry.name}:</span>
+              <span className="text-white">{entry.name}:</span>
               <span className="text-white font-medium">£{entry.value.toLocaleString()}</span>
             </div>
           ))}
@@ -145,7 +145,7 @@ const SalaryProgressionChart = () => {
             <TrendingUp className="h-5 w-5" />
             Apprenticeship Salary Progression
           </CardTitle>
-          <p className="text-sm text-white/70">
+          <p className="text-sm text-white">
             Expected salary ranges throughout your 4-year apprenticeship
           </p>
         </CardHeader>
@@ -209,39 +209,39 @@ const SalaryProgressionChart = () => {
           <div className="flex justify-center gap-4 sm:gap-6 mt-4 text-sm flex-wrap">
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-              <span className="text-white/70">Minimum</span>
+              <span className="text-white">Minimum</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-              <span className="text-white/70">Average</span>
+              <span className="text-white">Average</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-              <span className="text-white/70">Maximum</span>
+              <span className="text-white">Maximum</span>
             </div>
           </div>
 
           {/* Quick stats */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6">
             <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-center">
-              <p className="text-white/60 text-xs">Starting</p>
+              <p className="text-white text-xs">Starting</p>
               <p className="text-lg font-bold text-white">£17.5k</p>
-              <p className="text-white/60 text-xs">Year 1 avg</p>
+              <p className="text-white text-xs">Year 1 avg</p>
             </div>
             <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-center">
-              <p className="text-white/60 text-xs">Qualified</p>
+              <p className="text-white text-xs">Qualified</p>
               <p className="text-lg font-bold text-green-400">£42k</p>
-              <p className="text-white/60 text-xs">Average</p>
+              <p className="text-white text-xs">Average</p>
             </div>
             <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-center">
-              <p className="text-white/60 text-xs">4-Year Rise</p>
+              <p className="text-white text-xs">4-Year Rise</p>
               <p className="text-lg font-bold text-elec-yellow">+140%</p>
-              <p className="text-white/60 text-xs">Growth</p>
+              <p className="text-white text-xs">Growth</p>
             </div>
             <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-center">
-              <p className="text-white/60 text-xs">Top Earners</p>
+              <p className="text-white text-xs">Top Earners</p>
               <p className="text-lg font-bold text-purple-400">£50k+</p>
-              <p className="text-white/60 text-xs">Specialists</p>
+              <p className="text-white text-xs">Specialists</p>
             </div>
           </div>
         </CardContent>
@@ -254,7 +254,7 @@ const SalaryProgressionChart = () => {
             <MapPin className="h-5 w-5" />
             Regional Salary Comparison
           </CardTitle>
-          <p className="text-sm text-white/70">How salaries vary across different UK regions</p>
+          <p className="text-sm text-white">How salaries vary across different UK regions</p>
         </CardHeader>
         <CardContent>
           <div className="h-64 sm:h-72 w-full">
@@ -284,30 +284,30 @@ const SalaryProgressionChart = () => {
           <div className="flex justify-center gap-3 sm:gap-4 mt-4 text-xs flex-wrap">
             <div className="flex items-center gap-1">
               <div className="w-2 h-2 bg-red-500 rounded"></div>
-              <span className="text-white/70">Y1</span>
+              <span className="text-white">Y1</span>
             </div>
             <div className="flex items-center gap-1">
               <div className="w-2 h-2 bg-amber-500 rounded"></div>
-              <span className="text-white/70">Y2</span>
+              <span className="text-white">Y2</span>
             </div>
             <div className="flex items-center gap-1">
               <div className="w-2 h-2 bg-green-500 rounded"></div>
-              <span className="text-white/70">Y3</span>
+              <span className="text-white">Y3</span>
             </div>
             <div className="flex items-center gap-1">
               <div className="w-2 h-2 bg-blue-500 rounded"></div>
-              <span className="text-white/70">Y4</span>
+              <span className="text-white">Y4</span>
             </div>
             <div className="flex items-center gap-1">
               <div className="w-2 h-2 bg-purple-500 rounded"></div>
-              <span className="text-white/70">Qualified</span>
+              <span className="text-white">Qualified</span>
             </div>
           </div>
 
           <div className="mt-4 p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
             <div className="flex items-start gap-2">
               <Info className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 London salaries are typically 10-15% higher due to cost of living, but other regions
                 can offer better value when accounting for housing costs.
               </p>
@@ -323,7 +323,7 @@ const SalaryProgressionChart = () => {
             <Briefcase className="h-5 w-5" />
             Career Path Earnings
           </CardTitle>
-          <p className="text-sm text-white/70">What you could earn after qualifying</p>
+          <p className="text-sm text-white">What you could earn after qualifying</p>
         </CardHeader>
         <CardContent>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -338,7 +338,7 @@ const SalaryProgressionChart = () => {
                         ? 'bg-green-500/20 text-green-400 border-green-500/30'
                         : career.growth === 'Strong' || career.growth === 'Good'
                           ? 'bg-blue-500/20 text-blue-400 border-blue-500/30'
-                          : 'bg-white/10 text-white/60'
+                          : 'bg-white/10 text-white'
                     }`}
                   >
                     {career.growth}
@@ -358,7 +358,7 @@ const SalaryProgressionChart = () => {
             <Gift className="h-5 w-5" />
             Benefits Beyond Salary
           </CardTitle>
-          <p className="text-sm text-white/70">
+          <p className="text-sm text-white">
             Your total compensation package is more than just salary
           </p>
         </CardHeader>
@@ -370,7 +370,7 @@ const SalaryProgressionChart = () => {
                   <benefit.icon className="h-5 w-5 text-purple-400" />
                   <span className="font-medium text-white">{benefit.title}</span>
                 </div>
-                <p className="text-white/70 text-sm mb-2">{benefit.description}</p>
+                <p className="text-white text-sm mb-2">{benefit.description}</p>
                 <Badge
                   variant="outline"
                   className="text-xs bg-purple-500/10 text-purple-400 border-purple-500/30"
@@ -390,7 +390,7 @@ const SalaryProgressionChart = () => {
             <Clock className="h-5 w-5" />
             Overtime Impact Example
           </CardTitle>
-          <p className="text-sm text-white/70">
+          <p className="text-sm text-white">
             How overtime can significantly boost your earnings
           </p>
         </CardHeader>
@@ -400,19 +400,19 @@ const SalaryProgressionChart = () => {
               <h4 className="font-medium text-white">Scenario: Qualified Electrician</h4>
               <div className="space-y-2">
                 <div className="flex justify-between p-2 rounded bg-white/5">
-                  <span className="text-white/70">Base Salary</span>
+                  <span className="text-white">Base Salary</span>
                   <span className="text-white font-medium">£35,000</span>
                 </div>
                 <div className="flex justify-between p-2 rounded bg-white/5">
-                  <span className="text-white/70">Standard Week</span>
+                  <span className="text-white">Standard Week</span>
                   <span className="text-white font-medium">40 hours</span>
                 </div>
                 <div className="flex justify-between p-2 rounded bg-white/5">
-                  <span className="text-white/70">Overtime Rate</span>
+                  <span className="text-white">Overtime Rate</span>
                   <span className="text-white font-medium">1.5x (time and a half)</span>
                 </div>
                 <div className="flex justify-between p-2 rounded bg-white/5">
-                  <span className="text-white/70">Weekly Overtime</span>
+                  <span className="text-white">Weekly Overtime</span>
                   <span className="text-white font-medium">8 hours average</span>
                 </div>
               </div>
@@ -421,7 +421,7 @@ const SalaryProgressionChart = () => {
               <h4 className="font-medium text-white">Potential Total Earnings</h4>
               <div className="space-y-2">
                 <div className="flex justify-between p-2 rounded bg-white/5">
-                  <span className="text-white/70">Base Salary</span>
+                  <span className="text-white">Base Salary</span>
                   <span className="text-white font-medium">£35,000</span>
                 </div>
                 <div className="flex justify-between p-2 rounded bg-cyan-500/10">
@@ -433,7 +433,7 @@ const SalaryProgressionChart = () => {
                   <span className="text-green-400 font-bold text-lg">£44,700</span>
                 </div>
               </div>
-              <p className="text-white/60 text-xs">
+              <p className="text-white text-xs">
                 * Calculation: (£35,000 ÷ 52 ÷ 40) × 1.5 × 8 hours × 48 weeks
               </p>
             </div>
@@ -450,25 +450,25 @@ const SalaryProgressionChart = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           <div className="flex items-start gap-2">
             <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-            <span className="text-white/80 text-sm">
+            <span className="text-white text-sm">
               Your salary more than doubles during your apprenticeship
             </span>
           </div>
           <div className="flex items-start gap-2">
             <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-            <span className="text-white/80 text-sm">
+            <span className="text-white text-sm">
               Specialists and self-employed can earn £50-65k+
             </span>
           </div>
           <div className="flex items-start gap-2">
             <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-            <span className="text-white/80 text-sm">
+            <span className="text-white text-sm">
               Benefits like van and tools add £5-10k+ in value
             </span>
           </div>
           <div className="flex items-start gap-2">
             <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-            <span className="text-white/80 text-sm">
+            <span className="text-white text-sm">
               Overtime can add £5-15k to your annual earnings
             </span>
           </div>

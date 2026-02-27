@@ -98,7 +98,7 @@ const BS7671Module5Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bs7671-module-5">
@@ -119,7 +119,7 @@ const BS7671Module5Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Isolation, Switching & Emergency Controls
           </h1>
-          <p className="text-white/80">Essential safety controls for electrical installations</p>
+          <p className="text-white">Essential safety controls for electrical installations</p>
         </header>
 
         {/* Quick Summary */}
@@ -190,10 +190,10 @@ const BS7671Module5Section4 = () => {
             <div className="grid sm:grid-cols-3 gap-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-elec-yellow mb-2">Isolation</p>
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   Complete disconnection for safe maintenance work
                 </p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• Visible break or clear OFF indication</li>
                   <li>• Provision for locking in OFF</li>
                   <li>• Suitable fault current rating</li>
@@ -202,10 +202,10 @@ const BS7671Module5Section4 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-orange-400 mb-2">Mechanical Maintenance</p>
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   Controlled disconnection with safety procedures
                 </p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• Lock-off procedures (LOTO)</li>
                   <li>• Permit to work systems</li>
                   <li>• Warning notices and tags</li>
@@ -214,10 +214,10 @@ const BS7671Module5Section4 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-red-400 mb-2">Emergency Switching</p>
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   Immediate disconnection in dangerous situations
                 </p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• Rapid operation capability</li>
                   <li>• Highly visible and accessible</li>
                   <li>• Red colour coding</li>
@@ -285,19 +285,19 @@ const BS7671Module5Section4 = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-white mb-1">Domestic</p>
-                  <p className="text-white/90 text-xs">Consumer unit main switch, MCBs</p>
+                  <p className="text-white text-xs">Consumer unit main switch, MCBs</p>
                 </div>
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-white mb-1">Commercial</p>
-                  <p className="text-white/90 text-xs">Distribution board isolators</p>
+                  <p className="text-white text-xs">Distribution board isolators</p>
                 </div>
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-white mb-1">Industrial</p>
-                  <p className="text-white/90 text-xs">Motor control, emergency stops</p>
+                  <p className="text-white text-xs">Motor control, emergency stops</p>
                 </div>
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-white mb-1">Special</p>
-                  <p className="text-white/90 text-xs">PV isolators, EV charging</p>
+                  <p className="text-white text-xs">PV isolators, EV charging</p>
                 </div>
               </div>
             </div>
@@ -407,7 +407,7 @@ const BS7671Module5Section4 = () => {
 
             <div className="p-4 rounded-lg bg-transparent border border-white/10">
               <p className="text-sm font-medium text-white mb-2">Standard Installation Heights</p>
-              <ul className="text-sm text-white/90 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>
                   <strong>General switches:</strong> 0.45m - 1.2m above floor
                 </li>
@@ -429,12 +429,12 @@ const BS7671Module5Section4 = () => {
             <h3 className="text-sm font-medium text-elec-yellow mb-3">
               Commercial Kitchen Emergency Control System
             </h3>
-            <p className="text-sm text-white/90 leading-relaxed mb-4">
+            <p className="text-sm text-white leading-relaxed mb-4">
               In a commercial kitchen, emergency stop buttons are installed near cooking equipment
               and at exit points. During a fire risk event, staff activate the emergency stop to
               isolate circuits, cutting power to ovens, fryers, and extraction systems.
             </p>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white/80">
+            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
               <div>
                 <p className="font-medium text-white mb-1">Risk Assessment</p>
                 <p>
@@ -460,7 +460,7 @@ const BS7671Module5Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -472,7 +472,7 @@ const BS7671Module5Section4 = () => {
           <div className="grid sm:grid-cols-3 gap-4 text-xs text-white">
             <div>
               <p className="font-medium text-white mb-1">Isolation</p>
-              <ul className="space-y-0.5 text-white/80">
+              <ul className="space-y-0.5 text-white">
                 <li>• OFF-load operation</li>
                 <li>• Visible break indication</li>
                 <li>• Lockable in OFF position</li>
@@ -480,7 +480,7 @@ const BS7671Module5Section4 = () => {
             </div>
             <div>
               <p className="font-medium text-white mb-1">Mechanical Maintenance</p>
-              <ul className="space-y-0.5 text-white/80">
+              <ul className="space-y-0.5 text-white">
                 <li>• LOTO procedures</li>
                 <li>• Permit to work</li>
                 <li>• Warning notices</li>
@@ -488,7 +488,7 @@ const BS7671Module5Section4 = () => {
             </div>
             <div>
               <p className="font-medium text-white mb-1">Emergency Switching</p>
-              <ul className="space-y-0.5 text-white/80">
+              <ul className="space-y-0.5 text-white">
                 <li>• Immediate operation</li>
                 <li>• Red colour coding</li>
                 <li>• Latching OFF</li>
@@ -512,7 +512,7 @@ const BS7671Module5Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bs7671-module-5-section-3">

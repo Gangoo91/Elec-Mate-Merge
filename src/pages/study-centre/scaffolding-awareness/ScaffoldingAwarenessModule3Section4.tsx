@@ -217,7 +217,7 @@ const ScaffoldingAwarenessModule3Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Bracing, Ties & Stability
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How bracing prevents racking, the different bracing types, tie arrangements that anchor
             the scaffold to the building, proof-load testing, and the effects of sheeting on wind
             loading
@@ -462,7 +462,7 @@ const ScaffoldingAwarenessModule3Section4 = () => {
               {/* Facade Bracing Patterns */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="font-semibold mb-3 text-slate-300">Facade Bracing Patterns</h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The arrangement of ledger bracing across the face of the scaffold follows
                   established patterns depending on the scaffold configuration and loading.
                 </p>
@@ -584,7 +584,7 @@ const ScaffoldingAwarenessModule3Section4 = () => {
                         />
                       </svg>
                     </div>
-                    <p className="text-[10px] sm:text-xs text-white/50 text-center mt-2">
+                    <p className="text-[10px] sm:text-xs text-white text-center mt-2">
                       Diagonal across face (zigzag)
                     </p>
                   </div>
@@ -635,14 +635,14 @@ const ScaffoldingAwarenessModule3Section4 = () => {
                         />
                       </svg>
                       {/* Labels */}
-                      <span className="absolute left-[12%] top-[1%] text-[8px] text-white/40">
+                      <span className="absolute left-[12%] top-[1%] text-[8px] text-white">
                         INNER
                       </span>
-                      <span className="absolute right-[12%] top-[1%] text-[8px] text-white/40">
+                      <span className="absolute right-[12%] top-[1%] text-[8px] text-white">
                         OUTER
                       </span>
                     </div>
-                    <p className="text-[10px] sm:text-xs text-white/50 text-center mt-2">
+                    <p className="text-[10px] sm:text-xs text-white text-center mt-2">
                       Horizontal plane (bird's eye)
                     </p>
                   </div>
@@ -723,7 +723,7 @@ const ScaffoldingAwarenessModule3Section4 = () => {
                         />
                       </svg>
                     </div>
-                    <p className="text-[10px] sm:text-xs text-white/50 text-center mt-2">
+                    <p className="text-[10px] sm:text-xs text-white text-center mt-2">
                       Two diagonals per bay (strongest)
                     </p>
                   </div>
@@ -945,7 +945,7 @@ const ScaffoldingAwarenessModule3Section4 = () => {
                 <h3 className="font-semibold mb-2 text-slate-300">
                   The General Rule: Every Other Standard at Every Other Lift
                 </h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   For a standard independent scaffold (not sheeted, not heavily loaded), ties are
                   required at every other standard on every other lift, arranged in a staggered
                   (diamond) pattern. This means the tie positions on adjacent tied lifts are offset
@@ -962,12 +962,12 @@ const ScaffoldingAwarenessModule3Section4 = () => {
                   <div className="min-w-[320px] max-w-[480px] mx-auto">
                     {/* Grid labels */}
                     <div className="flex items-center mb-1">
-                      <span className="w-12 text-[10px] text-white/40 text-right pr-2">Lift</span>
+                      <span className="w-12 text-[10px] text-white text-right pr-2">Lift</span>
                       <div className="flex-1 grid grid-cols-6 gap-0">
                         {['Std 1', 'Std 2', 'Std 3', 'Std 4', 'Std 5', 'Std 6'].map((label) => (
                           <span
                             key={label}
-                            className="text-[9px] sm:text-[10px] text-white/40 text-center"
+                            className="text-[9px] sm:text-[10px] text-white text-center"
                           >
                             {label}
                           </span>
@@ -985,7 +985,7 @@ const ScaffoldingAwarenessModule3Section4 = () => {
                       { lift: 1, ties: [false, false, false, false, false, false] },
                     ].map((row) => (
                       <div key={row.lift} className="flex items-center mb-1">
-                        <span className="w-12 text-[10px] text-white/40 text-right pr-2">
+                        <span className="w-12 text-[10px] text-white text-right pr-2">
                           {row.lift}
                         </span>
                         <div className="flex-1 grid grid-cols-6 gap-0">
@@ -1008,16 +1008,16 @@ const ScaffoldingAwarenessModule3Section4 = () => {
                     <div className="flex items-center gap-4 mt-3 pt-3 border-t border-white/10">
                       <div className="flex items-center gap-1.5">
                         <div className="w-3 h-3 rounded-full bg-slate-400 border border-slate-300" />
-                        <span className="text-[10px] text-white/50">Tie position</span>
+                        <span className="text-[10px] text-white">Tie position</span>
                       </div>
                       <div className="flex items-center gap-1.5">
                         <div className="w-[2px] h-3 bg-white/30" />
-                        <span className="text-[10px] text-white/50">Standard</span>
+                        <span className="text-[10px] text-white">Standard</span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <p className="text-xs text-white/50 text-center mt-3">
+                <p className="text-xs text-white text-center mt-3">
                   Ties staggered at every other standard on every other lift. Lift 1 is typically
                   below the first tie level.
                 </p>
@@ -1375,7 +1375,7 @@ const ScaffoldingAwarenessModule3Section4 = () => {
 
               <div className="bg-slate-500/10 border border-slate-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-slate-300">Wind Force Multiplier</h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The wind force on a scaffold is proportional to the area presented to the wind and
                   the solidity ratio (how much of that area is solid). An open scaffold has a
                   solidity ratio of approximately 0.1 to 0.2. A fully sheeted scaffold has a
@@ -1385,19 +1385,19 @@ const ScaffoldingAwarenessModule3Section4 = () => {
                 </p>
                 <div className="grid sm:grid-cols-3 gap-3 mt-3">
                   <div className="bg-[#1a1a1a] rounded-lg p-3 border border-white/10 text-center">
-                    <p className="text-xs text-white/40 mb-1">Open Scaffold</p>
+                    <p className="text-xs text-white mb-1">Open Scaffold</p>
                     <p className="text-lg font-bold text-green-400">1x</p>
-                    <p className="text-[10px] text-white/40">Base wind load</p>
+                    <p className="text-[10px] text-white">Base wind load</p>
                   </div>
                   <div className="bg-[#1a1a1a] rounded-lg p-3 border border-white/10 text-center">
-                    <p className="text-xs text-white/40 mb-1">Debris Netting</p>
+                    <p className="text-xs text-white mb-1">Debris Netting</p>
                     <p className="text-lg font-bold text-amber-400">2-3x</p>
-                    <p className="text-[10px] text-white/40">Wind load multiplier</p>
+                    <p className="text-[10px] text-white">Wind load multiplier</p>
                   </div>
                   <div className="bg-[#1a1a1a] rounded-lg p-3 border border-white/10 text-center">
-                    <p className="text-xs text-white/40 mb-1">Full Sheeting</p>
+                    <p className="text-xs text-white mb-1">Full Sheeting</p>
                     <p className="text-lg font-bold text-red-400">3-5x</p>
-                    <p className="text-[10px] text-white/40">Wind load multiplier</p>
+                    <p className="text-[10px] text-white">Wind load multiplier</p>
                   </div>
                 </div>
               </div>
@@ -1539,7 +1539,7 @@ const ScaffoldingAwarenessModule3Section4 = () => {
 
               <div className="bg-slate-500/10 border border-slate-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-slate-300">Kentledge (Counterweight)</h3>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Where rakers bear on the ground, the base may need to be weighted down with
                   kentledge — concrete blocks or other heavy materials placed on a platform at the
                   foot of the raker. The kentledge prevents the raker from sliding outward under
@@ -1564,7 +1564,7 @@ const ScaffoldingAwarenessModule3Section4 = () => {
             <div className="space-y-4">
               <div>
                 <h3 className="font-semibold text-white mb-2">Bracing Types</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1591,7 +1591,7 @@ const ScaffoldingAwarenessModule3Section4 = () => {
 
               <div>
                 <h3 className="font-semibold text-white mb-2">Tie Types</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1625,7 +1625,7 @@ const ScaffoldingAwarenessModule3Section4 = () => {
 
               <div>
                 <h3 className="font-semibold text-white mb-2">Tie Testing</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1653,7 +1653,7 @@ const ScaffoldingAwarenessModule3Section4 = () => {
             <div className="space-y-4">
               <div>
                 <h3 className="font-semibold text-white mb-2">Tie Spacing (General Rule)</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1686,7 +1686,7 @@ const ScaffoldingAwarenessModule3Section4 = () => {
 
               <div>
                 <h3 className="font-semibold text-white mb-2">Sheeting Effects</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1712,7 +1712,7 @@ const ScaffoldingAwarenessModule3Section4 = () => {
 
               <div>
                 <h3 className="font-semibold text-white mb-2">Buttressing</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1757,7 +1757,7 @@ const ScaffoldingAwarenessModule3Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1773,7 +1773,7 @@ const ScaffoldingAwarenessModule3Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-3">

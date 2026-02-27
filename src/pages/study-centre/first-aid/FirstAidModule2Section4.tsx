@@ -218,11 +218,11 @@ const FirstAidModule2Section4 = () => {
           </div>
           <div className="inline-block bg-rose-500/10 border border-rose-500/20 px-3 py-1 rounded-full text-sm font-semibold mb-4 ml-0">
             <span className="text-rose-400">MODULE 2</span>
-            <span className="text-white/40 mx-2">&middot;</span>
-            <span className="text-white/60">SECTION 4</span>
+            <span className="text-white mx-2">&middot;</span>
+            <span className="text-white">SECTION 4</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">Choking Management</h1>
-          <p className="text-white/70 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Recognising airway obstruction and intervening effectively with back blows, abdominal
             thrusts, and CPR for unconscious choking casualties
           </p>
@@ -232,7 +232,7 @@ const FirstAidModule2Section4 = () => {
         <div className="grid sm:grid-cols-2 gap-4 mb-10">
           <div className="rounded-lg p-4 bg-rose-500/5 border-l-2 border-rose-500/50">
             <p className="font-semibold text-rose-400 mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -265,7 +265,7 @@ const FirstAidModule2Section4 = () => {
           </div>
           <div className="rounded-lg p-4 bg-rose-500/5 border-l-2 border-rose-500/50">
             <p className="font-semibold text-rose-400/90 mb-2">Key Protocol</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -301,7 +301,7 @@ const FirstAidModule2Section4 = () => {
         {/* Learning Outcomes */}
         <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4">By the end of this section, you will be able to:</p>
+          <p className="text-white mb-4">By the end of this section, you will be able to:</p>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
               'Recognise the signs and symptoms of choking and differentiate between mild and severe obstruction',
@@ -313,7 +313,7 @@ const FirstAidModule2Section4 = () => {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-rose-400/70 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </div>
             ))}
           </div>
@@ -328,7 +328,7 @@ const FirstAidModule2Section4 = () => {
               <span className="text-rose-400/80 text-sm font-normal">01</span>
               Recognising Choking
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Choking occurs when a foreign object partially or completely blocks the airway,
                 preventing normal breathing. In adults, choking most commonly happens during eating
@@ -340,7 +340,7 @@ const FirstAidModule2Section4 = () => {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-3 text-rose-400">Signs and Symptoms of Choking</h3>
-                <div className="space-y-2 text-sm text-white/70">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-rose-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -390,7 +390,7 @@ const FirstAidModule2Section4 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-rose-400 font-medium mb-2">Ask the Question</h3>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   If you suspect someone is choking, ask them clearly:{' '}
                   <strong className="text-white">&ldquo;Are you choking?&rdquo;</strong> If they can
                   answer verbally, the obstruction is mild. If they cannot speak, nod, point to
@@ -409,7 +409,7 @@ const FirstAidModule2Section4 = () => {
               <span className="text-rose-400/80 text-sm font-normal">02</span>
               Mild vs Severe Obstruction
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The Resuscitation Council UK classifies choking into two categories based on the
                 effectiveness of the casualty&rsquo;s cough. The distinction between mild and severe
@@ -425,7 +425,7 @@ const FirstAidModule2Section4 = () => {
                     <CheckCircle className="h-5 w-5" />
                     Mild Obstruction
                   </h3>
-                  <div className="space-y-2 text-sm text-white/70 mb-4">
+                  <div className="space-y-2 text-sm text-white mb-4">
                     <p className="font-medium text-green-300">Signs:</p>
                     <div className="flex items-start gap-2">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />
@@ -446,7 +446,7 @@ const FirstAidModule2Section4 = () => {
                   </div>
                   <div className="bg-green-500/10 border border-green-500/20 rounded p-3">
                     <p className="font-medium text-green-300 text-sm mb-1">Action:</p>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Encourage the casualty to keep coughing.{' '}
                       <strong className="text-white">Do NOT interfere</strong> with their efforts —
                       no back blows, no thrusts. Stay with them and monitor. If the cough becomes
@@ -461,7 +461,7 @@ const FirstAidModule2Section4 = () => {
                     <AlertTriangle className="h-5 w-5" />
                     Severe Obstruction
                   </h3>
-                  <div className="space-y-2 text-sm text-white/70 mb-4">
+                  <div className="space-y-2 text-sm text-white mb-4">
                     <p className="font-medium text-red-300">Signs:</p>
                     <div className="flex items-start gap-2">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
@@ -482,7 +482,7 @@ const FirstAidModule2Section4 = () => {
                   </div>
                   <div className="bg-red-500/10 border border-red-500/20 rounded p-3">
                     <p className="font-medium text-red-300 text-sm mb-1">Action:</p>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       <strong className="text-white">Immediate intervention required.</strong> Give
                       up to 5 back blows. If unsuccessful, give up to 5 abdominal thrusts. Alternate
                       until cleared. Call 999 if not clearing.
@@ -496,7 +496,7 @@ const FirstAidModule2Section4 = () => {
                   <AlertTriangle className="h-5 w-5 text-rose-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-rose-300">Critical Distinction</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   The key question is:{' '}
                   <strong className="text-white">can the casualty cough effectively?</strong> An
                   effective cough means the body is clearing the obstruction itself — your
@@ -519,7 +519,7 @@ const FirstAidModule2Section4 = () => {
               <span className="text-rose-400/80 text-sm font-normal">03</span>
               Back Blows &amp; Abdominal Thrusts
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 For a conscious casualty with severe airway obstruction, the Resuscitation Council
                 UK recommends alternating between back blows and abdominal thrusts. Each technique
@@ -589,7 +589,7 @@ const FirstAidModule2Section4 = () => {
                         &darr;
                       </div>
                     </div>
-                    <div className="text-center text-xs text-white/50 space-y-1">
+                    <div className="text-center text-xs text-white space-y-1">
                       <p className="text-rose-300 font-medium">Between shoulder blades</p>
                       <p>Casualty leaning well forward</p>
                       <p>Rescuer to the side and behind</p>
@@ -652,7 +652,7 @@ const FirstAidModule2Section4 = () => {
                         &uarr;
                       </div>
                     </div>
-                    <div className="text-center text-xs text-white/50 space-y-1">
+                    <div className="text-center text-xs text-white space-y-1">
                       <p className="text-rose-300 font-medium">Between navel &amp; breastbone</p>
                       <p>Rescuer behind, arms around abdomen</p>
                       <p>Pull sharply inwards and upwards</p>
@@ -662,15 +662,15 @@ const FirstAidModule2Section4 = () => {
                 <div className="flex justify-center gap-6 mt-4 text-xs">
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-rose-300/40 rounded-full" />
-                    <span className="text-white/60">Casualty</span>
+                    <span className="text-white">Casualty</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-rose-400/50 rounded-full" />
-                    <span className="text-white/60">Rescuer</span>
+                    <span className="text-white">Rescuer</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-rose-500/30 rounded-full border-2 border-rose-400" />
-                    <span className="text-white/60">Point of action</span>
+                    <span className="text-white">Point of action</span>
                   </div>
                 </div>
               </div>
@@ -719,7 +719,7 @@ const FirstAidModule2Section4 = () => {
                       </div>
                       <div>
                         <p className="text-white font-medium text-sm">{title}</p>
-                        <p className="text-white/60 text-sm">{detail}</p>
+                        <p className="text-white text-sm">{detail}</p>
                       </div>
                     </div>
                   ))}
@@ -771,7 +771,7 @@ const FirstAidModule2Section4 = () => {
                       </div>
                       <div>
                         <p className="text-white font-medium text-sm">{title}</p>
-                        <p className="text-white/60 text-sm">{detail}</p>
+                        <p className="text-white text-sm">{detail}</p>
                       </div>
                     </div>
                   ))}
@@ -784,20 +784,20 @@ const FirstAidModule2Section4 = () => {
                 <div className="flex flex-col sm:flex-row items-center gap-3 text-center py-3">
                   <div className="bg-rose-500/20 border border-rose-500/30 rounded-lg px-4 py-2">
                     <p className="text-rose-300 font-bold text-lg">5</p>
-                    <p className="text-white/60 text-xs">Back Blows</p>
+                    <p className="text-white text-xs">Back Blows</p>
                   </div>
                   <span className="text-rose-400 text-2xl">&rarr;</span>
                   <div className="bg-rose-500/20 border border-rose-500/30 rounded-lg px-4 py-2">
                     <p className="text-rose-300 font-bold text-lg">5</p>
-                    <p className="text-white/60 text-xs">Abdominal Thrusts</p>
+                    <p className="text-white text-xs">Abdominal Thrusts</p>
                   </div>
                   <span className="text-rose-400 text-2xl">&rarr;</span>
                   <div className="bg-rose-500/20 border border-rose-500/30 rounded-lg px-4 py-2">
                     <p className="text-rose-300 font-bold text-lg">&orarr;</p>
-                    <p className="text-white/60 text-xs">Repeat Cycle</p>
+                    <p className="text-white text-xs">Repeat Cycle</p>
                   </div>
                 </div>
-                <p className="text-white/70 text-sm text-center mt-2">
+                <p className="text-white text-sm text-center mt-2">
                   Continue alternating until the obstruction clears, the casualty becomes
                   unconscious, or emergency services arrive.
                   <strong className="text-white">
@@ -817,7 +817,7 @@ const FirstAidModule2Section4 = () => {
               <span className="text-rose-400/80 text-sm font-normal">04</span>
               Unconscious Choking &mdash; CPR
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 If a choking casualty becomes unconscious, the situation has escalated to a
                 life-threatening emergency. The muscles around the airway may relax when
@@ -869,7 +869,7 @@ const FirstAidModule2Section4 = () => {
                       <div className="w-6 h-6 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center flex-shrink-0 mt-0.5">
                         <span className="text-red-400 text-xs font-bold">{step}</span>
                       </div>
-                      <p className="text-white/70">{text}</p>
+                      <p className="text-white">{text}</p>
                     </div>
                   ))}
                 </div>
@@ -879,7 +879,7 @@ const FirstAidModule2Section4 = () => {
                 <h3 className="text-rose-400 font-medium mb-2">
                   Why CPR Works for Unconscious Choking
                 </h3>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Chest compressions generate pressure within the chest cavity that can help
                   dislodge a foreign body from the airway — effectively acting as both back blows
                   and abdominal thrusts combined. When the casualty loses consciousness, the muscle
@@ -902,7 +902,7 @@ const FirstAidModule2Section4 = () => {
               <span className="text-rose-400/80 text-sm font-normal">05</span>
               Post-Choking Medical Review
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 After any choking incident, the casualty should be advised to seek medical
                 attention. Even when the obstruction has been cleared successfully, there may be
@@ -915,12 +915,12 @@ const FirstAidModule2Section4 = () => {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Mandatory Hospital Attendance</h3>
                 </div>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   If <strong className="text-white">abdominal thrusts were used</strong>, the
                   casualty <strong className="text-white">MUST</strong> attend hospital for medical
                   assessment. This is non-negotiable, even if the casualty feels completely fine.
                 </p>
-                <div className="space-y-2 text-sm text-white/70">
+                <div className="space-y-2 text-sm text-white">
                   <p className="font-medium text-red-300">Abdominal thrusts can cause:</p>
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
@@ -943,7 +943,7 @@ const FirstAidModule2Section4 = () => {
                     <span>Rib fractures (particularly in elderly casualties)</span>
                   </div>
                 </div>
-                <p className="text-white/50 text-xs mt-3 italic">
+                <p className="text-white text-xs mt-3 italic">
                   These injuries may not produce symptoms immediately but can become
                   life-threatening hours later. Always err on the side of caution.
                 </p>
@@ -953,7 +953,7 @@ const FirstAidModule2Section4 = () => {
                 <h3 className="text-rose-400 font-medium mb-3">
                   Post-Choking Advice for All Casualties
                 </h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-rose-400 mt-1 flex-shrink-0" />
                     <div>
@@ -1000,7 +1000,7 @@ const FirstAidModule2Section4 = () => {
               <span className="text-rose-400/80 text-sm font-normal">06</span>
               Choking in Special Populations
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The standard back blows and abdominal thrusts technique must be adapted for certain
                 groups. Understanding these modifications ensures you can help anyone who is
@@ -1014,10 +1014,10 @@ const FirstAidModule2Section4 = () => {
                     <Users className="h-4 w-4" />
                     Pregnant Women
                   </h3>
-                  <p className="text-white/70 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     <strong className="text-white">Chest thrusts</strong> replace abdominal thrusts:
                   </p>
-                  <ul className="text-white/70 space-y-1 text-sm">
+                  <ul className="text-white space-y-1 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                       <span>Give 5 back blows as normal</span>
@@ -1043,10 +1043,10 @@ const FirstAidModule2Section4 = () => {
                     <Users className="h-4 w-4" />
                     Obese Casualties
                   </h3>
-                  <p className="text-white/70 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     If you <strong className="text-white">cannot reach around the abdomen</strong>:
                   </p>
-                  <ul className="text-white/70 space-y-1 text-sm">
+                  <ul className="text-white space-y-1 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                       <span>Give 5 back blows as normal</span>
@@ -1074,10 +1074,10 @@ const FirstAidModule2Section4 = () => {
                     <Users className="h-4 w-4" />
                     Children (1&ndash;12 Years)
                   </h3>
-                  <p className="text-white/70 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     <strong className="text-white">Same technique, adjusted force:</strong>
                   </p>
-                  <ul className="text-white/70 space-y-1 text-sm">
+                  <ul className="text-white space-y-1 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                       <span>5 back blows — use less force than for an adult</span>
@@ -1103,12 +1103,12 @@ const FirstAidModule2Section4 = () => {
                     <AlertTriangle className="h-4 w-4" />
                     Infants (Under 1 Year)
                   </h3>
-                  <p className="text-white/70 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     <strong className="text-white">
                       Different technique — NO abdominal thrusts:
                     </strong>
                   </p>
-                  <ul className="text-white/70 space-y-1 text-sm">
+                  <ul className="text-white space-y-1 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                       <span>Lay baby face-down on your forearm, head lower than chest</span>
@@ -1143,7 +1143,7 @@ const FirstAidModule2Section4 = () => {
                   <Users className="h-4 w-4" />
                   Wheelchair Users
                 </h3>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Back blows and abdominal thrusts{' '}
                   <strong className="text-white">can be performed with the casualty seated</strong>{' '}
                   in their wheelchair. Lock the wheelchair brakes first. For back blows, lean the
@@ -1158,7 +1158,7 @@ const FirstAidModule2Section4 = () => {
               {/* Prevention on construction sites */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-rose-400 font-medium mb-3">Prevention on Construction Sites</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <Shield className="h-4 w-4 text-rose-400 mt-1 flex-shrink-0" />
                     <div>
@@ -1219,7 +1219,7 @@ const FirstAidModule2Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1235,7 +1235,7 @@ const FirstAidModule2Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-2">

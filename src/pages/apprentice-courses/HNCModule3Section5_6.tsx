@@ -235,7 +235,7 @@ const HNCModule3Section5_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section5">
@@ -257,7 +257,7 @@ const HNCModule3Section5_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             DC Machines (Types, Control, Applications)
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding DC motor and generator principles, control methods, and their role in
             building services
           </p>
@@ -376,13 +376,13 @@ const HNCModule3Section5_6 = () => {
                   <p className="font-mono text-center mb-1">
                     E = V - I<sub>a</sub>R<sub>a</sub>
                   </p>
-                  <p className="text-xs text-white/70 text-center">Back-EMF relationship</p>
+                  <p className="text-xs text-white text-center">Back-EMF relationship</p>
                 </div>
                 <div>
                   <p className="font-mono text-center mb-1">
                     E = k<sub>e</sub> x phi x n
                   </p>
-                  <p className="text-xs text-white/70 text-center">
+                  <p className="text-xs text-white text-center">
                     EMF proportional to flux and speed
                   </p>
                 </div>
@@ -390,7 +390,7 @@ const HNCModule3Section5_6 = () => {
                   <p className="font-mono text-center mb-1">
                     T = k<sub>t</sub> x phi x I<sub>a</sub>
                   </p>
-                  <p className="text-xs text-white/70 text-center">
+                  <p className="text-xs text-white text-center">
                     Torque proportional to flux and current
                   </p>
                 </div>
@@ -398,7 +398,7 @@ const HNCModule3Section5_6 = () => {
                   <p className="font-mono text-center mb-1">
                     n = (V - I<sub>a</sub>R<sub>a</sub>) / (k<sub>e</sub> x phi)
                   </p>
-                  <p className="text-xs text-white/70 text-center">Speed equation</p>
+                  <p className="text-xs text-white text-center">Speed equation</p>
                 </div>
               </div>
             </div>
@@ -515,7 +515,7 @@ const HNCModule3Section5_6 = () => {
 
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
               <p className="text-sm font-medium text-red-400 mb-1">Series Motor Safety Warning</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Never operate a series motor without mechanical load directly coupled. If load is
                 removed (e.g., belt breaks), the motor will accelerate to destructive speeds. Series
                 motors must have direct coupling, not belt drives, and load-sensing protection.
@@ -543,7 +543,7 @@ const HNCModule3Section5_6 = () => {
               <div className="grid sm:grid-cols-3 gap-4">
                 <div className="p-4 rounded-lg bg-white/5">
                   <p className="font-medium text-elec-yellow mb-2">Series Motor</p>
-                  <ul className="text-xs text-white/90 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Hyperbolic speed-torque curve</li>
                     <li>Speed drops significantly with load</li>
                     <li>Very high torque at low speed</li>
@@ -554,7 +554,7 @@ const HNCModule3Section5_6 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5">
                   <p className="font-medium text-elec-yellow mb-2">Shunt Motor</p>
-                  <ul className="text-xs text-white/90 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Nearly flat speed-torque curve</li>
                     <li>Speed drops 5-10% from no load to full load</li>
                     <li>Constant field flux</li>
@@ -565,7 +565,7 @@ const HNCModule3Section5_6 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5">
                   <p className="font-medium text-elec-yellow mb-2">Compound Motor</p>
-                  <ul className="text-xs text-white/90 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Curve between series and shunt</li>
                     <li>Good starting torque</li>
                     <li>Better speed regulation than series</li>
@@ -577,12 +577,12 @@ const HNCModule3Section5_6 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Speed Regulation</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Speed regulation = (N<sub>no-load</sub> - N<sub>full-load</sub>) / N
                   <sub>full-load</sub> x 100%
                 </p>
-                <p className="mt-2 text-white/60">Typical values:</p>
+                <p className="mt-2 text-white">Typical values:</p>
                 <p>Series motor: 20-50% (poor)</p>
                 <p>Shunt motor: 5-10% (good)</p>
                 <p>Compound motor: 10-25% (moderate)</p>
@@ -635,12 +635,12 @@ const HNCModule3Section5_6 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="font-medium text-elec-yellow mb-2">Commutation Process</p>
-                <p className="text-sm text-white/90 mb-2">
+                <p className="text-sm text-white mb-2">
                   As each armature coil passes under the brushes, current must reverse. Good
                   commutation requires this reversal to be complete before the coil leaves the brush
                   contact.
                 </p>
-                <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                   <li>Under-commutation: current reversal incomplete, trailing sparks</li>
                   <li>Over-commutation: current reverses too fast, leading sparks</li>
                   <li>Ideal: sparkless, linear current reversal</li>
@@ -648,7 +648,7 @@ const HNCModule3Section5_6 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="font-medium text-elec-yellow mb-2">Improving Commutation</p>
-                <ul className="text-xs text-white/90 space-y-1 list-disc list-outside ml-4">
+                <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                   <li>
                     <strong>Interpoles (commutating poles):</strong> Small poles between main poles
                     produce flux that opposes armature MMF in the commutation zone
@@ -756,14 +756,14 @@ const HNCModule3Section5_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Modern DC Drives (PWM Converters)
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Modern DC drives use thyristor or IGBT converters to provide smooth, efficient speed
                 control.
               </p>
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-1">Single-quadrant drive</p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
                     <li>Forward motoring only</li>
                     <li>Simple half-controlled converter</li>
                     <li>Fans, pumps, conveyors</li>
@@ -771,7 +771,7 @@ const HNCModule3Section5_6 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-1">Four-quadrant drive</p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
                     <li>Both directions, motoring and braking</li>
                     <li>Fully controlled dual converter</li>
                     <li>Lifts, cranes, winders</li>
@@ -870,7 +870,7 @@ const HNCModule3Section5_6 = () => {
               <p className="text-sm font-medium text-white mb-2">
                 Build-up of Self-Excited Generators
               </p>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 Self-excited generators rely on residual magnetism in the poles to begin voltage
                 generation. Conditions for successful build-up:
               </p>
@@ -949,14 +949,14 @@ const HNCModule3Section5_6 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Electronic Commutation</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 The controller must know rotor position to energise the correct stator phases. Two
                 methods:
               </p>
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-1">Sensored (Hall sensors)</p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
                     <li>Three Hall sensors 120 degrees apart</li>
                     <li>Provide position signal at all speeds</li>
                     <li>Works from zero speed</li>
@@ -965,7 +965,7 @@ const HNCModule3Section5_6 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-1">Sensorless (back-EMF)</p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
                     <li>Detects back-EMF zero crossings</li>
                     <li>No position sensors needed</li>
                     <li>Cannot work at zero/low speed</li>
@@ -1067,7 +1067,7 @@ const HNCModule3Section5_6 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Regeneration in Lifts</p>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 Lift systems regenerate energy in two scenarios:
               </p>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
@@ -1080,7 +1080,7 @@ const HNCModule3Section5_6 = () => {
                   regeneration
                 </li>
               </ul>
-              <p className="text-sm text-white/70 mt-2">
+              <p className="text-sm text-white mt-2">
                 Energy can be fed back to the building supply, stored in batteries/supercapacitors,
                 or dissipated in braking resistors if regeneration is not possible.
               </p>
@@ -1088,7 +1088,7 @@ const HNCModule3Section5_6 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Four-Quadrant Operation</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Quadrant 1: Forward motoring (positive speed, positive torque)</p>
                 <p>Quadrant 2: Forward braking/regenerating (positive speed, negative torque)</p>
                 <p>Quadrant 3: Reverse motoring (negative speed, negative torque)</p>
@@ -1119,7 +1119,7 @@ const HNCModule3Section5_6 = () => {
                 to excellent speed control capabilities. Ward-Leonard systems (motor-generator sets)
                 provided smooth, variable-speed operation essential for passenger comfort.
               </p>
-              <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                 <li>Compound DC motors provided high starting torque for acceleration</li>
                 <li>Four-quadrant drives enabled regenerative braking</li>
                 <li>Ward-Leonard systems now largely replaced by VFD-driven AC motors</li>
@@ -1133,7 +1133,7 @@ const HNCModule3Section5_6 = () => {
                 <strong>Legacy installations:</strong> Some older buildings retain DC motor-driven
                 HVAC equipment requiring maintenance knowledge.
               </p>
-              <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                 <li>Large DC motors on older centrifugal chillers</li>
                 <li>Variable-speed fans and pumps (pre-VFD era)</li>
                 <li>Damper actuators in pneumatic/electric hybrid systems</li>
@@ -1149,7 +1149,7 @@ const HNCModule3Section5_6 = () => {
                 <strong>DC supply natural fit:</strong> Battery systems provide DC, making DC motors
                 or BLDC motors ideal for battery-powered applications.
               </p>
-              <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                 <li>UPS-powered critical equipment (data centres, hospitals)</li>
                 <li>Emergency lighting and fire alarm systems</li>
                 <li>Battery-powered tools and equipment</li>
@@ -1166,7 +1166,7 @@ const HNCModule3Section5_6 = () => {
                 <strong>Current trend:</strong> BLDC motors (often marketed as EC motors) are
                 increasingly specified for their efficiency and controllability.
               </p>
-              <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                 <li>EC plug fans for AHUs - up to 90% efficiency</li>
                 <li>High-efficiency circulator pumps</li>
                 <li>Variable refrigerant flow (VRF) compressors</li>
@@ -1191,7 +1191,7 @@ const HNCModule3Section5_6 = () => {
                 ohm and draws 20A at full load when running at 1200 rpm. Calculate (a) the back-EMF
                 at full load, and (b) the starting current if connected directly to supply.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>(a) Back-EMF at full load:</p>
                 <p>
                   E = V - I<sub>a</sub>R<sub>a</sub>
@@ -1206,7 +1206,7 @@ const HNCModule3Section5_6 = () => {
                 <p>
                   I<sub>start</sub> = 230 / 0.5 = <strong>460A</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This is 23x full-load current - a starter is essential!
                 </p>
               </div>
@@ -1222,7 +1222,7 @@ const HNCModule3Section5_6 = () => {
                 new speed (assuming constant armature current and negligible armature resistance
                 drop).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Speed is inversely proportional to field flux:</p>
                 <p>
                   n<sub>2</sub> / n<sub>1</sub> = phi<sub>1</sub> / phi<sub>2</sub>
@@ -1239,7 +1239,7 @@ const HNCModule3Section5_6 = () => {
                 <p>
                   n<sub>2</sub> = <strong>1250 rpm</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Field weakening increases speed above base value
                 </p>
               </div>
@@ -1254,7 +1254,7 @@ const HNCModule3Section5_6 = () => {
                 load, regenerating at 80% of rated power. If the DC bus voltage is 600V and losses
                 are 5%, calculate the power returned to the supply.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Regenerated mechanical power:</p>
                 <p>
                   P<sub>regen</sub> = 0.8 x 15kW = 12kW
@@ -1267,7 +1267,7 @@ const HNCModule3Section5_6 = () => {
                 <p>
                   I = P / V = 11400 / 600 = <strong>19A</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This current flows back into the supply or to other loads
                 </p>
               </div>
@@ -1367,7 +1367,7 @@ const HNCModule3Section5_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1413,7 +1413,7 @@ const HNCModule3Section5_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section5-5">

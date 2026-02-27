@@ -200,7 +200,7 @@ export default function FirstAidModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-3">
@@ -223,7 +223,7 @@ export default function FirstAidModule3Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Burns, Scalds &amp; Electrical Burns
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Burn depth classification, cooling and covering burns, chemical and electrical burns,
             the Rule of Nines, severity assessment, inhalation injury, and construction site burn
             risks
@@ -316,7 +316,7 @@ export default function FirstAidModule3Section3() {
                     <Thermometer className="h-5 w-5 text-amber-400" />
                     <p className="text-sm font-medium text-amber-400">Superficial (First-Degree)</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -358,7 +358,7 @@ export default function FirstAidModule3Section3() {
                       Partial-Thickness (Second-Degree)
                     </p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -401,7 +401,7 @@ export default function FirstAidModule3Section3() {
                       Full-Thickness (Third-Degree)
                     </p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -485,7 +485,7 @@ export default function FirstAidModule3Section3() {
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-xs font-bold flex-shrink-0">
                         {i + 1}
                       </span>
-                      <p className="text-sm text-white/80">{step}</p>
+                      <p className="text-sm text-white">{step}</p>
                     </div>
                   ))}
                 </div>
@@ -509,7 +509,7 @@ export default function FirstAidModule3Section3() {
                     Hypothermia Risk in Large Burns
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   When a casualty has a large area of burned skin, prolonged cooling can cause
                   hypothermia &mdash; especially in children and elderly people. Cool the burn area
                   only, not the whole body. Keep unburned areas covered and warm. Monitor the
@@ -546,7 +546,7 @@ export default function FirstAidModule3Section3() {
                 <div className="space-y-3">
                   <div className="bg-rose-500/10 border border-rose-500/30 p-3 rounded-lg">
                     <p className="text-sm font-medium text-rose-400 mb-1">Cling Film (Preferred)</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>
@@ -577,7 +577,7 @@ export default function FirstAidModule3Section3() {
 
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white mb-1">Clean Plastic Bag</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       For burns to the hands or feet, a clean plastic bag can be placed loosely over
                       the affected area. This protects the burn while allowing the casualty to move
                       their fingers or toes.
@@ -588,7 +588,7 @@ export default function FirstAidModule3Section3() {
                     <p className="text-sm font-medium text-white mb-1">
                       Sterile Non-Adherent Dressing
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       If cling film is not available, a sterile non-adherent dressing can be applied
                       loosely. Do not use adhesive dressings, cotton wool, or fluffy materials
                       directly on a burn &mdash; fibres will stick to the wound.
@@ -602,7 +602,7 @@ export default function FirstAidModule3Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Why NOT Circumferentially?</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Burns cause significant tissue swelling (oedema) in the hours following the
                   injury. If cling film is wrapped tightly around a limb like a bandage, it cannot
                   expand as the tissue swells. This creates a{' '}
@@ -650,7 +650,7 @@ export default function FirstAidModule3Section3() {
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-xs font-bold flex-shrink-0">
                         {i + 1}
                       </span>
-                      <p className="text-sm text-white/80">{step}</p>
+                      <p className="text-sm text-white">{step}</p>
                     </div>
                   ))}
                 </div>
@@ -659,7 +659,7 @@ export default function FirstAidModule3Section3() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-orange-500/10 border border-orange-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-orange-400 mb-2">Acid Burns</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -685,7 +685,7 @@ export default function FirstAidModule3Section3() {
 
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-red-400 mb-2">Alkali Burns</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -749,7 +749,7 @@ export default function FirstAidModule3Section3() {
                     Critical: Always Send to Hospital
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     <strong className="text-red-300">
                       ALL electrical burns require hospital assessment, regardless of how minor the
@@ -776,7 +776,7 @@ export default function FirstAidModule3Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Electrical Burn Characteristics
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -834,7 +834,7 @@ export default function FirstAidModule3Section3() {
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-xs font-bold flex-shrink-0">
                         {i + 1}
                       </span>
-                      <p className="text-sm text-white/80">{step}</p>
+                      <p className="text-sm text-white">{step}</p>
                     </div>
                   ))}
                 </div>
@@ -872,7 +872,7 @@ export default function FirstAidModule3Section3() {
                       <div className="w-16 h-16 sm:w-18 sm:h-18 rounded-full bg-rose-500/15 border-2 border-rose-400/40 flex items-center justify-center mb-1">
                         <div className="text-center">
                           <p className="text-xs font-bold text-rose-400">9%</p>
-                          <p className="text-[9px] text-white/60">Head &amp; neck</p>
+                          <p className="text-[9px] text-white">Head &amp; neck</p>
                         </div>
                       </div>
 
@@ -882,7 +882,7 @@ export default function FirstAidModule3Section3() {
                         <div className="w-12 sm:w-14 h-28 sm:h-32 bg-amber-500/15 border-2 border-amber-400/40 rounded-lg flex items-center justify-center mt-2">
                           <div className="text-center -rotate-90 whitespace-nowrap">
                             <p className="text-xs font-bold text-amber-400">9%</p>
-                            <p className="text-[8px] text-white/60">L. Arm</p>
+                            <p className="text-[8px] text-white">L. Arm</p>
                           </div>
                         </div>
 
@@ -892,14 +892,14 @@ export default function FirstAidModule3Section3() {
                           <div className="w-24 sm:w-28 h-16 sm:h-18 bg-blue-500/15 border-2 border-blue-400/40 border-b-0 rounded-t-lg flex items-center justify-center">
                             <div className="text-center">
                               <p className="text-xs font-bold text-blue-400">18%</p>
-                              <p className="text-[8px] text-white/60">Front torso</p>
+                              <p className="text-[8px] text-white">Front torso</p>
                             </div>
                           </div>
                           {/* Back torso */}
                           <div className="w-24 sm:w-28 h-16 sm:h-18 bg-purple-500/15 border-2 border-purple-400/40 rounded-b-lg flex items-center justify-center">
                             <div className="text-center">
                               <p className="text-xs font-bold text-purple-400">18%</p>
-                              <p className="text-[8px] text-white/60">Back torso</p>
+                              <p className="text-[8px] text-white">Back torso</p>
                             </div>
                           </div>
                         </div>
@@ -908,14 +908,14 @@ export default function FirstAidModule3Section3() {
                         <div className="w-12 sm:w-14 h-28 sm:h-32 bg-amber-500/15 border-2 border-amber-400/40 rounded-lg flex items-center justify-center mt-2">
                           <div className="text-center rotate-90 whitespace-nowrap">
                             <p className="text-xs font-bold text-amber-400">9%</p>
-                            <p className="text-[8px] text-white/60">R. Arm</p>
+                            <p className="text-[8px] text-white">R. Arm</p>
                           </div>
                         </div>
                       </div>
 
                       {/* Perineum */}
                       <div className="w-10 h-5 bg-white/10 border border-white/30 flex items-center justify-center">
-                        <p className="text-[8px] font-bold text-white/60">1%</p>
+                        <p className="text-[8px] font-bold text-white">1%</p>
                       </div>
 
                       {/* Legs row */}
@@ -924,7 +924,7 @@ export default function FirstAidModule3Section3() {
                         <div className="w-14 sm:w-16 h-32 sm:h-36 bg-green-500/15 border-2 border-green-400/40 rounded-lg flex items-center justify-center">
                           <div className="text-center">
                             <p className="text-xs font-bold text-green-400">18%</p>
-                            <p className="text-[8px] text-white/60">L. Leg</p>
+                            <p className="text-[8px] text-white">L. Leg</p>
                           </div>
                         </div>
 
@@ -932,7 +932,7 @@ export default function FirstAidModule3Section3() {
                         <div className="w-14 sm:w-16 h-32 sm:h-36 bg-green-500/15 border-2 border-green-400/40 rounded-lg flex items-center justify-center">
                           <div className="text-center">
                             <p className="text-xs font-bold text-green-400">18%</p>
-                            <p className="text-[8px] text-white/60">R. Leg</p>
+                            <p className="text-[8px] text-white">R. Leg</p>
                           </div>
                         </div>
                       </div>
@@ -944,30 +944,30 @@ export default function FirstAidModule3Section3() {
                 <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 mt-4 text-[11px]">
                   <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 bg-rose-500/15 border border-rose-400/40 rounded" />
-                    <span className="text-white/60">Head &amp; neck: 9%</span>
+                    <span className="text-white">Head &amp; neck: 9%</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 bg-amber-500/15 border border-amber-400/40 rounded" />
-                    <span className="text-white/60">Each arm: 9%</span>
+                    <span className="text-white">Each arm: 9%</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 bg-blue-500/15 border border-blue-400/40 rounded" />
-                    <span className="text-white/60">Front torso: 18%</span>
+                    <span className="text-white">Front torso: 18%</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 bg-purple-500/15 border border-purple-400/40 rounded" />
-                    <span className="text-white/60">Back torso: 18%</span>
+                    <span className="text-white">Back torso: 18%</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 bg-green-500/15 border border-green-400/40 rounded" />
-                    <span className="text-white/60">Each leg: 18%</span>
+                    <span className="text-white">Each leg: 18%</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 bg-white/10 border border-white/30 rounded" />
-                    <span className="text-white/60">Perineum: 1%</span>
+                    <span className="text-white">Perineum: 1%</span>
                   </div>
                 </div>
-                <p className="text-[11px] text-white/40 text-center mt-2">
+                <p className="text-[11px] text-white text-center mt-2">
                   Total: 9 + 9 + 9 + 18 + 18 + 18 + 18 + 1 = 100%
                 </p>
               </div>
@@ -989,7 +989,7 @@ export default function FirstAidModule3Section3() {
                   <ShieldAlert className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Call 999 For:</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1054,7 +1054,7 @@ export default function FirstAidModule3Section3() {
                     Inhalation Injury &mdash; Medical Emergency
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     An inhalation injury occurs when hot gases, smoke, or chemical fumes are
                     breathed in, causing burns and swelling to the airway. This is a{' '}
@@ -1122,7 +1122,7 @@ export default function FirstAidModule3Section3() {
               <AlertTriangle className="h-6 w-6 text-red-400" />
               <h2 className="text-lg font-semibold text-red-400">What NOT to Do</h2>
             </div>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               The following common mistakes can significantly worsen a burn injury. Avoid all of
               these:
             </p>
@@ -1161,7 +1161,7 @@ export default function FirstAidModule3Section3() {
               ].map((item, i) => (
                 <div key={i} className="bg-red-500/5 border border-red-500/20 p-3 rounded-lg">
                   <p className="text-sm font-medium text-red-300 mb-1">{item.action}</p>
-                  <p className="text-xs text-white/70">{item.reason}</p>
+                  <p className="text-xs text-white">{item.reason}</p>
                 </div>
               ))}
             </div>
@@ -1189,7 +1189,7 @@ export default function FirstAidModule3Section3() {
                     Common Construction Site Burn Hazards
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1232,7 +1232,7 @@ export default function FirstAidModule3Section3() {
                     Cement Burns &mdash; A Specific Construction Risk
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Wet cement and concrete are{' '}
                     <strong className="text-white">highly alkaline</strong>, with a pH of
@@ -1288,7 +1288,7 @@ export default function FirstAidModule3Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1302,7 +1302,7 @@ export default function FirstAidModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-3">

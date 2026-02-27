@@ -214,7 +214,7 @@ const HNCModule4Section4_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section4">
@@ -236,7 +236,7 @@ const HNCModule4Section4_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             External Lighting
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Designing external lighting for security, amenity and aesthetics while controlling light
             pollution
           </p>
@@ -799,7 +799,7 @@ const HNCModule4Section4_5 = () => {
                 <strong>Brief:</strong> Design lighting for a 50-space surface car park (40m × 30m)
                 in a suburban location (Zone E3).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Target illuminance (EN 12464-2): 50 lux</p>
                 <p>Uniformity required: Uo ≥ 0.25</p>
                 <p className="mt-2">ILP Zone E3 limits:</p>
@@ -825,7 +825,7 @@ const HNCModule4Section4_5 = () => {
                 <strong>Question:</strong> A proposed luminaire has 3% ULOR. Is it compliant for
                 Zone E2?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Zone E2 (Rural) ULOR limit: 2.5%</p>
                 <p>Proposed luminaire: 3.0%</p>
                 <p className="mt-2 text-red-400">✗ NOT COMPLIANT for Zone E2</p>
@@ -845,7 +845,7 @@ const HNCModule4Section4_5 = () => {
                 <strong>Brief:</strong> Verify a proposed luminaire meets Part L efficacy
                 requirements.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Luminaire specification:</p>
                 <p>- System power: 85W</p>
                 <p>- Lamp lumens: 10,200 lm</p>
@@ -931,7 +931,7 @@ const HNCModule4Section4_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -977,7 +977,7 @@ const HNCModule4Section4_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section4-4">

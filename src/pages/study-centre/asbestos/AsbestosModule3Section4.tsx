@@ -201,7 +201,7 @@ export default function AsbestosModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-3">
@@ -226,7 +226,7 @@ export default function AsbestosModule3Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Presuming, Sampling &amp; Analysis
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             When to presume, when to sample, who can do it, and how laboratory analysis identifies
             asbestos in materials
           </p>
@@ -324,7 +324,7 @@ export default function AsbestosModule3Section4() {
                 <p className="text-sm font-medium text-orange-400 mb-3">
                   Presumption as a Management Strategy
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Presumption is not just a fallback when sampling has not been carried out &mdash;
                   it is a
                   <strong className="text-white"> valid and recognised management strategy</strong>{' '}
@@ -335,7 +335,7 @@ export default function AsbestosModule3Section4() {
                     <p className="text-xs text-green-400 font-medium uppercase tracking-wide mb-2">
                       Advantages of Presuming
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                         <span>No sampling cost</span>
@@ -360,7 +360,7 @@ export default function AsbestosModule3Section4() {
                     <p className="text-xs text-red-400 font-medium uppercase tracking-wide mb-2">
                       Disadvantages of Presuming
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                         <span>May result in unnecessary restrictions on work</span>
@@ -394,7 +394,7 @@ export default function AsbestosModule3Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Legal Requirement</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Presumption is <strong>not optional</strong>. If a material has not been sampled
                   and analysed, the law requires it to be presumed to contain asbestos. Failing to
                   presume &mdash; and subsequently allowing work to disturb the material without
@@ -426,7 +426,7 @@ export default function AsbestosModule3Section4() {
                 <p className="text-sm font-medium text-orange-400 mb-3">
                   Sampling May Be Justified When&hellip;
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -513,7 +513,7 @@ export default function AsbestosModule3Section4() {
                 {/* NO Branch */}
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3 text-center">
                   <p className="text-xs font-medium text-green-400 mb-1">LOW RISK</p>
-                  <p className="text-white/80 text-xs sm:text-sm">
+                  <p className="text-white text-xs sm:text-sm">
                     Unlikely to contain asbestos (but check any refurbishment materials)
                   </p>
                 </div>
@@ -641,7 +641,7 @@ export default function AsbestosModule3Section4() {
                 <p className="text-sm font-medium text-orange-400 mb-3">
                   Competence Requirements for Sampling
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -702,7 +702,7 @@ export default function AsbestosModule3Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Never Sample It Yourself</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   As an electrician or tradesperson, you must{' '}
                   <strong>NEVER attempt to take your own samples</strong> of suspected asbestos
                   materials. Breaking, scraping, or drilling into an ACM to take a sample without
@@ -735,7 +735,7 @@ export default function AsbestosModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-orange-400 mb-3">How PLM Works</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -776,7 +776,7 @@ export default function AsbestosModule3Section4() {
                 <p className="text-sm font-medium text-orange-400 mb-3">
                   Laboratory &amp; Cost Details
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -844,20 +844,20 @@ export default function AsbestosModule3Section4() {
                 <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
                   <div className="bg-gradient-to-r from-orange-500/30 to-orange-400/20 border-b border-orange-500/30 px-4 py-3">
                     <p className="text-orange-400 font-semibold text-base">Bulk Sampling</p>
-                    <p className="text-white/60 text-xs">Material identification</p>
+                    <p className="text-white text-xs">Material identification</p>
                   </div>
                   <div className="p-4 space-y-3 text-sm">
                     <div>
                       <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                         What It Is
                       </p>
-                      <p className="text-white/80">Taking a physical sample of the material</p>
+                      <p className="text-white">Taking a physical sample of the material</p>
                     </div>
                     <div>
                       <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                         Purpose
                       </p>
-                      <p className="text-white/80">
+                      <p className="text-white">
                         Determines if a material <strong className="text-white">contains</strong>{' '}
                         asbestos
                       </p>
@@ -866,19 +866,19 @@ export default function AsbestosModule3Section4() {
                       <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                         Analysis Method
                       </p>
-                      <p className="text-white/80">Polarised Light Microscopy (PLM)</p>
+                      <p className="text-white">Polarised Light Microscopy (PLM)</p>
                     </div>
                     <div>
                       <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                         What It Tells You
                       </p>
-                      <p className="text-white/80">Whether asbestos is present and which type(s)</p>
+                      <p className="text-white">Whether asbestos is present and which type(s)</p>
                     </div>
                     <div>
                       <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                         When Used
                       </p>
-                      <p className="text-white/80">
+                      <p className="text-white">
                         During surveys, before work on suspect materials
                       </p>
                     </div>
@@ -889,14 +889,14 @@ export default function AsbestosModule3Section4() {
                 <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
                   <div className="bg-gradient-to-r from-orange-500/30 to-red-500/20 border-b border-orange-500/30 px-4 py-3">
                     <p className="text-orange-400 font-semibold text-base">Air Monitoring</p>
-                    <p className="text-white/60 text-xs">Fibre concentration measurement</p>
+                    <p className="text-white text-xs">Fibre concentration measurement</p>
                   </div>
                   <div className="p-4 space-y-3 text-sm">
                     <div>
                       <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                         What It Is
                       </p>
-                      <p className="text-white/80">
+                      <p className="text-white">
                         Measuring airborne asbestos fibre concentration
                       </p>
                     </div>
@@ -904,7 +904,7 @@ export default function AsbestosModule3Section4() {
                       <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                         Purpose
                       </p>
-                      <p className="text-white/80">
+                      <p className="text-white">
                         Determines if fibres are being{' '}
                         <strong className="text-white">released into the air</strong>
                       </p>
@@ -913,7 +913,7 @@ export default function AsbestosModule3Section4() {
                       <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                         Analysis Method
                       </p>
-                      <p className="text-white/80">
+                      <p className="text-white">
                         Phase Contrast Microscopy (PCM) &mdash; counts fibres but cannot identify
                         type
                       </p>
@@ -922,7 +922,7 @@ export default function AsbestosModule3Section4() {
                       <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                         What It Tells You
                       </p>
-                      <p className="text-white/80">
+                      <p className="text-white">
                         Whether fibre levels are below the control limit
                       </p>
                     </div>
@@ -930,7 +930,7 @@ export default function AsbestosModule3Section4() {
                       <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                         When Used
                       </p>
-                      <p className="text-white/80">
+                      <p className="text-white">
                         During and after asbestos removal work; 4-stage clearance
                       </p>
                     </div>
@@ -942,7 +942,7 @@ export default function AsbestosModule3Section4() {
                 <p className="text-sm font-medium text-orange-400 mb-3">
                   Transmission Electron Microscopy (TEM)
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">TEM</strong> is a more advanced and expensive
                   technique that can identify the type of asbestos fibre in air samples &mdash;
                   something PCM cannot do. TEM is used when fibre type identification is required in
@@ -955,12 +955,12 @@ export default function AsbestosModule3Section4() {
                 <p className="text-sm font-medium text-orange-400 mb-3">
                   4-Stage Clearance Procedure
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   After <strong className="text-white">licensed asbestos removal work</strong>, a
                   formal 4-stage clearance procedure must be completed before the area can be
                   reoccupied:
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-orange-500/20 text-orange-400 text-xs font-bold flex-shrink-0">
                       1
@@ -1025,7 +1025,7 @@ export default function AsbestosModule3Section4() {
                 <p className="text-sm font-medium text-orange-400 mb-3">
                   Step-by-Step Sampling Procedure
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-orange-500/20 text-orange-400 text-xs font-bold flex-shrink-0">
                       1
@@ -1188,7 +1188,7 @@ export default function AsbestosModule3Section4() {
                     <p className="text-sm font-medium text-red-400 mb-1">
                       &ldquo;Asbestos detected &mdash; chrysotile&rdquo;
                     </p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       The material contains{' '}
                       <strong className="text-white">white asbestos (chrysotile)</strong>. It must
                       be managed in accordance with the management plan. Work on this material
@@ -1200,7 +1200,7 @@ export default function AsbestosModule3Section4() {
                     <p className="text-sm font-medium text-red-400 mb-1">
                       &ldquo;Asbestos detected &mdash; amosite&rdquo; or &ldquo;crocidolite&rdquo;
                     </p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       The material contains{' '}
                       <strong className="text-white">
                         brown asbestos (amosite) or blue asbestos (crocidolite)
@@ -1214,7 +1214,7 @@ export default function AsbestosModule3Section4() {
                     <p className="text-sm font-medium text-green-400 mb-1">
                       &ldquo;No asbestos detected&rdquo;
                     </p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       The specific sample taken does{' '}
                       <strong className="text-white">not contain asbestos</strong>. However, this
                       result only applies to the specific sample &mdash; it does NOT confirm that
@@ -1227,7 +1227,7 @@ export default function AsbestosModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-orange-400 mb-3">What to Do with Results</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -1267,7 +1267,7 @@ export default function AsbestosModule3Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Limitation</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong>
                     One negative result does not mean the entire area is asbestos-free.
                   </strong>{' '}
@@ -1289,7 +1289,7 @@ export default function AsbestosModule3Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1303,7 +1303,7 @@ export default function AsbestosModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-3-section-3">

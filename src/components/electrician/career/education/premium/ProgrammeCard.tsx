@@ -217,8 +217,8 @@ const ProgrammeCard = ({
             <span className="font-semibold text-emerald-300">{programme.employmentRate || 0}%</span>
           </div>
           <div className="flex items-center gap-1.5 px-2 py-1 rounded-full bg-white/5 ml-auto">
-            <Clock className="h-3.5 w-3.5 text-white/60" />
-            <span className="text-white/70">{formatDuration(programme.duration)}</span>
+            <Clock className="h-3.5 w-3.5 text-white" />
+            <span className="text-white">{formatDuration(programme.duration)}</span>
           </div>
         </div>
 
@@ -238,7 +238,7 @@ const ProgrammeCard = ({
         </div>
 
         {/* Study details */}
-        <div className="flex items-center justify-between text-xs text-white/50">
+        <div className="flex items-center justify-between text-xs text-white">
           <span className="bg-white/5 px-2 py-1 rounded">{programme.studyMode}</span>
           {programme.locations.length > 0 && (
             <span className="flex items-center gap-1">
@@ -258,7 +258,7 @@ const ProgrammeCard = ({
           {/* Price row */}
           <div className="flex items-center justify-between">
             <div>
-              <span className="text-xs text-white/40 block">From</span>
+              <span className="text-xs text-white block">From</span>
               <span className="text-lg font-bold text-white">{programme.tuitionFees}</span>
             </div>
             {/* Desktop button - hidden on mobile */}

@@ -280,7 +280,7 @@ const Level3Module1Section3_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section3">
@@ -367,7 +367,7 @@ const Level3Module1Section3_5 = () => {
 
             <div className="my-6 p-4 rounded bg-white/5 border-l-2 border-elec-yellow">
               <p className="text-sm font-medium text-elec-yellow mb-2">GS38 Key Points</p>
-              <ul className="text-sm text-white/90 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>Test equipment must be suitable for the voltage and environment</li>
                 <li>Test probes should have limited exposed metal (max 4mm recommended)</li>
                 <li>Finger barriers must prevent accidental contact with probe tips</li>
@@ -406,7 +406,7 @@ const Level3Module1Section3_5 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">CAT IV - Origin</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Service entrance, meters</li>
                   <li>Primary overcurrent protection</li>
                   <li>Outside and service entrance lines</li>
@@ -415,7 +415,7 @@ const Level3Module1Section3_5 = () => {
               </div>
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">CAT III - Distribution</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Sub-distribution boards</li>
                   <li>Fixed wiring and junction boxes</li>
                   <li>Industrial equipment connections</li>
@@ -426,7 +426,7 @@ const Level3Module1Section3_5 = () => {
                 <p className="text-sm font-medium text-elec-yellow mb-2">
                   CAT II - Appliance Level
                 </p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Socket outlets</li>
                   <li>Portable equipment</li>
                   <li>Appliance testing</li>
@@ -435,7 +435,7 @@ const Level3Module1Section3_5 = () => {
               </div>
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">CAT I - Electronics</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Protected electronic equipment</li>
                   <li>Low-energy circuits</li>
                   <li>Signal level electronics</li>
@@ -446,7 +446,7 @@ const Level3Module1Section3_5 = () => {
 
             <div className="my-6 p-4 rounded bg-red-500/10 border border-red-500/20">
               <p className="text-sm font-medium text-red-400 mb-2">Wrong CAT = Risk:</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Using CAT II equipment at a distribution board (CAT III location) means the
                 equipment may fail if a transient occurs. This could result in arc flash, equipment
                 explosion, or electric shock. Always match or exceed the required CAT rating for the
@@ -454,7 +454,7 @@ const Level3Module1Section3_5 = () => {
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Trade Tip:</strong> For general electrical work, CAT III 600V or CAT III 1000V
               equipment covers most situations. If you work at service entrances or with supplies
               from transformers, CAT IV may be required. When in doubt, use the higher category.
@@ -483,7 +483,7 @@ const Level3Module1Section3_5 = () => {
             <div className="my-6 space-y-4">
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Probe Tips</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   Maximum 4mm exposed metal recommended. Longer tips can accidentally bridge between
                   terminals or contact adjacent earthed metalwork, causing short circuits and arc
                   flash. Spring-loaded shrouded tips meet this requirement while still allowing firm
@@ -493,7 +493,7 @@ const Level3Module1Section3_5 = () => {
 
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Finger Barriers</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   Physical barriers on probes prevent fingers from sliding onto the metal tip when
                   applying pressure. When probing into tight spaces, you naturally grip closer to
                   the tip - barriers ensure your fingers can't reach live metal even if they slip.
@@ -502,7 +502,7 @@ const Level3Module1Section3_5 = () => {
 
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Fused Leads</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   Leads should contain fuses (typically 500mA, maximum 1A high-rupturing capacity
                   type) to limit fault current. If probes accidentally short-circuit across a
                   high-capacity source, the fuse blows before severe arcing or burns occur. Check
@@ -512,7 +512,7 @@ const Level3Module1Section3_5 = () => {
 
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Lead Construction</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   Leads should be robustly insulated, flexible, and have adequate current rating.
                   Strain relief at plugs and probes prevents internal wire breakage. Outer
                   insulation should be cut-resistant. Inspect regularly for damage - replace, don't
@@ -573,7 +573,7 @@ const Level3Module1Section3_5 = () => {
 
             <div className="my-6 p-4 rounded bg-white/5 border-l-2 border-elec-yellow">
               <p className="text-sm font-medium text-elec-yellow mb-2">Calibration and Service</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Test equipment should be calibrated annually or as recommended by the manufacturer.
                 Calibration verifies accuracy against known standards. Between calibrations, the
                 proving procedure verifies operational function - but proving doesn't guarantee
@@ -583,7 +583,7 @@ const Level3Module1Section3_5 = () => {
 
             <div className="my-6 p-4 rounded bg-red-500/10 border border-red-500/20">
               <p className="text-sm font-medium text-red-400 mb-2">Replace Immediately If:</p>
-              <ul className="text-sm text-white/90 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>Equipment is dropped or physically damaged</li>
                 <li>Insulation is cut, cracked, or deteriorated</li>
                 <li>Probe tips are damaged or corroded</li>
@@ -593,7 +593,7 @@ const Level3Module1Section3_5 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Investment:</strong> Quality test equipment costs money but protects your
               life. Budget for annual calibration, replacement leads, and eventual replacement of
               the equipment itself. The cheapest test equipment often has the shortest safe
@@ -673,7 +673,7 @@ const Level3Module1Section3_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -724,7 +724,7 @@ const Level3Module1Section3_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section3-4">

@@ -99,7 +99,7 @@ export const SocialProofBar = () => {
                     <AnimatedCounter value={stat.value} suffix={stat.suffix} isInView={isInView} />
                   </span>
                 </div>
-                <p className="text-[10px] sm:text-xs text-white/40 font-medium uppercase tracking-wider">
+                <p className="text-[10px] sm:text-xs text-white font-medium uppercase tracking-wider">
                   {stat.label}
                 </p>
               </div>

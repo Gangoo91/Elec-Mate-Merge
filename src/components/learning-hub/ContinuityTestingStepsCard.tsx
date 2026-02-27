@@ -44,7 +44,7 @@ const ContinuityTestingStepsCard = ({ step, onToggle }: ContinuityTestingStepsCa
       case 'supplementary-bonding':
         return <CheckCircle2 className="h-4 w-4 text-yellow-400" />;
       default:
-        return <BookOpen className="h-4 w-4 text-white/80" />;
+        return <BookOpen className="h-4 w-4 text-white" />;
     }
   };
 
@@ -100,7 +100,7 @@ const ContinuityTestingStepsCard = ({ step, onToggle }: ContinuityTestingStepsCa
               {step.regulation}
             </div>
           </div>
-          <Button variant="ghost" size="sm" className="text-white/80 hover:text-foreground">
+          <Button variant="ghost" size="sm" className="text-white hover:text-foreground">
             {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
           </Button>
         </div>

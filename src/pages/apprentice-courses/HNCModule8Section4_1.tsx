@@ -246,7 +246,7 @@ const HNCModule8Section4_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section4">
@@ -268,7 +268,7 @@ const HNCModule8Section4_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Motor Fundamentals
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding three-phase induction motors: the workhorses of HVAC systems
           </p>
         </header>
@@ -354,7 +354,7 @@ const HNCModule8Section4_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="font-medium text-white mb-2">Stator (Stationary Part)</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-4">
                     <li>Laminated steel core to reduce eddy current losses</li>
                     <li>Three-phase windings displaced by 120 electrical degrees</li>
                     <li>Windings connected in star or delta configuration</li>
@@ -363,7 +363,7 @@ const HNCModule8Section4_1 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-2">Rotor (Rotating Part)</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-4">
                     <li>Laminated steel core mounted on shaft</li>
                     <li>Aluminium or copper bars in slots (squirrel cage)</li>
                     <li>Bars short-circuited by end rings</li>
@@ -377,7 +377,7 @@ const HNCModule8Section4_1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Operating Principle - The Rotating Magnetic Field
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 When three-phase AC is applied to the stator windings, the currents create a
                 magnetic field that rotates at <strong>synchronous speed</strong>. This rotation
                 occurs because:
@@ -398,12 +398,12 @@ const HNCModule8Section4_1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">
                 Synchronous Speed Formula
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Ns = (120 x f) / p</p>
-                <p className="mt-2 text-white/60">Where:</p>
-                <p className="text-white/60">Ns = synchronous speed (rpm)</p>
-                <p className="text-white/60">f = supply frequency (Hz)</p>
-                <p className="text-white/60">p = number of poles</p>
+                <p className="mt-2 text-white">Where:</p>
+                <p className="text-white">Ns = synchronous speed (rpm)</p>
+                <p className="text-white">f = supply frequency (Hz)</p>
+                <p className="text-white">p = number of poles</p>
               </div>
             </div>
 
@@ -488,12 +488,12 @@ const HNCModule8Section4_1 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">Slip Formula</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>s = (Ns - Nr) / Ns x 100%</p>
-                <p className="mt-2 text-white/60">Where:</p>
-                <p className="text-white/60">s = slip (%)</p>
-                <p className="text-white/60">Ns = synchronous speed (rpm)</p>
-                <p className="text-white/60">Nr = rotor speed (rpm)</p>
+                <p className="mt-2 text-white">Where:</p>
+                <p className="text-white">s = slip (%)</p>
+                <p className="text-white">Ns = synchronous speed (rpm)</p>
+                <p className="text-white">Nr = rotor speed (rpm)</p>
               </div>
             </div>
 
@@ -522,7 +522,7 @@ const HNCModule8Section4_1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">
                 Torque-Speed Characteristic
               </p>
-              <div className="font-mono text-sm text-white/90 leading-relaxed">
+              <div className="font-mono text-sm text-white leading-relaxed">
                 <pre className="overflow-x-auto">
                   {`Torque
    ^
@@ -595,7 +595,7 @@ const HNCModule8Section4_1 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
               <p className="text-sm font-medium text-amber-300 mb-2">Critical Understanding</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 If the load torque exceeds pull-out torque, the motor will <strong>stall</strong>.
                 The rotor slows dramatically, slip increases, and current rises to starting levels.
                 Without protection, the motor will overheat rapidly. This is why overload and stall
@@ -707,7 +707,7 @@ const HNCModule8Section4_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Types of Losses</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-4">
                     <li>Stator copper losses (I squared R)</li>
                     <li>Rotor copper losses</li>
                     <li>Iron losses (hysteresis and eddy current)</li>
@@ -717,7 +717,7 @@ const HNCModule8Section4_1 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">How IE3/IE4 Reduce Losses</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-4">
                     <li>More copper in windings (lower resistance)</li>
                     <li>Better quality laminations (lower iron losses)</li>
                     <li>Optimised air gap and slot geometry</li>
@@ -732,7 +732,7 @@ const HNCModule8Section4_1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">
                 Cost-Benefit Example: IE2 vs IE3
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Motor: 15kW, 4-pole, running 4000 hours/year</p>
                 <p>Electricity cost: 15p/kWh</p>
                 <p className="mt-2">IE2 efficiency: 90.0%</p>
@@ -746,7 +746,7 @@ const HNCModule8Section4_1 = () => {
                   Annual cost: 65,574 x 0.15 = <strong>9,836 pounds</strong>
                 </p>
                 <p className="mt-2 text-green-400">Annual saving: 164 pounds</p>
-                <p className="text-white/60">Typical price premium for IE3: 200-400 pounds</p>
+                <p className="text-white">Typical price premium for IE3: 200-400 pounds</p>
                 <p className="text-green-400">Payback: 1-2.5 years</p>
               </div>
             </div>
@@ -1026,7 +1026,7 @@ const HNCModule8Section4_1 = () => {
               <p className="text-sm font-medium text-amber-300 mb-2">
                 VSD Applications - Derating Considerations
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 When motors operate with variable speed drives at reduced speeds, cooling is
                 compromised (shaft-mounted fan provides less airflow). For continuous operation
                 below 50% speed, either <strong>oversize the motor</strong> or specify a{' '}
@@ -1064,7 +1064,7 @@ const HNCModule8Section4_1 = () => {
                 <strong>Question:</strong> A 6-pole motor operates on a 50Hz supply and runs at 960
                 rpm at full load. Calculate the synchronous speed and percentage slip.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Synchronous speed Ns = (120 x f) / p</p>
                 <p>
                   Ns = (120 x 50) / 6 = <strong>1000 rpm</strong>
@@ -1073,7 +1073,7 @@ const HNCModule8Section4_1 = () => {
                 <p>
                   s = (1000 - 960) / 1000 x 100% = <strong>4%</strong>
                 </p>
-                <p className="mt-2 text-white/60">This is typical slip for a fully loaded motor</p>
+                <p className="mt-2 text-white">This is typical slip for a fully loaded motor</p>
               </div>
             </div>
 
@@ -1085,7 +1085,7 @@ const HNCModule8Section4_1 = () => {
                 <strong>Question:</strong> A motor nameplate shows: 400V, 15kW, 28A, cos phi 0.87,
                 efficiency 91.5%. Verify these values are consistent.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Input power = Output power / Efficiency</p>
                 <p>Pin = 15,000W / 0.915 = 16,393W</p>
                 <p className="mt-2">From three-phase power formula:</p>
@@ -1096,7 +1096,7 @@ const HNCModule8Section4_1 = () => {
                 <p className="mt-2 text-green-400">
                   Values are consistent (small difference due to rounding)
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   This verification confirms nameplate data is correct
                 </p>
               </div>
@@ -1110,7 +1110,7 @@ const HNCModule8Section4_1 = () => {
                 <strong>Question:</strong> An AHU fan motor (22kW, 4-pole) runs 6000 hours/year.
                 Compare annual running costs for IE2 (90.5%) vs IE4 (93.0%) at 18p/kWh.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>IE2 annual energy: 22kW / 0.905 x 6000h = 145,856 kWh</p>
                 <p>
                   IE2 annual cost: 145,856 x 0.18 = <strong>26,254 pounds</strong>
@@ -1120,8 +1120,8 @@ const HNCModule8Section4_1 = () => {
                   IE4 annual cost: 141,935 x 0.18 = <strong>25,548 pounds</strong>
                 </p>
                 <p className="mt-2 text-green-400">Annual saving: 706 pounds</p>
-                <p className="text-white/60">Over 15-year motor life: 10,590 pounds saved</p>
-                <p className="text-white/60">Plus reduced carbon emissions: ~0.7 tonnes CO2/year</p>
+                <p className="text-white">Over 15-year motor life: 10,590 pounds saved</p>
+                <p className="text-white">Plus reduced carbon emissions: ~0.7 tonnes CO2/year</p>
               </div>
             </div>
 
@@ -1134,7 +1134,7 @@ const HNCModule8Section4_1 = () => {
                 speed, operating continuously via VSD at 30-100% speed. Ambient temperature 40
                 degrees C.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Base requirement: 7.5kW, 4-pole, 400V, IE3</p>
                 <p className="mt-2">VSD derating factor (continuous below 50%): 0.85</p>
                 <p>Required motor rating: 7.5 / 0.85 = 8.8kW</p>
@@ -1145,8 +1145,8 @@ const HNCModule8Section4_1 = () => {
                 <p className="mt-2 text-green-400">
                   Selection: 11kW IE3 motor (next standard size up)
                 </p>
-                <p className="text-white/60">Frame: 160M, IP55, Class F insulation</p>
-                <p className="text-white/60">Alternative: 7.5kW force-ventilated motor</p>
+                <p className="text-white">Frame: 160M, IP55, Class F insulation</p>
+                <p className="text-white">Alternative: 7.5kW force-ventilated motor</p>
               </div>
             </div>
           </div>
@@ -1256,7 +1256,7 @@ const HNCModule8Section4_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1302,7 +1302,7 @@ const HNCModule8Section4_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section4">

@@ -272,7 +272,7 @@ const HNCModule8Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section2">
@@ -294,7 +294,7 @@ const HNCModule8Section2_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Ventilation Principles
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Air change rates, fresh air requirements, contaminant control and ventilation standards
             for building services
           </p>
@@ -382,7 +382,7 @@ const HNCModule8Section2_1 = () => {
                 Air Change Rate Formula
               </p>
               <p className="font-mono text-center text-lg mb-2">ACH = (Q × 3600) / V</p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where Q = airflow rate (m³/s), V = room volume (m³)
               </p>
             </div>
@@ -509,8 +509,8 @@ const HNCModule8Section2_1 = () => {
                 Converting ACH to Flow Rate
               </p>
               <p className="font-mono text-center text-lg mb-2">Q (L/s) = (ACH × V) / 3.6</p>
-              <p className="text-xs text-white/70 text-center mb-3">Where V = room volume (m³)</p>
-              <p className="text-sm text-white/80">
+              <p className="text-xs text-white text-center mb-3">Where V = room volume (m³)</p>
+              <p className="text-sm text-white">
                 Example: A 150 m³ meeting room requiring 8 ACH needs: Q = (8 × 150) / 3.6 = 333 L/s
               </p>
             </div>
@@ -668,7 +668,7 @@ const HNCModule8Section2_1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Ventilation Calculation Example
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Scenario:</strong> Open-plan office, 500 m² floor area, 50 occupants
                 </p>
@@ -803,7 +803,7 @@ const HNCModule8Section2_1 = () => {
                 Steady-State CO2 Calculation
               </p>
               <p className="font-mono text-center text-lg mb-2">Ci = Co + (N × G) / Q</p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Ci = indoor CO2 (ppm), Co = outdoor CO2 (typically 400-450 ppm), N = number of
                 occupants, G = CO2 generation per person (approximately 18 L/h sedentary), Q =
                 outdoor airflow (L/h)
@@ -1181,7 +1181,7 @@ const HNCModule8Section2_1 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Design consideration:</strong> Higher ventilation effectiveness allows lower
               total airflow rates whilst maintaining equivalent air quality at the breathing zone,
               reducing both capital and operating costs.
@@ -1208,7 +1208,7 @@ const HNCModule8Section2_1 = () => {
                 office measuring 25m × 20m with a 2.8m ceiling height. Design occupancy is 1 person
                 per 8 m².
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Step 1: Calculate occupancy</strong>
                 </p>
@@ -1226,7 +1226,7 @@ const HNCModule8Section2_1 = () => {
                 <p className="mt-2 text-green-400">
                   <strong>Design requirement:</strong> 2333 L/s (higher value)
                 </p>
-                <p className="text-white/60 mt-1">
+                <p className="text-white mt-1">
                   Note: Total airflow includes recirculated air; minimum 630 L/s must be outdoor air
                 </p>
               </div>
@@ -1240,7 +1240,7 @@ const HNCModule8Section2_1 = () => {
                 <strong>Question:</strong> A meeting room has 12 occupants. Outdoor CO2 is 420 ppm.
                 The target indoor CO2 is 800 ppm. Calculate the required outdoor air supply rate.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using: Ci = Co + (N × G) / Q</p>
                 <p>Rearranging: Q = (N × G) / (Ci - Co)</p>
                 <p className="mt-2">Where:</p>
@@ -1253,7 +1253,7 @@ const HNCModule8Section2_1 = () => {
                 <p className="mt-2 text-green-400">
                   <strong>Required outdoor air:</strong> 158 L/s (or 13.2 L/s per person)
                 </p>
-                <p className="text-white/60 mt-1">
+                <p className="text-white mt-1">
                   This exceeds the Part F minimum of 10 L/s per person to achieve 800 ppm target
                 </p>
               </div>
@@ -1267,7 +1267,7 @@ const HNCModule8Section2_1 = () => {
                 <strong>Question:</strong> Assess whether single-sided natural ventilation is
                 suitable for an office with 3m ceiling height and 12m depth from the window wall.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Single-sided ventilation limit:</strong>
                 </p>
@@ -1297,7 +1297,7 @@ const HNCModule8Section2_1 = () => {
                 <strong>Question:</strong> Size the extract system for a commercial kitchen
                 measuring 8m × 6m with a 3m ceiling height.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Step 1: Calculate volume</strong>
                 </p>
@@ -1316,7 +1316,7 @@ const HNCModule8Section2_1 = () => {
                 <p className="mt-2 text-green-400">
                   <strong>Design extract rate:</strong> 1500 L/s (higher value)
                 </p>
-                <p className="text-white/60 mt-1">
+                <p className="text-white mt-1">
                   Supply air must balance extract, typically 80-90% to maintain slight negative
                   pressure
                 </p>
@@ -1331,7 +1331,7 @@ const HNCModule8Section2_1 = () => {
                 <strong>Question:</strong> Estimate annual energy savings from DCV in a 100-person
                 office running 50 hours per week at 40% average occupancy versus design maximum.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Design airflow:</strong>
                 </p>
@@ -1354,7 +1354,7 @@ const HNCModule8Section2_1 = () => {
                 <p className="mt-2 text-green-400">
                   <strong>Annual savings:</strong> 4550 kWh (87.5% reduction in fan energy)
                 </p>
-                <p className="text-white/60 mt-1">
+                <p className="text-white mt-1">
                   Additional savings from reduced heating/cooling of outdoor air
                 </p>
               </div>
@@ -1466,7 +1466,7 @@ const HNCModule8Section2_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1512,7 +1512,7 @@ const HNCModule8Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section1">

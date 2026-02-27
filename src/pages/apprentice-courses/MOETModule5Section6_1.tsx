@@ -257,7 +257,7 @@ const MOETModule5Section6_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module5-section6">
@@ -279,7 +279,7 @@ const MOETModule5Section6_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Fieldbus and Profibus Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Digital serial communication networks replacing analogue wiring in process and factory
             automation
           </p>
@@ -546,7 +546,7 @@ const MOETModule5Section6_1 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Repeaters can extend the total network length. Up to 32 stations per segment; 127
                 total with repeaters.
               </p>
@@ -857,7 +857,7 @@ const MOETModule5Section6_1 = () => {
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Note:</strong> Under ST1426, maintenance technicians are expected to
               understand fieldbus communication principles, identify fieldbus components, carry out
               basic fault-finding using appropriate test equipment, and replace faulty devices
@@ -876,7 +876,7 @@ const MOETModule5Section6_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -895,7 +895,7 @@ const MOETModule5Section6_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module5-section6">

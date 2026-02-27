@@ -205,7 +205,7 @@ const HNCModule3Section6_7 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section6">
@@ -227,7 +227,7 @@ const HNCModule3Section6_7 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Integration with Renewables and Storage Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Solar PV, battery storage, EV charging and smart grid integration for modern building
             services
           </p>
@@ -399,7 +399,7 @@ const HNCModule3Section6_7 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 PV System Sizing Example
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Requirement:</strong> 50,000 kWh annual consumption, target 30% solar
                 </p>
@@ -632,7 +632,7 @@ const HNCModule3Section6_7 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 BESS Sizing Example: Peak Shaving
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Requirement:</strong> Reduce 150kW peak demand to 100kW for 2 hours
                 </p>
@@ -643,7 +643,7 @@ const HNCModule3Section6_7 = () => {
                   At 90% DoD: Battery capacity = 100 / 0.9 = <strong>111kWh</strong>
                 </p>
                 <p>Power rating needed = 50kW minimum</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → Select 120kWh, 60kW battery system (0.5C rating)
                 </p>
               </div>
@@ -790,7 +790,7 @@ const HNCModule3Section6_7 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Optimisation:</strong> Modern EMS uses machine learning to predict generation
               and consumption, enabling proactive battery management and optimal grid interaction
               timing.
@@ -888,7 +888,7 @@ const HNCModule3Section6_7 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 EV Charger Circuit Design
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>7.4kW Charger (32A single-phase):</strong>
                 </p>
@@ -1060,7 +1060,7 @@ const HNCModule3Section6_7 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Revenue potential:</strong> A 100kW/200kWh commercial BESS participating in
               frequency response can generate £15,000-30,000 annually from grid services, in
               addition to peak shaving savings.
@@ -1182,7 +1182,7 @@ const HNCModule3Section6_7 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Islanding Protection Scheme
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Anti-islanding (standard G98/G99):</strong>
                 </p>
@@ -1326,7 +1326,7 @@ const HNCModule3Section6_7 = () => {
                 <strong>Scenario:</strong> Office building, 100,000 kWh annual consumption, 150kW
                 peak demand, aiming for 40% renewable supply with peak shaving.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>PV Sizing:</strong>
                 </p>
@@ -1348,7 +1348,7 @@ const HNCModule3Section6_7 = () => {
                 <p>
                   Select: <strong>50kWp PV + 120kWh/60kW BESS</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → G99 application required (50kW exceeds G98 limit)
                 </p>
               </div>
@@ -1362,7 +1362,7 @@ const HNCModule3Section6_7 = () => {
                 <strong>Scenario:</strong> Car park with 10 × 7.4kW chargers, 100A three-phase
                 supply available.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Maximum demand calculation:</strong>
                 </p>
@@ -1380,7 +1380,7 @@ const HNCModule3Section6_7 = () => {
                 </p>
                 <p>Available capacity = 100A × √3 × 400 = 69.3kW</p>
                 <p>Per charger limit = 69.3 / 10 = 6.9kW each</p>
-                <p className="text-white/60">
+                <p className="text-white">
                   → Implement dynamic load sharing for full charging when fewer EVs connected
                 </p>
               </div>
@@ -1393,7 +1393,7 @@ const HNCModule3Section6_7 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Domestic 4kWp PV, considering 10kWh battery addition.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Without battery:</strong>
                 </p>
@@ -1432,7 +1432,7 @@ const HNCModule3Section6_7 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1478,7 +1478,7 @@ const HNCModule3Section6_7 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section6-6">

@@ -27,7 +27,7 @@ const TestResultsList = ({ testResults, onRemoveTest }: TestResultsListProps) =>
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-4">
                   <div className="font-medium text-foreground">{test.circuitRef}</div>
-                  <div className="text-sm text-white/80">
+                  <div className="text-sm text-white">
                     ({test.testMethod === 'dead' ? 'Dead Test' : 'Live Test'})
                   </div>
                   <Badge
@@ -54,14 +54,14 @@ const TestResultsList = ({ testResults, onRemoveTest }: TestResultsListProps) =>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
                 {test.socketOutlets !== 'pending' && (
                   <div>
-                    <span className="text-white/80">Sockets:</span>
+                    <span className="text-white">Sockets:</span>
                     <span
                       className={`ml-1 ${
                         test.socketOutlets === 'pass'
                           ? 'text-green-400'
                           : test.socketOutlets === 'fail'
                             ? 'text-red-400'
-                            : 'text-white/80'
+                            : 'text-white'
                       }`}
                     >
                       {test.socketOutlets === 'pass'
@@ -75,14 +75,14 @@ const TestResultsList = ({ testResults, onRemoveTest }: TestResultsListProps) =>
 
                 {test.lightingPoints !== 'pending' && (
                   <div>
-                    <span className="text-white/80">Lighting:</span>
+                    <span className="text-white">Lighting:</span>
                     <span
                       className={`ml-1 ${
                         test.lightingPoints === 'pass'
                           ? 'text-green-400'
                           : test.lightingPoints === 'fail'
                             ? 'text-red-400'
-                            : 'text-white/80'
+                            : 'text-white'
                       }`}
                     >
                       {test.lightingPoints === 'pass'
@@ -96,14 +96,14 @@ const TestResultsList = ({ testResults, onRemoveTest }: TestResultsListProps) =>
 
                 {test.isolatorSwitches !== 'pending' && (
                   <div>
-                    <span className="text-white/80">Isolators:</span>
+                    <span className="text-white">Isolators:</span>
                     <span
                       className={`ml-1 ${
                         test.isolatorSwitches === 'pass'
                           ? 'text-green-400'
                           : test.isolatorSwitches === 'fail'
                             ? 'text-red-400'
-                            : 'text-white/80'
+                            : 'text-white'
                       }`}
                     >
                       {test.isolatorSwitches === 'pass'
@@ -116,7 +116,7 @@ const TestResultsList = ({ testResults, onRemoveTest }: TestResultsListProps) =>
                 )}
               </div>
 
-              {test.notes && <div className="mt-2 text-sm text-white/80">Notes: {test.notes}</div>}
+              {test.notes && <div className="mt-2 text-sm text-white">Notes: {test.notes}</div>}
             </CardContent>
           </Card>
         ))}

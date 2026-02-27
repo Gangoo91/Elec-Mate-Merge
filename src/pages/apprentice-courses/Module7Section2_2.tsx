@@ -146,7 +146,7 @@ const Module7Section2_2 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -164,18 +164,18 @@ const Module7Section2_2 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 7</span>
-              <span className="text-white/40">•</span>
+              <span className="text-white">•</span>
               <span>Section 2.2</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">Short Circuits</h1>
-            <p className="text-white/60 max-w-xl mx-auto">
+            <p className="text-white max-w-xl mx-auto">
               Understanding detection, causes, and rectification of short circuit faults
             </p>
           </header>
 
           {/* Summary Box */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               A <strong className="text-white">short circuit fault</strong> occurs when current
               flows along an unintended path with very low resistance, causing dangerously high
               current levels. These require immediate attention and protective device operation.
@@ -188,7 +188,7 @@ const Module7Section2_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Definition and Characteristics
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 A short circuit occurs when live conductors at different potentials come into direct
                 contact, either physically or through a conductive path with very low resistance.
@@ -284,7 +284,7 @@ const Module7Section2_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Causes and Contributing Factors
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Short circuits can result from numerous factors, often involving a combination of
                 installation errors, environmental conditions, and equipment failures:
@@ -361,7 +361,7 @@ const Module7Section2_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Dangers and Immediate Effects
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Short circuits represent one of the most dangerous electrical fault conditions,
                 capable of causing immediate and severe consequences:
@@ -451,7 +451,7 @@ const Module7Section2_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Protective Devices and Standards
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 BS 7671 requires appropriate protection against short circuit currents with specific
                 performance criteria:
@@ -524,7 +524,7 @@ const Module7Section2_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Detection and Emergency Response
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Proper detection methods and emergency procedures are critical for managing short
                 circuit incidents safely:
@@ -686,7 +686,7 @@ const Module7Section2_2 = () => {
                 <h4 className="font-medium text-white mb-2">
                   What's the main difference between a short circuit and an overload?
                 </h4>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A short circuit creates an unintended low-resistance path with very high current,
                   while an overload is excessive current through the intended path due to too much
                   load.
@@ -697,7 +697,7 @@ const Module7Section2_2 = () => {
                 <h4 className="font-medium text-white mb-2">
                   How quickly do protective devices respond to short circuits?
                 </h4>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   MCBs and fuses can respond in milliseconds to short circuits, but the exact time
                   depends on the fault current magnitude and device characteristics.
                 </p>
@@ -707,7 +707,7 @@ const Module7Section2_2 = () => {
                 <h4 className="font-medium text-white mb-2">
                   Can I test for short circuits with the power on?
                 </h4>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   No, never test for short circuits on live circuits. Always isolate, verify
                   isolation, and use insulation resistance testing methods.
                 </p>
@@ -717,7 +717,7 @@ const Module7Section2_2 = () => {
                 <h4 className="font-medium text-white mb-2">
                   What causes most short circuit faults?
                 </h4>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Common causes include damaged cable insulation, moisture ingress, incorrect
                   connections, and physical damage to conductors.
                 </p>
@@ -732,7 +732,7 @@ const Module7Section2_2 = () => {
                 <CheckCircle className="w-5 h-5 text-green-400" />
                 <h3 className="font-semibold text-white">Summary</h3>
               </div>
-              <p className="text-sm text-white/80 leading-relaxed">
+              <p className="text-sm text-white leading-relaxed">
                 Short circuit faults represent the most dangerous type of electrical fault, creating
                 extremely low resistance paths that allow dangerous fault currents to flow. These
                 can result from installation errors, mechanical damage, and equipment failures,

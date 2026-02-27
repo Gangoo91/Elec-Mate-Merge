@@ -108,7 +108,7 @@ const BS7671Module6Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bs7671-module-6">
@@ -129,7 +129,7 @@ const BS7671Module6Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Model Forms and Certification Overview
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding EIC, MEIWC, and EICR certification requirements under BS 7671
           </p>
         </header>
@@ -309,7 +309,7 @@ const BS7671Module6Section4 = () => {
                     <p className="font-medium text-white">
                       Danger Present - Immediate Action Required
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Installation unsafe, immediate remedial action required
                     </p>
                   </div>
@@ -320,7 +320,7 @@ const BS7671Module6Section4 = () => {
                   </span>
                   <div>
                     <p className="font-medium text-white">Potentially Dangerous</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Urgent remedial action required to remove potential danger
                     </p>
                   </div>
@@ -331,7 +331,7 @@ const BS7671Module6Section4 = () => {
                   </span>
                   <div>
                     <p className="font-medium text-white">Improvement Recommended</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Departure from current standards, improvement recommended
                     </p>
                   </div>
@@ -342,7 +342,7 @@ const BS7671Module6Section4 = () => {
                   </span>
                   <div>
                     <p className="font-medium text-white">Further Investigation Required</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Investigation required to determine if defect exists
                     </p>
                   </div>
@@ -353,15 +353,15 @@ const BS7671Module6Section4 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Domestic</p>
-                <p className="text-white/90 text-xs">10 years (5 for rental)</p>
+                <p className="text-white text-xs">10 years (5 for rental)</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Commercial</p>
-                <p className="text-white/90 text-xs">5 years typical</p>
+                <p className="text-white text-xs">5 years typical</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Industrial</p>
-                <p className="text-white/90 text-xs">3-5 years</p>
+                <p className="text-white text-xs">3-5 years</p>
               </div>
             </div>
           </div>
@@ -496,7 +496,7 @@ const BS7671Module6Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -555,7 +555,7 @@ const BS7671Module6Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bs7671-module-6-section-3">

@@ -227,7 +227,7 @@ const Module5Section1_5 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -245,13 +245,13 @@ const Module5Section1_5 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.1.5</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.1.5</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Identifying Installation Requirements from Drawings
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Drawings are more than just pictures of layouts — they are instructions for how an
               installation must be carried out.
             </p>
@@ -262,7 +262,7 @@ const Module5Section1_5 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-                <ul className="list-disc pl-5 space-y-1 text-white/80 text-sm">
+                <ul className="list-disc pl-5 space-y-1 text-white text-sm">
                   <li>Drawings provide detailed instructions for electrical installation work.</li>
                   <li>Title blocks and notes contain critical project and material information.</li>
                   <li>Must be cross-referenced with specifications for complete requirements.</li>
@@ -270,7 +270,7 @@ const Module5Section1_5 = () => {
               </div>
               <div>
                 <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-                <ul className="list-disc pl-5 space-y-1 text-white/80 text-sm">
+                <ul className="list-disc pl-5 space-y-1 text-white text-sm">
                   <li>
                     <strong>Spot:</strong> Material lists, installation methods, BS standards,
                     testing requirements.
@@ -294,7 +294,7 @@ const Module5Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Learning Outcomes
             </h2>
-            <ul className="list-disc pl-6 space-y-2 text-white/80">
+            <ul className="list-disc pl-6 space-y-2 text-white">
               <li>Identify key installation requirements from electrical drawings.</li>
               <li>Recognise how to determine materials, routes, and accessories from drawings.</li>
               <li>Understand the role of notes, legends, and circuit codes in drawings.</li>
@@ -309,7 +309,7 @@ const Module5Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Reading the Title Block and Notes
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 The title block and notes provide essential information that must be understood
                 before beginning any installation work:
@@ -340,7 +340,7 @@ const Module5Section1_5 = () => {
                   <li>Testing and commissioning requirements</li>
                 </ul>
 
-                <p className="text-sm text-white/60 mt-3">
+                <p className="text-sm text-white mt-3">
                   <strong>Key principle:</strong> Always read title blocks and notes first - they
                   contain mandatory requirements that override standard practices
                 </p>
@@ -364,7 +364,7 @@ const Module5Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Identifying Materials
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Drawings use symbols and annotations to specify exactly which materials and
                 accessories are required:
@@ -395,7 +395,7 @@ const Module5Section1_5 = () => {
                   <li>Control device symbols (PIR, timers, dimmers)</li>
                 </ul>
 
-                <p className="text-sm text-white/60 mt-3">
+                <p className="text-sm text-white mt-3">
                   <strong>Selection guide:</strong> Always refer to the drawing legend and
                   cross-check with specifications for complete material details
                 </p>
@@ -419,7 +419,7 @@ const Module5Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Circuit Identification
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Every circuit must be properly identified and cross-referenced to ensure correct
                 installation:
@@ -450,7 +450,7 @@ const Module5Section1_5 = () => {
                   <li>Testing requirements and acceptance criteria</li>
                 </ul>
 
-                <p className="text-sm text-white/60 mt-3">
+                <p className="text-sm text-white mt-3">
                   <strong>Critical process:</strong> Never assume circuit details - always
                   cross-reference with distribution schedules and specifications
                 </p>
@@ -466,7 +466,7 @@ const Module5Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Safe Zones and Routes
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>Cable routes must be carefully planned to comply with safety regulations:</p>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
@@ -494,7 +494,7 @@ const Module5Section1_5 = () => {
                   <li>Fire stopping requirements at compartment boundaries</li>
                 </ul>
 
-                <p className="text-sm text-white/60 mt-3">
+                <p className="text-sm text-white mt-3">
                   <strong>Safety priority:</strong> Routes must comply with BS 7671 safe zones to
                   prevent damage during future work
                 </p>
@@ -510,7 +510,7 @@ const Module5Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Cross-Referencing Specifications
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Drawings and specifications must be used together for complete installation
                 information:
@@ -543,7 +543,7 @@ const Module5Section1_5 = () => {
                   <li>Document any discrepancies and seek clarification</li>
                 </ul>
 
-                <p className="text-sm text-white/60 mt-3">
+                <p className="text-sm text-white mt-3">
                   <strong>Working principle:</strong> Drawings show where, specifications show how -
                   both are essential for compliant installation
                 </p>
@@ -567,7 +567,7 @@ const Module5Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Common Errors
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Avoid these common mistakes when interpreting installation requirements from
                 drawings:
@@ -603,7 +603,7 @@ const Module5Section1_5 = () => {
                   </li>
                 </ul>
 
-                <p className="text-sm text-white/60 mt-3">
+                <p className="text-sm text-white mt-3">
                   <strong>Prevention strategy:</strong> Always read carefully, check specifications,
                   and seek clarification when uncertain
                 </p>
@@ -620,7 +620,7 @@ const Module5Section1_5 = () => {
             <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
-                <div className="text-white/80">
+                <div className="text-white">
                   <p className="font-medium text-white mb-2">Commercial Site Socket Assumption</p>
                   <p className="text-sm mb-3">
                     On a commercial site, an installer assumed all sockets were standard 13A types
@@ -652,11 +652,11 @@ const Module5Section1_5 = () => {
                   >
                     <span className="font-medium text-white pr-4">{faq.question}</span>
                     <ChevronDown
-                      className={`w-5 h-5 text-white/60 flex-shrink-0 transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
+                      className={`w-5 h-5 text-white flex-shrink-0 transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
                     />
                   </button>
                   {openFaq === index && (
-                    <div className="px-4 pb-4 text-white/70 text-sm border-t border-white/10 pt-3">
+                    <div className="px-4 pb-4 text-white text-sm border-t border-white/10 pt-3">
                       {faq.answer}
                     </div>
                   )}
@@ -672,7 +672,7 @@ const Module5Section1_5 = () => {
               Pocket Guide
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <div className="grid md:grid-cols-2 gap-4 text-sm text-white/80">
+              <div className="grid md:grid-cols-2 gap-4 text-sm text-white">
                 <div className="space-y-2">
                   <p className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
@@ -707,7 +707,7 @@ const Module5Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">10</span>
               Recap
             </h2>
-            <div className="text-white/80 space-y-4">
+            <div className="text-white space-y-4">
               <p>In this subsection, you learned:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>
@@ -738,7 +738,7 @@ const Module5Section1_5 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../1-4">

@@ -257,7 +257,7 @@ const HNCModule6Section6_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section6">
@@ -279,7 +279,7 @@ const HNCModule6Section6_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Whole Life Carbon Assessment
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             RICS methodology, life cycle stages, data sources, benchmarking, and reduction
             strategies for building services
           </p>
@@ -438,11 +438,11 @@ const HNCModule6Section6_4 = () => {
               <div className="font-mono text-sm text-white">
                 <p>WLC = Embodied Carbon + Operational Carbon</p>
                 <p className="mt-2">WLC = (A1-A5 + B1-B5 + C1-C4) + (B6 + B7)</p>
-                <p className="mt-2 text-white/60">Where:</p>
-                <p className="ml-4 text-white/60">A1-A5 = Product & construction stage</p>
-                <p className="ml-4 text-white/60">B1-B5 = Use stage (maintenance, replacement)</p>
-                <p className="ml-4 text-white/60">B6-B7 = Operational energy and water</p>
-                <p className="ml-4 text-white/60">C1-C4 = End-of-life stage</p>
+                <p className="mt-2 text-white">Where:</p>
+                <p className="ml-4 text-white">A1-A5 = Product & construction stage</p>
+                <p className="ml-4 text-white">B1-B5 = Use stage (maintenance, replacement)</p>
+                <p className="ml-4 text-white">B6-B7 = Operational energy and water</p>
+                <p className="ml-4 text-white">C1-C4 = End-of-life stage</p>
               </div>
             </div>
 
@@ -835,7 +835,7 @@ const HNCModule6Section6_4 = () => {
                   <p className="text-sm font-medium text-green-400">
                     1. Build Less (Demand Reduction)
                   </p>
-                  <p className="text-sm text-white/80 mt-1">
+                  <p className="text-sm text-white mt-1">
                     Fabric-first approach, passive design, reduce conditioned floor area
                   </p>
                 </div>
@@ -843,7 +843,7 @@ const HNCModule6Section6_4 = () => {
                   <p className="text-sm font-medium text-blue-400">
                     2. Build Clever (Design Optimisation)
                   </p>
-                  <p className="text-sm text-white/80 mt-1">
+                  <p className="text-sm text-white mt-1">
                     Right-size systems, hybrid solutions, efficient distribution
                   </p>
                 </div>
@@ -851,7 +851,7 @@ const HNCModule6Section6_4 = () => {
                   <p className="text-sm font-medium text-yellow-400">
                     3. Build Efficiently (Low Carbon Materials)
                   </p>
-                  <p className="text-sm text-white/80 mt-1">
+                  <p className="text-sm text-white mt-1">
                     Low-GWP refrigerants, recycled content, aluminium cables
                   </p>
                 </div>
@@ -859,7 +859,7 @@ const HNCModule6Section6_4 = () => {
                   <p className="text-sm font-medium text-purple-400">
                     4. Build for Longevity (Extended Life)
                   </p>
-                  <p className="text-sm text-white/80 mt-1">
+                  <p className="text-sm text-white mt-1">
                     Durable equipment, design for maintenance, modular systems
                   </p>
                 </div>
@@ -955,7 +955,7 @@ const HNCModule6Section6_4 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Carbon payback:</strong> Technologies like PV and heat pumps have embodied
               carbon but typically achieve carbon payback within 2-5 years through operational
               savings - always assess whole life impact, not just upfront carbon.
@@ -981,13 +981,13 @@ const HNCModule6Section6_4 = () => {
                 <strong>Scenario:</strong> Calculate embodied carbon for 500m of 95mm2 4-core
                 XLPE/SWA copper cable.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given:</p>
                 <p>- Cable mass: 4.2 kg/m (from manufacturer data)</p>
                 <p>- Copper content: approximately 65% by mass</p>
                 <p>- Steel armour: approximately 20% by mass</p>
                 <p>- XLPE/PVC: approximately 15% by mass</p>
-                <p className="mt-2 text-white/60">Calculation:</p>
+                <p className="mt-2 text-white">Calculation:</p>
                 <p>Total cable mass = 500m x 4.2 kg/m = 2,100 kg</p>
                 <p className="mt-2">
                   Copper = 2,100 x 0.65 x 2.71 kgCO2e/kg ={' '}
@@ -1002,7 +1002,7 @@ const HNCModule6Section6_4 = () => {
                   <span className="text-green-400">882 kgCO2e</span>
                 </p>
                 <p className="mt-2 text-green-400">Total A1-A3 = 5,741 kgCO2e (5.74 tCO2e)</p>
-                <p className="mt-2 text-white/60">Note: If using aluminium conductor equivalent:</p>
+                <p className="mt-2 text-white">Note: If using aluminium conductor equivalent:</p>
                 <p>Al mass for 95mm2 equivalent ≈ 50% of Cu mass</p>
                 <p>
                   Al carbon = 1,050 x 0.43 (recycled) ={' '}
@@ -1020,8 +1020,8 @@ const HNCModule6Section6_4 = () => {
                 <strong>Scenario:</strong> Compare lifetime refrigerant emissions for two 200kW
                 chiller options.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Option A: R-410A chiller</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Option A: R-410A chiller</p>
                 <p>- Refrigerant charge: 45 kg</p>
                 <p>- Annual leakage rate: 5%</p>
                 <p>- GWP: 2088</p>
@@ -1030,7 +1030,7 @@ const HNCModule6Section6_4 = () => {
                 <p>
                   20-year leakage = 4,698 x 20 = <span className="text-red-400">93,960 kgCO2e</span>
                 </p>
-                <p className="mt-3 text-white/60">Option B: R-32 chiller</p>
+                <p className="mt-3 text-white">Option B: R-32 chiller</p>
                 <p>- Refrigerant charge: 35 kg (lower charge)</p>
                 <p>- Annual leakage rate: 5%</p>
                 <p>- GWP: 675</p>
@@ -1053,27 +1053,27 @@ const HNCModule6Section6_4 = () => {
                 <strong>Scenario:</strong> Calculate 60-year embodied carbon for LED lighting
                 installation.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given:</p>
                 <p>- 200 LED luminaires at 8 kgCO2e each (A1-A3)</p>
                 <p>- LED driver life: 15 years</p>
                 <p>- LED module life: 15 years</p>
                 <p>- Housing reuse potential: 60 years</p>
-                <p className="mt-2 text-white/60">Initial installation (A1-A3):</p>
+                <p className="mt-2 text-white">Initial installation (A1-A3):</p>
                 <p>
                   200 x 8 = <span className="text-green-400">1,600 kgCO2e</span>
                 </p>
-                <p className="mt-2 text-white/60">Replacements over 60 years (B4):</p>
+                <p className="mt-2 text-white">Replacements over 60 years (B4):</p>
                 <p>Number of driver/module replacements = 60/15 - 1 = 3</p>
                 <p>Replacement carbon (driver + LED) = 4 kgCO2e per luminaire</p>
                 <p>
                   B4 = 200 x 4 x 3 = <span className="text-green-400">2,400 kgCO2e</span>
                 </p>
-                <p className="mt-2 text-white/60">Total lighting WLC:</p>
+                <p className="mt-2 text-white">Total lighting WLC:</p>
                 <p>
                   A1-A3 + B4 = 1,600 + 2,400 = <span className="text-green-400">4,000 kgCO2e</span>
                 </p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Note: B4 is 60% of total - longer-life LEDs reduce WLC significantly
                 </p>
               </div>
@@ -1167,7 +1167,7 @@ const HNCModule6Section6_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1215,7 +1215,7 @@ const HNCModule6Section6_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section6">

@@ -213,7 +213,7 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
     // Auto-set PME status based on earthing arrangement
     if (value === 'tncs' && formData.supplyPME !== 'yes') {
       onUpdate('supplyPME', 'yes');
-    } else if (['tns', 'tt', 'it'].includes(value) && formData.supplyPME !== 'no') {
+    } else if (['tnc', 'tns', 'tt', 'it'].includes(value) && formData.supplyPME !== 'no') {
       onUpdate('supplyPME', 'no');
     }
   };
@@ -340,6 +340,7 @@ const EICSupplyCharacteristicsSection: React.FC<EICSupplyCharacteristicsSectionP
                       <SelectValue placeholder="Select earthing type" />
                     </SelectTrigger>
                     <SelectContent className="max-w-[calc(100vw-2rem)]">
+                      <SelectItem value="tnc">TN-C</SelectItem>
                       <SelectItem value="tncs">TN-C-S (PME)</SelectItem>
                       <SelectItem value="tns">TN-S</SelectItem>
                       <SelectItem value="tt">TT</SelectItem>

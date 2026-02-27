@@ -37,7 +37,7 @@ const QuizAssessment = () => {
       case 'Advanced':
         return 'text-red-400 bg-red-400/10';
       default:
-        return 'text-white/80 bg-gray-400/10';
+        return 'text-white bg-gray-400/10';
     }
   };
 
@@ -68,7 +68,7 @@ const QuizAssessment = () => {
                 )}
               </div>
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4 text-sm text-white/80">
+                <div className="flex items-center gap-4 text-sm text-white">
                   <span>{assessment.questions} questions</span>
                   <div className="flex items-center gap-1">
                     <Clock className="h-3 w-3" />

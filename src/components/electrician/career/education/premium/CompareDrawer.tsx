@@ -100,7 +100,7 @@ const MiniCompareCard = ({
             <img src={programme.imageUrl} alt="" className="w-full h-full object-cover" />
           ) : (
             <div className="w-full h-full bg-white/10 flex items-center justify-center">
-              <GraduationCap className="h-8 w-8 text-white/20" />
+              <GraduationCap className="h-8 w-8 text-white" />
             </div>
           )}
         </div>
@@ -154,8 +154,8 @@ const ComparisonRow = ({
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2">
-        {Icon && <Icon className="h-4 w-4 text-white/40" />}
-        <span className="text-sm text-white/60">{label}</span>
+        {Icon && <Icon className="h-4 w-4 text-white" />}
+        <span className="text-sm text-white">{label}</span>
       </div>
       <div className="grid gap-2" style={{ gridTemplateColumns: `repeat(${values.length}, 1fr)` }}>
         {values.map((value, index) => {
@@ -171,7 +171,7 @@ const ComparisonRow = ({
               <div key={index} className="space-y-1">
                 <div className="flex items-center justify-between">
                   <span
-                    className={cn('text-sm font-medium', isWinner ? 'text-white' : 'text-white/70')}
+                    className={cn('text-sm font-medium', isWinner ? 'text-white' : 'text-white')}
                   >
                     {displayValue}
                   </span>
@@ -194,7 +194,7 @@ const ComparisonRow = ({
           }
 
           return (
-            <div key={index} className="text-sm text-white/70 text-center py-1">
+            <div key={index} className="text-sm text-white text-center py-1">
               {String(value)}
             </div>
           );
@@ -265,14 +265,14 @@ const CompareDrawer = ({
                 onClick={onAddMore}
                 className="min-w-[180px] h-[160px] rounded-xl border-2 border-dashed border-white/20 flex flex-col items-center justify-center gap-2 hover:border-purple-500/50 hover:bg-white/5 transition-colors"
               >
-                <Plus className="h-8 w-8 text-white/30" />
-                <span className="text-sm text-white/40">Add Programme</span>
+                <Plus className="h-8 w-8 text-white" />
+                <span className="text-sm text-white">Add Programme</span>
               </motion.button>
             )}
           </div>
 
           {/* Swipe hint */}
-          <p className="text-xs text-white/40 text-center mb-6">
+          <p className="text-xs text-white text-center mb-6">
             Swipe left on a card to remove it
           </p>
 
@@ -284,7 +284,7 @@ const CompareDrawer = ({
               animate="animate"
               className="space-y-6"
             >
-              <h3 className="text-sm font-medium text-white/60 uppercase tracking-wide">
+              <h3 className="text-sm font-medium text-white uppercase tracking-wide">
                 Comparison
               </h3>
 
@@ -338,7 +338,7 @@ const CompareDrawer = ({
             <div className="text-center py-12">
               <GraduationCap className="h-16 w-16 text-white/10 mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-white mb-2">Add programmes to compare</h3>
-              <p className="text-sm text-white/50 max-w-xs mx-auto">
+              <p className="text-sm text-white max-w-xs mx-auto">
                 Select at least 2 programmes to see a side-by-side comparison
               </p>
               <Button onClick={onAddMore} className="mt-4 bg-purple-500 hover:bg-purple-600">

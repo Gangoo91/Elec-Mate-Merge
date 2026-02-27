@@ -82,7 +82,7 @@ const Dashboard = () => {
 
         {/* Premium Hub Cards */}
         <motion.section variants={sectionVariants} initial="hidden" animate="visible" custom={3}>
-          <h2 className="text-xs sm:text-sm font-medium text-white/70 uppercase tracking-wider mb-3 px-0.5">
+          <h2 className="text-xs sm:text-sm font-medium text-white uppercase tracking-wider mb-3 px-0.5">
             Your Hubs
           </h2>
           <PremiumHubGrid />

@@ -221,7 +221,7 @@ export function AddRequirementDialog({
           {/* Evidence Types */}
           <div className="space-y-2">
             <Label>Evidence Types *</Label>
-            <p className="text-xs text-white/50">
+            <p className="text-xs text-white">
               Select the types of evidence the student can upload
             </p>
             <div className="grid grid-cols-2 gap-2 mt-2">
@@ -298,7 +298,7 @@ export function AddRequirementDialog({
                     setFormData((prev) => ({ ...prev, isMandatory: checked }))
                   }
                 />
-                <span className="text-sm text-white/70">
+                <span className="text-sm text-white">
                   {formData.isMandatory ? 'Required' : 'Optional'}
                 </span>
               </div>

@@ -112,7 +112,7 @@ const RenewableEnergyModule2Section3 = () => {
           <Button
             variant="ghost"
             size="sm"
-            className="text-white/70 hover:text-white hover:bg-white/10 -ml-2"
+            className="text-white hover:text-white hover:bg-white/10 -ml-2"
             asChild
           >
             <Link to="/electrician/upskilling/renewable-energy-module-2">
@@ -132,7 +132,7 @@ const RenewableEnergyModule2Section3 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             String Design &amp; Voltage Matching
           </h1>
-          <p className="text-white/60 text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Panel Sizing for Safety &amp; Performance
           </p>
         </div>
@@ -159,19 +159,19 @@ const RenewableEnergyModule2Section3 = () => {
           <div className="space-y-2">
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-white/80 text-sm">
+              <span className="text-white text-sm">
                 Calculate string voltages and currents for safe system operation
               </span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-white/80 text-sm">
+              <span className="text-white text-sm">
                 Understand inverter input requirements and MPPT windows
               </span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-white/80 text-sm">
+              <span className="text-white text-sm">
                 Avoid mismatch and overvoltage issues through proper design
               </span>
             </div>
@@ -184,7 +184,7 @@ const RenewableEnergyModule2Section3 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">01</span>
             Panel Electrical Parameters
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Every solar panel has key electrical specifications that determine how it can be
               connected and what performance to expect. Electrical compatibility starts at the
@@ -249,7 +249,7 @@ const RenewableEnergyModule2Section3 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">02</span>
             String Length &amp; MPPT Windows
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               String design must keep voltages within the inverter's MPPT (Maximum Power Point
               Tracking) window under all operating conditions.
@@ -323,7 +323,7 @@ const RenewableEnergyModule2Section3 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">03</span>
             Series vs Parallel Configurations
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Understanding how panels combine electrically is fundamental to system design and
               troubleshooting.
@@ -401,7 +401,7 @@ const RenewableEnergyModule2Section3 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">04</span>
             Temperature Effects on Voltage
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Temperature significantly affects panel voltage, requiring careful consideration in
               string design to avoid overvoltage conditions.
@@ -469,7 +469,7 @@ const RenewableEnergyModule2Section3 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">05</span>
             Design Tools &amp; Validation
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Professional design tools and proper datasheet interpretation are essential for
               accurate string sizing and system design.
@@ -512,7 +512,7 @@ const RenewableEnergyModule2Section3 = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
             <div>
               <h4 className="text-red-400 font-medium mb-2">Overvoltage Issues</h4>
-              <ul className="text-white/70 space-y-1">
+              <ul className="text-white space-y-1">
                 <li>• Not accounting for cold temperature rise</li>
                 <li>• Exceeding inverter max input voltage</li>
                 <li>• Inadequate safety margins</li>
@@ -520,7 +520,7 @@ const RenewableEnergyModule2Section3 = () => {
             </div>
             <div>
               <h4 className="text-red-400 font-medium mb-2">Undervoltage Problems</h4>
-              <ul className="text-white/70 space-y-1">
+              <ul className="text-white space-y-1">
                 <li>• String voltage below MPPT min (hot)</li>
                 <li>• Poor hot weather performance</li>
                 <li>• Inverter cannot start in low light</li>
@@ -528,7 +528,7 @@ const RenewableEnergyModule2Section3 = () => {
             </div>
             <div>
               <h4 className="text-red-400 font-medium mb-2">Panel Mismatch</h4>
-              <ul className="text-white/70 space-y-1">
+              <ul className="text-white space-y-1">
                 <li>• Mixing different panel models</li>
                 <li>• Different orientations in same string</li>
                 <li>• Ignoring tolerance variations</li>
@@ -536,7 +536,7 @@ const RenewableEnergyModule2Section3 = () => {
             </div>
             <div>
               <h4 className="text-red-400 font-medium mb-2">Current Oversizing</h4>
-              <ul className="text-white/70 space-y-1">
+              <ul className="text-white space-y-1">
                 <li>• Too many parallel strings</li>
                 <li>• Inadequate DC conductor sizing</li>
                 <li>• Missing or undersized fusing</li>
@@ -548,7 +548,7 @@ const RenewableEnergyModule2Section3 = () => {
         {/* Practical Guidance */}
         <div className="mb-8 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
           <h3 className="text-white font-semibold mb-3">Practical Guidance</h3>
-          <div className="space-y-2 text-white/80 text-sm">
+          <div className="space-y-2 text-white text-sm">
             <p>
               <strong className="text-white">Multi-orientation systems:</strong> Never mix
               orientations in the same string - use separate MPPT inputs for each orientation.
@@ -572,7 +572,7 @@ const RenewableEnergyModule2Section3 = () => {
               <h4 className="text-white font-medium mb-2">
                 Why does cold weather increase voltage?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Solar cells are semiconductors - lower temperatures reduce electron movement
                 resistance, increasing voltage output. This is why string design must account for
                 coldest expected temperatures to avoid overvoltage.
@@ -582,7 +582,7 @@ const RenewableEnergyModule2Section3 = () => {
               <h4 className="text-white font-medium mb-2">
                 What happens if string voltage exceeds MPPT maximum?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 The inverter may shut down to protect itself, or in worst cases suffer damage. Most
                 modern inverters have overvoltage protection, but consistent operation above limits
                 reduces lifespan and voids warranties.
@@ -592,7 +592,7 @@ const RenewableEnergyModule2Section3 = () => {
               <h4 className="text-white font-medium mb-2">
                 Can I mix different wattage panels in a string?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Generally not recommended. The string current is limited by the lowest-current
                 panel, and voltage differences can cause mismatch losses. If unavoidable, use power
                 optimisers to mitigate losses.
@@ -600,7 +600,7 @@ const RenewableEnergyModule2Section3 = () => {
             </div>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
               <h4 className="text-white font-medium mb-2">When do I need string fuses?</h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 String fuses are typically required when three or more strings are connected in
                 parallel to the same inverter input. They protect against reverse current flow from
                 other strings if one string develops a fault.
@@ -610,7 +610,7 @@ const RenewableEnergyModule2Section3 = () => {
               <h4 className="text-white font-medium mb-2">
                 What is oversizing and when should I use it?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Oversizing means installing more panel capacity than inverter rating (e.g., 6kWp
                 panels on 5kW inverter). This improves yield during non-peak hours but clips output
                 at peak. Typically 10-30% oversizing is beneficial.
@@ -620,7 +620,7 @@ const RenewableEnergyModule2Section3 = () => {
               <h4 className="text-white font-medium mb-2">
                 How do I troubleshoot underperforming strings?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Use a DC clamp meter to measure string current and multimeter for voltage. Compare
                 against expected values from datasheets. Thermal cameras can identify hot spots. I-V
                 curve tracers provide detailed panel analysis.
@@ -638,7 +638,7 @@ const RenewableEnergyModule2Section3 = () => {
         <div className="flex justify-between items-center pt-6 border-t border-white/10">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/10"
+            className="text-white hover:text-white hover:bg-white/10"
             asChild
           >
             <Link to="../section-2">

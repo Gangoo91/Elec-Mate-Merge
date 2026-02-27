@@ -185,7 +185,7 @@ const QuoteBuilderCreate = () => {
             </div>
             <div className="flex-1 min-w-0">
               <h1 className="text-base font-semibold text-white truncate">New Quote</h1>
-              <p className="text-[11px] text-white/50">Create a professional quote</p>
+              <p className="text-[11px] text-white">Create a professional quote</p>
             </div>
           </div>
         </header>
@@ -202,7 +202,7 @@ const QuoteBuilderCreate = () => {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[15px] font-medium text-emerald-400">Cost Data Imported</p>
-              <p className="text-[13px] text-white/50">
+              <p className="text-[13px] text-white">
                 {costContext.materials?.length || 0} materials pre-filled
               </p>
             </div>
@@ -221,7 +221,7 @@ const QuoteBuilderCreate = () => {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[15px] font-medium text-blue-400">Certificate Data Imported</p>
-              <p className="text-[13px] text-white/50">
+              <p className="text-[13px] text-white">
                 Client details pre-filled from certificate
               </p>
             </div>
@@ -240,7 +240,7 @@ const QuoteBuilderCreate = () => {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[15px] font-medium text-emerald-400">Imported from Site Visit</p>
-              <p className="text-[13px] text-white/50">Client details and scope pre-filled</p>
+              <p className="text-[13px] text-white">Client details and scope pre-filled</p>
             </div>
           </motion.div>
         )}
@@ -259,7 +259,7 @@ const QuoteBuilderCreate = () => {
               <p className="text-[15px] font-medium text-amber-400">
                 Materials Imported from {materialsContext.sourceLabel}
               </p>
-              <p className="text-[13px] text-white/50">
+              <p className="text-[13px] text-white">
                 {materialsContext.materials.length}{' '}
                 {materialsContext.materials.length === 1 ? 'item' : 'items'} pre-filled
               </p>

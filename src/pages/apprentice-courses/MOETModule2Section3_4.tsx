@@ -265,7 +265,7 @@ const MOETModule2Section3_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module2-section3">
@@ -287,7 +287,7 @@ const MOETModule2Section3_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             DC Motors and Their Control
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Series, shunt, and compound wound motors — speed control, braking, DC drives, and
             commutator maintenance
           </p>
@@ -383,11 +383,11 @@ const MOETModule2Section3_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">
                 Fundamental DC Motor Equation
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p className="font-mono mb-1">V = Eb + Ia x Ra</p>
                 <p className="font-mono mb-1">Eb = k x phi x N (back-EMF)</p>
                 <p className="font-mono mb-1">T = k x phi x Ia (torque)</p>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   Where: V = supply voltage, Eb = back-EMF, Ia = armature current, Ra = armature
                   resistance, phi = field flux, N = speed, k = machine constant
                 </p>
@@ -397,7 +397,7 @@ const MOETModule2Section3_4 = () => {
             <div className="my-6 space-y-4">
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
                 <h3 className="text-sm font-medium text-red-400 mb-3">Series Wound Motor</h3>
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   The field winding is connected in series with the armature — field current equals
                   armature current. This gives unique characteristics.
                 </p>
@@ -427,7 +427,7 @@ const MOETModule2Section3_4 = () => {
 
               <div className="p-4 rounded-lg bg-blue-500/10 border-l-2 border-blue-500/50">
                 <h3 className="text-sm font-medium text-blue-400 mb-3">Shunt Wound Motor</h3>
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   The field winding is connected in parallel (shunt) with the armature, across the
                   full supply voltage. Field current is independent of load.
                 </p>
@@ -456,7 +456,7 @@ const MOETModule2Section3_4 = () => {
 
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
                 <h3 className="text-sm font-medium text-green-400 mb-3">Compound Wound Motor</h3>
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   Has both series and shunt field windings, combining characteristics of both types.
                 </p>
                 <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
@@ -502,7 +502,7 @@ const MOETModule2Section3_4 = () => {
                 <h3 className="text-sm font-medium text-blue-400 mb-3">
                   Armature Voltage Control (Below Base Speed)
                 </h3>
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   The armature voltage is varied from zero to rated voltage while the field current
                   is held constant at its rated value. This provides constant-torque operation.
                 </p>
@@ -532,7 +532,7 @@ const MOETModule2Section3_4 = () => {
                 <h3 className="text-sm font-medium text-purple-400 mb-3">
                   Field Weakening (Above Base Speed)
                 </h3>
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   The armature voltage is held at its rated value and the field current is reduced
                   below its rated value. This provides constant-power operation.
                 </p>
@@ -559,7 +559,7 @@ const MOETModule2Section3_4 = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Combined Speed Range</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   Using armature voltage control from zero to base speed, then field weakening from
                   base speed upwards, a DC drive can achieve speed ranges of 100:1 or greater. Below
                   base speed: constant torque capability. Above base speed: constant power
@@ -594,7 +594,7 @@ const MOETModule2Section3_4 = () => {
                     <p className="text-sm font-medium text-blue-400 mb-1">
                       Thyristor (SCR) Converter Drive
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Uses phase-controlled thyristors to convert three-phase AC to variable DC
                       voltage. The firing angle controls the output voltage. Single converter =
                       2-quadrant (forward motoring + forward regenerative braking). Dual converter =
@@ -604,7 +604,7 @@ const MOETModule2Section3_4 = () => {
                   </div>
                   <div className="bg-black/30 p-3 rounded">
                     <p className="text-sm font-medium text-blue-400 mb-1">Chopper (PWM) Drive</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Uses transistors (IGBTs or MOSFETs) to rapidly switch a fixed DC supply on and
                       off, controlling the mean voltage to the motor. Used in battery-powered
                       vehicles, small drives, and traction applications. Faster response than
@@ -619,7 +619,7 @@ const MOETModule2Section3_4 = () => {
                 <div className="space-y-3">
                   <div className="bg-black/30 p-3 rounded">
                     <p className="text-sm font-medium text-green-400 mb-1">Regenerative Braking</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       The motor acts as a generator, feeding energy back to the supply. The armature
                       voltage (or back-EMF) exceeds the supply voltage, reversing the current flow.
                       Efficient — energy is recovered. Requires a regenerative (4-quadrant) drive or
@@ -631,7 +631,7 @@ const MOETModule2Section3_4 = () => {
                     <p className="text-sm font-medium text-amber-400 mb-1">
                       Dynamic (Rheostatic) Braking
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       The armature is disconnected from the supply and connected across a braking
                       resistor. The motor generates current through the resistor, converting kinetic
                       energy to heat. Energy is wasted but the method is simple and effective.
@@ -643,7 +643,7 @@ const MOETModule2Section3_4 = () => {
                     <p className="text-sm font-medium text-red-400 mb-1">
                       Plugging (Counter-Current Braking)
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       The armature supply is reversed while the motor is still running, applying
                       torque in the opposite direction. Very high braking torque but extremely high
                       armature current (supply voltage + back-EMF across the armature resistance). A
@@ -680,11 +680,11 @@ const MOETModule2Section3_4 = () => {
                 <table className="w-full text-sm text-left">
                   <thead>
                     <tr className="border-b border-white/10">
-                      <th className="py-2 pr-4 text-white/70 font-medium">Condition</th>
-                      <th className="py-2 text-white/70 font-medium">Interpretation</th>
+                      <th className="py-2 pr-4 text-white font-medium">Condition</th>
+                      <th className="py-2 text-white font-medium">Interpretation</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/90 text-xs">
+                  <tbody className="text-white text-xs">
                     <tr className="border-b border-white/5">
                       <td className="py-2 pr-4 text-green-400">Dark brown, even polish</td>
                       <td className="py-2">Healthy patina — good commutation</td>
@@ -724,7 +724,7 @@ const MOETModule2Section3_4 = () => {
               <div className="space-y-3">
                 <div className="bg-black/30 p-3 rounded">
                   <p className="text-sm font-medium text-blue-400 mb-1">Undercutting</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Removing mica insulation to 1-1.5mm below the copper surface using a
                     purpose-made undercutting tool or small circular saw. Must produce a clean,
                     square-bottomed slot with no burrs or copper drag. Deburr segment edges after
@@ -733,7 +733,7 @@ const MOETModule2Section3_4 = () => {
                 </div>
                 <div className="bg-black/30 p-3 rounded">
                   <p className="text-sm font-medium text-blue-400 mb-1">Skimming (Turning)</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Machining the commutator surface in a lathe to restore a true cylindrical
                     surface when it becomes oval, eccentric, or has flat spots. Minimum diameter
                     must not be exceeded. Follow with undercutting and deburring. Run with old
@@ -742,7 +742,7 @@ const MOETModule2Section3_4 = () => {
                 </div>
                 <div className="bg-black/30 p-3 rounded">
                   <p className="text-sm font-medium text-blue-400 mb-1">Cleaning</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Remove carbon dust and brush debris with a vacuum cleaner (not compressed air,
                     which drives dust into insulation). Clean commutator surface with a lint-free
                     cloth dampened with approved solvent. Never use emery cloth — use only fine
@@ -787,7 +787,7 @@ const MOETModule2Section3_4 = () => {
               <p className="text-sm font-medium text-elec-yellow mb-2">
                 ST1426 Maintenance Competency
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 The Level 3 apprenticeship standard requires you to carry out inspection and
                 maintenance of DC machines, including commutator assessment, brush replacement,
                 insulation testing, and fault diagnosis. You should be able to identify the causes
@@ -809,7 +809,7 @@ const MOETModule2Section3_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -828,7 +828,7 @@ const MOETModule2Section3_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module2-section3-3">

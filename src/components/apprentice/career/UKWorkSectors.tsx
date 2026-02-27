@@ -32,7 +32,7 @@ const UKWorkSectors = () => {
             </div>
             UK Electrical Work Sectors
           </CardTitle>
-          <p className="text-sm sm:text-base text-white/80">
+          <p className="text-sm sm:text-base text-white">
             Comprehensive overview of electrical work sectors in the UK, including pay rates, growth
             prospects, and career opportunities
           </p>

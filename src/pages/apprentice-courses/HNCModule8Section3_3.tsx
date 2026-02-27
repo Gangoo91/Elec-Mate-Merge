@@ -565,7 +565,7 @@ const FAQAccordion: React.FC<FAQAccordionProps> = ({ faqs }) => {
           <AccordionTrigger className="text-left text-white hover:text-elec-yellow hover:no-underline py-4">
             <span className="text-sm sm:text-base font-medium pr-4">{faq.question}</span>
           </AccordionTrigger>
-          <AccordionContent className="text-white/80 text-sm leading-relaxed pb-4">
+          <AccordionContent className="text-white text-sm leading-relaxed pb-4">
             {faq.answer}
           </AccordionContent>
         </AccordionItem>
@@ -585,7 +585,7 @@ const HNCModule8Section3_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section3">
@@ -607,7 +607,7 @@ const HNCModule8Section3_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Chilled Water Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Chillers, cooling towers, pumping arrangements and system hydraulics for commercial
             cooling
           </p>
@@ -805,14 +805,14 @@ const HNCModule8Section3_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-semibold text-elec-yellow mb-1">Range</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Temperature difference between entering and leaving water. Typically 5-6K for
                     HVAC applications.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-semibold text-elec-yellow mb-1">Approach</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Difference between leaving water and ambient wet bulb. Typically 3-5K - lower
                     approach = larger tower.
                   </p>
@@ -884,7 +884,7 @@ const HNCModule8Section3_3 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-400/30">
               <p className="text-sm font-medium text-red-300 mb-2">Legionella Risk Management</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Cooling towers create ideal conditions for Legionella growth (warm, aerated water
                 with nutrients from airborne contamination). Compliance with L8 ACOP and HSG274 Part
                 1 is mandatory, requiring written risk assessments, competent water treatment,
@@ -1064,10 +1064,10 @@ const HNCModule8Section3_3 = () => {
               <p className="font-mono text-center text-lg mb-2 text-white">
                 Q = Cooling Load / (4.2 x ΔT x 1000)
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where Q is flow rate in l/s, cooling load in kW, ΔT in K (typically 6K)
               </p>
-              <div className="mt-4 bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="mt-4 bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Example: 500kW cooling load</p>
                 <p>Q = 500 / (4.2 x 6 x 1000) = 500 / 25,200 = 0.0198 m³/s</p>
                 <p>Q = 19.8 l/s or 71.4 m³/h</p>
@@ -1207,7 +1207,7 @@ const HNCModule8Section3_3 = () => {
                 the annual energy consumption of air-cooled (COP 3.0) vs water-cooled (COP 6.0)
                 chillers operating 2500 equivalent full load hours.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Air-cooled annual energy:</p>
                 <p>E = Load / COP x Hours = 800 / 3.0 x 2500 = 666,667 kWh</p>
                 <p className="mt-2">Water-cooled annual energy:</p>
@@ -1227,14 +1227,14 @@ const HNCModule8Section3_3 = () => {
                 <strong>Question:</strong> Calculate the chilled water flow rate for a 350kW AHU
                 coil with 6/12°C chilled water.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Q = Cooling Load / (cp x ΔT x ρ)</p>
                 <p>Q = 350 / (4.2 x 6 x 1000)</p>
                 <p>
                   Q = 350 / 25,200 = <strong>0.0139 m³/s = 13.9 l/s</strong>
                 </p>
                 <p className="mt-2">Or: Q = 50 m³/h</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → Select DN80 pipe (capacity ~14 l/s at 200 Pa/m)
                 </p>
               </div>
@@ -1249,14 +1249,14 @@ const HNCModule8Section3_3 = () => {
                 Pa/m, plus chiller (45 kPa), AHU coil (25 kPa) and control valve (15 kPa). Calculate
                 pump head.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Pipe losses = 150m x 250 Pa/m = 37,500 Pa = 37.5 kPa</p>
                 <p>Equipment losses = 45 + 25 + 15 = 85 kPa</p>
                 <p className="mt-2">Total = 37.5 + 85 = 122.5 kPa</p>
                 <p className="mt-2">
                   Head in metres = 122.5 / 9.81 = <strong>12.5 m</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → Select pump for 13.9 l/s at 12.5 m head + margin
                 </p>
               </div>
@@ -1390,7 +1390,7 @@ const HNCModule8Section3_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section3">

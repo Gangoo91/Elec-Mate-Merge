@@ -185,7 +185,7 @@ export default function AsbestosModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-3">
@@ -210,7 +210,7 @@ export default function AsbestosModule3Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Common ACMs &mdash; Boards &amp; Sheets
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding Asbestos Insulating Board (AIB) and Asbestos Cement (AC) &mdash; the two
             most common board and sheet ACMs found in UK buildings, how to tell them apart, and what
             to do when you encounter them
@@ -323,14 +323,14 @@ export default function AsbestosModule3Section1() {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-lg font-bold text-orange-400">AIB</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       High asbestos content &middot; Friable &middot; High risk &middot; Licensed
                       removal
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-lg font-bold text-orange-400">AC</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Lower asbestos content &middot; Non-friable when intact &middot; Medium risk
                       &middot; Lower-level controls
                     </p>
@@ -343,7 +343,7 @@ export default function AsbestosModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Reminder</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   You <strong className="text-white">cannot</strong> confirm whether a material is
                   AIB, AC, or non-asbestos by visual inspection alone. The only definitive method is{' '}
                   <strong className="text-white">laboratory analysis</strong>. When in doubt, always
@@ -372,7 +372,7 @@ export default function AsbestosModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Physical Properties</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -422,7 +422,7 @@ export default function AsbestosModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Common Locations</p>
-                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Ceiling tiles</span>
@@ -463,7 +463,7 @@ export default function AsbestosModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Licensed Removal Required</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Due to its high asbestos content and friable nature, AIB requires{' '}
                   <strong className="text-white">
                     licensed removal by an HSE-licensed asbestos removal contractor
@@ -499,37 +499,37 @@ export default function AsbestosModule3Section1() {
               <div className="bg-orange-500/10 border-b border-orange-500/30 px-4 py-3 text-center">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-300 to-gray-500 border-2 border-gray-400/40 mx-auto mb-2" />
                 <p className="text-sm font-bold text-orange-400">Asbestos Insulating Board (AIB)</p>
-                <p className="text-xs text-white/60">High-Risk Board Product</p>
+                <p className="text-xs text-white">High-Risk Board Product</p>
               </div>
-              <div className="px-4 py-3 space-y-2 text-xs text-white/80">
+              <div className="px-4 py-3 space-y-2 text-xs text-white">
                 <div className="flex justify-between">
-                  <span className="text-white/50">Colour indicator</span>
+                  <span className="text-white">Colour indicator</span>
                   <span className="text-white font-medium">Light grey</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/50">Asbestos content</span>
+                  <span className="text-white">Asbestos content</span>
                   <span className="text-white font-medium">25&ndash;40%</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/50">Common asbestos type</span>
+                  <span className="text-white">Common asbestos type</span>
                   <span className="text-white font-medium">Amosite, chrysotile</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/50">Texture</span>
+                  <span className="text-white">Texture</span>
                   <span className="text-white font-medium">Soft, can be indented</span>
                 </div>
                 <hr className="border-white/10" />
                 <div className="flex justify-between">
-                  <span className="text-white/50">Friability</span>
+                  <span className="text-white">Friability</span>
                   <span className="text-red-400 font-bold">HIGH &mdash; crumbles easily</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/50">Density</span>
+                  <span className="text-white">Density</span>
                   <span className="text-white font-medium">Low (~700&ndash;1,000 kg/m&sup3;)</span>
                 </div>
                 <hr className="border-white/10" />
                 <div>
-                  <span className="text-white/50">Typical locations</span>
+                  <span className="text-white">Typical locations</span>
                   <p className="text-white mt-1">
                     Ceiling tiles, partitions, fire doors, soffits, column casings, heater cupboard
                     linings
@@ -537,18 +537,18 @@ export default function AsbestosModule3Section1() {
                 </div>
                 <hr className="border-white/10" />
                 <div className="flex justify-between items-center">
-                  <span className="text-white/50">Risk level</span>
+                  <span className="text-white">Risk level</span>
                   <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-500/20 border border-red-400/30 text-red-400 font-bold text-[11px]">
                     HIGH
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/50">Removal</span>
+                  <span className="text-white">Removal</span>
                   <span className="text-red-300 font-medium">LICENSED contractor required</span>
                 </div>
                 <hr className="border-white/10" />
                 <div>
-                  <span className="text-white/50">Visual clue</span>
+                  <span className="text-white">Visual clue</span>
                   <p className="text-white mt-1">
                     Smooth or slightly textured surface, lightweight for its size
                   </p>
@@ -561,59 +561,59 @@ export default function AsbestosModule3Section1() {
               <div className="bg-orange-500/10 border-b border-orange-500/30 px-4 py-3 text-center">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-500 to-gray-700 border-2 border-gray-500/40 mx-auto mb-2" />
                 <p className="text-sm font-bold text-orange-400">Asbestos Cement (AC)</p>
-                <p className="text-xs text-white/60">Medium-Risk Cement Product</p>
+                <p className="text-xs text-white">Medium-Risk Cement Product</p>
               </div>
-              <div className="px-4 py-3 space-y-2 text-xs text-white/80">
+              <div className="px-4 py-3 space-y-2 text-xs text-white">
                 <div className="flex justify-between">
-                  <span className="text-white/50">Colour indicator</span>
+                  <span className="text-white">Colour indicator</span>
                   <span className="text-white font-medium">Dark grey</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/50">Asbestos content</span>
+                  <span className="text-white">Asbestos content</span>
                   <span className="text-white font-medium">10&ndash;15%</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/50">Common asbestos type</span>
+                  <span className="text-white">Common asbestos type</span>
                   <span className="text-white font-medium">Chrysotile</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/50">Texture</span>
+                  <span className="text-white">Texture</span>
                   <span className="text-white font-medium">Hard, cannot be indented</span>
                 </div>
                 <hr className="border-white/10" />
                 <div className="flex justify-between">
-                  <span className="text-white/50">Friability</span>
+                  <span className="text-white">Friability</span>
                   <span className="text-amber-400 font-bold">LOW when intact</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/50">Density</span>
+                  <span className="text-white">Density</span>
                   <span className="text-white font-medium">
                     High (~1,500&ndash;2,000 kg/m&sup3;)
                   </span>
                 </div>
                 <hr className="border-white/10" />
                 <div>
-                  <span className="text-white/50">Typical locations</span>
+                  <span className="text-white">Typical locations</span>
                   <p className="text-white mt-1">
                     Roof sheets, wall cladding, gutters, downpipes, flue pipes, water tanks
                   </p>
                 </div>
                 <hr className="border-white/10" />
                 <div className="flex justify-between items-center">
-                  <span className="text-white/50">Risk level</span>
+                  <span className="text-white">Risk level</span>
                   <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-400 font-bold text-[11px]">
                     MEDIUM
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/50">Removal</span>
+                  <span className="text-white">Removal</span>
                   <span className="text-amber-300 font-medium">
                     Non-licensed if intact, NNLW if power tools
                   </span>
                 </div>
                 <hr className="border-white/10" />
                 <div>
-                  <span className="text-white/50">Visual clue</span>
+                  <span className="text-white">Visual clue</span>
                   <p className="text-white mt-1">Hard, heavy, cement-like appearance</p>
                 </div>
               </div>
@@ -640,7 +640,7 @@ export default function AsbestosModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Physical Properties</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -683,7 +683,7 @@ export default function AsbestosModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Common Locations</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -731,7 +731,7 @@ export default function AsbestosModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Power Tools = NNLW</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Power tool work on asbestos cement (drilling, cutting, grinding) is classified as{' '}
                   <strong className="text-white">NNLW (notifiable non-licensed work)</strong>. This
                   requires notification to the HSE before work begins, medical surveillance for
@@ -770,7 +770,7 @@ export default function AsbestosModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Physical Comparison</p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[52px] h-7 rounded-full bg-orange-500/20 text-orange-400 text-xs font-bold flex-shrink-0">
                       Touch
@@ -846,7 +846,7 @@ export default function AsbestosModule3Section1() {
                     Visual Identification Is NOT Definitive
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">CRITICAL:</strong> Visual and physical
                   identification is indicative only. It is{' '}
                   <strong className="text-white">not</strong> a substitute for laboratory analysis.
@@ -883,7 +883,7 @@ export default function AsbestosModule3Section1() {
               <div className="space-y-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Millboard</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Thin asbestos board, typically 1&ndash;6 mm thick</span>
@@ -903,7 +903,7 @@ export default function AsbestosModule3Section1() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Asbestos Paper</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Very thin sheets of asbestos, sometimes backed with foil</span>
@@ -925,7 +925,7 @@ export default function AsbestosModule3Section1() {
                   <p className="text-sm font-medium text-white mb-2">
                     Packing &amp; Jointing Materials
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -947,7 +947,7 @@ export default function AsbestosModule3Section1() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Rope &amp; String</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -997,7 +997,7 @@ export default function AsbestosModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Emergency Procedure</p>
-                <ol className="text-sm text-white/80 space-y-3">
+                <ol className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 w-6 h-6 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center flex-shrink-0 text-xs font-bold text-red-400">
                       1
@@ -1071,7 +1071,7 @@ export default function AsbestosModule3Section1() {
                     If You Have Already Disturbed the Material
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If you have already drilled into, cut, broken, or otherwise disturbed a suspected
                   ACM before realising what it might be, follow the{' '}
                   <strong className="text-white">4-S emergency procedure</strong> (covered in detail
@@ -1106,7 +1106,7 @@ export default function AsbestosModule3Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1120,7 +1120,7 @@ export default function AsbestosModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-2-section-4">

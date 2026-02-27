@@ -242,7 +242,7 @@ const HNCModule1Section2_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section2">
@@ -264,7 +264,7 @@ const HNCModule1Section2_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Dynamic Risk Assessment
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Real-time hazard identification and management in changing workplace conditions
           </p>
         </header>
@@ -838,7 +838,7 @@ const HNCModule1Section2_6 = () => {
                 be isolated per the permit to work. Upon opening the panel and testing, you find the
                 busbar is still live.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p>
                   <strong>STOP:</strong> Close the panel immediately. Move away from the equipment.
                 </p>
@@ -868,7 +868,7 @@ const HNCModule1Section2_6 = () => {
                 <strong>Situation:</strong> While installing containment in a functioning office
                 building, the fire alarm activates. You are on a mobile tower working at height.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p>
                   <strong>STOP:</strong> Stop work immediately. Do not assume it is a false alarm or
                   drill.
@@ -901,7 +901,7 @@ const HNCModule1Section2_6 = () => {
                 material that appears to be asbestos insulation board around old pipework. This was
                 not identified in the refurbishment survey.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p>
                   <strong>STOP:</strong> Stop work immediately. Do not disturb the material further.
                 </p>
@@ -934,7 +934,7 @@ const HNCModule1Section2_6 = () => {
                 mechanical contractor begins hot works (welding) in the same plantroom. This was not
                 coordinated in the site meeting.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p>
                   <strong>STOP:</strong> Pause your testing. Do not assume the hot works permit
                   covers your presence.
@@ -1056,7 +1056,7 @@ const HNCModule1Section2_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1102,7 +1102,7 @@ const HNCModule1Section2_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section2-5">

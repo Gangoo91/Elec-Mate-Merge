@@ -62,7 +62,7 @@ const AITooling = () => {
           </div>
           <div>
             <h1 className="text-xl font-bold text-white">AI Tooling Suite</h1>
-            <p className="text-sm text-white/70">Smart analysis tools for UK electricians</p>
+            <p className="text-sm text-white">Smart analysis tools for UK electricians</p>
           </div>
         </motion.div>
 
@@ -104,14 +104,14 @@ const AITooling = () => {
                             {/* Title */}
                             <h3 className="text-[15px] font-bold text-white">{tool.label}</h3>
                             {/* Description */}
-                            <p className="text-[13px] text-white/70 line-clamp-1">
+                            <p className="text-[13px] text-white line-clamp-1">
                               {tool.description}
                             </p>
                           </div>
 
                           {/* Arrow indicator */}
                           <div className="flex-shrink-0 w-9 h-9 rounded-full bg-white/[0.08] flex items-center justify-center group-active:bg-white/[0.12] transition-colors">
-                            <ArrowRight className="h-4 w-4 text-white/70" />
+                            <ArrowRight className="h-4 w-4 text-white" />
                           </div>
                         </div>
                       </div>

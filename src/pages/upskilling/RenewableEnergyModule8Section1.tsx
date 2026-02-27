@@ -259,7 +259,7 @@ const RenewableEnergyModule8Section1 = () => {
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
           MCS Requirements and Certification Pathways
         </h1>
-        <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+        <p className="text-white text-sm sm:text-base max-w-xl mx-auto">
           The Microgeneration Certification Scheme - your pathway to certified renewable energy
           installation
         </p>
@@ -308,7 +308,7 @@ const RenewableEnergyModule8Section1 = () => {
           ].map((outcome, index) => (
             <div key={index} className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
-              <span className="text-white/80 text-sm">{outcome}</span>
+              <span className="text-white text-sm">{outcome}</span>
             </div>
           ))}
         </div>
@@ -321,7 +321,7 @@ const RenewableEnergyModule8Section1 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">01</span>
             <h2 className="text-xl font-semibold text-white">Understanding MCS</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               The Microgeneration Certification Scheme (MCS) is an industry-led quality assurance
               scheme that certifies both microgeneration products and the competence of installers.
@@ -358,7 +358,7 @@ const RenewableEnergyModule8Section1 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">02</span>
             <h2 className="text-xl font-semibold text-white">Technologies Covered</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               MCS covers a comprehensive range of microgeneration technologies, each with specific
               installation standards (MIS documents) that define requirements for design,
@@ -403,7 +403,7 @@ const RenewableEnergyModule8Section1 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">03</span>
             <h2 className="text-xl font-semibold text-white">Certification Bodies and Process</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               MCS certification is delivered through UKAS-accredited certification bodies. These
               include well-known organisations such as NICEIC, NAPIT, HIES, and others who are
@@ -445,7 +445,7 @@ const RenewableEnergyModule8Section1 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">04</span>
             <h2 className="text-xl font-semibold text-white">Training Requirements</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               MCS requires installers to complete technology-specific training from approved
               training providers before certification. This training ensures you understand the
@@ -491,7 +491,7 @@ const RenewableEnergyModule8Section1 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">05</span>
             <h2 className="text-xl font-semibold text-white">Maintaining Certification</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               MCS certification is not a one-time achievement but requires ongoing commitment to
               quality and professional development. Certification bodies conduct regular
@@ -535,7 +535,7 @@ const RenewableEnergyModule8Section1 = () => {
             <Zap className="w-4 h-4 text-elec-yellow" />
             Practical Guidance
           </h3>
-          <div className="space-y-2 text-white/80 text-sm">
+          <div className="space-y-2 text-white text-sm">
             <p>
               <span className="text-white font-medium">Start with one technology:</span> Rather than
               attempting multiple certifications simultaneously, focus on achieving competence and
@@ -564,7 +564,7 @@ const RenewableEnergyModule8Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <h3 className="text-white font-medium mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>

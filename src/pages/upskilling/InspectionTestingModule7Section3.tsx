@@ -229,7 +229,7 @@ const InspectionTestingModule7Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-7">
@@ -251,7 +251,7 @@ const InspectionTestingModule7Section3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Three-Phase Rotation Testing
           </h1>
-          <p className="text-white/80">Verify correct phase sequence for motors and equipment</p>
+          <p className="text-white">Verify correct phase sequence for motors and equipment</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -330,15 +330,15 @@ const InspectionTestingModule7Section3 = () => {
                 <p className="text-sm font-medium text-green-400 mb-2">
                   Clockwise (Positive) - CORRECT
                 </p>
-                <p className="text-sm text-white/90">L1 then L2 then L3 then L1...</p>
-                <p className="text-xs text-white/60 mt-1">Standard UK sequence</p>
+                <p className="text-sm text-white">L1 then L2 then L3 then L1...</p>
+                <p className="text-xs text-white mt-1">Standard UK sequence</p>
               </div>
               <div>
                 <p className="text-sm font-medium text-red-400 mb-2">
                   Anti-clockwise (Negative) - REVERSED
                 </p>
-                <p className="text-sm text-white/90">L1 then L3 then L2 then L1...</p>
-                <p className="text-xs text-white/60 mt-1">Two phases have been swapped</p>
+                <p className="text-sm text-white">L1 then L3 then L2 then L1...</p>
+                <p className="text-xs text-white mt-1">Two phases have been swapped</p>
               </div>
             </div>
 
@@ -402,31 +402,31 @@ const InspectionTestingModule7Section3 = () => {
               <div className="grid grid-cols-1 gap-3 text-sm">
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Step 1</p>
-                  <p className="text-white/90 text-xs">
+                  <p className="text-white text-xs">
                     Verify tester is rated for system voltage (400V+)
                   </p>
                 </div>
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Step 2</p>
-                  <p className="text-white/90 text-xs">
+                  <p className="text-white text-xs">
                     Prove tester functional using proving unit
                   </p>
                 </div>
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Step 3</p>
-                  <p className="text-white/90 text-xs">
+                  <p className="text-white text-xs">
                     Connect L1, L2, L3 leads to corresponding phases
                   </p>
                 </div>
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Step 4</p>
-                  <p className="text-white/90 text-xs">
+                  <p className="text-white text-xs">
                     Read indication (clockwise/anti-clockwise or +/-)
                   </p>
                 </div>
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Step 5</p>
-                  <p className="text-white/90 text-xs">Re-prove tester after use</p>
+                  <p className="text-white text-xs">Re-prove tester after use</p>
                 </div>
               </div>
             </div>
@@ -453,12 +453,12 @@ const InspectionTestingModule7Section3 = () => {
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-red-400 mb-2">Before (Wrong)</p>
-                <p className="text-sm font-mono text-white/90">L1 - L3 - L2 (anti-clockwise)</p>
+                <p className="text-sm font-mono text-white">L1 - L3 - L2 (anti-clockwise)</p>
               </div>
               <div>
                 <p className="text-sm font-medium text-green-400 mb-2">After (Correct)</p>
-                <p className="text-sm font-mono text-white/90">L1 - L2 - L3 (clockwise)</p>
-                <p className="text-xs text-white/60 mt-1">Swapped L2 and L3</p>
+                <p className="text-sm font-mono text-white">L1 - L2 - L3 (clockwise)</p>
+                <p className="text-xs text-white mt-1">Swapped L2 and L3</p>
               </div>
             </div>
 
@@ -486,28 +486,28 @@ const InspectionTestingModule7Section3 = () => {
                 <div className="w-12 h-12 rounded-lg bg-amber-700 border-2 border-white/20" />
                 <div>
                   <span className="text-white font-semibold">BROWN - L1</span>
-                  <p className="text-white/60 text-sm">Phase 1 (was Red)</p>
+                  <p className="text-white text-sm">Phase 1 (was Red)</p>
                 </div>
               </div>
               <div className="flex items-center gap-4 p-3 bg-white/5 rounded-xl">
                 <div className="w-12 h-12 rounded-lg bg-gray-900 border-2 border-white/20" />
                 <div>
                   <span className="text-white font-semibold">BLACK - L2</span>
-                  <p className="text-white/60 text-sm">Phase 2 (was Yellow)</p>
+                  <p className="text-white text-sm">Phase 2 (was Yellow)</p>
                 </div>
               </div>
               <div className="flex items-center gap-4 p-3 bg-white/5 rounded-xl">
                 <div className="w-12 h-12 rounded-lg bg-gray-500 border-2 border-white/20" />
                 <div>
                   <span className="text-white font-semibold">GREY - L3</span>
-                  <p className="text-white/60 text-sm">Phase 3 (was Blue)</p>
+                  <p className="text-white text-sm">Phase 3 (was Blue)</p>
                 </div>
               </div>
               <div className="flex items-center gap-4 p-3 bg-white/5 rounded-xl">
                 <div className="w-12 h-12 rounded-lg bg-blue-600 border-2 border-white/20" />
                 <div>
                   <span className="text-white font-semibold">BLUE - N</span>
-                  <p className="text-white/60 text-sm">Neutral (was Black)</p>
+                  <p className="text-white text-sm">Neutral (was Black)</p>
                 </div>
               </div>
             </div>
@@ -604,7 +604,7 @@ const InspectionTestingModule7Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -652,7 +652,7 @@ const InspectionTestingModule7Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-7/section-2">

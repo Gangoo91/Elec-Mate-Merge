@@ -187,12 +187,12 @@ const AM2Module6Section4 = () => {
 
       {/* Critical Warning */}
       <AM2CriticalWarning title="CRITICAL: Exam Technique is Everything">
-        <p className="text-ios-callout text-white/80 mb-2">
+        <p className="text-ios-callout text-white mb-2">
           Many candidates fail the AM2 knowledge test not due to lack of knowledge, but poor exam
           technique. Misreading questions, panicking under pressure, and second-guessing yourself
           are guaranteed routes to failure.
         </p>
-        <p className="text-ios-callout text-white/90 font-medium">
+        <p className="text-ios-callout text-white font-medium">
           Master these techniques and your mindset. Knowledge + exam discipline = pass.
         </p>
       </AM2CriticalWarning>
@@ -210,9 +210,9 @@ const AM2Module6Section4 = () => {
         </h2>
 
         <div className="space-y-4 text-sm sm:text-base leading-relaxed">
-          <p className="text-white/80">Many fails come from misreading. Always:</p>
+          <p className="text-white">Many fails come from misreading. Always:</p>
 
-          <ul className="space-y-2 ml-4 text-white/80">
+          <ul className="space-y-2 ml-4 text-white">
             <li>
               - <strong className="text-white">Look for keywords:</strong> "minimum", "maximum",
               "must", "should"
@@ -233,7 +233,7 @@ const AM2Module6Section4 = () => {
           <div className="grid md:grid-cols-2 gap-4">
             <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
               <h4 className="font-semibold text-white mb-2">Key Words to Watch For:</h4>
-              <ul className="space-y-1 text-xs sm:text-sm text-white/80">
+              <ul className="space-y-1 text-xs sm:text-sm text-white">
                 <li>
                   - <strong className="text-white">"Minimum"</strong> vs{' '}
                   <strong className="text-white">"Maximum"</strong> (most common trap)
@@ -258,7 +258,7 @@ const AM2Module6Section4 = () => {
             </div>
             <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
               <h4 className="font-semibold text-white mb-2">Active Reading Technique:</h4>
-              <ul className="space-y-1 text-xs sm:text-sm text-white/80">
+              <ul className="space-y-1 text-xs sm:text-sm text-white">
                 <li>- Read question twice before looking at options</li>
                 <li>- Circle or highlight key words</li>
                 <li>- Rephrase question in your own words</li>
@@ -286,7 +286,7 @@ const AM2Module6Section4 = () => {
         </h2>
 
         <div className="space-y-4 text-sm sm:text-base leading-relaxed">
-          <ul className="space-y-2 ml-4 text-white/80">
+          <ul className="space-y-2 ml-4 text-white">
             <li>
               - <strong className="text-white">Cross out the obviously wrong answers first</strong>
             </li>
@@ -306,19 +306,19 @@ const AM2Module6Section4 = () => {
           <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
             <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
               <h4 className="font-semibold text-white mb-2 text-sm">Step 1: Obvious Wrong</h4>
-              <p className="text-xs text-white/80">
+              <p className="text-xs text-white">
                 Cross out answers that are clearly impossible or irrelevant to the question context.
               </p>
             </div>
             <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
               <h4 className="font-semibold text-white mb-2 text-sm">Step 2: Context Check</h4>
-              <p className="text-xs text-white/80">
+              <p className="text-xs text-white">
                 Eliminate answers that don't fit the scenario (e.g., domestic vs industrial).
               </p>
             </div>
             <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
               <h4 className="font-semibold text-white mb-2 text-sm">Step 3: Best Fit</h4>
-              <p className="text-xs text-white/80">
+              <p className="text-xs text-white">
                 Choose the most complete and accurate answer from remaining options.
               </p>
             </div>
@@ -355,7 +355,7 @@ const AM2Module6Section4 = () => {
         </h2>
 
         <div className="space-y-4 text-sm sm:text-base leading-relaxed">
-          <ul className="space-y-2 ml-4 text-white/80">
+          <ul className="space-y-2 ml-4 text-white">
             <li>
               - <strong className="text-white">Mixing units:</strong> confusing kW and W, or ms and
               s
@@ -392,7 +392,7 @@ const AM2Module6Section4 = () => {
         </h2>
 
         <div className="space-y-4 text-sm sm:text-base leading-relaxed">
-          <ul className="space-y-2 ml-4 text-white/80">
+          <ul className="space-y-2 ml-4 text-white">
             <li>
               - <strong className="text-white">If you hit a hard question,</strong> breathe and move
               on
@@ -417,7 +417,7 @@ const AM2Module6Section4 = () => {
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <h4 className="font-semibold text-white mb-3">When You Feel Overwhelmed:</h4>
-              <ul className="space-y-2 ml-4 text-white/80">
+              <ul className="space-y-2 ml-4 text-white">
                 <li>
                   - <strong className="text-white">Take 3 deep breaths</strong> - reset your nervous
                   system
@@ -441,7 +441,7 @@ const AM2Module6Section4 = () => {
             </div>
             <div>
               <h4 className="font-semibold text-white mb-3">Physical Stress Response:</h4>
-              <ul className="space-y-2 ml-4 text-white/80">
+              <ul className="space-y-2 ml-4 text-white">
                 <li>
                   - <strong className="text-white">Tight shoulders?</strong> Roll them back 3 times
                 </li>
@@ -473,7 +473,7 @@ const AM2Module6Section4 = () => {
         </h2>
 
         <div className="space-y-4 text-sm sm:text-base leading-relaxed">
-          <ul className="space-y-2 ml-4 text-white/80">
+          <ul className="space-y-2 ml-4 text-white">
             <li>
               - <strong className="text-white">Always answer every question</strong> - no penalties
               for wrong answers
@@ -496,25 +496,25 @@ const AM2Module6Section4 = () => {
           <div className="grid md:grid-cols-4 gap-4">
             <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
               <h4 className="font-semibold text-white mb-2 text-sm">F - Flag</h4>
-              <p className="text-xs text-white/80">
+              <p className="text-xs text-white">
                 Mark difficult questions for later review instead of getting stuck.
               </p>
             </div>
             <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
               <h4 className="font-semibold text-white mb-2 text-sm">A - Answer</h4>
-              <p className="text-xs text-white/80">
+              <p className="text-xs text-white">
                 Give your best guess using elimination - never leave blank.
               </p>
             </div>
             <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
               <h4 className="font-semibold text-white mb-2 text-sm">S - Skip</h4>
-              <p className="text-xs text-white/80">
+              <p className="text-xs text-white">
                 Move on quickly to maintain momentum and confidence.
               </p>
             </div>
             <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
               <h4 className="font-semibold text-white mb-2 text-sm">T - Time</h4>
-              <p className="text-xs text-white/80">
+              <p className="text-xs text-white">
                 Return with remaining time for fresh perspective.
               </p>
             </div>
@@ -553,7 +553,7 @@ const AM2Module6Section4 = () => {
           Practical Guidance
         </h2>
 
-        <ul className="space-y-2 text-sm text-white/80">
+        <ul className="space-y-2 text-sm text-white">
           <li>
             - <strong className="text-white">Practice active reading.</strong> Say the question to
             yourself in your own words
@@ -585,28 +585,28 @@ const AM2Module6Section4 = () => {
 
         <div className="space-y-4">
           <div className="p-4 bg-red-950/20 rounded-lg border border-red-800/30">
-            <p className="text-white/80">
+            <p className="text-white">
               <strong className="text-red-200">Example 1:</strong> Candidate misread "maximum" as
               "minimum" in a regs question. Gave opposite answer - lost easy marks.
             </p>
           </div>
 
           <div className="p-4 bg-green-950/20 rounded-lg border border-green-800/30">
-            <p className="text-white/80">
+            <p className="text-white">
               <strong className="text-green-200">Example 2:</strong> Candidate flagged 4 questions,
               came back fresh, and answered 3 correctly - passed comfortably.
             </p>
           </div>
 
           <div className="p-4 bg-red-950/20 rounded-lg border border-red-800/30">
-            <p className="text-white/80">
+            <p className="text-white">
               <strong className="text-red-200">Example 3:</strong> Candidate panicked, rushed, and
               changed 6 answers - original choices were correct.
             </p>
           </div>
 
           <div className="p-4 bg-amber-950/20 rounded-lg border border-amber-800/30">
-            <p className="text-white/80">
+            <p className="text-white">
               <strong className="text-amber-200">Example 4:</strong> In real work, an electrician
               confused kW with W when calculating load. Same error in AM2 = wrong answer.
             </p>
@@ -625,7 +625,7 @@ const AM2Module6Section4 = () => {
             <p className="font-semibold text-white mb-1">
               Q1: Should I always change my first answer if I feel unsure?
             </p>
-            <p className="text-white/80">
+            <p className="text-white">
               A: No - research shows your first instinct is usually right. Change only if you see
               clear evidence.
             </p>
@@ -635,14 +635,14 @@ const AM2Module6Section4 = () => {
             <p className="font-semibold text-white mb-1">
               Q2: How do I handle a maths-heavy question under time pressure?
             </p>
-            <p className="text-white/80">A: Flag it, move on, return later.</p>
+            <p className="text-white">A: Flag it, move on, return later.</p>
           </div>
 
           <div className="border-l-4 border-elec-yellow/50 pl-4">
             <p className="font-semibold text-white mb-1">
               Q3: What's the biggest trap in AM2 questions?
             </p>
-            <p className="text-white/80">
+            <p className="text-white">
               A: Misreading key words like "minimum/maximum" or mixing up units.
             </p>
           </div>
@@ -651,7 +651,7 @@ const AM2Module6Section4 = () => {
             <p className="font-semibold text-white mb-1">
               Q4: How many questions can I afford to get wrong and still pass?
             </p>
-            <p className="text-white/80">
+            <p className="text-white">
               A: Around 12-14 wrong (if 40 questions total), depending on pass mark.
             </p>
           </div>
@@ -660,7 +660,7 @@ const AM2Module6Section4 = () => {
             <p className="font-semibold text-white mb-1">
               Q5: How can I calm nerves before starting?
             </p>
-            <p className="text-white/80">
+            <p className="text-white">
               A: Take deep breaths, remind yourself you've practised, and treat it like a normal
               work task.
             </p>
@@ -675,7 +675,7 @@ const AM2Module6Section4 = () => {
           Summary
         </h2>
 
-        <div className="text-sm text-white/80 space-y-3">
+        <div className="text-sm text-white space-y-3">
           <p>Good exam technique and mindset can add 10-15% to your score. To succeed:</p>
           <ul className="space-y-1 ml-4">
             <li>- Read carefully, watch for key words</li>

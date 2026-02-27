@@ -80,7 +80,7 @@ export function ModuleCard({
                 {number}
               </span>
               {comingSoon && (
-                <Badge className="bg-white/10 text-white/60 border-white/20 text-[10px] px-1.5 py-0 h-4">
+                <Badge className="bg-white/10 text-white border-white/20 text-[10px] px-1.5 py-0 h-4">
                   Coming Soon
                 </Badge>
               )}
@@ -88,7 +88,7 @@ export function ModuleCard({
             <h3
               className={cn(
                 'font-semibold text-sm sm:text-base mb-1.5 leading-tight transition-colors',
-                comingSoon ? 'text-white/50' : 'text-white group-hover:text-blue-100'
+                comingSoon ? 'text-white' : 'text-white group-hover:text-blue-100'
               )}
             >
               {title}
@@ -96,7 +96,7 @@ export function ModuleCard({
             <p
               className={cn(
                 'text-xs sm:text-sm leading-relaxed line-clamp-2',
-                comingSoon ? 'text-white/30' : 'text-white/50'
+                comingSoon ? 'text-white' : 'text-white'
               )}
             >
               {description}
@@ -106,7 +106,7 @@ export function ModuleCard({
           {/* Arrow indicator */}
           {!comingSoon && (
             <div className="p-1.5 rounded-full bg-white/5 group-hover:bg-white/10 transition-colors shrink-0 self-center">
-              <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 text-white/40 group-hover:text-blue-400 transition-colors" />
+              <ChevronRight className="h-4 w-4 sm:h-5 sm:w-5 text-white group-hover:text-blue-400 transition-colors" />
             </div>
           )}
         </div>

@@ -241,7 +241,7 @@ const Level3Module2Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module2-section4">
@@ -382,7 +382,7 @@ const Level3Module2Section4_2 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A new EV with CCS2 inlet can charge at any Type 2 AC charger
               (using the top part of the inlet) and any CCS DC rapid charger (using the full inlet
               including DC pins). This versatility is why CCS has become dominant.
@@ -455,19 +455,19 @@ const Level3Module2Section4_2 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">16A Cable</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Up to 3.7kW (single-phase) or 11kW (three-phase)
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">32A Cable</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Up to 7.4kW (single-phase) or 22kW (three-phase)
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Typical Length</p>
-                <p className="text-white/90 text-xs">5m standard, 7.5m+ for flexibility</p>
+                <p className="text-white text-xs">5m standard, 7.5m+ for flexibility</p>
               </div>
             </div>
 
@@ -561,7 +561,7 @@ const Level3Module2Section4_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -604,7 +604,7 @@ const Level3Module2Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module2-section4-1">

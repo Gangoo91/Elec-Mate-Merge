@@ -272,7 +272,7 @@ const Level3Module6Section1_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section1">
@@ -430,7 +430,7 @@ const Level3Module6Section1_5 = () => {
               rooms need manual control plus auto-off when vacant.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Savings Example:</strong> A 1000m² office with 15 W/m² lighting load operating
               3000 hours/year uses 45,000 kWh annually. Adding presence detection (30% saving) and
               daylight dimming (20% saving) reduces this to approximately 25,000 kWh - saving 20,000
@@ -511,29 +511,29 @@ const Level3Module6Section1_5 = () => {
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Power Factor</p>
-                <p className="text-white/90 text-xs">Target 0.95+ to reduce current and losses</p>
+                <p className="text-white text-xs">Target 0.95+ to reduce current and losses</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Cable Sizing</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Consider economic size for long, loaded circuits
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Transformer Efficiency</p>
-                <p className="text-white/90 text-xs">Specify low-loss designs for 24/7 loads</p>
+                <p className="text-white text-xs">Specify low-loss designs for 24/7 loads</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Voltage Drop</p>
-                <p className="text-white/90 text-xs">Lower voltage drop = lower losses</p>
+                <p className="text-white text-xs">Lower voltage drop = lower losses</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Load Balancing</p>
-                <p className="text-white/90 text-xs">Balance phases to minimise neutral current</p>
+                <p className="text-white text-xs">Balance phases to minimise neutral current</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">VSDs</p>
-                <p className="text-white/90 text-xs">Match motor speed to actual demand</p>
+                <p className="text-white text-xs">Match motor speed to actual demand</p>
               </div>
             </div>
 
@@ -544,7 +544,7 @@ const Level3Module6Section1_5 = () => {
               reactive power charges from electricity suppliers.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Power Factor Example:</strong> A 100kW load at 0.7 power factor draws 143kVA
               (619A at 230V). Correcting to 0.95 power factor reduces apparent power to 105kVA (457A
               at 230V). Cable losses reduce by about 45%, and reactive power charges are eliminated.
@@ -614,7 +614,7 @@ const Level3Module6Section1_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -659,7 +659,7 @@ const Level3Module6Section1_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section1-4">

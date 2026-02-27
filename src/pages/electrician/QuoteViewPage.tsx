@@ -476,7 +476,7 @@ const QuoteViewPage = () => {
           </div>
           <div className="flex-1 min-w-0">
             <h1 className="text-base font-semibold text-white truncate">{quote.quoteNumber}</h1>
-            <p className="text-[11px] text-white/50">{statusInfo?.label}</p>
+            <p className="text-[11px] text-white">{statusInfo?.label}</p>
           </div>
           <div className="text-right">
             <p className="text-lg font-bold text-elec-yellow">{formatCurrency(quote.total)}</p>
@@ -497,7 +497,7 @@ const QuoteViewPage = () => {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-[15px] font-medium text-emerald-400">Quote Accepted</p>
-                <p className="text-[13px] text-white/50">
+                <p className="text-[13px] text-white">
                   {quote.accepted_at && format(new Date(quote.accepted_at), 'dd MMM yyyy')}
                   {quote.accepted_by_name && ` by ${quote.accepted_by_name}`}
                 </p>
@@ -506,7 +506,7 @@ const QuoteViewPage = () => {
             {/* Customer Signature */}
             {quote.signature_url && (
               <div className="px-4 pb-4 pt-2 border-t border-emerald-500/20">
-                <p className="text-[11px] font-medium text-white/40 uppercase tracking-wider mb-2">
+                <p className="text-[11px] font-medium text-white uppercase tracking-wider mb-2">
                   Customer Signature
                 </p>
                 <div className="bg-white rounded-xl p-3 inline-block">
@@ -531,14 +531,14 @@ const QuoteViewPage = () => {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[15px] font-medium text-elec-yellow">Invoice Raised</p>
-              <p className="text-[13px] text-white/50">Invoice #{quote.invoice_number}</p>
+              <p className="text-[13px] text-white">Invoice #{quote.invoice_number}</p>
             </div>
           </motion.div>
         )}
 
         {/* Quick Actions - iOS grouped list style */}
         <motion.div variants={itemVariants}>
-          <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+          <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
             Actions
           </p>
           <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
@@ -556,9 +556,9 @@ const QuoteViewPage = () => {
               </div>
               <div className="flex-1 min-w-0 text-left">
                 <p className="text-[15px] font-medium text-white">Download PDF</p>
-                <p className="text-[13px] text-white/50">Get a copy of this quote</p>
+                <p className="text-[13px] text-white">Get a copy of this quote</p>
               </div>
-              <ChevronRight className="h-4 w-4 text-white/20" />
+              <ChevronRight className="h-4 w-4 text-white" />
             </button>
 
             <div className="flex items-center gap-3 p-3.5 touch-manipulation">
@@ -567,7 +567,7 @@ const QuoteViewPage = () => {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-[15px] font-medium text-white text-left">Send Quote</p>
-                <p className="text-[13px] text-white/50 text-left">Email or WhatsApp</p>
+                <p className="text-[13px] text-white text-left">Email or WhatsApp</p>
               </div>
               <QuoteSendDropdown
                 quote={quote}
@@ -586,9 +586,9 @@ const QuoteViewPage = () => {
               </div>
               <div className="flex-1 min-w-0 text-left">
                 <p className="text-[15px] font-medium text-white">Edit Quote</p>
-                <p className="text-[13px] text-white/50">Make changes</p>
+                <p className="text-[13px] text-white">Make changes</p>
               </div>
-              <ChevronRight className="h-4 w-4 text-white/20" />
+              <ChevronRight className="h-4 w-4 text-white" />
             </button>
 
             <button
@@ -600,9 +600,9 @@ const QuoteViewPage = () => {
               </div>
               <div className="flex-1 min-w-0 text-left">
                 <p className="text-[15px] font-medium text-red-400">Delete Quote</p>
-                <p className="text-[13px] text-white/50">Remove permanently</p>
+                <p className="text-[13px] text-white">Remove permanently</p>
               </div>
-              <ChevronRight className="h-4 w-4 text-white/20" />
+              <ChevronRight className="h-4 w-4 text-white" />
             </button>
           </div>
         </motion.div>
@@ -624,7 +624,7 @@ const QuoteViewPage = () => {
               </div>
               <div className="flex-1 min-w-0 text-left">
                 <p className="text-[15px] font-medium text-emerald-400">Convert to Invoice</p>
-                <p className="text-[13px] text-white/50">Create invoice from this quote</p>
+                <p className="text-[13px] text-white">Create invoice from this quote</p>
               </div>
               <ChevronRight className="h-4 w-4 text-emerald-400/50" />
             </button>
@@ -636,33 +636,33 @@ const QuoteViewPage = () => {
           quote.acceptance_status === 'pending' &&
           emailTracking?.first_sent_at && (
             <motion.div variants={itemVariants}>
-              <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+              <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
                 Email Tracking
               </p>
               <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
                 <div className="grid grid-cols-4 divide-x divide-white/[0.06]">
                   <div className="p-3 text-center">
                     <Send className="h-4 w-4 mx-auto mb-1 text-blue-400" />
-                    <p className="text-[11px] text-white/40">Sent</p>
+                    <p className="text-[11px] text-white">Sent</p>
                     <p className="text-[13px] font-semibold text-white">
                       {format(new Date(emailTracking.first_sent_at), 'd MMM')}
                     </p>
                   </div>
                   <div className="p-3 text-center">
-                    <Eye className="h-4 w-4 mx-auto mb-1 text-white/40" />
-                    <p className="text-[11px] text-white/40">Opens</p>
+                    <Eye className="h-4 w-4 mx-auto mb-1 text-white" />
+                    <p className="text-[11px] text-white">Opens</p>
                     <p
                       className={cn(
                         'text-[13px] font-semibold',
-                        emailTracking.email_opened_at ? 'text-blue-400' : 'text-white/30'
+                        emailTracking.email_opened_at ? 'text-blue-400' : 'text-white'
                       )}
                     >
                       {emailTracking.email_opened_at ? emailTracking.email_open_count || 1 : '—'}
                     </p>
                   </div>
                   <div className="p-3 text-center">
-                    <Bell className="h-4 w-4 mx-auto mb-1 text-white/40" />
-                    <p className="text-[11px] text-white/40">Reminders</p>
+                    <Bell className="h-4 w-4 mx-auto mb-1 text-white" />
+                    <p className="text-[11px] text-white">Reminders</p>
                     <p
                       className={cn(
                         'text-[13px] font-semibold',
@@ -673,8 +673,8 @@ const QuoteViewPage = () => {
                     </p>
                   </div>
                   <div className="p-3 text-center">
-                    <Clock className="h-4 w-4 mx-auto mb-1 text-white/40" />
-                    <p className="text-[11px] text-white/40">Expires</p>
+                    <Clock className="h-4 w-4 mx-auto mb-1 text-white" />
+                    <p className="text-[11px] text-white">Expires</p>
                     <p
                       className={cn(
                         'text-[13px] font-semibold',
@@ -694,7 +694,7 @@ const QuoteViewPage = () => {
                   </div>
                 </div>
                 <div className="px-4 py-3 border-t border-white/[0.06] bg-white/[0.02]">
-                  <p className="text-[12px] text-center text-white/40">
+                  <p className="text-[12px] text-center text-white">
                     {emailTracking.email_opened_at ? (
                       <span className="text-blue-400">
                         Client viewed your quote — awaiting decision
@@ -711,9 +711,9 @@ const QuoteViewPage = () => {
                     className="flex items-center justify-center gap-2 w-full p-3.5 border-t border-white/[0.06] touch-manipulation active:bg-white/[0.04] transition-colors"
                   >
                     {isSendingReminder ? (
-                      <Loader2 className="h-4 w-4 animate-spin text-white/50" />
+                      <Loader2 className="h-4 w-4 animate-spin text-white" />
                     ) : (
-                      <Bell className="h-4 w-4 text-white/50" />
+                      <Bell className="h-4 w-4 text-white" />
                     )}
                     <span className="text-[15px] font-medium text-white">Send Reminder</span>
                   </button>
@@ -724,7 +724,7 @@ const QuoteViewPage = () => {
 
         {/* Client Details */}
         <motion.div variants={itemVariants}>
-          <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+          <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
             Client Details
           </p>
           <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
@@ -736,7 +736,7 @@ const QuoteViewPage = () => {
                 <p className="text-[15px] font-medium text-white">
                   {quote.client?.name || 'No client name'}
                 </p>
-                <p className="text-[13px] text-white/50">Client Name</p>
+                <p className="text-[13px] text-white">Client Name</p>
               </div>
             </div>
             {quote.client?.email && (
@@ -749,9 +749,9 @@ const QuoteViewPage = () => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-[15px] font-medium text-white">{quote.client.email}</p>
-                  <p className="text-[13px] text-white/50">Email</p>
+                  <p className="text-[13px] text-white">Email</p>
                 </div>
-                <ChevronRight className="h-4 w-4 text-white/20" />
+                <ChevronRight className="h-4 w-4 text-white" />
               </a>
             )}
             {quote.client?.phone && (
@@ -764,9 +764,9 @@ const QuoteViewPage = () => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-[15px] font-medium text-white">{quote.client.phone}</p>
-                  <p className="text-[13px] text-white/50">Phone</p>
+                  <p className="text-[13px] text-white">Phone</p>
                 </div>
-                <ChevronRight className="h-4 w-4 text-white/20" />
+                <ChevronRight className="h-4 w-4 text-white" />
               </a>
             )}
             {quote.client?.address && (
@@ -776,7 +776,7 @@ const QuoteViewPage = () => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-[15px] font-medium text-white">{quote.client.address}</p>
-                  <p className="text-[13px] text-white/50">Address</p>
+                  <p className="text-[13px] text-white">Address</p>
                 </div>
               </div>
             )}
@@ -786,7 +786,7 @@ const QuoteViewPage = () => {
         {/* Job Details */}
         {quote.jobDetails?.description && (
           <motion.div variants={itemVariants}>
-            <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+            <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
               Job Details
             </p>
             <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4">
@@ -795,13 +795,13 @@ const QuoteViewPage = () => {
                   {quote.jobDetails.title}
                 </h3>
               )}
-              <p className="text-[14px] text-white/70 whitespace-pre-wrap">
+              <p className="text-[14px] text-white whitespace-pre-wrap">
                 {quote.jobDetails.description}
               </p>
               {quote.jobDetails.location && (
                 <div className="flex items-center gap-2 mt-3 pt-3 border-t border-white/[0.06]">
-                  <MapPin className="h-4 w-4 text-white/40" />
-                  <span className="text-[13px] text-white/50">{quote.jobDetails.location}</span>
+                  <MapPin className="h-4 w-4 text-white" />
+                  <span className="text-[13px] text-white">{quote.jobDetails.location}</span>
                 </div>
               )}
             </div>
@@ -810,7 +810,7 @@ const QuoteViewPage = () => {
 
         {/* Quote Dates */}
         <motion.div variants={itemVariants}>
-          <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+          <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
             Quote Dates
           </p>
           <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
@@ -822,7 +822,7 @@ const QuoteViewPage = () => {
                 <p className="text-[15px] font-medium text-white">
                   {format(new Date(quote.createdAt), 'dd MMM yyyy')}
                 </p>
-                <p className="text-[13px] text-white/50">Created</p>
+                <p className="text-[13px] text-white">Created</p>
               </div>
             </div>
             <div className="flex items-center gap-3 p-3.5">
@@ -843,7 +843,7 @@ const QuoteViewPage = () => {
                 >
                   {format(new Date(quote.expiryDate), 'dd MMM yyyy')}
                 </p>
-                <p className="text-[13px] text-white/50">
+                <p className="text-[13px] text-white">
                   {isExpired
                     ? 'Expired'
                     : daysUntilExpiry !== null && daysUntilExpiry <= 7
@@ -857,7 +857,7 @@ const QuoteViewPage = () => {
 
         {/* Line Items */}
         <motion.div variants={itemVariants}>
-          <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+          <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
             Line Items ({quote.items?.length || 0})
           </p>
           <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
@@ -868,7 +868,7 @@ const QuoteViewPage = () => {
                     <p className="text-[15px] font-medium text-white leading-tight">
                       {item.name || item.description}
                     </p>
-                    <p className="text-[13px] text-white/50 mt-0.5">
+                    <p className="text-[13px] text-white mt-0.5">
                       {item.quantity} × {formatCurrency(item.unitPrice || item.price)}
                     </p>
                   </div>
@@ -885,29 +885,29 @@ const QuoteViewPage = () => {
 
         {/* Quote Summary */}
         <motion.div variants={itemVariants}>
-          <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+          <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
             Summary
           </p>
           <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4 space-y-3">
             <div className="flex justify-between text-[14px]">
-              <span className="text-white/50">Subtotal</span>
+              <span className="text-white">Subtotal</span>
               <span className="text-white">{formatCurrency(quote.subtotal)}</span>
             </div>
             {(quote.overhead ?? 0) > 0 && (
               <div className="flex justify-between text-[14px]">
-                <span className="text-white/50">Overhead</span>
+                <span className="text-white">Overhead</span>
                 <span className="text-white">{formatCurrency(quote.overhead)}</span>
               </div>
             )}
             {(quote.profit ?? 0) > 0 && (
               <div className="flex justify-between text-[14px]">
-                <span className="text-white/50">Profit</span>
+                <span className="text-white">Profit</span>
                 <span className="text-white">{formatCurrency(quote.profit)}</span>
               </div>
             )}
             {(quote.vatAmount ?? 0) > 0 && (
               <div className="flex justify-between text-[14px]">
-                <span className="text-white/50">VAT</span>
+                <span className="text-white">VAT</span>
                 <span className="text-white">{formatCurrency(quote.vatAmount)}</span>
               </div>
             )}
@@ -923,11 +923,11 @@ const QuoteViewPage = () => {
         {/* Notes */}
         {quote.notes && (
           <motion.div variants={itemVariants}>
-            <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+            <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
               Notes
             </p>
             <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] p-4">
-              <p className="text-[14px] text-white/70 whitespace-pre-wrap">{quote.notes}</p>
+              <p className="text-[14px] text-white whitespace-pre-wrap">{quote.notes}</p>
             </div>
           </motion.div>
         )}

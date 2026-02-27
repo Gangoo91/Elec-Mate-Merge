@@ -239,7 +239,7 @@ const HNCModule1Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section2">
@@ -261,7 +261,7 @@ const HNCModule1Section2_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Hazard Identification Methods
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Systematic techniques for identifying workplace hazards in building services
             environments
           </p>
@@ -346,7 +346,7 @@ const HNCModule1Section2_1 = () => {
             <div className="my-6 grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Hazard</p>
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   A hazard is anything with the <strong>potential</strong> to cause harm. This
                   includes:
                 </p>
@@ -360,7 +360,7 @@ const HNCModule1Section2_1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Risk</p>
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   Risk is the <strong>likelihood</strong> of harm occurring combined with its{' '}
                   <strong>severity</strong>:
                 </p>
@@ -376,7 +376,7 @@ const HNCModule1Section2_1 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
               <p className="text-sm font-medium text-orange-300 mb-2">Practical Example</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 <strong>Hazard:</strong> A distribution board with exposed live terminals
                 <br />
                 <strong>Risk assessment considers:</strong> Who has access? Is it locked? How often
@@ -530,7 +530,7 @@ const HNCModule1Section2_1 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Task Analysis Process</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Task analysis systematically examines how work is actually performed to identify
                 hazards inherent in the task itself:
               </p>
@@ -696,11 +696,11 @@ const HNCModule1Section2_1 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Heinrich's Triangle</p>
                 <div className="p-3 rounded bg-white/5 text-center">
-                  <p className="text-xs text-white/70 mb-2">For every:</p>
+                  <p className="text-xs text-white mb-2">For every:</p>
                   <p className="text-lg font-bold text-red-400">1 Serious Injury</p>
-                  <p className="text-xs text-white/70 my-1">there are</p>
+                  <p className="text-xs text-white my-1">there are</p>
                   <p className="text-lg font-bold text-orange-400">29 Minor Injuries</p>
-                  <p className="text-xs text-white/70 my-1">and</p>
+                  <p className="text-xs text-white my-1">and</p>
                   <p className="text-lg font-bold text-yellow-400">300 Near Misses</p>
                 </div>
               </div>
@@ -708,7 +708,7 @@ const HNCModule1Section2_1 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
               <p className="text-sm font-medium text-orange-300 mb-2">Near Miss Importance</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Near misses are 'free lessons' - incidents where harm could have occurred but
                 didn't. They reveal the same hazards and system failures as actual injuries but
                 without the human cost. Organisations with strong near-miss reporting cultures have
@@ -949,7 +949,7 @@ const HNCModule1Section2_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -997,7 +997,7 @@ const HNCModule1Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section2">

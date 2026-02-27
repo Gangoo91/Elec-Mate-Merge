@@ -63,7 +63,7 @@ const FormattedDescription: React.FC<{ description: string; isPreview?: boolean 
 
   if (steps.length === 0) {
     return (
-      <p className={`text-sm text-white/80 leading-relaxed ${isPreview ? 'line-clamp-2' : ''}`}>
+      <p className={`text-sm text-white leading-relaxed ${isPreview ? 'line-clamp-2' : ''}`}>
         {intro}
       </p>
     );
@@ -72,13 +72,13 @@ const FormattedDescription: React.FC<{ description: string; isPreview?: boolean 
   if (isPreview) {
     // Show just first line for preview
     return (
-      <p className="text-sm text-white/70 leading-relaxed line-clamp-2">{intro || steps[0]}</p>
+      <p className="text-sm text-white leading-relaxed line-clamp-2">{intro || steps[0]}</p>
     );
   }
 
   return (
     <div className="space-y-3">
-      {intro && <p className="text-sm text-white/80 leading-relaxed">{intro}</p>}
+      {intro && <p className="text-sm text-white leading-relaxed">{intro}</p>}
       <div className="space-y-2">
         {steps.map((stepText, idx) => (
           <div
@@ -88,7 +88,7 @@ const FormattedDescription: React.FC<{ description: string; isPreview?: boolean 
             <div className="flex-shrink-0 w-6 h-6 rounded-md bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center">
               <span className="text-xs font-bold text-emerald-400">{idx + 1}</span>
             </div>
-            <p className="text-sm text-white/80 leading-relaxed flex-1">
+            <p className="text-sm text-white leading-relaxed flex-1">
               {stepText.replace(/^\d+\.\s*/, '')}
             </p>
           </div>
@@ -111,7 +111,7 @@ const StepCard: React.FC<{ step: MethodStep; index: number }> = ({ step, index }
       case 'high':
         return { bg: 'bg-red-500', border: 'border-red-500/30', text: 'text-red-400' };
       default:
-        return { bg: 'bg-white/30', border: 'border-white/20', text: 'text-white/60' };
+        return { bg: 'bg-white/30', border: 'border-white/20', text: 'text-white' };
     }
   };
 
@@ -157,7 +157,7 @@ const StepCard: React.FC<{ step: MethodStep; index: number }> = ({ step, index }
               <div className="flex-1 min-w-0">
                 <h4 className="text-base font-semibold text-white leading-snug">{step.title}</h4>
                 <div className="flex items-center gap-3 mt-1.5 flex-wrap">
-                  <span className="text-xs text-white/50 flex items-center gap-1">
+                  <span className="text-xs text-white flex items-center gap-1">
                     <Clock className="h-3 w-3" />
                     {step.estimatedDuration}
                   </span>
@@ -275,7 +275,7 @@ const StepCard: React.FC<{ step: MethodStep; index: number }> = ({ step, index }
                     {/* Notes if any */}
                     {step.notes && (
                       <div className="p-3 rounded-xl bg-white/5 border border-white/10">
-                        <p className="text-xs text-white/60 italic">{step.notes}</p>
+                        <p className="text-xs text-white italic">{step.notes}</p>
                       </div>
                     )}
                   </div>
@@ -309,7 +309,7 @@ export const MethodStatementReviewEditor: React.FC<MethodStatementReviewEditorPr
       case 'high':
         return { bg: 'bg-red-500/20', text: 'text-red-400', border: 'border-red-500/30' };
       default:
-        return { bg: 'bg-white/10', text: 'text-white/70', border: 'border-white/20' };
+        return { bg: 'bg-white/10', text: 'text-white', border: 'border-white/20' };
     }
   };
 
@@ -338,8 +338,8 @@ export const MethodStatementReviewEditor: React.FC<MethodStatementReviewEditorPr
             <div className="flex-1 min-w-0">
               <h2 className="text-xl font-bold text-white">{methodData.jobTitle}</h2>
               <div className="flex items-center gap-2 mt-1">
-                <MapPin className="h-3.5 w-3.5 text-white/40" />
-                <span className="text-sm text-white/60">
+                <MapPin className="h-3.5 w-3.5 text-white" />
+                <span className="text-sm text-white">
                   {methodData.location || 'Location not specified'}
                 </span>
               </div>
@@ -352,7 +352,7 @@ export const MethodStatementReviewEditor: React.FC<MethodStatementReviewEditorPr
               <p className="text-xl sm:text-2xl font-bold text-white">
                 {methodData.steps?.length || 0}
               </p>
-              <p className="text-[9px] sm:text-[10px] text-white/50 uppercase tracking-wide">
+              <p className="text-[9px] sm:text-[10px] text-white uppercase tracking-wide">
                 Steps
               </p>
             </div>
@@ -360,7 +360,7 @@ export const MethodStatementReviewEditor: React.FC<MethodStatementReviewEditorPr
               <p className="text-sm sm:text-lg font-bold text-white truncate">
                 {methodData.totalEstimatedTime || '-'}
               </p>
-              <p className="text-[9px] sm:text-[10px] text-white/50 uppercase tracking-wide">
+              <p className="text-[9px] sm:text-[10px] text-white uppercase tracking-wide">
                 Duration
               </p>
             </div>
@@ -368,7 +368,7 @@ export const MethodStatementReviewEditor: React.FC<MethodStatementReviewEditorPr
               <p className="text-xl sm:text-2xl font-bold text-white">
                 {methodData.riskAssessment?.hazards?.length || 0}
               </p>
-              <p className="text-[9px] sm:text-[10px] text-white/50 uppercase tracking-wide">
+              <p className="text-[9px] sm:text-[10px] text-white uppercase tracking-wide">
                 Hazards
               </p>
             </div>
@@ -378,7 +378,7 @@ export const MethodStatementReviewEditor: React.FC<MethodStatementReviewEditorPr
               <p className={`text-xs sm:text-sm font-bold ${riskStyles.text} uppercase truncate`}>
                 {methodData.overallRiskLevel}
               </p>
-              <p className="text-[9px] sm:text-[10px] text-white/50 uppercase tracking-wide">
+              <p className="text-[9px] sm:text-[10px] text-white uppercase tracking-wide">
                 Risk
               </p>
             </div>
@@ -389,15 +389,15 @@ export const MethodStatementReviewEditor: React.FC<MethodStatementReviewEditorPr
             <div className="flex flex-wrap gap-4 text-sm">
               {methodData.contractor && (
                 <div className="flex items-center gap-1.5">
-                  <Users className="h-3.5 w-3.5 text-white/40" />
-                  <span className="text-white/50">Contractor:</span>
+                  <Users className="h-3.5 w-3.5 text-white" />
+                  <span className="text-white">Contractor:</span>
                   <span className="text-white font-medium">{methodData.contractor}</span>
                 </div>
               )}
               {methodData.supervisor && (
                 <div className="flex items-center gap-1.5">
-                  <HardHat className="h-3.5 w-3.5 text-white/40" />
-                  <span className="text-white/50">Supervisor:</span>
+                  <HardHat className="h-3.5 w-3.5 text-white" />
+                  <span className="text-white">Supervisor:</span>
                   <span className="text-white font-medium">{methodData.supervisor}</span>
                 </div>
               )}
@@ -436,7 +436,7 @@ export const MethodStatementReviewEditor: React.FC<MethodStatementReviewEditorPr
           </div>
 
           {lastSaved && (
-            <p className="text-xs text-white/40">Saved {lastSaved.toLocaleTimeString()}</p>
+            <p className="text-xs text-white">Saved {lastSaved.toLocaleTimeString()}</p>
           )}
         </div>
       </motion.div>
@@ -446,7 +446,7 @@ export const MethodStatementReviewEditor: React.FC<MethodStatementReviewEditorPr
         <div className="flex items-center gap-2 px-1">
           <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
           <h3 className="text-base font-bold text-white">Installation Steps</h3>
-          <span className="text-xs text-white/40">Tap to expand</span>
+          <span className="text-xs text-white">Tap to expand</span>
         </div>
 
         <div className="space-y-2">
@@ -489,7 +489,7 @@ export const MethodStatementReviewEditor: React.FC<MethodStatementReviewEditorPr
                           {hazard.riskLevel}
                         </span>
                         {hazard.linkedToStep > 0 && (
-                          <span className="text-xs text-white/40">Step {hazard.linkedToStep}</span>
+                          <span className="text-xs text-white">Step {hazard.linkedToStep}</span>
                         )}
                       </div>
                     </div>
@@ -533,7 +533,7 @@ export const MethodStatementReviewEditor: React.FC<MethodStatementReviewEditorPr
         <CheckCircle2 className="h-5 w-5 text-emerald-400 flex-shrink-0" />
         <div>
           <p className="text-sm font-medium text-white">BS 7671:2018+A3:2024 Compliant</p>
-          <p className="text-xs text-white/50">
+          <p className="text-xs text-white">
             Method statement follows current wiring regulations
           </p>
         </div>

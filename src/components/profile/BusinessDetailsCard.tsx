@@ -118,7 +118,7 @@ const BusinessDetailsCard: React.FC<BusinessDetailsCardProps> = ({
             <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
             <span className="font-semibold text-[15px] text-white">Business Details</span>
           </div>
-          <ChevronRight className="h-5 w-5 text-white/30" />
+          <ChevronRight className="h-5 w-5 text-white" />
         </button>
 
         <div className="border-t border-white/[0.06]">
@@ -136,7 +136,7 @@ const BusinessDetailsCard: React.FC<BusinessDetailsCardProps> = ({
                   <Icon className={`h-4 w-4 ${row.iconColor}`} />
                 </div>
                 <div className="flex-1 min-w-0 text-left">
-                  <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+                  <p className="text-[11px] font-medium text-white uppercase tracking-wide">
                     {row.label}
                   </p>
                   <p className="text-[15px] text-white truncate">{row.value}</p>
@@ -187,7 +187,7 @@ const BusinessDetailsCard: React.FC<BusinessDetailsCardProps> = ({
 
           <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-6 space-y-6 pb-8">
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Company Name *
               </Label>
               <Input
@@ -199,7 +199,7 @@ const BusinessDetailsCard: React.FC<BusinessDetailsCardProps> = ({
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Address
               </Label>
               <Textarea
@@ -211,7 +211,7 @@ const BusinessDetailsCard: React.FC<BusinessDetailsCardProps> = ({
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Postcode
               </Label>
               <Input
@@ -225,7 +225,7 @@ const BusinessDetailsCard: React.FC<BusinessDetailsCardProps> = ({
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Website
               </Label>
               <Input
@@ -238,7 +238,7 @@ const BusinessDetailsCard: React.FC<BusinessDetailsCardProps> = ({
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Company Registration Number
               </Label>
               <Input
@@ -252,14 +252,14 @@ const BusinessDetailsCard: React.FC<BusinessDetailsCardProps> = ({
             <div className="flex items-center justify-between py-3 px-1">
               <div>
                 <p className="text-[15px] font-medium text-white">VAT Registered</p>
-                <p className="text-[13px] text-white/50">Turn on if VAT registered</p>
+                <p className="text-[13px] text-white">Turn on if VAT registered</p>
               </div>
               <Switch checked={isVatRegistered} onCheckedChange={setIsVatRegistered} />
             </div>
 
             {isVatRegistered && (
               <div className="space-y-2">
-                <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+                <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                   VAT Number
                 </Label>
                 <Input

@@ -258,7 +258,7 @@ const HNCModule7Section6_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section6">
@@ -280,7 +280,7 @@ const HNCModule7Section6_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Circuit Protection
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Device selection, breaking capacity, let-through energy, selectivity and RCD
             coordination
           </p>
@@ -559,23 +559,23 @@ const HNCModule7Section6_2 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">PFC Calculation Example</p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Supply transformer:</span>{' '}
+                  <span className="text-white">Supply transformer:</span>{' '}
                   <span className="text-white">500kVA, 4% impedance</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Secondary voltage:</span>{' '}
+                  <span className="text-white">Secondary voltage:</span>{' '}
                   <span className="text-white">400V (line-line)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Full load current:</span>{' '}
+                  <span className="text-white">Full load current:</span>{' '}
                   <span className="text-white">I = 500,000 / (√3 × 400) = 722A</span>
                 </p>
                 <p>
-                  <span className="text-white/60">PFC at transformer:</span>{' '}
+                  <span className="text-white">PFC at transformer:</span>{' '}
                   <span className="text-white">722 / 0.04 = 18.05kA</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Minimum breaking capacity:</span>{' '}
+                  <span className="text-white">Minimum breaking capacity:</span>{' '}
                   <span className="text-white">&gt;18kA at main switchboard</span>
                 </p>
               </div>
@@ -607,14 +607,14 @@ const HNCModule7Section6_2 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Adiabatic Equation</p>
               <div className="font-mono text-sm space-y-2 text-center">
                 <p className="text-lg">I²t ≤ k²S²</p>
-                <p className="text-white/60 text-xs mt-2">Where:</p>
-                <p className="text-white/60 text-xs">
+                <p className="text-white text-xs mt-2">Where:</p>
+                <p className="text-white text-xs">
                   I²t = let-through energy of protective device (A²s)
                 </p>
-                <p className="text-white/60 text-xs">
+                <p className="text-white text-xs">
                   k = conductor constant (115 for thermoplastic/Cu, 143 for thermosetting/Cu)
                 </p>
-                <p className="text-white/60 text-xs">S = conductor cross-sectional area (mm²)</p>
+                <p className="text-white text-xs">S = conductor cross-sectional area (mm²)</p>
               </div>
             </div>
 
@@ -705,19 +705,19 @@ const HNCModule7Section6_2 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">Verification Example</p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Cable:</span>{' '}
+                  <span className="text-white">Cable:</span>{' '}
                   <span className="text-white">2.5mm² thermoplastic copper</span>
                 </p>
                 <p>
-                  <span className="text-white/60">k²S² =</span>{' '}
+                  <span className="text-white">k²S² =</span>{' '}
                   <span className="text-white">115² × 2.5² = 82,656 A²s</span>
                 </p>
                 <p>
-                  <span className="text-white/60">32A Type B MCB let-through at 3kA:</span>{' '}
+                  <span className="text-white">32A Type B MCB let-through at 3kA:</span>{' '}
                   <span className="text-white">~15,000 A²s (typical)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Check:</span>{' '}
+                  <span className="text-white">Check:</span>{' '}
                   <span className="text-green-400">15,000 &lt; 82,656 ✓ Cable protected</span>
                 </p>
               </div>
@@ -886,19 +886,19 @@ const HNCModule7Section6_2 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">RCD Discrimination Example</p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Upstream:</span>{' '}
+                  <span className="text-white">Upstream:</span>{' '}
                   <span className="text-white">100mA Type S (time-delayed)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Downstream:</span>{' '}
+                  <span className="text-white">Downstream:</span>{' '}
                   <span className="text-white">30mA general (instantaneous)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Ratio check:</span>{' '}
+                  <span className="text-white">Ratio check:</span>{' '}
                   <span className="text-white">100/30 = 3.33:1 ≥ 3:1 ✓</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Time check:</span>{' '}
+                  <span className="text-white">Time check:</span>{' '}
                   <span className="text-white">S type has 40-500ms delay ✓</span>
                 </p>
                 <p>
@@ -928,7 +928,7 @@ const HNCModule7Section6_2 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>BS 7671 mandate:</strong> Regulation 411.3.3 requires 30mA RCD protection for
               socket outlets ≤32A in domestic and similar installations, cables concealed in walls
               at depths &lt;50mm, and cables without earthed metallic covering.
@@ -954,8 +954,8 @@ const HNCModule7Section6_2 = () => {
                 <strong>Scenario:</strong> Select an MCB for a ring final circuit with design
                 current 26A, cable capacity 32A.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given data:</p>
                 <p className="ml-4">Design current (Ib) = 26A</p>
                 <p className="ml-4">Cable current capacity (Iz) = 32A</p>
                 <p className="ml-4">PFC at board = 3kA</p>
@@ -977,8 +977,8 @@ const HNCModule7Section6_2 = () => {
                 <strong>Scenario:</strong> Verify a 16A Type B MCB protects a 1.5mm² thermoplastic
                 cable.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given data:</p>
                 <p className="ml-4">Cable: 1.5mm² 70°C thermoplastic copper (k = 115)</p>
                 <p className="ml-4">MCB: 16A Type B, Class 3 energy limiting</p>
                 <p className="ml-4">PFC at circuit = 2kA</p>
@@ -998,8 +998,8 @@ const HNCModule7Section6_2 = () => {
                 <strong>Scenario:</strong> Design RCD discrimination for a consumer unit with
                 multiple final circuits.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">
                   Requirement: Discrimination between main and final circuit RCDs
                 </p>
                 <p className="mt-2">Main incomer:</p>
@@ -1010,10 +1010,10 @@ const HNCModule7Section6_2 = () => {
                 <p className="ml-4">Ratio: 100mA / 30mA = 3.33:1 ≥ 3:1 ✓</p>
                 <p className="ml-4">Time: Upstream S-type (40-500ms) vs instantaneous ✓</p>
                 <p className="mt-2 text-green-400">Full discrimination achieved</p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Result: Earth fault on final circuit trips RCBO only,
                 </p>
-                <p className="text-white/60 ml-4">
+                <p className="text-white ml-4">
                   main RCD remains closed, other circuits unaffected
                 </p>
               </div>
@@ -1097,7 +1097,7 @@ const HNCModule7Section6_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1143,7 +1143,7 @@ const HNCModule7Section6_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section6">

@@ -236,7 +236,7 @@ export default function MewpModule5Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Emergency Lowering Systems &amp; Ground Controls
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding the multiple control systems and emergency lowering methods built into
             every MEWP &mdash; and knowing how to use them on YOUR specific machine
           </p>
@@ -277,7 +277,7 @@ export default function MewpModule5Section2() {
         {/* Learning Outcomes */}
         <section className="mb-12">
           <h2 className="text-lg font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4">By the end of this section, you will be able to:</p>
+          <p className="text-white mb-4">By the end of this section, you will be able to:</p>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
               'Identify the four control systems fitted to MEWPs for redundancy',
@@ -341,7 +341,7 @@ export default function MewpModule5Section2() {
                           <p className="text-green-300 font-semibold text-sm">
                             Primary Platform Controls
                           </p>
-                          <p className="text-white/60 text-xs mt-1">
+                          <p className="text-white text-xs mt-1">
                             Normal operator controls in the basket. Used during routine operation.
                             First line of control.
                           </p>
@@ -371,7 +371,7 @@ export default function MewpModule5Section2() {
                           <p className="text-blue-300 font-semibold text-sm">
                             Primary Ground Controls
                           </p>
-                          <p className="text-white/60 text-xs mt-1">
+                          <p className="text-white text-xs mt-1">
                             Full set of controls at the base of the machine. Used by a ground rescue
                             person. Overrides platform controls.
                           </p>
@@ -400,7 +400,7 @@ export default function MewpModule5Section2() {
                           <p className="text-purple-300 font-semibold text-sm">
                             Auxiliary Platform Controls
                           </p>
-                          <p className="text-white/60 text-xs mt-1">
+                          <p className="text-white text-xs mt-1">
                             Backup controls in the basket if the primary platform controls fail. Not
                             fitted to all machines.
                           </p>
@@ -429,7 +429,7 @@ export default function MewpModule5Section2() {
                           <p className="text-red-300 font-semibold text-sm">
                             Emergency / Auxiliary Lowering Systems
                           </p>
-                          <p className="text-white/60 text-xs mt-1">
+                          <p className="text-white text-xs mt-1">
                             Last-resort methods to bring the platform to the ground: APU, manual
                             lowering valve, hand pump, engine override.
                           </p>
@@ -450,19 +450,19 @@ export default function MewpModule5Section2() {
                   <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-[11px]">
                     <div className="flex items-center gap-1.5">
                       <div className="w-3 h-3 rounded-full bg-green-400/40 border border-green-400/60" />
-                      <span className="text-white/50">Normal operation</span>
+                      <span className="text-white">Normal operation</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                       <div className="w-3 h-3 rounded-full bg-blue-400/40 border border-blue-400/60" />
-                      <span className="text-white/50">Ground rescue</span>
+                      <span className="text-white">Ground rescue</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                       <div className="w-3 h-3 rounded-full bg-purple-400/40 border border-purple-400/60" />
-                      <span className="text-white/50">Backup (if fitted)</span>
+                      <span className="text-white">Backup (if fitted)</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                       <div className="w-3 h-3 rounded-full bg-red-400/40 border border-red-400/60" />
-                      <span className="text-white/50">Emergency last resort</span>
+                      <span className="text-white">Emergency last resort</span>
                     </div>
                   </div>
                 </div>
@@ -504,7 +504,7 @@ export default function MewpModule5Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Safety Feature</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Activating ground controls usually{' '}
                   <strong className="text-white">OVERRIDES platform controls</strong>. This is
                   essential &mdash; if the operator is incapacitated and slumped against a platform
@@ -538,7 +538,7 @@ export default function MewpModule5Section2() {
                       <p className="text-sm font-medium text-blue-300">
                         Locate the Ground Control Panel
                       </p>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white">
                         Usually at the base of the machine, behind a lockable cover or panel. The
                         location should have been identified during familiarisation.
                       </p>
@@ -552,7 +552,7 @@ export default function MewpModule5Section2() {
                       <p className="text-sm font-medium text-blue-300">
                         Activate Using Key or Switch
                       </p>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white">
                         Insert the key or follow the activation sequence specified in the operator
                         manual. This transfers control authority from the platform to the ground.
                       </p>
@@ -566,7 +566,7 @@ export default function MewpModule5Section2() {
                       <p className="text-sm font-medium text-blue-300">
                         Lower the Platform Smoothly
                       </p>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white">
                         Use the ground controls to lower the platform in a controlled manner.
                         Continuously check for obstructions both <strong>above and below</strong>{' '}
                         the platform as it descends.
@@ -590,7 +590,7 @@ export default function MewpModule5Section2() {
                     'Emergency stop',
                   ].map((fn, i) => (
                     <div key={i} className="bg-white/5 rounded px-3 py-2 text-center">
-                      <span className="text-white/70 text-xs">{fn}</span>
+                      <span className="text-white text-xs">{fn}</span>
                     </div>
                   ))}
                 </div>
@@ -631,7 +631,7 @@ export default function MewpModule5Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-teal-300">Activate the APU Switch</p>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white">
                         Usually located at ground level, often near or within the ground control
                         panel. Follow the manufacturer&rsquo;s instructions for the specific
                         activation sequence.
@@ -646,7 +646,7 @@ export default function MewpModule5Section2() {
                       <p className="text-sm font-medium text-teal-300">
                         Use Ground Controls to Operate Boom/Scissor
                       </p>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white">
                         With the APU providing hydraulic pressure, use the ground controls to
                         operate the boom or scissor mechanism as needed.
                       </p>
@@ -658,7 +658,7 @@ export default function MewpModule5Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-teal-300">Lower Platform to Ground</p>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white">
                         Lower the platform smoothly and controllably to the stowed position. Check
                         for obstructions throughout the descent.
                       </p>
@@ -672,7 +672,7 @@ export default function MewpModule5Section2() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">APU Limitations</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -739,7 +739,7 @@ export default function MewpModule5Section2() {
                     How the Manual Lowering Valve Works
                   </p>
                 </div>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex items-start gap-3">
                     <span className="flex items-center justify-center w-7 h-7 rounded-full bg-red-500/20 text-red-400 text-xs font-bold flex-shrink-0">
                       1
@@ -796,7 +796,7 @@ export default function MewpModule5Section2() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Limitation</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The manual lowering valve typically{' '}
                   <strong className="text-white">only lowers</strong> the platform. It cannot raise,
                   slew, telescope, or drive the machine. If the platform needs to be moved laterally
@@ -835,7 +835,7 @@ export default function MewpModule5Section2() {
                   <Wrench className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">Hand Pump</p>
                 </div>
-                <div className="text-sm text-white/80 space-y-3">
+                <div className="text-sm text-white space-y-3">
                   <p>
                     A <strong>manual hydraulic pump</strong>, usually located at the base of the
                     machine. The operator physically pumps a lever back and forth to generate
@@ -878,7 +878,7 @@ export default function MewpModule5Section2() {
                   <Settings className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">Engine Override</p>
                 </div>
-                <div className="text-sm text-white/80 space-y-3">
+                <div className="text-sm text-white space-y-3">
                   <p>
                     Engine override is the ability to{' '}
                     <strong>bypass normal electronic control circuits</strong> and operate the
@@ -917,7 +917,7 @@ export default function MewpModule5Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Both Are Last-Resort Methods</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The hand pump and engine override are the final on-machine options. If these
                   methods are also unavailable or fail to bring the platform to the ground, the
                   situation becomes a{' '}
@@ -962,7 +962,7 @@ export default function MewpModule5Section2() {
                     Key Questions for Familiarisation
                   </p>
                 </div>
-                <p className="text-sm text-white/60 mb-3">
+                <p className="text-sm text-white mb-3">
                   You must be able to answer ALL of these for the specific machine before you
                   elevate the platform:
                 </p>
@@ -979,7 +979,7 @@ export default function MewpModule5Section2() {
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs font-bold flex-shrink-0">
                         {i + 1}
                       </span>
-                      <span className="text-sm text-white/80">{q}</span>
+                      <span className="text-sm text-white">{q}</span>
                     </div>
                   ))}
                 </div>
@@ -1003,7 +1003,7 @@ export default function MewpModule5Section2() {
                     Before You Elevate &mdash; Emergency Systems Checklist
                   </p>
                 </div>
-                <p className="text-sm text-white/60 mb-4">
+                <p className="text-sm text-white mb-4">
                   Confirm all of the following before operating the platform at height:
                 </p>
                 <div className="space-y-2">
@@ -1019,12 +1019,12 @@ export default function MewpModule5Section2() {
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <span className="text-elec-yellow font-mono text-xs mt-0.5">&#9744;</span>
-                      <span className="text-sm text-white/80">{item}</span>
+                      <span className="text-sm text-white">{item}</span>
                     </div>
                   ))}
                 </div>
                 <div className="mt-4 pt-3 border-t border-elec-yellow/20">
-                  <p className="text-xs text-white/50 italic">
+                  <p className="text-xs text-white italic">
                     If you cannot tick every box, do not elevate the platform until you can. Take
                     the time to familiarise yourself properly &mdash; it could save your life or a
                     colleague&rsquo;s life.
@@ -1044,7 +1044,7 @@ export default function MewpModule5Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-2">{faq.question}</h3>
-                <p className="text-sm text-white/70 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1063,7 +1063,7 @@ export default function MewpModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-5">

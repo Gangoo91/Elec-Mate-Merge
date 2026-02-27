@@ -197,12 +197,12 @@ const AM2Module6Section3 = () => {
 
       {/* Critical Warning */}
       <AM2CriticalWarning title="CRITICAL: Time Management is Everything">
-        <p className="text-ios-callout text-white/80 mb-2">
+        <p className="text-ios-callout text-white mb-2">
           Many candidates fail the knowledge test not due to lack of knowledge, but poor time
           management. Getting stuck on difficult questions and leaving others blank is a guaranteed
           route to failure.
         </p>
-        <p className="text-ios-callout text-white/90 font-medium">
+        <p className="text-ios-callout text-white font-medium">
           You must attempt every question. There's no penalty for guessing, but blank answers
           guarantee lost marks.
         </p>
@@ -221,7 +221,7 @@ const AM2Module6Section3 = () => {
         </h2>
 
         <div className="space-y-4 text-sm sm:text-base leading-relaxed">
-          <ul className="space-y-2 ml-4 text-white/80">
+          <ul className="space-y-2 ml-4 text-white">
             <li>
               - <strong className="text-white">30 questions = 3 minutes each</strong>
             </li>
@@ -240,7 +240,7 @@ const AM2Module6Section3 = () => {
           <div className="grid md:grid-cols-2 gap-4">
             <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
               <h4 className="font-semibold text-white mb-2">Time Allocation Breakdown:</h4>
-              <ul className="space-y-1 text-xs sm:text-sm text-white/80">
+              <ul className="space-y-1 text-xs sm:text-sm text-white">
                 <li>
                   - <strong className="text-white">First 30 minutes:</strong> 10-12 easy questions
                 </li>
@@ -258,7 +258,7 @@ const AM2Module6Section3 = () => {
             </div>
             <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
               <h4 className="font-semibold text-white mb-2">Pace Indicators:</h4>
-              <ul className="space-y-1 text-xs sm:text-sm text-white/80">
+              <ul className="space-y-1 text-xs sm:text-sm text-white">
                 <li>
                   - <strong className="text-white">On track:</strong> 1/3 complete at 30 minutes
                 </li>
@@ -311,7 +311,7 @@ const AM2Module6Section3 = () => {
         </h2>
 
         <div className="space-y-4 text-sm sm:text-base leading-relaxed">
-          <ul className="space-y-2 ml-4 text-white/80">
+          <ul className="space-y-2 ml-4 text-white">
             <li>
               - <strong className="text-white">Flag and return later.</strong> Don't waste 10
               minutes stuck
@@ -332,7 +332,7 @@ const AM2Module6Section3 = () => {
           <div className="space-y-4">
             <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
               <h4 className="font-semibold text-white mb-2">The FLAGGING System:</h4>
-              <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm text-white/80">
+              <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-xs sm:text-sm text-white">
                 <div>
                   <p className="font-medium text-red-400 mb-1">RED FLAG</p>
                   <p>Complex calculations requiring 5+ minutes</p>
@@ -350,7 +350,7 @@ const AM2Module6Section3 = () => {
 
             <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
               <h4 className="font-semibold text-white mb-2">Question Types & Time Allocation:</h4>
-              <ul className="space-y-1 text-xs sm:text-sm text-white/80">
+              <ul className="space-y-1 text-xs sm:text-sm text-white">
                 <li>
                   - <strong className="text-white">Regulation recall (30 seconds):</strong> "Maximum
                   Zs for 32A Type B MCB?"
@@ -372,7 +372,7 @@ const AM2Module6Section3 = () => {
 
             <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
               <h4 className="font-semibold text-white mb-2">Emergency Time Recovery:</h4>
-              <ul className="space-y-1 text-xs sm:text-sm text-white/80">
+              <ul className="space-y-1 text-xs sm:text-sm text-white">
                 <li>
                   - <strong className="text-white">If 15+ minutes behind:</strong> Flag ALL
                   calculations, focus on recall questions
@@ -403,7 +403,7 @@ const AM2Module6Section3 = () => {
         </h2>
 
         <div className="space-y-4 text-sm sm:text-base leading-relaxed">
-          <ul className="space-y-2 ml-4 text-white/80">
+          <ul className="space-y-2 ml-4 text-white">
             <li>
               - <strong className="text-white">Breathe and re-focus</strong> if you feel rushed
             </li>
@@ -423,7 +423,7 @@ const AM2Module6Section3 = () => {
           <div className="grid md:grid-cols-2 gap-4">
             <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
               <h4 className="font-semibold text-white mb-2">Physical Calm Techniques:</h4>
-              <ul className="space-y-1 text-xs sm:text-sm text-white/80">
+              <ul className="space-y-1 text-xs sm:text-sm text-white">
                 <li>
                   - <strong className="text-white">4-7-8 Breathing:</strong> Inhale 4, hold 7,
                   exhale 8 counts
@@ -444,7 +444,7 @@ const AM2Module6Section3 = () => {
             </div>
             <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
               <h4 className="font-semibold text-white mb-2">Mental Calm Strategies:</h4>
-              <ul className="space-y-1 text-xs sm:text-sm text-white/80">
+              <ul className="space-y-1 text-xs sm:text-sm text-white">
                 <li>
                   - <strong className="text-white">Positive self-talk:</strong> "I know this
                   material"
@@ -513,11 +513,11 @@ const AM2Module6Section3 = () => {
         </h2>
 
         <div className="space-y-4 text-sm sm:text-base leading-relaxed">
-          <p className="text-white/80">
+          <p className="text-white">
             Assessors don't see your screen, but they know what good exam technique looks like. They
             expect you to:
           </p>
-          <ul className="space-y-2 ml-4 text-white/80">
+          <ul className="space-y-2 ml-4 text-white">
             <li>
               - <strong className="text-white">Attempt every question</strong> (no blanks)
             </li>
@@ -536,7 +536,7 @@ const AM2Module6Section3 = () => {
           <div className="grid md:grid-cols-2 gap-4">
             <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
               <h4 className="font-semibold text-green-400 mb-2">Good Exam Discipline:</h4>
-              <ul className="space-y-1 text-xs sm:text-sm text-white/80">
+              <ul className="space-y-1 text-xs sm:text-sm text-white">
                 <li>- Consistent pacing throughout the test</li>
                 <li>- Every question attempted (no blanks)</li>
                 <li>- Logical sequence of answering</li>
@@ -546,7 +546,7 @@ const AM2Module6Section3 = () => {
             </div>
             <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
               <h4 className="font-semibold text-red-400 mb-2">Poor Time Management:</h4>
-              <ul className="space-y-1 text-xs sm:text-sm text-white/80">
+              <ul className="space-y-1 text-xs sm:text-sm text-white">
                 <li>- Large gaps of unanswered questions</li>
                 <li>- Erratic timing patterns</li>
                 <li>- Rush of answers in final minutes</li>
@@ -594,7 +594,7 @@ const AM2Module6Section3 = () => {
           Practical Guidance
         </h2>
 
-        <ul className="space-y-2 text-sm text-white/80">
+        <ul className="space-y-2 text-sm text-white">
           <li>
             - <strong className="text-white">Do a first pass quickly.</strong> Answer all the ones
             you know
@@ -627,21 +627,21 @@ const AM2Module6Section3 = () => {
 
         <div className="space-y-4">
           <div className="p-4 bg-red-950/20 rounded-lg border border-red-800/30">
-            <p className="text-white/80">
+            <p className="text-white">
               <strong className="text-red-200">Example 1:</strong> Candidate spent 20 minutes on one
               science calculation, left 6 questions unanswered - failed by 2 marks.
             </p>
           </div>
 
           <div className="p-4 bg-green-950/20 rounded-lg border border-green-800/30">
-            <p className="text-white/80">
+            <p className="text-white">
               <strong className="text-green-200">Example 2:</strong> Candidate flagged 5 tricky
               questions, finished the rest, came back fresh and got 4 right - passed.
             </p>
           </div>
 
           <div className="p-4 bg-red-950/20 rounded-lg border border-red-800/30">
-            <p className="text-white/80">
+            <p className="text-white">
               <strong className="text-red-200">Example 3:</strong> Candidate rushed and misread
               "minimum" for "maximum" in a regs question - lost easy marks.
             </p>
@@ -660,31 +660,31 @@ const AM2Module6Section3 = () => {
             <p className="font-semibold text-white mb-1">
               Q1: Should I guess if I don't know the answer?
             </p>
-            <p className="text-white/80">A: Yes - there's no negative marking.</p>
+            <p className="text-white">A: Yes - there's no negative marking.</p>
           </div>
 
           <div className="border-l-4 border-elec-yellow/50 pl-4">
             <p className="font-semibold text-white mb-1">
               Q2: How many questions should I aim to finish in the first 30 minutes?
             </p>
-            <p className="text-white/80">A: Around 10-12.</p>
+            <p className="text-white">A: Around 10-12.</p>
           </div>
 
           <div className="border-l-4 border-elec-yellow/50 pl-4">
             <p className="font-semibold text-white mb-1">Q3: What happens if I run out of time?</p>
-            <p className="text-white/80">A: Any unanswered questions are marked wrong.</p>
+            <p className="text-white">A: Any unanswered questions are marked wrong.</p>
           </div>
 
           <div className="border-l-4 border-elec-yellow/50 pl-4">
             <p className="font-semibold text-white mb-1">Q4: Can I change answers once selected?</p>
-            <p className="text-white/80">A: Yes - until you submit at the end.</p>
+            <p className="text-white">A: Yes - until you submit at the end.</p>
           </div>
 
           <div className="border-l-4 border-elec-yellow/50 pl-4">
             <p className="font-semibold text-white mb-1">
               Q5: Should I spend equal time on every question?
             </p>
-            <p className="text-white/80">
+            <p className="text-white">
               A: No - answer easy ones quickly, spend more time on hard ones later.
             </p>
           </div>
@@ -698,7 +698,7 @@ const AM2Module6Section3 = () => {
           Summary
         </h2>
 
-        <div className="text-sm text-white/80 space-y-3">
+        <div className="text-sm text-white space-y-3">
           <p>Time management in the AM2 knowledge test is about control and pacing.</p>
           <ul className="space-y-1 ml-4">
             <li>- Allocate 2-3 minutes per question</li>

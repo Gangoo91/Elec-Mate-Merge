@@ -196,7 +196,7 @@ export default function PasmaModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-3">
@@ -221,7 +221,7 @@ export default function PasmaModule3Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             3T Method &mdash; Through The Trap
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The traditional PASMA assembly method where the operative works from inside the tower,
             climbing through trapdoor platforms to build each level safely
           </p>
@@ -316,7 +316,7 @@ export default function PasmaModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">When to Use the 3T Method</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Standard tower assembly where AGR frames are not available</span>
@@ -338,7 +338,7 @@ export default function PasmaModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Minimum Team Size</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   While regulations do not specify an exact minimum team size, PASMA guidance
                   recommends a minimum of two people for tower assembly using the 3T method. One
                   person assembles from inside the tower while the other passes components from
@@ -391,7 +391,7 @@ export default function PasmaModule3Section2() {
                       <p className="text-sm font-medium text-white">
                         Position castors or base plates
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Place on firm, level ground (or sole boards). Castors should be in the
                         locked position. Use base plates for fixed towers.
                       </p>
@@ -405,7 +405,7 @@ export default function PasmaModule3Section2() {
                       <p className="text-sm font-medium text-white">
                         Fit the first pair of end frames
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Insert the end frames into the castors or base plates. Ensure spigots are
                         fully engaged and locking clips are secured.
                       </p>
@@ -419,7 +419,7 @@ export default function PasmaModule3Section2() {
                       <p className="text-sm font-medium text-white">
                         Install plan braces and horizontal braces
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Fit plan braces diagonally across the base to prevent racking. Add
                         horizontal braces to complete the base frame structure.
                       </p>
@@ -431,7 +431,7 @@ export default function PasmaModule3Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Level using adjustable legs</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Use a spirit level on the horizontal braces. Adjust castor stems or base
                         plate legs until the base is perfectly level in both directions.
                       </p>
@@ -443,7 +443,7 @@ export default function PasmaModule3Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Lock all castors</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Engage both the wheel brake and the swivel lock on every castor. The tower
                         must not move during assembly. Check all four castors are fully locked.
                       </p>
@@ -457,7 +457,7 @@ export default function PasmaModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Critical Base Checks</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Never proceed beyond the base until: the base is level in both directions, all
                   castors are fully locked (wheel and swivel), all braces are fitted with locks
                   engaged, and the frame is square and plumb. A base error of even a few millimetres
@@ -489,7 +489,7 @@ export default function PasmaModule3Section2() {
                 <p className="text-sm font-medium text-elec-yellow mb-3">
                   Build-Up Sequence for Each Lift
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">1. Fit next end frames:</strong> Slide the next
                     pair of end frames onto the spigots of the frames below. Ensure they drop fully
@@ -528,7 +528,7 @@ export default function PasmaModule3Section2() {
               <div className="my-8 flex justify-center">
                 <svg
                   viewBox="0 0 400 500"
-                  className="w-full max-w-sm text-white/70"
+                  className="w-full max-w-sm text-white"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
@@ -742,7 +742,7 @@ export default function PasmaModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Passing Components Up</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   As the tower grows taller, components must be passed up from ground level. The
                   ground operative lifts components to the person on the tower, who receives them
                   from a safe position inside the structure. Never throw components upward. For
@@ -784,7 +784,7 @@ export default function PasmaModule3Section2() {
                     className="w-full h-full"
                   />
                 </div>
-                <p className="text-xs text-white/40 mt-2 text-center">
+                <p className="text-xs text-white mt-2 text-center">
                   Setting up a BoSS Ladderspan 3T mobile access tower
                 </p>
               </div>
@@ -805,7 +805,7 @@ export default function PasmaModule3Section2() {
                       1
                     </span>
                     <div>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         <strong className="text-white">Open the trapdoor</strong> from below. Ensure
                         it opens fully and rests securely in the open position.
                       </p>
@@ -816,7 +816,7 @@ export default function PasmaModule3Section2() {
                       2
                     </span>
                     <div>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         <strong className="text-white">Pass through to waist height.</strong> Climb
                         until your waist is level with the platform. The platform edges now protect
                         you on all sides like a guardrail.
@@ -828,7 +828,7 @@ export default function PasmaModule3Section2() {
                       3
                     </span>
                     <div>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         <strong className="text-white">Fit guardrails on all open sides.</strong>{' '}
                         Working from the protected waist-height position, install guardrails on all
                         sides of the platform that are not protected by end frames. Ensure all hooks
@@ -841,7 +841,7 @@ export default function PasmaModule3Section2() {
                       4
                     </span>
                     <div>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         <strong className="text-white">Step fully onto the platform.</strong> Only
                         once all guardrails are in place, step fully through the trapdoor onto the
                         platform. Close and lock the trapdoor behind you.
@@ -853,7 +853,7 @@ export default function PasmaModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Guardrail Heights</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -899,7 +899,7 @@ export default function PasmaModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Guardrails During Dismantling</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   During dismantling (which is the reverse of assembly), guardrails are removed last
                   at each level. The operative descends through the trapdoor to the level below
                   before the guardrails on the level above are removed. This ensures continuous edge
@@ -939,7 +939,7 @@ export default function PasmaModule3Section2() {
                   <Lock className="h-5 w-5 text-cyan-400" />
                   <p className="text-sm font-medium text-cyan-400">Trapdoor Operating Principles</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -980,7 +980,7 @@ export default function PasmaModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Trapdoor Safety Rules</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1027,7 +1027,7 @@ export default function PasmaModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Emergency Egress</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The trapdoor is also the primary means of emergency egress from the platform. If
                   an operative is injured or conditions change suddenly (severe weather, fire), they
                   must be able to descend through the trapdoor quickly. This is another reason to
@@ -1067,7 +1067,7 @@ export default function PasmaModule3Section2() {
                     Completion Inspection Checklist
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1137,7 +1137,7 @@ export default function PasmaModule3Section2() {
                     Visual Check from Ground Level
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   After the detailed component check, step back and view the tower from each side at
                   ground level. The tower should appear vertical and true. Any visible lean, twist,
                   or misalignment indicates a problem that must be investigated and corrected before
@@ -1168,7 +1168,7 @@ export default function PasmaModule3Section2() {
               <div className="space-y-4">
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-red-400 mb-2">Missing Braces</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Leaving out horizontal or diagonal braces to "save time" or because a brace
                     appears to be missing from the component set. Every brace specified by the
                     manufacturer is structurally necessary. A tower missing a single diagonal brace
@@ -1178,7 +1178,7 @@ export default function PasmaModule3Section2() {
 
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-red-400 mb-2">Unlocked Components</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Fitting components but failing to engage the locking mechanisms. Brace hooks
                     that are resting on the rung but not clipped, spigot connections without locking
                     pins, and platform boards not clicked into place. If it is not locked, it is not
@@ -1190,7 +1190,7 @@ export default function PasmaModule3Section2() {
                   <p className="text-sm font-medium text-red-400 mb-2">
                     Guardrails Not Fitted Before Use
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Stepping fully onto a platform before all guardrails are in place. This is the
                     most dangerous error &mdash; even a momentary lapse creates a fall hazard. The
                     guardrails must be fitted from the waist-height position through the trapdoor,
@@ -1200,7 +1200,7 @@ export default function PasmaModule3Section2() {
 
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-red-400 mb-2">Trapdoor Left Open</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Leaving the trapdoor open after climbing through. An open trapdoor is a fall
                     hazard for anyone on the platform and reduces the usable platform area. Close
                     and lock it as soon as you have stepped through.
@@ -1211,7 +1211,7 @@ export default function PasmaModule3Section2() {
                   <p className="text-sm font-medium text-red-400 mb-2">
                     Working from Outside the Tower
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Using a separate ladder or standing on another structure to fit components to
                     the tower from the outside. The 3T method requires all assembly work at height
                     to be done from inside the tower. External assembly removes the protection
@@ -1223,7 +1223,7 @@ export default function PasmaModule3Section2() {
                   <p className="text-sm font-medium text-red-400 mb-2">
                     Exceeding Freestanding Height Without Stabilisers
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Building the tower beyond its maximum freestanding height without fitting
                     stabilisers or outriggers. The height-to-base ratio must be maintained within
                     safe limits: 3.5:1 indoors and 3:1 outdoors. Exceeding these ratios without
@@ -1252,7 +1252,7 @@ export default function PasmaModule3Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1266,7 +1266,7 @@ export default function PasmaModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-3-section-1">

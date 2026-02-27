@@ -136,7 +136,7 @@ const CPDEntryForm = ({ onSuccess }: CPDEntryFormProps = {}) => {
             </div>
             <div>
               <p className="font-medium text-amber-400 mb-1">Professional Body Required</p>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 {memberships.length === 0
                   ? 'Please set up your professional body membership in settings to enable CPD tracking.'
                   : 'No active professional body selected. CPD entries will be saved but may not count towards compliance.'}
@@ -156,7 +156,7 @@ const CPDEntryForm = ({ onSuccess }: CPDEntryFormProps = {}) => {
             Log CPD Activity
           </CardTitle>
           {activeMembership && (
-            <p className="text-sm text-white/70 mt-2">
+            <p className="text-sm text-white mt-2">
               Recording for{' '}
               <span className="text-elec-yellow font-medium">
                 {activeMembership.professional_body?.name}
@@ -178,7 +178,7 @@ const CPDEntryForm = ({ onSuccess }: CPDEntryFormProps = {}) => {
                   value={formData.title}
                   onChange={(e) => handleInputChange('title', e.target.value)}
                   placeholder="e.g., BS 7671 18th Edition Update Course"
-                  className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40 focus:border-elec-yellow/50"
+                  className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white focus:border-elec-yellow/50"
                   required
                 />
               </div>
@@ -195,7 +195,7 @@ const CPDEntryForm = ({ onSuccess }: CPDEntryFormProps = {}) => {
                       variant="outline"
                       className={cn(
                         'w-full h-11 justify-start text-left font-normal bg-white/5 border-white/20 hover:bg-white/10 hover:border-elec-yellow/30',
-                        !date && 'text-white/40'
+                        !date && 'text-white'
                       )}
                     >
                       <CalendarIcon className="mr-2 h-4 w-4 text-elec-yellow" />
@@ -222,7 +222,7 @@ const CPDEntryForm = ({ onSuccess }: CPDEntryFormProps = {}) => {
                   value={formData.hours}
                   onChange={(e) => handleInputChange('hours', e.target.value)}
                   placeholder="e.g., 3.5"
-                  className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40 focus:border-elec-yellow/50"
+                  className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white focus:border-elec-yellow/50"
                   required
                 />
               </div>
@@ -286,7 +286,7 @@ const CPDEntryForm = ({ onSuccess }: CPDEntryFormProps = {}) => {
                 value={formData.description}
                 onChange={(e) => handleInputChange('description', e.target.value)}
                 placeholder="Brief description of the activity and what was covered..."
-                className="bg-white/5 border-white/20 text-white placeholder:text-white/40 focus:border-elec-yellow/50 min-h-[100px]"
+                className="bg-white/5 border-white/20 text-white placeholder:text-white focus:border-elec-yellow/50 min-h-[100px]"
                 rows={3}
               />
             </div>
@@ -302,7 +302,7 @@ const CPDEntryForm = ({ onSuccess }: CPDEntryFormProps = {}) => {
                 value={formData.learningOutcomes}
                 onChange={(e) => handleInputChange('learningOutcomes', e.target.value)}
                 placeholder="What did you learn? How will this benefit your professional development?"
-                className="bg-white/5 border-white/20 text-white placeholder:text-white/40 focus:border-elec-yellow/50 min-h-[100px]"
+                className="bg-white/5 border-white/20 text-white placeholder:text-white focus:border-elec-yellow/50 min-h-[100px]"
                 rows={3}
               />
             </div>

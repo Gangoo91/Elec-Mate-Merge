@@ -67,7 +67,7 @@ export const CircuitBuilderStep = ({
           </div>
           <div>
             <h2 className="text-lg font-semibold text-white">Build Your Circuits</h2>
-            <p className="text-sm text-white/50">Add circuits for accurate calculations</p>
+            <p className="text-sm text-white">Add circuits for accurate calculations</p>
           </div>
         </div>
         <Badge
@@ -76,7 +76,7 @@ export const CircuitBuilderStep = ({
             'px-3 py-1.5 rounded-full font-semibold',
             circuits.length > 0
               ? 'bg-elec-yellow/15 border border-elec-yellow/30 text-elec-yellow'
-              : 'bg-white/5 border border-white/10 text-white/50'
+              : 'bg-white/5 border border-white/10 text-white'
           )}
         >
           {circuits.length} Circuit{circuits.length !== 1 ? 's' : ''}
@@ -105,7 +105,7 @@ export const CircuitBuilderStep = ({
       {circuits.length > 0 && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-white/80 flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-white flex items-center gap-2">
               <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow"></div>
               Your Circuits
             </h3>
@@ -171,7 +171,7 @@ export const CircuitBuilderStep = ({
           <h3 className="text-base sm:text-lg font-semibold text-white mb-2">
             No Circuits Added Yet
           </h3>
-          <p className="text-sm text-white/50 mb-6 max-w-sm mx-auto">
+          <p className="text-sm text-white mb-6 max-w-sm mx-auto">
             Choose a template above or add individual circuits to start designing
           </p>
           <Button

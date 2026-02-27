@@ -70,7 +70,7 @@ const ProgressCard: React.FC<ProgressCardProps> = ({ completedCount, totalScenar
                 {getProgressMessage()}
               </h4>
               {progressPercentage < 100 && (
-                <p className="text-sm text-white/80 mt-1">
+                <p className="text-sm text-white mt-1">
                   {totalScenarios - completedCount} scenarios remaining
                 </p>
               )}
@@ -84,7 +84,7 @@ const ProgressCard: React.FC<ProgressCardProps> = ({ completedCount, totalScenar
             <div className="p-2 rounded-lg bg-blue-500/20 flex-shrink-0">
               <Sparkles className="h-4 w-4 text-blue-400" />
             </div>
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               Complete all scenarios to improve your understanding of electrical safety regulations
               and decision-making in the workplace. Your progress is tracked as you work through
               each scenario.

@@ -209,7 +209,7 @@ const Module3Section3_6: React.FC = () => {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             PPE Associated with Tool Use
           </h1>
-          <p className="text-white/70">
+          <p className="text-white">
             Essential personal protective equipment for safe electrical tool operation and
             maintenance requirements.
           </p>

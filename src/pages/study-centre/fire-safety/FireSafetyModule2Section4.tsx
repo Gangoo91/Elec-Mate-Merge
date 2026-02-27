@@ -207,7 +207,7 @@ export default function FireSafetyModule2Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-2">
@@ -230,7 +230,7 @@ export default function FireSafetyModule2Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Supporting Legislation &amp; Standards
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The wider legislative and standards framework that supports the RRFSO &mdash; from the
             Health and Safety at Work Act and Management Regulations to Building Regulations Part B,
             British Standards for fire detection, emergency lighting, and fire safety design
@@ -322,7 +322,7 @@ export default function FireSafetyModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Key Sections of HASAWA (Sections 2&ndash;9)
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-rose-500/20 text-rose-400 text-xs font-bold flex-shrink-0">
                       S2
@@ -426,7 +426,7 @@ export default function FireSafetyModule2Section4() {
                   <ShieldCheck className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Key Point</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     HASAWA provides the general duty of care; the RRFSO provides the specific fire
                     safety duties.
@@ -461,7 +461,7 @@ export default function FireSafetyModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Key Regulations and Their Fire Safety Relevance
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[40px] h-7 rounded-full bg-rose-500/20 text-rose-400 text-xs font-bold flex-shrink-0">
                       Reg 3
@@ -599,7 +599,7 @@ export default function FireSafetyModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   The Five Sections of Approved Document B
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-rose-500/20 text-rose-400 text-xs font-bold flex-shrink-0">
                       B1
@@ -694,7 +694,7 @@ export default function FireSafetyModule2Section4() {
                     Fire Stopping, Compartmentation &amp; Cavity Barriers
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     These are critical for electrical installations.
                   </strong>{' '}
@@ -730,7 +730,7 @@ export default function FireSafetyModule2Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">BS 5839-1 System Categories</p>
-                <div className="space-y-4 text-sm text-white/80">
+                <div className="space-y-4 text-sm text-white">
                   <div>
                     <p className="text-white font-medium mb-2">
                       Life Safety Categories (L1&ndash;L5)
@@ -837,7 +837,7 @@ export default function FireSafetyModule2Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">System Types</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -917,7 +917,7 @@ export default function FireSafetyModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Types of Emergency Lighting System
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -944,7 +944,7 @@ export default function FireSafetyModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Categories of Emergency Lighting
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -980,7 +980,7 @@ export default function FireSafetyModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Duration Requirements and Testing
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -1022,7 +1022,7 @@ export default function FireSafetyModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Power Sources for Emergency Lighting
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -1076,7 +1076,7 @@ export default function FireSafetyModule2Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key Features of BS 9999</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -1161,7 +1161,7 @@ export default function FireSafetyModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Principal Contractor&rsquo;s Fire Safety Responsibilities
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -1224,7 +1224,7 @@ export default function FireSafetyModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Joint Codes of Practice &amp; FPA RC 35/59
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The{' '}
                   <strong className="text-white">
                     Joint Codes of Practice on Fire Prevention in Construction
@@ -1233,7 +1233,7 @@ export default function FireSafetyModule2Section4() {
                   supported by the Fire Protection Association) provide detailed guidance on fire
                   prevention measures during the construction phase. They cover topics including:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>Site security and arson prevention</span>
@@ -1260,7 +1260,7 @@ export default function FireSafetyModule2Section4() {
                     </span>
                   </li>
                 </ul>
-                <p className="text-sm text-white/80 mt-3">
+                <p className="text-sm text-white mt-3">
                   <strong className="text-white">FPA RC 35/59</strong> (Recommendations for Fire
                   Prevention on Construction Sites) is a complementary guidance document from the
                   Fire Protection Association that provides practical recommendations for managing
@@ -1276,7 +1276,7 @@ export default function FireSafetyModule2Section4() {
                     Electricians on Construction Sites
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   As an electrician working on a construction site, you must follow the principal
                   contractor&rsquo;s fire plan, comply with the hot works permit system (if carrying
                   out any work that produces sparks or heat), maintain temporary fire detection
@@ -1295,7 +1295,7 @@ export default function FireSafetyModule2Section4() {
         <section className="mb-10">
           <h2 className="text-xl font-semibold text-white mb-4">Fire Safety Legislation Map</h2>
           <div className="bg-gradient-to-br from-rose-500/10 via-rose-400/5 to-transparent border border-rose-500/30 rounded-xl p-5 sm:p-6">
-            <p className="text-sm text-white/60 mb-5 text-center">
+            <p className="text-sm text-white mb-5 text-center">
               How the key fire safety laws and standards interconnect
             </p>
 
@@ -1306,7 +1306,7 @@ export default function FireSafetyModule2Section4() {
                   Overarching
                 </p>
                 <p className="text-white text-sm font-bold">Health &amp; Safety at Work Act 1974</p>
-                <p className="text-white/60 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   General duty of care &mdash; Sections 2&ndash;9
                 </p>
               </div>
@@ -1324,7 +1324,7 @@ export default function FireSafetyModule2Section4() {
                   Fire-Specific
                 </p>
                 <p className="text-white text-sm font-bold">RRFSO 2005</p>
-                <p className="text-white/60 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Fire risk assessment, fire safety duties
                 </p>
               </div>
@@ -1333,7 +1333,7 @@ export default function FireSafetyModule2Section4() {
                   Management
                 </p>
                 <p className="text-white text-sm font-bold">Management Regs 1999</p>
-                <p className="text-white/60 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Risk assessment, competent persons, training
                 </p>
               </div>
@@ -1351,7 +1351,7 @@ export default function FireSafetyModule2Section4() {
                   Building Design
                 </p>
                 <p className="text-white text-sm font-bold">Building Regs Part B / ADB</p>
-                <p className="text-white/60 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   B1&ndash;B5: Warning, escape, fire spread, access
                 </p>
               </div>
@@ -1360,7 +1360,7 @@ export default function FireSafetyModule2Section4() {
                   Construction Phase
                 </p>
                 <p className="text-white text-sm font-bold">CDM 2015</p>
-                <p className="text-white/60 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Fire plan, temporary detection, hot works
                 </p>
               </div>
@@ -1378,25 +1378,25 @@ export default function FireSafetyModule2Section4() {
                   Detection
                 </p>
                 <p className="text-white text-sm font-bold">BS 5839</p>
-                <p className="text-white/60 text-xs mt-1">Fire detection &amp; alarm systems</p>
+                <p className="text-white text-xs mt-1">Fire detection &amp; alarm systems</p>
               </div>
               <div className="bg-white/5 border border-white/10 rounded-lg px-3 py-3 text-center">
                 <p className="text-green-400 text-xs font-semibold mb-1 uppercase tracking-wide">
                   Lighting
                 </p>
                 <p className="text-white text-sm font-bold">BS 5266</p>
-                <p className="text-white/60 text-xs mt-1">Emergency escape lighting</p>
+                <p className="text-white text-xs mt-1">Emergency escape lighting</p>
               </div>
               <div className="bg-white/5 border border-white/10 rounded-lg px-3 py-3 text-center">
                 <p className="text-green-400 text-xs font-semibold mb-1 uppercase tracking-wide">
                   Design
                 </p>
                 <p className="text-white text-sm font-bold">BS 9999</p>
-                <p className="text-white/60 text-xs mt-1">Risk-based fire safety design</p>
+                <p className="text-white text-xs mt-1">Risk-based fire safety design</p>
               </div>
             </div>
 
-            <p className="text-xs text-white/40 text-center mt-5">
+            <p className="text-xs text-white text-center mt-5">
               All standards support compliance with the RRFSO and Building Regulations &mdash; they
               do not operate in isolation
             </p>
@@ -1410,7 +1410,7 @@ export default function FireSafetyModule2Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1424,7 +1424,7 @@ export default function FireSafetyModule2Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-2-section-3">

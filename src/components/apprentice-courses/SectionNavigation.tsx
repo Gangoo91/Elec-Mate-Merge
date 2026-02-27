@@ -24,7 +24,7 @@ export function SectionNavigation({
       <Button
         variant="ghost"
         size="lg"
-        className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98] transition-all"
+        className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98] transition-all"
         asChild
       >
         <Link to={backHref}>

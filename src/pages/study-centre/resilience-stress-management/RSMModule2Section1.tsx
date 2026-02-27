@@ -195,7 +195,7 @@ export default function RSMModule2Section1() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="min-h-[44px] text-white/70 hover:text-white active:text-white p-0 -ml-1 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] text-white hover:text-white active:text-white p-0 -ml-1 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-2">
@@ -215,7 +215,7 @@ export default function RSMModule2Section1() {
             MODULE 2 &middot; SECTION 1
           </span>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">What Is Resilience?</h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding the true meaning of resilience, why it is a learnable skill, and debunking
             the myths that stop people from building it
           </p>
@@ -270,7 +270,7 @@ export default function RSMModule2Section1() {
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-rose-500/10 border-l-2 border-l-rose-500/50 border border-rose-500/30">
               <p className="font-semibold text-base text-rose-400 mb-2">Why It Matters</p>
-              <ul className="text-base text-white/80 space-y-1.5">
+              <ul className="text-base text-white space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                   <span>
@@ -395,7 +395,7 @@ export default function RSMModule2Section1() {
                   <Brain className="h-4 w-4 inline-block mr-2 -mt-0.5" />
                   What Resilience Looks Like in Practice
                 </h3>
-                <ul className="text-white/80 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -478,7 +478,7 @@ export default function RSMModule2Section1() {
                 <h3 className="text-rose-400 font-medium mb-2">
                   The Resilience-as-Fitness Analogy
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Think of resilience like physical fitness. Some people are naturally more
                   athletic, but <strong className="text-white">everyone</strong> benefits from
                   regular exercise. A person who has never trained can become significantly fitter
@@ -526,7 +526,7 @@ export default function RSMModule2Section1() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-2">Bouncing Back</h4>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                         <span>Returning to your previous level of functioning</span>
@@ -543,7 +543,7 @@ export default function RSMModule2Section1() {
                   </div>
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-2">Bouncing Forward</h4>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                         <span>Growing beyond your previous level of functioning</span>
@@ -630,7 +630,7 @@ export default function RSMModule2Section1() {
                     <h4 className="text-red-400 font-medium mb-1">
                       Myth: &ldquo;Tough people don&rsquo;t get stressed&rdquo;
                     </h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       <strong className="text-white">Reality:</strong> Everyone experiences stress
                       &mdash; it is a fundamental biological response to perceived threats. The
                       difference between resilient and non-resilient people is not whether they feel
@@ -644,7 +644,7 @@ export default function RSMModule2Section1() {
                     <h4 className="text-red-400 font-medium mb-1">
                       Myth: &ldquo;Asking for help is a sign of weakness&rdquo;
                     </h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       <strong className="text-white">Reality:</strong> Reaching out for support is
                       one of the strongest predictors of resilience, according to virtually every
                       major research study on the topic. It takes self-awareness to recognise when
@@ -658,7 +658,7 @@ export default function RSMModule2Section1() {
                     <h4 className="text-red-400 font-medium mb-1">
                       Myth: &ldquo;Resilience means coping alone&rdquo;
                     </h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       <strong className="text-white">Reality:</strong> True resilience involves
                       knowing when to lean on others. Social connection is consistently identified
                       as one of the most powerful protective factors against mental health decline.
@@ -672,7 +672,7 @@ export default function RSMModule2Section1() {
                     <h4 className="text-red-400 font-medium mb-1">
                       Myth: &ldquo;You either have resilience or you don&rsquo;t&rdquo;
                     </h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       <strong className="text-white">Reality:</strong> As Connor and Davidson
                       demonstrated, resilience is measurable and improvable. It is not a binary
                       on/off switch. Your resilience level fluctuates based on your current
@@ -686,7 +686,7 @@ export default function RSMModule2Section1() {
                     <h4 className="text-red-400 font-medium mb-1">
                       Myth: &ldquo;Resilient people are always positive and optimistic&rdquo;
                     </h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       <strong className="text-white">Reality:</strong> Resilience is not about
                       forced positivity or toxic optimism. Resilient people experience the full
                       range of human emotions, including anger, sadness, frustration, and fear. What
@@ -705,7 +705,7 @@ export default function RSMModule2Section1() {
                     Why These Myths Are Dangerous in Construction
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The construction industry has a deeply embedded culture of stoicism. While there
                   is nothing wrong with being tough and determined, the line between healthy
                   stoicism and harmful emotional suppression is frequently crossed. When workers
@@ -740,7 +740,7 @@ export default function RSMModule2Section1() {
                 <h3 className="text-rose-400 font-medium mb-3">
                   Common Stressors in the Electrical Trade
                 </h3>
-                <ul className="text-white/80 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -869,7 +869,7 @@ export default function RSMModule2Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -885,7 +885,7 @@ export default function RSMModule2Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-2">

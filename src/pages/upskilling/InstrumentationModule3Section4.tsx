@@ -104,7 +104,7 @@ const InstrumentationModule3Section4 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Signal Scaling, Conversions, and Error
           </h1>
-          <p className="text-white/80">Transform signals accurately while managing error sources</p>
+          <p className="text-white">Transform signals accurately while managing error sources</p>
         </div>
 
         {/* Quick Summary */}

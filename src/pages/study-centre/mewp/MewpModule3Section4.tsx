@@ -201,7 +201,7 @@ export default function MewpModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-3">
@@ -226,7 +226,7 @@ export default function MewpModule3Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Fall Protection, Harnesses &amp; PPE
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Work restraint versus fall arrest, harness selection, fitting and inspection, anchor
             points, and the full range of PPE required for safe MEWP operations
           </p>
@@ -307,7 +307,7 @@ export default function MewpModule3Section4() {
                 <div className="space-y-3">
                   <div>
                     <p className="text-sm font-medium text-green-400">Work Restraint</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       A system that <strong>prevents</strong> the operator from getting into a
                       position where they could fall. The lanyard is short enough to keep the
                       operator inside the platform at all times. The operator{' '}
@@ -317,7 +317,7 @@ export default function MewpModule3Section4() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-red-400">Fall Arrest</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       A system that <strong>catches</strong> the fall after it has started. The
                       operator is allowed to reach a fall position, and the system then arrests the
                       fall via a shock absorber or inertia reel, limiting the forces on the body.
@@ -334,11 +334,11 @@ export default function MewpModule3Section4() {
                     Critical: MEWPs Primarily Use RESTRAINT Systems
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Fall arrest is <strong className="text-white">NOT generally recommended</strong>{' '}
                   for MEWPs. The three principal reasons are:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -372,7 +372,7 @@ export default function MewpModule3Section4() {
                   <p className="text-sm font-medium text-green-400 mb-3">
                     Work Restraint (Preferred for MEWPs)
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                       <span>Prevents the fall from occurring</span>
@@ -403,7 +403,7 @@ export default function MewpModule3Section4() {
                   <p className="text-sm font-medium text-red-400 mb-3">
                     Fall Arrest (Not Recommended for MEWPs)
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                       <span>Catches the fall after it starts</span>
@@ -457,14 +457,14 @@ export default function MewpModule3Section4() {
                     Boom-Type MEWPs (Categories 3B &amp; 1B)
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Work restraint harness and lanyard{' '}
                   <strong className="text-white">STRONGLY RECOMMENDED at all times</strong>. Boom
                   movement can eject operators from the platform &mdash; the &ldquo;catapult
                   effect&rdquo; occurs when the boom moves suddenly, causing the platform to
                   accelerate and the operator&rsquo;s body to be thrown outwards.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -507,7 +507,7 @@ export default function MewpModule3Section4() {
                     Scissor Lifts (Categories 3A &amp; 1A)
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Harness use is{' '}
                   <strong className="text-white">
                     determined by the task-specific risk assessment
@@ -515,7 +515,7 @@ export default function MewpModule3Section4() {
                   . Scissor lifts are generally considered lower risk because they have an enclosed
                   platform and no catapult effect.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Generally lower ejection risk than boom-type machines</span>
@@ -548,15 +548,15 @@ export default function MewpModule3Section4() {
                     Scissor (3A/1A)
                   </div>
 
-                  <div className="p-3 text-white/80 border-b border-white/10">Harness worn</div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10">
+                  <div className="p-3 text-white border-b border-white/10">Harness worn</div>
+                  <div className="p-3 text-white border-b border-l border-white/10">
                     Strongly recommended always
                   </div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10">
+                  <div className="p-3 text-white border-b border-l border-white/10">
                     By risk assessment
                   </div>
 
-                  <div className="p-3 text-white/80 border-b border-white/10">Ejection risk</div>
+                  <div className="p-3 text-white border-b border-white/10">Ejection risk</div>
                   <div className="p-3 text-red-300 font-medium border-b border-l border-white/10">
                     HIGH (catapult effect)
                   </div>
@@ -564,19 +564,19 @@ export default function MewpModule3Section4() {
                     LOW (enclosed platform)
                   </div>
 
-                  <div className="p-3 text-white/80 border-b border-white/10">System type</div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10">
+                  <div className="p-3 text-white border-b border-white/10">System type</div>
+                  <div className="p-3 text-white border-b border-l border-white/10">
                     Work restraint
                   </div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10">
+                  <div className="p-3 text-white border-b border-l border-white/10">
                     Work restraint (if required)
                   </div>
 
-                  <div className="p-3 text-white/80">Lanyard length</div>
-                  <div className="p-3 text-white/80 border-l border-white/10">
+                  <div className="p-3 text-white">Lanyard length</div>
+                  <div className="p-3 text-white border-l border-white/10">
                     Short &mdash; stay inside platform
                   </div>
-                  <div className="p-3 text-white/80 border-l border-white/10">
+                  <div className="p-3 text-white border-l border-white/10">
                     Short &mdash; stay inside platform
                   </div>
                 </div>
@@ -645,7 +645,7 @@ export default function MewpModule3Section4() {
                       </span>
                       <div>
                         <p className="text-sm font-medium text-white">{item.title}</p>
-                        <p className="text-sm text-white/80">{item.desc}</p>
+                        <p className="text-sm text-white">{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -708,31 +708,31 @@ export default function MewpModule3Section4() {
                   <div className="grid grid-cols-2 gap-2 mt-4">
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-sm bg-amber-500/60" />
-                      <span className="text-xs text-white/80">Shoulder straps</span>
+                      <span className="text-xs text-white">Shoulder straps</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-sm bg-teal-500/60" />
-                      <span className="text-xs text-white/80">Chest strap</span>
+                      <span className="text-xs text-white">Chest strap</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full border-2 border-elec-yellow bg-elec-yellow/20" />
-                      <span className="text-xs text-white/80">Dorsal D-ring</span>
+                      <span className="text-xs text-white">Dorsal D-ring</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-full border-2 border-teal-400 bg-teal-400/20" />
-                      <span className="text-xs text-white/80">Sternal D-ring</span>
+                      <span className="text-xs text-white">Sternal D-ring</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-sm bg-orange-500/60" />
-                      <span className="text-xs text-white/80">Leg loops</span>
+                      <span className="text-xs text-white">Leg loops</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-sm bg-green-500/60" />
-                      <span className="text-xs text-white/80">Lanyard attachment</span>
+                      <span className="text-xs text-white">Lanyard attachment</span>
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 rounded-sm bg-purple-500/60" />
-                      <span className="text-xs text-white/80">Sub-pelvic strap</span>
+                      <span className="text-xs text-white">Sub-pelvic strap</span>
                     </div>
                   </div>
                 </div>
@@ -763,7 +763,7 @@ export default function MewpModule3Section4() {
                     <Search className="h-5 w-5 text-amber-400" />
                     <p className="text-sm font-medium text-amber-400">Webbing Inspection</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     {[
                       'Cuts or tears in the webbing material',
                       'Fraying or abraded areas along edges or surfaces',
@@ -785,7 +785,7 @@ export default function MewpModule3Section4() {
                     <Search className="h-5 w-5 text-blue-400" />
                     <p className="text-sm font-medium text-blue-400">Hardware Inspection</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     {[
                       'Buckles: functioning correctly, no corrosion, no distortion',
                       'D-rings: no cracks, no corrosion, no distortion or deformation',
@@ -805,7 +805,7 @@ export default function MewpModule3Section4() {
                     <Search className="h-5 w-5 text-green-400" />
                     <p className="text-sm font-medium text-green-400">Lanyard Inspection</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     {[
                       'Overall condition of lanyard material (no cuts, fraying, or damage)',
                       'Length adjustment mechanism working correctly',
@@ -825,7 +825,7 @@ export default function MewpModule3Section4() {
                     <Eye className="h-5 w-5 text-purple-400" />
                     <p className="text-sm font-medium text-purple-400">Labels &amp; Anchor Point</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     {[
                       'Labels legible — manufacturer, model, standard, serial number',
                       "Within manufacturer's recommended service life",
@@ -846,7 +846,7 @@ export default function MewpModule3Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">If ANY Defect Is Found</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Immediately withdraw the harness or lanyard from service. Tag it as defective so
                   that no one else uses it. Report the defect to your supervisor. Do{' '}
                   <strong className="text-white">NOT</strong> attempt to repair the equipment
@@ -881,7 +881,7 @@ export default function MewpModule3Section4() {
                     Anchor Point Rules &mdash; Non-Negotiable
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                     <span>
@@ -933,7 +933,7 @@ export default function MewpModule3Section4() {
                   <Link2 className="h-5 w-5 text-cyan-400" />
                   <p className="text-sm font-medium text-cyan-400">Lanyard Length Adjustment</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1008,7 +1008,7 @@ export default function MewpModule3Section4() {
                     </div>
                     <p className="text-sm font-medium text-amber-400">Hard Hat</p>
                   </div>
-                  <ul className="text-xs sm:text-sm text-white/80 space-y-1">
+                  <ul className="text-xs sm:text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Protection from falling objects and overhead impact</span>
@@ -1032,7 +1032,7 @@ export default function MewpModule3Section4() {
                       High-Visibility Vest/Jacket
                     </p>
                   </div>
-                  <ul className="text-xs sm:text-sm text-white/80 space-y-1">
+                  <ul className="text-xs sm:text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Visibility to other site personnel</span>
@@ -1051,7 +1051,7 @@ export default function MewpModule3Section4() {
                     </div>
                     <p className="text-sm font-medium text-blue-400">Safety Boots</p>
                   </div>
-                  <ul className="text-xs sm:text-sm text-white/80 space-y-1">
+                  <ul className="text-xs sm:text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Steel or composite toe cap protection</span>
@@ -1070,7 +1070,7 @@ export default function MewpModule3Section4() {
                     </div>
                     <p className="text-sm font-medium text-purple-400">Gloves</p>
                   </div>
-                  <ul className="text-xs sm:text-sm text-white/80 space-y-1">
+                  <ul className="text-xs sm:text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Grip for tools and controls</span>
@@ -1089,7 +1089,7 @@ export default function MewpModule3Section4() {
                     </div>
                     <p className="text-sm font-medium text-teal-400">Eye Protection</p>
                   </div>
-                  <ul className="text-xs sm:text-sm text-white/80 space-y-1">
+                  <ul className="text-xs sm:text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Required if task involves grinding, cutting, or drilling</span>
@@ -1108,7 +1108,7 @@ export default function MewpModule3Section4() {
                     </div>
                     <p className="text-sm font-medium text-red-400">Hearing Protection</p>
                   </div>
-                  <ul className="text-xs sm:text-sm text-white/80 space-y-1">
+                  <ul className="text-xs sm:text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Required if noise levels exceed action values</span>
@@ -1159,7 +1159,7 @@ export default function MewpModule3Section4() {
                     Formal Inspection Requirements
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1204,11 +1204,11 @@ export default function MewpModule3Section4() {
                     Immediate Withdrawal from Service
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   A harness must be withdrawn from service immediately if any of the following
                   apply:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -1267,15 +1267,15 @@ export default function MewpModule3Section4() {
                   <div className="grid grid-cols-3 gap-3 text-center">
                     <div>
                       <p className="text-xs text-green-400 font-medium">Pre-Use Check</p>
-                      <p className="text-xs text-white/60">By operator</p>
+                      <p className="text-xs text-white">By operator</p>
                     </div>
                     <div>
                       <p className="text-xs text-blue-400 font-medium">Formal Inspection</p>
-                      <p className="text-xs text-white/60">By competent person</p>
+                      <p className="text-xs text-white">By competent person</p>
                     </div>
                     <div>
                       <p className="text-xs text-amber-400 font-medium">Service Life Limit</p>
-                      <p className="text-xs text-white/60">Manufacturer&rsquo;s max</p>
+                      <p className="text-xs text-white">Manufacturer&rsquo;s max</p>
                     </div>
                   </div>
                 </div>
@@ -1302,7 +1302,7 @@ export default function MewpModule3Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1316,7 +1316,7 @@ export default function MewpModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-3">

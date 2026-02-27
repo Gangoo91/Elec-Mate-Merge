@@ -241,7 +241,7 @@ const SafetyComplianceSection = () => {
                   </Badge>
                 </div>
                 <p className="text-sm text-elec-yellow font-medium mb-2">{req.requirement}</p>
-                <p className="text-xs text-white/80 mb-2">{req.details}</p>
+                <p className="text-xs text-white mb-2">{req.details}</p>
                 <Badge variant="secondary" className="text-xs">
                   {req.regulation}
                 </Badge>

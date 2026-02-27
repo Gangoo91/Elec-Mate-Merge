@@ -31,7 +31,7 @@ const CareerAdvancementTips = () => {
               className="flex items-start gap-3 p-2 rounded-lg hover:bg-white/5 transition-colors"
             >
               <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-              <span className="text-sm text-white/80">{tip}</span>
+              <span className="text-sm text-white">{tip}</span>
             </li>
           ))}
         </ul>

@@ -103,7 +103,7 @@ const EVChargingModule3Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/ev-charging-module-3">
@@ -124,7 +124,7 @@ const EVChargingModule3Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Voltage Drop and Cable Sizing
           </h1>
-          <p className="text-white/80">Selecting cables for EV charging installations</p>
+          <p className="text-white">Selecting cables for EV charging installations</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -222,7 +222,7 @@ const EVChargingModule3Section2 = () => {
               <p className="text-sm font-medium text-elec-yellow mb-2">Voltage Drop Formulas</p>
               <p className="font-mono text-white text-sm mb-1">Single-phase: Vd = I × R × L</p>
               <p className="font-mono text-white text-sm">Three-phase: Vd = √3 × I × R × L</p>
-              <p className="text-xs text-white/70 mt-2">
+              <p className="text-xs text-white mt-2">
                 Where I = current, R = resistance/metre, L = length
               </p>
             </div>
@@ -350,7 +350,7 @@ const EVChargingModule3Section2 = () => {
                   </p>
                 </div>
               </div>
-              <p className="text-xs text-white/70 mt-2">
+              <p className="text-xs text-white mt-2">
                 Sizes depend on cable run length and installation method
               </p>
             </div>
@@ -483,7 +483,7 @@ const EVChargingModule3Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/ev-charging-module-3-section-1">

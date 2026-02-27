@@ -194,7 +194,7 @@ export default function FireSafetyModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-3">
@@ -217,7 +217,7 @@ export default function FireSafetyModule3Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Fire Prevention Measures
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Proactive strategies for eliminating fire risks &mdash; from ignition source control and
             flammable material storage to structural compartmentation and electrical safety
           </p>
@@ -300,13 +300,13 @@ export default function FireSafetyModule3Section1() {
                   <Zap className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Electrical Safety</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Electrical faults are the single largest cause of fires in UK commercial and
                   industrial premises. Faulty wiring, overloaded circuits, damaged cables, and
                   poorly maintained equipment can all produce enough heat or arcing to ignite
                   surrounding materials.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -362,12 +362,12 @@ export default function FireSafetyModule3Section1() {
                   <Flame className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Hot Work Controls</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Hot work — including welding, brazing, soldering, grinding, and the use of
                   blowtorches — is one of the most common causes of workplace fires. A formal hot
                   work permit system is essential wherever hot work is carried out.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -418,7 +418,7 @@ export default function FireSafetyModule3Section1() {
               <div className="grid sm:grid-cols-3 gap-4">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">No-Smoking Policies</p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>Enforce strict no-smoking policy across all work areas</span>
@@ -438,7 +438,7 @@ export default function FireSafetyModule3Section1() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Heating Equipment</p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
@@ -457,7 +457,7 @@ export default function FireSafetyModule3Section1() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Arson Prevention</p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
@@ -483,7 +483,7 @@ export default function FireSafetyModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Key Point</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Arson accounts for approximately{' '}
                   <strong className="text-white">45% of all fires in commercial premises</strong> in
                   the UK. Many arson fires are opportunistic — the arsonist uses waste or materials
@@ -518,13 +518,13 @@ export default function FireSafetyModule3Section1() {
               {/* Flammable Liquids */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-400 mb-3">Flammable Liquids</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Solvents, adhesives, paints, thinners, cleaning fluids, and many other substances
                   commonly found on electrical and construction sites are classified as flammable
                   liquids. Their vapours are heavier than air and can travel significant distances
                   to find an ignition source.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -576,12 +576,12 @@ export default function FireSafetyModule3Section1() {
               {/* Gas Cylinders */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-orange-400 mb-3">Gas Cylinders</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Compressed gas cylinders (propane, acetylene, oxygen, LPG) present significant
                   fire and explosion risks if stored or handled incorrectly. Heat exposure can cause
                   catastrophic cylinder failure.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -627,7 +627,7 @@ export default function FireSafetyModule3Section1() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Aerosols</p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Aerosol cans (spray paints, lubricants, foam cleaners) contain flammable
                     propellants that can explode if heated. They must be stored away from heat
                     sources and direct sunlight, in cool, ventilated areas, and never punctured or
@@ -636,7 +636,7 @@ export default function FireSafetyModule3Section1() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Combustible Dusts</p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Fine dusts from wood, metal, flour, and other materials can form explosive
                     atmospheres when suspended in air. Dust extraction systems, regular cleaning,
                     and elimination of ignition sources in dusty environments are essential. DSEAR
@@ -679,7 +679,7 @@ export default function FireSafetyModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-400 mb-3">Key Housekeeping Measures</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -745,7 +745,7 @@ export default function FireSafetyModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Housekeeping Audits &amp; 5S Methodology
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Regular housekeeping audits should be conducted to verify that fire prevention
                   standards are maintained. The{' '}
                   <strong className="text-white">5S methodology</strong> — originally developed for
@@ -769,7 +769,7 @@ export default function FireSafetyModule3Section1() {
                       <p className="text-xs font-bold text-rose-400 mb-1">
                         {i + 1}. {s.label}
                       </p>
-                      <p className="text-xs text-white/70">{s.desc}</p>
+                      <p className="text-xs text-white">{s.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -801,7 +801,7 @@ export default function FireSafetyModule3Section1() {
                   <Shield className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Fire Doors</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Fire doors are the most common — and most commonly compromised — element of
                   compartmentation. They are tested to resist the passage of fire and smoke for a
                   specified period and are critical life-safety elements.
@@ -809,20 +809,20 @@ export default function FireSafetyModule3Section1() {
                 <div className="grid sm:grid-cols-2 gap-4 mb-3">
                   <div className="bg-rose-500/5 border border-rose-500/20 p-3 rounded-lg">
                     <p className="text-sm font-bold text-rose-400 mb-1">FD30</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Resists fire for 30 minutes. Used in most commercial and residential buildings
                       — offices, corridors, storerooms.
                     </p>
                   </div>
                   <div className="bg-rose-500/5 border border-rose-500/20 p-3 rounded-lg">
                     <p className="text-sm font-bold text-rose-400 mb-1">FD60</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Resists fire for 60 minutes. Used in higher-risk areas — stairwells, corridors
                       serving sleeping accommodation, plant rooms.
                     </p>
                   </div>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -869,14 +869,14 @@ export default function FireSafetyModule3Section1() {
                   <Building className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">Fire Stopping</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Fire stopping is the process of sealing penetrations through fire-rated barriers
                   to maintain their fire resistance. This is{' '}
                   <strong className="text-white">critically important for electricians</strong> —
                   every cable, trunking, conduit, or busbar that passes through a fire wall or fire
                   floor creates a penetration that must be fire-stopped.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -928,7 +928,7 @@ export default function FireSafetyModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Warning</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Inadequate fire stopping is one of the{' '}
                   <strong className="text-white">most common fire safety failings</strong> found
                   during building inspections. Electricians, plumbers, and other trades frequently
@@ -969,13 +969,13 @@ export default function FireSafetyModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Periodic Inspection &amp; Testing (BS 7671)
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   All electrical installations deteriorate over time. Periodic inspection and
                   testing identifies faults before they become dangerous. The resulting Electrical
                   Installation Condition Report (EICR) classifies any defects by severity and
                   provides recommendations for remedial work.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>Commercial premises: every 5 years (or at change of occupancy)</span>
@@ -1000,7 +1000,7 @@ export default function FireSafetyModule3Section1() {
                 <p className="text-sm font-medium text-rose-400 mb-3">
                   Earth Fault Protection: RCDs, MCBs &amp; AFDDs
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Multiple layers of electrical protection work together to prevent fire:
                 </p>
                 <div className="space-y-3">
@@ -1008,7 +1008,7 @@ export default function FireSafetyModule3Section1() {
                     <p className="text-sm font-bold text-white mb-1">
                       RCDs (Residual Current Devices)
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Detect imbalances between live and neutral currents, indicating current is
                       leaking to earth through an unintended path. Trip at 30 mA for personal
                       protection, 300 mA for fire protection. Effective against earth faults but do
@@ -1019,7 +1019,7 @@ export default function FireSafetyModule3Section1() {
                     <p className="text-sm font-bold text-white mb-1">
                       MCBs (Miniature Circuit Breakers)
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Protect against overcurrent (overload and short circuit). Trip when current
                       exceeds the rated value, preventing cables from overheating. Do not detect
                       earth faults or arc faults — they only respond to excessive current flow.
@@ -1029,7 +1029,7 @@ export default function FireSafetyModule3Section1() {
                     <p className="text-sm font-bold text-rose-400 mb-1">
                       AFDDs (Arc Fault Detection Devices) — BS 7671 18th Edition
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       AFDDs represent the latest advancement in electrical fire prevention. They
                       detect dangerous electrical arcing — both series arcs (caused by damaged
                       conductors, loose connections, or insulation breakdown) and parallel arcs
@@ -1047,7 +1047,7 @@ export default function FireSafetyModule3Section1() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Cable Selection</p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>Correct current rating for the load and protective device</span>
@@ -1072,7 +1072,7 @@ export default function FireSafetyModule3Section1() {
                   <p className="text-sm font-medium text-white mb-2">
                     Thermal Imaging &amp; Maintenance
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
@@ -1128,7 +1128,7 @@ export default function FireSafetyModule3Section1() {
                     Construction Site Fire Prevention
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1215,7 +1215,7 @@ export default function FireSafetyModule3Section1() {
                     Building a Fire Prevention Culture
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1287,7 +1287,7 @@ export default function FireSafetyModule3Section1() {
         <section className="mb-10">
           <h2 className="text-xl font-semibold text-white mb-4">Fire Prevention Hierarchy</h2>
           <div className="bg-white/5 border border-white/10 rounded-lg p-4 sm:p-6">
-            <p className="text-sm text-white/60 mb-4 text-center">
+            <p className="text-sm text-white mb-4 text-center">
               The hierarchy of fire prevention controls — most effective at the top
             </p>
             <div className="max-w-lg mx-auto space-y-2">
@@ -1298,7 +1298,7 @@ export default function FireSafetyModule3Section1() {
                     1. Elimination
                   </span>
                 </div>
-                <p className="text-xs sm:text-sm text-white/80">
+                <p className="text-xs sm:text-sm text-white">
                   Remove the hazard entirely &mdash; eliminate the ignition source or the flammable
                   material from the workplace
                 </p>
@@ -1311,7 +1311,7 @@ export default function FireSafetyModule3Section1() {
                     2. Substitution
                   </span>
                 </div>
-                <p className="text-xs sm:text-sm text-white/80">
+                <p className="text-xs sm:text-sm text-white">
                   Replace the dangerous substance with a less flammable alternative &mdash; e.g.
                   water-based paint instead of solvent-based
                 </p>
@@ -1324,7 +1324,7 @@ export default function FireSafetyModule3Section1() {
                     3. Engineering Controls
                   </span>
                 </div>
-                <p className="text-xs sm:text-sm text-white/80">
+                <p className="text-xs sm:text-sm text-white">
                   Physical measures &mdash; fire-resistant storage, ventilation systems,
                   compartmentation, AFDDs, fire detection systems
                 </p>
@@ -1337,7 +1337,7 @@ export default function FireSafetyModule3Section1() {
                     4. Administrative Controls
                   </span>
                 </div>
-                <p className="text-xs sm:text-sm text-white/80">
+                <p className="text-xs sm:text-sm text-white">
                   Policies, procedures, training, permits to work, housekeeping audits, signage, and
                   management systems
                 </p>
@@ -1350,7 +1350,7 @@ export default function FireSafetyModule3Section1() {
                     5. PPE &amp; Emergency Response
                   </span>
                 </div>
-                <p className="text-xs sm:text-sm text-white/80">
+                <p className="text-xs sm:text-sm text-white">
                   Last resort &mdash; fire extinguishers, fire blankets, fire-resistant PPE,
                   evacuation procedures, emergency plans
                 </p>
@@ -1358,7 +1358,7 @@ export default function FireSafetyModule3Section1() {
             </div>
 
             <div className="mt-4 text-center">
-              <p className="text-xs text-white/50">
+              <p className="text-xs text-white">
                 &uarr; Most effective &mdash; always start at the top of the hierarchy and work
                 downwards &darr;
               </p>
@@ -1373,7 +1373,7 @@ export default function FireSafetyModule3Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1387,7 +1387,7 @@ export default function FireSafetyModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-3">

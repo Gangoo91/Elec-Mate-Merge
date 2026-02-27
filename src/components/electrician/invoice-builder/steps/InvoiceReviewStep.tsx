@@ -63,7 +63,7 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
 
         {/* Client Details */}
         <div>
-          <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider mb-3">
+          <p className="text-[13px] font-medium text-white uppercase tracking-wider mb-3">
             Client Details
           </p>
           <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
@@ -94,7 +94,7 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
             </div>
             <div className="flex items-center gap-3 p-4">
               <div className="w-9 h-9 rounded-lg bg-white/[0.05] flex items-center justify-center flex-shrink-0">
-                <MapPin className="h-4 w-4 text-white/70" />
+                <MapPin className="h-4 w-4 text-white" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-[12px] text-white">Address</p>
@@ -108,7 +108,7 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
 
         {/* Items Summary */}
         <div>
-          <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider mb-3">
+          <p className="text-[13px] font-medium text-white uppercase tracking-wider mb-3">
             Items ({allItems.length})
           </p>
           <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
@@ -119,7 +119,7 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
                     <p className="text-[14px] font-medium text-white truncate">
                       {item.description}
                     </p>
-                    <p className="text-[12px] text-white/50">
+                    <p className="text-[12px] text-white">
                       {item.quantity} × {formatCurrency(item.unitPrice)}
                     </p>
                   </div>
@@ -130,14 +130,14 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
               ))}
               {allItems.length > 5 && (
                 <div className="p-4 text-center">
-                  <p className="text-[12px] text-white/50">+{allItems.length - 5} more items</p>
+                  <p className="text-[12px] text-white">+{allItems.length - 5} more items</p>
                 </div>
               )}
             </div>
             <div className="p-4 bg-elec-yellow/10 border-t border-elec-yellow/20 space-y-2">
               {/* Subtotal */}
               <div className="flex items-center justify-between">
-                <span className="text-[12px] text-white/70">Subtotal</span>
+                <span className="text-[12px] text-white">Subtotal</span>
                 <span className="text-[13px] font-medium text-white">
                   {formatCurrency(invoice.subtotal || 0)}
                 </span>
@@ -158,7 +158,7 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
               {/* VAT - only show if VAT registered */}
               {invoice.settings?.vatRegistered && (
                 <div className="flex items-center justify-between">
-                  <span className="text-[12px] text-white/70">
+                  <span className="text-[12px] text-white">
                     VAT ({invoice.settings?.vatRate || 20}%)
                   </span>
                   <span className="text-[13px] font-medium text-white">
@@ -226,9 +226,9 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
               <span className="text-[14px] font-medium text-white">Client Information</span>
             </div>
             {expandedSections.includes('client') ? (
-              <ChevronUp className="h-5 w-5 text-white/50" />
+              <ChevronUp className="h-5 w-5 text-white" />
             ) : (
-              <ChevronDown className="h-5 w-5 text-white/50" />
+              <ChevronDown className="h-5 w-5 text-white" />
             )}
           </button>
 
@@ -277,9 +277,9 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
               <span className="text-[14px] font-medium text-white">Invoice Details</span>
             </div>
             {expandedSections.includes('details') ? (
-              <ChevronUp className="h-5 w-5 text-white/50" />
+              <ChevronUp className="h-5 w-5 text-white" />
             ) : (
-              <ChevronDown className="h-5 w-5 text-white/50" />
+              <ChevronDown className="h-5 w-5 text-white" />
             )}
           </button>
 
@@ -341,9 +341,9 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
               </span>
             </div>
             {expandedSections.includes('items') ? (
-              <ChevronUp className="h-5 w-5 text-white/50" />
+              <ChevronUp className="h-5 w-5 text-white" />
             ) : (
-              <ChevronDown className="h-5 w-5 text-white/50" />
+              <ChevronDown className="h-5 w-5 text-white" />
             )}
           </button>
 
@@ -398,14 +398,14 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
                           <div className="flex-1 min-w-0">
                             <p className="text-[14px] font-medium text-white">{item.description}</p>
                             {item.notes && (
-                              <p className="text-[12px] text-white/50 mt-0.5">{item.notes}</p>
+                              <p className="text-[12px] text-white mt-0.5">{item.notes}</p>
                             )}
                           </div>
                           <p className="text-[14px] font-bold text-elec-yellow shrink-0">
                             {formatCurrency((item.quantity || 0) * (item.unitPrice || 0))}
                           </p>
                         </div>
-                        <div className="flex items-center gap-4 text-[12px] text-white/50">
+                        <div className="flex items-center gap-4 text-[12px] text-white">
                           <span>
                             {item.quantity} {item.unit}
                           </span>
@@ -420,7 +420,7 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
               <div className="p-4 bg-elec-yellow/10 border-t border-elec-yellow/20 space-y-2">
                 {/* Subtotal */}
                 <div className="flex items-center justify-between">
-                  <span className="text-[13px] text-white/70">Subtotal</span>
+                  <span className="text-[13px] text-white">Subtotal</span>
                   <span className="text-[14px] font-medium text-white">
                     {formatCurrency(invoice.subtotal || 0)}
                   </span>
@@ -441,7 +441,7 @@ export const InvoiceReviewStep = ({ invoice, showSummaryOnly = false }: InvoiceR
                 {/* VAT - only show if VAT registered */}
                 {invoice.settings?.vatRegistered && (
                   <div className="flex items-center justify-between">
-                    <span className="text-[13px] text-white/70">
+                    <span className="text-[13px] text-white">
                       VAT ({invoice.settings?.vatRate || 20}%)
                     </span>
                     <span className="text-[14px] font-medium text-white">

@@ -220,7 +220,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-3">
@@ -245,7 +245,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Sustainable Materials &amp; Procurement
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Choosing construction materials with lower environmental impact, understanding
             responsible sourcing frameworks, and reducing material waste across the project
             lifecycle
@@ -366,7 +366,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                   ].map((criterion, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 rounded-lg p-3">
                       <p className="text-sm font-medium text-emerald-400 mb-1">{criterion.title}</p>
-                      <p className="text-xs sm:text-sm text-white/80">{criterion.desc}</p>
+                      <p className="text-xs sm:text-sm text-white">{criterion.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -422,7 +422,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                     FSC &amp; PEFC Certification
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Certification schemes provide independent assurance that timber has been sourced
                   from responsibly managed forests:
                 </p>
@@ -431,7 +431,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       FSC (Forest Stewardship Council)
                     </p>
-                    <ul className="text-xs sm:text-sm text-white/80 space-y-1">
+                    <ul className="text-xs sm:text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                         <span>International not-for-profit organisation</span>
@@ -456,7 +456,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       PEFC (Programme for the Endorsement of Forest Certification)
                     </p>
-                    <ul className="text-xs sm:text-sm text-white/80 space-y-1">
+                    <ul className="text-xs sm:text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                         <span>World&rsquo;s largest forest certification system by area</span>
@@ -491,7 +491,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       Cross-Laminated Timber (CLT)
                     </p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       Prefabricated structural panels made from layers of timber boards glued at
                       right angles. CLT can replace concrete and steel in walls, floors, and roofs
                       up to 10+ storeys. It offers excellent structural performance, rapid on-site
@@ -504,7 +504,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       Glued Laminated Timber (Glulam)
                     </p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       Structural beams and columns made from multiple layers of timber bonded
                       together. Glulam can achieve long spans that solid timber cannot, making it
                       suitable for sports halls, swimming pools, and commercial buildings. It is
@@ -519,7 +519,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                   <Leaf className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">UK-Grown Timber</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The UK has a growing domestic timber industry, with species such as{' '}
                   <strong className="text-white">Sitka spruce</strong>,{' '}
                   <strong className="text-white">Douglas fir</strong>,{' '}
@@ -579,7 +579,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       GGBS (Ground Granulated Blast-furnace Slag)
                     </p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       A waste by-product of iron and steel manufacturing. Can replace up to{' '}
                       <strong className="text-white">70%</strong> of Portland cement clinker in
                       concrete (CEM III). Produces a lighter-coloured concrete with improved
@@ -592,7 +592,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       PFA / Fly Ash (Pulverised Fuel Ash)
                     </p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       A waste by-product from coal-fired power stations. Can replace up to{' '}
                       <strong className="text-white">35&ndash;40%</strong> of Portland cement.
                       Improves workability, reduces heat of hydration (beneficial in mass concrete
@@ -603,7 +603,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Silica Fume (Microsilica)</p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       An ultra-fine by-product of silicon and ferrosilicon alloy production. Used in
                       small quantities (typically{' '}
                       <strong className="text-white">5&ndash;10%</strong> cement replacement) to
@@ -618,7 +618,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-emerald-400 mb-3">Cement Classifications</p>
                 <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-white/80">
+                  <table className="w-full text-sm text-white">
                     <thead>
                       <tr className="border-b border-white/10">
                         <th className="text-left py-2 pr-4 text-emerald-400 font-medium">Type</th>
@@ -659,7 +659,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-emerald-400 mb-3">Emerging Technologies</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -696,7 +696,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Important Consideration</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   When specifying lower-carbon concrete mixes, it is essential to ensure the mix
                   design meets the{' '}
                   <strong className="text-white">structural and durability requirements</strong> of
@@ -740,7 +740,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       Basic Oxygen Steelmaking (BOS)
                     </p>
-                    <ul className="text-xs sm:text-sm text-white/80 space-y-1">
+                    <ul className="text-xs sm:text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                         <span>Uses iron ore as the primary feedstock</span>
@@ -763,7 +763,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       Electric Arc Furnace (EAF)
                     </p>
-                    <ul className="text-xs sm:text-sm text-white/80 space-y-1">
+                    <ul className="text-xs sm:text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                         <span>Uses scrap steel as the primary feedstock</span>
@@ -783,7 +783,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                     </ul>
                   </div>
                 </div>
-                <p className="text-xs sm:text-sm text-white/60 mt-3">
+                <p className="text-xs sm:text-sm text-white mt-3">
                   UK-produced steel contains approximately{' '}
                   <strong className="text-white">30% recycled scrap</strong> on average across both
                   production routes. The global average recycling rate for structural steel is over
@@ -798,7 +798,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                 <div className="space-y-3">
                   <div>
                     <p className="text-sm font-medium text-white mb-1">Aluminium</p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       Highly recyclable &mdash; recycling aluminium uses only{' '}
                       <strong className="text-white">5%</strong> of the energy required to produce
                       it from bauxite ore. Commonly used in curtain walling, window frames, roofing,
@@ -808,7 +808,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white mb-1">Copper</p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       One of the most valuable recyclable metals. Copper cabling, pipework, and
                       roofing can all be recycled. Over <strong className="text-white">40%</strong>{' '}
                       of European copper demand is met from recycled sources. As an electrician,
@@ -869,7 +869,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                         Medium carbon
                       </span>
                     </div>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       Made from recycled glass or volcanic rock. Good thermal and acoustic
                       performance. Non-combustible (Euroclass A1). Widely available and
                       cost-effective. Typical lambda value: 0.032&ndash;0.044 W/mK. Embodied carbon:
@@ -883,7 +883,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                         High carbon
                       </span>
                     </div>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       Petroleum-derived rigid foam boards. Excellent thermal performance per unit
                       thickness (lambda: 0.022&ndash;0.024 W/mK), making it ideal where space is
                       limited. Higher embodied carbon: approximately 4.2&ndash;7.4 kgCO&#8322;e/kg.
@@ -897,7 +897,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                         Medium-high carbon
                       </span>
                     </div>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       Lightweight, moisture-resistant, commonly used in external wall insulation
                       systems and below ground. Lambda: 0.030&ndash;0.038 W/mK. Embodied carbon:
                       approximately 2.5&ndash;3.4 kgCO&#8322;e/kg. Recyclable in theory but rarely
@@ -919,7 +919,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                         Very low carbon
                       </span>
                     </div>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       Renewable agricultural by-product. Excellent moisture management &mdash; can
                       absorb and release moisture without losing thermal performance. Naturally
                       flame-retardant. Lambda: 0.035&ndash;0.040 W/mK. Embodied carbon:
@@ -934,7 +934,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                         Very low carbon
                       </span>
                     </div>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       Made from hemp fibres, often with a polyester binder. Fast-growing crop that
                       sequesters significant carbon during growth. Good moisture buffering
                       properties. Lambda: 0.038&ndash;0.042 W/mK. Embodied carbon: approximately
@@ -949,7 +949,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                         Low carbon
                       </span>
                     </div>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       Available as flexible batts or rigid boards. Excellent thermal mass properties
                       &mdash; helps regulate summer overheating. Often used in timber frame and
                       external wall insulation systems. Lambda: 0.038&ndash;0.042 W/mK. Embodied
@@ -965,7 +965,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                         Very low carbon
                       </span>
                     </div>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       Made from recycled newspaper treated with borax for fire and pest resistance.
                       Blown or sprayed into cavities and loft spaces. Very low embodied carbon:
                       approximately 0.5&ndash;0.7 kgCO&#8322;e/kg. Lambda: 0.035&ndash;0.040 W/mK.
@@ -1018,7 +1018,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                     BES 6001 &mdash; Responsible Sourcing
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   BES 6001 is the{' '}
                   <strong className="text-white">
                     Framework Standard for Responsible Sourcing of Construction Products
@@ -1026,7 +1026,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                   , published by BRE. It provides a holistic assessment of how responsibly a product
                   has been sourced.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -1069,11 +1069,11 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   Supply Chain Due Diligence
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Responsible procurement requires understanding where materials come from and how
                   they are produced at every stage of the supply chain:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -1114,7 +1114,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Modern Slavery Considerations</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The <strong className="text-white">Modern Slavery Act 2015</strong> requires
                   organisations with a turnover above &pound;36 million to publish an annual slavery
                   and human trafficking statement. Construction supply chains are particularly
@@ -1129,7 +1129,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   Ethical Sourcing Policies
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Most major UK contractors now maintain formal ethical sourcing policies that set
                   out minimum standards for suppliers. These typically require suppliers to
                   demonstrate compliance with health and safety legislation, pay at least the
@@ -1276,13 +1276,13 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                       <td className={`py-2 px-2 text-centre ${row.renewableColour}`}>
                         {row.renewable}
                       </td>
-                      <td className="py-2 px-2 text-white/60">{row.cert}</td>
+                      <td className="py-2 px-2 text-white">{row.cert}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-            <p className="text-xs text-white/40 mt-3">
+            <p className="text-xs text-white mt-3">
               Note: Embodied carbon ratings are indicative and vary by manufacturer, production
               method, and transport distance. Always refer to product-specific EPDs for accurate
               comparison data.
@@ -1314,7 +1314,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                   <FileText className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">EN 15804 Standard</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   All construction EPDs in Europe are produced in accordance with{' '}
                   <strong className="text-white">
                     BS EN 15804: Sustainability of construction works &mdash; Environmental product
@@ -1323,7 +1323,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                   . This standard ensures consistency, allowing meaningful comparison between
                   products from different manufacturers.
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   EN 15804 defines lifecycle stages using a modular system:
                 </p>
                 <div className="grid sm:grid-cols-2 gap-3 mt-3">
@@ -1331,7 +1331,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                     <p className="text-xs text-emerald-400 font-medium uppercase tracking-wide mb-1">
                       A1&ndash;A3: Product Stage
                     </p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       Raw material supply, transport to factory, and manufacturing. This is the
                       &ldquo;cradle to gate&rdquo; embodied carbon.
                     </p>
@@ -1340,7 +1340,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                     <p className="text-xs text-emerald-400 font-medium uppercase tracking-wide mb-1">
                       A4&ndash;A5: Construction Stage
                     </p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       Transport to site and installation, including waste generated during
                       construction.
                     </p>
@@ -1349,7 +1349,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                     <p className="text-xs text-emerald-400 font-medium uppercase tracking-wide mb-1">
                       B1&ndash;B7: Use Stage
                     </p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       In-use impacts including maintenance, repair, replacement, and operational
                       energy and water use.
                     </p>
@@ -1358,7 +1358,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                     <p className="text-xs text-emerald-400 font-medium uppercase tracking-wide mb-1">
                       C1&ndash;C4: End of Life
                     </p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       Deconstruction/demolition, transport, waste processing, and disposal.
                     </p>
                   </div>
@@ -1366,7 +1366,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                     <p className="text-xs text-emerald-400 font-medium uppercase tracking-wide mb-1">
                       D: Beyond System Boundary
                     </p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       Benefits from reuse, recycling, or energy recovery &mdash; credits for the
                       circular economy contribution of the product.
                     </p>
@@ -1376,10 +1376,10 @@ export default function EnvironmentalSustainabilityModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-emerald-400 mb-3">How to Read an EPD</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Key environmental indicators to look for when comparing products:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -1425,7 +1425,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   BRE Green Guide to Specification
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The <strong className="text-white">Green Guide to Specification</strong> is
                   published by the Building Research Establishment (BRE) and rates over 1,500
                   building element specifications from{' '}
@@ -1482,7 +1482,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Accurate Specification</p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       Precisely calculate material quantities before ordering. Use digital take-off
                       tools and BIM models where available to minimise over-ordering. A typical
                       5&ndash;10% wastage allowance on cable, for example, can represent thousands
@@ -1492,7 +1492,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Modular Design</p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       Designing to standard module sizes reduces cutting waste. For example,
                       designing stud walls to 600 mm centres matches standard plasterboard sheet
                       widths, eliminating the need for cutting and reducing offcut waste. Modular
@@ -1502,7 +1502,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Standard Sizes</p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       Ordering materials in standard manufactured sizes avoids cutting waste.
                       Standard-length cable drums, pre-cut conduit, and factory-finished components
                       all reduce on-site waste. Working with manufacturers to supply purpose-made
@@ -1511,7 +1511,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Just-in-Time Delivery</p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       Scheduling material deliveries to coincide with the programme of work reduces
                       the time materials spend on site exposed to weather, damage, and theft. JIT
                       delivery reduces storage requirements, handling damage, and the risk of
@@ -1523,12 +1523,12 @@ export default function EnvironmentalSustainabilityModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-emerald-400 mb-3">Material Passports</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   A <strong className="text-white">material passport</strong> is a digital record
                   that documents the composition, origin, and characteristics of every material and
                   component used in a building. It typically includes:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>Manufacturer details and product specifications</span>
@@ -1550,7 +1550,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                     <span>End-of-life options: reuse, recycling, or disposal instructions</span>
                   </li>
                 </ul>
-                <p className="text-xs sm:text-sm text-white/60 mt-3">
+                <p className="text-xs sm:text-sm text-white mt-3">
                   Material passports are a key enabler of the circular economy in construction,
                   ensuring that the value of materials is not lost when a building reaches the end
                   of its useful life.
@@ -1561,7 +1561,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   Design for Deconstruction (DfD)
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Rather than designing buildings that must be demolished at end of life (destroying
                   all materials), design for deconstruction means planning from the outset for
                   materials to be{' '}
@@ -1570,7 +1570,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                   </strong>
                   :
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -1643,7 +1643,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
             Responsible Procurement Checklist
           </h2>
           <div className="bg-white/5 border border-emerald-500/30 rounded-xl p-4 sm:p-6">
-            <p className="text-sm text-white/60 mb-4">
+            <p className="text-sm text-white mb-4">
               Use this checklist when evaluating materials and suppliers for sustainability and
               responsible sourcing:
             </p>
@@ -1712,7 +1712,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
                     {group.items.map((item, ii) => (
                       <li
                         key={ii}
-                        className="flex items-start gap-2 text-xs sm:text-sm text-white/80"
+                        className="flex items-start gap-2 text-xs sm:text-sm text-white"
                       >
                         <div
                           className={`mt-0.5 w-4 h-4 rounded border flex-shrink-0 ${
@@ -1744,7 +1744,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1762,7 +1762,7 @@ export default function EnvironmentalSustainabilityModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-3-section-3">

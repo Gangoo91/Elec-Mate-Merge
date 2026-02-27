@@ -332,22 +332,22 @@ const JIBGradingScheme = () => {
             <div className="aspect-square rounded-lg border border-elec-yellow/20 bg-white/5 p-4 flex flex-col items-center justify-center text-center">
               <Award className="h-8 w-8 text-purple-400 mb-3" aria-hidden="true" />
               <div className="font-semibold text-base text-white">6 Grades</div>
-              <div className="text-xs text-white/80">Progression pathway</div>
+              <div className="text-xs text-white">Progression pathway</div>
             </div>
             <div className="aspect-square rounded-lg border border-elec-yellow/20 bg-white/5 p-4 flex flex-col items-center justify-center text-center">
               <Clock className="h-8 w-8 text-elec-yellow mb-3" aria-hidden="true" />
               <div className="font-semibold text-base text-white">4–5 yrs</div>
-              <div className="text-xs text-white/80">To Gold Card</div>
+              <div className="text-xs text-white">To Gold Card</div>
             </div>
             <div className="aspect-square rounded-lg border border-elec-yellow/20 bg-white/5 p-4 flex flex-col items-center justify-center text-center">
               <Shield className="h-8 w-8 text-green-400 mb-3" aria-hidden="true" />
               <div className="font-semibold text-base text-white">3‑year</div>
-              <div className="text-xs text-white/80">ECS renewal</div>
+              <div className="text-xs text-white">ECS renewal</div>
             </div>
             <div className="aspect-square rounded-lg border border-elec-yellow/20 bg-white/5 p-4 flex flex-col items-center justify-center text-center">
               <Briefcase className="h-8 w-8 text-blue-400 mb-3" aria-hidden="true" />
               <div className="font-semibold text-base text-white">UK‑wide</div>
-              <div className="text-xs text-white/80">Employer recognition</div>
+              <div className="text-xs text-white">Employer recognition</div>
             </div>
           </div>
 
@@ -951,7 +951,7 @@ const JIBGradingScheme = () => {
                       <div className="text-sm text-white leading-relaxed">
                         Apprentice → Improver → Electrician (Gold) → Approved → Technician
                       </div>
-                      <div className="text-sm text-white/80 leading-relaxed">
+                      <div className="text-sm text-white leading-relaxed">
                         Typical 6–10 years to Technician depending on experience and qualifications.
                       </div>
                     </div>
@@ -968,7 +968,7 @@ const JIBGradingScheme = () => {
                       <div className="text-sm text-white leading-relaxed">
                         Approved/Technician → Chargehand → Site Supervisor → Manager
                       </div>
-                      <div className="text-sm text-white/80 leading-relaxed">
+                      <div className="text-sm text-white leading-relaxed">
                         Add leadership (SSSTS/SMSTS/IOSH) and project delivery experience.
                       </div>
                     </div>
@@ -983,7 +983,7 @@ const JIBGradingScheme = () => {
                       <div className="text-sm text-white leading-relaxed">
                         Experienced workers scheme with evidence portfolio
                       </div>
-                      <div className="text-sm text-white/80 leading-relaxed">
+                      <div className="text-sm text-white leading-relaxed">
                         Recognition of prior learning can reduce time to Gold/Approved.
                       </div>
                     </div>

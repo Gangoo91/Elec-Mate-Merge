@@ -285,7 +285,7 @@ const Level3Module4Section5_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section5">
@@ -446,7 +446,7 @@ const Level3Module4Section5_1 = () => {
               (such as fire performance in escape routes per Regulation 422.2).
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> Replacing a damaged section of ring final circuit cable
               requires matching the conductor size (typically 2.5mm²), insulation type (usually 70°C
               thermoplastic), and ensuring any joints are made correctly using appropriate
@@ -507,19 +507,19 @@ const Level3Module4Section5_1 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Screw Terminals</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Tighten to manufacturer's torque - typically 0.5-1.2Nm for accessories
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Push-fit Connectors</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Insert to gauge mark, verify by gentle pull test
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Compression Lugs</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Use correct size die and verify crimp with pull test
                 </p>
               </div>
@@ -582,7 +582,7 @@ const Level3Module4Section5_1 = () => {
               almost always the better choice.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A cable has been damaged by a nail passing through a wall.
               The nail has been removed, leaving a clean hole through the outer sheath and one
               conductor's insulation. If the conductor itself is undamaged, cleaning the area and
@@ -717,7 +717,7 @@ const Level3Module4Section5_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -762,7 +762,7 @@ const Level3Module4Section5_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section4-5">

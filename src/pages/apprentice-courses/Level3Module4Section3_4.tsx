@@ -288,7 +288,7 @@ const Level3Module4Section3_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section3">
@@ -451,7 +451,7 @@ const Level3Module4Section3_4 = () => {
               updated. Always verify bonding visually and by testing.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A customer reports tingling from their metal sink when
               touching a radiator. Investigation finds the main water bonding clamp has corroded
               through, leaving the water pipework (connected to sink) at a different potential from
@@ -568,7 +568,7 @@ const Level3Module4Section3_4 = () => {
               resistance suggests electrode deterioration requiring attention.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A rural cottage TT installation trips its RCD when the RCD
               is tested, but won't trip using the installation tester. Investigation shows electrode
               resistance has risen to 400 ohms due to summer drought. At 400 ohms with 30mA trip
@@ -644,7 +644,7 @@ const Level3Module4Section3_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -689,7 +689,7 @@ const Level3Module4Section3_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section3-3">

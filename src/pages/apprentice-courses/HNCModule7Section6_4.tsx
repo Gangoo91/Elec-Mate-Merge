@@ -253,7 +253,7 @@ const HNCModule7Section6_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section6">
@@ -275,7 +275,7 @@ const HNCModule7Section6_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Coordination Studies
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Short-circuit calculations, protective device coordination, software tools, and study
             documentation
           </p>
@@ -453,12 +453,12 @@ const HNCModule7Section6_4 = () => {
               </p>
               <div className="font-mono text-sm space-y-2">
                 <p className="text-white">I"k = (c × Un) / (√3 × Zk)</p>
-                <p className="text-white/70 text-xs mt-2">Where:</p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs mt-2">Where:</p>
+                <p className="text-white text-xs">
                   c = voltage factor (typically 1.1 for maximum)
                 </p>
-                <p className="text-white/70 text-xs">Un = nominal voltage</p>
-                <p className="text-white/70 text-xs">Zk = total impedance to fault point</p>
+                <p className="text-white text-xs">Un = nominal voltage</p>
+                <p className="text-white text-xs">Zk = total impedance to fault point</p>
               </div>
             </div>
 
@@ -670,7 +670,7 @@ const HNCModule7Section6_4 = () => {
                 <p className="text-white">
                   TCC curves plot operating time versus fault current on log-log scales:
                 </p>
-                <ul className="text-sm text-white/90 space-y-1.5 list-disc list-outside ml-5">
+                <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                   <li className="pl-1">
                     <strong>X-axis:</strong> Current (typically in multiples of rated current)
                   </li>
@@ -708,7 +708,7 @@ const HNCModule7Section6_4 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Selectivity limit:</strong> The maximum fault current at which coordination is
               maintained. Above this level, both devices may operate simultaneously (partial
               selectivity).
@@ -877,19 +877,19 @@ const HNCModule7Section6_4 = () => {
                 terminals of an 800 kVA, 11/0.4 kV transformer with 5% impedance. Assume utility
                 fault level is infinite.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given:</p>
                 <p>Transformer rating S = 800 kVA</p>
                 <p>Secondary voltage Un = 400 V</p>
                 <p>Impedance Uk = 5%</p>
                 <p>Voltage factor c = 1.1 (maximum)</p>
-                <p className="mt-2 text-white/60">Calculation:</p>
+                <p className="mt-2 text-white">Calculation:</p>
                 <p>Rated secondary current In = S / (√3 × Un)</p>
                 <p>In = 800,000 / (1.732 × 400) = 1155 A</p>
                 <p className="mt-2">Initial symmetrical fault current:</p>
                 <p>I"k = (c × In) / Uk = (1.1 × 1155) / 0.05</p>
                 <p className="text-green-400">I"k = 25.4 kA</p>
-                <p className="mt-2 text-white/60">Peak current (assuming X/R = 10, κ = 1.8):</p>
+                <p className="mt-2 text-white">Peak current (assuming X/R = 10, κ = 1.8):</p>
                 <p>ip = κ × √2 × I"k = 1.8 × 1.414 × 25.4</p>
                 <p className="text-green-400">ip = 64.6 kA (peak)</p>
               </div>
@@ -903,11 +903,11 @@ const HNCModule7Section6_4 = () => {
                 <strong>Scenario:</strong> Determine the time settings for three series-connected
                 overcurrent relays to achieve coordination with 0.4 second margins.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">System configuration:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">System configuration:</p>
                 <p>Relay A (upstream) → Relay B (midstream) → Relay C (downstream)</p>
                 <p>Fault current at Relay C location = 10 kA</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Setting calculation (working upstream from fault):
                 </p>
                 <p>Relay C operating time at 10 kA: 0.3 seconds (fastest clearance)</p>
@@ -917,7 +917,7 @@ const HNCModule7Section6_4 = () => {
                 <p className="mt-2">Relay A time setting:</p>
                 <p>Minimum = Relay B time + margin = 0.7 + 0.4 = 1.1 seconds</p>
                 <p className="text-green-400">Set Relay A time multiplier for 1.1s at 10 kA</p>
-                <p className="mt-2 text-white/60">Total fault clearance time at Relay C:</p>
+                <p className="mt-2 text-white">Total fault clearance time at Relay C:</p>
                 <p>Relay C operates in 0.3s (+ breaker time ~0.05s) = 0.35s total</p>
               </div>
             </div>
@@ -930,20 +930,20 @@ const HNCModule7Section6_4 = () => {
                 <strong>Scenario:</strong> Calculate the fault current contribution from a 200 kW
                 induction motor group during the initial cycles of a nearby fault.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given:</p>
                 <p>Motor group rating = 200 kW</p>
                 <p>Supply voltage = 400 V</p>
                 <p>Power factor = 0.85</p>
                 <p>Efficiency = 0.92</p>
                 <p>Motor contribution factor = 5 × FLC (typical induction)</p>
-                <p className="mt-2 text-white/60">Calculation:</p>
+                <p className="mt-2 text-white">Calculation:</p>
                 <p>Motor input power = 200 / 0.92 = 217.4 kVA</p>
                 <p>Motor FLC = 217,400 / (√3 × 400) = 314 A</p>
                 <p className="mt-2">Initial fault contribution:</p>
                 <p>Imotor = 5 × 314 = 1570 A</p>
                 <p className="text-green-400">Motor contribution ≈ 1.6 kA (initial cycles)</p>
-                <p className="mt-2 text-white/60">Note: This decays to zero within 3-5 cycles</p>
+                <p className="mt-2 text-white">Note: This decays to zero within 3-5 cycles</p>
                 <p>Must be added to utility contribution for total I"k</p>
               </div>
             </div>
@@ -1034,7 +1034,7 @@ const HNCModule7Section6_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1080,7 +1080,7 @@ const HNCModule7Section6_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section6">

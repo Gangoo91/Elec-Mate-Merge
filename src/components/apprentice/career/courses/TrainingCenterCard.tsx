@@ -29,7 +29,7 @@ const TrainingCenterCard = ({ center, onViewDetails }: TrainingCenterCardProps) 
               </div>
               {center.name}
             </CardTitle>
-            <div className="flex items-center gap-1.5 text-sm mt-2 text-white/70">
+            <div className="flex items-center gap-1.5 text-sm mt-2 text-white">
               <MapPin className="h-3.5 w-3.5 text-elec-yellow" />
               <span>{center.location}</span>
             </div>
@@ -58,7 +58,7 @@ const TrainingCenterCard = ({ center, onViewDetails }: TrainingCenterCardProps) 
               {center.courses.map((course, idx) => (
                 <li key={idx} className="flex items-center gap-2">
                   <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow flex-shrink-0" />
-                  <span className="text-white/80">{course}</span>
+                  <span className="text-white">{course}</span>
                 </li>
               ))}
             </ul>
@@ -75,7 +75,7 @@ const TrainingCenterCard = ({ center, onViewDetails }: TrainingCenterCardProps) 
               {center.facilities.map((facility, idx) => (
                 <li key={idx} className="flex items-center gap-2">
                   <span className="h-1.5 w-1.5 rounded-full bg-green-400 flex-shrink-0" />
-                  <span className="text-white/80">{facility}</span>
+                  <span className="text-white">{facility}</span>
                 </li>
               ))}
             </ul>

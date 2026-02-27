@@ -782,7 +782,7 @@ const IndustrialElectricalModule5Section5: React.FC = () => {
               <p className="text-white text-sm">
                 "Motor would not start. Replaced contactor. Working now."
               </p>
-              <p className="text-white/70 text-xs mt-2">
+              <p className="text-white text-xs mt-2">
                 This tells us nothing about why it failed, does not help diagnose future similar
                 faults, and provides no prevention recommendations.
               </p>
@@ -826,7 +826,7 @@ const IndustrialElectricalModule5Section5: React.FC = () => {
                   Action taken to eliminate the cause of a detected nonconformity or undesirable
                   situation to prevent recurrence.
                 </p>
-                <ul className="text-white/80 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Addresses existing problems</li>
                   <li>- Reacts to failures that have occurred</li>
                   <li>- Aims to prevent THIS fault recurring</li>
@@ -843,7 +843,7 @@ const IndustrialElectricalModule5Section5: React.FC = () => {
                   Action taken to eliminate the cause of a potential nonconformity or undesirable
                   situation to prevent occurrence.
                 </p>
-                <ul className="text-white/80 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Addresses potential problems</li>
                   <li>- Proactive approach before failure</li>
                   <li>- Aims to prevent SIMILAR faults occurring</li>

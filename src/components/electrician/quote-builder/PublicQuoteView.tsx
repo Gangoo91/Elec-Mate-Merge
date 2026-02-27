@@ -523,7 +523,7 @@ const PublicQuoteView = () => {
                     value={clientName}
                     onChange={(e) => setClientName(e.target.value)}
                     placeholder="Enter your full name"
-                    className="h-12 mt-1.5 bg-white/5 border-white/20 text-white placeholder:text-white/40 focus:border-elec-yellow focus:ring-elec-yellow touch-manipulation text-base"
+                    className="h-12 mt-1.5 bg-white/5 border-white/20 text-white placeholder:text-white focus:border-elec-yellow focus:ring-elec-yellow touch-manipulation text-base"
                   />
                 </div>
                 <div>
@@ -536,7 +536,7 @@ const PublicQuoteView = () => {
                     value={clientEmail}
                     onChange={(e) => setClientEmail(e.target.value)}
                     placeholder="Enter your email"
-                    className="h-12 mt-1.5 bg-white/5 border-white/20 text-white placeholder:text-white/40 focus:border-elec-yellow focus:ring-elec-yellow touch-manipulation text-base"
+                    className="h-12 mt-1.5 bg-white/5 border-white/20 text-white placeholder:text-white focus:border-elec-yellow focus:ring-elec-yellow touch-manipulation text-base"
                   />
                 </div>
               </div>

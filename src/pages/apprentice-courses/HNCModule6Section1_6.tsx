@@ -269,7 +269,7 @@ const HNCModule6Section1_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section1">
@@ -291,7 +291,7 @@ const HNCModule6Section1_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Documentation and Handover
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             EPCs, commissioning certificates, building log books, as-built documentation, Part L
             evidence, and handover procedures
           </p>
@@ -574,7 +574,7 @@ const HNCModule6Section1_6 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">
                 Commissioning Certificate Content
               </p>
-              <div className="text-sm space-y-1 text-white/90">
+              <div className="text-sm space-y-1 text-white">
                 <p>
                   <strong>Project details:</strong> Name, address, Building Control reference
                 </p>
@@ -626,7 +626,7 @@ const HNCModule6Section1_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Part A: General Information</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Building description and use</li>
                     <li>Contact details for services</li>
                     <li>Design conditions and occupancy</li>
@@ -636,7 +636,7 @@ const HNCModule6Section1_6 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Part B: System Information</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>HVAC system descriptions</li>
                     <li>Heating/cooling plant details</li>
                     <li>Ventilation system data</li>
@@ -747,25 +747,25 @@ const HNCModule6Section1_6 = () => {
               </p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">1. Submit:</span>{' '}
+                  <span className="text-white">1. Submit:</span>{' '}
                   <span className="text-white">All Part L evidence and commissioning notices</span>
                 </p>
                 <p>
-                  <span className="text-white/60">2. Inspect:</span>{' '}
+                  <span className="text-white">2. Inspect:</span>{' '}
                   <span className="text-white">Final inspection of completed works</span>
                 </p>
                 <p>
-                  <span className="text-white/60">3. Review:</span>{' '}
+                  <span className="text-white">3. Review:</span>{' '}
                   <span className="text-white">Documentation check against requirements</span>
                 </p>
                 <p>
-                  <span className="text-white/60">4. Issue:</span>{' '}
+                  <span className="text-white">4. Issue:</span>{' '}
                   <span className="text-white">
                     Completion certificate (Building Regulations compliance)
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">5. Register:</span>{' '}
+                  <span className="text-white">5. Register:</span>{' '}
                   <span className="text-white">EPC lodged on public register</span>
                 </p>
               </div>
@@ -885,7 +885,7 @@ const HNCModule6Section1_6 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Performance gap:</strong> Soft landings addresses the common gap between
               design predictions and actual building performance, which can be 2-5 times greater
               energy use than predicted.
@@ -911,8 +911,8 @@ const HNCModule6Section1_6 = () => {
                 <strong>Scenario:</strong> Compile Part L evidence package for a 2,500m² office
                 building.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Part L Evidence Checklist:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Part L Evidence Checklist:</p>
                 <p className="mt-2 text-green-400">Design Stage Documents:</p>
                 <p className="ml-4">BRUKL output showing TER = 28.5 kgCO₂/m²</p>
                 <p className="ml-4">Design BER = 25.2 kgCO₂/m² (meets target)</p>
@@ -935,8 +935,8 @@ const HNCModule6Section1_6 = () => {
                 <strong>Scenario:</strong> Complete commissioning certificate for AHU serving office
                 floors.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">AHU-01 Commissioning Certificate</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">AHU-01 Commissioning Certificate</p>
                 <p className="mt-2">Project: City Centre Office Building</p>
                 <p>System: AHU-01 serving Floors 1-3</p>
                 <p className="mt-2">Parameter | Design | Measured | Status</p>
@@ -962,8 +962,8 @@ const HNCModule6Section1_6 = () => {
                 <strong>Scenario:</strong> Verify handover documentation completeness for building
                 services.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Handover Documentation Status:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Handover Documentation Status:</p>
                 <p className="mt-2">Document | Status | Notes</p>
                 <p>----------------------------|-----------|----------------</p>
                 <p className="text-green-400">
@@ -1067,7 +1067,7 @@ const HNCModule6Section1_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1115,7 +1115,7 @@ const HNCModule6Section1_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section1">

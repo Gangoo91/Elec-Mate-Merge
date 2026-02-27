@@ -39,9 +39,9 @@ const OptionCard: React.FC<{
     {icon}
     <div className="flex-1 min-w-0">
       <div className="text-sm font-semibold text-white">{title}</div>
-      <div className="text-xs text-white/50 mt-0.5">{description}</div>
+      <div className="text-xs text-white mt-0.5">{description}</div>
     </div>
-    <ArrowRight className="h-4 w-4 text-white/30 flex-shrink-0" />
+    <ArrowRight className="h-4 w-4 text-white flex-shrink-0" />
   </button>
 );
 
@@ -80,7 +80,7 @@ const QuoteOptionsContent: React.FC<{
       <button
         type="button"
         onClick={onClose}
-        className="w-full text-center text-xs text-white/40 hover:text-white/60 py-2 touch-manipulation transition-colors"
+        className="w-full text-center text-xs text-white hover:text-white py-2 touch-manipulation transition-colors"
       >
         Cancel
       </button>
@@ -116,7 +116,7 @@ const QuoteOptionsSheet: React.FC<QuoteOptionsSheetProps> = ({
             <button
               type="button"
               onClick={() => onOpenChange(false)}
-              className="h-11 w-11 rounded-lg flex items-center justify-center text-white/40 hover:text-white/70 hover:bg-white/10 transition-colors touch-manipulation"
+              className="h-11 w-11 rounded-lg flex items-center justify-center text-white hover:text-white hover:bg-white/10 transition-colors touch-manipulation"
             >
               <X className="h-4 w-4" />
             </button>

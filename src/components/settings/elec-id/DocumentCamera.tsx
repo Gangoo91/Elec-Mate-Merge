@@ -301,7 +301,7 @@ const DocumentCamera = ({
 
                     {/* Center focus indicator */}
                     <div className="absolute inset-0 flex items-center justify-center">
-                      <Focus className="h-12 w-12 text-white/30" />
+                      <Focus className="h-12 w-12 text-white" />
                     </div>
                   </div>
                 </div>
@@ -332,7 +332,7 @@ const DocumentCamera = ({
                 <CardContent className="p-4 text-center">
                   <AlertCircle className="h-10 w-10 text-red-400 mx-auto mb-3" />
                   <p className="text-white font-medium mb-2">Camera Error</p>
-                  <p className="text-sm text-white/70 mb-4">{error}</p>
+                  <p className="text-sm text-white mb-4">{error}</p>
                   <Button
                     variant="outline"
                     className="border-white/30 text-white"
@@ -354,7 +354,7 @@ const DocumentCamera = ({
         {isStreaming && !capturedImage && (
           <div className="absolute bottom-32 left-0 right-0 px-4">
             <div className="bg-black/60 backdrop-blur-sm rounded-lg p-3">
-              <p className="text-xs text-white/80 text-center">
+              <p className="text-xs text-white text-center">
                 {guide.tips[Math.floor(Date.now() / 3000) % guide.tips.length]}
               </p>
             </div>

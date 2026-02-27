@@ -167,14 +167,14 @@ const CVTemplateShowcase = ({
       <div className="flex items-center justify-between px-1">
         <div>
           <h3 className="text-lg font-bold text-white">Choose Your Template</h3>
-          <p className="text-sm text-white/50">Select a style that suits you</p>
+          <p className="text-sm text-white">Select a style that suits you</p>
         </div>
         <div className="flex gap-2">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => scroll('left')}
-            className="h-8 w-8 rounded-full bg-white/5 text-white/60 hover:text-white hover:bg-white/10"
+            className="h-8 w-8 rounded-full bg-white/5 text-white hover:text-white hover:bg-white/10"
           >
             <ChevronLeft className="h-4 w-4" />
           </Button>
@@ -182,7 +182,7 @@ const CVTemplateShowcase = ({
             variant="ghost"
             size="icon"
             onClick={() => scroll('right')}
-            className="h-8 w-8 rounded-full bg-white/5 text-white/60 hover:text-white hover:bg-white/10"
+            className="h-8 w-8 rounded-full bg-white/5 text-white hover:text-white hover:bg-white/10"
           >
             <ChevronRight className="h-4 w-4" />
           </Button>
@@ -243,7 +243,7 @@ const CVTemplateShowcase = ({
                   )}
                 </div>
 
-                <p className="text-[10px] text-white/50 line-clamp-2">{template.description}</p>
+                <p className="text-[10px] text-white line-clamp-2">{template.description}</p>
 
                 {/* Selected indicator */}
                 <AnimatePresence>
@@ -297,7 +297,7 @@ const CVTemplateShowcase = ({
                       <h4 className="font-semibold text-white">{template.name} Template</h4>
                       {template.popular && <Sparkles className="h-4 w-4 text-amber-400" />}
                     </div>
-                    <p className="text-sm text-white/60">{template.description}</p>
+                    <p className="text-sm text-white">{template.description}</p>
                   </div>
                 </div>
               );

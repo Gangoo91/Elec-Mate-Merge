@@ -250,7 +250,7 @@ const HNCModule5Section5_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section5">
@@ -272,7 +272,7 @@ const HNCModule5Section5_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Commissioning Planning
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             CIBSE Code M principles, commissioning management plans, and coordination of building
             services commissioning
           </p>
@@ -809,7 +809,7 @@ const HNCModule5Section5_1 = () => {
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Critical interface:</strong> Electrical installation must be complete with EIC
               issued before any HVAC, BMS, or life safety system commissioning can commence.
             </p>
@@ -834,7 +834,7 @@ const HNCModule5Section5_1 = () => {
                 <strong>Scenario:</strong> Develop commissioning milestone dates for a 5,000m2
                 office building with handover on 1st September.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Working backwards from handover:</p>
                 <p className="mt-2">1 Sept: Handover (practical completion)</p>
                 <p>15 Aug: Witness testing complete (-2 weeks)</p>
@@ -854,7 +854,7 @@ const HNCModule5Section5_1 = () => {
                 <strong>Scenario:</strong> Calculate air balancing resource requirement for 25 AHUs
                 and 400 VAV terminals.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Typical production rates:</p>
                 <p>AHU commissioning: 1-2 days each = 25-50 days</p>
                 <p>VAV commissioning: 8-12 per day = 33-50 days</p>
@@ -873,7 +873,7 @@ const HNCModule5Section5_1 = () => {
                 <strong>Scenario:</strong> Identify commissioning dependencies for a fire alarm
                 system.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Fire alarm commissioning requires:</p>
                 <p className="mt-2">Before fire alarm:</p>
                 <p className="ml-4">- Electrical distribution commissioned</p>
@@ -962,7 +962,7 @@ const HNCModule5Section5_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1008,7 +1008,7 @@ const HNCModule5Section5_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section5">

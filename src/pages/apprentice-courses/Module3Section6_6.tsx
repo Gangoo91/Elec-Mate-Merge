@@ -1074,7 +1074,7 @@ export default function Module3Section6_6() {
             Summary
           </h2>
           <div className="p-4 bg-transparent border-l-2 border-elec-yellow rounded-lg border border-white/10">
-            <p className="text-white/90">
+            <p className="text-white">
               Following manufacturer instructions and site specifications is legally mandated under
               BS 7671 and forms essential contractual obligations. These requirements protect
               safety, ensure warranty coverage, and maintain professional standards. A systematic

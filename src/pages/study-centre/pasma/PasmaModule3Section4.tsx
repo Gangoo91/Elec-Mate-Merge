@@ -178,7 +178,7 @@ export default function PasmaModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-3">
@@ -203,7 +203,7 @@ export default function PasmaModule3Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Stability Principles
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding what keeps a tower upright &mdash; centre of gravity, height-to-base
             ratios, stabilisers, wind loading, and how to calculate safe working heights
           </p>
@@ -283,7 +283,7 @@ export default function PasmaModule3Section4() {
                 <p className="text-sm font-medium text-elec-yellow mb-3">
                   What Moves the Centre of Gravity?
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -327,7 +327,7 @@ export default function PasmaModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Overturning in Simple Terms</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Imagine a vertical line dropping straight down from the centre of gravity. As long
                   as this line falls within the tower's base area, the tower is stable. The moment
                   it falls outside the base area &mdash; whether from wind, reaching, or impact
@@ -342,7 +342,7 @@ export default function PasmaModule3Section4() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">The Height Factor</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The taller a tower is relative to its base, the less force is needed to overturn
                   it. A small push at the top of a 6-metre tower creates a much larger overturning
                   moment than the same push at the top of a 3-metre tower. This is why
@@ -362,7 +362,7 @@ export default function PasmaModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">The Overturning Moment</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   In engineering terms, the overturning moment equals the applied force multiplied
                   by the height at which it acts (the lever arm). A 50kg force at 6 metres creates
                   an overturning moment of 300 kg&middot;m, while the same force at 3 metres creates
@@ -393,7 +393,7 @@ export default function PasmaModule3Section4() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-blue-400 mb-2">Indoor Maximum: 3.5:1</p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     For towers used indoors where there is no wind exposure. The platform height
                     must not exceed 3.5 times the narrowest base dimension.
                   </p>
@@ -407,7 +407,7 @@ export default function PasmaModule3Section4() {
                 </div>
                 <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-green-400 mb-2">Outdoor Maximum: 3:1</p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     For towers used outdoors where wind loading applies. The more restrictive ratio
                     accounts for the additional overturning force from wind.
                   </p>
@@ -425,7 +425,7 @@ export default function PasmaModule3Section4() {
                   <Calculator className="h-5 w-5 text-elec-yellow" />
                   <p className="text-sm font-medium text-elec-yellow">How to Calculate</p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Step 1:</strong> Measure the narrowest base
                     dimension (the shortest distance between the outer edges of opposite castors or
@@ -448,7 +448,7 @@ export default function PasmaModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Common Tower Base Dimensions</p>
-                <div className="space-y-1 text-sm text-white/80">
+                <div className="space-y-1 text-sm text-white">
                   <p className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -480,7 +480,7 @@ export default function PasmaModule3Section4() {
                     Critical: Use the Narrowest Dimension
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Always use the narrowest base dimension for the calculation, not the longest. A
                   tower that is 2.5m long but only 1.35m wide must use 1.35m as the base dimension.
                   The tower is most vulnerable to overturning across its narrow axis. This is a
@@ -521,7 +521,7 @@ export default function PasmaModule3Section4() {
                 <p className="text-sm font-medium text-elec-yellow mb-3">
                   Stabilisers Are Required When:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -569,7 +569,7 @@ export default function PasmaModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Types of Stability Devices</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Outriggers:</strong> Extend horizontally from the
                     tower base to increase the effective base area. They widen the footprint without
@@ -638,7 +638,7 @@ export default function PasmaModule3Section4() {
                   <Anchor className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Outrigger Positioning Rules</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -706,7 +706,7 @@ export default function PasmaModule3Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Outrigger Impact on Site Layout
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Outriggers extend the tower's footprint significantly. A double-width tower with
                   full outriggers can occupy an area several metres wider than the tower itself.
                   This must be planned during the site survey. Ensure there is sufficient space for
@@ -721,7 +721,7 @@ export default function PasmaModule3Section4() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Common Outrigger Errors</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Fitting outriggers on only two sides instead of all four</span>
@@ -767,7 +767,7 @@ export default function PasmaModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Ballast Requirements</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -811,7 +811,7 @@ export default function PasmaModule3Section4() {
                     Calculating Required Ballast
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The amount of ballast required depends on the tower height, base dimensions,
                   expected wind loading, and the number of operatives. Manufacturers provide ballast
                   tables in their instruction manuals specifying the exact weight needed for each
@@ -826,7 +826,7 @@ export default function PasmaModule3Section4() {
                   <TriangleAlert className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Never Use Improvised Ballast</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Using sandbags, concrete blocks, or other loose materials as ballast is dangerous
                   and non-compliant. These materials can be moved by others who do not understand
                   their purpose, can shift during transport if the tower is mobile, and their weight
@@ -845,7 +845,7 @@ export default function PasmaModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Ballast vs Stabilisers</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Ballast and stabilisers serve different purposes and are sometimes used together.
                   Stabilisers and outriggers increase the effective base area, while ballast adds
                   weight to resist overturning. For very tall towers or towers in exposed locations,
@@ -881,10 +881,10 @@ export default function PasmaModule3Section4() {
                       Cease Work: Beaufort Force 4
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Approximately 17 mph / 13 knots / 28 km/h
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     <strong className="text-white">Visual signs:</strong> Dust and loose paper
                     raised from the ground, small branches begin to move, flags extend from the
                     pole. At this point, conditions on the platform are unsafe for work.
@@ -897,10 +897,10 @@ export default function PasmaModule3Section4() {
                       Structural Limit: Beaufort Force 6
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Approximately 28 mph / 24 knots / 45 km/h
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     <strong className="text-white">Visual signs:</strong> Large branches in motion,
                     whistling in wires, difficulty holding an umbrella. Above Force 6, the tower
                     structure itself may be at risk of overturning or structural damage.
@@ -912,13 +912,13 @@ export default function PasmaModule3Section4() {
                 <p className="text-sm font-medium text-elec-yellow mb-3">
                   Sheet Materials — The Sail Effect
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Sheet materials on the platform &mdash; plywood boards, plastic sheeting,
                   tarpaulins, signage &mdash; dramatically increase the wind loading on the tower. A
                   2.4m &times; 1.2m sheet of plywood on the platform effectively turns the tower
                   into a sail.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Reduce the maximum tower height when carrying sheet materials</span>
@@ -945,7 +945,7 @@ export default function PasmaModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Monitoring Wind Speed</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1006,7 +1006,7 @@ export default function PasmaModule3Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   The Beaufort Scale &mdash; Key Levels for Tower Work
                 </p>
-                <div className="space-y-1 text-sm text-white/80">
+                <div className="space-y-1 text-sm text-white">
                   <p className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1066,7 +1066,7 @@ export default function PasmaModule3Section4() {
                 <p className="text-sm font-medium text-blue-400 mb-3">
                   Example 1: Indoor Double-Width Tower at 6m
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Situation:</strong> You need a 6m platform height
                     inside a warehouse. The tower is double-width with a base dimension of 1.35m. No
@@ -1092,7 +1092,7 @@ export default function PasmaModule3Section4() {
                 <p className="text-sm font-medium text-green-400 mb-3">
                   Example 2: Outdoor Double-Width Tower at 4m with Tools
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Situation:</strong> A 4m platform height
                     outdoors. Double-width tower (1.35m base). Operative will use hand tools, no
@@ -1118,7 +1118,7 @@ export default function PasmaModule3Section4() {
                 <p className="text-sm font-medium text-purple-400 mb-3">
                   Example 3: Single-Width Tower Near Maximum Height
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Situation:</strong> A single-width tower (0.85m
                     base) is needed to reach a 3.5m platform height indoors for cable tray
@@ -1147,7 +1147,7 @@ export default function PasmaModule3Section4() {
                     Quick Reference Calculation
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-1">
+                <div className="text-sm text-white space-y-1">
                   <p>
                     <strong className="text-white">Check your ratio:</strong> Platform height
                     &divide; narrowest base = your ratio
@@ -1171,7 +1171,7 @@ export default function PasmaModule3Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Practical Tips for Stability Calculations
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1218,7 +1218,7 @@ export default function PasmaModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">On-Site Stability Checklist</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>What is the required platform height?</span>
@@ -1266,7 +1266,7 @@ export default function PasmaModule3Section4() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Real-World Reminder</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The HSE investigates all serious tower incidents. One of the most common findings
                   is that the tower was erected beyond its safe freestanding height without
                   stabilisers. This is entirely preventable with a simple calculation and the
@@ -1285,7 +1285,7 @@ export default function PasmaModule3Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1299,7 +1299,7 @@ export default function PasmaModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-3-section-3">

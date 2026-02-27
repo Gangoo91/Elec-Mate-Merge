@@ -134,7 +134,7 @@ const EnhancedContinuityRingTestCard = () => {
           </div>
         </div>
 
-        <div className="mt-4 text-xs text-white/80 text-center">
+        <div className="mt-4 text-xs text-white text-center">
           Two cables form a ring - both legs must be tested separately
         </div>
       </div>
@@ -153,7 +153,7 @@ const EnhancedContinuityRingTestCard = () => {
           <div className="border-2 border-blue-400 p-3 rounded text-center">
             <div className="text-foreground mb-2">At DB: Link L1↔E1</div>
             <div className="text-yellow-400 mb-2">Test at Socket: L↔E</div>
-            <div className="text-xs text-white/80">This tests one leg of the ring</div>
+            <div className="text-xs text-white">This tests one leg of the ring</div>
           </div>
         </div>
         <div className="bg-card p-4 rounded">
@@ -161,7 +161,7 @@ const EnhancedContinuityRingTestCard = () => {
           <div className="border-2 border-purple-400 p-3 rounded text-center">
             <div className="text-foreground mb-2">At DB: Link L2↔E2</div>
             <div className="text-yellow-400 mb-2">Test at Socket: L↔E</div>
-            <div className="text-xs text-white/80">This tests the other leg</div>
+            <div className="text-xs text-white">This tests the other leg</div>
           </div>
         </div>
         <div className="bg-card p-4 rounded">
@@ -169,7 +169,7 @@ const EnhancedContinuityRingTestCard = () => {
           <div className="border-2 border-green-400 p-3 rounded text-center">
             <div className="text-foreground mb-2">At DB: Link L1↔E2</div>
             <div className="text-yellow-400 mb-2">Test at Socket: L↔E</div>
-            <div className="text-xs text-white/80">Verifies ring integrity</div>
+            <div className="text-xs text-white">Verifies ring integrity</div>
           </div>
         </div>
       </div>
@@ -573,7 +573,7 @@ const EnhancedContinuityRingTestCard = () => {
                       <div>Final R1+R2: {result.finalR1R2}Ω</div>
                     </div>
                     {result.notes && (
-                      <div className="mt-2 text-sm text-white/80">Notes: {result.notes}</div>
+                      <div className="mt-2 text-sm text-white">Notes: {result.notes}</div>
                     )}
                   </div>
                 ))}

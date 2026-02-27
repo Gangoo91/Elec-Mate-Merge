@@ -219,7 +219,7 @@ export default function MentalHealthModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-5">
@@ -244,7 +244,7 @@ export default function MentalHealthModule5Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Signposting &amp; Support Services
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Knowing where to direct someone for help is one of the most practical skills a Mental
             Health First Aider can have &mdash; this section covers the full landscape from NHS
             services to construction-specific charities
@@ -331,7 +331,7 @@ export default function MentalHealthModule5Section2() {
                     NHS Talking Therapies (Formerly IAPT)
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-3">
+                <div className="text-sm text-white space-y-3">
                   <p>
                     NHS Talking Therapies (previously known as IAPT &mdash; Improving Access to
                     Psychological Therapies) is the NHS's flagship programme for treating common
@@ -391,7 +391,7 @@ export default function MentalHealthModule5Section2() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 p-3 rounded-lg">
                       <p className="text-sm font-medium text-purple-300 mb-1">{item.service}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -446,7 +446,7 @@ export default function MentalHealthModule5Section2() {
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex-shrink-0">
                         {i + 1}
                       </span>
-                      <p className="text-sm text-white/80">{step}</p>
+                      <p className="text-sm text-white">{step}</p>
                     </div>
                   ))}
                 </div>
@@ -456,7 +456,7 @@ export default function MentalHealthModule5Section2() {
                 <p className="text-sm font-medium text-purple-400 mb-3">
                   Encouraging Someone to Visit Their GP
                 </p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Many people are reluctant to see their GP about mental health. Common barriers
                     include embarrassment, fear of being judged, concern about being prescribed
@@ -481,7 +481,7 @@ export default function MentalHealthModule5Section2() {
                     Fit Notes &amp; Workplace Adjustments
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     A GP can issue a <strong className="text-white">fit note</strong> (Statement of
                     Fitness for Work) if someone is unable to work or needs adjustments due to their
@@ -582,7 +582,7 @@ export default function MentalHealthModule5Section2() {
                           {item.number}
                         </span>
                       </div>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -592,7 +592,7 @@ export default function MentalHealthModule5Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Section 136 &mdash; Police Powers for Mental Health
                 </p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Section 136 of the Mental Health Act 1983 gives police officers the power to
                     take a person from a <strong className="text-white">public place</strong> to a
@@ -614,7 +614,7 @@ export default function MentalHealthModule5Section2() {
                 <p className="text-sm font-medium text-purple-400 mb-2">
                   Crisis Cafes &amp; Safe Havens
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A growing number of areas now offer{' '}
                   <strong className="text-white">crisis cafes</strong> and{' '}
                   <strong className="text-white">safe havens</strong> &mdash; community-based
@@ -716,8 +716,8 @@ export default function MentalHealthModule5Section2() {
                     <div key={i} className="bg-white/5 border border-white/10 p-3 rounded-lg">
                       <p className="text-sm font-bold text-purple-300 mb-1">{org.name}</p>
                       <p className="text-xs font-semibold text-violet-400 mb-0.5">{org.contact}</p>
-                      <p className="text-[11px] text-white/50 mb-1.5">{org.alt}</p>
-                      <p className="text-xs text-white/70">{org.desc}</p>
+                      <p className="text-[11px] text-white mb-1.5">{org.alt}</p>
+                      <p className="text-xs text-white">{org.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -758,7 +758,7 @@ export default function MentalHealthModule5Section2() {
                     <Users className="h-5 w-5 text-purple-400" />
                     <p className="text-sm font-medium text-purple-400">Mates in Mind</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -798,7 +798,7 @@ export default function MentalHealthModule5Section2() {
                       Lighthouse Club (0345 605 1956)
                     </p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -838,7 +838,7 @@ export default function MentalHealthModule5Section2() {
                       Building Mental Health Framework
                     </p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -871,7 +871,7 @@ export default function MentalHealthModule5Section2() {
                       CITB Mental Health Resources
                     </p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -971,7 +971,7 @@ export default function MentalHealthModule5Section2() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 p-3 rounded-lg">
                       <p className="text-sm font-medium text-purple-300 mb-1">{item.area}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -991,7 +991,7 @@ export default function MentalHealthModule5Section2() {
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex-shrink-0">
                         {i + 1}
                       </span>
-                      <p className="text-sm text-white/80">{step}</p>
+                      <p className="text-sm text-white">{step}</p>
                     </div>
                   ))}
                 </div>
@@ -1001,7 +1001,7 @@ export default function MentalHealthModule5Section2() {
                 <p className="text-sm font-medium text-purple-400 mb-3">
                   Overcoming Barriers to EAP Use
                 </p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>The most common barriers to EAP usage are:</p>
                   <div className="grid sm:grid-cols-2 gap-2">
                     {[
@@ -1028,7 +1028,7 @@ export default function MentalHealthModule5Section2() {
                     ].map((item, i) => (
                       <div key={i} className="bg-white/5 border border-white/10 p-3 rounded-lg">
                         <p className="text-xs font-medium text-violet-300 mb-1">{item.barrier}</p>
-                        <p className="text-xs text-white/60">{item.response}</p>
+                        <p className="text-xs text-white">{item.response}</p>
                       </div>
                     ))}
                   </div>
@@ -1042,7 +1042,7 @@ export default function MentalHealthModule5Section2() {
                     The MHFA&rsquo;s Role in Signposting to EAPs
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     As an MHFA, you are not a counsellor or therapist &mdash; your role is to
                     provide initial support and signpost to appropriate professional help. The EAP
@@ -1072,7 +1072,7 @@ export default function MentalHealthModule5Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1086,7 +1086,7 @@ export default function MentalHealthModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-5">

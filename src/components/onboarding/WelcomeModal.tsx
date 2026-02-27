@@ -143,13 +143,13 @@ const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
               <Icon className={`h-10 w-10 md:h-12 md:w-12 ${content.color}`} />
             </div>
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">{content.title}</h2>
-            <p className="text-white/60 md:text-lg">{content.subtitle}</p>
+            <p className="text-white md:text-lg">{content.subtitle}</p>
           </div>
         </div>
 
         {/* Features */}
         <div className="px-6 md:px-8 py-6 md:py-8 space-y-3 md:space-y-4">
-          <p className="text-xs md:text-sm font-medium text-white/40 uppercase tracking-wider mb-4">
+          <p className="text-xs md:text-sm font-medium text-white uppercase tracking-wider mb-4">
             What you get with your 7-day free trial
           </p>
           {content.features.map((feature, index) => {
@@ -165,7 +165,7 @@ const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-medium text-white text-sm md:text-base">{feature.text}</p>
-                  <p className="text-xs md:text-sm text-white/50">{feature.desc}</p>
+                  <p className="text-xs md:text-sm text-white">{feature.desc}</p>
                 </div>
                 <CheckCircle2 className="h-4 w-4 md:h-5 md:w-5 text-green-500 flex-shrink-0 mt-1" />
               </div>
@@ -200,7 +200,7 @@ const WelcomeModal = ({ isOpen, onClose }: WelcomeModalProps) => {
           <Button
             variant="ghost"
             onClick={handleSkip}
-            className="w-full h-11 text-white/50 hover:text-white/70 md:text-base touch-manipulation"
+            className="w-full h-11 text-white hover:text-white md:text-base touch-manipulation"
           >
             I'll explore on my own
           </Button>

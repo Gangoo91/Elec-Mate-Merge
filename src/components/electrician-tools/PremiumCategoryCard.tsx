@@ -66,7 +66,7 @@ const PremiumCategoryCard = ({
           <div className="metric-box">
             <Package className="h-4 w-4 text-primary shrink-0" />
             <div className="min-w-0">
-              <span className="text-xs text-white/60 block">Tools</span>
+              <span className="text-xs text-white block">Tools</span>
               {isLoading ? (
                 <Loader2 className="h-3 w-3 animate-spin text-primary" />
               ) : (
@@ -81,7 +81,7 @@ const PremiumCategoryCard = ({
           <div className="metric-box">
             <span className="text-primary font-bold text-sm shrink-0">£</span>
             <div className="min-w-0">
-              <span className="text-xs text-white/60 block">Price Range</span>
+              <span className="text-xs text-white block">Price Range</span>
               <span className="text-sm font-semibold text-white truncate block">
                 {category.priceRange || 'Various'}
               </span>
@@ -92,7 +92,7 @@ const PremiumCategoryCard = ({
           <div className="metric-box">
             <Store className="h-4 w-4 text-primary shrink-0" />
             <div className="min-w-0">
-              <span className="text-xs text-white/60 block">Suppliers</span>
+              <span className="text-xs text-white block">Suppliers</span>
               <span className="text-sm font-semibold text-white">4+</span>
             </div>
           </div>
@@ -103,16 +103,16 @@ const PremiumCategoryCard = ({
               <>
                 <div className="h-2 w-2 rounded-full bg-green-500 shrink-0 animate-pulse" />
                 <div className="min-w-0">
-                  <span className="text-xs text-white/60 block">Status</span>
+                  <span className="text-xs text-white block">Status</span>
                   <span className="text-sm font-semibold text-green-400">In Stock</span>
                 </div>
               </>
             ) : (
               <>
-                <Loader2 className="h-4 w-4 text-white/40 animate-spin shrink-0" />
+                <Loader2 className="h-4 w-4 text-white animate-spin shrink-0" />
                 <div className="min-w-0">
-                  <span className="text-xs text-white/60 block">Status</span>
-                  <span className="text-sm font-medium text-white/40">Loading</span>
+                  <span className="text-xs text-white block">Status</span>
+                  <span className="text-sm font-medium text-white">Loading</span>
                 </div>
               </>
             )}
@@ -120,7 +120,7 @@ const PremiumCategoryCard = ({
         </div>
 
         {/* Description - Progressive Disclosure */}
-        <p className="reveal-on-hover text-sm text-white/70 leading-relaxed line-clamp-2 mb-4">
+        <p className="reveal-on-hover text-sm text-white leading-relaxed line-clamp-2 mb-4">
           {category.description}
         </p>
 
@@ -129,7 +129,7 @@ const PremiumCategoryCard = ({
 
         {/* Footer: Browse Arrow */}
         <div className="flex items-center justify-between pt-3 border-t border-white/10">
-          <span className="text-sm text-white/60 group-hover:text-white transition-colors">
+          <span className="text-sm text-white group-hover:text-white transition-colors">
             Browse {category.count > 0 ? `${category.count} tools` : 'category'}
           </span>
           <ArrowRight className="arrow-reveal h-5 w-5 text-primary" />

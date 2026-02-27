@@ -233,7 +233,7 @@ const HNCModule2Section3_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section3">
@@ -255,7 +255,7 @@ const HNCModule2Section3_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Cooling and Heating Coils
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding coil selection, apparatus dew point and contact factor for HVAC design
           </p>
         </header>
@@ -335,7 +335,7 @@ const HNCModule2Section3_5 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-cyan-400/80 mb-2">ADP Concept</p>
-              <div className="text-sm text-white/90 space-y-2">
+              <div className="text-sm text-white space-y-2">
                 <p>• ADP lies on the saturation curve of the psychrometric chart</p>
                 <p>• It is the point where the coil process line intersects saturation</p>
                 <p>• Air leaving an ideal (100% contact) coil would be at ADP</p>
@@ -415,7 +415,7 @@ const HNCModule2Section3_5 = () => {
                   T<sub>off</sub> = ADP + BF × (T<sub>in</sub> - ADP)
                 </p>
               </div>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Same equations apply for moisture content (g)
               </p>
             </div>
@@ -570,7 +570,7 @@ const HNCModule2Section3_5 = () => {
                   Latent load: Q<sub>L</sub> = ṁ × (g<sub>in</sub> - g<sub>off</sub>) × h
                   <sub>fg</sub>
                 </p>
-                <p className="text-xs text-white/70 mt-2">Check: Qt = Qs + QL</p>
+                <p className="text-xs text-white mt-2">Check: Qt = Qs + QL</p>
               </div>
             </div>
           </div>
@@ -675,7 +675,7 @@ const HNCModule2Section3_5 = () => {
                 <strong>Question:</strong> Air enters a cooling coil at 28°C. The ADP is 10°C and
                 the coil contact factor is 0.82. Calculate the off-coil temperature.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given: T_in = 28°C, ADP = 10°C, CF = 0.82</p>
                 <p>BF = 1 - CF = 1 - 0.82 = 0.18</p>
                 <p className="mt-2">Method 1: T_off = ADP + BF × (T_in - ADP)</p>
@@ -698,7 +698,7 @@ const HNCModule2Section3_5 = () => {
                 <strong>Question:</strong> Air at 26°C, 11 g/kg enters a cooling coil and leaves at
                 14°C, 9 g/kg. Find the ADP and contact factor.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Draw line from entry (26°C, 11 g/kg) through exit (14°C, 9 g/kg)</p>
                 <p>Step 2: Extend to saturation curve to find ADP</p>
                 <p>
@@ -709,10 +709,10 @@ const HNCModule2Section3_5 = () => {
                 <p>
                   CF = (26 - 14) / (26 - 9) = 12/17 = <strong>0.71</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Verify with moisture: CF = (11-9)/(11-8.5) = 2/2.5 = 0.8
                 </p>
-                <p className="text-white/60">(Slight difference due to chart reading)</p>
+                <p className="text-white">(Slight difference due to chart reading)</p>
               </div>
             </div>
 
@@ -724,7 +724,7 @@ const HNCModule2Section3_5 = () => {
                 <strong>Question:</strong> A coil handles 5 kg/s. Entry: 28°C, 12 g/kg, h = 58
                 kJ/kg. Exit: 14°C, 9 g/kg, h = 37 kJ/kg. Calculate loads.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Total load: Qt = ṁ × Δh</p>
                 <p>
                   Qt = 5 × (58 - 37) = 5 × 21 = <strong>105 kW</strong>
@@ -752,7 +752,7 @@ const HNCModule2Section3_5 = () => {
                 <strong>Question:</strong> A 120 kW cooling coil uses chilled water at 6/12°C.
                 Calculate the required water flow rate.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Q = ṁw × cpw × ΔTw</p>
                 <p>120 = ṁw × 4.19 × 6</p>
                 <p>ṁw = 120 / (4.19 × 6) = 120 / 25.14</p>
@@ -837,7 +837,7 @@ const HNCModule2Section3_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -883,7 +883,7 @@ const HNCModule2Section3_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section3-4">

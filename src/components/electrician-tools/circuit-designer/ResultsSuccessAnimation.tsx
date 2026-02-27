@@ -229,7 +229,7 @@ export const ResultsSuccessAnimation = ({
 
             {/* Subtitle with circuit count */}
             <motion.p
-              className="mt-2 text-base text-white/60"
+              className="mt-2 text-base text-white"
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.6, duration: 0.4 }}
@@ -247,7 +247,7 @@ export const ResultsSuccessAnimation = ({
             {/* Project name */}
             {projectName && (
               <motion.p
-                className="mt-1 text-sm text-white/40"
+                className="mt-1 text-sm text-white"
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 0.7, duration: 0.4 }}
@@ -258,7 +258,7 @@ export const ResultsSuccessAnimation = ({
 
             {/* Tap to continue hint */}
             <motion.p
-              className="mt-8 text-xs text-white/30"
+              className="mt-8 text-xs text-white"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.5, duration: 0.5 }}

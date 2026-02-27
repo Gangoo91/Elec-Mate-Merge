@@ -86,7 +86,7 @@ export function MyJobsSheet({ open, onOpenChange }: MyJobsSheetProps) {
                     'flex-1 h-9 touch-manipulation capitalize',
                     filter === f
                       ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30'
-                      : 'bg-white/[0.03] text-white/60 border border-white/10'
+                      : 'bg-white/[0.03] text-white border border-white/10'
                   )}
                 >
                   <Filter className="h-3.5 w-3.5 mr-1.5" />
@@ -107,7 +107,7 @@ export function MyJobsSheet({ open, onOpenChange }: MyJobsSheetProps) {
                 <div className="w-16 h-16 rounded-2xl bg-elec-yellow/10 flex items-center justify-center mx-auto mb-4">
                   <Briefcase className="h-8 w-8 text-elec-yellow" />
                 </div>
-                <p className="text-white/60">No {filter !== 'all' ? filter : ''} jobs found</p>
+                <p className="text-white">No {filter !== 'all' ? filter : ''} jobs found</p>
               </div>
             ) : (
               <AnimatePresence mode="popLayout">
@@ -126,9 +126,9 @@ export function MyJobsSheet({ open, onOpenChange }: MyJobsSheetProps) {
                           {getStatusBadge(job.status)}
                         </div>
                         {job.client_name && (
-                          <p className="text-sm text-white/60 mb-2">{job.client_name}</p>
+                          <p className="text-sm text-white mb-2">{job.client_name}</p>
                         )}
-                        <div className="flex flex-wrap gap-3 text-xs text-white/50">
+                        <div className="flex flex-wrap gap-3 text-xs text-white">
                           {job.address && (
                             <span className="flex items-center gap-1">
                               <MapPin className="h-3 w-3" />
@@ -146,7 +146,7 @@ export function MyJobsSheet({ open, onOpenChange }: MyJobsSheetProps) {
                           )}
                         </div>
                       </div>
-                      <ChevronRight className="h-5 w-5 text-white/30 flex-shrink-0" />
+                      <ChevronRight className="h-5 w-5 text-white flex-shrink-0" />
                     </div>
                   </motion.button>
                 ))}

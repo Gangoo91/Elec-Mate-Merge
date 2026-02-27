@@ -194,7 +194,7 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
             <div className="w-1.5 h-1.5 rounded-full bg-green-400" />
             <span className="font-semibold text-[15px] text-white">Payment & Banking</span>
           </div>
-          <ChevronRight className="h-5 w-5 text-white/30" />
+          <ChevronRight className="h-5 w-5 text-white" />
         </button>
 
         <div className="border-t border-white/[0.06]">
@@ -204,13 +204,13 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
               <CreditCard className="h-4 w-4 text-indigo-400" />
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+              <p className="text-[11px] font-medium text-white uppercase tracking-wide">
                 Card Payments
               </p>
               {stripeLoading ? (
                 <div className="flex items-center gap-2">
-                  <Loader2 className="h-3.5 w-3.5 animate-spin text-white/40" />
-                  <span className="text-[15px] text-white/50">Checking...</span>
+                  <Loader2 className="h-3.5 w-3.5 animate-spin text-white" />
+                  <span className="text-[15px] text-white">Checking...</span>
                 </div>
               ) : stripeStatus?.status === 'active' ? (
                 <div className="flex items-center gap-2">
@@ -239,7 +239,7 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
                   handleOpenStripeDashboard();
                 }}
                 disabled={connecting}
-                className="px-3 py-1.5 rounded-lg bg-white/[0.06] text-[13px] text-white/70 active:bg-white/[0.1] touch-manipulation"
+                className="px-3 py-1.5 rounded-lg bg-white/[0.06] text-[13px] text-white active:bg-white/[0.1] touch-manipulation"
               >
                 <ExternalLink className="h-3.5 w-3.5 inline mr-1" />
                 Dashboard
@@ -253,7 +253,7 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
               <Landmark className="h-4 w-4 text-cyan-400" />
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+              <p className="text-[11px] font-medium text-white uppercase tracking-wide">
                 Bank Transfer
               </p>
               {companyProfile?.bank_details?.accountNumber ? (
@@ -261,7 +261,7 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
                   <p className="text-[15px] text-white">
                     {companyProfile.bank_details.accountName || 'Account'}
                   </p>
-                  <p className="text-[13px] text-white/50">
+                  <p className="text-[13px] text-white">
                     {companyProfile.bank_details.bankName &&
                       `${companyProfile.bank_details.bankName} • `}
                     {maskAccountNumber(companyProfile.bank_details.accountNumber)}
@@ -335,48 +335,48 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
                   </div>
                   <div className="flex-1 text-left">
                     <p className="text-[15px] font-medium text-white">Accept Card Payments</p>
-                    <p className="text-[13px] text-white/50">
+                    <p className="text-[13px] text-white">
                       Connect Stripe to take payments on invoices
                     </p>
                   </div>
-                  <ChevronRight className="h-5 w-5 text-white/30" />
+                  <ChevronRight className="h-5 w-5 text-white" />
                 </motion.button>
 
                 {/* Fee breakdown */}
                 <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-4">
-                  <p className="text-[13px] font-medium text-white/70 mb-3">
+                  <p className="text-[13px] font-medium text-white mb-3">
                     Payment Processing Fees
                   </p>
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
-                      <span className="text-[13px] text-white/50">Stripe (UK cards)</span>
-                      <span className="text-[13px] text-white/70">1.5% + 20p</span>
+                      <span className="text-[13px] text-white">Stripe (UK cards)</span>
+                      <span className="text-[13px] text-white">1.5% + 20p</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-[13px] text-white/50">Elec-Mate</span>
-                      <span className="text-[13px] text-white/70">1%</span>
+                      <span className="text-[13px] text-white">Elec-Mate</span>
+                      <span className="text-[13px] text-white">1%</span>
                     </div>
                     <div className="border-t border-white/[0.06] pt-2 mt-2">
                       <div className="flex justify-between items-center">
-                        <span className="text-[13px] font-medium text-white/70">Total</span>
+                        <span className="text-[13px] font-medium text-white">Total</span>
                         <span className="text-[13px] font-semibold text-white">2.5% + 20p</span>
                       </div>
                     </div>
                   </div>
-                  <p className="text-[11px] text-white/40 mt-3">
+                  <p className="text-[11px] text-white mt-3">
                     EU cards: 2.5% + 20p • International: 3.25% + 20p
                   </p>
                 </div>
               </div>
             )}
 
-            <p className="text-[13px] text-white/50">
+            <p className="text-[13px] text-white">
               These details appear on your invoices for customers paying by bank transfer.
             </p>
 
             {/* Account Name */}
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Account Name
               </Label>
               <Input
@@ -389,7 +389,7 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
 
             {/* Bank Name */}
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Bank Name
               </Label>
               <Input
@@ -402,7 +402,7 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
 
             {/* Account Number */}
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Account Number
               </Label>
               <Input
@@ -421,7 +421,7 @@ const PaymentBankingCard: React.FC<PaymentBankingCardProps> = ({
 
             {/* Sort Code */}
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Sort Code
               </Label>
               <Input

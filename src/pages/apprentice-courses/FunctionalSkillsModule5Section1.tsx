@@ -118,7 +118,7 @@ const FunctionalSkillsModule5Section1 = () => {
             to="/study-centre/apprentice/functional-skills/module5"
             className="p-2 -ml-2 touch-manipulation"
           >
-            <ArrowLeft className="w-5 h-5 text-white/60" />
+            <ArrowLeft className="w-5 h-5 text-white" />
           </Link>
           <div>
             <p className="text-[11px] font-semibold text-green-400 uppercase tracking-wider">
@@ -144,7 +144,7 @@ const FunctionalSkillsModule5Section1 = () => {
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
               Level 1 Functional Skills Practice
             </h2>
-            <p className="text-sm text-white/50 max-w-lg mx-auto">
+            <p className="text-sm text-white max-w-lg mx-auto">
               Understand exam formats, practise with sample questions at Level 1 standard, and
               develop strategies to confidently pass your Functional Skills assessments.
             </p>
@@ -167,7 +167,7 @@ const FunctionalSkillsModule5Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Understanding Level 1</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Level 1 Functional Skills qualifications sit between GCSE grades 3 and 1 (old grades
               D-G). They demonstrate that you can apply fundamental maths, English, and ICT skills
@@ -184,7 +184,7 @@ const FunctionalSkillsModule5Section1 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Functional Skills are not about abstract theory — every question is set in a
                 practical, real-world context. For electricians, this means questions about
                 measurements, costs, safety documents, and workplace communications. You are already
@@ -269,7 +269,7 @@ const FunctionalSkillsModule5Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Level 1 Maths Format</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               The Level 1 Maths exam is an externally set and marked paper. It is typically divided
               into two sections and lasts approximately 1 hour 30 minutes in total, though exact
@@ -286,7 +286,7 @@ const FunctionalSkillsModule5Section1 = () => {
                   <p className="text-xs font-semibold text-green-400 mb-1">
                     Section A — Non-Calculator
                   </p>
-                  <ul className="space-y-1 text-xs text-white/70">
+                  <ul className="space-y-1 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <span className="text-green-400 mt-0.5">•</span>
                       <span>Approximately 30 minutes duration</span>
@@ -312,7 +312,7 @@ const FunctionalSkillsModule5Section1 = () => {
                   <p className="text-xs font-semibold text-green-400 mb-1">
                     Section B — Calculator Allowed
                   </p>
-                  <ul className="space-y-1 text-xs text-white/70">
+                  <ul className="space-y-1 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <span className="text-green-400 mt-0.5">•</span>
                       <span>Approximately 1 hour duration</span>
@@ -346,7 +346,7 @@ const FunctionalSkillsModule5Section1 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Always show your working, even in the calculator section. If you make a keying error
                 on your calculator but your method is correct, you can still earn method marks. A
                 blank answer always scores zero, but a partially correct method can score partial
@@ -392,15 +392,15 @@ const FunctionalSkillsModule5Section1 = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="bg-white/5 rounded-lg p-3">
                 <p className="text-xs font-semibold text-green-400 mb-1">Multiple Choice</p>
-                <p className="text-xs text-white/70">Select the correct answer from four options</p>
+                <p className="text-xs text-white">Select the correct answer from four options</p>
               </div>
               <div className="bg-white/5 rounded-lg p-3">
                 <p className="text-xs font-semibold text-green-400 mb-1">Short Answer</p>
-                <p className="text-xs text-white/70">Write a numerical answer with working shown</p>
+                <p className="text-xs text-white">Write a numerical answer with working shown</p>
               </div>
               <div className="bg-white/5 rounded-lg p-3">
                 <p className="text-xs font-semibold text-green-400 mb-1">Multi-Step</p>
-                <p className="text-xs text-white/70">Problems requiring two or more calculations</p>
+                <p className="text-xs text-white">Problems requiring two or more calculations</p>
               </div>
             </div>
           </div>
@@ -425,7 +425,7 @@ const FunctionalSkillsModule5Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Level 1 Maths Practice Questions</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Below are practice questions at Level 1 standard, set in contexts relevant to
               electrical work. Try each one before checking the worked solution. These cover the key
@@ -439,13 +439,13 @@ const FunctionalSkillsModule5Section1 = () => {
                   Practice Question 1 — Non-Calculator (Whole Numbers)
                 </p>
               </div>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 An electrician buys 8 rolls of cable at £15 each and 4 packs of cable clips at £3
                 each. What is the total cost?
               </p>
               <div className="bg-white/5 rounded-lg p-3 mt-2">
                 <p className="text-xs font-semibold text-green-400 mb-1">Worked Solution</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Cable: 8 x £15 = £120
                   <br />
                   Clips: 4 x £3 = £12
@@ -462,13 +462,13 @@ const FunctionalSkillsModule5Section1 = () => {
                   Practice Question 2 — Non-Calculator (Fractions)
                 </p>
               </div>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 A job requires 3/4 of a 100-metre drum of cable. How many metres of cable are
                 needed?
               </p>
               <div className="bg-white/5 rounded-lg p-3 mt-2">
                 <p className="text-xs font-semibold text-green-400 mb-1">Worked Solution</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   3/4 of 100 = 100 divided by 4 x 3<br />
                   100 divided by 4 = 25
                   <br />
@@ -484,13 +484,13 @@ const FunctionalSkillsModule5Section1 = () => {
                   Practice Question 3 — Non-Calculator (Percentages)
                 </p>
               </div>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 An electrician buys cable costing £85.00. There is a 20% discount for trade
                 customers. How much does the electrician pay?
               </p>
               <div className="bg-white/5 rounded-lg p-3 mt-2">
                 <p className="text-xs font-semibold text-green-400 mb-1">Worked Solution</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Find 20% of £85: 20/100 x 85 = £17.00
                   <br />
                   Subtract the discount: £85.00 - £17.00 ={' '}
@@ -506,13 +506,13 @@ const FunctionalSkillsModule5Section1 = () => {
                   Practice Question 4 — Calculator (Area)
                 </p>
               </div>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 A rectangular kitchen measures 4.8 metres by 3.5 metres. The electrician needs to
                 install downlighters with one light per 2 m². How many downlighters are needed?
               </p>
               <div className="bg-white/5 rounded-lg p-3 mt-2">
                 <p className="text-xs font-semibold text-green-400 mb-1">Worked Solution</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Area = 4.8 x 3.5 = 16.8 m²
                   <br />
                   Lights needed = 16.8 divided by 2 = 8.4
@@ -530,14 +530,14 @@ const FunctionalSkillsModule5Section1 = () => {
                   Practice Question 5 — Calculator (Overtime Pay)
                 </p>
               </div>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 An electrician works 37.5 hours per week and earns £12.80 per hour. Overtime is paid
                 at 1.5 times the normal rate. If they work 4 hours overtime one week, what is their
                 total pay?
               </p>
               <div className="bg-white/5 rounded-lg p-3 mt-2">
                 <p className="text-xs font-semibold text-green-400 mb-1">Worked Solution</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Normal pay: 37.5 x £12.80 = £480.00
                   <br />
                   Overtime rate: £12.80 x 1.5 = £19.20
@@ -556,14 +556,14 @@ const FunctionalSkillsModule5Section1 = () => {
                   Practice Question 6 — Calculator (Data Handling)
                 </p>
               </div>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 A team of 5 electricians completed the following numbers of installations last
                 month: 12, 15, 9, 18, and 11. What was the mean average number of installations per
                 electrician?
               </p>
               <div className="bg-white/5 rounded-lg p-3 mt-2">
                 <p className="text-xs font-semibold text-green-400 mb-1">Worked Solution</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Total installations: 12 + 15 + 9 + 18 + 11 = 65
                   <br />
                   Mean = total divided by number of values = 65 divided by 5 ={' '}
@@ -579,12 +579,12 @@ const FunctionalSkillsModule5Section1 = () => {
                   Practice Question 7 — Calculator (Unit Conversion)
                 </p>
               </div>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 A cable run measures 2,750 millimetres. Express this in metres.
               </p>
               <div className="bg-white/5 rounded-lg p-3 mt-2">
                 <p className="text-xs font-semibold text-green-400 mb-1">Worked Solution</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Recall that 1 metre = 1,000 millimetres
                   <br />
                   Divide by 1,000: 2,750 divided by 1,000 ={' '}
@@ -595,7 +595,7 @@ const FunctionalSkillsModule5Section1 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 In real exam questions, always check whether you need to round up or round down. For
                 physical items (lights, cables, circuit breakers), always round up — you cannot
                 install a fraction of an item. For costs, round to 2 decimal places. For
@@ -618,7 +618,7 @@ const FunctionalSkillsModule5Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Level 1 English Format</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Level 1 Functional Skills English is divided into three components: Reading, Writing,
               and Speaking, Listening and Communicating (SLC). The reading and writing components
@@ -631,7 +631,7 @@ const FunctionalSkillsModule5Section1 = () => {
                 <BookOpen className="w-4 h-4 text-green-400" />
                 <h4 className="text-white font-semibold text-sm">Reading Exam</h4>
               </div>
-              <ul className="space-y-2 text-xs text-white/70">
+              <ul className="space-y-2 text-xs text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">•</span>
                   <span>
@@ -670,7 +670,7 @@ const FunctionalSkillsModule5Section1 = () => {
                 <BookOpen className="w-4 h-4 text-green-400" />
                 <h4 className="text-white font-semibold text-sm">Writing Exam</h4>
               </div>
-              <ul className="space-y-2 text-xs text-white/70">
+              <ul className="space-y-2 text-xs text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">•</span>
                   <span>
@@ -710,7 +710,7 @@ const FunctionalSkillsModule5Section1 = () => {
                   Speaking, Listening and Communicating (SLC)
                 </h4>
               </div>
-              <ul className="space-y-2 text-xs text-white/70">
+              <ul className="space-y-2 text-xs text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">•</span>
                   <span>
@@ -749,21 +749,21 @@ const FunctionalSkillsModule5Section1 = () => {
             <div className="grid grid-cols-3 gap-3">
               <div className="bg-white/5 rounded-lg p-3 text-center">
                 <div className="text-lg text-green-400 font-bold">5 min</div>
-                <div className="text-xs text-white/60">Planning</div>
+                <div className="text-xs text-white">Planning</div>
               </div>
               <div className="bg-white/5 rounded-lg p-3 text-center">
                 <div className="text-lg text-green-400 font-bold">30 min</div>
-                <div className="text-xs text-white/60">Writing</div>
+                <div className="text-xs text-white">Writing</div>
               </div>
               <div className="bg-white/5 rounded-lg p-3 text-center">
                 <div className="text-lg text-green-400 font-bold">5 min</div>
-                <div className="text-xs text-white/60">Checking</div>
+                <div className="text-xs text-white">Checking</div>
               </div>
             </div>
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 In the writing exam, always plan before you write. Spend 5 minutes noting key
                 points, deciding on paragraph structure, and identifying the correct tone (formal
                 for letters, semi-formal for emails). A well-organised response with a few minor
@@ -792,7 +792,7 @@ const FunctionalSkillsModule5Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Level 1 English Practice Questions</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Below are practice exercises in the style of Level 1 English reading and writing
               tasks. These use contexts relevant to electrical apprentices to help you connect the
@@ -803,7 +803,7 @@ const FunctionalSkillsModule5Section1 = () => {
               <p className="text-xs font-semibold text-green-400 mb-1">
                 Reading Practice — Safety Notice
               </p>
-              <div className="bg-white/5 rounded-lg p-3 text-xs text-white/70 italic">
+              <div className="bg-white/5 rounded-lg p-3 text-xs text-white italic">
                 <p className="mb-2">
                   "IMPORTANT NOTICE — All electrical work in communal areas must be completed by
                   17:00 each day. Tools and materials must be stored securely overnight. Any work
@@ -812,33 +812,33 @@ const FunctionalSkillsModule5Section1 = () => {
                 </p>
               </div>
               <div className="space-y-2">
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">Q1:</strong> By what time must electrical work in
                   communal areas be completed?
                 </p>
-                <p className="text-xs text-white/60 ml-4">Answer: By 17:00 (5 pm)</p>
+                <p className="text-xs text-white ml-4">Answer: By 17:00 (5 pm)</p>
 
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">Q2:</strong> What must happen before isolating the
                   main supply?
                 </p>
-                <p className="text-xs text-white/60 ml-4">
+                <p className="text-xs text-white ml-4">
                   Answer: Agreement with the building manager at least 24 hours in advance
                 </p>
 
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">Q3:</strong> What is the purpose of this notice?
                 </p>
-                <p className="text-xs text-white/60 ml-4">
+                <p className="text-xs text-white ml-4">
                   Answer: To inform contractors of site rules and the consequences of not following
                   them
                 </p>
 
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">Q4:</strong> Who is the intended audience for this
                   notice?
                 </p>
-                <p className="text-xs text-white/60 ml-4">
+                <p className="text-xs text-white ml-4">
                   Answer: Electricians and other contractors working on site
                 </p>
               </div>
@@ -848,7 +848,7 @@ const FunctionalSkillsModule5Section1 = () => {
               <p className="text-xs font-semibold text-green-400 mb-1">
                 Reading Practice — Workplace Email
               </p>
-              <div className="bg-white/5 rounded-lg p-3 text-xs text-white/70 italic">
+              <div className="bg-white/5 rounded-lg p-3 text-xs text-white italic">
                 <p className="mb-1">Subject: Updated PPE Requirements</p>
                 <p className="mb-2">
                   "Following the recent health and safety review, all operatives working on the
@@ -860,27 +860,27 @@ const FunctionalSkillsModule5Section1 = () => {
                 </p>
               </div>
               <div className="space-y-2">
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">Q1:</strong> What new requirement has been
                   introduced?
                 </p>
-                <p className="text-xs text-white/60 ml-4">
+                <p className="text-xs text-white ml-4">
                   Answer: High-visibility vests must be worn at all times, including inside the
                   building
                 </p>
 
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">Q2:</strong> When are hard hats compulsory?
                 </p>
-                <p className="text-xs text-white/60 ml-4">
+                <p className="text-xs text-white ml-4">
                   Answer: In all areas where overhead work is taking place
                 </p>
 
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">Q3:</strong> Where and when can new PPE be
                   collected?
                 </p>
-                <p className="text-xs text-white/60 ml-4">
+                <p className="text-xs text-white ml-4">
                   Answer: From the site office between 07:00 and 08:00
                 </p>
               </div>
@@ -890,14 +890,14 @@ const FunctionalSkillsModule5Section1 = () => {
               <p className="text-xs font-semibold text-green-400 mb-1">
                 Writing Practice — Formal Email
               </p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Write a formal email to your supervisor explaining that you have discovered a fault
                 with the consumer unit in a property you are working on. Include what the fault is,
                 what action you have taken so far, and what you recommend as the next step.
               </p>
               <div className="bg-white/5 rounded-lg p-3 mt-2">
                 <p className="text-xs font-semibold text-green-400 mb-1">Model Answer Structure</p>
-                <ul className="space-y-1 text-xs text-white/70">
+                <ul className="space-y-1 text-xs text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-green-400 mt-0.5">•</span>
                     <span>
@@ -992,7 +992,7 @@ const FunctionalSkillsModule5Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Level 1 ICT Format</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               The Level 1 ICT Functional Skills assessment (now often called Digital Functional
               Skills under the 2019 reformed standards) tests your ability to use digital tools
@@ -1002,7 +1002,7 @@ const FunctionalSkillsModule5Section1 = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="text-white font-semibold text-sm mb-3">Assessment Format</h4>
-              <ul className="space-y-2 text-xs text-white/70">
+              <ul className="space-y-2 text-xs text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">•</span>
                   <span>
@@ -1074,7 +1074,7 @@ const FunctionalSkillsModule5Section1 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 The ICT assessment focuses on whether your documents are fit for purpose — not on
                 using every feature available. A clean, well-formatted job sheet is worth more than
                 a cluttered document with unnecessary formatting. Think about what a real reader
@@ -1092,7 +1092,7 @@ const FunctionalSkillsModule5Section1 = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4 mt-2">
               <p className="text-xs font-semibold text-green-400 mb-1">Practice Task</p>
-              <p className="text-xs text-white/70">
+              <p className="text-xs text-white">
                 Create a spreadsheet listing 10 common electrical materials (e.g., 2.5 mm² twin and
                 earth cable, consumer unit, RCDs, MCBs). Include columns for item name, quantity
                 needed, unit price, and total cost. Use a SUM formula to calculate the grand total
@@ -1103,7 +1103,7 @@ const FunctionalSkillsModule5Section1 = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4 mt-2">
               <p className="text-xs font-semibold text-green-400 mb-1">Practice Task 2</p>
-              <p className="text-xs text-white/70">
+              <p className="text-xs text-white">
                 Write a formal letter using a word processor to a customer confirming the date and
                 time of an electrical inspection. Include the company letterhead details, a clear
                 subject line, the date and address, and a professional sign-off. Use appropriate
@@ -1132,7 +1132,7 @@ const FunctionalSkillsModule5Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Time Management Strategies</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Poor time management is one of the biggest reasons candidates lose marks in Functional
               Skills exams. It is not about rushing — it is about working strategically so you can
@@ -1144,12 +1144,12 @@ const FunctionalSkillsModule5Section1 = () => {
                 <Clock className="w-4 h-4 text-green-400" />
                 <h4 className="text-white font-semibold text-sm">The Mark-Per-Minute Rule</h4>
               </div>
-              <p className="text-xs text-white/70 mb-2">
+              <p className="text-xs text-white mb-2">
                 Calculate how many minutes you have per mark. For example, in a 90-minute exam worth
                 60 marks:
               </p>
-              <p className="text-xs text-white/70">90 divided by 60 = 1.5 minutes per mark</p>
-              <p className="text-xs text-white/70 mt-2">
+              <p className="text-xs text-white">90 divided by 60 = 1.5 minutes per mark</p>
+              <p className="text-xs text-white mt-2">
                 This means a 4-mark question should take approximately 6 minutes. A 2-mark question
                 should take about 3 minutes. Use this as a rough guide for pacing yourself through
                 the paper.
@@ -1220,7 +1220,7 @@ const FunctionalSkillsModule5Section1 = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="bg-white/5 rounded-lg p-3">
                 <p className="text-xs font-semibold text-green-400 mb-1">Maths Exam (90 min)</p>
-                <ul className="text-xs text-white/70 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-green-400 mt-0.5">•</span>
                     <span>Non-calculator: ~1.5 min per question</span>
@@ -1237,7 +1237,7 @@ const FunctionalSkillsModule5Section1 = () => {
               </div>
               <div className="bg-white/5 rounded-lg p-3">
                 <p className="text-xs font-semibold text-green-400 mb-1">English Exam (60 min)</p>
-                <ul className="text-xs text-white/70 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-green-400 mt-0.5">•</span>
                     <span>Reading questions: ~1 min per mark</span>
@@ -1280,7 +1280,7 @@ const FunctionalSkillsModule5Section1 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Never leave a question blank. Even an educated guess can earn you marks,
                 particularly in multiple-choice questions. A blank answer always scores zero, but a
                 guess has at least a 25% chance of being correct on a four-option question.
@@ -1302,7 +1302,7 @@ const FunctionalSkillsModule5Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Common Mistakes to Avoid</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Learning from the most common mistakes that candidates make can significantly improve
               your exam performance. These errors are avoidable with awareness and practice.
@@ -1313,7 +1313,7 @@ const FunctionalSkillsModule5Section1 = () => {
                 <AlertTriangle className="w-4 h-4 text-amber-400" />
                 <h4 className="text-white font-semibold text-sm">Maths Mistakes</h4>
               </div>
-              <ul className="space-y-2 text-xs text-white/70">
+              <ul className="space-y-2 text-xs text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">•</span>
                   <span>
@@ -1368,7 +1368,7 @@ const FunctionalSkillsModule5Section1 = () => {
                 <AlertTriangle className="w-4 h-4 text-amber-400" />
                 <h4 className="text-white font-semibold text-sm">English Mistakes</h4>
               </div>
-              <ul className="space-y-2 text-xs text-white/70">
+              <ul className="space-y-2 text-xs text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">•</span>
                   <span>
@@ -1417,7 +1417,7 @@ const FunctionalSkillsModule5Section1 = () => {
                 <AlertTriangle className="w-4 h-4 text-amber-400" />
                 <h4 className="text-white font-semibold text-sm">ICT Mistakes</h4>
               </div>
-              <ul className="space-y-2 text-xs text-white/70">
+              <ul className="space-y-2 text-xs text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">•</span>
                   <span>
@@ -1455,7 +1455,7 @@ const FunctionalSkillsModule5Section1 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 The number one mistake across all subjects is not reading the question properly.
                 Before answering, read the question at least twice. Identify exactly what is being
                 asked, what information is given, and how many marks are available. The marks tell
@@ -1465,7 +1465,7 @@ const FunctionalSkillsModule5Section1 = () => {
 
             <h4 className="text-white font-semibold pt-2">Pre-Exam Checklist</h4>
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <ul className="space-y-2 text-xs text-white/70">
+              <ul className="space-y-2 text-xs text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>Scientific calculator with fresh batteries (not a phone)</span>
@@ -1510,7 +1510,7 @@ const FunctionalSkillsModule5Section1 = () => {
         <div className="flex items-center justify-between pt-6 border-t border-white/10">
           <Link
             to="/study-centre/apprentice/functional-skills/module5"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Module

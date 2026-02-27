@@ -39,7 +39,7 @@ const InstrumentationModule5Section1 = () => {
             <Zap className="h-4 w-4 text-elec-yellow" />
             Quick Summary
           </h2>
-          <p className="text-white/80 text-sm">
+          <p className="text-white text-sm">
             Control systems can be categorised as open loop (no feedback) or closed loop (with
             feedback). Understanding the differences helps in selecting the right approach for
             industrial applications. Closed loop systems offer self-correction while open loop
@@ -61,7 +61,7 @@ const InstrumentationModule5Section1 = () => {
               <Play className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-medium text-white mb-2">What is an Open Loop System?</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Open loop systems operate without feedback. They execute predetermined actions
                   based on input commands, regardless of the actual output or system conditions. The
                   controller sends a signal to the actuator, but there is no measurement of the
@@ -72,7 +72,7 @@ const InstrumentationModule5Section1 = () => {
 
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-medium text-white mb-3">Key Characteristics</h4>
-              <ul className="space-y-2 text-white/80 text-sm">
+              <ul className="space-y-2 text-white text-sm">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>No feedback mechanism - output is not measured</span>
@@ -97,21 +97,21 @@ const InstrumentationModule5Section1 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Basic Timer Switch</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Runs for a set time regardless of conditions
                   </p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Manual Control Valve</p>
-                  <p className="text-white/70 text-xs">Fixed position until manually adjusted</p>
+                  <p className="text-white text-xs">Fixed position until manually adjusted</p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Washing Machine Timer</p>
-                  <p className="text-white/70 text-xs">Follows predetermined cycle</p>
+                  <p className="text-white text-xs">Follows predetermined cycle</p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Traffic Light System</p>
-                  <p className="text-white/70 text-xs">Fixed timing sequence at intersections</p>
+                  <p className="text-white text-xs">Fixed timing sequence at intersections</p>
                 </div>
               </div>
             </div>
@@ -119,7 +119,7 @@ const InstrumentationModule5Section1 = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
                 <h4 className="font-medium text-green-300 mb-2">Advantages</h4>
-                <ul className="space-y-1 text-white/80 text-sm">
+                <ul className="space-y-1 text-white text-sm">
                   <li>Simple and inexpensive</li>
                   <li>Easy to understand and maintain</li>
                   <li>Fast response (no feedback delay)</li>
@@ -128,7 +128,7 @@ const InstrumentationModule5Section1 = () => {
               </div>
               <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
                 <h4 className="font-medium text-red-300 mb-2">Limitations</h4>
-                <ul className="space-y-1 text-white/80 text-sm">
+                <ul className="space-y-1 text-white text-sm">
                   <li>Cannot adjust to disturbances</li>
                   <li>No error correction capability</li>
                   <li>Less accurate control</li>
@@ -160,7 +160,7 @@ const InstrumentationModule5Section1 = () => {
               <RotateCcw className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-medium text-white mb-2">What is a Closed Loop System?</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Closed loop systems use feedback to continuously monitor output and adjust control
                   actions. They compare actual performance with desired performance (setpoint) and
                   make corrections automatically. This creates a continuous loop of measurement,
@@ -171,7 +171,7 @@ const InstrumentationModule5Section1 = () => {
 
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-medium text-white mb-3">Key Characteristics</h4>
-              <ul className="space-y-2 text-white/80 text-sm">
+              <ul className="space-y-2 text-white text-sm">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Feedback mechanism present - output is measured and compared</span>
@@ -196,19 +196,19 @@ const InstrumentationModule5Section1 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Thermostat Control</p>
-                  <p className="text-white/70 text-xs">Maintains temperature at ±1°C accuracy</p>
+                  <p className="text-white text-xs">Maintains temperature at ±1°C accuracy</p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Motor Speed Control</p>
-                  <p className="text-white/70 text-xs">Maintains ±0.1% speed accuracy</p>
+                  <p className="text-white text-xs">Maintains ±0.1% speed accuracy</p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Pressure Regulation</p>
-                  <p className="text-white/70 text-xs">Maintains ±2% pressure accuracy</p>
+                  <p className="text-white text-xs">Maintains ±2% pressure accuracy</p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Level Control</p>
-                  <p className="text-white/70 text-xs">Prevents overflow and emptying</p>
+                  <p className="text-white text-xs">Prevents overflow and emptying</p>
                 </div>
               </div>
             </div>
@@ -217,15 +217,15 @@ const InstrumentationModule5Section1 = () => {
               <h4 className="font-medium text-white mb-3">Performance Comparison</h4>
               <div className="grid grid-cols-3 gap-4 text-center">
                 <div>
-                  <p className="text-white/70 text-xs mb-1">Accuracy</p>
+                  <p className="text-white text-xs mb-1">Accuracy</p>
                   <p className="text-green-400 font-semibold">Higher</p>
                 </div>
                 <div>
-                  <p className="text-white/70 text-xs mb-1">Reliability</p>
+                  <p className="text-white text-xs mb-1">Reliability</p>
                   <p className="text-green-400 font-semibold">Better</p>
                 </div>
                 <div>
-                  <p className="text-white/70 text-xs mb-1">Disturbance Rejection</p>
+                  <p className="text-white text-xs mb-1">Disturbance Rejection</p>
                   <p className="text-green-400 font-semibold">Excellent</p>
                 </div>
               </div>
@@ -254,7 +254,7 @@ const InstrumentationModule5Section1 = () => {
               <RefreshCw className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-medium text-white mb-2">When to Use Each System</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The choice between open and closed loop control depends on accuracy requirements,
                   cost constraints, response speed needs, and the predictability of disturbances.
                 </p>
@@ -265,12 +265,12 @@ const InstrumentationModule5Section1 = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/20">
-                    <th className="text-left py-2 text-white/70">Aspect</th>
-                    <th className="text-left py-2 text-white/70">Open Loop</th>
-                    <th className="text-left py-2 text-white/70">Closed Loop</th>
+                    <th className="text-left py-2 text-white">Aspect</th>
+                    <th className="text-left py-2 text-white">Open Loop</th>
+                    <th className="text-left py-2 text-white">Closed Loop</th>
                   </tr>
                 </thead>
-                <tbody className="text-white/80">
+                <tbody className="text-white">
                   <tr className="border-b border-white/10">
                     <td className="py-2">Accuracy</td>
                     <td className="py-2">Lower</td>
@@ -302,7 +302,7 @@ const InstrumentationModule5Section1 = () => {
 
             <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
               <h4 className="font-medium text-blue-300 mb-2">Real-World Example: Home Heating</h4>
-              <div className="space-y-3 text-white/80 text-sm">
+              <div className="space-y-3 text-white text-sm">
                 <div>
                   <p className="text-white font-medium">Open Loop (Timer-Based):</p>
                   <p>
@@ -341,7 +341,7 @@ const InstrumentationModule5Section1 = () => {
               <h4 className="font-medium text-white mb-2">
                 Can open loop systems adjust to change?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 No, open loop systems cannot adjust to changes because they lack feedback
                 mechanisms. They operate according to predetermined patterns regardless of actual
                 conditions. Any adjustment requires manual intervention.
@@ -352,7 +352,7 @@ const InstrumentationModule5Section1 = () => {
               <h4 className="font-medium text-white mb-2">
                 What is the main advantage of open loop systems in high-speed applications?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Open loop systems have no feedback delay, making them faster in response time. This
                 is advantageous in high-speed applications where immediate action is required and
                 the process is well understood and predictable.
@@ -363,7 +363,7 @@ const InstrumentationModule5Section1 = () => {
               <h4 className="font-medium text-white mb-2">
                 Does adding feedback always improve system stability?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Not necessarily. Adding feedback can improve or decrease stability depending on the
                 system design and tuning. Properly designed feedback improves stability, but poor
                 design or incorrect tuning can cause oscillations and instability.
@@ -374,7 +374,7 @@ const InstrumentationModule5Section1 = () => {
               <h4 className="font-medium text-white mb-2">
                 Why are closed loop systems preferred for precision control?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Closed loop systems continuously measure and correct errors, automatically
                 compensating for disturbances, component variations, and environmental changes. This
                 makes them essential for applications requiring tight tolerances and consistent

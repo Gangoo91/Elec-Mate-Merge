@@ -189,11 +189,11 @@ const MWFormHeader: React.FC<MWFormHeaderProps> = ({
                 <h1 className="text-2xl font-bold tracking-tight text-white">
                   Minor Works Certificate
                 </h1>
-                <p className="text-sm text-white/60 mt-0.5">
+                <p className="text-sm text-white mt-0.5">
                   BS7671 Minor Electrical Installation Works
                 </p>
                 {formData?.certificateNumber && (
-                  <p className="text-xs font-mono text-white/40 mt-1">
+                  <p className="text-xs font-mono text-white mt-1">
                     {formData.certificateNumber}
                   </p>
                 )}

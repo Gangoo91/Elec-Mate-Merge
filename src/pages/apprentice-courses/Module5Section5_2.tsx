@@ -247,7 +247,7 @@ const Module5Section5_2 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -265,13 +265,13 @@ const Module5Section5_2 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.2</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.2</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Communicating with Site Supervisors and Foremen
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Learn effective communication techniques with site supervisors and foremen for
               professional success on construction sites.
             </p>
@@ -282,7 +282,7 @@ const Module5Section5_2 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc ml-4">
+                <ul className="text-white text-sm space-y-1 list-disc ml-4">
                   <li>Clear communication with supervisors prevents costly mistakes and delays.</li>
                   <li>Always confirm instructions by repeating them back.</li>
                   <li>Keep written records of important instructions and decisions.</li>
@@ -290,7 +290,7 @@ const Module5Section5_2 = () => {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc ml-4">
+                <ul className="text-white text-sm space-y-1 list-disc ml-4">
                   <li>
                     <strong>Spot:</strong> Miscommunication leading to rework, delays, or safety
                     issues.
@@ -312,7 +312,7 @@ const Module5Section5_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Introduction
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Clear and professional communication with site supervisors and foremen is essential
                 for smooth project delivery and workplace safety. As an apprentice electrician, your
@@ -331,7 +331,7 @@ const Module5Section5_2 = () => {
                   <MessageSquare className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-elec-yellow mb-1">Why This Matters</p>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       Effective communication with supervisors reduces project delays by up to 40%
                       and significantly improves safety outcomes through clearer understanding of
                       instructions and procedures.
@@ -352,13 +352,13 @@ const Module5Section5_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <p className="text-white/80 mb-4">
+            <p className="text-white mb-4">
               By the end of this subsection, you will be able to:
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-medium text-white mb-2">Communication Knowledge</h4>
-                <ul className="space-y-2 text-white/70 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start">
                     <span className="text-elec-yellow mr-2">•</span>Understand the role of
                     supervisors and foremen in communication
@@ -379,7 +379,7 @@ const Module5Section5_2 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-medium text-white mb-2">Professional Skills</h4>
-                <ul className="space-y-2 text-white/70 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start">
                     <span className="text-elec-yellow mr-2">•</span>Recognise the importance of
                     clear record-keeping and confirmation
@@ -407,7 +407,7 @@ const Module5Section5_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Role of Supervisors and Foremen
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Supervisors and foremen are your key communication link on site. Understanding their
                 role helps you communicate more effectively:
@@ -437,7 +437,7 @@ const Module5Section5_2 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   <strong>Why This Matters:</strong> Supervisors and foremen have the authority to
                   make decisions about your work and are accountable for the outcomes. Building good
                   communication with them directly impacts your daily work experience and career
@@ -461,13 +461,13 @@ const Module5Section5_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Communication Methods
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>Different situations require different communication approaches:</p>
 
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Face-to-Face Communication</p>
-                  <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                  <ul className="text-sm text-white list-disc ml-4 space-y-1">
                     <li>Most common method on site</li>
                     <li>Be clear, polite, and concise</li>
                     <li>Ideal for immediate questions or urgent issues</li>
@@ -476,7 +476,7 @@ const Module5Section5_2 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Toolbox Talks / Briefings</p>
-                  <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                  <ul className="text-sm text-white list-disc ml-4 space-y-1">
                     <li>Listen carefully and actively participate</li>
                     <li>Take notes if needed</li>
                     <li>Ask questions for clarification</li>
@@ -485,7 +485,7 @@ const Module5Section5_2 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Written Records</p>
-                  <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                  <ul className="text-sm text-white list-disc ml-4 space-y-1">
                     <li>Use job sheets, emails, or site forms</li>
                     <li>Confirm key instructions in writing</li>
                     <li>Provides legal protection and clarity</li>
@@ -494,7 +494,7 @@ const Module5Section5_2 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Two-Way Communication</p>
-                  <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                  <ul className="text-sm text-white list-disc ml-4 space-y-1">
                     <li>Don't just listen - actively engage</li>
                     <li>Ask questions if anything is unclear</li>
                     <li>Provide feedback and updates</li>
@@ -519,7 +519,7 @@ const Module5Section5_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Effective Communication Skills
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>Professional communication involves both verbal and non-verbal elements:</p>
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
@@ -542,7 +542,7 @@ const Module5Section5_2 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-semibold text-white mb-3">Non-Verbal Communication</p>
-                <ul className="text-sm text-white/70 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li>
                     <strong>Maintain appropriate eye contact</strong> – Shows attention and respect
                     without being intimidating.
@@ -560,7 +560,7 @@ const Module5Section5_2 = () => {
 
               <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                 <p className="font-medium text-amber-400 mb-2">Communication Example</p>
-                <p className="text-sm text-white/70 italic">
+                <p className="text-sm text-white italic">
                   "Good morning, John. I've finished the first fix in the office area. Before I
                   start the second fix, could you confirm which circuits need RCD protection? I want
                   to make sure I understand the specification correctly."
@@ -583,13 +583,13 @@ const Module5Section5_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Common Communication Issues
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>Understanding common communication problems helps you avoid them:</p>
 
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                   <p className="font-medium text-red-400 mb-2">Making Assumptions</p>
-                  <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                  <ul className="text-sm text-white list-disc ml-4 space-y-1">
                     <li>Assuming you understand without clarification</li>
                     <li>Thinking "it's obvious" what was meant</li>
                     <li>Not asking questions to avoid looking uninformed</li>
@@ -597,7 +597,7 @@ const Module5Section5_2 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                   <p className="font-medium text-red-400 mb-2">Poor Record Keeping</p>
-                  <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                  <ul className="text-sm text-white list-disc ml-4 space-y-1">
                     <li>Forgetting instructions due to lack of notes</li>
                     <li>Relying only on memory for complex tasks</li>
                     <li>Not documenting changes or variations</li>
@@ -607,7 +607,7 @@ const Module5Section5_2 = () => {
 
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="font-medium text-red-400 mb-2">Trade Conflicts</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Misunderstandings between trades leading to conflicts, delays, and tension on
                   site. These often arise from unclear communication about workspace sharing,
                   installation sequences, or responsibilities.
@@ -631,7 +631,7 @@ const Module5Section5_2 = () => {
                   <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <span className="text-xs font-medium text-elec-yellow">{index + 1}</span>
                   </div>
-                  <p className="text-sm text-white/80">{step}</p>
+                  <p className="text-sm text-white">{step}</p>
                 </div>
               ))}
             </div>
@@ -647,15 +647,15 @@ const Module5Section5_2 = () => {
               <div className="flex items-start gap-3">
                 <Lightbulb className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="text-white/80 mb-3">
+                  <p className="text-white mb-3">
                     <strong>The Situation:</strong> On a refurbishment project, an apprentice
                     misheard the instruction to "terminate at DB2" and instead wired into DB1.
                   </p>
-                  <p className="text-white/80 mb-3">
+                  <p className="text-white mb-3">
                     <strong>The Result:</strong> The mistake caused two days' delay and extra cost
                     for rewiring and testing.
                   </p>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     <strong>The Lesson:</strong> If the apprentice had repeated back the instruction
                     to the supervisor, the issue would have been avoided. A simple "Just to confirm,
                     you want me to terminate at DB2, not DB1?" would have prevented the costly
@@ -677,7 +677,7 @@ const Module5Section5_2 = () => {
                 <h3 className="font-semibold text-white mb-2">
                   Q: Can I go directly to the site manager with a question?
                 </h3>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A: Not usually — always go to your foreman/supervisor first, unless it's an
                   emergency situation that requires immediate senior management attention.
                 </p>
@@ -686,7 +686,7 @@ const Module5Section5_2 = () => {
                 <h3 className="font-semibold text-white mb-2">
                   Q: What if my supervisor is unavailable?
                 </h3>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A: Wait if possible, or pass the issue to another foreman from your team. Never
                   guess or make assumptions about what should be done.
                 </p>
@@ -695,7 +695,7 @@ const Module5Section5_2 = () => {
                 <h3 className="font-semibold text-white mb-2">
                   Q: Should I challenge instructions if I think they're unsafe?
                 </h3>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A: Yes — politely raise the safety concern, and if it remains unresolved, escalate
                   to the Health & Safety Officer. Safety always takes priority.
                 </p>
@@ -716,7 +716,7 @@ const Module5Section5_2 = () => {
                   className="flex items-center gap-3 p-3 bg-white/5 rounded-lg border border-white/10"
                 >
                   <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0" />
-                  <span className="text-sm text-white/80">{item}</span>
+                  <span className="text-sm text-white">{item}</span>
                 </div>
               ))}
             </div>
@@ -731,7 +731,7 @@ const Module5Section5_2 = () => {
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <div className="flex items-start gap-3">
                 <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                <p className="text-white/80">
+                <p className="text-white">
                   You've learned how to communicate clearly and effectively with supervisors and
                   foremen, why it matters, and how to avoid common mistakes. Good communication
                   reduces errors, improves safety, and keeps projects running smoothly while

@@ -219,7 +219,7 @@ const Level3Module3Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section4">
@@ -357,7 +357,7 @@ const Level3Module3Section4_4 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Worked Example:</strong> A circuit has R = 30 ohms and XL = 40 ohms.
               <br />
               |Z| = sqrt(30 squared + 40 squared) = sqrt(900 + 1600) = sqrt(2500) = 50 ohms
@@ -393,18 +393,18 @@ const Level3Module3Section4_4 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Net Reactance</p>
-                <p className="text-white/90 text-xs">X = XL - XC</p>
-                <p className="text-white/90 text-xs">(taking positive as inductive)</p>
+                <p className="text-white text-xs">X = XL - XC</p>
+                <p className="text-white text-xs">(taking positive as inductive)</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">At Resonance</p>
-                <p className="text-white/90 text-xs">XL = XC, X = 0</p>
-                <p className="text-white/90 text-xs">Z = R (minimum)</p>
+                <p className="text-white text-xs">XL = XC, X = 0</p>
+                <p className="text-white text-xs">Z = R (minimum)</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Resonant Frequency</p>
-                <p className="text-white/90 text-xs">f = 1/(2 pi sqrt LC)</p>
-                <p className="text-white/90 text-xs">I = V/R (maximum)</p>
+                <p className="text-white text-xs">f = 1/(2 pi sqrt LC)</p>
+                <p className="text-white text-xs">I = V/R (maximum)</p>
               </div>
             </div>
 
@@ -457,7 +457,7 @@ const Level3Module3Section4_4 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> Two branches in parallel have Z1 = 10 ohms and Z2 = 20 ohms.
               <br />
               Y1 = 1/10 = 0.1 S, Y2 = 1/20 = 0.05 S
@@ -540,7 +540,7 @@ const Level3Module3Section4_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -585,7 +585,7 @@ const Level3Module3Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section4-3">

@@ -177,7 +177,7 @@ const SuppliersAndCostsTab = () => {
           </div>
           <div>
             <p className="font-medium text-blue-400 mb-1">Smart Purchasing Guide</p>
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               Smart supplier selection and budgeting can save you hundreds of pounds on your
               professional toolkit while ensuring you get quality tools.
             </p>
@@ -195,7 +195,7 @@ const SuppliersAndCostsTab = () => {
             </div>
             Major UK Tool Suppliers
           </CardTitle>
-          <p className="text-sm text-white/60">
+          <p className="text-sm text-white">
             Key suppliers for electrical tools and equipment across the UK
           </p>
         </CardHeader>
@@ -209,7 +209,7 @@ const SuppliersAndCostsTab = () => {
                 <div className="flex items-start justify-between">
                   <div>
                     <h3 className="font-semibold text-white">{supplier.name}</h3>
-                    <p className="text-sm text-white/60">{supplier.speciality}</p>
+                    <p className="text-sm text-white">{supplier.speciality}</p>
                   </div>
                   <Badge
                     variant="outline"
@@ -221,18 +221,18 @@ const SuppliersAndCostsTab = () => {
 
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   <div>
-                    <span className="text-white/80">Locations:</span>
-                    <p className="text-white/80">{supplier.locations}</p>
+                    <span className="text-white">Locations:</span>
+                    <p className="text-white">{supplier.locations}</p>
                   </div>
                   <div>
-                    <span className="text-white/80">Best For:</span>
-                    <p className="text-white/80">{supplier.bestFor}</p>
+                    <span className="text-white">Best For:</span>
+                    <p className="text-white">{supplier.bestFor}</p>
                   </div>
                 </div>
 
                 <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
                   <span className="text-xs font-medium text-green-400">Apprentice Support:</span>
-                  <p className="text-xs text-white/70 mt-1">{supplier.apprenticeSupport}</p>
+                  <p className="text-xs text-white mt-1">{supplier.apprenticeSupport}</p>
                 </div>
 
                 <div className="flex items-center gap-2 text-xs text-blue-400">
@@ -258,7 +258,7 @@ const SuppliersAndCostsTab = () => {
             </div>
             Budgeting Strategies for Apprentices
           </CardTitle>
-          <p className="text-sm text-white/60">
+          <p className="text-sm text-white">
             Smart approaches to building your professional toolkit
           </p>
         </CardHeader>
@@ -278,12 +278,12 @@ const SuppliersAndCostsTab = () => {
                     {strategy.monthlyBudget}/month
                   </Badge>
                 </div>
-                <p className="text-sm text-white/60 mb-4">{strategy.description}</p>
+                <p className="text-sm text-white mb-4">{strategy.description}</p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-3 rounded-lg bg-white/10 border border-white/10">
                     <h4 className="text-sm font-medium text-green-400 mb-2">Benefits:</h4>
-                    <ul className="text-sm text-white/60 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       {strategy.benefits.map((benefit, idx) => (
                         <li key={idx} className="flex items-start gap-2">
                           <CheckCircle className="h-3.5 w-3.5 text-green-400 mt-0.5 flex-shrink-0" />
@@ -294,7 +294,7 @@ const SuppliersAndCostsTab = () => {
                   </div>
                   <div className="p-3 rounded-lg bg-white/10 border border-white/10">
                     <h4 className="text-sm font-medium text-green-400 mb-2">Timeline:</h4>
-                    <ul className="text-sm text-white/60 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       {strategy.timeline.map((phase, idx) => (
                         <li key={idx} className="flex items-start gap-2">
                           <div className="w-2 h-2 bg-green-400 rounded-full mt-1.5 flex-shrink-0" />
@@ -320,7 +320,7 @@ const SuppliersAndCostsTab = () => {
             </div>
             Money-Saving Tips for Tool Purchases
           </CardTitle>
-          <p className="text-sm text-white/60">
+          <p className="text-sm text-white">
             Smart strategies to get the best value for your money
           </p>
         </CardHeader>
@@ -340,8 +340,8 @@ const SuppliersAndCostsTab = () => {
                     Save {tip.savings}
                   </Badge>
                 </div>
-                <p className="text-sm text-white/60 mb-3">{tip.description}</p>
-                <ul className="text-sm text-white/60 space-y-1.5">
+                <p className="text-sm text-white mb-3">{tip.description}</p>
+                <ul className="text-sm text-white space-y-1.5">
                   {tip.details.map((detail, idx) => (
                     <li key={idx} className="flex items-start gap-2">
                       <div className="w-2 h-2 bg-orange-400 rounded-full mt-1.5 flex-shrink-0" />
@@ -365,7 +365,7 @@ const SuppliersAndCostsTab = () => {
             </div>
             Financing Options for Larger Purchases
           </CardTitle>
-          <p className="text-sm text-white/60">
+          <p className="text-sm text-white">
             Responsible financing options for expensive test equipment
           </p>
         </CardHeader>
@@ -388,23 +388,23 @@ const SuppliersAndCostsTab = () => {
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm mb-4">
                   <div className="p-2 rounded-lg bg-white/10">
-                    <span className="text-white/80 text-xs">Amount:</span>
+                    <span className="text-white text-xs">Amount:</span>
                     <p className="text-white font-medium">{option.amount}</p>
                   </div>
                   <div className="p-2 rounded-lg bg-white/10">
-                    <span className="text-white/80 text-xs">Term:</span>
+                    <span className="text-white text-xs">Term:</span>
                     <p className="text-white font-medium">{option.term}</p>
                   </div>
                   <div className="col-span-2 p-2 rounded-lg bg-white/10">
-                    <span className="text-white/80 text-xs">Eligibility:</span>
-                    <p className="text-white/80 text-sm">{option.eligibility}</p>
+                    <span className="text-white text-xs">Eligibility:</span>
+                    <p className="text-white text-sm">{option.eligibility}</p>
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
                     <span className="text-sm font-medium text-green-400">Pros:</span>
-                    <ul className="text-sm text-white/60 mt-2 space-y-1">
+                    <ul className="text-sm text-white mt-2 space-y-1">
                       {option.pros.map((pro, idx) => (
                         <li key={idx} className="flex items-start gap-2">
                           <CheckCircle className="h-3.5 w-3.5 text-green-400 mt-0.5 flex-shrink-0" />
@@ -415,7 +415,7 @@ const SuppliersAndCostsTab = () => {
                   </div>
                   <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20">
                     <span className="text-sm font-medium text-red-400">Cons:</span>
-                    <ul className="text-sm text-white/60 mt-2 space-y-1">
+                    <ul className="text-sm text-white mt-2 space-y-1">
                       {option.cons.map((con, idx) => (
                         <li key={idx} className="flex items-start gap-2">
                           <AlertTriangle className="h-3.5 w-3.5 text-red-400 mt-0.5 flex-shrink-0" />
@@ -439,7 +439,7 @@ const SuppliersAndCostsTab = () => {
           </div>
           <div>
             <p className="font-medium text-red-400 mb-1">Financial Warning</p>
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               Only borrow what you can afford to repay. Tool purchases are an investment, but debt
               can impact your financial future. Consider starting with essential items and upgrading
               gradually.

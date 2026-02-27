@@ -210,7 +210,7 @@ export default function LeadershipModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-5-section-1">
@@ -233,7 +233,7 @@ export default function LeadershipModule5Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Managing Subcontractors and Other Trades
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Multi-trade coordination, setting expectations, managing quality across teams, and
             building the professional relationships that make complex sites work
           </p>
@@ -319,7 +319,7 @@ export default function LeadershipModule5Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Trades You Will Coordinate With
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">Services Trades</p>
                     <ul className="space-y-1.5">
@@ -388,7 +388,7 @@ export default function LeadershipModule5Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Typical Electrical Sequencing on a Construction Project
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -445,7 +445,7 @@ export default function LeadershipModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Day-One Expectations Briefing</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -500,7 +500,7 @@ export default function LeadershipModule5Section2() {
                   <BookOpen className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Put It in Writing</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Where possible, put your expectations in writing. A simple email confirming what
                   was discussed, what standards are expected, and what the key dates are creates a
                   reference point for both sides. If a dispute arises later, you have evidence that
@@ -521,7 +521,7 @@ export default function LeadershipModule5Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Common Expectations That Get Missed
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -580,7 +580,7 @@ export default function LeadershipModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Coordination Strategies</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">Proactive Measures</p>
                     <ul className="space-y-1.5">
@@ -638,7 +638,7 @@ export default function LeadershipModule5Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Coordination Meeting Best Practice
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -679,7 +679,7 @@ export default function LeadershipModule5Section2() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Common Sequencing Trap</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The biggest sequencing trap is assuming &ldquo;they&rsquo;ll be finished by
                   then.&rdquo; Never assume &mdash; confirm. Check daily that predecessor trades are
                   on track. If you can see they are falling behind, raise it immediately rather than
@@ -712,7 +712,7 @@ export default function LeadershipModule5Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Common Quality Issues Between Trades
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -753,7 +753,7 @@ export default function LeadershipModule5Section2() {
                   <Camera className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Document Everything</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   When you identify damage or quality issues caused by another trade, take
                   photographs immediately with a timestamp. Note the location, date, time, and the
                   trade responsible. Approach the other trade&rsquo;s supervisor calmly and
@@ -776,7 +776,7 @@ export default function LeadershipModule5Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   The Professional Escalation Ladder
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -838,7 +838,7 @@ export default function LeadershipModule5Section2() {
                     Building Your Professional Reputation
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -914,7 +914,7 @@ export default function LeadershipModule5Section2() {
                 from this section are:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -984,7 +984,7 @@ export default function LeadershipModule5Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -998,7 +998,7 @@ export default function LeadershipModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-5-section-1">

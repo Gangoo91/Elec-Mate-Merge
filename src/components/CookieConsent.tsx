@@ -106,12 +106,12 @@ export const CookieConsent = () => {
                   <h3 className="text-base sm:text-lg font-semibold text-white">
                     Cookie Preferences
                   </h3>
-                  <p className="text-xs text-white/50">Manage your privacy settings</p>
+                  <p className="text-xs text-white">Manage your privacy settings</p>
                 </div>
               </div>
 
               {/* Description */}
-              <p className="text-sm text-white/70 leading-relaxed mb-4">
+              <p className="text-sm text-white leading-relaxed mb-4">
                 We use cookies to enhance your experience and analyse platform usage.{' '}
                 <Link
                   to="/cookies"
@@ -141,7 +141,7 @@ export const CookieConsent = () => {
               {/* Customise Toggle */}
               <button
                 onClick={() => setShowDetails(!showDetails)}
-                className="w-full flex items-center justify-center gap-2 py-2.5 text-sm text-white/60 hover:text-white/90 transition-colors touch-manipulation rounded-lg hover:bg-white/5 active:bg-white/10"
+                className="w-full flex items-center justify-center gap-2 py-2.5 text-sm text-white hover:text-white transition-colors touch-manipulation rounded-lg hover:bg-white/5 active:bg-white/10"
               >
                 Customise
                 {showDetails ? (
@@ -175,7 +175,7 @@ export const CookieConsent = () => {
                             Always on
                           </span>
                         </div>
-                        <p className="text-xs text-white/50 mt-0.5 line-clamp-1">
+                        <p className="text-xs text-white mt-0.5 line-clamp-1">
                           Authentication &amp; security
                         </p>
                       </div>
@@ -196,7 +196,7 @@ export const CookieConsent = () => {
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium text-white">Analytics</p>
-                        <p className="text-xs text-white/50 mt-0.5 line-clamp-1">
+                        <p className="text-xs text-white mt-0.5 line-clamp-1">
                           Help us improve the platform
                         </p>
                       </div>
@@ -219,7 +219,7 @@ export const CookieConsent = () => {
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-medium text-white">Marketing</p>
-                        <p className="text-xs text-white/50 mt-0.5 line-clamp-1">
+                        <p className="text-xs text-white mt-0.5 line-clamp-1">
                           Personalised content &amp; ads
                         </p>
                       </div>

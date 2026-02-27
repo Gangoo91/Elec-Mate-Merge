@@ -266,7 +266,7 @@ const HNCModule8Section6_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section6">
@@ -288,7 +288,7 @@ const HNCModule8Section6_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Handover and Training
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Client training, operational handover, defects liability period, and post-occupancy
             support for building services
           </p>
@@ -650,7 +650,7 @@ const HNCModule8Section6_6 = () => {
               <p className="text-lg text-white text-center font-medium">
                 12 months from practical completion
               </p>
-              <p className="text-sm text-white/80 text-center mt-2">
+              <p className="text-sm text-white text-center mt-2">
                 Extended to 24 months for some specialist systems (BMS, fire alarm) under certain
                 contracts
               </p>
@@ -715,7 +715,7 @@ const HNCModule8Section6_6 = () => {
             <div className="my-6 grid sm:grid-cols-2 gap-6">
               <div className="p-3 rounded bg-green-500/10">
                 <p className="font-medium text-green-400 mb-1">Defects Covered</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Faulty workmanship</li>
                   <li>• Defective materials</li>
                   <li>• Equipment failure (manufacturing)</li>
@@ -725,7 +725,7 @@ const HNCModule8Section6_6 = () => {
               </div>
               <div className="p-3 rounded bg-red-500/10">
                 <p className="font-medium text-red-400 mb-1">Not Covered</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Damage by client/occupants</li>
                   <li>• Fair wear and tear</li>
                   <li>• Client-requested changes</li>
@@ -879,7 +879,7 @@ const HNCModule8Section6_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-white font-medium mb-1">12-Month POE</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Full seasonal energy analysis</li>
                     <li>• Occupant satisfaction survey</li>
                     <li>• System performance review</li>
@@ -889,7 +889,7 @@ const HNCModule8Section6_6 = () => {
                 </div>
                 <div>
                   <p className="text-white font-medium mb-1">3-Year POE (Optional)</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Long-term energy trend analysis</li>
                     <li>• Equipment reliability assessment</li>
                     <li>• Maintenance cost evaluation</li>
@@ -908,7 +908,7 @@ const HNCModule8Section6_6 = () => {
                 <p className="text-sm text-white mb-2">
                   <strong>Mandatory for UK government projects.</strong> Key requirements include:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1 list-disc list-outside ml-5">
+                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                   <li className="pl-1">Champion identified at project inception</li>
                   <li className="pl-1">
                     Reality checking of designs against operational requirements
@@ -976,7 +976,7 @@ const HNCModule8Section6_6 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Performance gap:</strong> Studies show that buildings often consume 2-5 times
               more energy than design predictions. Soft Landings and POE help identify and close
               this performance gap.
@@ -1002,8 +1002,8 @@ const HNCModule8Section6_6 = () => {
                 <strong>Scenario:</strong> Develop a training programme for a new office building
                 with BMS-controlled lighting and HVAC.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Training Programme - ABC Office Building</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Training Programme - ABC Office Building</p>
                 <p className="mt-2">Session 1: FM Manager Training (1 day)</p>
                 <p>---------------------------------------------</p>
                 <p>09:00 - System overview and distribution architecture</p>
@@ -1030,10 +1030,10 @@ const HNCModule8Section6_6 = () => {
                 <strong>Scenario:</strong> Track and manage defects during the 12-month liability
                 period.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Defects Register - Project XYZ</p>
-                <p className="text-white/60">Practical Completion: 15 March 2024</p>
-                <p className="text-white/60">DLP Ends: 14 March 2025</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Defects Register - Project XYZ</p>
+                <p className="text-white">Practical Completion: 15 March 2024</p>
+                <p className="text-white">DLP Ends: 14 March 2025</p>
                 <p className="mt-2">Ref | Date | Location | Description | Status</p>
                 <p>-----|----------|-------------|----------------------|--------</p>
                 <p>D001 | 20/03/24 | Level 2 DB | Loose terminations | Rectified</p>
@@ -1047,8 +1047,8 @@ const HNCModule8Section6_6 = () => {
                   D005 | 10/01/25 | Server room | UPS alarm fault |{' '}
                   <span className="text-yellow-400">Outstanding</span>
                 </p>
-                <p className="mt-2 text-white/60">Next review meeting: 28 February 2025</p>
-                <p className="text-white/60">
+                <p className="mt-2 text-white">Next review meeting: 28 February 2025</p>
+                <p className="text-white">
                   All outstanding items to be closed before final certificate
                 </p>
               </div>
@@ -1062,8 +1062,8 @@ const HNCModule8Section6_6 = () => {
                 <strong>Scenario:</strong> Summarise findings from a 12-month POE for a commercial
                 building.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">12-Month Post-Occupancy Evaluation Summary</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">12-Month Post-Occupancy Evaluation Summary</p>
                 <p className="mt-2">Energy Performance:</p>
                 <p>- Design prediction: 85 kWh/m²/year</p>
                 <p>- Actual consumption: 102 kWh/m²/year (+20%)</p>
@@ -1175,7 +1175,7 @@ const HNCModule8Section6_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1239,7 +1239,7 @@ const HNCModule8Section6_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section6">

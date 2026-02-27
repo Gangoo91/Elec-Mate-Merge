@@ -105,7 +105,7 @@ const QuizAchievements = () => {
           return 'bg-elec-yellow/20 text-elec-yellow';
       }
     }
-    return 'bg-neutral-600 text-white/80';
+    return 'bg-neutral-600 text-white';
   };
 
   const filteredAchievements = achievements.filter((achievement) => {
@@ -145,7 +145,7 @@ const QuizAchievements = () => {
                 >
                   {achievement.title}
                 </h4>
-                <p className="text-sm text-white/80 mt-1">{achievement.description}</p>
+                <p className="text-sm text-white mt-1">{achievement.description}</p>
               </div>
 
               <div className="flex items-center gap-2">
@@ -160,7 +160,7 @@ const QuizAchievements = () => {
 
             {!achievement.unlocked && progress && (
               <div className="mt-3">
-                <div className="flex items-center justify-between text-xs text-white/80 mb-1">
+                <div className="flex items-center justify-between text-xs text-white mb-1">
                   <span>Progress</span>
                   <span>
                     {progress.currentValue}/{progress.targetValue}
@@ -247,7 +247,7 @@ const QuizAchievements = () => {
           {filteredAchievements.length > 0 ? (
             filteredAchievements.map(renderAchievement)
           ) : (
-            <div className="text-center py-6 sm:py-8 text-white/80">
+            <div className="text-center py-6 sm:py-8 text-white">
               <Trophy className="h-6 w-6 sm:h-8 sm:w-8 mx-auto mb-2 opacity-50" />
               <p className="text-sm">No achievements match your current filters</p>
             </div>

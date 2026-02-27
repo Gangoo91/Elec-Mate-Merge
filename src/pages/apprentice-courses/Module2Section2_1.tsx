@@ -202,7 +202,7 @@ const Module2Section2_1: React.FC = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Ohm's Law in Plain English
           </h1>
-          <p className="text-lg text-white/80 max-w-2xl mx-auto">
+          <p className="text-lg text-white max-w-2xl mx-auto">
             Understanding V = I×R for practical electrical work
           </p>
         </div>
@@ -703,7 +703,7 @@ const Module2Section2_1: React.FC = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level2/module2/section2">

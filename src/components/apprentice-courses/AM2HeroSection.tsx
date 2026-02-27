@@ -70,7 +70,7 @@ export const AM2HeroSection = memo(function AM2HeroSection({
 
       {/* Description */}
       <p
-        className={cn('text-ios-body text-white/70 leading-relaxed max-w-2xl', 'ios-animate-in')}
+        className={cn('text-ios-body text-white leading-relaxed max-w-2xl', 'ios-animate-in')}
         style={{ '--ios-delay': '150ms' } as React.CSSProperties}
       >
         {description}

@@ -213,24 +213,24 @@ const ModernCoursesDetailsModal = ({
                 <div className="grid grid-cols-2 gap-2.5">
                   <div className="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
                     <Clock className="h-4 w-4 text-blue-400 mx-auto mb-1.5" />
-                    <p className="text-[10px] text-white/50 uppercase tracking-wider">Duration</p>
+                    <p className="text-[10px] text-white uppercase tracking-wider">Duration</p>
                     <p className="text-sm font-semibold text-white mt-0.5">{course.duration}</p>
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
                     <GraduationCap className="h-4 w-4 text-purple-400 mx-auto mb-1.5" />
-                    <p className="text-[10px] text-white/50 uppercase tracking-wider">Level</p>
+                    <p className="text-[10px] text-white uppercase tracking-wider">Level</p>
                     <p className="text-sm font-semibold text-white mt-0.5">{course.level}</p>
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
                     <Monitor className="h-4 w-4 text-green-400 mx-auto mb-1.5" />
-                    <p className="text-[10px] text-white/50 uppercase tracking-wider">Format</p>
+                    <p className="text-[10px] text-white uppercase tracking-wider">Format</p>
                     <p className="text-sm font-semibold text-white mt-0.5">
                       {course.format || 'In-Person'}
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
                     <PoundSterling className="h-4 w-4 text-elec-yellow mx-auto mb-1.5" />
-                    <p className="text-[10px] text-white/50 uppercase tracking-wider">Price</p>
+                    <p className="text-[10px] text-white uppercase tracking-wider">Price</p>
                     <p className="text-sm font-semibold text-white mt-0.5">{course.price}</p>
                   </div>
                 </div>
@@ -245,7 +245,7 @@ const ModernCoursesDetailsModal = ({
                       <p className={`text-sm font-semibold ${demandStyle.color}`}>
                         {demandStyle.label}
                       </p>
-                      <p className="text-xs text-white/60 mt-0.5">
+                      <p className="text-xs text-white mt-0.5">
                         {course.industryDemand === 'High'
                           ? 'This qualification is in strong demand across the UK electrical industry'
                           : course.industryDemand === 'Medium'
@@ -296,7 +296,7 @@ const ModernCoursesDetailsModal = ({
                     <BookOpen className="h-4 w-4 text-blue-400" />
                     Description
                   </h3>
-                  <p className="text-white/80 leading-relaxed text-sm">{course.description}</p>
+                  <p className="text-white leading-relaxed text-sm">{course.description}</p>
                 </div>
 
                 {/* Course Content — numbered list in subtle cards */}
@@ -315,7 +315,7 @@ const ModernCoursesDetailsModal = ({
                           <span className="flex-shrink-0 w-6 h-6 rounded-full bg-green-500/20 text-green-400 text-xs font-bold flex items-center justify-center">
                             {index + 1}
                           </span>
-                          <span className="text-sm text-white/90 pt-0.5">{item}</span>
+                          <span className="text-sm text-white pt-0.5">{item}</span>
                         </div>
                       ))}
                     </div>
@@ -331,7 +331,7 @@ const ModernCoursesDetailsModal = ({
                     </h3>
                     <div className="space-y-2">
                       {course.prerequisites.map((prereq, index) => (
-                        <div key={index} className="flex items-start gap-2.5 text-white/80">
+                        <div key={index} className="flex items-start gap-2.5 text-white">
                           <AlertTriangle className="h-3.5 w-3.5 text-purple-400 mt-0.5 flex-shrink-0" />
                           <span className="text-sm">{prereq}</span>
                         </div>
@@ -351,7 +351,7 @@ const ModernCoursesDetailsModal = ({
                       {course.careerOutcomes.map((outcome, index) => (
                         <div key={index} className="flex items-start gap-2.5">
                           <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-sm text-white/90">{outcome}</span>
+                          <span className="text-sm text-white">{outcome}</span>
                         </div>
                       ))}
                     </div>
@@ -406,7 +406,7 @@ const ModernCoursesDetailsModal = ({
             <div className="absolute bottom-0 inset-x-0 p-4 bg-elec-gray/95 backdrop-blur-lg border-t border-white/10 safe-area-inset-bottom">
               <div className="flex items-center gap-3">
                 <div className="flex-shrink-0">
-                  <div className="text-[10px] text-white/50 mb-0.5">Price</div>
+                  <div className="text-[10px] text-white mb-0.5">Price</div>
                   <div className="text-lg font-bold text-white flex items-center gap-0.5">
                     <PoundSterling className="h-4 w-4" />
                     {course.price.replace(/[£$]/g, '')}

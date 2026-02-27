@@ -218,7 +218,7 @@ export default function FirstAidModule2Section1() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Cardiac Arrest &amp; CPR
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Recognising cardiac arrest, performing effective CPR, and understanding the Chain of
             Survival &mdash; following Resuscitation Council UK 2021/2025 guidelines
           </p>
@@ -372,7 +372,7 @@ export default function FirstAidModule2Section1() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-rose-400">Definition: Cardiac Arrest</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   <strong className="text-white">Cardiac arrest</strong> occurs when the heart
                   suddenly stops pumping blood around the body. The brain and vital organs are
                   starved of oxygen. Without intervention, death occurs within minutes. Cardiac
@@ -398,7 +398,7 @@ export default function FirstAidModule2Section1() {
                       <br />
                       &amp; Call for Help
                     </p>
-                    <p className="text-white/60 text-xs mt-1 leading-tight">
+                    <p className="text-white text-xs mt-1 leading-tight">
                       Recognise cardiac arrest.
                       <br />
                       Call 999 immediately.
@@ -420,7 +420,7 @@ export default function FirstAidModule2Section1() {
                     <p className="text-rose-300 font-semibold text-xs sm:text-sm leading-tight">
                       Early CPR
                     </p>
-                    <p className="text-white/60 text-xs mt-1 leading-tight">
+                    <p className="text-white text-xs mt-1 leading-tight">
                       Buy time. Keep blood
                       <br />
                       flowing to the brain.
@@ -444,7 +444,7 @@ export default function FirstAidModule2Section1() {
                       <br />
                       Defibrillation
                     </p>
-                    <p className="text-white/60 text-xs mt-1 leading-tight">
+                    <p className="text-white text-xs mt-1 leading-tight">
                       Shock the heart back
                       <br />
                       into a normal rhythm.
@@ -468,14 +468,14 @@ export default function FirstAidModule2Section1() {
                       <br />
                       Care
                     </p>
-                    <p className="text-white/60 text-xs mt-1 leading-tight">
+                    <p className="text-white text-xs mt-1 leading-tight">
                       Advanced care by
                       <br />
                       paramedics &amp; hospital.
                     </p>
                   </div>
                 </div>
-                <p className="text-white/50 text-xs text-center mt-4 italic">
+                <p className="text-white text-xs text-center mt-4 italic">
                   Each link increases the chance of survival. Bystander CPR alone doubles or triples
                   survival rates.
                 </p>
@@ -527,7 +527,7 @@ export default function FirstAidModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Time Is Critical</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   For every minute that passes without CPR or defibrillation, the chance of survival
                   decreases by approximately 10%. After 10 minutes without intervention, survival is
                   extremely unlikely. This is why bystander action is so important &mdash; the
@@ -563,7 +563,7 @@ export default function FirstAidModule2Section1() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-rose-300 font-medium mb-1">Check for Response</h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Gently shake the casualty&rsquo;s shoulders and shout loudly: &ldquo;Can
                           you hear me? Open your eyes!&rdquo; If there is no response, the casualty
                           is <strong className="text-white">unresponsive</strong>.
@@ -580,7 +580,7 @@ export default function FirstAidModule2Section1() {
                         <h4 className="text-rose-300 font-medium mb-1">
                           Check for Normal Breathing
                         </h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Open the airway (head tilt, chin lift) and look, listen, and feel for
                           normal breathing for no more than 10 seconds. Look for chest movement,
                           listen for breath sounds, and feel for air on your cheek. If the casualty
@@ -598,7 +598,7 @@ export default function FirstAidModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Do NOT Check for a Pulse</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The Resuscitation Council UK guidelines are clear:{' '}
                   <strong className="text-white">
                     non-healthcare professionals should NOT attempt to check for a pulse.
@@ -612,7 +612,7 @@ export default function FirstAidModule2Section1() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-rose-400">Definition: Agonal Breathing</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   <strong className="text-white">Agonal breathing</strong> consists of irregular,
                   infrequent gasps that may sound like snoring, groaning, or gasping. The casualty
                   may appear to be making an effort to breathe, but the breaths are ineffective and
@@ -666,7 +666,7 @@ export default function FirstAidModule2Section1() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-rose-300 font-medium mb-1">Call 999</h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Call 999 immediately, or send someone to call. Put the phone on speaker so
                           the ambulance dispatcher can guide you through CPR. Ask someone to fetch
                           the nearest AED.
@@ -682,7 +682,7 @@ export default function FirstAidModule2Section1() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-rose-300 font-medium mb-1">Position Your Hands</h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Kneel beside the casualty. Place the{' '}
                           <strong className="text-white">
                             heel of one hand on the centre of the chest
@@ -704,7 +704,7 @@ export default function FirstAidModule2Section1() {
                         <h4 className="text-rose-300 font-medium mb-1">
                           Give 30 Chest Compressions
                         </h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Lock your arms straight, position your shoulders directly above your
                           hands, and press down firmly. Compress the chest to a depth of{' '}
                           <strong className="text-white">5&ndash;6&nbsp;cm</strong> (about one-third
@@ -727,7 +727,7 @@ export default function FirstAidModule2Section1() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-rose-300 font-medium mb-1">Give 2 Rescue Breaths</h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Tilt the head back and lift the chin to open the airway. Pinch the nose
                           shut. Seal your mouth over the casualty&rsquo;s mouth and blow steadily
                           for about
@@ -748,7 +748,7 @@ export default function FirstAidModule2Section1() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-rose-300 font-medium mb-1">Continue 30:2</h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Continue the cycle of{' '}
                           <strong className="text-white">
                             30 compressions followed by 2 rescue breaths
@@ -775,7 +775,7 @@ export default function FirstAidModule2Section1() {
                     {/* Breastbone line */}
                     <div className="absolute left-1/2 top-[15%] bottom-[25%] w-0.5 bg-white/20 -translate-x-1/2" />
                     {/* Label: Breastbone */}
-                    <p className="absolute top-[8%] left-1/2 -translate-x-1/2 text-white/40 text-[10px] sm:text-xs whitespace-nowrap">
+                    <p className="absolute top-[8%] left-1/2 -translate-x-1/2 text-white text-[10px] sm:text-xs whitespace-nowrap">
                       Breastbone (sternum)
                     </p>
                     {/* Hand placement zone */}
@@ -796,11 +796,11 @@ export default function FirstAidModule2Section1() {
                       </span>
                     </div>
                     {/* Centre of chest label */}
-                    <p className="absolute bottom-[12%] left-1/2 -translate-x-1/2 text-white/40 text-[10px] sm:text-xs whitespace-nowrap">
+                    <p className="absolute bottom-[12%] left-1/2 -translate-x-1/2 text-white text-[10px] sm:text-xs whitespace-nowrap">
                       Centre of chest
                     </p>
                   </div>
-                  <p className="text-white/50 text-xs text-center mt-3 italic max-w-xs">
+                  <p className="text-white text-xs text-center mt-3 italic max-w-xs">
                     Heel of one hand on the lower half of the breastbone, other hand on top, fingers
                     interlocked.
                   </p>
@@ -815,7 +815,7 @@ export default function FirstAidModule2Section1() {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
                   <div className="bg-rose-500/10 border border-rose-500/20 rounded-lg p-3">
                     <p className="text-rose-400 font-bold text-xl sm:text-2xl">30:2</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Compressions
                       <br />
                       to breaths
@@ -823,7 +823,7 @@ export default function FirstAidModule2Section1() {
                   </div>
                   <div className="bg-rose-500/10 border border-rose-500/20 rounded-lg p-3">
                     <p className="text-rose-400 font-bold text-xl sm:text-2xl">100&ndash;120</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Compressions
                       <br />
                       per minute
@@ -831,7 +831,7 @@ export default function FirstAidModule2Section1() {
                   </div>
                   <div className="bg-rose-500/10 border border-rose-500/20 rounded-lg p-3">
                     <p className="text-rose-400 font-bold text-xl sm:text-2xl">5&ndash;6 cm</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Compression
                       <br />
                       depth
@@ -839,7 +839,7 @@ export default function FirstAidModule2Section1() {
                   </div>
                   <div className="bg-rose-500/10 border border-rose-500/20 rounded-lg p-3">
                     <p className="text-rose-400 font-bold text-xl sm:text-2xl">1 sec</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Per rescue
                       <br />
                       breath
@@ -850,7 +850,7 @@ export default function FirstAidModule2Section1() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-rose-400">Full Chest Recoil</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   <strong className="text-white">Full chest recoil</strong> means completely
                   releasing pressure on the chest after each compression, allowing the chest wall to
                   return to its normal position. This is essential because the recoil phase creates
@@ -866,7 +866,7 @@ export default function FirstAidModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Rescue Breath Failure</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   If you cannot achieve effective rescue breaths (the chest does not rise), do not
                   spend excessive time trying. Ensure the head is adequately tilted back and the
                   chin lifted, check the mouth for visible obstructions, and attempt two breaths
@@ -901,7 +901,7 @@ export default function FirstAidModule2Section1() {
                 <h3 className="font-semibold mb-2 text-rose-400">
                   When to Use Compression-Only CPR
                 </h3>
-                <ul className="text-white/80 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -935,7 +935,7 @@ export default function FirstAidModule2Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-rose-400 font-medium mb-2">How It Works</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Compression-only CPR means giving{' '}
                   <strong className="text-white">
                     continuous chest compressions without stopping for rescue breaths
@@ -943,7 +943,7 @@ export default function FirstAidModule2Section1() {
                   . Push hard and fast on the centre of the chest at 100&ndash;120 compressions per
                   minute. Do not stop until emergency services arrive.
                 </p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   In the first few minutes of a witnessed cardiac arrest, the blood still contains
                   enough oxygen to sustain the brain &mdash; provided it is being circulated by
                   chest compressions. This is why compression-only CPR is effective in the early
@@ -957,7 +957,7 @@ export default function FirstAidModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">The Worst CPR Is No CPR</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Many bystanders hesitate to perform CPR because they fear doing it
                   &ldquo;wrong&rdquo;. The reality is simple:{' '}
                   <strong className="text-white">
@@ -1033,7 +1033,7 @@ export default function FirstAidModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Do Not Stop for Rib Fractures</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   You may hear or feel cracking during CPR. This is likely the cartilage connecting
                   the ribs to the breastbone, or the ribs themselves.{' '}
                   <strong className="text-white">Do not stop CPR.</strong>&nbsp; Rib fractures are a
@@ -1058,7 +1058,7 @@ export default function FirstAidModule2Section1() {
                 <h3 className="font-semibold mb-2 text-rose-400">
                   2025 Guidelines Update: CPR on a Bed
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The <strong className="text-white">2025 Resuscitation Council UK update</strong>{' '}
                   acknowledges that CPR can be performed on a bed or other soft surface if moving
                   the casualty to the floor is not practical. This is particularly relevant in
@@ -1080,7 +1080,7 @@ export default function FirstAidModule2Section1() {
                   {/* Pregnancy */}
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-2">Pregnancy</h4>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>
@@ -1118,7 +1118,7 @@ export default function FirstAidModule2Section1() {
                   {/* Drowning */}
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-2">Drowning</h4>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>
@@ -1152,7 +1152,7 @@ export default function FirstAidModule2Section1() {
                   {/* Children */}
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-2">Children (Age 1 to Puberty)</h4>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>
@@ -1199,7 +1199,7 @@ export default function FirstAidModule2Section1() {
                 <h3 className="font-semibold mb-2 text-rose-400">
                   Workplace Relevance for Electricians
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Electricians face a higher-than-average risk of cardiac arrest caused by{' '}
                   <strong className="text-white">electric shock</strong>. An electric current
                   passing through the body can disrupt the heart&rsquo;s electrical system, causing
@@ -1306,13 +1306,13 @@ export default function FirstAidModule2Section1() {
 
               <div className="bg-white/5 border border-rose-400/30 p-4 rounded-lg">
                 <h3 className="text-rose-400 font-medium mb-2">The Bystander Effect</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Research consistently shows that bystanders who have received CPR training are
                   significantly more likely to intervene in a cardiac arrest. As a first aider
                   trained in CPR, you are part of a group of people who can genuinely save lives.
                   The most common reasons people give for not performing CPR are:
                 </p>
-                <ul className="text-white/80 text-sm space-y-1.5">
+                <ul className="text-white text-sm space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1349,7 +1349,7 @@ export default function FirstAidModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Every Minute Counts</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Without any intervention, a person in cardiac arrest loses approximately 10%
                   chance of survival for every minute that passes. After 10 minutes without CPR or
                   defibrillation, survival is virtually impossible. By starting CPR immediately, you
@@ -1435,7 +1435,7 @@ export default function FirstAidModule2Section1() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-rose-400">Adult BLS Algorithm Summary</h3>
-                <div className="text-white/80 text-sm space-y-2">
+                <div className="text-white text-sm space-y-2">
                   <div className="flex items-start gap-2">
                     <span className="text-rose-400 font-mono text-xs mt-0.5 w-5 text-right flex-shrink-0">
                       1.
@@ -1516,7 +1516,7 @@ export default function FirstAidModule2Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1532,7 +1532,7 @@ export default function FirstAidModule2Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-2">

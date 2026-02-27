@@ -141,7 +141,7 @@ const FunctionalSkillsModule5Section4 = () => {
             to="/study-centre/apprentice/functional-skills/module5"
             className="p-2 -ml-2 touch-manipulation"
           >
-            <ArrowLeft className="w-5 h-5 text-white/60" />
+            <ArrowLeft className="w-5 h-5 text-white" />
           </Link>
           <div>
             <p className="text-[11px] font-semibold text-green-400 uppercase tracking-wider">
@@ -167,7 +167,7 @@ const FunctionalSkillsModule5Section4 = () => {
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
               Portfolio Building & Evidence
             </h2>
-            <p className="text-sm text-white/50 max-w-lg mx-auto">
+            <p className="text-sm text-white max-w-lg mx-auto">
               Build a comprehensive, well-organised portfolio of evidence that clearly demonstrates
               your functional skills competence to assessors and supports your apprenticeship
               completion.
@@ -191,7 +191,7 @@ const FunctionalSkillsModule5Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">What Assessors Expect</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Your portfolio is reviewed by an assessor whose job is to confirm that you are
               competent in your role. Understanding what they are looking for helps you build a
@@ -213,7 +213,7 @@ const FunctionalSkillsModule5Section4 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
                   <p className="text-xs font-semibold text-green-400 mb-1">Valid</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Evidence must be relevant to the criteria being assessed. A photo of a completed
                     installation is valid evidence of practical competence; a photo of your toolbox
                     is not.
@@ -221,21 +221,21 @@ const FunctionalSkillsModule5Section4 = () => {
                 </div>
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
                   <p className="text-xs font-semibold text-green-400 mb-1">Authentic</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Evidence must be your own work. If questioned, you must be able to explain it in
                     detail. Copied or fabricated evidence is a serious disciplinary matter.
                   </p>
                 </div>
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
                   <p className="text-xs font-semibold text-green-400 mb-1">Current</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Evidence should reflect your current level of competence. Work from several
                     years ago may not demonstrate your present ability.
                   </p>
                 </div>
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
                   <p className="text-xs font-semibold text-green-400 mb-1">Sufficient</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     There must be enough evidence to cover every assessment criterion. One piece of
                     evidence may cover multiple criteria, but there must be no gaps.
                   </p>
@@ -284,7 +284,7 @@ const FunctionalSkillsModule5Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Assessors are on your side. Their job is to confirm your competence, not to catch
                 you out. If your evidence is genuine and well-organised, the assessment process
                 should be straightforward. Think of your assessor as someone who wants to help you
@@ -307,7 +307,7 @@ const FunctionalSkillsModule5Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Types of Evidence</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               There are many types of evidence you can include in your portfolio. Using a variety of
               evidence types creates a stronger, more convincing portfolio. Different types suit
@@ -323,7 +323,7 @@ const FunctionalSkillsModule5Section4 = () => {
                     Certificates & Qualifications
                   </h4>
                 </div>
-                <ul className="space-y-1.5 text-xs text-white/70">
+                <ul className="space-y-1.5 text-xs text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-green-400 mt-0.5">•</span>
                     <span>Functional Skills certificates (Level 1 or Level 2)</span>
@@ -348,7 +348,7 @@ const FunctionalSkillsModule5Section4 = () => {
                   <FileText className="w-4 h-4 text-green-400" />
                   <h4 className="text-green-400 font-semibold text-xs">Work Products</h4>
                 </div>
-                <ul className="space-y-1.5 text-xs text-white/70">
+                <ul className="space-y-1.5 text-xs text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-green-400 mt-0.5">•</span>
                     <span>Completed job sheets and timesheets</span>
@@ -373,7 +373,7 @@ const FunctionalSkillsModule5Section4 = () => {
                   <Camera className="w-4 h-4 text-green-400" />
                   <h4 className="text-green-400 font-semibold text-xs">Photographic Evidence</h4>
                 </div>
-                <ul className="space-y-1.5 text-xs text-white/70">
+                <ul className="space-y-1.5 text-xs text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-green-400 mt-0.5">•</span>
                     <span>Photos of completed work (with permission)</span>
@@ -398,7 +398,7 @@ const FunctionalSkillsModule5Section4 = () => {
                   <PenLine className="w-4 h-4 text-green-400" />
                   <h4 className="text-green-400 font-semibold text-xs">Reflective Accounts</h4>
                 </div>
-                <ul className="space-y-1.5 text-xs text-white/70">
+                <ul className="space-y-1.5 text-xs text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-green-400 mt-0.5">•</span>
                     <span>Written descriptions of tasks you performed</span>
@@ -423,12 +423,12 @@ const FunctionalSkillsModule5Section4 = () => {
                   <UserCheck className="w-4 h-4 text-green-400" />
                   <h4 className="text-green-400 font-semibold text-xs">Witness Testimonies</h4>
                 </div>
-                <p className="text-xs text-white/70 mb-2">
+                <p className="text-xs text-white mb-2">
                   Written statements from supervisors, colleagues, or clients confirming your
                   competence in specific tasks. These are particularly valuable when direct
                   observation by the assessor is not possible.
                 </p>
-                <ul className="space-y-1.5 text-xs text-white/70">
+                <ul className="space-y-1.5 text-xs text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-green-400 mt-0.5">•</span>
                     <span>Must include the witness's name, job title, date, and signature</span>
@@ -447,7 +447,7 @@ const FunctionalSkillsModule5Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 A strong portfolio uses a variety of evidence types. Relying solely on one type
                 (e.g., only reflective accounts or only photographs) creates a weaker portfolio. Aim
                 for a balanced mix that includes at least three different evidence types to
@@ -476,7 +476,7 @@ const FunctionalSkillsModule5Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Photographic Evidence</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Photographs are powerful evidence because they provide visual proof of your work.
               However, a photograph without context is almost worthless — it needs to be captioned,
@@ -489,7 +489,7 @@ const FunctionalSkillsModule5Section4 = () => {
                 <Camera className="w-4 h-4 text-green-400" />
                 <h4 className="text-white font-semibold text-sm">Taking Good Evidence Photos</h4>
               </div>
-              <ul className="space-y-2 text-xs text-white/70">
+              <ul className="space-y-2 text-xs text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">•</span>
                   <span>
@@ -540,7 +540,7 @@ const FunctionalSkillsModule5Section4 = () => {
             </p>
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-2">Example Photo Caption</p>
-              <div className="bg-white/5 rounded-lg p-3 text-xs text-white/70 space-y-1">
+              <div className="bg-white/5 rounded-lg p-3 text-xs text-white space-y-1">
                 <p>
                   <strong className="text-white">Date:</strong> 14 January 2026
                 </p>
@@ -592,7 +592,7 @@ const FunctionalSkillsModule5Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Get into the habit of photographing your work as you go. Do not wait until the end
                 of your apprenticeship to realise you have no photographic evidence from the first
                 two years. Set a reminder to take photos at least twice a week — it takes 30 seconds
@@ -615,7 +615,7 @@ const FunctionalSkillsModule5Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Written Evidence</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Written evidence demonstrates both your practical competence and your communication
               skills — two things assessors are specifically looking for. Any written document you
@@ -628,7 +628,7 @@ const FunctionalSkillsModule5Section4 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-white/5 rounded-lg p-3">
                   <p className="text-xs font-semibold text-green-400 mb-1">Workplace Documents</p>
-                  <ul className="space-y-1 text-xs text-white/70">
+                  <ul className="space-y-1 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <span className="text-green-400 mt-0.5">•</span>
                       <span>Job sheets and work orders</span>
@@ -649,7 +649,7 @@ const FunctionalSkillsModule5Section4 = () => {
                 </div>
                 <div className="bg-white/5 rounded-lg p-3">
                   <p className="text-xs font-semibold text-green-400 mb-1">Communications</p>
-                  <ul className="space-y-1 text-xs text-white/70">
+                  <ul className="space-y-1 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <span className="text-green-400 mt-0.5">•</span>
                       <span>Professional emails to customers or suppliers</span>
@@ -670,7 +670,7 @@ const FunctionalSkillsModule5Section4 = () => {
                 </div>
                 <div className="bg-white/5 rounded-lg p-3">
                   <p className="text-xs font-semibold text-green-400 mb-1">Calculations</p>
-                  <ul className="space-y-1 text-xs text-white/70">
+                  <ul className="space-y-1 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <span className="text-green-400 mt-0.5">•</span>
                       <span>Cable sizing calculations</span>
@@ -691,7 +691,7 @@ const FunctionalSkillsModule5Section4 = () => {
                 </div>
                 <div className="bg-white/5 rounded-lg p-3">
                   <p className="text-xs font-semibold text-green-400 mb-1">Digital Documents</p>
-                  <ul className="space-y-1 text-xs text-white/70">
+                  <ul className="space-y-1 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <span className="text-green-400 mt-0.5">•</span>
                       <span>Spreadsheets you have created</span>
@@ -748,7 +748,7 @@ const FunctionalSkillsModule5Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Written evidence is particularly valuable for demonstrating functional skills
                 because it directly shows your maths (calculations), English (emails, reports), and
                 ICT (spreadsheets, formatted documents) abilities in a real workplace context. Every
@@ -778,7 +778,7 @@ const FunctionalSkillsModule5Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Witness Testimonies</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Witness testimonies are written statements from people who have observed you working.
               They are valuable because they provide third-party confirmation of your competence —
@@ -789,7 +789,7 @@ const FunctionalSkillsModule5Section4 = () => {
               <h4 className="text-white font-semibold text-sm mb-3">
                 Who Can Provide a Witness Testimony?
               </h4>
-              <ul className="space-y-2 text-xs text-white/70">
+              <ul className="space-y-2 text-xs text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">•</span>
                   <span>
@@ -831,7 +831,7 @@ const FunctionalSkillsModule5Section4 = () => {
             <h4 className="text-white font-semibold pt-2">What Makes a Strong Witness Testimony</h4>
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-2">Example Template</p>
-              <div className="bg-white/5 rounded-lg p-3 text-xs text-white/70 space-y-2">
+              <div className="bg-white/5 rounded-lg p-3 text-xs text-white space-y-2">
                 <p>
                   <strong className="text-white">Witness Name:</strong> John Smith
                 </p>
@@ -899,7 +899,7 @@ const FunctionalSkillsModule5Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Do not be afraid to ask for witness testimonies — most supervisors and colleagues
                 are happy to help. It takes them only 5-10 minutes to write, and it provides you
                 with powerful evidence that cannot be obtained any other way. The key is to ask
@@ -922,7 +922,7 @@ const FunctionalSkillsModule5Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Reflective Accounts</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Reflective accounts are written descriptions of work activities that demonstrate your
               competence. They are one of the most important evidence types because they show your
@@ -935,34 +935,34 @@ const FunctionalSkillsModule5Section4 = () => {
                 <PenLine className="w-4 h-4 text-green-400" />
                 <h4 className="text-white font-semibold text-sm">The STAR Structure</h4>
               </div>
-              <p className="text-xs text-white/70 mb-3">
+              <p className="text-xs text-white mb-3">
                 Use STAR to structure every reflective account consistently:
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
                   <p className="text-xs font-semibold text-green-400 mb-1">S -- Situation</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Describe where you were, what the job was, and the context. Include the type of
                     property, location, and what work was required.
                   </p>
                 </div>
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
                   <p className="text-xs font-semibold text-green-400 mb-1">T -- Task</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     What specifically were you asked to do? What was your role? What skills did the
                     task require?
                   </p>
                 </div>
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
                   <p className="text-xs font-semibold text-green-400 mb-1">A -- Action</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     What did you actually do? Include details of tools, techniques, calculations,
                     and decisions you made. This is the most important section.
                   </p>
                 </div>
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
                   <p className="text-xs font-semibold text-green-400 mb-1">R -- Result</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     What was the outcome? Was it successful? What did you learn? What would you do
                     differently next time?
                   </p>
@@ -972,7 +972,7 @@ const FunctionalSkillsModule5Section4 = () => {
 
             <h4 className="text-white font-semibold pt-2">Example Reflective Account</h4>
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <div className="bg-white/5 rounded-lg p-3 text-xs text-white/70 space-y-2">
+              <div className="bg-white/5 rounded-lg p-3 text-xs text-white space-y-2">
                 <p>
                   <strong className="text-green-400">Situation:</strong> I was working on a domestic
                   rewire at a terraced house in Leeds. The job required calculating the total cable
@@ -1001,7 +1001,7 @@ const FunctionalSkillsModule5Section4 = () => {
                   and money later, and that adding a wastage allowance is essential for avoiding
                   delays.
                 </p>
-                <p className="text-white/50 italic">
+                <p className="text-white italic">
                   Criteria covered: Functional Skills Maths L2 (2.3 — using measurements, 2.5 —
                   multi-step calculations), English L2 (3.1 — professional written communication)
                 </p>
@@ -1010,7 +1010,7 @@ const FunctionalSkillsModule5Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 One detailed, well-structured reflective account is worth more than five brief ones.
                 Aim for 300-500 words per account. Include specific details — what tools you used,
                 what calculations you performed, what decisions you made. Generic statements like "I
@@ -1039,7 +1039,7 @@ const FunctionalSkillsModule5Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Organising Your Portfolio</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               A well-organised portfolio makes a strong impression on assessors and makes it easy
               for them to find the evidence they need. Poor organisation can lead to evidence being
@@ -1052,10 +1052,10 @@ const FunctionalSkillsModule5Section4 = () => {
                 <Layers className="w-4 h-4 text-green-400" />
                 <h4 className="text-white font-semibold text-sm">Portfolio Structure</h4>
               </div>
-              <p className="text-xs text-white/70 mb-3">
+              <p className="text-xs text-white mb-3">
                 A well-structured portfolio typically includes these sections in order:
               </p>
-              <div className="space-y-2 text-xs text-white/70">
+              <div className="space-y-2 text-xs text-white">
                 <div className="flex items-start gap-3 bg-white/5 rounded-lg p-2">
                   <span className="text-green-400 font-bold min-w-[24px]">1.</span>
                   <span>
@@ -1112,7 +1112,7 @@ const FunctionalSkillsModule5Section4 = () => {
                 <Search className="w-4 h-4 text-green-400" />
                 <h4 className="text-white font-semibold text-sm">How to Build a Matrix</h4>
               </div>
-              <ul className="space-y-2 text-xs text-white/70">
+              <ul className="space-y-2 text-xs text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">•</span>
                   <span>List all assessment criteria in the left column</span>
@@ -1145,7 +1145,7 @@ const FunctionalSkillsModule5Section4 = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div className="bg-white/5 border border-white/10 rounded-xl p-4">
                 <h4 className="text-green-400 font-semibold text-xs mb-2">Digital Portfolios</h4>
-                <ul className="space-y-1.5 text-xs text-white/70">
+                <ul className="space-y-1.5 text-xs text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-green-400 mt-0.5">•</span>
                     <span>Easy to reorganise and update</span>
@@ -1170,7 +1170,7 @@ const FunctionalSkillsModule5Section4 = () => {
               </div>
               <div className="bg-white/5 border border-white/10 rounded-xl p-4">
                 <h4 className="text-green-400 font-semibold text-xs mb-2">Physical Portfolios</h4>
-                <ul className="space-y-1.5 text-xs text-white/70">
+                <ul className="space-y-1.5 text-xs text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-green-400 mt-0.5">•</span>
                     <span>Use a sturdy ring binder with plastic wallets</span>
@@ -1197,7 +1197,7 @@ const FunctionalSkillsModule5Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Update your portfolio regularly — ideally weekly. Set a recurring reminder to add
                 new evidence, update your cross-referencing matrix, and check for gaps. It is much
                 easier to maintain a portfolio throughout your apprenticeship than to build one from
@@ -1220,7 +1220,7 @@ const FunctionalSkillsModule5Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Portfolio Checklist</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Before submitting your portfolio for assessment, use this comprehensive checklist to
               ensure everything is in order. Addressing these points before submission significantly
@@ -1233,53 +1233,53 @@ const FunctionalSkillsModule5Section4 = () => {
                 <h4 className="text-white font-semibold text-sm">Pre-Submission Checklist</h4>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                <div className="flex items-start gap-2 text-xs text-white/70">
+                <div className="flex items-start gap-2 text-xs text-white">
                   <CheckCircle className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
                     All assessment criteria are covered with at least one piece of evidence
                   </span>
                 </div>
-                <div className="flex items-start gap-2 text-xs text-white/70">
+                <div className="flex items-start gap-2 text-xs text-white">
                   <CheckCircle className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>Cross-referencing matrix is complete and up to date</span>
                 </div>
-                <div className="flex items-start gap-2 text-xs text-white/70">
+                <div className="flex items-start gap-2 text-xs text-white">
                   <CheckCircle className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>Contents page is accurate with correct page numbers</span>
                 </div>
-                <div className="flex items-start gap-2 text-xs text-white/70">
+                <div className="flex items-start gap-2 text-xs text-white">
                   <CheckCircle className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>All evidence is clearly labelled and dated</span>
                 </div>
-                <div className="flex items-start gap-2 text-xs text-white/70">
+                <div className="flex items-start gap-2 text-xs text-white">
                   <CheckCircle className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>Witness statements are signed, dated, with name and job title</span>
                 </div>
-                <div className="flex items-start gap-2 text-xs text-white/70">
+                <div className="flex items-start gap-2 text-xs text-white">
                   <CheckCircle className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>Reflective accounts use the STAR structure consistently</span>
                 </div>
-                <div className="flex items-start gap-2 text-xs text-white/70">
+                <div className="flex items-start gap-2 text-xs text-white">
                   <CheckCircle className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>Photographs are clear, captioned, and credited to your work</span>
                 </div>
-                <div className="flex items-start gap-2 text-xs text-white/70">
+                <div className="flex items-start gap-2 text-xs text-white">
                   <CheckCircle className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>You can explain every piece of evidence if questioned by the assessor</span>
                 </div>
-                <div className="flex items-start gap-2 text-xs text-white/70">
+                <div className="flex items-start gap-2 text-xs text-white">
                   <CheckCircle className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>Sensitive information has been redacted where necessary</span>
                 </div>
-                <div className="flex items-start gap-2 text-xs text-white/70">
+                <div className="flex items-start gap-2 text-xs text-white">
                   <CheckCircle className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>A variety of evidence types has been used (not just one type)</span>
                 </div>
-                <div className="flex items-start gap-2 text-xs text-white/70">
+                <div className="flex items-start gap-2 text-xs text-white">
                   <CheckCircle className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>No unnecessary duplication — quality over quantity throughout</span>
                 </div>
-                <div className="flex items-start gap-2 text-xs text-white/70">
+                <div className="flex items-start gap-2 text-xs text-white">
                   <CheckCircle className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>Portfolio is presentable, clean, and professionally organised</span>
                 </div>
@@ -1362,7 +1362,7 @@ const FunctionalSkillsModule5Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Your portfolio is a living document that grows with you throughout your
                 apprenticeship. Start building it from day one, update it weekly, and review it
                 regularly against the assessment criteria. By the time your final assessment
@@ -1381,7 +1381,7 @@ const FunctionalSkillsModule5Section4 = () => {
         <div className="flex items-center justify-between pt-6 border-t border-white/10">
           <Link
             to="/study-centre/apprentice/functional-skills/module5/section3"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
           >
             <ArrowLeft className="w-4 h-4" />
             Study Techniques

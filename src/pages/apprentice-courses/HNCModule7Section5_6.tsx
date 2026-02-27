@@ -262,7 +262,7 @@ const HNCModule7Section5_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section5">
@@ -284,7 +284,7 @@ const HNCModule7Section5_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Efficiency Retrofits
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Assessment methodology, business case development, implementation planning, and
             verification of savings
           </p>
@@ -577,23 +577,23 @@ const HNCModule7Section5_6 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">Sample Payback Calculation</p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Project:</span>{' '}
+                  <span className="text-white">Project:</span>{' '}
                   <span className="text-white">Office LED Retrofit - 500 fittings</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Capital cost:</span>{' '}
+                  <span className="text-white">Capital cost:</span>{' '}
                   <span className="text-white">£45,000 (equipment + installation)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Energy saving:</span>{' '}
+                  <span className="text-white">Energy saving:</span>{' '}
                   <span className="text-white">75,000 kWh/year @ £0.30/kWh = £22,500/year</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Maintenance saving:</span>{' '}
+                  <span className="text-white">Maintenance saving:</span>{' '}
                   <span className="text-white">£3,500/year</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Total annual saving:</span>{' '}
+                  <span className="text-white">Total annual saving:</span>{' '}
                   <span className="text-white">£26,000</span>
                 </p>
                 <p className="mt-2 text-green-400">Simple payback: £45,000 ÷ £26,000 = 1.7 years</p>
@@ -736,7 +736,7 @@ const HNCModule7Section5_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-2">Occupancy Sensing</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>PIR or microwave detection</li>
                     <li>Presence/absence modes</li>
                     <li>Typical saving: 20-30%</li>
@@ -745,7 +745,7 @@ const HNCModule7Section5_6 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-2">Daylight Dimming</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Photocell control</li>
                     <li>Maintains target lux level</li>
                     <li>Typical saving: 15-25%</li>
@@ -837,11 +837,11 @@ const HNCModule7Section5_6 = () => {
                 <p className="text-white">
                   Energy Savings = (Baseline Energy - Reporting Period Energy) ± Adjustments
                 </p>
-                <p className="mt-2 text-white/80">Where adjustments account for:</p>
-                <p className="ml-4 text-white/80">• Changes in weather (degree days)</p>
-                <p className="ml-4 text-white/80">• Changes in occupancy</p>
-                <p className="ml-4 text-white/80">• Changes in operating hours</p>
-                <p className="ml-4 text-white/80">• Changes in production (if applicable)</p>
+                <p className="mt-2 text-white">Where adjustments account for:</p>
+                <p className="ml-4 text-white">• Changes in weather (degree days)</p>
+                <p className="ml-4 text-white">• Changes in occupancy</p>
+                <p className="ml-4 text-white">• Changes in operating hours</p>
+                <p className="ml-4 text-white">• Changes in production (if applicable)</p>
               </div>
             </div>
 
@@ -879,7 +879,7 @@ const HNCModule7Section5_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-2">Short-term (0-3 months)</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Commissioning completion report</li>
                     <li>Initial power measurements</li>
                     <li>Control system verification</li>
@@ -888,7 +888,7 @@ const HNCModule7Section5_6 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-2">Long-term (12+ months)</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Full year energy comparison</li>
                     <li>Regression-adjusted baseline</li>
                     <li>Verified savings calculation</li>
@@ -898,7 +898,7 @@ const HNCModule7Section5_6 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Verification principle:</strong> Savings cannot be directly measured - they
               represent the absence of energy use. IPMVP provides the methodology to calculate what
               would have been consumed without the retrofit.
@@ -923,16 +923,16 @@ const HNCModule7Section5_6 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Calculate annual savings for an office lighting retrofit.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Existing system:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Existing system:</p>
                 <p className="ml-4">100 × T8 fluorescent fittings, 2 × 58W lamps + HF ballast</p>
                 <p className="ml-4">Total load: 100 × 116W = 11.6 kW</p>
                 <p className="ml-4">Operating hours: 2,500 hours/year</p>
                 <p className="ml-4">Annual consumption: 11.6 × 2,500 = 29,000 kWh</p>
-                <p className="mt-2 text-white/60">Proposed LED system:</p>
+                <p className="mt-2 text-white">Proposed LED system:</p>
                 <p className="ml-4">100 × LED panels, 40W each = 4.0 kW</p>
                 <p className="ml-4">Annual consumption: 4.0 × 2,500 = 10,000 kWh</p>
-                <p className="mt-2 text-white/60">Savings calculation:</p>
+                <p className="mt-2 text-white">Savings calculation:</p>
                 <p className="ml-4">Energy saved: 29,000 - 10,000 = 19,000 kWh/year</p>
                 <p className="ml-4">At £0.30/kWh: 19,000 × 0.30 = £5,700/year</p>
                 <p className="ml-4">With occupancy controls (+25%): £5,700 × 1.25 = £7,125/year</p>
@@ -948,17 +948,17 @@ const HNCModule7Section5_6 = () => {
                 <strong>Scenario:</strong> Evaluate a £50,000 retrofit with £15,000 annual savings
                 over 10 years.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Parameters:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Parameters:</p>
                 <p className="ml-4">Initial investment: £50,000</p>
                 <p className="ml-4">Annual savings: £15,000</p>
                 <p className="ml-4">Project life: 10 years</p>
                 <p className="ml-4">Discount rate: 8%</p>
-                <p className="mt-2 text-white/60">NPV calculation:</p>
+                <p className="mt-2 text-white">NPV calculation:</p>
                 <p className="ml-4">Present value of annuity factor (8%, 10 years): 6.71</p>
                 <p className="ml-4">PV of savings: £15,000 × 6.71 = £100,650</p>
                 <p className="ml-4">NPV: £100,650 - £50,000 = £50,650</p>
-                <p className="mt-2 text-white/60">Simple payback: £50,000 ÷ £15,000 = 3.3 years</p>
+                <p className="mt-2 text-white">Simple payback: £50,000 ÷ £15,000 = 3.3 years</p>
                 <p className="mt-2 text-green-400">
                   Decision: Positive NPV = proceed with investment
                 </p>
@@ -973,19 +973,19 @@ const HNCModule7Section5_6 = () => {
                 <strong>Scenario:</strong> Adjust baseline consumption for weather changes using
                 IPMVP Option C.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Baseline period (pre-retrofit):</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Baseline period (pre-retrofit):</p>
                 <p className="ml-4">Annual consumption: 450,000 kWh</p>
                 <p className="ml-4">Heating degree days (HDD): 2,200</p>
                 <p className="ml-4">Cooling degree days (CDD): 150</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Regression model: kWh = 180,000 + (100 × HDD) + (200 × CDD)
                 </p>
-                <p className="mt-2 text-white/60">Reporting period (post-retrofit):</p>
+                <p className="mt-2 text-white">Reporting period (post-retrofit):</p>
                 <p className="ml-4">Actual consumption: 320,000 kWh</p>
                 <p className="ml-4">HDD: 2,400 (colder year)</p>
                 <p className="ml-4">CDD: 180 (warmer summer)</p>
-                <p className="mt-2 text-white/60">Adjusted baseline:</p>
+                <p className="mt-2 text-white">Adjusted baseline:</p>
                 <p className="ml-4">180,000 + (100 × 2,400) + (200 × 180) = 456,000 kWh</p>
                 <p className="mt-2 text-green-400">
                   Verified savings: 456,000 - 320,000 = 136,000 kWh (30%)
@@ -1079,7 +1079,7 @@ const HNCModule7Section5_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1125,7 +1125,7 @@ const HNCModule7Section5_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section5">

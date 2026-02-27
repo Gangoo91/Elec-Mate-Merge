@@ -276,7 +276,7 @@ const HNCModule8Section2_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section2">
@@ -298,7 +298,7 @@ const HNCModule8Section2_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Ductwork Design
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Sizing methods, pressure drop calculations, materials specification, acoustic treatment,
             and fire protection for HVAC ductwork
           </p>
@@ -381,12 +381,12 @@ const HNCModule8Section2_5 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
               <p className="text-sm font-medium text-blue-400 mb-2">The Equal Friction Method</p>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 This method maintains constant pressure drop per unit length throughout the duct
                 system, typically 1.0 Pa/m for low-velocity comfort systems or up to 2.0 Pa/m where
                 space is limited.
               </p>
-              <ul className="text-sm space-y-1 text-white/80">
+              <ul className="text-sm space-y-1 text-white">
                 <li>- Duct velocity varies naturally as airflow reduces at each branch</li>
                 <li>- Simplified balancing as path pressure drops are proportional to length</li>
                 <li>- Self-balancing tendency in well-designed systems</li>
@@ -398,12 +398,12 @@ const HNCModule8Section2_5 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 The Velocity Reduction Method
               </p>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 Starting with higher velocity at the fan (6-8 m/s), velocity is progressively
                 reduced in steps along the duct run to achieve lower velocities (3-4 m/s) at
                 terminal outlets.
               </p>
-              <ul className="text-sm space-y-1 text-white/80">
+              <ul className="text-sm space-y-1 text-white">
                 <li>- Controls noise generation which increases with v^5-6</li>
                 <li>- Larger ducts near fan where noise is less critical</li>
                 <li>- Smaller, quieter ducts in occupied spaces</li>
@@ -472,8 +472,8 @@ const HNCModule8Section2_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Straight Duct Sections</p>
-                  <p className="text-sm text-white/80 font-mono mb-2">ΔP = f × (L/D) × (ρv²/2)</p>
-                  <ul className="text-xs text-white/70 space-y-1">
+                  <p className="text-sm text-white font-mono mb-2">ΔP = f × (L/D) × (ρv²/2)</p>
+                  <ul className="text-xs text-white space-y-1">
                     <li>f = friction factor (0.02-0.03 typical)</li>
                     <li>L = duct length (m)</li>
                     <li>D = hydraulic diameter (m)</li>
@@ -483,8 +483,8 @@ const HNCModule8Section2_5 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Fittings and Components</p>
-                  <p className="text-sm text-white/80 font-mono mb-2">ΔP = K × (ρv²/2)</p>
-                  <ul className="text-xs text-white/70 space-y-1">
+                  <p className="text-sm text-white font-mono mb-2">ΔP = K × (ρv²/2)</p>
+                  <ul className="text-xs text-white space-y-1">
                     <li>K = loss coefficient (from tables)</li>
                     <li>90° bend (no vanes): K = 1.0-1.5</li>
                     <li>90° bend (with vanes): K = 0.15-0.25</li>
@@ -663,7 +663,7 @@ const HNCModule8Section2_5 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
               <p className="text-sm font-medium text-amber-400 mb-2">Aspect Ratio Considerations</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 For rectangular ducts, the aspect ratio (width ÷ height) should not exceed 4:1.
                 Higher aspect ratios result in increased friction losses, uneven velocity
                 distribution, and higher material usage. Where possible, aim for aspect ratios of
@@ -822,19 +822,19 @@ const HNCModule8Section2_5 = () => {
               <div className="grid grid-cols-4 gap-2 text-center text-sm">
                 <div className="p-2 rounded bg-white/5">
                   <p className="font-bold text-white mb-1">Class 0</p>
-                  <p className="text-white/70 text-xs">No requirement</p>
+                  <p className="text-white text-xs">No requirement</p>
                 </div>
                 <div className="p-2 rounded bg-white/5">
                   <p className="font-bold text-white mb-1">Class 1</p>
-                  <p className="text-white/70 text-xs">Standard leakage</p>
+                  <p className="text-white text-xs">Standard leakage</p>
                 </div>
                 <div className="p-2 rounded bg-white/5">
                   <p className="font-bold text-white mb-1">Class 2</p>
-                  <p className="text-white/70 text-xs">Low leakage</p>
+                  <p className="text-white text-xs">Low leakage</p>
                 </div>
                 <div className="p-2 rounded bg-white/5">
                   <p className="font-bold text-green-400 mb-1">Class 3</p>
-                  <p className="text-white/70 text-xs">Very low leakage</p>
+                  <p className="text-white text-xs">Very low leakage</p>
                 </div>
               </div>
             </div>
@@ -928,12 +928,12 @@ const HNCModule8Section2_5 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
               <p className="text-sm font-medium text-blue-400 mb-2">Splitter Attenuators</p>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 The most common acoustic attenuator type uses parallel splitters of sound-absorbing
                 material (typically glass fibre or mineral wool) to absorb sound energy as air
                 passes through.
               </p>
-              <ul className="text-sm space-y-1 text-white/80">
+              <ul className="text-sm space-y-1 text-white">
                 <li>- Attenuation: 10-25 dB depending on length and splitter spacing</li>
                 <li>- Typical length: 900-1800mm for significant attenuation</li>
                 <li>- Splitter spacing: 100-200mm airways between splitters</li>
@@ -1003,7 +1003,7 @@ const HNCModule8Section2_5 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Note: p = test pressure in Pa. For Class C at 400 Pa: 0.081 × 400^0.65 = 4.0 L/s per
                 m² duct surface
               </p>
@@ -1016,7 +1016,7 @@ const HNCModule8Section2_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Pressure Decay Method</p>
-                  <ul className="text-xs text-white/80 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>1. Seal all openings in test section</li>
                     <li>2. Pressurise to 110% of test pressure</li>
                     <li>3. Allow to stabilise for 2 minutes</li>
@@ -1027,7 +1027,7 @@ const HNCModule8Section2_5 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Constant Pressure Method</p>
-                  <ul className="text-xs text-white/80 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>1. Seal all openings in test section</li>
                     <li>2. Connect calibrated flow meter to test rig</li>
                     <li>3. Pressurise to test pressure</li>
@@ -1043,7 +1043,7 @@ const HNCModule8Section2_5 = () => {
               <p className="text-sm font-medium text-amber-400 mb-2">
                 Energy Impact of Ductwork Leakage
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 A system with 10% duct leakage requires approximately 20-30% more fan power to
                 deliver the same airflow to terminals. Modern energy regulations increasingly
                 require Class A or B tightness. Testing before insulation allows remedial sealing -
@@ -1078,8 +1078,8 @@ const HNCModule8Section2_5 = () => {
                 <strong>Scenario:</strong> Size a supply duct for 500 L/s (0.5 m³/s) using the equal
                 friction method at 1 Pa/m.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">
                   From CIBSE duct sizing chart at 1 Pa/m and 0.5 m³/s:
                 </p>
                 <p className="mt-2">Circular duct: Diameter = 350mm</p>
@@ -1089,7 +1089,7 @@ const HNCModule8Section2_5 = () => {
                 <p className="ml-4">Option 1: 400mm × 250mm (0.100 m², 2:1 aspect)</p>
                 <p className="ml-4">Option 2: 500mm × 200mm (0.100 m², 2.5:1 aspect)</p>
                 <p className="mt-2 text-green-400">Selected: 400mm × 250mm rectangular</p>
-                <p className="text-white/60">(Better aspect ratio, similar space requirement)</p>
+                <p className="text-white">(Better aspect ratio, similar space requirement)</p>
               </div>
             </div>
 
@@ -1101,8 +1101,8 @@ const HNCModule8Section2_5 = () => {
                 <strong>Scenario:</strong> Calculate pressure drop through a 90° bend (no vanes) at
                 6 m/s velocity.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Using: ΔP = K × (ρv²/2)</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Using: ΔP = K × (ρv²/2)</p>
                 <p className="mt-2">K factor for 90° bend (no vanes) = 1.2</p>
                 <p>Air density ρ = 1.2 kg/m³</p>
                 <p>Velocity v = 6 m/s</p>
@@ -1110,11 +1110,11 @@ const HNCModule8Section2_5 = () => {
                 <p>ΔP = 1.2 × (1.2 × 36/2)</p>
                 <p>ΔP = 1.2 × 21.6</p>
                 <p className="mt-2 text-green-400">ΔP = 25.9 Pa</p>
-                <p className="mt-2 text-white/60">With turning vanes (K = 0.2):</p>
+                <p className="mt-2 text-white">With turning vanes (K = 0.2):</p>
                 <p>
                   ΔP = 0.2 × 21.6 = <span className="text-green-400">4.3 Pa</span>
                 </p>
-                <p className="text-white/60">Saving = 21.6 Pa per bend</p>
+                <p className="text-white">Saving = 21.6 Pa per bend</p>
               </div>
             </div>
 
@@ -1126,8 +1126,8 @@ const HNCModule8Section2_5 = () => {
                 <strong>Scenario:</strong> Verify Class C compliance for a duct section with 150 m²
                 surface area tested at 400 Pa.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Class C leakage limit formula:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Class C leakage limit formula:</p>
                 <p>q = 0.081 × p^0.65 L/s per m²</p>
                 <p className="mt-2">At test pressure p = 400 Pa:</p>
                 <p>q = 0.081 × 400^0.65</p>
@@ -1135,11 +1135,11 @@ const HNCModule8Section2_5 = () => {
                 <p>q = 3.98 L/s per m² of duct surface</p>
                 <p className="mt-2">For 150 m² duct surface:</p>
                 <p>Maximum allowable leakage = 3.98 × 150 = 597 L/s</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Test result: Measured 420 L/s to maintain 400 Pa
                 </p>
                 <p className="mt-2 text-green-400">✓ PASS - 420 L/s &lt; 597 L/s limit</p>
-                <p className="text-white/60">Actual class achieved: 420/150 = 2.8 L/s per m²</p>
+                <p className="text-white">Actual class achieved: 420/150 = 2.8 L/s per m²</p>
               </div>
             </div>
           </div>
@@ -1231,7 +1231,7 @@ const HNCModule8Section2_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1277,7 +1277,7 @@ const HNCModule8Section2_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section2">

@@ -233,7 +233,7 @@ const InspectionTestingModule7Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-7">
@@ -255,7 +255,7 @@ const InspectionTestingModule7Section5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Protective Device Operation
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Verify MCBs, RCBOs, fuses and other protective devices are correctly installed and
             function
           </p>
@@ -344,7 +344,7 @@ const InspectionTestingModule7Section5 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">RCBO Additional Check</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Test button should trip the device - verify RCD function operates in addition to MCB
                 switching.
               </p>
@@ -594,7 +594,7 @@ const InspectionTestingModule7Section5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -634,7 +634,7 @@ const InspectionTestingModule7Section5 = () => {
         <section className="mb-10">
           <div className="p-6 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30 text-center">
             <h3 className="text-xl font-bold text-white mb-2">Module 7 Complete!</h3>
-            <p className="text-white/70 mb-3">
+            <p className="text-white mb-3">
               You've mastered polarity testing, phase rotation, functional testing, and protective
               device verification.
             </p>
@@ -654,7 +654,7 @@ const InspectionTestingModule7Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-7/section-4">

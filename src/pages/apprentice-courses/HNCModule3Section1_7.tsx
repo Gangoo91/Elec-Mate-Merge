@@ -174,7 +174,7 @@ const HNCModule3Section1_7 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section1">
@@ -196,7 +196,7 @@ const HNCModule3Section1_7 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Building Services Applications
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Practical DC circuit applications in emergency lighting, fire alarms, BMS controls and
             standby power
           </p>
@@ -355,7 +355,7 @@ const HNCModule3Section1_7 = () => {
                 Battery Capacity Calculation
               </p>
               <p className="font-mono text-center text-lg mb-2">C = P × t / V × 1.25</p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where C = capacity (Ah), P = power (W), t = time (h), V = voltage (V), 1.25 = ageing
                 factor
               </p>
@@ -454,7 +454,7 @@ const HNCModule3Section1_7 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 R<sub>loop</sub> = 2 × L × r
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where L = cable length (m), r = conductor resistance (Ω/m)
               </p>
             </div>
@@ -584,7 +584,7 @@ const HNCModule3Section1_7 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 R<sub>max</sub> = V<sub>drop(max)</sub> / I<sub>loop</sub>
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Example: 1.2V max drop, 50mA loop = 24Ω maximum cable resistance
               </p>
             </div>
@@ -691,7 +691,7 @@ const HNCModule3Section1_7 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Battery Bank Sizing</p>
               <p className="font-mono text-center text-lg mb-2">Ah = (P × t) / (V × η × DoD)</p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where η = inverter efficiency (~0.9), DoD = depth of discharge (~0.8 for lead-acid)
               </p>
             </div>
@@ -787,7 +787,7 @@ const HNCModule3Section1_7 = () => {
                 <strong>Question:</strong> An emergency luminaire uses a 5W LED lamp with 3.6V NiCd
                 battery. Calculate the minimum battery capacity for 3-hour operation.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Energy required = Power × Time</p>
                 <p>
                   E = 5W × 3h = <strong>15Wh</strong>
@@ -798,7 +798,7 @@ const HNCModule3Section1_7 = () => {
                 <p>
                   C<sub>design</sub> = 4.17 × 1.25 = <strong>5.2Ah minimum</strong>
                 </p>
-                <p className="mt-2 text-white/60">→ Specify 6Ah battery (next standard size)</p>
+                <p className="mt-2 text-white">→ Specify 6Ah battery (next standard size)</p>
               </div>
             </div>
 
@@ -810,7 +810,7 @@ const HNCModule3Section1_7 = () => {
                 <strong>Question:</strong> A fire alarm system has 180mA quiescent current and 2.5A
                 alarm current. Size batteries for 24V system.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Standby requirement (24 hours):</p>
                 <p>
                   E<sub>standby</sub> = 0.18A × 24h = 4.32Ah
@@ -839,7 +839,7 @@ const HNCModule3Section1_7 = () => {
                 <strong>Question:</strong> A 24V DC sensor circuit runs 80m using 0.75mm² cable.
                 Current is 40mA. Check voltage drop is within 5%.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Cable resistance (0.75mm²) = 24.5mΩ/m</p>
                 <p className="mt-2">Loop resistance:</p>
                 <p>R = 2 × 80m × 24.5mΩ/m = 3.92Ω</p>
@@ -863,12 +863,12 @@ const HNCModule3Section1_7 = () => {
                 <strong>Question:</strong> A fire alarm detection loop uses 1.5mm² cable and is 350m
                 long. Will it meet the 40Ω maximum?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Cable resistance (1.5mm²) = 12.1mΩ/m</p>
                 <p className="mt-2">Loop resistance:</p>
                 <p>R = 2 × 350m × 12.1mΩ/m = 8.47Ω</p>
                 <p className="mt-2 text-green-400">✓ 8.47Ω is well below 40Ω limit</p>
-                <p className="mt-2 text-white/60">Maximum length with 1.5mm² cable:</p>
+                <p className="mt-2 text-white">Maximum length with 1.5mm² cable:</p>
                 <p>
                   L<sub>max</sub> = 40Ω / (2 × 12.1mΩ/m) = <strong>1653m</strong>
                 </p>
@@ -967,7 +967,7 @@ const HNCModule3Section1_7 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1013,7 +1013,7 @@ const HNCModule3Section1_7 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section1-6">

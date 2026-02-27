@@ -245,7 +245,7 @@ const CscsCardModule4Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-4">
@@ -271,7 +271,7 @@ const CscsCardModule4Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Environmental Protection
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding your legal duties to protect the environment on construction sites &mdash;
             from waste management and pollution prevention to protected species and sustainability
           </p>
@@ -416,10 +416,10 @@ const CscsCardModule4Section4 = () => {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Legal Penalties for Pollution</h3>
                 </div>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Environmental offences carry severe penalties. Individuals and companies can face:
                 </p>
-                <ul className="text-white/80 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                     <span>
@@ -482,10 +482,10 @@ const CscsCardModule4Section4 = () => {
 
               <div className="bg-white/5 border border-blue-400/30 p-4 rounded-lg">
                 <h3 className={`${headingColours[1]} font-medium mb-3`}>Duty of Care</h3>
-                <p className="text-white/60 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The duty of care for waste requires you to:
                 </p>
-                <ul className="text-white/80 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-blue-400" />
                     <span>Keep waste to a minimum and apply the waste hierarchy</span>
@@ -528,7 +528,7 @@ const CscsCardModule4Section4 = () => {
               {/* Waste Hierarchy Diagram */}
               <div className="bg-white/5 border border-green-400/30 p-4 rounded-lg">
                 <h3 className="text-green-300 font-medium mb-4">The Waste Hierarchy</h3>
-                <p className="text-white/60 text-sm mb-4">
+                <p className="text-white text-sm mb-4">
                   The waste hierarchy ranks options from most to least preferred. Always start at
                   the top and only move down when higher options are not practicable.
                 </p>
@@ -536,13 +536,13 @@ const CscsCardModule4Section4 = () => {
                   {/* Tier 1 — Prevent */}
                   <div className="w-full max-w-[200px] bg-green-500/20 border border-green-500/40 rounded-lg px-4 py-3 text-center">
                     <span className="text-green-300 font-bold text-sm block">PREVENT</span>
-                    <span className="text-white/60 text-xs">Most preferred</span>
+                    <span className="text-white text-xs">Most preferred</span>
                   </div>
                   <div className="w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-green-400/50" />
                   {/* Tier 2 — Reuse */}
                   <div className="w-full max-w-[260px] bg-teal-500/20 border border-teal-500/40 rounded-lg px-4 py-3 text-center">
                     <span className="text-teal-300 font-bold text-sm block">REUSE</span>
-                    <span className="text-white/60 text-xs">
+                    <span className="text-white text-xs">
                       Use again for same or different purpose
                     </span>
                   </div>
@@ -550,7 +550,7 @@ const CscsCardModule4Section4 = () => {
                   {/* Tier 3 — Recycle */}
                   <div className="w-full max-w-[320px] bg-blue-500/20 border border-blue-500/40 rounded-lg px-4 py-3 text-center">
                     <span className="text-blue-300 font-bold text-sm block">RECYCLE</span>
-                    <span className="text-white/60 text-xs">
+                    <span className="text-white text-xs">
                       Process into new materials or products
                     </span>
                   </div>
@@ -558,7 +558,7 @@ const CscsCardModule4Section4 = () => {
                   {/* Tier 4 — Recover */}
                   <div className="w-full max-w-[380px] bg-amber-500/20 border border-amber-500/40 rounded-lg px-4 py-3 text-center">
                     <span className="text-amber-300 font-bold text-sm block">RECOVER</span>
-                    <span className="text-white/60 text-xs">
+                    <span className="text-white text-xs">
                       Extract energy (e.g. incineration with energy recovery)
                     </span>
                   </div>
@@ -566,14 +566,14 @@ const CscsCardModule4Section4 = () => {
                   {/* Tier 5 — Dispose */}
                   <div className="w-full max-w-[440px] bg-red-500/20 border border-red-500/40 rounded-lg px-4 py-3 text-center">
                     <span className="text-red-300 font-bold text-sm block">DISPOSE</span>
-                    <span className="text-white/60 text-xs">Landfill — last resort only</span>
+                    <span className="text-white text-xs">Landfill — last resort only</span>
                   </div>
                 </div>
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-blue-300 font-medium mb-3">Waste Segregation on Site</h3>
-                <p className="text-white/60 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Segregating waste at source improves recycling rates and reduces costs. Common
                   categories on construction sites include:
                 </p>
@@ -590,7 +590,7 @@ const CscsCardModule4Section4 = () => {
                   ].map((item, idx) => (
                     <div key={idx} className="flex items-start gap-2 text-sm">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-blue-400" />
-                      <span className="text-white/80">{item}</span>
+                      <span className="text-white">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -598,7 +598,7 @@ const CscsCardModule4Section4 = () => {
 
               <div className="bg-white/5 border border-blue-500/30 p-4 rounded-lg">
                 <h3 className="text-blue-300 font-medium mb-3">Site Waste Management Plans</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Although no longer a legal requirement in England since 2013, site waste
                   management plans (SWMPs) remain best practice and are often required by clients
                   and principal contractors. A SWMP identifies the types and quantities of waste
@@ -638,7 +638,7 @@ const CscsCardModule4Section4 = () => {
                 <h3 className={`${headingColours[2]} font-medium mb-3`}>
                   Common Construction Pollutants
                 </h3>
-                <ul className="text-white/80 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-cyan-400" />
                     <span>
@@ -677,7 +677,7 @@ const CscsCardModule4Section4 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-cyan-300 font-medium mb-3">Prevention Measures</h3>
-                <ul className="text-white/80 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-cyan-400" />
                     <span>
@@ -735,7 +735,7 @@ const CscsCardModule4Section4 = () => {
                   <AlertTriangle className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-amber-300">Reporting Spills</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   If a pollutant has entered or is likely to enter a watercourse, the Environment
                   Agency must be notified immediately on their 24-hour incident hotline:{' '}
                   <strong className="text-white">0800 80 70 60</strong>. Early reporting can help
@@ -774,7 +774,7 @@ const CscsCardModule4Section4 = () => {
                     <h4 className="text-red-300 font-semibold text-sm mb-1">
                       Silica Dust — Most Dangerous
                     </h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Generated from cutting, drilling, or grinding concrete, sandstone, mortar, and
                       brick. Respirable crystalline silica (RCS) can cause silicosis, lung cancer,
                       and COPD. The workplace exposure limit is extremely low (0.1 mg/m&sup3;).
@@ -785,7 +785,7 @@ const CscsCardModule4Section4 = () => {
                     <h4 className="text-amber-300 font-semibold text-sm mb-1">
                       Wood Dust — Hardwood Especially
                     </h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Generated from sawing, sanding, and routing timber. Hardwood dust is
                       classified as a carcinogen (can cause nasal cancer). Softwood dust can cause
                       asthma and respiratory irritation. The WEL for hardwood dust is 3 mg/m&sup3;
@@ -796,7 +796,7 @@ const CscsCardModule4Section4 = () => {
                     <h4 className="text-blue-300 font-semibold text-sm mb-1">
                       General Construction Dust
                     </h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Generated from demolition, earthworks, sweeping, and vehicle movements. While
                       lower health risk than silica or hardwood dust, it can cause respiratory
                       irritation, exacerbate asthma, and create significant nuisance to neighbours
@@ -808,7 +808,7 @@ const CscsCardModule4Section4 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-purple-300 font-medium mb-3">Dust Suppression Methods</h3>
-                <ul className="text-white/80 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-purple-400" />
                     <span>
@@ -864,7 +864,7 @@ const CscsCardModule4Section4 = () => {
 
               <div className="bg-white/5 border border-purple-500/30 p-4 rounded-lg">
                 <h3 className="text-purple-300 font-medium mb-2">Clean Air Act Considerations</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Under the Clean Air Act 1993, it is an offence to emit dark smoke from the chimney
                   of a building or from industrial or trade premises. On construction sites, this
                   means burning waste on site is generally prohibited &mdash; particularly in smoke
@@ -908,7 +908,7 @@ const CscsCardModule4Section4 = () => {
                     <h4 className="text-amber-300 font-semibold text-sm mb-1">
                       Section 60 — Noise Abatement Notice
                     </h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       A Section 60 notice is served{' '}
                       <strong className="text-white">
                         by the local authority on the contractor
@@ -924,7 +924,7 @@ const CscsCardModule4Section4 = () => {
                     <h4 className="text-green-300 font-semibold text-sm mb-1">
                       Section 61 — Prior Consent
                     </h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       A Section 61 agreement is a{' '}
                       <strong className="text-white">
                         voluntary application by the contractor to the local authority
@@ -941,11 +941,11 @@ const CscsCardModule4Section4 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-amber-300 font-medium mb-3">Best Practicable Means (BPM)</h3>
-                <p className="text-white/60 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Contractors must use the best practicable means to reduce noise and vibration.
                   This includes:
                 </p>
-                <ul className="text-white/80 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-amber-400" />
                     <span>
@@ -987,7 +987,7 @@ const CscsCardModule4Section4 = () => {
                 <h3 className="text-amber-300 font-medium mb-3">
                   Working Hours &amp; Neighbour Relations
                 </h3>
-                <ul className="text-white/80 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-amber-400" />
                     <span>
@@ -1046,7 +1046,7 @@ const CscsCardModule4Section4 = () => {
                     <h4 className="text-purple-300 font-semibold text-sm mb-1">
                       Bats (All Species)
                     </h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       All 18 species of bat in the UK are protected. It is an offence to
                       deliberately kill, injure, or capture a bat, to deliberately disturb a bat, or
                       to damage or destroy a bat roost &mdash; even if no bats are present at the
@@ -1060,7 +1060,7 @@ const CscsCardModule4Section4 = () => {
                     <h4 className="text-green-300 font-semibold text-sm mb-1">
                       Great Crested Newts
                     </h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       A European Protected Species. It is an offence to capture, kill, disturb, or
                       injure great crested newts, or to damage or destroy their habitats. They breed
                       in ponds but spend most of the year on land, up to 500 metres from their
@@ -1073,7 +1073,7 @@ const CscsCardModule4Section4 = () => {
                     <h4 className="text-blue-300 font-semibold text-sm mb-1">
                       Nesting Birds (All Wild Birds)
                     </h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       It is an offence to intentionally kill, injure, or take any wild bird, or to
                       intentionally take, damage, or destroy the nest of any wild bird while in use
                       or being built. The main nesting season is March to August, but some species
@@ -1141,7 +1141,7 @@ const CscsCardModule4Section4 = () => {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold text-green-300 mb-2">Biodiversity Net Gain</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Since February 2024, most developments in England must deliver a minimum 10%
                   biodiversity net gain (BNG) under the Environment Act 2021. This means the
                   development must leave the natural environment in a measurably better state than
@@ -1180,7 +1180,7 @@ const CscsCardModule4Section4 = () => {
                 <h3 className={`${headingColours[6]} font-medium mb-3`}>
                   Reducing Energy Use on Site
                 </h3>
-                <ul className="text-white/80 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-teal-400" />
                     <span>
@@ -1226,7 +1226,7 @@ const CscsCardModule4Section4 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-teal-300 font-medium mb-3">Reducing Transport Emissions</h3>
-                <ul className="text-white/80 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-teal-400" />
                     <span>
@@ -1259,7 +1259,7 @@ const CscsCardModule4Section4 = () => {
                 <h3 className="text-teal-300 font-medium mb-3">
                   Sustainable Materials &amp; Carbon Awareness
                 </h3>
-                <ul className="text-white/80 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-teal-400" />
                     <span>
@@ -1321,7 +1321,7 @@ const CscsCardModule4Section4 = () => {
 
               <div className="bg-white/5 border border-red-400/30 p-4 rounded-lg">
                 <h3 className={`${headingColours[7]} font-medium mb-3`}>Spill Kit Contents</h3>
-                <p className="text-white/60 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   A standard construction site spill kit typically contains:
                 </p>
                 <div className="grid sm:grid-cols-2 gap-2">
@@ -1337,7 +1337,7 @@ const CscsCardModule4Section4 = () => {
                   ].map((item, idx) => (
                     <div key={idx} className="flex items-start gap-2 text-sm">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
-                      <span className="text-white/80">{item}</span>
+                      <span className="text-white">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -1346,7 +1346,7 @@ const CscsCardModule4Section4 = () => {
               {/* Spillage Response Steps — Flowchart Diagram */}
               <div className="bg-white/5 border border-red-400/30 p-4 rounded-lg">
                 <h3 className="text-red-300 font-medium mb-4">Spillage Response Steps</h3>
-                <p className="text-white/60 text-sm mb-4">
+                <p className="text-white text-sm mb-4">
                   Follow these steps in order when responding to any spillage on site.
                 </p>
                 <div className="flex flex-col items-center gap-2">
@@ -1355,7 +1355,7 @@ const CscsCardModule4Section4 = () => {
                     <span className="text-red-300 font-bold text-sm block">
                       1. STOP &amp; ASSESS
                     </span>
-                    <span className="text-white/60 text-xs">
+                    <span className="text-white text-xs">
                       Identify the substance, assess the size, check for hazards (fire, fumes)
                     </span>
                   </div>
@@ -1365,7 +1365,7 @@ const CscsCardModule4Section4 = () => {
                     <span className="text-amber-300 font-bold text-sm block">
                       2. PROTECT YOURSELF
                     </span>
-                    <span className="text-white/60 text-xs">
+                    <span className="text-white text-xs">
                       Don PPE from spill kit (gloves, goggles). Avoid breathing fumes
                     </span>
                   </div>
@@ -1375,7 +1375,7 @@ const CscsCardModule4Section4 = () => {
                     <span className="text-blue-300 font-bold text-sm block">
                       3. CONTAIN THE SPILL
                     </span>
-                    <span className="text-white/60 text-xs">
+                    <span className="text-white text-xs">
                       Use booms/socks to surround spill. Block drains with covers. Stop the source
                     </span>
                   </div>
@@ -1385,7 +1385,7 @@ const CscsCardModule4Section4 = () => {
                     <span className="text-purple-300 font-bold text-sm block">
                       4. ABSORB &amp; CLEAN UP
                     </span>
-                    <span className="text-white/60 text-xs">
+                    <span className="text-white text-xs">
                       Apply absorbent granules/pads. Collect all contaminated material in waste bags
                     </span>
                   </div>
@@ -1393,7 +1393,7 @@ const CscsCardModule4Section4 = () => {
                   {/* Step 5 */}
                   <div className="w-full max-w-md bg-cyan-500/20 border border-cyan-500/40 rounded-lg px-4 py-3 text-center">
                     <span className="text-cyan-300 font-bold text-sm block">5. REPORT</span>
-                    <span className="text-white/60 text-xs">
+                    <span className="text-white text-xs">
                       Inform supervisor immediately. If watercourse affected: call Environment
                       Agency (0800 80 70 60)
                     </span>
@@ -1404,7 +1404,7 @@ const CscsCardModule4Section4 = () => {
                     <span className="text-green-300 font-bold text-sm block">
                       6. RECORD &amp; INVESTIGATE
                     </span>
-                    <span className="text-white/60 text-xs">
+                    <span className="text-white text-xs">
                       Document the incident. Investigate root cause. Implement prevention measures
                     </span>
                   </div>
@@ -1413,7 +1413,7 @@ const CscsCardModule4Section4 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-red-300 font-medium mb-3">Containment Procedures</h3>
-                <ul className="text-white/80 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                     <span>
@@ -1451,18 +1451,18 @@ const CscsCardModule4Section4 = () => {
 
               <div className="bg-white/5 border border-red-500/30 p-4 rounded-lg">
                 <h3 className="text-red-300 font-medium mb-3">Environment Agency Notification</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The Environment Agency must be notified if a pollutant has entered or is likely to
                   enter a watercourse (river, stream, lake, ditch, or groundwater). Report to the
                   24-hour incident hotline:
                 </p>
                 <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 text-center mb-3">
                   <span className="text-red-300 font-bold text-lg">0800 80 70 60</span>
-                  <span className="text-white/60 text-xs block">
+                  <span className="text-white text-xs block">
                     Environment Agency Incident Hotline — 24 hours
                   </span>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   When reporting, you will need to provide: your name and contact details, the
                   location of the incident (grid reference or postcode), the type and estimated
                   quantity of pollutant, whether it has entered a watercourse, and what containment
@@ -1472,7 +1472,7 @@ const CscsCardModule4Section4 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-red-300 font-medium mb-3">Prevention Measures</h3>
-                <ul className="text-white/80 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                     <span>
@@ -1527,7 +1527,7 @@ const CscsCardModule4Section4 = () => {
                   <AlertTriangle className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-amber-300">Recording &amp; Investigation</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Every spill, no matter how small, should be recorded and investigated. The record
                   should include: the date, time, and location of the spill; the type and quantity
                   of substance spilled; how the spill occurred (root cause); the containment and
@@ -1550,7 +1550,7 @@ const CscsCardModule4Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1568,7 +1568,7 @@ const CscsCardModule4Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-4">

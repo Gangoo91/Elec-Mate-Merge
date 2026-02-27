@@ -97,7 +97,7 @@ const EquipmentChecklistCard = () => {
       case 'isolation':
         return <CheckCircle2 className="h-4 w-4 text-orange-400" />;
       default:
-        return <Wrench className="h-4 w-4 text-white/80" />;
+        return <Wrench className="h-4 w-4 text-white" />;
     }
   };
 

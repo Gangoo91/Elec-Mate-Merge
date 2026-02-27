@@ -260,7 +260,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
       <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
         {/* Quick Summary */}
         <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
-          <p className="text-white/90 leading-relaxed">
+          <p className="text-white leading-relaxed">
             Master demand response, grid services, and intelligent load management for modern
             electrical installations.
           </p>
@@ -274,7 +274,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
             Remote Monitoring and Control Fundamentals
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Remote monitoring and control systems enable real-time visibility and management of
               electrical installations from centralised locations. These systems form the foundation
@@ -286,7 +286,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <h4 className="text-elec-yellow font-medium">Monitoring Layer</h4>
-                  <ul className="list-disc list-inside space-y-1 text-sm text-white/70">
+                  <ul className="list-disc list-inside space-y-1 text-sm text-white">
                     <li>Smart meters with half-hourly data</li>
                     <li>CT clamps and sub-metering</li>
                     <li>Power quality analysers</li>
@@ -296,7 +296,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                 </div>
                 <div className="space-y-2">
                   <h4 className="text-elec-yellow font-medium">Control Layer</h4>
-                  <ul className="list-disc list-inside space-y-1 text-sm text-white/70">
+                  <ul className="list-disc list-inside space-y-1 text-sm text-white">
                     <li>Smart contactors and motorised breakers</li>
                     <li>Variable speed drives with comms</li>
                     <li>Building Energy Management Systems (BEMS)</li>
@@ -318,7 +318,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                       <th className="text-left py-2 text-elec-yellow">Typical Use</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2">Modbus TCP/IP</td>
                       <td className="py-2">Industrial control</td>
@@ -354,7 +354,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                 <Shield className="w-4 h-4" />
                 Cybersecurity Considerations
               </h4>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Remote control systems must implement robust cybersecurity: encrypted communications
                 (TLS/SSL), strong authentication, network segmentation, regular firmware updates,
                 and audit logging. The National Cyber Security Centre (NCSC) provides guidance for
@@ -372,7 +372,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
             Load Shedding Strategies and Priorities
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Effective load shedding requires careful categorisation of loads by criticality,
               establishing clear hierarchies, and implementing automated systems that can respond
@@ -391,7 +391,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                   </span>
                   <div>
                     <h4 className="text-red-400 font-medium">Critical - Never Shed</h4>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       Life safety systems, emergency lighting, fire alarms, security systems,
                       medical equipment, data centre UPS, emergency lifts
                     </p>
@@ -405,7 +405,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                     <h4 className="text-orange-400 font-medium">
                       Essential - Shed Only in Emergency
                     </h4>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       Server rooms, refrigeration (food safety), essential process equipment,
                       minimum lighting for safety, communications systems
                     </p>
@@ -417,7 +417,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                   </span>
                   <div>
                     <h4 className="text-yellow-400 font-medium">Important - Shed with Notice</h4>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       General HVAC (occupied areas), passenger lifts, general office equipment,
                       kitchen equipment, EV charging (interruptible)
                     </p>
@@ -429,7 +429,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                   </span>
                   <div>
                     <h4 className="text-green-400 font-medium">Discretionary - Shed First</h4>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       Non-essential lighting, HVAC in unoccupied areas, decorative features, water
                       heating (with storage), EV charging (deferrable)
                     </p>
@@ -443,41 +443,41 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <h4 className="text-elec-yellow font-medium mb-2">Sequential Shedding</h4>
-                  <p className="text-sm mb-2 text-white/70">
+                  <p className="text-sm mb-2 text-white">
                     Loads shed in predetermined order based on priority. Simple to implement but may
                     over-shed or under-shed depending on individual load sizes.
                   </p>
-                  <div className="text-xs text-white/50">
+                  <div className="text-xs text-white">
                     Example: P4 loads → P3 loads → P2 loads (stop before P1)
                   </div>
                 </div>
                 <div>
                   <h4 className="text-elec-yellow font-medium mb-2">Rotational Shedding</h4>
-                  <p className="text-sm mb-2 text-white/70">
+                  <p className="text-sm mb-2 text-white">
                     Similar loads cycled on/off to share the burden. Common for HVAC zones to
                     maintain acceptable comfort while reducing demand.
                   </p>
-                  <div className="text-xs text-white/50">
+                  <div className="text-xs text-white">
                     Example: AHU1 off 15min → AHU2 off 15min → AHU3 off 15min → repeat
                   </div>
                 </div>
                 <div>
                   <h4 className="text-elec-yellow font-medium mb-2">Proportional Reduction</h4>
-                  <p className="text-sm mb-2 text-white/70">
+                  <p className="text-sm mb-2 text-white">
                     Variable loads reduced proportionally rather than switched off completely.
                     Provides finer control and less disruption.
                   </p>
-                  <div className="text-xs text-white/50">
+                  <div className="text-xs text-white">
                     Example: All VSDs reduced to 75% speed, lighting dimmed to 50%
                   </div>
                 </div>
                 <div>
                   <h4 className="text-elec-yellow font-medium mb-2">Target-Based Shedding</h4>
-                  <p className="text-sm mb-2 text-white/70">
+                  <p className="text-sm mb-2 text-white">
                     Intelligent system calculates which loads to shed to achieve target demand
                     reduction with minimum disruption.
                   </p>
-                  <div className="text-xs text-white/50">
+                  <div className="text-xs text-white">
                     Example: "Reduce 100kW" → system selects optimal combination
                   </div>
                 </div>
@@ -502,7 +502,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
             Demand Response Programmes (UK)
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               The UK offers several demand response programmes that reward consumers for reducing
               electricity consumption during peak periods or providing flexibility services. These
@@ -514,14 +514,14 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                 <Zap className="w-5 h-5" />
                 Demand Flexibility Service (DFS)
               </h3>
-              <p className="text-sm mb-3 text-white/80">
+              <p className="text-sm mb-3 text-white">
                 Introduced by National Grid ESO for winter 2022/23, DFS pays consumers to reduce
                 electricity use during peak demand periods, typically winter evenings (4-7pm).
               </p>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
                   <h4 className="text-white font-medium mb-2">How It Works</h4>
-                  <ul className="list-disc list-inside space-y-1 text-white/70">
+                  <ul className="list-disc list-inside space-y-1 text-white">
                     <li>Events announced day-ahead via app/email</li>
                     <li>Typical duration: 1-2 hours</li>
                     <li>Payment based on kWh reduced vs baseline</li>
@@ -531,7 +531,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-white font-medium mb-2">Participation Requirements</h4>
-                  <ul className="list-disc list-inside space-y-1 text-white/70">
+                  <ul className="list-disc list-inside space-y-1 text-white">
                     <li>Smart meter with half-hourly readings</li>
                     <li>Register via supplier or aggregator</li>
                     <li>Minimum 1kW reduction capability</li>
@@ -547,7 +547,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
               <div className="space-y-4">
                 <div className="border-l-4 border-blue-500 pl-4">
                   <h4 className="text-blue-400 font-medium">Short Term Operating Reserve (STOR)</h4>
-                  <p className="text-sm mt-1 text-white/70">
+                  <p className="text-sm mt-1 text-white">
                     Provides additional power or demand reduction at short notice. Requires 3MW
                     minimum (can aggregate), response within 20 minutes of instruction, sustain for
                     at least 2 hours. Revenue: £3-8/kW/year availability + £100-200/MWh utilisation.
@@ -555,7 +555,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                 </div>
                 <div className="border-l-4 border-purple-500 pl-4">
                   <h4 className="text-purple-400 font-medium">Firm Frequency Response (FFR)</h4>
-                  <p className="text-sm mt-1 text-white/70">
+                  <p className="text-sm mt-1 text-white">
                     Automatic response to grid frequency deviations. Primary (10 sec), Secondary (30
                     sec), High (10 min). Requires 1MW minimum, automatic frequency-triggered
                     response. Revenue: £50-150/kW/year depending on service type.
@@ -563,7 +563,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                 </div>
                 <div className="border-l-4 border-green-500 pl-4">
                   <h4 className="text-green-400 font-medium">Dynamic Containment (DC)</h4>
-                  <p className="text-sm mt-1 text-white/70">
+                  <p className="text-sm mt-1 text-white">
                     Fast-acting frequency response (sub-second). Requires battery storage or
                     fast-responding loads. 1MW minimum. Premium rates for rapid response capability.
                     Revenue: £100-300/kW/year (highly variable).
@@ -571,7 +571,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                 </div>
                 <div className="border-l-4 border-orange-500 pl-4">
                   <h4 className="text-orange-400 font-medium">Capacity Market (CM)</h4>
-                  <p className="text-sm mt-1 text-white/70">
+                  <p className="text-sm mt-1 text-white">
                     Annual payments for committing capacity during system stress events. Auctions
                     held 4 years and 1 year ahead. Minimum 1MW (DSR), penalties for non-delivery.
                     Revenue: £15-45/kW/year (auction dependent).
@@ -598,7 +598,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
             Maximum Demand Management and Triad Avoidance
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Maximum demand (MD) charges and Triad-based transmission charges can represent 20-40%
               of large commercial electricity bills. Understanding and managing these peak demands
@@ -607,7 +607,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
 
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h3 className="text-white font-medium mb-3">Understanding Maximum Demand Charges</h3>
-              <p className="text-sm mb-3 text-white/70">
+              <p className="text-sm mb-3 text-white">
                 MD charges are based on your highest recorded demand (kW or kVA) in any half-hour
                 settlement period during the billing month. A single peak can set your charge for
                 the entire month.
@@ -615,7 +615,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="bg-white/5 p-3 rounded">
                   <h4 className="text-elec-yellow font-medium text-sm">MD Calculation Example</h4>
-                  <ul className="text-xs space-y-1 mt-2 text-white/70">
+                  <ul className="text-xs space-y-1 mt-2 text-white">
                     <li>Recorded peak: 450kW</li>
                     <li>MD rate: £8/kW/month</li>
                     <li>Monthly MD charge: £3,600</li>
@@ -625,7 +625,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                 </div>
                 <div className="bg-white/5 p-3 rounded">
                   <h4 className="text-elec-yellow font-medium text-sm">MD Reduction Strategies</h4>
-                  <ul className="text-xs space-y-1 mt-2 text-white/70">
+                  <ul className="text-xs space-y-1 mt-2 text-white">
                     <li>Stagger start-up of equipment</li>
                     <li>Interlock high-power loads</li>
                     <li>Shift flexible loads off-peak</li>
@@ -641,7 +641,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                 <AlertTriangle className="w-5 h-5" />
                 Triad Periods Explained
               </h3>
-              <p className="text-sm mb-3 text-white/80">
+              <p className="text-sm mb-3 text-white">
                 Triads are the three half-hour periods of highest national electricity demand
                 between
                 <strong className="text-white"> November and February</strong>. Large consumers
@@ -651,7 +651,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
               <div className="grid md:grid-cols-3 gap-4 text-sm">
                 <div className="bg-white/5 p-3 rounded">
                   <h4 className="text-white font-medium">When Triads Occur</h4>
-                  <ul className="text-xs space-y-1 mt-2 text-white/60">
+                  <ul className="text-xs space-y-1 mt-2 text-white">
                     <li>November - February only</li>
                     <li>Typically weekday evenings</li>
                     <li>Usually 4:30-6:00pm</li>
@@ -661,7 +661,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                 </div>
                 <div className="bg-white/5 p-3 rounded">
                   <h4 className="text-white font-medium">Cost Impact (2023/24)</h4>
-                  <ul className="text-xs space-y-1 mt-2 text-white/60">
+                  <ul className="text-xs space-y-1 mt-2 text-white">
                     <li>TNUoS: ~£50-75/kW/year</li>
                     <li>Based on Triad average</li>
                     <li>500kW site: £25,000-37,500</li>
@@ -671,7 +671,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                 </div>
                 <div className="bg-white/5 p-3 rounded">
                   <h4 className="text-white font-medium">Avoidance Value</h4>
-                  <ul className="text-xs space-y-1 mt-2 text-white/60">
+                  <ul className="text-xs space-y-1 mt-2 text-white">
                     <li>Reduce demand during warnings</li>
                     <li>Use prediction services</li>
                     <li>Battery discharge</li>
@@ -687,21 +687,21 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1 border border-yellow-500/30 rounded p-3">
                   <div className="text-yellow-400 font-medium text-sm mb-2">Amber Warning</div>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     High probability of Triad. Issued morning/afternoon of potential Triad day.
                     Prepare systems, alert staff, review load status.
                   </p>
                 </div>
                 <div className="flex-1 border border-red-500/30 rounded p-3">
                   <div className="text-red-400 font-medium text-sm mb-2">Red Warning</div>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Very high probability. Usually issued 1-2 hours before. Initiate load shedding,
                     start backup generation, activate battery discharge.
                   </p>
                 </div>
                 <div className="flex-1 border border-green-500/30 rounded p-3">
                   <div className="text-green-400 font-medium text-sm mb-2">All Clear</div>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Triad window passed. Restore normal operations. Log actual demand achieved for
                     analysis and improvement.
                   </p>
@@ -727,7 +727,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
             Safety Considerations for Remote Switching
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Remote control of electrical equipment introduces specific safety challenges that must
               be addressed through proper design, procedures, and compliance with regulations
@@ -742,7 +742,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <h4 className="text-white font-medium text-sm mb-2">BS 7671 Compliance</h4>
-                  <ul className="text-sm space-y-1 text-white/70">
+                  <ul className="text-sm space-y-1 text-white">
                     <li>Reg 537: Isolation requirements must be maintained</li>
                     <li>Clear indication of switch position at all times</li>
                     <li>Prevention of inadvertent reclosure</li>
@@ -752,7 +752,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-white font-medium text-sm mb-2">Electricity at Work Regs</h4>
-                  <ul className="text-sm space-y-1 text-white/70">
+                  <ul className="text-sm space-y-1 text-white">
                     <li>No person exposed to danger from switching</li>
                     <li>Suitable precautions during work</li>
                     <li>Competent persons to operate systems</li>
@@ -770,7 +770,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                   <ToggleRight className="w-5 h-5 text-elec-yellow mt-0.5" />
                   <div>
                     <h4 className="text-white font-medium text-sm">Local Override Capability</h4>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Every remotely-controlled circuit must have local manual override for
                       maintenance and emergency situations. This takes precedence over remote
                       commands.
@@ -781,7 +781,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                   <Activity className="w-5 h-5 text-elec-yellow mt-0.5" />
                   <div>
                     <h4 className="text-white font-medium text-sm">Status Verification</h4>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Real-time feedback confirming actual switch position, not just command sent.
                       Use auxiliary contacts for status verification, not assumed state.
                     </p>
@@ -791,7 +791,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                   <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5" />
                   <div>
                     <h4 className="text-white font-medium text-sm">Pre-Switch Warning</h4>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Appropriate warning to affected areas before remote switching. May include
                       visual indicators, audible alarms, or direct communication with site
                       personnel.
@@ -802,7 +802,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                   <Building2 className="w-5 h-5 text-elec-yellow mt-0.5" />
                   <div>
                     <h4 className="text-white font-medium text-sm">Impact Assessment</h4>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Verify what equipment/areas will be affected before switching. Ensure no
                       persons at risk, no processes that could be damaged by sudden de-energisation.
                     </p>
@@ -812,7 +812,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                   <Server className="w-5 h-5 text-elec-yellow mt-0.5" />
                   <div>
                     <h4 className="text-white font-medium text-sm">Audit Trail</h4>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Complete logging of all remote switching operations: who, when, what, why.
                       Essential for incident investigation and demonstrating due diligence.
                     </p>
@@ -826,7 +826,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                 <Lightbulb className="w-4 h-4" />
                 Best Practice: Permit-to-Work Integration
               </h4>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 For sites with permit-to-work systems, remote control systems should integrate with
                 the permit system to prevent switching of circuits under active permits. Electronic
                 permit systems can provide automatic interlocking - if a permit is live on a
@@ -844,7 +844,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
             Grid Services and Revenue Opportunities
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Commercial and industrial sites can generate significant revenue by participating in
               grid services. The UK's transition to renewable energy creates increasing demand for
@@ -864,7 +864,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                       <th className="text-left py-2 text-elec-yellow">Potential Revenue</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2">Office Building</td>
                       <td className="py-2">100-500kW</td>
@@ -902,7 +902,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
 
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h3 className="text-white font-medium mb-3">Revenue Stacking Strategy</h3>
-              <p className="text-sm mb-3 text-white/70">
+              <p className="text-sm mb-3 text-white">
                 Maximise returns by combining multiple revenue streams. A well-designed system can
                 participate in several services simultaneously or sequentially.
               </p>
@@ -912,21 +912,21 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                 </h4>
                 <div className="space-y-2 text-sm">
                   <div className="flex justify-between items-center border-b border-white/10 pb-2">
-                    <span className="text-white/80">Dynamic Containment (primary service)</span>
+                    <span className="text-white">Dynamic Containment (primary service)</span>
                     <span className="text-green-400">£150,000/year</span>
                   </div>
                   <div className="flex justify-between items-center border-b border-white/10 pb-2">
-                    <span className="text-white/80">Triad avoidance (winter peaks)</span>
+                    <span className="text-white">Triad avoidance (winter peaks)</span>
                     <span className="text-green-400">£40,000/year</span>
                   </div>
                   <div className="flex justify-between items-center border-b border-white/10 pb-2">
-                    <span className="text-white/80">
+                    <span className="text-white">
                       Wholesale arbitrage (off-peak charge, peak discharge)
                     </span>
                     <span className="text-green-400">£25,000/year</span>
                   </div>
                   <div className="flex justify-between items-center border-b border-white/10 pb-2">
-                    <span className="text-white/80">Capacity Market payment</span>
+                    <span className="text-white">Capacity Market payment</span>
                     <span className="text-green-400">£30,000/year</span>
                   </div>
                   <div className="flex justify-between items-center pt-2 font-medium">
@@ -939,14 +939,14 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
 
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h3 className="text-white font-medium mb-3">Working with Aggregators</h3>
-              <p className="text-sm mb-3 text-white/70">
+              <p className="text-sm mb-3 text-white">
                 Most sites participate in grid services through aggregators who bundle multiple
                 sites to meet minimum capacity requirements and handle complex market interactions.
               </p>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <h4 className="text-elec-yellow font-medium text-sm mb-2">Aggregator Benefits</h4>
-                  <ul className="text-xs space-y-1 text-white/70">
+                  <ul className="text-xs space-y-1 text-white">
                     <li>Access markets with lower capacity</li>
                     <li>Handle technical compliance</li>
                     <li>Manage settlement and payments</li>
@@ -956,7 +956,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-elec-yellow font-medium text-sm mb-2">Typical Terms</h4>
-                  <ul className="text-xs space-y-1 text-white/70">
+                  <ul className="text-xs space-y-1 text-white">
                     <li>Revenue share: 10-30% to aggregator</li>
                     <li>Contract length: 1-3 years</li>
                     <li>Minimum commitment required</li>
@@ -973,13 +973,13 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
                 Getting Started Checklist
               </h4>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>Audit flexible/shiftable loads</li>
                   <li>Review half-hourly consumption data</li>
                   <li>Identify load shedding potential</li>
                   <li>Assess backup generation capacity</li>
                 </ul>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>Contact 2-3 aggregators for quotes</li>
                   <li>Understand contractual obligations</li>
                   <li>Plan control system requirements</li>
@@ -1004,23 +1004,23 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
               </h3>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-white/60">DFS</span>
+                  <span className="text-white">DFS</span>
                   <span className="text-white">Demand reduction during peaks (£3-4/kWh)</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/60">STOR</span>
+                  <span className="text-white">STOR</span>
                   <span className="text-white">Reserve power, 20min response (3MW min)</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/60">FFR</span>
+                  <span className="text-white">FFR</span>
                   <span className="text-white">Frequency response 10s-10min (1MW min)</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/60">DC</span>
+                  <span className="text-white">DC</span>
                   <span className="text-white">Sub-second frequency (batteries, 1MW min)</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/60">CM</span>
+                  <span className="text-white">CM</span>
                   <span className="text-white">Capacity commitment (£15-45/kW/year)</span>
                 </div>
               </div>
@@ -1032,23 +1032,23 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
               </h3>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-white/60">Triad Season</span>
+                  <span className="text-white">Triad Season</span>
                   <span className="text-white">November - February</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/60">Typical Triad Time</span>
+                  <span className="text-white">Typical Triad Time</span>
                   <span className="text-white">4:30pm - 6:00pm weekdays</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/60">Triad Spacing</span>
+                  <span className="text-white">Triad Spacing</span>
                   <span className="text-white">Minimum 10 days apart</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/60">MD Measurement</span>
+                  <span className="text-white">MD Measurement</span>
                   <span className="text-white">Highest half-hour kW/kVA</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/60">DFS Events</span>
+                  <span className="text-white">DFS Events</span>
                   <span className="text-white">Typically 4pm-7pm winter</span>
                 </div>
               </div>
@@ -1082,7 +1082,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
               <h3 className="text-white font-medium mb-2 border-b border-white/20 pb-1">
                 Safety Requirements
               </h3>
-              <div className="space-y-1 text-sm text-white/80">
+              <div className="space-y-1 text-sm text-white">
                 <p>Local manual override on all remote circuits</p>
                 <p>Clear position indication (verified status)</p>
                 <p>Pre-switching warning to affected areas</p>
@@ -1101,7 +1101,7 @@ const EnergyEfficiencyModule5Section4: React.FC = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-0 last:pb-0">
                 <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

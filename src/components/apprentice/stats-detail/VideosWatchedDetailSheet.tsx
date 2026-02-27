@@ -126,7 +126,7 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
               onClick={() => onOpenChange(false)}
               className="absolute right-2 top-1.5 h-11 w-11 flex items-center justify-center rounded-full active:bg-white/10 touch-manipulation z-10"
             >
-              <ChevronDown className="h-5 w-5 text-white/60" />
+              <ChevronDown className="h-5 w-5 text-white" />
             </button>
           </SheetHeader>
 
@@ -149,10 +149,10 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                         value={watchedCount}
                         className="text-3xl font-bold text-elec-yellow"
                       />
-                      <span className="text-base text-white/40 mx-1">/</span>
-                      <span className="text-base text-white/40">{totalVideos}</span>
+                      <span className="text-base text-white mx-1">/</span>
+                      <span className="text-base text-white">{totalVideos}</span>
                     </div>
-                    <span className="text-[11px] text-white/50 mt-0.5">watched</span>
+                    <span className="text-[11px] text-white mt-0.5">watched</span>
                   </div>
                 </StatRing>
               </div>
@@ -160,7 +160,7 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="text-sm text-white/80 mt-4 font-medium"
+                className="text-sm text-white mt-4 font-medium"
               >
                 {completionPercent}% of available videos completed
               </motion.p>
@@ -179,7 +179,7 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                 <p className="text-xl font-bold text-white">
                   {watchTimeMinutes > 0 ? formatTime(watchTimeMinutes) : '0m'}
                 </p>
-                <p className="text-[11px] text-white/50 mt-1 uppercase tracking-wider font-medium">
+                <p className="text-[11px] text-white mt-1 uppercase tracking-wider font-medium">
                   Time invested
                 </p>
               </div>
@@ -189,7 +189,7 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                 <p className="text-xl font-bold text-white">
                   {remainingTimeMinutes > 0 ? formatTime(remainingTimeMinutes) : '0m'}
                 </p>
-                <p className="text-[11px] text-white/50 mt-1 uppercase tracking-wider font-medium">
+                <p className="text-[11px] text-white mt-1 uppercase tracking-wider font-medium">
                   Remaining
                 </p>
               </div>
@@ -238,7 +238,7 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                         {nextRecommendedVideo.title}
                       </p>
                       <div className="flex items-center gap-2 mt-1.5">
-                        <span className="text-xs text-white/50">
+                        <span className="text-xs text-white">
                           {nextRecommendedVideo.channel}
                         </span>
                         <span className="text-white/15">·</span>
@@ -259,7 +259,7 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                         </span>
                       </div>
                     </div>
-                    <ChevronRight className="h-5 w-5 text-white/30 flex-shrink-0 mt-0.5 group-active:text-elec-yellow transition-colors" />
+                    <ChevronRight className="h-5 w-5 text-white flex-shrink-0 mt-0.5 group-active:text-elec-yellow transition-colors" />
                   </div>
                 </button>
               </motion.div>
@@ -273,7 +273,7 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                 transition={{ delay: 0.25 }}
               >
                 <div className="flex items-center gap-2 mb-3">
-                  <BarChart3 className="h-4 w-4 text-white/50" />
+                  <BarChart3 className="h-4 w-4 text-white" />
                   <span className="text-sm font-semibold text-white">Difficulty Level</span>
                 </div>
                 <div className="rounded-2xl bg-white/[0.04] border border-white/[0.06] p-4">
@@ -284,7 +284,7 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                       const pct = totalLevelWatched > 0 ? (count / totalLevelWatched) * 100 : 0;
                       return (
                         <div key={level} className="flex items-center gap-3">
-                          <span className="text-xs text-white/60 w-20 flex-shrink-0">
+                          <span className="text-xs text-white w-20 flex-shrink-0">
                             {levelLabels[level]}
                           </span>
                           <div className="flex-1 h-3 rounded-full bg-white/[0.06] overflow-hidden">
@@ -319,9 +319,9 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                 transition={{ delay: 0.3 }}
               >
                 <div className="flex items-center gap-2 mb-3">
-                  <LayoutGrid className="h-4 w-4 text-white/50" />
+                  <LayoutGrid className="h-4 w-4 text-white" />
                   <span className="text-sm font-semibold text-white">Categories</span>
-                  <span className="text-xs text-white/40 ml-auto">
+                  <span className="text-xs text-white ml-auto">
                     {categoriesExplored} of {categoriesTotal} explored
                   </span>
                 </div>
@@ -347,7 +347,7 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                       className={cn(
                         'px-3 py-1.5 rounded-xl text-xs font-semibold border',
                         'touch-manipulation active:scale-95 transition-all',
-                        categoryColours[category] || 'bg-white/10 text-white/70 border-white/15'
+                        categoryColours[category] || 'bg-white/10 text-white border-white/15'
                       )}
                     >
                       {label} ({count})
@@ -365,9 +365,9 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                 transition={{ delay: 0.35 }}
               >
                 <div className="flex items-center gap-2 mb-3">
-                  <Bookmark className="h-4 w-4 text-white/50" />
+                  <Bookmark className="h-4 w-4 text-white" />
                   <span className="text-sm font-semibold text-white">Bookmarked</span>
-                  <span className="text-xs text-white/40 ml-auto">
+                  <span className="text-xs text-white ml-auto">
                     {bookmarks.length} saved
                     {unwatchedBookmarks.length > 0
                       ? ` · ${unwatchedBookmarks.length} unwatched`
@@ -401,13 +401,13 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                           className={cn(
                             'inline-block mt-1 px-2 py-0.5 rounded-lg text-[10px] font-semibold border',
                             categoryColours[b.category as VideoCategory] ||
-                              'bg-white/10 text-white/60 border-white/15'
+                              'bg-white/10 text-white border-white/15'
                           )}
                         >
                           {categoryLabels[b.category as VideoCategory] || b.category}
                         </span>
                       </div>
-                      <ChevronRight className="h-4 w-4 text-white/20 flex-shrink-0 mr-3" />
+                      <ChevronRight className="h-4 w-4 text-white flex-shrink-0 mr-3" />
                     </button>
                   ))}
                   {bookmarks.length > 5 && (
@@ -436,7 +436,7 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                   <div className="p-2 rounded-xl bg-elec-yellow/15 flex-shrink-0">
                     <Lightbulb className="h-4 w-4 text-elec-yellow" />
                   </div>
-                  <p className="text-sm text-white/90 leading-relaxed">{insightText}</p>
+                  <p className="text-sm text-white leading-relaxed">{insightText}</p>
                 </div>
               </motion.div>
             )}
@@ -450,7 +450,7 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
               >
                 <div className="flex items-center gap-3 pt-1 mb-4">
                   <div className="flex-1 border-t border-white/[0.06]" />
-                  <span className="text-[11px] font-semibold text-white/40 uppercase tracking-wider">
+                  <span className="text-[11px] font-semibold text-white uppercase tracking-wider">
                     What to do next
                   </span>
                   <div className="flex-1 border-t border-white/[0.06]" />
@@ -493,7 +493,7 @@ export function VideosWatchedDetailSheet({ open, onOpenChange }: VideosWatchedDe
                   <Play className="h-8 w-8 text-elec-yellow" />
                 </div>
                 <h3 className="text-base font-semibold text-white mb-1">Start watching</h3>
-                <p className="text-sm text-white/50 max-w-[260px] mb-5">
+                <p className="text-sm text-white max-w-[260px] mb-5">
                   Curated electrical training videos from industry experts, ready when you are
                 </p>
                 <button

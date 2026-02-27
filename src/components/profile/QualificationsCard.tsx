@@ -136,7 +136,7 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
             <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
             <span className="font-semibold text-[15px] text-white">Qualifications</span>
           </div>
-          <ChevronRight className="h-5 w-5 text-white/30" />
+          <ChevronRight className="h-5 w-5 text-white" />
         </button>
 
         <div className="border-t border-white/[0.06]">
@@ -147,12 +147,12 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
                 <IdCard className="h-4 w-4 text-emerald-400" />
               </div>
               <div className="flex-1 min-w-0 text-left">
-                <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+                <p className="text-[11px] font-medium text-white uppercase tracking-wide">
                   ECS Card
                 </p>
                 <p className="text-[15px] text-white">{ecsCardType || 'Not set'}</p>
                 {ecsCardNumber && (
-                  <p className="text-[13px] text-white/50 mt-0.5">
+                  <p className="text-[13px] text-white mt-0.5">
                     {ecsCardNumber} {ecsExpiry && `• Exp: ${formatDate(ecsExpiry)}`}
                   </p>
                 )}
@@ -172,7 +172,7 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
               <Award className="h-4 w-4 text-purple-400" />
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+              <p className="text-[11px] font-medium text-white uppercase tracking-wide">
                 Scheme Registration
               </p>
               <p className="text-[15px] text-white">
@@ -181,7 +181,7 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
                     {inspectorProfile.registrationScheme}:{' '}
                     {inspectorProfile.registrationNumber || 'No number'}
                     {inspectorProfile.registrationExpiry && (
-                      <span className="text-white/50">
+                      <span className="text-white">
                         {' '}
                         • Exp: {formatDate(inspectorProfile.registrationExpiry)}
                       </span>
@@ -200,7 +200,7 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
               <GraduationCap className="h-4 w-4 text-blue-400" />
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+              <p className="text-[11px] font-medium text-white uppercase tracking-wide">
                 Qualifications
               </p>
               {inspectorProfile?.qualifications && inspectorProfile.qualifications.length > 0 ? (
@@ -269,7 +269,7 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
                     ECS Card from Elec-ID
                   </span>
                 </div>
-                <p className="text-[13px] text-white/60">
+                <p className="text-[13px] text-white">
                   Your ECS card details are pulled from your verified Elec-ID. Update them in
                   Settings → Elec-ID.
                 </p>
@@ -277,7 +277,7 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
             )}
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Registration Scheme
               </Label>
               <div className="grid grid-cols-2 gap-2">
@@ -291,7 +291,7 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
                       className={`flex items-center justify-between p-3.5 rounded-xl border touch-manipulation text-left transition-all ${
                         isSelected
                           ? 'bg-purple-500/20 border-purple-500/50 text-white'
-                          : 'bg-white/[0.04] border-white/[0.06] text-white/70 active:bg-white/[0.08]'
+                          : 'bg-white/[0.04] border-white/[0.06] text-white active:bg-white/[0.08]'
                       }`}
                       onClick={() => setFormData({ ...formData, registrationScheme: scheme.value })}
                     >
@@ -304,7 +304,7 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Registration Number
               </Label>
               <Input
@@ -316,7 +316,7 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Registration Expiry
               </Label>
               <Input
@@ -328,7 +328,7 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
             </div>
 
             <div className="space-y-3">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Qualifications
               </Label>
               <div className="space-y-2">
@@ -354,14 +354,14 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
               <CollapsibleTrigger className="w-full flex items-center justify-between p-3.5 rounded-xl bg-white/[0.04] border border-white/[0.06] touch-manipulation">
                 <span className="text-[15px] font-medium text-white">Insurance Details</span>
                 {showInsurance ? (
-                  <ChevronUp className="h-5 w-5 text-white/50" />
+                  <ChevronUp className="h-5 w-5 text-white" />
                 ) : (
-                  <ChevronDown className="h-5 w-5 text-white/50" />
+                  <ChevronDown className="h-5 w-5 text-white" />
                 )}
               </CollapsibleTrigger>
               <CollapsibleContent className="pt-4 space-y-4">
                 <div className="space-y-2">
-                  <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+                  <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                     Insurance Provider
                   </Label>
                   <Input
@@ -374,7 +374,7 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+                  <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                     Policy Number
                   </Label>
                   <Input
@@ -387,7 +387,7 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+                  <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                     Coverage Amount
                   </Label>
                   <Input
@@ -400,7 +400,7 @@ const QualificationsCard: React.FC<QualificationsCardProps> = ({
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+                  <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                     Expiry Date
                   </Label>
                   <Input

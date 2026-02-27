@@ -218,7 +218,7 @@ export default function FireSafetyModule5Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-5">
@@ -243,7 +243,7 @@ export default function FireSafetyModule5Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Post-Incident Procedures
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding the procedures that follow a fire incident &mdash; from immediate welfare
             and scene preservation through investigation, reinstatement, and long-term recovery
           </p>
@@ -340,11 +340,11 @@ export default function FireSafetyModule5Section4() {
                     Scene Security &amp; Cordoning
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Once the fire service has completed firefighting operations, the scene must be
                   secured immediately. This involves:
                 </p>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -383,11 +383,11 @@ export default function FireSafetyModule5Section4() {
                   <Heart className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Welfare of Evacuees</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The welfare of all evacuated persons is the absolute first priority once the scene
                   is secure:
                 </p>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -435,7 +435,7 @@ export default function FireSafetyModule5Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Communication with Emergency Services
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The responsible person or their nominated deputy must liaise directly with the
                   senior fire officer on scene, providing critical information including: the number
                   and location of any persons unaccounted for, the building layout and any areas of
@@ -478,7 +478,7 @@ export default function FireSafetyModule5Section4() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Cordon &amp; Guard</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The scene must be physically cordoned off and guarded at all times. Access
                       must be restricted to authorised personnel only &mdash; the fire investigation
                       officer, police forensic teams (if applicable), and any specialists they
@@ -488,7 +488,7 @@ export default function FireSafetyModule5Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Do Not Disturb Evidence</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Nothing should be moved, cleaned, removed, or altered within the cordoned
                       area. This includes debris, damaged equipment, electrical components,
                       furniture, and any materials that may appear to be rubbish. What looks like
@@ -501,7 +501,7 @@ export default function FireSafetyModule5Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       Photography Before Any Cleanup
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Before any cleanup, remediation, or repair work begins (after the scene is
                       released), comprehensive photographic and video documentation should be made.
                       This should cover every area affected by the fire, smoke, and water damage,
@@ -512,7 +512,7 @@ export default function FireSafetyModule5Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Evidence Chain of Custody</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Any physical evidence collected from the scene must have a continuous,
                       documented chain of custody. This means recording who collected it, when,
                       where, how it was stored, and who has had access to it at every stage. A
@@ -528,7 +528,7 @@ export default function FireSafetyModule5Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Duration of Scene Preservation
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The scene must remain preserved and under guard{' '}
                   <strong>until formally released by the fire investigation officer</strong>. There
                   is no fixed timescale &mdash; it depends on the complexity of the investigation,
@@ -600,7 +600,7 @@ export default function FireSafetyModule5Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 rounded-lg p-3">
                       <p className="text-sm font-medium text-white">{item.label}</p>
-                      <p className="text-xs text-white/70 mt-0.5">{item.desc}</p>
+                      <p className="text-xs text-white mt-0.5">{item.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -614,7 +614,7 @@ export default function FireSafetyModule5Section4() {
                 documentation requested.
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -680,7 +680,7 @@ export default function FireSafetyModule5Section4() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Immediate Notification</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Most insurance policies contain a <strong>condition precedent</strong>{' '}
                       requiring immediate notification of any loss or damage. This means the insurer
                       must be informed as soon as reasonably practicable &mdash; ideally on the same
@@ -692,7 +692,7 @@ export default function FireSafetyModule5Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Loss Adjuster Appointment</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The insurer will appoint a <strong>loss adjuster</strong> to visit the
                       premises, assess the damage, and manage the claim. The loss adjuster acts on
                       behalf of the insurer and will determine the extent of the loss, verify the
@@ -703,7 +703,7 @@ export default function FireSafetyModule5Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Documenting Damage</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Thorough documentation of the damage is essential for the insurance claim.
                       This includes: comprehensive photographs and video from all angles (taken
                       before any cleanup), a detailed inventory of damaged or destroyed items with
@@ -716,7 +716,7 @@ export default function FireSafetyModule5Section4() {
                 </div>
               </div>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -752,7 +752,7 @@ export default function FireSafetyModule5Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Policy Conditions to Be Aware Of
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Insurance policies contain various conditions that the policyholder must comply
                   with. Common conditions relevant to fire claims include: immediate notification of
                   loss, cooperation with the insurer's investigation, maintaining the scene in its
@@ -799,7 +799,7 @@ export default function FireSafetyModule5Section4() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">1. Structural Assessment</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       A qualified structural engineer must assess the building before any
                       remediation work begins. Fire can weaken structural steel (which loses
                       approximately 50% of its strength at 600&deg;C), cause spalling of concrete
@@ -814,7 +814,7 @@ export default function FireSafetyModule5Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       2. Smoke &amp; Water Damage Remediation
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Smoke and water damage can be as extensive as fire damage itself. Smoke
                       penetrates every crevice, leaving acidic residues that corrode metals,
                       discolour surfaces, and produce persistent odours. Water from firefighting
@@ -829,7 +829,7 @@ export default function FireSafetyModule5Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       3. Electrical System Re-Certification (BS 7671)
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The entire electrical installation in the affected area must be inspected,
                       tested, and re-certified to <strong>BS 7671</strong> (the IET Wiring
                       Regulations) before re-occupation. Heat can degrade cable insulation even
@@ -846,7 +846,7 @@ export default function FireSafetyModule5Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       4. Fire Alarm &amp; Detection System (BS 5839)
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The fire alarm and fire detection system must be fully reinstated to{' '}
                       <strong>BS 5839</strong>. This includes replacing any damaged detectors,
                       sounders, call points, cabling, and control equipment. The entire system must
@@ -860,7 +860,7 @@ export default function FireSafetyModule5Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       5. Emergency Lighting Restoration (BS 5266)
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Emergency lighting must be fully restored to <strong>BS 5266</strong>. All
                       luminaires in the affected area must be inspected, tested, and replaced where
                       necessary. Battery condition must be verified (fire damage can degrade battery
@@ -871,7 +871,7 @@ export default function FireSafetyModule5Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">6. Phased Re-Occupation</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Re-occupation should be phased, with each area signed off as safe before
                       occupants return. A pre-occupation inspection should verify that all
                       structural repairs are complete, building services are fully operational and
@@ -937,7 +937,7 @@ export default function FireSafetyModule5Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 rounded-lg p-3">
                       <p className="text-sm font-medium text-white">{item.label}</p>
-                      <p className="text-xs text-white/70 mt-0.5 leading-relaxed">{item.desc}</p>
+                      <p className="text-xs text-white mt-0.5 leading-relaxed">{item.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -945,7 +945,7 @@ export default function FireSafetyModule5Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Competence of the Reviewer</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The post-incident review of the fire risk assessment should be conducted by a{' '}
                   <strong>competent person</strong> &mdash; ideally someone with formal fire risk
                   assessment qualifications and experience. Where the original fire risk assessment
@@ -987,7 +987,7 @@ export default function FireSafetyModule5Section4() {
                   <RefreshCw className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Areas for Review</p>
                 </div>
-                <ul className="space-y-3 text-sm text-white/70">
+                <ul className="space-y-3 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1043,7 +1043,7 @@ export default function FireSafetyModule5Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Testing Revised Procedures</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Any revised procedures must be tested through a <strong>fire drill</strong> as
                   soon as practicable after implementation. This should not wait until the next
                   scheduled drill date &mdash; a specific drill should be arranged to test the
@@ -1083,7 +1083,7 @@ export default function FireSafetyModule5Section4() {
                   <Heart className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Post-Incident Stress</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Following a fire, staff may experience a range of psychological responses. These
                   are normal reactions to an abnormal event, but they require recognition and
                   support:
@@ -1109,7 +1109,7 @@ export default function FireSafetyModule5Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 rounded-lg p-3">
                       <p className="text-sm font-medium text-white">{item.label}</p>
-                      <p className="text-xs text-white/70 mt-0.5">{item.desc}</p>
+                      <p className="text-xs text-white mt-0.5">{item.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -1123,7 +1123,7 @@ export default function FireSafetyModule5Section4() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Debriefing Sessions</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       A structured debriefing session should be conducted within 48&ndash;72 hours
                       of the incident. This is not a blame-finding exercise &mdash; it is a
                       facilitated discussion where those involved can talk about what happened, how
@@ -1137,7 +1137,7 @@ export default function FireSafetyModule5Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       Employee Assistance Programme (EAP)
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Access to a confidential Employee Assistance Programme should be made
                       available to all affected staff. An EAP provides professional counselling,
                       support, and signposting to specialist services. The EAP details should be
@@ -1147,7 +1147,7 @@ export default function FireSafetyModule5Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Return-to-Work Support</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       For staff who take time off following the incident, a phased return-to-work
                       programme should be offered. This may involve: reduced hours initially,
                       alternative duties away from the affected area, regular one-to-one check-ins
@@ -1158,7 +1158,7 @@ export default function FireSafetyModule5Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Long-Term Monitoring</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Post-traumatic stress disorder (PTSD) and other mental health conditions can
                       develop weeks or months after the incident. Long-term monitoring for up to 12
                       months is recommended. This involves: periodic welfare check-ins, awareness
@@ -1173,7 +1173,7 @@ export default function FireSafetyModule5Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Legal Duty of Care</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The employer's duty of care to employees' mental health is well established in UK
                   law. The Health and Safety at Work etc. Act 1974 requires employers to ensure, so
                   far as is reasonably practicable, the health, safety, and welfare of employees
@@ -1203,7 +1203,7 @@ export default function FireSafetyModule5Section4() {
               {/* Phase 1: Immediate */}
               <div className="bg-rose-500/20 border border-rose-500/40 rounded-lg px-4 py-3 text-center">
                 <p className="text-xs font-bold text-rose-400">PHASE 1: IMMEDIATE RESPONSE</p>
-                <p className="text-[10px] text-white/50 mt-1">0 &ndash; 24 hours</p>
+                <p className="text-[10px] text-white mt-1">0 &ndash; 24 hours</p>
               </div>
               <div className="flex justify-center">
                 <div className="w-px h-4 bg-rose-500/30" />
@@ -1212,14 +1212,14 @@ export default function FireSafetyModule5Section4() {
                 <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                   <Heart className="h-4 w-4 text-rose-400 mx-auto mb-1" />
                   <p className="text-xs font-bold text-white">Welfare &amp; Accountability</p>
-                  <p className="text-[10px] text-white/50">
+                  <p className="text-[10px] text-white">
                     Roll call, shelter, first aid, emotional support
                   </p>
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                   <Shield className="h-4 w-4 text-rose-400 mx-auto mb-1" />
                   <p className="text-xs font-bold text-white">Scene Security</p>
-                  <p className="text-[10px] text-white/50">
+                  <p className="text-[10px] text-white">
                     Cordon, guard, prevent re-entry, isolate utilities
                   </p>
                 </div>
@@ -1234,7 +1234,7 @@ export default function FireSafetyModule5Section4() {
                 <p className="text-xs font-bold text-rose-400">
                   PHASE 2: INVESTIGATION &amp; NOTIFICATION
                 </p>
-                <p className="text-[10px] text-white/50 mt-1">24 hours &ndash; 2 weeks</p>
+                <p className="text-[10px] text-white mt-1">24 hours &ndash; 2 weeks</p>
               </div>
               <div className="flex justify-center">
                 <div className="w-px h-4 bg-rose-500/30" />
@@ -1243,14 +1243,14 @@ export default function FireSafetyModule5Section4() {
                 <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                   <FileSearch className="h-4 w-4 text-rose-400 mx-auto mb-1" />
                   <p className="text-xs font-bold text-white">Fire Investigation</p>
-                  <p className="text-[10px] text-white/50">
+                  <p className="text-[10px] text-white">
                     Scene examination, evidence collection, cause determination
                   </p>
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                   <Landmark className="h-4 w-4 text-rose-400 mx-auto mb-1" />
                   <p className="text-xs font-bold text-white">Insurer Notification</p>
-                  <p className="text-[10px] text-white/50">
+                  <p className="text-[10px] text-white">
                     Loss adjuster appointment, damage documentation
                   </p>
                 </div>
@@ -1263,7 +1263,7 @@ export default function FireSafetyModule5Section4() {
               {/* Phase 3: Reinstatement */}
               <div className="bg-rose-500/20 border border-rose-500/40 rounded-lg px-4 py-3 text-center">
                 <p className="text-xs font-bold text-rose-400">PHASE 3: REINSTATEMENT</p>
-                <p className="text-[10px] text-white/50 mt-1">2 weeks &ndash; 6 months+</p>
+                <p className="text-[10px] text-white mt-1">2 weeks &ndash; 6 months+</p>
               </div>
               <div className="flex justify-center">
                 <div className="w-px h-4 bg-rose-500/30" />
@@ -1272,19 +1272,19 @@ export default function FireSafetyModule5Section4() {
                 <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg px-3 py-2 text-center">
                   <HardHat className="h-4 w-4 text-rose-400 mx-auto mb-1" />
                   <p className="text-xs font-bold text-rose-400">Structural Repair</p>
-                  <p className="text-[10px] text-white/50">
+                  <p className="text-[10px] text-white">
                     Assessment, remediation, smoke/water damage
                   </p>
                 </div>
                 <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg px-3 py-2 text-center">
                   <Zap className="h-4 w-4 text-rose-400 mx-auto mb-1" />
                   <p className="text-xs font-bold text-rose-400">Services Re-Cert</p>
-                  <p className="text-[10px] text-white/50">BS 7671, BS 5839, BS 5266</p>
+                  <p className="text-[10px] text-white">BS 7671, BS 5839, BS 5266</p>
                 </div>
                 <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg px-3 py-2 text-center">
                   <Flame className="h-4 w-4 text-rose-400 mx-auto mb-1" />
                   <p className="text-xs font-bold text-rose-400">FRA Review</p>
-                  <p className="text-[10px] text-white/50">Mandatory update, revised controls</p>
+                  <p className="text-[10px] text-white">Mandatory update, revised controls</p>
                 </div>
               </div>
 
@@ -1295,7 +1295,7 @@ export default function FireSafetyModule5Section4() {
               {/* Phase 4: Recovery */}
               <div className="bg-rose-500/20 border border-rose-500/40 rounded-lg px-4 py-3 text-center">
                 <p className="text-xs font-bold text-rose-400">PHASE 4: RECOVERY &amp; RETURN</p>
-                <p className="text-[10px] text-white/50 mt-1">Ongoing &ndash; up to 12 months</p>
+                <p className="text-[10px] text-white mt-1">Ongoing &ndash; up to 12 months</p>
               </div>
               <div className="flex justify-center">
                 <div className="w-px h-4 bg-rose-500/30" />
@@ -1304,20 +1304,20 @@ export default function FireSafetyModule5Section4() {
                 <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                   <BookOpen className="h-4 w-4 text-rose-400 mx-auto mb-1" />
                   <p className="text-xs font-bold text-white">Updated Procedures</p>
-                  <p className="text-[10px] text-white/50">
+                  <p className="text-[10px] text-white">
                     Revised emergency plan, training, drills
                   </p>
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                   <Heart className="h-4 w-4 text-rose-400 mx-auto mb-1" />
                   <p className="text-xs font-bold text-white">Staff Wellbeing</p>
-                  <p className="text-[10px] text-white/50">
+                  <p className="text-[10px] text-white">
                     EAP, phased return, long-term monitoring
                   </p>
                 </div>
               </div>
 
-              <p className="text-xs text-white/50 text-center mt-4">
+              <p className="text-xs text-white text-center mt-4">
                 Timescales vary depending on the severity of the fire. Minor incidents may complete
                 within weeks; major fires may take 12 months or longer to fully resolve.
               </p>
@@ -1334,7 +1334,7 @@ export default function FireSafetyModule5Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1352,7 +1352,7 @@ export default function FireSafetyModule5Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-5-section-3">

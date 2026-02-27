@@ -261,7 +261,7 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search UK chargers..."
-                className="h-11 border-0 bg-transparent focus-visible:ring-0 px-0 text-base text-white placeholder:text-white/40"
+                className="h-11 border-0 bg-transparent focus-visible:ring-0 px-0 text-base text-white placeholder:text-white"
                 autoFocus
               />
               {searchQuery && (
@@ -280,7 +280,7 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
             <div className="flex-1 overflow-y-auto momentum-scroll-y px-3 py-2">
               {filteredChargers.length === 0 ? (
                 <div className="py-12 text-center">
-                  <Zap className="h-12 w-12 mx-auto mb-3 text-white/20" />
+                  <Zap className="h-12 w-12 mx-auto mb-3 text-white" />
                   <p className="text-base text-white">No chargers found</p>
                   <p className="text-sm text-white mt-1">Try searching by make or model</p>
                 </div>
@@ -338,7 +338,7 @@ export const ChargerAutocomplete: React.FC<ChargerAutocompleteProps> = ({
           <CommandList className="max-h-[320px]">
             {filteredChargers.length === 0 ? (
               <CommandEmpty className="py-6 text-center">
-                <Zap className="h-8 w-8 mx-auto mb-2 text-white/20" />
+                <Zap className="h-8 w-8 mx-auto mb-2 text-white" />
                 <p className="text-white">No chargers found</p>
                 <p className="text-xs text-white mt-1">Try searching by make or model</p>
               </CommandEmpty>

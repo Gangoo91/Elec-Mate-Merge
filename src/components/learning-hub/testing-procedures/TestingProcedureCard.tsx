@@ -21,7 +21,7 @@ const TestingProcedureCard = ({ procedure, onStart, onPreview }: TestingProcedur
       case 'Required':
         return 'bg-blue-500/10 text-blue-400 border-blue-400/20';
       default:
-        return 'bg-muted/50 text-white/80 border-border';
+        return 'bg-muted/50 text-white border-border';
     }
   };
 
@@ -83,7 +83,7 @@ const TestingProcedureCard = ({ procedure, onStart, onPreview }: TestingProcedur
       <CardContent className="space-y-3 sm:space-y-4 p-4 sm:p-5 md:p-6 pt-0">
         {/* Key Equipment */}
         <div>
-          <p className="text-xs text-white/80 mb-2 font-medium">Key Equipment:</p>
+          <p className="text-xs text-white mb-2 font-medium">Key Equipment:</p>
           <div className="flex flex-wrap gap-1.5 sm:gap-2">
             {procedure.equipment.slice(0, 3).map((item, index) => (
               <Badge key={index} variant="outline" className="text-xs bg-muted/50 border-border">
@@ -101,7 +101,7 @@ const TestingProcedureCard = ({ procedure, onStart, onPreview }: TestingProcedur
         {/* Real World Examples Preview */}
         {procedure.realWorldExamples.length > 0 && (
           <div className="p-3 bg-muted/50 rounded-lg text-xs sm:text-sm">
-            <p className="text-white/80 mb-1.5 font-medium">Example scenario:</p>
+            <p className="text-white mb-1.5 font-medium">Example scenario:</p>
             <p className="text-foreground leading-relaxed line-clamp-2">
               {procedure.realWorldExamples[0].scenario}
             </p>

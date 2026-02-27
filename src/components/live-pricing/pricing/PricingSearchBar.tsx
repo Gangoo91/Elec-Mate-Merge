@@ -247,7 +247,7 @@ const PricingSearchBar = ({
       {/* Current Search Display - Shows what you're searching for */}
       {(postcode || selectedJobType) && (
         <div className="flex items-center gap-2 flex-wrap animate-fade-in">
-          <span className="text-xs text-white/50 uppercase tracking-wider font-medium">
+          <span className="text-xs text-white uppercase tracking-wider font-medium">
             Searching:
           </span>
           {postcode && (
@@ -291,7 +291,7 @@ const PricingSearchBar = ({
               <div
                 className={cn(
                   'absolute left-4 top-1/2 -translate-y-1/2 z-10 pointer-events-none transition-all duration-200',
-                  isFocused || postcode ? 'text-yellow-400' : 'text-white/40'
+                  isFocused || postcode ? 'text-yellow-400' : 'text-white'
                 )}
               >
                 <Search className="h-5 w-5" />
@@ -306,7 +306,7 @@ const PricingSearchBar = ({
                 className={cn(
                   'w-full h-14 pl-12 pr-12 rounded-xl',
                   'bg-neutral-900/80 border-0',
-                  'text-lg font-semibold text-white placeholder:text-white/30',
+                  'text-lg font-semibold text-white placeholder:text-white',
                   'focus:outline-none focus:ring-0',
                   'transition-all duration-200',
                   'touch-manipulation'
@@ -323,7 +323,7 @@ const PricingSearchBar = ({
                     setPostcode('');
                     inputRef.current?.focus();
                   }}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white/60 hover:text-white transition-all z-10 touch-manipulation"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white hover:text-white transition-all z-10 touch-manipulation"
                 >
                   <X className="h-4 w-4" />
                 </button>
@@ -423,9 +423,9 @@ const PricingSearchBar = ({
             )}
           </div>
           {showJobTypes ? (
-            <ChevronUp className="h-4 w-4 text-white/60" />
+            <ChevronUp className="h-4 w-4 text-white" />
           ) : (
-            <ChevronDown className="h-4 w-4 text-white/60" />
+            <ChevronDown className="h-4 w-4 text-white" />
           )}
         </button>
 
@@ -475,8 +475,8 @@ const PricingSearchBar = ({
       {recentSearches.length > 0 && !isFocused && (
         <div className="animate-fade-in">
           <div className="flex items-center gap-2 mb-3">
-            <Clock className="h-4 w-4 text-white/40" />
-            <span className="text-xs text-white/50 font-medium uppercase tracking-wider">
+            <Clock className="h-4 w-4 text-white" />
+            <span className="text-xs text-white font-medium uppercase tracking-wider">
               Recent
             </span>
           </div>
@@ -514,8 +514,8 @@ const PricingSearchBar = ({
       {recentSearches.length === 0 && !isFocused && (
         <div className="animate-fade-in">
           <div className="flex items-center gap-2 mb-3">
-            <Sparkles className="h-4 w-4 text-white/40" />
-            <span className="text-xs text-white/50 font-medium uppercase tracking-wider">
+            <Sparkles className="h-4 w-4 text-white" />
+            <span className="text-xs text-white font-medium uppercase tracking-wider">
               Popular Areas
             </span>
           </div>
@@ -535,7 +535,7 @@ const PricingSearchBar = ({
                 )}
               >
                 <span className="text-white font-bold">{item.code}</span>
-                <span className="text-white/50 text-xs">{item.area}</span>
+                <span className="text-white text-xs">{item.area}</span>
               </button>
             ))}
           </div>

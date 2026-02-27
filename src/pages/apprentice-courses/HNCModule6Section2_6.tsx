@@ -241,7 +241,7 @@ const HNCModule6Section2_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section2">
@@ -263,7 +263,7 @@ const HNCModule6Section2_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             CHP and District Energy
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Combined heat and power systems, district heating networks, energy centres, and system
             optimisation
           </p>
@@ -431,25 +431,25 @@ const HNCModule6Section2_6 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">Efficiency Calculation</p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Overall efficiency:</span>{' '}
+                  <span className="text-white">Overall efficiency:</span>{' '}
                   <span className="text-white">η = (Pelec + Qheat) / Qfuel × 100%</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Electrical efficiency:</span>{' '}
+                  <span className="text-white">Electrical efficiency:</span>{' '}
                   <span className="text-white">ηe = Pelec / Qfuel × 100%</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Thermal efficiency:</span>{' '}
+                  <span className="text-white">Thermal efficiency:</span>{' '}
                   <span className="text-white">ηth = Qheat / Qfuel × 100%</span>
                 </p>
                 <p className="mt-2">
-                  <span className="text-white/60">Example:</span>{' '}
+                  <span className="text-white">Example:</span>{' '}
                   <span className="text-white">
                     500 kW gas input, 180 kWe electrical, 250 kWth heat
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">Overall:</span>{' '}
+                  <span className="text-white">Overall:</span>{' '}
                   <span className="text-green-400">(180 + 250) / 500 × 100 = 86%</span>
                 </p>
               </div>
@@ -598,15 +598,15 @@ const HNCModule6Section2_6 = () => {
               </p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">3rd Generation (current):</span>{' '}
+                  <span className="text-white">3rd Generation (current):</span>{' '}
                   <span className="text-white">Flow 70-90°C, Return 40-60°C, ΔT 30 K</span>
                 </p>
                 <p>
-                  <span className="text-white/60">4th Generation (emerging):</span>{' '}
+                  <span className="text-white">4th Generation (emerging):</span>{' '}
                   <span className="text-white">Flow 50-60°C, Return 25-35°C, ΔT 25 K</span>
                 </p>
                 <p>
-                  <span className="text-white/60">5th Generation (ambient):</span>{' '}
+                  <span className="text-white">5th Generation (ambient):</span>{' '}
                   <span className="text-white">Flow 10-25°C with building-level heat pumps</span>
                 </p>
               </div>
@@ -883,7 +883,7 @@ const HNCModule6Section2_6 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Optimisation goal:</strong> Maximise CHP running hours while ensuring all
               generated heat is utilised - unused heat negates the efficiency benefit.
             </p>
@@ -908,8 +908,8 @@ const HNCModule6Section2_6 = () => {
                 <strong>Scenario:</strong> A gas engine CHP consumes 1,200 kW of natural gas and
                 produces 450 kWe electrical and 550 kWth thermal output. Calculate all efficiencies.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given:</p>
                 <p className="ml-4">Fuel input (Qfuel) = 1,200 kW</p>
                 <p className="ml-4">Electrical output (Pelec) = 450 kW</p>
                 <p className="ml-4">Thermal output (Qheat) = 550 kW</p>
@@ -945,8 +945,8 @@ const HNCModule6Section2_6 = () => {
                 Flow temperature is 85°C, return temperature is 55°C. Calculate the required flow
                 rate.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given:</p>
                 <p className="ml-4">Heat load (Q) = 3,000 kW</p>
                 <p className="ml-4">Flow temp (Tf) = 85°C</p>
                 <p className="ml-4">Return temp (Tr) = 55°C</p>
@@ -974,22 +974,22 @@ const HNCModule6Section2_6 = () => {
                 <strong>Scenario:</strong> Evaluate CHP viability with electricity at 18p/kWh, gas
                 at 4p/kWh, electrical efficiency 38%, and CHP output of 500 kWe.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Step 1: Calculate gas consumption</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Step 1: Calculate gas consumption</p>
                 <p className="ml-4">Gas input = 500 kWe / 0.38 = 1,316 kW</p>
-                <p className="mt-2 text-white/60">Step 2: Calculate spark spread</p>
+                <p className="mt-2 text-white">Step 2: Calculate spark spread</p>
                 <p className="ml-4">Cost of gas per kWh electrical:</p>
                 <p className="ml-4">= Gas price / ηe = 4p / 0.38 = 10.5p/kWh</p>
                 <p className="ml-4">Spark spread = Electricity price - gas cost per kWhe</p>
                 <p className="ml-4">
                   = 18p - 10.5p = <span className="text-green-400">7.5p/kWh positive</span>
                 </p>
-                <p className="mt-2 text-white/60">Step 3: Annual electrical savings (5,000 hrs)</p>
+                <p className="mt-2 text-white">Step 3: Annual electrical savings (5,000 hrs)</p>
                 <p className="ml-4">= 500 kWe × 5,000 hrs × 7.5p/kWh</p>
                 <p className="ml-4">
                   = <span className="text-green-400">£187,500/year electrical benefit</span>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Step 4: Add heat credit (600 kWth at 90% boiler efficiency)
                 </p>
                 <p className="ml-4">Avoided boiler gas = 600 / 0.90 = 667 kW</p>
@@ -997,7 +997,7 @@ const HNCModule6Section2_6 = () => {
                   Heat credit = 667 × 5,000 × 4p ={' '}
                   <span className="text-green-400">£133,400/year</span>
                 </p>
-                <p className="mt-2 text-white/60">Total annual benefit:</p>
+                <p className="mt-2 text-white">Total annual benefit:</p>
                 <p className="ml-4">
                   <span className="text-green-400">£320,900/year (before maintenance)</span>
                 </p>
@@ -1093,7 +1093,7 @@ const HNCModule6Section2_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1139,7 +1139,7 @@ const HNCModule6Section2_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section2">

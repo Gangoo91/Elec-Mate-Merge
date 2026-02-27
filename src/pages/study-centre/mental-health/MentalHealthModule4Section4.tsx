@@ -259,7 +259,7 @@ const MentalHealthModule4Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-4">
@@ -285,7 +285,7 @@ const MentalHealthModule4Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Trauma, PTSD &amp; Adverse Experiences
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding trauma, recognising post-traumatic stress disorder, applying
             trauma-informed principles, and supporting colleagues affected by adverse experiences in
             the construction industry
@@ -393,7 +393,7 @@ const MentalHealthModule4Section4 = () => {
                     <h4 className="text-purple-300 font-semibold text-sm mb-2">
                       1. Single-Incident Trauma
                     </h4>
-                    <p className="text-white/70 text-sm mb-2">
+                    <p className="text-white text-sm mb-2">
                       A one-off traumatic event that is sudden, unexpected, and overwhelming.
                     </p>
                     <div className="grid sm:grid-cols-2 gap-2">
@@ -407,7 +407,7 @@ const MentalHealthModule4Section4 = () => {
                       ].map((item, idx) => (
                         <div key={idx} className="flex items-start gap-2 text-sm">
                           <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0" />
-                          <span className="text-white/80">{item}</span>
+                          <span className="text-white">{item}</span>
                         </div>
                       ))}
                     </div>
@@ -418,7 +418,7 @@ const MentalHealthModule4Section4 = () => {
                     <h4 className="text-violet-300 font-semibold text-sm mb-2">
                       2. Complex / Repeated Trauma
                     </h4>
-                    <p className="text-white/70 text-sm mb-2">
+                    <p className="text-white text-sm mb-2">
                       Prolonged, repeated, or ongoing traumatic experiences, often in situations
                       where the person cannot escape.
                     </p>
@@ -433,7 +433,7 @@ const MentalHealthModule4Section4 = () => {
                       ].map((item, idx) => (
                         <div key={idx} className="flex items-start gap-2 text-sm">
                           <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0" />
-                          <span className="text-white/80">{item}</span>
+                          <span className="text-white">{item}</span>
                         </div>
                       ))}
                     </div>
@@ -444,7 +444,7 @@ const MentalHealthModule4Section4 = () => {
                     <h4 className="text-purple-300 font-semibold text-sm mb-2">
                       3. Vicarious / Secondary Trauma
                     </h4>
-                    <p className="text-white/70 text-sm mb-2">
+                    <p className="text-white text-sm mb-2">
                       Trauma experienced indirectly through exposure to others&rsquo; traumatic
                       experiences.
                     </p>
@@ -459,7 +459,7 @@ const MentalHealthModule4Section4 = () => {
                       ].map((item, idx) => (
                         <div key={idx} className="flex items-start gap-2 text-sm">
                           <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0" />
-                          <span className="text-white/80">{item}</span>
+                          <span className="text-white">{item}</span>
                         </div>
                       ))}
                     </div>
@@ -470,7 +470,7 @@ const MentalHealthModule4Section4 = () => {
                     <h4 className="text-violet-300 font-semibold text-sm mb-2">
                       4. Developmental Trauma
                     </h4>
-                    <p className="text-white/70 text-sm mb-2">
+                    <p className="text-white text-sm mb-2">
                       Adverse experiences during childhood that affect development and have lasting
                       impacts into adulthood.
                     </p>
@@ -485,7 +485,7 @@ const MentalHealthModule4Section4 = () => {
                       ].map((item, idx) => (
                         <div key={idx} className="flex items-start gap-2 text-sm">
                           <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0" />
-                          <span className="text-white/80">{item}</span>
+                          <span className="text-white">{item}</span>
                         </div>
                       ))}
                     </div>
@@ -497,7 +497,7 @@ const MentalHealthModule4Section4 = () => {
                 <h3 className="font-semibold mb-2 text-purple-400">
                   Key Principle: Trauma Is Subjective
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Two people can experience the same event and respond very differently. One may
                   recover quickly while the other develops long-term psychological difficulties.
                   Factors that influence this include: previous trauma history, childhood
@@ -557,7 +557,7 @@ const MentalHealthModule4Section4 = () => {
                         </span>
                       </div>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
                         <span>
@@ -605,7 +605,7 @@ const MentalHealthModule4Section4 = () => {
                         </span>
                       </div>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
                         <span>
@@ -656,7 +656,7 @@ const MentalHealthModule4Section4 = () => {
                         </span>
                       </div>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-400 flex-shrink-0" />
                         <span>
@@ -705,7 +705,7 @@ const MentalHealthModule4Section4 = () => {
                         </span>
                       </div>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0" />
                         <span>
@@ -744,11 +744,11 @@ const MentalHealthModule4Section4 = () => {
 
               <div className="bg-violet-500/10 border border-violet-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-violet-400">Diagnosis: When Is It PTSD?</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   A normal stress reaction after a traumatic event may include many of the symptoms
                   described above. The distinction between a normal reaction and PTSD depends on:
                 </p>
-                <ul className="text-white/80 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <span className="text-violet-400 font-bold flex-shrink-0 mt-0.5">&bull;</span>
                     <span>
@@ -823,7 +823,7 @@ const MentalHealthModule4Section4 = () => {
                       </h4>
                     </div>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>
@@ -866,7 +866,7 @@ const MentalHealthModule4Section4 = () => {
                       </h4>
                     </div>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                       <span>
@@ -901,7 +901,7 @@ const MentalHealthModule4Section4 = () => {
                       </h4>
                     </div>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>
@@ -934,7 +934,7 @@ const MentalHealthModule4Section4 = () => {
                     Important: Overlap with Personality Disorder
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Many of the features of Complex PTSD &mdash; particularly emotional dysregulation,
                   unstable relationships, and distorted self-image &mdash; overlap significantly
                   with Emotionally Unstable Personality Disorder (EUPD), also known as Borderline
@@ -990,7 +990,7 @@ const MentalHealthModule4Section4 = () => {
                   ].map((item, idx) => (
                     <div key={idx} className="flex items-start gap-2 text-sm">
                       <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0" />
-                      <span className="text-white/80">{item}</span>
+                      <span className="text-white">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -1081,7 +1081,7 @@ const MentalHealthModule4Section4 = () => {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">The Statistics</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Construction workers in the UK are approximately two to three times more likely to
                   take their own life than the average male worker. Unrecognised and untreated
                   trauma is a significant contributing factor. The Mates in Mind charity and the
@@ -1138,10 +1138,10 @@ const MentalHealthModule4Section4 = () => {
                       </div>
                       <h4 className="text-green-300 font-semibold text-sm">Safety</h4>
                     </div>
-                    <p className="text-white/70 text-sm mb-2">
+                    <p className="text-white text-sm mb-2">
                       Ensuring physical and emotional safety for the person.
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                         <span>
@@ -1174,10 +1174,10 @@ const MentalHealthModule4Section4 = () => {
                       </div>
                       <h4 className="text-blue-300 font-semibold text-sm">Trustworthiness</h4>
                     </div>
-                    <p className="text-white/70 text-sm mb-2">
+                    <p className="text-white text-sm mb-2">
                       Being transparent, consistent, and reliable.
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                         <span>
@@ -1210,10 +1210,10 @@ const MentalHealthModule4Section4 = () => {
                       </div>
                       <h4 className="text-amber-300 font-semibold text-sm">Choice</h4>
                     </div>
-                    <p className="text-white/70 text-sm mb-2">
+                    <p className="text-white text-sm mb-2">
                       Giving the person options and restoring their sense of control.
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                         <span>
@@ -1246,10 +1246,10 @@ const MentalHealthModule4Section4 = () => {
                       </div>
                       <h4 className="text-purple-300 font-semibold text-sm">Collaboration</h4>
                     </div>
-                    <p className="text-white/70 text-sm mb-2">
+                    <p className="text-white text-sm mb-2">
                       Working alongside the person, not doing things to them.
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                         <span>
@@ -1282,10 +1282,10 @@ const MentalHealthModule4Section4 = () => {
                       </div>
                       <h4 className="text-violet-300 font-semibold text-sm">Empowerment</h4>
                     </div>
-                    <p className="text-white/70 text-sm mb-2">
+                    <p className="text-white text-sm mb-2">
                       Supporting the person&rsquo;s strengths, resilience, and ability to recover.
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                         <span>
@@ -1314,7 +1314,7 @@ const MentalHealthModule4Section4 = () => {
 
               <div className="bg-white/5 border border-purple-500/30 p-4 rounded-lg">
                 <h3 className="text-purple-300 font-medium mb-3">Avoiding Re-Traumatisation</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Re-traumatisation occurs when a person is exposed to situations, interactions, or
                   environments that replicate aspects of their original trauma. As an MHFA, you must
                   take care to avoid this:
@@ -1396,11 +1396,11 @@ const MentalHealthModule4Section4 = () => {
                     NICE Recommended
                   </span>
                 </div>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   A specialised form of Cognitive Behavioural Therapy specifically designed for
                   trauma. It is one of the two first-line treatments recommended by NICE for PTSD.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>Typically 8&ndash;12 sessions with a trained therapist</span>
@@ -1445,7 +1445,7 @@ const MentalHealthModule4Section4 = () => {
                     NICE Recommended
                   </span>
                 </div>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   A specialised psychotherapy developed by Francine Shapiro in 1987 that uses
                   bilateral stimulation to help the brain reprocess traumatic memories. It is the
                   second first-line treatment recommended by NICE.
@@ -1510,7 +1510,7 @@ const MentalHealthModule4Section4 = () => {
                   </ul>
                 </div>
 
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1594,7 +1594,7 @@ const MentalHealthModule4Section4 = () => {
                 <h3 className="text-violet-300 font-medium mb-3">
                   When to Refer for Professional Help
                 </h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Encourage the person to seek professional support in any of the following
                   circumstances:
                 </p>
@@ -1611,7 +1611,7 @@ const MentalHealthModule4Section4 = () => {
                   ].map((item, idx) => (
                     <div key={idx} className="flex items-start gap-2 text-sm">
                       <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0" />
-                      <span className="text-white/80">{item}</span>
+                      <span className="text-white">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -1629,7 +1629,7 @@ const MentalHealthModule4Section4 = () => {
                   {/* DO */}
                   <div className="bg-green-500/5 border border-green-500/20 p-3 rounded-lg">
                     <h4 className="text-green-300 font-semibold text-sm mb-2">You DO:</h4>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       {[
                         'Listen without judgement',
                         'Validate their feelings and experience',
@@ -1650,7 +1650,7 @@ const MentalHealthModule4Section4 = () => {
                   {/* DO NOT */}
                   <div className="bg-red-500/5 border border-red-500/20 p-3 rounded-lg">
                     <h4 className="text-red-300 font-semibold text-sm mb-2">You Do NOT:</h4>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       {[
                         'Diagnose PTSD or any other condition',
                         'Provide therapy or counselling',
@@ -1674,7 +1674,7 @@ const MentalHealthModule4Section4 = () => {
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-purple-300 font-medium mb-3">Key Support Services</h3>
                 <div className="space-y-2 text-sm">
-                  <div className="flex items-start gap-3 text-white/80">
+                  <div className="flex items-start gap-3 text-white">
                     <span className="text-purple-400 font-semibold flex-shrink-0 min-w-[160px]">
                       Samaritans
                     </span>
@@ -1683,7 +1683,7 @@ const MentalHealthModule4Section4 = () => {
                       in distress
                     </span>
                   </div>
-                  <div className="flex items-start gap-3 text-white/80">
+                  <div className="flex items-start gap-3 text-white">
                     <span className="text-purple-400 font-semibold flex-shrink-0 min-w-[160px]">
                       Construction Helpline
                     </span>
@@ -1692,7 +1692,7 @@ const MentalHealthModule4Section4 = () => {
                       construction-specific support
                     </span>
                   </div>
-                  <div className="flex items-start gap-3 text-white/80">
+                  <div className="flex items-start gap-3 text-white">
                     <span className="text-purple-400 font-semibold flex-shrink-0 min-w-[160px]">
                       Mind
                     </span>
@@ -1701,7 +1701,7 @@ const MentalHealthModule4Section4 = () => {
                       information and support
                     </span>
                   </div>
-                  <div className="flex items-start gap-3 text-white/80">
+                  <div className="flex items-start gap-3 text-white">
                     <span className="text-purple-400 font-semibold flex-shrink-0 min-w-[160px]">
                       Mates in Mind
                     </span>
@@ -1710,7 +1710,7 @@ const MentalHealthModule4Section4 = () => {
                       campaigns
                     </span>
                   </div>
-                  <div className="flex items-start gap-3 text-white/80">
+                  <div className="flex items-start gap-3 text-white">
                     <span className="text-purple-400 font-semibold flex-shrink-0 min-w-[160px]">
                       NHS Talking Therapies
                     </span>
@@ -1719,7 +1719,7 @@ const MentalHealthModule4Section4 = () => {
                       including trauma-focused CBT
                     </span>
                   </div>
-                  <div className="flex items-start gap-3 text-white/80">
+                  <div className="flex items-start gap-3 text-white">
                     <span className="text-purple-400 font-semibold flex-shrink-0 min-w-[160px]">
                       GP
                     </span>
@@ -1746,7 +1746,7 @@ const MentalHealthModule4Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1764,7 +1764,7 @@ const MentalHealthModule4Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-4">

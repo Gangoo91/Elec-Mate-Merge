@@ -48,7 +48,7 @@ export const CashFlowExpenseCard = ({ category, onUpdate, onRemove }: CashFlowEx
                 </span>
               )}
             </div>
-            <p className="text-xs text-white/50 capitalize">{category.frequency}</p>
+            <p className="text-xs text-white capitalize">{category.frequency}</p>
           </div>
         </div>
         <div className="flex items-center gap-3">
@@ -57,7 +57,7 @@ export const CashFlowExpenseCard = ({ category, onUpdate, onRemove }: CashFlowEx
           </span>
           <ChevronDown
             className={cn(
-              'h-4 w-4 text-white/40 transition-transform duration-200',
+              'h-4 w-4 text-white transition-transform duration-200',
               isExpanded && 'rotate-180'
             )}
           />
@@ -108,7 +108,7 @@ export const CashFlowExpenseCard = ({ category, onUpdate, onRemove }: CashFlowEx
                 onChange={(e) => onUpdate(category.id, { variable: e.target.checked })}
                 className="w-4 h-4 rounded border-white/20 bg-white/5 text-blue-500 focus:ring-blue-500 focus:ring-offset-0"
               />
-              <span className="text-sm text-white/70">Variable cost</span>
+              <span className="text-sm text-white">Variable cost</span>
             </label>
           </div>
           <button

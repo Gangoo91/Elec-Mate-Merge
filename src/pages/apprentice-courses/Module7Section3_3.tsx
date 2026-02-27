@@ -216,7 +216,7 @@ const Module7Section3_3 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -234,13 +234,13 @@ const Module7Section3_3 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 7</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 3.3</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 3.3</span>
             </div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
               Testing One Component or Section at a Time
             </h1>
-            <p className="text-white/70 text-base sm:text-lg max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg max-w-2xl mx-auto">
               Isolate and confirm faults efficiently with step-by-step testing.
             </p>
           </header>
@@ -248,7 +248,7 @@ const Module7Section3_3 = () => {
           {/* In 30 Seconds Summary */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 space-y-1 text-sm list-disc pl-4">
+            <ul className="text-white space-y-1 text-sm list-disc pl-4">
               <li>Testing one section at a time prevents confusion and wasted effort.</li>
               <li>This structured method gradually narrows down fault locations.</li>
               <li>It prevents replacing working components while missing real faults.</li>
@@ -261,7 +261,7 @@ const Module7Section3_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <ul className="text-white/80 space-y-2 text-sm list-disc pl-4">
+            <ul className="text-white space-y-2 text-sm list-disc pl-4">
               <li>
                 Explain why testing one part of a circuit at a time is effective for fault
                 diagnosis.
@@ -282,7 +282,7 @@ const Module7Section3_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Why Testing One Section at a Time Works
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 This approach reduces variables and provides clear pass/fail results for each part
                 of the circuit, building a logical picture of where faults lie.
@@ -327,7 +327,7 @@ const Module7Section3_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               How to Break Circuits into Sections
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Divide circuits into logical sections: supply, control, and load components, with
                 clear test points between each section.
@@ -398,7 +398,7 @@ const Module7Section3_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Method: Isolate, Test, Record, Conclude
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Follow a systematic four-step process for each section to ensure thorough and
                 accurate fault diagnosis.
@@ -469,7 +469,7 @@ const Module7Section3_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Practical Applications
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Apply systematic section testing to common circuit types with specific test points
                 and procedures.
@@ -528,7 +528,7 @@ const Module7Section3_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Documentation and Repeatability
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Record results after each step to build a clear diagnostic picture and ensure the
                 fault is properly resolved.
@@ -588,7 +588,7 @@ const Module7Section3_3 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
                 <p className="font-medium text-white mb-2">Best Practice Approach</p>
-                <ul className="text-sm list-disc pl-4 space-y-1 text-white/80">
+                <ul className="text-sm list-disc pl-4 space-y-1 text-white">
                   <li>Keep tests focused and targeted on one section</li>
                   <li>Record results after each test to build clear picture</li>
                   <li>Don't skip sections even if fault seems obvious</li>
@@ -600,7 +600,7 @@ const Module7Section3_3 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-amber-500/50">
                 <p className="font-medium text-amber-400 mb-2">Common Mistakes to Avoid</p>
-                <ul className="text-sm list-disc pl-4 space-y-1 text-white/80">
+                <ul className="text-sm list-disc pl-4 space-y-1 text-white">
                   <li>Replacing parts without testing first</li>
                   <li>Testing too many things at once</li>
                   <li>Jumping around the circuit randomly</li>
@@ -621,7 +621,7 @@ const Module7Section3_3 = () => {
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">Domestic Lighting Circuit Fault</p>
-                <div className="grid sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-3 text-sm text-white">
                   <div>
                     <p className="text-elec-yellow font-medium mb-1">Situation</p>
                     <p>
@@ -655,7 +655,7 @@ const Module7Section3_3 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
                 <p className="font-medium text-white mb-2">Factory Machine Motor Fault</p>
-                <div className="grid sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-3 text-sm text-white">
                   <div>
                     <p className="text-elec-yellow font-medium mb-1">Situation</p>
                     <p>
@@ -699,7 +699,7 @@ const Module7Section3_3 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
                   <p className="font-medium text-white mb-2">{faq.question}</p>
-                  <p className="text-white/70 text-sm">{faq.answer}</p>
+                  <p className="text-white text-sm">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -714,37 +714,37 @@ const Module7Section3_3 = () => {
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
               <div className="p-3 rounded-lg bg-white/5">
                 <p className="font-medium text-elec-yellow text-sm mb-1">Systematic Isolation</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Test one section at a time to isolate faults logically and efficiently.
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-white/5">
                 <p className="font-medium text-green-400 text-sm mb-1">Record Everything</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Document results after each test to build clear diagnostic picture.
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-white/5">
                 <p className="font-medium text-orange-400 text-sm mb-1">Prevent Waste</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Avoid replacing working components by confirming faults first.
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-white/5">
                 <p className="font-medium text-purple-400 text-sm mb-1">Apply Universally</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Method works for all systems from simple lighting to complex industrial.
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-white/5">
                 <p className="font-medium text-teal-400 text-sm mb-1">Build Confidence</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Structured approach provides certainty and professional competence.
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-white/5">
                 <p className="font-medium text-red-400 text-sm mb-1">Stay Focused</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Resist temptation to jump around - systematic progression saves time.
                 </p>
               </div>
@@ -752,7 +752,7 @@ const Module7Section3_3 = () => {
 
             <div className="mt-4 p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="font-medium text-elec-yellow mb-1 text-sm">Key Success Factors</p>
-              <p className="text-xs text-white/70">
+              <p className="text-xs text-white">
                 Master this disciplined testing approach - it transforms fault finding from
                 guesswork into professional, efficient diagnosis.
               </p>
@@ -771,7 +771,7 @@ const Module7Section3_3 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mt-10 pt-6 border-t border-white/10">
             <Button
               variant="ghost"
-              className="w-full sm:w-auto text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="w-full sm:w-auto text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../3-2">

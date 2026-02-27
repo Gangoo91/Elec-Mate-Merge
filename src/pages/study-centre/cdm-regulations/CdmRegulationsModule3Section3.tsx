@@ -201,7 +201,7 @@ export default function CdmRegulationsModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-3">
@@ -224,7 +224,7 @@ export default function CdmRegulationsModule3Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Health &amp; Safety File
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The legacy document that protects future workers &mdash; what it contains, who prepares
             it, and why it matters for every electrical project
           </p>
@@ -305,7 +305,7 @@ export default function CdmRegulationsModule3Section3() {
                     Regulation 12(5) &mdash; CDM 2015
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The health and safety file is a document containing information likely to be
                   needed to ensure health and safety during any subsequent construction work on the
                   structure. It is a <strong className="text-white">legacy document</strong> &mdash;
@@ -336,7 +336,7 @@ export default function CdmRegulationsModule3Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   The File Covers Future Work Including:
                 </p>
-                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -397,7 +397,7 @@ export default function CdmRegulationsModule3Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Principal Designer&rsquo;s File Duties
                 </p>
-                <ol className="text-sm text-white/80 space-y-3">
+                <ol className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 w-7 h-7 rounded-full bg-blue-500/20 border border-blue-500/40 flex items-center justify-center flex-shrink-0 text-xs font-bold text-blue-400">
                       1
@@ -466,7 +466,7 @@ export default function CdmRegulationsModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">After Handover</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Once the file has been passed to the client, the{' '}
                   <strong className="text-white">client retains it and makes it available</strong>{' '}
                   to anyone who needs the information for future work. The client must keep the file
@@ -498,7 +498,7 @@ export default function CdmRegulationsModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key Content Categories</p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -594,7 +594,7 @@ export default function CdmRegulationsModule3Section3() {
                     Critical for Electrical Safety
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Electrical information is one of the most important components of the health and
                   safety file. Future electricians carrying out maintenance, fault-finding,
                   alterations, or testing need accurate information about the electrical
@@ -612,42 +612,42 @@ export default function CdmRegulationsModule3Section3() {
                     <p className="text-base font-bold text-blue-400">
                       Distribution Board Schedules
                     </p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Circuit identification, protective device ratings, cable sizes, load
                       distribution across all boards
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-blue-400">Cable Routes</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Especially hidden or embedded cables &mdash; within walls, floors, ceilings,
                       and underground. Critical for avoiding cable strikes
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-blue-400">Isolation Procedures</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Location of isolation points, switching sequences for complex systems,
                       interlocks and safety systems
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-blue-400">Test Certificates</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Initial verification certificates (BS 7671), periodic inspection schedules,
                       test results as a baseline
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-blue-400">Earthing Arrangements</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Type of earthing system (TN-S, TN-C-S, TT), main earthing terminal location,
                       bonding conductor routes
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-blue-400">Lightning Protection</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Lightning protection system details, down conductor routes, test point
                       locations, maintenance requirements
                     </p>
@@ -668,7 +668,7 @@ export default function CdmRegulationsModule3Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Why This Matters</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Cable strikes are one of the most common causes of electrical injury on
                   construction and maintenance sites. Many cable strikes occur because workers did
                   not know where cables were located. Accurate cable route information in the H&S
@@ -708,7 +708,7 @@ export default function CdmRegulationsModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Single-Contractor Projects</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -786,28 +786,28 @@ export default function CdmRegulationsModule3Section3() {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-blue-400">Paper Format</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Traditional ring-binder approach. Simple, no technology required to access.
                       Risk of loss, damage, or degradation over time. Difficult to update.
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-blue-400">Electronic Format</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       PDF documents, shared drives, cloud storage. Easy to distribute and backup.
                       Requires technology to access. File formats may become obsolete.
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-blue-400">BIM Integration</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       H&S file information embedded within the Building Information Model. Allows
                       spatial referencing. Requires BIM software to access.
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-blue-400">Hybrid Approach</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Combination of paper summary and electronic detailed records. Provides
                       immediate access to key information with detailed backup available digitally.
                     </p>
@@ -824,7 +824,7 @@ export default function CdmRegulationsModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Accessibility Requirements</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -891,7 +891,7 @@ export default function CdmRegulationsModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Client&rsquo;s Legal Duties</p>
-                <ol className="text-sm text-white/80 space-y-3">
+                <ol className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 w-7 h-7 rounded-full bg-blue-500/20 border border-blue-500/40 flex items-center justify-center flex-shrink-0 text-xs font-bold text-blue-400">
                       1
@@ -948,7 +948,7 @@ export default function CdmRegulationsModule3Section3() {
                     Common Problem &mdash; Clients Not Aware of Their Duties
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Many clients &mdash; particularly domestic clients and small commercial clients
                   &mdash; are not aware of their duty to retain and make available the health and
                   safety file. The principal designer or contractor should{' '}
@@ -995,14 +995,14 @@ export default function CdmRegulationsModule3Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">HSE-Identified Failings</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The Health and Safety Executive has consistently identified significant failings
                   in the preparation, quality, and management of health and safety files across the
                   construction industry. These failings undermine the protection that the file is
                   supposed to provide to future workers.
                 </p>
                 <div className="space-y-2">
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">&times;</span>
                     <span>
                       <strong className="text-white">Files not prepared at all</strong> &mdash; on
@@ -1011,7 +1011,7 @@ export default function CdmRegulationsModule3Section3() {
                       and cost
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">&times;</span>
                     <span>
                       <strong className="text-white">Poor quality content</strong> &mdash; files
@@ -1019,7 +1019,7 @@ export default function CdmRegulationsModule3Section3() {
                       content that provides no real value to future users
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">&times;</span>
                     <span>
                       <strong className="text-white">Not passed to the client</strong> &mdash; files
@@ -1027,7 +1027,7 @@ export default function CdmRegulationsModule3Section3() {
                       without explanation of the client&rsquo;s duties
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">&times;</span>
                     <span>
                       <strong className="text-white">Not kept up to date</strong> &mdash; files that
@@ -1035,7 +1035,7 @@ export default function CdmRegulationsModule3Section3() {
                       on the structure
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">&times;</span>
                     <span>
                       <strong className="text-white">Generic content, not project-specific</strong>{' '}
@@ -1043,7 +1043,7 @@ export default function CdmRegulationsModule3Section3() {
                       apply to any project, rather than specific details about the actual structure
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">&times;</span>
                     <span>
                       <strong className="text-white">Lost during property transfers</strong> &mdash;
@@ -1060,7 +1060,7 @@ export default function CdmRegulationsModule3Section3() {
                   <p className="text-sm font-medium text-blue-400">How to Get It Right</p>
                 </div>
                 <div className="space-y-2">
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-green-400 font-bold mt-0.5 flex-shrink-0">&#10003;</span>
                     <span>
                       <strong className="text-white">Start the file early</strong> &mdash; begin
@@ -1068,7 +1068,7 @@ export default function CdmRegulationsModule3Section3() {
                       end of the project
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-green-400 font-bold mt-0.5 flex-shrink-0">&#10003;</span>
                     <span>
                       <strong className="text-white">Make it project-specific</strong> &mdash; every
@@ -1076,7 +1076,7 @@ export default function CdmRegulationsModule3Section3() {
                       structure and the actual work carried out
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-green-400 font-bold mt-0.5 flex-shrink-0">&#10003;</span>
                     <span>
                       <strong className="text-white">Include as-built information</strong> &mdash;
@@ -1084,7 +1084,7 @@ export default function CdmRegulationsModule3Section3() {
                       built, not what was originally designed
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-green-400 font-bold mt-0.5 flex-shrink-0">&#10003;</span>
                     <span>
                       <strong className="text-white">Hand over formally</strong> &mdash; ensure the
@@ -1092,7 +1092,7 @@ export default function CdmRegulationsModule3Section3() {
                       the handover
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-green-400 font-bold mt-0.5 flex-shrink-0">&#10003;</span>
                     <span>
                       <strong className="text-white">Think about the future user</strong> &mdash;
@@ -1180,7 +1180,7 @@ export default function CdmRegulationsModule3Section3() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <span className="text-xs font-medium text-white">{item.label}</span>
-                        <span className="text-[10px] text-white/50 ml-2">{item.detail}</span>
+                        <span className="text-[10px] text-white ml-2">{item.detail}</span>
                       </div>
                     </div>
                   ))}
@@ -1189,7 +1189,7 @@ export default function CdmRegulationsModule3Section3() {
                 <div className="mt-4 border-t border-white/10 pt-3">
                   <div className="flex items-center gap-2 justify-center">
                     <div className="w-2 h-2 rounded-full bg-blue-400" />
-                    <span className="text-[10px] text-white/50">
+                    <span className="text-[10px] text-white">
                       All content must be project-specific, not generic
                     </span>
                   </div>
@@ -1219,7 +1219,7 @@ export default function CdmRegulationsModule3Section3() {
                     </div>
                     <span className="text-sm font-medium text-blue-400">Creation</span>
                   </div>
-                  <div className="ml-9 text-xs text-white/70 space-y-1">
+                  <div className="ml-9 text-xs text-white space-y-1">
                     <p>PD establishes file structure during pre-construction</p>
                     <p>Designers &amp; contractors contribute as-built information</p>
                     <p>PD reviews, updates, and revises throughout the project</p>
@@ -1239,7 +1239,7 @@ export default function CdmRegulationsModule3Section3() {
                     </div>
                     <span className="text-sm font-medium text-blue-400">Handover</span>
                   </div>
-                  <div className="ml-9 text-xs text-white/70 space-y-1">
+                  <div className="ml-9 text-xs text-white space-y-1">
                     <p>PD passes completed file to the client at project end</p>
                     <p>Client&rsquo;s duties are explained (retain, make available, update)</p>
                     <p>Formal handover is documented</p>
@@ -1259,7 +1259,7 @@ export default function CdmRegulationsModule3Section3() {
                     </div>
                     <span className="text-sm font-medium text-blue-300">Maintenance</span>
                   </div>
-                  <div className="ml-9 text-xs text-white/70 space-y-1">
+                  <div className="ml-9 text-xs text-white space-y-1">
                     <p>Client retains the file for the life of the structure</p>
                     <p>Updated when further construction work is carried out</p>
                     <p>Passed to new owner if property is sold or transferred</p>
@@ -1279,7 +1279,7 @@ export default function CdmRegulationsModule3Section3() {
                     </div>
                     <span className="text-sm font-medium text-green-400">Future Use</span>
                   </div>
-                  <div className="ml-9 text-xs text-white/70 space-y-1">
+                  <div className="ml-9 text-xs text-white space-y-1">
                     <p>Future designers use it to plan safe new work</p>
                     <p>Future contractors use it to identify hazards before starting</p>
                     <p>Building managers use it for safe maintenance planning</p>
@@ -1291,15 +1291,15 @@ export default function CdmRegulationsModule3Section3() {
               <div className="flex flex-wrap gap-3 mt-4 justify-center">
                 <div className="flex items-center gap-1.5">
                   <div className="w-3 h-3 border-2 border-blue-500/50 bg-blue-500/10 rounded-sm" />
-                  <span className="text-[10px] text-white/60">PD Responsibility</span>
+                  <span className="text-[10px] text-white">PD Responsibility</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-3 h-3 border-2 border-blue-300/50 bg-blue-300/10 rounded-sm" />
-                  <span className="text-[10px] text-white/60">Client Responsibility</span>
+                  <span className="text-[10px] text-white">Client Responsibility</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-3 h-3 border-2 border-green-500/50 bg-green-500/10 rounded-sm" />
-                  <span className="text-[10px] text-white/60">Future Benefit</span>
+                  <span className="text-[10px] text-white">Future Benefit</span>
                 </div>
               </div>
             </div>
@@ -1313,7 +1313,7 @@ export default function CdmRegulationsModule3Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1327,7 +1327,7 @@ export default function CdmRegulationsModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-3-section-2">

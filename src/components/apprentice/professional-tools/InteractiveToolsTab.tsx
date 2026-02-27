@@ -35,7 +35,7 @@ const InteractiveToolsTab = () => {
           </div>
           <div>
             <p className="font-medium text-purple-400 mb-1">Interactive Tools</p>
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               Use these tools to plan your toolkit investment and create project-specific equipment
               lists.
             </p>
@@ -82,7 +82,7 @@ const InteractiveToolsTab = () => {
                     <div className={classes.iconColor}>{tool.icon}</div>
                   </div>
                   <h3 className="font-semibold text-white mb-1">{tool.title}</h3>
-                  <p className="text-sm text-white/60">{tool.description}</p>
+                  <p className="text-sm text-white">{tool.description}</p>
                 </div>
               </CardContent>
             </Card>
@@ -104,7 +104,7 @@ const InteractiveToolsTab = () => {
           </div>
           <div>
             <p className="font-medium text-blue-400 mb-1">Pro Tip</p>
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               Download your checklists before heading to site to ensure you have all necessary
               tools. Update your budget calculator as your toolkit grows.
             </p>

@@ -250,7 +250,7 @@ const HNCModule7Section1_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section1">
@@ -272,7 +272,7 @@ const HNCModule7Section1_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Switchgear Selection
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             LV switchboards, MCCB vs ACB, rated currents, short-circuit ratings, and type-tested
             assemblies
           </p>
@@ -680,25 +680,25 @@ const HNCModule7Section1_1 = () => {
               </p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Transformer:</span>{' '}
+                  <span className="text-white">Transformer:</span>{' '}
                   <span className="text-white">1000kVA, 6% impedance</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Secondary voltage:</span>{' '}
+                  <span className="text-white">Secondary voltage:</span>{' '}
                   <span className="text-white">400V</span>
                 </p>
                 <p>
-                  <span className="text-white/60">PSCC at transformer:</span>{' '}
+                  <span className="text-white">PSCC at transformer:</span>{' '}
                   <span className="text-white">
                     I<sub>sc</sub> = kVA × 1000 / (√3 × V × Z%)
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">Calculation:</span>{' '}
+                  <span className="text-white">Calculation:</span>{' '}
                   <span className="text-white">= 1000 × 1000 / (1.732 × 400 × 0.06) = 24.1kA</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Selection:</span>{' '}
+                  <span className="text-white">Selection:</span>{' '}
                   <span className="text-white">MCCB with Icu ≥ 25kA (select 36kA for margin)</span>
                 </p>
               </div>
@@ -895,7 +895,7 @@ const HNCModule7Section1_1 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Specification note:</strong> Always specify form of separation in tender
               documents. Cost increases with form number, but Form 2 or higher is typical for most
               commercial and industrial applications.
@@ -921,14 +921,14 @@ const HNCModule7Section1_1 = () => {
                 <strong>Scenario:</strong> Specify switchgear for a 1600A main LV switchboard fed
                 from a 1000kVA transformer (6% impedance).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Step 1: Calculate prospective fault current</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Step 1: Calculate prospective fault current</p>
                 <p>
                   I<sub>sc</sub> = (1000 × 1000) / (1.732 × 400 × 0.06) = 24.1kA
                 </p>
-                <p className="mt-2 text-white/60">Step 2: Select main incomer device</p>
+                <p className="mt-2 text-white">Step 2: Select main incomer device</p>
                 <p>Options: 1600A MCCB (Icu 36kA) or 1600A ACB (Icu 65kA)</p>
-                <p className="mt-2 text-white/60">Step 3: Evaluate requirements</p>
+                <p className="mt-2 text-white">Step 3: Evaluate requirements</p>
                 <p>- Withdrawable preferred for maintenance flexibility</p>
                 <p>- Communication interface for BMS integration required</p>
                 <p>- Form 3b separation specified</p>
@@ -948,15 +948,15 @@ const HNCModule7Section1_1 = () => {
                 <strong>Scenario:</strong> Select MCCB for a 350A submain with 25kA prospective
                 fault current.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Requirements analysis:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Requirements analysis:</p>
                 <p>- Load current: 350A</p>
                 <p>- PSCC: 25kA</p>
                 <p>- Fixed mounting acceptable</p>
-                <p className="mt-2 text-white/60">Frame size options:</p>
+                <p className="mt-2 text-white">Frame size options:</p>
                 <p>- 400A frame: Icu options 25kA, 36kA, 50kA</p>
                 <p>- 630A frame: Higher capacity, oversized for application</p>
-                <p className="mt-2 text-white/60">Selection process:</p>
+                <p className="mt-2 text-white">Selection process:</p>
                 <p>Frame: 400A (minimum frame for 350A setting)</p>
                 <p>Icu: 36kA (exceeds 25kA PSCC with margin)</p>
                 <p>Trip unit: Electronic adjustable (Ir 0.4-1 × In, Im 1.5-10 × In)</p>
@@ -974,13 +974,13 @@ const HNCModule7Section1_1 = () => {
                 <strong>Scenario:</strong> Determine form of separation for a data centre main
                 switchboard.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Operational requirements:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Operational requirements:</p>
                 <p>- 24/7 operation, no planned shutdowns</p>
                 <p>- Regular circuit additions expected</p>
                 <p>- Maintenance on individual circuits with others live</p>
                 <p>- Multiple maintenance personnel may work simultaneously</p>
-                <p className="mt-2 text-white/60">Assessment:</p>
+                <p className="mt-2 text-white">Assessment:</p>
                 <p>- Form 1: Inadequate - no separation</p>
                 <p>- Form 2: Inadequate - terminals not separated</p>
                 <p>- Form 3: Marginal - functional units separated but terminals shared</p>
@@ -1081,7 +1081,7 @@ const HNCModule7Section1_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1127,7 +1127,7 @@ const HNCModule7Section1_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section1">

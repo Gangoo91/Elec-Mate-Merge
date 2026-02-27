@@ -264,7 +264,7 @@ const Level3Module1Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section4">
@@ -445,7 +445,7 @@ const Level3Module1Section4_2 = () => {
               right, do not use it.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> An electrician stepped onto a scaffold platform to install a
               cable tray. The scaffold had a valid green tag. However, during the night, another
               trade had removed boards from an adjacent bay to pass materials through and not
@@ -496,19 +496,19 @@ const Level3Module1Section4_2 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">75 Degree Angle</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   1:4 ratio - base 1 unit out for every 4 up. Use the standing test.
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">1 Metre Extension</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Extend at least 1m (3 rungs) above landing for safe handhold.
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">3 Point Contact</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Always maintain three limbs in contact while climbing.
                 </p>
               </div>
@@ -599,7 +599,7 @@ const Level3Module1Section4_2 = () => {
               harnesses are not worn in boom lifts.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> An electrician was working from a cherry picker to install
               external lighting on a warehouse. The site had recently had heavy rain. As the boom
               extended, the outrigger on one side sank into soft ground. The MEWP became unstable
@@ -670,7 +670,7 @@ const Level3Module1Section4_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -715,7 +715,7 @@ const Level3Module1Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section4-1">

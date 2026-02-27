@@ -234,7 +234,7 @@ const Level3Module3Section2_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section2">
@@ -306,7 +306,7 @@ const Level3Module3Section2_4 = () => {
                 <p className="font-medium text-elec-yellow/80 mb-2 text-center">
                   Z = square root of (R squared + XL squared)
                 </p>
-                <p className="text-sm text-white/80 text-center">
+                <p className="text-sm text-white text-center">
                   Series RL impedance using Pythagoras theorem
                 </p>
               </div>
@@ -344,7 +344,7 @@ const Level3Module3Section2_4 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Worked Example:</strong> A coil has R = 30 ohms and XL = 40 ohms. Find Z, I,
               and pf for 230V supply. Z = square root of (30 squared + 40 squared) = square root of
               (900 + 1600) = 50 ohms. I = 230 / 50 = 4.6A. Power factor = R/Z = 30/50 = 0.6 lagging.
@@ -372,7 +372,7 @@ const Level3Module3Section2_4 = () => {
                 <p className="font-medium text-elec-yellow/80 mb-2 text-center">
                   Z = square root of (R squared + XC squared)
                 </p>
-                <p className="text-sm text-white/80 text-center">
+                <p className="text-sm text-white text-center">
                   Series RC impedance using Pythagoras theorem
                 </p>
               </div>
@@ -388,25 +388,25 @@ const Level3Module3Section2_4 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">RL Circuit</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Current LAGS voltage (lagging pf). VL leads I by 90 degrees.
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">RC Circuit</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Current LEADS voltage (leading pf). VC lags I by 90 degrees.
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Same Impedance Formula</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Z = square root of (R squared + X squared) applies to both
                 </p>
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Worked Example:</strong> R = 40 ohms, C = 100 microfarads, f = 50Hz, V = 230V.
               XC = 1/(2 x pi x 50 x 0.0001) = 31.8 ohms. Z = square root of (40 squared + 31.8
               squared) = 51.1 ohms. I = 230/51.1 = 4.5A. Power factor = 40/51.1 = 0.78 leading.
@@ -435,7 +435,7 @@ const Level3Module3Section2_4 = () => {
                 <p className="font-medium text-elec-yellow/80 mb-2 text-center">
                   Z = square root of (R squared + (XL - XC) squared)
                 </p>
-                <p className="text-sm text-white/80 text-center">
+                <p className="text-sm text-white text-center">
                   Series RLC impedance with net reactance
                 </p>
               </div>
@@ -466,7 +466,7 @@ const Level3Module3Section2_4 = () => {
               resonant frequency can be calculated from the L and C values.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Worked Example:</strong> R = 25 ohms, XL = 60 ohms, XC = 20 ohms. Net
               reactance = XL - XC = 60 - 20 = 40 ohms (inductive). Z = square root of (25 squared +
               40 squared) = square root of (625 + 1600) = 47.2 ohms. Power factor = 25/47.2 = 0.53
@@ -620,7 +620,7 @@ const Level3Module3Section2_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -665,7 +665,7 @@ const Level3Module3Section2_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section2-3">

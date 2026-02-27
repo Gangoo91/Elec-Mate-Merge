@@ -205,7 +205,7 @@ const HNCModule3Section6_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section6">
@@ -227,7 +227,7 @@ const HNCModule3Section6_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Load Management and Demand Reduction
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Strategies and techniques to optimise electrical demand, reduce peak loads and minimise
             energy costs in building services
           </p>
@@ -336,7 +336,7 @@ const HNCModule3Section6_3 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 Load Factor = Average Demand / Maximum Demand
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Also expressed as: Total Energy (kWh) / (MD × Operating Hours)
               </p>
             </div>
@@ -638,7 +638,7 @@ const HNCModule3Section6_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Regulatory note:</strong> BS 7671 and building regulations require that life
               safety systems remain operational. Load shedding schemes must be designed to protect
               these circuits.
@@ -726,7 +726,7 @@ const HNCModule3Section6_3 = () => {
               <p className="font-mono text-center text-base mb-2">
                 Required Capacity (kWh) = Peak Reduction (kW) x Duration (hours) / DoD
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 DoD = Depth of Discharge (typically 0.8-0.9 for lithium-ion)
               </p>
             </div>
@@ -734,13 +734,13 @@ const HNCModule3Section6_3 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6 text-sm">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-elec-yellow mb-1">Example: Battery Sizing</p>
-                <p className="text-white/70">Reduce peak by 100 kW for 2 hours</p>
-                <p className="text-white/70">Capacity = 100 x 2 / 0.85 = 235 kWh</p>
+                <p className="text-white">Reduce peak by 100 kW for 2 hours</p>
+                <p className="text-white">Capacity = 100 x 2 / 0.85 = 235 kWh</p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-elec-yellow mb-1">Economic Benefit</p>
-                <p className="text-white/70">MD reduction: 100 kW</p>
-                <p className="text-white/70">At £15/kVA/month = £18,000/year saving</p>
+                <p className="text-white">MD reduction: 100 kW</p>
+                <p className="text-white">At £15/kVA/month = £18,000/year saving</p>
               </div>
             </div>
 
@@ -881,15 +881,15 @@ const HNCModule3Section6_3 = () => {
               <div className="grid grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-black/20">
                   <p className="font-bold text-elec-yellow mb-1">pf = kW / kVA</p>
-                  <p className="text-white/70 text-xs">Power factor definition</p>
+                  <p className="text-white text-xs">Power factor definition</p>
                 </div>
                 <div className="p-3 rounded bg-black/20">
                   <p className="font-bold text-elec-yellow mb-1">kVAr = kVA x sin(cos⁻¹pf)</p>
-                  <p className="text-white/70 text-xs">Reactive power</p>
+                  <p className="text-white text-xs">Reactive power</p>
                 </div>
                 <div className="p-3 rounded bg-black/20">
                   <p className="font-bold text-elec-yellow mb-1">kVA = kW / pf</p>
-                  <p className="text-white/70 text-xs">Apparent power</p>
+                  <p className="text-white text-xs">Apparent power</p>
                 </div>
               </div>
             </div>
@@ -977,7 +977,7 @@ const HNCModule3Section6_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Warning:</strong> Over-correction (leading pf) can cause voltage rise and
               equipment damage. Target pf of 0.95-0.98 is recommended.
             </p>
@@ -1099,7 +1099,7 @@ const HNCModule3Section6_3 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6 text-sm">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-elec-yellow mb-1">Quick Wins</p>
-                <ul className="text-white/70 space-y-1 list-disc list-outside ml-4">
+                <ul className="text-white space-y-1 list-disc list-outside ml-4">
                   <li>Stagger start-up sequences</li>
                   <li>Optimise HVAC schedules</li>
                   <li>Control hot water heating times</li>
@@ -1108,7 +1108,7 @@ const HNCModule3Section6_3 = () => {
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-elec-yellow mb-1">Strategic Investments</p>
-                <ul className="text-white/70 space-y-1 list-disc list-outside ml-4">
+                <ul className="text-white space-y-1 list-disc list-outside ml-4">
                   <li>Battery energy storage</li>
                   <li>Thermal storage systems</li>
                   <li>Smart building controls</li>
@@ -1272,7 +1272,7 @@ const HNCModule3Section6_3 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Commissioning note:</strong> Staggered start sequences must be tested during
               commissioning to verify delays are appropriate and no critical services are delayed
               excessively.
@@ -1297,7 +1297,7 @@ const HNCModule3Section6_3 = () => {
                 working month, operating 10 hours per day. Maximum demand is 95 kW. Calculate the
                 load factor.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Operating hours = 22 days x 10 hours = 220 hours</p>
                 <p className="mt-2">Average demand = Total energy / Operating hours</p>
                 <p>
@@ -1307,7 +1307,7 @@ const HNCModule3Section6_3 = () => {
                 <p>
                   Load Factor = 68.2 / 95 = <strong>0.72 (72%)</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → Good load factor indicates efficient supply utilisation
                 </p>
               </div>
@@ -1321,7 +1321,7 @@ const HNCModule3Section6_3 = () => {
                 <strong>Question:</strong> A factory has 400 kW load at 0.75 pf. Calculate the kVAr
                 required to improve to 0.95 pf, and the kVA reduction achieved.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Original kVA = kW / pf = 400 / 0.75 = <strong>533 kVA</strong>
                 </p>
@@ -1352,7 +1352,7 @@ const HNCModule3Section6_3 = () => {
                 limit grid demand to 450 kW for a 3-hour peak period using battery storage. Size the
                 system.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Peak reduction required = 600 - 450 = 150 kW</p>
                 <p className="mt-2">Energy required = Power x Time = 150 kW x 3 h = 450 kWh</p>
                 <p className="mt-2">Accounting for 85% depth of discharge:</p>
@@ -1362,7 +1362,7 @@ const HNCModule3Section6_3 = () => {
                 <p className="mt-2">
                   Inverter rating = Peak power = <strong>150 kW minimum</strong>
                 </p>
-                <p className="mt-2 text-white/60">→ Specify 530 kWh / 200 kW battery system</p>
+                <p className="mt-2 text-white">→ Specify 530 kWh / 200 kW battery system</p>
                 <p className="mt-2 text-green-400">
                   At £15/kVA/month demand saving = £2,250/month = £27,000/year
                 </p>
@@ -1450,7 +1450,7 @@ const HNCModule3Section6_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1496,7 +1496,7 @@ const HNCModule3Section6_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section6-2">

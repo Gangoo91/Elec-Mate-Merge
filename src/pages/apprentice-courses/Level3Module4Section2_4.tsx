@@ -280,7 +280,7 @@ const Level3Module4Section2_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section2">
@@ -376,7 +376,7 @@ const Level3Module4Section2_4 = () => {
               test period.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Site example:</strong> You're about to work on a circuit that should be dead.
               You prove your voltage indicator on a known live source - it shows 235V, beeps, and
               illuminates as expected. You test the circuit to be worked on - no indication. You
@@ -487,7 +487,7 @@ const Level3Module4Section2_4 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Site example:</strong> During an audit, you're asked to demonstrate your
               instruments are calibrated. You produce certificates showing each instrument was
               calibrated within the last 12 months by a UKAS-accredited laboratory. The certificates
@@ -525,7 +525,7 @@ const Level3Module4Section2_4 = () => {
               <p className="text-sm font-medium text-white mb-2">
                 Reading Accuracy Specifications:
               </p>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 Example: plus or minus 2% of reading plus or minus 3 digits
               </p>
               <ul className="text-sm text-white space-y-1 ml-4">
@@ -546,19 +546,19 @@ const Level3Module4Section2_4 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Example at 100R</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   2% = 2R, 3 digits = 0.3R, Total = plus or minus 2.3R
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Example at 1.0R</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   2% = 0.02R, 3 digits = 0.03R, Total = plus or minus 0.05R (5%!)
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Conclusion</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Relative accuracy is worse at lower readings due to digit error
                 </p>
               </div>
@@ -596,7 +596,7 @@ const Level3Module4Section2_4 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Site example:</strong> Your loop impedance tester shows Zs = 1.40 ohms on a
               circuit with maximum of 1.44 ohms. With plus or minus 3% plus 0.02 ohm accuracy,
               actual Zs could be 1.34 to 1.46 ohms. The circuit might actually be non-compliant.
@@ -675,7 +675,7 @@ const Level3Module4Section2_4 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Site example:</strong> You're measuring insulation resistance in a damp
               basement. Readings are lower than expected - around 5 MR instead of typical 100+ MR.
               Before condemning the installation, consider that humidity is affecting the
@@ -758,7 +758,7 @@ const Level3Module4Section2_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -803,7 +803,7 @@ const Level3Module4Section2_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section2-3">

@@ -26,7 +26,7 @@ const PlanSelection = () => {
             className={cn(
               'relative z-10 px-6 sm:px-8 py-2.5 text-sm font-semibold rounded-full transition-all duration-300 min-w-[110px] sm:min-w-[130px] min-h-[44px] touch-manipulation',
               'active:scale-[0.98]',
-              billing === 'monthly' ? 'text-elec-dark' : 'text-white/50'
+              billing === 'monthly' ? 'text-elec-dark' : 'text-white'
             )}
           >
             Monthly
@@ -37,7 +37,7 @@ const PlanSelection = () => {
             className={cn(
               'relative z-10 px-6 sm:px-8 py-2.5 text-sm font-semibold rounded-full transition-all duration-300 min-w-[110px] sm:min-w-[130px] min-h-[44px] touch-manipulation',
               'active:scale-[0.98]',
-              billing === 'yearly' ? 'text-elec-dark' : 'text-white/50'
+              billing === 'yearly' ? 'text-elec-dark' : 'text-white'
             )}
           >
             Annual

@@ -162,7 +162,7 @@ export default function SharedPortfolioView() {
                 placeholder="Your name"
                 value={reviewerName}
                 onChange={(e) => setReviewerName(e.target.value)}
-                className="h-11 px-3 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-white/40 focus:outline-none focus:border-yellow-400/50 touch-manipulation"
+                className="h-11 px-3 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-white focus:outline-none focus:border-yellow-400/50 touch-manipulation"
               />
               <select
                 value={reviewerRole}

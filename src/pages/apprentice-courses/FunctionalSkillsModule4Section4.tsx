@@ -104,7 +104,7 @@ const FunctionalSkillsModule4Section4 = () => {
             to="/study-centre/apprentice/functional-skills/module4"
             className="p-2 -ml-2 touch-manipulation"
           >
-            <ArrowLeft className="w-5 h-5 text-white/60" />
+            <ArrowLeft className="w-5 h-5 text-white" />
           </Link>
           <div>
             <p className="text-[11px] font-semibold text-green-400 uppercase tracking-wider">
@@ -130,7 +130,7 @@ const FunctionalSkillsModule4Section4 = () => {
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
               Geometry &amp; Spatial Skills
             </h2>
-            <p className="text-sm text-white/50 max-w-lg mx-auto">
+            <p className="text-sm text-white max-w-lg mx-auto">
               Apply practical geometry to conduit bending, trunking fill, cable routes, lighting
               layouts and ventilation calculations on real electrical installations.
             </p>
@@ -153,7 +153,7 @@ const FunctionalSkillsModule4Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Conduit Bending Angles</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Bending conduit accurately requires understanding the geometry of curves. Every bend
               has a radius, an angle, and an arc length. Getting these measurements right means your
@@ -164,7 +164,7 @@ const FunctionalSkillsModule4Section4 = () => {
               <p className="text-green-400 font-mono text-lg mb-1">
                 Arc Length = 2&pi;r &times; (&theta; / 360)
               </p>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 r = bending radius, &theta; = bend angle in degrees
               </p>
             </div>
@@ -173,10 +173,10 @@ const FunctionalSkillsModule4Section4 = () => {
               <h4 className="font-medium text-green-400 mb-2">
                 Worked Example &mdash; 90&deg; Bend
               </h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 Bending 20mm conduit with a bending radius of 100mm through 90&deg;.
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>Arc = 2 &times; 3.14159 &times; 100 &times; (90/360)</span>
@@ -196,19 +196,19 @@ const FunctionalSkillsModule4Section4 = () => {
               <h4 className="font-medium text-green-400 mb-2">Standard Bending Radii</h4>
               <div className="space-y-1 text-sm">
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">20mm conduit</span>
+                  <span className="text-white">20mm conduit</span>
                   <span className="text-green-400">75&ndash;100mm radius</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">25mm conduit</span>
+                  <span className="text-white">25mm conduit</span>
                   <span className="text-green-400">100&ndash;125mm radius</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/80">32mm conduit</span>
+                  <span className="text-white">32mm conduit</span>
                   <span className="text-green-400">125&ndash;150mm radius</span>
                 </div>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Bending too tightly risks kinking the conduit and making it impossible to draw
                 cables through.
               </p>
@@ -216,12 +216,12 @@ const FunctionalSkillsModule4Section4 = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-2">The &ldquo;Gain&rdquo; in a Bend</h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 When you bend conduit, the overall length of conduit used is less than if you used a
                 straight piece plus an elbow. This difference is called the &ldquo;gain&rdquo; or
                 &ldquo;shrinkage.&rdquo;
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>For a 90&deg; bend: gain = 2r &minus; arc = 2(100) &minus; 157 = 43mm</span>
@@ -242,7 +242,7 @@ const FunctionalSkillsModule4Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Always mark your bending points carefully before applying the bending spring or
                 machine. Measure twice, bend once. A badly placed bend cannot be easily corrected
                 &mdash; you will need to start with a new piece of conduit.
@@ -264,7 +264,7 @@ const FunctionalSkillsModule4Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Trunking Fill Calculations</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               BS 7671 limits trunking fill to 45% of the internal cross-sectional area (CSA). This
               ensures cables can be installed without damage and allows adequate air circulation for
@@ -275,7 +275,7 @@ const FunctionalSkillsModule4Section4 = () => {
               <p className="text-green-400 font-mono text-lg mb-1">
                 Max cable area = Trunking CSA &times; 0.45
               </p>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 CSA of each cable is found in Appendix 5 of the On-Site Guide
               </p>
             </div>
@@ -286,23 +286,23 @@ const FunctionalSkillsModule4Section4 = () => {
               </h4>
               <div className="space-y-1 text-sm">
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">1.5mm&sup2; flat T&amp;E</span>
+                  <span className="text-white">1.5mm&sup2; flat T&amp;E</span>
                   <span className="text-green-400">16.6mm&sup2;</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">2.5mm&sup2; flat T&amp;E</span>
+                  <span className="text-white">2.5mm&sup2; flat T&amp;E</span>
                   <span className="text-green-400">23.4mm&sup2;</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">4.0mm&sup2; flat T&amp;E</span>
+                  <span className="text-white">4.0mm&sup2; flat T&amp;E</span>
                   <span className="text-green-400">30.2mm&sup2;</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">6.0mm&sup2; flat T&amp;E</span>
+                  <span className="text-white">6.0mm&sup2; flat T&amp;E</span>
                   <span className="text-green-400">36.3mm&sup2;</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/80">10.0mm&sup2; flat T&amp;E</span>
+                  <span className="text-white">10.0mm&sup2; flat T&amp;E</span>
                   <span className="text-green-400">55.0mm&sup2;</span>
                 </div>
               </div>
@@ -310,11 +310,11 @@ const FunctionalSkillsModule4Section4 = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-2">Worked Example</h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 A 75mm &times; 75mm trunking run needs to carry: 6 &times; 2.5mm&sup2; T&amp;E, 4
                 &times; 1.5mm&sup2; T&amp;E, and 2 &times; 6.0mm&sup2; T&amp;E. Does it comply?
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>Trunking CSA = 75 &times; 75 = 5,625mm&sup2;</span>
@@ -339,14 +339,14 @@ const FunctionalSkillsModule4Section4 = () => {
                   </span>
                 </li>
               </ul>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 This trunking is only 11% full, so there is plenty of room for future additions.
               </p>
             </div>
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 For conduit, the fill factor is only 40% (not 45% like trunking) because the
                 circular cross-section wastes more space. Also, the 45% trunking fill is for
                 straight runs &mdash; at bends and tee-offs the effective fill should be even lower.
@@ -382,7 +382,7 @@ const FunctionalSkillsModule4Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Containment Layouts</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Planning containment layouts requires measuring distances on architectural drawings,
               calculating material quantities, and accounting for bends, junctions, and accessories.
@@ -391,7 +391,7 @@ const FunctionalSkillsModule4Section4 = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-2">Reading Drawing Scales</h4>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>1:50 scale &mdash; 1mm on drawing = 50mm (5cm) in real life</span>
@@ -417,11 +417,11 @@ const FunctionalSkillsModule4Section4 = () => {
               <h4 className="font-medium text-green-400 mb-2">
                 Worked Example &mdash; Trunking Quantity Takeoff
               </h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 An office has trunking running around the perimeter at desk height. The room is 12m
                 &times; 8m with one 2m wide doorway.
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>Perimeter = 2 &times; (12 + 8) = 40m</span>
@@ -453,7 +453,7 @@ const FunctionalSkillsModule4Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Always add 10% to your trunking and conduit quantities for cutting waste. A 38m run
                 becomes an order for approximately 42m. It is far cheaper to have a spare length
                 than to stop work and wait for a delivery.
@@ -475,7 +475,7 @@ const FunctionalSkillsModule4Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Basic Trigonometry</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Trigonometry might sound academic, but electricians use it constantly &mdash;
               calculating conduit offsets, cable tray angles, and containment runs around obstacles.
@@ -485,15 +485,15 @@ const FunctionalSkillsModule4Section4 = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 text-center">
                 <p className="text-green-400 font-mono text-lg mb-1">sin = O / H</p>
-                <p className="text-xs text-white/60">Opposite / Hypotenuse</p>
+                <p className="text-xs text-white">Opposite / Hypotenuse</p>
               </div>
               <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 text-center">
                 <p className="text-green-400 font-mono text-lg mb-1">cos = A / H</p>
-                <p className="text-xs text-white/60">Adjacent / Hypotenuse</p>
+                <p className="text-xs text-white">Adjacent / Hypotenuse</p>
               </div>
               <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 text-center">
                 <p className="text-green-400 font-mono text-lg mb-1">tan = O / A</p>
-                <p className="text-xs text-white/60">Opposite / Adjacent</p>
+                <p className="text-xs text-white">Opposite / Adjacent</p>
               </div>
             </div>
 
@@ -501,27 +501,27 @@ const FunctionalSkillsModule4Section4 = () => {
               <h4 className="font-medium text-green-400 mb-2">Key Trig Values for Electricians</h4>
               <div className="space-y-1 text-sm">
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">sin 30&deg;</span>
+                  <span className="text-white">sin 30&deg;</span>
                   <span className="text-green-400">0.500</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">sin 45&deg;</span>
+                  <span className="text-white">sin 45&deg;</span>
                   <span className="text-green-400">0.707</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">sin 60&deg;</span>
+                  <span className="text-white">sin 60&deg;</span>
                   <span className="text-green-400">0.866</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">cos 30&deg;</span>
+                  <span className="text-white">cos 30&deg;</span>
                   <span className="text-green-400">0.866</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">cos 45&deg;</span>
+                  <span className="text-white">cos 45&deg;</span>
                   <span className="text-green-400">0.707</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/80">cos 60&deg;</span>
+                  <span className="text-white">cos 60&deg;</span>
                   <span className="text-green-400">0.500</span>
                 </div>
               </div>
@@ -531,10 +531,10 @@ const FunctionalSkillsModule4Section4 = () => {
               <h4 className="font-medium text-green-400 mb-2">
                 Worked Example &mdash; Conduit Offset
               </h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 You need a conduit offset to clear a 200mm deep obstacle using 45&deg; bends.
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>Offset (depth) = 200mm</span>
@@ -556,7 +556,7 @@ const FunctionalSkillsModule4Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Remember SOH CAH TOA &mdash; Sin = Opposite/Hypotenuse, Cos = Adjacent/Hypotenuse,
                 Tan = Opposite/Adjacent. For conduit offsets at 45&deg;, the travel is always the
                 offset multiplied by &radic;2 (approximately 1.414).
@@ -587,7 +587,7 @@ const FunctionalSkillsModule4Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Pythagoras for Cable Routes</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Pythagoras&rsquo; theorem is your most used geometry tool on site. Whenever you need
               to find the actual length of a diagonal cable run, a cable tray riser, or a conduit
@@ -598,7 +598,7 @@ const FunctionalSkillsModule4Section4 = () => {
               <p className="text-green-400 font-mono text-lg mb-1">
                 c = &radic;(a&sup2; + b&sup2;)
               </p>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 c = hypotenuse (diagonal), a and b = the other two sides
               </p>
             </div>
@@ -607,11 +607,11 @@ const FunctionalSkillsModule4Section4 = () => {
               <h4 className="font-medium text-green-400 mb-2">
                 Worked Example &mdash; Diagonal Cable Route
               </h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 A cable tray rises vertically 3m while running horizontally 4m. What length of tray
                 is needed?
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>c = &radic;(3&sup2; + 4&sup2;) = &radic;(9 + 16) = &radic;25 = 5m</span>
@@ -627,11 +627,11 @@ const FunctionalSkillsModule4Section4 = () => {
               <h4 className="font-medium text-green-400 mb-2">
                 Worked Example &mdash; Cable Through a Wall
               </h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 A cable needs to pass diagonally through a 300mm thick wall, dropping 200mm in
                 height. What length of cable is inside the wall?
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
@@ -648,10 +648,10 @@ const FunctionalSkillsModule4Section4 = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-2">Common Pythagorean Triples</h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 These exact whole-number triangles appear frequently in practical work:
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>3 &ndash; 4 &ndash; 5 (and multiples: 6-8-10, 9-12-15, 30-40-50)</span>
@@ -669,7 +669,7 @@ const FunctionalSkillsModule4Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Builders use the 3-4-5 rule to check right angles on site. Measure 3m along one
                 wall, 4m along the other, and if the diagonal is exactly 5m, the corner is a true
                 90&deg;. You can use this technique to verify containment runs are square.
@@ -691,7 +691,7 @@ const FunctionalSkillsModule4Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Area Calculations for Lighting</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Designing lighting installations requires calculating room areas and applying the
               lumen method to determine how many luminaires are needed. This ensures adequate
@@ -702,7 +702,7 @@ const FunctionalSkillsModule4Section4 = () => {
               <p className="text-green-400 font-mono text-lg mb-1">
                 N = (E &times; A) / (F &times; UF &times; MF)
               </p>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 N = number of luminaires, E = required lux, A = area (m&sup2;), F = lumens per
                 fitting, UF = utilisation factor, MF = maintenance factor
               </p>
@@ -714,23 +714,23 @@ const FunctionalSkillsModule4Section4 = () => {
               </h4>
               <div className="space-y-1 text-sm">
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Corridors, stairs</span>
+                  <span className="text-white">Corridors, stairs</span>
                   <span className="text-green-400">100 lux</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Domestic living rooms</span>
+                  <span className="text-white">Domestic living rooms</span>
                   <span className="text-green-400">150&ndash;300 lux</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Offices (general)</span>
+                  <span className="text-white">Offices (general)</span>
                   <span className="text-green-400">300&ndash;500 lux</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Workshops, kitchens</span>
+                  <span className="text-white">Workshops, kitchens</span>
                   <span className="text-green-400">500 lux</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/80">Detailed work (electronics)</span>
+                  <span className="text-white">Detailed work (electronics)</span>
                   <span className="text-green-400">750&ndash;1000 lux</span>
                 </div>
               </div>
@@ -740,11 +740,11 @@ const FunctionalSkillsModule4Section4 = () => {
               <h4 className="font-medium text-green-400 mb-2">
                 Worked Example &mdash; Office Lighting
               </h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 An office is 8m &times; 6m. It needs 400 lux. Each LED panel provides 4,000 lumens.
                 UF = 0.55, MF = 0.8.
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>Area = 8 &times; 6 = 48m&sup2;</span>
@@ -772,7 +772,7 @@ const FunctionalSkillsModule4Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 The utilisation factor depends on room shape, reflectances (ceiling, walls, floor
                 colours), and luminaire type. Light-coloured rooms have higher UF values because
                 more light is reflected. The maintenance factor accounts for dirt build-up and lamp
@@ -804,7 +804,7 @@ const FunctionalSkillsModule4Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Volume &amp; Ventilation</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Electricians install extraction fans, ventilation systems, and air handling equipment.
               Calculating room volume and required air change rates is essential for selecting the
@@ -815,7 +815,7 @@ const FunctionalSkillsModule4Section4 = () => {
               <p className="text-green-400 font-mono text-lg mb-1">
                 Fan capacity = Volume &times; Air changes per hour
               </p>
-              <p className="text-sm text-white/70">Volume in m&sup3;, result in m&sup3;/hr</p>
+              <p className="text-sm text-white">Volume in m&sup3;, result in m&sup3;/hr</p>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
@@ -824,27 +824,27 @@ const FunctionalSkillsModule4Section4 = () => {
               </h4>
               <div className="space-y-1 text-sm">
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Domestic bathroom</span>
+                  <span className="text-white">Domestic bathroom</span>
                   <span className="text-green-400">
                     15 l/s (intermittent) or 8 l/s (continuous)
                   </span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Domestic kitchen</span>
+                  <span className="text-white">Domestic kitchen</span>
                   <span className="text-green-400">
                     60 l/s (intermittent) or 13 l/s (continuous)
                   </span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">WC (no window)</span>
+                  <span className="text-white">WC (no window)</span>
                   <span className="text-green-400">6 l/s (intermittent)</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Office</span>
+                  <span className="text-white">Office</span>
                   <span className="text-green-400">6&ndash;10 air changes/hr</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/80">Server room</span>
+                  <span className="text-white">Server room</span>
                   <span className="text-green-400">10&ndash;15 air changes/hr</span>
                 </div>
               </div>
@@ -854,10 +854,10 @@ const FunctionalSkillsModule4Section4 = () => {
               <h4 className="font-medium text-green-400 mb-2">
                 Worked Example &mdash; Server Room Fan
               </h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 A server room is 5m &times; 4m &times; 3m high. It requires 12 air changes per hour.
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>Volume = 5 &times; 4 &times; 3 = 60m&sup3;</span>
@@ -881,7 +881,7 @@ const FunctionalSkillsModule4Section4 = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-2">Unit Conversions</h4>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>1 m&sup3;/hr = 0.278 l/s (litres per second)</span>
@@ -905,7 +905,7 @@ const FunctionalSkillsModule4Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Always account for ducting resistance when selecting a fan. A fan rated at 200 l/s
                 in free air may only deliver 150 l/s when connected to ductwork due to back
                 pressure. Check the fan&rsquo;s performance curve against the system resistance.
@@ -927,7 +927,7 @@ const FunctionalSkillsModule4Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Practical Geometry Applications</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Let us bring together all the geometry skills covered in this section with practical
               applications that you will encounter on real electrical installations.
@@ -937,10 +937,10 @@ const FunctionalSkillsModule4Section4 = () => {
               <h4 className="font-medium text-green-400 mb-2">
                 Application 1: Bending Spring Offset Calculations
               </h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 You need to offset 20mm conduit by 100mm using a bending spring with 30&deg; bends.
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>Travel = offset / sin(30&deg;) = 100 / 0.5 = 200mm</span>
@@ -966,11 +966,11 @@ const FunctionalSkillsModule4Section4 = () => {
               <h4 className="font-medium text-green-400 mb-2">
                 Application 2: Cable Tray Around a Column
               </h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 Cable tray needs to route around a 600mm square column. The tray approaches from one
                 side and continues on the adjacent side (90&deg; turn).
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>You need two 45&deg; flat bends (or one 90&deg; flat bend)</span>
@@ -998,7 +998,7 @@ const FunctionalSkillsModule4Section4 = () => {
                 <BookOpen className="w-4 h-4 text-green-400" />
                 Key Takeaways
               </h4>
-              <ul className="space-y-2 text-sm text-white/80">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
@@ -1036,7 +1036,7 @@ const FunctionalSkillsModule4Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Geometry is not abstract maths &mdash; it is a practical skill you use every day on
                 site. The electrician who can accurately calculate bends, routes and quantities
                 without trial and error saves time, reduces waste, and produces cleaner
@@ -1053,7 +1053,7 @@ const FunctionalSkillsModule4Section4 = () => {
         <div className="flex items-center justify-between pt-6 border-t border-white/10">
           <Link
             to="/study-centre/apprentice/functional-skills/module4/section3"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
           >
             <ArrowLeft className="w-4 h-4" />
             Costing &amp; Quoting

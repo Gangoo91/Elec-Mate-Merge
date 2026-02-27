@@ -17,7 +17,7 @@ const wrapListItems = (text: string): string => {
         inList = true;
       }
       const content = line.replace(/^[\s]*[\-\*\+]\s/, '');
-      result.push(`  <li class="leading-relaxed text-white/90 pl-1">${content}</li>`);
+      result.push(`  <li class="leading-relaxed text-white pl-1">${content}</li>`);
     } else {
       if (inList) {
         result.push('</ul>');

@@ -223,7 +223,7 @@ const Level3Module3Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section2">
@@ -371,7 +371,7 @@ const Level3Module3Section2_3 = () => {
                 <p className="font-medium text-elec-yellow/80 mb-2 text-center">
                   XC = 1 / (2 x pi x f x C)
                 </p>
-                <p className="text-sm text-white/80 text-center">
+                <p className="text-sm text-white text-center">
                   Where: XC = capacitive reactance (ohms), f = frequency (Hz), C = capacitance (F)
                 </p>
               </div>
@@ -384,7 +384,7 @@ const Level3Module3Section2_3 = () => {
               reactance - the capacitor blocks DC completely.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Worked Example:</strong> Calculate the reactance of a 47 microfarad capacitor
               at 50Hz. XC = 1/(2 x pi x f x C) = 1/(2 x 3.142 x 50 x 0.000047) = 1/0.01476 = 67.7
               ohms. At 100Hz: XC = 1/(2 x 3.142 x 100 x 0.000047) = 33.9 ohms (halved).
@@ -435,19 +435,19 @@ const Level3Module3Section2_3 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">1 Time Constant</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Charges to 63.2% of final voltage (or discharges to 36.8%)
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">3 Time Constants</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Reaches 95% of final value - often considered 'practically complete'
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">5 Time Constants</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Reaches 99.3% of final value - theoretically complete
                 </p>
               </div>
@@ -472,7 +472,7 @@ const Level3Module3Section2_3 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Worked Example:</strong> A 100 microfarad capacitor charges through a 10
               kilohm resistor. Time constant = R x C = 10000 x 0.0001 = 1 second. After 1 second, it
               reaches 63.2% of supply voltage. After 5 seconds, it is fully charged.
@@ -628,7 +628,7 @@ const Level3Module3Section2_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -673,7 +673,7 @@ const Level3Module3Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section2-2">

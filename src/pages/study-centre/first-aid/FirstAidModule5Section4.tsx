@@ -207,7 +207,7 @@ export default function FirstAidModule5Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-5">
@@ -230,7 +230,7 @@ export default function FirstAidModule5Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Mental Health Crises, Communication &amp; First Aider Wellbeing
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Recognising and responding to mental health emergencies on site, effective communication
             skills, understanding barriers to seeking help in construction, and looking after your
             own wellbeing as a first aider
@@ -330,14 +330,14 @@ export default function FirstAidModule5Section4() {
                   <Heart className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Panic Attacks</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   A panic attack is a sudden episode of intense fear or anxiety that triggers severe
                   physical reactions, even when there is no real danger or apparent cause. They can
                   be extremely frightening for the person experiencing them and can mimic the
                   symptoms of a heart attack.
                 </p>
                 <p className="text-sm font-medium text-white mb-2">Recognition:</p>
-                <ul className="text-sm text-white/80 space-y-2 mb-3">
+                <ul className="text-sm text-white space-y-2 mb-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -391,7 +391,7 @@ export default function FirstAidModule5Section4() {
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-xs font-bold flex-shrink-0">
                         {i + 1}
                       </span>
-                      <p className="text-sm text-white/80">{step}</p>
+                      <p className="text-sm text-white">{step}</p>
                     </div>
                   ))}
                 </div>
@@ -403,7 +403,7 @@ export default function FirstAidModule5Section4() {
                   <Heart className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Severe Anxiety</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Severe anxiety goes beyond normal worry. It is persistent, overwhelming anxiety
                   that significantly affects a person&rsquo;s ability to function, think clearly, or
                   carry out their work safely. On a construction site, a severely anxious worker may
@@ -411,7 +411,7 @@ export default function FirstAidModule5Section4() {
                   decision-making.
                 </p>
                 <p className="text-sm font-medium text-white mb-2">Signs to look for:</p>
-                <ul className="text-sm text-white/80 space-y-2 mb-3">
+                <ul className="text-sm text-white space-y-2 mb-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -435,7 +435,7 @@ export default function FirstAidModule5Section4() {
                   </li>
                 </ul>
                 <p className="text-sm font-medium text-white mb-2">How to help:</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -473,7 +473,7 @@ export default function FirstAidModule5Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Suicidal Ideation</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Suicidal ideation means thinking about, considering, or planning suicide. It can
                   range from fleeting thoughts (&ldquo;I wish I wasn&rsquo;t here&rdquo;) to
                   detailed planning with intent and means. As a first aider, you must take{' '}
@@ -493,7 +493,7 @@ export default function FirstAidModule5Section4() {
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-red-500/20 text-red-400 text-xs font-bold flex-shrink-0">
                         {i + 1}
                       </span>
-                      <p className="text-sm text-white/80">{step}</p>
+                      <p className="text-sm text-white">{step}</p>
                     </div>
                   ))}
                 </div>
@@ -513,7 +513,7 @@ export default function FirstAidModule5Section4() {
                   <Shield className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Acute Psychosis</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Acute psychosis involves a loss of contact with reality. The person may experience
                   hallucinations (seeing or hearing things that are not there), delusions (firmly
                   held false beliefs), confused or disorganised thinking, and agitated or
@@ -521,7 +521,7 @@ export default function FirstAidModule5Section4() {
                   extreme stress.
                 </p>
                 <p className="text-sm font-medium text-white mb-2">How to respond:</p>
-                <ul className="text-sm text-white/80 space-y-2 mb-3">
+                <ul className="text-sm text-white space-y-2 mb-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -608,7 +608,7 @@ export default function FirstAidModule5Section4() {
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-rose-500/5 border border-rose-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-rose-400 mb-1">Calm, Clear Voice</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Lower your tone. Speak slowly and clearly. A calm voice signals safety and
                       helps reduce the person&rsquo;s agitation. Match their pace &mdash; do not
                       rush them.
@@ -616,7 +616,7 @@ export default function FirstAidModule5Section4() {
                   </div>
                   <div className="bg-rose-500/5 border border-rose-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-rose-400 mb-1">Active Listening</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Give your full attention. Maintain appropriate eye contact. Nod to show you
                       are listening. Reflect back what you hear: &ldquo;It sounds like you&rsquo;re
                       feeling&hellip;&rdquo;
@@ -626,7 +626,7 @@ export default function FirstAidModule5Section4() {
                     <p className="text-sm font-medium text-rose-400 mb-1">
                       Non-Judgemental Language
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Say &ldquo;I can see you&rsquo;re struggling&rdquo; not &ldquo;Pull yourself
                       together.&rdquo; Acknowledge their feelings as valid. Avoid minimising or
                       dismissing what they are experiencing.
@@ -634,7 +634,7 @@ export default function FirstAidModule5Section4() {
                   </div>
                   <div className="bg-rose-500/5 border border-rose-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-rose-400 mb-1">Open Questions</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Ask &ldquo;How are you feeling?&rdquo; rather than &ldquo;Are you OK?&rdquo;
                       Open questions invite a real answer and show genuine interest. Closed
                       questions get &ldquo;yes&rdquo; or &ldquo;fine&rdquo; even when things are not
@@ -643,7 +643,7 @@ export default function FirstAidModule5Section4() {
                   </div>
                   <div className="bg-rose-500/5 border border-rose-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-rose-400 mb-1">Body Language</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Open posture &mdash; uncrossed arms, facing them. Appropriate distance &mdash;
                       do not crowd. Get to the same level &mdash; kneel or sit if they are on the
                       ground. Show you are present and engaged.
@@ -651,7 +651,7 @@ export default function FirstAidModule5Section4() {
                   </div>
                   <div className="bg-rose-500/5 border border-rose-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-rose-400 mb-1">Avoid Minimising</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Do not say &ldquo;It could be worse&rdquo;, &ldquo;Others have it
                       harder&rdquo;, or &ldquo;Man up.&rdquo; These phrases are harmful, invalidate
                       the person&rsquo;s experience, and make them less likely to seek help in
@@ -660,7 +660,7 @@ export default function FirstAidModule5Section4() {
                   </div>
                   <div className="bg-rose-500/5 border border-rose-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-rose-400 mb-1">Confidentiality</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Respect their privacy. What they tell you should be kept confidential.
                       However, explain the limits: you have a duty to report if there is a risk of
                       harm to themselves or others.
@@ -668,7 +668,7 @@ export default function FirstAidModule5Section4() {
                   </div>
                   <div className="bg-rose-500/5 border border-rose-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-rose-400 mb-1">Cultural Sensitivity</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Be aware that attitudes to mental health vary across cultures. Language
                       barriers may make communication difficult. Religious and cultural
                       considerations may affect how a person understands and responds to mental
@@ -723,14 +723,14 @@ export default function FirstAidModule5Section4() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="bg-red-500/5 border border-red-500/20 p-3 rounded-lg text-center">
                     <p className="text-2xl font-bold text-red-400 mb-1">3.7x</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Construction workers are 3.7 times more likely to die by suicide than the
                       national average
                     </p>
                   </div>
                   <div className="bg-red-500/5 border border-red-500/20 p-3 rounded-lg text-center">
                     <p className="text-2xl font-bold text-red-400 mb-1">2 per day</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Approximately 2 construction workers take their own lives every working day in
                       the UK
                     </p>
@@ -740,7 +740,7 @@ export default function FirstAidModule5Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key Barriers</p>
-                <ul className="text-sm text-white/80 space-y-3">
+                <ul className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -805,7 +805,7 @@ export default function FirstAidModule5Section4() {
                     Industry Initiatives &amp; Support
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -869,7 +869,7 @@ export default function FirstAidModule5Section4() {
                     Normal Reactions After a Traumatic Incident
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -949,10 +949,10 @@ export default function FirstAidModule5Section4() {
                     When to Seek Professional Help
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   While most people recover naturally, you should seek professional support if:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1021,7 +1021,7 @@ export default function FirstAidModule5Section4() {
                 <div className="space-y-3">
                   <div className="bg-rose-500/10 border border-rose-500/30 p-3 rounded-lg">
                     <p className="text-sm font-medium text-rose-400 mb-1">Operational Debrief</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       What happened? What went well? What could be improved? What lessons can be
                       learned? This should take place ideally within <strong>72 hours</strong> of
                       the incident. It focuses on facts and process, not on emotions, and helps the
@@ -1030,7 +1030,7 @@ export default function FirstAidModule5Section4() {
                   </div>
                   <div className="bg-rose-500/10 border border-rose-500/30 p-3 rounded-lg">
                     <p className="text-sm font-medium text-rose-400 mb-1">Emotional Support</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       An opportunity for the first aider to talk about how the experience affected
                       them emotionally. This is not therapy &mdash; it is simply providing a safe
                       space to acknowledge what happened and how they feel. It should be offered,
@@ -1039,7 +1039,7 @@ export default function FirstAidModule5Section4() {
                   </div>
                   <div className="bg-rose-500/10 border border-rose-500/30 p-3 rounded-lg">
                     <p className="text-sm font-medium text-rose-400 mb-1">Peer Support</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Talking to colleagues who understand &mdash; particularly other first aiders
                       who have been through similar experiences. Peer support can be incredibly
                       valuable because it normalises the emotional response and reduces feelings of
@@ -1048,7 +1048,7 @@ export default function FirstAidModule5Section4() {
                   </div>
                   <div className="bg-rose-500/10 border border-rose-500/30 p-3 rounded-lg">
                     <p className="text-sm font-medium text-rose-400 mb-1">Professional Support</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Access to occupational health, counselling, or an Employee Assistance
                       Programme (EAP). Many employers provide free, confidential counselling through
                       an EAP &mdash; first aiders should be made aware of this service and
@@ -1134,7 +1134,7 @@ export default function FirstAidModule5Section4() {
                       <CheckCircle className="h-5 w-5 text-rose-400/70 mt-0.5 flex-shrink-0" />
                       <div>
                         <p className="text-sm font-medium text-white">{item.title}</p>
-                        <p className="text-sm text-white/80">{item.description}</p>
+                        <p className="text-sm text-white">{item.description}</p>
                       </div>
                     </div>
                   ))}
@@ -1163,7 +1163,7 @@ export default function FirstAidModule5Section4() {
                 Helpline Numbers &mdash; Keep These Visible
               </p>
             </div>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               These numbers should be displayed on site and known by all first aiders. They are
               free, confidential, and available to anyone.
             </p>
@@ -1171,7 +1171,7 @@ export default function FirstAidModule5Section4() {
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg text-center">
                 <p className="text-lg font-bold text-rose-400 mb-1">116 123</p>
                 <p className="text-sm font-medium text-white mb-1">Samaritans</p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   Free, 24 hours a day, 7 days a week. Available to anyone who is struggling, not
                   just those who are suicidal.
                 </p>
@@ -1179,7 +1179,7 @@ export default function FirstAidModule5Section4() {
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg text-center">
                 <p className="text-lg font-bold text-rose-400 mb-1">Text SHOUT to 85258</p>
                 <p className="text-sm font-medium text-white mb-1">Shout Crisis Text Line</p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   Free, 24/7 text-based support for anyone in crisis. Useful if the person cannot or
                   prefers not to speak on the phone.
                 </p>
@@ -1189,7 +1189,7 @@ export default function FirstAidModule5Section4() {
                 <p className="text-sm font-medium text-white mb-1">
                   Construction Industry Helpline
                 </p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   Free, confidential support specifically for construction workers and their
                   families. Covers mental health, financial, and legal support.
                 </p>
@@ -1207,7 +1207,7 @@ export default function FirstAidModule5Section4() {
                 When to Call 999 for Mental Health
               </h2>
             </div>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               Mental health emergencies are real emergencies. Call 999 in any of the following
               situations:
             </p>
@@ -1244,7 +1244,7 @@ export default function FirstAidModule5Section4() {
               ].map((item, i) => (
                 <div key={i} className="bg-red-500/5 border border-red-500/20 p-3 rounded-lg">
                   <p className="text-sm font-medium text-red-300 mb-1">{item.situation}</p>
-                  <p className="text-xs text-white/70">{item.detail}</p>
+                  <p className="text-xs text-white">{item.detail}</p>
                 </div>
               ))}
             </div>
@@ -1258,7 +1258,7 @@ export default function FirstAidModule5Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1272,7 +1272,7 @@ export default function FirstAidModule5Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-5">

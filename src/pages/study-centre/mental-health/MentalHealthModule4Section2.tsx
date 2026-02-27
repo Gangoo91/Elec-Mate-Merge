@@ -204,7 +204,7 @@ export default function MentalHealthModule4Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-4">
@@ -229,7 +229,7 @@ export default function MentalHealthModule4Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Eating Disorders
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding eating disorders including Anorexia Nervosa, Bulimia Nervosa, Binge Eating
             Disorder, OSFED, and ARFID &mdash; recognition in the workplace, physical health risks,
             male prevalence, and how to approach and support
@@ -314,7 +314,7 @@ export default function MentalHealthModule4Section2() {
                   <AlertTriangle className="h-6 w-6 text-red-400" />
                   <p className="text-base font-bold text-red-400">Highest Mortality Rate</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Eating disorders have the{' '}
                   <strong className="text-white">
                     highest mortality rate of any mental health condition
@@ -325,7 +325,7 @@ export default function MentalHealthModule4Section2() {
                   taking their own life. Early identification and treatment are critical for
                   survival.
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   According to the eating disorder charity{' '}
                   <strong className="text-white">BEAT</strong>, an estimated{' '}
                   <strong className="text-white">1.25 million people in the UK</strong> have an
@@ -356,7 +356,7 @@ export default function MentalHealthModule4Section2() {
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex-shrink-0">
                         {i + 1}
                       </span>
-                      <p className="text-sm text-white/80">{fact}</p>
+                      <p className="text-sm text-white">{fact}</p>
                     </div>
                   ))}
                 </div>
@@ -364,7 +364,7 @@ export default function MentalHealthModule4Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">What Eating Disorders Are NOT</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   {[
                     "NOT a diet or a choice — the person cannot 'just eat normally'",
                     'NOT about vanity or wanting to look thin — they are driven by complex psychological distress',
@@ -459,9 +459,9 @@ export default function MentalHealthModule4Section2() {
                     <div key={i} className={`${item.bg} border ${item.border} p-3 rounded-lg`}>
                       <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 mb-1.5">
                         <p className={`text-sm font-semibold ${item.colour}`}>{item.name}</p>
-                        <span className="text-xs text-white/50">{item.key}</span>
+                        <span className="text-xs text-white">{item.key}</span>
                       </div>
-                      <p className="text-sm text-white/80">{item.features}</p>
+                      <p className="text-sm text-white">{item.features}</p>
                     </div>
                   ))}
                 </div>
@@ -472,7 +472,7 @@ export default function MentalHealthModule4Section2() {
                 <p className="text-sm font-medium text-red-400 mb-3">
                   Anorexia Nervosa &mdash; In Detail
                 </p>
-                <div className="text-sm text-white/80 space-y-3">
+                <div className="text-sm text-white space-y-3">
                   <p>
                     Anorexia Nervosa is characterised by a relentless pursuit of thinness, an
                     intense fear of gaining weight (even when significantly underweight), and a
@@ -506,7 +506,7 @@ export default function MentalHealthModule4Section2() {
                 <p className="text-sm font-medium text-amber-400 mb-3">
                   Bulimia Nervosa &mdash; In Detail
                 </p>
-                <div className="text-sm text-white/80 space-y-3">
+                <div className="text-sm text-white space-y-3">
                   <p>
                     Bulimia Nervosa is characterised by recurrent cycles of binge eating followed by
                     compensatory behaviours designed to prevent weight gain. The binge-purge cycle
@@ -536,7 +536,7 @@ export default function MentalHealthModule4Section2() {
                 <p className="text-sm font-medium text-blue-400 mb-3">
                   Binge Eating Disorder (BED) &mdash; In Detail
                 </p>
-                <div className="text-sm text-white/80 space-y-3">
+                <div className="text-sm text-white space-y-3">
                   <p>
                     Binge Eating Disorder is the most common eating disorder. It involves recurrent
                     episodes of eating significantly more food than most people would eat in a
@@ -590,7 +590,7 @@ export default function MentalHealthModule4Section2() {
                     The Male Eating Disorder Gap
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Approximately{' '}
                   <strong className="text-white">
                     25% of people with eating disorders are male
@@ -600,7 +600,7 @@ export default function MentalHealthModule4Section2() {
                   help, less likely to be asked about eating behaviour by healthcare professionals,
                   and less likely to be correctly diagnosed.
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Male eating disorder rates are <strong className="text-white">rising</strong>, and
                   the gap between male and female rates may be narrower than statistics suggest.
                   Research from the NHS shows a sharp increase in hospital admissions for eating
@@ -613,7 +613,7 @@ export default function MentalHealthModule4Section2() {
                   <p className="text-sm font-medium text-violet-400 mb-3">
                     Why Men Are Under-Diagnosed
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     {[
                       "Persistent perception that eating disorders are a 'female problem'",
                       'Screening tools and diagnostic criteria historically developed based on female presentations',
@@ -634,7 +634,7 @@ export default function MentalHealthModule4Section2() {
                   <p className="text-sm font-medium text-purple-400 mb-3">
                     Construction-Specific Factors
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     {[
                       "Physical labour can mask excessive exercise — seen as 'part of the job'",
                       "Skipping meals on site may be normalised ('too busy to eat')",
@@ -656,7 +656,7 @@ export default function MentalHealthModule4Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   How Eating Disorders May Present Differently in Men
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   {[
                     "Focus on 'muscularity' rather than thinness — desire to be lean and muscular rather than thin",
                     "Excessive gym use and obsessive exercise routines ('bigorexia' or Muscle Dysmorphia)",
@@ -710,7 +710,7 @@ export default function MentalHealthModule4Section2() {
                     <HeartPulse className="h-5 w-5 text-red-400" />
                     <p className="text-sm font-medium text-red-400">Heart &amp; Cardiovascular</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     {[
                       'Cardiac arrhythmias (irregular heartbeat) — the leading cause of sudden death in eating disorders',
                       'Bradycardia (abnormally slow heart rate)',
@@ -731,7 +731,7 @@ export default function MentalHealthModule4Section2() {
                     <Activity className="h-5 w-5 text-amber-400" />
                     <p className="text-sm font-medium text-amber-400">Kidneys &amp; Electrolytes</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     {[
                       'Kidney failure from chronic dehydration and electrolyte disturbance',
                       'Hypokalaemia (low potassium) — can cause fatal cardiac arrhythmias',
@@ -754,7 +754,7 @@ export default function MentalHealthModule4Section2() {
                       Bones, Muscles &amp; Hormones
                     </p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     {[
                       'Osteoporosis (brittle bones) — increased fracture risk, especially dangerous in physical jobs',
                       'Muscle wasting and weakness — reduced strength and ability to work safely',
@@ -777,7 +777,7 @@ export default function MentalHealthModule4Section2() {
                       Other Physical Complications
                     </p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     {[
                       'Dental erosion — stomach acid from repeated vomiting destroys tooth enamel',
                       'Oesophageal tears (Mallory-Weiss) from forceful vomiting',
@@ -803,7 +803,7 @@ export default function MentalHealthModule4Section2() {
                     Medical Emergency Signs &mdash; Call 999
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The following signs may indicate a life-threatening complication of an eating
                   disorder. They require{' '}
                   <strong className="text-white">immediate emergency medical attention</strong>:
@@ -821,7 +821,7 @@ export default function MentalHealthModule4Section2() {
                   ].map((sign, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
-                      <p className="text-sm text-white/80">{sign}</p>
+                      <p className="text-sm text-white">{sign}</p>
                     </div>
                   ))}
                 </div>
@@ -866,7 +866,7 @@ export default function MentalHealthModule4Section2() {
                     <Eye className="h-5 w-5 text-purple-400" />
                     <p className="text-sm font-medium text-purple-400">Behavioural Signs</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     {[
                       'Avoiding eating with others — always finding excuses not to join for lunch or breaks',
                       'Excessive exercise beyond what the job requires — going to the gym before and after physical work',
@@ -892,7 +892,7 @@ export default function MentalHealthModule4Section2() {
                     <Activity className="h-5 w-5 text-violet-400" />
                     <p className="text-sm font-medium text-violet-400">Physical Signs</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     {[
                       'Noticeable weight changes — either loss or gain — over a period of weeks or months',
                       'Persistent fatigue and low energy despite adequate rest',
@@ -919,7 +919,7 @@ export default function MentalHealthModule4Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Safety Implications on Site</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Eating disorders can directly impact workplace safety on construction sites.
                   Dizziness and fainting from malnutrition or dehydration can lead to falls from
                   height or injury from tools and equipment. Muscle weakness can impair the ability
@@ -935,7 +935,7 @@ export default function MentalHealthModule4Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Important: What These Signs Do NOT Mean
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Noticing one or two of these signs does not mean someone definitely has an eating
                   disorder. Many of these behaviours or physical changes can have other causes. What
                   should prompt concern is a <strong className="text-white">pattern</strong> of
@@ -989,7 +989,7 @@ export default function MentalHealthModule4Section2() {
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex-shrink-0">
                         {i + 1}
                       </span>
-                      <p className="text-sm text-white/80">{step}</p>
+                      <p className="text-sm text-white">{step}</p>
                     </div>
                   ))}
                 </div>
@@ -998,7 +998,7 @@ export default function MentalHealthModule4Section2() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-green-400 mb-2">Things to Say</p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     {[
                       "'I've noticed you've seemed a bit down recently and I wanted to check in'",
                       "'I care about you and I'm here if you ever want to talk about anything'",
@@ -1016,7 +1016,7 @@ export default function MentalHealthModule4Section2() {
 
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-red-400 mb-2">Things to Avoid</p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     {[
                       "'You've lost so much weight!' or 'You look really thin'",
                       "'Just eat something — it's not that hard'",
@@ -1049,7 +1049,7 @@ export default function MentalHealthModule4Section2() {
                       BEAT Eating Disorders Helpline
                     </p>
                     <p className="text-lg font-bold text-white mb-1">0808 801 0677</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Free, confidential helpline open to anyone concerned about their own or
                       someone else&rsquo;s eating. Also available via webchat at
                       beateatingdisorders.org.uk. Youthline (under 18s): 0808 801 0711.
@@ -1057,7 +1057,7 @@ export default function MentalHealthModule4Section2() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white mb-1">GP Referral</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Encourage the person to see their GP, who can assess their physical health,
                       provide initial support, and refer them to a specialist eating disorder
                       service if needed. Under NICE guidelines, GPs should refer to a specialist
@@ -1069,7 +1069,7 @@ export default function MentalHealthModule4Section2() {
                     <p className="text-sm font-medium text-white mb-1">
                       Specialist Eating Disorder Services
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       The NHS provides specialist eating disorder services in every area of the UK.
                       Treatment may include Cognitive Behavioural Therapy for eating disorders
                       (CBT-ED), the Maudsley Anorexia Nervosa Treatment for Adults (MANTRA),
@@ -1080,7 +1080,7 @@ export default function MentalHealthModule4Section2() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white mb-1">Additional Resources</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>
@@ -1119,7 +1119,7 @@ export default function MentalHealthModule4Section2() {
                   <Heart className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Recovery IS Possible</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   It is important to know and to communicate that{' '}
                   <strong className="text-white">
                     full recovery from an eating disorder is possible
@@ -1158,7 +1158,7 @@ export default function MentalHealthModule4Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1172,7 +1172,7 @@ export default function MentalHealthModule4Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-4">

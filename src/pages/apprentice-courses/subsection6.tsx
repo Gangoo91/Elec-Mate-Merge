@@ -222,7 +222,7 @@ const Section2_2 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-foreground active:text-foreground p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -248,7 +248,7 @@ const Section2_2 = () => {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
             Overloads, Short Circuits and Arcing
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding electrical faults, their causes, effects, and prevention strategies. BS
             7671 fault protection requirements and investigation techniques.
           </p>
@@ -710,7 +710,7 @@ const Section2_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="rounded-lg p-3 sm:p-4 bg-card border border-border/20">
                 <h3 className="font-medium text-foreground mb-2">{faq.question}</h3>
-                <p className="text-sm text-white/80">{faq.answer}</p>
+                <p className="text-sm text-white">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -794,7 +794,7 @@ const Section2_2 = () => {
             <div className="grid md:grid-cols-3 gap-3 sm:gap-4 text-sm">
               <div>
                 <h4 className="font-medium text-foreground mb-2">Overload Signs</h4>
-                <ul className="text-white/80 space-y-1">
+                <ul className="text-white space-y-1">
                   <li>• Warm cables/outlets</li>
                   <li>• MCB tripping</li>
                   <li>• Voltage drop symptoms</li>
@@ -803,7 +803,7 @@ const Section2_2 = () => {
               </div>
               <div>
                 <h4 className="font-medium text-foreground mb-2">Short Circuit Indicators</h4>
-                <ul className="text-white/80 space-y-1">
+                <ul className="text-white space-y-1">
                   <li>• Instantaneous MCB trip</li>
                   <li>• Sparks/flash at fault point</li>
                   <li>• Burned cable insulation</li>
@@ -812,7 +812,7 @@ const Section2_2 = () => {
               </div>
               <div>
                 <h4 className="font-medium text-foreground mb-2">Arc Fault Protection</h4>
-                <ul className="text-white/80 space-y-1">
+                <ul className="text-white space-y-1">
                   <li>• AFDD required locations</li>
                   <li>• Proper connection torques</li>
                   <li>• Regular maintenance</li>

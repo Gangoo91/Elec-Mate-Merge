@@ -82,12 +82,12 @@ const SafetyGrid = ({ onSelectTopic }: SafetyGridProps) => {
         </div>
         <div className="flex-1 min-w-0">
           <h3 className="text-[15px] font-medium text-white leading-tight">{topic.title}</h3>
-          <p className="text-[13px] text-white/50 leading-tight mt-0.5 line-clamp-1">
+          <p className="text-[13px] text-white leading-tight mt-0.5 line-clamp-1">
             {topic.description}
           </p>
         </div>
         <div className="flex items-center gap-2 flex-shrink-0">
-          <ChevronRight className="h-4 w-4 text-white/20" />
+          <ChevronRight className="h-4 w-4 text-white" />
         </div>
       </motion.div>
     );
@@ -98,7 +98,7 @@ const SafetyGrid = ({ onSelectTopic }: SafetyGridProps) => {
       {/* Critical */}
       {criticalTopics.length > 0 && (
         <div>
-          <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+          <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
             Critical
           </p>
           <div className="rounded-2xl bg-white/[0.03] border border-red-500/20 overflow-hidden divide-y divide-white/[0.06]">
@@ -110,7 +110,7 @@ const SafetyGrid = ({ onSelectTopic }: SafetyGridProps) => {
       {/* High Priority */}
       {highTopics.length > 0 && (
         <div>
-          <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+          <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
             High Priority
           </p>
           <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
@@ -122,7 +122,7 @@ const SafetyGrid = ({ onSelectTopic }: SafetyGridProps) => {
       {/* Essential */}
       {essentialTopics.length > 0 && (
         <div>
-          <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+          <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
             Essential
           </p>
           <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
@@ -134,8 +134,8 @@ const SafetyGrid = ({ onSelectTopic }: SafetyGridProps) => {
       {/* Safety reminder */}
       <motion.div variants={itemVariants}>
         <div className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-white/[0.02]">
-          <AlertTriangle className="h-4 w-4 text-white/30 flex-shrink-0" />
-          <p className="text-[12px] text-white/40">
+          <AlertTriangle className="h-4 w-4 text-white flex-shrink-0" />
+          <p className="text-[12px] text-white">
             Always prioritise safety over speed of diagnosis
           </p>
         </div>

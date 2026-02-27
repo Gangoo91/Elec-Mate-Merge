@@ -240,7 +240,7 @@ const HNCModule5Section5_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section5">
@@ -262,7 +262,7 @@ const HNCModule5Section5_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Witness Testing
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Client attendance requirements, documentation standards, sign-off procedures, and
             acceptance protocols
           </p>
@@ -580,7 +580,7 @@ const HNCModule5Section5_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-2">Header Information</p>
-                  <ul className="text-white/80 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-white space-y-1 list-disc list-outside ml-5">
                     <li>Project name and reference</li>
                     <li>Test description and reference number</li>
                     <li>Location/area being tested</li>
@@ -590,7 +590,7 @@ const HNCModule5Section5_5 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-2">Results Section</p>
-                  <ul className="text-white/80 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-white space-y-1 list-disc list-outside ml-5">
                     <li>Acceptance criterion (specified value)</li>
                     <li>Actual result (measured/observed)</li>
                     <li>Pass/Fail status (clear indication)</li>
@@ -757,7 +757,7 @@ const HNCModule5Section5_5 = () => {
                 matrix, activating Zone 3 detectors fails to release the magnetic door holders on
                 Fire Exit 2 as specified.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90 mt-3">
+              <div className="bg-black/30 p-3 rounded text-sm text-white mt-3">
                 <p>
                   <strong>Recorded failure:</strong> Zone 3 detection did not trigger output to
                   MagLock 2
@@ -778,7 +778,7 @@ const HNCModule5Section5_5 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Contract tip:</strong> Review your contract for maximum time allowed between
               failed test and re-test. Missing deadlines may incur liquidated damages.
             </p>
@@ -803,7 +803,7 @@ const HNCModule5Section5_5 = () => {
                 <strong>Scenario:</strong> Conduct a 3-hour duration test on emergency lighting
                 installation.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Preparation:</strong>
                 </p>
@@ -837,7 +837,7 @@ const HNCModule5Section5_5 = () => {
                 <strong>Scenario:</strong> Client representative fails to attend a notified
                 generator load test.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Timeline:</strong>
                 </p>
@@ -870,7 +870,7 @@ const HNCModule5Section5_5 = () => {
                 <strong>Scenario:</strong> Fire alarm 100% detector test - 2 detectors out of 150
                 fail to respond.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Test result summary:</strong>
                 </p>
@@ -963,7 +963,7 @@ const HNCModule5Section5_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1009,7 +1009,7 @@ const HNCModule5Section5_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section5">

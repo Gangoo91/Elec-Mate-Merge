@@ -220,7 +220,7 @@ const HNCModule3Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section4">
@@ -242,7 +242,7 @@ const HNCModule3Section4_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Balanced and Unbalanced Loads
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding load distribution, neutral current flow, and the effects of asymmetrical
             loading in three-phase systems
           </p>
@@ -385,7 +385,7 @@ const HNCModule3Section4_3 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Mathematical Proof</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>For balanced currents with magnitude I:</p>
                 <p className="mt-2">
                   I<sub>R</sub> = I∠0°
@@ -422,7 +422,7 @@ const HNCModule3Section4_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Phasor Diagram Visualisation
               </p>
-              <div className="p-4 rounded bg-black/30 text-sm text-white/90">
+              <div className="p-4 rounded bg-black/30 text-sm text-white">
                 <p>Imagine three arrows of equal length, starting from the same point:</p>
                 <ul className="mt-2 space-y-1 list-disc list-outside ml-5">
                   <li className="pl-1">
@@ -557,7 +557,7 @@ const HNCModule3Section4_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 General Formula (Phasor Addition)
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>
                     I<sub>N</sub> = I<sub>R</sub> + I<sub>Y</sub> + I<sub>B</sub>
@@ -644,7 +644,7 @@ const HNCModule3Section4_3 = () => {
                 <strong>Problem:</strong> A distribution board has: Red = 40A, Yellow = 30A, Blue =
                 25A (all resistive loads). Calculate neutral current.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Using: I<sub>N</sub> = √(I<sub>R</sub>² + I<sub>Y</sub>² + I<sub>B</sub>² - I
                   <sub>R</sub>·I<sub>Y</sub> - I<sub>Y</sub>·I<sub>B</sub> - I<sub>B</sub>·I
@@ -694,13 +694,13 @@ const HNCModule3Section4_3 = () => {
                 <p className="text-sm text-white mb-2">
                   Voltage unbalance is measured using symmetrical components:
                 </p>
-                <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+                <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                   <p>
                     <strong>
                       VUF = (V<sub>negative</sub> / V<sub>positive</sub>) × 100%
                     </strong>
                   </p>
-                  <p className="mt-2 text-white/60">Simplified approximation:</p>
+                  <p className="mt-2 text-white">Simplified approximation:</p>
                   <p>
                     VUF ≈ (V<sub>max</sub> - V<sub>min</sub>) / V<sub>avg</sub> × 100%
                   </p>
@@ -761,7 +761,7 @@ const HNCModule3Section4_3 = () => {
               <p className="text-sm font-medium text-red-400 mb-2">
                 Motor Heating Due to Voltage Unbalance
               </p>
-              <div className="text-sm text-white/90">
+              <div className="text-sm text-white">
                 <p>The temperature rise in motors increases approximately as:</p>
                 <p className="font-mono mt-2 text-center">
                   ΔT<sub>increase</sub> ≈ 2 × (% voltage unbalance)²
@@ -896,7 +896,7 @@ const HNCModule3Section4_3 = () => {
                 <strong>Problem:</strong> Allocate these loads across three phases: 20A, 15A, 12A,
                 10A, 8A, 6A, 5A, 4A
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step-by-step allocation:</p>
                 <p className="mt-2">Start with empty phases: R=0, Y=0, B=0</p>
                 <p className="mt-2">Add 20A → R=20, Y=0, B=0</p>
@@ -1001,7 +1001,7 @@ const HNCModule3Section4_3 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
               <p className="text-sm font-medium text-amber-400 mb-2">Triplen Harmonic Warning</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 In an office building with computers on each phase drawing equal fundamental current
                 but 50% third harmonic content, the neutral current from triplen harmonics alone
                 equals 1.5× the phase fundamental current. Combined with any unbalance, the neutral
@@ -1137,18 +1137,18 @@ const HNCModule3Section4_3 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Problem:</strong> Design a distribution board for a 500m² open-plan office.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Load Assessment:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Load Assessment:</p>
                 <p>Lighting: 500m² × 12W/m² = 6kW → 26A at 230V</p>
                 <p>Small power: 500m² × 25W/m² = 12.5kW → 54A at 230V</p>
-                <p className="mt-2 text-white/60">Distribution (balanced):</p>
+                <p className="mt-2 text-white">Distribution (balanced):</p>
                 <p>Lighting: 3 × 10A circuits (one per phase)</p>
                 <p>Small power: 6 × 32A ring finals (2 per phase)</p>
-                <p className="mt-2 text-white/60">Phase allocation:</p>
+                <p className="mt-2 text-white">Phase allocation:</p>
                 <p>R: 1×10A lighting + 2×32A rings = ~26A design</p>
                 <p>Y: 1×10A lighting + 2×32A rings = ~26A design</p>
                 <p>B: 1×10A lighting + 2×32A rings = ~26A design</p>
-                <p className="mt-2 text-white/60">Neutral sizing:</p>
+                <p className="mt-2 text-white">Neutral sizing:</p>
                 <p>IT-heavy office → expect ~30% THD</p>
                 <p>Neutral sized equal to phase: 100A rated</p>
                 <p className="text-elec-yellow mt-1">
@@ -1181,7 +1181,7 @@ const HNCModule3Section4_3 = () => {
                 <strong>Problem:</strong> A four-wire star system supplies loads of 50A on Red, 40A
                 on Yellow, and 30A on Blue (all resistive). Calculate the neutral current.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Using: I<sub>N</sub> = √(I<sub>R</sub>² + I<sub>Y</sub>² + I<sub>B</sub>² - I
                   <sub>R</sub>·I<sub>Y</sub> - I<sub>Y</sub>·I<sub>B</sub> - I<sub>B</sub>·I
@@ -1201,7 +1201,7 @@ const HNCModule3Section4_3 = () => {
                     I<sub>N</sub> = 17.3A
                   </strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   The neutral carries 17.3A despite a 20A difference between max and min phase
                   currents.
                 </p>
@@ -1216,7 +1216,7 @@ const HNCModule3Section4_3 = () => {
                 <strong>Problem:</strong> Measured phase voltages are V<sub>R</sub> = 238V, V
                 <sub>Y</sub> = 232V, V<sub>B</sub> = 235V. Calculate the approximate VUF.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   V<sub>max</sub> = 238V, V<sub>min</sub> = 232V
                 </p>
@@ -1244,19 +1244,19 @@ const HNCModule3Section4_3 = () => {
                 <strong>Problem:</strong> A 30kW motor operates with 2.5% voltage unbalance. What is
                 the recommended output derating?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>From NEMA MG1 derating factors:</p>
                 <p>At 2.5% VUF → derating factor ≈ 0.925</p>
                 <p className="mt-2">
                   Derated output = 30kW × 0.925 = <strong>27.75kW</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Alternative: temperature rise increases by approximately:
                 </p>
                 <p>
                   ΔT<sub>increase</sub> ≈ 2 × (2.5)² = 12.5%
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Either reduce load to 27.75kW or accept higher operating temperature.
                 </p>
               </div>
@@ -1352,7 +1352,7 @@ const HNCModule3Section4_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1400,7 +1400,7 @@ const HNCModule3Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section4-2">

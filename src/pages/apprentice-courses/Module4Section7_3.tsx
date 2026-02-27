@@ -195,7 +195,7 @@ const Module4Section7_3 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -213,13 +213,13 @@ const Module4Section7_3 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 7.3</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 7.3</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               PPE for Cutting, Bending, and Fixing Work
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master proper PPE selection, use, and maintenance to protect against workplace hazards
               in electrical installation.
             </p>
@@ -231,7 +231,7 @@ const Module4Section7_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="grid md:grid-cols-2 gap-4 text-white/80">
+            <div className="grid md:grid-cols-2 gap-4 text-white">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
@@ -276,7 +276,7 @@ const Module4Section7_3 = () => {
               Learning Outcomes
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <ul className="list-disc pl-6 space-y-2 text-white/80">
+              <ul className="list-disc pl-6 space-y-2 text-white">
                 <li>Identify the correct PPE for different installation tasks.</li>
                 <li>Understand how PPE reduces risk during cutting, bending, and fixing.</li>
                 <li>Apply safe working practices alongside PPE use.</li>
@@ -292,7 +292,7 @@ const Module4Section7_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Legal Requirements
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 PPE regulations establish clear legal obligations for both employers and employees
                 to ensure adequate protection against workplace hazards:
@@ -331,7 +331,7 @@ const Module4Section7_3 = () => {
                   <p className="mb-2">
                     <strong>CE marking requirements:</strong>
                   </p>
-                  <p className="text-white/70">
+                  <p className="text-white">
                     All PPE must carry CE marking and comply with relevant European standards (EN
                     standards). This ensures the equipment has been tested and meets minimum safety
                     requirements for protection against specific hazards.
@@ -355,7 +355,7 @@ const Module4Section7_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Typical PPE for Cutting and Bending Work
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Different installation tasks require specific PPE combinations to protect against
                 the unique hazards of each operation:
@@ -396,7 +396,7 @@ const Module4Section7_3 = () => {
                   <p className="mb-2">
                     <strong>Task-specific PPE combinations:</strong>
                   </p>
-                  <ul className="text-white/70 list-disc pl-4 space-y-1">
+                  <ul className="text-white list-disc pl-4 space-y-1">
                     <li>
                       <strong>Cutting conduit/trunking:</strong> Safety glasses, cut-resistant
                       gloves, hearing protection
@@ -437,7 +437,7 @@ const Module4Section7_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Hazards Without PPE
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Understanding the serious consequences of inadequate PPE helps emphasise the
                 importance of proper protection in electrical installation work:
@@ -491,7 +491,7 @@ const Module4Section7_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Maintenance of PPE
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Proper maintenance ensures PPE remains effective throughout its service life and
                 provides reliable protection when needed:
@@ -532,7 +532,7 @@ const Module4Section7_3 = () => {
                   <p className="mb-2">
                     <strong>Inspection checklist for common PPE:</strong>
                   </p>
-                  <ul className="text-white/70 list-disc pl-4 space-y-1">
+                  <ul className="text-white list-disc pl-4 space-y-1">
                     <li>
                       <strong>Safety glasses:</strong> Scratches, cracks, loose components, clean
                       lenses
@@ -565,7 +565,7 @@ const Module4Section7_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Integrating PPE with Safe Practice
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 PPE works most effectively when integrated with comprehensive safe working practices
                 and proper risk management:
@@ -614,7 +614,7 @@ const Module4Section7_3 = () => {
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-2">Pre-Task PPE Preparation</h3>
-                <ul className="text-sm text-white/70 space-y-1 list-disc ml-5">
+                <ul className="text-sm text-white space-y-1 list-disc ml-5">
                   <li>
                     Always de-burr conduit ends before handling to reduce cut risk even with gloves
                   </li>
@@ -628,7 +628,7 @@ const Module4Section7_3 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-2">Task-Specific PPE Selection</h3>
-                <ul className="text-sm text-white/70 space-y-1 list-disc ml-5">
+                <ul className="text-sm text-white space-y-1 list-disc ml-5">
                   <li>Wear ear protection when drilling into blockwork or using angle grinders</li>
                   <li>
                     Use cut-resistant gloves (Level 3–5 EN388 standard) when cutting cable tray
@@ -644,7 +644,7 @@ const Module4Section7_3 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-2">PPE Management Best Practices</h3>
-                <ul className="text-sm text-white/70 space-y-1 list-disc ml-5">
+                <ul className="text-sm text-white space-y-1 list-disc ml-5">
                   <li>
                     Label and keep PPE personal — never swap gloves or ear protection with others
                   </li>
@@ -672,12 +672,12 @@ const Module4Section7_3 = () => {
                     <h3 className="font-medium text-white mb-2">
                       Case Study 1: Eye Injury from Metal Fragment
                     </h3>
-                    <p className="text-sm text-white/70 mb-2">
+                    <p className="text-sm text-white mb-2">
                       On a commercial site, an electrician was cutting trunking with a hacksaw
                       without safety glasses. A small metal fragment flew into his eye, requiring
                       hospital treatment and three days off work.
                     </p>
-                    <p className="text-sm text-white/70 bg-black/20 p-2 rounded">
+                    <p className="text-sm text-white bg-black/20 p-2 rounded">
                       <strong>Prevention:</strong> Safety glasses costing less than £5 would have
                       prevented this injury entirely.
                     </p>
@@ -692,12 +692,12 @@ const Module4Section7_3 = () => {
                     <h3 className="font-medium text-white mb-2">
                       Case Study 3: Good PPE Practice Prevents Serious Injury
                     </h3>
-                    <p className="text-sm text-white/70 mb-2">
+                    <p className="text-sm text-white mb-2">
                       During cable tray installation, a worker's cut-resistant gloves prevented
                       serious injury when a sharp edge sliced through the outer layer. The gloves
                       were immediately replaced, and the incident was reported as a near-miss.
                     </p>
-                    <p className="text-sm text-white/70 bg-black/20 p-2 rounded">
+                    <p className="text-sm text-white bg-black/20 p-2 rounded">
                       <strong>Good Practice:</strong> Proper PPE selection, immediate replacement
                       when damaged, and treating near-misses as learning opportunities.
                     </p>
@@ -717,7 +717,7 @@ const Module4Section7_3 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                  <p className="text-sm text-white/70">{faq.answer}</p>
+                  <p className="text-sm text-white">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -784,8 +784,8 @@ const Module4Section7_3 = () => {
               Recap
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-white/80 mb-4">In this subsection, you learned:</p>
-              <ul className="list-disc pl-6 space-y-2 text-white/80">
+              <p className="text-white mb-4">In this subsection, you learned:</p>
+              <ul className="list-disc pl-6 space-y-2 text-white">
                 <li>The legal requirements for PPE in electrical installation.</li>
                 <li>Typical PPE used in cutting, bending, and fixing tasks.</li>
                 <li>Common hazards that PPE helps prevent.</li>

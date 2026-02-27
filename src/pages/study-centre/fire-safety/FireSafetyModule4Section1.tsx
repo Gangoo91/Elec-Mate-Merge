@@ -200,7 +200,7 @@ export default function FireSafetyModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-4">
@@ -223,7 +223,7 @@ export default function FireSafetyModule4Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             The Fire Marshal Role
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Appointment, responsibilities, training, routine inspections, and the relationship
             between fire marshals and the responsible person under the RRFSO
           </p>
@@ -316,12 +316,12 @@ export default function FireSafetyModule4Section1() {
                   <p className="text-sm font-bold text-white mb-2">
                     Procedures for Serious and Imminent Danger
                   </p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Requires the responsible person to establish and give effect to appropriate
                     procedures to be followed in the event of serious and imminent danger to
                     relevant persons. This includes:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
@@ -358,12 +358,12 @@ export default function FireSafetyModule4Section1() {
                   <p className="text-sm font-bold text-white mb-2">
                     Safety Assistance &mdash; Competent Persons
                   </p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Requires the responsible person to appoint one or more competent persons to
                     assist in undertaking the preventive and protective measures required by the
                     Order. A competent person must have:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
@@ -395,7 +395,7 @@ export default function FireSafetyModule4Section1() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Key Point</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The general recommendation is a minimum of{' '}
                   <strong className="text-white">1 fire marshal per 50 occupants per floor</strong>.
                   This ratio is widely cited in fire safety guidance and training materials,
@@ -434,12 +434,12 @@ export default function FireSafetyModule4Section1() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-bold text-rose-400 mb-2">Fire Warden</p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     In organisations that distinguish between the roles, the fire warden is
                     typically assigned to a specific floor or zone within the building. Their
                     primary duty during an evacuation is to:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>Sweep their designated area to ensure all persons have evacuated</span>
@@ -463,11 +463,11 @@ export default function FireSafetyModule4Section1() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-bold text-rose-400 mb-2">Fire Marshal</p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     In organisations that distinguish between the roles, the fire marshal takes on a
                     broader coordination role that includes:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
@@ -529,11 +529,11 @@ export default function FireSafetyModule4Section1() {
                   <ClipboardCheck className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Day-to-Day Responsibilities</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The majority of a fire marshal&rsquo;s time is spent on proactive fire prevention
                   rather than emergency response. Day-to-day responsibilities include:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -590,12 +590,12 @@ export default function FireSafetyModule4Section1() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">During an Emergency</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   When the fire alarm activates, the fire marshal must immediately transition from
                   their normal work activities to their emergency role. Speed and systematic action
                   are critical:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -658,11 +658,11 @@ export default function FireSafetyModule4Section1() {
                   <ClipboardCheck className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">After the Emergency</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Once the emergency has been resolved and the &ldquo;all clear&rdquo; has been
                   given, the fire marshal&rsquo;s responsibilities continue:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -717,10 +717,10 @@ export default function FireSafetyModule4Section1() {
                 <p className="text-sm font-medium text-rose-400 mb-3">
                   Initial Fire Marshal Training (Typically Half Day)
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Initial fire marshal training should cover the following topics as a minimum:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -776,10 +776,10 @@ export default function FireSafetyModule4Section1() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Annual Refresher Training</p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Refresher training should be provided at least annually. It should cover:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>Review of any changes to the premises, layout, or fire strategy</span>
@@ -803,11 +803,11 @@ export default function FireSafetyModule4Section1() {
                   <p className="text-sm font-medium text-white mb-2">
                     Practical Extinguisher Training
                   </p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     While not explicitly mandated by the RRFSO, practical extinguisher training is
                     considered essential best practice for fire marshals:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>Live-fire exercises using controlled fire trays</span>
@@ -833,7 +833,7 @@ export default function FireSafetyModule4Section1() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Article 21 Requirements</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Article 21 states that training must be provided{' '}
                   <strong className="text-white">during working hours</strong> and at{' '}
                   <strong className="text-white">no cost to the employee</strong>. It must be
@@ -870,7 +870,7 @@ export default function FireSafetyModule4Section1() {
                   <Users className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">General Guidance</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -951,7 +951,7 @@ export default function FireSafetyModule4Section1() {
                   ].map((factor, i) => (
                     <div key={i} className="bg-rose-500/5 border border-rose-500/20 p-3 rounded-lg">
                       <p className="text-xs font-bold text-rose-400 mb-1">{factor.label}</p>
-                      <p className="text-xs text-white/70">{factor.desc}</p>
+                      <p className="text-xs text-white">{factor.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -980,7 +980,7 @@ export default function FireSafetyModule4Section1() {
                   <UserCheck className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Key Principles</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1072,7 +1072,7 @@ export default function FireSafetyModule4Section1() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <p className="text-sm font-medium text-white mb-2">Identification</p>
-                    <ul className="text-sm text-white/80 space-y-2">
+                    <ul className="text-sm text-white space-y-2">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                         <span>
@@ -1094,7 +1094,7 @@ export default function FireSafetyModule4Section1() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white mb-2">Communication</p>
-                    <ul className="text-sm text-white/80 space-y-2">
+                    <ul className="text-sm text-white space-y-2">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                         <span>
@@ -1117,7 +1117,7 @@ export default function FireSafetyModule4Section1() {
                 <div className="grid sm:grid-cols-2 gap-4 mt-4">
                   <div>
                     <p className="text-sm font-medium text-white mb-2">Inspection &amp; Sweep</p>
-                    <ul className="text-sm text-white/80 space-y-2">
+                    <ul className="text-sm text-white space-y-2">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                         <span>
@@ -1137,7 +1137,7 @@ export default function FireSafetyModule4Section1() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white mb-2">Knowledge Requirements</p>
-                    <ul className="text-sm text-white/80 space-y-2">
+                    <ul className="text-sm text-white space-y-2">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                         <span>
@@ -1181,12 +1181,12 @@ export default function FireSafetyModule4Section1() {
                   <Search className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Weekly Inspection Checklist</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The following items should be checked weekly as a minimum. All findings must be
                   recorded in writing and any deficiencies reported to the responsible person
                   immediately:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1253,7 +1253,7 @@ export default function FireSafetyModule4Section1() {
                     <Radio className="h-5 w-5 text-blue-400" />
                     <p className="text-sm font-medium text-blue-400">Monthly Checks</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
@@ -1286,7 +1286,7 @@ export default function FireSafetyModule4Section1() {
                     <ClipboardCheck className="h-5 w-5 text-green-400" />
                     <p className="text-sm font-medium text-green-400">Recording Findings</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
@@ -1318,7 +1318,7 @@ export default function FireSafetyModule4Section1() {
         <section className="mb-10">
           <h2 className="text-xl font-semibold text-white mb-4">Fire Marshal Responsibilities</h2>
           <div className="bg-white/5 border border-white/10 rounded-lg p-4 sm:p-6">
-            <p className="text-sm text-white/60 mb-4 text-center">
+            <p className="text-sm text-white mb-4 text-center">
               Fire marshal duties span three phases &mdash; before, during, and after an emergency
             </p>
             <div className="grid sm:grid-cols-3 gap-4">
@@ -1332,7 +1332,7 @@ export default function FireSafetyModule4Section1() {
                 <p className="text-xs font-semibold text-green-400 mb-2 text-center">
                   Day-to-Day Prevention
                 </p>
-                <ul className="text-xs text-white/80 space-y-1.5">
+                <ul className="text-xs text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1 w-1 h-1 rounded-full bg-green-400" />
                     <span>Fire prevention awareness</span>
@@ -1366,7 +1366,7 @@ export default function FireSafetyModule4Section1() {
                 <p className="text-xs font-semibold text-rose-400 mb-2 text-center">
                   Emergency Response
                 </p>
-                <ul className="text-xs text-white/80 space-y-1.5">
+                <ul className="text-xs text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1 w-1 h-1 rounded-full bg-rose-400" />
                     <span>Initiate evacuation</span>
@@ -1404,7 +1404,7 @@ export default function FireSafetyModule4Section1() {
                 <p className="text-xs font-semibold text-blue-400 mb-2 text-center">
                   Post-Incident
                 </p>
-                <ul className="text-xs text-white/80 space-y-1.5">
+                <ul className="text-xs text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1 w-1 h-1 rounded-full bg-blue-400" />
                     <span>Head count at assembly</span>
@@ -1430,7 +1430,7 @@ export default function FireSafetyModule4Section1() {
             </div>
 
             <div className="mt-4 text-center">
-              <p className="text-xs text-white/50">
+              <p className="text-xs text-white">
                 Most of a fire marshal&rsquo;s time is spent in the &ldquo;Before&rdquo; phase
                 &mdash; prevention and routine inspection are the foundation of effective fire
                 safety management
@@ -1446,7 +1446,7 @@ export default function FireSafetyModule4Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1460,7 +1460,7 @@ export default function FireSafetyModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-4">

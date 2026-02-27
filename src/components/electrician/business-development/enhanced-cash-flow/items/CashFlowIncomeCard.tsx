@@ -41,7 +41,7 @@ export const CashFlowIncomeCard = ({ stream, onUpdate, onRemove }: CashFlowIncom
           </div>
           <div className="min-w-0 flex-1">
             <h4 className="font-medium text-white text-sm truncate">{stream.name}</h4>
-            <p className="text-xs text-white/50 capitalize">{stream.frequency}</p>
+            <p className="text-xs text-white capitalize">{stream.frequency}</p>
           </div>
         </div>
         <div className="flex items-center gap-3">
@@ -50,7 +50,7 @@ export const CashFlowIncomeCard = ({ stream, onUpdate, onRemove }: CashFlowIncom
           </span>
           <ChevronDown
             className={cn(
-              'h-4 w-4 text-white/40 transition-transform duration-200',
+              'h-4 w-4 text-white transition-transform duration-200',
               isExpanded && 'rotate-180'
             )}
           />

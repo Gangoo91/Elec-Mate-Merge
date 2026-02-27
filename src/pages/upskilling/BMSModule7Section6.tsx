@@ -102,7 +102,7 @@ const BMSModule7Section6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bms-module-7">
@@ -285,10 +285,10 @@ const BMSModule7Section6 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">As-Built Schematics</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Accurate wiring diagrams reflecting the final installation
                 </p>
-                <ul className="text-xs text-white/70 space-y-1 ml-3">
+                <ul className="text-xs text-white space-y-1 ml-3">
                   <li>Updated cable routes and terminations</li>
                   <li>Corrected device locations</li>
                   <li>Final power supply arrangements</li>
@@ -296,10 +296,10 @@ const BMSModule7Section6 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">IO Lists</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Final verified point list with device addresses
                 </p>
-                <ul className="text-xs text-white/70 space-y-1 ml-3">
+                <ul className="text-xs text-white space-y-1 ml-3">
                   <li>Complete input/output inventory</li>
                   <li>Device descriptions and locations</li>
                   <li>Scaling and engineering units</li>
@@ -307,10 +307,10 @@ const BMSModule7Section6 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">Addressing Registers</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   BACnet IDs, Modbus addresses, KNX addresses
                 </p>
-                <ul className="text-xs text-white/70 space-y-1 ml-3">
+                <ul className="text-xs text-white space-y-1 ml-3">
                   <li>Network topology diagrams</li>
                   <li>Device addressing schemes</li>
                   <li>Communication protocol settings</li>
@@ -318,10 +318,10 @@ const BMSModule7Section6 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">Software Backups</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Copies of controller programs and server databases
                 </p>
-                <ul className="text-xs text-white/70 space-y-1 ml-3">
+                <ul className="text-xs text-white space-y-1 ml-3">
                   <li>Controller application software</li>
                   <li>Database configurations</li>
                   <li>Graphics and user interfaces</li>
@@ -329,10 +329,10 @@ const BMSModule7Section6 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">Commissioning Records</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Test sheets showing all I/O and sequences were verified
                 </p>
-                <ul className="text-xs text-white/70 space-y-1 ml-3">
+                <ul className="text-xs text-white space-y-1 ml-3">
                   <li>Pre-functional test results</li>
                   <li>Functional commissioning reports</li>
                   <li>Calibration certificates</li>
@@ -340,10 +340,10 @@ const BMSModule7Section6 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">O&M Manuals</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Instructions for equipment, controls, and BMS user guides
                 </p>
-                <ul className="text-xs text-white/70 space-y-1 ml-3">
+                <ul className="text-xs text-white space-y-1 ml-3">
                   <li>Equipment operation procedures</li>
                   <li>Maintenance schedules</li>
                   <li>Troubleshooting guides</li>
@@ -507,7 +507,7 @@ const BMSModule7Section6 = () => {
 
               <div className="grid sm:grid-cols-2 gap-4 mb-4">
                 <div>
-                  <p className="text-xs font-medium text-white/70 mb-1">The Situation</p>
+                  <p className="text-xs font-medium text-white mb-1">The Situation</p>
                   <ul className="text-sm text-white space-y-1">
                     <li>BMS installed and tested successfully</li>
                     <li>System was functioning correctly</li>
@@ -516,7 +516,7 @@ const BMSModule7Section6 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-white/70 mb-1">Missing Documentation</p>
+                  <p className="text-xs font-medium text-white mb-1">Missing Documentation</p>
                   <ul className="text-sm text-white space-y-1">
                     <li>No updated IO list provided</li>
                     <li>Software backups not created</li>
@@ -537,7 +537,7 @@ const BMSModule7Section6 = () => {
 
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-xs font-medium text-white/70 mb-1">Immediate Consequences</p>
+                  <p className="text-xs font-medium text-white mb-1">Immediate Consequences</p>
                   <ul className="text-sm text-white space-y-1">
                     <li>System remained faulty for days</li>
                     <li>Poor indoor air quality in classrooms</li>
@@ -546,7 +546,7 @@ const BMSModule7Section6 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-white/70 mb-1">Financial Impact</p>
+                  <p className="text-xs font-medium text-white mb-1">Financial Impact</p>
                   <ul className="text-sm text-white space-y-1">
                     <li>Costly emergency site visit</li>
                     <li>Time spent recreating documentation</li>
@@ -563,7 +563,7 @@ const BMSModule7Section6 = () => {
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-xs font-medium text-white/70 mb-1">Mandatory Requirements</p>
+                  <p className="text-xs font-medium text-white mb-1">Mandatory Requirements</p>
                   <ul className="text-sm text-white space-y-1">
                     <li>Complete as-built documentation before handover</li>
                     <li>Tested software backups on separate media</li>
@@ -572,7 +572,7 @@ const BMSModule7Section6 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-white/70 mb-1">Quality Assurance</p>
+                  <p className="text-xs font-medium text-white mb-1">Quality Assurance</p>
                   <ul className="text-sm text-white space-y-1">
                     <li>Project manager sign-off on all documentation</li>
                     <li>Client acknowledgment of training received</li>
@@ -613,7 +613,7 @@ const BMSModule7Section6 = () => {
           <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
             <div>
               <p className="font-medium text-white mb-1">Essential Documentation</p>
-              <ul className="space-y-0.5 text-white/80">
+              <ul className="space-y-0.5 text-white">
                 <li>As-built schematics</li>
                 <li>IO lists with addresses</li>
                 <li>Addressing registers</li>
@@ -624,7 +624,7 @@ const BMSModule7Section6 = () => {
             </div>
             <div>
               <p className="font-medium text-white mb-1">Training Focus Areas</p>
-              <ul className="space-y-0.5 text-white/80">
+              <ul className="space-y-0.5 text-white">
                 <li>Dashboard navigation</li>
                 <li>Alarm acknowledgment</li>
                 <li>Setpoint adjustment</li>
@@ -646,7 +646,7 @@ const BMSModule7Section6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bms-module-7-section-5">

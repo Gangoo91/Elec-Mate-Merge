@@ -131,7 +131,7 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
           <Users className="w-8 h-8 text-red-400" />
         </div>
         <h3 className="font-semibold text-white mb-2">Failed to load supporters</h3>
-        <p className="text-sm text-white/60 max-w-xs mx-auto mb-4">
+        <p className="text-sm text-white max-w-xs mx-auto mb-4">
           Something went wrong. Please try again.
         </p>
         <Button
@@ -153,7 +153,7 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
           <Users className="w-8 h-8 text-purple-400/50" />
         </div>
         <h3 className="font-semibold text-white mb-2">No one available right now</h3>
-        <p className="text-sm text-white/60 max-w-xs mx-auto mb-4">
+        <p className="text-sm text-white max-w-xs mx-auto mb-4">
           All our Mental Health Mates are currently offline. Check back later or consider becoming a
           supporter yourself!
         </p>
@@ -183,7 +183,7 @@ const AvailableSupporters: React.FC<AvailableSupportersProps> = ({
         <Button
           variant="ghost"
           onClick={() => refetch()}
-          className="h-11 gap-1.5 text-white/60 hover:text-white touch-manipulation active:scale-[0.98] transition-all"
+          className="h-11 gap-1.5 text-white hover:text-white touch-manipulation active:scale-[0.98] transition-all"
         >
           <RefreshCw className="w-4 h-4" />
           Refresh

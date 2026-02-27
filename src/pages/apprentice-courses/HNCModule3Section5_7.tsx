@@ -216,7 +216,7 @@ const HNCModule3Section5_7 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section5">
@@ -238,7 +238,7 @@ const HNCModule3Section5_7 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Starting and Speed Control Methods for Motors
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             From DOL starters to variable frequency drives - controlling motor starting current and
             speed for building services
           </p>
@@ -434,7 +434,7 @@ const HNCModule3Section5_7 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-1">Star (Y) Connection</p>
-                  <ul className="space-y-0.5 text-white/90">
+                  <ul className="space-y-0.5 text-white">
                     <li>Voltage per winding = VL / √3 = 230V</li>
                     <li>Current per winding = Line current</li>
                     <li>Power = 1/3 of delta power</li>
@@ -443,7 +443,7 @@ const HNCModule3Section5_7 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-1">Delta (Δ) Connection</p>
-                  <ul className="space-y-0.5 text-white/90">
+                  <ul className="space-y-0.5 text-white">
                     <li>Voltage per winding = VL = 400V</li>
                     <li>Current per winding = IL / √3</li>
                     <li>Full rated power</li>
@@ -565,7 +565,7 @@ const HNCModule3Section5_7 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">Soft Starter Operation</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Soft starters use back-to-back thyristors (SCRs) or triacs to control the voltage
                 applied to the motor by phase-angle control. Voltage ramps up gradually from a
                 preset initial value to full voltage over an adjustable time period.
@@ -573,15 +573,15 @@ const HNCModule3Section5_7 = () => {
               <div className="grid sm:grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">Ramp Time</p>
-                  <p className="text-white/70 text-xs">1-60 seconds typical</p>
+                  <p className="text-white text-xs">1-60 seconds typical</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">Initial Voltage</p>
-                  <p className="text-white/70 text-xs">30-70% adjustable</p>
+                  <p className="text-white text-xs">30-70% adjustable</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">Current Limit</p>
-                  <p className="text-white/70 text-xs">200-500% FLC settable</p>
+                  <p className="text-white text-xs">200-500% FLC settable</p>
                 </div>
               </div>
             </div>
@@ -642,7 +642,7 @@ const HNCModule3Section5_7 = () => {
               <p className="text-sm font-medium text-orange-300 mb-2">
                 Important: Soft Starter Limitations
               </p>
-              <ul className="text-sm text-white/90 space-y-1.5 list-disc list-outside ml-5">
+              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                 <li className="pl-1">Runs at fixed speed once started - no speed control</li>
                 <li className="pl-1">Starting torque still reduced with reduced voltage</li>
                 <li className="pl-1">Generates harmonics during ramp (phase-angle control)</li>
@@ -670,18 +670,18 @@ const HNCModule3Section5_7 = () => {
               <div className="grid sm:grid-cols-3 gap-4 text-sm text-center">
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-white mb-1">Rectifier</p>
-                  <p className="text-white/70 text-xs">AC → DC</p>
-                  <p className="text-white/60 text-xs mt-1">Diode bridge or active front end</p>
+                  <p className="text-white text-xs">AC → DC</p>
+                  <p className="text-white text-xs mt-1">Diode bridge or active front end</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-white mb-1">DC Link</p>
-                  <p className="text-white/70 text-xs">Energy storage</p>
-                  <p className="text-white/60 text-xs mt-1">Capacitors, smooth DC bus</p>
+                  <p className="text-white text-xs">Energy storage</p>
+                  <p className="text-white text-xs mt-1">Capacitors, smooth DC bus</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-white mb-1">Inverter</p>
-                  <p className="text-white/70 text-xs">DC → Variable AC</p>
-                  <p className="text-white/60 text-xs mt-1">IGBT PWM switching</p>
+                  <p className="text-white text-xs">DC → Variable AC</p>
+                  <p className="text-white text-xs mt-1">IGBT PWM switching</p>
                 </div>
               </div>
             </div>
@@ -784,7 +784,7 @@ const HNCModule3Section5_7 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">
                 V/f (Volts/Hertz) Control
               </p>
-              <div className="text-sm text-white/90 space-y-2">
+              <div className="text-sm text-white space-y-2">
                 <p>
                   Also called scalar control, V/f maintains a constant ratio of voltage to
                   frequency. This keeps motor flux approximately constant, ensuring rated torque is
@@ -856,7 +856,7 @@ const HNCModule3Section5_7 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-1">Sensorless Vector</p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
                     <li className="pl-1">Estimates rotor position from motor currents</li>
                     <li className="pl-1">No encoder required</li>
                     <li className="pl-1">Good torque down to ~1Hz</li>
@@ -865,7 +865,7 @@ const HNCModule3Section5_7 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-1">Closed-Loop Vector (FOC)</p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
                     <li className="pl-1">Uses encoder for rotor position feedback</li>
                     <li className="pl-1">Full torque at zero speed</li>
                     <li className="pl-1">Precise positioning capability</li>
@@ -904,17 +904,17 @@ const HNCModule3Section5_7 = () => {
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-mono text-elec-yellow">Q ∝ N</p>
                   <p className="text-sm text-white mt-1">Flow</p>
-                  <p className="text-xs text-white/60">proportional to speed</p>
+                  <p className="text-xs text-white">proportional to speed</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-mono text-elec-yellow">H ∝ N²</p>
                   <p className="text-sm text-white mt-1">Head/Pressure</p>
-                  <p className="text-xs text-white/60">proportional to speed²</p>
+                  <p className="text-xs text-white">proportional to speed²</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-mono text-elec-yellow">P ∝ N³</p>
                   <p className="text-sm text-white mt-1">Power</p>
-                  <p className="text-xs text-white/60">proportional to speed³</p>
+                  <p className="text-xs text-white">proportional to speed³</p>
                 </div>
               </div>
             </div>
@@ -982,7 +982,7 @@ const HNCModule3Section5_7 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-red-500/10 border border-red-500/30">
                   <p className="font-medium text-red-300 mb-1">Throttling/Dampers</p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
                     <li className="pl-1">Motor runs at full speed</li>
                     <li className="pl-1">Energy wasted as heat in valve/damper</li>
                     <li className="pl-1">Valve wear, noise, maintenance</li>
@@ -991,7 +991,7 @@ const HNCModule3Section5_7 = () => {
                 </div>
                 <div className="p-3 rounded bg-green-500/10 border border-green-500/30">
                   <p className="font-medium text-green-300 mb-1">VSD Speed Control</p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
                     <li className="pl-1">Motor speed matches demand</li>
                     <li className="pl-1">Energy savings follow cube law</li>
                     <li className="pl-1">Reduced mechanical wear</li>
@@ -1003,7 +1003,7 @@ const HNCModule3Section5_7 = () => {
 
             <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
               <p className="text-sm font-medium text-green-300 mb-2">Typical VSD Payback Periods</p>
-              <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                 <li className="pl-1">
                   <strong>HVAC fans (AHUs):</strong> 1-2 years (often operate at part load)
                 </li>
@@ -1179,7 +1179,7 @@ const HNCModule3Section5_7 = () => {
 
             <div className="p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">BMS Integration</p>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 Modern VSDs integrate with Building Management Systems for optimised control:
               </p>
               <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
@@ -1304,7 +1304,7 @@ const HNCModule3Section5_7 = () => {
                 <strong>Question:</strong> A 15kW motor has a DOL starting current of 180A. What is
                 the starting current with star-delta starting?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Star-delta reduces starting current to 1/3 of DOL</p>
                 <p className="mt-2">
                   I<sub>start(Y-Δ)</sub> = I<sub>start(DOL)</sub> × 1/3
@@ -1312,7 +1312,7 @@ const HNCModule3Section5_7 = () => {
                 <p>
                   I<sub>start(Y-Δ)</sub> = 180A × 1/3 = <strong>60A</strong>
                 </p>
-                <p className="mt-2 text-white/60">Note: Starting torque is also reduced to 1/3</p>
+                <p className="mt-2 text-white">Note: Starting torque is also reduced to 1/3</p>
               </div>
             </div>
 
@@ -1325,7 +1325,7 @@ const HNCModule3Section5_7 = () => {
                 requests 70% airflow. Calculate the new frequency, speed, and power as a percentage
                 of full load.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Flow is proportional to speed, so 70% flow = 70% speed</p>
                 <p className="mt-2">
                   New speed = 1440 × 0.7 = <strong>1008 rpm</strong>
@@ -1353,7 +1353,7 @@ const HNCModule3Section5_7 = () => {
                 60% flow. Calculate annual savings if converted to VSD control at 60% speed.
                 Electricity costs £0.15/kWh.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Current consumption (throttled, full speed):</p>
                 <p>Energy = 22kW × 4000h = 88,000 kWh/year</p>
                 <p>
@@ -1513,7 +1513,7 @@ const HNCModule3Section5_7 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1561,7 +1561,7 @@ const HNCModule3Section5_7 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section5-6">

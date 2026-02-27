@@ -219,7 +219,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-5">
@@ -246,7 +246,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Environmental Management Systems
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding how organisations systematically manage their environmental
             responsibilities through structured frameworks &mdash; from ISO 14001 certification to
             practical on-site implementation and continual improvement
@@ -346,12 +346,12 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                     Purpose &amp; Systematic Approach
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The purpose of an EMS is not simply to comply with environmental legislation
                   &mdash; though compliance is a fundamental requirement. An EMS goes further by
                   establishing a systematic, proactive approach to:
                 </p>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -403,7 +403,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                     Continual Improvement &amp; PDCA
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The cornerstone principle of any EMS is <strong>continual improvement</strong>.
                   This is achieved through the <strong>Plan-Do-Check-Act (PDCA)</strong> framework,
                   also known as the Deming Cycle:
@@ -429,7 +429,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 rounded-lg p-3">
                       <p className="text-sm font-bold text-emerald-400">{item.label}</p>
-                      <p className="text-xs text-white/70 mt-0.5 leading-relaxed">{item.desc}</p>
+                      <p className="text-xs text-white mt-0.5 leading-relaxed">{item.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -439,7 +439,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Why &ldquo;System&rdquo; Matters
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The word &ldquo;system&rdquo; is critical. An EMS is not a single document or a
                   one-off project. It is an integrated set of interconnected processes, procedures,
                   and practices that work together as a coherent whole. Each element supports and
@@ -530,7 +530,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 rounded-lg p-3">
                       <p className="text-sm font-medium text-white">{item.clause}</p>
-                      <p className="text-xs text-white/70 mt-0.5 leading-relaxed">{item.desc}</p>
+                      <p className="text-xs text-white mt-0.5 leading-relaxed">{item.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -538,7 +538,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">High Level Structure (HLS)</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   ISO 14001:2015 follows the <strong>High Level Structure (HLS)</strong>, also known
                   as Annex SL. This is a common framework shared by all modern ISO management system
                   standards, including ISO 9001 (quality), ISO 45001 (occupational health and
@@ -584,7 +584,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Environmental Policy</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The environmental policy is the foundation of the EMS. It must be appropriate
                       to the purpose and context of the organisation, provide a framework for
                       setting environmental objectives, include a commitment to protection of the
@@ -600,7 +600,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       Aspects and Impacts Register
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The organisation must identify the environmental aspects of its activities,
                       products, and services that it can control or influence, and determine which
                       aspects have or can have a significant environmental impact. This is
@@ -615,7 +615,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Legal Compliance Register</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The organisation must identify and have access to the compliance obligations
                       related to its environmental aspects. These include legislative and regulatory
                       requirements (e.g., Environmental Protection Act 1990, Environmental
@@ -629,7 +629,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Objectives and Targets</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Environmental objectives must be established for relevant functions and levels
                       of the organisation, consistent with the environmental policy. Objectives must
                       be measurable (where practicable), monitored, communicated, and updated as
@@ -643,7 +643,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Operational Controls</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The organisation must establish operational controls for processes associated
                       with its significant environmental aspects. These controls ensure that
                       activities are carried out in a way that prevents or minimises adverse
@@ -657,7 +657,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Emergency Preparedness</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The organisation must identify potential emergency situations and potential
                       accidents that can have an environmental impact, and plan how it will respond.
                       This includes fuel and chemical spills, uncontrolled emissions to air,
@@ -708,7 +708,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       Environmental Statement (Public Disclosure)
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The most significant difference is that EMAS requires organisations to produce
                       and publish an <strong>environmental statement</strong> that is publicly
                       available. This statement must include: a description of the organisation and
@@ -723,7 +723,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Legal Compliance</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       EMAS requires demonstrated legal compliance as a prerequisite for
                       registration. The organisation must provide evidence that it is in full
                       compliance with all applicable environmental legislation. ISO 14001 requires a
@@ -737,7 +737,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Employee Involvement</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       EMAS places a stronger emphasis on employee involvement in the environmental
                       management process. Whilst ISO 14001 requires awareness and competence, EMAS
                       specifically requires active employee participation in the identification of
@@ -752,7 +752,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       Core Performance Indicators
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       EMAS requires organisations to report on specific core performance indicators,
                       providing standardised metrics that allow comparison between organisations and
                       tracking of trends over time. These core indicators cover: energy efficiency
@@ -769,7 +769,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">EMAS in the UK Post-Brexit</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Following the UK&rsquo;s departure from the European Union, EMAS is no longer
                   directly available for UK-based organisations (as it is an EU regulation).
                   However, the UK government has retained the ability to recognise EMAS under its
@@ -818,7 +818,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       Step 1: Environmental Aspects Identification
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Conduct a thorough review of all site activities and identify every
                       environmental aspect. Walk the site, review method statements, consult with
                       operatives, and consider the full lifecycle of activities from mobilisation
@@ -835,7 +835,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       Step 2: Significant Impacts Assessment
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Not all environmental aspects are equally significant. The significance
                       assessment process evaluates each aspect using defined criteria to determine
                       which require the most attention and resources. A typical scoring methodology
@@ -853,7 +853,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       Step 3: Setting Objectives and Targets
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       For each significant environmental aspect, set measurable objectives and
                       specific targets. Objectives should be SMART: Specific, Measurable,
                       Achievable, Relevant, and Time-bound. Examples for an electrical installation
@@ -868,7 +868,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       Step 4: Establishing Procedures
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Develop practical procedures for managing each significant environmental
                       aspect. Procedures should be concise, clear, and written for the people who
                       will use them &mdash; not for auditors. A good environmental procedure
@@ -885,7 +885,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       Step 5: Training and Awareness
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       All site personnel must receive environmental awareness training appropriate
                       to their role. At a minimum, every person on site should understand: the
                       environmental policy and what it means for their work, the significant
@@ -901,7 +901,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       Step 6: Documentation and Record-Keeping
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The EMS requires documented information to be created, maintained, and
                       retained. This includes: the environmental policy, the aspects and impacts
                       register, the legal compliance register, objectives and targets, operational
@@ -948,13 +948,13 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                   <Search className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">Internal Audits</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The organisation must conduct internal audits at planned intervals to provide
                   information on whether the EMS conforms to the organisation&rsquo;s own
                   requirements and the requirements of ISO 14001, and is effectively implemented and
                   maintained.
                 </p>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -996,7 +996,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                     External Audits (Certification Body)
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   External audits are conducted by a UKAS-accredited certification body. These
                   provide independent, third-party verification that the EMS meets the requirements
                   of ISO 14001.
@@ -1006,7 +1006,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       Stage 1 Audit (Document Review)
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The Stage 1 audit assesses the organisation&rsquo;s readiness for
                       certification. The auditor reviews the EMS documentation to verify that it
                       meets the requirements of the standard, evaluates the organisation&rsquo;s
@@ -1019,7 +1019,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       Stage 2 Audit (Implementation Audit)
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The Stage 2 audit is the main certification audit, conducted on-site. The
                       auditor examines the implementation and effectiveness of the EMS through
                       interviews with personnel at all levels, observation of activities and
@@ -1038,7 +1038,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                     Non-Conformance &amp; Corrective Action
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   When an audit identifies a failure to meet a requirement, it is raised as a{' '}
                   <strong>non-conformance</strong> (also called a non-conformity):
                 </p>
@@ -1063,7 +1063,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 rounded-lg p-3">
                       <p className="text-sm font-medium text-white">{item.label}</p>
-                      <p className="text-xs text-white/70 mt-0.5 leading-relaxed">{item.desc}</p>
+                      <p className="text-xs text-white mt-0.5 leading-relaxed">{item.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -1103,7 +1103,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                     Key Performance Indicators (KPIs)
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   KPIs are quantified metrics that track environmental performance over time.
                   Effective environmental KPIs for a construction or electrical contracting
                   organisation include:
@@ -1137,7 +1137,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 rounded-lg p-3">
                       <p className="text-sm font-medium text-white">{item.label}</p>
-                      <p className="text-xs text-white/70 mt-0.5 leading-relaxed">{item.desc}</p>
+                      <p className="text-xs text-white mt-0.5 leading-relaxed">{item.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -1148,11 +1148,11 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                   <Target className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">Benchmarking &amp; Targets</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Benchmarking compares the organisation&rsquo;s environmental performance against
                   relevant reference points:
                 </p>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -1189,7 +1189,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                   <BookOpen className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">Management Review</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The management review is the mechanism by which top management maintains oversight
                   of the EMS and drives continual improvement. ISO 14001 specifies both the required
                   inputs and expected outputs:
@@ -1197,7 +1197,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Management Review Inputs</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Status of actions from previous reviews, changes in external/internal issues,
                       the needs and expectations of interested parties, significant environmental
                       aspects, risks and opportunities, the extent to which objectives have been
@@ -1209,7 +1209,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Management Review Outputs</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Conclusions on the continuing suitability, adequacy, and effectiveness of the
                       EMS, decisions related to continual improvement opportunities, decisions
                       related to any need for changes to the EMS (including resources, policy,
@@ -1224,7 +1224,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Learning from Incidents</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Environmental incidents &mdash; whether actual (a spill, an unauthorised
                   discharge, a waste duty of care breach) or near-misses (a situation that could
                   have resulted in an incident) &mdash; are valuable sources of learning. Every
@@ -1269,7 +1269,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Tender Qualification</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       ISO 14001 certification is increasingly a mandatory pre-qualification
                       requirement for tenders, particularly in the public sector, for major
                       contractors, and within framework agreements. Without certification,
@@ -1283,7 +1283,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Client Requirements</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Beyond formal tender requirements, many principal contractors and clients
                       require their supply chain to demonstrate environmental management capability
                       as a condition of appointment. This may be expressed as a requirement for ISO
@@ -1298,7 +1298,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       Legal Compliance Assurance
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The EMS provides a systematic mechanism for identifying, accessing, and
                       complying with environmental legislation. The legal compliance register
                       ensures the organisation knows what laws apply to its activities, and the
@@ -1312,7 +1312,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Cost Savings</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       A well-implemented EMS consistently delivers measurable cost savings. Waste
                       reduction: measuring and managing waste streams typically reduces waste
                       volumes by 15&ndash;30%, directly reducing skip hire and landfill tax costs
@@ -1326,7 +1326,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Risk Reduction</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Proactive environmental management reduces the risk of pollution incidents,
                       regulatory enforcement, project delays caused by environmental non-compliance,
                       damage to watercourses or protected habitats, community complaints and
@@ -1342,7 +1342,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       Reputation &amp; Competitive Advantage
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Environmental credentials are increasingly important to clients, investors,
                       employees, and the wider public. ISO 14001 certification provides independent,
                       third-party verification that the organisation takes environmental management
@@ -1374,7 +1374,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
               {/* Centre: Leadership */}
               <div className="bg-emerald-500/20 border border-emerald-500/40 rounded-lg px-4 py-3 text-center">
                 <p className="text-xs font-bold text-emerald-400">LEADERSHIP &amp; COMMITMENT</p>
-                <p className="text-[10px] text-white/50 mt-1">
+                <p className="text-[10px] text-white mt-1">
                   Clause 5 &mdash; Environmental policy, roles, responsibilities, authorities
                 </p>
               </div>
@@ -1386,7 +1386,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
               {/* PLAN */}
               <div className="bg-emerald-500/20 border border-emerald-500/40 rounded-lg px-4 py-3 text-center">
                 <p className="text-xs font-bold text-emerald-400">PLAN</p>
-                <p className="text-[10px] text-white/50 mt-1">
+                <p className="text-[10px] text-white mt-1">
                   Clause 4 (Context) &amp; Clause 6 (Planning)
                 </p>
               </div>
@@ -1397,21 +1397,21 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                 <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                   <Globe className="h-4 w-4 text-emerald-400 mx-auto mb-1" />
                   <p className="text-xs font-bold text-white">Context</p>
-                  <p className="text-[10px] text-white/50">
+                  <p className="text-[10px] text-white">
                     Internal/external issues, interested parties, scope
                   </p>
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                   <ClipboardList className="h-4 w-4 text-emerald-400 mx-auto mb-1" />
                   <p className="text-xs font-bold text-white">Aspects &amp; Impacts</p>
-                  <p className="text-[10px] text-white/50">
+                  <p className="text-[10px] text-white">
                     Identification, significance assessment, compliance obligations
                   </p>
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                   <Target className="h-4 w-4 text-emerald-400 mx-auto mb-1" />
                   <p className="text-xs font-bold text-white">Objectives</p>
-                  <p className="text-[10px] text-white/50">
+                  <p className="text-[10px] text-white">
                     Measurable targets, action plans, resources
                   </p>
                 </div>
@@ -1424,7 +1424,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
               {/* DO */}
               <div className="bg-emerald-500/20 border border-emerald-500/40 rounded-lg px-4 py-3 text-center">
                 <p className="text-xs font-bold text-emerald-400">DO</p>
-                <p className="text-[10px] text-white/50 mt-1">
+                <p className="text-[10px] text-white mt-1">
                   Clause 7 (Support) &amp; Clause 8 (Operation)
                 </p>
               </div>
@@ -1435,21 +1435,21 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                 <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg px-3 py-2 text-center">
                   <FileText className="h-4 w-4 text-emerald-400 mx-auto mb-1" />
                   <p className="text-xs font-bold text-emerald-400">Support</p>
-                  <p className="text-[10px] text-white/50">
+                  <p className="text-[10px] text-white">
                     Resources, competence, awareness, communication, documents
                   </p>
                 </div>
                 <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg px-3 py-2 text-center">
                   <Building className="h-4 w-4 text-emerald-400 mx-auto mb-1" />
                   <p className="text-xs font-bold text-emerald-400">Operational Controls</p>
-                  <p className="text-[10px] text-white/50">
+                  <p className="text-[10px] text-white">
                     Procedures, work instructions, lifecycle perspective
                   </p>
                 </div>
                 <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg px-3 py-2 text-center">
                   <Leaf className="h-4 w-4 text-emerald-400 mx-auto mb-1" />
                   <p className="text-xs font-bold text-emerald-400">Emergency Preparedness</p>
-                  <p className="text-[10px] text-white/50">
+                  <p className="text-[10px] text-white">
                     Spill response, pollution prevention, drills
                   </p>
                 </div>
@@ -1462,7 +1462,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
               {/* CHECK */}
               <div className="bg-emerald-500/20 border border-emerald-500/40 rounded-lg px-4 py-3 text-center">
                 <p className="text-xs font-bold text-emerald-400">CHECK</p>
-                <p className="text-[10px] text-white/50 mt-1">Clause 9 (Performance Evaluation)</p>
+                <p className="text-[10px] text-white mt-1">Clause 9 (Performance Evaluation)</p>
               </div>
               <div className="flex justify-center">
                 <div className="w-px h-4 bg-emerald-500/30" />
@@ -1471,21 +1471,21 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                 <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                   <BarChart3 className="h-4 w-4 text-emerald-400 mx-auto mb-1" />
                   <p className="text-xs font-bold text-white">Monitoring</p>
-                  <p className="text-[10px] text-white/50">
+                  <p className="text-[10px] text-white">
                     KPIs, measurement, compliance evaluation
                   </p>
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                   <Search className="h-4 w-4 text-emerald-400 mx-auto mb-1" />
                   <p className="text-xs font-bold text-white">Internal Audit</p>
-                  <p className="text-[10px] text-white/50">
+                  <p className="text-[10px] text-white">
                     Planned programme, competent auditors, NC reporting
                   </p>
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                   <BookOpen className="h-4 w-4 text-emerald-400 mx-auto mb-1" />
                   <p className="text-xs font-bold text-white">Management Review</p>
-                  <p className="text-[10px] text-white/50">
+                  <p className="text-[10px] text-white">
                     Inputs, outputs, decisions, resource allocation
                   </p>
                 </div>
@@ -1498,7 +1498,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
               {/* ACT */}
               <div className="bg-emerald-500/20 border border-emerald-500/40 rounded-lg px-4 py-3 text-center">
                 <p className="text-xs font-bold text-emerald-400">ACT</p>
-                <p className="text-[10px] text-white/50 mt-1">Clause 10 (Improvement)</p>
+                <p className="text-[10px] text-white mt-1">Clause 10 (Improvement)</p>
               </div>
               <div className="flex justify-center">
                 <div className="w-px h-4 bg-emerald-500/30" />
@@ -1507,20 +1507,20 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                 <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                   <TrendingUp className="h-4 w-4 text-emerald-400 mx-auto mb-1" />
                   <p className="text-xs font-bold text-white">Corrective Action</p>
-                  <p className="text-[10px] text-white/50">
+                  <p className="text-[10px] text-white">
                     Root cause analysis, prevent recurrence
                   </p>
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                   <RefreshCw className="h-4 w-4 text-emerald-400 mx-auto mb-1" />
                   <p className="text-xs font-bold text-white">Continual Improvement</p>
-                  <p className="text-[10px] text-white/50">
+                  <p className="text-[10px] text-white">
                     Enhance suitability, adequacy, effectiveness
                   </p>
                 </div>
               </div>
 
-              <p className="text-xs text-white/50 text-center mt-4">
+              <p className="text-xs text-white text-center mt-4">
                 The cycle repeats continuously &mdash; each iteration builds on the previous one,
                 driving ongoing improvement in environmental performance.
               </p>
@@ -1598,7 +1598,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                         <item.icon className="h-4 w-4 text-emerald-400" />
                         <p className="text-xs font-bold text-white">{item.title}</p>
                       </div>
-                      <p className="text-[10px] text-white/50">{item.desc}</p>
+                      <p className="text-[10px] text-white">{item.desc}</p>
                     </div>
                   </div>
                   {i < 7 && (
@@ -1615,12 +1615,12 @@ export default function EnvironmentalSustainabilityModule5Section4() {
                 <p className="text-[10px] font-bold text-emerald-400">
                   CYCLE REPEATS &mdash; CONTINUAL IMPROVEMENT
                 </p>
-                <p className="text-[10px] text-white/50">
+                <p className="text-[10px] text-white">
                   Review outputs feed back into planning for the next cycle
                 </p>
               </div>
 
-              <p className="text-xs text-white/50 text-center mt-4">
+              <p className="text-xs text-white text-center mt-4">
                 Implementation is not a linear process &mdash; later steps may reveal the need to
                 revisit and refine earlier steps. The entire system matures over successive PDCA
                 cycles.
@@ -1638,7 +1638,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1656,7 +1656,7 @@ export default function EnvironmentalSustainabilityModule5Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-5-section-3">

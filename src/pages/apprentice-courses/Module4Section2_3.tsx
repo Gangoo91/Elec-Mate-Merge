@@ -274,7 +274,7 @@ const Module4Section2_3 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -291,13 +291,13 @@ const Module4Section2_3 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 2.3</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 2.3</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Following Dimensions, Levels, and Tolerances
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master precision in electrical installation by following specified dimensions, levels,
               and tolerances
             </p>
@@ -312,7 +312,7 @@ const Module4Section2_3 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2 text-sm">In 30 Seconds</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                <ul className="text-white text-sm space-y-1 list-disc pl-4">
                   <li>Follow specified dimensions exactly, checking centre vs edge</li>
                   <li>Maintain tolerances: ±3mm for accessories, ±2mm/m for alignment</li>
                   <li>Use consistent reference points and recheck long runs</li>
@@ -320,7 +320,7 @@ const Module4Section2_3 = () => {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2 text-sm">Spot it / Use it</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                <ul className="text-white text-sm space-y-1 list-disc pl-4">
                   <li>
                     <strong>Spot:</strong> Reference points, tolerance requirements, specification
                     details
@@ -343,7 +343,7 @@ const Module4Section2_3 = () => {
               Learning Outcomes
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <ul className="text-white/80 text-sm space-y-2 list-disc pl-4">
+              <ul className="text-white text-sm space-y-2 list-disc pl-4">
                 <li>
                   Interpret dimensions and tolerances from technical drawings and specifications
                 </li>
@@ -361,15 +361,15 @@ const Module4Section2_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Understanding Dimensions
             </h2>
-            <p className="text-white/70 text-sm mb-4">
+            <p className="text-white text-sm mb-4">
               Precise interpretation and application of dimensions ensures accurate positioning:
             </p>
             <div className="space-y-3">
               {dimensionPrinciples.map((principle, i) => (
                 <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                   <p className="font-medium text-elec-yellow mb-1">{principle.principle}</p>
-                  <p className="text-white/70 text-sm mb-2">{principle.description}</p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-sm mb-2">{principle.description}</p>
+                  <p className="text-white text-xs">
                     <strong>Application:</strong> {principle.application} — {principle.keyPoint}
                   </p>
                 </div>
@@ -384,15 +384,15 @@ const Module4Section2_3 = () => {
               <Ruler className="w-5 h-5" />
               Levels and Alignment Tools
             </h2>
-            <p className="text-white/70 text-sm mb-4">
+            <p className="text-white text-sm mb-4">
               Proper levelling ensures professional appearance and functional integrity:
             </p>
             <div className="space-y-3">
               {levellingTools.map((tool, i) => (
                 <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
                   <p className="font-medium text-green-400 mb-1">{tool.tool}</p>
-                  <p className="text-white/70 text-sm mb-2">{tool.purpose}</p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-sm mb-2">{tool.purpose}</p>
+                  <p className="text-white text-xs">
                     <strong>Applications:</strong> {tool.applications.join(', ')} — Advantages:{' '}
                     {tool.advantages.join(', ')}
                   </p>
@@ -401,7 +401,7 @@ const Module4Section2_3 = () => {
             </div>
             <div className="mt-4 p-4 rounded-lg bg-green-500/10 border border-green-500/20">
               <p className="text-sm font-medium text-white mb-1">Levelling Requirements</p>
-              <p className="text-white/60 text-xs">
+              <p className="text-white text-xs">
                 Horizontal runs (trunking) must be straight for appearance and function. Vertical
                 runs (risers) should be perfectly plumb unless specified otherwise.
               </p>
@@ -422,17 +422,17 @@ const Module4Section2_3 = () => {
               <span className="text-purple-400/80 text-sm font-normal">05</span>
               Tolerance Standards
             </h2>
-            <p className="text-white/70 text-sm mb-4">
+            <p className="text-white text-sm mb-4">
               Understanding and applying appropriate tolerances ensures quality and compliance:
             </p>
             <div className="space-y-3">
               {toleranceStandards.map((standard, i) => (
                 <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
                   <p className="font-medium text-purple-400 mb-1">{standard.component}</p>
-                  <p className="text-white/70 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     Tolerance: <strong>{standard.tolerance}</strong> — {standard.reason}
                   </p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-xs">
                     <strong>Impact:</strong> {standard.impact}
                   </p>
                 </div>
@@ -440,7 +440,7 @@ const Module4Section2_3 = () => {
             </div>
             <div className="mt-4 p-4 rounded-lg bg-white/5 border border-white/10">
               <p className="text-sm font-medium text-white mb-1">Project-Specific Tolerances</p>
-              <p className="text-white/60 text-xs">
+              <p className="text-white text-xs">
                 Always follow project specifications as high-end projects may require much tighter
                 tolerances than standard builds.
               </p>
@@ -461,15 +461,15 @@ const Module4Section2_3 = () => {
               <span className="text-orange-400/80 text-sm font-normal">06</span>
               Maintaining Accuracy on Site
             </h2>
-            <p className="text-white/70 text-sm mb-4">
+            <p className="text-white text-sm mb-4">
               Systematic approaches to maintaining precision throughout installation:
             </p>
             <div className="space-y-3">
               {accuracyTechniques.map((technique, i) => (
                 <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
                   <p className="font-medium text-orange-400 mb-1">{technique.technique}</p>
-                  <p className="text-white/70 text-sm mb-2">{technique.description}</p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-sm mb-2">{technique.description}</p>
+                  <p className="text-white text-xs">
                     <strong>Application:</strong> {technique.application} —{' '}
                     <strong>Benefit:</strong> {technique.benefit}
                   </p>
@@ -497,8 +497,8 @@ const Module4Section2_3 = () => {
               {consequences.map((consequence, i) => (
                 <div key={i} className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
                   <p className="font-medium text-red-400 mb-1">{consequence.issue}</p>
-                  <p className="text-white/70 text-sm mb-2">Impact: {consequence.impact}</p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-sm mb-2">Impact: {consequence.impact}</p>
+                  <p className="text-white text-xs">
                     <strong>Cost:</strong> {consequence.cost} — <strong>Prevention:</strong>{' '}
                     {consequence.prevention}
                   </p>
@@ -517,20 +517,20 @@ const Module4Section2_3 = () => {
             <div className="space-y-3">
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
                 <p className="font-medium text-red-400 mb-2">BS 7671 Requirements</p>
-                <p className="text-white/70 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   Requires installations to be "adequately supported and correctly positioned".
                 </p>
-                <p className="text-white/60 text-xs">
+                <p className="text-white text-xs">
                   <strong>Implications:</strong> All dimensional and positional requirements must be
                   met for compliance.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
                 <p className="font-medium text-red-400 mb-2">Building Regulations Part M</p>
-                <p className="text-white/70 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   Stipulates specific mounting heights for accessibility compliance.
                 </p>
-                <p className="text-white/60 text-xs">
+                <p className="text-white text-xs">
                   <strong>Requirements:</strong> Switch and socket heights must meet accessibility
                   standards for disabled access.
                 </p>
@@ -546,7 +546,7 @@ const Module4Section2_3 = () => {
               Real-World Example
             </h2>
             <div className="p-4 rounded-lg bg-blue-500/10 border-l-2 border-blue-500/50">
-              <p className="text-white/80 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 On a retail fit-out, a run of sockets was installed 20 mm too high compared to the
                 specified height. The deviation broke compliance with accessibility requirements,
                 leading to all the outlets being reinstalled at additional cost.
@@ -564,7 +564,7 @@ const Module4Section2_3 = () => {
           {/* FAQs */}
           <section className="mb-10">
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-              <span className="text-white/40 text-sm font-normal">10</span>
+              <span className="text-white text-sm font-normal">10</span>
               Frequently Asked Questions
             </h2>
             <div className="space-y-4">
@@ -572,7 +572,7 @@ const Module4Section2_3 = () => {
                 <p className="font-medium text-white text-sm mb-1">
                   Q: Can I adjust a dimension slightly if it looks better visually?
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A: Only if it's within tolerance and approved by the supervisor or client.
                 </p>
               </div>
@@ -580,7 +580,7 @@ const Module4Section2_3 = () => {
                 <p className="font-medium text-white text-sm mb-1">
                   Q: Are tolerances the same for all projects?
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A: No, high-specification projects may require much tighter tolerances than
                   standard builds.
                 </p>
@@ -589,7 +589,7 @@ const Module4Section2_3 = () => {
                 <p className="font-medium text-white text-sm mb-1">
                   Q: How do I measure accurately over long distances?
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A: Use a laser level or two-person measurement method to reduce errors.
                 </p>
               </div>
@@ -599,11 +599,11 @@ const Module4Section2_3 = () => {
           {/* Summary */}
           <section className="mb-10">
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-              <span className="text-white/40 text-sm font-normal">11</span>
+              <span className="text-white text-sm font-normal">11</span>
               Summary
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 Working within the specified dimensions, levels, and tolerances ensures compliance,
                 safety, and a professional finish. Precision protects the integrity of the
                 installation and avoids costly rework. Remember to use consistent reference points,

@@ -260,7 +260,7 @@ const HNCModule8Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section4">
@@ -282,7 +282,7 @@ const HNCModule8Section4_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Motor Protection
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Comprehensive protection systems for HVAC motors: overload, phase failure, earth fault
             and thermistor protection
           </p>
@@ -366,7 +366,7 @@ const HNCModule8Section4_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Thermal Overload Relays
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Thermal overload relays use bimetallic strips heated by motor current. As current
                 increases, the strips bend until they trip the relay contacts. This provides an
                 inverse-time characteristic that matches motor heating patterns.
@@ -394,7 +394,7 @@ const HNCModule8Section4_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Electronic Overload Relays
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Electronic overload relays use current transformers and microprocessor control to
                 provide accurate, adjustable protection with additional features not possible with
                 thermal types.
@@ -475,7 +475,7 @@ const HNCModule8Section4_4 = () => {
                   <p className="text-sm font-medium text-orange-300 mb-1">
                     Setting Overload Relays
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Set the overload current to the motor nameplate full load current (FLC), not the
                     cable or circuit breaker rating. If the motor FLC is between dial settings, set
                     to the next highest value. Never exceed 1.0× FLC setting unless motor is
@@ -506,7 +506,7 @@ const HNCModule8Section4_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Single-Phasing (Phase Failure)
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Single-phasing occurs when one supply phase is lost due to a blown fuse, loose
                 connection, or supply fault. The motor attempts to continue running on two phases
                 with severe consequences.
@@ -532,7 +532,7 @@ const HNCModule8Section4_4 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Phase Imbalance</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Even small voltage imbalances between phases cause disproportionate current
                 imbalances and additional motor heating. Phase monitoring relays can detect this
                 condition.
@@ -576,7 +576,7 @@ const HNCModule8Section4_4 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Motors should be derated or protected if supply imbalance exceeds 2%
               </p>
             </div>
@@ -585,7 +585,7 @@ const HNCModule8Section4_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Phase Sequence (Reversal) Protection
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Phase sequence relays ensure the motor rotates in the correct direction by detecting
                 the order of phase voltages. Incorrect sequence prevents the motor from starting.
               </p>
@@ -613,7 +613,7 @@ const HNCModule8Section4_4 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                   Phase Monitoring Relay Functions
                 </p>
-                <ul className="text-sm text-white/80 space-y-1 list-disc list-outside ml-5">
+                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                   <li className="pl-1">Phase failure (single-phasing)</li>
                   <li className="pl-1">Phase sequence (rotation direction)</li>
                   <li className="pl-1">Phase imbalance (voltage asymmetry)</li>
@@ -623,7 +623,7 @@ const HNCModule8Section4_4 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Typical Settings</p>
-                <ul className="text-sm text-white/80 space-y-1 list-disc list-outside ml-5">
+                <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                   <li className="pl-1">Phase loss: Instant trip</li>
                   <li className="pl-1">Phase imbalance: 5-10% threshold</li>
                   <li className="pl-1">Undervoltage: 85-90% nominal</li>
@@ -654,7 +654,7 @@ const HNCModule8Section4_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 PTC Thermistors (Positive Temperature Coefficient)
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 PTC thermistors exhibit a sharp resistance increase at a specific temperature. Below
                 this point, resistance is low (typically 100-250Ω). Above the switching temperature,
                 resistance increases rapidly to several thousand ohms.
@@ -716,7 +716,7 @@ const HNCModule8Section4_4 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 PTC sensors trip 5-10°C below maximum to prevent insulation damage
               </p>
             </div>
@@ -725,7 +725,7 @@ const HNCModule8Section4_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 NTC Thermistors (Negative Temperature Coefficient)
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 NTC thermistors have gradually decreasing resistance as temperature rises, providing
                 continuous analogue temperature measurement rather than a switching function.
               </p>
@@ -753,10 +753,10 @@ const HNCModule8Section4_4 = () => {
                 <Thermometer className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="text-sm font-medium text-white mb-2">Thermistor Relay Operation</p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     The thermistor relay monitors total resistance of the series-connected sensors:
                   </p>
-                  <ul className="text-sm text-white/70 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">
                       <strong>Normal:</strong> Total R typically 300-750Ω (3 × 100-250Ω)
                     </li>
@@ -807,7 +807,7 @@ const HNCModule8Section4_4 = () => {
               <ul className="text-sm text-white space-y-2 list-none ml-0">
                 <li className="pl-0 p-3 rounded bg-white/5">
                   <strong className="text-elec-yellow/90">RCDs (Residual Current Devices):</strong>
-                  <span className="text-white/80 block mt-1">
+                  <span className="text-white block mt-1">
                     Detect imbalance between line and neutral currents indicating earth leakage.
                     Standard 30mA for personnel protection, 100-300mA for equipment protection. May
                     nuisance trip with VSD harmonic currents.
@@ -815,7 +815,7 @@ const HNCModule8Section4_4 = () => {
                 </li>
                 <li className="pl-0 p-3 rounded bg-white/5">
                   <strong className="text-elec-yellow/90">Core Balance CT (CBCT):</strong>
-                  <span className="text-white/80 block mt-1">
+                  <span className="text-white block mt-1">
                     All phase and neutral conductors pass through a single CT. Any earth fault
                     current creates an imbalance detected by the relay. More suitable for motor
                     circuits than standard RCDs.
@@ -823,7 +823,7 @@ const HNCModule8Section4_4 = () => {
                 </li>
                 <li className="pl-0 p-3 rounded bg-white/5">
                   <strong className="text-elec-yellow/90">Zero Sequence CT:</strong>
-                  <span className="text-white/80 block mt-1">
+                  <span className="text-white block mt-1">
                     Measures the sum of three phase currents. In a balanced system this equals zero.
                     Earth faults create a non-zero sum current proportional to fault severity.
                   </span>
@@ -880,7 +880,7 @@ const HNCModule8Section4_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Motor Protection Relay (MPR) Functions
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Modern MPRs combine multiple protection functions with programmable settings, fault
                 logging, and communication interfaces. They provide comprehensive motor protection
                 in a single device.
@@ -890,7 +890,7 @@ const HNCModule8Section4_4 = () => {
                   <p className="text-sm font-medium text-white mb-2">
                     Standard Protection Functions
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Thermal overload (49)</li>
                     <li className="pl-1">Phase failure (47)</li>
                     <li className="pl-1">Phase imbalance (46)</li>
@@ -901,7 +901,7 @@ const HNCModule8Section4_4 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Advanced Features</p>
-                  <ul className="text-sm text-white/80 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Thermistor input (RTD/PTC)</li>
                     <li className="pl-1">Motor thermal model</li>
                     <li className="pl-1">Starts per hour limiting</li>
@@ -920,7 +920,7 @@ const HNCModule8Section4_4 = () => {
                   <p className="text-sm font-medium text-orange-300 mb-1">
                     Short-Circuit Protection Required
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Motor protection relays and overload devices do NOT provide short-circuit
                     protection. Fast-acting fuses or MCCBs with adequate breaking capacity must be
                     installed upstream to interrupt fault currents. Verify coordination between
@@ -935,7 +935,7 @@ const HNCModule8Section4_4 = () => {
                 Complete Motor Circuit Protection
               </p>
               <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   A properly protected motor circuit includes:
                 </p>
                 <ol className="text-sm text-white space-y-1.5 list-decimal list-outside ml-5">
@@ -985,7 +985,7 @@ const HNCModule8Section4_4 = () => {
                 Class F insulation. The fan has moderate inertia and takes 12 seconds to reach full
                 speed. Select appropriate overload protection.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Motor FLC: 21A</p>
                 <p>Starting time: 12 seconds (exceeds Class 10 limit)</p>
                 <p className="mt-2">Selection:</p>
@@ -1012,7 +1012,7 @@ const HNCModule8Section4_4 = () => {
                 During commissioning, the thermistor relay shows total circuit resistance of 720Ω.
                 Is this acceptable?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given: Total resistance = 720Ω with 3 sensors</p>
                 <p>
                   Per sensor: 720 ÷ 3 = <strong>240Ω per thermistor</strong>
@@ -1024,7 +1024,7 @@ const HNCModule8Section4_4 = () => {
                 <p className="mt-2">Warning levels to monitor:</p>
                 <p>• Pre-alarm: {'>'}1500Ω total</p>
                 <p>• Trip: {'>'}3000Ω total</p>
-                <p className="mt-2 text-white/60">Record baseline value for future comparison</p>
+                <p className="mt-2 text-white">Record baseline value for future comparison</p>
               </div>
             </div>
 
@@ -1037,7 +1037,7 @@ const HNCModule8Section4_4 = () => {
                 resistance Ra = 20Ω. What maximum earth fault current setting will ensure
                 disconnection within 0.4s?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>BS 7671 requirement: Ra × Ia ≤ 50V</p>
                 <p>Where Ia = operating current of protective device</p>
                 <p className="mt-2">Rearranging: Ia ≤ 50V ÷ Ra</p>
@@ -1048,7 +1048,7 @@ const HNCModule8Section4_4 = () => {
                 <p>• Use 300mA RCD (provides safety margin)</p>
                 <p>• Or CBCT with 500mA setting</p>
                 <p>• Verify 0.4s disconnection at calculated current</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Consider time-delayed RCD to avoid VSD nuisance trips
                 </p>
               </div>
@@ -1139,7 +1139,7 @@ const HNCModule8Section4_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1185,7 +1185,7 @@ const HNCModule8Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section4-3">

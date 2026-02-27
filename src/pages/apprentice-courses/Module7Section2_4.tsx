@@ -108,7 +108,7 @@ const Module7Section2_4 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -127,13 +127,13 @@ const Module7Section2_4 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 7</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 2.4</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 2.4</span>
             </div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
               Overload Current and Protection
             </h1>
-            <p className="text-white/70 text-base sm:text-lg max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg max-w-2xl mx-auto">
               Understanding overload currents, protection devices, and circuit design considerations
             </p>
           </header>
@@ -141,7 +141,7 @@ const Module7Section2_4 = () => {
           {/* In 30 Seconds Summary */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <h2 className="text-lg font-semibold text-white mb-3">In 30 seconds</h2>
-            <div className="grid gap-4 sm:grid-cols-2 text-sm text-white/80">
+            <div className="grid gap-4 sm:grid-cols-2 text-sm text-white">
               <div>
                 <h3 className="font-medium text-white mb-2">Spot it</h3>
                 <ul className="list-disc pl-4 space-y-1">
@@ -166,7 +166,7 @@ const Module7Section2_4 = () => {
           {/* Learning Outcomes */}
           <div className="p-4 rounded-lg bg-white/5 border border-white/10 mb-10">
             <h2 className="text-lg font-semibold text-white mb-3">Learning Outcomes</h2>
-            <ul className="list-disc pl-6 space-y-2 text-sm text-white/80">
+            <ul className="list-disc pl-6 space-y-2 text-sm text-white">
               <li>Understand overload fundamentals and distinguish from fault conditions</li>
               <li>Select and coordinate appropriate protection systems and devices</li>
               <li>Apply current rating relationships and cable design principles</li>
@@ -180,7 +180,7 @@ const Module7Section2_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Overload Fundamentals and Characteristics
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div>
                 <h3 className="font-medium text-white mb-2">Definition and Nature</h3>
                 <p className="mb-3">
@@ -284,7 +284,7 @@ const Module7Section2_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Protection Systems and Device Selection
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div>
                 <h3 className="font-medium text-white mb-2">Time/Current Characteristics</h3>
                 <p className="mb-3">
@@ -376,7 +376,7 @@ const Module7Section2_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Current Ratings and Cable Design
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div>
                 <h3 className="font-medium text-white mb-2">Fundamental Design Relationship</h3>
                 <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30 mb-4 text-center">
@@ -497,7 +497,7 @@ const Module7Section2_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Detection, Testing and Load Management
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div>
                 <h3 className="font-medium text-white mb-2">Load Survey Techniques</h3>
                 <p className="mb-3">
@@ -635,7 +635,7 @@ const Module7Section2_4 = () => {
             <h2 className="text-xl font-semibold text-white mb-4">Real-world Example</h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
               <h3 className="font-medium text-white mb-3">Office Kitchen Circuit Overload</h3>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 <strong>Situation:</strong> An office kitchen circuit rated at 20A (Type B MCB)
                 serving a 2.5mm² cable keeps tripping during lunch periods when multiple appliances
                 operate simultaneously.
@@ -644,7 +644,7 @@ const Module7Section2_4 = () => {
               <div className="grid gap-4 sm:grid-cols-2 mt-4">
                 <div>
                   <h4 className="font-medium text-white mb-2 text-sm">Investigation findings:</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-xs text-white/70">
+                  <ul className="list-disc pl-4 space-y-1 text-xs text-white">
                     <li>Microwave: 8A</li>
                     <li>Kettle: 10A</li>
                     <li>Toaster: 6A</li>
@@ -654,7 +654,7 @@ const Module7Section2_4 = () => {
                 </div>
                 <div>
                   <h4 className="font-medium text-white mb-2 text-sm">Solution implemented:</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-xs text-white/70">
+                  <ul className="list-disc pl-4 space-y-1 text-xs text-white">
                     <li>Install second 20A circuit using 2.5mm² cable</li>
                     <li>Redistribute loads across both circuits</li>
                     <li>Label sockets clearly for load management</li>
@@ -663,7 +663,7 @@ const Module7Section2_4 = () => {
                 </div>
               </div>
 
-              <p className="mt-3 text-xs italic text-white/60">
+              <p className="mt-3 text-xs italic text-white">
                 Result: Load balanced across two circuits (14A each), eliminating nuisance tripping
                 and ensuring safe operation.
               </p>
@@ -680,7 +680,7 @@ const Module7Section2_4 = () => {
                   className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50"
                 >
                   <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                  <p className="text-sm text-white/70">{faq.answer}</p>
+                  <p className="text-sm text-white">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -690,7 +690,7 @@ const Module7Section2_4 = () => {
           <section className="mb-10">
             <div className="p-4 rounded-lg bg-gradient-to-r from-elec-yellow/10 to-purple-500/10 border border-white/10">
               <h2 className="text-xl font-semibold text-white mb-4">Key Points Summary</h2>
-              <div className="grid gap-4 sm:grid-cols-2 text-sm text-white/80">
+              <div className="grid gap-4 sm:grid-cols-2 text-sm text-white">
                 <ul className="list-disc pl-6 space-y-2">
                   <li>Overloads result from legitimate loads exceeding circuit design capacity</li>
                   <li>The relationship Ib ≤ In ≤ Iz must always be maintained</li>
@@ -716,7 +716,7 @@ const Module7Section2_4 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mt-10 pt-6 border-t border-white/10">
             <Button
               variant="ghost"
-              className="w-full sm:w-auto text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="w-full sm:w-auto text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../2-3">

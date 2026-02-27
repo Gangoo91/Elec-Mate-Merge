@@ -143,7 +143,7 @@ const CommunityResourcesList = ({ resources }: CommunityResourcesListProps) => {
             </div>
             <div className="text-left">
               <h3 className="font-semibold text-foreground">{config.label}</h3>
-              <p className="text-xs text-white/70">
+              <p className="text-xs text-white">
                 {typeResources.length} resource{typeResources.length !== 1 ? 's' : ''}
               </p>
             </div>
@@ -156,7 +156,7 @@ const CommunityResourcesList = ({ resources }: CommunityResourcesListProps) => {
               className="transition-transform duration-300"
               style={{ transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
             >
-              <ChevronDown className="h-5 w-5 text-white/70" />
+              <ChevronDown className="h-5 w-5 text-white" />
             </div>
           </div>
         </button>
@@ -177,7 +177,7 @@ const CommunityResourcesList = ({ resources }: CommunityResourcesListProps) => {
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 min-w-0">
                     <h4 className="font-medium text-foreground text-sm">{resource.title}</h4>
-                    <p className="text-xs text-white/70 line-clamp-2 mt-0.5">
+                    <p className="text-xs text-white line-clamp-2 mt-0.5">
                       {resource.description}
                     </p>
                   </div>

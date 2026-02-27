@@ -83,7 +83,7 @@ export const CashFlowSidebar = ({
             <p className="text-lg font-bold text-white">
               {formatCurrency(financialMetrics.totalIncome)}
             </p>
-            <p className="text-xs text-white/50">
+            <p className="text-xs text-white">
               {formatCurrency(financialMetrics.avgMonthlyIncome)}/mo
             </p>
           </div>
@@ -96,7 +96,7 @@ export const CashFlowSidebar = ({
             <p className="text-lg font-bold text-white">
               {formatCurrency(financialMetrics.totalExpenses)}
             </p>
-            <p className="text-xs text-white/50">
+            <p className="text-xs text-white">
               {formatCurrency(financialMetrics.avgMonthlyExpenses)}/mo
             </p>
           </div>
@@ -116,7 +116,7 @@ export const CashFlowSidebar = ({
             <p className="text-lg font-bold text-white">
               {formatCurrency(financialMetrics.netProfit)}
             </p>
-            <p className="text-xs text-white/50">
+            <p className="text-xs text-white">
               {financialMetrics.profitMargin.toFixed(1)}% margin
             </p>
           </div>
@@ -134,7 +134,7 @@ export const CashFlowSidebar = ({
               <span className="text-xs text-amber-400">Cash Runway</span>
             </div>
             <p className="text-lg font-bold text-white">{financialMetrics.cashRunway} mo</p>
-            <p className="text-xs text-white/50">
+            <p className="text-xs text-white">
               Min: {formatCurrency(financialMetrics.minBalance)}
             </p>
           </div>
@@ -153,7 +153,7 @@ export const CashFlowSidebar = ({
                 'px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-200',
                 selectedScenario === scenario.id
                   ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30'
-                  : 'bg-white/5 text-white/60 border border-white/10 hover:bg-white/10'
+                  : 'bg-white/5 text-white border border-white/10 hover:bg-white/10'
               )}
             >
               {scenario.name}
@@ -175,14 +175,14 @@ export const CashFlowSidebar = ({
           </button>
           <button
             onClick={onExportCSV}
-            className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white/70 text-sm font-medium hover:bg-white/10 transition-colors"
+            className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm font-medium hover:bg-white/10 transition-colors"
           >
             <Download className="h-4 w-4" />
             <span>Export CSV</span>
           </button>
           <button
             onClick={onCopySummary}
-            className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white/70 text-sm font-medium hover:bg-white/10 transition-colors"
+            className="flex items-center gap-2 px-3 py-2.5 rounded-xl bg-white/5 border border-white/10 text-white text-sm font-medium hover:bg-white/10 transition-colors"
           >
             <Copy className="h-4 w-4" />
             <span>Copy Summary</span>

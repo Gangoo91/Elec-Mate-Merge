@@ -100,7 +100,7 @@ const StatPill = ({
       <span className="text-sm font-bold text-white leading-tight">
         <AnimatedCounter value={value} suffix={suffix} prefix={prefix} />
       </span>
-      <span className="text-[9px] text-white/50 uppercase tracking-wide leading-tight">
+      <span className="text-[9px] text-white uppercase tracking-wide leading-tight">
         {label}
       </span>
     </div>
@@ -181,7 +181,7 @@ const JobsHeroCard = ({
                 disabled={isRefreshing}
                 size="icon"
                 variant="ghost"
-                className="h-9 w-9 text-white/60 hover:text-white hover:bg-white/10 rounded-lg flex-shrink-0 touch-manipulation"
+                className="h-9 w-9 text-white hover:text-white hover:bg-white/10 rounded-lg flex-shrink-0 touch-manipulation"
               >
                 <RefreshCw className={cn('h-4 w-4', isRefreshing && 'animate-spin')} />
               </Button>
@@ -228,7 +228,7 @@ const JobsHeroCard = ({
                   variant="outline"
                   size="icon"
                   disabled
-                  className="h-11 w-11 border-white/20 text-white/40 rounded-xl cursor-not-allowed"
+                  className="h-11 w-11 border-white/20 text-white rounded-xl cursor-not-allowed"
                 >
                   <FileText className="h-4 w-4" />
                 </Button>
@@ -252,7 +252,7 @@ const JobsHeroCard = ({
           >
             <Badge
               variant="secondary"
-              className="bg-white/5 text-white/80 border-white/10 hover:bg-blue-500/20 hover:text-blue-300 hover:border-blue-500/30 transition-colors cursor-pointer whitespace-nowrap touch-manipulation"
+              className="bg-white/5 text-white border-white/10 hover:bg-blue-500/20 hover:text-blue-300 hover:border-blue-500/30 transition-colors cursor-pointer whitespace-nowrap touch-manipulation"
             >
               {term}
             </Badge>

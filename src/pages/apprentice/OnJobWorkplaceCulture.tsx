@@ -175,7 +175,7 @@ const OnJobWorkplaceCulture = () => {
               setSearchQuery(e.target.value);
               setExpandedSearchId(null);
             }}
-            className="h-11 pl-10 text-base touch-manipulation bg-white/5 border-white/10 focus:border-purple-500 focus:ring-purple-500 placeholder:text-white/50"
+            className="h-11 pl-10 text-base touch-manipulation bg-white/5 border-white/10 focus:border-purple-500 focus:ring-purple-500 placeholder:text-white"
           />
           {searchQuery.length > 0 && (
             <button

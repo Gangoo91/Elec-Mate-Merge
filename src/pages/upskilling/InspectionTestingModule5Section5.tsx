@@ -186,7 +186,7 @@ const InspectionTestingModule5Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-5">
@@ -208,7 +208,7 @@ const InspectionTestingModule5Section5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Prospective Fault Current
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding PSCC calculation and protective device selection
           </p>
         </header>
@@ -288,14 +288,14 @@ const InspectionTestingModule5Section5 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-red-400 mb-2">Why It Matters</p>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 Protective devices must be able to safely interrupt this current. If PSCC exceeds
                 the device's breaking capacity, the device could explode, burn, or fail to clear the
                 fault.
               </p>
             </div>
 
-            <p className="text-sm text-white/60">
+            <p className="text-sm text-white">
               PSCC is sometimes referred to as PFC (Prospective Fault Current) or If (fault
               current).
             </p>
@@ -311,14 +311,14 @@ const InspectionTestingModule5Section5 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <div className="my-6 text-center">
               <p className="text-2xl font-mono text-elec-yellow mb-2">Ipf = Uo / Zs</p>
-              <p className="text-sm text-white/60">
+              <p className="text-sm text-white">
                 Prospective Fault Current = Voltage / Impedance
               </p>
             </div>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Example Calculation:</p>
-              <p className="text-sm text-white/70 font-mono">
+              <p className="text-sm text-white font-mono">
                 Uo = 230V (nominal voltage)
                 <br />
                 Zs = 0.5Ω (measured impedance)
@@ -327,7 +327,7 @@ const InspectionTestingModule5Section5 = () => {
               </p>
             </div>
 
-            <p className="text-sm text-white/60">
+            <p className="text-sm text-white">
               At the origin where Zs may be 0.1Ω: Ipf = 230 / 0.1 = 2300A (2.3kA)
             </p>
           </div>
@@ -348,11 +348,11 @@ const InspectionTestingModule5Section5 = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/20">
-                    <th className="text-left py-2 text-white/60">Device Type</th>
-                    <th className="text-right py-2 text-white/60">Typical Icn</th>
+                    <th className="text-left py-2 text-white">Device Type</th>
+                    <th className="text-right py-2 text-white">Typical Icn</th>
                   </tr>
                 </thead>
-                <tbody className="text-white/80">
+                <tbody className="text-white">
                   <tr className="border-b border-white/10">
                     <td className="py-2">Domestic MCB</td>
                     <td className="text-right font-mono text-elec-yellow">6kA</td>
@@ -391,14 +391,14 @@ const InspectionTestingModule5Section5 = () => {
             <div className="my-6 space-y-4">
               <div>
                 <p className="text-sm font-medium text-elec-yellow mb-2">Direct Measurement</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Modern multifunction testers can measure and display PSCC directly (often labelled
                   PFC or I fault). This is the quickest method.
                 </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-blue-400 mb-2">Calculation from Zs</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   If your meter shows only impedance, calculate: Ipf = 230 / Zs. Remember to use the
                   lowest Zs (highest PSCC) point.
                 </p>
@@ -418,20 +418,20 @@ const InspectionTestingModule5Section5 = () => {
 
             <div className="my-6 space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">At Origin (Ze approximately 0.35Ω)</span>
+                <span className="text-white">At Origin (Ze approximately 0.35Ω)</span>
                 <span className="text-white font-mono">~650A</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">Typical Range</span>
+                <span className="text-white">Typical Range</span>
                 <span className="text-white font-mono">1-3kA</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">Standard MCB Capacity</span>
+                <span className="text-white">Standard MCB Capacity</span>
                 <span className="text-emerald-400 font-mono">6kA</span>
               </div>
             </div>
 
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               Domestic PSCC rarely exceeds 3kA, so standard 6kA MCBs are adequate. Higher values may
               occur close to transformers.
             </p>
@@ -468,7 +468,7 @@ const InspectionTestingModule5Section5 = () => {
               </li>
             </ul>
 
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong className="text-elec-yellow">Format:</strong> Record as "PSCC: 2.3kA" or "PFC:
               2300A" at origin.
             </p>
@@ -521,7 +521,7 @@ const InspectionTestingModule5Section5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -577,7 +577,7 @@ const InspectionTestingModule5Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-5/section-4">

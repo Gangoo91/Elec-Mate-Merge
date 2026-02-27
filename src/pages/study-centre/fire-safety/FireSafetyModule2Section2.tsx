@@ -196,7 +196,7 @@ export default function FireSafetyModule2Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-2">
@@ -219,7 +219,7 @@ export default function FireSafetyModule2Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             The Responsible Person
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Who the responsible person is under the RRFSO, their legal duties, competent persons,
             delegation of tasks, multi-occupancy responsibilities, and personal liability
           </p>
@@ -297,7 +297,7 @@ export default function FireSafetyModule2Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Article 5 &mdash; Responsible Person Definition
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -438,7 +438,7 @@ export default function FireSafetyModule2Section2() {
                         <h4 className="font-semibold text-white text-sm sm:text-base mb-1">
                           {item.title}
                         </h4>
-                        <p className="text-white/80 text-sm leading-relaxed">{item.detail}</p>
+                        <p className="text-white text-sm leading-relaxed">{item.detail}</p>
                       </div>
                     </div>
                   </div>
@@ -482,7 +482,7 @@ export default function FireSafetyModule2Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   What Makes a Person &ldquo;Competent&rdquo;?
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The RRFSO states that a person is competent if they have{' '}
                   <strong>
                     &ldquo;sufficient training and experience or knowledge and other
@@ -490,7 +490,7 @@ export default function FireSafetyModule2Section2() {
                   </strong>{' '}
                   to properly assist the responsible person. In practice, this means:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -539,7 +539,7 @@ export default function FireSafetyModule2Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Third-Party Certification &amp; PAS 79
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -606,8 +606,8 @@ export default function FireSafetyModule2Section2() {
                     <CheckCircle className="h-5 w-5 text-green-400" />
                     <h3 className="font-bold text-green-300 text-sm">Can Be Delegated</h3>
                   </div>
-                  <p className="text-white/70 text-xs mb-3">Tasks &amp; operational duties</p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <p className="text-white text-xs mb-3">Tasks &amp; operational duties</p>
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>Carrying out the fire risk assessment</span>
@@ -635,8 +635,8 @@ export default function FireSafetyModule2Section2() {
                     <AlertTriangle className="h-5 w-5 text-red-400" />
                     <h3 className="font-bold text-red-300 text-sm">Cannot Be Delegated</h3>
                   </div>
-                  <p className="text-white/70 text-xs mb-3">Legal responsibility &amp; liability</p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <p className="text-white text-xs mb-3">Legal responsibility &amp; liability</p>
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                       <span>Criminal liability under the RRFSO</span>
@@ -699,7 +699,7 @@ export default function FireSafetyModule2Section2() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm font-semibold text-white">{item.role}</p>
-                        <p className="text-xs text-white/70">{item.desc}</p>
+                        <p className="text-xs text-white">{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -742,11 +742,11 @@ export default function FireSafetyModule2Section2() {
                     Article 19 &mdash; Information to Employees
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   The responsible person must provide employees with comprehensible and relevant
                   information on:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>The risks identified by the fire risk assessment</span>
@@ -782,11 +782,11 @@ export default function FireSafetyModule2Section2() {
                     Article 20 &mdash; Information to Non-Employees
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   The RP must also provide comprehensible and relevant information to non-employees
                   who may be on the premises, including:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -818,11 +818,11 @@ export default function FireSafetyModule2Section2() {
                   <Shield className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Article 21 &mdash; Training</p>
                 </div>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   The responsible person must ensure that employees receive adequate fire safety
                   training:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -903,11 +903,11 @@ export default function FireSafetyModule2Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Article 22 &mdash; Co-operation and Co-ordination
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Where two or more responsible persons share, or have duties in respect of, the
                   same premises, each must:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -939,7 +939,7 @@ export default function FireSafetyModule2Section2() {
                     Common Areas &mdash; Who Is Responsible?
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1025,7 +1025,7 @@ export default function FireSafetyModule2Section2() {
                   well as the body corporate is guilty of the offence and liable to be prosecuted
                   and punished accordingly.
                 </p>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   This means a director who knew about a fire safety deficiency and failed to act,
                   or who turned a blind eye to non-compliance, can face personal criminal
                   prosecution.
@@ -1037,13 +1037,13 @@ export default function FireSafetyModule2Section2() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="text-center bg-red-500/10 border border-red-500/30 rounded-lg p-3 sm:p-4">
                     <div className="text-2xl sm:text-3xl font-bold text-red-400">Unlimited</div>
-                    <div className="text-xs text-white/60 mt-1">
+                    <div className="text-xs text-white mt-1">
                       Fines &mdash; no upper limit on fines for RRFSO offences on indictment
                     </div>
                   </div>
                   <div className="text-center bg-red-500/10 border border-red-500/30 rounded-lg p-3 sm:p-4">
                     <div className="text-2xl sm:text-3xl font-bold text-red-400">2 Years</div>
-                    <div className="text-xs text-white/60 mt-1">
+                    <div className="text-xs text-white mt-1">
                       Maximum imprisonment &mdash; on conviction on indictment
                     </div>
                   </div>
@@ -1054,7 +1054,7 @@ export default function FireSafetyModule2Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Consequences Beyond Criminal Penalties
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1197,7 +1197,7 @@ export default function FireSafetyModule2Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1211,7 +1211,7 @@ export default function FireSafetyModule2Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-2-section-1">

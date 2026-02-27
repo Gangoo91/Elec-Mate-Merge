@@ -206,7 +206,7 @@ export default function IpafModule5Section4() {
           <Button
             variant="ghost"
             size="icon"
-            className="min-h-[44px] min-w-[44px] text-white/70 hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] min-w-[44px] text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../ipaf-module-5">
@@ -214,7 +214,7 @@ export default function IpafModule5Section4() {
             </Link>
           </Button>
           <div className="flex-1 min-w-0">
-            <p className="text-xs text-white/40">Module 5 {'\u2022'} Section 4</p>
+            <p className="text-xs text-white">Module 5 {'\u2022'} Section 4</p>
             <h1 className="text-sm font-semibold text-white truncate">
               Moving & Repositioning Towers Safely
             </h1>
@@ -237,7 +237,7 @@ export default function IpafModule5Section4() {
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Moving & Repositioning Towers Safely
           </h2>
-          <p className="text-white/60 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             When, how, and under what conditions a mobile access tower can be safely repositioned —
             and the zero-tolerance rules that must never be broken
           </p>
@@ -249,7 +249,7 @@ export default function IpafModule5Section4() {
             <Zap className="h-4 w-4" />
             In 30 Seconds
           </h3>
-          <p className="text-white/80 text-base leading-relaxed">
+          <p className="text-white text-base leading-relaxed">
             NEVER move a tower with anyone on board — zero tolerance, no exceptions, regardless of
             distance. Before moving: wind must be below Beaufort Force 4, all persons descended, all
             loose materials removed, height under 4 metres (or manufacturer's limit), and the route
@@ -264,7 +264,7 @@ export default function IpafModule5Section4() {
             <Ban className="h-4 w-4" />
             On Site — Zero Tolerance Rule
           </h3>
-          <p className="text-white/80 text-base leading-relaxed">
+          <p className="text-white text-base leading-relaxed">
             <strong className="text-red-400">NEVER move a tower with people on board.</strong> This
             is the single most important rule in this section. It applies to every tower, every
             height, every distance, every situation. There are no exceptions. If someone says "I'll
@@ -290,7 +290,7 @@ export default function IpafModule5Section4() {
             ].map((outcome, i) => (
               <li key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </li>
             ))}
           </ul>
@@ -307,7 +307,7 @@ export default function IpafModule5Section4() {
             <h3 className="text-xl font-semibold text-white">When Is It Safe to Move a Tower?</h3>
           </div>
           <div className="border-l-2 border-green-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               A mobile access tower can only be moved when ALL of the following conditions are met.
               If any single condition is not satisfied, the tower must not be moved.
             </p>
@@ -323,7 +323,7 @@ export default function IpafModule5Section4() {
                   </div>
                   <div>
                     <p className="text-red-400 font-semibold text-sm">NO ONE on board</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Zero tolerance — every person must be off the tower with both feet on the
                       ground. No exceptions for distance, height, or urgency.
                     </p>
@@ -337,7 +337,7 @@ export default function IpafModule5Section4() {
                     <p className="text-blue-400 font-semibold text-sm">
                       Wind below Beaufort Force 4
                     </p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Moderate breeze (20-28 km/h) — loose paper blows around, small branches move.
                       If you see these signs, do not move the tower.
                     </p>
@@ -351,7 +351,7 @@ export default function IpafModule5Section4() {
                     <p className="text-amber-400 font-semibold text-sm">
                       All loose materials removed
                     </p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Every tool, piece of material, and item of equipment must be removed from the
                       platform and any intermediate levels. Unsecured items can fall during movement
                       or shift the centre of gravity.
@@ -366,7 +366,7 @@ export default function IpafModule5Section4() {
                     <p className="text-purple-400 font-semibold text-sm">
                       Height under 4 metres (or manufacturer's limit)
                     </p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       The platform height must not exceed 4 metres for movement, unless the
                       manufacturer's instructions specify a higher limit for that specific tower
                       model and configuration.
@@ -381,7 +381,7 @@ export default function IpafModule5Section4() {
                     <p className="text-green-400 font-semibold text-sm">
                       Ground route clear and level
                     </p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       The entire route from current position to new position must be checked: firm
                       surface, no cables/debris, no slopes, no gaps or holes, no overhead hazards
                       along the route.
@@ -409,11 +409,11 @@ export default function IpafModule5Section4() {
                 <Ban className="h-4 w-4" />
                 NEVER Move a Tower with People on Board
               </h4>
-              <p className="text-white/80 text-sm leading-relaxed mb-3">
+              <p className="text-white text-sm leading-relaxed mb-3">
                 This is a zero-tolerance rule. It is not a guideline, not a recommendation, and not
                 open to interpretation. It applies in every situation:
               </p>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                   <span>
@@ -451,7 +451,7 @@ export default function IpafModule5Section4() {
                 </li>
               </ul>
             </div>
-            <p className="text-white/70 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               If anyone asks you to move a tower while someone is on it, or if you see this
               happening, you have a legal duty to stop the activity immediately. Under the Health
               and Safety at Work Act 1974, both the person directing the move and the person
@@ -484,7 +484,7 @@ export default function IpafModule5Section4() {
             <h3 className="text-xl font-semibold text-white">How to Move a Tower Safely</h3>
           </div>
           <div className="border-l-2 border-blue-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Once all pre-move conditions are confirmed, the tower can be moved using the following
               procedure.
             </p>
@@ -499,7 +499,7 @@ export default function IpafModule5Section4() {
                   </span>
                   <div>
                     <p className="text-white font-medium">Confirm all persons have descended</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Visually verify no one is on the tower at any level — check platforms,
                       ladders, and intermediate levels.
                     </p>
@@ -513,7 +513,7 @@ export default function IpafModule5Section4() {
                     <p className="text-white font-medium">
                       Remove all loose materials from platform
                     </p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Clear tools, materials, equipment, and rubbish from all levels. Store safely
                       at ground level.
                     </p>
@@ -525,7 +525,7 @@ export default function IpafModule5Section4() {
                   </span>
                   <div>
                     <p className="text-white font-medium">Check wind conditions</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Confirm wind is below Beaufort Force 4. If in doubt, do not move.
                     </p>
                   </div>
@@ -536,7 +536,7 @@ export default function IpafModule5Section4() {
                   </span>
                   <div>
                     <p className="text-white font-medium">Check and clear the route</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Walk the entire route first. Check for cables, debris, slopes, holes, uneven
                       surfaces, and overhead hazards along the path.
                     </p>
@@ -548,7 +548,7 @@ export default function IpafModule5Section4() {
                   </span>
                   <div>
                     <p className="text-white font-medium">Retract stabilisers and outriggers</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       If fitted, retract or fold stabilisers and outriggers so they clear ground
                       obstructions during the move.
                     </p>
@@ -560,7 +560,7 @@ export default function IpafModule5Section4() {
                   </span>
                   <div>
                     <p className="text-white font-medium">Unlock castors</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Release all castor brakes. Check that all castors rotate and swivel freely.
                     </p>
                   </div>
@@ -571,7 +571,7 @@ export default function IpafModule5Section4() {
                   </span>
                   <div>
                     <p className="text-white font-medium">Push at the BASE — minimum 2 people</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Apply force at the base of the tower, NOT mid-height or above. One person at
                       each end for control and hazard spotting. Move slowly and steadily.
                     </p>
@@ -585,7 +585,7 @@ export default function IpafModule5Section4() {
                     <p className="text-white font-medium">
                       Watch for overhead hazards during transit
                     </p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       A dedicated lookout should watch for power lines, beams, pipe bridges, and
                       other overhead obstructions along the route. Stop if any hazard is identified.
                     </p>
@@ -595,7 +595,7 @@ export default function IpafModule5Section4() {
             </div>
             <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-white text-sm mb-2">Why Push at the Base?</h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Pushing at the base keeps the applied force below the tower's centre of gravity.
                 This creates a rolling motion rather than a tipping motion. Pushing at mid-height or
                 above creates a moment arm — the higher the push point, the greater the tipping
@@ -630,7 +630,7 @@ export default function IpafModule5Section4() {
             <h3 className="text-xl font-semibold text-white">Ground Surface Requirements</h3>
           </div>
           <div className="border-l-2 border-amber-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The ground surface along the entire movement route must be capable of supporting the
               tower's castors without sinking, catching, or causing instability.
             </p>
@@ -639,7 +639,7 @@ export default function IpafModule5Section4() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-green-400 font-semibold">Suitable Surfaces</p>
-                  <ul className="text-white/70 space-y-1 mt-1 text-xs">
+                  <ul className="text-white space-y-1 mt-1 text-xs">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Smooth concrete (warehouse, factory floor)</span>
@@ -660,7 +660,7 @@ export default function IpafModule5Section4() {
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-red-400 font-semibold">Unsuitable / Hazardous Surfaces</p>
-                  <ul className="text-white/70 space-y-1 mt-1 text-xs">
+                  <ul className="text-white space-y-1 mt-1 text-xs">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Soft ground, grass, or mud</span>
@@ -689,7 +689,7 @@ export default function IpafModule5Section4() {
                 </div>
               </div>
             </div>
-            <p className="text-white/70 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               If the surface along the route is unsuitable for castor movement, the options are: (1)
               Create a firm path using plywood boards, (2) Choose a different route on a suitable
               surface, or (3) Dismantle the tower and re-erect at the new position. Never force a
@@ -711,7 +711,7 @@ export default function IpafModule5Section4() {
             </h3>
           </div>
           <div className="border-l-2 border-emerald-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               After repositioning, the tower must be thoroughly checked before anyone climbs it.
               Movement can loosen connections, and the new location may have different ground
               conditions or overhead clearances.
@@ -726,7 +726,7 @@ export default function IpafModule5Section4() {
                   <CheckCircle className="h-5 w-5 text-emerald-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="text-white font-medium">Re-check ground stability</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Verify the new position is on firm, level ground. Check for voids, drains,
                       soft spots, or uneven surfaces beneath the castors.
                     </p>
@@ -736,7 +736,7 @@ export default function IpafModule5Section4() {
                   <CheckCircle className="h-5 w-5 text-emerald-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="text-white font-medium">Re-level using a spirit level</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       The tower must be level in both directions. Use the adjustable base legs to
                       achieve level — do NOT use packing materials under the castors.
                     </p>
@@ -746,7 +746,7 @@ export default function IpafModule5Section4() {
                   <CheckCircle className="h-5 w-5 text-emerald-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="text-white font-medium">Lock ALL castors</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Every castor must be locked — check each one individually. Apply the brake and
                       try to push the tower to verify the locks are holding.
                     </p>
@@ -758,7 +758,7 @@ export default function IpafModule5Section4() {
                     <p className="text-white font-medium">
                       Deploy and adjust stabilisers/outriggers
                     </p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Re-deploy stabilisers or outriggers and adjust for the new ground level.
                       Verify they are making firm contact with the ground.
                     </p>
@@ -768,7 +768,7 @@ export default function IpafModule5Section4() {
                   <CheckCircle className="h-5 w-5 text-emerald-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="text-white font-medium">Conduct a full pre-use inspection</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Check all frames, braces, platforms, guardrails, toeboards, and connections.
                       Movement can loosen spigot pins, brace hooks, and platform catches.
                     </p>
@@ -780,7 +780,7 @@ export default function IpafModule5Section4() {
                     <p className="text-white font-medium">
                       Check overhead clearance at new position
                     </p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Verify there are no power lines, beams, ducts, or other overhead obstructions
                       at the new location. The overhead environment may be different from the
                       previous position.
@@ -803,7 +803,7 @@ export default function IpafModule5Section4() {
             <h3 className="text-xl font-semibold text-white">Wind Conditions & Beaufort Scale</h3>
           </div>
           <div className="border-l-2 border-sky-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Wind creates lateral force on the tower structure during movement, significantly
               increasing the risk of overturning. The Beaufort Scale provides a practical way to
               assess wind conditions on site without instruments.
@@ -819,7 +819,7 @@ export default function IpafModule5Section4() {
                   </span>
                   <div>
                     <p className="text-green-400 font-medium">Light Breeze (6-11 km/h)</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Wind felt on face, leaves rustle. Safe to work and move towers.
                     </p>
                   </div>
@@ -830,7 +830,7 @@ export default function IpafModule5Section4() {
                   </span>
                   <div>
                     <p className="text-amber-400 font-medium">Gentle Breeze (12-19 km/h)</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Leaves and small twigs in constant motion, light flags extended. Caution —
                       monitor conditions closely.
                     </p>
@@ -842,7 +842,7 @@ export default function IpafModule5Section4() {
                   </span>
                   <div>
                     <p className="text-red-400 font-medium">Moderate Breeze (20-28 km/h) — STOP</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Loose paper blows around, small branches move.{' '}
                       <strong className="text-white">
                         Do not move towers. Consider stopping all tower work.
@@ -856,7 +856,7 @@ export default function IpafModule5Section4() {
                   </span>
                   <div>
                     <p className="text-red-400 font-medium">Fresh Breeze and Above (29+ km/h)</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Small trees sway.{' '}
                       <strong className="text-white">
                         All tower work must stop. Secure or dismantle the tower if conditions are
@@ -869,7 +869,7 @@ export default function IpafModule5Section4() {
             </div>
             <div className="bg-white/5 border border-white/10 rounded-lg p-4">
               <h4 className="font-semibold text-white text-sm mb-2">Wind Gusts vs Average Speed</h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Remember that gusts can be 50-100% stronger than the average wind speed. A site
                 reporting an average of Beaufort Force 3 may experience gusts at Force 5 or 6.
                 Buildings and structures can also channel wind, creating local gusts significantly
@@ -904,7 +904,7 @@ export default function IpafModule5Section4() {
             <h3 className="text-xl font-semibold text-white">Special Situations & Edge Cases</h3>
           </div>
           <div className="border-l-2 border-purple-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Some situations require additional thought beyond the standard moving procedure.
               Knowing how to handle these edge cases prevents improvisation that could lead to
               accidents.
@@ -914,7 +914,7 @@ export default function IpafModule5Section4() {
               <div className="space-y-3">
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-purple-400 font-semibold text-sm">Moving Through Doorways</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Measure the doorway height and width before attempting to move the tower
                     through. If the tower is too tall, it must be partially dismantled — never tilt
                     or angle a tower to fit through an opening. Check for door frame thresholds that
@@ -925,7 +925,7 @@ export default function IpafModule5Section4() {
                   <p className="text-purple-400 font-semibold text-sm">
                     Moving Between Indoor and Outdoor
                   </p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Transitioning from a smooth indoor floor to an outdoor surface requires extra
                     caution. The outdoor surface may be uneven, wet, or sloped. Check the transition
                     point for lips, ramps, or level changes that could catch castors or cause the
@@ -936,7 +936,7 @@ export default function IpafModule5Section4() {
                   <p className="text-purple-400 font-semibold text-sm">
                     Moving Near Vehicle Traffic
                   </p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     If the tower route crosses or runs alongside a vehicle traffic route, additional
                     controls are needed: banksman, temporary traffic management, high-visibility
                     clothing, and coordination with the site traffic management plan. A vehicle
@@ -945,7 +945,7 @@ export default function IpafModule5Section4() {
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-purple-400 font-semibold text-sm">When Dismantling Is Safer</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     If the move distance is long, the route has multiple obstacles, the surface
                     changes significantly, or the tower must pass under overhead hazards, it may be
                     safer and quicker to dismantle, transport the components, and re-erect at the
@@ -969,33 +969,33 @@ export default function IpafModule5Section4() {
             <div className="space-y-3 text-sm">
               <div className="flex items-start gap-3 bg-black/20 rounded-lg p-3">
                 <span className="text-red-400 font-bold text-lg flex-shrink-0">1</span>
-                <p className="text-white/80">
+                <p className="text-white">
                   <strong className="text-red-400">NEVER</strong> move a tower with anyone on board
                   — zero tolerance, no exceptions
                 </p>
               </div>
               <div className="flex items-start gap-3 bg-black/20 rounded-lg p-3">
                 <span className="text-amber-400 font-bold text-lg flex-shrink-0">2</span>
-                <p className="text-white/80">
+                <p className="text-white">
                   Push at the <strong className="text-amber-400">BASE</strong>, not mid-height or
                   above
                 </p>
               </div>
               <div className="flex items-start gap-3 bg-black/20 rounded-lg p-3">
                 <span className="text-blue-400 font-bold text-lg flex-shrink-0">3</span>
-                <p className="text-white/80">
+                <p className="text-white">
                   Minimum <strong className="text-blue-400">2 people</strong> to move any tower
                 </p>
               </div>
               <div className="flex items-start gap-3 bg-black/20 rounded-lg p-3">
                 <span className="text-green-400 font-bold text-lg flex-shrink-0">4</span>
-                <p className="text-white/80">
+                <p className="text-white">
                   Wind must be <strong className="text-green-400">below Beaufort Force 4</strong>
                 </p>
               </div>
               <div className="flex items-start gap-3 bg-black/20 rounded-lg p-3">
                 <span className="text-purple-400 font-bold text-lg flex-shrink-0">5</span>
-                <p className="text-white/80">
+                <p className="text-white">
                   Platform height must be{' '}
                   <strong className="text-purple-400">under 4 metres</strong> (or manufacturer's
                   specified limit)
@@ -1003,7 +1003,7 @@ export default function IpafModule5Section4() {
               </div>
               <div className="flex items-start gap-3 bg-black/20 rounded-lg p-3">
                 <span className="text-cyan-400 font-bold text-lg flex-shrink-0">6</span>
-                <p className="text-white/80">
+                <p className="text-white">
                   After every move:{' '}
                   <strong className="text-cyan-400">
                     re-level, lock castors, deploy stabilisers, full inspection
@@ -1026,7 +1026,7 @@ export default function IpafModule5Section4() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-3">
                 <h4 className="font-medium text-white text-sm">Pre-Move Quick Check</h4>
-                <ul className="space-y-1 text-xs text-white/70">
+                <ul className="space-y-1 text-xs text-white">
                   <li>&#10003; All persons off the tower — visually confirmed</li>
                   <li>&#10003; All loose materials removed from all levels</li>
                   <li>&#10003; Wind below Beaufort Force 4</li>
@@ -1039,7 +1039,7 @@ export default function IpafModule5Section4() {
               </div>
               <div className="space-y-3">
                 <h4 className="font-medium text-white text-sm">Post-Move Quick Check</h4>
-                <ul className="space-y-1 text-xs text-white/70">
+                <ul className="space-y-1 text-xs text-white">
                   <li>&#10003; Ground firm and level at new position</li>
                   <li>&#10003; Tower re-levelled using spirit level</li>
                   <li>&#10003; ALL castors locked — each one tested</li>
@@ -1063,7 +1063,7 @@ export default function IpafModule5Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-xl p-4">
                 <h4 className="font-medium text-white mb-2 text-sm">{faq.question}</h4>
-                <p className="text-sm text-white/60 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

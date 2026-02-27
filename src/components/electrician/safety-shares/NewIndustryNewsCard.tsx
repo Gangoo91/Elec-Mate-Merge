@@ -141,7 +141,7 @@ const NewIndustryNewsCard = () => {
           <AlertTriangle className="h-8 w-8 text-red-400" />
         </div>
         <h2 className="text-lg font-semibold text-white mb-2">Unable to load news</h2>
-        <p className="text-sm text-white/50 text-center mb-4">
+        <p className="text-sm text-white text-center mb-4">
           Please check your connection and try again
         </p>
         <Button
@@ -199,7 +199,7 @@ const NewIndustryNewsCard = () => {
                 variant="ghost"
                 size="sm"
                 onClick={() => navigate(-1)}
-                className="text-white/50 hover:text-white hover:bg-white/5 -ml-2 gap-1.5"
+                className="text-white hover:text-white hover:bg-white/5 -ml-2 gap-1.5"
               >
                 <ArrowLeft className="h-4 w-4" />
                 <span className="text-sm">Back</span>
@@ -211,7 +211,7 @@ const NewIndustryNewsCard = () => {
                 size="sm"
                 onClick={handleRefresh}
                 disabled={isRefreshing}
-                className="hidden sm:flex text-white/40 hover:text-elec-yellow hover:bg-elec-yellow/5 gap-2"
+                className="hidden sm:flex text-white hover:text-elec-yellow hover:bg-elec-yellow/5 gap-2"
               >
                 <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
                 <span className="text-sm">{isRefreshing ? 'Updating...' : 'Refresh'}</span>
@@ -226,7 +226,7 @@ const NewIndustryNewsCard = () => {
                   <span className="text-xs font-medium tracking-wide uppercase">Live Feed</span>
                 </div>
                 {articles.length > 0 && (
-                  <span className="text-xs text-white/30">• {articles.length} articles</span>
+                  <span className="text-xs text-white">• {articles.length} articles</span>
                 )}
               </div>
 
@@ -234,7 +234,7 @@ const NewIndustryNewsCard = () => {
                 Industry Updates
               </h1>
 
-              <p className="text-sm text-white/50">
+              <p className="text-sm text-white">
                 Electrical Times • Professional Electrician • ECN
               </p>
             </div>
@@ -243,7 +243,7 @@ const NewIndustryNewsCard = () => {
             <div className="relative">
               <div className="relative group">
                 {!searchTerm && (
-                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30 group-focus-within:text-elec-yellow transition-colors pointer-events-none" />
+                  <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-white group-focus-within:text-elec-yellow transition-colors pointer-events-none" />
                 )}
                 <Input
                   type="text"
@@ -260,7 +260,7 @@ const NewIndustryNewsCard = () => {
                     variant="ghost"
                     size="sm"
                     onClick={() => setSearchTerm('')}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 p-0 text-white/40 hover:text-white hover:bg-white/10 rounded-lg"
+                    className="absolute right-2 top-1/2 -translate-y-1/2 h-8 w-8 p-0 text-white hover:text-white hover:bg-white/10 rounded-lg"
                   >
                     <X className="h-4 w-4" />
                   </Button>
@@ -274,7 +274,7 @@ const NewIndustryNewsCard = () => {
                     initial={{ opacity: 0, y: -8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
-                    className="absolute -bottom-7 left-0 text-xs text-white/40"
+                    className="absolute -bottom-7 left-0 text-xs text-white"
                   >
                     {filteredArticles.length} result{filteredArticles.length !== 1 ? 's' : ''} for "
                     {searchTerm}"
@@ -293,7 +293,7 @@ const NewIndustryNewsCard = () => {
                     'px-3 py-1.5 rounded-full text-xs whitespace-nowrap transition-all touch-manipulation',
                     selectedCategory === cat
                       ? 'bg-elec-yellow text-black font-medium'
-                      : 'bg-white/10 text-white/60 hover:bg-white/15'
+                      : 'bg-white/10 text-white hover:bg-white/15'
                   )}
                 >
                   {cat}
@@ -313,10 +313,10 @@ const NewIndustryNewsCard = () => {
         {articles.length === 0 ? (
           <motion.div variants={itemVariants} className="py-16 text-center">
             <div className="w-20 h-20 rounded-2xl bg-white/5 flex items-center justify-center mx-auto mb-4">
-              <Newspaper className="h-10 w-10 text-white/20" />
+              <Newspaper className="h-10 w-10 text-white" />
             </div>
             <h2 className="text-lg font-medium text-white mb-2">No articles yet</h2>
-            <p className="text-sm text-white/40 mb-6">Pull down to fetch the latest news</p>
+            <p className="text-sm text-white mb-6">Pull down to fetch the latest news</p>
             <Button
               onClick={handleRefresh}
               disabled={isRefreshing}
@@ -329,10 +329,10 @@ const NewIndustryNewsCard = () => {
         ) : displayArticles.length === 0 ? (
           <motion.div variants={itemVariants} className="py-16 text-center">
             <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mx-auto mb-4">
-              <Search className="h-8 w-8 text-white/20" />
+              <Search className="h-8 w-8 text-white" />
             </div>
             <h2 className="text-lg font-medium text-white mb-2">No matches</h2>
-            <p className="text-sm text-white/40">Try different keywords</p>
+            <p className="text-sm text-white">Try different keywords</p>
           </motion.div>
         ) : (
           <>
@@ -347,7 +347,7 @@ const NewIndustryNewsCard = () => {
             {gridArticles.length > 0 && (
               <motion.section variants={itemVariants} className="space-y-4">
                 <div className="flex items-center gap-4">
-                  <h2 className="text-base font-medium text-white/70">More Stories</h2>
+                  <h2 className="text-base font-medium text-white">More Stories</h2>
                   <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent" />
                 </div>
                 <NewsGrid articles={gridArticles} />
@@ -369,7 +369,7 @@ const NewIndustryNewsCard = () => {
 
         {/* Footer attribution */}
         <motion.footer variants={itemVariants} className="pt-8 pb-4 text-center">
-          <p className="text-[11px] text-white/20">News aggregated from trusted industry sources</p>
+          <p className="text-[11px] text-white">News aggregated from trusted industry sources</p>
         </motion.footer>
       </motion.div>
     </PullToRefresh>

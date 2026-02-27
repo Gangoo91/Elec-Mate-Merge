@@ -134,7 +134,7 @@ export default function Module4Section4_7() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -152,13 +152,13 @@ export default function Module4Section4_7() {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 4.7</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 4.7</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Working at Height Safely While Installing Systems
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Learn safe working practices for height work during electrical installations. Covers
               equipment selection, fall protection, and Work at Height Regulations 2005 compliance.
             </p>
@@ -173,7 +173,7 @@ export default function Module4Section4_7() {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2 text-sm">In 30 Seconds</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                <ul className="text-white text-sm space-y-1 list-disc pl-4">
                   <li>Working at height is high-risk but necessary for electrical installations</li>
                   <li>Work at Height Regulations 2005 provide legal framework</li>
                   <li>Correct equipment selection prevents most accidents</li>
@@ -182,7 +182,7 @@ export default function Module4Section4_7() {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2 text-sm">Spot it / Use it</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                <ul className="text-white text-sm space-y-1 list-disc pl-4">
                   <li>Risk assess before starting work</li>
                   <li>Inspect all equipment before use</li>
                   <li>Three points of contact on ladders</li>
@@ -198,7 +198,7 @@ export default function Module4Section4_7() {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <div className="text-white/80 space-y-2 leading-relaxed">
+            <div className="text-white space-y-2 leading-relaxed">
               <ul className="list-disc pl-6 space-y-2">
                 <li>Identify hazards associated with working at height</li>
                 <li>Select the correct access equipment for different installation tasks</li>
@@ -215,14 +215,14 @@ export default function Module4Section4_7() {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Legal and Safety Requirements
             </h2>
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Work at height is regulated under the <strong>Work at Height Regulations 2005</strong>
               , which place specific duties on employers and workers.
             </p>
 
             <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50 mb-4">
               <p className="font-medium text-white mb-2">Key Legal Requirements</p>
-              <ul className="text-white/70 text-sm list-disc pl-6 space-y-1">
+              <ul className="text-white text-sm list-disc pl-6 space-y-1">
                 <li>
                   <strong>Avoid</strong> working at height where reasonably practicable
                 </li>
@@ -243,7 +243,7 @@ export default function Module4Section4_7() {
 
             <div className="p-4 rounded-lg bg-orange-500/5 border-l-2 border-orange-500/50">
               <p className="font-medium text-white mb-2">Critical Requirement</p>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Height work must be planned, supervised, and carried out by competent persons.
                 Training records must be maintained and refreshed regularly.
               </p>
@@ -266,7 +266,7 @@ export default function Module4Section4_7() {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Common Hazards
             </h2>
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Understanding hazards is the first step in preventing accidents during electrical
               installation work at height.
             </p>
@@ -274,7 +274,7 @@ export default function Module4Section4_7() {
             <div className="grid sm:grid-cols-2 gap-4 mb-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50">
                 <p className="font-medium text-white mb-2">Primary Hazards</p>
-                <ul className="text-white/70 text-sm list-disc pl-6 space-y-1">
+                <ul className="text-white text-sm list-disc pl-6 space-y-1">
                   <li>Falls from ladders, scaffolds, or platforms</li>
                   <li>Dropped tools or materials striking people below</li>
                   <li>Overreaching or leaning too far from working platform</li>
@@ -283,7 +283,7 @@ export default function Module4Section4_7() {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50">
                 <p className="font-medium text-white mb-2">Environmental Hazards</p>
-                <ul className="text-white/70 text-sm list-disc pl-6 space-y-1">
+                <ul className="text-white text-sm list-disc pl-6 space-y-1">
                   <li>Contact with overhead power lines</li>
                   <li>Poor weather conditions (wind, rain, ice)</li>
                   <li>Inadequate lighting for height work</li>
@@ -294,7 +294,7 @@ export default function Module4Section4_7() {
 
             <div className="p-4 rounded-lg bg-red-500/5 border-l-2 border-red-500/50">
               <p className="font-medium text-white mb-2">Statistics Alert</p>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Falls from height account for approximately 40% of workplace fatalities in
                 construction. Most are preventable through proper planning and equipment use.
               </p>
@@ -307,7 +307,7 @@ export default function Module4Section4_7() {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Access Equipment
             </h2>
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Selecting the right access equipment for the task is crucial for both safety and
               efficiency.
             </p>
@@ -315,41 +315,41 @@ export default function Module4Section4_7() {
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
                 <p className="font-medium text-white mb-2">Step Ladders</p>
-                <p className="text-white/70 text-sm mb-1">
+                <p className="text-white text-sm mb-1">
                   <strong>Use for:</strong> Short-duration, light tasks up to 2.5m working height
                 </p>
-                <p className="text-white/70 text-sm mb-1">
+                <p className="text-white text-sm mb-1">
                   <strong>Requirements:</strong> Must be stable, positioned correctly, and not
                   overloaded
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   <strong>Limitations:</strong> Not suitable for prolonged work or heavy tool use
                 </p>
               </div>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
                 <p className="font-medium text-white mb-2">Extension Ladders</p>
-                <p className="text-white/70 text-sm mb-1">
+                <p className="text-white text-sm mb-1">
                   <strong>Use for:</strong> Access only, not prolonged work
                 </p>
-                <p className="text-white/70 text-sm mb-1">
+                <p className="text-white text-sm mb-1">
                   <strong>Requirements:</strong> Secure at top and bottom, 4:1 angle ratio
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   <strong>Limitations:</strong> No working platform, limited tool carrying capacity
                 </p>
               </div>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
                 <p className="font-medium text-white mb-2">Towers/Scaffolds</p>
-                <p className="text-white/70 text-sm mb-1">
+                <p className="text-white text-sm mb-1">
                   <strong>Use for:</strong> Prolonged work requiring large, stable platform
                 </p>
-                <p className="text-white/70 text-sm mb-1">
+                <p className="text-white text-sm mb-1">
                   <strong>Requirements:</strong> Must be erected by competent persons, guard rails
                   fitted
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   <strong>Benefits:</strong> Large working area, tool storage, multiple workers
                 </p>
               </div>
@@ -358,13 +358,13 @@ export default function Module4Section4_7() {
                 <p className="font-medium text-white mb-2">
                   MEWPs (Mobile Elevating Work Platforms)
                 </p>
-                <p className="text-white/70 text-sm mb-1">
+                <p className="text-white text-sm mb-1">
                   <strong>Types:</strong> Scissor lifts, boom lifts, cherry pickers
                 </p>
-                <p className="text-white/70 text-sm mb-1">
+                <p className="text-white text-sm mb-1">
                   <strong>Requirements:</strong> IPAF-trained operators, ground condition checks
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   <strong>Benefits:</strong> Quick positioning, precise height control, mobility
                 </p>
               </div>
@@ -387,7 +387,7 @@ export default function Module4Section4_7() {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Safe Working Practices
             </h2>
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Following established safe working practices reduces risk and ensures legal
               compliance.
             </p>
@@ -395,7 +395,7 @@ export default function Module4Section4_7() {
             <div className="grid sm:grid-cols-2 gap-4 mb-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">Pre-Work Checks</p>
-                <ul className="text-white/70 text-sm list-disc pl-6 space-y-1">
+                <ul className="text-white text-sm list-disc pl-6 space-y-1">
                   <li>Inspect all access equipment before use</li>
                   <li>Check weather conditions and visibility</li>
                   <li>Verify ground conditions for stability</li>
@@ -405,7 +405,7 @@ export default function Module4Section4_7() {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">During Work</p>
-                <ul className="text-white/70 text-sm list-disc pl-6 space-y-1">
+                <ul className="text-white text-sm list-disc pl-6 space-y-1">
                   <li>Maintain three points of contact on ladders</li>
                   <li>Never overreach — reposition equipment instead</li>
                   <li>Use tool lanyards to prevent dropping equipment</li>
@@ -417,7 +417,7 @@ export default function Module4Section4_7() {
 
             <div className="p-4 rounded-lg bg-purple-500/5 border-l-2 border-purple-500/50">
               <p className="font-medium text-white mb-2">Professional Tip</p>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 The "belt buckle rule" helps prevent overreaching: keep your belt buckle between the
                 ladder rails at all times. If you need to reach beyond this, reposition the ladder.
               </p>
@@ -430,14 +430,14 @@ export default function Module4Section4_7() {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Fall Protection
             </h2>
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               When edge protection cannot be provided, personal fall protection systems become
               essential.
             </p>
 
             <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50 mb-4">
               <p className="font-medium text-white mb-2">Fall Protection Systems</p>
-              <ul className="text-white/70 text-sm list-disc pl-6 space-y-1">
+              <ul className="text-white text-sm list-disc pl-6 space-y-1">
                 <li>
                   <strong>Work Restraint:</strong> Prevents reaching the fall edge (preferred
                   method)
@@ -454,7 +454,7 @@ export default function Module4Section4_7() {
             <div className="grid sm:grid-cols-2 gap-4 mb-4">
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="font-medium text-white mb-2">Equipment Requirements</p>
-                <ul className="text-white/70 text-sm list-disc pl-6 space-y-1">
+                <ul className="text-white text-sm list-disc pl-6 space-y-1">
                   <li>Full body harness (not belt)</li>
                   <li>Energy-absorbing lanyard</li>
                   <li>Certified anchor point (15kN minimum)</li>
@@ -463,7 +463,7 @@ export default function Module4Section4_7() {
               </div>
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="font-medium text-white mb-2">Critical Factors</p>
-                <ul className="text-white/70 text-sm list-disc pl-6 space-y-1">
+                <ul className="text-white text-sm list-disc pl-6 space-y-1">
                   <li>Fall clearance calculations</li>
                   <li>Rescue plan and equipment</li>
                   <li>Training in system use</li>
@@ -474,7 +474,7 @@ export default function Module4Section4_7() {
 
             <div className="p-4 rounded-lg bg-orange-500/5 border-l-2 border-orange-500/50">
               <p className="font-medium text-white mb-2">Critical Requirement</p>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Fall arrest systems require sufficient clearance below the worker to prevent ground
                 impact during arrest. Calculate fall distance including lanyard extension and
                 harness stretch.
@@ -498,7 +498,7 @@ export default function Module4Section4_7() {
               <span className="text-elec-yellow/80 text-sm font-normal">08</span>
               Common Mistakes
             </h2>
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Learning from common mistakes helps prevent accidents and ensures professional
               standards.
             </p>
@@ -508,7 +508,7 @@ export default function Module4Section4_7() {
                 <p className="font-medium text-red-400 mb-1">
                   Using ladders for tasks that require a platform
                 </p>
-                <p className="text-white/60 text-sm">
+                <p className="text-white text-sm">
                   Prolonged work, heavy tools, or two-handed tasks need a stable platform, not
                   ladder access.
                 </p>
@@ -517,7 +517,7 @@ export default function Module4Section4_7() {
                 <p className="font-medium text-red-400 mb-1">
                   Standing on the top step or rung of a ladder
                 </p>
-                <p className="text-white/60 text-sm">
+                <p className="text-white text-sm">
                   This eliminates handholds and creates an unstable working position with high fall
                   risk.
                 </p>
@@ -526,7 +526,7 @@ export default function Module4Section4_7() {
                 <p className="font-medium text-red-400 mb-1">
                   Failing to secure tools and materials at height
                 </p>
-                <p className="text-white/60 text-sm">
+                <p className="text-white text-sm">
                   Dropped tools can cause serious injuries and expensive damage to equipment below.
                 </p>
               </div>
@@ -534,7 +534,7 @@ export default function Module4Section4_7() {
                 <p className="font-medium text-red-400 mb-1">
                   Ignoring weather conditions for outdoor height work
                 </p>
-                <p className="text-white/60 text-sm">
+                <p className="text-white text-sm">
                   Wind, rain, or poor visibility significantly increase risks and should halt height
                   work.
                 </p>
@@ -551,7 +551,7 @@ export default function Module4Section4_7() {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="font-medium text-white mb-2">Planning and Preparation</p>
-                <ul className="text-white/70 text-sm list-disc pl-6 space-y-1">
+                <ul className="text-white text-sm list-disc pl-6 space-y-1">
                   <li>Always carry out a risk assessment before starting work at height</li>
                   <li>Select the shortest and most stable access method possible for the task</li>
                   <li>Position ladders at a 4:1 ratio (for every 4 m up, base is 1 m out)</li>
@@ -563,7 +563,7 @@ export default function Module4Section4_7() {
               </div>
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="font-medium text-white mb-2">During Installation</p>
-                <ul className="text-white/70 text-sm list-disc pl-6 space-y-1">
+                <ul className="text-white text-sm list-disc pl-6 space-y-1">
                   <li>For MEWPs, check ground conditions before positioning the platform</li>
                   <li>
                     Use chutes or hoists to raise materials — avoid carrying heavy items up ladders
@@ -587,7 +587,7 @@ export default function Module4Section4_7() {
               <p className="font-medium text-white mb-2">
                 Warehouse Lighting Installation Incident
               </p>
-              <p className="text-white/70 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 During a warehouse lighting installation, a worker used a ladder for a task that
                 required both hands and heavy tools. Overreaching caused the ladder to slip,
                 resulting in a fall and injury.
@@ -606,7 +606,7 @@ export default function Module4Section4_7() {
               <span className="text-elec-yellow/80 text-sm font-normal">11</span>
               Frequently Asked Questions
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="font-medium text-white mb-1">
                   Q: Do I always need a harness when working at height?
@@ -643,7 +643,7 @@ export default function Module4Section4_7() {
               Summary
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-white/80 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Working at height safely requires planning, the correct equipment, and adherence to
                 regulations. The right access method, combined with good practices like securing
                 tools and avoiding overreaching, prevents accidents and ensures productivity.

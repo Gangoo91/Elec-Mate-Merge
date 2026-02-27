@@ -203,7 +203,7 @@ export default function RSMModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-4">
@@ -354,7 +354,7 @@ export default function RSMModule4Section1() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 p-3 rounded">
                       <p className="text-xs font-medium text-rose-400 mb-1">{item.hours}</p>
-                      <p className="text-xs text-white/80">{item.effect}</p>
+                      <p className="text-xs text-white">{item.effect}</p>
                     </div>
                   ))}
                 </div>
@@ -410,7 +410,7 @@ export default function RSMModule4Section1() {
                     <Clock className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">1. Consistent Schedule</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Go to bed and wake up at the same time every day, including weekends. Your
                     circadian rhythm (internal body clock) functions best with regularity. If you
                     need to be up at 5am, work backwards: you need to be asleep by 9:30&ndash;10pm
@@ -433,7 +433,7 @@ export default function RSMModule4Section1() {
                     <Moon className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">2. Dark, Cool, Quiet Room</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Your bedroom should be dark (blackout curtains or a sleep mask &mdash; essential
                     in summer when it is light until 10pm), cool (16&ndash;18&deg;C is optimal), and
                     quiet (earplugs if you live on a noisy road or have a partner with a different
@@ -450,7 +450,7 @@ export default function RSMModule4Section1() {
                       3. No Screens 1 Hour Before Bed
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Phone, tablet and laptop screens emit blue light that suppresses melatonin
                     production and stimulates the brain. Scrolling social media or watching intense
                     content also activates the sympathetic nervous system (fight-or-flight), making
@@ -466,7 +466,7 @@ export default function RSMModule4Section1() {
                     <Droplets className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">4. No Caffeine After 2pm</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Caffeine has a half-life of 5&ndash;6 hours. A coffee at 3pm still has half its
                     caffeine active in your body at 8&ndash;9pm. Even if you feel like you can fall
                     asleep after afternoon caffeine, research shows it reduces the depth and quality
@@ -528,7 +528,7 @@ export default function RSMModule4Section1() {
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-red-500/10 border border-red-500/20 p-3 rounded-lg">
                     <p className="text-xs font-medium text-red-400 mb-2">Sugar Spike Pattern</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                         <span>6am: Large coffee with sugar + energy drink</span>
@@ -555,7 +555,7 @@ export default function RSMModule4Section1() {
                     <p className="text-xs font-medium text-green-400 mb-2">
                       Sustained Energy Pattern
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                         <span>5:30am: Porridge with banana + coffee (no sugar)</span>
@@ -646,7 +646,7 @@ export default function RSMModule4Section1() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 p-3 rounded">
                     <p className="text-xs font-medium text-rose-400 mb-1">Repetitive Loading</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Construction work loads the same muscle groups in the same patterns day after
                       day. Pulling cables, lifting materials overhead, kneeling to wire sockets
                       &mdash; these repetitive movements create overuse injuries, not balanced
@@ -658,7 +658,7 @@ export default function RSMModule4Section1() {
                     <p className="text-xs font-medium text-rose-400 mb-1">
                       No Cardiovascular Conditioning
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Most construction work involves bursts of effort with rest periods, not
                       sustained cardiovascular activity. Your heart rate may spike when carrying
                       heavy materials but it does not stay elevated in the way that running, cycling
@@ -668,7 +668,7 @@ export default function RSMModule4Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded">
                     <p className="text-xs font-medium text-rose-400 mb-1">No Cortisol Reduction</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       One of the most important benefits of structured exercise is that it reduces
                       cortisol (the stress hormone) and increases endorphins (natural mood
                       boosters). Physical labour under time pressure and in stressful conditions can
@@ -748,13 +748,13 @@ export default function RSMModule4Section1() {
                     <AlertTriangle className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">Alcohol</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Alcohol is the most commonly used substance in UK construction. The culture of
                     &ldquo;a few pints after work&rdquo; is deeply embedded, and for many
                     tradespeople alcohol is the primary way they unwind after a stressful day.
                     However, research is clear on the effects:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                       <span>
@@ -790,13 +790,13 @@ export default function RSMModule4Section1() {
                     <AlertTriangle className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">Energy Drinks</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Energy drink consumption is extremely high in UK construction. Many workers
                     drink 2&ndash;4 cans per day, often starting on the drive to site. The appeal is
                     obvious: they provide an immediate boost of alertness and energy. But the cost
                     is significant:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                       <span>
@@ -834,7 +834,7 @@ export default function RSMModule4Section1() {
                       Caffeine: Timing Is Everything
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Caffeine itself is not harmful in moderate amounts (up to 400mg per day for most
                     adults). The critical factor is timing. Caffeine has a half-life of 5&ndash;6
                     hours: a coffee at 3pm means roughly half the caffeine is still in your system
@@ -890,7 +890,7 @@ export default function RSMModule4Section1() {
                   Pick the one area where you know you are most vulnerable and make a single change
                   this week. Here are examples:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -940,7 +940,7 @@ export default function RSMModule4Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Coming Next: Social Connection &amp; Peer Support
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Physical wellbeing is the foundation, but humans are social beings. In Section 2,
                   we explore why social connection is the number one protective factor against
                   stress and mental health problems, and how construction workers can build stronger
@@ -975,7 +975,7 @@ export default function RSMModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-4">

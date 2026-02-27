@@ -253,7 +253,7 @@ const Section3_4 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-foreground active:text-foreground p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -276,7 +276,7 @@ const Section3_4 = () => {
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
                 Control Measures and the Hierarchy of Control
               </h1>
-              <p className="text-xl text-white/80 max-w-4xl mt-2">
+              <p className="text-xl text-white max-w-4xl mt-2">
                 Ranking safety controls by effectiveness to choose the best protection for
                 electrical work
               </p>
@@ -334,7 +334,7 @@ const Section3_4 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
             Learning Outcomes
           </h2>
-          <p className="text-white/80 mb-4">By the end of this section, you'll be able to:</p>
+          <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-foreground">
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
@@ -383,7 +383,7 @@ const Section3_4 = () => {
               </p>
             </div>
 
-            <p className="text-white/80">
+            <p className="text-white">
               In electrical work, control measures might include switching off the power, using
               insulated tools, wearing protective equipment, or following specific procedures. The
               key is choosing the most effective controls for each situation.
@@ -721,7 +721,7 @@ const Section3_4 = () => {
           </div>
 
           <div className="space-y-4">
-            <p className="text-white/80">
+            <p className="text-white">
               The most effective approach often involves using multiple control measures together.
               This is called "defence in depth" - if one control fails, others remain in place.
             </p>
@@ -807,7 +807,7 @@ const Section3_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-border/20 pb-4 last:border-b-0">
                 <h4 className="font-semibold mb-2">{faq.question}</h4>
-                <p className="text-sm text-white/80">{faq.answer}</p>
+                <p className="text-sm text-white">{faq.answer}</p>
               </div>
             ))}
           </div>

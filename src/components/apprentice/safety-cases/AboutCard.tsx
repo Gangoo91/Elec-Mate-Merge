@@ -22,7 +22,7 @@ const AboutCard = () => {
             <div className="p-2 rounded-lg bg-elec-yellow/20 flex-shrink-0">
               <Info className="h-4 w-4 text-elec-yellow" />
             </div>
-            <p className="text-sm text-white/70 leading-relaxed">
+            <p className="text-sm text-white leading-relaxed">
               These interactive case studies are based on real situations encountered by UK
               electrical apprentices and electricians. Each scenario is designed to help you apply
               your knowledge of UK electrical regulations, safety standards, and professional

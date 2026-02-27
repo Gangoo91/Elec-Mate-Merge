@@ -255,7 +255,7 @@ const HNCModule6Section3_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section3">
@@ -277,7 +277,7 @@ const HNCModule6Section3_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             BREEAM Health and Wellbeing
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Daylighting, artificial lighting quality, indoor air quality, thermal comfort, and
             acoustic performance assessment
           </p>
@@ -448,25 +448,25 @@ const HNCModule6Section3_5 = () => {
               </p>
               <div className="text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Coverage:</span>{' '}
+                  <span className="text-white">Coverage:</span>{' '}
                   <span className="text-white">
                     95% of net internal area must have adequate view
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">View quality:</span>{' '}
+                  <span className="text-white">View quality:</span>{' '}
                   <span className="text-white">
                     Direct line of sight to sky, ground, or landscape
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">Glazing:</span>{' '}
+                  <span className="text-white">Glazing:</span>{' '}
                   <span className="text-white">
                     Clear glass at eye level (minimum visible light transmittance 50%)
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">Distance:</span>{' '}
+                  <span className="text-white">Distance:</span>{' '}
                   <span className="text-white">Workstations within 7m of perimeter glazing</span>
                 </p>
               </div>
@@ -660,25 +660,25 @@ const HNCModule6Section3_5 = () => {
               </p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Category I:</span>{' '}
+                  <span className="text-white">Category I:</span>{' '}
                   <span className="text-white">
                     High expectation - PPD &lt; 6% (23-26°C summer, 21-23°C winter)
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">Category II:</span>{' '}
+                  <span className="text-white">Category II:</span>{' '}
                   <span className="text-white">
                     Normal expectation - PPD &lt; 10% (22-27°C summer, 20-24°C winter)
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">Category III:</span>{' '}
+                  <span className="text-white">Category III:</span>{' '}
                   <span className="text-white">
                     Moderate expectation - PPD &lt; 15% (21-28°C summer, 19-25°C winter)
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">Category IV:</span>{' '}
+                  <span className="text-white">Category IV:</span>{' '}
                   <span className="text-white">
                     Outside normal criteria (only for limited periods)
                   </span>
@@ -910,7 +910,7 @@ const HNCModule6Section3_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="font-medium text-white mb-2">Illuminance Requirements</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>General office: 300-500 lux</li>
                     <li>Drawing/CAD: 500-750 lux</li>
                     <li>Corridors: 100-150 lux</li>
@@ -920,7 +920,7 @@ const HNCModule6Section3_5 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-2">Quality Parameters</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>UGR: ≤ 19 (offices), ≤ 16 (drawing)</li>
                     <li>CRI: ≥ 80 general, ≥ 90 colour-critical</li>
                     <li>CCT: 3000-4000K typical offices</li>
@@ -976,7 +976,7 @@ const HNCModule6Section3_5 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Building services noise:</strong> Early coordination with mechanical design is
               essential - ductwork velocities, attenuator positions, and equipment selections
               significantly impact achievable NR levels.
@@ -1002,18 +1002,18 @@ const HNCModule6Section3_5 = () => {
                 <strong>Scenario:</strong> Verify BREEAM Hea 01 compliance for a 12m deep office
                 floor plate.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given data:</p>
                 <p>Floor depth: 12m from facade</p>
                 <p>Floor-to-ceiling height: 2.7m</p>
                 <p>Window head height: 2.5m</p>
                 <p>Glazing ratio: 50% of facade</p>
                 <p>Visible light transmittance: 65%</p>
-                <p className="mt-2 text-white/60">Daylight factor calculation (simplified):</p>
+                <p className="mt-2 text-white">Daylight factor calculation (simplified):</p>
                 <p>Average DF = (A_window × VLT × 0.85) / (A_floor × (1 - R_mean))</p>
                 <p>Perimeter zone (0-6m): DF ≈ 3.2%</p>
                 <p>Core zone (6-12m): DF ≈ 1.1%</p>
-                <p className="mt-2 text-white/60">Assessment:</p>
+                <p className="mt-2 text-white">Assessment:</p>
                 <p>
                   Average across floor: 2.15% - <span className="text-green-400">COMPLIANT</span>
                 </p>
@@ -1035,15 +1035,15 @@ const HNCModule6Section3_5 = () => {
                 <strong>Scenario:</strong> Determine fresh air requirement for a 50-person meeting
                 room.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">BREEAM Hea 04 requirement:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">BREEAM Hea 04 requirement:</p>
                 <p>Meeting room rate: 12 l/s/person</p>
                 <p className="mt-2">Fresh air = 50 persons × 12 l/s</p>
                 <p>Fresh air = 600 l/s = 0.6 m³/s</p>
-                <p className="mt-2 text-white/60">Air changes (room 100m², 3m height):</p>
+                <p className="mt-2 text-white">Air changes (room 100m², 3m height):</p>
                 <p>Room volume: 300 m³</p>
                 <p>ACH = (0.6 × 3600) / 300 = 7.2 air changes/hour</p>
-                <p className="mt-2 text-white/60">CO2 monitoring setpoints:</p>
+                <p className="mt-2 text-white">CO2 monitoring setpoints:</p>
                 <p>Minimum ventilation (unoccupied): 150 l/s (0.5 l/s/m²)</p>
                 <p>Ramp-up trigger: 800 ppm CO2</p>
                 <p>Design ventilation: 600 l/s at 1000 ppm</p>
@@ -1061,18 +1061,18 @@ const HNCModule6Section3_5 = () => {
                 <strong>Scenario:</strong> Specify building services to achieve NR 40 in open-plan
                 office.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Noise budget (summing to NR 40):</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Noise budget (summing to NR 40):</p>
                 <p>Supply air diffusers: NR 32 (NC 30)</p>
                 <p>Return air grilles: NR 30</p>
                 <p>FCU/chilled beams: NR 28</p>
                 <p>Lighting (LED drivers): NR 20</p>
                 <p>External ingress: NR 25</p>
-                <p className="mt-2 text-white/60">Logarithmic addition:</p>
+                <p className="mt-2 text-white">Logarithmic addition:</p>
                 <p>Combined = 10 × log10(10^3.2 + 10^3.0 + 10^2.8 + 10^2.0 + 10^2.5)</p>
                 <p>Combined ≈ NR 36</p>
                 <p className="text-green-400">Result: NR 36 achieved, within NR 40 target</p>
-                <p className="mt-2 text-white/60">Key specifications:</p>
+                <p className="mt-2 text-white">Key specifications:</p>
                 <p>- Diffuser velocity: Max 2.5 m/s neck velocity</p>
                 <p>- Duct attenuation: 1m lined duct before diffuser</p>
                 <p>- FCU selection: Low-noise units, silent mode capability</p>
@@ -1171,7 +1171,7 @@ const HNCModule6Section3_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1221,7 +1221,7 @@ const HNCModule6Section3_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section3">

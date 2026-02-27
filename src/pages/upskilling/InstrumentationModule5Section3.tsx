@@ -47,7 +47,7 @@ const InstrumentationModule5Section3 = () => {
             <Zap className="h-4 w-4 text-elec-yellow" />
             Quick Summary
           </h2>
-          <p className="text-white/80 text-sm">
+          <p className="text-white text-sm">
             PID control uses three terms - Proportional (P), Integral (I), and Derivative (D) - to
             provide accurate, stable control. Each term addresses different aspects: P provides
             immediate response, I eliminates steady-state error, and D improves stability and
@@ -69,7 +69,7 @@ const InstrumentationModule5Section3 = () => {
               <Calculator className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-medium text-white mb-2">The PID Equation</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The PID controller calculates an output value based on the weighted sum of three
                   terms, each responding to different aspects of the error signal.
                 </p>
@@ -85,25 +85,25 @@ const InstrumentationModule5Section3 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
                 <div>
                   <p className="text-green-400 font-medium">Proportional (P)</p>
-                  <p className="text-white/70 text-xs">Kp × error</p>
-                  <p className="text-white/50 text-xs">Immediate response</p>
+                  <p className="text-white text-xs">Kp × error</p>
+                  <p className="text-white text-xs">Immediate response</p>
                 </div>
                 <div>
                   <p className="text-blue-400 font-medium">Integral (I)</p>
-                  <p className="text-white/70 text-xs">Ki × ∫error dt</p>
-                  <p className="text-white/50 text-xs">Accumulates over time</p>
+                  <p className="text-white text-xs">Ki × ∫error dt</p>
+                  <p className="text-white text-xs">Accumulates over time</p>
                 </div>
                 <div>
                   <p className="text-orange-400 font-medium">Derivative (D)</p>
-                  <p className="text-white/70 text-xs">Kd × de/dt</p>
-                  <p className="text-white/50 text-xs">Predicts future trend</p>
+                  <p className="text-white text-xs">Kd × de/dt</p>
+                  <p className="text-white text-xs">Predicts future trend</p>
                 </div>
               </div>
             </div>
 
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-medium text-white mb-3">What Each Term Does</h4>
-              <ul className="space-y-2 text-white/80 text-sm">
+              <ul className="space-y-2 text-white text-sm">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -151,7 +151,7 @@ const InstrumentationModule5Section3 = () => {
               <BarChart className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-medium text-white mb-2">How P Control Works</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Proportional control provides an output directly proportional to the error. The
                   larger the error, the larger the corrective action. It's simple and provides
                   immediate response.
@@ -164,7 +164,7 @@ const InstrumentationModule5Section3 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-white font-medium text-sm mb-2">Characteristics:</p>
-                  <ul className="space-y-1 text-white/70 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>Immediate response to error</li>
                     <li>Output proportional to error magnitude</li>
                     <li>Simple to understand and tune</li>
@@ -173,7 +173,7 @@ const InstrumentationModule5Section3 = () => {
                 </div>
                 <div>
                   <p className="text-white font-medium text-sm mb-2">Limitations:</p>
-                  <ul className="space-y-1 text-white/70 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>Creates steady-state offset</li>
                     <li>Cannot eliminate residual error</li>
                     <li>May cause oscillation if too high</li>
@@ -188,7 +188,7 @@ const InstrumentationModule5Section3 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="bg-red-500/10 border border-red-500/20 rounded p-3">
                   <p className="text-red-300 font-medium text-sm">Low Kp</p>
-                  <ul className="text-white/70 text-xs space-y-1 mt-2">
+                  <ul className="text-white text-xs space-y-1 mt-2">
                     <li>Slow response</li>
                     <li>Large offset</li>
                     <li>Very stable</li>
@@ -196,7 +196,7 @@ const InstrumentationModule5Section3 = () => {
                 </div>
                 <div className="bg-green-500/10 border border-green-500/20 rounded p-3">
                   <p className="text-green-300 font-medium text-sm">Optimal Kp</p>
-                  <ul className="text-white/70 text-xs space-y-1 mt-2">
+                  <ul className="text-white text-xs space-y-1 mt-2">
                     <li>Fast response</li>
                     <li>Minimal overshoot</li>
                     <li>Good stability</li>
@@ -204,7 +204,7 @@ const InstrumentationModule5Section3 = () => {
                 </div>
                 <div className="bg-orange-500/10 border border-orange-500/20 rounded p-3">
                   <p className="text-orange-300 font-medium text-sm">High Kp</p>
-                  <ul className="text-white/70 text-xs space-y-1 mt-2">
+                  <ul className="text-white text-xs space-y-1 mt-2">
                     <li>Very fast response</li>
                     <li>Oscillation risk</li>
                     <li>Potential instability</li>
@@ -236,7 +236,7 @@ const InstrumentationModule5Section3 = () => {
               <TrendingUp className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-medium text-white mb-2">How I Control Works</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Integral control accumulates error over time and provides correction proportional
                   to both the magnitude and duration of the error. It continues until the error is
                   eliminated.
@@ -249,7 +249,7 @@ const InstrumentationModule5Section3 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-white font-medium text-sm mb-2">Purpose:</p>
-                  <ul className="space-y-1 text-white/70 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>Eliminates steady-state error</li>
                     <li>Provides automatic reset</li>
                     <li>Improves accuracy</li>
@@ -258,7 +258,7 @@ const InstrumentationModule5Section3 = () => {
                 </div>
                 <div>
                   <p className="text-white font-medium text-sm mb-2">Operation:</p>
-                  <ul className="space-y-1 text-white/70 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>Continues until error = 0</li>
                     <li>Slower response than P action</li>
                     <li>Can cause overshoot</li>
@@ -273,31 +273,31 @@ const InstrumentationModule5Section3 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Integral Time (Ti)</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Time for integral action to equal proportional action
                   </p>
-                  <p className="text-white/50 text-xs mt-1">Longer Ti = slower integral action</p>
+                  <p className="text-white text-xs mt-1">Longer Ti = slower integral action</p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Reset Rate (1/Ti)</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Repeats per minute integral equals proportional
                   </p>
-                  <p className="text-white/50 text-xs mt-1">Higher rate = faster integral action</p>
+                  <p className="text-white text-xs mt-1">Higher rate = faster integral action</p>
                 </div>
               </div>
             </div>
 
             <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
               <h4 className="font-medium text-red-300 mb-2">Integral Windup</h4>
-              <p className="text-white/80 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 Occurs when output saturates while error persists, causing integral to accumulate
                 excessively.
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <p className="text-white text-xs font-medium">Causes:</p>
-                  <ul className="text-white/70 text-xs mt-1 space-y-1">
+                  <ul className="text-white text-xs mt-1 space-y-1">
                     <li>Large setpoint changes</li>
                     <li>Output saturation limits</li>
                     <li>Extended error conditions</li>
@@ -305,7 +305,7 @@ const InstrumentationModule5Section3 = () => {
                 </div>
                 <div>
                   <p className="text-white text-xs font-medium">Solutions:</p>
-                  <ul className="text-white/70 text-xs mt-1 space-y-1">
+                  <ul className="text-white text-xs mt-1 space-y-1">
                     <li>Anti-windup algorithms</li>
                     <li>Conditional integration</li>
                     <li>Output clamping</li>
@@ -331,7 +331,7 @@ const InstrumentationModule5Section3 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-white font-medium text-sm mb-2">Benefits:</p>
-                  <ul className="space-y-1 text-white/70 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>Reduces overshoot</li>
                     <li>Improves stability</li>
                     <li>Anticipates error trends</li>
@@ -340,7 +340,7 @@ const InstrumentationModule5Section3 = () => {
                 </div>
                 <div>
                   <p className="text-white font-medium text-sm mb-2">Limitations:</p>
-                  <ul className="space-y-1 text-white/70 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>Amplifies noise</li>
                     <li>No steady-state contribution</li>
                     <li>Requires noise filtering</li>
@@ -355,7 +355,7 @@ const InstrumentationModule5Section3 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-green-500/10 border border-green-500/20 rounded p-3">
                   <p className="text-green-300 font-medium text-sm">Good For:</p>
-                  <ul className="text-white/70 text-xs space-y-1 mt-2">
+                  <ul className="text-white text-xs space-y-1 mt-2">
                     <li>Processes with overshoot problems</li>
                     <li>Systems needing faster settling</li>
                     <li>Large, slow processes</li>
@@ -363,7 +363,7 @@ const InstrumentationModule5Section3 = () => {
                 </div>
                 <div className="bg-red-500/10 border border-red-500/20 rounded p-3">
                   <p className="text-red-300 font-medium text-sm">Avoid When:</p>
-                  <ul className="text-white/70 text-xs space-y-1 mt-2">
+                  <ul className="text-white text-xs space-y-1 mt-2">
                     <li>Signal is noisy</li>
                     <li>Fast processes</li>
                     <li>Level control applications</li>
@@ -393,13 +393,13 @@ const InstrumentationModule5Section3 = () => {
           <div className="space-y-4">
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-medium text-white mb-3">Ziegler-Nichols Method</h4>
-              <p className="text-white/70 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 The most widely used classical tuning method, providing systematic rules for PID
                 parameters.
               </p>
               <div className="bg-white/5 rounded p-3">
                 <p className="text-white font-medium text-sm mb-2">Closed Loop Method Steps:</p>
-                <ol className="text-white/70 text-xs space-y-1 list-decimal list-inside">
+                <ol className="text-white text-xs space-y-1 list-decimal list-inside">
                   <li>Set Ki = 0 and Kd = 0 (P control only)</li>
                   <li>Gradually increase Kp until sustained oscillation</li>
                   <li>Record Ultimate Gain (Ku) and Ultimate Period (Tu)</li>
@@ -417,7 +417,7 @@ const InstrumentationModule5Section3 = () => {
                   </span>
                   <div>
                     <p className="text-white text-sm font-medium">Start with P Only</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Increase Kp until response is fast but stable
                     </p>
                   </div>
@@ -428,7 +428,7 @@ const InstrumentationModule5Section3 = () => {
                   </span>
                   <div>
                     <p className="text-white text-sm font-medium">Add Integral</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Start with long Ti, decrease until offset eliminated
                     </p>
                   </div>
@@ -439,7 +439,7 @@ const InstrumentationModule5Section3 = () => {
                   </span>
                   <div>
                     <p className="text-white text-sm font-medium">Add Derivative (if needed)</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Start small, increase to reduce overshoot
                     </p>
                   </div>
@@ -450,7 +450,7 @@ const InstrumentationModule5Section3 = () => {
                   </span>
                   <div>
                     <p className="text-white text-sm font-medium">Fine-tune</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Make small adjustments for optimal performance
                     </p>
                   </div>
@@ -470,7 +470,7 @@ const InstrumentationModule5Section3 = () => {
           <div className="space-y-4">
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-medium text-white mb-2">Can PID loops self-correct?</h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Yes, through the integral action. The I term automatically adjusts the output to
                 eliminate persistent errors over time, providing self-correction capability.
               </p>
@@ -478,7 +478,7 @@ const InstrumentationModule5Section3 = () => {
 
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-medium text-white mb-2">Why use all three PID terms?</h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Each term addresses different aspects of control performance: P provides immediate
                 response, I eliminates steady-state error, and D provides stability and reduces
                 overshoot.
@@ -489,7 +489,7 @@ const InstrumentationModule5Section3 = () => {
               <h4 className="font-medium text-white mb-2">
                 What is the most common PID tuning method?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 The Ziegler-Nichols method is the most widely used classical tuning method,
                 providing systematic rules for determining PID parameters based on plant
                 characteristics.

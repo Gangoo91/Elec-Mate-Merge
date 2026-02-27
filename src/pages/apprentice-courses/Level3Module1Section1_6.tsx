@@ -183,7 +183,7 @@ const Level3Module1Section1_6 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
           <Link
             to="/study-centre/apprentice/level3-module1-section1"
-            className="inline-flex items-center gap-2 text-white/70 hover:text-white active:text-elec-yellow text-sm sm:text-base min-h-[44px] touch-manipulation transition-colors"
+            className="inline-flex items-center gap-2 text-white hover:text-white active:text-elec-yellow text-sm sm:text-base min-h-[44px] touch-manipulation transition-colors"
           >
             <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
             <span>Back to Section 1</span>
@@ -205,7 +205,7 @@ const Level3Module1Section1_6 = () => {
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight">
               Working at Height Regulations 2005
             </h1>
-            <p className="text-base sm:text-lg text-white/70 leading-relaxed">
+            <p className="text-base sm:text-lg text-white leading-relaxed">
               Understanding legal requirements for safe working at height in the electrical industry
             </p>
           </header>
@@ -217,7 +217,7 @@ const Level3Module1Section1_6 = () => {
                 <Clock className="w-5 h-5 text-elec-yellow" />
                 <h3 className="font-semibold text-white">In 30 Seconds</h3>
               </div>
-              <ul className="space-y-2 text-sm text-white/80">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow mt-1">*</span>
                   Falls from height are a leading cause of death in construction
@@ -241,7 +241,7 @@ const Level3Module1Section1_6 = () => {
                 <Shield className="w-5 h-5 text-elec-yellow" />
                 <h3 className="font-semibold text-white">Spot it / Use it</h3>
               </div>
-              <ul className="space-y-2 text-sm text-white/80">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow mt-1">*</span>
                   <strong className="text-white">Spot:</strong> Fragile surfaces, unprotected edges,
@@ -267,7 +267,7 @@ const Level3Module1Section1_6 = () => {
               <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
               Learning Outcomes
             </h2>
-            <p className="text-white/70 mb-4 text-sm sm:text-base">
+            <p className="text-white mb-4 text-sm sm:text-base">
               By the end of this section, you will be able to:
             </p>
             <ul className="space-y-3">
@@ -281,7 +281,7 @@ const Level3Module1Section1_6 = () => {
               ].map((outcome, index) => (
                 <li key={index} className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span className="text-white/80 text-sm sm:text-base">{outcome}</span>
+                  <span className="text-white text-sm sm:text-base">{outcome}</span>
                 </li>
               ))}
             </ul>
@@ -298,7 +298,7 @@ const Level3Module1Section1_6 = () => {
               </h2>
             </div>
             <div className="p-4 sm:p-6 rounded-xl bg-white/5 border border-white/10 space-y-4">
-              <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+              <p className="text-white text-sm sm:text-base leading-relaxed">
                 The <strong className="text-white">Working at Height Regulations 2005</strong>{' '}
                 define working at height as work in any place where, if precautions were not taken,
                 a person could fall a distance liable to cause personal injury. This definition is
@@ -312,7 +312,7 @@ const Level3Module1Section1_6 = () => {
                     <h4 className="font-semibold text-red-400 mb-1">
                       Critical Point: No Minimum Height
                     </h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       There is <strong className="text-white">no minimum height</strong> specified
                       in the regulations. Work at height includes stepping onto a small platform,
                       working from a ladder, working on a flat roof, or working near any edge or
@@ -326,7 +326,7 @@ const Level3Module1Section1_6 = () => {
                 <h4 className="font-semibold text-white mb-3">
                   Common at-height scenarios for electricians:
                 </h4>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">*</span>
                     Accessing ceiling voids for cable installation
@@ -358,7 +358,7 @@ const Level3Module1Section1_6 = () => {
                 </ul>
               </div>
 
-              <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+              <p className="text-white text-sm sm:text-base leading-relaxed">
                 The regulations place duties on employers, the self-employed, and anyone who
                 controls the work of others. All work at height must be{' '}
                 <strong className="text-white">properly planned</strong> by competent people,{' '}
@@ -392,7 +392,7 @@ const Level3Module1Section1_6 = () => {
               </h2>
             </div>
             <div className="p-4 sm:p-6 rounded-xl bg-white/5 border border-white/10 space-y-4">
-              <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+              <p className="text-white text-sm sm:text-base leading-relaxed">
                 The regulations establish a clear hierarchy of control measures that must be
                 followed <strong className="text-white">in sequence</strong>. This hierarchy
                 prioritises eliminating the risk entirely, then preventing falls, and finally
@@ -402,7 +402,7 @@ const Level3Module1Section1_6 = () => {
               <div className="space-y-4">
                 <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                   <h4 className="font-semibold text-green-400 mb-2">1. AVOID working at height</h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     This is always the first consideration. Can the work be done from ground level?
                     Can equipment be assembled at ground level and lifted into position? Can
                     prefabricated cable management systems reduce the need for work at height?
@@ -415,7 +415,7 @@ const Level3Module1Section1_6 = () => {
                   <h4 className="font-semibold text-amber-400 mb-2">
                     2. PREVENT falls by using the right equipment
                   </h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     When work at height cannot be avoided, preventing falls is the next priority.
                     This includes using appropriate work platforms, guard rails, scaffolding, or
                     MEWPs. The regulations require that{' '}
@@ -430,7 +430,7 @@ const Level3Module1Section1_6 = () => {
                   <h4 className="font-semibold text-red-400 mb-2">
                     3. MITIGATE the consequences of a fall
                   </h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     Only when avoiding and preventing are not reasonably practicable should you use
                     equipment that minimises the distance and consequences of a fall. This includes
                     safety nets, soft landing systems, and personal fall arrest systems (harnesses
@@ -448,7 +448,7 @@ const Level3Module1Section1_6 = () => {
                     <p className="text-white font-medium text-sm mb-2">
                       Collective Protection (Preferred)
                     </p>
-                    <ul className="space-y-1 text-sm text-white/80">
+                    <ul className="space-y-1 text-sm text-white">
                       <li>* Guard rails and barriers</li>
                       <li>* Toe boards</li>
                       <li>* Safety netting</li>
@@ -459,7 +459,7 @@ const Level3Module1Section1_6 = () => {
                     <p className="text-white font-medium text-sm mb-2">
                       Personal Protection (Secondary)
                     </p>
-                    <ul className="space-y-1 text-sm text-white/80">
+                    <ul className="space-y-1 text-sm text-white">
                       <li>* Safety harnesses</li>
                       <li>* Lanyards</li>
                       <li>* Fall arrest systems</li>
@@ -497,7 +497,7 @@ const Level3Module1Section1_6 = () => {
             <div className="p-4 sm:p-6 rounded-xl bg-white/5 border border-white/10 space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-semibold text-elec-yellow mb-3">LADDERS</h4>
-                <p className="text-white/80 text-sm leading-relaxed mb-3">
+                <p className="text-white text-sm leading-relaxed mb-3">
                   Ladders should only be used for{' '}
                   <strong className="text-white">short duration work</strong> (typically up to 30
                   minutes) or where a risk assessment shows other equipment is not justified.
@@ -505,20 +505,20 @@ const Level3Module1Section1_6 = () => {
                 <div className="grid sm:grid-cols-2 gap-4 mt-3">
                   <div className="p-3 rounded-lg bg-[#1a1a1a]">
                     <p className="text-white font-medium text-sm mb-2">The 1:4 Ratio</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       For every 4 metres of height, the base should be 1 metre out from the wall.
                       This ensures stability.
                     </p>
                   </div>
                   <div className="p-3 rounded-lg bg-[#1a1a1a]">
                     <p className="text-white font-medium text-sm mb-2">3 Points of Contact</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Always maintain 2 hands + 1 foot OR 2 feet + 1 hand on the ladder at all
                       times.
                     </p>
                   </div>
                 </div>
-                <ul className="space-y-2 text-sm text-white/80 mt-4">
+                <ul className="space-y-2 text-sm text-white mt-4">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">*</span>
                     Extend at least 1 metre (3 rungs) above the landing point
@@ -540,7 +540,7 @@ const Level3Module1Section1_6 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-semibold text-elec-yellow mb-3">SCAFFOLDING</h4>
-                <p className="text-white/80 text-sm leading-relaxed mb-3">
+                <p className="text-white text-sm leading-relaxed mb-3">
                   Must be erected, altered, and dismantled by{' '}
                   <strong className="text-white">competent persons</strong> only. Inspection is
                   critical.
@@ -549,20 +549,20 @@ const Level3Module1Section1_6 = () => {
                   <p className="text-green-400 font-medium text-sm">
                     GREEN TAG = Inspected and safe to use
                   </p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Red or warning tags indicate incomplete or unsafe scaffolds - DO NOT USE
                   </p>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed mb-2">
+                <p className="text-white text-sm leading-relaxed mb-2">
                   <strong className="text-white">Inspection requirements:</strong>
                 </p>
-                <ul className="space-y-1 text-sm text-white/80">
+                <ul className="space-y-1 text-sm text-white">
                   <li>* Before first use</li>
                   <li>* After any alteration</li>
                   <li>* After any event affecting stability (adverse weather)</li>
                   <li>* At intervals not exceeding 7 days</li>
                 </ul>
-                <p className="text-white/80 text-sm leading-relaxed mt-3">
+                <p className="text-white text-sm leading-relaxed mt-3">
                   Scaffold requirements include guard rails at 950mm minimum height, intermediate
                   guard rails, toe boards at least 150mm high, fully boarded platforms with no gaps
                   exceeding 25mm, and internal access via ladders or stair towers.
@@ -573,11 +573,11 @@ const Level3Module1Section1_6 = () => {
                 <h4 className="font-semibold text-elec-yellow mb-3">
                   MEWPs (Mobile Elevating Work Platforms)
                 </h4>
-                <p className="text-white/80 text-sm leading-relaxed mb-3">
+                <p className="text-white text-sm leading-relaxed mb-3">
                   Includes cherry pickers, scissor lifts, and boom lifts. Operators must hold valid{' '}
                   <strong className="text-white">IPAF certification</strong>.
                 </p>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">*</span>
                     IPAF training covers safe operation, pre-use checks, and emergency procedures
@@ -623,7 +623,7 @@ const Level3Module1Section1_6 = () => {
               </h2>
             </div>
             <div className="p-4 sm:p-6 rounded-xl bg-white/5 border border-white/10 space-y-4">
-              <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+              <p className="text-white text-sm sm:text-base leading-relaxed">
                 Electrical work at height presents a{' '}
                 <strong className="text-white">unique combination of hazards</strong> that require
                 specific control measures. The primary concern is that electrical shock can cause
@@ -635,7 +635,7 @@ const Level3Module1Section1_6 = () => {
                   <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <h4 className="font-semibold text-red-400 mb-1">Combined Hazards Warning</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       When electrical hazards and fall hazards combine, the consequences can be
                       fatal. A minor shock that would cause no lasting injury at ground level could
                       cause a fatal fall from height. Both sets of safety procedures must be
@@ -650,7 +650,7 @@ const Level3Module1Section1_6 = () => {
                   <h4 className="font-semibold text-white mb-2">
                     Lighting Columns and Street Furniture
                   </h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     Work on lighting columns combines fall risks with electrical hazards and traffic
                     risks. Isolation must be verified before climbing - never rely on time switches
                     or assumed off conditions. Use insulated tools and maintain safe working
@@ -660,7 +660,7 @@ const Level3Module1Section1_6 = () => {
 
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-semibold text-white mb-2">Distribution Boards at Height</h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     Common in industrial and commercial settings. Access may require ladders,
                     scaffolding, or MEWPs. Work often requires both hands, making fall protection
                     critical. Circuit isolation and safe isolation procedures must be followed, with
@@ -672,7 +672,7 @@ const Level3Module1Section1_6 = () => {
                   <h4 className="font-semibold text-white mb-2">
                     Roof Work and Solar Installations
                   </h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     Edge protection is essential, and fragile surface warnings must be heeded. DC
                     systems in solar installations remain energised during daylight - isolation may
                     not be possible. Work near overhead power lines requires safe clearance
@@ -682,7 +682,7 @@ const Level3Module1Section1_6 = () => {
 
                 <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                   <h4 className="font-semibold text-amber-400 mb-2">Weather Conditions</h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     Wet conditions increase both slip hazards and electrical risk. Wind speeds
                     exceeding Beaufort Force 5 (approximately 17 mph) should trigger work cessation.
                     Lightning risk requires immediate suspension of all work at height, particularly
@@ -714,7 +714,7 @@ const Level3Module1Section1_6 = () => {
                 Real-World Case: The Lighting Column Incident
               </h3>
             </div>
-            <div className="space-y-3 text-sm text-white/80">
+            <div className="space-y-3 text-sm text-white">
               <p>
                 <strong className="text-white">The Situation:</strong> An experienced electrician
                 was tasked with replacing a faulty lamp in a lighting column. He had done this work
@@ -751,7 +751,7 @@ const Level3Module1Section1_6 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-semibold text-elec-yellow mb-3">Before Starting Work</h4>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
                     Complete risk assessment for the task
@@ -776,7 +776,7 @@ const Level3Module1Section1_6 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-semibold text-elec-yellow mb-3">During Work</h4>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
                     Check weather - suspend if unsafe
@@ -815,7 +815,7 @@ const Level3Module1Section1_6 = () => {
                     +
                   </span>
                 </summary>
-                <p className="mt-2 text-white/70 text-sm pl-4 border-l-2 border-elec-yellow/30">
+                <p className="mt-2 text-white text-sm pl-4 border-l-2 border-elec-yellow/30">
                   While formal certification isn't required for ladder use, competency training is
                   necessary. Users must understand correct positioning (1:4 ratio), 3 points of
                   contact, securing methods, inspection requirements, and appropriate use limits.
@@ -829,7 +829,7 @@ const Level3Module1Section1_6 = () => {
                     +
                   </span>
                 </summary>
-                <p className="mt-2 text-white/70 text-sm pl-4 border-l-2 border-elec-yellow/30">
+                <p className="mt-2 text-white text-sm pl-4 border-l-2 border-elec-yellow/30">
                   Scaffolds must be inspected before first use, after substantial alteration, after
                   any event likely to affect stability (such as adverse weather), and at regular
                   intervals not exceeding 7 days. Inspection records must be kept and available on
@@ -843,7 +843,7 @@ const Level3Module1Section1_6 = () => {
                     +
                   </span>
                 </summary>
-                <p className="mt-2 text-white/70 text-sm pl-4 border-l-2 border-elec-yellow/30">
+                <p className="mt-2 text-white text-sm pl-4 border-l-2 border-elec-yellow/30">
                   Ladders may be used for short-duration electrical work where risk assessment shows
                   they are appropriate. However, work requiring both hands free, heavy lifting, or
                   extended duration should use alternative access equipment. Never use metal ladders
@@ -857,7 +857,7 @@ const Level3Module1Section1_6 = () => {
                     +
                   </span>
                 </summary>
-                <p className="mt-2 text-white/70 text-sm pl-4 border-l-2 border-elec-yellow/30">
+                <p className="mt-2 text-white text-sm pl-4 border-l-2 border-elec-yellow/30">
                   Most electricians benefit from Category 3a (scissor lifts) and Category 3b (boom
                   lifts). The specific category depends on the MEWP types used on your sites.
                   Training is valid for 5 years, and familiarisation is required for each specific
@@ -871,7 +871,7 @@ const Level3Module1Section1_6 = () => {
                     +
                   </span>
                 </summary>
-                <p className="mt-2 text-white/70 text-sm pl-4 border-l-2 border-elec-yellow/30">
+                <p className="mt-2 text-white text-sm pl-4 border-l-2 border-elec-yellow/30">
                   Fragile surfaces include roof lights, corroded metal sheeting, cement fibre
                   sheets, and glass panels. Never step directly on fragile materials - they can give
                   way without warning. Use crawling boards to distribute weight, install barriers to
@@ -889,7 +889,7 @@ const Level3Module1Section1_6 = () => {
             <div className="grid sm:grid-cols-2 gap-4 text-sm">
               <div className="space-y-2">
                 <h4 className="font-semibold text-elec-yellow">The Hierarchy:</h4>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>
                     1. <strong className="text-white">AVOID</strong> working at height
                   </li>
@@ -903,7 +903,7 @@ const Level3Module1Section1_6 = () => {
               </div>
               <div className="space-y-2">
                 <h4 className="font-semibold text-elec-yellow">Ladder Safety:</h4>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>* 1:4 ratio (1m out per 4m up)</li>
                   <li>* 3 points of contact always</li>
                   <li>* Extend 1m above landing</li>
@@ -912,7 +912,7 @@ const Level3Module1Section1_6 = () => {
               </div>
             </div>
             <div className="mt-4 p-3 rounded-lg bg-[#1a1a1a] border border-white/10">
-              <p className="text-white/80 text-sm text-center">
+              <p className="text-white text-sm text-center">
                 <strong className="text-elec-yellow">Remember:</strong> Falls from height are a
                 leading cause of workplace deaths - EVERY task at height deserves proper planning
                 and protection!

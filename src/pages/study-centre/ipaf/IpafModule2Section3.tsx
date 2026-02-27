@@ -206,7 +206,7 @@ const IpafModule2Section3 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Stability & Safe Working Loads
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding the forces acting on a tower and the load limits that keep you safe
           </p>
         </div>
@@ -347,7 +347,7 @@ const IpafModule2Section3 = () => {
                 <div className="bg-white/5 border border-elec-yellow/30 p-4 rounded-lg text-center">
                   <div className="text-4xl font-bold text-elec-yellow mb-2">275kg</div>
                   <div className="text-sm text-white font-semibold mb-2">Per Platform</div>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Maximum load on any single platform — includes personnel, tools, equipment, and
                     materials
                   </p>
@@ -355,7 +355,7 @@ const IpafModule2Section3 = () => {
                 <div className="bg-white/5 border border-elec-yellow/30 p-4 rounded-lg text-center">
                   <div className="text-4xl font-bold text-elec-yellow mb-2">950kg</div>
                   <div className="text-sm text-white font-semibold mb-2">Total Tower</div>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Maximum combined load across all platforms — the total the tower structure can
                     safely support
                   </p>
@@ -364,7 +364,7 @@ const IpafModule2Section3 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">What Counts Towards the Load?</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Everything on the platform counts towards the safe working load. This includes:
                 </p>
                 <ul className="text-white space-y-1 text-sm">
@@ -408,23 +408,23 @@ const IpafModule2Section3 = () => {
                 </h3>
                 <div className="space-y-2 text-sm">
                   <div className="grid grid-cols-2 gap-2">
-                    <span className="text-white/80">Electrician 1:</span>
+                    <span className="text-white">Electrician 1:</span>
                     <span className="text-white font-mono">85kg</span>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
-                    <span className="text-white/80">Electrician 2:</span>
+                    <span className="text-white">Electrician 2:</span>
                     <span className="text-white font-mono">92kg</span>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
-                    <span className="text-white/80">Cable drum:</span>
+                    <span className="text-white">Cable drum:</span>
                     <span className="text-white font-mono">35kg</span>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
-                    <span className="text-white/80">Tool bag:</span>
+                    <span className="text-white">Tool bag:</span>
                     <span className="text-white font-mono">12kg</span>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
-                    <span className="text-white/80">Box of luminaires:</span>
+                    <span className="text-white">Box of luminaires:</span>
                     <span className="text-white font-mono">28kg</span>
                   </div>
                   <div className="grid grid-cols-2 gap-2 border-t border-white/10 pt-2 mt-2">
@@ -432,15 +432,15 @@ const IpafModule2Section3 = () => {
                     <span className="text-elec-yellow font-mono font-bold">252kg</span>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
-                    <span className="text-white/80">Platform limit:</span>
+                    <span className="text-white">Platform limit:</span>
                     <span className="text-green-400 font-mono">275kg</span>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
-                    <span className="text-white/80">Remaining capacity:</span>
+                    <span className="text-white">Remaining capacity:</span>
                     <span className="text-green-400 font-mono">23kg</span>
                   </div>
                 </div>
-                <p className="text-white/60 text-xs mt-3">
+                <p className="text-white text-xs mt-3">
                   This platform load is within limits but leaves only 23kg of spare capacity. Adding
                   another cable drum would exceed the limit. Plan your materials carefully.
                 </p>
@@ -503,7 +503,7 @@ const IpafModule2Section3 = () => {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">20kg Is Less Than You Think</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   20kg of lateral force is roughly equivalent to leaning firmly against a wall with
                   one hand. This is not a lot of force. It means you must always work within the
                   footprint of the platform and avoid overreaching, pushing, or pulling. If the task
@@ -544,10 +544,10 @@ const IpafModule2Section3 = () => {
                     <div className="text-3xl font-bold text-orange-400">Beaufort 4</div>
                     <div className="text-sm text-white font-semibold">17 mph / 28 km/h</div>
                   </div>
-                  <p className="text-white/80 text-sm mb-2 font-semibold text-orange-300">
+                  <p className="text-white text-sm mb-2 font-semibold text-orange-300">
                     CEASE ALL WORK
                   </p>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     At this wind speed, work from the tower must stop. Personnel must descend and
                     the tower should be secured. Indicators: small branches move, dust and paper
                     blow around.
@@ -558,10 +558,10 @@ const IpafModule2Section3 = () => {
                     <div className="text-3xl font-bold text-red-400">Beaufort 6</div>
                     <div className="text-sm text-white font-semibold">27 mph / 44 km/h</div>
                   </div>
-                  <p className="text-white/80 text-sm mb-2 font-semibold text-red-300">
+                  <p className="text-white text-sm mb-2 font-semibold text-red-300">
                     TOWER DESIGN LIMIT
                   </p>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     Towers are typically designed to withstand Beaufort 6 when unoccupied. Above
                     this, the tower may need to be lowered or dismantled. Indicators: large branches
                     move, telegraph wires whistle.
@@ -576,42 +576,42 @@ const IpafModule2Section3 = () => {
                 <div className="space-y-2 text-sm">
                   <div className="grid grid-cols-12 gap-2 items-center">
                     <span className="col-span-2 text-white font-semibold">Force 0-2</span>
-                    <span className="col-span-3 text-white/80">0-7 mph</span>
+                    <span className="col-span-3 text-white">0-7 mph</span>
                     <span className="col-span-7 text-green-400">
                       Calm to light breeze — safe to work
                     </span>
                   </div>
                   <div className="grid grid-cols-12 gap-2 items-center">
                     <span className="col-span-2 text-white font-semibold">Force 3</span>
-                    <span className="col-span-3 text-white/80">8-12 mph</span>
+                    <span className="col-span-3 text-white">8-12 mph</span>
                     <span className="col-span-7 text-green-400">
                       Gentle breeze — generally safe, monitor conditions
                     </span>
                   </div>
                   <div className="grid grid-cols-12 gap-2 items-center">
                     <span className="col-span-2 text-white font-semibold">Force 4</span>
-                    <span className="col-span-3 text-white/80">13-17 mph</span>
+                    <span className="col-span-3 text-white">13-17 mph</span>
                     <span className="col-span-7 text-orange-400 font-semibold">
                       Moderate breeze — CEASE WORK
                     </span>
                   </div>
                   <div className="grid grid-cols-12 gap-2 items-center">
                     <span className="col-span-2 text-white font-semibold">Force 5</span>
-                    <span className="col-span-3 text-white/80">18-24 mph</span>
+                    <span className="col-span-3 text-white">18-24 mph</span>
                     <span className="col-span-7 text-orange-400">
                       Fresh breeze — tower unoccupied, monitor closely
                     </span>
                   </div>
                   <div className="grid grid-cols-12 gap-2 items-center">
                     <span className="col-span-2 text-white font-semibold">Force 6</span>
-                    <span className="col-span-3 text-white/80">25-31 mph</span>
+                    <span className="col-span-3 text-white">25-31 mph</span>
                     <span className="col-span-7 text-red-400 font-semibold">
                       Strong breeze — TOWER DESIGN LIMIT
                     </span>
                   </div>
                   <div className="grid grid-cols-12 gap-2 items-center">
                     <span className="col-span-2 text-white font-semibold">Force 7+</span>
-                    <span className="col-span-3 text-white/80">32+ mph</span>
+                    <span className="col-span-3 text-white">32+ mph</span>
                     <span className="col-span-7 text-red-400">
                       Near gale — consider lowering/dismantling tower
                     </span>
@@ -628,7 +628,7 @@ const IpafModule2Section3 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-elec-yellow">On-Site Wind Indicators</h3>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   If you do not have an anemometer, use these visual clues:
                 </p>
                 <ul className="text-white space-y-1 text-sm">
@@ -728,7 +728,7 @@ const IpafModule2Section3 = () => {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">The Only Rule That Matters</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The maximum permissible height for any tower configuration is stated in the{' '}
                   <strong className="text-white">manufacturer's instruction manual</strong>. This is
                   the only authoritative source. It will specify different maximum heights for
@@ -836,7 +836,7 @@ const IpafModule2Section3 = () => {
 
               <div className="bg-white/5 border border-elec-yellow/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-elec-yellow">Key Point</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   If a site supervisor, client, or colleague instructs you to build a tower higher
                   than the manufacturer's specified maximum, or to use it in a way that contradicts
                   the instructions, you have a{' '}
@@ -907,7 +907,7 @@ const IpafModule2Section3 = () => {
                 <h3 className="text-elec-yellow font-medium mb-2">
                   Practical Stability Checks on Site
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Before work begins each day — and after any modification to the tower — carry out
                   these checks:
                 </p>
@@ -952,7 +952,7 @@ const IpafModule2Section3 = () => {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Factors That Reduce Stability</h3>
                 </div>
-                <ul className="text-white/80 space-y-1 text-sm">
+                <ul className="text-white space-y-1 text-sm">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1009,7 +1009,7 @@ const IpafModule2Section3 = () => {
                 <h3 className="font-semibold mb-2 text-elec-yellow">
                   Definition: Overturning Moment
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   An <strong className="text-white">overturning moment</strong> is the tendency of a
                   force to cause rotation about a pivot point (the base edge of the tower). It
                   equals the force multiplied by the perpendicular distance from the pivot. Measured
@@ -1032,7 +1032,7 @@ const IpafModule2Section3 = () => {
             <div className="space-y-4">
               <div>
                 <h3 className="font-semibold text-white mb-2">Load Limits</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1058,7 +1058,7 @@ const IpafModule2Section3 = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-white mb-2">Wind Thresholds</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1085,7 +1085,7 @@ const IpafModule2Section3 = () => {
             <div className="space-y-4">
               <div>
                 <h3 className="font-semibold text-white mb-2">Critical Rules</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1116,7 +1116,7 @@ const IpafModule2Section3 = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-white mb-2">Quick Load Check</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Average person: 80-95kg</span>
@@ -1153,7 +1153,7 @@ const IpafModule2Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1169,7 +1169,7 @@ const IpafModule2Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../ipaf-module-2-section-2">

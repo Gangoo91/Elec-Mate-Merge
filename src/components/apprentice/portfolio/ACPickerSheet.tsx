@@ -134,7 +134,7 @@ export function ACPickerSheet({
                   </Badge>
                 )}
               </div>
-              <p className="text-xs text-white/50 mt-0.5">
+              <p className="text-xs text-white mt-0.5">
                 Choose the criteria this evidence demonstrates
               </p>
             </div>
@@ -142,12 +142,12 @@ export function ACPickerSheet({
             {/* Search */}
             <div className="px-4 pb-3">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/50" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                 <input
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search criteria..."
-                  className="w-full h-11 pl-10 pr-10 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white/50 focus:outline-none focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 touch-manipulation"
+                  className="w-full h-11 pl-10 pr-10 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white focus:outline-none focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 touch-manipulation"
                 />
                 {searchQuery && (
                   <button
@@ -169,8 +169,8 @@ export function ACPickerSheet({
               </div>
             ) : filteredUnits.length === 0 ? (
               <div className="text-center py-12">
-                <BookOpen className="h-8 w-8 text-white/20 mx-auto mb-3" />
-                <p className="text-sm text-white/50">
+                <BookOpen className="h-8 w-8 text-white mx-auto mb-3" />
+                <p className="text-sm text-white">
                   {requirementCode ? 'No criteria found' : 'No qualification selected'}
                 </p>
               </div>
@@ -255,9 +255,9 @@ function UnitAccordion({
         className="w-full flex items-center gap-3 px-4 py-3.5 bg-white/[0.03] touch-manipulation active:bg-white/[0.06] transition-colors"
       >
         {isExpanded ? (
-          <ChevronDown className="h-4 w-4 text-white/60 flex-shrink-0" />
+          <ChevronDown className="h-4 w-4 text-white flex-shrink-0" />
         ) : (
-          <ChevronRight className="h-4 w-4 text-white/60 flex-shrink-0" />
+          <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
         )}
         <div className="flex-1 text-left min-w-0">
           <span className="text-xs font-bold text-elec-yellow">Unit {unit.unitCode}</span>
@@ -269,7 +269,7 @@ function UnitAccordion({
               {selectedInUnit}
             </Badge>
           )}
-          <span className="text-xs text-white/40">{totalInUnit} ACs</span>
+          <span className="text-xs text-white">{totalInUnit} ACs</span>
         </div>
       </button>
 
@@ -286,17 +286,17 @@ function UnitAccordion({
                   className="w-full flex items-start gap-2.5 px-4 py-2.5 pl-10 touch-manipulation active:bg-white/[0.03] transition-colors"
                 >
                   {loExpanded ? (
-                    <ChevronDown className="h-3.5 w-3.5 text-white/40 mt-0.5 flex-shrink-0" />
+                    <ChevronDown className="h-3.5 w-3.5 text-white mt-0.5 flex-shrink-0" />
                   ) : (
-                    <ChevronRight className="h-3.5 w-3.5 text-white/40 mt-0.5 flex-shrink-0" />
+                    <ChevronRight className="h-3.5 w-3.5 text-white mt-0.5 flex-shrink-0" />
                   )}
                   <div className="flex-1 text-left">
                     {lo.loNumber && (
-                      <span className="text-[10px] font-medium text-white/50 uppercase tracking-wider">
+                      <span className="text-[10px] font-medium text-white uppercase tracking-wider">
                         LO{lo.loNumber}
                       </span>
                     )}
-                    <p className="text-xs text-white/80 leading-relaxed">{lo.loText}</p>
+                    <p className="text-xs text-white leading-relaxed">{lo.loText}</p>
                   </div>
                 </button>
 
@@ -325,7 +325,7 @@ function UnitAccordion({
                             <p
                               className={cn(
                                 'text-[11px] leading-relaxed',
-                                isEvidenced ? 'text-green-400/80' : 'text-white/60'
+                                isEvidenced ? 'text-green-400/80' : 'text-white'
                               )}
                             >
                               {ac.acText}

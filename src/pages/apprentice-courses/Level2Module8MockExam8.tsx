@@ -138,7 +138,7 @@ const Level2Module8MockExam8 = () => {
     const isCorrect = answer === examQuestions[index]?.correctAnswer;
     const isAnswered = answer !== undefined;
 
-    if (!isAnswered) return { type: 'unanswered', color: 'text-white/80' };
+    if (!isAnswered) return { type: 'unanswered', color: 'text-white' };
     if (isCorrect) return { type: 'correct', color: 'text-green-500' };
     return { type: 'incorrect', color: 'text-elec-yellow' };
   };
@@ -201,7 +201,7 @@ const Level2Module8MockExam8 = () => {
                 </div>
                 <h1 className="text-2xl font-bold text-foreground mb-2">Mock Exam 8</h1>
                 <h2 className="text-lg text-elec-yellow mb-6">Mixed Level 2 Examination</h2>
-                <p className="text-white/80 mb-6">
+                <p className="text-white mb-6">
                   Comprehensive 60-question practice exam covering all Level 2 electrical
                   installation modules including health & safety, electrical science, installation
                   methods, and testing & certification.
@@ -218,17 +218,17 @@ const Level2Module8MockExam8 = () => {
                 <div className="grid gap-2">
                   <div className="flex items-start gap-2">
                     <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                    <p className="text-sm text-white/80 leading-relaxed">
+                    <p className="text-sm text-white leading-relaxed">
                       60 questions randomly selected from all Level 2 modules
                     </p>
                   </div>
                   <div className="flex items-start gap-2">
                     <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                    <p className="text-sm text-white/80 leading-relaxed">60 minutes time limit</p>
+                    <p className="text-sm text-white leading-relaxed">60 minutes time limit</p>
                   </div>
                   <div className="flex items-start gap-2">
                     <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                    <p className="text-sm text-white/80 leading-relaxed">
+                    <p className="text-sm text-white leading-relaxed">
                       Progress automatically saved
                     </p>
                   </div>
@@ -274,7 +274,7 @@ const Level2Module8MockExam8 = () => {
                   <h1 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground">
                     Review Answers
                   </h1>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Score: {percentage}% ({score.correct}/{examQuestions.length})
                   </p>
                 </div>
@@ -282,7 +282,7 @@ const Level2Module8MockExam8 = () => {
                   onClick={() => setReviewMode(false)}
                   variant="ghost"
                   size="sm"
-                  className="text-white/80 hover:text-elec-yellow"
+                  className="text-white hover:text-elec-yellow"
                 >
                   <X className="h-4 w-4 mr-2" />
                   Exit Review
@@ -301,7 +301,7 @@ const Level2Module8MockExam8 = () => {
                     <div className="text-lg font-bold text-green-500">
                       {stats.answered - (stats.answered - score.correct)}
                     </div>
-                    <div className="text-xs text-white/80">Correct</div>
+                    <div className="text-xs text-white">Correct</div>
                   </CardContent>
                 </Card>
                 <Card
@@ -316,7 +316,7 @@ const Level2Module8MockExam8 = () => {
                     <div className="text-lg font-bold text-elec-yellow">
                       {stats.answered - score.correct}
                     </div>
-                    <div className="text-xs text-white/80">Incorrect</div>
+                    <div className="text-xs text-white">Incorrect</div>
                   </CardContent>
                 </Card>
                 <Card
@@ -328,8 +328,8 @@ const Level2Module8MockExam8 = () => {
                   }
                 >
                   <CardContent className="p-3 text-center">
-                    <div className="text-lg font-bold text-white/80">{stats.unanswered}</div>
-                    <div className="text-xs text-white/80">Unanswered</div>
+                    <div className="text-lg font-bold text-white">{stats.unanswered}</div>
+                    <div className="text-xs text-white">Unanswered</div>
                   </CardContent>
                 </Card>
                 <Card
@@ -340,7 +340,7 @@ const Level2Module8MockExam8 = () => {
                 >
                   <CardContent className="p-3 text-center">
                     <div className="text-lg font-bold text-elec-yellow">{stats.flagged}</div>
-                    <div className="text-xs text-white/80">Flagged</div>
+                    <div className="text-xs text-white">Flagged</div>
                   </CardContent>
                 </Card>
               </div>
@@ -379,7 +379,7 @@ const Level2Module8MockExam8 = () => {
                                 ? 'bg-green-500/20 text-green-500 border-green-500/40'
                                 : status.type === 'incorrect'
                                   ? 'bg-red-500/20 text-elec-yellow border-red-500/40'
-                                  : 'bg-muted/20 text-white/80 border-muted/40'
+                                  : 'bg-muted/20 text-white border-muted/40'
                             }
                           >
                             {status.type === 'correct'
@@ -448,7 +448,7 @@ const Level2Module8MockExam8 = () => {
                               <h4 className="text-sm font-semibold text-foreground mb-1">
                                 Explanation
                               </h4>
-                              <p className="text-xs text-white/80 leading-relaxed">
+                              <p className="text-xs text-white leading-relaxed">
                                 {question.explanation}
                               </p>
                             </div>
@@ -464,7 +464,7 @@ const Level2Module8MockExam8 = () => {
             {filteredQuestions.length === 0 && (
               <Card className="bg-card border-elec-yellow/30">
                 <CardContent className="p-8 text-center">
-                  <div className="text-white/80">No questions match the current filter.</div>
+                  <div className="text-white">No questions match the current filter.</div>
                 </CardContent>
               </Card>
             )}
@@ -484,7 +484,7 @@ const Level2Module8MockExam8 = () => {
                 </div>
                 <h1 className="text-2xl font-bold text-foreground mb-2">Exam Complete!</h1>
                 <div className="text-4xl font-bold text-elec-yellow mb-2">{percentage}%</div>
-                <p className="text-lg text-white/80 mb-4">
+                <p className="text-lg text-white mb-4">
                   You scored {score.correct} out of {examQuestions.length} questions correctly
                 </p>
                 <div
@@ -501,21 +501,21 @@ const Level2Module8MockExam8 = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
                 <div className="text-center">
                   <div className="text-lg font-bold text-green-500">{score.correct}</div>
-                  <div className="text-xs text-white/80">Correct</div>
+                  <div className="text-xs text-white">Correct</div>
                 </div>
                 <div className="text-center">
                   <div className="text-lg font-bold text-elec-yellow">
                     {stats.answered - score.correct}
                   </div>
-                  <div className="text-xs text-white/80">Incorrect</div>
+                  <div className="text-xs text-white">Incorrect</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-lg font-bold text-white/80">{stats.unanswered}</div>
-                  <div className="text-xs text-white/80">Unanswered</div>
+                  <div className="text-lg font-bold text-white">{stats.unanswered}</div>
+                  <div className="text-xs text-white">Unanswered</div>
                 </div>
                 <div className="text-center">
                   <div className="text-lg font-bold text-elec-yellow">{stats.flagged}</div>
-                  <div className="text-xs text-white/80">Flagged</div>
+                  <div className="text-xs text-white">Flagged</div>
                 </div>
               </div>
 
@@ -555,7 +555,7 @@ const Level2Module8MockExam8 = () => {
           <div className="flex items-center gap-4">
             <Link
               to=".."
-              className="inline-flex items-center text-white/80 hover:text-foreground transition-colors"
+              className="inline-flex items-center text-white hover:text-foreground transition-colors"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Exit Exam
@@ -578,7 +578,7 @@ const Level2Module8MockExam8 = () => {
                   <h2 className="text-lg font-semibold text-foreground">
                     Question {currentQuestion + 1} of {examQuestions.length}
                   </h2>
-                  <div className="text-sm text-white/80 mt-1">
+                  <div className="text-sm text-white mt-1">
                     Section {currentQ?.section} • {currentQ?.difficulty} • {currentQ?.topic}
                   </div>
                 </div>
@@ -608,7 +608,7 @@ const Level2Module8MockExam8 = () => {
                       className={`w-full p-4 text-left rounded-lg border transition-colors ${
                         selectedAnswers[currentQuestion] === index
                           ? 'bg-elec-yellow/20 border-elec-yellow text-foreground'
-                          : 'bg-background/30 border-elec-yellow/30 text-white/80 hover:bg-elec-yellow/10 hover:border-elec-yellow/40'
+                          : 'bg-background/30 border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:border-elec-yellow/40'
                       }`}
                     >
                       <div className="flex items-center gap-3">
@@ -675,7 +675,7 @@ const Level2Module8MockExam8 = () => {
                     <div className="font-mono text-2xl font-bold text-elec-yellow">
                       {formatTime(timeRemaining)}
                     </div>
-                    <div className="text-xs text-white/80 mt-1">
+                    <div className="text-xs text-white mt-1">
                       {timeRemaining < 300 ? 'Final 5 minutes!' : 'Stay focused'}
                     </div>
                   </div>
@@ -691,7 +691,7 @@ const Level2Module8MockExam8 = () => {
                       </span>
                     </div>
                     <Progress value={progressPercentage} className="h-3 mb-3" />
-                    <div className="text-xs text-center text-white/80">
+                    <div className="text-xs text-center text-white">
                       {Math.round(progressPercentage)}% Complete
                     </div>
                   </div>
@@ -754,7 +754,7 @@ const Level2Module8MockExam8 = () => {
                                 ? 'bg-elec-yellow text-black border-elec-yellow shadow-lg scale-110'
                                 : isAnswered
                                   ? 'bg-green-500/30 text-green-400 border-green-500/50 hover:bg-green-500/40'
-                                  : 'bg-background/30 text-white/80 border-elec-yellow/30 hover:bg-elec-yellow/20 hover:border-elec-yellow/40'
+                                  : 'bg-background/30 text-white border-elec-yellow/30 hover:bg-elec-yellow/20 hover:border-elec-yellow/40'
                             }
                           `}
                         >
@@ -783,7 +783,7 @@ const Level2Module8MockExam8 = () => {
                     Next Flagged ({flaggedQuestions.size})
                   </Button>
 
-                  <div className="text-xs text-center text-white/80 pt-2 border-t border-elec-yellow/30">
+                  <div className="text-xs text-center text-white pt-2 border-t border-elec-yellow/30">
                     <div>Exam: Module 8</div>
                     <div>Mixed Level 2 Exam</div>
                   </div>

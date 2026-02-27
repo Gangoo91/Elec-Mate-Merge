@@ -65,7 +65,7 @@ export const AM2NavigationFooter = memo(function AM2NavigationFooter({
             size="lg"
             className={cn(
               'w-full sm:w-auto min-h-[52px] px-6',
-              'text-white/70 hover:text-white hover:bg-white/5',
+              'text-white hover:text-white hover:bg-white/5',
               'ios-pressable transition-all duration-ios-normal ease-ios-ease',
               'touch-manipulation'
             )}
@@ -103,7 +103,7 @@ export const AM2NavigationFooter = memo(function AM2NavigationFooter({
       </div>
 
       {/* Section Counter (Mobile) */}
-      <p className="text-center text-ios-footnote text-white/40 mt-4 sm:hidden">
+      <p className="text-center text-ios-footnote text-white mt-4 sm:hidden">
         Section {currentSection} of {totalSections}
       </p>
     </nav>

@@ -218,7 +218,7 @@ const HNCModule4Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section2">
@@ -240,7 +240,7 @@ const HNCModule4Section2_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Thermal Constraints
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding derating factors for ambient temperature, grouping and thermal insulation
           </p>
         </header>
@@ -677,7 +677,7 @@ const HNCModule4Section2_3 = () => {
                   I<sub>z</sub> = I<sub>t</sub> × C<sub>a</sub> × C<sub>g</sub> × C<sub>i</sub>
                 </p>
               </div>
-              <p className="text-xs text-white/60 mt-2 text-center">
+              <p className="text-xs text-white mt-2 text-center">
                 Or rearranged for selection: Min I<sub>t</sub> = I<sub>n</sub> / (C<sub>a</sub> × C
                 <sub>g</sub> × C<sub>i</sub>)
               </p>
@@ -749,7 +749,7 @@ const HNCModule4Section2_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Worked Example: Hot Plant Room with Grouping
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Circuit: 32A MCB, 45°C ambient, 6 circuits grouped (PVC cable)</p>
                 <p className="mt-2">Ca (45°C PVC) = 0.79</p>
                 <p>Cg (6 circuits bunched) = 0.57</p>
@@ -761,7 +761,7 @@ const HNCModule4Section2_3 = () => {
                   Min It = 32 / 0.45 = <strong>71.1A</strong>
                 </p>
                 <p className="mt-2">Table 4D2A: Need 16mm² cable (It = 76A)</p>
-                <p className="text-white/60">
+                <p className="text-white">
                   → Severe derating requires much larger cable than 32A would suggest
                 </p>
               </div>
@@ -793,7 +793,7 @@ const HNCModule4Section2_3 = () => {
                 <strong>Question:</strong> A 6A lighting circuit runs through 300mm of loft
                 insulation. Ambient 35°C in summer. What cable size?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Ca (35°C) = 0.94</p>
                 <p>Cg = 1.0 (single circuit)</p>
                 <p>Ci (300mm through insulation) = interpolate ~0.60</p>
@@ -816,7 +816,7 @@ const HNCModule4Section2_3 = () => {
                 <strong>Question:</strong> 8 × 63A three-phase circuits in a riser, ambient 35°C.
                 XLPE/SWA on tray. What size?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Ca (35°C XLPE) = 0.96</p>
                 <p>Cg (8 circuits, single layer tray) = 0.72</p>
                 <p>Ci = 1.0</p>
@@ -839,11 +839,11 @@ const HNCModule4Section2_3 = () => {
                 <strong>Question:</strong> 50°C plant room, 4 circuits grouped. Compare cable sizes
                 for 32A circuit.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/70">PVC Cable:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">PVC Cable:</p>
                 <p>Ca = 0.71, Cg = 0.65 → Combined = 0.46</p>
                 <p>Min It = 32 / 0.46 = 69.6A → Need 16mm²</p>
-                <p className="mt-3 text-white/70">XLPE Cable:</p>
+                <p className="mt-3 text-white">XLPE Cable:</p>
                 <p>Ca = 0.82, Cg = 0.65 → Combined = 0.53</p>
                 <p>Min It = 32 / 0.53 = 60.4A → Need 10mm²</p>
                 <p className="mt-2 text-green-400">
@@ -924,7 +924,7 @@ const HNCModule4Section2_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -970,7 +970,7 @@ const HNCModule4Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section2-2">

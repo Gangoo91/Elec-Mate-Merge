@@ -211,7 +211,7 @@ const Index = () => {
               <br />
               Platform
             </h1>
-            <p className="text-ios-body text-white/60 max-w-sm mx-auto leading-relaxed">
+            <p className="text-ios-body text-white max-w-sm mx-auto leading-relaxed">
               From apprentice to master electrician. Training, tools, and team management.
             </p>
           </motion.div>
@@ -262,7 +262,7 @@ const Index = () => {
           {/* Trust indicators */}
           <motion.div
             variants={itemVariants}
-            className="flex justify-center gap-6 text-ios-caption-1 text-white/50"
+            className="flex justify-center gap-6 text-ios-caption-1 text-white"
           >
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="h-4 w-4 text-green-500" />
@@ -300,7 +300,7 @@ const Index = () => {
                 transition={{ delay: i * 0.1, type: 'spring', stiffness: 400 }}
               >
                 <div className="text-[20px] font-bold text-elec-yellow">{stat.value}</div>
-                <div className="text-ios-caption-2 text-white/40 mt-0.5">{stat.label}</div>
+                <div className="text-ios-caption-2 text-white mt-0.5">{stat.label}</div>
               </motion.div>
             ))}
           </div>
@@ -317,7 +317,7 @@ const Index = () => {
             className="text-center mb-8"
           >
             <h2 className="text-[24px] font-bold text-white mb-2">Four Specialised Hubs</h2>
-            <p className="text-ios-body text-white/50">Everything you need in one place</p>
+            <p className="text-ios-body text-white">Everything you need in one place</p>
           </motion.div>
 
           <div className="space-y-3">
@@ -366,16 +366,16 @@ const Index = () => {
                               <h3 className="text-ios-headline font-semibold text-white">
                                 {hub.title}
                               </h3>
-                              <ChevronRight className="h-5 w-5 text-white/30" />
+                              <ChevronRight className="h-5 w-5 text-white" />
                             </div>
-                            <p className="text-ios-caption-1 text-white/50 mb-2">
+                            <p className="text-ios-caption-1 text-white mb-2">
                               {hub.description}
                             </p>
                             <div className="flex flex-wrap gap-1.5">
                               {hub.features.map((feature, i) => (
                                 <span
                                   key={i}
-                                  className="text-ios-caption-2 px-2.5 py-1 rounded-lg bg-white/5 text-white/50 border border-white/5"
+                                  className="text-ios-caption-2 px-2.5 py-1 rounded-lg bg-white/5 text-white border border-white/5"
                                 >
                                   {feature}
                                 </span>
@@ -406,7 +406,7 @@ const Index = () => {
             className="text-center mb-8"
           >
             <h2 className="text-[24px] font-bold text-white mb-2">Built for UK Electricians</h2>
-            <p className="text-ios-body text-white/50">Professional tools and features</p>
+            <p className="text-ios-body text-white">Professional tools and features</p>
           </motion.div>
 
           <div className="grid grid-cols-3 gap-3">
@@ -426,7 +426,7 @@ const Index = () => {
                 <h3 className="text-ios-footnote font-semibold text-white mb-0.5">
                   {feature.title}
                 </h3>
-                <p className="text-ios-caption-2 text-white/40">{feature.desc}</p>
+                <p className="text-ios-caption-2 text-white">{feature.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -463,7 +463,7 @@ const Index = () => {
               <h2 className="text-[24px] font-bold text-white mb-2">
                 Your <span className="text-elec-yellow">Elec-ID</span>
               </h2>
-              <p className="text-ios-body text-white/60 mb-5 leading-relaxed">
+              <p className="text-ios-body text-white mb-5 leading-relaxed">
                 A portable digital credential that follows your career.
               </p>
 
@@ -481,7 +481,7 @@ const Index = () => {
                     <Lightbulb className="h-6 w-6 text-elec-yellow" />
                   </div>
                   <div className="flex-1">
-                    <div className="text-ios-caption-2 text-white/40 uppercase tracking-wider">
+                    <div className="text-ios-caption-2 text-white uppercase tracking-wider">
                       Elec-ID
                     </div>
                     <div className="font-mono text-ios-headline font-bold text-white">
@@ -503,7 +503,7 @@ const Index = () => {
                       <div className="text-ios-headline font-bold text-elec-yellow">
                         {stat.value}
                       </div>
-                      <div className="text-ios-caption-2 text-white/40">{stat.label}</div>
+                      <div className="text-ios-caption-2 text-white">{stat.label}</div>
                     </div>
                   ))}
                 </div>
@@ -518,7 +518,7 @@ const Index = () => {
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.4 + i * 0.1 }}
-                      className="flex items-center gap-2.5 text-ios-footnote text-white/70"
+                      className="flex items-center gap-2.5 text-ios-footnote text-white"
                     >
                       <CheckCircle2 className="h-4 w-4 text-elec-yellow" />
                       {item}
@@ -575,7 +575,7 @@ const Index = () => {
                         <Star key={i} className="h-4 w-4 fill-elec-yellow text-elec-yellow" />
                       ))}
                     </div>
-                    <p className="text-ios-body text-white/80 mb-4 leading-relaxed">"{t.quote}"</p>
+                    <p className="text-ios-body text-white mb-4 leading-relaxed">"{t.quote}"</p>
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-full bg-gradient-to-br from-elec-yellow/30 to-elec-yellow/10 flex items-center justify-center">
                         <span className="text-ios-footnote font-bold text-elec-yellow">
@@ -587,7 +587,7 @@ const Index = () => {
                       </div>
                       <div>
                         <div className="text-ios-subhead font-semibold text-white">{t.author}</div>
-                        <div className="text-ios-caption-1 text-white/40">{t.role}</div>
+                        <div className="text-ios-caption-1 text-white">{t.role}</div>
                       </div>
                     </div>
                   </CardContent>
@@ -630,7 +630,7 @@ const Index = () => {
             <Zap className="h-10 w-10 text-black" />
           </motion.div>
           <h2 className="text-[26px] font-bold text-white mb-3">Ready to Power Up?</h2>
-          <p className="text-ios-body text-white/50 mb-8 leading-relaxed">
+          <p className="text-ios-body text-white mb-8 leading-relaxed">
             Join UK electrical professionals using Elec-Mate
           </p>
 
@@ -648,7 +648,7 @@ const Index = () => {
             </Button>
           </motion.div>
 
-          <div className="flex justify-center gap-4 text-ios-caption-1 text-white/40">
+          <div className="flex justify-center gap-4 text-ios-caption-1 text-white">
             <span>No card</span>
             <span className="w-1 h-1 rounded-full bg-white/20 self-center" />
             <span>7 days free</span>
@@ -674,7 +674,7 @@ const Index = () => {
               Elec-<span className="text-elec-yellow">Mate</span>
             </span>
           </div>
-          <p className="text-ios-caption-1 text-white/40">
+          <p className="text-ios-caption-1 text-white">
             © {new Date().getFullYear()} Elec-Mate. Powering UK electrical professionals.
           </p>
         </div>

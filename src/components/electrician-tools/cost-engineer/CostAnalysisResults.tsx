@@ -497,14 +497,14 @@ const CostAnalysisResults = ({
             <div className="flex justify-center gap-4 pt-1">
               <button
                 onClick={handleCopyToClipboard}
-                className="text-xs text-white/40 hover:text-white/60 transition-colors flex items-center gap-1"
+                className="text-xs text-white hover:text-white transition-colors flex items-center gap-1"
               >
                 <Copy className="h-3 w-3" />
                 Copy
               </button>
               <button
                 onClick={() => setShowPayloadPreview(true)}
-                className="text-xs text-white/40 hover:text-white/60 transition-colors flex items-center gap-1"
+                className="text-xs text-white hover:text-white transition-colors flex items-center gap-1"
               >
                 <Eye className="h-3 w-3" />
                 Debug
@@ -554,14 +554,14 @@ const CostAnalysisResults = ({
           <div className="flex justify-center gap-4 pt-1">
             <button
               onClick={handleCopyToClipboard}
-              className="text-xs text-white/40 hover:text-white/60 transition-colors flex items-center gap-1 touch-manipulation"
+              className="text-xs text-white hover:text-white transition-colors flex items-center gap-1 touch-manipulation"
             >
               <Copy className="h-3 w-3" />
               Copy
             </button>
             <button
               onClick={() => setShowPayloadPreview(true)}
-              className="text-xs text-white/40 hover:text-white/60 transition-colors flex items-center gap-1 touch-manipulation"
+              className="text-xs text-white hover:text-white transition-colors flex items-center gap-1 touch-manipulation"
             >
               <Eye className="h-3 w-3" />
               Debug

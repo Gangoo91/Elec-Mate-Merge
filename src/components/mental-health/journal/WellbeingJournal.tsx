@@ -295,7 +295,7 @@ const WellbeingJournal = () => {
             <div className="flex gap-2">
               <div className="relative flex-1">
                 {!searchTerm && (
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
                 )}
                 <Input
                   value={searchTerm}
@@ -570,7 +570,7 @@ const WellbeingJournal = () => {
         <Card className="border-green-500/20 bg-green-500/5">
           <CardContent className="p-4">
             <h3 className="text-sm font-medium text-green-400 mb-2">Gratitude</h3>
-            <p className="text-xs text-white/70 mb-3">What are you grateful for today?</p>
+            <p className="text-xs text-white mb-3">What are you grateful for today?</p>
 
             <div className="flex gap-2 mb-3">
               <Input
@@ -600,7 +600,7 @@ const WellbeingJournal = () => {
                     <span className="text-sm text-white flex-1">{item}</span>
                     <button
                       onClick={() => removeGratitude(index)}
-                      className="text-white/60 hover:text-white touch-manipulation p-1 active:scale-95 transition-all"
+                      className="text-white hover:text-white touch-manipulation p-1 active:scale-95 transition-all"
                     >
                       <X className="h-4 w-4" />
                     </button>
@@ -615,7 +615,7 @@ const WellbeingJournal = () => {
         <Card className="border-orange-500/20 bg-orange-500/5">
           <CardContent className="p-4">
             <h3 className="text-sm font-medium text-orange-400 mb-2">Triggers or Challenges</h3>
-            <p className="text-xs text-white/70 mb-3">Any stressors affecting you? (optional)</p>
+            <p className="text-xs text-white mb-3">Any stressors affecting you? (optional)</p>
 
             <div className="flex gap-2 mb-3">
               <Input
@@ -645,7 +645,7 @@ const WellbeingJournal = () => {
                     <span className="text-sm text-white flex-1">{item}</span>
                     <button
                       onClick={() => removeTrigger(index)}
-                      className="text-white/60 hover:text-white touch-manipulation p-1 active:scale-95 transition-all"
+                      className="text-white hover:text-white touch-manipulation p-1 active:scale-95 transition-all"
                     >
                       <X className="h-4 w-4" />
                     </button>

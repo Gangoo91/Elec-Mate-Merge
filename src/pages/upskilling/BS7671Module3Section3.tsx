@@ -93,7 +93,7 @@ const BS7671Module3Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bs7671-module-3">
@@ -114,7 +114,7 @@ const BS7671Module3Section3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             External Influences & Installation Conditions
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Environmental conditions affecting material selection and installation methods
           </p>
         </header>
@@ -202,40 +202,40 @@ const BS7671Module3Section3 = () => {
                   <tr className="border-t border-white/5">
                     <td className="p-3 font-medium">AD</td>
                     <td className="p-3">Presence of water</td>
-                    <td className="p-3 text-white/70 text-xs">
+                    <td className="p-3 text-white text-xs">
                       AD1 (negligible) to AD8 (submerged)
                     </td>
                   </tr>
                   <tr className="border-t border-white/5">
                     <td className="p-3 font-medium">AE</td>
                     <td className="p-3">Presence of foreign solid bodies</td>
-                    <td className="p-3 text-white/70 text-xs">
+                    <td className="p-3 text-white text-xs">
                       AE1 (negligible) to AE6 (heavy dust)
                     </td>
                   </tr>
                   <tr className="border-t border-white/5">
                     <td className="p-3 font-medium">AF</td>
                     <td className="p-3">Corrosive/polluting substances</td>
-                    <td className="p-3 text-white/70 text-xs">
+                    <td className="p-3 text-white text-xs">
                       AF1 (negligible) to AF4 (continuous corrosion)
                     </td>
                   </tr>
                   <tr className="border-t border-white/5">
                     <td className="p-3 font-medium">AG</td>
                     <td className="p-3">Impact</td>
-                    <td className="p-3 text-white/70 text-xs">
+                    <td className="p-3 text-white text-xs">
                       AG1 (low) to AG4 (very high impact risk)
                     </td>
                   </tr>
                   <tr className="border-t border-white/5">
                     <td className="p-3 font-medium">AH</td>
                     <td className="p-3">Vibration</td>
-                    <td className="p-3 text-white/70 text-xs">AH1 (low) to AH3 (high vibration)</td>
+                    <td className="p-3 text-white text-xs">AH1 (low) to AH3 (high vibration)</td>
                   </tr>
                   <tr className="border-t border-white/5">
                     <td className="p-3 font-medium">AN</td>
                     <td className="p-3">Solar radiation</td>
-                    <td className="p-3 text-white/70 text-xs">
+                    <td className="p-3 text-white text-xs">
                       AN1 (low) to AN3 (high UV exposure)
                     </td>
                   </tr>
@@ -295,7 +295,7 @@ const BS7671Module3Section3 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-2">First Digit (X) - Solids</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>
                       <strong>0:</strong> No protection
                     </li>
@@ -318,7 +318,7 @@ const BS7671Module3Section3 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-2">Second Digit (Y) - Liquids</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>
                       <strong>0:</strong> No protection
                     </li>
@@ -531,7 +531,7 @@ const BS7671Module3Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -543,7 +543,7 @@ const BS7671Module3Section3 = () => {
           <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
             <div>
               <p className="font-medium text-elec-yellow mb-1">Key Influence Codes</p>
-              <ul className="space-y-0.5 text-white/90">
+              <ul className="space-y-0.5 text-white">
                 <li>AD: Water presence</li>
                 <li>AE: Foreign solid bodies</li>
                 <li>AF: Corrosive substances</li>
@@ -554,7 +554,7 @@ const BS7671Module3Section3 = () => {
             </div>
             <div>
               <p className="font-medium text-elec-yellow mb-1">Common IP Requirements</p>
-              <ul className="space-y-0.5 text-white/90">
+              <ul className="space-y-0.5 text-white">
                 <li>Indoor dry: IP20 minimum</li>
                 <li>Bathroom zones: IP44-IP67</li>
                 <li>Outdoor general: IP44-IP55</li>
@@ -580,7 +580,7 @@ const BS7671Module3Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bs7671-module-3-section-2">

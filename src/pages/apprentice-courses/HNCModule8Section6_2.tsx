@@ -278,7 +278,7 @@ const HNCModule8Section6_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section6">
@@ -300,7 +300,7 @@ const HNCModule8Section6_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Plant Room Design
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Layout considerations, access requirements, ventilation, lighting and electrical
             infrastructure
           </p>
@@ -500,23 +500,23 @@ const HNCModule8Section6_2 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">Plant Room Sizing Guide</p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Rule of thumb:</span>{' '}
+                  <span className="text-white">Rule of thumb:</span>{' '}
                   <span className="text-white">
                     Plant room area = 3-5% of gross building floor area
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">Height:</span>{' '}
+                  <span className="text-white">Height:</span>{' '}
                   <span className="text-white">Minimum 3.0m clear, 3.5-4.0m preferred</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Door size:</span>{' '}
+                  <span className="text-white">Door size:</span>{' '}
                   <span className="text-white">
                     1200mm wide minimum, double doors for large equipment
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">Floor loading:</span>{' '}
+                  <span className="text-white">Floor loading:</span>{' '}
                   <span className="text-white">
                     Typically 7.5-10 kN/m squared for equipment areas
                   </span>
@@ -775,25 +775,25 @@ const HNCModule8Section6_2 = () => {
               </p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Total heat dissipation:</span>{' '}
+                  <span className="text-white">Total heat dissipation:</span>{' '}
                   <span className="text-white">
                     15 kW (transformer 8kW, switchgear 4kW, cables 3kW)
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">Ventilation rate:</span>{' '}
+                  <span className="text-white">Ventilation rate:</span>{' '}
                   <span className="text-white">30 l/s per kW (standard)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Required airflow:</span>{' '}
+                  <span className="text-white">Required airflow:</span>{' '}
                   <span className="text-white">15 x 30 = 450 l/s</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Temperature rise:</span>{' '}
+                  <span className="text-white">Temperature rise:</span>{' '}
                   <span className="text-white">Q = m x Cp x delta T</span>
                 </p>
                 <p>
-                  <span className="text-white/60">With 10K rise:</span>{' '}
+                  <span className="text-white">With 10K rise:</span>{' '}
                   <span className="text-white">
                     External 28 degrees C + 10K = 38 degrees C max ambient
                   </span>
@@ -1050,23 +1050,23 @@ const HNCModule8Section6_2 = () => {
               </p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Main bonding conductor:</span>{' '}
+                  <span className="text-white">Main bonding conductor:</span>{' '}
                   <span className="text-white">
                     Minimum 50% of earthing conductor (min 6mm squared Cu)
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">Earthing conductor:</span>{' '}
+                  <span className="text-white">Earthing conductor:</span>{' '}
                   <span className="text-white">Per Table 54.7 based on line conductor size</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Supplementary bonding:</span>{' '}
+                  <span className="text-white">Supplementary bonding:</span>{' '}
                   <span className="text-white">
                     Minimum 4mm squared Cu (2.5mm squared if mechanically protected)
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">Earth bar:</span>{' '}
+                  <span className="text-white">Earth bar:</span>{' '}
                   <span className="text-white">
                     Sized for connected conductors + 30% spare capacity
                   </span>
@@ -1101,8 +1101,8 @@ const HNCModule8Section6_2 = () => {
                 containing 500kVA transformer, main LV switchboard (400A), and distribution
                 equipment.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Heat sources:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Heat sources:</p>
                 <p className="ml-4">Transformer (500kVA x 2.5% loss) = 12.5 kW</p>
                 <p className="ml-4">Switchgear (estimated) = 3 kW</p>
                 <p className="ml-4">Cables and miscellaneous = 2.5 kW</p>
@@ -1127,8 +1127,8 @@ const HNCModule8Section6_2 = () => {
                 <strong>Scenario:</strong> Design lighting for a 10m x 6m plant room with 3.5m
                 ceiling height.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Requirements:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Requirements:</p>
                 <p className="ml-4">General illuminance = 200 lux minimum</p>
                 <p className="ml-4">Switchgear face = 300 lux</p>
                 <p className="ml-4">Emergency = 10% or 15 lux minimum</p>
@@ -1140,7 +1140,7 @@ const HNCModule8Section6_2 = () => {
                 <p className="ml-4">LED battens 5000 lumens each</p>
                 <p className="ml-4">Quantity = 30,000 / 5,000 = 6 luminaires</p>
                 <p className="mt-2 text-green-400">Install 6 x LED battens in 2 rows of 3</p>
-                <p className="text-white/60">+ 3 x emergency luminaires (self-contained)</p>
+                <p className="text-white">+ 3 x emergency luminaires (self-contained)</p>
               </div>
             </div>
 
@@ -1152,8 +1152,8 @@ const HNCModule8Section6_2 = () => {
                 <strong>Scenario:</strong> Determine main protective bonding conductor sizes for a
                 plant room with 120mm squared earthing conductor.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given data:</p>
                 <p className="ml-4">Earthing conductor = 120mm squared copper</p>
                 <p className="ml-4">Water pipe = 54mm diameter</p>
                 <p className="ml-4">Gas pipe = 42mm diameter</p>
@@ -1273,7 +1273,7 @@ const HNCModule8Section6_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1319,7 +1319,7 @@ const HNCModule8Section6_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section6">

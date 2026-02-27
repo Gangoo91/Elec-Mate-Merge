@@ -200,7 +200,7 @@ export default function CscsCardModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-1">
@@ -225,7 +225,7 @@ export default function CscsCardModule1Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             The HS&amp;E Test Format
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Everything you need to know about the CITB Health, Safety and Environment test &mdash;
             test versions, question types, delivery format, pass marks, topic coverage, and how to
             avoid common pitfalls
@@ -323,12 +323,12 @@ export default function CscsCardModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-3">
-                  <BookOpen className="h-5 w-5 text-white/60" />
+                  <BookOpen className="h-5 w-5 text-white" />
                   <p className="text-sm font-medium text-white">
                     Why Does the HS&amp;E Test Exist?
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -397,7 +397,7 @@ export default function CscsCardModule1Section3() {
                       </span>
                     </div>
                     <div>
-                      <p className="text-sm text-white/80 mb-2">
+                      <p className="text-sm text-white mb-2">
                         For general construction workers, labourers, and tradespeople. This is the
                         most common test version and is required for{' '}
                         <strong>Green, Red, Blue, and Gold</strong> CSCS cards.
@@ -429,7 +429,7 @@ export default function CscsCardModule1Section3() {
                       </span>
                     </div>
                     <div>
-                      <p className="text-sm text-white/80 mb-2">
+                      <p className="text-sm text-white mb-2">
                         For workers in specialist roles such as demolition, highway works, and plant
                         operation. Contains <strong>additional specialist content</strong> relevant
                         to the role.
@@ -461,7 +461,7 @@ export default function CscsCardModule1Section3() {
                       </span>
                     </div>
                     <div>
-                      <p className="text-sm text-white/80 mb-2">
+                      <p className="text-sm text-white mb-2">
                         For managers, supervisors, and professionally qualified individuals.
                         Includes{' '}
                         <strong>management responsibilities, CDM 2015, and legal duties</strong> in
@@ -489,7 +489,7 @@ export default function CscsCardModule1Section3() {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-green-400 mb-2">Important Note</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Each test draws from a large <strong>question bank</strong> maintained by CITB.
                   This means no two sittings are identical. You cannot predict which specific
                   questions will appear &mdash; you must have a thorough understanding of all the
@@ -531,7 +531,7 @@ export default function CscsCardModule1Section3() {
                       </span>
                       <p className="text-sm font-medium text-white">Knowledge Questions</p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -571,7 +571,7 @@ export default function CscsCardModule1Section3() {
                       </span>
                       <p className="text-sm font-medium text-white">Behavioural Case Studies</p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-amber-400" />
                         <span>
@@ -610,7 +610,7 @@ export default function CscsCardModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Common Mistake</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Many candidates prepare only for knowledge questions and neglect behavioural case
                   studies. Case study questions can be more challenging because multiple options may
                   seem reasonable &mdash; you must identify the <strong>most appropriate</strong>{' '}
@@ -624,7 +624,7 @@ export default function CscsCardModule1Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Tips for Behavioural Case Studies
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -685,7 +685,7 @@ export default function CscsCardModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-3">
-                  <Monitor className="h-5 w-5 text-white/60" />
+                  <Monitor className="h-5 w-5 text-white" />
                   <p className="text-sm font-medium text-white">How the Test Works</p>
                 </div>
                 <div className="grid sm:grid-cols-2 gap-3">
@@ -723,7 +723,7 @@ export default function CscsCardModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-green-400 mb-1">{item.step}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -731,13 +731,13 @@ export default function CscsCardModule1Section3() {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-green-400 mb-2">Test Day Essentials</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   You must bring <strong>valid photo identification</strong> to the test centre.
                   Accepted forms of ID include a valid passport, UK driving licence (photocard), or
                   biometric residence permit. Without valid ID, you will not be allowed to sit the
                   test and will lose your fee.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -767,10 +767,10 @@ export default function CscsCardModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
-                  <HelpCircle className="h-5 w-5 text-white/60" />
+                  <HelpCircle className="h-5 w-5 text-white" />
                   <p className="text-sm font-medium text-white">Accessibility &amp; Support</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If you have a learning difficulty, disability, or English is not your first
                   language, you may be eligible for <strong>additional support</strong>. This can
                   include extra time, a voiceover (the questions are read aloud through headphones),
@@ -836,7 +836,7 @@ export default function CscsCardModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-green-400 mb-1">{item.item}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -849,7 +849,7 @@ export default function CscsCardModule1Section3() {
                     Do Not Leave Questions Blank
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Unanswered questions are marked as incorrect, so there is{' '}
                   <strong>no penalty for guessing</strong>. If you are running out of time, it is
                   always better to select an answer (even if you are unsure) than to leave a
@@ -860,7 +860,7 @@ export default function CscsCardModule1Section3() {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-green-400 mb-2">Time Management Strategy</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   With 50 questions in 45 minutes, you have less than{' '}
                   <strong>1 minute per question</strong> on average. Do not spend too long on any
                   single question. If you are unsure, <strong>flag it and move on</strong>. Answer
@@ -894,10 +894,10 @@ export default function CscsCardModule1Section3() {
                 </p>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-xs text-white/50 uppercase tracking-wider mb-2">
+                    <p className="text-xs text-white uppercase tracking-wider mb-2">
                       General Safety
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>Risk assessment and method statements</span>
@@ -921,10 +921,10 @@ export default function CscsCardModule1Section3() {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-xs text-white/50 uppercase tracking-wider mb-2">
+                    <p className="text-xs text-white uppercase tracking-wider mb-2">
                       Specialist Topics
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>Asbestos awareness and management</span>
@@ -948,10 +948,10 @@ export default function CscsCardModule1Section3() {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-xs text-white/50 uppercase tracking-wider mb-2">
+                    <p className="text-xs text-white uppercase tracking-wider mb-2">
                       Site-Specific Topics
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>Excavations and trenching</span>
@@ -975,10 +975,10 @@ export default function CscsCardModule1Section3() {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-xs text-white/50 uppercase tracking-wider mb-2">
+                    <p className="text-xs text-white uppercase tracking-wider mb-2">
                       Environmental Topics
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>Waste management and disposal</span>
@@ -1008,7 +1008,7 @@ export default function CscsCardModule1Section3() {
                 <p className="text-sm font-medium text-green-400 mb-3">
                   Additional Topics for Managers &amp; Professionals
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The Managers &amp; Professionals test includes all the Operatives topics plus
                   additional management-level content:
                 </p>
@@ -1023,7 +1023,7 @@ export default function CscsCardModule1Section3() {
                     'Monitoring and auditing health and safety performance',
                     'Welfare provisions and site facilities requirements',
                   ].map((topic, i) => (
-                    <div key={i} className="flex items-start gap-2 text-sm text-white/80">
+                    <div key={i} className="flex items-start gap-2 text-sm text-white">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>{topic}</span>
                     </div>
@@ -1035,7 +1035,7 @@ export default function CscsCardModule1Section3() {
                 <p className="text-sm font-medium text-white mb-2">
                   Behavioural &amp; Case Study Scenarios
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   In addition to the topic-specific knowledge questions, all test versions include{' '}
                   <strong>behavioural case study scenarios</strong>. These present realistic
                   construction situations and ask what you would do. Scenarios may involve
@@ -1102,7 +1102,7 @@ export default function CscsCardModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-orange-400 mb-1">{item.pitfall}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1113,7 +1113,7 @@ export default function CscsCardModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Common Misconceptions</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-orange-400" />
                     <span>
@@ -1155,7 +1155,7 @@ export default function CscsCardModule1Section3() {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-green-400 mb-2">The Right Mindset</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Treat the HS&amp;E test as a genuine examination, not a formality. Allocate proper
                   study time (most successful candidates revise for at least{' '}
                   <strong>2&ndash;3 weeks</strong> before their test date), use current revision
@@ -1184,7 +1184,7 @@ export default function CscsCardModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-3">
-                  <RefreshCw className="h-5 w-5 text-white/60" />
+                  <RefreshCw className="h-5 w-5 text-white" />
                   <p className="text-sm font-medium text-white">Recent &amp; Ongoing Updates</p>
                 </div>
                 <div className="grid sm:grid-cols-2 gap-3">
@@ -1222,7 +1222,7 @@ export default function CscsCardModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-green-400 mb-1">{item.area}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1235,7 +1235,7 @@ export default function CscsCardModule1Section3() {
                     Use Current Revision Materials Only
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Because the question bank is regularly updated,{' '}
                   <strong>older revision materials may contain outdated information</strong>. A
                   textbook or app from even two years ago may include questions that have been
@@ -1248,7 +1248,7 @@ export default function CscsCardModule1Section3() {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-green-400 mb-2">How to Stay Up to Date</p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1284,7 +1284,7 @@ export default function CscsCardModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Key Takeaway</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The HS&amp;E test is not a static exam &mdash; it reflects the current state of
                   health and safety law and best practice in the UK construction industry. Treating
                   it as a one-time hurdle that never changes is a mistake. If you are renewing your
@@ -1308,11 +1308,11 @@ export default function CscsCardModule1Section3() {
                   <span className="text-green-400 text-sm font-bold">OP</span>
                 </div>
                 <p className="text-sm font-semibold text-white mb-1">Operatives</p>
-                <p className="text-xs text-white/60 mb-2">Labourers &amp; Tradespeople</p>
+                <p className="text-xs text-white mb-2">Labourers &amp; Tradespeople</p>
                 <div className="space-y-1">
                   <p className="text-xs text-green-400">50 questions &middot; 45 mins</p>
-                  <p className="text-xs text-white/50">Pass: ~45/50 (90%)</p>
-                  <p className="text-xs text-white/50">Green, Red, Blue, Gold cards</p>
+                  <p className="text-xs text-white">Pass: ~45/50 (90%)</p>
+                  <p className="text-xs text-white">Green, Red, Blue, Gold cards</p>
                 </div>
               </div>
               <div className="bg-black/30 rounded-lg p-4 text-center border border-blue-500/20">
@@ -1320,11 +1320,11 @@ export default function CscsCardModule1Section3() {
                   <span className="text-blue-400 text-sm font-bold">SP</span>
                 </div>
                 <p className="text-sm font-semibold text-white mb-1">Specialists</p>
-                <p className="text-xs text-white/60 mb-2">Demolition, Plant, Highway</p>
+                <p className="text-xs text-white mb-2">Demolition, Plant, Highway</p>
                 <div className="space-y-1">
                   <p className="text-xs text-blue-400">50 questions &middot; 45 mins</p>
-                  <p className="text-xs text-white/50">Pass: ~45/50 (90%)</p>
-                  <p className="text-xs text-white/50">Specialist role cards</p>
+                  <p className="text-xs text-white">Pass: ~45/50 (90%)</p>
+                  <p className="text-xs text-white">Specialist role cards</p>
                 </div>
               </div>
               <div className="bg-black/30 rounded-lg p-4 text-center border border-purple-500/20">
@@ -1332,25 +1332,25 @@ export default function CscsCardModule1Section3() {
                   <span className="text-purple-400 text-sm font-bold">MP</span>
                 </div>
                 <p className="text-sm font-semibold text-white mb-1">Managers</p>
-                <p className="text-xs text-white/60 mb-2">Supervisors &amp; Professionals</p>
+                <p className="text-xs text-white mb-2">Supervisors &amp; Professionals</p>
                 <div className="space-y-1">
                   <p className="text-xs text-purple-400">50 questions &middot; 45 mins</p>
-                  <p className="text-xs text-white/50">Pass: ~46/50 (92%)</p>
-                  <p className="text-xs text-white/50">Black, White cards</p>
+                  <p className="text-xs text-white">Pass: ~46/50 (92%)</p>
+                  <p className="text-xs text-white">Black, White cards</p>
                 </div>
               </div>
             </div>
             <div className="grid sm:grid-cols-2 gap-3">
               <div className="bg-black/20 rounded-lg p-3 border border-white/5">
                 <p className="text-xs text-green-400 font-medium mb-1">Delivery</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Touch-screen computer at Pearson VUE centres. Questions drawn from a rotating bank
                   &mdash; every sitting is different.
                 </p>
               </div>
               <div className="bg-black/20 rounded-lg p-3 border border-white/5">
                 <p className="text-xs text-green-400 font-medium mb-1">Validity</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Results valid for 2 years. Re-sit after 2 clear working days if failed. Unlimited
                   re-sits allowed.
                 </p>
@@ -1373,7 +1373,7 @@ export default function CscsCardModule1Section3() {
                   </div>
                   <p className="text-sm font-semibold text-white">Knowledge Questions</p>
                 </div>
-                <ul className="text-xs text-white/70 space-y-1.5">
+                <ul className="text-xs text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>Standard multiple choice format</span>
@@ -1403,7 +1403,7 @@ export default function CscsCardModule1Section3() {
                   </div>
                   <p className="text-sm font-semibold text-white">Behavioural Case Studies</p>
                 </div>
-                <ul className="text-xs text-white/70 space-y-1.5">
+                <ul className="text-xs text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-amber-400" />
                     <span>Scenario-based with workplace situations</span>
@@ -1428,7 +1428,7 @@ export default function CscsCardModule1Section3() {
               </div>
             </div>
             <div className="mt-4 bg-black/20 rounded-lg p-3 border border-white/5 text-center">
-              <p className="text-xs text-white/60">
+              <p className="text-xs text-white">
                 Behavioural case study questions may carry{' '}
                 <strong className="text-green-400">more marks</strong> than standard knowledge
                 questions &mdash; do not underestimate them during revision.
@@ -1444,7 +1444,7 @@ export default function CscsCardModule1Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1458,7 +1458,7 @@ export default function CscsCardModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-1">

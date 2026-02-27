@@ -207,7 +207,7 @@ export default function LeadershipModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-3">
@@ -230,7 +230,7 @@ export default function LeadershipModule3Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Running Toolbox Talks and Site Briefings
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How to plan, deliver, and record effective toolbox talks that engage your team, prevent
             accidents, and satisfy CDM 2015 requirements
           </p>
@@ -350,7 +350,7 @@ export default function LeadershipModule3Section1() {
                   <MessageSquare className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">The Leadership Opportunity</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Beyond safety compliance, toolbox talks are a{' '}
                   <strong className="text-white">leadership opportunity</strong>. They give you a
                   regular platform to set expectations, recognise good work, address concerns,
@@ -380,11 +380,11 @@ export default function LeadershipModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Choosing Your Topic</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The most effective toolbox talks cover topics that are{' '}
                   <strong className="text-white">relevant and timely</strong>. Ask yourself:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -420,7 +420,7 @@ export default function LeadershipModule3Section1() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-500 mb-2">The Talk Structure</p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     <strong className="text-white">1. Opening hook</strong> &mdash; a real-world
                     example, a statistic, or a question that grabs attention in the first 30
@@ -471,7 +471,7 @@ export default function LeadershipModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Physical Presence</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -503,7 +503,7 @@ export default function LeadershipModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Voice and Pace</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -536,7 +536,7 @@ export default function LeadershipModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Read the Room</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If people are losing focus &mdash; checking phones, looking away, fidgeting
                   &mdash; change approach. Ask a question, bring in a prop, move to a different
                   point.
@@ -572,7 +572,7 @@ export default function LeadershipModule3Section1() {
                   <Users className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Interactive Techniques</p>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">Show of Hands</p>
                     <p>
@@ -617,7 +617,7 @@ export default function LeadershipModule3Section1() {
                 <p className="text-sm font-medium text-rose-500 mb-2">
                   The Most Powerful Technique
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">Get your team members to present.</strong> When an
                   experienced electrician delivers a five-minute talk on something they know well
                   &mdash; cable containment selection, isolation procedures, first-fix coordination
@@ -660,7 +660,7 @@ export default function LeadershipModule3Section1() {
                   <ClipboardList className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">What to Record</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -710,7 +710,7 @@ export default function LeadershipModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Follow Up on Actions</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The fastest way to destroy credibility is to raise actions in a toolbox talk and
                   then never follow up.{' '}
                   <strong className="text-white">If you say you will sort it, sort it.</strong>{' '}
@@ -737,7 +737,7 @@ export default function LeadershipModule3Section1() {
                 demonstrations of your leadership. The key points to carry forward are:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -787,7 +787,7 @@ export default function LeadershipModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Toolbox Talk Checklist</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-white/80">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
                     <span>Topic is relevant to current or upcoming work</span>
@@ -842,7 +842,7 @@ export default function LeadershipModule3Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -856,7 +856,7 @@ export default function LeadershipModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-3">

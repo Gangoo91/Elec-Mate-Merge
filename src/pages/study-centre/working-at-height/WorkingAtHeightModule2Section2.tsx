@@ -191,7 +191,7 @@ export default function WorkingAtHeightModule2Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-2">
@@ -217,7 +217,7 @@ export default function WorkingAtHeightModule2Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Scaffolding Basics
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
             Types of scaffolding, key structural components, inspection requirements, scaffold
             tagging systems, and competency standards for scaffold erection and use
           </p>
@@ -227,7 +227,7 @@ export default function WorkingAtHeightModule2Section2() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
           <div className="rounded-lg p-4 bg-amber-500/5 border-l-2 border-amber-500/50">
             <p className="font-semibold text-amber-400 mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-base space-y-1.5 leading-relaxed">
+            <ul className="text-white text-base space-y-1.5 leading-relaxed">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                 <span>
@@ -261,7 +261,7 @@ export default function WorkingAtHeightModule2Section2() {
 
           <div className="rounded-lg p-4 bg-amber-500/5 border-l-2 border-amber-500/50">
             <p className="font-semibold text-amber-400 mb-2">On Site</p>
-            <ul className="text-white/80 text-base space-y-1.5 leading-relaxed">
+            <ul className="text-white text-base space-y-1.5 leading-relaxed">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                 <span>
@@ -297,7 +297,7 @@ export default function WorkingAtHeightModule2Section2() {
         {/* ── Learning Outcomes ── */}
         <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4 leading-relaxed">
+          <p className="text-white mb-4 leading-relaxed">
             By the end of this section, you will be able to:
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -311,7 +311,7 @@ export default function WorkingAtHeightModule2Section2() {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-amber-400/70 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm leading-relaxed">{outcome}</span>
+                <span className="text-white text-sm leading-relaxed">{outcome}</span>
               </div>
             ))}
           </div>
@@ -328,7 +328,7 @@ export default function WorkingAtHeightModule2Section2() {
               <span className="text-amber-400/80 text-sm font-normal">01</span>
               Types of Scaffolding
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 Scaffolding is the most common form of temporary access equipment used on
                 construction sites in the UK. It provides stable working platforms at height,
@@ -339,7 +339,7 @@ export default function WorkingAtHeightModule2Section2() {
               <div className="space-y-4">
                 <div className="bg-white/5 border border-amber-400/30 p-4 rounded-lg">
                   <h3 className="text-amber-300 font-medium mb-3">Independent Tied Scaffold</h3>
-                  <p className="text-white/70 text-sm mb-2 leading-relaxed">
+                  <p className="text-white text-sm mb-2 leading-relaxed">
                     The most common type used on UK sites. It consists of{' '}
                     <strong className="text-white">two rows of standards</strong> — an inner row
                     close to the building and an outer row — connected by ledgers and transoms. The
@@ -347,7 +347,7 @@ export default function WorkingAtHeightModule2Section2() {
                     <strong className="text-white">tied back</strong> to the building at regular
                     intervals for lateral stability.
                   </p>
-                  <ul className="text-white/60 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Can be used on any building — new build or existing</span>
@@ -371,14 +371,14 @@ export default function WorkingAtHeightModule2Section2() {
 
                 <div className="bg-white/5 border border-amber-400/30 p-4 rounded-lg">
                   <h3 className="text-amber-300 font-medium mb-3">Putlog (Dependent) Scaffold</h3>
-                  <p className="text-white/70 text-sm mb-2 leading-relaxed">
+                  <p className="text-white text-sm mb-2 leading-relaxed">
                     Has only <strong className="text-white">one row of standards</strong> (the outer
                     row). Short horizontal tubes called{' '}
                     <strong className="text-white">putlogs</strong> are flattened at one end and
                     inserted into the horizontal mortar joints of new brickwork. The building itself
                     provides the inner support.
                   </p>
-                  <ul className="text-white/60 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Used only during new brickwork or blockwork construction</span>
@@ -400,12 +400,12 @@ export default function WorkingAtHeightModule2Section2() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="bg-white/5 border border-amber-400/30 p-4 rounded-lg">
                     <h3 className="text-amber-300 font-medium mb-3">System Scaffold</h3>
-                    <p className="text-white/70 text-sm mb-2 leading-relaxed">
+                    <p className="text-white text-sm mb-2 leading-relaxed">
                       Prefabricated modular scaffold systems with built-in connection points
                       (rosettes, cups, or wedge fittings) that eliminate the need for loose
                       couplers.
                     </p>
-                    <ul className="text-white/60 text-sm space-y-1">
+                    <ul className="text-white text-sm space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                         <span>Faster to erect than tube-and-fitting</span>
@@ -427,11 +427,11 @@ export default function WorkingAtHeightModule2Section2() {
 
                   <div className="bg-white/5 border border-amber-400/30 p-4 rounded-lg">
                     <h3 className="text-amber-300 font-medium mb-3">Mobile Tower Scaffold</h3>
-                    <p className="text-white/70 text-sm mb-2 leading-relaxed">
+                    <p className="text-white text-sm mb-2 leading-relaxed">
                       Lightweight, freestanding scaffold on castors — covered in detail in dedicated
                       PASMA training, but key points are:
                     </p>
-                    <ul className="text-white/60 text-sm space-y-1">
+                    <ul className="text-white text-sm space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                         <span>Freestanding — not tied to a building</span>
@@ -465,7 +465,7 @@ export default function WorkingAtHeightModule2Section2() {
               <span className="text-purple-400/80 text-sm font-normal">02</span>
               Key Scaffold Components
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 Understanding the structural components of a scaffold is essential — both for
                 recognising when a scaffold is safe to use and for communicating clearly with
@@ -483,7 +483,7 @@ export default function WorkingAtHeightModule2Section2() {
                   <div className="relative w-full" style={{ paddingBottom: '130%' }}>
                     {/* Ground line */}
                     <div className="absolute bottom-0 left-[5%] right-[5%] h-[3px] bg-white/30" />
-                    <div className="absolute bottom-[-20px] left-[50%] -translate-x-1/2 text-[10px] text-white/40">
+                    <div className="absolute bottom-[-20px] left-[50%] -translate-x-1/2 text-[10px] text-white">
                       GROUND LEVEL
                     </div>
 
@@ -565,7 +565,7 @@ export default function WorkingAtHeightModule2Section2() {
                       <br />
                       150mm+
                     </div>
-                    <div className="absolute bottom-[2%] left-[1%] text-[9px] sm:text-[10px] text-white/50 font-medium leading-tight">
+                    <div className="absolute bottom-[2%] left-[1%] text-[9px] sm:text-[10px] text-white font-medium leading-tight">
                       Sole plate
                       <br />+ base plate
                     </div>
@@ -580,19 +580,19 @@ export default function WorkingAtHeightModule2Section2() {
                 <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-2 text-[10px] sm:text-xs">
                   <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 rounded-full bg-amber-500/70 flex-shrink-0" />
-                    <span className="text-white/60">Standards</span>
+                    <span className="text-white">Standards</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 rounded-full bg-cyan-400/60 flex-shrink-0" />
-                    <span className="text-white/60">Ledgers</span>
+                    <span className="text-white">Ledgers</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 rounded-full bg-red-400/50 flex-shrink-0" />
-                    <span className="text-white/60">Braces</span>
+                    <span className="text-white">Braces</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 rounded-full bg-green-400/60 flex-shrink-0" />
-                    <span className="text-white/60">Guard rails</span>
+                    <span className="text-white">Guard rails</span>
                   </div>
                 </div>
               </div>
@@ -635,7 +635,7 @@ export default function WorkingAtHeightModule2Section2() {
                 ].map((comp, i) => (
                   <div key={i} className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-white font-medium text-sm">{comp.name}</p>
-                    <p className="text-white/60 text-xs leading-relaxed mt-1">{comp.desc}</p>
+                    <p className="text-white text-xs leading-relaxed mt-1">{comp.desc}</p>
                   </div>
                 ))}
               </div>
@@ -655,7 +655,7 @@ export default function WorkingAtHeightModule2Section2() {
               <span className="text-teal-400/80 text-sm font-normal">03</span>
               Scaffold Inspection Requirements
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 The{' '}
                 <strong className="text-white">Work at Height Regulations 2005, Schedule 7</strong>{' '}
@@ -694,7 +694,7 @@ export default function WorkingAtHeightModule2Section2() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 rounded-lg p-3">
                       <p className="text-white font-medium text-sm">{item.trigger}</p>
-                      <p className="text-white/60 text-xs leading-relaxed mt-1">{item.detail}</p>
+                      <p className="text-white text-xs leading-relaxed mt-1">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -705,7 +705,7 @@ export default function WorkingAtHeightModule2Section2() {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Inspection Records</h3>
                 </div>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Inspection reports must be completed within 24 hours of the inspection. They must
                   record the date, location, and details of the scaffold, any defects found, the
                   action taken, and the name of the competent person who carried out the inspection.
@@ -726,7 +726,7 @@ export default function WorkingAtHeightModule2Section2() {
               <span className="text-red-400/80 text-sm font-normal">04</span>
               NASC TG20 vs Designed Scaffolds
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 <strong className="text-white">TG20</strong> (Technical Guidance Note 20) is
                 published by the{' '}
@@ -741,7 +741,7 @@ export default function WorkingAtHeightModule2Section2() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-green-400/30 p-4 rounded-lg">
                   <h4 className="text-green-300 font-medium mb-2">TG20 Compliant Scaffold</h4>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Standard configuration within TG20 parameters</span>
@@ -763,7 +763,7 @@ export default function WorkingAtHeightModule2Section2() {
 
                 <div className="bg-white/5 border border-red-400/30 p-4 rounded-lg">
                   <h4 className="text-red-300 font-medium mb-2">Designed Scaffold</h4>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Exceeds TG20 parameters (height, loading, configuration)</span>
@@ -792,7 +792,7 @@ export default function WorkingAtHeightModule2Section2() {
                   <Info className="h-5 w-5" />
                   Key Point for Electricians
                 </h3>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   As an electrician, you do not need to know how to design or calculate a scaffold.
                   However, you should be aware that some scaffolds have specific loading
                   restrictions. Always check the scaffold tag and any posted load notices before
@@ -817,7 +817,7 @@ export default function WorkingAtHeightModule2Section2() {
               <span className="text-cyan-400/80 text-sm font-normal">05</span>
               Scaffold Tags &amp; Signage
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 Scaffold tags are the primary means of communicating the status of a scaffold to all
                 site personnel. They are typically attached at the access point (ladder base or
@@ -875,7 +875,7 @@ export default function WorkingAtHeightModule2Section2() {
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                      <span className="text-white/70 leading-relaxed">{item}</span>
+                      <span className="text-white leading-relaxed">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -886,7 +886,7 @@ export default function WorkingAtHeightModule2Section2() {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">No Tag = No Access</h3>
                 </div>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   If a scaffold has no tag, a missing tag, or an expired inspection date, treat it
                   as a red tag — do not use. Report it to your supervisor immediately. Never assume
                   a scaffold is safe because it looks complete. Incomplete scaffolds can appear
@@ -906,7 +906,7 @@ export default function WorkingAtHeightModule2Section2() {
               <span className="text-amber-400/80 text-sm font-normal">06</span>
               Who Can Erect Scaffolding — CISRS
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 Scaffolding must only be erected, altered, or dismantled by{' '}
                 <strong className="text-white">competent persons</strong>. In the UK, competence for
@@ -943,7 +943,7 @@ export default function WorkingAtHeightModule2Section2() {
                   ].map((card, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 rounded-lg p-3">
                       <p className="text-white font-medium text-sm">{card.level}</p>
-                      <p className="text-white/60 text-xs leading-relaxed mt-1">{card.desc}</p>
+                      <p className="text-white text-xs leading-relaxed mt-1">{card.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -954,7 +954,7 @@ export default function WorkingAtHeightModule2Section2() {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Never Alter a Scaffold Yourself</h3>
                 </div>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   As an electrician, you must <strong className="text-white">never</strong> remove,
                   move, or add any scaffold component — not even a single board, brace, or guard
                   rail. Even removing one guard rail to pass materials through can cause a fatal
@@ -979,7 +979,7 @@ export default function WorkingAtHeightModule2Section2() {
               <span className="text-purple-400/80 text-sm font-normal">07</span>
               Working Platform Standards
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 The working platform is the most critical part of the scaffold from the user's
                 perspective — it is where you stand, place your tools, and carry out your work.
@@ -1026,7 +1026,7 @@ export default function WorkingAtHeightModule2Section2() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 rounded-lg p-3">
                       <p className="text-white font-medium text-sm">{item.req}</p>
-                      <p className="text-white/60 text-xs leading-relaxed mt-1">{item.detail}</p>
+                      <p className="text-white text-xs leading-relaxed mt-1">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1034,7 +1034,7 @@ export default function WorkingAtHeightModule2Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-amber-400 font-medium mb-2">Daily Visual Check Before Use</h3>
-                <p className="text-white/70 text-sm mb-2 leading-relaxed">
+                <p className="text-white text-sm mb-2 leading-relaxed">
                   Even with weekly formal inspections, every user should carry out a quick visual
                   check before stepping onto the scaffold each day:
                 </p>
@@ -1051,7 +1051,7 @@ export default function WorkingAtHeightModule2Section2() {
                   ].map((check, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <Eye className="h-4 w-4 text-amber-400/70 mt-0.5 flex-shrink-0" />
-                      <span className="text-white/70 leading-relaxed">{check}</span>
+                      <span className="text-white leading-relaxed">{check}</span>
                     </div>
                   ))}
                 </div>
@@ -1069,7 +1069,7 @@ export default function WorkingAtHeightModule2Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1085,7 +1085,7 @@ export default function WorkingAtHeightModule2Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-2-section-1">

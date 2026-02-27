@@ -247,7 +247,7 @@ const Level3Module6Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section2">
@@ -423,7 +423,7 @@ const Level3Module6Section2_2 = () => {
               nearly double what would be needed without corrections.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Worked Example:</strong> A 32A circuit in 40 degrees C (Ca = 0.87) grouped
               with 2 others (Cg = 0.80), no insulation (Ci = 1.0). It = 32 / (0.87 x 0.80 x 1.0) =
               32 / 0.696 = 46.0A. Select a cable rated at least 46A from the appropriate table.
@@ -536,7 +536,7 @@ const Level3Module6Section2_2 = () => {
               the 5% limit for power circuits.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Verification:</strong> Check Ib (31.3A) &lt;= In (32A) &lt;= Iz (34.6A).
               Confirmed. If the circuit was longer, or if there were more correction factors, a
               larger cable might be needed to stay within voltage drop limits even if current
@@ -616,7 +616,7 @@ const Level3Module6Section2_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -661,7 +661,7 @@ const Level3Module6Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section2">

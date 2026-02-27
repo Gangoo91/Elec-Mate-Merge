@@ -189,7 +189,7 @@ const Module4Section7_4 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -207,13 +207,13 @@ const Module4Section7_4 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 7.4</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 7.4</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Working in Voids, Risers, and Ceilings
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master safe working practices for confined and elevated spaces, including hazard
               identification and legal compliance.
             </p>
@@ -224,7 +224,7 @@ const Module4Section7_4 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc ml-4">
+                <ul className="text-white text-sm space-y-1 list-disc ml-4">
                   <li>
                     Voids, risers, and ceiling spaces present unique risks including restricted
                     access, hidden services, and fall hazards.
@@ -241,7 +241,7 @@ const Module4Section7_4 = () => {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc ml-4">
+                <ul className="text-white text-sm space-y-1 list-disc ml-4">
                   <li>
                     <strong>Spot:</strong> Unmarked ceiling panels, unguarded openings, poor
                     lighting, missing crawl boards.
@@ -265,7 +265,7 @@ const Module4Section7_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <div className="text-white/80 space-y-2 leading-relaxed">
+            <div className="text-white space-y-2 leading-relaxed">
               <ul className="list-disc ml-6 space-y-2">
                 <li>Identify hazards associated with working in voids, risers, and ceilings.</li>
                 <li>Apply safe access and egress procedures.</li>
@@ -282,7 +282,7 @@ const Module4Section7_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Hazards in Voids, Risers, and Ceilings
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 These confined and elevated working environments present multiple serious hazards
                 that require careful risk assessment and control measures:
@@ -292,7 +292,7 @@ const Module4Section7_4 = () => {
                 <p className="font-semibold text-red-400 mb-2">
                   Physical and Environmental Hazards
                 </p>
-                <ul className="text-white/80 text-sm space-y-2 list-disc ml-4">
+                <ul className="text-white text-sm space-y-2 list-disc ml-4">
                   <li>
                     <strong>Restricted access and egress</strong> - limited entry/exit routes
                     increase risk of entrapment and emergency evacuation difficulties
@@ -322,7 +322,7 @@ const Module4Section7_4 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Structural considerations:</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Ceiling voids often contain lightweight construction materials not designed to
                   support human weight. Plasterboard, suspended ceiling tiles, and thin metal
                   supports can fail catastrophically under load, causing serious falls and
@@ -332,7 +332,7 @@ const Module4Section7_4 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Service integration risks:</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Modern buildings integrate multiple services through ceiling voids and risers.
                   Electrical cables, data networks, water pipes, gas lines, HVAC systems, and fire
                   suppression equipment create complex hazard profiles requiring careful
@@ -356,7 +356,7 @@ const Module4Section7_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Legal and Site Requirements
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Working in voids, risers, and ceilings is governed by multiple regulations that
                 establish specific safety requirements and procedures:
@@ -366,7 +366,7 @@ const Module4Section7_4 = () => {
                 <p className="font-semibold text-elec-yellow mb-2">
                   Regulatory Framework and Compliance
                 </p>
-                <ul className="text-white/80 text-sm space-y-2 list-disc ml-4">
+                <ul className="text-white text-sm space-y-2 list-disc ml-4">
                   <li>
                     <strong>Work at Height Regulations 2005</strong> - apply to all work above floor
                     level including ceiling access
@@ -396,7 +396,7 @@ const Module4Section7_4 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Permit-to-work criteria:</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Permits are typically required when work involves: critical building services,
                   confined space entry, hot work near combustible materials, work near high-voltage
                   equipment, or access to areas with specific environmental hazards. Always check
@@ -406,7 +406,7 @@ const Module4Section7_4 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Competence requirements:</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Workers must be trained and competent in confined space procedures, work at height
                   techniques, hazard recognition, emergency procedures, and use of specialist
                   equipment. Regular refresher training ensures continued competence and awareness
@@ -430,7 +430,7 @@ const Module4Section7_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Safe Access and Egress
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Proper access and egress procedures are fundamental to preventing falls and ensuring
                 emergency evacuation capability:
@@ -438,7 +438,7 @@ const Module4Section7_4 = () => {
 
               <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
                 <p className="font-semibold text-green-400 mb-2">Access Equipment and Procedures</p>
-                <ul className="text-white/80 text-sm space-y-2 list-disc ml-4">
+                <ul className="text-white text-sm space-y-2 list-disc ml-4">
                   <li>
                     <strong>Secure ladder systems</strong> - use appropriate ladders, steps, or
                     podiums for ceiling access with proper securing
@@ -468,7 +468,7 @@ const Module4Section7_4 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Access equipment selection:</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Choose equipment appropriate for the specific access requirements: step ladders
                   for simple ceiling access, extension ladders for higher access points, mobile
                   elevated work platforms for extensive ceiling work, and crawl boards for movement
@@ -478,7 +478,7 @@ const Module4Section7_4 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Pre-entry inspection:</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Before entering any void or riser, conduct visual inspection for structural
                   integrity, identify potential hazards, confirm adequate lighting, check for signs
                   of gas or water leaks, verify access equipment stability, and ensure emergency
@@ -502,7 +502,7 @@ const Module4Section7_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               PPE and Tools Required
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Specialised PPE and tools are essential for safe and effective work in confined and
                 elevated spaces:
@@ -510,7 +510,7 @@ const Module4Section7_4 = () => {
 
               <div className="p-4 rounded-lg bg-amber-500/5 border-l-2 border-amber-500/50">
                 <p className="font-semibold text-amber-400 mb-2">Essential PPE and Equipment</p>
-                <ul className="text-white/80 text-sm space-y-2 list-disc ml-4">
+                <ul className="text-white text-sm space-y-2 list-disc ml-4">
                   <li>
                     <strong>Helmet with chin strap</strong> - protection from impact in confined
                     overhead spaces
@@ -540,7 +540,7 @@ const Module4Section7_4 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Specialised tools and equipment:</p>
-                <ul className="text-white/70 text-sm list-disc ml-4 space-y-1">
+                <ul className="text-white text-sm list-disc ml-4 space-y-1">
                   <li>
                     <strong>Cable and pipe detectors:</strong> Essential for locating hidden
                     services before drilling or cutting
@@ -570,7 +570,7 @@ const Module4Section7_4 = () => {
 
               <div className="p-4 rounded-lg bg-amber-500/5 border border-amber-500/20">
                 <p className="font-medium text-white mb-2">Equipment maintenance and inspection:</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   All equipment must be regularly inspected and maintained. Head torches need
                   charged batteries and backup lighting, PPE requires daily condition checks,
                   detection equipment needs calibration verification, and access equipment requires
@@ -586,7 +586,7 @@ const Module4Section7_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Best Practices
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Industry best practices help ensure consistent safety standards and legal compliance
                 in all void, riser, and ceiling work:
@@ -594,7 +594,7 @@ const Module4Section7_4 = () => {
 
               <div className="p-4 rounded-lg bg-purple-500/5 border-l-2 border-purple-500/50">
                 <p className="font-semibold text-purple-400 mb-2">Professional Safety Standards</p>
-                <ul className="text-white/80 text-sm space-y-2 list-disc ml-4">
+                <ul className="text-white text-sm space-y-2 list-disc ml-4">
                   <li>
                     <strong>Atmosphere testing</strong> - test air quality in risers or confined
                     spaces where required
@@ -624,7 +624,7 @@ const Module4Section7_4 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Documentation and records:</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Maintain records of permit-to-work procedures, risk assessments, equipment
                   inspections, and any services encountered or modifications made. This
                   documentation supports legal compliance and provides valuable information for
@@ -634,7 +634,7 @@ const Module4Section7_4 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Continuous improvement:</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Regular review of procedures, near-miss reporting, and incorporation of lessons
                   learned help improve safety standards. Participate in safety meetings, share
                   experiences with colleagues, and stay updated on industry best practices and
@@ -653,7 +653,7 @@ const Module4Section7_4 = () => {
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-2">Pre-Work Safety Checks</h3>
-                <ul className="text-white/70 text-sm space-y-1 list-disc ml-5">
+                <ul className="text-white text-sm space-y-1 list-disc ml-5">
                   <li>
                     Always assume hidden services may be present – use a cable/pipe detector before
                     drilling or cutting
@@ -668,7 +668,7 @@ const Module4Section7_4 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-2">Safe Working Practices</h3>
-                <ul className="text-white/70 text-sm space-y-1 list-disc ml-5">
+                <ul className="text-white text-sm space-y-1 list-disc ml-5">
                   <li>
                     Use crawl boards in ceiling spaces to avoid damaging plasterboard and distribute
                     weight
@@ -687,7 +687,7 @@ const Module4Section7_4 = () => {
                 <h3 className="font-medium text-white mb-2">
                   Communication and Emergency Procedures
                 </h3>
-                <ul className="text-white/70 text-sm space-y-1 list-disc ml-5">
+                <ul className="text-white text-sm space-y-1 list-disc ml-5">
                   <li>
                     Keep communication open – always let someone know when you enter a void or riser
                   </li>
@@ -710,12 +710,12 @@ const Module4Section7_4 = () => {
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-red-500/5 border-l-2 border-red-500/50">
                 <h3 className="font-medium text-red-400 mb-2">Case Study 1: Ceiling Void Fall</h3>
-                <p className="text-white/70 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   During maintenance work in an office ceiling void, an apprentice stepped directly
                   onto plasterboard rather than using a crawl board. The plasterboard gave way,
                   causing a fall into the room below and minor injuries.
                 </p>
-                <p className="text-white/60 text-sm bg-white/5 p-2 rounded">
+                <p className="text-white text-sm bg-white/5 p-2 rounded">
                   <strong>Prevention:</strong> Proper use of crawl boards would have distributed
                   weight safely. The incident highlighted the importance of training in ceiling void
                   access procedures and the structural limitations of building materials.
@@ -726,12 +726,12 @@ const Module4Section7_4 = () => {
                 <h3 className="font-medium text-red-400 mb-2">
                   Case Study 2: Hidden Service Contact
                 </h3>
-                <p className="text-white/70 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   An electrician drilling cable entry holes in a riser contacted a hidden gas pipe,
                   causing a significant gas leak that required building evacuation and emergency
                   service response.
                 </p>
-                <p className="text-white/60 text-sm bg-white/5 p-2 rounded">
+                <p className="text-white text-sm bg-white/5 p-2 rounded">
                   <strong>Prevention:</strong> Use of cable and pipe detection equipment would have
                   identified the hidden gas line. The incident emphasized the critical importance of
                   service detection before any invasive work in building voids.
@@ -742,12 +742,12 @@ const Module4Section7_4 = () => {
                 <h3 className="font-medium text-green-400 mb-2">
                   Case Study 3: Effective Permit-to-Work System
                 </h3>
-                <p className="text-white/70 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   A complex ceiling void installation was completed safely using comprehensive
                   permit-to-work procedures, pre-work risk assessment, and continuous monitoring of
                   work conditions.
                 </p>
-                <p className="text-white/60 text-sm bg-white/5 p-2 rounded">
+                <p className="text-white text-sm bg-white/5 p-2 rounded">
                   <strong>Good Practice:</strong> Proper planning, hazard identification, control
                   measure implementation, and team communication ensured zero incidents. The permit
                   system facilitated coordination with other trades and building management.
@@ -766,7 +766,7 @@ const Module4Section7_4 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
                   <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                  <p className="text-white/70 text-sm">{faq.answer}</p>
+                  <p className="text-white text-sm">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -783,19 +783,19 @@ const Module4Section7_4 = () => {
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-sm">
                     <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                    <span className="text-white/80">
+                    <span className="text-white">
                       Risks: restricted access, hidden services, poor lighting, dust
                     </span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                    <span className="text-white/80">
+                    <span className="text-white">
                       Always use safe access equipment (ladders, crawl boards)
                     </span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                    <span className="text-white/80">
+                    <span className="text-white">
                       PPE: helmet, dust mask, head torch, gloves
                     </span>
                   </div>
@@ -803,19 +803,19 @@ const Module4Section7_4 = () => {
                 <div className="space-y-2">
                   <div className="flex items-center gap-2 text-sm">
                     <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                    <span className="text-white/80">
+                    <span className="text-white">
                       Permits may be required in risers and confined voids
                     </span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                    <span className="text-white/80">
+                    <span className="text-white">
                       Communicate and keep a safe exit route clear at all times
                     </span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
-                    <span className="text-white/80">
+                    <span className="text-white">
                       Use cable/pipe detectors before drilling or cutting
                     </span>
                   </div>
@@ -830,7 +830,7 @@ const Module4Section7_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">11</span>
               Recap
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>In this subsection, you learned:</p>
               <ul className="list-disc ml-6 space-y-2">
                 <li>The hazards of working in voids, risers, and ceilings.</li>
@@ -855,7 +855,7 @@ const Module4Section7_4 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../section7/subsection3">

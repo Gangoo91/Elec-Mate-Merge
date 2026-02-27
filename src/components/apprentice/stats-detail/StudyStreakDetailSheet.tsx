@@ -114,7 +114,7 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
               onClick={() => onOpenChange(false)}
               className="absolute right-2 top-1.5 h-11 w-11 flex items-center justify-center rounded-full active:bg-white/10 touch-manipulation z-10"
             >
-              <ChevronDown className="h-5 w-5 text-white/60" />
+              <ChevronDown className="h-5 w-5 text-white" />
             </button>
           </SheetHeader>
 
@@ -151,7 +151,7 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="text-sm text-white/70 mt-1.5"
+                className="text-sm text-white mt-1.5"
               >
                 {studiedToday ? 'Studied today' : `Last studied: ${lastStudiedText}`}
               </motion.p>
@@ -175,7 +175,7 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
               transition={{ delay: 0.15 }}
             >
               <div className="flex items-center gap-2 mb-3">
-                <Star className="h-4 w-4 text-white/50" />
+                <Star className="h-4 w-4 text-white" />
                 <span className="text-sm font-semibold text-white">Milestones</span>
                 {nextMilestone && (
                   <span className="text-xs text-orange-400 ml-auto">
@@ -201,7 +201,7 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                     <span
                       className={cn(
                         'text-[10px] font-semibold',
-                        m.unlocked ? 'text-orange-400' : 'text-white/40'
+                        m.unlocked ? 'text-orange-400' : 'text-white'
                       )}
                     >
                       {m.label}
@@ -232,10 +232,10 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                   <div className="flex items-baseline justify-center">
                     <AnimatedCounter value={stat.value} className="text-xl font-bold text-white" />
                     {stat.suffix && (
-                      <span className="text-xs text-white/50 ml-0.5">{stat.suffix}</span>
+                      <span className="text-xs text-white ml-0.5">{stat.suffix}</span>
                     )}
                   </div>
-                  <p className="text-xs text-white/60 mt-0.5">{stat.label}</p>
+                  <p className="text-xs text-white mt-0.5">{stat.label}</p>
                 </div>
               ))}
             </motion.div>
@@ -268,7 +268,7 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                     />
                   ))}
                 </div>
-                <p className="text-sm text-white/80 mt-2">
+                <p className="text-sm text-white mt-2">
                   <span className="font-bold text-white">{daysStudiedLast7}</span> of 7 days active
                 </p>
               </div>
@@ -281,7 +281,7 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                     </span>
                   </div>
                   <p className="text-lg font-bold text-white">{bestStudyDay}</p>
-                  <p className="text-xs text-white/60 mt-1">Most active day</p>
+                  <p className="text-xs text-white mt-1">Most active day</p>
                 </div>
               )}
             </motion.div>
@@ -293,7 +293,7 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
               transition={{ delay: 0.4 }}
             >
               <div className="flex items-center gap-2 mb-3">
-                <CalendarDays className="h-4 w-4 text-white/50" />
+                <CalendarDays className="h-4 w-4 text-white" />
                 <span className="text-sm font-semibold text-white">Study Activity</span>
               </div>
               <div className="rounded-2xl bg-white/[0.05] border border-white/[0.08] p-4">
@@ -314,7 +314,7 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                   <div className="p-2 rounded-xl bg-orange-500/15 flex-shrink-0">
                     <Lightbulb className="h-4 w-4 text-orange-400" />
                   </div>
-                  <p className="text-sm text-white/90 leading-relaxed">{insightText}</p>
+                  <p className="text-sm text-white leading-relaxed">{insightText}</p>
                 </div>
               </motion.div>
             )}
@@ -331,7 +331,7 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
                   <Flame className="h-8 w-8 text-orange-400" />
                 </div>
                 <h3 className="text-base font-semibold text-white mb-1">Start your streak</h3>
-                <p className="text-sm text-white/50 max-w-[260px] mb-5">
+                <p className="text-sm text-white max-w-[260px] mb-5">
                   Study flashcards or take a quiz today to begin building your study streak
                 </p>
                 <button
@@ -353,7 +353,7 @@ export function StudyStreakDetailSheet({ open, onOpenChange }: StudyStreakDetail
               >
                 <div className="flex items-center gap-3 pt-1 mb-4">
                   <div className="flex-1 border-t border-white/[0.06]" />
-                  <span className="text-[11px] font-semibold text-white/40 uppercase tracking-wider">
+                  <span className="text-[11px] font-semibold text-white uppercase tracking-wider">
                     What to do next
                   </span>
                   <div className="flex-1 border-t border-white/[0.06]" />

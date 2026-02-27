@@ -307,7 +307,7 @@ const AccountTab = () => {
           <Icon className={`h-4 w-4 ${iconColor}`} />
         </div>
         <div className="flex-1 min-w-0 text-left">
-          <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">{label}</p>
+          <p className="text-[11px] font-medium text-white uppercase tracking-wide">{label}</p>
           <p className="text-[15px] text-white truncate">{value}</p>
         </div>
         {badge && (
@@ -379,7 +379,7 @@ const AccountTab = () => {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <User className="w-5 h-5 text-white/40" />
+                  <User className="w-5 h-5 text-white" />
                 )}
               </div>
               <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 rounded-full bg-blue-500 flex items-center justify-center pointer-events-none">
@@ -391,7 +391,7 @@ const AccountTab = () => {
               <span className="font-semibold text-[15px] text-white">Profile</span>
             </div>
           </div>
-          <ChevronRight className="h-5 w-5 text-white/30" />
+          <ChevronRight className="h-5 w-5 text-white" />
         </button>
 
         <div className="border-t border-white/[0.06]">
@@ -430,7 +430,7 @@ const AccountTab = () => {
               <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
               <span className="font-semibold text-[15px] text-white">Apprentice Details</span>
             </div>
-            <ChevronRight className="h-5 w-5 text-white/30" />
+            <ChevronRight className="h-5 w-5 text-white" />
           </button>
 
           <div className="border-t border-white/[0.06]">
@@ -497,7 +497,7 @@ const AccountTab = () => {
               <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
               <span className="font-semibold text-[15px] text-white">Professional Details</span>
             </div>
-            <ChevronRight className="h-5 w-5 text-white/30" />
+            <ChevronRight className="h-5 w-5 text-white" />
           </button>
 
           <div className="border-t border-white/[0.06]">
@@ -552,7 +552,7 @@ const AccountTab = () => {
               <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
               <span className="font-semibold text-[15px] text-white">Business Role</span>
             </div>
-            <ChevronRight className="h-5 w-5 text-white/30" />
+            <ChevronRight className="h-5 w-5 text-white" />
           </button>
 
           <div className="border-t border-white/[0.06]">
@@ -599,7 +599,7 @@ const AccountTab = () => {
 
           <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-6 space-y-6 pb-8">
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Display Name
               </Label>
               <Input
@@ -611,13 +611,13 @@ const AccountTab = () => {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Email
               </Label>
               <div className="h-[50px] flex items-center bg-white/[0.04] rounded-xl px-4 border border-white/[0.06]">
-                <p className="text-[17px] text-white/40">{user?.email || ''}</p>
+                <p className="text-[17px] text-white">{user?.email || ''}</p>
               </div>
-              <p className="text-[12px] text-white/40 px-1">Email cannot be changed here</p>
+              <p className="text-[12px] text-white px-1">Email cannot be changed here</p>
             </div>
           </div>
         </SheetContent>
@@ -646,7 +646,7 @@ const AccountTab = () => {
 
           <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-6 space-y-6 pb-8">
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Course Level
               </Label>
               <Select value={apprenticeLevel} onValueChange={setApprenticeLevel}>
@@ -664,7 +664,7 @@ const AccountTab = () => {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Current Year
               </Label>
               <Select value={apprenticeYear} onValueChange={setApprenticeYear}>
@@ -681,7 +681,7 @@ const AccountTab = () => {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Training Provider
               </Label>
               <Input
@@ -693,7 +693,7 @@ const AccountTab = () => {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 ECS Card Status
               </Label>
               <Select value={ecsCardStatus} onValueChange={setEcsCardStatus}>
@@ -709,7 +709,7 @@ const AccountTab = () => {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Supervisor
               </Label>
               <Input
@@ -746,7 +746,7 @@ const AccountTab = () => {
 
           <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-6 space-y-6 pb-8">
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Job Title
               </Label>
               <Select value={jobTitle} onValueChange={setJobTitle}>
@@ -764,7 +764,7 @@ const AccountTab = () => {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Specialisation
               </Label>
               <Select value={specialisation} onValueChange={setSpecialisation}>
@@ -782,7 +782,7 @@ const AccountTab = () => {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Years Experience
               </Label>
               <Input
@@ -797,7 +797,7 @@ const AccountTab = () => {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 ECS Card Type
               </Label>
               <Select value={ecsCardType} onValueChange={setEcsCardType}>
@@ -840,7 +840,7 @@ const AccountTab = () => {
 
           <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-6 space-y-6 pb-8">
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Position
               </Label>
               <Select value={businessPosition} onValueChange={setBusinessPosition}>
@@ -858,7 +858,7 @@ const AccountTab = () => {
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Company Size
               </Label>
               <Select value={companySize} onValueChange={setCompanySize}>

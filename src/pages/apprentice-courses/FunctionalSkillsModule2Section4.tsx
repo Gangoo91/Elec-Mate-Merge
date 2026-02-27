@@ -135,7 +135,7 @@ const FunctionalSkillsModule2Section4 = () => {
             to="/study-centre/apprentice/functional-skills/module2"
             className="p-2 -ml-2 touch-manipulation"
           >
-            <ArrowLeft className="w-5 h-5 text-white/60" />
+            <ArrowLeft className="w-5 h-5 text-white" />
           </Link>
           <div>
             <p className="text-[11px] font-semibold text-green-400 uppercase tracking-wider">
@@ -161,7 +161,7 @@ const FunctionalSkillsModule2Section4 = () => {
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
               Spelling, Grammar &amp; Punctuation
             </h2>
-            <p className="text-sm text-white/50 max-w-lg mx-auto">
+            <p className="text-sm text-white max-w-lg mx-auto">
               Get to grips with the spelling, grammar and punctuation rules that matter most in
               electrical documentation and professional communication.
             </p>
@@ -184,7 +184,7 @@ const FunctionalSkillsModule2Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Why Accuracy Matters</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               As an electrician, the quality of your written work reflects the quality of your
               electrical work. When a client receives a certificate full of spelling errors and poor
@@ -202,7 +202,7 @@ const FunctionalSkillsModule2Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Your written work is a permanent record. Electrical certificates are kept for years
                 — sometimes decades. A poorly written certificate does not just look bad today; it
                 looks bad every time someone reads it in the future. First impressions last, and
@@ -217,7 +217,7 @@ const FunctionalSkillsModule2Section4 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">
+                  <strong className="text-white">
                     Electrical certificates (EIC, EICR, Minor Works):
                   </strong>{' '}
                   These are legal documents. Errors can cause confusion, delay sign-off, or raise
@@ -227,7 +227,7 @@ const FunctionalSkillsModule2Section4 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Client emails and quotations:</strong> These are
+                  <strong className="text-white">Client emails and quotations:</strong> These are
                   often the first point of contact with potential customers. Professional writing
                   wins work; sloppy writing loses it.
                 </span>
@@ -235,7 +235,7 @@ const FunctionalSkillsModule2Section4 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Method statements and risk assessments:</strong>{' '}
+                  <strong className="text-white">Method statements and risk assessments:</strong>{' '}
                   Safety documents must be unambiguous. A grammar error could change the meaning of
                   a safety instruction.
                 </span>
@@ -243,7 +243,7 @@ const FunctionalSkillsModule2Section4 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Site records and day sheets:</strong> These may
+                  <strong className="text-white">Site records and day sheets:</strong> These may
                   be used as evidence in disputes, insurance claims, or legal proceedings. Clear,
                   accurate records protect you.
                 </span>
@@ -251,7 +251,7 @@ const FunctionalSkillsModule2Section4 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Technical reports and fault analyses:</strong>{' '}
+                  <strong className="text-white">Technical reports and fault analyses:</strong>{' '}
                   When documenting faults or defects, precision in language is essential to convey
                   exactly what was found and what action is required.
                 </span>
@@ -293,7 +293,7 @@ const FunctionalSkillsModule2Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Professional Standard</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Many competent person schemes (NICEIC, NAPIT, ELECSA) audit their members'
                 paperwork. Certificates and reports with frequent spelling and grammar errors can
                 result in improvement notices or, in serious cases, affect your registration status.
@@ -316,7 +316,7 @@ const FunctionalSkillsModule2Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Common Trade Vocabulary</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               The electrical trade has its own vocabulary, and many of these words are commonly
               misspelt — even by experienced electricians. Getting them right on certificates,
@@ -335,7 +335,7 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">accessory</strong> — not 'accessorie',
+                    <strong className="text-white">accessory</strong> — not 'accessorie',
                     'acessory' or 'accesory'. This is the single most misspelt word in electrical
                     certification.
                   </span>
@@ -343,7 +343,7 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">fluorescent</strong> — not 'florescent',
+                    <strong className="text-white">fluorescent</strong> — not 'florescent',
                     'flourescent' or 'fluoresent'. Remember: flu-or-escent. The 'uo' and 'sc' are
                     the tricky parts.
                   </span>
@@ -351,28 +351,28 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">separate</strong> — not 'seperate'. Memory
+                    <strong className="text-white">separate</strong> — not 'seperate'. Memory
                     aid: there is 'a rat' in separate.
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">maintenance</strong> — not 'maintainance' or
+                    <strong className="text-white">maintenance</strong> — not 'maintainance' or
                     'maintenence'. The ending is '-enance', not '-ainance'.
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">accommodation</strong> — not 'accomodation'.
+                    <strong className="text-white">accommodation</strong> — not 'accomodation'.
                     It has double 'c' and double 'm'.
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">immediately</strong> — not 'immediatly' or
+                    <strong className="text-white">immediately</strong> — not 'immediatly' or
                     'imediately'. Remember: immediate + ly.
                   </span>
                 </li>
@@ -385,7 +385,7 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">installation</strong> — not 'instillation'
+                    <strong className="text-white">installation</strong> — not 'instillation'
                     (that means putting drops of liquid in something). This is a surprisingly common
                     mix-up.
                   </span>
@@ -393,28 +393,28 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">occurrence</strong> — not 'occurance' or
+                    <strong className="text-white">occurrence</strong> — not 'occurance' or
                     'occurence'. Double 'c', double 'r', ending in '-ence'.
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">resistance</strong> — not 'resistence'. The
+                    <strong className="text-white">resistance</strong> — not 'resistence'. The
                     ending is '-ance', not '-ence'.
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">continuity</strong> — not 'continuety' or
+                    <strong className="text-white">continuity</strong> — not 'continuety' or
                     'contenuity'. Think: contin-u-ity.
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">luminaire</strong> — not 'luminare',
+                    <strong className="text-white">luminaire</strong> — not 'luminare',
                     'luminair' or 'light fitting'. Luminaire is the correct BS 7671 term for a
                     complete light fitting including the lamp, control gear and housing.
                   </span>
@@ -422,7 +422,7 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">earthing</strong> — not 'grounding'. UK
+                    <strong className="text-white">earthing</strong> — not 'grounding'. UK
                     English uses 'earthing'; 'grounding' is American English and should not appear
                     on UK certificates.
                   </span>
@@ -430,14 +430,14 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">satisfactory</strong> — not 'satisfactry' or
+                    <strong className="text-white">satisfactory</strong> — not 'satisfactry' or
                     'satisfacory'. A word you will write hundreds of times on test schedules.
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">deterioration</strong> — not 'deteriation' or
+                    <strong className="text-white">deterioration</strong> — not 'deteriation' or
                     'deterioration'. Common on EICR observations describing cable or equipment
                     condition.
                   </span>
@@ -456,38 +456,38 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">colour</strong> (not color),{' '}
-                    <strong className="text-white/90">centre</strong> (not center),{' '}
-                    <strong className="text-white/90">metre</strong> (not meter)
+                    <strong className="text-white">colour</strong> (not color),{' '}
+                    <strong className="text-white">centre</strong> (not center),{' '}
+                    <strong className="text-white">metre</strong> (not meter)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">organisation</strong> (not organization),{' '}
-                    <strong className="text-white/90">analyse</strong> (not analyze)
+                    <strong className="text-white">organisation</strong> (not organization),{' '}
+                    <strong className="text-white">analyse</strong> (not analyze)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">earthing</strong> (not grounding),{' '}
-                    <strong className="text-white/90">consumer unit</strong> (not breaker panel)
+                    <strong className="text-white">earthing</strong> (not grounding),{' '}
+                    <strong className="text-white">consumer unit</strong> (not breaker panel)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">aluminium</strong> (not aluminum),{' '}
-                    <strong className="text-white/90">programme</strong> (not program, except in
+                    <strong className="text-white">aluminium</strong> (not aluminum),{' '}
+                    <strong className="text-white">programme</strong> (not program, except in
                     computing)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">licence</strong> (noun, not license),{' '}
-                    <strong className="text-white/90">practise</strong> (verb, not practice)
+                    <strong className="text-white">licence</strong> (noun, not license),{' '}
+                    <strong className="text-white">practise</strong> (verb, not practice)
                   </span>
                 </li>
               </ul>
@@ -495,7 +495,7 @@ const FunctionalSkillsModule2Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Tip</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Set your phone, tablet and computer spell checker to British English (en-GB). This
                 will flag American spellings automatically. On iPhones, go to Settings &gt; General
                 &gt; Keyboard &gt; Text Replacement and add commonly used trade terms that your
@@ -527,7 +527,7 @@ const FunctionalSkillsModule2Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Homophones &amp; Confusables</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Homophones are words that sound the same but have different meanings and spellings.
               They are responsible for some of the most common errors in written English, and spell
@@ -542,14 +542,14 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">their</strong> = belonging to them — "Their
+                    <strong className="text-white">their</strong> = belonging to them — "Their
                     installation was compliant with BS 7671"
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">there</strong> = a place, or used to introduce
+                    <strong className="text-white">there</strong> = a place, or used to introduce
                     a statement — "The consumer unit is over there" / "There are three circuits on
                     this RCD"
                   </span>
@@ -557,14 +557,14 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">they're</strong> = they are — "They're
+                    <strong className="text-white">they're</strong> = they are — "They're
                     replacing the distribution board next week"
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Test:</strong> If you can replace the word
+                    <strong className="text-white">Test:</strong> If you can replace the word
                     with 'they are' and it still makes sense, use 'they're'. If it means 'belonging
                     to them', use 'their'. Otherwise, use 'there'.
                   </span>
@@ -578,21 +578,21 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">your</strong> = belonging to you — "Your EICR
+                    <strong className="text-white">your</strong> = belonging to you — "Your EICR
                     report is attached" / "Your consumer unit requires upgrading"
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">you're</strong> = you are — "You're booked in
+                    <strong className="text-white">you're</strong> = you are — "You're booked in
                     for Thursday morning" / "You're covered by our 12-month warranty"
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Test:</strong> If you can replace it with 'you
+                    <strong className="text-white">Test:</strong> If you can replace it with 'you
                     are' and it still makes sense, use 'you're'. If it means 'belonging to you', use
                     'your'.
                   </span>
@@ -606,21 +606,21 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">its</strong> = belonging to it — "The RCD and
+                    <strong className="text-white">its</strong> = belonging to it — "The RCD and
                     its test button" / "The cable has exceeded its current-carrying capacity"
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">it's</strong> = it is / it has — "It's
+                    <strong className="text-white">it's</strong> = it is / it has — "It's
                     important to test before energising" / "It's been confirmed as a C2 observation"
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Test:</strong> If you can replace it with 'it
+                    <strong className="text-white">Test:</strong> If you can replace it with 'it
                     is' or 'it has' and it still makes sense, use 'it's'. If it means 'belonging to
                     it', use 'its' (no apostrophe).
                   </span>
@@ -628,7 +628,7 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Common trap:</strong> Many people think 'its'
+                    <strong className="text-white">Common trap:</strong> Many people think 'its'
                     needs an apostrophe for possession because other possessive forms do (client's,
                     company's). But 'its' follows the same rule as 'his', 'hers', and 'theirs' —
                     none of which have apostrophes.
@@ -643,7 +643,7 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">affect</strong> (verb) = to have an impact on
+                    <strong className="text-white">affect</strong> (verb) = to have an impact on
                     — "The fault will affect the lighting circuit" / "Ambient temperature affects
                     cable ratings"
                   </span>
@@ -651,7 +651,7 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">effect</strong> (noun) = the result — "The
+                    <strong className="text-white">effect</strong> (noun) = the result — "The
                     effect of the fault was a total power loss" / "The derating factor had a
                     significant effect on cable selection"
                   </span>
@@ -659,7 +659,7 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Memory aid:</strong> Affect is an Action (both
+                    <strong className="text-white">Memory aid:</strong> Affect is an Action (both
                     start with A); Effect is the End result (both start with E)
                   </span>
                 </li>
@@ -672,28 +672,28 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">to</strong> = direction or part of a verb —
+                    <strong className="text-white">to</strong> = direction or part of a verb —
                     "Connect to the earth terminal" / "I need to test the circuit"
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">too</strong> = also, or excessively — "The
+                    <strong className="text-white">too</strong> = also, or excessively — "The
                     cable is too small for the load" / "The kitchen circuit needs testing too"
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">two</strong> = the number 2 — "Two circuits
+                    <strong className="text-white">two</strong> = the number 2 — "Two circuits
                     share the same protective conductor"
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Common error:</strong> Writing "earth to
+                    <strong className="text-white">Common error:</strong> Writing "earth to
                     small" instead of "earth too small" on an EICR. This is one of the most frequent
                     homophone errors in the trade.
                   </span>
@@ -707,14 +707,14 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">lose</strong> (verb, rhymes with 'choose') =
+                    <strong className="text-white">lose</strong> (verb, rhymes with 'choose') =
                     to misplace or be deprived of — "Do not lose the test results"
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">loose</strong> (adjective, rhymes with
+                    <strong className="text-white">loose</strong> (adjective, rhymes with
                     'goose') = not tight, not fixed — "Loose connection at socket outlet in bedroom"
                     / "Loose accessory faceplate"
                   </span>
@@ -722,7 +722,7 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Tip:</strong> 'Loose' has a double 'o' — think
+                    <strong className="text-white">Tip:</strong> 'Loose' has a double 'o' — think
                     of the two 'o's being loose and wobbly. 'Lose' has lost one of its 'o's.
                   </span>
                 </li>
@@ -731,7 +731,7 @@ const FunctionalSkillsModule2Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Spell checkers will NOT catch homophone errors. The words are all spelt correctly —
                 they are just used in the wrong context. The only way to catch them is to read your
                 work carefully, or better still, read it aloud. Your ear will often detect what your
@@ -754,7 +754,7 @@ const FunctionalSkillsModule2Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Technical Terminology</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Technical terminology is the precise language of the trade. Using the correct terms
               shows competence and prevents misunderstandings. In formal documentation, vague or
@@ -774,7 +774,7 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Protective conductor:</strong> Not just 'earth
+                    <strong className="text-white">Protective conductor:</strong> Not just 'earth
                     wire' — the correct term covers all conductors providing fault protection,
                     including circuit protective conductors, main earthing conductors, and bonding
                     conductors.
@@ -783,7 +783,7 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Circuit-protective conductor (cpc):</strong>{' '}
+                    <strong className="text-white">Circuit-protective conductor (cpc):</strong>{' '}
                     The conductor connecting exposed-conductive-parts to the main earthing terminal.
                     On certificates, write 'cpc' (lowercase) as this is the standard abbreviation in
                     BS 7671.
@@ -792,7 +792,7 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Extraneous-conductive-part:</strong> A
+                    <strong className="text-white">Extraneous-conductive-part:</strong> A
                     conductive part not forming part of the electrical installation but liable to
                     introduce a potential. Note the hyphens — this is a compound term and should be
                     hyphenated.
@@ -801,7 +801,7 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Basic protection:</strong> Previously called
+                    <strong className="text-white">Basic protection:</strong> Previously called
                     'protection against direct contact' — protection against contact with live parts
                     under normal conditions. The terminology was updated in the 18th Edition.
                   </span>
@@ -809,7 +809,7 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Fault protection:</strong> Previously called
+                    <strong className="text-white">Fault protection:</strong> Previously called
                     'protection against indirect contact' — protection against contact with
                     exposed-conductive-parts that have become live under fault conditions.
                   </span>
@@ -817,7 +817,7 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Consumer unit:</strong> Not 'fuse box', 'fuse
+                    <strong className="text-white">Consumer unit:</strong> Not 'fuse box', 'fuse
                     board', or 'breaker panel'. The correct term for domestic distribution equipment
                     is 'consumer unit'. For commercial installations, use 'distribution board'.
                   </span>
@@ -835,69 +835,69 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">RCD</strong> — Residual Current Device (not
+                    <strong className="text-white">RCD</strong> — Residual Current Device (not
                     'trip switch' or 'safety switch')
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">MCB</strong> — Miniature Circuit Breaker (not
+                    <strong className="text-white">MCB</strong> — Miniature Circuit Breaker (not
                     just 'breaker')
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">RCBO</strong> — Residual Current Breaker with
+                    <strong className="text-white">RCBO</strong> — Residual Current Breaker with
                     Overcurrent protection
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">EICR</strong> — Electrical Installation
+                    <strong className="text-white">EICR</strong> — Electrical Installation
                     Condition Report
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">EIC</strong> — Electrical Installation
+                    <strong className="text-white">EIC</strong> — Electrical Installation
                     Certificate
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">MEIWC</strong> — Minor Electrical Installation
+                    <strong className="text-white">MEIWC</strong> — Minor Electrical Installation
                     Works Certificate
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">SWA</strong> — Steel Wire Armoured (cable)
+                    <strong className="text-white">SWA</strong> — Steel Wire Armoured (cable)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Zs</strong> — Earth fault loop impedance
+                    <strong className="text-white">Zs</strong> — Earth fault loop impedance
                     (note: lowercase 's' is a subscript)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Ze</strong> — External earth fault loop
+                    <strong className="text-white">Ze</strong> — External earth fault loop
                     impedance
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">R1+R2</strong> — Combined resistance of line
+                    <strong className="text-white">R1+R2</strong> — Combined resistance of line
                     conductor and circuit protective conductor
                   </span>
                 </li>
@@ -943,7 +943,7 @@ const FunctionalSkillsModule2Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Using the correct technical terminology demonstrates competence. A report that
                 refers to the 'fuse box' instead of 'consumer unit', or the 'trip switch' instead of
                 'RCD', suggests the author may not be fully conversant with current standards and
@@ -980,7 +980,7 @@ const FunctionalSkillsModule2Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Sentence Structure</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Clear writing starts with clear sentences. In technical writing, short, direct
               sentences are always preferable to long, complex ones. Your aim is to be understood,
@@ -1049,9 +1049,9 @@ const FunctionalSkillsModule2Section4 = () => {
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <ul className="space-y-3">
                 <li className="flex items-start gap-2">
-                  <span className="text-white/40 mt-0.5">&bull;</span>
+                  <span className="text-white mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/60">Passive:</strong> "The supply should be
+                    <strong className="text-white">Passive:</strong> "The supply should be
                     isolated before work commences"
                   </span>
                 </li>
@@ -1063,9 +1063,9 @@ const FunctionalSkillsModule2Section4 = () => {
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-white/40 mt-0.5">&bull;</span>
+                  <span className="text-white mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/60">Passive:</strong> "The test was carried out
+                    <strong className="text-white">Passive:</strong> "The test was carried out
                     and it was found that the readings were satisfactory"
                   </span>
                 </li>
@@ -1141,7 +1141,7 @@ const FunctionalSkillsModule2Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 If you read your sentence aloud and need to take a breath in the middle, it is
                 probably too long. Break it into two or more shorter sentences. Technical writing is
                 about clarity, not literary style.
@@ -1163,7 +1163,7 @@ const FunctionalSkillsModule2Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Punctuation Essentials</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Punctuation is not about being pedantic — it changes the meaning of sentences. In
               technical documents, incorrect punctuation can cause genuine confusion and even create
@@ -1205,7 +1205,7 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Lists:</strong> "Check the continuity,
+                    <strong className="text-white">Lists:</strong> "Check the continuity,
                     insulation resistance, polarity and earth fault loop impedance" — in UK English,
                     the comma before 'and' (Oxford comma) is optional, but be consistent throughout
                     the document.
@@ -1214,7 +1214,7 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Joining clauses:</strong> "The test was
+                    <strong className="text-white">Joining clauses:</strong> "The test was
                     completed, and the results were satisfactory" — use a comma before 'and', 'but',
                     or 'so' when joining two independent clauses (each of which could stand alone as
                     a sentence).
@@ -1223,7 +1223,7 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">After introductory words:</strong> "However,
+                    <strong className="text-white">After introductory words:</strong> "However,
                     the insulation resistance was below the minimum acceptable value" / "Following
                     the test, the circuit was re-energised"
                   </span>
@@ -1231,7 +1231,7 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Separating additional information:</strong>{' '}
+                    <strong className="text-white">Separating additional information:</strong>{' '}
                     "The consumer unit, which was installed in 2003, requires upgrading" — commas
                     around the extra information that could be removed without changing the core
                     meaning.
@@ -1250,21 +1250,21 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Possession (singular):</strong> "The client's
+                    <strong className="text-white">Possession (singular):</strong> "The client's
                     property" / "The board's main switch"
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Possession (plural):</strong> "The clients'
+                    <strong className="text-white">Possession (plural):</strong> "The clients'
                     properties" (more than one client) / "The circuits' protective devices"
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Contraction:</strong> "It's important to test"
+                    <strong className="text-white">Contraction:</strong> "It's important to test"
                     (it is) / "Don't work live" (do not)
                   </span>
                 </li>
@@ -1291,7 +1291,7 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Colon (:)</strong> — introduces a list or an
+                    <strong className="text-white">Colon (:)</strong> — introduces a list or an
                     explanation: "The following tests were carried out: continuity, insulation
                     resistance and polarity"
                   </span>
@@ -1299,7 +1299,7 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Colon (:)</strong> — introduces an
+                    <strong className="text-white">Colon (:)</strong> — introduces an
                     explanation: "The circuit was de-energised: the RCD had tripped due to an earth
                     fault"
                   </span>
@@ -1307,7 +1307,7 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Semicolon (;)</strong> — connects two related
+                    <strong className="text-white">Semicolon (;)</strong> — connects two related
                     but independent sentences: "The lighting circuit passed all tests; the ring
                     final circuit required further investigation"
                   </span>
@@ -1321,21 +1321,21 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Hyphen (-):</strong> Joins compound words —
+                    <strong className="text-white">Hyphen (-):</strong> Joins compound words —
                     "metal-clad", "single-phase", "like-for-like", "circuit-protective conductor"
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">En dash (&ndash;):</strong> Shows a range —
+                    <strong className="text-white">En dash (&ndash;):</strong> Shows a range —
                     "230&ndash;240V", "16&ndash;32A", "pages 41&ndash;45"
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Em dash (&mdash;):</strong> Used in place of
+                    <strong className="text-white">Em dash (&mdash;):</strong> Used in place of
                     commas or brackets for emphasis — "The consumer unit &mdash; which was over 30
                     years old &mdash; was replaced"
                   </span>
@@ -1345,7 +1345,7 @@ const FunctionalSkillsModule2Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 The most common punctuation error in the electrical trade is using apostrophes to
                 form plurals — "RCD's", "MCB's", "circuit's". Remember: apostrophes show possession
                 or contraction, never plurals. If in doubt, ask yourself: does it own something, or
@@ -1382,7 +1382,7 @@ const FunctionalSkillsModule2Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Proofreading Techniques</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Even experienced writers make errors. Proofreading is the final safety net before a
               document is submitted. The challenge is that your brain tends to read what it expects
@@ -1486,14 +1486,14 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Spell check helps with:</strong> Obvious
+                    <strong className="text-white">Spell check helps with:</strong> Obvious
                     typos, repeated words, basic spelling errors, and flagging potential problems
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Spell check misses:</strong> Wrong homophones
+                    <strong className="text-white">Spell check misses:</strong> Wrong homophones
                     (their/there), incorrect technical terms, context errors (e.g. 'earth to small'
                     instead of 'earth too small'), and proper nouns
                   </span>
@@ -1501,7 +1501,7 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Set to UK English:</strong> Ensure your spell
+                    <strong className="text-white">Set to UK English:</strong> Ensure your spell
                     checker is set to British English (en-GB) to catch Americanisms (colour not
                     color, centre not center, earthing not grounding)
                   </span>
@@ -1559,7 +1559,7 @@ const FunctionalSkillsModule2Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Proofreading is not optional — it is part of the job. Just as you would never hand
                 over an installation without testing it, you should never submit a document without
                 proofreading it. Budget time for proofreading as part of your workflow.
@@ -1581,7 +1581,7 @@ const FunctionalSkillsModule2Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Quick Reference Guide</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               This section brings together everything from this module into a quick-reference guide
               that you can return to whenever you need a reminder. Bookmark this page and use it as
@@ -1599,12 +1599,12 @@ const FunctionalSkillsModule2Section4 = () => {
 
             <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
               <h4 className="text-sm font-semibold text-red-300 mb-2">Poor Example</h4>
-              <p className="text-sm text-white/70 italic">
+              <p className="text-sm text-white italic">
                 "there consumer unit has no rcd protection its old and the earths are to small, the
                 accessorie's in the kitchen are loose to. needs replacing urgently theres danger of
                 shock"
               </p>
-              <p className="text-xs text-white/50 mt-3">
+              <p className="text-xs text-white mt-3">
                 <strong className="text-red-300">Errors found:</strong> Wrong homophone
                 (there/their), wrong homophone (its/it's), wrong homophone (to/too), incorrect
                 apostrophe (accessorie's), wrong homophone (to/too), missing capitals, missing full
@@ -1615,7 +1615,7 @@ const FunctionalSkillsModule2Section4 = () => {
 
             <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
               <h4 className="text-sm font-semibold text-green-300 mb-2">Professional Example</h4>
-              <p className="text-sm text-white/70 italic">
+              <p className="text-sm text-white italic">
                 "The consumer unit (located in the hallway cupboard) does not incorporate RCD
                 protection for circuits serving socket outlets. The installation predates the
                 requirement for RCD protection under BS 7671. Protective conductors on Circuits 1, 3
@@ -1624,7 +1624,7 @@ const FunctionalSkillsModule2Section4 = () => {
                 Potentially dangerous: recommend consumer unit upgrade with full RCBO board and
                 re-termination of affected circuits.)"
               </p>
-              <p className="text-xs text-white/50 mt-3">
+              <p className="text-xs text-white mt-3">
                 <strong className="text-green-300">Why this works:</strong> Correct spelling
                 throughout, proper use of technical terminology, complete sentences with subjects
                 and verbs, specific locations given, correct punctuation, regulation reference
@@ -1638,61 +1638,61 @@ const FunctionalSkillsModule2Section4 = () => {
                 <div className="flex items-start gap-2">
                   <span className="text-green-400 font-mono text-xs mt-0.5">1.</span>
                   <span>
-                    <strong className="text-white/90">accessory</strong> (not accessorie)
+                    <strong className="text-white">accessory</strong> (not accessorie)
                   </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-green-400 font-mono text-xs mt-0.5">2.</span>
                   <span>
-                    <strong className="text-white/90">fluorescent</strong> (not florescent)
+                    <strong className="text-white">fluorescent</strong> (not florescent)
                   </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-green-400 font-mono text-xs mt-0.5">3.</span>
                   <span>
-                    <strong className="text-white/90">separate</strong> (not seperate)
+                    <strong className="text-white">separate</strong> (not seperate)
                   </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-green-400 font-mono text-xs mt-0.5">4.</span>
                   <span>
-                    <strong className="text-white/90">maintenance</strong> (not maintainance)
+                    <strong className="text-white">maintenance</strong> (not maintainance)
                   </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-green-400 font-mono text-xs mt-0.5">5.</span>
                   <span>
-                    <strong className="text-white/90">installation</strong> (not instillation)
+                    <strong className="text-white">installation</strong> (not instillation)
                   </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-green-400 font-mono text-xs mt-0.5">6.</span>
                   <span>
-                    <strong className="text-white/90">occurrence</strong> (not occurance)
+                    <strong className="text-white">occurrence</strong> (not occurance)
                   </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-green-400 font-mono text-xs mt-0.5">7.</span>
                   <span>
-                    <strong className="text-white/90">continuity</strong> (not continuety)
+                    <strong className="text-white">continuity</strong> (not continuety)
                   </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-green-400 font-mono text-xs mt-0.5">8.</span>
                   <span>
-                    <strong className="text-white/90">luminaire</strong> (not luminare)
+                    <strong className="text-white">luminaire</strong> (not luminare)
                   </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-green-400 font-mono text-xs mt-0.5">9.</span>
                   <span>
-                    <strong className="text-white/90">satisfactory</strong> (not satisfactry)
+                    <strong className="text-white">satisfactory</strong> (not satisfactry)
                   </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-green-400 font-mono text-xs mt-0.5">10.</span>
                   <span>
-                    <strong className="text-white/90">deterioration</strong> (not deteriation)
+                    <strong className="text-white">deterioration</strong> (not deteriation)
                   </span>
                 </div>
               </div>
@@ -1704,45 +1704,45 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">their</strong> (belonging to them) /{' '}
-                    <strong className="text-white/90">there</strong> (a place) /{' '}
-                    <strong className="text-white/90">they're</strong> (they are)
+                    <strong className="text-white">their</strong> (belonging to them) /{' '}
+                    <strong className="text-white">there</strong> (a place) /{' '}
+                    <strong className="text-white">they're</strong> (they are)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">your</strong> (belonging to you) /{' '}
-                    <strong className="text-white/90">you're</strong> (you are)
+                    <strong className="text-white">your</strong> (belonging to you) /{' '}
+                    <strong className="text-white">you're</strong> (you are)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">its</strong> (belonging to it) /{' '}
-                    <strong className="text-white/90">it's</strong> (it is / it has)
+                    <strong className="text-white">its</strong> (belonging to it) /{' '}
+                    <strong className="text-white">it's</strong> (it is / it has)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">affect</strong> (verb — to impact) /{' '}
-                    <strong className="text-white/90">effect</strong> (noun — the result)
+                    <strong className="text-white">affect</strong> (verb — to impact) /{' '}
+                    <strong className="text-white">effect</strong> (noun — the result)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">to</strong> (direction) /{' '}
-                    <strong className="text-white/90">too</strong> (also/excessive) /{' '}
-                    <strong className="text-white/90">two</strong> (the number)
+                    <strong className="text-white">to</strong> (direction) /{' '}
+                    <strong className="text-white">too</strong> (also/excessive) /{' '}
+                    <strong className="text-white">two</strong> (the number)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">lose</strong> (to misplace) /{' '}
-                    <strong className="text-white/90">loose</strong> (not tight)
+                    <strong className="text-white">lose</strong> (to misplace) /{' '}
+                    <strong className="text-white">loose</strong> (not tight)
                   </span>
                 </li>
               </ul>
@@ -1754,28 +1754,28 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Possession (singular):</strong> Add 's — "the
+                    <strong className="text-white">Possession (singular):</strong> Add 's — "the
                     client's report", "the board's main switch"
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Possession (plural ending in s):</strong> Add
+                    <strong className="text-white">Possession (plural ending in s):</strong> Add
                     ' only — "the clients' reports", "the circuits' ratings"
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Possession (plural not ending in s):</strong>{' '}
+                    <strong className="text-white">Possession (plural not ending in s):</strong>{' '}
                     Add 's — "the children's rooms", "the men's toilets"
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Contractions:</strong> Replace the missing
+                    <strong className="text-white">Contractions:</strong> Replace the missing
                     letter(s) — "it's" (it is), "don't" (do not), "they're" (they are)
                   </span>
                 </li>
@@ -1795,14 +1795,14 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Subject-verb agreement:</strong> "Each of the
+                    <strong className="text-white">Subject-verb agreement:</strong> "Each of the
                     circuits was tested" (not 'were' — 'each' is singular)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Tense consistency:</strong> Do not mix past
+                    <strong className="text-white">Tense consistency:</strong> Do not mix past
                     and present tense in the same report — "The circuit was tested and the results
                     were satisfactory" (not 'the results show')
                   </span>
@@ -1810,14 +1810,14 @@ const FunctionalSkillsModule2Section4 = () => {
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Double negatives:</strong> "There was no earth
+                    <strong className="text-white">Double negatives:</strong> "There was no earth
                     connection" (not "There wasn't no earth connection")
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
-                    <strong className="text-white/90">Sentence fragments:</strong> Every sentence
+                    <strong className="text-white">Sentence fragments:</strong> Every sentence
                     needs a subject and a verb — "Tested and satisfactory" is not a sentence
                   </span>
                 </li>
@@ -1866,7 +1866,7 @@ const FunctionalSkillsModule2Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Final Thought</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Good spelling, grammar and punctuation are not about being academic — they are about
                 being professional. Your written work represents you, your company and your trade.
                 Taking the time to get it right demonstrates the same attention to detail that
@@ -1884,7 +1884,7 @@ const FunctionalSkillsModule2Section4 = () => {
         <div className="flex items-center justify-between pt-6 border-t border-white/10">
           <Link
             to="/study-centre/apprentice/functional-skills/module2/section3"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
           >
             <ArrowLeft className="w-4 h-4" />
             Communication Skills

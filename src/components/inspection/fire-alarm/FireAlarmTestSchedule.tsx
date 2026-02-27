@@ -229,7 +229,7 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({ formData,
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.panel && 'rotate-180'
                   )}
                 />
@@ -324,7 +324,7 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({ formData,
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.power && 'rotate-180'
                   )}
                 />
@@ -408,7 +408,7 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({ formData,
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.fault && 'rotate-180'
                   )}
                 />
@@ -487,7 +487,7 @@ const FireAlarmTestSchedule: React.FC<FireAlarmTestScheduleProps> = ({ formData,
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.soundLevels && 'rotate-180'
                   )}
                 />

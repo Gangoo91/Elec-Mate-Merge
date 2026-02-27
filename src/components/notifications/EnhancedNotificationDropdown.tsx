@@ -232,7 +232,7 @@ const EnhancedNotificationDropdown = () => {
                 animate={{ scale: 1 }}
                 className="relative z-10"
               >
-                <Bell className="h-5 w-5 text-white/70 group-hover:text-white transition-colors" />
+                <Bell className="h-5 w-5 text-white group-hover:text-white transition-colors" />
               </motion.div>
             )}
           </AnimatePresence>

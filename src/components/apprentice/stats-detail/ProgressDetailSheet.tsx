@@ -59,8 +59,8 @@ const trendIcons: Record<QuizTrend, LucideIcon> = {
 const trendColours: Record<QuizTrend, string> = {
   improving: 'text-green-400',
   declining: 'text-red-400',
-  stable: 'text-white/50',
-  'no-data': 'text-white/30',
+  stable: 'text-white',
+  'no-data': 'text-white',
 };
 
 const trendLabels: Record<QuizTrend, string> = {
@@ -160,7 +160,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
               onClick={() => onOpenChange(false)}
               className="absolute right-2 top-1.5 h-11 w-11 flex items-center justify-center rounded-full active:bg-white/10 touch-manipulation z-10"
             >
-              <ChevronDown className="h-5 w-5 text-white/60" />
+              <ChevronDown className="h-5 w-5 text-white" />
             </button>
           </SheetHeader>
 
@@ -192,7 +192,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                   <span className="text-xs text-green-400/70">overall</span>
                 </div>
                 <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/[0.06] border border-white/[0.08]">
-                  <span className="text-xs text-white/50">
+                  <span className="text-xs text-white">
                     {xp.xpToday}/{xp.dailyGoal} XP today
                   </span>
                 </div>
@@ -201,7 +201,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="text-xs text-white/50 mt-2"
+                className="text-xs text-white mt-2"
               >
                 Quizzes · Flashcards · OJT · Portfolio · Streak · EPA
               </motion.p>
@@ -225,7 +225,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
               transition={{ delay: 0.15 }}
             >
               <div className="flex items-center gap-2 mb-3">
-                <Target className="h-4 w-4 text-white/50" />
+                <Target className="h-4 w-4 text-white" />
                 <span className="text-sm font-semibold text-white">Quiz Performance</span>
                 <div className="flex items-center gap-1.5 ml-auto">
                   {quizTrend !== 'no-data' && (
@@ -237,7 +237,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                     </>
                   )}
                   {quizStats.totalQuizzes > 0 && quizTrend === 'no-data' && (
-                    <span className="text-xs text-white/40">
+                    <span className="text-xs text-white">
                       {quizStats.totalQuizzes} quiz{quizStats.totalQuizzes !== 1 ? 'zes' : ''}
                     </span>
                   )}
@@ -250,7 +250,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                       <div className="flex items-center gap-2">
                         <button
                           onClick={goToStudyCentre}
-                          className="text-sm text-white/80 font-medium touch-manipulation active:text-green-400 transition-colors"
+                          className="text-sm text-white font-medium touch-manipulation active:text-green-400 transition-colors"
                         >
                           {cat.subject}
                         </button>
@@ -298,9 +298,9 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
               transition={{ delay: 0.3 }}
             >
               <div className="flex items-center gap-2 mb-3">
-                <BookOpen className="h-4 w-4 text-white/50" />
+                <BookOpen className="h-4 w-4 text-white" />
                 <span className="text-sm font-semibold text-white">Flashcard Mastery</span>
-                <span className="text-xs text-white/50 ml-auto">
+                <span className="text-xs text-white ml-auto">
                   {totalMasteredCards} / {totalFlashcards} mastered
                 </span>
               </div>
@@ -308,7 +308,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                 {flashcardInsights.map((set, setIndex) => (
                   <div key={set.id} className="flex items-center gap-3">
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm text-white/80">{set.title}</p>
+                      <p className="text-sm text-white">{set.title}</p>
                     </div>
                     <div className="flex items-center gap-2.5 flex-shrink-0">
                       <div className="w-24 h-2.5 rounded-full bg-white/[0.08] overflow-hidden">
@@ -346,7 +346,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
               transition={{ delay: 0.4 }}
             >
               <div className="flex items-center gap-2 mb-3">
-                <Clock className="h-4 w-4 text-white/50" />
+                <Clock className="h-4 w-4 text-white" />
                 <span className="text-sm font-semibold text-white">On-the-Job Hours</span>
               </div>
               <div className="relative rounded-2xl overflow-hidden bg-white/[0.06] border border-white/[0.08] p-4">
@@ -357,7 +357,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                       value={ojtHours.logged}
                       className="text-2xl font-bold text-white"
                     />
-                    <span className="text-sm text-white/50">
+                    <span className="text-sm text-white">
                       / {ojtHours.target.toLocaleString('en-GB')} hrs
                     </span>
                   </div>
@@ -389,7 +389,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                   <div className="p-2 rounded-xl bg-green-500/15 flex-shrink-0">
                     <Lightbulb className="h-4 w-4 text-green-400" />
                   </div>
-                  <p className="text-sm text-white/90 leading-relaxed">{insightText}</p>
+                  <p className="text-sm text-white leading-relaxed">{insightText}</p>
                 </div>
               </motion.div>
             )}
@@ -406,7 +406,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
                   <Target className="h-8 w-8 text-green-400" />
                 </div>
                 <h3 className="text-base font-semibold text-white mb-1">Start learning</h3>
-                <p className="text-sm text-white/50 max-w-[260px] mb-5">
+                <p className="text-sm text-white max-w-[260px] mb-5">
                   Take a quiz, review flashcards, or log your on-the-job hours to track your
                   progress
                 </p>
@@ -429,7 +429,7 @@ export function ProgressDetailSheet({ open, onOpenChange }: ProgressDetailSheetP
               >
                 <div className="flex items-center gap-3 pt-1 mb-4">
                   <div className="flex-1 border-t border-white/[0.06]" />
-                  <span className="text-[11px] font-semibold text-white/40 uppercase tracking-wider">
+                  <span className="text-[11px] font-semibold text-white uppercase tracking-wider">
                     What to do next
                   </span>
                   <div className="flex-1 border-t border-white/[0.06]" />

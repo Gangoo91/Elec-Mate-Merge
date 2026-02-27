@@ -190,12 +190,12 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
         {open ? (
           <ChevronUp className="h-4 w-4 text-amber-400 flex-shrink-0" />
         ) : (
-          <ChevronDown className="h-4 w-4 text-white/40 flex-shrink-0" />
+          <ChevronDown className="h-4 w-4 text-white flex-shrink-0" />
         )}
       </button>
       {open && (
         <div className="px-4 pb-4 pt-0">
-          <p className="text-white/70 text-sm leading-relaxed">{answer}</p>
+          <p className="text-white text-sm leading-relaxed">{answer}</p>
         </div>
       )}
     </div>
@@ -220,7 +220,7 @@ export default function WorkingAtHeightModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-3">
@@ -246,7 +246,7 @@ export default function WorkingAtHeightModule3Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Personal Fall Protection Systems
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
             Full body harnesses, lanyards, shock absorbers, self-retracting lifelines, anchor
             points, clearance calculations, and the critical differences between fall arrest,
             restraint, and work positioning.
@@ -259,7 +259,7 @@ export default function WorkingAtHeightModule3Section2() {
             <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
               When To Use
             </p>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Personal fall protection is only used when collective protection is not reasonably
               practicable.
             </p>
@@ -268,7 +268,7 @@ export default function WorkingAtHeightModule3Section2() {
             <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
               Key Standard
             </p>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               EN 361 (harnesses), EN 354 (lanyards), EN 355 (energy absorbers), EN 360 (SRLs), EN
               795 (anchor devices).
             </p>
@@ -277,7 +277,7 @@ export default function WorkingAtHeightModule3Section2() {
             <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
               Inspection Cycle
             </p>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Pre-use visual check every time. Thorough examination by a competent person every 6
               months.
             </p>
@@ -286,7 +286,7 @@ export default function WorkingAtHeightModule3Section2() {
             <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
               Maximum Arrest Force
             </p>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Energy absorbers must limit peak force on the body to no more than 6 kN (EN 355).
             </p>
           </div>
@@ -309,7 +309,7 @@ export default function WorkingAtHeightModule3Section2() {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                <span className="text-white/70 text-sm leading-relaxed">{outcome}</span>
+                <span className="text-white text-sm leading-relaxed">{outcome}</span>
               </div>
             ))}
           </div>
@@ -327,11 +327,11 @@ export default function WorkingAtHeightModule3Section2() {
               <h2 className="text-lg sm:text-xl font-bold text-white">
                 When Personal Fall Protection Is Needed
               </h2>
-              <p className="text-white/50 text-sm">The hierarchy of control in practice</p>
+              <p className="text-white text-sm">The hierarchy of control in practice</p>
             </div>
           </div>
           <div className="border-l-2 border-amber-500/30 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               Personal fall protection systems are the last line of defence. They should only be
               selected after a thorough assessment has confirmed that:
             </p>
@@ -343,7 +343,7 @@ export default function WorkingAtHeightModule3Section2() {
               ].map((point, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                  <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                  <span className="text-white text-sm leading-relaxed">{point}</span>
                 </div>
               ))}
             </div>
@@ -353,7 +353,7 @@ export default function WorkingAtHeightModule3Section2() {
                 <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
                 <span className="text-amber-400 text-sm font-semibold">Critical Requirement</span>
               </div>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Every personal fall protection system <strong className="text-white">must</strong>{' '}
                 have an accompanying rescue plan. If someone falls and is suspended in their
                 harness, they must be rescued within minutes to avoid suspension trauma (harness
@@ -362,7 +362,7 @@ export default function WorkingAtHeightModule3Section2() {
               </p>
             </div>
 
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               Common electrical scenarios requiring personal fall protection include: working on
               cable trays above suspended ceilings where guard rails cannot be installed, climbing
               steel structures to install containment, accessing communications masts, and working
@@ -384,11 +384,11 @@ export default function WorkingAtHeightModule3Section2() {
               <h2 className="text-lg sm:text-xl font-bold text-white">
                 Full Body Harness — EN 361
               </h2>
-              <p className="text-white/50 text-sm">Components, fit, and adjustment</p>
+              <p className="text-white text-sm">Components, fit, and adjustment</p>
             </div>
           </div>
           <div className="border-l-2 border-blue-500/30 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               The full body harness is the foundation of any personal fall arrest system. Designed
               to EN 361, it distributes fall arrest forces across the strongest parts of the body —
               the shoulders, chest, and upper thighs — reducing the risk of injury during a fall
@@ -405,25 +405,25 @@ export default function WorkingAtHeightModule3Section2() {
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 rounded-full bg-amber-500 flex-shrink-0" />
                   <div className="flex-1 h-px bg-white/20" />
-                  <span className="text-xs text-white/70 flex-shrink-0">Shoulder Straps</span>
+                  <span className="text-xs text-white flex-shrink-0">Shoulder Straps</span>
                 </div>
                 {/* Rear D-ring */}
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 rounded-full bg-blue-400 flex-shrink-0" />
                   <div className="flex-1 h-px bg-white/20" />
-                  <span className="text-xs text-white/70 flex-shrink-0">Rear (Dorsal) D-Ring</span>
+                  <span className="text-xs text-white flex-shrink-0">Rear (Dorsal) D-Ring</span>
                 </div>
                 {/* Chest strap */}
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 rounded-full bg-green-400 flex-shrink-0" />
                   <div className="flex-1 h-px bg-white/20" />
-                  <span className="text-xs text-white/70 flex-shrink-0">Chest Strap & Buckle</span>
+                  <span className="text-xs text-white flex-shrink-0">Chest Strap & Buckle</span>
                 </div>
                 {/* Front D-ring */}
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 rounded-full bg-purple-400 flex-shrink-0" />
                   <div className="flex-1 h-px bg-white/20" />
-                  <span className="text-xs text-white/70 flex-shrink-0">
+                  <span className="text-xs text-white flex-shrink-0">
                     Front (Sternal) D-Ring
                   </span>
                 </div>
@@ -431,7 +431,7 @@ export default function WorkingAtHeightModule3Section2() {
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 rounded-full bg-cyan-400 flex-shrink-0" />
                   <div className="flex-1 h-px bg-white/20" />
-                  <span className="text-xs text-white/70 flex-shrink-0">
+                  <span className="text-xs text-white flex-shrink-0">
                     Waist/Positioning Belt
                   </span>
                 </div>
@@ -439,13 +439,13 @@ export default function WorkingAtHeightModule3Section2() {
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 rounded-full bg-rose-400 flex-shrink-0" />
                   <div className="flex-1 h-px bg-white/20" />
-                  <span className="text-xs text-white/70 flex-shrink-0">Adjustment Buckles</span>
+                  <span className="text-xs text-white flex-shrink-0">Adjustment Buckles</span>
                 </div>
                 {/* Leg loops */}
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 rounded-full bg-yellow-400 flex-shrink-0" />
                   <div className="flex-1 h-px bg-white/20" />
-                  <span className="text-xs text-white/70 flex-shrink-0">
+                  <span className="text-xs text-white flex-shrink-0">
                     Leg Loops / Thigh Straps
                   </span>
                 </div>
@@ -453,10 +453,10 @@ export default function WorkingAtHeightModule3Section2() {
                 <div className="flex items-center gap-3">
                   <div className="w-3 h-3 rounded-full bg-orange-400 flex-shrink-0" />
                   <div className="flex-1 h-px bg-white/20" />
-                  <span className="text-xs text-white/70 flex-shrink-0">Sub-Pelvic Strap</span>
+                  <span className="text-xs text-white flex-shrink-0">Sub-Pelvic Strap</span>
                 </div>
               </div>
-              <p className="text-center text-white/40 text-xs mt-4">
+              <p className="text-center text-white text-xs mt-4">
                 Labelled component layout — each coloured dot represents a key element of the EN 361
                 full body harness.
               </p>
@@ -496,7 +496,7 @@ export default function WorkingAtHeightModule3Section2() {
               ].map((item, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
-                  <span className="text-white/70 text-sm leading-relaxed">
+                  <span className="text-white text-sm leading-relaxed">
                     <strong className="text-white">{item.name}:</strong> {item.desc}
                   </span>
                 </div>
@@ -517,7 +517,7 @@ export default function WorkingAtHeightModule3Section2() {
                 ].map((point, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
-                    <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                    <span className="text-white text-sm leading-relaxed">{point}</span>
                   </div>
                 ))}
               </div>
@@ -540,13 +540,13 @@ export default function WorkingAtHeightModule3Section2() {
               <h2 className="text-lg sm:text-xl font-bold text-white">
                 Lanyards & Shock Absorbers
               </h2>
-              <p className="text-white/50 text-sm">
+              <p className="text-white text-sm">
                 EN 354 (restraint) and EN 355 (fall arrest with energy absorber)
               </p>
             </div>
           </div>
           <div className="border-l-2 border-green-500/30 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               A lanyard is the connecting element between the harness and the anchor point.
               Different lanyards serve different purposes, and using the wrong type in the wrong
               situation can be fatal.
@@ -567,7 +567,7 @@ export default function WorkingAtHeightModule3Section2() {
                   ].map((point, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
-                      <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                      <span className="text-white text-sm leading-relaxed">{point}</span>
                     </div>
                   ))}
                 </div>
@@ -586,7 +586,7 @@ export default function WorkingAtHeightModule3Section2() {
                   ].map((point, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
-                      <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                      <span className="text-white text-sm leading-relaxed">{point}</span>
                     </div>
                   ))}
                 </div>
@@ -596,7 +596,7 @@ export default function WorkingAtHeightModule3Section2() {
             <h3 className="text-white font-semibold text-base mt-6 mb-3">
               How Shock Absorbers Work
             </h3>
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               Energy absorbers typically use <strong className="text-white">tear webbing</strong> —
               layers of webbing stitched together in a specific pattern. During a fall, the
               stitching tears progressively, absorbing kinetic energy and converting it to heat.
@@ -612,7 +612,7 @@ export default function WorkingAtHeightModule3Section2() {
               ].map((point, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                  <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                  <span className="text-white text-sm leading-relaxed">{point}</span>
                 </div>
               ))}
             </div>
@@ -620,7 +620,7 @@ export default function WorkingAtHeightModule3Section2() {
             <h3 className="text-white font-semibold text-base mt-6 mb-3">
               Twin-Tail (Y-Type) Lanyards
             </h3>
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               Twin-tail lanyards have two legs, each with its own connector. This allows the user to
               remain connected at all times — one leg is always attached while the other is moved to
               a new anchor point. This provides 100% continuous tie-off, which is critical when
@@ -641,13 +641,13 @@ export default function WorkingAtHeightModule3Section2() {
               <h2 className="text-lg sm:text-xl font-bold text-white">
                 Self-Retracting Lifelines (SRLs)
               </h2>
-              <p className="text-white/50 text-sm">
+              <p className="text-white text-sm">
                 EN 360 — automatic braking fall arrest devices
               </p>
             </div>
           </div>
           <div className="border-l-2 border-purple-500/30 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               A self-retracting lifeline (SRL), also known as an inertia reel, contains a drum of
               cable or webbing that extends and retracts automatically as the user moves — similar
               to a car seat belt. Under normal movement, the line pays out freely. If the user falls
@@ -671,7 +671,7 @@ export default function WorkingAtHeightModule3Section2() {
                 ].map((point, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
-                    <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                    <span className="text-white text-sm leading-relaxed">{point}</span>
                   </div>
                 ))}
               </div>
@@ -684,7 +684,7 @@ export default function WorkingAtHeightModule3Section2() {
                   SRL vs Standard Lanyard
                 </span>
               </div>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 An SRL is often preferred over a standard lanyard because the shorter free-fall
                 distance reduces both the forces on the body and the total clearance distance
                 required. Where headroom below the working level is limited, an SRL may be the only
@@ -707,11 +707,11 @@ export default function WorkingAtHeightModule3Section2() {
             </span>
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-white">Anchor Points — EN 795</h2>
-              <p className="text-white/50 text-sm">Classes A–E and minimum strength requirements</p>
+              <p className="text-white text-sm">Classes A–E and minimum strength requirements</p>
             </div>
           </div>
           <div className="border-l-2 border-cyan-500/30 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               The anchor point is the fixed element to which the lanyard or SRL is connected. It
               must be strong enough to withstand the forces generated during a fall arrest event. EN
               795 classifies anchor devices into five types:
@@ -752,7 +752,7 @@ export default function WorkingAtHeightModule3Section2() {
                   <h4 className={`text-${item.colour}-400 text-sm font-semibold mb-1`}>
                     {item.cls}
                   </h4>
-                  <p className="text-white/70 text-sm leading-relaxed">{item.desc}</p>
+                  <p className="text-white text-sm leading-relaxed">{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -769,7 +769,7 @@ export default function WorkingAtHeightModule3Section2() {
                 ].map((point, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                    <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                    <span className="text-white text-sm leading-relaxed">{point}</span>
                   </div>
                 ))}
               </div>
@@ -789,14 +789,14 @@ export default function WorkingAtHeightModule3Section2() {
               <h2 className="text-lg sm:text-xl font-bold text-white">
                 Fall Arrest vs Fall Restraint vs Work Positioning
               </h2>
-              <p className="text-white/50 text-sm">Three distinct systems — choosing correctly</p>
+              <p className="text-white text-sm">Three distinct systems — choosing correctly</p>
             </div>
           </div>
           <div className="border-l-2 border-rose-500/30 pl-4 sm:pl-6 space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="rounded-xl border border-rose-500/20 bg-rose-500/5 p-4 sm:col-span-2">
                 <h4 className="text-rose-400 text-sm font-semibold mb-2">Fall Arrest</h4>
-                <p className="text-white/70 text-sm leading-relaxed mb-2">
+                <p className="text-white text-sm leading-relaxed mb-2">
                   The user <strong className="text-white">can</strong> reach the edge and fall. The
                   system stops the fall after it has begun. Requires a full body harness (EN 361),
                   fall arrest lanyard with energy absorber (EN 355) or SRL (EN 360), and a suitable
@@ -810,14 +810,14 @@ export default function WorkingAtHeightModule3Section2() {
                   ].map((point, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
-                      <span className="text-white/60 text-sm leading-relaxed">{point}</span>
+                      <span className="text-white text-sm leading-relaxed">{point}</span>
                     </div>
                   ))}
                 </div>
               </div>
               <div className="rounded-xl border border-green-500/20 bg-green-500/5 p-4">
                 <h4 className="text-green-400 text-sm font-semibold mb-2">Fall Restraint</h4>
-                <p className="text-white/70 text-sm leading-relaxed mb-2">
+                <p className="text-white text-sm leading-relaxed mb-2">
                   The system physically prevents the user from reaching the fall edge. The lanyard
                   is short enough (or an anchor is positioned) so the worker simply cannot get to
                   the point of danger.
@@ -830,14 +830,14 @@ export default function WorkingAtHeightModule3Section2() {
                   ].map((point, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
-                      <span className="text-white/60 text-sm leading-relaxed">{point}</span>
+                      <span className="text-white text-sm leading-relaxed">{point}</span>
                     </div>
                   ))}
                 </div>
               </div>
               <div className="rounded-xl border border-blue-500/20 bg-blue-500/5 p-4">
                 <h4 className="text-blue-400 text-sm font-semibold mb-2">Work Positioning</h4>
-                <p className="text-white/70 text-sm leading-relaxed mb-2">
+                <p className="text-white text-sm leading-relaxed mb-2">
                   The system supports the user in tension, allowing them to work hands-free while
                   leaning back (e.g., on a pole or tower). Governed by EN 358.
                 </p>
@@ -849,7 +849,7 @@ export default function WorkingAtHeightModule3Section2() {
                   ].map((point, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
-                      <span className="text-white/60 text-sm leading-relaxed">{point}</span>
+                      <span className="text-white text-sm leading-relaxed">{point}</span>
                     </div>
                   ))}
                 </div>
@@ -870,13 +870,13 @@ export default function WorkingAtHeightModule3Section2() {
               <h2 className="text-lg sm:text-xl font-bold text-white">
                 Clearance Distance Calculation
               </h2>
-              <p className="text-white/50 text-sm">
+              <p className="text-white text-sm">
                 Ensuring sufficient space to arrest a fall safely
               </p>
             </div>
           </div>
           <div className="border-l-2 border-amber-500/30 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               Before using any fall arrest system, you must calculate the
               <strong className="text-white"> total clearance distance</strong> — the minimum
               vertical space required below the anchor point to ensure the user does not strike the
@@ -890,23 +890,23 @@ export default function WorkingAtHeightModule3Section2() {
               </h4>
               <div className="max-w-md mx-auto space-y-3">
                 <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                  <span className="text-white/70 text-sm">Free fall distance (lanyard length)</span>
+                  <span className="text-white text-sm">Free fall distance (lanyard length)</span>
                   <span className="text-amber-400 text-sm font-semibold">2.0 m</span>
                 </div>
                 <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                  <span className="text-white/70 text-sm">Shock absorber deployment</span>
+                  <span className="text-white text-sm">Shock absorber deployment</span>
                   <span className="text-amber-400 text-sm font-semibold">1.75 m</span>
                 </div>
                 <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                  <span className="text-white/70 text-sm">Harness extension (stretch)</span>
+                  <span className="text-white text-sm">Harness extension (stretch)</span>
                   <span className="text-amber-400 text-sm font-semibold">0.25 m</span>
                 </div>
                 <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                  <span className="text-white/70 text-sm">Height of user below D-ring</span>
+                  <span className="text-white text-sm">Height of user below D-ring</span>
                   <span className="text-amber-400 text-sm font-semibold">1.5 m</span>
                 </div>
                 <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                  <span className="text-white/70 text-sm">Safety margin</span>
+                  <span className="text-white text-sm">Safety margin</span>
                   <span className="text-amber-400 text-sm font-semibold">1.0 m</span>
                 </div>
                 <div className="flex items-center justify-between pt-1">
@@ -914,7 +914,7 @@ export default function WorkingAtHeightModule3Section2() {
                   <span className="text-amber-400 text-base font-bold">6.5 m</span>
                 </div>
               </div>
-              <p className="text-center text-white/40 text-xs mt-4">
+              <p className="text-center text-white text-xs mt-4">
                 Always add each component — never assume a manufacturer&rsquo;s
                 &ldquo;typical&rdquo; figure covers all situations.
               </p>
@@ -936,7 +936,7 @@ export default function WorkingAtHeightModule3Section2() {
                 ].map((point, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                    <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                    <span className="text-white text-sm leading-relaxed">{point}</span>
                   </div>
                 ))}
               </div>
@@ -959,13 +959,13 @@ export default function WorkingAtHeightModule3Section2() {
               <h2 className="text-lg sm:text-xl font-bold text-white">
                 6-Monthly Thorough Examination
               </h2>
-              <p className="text-white/50 text-sm">
+              <p className="text-white text-sm">
                 LOLER requirement for all personal fall protection equipment
               </p>
             </div>
           </div>
           <div className="border-l-2 border-teal-500/30 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               The Lifting Operations and Lifting Equipment Regulations 1998 (LOLER) require that all
               equipment used to arrest a fall from height receives a{' '}
               <strong className="text-white">thorough examination</strong> by a{' '}
@@ -983,7 +983,7 @@ export default function WorkingAtHeightModule3Section2() {
               ].map((point, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-teal-400 flex-shrink-0" />
-                  <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                  <span className="text-white text-sm leading-relaxed">{point}</span>
                 </div>
               ))}
             </div>
@@ -1012,7 +1012,7 @@ export default function WorkingAtHeightModule3Section2() {
               ].map((point, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span className="text-white/80 text-sm leading-relaxed">{point}</span>
+                  <span className="text-white text-sm leading-relaxed">{point}</span>
                 </div>
               ))}
             </div>

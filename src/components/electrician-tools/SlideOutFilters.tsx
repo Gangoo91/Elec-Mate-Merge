@@ -243,7 +243,7 @@ const FilterSection = ({ icon: Icon, title, options, selected, onToggle }: Filte
                 className="border-white/30 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
               />
               <span
-                className={`text-sm ${isSelected ? 'text-white font-medium' : 'text-white/80'}`}
+                className={`text-sm ${isSelected ? 'text-white font-medium' : 'text-white'}`}
               >
                 {option}
               </span>

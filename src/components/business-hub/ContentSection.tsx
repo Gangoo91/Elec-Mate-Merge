@@ -141,7 +141,7 @@ const ContentSection = ({
             <ChevronDown
               className={cn(
                 'h-5 w-5 transition-colors',
-                isExpanded ? 'text-yellow-400' : 'text-white/80'
+                isExpanded ? 'text-yellow-400' : 'text-white'
               )}
             />
           </div>

@@ -181,7 +181,7 @@ const Level3Module3Section2_5 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section2">
@@ -200,7 +200,7 @@ const Level3Module3Section2_5 = () => {
         <h1 className="text-2xl md:text-3xl font-bold text-white mb-6">
           2.5 Phase Angle and Power Factor
         </h1>
-        <p className="text-xl text-white/70 mb-8">
+        <p className="text-xl text-white mb-8">
           Understanding the critical relationship between voltage and current phase, and how power
           factor affects electrical system efficiency and costs
         </p>
@@ -211,7 +211,7 @@ const Level3Module3Section2_5 = () => {
             <Zap className="w-5 h-5" />
             Quick Summary
           </h3>
-          <ul className="text-white/80 space-y-2">
+          <ul className="text-white space-y-2">
             <li>Phase angle is the angular difference between voltage and current waveforms</li>
             <li>Power factor = cos(phase angle) = True Power / Apparent Power</li>
             <li>Lagging power factor indicates inductive loads, leading indicates capacitive</li>
@@ -223,7 +223,7 @@ const Level3Module3Section2_5 = () => {
         {/* Learning Outcomes */}
         <div className="bg-blue-900/30 border border-blue-500/50 rounded-lg p-6 mb-8">
           <h3 className="text-lg font-semibold text-blue-400 mb-3">Learning Outcomes</h3>
-          <ul className="text-white/80 space-y-2">
+          <ul className="text-white space-y-2">
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 mt-1 text-green-400 flex-shrink-0" />
               Explain phase relationships in resistive, inductive and capacitive circuits
@@ -262,12 +262,12 @@ const Level3Module3Section2_5 = () => {
               Understanding Phase Angle
             </h2>
             <div className="bg-[#242424] rounded-lg p-6 border border-white/10">
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 In AC circuits, voltage and current are continuously varying sinusoidal waveforms.
                 The <strong>phase angle (phi)</strong> describes the angular difference between
                 these waveforms, measured in degrees or radians.
               </p>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 When voltage and current reach their peak values at the same instant, they are "in
                 phase" and the phase angle is zero. When they peak at different times, there is a
                 phase difference that significantly affects power transfer.
@@ -277,27 +277,27 @@ const Level3Module3Section2_5 = () => {
                 Phase Relationships in Different Circuits
               </h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Pure Resistance (R):</strong> Voltage and current in phase, phi = 0
                   degrees
                 </p>
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Pure Inductance (L):</strong> Current lags voltage by 90 degrees
                 </p>
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Pure Capacitance (C):</strong> Current leads voltage by 90 degrees
                 </p>
-                <p className="text-white/80">
+                <p className="text-white">
                   <strong>Combination Circuits:</strong> Phase angle between 0 and 90 degrees
                   depending on component values
                 </p>
               </div>
 
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 The memory aid <strong>"ELI the ICE man"</strong> helps remember these
                 relationships:
               </p>
-              <ul className="text-white/80 space-y-2 mb-4">
+              <ul className="text-white space-y-2 mb-4">
                 <li>
                   <strong>ELI:</strong> In inductance (L), EMF (voltage, E) leads current (I)
                 </li>
@@ -306,7 +306,7 @@ const Level3Module3Section2_5 = () => {
                 </li>
               </ul>
 
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 For combination circuits containing both resistance and reactance, the phase angle
                 can be calculated from:
               </p>
@@ -314,12 +314,12 @@ const Level3Module3Section2_5 = () => {
                 <p className="text-green-400 font-mono text-lg mb-2">
                   tan(phi) = X / R = (XL - XC) / R
                 </p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Where X is net reactance, XL is inductive reactance, XC is capacitive reactance
                 </p>
               </div>
 
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 Alternatively, using impedance: <strong>cos(phi) = R / Z</strong>, where Z is the
                 total impedance.
               </p>
@@ -342,7 +342,7 @@ const Level3Module3Section2_5 = () => {
               Power Factor Fundamentals
             </h2>
             <div className="bg-[#242424] rounded-lg p-6 border border-white/10">
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 <strong>Power factor</strong> is the cosine of the phase angle between voltage and
                 current. It represents the ratio of true power to apparent power and indicates how
                 effectively electrical power is being converted to useful work.
@@ -352,7 +352,7 @@ const Level3Module3Section2_5 = () => {
                 <p className="text-green-400 font-mono text-lg mb-2">
                   Power Factor = cos(phi) = P / S = R / Z
                 </p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Where P = true power (W), S = apparent power (VA), phi = phase angle
                 </p>
               </div>
@@ -361,20 +361,20 @@ const Level3Module3Section2_5 = () => {
               <div className="grid md:grid-cols-3 gap-4 mb-4">
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Unity (1.0)</h5>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Purely resistive load, voltage and current in phase. All apparent power is true
                     power.
                   </p>
                 </div>
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Lagging (&lt;1.0)</h5>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Inductive load, current lags voltage. Common in motors and transformers.
                   </p>
                 </div>
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Leading (&lt;1.0)</h5>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Capacitive load, current leads voltage. Seen with capacitor banks or lightly
                     loaded cables.
                   </p>
@@ -385,10 +385,10 @@ const Level3Module3Section2_5 = () => {
                 The Three Types of Power
               </h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   <strong>True Power (P)</strong> - measured in watts (W) or kilowatts (kW)
                 </p>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The actual power consumed and converted to useful work (heat, light, mechanical
                   energy). This is what electricity meters measure and what you pay for.
                 </p>
@@ -396,11 +396,11 @@ const Level3Module3Section2_5 = () => {
                   P = V x I x cos(phi) = I squared x R
                 </p>
 
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   <strong>Reactive Power (Q)</strong> - measured in volt-amperes reactive (VAR) or
                   kVAR
                 </p>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Power that oscillates between source and reactive components
                   (inductors/capacitors). It does no useful work but creates current flow in the
                   system.
@@ -409,10 +409,10 @@ const Level3Module3Section2_5 = () => {
                   Q = V x I x sin(phi) = I squared x X
                 </p>
 
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   <strong>Apparent Power (S)</strong> - measured in volt-amperes (VA) or kVA
                 </p>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The total power that must be supplied to the circuit. This determines cable sizes,
                   transformer ratings and switchgear capacity.
                 </p>
@@ -437,7 +437,7 @@ const Level3Module3Section2_5 = () => {
               The Power Triangle
             </h2>
             <div className="bg-[#242424] rounded-lg p-6 border border-white/10">
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 The <strong>power triangle</strong> is a graphical representation showing the
                 relationship between true power, reactive power and apparent power. It directly
                 corresponds to the impedance triangle and voltage triangle in AC circuits.
@@ -447,7 +447,7 @@ const Level3Module3Section2_5 = () => {
                 <h4 className="text-lg font-semibold text-green-400 mb-3 text-center">
                   Power Triangle Structure
                 </h4>
-                <div className="text-center text-white/80 mb-4">
+                <div className="text-center text-white mb-4">
                   <p className="mb-2">Apparent Power S (kVA) - Hypotenuse</p>
                   <p className="mb-2">True Power P (kW) - Horizontal (adjacent)</p>
                   <p className="mb-2">Reactive Power Q (kVAR) - Vertical (opposite)</p>
@@ -457,40 +457,40 @@ const Level3Module3Section2_5 = () => {
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Key Relationships</h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Power Factor:</strong> cos(phi) = P / S = kW / kVA
                 </p>
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Reactive Factor:</strong> sin(phi) = Q / S = kVAR / kVA
                 </p>
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Phase Angle:</strong> phi = arctan(Q / P) = arccos(P / S)
                 </p>
-                <p className="text-white/80">
+                <p className="text-white">
                   <strong>Apparent Power:</strong> S = P / cos(phi) = sqrt(P squared + Q squared)
                 </p>
               </div>
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Practical Example</h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   A factory has a load of 80 kW at power factor 0.75 lagging:
                 </p>
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   Apparent Power S = P / cos(phi) = 80 / 0.75 = <strong>106.7 kVA</strong>
                 </p>
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   Phase angle phi = arccos(0.75) = <strong>41.4 degrees</strong>
                 </p>
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   Reactive Power Q = S x sin(41.4) = 106.7 x 0.661 = <strong>70.5 kVAR</strong>
                 </p>
-                <p className="text-white/70 text-sm mt-3">
+                <p className="text-white text-sm mt-3">
                   Or using: Q = sqrt(S squared - P squared) = sqrt(11,385 - 6,400) = 70.6 kVAR
                 </p>
               </div>
 
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 The power triangle helps visualise why poor power factor is problematic: a smaller
                 angle (higher power factor) means less reactive power for the same true power,
                 reducing the apparent power demand on the system.
@@ -514,7 +514,7 @@ const Level3Module3Section2_5 = () => {
               Power Factor Correction
             </h2>
             <div className="bg-[#242424] rounded-lg p-6 border border-white/10">
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 <strong>Power factor correction (PFC)</strong> is the process of improving power
                 factor by adding reactive components - typically capacitors for inductive loads - to
                 reduce the reactive power drawn from the supply.
@@ -526,7 +526,7 @@ const Level3Module3Section2_5 = () => {
               <div className="grid md:grid-cols-2 gap-4 mb-4">
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Technical Benefits</h5>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>Reduced current for same power delivery</li>
                     <li>Lower I squared R losses in cables</li>
                     <li>Reduced voltage drop</li>
@@ -536,7 +536,7 @@ const Level3Module3Section2_5 = () => {
                 </div>
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Financial Benefits</h5>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>Avoid supplier penalties (typically below 0.9 pf)</li>
                     <li>Reduced maximum demand charges</li>
                     <li>Lower energy losses</li>
@@ -550,34 +550,34 @@ const Level3Module3Section2_5 = () => {
                 Calculating Correction Capacitance
               </h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   To correct power factor from cos(phi1) to cos(phi2):
                 </p>
                 <p className="text-green-400 font-mono mb-3">
                   Required kVAR = P x (tan(phi1) - tan(phi2))
                 </p>
-                <p className="text-white/80 mb-3">Then for the capacitor value:</p>
+                <p className="text-white mb-3">Then for the capacitor value:</p>
                 <p className="text-green-400 font-mono mb-3">C = Qc / (2 x pi x f x V squared)</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Where Qc is capacitive reactive power in VAR, f is frequency, V is voltage
                 </p>
               </div>
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Worked Example</h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   Correct a 60 kW load from power factor 0.7 to 0.95:
                 </p>
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   phi1 = arccos(0.7) = 45.57 degrees, tan(phi1) = 1.02
                 </p>
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   phi2 = arccos(0.95) = 18.19 degrees, tan(phi2) = 0.329
                 </p>
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   Required kVAR = 60 x (1.02 - 0.329) = 60 x 0.691 = <strong>41.5 kVAR</strong>
                 </p>
-                <p className="text-white/70 text-sm mt-3">
+                <p className="text-white text-sm mt-3">
                   This capacitor bank would reduce apparent power from 85.7 kVA to 63.2 kVA - a 26%
                   reduction.
                 </p>
@@ -586,7 +586,7 @@ const Level3Module3Section2_5 = () => {
               <h4 className="text-lg font-semibold text-green-400 mb-3">
                 Types of Power Factor Correction
               </h4>
-              <ul className="text-white/80 space-y-2 mb-4">
+              <ul className="text-white space-y-2 mb-4">
                 <li>
                   <strong>Individual correction:</strong> Capacitors installed at each motor or load
                   - most efficient but highest cost
@@ -621,7 +621,7 @@ const Level3Module3Section2_5 = () => {
               <h4 className="text-lg font-semibold text-yellow-400 mb-3">
                 Key Installation Considerations
               </h4>
-              <ul className="text-white/80 space-y-2">
+              <ul className="text-white space-y-2">
                 <li>
                   <strong>Avoid over-correction:</strong> Leading power factor can cause voltage
                   rise and equipment damage. Target 0.95 lagging, not unity.
@@ -653,7 +653,7 @@ const Level3Module3Section2_5 = () => {
               {faqItems.map((faq, index) => (
                 <div key={index} className="bg-[#242424] rounded-lg p-4 border border-white/10">
                   <h4 className="font-semibold text-white mb-2">{faq.question}</h4>
-                  <p className="text-white/70 text-sm">{faq.answer}</p>
+                  <p className="text-white text-sm">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -666,7 +666,7 @@ const Level3Module3Section2_5 = () => {
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <h4 className="font-semibold text-green-400 mb-3">Essential Formulas</h4>
-                  <ul className="text-white/70 text-sm space-y-2 font-mono">
+                  <ul className="text-white text-sm space-y-2 font-mono">
                     <li>Power Factor = cos(phi) = P / S</li>
                     <li>P = V x I x cos(phi)</li>
                     <li>Q = V x I x sin(phi)</li>
@@ -677,7 +677,7 @@ const Level3Module3Section2_5 = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-green-400 mb-3">Typical Power Factors</h4>
-                  <ul className="text-white/70 text-sm space-y-2">
+                  <ul className="text-white text-sm space-y-2">
                     <li>Incandescent lamps: 1.0</li>
                     <li>Resistive heaters: 1.0</li>
                     <li>Fluorescent lighting: 0.5-0.95</li>
@@ -694,7 +694,7 @@ const Level3Module3Section2_5 = () => {
         {/* Quiz Section */}
         <div className="mb-12">
           <h2 className="text-xl font-semibold text-white mb-4">Test Your Knowledge</h2>
-          <p className="text-white/70 mb-4">
+          <p className="text-white mb-4">
             Complete this quiz to check your understanding of phase angle and power factor concepts:
           </p>
           <Quiz questions={quizQuestions} moduleId="L3M3S2.5" />

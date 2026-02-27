@@ -238,7 +238,7 @@ const HNCModule7Section3_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section3">
@@ -260,7 +260,7 @@ const HNCModule7Section3_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Glare Assessment
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Unified Glare Rating (UGR) calculation, glare sources, shielding angles, and compliance
             with UGR limits for visual comfort
           </p>
@@ -346,7 +346,7 @@ const HNCModule7Section3_4 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-elec-yellow/80 mb-2">Discomfort Glare</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Causes visual discomfort without necessarily impairing vision</li>
                     <li>Results from high luminance sources in the field of view</li>
                     <li>Quantified using UGR (Unified Glare Rating)</li>
@@ -355,7 +355,7 @@ const HNCModule7Section3_4 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-elec-yellow/80 mb-2">Disability Glare</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Directly impairs visual performance</li>
                     <li>Light scattered in the eye reduces contrast</li>
                     <li>Common with bright light sources in dark environments</li>
@@ -441,11 +441,11 @@ const HNCModule7Section3_4 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">UGR Formula</p>
               <div className="font-mono text-sm space-y-2">
                 <p className="text-white">UGR = 8 × log₁₀ [ (0.25 / Lb) × Σ (L² × ω / p²) ]</p>
-                <p className="text-white/60 text-xs mt-2">Where:</p>
-                <p className="text-white/80 text-xs">Lb = Background luminance (cd/m²)</p>
-                <p className="text-white/80 text-xs">L = Luminaire luminance (cd/m²)</p>
-                <p className="text-white/80 text-xs">ω = Solid angle of luminaire (sr)</p>
-                <p className="text-white/80 text-xs">p = Position index (Guth index)</p>
+                <p className="text-white text-xs mt-2">Where:</p>
+                <p className="text-white text-xs">Lb = Background luminance (cd/m²)</p>
+                <p className="text-white text-xs">L = Luminaire luminance (cd/m²)</p>
+                <p className="text-white text-xs">ω = Solid angle of luminaire (sr)</p>
+                <p className="text-white text-xs">p = Position index (Guth index)</p>
               </div>
             </div>
 
@@ -568,8 +568,8 @@ const HNCModule7Section3_4 = () => {
                   The shielding angle (γ) is measured from horizontal to the line from the edge of
                   the luminaire aperture to the lamp.
                 </p>
-                <p className="font-mono text-white/80 mt-2">γ = arctan(d / h)</p>
-                <p className="text-white/60 text-xs">
+                <p className="font-mono text-white mt-2">γ = arctan(d / h)</p>
+                <p className="text-white text-xs">
                   Where: d = horizontal distance from lamp to aperture edge, h = vertical depth of
                   recess
                 </p>
@@ -744,7 +744,7 @@ const HNCModule7Section3_4 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 H = mounting height above eye level (typically 1.2m below luminaire for seated
                 observers)
               </p>
@@ -857,7 +857,7 @@ const HNCModule7Section3_4 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Design verification:</strong> While UGR tables provide initial guidance,
               always verify compliance using lighting design software that calculates UGR at
               multiple observer positions and viewing directions.
@@ -883,7 +883,7 @@ const HNCModule7Section3_4 = () => {
                 <strong>Scenario:</strong> Assess UGR suitability for a 12m × 8m open-plan office
                 with 2.8m ceiling height.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given data:</p>
                 <p className="ml-4">Room: 12m × 8m × 2.8m</p>
                 <p className="ml-4">Desk height: 0.72m, seated eye level: 1.2m</p>
@@ -910,7 +910,7 @@ const HNCModule7Section3_4 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Calculate the shielding angle for a recessed luminaire.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given data:</p>
                 <p className="ml-4">Recess depth below ceiling: 80mm</p>
                 <p className="ml-4">Horizontal distance from lamp edge to aperture: 60mm</p>
@@ -933,7 +933,7 @@ const HNCModule7Section3_4 = () => {
                 <strong>Scenario:</strong> A classroom design shows UGR 21, but the limit is UGR ≤
                 19. Identify improvement options.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Current situation:</p>
                 <p className="ml-4">Calculated UGR: 21</p>
                 <p className="ml-4">Required: ≤ 19</p>
@@ -1047,7 +1047,7 @@ const HNCModule7Section3_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1093,7 +1093,7 @@ const HNCModule7Section3_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section3">

@@ -253,7 +253,7 @@ const AM2Module2Section1 = () => {
 
       {/* Critical Warning */}
       <AM2CriticalWarning title="INSTANT FAIL IF WRONG">
-        <p className="text-ios-callout text-white/90">
+        <p className="text-ios-callout text-white">
           Safe isolation is the foundation of electrical safety and the most unforgiving part of the
           AM2. If you get it wrong, you fail - regardless of how well you perform elsewhere. In real
           working life, safe isolation mistakes can kill. In the AM2, they instantly end your
@@ -270,7 +270,7 @@ const AM2Module2Section1 = () => {
           <Wrench className="h-5 w-5" />
           Equipment Required
         </h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           Essential equipment for safe isolation procedures:
         </p>
         <div className="grid md:grid-cols-2 gap-3">
@@ -280,7 +280,7 @@ const AM2Module2Section1 = () => {
               className="flex items-center p-2 bg-white/5 rounded-xl border border-white/10"
             >
               <CheckCircle className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" />
-              <span className="text-ios-callout text-white/80">{item}</span>
+              <span className="text-ios-callout text-white">{item}</span>
             </div>
           ))}
         </div>
@@ -292,7 +292,7 @@ const AM2Module2Section1 = () => {
           <FileText className="h-5 w-5" />
           Pre-Isolation Checklist
         </h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           Complete these steps before beginning isolation:
         </p>
         <div className="space-y-2">
@@ -304,7 +304,7 @@ const AM2Module2Section1 = () => {
               <div className="bg-elec-yellow text-black font-bold w-6 h-6 rounded-full flex items-center justify-center mr-2 flex-shrink-0 text-xs">
                 {index + 1}
               </div>
-              <span className="text-ios-callout text-white/80">{item}</span>
+              <span className="text-ios-callout text-white">{item}</span>
             </div>
           ))}
         </div>
@@ -319,23 +319,23 @@ const AM2Module2Section1 = () => {
           <div>
             <h3 className="text-ios-headline text-white font-semibold mb-3">Safety Reasons:</h3>
             <ul className="space-y-2 text-ios-callout">
-              <li className="flex items-start gap-2 text-white/80">
+              <li className="flex items-start gap-2 text-white">
                 <AlertTriangle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>Prevents electrocution, burns, and arc flash injuries</span>
               </li>
-              <li className="flex items-start gap-2 text-white/80">
+              <li className="flex items-start gap-2 text-white">
                 <Shield className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>Ensures no one else can accidentally re-energise the system</span>
               </li>
-              <li className="flex items-start gap-2 text-white/80">
+              <li className="flex items-start gap-2 text-white">
                 <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                 <span>Protects both you and others on site</span>
               </li>
-              <li className="flex items-start gap-2 text-white/80">
+              <li className="flex items-start gap-2 text-white">
                 <XCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>Eliminates risk of electrical shock from induced voltages</span>
               </li>
-              <li className="flex items-start gap-2 text-white/80">
+              <li className="flex items-start gap-2 text-white">
                 <Lock className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>Prevents equipment damage from short circuits</span>
               </li>
@@ -344,25 +344,25 @@ const AM2Module2Section1 = () => {
           <div>
             <h3 className="text-ios-headline text-white font-semibold mb-3">Legal & Assessment:</h3>
             <ul className="space-y-2 text-ios-callout">
-              <li className="flex items-start gap-2 text-white/80">
+              <li className="flex items-start gap-2 text-white">
                 <FileText className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>
                   Mandatory legal requirement under the Electricity at Work Regulations 1989
                 </span>
               </li>
-              <li className="flex items-start gap-2 text-white/80">
+              <li className="flex items-start gap-2 text-white">
                 <XCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>In AM2, failure = instant disqualification</span>
               </li>
-              <li className="flex items-start gap-2 text-white/80">
+              <li className="flex items-start gap-2 text-white">
                 <AlertTriangle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>No second chances or partial marks</span>
               </li>
-              <li className="flex items-start gap-2 text-white/80">
+              <li className="flex items-start gap-2 text-white">
                 <Book className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>Demonstrates competency to IET Code of Practice</span>
               </li>
-              <li className="flex items-start gap-2 text-white/80">
+              <li className="flex items-start gap-2 text-white">
                 <Target className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                 <span>Required for professional certification maintenance</span>
               </li>
@@ -378,19 +378,19 @@ const AM2Module2Section1 = () => {
           <div className="grid md:grid-cols-3 gap-4">
             <div className="text-center p-3 bg-white/5 rounded-xl border border-white/10">
               <div className="text-ios-title-2 font-bold text-elec-yellow">30+</div>
-              <div className="text-ios-footnote text-white/70">
+              <div className="text-ios-footnote text-white">
                 Electrical deaths annually in UK workplace
               </div>
             </div>
             <div className="text-center p-3 bg-white/5 rounded-xl border border-white/10">
               <div className="text-ios-title-2 font-bold text-elec-yellow">1,000+</div>
-              <div className="text-ios-footnote text-white/70">
+              <div className="text-ios-footnote text-white">
                 Electrical injuries requiring hospital treatment
               </div>
             </div>
             <div className="text-center p-3 bg-white/5 rounded-xl border border-white/10">
               <div className="text-ios-title-2 font-bold text-elec-yellow">67%</div>
-              <div className="text-ios-footnote text-white/70">
+              <div className="text-ios-footnote text-white">
                 Of AM2 failures due to safe isolation errors
               </div>
             </div>
@@ -405,7 +405,7 @@ const AM2Module2Section1 = () => {
           <div className="space-y-3 text-ios-callout">
             <div className="flex items-start">
               <div className="w-2 h-2 bg-red-400 rounded-full mr-3 mt-2 flex-shrink-0"></div>
-              <div className="text-white/80">
+              <div className="text-white">
                 <span className="font-medium">Fatal Incident (2019):</span> Electrician bypassed
                 isolation procedure to "save time" - resulted in fatality and company prosecution
                 under Section 37 of Health & Safety at Work Act.
@@ -413,7 +413,7 @@ const AM2Module2Section1 = () => {
             </div>
             <div className="flex items-start">
               <div className="w-2 h-2 bg-orange-400 rounded-full mr-3 mt-2 flex-shrink-0"></div>
-              <div className="text-white/80">
+              <div className="text-white">
                 <span className="font-medium">Serious Injury (2021):</span> Apprentice received 11kV
                 shock when supervisor failed to follow lock-off procedure - 6 months recovery,
                 permanent nerve damage.
@@ -421,7 +421,7 @@ const AM2Module2Section1 = () => {
             </div>
             <div className="flex items-start">
               <div className="w-2 h-2 bg-elec-yellow rounded-full mr-3 mt-2 flex-shrink-0"></div>
-              <div className="text-white/80">
+              <div className="text-white">
                 <span className="font-medium">AM2 Impact:</span> 2023 data shows 7 out of 10 AM2
                 failures directly linked to incomplete or incorrect safe isolation procedures.
               </div>
@@ -681,7 +681,7 @@ const AM2Module2Section1 = () => {
                 {index + 1}
               </div>
               <div className="flex-1">
-                <p className="text-ios-callout text-white/90">{step}</p>
+                <p className="text-ios-callout text-white">{step}</p>
                 {index === 5 && (
                   <p className="text-ios-footnote text-elec-yellow mt-1">
                     Critical: Always prove on known live source first
@@ -699,7 +699,7 @@ const AM2Module2Section1 = () => {
 
         <div className="mt-4 p-4 bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl">
           <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">Practical Tips:</h4>
-          <ul className="text-ios-callout text-white/80 space-y-1">
+          <ul className="text-ios-callout text-white space-y-1">
             <li className="flex items-start gap-2">
               <span className="text-elec-yellow">•</span>
               <span>Allow 10-15 minutes for complete isolation procedure</span>
@@ -738,7 +738,7 @@ const AM2Module2Section1 = () => {
         <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">
           10-Point Test Sequence (Single-Phase Example)
         </h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           All combinations must be checked to ensure the circuit is completely dead:
         </p>
         <div className="grid md:grid-cols-2 gap-4">
@@ -751,7 +751,7 @@ const AM2Module2Section1 = () => {
                   className="flex items-center p-2 bg-white/5 rounded-xl border border-white/10"
                 >
                   <CheckCircle className="h-4 w-4 text-green-500 mr-2" />
-                  <span className="text-ios-callout text-white/80">{test}</span>
+                  <span className="text-ios-callout text-white">{test}</span>
                 </div>
               ))}
             </div>
@@ -760,7 +760,7 @@ const AM2Module2Section1 = () => {
             <h3 className="text-ios-headline text-elec-yellow font-semibold mb-2">
               Important Notes:
             </h3>
-            <ul className="space-y-1 text-ios-callout text-white/80">
+            <ul className="space-y-1 text-ios-callout text-white">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Test at both origin and point of work</span>
@@ -791,7 +791,7 @@ const AM2Module2Section1 = () => {
 
         <div className="mt-4 p-4 bg-white/5 border border-red-500/30 rounded-xl">
           <h4 className="text-ios-headline text-red-400 font-semibold mb-2">Common Test Errors:</h4>
-          <ul className="text-ios-callout text-white/80 space-y-1">
+          <ul className="text-ios-callout text-white space-y-1">
             <li className="flex items-start gap-2">
               <span className="text-red-400">•</span>
               <span>Testing with switch in wrong position</span>
@@ -818,7 +818,7 @@ const AM2Module2Section1 = () => {
           <XCircle className="h-5 w-5" />
           Common Critical Fails in AM2 Safe Isolation
         </h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           These errors from NET's common failures list will result in automatic fail:
         </p>
         <div className="space-y-2">
@@ -828,7 +828,7 @@ const AM2Module2Section1 = () => {
               className="flex items-start p-3 rounded-xl border border-red-500/30 bg-red-500/10"
             >
               <XCircle className="h-4 w-4 text-red-400 mr-2 mt-0.5 flex-shrink-0" />
-              <span className="text-ios-callout text-white/90">{fail}</span>
+              <span className="text-ios-callout text-white">{fail}</span>
             </div>
           ))}
         </div>
@@ -837,7 +837,7 @@ const AM2Module2Section1 = () => {
           <h4 className="text-ios-headline text-red-400 font-semibold mb-2">
             Prevention Strategies:
           </h4>
-          <ul className="text-ios-callout text-white/80 space-y-1">
+          <ul className="text-ios-callout text-white space-y-1">
             <li className="flex items-start gap-2">
               <span className="text-elec-yellow">•</span>
               <span>Create a personal checklist and use it every time</span>
@@ -864,14 +864,14 @@ const AM2Module2Section1 = () => {
           <Settings className="h-5 w-5" />
           Practice Scenarios
         </h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           Work through these realistic AM2 scenarios to build confidence:
         </p>
         <div className="space-y-4">
           {practiceScenarios.map((scenario, index) => (
             <div key={index} className="p-4 bg-white/5 rounded-xl border border-white/10">
               <h4 className="text-ios-headline text-white font-semibold mb-2">{scenario.title}</h4>
-              <p className="text-ios-callout text-white/70 mb-2">{scenario.description}</p>
+              <p className="text-ios-callout text-white mb-2">{scenario.description}</p>
               <div className="flex flex-wrap gap-1">
                 {scenario.keyPoints.map((point, i) => (
                   <span
@@ -895,7 +895,7 @@ const AM2Module2Section1 = () => {
             <h3 className="text-ios-headline text-red-400 font-semibold mb-1">
               Example 1: Forgotten Re-Prove
             </h3>
-            <p className="text-ios-callout text-white/80">
+            <p className="text-ios-callout text-white">
               A candidate did everything correctly but forgot to re-prove the tester during safe
               isolation. The assessor stopped the test and recorded a fail.
             </p>
@@ -907,7 +907,7 @@ const AM2Module2Section1 = () => {
             <h3 className="text-ios-headline text-red-400 font-semibold mb-1">
               Example 2: Wrong Lock-Off
             </h3>
-            <p className="text-ios-callout text-white/80">
+            <p className="text-ios-callout text-white">
               Candidate used tape instead of a lock-off device. Unsafe - instant fail.
             </p>
             <p className="text-ios-footnote text-elec-yellow mt-1">
@@ -918,7 +918,7 @@ const AM2Module2Section1 = () => {
             <h3 className="text-ios-headline text-red-400 font-semibold mb-1">
               Example 3: Missing Warning Notice
             </h3>
-            <p className="text-ios-callout text-white/80">
+            <p className="text-ios-callout text-white">
               A candidate isolated a lighting circuit correctly but didn't attach a warning notice.
               Lost critical marks, failed the section.
             </p>
@@ -930,7 +930,7 @@ const AM2Module2Section1 = () => {
             <h3 className="text-ios-headline text-red-400 font-semibold mb-1">
               Example 4: Wrong Circuit Isolated
             </h3>
-            <p className="text-ios-callout text-white/80">
+            <p className="text-ios-callout text-white">
               Candidate misread the circuit schedule and isolated the wrong circuit. Despite perfect
               procedure, this was a critical fail.
             </p>
@@ -950,13 +950,13 @@ const AM2Module2Section1 = () => {
         <div className="space-y-3">
           <div className="p-3 bg-white/5 rounded-xl border border-white/10">
             <h4 className="text-ios-headline text-white font-semibold mb-1">Correct Sequence</h4>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Assessors check you follow the exact NET sequence without shortcuts
             </p>
           </div>
           <div className="p-3 bg-white/5 rounded-xl border border-white/10">
             <h4 className="text-ios-headline text-white font-semibold mb-1">Equipment Handling</h4>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Proper use of test equipment, proving before and after
             </p>
           </div>
@@ -964,13 +964,13 @@ const AM2Module2Section1 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-1">
               Safety Consciousness
             </h4>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Clear demonstration that you understand the risks
             </p>
           </div>
           <div className="p-3 bg-white/5 rounded-xl border border-white/10">
             <h4 className="text-ios-headline text-white font-semibold mb-1">Communication</h4>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Clear explanation of what you're doing and why
             </p>
           </div>
@@ -987,7 +987,7 @@ const AM2Module2Section1 = () => {
             <h3 className="text-ios-headline text-white font-semibold mb-1">
               Q1: Can I just switch off at the consumer unit without locking off?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               A: No. Locking off and warning notices are mandatory under regulations.
             </p>
           </div>
@@ -995,7 +995,7 @@ const AM2Module2Section1 = () => {
             <h3 className="text-ios-headline text-white font-semibold mb-1">
               Q2: Do I have to use my own tester?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               A: You can bring your own if it complies, but the centre provides approved testers.
             </p>
           </div>
@@ -1003,7 +1003,7 @@ const AM2Module2Section1 = () => {
             <h3 className="text-ios-headline text-white font-semibold mb-1">
               Q3: Why is the 10-point test required?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               A: To confirm the circuit is dead in all conductor combinations.
             </p>
           </div>
@@ -1011,7 +1011,7 @@ const AM2Module2Section1 = () => {
             <h3 className="text-ios-headline text-white font-semibold mb-1">
               Q4: What happens if I forget one step?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               A: Missing a critical step = automatic fail.
             </p>
           </div>
@@ -1019,7 +1019,7 @@ const AM2Module2Section1 = () => {
             <h3 className="text-ios-headline text-white font-semibold mb-1">
               Q5: Can I talk through the process instead of demonstrating it?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               A: No. You must physically demonstrate the procedure.
             </p>
           </div>
@@ -1027,7 +1027,7 @@ const AM2Module2Section1 = () => {
             <h3 className="text-ios-headline text-white font-semibold mb-1">
               Q6: How long should safe isolation take?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               A: Allow 10-15 minutes including all tests and documentation.
             </p>
           </div>
@@ -1035,7 +1035,7 @@ const AM2Module2Section1 = () => {
             <h3 className="text-ios-headline text-white font-semibold mb-1">
               Q7: What if the tester fails during the process?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               A: Stop immediately, get a replacement tester, and start again.
             </p>
           </div>
@@ -1045,7 +1045,7 @@ const AM2Module2Section1 = () => {
       {/* Summary */}
       <AM2ContentCard accent>
         <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">Summary</h2>
-        <p className="text-ios-body text-white/90 leading-relaxed mb-4">
+        <p className="text-ios-body text-white leading-relaxed mb-4">
           Safe isolation is the most important part of the AM2. It must be carried out exactly as
           NET describes, with no shortcuts, no missed steps, and no unsafe practices.
         </p>
@@ -1053,7 +1053,7 @@ const AM2Module2Section1 = () => {
           <h3 className="text-ios-headline text-elec-yellow font-bold mb-2">
             Remember the Sequence:
           </h3>
-          <p className="text-ios-callout text-white/90 font-medium">
+          <p className="text-ios-callout text-white font-medium">
             Prove tester → Isolate → Lock off → Warning notice → Test all combinations → Re-prove
             tester → Keep key
           </p>
@@ -1065,11 +1065,11 @@ const AM2Module2Section1 = () => {
         <div className="mt-4 grid grid-cols-2 gap-3">
           <div className="text-center p-3 rounded-xl border border-green-500/30 bg-green-500/10">
             <div className="text-ios-callout text-green-400 font-semibold">Key Success Factor</div>
-            <div className="text-ios-footnote text-white/80">Practice until automatic</div>
+            <div className="text-ios-footnote text-white">Practice until automatic</div>
           </div>
           <div className="text-center p-3 rounded-xl border border-red-500/30 bg-red-500/10">
             <div className="text-ios-callout text-red-400 font-semibold">Main Failure Cause</div>
-            <div className="text-ios-footnote text-white/80">Rushing the process</div>
+            <div className="text-ios-footnote text-white">Rushing the process</div>
           </div>
         </div>
       </AM2ContentCard>

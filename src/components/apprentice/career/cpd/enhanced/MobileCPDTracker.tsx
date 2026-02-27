@@ -64,13 +64,13 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
           <div className="grid grid-cols-2 gap-4">
             <div className="text-center p-3 rounded-lg bg-white/5 border border-white/10">
               <div className="text-2xl font-bold text-elec-yellow">{stats.hoursThisYear}</div>
-              <div className="text-xs text-white/70">Hours This Year</div>
+              <div className="text-xs text-white">Hours This Year</div>
             </div>
             <div className="text-center p-3 rounded-lg bg-white/5 border border-white/10">
               <div className={`text-2xl font-bold ${getComplianceColor()}`}>
                 {stats.completionPercentage}%
               </div>
-              <div className="text-xs text-white/70">Progress</div>
+              <div className="text-xs text-white">Progress</div>
             </div>
           </div>
           <div className="mt-4 space-y-2 p-3 rounded-lg bg-white/5 border border-white/10">
@@ -100,7 +100,7 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
               className={`flex-1 flex items-center justify-center gap-2 px-3 py-3 rounded-lg text-sm font-medium transition-all touch-manipulation ${
                 activeTab === tab.id
                   ? 'bg-elec-yellow text-elec-dark'
-                  : 'text-white/70 hover:text-white hover:bg-white/5'
+                  : 'text-white hover:text-white hover:bg-white/5'
               }`}
             >
               <Icon className="h-4 w-4" />
@@ -119,14 +119,14 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
               <div className="absolute top-0 right-0 w-16 h-16 bg-amber-500/5 rounded-full blur-xl -translate-y-1/2 translate-x-1/2" />
               <CardContent className="p-4 text-center relative">
                 <div className="text-2xl font-bold text-amber-400">{stats.daysRemaining}</div>
-                <div className="text-xs text-white/70">Days Left</div>
+                <div className="text-xs text-white">Days Left</div>
               </CardContent>
             </Card>
             <Card className="bg-gradient-to-br from-elec-gray to-blue-950/20 border-blue-500/20 overflow-hidden relative">
               <div className="absolute top-0 right-0 w-16 h-16 bg-blue-500/5 rounded-full blur-xl -translate-y-1/2 translate-x-1/2" />
               <CardContent className="p-4 text-center relative">
                 <div className="text-2xl font-bold text-blue-400">{stats.hoursThisMonth}</div>
-                <div className="text-xs text-white/70">This Month</div>
+                <div className="text-xs text-white">This Month</div>
               </CardContent>
             </Card>
           </div>
@@ -176,7 +176,7 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
                       {entry.activity}
                     </h3>
                     <div className="flex flex-wrap items-center gap-2 text-xs">
-                      <span className="px-2 py-1 rounded bg-white/5 text-white/70">
+                      <span className="px-2 py-1 rounded bg-white/5 text-white">
                         {entry.date}
                       </span>
                       <span className="px-2 py-1 rounded bg-elec-yellow/10 text-elec-yellow font-medium">
@@ -190,7 +190,7 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
                       </Badge>
                     </div>
                   </div>
-                  <ChevronRight className="h-5 w-5 text-white/50 flex-shrink-0" />
+                  <ChevronRight className="h-5 w-5 text-white flex-shrink-0" />
                 </div>
               </CardContent>
             </Card>
@@ -228,7 +228,7 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
 
                   <div className="space-y-2 p-2 rounded-lg bg-white/5 border border-white/10">
                     <div className="flex justify-between text-xs text-white">
-                      <span className="text-white/60">Progress</span>
+                      <span className="text-white">Progress</span>
                       <span className="text-elec-yellow font-medium">
                         {goal.currentHours} / {goal.targetHours} hours
                       </span>
@@ -239,7 +239,7 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
                     />
                   </div>
 
-                  <div className="flex items-center gap-2 text-xs text-white/70">
+                  <div className="flex items-center gap-2 text-xs text-white">
                     <Calendar className="h-3.5 w-3.5 text-elec-yellow" />
                     <span>Due: {new Date(goal.deadline).toLocaleDateString()}</span>
                   </div>
@@ -253,10 +253,10 @@ const MobileCPDTracker = ({ onAddEntry, onViewEntry, onViewHistory }: MobileCPDT
               <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/5 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
               <CardContent className="p-6 text-center relative">
                 <div className="p-3 rounded-full bg-gradient-to-br from-white/10 to-white/5 border border-white/20 w-fit mx-auto mb-3">
-                  <Target className="h-6 w-6 text-white/50" />
+                  <Target className="h-6 w-6 text-white" />
                 </div>
                 <p className="text-sm text-white font-medium">No active goals</p>
-                <p className="text-xs text-white/60 mt-1">Create goals to track your progress</p>
+                <p className="text-xs text-white mt-1">Create goals to track your progress</p>
               </CardContent>
             </Card>
           )}

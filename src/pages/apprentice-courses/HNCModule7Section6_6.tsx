@@ -254,7 +254,7 @@ const HNCModule7Section6_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section6">
@@ -276,7 +276,7 @@ const HNCModule7Section6_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Documentation Requirements
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Single line diagrams, distribution schedules, test certificates, O&M manuals, and
             as-built drawings for electrical installations
           </p>
@@ -452,8 +452,8 @@ const HNCModule7Section6_6 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">Single Line Diagram Symbols</p>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
-                  <p className="text-white/80">Common symbols include:</p>
-                  <ul className="text-white/70 space-y-1 mt-2">
+                  <p className="text-white">Common symbols include:</p>
+                  <ul className="text-white space-y-1 mt-2">
                     <li>• Transformer (two circles)</li>
                     <li>• Isolator (gap with contacts)</li>
                     <li>• Circuit breaker (square with X)</li>
@@ -461,8 +461,8 @@ const HNCModule7Section6_6 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-white/80">Must also show:</p>
-                  <ul className="text-white/70 space-y-1 mt-2">
+                  <p className="text-white">Must also show:</p>
+                  <ul className="text-white space-y-1 mt-2">
                     <li>• Earth connections</li>
                     <li>• Neutral arrangements</li>
                     <li>• Generator connections</li>
@@ -642,7 +642,7 @@ const HNCModule7Section6_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-white font-medium mb-1">Volume 1 - Operating Information</p>
-                  <ul className="text-white/70 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>• System descriptions and schematics</li>
                     <li>• Operating procedures</li>
                     <li>• Start-up/shutdown sequences</li>
@@ -652,7 +652,7 @@ const HNCModule7Section6_6 = () => {
                 </div>
                 <div>
                   <p className="text-white font-medium mb-1">Volume 2 - Maintenance Information</p>
-                  <ul className="text-white/70 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>• Maintenance schedules and frequencies</li>
                     <li>• Equipment data sheets</li>
                     <li>• Spare parts lists and suppliers</li>
@@ -878,7 +878,7 @@ const HNCModule7Section6_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-white font-medium mb-1">Certificates and Records</p>
-                  <ul className="text-white/80 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>☐ Electrical Installation Certificate(s)</li>
                     <li>☐ Schedule of Test Results</li>
                     <li>☐ Commissioning records</li>
@@ -890,7 +890,7 @@ const HNCModule7Section6_6 = () => {
                 </div>
                 <div>
                   <p className="text-white font-medium mb-1">Documentation</p>
-                  <ul className="text-white/80 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>☐ O&M manuals (operation)</li>
                     <li>☐ O&M manuals (maintenance)</li>
                     <li>☐ As-built drawings (full set)</li>
@@ -953,7 +953,7 @@ const HNCModule7Section6_6 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>BIM requirement:</strong> On larger projects, as-built information is
               increasingly required as updated BIM models (COBie data) rather than traditional 2D
               drawings. The model becomes the authoritative record of the installation.
@@ -979,11 +979,11 @@ const HNCModule7Section6_6 = () => {
                 <strong>Scenario:</strong> Complete a distribution schedule for a 12-way TP+N board
                 serving office lighting and power.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90 overflow-x-auto">
-                <p className="text-white/60">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white overflow-x-auto">
+                <p className="text-white">
                   Distribution Board: DB-L1-01 | Location: First Floor Riser
                 </p>
-                <p className="text-white/60">Supply: 100A TP+N from MSB via 25mm² 4c SWA</p>
+                <p className="text-white">Supply: 100A TP+N from MSB via 25mm² 4c SWA</p>
                 <p className="mt-2">Circuit Schedule:</p>
                 <p>Cct | Description | Device | Cable | Ib | RCD</p>
                 <p>----|---------------------|-------------|------------|------|--------</p>
@@ -1007,8 +1007,8 @@ const HNCModule7Section6_6 = () => {
                 <strong>Scenario:</strong> Record observations from a periodic inspection with
                 appropriate classification codes.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Schedule of Observations:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Schedule of Observations:</p>
                 <p className="mt-2">Obs | Location | Observation | Code</p>
                 <p>----|-----------------|----------------------------------|------</p>
                 <p>1 | DB-G01 | Missing circuit chart | C3</p>
@@ -1028,8 +1028,8 @@ const HNCModule7Section6_6 = () => {
                   <span className="text-orange-400">C2</span>
                 </p>
                 <p>6 | Intake | Meter tails undersized for load | FI</p>
-                <p className="mt-2 text-white/60">Overall condition: Unsatisfactory</p>
-                <p className="text-white/60">C1 requires immediate attention - client notified</p>
+                <p className="mt-2 text-white">Overall condition: Unsatisfactory</p>
+                <p className="text-white">C1 requires immediate attention - client notified</p>
               </div>
             </div>
 
@@ -1041,8 +1041,8 @@ const HNCModule7Section6_6 = () => {
                 <strong>Scenario:</strong> Develop an index structure for electrical O&M manuals for
                 a commercial building.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Volume E - Electrical Installation O&M Manual</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Volume E - Electrical Installation O&M Manual</p>
                 <p className="mt-2">Section | Content</p>
                 <p>--------|------------------------------------------</p>
                 <p>E.1 | Introduction and System Overview</p>
@@ -1136,7 +1136,7 @@ const HNCModule7Section6_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1200,7 +1200,7 @@ const HNCModule7Section6_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section6">

@@ -222,7 +222,7 @@ export default function CdmRegulationsModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-1">
@@ -245,7 +245,7 @@ export default function CdmRegulationsModule1Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Key Definitions &amp; Scope
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The essential terminology and boundaries of the Construction (Design and Management)
             Regulations 2015 &mdash; what CDM covers, who it applies to, and where the limits lie
           </p>
@@ -353,7 +353,7 @@ export default function CdmRegulationsModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/20 border border-blue-500/40 flex items-center justify-center text-[10px] font-bold text-blue-400">
                         {String(i + 1).padStart(2, '0')}
                       </span>
-                      <span className="text-xs text-white/80">{item}</span>
+                      <span className="text-xs text-white">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -376,7 +376,7 @@ export default function CdmRegulationsModule1Section3() {
                     Key Implication for Electricians
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Every electrical installation, commissioning, maintenance, and removal activity is{' '}
                   <strong>construction work</strong> under CDM 2015. This means CDM duties apply to
                   every electrical job &mdash; from a domestic rewire to a major commercial fit-out.
@@ -464,7 +464,7 @@ export default function CdmRegulationsModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-blue-400 mb-1">{item.category}</p>
-                      <p className="text-xs text-white/70">{item.examples}</p>
+                      <p className="text-xs text-white">{item.examples}</p>
                     </div>
                   ))}
                 </div>
@@ -475,7 +475,7 @@ export default function CdmRegulationsModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">Why This Matters</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Many people assume CDM applies only to &ldquo;buildings&rdquo; in the conventional
                   sense. In fact, work on a pipeline, a scaffold, a telecommunications mast, a
                   railway siding, a sewer, or even a temporary access platform is all work on a
@@ -548,7 +548,7 @@ export default function CdmRegulationsModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-blue-400 mb-1">{item.element}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -570,7 +570,7 @@ export default function CdmRegulationsModule1Section3() {
                     Example &mdash; Electrician as Designer
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   An electrician who designs a distribution board layout, selects cable types and
                   sizes, specifies containment routes, and determines the protective device schedule
                   is acting as a <strong>designer</strong> under CDM 2015. They must consider the
@@ -617,7 +617,7 @@ export default function CdmRegulationsModule1Section3() {
                       </span>
                     </div>
                     <div>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Any person for whom a construction project is carried out. The client
                         initiates the project, commissions design and construction work, and must
                         make suitable arrangements for managing the project. This includes ensuring
@@ -638,7 +638,7 @@ export default function CdmRegulationsModule1Section3() {
                       </span>
                     </div>
                     <div>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Any person (including a business) who prepares or modifies a design for a
                         building, product, or system relating to construction work. Designers must
                         eliminate, reduce, or control foreseeable risks in their designs and provide
@@ -658,7 +658,7 @@ export default function CdmRegulationsModule1Section3() {
                       </span>
                     </div>
                     <div>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Any person who carries out, manages, or controls construction work. This
                         includes main contractors, subcontractors, specialist contractors, and
                         self-employed tradespeople. Contractors must plan, manage, and monitor their
@@ -678,7 +678,7 @@ export default function CdmRegulationsModule1Section3() {
                       </span>
                     </div>
                     <div>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Appointed by the client on projects involving more than one contractor. The
                         principal designer (PD) plans, manages, monitors, and coordinates health and
                         safety in the pre-construction phase. They must ensure that all designers
@@ -700,7 +700,7 @@ export default function CdmRegulationsModule1Section3() {
                       </span>
                     </div>
                     <div>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Appointed by the client on projects involving more than one contractor. The
                         principal contractor (PC) plans, manages, monitors, and coordinates the
                         construction phase. They prepare the construction phase plan, ensure all
@@ -721,7 +721,7 @@ export default function CdmRegulationsModule1Section3() {
                       </span>
                     </div>
                     <div>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Any individual who carries out construction work, including employees and
                         the self-employed. Workers must cooperate with others, report anything they
                         believe is likely to endanger health or safety, and not misuse anything
@@ -738,7 +738,7 @@ export default function CdmRegulationsModule1Section3() {
                   <Users className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">Multiple Roles</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   On smaller projects, one person or organisation commonly holds multiple CDM roles
                   simultaneously. For example, a sole-trader electrician carrying out a domestic
                   rewire is acting as <strong>designer</strong> (designing the electrical
@@ -777,7 +777,7 @@ export default function CdmRegulationsModule1Section3() {
                 <p className="text-sm font-medium text-blue-400 mb-3">
                   Regulation 7 &mdash; Domestic Client Duty Transfer
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Domestic clients are <strong>not</strong> required to carry out CDM client duties
                   themselves. Instead, the duties transfer automatically:
                 </p>
@@ -806,7 +806,7 @@ export default function CdmRegulationsModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-blue-400 mb-1">{item.scenario}</p>
-                      <p className="text-xs text-white/70">{item.transfer}</p>
+                      <p className="text-xs text-white">{item.transfer}</p>
                     </div>
                   ))}
                 </div>
@@ -817,7 +817,7 @@ export default function CdmRegulationsModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">Critical Point</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The domestic client exemption does <strong>not remove CDM duties</strong> &mdash;
                   it <strong>transfers them</strong>. CDM 2015 always applies to domestic
                   construction work. The effect of Regulation 7 is that the contractor (or PD/PC)
@@ -862,7 +862,7 @@ export default function CdmRegulationsModule1Section3() {
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-black/30 rounded-lg p-4">
                     <p className="text-sm font-bold text-blue-300 mb-2">Threshold A</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       The construction phase is likely to last longer than{' '}
                       <strong>30 working days</strong> AND will have{' '}
                       <strong>more than 20 workers working simultaneously</strong> at any point
@@ -871,13 +871,13 @@ export default function CdmRegulationsModule1Section3() {
                   </div>
                   <div className="bg-black/30 rounded-lg p-4">
                     <p className="text-sm font-bold text-blue-300 mb-2">Threshold B</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       The construction work is likely to exceed <strong>500 person-days</strong> of
                       construction work in total
                     </p>
                   </div>
                 </div>
-                <p className="text-xs text-white/50 mt-3">
+                <p className="text-xs text-white mt-3">
                   A project is notifiable if it meets <strong>either</strong> Threshold A{' '}
                   <strong>or</strong> Threshold B. Both conditions in Threshold A must be met
                   simultaneously.
@@ -918,7 +918,7 @@ export default function CdmRegulationsModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-blue-400 mb-1">{item.step}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -929,7 +929,7 @@ export default function CdmRegulationsModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">Common Misconception</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The notification threshold does <strong>not determine whether CDM applies</strong>
                   . CDM 2015 applies to <strong>all</strong> construction projects regardless of
                   size. The notification threshold only determines whether the project must be
@@ -952,7 +952,7 @@ export default function CdmRegulationsModule1Section3() {
             CDM Definitions Visual Map
           </h2>
           <div className="bg-white/5 border border-white/10 rounded-xl p-4 sm:p-6 overflow-hidden">
-            <p className="text-xs text-white/50 uppercase tracking-wider mb-4 text-center">
+            <p className="text-xs text-white uppercase tracking-wider mb-4 text-center">
               How the Key CDM 2015 Definitions Relate to Each Other
             </p>
 
@@ -978,7 +978,7 @@ export default function CdmRegulationsModule1Section3() {
                         <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/20 border border-blue-500/40 flex items-center justify-center text-[10px] font-bold text-blue-400">
                           {i + 1}
                         </span>
-                        <span className="text-xs text-white/80">{item}</span>
+                        <span className="text-xs text-white">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -1003,7 +1003,7 @@ export default function CdmRegulationsModule1Section3() {
                             <span className="flex-shrink-0 w-4 h-4 rounded-full bg-blue-500/15 border border-blue-500/30 flex items-center justify-center text-[9px] font-bold text-blue-400">
                               {String.fromCharCode(65 + i)}
                             </span>
-                            <span className="text-xs text-white/70">{item}</span>
+                            <span className="text-xs text-white">{item}</span>
                           </div>
                         ))}
                       </div>
@@ -1024,7 +1024,7 @@ export default function CdmRegulationsModule1Section3() {
                             <span className="flex-shrink-0 w-4 h-4 rounded-full bg-blue-500/15 border border-blue-500/30 flex items-center justify-center text-[9px] font-bold text-blue-400">
                               {String.fromCharCode(65 + i)}
                             </span>
-                            <span className="text-xs text-white/70">{item}</span>
+                            <span className="text-xs text-white">{item}</span>
                           </div>
                         ))}
                       </div>
@@ -1061,11 +1061,11 @@ export default function CdmRegulationsModule1Section3() {
               <div className="flex flex-wrap items-center gap-4 mt-4 justify-center">
                 <div className="flex items-center gap-1.5">
                   <span className="w-3 h-3 rounded-full bg-blue-500/30 border border-blue-500/50" />
-                  <span className="text-[10px] text-white/50">All-project roles</span>
+                  <span className="text-[10px] text-white">All-project roles</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className="w-3 h-3 rounded-full bg-indigo-500/30 border border-indigo-500/50" />
-                  <span className="text-[10px] text-white/50">Multi-contractor roles only</span>
+                  <span className="text-[10px] text-white">Multi-contractor roles only</span>
                 </div>
               </div>
             </div>
@@ -1079,7 +1079,7 @@ export default function CdmRegulationsModule1Section3() {
             Notification Threshold Decision Tree
           </h2>
           <div className="bg-white/5 border border-white/10 rounded-xl p-4 sm:p-6 overflow-hidden">
-            <p className="text-xs text-white/50 uppercase tracking-wider mb-4 text-center">
+            <p className="text-xs text-white uppercase tracking-wider mb-4 text-center">
               Does Your Project Need to Be Notified to the HSE?
             </p>
 
@@ -1087,7 +1087,7 @@ export default function CdmRegulationsModule1Section3() {
               {/* Step 1 */}
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 text-center">
                 <p className="text-sm font-semibold text-blue-300 mb-1">Step 1</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Is the construction phase likely to last longer than{' '}
                   <strong>30 working days</strong>?
                 </p>
@@ -1101,7 +1101,7 @@ export default function CdmRegulationsModule1Section3() {
                   </div>
                   <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3 text-center">
                     <p className="text-xs font-semibold text-blue-300 mb-1">Step 2a</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Will there be more than <strong>20 workers</strong> simultaneously at any
                       point?
                     </p>
@@ -1109,11 +1109,11 @@ export default function CdmRegulationsModule1Section3() {
                   <div className="grid grid-cols-2 gap-2">
                     <div className="bg-red-500/20 border border-red-500/30 rounded-lg p-2 text-center">
                       <p className="text-[10px] font-bold text-red-300">YES</p>
-                      <p className="text-[10px] text-white/70 mt-1">NOTIFY HSE (F10)</p>
+                      <p className="text-[10px] text-white mt-1">NOTIFY HSE (F10)</p>
                     </div>
                     <div className="bg-white/5 border border-white/10 rounded-lg p-2 text-center">
-                      <p className="text-[10px] font-bold text-white/60">NO</p>
-                      <p className="text-[10px] text-white/50 mt-1">Check Threshold B</p>
+                      <p className="text-[10px] font-bold text-white">NO</p>
+                      <p className="text-[10px] text-white mt-1">Check Threshold B</p>
                     </div>
                   </div>
                 </div>
@@ -1121,29 +1121,29 @@ export default function CdmRegulationsModule1Section3() {
                 {/* NO path */}
                 <div className="space-y-3">
                   <div className="bg-white/10 rounded-lg p-3 text-center">
-                    <p className="text-xs font-bold text-white/60">NO</p>
+                    <p className="text-xs font-bold text-white">NO</p>
                   </div>
                   <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3 text-center">
                     <p className="text-xs font-semibold text-blue-300 mb-1">Step 2b</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Will the total effort exceed <strong>500 person-days</strong>?
                     </p>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     <div className="bg-red-500/20 border border-red-500/30 rounded-lg p-2 text-center">
                       <p className="text-[10px] font-bold text-red-300">YES</p>
-                      <p className="text-[10px] text-white/70 mt-1">NOTIFY HSE (F10)</p>
+                      <p className="text-[10px] text-white mt-1">NOTIFY HSE (F10)</p>
                     </div>
                     <div className="bg-green-500/20 border border-green-500/30 rounded-lg p-2 text-center">
                       <p className="text-[10px] font-bold text-green-300">NO</p>
-                      <p className="text-[10px] text-white/70 mt-1">Not notifiable</p>
+                      <p className="text-[10px] text-white mt-1">Not notifiable</p>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3 text-center">
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   <strong className="text-blue-400">Remember:</strong> CDM duties apply to{' '}
                   <strong>all</strong> projects regardless of whether they are notifiable.
                   Notification only determines whether the F10 form must be submitted.
@@ -1199,7 +1199,7 @@ export default function CdmRegulationsModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-blue-400 mb-1">{item.exclusion}</p>
-                      <p className="text-xs text-white/70">{item.reason}</p>
+                      <p className="text-xs text-white">{item.reason}</p>
                     </div>
                   ))}
                 </div>
@@ -1210,7 +1210,7 @@ export default function CdmRegulationsModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">Boundary Areas</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Some activities sit on the boundary and require careful consideration. For
                   example, <strong>manufacturing</strong> of building components in a factory is not
                   construction work (it is covered by general workplace health and safety
@@ -1262,7 +1262,7 @@ export default function CdmRegulationsModule1Section3() {
                       <p className="text-sm font-medium text-white mb-1">
                         Is painting a room construction work?
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Yes. &ldquo;Redecoration&rdquo; is explicitly listed in the Regulation 2
                         definition. Painting, wallpapering, and other decorating activities are
                         construction work. However, for a simple domestic repaint by a single
@@ -1286,7 +1286,7 @@ export default function CdmRegulationsModule1Section3() {
                       <p className="text-sm font-medium text-white mb-1">
                         Is installing a new consumer unit construction work?
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Yes. The installation, commissioning, maintenance, and removal of electrical
                         services is explicitly included. Installing a consumer unit involves
                         alteration and the installation of electrical services &mdash; both are
@@ -1310,7 +1310,7 @@ export default function CdmRegulationsModule1Section3() {
                       <p className="text-sm font-medium text-white mb-1">
                         Does fitting a new kitchen count as construction work?
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Yes in most cases. Kitchen fitting typically involves alteration, fitting
                         out, and the installation of mechanical and electrical services (plumbing,
                         gas, electrics). If the work involves structural changes (removing a wall,
@@ -1334,7 +1334,7 @@ export default function CdmRegulationsModule1Section3() {
                       <p className="text-sm font-medium text-white mb-1">
                         Is replacing a light fitting construction work?
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Likely yes. It involves maintenance of electrical services within a
                         structure. The HSE would expect the work to be carried out competently and
                         safely, but the practical CDM burden for a simple light fitting change is
@@ -1358,7 +1358,7 @@ export default function CdmRegulationsModule1Section3() {
                       <p className="text-sm font-medium text-white mb-1">
                         Is routine window cleaning construction work?
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Generally no, unless it involves work on the fabric of the structure itself.
                         Regular window cleaning using ladders or water-fed poles is normally covered
                         by general health and safety legislation (MHSWR, WAHR) rather than CDM.
@@ -1382,7 +1382,7 @@ export default function CdmRegulationsModule1Section3() {
                       <p className="text-sm font-medium text-white mb-1">
                         Is putting up shelves in an office construction work?
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         This depends on context. Installing a small shelf using a drill and wall
                         fixings is arguably a minor alteration to a structure and therefore
                         construction work, but the practical CDM implications are negligible.
@@ -1403,7 +1403,7 @@ export default function CdmRegulationsModule1Section3() {
                     HSE Guidance &mdash; The Proportionate Approach
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The HSE&rsquo;s approved code of practice{' '}
                   <strong>L153 (Managing health and safety in construction)</strong> emphasises that
                   CDM should be applied proportionately to the scale and complexity of the project.
@@ -1418,7 +1418,7 @@ export default function CdmRegulationsModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-2 bg-black/30 rounded p-2">
                       <CheckCircle className="h-3.5 w-3.5 text-blue-400 mt-0.5 flex-shrink-0" />
-                      <span className="text-xs text-white/70">{item}</span>
+                      <span className="text-xs text-white">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -1429,7 +1429,7 @@ export default function CdmRegulationsModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">Practical Advice</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If you are ever unsure whether a particular activity is construction work under
                   CDM, the safest approach is to <strong>assume it is</strong> and apply CDM duties
                   proportionately. The consequences of ignoring CDM when it applies (potential
@@ -1450,7 +1450,7 @@ export default function CdmRegulationsModule1Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1464,7 +1464,7 @@ export default function CdmRegulationsModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-1-section-2">

@@ -17,14 +17,14 @@ const CircuitDesignerPage = () => {
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 Circuit Designer
               </h1>
-              <p className="text-sm text-white/60">AI-powered circuit design assistant</p>
+              <p className="text-sm text-white">AI-powered circuit design assistant</p>
             </div>
           </div>
           <Link to="/electrician-tools/ai-tooling">
             <Button
               variant="outline"
               size="sm"
-              className="h-10 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
+              className="h-10 px-4 border-white/20 text-white hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
             >
               <ArrowLeft className="h-4 w-4" />
               Back to AI Tools

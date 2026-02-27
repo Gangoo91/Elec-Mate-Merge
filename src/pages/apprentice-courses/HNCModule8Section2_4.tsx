@@ -270,7 +270,7 @@ const HNCModule8Section2_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section2">
@@ -292,7 +292,7 @@ const HNCModule8Section2_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Heat Recovery Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Plate heat exchangers, thermal wheels, run-around coils, efficiency calculations, and
             control strategies for building ventilation
           </p>
@@ -379,7 +379,7 @@ const HNCModule8Section2_4 = () => {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <p className="font-medium text-blue-400 mb-2">Extract Side</p>
-                    <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                    <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                       <li className="pl-1">Warm, stale air extracted from wet rooms</li>
                       <li className="pl-1">Kitchens: 13-30 l/s continuous</li>
                       <li className="pl-1">Bathrooms: 8-15 l/s continuous</li>
@@ -389,7 +389,7 @@ const HNCModule8Section2_4 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-green-400 mb-2">Supply Side</p>
-                    <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                    <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                       <li className="pl-1">Fresh outdoor air drawn in</li>
                       <li className="pl-1">Filtered to remove pollutants</li>
                       <li className="pl-1">Pre-heated by recovered energy</li>
@@ -455,7 +455,7 @@ const HNCModule8Section2_4 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
               <p className="text-sm font-medium text-green-400 mb-2">Energy Savings Potential</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 A well-designed MVHR system recovering 85% of exhaust heat can save 2,000-4,000
                 kWh/year in a typical UK dwelling - equivalent to £200-400 annually at current
                 energy prices. The system also improves indoor air quality by filtering incoming air
@@ -492,7 +492,7 @@ const HNCModule8Section2_4 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
                   <p className="font-medium text-blue-400 mb-2">Cross-Flow Exchanger</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Air streams cross at 90 degrees</li>
                     <li className="pl-1">Typical efficiency: 50-75%</li>
                     <li className="pl-1">Compact, simple construction</li>
@@ -502,7 +502,7 @@ const HNCModule8Section2_4 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
                   <p className="font-medium text-green-400 mb-2">Counter-Flow Exchanger</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Air streams flow in opposite directions</li>
                     <li className="pl-1">Typical efficiency: 75-95%</li>
                     <li className="pl-1">Maximum temperature differential maintained</li>
@@ -566,19 +566,19 @@ const HNCModule8Section2_4 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Efficiency Calculation</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Heat Recovery Efficiency (η) = (T_supply_out - T_supply_in) / (T_extract_in -
                   T_supply_in) × 100%
                 </p>
-                <p className="mt-2 text-white/60">Where:</p>
-                <p className="text-white/60">
+                <p className="mt-2 text-white">Where:</p>
+                <p className="text-white">
                   T_supply_out = Temperature of supply air leaving exchanger
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   T_supply_in = Temperature of outdoor supply air entering
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   T_extract_in = Temperature of extract air entering exchanger
                 </p>
                 <p className="mt-2">Example: Supply in 0°C, Extract in 21°C, Supply out 17°C</p>
@@ -615,7 +615,7 @@ const HNCModule8Section2_4 = () => {
               </p>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
                 <p className="font-medium text-purple-400 mb-2">Operating Principle</p>
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   A thermal wheel consists of a rotating matrix (typically aluminium honeycomb
                   structure) that passes alternately through the warm exhaust and cool supply air
                   streams. The matrix absorbs heat from the exhaust air and releases it to the
@@ -624,7 +624,7 @@ const HNCModule8Section2_4 = () => {
                 <div className="grid sm:grid-cols-2 gap-4 text-sm">
                   <div>
                     <p className="text-white font-medium mb-1">Advantages</p>
-                    <ul className="text-white/80 space-y-1 list-disc list-outside ml-5">
+                    <ul className="text-white space-y-1 list-disc list-outside ml-5">
                       <li className="pl-1">Enthalpy recovery (sensible + latent)</li>
                       <li className="pl-1">75-85% total efficiency achievable</li>
                       <li className="pl-1">Self-cleaning action</li>
@@ -634,7 +634,7 @@ const HNCModule8Section2_4 = () => {
                   </div>
                   <div>
                     <p className="text-white font-medium mb-1">Limitations</p>
-                    <ul className="text-white/80 space-y-1 list-disc list-outside ml-5">
+                    <ul className="text-white space-y-1 list-disc list-outside ml-5">
                       <li className="pl-1">2-5% cross-contamination (carryover)</li>
                       <li className="pl-1">Moving parts require maintenance</li>
                       <li className="pl-1">Air streams must be adjacent</li>
@@ -650,7 +650,7 @@ const HNCModule8Section2_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">Run-Around Coils</p>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
                 <p className="font-medium text-orange-400 mb-2">System Components</p>
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   Run-around coil systems use two finned-tube coils (one in extract, one in supply)
                   connected by pipework carrying a water/glycol solution. A pump circulates the
                   fluid, which absorbs heat from exhaust air and releases it to supply air.
@@ -658,7 +658,7 @@ const HNCModule8Section2_4 = () => {
                 <div className="grid sm:grid-cols-2 gap-4 text-sm">
                   <div>
                     <p className="text-white font-medium mb-1">Advantages</p>
-                    <ul className="text-white/80 space-y-1 list-disc list-outside ml-5">
+                    <ul className="text-white space-y-1 list-disc list-outside ml-5">
                       <li className="pl-1">Zero cross-contamination</li>
                       <li className="pl-1">Air streams can be remote</li>
                       <li className="pl-1">Ideal for hospitals, labs</li>
@@ -668,7 +668,7 @@ const HNCModule8Section2_4 = () => {
                   </div>
                   <div>
                     <p className="text-white font-medium mb-1">Limitations</p>
-                    <ul className="text-white/80 space-y-1 list-disc list-outside ml-5">
+                    <ul className="text-white space-y-1 list-disc list-outside ml-5">
                       <li className="pl-1">Lower efficiency (45-55%)</li>
                       <li className="pl-1">Double heat transfer loss</li>
                       <li className="pl-1">Pump energy consumption</li>
@@ -740,7 +740,7 @@ const HNCModule8Section2_4 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
               <p className="text-sm font-medium text-blue-400 mb-2">Heat Pipe Systems</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Heat pipes are sealed tubes containing a working fluid (typically refrigerant) that
                 evaporates in the warm air stream and condenses in the cool air stream. They are
                 completely passive (no moving parts or pumps) and provide zero cross-contamination.
@@ -776,7 +776,7 @@ const HNCModule8Section2_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">
                 Frost Protection Methods
               </p>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 When outdoor temperatures fall below approximately -5°C, moisture in warm exhaust
                 air can freeze on the cold heat exchanger surfaces, blocking airflow and damaging
                 equipment.
@@ -784,7 +784,7 @@ const HNCModule8Section2_4 = () => {
               <div className="space-y-4">
                 <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
                   <p className="font-medium text-blue-400 mb-1">Pre-Heater</p>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-white">
                     Electric or LPHW coil heats incoming air to above freezing point before entering
                     exchanger. Simple and effective but uses energy, partially offsetting heat
                     recovery savings. Typically activates below -5°C outdoor temperature.
@@ -792,7 +792,7 @@ const HNCModule8Section2_4 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
                   <p className="font-medium text-green-400 mb-1">Supply Air Modulation</p>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-white">
                     Temporarily reduces supply airflow, allowing warm exhaust air to defrost the
                     exchanger. Energy-efficient but temporarily reduces ventilation. Often combined
                     with recirculation to maintain air movement within the building.
@@ -800,7 +800,7 @@ const HNCModule8Section2_4 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
                   <p className="font-medium text-orange-400 mb-1">Defrost Cycle</p>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-white">
                     Periodically bypasses heat recovery or reverses airflow to melt ice. Can cause
                     temporary discomfort as cold air enters. Some systems use exhaust air
                     recirculation during defrost periods.
@@ -808,7 +808,7 @@ const HNCModule8Section2_4 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
                   <p className="font-medium text-purple-400 mb-1">Earth Tube Pre-Heating</p>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-white">
                     Outdoor air passes through buried tubes, pre-tempered by ground heat (8-12°C
                     year-round). Passive, zero-energy frost protection but requires significant
                     excavation. Also provides summer pre-cooling benefit.
@@ -822,7 +822,7 @@ const HNCModule8Section2_4 = () => {
                 Summer Bypass Operation
               </p>
               <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   When outdoor temperature is lower than indoor temperature, heat recovery is
                   undesirable - it would heat incoming air that is already cooler than required. A
                   summer bypass allows fresh air to enter directly, providing free cooling.
@@ -830,7 +830,7 @@ const HNCModule8Section2_4 = () => {
                 <div className="grid sm:grid-cols-2 gap-4 text-sm">
                   <div>
                     <p className="text-white font-medium mb-1">Bypass Activation Conditions</p>
-                    <ul className="text-white/80 space-y-1 list-disc list-outside ml-5">
+                    <ul className="text-white space-y-1 list-disc list-outside ml-5">
                       <li className="pl-1">Outdoor temp &lt; Indoor temp</li>
                       <li className="pl-1">No heating demand</li>
                       <li className="pl-1">Typically above 12-15°C outdoor</li>
@@ -839,7 +839,7 @@ const HNCModule8Section2_4 = () => {
                   </div>
                   <div>
                     <p className="text-white font-medium mb-1">Bypass Methods</p>
-                    <ul className="text-white/80 space-y-1 list-disc list-outside ml-5">
+                    <ul className="text-white space-y-1 list-disc list-outside ml-5">
                       <li className="pl-1">Motorised damper around exchanger</li>
                       <li className="pl-1">100% bypass or modulating</li>
                       <li className="pl-1">Automatic based on temperature</li>
@@ -942,7 +942,7 @@ const HNCModule8Section2_4 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
               <p className="text-sm font-medium text-red-400 mb-2">Common Commissioning Issues</p>
-              <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                 <li className="pl-1">
                   <strong>Unbalanced airflow:</strong> Extract exceeding supply creates negative
                   pressure
@@ -989,7 +989,7 @@ const HNCModule8Section2_4 = () => {
                 air at 20°C, and supply air leaving the exchanger at 15.5°C. Calculate the heat
                 recovery efficiency.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given: T_supply_in = -2°C, T_extract_in = 20°C, T_supply_out = 15.5°C</p>
                 <p className="mt-2">Heat Recovery Efficiency Formula:</p>
                 <p>η = (T_supply_out - T_supply_in) / (T_extract_in - T_supply_in) × 100%</p>
@@ -1015,7 +1015,7 @@ const HNCModule8Section2_4 = () => {
                 with 80% efficiency, 50 l/s airflow, operating 8,760 hours/year, average heating
                 season ΔT of 15°C for 5,000 hours.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given: η = 80%, Q = 50 l/s = 0.05 m³/s, ΔT = 15°C, t = 5000 hours</p>
                 <p className="mt-2">Heat Recovery Power:</p>
                 <p>P = Q × ρ × Cp × ΔT × η</p>
@@ -1039,7 +1039,7 @@ const HNCModule8Section2_4 = () => {
                 <strong>Question:</strong> An MVHR unit has two fans each consuming 45W to deliver
                 60 l/s. Calculate the specific fan power and assess Part L compliance.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given: Total fan power = 2 × 45W = 90W, Airflow = 60 l/s</p>
                 <p className="mt-2">Specific Fan Power Formula:</p>
                 <p>SFP = Total Fan Power / Airflow</p>
@@ -1049,8 +1049,8 @@ const HNCModule8Section2_4 = () => {
                   SFP = <strong>1.5 W/(l/s)</strong>
                 </p>
                 <p className="mt-2 text-red-400">This exceeds the Part L limit of 1.0 W/(l/s)</p>
-                <p className="text-white/60">Solutions: Reduce duct resistance, larger ductwork,</p>
-                <p className="text-white/60">more efficient fans, or lower airflow if compliant</p>
+                <p className="text-white">Solutions: Reduce duct resistance, larger ductwork,</p>
+                <p className="text-white">more efficient fans, or lower airflow if compliant</p>
               </div>
             </div>
 
@@ -1063,8 +1063,8 @@ const HNCModule8Section2_4 = () => {
                 kitchen, 2 bathrooms, and 1 utility room. Determine the minimum continuous
                 ventilation rate.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">
                   Part F Ventilation Rates (System 4 - Continuous MVHR):
                 </p>
                 <p className="mt-2">Extract Requirements:</p>
@@ -1081,7 +1081,7 @@ const HNCModule8Section2_4 = () => {
                 <p className="mt-2">
                   Design rate = MAX(37, 30) = <strong>37 l/s continuous</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Boost rates: Kitchen 30 l/s, Bathrooms 15 l/s each
                 </p>
                 <p className="text-green-400">Select unit capable of 60+ l/s for boost capacity</p>
@@ -1195,7 +1195,7 @@ const HNCModule8Section2_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1259,7 +1259,7 @@ const HNCModule8Section2_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section2-3">

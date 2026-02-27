@@ -212,7 +212,7 @@ export default function MewpModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-3">
@@ -237,7 +237,7 @@ export default function MewpModule3Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Outriggers, Stabilisers &amp; Ground Preparation
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Outrigger types and deployment procedures, spreader plates and pads, ground assessment
             and preparation, interlock systems, and the complete practical setup procedure for
             boom-type MEWPs
@@ -331,7 +331,7 @@ export default function MewpModule3Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Safety Rule</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     ALL outriggers must be FULLY deployed before the platform is elevated.
                   </strong>{' '}
@@ -377,7 +377,7 @@ export default function MewpModule3Section3() {
                     <Shield className="h-5 w-5 text-amber-400" />
                     <p className="text-sm font-medium text-amber-400">Manual Outriggers</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Pin-lock mechanism for extension positions</span>
@@ -402,7 +402,7 @@ export default function MewpModule3Section3() {
                     <Shield className="h-5 w-5 text-blue-400" />
                     <p className="text-sm font-medium text-blue-400">Hydraulic Outriggers</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Powered extension and retraction</span>
@@ -427,7 +427,7 @@ export default function MewpModule3Section3() {
                     <Shield className="h-5 w-5 text-green-400" />
                     <p className="text-sm font-medium text-green-400">Stabilisers</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Shorter legs that stabilise rather than fully support</span>
@@ -472,7 +472,7 @@ export default function MewpModule3Section3() {
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs font-bold flex-shrink-0">
                         {i + 1}
                       </span>
-                      <p className="text-sm text-white/80">{step}</p>
+                      <p className="text-sm text-white">{step}</p>
                     </div>
                   ))}
                 </div>
@@ -493,7 +493,7 @@ export default function MewpModule3Section3() {
 
                     {/* Machine body (centre rectangle) */}
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-36 sm:w-28 sm:h-40 bg-white/10 border border-white/30 rounded flex items-center justify-center">
-                      <span className="text-[10px] text-white/60 text-center leading-tight">
+                      <span className="text-[10px] text-white text-center leading-tight">
                         MEWP
                         <br />
                         Chassis
@@ -546,18 +546,18 @@ export default function MewpModule3Section3() {
                 <div className="flex flex-wrap justify-center gap-4 mt-4 text-[11px]">
                   <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 bg-amber-500/20 border border-amber-400/60 rounded" />
-                    <span className="text-white/60">Outrigger foot</span>
+                    <span className="text-white">Outrigger foot</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 border border-blue-400/30 rounded" />
-                    <span className="text-white/60">Spreader pad</span>
+                    <span className="text-white">Spreader pad</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <div className="w-3 h-[1px] border border-dashed border-green-500/40" />
-                    <span className="text-white/60">Stability envelope</span>
+                    <span className="text-white">Stability envelope</span>
                   </div>
                 </div>
-                <p className="text-[11px] text-white/40 text-center mt-2">
+                <p className="text-[11px] text-white text-center mt-2">
                   FL = Front Left, FR = Front Right, RL = Rear Left, RR = Rear Right
                 </p>
               </div>
@@ -588,7 +588,7 @@ export default function MewpModule3Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Mandatory Requirement</p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     <strong className="text-white">Boom-type MEWPs on outriggers:</strong> Spreader
                     plates MUST ALWAYS be used. No exceptions.
@@ -605,7 +605,7 @@ export default function MewpModule3Section3() {
                 <p className="text-sm font-medium text-elec-yellow mb-3">
                   Sizing Spreader Pads &mdash; IPAF Spreader Pad Calculator
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   IPAF provides a free Spreader Pad Calculator. The correct pad size depends on
                   three inputs:
                 </p>
@@ -614,7 +614,7 @@ export default function MewpModule3Section3() {
                     <span className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs font-bold flex-shrink-0">
                       1
                     </span>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-white">Machine weight + rated load</strong> &mdash;
                       the total force bearing down on each outrigger
                     </p>
@@ -623,7 +623,7 @@ export default function MewpModule3Section3() {
                     <span className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs font-bold flex-shrink-0">
                       2
                     </span>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-white">Ground bearing capacity</strong> &mdash; the
                       maximum pressure the ground can support (kN/m&sup2; or kPa)
                     </p>
@@ -632,7 +632,7 @@ export default function MewpModule3Section3() {
                     <span className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs font-bold flex-shrink-0">
                       3
                     </span>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-white">Outrigger pad size</strong> &mdash; the contact
                       area of the outrigger foot itself
                     </p>
@@ -643,7 +643,7 @@ export default function MewpModule3Section3() {
               <div className="grid md:grid-cols-3 gap-4 sm:gap-6">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-amber-400 mb-2">Timber Pads</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Scaffold boards (multiple, bolted)</span>
@@ -664,7 +664,7 @@ export default function MewpModule3Section3() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-blue-400 mb-2">Proprietary Pads</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Engineered plastic or composite</span>
@@ -685,7 +685,7 @@ export default function MewpModule3Section3() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-green-400 mb-2">Steel Plates</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Heavy-duty industrial applications</span>
@@ -795,7 +795,7 @@ export default function MewpModule3Section3() {
                   <Footprints className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Pre-Positioning Ground Checks</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -845,28 +845,28 @@ export default function MewpModule3Section3() {
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div>
                     <p className="text-sm font-medium text-white mb-1">Timber Mats</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Multiple scaffold boards bolted together to form a load-spreading platform.
                       Suitable for moderately soft ground.
                     </p>
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white mb-1">Proprietary Ground Mats</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Lightweight composite mats designed specifically for spreading heavy point
                       loads. Interlocking for larger areas.
                     </p>
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white mb-1">Steel Grillages</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Heavy-duty steel frameworks for industrial applications where very high ground
                       loading is expected.
                     </p>
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white mb-1">Concrete Pads</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Permanent installations for locations where MEWPs are regularly used in the
                       same position (e.g. maintenance bays).
                     </p>
@@ -881,7 +881,7 @@ export default function MewpModule3Section3() {
                     Distance From Excavation Edges
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The general rule is that the MEWP must be positioned at least a distance{' '}
                   <strong className="text-white">equal to the depth</strong> of the excavation away
                   from its edge. For example: a 3-metre-deep trench requires a minimum 3-metre
@@ -927,15 +927,15 @@ export default function MewpModule3Section3() {
                     <div key={i} className="flex items-center justify-between text-sm">
                       <div className="flex items-center gap-2">
                         <div className={`w-2 h-2 rounded-full ${row.colour} flex-shrink-0`} />
-                        <span className="text-white/80">{row.type}</span>
+                        <span className="text-white">{row.type}</span>
                       </div>
-                      <span className="text-white/60 text-xs ml-2 whitespace-nowrap">
+                      <span className="text-white text-xs ml-2 whitespace-nowrap">
                         {row.capacity}
                       </span>
                     </div>
                   ))}
                 </div>
-                <p className="text-[11px] text-white/40 mt-2">
+                <p className="text-[11px] text-white mt-2">
                   Values are indicative only. Always use site-specific data where available.
                 </p>
               </div>
@@ -967,7 +967,7 @@ export default function MewpModule3Section3() {
                     <Layers className="h-5 w-5 text-amber-400" />
                     <p className="text-sm font-medium text-amber-400">Pressure Switches</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Detect that load is being applied to the outrigger foot, confirming it is in
                     contact with the ground and bearing weight. If an outrigger is not loaded, the
                     switch prevents elevation.
@@ -979,7 +979,7 @@ export default function MewpModule3Section3() {
                     <Eye className="h-5 w-5 text-blue-400" />
                     <p className="text-sm font-medium text-blue-400">Position Sensors</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Detect that the outrigger beam is fully extended to its maximum reach. If
                     outriggers are only partially extended, the sensor prevents elevation and may
                     restrict the working envelope.
@@ -991,7 +991,7 @@ export default function MewpModule3Section3() {
                     <Lock className="h-5 w-5 text-green-400" />
                     <p className="text-sm font-medium text-green-400">Level Sensors</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Detect that the machine chassis is within the manufacturer&rsquo;s permitted
                     tilt range. If the machine is not level enough, elevation is prevented until the
                     operator adjusts the outriggers.
@@ -1006,7 +1006,7 @@ export default function MewpModule3Section3() {
                     WARNING: Never Bypass Interlocks
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Interlocks are a safety backup, <strong className="text-white">NOT</strong> a
                     substitute for visual confirmation by the operator. The operator must always
@@ -1119,7 +1119,7 @@ export default function MewpModule3Section3() {
                       </span>
                       <div>
                         <p className="text-sm font-medium text-white">{item.step}</p>
-                        <p className="text-sm text-white/70 mt-0.5">{item.detail}</p>
+                        <p className="text-sm text-white mt-0.5">{item.detail}</p>
                       </div>
                     </div>
                   ))}
@@ -1131,7 +1131,7 @@ export default function MewpModule3Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Common Setup Errors</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1192,7 +1192,7 @@ export default function MewpModule3Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1206,7 +1206,7 @@ export default function MewpModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-3">

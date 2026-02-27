@@ -186,7 +186,7 @@ export default function WorkingAtHeightModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-1">
@@ -211,7 +211,7 @@ export default function WorkingAtHeightModule1Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             What Is Working at Height?
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The legal definition, real-world scenarios, and the statistics that show why falls from
             height remain the biggest killer on UK construction sites
           </p>
@@ -324,7 +324,7 @@ export default function WorkingAtHeightModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">What the Definition Includes</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -380,7 +380,7 @@ export default function WorkingAtHeightModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">What Is NOT Working at Height</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -411,7 +411,7 @@ export default function WorkingAtHeightModule1Section1() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Common Misconception</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Many people believe that working at height only means being high up &mdash; on a
                   roof, a scaffold, or a tall ladder. In reality, the regulations apply to any
                   situation where a fall could cause injury. Standing on a 600mm-high stepladder to
@@ -448,25 +448,25 @@ export default function WorkingAtHeightModule1Section1() {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">~40</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       workers killed by falls from height each year
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">5,000+</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       major injuries from falls at height each year
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">~50%</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       of all construction fatalities involve falls
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">&lt;2m</p>
-                    <p className="text-white/70 text-xs">height band with the most fatal falls</p>
+                    <p className="text-white text-xs">height band with the most fatal falls</p>
                   </div>
                 </div>
               </div>
@@ -514,7 +514,7 @@ export default function WorkingAtHeightModule1Section1() {
                         </span>
                       </div>
                     </div>
-                    <p className="text-xs text-white/50 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Stepladders, low platforms, ground-level edges
                     </p>
                   </div>
@@ -530,7 +530,7 @@ export default function WorkingAtHeightModule1Section1() {
                         style={{ width: '30%' }}
                       ></div>
                     </div>
-                    <p className="text-xs text-white/50 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Ladders, low scaffolds, vehicle platforms
                     </p>
                   </div>
@@ -546,7 +546,7 @@ export default function WorkingAtHeightModule1Section1() {
                         style={{ width: '20%' }}
                       ></div>
                     </div>
-                    <p className="text-xs text-white/50 mt-1">Scaffolds, roofs, MEWPs</p>
+                    <p className="text-xs text-white mt-1">Scaffolds, roofs, MEWPs</p>
                   </div>
                   {/* Above 10m */}
                   <div>
@@ -560,7 +560,7 @@ export default function WorkingAtHeightModule1Section1() {
                         style={{ width: '15%' }}
                       ></div>
                     </div>
-                    <p className="text-xs text-white/50 mt-1">
+                    <p className="text-xs text-white mt-1">
                       High-level scaffolds, steelwork, towers
                     </p>
                   </div>
@@ -568,7 +568,7 @@ export default function WorkingAtHeightModule1Section1() {
                 <div className="mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
                   <div className="flex items-start gap-2">
                     <TrendingDown className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       <strong className="text-red-400">Critical insight:</strong> Over 60% of all
                       fatal falls occur from below 5 metres. The greatest risk is not extreme height
                       &mdash; it is complacency at low level. Workers often take fewer precautions
@@ -595,7 +595,7 @@ export default function WorkingAtHeightModule1Section1() {
                     Why Low-Level Falls Are So Deadly
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -658,7 +658,7 @@ export default function WorkingAtHeightModule1Section1() {
                     Typical Electrician Working at Height Scenarios
                   </p>
                 </div>
-                <div className="grid sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-3 text-sm text-white">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">Cable Tray &amp; Containment</p>
                     <ul className="space-y-1.5">
@@ -743,13 +743,13 @@ export default function WorkingAtHeightModule1Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Danger: Fragile Surfaces</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Electricians are particularly at risk from{' '}
                   <strong className="text-white">fragile surfaces</strong> when accessing rooftops,
                   ceiling voids, and industrial buildings. The following surfaces should always be
                   treated as fragile unless proven otherwise:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -809,7 +809,7 @@ export default function WorkingAtHeightModule1Section1() {
                   <HardHat className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Electrician-Specific Risks</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Electricians face additional risks when working at height because electrical work
                   often requires both hands to be free for connecting, terminating, or testing
                   cables. This can make it difficult to maintain three points of contact on a
@@ -844,7 +844,7 @@ export default function WorkingAtHeightModule1Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Activities Covered by the Regulations
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -904,7 +904,7 @@ export default function WorkingAtHeightModule1Section1() {
                 <p className="text-sm font-medium text-amber-500 mb-3">
                   Key Duties Under WAH Regulations 2005
                 </p>
-                <ol className="text-sm text-white/80 space-y-2 list-decimal list-inside">
+                <ol className="text-sm text-white space-y-2 list-decimal list-inside">
                   <li className="leading-relaxed">
                     <strong className="text-white">Avoid</strong> work at height wherever it is
                     reasonably practicable to do so
@@ -956,27 +956,27 @@ export default function WorkingAtHeightModule1Section1() {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-amber-400 text-xs font-semibold mb-1">Regulation 4</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Organisation and planning &mdash; all work at height must be properly planned,
                       appropriately supervised, and carried out in a safe manner
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-amber-400 text-xs font-semibold mb-1">Regulation 6</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Avoidance of risks &mdash; the avoid/prevent/mitigate hierarchy
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-amber-400 text-xs font-semibold mb-1">Regulation 7</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Selection of work equipment &mdash; must give collective protection priority
                       over personal protection
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-amber-400 text-xs font-semibold mb-1">Regulation 9</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Fragile surfaces &mdash; no person shall pass across or near, or work on,
                       from, or near a fragile surface unless safe to do so
                     </p>
@@ -1006,14 +1006,14 @@ export default function WorkingAtHeightModule1Section1() {
                 <p className="text-sm font-medium text-red-400 mb-2">
                   Case Study 1: Stepladder Fall &mdash; Fatal Head Injury
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   An experienced electrician was replacing a fluorescent luminaire in a commercial
                   office. He was standing on a standard two-tread stepladder approximately 600mm
                   above floor level. While reaching to disconnect the old fitting, the stepladder
                   shifted on the polished floor, causing him to fall backwards. He struck the back
                   of his head on the edge of a desk and suffered a fatal traumatic brain injury.
                 </p>
-                <p className="text-sm text-white/60">
+                <p className="text-sm text-white">
                   <strong className="text-amber-400">Lessons:</strong> The stepladder had no
                   non-slip feet. No risk assessment had been carried out. A podium step with
                   guardrails would have provided a stable, protected working platform. The task was
@@ -1025,7 +1025,7 @@ export default function WorkingAtHeightModule1Section1() {
                 <p className="text-sm font-medium text-red-400 mb-2">
                   Case Study 2: Fragile Roof Fall &mdash; Through a Roof Light
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   An electrical contractor was installing external security lighting on an
                   industrial unit. To run a cable across the roof, he walked across the flat roof
                   area. He stepped onto what appeared to be a solid section of the roof but was in
@@ -1034,7 +1034,7 @@ export default function WorkingAtHeightModule1Section1() {
                   to the concrete floor below, sustaining multiple fractures and a severe spinal
                   injury.
                 </p>
-                <p className="text-sm text-white/60">
+                <p className="text-sm text-white">
                   <strong className="text-amber-400">Lessons:</strong> No roof survey had been
                   carried out. Fragile surfaces had not been identified. No crawl boards, guard
                   rails, or fall arrest equipment were in use. The roof plan should have been
@@ -1046,7 +1046,7 @@ export default function WorkingAtHeightModule1Section1() {
                 <p className="text-sm font-medium text-red-400 mb-2">
                   Case Study 3: Ladder Overreach &mdash; Spinal Injury
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   A second-year apprentice was installing cable clips to a cable run along a wall in
                   a warehouse. He was working from a standard 3-section extension ladder. Rather
                   than moving the ladder along each time, he repeatedly overreached to the side to
@@ -1054,7 +1054,7 @@ export default function WorkingAtHeightModule1Section1() {
                   approximately 4 metres, landing on his back on the concrete floor. He sustained a
                   fractured vertebra and a ruptured disc, resulting in permanent partial paralysis.
                 </p>
-                <p className="text-sm text-white/60">
+                <p className="text-sm text-white">
                   <strong className="text-amber-400">Lessons:</strong> A ladder was not the right
                   access equipment for a task requiring sustained work along a horizontal run. A
                   tower scaffold or mobile scaffold would have been more appropriate. The apprentice
@@ -1086,20 +1086,20 @@ export default function WorkingAtHeightModule1Section1() {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-amber-400 font-semibold text-xs mb-1">Improvement Notice</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Requires the duty holder to remedy a contravention within a specified
                       timeframe
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-amber-400 font-semibold text-xs mb-1">Prohibition Notice</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Immediately stops a work activity that poses a risk of serious personal injury
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-red-400 font-semibold text-xs mb-1">Prosecution</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Unlimited fines and up to 2 years&rsquo; imprisonment for individuals
                     </p>
                   </div>
@@ -1107,7 +1107,7 @@ export default function WorkingAtHeightModule1Section1() {
                     <p className="text-red-400 font-semibold text-xs mb-1">
                       Fee for Intervention (FFI)
                     </p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       HSE charges &pound;163/hour for time spent investigating material breaches
                     </p>
                   </div>
@@ -1133,7 +1133,7 @@ export default function WorkingAtHeightModule1Section1() {
                 The key points to remember are:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -1201,7 +1201,7 @@ export default function WorkingAtHeightModule1Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1215,7 +1215,7 @@ export default function WorkingAtHeightModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-1">

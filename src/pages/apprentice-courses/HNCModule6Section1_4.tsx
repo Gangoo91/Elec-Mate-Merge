@@ -264,7 +264,7 @@ const HNCModule6Section1_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section1">
@@ -286,7 +286,7 @@ const HNCModule6Section1_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Air Permeability
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Air tightness testing, design air permeability, testing procedures, and achieving
             targets during construction
           </p>
@@ -644,7 +644,7 @@ const HNCModule6Section1_4 = () => {
               <div className="grid sm:grid-cols-2 gap-4 mt-2">
                 <div>
                   <p className="font-medium text-white mb-1">TSL1 - Dwellings</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Whole dwelling testing</li>
                     <li>Minimum 50Pa test pressure</li>
                     <li>Results in m³/h.m² @ 50Pa</li>
@@ -653,7 +653,7 @@ const HNCModule6Section1_4 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-1">TSL2 - Non-Domestic</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Whole building or zone testing</li>
                     <li>Representative sample options</li>
                     <li>Results in m³/h.m² @ 50Pa</li>
@@ -800,7 +800,7 @@ const HNCModule6Section1_4 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Structural Junctions</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Wall to floor junctions</li>
                     <li>Wall to ceiling junctions</li>
                     <li>Wall to roof connections</li>
@@ -811,7 +811,7 @@ const HNCModule6Section1_4 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Service Penetrations</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Electrical cables and back boxes</li>
                     <li>Plumbing pipes (water, waste, gas)</li>
                     <li>HVAC ductwork and pipework</li>
@@ -991,7 +991,7 @@ const HNCModule6Section1_4 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Critical coordination:</strong> MEP services that penetrate the air barrier
               after it is sealed - or that are installed without proper sealing - are the leading
               cause of air permeability test failures on otherwise well-constructed buildings.
@@ -1017,7 +1017,7 @@ const HNCModule6Section1_4 = () => {
                 <strong>Scenario:</strong> A detached dwelling with envelope area 320 m² tested at
                 50Pa shows air leakage rate of 1,280 m³/h.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given:</p>
                 <p className="ml-4">Air leakage rate (Q50) = 1,280 m³/h</p>
                 <p className="ml-4">Envelope area = 320 m²</p>
@@ -1028,7 +1028,7 @@ const HNCModule6Section1_4 = () => {
                 <p className="mt-2">Assessment:</p>
                 <p className="ml-4">Part L limit: 8.0 m³/h.m² @ 50Pa</p>
                 <p className="ml-4 text-green-400">Result: PASS (4.0 &lt; 8.0)</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This is a good result for standard construction
                 </p>
               </div>
@@ -1042,7 +1042,7 @@ const HNCModule6Section1_4 = () => {
                 <strong>Scenario:</strong> Same dwelling with internal volume 480 m³. Calculate n50
                 air changes.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given:</p>
                 <p className="ml-4">Air leakage rate (Q50) = 1,280 m³/h</p>
                 <p className="ml-4">Internal volume = 480 m³</p>
@@ -1065,7 +1065,7 @@ const HNCModule6Section1_4 = () => {
                 <strong>Scenario:</strong> Pre-test shows 6.5 m³/h.m² @ 50Pa against design target
                 of 5.0 m³/h.m². Identify remediation approach.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Assessment:</p>
                 <p className="ml-4">Result: 6.5 m³/h.m² @ 50Pa</p>
                 <p className="ml-4">Target: 5.0 m³/h.m² @ 50Pa</p>
@@ -1179,7 +1179,7 @@ const HNCModule6Section1_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1225,7 +1225,7 @@ const HNCModule6Section1_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section1">

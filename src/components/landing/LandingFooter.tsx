@@ -42,10 +42,10 @@ export const LandingFooter = () => {
                 Elec-<span className="text-yellow-400">Mate</span>
               </span>
             </Link>
-            <p className="text-xs sm:text-sm text-white/40 mb-4 max-w-[200px]">
+            <p className="text-xs sm:text-sm text-white mb-4 max-w-[200px]">
               The complete platform for UK electrical professionals.
             </p>
-            <div className="space-y-1.5 text-xs text-white/30">
+            <div className="space-y-1.5 text-xs text-white">
               <div className="flex items-center gap-2">
                 <Mail className="w-3.5 h-3.5" />
                 <span>info@elec-mate.com</span>
@@ -66,7 +66,7 @@ export const LandingFooter = () => {
                   <li key={link.name}>
                     <Link
                       to={link.href}
-                      className="text-xs sm:text-sm text-white/40 hover:text-white/70 active:text-white transition-colors touch-manipulation"
+                      className="text-xs sm:text-sm text-white hover:text-white active:text-white transition-colors touch-manipulation"
                     >
                       {link.name}
                     </Link>
@@ -80,10 +80,10 @@ export const LandingFooter = () => {
         {/* Divider */}
         <div className="border-t border-white/[0.04] pt-6">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-3">
-            <p className="text-xs text-white/30">
+            <p className="text-xs text-white">
               &copy; {currentYear} Elec-Mate. All rights reserved.
             </p>
-            <div className="flex items-center gap-3 text-xs text-white/30">
+            <div className="flex items-center gap-3 text-xs text-white">
               <span>BS 7671 Compliant</span>
               <span className="w-1 h-1 rounded-full bg-white/20" />
               <span>Made in UK</span>

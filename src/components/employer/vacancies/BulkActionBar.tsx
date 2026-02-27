@@ -48,7 +48,7 @@ export function BulkActionBar({
             <Button
               variant="ghost"
               size="icon"
-              className="h-8 w-8 text-white/60 hover:text-white hover:bg-white/10"
+              className="h-8 w-8 text-white hover:text-white hover:bg-white/10"
               onClick={onClearSelection}
               disabled={isProcessing}
             >

@@ -53,12 +53,12 @@ export const ElecIdBanner = ({ variant = 'electrician' }: ElecIdBannerProps) => 
                   </span>
                 )}
               </div>
-              <p className="text-xs text-white/60">
+              <p className="text-xs text-white">
                 {hasElecId ? 'Worker-owned professional identity' : 'Get your free credential'}
               </p>
             </div>
           </div>
-          <ChevronRight className="h-4 w-4 text-white/40 group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all" />
+          <ChevronRight className="h-4 w-4 text-white group-hover:text-elec-yellow group-hover:translate-x-0.5 transition-all" />
         </div>
       </Card>
     </Link>

@@ -226,7 +226,7 @@ const HNCModule4Section3_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section3">
@@ -248,7 +248,7 @@ const HNCModule4Section3_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Arc Fault Detection
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             AFDDs for fire prevention - technology, applications, and BS 7671 recommendations
           </p>
         </header>
@@ -386,7 +386,7 @@ const HNCModule4Section3_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Installation Faults</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Loose terminal connections</li>
                     <li className="pl-1">Damaged cable during installation</li>
                     <li className="pl-1">Incorrectly tightened connections</li>
@@ -395,7 +395,7 @@ const HNCModule4Section3_6 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Aging/Damage</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Insulation degradation over time</li>
                     <li className="pl-1">Rodent damage to cables</li>
                     <li className="pl-1">Physical damage (DIY, nails)</li>
@@ -580,7 +580,7 @@ const HNCModule4Section3_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Regulation 421.1.7 Recommendations
               </p>
-              <p className="text-sm text-white/90 italic mb-3">
+              <p className="text-sm text-white italic mb-3">
                 "Arc Fault Detection Devices (AFDDs) conforming to BS EN 62606 are recommended in AC
                 final circuits..."
               </p>
@@ -779,7 +779,7 @@ const HNCModule4Section3_6 = () => {
                   <p className="text-sm font-medium text-white mb-1">
                     Potential Nuisance Trip Sources
                   </p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Universal motors (vacuum, tools)</li>
                     <li className="pl-1">Some LED dimmer switches</li>
                     <li className="pl-1">Older electronic equipment</li>
@@ -789,7 +789,7 @@ const HNCModule4Section3_6 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Mitigation Strategies</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Select quality AFDD devices</li>
                     <li className="pl-1">Check manufacturer compatibility</li>
                     <li className="pl-1">Separate sensitive loads</li>
@@ -813,7 +813,7 @@ const HNCModule4Section3_6 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Troubleshooting:</strong> If an AFDD trips repeatedly, investigate the circuit
               for genuine wiring faults before assuming nuisance tripping. The AFDD may be detecting
               a real problem.
@@ -839,7 +839,7 @@ const HNCModule4Section3_6 = () => {
                 <strong>Question:</strong> Specify protection for a 6-bedroom HMO with sleeping
                 accommodation on all floors. Supply is TN-C-S.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Risk assessment:</p>
                 <p>
                   - Sleeping accommodation: <strong>High risk</strong>
@@ -865,7 +865,7 @@ const HNCModule4Section3_6 = () => {
                 <strong>Question:</strong> Compare protection options for a 10-way consumer unit:
                 standard RCBOs vs AFDD/RCBOs.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Cost comparison (approximate):</p>
                 <p>- Standard RCBO: £25 × 10 = £250</p>
                 <p>- AFDD/RCBO: £80 × 10 = £800</p>
@@ -878,8 +878,8 @@ const HNCModule4Section3_6 = () => {
                 <p>- Compliance with Reg 421.1.7 recommendation</p>
                 <p>- Potential insurance premium reduction</p>
                 <p>- Demonstrates design due diligence</p>
-                <p className="mt-2 text-white/60">→ For sleeping accommodation: cost justified</p>
-                <p className="text-white/60">→ For standard office: discuss with client</p>
+                <p className="mt-2 text-white">→ For sleeping accommodation: cost justified</p>
+                <p className="text-white">→ For standard office: discuss with client</p>
               </div>
             </div>
 
@@ -891,7 +891,7 @@ const HNCModule4Section3_6 = () => {
                 <strong>Question:</strong> An AFDD trips when a vacuum cleaner is used. How should
                 this be investigated?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Investigation steps:</p>
                 <p className="mt-2">
                   1. <strong>Verify the fault:</strong>
@@ -996,7 +996,7 @@ const HNCModule4Section3_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1042,7 +1042,7 @@ const HNCModule4Section3_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section3-5">

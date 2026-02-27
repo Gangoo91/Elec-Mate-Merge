@@ -210,7 +210,7 @@ export default function CscsCardModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-4">
@@ -237,7 +237,7 @@ export default function CscsCardModule4Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Noise &amp; Vibration
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding how excessive noise and vibration on construction sites cause permanent
             health damage, the legal exposure limits that apply, and the practical measures required
             to protect hearing and prevent hand-arm vibration syndrome
@@ -335,7 +335,7 @@ export default function CscsCardModule4Section3() {
                 <strong>Common noise sources on construction sites</strong> include:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                   <span>
@@ -467,11 +467,11 @@ export default function CscsCardModule4Section3() {
                         Lower Exposure Action Value
                       </p>
                     </div>
-                    <p className="text-xs text-white/60 mb-2">
+                    <p className="text-xs text-white mb-2">
                       Daily/weekly: <strong className="text-white">80 dB(A)</strong> &nbsp;|&nbsp;
                       Peak: <strong className="text-white">135 dB(C)</strong>
                     </p>
-                    <ul className="space-y-1 text-xs text-white/70">
+                    <ul className="space-y-1 text-xs text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-yellow-400" />
                         <span>Carry out a noise risk assessment</span>
@@ -502,11 +502,11 @@ export default function CscsCardModule4Section3() {
                         Upper Exposure Action Value
                       </p>
                     </div>
-                    <p className="text-xs text-white/60 mb-2">
+                    <p className="text-xs text-white mb-2">
                       Daily/weekly: <strong className="text-white">85 dB(A)</strong> &nbsp;|&nbsp;
                       Peak: <strong className="text-white">137 dB(C)</strong>
                     </p>
-                    <ul className="space-y-1 text-xs text-white/70">
+                    <ul className="space-y-1 text-xs text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-orange-400" />
                         <span>Reduce exposure through a programme of noise control measures</span>
@@ -539,11 +539,11 @@ export default function CscsCardModule4Section3() {
                       </div>
                       <p className="text-sm font-bold text-red-400">Exposure Limit Value</p>
                     </div>
-                    <p className="text-xs text-white/60 mb-2">
+                    <p className="text-xs text-white mb-2">
                       Daily/weekly: <strong className="text-white">87 dB(A)</strong> &nbsp;|&nbsp;
                       Peak: <strong className="text-white">140 dB(C)</strong>
                     </p>
-                    <ul className="space-y-1 text-xs text-white/70">
+                    <ul className="space-y-1 text-xs text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                         <span>Must NEVER be exceeded (takes hearing protection into account)</span>
@@ -563,8 +563,8 @@ export default function CscsCardModule4Section3() {
                 </div>
 
                 <div className="mt-4 bg-white/5 border border-white/10 rounded-lg p-3">
-                  <p className="text-xs text-white/60 text-center">
-                    <strong className="text-white/80">Important distinction:</strong> The exposure
+                  <p className="text-xs text-white text-center">
+                    <strong className="text-white">Important distinction:</strong> The exposure
                     limit value of 87 dB(A) takes into account the noise reduction provided by
                     hearing protection. The action values of 80 and 85 dB(A) do <strong>not</strong>{' '}
                     take hearing protection into account &mdash; they are measured at the ambient
@@ -623,7 +623,7 @@ export default function CscsCardModule4Section3() {
                 lower-level ones:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                   <span>
@@ -716,11 +716,11 @@ export default function CscsCardModule4Section3() {
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                   <Ear className="h-6 w-6 text-green-400 mb-2" />
                   <p className="text-sm font-semibold text-green-400 mb-1">Ear Plugs</p>
-                  <p className="text-xs text-white/70 mb-2">
+                  <p className="text-xs text-white mb-2">
                     Inserted into the ear canal to block sound transmission. Available as disposable
                     foam plugs, reusable silicone plugs, or custom-moulded plugs.
                   </p>
-                  <ul className="space-y-1 text-xs text-white/60">
+                  <ul className="space-y-1 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>Lightweight and comfortable for extended wear</span>
@@ -742,11 +742,11 @@ export default function CscsCardModule4Section3() {
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                   <Shield className="h-6 w-6 text-green-400 mb-2" />
                   <p className="text-sm font-semibold text-green-400 mb-1">Ear Defenders (Muffs)</p>
-                  <p className="text-xs text-white/70 mb-2">
+                  <p className="text-xs text-white mb-2">
                     Cups that fit over the entire ear, sealed against the head with cushioned pads,
                     held in place by a headband or attached to a hard hat.
                   </p>
-                  <ul className="space-y-1 text-xs text-white/60">
+                  <ul className="space-y-1 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>Generally provide higher attenuation than plugs</span>
@@ -780,7 +780,7 @@ export default function CscsCardModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Over-Protection Warning</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   It is important not to <strong>over-protect</strong>. If the hearing protection
                   reduces noise at the ear to below 70 dB(A), the wearer may feel isolated, unable
                   to hear warning signals, alarms, or verbal instructions. This creates a safety
@@ -794,7 +794,7 @@ export default function CscsCardModule4Section3() {
                 <strong>Proper fitting, maintenance, and hearing protection zones:</strong>
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                   <span>
@@ -863,7 +863,7 @@ export default function CscsCardModule4Section3() {
                 <strong>Common tools that cause HAV on construction sites:</strong>
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                   <span>
@@ -906,7 +906,7 @@ export default function CscsCardModule4Section3() {
                 <strong>Symptoms of HAVS</strong> fall into three categories:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                   <span>
@@ -946,7 +946,7 @@ export default function CscsCardModule4Section3() {
                   <Activity className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">HAVS Symptoms Progression</p>
                 </div>
-                <p className="text-xs text-white/50 mb-4">
+                <p className="text-xs text-white mb-4">
                   Staging from early to advanced &mdash; based on the Stockholm Workshop Scale
                 </p>
                 <div className="space-y-3">
@@ -958,7 +958,7 @@ export default function CscsCardModule4Section3() {
                       </div>
                       <p className="text-sm font-bold text-yellow-400">Early Stage (Mild)</p>
                     </div>
-                    <ul className="space-y-1 text-xs text-white/70">
+                    <ul className="space-y-1 text-xs text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-yellow-400" />
                         <span>
@@ -993,7 +993,7 @@ export default function CscsCardModule4Section3() {
                         Intermediate Stage (Moderate)
                       </p>
                     </div>
-                    <ul className="space-y-1 text-xs text-white/70">
+                    <ul className="space-y-1 text-xs text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-orange-400" />
                         <span>Frequent blanching extending to the middle and base of fingers</span>
@@ -1026,7 +1026,7 @@ export default function CscsCardModule4Section3() {
                       </div>
                       <p className="text-sm font-bold text-red-400">Advanced Stage (Severe)</p>
                     </div>
-                    <ul className="space-y-1 text-xs text-white/70">
+                    <ul className="space-y-1 text-xs text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                         <span>Extensive blanching affecting most or all fingers on both hands</span>
@@ -1053,8 +1053,8 @@ export default function CscsCardModule4Section3() {
                 </div>
 
                 <div className="mt-4 bg-white/5 border border-white/10 rounded-lg p-3">
-                  <p className="text-xs text-white/60 text-center">
-                    <strong className="text-white/80">Critical point:</strong> HAVS is largely
+                  <p className="text-xs text-white text-center">
+                    <strong className="text-white">Critical point:</strong> HAVS is largely
                     irreversible once established. Early detection through health surveillance is
                     essential because removing the worker from vibration exposure in the early stage
                     may prevent progression to more severe and disabling stages.
@@ -1102,14 +1102,14 @@ export default function CscsCardModule4Section3() {
                           Exposure Action Value (EAV)
                         </p>
                         <p className="text-lg font-bold text-white">2.5 m/s&sup2; A(8)</p>
-                        <p className="text-[10px] text-white/50 mt-1">
+                        <p className="text-[10px] text-white mt-1">
                           Action required: reduce exposure, inform workers, health surveillance
                         </p>
                       </div>
                       <div className="bg-red-500/10 border border-red-500/20 rounded p-2">
                         <p className="text-xs font-bold text-red-400">Exposure Limit Value (ELV)</p>
                         <p className="text-lg font-bold text-white">5.0 m/s&sup2; A(8)</p>
-                        <p className="text-[10px] text-white/50 mt-1">
+                        <p className="text-[10px] text-white mt-1">
                           Must NOT be exceeded &mdash; immediate action to reduce below limit
                         </p>
                       </div>
@@ -1127,14 +1127,14 @@ export default function CscsCardModule4Section3() {
                           Exposure Action Value (EAV)
                         </p>
                         <p className="text-lg font-bold text-white">0.5 m/s&sup2; A(8)</p>
-                        <p className="text-[10px] text-white/50 mt-1">
+                        <p className="text-[10px] text-white mt-1">
                           Action required: reduce exposure, inform workers, health surveillance
                         </p>
                       </div>
                       <div className="bg-red-500/10 border border-red-500/20 rounded p-2">
                         <p className="text-xs font-bold text-red-400">Exposure Limit Value (ELV)</p>
                         <p className="text-lg font-bold text-white">1.15 m/s&sup2; A(8)</p>
-                        <p className="text-[10px] text-white/50 mt-1">
+                        <p className="text-[10px] text-white mt-1">
                           Must NOT be exceeded &mdash; immediate action to reduce below limit
                         </p>
                       </div>
@@ -1149,7 +1149,7 @@ export default function CscsCardModule4Section3() {
                 </strong>
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                   <span>
@@ -1184,7 +1184,7 @@ export default function CscsCardModule4Section3() {
                 </strong>
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                   <span>
@@ -1239,7 +1239,7 @@ export default function CscsCardModule4Section3() {
                 tool, the task, and the exposure duration.
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                   <span>
@@ -1325,7 +1325,7 @@ export default function CscsCardModule4Section3() {
                   <Wrench className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="text-sm font-medium text-white mb-2">Grip Force</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Encourage workers to use the minimum grip force necessary to control the tool
                       safely. A tight, white-knuckle grip transmits more vibration to the hands than
                       a relaxed, controlled grip. Workers should also avoid supporting the weight of
@@ -1366,7 +1366,7 @@ export default function CscsCardModule4Section3() {
 
               <p className="font-medium text-white">Health Surveillance for Noise Exposure</p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                   <span>
@@ -1410,7 +1410,7 @@ export default function CscsCardModule4Section3() {
 
               <p className="font-medium text-white">Health Surveillance for HAVS</p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                   <span>
@@ -1456,7 +1456,7 @@ export default function CscsCardModule4Section3() {
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                   <Stethoscope className="h-6 w-6 text-green-400 mb-2" />
                   <p className="text-sm font-semibold text-green-400 mb-1">Reporting Obligations</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Cases of confirmed HAVS or occupational deafness must be reported to the HSE
                     under <strong>RIDDOR 2013</strong> (Reporting of Injuries, Diseases and
                     Dangerous Occurrences Regulations). HAVS is a prescribed occupational disease,
@@ -1470,7 +1470,7 @@ export default function CscsCardModule4Section3() {
                   <p className="text-sm font-semibold text-green-400 mb-1">
                     Fitness for Work Decisions
                   </p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     When HAVS is confirmed, the occupational health physician must advise on the
                     worker&rsquo;s fitness for continued vibration exposure. In early-stage cases,
                     continuing with reduced exposure and enhanced monitoring may be appropriate. In
@@ -1511,7 +1511,7 @@ export default function CscsCardModule4Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1529,7 +1529,7 @@ export default function CscsCardModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-4">

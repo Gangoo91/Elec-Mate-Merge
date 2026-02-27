@@ -293,7 +293,7 @@ const skipColourGuide = [
     bgClass: 'bg-white/10',
     borderClass: 'border-white/30',
     dotClass: 'bg-white/60',
-    textClass: 'text-white/70',
+    textClass: 'text-white',
     materials: 'General / mixed waste (last resort)',
     notes: 'Only for waste that genuinely cannot be segregated — aim to minimise this stream',
   },
@@ -335,7 +335,7 @@ const EnvironmentalSustainabilityModule2Section1 = () => {
             MODULE 2 &middot; SECTION 1
           </span>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">The Waste Hierarchy</h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding the five-level waste hierarchy &mdash; from prevention to disposal &mdash;
             and how to apply it practically on construction sites to reduce environmental impact and
             cost
@@ -496,7 +496,7 @@ const EnvironmentalSustainabilityModule2Section1 = () => {
                   <CheckCircle className="h-5 w-5 text-emerald-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-emerald-300">WRAP Guidance</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The Waste and Resources Action Programme (
                   <strong className="text-white">WRAP</strong>) provides free guidance, tools, and
                   case studies for construction waste prevention. Their &ldquo;Designing Out
@@ -587,7 +587,7 @@ const EnvironmentalSustainabilityModule2Section1 = () => {
                     Demolition Protocol for Reclamation
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Maximising reuse requires a{' '}
                   <strong className="text-white">pre-demolition audit</strong> to identify materials
                   with reclamation value, followed by a{' '}
@@ -712,7 +712,7 @@ const EnvironmentalSustainabilityModule2Section1 = () => {
                   <AlertTriangle className="h-5 w-5 text-emerald-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-emerald-300">Plasterboard Segregation</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Plasterboard must <strong className="text-white">always</strong> be segregated
                   from general waste. When gypsum decomposes in landfill in the presence of
                   biodegradable waste, it produces
@@ -784,7 +784,7 @@ const EnvironmentalSustainabilityModule2Section1 = () => {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Important Distinction</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Energy recovery is <strong className="text-white">below recycling</strong> in the
                   hierarchy because it destroys the material permanently. While it diverts waste
                   from landfill and captures energy value, the original material cannot be
@@ -855,14 +855,14 @@ const EnvironmentalSustainabilityModule2Section1 = () => {
                     Standard Rate
                   </p>
                   <p className="text-3xl sm:text-4xl font-bold text-white mb-1">&pound;103.70</p>
-                  <p className="text-white/60 text-sm">per tonne (non-inert waste)</p>
+                  <p className="text-white text-sm">per tonne (non-inert waste)</p>
                 </div>
                 <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg text-center">
                   <p className="text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Lower Rate (Inert)
                   </p>
                   <p className="text-3xl sm:text-4xl font-bold text-white mb-1">&pound;3.25</p>
-                  <p className="text-white/60 text-sm">per tonne (clean soil, stone, concrete)</p>
+                  <p className="text-white text-sm">per tonne (clean soil, stone, concrete)</p>
                 </div>
               </div>
 
@@ -1002,7 +1002,7 @@ const EnvironmentalSustainabilityModule2Section1 = () => {
                     The Cost of Poor Waste Management
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   WRAP research shows that construction waste typically costs{' '}
                   <strong className="text-white">between 2% and 4% of total project value</strong>.
                   This includes not just skip hire and disposal costs, but also the cost of the
@@ -1164,7 +1164,7 @@ const EnvironmentalSustainabilityModule2Section1 = () => {
               Waste Hierarchy Pyramid
             </h2>
             <div className="space-y-4 text-white">
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 The pyramid shape illustrates the priority order: the narrowest section at the top
                 (Prevention) is the most preferred option, and the widest section at the base
                 (Disposal) is the least preferred.
@@ -1188,7 +1188,7 @@ const EnvironmentalSustainabilityModule2Section1 = () => {
                             <p className={`${level.textClass} font-semibold text-sm`}>
                               {level.title}
                             </p>
-                            <p className="text-white/70 text-xs mt-0.5 hidden sm:block">
+                            <p className="text-white text-xs mt-0.5 hidden sm:block">
                               {level.description}
                             </p>
                           </div>
@@ -1197,7 +1197,7 @@ const EnvironmentalSustainabilityModule2Section1 = () => {
                     </div>
                   ))}
                 </div>
-                <div className="flex justify-between mt-4 text-xs text-white/50 px-4">
+                <div className="flex justify-between mt-4 text-xs text-white px-4">
                   <span>Most preferred</span>
                   <span>Least preferred</span>
                 </div>
@@ -1214,7 +1214,7 @@ const EnvironmentalSustainabilityModule2Section1 = () => {
               Site Waste Segregation Guide
             </h2>
             <div className="space-y-4 text-white">
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 Colour-coded skip systems vary between sites, but the following is a common
                 convention used across UK construction. Always check your specific site rules.
               </p>
@@ -1239,10 +1239,10 @@ const EnvironmentalSustainabilityModule2Section1 = () => {
                             <span className={`${skip.textClass} font-semibold text-sm`}>
                               {skip.colour}
                             </span>
-                            <span className="text-white/50 text-xs">&mdash;</span>
+                            <span className="text-white text-xs">&mdash;</span>
                             <span className="text-white text-sm font-medium">{skip.materials}</span>
                           </div>
-                          <p className="text-white/60 text-xs">{skip.notes}</p>
+                          <p className="text-white text-xs">{skip.notes}</p>
                         </div>
                       </div>
                     </div>
@@ -1340,7 +1340,7 @@ const EnvironmentalSustainabilityModule2Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1356,7 +1356,7 @@ const EnvironmentalSustainabilityModule2Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-2">

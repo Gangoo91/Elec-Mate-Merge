@@ -255,7 +255,7 @@ const HNCModule5Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section2">
@@ -277,7 +277,7 @@ const HNCModule5Section2_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             NEC Contracts
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             NEC4 ECC main options, early warning procedures, compensation events, and programme
             management for building services projects
           </p>
@@ -470,7 +470,7 @@ const HNCModule5Section2_3 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                   Building Services Example - Option A
                 </p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   A straightforward lighting installation package with clear specification and
                   quantities would suit Option A. The M&E subcontractor prices activities (supply
                   luminaires, first fix, second fix, commissioning) and is paid on completion of
@@ -481,7 +481,7 @@ const HNCModule5Section2_3 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                   Building Services Example - Option C
                 </p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   A complex HVAC installation where design will develop during construction suits
                   Option C. The target is agreed, but as design evolves, the pain/gain share
                   incentivises the contractor to deliver efficiently whilst the employer shares some
@@ -619,7 +619,7 @@ const HNCModule5Section2_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Building Services Scenario
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 An electrical subcontractor notices the architect's ceiling grid layout conflicts
                 with the containment routes shown in the M&E coordination drawings. Rather than
                 waiting for installation and claiming delay, they raise an early warning. A risk
@@ -775,7 +775,7 @@ const HNCModule5Section2_3 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                   M&E Example - Scope Change
                 </p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   The architect instructs additional power outlets in the meeting rooms. The
                   electrical contractor notifies this as CE 60.1(1). They submit a quotation showing
                   additional cable, containment, outlets, labour hours (Defined Cost) plus Fee, and
@@ -785,7 +785,7 @@ const HNCModule5Section2_3 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">M&E Example - Access</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   The mechanical contractor cannot access the plant room on the stated date because
                   builder's work is incomplete. This is CE 60.1(2). The quotation includes standing
                   time for the ductwork installation team, re-mobilisation costs, and demonstrates
@@ -848,13 +848,13 @@ const HNCModule5Section2_3 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Float Ownership</p>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 Under NEC4, <strong>terminal float</strong> (time between planned Completion and the
                 Completion Date) belongs to the Contractor. When assessing compensation events, the
                 effect is measured against planned Completion - the Contractor keeps their float
                 protection.
               </p>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 Example: If planned Completion is Week 48 and Completion Date is Week 52, a CE
                 causing 3 weeks delay moves planned Completion to Week 51 and Completion Date to
                 Week 55 - the 4-week float is preserved.
@@ -992,7 +992,7 @@ const HNCModule5Section2_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Collaborative Working in Practice
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 NEC4's strength lies in its collaborative mechanisms. On a hospital M&E project, the
                 electrical contractor raises an early warning about switchgear lead times. At the
                 risk reduction meeting, the team agrees to resequence the installation, starting in
@@ -1029,7 +1029,7 @@ const HNCModule5Section2_3 = () => {
                 Design is 70% complete with some elements still developing. Budget is tight but
                 firm.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Analysis:</p>
                 <p>- Design not fully complete → scope may change</p>
                 <p>- Budget sensitivity → need cost control incentive</p>
@@ -1037,10 +1037,10 @@ const HNCModule5Section2_3 = () => {
                 <p className="mt-2">
                   Recommendation: <strong>Option C (Target Cost)</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Pain/gain share motivates Contractor to control costs
                 </p>
-                <p className="text-white/60">while target adjusts for scope changes via CEs.</p>
+                <p className="text-white">while target adjusts for scope changes via CEs.</p>
               </div>
             </div>
 
@@ -1052,7 +1052,7 @@ const HNCModule5Section2_3 = () => {
                 <strong>Scenario:</strong> PM instructs additional fan coil units in meeting rooms.
                 Contractor to assess.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Defined Cost assessment (Option A):</p>
                 <p>Materials: 6 × FCU @ £850 = £5,100</p>
                 <p>Pipework and valves = £1,200</p>
@@ -1061,7 +1061,7 @@ const HNCModule5Section2_3 = () => {
                 <p className="border-t border-white/20 mt-2 pt-2">Total Defined Cost = £8,860</p>
                 <p>Fee (stated in Contract Data 12%) = £1,063</p>
                 <p className="font-bold">Total CE quotation = £9,923</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Time: 5 days on critical path (demonstrated on programme)
                 </p>
               </div>
@@ -1075,7 +1075,7 @@ const HNCModule5Section2_3 = () => {
                 <strong>Scenario:</strong> Electrical subcontractor identifies that cable delivery
                 from overseas will be 4 weeks late due to shipping delays.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Early Warning issued immediately</p>
                 <p className="mt-2">Risk Reduction Meeting actions agreed:</p>
                 <p>1. Contractor to source alternative UK supplier</p>
@@ -1085,7 +1085,7 @@ const HNCModule5Section2_3 = () => {
                 <p className="mt-2 text-green-400">
                   → Result: Completion date protected through collaboration
                 </p>
-                <p className="text-white/60">No compensation event required - risk mitigated</p>
+                <p className="text-white">No compensation event required - risk mitigated</p>
               </div>
             </div>
           </div>
@@ -1176,7 +1176,7 @@ const HNCModule5Section2_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1225,7 +1225,7 @@ const HNCModule5Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section2">

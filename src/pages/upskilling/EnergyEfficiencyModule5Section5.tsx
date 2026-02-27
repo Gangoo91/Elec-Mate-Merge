@@ -238,7 +238,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
       <div className="max-w-4xl mx-auto px-4 py-6 space-y-6">
         {/* Quick Summary */}
         <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
-          <p className="text-white/90 leading-relaxed">
+          <p className="text-white leading-relaxed">
             Essential cybersecurity practices for Building Management Systems and energy
             infrastructure. Understand OT security, network segmentation, UK NIS Regulations, and
             practical security measures every electrician should implement.
@@ -255,13 +255,13 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
               <h2 className="text-xl font-semibold text-red-400 mb-3">
                 Why Cybersecurity Matters for Electricians
               </h2>
-              <p className="text-white/80 mb-3">
+              <p className="text-white mb-3">
                 Modern electrical installations are increasingly networked. Smart meters, Building
                 Management Systems, EV chargers, solar inverters, and IoT devices all connect to
                 networks - and all can be compromised. A single vulnerable device can provide
                 attackers access to entire building systems or corporate networks.
               </p>
-              <p className="text-white/80">
+              <p className="text-white">
                 As electrical professionals, we have a responsibility to understand these risks and
                 implement basic security measures. The consequences of poor security can include
                 ransomware attacks, equipment damage, safety system failures, and significant
@@ -279,7 +279,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
             OT vs IT Security Differences
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Understanding the fundamental differences between Information Technology (IT) and
               Operational Technology (OT) is crucial for effective security in building systems.
@@ -291,7 +291,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                   <Server className="w-5 h-5 text-blue-400" />
                   <h3 className="font-semibold text-blue-400">IT Systems</h3>
                 </div>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-blue-400 mt-1">-</span>
                     Computers, servers, databases, business applications
@@ -320,7 +320,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                   <Zap className="w-5 h-5 text-elec-yellow" />
                   <h3 className="font-semibold text-elec-yellow">OT Systems</h3>
                 </div>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow mt-1">-</span>
                     BMS, SCADA, PLCs, HMIs, smart devices
@@ -347,7 +347,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
 
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h4 className="font-semibold text-elec-yellow mb-2">The Convergence Challenge</h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Traditional OT systems were isolated ("air-gapped") from IT networks. Modern smart
                 buildings increasingly connect OT to IT networks for remote monitoring, analytics,
                 and cloud services. This convergence creates new attack vectors. Security strategies
@@ -375,7 +375,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
             Common Vulnerabilities in BMS and Energy Systems
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Building Management Systems and energy infrastructure have numerous common
               vulnerabilities. Understanding these helps identify and mitigate risks during
@@ -388,7 +388,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                   <Key className="w-5 h-5 text-red-400" />
                   <h4 className="font-semibold text-red-400">Default Credentials</h4>
                 </div>
-                <p className="text-white/70 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   The most common and easily exploited vulnerability. Default usernames and
                   passwords (admin/admin, administrator/password) are published in manuals and
                   online databases.
@@ -405,7 +405,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                   <Wifi className="w-5 h-5 text-orange-400" />
                   <h4 className="font-semibold text-orange-400">Unencrypted Protocols</h4>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Legacy protocols like BACnet, Modbus, and LonWorks were designed for isolated
                   networks and lack encryption or authentication. Data travels in plaintext,
                   vulnerable to interception and manipulation. BACnet/SC (Secure Connect) addresses
@@ -418,7 +418,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                   <AlertTriangle className="w-5 h-5 text-yellow-400" />
                   <h4 className="font-semibold text-yellow-400">Unpatched Systems</h4>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   OT systems often run outdated operating systems (Windows XP, Windows 7) that no
                   longer receive security updates. Controllers may have firmware vulnerabilities
                   that cannot be patched without vendor support or system downtime that operations
@@ -431,7 +431,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                   <Eye className="w-5 h-5 text-purple-400" />
                   <h4 className="font-semibold text-purple-400">Direct Internet Exposure</h4>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   BMS web interfaces and controllers directly accessible from the internet without
                   VPN or firewall protection. Often done for convenience of remote access but
                   creates massive attack surface. Port forwarding to BMS devices is particularly
@@ -444,7 +444,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                   <Network className="w-5 h-5 text-blue-400" />
                   <h4 className="font-semibold text-blue-400">Flat Network Architecture</h4>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   All devices on a single network segment with no segregation. Once an attacker
                   gains access to any device, they can reach all others. Common in older
                   installations and small-to-medium buildings where network design was an
@@ -455,7 +455,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
 
             <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-red-400 mb-2">Notable BMS Security Incidents</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li>
                   <strong>Target (2013):</strong> 40 million credit cards compromised via HVAC
                   contractor network access
@@ -494,7 +494,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
             Network Segmentation and Firewalls
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Network segmentation is the practice of dividing a network into separate zones with
               controlled communication between them. This limits the spread of attacks and protects
@@ -508,39 +508,39 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
               <div className="space-y-2 text-sm">
                 <div className="flex items-center gap-3 p-2 bg-purple-500/20 rounded">
                   <span className="text-purple-400 font-mono w-16">Level 5</span>
-                  <span className="text-white/70">
+                  <span className="text-white">
                     Enterprise Network - Corporate IT, internet access
                   </span>
                 </div>
                 <div className="flex items-center gap-3 p-2 bg-blue-500/20 rounded">
                   <span className="text-blue-400 font-mono w-16">Level 4</span>
-                  <span className="text-white/70">Business Planning - ERP, business systems</span>
+                  <span className="text-white">Business Planning - ERP, business systems</span>
                 </div>
                 <div className="flex items-center gap-3 p-2 bg-green-500/20 rounded border-2 border-green-500/50">
                   <span className="text-green-400 font-mono w-16">DMZ</span>
-                  <span className="text-white/70">
+                  <span className="text-white">
                     Demilitarised Zone - Secure buffer between IT and OT
                   </span>
                 </div>
                 <div className="flex items-center gap-3 p-2 bg-yellow-500/20 rounded">
                   <span className="text-yellow-400 font-mono w-16">Level 3</span>
-                  <span className="text-white/70">
+                  <span className="text-white">
                     Site Operations - BMS head-end, historian, engineering workstations
                   </span>
                 </div>
                 <div className="flex items-center gap-3 p-2 bg-orange-500/20 rounded">
                   <span className="text-orange-400 font-mono w-16">Level 2</span>
-                  <span className="text-white/70">
+                  <span className="text-white">
                     Area Control - Local HMIs, supervisory systems
                   </span>
                 </div>
                 <div className="flex items-center gap-3 p-2 bg-red-500/20 rounded">
                   <span className="text-red-400 font-mono w-16">Level 1</span>
-                  <span className="text-white/70">Basic Control - PLCs, controllers, RTUs</span>
+                  <span className="text-white">Basic Control - PLCs, controllers, RTUs</span>
                 </div>
                 <div className="flex items-center gap-3 p-2 bg-white/5 rounded">
-                  <span className="text-white/50 font-mono w-16">Level 0</span>
-                  <span className="text-white/70">
+                  <span className="text-white font-mono w-16">Level 0</span>
+                  <span className="text-white">
                     Physical Process - Sensors, actuators, field devices
                   </span>
                 </div>
@@ -550,11 +550,11 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-white/5 rounded-lg p-4 border border-white/10">
                 <h4 className="font-semibold text-blue-400 mb-2">VLAN Segmentation</h4>
-                <p className="text-white/70 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   Virtual LANs separate network traffic at Layer 2. Different systems get different
                   VLANs:
                 </p>
-                <ul className="space-y-1 text-sm text-white/60">
+                <ul className="space-y-1 text-sm text-white">
                   <li>- VLAN 10: Corporate IT</li>
                   <li>- VLAN 20: BMS/HVAC</li>
                   <li>- VLAN 30: Lighting controls</li>
@@ -565,10 +565,10 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
 
               <div className="bg-white/5 rounded-lg p-4 border border-white/10">
                 <h4 className="font-semibold text-green-400 mb-2">Firewall Rules</h4>
-                <p className="text-white/70 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   Firewalls control traffic between VLANs and networks using rules:
                 </p>
-                <ul className="space-y-1 text-sm text-white/60">
+                <ul className="space-y-1 text-sm text-white">
                   <li>- Allow BMS server to query controllers</li>
                   <li>- Block direct internet access from OT</li>
                   <li>- Allow specific management ports only</li>
@@ -582,7 +582,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
               <h4 className="font-semibold text-elec-yellow mb-2">
                 Practical Tip for Electricians
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 When installing networked equipment, always ask the client about their network
                 architecture. Request the correct VLAN assignment for your devices. Do not simply
                 connect to the nearest available network port - it may be the wrong network segment.
@@ -601,7 +601,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
             Authentication and Access Control
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Proper authentication ensures only authorised users and devices can access systems.
               Access control limits what authenticated users can do based on their role.
@@ -613,7 +613,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                   <CheckCircle2 className="w-5 h-5 text-green-400" />
                   <h4 className="font-semibold text-white">Password Best Practices</h4>
                 </div>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 flex-shrink-0" />
                     <span>Change all default passwords before handover</span>
@@ -642,7 +642,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                   <XCircle className="w-5 h-5 text-red-400" />
                   <h4 className="font-semibold text-white">Common Mistakes to Avoid</h4>
                 </div>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <XCircle className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
                     <span>Leaving default passwords in place</span>
@@ -671,7 +671,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
               <h4 className="font-semibold text-elec-yellow mb-3">
                 Role-Based Access Control (RBAC)
               </h4>
-              <p className="text-white/70 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 Users should only have access to what they need for their role - the principle of
                 least privilege:
               </p>
@@ -684,7 +684,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                       <th className="text-left py-2 text-elec-yellow">Typical Permissions</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/70">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2">Administrator</td>
                       <td className="py-2">Full</td>
@@ -714,7 +714,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
               <h4 className="font-semibold text-elec-yellow mb-2">
                 Multi-Factor Authentication (MFA)
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 MFA requires two or more verification methods: something you know (password),
                 something you have (phone/token), or something you are (biometric). Increasingly
                 supported by modern BMS platforms for web interfaces and remote access. Essential
@@ -733,7 +733,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
             UK Regulatory Requirements (NIS Directive)
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/30">
               <div className="flex items-center gap-2 mb-3">
                 <FileText className="w-5 h-5 text-blue-400" />
@@ -741,12 +741,12 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                   Network and Information Systems (NIS) Regulations 2018
                 </h4>
               </div>
-              <p className="text-white/70 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 The UK NIS Regulations implement the EU NIS Directive and establish a legal
                 framework for cybersecurity in critical infrastructure sectors including energy. Key
                 requirements:
               </p>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-blue-400">-</span>
                   <span>
@@ -788,33 +788,33 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                   NCSC Cyber Assessment Framework (CAF)
                 </h4>
               </div>
-              <p className="text-white/70 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 The National Cyber Security Centre provides the CAF to help organisations achieve
                 NIS compliance:
               </p>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <div className="bg-green-500/10 p-2 rounded">
                   <span className="text-green-400 font-medium">Objective A:</span>
-                  <span className="text-white/70"> Managing Security Risk</span>
+                  <span className="text-white"> Managing Security Risk</span>
                 </div>
                 <div className="bg-green-500/10 p-2 rounded">
                   <span className="text-green-400 font-medium">Objective B:</span>
-                  <span className="text-white/70"> Protecting Against Attacks</span>
+                  <span className="text-white"> Protecting Against Attacks</span>
                 </div>
                 <div className="bg-green-500/10 p-2 rounded">
                   <span className="text-green-400 font-medium">Objective C:</span>
-                  <span className="text-white/70"> Detecting Security Events</span>
+                  <span className="text-white"> Detecting Security Events</span>
                 </div>
                 <div className="bg-green-500/10 p-2 rounded">
                   <span className="text-green-400 font-medium">Objective D:</span>
-                  <span className="text-white/70"> Minimising Incident Impact</span>
+                  <span className="text-white"> Minimising Incident Impact</span>
                 </div>
               </div>
             </div>
 
             <div className="bg-white/5 rounded-lg p-4 border border-white/10">
               <h4 className="font-semibold text-elec-yellow mb-2">Implications for Contractors</h4>
-              <div className="space-y-3 text-sm text-white/70">
+              <div className="space-y-3 text-sm text-white">
                 <p>
                   While NIS obligations fall on OES organisations, contractors working on their
                   sites must:
@@ -846,7 +846,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
 
             <div className="bg-purple-500/10 border border-purple-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-purple-400 mb-2">Additional UK Guidance</h4>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li>
                   <strong className="text-white">NCSC:</strong> Extensive free guidance at
                   ncsc.gov.uk including OT-specific advice
@@ -885,7 +885,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
             Security Best Practices for Electricians
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Practical cybersecurity measures that electrical professionals can implement without
               specialist IT knowledge. These actions significantly reduce risk exposure.
@@ -899,7 +899,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                   </div>
                   <h4 className="font-semibold text-white">During Installation</h4>
                 </div>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow font-bold">1.</span>
                     <span>
@@ -952,7 +952,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                   </div>
                   <h4 className="font-semibold text-white">Documentation and Handover</h4>
                 </div>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-blue-400 font-bold">1.</span>
                     <span>
@@ -998,7 +998,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
                   </div>
                   <h4 className="font-semibold text-white">When You Discover Issues</h4>
                 </div>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-orange-400 font-bold">1.</span>
                     <span>
@@ -1040,7 +1040,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
 
             <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-red-400 mb-2">Warning: What NOT to Do</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <XCircle className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
                   <span>Never connect BMS directly to the internet "for convenience"</span>
@@ -1076,7 +1076,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
           <div className="grid md:grid-cols-2 gap-4">
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-semibold text-white mb-2">Installation Security Checklist</h4>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li>[ ] Default passwords changed</li>
                 <li>[ ] Firmware updated to latest version</li>
                 <li>[ ] Unused services disabled</li>
@@ -1090,7 +1090,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
 
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-semibold text-white mb-2">Key Contacts and Resources</h4>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li>
                   <strong className="text-white">NCSC:</strong> ncsc.gov.uk - Free security guidance
                 </li>
@@ -1112,7 +1112,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
 
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-semibold text-white mb-2">Strong Password Format</h4>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li>- Minimum 12 characters</li>
                 <li>- Mix of upper and lowercase</li>
                 <li>- Include numbers and symbols</li>
@@ -1124,7 +1124,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
 
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-semibold text-white mb-2">Red Flags to Report</h4>
-              <ul className="space-y-1 text-sm text-white/70">
+              <ul className="space-y-1 text-sm text-white">
                 <li>- Default credentials still in use</li>
                 <li>- BMS accessible from internet</li>
                 <li>- No network segmentation</li>
@@ -1146,7 +1146,7 @@ const EnergyEfficiencyModule5Section5: React.FC = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-0 last:pb-0">
                 <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

@@ -142,7 +142,7 @@ const Module6Section7_2 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -160,13 +160,13 @@ const Module6Section7_2 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.7.2</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.7.2</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Awareness of Electrical Installation Certificates (EICs)
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Understanding Electrical Installation Certificates for new installations and major
               alterations
             </p>
@@ -175,7 +175,7 @@ const Module6Section7_2 = () => {
           {/* Summary Box */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <h2 className="font-semibold text-white mb-3">Spot it in 30 Seconds</h2>
-            <ul className="space-y-2 text-sm text-white/80">
+            <ul className="space-y-2 text-sm text-white">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>EIC required for new installations and major alterations</span>
@@ -201,7 +201,7 @@ const Module6Section7_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Introduction
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 The Electrical Installation Certificate (EIC) is the primary document used to
                 certify that new electrical installations, or significant alterations, comply with
@@ -217,7 +217,7 @@ const Module6Section7_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               What an EIC Is
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 An Electrical Installation Certificate (EIC) is an official document required by BS
                 7671 to confirm that new electrical work has been inspected, tested, and complies
@@ -229,7 +229,7 @@ const Module6Section7_2 = () => {
 
               <div className="p-4 rounded-lg bg-blue-500/10 border-l-2 border-blue-400/50">
                 <h4 className="font-medium text-blue-300 mb-2">EIC Definition and Scope:</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-white/70">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-white">
                   <div>
                     <strong>What it Covers:</strong>
                     <ul className="mt-1 space-y-1 ml-4">
@@ -260,7 +260,7 @@ const Module6Section7_2 = () => {
 
               <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-400/50">
                 <h4 className="font-medium text-amber-300 mb-2">EIC vs Other Certificates:</h4>
-                <ul className="text-sm text-white/70 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>
                     • <strong>EIC:</strong> New installations and major alterations
                   </li>
@@ -296,7 +296,7 @@ const Module6Section7_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               When an EIC Must Be Issued
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>An EIC is mandatory for:</p>
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>New installations (e.g., a new house wiring system)</li>
@@ -310,7 +310,7 @@ const Module6Section7_2 = () => {
 
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-400/50">
                 <h4 className="font-medium text-green-300 mb-2">Detailed EIC Requirements:</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-white/70">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-white">
                   <div>
                     <strong>Always Require EIC:</strong>
                     <ul className="mt-1 space-y-1 ml-4">
@@ -342,7 +342,7 @@ const Module6Section7_2 = () => {
 
               <div className="p-4 rounded-lg bg-purple-500/10 border-l-2 border-purple-400/50">
                 <h4 className="font-medium text-purple-300 mb-2">Special Considerations:</h4>
-                <ul className="text-sm text-white/70 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>
                     • Bathroom installations usually require EIC due to special location
                     requirements
@@ -377,7 +377,7 @@ const Module6Section7_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Information Included in an EIC
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>An EIC includes:</p>
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>Details of the installation (address, description, supply characteristics)</li>
@@ -398,7 +398,7 @@ const Module6Section7_2 = () => {
                 <h4 className="font-medium text-orange-300 mb-2">
                   Detailed EIC Information Sections:
                 </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-white/70">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-white">
                   <div>
                     <strong>Installation Details:</strong>
                     <ul className="mt-1 space-y-1 ml-4">
@@ -447,7 +447,7 @@ const Module6Section7_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Legal and Professional Importance
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 The EIC provides legal evidence that the work complies with BS 7671 and the
                 Electricity at Work Regulations 1989. Without it, the work may be considered
@@ -458,7 +458,7 @@ const Module6Section7_2 = () => {
 
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-400/50">
                 <h4 className="font-medium text-red-300 mb-2">Legal Standing of EICs:</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-white/70">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-white">
                   <div>
                     <strong>Legal Protection:</strong>
                     <ul className="mt-1 space-y-1 ml-4">
@@ -482,7 +482,7 @@ const Module6Section7_2 = () => {
                 <h4 className="font-medium text-purple-300 mb-2">
                   Professional Consequences of Missing EICs:
                 </h4>
-                <ul className="text-sm text-white/70 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Potential removal from competent person schemes</li>
                   <li>• Difficulty obtaining professional insurance</li>
                   <li>• Loss of client confidence and repeat business</li>
@@ -514,25 +514,25 @@ const Module6Section7_2 = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-medium text-white mb-2">Issue for Major Works</h4>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Always issue an EIC for new installations or major alterations.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-medium text-white mb-2">Complete All Sections</h4>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Make sure all sections of the form are fully and accurately completed.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-medium text-white mb-2">Use Approved Forms</h4>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Use BS 7671 Appendix 6 forms or approved digital software.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-medium text-white mb-2">Retain Copies</h4>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Retain a copy for your records and provide the client with their own copy.
                 </p>
               </div>
@@ -555,7 +555,7 @@ const Module6Section7_2 = () => {
                 <h4 className="font-medium text-red-300 mb-2">
                   Insurance Problems Due to Missing EIC
                 </h4>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A contractor installed a new three-phase distribution board in a small workshop
                   but failed to issue an Electrical Installation Certificate. Months later, when the
                   client applied for insurance cover, the insurer requested evidence of compliance.
@@ -565,7 +565,7 @@ const Module6Section7_2 = () => {
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-400/50">
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   <strong className="text-green-300">Lesson:</strong> An EIC is not optional — it is
                   essential for client confidence, legal compliance, and professional credibility.
                 </p>
@@ -582,7 +582,7 @@ const Module6Section7_2 = () => {
             <div className="space-y-4">
               <div className="border-b border-white/10 pb-4">
                 <h3 className="font-medium text-white mb-2">Q: Can an apprentice issue an EIC?</h3>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A: No. Only a competent and qualified person can sign an EIC.
                 </p>
               </div>
@@ -590,13 +590,13 @@ const Module6Section7_2 = () => {
                 <h3 className="font-medium text-white mb-2">
                   Q: Is an EIC needed for replacing a socket outlet?
                 </h3>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A: No. That would normally require a Minor Works Certificate, not an EIC.
                 </p>
               </div>
               <div>
                 <h3 className="font-medium text-white mb-2">Q: How long should an EIC be kept?</h3>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A: For the life of the installation, or until it is replaced by new certification.
                 </p>
               </div>
@@ -607,7 +607,7 @@ const Module6Section7_2 = () => {
           <section className="mb-10">
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <h2 className="font-semibold text-white mb-3">Recap</h2>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 An Electrical Installation Certificate (EIC) is required for all new installations
                 and major alterations. It records key details of the installation, test results, and
                 the signatures of the designer, installer, and tester. It provides legal proof of
@@ -624,7 +624,7 @@ const Module6Section7_2 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../7-1">

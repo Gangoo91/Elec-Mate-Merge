@@ -201,7 +201,7 @@ export default function RSMModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-1">
@@ -314,7 +314,7 @@ export default function RSMModule1Section4() {
                   <Heart className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-white">Common Physical Symptoms</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -380,7 +380,7 @@ export default function RSMModule1Section4() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-400 mb-2">Construction Context</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Physical symptoms of stress are particularly problematic in construction because
                   they are easily attributed to the physical demands of the job itself. An
                   electrician with persistent headaches, fatigue, and muscle tension may assume
@@ -413,7 +413,7 @@ export default function RSMModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Common Emotional Symptoms</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -494,7 +494,7 @@ export default function RSMModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Common Behavioural Symptoms</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -547,7 +547,7 @@ export default function RSMModule1Section4() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-400 mb-2">Construction Example</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   An experienced electrician who has always been the first to arrive, who takes
                   meticulous pride in their work, and who is always up for a laugh in the canteen
                   has gradually changed. They arrive late three mornings a week. They eat lunch
@@ -582,7 +582,7 @@ export default function RSMModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Common Cognitive Symptoms</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>
@@ -636,7 +636,7 @@ export default function RSMModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Safety Implication</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   In electrical work, cognitive impairment is potentially fatal. An electrician who
                   cannot concentrate, who forgets which circuits are isolated, who cannot make clear
                   decisions under pressure, or who is so consumed by worry that they are mentally
@@ -670,7 +670,7 @@ export default function RSMModule1Section4() {
                 <p className="text-base text-white leading-relaxed">
                   <strong>&ldquo;Look for changes from normal behaviour.&rdquo;</strong>
                 </p>
-                <p className="text-sm text-white/80 mt-2">
+                <p className="text-sm text-white mt-2">
                   Everyone is different. What is normal for one person may be unusual for another.
                   The key is not matching a person to a checklist of symptoms &mdash; it is noticing
                   when they are behaving differently from how they usually behave. A change from
@@ -683,7 +683,7 @@ export default function RSMModule1Section4() {
                   <Eye className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-white">What to Look For</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                     <span>
@@ -733,7 +733,7 @@ export default function RSMModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Construction Examples</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -798,7 +798,7 @@ export default function RSMModule1Section4() {
                 them in yourself and others. The key takeaways are:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -851,7 +851,7 @@ export default function RSMModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key Support Resources</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                     <span>
@@ -906,7 +906,7 @@ export default function RSMModule1Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -920,7 +920,7 @@ export default function RSMModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-1">

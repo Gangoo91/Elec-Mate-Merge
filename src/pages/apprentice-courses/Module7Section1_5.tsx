@@ -228,7 +228,7 @@ const Module7Section1_5 = () => {
           <Button
             variant="ghost"
             size="sm"
-            className="min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5 -ml-2 px-3"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] text-white hover:text-white hover:bg-white/5 -ml-2 px-3"
             asChild
           >
             <Link to="..">
@@ -246,13 +246,13 @@ const Module7Section1_5 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="font-medium">Module 7</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/70">Section 1.5</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 1.5</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
               Legal and Safety Responsibilities
             </h1>
-            <p className="text-white/70 max-w-xl mx-auto">
+            <p className="text-white max-w-xl mx-auto">
               Understanding legal duties and safety responsibilities when dealing with electrical
               faults.
             </p>
@@ -260,7 +260,7 @@ const Module7Section1_5 = () => {
 
           {/* Summary Box */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
-            <p className="text-white/90 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               <strong className="text-elec-yellow">Key Points:</strong> EAWR 1989 creates legal
               duties for electrical safety. Immediate action required for dangerous faults. Personal
               liability applies to all electrical workers.
@@ -273,7 +273,7 @@ const Module7Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Discovering an electrical fault creates immediate legal and professional
                 responsibilities that cannot be ignored. The Electricity at Work Regulations 1989
@@ -315,7 +315,7 @@ const Module7Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <div className="text-white/80 space-y-3 leading-relaxed">
+            <div className="text-white space-y-3 leading-relaxed">
               <p>By the end of this subsection, learners will be able to:</p>
               <ul className="list-disc pl-5 space-y-2">
                 <li>
@@ -337,7 +337,7 @@ const Module7Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Legal Duties Under EAWR 1989
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 EAWR 1989 creates specific legal duties that apply to everyone who works with
                 electrical systems.
@@ -346,25 +346,25 @@ const Module7Section1_5 = () => {
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Regulation 4(1)</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     All electrical systems must be constructed, maintained, and used safely
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Regulation 14</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     No person shall work on live electrical equipment
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Regulation 13</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Adequate precautions must be taken to prevent danger
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Regulation 3</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Duties apply to both employers and employees
                   </p>
                 </div>
@@ -372,7 +372,7 @@ const Module7Section1_5 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Personal Liability:</p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/70">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>Individual employees can be prosecuted for safety breaches</li>
                   <li>Maximum penalty: unlimited fine and 2 years imprisonment</li>
                   <li>"I was following orders" is not a valid defence</li>
@@ -384,7 +384,7 @@ const Module7Section1_5 = () => {
                 <p className="font-medium text-white mb-2">
                   Immediate Duties When Faults Are Found:
                 </p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/70">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>Isolate dangerous circuits immediately</li>
                   <li>Prevent access to hazardous areas</li>
                   <li>Report findings to appropriate persons</li>
@@ -419,7 +419,7 @@ const Module7Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Safety First – Isolating Faulty Circuits
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Safe isolation procedures are legally required and must be followed whenever
                 electrical faults are discovered.
@@ -428,7 +428,7 @@ const Module7Section1_5 = () => {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Before Investigation</p>
-                  <ul className="list-disc pl-4 space-y-1 text-sm text-white/70">
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                     <li>Isolate the circuit at the source</li>
                     <li>Secure isolation (lock off if possible)</li>
                     <li>Test voltage indicator on known live source</li>
@@ -437,7 +437,7 @@ const Module7Section1_5 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">During Work</p>
-                  <ul className="list-disc pl-4 space-y-1 text-sm text-white/70">
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                     <li>Apply warning notices</li>
                     <li>Prevent unauthorised re-energisation</li>
                     <li>Re-test before touching conductors</li>
@@ -448,7 +448,7 @@ const Module7Section1_5 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Legal Requirements:</p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/70">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>
                     <strong>Regulation 14:</strong> Work on dead equipment only (with limited
                     exceptions)
@@ -468,13 +468,13 @@ const Module7Section1_5 = () => {
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Permit to Work</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Required for complex or high-risk isolation procedures
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Isolation Certificates</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Record of isolation procedures and safety checks
                   </p>
                 </div>
@@ -507,7 +507,7 @@ const Module7Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Reporting and Documentation
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Proper reporting and documentation are legal requirements that provide essential
                 protection.
@@ -516,25 +516,25 @@ const Module7Section1_5 = () => {
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Immediate Reporting</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Dangerous faults must be reported immediately to supervisors and duty holders
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Detailed Records</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Complete documentation of faults, actions taken, and test results
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Legal Evidence</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Records provide evidence of due diligence and legal compliance
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Professional Protection</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Proper documentation protects against future liability claims
                   </p>
                 </div>
@@ -542,7 +542,7 @@ const Module7Section1_5 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Required Documentation Elements:</p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/70">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>Precise description of the fault discovered</li>
                   <li>Date, time, and location of discovery</li>
                   <li>Immediate actions taken to secure safety</li>
@@ -580,7 +580,7 @@ const Module7Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Professional and Legal Consequences of Negligence
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Failing to meet legal and safety responsibilities can have severe personal and
                 professional consequences.
@@ -589,25 +589,25 @@ const Module7Section1_5 = () => {
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Criminal Penalties</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Unlimited fines and up to 2 years imprisonment under EAWR 1989
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Civil Liability</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Personal compensation claims for injury and damage
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Professional Impact</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Loss of competency cards and professional registration
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Career Damage</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Difficulty obtaining future employment and insurance
                   </p>
                 </div>
@@ -615,7 +615,7 @@ const Module7Section1_5 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Real Consequences:</p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/70">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>HSE prosecutions result in average fines of £200,000+ for serious cases</li>
                   <li>
                     Individual electricians have received prison sentences for safety breaches
@@ -653,7 +653,7 @@ const Module7Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Practical Guidance
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div>
                 <p className="font-medium text-white mb-2">Legal Compliance Procedures:</p>
                 <ul className="list-disc pl-5 space-y-2 text-sm">
@@ -703,7 +703,7 @@ const Module7Section1_5 = () => {
               <p className="font-medium text-white mb-3">
                 Case Study: HSE Prosecution for Ignored Earth Fault
               </p>
-              <div className="text-white/80 space-y-3 text-sm leading-relaxed">
+              <div className="text-white space-y-3 text-sm leading-relaxed">
                 <p>
                   During a commercial refurbishment, an electrician discovered a loose earth
                   connection in a distribution board but failed to report it, assuming it "would be
@@ -747,7 +747,7 @@ const Module7Section1_5 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">{faq.question}</p>
-                  <p className="text-sm text-white/70">{faq.answer}</p>
+                  <p className="text-sm text-white">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -760,7 +760,7 @@ const Module7Section1_5 = () => {
               Recap
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <ul className="list-disc pl-5 space-y-2 text-white/80 text-sm">
+              <ul className="list-disc pl-5 space-y-2 text-white text-sm">
                 <li>
                   EAWR 1989 creates personal legal duties for all electrical workers with serious
                   criminal penalties for non-compliance.
@@ -794,7 +794,7 @@ const Module7Section1_5 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             <Button
               variant="ghost"
-              className="min-h-[48px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5 justify-start"
+              className="min-h-[48px] touch-manipulation active:scale-[0.98] text-white hover:text-white hover:bg-white/5 justify-start"
               asChild
             >
               <Link to="../1-4">

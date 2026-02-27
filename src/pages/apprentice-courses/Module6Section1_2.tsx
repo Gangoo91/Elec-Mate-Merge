@@ -144,7 +144,7 @@ const Module6Section1_2 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -162,13 +162,13 @@ const Module6Section1_2 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.1.2</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.1.2</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Legal and Safety Reasons for Electrical Inspection and Testing
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Legal requirements under EAWR 1989, BS 7671 compliance, personal responsibility and
               consequences of non-compliance
             </p>
@@ -177,7 +177,7 @@ const Module6Section1_2 = () => {
           {/* Summary Box */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-sm space-y-1 list-disc pl-5">
+            <ul className="text-white text-sm space-y-1 list-disc pl-5">
               <li>EAWR 1989 creates absolute legal duty to prevent electrical danger.</li>
               <li>
                 BS 7671 sets technical standards – initial verification and periodic inspection
@@ -199,7 +199,7 @@ const Module6Section1_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <div className="text-white/80 space-y-2 leading-relaxed">
+            <div className="text-white space-y-2 leading-relaxed">
               <ul className="list-disc pl-6 space-y-2 text-sm">
                 <li>
                   Identify the specific legal requirements for inspection and testing under EAWR
@@ -235,7 +235,7 @@ const Module6Section1_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               The Electricity at Work Regulations (EAWR 1989)
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 The EAWR 1989 creates the legal foundation for electrical safety in the UK. Unlike
                 guidance documents, these are statutory regulations with the full force of criminal
@@ -315,7 +315,7 @@ const Module6Section1_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               BS 7671 Wiring Regulations - The Technical Framework
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 While EAWR 1989 sets the legal requirement for safety, BS 7671 provides the detailed
                 technical methods for achieving compliance. Courts recognise BS 7671 as the
@@ -402,7 +402,7 @@ const Module6Section1_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Personal Legal Responsibility and Professional Accountability
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 When you sign an electrical certificate, you're not just completing paperwork –
                 you're making a legal declaration that could result in criminal prosecution if
@@ -499,7 +499,7 @@ const Module6Section1_2 = () => {
               <h3 className="font-medium text-white mb-2">
                 R v Tangerine Confectionery and Mr David Costley-Wood (2014)
               </h3>
-              <div className="text-white/80 text-sm space-y-3">
+              <div className="text-white text-sm space-y-3">
                 <p>
                   A maintenance electrician was killed when he touched live 415V conductors in a
                   distribution board. The investigation revealed systematic failures in electrical
@@ -537,7 +537,7 @@ const Module6Section1_2 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">Legal Framework:</p>
-                <ul className="text-sm space-y-1 text-white/80">
+                <ul className="text-sm space-y-1 text-white">
                   <li>
                     <strong>EAWR 1989:</strong> Criminal law – absolute duty to prevent danger
                   </li>
@@ -554,7 +554,7 @@ const Module6Section1_2 = () => {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">Personal Protection:</p>
-                <ul className="text-sm space-y-1 text-white/80">
+                <ul className="text-sm space-y-1 text-white">
                   <li>
                     <strong>Competence:</strong> Only work within your proven abilities
                   </li>
@@ -578,7 +578,7 @@ const Module6Section1_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Key Takeaways
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Electrical inspection and testing exist within a robust legal framework that
                 protects lives and property. EAWR 1989 creates the legal duty, BS 7671 provides the
@@ -616,7 +616,7 @@ const Module6Section1_2 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../1-1">

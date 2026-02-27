@@ -270,7 +270,7 @@ const HNCModule5Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section4">
@@ -292,7 +292,7 @@ const HNCModule5Section4_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Installation Quality
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Workmanship standards, supervision requirements, quality audits, and progressive
             verification in building services installation
           </p>
@@ -720,7 +720,7 @@ const HNCModule5Section4_4 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Process Audit</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Are quality procedures being followed?</li>
                     <li>Are records being maintained?</li>
                     <li>Is supervision adequate?</li>
@@ -729,7 +729,7 @@ const HNCModule5Section4_4 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Product Audit</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Does installed work meet specification?</li>
                     <li>Are materials as approved?</li>
                     <li>Is workmanship acceptable?</li>
@@ -760,7 +760,7 @@ const HNCModule5Section4_4 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Real-world example:</strong> On a London hospital project, systematic
               walk-downs before ceiling closure identified 340 containment support deficiencies.
               Remediation took 3 days. Had these been found after ceiling installation, remediation
@@ -848,7 +848,7 @@ const HNCModule5Section4_4 = () => {
                   <span className="text-elec-yellow font-bold text-sm">1</span>
                   <div>
                     <p className="font-medium text-white">First Fix Verification</p>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       Containment routes, back boxes, cable runs before covering
                     </p>
                   </div>
@@ -857,7 +857,7 @@ const HNCModule5Section4_4 = () => {
                   <span className="text-elec-yellow font-bold text-sm">2</span>
                   <div>
                     <p className="font-medium text-white">Distribution Verification</p>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       Boards installed, cables terminated, circuit identification
                     </p>
                   </div>
@@ -866,7 +866,7 @@ const HNCModule5Section4_4 = () => {
                   <span className="text-elec-yellow font-bold text-sm">3</span>
                   <div>
                     <p className="font-medium text-white">Second Fix Verification</p>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       Accessories, luminaires, final connections
                     </p>
                   </div>
@@ -875,7 +875,7 @@ const HNCModule5Section4_4 = () => {
                   <span className="text-elec-yellow font-bold text-sm">4</span>
                   <div>
                     <p className="font-medium text-white">Pre-Commissioning Verification</p>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       Visual inspection complete, ready for testing
                     </p>
                   </div>
@@ -890,7 +890,7 @@ const HNCModule5Section4_4 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">What to Photograph</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>All concealed installations</li>
                     <li>Fire barrier installations</li>
                     <li>Complex terminations</li>
@@ -901,7 +901,7 @@ const HNCModule5Section4_4 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Photo Standards</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Include location reference board</li>
                     <li>Context shot plus detail shot</li>
                     <li>Consistent file naming convention</li>
@@ -967,7 +967,7 @@ const HNCModule5Section4_4 = () => {
                 <strong>Question:</strong> A commercial fit-out has 45 electrical operatives
                 installing general distribution and lighting. How many supervisors are required?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Work type: Standard installation (containment, wiring, accessories)</p>
                 <p>Recommended ratio: 1:15 to 1:20</p>
                 <p className="mt-2">
@@ -977,7 +977,7 @@ const HNCModule5Section4_4 = () => {
                   Using 1:20 (minimum): 45 ÷ 20 = 2.25 = <strong>3 supervisors</strong>
                 </p>
                 <p className="mt-2 text-green-400">Answer: Minimum 3 supervisors required</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Note: If any complex work (main switchgear, BMS), increase ratio for those areas
                 </p>
               </div>
@@ -991,7 +991,7 @@ const HNCModule5Section4_4 = () => {
                 <strong>Question:</strong> A project has 200 identical office lighting
                 installations. How many should be formally inspected?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>CIBSE recommendation: 25% minimum sample for repetitive work</p>
                 <p className="mt-2">
                   Sample size: 200 × 0.25 = <strong>50 installations</strong>
@@ -1014,7 +1014,7 @@ const HNCModule5Section4_4 = () => {
                 <strong>Question:</strong> A containment defect found after ceiling installation.
                 Original installation cost £2,000. What is the likely remediation cost?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Remediation activities required:</p>
                 <p>- Remove ceiling tiles: 2 days labour @ £400/day = £800</p>
                 <p>- Scaffold/access: £600</p>
@@ -1027,7 +1027,7 @@ const HNCModule5Section4_4 = () => {
                 <p className="mt-2">
                   Cost multiplier: 2,500 ÷ 2,000 = <strong>1.25×</strong> original cost
                 </p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Had defect been found before ceiling: remediation ~£300
                 </p>
                 <p className="text-red-400 mt-2">Early detection saving: £2,200 (88% saving)</p>
@@ -1113,7 +1113,7 @@ const HNCModule5Section4_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1159,7 +1159,7 @@ const HNCModule5Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section4">

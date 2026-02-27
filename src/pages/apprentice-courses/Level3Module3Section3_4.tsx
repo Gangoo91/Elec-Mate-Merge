@@ -202,7 +202,7 @@ const Level3Module3Section3_4 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section3">
@@ -221,7 +221,7 @@ const Level3Module3Section3_4 = () => {
         <h1 className="text-2xl md:text-3xl font-bold text-white mb-6">
           3.4 Transformers - Theory and Applications
         </h1>
-        <p className="text-xl text-white/70 mb-8">
+        <p className="text-xl text-white mb-8">
           Understanding transformer principles, construction, efficiency and practical applications
           in electrical systems
         </p>
@@ -232,7 +232,7 @@ const Level3Module3Section3_4 = () => {
             <Zap className="w-5 h-5" />
             Quick Summary
           </h3>
-          <ul className="text-white/80 space-y-2">
+          <ul className="text-white space-y-2">
             <li>Turns ratio: Vp/Vs = Np/Ns = Is/Ip (ideal transformer)</li>
             <li>Power conservation: Vp x Ip = Vs x Is (ignoring losses)</li>
             <li>Losses: Core (fixed) + Copper (variable with load squared)</li>
@@ -244,7 +244,7 @@ const Level3Module3Section3_4 = () => {
         {/* Learning Outcomes */}
         <div className="bg-blue-900/30 border border-blue-500/50 rounded-lg p-6 mb-8">
           <h3 className="text-lg font-semibold text-blue-400 mb-3">Learning Outcomes</h3>
-          <ul className="text-white/80 space-y-2">
+          <ul className="text-white space-y-2">
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 mt-1 text-green-400 flex-shrink-0" />
               Explain the operating principle of transformers using electromagnetic induction
@@ -283,7 +283,7 @@ const Level3Module3Section3_4 = () => {
               Transformer Principles
             </h2>
             <div className="bg-[#242424] rounded-lg p-6 border border-white/10">
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 A <strong>transformer</strong> transfers electrical energy between circuits using
                 electromagnetic induction. AC current in the primary winding creates a changing
                 magnetic flux in the core, which induces an EMF in the secondary winding.
@@ -291,7 +291,7 @@ const Level3Module3Section3_4 = () => {
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">The Ideal Transformer</h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   For an ideal transformer (no losses, perfect coupling):
                 </p>
                 <p className="text-green-400 font-mono mb-2">
@@ -301,7 +301,7 @@ const Level3Module3Section3_4 = () => {
                   Current ratio: Ip / Is = Ns / Np = 1/n
                 </p>
                 <p className="text-green-400 font-mono mb-2">Power: Vp x Ip = Vs x Is</p>
-                <p className="text-white/80 text-sm mt-3">
+                <p className="text-white text-sm mt-3">
                   Where n = turns ratio, p = primary, s = secondary
                 </p>
               </div>
@@ -309,14 +309,14 @@ const Level3Module3Section3_4 = () => {
               <div className="grid md:grid-cols-2 gap-4 mb-4">
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Step-Down Transformer</h5>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Np greater than Ns: reduces voltage, increases current. Used in distribution
                     (11kV to 400V).
                   </p>
                 </div>
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Step-Up Transformer</h5>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Ns greater than Np: increases voltage, reduces current. Used at power stations
                     for transmission.
                   </p>
@@ -326,7 +326,7 @@ const Level3Module3Section3_4 = () => {
               <h4 className="text-lg font-semibold text-green-400 mb-3">EMF Equation</h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4 text-center">
                 <p className="text-green-400 font-mono text-lg mb-2">E = 4.44 x f x N x Phi(max)</p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Where E = RMS EMF, f = frequency (Hz), N = turns, Phi(max) = peak flux (Wb)
                 </p>
               </div>
@@ -349,7 +349,7 @@ const Level3Module3Section3_4 = () => {
               Transformer Losses and Efficiency
             </h2>
             <div className="bg-[#242424] rounded-lg p-6 border border-white/10">
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 Real transformers have losses that reduce efficiency below 100%. Understanding these
                 losses is essential for sizing, cooling and efficiency calculations.
               </p>
@@ -358,7 +358,7 @@ const Level3Module3Section3_4 = () => {
               <div className="grid md:grid-cols-2 gap-4 mb-4">
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Core Losses (Iron Losses)</h5>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>
                       <strong>Hysteresis:</strong> Energy to reverse magnetic domains each cycle
                     </li>
@@ -371,7 +371,7 @@ const Level3Module3Section3_4 = () => {
                 </div>
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Copper Losses (I squared R)</h5>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>Resistive heating in primary and secondary windings</li>
                     <li>Proportional to current squared</li>
                     <li>Vary with load (zero at no-load)</li>
@@ -388,20 +388,20 @@ const Level3Module3Section3_4 = () => {
                 <p className="text-green-400 font-mono mb-2">
                   Efficiency = (S x pf) / (S x pf + Pcore + x squared x Pcu)
                 </p>
-                <p className="text-white/80 text-sm mt-3">
+                <p className="text-white text-sm mt-3">
                   Where S = apparent power (VA), pf = power factor, x = fraction of full load, Pcu =
                   copper loss at full load
                 </p>
               </div>
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Maximum Efficiency</h4>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 Maximum efficiency occurs when variable losses (copper) equal fixed losses (core):
               </p>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4 text-center">
                 <p className="text-green-400 font-mono text-lg mb-2">x squared x Pcu = Pcore</p>
                 <p className="text-green-400 font-mono">x = sqrt(Pcore / Pcu)</p>
-                <p className="text-white/80 text-sm mt-2">
+                <p className="text-white text-sm mt-2">
                   This typically occurs at 50-75% of full load
                 </p>
               </div>
@@ -425,7 +425,7 @@ const Level3Module3Section3_4 = () => {
             </h2>
             <div className="bg-[#242424] rounded-lg p-6 border border-white/10">
               <h4 className="text-lg font-semibold text-green-400 mb-3">Voltage Regulation</h4>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 <strong>Voltage regulation</strong> is the change in secondary voltage from no-load
                 to full-load, expressed as a percentage.
               </p>
@@ -433,13 +433,13 @@ const Level3Module3Section3_4 = () => {
                 <p className="text-green-400 font-mono text-lg mb-2">
                   Regulation % = ((V(no-load) - V(full-load)) / V(no-load)) x 100
                 </p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Good regulation is typically 2-4% for distribution transformers
                 </p>
               </div>
 
-              <p className="text-white/80 mb-4">Voltage drop under load is caused by:</p>
-              <ul className="text-white/80 space-y-2 mb-4">
+              <p className="text-white mb-4">Voltage drop under load is caused by:</p>
+              <ul className="text-white space-y-2 mb-4">
                 <li>
                   <strong>Winding resistance:</strong> Creates in-phase voltage drop (I x R)
                 </li>
@@ -451,25 +451,25 @@ const Level3Module3Section3_4 = () => {
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Percentage Impedance</h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   <strong>Percentage impedance (%Z)</strong> is the percentage of rated voltage
                   needed to circulate rated current with secondary short-circuited:
                 </p>
                 <p className="text-green-400 font-mono mb-2">%Z = (Vsc / Vrated) x 100</p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Typical values: 4-6% for distribution transformers
                 </p>
               </div>
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Fault Current</h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   %Z determines prospective short-circuit current:
                 </p>
                 <p className="text-green-400 font-mono mb-2">
                   I(fault) = I(rated) / (%Z / 100) = I(rated) x (100 / %Z)
                 </p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Example: 5% Z means fault current = 20 x rated current
                 </p>
               </div>
@@ -496,14 +496,14 @@ const Level3Module3Section3_4 = () => {
               <div className="grid md:grid-cols-2 gap-4 mb-4">
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Core Type</h5>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Windings on two legs of rectangular core. Good for high voltage - windings easy
                     to insulate. Common in power transformers.
                   </p>
                 </div>
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Shell Type</h5>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Windings on central leg, surrounded by core. Better magnetic coupling, lower
                     leakage. Common in distribution transformers.
                   </p>
@@ -514,7 +514,7 @@ const Level3Module3Section3_4 = () => {
                 Special Transformer Types
               </h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <ul className="text-white/80 space-y-3">
+                <ul className="text-white space-y-3">
                   <li>
                     <strong>Auto-transformer:</strong> Single winding with taps. Smaller and cheaper
                     for small ratios but no isolation. Used for motor starting and voltage
@@ -537,8 +537,8 @@ const Level3Module3Section3_4 = () => {
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">3-Phase Connections</h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-3">Common vector groups (primary-secondary):</p>
-                <ul className="text-white/70 text-sm space-y-2">
+                <p className="text-white mb-3">Common vector groups (primary-secondary):</p>
+                <ul className="text-white text-sm space-y-2">
                   <li>
                     <strong>Dyn11:</strong> Delta-Star, 30 degree phase shift. Most common for HV/LV
                     distribution. Star secondary provides neutral.
@@ -574,7 +574,7 @@ const Level3Module3Section3_4 = () => {
               <h4 className="text-lg font-semibold text-yellow-400 mb-3">
                 Installation and Safety
               </h4>
-              <ul className="text-white/80 space-y-2">
+              <ul className="text-white space-y-2">
                 <li>
                   <strong>Transformer rating:</strong> Must exceed maximum load plus diversity
                   factor. Consider future expansion and starting currents of motors.
@@ -606,7 +606,7 @@ const Level3Module3Section3_4 = () => {
               {faqItems.map((faq, index) => (
                 <div key={index} className="bg-[#242424] rounded-lg p-4 border border-white/10">
                   <h4 className="font-semibold text-white mb-2">{faq.question}</h4>
-                  <p className="text-white/70 text-sm">{faq.answer}</p>
+                  <p className="text-white text-sm">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -619,7 +619,7 @@ const Level3Module3Section3_4 = () => {
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <h4 className="font-semibold text-green-400 mb-3">Essential Formulas</h4>
-                  <ul className="text-white/70 text-sm space-y-2 font-mono">
+                  <ul className="text-white text-sm space-y-2 font-mono">
                     <li>Vp/Vs = Np/Ns = Is/Ip</li>
                     <li>E = 4.44 x f x N x Phi</li>
                     <li>Eff = Output/(Output + losses)</li>
@@ -630,7 +630,7 @@ const Level3Module3Section3_4 = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-green-400 mb-3">Typical Values</h4>
-                  <ul className="text-white/70 text-sm space-y-2">
+                  <ul className="text-white text-sm space-y-2">
                     <li>Efficiency: 95-99%</li>
                     <li>Voltage regulation: 2-4%</li>
                     <li>%Z: 4-6% (distribution)</li>
@@ -647,7 +647,7 @@ const Level3Module3Section3_4 = () => {
         {/* Quiz Section */}
         <div className="mb-12">
           <h2 className="text-xl font-semibold text-white mb-4">Test Your Knowledge</h2>
-          <p className="text-white/70 mb-4">
+          <p className="text-white mb-4">
             Complete this quiz to check your understanding of transformer theory:
           </p>
           <Quiz questions={quizQuestions} moduleId="L3M3S3.4" />

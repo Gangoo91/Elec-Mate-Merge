@@ -231,7 +231,7 @@ const Level3Module2Section4_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module2-section4">
@@ -409,7 +409,7 @@ const Level3Module2Section4_1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A typical home installation is a 7kW Mode 3 wallbox on a
               dedicated 32A circuit. This provides a full charge overnight for most EVs - around
               25-30 miles of range per hour of charging.
@@ -436,15 +436,15 @@ const Level3Module2Section4_1 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Rapid (50kW)</p>
-                <p className="text-white/90 text-xs">~100 miles in 30-40 minutes</p>
+                <p className="text-white text-xs">~100 miles in 30-40 minutes</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Ultra-rapid (150kW)</p>
-                <p className="text-white/90 text-xs">~100 miles in 10-15 minutes</p>
+                <p className="text-white text-xs">~100 miles in 10-15 minutes</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">High-power (350kW)</p>
-                <p className="text-white/90 text-xs">~100 miles in under 10 minutes</p>
+                <p className="text-white text-xs">~100 miles in under 10 minutes</p>
               </div>
             </div>
 
@@ -529,7 +529,7 @@ const Level3Module2Section4_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -574,7 +574,7 @@ const Level3Module2Section4_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module2-section4">

@@ -260,7 +260,7 @@ const HNCModule5Section6_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section6">
@@ -282,7 +282,7 @@ const HNCModule5Section6_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             CDM Site Compliance
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Construction phase plan requirements, site inductions, toolbox talks and CDM 2015
             compliance procedures
           </p>
@@ -474,7 +474,7 @@ const HNCModule5Section6_4 = () => {
                 </li>
                 <li className="pl-1">Work will exceed 500 person-days</li>
               </ul>
-              <p className="text-sm text-white/70 mt-2">
+              <p className="text-sm text-white mt-2">
                 The F10 must be displayed prominently on site and contains project details, client
                 information, and dutyholder appointments.
               </p>
@@ -706,7 +706,7 @@ const HNCModule5Section6_4 = () => {
               <div className="grid sm:grid-cols-3 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Electrical Safety</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Isolation procedures</li>
                     <li>Safe use of test equipment</li>
                     <li>Cable damage prevention</li>
@@ -715,7 +715,7 @@ const HNCModule5Section6_4 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Working at Height</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Ladder safety</li>
                     <li>MEWP operation</li>
                     <li>Scaffold use</li>
@@ -724,7 +724,7 @@ const HNCModule5Section6_4 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">General Site Safety</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Manual handling</li>
                     <li>Housekeeping</li>
                     <li>Fire prevention</li>
@@ -734,7 +734,7 @@ const HNCModule5Section6_4 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Documentation tip:</strong> Keep attendance records for all toolbox talks.
               These demonstrate due diligence and are valuable evidence if incidents occur. Many
               sites use digital sign-in systems for efficiency.
@@ -936,7 +936,7 @@ const HNCModule5Section6_4 = () => {
                 <strong>Situation:</strong> You are starting electrical first fix on a new-build
                 office block. What CDM compliance steps must you complete?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p className="font-medium mb-2">Required Steps:</p>
                 <ol className="list-decimal list-inside space-y-1">
                   <li>Complete site induction delivered by principal contractor</li>
@@ -959,7 +959,7 @@ const HNCModule5Section6_4 = () => {
                 <strong>Situation:</strong> Your team will be installing cable tray at 4m height
                 tomorrow. Prepare a toolbox talk outline.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p className="font-medium mb-2">Toolbox Talk Structure:</p>
                 <ul className="list-disc list-inside space-y-1">
                   <li>
@@ -991,7 +991,7 @@ const HNCModule5Section6_4 = () => {
                 <strong>Situation:</strong> You need to isolate and modify an existing distribution
                 board in an occupied office. Key RAMS considerations?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p className="font-medium mb-2">RAMS Must Address:</p>
                 <ul className="list-disc list-inside space-y-1">
                   <li>
@@ -1096,7 +1096,7 @@ const HNCModule5Section6_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1142,7 +1142,7 @@ const HNCModule5Section6_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section6">

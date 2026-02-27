@@ -254,7 +254,7 @@ const Module4Section2_2 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -271,13 +271,13 @@ const Module4Section2_2 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 2.2</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 2.2</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Setting Out for Conduit, Trunking, and Accessories
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master precise setting out techniques to ensure aligned, level, and compliant
               electrical installations
             </p>
@@ -292,7 +292,7 @@ const Module4Section2_2 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2 text-sm">In 30 Seconds</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                <ul className="text-white text-sm space-y-1 list-disc pl-4">
                   <li>Set out from consistent reference points for accuracy</li>
                   <li>Use correct spacing: conduit 1.2-1.5m, trunking 0.9-1.2m</li>
                   <li>Check for obstructions and mark centre lines for alignment</li>
@@ -300,7 +300,7 @@ const Module4Section2_2 = () => {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2 text-sm">Spot it / Use it</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                <ul className="text-white text-sm space-y-1 list-disc pl-4">
                   <li>
                     <strong>Spot:</strong> Reference points, fixing positions, potential
                     obstructions
@@ -323,7 +323,7 @@ const Module4Section2_2 = () => {
               Learning Outcomes
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <ul className="text-white/80 text-sm space-y-2 list-disc pl-4">
+              <ul className="text-white text-sm space-y-2 list-disc pl-4">
                 <li>Explain the importance of accurate setting out in electrical installations</li>
                 <li>
                   Mark out positions for conduit, trunking, and accessories using correct tools
@@ -342,15 +342,15 @@ const Module4Section2_2 = () => {
               <FileText className="w-5 h-5" />
               Preparation Before Setting Out
             </h2>
-            <p className="text-white/70 text-sm mb-4">
+            <p className="text-white text-sm mb-4">
               Thorough preparation prevents errors and ensures efficient, accurate installation:
             </p>
             <div className="space-y-3">
               {preparationSteps.map((step, i) => (
                 <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                   <p className="font-medium text-elec-yellow mb-1">{step.step}</p>
-                  <p className="text-white/70 text-sm mb-2">{step.description}</p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-sm mb-2">{step.description}</p>
+                  <p className="text-white text-xs">
                     <strong>Importance:</strong> {step.importance} — Tools: {step.tools.join(', ')}
                   </p>
                 </div>
@@ -364,15 +364,15 @@ const Module4Section2_2 = () => {
               <span className="text-green-400/80 text-sm font-normal">04</span>
               Tools for Setting Out
             </h2>
-            <p className="text-white/70 text-sm mb-4">
+            <p className="text-white text-sm mb-4">
               Selecting and using the correct tools ensures accurate and efficient setting out:
             </p>
             <div className="space-y-3">
               {settingOutTools.map((tool, i) => (
                 <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
                   <p className="font-medium text-green-400 mb-1">{tool.name}</p>
-                  <p className="text-white/70 text-sm mb-2">{tool.purpose}</p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-sm mb-2">{tool.purpose}</p>
+                  <p className="text-white text-xs">
                     <strong>Applications:</strong> {tool.applications.join(', ')} —{' '}
                     {tool.bestPractice}
                   </p>
@@ -396,17 +396,17 @@ const Module4Section2_2 = () => {
               <MapPin className="w-5 h-5" />
               Setting Out Containment Runs
             </h2>
-            <p className="text-white/70 text-sm mb-4">
+            <p className="text-white text-sm mb-4">
               Systematic approach to marking containment positions for professional results:
             </p>
             <div className="space-y-3">
               {spacingRequirements.map((req, i) => (
                 <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
                   <p className="font-medium text-purple-400 mb-1">{req.type}</p>
-                  <p className="text-white/70 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     Spacing: <strong>{req.spacing}</strong> — {req.reason}
                   </p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-xs">
                     <strong>Considerations:</strong> {req.considerations.join(', ')}
                   </p>
                 </div>
@@ -414,7 +414,7 @@ const Module4Section2_2 = () => {
             </div>
             <div className="mt-4 p-4 rounded-lg bg-white/5 border border-white/10">
               <p className="text-sm font-medium text-white mb-1">Setting Out Process</p>
-              <p className="text-white/60 text-xs">
+              <p className="text-white text-xs">
                 Start from known reference points, mark centre lines for symmetry, use consistent
                 spacing between fixing points, and allow for bends, junctions, and expansion where
                 necessary.
@@ -436,15 +436,15 @@ const Module4Section2_2 = () => {
               <span className="text-orange-400/80 text-sm font-normal">06</span>
               Avoiding Common Errors
             </h2>
-            <p className="text-white/70 text-sm mb-4">
+            <p className="text-white text-sm mb-4">
               Learn from typical mistakes to ensure accurate and efficient setting out:
             </p>
             <div className="space-y-3">
               {commonErrors.map((error, i) => (
                 <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
                   <p className="font-medium text-orange-400 mb-1">{error.error}</p>
-                  <p className="text-white/70 text-sm mb-2">Consequence: {error.consequence}</p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-sm mb-2">Consequence: {error.consequence}</p>
+                  <p className="text-white text-xs">
                     <strong>Prevention:</strong> {error.prevention}
                   </p>
                 </div>
@@ -470,20 +470,20 @@ const Module4Section2_2 = () => {
             <div className="space-y-3">
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
                 <p className="font-medium text-red-400 mb-2">BS 7671 Requirements</p>
-                <p className="text-white/70 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   Containment must be installed in safe zones with correct support spacing.
                 </p>
-                <p className="text-white/60 text-xs">
+                <p className="text-white text-xs">
                   <strong>Compliance areas:</strong> Safe zones, support spacing, cable segregation,
                   and protection methods.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
                 <p className="font-medium text-red-400 mb-2">Building Regulations Part M</p>
-                <p className="text-white/70 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   May dictate accessory mounting heights for accessibility.
                 </p>
-                <p className="text-white/60 text-xs">
+                <p className="text-white text-xs">
                   <strong>Considerations:</strong> Switch heights, socket positions, accessibility
                   requirements, and ergonomic guidelines.
                 </p>
@@ -499,7 +499,7 @@ const Module4Section2_2 = () => {
               Real-World Example
             </h2>
             <div className="p-4 rounded-lg bg-blue-500/10 border-l-2 border-blue-500/50">
-              <p className="text-white/80 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 On a large office fit-out, the containment was set out without checking for overhead
                 ducting. This meant that several trunking runs clashed with HVAC systems and had to
                 be re-routed at extra cost.
@@ -516,7 +516,7 @@ const Module4Section2_2 = () => {
           {/* FAQs */}
           <section className="mb-10">
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-              <span className="text-white/40 text-sm font-normal">09</span>
+              <span className="text-white text-sm font-normal">09</span>
               Frequently Asked Questions
             </h2>
             <div className="space-y-4">
@@ -524,7 +524,7 @@ const Module4Section2_2 = () => {
                 <p className="font-medium text-white text-sm mb-1">
                   Q: Can I set out directly from the floor plan dimensions?
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A: Only if you've verified the building matches the plan — actual site
                   measurements may differ.
                 </p>
@@ -533,7 +533,7 @@ const Module4Section2_2 = () => {
                 <p className="font-medium text-white text-sm mb-1">
                   Q: Is a chalk line better than a laser line?
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A: Chalk lines are quicker for marking physical reference lines, while laser lines
                   are better for temporary guides without marking surfaces.
                 </p>
@@ -542,7 +542,7 @@ const Module4Section2_2 = () => {
                 <p className="font-medium text-white text-sm mb-1">
                   Q: Should I mark every fixing point?
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A: Yes, especially in complex or high-visibility installations, to maintain
                   accuracy.
                 </p>
@@ -553,11 +553,11 @@ const Module4Section2_2 = () => {
           {/* Summary */}
           <section className="mb-10">
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-              <span className="text-white/40 text-sm font-normal">10</span>
+              <span className="text-white text-sm font-normal">10</span>
               Summary
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 Accurate setting out ensures neat, aligned, and compliant installations. By using
                 the correct tools, following plans, and considering site conditions, you can avoid
                 costly mistakes and deliver a professional finish. Remember to work from consistent

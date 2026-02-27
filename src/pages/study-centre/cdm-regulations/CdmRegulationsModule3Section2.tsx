@@ -199,7 +199,7 @@ export default function CdmRegulationsModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-3">
@@ -222,7 +222,7 @@ export default function CdmRegulationsModule3Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Construction Phase Plan
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The essential document that sets out how health and safety will be managed during the
             construction phase &mdash; who prepares it, when it must be in place, what it must
             contain, and how it is kept up to date
@@ -311,7 +311,7 @@ export default function CdmRegulationsModule3Section2() {
                     Regulation 12 &mdash; Key Requirement
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The <strong className="text-white">principal contractor</strong> must draw up a
                   construction phase plan, or arrange for it to be drawn up,{' '}
                   <strong className="text-white">before the construction phase begins</strong>. On
@@ -331,7 +331,7 @@ export default function CdmRegulationsModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">The CPP Must Address</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -403,7 +403,7 @@ export default function CdmRegulationsModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Legal Requirement</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Construction work <strong className="text-white">must not start</strong> until a
                   construction phase plan has been drawn up. Beginning construction without an
                   adequate CPP is a breach of CDM 2015 and can result in enforcement action by the
@@ -413,7 +413,7 @@ export default function CdmRegulationsModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Proportionate from Day One</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -468,7 +468,7 @@ export default function CdmRegulationsModule3Section2() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">PC Appointed</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         CPP development begins using pre-construction information
                       </p>
                     </div>
@@ -479,7 +479,7 @@ export default function CdmRegulationsModule3Section2() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Before Construction Starts</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         CPP must be in place with sufficient detail for the initial phase
                       </p>
                     </div>
@@ -490,7 +490,7 @@ export default function CdmRegulationsModule3Section2() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">During Construction</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         CPP is developed, reviewed, and updated as the project progresses
                       </p>
                     </div>
@@ -501,7 +501,7 @@ export default function CdmRegulationsModule3Section2() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Project Completion</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Relevant information is passed to the health and safety file
                       </p>
                     </div>
@@ -536,7 +536,7 @@ export default function CdmRegulationsModule3Section2() {
                     Required Content Under Regulation 12(2)
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The construction phase plan must include sufficient detail to set out the
                   <strong className="text-white">
                     {' '}
@@ -551,7 +551,7 @@ export default function CdmRegulationsModule3Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     1. Description of the Project
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>The nature and scope of the work to be carried out</span>
@@ -578,7 +578,7 @@ export default function CdmRegulationsModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">2. Management Structure</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>The organisational structure for managing the project</span>
@@ -598,7 +598,7 @@ export default function CdmRegulationsModule3Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     3. Health and Safety Arrangements
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Site induction procedures for all workers and visitors</span>
@@ -623,7 +623,7 @@ export default function CdmRegulationsModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">4. Site Rules</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>The rules that apply to everyone on site</span>
@@ -637,7 +637,7 @@ export default function CdmRegulationsModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">5. Specific Risk Procedures</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -660,7 +660,7 @@ export default function CdmRegulationsModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">6. Monitoring Arrangements</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -684,7 +684,7 @@ export default function CdmRegulationsModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">No Generic Plans</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A generic, &ldquo;one size fits all&rdquo; construction phase plan that is not
                   tailored to the specific project does{' '}
                   <strong className="text-white">not satisfy the legal requirements</strong>. The
@@ -716,7 +716,7 @@ export default function CdmRegulationsModule3Section2() {
               <div className="space-y-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Project Team Details</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -753,7 +753,7 @@ export default function CdmRegulationsModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Communication Procedures</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -790,7 +790,7 @@ export default function CdmRegulationsModule3Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     Health and Safety Consultation
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -823,7 +823,7 @@ export default function CdmRegulationsModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Coordination Arrangements</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -853,7 +853,7 @@ export default function CdmRegulationsModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Monitoring Procedures</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -911,7 +911,7 @@ export default function CdmRegulationsModule3Section2() {
               <div className="space-y-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Access and Egress</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -945,7 +945,7 @@ export default function CdmRegulationsModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">PPE Requirements</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -972,7 +972,7 @@ export default function CdmRegulationsModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Permit Systems</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -999,7 +999,7 @@ export default function CdmRegulationsModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Traffic Management</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1030,7 +1030,7 @@ export default function CdmRegulationsModule3Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     Housekeeping, Welfare &amp; Emergency Procedures
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1094,7 +1094,7 @@ export default function CdmRegulationsModule3Section2() {
               <div className="space-y-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Working at Height</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Hierarchy of control: avoid &rarr; prevent &rarr; mitigate</span>
@@ -1116,7 +1116,7 @@ export default function CdmRegulationsModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Hot Works</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1136,7 +1136,7 @@ export default function CdmRegulationsModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Excavations</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1160,7 +1160,7 @@ export default function CdmRegulationsModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Confined Spaces</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Identification of confined spaces on site</span>
@@ -1182,7 +1182,7 @@ export default function CdmRegulationsModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Electrical Work Isolation</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1207,7 +1207,7 @@ export default function CdmRegulationsModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Asbestos Encounters</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1239,7 +1239,7 @@ export default function CdmRegulationsModule3Section2() {
                     Real Procedures, Not Tick Boxes
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Specific risk procedures must be{' '}
                   <strong className="text-white">practical and actionable</strong>, not generic
                   statements copied from a template. Each procedure should clearly describe the
@@ -1275,7 +1275,7 @@ export default function CdmRegulationsModule3Section2() {
                   <ShieldCheck className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">The Proportionality Principle</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">Simple project = simple plan.</strong> A
                   straightforward job with low risk and a single contractor needs only a brief,
                   focused plan covering the key risks and arrangements.{' '}
@@ -1298,7 +1298,7 @@ export default function CdmRegulationsModule3Section2() {
                     <p className="text-sm font-bold text-green-400 mb-3 text-center">
                       Small / Simple Project
                     </p>
-                    <div className="space-y-2 text-sm text-white/80">
+                    <div className="space-y-2 text-sm text-white">
                       <div className="flex items-start gap-2">
                         <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />
                         <span>Single contractor (e.g., domestic rewire)</span>
@@ -1316,7 +1316,7 @@ export default function CdmRegulationsModule3Section2() {
                       <p className="text-xs font-semibold text-green-300 mb-1">
                         CPP Might Include:
                       </p>
-                      <ul className="text-xs text-white/70 space-y-0.5">
+                      <ul className="text-xs text-white space-y-0.5">
                         <li>&bull; 1&ndash;3 pages</li>
                         <li>&bull; Key risks and controls</li>
                         <li>&bull; Emergency contact details</li>
@@ -1331,7 +1331,7 @@ export default function CdmRegulationsModule3Section2() {
                     <p className="text-sm font-bold text-blue-400 mb-3 text-center">
                       Large / Complex Project
                     </p>
-                    <div className="space-y-2 text-sm text-white/80">
+                    <div className="space-y-2 text-sm text-white">
                       <div className="flex items-start gap-2">
                         <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
                         <span>Multiple contractors (e.g., new-build hospital)</span>
@@ -1347,7 +1347,7 @@ export default function CdmRegulationsModule3Section2() {
                     </div>
                     <div className="mt-4 bg-blue-500/10 border border-blue-500/20 rounded p-3">
                       <p className="text-xs font-semibold text-blue-300 mb-1">CPP Might Include:</p>
-                      <ul className="text-xs text-white/70 space-y-0.5">
+                      <ul className="text-xs text-white space-y-0.5">
                         <li>&bull; 20&ndash;50+ pages with appendices</li>
                         <li>&bull; Detailed management structure &amp; org chart</li>
                         <li>&bull; Full coordination procedures</li>
@@ -1363,7 +1363,7 @@ export default function CdmRegulationsModule3Section2() {
                 <div className="mt-6 flex items-center justify-center gap-2">
                   <div className="h-2 flex-1 rounded-full bg-gradient-to-r from-green-500/40 via-yellow-500/40 to-blue-500/40" />
                 </div>
-                <div className="flex justify-between text-xs text-white/50 mt-1">
+                <div className="flex justify-between text-xs text-white mt-1">
                   <span>Simple</span>
                   <span>Proportionate to risk</span>
                   <span>Complex</span>
@@ -1374,7 +1374,7 @@ export default function CdmRegulationsModule3Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Avoiding Paperwork for Its Own Sake
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1440,7 +1440,7 @@ export default function CdmRegulationsModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Common Triggers for Review</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1495,7 +1495,7 @@ export default function CdmRegulationsModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Version Control</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1538,7 +1538,7 @@ export default function CdmRegulationsModule3Section2() {
                   {/* Top Level */}
                   <div className="bg-blue-500/20 border border-blue-500/40 rounded-lg p-3 text-center">
                     <p className="text-sm font-bold text-blue-300">Construction Phase Plan</p>
-                    <p className="text-xs text-white/50">
+                    <p className="text-xs text-white">
                       Living document &mdash; reviewed and updated throughout the project
                     </p>
                   </div>
@@ -1552,33 +1552,33 @@ export default function CdmRegulationsModule3Section2() {
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                       <p className="text-xs font-semibold text-white">Project Description</p>
-                      <p className="text-[10px] text-white/50 mt-1">Scope, location, phases</p>
+                      <p className="text-[10px] text-white mt-1">Scope, location, phases</p>
                     </div>
                     <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                       <p className="text-xs font-semibold text-white">Management Structure</p>
-                      <p className="text-[10px] text-white/50 mt-1">
+                      <p className="text-[10px] text-white mt-1">
                         Roles, org chart, coordination
                       </p>
                     </div>
                     <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                       <p className="text-xs font-semibold text-white">H&amp;S Arrangements</p>
-                      <p className="text-[10px] text-white/50 mt-1">
+                      <p className="text-[10px] text-white mt-1">
                         Inductions, welfare, first aid
                       </p>
                     </div>
                     <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                       <p className="text-xs font-semibold text-white">Site Rules</p>
-                      <p className="text-[10px] text-white/50 mt-1">
+                      <p className="text-[10px] text-white mt-1">
                         PPE, access, permits, traffic
                       </p>
                     </div>
                     <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                       <p className="text-xs font-semibold text-white">Risk Procedures</p>
-                      <p className="text-[10px] text-white/50 mt-1">Height, hot works, confined</p>
+                      <p className="text-[10px] text-white mt-1">Height, hot works, confined</p>
                     </div>
                     <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                       <p className="text-xs font-semibold text-white">Emergency Plan</p>
-                      <p className="text-[10px] text-white/50 mt-1">Fire, evacuation, rescue</p>
+                      <p className="text-[10px] text-white mt-1">Fire, evacuation, rescue</p>
                     </div>
                   </div>
 
@@ -1591,17 +1591,17 @@ export default function CdmRegulationsModule3Section2() {
                   <div className="grid grid-cols-3 gap-2">
                     <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-2 text-center">
                       <p className="text-[10px] font-semibold text-amber-300">Version Control</p>
-                      <p className="text-[9px] text-white/40 mt-0.5">Numbered, dated, logged</p>
+                      <p className="text-[9px] text-white mt-0.5">Numbered, dated, logged</p>
                     </div>
                     <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-2 text-center">
                       <p className="text-[10px] font-semibold text-amber-300">Review Triggers</p>
-                      <p className="text-[9px] text-white/40 mt-0.5">
+                      <p className="text-[9px] text-white mt-0.5">
                         New risks, incidents, changes
                       </p>
                     </div>
                     <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-2 text-center">
                       <p className="text-[10px] font-semibold text-amber-300">Site Access</p>
-                      <p className="text-[9px] text-white/40 mt-0.5">Available to all workers</p>
+                      <p className="text-[9px] text-white mt-0.5">Available to all workers</p>
                     </div>
                   </div>
                 </div>
@@ -1609,7 +1609,7 @@ export default function CdmRegulationsModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Accessibility on Site</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1664,7 +1664,7 @@ export default function CdmRegulationsModule3Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1678,7 +1678,7 @@ export default function CdmRegulationsModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-3-section-1">

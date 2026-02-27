@@ -199,7 +199,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-5">
@@ -224,7 +224,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Protected Species &amp; Habitats
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             UK wildlife legislation, protected species encountered in construction, habitat
             designations, biodiversity net gain, ecological surveys, and enforcement
           </p>
@@ -309,7 +309,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Ecosystem Services We Depend Upon
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -358,7 +358,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">UK Biodiversity Decline</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The UK is one of the most{' '}
                   <strong className="text-white">nature-depleted countries in the world</strong>.
                   The 2023 State of Nature report found that 16% of UK species are threatened with
@@ -423,7 +423,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                       </div>
                       <p className="text-sm font-semibold text-white">Schedule 1 &mdash; Birds</p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Birds afforded special protection, including barn owls, peregrine falcons,
                       kingfishers, and red kites. It is an offence to intentionally or recklessly
                       disturb these species at or near their nest during the breeding season. All
@@ -438,7 +438,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                       </div>
                       <p className="text-sm font-semibold text-white">Schedule 5 &mdash; Animals</p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Animals given special protection, including all bats, great crested newts,
                       dormice, otters, water voles, slow worms, adders, grass snakes, and common
                       lizards. It is an offence to intentionally kill, injure, or take these
@@ -453,7 +453,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                       </div>
                       <p className="text-sm font-semibold text-white">Schedule 8 &mdash; Plants</p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Plants given special protection, including bluebell (wild), lady&apos;s
                       slipper orchid, and shore dock. It is an offence to intentionally pick,
                       uproot, or destroy these species. It is also an offence for anyone to uproot
@@ -467,7 +467,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Key Offences Under the WCA 1981
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -504,7 +504,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Penalties</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Offences under the Wildlife &amp; Countryside Act 1981 are{' '}
                   <strong className="text-white">criminal offences</strong>. Each offence can carry
                   an <strong className="text-white">unlimited fine</strong> and/or{' '}
@@ -549,12 +549,12 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   European Protected Species (EPS)
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Species listed in <strong className="text-white">Annex IV</strong> of the Habitats
                   Directive receive the strictest protection. In the UK, the most commonly
                   encountered EPS in construction are:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -587,7 +587,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Annex II Species &amp; Habitat Designations
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Species listed in <strong className="text-white">Annex II</strong> require the
                   designation of{' '}
                   <strong className="text-white">Special Areas of Conservation (SACs)</strong> for
@@ -596,7 +596,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                   <strong className="text-white">Habitats Regulations Assessment (HRA)</strong>{' '}
                   before it can proceed.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -627,7 +627,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Derogation Licences</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Where development will unavoidably affect European Protected Species, a{' '}
                   <strong className="text-white">
                     European Protected Species mitigation licence
@@ -635,7 +635,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                   (derogation licence) must be obtained from Natural England. Three strict tests
                   must be met:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1 mt-2">
+                <ul className="text-sm text-white space-y-1 mt-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -697,7 +697,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                 <p className="text-sm font-bold text-emerald-400 mb-3">
                   Bats &mdash; All Species Protected
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -740,7 +740,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
               {/* Great Crested Newts */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Great Crested Newts</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Protected at all life stages and at all times of year</span>
@@ -773,7 +773,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
               {/* Nesting Birds */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Nesting Birds</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -810,7 +810,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
               {/* Badgers */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Badgers</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -846,7 +846,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
               <div className="grid sm:grid-cols-2 gap-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Reptiles</p>
-                  <ul className="text-xs text-white/80 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -871,7 +871,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Water Voles</p>
-                  <ul className="text-xs text-white/80 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -902,7 +902,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                     Protected Species Calendar &mdash; Seasonal Constraints
                   </p>
                 </div>
-                <p className="text-xs text-white/60 mb-3">
+                <p className="text-xs text-white mb-3">
                   Key survey and constraint windows for common protected species on construction
                   sites
                 </p>
@@ -911,7 +911,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                   <div className="min-w-[600px]">
                     {/* Header row */}
                     <div className="grid grid-cols-[140px_repeat(12,1fr)] gap-px mb-1">
-                      <div className="text-xs text-white/60 font-medium">Species</div>
+                      <div className="text-xs text-white font-medium">Species</div>
                       {[
                         'Jan',
                         'Feb',
@@ -926,7 +926,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                         'Nov',
                         'Dec',
                       ].map((m) => (
-                        <div key={m} className="text-[10px] text-white/50 text-center">
+                        <div key={m} className="text-[10px] text-white text-center">
                           {m}
                         </div>
                       ))}
@@ -1018,7 +1018,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                   </div>
                 </div>
 
-                <div className="mt-3 bg-white/5 p-2 rounded text-[10px] text-white/60">
+                <div className="mt-3 bg-white/5 p-2 rounded text-[10px] text-white">
                   Note: Exact timings vary by region, weather, and species. Always consult a
                   qualified ecologist for site-specific survey timing.
                 </div>
@@ -1057,7 +1057,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                     <p className="text-xs font-bold text-red-400 mb-1">
                       INTERNATIONAL DESIGNATIONS &mdash; Highest Protection
                     </p>
-                    <ul className="text-xs text-white/80 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>
@@ -1089,7 +1089,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                   {/* National */}
                   <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
                     <p className="text-xs font-bold text-amber-400 mb-1">NATIONAL DESIGNATIONS</p>
-                    <ul className="text-xs text-white/80 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>
@@ -1126,7 +1126,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                   {/* Local */}
                   <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3">
                     <p className="text-xs font-bold text-emerald-400 mb-1">LOCAL DESIGNATIONS</p>
-                    <ul className="text-xs text-white/80 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>
@@ -1186,12 +1186,12 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                     <p className="text-emerald-400 text-lg font-bold">
                       Minimum Biodiversity Net Gain
                     </p>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Environment Act 2021 &mdash; mandatory for most new developments in England
                     </p>
                   </div>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Developers must demonstrate that the post-development biodiversity value of the
                   site will be at least{' '}
                   <strong className="text-white">
@@ -1222,7 +1222,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                       </div>
                       <div>
                         <p className="text-sm font-bold text-white">Baseline Assessment</p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           Ecologist surveys existing habitats and calculates pre-development
                           biodiversity units using the DEFRA metric
                         </p>
@@ -1248,7 +1248,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                         <p className="text-sm font-bold text-white">
                           Apply the Mitigation Hierarchy
                         </p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           Avoid habitat loss where possible, then mitigate unavoidable impacts
                           through design changes, then compensate for residual loss
                         </p>
@@ -1274,7 +1274,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                         <p className="text-sm font-bold text-white">
                           Calculate Post-Development Value
                         </p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           Calculate the biodiversity units after development, including on-site
                           habitat creation/enhancement
                         </p>
@@ -1298,7 +1298,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                       </div>
                       <div>
                         <p className="text-sm font-bold text-white">Achieve 10% Net Gain</p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           If on-site measures are insufficient, use off-site habitat creation or
                           purchase biodiversity units from a habitat bank
                         </p>
@@ -1322,7 +1322,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                       </div>
                       <div>
                         <p className="text-sm font-bold text-white">30-Year Management Plan</p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           Secure the net gain through a conservation covenant or S106 agreement with
                           a legally binding 30-year management and monitoring plan
                         </p>
@@ -1336,7 +1336,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   How to Deliver Biodiversity Net Gain
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1369,7 +1369,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Important Restrictions</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   BNG does NOT allow the destruction of{' '}
                   <strong className="text-white">irreplaceable habitats</strong> (ancient woodland,
                   ancient and veteran trees) &mdash; these cannot be adequately compensated for
@@ -1401,7 +1401,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Pre-Commencement Surveys</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -1431,7 +1431,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Seasonal Constraints</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1463,7 +1463,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Exclusion Zones</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1501,12 +1501,12 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Ecological Clerk of Works (ECoW)
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   On projects where protected species or habitats are present, an{' '}
                   <strong className="text-white">Ecological Clerk of Works</strong> may be required
                   on site. Their role includes:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1538,7 +1538,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Method Statements &amp; Toolbox Talks
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1601,7 +1601,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Unlimited Fines</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         The courts can impose unlimited fines for wildlife offences. Fines are
                         assessed per specimen &mdash; multiple offences from a single incident can
                         result in cumulative penalties of tens or hundreds of thousands of pounds
@@ -1614,7 +1614,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Imprisonment</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Up to six months&apos; imprisonment per offence under the WCA 1981. More
                         serious offences under the Habitats Regulations can carry higher sentences.
                         Company directors can be held personally liable
@@ -1627,7 +1627,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Forfeiture</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Courts can order forfeiture of vehicles, equipment, and other articles used
                         in the commission of the offence
                       </p>
@@ -1638,7 +1638,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Natural England Enforcement</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1675,7 +1675,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Planning Enforcement</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1706,12 +1706,12 @@ export default function EnvironmentalSustainabilityModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">The Due Diligence Defence</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   In some circumstances, a{' '}
                   <strong className="text-white">due diligence defence</strong> may be available. To
                   rely on this defence, you must demonstrate that:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -1748,7 +1748,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Ignorance is NOT a Defence</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Claiming that you did not know protected species were present is{' '}
                   <strong className="text-white">not a valid defence</strong> if you failed to carry
                   out appropriate surveys. The law expects developers and contractors to take{' '}
@@ -1782,7 +1782,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1796,7 +1796,7 @@ export default function EnvironmentalSustainabilityModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-5">

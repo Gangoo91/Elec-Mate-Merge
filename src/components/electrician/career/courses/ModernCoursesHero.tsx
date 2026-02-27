@@ -56,7 +56,7 @@ const StatPill = ({
   <div className="flex-shrink-0 flex items-center gap-2 bg-white/5 rounded-full px-3 py-1.5 border border-white/10">
     <Icon className={cn('h-4 w-4', color)} />
     <span className="text-sm font-semibold text-white">{value}</span>
-    <span className="text-xs text-white/60">{label}</span>
+    <span className="text-xs text-white">{label}</span>
   </div>
 );
 
@@ -82,7 +82,7 @@ const CategoryPill = ({
       'flex-shrink-0 flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium transition-all touch-manipulation',
       isSelected
         ? 'bg-blue-500 text-white border border-blue-400'
-        : 'bg-white/5 text-white/80 border border-white/10 hover:bg-white/10 active:scale-95'
+        : 'bg-white/5 text-white border border-white/10 hover:bg-white/10 active:scale-95'
     )}
   >
     <Icon className={cn('h-3.5 w-3.5', isSelected ? 'text-white' : color)} />
@@ -121,7 +121,7 @@ const ModernCoursesHero = ({
             <h1 className="text-lg sm:text-xl font-semibold text-white">
               Training <span className="text-blue-400">Courses</span>
             </h1>
-            <p className="text-xs text-white/60 hidden sm:block">
+            <p className="text-xs text-white hidden sm:block">
               Find accredited courses near you
             </p>
           </div>
@@ -133,7 +133,7 @@ const ModernCoursesHero = ({
               disabled={isRefreshing}
               size="sm"
               variant="ghost"
-              className="h-8 w-8 p-0 text-white/70 hover:text-white hover:bg-white/10"
+              className="h-8 w-8 p-0 text-white hover:text-white hover:bg-white/10"
             >
               <RefreshCw className={cn('h-4 w-4', isRefreshing && 'animate-spin')} />
             </Button>
@@ -168,25 +168,25 @@ const ModernCoursesHero = ({
         {/* Search + Location Row */}
         <div className="flex gap-2 mt-3">
           <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
             <Input
               type="text"
               placeholder="Course or topic..."
               value={searchQuery}
               onChange={(e) => onSearchChange(e.target.value)}
-              className="h-10 pl-9 bg-white/5 border-white/10 text-white text-sm placeholder:text-white/40 focus:border-blue-500/50 focus:ring-blue-500/20 touch-manipulation"
+              className="h-10 pl-9 bg-white/5 border-white/10 text-white text-sm placeholder:text-white focus:border-blue-500/50 focus:ring-blue-500/20 touch-manipulation"
             />
           </div>
           {onLocationChange && (
             <div className="relative w-24 sm:w-28">
-              <MapPin className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white/40 pointer-events-none" />
+              <MapPin className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-white pointer-events-none" />
               <Input
                 type="text"
                 placeholder="Postcode"
                 value={locationQuery}
                 onChange={(e) => onLocationChange(e.target.value.toUpperCase())}
                 maxLength={8}
-                className="h-10 pl-7 bg-white/5 border-white/10 text-white text-sm placeholder:text-white/40 focus:border-blue-500/50 focus:ring-blue-500/20 touch-manipulation uppercase"
+                className="h-10 pl-7 bg-white/5 border-white/10 text-white text-sm placeholder:text-white focus:border-blue-500/50 focus:ring-blue-500/20 touch-manipulation uppercase"
               />
             </div>
           )}
@@ -201,7 +201,7 @@ const ModernCoursesHero = ({
                 'flex-shrink-0 rounded-full px-3 py-1.5 text-xs font-medium transition-all touch-manipulation',
                 !selectedCategory
                   ? 'bg-blue-500 text-white border border-blue-400'
-                  : 'bg-white/5 text-white/80 border border-white/10 hover:bg-white/10 active:scale-95'
+                  : 'bg-white/5 text-white border border-white/10 hover:bg-white/10 active:scale-95'
               )}
             >
               All Courses

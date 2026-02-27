@@ -199,7 +199,7 @@ export default function MewpModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-3">
@@ -224,7 +224,7 @@ export default function MewpModule3Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Thorough Examination &amp; Maintenance Requirements
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             LOLER 1998 thorough examination obligations, examination frequency and triggers,
             competent person requirements, defect categories, reporting duties, and routine
             maintenance under PUWER 1998
@@ -322,7 +322,7 @@ export default function MewpModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">A Thorough Examination Is NOT:</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -359,7 +359,7 @@ export default function MewpModule3Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   The Purpose of a Thorough Examination
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Detect defects or damage that could result in danger to persons</span>
@@ -435,7 +435,7 @@ export default function MewpModule3Section2() {
                 </div>
                 <div className="divide-y divide-white/5">
                   {/* Header Row */}
-                  <div className="grid grid-cols-3 text-xs font-medium text-white/60 px-4 py-2 bg-white/5">
+                  <div className="grid grid-cols-3 text-xs font-medium text-white px-4 py-2 bg-white/5">
                     <span>Category</span>
                     <span className="text-centre">Interval</span>
                     <span className="text-right">Examples</span>
@@ -444,7 +444,7 @@ export default function MewpModule3Section2() {
                   <div className="grid grid-cols-3 items-start text-sm px-4 py-3 bg-amber-500/5">
                     <span className="text-amber-400 font-medium">Lifting Persons</span>
                     <span className="text-centre text-white font-semibold">Every 6 Months</span>
-                    <span className="text-right text-white/80 text-xs">
+                    <span className="text-right text-white text-xs">
                       Scissor lifts, boom lifts, spider lifts, truck mounts, all MEWPs
                     </span>
                   </div>
@@ -452,7 +452,7 @@ export default function MewpModule3Section2() {
                   <div className="grid grid-cols-3 items-start text-sm px-4 py-3">
                     <span className="text-blue-400 font-medium">NOT Lifting Persons</span>
                     <span className="text-centre text-white font-semibold">Every 12 Months</span>
-                    <span className="text-right text-white/80 text-xs">
+                    <span className="text-right text-white text-xs">
                       Overhead cranes, hoists, goods lifts, fork-lift trucks (when not carrying
                       persons)
                     </span>
@@ -467,7 +467,7 @@ export default function MewpModule3Section2() {
                     Important: MEWPs Are Always 6 Months
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A MEWP is, by definition, a machine that lifts persons. Even if the platform is
                   occasionally used to lift materials as well, the machine is classified as
                   equipment for lifting persons and must be examined every 6&nbsp;months. Do not
@@ -484,7 +484,7 @@ export default function MewpModule3Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Additional Examination Triggers
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -564,7 +564,7 @@ export default function MewpModule3Section2() {
                     Who Typically Conducts Thorough Examinations?
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -600,7 +600,7 @@ export default function MewpModule3Section2() {
                     Who Cannot Conduct a Thorough Examination?
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -643,19 +643,19 @@ export default function MewpModule3Section2() {
                 <div className="grid sm:grid-cols-3 gap-3">
                   <div className="bg-white/5 p-3 rounded-lg text-centre">
                     <p className="text-sm font-medium text-elec-yellow mb-1">Knowledge</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Sufficient theoretical and practical knowledge of the equipment type
                     </p>
                   </div>
                   <div className="bg-white/5 p-3 rounded-lg text-centre">
                     <p className="text-sm font-medium text-elec-yellow mb-1">Experience</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Practical experience in examining lifting equipment and detecting defects
                     </p>
                   </div>
                   <div className="bg-white/5 p-3 rounded-lg text-centre">
                     <p className="text-sm font-medium text-elec-yellow mb-1">Independence</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Free from commercial or organisational bias that could affect findings
                     </p>
                   </div>
@@ -705,7 +705,7 @@ export default function MewpModule3Section2() {
                     'Slewing mechanism and slew ring',
                     'Load monitoring and overload protection systems',
                   ].map((item, i) => (
-                    <div key={i} className="flex items-start gap-2 text-sm text-white/80">
+                    <div key={i} className="flex items-start gap-2 text-sm text-white">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>{item}</span>
                     </div>
@@ -726,7 +726,7 @@ export default function MewpModule3Section2() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Structural Assessment</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Cracking, bending, or distortion of structural members</span>
@@ -747,7 +747,7 @@ export default function MewpModule3Section2() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Functional Testing</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>All controls respond correctly and proportionally</span>
@@ -815,7 +815,7 @@ export default function MewpModule3Section2() {
                 <div className="space-y-4">
                   <div className="bg-red-500/10 border border-red-500/30 p-3 rounded-lg">
                     <p className="text-sm font-medium text-red-400 mb-1">(a) Immediate Danger</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                         <span>
@@ -847,7 +847,7 @@ export default function MewpModule3Section2() {
                     <p className="text-sm font-medium text-amber-400 mb-1">
                       (b) Defect Requiring Attention
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                         <span>A defect that could become dangerous if not rectified</span>
@@ -878,7 +878,7 @@ export default function MewpModule3Section2() {
                   </div>
                   <div className="bg-blue-500/10 border border-blue-500/30 p-3 rounded-lg">
                     <p className="text-sm font-medium text-blue-400 mb-1">(c) Observation</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                         <span>An advisory note for future attention</span>
@@ -909,7 +909,7 @@ export default function MewpModule3Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Report Retention &amp; Legal Obligations
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -946,7 +946,7 @@ export default function MewpModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Criminal Offence</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Failure to have a current thorough examination for a MEWP that is in use is a{' '}
                   <strong className="text-white">criminal offence</strong> under LOLER 1998. This
                   applies to the employer, the person who controls the use of the equipment, and
@@ -981,7 +981,7 @@ export default function MewpModule3Section2() {
                     PUWER Maintenance Requirements
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1027,7 +1027,7 @@ export default function MewpModule3Section2() {
                   <Settings className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Inspection Requirements</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1060,7 +1060,7 @@ export default function MewpModule3Section2() {
                     Events Triggering Additional Inspection
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>Severe weather (high winds, heavy rain, frost, snow, or lightning)</span>
@@ -1097,7 +1097,7 @@ export default function MewpModule3Section2() {
                       The Operator Is Responsible For:
                     </p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Completing a pre-use inspection before every shift</span>
@@ -1131,7 +1131,7 @@ export default function MewpModule3Section2() {
                     <Shield className="h-5 w-5 text-green-400" />
                     <p className="text-sm font-medium text-green-400">The Employer Must Arrange:</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>6-monthly thorough examinations under LOLER 1998</span>
@@ -1182,7 +1182,7 @@ export default function MewpModule3Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1196,7 +1196,7 @@ export default function MewpModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-3">

@@ -286,7 +286,7 @@ const Level3Module4Section3_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section3">
@@ -445,7 +445,7 @@ const Level3Module4Section3_1 = () => {
               you can often pinpoint fault locations without destructive investigation.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A ring has end-to-end readings of L=0.4 ohms, N=0.4 ohms,
               CPC=0.65 ohms. After cross-connection, socket A shows r1+r2 = 0.26 ohms, socket B =
               0.27 ohms, but socket C = 0.48 ohms. The high reading at C suggests a partial break or
@@ -559,7 +559,7 @@ const Level3Module4Section3_1 = () => {
               connection points under load.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A ring circuit trips its MCB only on winter evenings.
               Investigation shows the ring is broken, but the customer's normal daytime load doesn't
               exceed the capacity of a single radial leg. In the evening, with heating, lighting,
@@ -639,7 +639,7 @@ const Level3Module4Section3_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -686,7 +686,7 @@ const Level3Module4Section3_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section2-4">

@@ -106,19 +106,19 @@ const AM2Module1Section3 = () => {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
         <AM2ContentCard className="text-center">
           <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">Yes/No</div>
-          <div className="text-ios-footnote text-white/70">Competence-based marking</div>
+          <div className="text-ios-footnote text-white">Competence-based marking</div>
         </AM2ContentCard>
         <AM2ContentCard className="text-center">
           <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">5</div>
-          <div className="text-ios-footnote text-white/70">Main assessment sections</div>
+          <div className="text-ios-footnote text-white">Main assessment sections</div>
         </AM2ContentCard>
         <AM2ContentCard className="text-center">
           <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">100%</div>
-          <div className="text-ios-footnote text-white/70">Safe isolation requirement</div>
+          <div className="text-ios-footnote text-white">Safe isolation requirement</div>
         </AM2ContentCard>
         <AM2ContentCard className="text-center">
           <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">Fixed</div>
-          <div className="text-ios-footnote text-white/70">Standards-based marking</div>
+          <div className="text-ios-footnote text-white">Standards-based marking</div>
         </AM2ContentCard>
       </div>
 
@@ -128,10 +128,10 @@ const AM2Module1Section3 = () => {
           <Target className="h-5 w-5" />
           Learning Outcomes
         </h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           By the end of this section, you should be able to:
         </p>
-        <ul className="space-y-2 text-ios-body text-white/80">
+        <ul className="space-y-2 text-ios-body text-white">
           <li className="flex items-start gap-2">
             <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span>Explain how the AM2 assessment is marked and what "competence-based" means</span>
@@ -158,14 +158,14 @@ const AM2Module1Section3 = () => {
       <AM2ContentCard>
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4 mb-4">
           <p className="text-ios-footnote text-elec-yellow font-semibold mb-1">Important Note:</p>
-          <p className="text-ios-callout text-white/80">
+          <p className="text-ios-callout text-white">
             The AM2 is not a "college exam" - it is a competence-based final assessment overseen by
             NET to prove you can work independently and safely as an electrician. Unlike written
             exams, the AM2 is judged against strict marking criteria and thresholds, with particular
             focus on safety, accuracy, and compliance with BS 7671.
           </p>
         </div>
-        <p className="text-ios-body text-white/90">
+        <p className="text-ios-body text-white">
           Some mistakes will only lose you marks, but others are considered critical fails that stop
           you passing regardless of your score elsewhere. Understanding how the AM2 is marked is
           vital to preparing effectively.
@@ -178,28 +178,28 @@ const AM2Module1Section3 = () => {
           <Eye className="h-5 w-5" />
           1. Competence-based Marking
         </h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           The AM2 is assessed against fixed standards, not relative scores. Your work must be:
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <Shield className="h-6 w-6 text-elec-yellow mb-2" />
             <h4 className="text-ios-headline text-white font-semibold mb-1">Safe</h4>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               In line with health and safety and BS 7671
             </p>
           </div>
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <Target className="h-6 w-6 text-elec-yellow mb-2" />
             <h4 className="text-ios-headline text-white font-semibold mb-1">Accurate</h4>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Matches drawings and specifications exactly
             </p>
           </div>
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <Award className="h-6 w-6 text-elec-yellow mb-2" />
             <h4 className="text-ios-headline text-white font-semibold mb-1">Workmanlike</h4>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Professional standard as per IET definition
             </p>
           </div>
@@ -225,12 +225,12 @@ const AM2Module1Section3 = () => {
           <TrendingUp className="h-5 w-5" />
           2. Competence-Based Pass Requirements
         </h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           The AM2 uses <strong className="text-elec-yellow">competence-based assessment</strong> -
           assessors judge each criterion as Competent or Not Yet Competent. There is no percentage
           pass mark. You must demonstrate competence across all sections:
         </p>
-        <ul className="space-y-2 text-ios-body text-white/80">
+        <ul className="space-y-2 text-ios-body text-white">
           <li className="flex items-start gap-2">
             <AlertCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span>You must demonstrate competence in each main section</span>
@@ -269,7 +269,7 @@ const AM2Module1Section3 = () => {
           <AlertTriangle className="h-5 w-5" />
           3. Critical Fails (Automatic Failures)
         </h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           NET defines certain errors as automatic fails regardless of performance elsewhere:
         </p>
         <div className="space-y-3">
@@ -277,7 +277,7 @@ const AM2Module1Section3 = () => {
             <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
               Unsafe Isolation Procedure
             </h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Failing to prove dead correctly</span>
@@ -296,7 +296,7 @@ const AM2Module1Section3 = () => {
             <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
               Unsafe Circuit Conditions
             </h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Leaving circuits in an unsafe condition</span>
@@ -315,7 +315,7 @@ const AM2Module1Section3 = () => {
             <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
               Serious Health & Safety Breach
             </h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Major PPE violations</span>
@@ -357,7 +357,7 @@ const AM2Module1Section3 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-1">
               Safe Isolation & Risk Assessment
             </h4>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               100% correct procedure required - no margin for error
             </p>
           </div>
@@ -365,7 +365,7 @@ const AM2Module1Section3 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-1">
               Composite Installation
             </h4>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Must follow drawings exactly; correct cable types, routing, termination, and neatness
               standards
             </p>
@@ -374,19 +374,19 @@ const AM2Module1Section3 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-1">
               Inspection, Testing & Certification
             </h4>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Step-by-step GN3 procedure; accurate test results; correctly completed EIC
             </p>
           </div>
           <div className="border-l-4 border-elec-yellow/50 pl-4">
             <h4 className="text-ios-headline text-white font-semibold mb-1">Fault Diagnosis</h4>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Usually four faults; you must find and diagnose most (typically 3/4 minimum)
             </p>
           </div>
           <div className="border-l-4 border-elec-yellow/50 pl-4">
             <h4 className="text-ios-headline text-white font-semibold mb-1">Theory Test</h4>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Around 30 questions; based on BS 7671, building regulations, safe working practices
             </p>
           </div>
@@ -399,10 +399,10 @@ const AM2Module1Section3 = () => {
           <Eye className="h-5 w-5" />
           5. Sampling and Neatness Standards
         </h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           Assessors often sample test points rather than checking every connection. This means:
         </p>
-        <ul className="space-y-2 text-ios-body text-white/80">
+        <ul className="space-y-2 text-ios-body text-white">
           <li className="flex items-start gap-2">
             <AlertCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span>If the sample is poor quality, you lose marks across the board</span>
@@ -439,7 +439,7 @@ const AM2Module1Section3 = () => {
             <h4 className="text-ios-headline text-elec-yellow font-semibold mb-1">
               Example 1: Isolation Failure
             </h4>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Candidate wired an entire installation correctly but missed one key step in safe
               isolation (didn't re-prove tester). Result: Automatic fail despite otherwise excellent
               work.
@@ -449,7 +449,7 @@ const AM2Module1Section3 = () => {
             <h4 className="text-ios-headline text-elec-yellow font-semibold mb-1">
               Example 2: Insufficient Fault Finding
             </h4>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Candidate completed installation work but only correctly identified 1/4 faults.
               Overall high marks in installation didn't save them - failed due to not meeting
               section threshold.
@@ -459,7 +459,7 @@ const AM2Module1Section3 = () => {
             <h4 className="text-ios-headline text-amber-400 font-semibold mb-1">
               Example 3: Specification Deviation
             </h4>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Candidate completed installation neatly but didn't follow the drawing (used wrong
               cable size for cooker). Marked down heavily - borderline pass due to accuracy
               requirements.
@@ -478,7 +478,7 @@ const AM2Module1Section3 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-1">
               Q: If I fail one section but pass others, do I fail the whole AM2?
             </h4>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               A: Yes, unless the section is minor and doesn't fall under NET's critical pass
               criteria. Safe isolation, for example, is non-negotiable.
             </p>
@@ -487,7 +487,7 @@ const AM2Module1Section3 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-1">
               Q: How strict are assessors on neatness?
             </h4>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               A: Very strict. NET defines "workmanlike" standards clearly. Cables must be straight,
               terminated properly, with no insulation damage.
             </p>
@@ -496,7 +496,7 @@ const AM2Module1Section3 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-1">
               Q: Do I lose marks for asking the assessor a question?
             </h4>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               A: No, but they will not give hints. They can clarify instructions if wording is
               unclear.
             </p>
@@ -505,7 +505,7 @@ const AM2Module1Section3 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-1">
               Q: Can I pass if I miss a fault in fault-finding?
             </h4>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               A: Usually yes if you get the majority correct (e.g. 3/4). Missing more than one is
               risky.
             </p>

@@ -267,9 +267,9 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                 </Button>
               </div>
 
-              <p className="text-white/80 text-justify">{course.description}</p>
+              <p className="text-white text-justify">{course.description}</p>
               {isLiveCourse && course.source && (
-                <p className="text-xs text-white/60 mt-2 flex items-center gap-1.5">
+                <p className="text-xs text-white mt-2 flex items-center gap-1.5">
                   <Database className="h-3 w-3" />
                   Source: {course.source}
                 </p>
@@ -279,7 +279,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
               variant="ghost"
               size="sm"
               onClick={onClose}
-              className="text-white/60 hover:text-white hover:bg-white/10"
+              className="text-white hover:text-white hover:bg-white/10"
             >
               <X className="h-5 w-5" />
             </Button>
@@ -293,7 +293,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                   <Clock className="h-5 w-5 text-elec-yellow" />
                 </div>
                 <div className="font-medium text-white">{course.duration}</div>
-                <div className="text-xs text-white/70">Duration</div>
+                <div className="text-xs text-white">Duration</div>
               </CardContent>
             </Card>
             <Card className="bg-gradient-to-br from-blue-500/10 to-blue-500/5 border-blue-500/20">
@@ -302,7 +302,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                   <Users className="h-5 w-5 text-blue-400" />
                 </div>
                 <div className="font-medium text-white">{course.level}</div>
-                <div className="text-xs text-white/70">Level</div>
+                <div className="text-xs text-white">Level</div>
               </CardContent>
             </Card>
             <Card className="bg-gradient-to-br from-green-500/10 to-green-500/5 border-green-500/20">
@@ -311,7 +311,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                   <PoundSterling className="h-5 w-5 text-green-400" />
                 </div>
                 <div className="font-medium text-white text-sm">{course.price}</div>
-                <div className="text-xs text-white/70">Price Range</div>
+                <div className="text-xs text-white">Price Range</div>
               </CardContent>
             </Card>
             <Card className="bg-gradient-to-br from-purple-500/10 to-purple-500/5 border-purple-500/20">
@@ -320,7 +320,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                   <TrendingUp className="h-5 w-5 text-purple-400" />
                 </div>
                 <div className="font-medium text-white">{course.futureProofing}/5</div>
-                <div className="text-xs text-white/70">Future-Proof</div>
+                <div className="text-xs text-white">Future-Proof</div>
               </CardContent>
             </Card>
           </div>
@@ -339,13 +339,13 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
               </CardHeader>
               <CardContent className="space-y-3 relative">
                 <div className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10">
-                  <span className="text-sm text-white/70">Industry Demand:</span>
+                  <span className="text-sm text-white">Industry Demand:</span>
                   <Badge className={`${getDemandColor(course.industryDemand)} text-xs border`}>
                     {course.industryDemand}
                   </Badge>
                 </div>
                 <div className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10">
-                  <span className="text-sm text-white/70">Salary Impact:</span>
+                  <span className="text-sm text-white">Salary Impact:</span>
                   <span className="text-sm text-green-400 font-medium">{course.salaryImpact}</span>
                 </div>
                 {course.employerSupport && (
@@ -403,7 +403,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                       className="flex items-start gap-2 text-sm p-2 rounded-lg bg-white/5"
                     >
                       <CheckCircle className="h-3.5 w-3.5 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-white/80">{item}</span>
+                      <span className="text-white">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -428,7 +428,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                       className="flex items-start gap-2 text-sm p-2 rounded-lg bg-white/5"
                     >
                       <CheckCircle className="h-3.5 w-3.5 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-white/80">{outcome}</span>
+                      <span className="text-white">{outcome}</span>
                     </div>
                   ))}
                 </div>
@@ -450,11 +450,11 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
               </CardHeader>
               <CardContent className="space-y-3 relative">
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-                  <span className="text-xs text-white/60">Method</span>
+                  <span className="text-xs text-white">Method</span>
                   <p className="text-sm text-white">{course.assessmentMethod}</p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-                  <span className="text-xs text-white/60">Continuous Assessment</span>
+                  <span className="text-xs text-white">Continuous Assessment</span>
                   <p className="text-sm text-white">
                     {course.continuousAssessment ? 'Yes' : 'Final exam only'}
                   </p>
@@ -480,7 +480,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                       className="flex items-center gap-2 text-sm p-2 rounded-lg bg-white/5"
                     >
                       <div className="w-1.5 h-1.5 rounded-full bg-orange-400 flex-shrink-0" />
-                      <span className="text-white/80">{prereq}</span>
+                      <span className="text-white">{prereq}</span>
                     </div>
                   ))}
                 </div>
@@ -504,7 +504,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                 {displayLocations.map((location, idx) => (
                   <span
                     key={idx}
-                    className="text-sm bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg flex items-center gap-1.5 text-white/80"
+                    className="text-sm bg-white/5 border border-white/10 px-3 py-1.5 rounded-lg flex items-center gap-1.5 text-white"
                   >
                     <MapPin className="h-3.5 w-3.5 text-elec-yellow" />
                     {location}
@@ -530,21 +530,21 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                 <Table>
                   <TableHeader>
                     <TableRow className="border-white/10">
-                      <TableHead className="text-white/70">Start Date</TableHead>
-                      <TableHead className="text-white/70">Location</TableHead>
-                      <TableHead className="text-white/70">Format</TableHead>
-                      <TableHead className="text-white/70">Availability</TableHead>
-                      <TableHead className="text-right text-white/70">Action</TableHead>
+                      <TableHead className="text-white">Start Date</TableHead>
+                      <TableHead className="text-white">Location</TableHead>
+                      <TableHead className="text-white">Format</TableHead>
+                      <TableHead className="text-white">Availability</TableHead>
+                      <TableHead className="text-right text-white">Action</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {displayNextDates.map((date, idx) => (
                       <TableRow key={idx} className="border-white/10">
                         <TableCell className="text-white">{date}</TableCell>
-                        <TableCell className="text-white/80">
+                        <TableCell className="text-white">
                           {displayLocations[idx % displayLocations.length]}
                         </TableCell>
-                        <TableCell className="text-white/80">
+                        <TableCell className="text-white">
                           {getDisplayValue(course.format?.split(',')[0], 'To be confirmed')}
                         </TableCell>
                         <TableCell>
@@ -597,7 +597,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                       <Phone className="h-4 w-4 text-green-400" />
                     </div>
                     <div>
-                      <p className="text-xs text-white/60">Phone</p>
+                      <p className="text-xs text-white">Phone</p>
                       <a
                         href={`tel:${contactInfo.phone}`}
                         className="text-white hover:text-green-400 transition-colors"
@@ -614,7 +614,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                       <Mail className="h-4 w-4 text-blue-400" />
                     </div>
                     <div>
-                      <p className="text-xs text-white/60">Email</p>
+                      <p className="text-xs text-white">Email</p>
                       <a
                         href={`mailto:${contactInfo.email}`}
                         className="text-white hover:text-blue-400 transition-colors"
@@ -631,7 +631,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                       <MapPin className="h-4 w-4 text-orange-400" />
                     </div>
                     <div>
-                      <p className="text-xs text-white/60">Address</p>
+                      <p className="text-xs text-white">Address</p>
                       <p className="text-white">{contactInfo.address}</p>
                     </div>
                   </div>
@@ -643,7 +643,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                       <Users className="h-4 w-4 text-purple-400" />
                     </div>
                     <div>
-                      <p className="text-xs text-white/60">Contact Person</p>
+                      <p className="text-xs text-white">Contact Person</p>
                       <p className="text-white">{contactInfo.contactPerson}</p>
                     </div>
                   </div>
@@ -655,7 +655,7 @@ const CourseDetailsModal = ({ course, onClose }: CourseDetailsModalProps) => {
                       <Clock className="h-4 w-4 text-yellow-400" />
                     </div>
                     <div>
-                      <p className="text-xs text-white/60">Office Hours</p>
+                      <p className="text-xs text-white">Office Hours</p>
                       <p className="text-white">{contactInfo.officeHours}</p>
                     </div>
                   </div>

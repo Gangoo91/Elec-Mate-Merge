@@ -260,7 +260,7 @@ const Level3Module1Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section4">
@@ -432,7 +432,7 @@ const Level3Module1Section4_3 = () => {
               calibrated equipment before and during entry.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> Two workers entered a cable chamber to carry out routine
               jointing work. Unknown to them, decomposing organic matter that had washed into the
               chamber had consumed much of the oxygen. The first worker collapsed immediately. The
@@ -487,19 +487,19 @@ const Level3Module1Section4_3 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Preparation</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Risk assessment, control measures planned, rescue arranged
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Issue</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Authorised person checks controls, issues permit
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Close-out</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Work completed, permit cancelled, space made safe
                 </p>
               </div>
@@ -582,7 +582,7 @@ const Level3Module1Section4_3 = () => {
               at risk.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> An incident at a water treatment works: a worker collapsed
               in a chamber. A colleague immediately climbed down to help, followed by a third. All
               three were overcome by hydrogen sulphide. Emergency services used breathing apparatus
@@ -659,7 +659,7 @@ const Level3Module1Section4_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -704,7 +704,7 @@ const Level3Module1Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section4-2">

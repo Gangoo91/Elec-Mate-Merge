@@ -217,7 +217,7 @@ const HNCModule3Section3_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section3">
@@ -239,7 +239,7 @@ const HNCModule3Section3_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Phase Difference and Vector Representation
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding phasor diagrams and phase relationships for AC circuit analysis in
             building services
           </p>
@@ -327,7 +327,7 @@ const HNCModule3Section3_3 = () => {
               <p className="text-center font-mono text-lg mb-2">
                 phi = (delta t / T) x 360 degrees
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where delta t = time difference, T = period of one cycle
               </p>
             </div>
@@ -427,7 +427,7 @@ const HNCModule3Section3_3 = () => {
                   <p>
                     <strong>E</strong> (voltage) leads <strong>I</strong> (current)
                   </p>
-                  <p className="text-white/70 mt-1">Current lags voltage by up to 90 degrees</p>
+                  <p className="text-white mt-1">Current lags voltage by up to 90 degrees</p>
                 </div>
                 <div>
                   <p className="font-mono text-lg mb-1">ICE</p>
@@ -437,7 +437,7 @@ const HNCModule3Section3_3 = () => {
                   <p>
                     <strong>I</strong> (current) leads <strong>E</strong> (voltage)
                   </p>
-                  <p className="text-white/70 mt-1">Current leads voltage by up to 90 degrees</p>
+                  <p className="text-white mt-1">Current leads voltage by up to 90 degrees</p>
                 </div>
               </div>
             </div>
@@ -477,7 +477,7 @@ const HNCModule3Section3_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Why Current Lags in Inductors
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 An inductor opposes changes in current. When voltage is applied, the magnetic field
                 builds up, which opposes current flow. The current gradually increases, reaching its
                 maximum 90 degrees (quarter cycle) after the voltage peak. This is why motors, which
@@ -489,7 +489,7 @@ const HNCModule3Section3_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Why Current Leads in Capacitors
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 A capacitor allows current to flow freely when uncharged. Maximum current flows at
                 the instant voltage begins rising (to charge the capacitor). As voltage reaches its
                 peak, the capacitor is fully charged and current drops to zero. Current therefore
@@ -548,19 +548,19 @@ const HNCModule3Section3_3 = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">Reference</p>
-                  <p className="text-white/70 text-xs">Voltage at 0 degrees</p>
+                  <p className="text-white text-xs">Voltage at 0 degrees</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-green-400 mb-1">Leading</p>
-                  <p className="text-white/70 text-xs">Anti-clockwise from V</p>
+                  <p className="text-white text-xs">Anti-clockwise from V</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-orange-400 mb-1">Lagging</p>
-                  <p className="text-white/70 text-xs">Clockwise from V</p>
+                  <p className="text-white text-xs">Clockwise from V</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-blue-400 mb-1">In Phase</p>
-                  <p className="text-white/70 text-xs">Same direction as V</p>
+                  <p className="text-white text-xs">Same direction as V</p>
                 </div>
               </div>
             </div>
@@ -678,22 +678,22 @@ const HNCModule3Section3_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium mb-1">In Phase (0 degrees)</p>
-                  <p className="text-white/70">Resultant = V1 + V2</p>
-                  <p className="text-white/70">Phasors simply add</p>
+                  <p className="text-white">Resultant = V1 + V2</p>
+                  <p className="text-white">Phasors simply add</p>
                 </div>
                 <div>
                   <p className="font-medium mb-1">Anti-Phase (180 degrees)</p>
-                  <p className="text-white/70">Resultant = |V1 - V2|</p>
-                  <p className="text-white/70">Phasors subtract</p>
+                  <p className="text-white">Resultant = |V1 - V2|</p>
+                  <p className="text-white">Phasors subtract</p>
                 </div>
                 <div>
                   <p className="font-medium mb-1">Quadrature (90 degrees)</p>
-                  <p className="text-white/70">Resultant = sqrt(V1 squared + V2 squared)</p>
-                  <p className="text-white/70">Pythagoras applies</p>
+                  <p className="text-white">Resultant = sqrt(V1 squared + V2 squared)</p>
+                  <p className="text-white">Pythagoras applies</p>
                 </div>
                 <div>
                   <p className="font-medium mb-1">General Case</p>
-                  <p className="text-white/70">Use cosine rule or resolve into components</p>
+                  <p className="text-white">Use cosine rule or resolve into components</p>
                 </div>
               </div>
             </div>
@@ -702,7 +702,7 @@ const HNCModule3Section3_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Resolving into Components
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>For phasor V at angle theta:</p>
                 <p className="mt-1">Horizontal component: Vx = V x cos(theta)</p>
                 <p>Vertical component: Vy = V x sin(theta)</p>
@@ -714,7 +714,7 @@ const HNCModule3Section3_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Practical application:</strong> In three-phase systems, the line voltage is
               the phasor difference between two phase voltages, giving 400V = 230V x sqrt(3) from
               the 120-degree phase relationship.
@@ -745,7 +745,7 @@ const HNCModule3Section3_3 = () => {
                   <li className="pl-1">Power = VI (all real power)</li>
                 </ul>
                 <div className="p-3 rounded bg-white/5 text-sm">
-                  <p className="text-white/70">
+                  <p className="text-white">
                     Building examples: heaters, incandescent lamps, resistive heating elements
                   </p>
                 </div>
@@ -762,7 +762,7 @@ const HNCModule3Section3_3 = () => {
                   <li className="pl-1">Power oscillates, average = 0 (reactive)</li>
                 </ul>
                 <div className="p-3 rounded bg-white/5 text-sm">
-                  <p className="text-white/70">
+                  <p className="text-white">
                     Building examples: motor windings, transformer cores, chokes, solenoid valves
                   </p>
                 </div>
@@ -779,7 +779,7 @@ const HNCModule3Section3_3 = () => {
                   <li className="pl-1">Power oscillates, average = 0 (reactive)</li>
                 </ul>
                 <div className="p-3 rounded bg-white/5 text-sm">
-                  <p className="text-white/70">
+                  <p className="text-white">
                     Building examples: PFC capacitors, motor run capacitors, filter capacitors
                   </p>
                 </div>
@@ -859,15 +859,15 @@ const HNCModule3Section3_3 = () => {
               <div className="grid grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-red-400 mb-1">L1</p>
-                  <p className="text-white/70 text-xs">Reference: 0 degrees</p>
+                  <p className="text-white text-xs">Reference: 0 degrees</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-yellow-400 mb-1">L2</p>
-                  <p className="text-white/70 text-xs">Lags L1 by 120 degrees</p>
+                  <p className="text-white text-xs">Lags L1 by 120 degrees</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-blue-400 mb-1">L3</p>
-                  <p className="text-white/70 text-xs">Lags L1 by 240 degrees</p>
+                  <p className="text-white text-xs">Lags L1 by 240 degrees</p>
                 </div>
               </div>
             </div>
@@ -942,7 +942,7 @@ const HNCModule3Section3_3 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
               <p className="text-sm font-medium text-orange-400 mb-2">Phase Sequence Indicators</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Always use a phase sequence indicator before connecting three-phase motors. Modern
                 indicators show rotation direction with LED lights. The instrument is connected to
                 L1, L2, L3 and indicates whether the sequence will give clockwise or anti-clockwise
@@ -975,25 +975,25 @@ const HNCModule3Section3_3 = () => {
               <div className="grid grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">P (kW)</p>
-                  <p className="text-white/70 text-xs">Real power</p>
-                  <p className="text-white/70 text-xs">Horizontal side</p>
+                  <p className="text-white text-xs">Real power</p>
+                  <p className="text-white text-xs">Horizontal side</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-blue-400 mb-1">Q (kVAr)</p>
-                  <p className="text-white/70 text-xs">Reactive power</p>
-                  <p className="text-white/70 text-xs">Vertical side</p>
+                  <p className="text-white text-xs">Reactive power</p>
+                  <p className="text-white text-xs">Vertical side</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-purple-400 mb-1">S (kVA)</p>
-                  <p className="text-white/70 text-xs">Apparent power</p>
-                  <p className="text-white/70 text-xs">Hypotenuse</p>
+                  <p className="text-white text-xs">Apparent power</p>
+                  <p className="text-white text-xs">Hypotenuse</p>
                 </div>
               </div>
             </div>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Power Factor Equations</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Power factor = cos(phi) = P / S = kW / kVA</p>
                 <p className="mt-2">Real power: P = V x I x cos(phi)</p>
                 <p>Reactive power: Q = V x I x sin(phi)</p>
@@ -1103,7 +1103,7 @@ const HNCModule3Section3_3 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Motor Starting Current</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Induction motors draw very high starting current (locked rotor current) because the
                 rotor is stationary. At standstill, the motor acts almost as a short-circuited
                 transformer with very low impedance.
@@ -1169,7 +1169,7 @@ const HNCModule3Section3_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-yellow-400 mb-1">Star Connection (Start)</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Each winding sees 230V (phase voltage)</li>
                     <li className="pl-1">Current reduced by factor of sqrt(3)</li>
                     <li className="pl-1">Power reduced to 1/3</li>
@@ -1178,7 +1178,7 @@ const HNCModule3Section3_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-green-400 mb-1">Delta Connection (Run)</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Each winding sees 400V (line voltage)</li>
                     <li className="pl-1">Full rated current</li>
                     <li className="pl-1">Full power capability</li>
@@ -1192,11 +1192,11 @@ const HNCModule3Section3_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Power Factor Correction Capacitors
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Capacitors provide leading reactive current that cancels the lagging reactive
                 current drawn by motors. This reduces the total current from the supply.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Required kVAr = kW x (tan(phi1) - tan(phi2))</p>
                 <p className="mt-2">Where:</p>
                 <p>phi1 = original phase angle = arccos(original pf)</p>
@@ -1259,7 +1259,7 @@ const HNCModule3Section3_3 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
               <p className="text-sm font-medium text-red-400 mb-2">Capacitor Safety Warning</p>
-              <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                 <li className="pl-1">
                   Capacitors store dangerous charge - allow discharge time before working
                 </li>
@@ -1294,7 +1294,7 @@ const HNCModule3Section3_3 = () => {
                 <strong>Question:</strong> A 22kW motor has a power factor of 0.82 lagging at full
                 load. Calculate the phase angle and the reactive power drawn.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Phase angle: phi = arccos(0.82) = <strong>34.9 degrees lagging</strong>
                 </p>
@@ -1303,7 +1303,7 @@ const HNCModule3Section3_3 = () => {
                 <p>
                   Q = 26.83 x sin(34.9) = 26.83 x 0.572 = <strong>15.35 kVAr</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Alternatively: Q = sqrt(S squared - P squared) = sqrt(26.83 squared - 22 squared)
                   = 15.35 kVAr
                 </p>
@@ -1318,7 +1318,7 @@ const HNCModule3Section3_3 = () => {
                 <strong>Question:</strong> Two currents of 10A at 0 degrees and 8A at 60 degrees
                 flow into a junction. Find the resultant current.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Resolve into components:</p>
                 <p>I1: I1x = 10 x cos(0) = 10A, I1y = 10 x sin(0) = 0A</p>
                 <p>I2: I2x = 8 x cos(60) = 4A, I2y = 8 x sin(60) = 6.93A</p>
@@ -1344,7 +1344,7 @@ const HNCModule3Section3_3 = () => {
                 <strong>Question:</strong> An installation has a load of 150kW at 0.75 power factor
                 lagging. Calculate the capacitor bank size needed to improve to 0.95 pf.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Original angle: phi1 = arccos(0.75) = 41.4 degrees</p>
                 <p>Target angle: phi2 = arccos(0.95) = 18.2 degrees</p>
                 <p className="mt-2">Required kVAr = kW x (tan(phi1) - tan(phi2))</p>
@@ -1353,7 +1353,7 @@ const HNCModule3Section3_3 = () => {
                 <p>
                   kVAr = 150 x 0.553 = <strong>83 kVAr</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Standard capacitor bank: 90 kVAr (next standard size up)
                 </p>
               </div>
@@ -1367,7 +1367,7 @@ const HNCModule3Section3_3 = () => {
                 <strong>Question:</strong> Using phasor addition, show why three-phase line voltage
                 is sqrt(3) times the phase voltage.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Line voltage VL1-L2 = V1 - V2 (phasor difference)</p>
                 <p className="mt-2">V1 = Vp at 0 degrees = Vp</p>
                 <p>V2 = Vp at -120 degrees</p>
@@ -1381,7 +1381,7 @@ const HNCModule3Section3_3 = () => {
                 <p>
                   = sqrt(2.25 + 0.75) x Vp = sqrt(3) x Vp = <strong>1.732 x Vp</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Therefore VL = sqrt(3) x Vp = 1.732 x 230 = 400V
                 </p>
               </div>
@@ -1473,7 +1473,7 @@ const HNCModule3Section3_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1519,7 +1519,7 @@ const HNCModule3Section3_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section3-2">

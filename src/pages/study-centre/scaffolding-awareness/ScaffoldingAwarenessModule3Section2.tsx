@@ -165,7 +165,7 @@ export default function ScaffoldingAwarenessModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-3">
@@ -190,7 +190,7 @@ export default function ScaffoldingAwarenessModule3Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Base Plates, Sole Boards &amp; Foundations
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Ground conditions assessment, bearing capacity, base plate dimensions, sole board
             requirements, adjustable bases for slopes, load distribution, preventing settlement, and
             scaffold foundations near excavations
@@ -285,7 +285,7 @@ export default function ScaffoldingAwarenessModule3Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   What to Check During a Ground Assessment
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -438,7 +438,7 @@ export default function ScaffoldingAwarenessModule3Section2() {
                     Never Assume &mdash; Always Assess
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Ground that looks firm on the surface can hide voids, soft spots, or recently
                   filled trenches beneath. A tarmac car park may look solid but could be a thin
                   layer over soft clay or backfilled ground.{' '}
@@ -473,14 +473,14 @@ export default function ScaffoldingAwarenessModule3Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     Bearing Capacity (What the Ground Can Take)
                   </p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Bearing capacity is the{' '}
                     <strong className="text-white">maximum load per unit area</strong> (measured in
                     kN/m&sup2;) that the ground can safely support without failure or excessive
                     settlement. It depends on the soil type, moisture content, depth, and whether
                     the ground is disturbed or undisturbed.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                       <span>
@@ -539,7 +539,7 @@ export default function ScaffoldingAwarenessModule3Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     Bearing Pressure (What the Scaffold Applies)
                   </p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Bearing pressure is the{' '}
                     <strong className="text-white">actual load per unit area</strong> being applied
                     to the ground by the scaffold. It is calculated by dividing the total load at a
@@ -590,7 +590,7 @@ export default function ScaffoldingAwarenessModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Base Plate Requirements</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -634,7 +634,7 @@ export default function ScaffoldingAwarenessModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Types of Base Plate</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -669,7 +669,7 @@ export default function ScaffoldingAwarenessModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Common Defects to Reject</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
                     <span>Bent, bowed, or warped plates that do not sit flat</span>
@@ -714,7 +714,7 @@ export default function ScaffoldingAwarenessModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Sole Board Requirements</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -761,7 +761,7 @@ export default function ScaffoldingAwarenessModule3Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Sole Board Sizing for Multiple Standards
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -908,7 +908,7 @@ export default function ScaffoldingAwarenessModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">How Adjustable Bases Work</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -947,7 +947,7 @@ export default function ScaffoldingAwarenessModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Maximum Extension Limits</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -1019,7 +1019,7 @@ export default function ScaffoldingAwarenessModule3Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     Hard Surfaces &mdash; Concrete and Tarmac
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                       <span>
@@ -1069,7 +1069,7 @@ export default function ScaffoldingAwarenessModule3Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     Soft Ground &mdash; Clay, Turf, Bare Earth, and Fill
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                       <span>
@@ -1155,7 +1155,7 @@ export default function ScaffoldingAwarenessModule3Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   How Loads Travel Through the Scaffold
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1217,7 +1217,7 @@ export default function ScaffoldingAwarenessModule3Section2() {
                     <p className="text-sm text-white mb-1">
                       <strong>Uniform settlement</strong>
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       If all standards settle by the{' '}
                       <strong className="text-white">same amount</strong>, the scaffold drops
                       evenly. While this is undesirable, it does not immediately cause structural
@@ -1230,7 +1230,7 @@ export default function ScaffoldingAwarenessModule3Section2() {
                     <p className="text-sm text-white mb-1">
                       <strong>Differential settlement</strong>
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       If some standards settle{' '}
                       <strong className="text-white">more than others</strong>, the scaffold tilts
                       and distorts. This is{' '}
@@ -1251,7 +1251,7 @@ export default function ScaffoldingAwarenessModule3Section2() {
                     Signs of Settlement &mdash; Act Immediately
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
                     <span>Base plates or sole boards sinking into the ground</span>
@@ -1291,7 +1291,7 @@ export default function ScaffoldingAwarenessModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Preventing Settlement</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1360,7 +1360,7 @@ export default function ScaffoldingAwarenessModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">The Zone of Influence</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   When ground is excavated, the{' '}
                   <strong className="text-white">lateral support</strong> that the removed soil was
                   providing to the adjacent ground is lost. This creates a weakened zone around the
@@ -1368,7 +1368,7 @@ export default function ScaffoldingAwarenessModule3Section2() {
                   risk of collapse. This weakened area is called the{' '}
                   <strong className="text-white">zone of influence</strong>.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1403,7 +1403,7 @@ export default function ScaffoldingAwarenessModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Safety Rules</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -1448,7 +1448,7 @@ export default function ScaffoldingAwarenessModule3Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Other Hazards Near Excavations
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1508,7 +1508,7 @@ export default function ScaffoldingAwarenessModule3Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1522,7 +1522,7 @@ export default function ScaffoldingAwarenessModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-3">

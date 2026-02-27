@@ -290,7 +290,7 @@ const Level3Module8Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module8-section4">
@@ -358,43 +358,43 @@ const Level3Module8Section4_3 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Active Recall</p>
-                <p className="text-xs text-white/80 mb-2">
+                <p className="text-xs text-white mb-2">
                   Test yourself without looking at materials. Use flashcards, practice questions, or
                   explain concepts from memory.
                 </p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   <strong>Why it works:</strong> Retrieval strengthens memory pathways more than
                   recognition.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Spaced Repetition</p>
-                <p className="text-xs text-white/80 mb-2">
+                <p className="text-xs text-white mb-2">
                   Review material at increasing intervals. Start with daily, extend to weekly, then
                   longer.
                 </p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   <strong>Why it works:</strong> Fighting forgetting at optimal moments strengthens
                   long-term memory.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Interleaving</p>
-                <p className="text-xs text-white/80 mb-2">
+                <p className="text-xs text-white mb-2">
                   Mix different topics in a single study session rather than focusing on one until
                   mastered.
                 </p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   <strong>Why it works:</strong> Improves ability to distinguish between similar
                   concepts and apply correct method.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Elaboration</p>
-                <p className="text-xs text-white/80 mb-2">
+                <p className="text-xs text-white mb-2">
                   Explain how concepts work, connect new information to what you already know.
                 </p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   <strong>Why it works:</strong> Creates multiple memory connections, making
                   retrieval easier.
                 </p>
@@ -405,7 +405,7 @@ const Level3Module8Section4_3 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Sample Effective Study Session (2 hours):
               </p>
-              <div className="text-xs text-white/80 space-y-2">
+              <div className="text-xs text-white space-y-2">
                 <p>
                   <strong>0-25 mins:</strong> Active recall - flashcard review of previous topics
                   (spaced repetition)
@@ -465,26 +465,26 @@ const Level3Module8Section4_3 = () => {
               <div className="space-y-3 text-sm">
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">Step 1: Learn the Method</p>
-                  <p className="text-white/80 mt-1">
+                  <p className="text-white mt-1">
                     Understand the formula and when to apply it. Write out the steps clearly.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">Step 2: Worked Examples</p>
-                  <p className="text-white/80 mt-1">
+                  <p className="text-white mt-1">
                     Work through 5-10 examples with solutions, comparing your working to correct
                     method.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">Step 3: Independent Practice</p>
-                  <p className="text-white/80 mt-1">
+                  <p className="text-white mt-1">
                     Complete 10-20 problems without looking at method. Only check after attempting.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">Step 4: Timed Practice</p>
-                  <p className="text-white/80 mt-1">
+                  <p className="text-white mt-1">
                     Once accurate, practice for speed. Target 2-3 minutes per calculation.
                   </p>
                 </div>
@@ -502,7 +502,7 @@ const Level3Module8Section4_3 = () => {
                       <th className="text-left py-2 text-elec-yellow/80">Target Time</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80 text-xs">
+                  <tbody className="text-white text-xs">
                     <tr className="border-b border-white/5">
                       <td className="py-2">Voltage drop</td>
                       <td className="py-2 font-mono">Vd = (mV/A/m x I x L) / 1000</td>
@@ -533,7 +533,7 @@ const Level3Module8Section4_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Pro Tip:</strong> Create calculation practice sets mixing different types.
               This builds the skill of recognising which method to use - critical for exams.
             </p>
@@ -560,11 +560,11 @@ const Level3Module8Section4_3 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                   Acronyms and Mnemonics
                 </p>
-                <p className="text-xs text-white/80">
+                <p className="text-xs text-white">
                   Create memorable phrases for sequences or lists. The more personal or unusual, the
                   more memorable.
                 </p>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   Example: For safe isolation - "ISIPVSLTS" becomes "I Saw Ivan Put Vinegar, Salt,
                   Lemon, Tea, Sugar" (Isolate, Secure, Identify, Post notice, Verify dead, Secure
                   again, Lock off, Test equipment, Start work)
@@ -572,33 +572,33 @@ const Level3Module8Section4_3 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Visual Associations</p>
-                <p className="text-xs text-white/80">
+                <p className="text-xs text-white">
                   Link abstract concepts to vivid mental images. The stranger the image, the more
                   memorable.
                 </p>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   Example: Imagine voltage "dropping" like water down a waterfall to remember
                   voltage drop increases with length and current.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Method of Loci</p>
-                <p className="text-xs text-white/80">
+                <p className="text-xs text-white">
                   Place items to remember along a familiar route or in rooms of your house. Walk
                   through mentally to recall.
                 </p>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   Example: Place the sequence of tests in initial verification around your home -
                   continuity at the door, insulation resistance in the kitchen, etc.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Chunking</p>
-                <p className="text-xs text-white/80">
+                <p className="text-xs text-white">
                   Group related information into meaningful chunks rather than trying to remember
                   individual items.
                 </p>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   Example: Remember MCB types as groups - B for domestic (3-5x), C for commercial
                   (5-10x), D for motors (10-20x).
                 </p>
@@ -609,7 +609,7 @@ const Level3Module8Section4_3 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Creating Effective Memory Aids:
               </p>
-              <ul className="text-xs text-white/80 space-y-2">
+              <ul className="text-xs text-white space-y-2">
                 <li>
                   <strong>Make it personal:</strong> Use names, places, or events from your own life
                 </li>
@@ -631,7 +631,7 @@ const Level3Module8Section4_3 = () => {
 
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20 my-6">
               <p className="text-sm font-medium text-red-400 mb-2">Memory Aid Limitations:</p>
-              <p className="text-xs text-white/90">
+              <p className="text-xs text-white">
                 Memory aids help with recall but don't replace understanding. Use them for specific
                 facts, values, and sequences - but ensure you understand the underlying concepts. In
                 exams, you need both: understanding to recognise what's being asked, memory aids to
@@ -666,28 +666,28 @@ const Level3Module8Section4_3 = () => {
               <div className="space-y-3 text-sm">
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">Realistic Practice</p>
-                  <p className="text-white/80 mt-1">
+                  <p className="text-white mt-1">
                     Complete mock exams under exam conditions - timed, silent, no notes. This makes
                     the real exam feel familiar.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">Progressive Success</p>
-                  <p className="text-white/80 mt-1">
+                  <p className="text-white mt-1">
                     Track improving scores to see objective evidence of progress. Celebrate
                     milestones.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">Visualisation</p>
-                  <p className="text-white/80 mt-1">
+                  <p className="text-white mt-1">
                     Imagine yourself calmly and confidently working through the exam. Visualise
                     success.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">Physical Readiness</p>
-                  <p className="text-white/80 mt-1">
+                  <p className="text-white mt-1">
                     Good sleep, nutrition, and exercise support cognitive performance. Don't neglect
                     basics.
                   </p>
@@ -698,7 +698,7 @@ const Level3Module8Section4_3 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Before the Exam</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Prepare equipment the night before</li>
                   <li>Plan journey with extra time</li>
                   <li>Light review only - no new material</li>
@@ -708,7 +708,7 @@ const Level3Module8Section4_3 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">During the Exam</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Read all instructions carefully</li>
                   <li>Scan all questions first</li>
                   <li>Start with questions you're confident on</li>
@@ -720,7 +720,7 @@ const Level3Module8Section4_3 = () => {
 
             <div className="p-4 rounded-lg bg-transparent border border-white/10 my-6">
               <p className="text-sm font-medium text-white mb-2">Managing Exam Anxiety:</p>
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow/70">1.</span>
                   <span>
@@ -751,7 +751,7 @@ const Level3Module8Section4_3 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Remember:</strong> Some nervousness is normal and even helpful - it keeps you
               alert. The goal isn't to eliminate anxiety but to manage it so it doesn't interfere
               with performance.
@@ -811,7 +811,7 @@ const Level3Module8Section4_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -860,7 +860,7 @@ const Level3Module8Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module8-section4-2">

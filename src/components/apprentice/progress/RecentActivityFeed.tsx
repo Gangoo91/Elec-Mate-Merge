@@ -109,7 +109,7 @@ export function RecentActivityFeed() {
           </div>
         ) : activities.length === 0 ? (
           <div className="text-center py-6">
-            <Activity className="h-8 w-8 text-white/20 mx-auto mb-2" />
+            <Activity className="h-8 w-8 text-white mx-auto mb-2" />
             <p className="text-sm text-white">No activity yet</p>
             <p className="text-xs text-white mt-1">
               Complete a quiz or study flashcards to get started

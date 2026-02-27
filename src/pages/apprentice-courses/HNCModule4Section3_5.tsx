@@ -203,7 +203,7 @@ const HNCModule4Section3_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section3">
@@ -225,7 +225,7 @@ const HNCModule4Section3_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Earth Fault Protection
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             RCD types, applications, and earth fault protection requirements for different earthing
             systems
           </p>
@@ -362,7 +362,7 @@ const HNCModule4Section3_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-1">High Sensitivity (≤30mA)</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">30mA - Additional protection</li>
                     <li className="pl-1">10mA - Enhanced protection (medical)</li>
                     <li className="pl-1">Provides shock protection</li>
@@ -372,7 +372,7 @@ const HNCModule4Section3_5 = () => {
                   <p className="text-sm font-medium text-white mb-1">
                     Medium Sensitivity (100-500mA)
                   </p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">100mA - Fire protection</li>
                     <li className="pl-1">300mA - Fire protection</li>
                     <li className="pl-1">500mA - Sub-main protection</li>
@@ -559,7 +559,7 @@ const HNCModule4Section3_5 = () => {
                 TN System Earth Fault Protection
               </p>
               <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   In TN systems, earth fault loop impedance is low because the return path is
                   through the supply neutral. Overcurrent devices can provide earth fault protection
                   if Zs is low enough.
@@ -567,7 +567,7 @@ const HNCModule4Section3_5 = () => {
                 <div className="font-mono text-center text-lg mb-2">
                   Zs ≤ U<sub>o</sub> / I<sub>a</sub>
                 </div>
-                <p className="text-xs text-white/70 text-center">
+                <p className="text-xs text-white text-center">
                   Where Ia is the current causing automatic disconnection in required time
                 </p>
               </div>
@@ -616,7 +616,7 @@ const HNCModule4Section3_5 = () => {
                 TT System Earth Fault Protection
               </p>
               <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   In TT systems, the earth fault path includes the installation's earth electrode
                   resistance (RA), which is typically much higher than the TN metallic path. RCDs
                   are almost always required.
@@ -624,7 +624,7 @@ const HNCModule4Section3_5 = () => {
                 <div className="font-mono text-center text-lg mb-2">
                   R<sub>A</sub> × I<sub>Δn</sub> ≤ 50V
                 </div>
-                <p className="text-xs text-white/70 text-center">
+                <p className="text-xs text-white text-center">
                   This limits touch voltage on exposed-conductive-parts during a fault
                 </p>
               </div>
@@ -784,7 +784,7 @@ const HNCModule4Section3_5 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 RCBO vs Split-Load Boards
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 RCBOs (combined RCD + MCB) offer better discrimination than split-load boards
                 because each circuit has independent RCD protection. A fault on one circuit doesn't
                 affect others. Split-load boards with shared RCDs will disconnect all circuits on
@@ -792,7 +792,7 @@ const HNCModule4Section3_5 = () => {
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Design consideration:</strong> For critical installations, use individual
               RCBOs or dedicated RCDs per circuit to maximise discrimination and supply
               availability.
@@ -818,7 +818,7 @@ const HNCModule4Section3_5 = () => {
                 <strong>Question:</strong> A 32A Type B MCB protects a circuit with measured Zs =
                 0.85Ω at the furthest point. Is disconnection time adequate?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>From BS 7671 Table 41.3:</p>
                 <p>
                   32A Type B MCB max Zs = <strong>1.44Ω</strong> for 0.4s
@@ -842,7 +842,7 @@ const HNCModule4Section3_5 = () => {
                 <strong>Question:</strong> A TT installation has earth electrode resistance RA =
                 85Ω. What RCD rating is required for fault protection?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Requirement: RA × IΔn ≤ 50V</p>
                 <p className="mt-2">Rearranging: IΔn ≤ 50V / RA</p>
                 <p>
@@ -861,7 +861,7 @@ const HNCModule4Section3_5 = () => {
                 <p>
                   - 30mA: 85 × 0.03 = 2.55V &lt; 50V <span className="text-green-400">✓</span>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → 30mA provides best protection and additional protection
                 </p>
               </div>
@@ -875,7 +875,7 @@ const HNCModule4Section3_5 = () => {
                 <strong>Question:</strong> A 7.5kW variable speed drive supplies an AHU fan. What
                 RCD type is required?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>VSD characteristics:</p>
                 <p>- Rectifier stage produces DC components</p>
                 <p>- PWM output creates high-frequency components</p>
@@ -982,7 +982,7 @@ const HNCModule4Section3_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1028,7 +1028,7 @@ const HNCModule4Section3_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section3-4">

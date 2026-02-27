@@ -208,7 +208,7 @@ const MOETModule2Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module2-section1">
@@ -230,7 +230,7 @@ const MOETModule2Section1_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Ohm's Law and Watt's Law
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             The essential formulae that underpin all electrical circuit analysis and fault diagnosis
           </p>
         </header>
@@ -319,7 +319,7 @@ const MOETModule2Section1_2 = () => {
               <div className="space-y-3">
                 <div>
                   <p className="text-lg font-mono text-elec-yellow">V = I x R</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Voltage (volts) = Current (amperes) x Resistance (ohms)
                   </p>
                 </div>
@@ -410,7 +410,7 @@ const MOETModule2Section1_2 = () => {
                 <p>
                   R = <strong>18.4 ohms</strong>
                 </p>
-                <p className="mt-2 text-white/70">
+                <p className="mt-2 text-white">
                   The nameplate states the element is 3 kW. Expected current: I = P/V = 3000/230 =
                   13 A. The measured 12.5 A is slightly low, suggesting a minor increase in
                   resistance — possibly due to ageing or a developing fault in the element.
@@ -459,7 +459,7 @@ const MOETModule2Section1_2 = () => {
               <div className="space-y-3">
                 <div>
                   <p className="text-lg font-mono text-elec-yellow">P = I x V</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Power (watts) = Current (amperes) x Voltage (volts)
                   </p>
                 </div>
@@ -657,7 +657,7 @@ const MOETModule2Section1_2 = () => {
                 </p>
                 <p>V2 = IR2 = 4.89 x 22 = 107.6 V</p>
                 <p>V3 = IR3 = 4.89 x 15 = 73.4 V</p>
-                <p className="text-white/70">
+                <p className="text-white">
                   Check: 48.9 + 107.6 + 73.4 = 229.9 V (rounding accounts for the 0.1 V difference)
                 </p>
                 <p>
@@ -665,7 +665,7 @@ const MOETModule2Section1_2 = () => {
                 </p>
                 <p>P2 = I²R2 = 4.89² x 22 = 526.0 W</p>
                 <p>P3 = I²R3 = 4.89² x 15 = 358.6 W</p>
-                <p className="text-white/70">
+                <p className="text-white">
                   Total power: 239.1 + 526.0 + 358.6 = 1123.7 W. Check: P = VI = 230 x 4.89 = 1124.7
                   W (close match)
                 </p>
@@ -815,10 +815,10 @@ const MOETModule2Section1_2 = () => {
                 <p>
                   <strong>(c)</strong> Rt = V/I(total) = 230/8 = <strong>28.75 ohms</strong>
                 </p>
-                <p className="text-white/70">
+                <p className="text-white">
                   Check: 1/Rt = 1/46 + 1/115 + 1/230 = 0.02174 + 0.00870 + 0.00435 = 0.03478
                 </p>
-                <p className="text-white/70">Rt = 1/0.03478 = 28.75 ohms (confirmed)</p>
+                <p className="text-white">Rt = 1/0.03478 = 28.75 ohms (confirmed)</p>
               </div>
             </div>
 
@@ -1032,7 +1032,7 @@ const MOETModule2Section1_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1088,7 +1088,7 @@ const MOETModule2Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module2-section1-1">

@@ -15,13 +15,13 @@ interface EICCircuitDetailsTabProps {
 function DetailRow({ label, value, colNum }: { label: string; value: string; colNum?: number }) {
   return (
     <div className="flex items-center justify-between py-1 border-b border-white/[0.03] last:border-0">
-      <span className="text-[10px] text-white/80 flex items-center gap-1">
+      <span className="text-[10px] text-white flex items-center gap-1">
         {colNum != null && (
-          <span className="text-[8px] text-white/40 font-mono w-3 text-right">{colNum}</span>
+          <span className="text-[8px] text-white font-mono w-3 text-right">{colNum}</span>
         )}
         {label}
       </span>
-      <span className={cn('text-[11px] font-mono', value ? 'text-white/70' : 'text-white/20')}>
+      <span className={cn('text-[11px] font-mono', value ? 'text-white' : 'text-white')}>
         {value || '—'}
       </span>
     </div>

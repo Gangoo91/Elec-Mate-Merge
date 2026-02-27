@@ -58,7 +58,7 @@ export default function IpafModule5() {
             <Button
               variant="ghost"
               size="lg"
-              className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+              className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../ipaf-course">
@@ -80,16 +80,16 @@ export default function IpafModule5() {
               </div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20">
                 <span className="text-elec-yellow text-xs font-semibold">MODULE 5</span>
-                <span className="text-white/40 text-xs">&bull;</span>
-                <span className="text-white/60 text-xs">4 Sections</span>
-                <span className="text-white/40 text-xs">&bull;</span>
-                <span className="text-white/60 text-xs">35 mins</span>
+                <span className="text-white text-xs">&bull;</span>
+                <span className="text-white text-xs">4 Sections</span>
+                <span className="text-white text-xs">&bull;</span>
+                <span className="text-white text-xs">35 mins</span>
               </div>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
               Hazards, Risk Assessment & Rescue
             </h1>
-            <p className="text-white/60 text-sm sm:text-base">
+            <p className="text-white text-sm sm:text-base">
               Common hazards, 5-step risk assessment, rescue procedures, and safe tower
               repositioning for mobile access tower work
             </p>

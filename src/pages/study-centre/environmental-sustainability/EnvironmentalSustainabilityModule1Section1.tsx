@@ -220,7 +220,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-1">
@@ -247,7 +247,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             What Is Environmental Management?
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding the fundamentals of environmental management in the UK construction
             industry &mdash; why it matters, what it covers, who is responsible, and how it benefits
             your projects and career
@@ -372,7 +372,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                 <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4">
                   <Scale className="h-6 w-6 text-emerald-400 mb-2" />
                   <p className="text-sm font-semibold text-emerald-400 mb-1">Legal Compliance</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Ensuring all activities comply with UK environmental legislation, permits,
                     planning conditions, and regulatory requirements. Non-compliance can result in
                     unlimited fines and imprisonment.
@@ -383,7 +383,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                   <p className="text-sm font-semibold text-emerald-400 mb-1">
                     Pollution Prevention
                   </p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Preventing contamination of water, land, and air through proactive controls
                     rather than reactive clean-up. Prevention is always more effective and less
                     costly than remediation.
@@ -392,7 +392,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                 <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4">
                   <Recycle className="h-6 w-6 text-emerald-400 mb-2" />
                   <p className="text-sm font-semibold text-emerald-400 mb-1">Resource Efficiency</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Minimising waste generation, maximising material reuse and recycling, reducing
                     energy and water consumption, and using sustainably sourced materials wherever
                     practicable.
@@ -403,7 +403,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                   <p className="text-sm font-semibold text-emerald-400 mb-1">
                     Continuous Improvement
                   </p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Driving ongoing improvements in environmental performance through monitoring,
                     review, target-setting, and the Plan-Do-Check-Act cycle that underpins all
                     credible management systems.
@@ -424,7 +424,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Historical Context</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Environmental management as a formal discipline emerged in the UK during the 1970s
                   and 1980s, driven by growing public awareness of pollution and a series of
                   high-profile environmental incidents. The Environmental Protection Act 1990 was a
@@ -471,61 +471,61 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                   <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3 text-center">
                     <div className="text-lg mb-1">&#127758;</div>
                     <p className="text-[11px] font-semibold text-emerald-400">LAND USE</p>
-                    <p className="text-[10px] text-white/50 mt-1">
+                    <p className="text-[10px] text-white mt-1">
                       Greenfield loss, soil sealing, habitat fragmentation
                     </p>
                   </div>
                   <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3 text-center">
                     <div className="text-lg mb-1">&#9851;&#65039;</div>
                     <p className="text-[11px] font-semibold text-emerald-400">WASTE</p>
-                    <p className="text-[10px] text-white/50 mt-1">
+                    <p className="text-[10px] text-white mt-1">
                       62% of UK waste from CDW, landfill pressure
                     </p>
                   </div>
                   <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3 text-center">
                     <div className="text-lg mb-1">&#9729;&#65039;</div>
                     <p className="text-[11px] font-semibold text-emerald-400">EMISSIONS</p>
-                    <p className="text-[10px] text-white/50 mt-1">
+                    <p className="text-[10px] text-white mt-1">
                       CO&#8322;, dust, VOCs, vehicle exhaust, plant
                     </p>
                   </div>
                   <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3 text-center">
                     <div className="text-lg mb-1">&#128167;</div>
                     <p className="text-[11px] font-semibold text-emerald-400">WATER</p>
-                    <p className="text-[10px] text-white/50 mt-1">
+                    <p className="text-[10px] text-white mt-1">
                       Sediment, chemicals, concrete washings, run-off
                     </p>
                   </div>
                   <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3 text-center">
                     <div className="text-lg mb-1">&#128266;</div>
                     <p className="text-[11px] font-semibold text-emerald-400">NOISE</p>
-                    <p className="text-[10px] text-white/50 mt-1">
+                    <p className="text-[10px] text-white mt-1">
                       Plant, power tools, piling, deliveries, vibration
                     </p>
                   </div>
                   <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3 text-center">
                     <div className="text-lg mb-1">&#127795;</div>
                     <p className="text-[11px] font-semibold text-emerald-400">ECOLOGY</p>
-                    <p className="text-[10px] text-white/50 mt-1">
+                    <p className="text-[10px] text-white mt-1">
                       Habitat loss, species displacement, tree removal
                     </p>
                   </div>
                   <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3 text-center">
                     <div className="text-lg mb-1">&#9962;&#65039;</div>
                     <p className="text-[11px] font-semibold text-emerald-400">RESOURCES</p>
-                    <p className="text-[10px] text-white/50 mt-1">
+                    <p className="text-[10px] text-white mt-1">
                       Aggregates, timber, metals, energy, water
                     </p>
                   </div>
                   <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3 text-center">
                     <div className="text-lg mb-1">&#128168;</div>
                     <p className="text-[11px] font-semibold text-emerald-400">DUST</p>
-                    <p className="text-[10px] text-white/50 mt-1">
+                    <p className="text-[10px] text-white mt-1">
                       PM10, PM2.5, silica, demolition, earthworks
                     </p>
                   </div>
                 </div>
-                <p className="text-xs text-white/50 text-center mt-4">
+                <p className="text-xs text-white text-center mt-4">
                   Every construction activity has the potential to cause multiple, overlapping
                   environmental impacts. Effective management requires a holistic approach.
                 </p>
@@ -539,7 +539,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Land Use &amp; Soil Disturbance
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Construction physically transforms land. Greenfield development converts
                       natural or agricultural land to built form, permanently sealing soil surfaces
                       with impermeable materials (concrete, tarmac) which prevents natural drainage,
@@ -554,7 +554,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Resource Consumption</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The UK construction industry consumes vast quantities of natural resources. It
                       uses approximately 400 million tonnes of materials annually, including
                       aggregates (sand, gravel, crushed rock), cement, timber, steel, copper,
@@ -570,7 +570,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Waste Generation</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Construction, demolition and excavation (CDE) waste accounts for approximately
                       62% of all waste produced in England by tonnage (DEFRA statistics). This
                       includes excavated soils and stones, concrete and masonry, timber, metals,
@@ -584,7 +584,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Air Emissions &amp; Dust</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Construction generates atmospheric emissions from multiple sources: CO&#8322;
                       and other greenhouse gases from plant and vehicles (diesel engines), from
                       energy use (generators, heating), and from material production (embodied
@@ -601,7 +601,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Water Pollution</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Construction is a leading cause of water pollution incidents in the UK. The
                       Environment Agency identifies construction as a significant source of
                       pollution to rivers, streams, and groundwater. Key pollutants include sediment
@@ -616,7 +616,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Noise &amp; Vibration</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Construction noise can cause significant disturbance to neighbouring
                       residents, businesses, schools, hospitals, and wildlife. Sources include power
                       tools (cutting, drilling, chasing), heavy plant (excavators, cranes,
@@ -633,7 +633,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Habitat Destruction &amp; Biodiversity Loss
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Construction can directly destroy habitats through site clearance, demolition,
                       and earthworks. Even on brownfield sites, significant ecological value may be
                       present &mdash; brownfield land can support rare invertebrates, plants, and
@@ -683,28 +683,28 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-emerald-400">~62%</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Of all waste generated in England comes from construction, demolition, and
                       excavation activities (DEFRA)
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-emerald-400">~25%</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Of all UK carbon emissions are attributable to the construction and built
                       environment sector (UKGBC)
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-emerald-400">400Mt</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Approximate annual material consumption by UK construction &mdash; aggregates,
                       cement, steel, timber, and other resources
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-emerald-400">8%</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Of global CO&#8322; emissions come from cement production alone, making
                       concrete the world&rsquo;s most carbon-intensive material by total volume
                     </p>
@@ -727,7 +727,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Concrete: The Scale of the Problem
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Concrete is the most widely used construction material on earth, second only to
                   water as the most consumed substance globally. The production of Portland cement
                   &mdash; the binding agent in concrete &mdash; requires heating limestone and clay
@@ -805,7 +805,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                 systematic manner. The core components of an EMS include:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                   <span>
@@ -887,7 +887,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                   <div className="flex justify-center mb-3">
                     <div className="bg-emerald-500/20 border border-emerald-500/40 rounded-lg px-5 py-3 text-center w-40">
                       <p className="text-xs font-bold text-emerald-400">PLAN</p>
-                      <p className="text-[10px] text-white/50 mt-1">
+                      <p className="text-[10px] text-white mt-1">
                         Set objectives, identify aspects &amp; impacts, establish processes
                       </p>
                     </div>
@@ -896,7 +896,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                   <div className="flex justify-between items-center px-0 sm:px-2 mb-3">
                     <div className="bg-purple-500/20 border border-purple-500/40 rounded-lg px-3 py-3 text-center w-36">
                       <p className="text-xs font-bold text-purple-400">ACT</p>
-                      <p className="text-[10px] text-white/50 mt-1">
+                      <p className="text-[10px] text-white mt-1">
                         Correct, prevent, improve processes
                       </p>
                     </div>
@@ -913,7 +913,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                     </div>
                     <div className="bg-blue-500/20 border border-blue-500/40 rounded-lg px-3 py-3 text-center w-36">
                       <p className="text-xs font-bold text-blue-400">DO</p>
-                      <p className="text-[10px] text-white/50 mt-1">
+                      <p className="text-[10px] text-white mt-1">
                         Implement controls, train staff, operate
                       </p>
                     </div>
@@ -922,13 +922,13 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                   <div className="flex justify-center">
                     <div className="bg-amber-500/20 border border-amber-500/40 rounded-lg px-5 py-3 text-center w-40">
                       <p className="text-xs font-bold text-amber-400">CHECK</p>
-                      <p className="text-[10px] text-white/50 mt-1">
+                      <p className="text-[10px] text-white mt-1">
                         Monitor, measure, audit, evaluate performance
                       </p>
                     </div>
                   </div>
                 </div>
-                <p className="text-xs text-white/50 text-center mt-4">
+                <p className="text-xs text-white text-center mt-4">
                   The PDCA cycle is the engine of continual improvement in ISO 14001. Each cycle
                   builds on the last, driving progressively better environmental performance.
                 </p>
@@ -941,7 +941,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                 practical, site-specific controls. It typically covers:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                   <span>
@@ -1003,7 +1003,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Considerate Constructors Scheme (CCS)
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The Considerate Constructors Scheme is a voluntary initiative that many UK
                   construction sites register with. The scheme&rsquo;s Code of Considerate Practice
                   includes a specific section on &ldquo;Respecting the Environment&rdquo; which
@@ -1048,7 +1048,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                         The Polluter Pays Principle
                       </p>
                     </div>
-                    <p className="text-sm text-white/80 mb-3">
+                    <p className="text-sm text-white mb-3">
                       The polluter pays principle establishes that the person or organisation
                       responsible for causing pollution or environmental damage must bear the full
                       costs of remediation, clean-up, and compensation. This is a cornerstone of UK
@@ -1056,7 +1056,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                       the Environmental Damage (Prevention and Remediation) Regulations 2009, and
                       the Environmental Permitting Regulations 2016.
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       In practical terms, if a construction site causes a pollution incident &mdash;
                       for example, by allowing concrete washings to enter a watercourse &mdash; the
                       contractor responsible will bear all costs: the Environment Agency&rsquo;s
@@ -1073,7 +1073,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                         The Precautionary Principle
                       </p>
                     </div>
-                    <p className="text-sm text-white/80 mb-3">
+                    <p className="text-sm text-white mb-3">
                       The precautionary principle states that where there are threats of serious or
                       irreversible environmental damage, lack of full scientific certainty should
                       not be used as a reason for postponing cost-effective measures to prevent
@@ -1081,7 +1081,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                       an activity to demonstrate that it will not cause significant harm, rather
                       than requiring opponents to prove that harm will occur.
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       In construction, this means that if there is reasonable suspicion that an
                       activity could cause significant environmental harm &mdash; for example, if
                       there is a possibility that protected species are present on site, or that
@@ -1098,7 +1098,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                         Sustainable Development
                       </p>
                     </div>
-                    <p className="text-sm text-white/80 mb-3">
+                    <p className="text-sm text-white mb-3">
                       The most widely cited definition of sustainable development comes from the{' '}
                       <strong>Brundtland Commission</strong> report <em>Our Common Future</em>{' '}
                       (1987):
@@ -1110,7 +1110,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                         own needs.&rdquo;
                       </p>
                     </div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Sustainable development rests on three interconnected pillars:{' '}
                       <strong>environmental protection</strong> (preserving natural resources and
                       ecosystems), <strong>economic growth</strong> (enabling prosperity and
@@ -1129,7 +1129,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                       <Recycle className="h-5 w-5 text-emerald-400" />
                       <p className="text-sm font-semibold text-emerald-400">The Circular Economy</p>
                     </div>
-                    <p className="text-sm text-white/80 mb-3">
+                    <p className="text-sm text-white mb-3">
                       The circular economy is an economic model that aims to eliminate waste and the
                       continual use of resources by keeping materials in use for as long as
                       possible, extracting maximum value from them while in use, and recovering and
@@ -1137,7 +1137,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                       contrasts with the traditional <strong>linear economy</strong> model of
                       &ldquo;take, make, dispose.&rdquo;
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       In construction, circular economy principles translate into:{' '}
                       <strong>designing for disassembly</strong> (so buildings can be deconstructed
                       rather than demolished, with materials recovered for reuse),{' '}
@@ -1204,7 +1204,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Environmental Permitting</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The EA issues environmental permits under the Environmental Permitting
                       (England and Wales) Regulations 2016 for a wide range of activities including
                       waste operations (waste transfer stations, treatment facilities, landfill
@@ -1218,7 +1218,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Waste Regulation</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The EA regulates the storage, treatment, transportation, and disposal of
                       waste. It maintains the public registers of waste carriers, brokers, and
                       dealers. It registers waste exemptions (for low-risk waste activities that do
@@ -1235,7 +1235,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Water Quality &amp; Flood Risk
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The EA monitors and protects the quality of rivers, lakes, estuaries, coastal
                       waters, and groundwater across England. It investigates water pollution
                       incidents and takes enforcement action against polluters. It also manages
@@ -1250,7 +1250,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Enforcement Powers</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The EA has extensive enforcement powers including: issuing{' '}
                       <strong>enforcement notices</strong> requiring compliance within a specified
                       timeframe; issuing <strong>prohibition notices</strong> requiring immediate
@@ -1273,7 +1273,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Emergency Contact</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If you witness a pollution incident or environmental emergency, report it
                   immediately to the{' '}
                   <strong>Environment Agency 24-hour incident hotline: 0800 80 70 60</strong>. This
@@ -1289,7 +1289,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Equivalent Bodies in the Devolved Nations
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   In <strong>Wales</strong>, Natural Resources Wales (NRW) performs the combined
                   functions of the Environment Agency, the Countryside Council for Wales, and the
                   Forestry Commission Wales. In <strong>Scotland</strong>, the Scottish Environment
@@ -1336,7 +1336,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                     <p className="text-sm font-semibold text-white mb-2">
                       Employer / Organisation Duties
                     </p>
-                    <ul className="space-y-2 text-sm text-white/70">
+                    <ul className="space-y-2 text-sm text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                         <span>
@@ -1392,7 +1392,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                     <p className="text-sm font-semibold text-white mb-2">
                       Employee / Worker Duties
                     </p>
-                    <ul className="space-y-2 text-sm text-white/70">
+                    <ul className="space-y-2 text-sm text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                         <span>
@@ -1446,7 +1446,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                     <p className="text-sm font-semibold text-white mb-2">
                       Principal Contractor Duties
                     </p>
-                    <ul className="space-y-2 text-sm text-white/70">
+                    <ul className="space-y-2 text-sm text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                         <span>
@@ -1487,7 +1487,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
 
                   <div className="bg-white/5 border border-white/10 rounded-lg p-4">
                     <p className="text-sm font-semibold text-white mb-2">Client Duties</p>
-                    <ul className="space-y-2 text-sm text-white/70">
+                    <ul className="space-y-2 text-sm text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                         <span>
@@ -1533,7 +1533,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   CDM 2015 and Environmental Overlap
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The Construction (Design and Management) Regulations 2015 (CDM 2015) are primarily
                   health and safety regulations, but they have significant environmental
                   implications. CDM 2015 requires all duty holders &mdash; clients, designers,
@@ -1583,7 +1583,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-4">
                     <p className="text-sm font-semibold text-white mb-2">Cost Savings</p>
-                    <ul className="space-y-2 text-sm text-white/70">
+                    <ul className="space-y-2 text-sm text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                         <span>
@@ -1634,7 +1634,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                     <p className="text-sm font-semibold text-white mb-2">
                       Legal Compliance &amp; Risk Reduction
                     </p>
-                    <ul className="space-y-2 text-sm text-white/70">
+                    <ul className="space-y-2 text-sm text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                         <span>
@@ -1666,7 +1666,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                     <p className="text-sm font-semibold text-white mb-2">
                       Reputation &amp; Competitive Advantage
                     </p>
-                    <ul className="space-y-2 text-sm text-white/70">
+                    <ul className="space-y-2 text-sm text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                         <span>
@@ -1701,7 +1701,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                     <p className="text-sm font-semibold text-white mb-2">
                       Worker Health &amp; Community Relations
                     </p>
-                    <ul className="space-y-2 text-sm text-white/70">
+                    <ul className="space-y-2 text-sm text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                         <span>
@@ -1752,7 +1752,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Electrician&rsquo;s Perspective
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   As an electrician, your environmental contributions include: correctly segregating
                   cable offcuts (copper can be recycled at good value), managing packaging waste
                   (returning reels, recycling cardboard and plastic), properly disposing of old
@@ -1779,7 +1779,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1797,7 +1797,7 @@ export default function EnvironmentalSustainabilityModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-1">

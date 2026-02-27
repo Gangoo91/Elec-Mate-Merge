@@ -415,7 +415,7 @@ export default function EICCertificate() {
                 </div>
                 <div className="text-center">
                   <h3 className="text-lg font-semibold text-white">Loading Design</h3>
-                  <p className="text-sm text-white/50">
+                  <p className="text-sm text-white">
                     Pre-filling circuits from Circuit Designer...
                   </p>
                 </div>
@@ -556,7 +556,7 @@ export default function EICCertificate() {
               <div className="flex items-center gap-2 text-sm">
                 <Zap className="h-4 w-4 text-elec-yellow" />
                 <span className="text-elec-yellow font-medium">Circuit Designer Integration:</span>
-                <span className="text-white/70">
+                <span className="text-white">
                   {formData.scheduleOfTests?.length || 0} circuits pre-filled with expected test
                   values. Enter actual readings on-site.
                 </span>

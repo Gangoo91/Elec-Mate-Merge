@@ -144,7 +144,7 @@ const Module6Section3_2 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -161,13 +161,13 @@ const Module6Section3_2 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.3.2</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.3.2</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               GS38 Compliance and Tester Safety
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Understanding and implementing GS38 safety requirements for electrical test
               instruments
             </p>
@@ -179,7 +179,7 @@ const Module6Section3_2 = () => {
               <Target className="w-5 h-5 text-elec-yellow" />
               <h2 className="text-lg font-semibold text-white">Spot it in 30 Seconds</h2>
             </div>
-            <div className="grid sm:grid-cols-2 gap-4 text-white/80 text-sm">
+            <div className="grid sm:grid-cols-2 gap-4 text-white text-sm">
               <div>
                 <p className="font-medium text-white mb-2">Key Points</p>
                 <ul className="space-y-1.5">
@@ -212,7 +212,7 @@ const Module6Section3_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Electrical testing instruments are critical tools for ensuring safety and compliance
                 in electrical installations. However, test instruments themselves can pose
@@ -233,10 +233,10 @@ const Module6Section3_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <p className="text-white/80 mb-4">
+            <p className="text-white mb-4">
               By the end of this subsection, you will be able to:
             </p>
-            <ul className="list-disc pl-6 space-y-2 text-white/80">
+            <ul className="list-disc pl-6 space-y-2 text-white">
               <li>Explain what GS38 is and why it is important for electrical testing safety.</li>
               <li>Identify the key features of GS38-compliant test equipment.</li>
               <li>Recognise the dangers associated with non-compliant test equipment.</li>
@@ -251,7 +251,7 @@ const Module6Section3_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               What is GS38?
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 GS38 (Guidance on the Use of Electrical Test Equipment) is a Health and Safety
                 Executive (HSE) document that provides essential safety guidance for electrical test
@@ -297,7 +297,7 @@ const Module6Section3_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               GS38 Safety Features
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 GS38-compliant test equipment incorporates specific design features to minimise the
                 risk of electric shock and ensure safe operation in live electrical environments.
@@ -342,7 +342,7 @@ const Module6Section3_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Dangers of Non-Compliant Equipment
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Using non-compliant test equipment poses serious safety risks and can result in
                 severe injury or death. Understanding these dangers is critical for making informed
@@ -384,7 +384,7 @@ const Module6Section3_2 = () => {
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
                 <h3 className="font-semibold text-white mb-3">Essential Testing Procedures</h3>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li>• Prove before and after: Test instruments on known live source</li>
                   <li>• Visual inspection: Check test equipment for damage before each use</li>
                   <li>• Appropriate PPE: Use insulated gloves and safety glasses</li>
@@ -396,7 +396,7 @@ const Module6Section3_2 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                 <h3 className="font-semibold text-white mb-3">Pre-Use Safety Checks</h3>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li>• Inspect leads for cuts, nicks, or damaged insulation</li>
                   <li>• Check probe shrouds are intact and functioning</li>
                   <li>• Verify CAT rating is appropriate for the installation</li>
@@ -429,7 +429,7 @@ const Module6Section3_2 = () => {
 
             <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50 mb-4">
               <h3 className="font-semibold text-white mb-3">Understanding CAT Ratings</h3>
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li>
                   <strong>CAT I:</strong> Electronic equipment, domestic appliances (300V max)
                 </li>
@@ -447,7 +447,7 @@ const Module6Section3_2 = () => {
 
             <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
               <p className="font-medium text-amber-400 mb-2">Important</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Always use equipment with a CAT rating that matches or exceeds the environment
                 you're working in. Using equipment with an inadequate CAT rating can result in
                 equipment failure, injury, or death.
@@ -465,13 +465,13 @@ const Module6Section3_2 = () => {
               <h3 className="font-semibold text-amber-400 mb-3">
                 Case Study: Non-Compliant Equipment Incident
               </h3>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 An electrician was testing a commercial three-phase distribution board using
                 non-GS38 compliant test probes. The probes had excessive exposed tips (10mm) and no
                 finger guards. During voltage testing, the electrician accidentally contacted both
                 probes simultaneously while reaching across the panel.
               </p>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 The result was an immediate short circuit between phases, causing an arc flash that
                 resulted in second-degree burns to the electrician's hands and face, damaged
                 equipment, and a site shutdown lasting several days.
@@ -479,7 +479,7 @@ const Module6Section3_2 = () => {
               <div className="grid sm:grid-cols-2 gap-3 mt-4">
                 <div className="p-3 bg-red-500/10 rounded border-l-2 border-red-500/50">
                   <p className="font-medium text-red-400 mb-1">What Went Wrong</p>
-                  <ul className="text-xs text-white/70 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>• Non-compliant probes with excessive exposed tips</li>
                     <li>• No finger guards or shrouding</li>
                     <li>• Poor working practice</li>
@@ -487,7 +487,7 @@ const Module6Section3_2 = () => {
                 </div>
                 <div className="p-3 bg-green-500/10 rounded border-l-2 border-green-500/50">
                   <p className="font-medium text-green-400 mb-1">Prevention with GS38</p>
-                  <ul className="text-xs text-white/70 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>• Shrouded probes would have prevented contact</li>
                     <li>• 4mm tip limit would have reduced arc energy</li>
                     <li>• Fused leads would have limited fault current</li>
@@ -510,7 +510,7 @@ const Module6Section3_2 = () => {
                   className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50"
                 >
                   <p className="font-medium text-white mb-2">Q: {faq.question}</p>
-                  <p className="text-sm text-white/80">A: {faq.answer}</p>
+                  <p className="text-sm text-white">A: {faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -526,35 +526,35 @@ const Module6Section3_2 = () => {
               <div className="grid gap-2">
                 <div className="flex items-start gap-2">
                   <span className="text-green-500">✓</span>
-                  <span className="text-white/90">Check probe shrouds: max 4mm exposed tip</span>
+                  <span className="text-white">Check probe shrouds: max 4mm exposed tip</span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-green-500">✓</span>
-                  <span className="text-white/90">
+                  <span className="text-white">
                     Verify fused leads: current limiting protection
                   </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-green-500">✓</span>
-                  <span className="text-white/90">
+                  <span className="text-white">
                     Confirm CAT rating: matches installation voltage
                   </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-green-500">✓</span>
-                  <span className="text-white/90">
+                  <span className="text-white">
                     Visual inspection: check for damage before use
                   </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-green-500">✓</span>
-                  <span className="text-white/90">
+                  <span className="text-white">
                     Prove before/after: test on known live source
                   </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-green-500">✓</span>
-                  <span className="text-white/90">
+                  <span className="text-white">
                     Never use: neon screwdrivers for proving dead
                   </span>
                 </div>
@@ -572,30 +572,30 @@ const Module6Section3_2 = () => {
               <div className="text-center p-3 rounded-lg bg-white/5 border border-white/10">
                 <Shield className="w-6 h-6 text-elec-yellow mx-auto mb-2" />
                 <p className="font-medium text-white text-sm">GS38 Purpose</p>
-                <p className="text-xs text-white/60">HSE safety guidance</p>
+                <p className="text-xs text-white">HSE safety guidance</p>
               </div>
               <div className="text-center p-3 rounded-lg bg-white/5 border border-white/10">
                 <Eye className="w-6 h-6 text-green-400 mx-auto mb-2" />
                 <p className="font-medium text-white text-sm">Safety Features</p>
-                <p className="text-xs text-white/60">Shrouded probes, fused leads</p>
+                <p className="text-xs text-white">Shrouded probes, fused leads</p>
               </div>
               <div className="text-center p-3 rounded-lg bg-white/5 border border-white/10">
                 <FileText className="w-6 h-6 text-purple-400 mx-auto mb-2" />
                 <p className="font-medium text-white text-sm">Compliance</p>
-                <p className="text-xs text-white/60">4mm max tip, CAT ratings</p>
+                <p className="text-xs text-white">4mm max tip, CAT ratings</p>
               </div>
               <div className="text-center p-3 rounded-lg bg-white/5 border border-white/10">
                 <AlertTriangle className="w-6 h-6 text-red-400 mx-auto mb-2" />
                 <p className="font-medium text-white text-sm">Risks</p>
-                <p className="text-xs text-white/60">Shock, arc flash, damage</p>
+                <p className="text-xs text-white">Shock, arc flash, damage</p>
               </div>
               <div className="text-center p-3 rounded-lg bg-white/5 border border-white/10">
                 <Target className="w-6 h-6 text-amber-400 mx-auto mb-2" />
                 <p className="font-medium text-white text-sm">Best Practice</p>
-                <p className="text-xs text-white/60">Prove, inspect, comply</p>
+                <p className="text-xs text-white">Prove, inspect, comply</p>
               </div>
             </div>
-            <p className="text-white/80">
+            <p className="text-white">
               GS38 compliance is not optional - it's a legal and professional requirement that
               protects electricians and ensures safe testing practices. Always use compliant
               equipment and follow proper procedures to prevent accidents and maintain professional
@@ -612,7 +612,7 @@ const Module6Section3_2 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../3-1">

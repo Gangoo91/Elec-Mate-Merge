@@ -50,7 +50,7 @@ export const InspectionShowcase = () => {
               Complete Certification & <span className="text-green-400">Testing Platform</span>
             </h2>
 
-            <p className="text-white/70 text-lg mb-8 leading-relaxed">
+            <p className="text-white text-lg mb-8 leading-relaxed">
               Digital certificates, test result logging, and automatic compliance checking.
               Everything you need for professional electrical inspections.
             </p>
@@ -69,7 +69,7 @@ export const InspectionShowcase = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-white text-sm">{feature.title}</h4>
-                    <p className="text-white/60 text-xs mt-1">{feature.description}</p>
+                    <p className="text-white text-xs mt-1">{feature.description}</p>
                   </div>
                 </motion.div>
               ))}
@@ -102,7 +102,7 @@ export const InspectionShowcase = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-white">EICR Certificate</h4>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Electrical Installation Condition Report
                     </p>
                   </div>
@@ -110,19 +110,19 @@ export const InspectionShowcase = () => {
 
                 <div className="space-y-3">
                   <div className="flex justify-between items-center py-2 border-b border-white/10">
-                    <span className="text-white/60 text-sm">Installation Address</span>
+                    <span className="text-white text-sm">Installation Address</span>
                     <span className="text-white text-sm">123 Example Street</span>
                   </div>
                   <div className="flex justify-between items-center py-2 border-b border-white/10">
-                    <span className="text-white/60 text-sm">Date of Inspection</span>
+                    <span className="text-white text-sm">Date of Inspection</span>
                     <span className="text-white text-sm">15 Jan 2026</span>
                   </div>
                   <div className="flex justify-between items-center py-2 border-b border-white/10">
-                    <span className="text-white/60 text-sm">Next Inspection</span>
+                    <span className="text-white text-sm">Next Inspection</span>
                     <span className="text-white text-sm">Jan 2031</span>
                   </div>
                   <div className="flex justify-between items-center py-2">
-                    <span className="text-white/60 text-sm">Overall Assessment</span>
+                    <span className="text-white text-sm">Overall Assessment</span>
                     <span className="text-green-400 font-semibold text-sm">SATISFACTORY</span>
                   </div>
                 </div>

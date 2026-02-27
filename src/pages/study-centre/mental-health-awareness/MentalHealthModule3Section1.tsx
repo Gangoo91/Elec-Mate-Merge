@@ -325,7 +325,7 @@ export default function MentalHealthModule3Section1() {
                     psychological distress.&rdquo;
                   </strong>
                 </p>
-                <p className="text-sm text-white/80 mt-2">
+                <p className="text-sm text-white mt-2">
                   Research from the Samaritans, Mind, and numerous academic studies consistently
                   shows that feeling listened to and understood &mdash; even briefly &mdash; can
                   significantly reduce distress, hopelessness, and suicidal ideation. The listener
@@ -1070,7 +1070,7 @@ export default function MentalHealthModule3Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

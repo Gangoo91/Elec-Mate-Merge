@@ -61,7 +61,7 @@ export const FinalCTA = () => {
             </span>
           </h2>
 
-          <p className="text-base sm:text-lg text-white/50 mb-8 sm:mb-10 max-w-xl mx-auto">
+          <p className="text-base sm:text-lg text-white mb-8 sm:mb-10 max-w-xl mx-auto">
             AI-powered tools, certifications, training & job management. Everything you need to
             excel.
           </p>
@@ -87,7 +87,7 @@ export const FinalCTA = () => {
             </Link>
           </div>
 
-          <p className="text-white/30 text-sm mt-6">
+          <p className="text-white text-sm mt-6">
             7-day free trial. No card required. Cancel anytime.
           </p>
         </motion.div>

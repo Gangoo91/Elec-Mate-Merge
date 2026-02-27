@@ -239,7 +239,7 @@ const RenewableEnergyModule6Section5 = () => {
           <span className="text-elec-yellow text-sm font-medium">Module 6 - Section 5</span>
         </div>
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">V2G and Smart Charging</h1>
-        <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+        <p className="text-white text-sm sm:text-base max-w-xl mx-auto">
           Bidirectional charging technology and intelligent charging management for grid integration
         </p>
       </div>
@@ -288,7 +288,7 @@ const RenewableEnergyModule6Section5 = () => {
           ].map((outcome, index) => (
             <div key={index} className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
-              <span className="text-white/80 text-sm">{outcome}</span>
+              <span className="text-white text-sm">{outcome}</span>
             </div>
           ))}
         </div>
@@ -303,7 +303,7 @@ const RenewableEnergyModule6Section5 = () => {
               Bidirectional Charging Technologies
             </h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Bidirectional charging transforms EVs from passive loads into active energy assets.
               Several related technologies enable different use cases for exporting stored battery
@@ -339,7 +339,7 @@ const RenewableEnergyModule6Section5 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">02</span>
             <h2 className="text-xl font-semibold text-white">Grid Services and Revenue Streams</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               EVs can provide valuable services to the electricity grid, generating revenue for
               vehicle owners whilst helping to balance supply and demand across the network.
@@ -374,7 +374,7 @@ const RenewableEnergyModule6Section5 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">03</span>
             <h2 className="text-xl font-semibold text-white">Smart Charging Implementation</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Smart charging optimises when and how vehicles charge, balancing user needs, grid
               constraints, and cost considerations through automated scheduling and power
@@ -410,7 +410,7 @@ const RenewableEnergyModule6Section5 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">04</span>
             <h2 className="text-xl font-semibold text-white">V2G Installation Requirements</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Installing V2G systems requires consideration of electrical infrastructure, regulatory
               compliance, and vehicle compatibility beyond standard EV charging requirements.
@@ -447,7 +447,7 @@ const RenewableEnergyModule6Section5 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">05</span>
             <h2 className="text-xl font-semibold text-white">Renewable Energy Integration</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               EVs and smart/bidirectional charging play a key role in maximising renewable energy
               utilisation, both at individual property level and across the wider grid.
@@ -482,7 +482,7 @@ const RenewableEnergyModule6Section5 = () => {
             <Zap className="w-4 h-4 text-elec-yellow" />
             Practical Guidance
           </h3>
-          <div className="space-y-2 text-white/80 text-sm">
+          <div className="space-y-2 text-white text-sm">
             <p>
               <span className="text-white font-medium">Customer conversations:</span> Focus on
               practical benefits - reduced bills through smart charging, potential revenue from grid
@@ -510,7 +510,7 @@ const RenewableEnergyModule6Section5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <h3 className="text-white font-medium mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>

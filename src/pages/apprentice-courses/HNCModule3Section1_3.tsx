@@ -205,7 +205,7 @@ const HNCModule3Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section1">
@@ -227,7 +227,7 @@ const HNCModule3Section1_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Series Circuits
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding how current, voltage, and resistance behave when components share a single
             path
           </p>
@@ -320,28 +320,28 @@ const HNCModule3Section1_3 = () => {
                   <p className="font-mono text-sm">
                     I<sub>T</sub> = I<sub>1</sub> = I<sub>2</sub> = I<sub>3</sub>
                   </p>
-                  <p className="text-white/70 text-xs mt-2">Same through all components</p>
+                  <p className="text-white text-xs mt-2">Same through all components</p>
                 </div>
                 <div className="p-3 rounded bg-black/30 border border-elec-yellow/30">
                   <p className="text-lg font-bold text-elec-yellow mb-1">Voltage</p>
                   <p className="font-mono text-sm">
                     V<sub>T</sub> = V<sub>1</sub> + V<sub>2</sub> + V<sub>3</sub>
                   </p>
-                  <p className="text-white/70 text-xs mt-2">Divides across components</p>
+                  <p className="text-white text-xs mt-2">Divides across components</p>
                 </div>
                 <div className="p-3 rounded bg-black/30 border border-green-500/30">
                   <p className="text-lg font-bold text-green-400 mb-1">Resistance</p>
                   <p className="font-mono text-sm">
                     R<sub>T</sub> = R<sub>1</sub> + R<sub>2</sub> + R<sub>3</sub>
                   </p>
-                  <p className="text-white/70 text-xs mt-2">Adds up (sum of all)</p>
+                  <p className="text-white text-xs mt-2">Adds up (sum of all)</p>
                 </div>
               </div>
             </div>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-3">Why Current is Constant:</p>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 Think of water flowing through a pipe with several restrictions. The same amount of
                 water must pass through each restriction - it cannot accumulate or disappear.
                 Similarly, charge is conserved in electrical circuits. Every coulomb entering a
@@ -356,7 +356,7 @@ const HNCModule3Section1_3 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-3">Why Voltage Divides:</p>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 Energy is transferred as current flows through each resistance. The voltage drop
                 across each resistor represents the energy converted per coulomb of charge. Larger
                 resistors convert more energy, so they have larger voltage drops.
@@ -399,7 +399,7 @@ const HNCModule3Section1_3 = () => {
                   R<sub>T</sub> = R<sub>1</sub> + R<sub>2</sub> + R<sub>3</sub> + ... + R
                   <sub>n</sub>
                 </p>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   Simply add all resistance values together
                 </p>
               </div>
@@ -409,7 +409,7 @@ const HNCModule3Section1_3 = () => {
               <p className="text-sm font-medium text-white mb-2">
                 Worked Example 1: Emergency Lighting Control Circuit
               </p>
-              <div className="bg-black/30 p-4 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-4 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Given:</strong> Control circuit with 3 resistors in series:
                 </p>
@@ -432,7 +432,7 @@ const HNCModule3Section1_3 = () => {
               <p className="text-sm font-medium text-white mb-2">
                 Worked Example 2: Cable Resistance
               </p>
-              <div className="bg-black/30 p-4 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-4 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Given:</strong> 25m cable run, 2.5mm² copper (7.41mΩ/m)
                 </p>
@@ -445,13 +445,13 @@ const HNCModule3Section1_3 = () => {
                 <p className="text-elec-yellow mt-2">
                   R<sub>cable</sub> = 0.185 + 0.185 = <strong>0.37Ω</strong>
                 </p>
-                <p className="text-white/60 mt-2">(Or simply: 25m × 2 × 7.41mΩ/m = 0.37Ω)</p>
+                <p className="text-white mt-2">(Or simply: 25m × 2 × 7.41mΩ/m = 0.37Ω)</p>
               </div>
             </div>
 
             <div className="p-4 rounded-lg bg-blue-500/10 border-l-2 border-blue-500/50">
               <p className="text-sm font-medium text-blue-400 mb-2">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Series resistance is always{' '}
                 <strong>greater than the largest individual resistance</strong>. Adding any
                 resistance to a series circuit increases the total - there is no way to reduce it by
@@ -484,7 +484,7 @@ const HNCModule3Section1_3 = () => {
                 <p className="text-xl font-bold font-mono text-elec-yellow">
                   V<sub>x</sub> = V<sub>T</sub> × (R<sub>x</sub> / R<sub>T</sub>)
                 </p>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   Voltage across any resistor = Total voltage × (that resistance / total resistance)
                 </p>
               </div>
@@ -494,7 +494,7 @@ const HNCModule3Section1_3 = () => {
               <p className="text-sm font-medium text-white mb-2">
                 Worked Example 3: PIR Sensor Reference Voltage
               </p>
-              <div className="bg-black/30 p-4 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-4 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Given:</strong> 12V DC supply, need 4V reference for comparator
                 </p>
@@ -525,7 +525,7 @@ const HNCModule3Section1_3 = () => {
               <p className="text-sm font-medium text-white mb-2">
                 Worked Example 4: Two-Resistor Divider Design
               </p>
-              <div className="bg-black/30 p-4 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-4 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Task:</strong> Design a divider to give 5V from 24V DC (BMS sensor input)
                 </p>
@@ -548,7 +548,7 @@ const HNCModule3Section1_3 = () => {
                 <p className="text-elec-yellow">
                   R<sub>1</sub> = <strong>38.1kΩ</strong> (use 39kΩ standard value)
                 </p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Check: V<sub>out</sub> = 24 × (10/49) = 4.9V ✓
                 </p>
               </div>
@@ -605,12 +605,12 @@ const HNCModule3Section1_3 = () => {
                     V<sub>pack</sub> = n × V<sub>cell</sub>
                   </strong>
                 </p>
-                <p className="text-xs text-white/60 mt-1">
+                <p className="text-xs text-white mt-1">
                   Pack voltage = number of cells × cell voltage
                 </p>
               </div>
               <p className="text-sm font-medium text-white mb-2">Worked Example:</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Given:</strong> Emergency luminaire requires 24V battery backup
                 </p>
@@ -628,7 +628,7 @@ const HNCModule3Section1_3 = () => {
                 <p>
                   V<sub>min</sub> = 20 × 1.0V = 20V
                 </p>
-                <p className="text-white/60 mt-1">Luminaire must operate from 20V to 24V range</p>
+                <p className="text-white mt-1">Luminaire must operate from 20V to 24V range</p>
               </div>
             </div>
 
@@ -642,7 +642,7 @@ const HNCModule3Section1_3 = () => {
                 comparators. The divider creates a stable reference voltage.
               </p>
               <p className="text-sm font-medium text-white mb-2">Worked Example:</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Given:</strong> PIR circuit powered by 5V, needs 2.5V reference
                 </p>
@@ -660,7 +660,7 @@ const HNCModule3Section1_3 = () => {
                 </p>
                 <p>I = 5V / 20kΩ = 0.25mA (negligible for battery operation)</p>
               </div>
-              <p className="text-xs text-white/70 mt-3">
+              <p className="text-xs text-white mt-3">
                 <strong>Design Note:</strong> High resistance values (10kΩ+) minimise current drain
                 in battery-powered sensors.
               </p>
@@ -675,7 +675,7 @@ const HNCModule3Section1_3 = () => {
                 Fuses, MCBs, and RCBOs are always connected in series with the circuit they protect.
                 This ensures the protective device carries the full load current.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p>
                   <strong>Series connection ensures:</strong>
                 </p>
@@ -702,7 +702,7 @@ const HNCModule3Section1_3 = () => {
                 voltage must exceed the sum of all LED forward voltages.
               </p>
               <p className="text-sm font-medium text-white mb-2">Worked Example:</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Given:</strong> 3 green LEDs (V<sub>f</sub>=2.2V each) from 24V DC
                 </p>
@@ -809,7 +809,7 @@ const HNCModule3Section1_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -861,7 +861,7 @@ const HNCModule3Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section1-2">

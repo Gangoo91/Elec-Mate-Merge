@@ -141,7 +141,7 @@ const Module6Section2_2 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -159,13 +159,13 @@ const Module6Section2_2 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.2.2</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.2.2</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Signs of Damage, Wear, or Incorrect Installation
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Identifying physical damage, deterioration and installation faults in electrical
               systems
             </p>
@@ -177,7 +177,7 @@ const Module6Section2_2 = () => {
               <Target className="w-5 h-5 text-elec-yellow" />
               <h2 className="font-semibold text-white">Spot it in 30 Seconds</h2>
             </div>
-            <div className="grid sm:grid-cols-2 gap-4 text-sm text-white/80">
+            <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
               <div>
                 <p className="font-medium text-elec-yellow mb-2">Key Points</p>
                 <ul className="list-disc pl-5 space-y-1">
@@ -210,7 +210,7 @@ const Module6Section2_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Even a correctly designed system can become unsafe if it suffers from damage,
                 deterioration, or poor installation practices. Visual inspections must identify
@@ -228,7 +228,7 @@ const Module6Section2_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <div className="text-white/80 space-y-3 leading-relaxed">
+            <div className="text-white space-y-3 leading-relaxed">
               <p>By the end of this subsection, learners will be able to:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Recognise physical signs of electrical damage and deterioration</li>
@@ -246,7 +246,7 @@ const Module6Section2_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Physical Damage
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Physical damage to electrical equipment poses immediate safety risks. Visual
                 inspection must identify all forms of physical damage that could compromise
@@ -321,7 +321,7 @@ const Module6Section2_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Wear and Deterioration
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Electrical installations deteriorate over time due to environmental factors, usage
                 patterns, and material aging. Recognising deterioration patterns helps predict and
@@ -387,7 +387,7 @@ const Module6Section2_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Incorrect Installation Practices
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Poor installation practices compromise safety and can lead to premature failure.
                 Visual inspection must identify workmanship issues that violate standards or create
@@ -453,7 +453,7 @@ const Module6Section2_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Safety Hazards from Incorrect Workmanship
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Poor workmanship creates specific safety hazards that can lead to fire, electric
                 shock, or injury. Understanding these hazards helps prioritise remedial actions.
@@ -508,7 +508,7 @@ const Module6Section2_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Differentiating Cosmetic vs. Safety Issues
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Not all defects are safety-critical. Inspectors must distinguish between cosmetic
                 issues and genuine safety concerns to prioritise remedial actions appropriately.
@@ -557,7 +557,7 @@ const Module6Section2_2 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
               <p className="font-medium text-amber-400 mb-2">Distribution Board Fire Risk</p>
-              <div className="text-white/80 space-y-3 text-sm">
+              <div className="text-white space-y-3 text-sm">
                 <p>
                   <strong>Situation:</strong> During an office rewire inspection, inspectors found a
                   distribution board with scorch marks and melted insulation around one terminal.
@@ -586,7 +586,7 @@ const Module6Section2_2 = () => {
               <h2 className="text-lg font-semibold text-white mb-4">
                 Pocket Guide – Key Signs of Damage
               </h2>
-              <ul className="space-y-2 text-sm text-white/80">
+              <ul className="space-y-2 text-sm text-white">
                 <li>✅ Cracks, breaks, or scorch marks on accessories</li>
                 <li>✅ Exposed copper from damaged insulation</li>
                 <li>✅ Loose fittings or worn connections</li>
@@ -605,7 +605,7 @@ const Module6Section2_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">09</span>
               Recap
             </h2>
-            <div className="text-white/80 space-y-3 leading-relaxed">
+            <div className="text-white space-y-3 leading-relaxed">
               <ul className="list-disc pl-6 space-y-2">
                 <li>
                   Inspectors must look for physical damage, wear, and poor installation practices
@@ -633,7 +633,7 @@ const Module6Section2_2 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../2-1">

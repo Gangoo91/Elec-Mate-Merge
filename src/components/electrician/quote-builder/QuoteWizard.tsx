@@ -582,7 +582,7 @@ export const QuoteWizard = ({
           <div className="flex items-start justify-between gap-4">
             <div>
               <h3 className="font-semibold text-amber-400 mb-1">Recover Unsaved Quote?</h3>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 You have an unsaved quote draft
                 {(recoveredDraft.client as QuoteClient | undefined)?.name &&
                   ` for ${(recoveredDraft.client as QuoteClient).name}`}
@@ -594,7 +594,7 @@ export const QuoteWizard = ({
                 size="sm"
                 variant="ghost"
                 onClick={handleDiscardDraft}
-                className="text-white/60 hover:text-white"
+                className="text-white hover:text-white"
               >
                 Discard
               </Button>
@@ -641,7 +641,7 @@ export const QuoteWizard = ({
                   isComplete && 'bg-emerald-500/15 text-emerald-400 cursor-pointer',
                   isActive &&
                     'bg-elec-yellow text-black font-semibold shadow-lg shadow-elec-yellow/20',
-                  !isComplete && !isActive && 'text-white/30'
+                  !isComplete && !isActive && 'text-white'
                 )}
               >
                 {isComplete ? <Check className="h-4 w-4" /> : <Icon className="h-4 w-4" />}

@@ -139,7 +139,7 @@ const Module4Section5_4 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -157,13 +157,13 @@ const Module4Section5_4 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.4</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.4</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Using Ferrules, Sleeving, Glands, and Crimps
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master cable termination accessories for secure, reliable, and compliant electrical
               connections.
             </p>
@@ -171,7 +171,7 @@ const Module4Section5_4 = () => {
 
           {/* Quick Summary */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               <strong className="text-elec-yellow">Key points:</strong> Cable termination
               accessories ensure secure, reliable, and compliant connections. Each accessory has
               specific purposes. Improper selection or installation leads to failures and safety
@@ -185,7 +185,7 @@ const Module4Section5_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Ferrules and Their Applications
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Ferrules are essential accessories for terminating stranded flexible conductors
                 safely and securely.
@@ -221,7 +221,7 @@ const Module4Section5_4 = () => {
                   <li>Apply crimp ensuring tool ratchet completes full cycle</li>
                   <li>Perform tug test to verify mechanical security</li>
                 </ol>
-                <p className="text-xs text-white/60 mt-3 p-2 bg-black/20 rounded">
+                <p className="text-xs text-white mt-3 p-2 bg-black/20 rounded">
                   Quality check: Properly crimped ferrule should show hexagonal impression with no
                   conductor visible at crimp
                 </p>
@@ -243,7 +243,7 @@ const Module4Section5_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Sleeving for Identification and Protection
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Sleeving provides insulation and identification for conductors, particularly
                 essential for CPC identification.
@@ -264,7 +264,7 @@ const Module4Section5_4 = () => {
                   </li>
                   <li>• Other colours for control and instrumentation as specified</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-3 p-2 bg-black/20 rounded">
+                <p className="text-xs text-white mt-3 p-2 bg-black/20 rounded">
                   BS 7671 requirement: CPC in T&E cable must always be sleeved green/yellow before
                   termination
                 </p>
@@ -296,7 +296,7 @@ const Module4Section5_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Glands for Cable Entry and Protection
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Glands secure cables at enclosure entry points, providing mechanical retention and
                 environmental sealing.
@@ -331,7 +331,7 @@ const Module4Section5_4 = () => {
                     • <strong>IP54:</strong> Protected against dust and water splashing
                   </li>
                 </ul>
-                <p className="text-xs text-white/60 mt-3 p-2 bg-black/20 rounded">
+                <p className="text-xs text-white mt-3 p-2 bg-black/20 rounded">
                   Installation note: Follow manufacturer torque settings to avoid damage while
                   maintaining IP rating
                 </p>
@@ -353,7 +353,7 @@ const Module4Section5_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Crimps and Best Practices
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-medium text-white mb-2">Crimp Terminal Types</h4>
                 <ul className="space-y-2 text-sm">
@@ -371,7 +371,7 @@ const Module4Section5_4 = () => {
                     • <strong>Pin crimps:</strong> For insertion into plug and socket connectors
                   </li>
                 </ul>
-                <p className="text-xs text-white/60 mt-3 p-2 bg-black/20 rounded">
+                <p className="text-xs text-white mt-3 p-2 bg-black/20 rounded">
                   Tool requirement: Ratchet crimp tool matched to terminal size ensures proper
                   compression
                 </p>
@@ -379,7 +379,7 @@ const Module4Section5_4 = () => {
 
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <h4 className="font-medium text-red-400 mb-2">Common Errors to Avoid</h4>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li>• Using wrong size accessory for conductor cross-sectional area</li>
                   <li>• Not fully inserting conductor before securing</li>
                   <li>• Over-tightening glands causing damage to insulation</li>
@@ -387,7 +387,7 @@ const Module4Section5_4 = () => {
                   <li>• Failing to earth metallic glands when required</li>
                   <li>• Reusing crimped terminals that have been previously deformed</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-3 p-2 bg-black/20 rounded">
+                <p className="text-xs text-white mt-3 p-2 bg-black/20 rounded">
                   Safety note: Poor terminations are a leading cause of electrical fires and system
                   failures
                 </p>
@@ -402,12 +402,12 @@ const Module4Section5_4 = () => {
               Real-World Example
             </h2>
             <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
-              <p className="text-white/80 text-sm leading-relaxed mb-3">
+              <p className="text-white text-sm leading-relaxed mb-3">
                 A machinery installation used flexible cables without ferrules in vibration-heavy
                 conditions. Over time, loose strands worked free from terminals, causing overheating
                 and intermittent tripping.
               </p>
-              <p className="text-white/80 text-sm leading-relaxed mb-3">
+              <p className="text-white text-sm leading-relaxed mb-3">
                 The loose connections created high resistance points, leading to voltage drop and
                 equipment malfunction. Refitting with correctly sized ferrules solved the problem
                 and extended the system's service life significantly.
@@ -424,7 +424,7 @@ const Module4Section5_4 = () => {
           {/* Summary */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <h3 className="font-medium text-white mb-2">Summary</h3>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Ferrules, sleeving, glands, and crimps are not optional extras — they are key
               components in safe and professional electrical installations. Correct sizing, proper
               tools, and compliance with BS 7671 ensure secure, long-lasting connections.

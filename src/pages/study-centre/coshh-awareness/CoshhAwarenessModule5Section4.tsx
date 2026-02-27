@@ -226,7 +226,7 @@ export default function CoshhAwarenessModule5Section4() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Training, Record Keeping &amp; Review
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             COSHH training obligations under Regulation 12, what records you must keep and for how
             long, when to review assessments, and how the HSE enforces compliance &mdash; plus
             continuous improvement through Plan-Do-Check-Act
@@ -240,7 +240,7 @@ export default function CoshhAwarenessModule5Section4() {
               <CheckCircle className="h-5 w-5 text-violet-400 flex-shrink-0 mt-0.5" />
               <h2 className="font-semibold text-violet-300 text-base">Learning Outcomes</h2>
             </div>
-            <ul className="space-y-2 text-sm text-white/80">
+            <ul className="space-y-2 text-sm text-white">
               <li className="flex items-start gap-3">
                 <div className="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                 <span>
@@ -447,7 +447,7 @@ export default function CoshhAwarenessModule5Section4() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-5">
                 <div className="rounded-lg p-3 sm:p-4 bg-violet-500/10 border-l-2 border-l-violet-500/50 border border-violet-500/30">
                   <p className="font-semibold text-base text-violet-400 mb-2">Toolbox Talks</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Short, focused talks delivered at the worksite &mdash; typically 10&ndash;15
                     minutes. Ideal for site-specific hazards, reinforcing key messages, and sharing
                     lessons from incidents. Can be delivered by supervisors or competent colleagues.
@@ -458,7 +458,7 @@ export default function CoshhAwarenessModule5Section4() {
                   <p className="font-semibold text-base text-violet-400 mb-2">
                     Formal Training Sessions
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Classroom-based or structured sessions covering COSHH principles, hazard
                     identification, risk assessment, and control hierarchy in detail. Suitable for
                     induction training and annual refreshers. Should include assessment of
@@ -467,7 +467,7 @@ export default function CoshhAwarenessModule5Section4() {
                 </div>
                 <div className="rounded-lg p-3 sm:p-4 bg-violet-500/10 border-l-2 border-l-violet-500/50 border border-violet-500/30">
                   <p className="font-semibold text-base text-violet-400 mb-2">E-Learning</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Online training modules that workers can complete at their own pace. Useful for
                     foundational knowledge and standardised content. Must include assessment to
                     verify understanding. E-learning alone is rarely sufficient &mdash; it should be
@@ -478,7 +478,7 @@ export default function CoshhAwarenessModule5Section4() {
                   <p className="font-semibold text-base text-violet-400 mb-2">
                     Practical Demonstrations
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Hands-on training in the correct use of PPE (donning and doffing gloves, fitting
                     RPE), spill response procedures, and the operation of control equipment such as
                     LEV systems. Workers must demonstrate competence, not merely observe the
@@ -492,13 +492,13 @@ export default function CoshhAwarenessModule5Section4() {
                   <AlertTriangle className="h-5 w-5 text-violet-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-violet-300">Competence vs Mere Awareness</h3>
                 </div>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   An HSE inspector drawing a distinction between{' '}
                   <strong className="text-white">awareness</strong> and{' '}
                   <strong className="text-white">competence</strong> is one of the most common
                   findings during COSHH enforcement visits:
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-3">
                     <div className="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <span>
@@ -515,7 +515,7 @@ export default function CoshhAwarenessModule5Section4() {
                     </span>
                   </div>
                 </div>
-                <p className="text-white/80 text-sm mt-3">
+                <p className="text-white text-sm mt-3">
                   A worker who has watched a video is <em>aware</em>. A worker who can correctly don
                   RPE, interpret an SDS, and respond to a spill is <em>competent</em>. The law
                   requires competence, not just awareness.
@@ -620,7 +620,7 @@ export default function CoshhAwarenessModule5Section4() {
                     ></div>
                   </div>
                 </div>
-                <div className="ml-[calc(6rem+0.75rem)] sm:ml-[calc(7rem+0.75rem)] text-xs text-white/70 -mt-1 space-y-1">
+                <div className="ml-[calc(6rem+0.75rem)] sm:ml-[calc(7rem+0.75rem)] text-xs text-white -mt-1 space-y-1">
                   <p>Health surveillance records</p>
                   <p>Personal exposure monitoring records</p>
                 </div>
@@ -639,7 +639,7 @@ export default function CoshhAwarenessModule5Section4() {
                     ></div>
                   </div>
                 </div>
-                <div className="ml-[calc(6rem+0.75rem)] sm:ml-[calc(7rem+0.75rem)] text-xs text-white/70 -mt-1 space-y-1">
+                <div className="ml-[calc(6rem+0.75rem)] sm:ml-[calc(7rem+0.75rem)] text-xs text-white -mt-1 space-y-1">
                   <p>General workplace monitoring records</p>
                   <p>LEV thorough examination and test records</p>
                 </div>
@@ -658,7 +658,7 @@ export default function CoshhAwarenessModule5Section4() {
                     ></div>
                   </div>
                 </div>
-                <div className="ml-[calc(6rem+0.75rem)] sm:ml-[calc(7rem+0.75rem)] text-xs text-white/70 -mt-1 space-y-1">
+                <div className="ml-[calc(6rem+0.75rem)] sm:ml-[calc(7rem+0.75rem)] text-xs text-white -mt-1 space-y-1">
                   <p>Accident and incident records (RIDDOR minimum)</p>
                 </div>
 
@@ -676,7 +676,7 @@ export default function CoshhAwarenessModule5Section4() {
                     ></div>
                   </div>
                 </div>
-                <div className="ml-[calc(6rem+0.75rem)] sm:ml-[calc(7rem+0.75rem)] text-xs text-white/70 -mt-1 space-y-1">
+                <div className="ml-[calc(6rem+0.75rem)] sm:ml-[calc(7rem+0.75rem)] text-xs text-white -mt-1 space-y-1">
                   <p>Training records (duration of employment + reasonable period)</p>
                   <p>RPE face-fit test records</p>
                 </div>
@@ -695,13 +695,13 @@ export default function CoshhAwarenessModule5Section4() {
                     ></div>
                   </div>
                 </div>
-                <div className="ml-[calc(6rem+0.75rem)] sm:ml-[calc(7rem+0.75rem)] text-xs text-white/70 -mt-1 space-y-1">
+                <div className="ml-[calc(6rem+0.75rem)] sm:ml-[calc(7rem+0.75rem)] text-xs text-white -mt-1 space-y-1">
                   <p>COSHH assessments (current version, plus superseded versions for reference)</p>
                   <p>SDS library (current versions must be accessible to all workers)</p>
                 </div>
               </div>
               <div className="bg-white/5 border-t border-white/10 px-4 py-2.5">
-                <p className="text-white/50 text-xs italic text-center">
+                <p className="text-white text-xs italic text-center">
                   Retention periods are statutory minimums &mdash; many organisations retain records
                   for longer as a precaution
                 </p>
@@ -786,7 +786,7 @@ export default function CoshhAwarenessModule5Section4() {
                 <p className="font-semibold text-base text-violet-400 mb-2">
                   Electronic vs Paper Records
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Both electronic and paper records are legally acceptable. Electronic records offer
                   advantages: easier backup, faster retrieval, automated reminders for refresher
                   training, and better accessibility across multiple sites. Paper records must be
@@ -797,7 +797,7 @@ export default function CoshhAwarenessModule5Section4() {
               </div>
               <div className="rounded-lg p-3 sm:p-4 bg-violet-500/10 border-l-2 border-l-violet-500/50 border border-violet-500/30">
                 <p className="font-semibold text-base text-violet-400 mb-2">Backup Requirements</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Whatever format is used, records must be backed up and protected against loss. For
                   electronic records, this means regular backups to a separate location or cloud
                   storage. For paper records, consider scanning critical documents. The HSE expects
@@ -878,7 +878,7 @@ export default function CoshhAwarenessModule5Section4() {
                   <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-green-300">Electrician&rsquo;s Perspective</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   As an electrician, you will regularly arrive at client sites where chemicals are
                   used in processes you are not directly involved in &mdash; manufacturing plants,
                   laboratories, commercial kitchens, and plant rooms. You have the{' '}
@@ -985,7 +985,7 @@ export default function CoshhAwarenessModule5Section4() {
                   <p className="font-semibold text-base text-violet-400 mb-2">
                     Documenting Changes
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     When a review results in changes to the COSHH assessment, the updated assessment
                     must be recorded with the revision date, the reason for the change, and the name
                     of the person who carried out the review. Superseded versions should be retained
@@ -997,7 +997,7 @@ export default function CoshhAwarenessModule5Section4() {
                   <p className="font-semibold text-base text-violet-400 mb-2">
                     Communicating Changes
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Updated COSHH assessments are worthless if the changes are not communicated to
                     the workers who are affected. Changes must be shared through toolbox talks,
                     briefings, updated signage, and revised safe systems of work. Workers must
@@ -1128,7 +1128,7 @@ export default function CoshhAwarenessModule5Section4() {
                   <p className="font-semibold text-base text-violet-400 mb-2">
                     Fee for Intervention (FFI)
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     If an HSE inspector identifies a{' '}
                     <strong className="text-white">material breach</strong> of health and safety
                     law, the employer must pay for the time the HSE spends investigating and taking
@@ -1142,7 +1142,7 @@ export default function CoshhAwarenessModule5Section4() {
                   <p className="font-semibold text-base text-red-400 mb-2">
                     Prosecution &amp; Penalties
                   </p>
-                  <div className="text-sm text-white/80 space-y-2">
+                  <div className="text-sm text-white space-y-2">
                     <div className="flex items-start gap-3">
                       <div className="w-1.5 h-1.5 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                       <span>
@@ -1210,7 +1210,7 @@ export default function CoshhAwarenessModule5Section4() {
                       <div className="bg-blue-500/20 border-b border-blue-500/30 px-4 py-2.5 text-center">
                         <p className="text-blue-400 font-bold text-base">PLAN</p>
                       </div>
-                      <div className="p-3 sm:p-4 space-y-2 text-sm text-white/80">
+                      <div className="p-3 sm:p-4 space-y-2 text-sm text-white">
                         <div className="flex items-start gap-2">
                           <div className="w-1.5 h-1.5 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
                           <span>Identify hazardous substances in use</span>
@@ -1235,7 +1235,7 @@ export default function CoshhAwarenessModule5Section4() {
                       <div className="bg-green-500/20 border-b border-green-500/30 px-4 py-2.5 text-center">
                         <p className="text-green-400 font-bold text-base">DO</p>
                       </div>
-                      <div className="p-3 sm:p-4 space-y-2 text-sm text-white/80">
+                      <div className="p-3 sm:p-4 space-y-2 text-sm text-white">
                         <div className="flex items-start gap-2">
                           <div className="w-1.5 h-1.5 rounded-full bg-green-400 mt-2 flex-shrink-0"></div>
                           <span>Implement control measures</span>
@@ -1260,7 +1260,7 @@ export default function CoshhAwarenessModule5Section4() {
                       <div className="bg-amber-500/20 border-b border-amber-500/30 px-4 py-2.5 text-center">
                         <p className="text-amber-400 font-bold text-base">CHECK</p>
                       </div>
-                      <div className="p-3 sm:p-4 space-y-2 text-sm text-white/80">
+                      <div className="p-3 sm:p-4 space-y-2 text-sm text-white">
                         <div className="flex items-start gap-2">
                           <div className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-2 flex-shrink-0"></div>
                           <span>Monitor workplace exposure levels</span>
@@ -1285,7 +1285,7 @@ export default function CoshhAwarenessModule5Section4() {
                       <div className="bg-violet-500/20 border-b border-violet-500/30 px-4 py-2.5 text-center">
                         <p className="text-violet-400 font-bold text-base">ACT</p>
                       </div>
-                      <div className="p-3 sm:p-4 space-y-2 text-sm text-white/80">
+                      <div className="p-3 sm:p-4 space-y-2 text-sm text-white">
                         <div className="flex items-start gap-2">
                           <div className="w-1.5 h-1.5 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                           <span>Update assessments based on findings</span>
@@ -1307,7 +1307,7 @@ export default function CoshhAwarenessModule5Section4() {
                   </div>
 
                   <div className="mt-4 text-center">
-                    <p className="text-white/50 text-xs italic">
+                    <p className="text-white text-xs italic">
                       The cycle repeats continuously &mdash; COSHH management is never
                       &ldquo;complete&rdquo;
                     </p>
@@ -1322,7 +1322,7 @@ export default function CoshhAwarenessModule5Section4() {
                     Why Continuous Improvement Matters
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   A COSHH assessment written three years ago and never reviewed is almost certainly
                   out of date. Substances change, suppliers change, WELs are updated, new research
                   identifies previously unknown risks, and work practices evolve. An HSE inspector
@@ -1367,32 +1367,32 @@ export default function CoshhAwarenessModule5Section4() {
                     <div className="space-y-2 ml-1">
                       <div className="flex items-start gap-3">
                         <div className="w-2 h-2 rounded-full bg-violet-500 mt-2 flex-shrink-0"></div>
-                        <span className="text-white/80">
+                        <span className="text-white">
                           Ask for a COSHH induction &mdash; what substances are on site, where they
                           are, and what controls are in place?
                         </span>
                       </div>
                       <div className="flex items-start gap-3">
                         <div className="w-2 h-2 rounded-full bg-violet-500 mt-2 flex-shrink-0"></div>
-                        <span className="text-white/80">
+                        <span className="text-white">
                           Review the COSHH assessment for your work area
                         </span>
                       </div>
                       <div className="flex items-start gap-3">
                         <div className="w-2 h-2 rounded-full bg-violet-500 mt-2 flex-shrink-0"></div>
-                        <span className="text-white/80">
+                        <span className="text-white">
                           Check the SDSs for any substances you may encounter
                         </span>
                       </div>
                       <div className="flex items-start gap-3">
                         <div className="w-2 h-2 rounded-full bg-violet-500 mt-2 flex-shrink-0"></div>
-                        <span className="text-white/80">
+                        <span className="text-white">
                           Ensure you have the correct PPE and that it fits properly
                         </span>
                       </div>
                       <div className="flex items-start gap-3">
                         <div className="w-2 h-2 rounded-full bg-violet-500 mt-2 flex-shrink-0"></div>
-                        <span className="text-white/80">
+                        <span className="text-white">
                           Confirm your COSHH training is up to date
                         </span>
                       </div>
@@ -1404,26 +1404,26 @@ export default function CoshhAwarenessModule5Section4() {
                     <div className="space-y-2 ml-1">
                       <div className="flex items-start gap-3">
                         <div className="w-2 h-2 rounded-full bg-violet-500 mt-2 flex-shrink-0"></div>
-                        <span className="text-white/80">
+                        <span className="text-white">
                           Follow the safe system of work &mdash; no shortcuts
                         </span>
                       </div>
                       <div className="flex items-start gap-3">
                         <div className="w-2 h-2 rounded-full bg-violet-500 mt-2 flex-shrink-0"></div>
-                        <span className="text-white/80">
+                        <span className="text-white">
                           Use control measures and PPE as required
                         </span>
                       </div>
                       <div className="flex items-start gap-3">
                         <div className="w-2 h-2 rounded-full bg-violet-500 mt-2 flex-shrink-0"></div>
-                        <span className="text-white/80">
+                        <span className="text-white">
                           Report any unexpected chemical hazards, spills, or unusual smells
                           immediately
                         </span>
                       </div>
                       <div className="flex items-start gap-3">
                         <div className="w-2 h-2 rounded-full bg-violet-500 mt-2 flex-shrink-0"></div>
-                        <span className="text-white/80">
+                        <span className="text-white">
                           If you feel unwell (headache, dizziness, irritation), leave the area and
                           seek fresh air
                         </span>
@@ -1436,26 +1436,26 @@ export default function CoshhAwarenessModule5Section4() {
                     <div className="space-y-2 ml-1">
                       <div className="flex items-start gap-3">
                         <div className="w-2 h-2 rounded-full bg-violet-500 mt-2 flex-shrink-0"></div>
-                        <span className="text-white/80">
+                        <span className="text-white">
                           Clean and store PPE correctly &mdash; contaminated PPE must not be taken
                           home
                         </span>
                       </div>
                       <div className="flex items-start gap-3">
                         <div className="w-2 h-2 rounded-full bg-violet-500 mt-2 flex-shrink-0"></div>
-                        <span className="text-white/80">
+                        <span className="text-white">
                           Wash hands and exposed skin before eating, drinking, or smoking
                         </span>
                       </div>
                       <div className="flex items-start gap-3">
                         <div className="w-2 h-2 rounded-full bg-violet-500 mt-2 flex-shrink-0"></div>
-                        <span className="text-white/80">
+                        <span className="text-white">
                           Report any concerns, near misses, or symptoms to your supervisor
                         </span>
                       </div>
                       <div className="flex items-start gap-3">
                         <div className="w-2 h-2 rounded-full bg-violet-500 mt-2 flex-shrink-0"></div>
-                        <span className="text-white/80">
+                        <span className="text-white">
                           Attend health surveillance if required for your exposure history
                         </span>
                       </div>
@@ -1470,7 +1470,7 @@ export default function CoshhAwarenessModule5Section4() {
                   <CheckCircle className="h-6 w-6 text-violet-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-bold text-violet-300 text-base">Section Summary</h3>
                 </div>
-                <ul className="space-y-3 text-sm text-white/80">
+                <ul className="space-y-3 text-sm text-white">
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-violet-500 mt-0.5 flex-shrink-0" />
                     <span>
@@ -1560,7 +1560,7 @@ export default function CoshhAwarenessModule5Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1576,7 +1576,7 @@ export default function CoshhAwarenessModule5Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-5-section-3">

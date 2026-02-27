@@ -507,7 +507,7 @@ Review and update it regularly, especially when you're feeling well.
               </div>
               <div className="flex-1">
                 <h3 className="text-lg font-bold text-green-400 mb-1">Plan Complete! 🎉</h3>
-                <p className="text-sm text-white/90 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   Well done for completing your Personal Safety Plan. This is an important step in
                   taking care of your mental health.
                 </p>
@@ -517,15 +517,15 @@ Review and update it regularly, especially when you're feeling well.
             <div className="space-y-3 mb-4">
               <div className="flex items-start gap-2 text-sm">
                 <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                <span className="text-white/80">Save a copy to share with someone you trust</span>
+                <span className="text-white">Save a copy to share with someone you trust</span>
               </div>
               <div className="flex items-start gap-2 text-sm">
                 <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                <span className="text-white/80">Keep it accessible for when you need it</span>
+                <span className="text-white">Keep it accessible for when you need it</span>
               </div>
               <div className="flex items-start gap-2 text-sm">
                 <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                <span className="text-white/80">Review and update it regularly</span>
+                <span className="text-white">Review and update it regularly</span>
               </div>
             </div>
 
@@ -537,7 +537,7 @@ Review and update it regularly, especially when you're feeling well.
                 <Download className="h-4 w-4 mr-2" />
                 Download Your Plan
               </Button>
-              <p className="text-xs text-center text-white/60 mt-1">
+              <p className="text-xs text-center text-white mt-1">
                 Saves as a text file you can print, email, or share
               </p>
             </div>

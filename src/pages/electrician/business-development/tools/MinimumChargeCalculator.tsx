@@ -119,7 +119,7 @@ const MinimumChargeCalculator: React.FC = () => {
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 Minimum Charge Calculator
               </h1>
-              <p className="text-sm text-white/70">Set profitable call-out pricing</p>
+              <p className="text-sm text-white">Set profitable call-out pricing</p>
             </div>
           </div>
           <SmartBackButton />
@@ -309,7 +309,7 @@ const MinimumChargeCalculator: React.FC = () => {
               disabled={!isValid}
               className={cn(
                 'flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation',
-                isValid ? 'text-black' : 'bg-white/10 text-white/60 cursor-not-allowed'
+                isValid ? 'text-black' : 'bg-white/10 text-white cursor-not-allowed'
               )}
               style={
                 isValid
@@ -408,7 +408,7 @@ const MinimumChargeCalculator: React.FC = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      'h-4 w-4 text-white/80 transition-transform duration-200',
+                      'h-4 w-4 text-white transition-transform duration-200',
                       showBreakdown && 'rotate-180'
                     )}
                   />
@@ -487,7 +487,7 @@ const MinimumChargeCalculator: React.FC = () => {
               </div>
               <ChevronDown
                 className={cn(
-                  'h-4 w-4 text-white/80 transition-transform duration-200',
+                  'h-4 w-4 text-white transition-transform duration-200',
                   showReference && 'rotate-180'
                 )}
               />

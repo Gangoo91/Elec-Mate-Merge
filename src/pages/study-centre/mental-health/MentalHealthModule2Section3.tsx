@@ -381,7 +381,7 @@ const MentalHealthModule2Section3 = () => {
             </span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">Stress &amp; Burnout</h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding workplace stress, the difference between pressure and harm, the science of
             chronic stress, the Maslach Burnout Model, and how to recognise and assess stress using
             HSE frameworks
@@ -393,7 +393,7 @@ const MentalHealthModule2Section3 = () => {
           <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4 text-center">
             <Brain className="h-6 w-6 text-purple-400 mx-auto mb-2" />
             <h3 className="text-white font-semibold text-sm mb-1">Understand Stress</h3>
-            <p className="text-white/70 text-xs">
+            <p className="text-white text-xs">
               HSE definition, the stress process, and the critical difference between motivating
               pressure and harmful stress
             </p>
@@ -401,7 +401,7 @@ const MentalHealthModule2Section3 = () => {
           <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4 text-center">
             <Flame className="h-6 w-6 text-purple-400 mx-auto mb-2" />
             <h3 className="text-white font-semibold text-sm mb-1">Recognise Burnout</h3>
-            <p className="text-white/70 text-xs">
+            <p className="text-white text-xs">
               The three dimensions of burnout and how chronic, unmanaged stress progresses to
               complete disengagement
             </p>
@@ -409,7 +409,7 @@ const MentalHealthModule2Section3 = () => {
           <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4 text-center">
             <Shield className="h-6 w-6 text-purple-400 mx-auto mb-2" />
             <h3 className="text-white font-semibold text-sm mb-1">Assess &amp; Manage</h3>
-            <p className="text-white/70 text-xs">
+            <p className="text-white text-xs">
               Apply the HSE Management Standards and recognise physical, emotional, behavioural, and
               cognitive signs of stress
             </p>
@@ -422,7 +422,7 @@ const MentalHealthModule2Section3 = () => {
             <CheckCircle className="h-5 w-5" />
             Learning Outcomes
           </h2>
-          <p className="text-white/60 text-sm mb-3">
+          <p className="text-white text-sm mb-3">
             By the end of this section you will be able to:
           </p>
           <ul className="space-y-2 text-sm text-white">
@@ -492,7 +492,7 @@ const MentalHealthModule2Section3 = () => {
 
               <div className="bg-purple-500/10 border border-purple-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-purple-400">Key Principle</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Stress is <strong>not an illness</strong>, but prolonged or severe stress can lead
                   to both physical and mental illness. It is the body&rsquo;s alarm system telling
                   you that the demands being placed upon you are exceeding your ability to cope.
@@ -503,7 +503,7 @@ const MentalHealthModule2Section3 = () => {
 
               <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
                 <h3 className={`${headingColours[0]} font-medium mb-3`}>Pressure vs Stress</h3>
-                <p className="text-white/80 text-sm mb-4">
+                <p className="text-white text-sm mb-4">
                   Understanding the difference between pressure and stress is fundamental to
                   managing workplace wellbeing:
                 </p>
@@ -515,7 +515,7 @@ const MentalHealthModule2Section3 = () => {
                         Pressure (Motivating)
                       </h4>
                     </div>
-                    <ul className="text-white/80 text-xs space-y-2">
+                    <ul className="text-white text-xs space-y-2">
                       <li className="flex items-start gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 flex-shrink-0" />
                         <span>Proportionate to abilities and resources</span>
@@ -543,7 +543,7 @@ const MentalHealthModule2Section3 = () => {
                       <AlertTriangle className="h-5 w-5 text-red-400" />
                       <h4 className="text-red-300 font-semibold text-sm">Stress (Harmful)</h4>
                     </div>
-                    <ul className="text-white/80 text-xs space-y-2">
+                    <ul className="text-white text-xs space-y-2">
                       <li className="flex items-start gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-red-400 mt-1.5 flex-shrink-0" />
                         <span>Exceeds perceived ability to cope</span>
@@ -573,7 +573,7 @@ const MentalHealthModule2Section3 = () => {
                 <h3 className="text-purple-300 font-medium mb-2">
                   Stress as a Process, Not an Event
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Stress is not a single moment &mdash; it is a dynamic process that unfolds over
                   time. It involves a continuous interaction between the demands placed on a person
                   and their perception of their ability to meet those demands. This is why two
@@ -581,7 +581,7 @@ const MentalHealthModule2Section3 = () => {
                   resources, support systems, coping strategies, and personal circumstances all
                   affect the equation.
                 </p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Recognising stress as a process means understanding that early intervention is
                   possible. If you can identify the warning signs before a person reaches crisis
                   point, you can adjust demands, increase support, or improve coping resources to
@@ -616,12 +616,12 @@ const MentalHealthModule2Section3 = () => {
                     <Activity className="h-5 w-5 text-violet-400" />
                     <h4 className="text-violet-300 font-semibold text-sm">Acute Stress</h4>
                   </div>
-                  <p className="text-white/80 text-xs mb-3">
+                  <p className="text-white text-xs mb-3">
                     Short-term stress triggered by a specific event or situation. The body activates
                     its &ldquo;fight or flight&rdquo; response, then returns to normal once the
                     threat passes.
                   </p>
-                  <ul className="text-white/70 text-xs space-y-1.5">
+                  <ul className="text-white text-xs space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="w-1.5 h-1.5 rounded-full bg-violet-400 mt-1.5 flex-shrink-0" />
                       <span>Specific, identifiable trigger</span>
@@ -647,12 +647,12 @@ const MentalHealthModule2Section3 = () => {
                     <Clock className="h-5 w-5 text-red-400" />
                     <h4 className="text-red-300 font-semibold text-sm">Chronic Stress</h4>
                   </div>
-                  <p className="text-white/80 text-xs mb-3">
+                  <p className="text-white text-xs mb-3">
                     Long-term, ongoing stress where the body&rsquo;s stress response is constantly
                     activated. There is no recovery period. The cumulative effect causes progressive
                     damage.
                   </p>
-                  <ul className="text-white/70 text-xs space-y-1.5">
+                  <ul className="text-white text-xs space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="w-1.5 h-1.5 rounded-full bg-red-400 mt-1.5 flex-shrink-0" />
                       <span>Multiple or ongoing stressors</span>
@@ -680,7 +680,7 @@ const MentalHealthModule2Section3 = () => {
                 <h3 className={`${headingColours[1]} font-medium mb-3`}>
                   The Stress Response: Cortisol &amp; Adrenaline
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   When the brain perceives a threat, the hypothalamic-pituitary-adrenal (HPA) axis
                   activates, releasing two key hormones:
                 </p>
@@ -689,7 +689,7 @@ const MentalHealthModule2Section3 = () => {
                     <h4 className="text-violet-300 font-semibold text-sm mb-1">
                       Adrenaline (Epinephrine)
                     </h4>
-                    <p className="text-white/70 text-xs leading-relaxed">
+                    <p className="text-white text-xs leading-relaxed">
                       Released immediately. Increases heart rate, blood pressure, and breathing
                       rate. Diverts blood to muscles. Sharpens senses. Prepares the body for
                       &ldquo;fight or flight.&rdquo; Effects are short-lived and subside once the
@@ -698,7 +698,7 @@ const MentalHealthModule2Section3 = () => {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <h4 className="text-violet-300 font-semibold text-sm mb-1">Cortisol</h4>
-                    <p className="text-white/70 text-xs leading-relaxed">
+                    <p className="text-white text-xs leading-relaxed">
                       Released more slowly, lasts longer. Maintains elevated blood sugar for energy.
                       Suppresses non-essential functions (immune system, digestion, reproduction).
                       In chronic stress, cortisol remains permanently elevated, causing progressive
@@ -740,7 +740,7 @@ const MentalHealthModule2Section3 = () => {
                       <h4 className="text-red-300 font-semibold text-xs mb-1">
                         {item.system} System
                       </h4>
-                      <p className="text-white/70 text-xs leading-relaxed">{item.effect}</p>
+                      <p className="text-white text-xs leading-relaxed">{item.effect}</p>
                     </div>
                   ))}
                 </div>
@@ -813,7 +813,7 @@ const MentalHealthModule2Section3 = () => {
                                 {dim.dimension}
                               </span>
                             </div>
-                            <p className="text-white/70 text-xs leading-relaxed">
+                            <p className="text-white text-xs leading-relaxed">
                               {dim.description}
                             </p>
                           </div>
@@ -824,7 +824,7 @@ const MentalHealthModule2Section3 = () => {
 
                   {/* Flow label */}
                   <div className="mt-4 text-center">
-                    <p className="text-white/50 text-xs italic">
+                    <p className="text-white text-xs italic">
                       Chronic unmanaged stress &rarr; Emotional Exhaustion &rarr; Depersonalisation
                       &rarr; Reduced Accomplishment &rarr; Full Burnout
                     </p>
@@ -855,7 +855,7 @@ const MentalHealthModule2Section3 = () => {
                                       : 'rgb(96 165 250)',
                               }}
                             />
-                            <span className="text-white/80">{sign}</span>
+                            <span className="text-white">{sign}</span>
                           </div>
                         ))}
                       </div>
@@ -866,7 +866,7 @@ const MentalHealthModule2Section3 = () => {
 
               <div className="bg-purple-500/10 border border-purple-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-purple-400">Key Insight</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Burnout is not simply &ldquo;being tired.&rdquo; It is a recognised occupational
                   phenomenon included in the{' '}
                   <strong>WHO International Classification of Diseases (ICD-11)</strong> as a
@@ -947,7 +947,7 @@ const MentalHealthModule2Section3 = () => {
                   ].map((item, idx) => (
                     <div key={idx} className="bg-white/5 border border-white/10 rounded-lg p-3">
                       <h4 className="text-white font-semibold text-sm mb-1">{item.stressor}</h4>
-                      <p className="text-white/70 text-xs leading-relaxed">{item.detail}</p>
+                      <p className="text-white text-xs leading-relaxed">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -957,7 +957,7 @@ const MentalHealthModule2Section3 = () => {
                 <h3 className="font-semibold mb-3 text-violet-400">
                   HSE Statistics: Stress in Construction
                 </h3>
-                <ul className="text-white/80 text-sm space-y-3">
+                <ul className="text-white text-sm space-y-3">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0" />
                     <span>
@@ -998,7 +998,7 @@ const MentalHealthModule2Section3 = () => {
                   <Heart className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Breaking the Silence</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Organisations like <strong>Mates in Mind</strong>,{' '}
                   <strong>the Lighthouse Construction Industry Charity</strong>, and the{' '}
                   <strong>Construction Industry Helpline (0345 605 1956)</strong> are working to
@@ -1052,9 +1052,9 @@ const MentalHealthModule2Section3 = () => {
                           {standard.standard}
                         </h4>
                       </div>
-                      <p className="text-white/80 text-sm mb-2">{standard.description}</p>
+                      <p className="text-white text-sm mb-2">{standard.description}</p>
                       <div className="bg-purple-500/10 border border-purple-400/20 rounded-lg p-3">
-                        <p className="text-white/60 text-xs">
+                        <p className="text-white text-xs">
                           <strong className="text-purple-300">Construction example:</strong>{' '}
                           {standard.example}
                         </p>
@@ -1068,7 +1068,7 @@ const MentalHealthModule2Section3 = () => {
                 <h3 className="text-violet-300 font-medium mb-3">
                   Conducting a Stress Risk Assessment
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The HSE recommends a five-step approach to stress risk assessment, aligned with
                   the general principles of risk assessment:
                 </p>
@@ -1128,12 +1128,12 @@ const MentalHealthModule2Section3 = () => {
 
               <div className="bg-white/5 border border-purple-500/30 p-4 rounded-lg">
                 <h3 className="text-purple-300 font-medium mb-2">The HSE Indicator Tool</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The HSE Indicator Tool is a <strong>35-item questionnaire</strong> that asks
                   employees about their working conditions across the six Management Standards. It
                   is designed to be anonymous and confidential, encouraging honest responses.
                 </p>
-                <ul className="text-white/80 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0" />
                     <span>
@@ -1193,7 +1193,7 @@ const MentalHealthModule2Section3 = () => {
                     <Activity className="h-5 w-5 text-red-400" />
                     <h4 className="text-red-300 font-semibold text-sm">Physical Signs</h4>
                   </div>
-                  <ul className="text-white/80 text-xs space-y-2">
+                  <ul className="text-white text-xs space-y-2">
                     {[
                       'Persistent headaches and migraines',
                       'Chronic fatigue and exhaustion',
@@ -1218,7 +1218,7 @@ const MentalHealthModule2Section3 = () => {
                     <Heart className="h-5 w-5 text-amber-400" />
                     <h4 className="text-amber-300 font-semibold text-sm">Emotional Signs</h4>
                   </div>
-                  <ul className="text-white/80 text-xs space-y-2">
+                  <ul className="text-white text-xs space-y-2">
                     {[
                       'Irritability and short temper',
                       'Anxiety and constant worry',
@@ -1243,7 +1243,7 @@ const MentalHealthModule2Section3 = () => {
                     <Users className="h-5 w-5 text-purple-400" />
                     <h4 className="text-purple-300 font-semibold text-sm">Behavioural Signs</h4>
                   </div>
-                  <ul className="text-white/80 text-xs space-y-2">
+                  <ul className="text-white text-xs space-y-2">
                     {[
                       'Withdrawal from colleagues and social activities',
                       'Increased alcohol, tobacco, or substance use',
@@ -1268,7 +1268,7 @@ const MentalHealthModule2Section3 = () => {
                     <Brain className="h-5 w-5 text-blue-400" />
                     <h4 className="text-blue-300 font-semibold text-sm">Cognitive Signs</h4>
                   </div>
-                  <ul className="text-white/80 text-xs space-y-2">
+                  <ul className="text-white text-xs space-y-2">
                     {[
                       'Poor concentration and forgetfulness',
                       'Difficulty making decisions (indecisiveness)',
@@ -1292,12 +1292,12 @@ const MentalHealthModule2Section3 = () => {
                 <h3 className="font-semibold mb-2 text-violet-400">
                   Recognising Stress in Others on Site
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   As a Mental Health First Aider, you should be alert to
                   <strong> changes in behaviour</strong> rather than single symptoms. It is the
                   pattern of change that matters:
                 </p>
-                <ul className="text-white/80 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-violet-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -1330,7 +1330,7 @@ const MentalHealthModule2Section3 = () => {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Safety-Critical Warning</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   In construction, stress does not just affect wellbeing &mdash; it affects{' '}
                   <strong>safety</strong>. A stressed worker with poor concentration, impaired
                   decision-making, and fatigue is more likely to have an accident, make a wiring
@@ -1359,7 +1359,7 @@ const MentalHealthModule2Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1379,7 +1379,7 @@ const MentalHealthModule2Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-2">

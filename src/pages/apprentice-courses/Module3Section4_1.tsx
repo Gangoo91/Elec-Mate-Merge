@@ -216,13 +216,13 @@ const Module3Section4_1: React.FC = () => {
         <header className="mb-6 sm:mb-8 text-center">
           <div className="inline-flex items-center justify-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/30 mb-4">
             <span className="text-elec-yellow text-sm font-medium">Module 3</span>
-            <span className="text-white/50">|</span>
-            <span className="text-white/70 text-sm">Section 3.4.1</span>
+            <span className="text-white">|</span>
+            <span className="text-white text-sm">Section 3.4.1</span>
           </div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Surface vs Concealed Wiring Installations
           </h1>
-          <p className="text-white/70">
+          <p className="text-white">
             Understanding installation methods, advantages, disadvantages and selection criteria for
             different environments.
           </p>
@@ -671,7 +671,7 @@ const Module3Section4_1: React.FC = () => {
                 className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/20"
               >
                 <p className="font-medium text-white mb-1">{faq.q}</p>
-                <p className="text-sm text-white/70">{faq.a}</p>
+                <p className="text-sm text-white">{faq.a}</p>
               </div>
             ))}
           </div>

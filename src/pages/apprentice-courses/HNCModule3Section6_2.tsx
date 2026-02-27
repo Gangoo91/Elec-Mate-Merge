@@ -192,7 +192,7 @@ const HNCModule3Section6_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section6">
@@ -214,7 +214,7 @@ const HNCModule3Section6_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Efficiency Calculations for Equipment and Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Quantifying equipment performance and making economically sound decisions for building
             services
           </p>
@@ -305,7 +305,7 @@ const HNCModule3Section6_2 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 η = P<sub>out</sub> / P<sub>in</sub> × 100%
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where η (eta) = efficiency, Pout = useful output power, Pin = total input power
               </p>
             </div>
@@ -493,7 +493,7 @@ const HNCModule3Section6_2 = () => {
               <p className="text-sm text-white mb-2">
                 An 11kW motor runs 6000 hours/year. Upgrading from IE2 (89.8%) to IE4 (92.6%):
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>IE2 input power = 11 / 0.898 = 12.25 kW</p>
                 <p>IE4 input power = 11 / 0.926 = 11.88 kW</p>
                 <p>Power saving = 12.25 - 11.88 = 0.37 kW</p>
@@ -536,7 +536,7 @@ const HNCModule3Section6_2 = () => {
                 η = (V<sub>2</sub>I<sub>2</sub>cosφ) / (V<sub>2</sub>I<sub>2</sub>cosφ + P
                 <sub>i</sub> + P<sub>c</sub>) × 100%
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where Pi = iron losses (constant), Pc = copper losses at actual load
               </p>
             </div>
@@ -568,7 +568,7 @@ const HNCModule3Section6_2 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 x = √(P<sub>i</sub> / P<sub>c(FL)</sub>)
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where x = fraction of full load at maximum efficiency
               </p>
             </div>
@@ -585,7 +585,7 @@ const HNCModule3Section6_2 = () => {
                 <p className="font-mono text-center mb-2">
                   η<sub>all-day</sub> = (Energy output over 24h) / (Energy input over 24h) × 100%
                 </p>
-                <p className="text-xs text-white/70 text-center">
+                <p className="text-xs text-white text-center">
                   Or: η = ΣW<sub>out</sub> / (ΣW<sub>out</sub> + 24×P<sub>i</sub> + ΣP<sub>c</sub>
                   ×t)
                 </p>
@@ -788,15 +788,15 @@ const HNCModule3Section6_2 = () => {
               <div className="grid grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">Q ∝ N</p>
-                  <p className="text-white/70 text-xs">Flow proportional to speed</p>
+                  <p className="text-white text-xs">Flow proportional to speed</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">H ∝ N²</p>
-                  <p className="text-white/70 text-xs">Head proportional to speed squared</p>
+                  <p className="text-white text-xs">Head proportional to speed squared</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">P ∝ N³</p>
-                  <p className="text-white/70 text-xs">Power proportional to speed cubed</p>
+                  <p className="text-white text-xs">Power proportional to speed cubed</p>
                 </div>
               </div>
             </div>
@@ -831,7 +831,7 @@ const HNCModule3Section6_2 = () => {
                 η<sub>system</sub> = η<sub>1</sub> × η<sub>2</sub> × η<sub>3</sub> × ... × η
                 <sub>n</sub>
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Individual efficiencies multiply - they do not add
               </p>
             </div>
@@ -880,7 +880,7 @@ const HNCModule3Section6_2 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/70 mt-2">
+              <p className="text-xs text-white mt-2">
                 Overall system efficiency: 0.97 × 0.97 × 0.93 × 0.95 × 0.80 = 66.5% - nearly
                 one-third of input energy is lost.
               </p>
@@ -972,7 +972,7 @@ const HNCModule3Section6_2 = () => {
                 LCC = C<sub>ic</sub> + C<sub>in</sub> + C<sub>e</sub> + C<sub>o</sub> + C
                 <sub>m</sub> + C<sub>s</sub> + C<sub>env</sub> - C<sub>d</sub>
               </p>
-              <div className="text-xs text-white/70 mt-2 grid grid-cols-2 gap-1">
+              <div className="text-xs text-white mt-2 grid grid-cols-2 gap-1">
                 <span>Cic = Initial cost</span>
                 <span>Cin = Installation cost</span>
                 <span>Ce = Energy cost</span>
@@ -1034,7 +1034,7 @@ const HNCModule3Section6_2 = () => {
                 </p>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-mono text-center mb-2">Payback = ΔCost / Annual Savings</p>
-                  <p className="text-xs text-white/70 text-center">
+                  <p className="text-xs text-white text-center">
                     Years to recover extra investment
                   </p>
                 </div>
@@ -1052,7 +1052,7 @@ const HNCModule3Section6_2 = () => {
                   <p className="font-mono text-center mb-2">
                     NPV = Σ (C<sub>t</sub> / (1+r)<sup>t</sup>) - C<sub>0</sub>
                   </p>
-                  <p className="text-xs text-white/70 text-center">
+                  <p className="text-xs text-white text-center">
                     Discounted cash flow over equipment life
                   </p>
                 </div>
@@ -1071,21 +1071,21 @@ const HNCModule3Section6_2 = () => {
               <p className="text-sm text-white mb-2">
                 15kW motor, 6000 hours/year, 15 year life, electricity at 15p/kWh:
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p className="font-bold">Standard motor (IE2, 89.8%):</p>
                 <p>Purchase: GBP 850</p>
                 <p>
                   Annual energy: 15 ÷ 0.898 × 6000 × 0.15 = <strong>GBP 15,034</strong>
                 </p>
                 <p>15-year energy: GBP 225,501</p>
-                <p className="text-white/60">LCC ≈ GBP 226,350</p>
+                <p className="text-white">LCC ≈ GBP 226,350</p>
                 <p className="mt-3 font-bold">Premium motor (IE4, 92.6%):</p>
                 <p>Purchase: GBP 1,250 (+GBP 400)</p>
                 <p>
                   Annual energy: 15 ÷ 0.926 × 6000 × 0.15 = <strong>GBP 14,579</strong>
                 </p>
                 <p>15-year energy: GBP 218,685</p>
-                <p className="text-white/60">LCC ≈ GBP 219,935</p>
+                <p className="text-white">LCC ≈ GBP 219,935</p>
                 <p className="mt-3 text-green-400 font-bold">Savings: GBP 6,415 over 15 years</p>
                 <p className="text-green-400">
                   Simple payback: GBP 400 ÷ GBP 455/year = 0.88 years
@@ -1169,7 +1169,7 @@ const HNCModule3Section6_2 = () => {
                   <span className="text-elec-yellow font-bold">1</span>
                   <div>
                     <p className="font-medium">Baseline Establishment</p>
-                    <p className="text-white/70 text-sm">
+                    <p className="text-white text-sm">
                       Collect 12+ months utility bills, establish kWh/m²/year benchmark
                     </p>
                   </div>
@@ -1178,7 +1178,7 @@ const HNCModule3Section6_2 = () => {
                   <span className="text-elec-yellow font-bold">2</span>
                   <div>
                     <p className="font-medium">Site Survey</p>
-                    <p className="text-white/70 text-sm">
+                    <p className="text-white text-sm">
                       Equipment inventory, operating schedules, nameplate data collection
                     </p>
                   </div>
@@ -1187,7 +1187,7 @@ const HNCModule3Section6_2 = () => {
                   <span className="text-elec-yellow font-bold">3</span>
                   <div>
                     <p className="font-medium">Load Profiling</p>
-                    <p className="text-white/70 text-sm">
+                    <p className="text-white text-sm">
                       Sub-metering, power logging, identify peak demand periods
                     </p>
                   </div>
@@ -1196,7 +1196,7 @@ const HNCModule3Section6_2 = () => {
                   <span className="text-elec-yellow font-bold">4</span>
                   <div>
                     <p className="font-medium">Energy Balance</p>
-                    <p className="text-white/70 text-sm">
+                    <p className="text-white text-sm">
                       Account for all energy use, identify major consumers (should balance to ±5%)
                     </p>
                   </div>
@@ -1205,7 +1205,7 @@ const HNCModule3Section6_2 = () => {
                   <span className="text-elec-yellow font-bold">5</span>
                   <div>
                     <p className="font-medium">ECM Identification</p>
-                    <p className="text-white/70 text-sm">
+                    <p className="text-white text-sm">
                       List all Energy Conservation Measures with costs and savings
                     </p>
                   </div>
@@ -1214,7 +1214,7 @@ const HNCModule3Section6_2 = () => {
                   <span className="text-elec-yellow font-bold">6</span>
                   <div>
                     <p className="font-medium">Prioritisation</p>
-                    <p className="text-white/70 text-sm">
+                    <p className="text-white text-sm">
                       Rank by payback, NPV, or marginal abatement cost
                     </p>
                   </div>
@@ -1442,7 +1442,7 @@ const HNCModule3Section6_2 = () => {
               <p className="text-sm text-white mb-2">
                 Office building lighting: 500 × 58W fluorescent fittings, 3000 hours/year
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p className="font-bold">Existing system:</p>
                 <p>Load = 500 × 58W × 1.15 (ballast) = 33.35 kW</p>
                 <p>Annual energy = 33.35 × 3000 = 100,050 kWh</p>
@@ -1508,14 +1508,14 @@ const HNCModule3Section6_2 = () => {
                 <strong>Question:</strong> A motor draws 18.5kW from the supply and has mechanical
                 losses of 1.2kW and electrical losses of 0.8kW. Calculate its efficiency.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Total losses = 1.2 + 0.8 = 2.0 kW</p>
                 <p>Output power = 18.5 - 2.0 = 16.5 kW</p>
                 <p className="mt-2">Efficiency η = Pout / Pin × 100%</p>
                 <p>
                   η = 16.5 / 18.5 × 100% = <strong>89.2%</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Alternative: η = (Pin - Losses) / Pin = (18.5 - 2.0) / 18.5 = 89.2%
                 </p>
               </div>
@@ -1531,7 +1531,7 @@ const HNCModule3Section6_2 = () => {
                 and 10% load for 8 hours daily. Calculate the all-day efficiency at 0.8 power
                 factor.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p className="font-bold">Energy output:</p>
                 <p>Full load: 500 × 0.8 × 6 = 2400 kWh</p>
                 <p>Half load: 500 × 0.5 × 0.8 × 10 = 2000 kWh</p>
@@ -1561,7 +1561,7 @@ const HNCModule3Section6_2 = () => {
                 system comprises: VSD (96%), motor (91%), coupling (98%), pump (75%). Calculate
                 annual energy cost at 14p/kWh for 5000 hours operation.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p className="font-bold">System efficiency:</p>
                 <p>η_system = 0.96 × 0.91 × 0.98 × 0.75 = 0.642 = 64.2%</p>
                 <p className="mt-2 font-bold">Electrical input power:</p>
@@ -1572,7 +1572,7 @@ const HNCModule3Section6_2 = () => {
                 <p>
                   Cost = 350,500 × 0.14 = <strong>GBP 49,070</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Losses = 70.1 - 45 = 25.1 kW (GBP 17,570/year wasted)
                 </p>
               </div>
@@ -1586,7 +1586,7 @@ const HNCModule3Section6_2 = () => {
                 <strong>Question:</strong> A VSD costs GBP 8,000 installed and saves GBP 2,500/year
                 in energy. Equipment life is 10 years. Calculate NPV at 8% discount rate.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p className="font-bold">Using present value of annuity factor:</p>
                 <p>PVA factor (10 years, 8%) = (1 - (1.08)^-10) / 0.08 = 6.710</p>
                 <p className="mt-2">PV of savings = GBP 2,500 × 6.710 = GBP 16,775</p>
@@ -1598,7 +1598,7 @@ const HNCModule3Section6_2 = () => {
                 <p className="mt-2 text-green-400">
                   NPV &gt; 0, therefore investment is worthwhile
                 </p>
-                <p className="text-white/60 mt-2">Simple payback = 8000 / 2500 = 3.2 years</p>
+                <p className="text-white mt-2">Simple payback = 8000 / 2500 = 3.2 years</p>
               </div>
             </div>
           </div>
@@ -1691,7 +1691,7 @@ const HNCModule3Section6_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1757,7 +1757,7 @@ const HNCModule3Section6_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section6-1">

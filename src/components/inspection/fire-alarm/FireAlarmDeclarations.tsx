@@ -252,7 +252,7 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.commissioning && 'rotate-180'
                   )}
                 />
@@ -347,7 +347,7 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.handover && 'rotate-180'
                   )}
                 />
@@ -437,7 +437,7 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                   </div>
                   <ChevronDown
                     className={cn(
-                      'h-5 w-5 text-white/40 transition-transform',
+                      'h-5 w-5 text-white transition-transform',
                       openSections.previousDefects && 'rotate-180'
                     )}
                   />
@@ -617,7 +617,7 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.defects && 'rotate-180'
                   )}
                 />
@@ -867,7 +867,7 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.declarations && 'rotate-180'
                   )}
                 />
@@ -900,7 +900,7 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
 
               {/* Designer Declaration (optional) */}
               <div className="bg-black/40 rounded-xl p-4">
-                <h4 className="text-sm font-semibold mb-4 text-white/80">
+                <h4 className="text-sm font-semibold mb-4 text-white">
                   Designer Declaration (if applicable)
                 </h4>
                 <div className="space-y-4">
@@ -1155,7 +1155,7 @@ const FireAlarmDeclarations: React.FC<FireAlarmDeclarationsProps> = ({ formData,
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.certification && 'rotate-180'
                   )}
                 />

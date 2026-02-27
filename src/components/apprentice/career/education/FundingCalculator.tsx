@@ -186,7 +186,7 @@ const FundingCalculator = () => {
               <h2 className="text-lg sm:text-xl font-semibold text-white">
                 Funding <span className="text-purple-400">Calculator</span>
               </h2>
-              <p className="text-xs text-white/60 hidden sm:block">
+              <p className="text-xs text-white hidden sm:block">
                 2025 rates • Find your funding options
               </p>
             </div>
@@ -197,17 +197,17 @@ const FundingCalculator = () => {
             <div className="flex-shrink-0 flex items-center gap-2 bg-white/5 rounded-full px-3 py-1.5 border border-white/10">
               <PoundSterling className="h-4 w-4 text-green-400" />
               <span className="text-sm font-medium text-white">£9,250</span>
-              <span className="text-xs text-white/50">Undergrad</span>
+              <span className="text-xs text-white">Undergrad</span>
             </div>
             <div className="flex-shrink-0 flex items-center gap-2 bg-white/5 rounded-full px-3 py-1.5 border border-white/10">
               <TrendingUp className="h-4 w-4 text-purple-400" />
               <span className="text-sm font-medium text-white">£12,858</span>
-              <span className="text-xs text-white/50">Postgrad</span>
+              <span className="text-xs text-white">Postgrad</span>
             </div>
             <div className="flex-shrink-0 flex items-center gap-2 bg-white/5 rounded-full px-3 py-1.5 border border-white/10">
               <Clock className="h-4 w-4 text-amber-400" />
               <span className="text-sm font-medium text-white">£27,295</span>
-              <span className="text-xs text-white/50">Threshold</span>
+              <span className="text-xs text-white">Threshold</span>
             </div>
           </div>
         </div>
@@ -215,7 +215,7 @@ const FundingCalculator = () => {
 
       {/* Funding Type Selection */}
       <div className="space-y-3">
-        <p className="text-sm text-white/70 px-1">Select your qualification type:</p>
+        <p className="text-sm text-white px-1">Select your qualification type:</p>
 
         <div className="grid grid-cols-2 gap-3">
           {FUNDING_TYPES.map((type) => (
@@ -241,9 +241,9 @@ const FundingCalculator = () => {
                 <type.icon className={cn('h-5 w-5', type.color)} />
               </div>
               <h3 className="font-medium text-white text-sm">{type.title}</h3>
-              <p className="text-xs text-white/50 mt-0.5">{type.subtitle}</p>
+              <p className="text-xs text-white mt-0.5">{type.subtitle}</p>
               <p className={cn('text-sm font-semibold mt-2', type.color)}>{type.amount}</p>
-              <ChevronRight className="absolute top-4 right-3 h-4 w-4 text-white/30" />
+              <ChevronRight className="absolute top-4 right-3 h-4 w-4 text-white" />
             </motion.button>
           ))}
         </div>
@@ -251,7 +251,7 @@ const FundingCalculator = () => {
 
       {/* Quick Links */}
       <div className="space-y-2">
-        <p className="text-xs text-white/50 px-1">Official resources:</p>
+        <p className="text-xs text-white px-1">Official resources:</p>
         <div className="flex gap-2 overflow-x-auto -mx-4 px-4 pb-1 scrollbar-hide">
           {[
             { label: 'Student Finance', url: 'https://www.gov.uk/student-finance' },
@@ -264,7 +264,7 @@ const FundingCalculator = () => {
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-shrink-0 flex items-center gap-1.5 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-xs text-white/70 hover:bg-white/10 transition-colors touch-manipulation"
+              className="flex-shrink-0 flex items-center gap-1.5 px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-xs text-white hover:bg-white/10 transition-colors touch-manipulation"
             >
               <ExternalLink className="h-3 w-3" />
               {link.label}
@@ -283,7 +283,7 @@ const FundingCalculator = () => {
                   variant="ghost"
                   size="icon"
                   onClick={() => setShowCalculator(false)}
-                  className="h-9 w-9 text-white/70"
+                  className="h-9 w-9 text-white"
                 >
                   <ArrowLeft className="h-5 w-5" />
                 </Button>
@@ -307,7 +307,7 @@ const FundingCalculator = () => {
                         <p className="text-sm font-medium text-white">
                           {FUNDING_TYPES.find((t) => t.id === selectedType)!.title}
                         </p>
-                        <p className="text-xs text-white/50">
+                        <p className="text-xs text-white">
                           {FUNDING_TYPES.find((t) => t.id === selectedType)!.amount}
                         </p>
                       </div>
@@ -319,44 +319,44 @@ const FundingCalculator = () => {
               {/* Form */}
               <div className="space-y-4">
                 <div className="space-y-2">
-                  <Label className="text-sm text-white/80">Course Cost (£) *</Label>
+                  <Label className="text-sm text-white">Course Cost (£) *</Label>
                   <div className="relative">
-                    <PoundSterling className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+                    <PoundSterling className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                     <Input
                       type="number"
                       placeholder="e.g. 9250"
                       value={courseCost}
                       onChange={(e) => setCourseCost(e.target.value)}
-                      className="h-12 pl-9 bg-white/5 border-white/10 text-white text-base placeholder:text-white/40 focus:border-purple-500/50 touch-manipulation"
+                      className="h-12 pl-9 bg-white/5 border-white/10 text-white text-base placeholder:text-white focus:border-purple-500/50 touch-manipulation"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <Label className="text-sm text-white/80">Your Annual Salary (£)</Label>
+                  <Label className="text-sm text-white">Your Annual Salary (£)</Label>
                   <div className="relative">
-                    <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+                    <Briefcase className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                     <Input
                       type="number"
                       placeholder="e.g. 32000"
                       value={salary}
                       onChange={(e) => setSalary(e.target.value)}
-                      className="h-12 pl-9 bg-white/5 border-white/10 text-white text-base placeholder:text-white/40 focus:border-purple-500/50 touch-manipulation"
+                      className="h-12 pl-9 bg-white/5 border-white/10 text-white text-base placeholder:text-white focus:border-purple-500/50 touch-manipulation"
                     />
                   </div>
-                  <p className="text-xs text-white/50">Used to calculate repayments</p>
+                  <p className="text-xs text-white">Used to calculate repayments</p>
                 </div>
 
                 <div className="space-y-2">
-                  <Label className="text-sm text-white/80">Employer Contribution (£)</Label>
+                  <Label className="text-sm text-white">Employer Contribution (£)</Label>
                   <div className="relative">
-                    <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+                    <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                     <Input
                       type="number"
                       placeholder="e.g. 2000 (optional)"
                       value={employerSupport}
                       onChange={(e) => setEmployerSupport(e.target.value)}
-                      className="h-12 pl-9 bg-white/5 border-white/10 text-white text-base placeholder:text-white/40 focus:border-purple-500/50 touch-manipulation"
+                      className="h-12 pl-9 bg-white/5 border-white/10 text-white text-base placeholder:text-white focus:border-purple-500/50 touch-manipulation"
                     />
                   </div>
                 </div>
@@ -388,7 +388,7 @@ const FundingCalculator = () => {
                   variant="ghost"
                   size="icon"
                   onClick={() => setShowResult(false)}
-                  className="h-9 w-9 text-white/70"
+                  className="h-9 w-9 text-white"
                 >
                   <ArrowLeft className="h-5 w-5" />
                 </Button>
@@ -401,7 +401,7 @@ const FundingCalculator = () => {
                 {/* Summary Cards */}
                 <div className="grid grid-cols-2 gap-3">
                   <div className="p-4 bg-white/5 border border-white/10 rounded-xl">
-                    <p className="text-xs text-white/50 mb-1">Course Cost</p>
+                    <p className="text-xs text-white mb-1">Course Cost</p>
                     <p className="text-xl font-bold text-white">
                       £{result.totalCost.toLocaleString()}
                     </p>
@@ -417,7 +417,7 @@ const FundingCalculator = () => {
                 {/* Coverage Progress */}
                 <div className="p-4 bg-white/5 border border-white/10 rounded-xl space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-white/70">Funding Coverage</span>
+                    <span className="text-sm text-white">Funding Coverage</span>
                     <span className="text-sm font-semibold text-white">
                       {result.coverage.toFixed(0)}%
                     </span>
@@ -465,7 +465,7 @@ const FundingCalculator = () => {
                         </div>
                         <div>
                           <p className="text-sm font-medium text-white">{source.name}</p>
-                          <p className="text-xs text-white/50 capitalize">{source.type}</p>
+                          <p className="text-xs text-white capitalize">{source.type}</p>
                         </div>
                       </div>
                       <p className="text-sm font-semibold text-white">
@@ -486,7 +486,7 @@ const FundingCalculator = () => {
                       £{result.monthlyRepayment.toFixed(0)}
                       <span className="text-sm font-normal">/month</span>
                     </p>
-                    <p className="text-xs text-white/50 mt-1">
+                    <p className="text-xs text-white mt-1">
                       9% of earnings above £
                       {FUNDING_2025.advancedLearner.repaymentThreshold.toLocaleString()}
                     </p>
@@ -496,7 +496,7 @@ const FundingCalculator = () => {
                 {/* Tips */}
                 <div className="p-4 bg-gradient-to-br from-purple-500/10 to-purple-600/5 border border-purple-500/20 rounded-xl">
                   <h4 className="text-sm font-medium text-white mb-2">Next Steps</h4>
-                  <ul className="space-y-2 text-sm text-white/70">
+                  <ul className="space-y-2 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
                       Apply early - funding applications can take 6-8 weeks

@@ -248,7 +248,7 @@ const HNCModule7Section6_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section6">
@@ -270,7 +270,7 @@ const HNCModule7Section6_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Commissioning Procedures
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Pre-commissioning checks, initial verification, functional testing, and handover
             documentation
           </p>
@@ -551,35 +551,35 @@ const HNCModule7Section6_5 = () => {
               </p>
               <div className="text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Step 1:</span>{' '}
+                  <span className="text-white">Step 1:</span>{' '}
                   <span className="text-white">
                     Measure end-to-end resistance of L conductors (r1)
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">Step 2:</span>{' '}
+                  <span className="text-white">Step 2:</span>{' '}
                   <span className="text-white">
                     Measure end-to-end resistance of N conductors (rn)
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">Step 3:</span>{' '}
+                  <span className="text-white">Step 3:</span>{' '}
                   <span className="text-white">Measure end-to-end resistance of CPC (r2)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Step 4:</span>{' '}
+                  <span className="text-white">Step 4:</span>{' '}
                   <span className="text-white">
                     Cross-connect L1 to L2 and N1 to N2, test each socket (should equal r1/4 + rn/4)
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">Step 5:</span>{' '}
+                  <span className="text-white">Step 5:</span>{' '}
                   <span className="text-white">
                     Cross-connect L1 to CPC2, test L-CPC at each socket to obtain R1+R2
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">Result:</span>{' '}
+                  <span className="text-white">Result:</span>{' '}
                   <span className="text-white">
                     All readings should be consistent; significant deviation indicates spurs or
                     faults
@@ -673,7 +673,7 @@ const HNCModule7Section6_5 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Apply 0.8 multiplier to account for conductor temperature rise during fault
                 conditions
               </p>
@@ -762,7 +762,7 @@ const HNCModule7Section6_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Lighting Systems</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• All luminaires illuminate correctly</li>
                     <li>• Switching operates as designed</li>
                     <li>• Dimming controls function smoothly</li>
@@ -772,7 +772,7 @@ const HNCModule7Section6_5 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Power Distribution</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Load balancing across phases</li>
                     <li>• Metering reads correctly</li>
                     <li>• Changeover switches operate</li>
@@ -888,7 +888,7 @@ const HNCModule7Section6_5 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Professional requirement:</strong> Certificates must only be issued by persons
               competent in electrical installation testing and able to verify the work meets BS 7671
               requirements.
@@ -914,8 +914,8 @@ const HNCModule7Section6_5 = () => {
                 <strong>Scenario:</strong> A 32A Type B MCB protects a ring final circuit. Ze
                 measured at origin = 0.35Ω. Verify the circuit is compliant.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given information:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given information:</p>
                 <p>MCB: 32A Type B</p>
                 <p>Ze (measured at origin): 0.35Ω</p>
                 <p>R1+R2 (measured at furthest socket): 0.72Ω</p>
@@ -937,8 +937,8 @@ const HNCModule7Section6_5 = () => {
                 <strong>Scenario:</strong> A lighting circuit shows 0.4 MΩ insulation resistance.
                 Identify and locate the fault.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Initial test result:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Initial test result:</p>
                 <p>Circuit 3 (Lighting) IR: 0.4 MΩ - FAIL (minimum 1.0 MΩ)</p>
                 <p className="mt-2">Fault-finding procedure:</p>
                 <p>Step 1: Disconnect all luminaires at their terminals</p>
@@ -963,9 +963,9 @@ const HNCModule7Section6_5 = () => {
                 <strong>Scenario:</strong> Complete RCD testing on a 30mA Type A RCBO protecting a
                 socket circuit.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Test equipment: Calibrated multifunction tester</p>
-                <p className="text-white/60">Device: 30mA Type A RCBO</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Test equipment: Calibrated multifunction tester</p>
+                <p className="text-white">Device: 30mA Type A RCBO</p>
                 <p className="mt-2">Test 1: 50% IΔn (15mA) - No trip test</p>
                 <p>Result: Device did not trip ✓</p>
                 <p className="mt-2">Test 2: 100% IΔn (30mA) - Full load test</p>
@@ -1068,7 +1068,7 @@ const HNCModule7Section6_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1114,7 +1114,7 @@ const HNCModule7Section6_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section6">

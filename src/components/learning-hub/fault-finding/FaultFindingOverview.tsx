@@ -121,11 +121,11 @@ const FaultFindingOverview = ({ onNavigate }: FaultFindingOverviewProps) => {
         </div>
         <div className="flex-1 min-w-0">
           <h3 className="text-[15px] font-medium text-white leading-tight">{item.title}</h3>
-          <p className="text-[13px] text-white/50 leading-tight mt-0.5">{item.subtitle}</p>
+          <p className="text-[13px] text-white leading-tight mt-0.5">{item.subtitle}</p>
         </div>
         <div className="flex items-center gap-2 flex-shrink-0">
-          <span className="text-[13px] text-white/30">{item.count}</span>
-          <ChevronRight className="h-4 w-4 text-white/20" />
+          <span className="text-[13px] text-white">{item.count}</span>
+          <ChevronRight className="h-4 w-4 text-white" />
         </div>
       </motion.div>
     );
@@ -135,7 +135,7 @@ const FaultFindingOverview = ({ onNavigate }: FaultFindingOverviewProps) => {
     <motion.div className="space-y-6" variants={containerVariants} initial="hidden" animate="show">
       {/* Diagnostic Tools */}
       <div>
-        <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+        <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
           Diagnostic Tools
         </p>
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
@@ -145,7 +145,7 @@ const FaultFindingOverview = ({ onNavigate }: FaultFindingOverviewProps) => {
 
       {/* Practical Resources */}
       <div>
-        <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+        <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
           Practical Resources
         </p>
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
@@ -156,8 +156,8 @@ const FaultFindingOverview = ({ onNavigate }: FaultFindingOverviewProps) => {
       {/* Safety reminder */}
       <motion.div variants={itemVariants}>
         <div className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-white/[0.02]">
-          <Shield className="h-4 w-4 text-white/30 flex-shrink-0" />
-          <p className="text-[12px] text-white/40">Always isolate safely before fault diagnosis</p>
+          <Shield className="h-4 w-4 text-white flex-shrink-0" />
+          <p className="text-[12px] text-white">Always isolate safely before fault diagnosis</p>
         </div>
       </motion.div>
     </motion.div>

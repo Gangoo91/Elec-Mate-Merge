@@ -253,7 +253,7 @@ const HNCModule6Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section4">
@@ -275,7 +275,7 @@ const HNCModule6Section4_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Science-Based Targets
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             SBTi framework, 1.5°C alignment, target setting, and progress tracking for building
             services sustainability
           </p>
@@ -434,27 +434,27 @@ const HNCModule6Section4_4 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">SBTi Validation Process</p>
               <div className="text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Step 1:</span>{' '}
+                  <span className="text-white">Step 1:</span>{' '}
                   <span className="text-white">Commit</span> - Sign commitment letter (24 months to
                   submit targets)
                 </p>
                 <p>
-                  <span className="text-white/60">Step 2:</span>{' '}
+                  <span className="text-white">Step 2:</span>{' '}
                   <span className="text-white">Develop</span> - Set targets using SBTi methodologies
                   and tools
                 </p>
                 <p>
-                  <span className="text-white/60">Step 3:</span>{' '}
+                  <span className="text-white">Step 3:</span>{' '}
                   <span className="text-white">Submit</span> - Complete Target Submission Form for
                   validation
                 </p>
                 <p>
-                  <span className="text-white/60">Step 4:</span>{' '}
+                  <span className="text-white">Step 4:</span>{' '}
                   <span className="text-white">Validate</span> - SBTi assesses against criteria
                   (typically 4-6 months)
                 </p>
                 <p>
-                  <span className="text-white/60">Step 5:</span>{' '}
+                  <span className="text-white">Step 5:</span>{' '}
                   <span className="text-white">Communicate</span> - Announce validated targets
                   publicly
                 </p>
@@ -675,7 +675,7 @@ const HNCModule6Section4_4 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="text-sm font-medium text-white mb-2">Carbon Removal vs Offsetting</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>
                     <strong>Removal (accepted):</strong> Permanently removing CO2 from atmosphere
                   </li>
@@ -688,7 +688,7 @@ const HNCModule6Section4_4 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="text-sm font-medium text-white mb-2">Beyond Value Chain Mitigation</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Carbon credits can fund additional climate action</li>
                   <li>Does not count towards target achievement</li>
                   <li>Demonstrates broader climate leadership</li>
@@ -854,7 +854,7 @@ const HNCModule6Section4_4 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Building services insight:</strong> For contractors, Category 11 (use of sold
               products) often dominates Scope 3 - the lifetime operational emissions of installed
               HVAC, lighting, and electrical systems typically exceed all other emission sources
@@ -881,12 +881,12 @@ const HNCModule6Section4_4 = () => {
                 <strong>Scenario:</strong> An MEP contractor with 2020 base year emissions wants to
                 set a 1.5°C-aligned target.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Base year (2020) emissions:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Base year (2020) emissions:</p>
                 <p className="ml-4">Scope 1: 850 tCO2e (vehicles, site equipment)</p>
                 <p className="ml-4">Scope 2: 320 tCO2e (offices, workshops)</p>
                 <p className="ml-4">Total Scope 1+2: 1,170 tCO2e</p>
-                <p className="mt-2 text-white/60">Target calculation (1.5°C aligned):</p>
+                <p className="mt-2 text-white">Target calculation (1.5°C aligned):</p>
                 <p className="ml-4">Required reduction: 4.2% linear annual reduction</p>
                 <p className="ml-4">Target year: 2030 (10 years from base)</p>
                 <p className="ml-4">Cumulative reduction: 42% by 2030</p>
@@ -905,15 +905,15 @@ const HNCModule6Section4_4 = () => {
                 <strong>Scenario:</strong> A facilities management company sets a buildings sector
                 intensity target.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Base year portfolio performance:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Base year portfolio performance:</p>
                 <p className="ml-4">Total operational emissions: 15,000 tCO2e</p>
                 <p className="ml-4">Managed floor area: 250,000 m²</p>
                 <p className="ml-4">Base intensity: 60 kgCO2e/m²</p>
-                <p className="mt-2 text-white/60">SBTi buildings pathway requirement:</p>
+                <p className="mt-2 text-white">SBTi buildings pathway requirement:</p>
                 <p className="ml-4">2030 benchmark: ~35 kgCO2e/m² (commercial offices)</p>
                 <p className="ml-4">Required reduction: (60-35)/60 = 42%</p>
-                <p className="mt-2 text-white/60">Implementation approach:</p>
+                <p className="mt-2 text-white">Implementation approach:</p>
                 <p className="ml-4">LED lighting upgrades: -15 kgCO2e/m²</p>
                 <p className="ml-4">HVAC optimisation: -8 kgCO2e/m²</p>
                 <p className="ml-4">Renewable electricity: -5 kgCO2e/m²</p>
@@ -931,8 +931,8 @@ const HNCModule6Section4_4 = () => {
                 <strong>Scenario:</strong> Determining if Scope 3 targets are required for an
                 electrical contractor.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Emissions screening:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Emissions screening:</p>
                 <p className="ml-4">Scope 1: 500 tCO2e</p>
                 <p className="ml-4">Scope 2: 200 tCO2e</p>
                 <p className="ml-4">Scope 3 (estimated): 4,800 tCO2e</p>
@@ -940,7 +940,7 @@ const HNCModule6Section4_4 = () => {
                 <p className="ml-8">- Subcontractors: 1,200 tCO2e</p>
                 <p className="ml-8">- Employee commuting: 400 tCO2e</p>
                 <p className="ml-8">- Use of products (lifetime): 1,100 tCO2e</p>
-                <p className="mt-2 text-white/60">Threshold calculation:</p>
+                <p className="mt-2 text-white">Threshold calculation:</p>
                 <p className="ml-4">Total: 500 + 200 + 4,800 = 5,500 tCO2e</p>
                 <p className="ml-4">Scope 3 percentage: 4,800/5,500 = 87%</p>
                 <p className="mt-2 text-red-400">
@@ -959,18 +959,18 @@ const HNCModule6Section4_4 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Planning a net-zero commitment for 2050.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Current emissions profile (2024):</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Current emissions profile (2024):</p>
                 <p className="ml-4">Total all scopes: 10,000 tCO2e</p>
-                <p className="mt-2 text-white/60">Net-Zero Standard requirements:</p>
+                <p className="mt-2 text-white">Net-Zero Standard requirements:</p>
                 <p className="ml-4">Minimum reduction: 90%</p>
                 <p className="ml-4">Maximum residual: 10% = 1,000 tCO2e</p>
                 <p className="ml-4">Required abatement: 9,000 tCO2e through actual reductions</p>
-                <p className="mt-2 text-white/60">Pathway milestones:</p>
+                <p className="mt-2 text-white">Pathway milestones:</p>
                 <p className="ml-4">2030 near-term: 5,800 tCO2e (-42%)</p>
                 <p className="ml-4">2040 interim: 2,500 tCO2e (-75%)</p>
                 <p className="ml-4">2050 net-zero: 1,000 tCO2e (-90%)</p>
-                <p className="mt-2 text-white/60">Residual emissions neutralisation:</p>
+                <p className="mt-2 text-white">Residual emissions neutralisation:</p>
                 <p className="ml-4">1,000 tCO2e requires permanent carbon removal</p>
                 <p className="ml-4">Options: Direct air capture, biochar, enhanced weathering</p>
                 <p className="mt-2 text-yellow-400">
@@ -1060,7 +1060,7 @@ const HNCModule6Section4_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1106,7 +1106,7 @@ const HNCModule6Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section4">

@@ -217,14 +217,14 @@ const EducationalResourcesTab = () => {
               <CardTitle className="text-xl sm:text-2xl font-bold text-white">
                 Educational <span className="text-purple-400">Resources</span>
               </CardTitle>
-              <p className="text-sm text-white/60 mt-1">
+              <p className="text-sm text-white mt-1">
                 Regulations, Standards & Practical Guidance
               </p>
             </div>
           </div>
         </CardHeader>
         <CardContent className="relative">
-          <p className="text-white/70">
+          <p className="text-white">
             Understanding these regulations helps ensure your assessments meet legal and safety
             requirements. Access essential resources for conducting thorough and compliant site
             assessments.
@@ -270,7 +270,7 @@ const EducationalResourcesTab = () => {
               <h3 className="text-lg font-semibold text-white">
                 Key Regulations for Site Assessment
               </h3>
-              <p className="text-sm text-white/60">
+              <p className="text-sm text-white">
                 Understanding these regulations helps ensure your assessments meet legal and safety
                 requirements.
               </p>
@@ -317,7 +317,7 @@ const EducationalResourcesTab = () => {
                       </h4>
                       <ul className="space-y-2">
                         {regulation.keyAreas.map((area, index) => (
-                          <li key={index} className="flex items-start gap-2 text-sm text-white/70">
+                          <li key={index} className="flex items-start gap-2 text-sm text-white">
                             <span
                               className={`w-1.5 h-1.5 ${colorConfig.bg.replace('/10', '')} rounded-full mt-1.5 flex-shrink-0`}
                             />
@@ -334,7 +334,7 @@ const EducationalResourcesTab = () => {
                         </div>
                         What This Means for You
                       </h4>
-                      <p className="text-sm text-white/70">{regulation.whatItMeans}</p>
+                      <p className="text-sm text-white">{regulation.whatItMeans}</p>
                     </div>
 
                     <div className="p-4 rounded-xl bg-purple-500/5 border border-purple-500/20">
@@ -344,7 +344,7 @@ const EducationalResourcesTab = () => {
                         </div>
                         Where to Find More Information
                       </h4>
-                      <p className="text-sm text-white/70">{regulation.whereToFind}</p>
+                      <p className="text-sm text-white">{regulation.whereToFind}</p>
                     </div>
                   </CardContent>
                 </Card>
@@ -361,7 +361,7 @@ const EducationalResourcesTab = () => {
             </div>
             <div>
               <h3 className="text-lg font-semibold text-white">Practical Assessment Guidance</h3>
-              <p className="text-sm text-white/60">
+              <p className="text-sm text-white">
                 Real-world tips and checklists to help you conduct thorough and effective site
                 assessments.
               </p>
@@ -386,7 +386,7 @@ const EducationalResourcesTab = () => {
                       </div>
                       <div>
                         <span className="text-base sm:text-lg">{guide.title}</span>
-                        <p className="text-sm text-white/60 font-normal mt-1">
+                        <p className="text-sm text-white font-normal mt-1">
                           {guide.description}
                         </p>
                       </div>
@@ -402,7 +402,7 @@ const EducationalResourcesTab = () => {
                           <div className="p-1.5 rounded-lg bg-green-500/20 flex-shrink-0 mt-0.5">
                             <CheckCircle className="h-3.5 w-3.5 text-green-400" />
                           </div>
-                          <span className="text-sm text-white/70">{item}</span>
+                          <span className="text-sm text-white">{item}</span>
                         </li>
                       ))}
                     </ul>
@@ -421,7 +421,7 @@ const EducationalResourcesTab = () => {
             </div>
             <div>
               <h3 className="text-lg font-semibold text-white">Additional Learning Resources</h3>
-              <p className="text-sm text-white/60">
+              <p className="text-sm text-white">
                 Further reading and resources to deepen your understanding of site assessment
                 requirements.
               </p>
@@ -445,7 +445,7 @@ const EducationalResourcesTab = () => {
                     className="p-3 rounded-xl bg-blue-500/5 border border-blue-500/20"
                   >
                     <p className="font-medium text-white mb-1">{pub.title}</p>
-                    <p className="text-sm text-white/60">{pub.description}</p>
+                    <p className="text-sm text-white">{pub.description}</p>
                   </div>
                 ))}
               </CardContent>
@@ -464,7 +464,7 @@ const EducationalResourcesTab = () => {
                 {emergencyProcedures.map((proc, index) => (
                   <div key={index} className="p-3 rounded-xl bg-red-500/5 border border-red-500/20">
                     <p className="font-medium text-white mb-1">{proc.title}</p>
-                    <p className="text-sm text-white/60">{proc.description}</p>
+                    <p className="text-sm text-white">{proc.description}</p>
                   </div>
                 ))}
               </CardContent>
@@ -482,7 +482,7 @@ const EducationalResourcesTab = () => {
                   <h3 className="font-semibold text-purple-300 mb-2">
                     Pro Tip: Continuous Learning
                   </h3>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Regulations and best practices evolve regularly. Stay updated by subscribing to
                     industry publications, attending training courses, and participating in
                     professional development activities. Your employer should provide access to the

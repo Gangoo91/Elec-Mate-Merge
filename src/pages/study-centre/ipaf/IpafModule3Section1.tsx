@@ -210,7 +210,7 @@ const IpafModule3Section1 = () => {
             Module 3.1
           </span>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">Planning & Preparation</h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Site surveys, ground assessment, overhead hazards, and pre-assembly preparation for safe
             tower erection
           </p>
@@ -697,7 +697,7 @@ const IpafModule3Section1 = () => {
                 <div className="bg-[#1a1a1a] border border-white/10 p-3 rounded font-mono text-sm text-elec-yellow">
                   Total reach = Platform height + Operative height (1.8m) + Arm reach (0.6m)
                 </div>
-                <p className="text-white/70 text-sm mt-2">
+                <p className="text-white text-sm mt-2">
                   For indoor work, ensure at least 1 metre clearance between the top of the
                   operative's head and any overhead obstruction. This allows safe working posture
                   and tool handling.
@@ -1253,7 +1253,7 @@ const IpafModule3Section1 = () => {
             <div className="space-y-4">
               <div>
                 <h3 className="font-semibold text-white mb-2">Ground Assessment Checklist</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1284,7 +1284,7 @@ const IpafModule3Section1 = () => {
 
               <div>
                 <h3 className="font-semibold text-white mb-2">Critical Distances</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1318,7 +1318,7 @@ const IpafModule3Section1 = () => {
             <div className="space-y-4">
               <div>
                 <h3 className="font-semibold text-white mb-2">Mandatory PPE</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1349,7 +1349,7 @@ const IpafModule3Section1 = () => {
 
               <div>
                 <h3 className="font-semibold text-white mb-2">Documentation Required</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Risk assessment</span>
@@ -1386,7 +1386,7 @@ const IpafModule3Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1402,7 +1402,7 @@ const IpafModule3Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../ipaf-module-3">

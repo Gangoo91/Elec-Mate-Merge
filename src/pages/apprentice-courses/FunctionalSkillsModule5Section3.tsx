@@ -136,7 +136,7 @@ const FunctionalSkillsModule5Section3 = () => {
             to="/study-centre/apprentice/functional-skills/module5"
             className="p-2 -ml-2 touch-manipulation"
           >
-            <ArrowLeft className="w-5 h-5 text-white/60" />
+            <ArrowLeft className="w-5 h-5 text-white" />
           </Link>
           <div>
             <p className="text-[11px] font-semibold text-green-400 uppercase tracking-wider">
@@ -162,7 +162,7 @@ const FunctionalSkillsModule5Section3 = () => {
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
               Study Techniques & Exam Skills
             </h2>
-            <p className="text-sm text-white/50 max-w-lg mx-auto">
+            <p className="text-sm text-white max-w-lg mx-auto">
               Master proven study techniques and exam strategies that will help you revise
               efficiently, manage your time, and perform at your best on assessment day.
             </p>
@@ -185,7 +185,7 @@ const FunctionalSkillsModule5Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Effective Revision Methods</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Not all revision is created equal. Research consistently shows that some study methods
               are far more effective than others. Understanding the difference between passive and
@@ -205,28 +205,28 @@ const FunctionalSkillsModule5Section3 = () => {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-white/5 rounded-lg p-3">
-                  <p className="text-xs font-semibold text-white/60 mb-2">
+                  <p className="text-xs font-semibold text-white mb-2">
                     Passive (Less Effective)
                   </p>
-                  <ul className="space-y-1.5 text-xs text-white/70">
+                  <ul className="space-y-1.5 text-xs text-white">
                     <li className="flex items-start gap-2">
-                      <span className="text-white/40 mt-0.5">•</span>
+                      <span className="text-white mt-0.5">•</span>
                       <span>Re-reading notes or textbooks</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-white/40 mt-0.5">•</span>
+                      <span className="text-white mt-0.5">•</span>
                       <span>Highlighting or underlining passages</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-white/40 mt-0.5">•</span>
+                      <span className="text-white mt-0.5">•</span>
                       <span>Copying notes out again neatly</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-white/40 mt-0.5">•</span>
+                      <span className="text-white mt-0.5">•</span>
                       <span>Watching revision videos without taking notes</span>
                     </li>
                     <li className="flex items-start gap-2">
-                      <span className="text-white/40 mt-0.5">•</span>
+                      <span className="text-white mt-0.5">•</span>
                       <span>Listening to someone else explain a topic</span>
                     </li>
                   </ul>
@@ -235,7 +235,7 @@ const FunctionalSkillsModule5Section3 = () => {
                   <p className="text-xs font-semibold text-green-400 mb-2">
                     Active (Highly Effective)
                   </p>
-                  <ul className="space-y-1.5 text-xs text-white/70">
+                  <ul className="space-y-1.5 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <span className="text-green-400 mt-0.5">•</span>
                       <span>Doing practice questions and past papers</span>
@@ -280,7 +280,7 @@ const FunctionalSkillsModule5Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Revision should feel challenging. If it feels easy and comfortable, you are probably
                 using passive methods that are not building strong memories. The slight discomfort
                 of trying to recall something you cannot quite remember is exactly when the most
@@ -303,7 +303,7 @@ const FunctionalSkillsModule5Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Spaced Repetition</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Spaced repetition is one of the most scientifically supported study techniques. It
               works by reviewing material at gradually increasing intervals, which moves information
@@ -316,7 +316,7 @@ const FunctionalSkillsModule5Section3 = () => {
                 <RefreshCw className="w-4 h-4 text-green-400" />
                 <h4 className="text-white font-semibold text-sm">How Spaced Repetition Works</h4>
               </div>
-              <p className="text-xs text-white/70 mb-3">
+              <p className="text-xs text-white mb-3">
                 When you first learn something, your memory of it fades quickly. By reviewing at
                 precisely the right moment — just as you are about to forget — you reset and
                 strengthen the memory. Each time you review, the memory lasts longer before fading.
@@ -324,19 +324,19 @@ const FunctionalSkillsModule5Section3 = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <div className="bg-white/5 rounded-lg p-3 text-center">
                   <div className="text-lg text-green-400 font-bold">Day 1</div>
-                  <div className="text-xs text-white/60">Learn the topic</div>
+                  <div className="text-xs text-white">Learn the topic</div>
                 </div>
                 <div className="bg-white/5 rounded-lg p-3 text-center">
                   <div className="text-lg text-green-400 font-bold">Day 2</div>
-                  <div className="text-xs text-white/60">First review (10 min)</div>
+                  <div className="text-xs text-white">First review (10 min)</div>
                 </div>
                 <div className="bg-white/5 rounded-lg p-3 text-center">
                   <div className="text-lg text-green-400 font-bold">Day 5</div>
-                  <div className="text-xs text-white/60">Second review (10 min)</div>
+                  <div className="text-xs text-white">Second review (10 min)</div>
                 </div>
                 <div className="bg-white/5 rounded-lg p-3 text-center">
                   <div className="text-lg text-green-400 font-bold">Day 14</div>
-                  <div className="text-xs text-white/60">Third review (5 min)</div>
+                  <div className="text-xs text-white">Third review (5 min)</div>
                 </div>
               </div>
             </div>
@@ -387,7 +387,7 @@ const FunctionalSkillsModule5Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Start early. Spaced repetition requires time between reviews to work. If you start
                 revising 6 weeks before your exam, you can review each topic 4-5 times. If you start
                 2 days before, you can only cram — and most of it will be forgotten by the time you
@@ -416,7 +416,7 @@ const FunctionalSkillsModule5Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Active Recall Techniques</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Active recall is the practice of deliberately trying to retrieve information from
               memory without looking at your notes. It is the opposite of passive re-reading and is
@@ -433,7 +433,7 @@ const FunctionalSkillsModule5Section3 = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="bg-white/5 rounded-lg p-3">
                   <p className="text-xs font-semibold text-green-400 mb-2">Flashcards</p>
-                  <ul className="space-y-1.5 text-xs text-white/70">
+                  <ul className="space-y-1.5 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <span className="text-green-400 mt-0.5">•</span>
                       <span>Write a question on one side, the answer on the other</span>
@@ -454,7 +454,7 @@ const FunctionalSkillsModule5Section3 = () => {
                 </div>
                 <div className="bg-white/5 rounded-lg p-3">
                   <p className="text-xs font-semibold text-green-400 mb-2">Blank Page Method</p>
-                  <ul className="space-y-1.5 text-xs text-white/70">
+                  <ul className="space-y-1.5 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <span className="text-green-400 mt-0.5">•</span>
                       <span>After studying a topic, close your notes</span>
@@ -475,7 +475,7 @@ const FunctionalSkillsModule5Section3 = () => {
                 </div>
                 <div className="bg-white/5 rounded-lg p-3">
                   <p className="text-xs font-semibold text-green-400 mb-2">Practice Questions</p>
-                  <ul className="space-y-1.5 text-xs text-white/70">
+                  <ul className="space-y-1.5 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <span className="text-green-400 mt-0.5">•</span>
                       <span>The single most effective revision technique</span>
@@ -496,7 +496,7 @@ const FunctionalSkillsModule5Section3 = () => {
                 </div>
                 <div className="bg-white/5 rounded-lg p-3">
                   <p className="text-xs font-semibold text-green-400 mb-2">Teaching Others</p>
-                  <ul className="space-y-1.5 text-xs text-white/70">
+                  <ul className="space-y-1.5 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <span className="text-green-400 mt-0.5">•</span>
                       <span>Explaining a concept to someone else forces deep understanding</span>
@@ -559,7 +559,7 @@ const FunctionalSkillsModule5Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 The most important part of active recall is the struggle. When you cannot quite
                 remember something and have to work hard to retrieve it, that is when the strongest
                 learning happens. Do not give in and look at your notes too quickly — give yourself
@@ -582,7 +582,7 @@ const FunctionalSkillsModule5Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Time Management for Study</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               As an apprentice, you are juggling work on site, college days, personal life, and
               revision. Effective time management is not about finding more hours — it is about
@@ -595,7 +595,7 @@ const FunctionalSkillsModule5Section3 = () => {
                 <Clock className="w-4 h-4 text-green-400" />
                 <h4 className="text-white font-semibold text-sm">The Pomodoro Technique</h4>
               </div>
-              <p className="text-xs text-white/70 mb-3">
+              <p className="text-xs text-white mb-3">
                 The Pomodoro Technique uses timed intervals to maintain focus and prevent mental
                 fatigue. It is particularly effective for people who struggle to concentrate for
                 long periods.
@@ -603,19 +603,19 @@ const FunctionalSkillsModule5Section3 = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3 text-center">
                   <div className="text-lg text-green-400 font-bold">25 min</div>
-                  <div className="text-xs text-white/60">Focused study</div>
+                  <div className="text-xs text-white">Focused study</div>
                 </div>
                 <div className="bg-white/5 rounded-lg p-3 text-center">
                   <div className="text-lg text-green-400 font-bold">5 min</div>
-                  <div className="text-xs text-white/60">Short break</div>
+                  <div className="text-xs text-white">Short break</div>
                 </div>
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3 text-center">
                   <div className="text-lg text-green-400 font-bold">x 4</div>
-                  <div className="text-xs text-white/60">Repeat 4 times</div>
+                  <div className="text-xs text-white">Repeat 4 times</div>
                 </div>
                 <div className="bg-white/5 rounded-lg p-3 text-center">
                   <div className="text-lg text-green-400 font-bold">15-30 min</div>
-                  <div className="text-xs text-white/60">Long break</div>
+                  <div className="text-xs text-white">Long break</div>
                 </div>
               </div>
             </div>
@@ -627,7 +627,7 @@ const FunctionalSkillsModule5Section3 = () => {
             </p>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <div className="space-y-2 text-xs text-white/70">
+              <div className="space-y-2 text-xs text-white">
                 <div className="grid grid-cols-3 gap-2 pb-2 border-b border-white/10">
                   <span className="font-semibold text-white">Day</span>
                   <span className="font-semibold text-white">Activity</span>
@@ -655,8 +655,8 @@ const FunctionalSkillsModule5Section3 = () => {
                 </div>
                 <div className="grid grid-cols-3 gap-2">
                   <span>Friday</span>
-                  <span className="text-white/40">Rest day — no revision</span>
-                  <span className="text-white/40">—</span>
+                  <span className="text-white">Rest day — no revision</span>
+                  <span className="text-white">—</span>
                 </div>
                 <div className="grid grid-cols-3 gap-2">
                   <span>Saturday</span>
@@ -705,7 +705,7 @@ const FunctionalSkillsModule5Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Tell your employer and family about your upcoming exams. They may offer support such
                 as flexible hours, reduced overtime, or a quiet space to study. Most employers
                 understand that your qualifications benefit them too and will be supportive if you
@@ -734,7 +734,7 @@ const FunctionalSkillsModule5Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Managing Exam Stress</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Some nervousness before an exam is completely normal — and even helpful. A small
               amount of adrenaline sharpens your focus and helps you perform better. However,
@@ -747,14 +747,14 @@ const FunctionalSkillsModule5Section3 = () => {
                 <Heart className="w-4 h-4 text-green-400" />
                 <h4 className="text-white font-semibold text-sm">Breathing Techniques</h4>
               </div>
-              <p className="text-xs text-white/70 mb-3">
+              <p className="text-xs text-white mb-3">
                 Controlled breathing is the fastest way to calm your nervous system. These
                 techniques can be done quietly at your desk during the exam:
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
                   <p className="text-xs font-semibold text-green-400 mb-1">4-7-8 Technique</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Breathe in for 4 counts, hold for 7 counts, breathe out slowly for 8 counts.
                     Repeat 3-4 times. This activates your parasympathetic nervous system and reduces
                     heart rate.
@@ -762,7 +762,7 @@ const FunctionalSkillsModule5Section3 = () => {
                 </div>
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
                   <p className="text-xs font-semibold text-green-400 mb-1">Box Breathing</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Breathe in for 4 counts, hold for 4 counts, breathe out for 4 counts, hold for 4
                     counts. Repeat until calm. Used by military and emergency services for
                     high-pressure situations.
@@ -844,7 +844,7 @@ const FunctionalSkillsModule5Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 The single best way to reduce exam anxiety is thorough preparation over time. When
                 you have practised enough questions under timed conditions, you will feel confident
                 because you know what to expect. There are no surprises when you are well-prepared.
@@ -867,7 +867,7 @@ const FunctionalSkillsModule5Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Past Paper Practice</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Past papers are the closest thing you have to seeing the actual exam in advance. Used
               properly, they are the single most valuable revision resource available. They
@@ -880,7 +880,7 @@ const FunctionalSkillsModule5Section3 = () => {
                 <BookOpen className="w-4 h-4 text-green-400" />
                 <h4 className="text-white font-semibold text-sm">Where to Find Past Papers</h4>
               </div>
-              <ul className="space-y-2 text-xs text-white/70">
+              <ul className="space-y-2 text-xs text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">•</span>
                   <span>
@@ -950,7 +950,7 @@ const FunctionalSkillsModule5Section3 = () => {
                 <BarChart3 className="w-4 h-4 text-green-400" />
                 <h4 className="text-white font-semibold text-sm">Self-Marking Tips</h4>
               </div>
-              <ul className="space-y-2 text-xs text-white/70">
+              <ul className="space-y-2 text-xs text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">•</span>
                   <span>
@@ -993,7 +993,7 @@ const FunctionalSkillsModule5Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Aim to complete at least 3-4 full past papers under timed conditions before your
                 exam. The first paper will feel challenging, but by the third or fourth, you will
                 know the format inside out and can focus entirely on answering the questions
@@ -1022,7 +1022,7 @@ const FunctionalSkillsModule5Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Memory Techniques for Formulae</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Remembering formulae, key facts, and technical values is essential for both your
               Functional Skills exams and your electrical apprenticeship. Memory techniques
@@ -1039,8 +1039,8 @@ const FunctionalSkillsModule5Section3 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
                   <p className="text-xs font-semibold text-green-400 mb-1">Ohm's Law Triangle</p>
-                  <p className="text-xs text-white/70 mb-1">V = I x R</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white mb-1">V = I x R</p>
+                  <p className="text-xs text-white">
                     "<strong className="text-white">V</strong>ery{' '}
                     <strong className="text-white">I</strong>cy{' '}
                     <strong className="text-white">R</strong>oads" — picture yourself driving on
@@ -1049,8 +1049,8 @@ const FunctionalSkillsModule5Section3 = () => {
                 </div>
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
                   <p className="text-xs font-semibold text-green-400 mb-1">Power Formula</p>
-                  <p className="text-xs text-white/70 mb-1">P = V x I</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white mb-1">P = V x I</p>
+                  <p className="text-xs text-white">
                     "<strong className="text-white">P</strong>ut{' '}
                     <strong className="text-white">V</strong>olts{' '}
                     <strong className="text-white">I</strong>n" — power equals voltage multiplied by
@@ -1061,8 +1061,8 @@ const FunctionalSkillsModule5Section3 = () => {
                   <p className="text-xs font-semibold text-green-400 mb-1">
                     Three-Phase Colour Codes
                   </p>
-                  <p className="text-xs text-white/70 mb-1">L1=Brown, L2=Black, L3=Grey</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white mb-1">L1=Brown, L2=Black, L3=Grey</p>
+                  <p className="text-xs text-white">
                     "<strong className="text-white">B</strong>rown{' '}
                     <strong className="text-white">B</strong>lack{' '}
                     <strong className="text-white">G</strong>rey" — "BBG" like a barbecue (BBQ) but
@@ -1071,8 +1071,8 @@ const FunctionalSkillsModule5Section3 = () => {
                 </div>
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
                   <p className="text-xs font-semibold text-green-400 mb-1">Area Formula</p>
-                  <p className="text-xs text-white/70 mb-1">Area = Length x Width</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white mb-1">Area = Length x Width</p>
+                  <p className="text-xs text-white">
                     Imagine a rectangular room. To find how much flooring you need, you multiply the
                     two sides — just like measuring for carpet on a job.
                   </p>
@@ -1173,7 +1173,7 @@ const FunctionalSkillsModule5Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 The best mnemonics are personal ones. Create your own associations that mean
                 something to you. A mnemonic someone else invented is useful, but one you created
                 yourself — connected to your own experiences — will be far easier to recall because
@@ -1196,7 +1196,7 @@ const FunctionalSkillsModule5Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Creating a Study Plan</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               A structured study plan is the foundation of effective exam preparation. Without a
               plan, it is easy to waste time revising topics you already know whilst neglecting
@@ -1214,7 +1214,7 @@ const FunctionalSkillsModule5Section3 = () => {
                   <p className="text-xs font-semibold text-green-400 mb-1">
                     Step 1 — Know Your Exam Dates
                   </p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Write down every exam date and work backwards to count the available weeks. If
                     your maths exam is in 8 weeks, you have 8 weeks of revision to plan.
                   </p>
@@ -1223,7 +1223,7 @@ const FunctionalSkillsModule5Section3 = () => {
                   <p className="text-xs font-semibold text-green-400 mb-1">
                     Step 2 — List All Topics
                   </p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Get the full specification from your awarding body. List every topic area for
                     each exam. For Level 1 Maths, this might be: number, fractions, decimals,
                     percentages, measurement, area, perimeter, data handling.
@@ -1233,7 +1233,7 @@ const FunctionalSkillsModule5Section3 = () => {
                   <p className="text-xs font-semibold text-green-400 mb-1">
                     Step 3 — Traffic Light Assessment
                   </p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Rate each topic: <strong className="text-green-400">Green</strong> = confident,{' '}
                     <strong className="text-yellow-400">Amber</strong> = need some practice,{' '}
                     <strong className="text-red-400">Red</strong> = need significant work. This
@@ -1244,7 +1244,7 @@ const FunctionalSkillsModule5Section3 = () => {
                   <p className="text-xs font-semibold text-green-400 mb-1">
                     Step 4 — Allocate Topics to Weeks
                   </p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Prioritise red and amber topics in the early weeks when you have the most time.
                     Schedule green topics as lighter review sessions nearer the exam.
                   </p>
@@ -1253,7 +1253,7 @@ const FunctionalSkillsModule5Section3 = () => {
                   <p className="text-xs font-semibold text-green-400 mb-1">
                     Step 5 — Build in Past Papers
                   </p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Schedule your first timed past paper about halfway through your revision (week 4
                     of 8). Schedule 2-3 more in the final 2 weeks. These are your reality checks.
                   </p>
@@ -1262,7 +1262,7 @@ const FunctionalSkillsModule5Section3 = () => {
                   <p className="text-xs font-semibold text-green-400 mb-1">
                     Step 6 — Include Rest Days
                   </p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     At least one full rest day per week. Your brain consolidates memories during
                     rest. A sustainable plan beats an intense one you abandon after 3 days.
                   </p>
@@ -1316,7 +1316,7 @@ const FunctionalSkillsModule5Section3 = () => {
                 <Target className="w-4 h-4 text-green-400" />
                 <h4 className="text-white font-semibold text-sm">Weekly Review Checklist</h4>
               </div>
-              <ul className="space-y-2 text-xs text-white/70">
+              <ul className="space-y-2 text-xs text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">•</span>
                   <span>What topics did I cover this week? Did I complete everything planned?</span>
@@ -1382,7 +1382,7 @@ const FunctionalSkillsModule5Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 The most successful learners are not necessarily the most talented — they are the
                 ones who consistently plan, review their performance, identify weaknesses, and
                 adjust their approach. Make this feedback loop a habit and your results will follow.
@@ -1400,7 +1400,7 @@ const FunctionalSkillsModule5Section3 = () => {
         <div className="flex items-center justify-between pt-6 border-t border-white/10">
           <Link
             to="/study-centre/apprentice/functional-skills/module5/section2"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
           >
             <ArrowLeft className="w-4 h-4" />
             Level 2 Practice

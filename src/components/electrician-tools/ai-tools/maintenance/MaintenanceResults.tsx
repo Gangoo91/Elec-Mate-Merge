@@ -294,7 +294,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
         <div className="bg-white/5 rounded-xl p-4 min-h-[44px]">
           <div className="flex items-center gap-2 mb-2">
             <AlertTriangle className={`h-4 w-4 ${getRiskColor(results.riskLevel).split(' ')[0]}`} />
-            <span className="text-xs text-white/50">Risk Level</span>
+            <span className="text-xs text-white">Risk Level</span>
           </div>
           <p
             className={`text-2xl sm:text-3xl font-bold ${getRiskColor(results.riskLevel).split(' ')[0]}`}
@@ -312,7 +312,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
             <CheckCircle2
               className={`h-4 w-4 ${getComplianceColor(results.complianceStatus).split(' ')[0]}`}
             />
-            <span className="text-xs text-white/50">Compliance</span>
+            <span className="text-xs text-white">Compliance</span>
           </div>
           <Badge className={`${getComplianceColor(results.complianceStatus)}`}>
             {results.complianceStatus?.replace('-', ' ') || 'unknown'}
@@ -326,7 +326,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
         <div className="bg-white/5 rounded-xl p-4 min-h-[44px]">
           <div className="flex items-center gap-2 mb-2">
             <PoundSterling className="h-4 w-4 text-elec-yellow" />
-            <span className="text-xs text-white/50">Annual Cost</span>
+            <span className="text-xs text-white">Annual Cost</span>
           </div>
           {results.annualCostEstimate ? (
             <>
@@ -344,7 +344,7 @@ export const MaintenanceResults = ({ results, onReset }: MaintenanceResultsProps
         <div className="bg-white/5 rounded-xl p-4 min-h-[44px]">
           <div className="flex items-center gap-2 mb-2">
             <Clock className="h-4 w-4 text-elec-yellow" />
-            <span className="text-xs text-white/50">Annual Hours</span>
+            <span className="text-xs text-white">Annual Hours</span>
           </div>
           <p className="text-xl sm:text-2xl font-bold text-foreground">
             {results.totalEstimatedHours || 0}h

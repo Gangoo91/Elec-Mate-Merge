@@ -37,7 +37,7 @@ function HubCard({ title, subtitle, description, icon, path, iconColor, iconBg }
           >
             {icon}
           </div>
-          <span className="text-[10px] sm:text-xs font-medium text-white/40 uppercase tracking-wider px-2 py-1 rounded-md bg-white/[0.04]">
+          <span className="text-[10px] sm:text-xs font-medium text-white uppercase tracking-wider px-2 py-1 rounded-md bg-white/[0.04]">
             {subtitle}
           </span>
         </div>
@@ -47,7 +47,7 @@ function HubCard({ title, subtitle, description, icon, path, iconColor, iconBg }
           <h3 className="text-base sm:text-lg font-semibold text-white mb-1 group-hover:text-elec-yellow transition-colors">
             {title}
           </h3>
-          <p className="text-xs sm:text-sm text-white/50 leading-relaxed line-clamp-2">
+          <p className="text-xs sm:text-sm text-white leading-relaxed line-clamp-2">
             {description}
           </p>
         </div>
@@ -66,7 +66,7 @@ function HubCard({ title, subtitle, description, icon, path, iconColor, iconBg }
             transition-all duration-200
           "
           >
-            <ChevronRight className="w-4 h-4 text-white/60 group-hover:text-black group-hover:translate-x-0.5 transition-all" />
+            <ChevronRight className="w-4 h-4 text-white group-hover:text-black group-hover:translate-x-0.5 transition-all" />
           </div>
         </div>
       </div>

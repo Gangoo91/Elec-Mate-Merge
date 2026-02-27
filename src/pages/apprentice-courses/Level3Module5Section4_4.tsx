@@ -272,7 +272,7 @@ const Level3Module5Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module5-section4">
@@ -360,17 +360,17 @@ const Level3Module5Section4_4 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Before Handover</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Contractor responsible, installation not in use
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">During Handover</p>
-                <p className="text-white/90 text-xs">Documentation, demonstration, questions</p>
+                <p className="text-white text-xs">Documentation, demonstration, questions</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">After Handover</p>
-                <p className="text-white/90 text-xs">Client responsible, using the installation</p>
+                <p className="text-white text-xs">Client responsible, using the installation</p>
               </div>
             </div>
 
@@ -442,7 +442,7 @@ const Level3Module5Section4_4 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Note:</strong> Keep copies of all documentation you provide. You may need to
               prove what was handed over, and clients sometimes lose documents.
             </p>
@@ -558,15 +558,15 @@ const Level3Module5Section4_4 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">RCD Testing</p>
-                <p className="text-white/90 text-xs">Quarterly using test button</p>
+                <p className="text-white text-xs">Quarterly using test button</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Periodic Inspection</p>
-                <p className="text-white/90 text-xs">Every 5-10 years for domestic</p>
+                <p className="text-white text-xs">Every 5-10 years for domestic</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Equipment Service</p>
-                <p className="text-white/90 text-xs">Per manufacturer schedules</p>
+                <p className="text-white text-xs">Per manufacturer schedules</p>
               </div>
             </div>
 
@@ -576,7 +576,7 @@ const Level3Module5Section4_4 = () => {
               changing light bulbs and like-for-like accessory replacements.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Provide in writing:</strong> Emergency contact numbers, RCD test reminder, and
               recommended periodic inspection interval on a simple handover sheet.
             </p>
@@ -643,7 +643,7 @@ const Level3Module5Section4_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -688,7 +688,7 @@ const Level3Module5Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module5-section4">

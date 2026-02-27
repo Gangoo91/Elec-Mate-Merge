@@ -242,7 +242,7 @@ const InspectionTestingModule1Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-1">
@@ -264,7 +264,7 @@ const InspectionTestingModule1Section5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Test Sequence and Documentation
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding the correct order of tests and how to properly record and certify your
             findings
           </p>
@@ -346,7 +346,7 @@ const InspectionTestingModule1Section5 = () => {
 
             <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 my-6">
               <p className="text-white font-semibold mb-2">Why Sequence Matters</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Dead tests identify faults like short circuits and insulation failures that could
                 cause danger when the supply is connected. If you skip to live tests without
                 completing dead tests, unidentified faults could cause shock or fire.
@@ -358,21 +358,21 @@ const InspectionTestingModule1Section5 = () => {
               <div className="space-y-3">
                 <div>
                   <p className="text-blue-400 font-semibold text-sm">Stage 1: Visual Inspection</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Supply OFF. Check for obvious defects, damage, non-compliance, and anything that
                     would make testing dangerous.
                   </p>
                 </div>
                 <div>
                   <p className="text-orange-400 font-semibold text-sm">Stage 2: Dead Tests</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Supply ISOLATED. Continuity of protective conductors, ring final circuits,
                     insulation resistance, polarity.
                   </p>
                 </div>
                 <div>
                   <p className="text-green-400 font-semibold text-sm">Stage 3: Live Tests</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Supply CONNECTED. Earth fault loop impedance, prospective fault current, RCD
                     operation, functional testing.
                   </p>
@@ -415,13 +415,13 @@ const InspectionTestingModule1Section5 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-1">
                   Schedule of Inspections
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Records all items checked and their compliance status
                 </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-1">Photographs</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Visual evidence of defects, hazards, and notable observations
                 </p>
               </div>
@@ -767,7 +767,7 @@ const InspectionTestingModule1Section5 = () => {
               </marker>
             </defs>
           </svg>
-          <p className="text-xs text-white/40 mt-3">
+          <p className="text-xs text-white mt-3">
             Test sequence per BS 7671 Chapter 64 and GN3. Visual inspection first, then dead tests
             (supply isolated), then live tests (supply connected). Never skip stages — each confirms
             safety for the next.
@@ -815,7 +815,7 @@ const InspectionTestingModule1Section5 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Why This Order?</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Continuity is tested first because insulation resistance testing at 500V could
                 damage certain equipment. The continuity test at low voltage confirms the
                 installation is safe for IR testing.
@@ -895,10 +895,10 @@ const InspectionTestingModule1Section5 = () => {
                   <thead>
                     <tr className="border-b border-white/10">
                       <th className="text-left py-2 text-white">Test</th>
-                      <th className="text-left py-2 text-white/80">Values to Record</th>
+                      <th className="text-left py-2 text-white">Values to Record</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/5">
                       <td className="py-2 text-elec-yellow">Continuity</td>
                       <td>R1+R2 or R2 values in ohms</td>
@@ -964,15 +964,15 @@ const InspectionTestingModule1Section5 = () => {
                   <p className="text-green-400 font-semibold text-sm">
                     Electrical Installation Certificate (EIC)
                   </p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     <strong>Use for:</strong> New installations, additions to installations,
                     alterations
                   </p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     <strong>Includes:</strong> Design details, Schedule of Inspections, Schedule of
                     Test Results
                   </p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     <strong>Signed by:</strong> Designer, constructor, and inspector (may be same
                     person)
                   </p>
@@ -981,14 +981,14 @@ const InspectionTestingModule1Section5 = () => {
                   <p className="text-blue-400 font-semibold text-sm">
                     Electrical Installation Condition Report (EICR)
                   </p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     <strong>Use for:</strong> Periodic inspection of existing installations
                   </p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     <strong>Includes:</strong> Observations with classification codes, Schedule of
                     Test Results
                   </p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     <strong>Signed by:</strong> Inspector only
                   </p>
                 </div>
@@ -996,14 +996,14 @@ const InspectionTestingModule1Section5 = () => {
                   <p className="text-orange-400 font-semibold text-sm">
                     Minor Electrical Installation Works Certificate
                   </p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     <strong>Use for:</strong> Minor work not involving a new circuit
                   </p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     <strong>Examples:</strong> Adding socket to existing circuit, replacing consumer
                     unit like-for-like
                   </p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     <strong>Signed by:</strong> Person carrying out the work
                   </p>
                 </div>
@@ -1079,7 +1079,7 @@ const InspectionTestingModule1Section5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1103,7 +1103,7 @@ const InspectionTestingModule1Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-1/section-4">

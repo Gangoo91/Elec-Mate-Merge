@@ -222,7 +222,7 @@ const Level3Module3Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section2">
@@ -371,7 +371,7 @@ const Level3Module3Section2_2 = () => {
                 <p className="font-medium text-elec-yellow/80 mb-2 text-center">
                   XL = 2 x pi x f x L
                 </p>
-                <p className="text-sm text-white/80 text-center">
+                <p className="text-sm text-white text-center">
                   Where: XL = inductive reactance (ohms), f = frequency (Hz), L = inductance (H)
                 </p>
               </div>
@@ -384,7 +384,7 @@ const Level3Module3Section2_2 = () => {
               doubles.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Worked Example:</strong> Calculate the reactance of a 100mH inductor at 50Hz.
               XL = 2 x pi x f x L = 2 x 3.142 x 50 x 0.1 = 31.42 ohms. At 100Hz: XL = 2 x 3.142 x
               100 x 0.1 = 62.84 ohms (doubled).
@@ -436,19 +436,19 @@ const Level3Module3Section2_2 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Voltage Peak</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Current is at zero, crossing through (rate of change is maximum)
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Current Peak</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Voltage is at zero (rate of change of current is zero)
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">90 Degree Lag</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Current waveform is shifted 90 degrees behind voltage
                 </p>
               </div>
@@ -481,7 +481,7 @@ const Level3Module3Section2_2 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Understanding Reactive Power:</strong> In each quarter cycle, energy flows
               from the source into the inductor's magnetic field, then back out to the source. This
               oscillating energy transfer is reactive power - it loads the supply cables and
@@ -511,7 +511,7 @@ const Level3Module3Section2_2 = () => {
                 <p className="font-medium text-elec-yellow/80 mb-2 text-center">
                   E = 0.5 x L x I squared
                 </p>
-                <p className="text-sm text-white/80 text-center">
+                <p className="text-sm text-white text-center">
                   Energy stored in an inductor's magnetic field (Joules)
                 </p>
               </div>
@@ -524,7 +524,7 @@ const Level3Module3Section2_2 = () => {
               field releases its energy very quickly, generating high voltages.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Worked Example:</strong> A motor winding has 0.5H inductance and carries 20A
               at the moment of switch-off. Energy stored = 0.5 x 0.5 x 20 squared = 0.25 x 400 = 100
               Joules. This energy must be dissipated somewhere when the circuit opens - often as an
@@ -631,7 +631,7 @@ const Level3Module3Section2_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -676,7 +676,7 @@ const Level3Module3Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section2-1">

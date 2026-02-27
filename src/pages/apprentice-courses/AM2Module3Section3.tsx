@@ -216,23 +216,23 @@ const AM2Module3Section3 = () => {
         icon={Lightbulb}
         accent
       >
-        <div className="space-y-6 text-xs sm:text-sm text-white/80">
+        <div className="space-y-6 text-xs sm:text-sm text-white">
           {/* Detailed Step-by-Step Installation */}
           <div>
-            <h3 className="font-medium text-white/90 mb-3">Detailed Installation Steps</h3>
+            <h3 className="font-medium text-white mb-3">Detailed Installation Steps</h3>
             <div className="space-y-4">
               <div className="border border-white/10 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">
                   Phase 1: Cable Installation & Preparation
                 </h4>
-                <ol className="space-y-2 text-sm text-white/80">
+                <ol className="space-y-2 text-sm text-white">
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Route cable from consumer unit to switch position
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         Use 1.5mm² twin & earth cable. Ensure adequate support every 300mm
                         horizontally, 400mm vertically. Cable must be mechanically protected where
                         required.
@@ -242,10 +242,10 @@ const AM2Module3Section3 = () => {
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">2.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Continue cable from switch to ceiling rose
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         Maintain cable integrity. No joints in inaccessible areas. Use proper cable
                         entry methods into back boxes and ceiling roses.
                       </p>
@@ -254,10 +254,10 @@ const AM2Module3Section3 = () => {
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">3.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Strip cable ends - Switch: 15mm, Ceiling rose: 20mm
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         Use proper cable strippers. No damage to conductor cores. Remove exactly the
                         right amount of sheath - too much exposes cable, too little prevents proper
                         termination.
@@ -267,10 +267,10 @@ const AM2Module3Section3 = () => {
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">4.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Apply green/yellow sleeving to CPC at both ends
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         Sleeving must cover all exposed copper CPC. Ensure sleeving doesn't
                         interfere with terminations.
                       </p>
@@ -281,14 +281,14 @@ const AM2Module3Section3 = () => {
 
               <div className="border border-white/10 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Phase 2: Switch Connections</h4>
-                <ol className="space-y-2 text-sm text-white/80" start={5}>
+                <ol className="space-y-2 text-sm text-white" start={5}>
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">5.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Connect live feed (brown) to COM terminal
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         This is the permanent live from the consumer unit. Ensure tight connection
                         with no exposed copper outside terminal.
                       </p>
@@ -297,10 +297,10 @@ const AM2Module3Section3 = () => {
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">6.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Connect switched live (brown) to L1 terminal
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         This feeds the light fitting when switch is closed. Apply brown
                         identification sleeve if using different coloured conductor.
                       </p>
@@ -309,10 +309,10 @@ const AM2Module3Section3 = () => {
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">7.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Secure neutral and CPC in back box connector block
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         Neutral and CPC bypass the switch. Use proper connector block rated for the
                         application. No joints in switch back box if possible.
                       </p>
@@ -321,10 +321,10 @@ const AM2Module3Section3 = () => {
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">8.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Secure switch to back box with correct screws
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         Switch must be level and flush. Cable must not be trapped. Ensure switch
                         operates smoothly.
                       </p>
@@ -338,7 +338,7 @@ const AM2Module3Section3 = () => {
           {/* Common Mistakes */}
           <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
             <h3 className="font-medium text-red-400 mb-2">Common Installation Errors</h3>
-            <ul className="space-y-1 text-sm text-white/80">
+            <ul className="space-y-1 text-sm text-white">
               <li>
                 <strong className="text-red-400">Switching neutral instead of live</strong> -
                 Creates dangerous live circuit when "off"
@@ -367,7 +367,7 @@ const AM2Module3Section3 = () => {
           </div>
 
           <div className="bg-white/5 border border-elec-yellow/30 rounded-xl p-4">
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               <strong className="text-elec-yellow">Key Point:</strong> In one-way switching, only
               the live conductor is switched. The neutral must go directly to the fitting, not
               through the switch terminals.
@@ -380,23 +380,23 @@ const AM2Module3Section3 = () => {
 
       {/* Two-Way Switching */}
       <AM2ContentCard title="2. Two-Way Switching - Complete Installation Guide" icon={Zap}>
-        <div className="space-y-6 text-xs sm:text-sm text-white/80">
+        <div className="space-y-6 text-xs sm:text-sm text-white">
           {/* Detailed Installation Steps */}
           <div>
-            <h3 className="font-medium text-white/90 mb-3">Complete Installation Process</h3>
+            <h3 className="font-medium text-white mb-3">Complete Installation Process</h3>
             <div className="space-y-4">
               <div className="border border-white/10 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">
                   Phase 1: Cable Installation & Planning
                 </h4>
-                <ol className="space-y-2 text-sm text-white/80">
+                <ol className="space-y-2 text-sm text-white">
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Install 1.5mm² T&E from consumer unit to Switch 1 position
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         This carries the permanent live feed. Ensure proper cable support and
                         protection throughout run.
                       </p>
@@ -405,10 +405,10 @@ const AM2Module3Section3 = () => {
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">2.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Install 1.5mm² 3-core & earth from Switch 1 to Switch 2
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         Critical cable - carries the two strappers. Plan route carefully to avoid
                         damage. This cable enables the two-way switching function.
                       </p>
@@ -417,10 +417,10 @@ const AM2Module3Section3 = () => {
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">3.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Install 1.5mm² T&E from Switch 2 to light fitting
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         Carries switched live to fitting. Neutral continues from Switch 1 position
                         through connector blocks.
                       </p>
@@ -433,14 +433,14 @@ const AM2Module3Section3 = () => {
                 <h4 className="font-medium text-elec-yellow mb-2">
                   Phase 2: Switch 1 Connections (Feed Point)
                 </h4>
-                <ol className="space-y-2 text-sm text-white/80" start={4}>
+                <ol className="space-y-2 text-sm text-white" start={4}>
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">4.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Connect permanent live (brown) to COM terminal
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         This is the live feed from the consumer unit. Ensure maximum contact area
                         and tight connection.
                       </p>
@@ -449,10 +449,10 @@ const AM2Module3Section3 = () => {
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">5.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Connect first strapper to L1 terminal
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         Use brown-sleeved conductor from 3-core cable. This will connect to L1 on
                         Switch 2.
                       </p>
@@ -461,10 +461,10 @@ const AM2Module3Section3 = () => {
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">6.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Connect second strapper to L2 terminal
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         Use black-sleeved conductor from 3-core cable. This will connect to L2 on
                         Switch 2.
                       </p>
@@ -477,14 +477,14 @@ const AM2Module3Section3 = () => {
                 <h4 className="font-medium text-elec-yellow mb-2">
                   Phase 3: Switch 2 Connections (Load Point)
                 </h4>
-                <ol className="space-y-2 text-sm text-white/80" start={7}>
+                <ol className="space-y-2 text-sm text-white" start={7}>
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">7.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Connect switched live (to light) to COM terminal
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         This feeds the light fitting. When either switch position allows continuity
                         through strappers, light will operate.
                       </p>
@@ -493,10 +493,10 @@ const AM2Module3Section3 = () => {
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">8.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Connect first strapper from Switch 1 to L1
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         Match the conductor sleeving - brown to brown, maintaining consistent
                         identification.
                       </p>
@@ -505,10 +505,10 @@ const AM2Module3Section3 = () => {
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">9.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Connect second strapper from Switch 1 to L2
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         Match the conductor sleeving - black to black. These connections complete
                         the strapper circuit.
                       </p>
@@ -522,7 +522,7 @@ const AM2Module3Section3 = () => {
           {/* Critical Errors */}
           <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
             <h3 className="font-medium text-red-400 mb-2">Critical Two-Way Switching Errors</h3>
-            <ul className="space-y-1 text-sm text-white/80">
+            <ul className="space-y-1 text-sm text-white">
               <li>
                 <strong className="text-red-400">Incorrect strapper connections</strong> - Light
                 operates from one switch only
@@ -551,7 +551,7 @@ const AM2Module3Section3 = () => {
           </div>
 
           <div className="bg-white/5 border border-amber-500/30 rounded-xl p-4">
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               <strong className="text-amber-400">Common Error:</strong> Swapping L1 and L2
               connections means one switch position won't work. Always check both switches operate
               the light in both positions.
@@ -567,21 +567,21 @@ const AM2Module3Section3 = () => {
         title="3. Intermediate Switching - Complete Installation Guide"
         icon={CircuitBoard}
       >
-        <div className="space-y-6 text-xs sm:text-sm text-white/80">
+        <div className="space-y-6 text-xs sm:text-sm text-white">
           {/* Detailed Installation Steps */}
           <div>
-            <h3 className="font-medium text-white/90 mb-3">Complete Installation Process</h3>
+            <h3 className="font-medium text-white mb-3">Complete Installation Process</h3>
             <div className="space-y-4">
               <div className="border border-white/10 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Phase 1: Circuit Planning</h4>
-                <ol className="space-y-2 text-sm text-white/80">
+                <ol className="space-y-2 text-sm text-white">
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Install first two-way switch exactly as in two-way switching
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         This receives the live feed and sends out the two strappers. Install and
                         wire completely before adding intermediate.
                       </p>
@@ -590,10 +590,10 @@ const AM2Module3Section3 = () => {
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">2.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Run 3-core & earth from first two-way to intermediate switch
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         Carries the two strappers from first switch. Plan cable route to avoid
                         damage.
                       </p>
@@ -602,10 +602,10 @@ const AM2Module3Section3 = () => {
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">3.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Run 3-core & earth from intermediate to final two-way switch
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         Carries modified strapper signals to final switch. Multiple intermediates
                         can be chained.
                       </p>
@@ -618,14 +618,14 @@ const AM2Module3Section3 = () => {
                 <h4 className="font-medium text-elec-yellow mb-2">
                   Phase 2: Intermediate Switch Connections
                 </h4>
-                <ol className="space-y-2 text-sm text-white/80" start={4}>
+                <ol className="space-y-2 text-sm text-white" start={4}>
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">4.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Connect first strapper from Switch 1 to Terminal 1
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         Input from L1 of first two-way switch. Maintains brown identification
                         sleeving.
                       </p>
@@ -634,10 +634,10 @@ const AM2Module3Section3 = () => {
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">5.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Connect second strapper from Switch 1 to Terminal 2
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         Input from L2 of first two-way switch. Maintains black identification
                         sleeving.
                       </p>
@@ -646,10 +646,10 @@ const AM2Module3Section3 = () => {
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">6.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Connect first strapper to Switch 2 from Terminal 3
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         Output to L1 of final two-way switch. Apply appropriate identification
                         sleeving.
                       </p>
@@ -658,10 +658,10 @@ const AM2Module3Section3 = () => {
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">7.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Connect second strapper to Switch 2 from Terminal 4
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         Output to L2 of final two-way switch. Complete strapper circuit through
                         intermediate.
                       </p>
@@ -672,14 +672,14 @@ const AM2Module3Section3 = () => {
 
               <div className="border border-white/10 rounded-lg p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Phase 3: Final Two-Way Switch</h4>
-                <ol className="space-y-2 text-sm text-white/80" start={8}>
+                <ol className="space-y-2 text-sm text-white" start={8}>
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">8.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Wire final two-way switch COM to light fitting
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         This provides the switched live output when circuit continuity is
                         established.
                       </p>
@@ -688,10 +688,10 @@ const AM2Module3Section3 = () => {
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">9.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Connect L1 and L2 to strappers from intermediate
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         Complete the switching circuit. Maintain consistent conductor identification
                         throughout.
                       </p>
@@ -700,10 +700,10 @@ const AM2Module3Section3 = () => {
                   <li className="flex gap-2">
                     <span className="font-medium text-elec-yellow min-w-[20px]">10.</span>
                     <div>
-                      <strong className="text-white/90">
+                      <strong className="text-white">
                         Ensure neutral and CPC continuity throughout circuit
                       </strong>
-                      <p className="text-xs mt-1 text-white/70">
+                      <p className="text-xs mt-1 text-white">
                         These bypass all switches and must maintain continuity from source to light
                         fitting.
                       </p>
@@ -716,24 +716,24 @@ const AM2Module3Section3 = () => {
 
           {/* How It Works */}
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h3 className="font-medium text-white/90 mb-3">How Intermediate Switching Works</h3>
-            <div className="space-y-3 text-sm text-white/80">
+            <h3 className="font-medium text-white mb-3">How Intermediate Switching Works</h3>
+            <div className="space-y-3 text-sm text-white">
               <p>
-                <strong className="text-white/90">Internal Crossing:</strong> The intermediate
+                <strong className="text-white">Internal Crossing:</strong> The intermediate
                 switch internally crosses its connections when operated. This allows it to "reverse"
                 the strapper signals between the two-way switches.
               </p>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <h4 className="font-medium text-elec-yellow text-xs mb-2">Normal Position</h4>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Terminal 1 - Terminal 3, Terminal 2 - Terminal 4. Strappers pass through
                     unchanged.
                   </p>
                 </div>
                 <div>
                   <h4 className="font-medium text-elec-yellow text-xs mb-2">Operated Position</h4>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Terminal 1 - Terminal 4, Terminal 2 - Terminal 3. Strappers are crossed,
                     changing circuit state.
                   </p>
@@ -745,7 +745,7 @@ const AM2Module3Section3 = () => {
           {/* Critical Points */}
           <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
             <h3 className="font-medium text-red-400 mb-2">Critical Installation Points</h3>
-            <ul className="space-y-1 text-sm text-white/80">
+            <ul className="space-y-1 text-sm text-white">
               <li>
                 <strong className="text-red-400">Wrong terminal connections</strong> - Circuit won't
                 work from all positions
@@ -775,13 +775,13 @@ const AM2Module3Section3 = () => {
 
       {/* Testing Requirements */}
       <AM2ContentCard title="Testing and Verification" icon={TestTube2}>
-        <div className="space-y-4 text-xs sm:text-sm text-white/80">
+        <div className="space-y-4 text-xs sm:text-sm text-white">
           <div>
-            <h3 className="font-medium text-white/90 mb-2">Required Tests Before Energisation</h3>
+            <h3 className="font-medium text-white mb-2">Required Tests Before Energisation</h3>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-white/5 border border-white/10 rounded-xl p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Continuity Tests</h4>
-                <ul className="space-y-1 text-sm text-white/70">
+                <ul className="space-y-1 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Protective conductor continuity
@@ -802,7 +802,7 @@ const AM2Module3Section3 = () => {
               </div>
               <div className="bg-white/5 border border-white/10 rounded-xl p-4">
                 <h4 className="font-medium text-elec-yellow mb-2">Other Required Tests</h4>
-                <ul className="space-y-1 text-sm text-white/70">
+                <ul className="space-y-1 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                     Insulation resistance (1MO minimum)
@@ -828,7 +828,7 @@ const AM2Module3Section3 = () => {
             <h3 className="font-medium text-amber-400 mb-2">
               Testing Sequence for Lighting Circuits
             </h3>
-            <ol className="space-y-1 text-sm text-white/80">
+            <ol className="space-y-1 text-sm text-white">
               <li>1. Visual inspection - Check all connections, sleeving, mechanical security</li>
               <li>2. Continuity of protective conductors</li>
               <li>3. Continuity of ring final circuit conductors (if applicable)</li>
@@ -843,9 +843,9 @@ const AM2Module3Section3 = () => {
 
       {/* Assessment Tips */}
       <AM2ContentCard title="AM2 Assessment Tips" icon={CheckCircle} accent>
-        <div className="space-y-4 text-xs sm:text-sm text-white/80">
+        <div className="space-y-4 text-xs sm:text-sm text-white">
           <div>
-            <h3 className="font-medium text-white/90 mb-2">Time Management</h3>
+            <h3 className="font-medium text-white mb-2">Time Management</h3>
             <ul className="space-y-1">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
@@ -867,7 +867,7 @@ const AM2Module3Section3 = () => {
           </div>
 
           <div>
-            <h3 className="font-medium text-white/90 mb-2">Quality Checkpoints</h3>
+            <h3 className="font-medium text-white mb-2">Quality Checkpoints</h3>
             <ul className="space-y-1">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
@@ -893,7 +893,7 @@ const AM2Module3Section3 = () => {
           </div>
 
           <div>
-            <h3 className="font-medium text-white/90 mb-2">Common Candidate Failures</h3>
+            <h3 className="font-medium text-white mb-2">Common Candidate Failures</h3>
             <ul className="space-y-1">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0"></div>

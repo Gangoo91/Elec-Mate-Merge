@@ -255,7 +255,7 @@ const Level3Module7Section1_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section1">
@@ -409,7 +409,7 @@ const Level3Module7Section1_1 = () => {
               are built before testing them.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Career Tip:</strong> Inspection and testing skills are highly valued and can
               lead to roles in building control, insurance assessment, and consultancy. The 2391
               qualification is often the gateway to supervisory positions.
@@ -466,7 +466,7 @@ const Level3Module7Section1_1 = () => {
               underlying principles to verify outputs and make professional judgements.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> On a new office development, the electrical designer would
               specify the incoming supply requirements, distribution board layouts, cable routes,
               lighting design, small power arrangements, and fire alarm system. Installers then
@@ -494,19 +494,19 @@ const Level3Module7Section1_1 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Foreman</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   First-line supervisor on site, manages daily work allocation
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Project Manager</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Oversees complete projects from start to handover
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Contracts Manager</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Manages multiple projects, budgets, and client relationships
                 </p>
               </div>
@@ -595,7 +595,7 @@ const Level3Module7Section1_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -640,7 +640,7 @@ const Level3Module7Section1_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section1">

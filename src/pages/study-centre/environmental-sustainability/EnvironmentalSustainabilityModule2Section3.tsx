@@ -188,7 +188,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-2">
@@ -213,7 +213,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Hazardous vs Non-Hazardous Waste
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How to identify, classify, store, and dispose of hazardous and non-hazardous waste
             streams on construction sites &mdash; from EWC codes to consignment notes
           </p>
@@ -310,7 +310,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   The 15 Hazardous Properties (HP1&ndash;HP15)
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -482,7 +482,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   Hazardous Wastes Commonly Found on Construction Sites
                 </p>
-                <ul className="text-sm text-white/80 space-y-3">
+                <ul className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -581,7 +581,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Site Safety</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If you encounter any material on site that you suspect may be hazardous,{' '}
                   <strong>stop work immediately</strong> and report it to your supervisor or site
                   manager. Do not attempt to handle, move, or dispose of unknown materials yourself.
@@ -616,7 +616,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   Step-by-Step Waste Classification
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex-shrink-0">
                       1
@@ -711,7 +711,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Common Mistake</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong>Never assume a waste is non-hazardous without proper assessment.</strong>{' '}
                   For mirror entries, the default position must be that the waste is hazardous until
                   assessment or testing proves otherwise. Incorrectly classifying hazardous waste as
@@ -743,7 +743,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   Hazardous Waste Storage Requirements
                 </p>
-                <ul className="text-sm text-white/80 space-y-3">
+                <ul className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -853,7 +853,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   Consignment Note Requirements
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -896,7 +896,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   Record-Keeping Obligations
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -939,7 +939,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Legal Obligation</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The waste producer has a <strong>duty of care</strong> that extends beyond the
                   site boundary. You must check that the waste carrier holds a valid waste carrier
                   registration and that the receiving facility has the appropriate environmental
@@ -978,7 +978,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
                 <div className="space-y-4">
                   <div>
                     <p className="text-white font-medium text-sm mb-2">Inert Waste</p>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       Inert waste does not undergo any significant physical, chemical, or biological
                       transformation when landfilled. It does not dissolve, burn, produce gas, or
                       adversely affect other materials it comes into contact with.
@@ -1007,7 +1007,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
                     <p className="text-white font-medium text-sm mb-2">
                       Non-Hazardous Non-Inert Waste
                     </p>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       This category covers waste that is not hazardous but does undergo physical,
                       chemical, or biological changes over time. It cannot be disposed of in inert
                       landfill sites and usually has higher disposal costs than inert waste.
@@ -1025,7 +1025,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
                       ].map((item) => (
                         <span
                           key={item}
-                          className="px-2 py-1 bg-white/5 border border-white/10 rounded text-xs text-white/70"
+                          className="px-2 py-1 bg-white/5 border border-white/10 rounded text-xs text-white"
                         >
                           {item}
                         </span>
@@ -1182,11 +1182,11 @@ export default function EnvironmentalSustainabilityModule2Section3() {
                   </span>
                   <span className="text-sm font-medium text-white">{hp.name}</span>
                 </div>
-                <p className="text-xs text-white/60">e.g. {hp.example}</p>
+                <p className="text-xs text-white">e.g. {hp.example}</p>
               </div>
             ))}
           </div>
-          <p className="text-center text-white/40 text-xs mt-3">
+          <p className="text-center text-white text-xs mt-3">
             All 15 hazardous properties defined under the Hazardous Waste Regulations 2005
           </p>
         </section>
@@ -1202,14 +1202,14 @@ export default function EnvironmentalSustainabilityModule2Section3() {
             <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
               <div className="bg-gradient-to-r from-red-500/30 to-orange-500/20 border-b border-red-500/30 px-4 py-3">
                 <p className="text-red-400 font-semibold text-base">Hazardous Waste</p>
-                <p className="text-white/60 text-xs">Marked with * in the EWC</p>
+                <p className="text-white text-xs">Marked with * in the EWC</p>
               </div>
               <div className="p-4 space-y-3 text-sm">
                 <div>
                   <p className="text-red-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Definition
                   </p>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     Displays one or more hazardous properties (HP1&ndash;HP15)
                   </p>
                 </div>
@@ -1217,37 +1217,37 @@ export default function EnvironmentalSustainabilityModule2Section3() {
                   <p className="text-red-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Documentation
                   </p>
-                  <p className="text-white/80">Consignment note for every movement</p>
+                  <p className="text-white">Consignment note for every movement</p>
                 </div>
                 <div>
                   <p className="text-red-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Storage
                   </p>
-                  <p className="text-white/80">Segregated, labelled, bunded (liquids), secure</p>
+                  <p className="text-white">Segregated, labelled, bunded (liquids), secure</p>
                 </div>
                 <div>
                   <p className="text-red-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Mixing
                   </p>
-                  <p className="text-white/80">Prohibited &mdash; contaminates entire load</p>
+                  <p className="text-white">Prohibited &mdash; contaminates entire load</p>
                 </div>
                 <div>
                   <p className="text-red-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Record Retention
                   </p>
-                  <p className="text-white/80">Minimum 3 years</p>
+                  <p className="text-white">Minimum 3 years</p>
                 </div>
                 <div>
                   <p className="text-red-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Disposal
                   </p>
-                  <p className="text-white/80">Hazardous landfill or specialist treatment only</p>
+                  <p className="text-white">Hazardous landfill or specialist treatment only</p>
                 </div>
                 <div>
                   <p className="text-red-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Examples
                   </p>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     Asbestos, lead paint, oils, solvents, fluorescent tubes, batteries
                   </p>
                 </div>
@@ -1255,7 +1255,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
                   <p className="text-red-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Cost
                   </p>
-                  <p className="text-white/80">Significantly higher than non-hazardous disposal</p>
+                  <p className="text-white">Significantly higher than non-hazardous disposal</p>
                 </div>
               </div>
             </div>
@@ -1264,20 +1264,20 @@ export default function EnvironmentalSustainabilityModule2Section3() {
             <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
               <div className="bg-gradient-to-r from-emerald-500/30 to-emerald-400/20 border-b border-emerald-500/30 px-4 py-3">
                 <p className="text-emerald-400 font-semibold text-base">Non-Hazardous Waste</p>
-                <p className="text-white/60 text-xs">No * in the EWC code</p>
+                <p className="text-white text-xs">No * in the EWC code</p>
               </div>
               <div className="p-4 space-y-3 text-sm">
                 <div>
                   <p className="text-emerald-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Definition
                   </p>
-                  <p className="text-white/80">Does not display any hazardous properties</p>
+                  <p className="text-white">Does not display any hazardous properties</p>
                 </div>
                 <div>
                   <p className="text-emerald-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Documentation
                   </p>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     Waste transfer note (can cover 12 months if same waste/carrier)
                   </p>
                 </div>
@@ -1285,7 +1285,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
                   <p className="text-emerald-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Storage
                   </p>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     Segregated by type for recycling, contained, secure
                   </p>
                 </div>
@@ -1293,7 +1293,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
                   <p className="text-emerald-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Mixing
                   </p>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     Different non-hazardous streams can be mixed (but reduces recyclability)
                   </p>
                 </div>
@@ -1301,13 +1301,13 @@ export default function EnvironmentalSustainabilityModule2Section3() {
                   <p className="text-emerald-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Record Retention
                   </p>
-                  <p className="text-white/80">Minimum 2 years</p>
+                  <p className="text-white">Minimum 2 years</p>
                 </div>
                 <div>
                   <p className="text-emerald-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Disposal
                   </p>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     Non-hazardous landfill, recycling, energy recovery
                   </p>
                 </div>
@@ -1315,7 +1315,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
                   <p className="text-emerald-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Examples
                   </p>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     Concrete, timber, plasterboard, plastics, cardboard, metals
                   </p>
                 </div>
@@ -1323,14 +1323,14 @@ export default function EnvironmentalSustainabilityModule2Section3() {
                   <p className="text-emerald-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Cost
                   </p>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     Lower disposal costs; recycling may generate revenue
                   </p>
                 </div>
               </div>
             </div>
           </div>
-          <p className="text-center text-white/40 text-xs mt-3 md:hidden">
+          <p className="text-center text-white text-xs mt-3 md:hidden">
             Scroll down to compare both waste categories
           </p>
         </section>
@@ -1357,7 +1357,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   Key Principles of the WEEE Regulations
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -1418,7 +1418,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
                     'UPS (uninterruptible power supply) systems',
                     'Building management system (BMS) controllers',
                   ].map((item, i) => (
-                    <div key={i} className="flex items-start gap-2 text-sm text-white/80">
+                    <div key={i} className="flex items-start gap-2 text-sm text-white">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                       <span>{item}</span>
                     </div>
@@ -1462,7 +1462,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   Plasterboard (Gypsum Waste)
                 </p>
-                <div className="text-sm text-white/80 space-y-3">
+                <div className="text-sm text-white space-y-3">
                   <p>
                     Plasterboard is classified as <strong>non-hazardous non-inert waste</strong>,
                     but it has been subject to special controls since <strong>2009</strong> when the
@@ -1516,7 +1516,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
               {/* Asbestos */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-emerald-400 mb-3">Asbestos Waste</p>
-                <div className="text-sm text-white/80 space-y-3">
+                <div className="text-sm text-white space-y-3">
                   <p>
                     Asbestos is one of the most heavily regulated waste streams in the UK. All
                     asbestos waste is classified as hazardous (carcinogenic &mdash; HP7) and is
@@ -1576,7 +1576,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   Refrigerants (F-Gas Regulations)
                 </p>
-                <div className="text-sm text-white/80 space-y-3">
+                <div className="text-sm text-white space-y-3">
                   <p>
                     Refrigerants used in air conditioning, heat pumps, and refrigeration equipment
                     are regulated under the{' '}
@@ -1629,7 +1629,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Remember</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Special waste streams often involve{' '}
                   <strong>multiple overlapping regulations</strong>. For example, a decommissioned
                   air conditioning unit may involve F-gas recovery regulations, WEEE Regulations,
@@ -1649,7 +1649,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1663,7 +1663,7 @@ export default function EnvironmentalSustainabilityModule2Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-2-section-2">

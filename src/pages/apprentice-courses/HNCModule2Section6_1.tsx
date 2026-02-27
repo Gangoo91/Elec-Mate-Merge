@@ -238,7 +238,7 @@ const HNCModule2Section6_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section6">
@@ -260,7 +260,7 @@ const HNCModule2Section6_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Load Estimation Methods
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             CIBSE methodologies for accurate heating and cooling load calculations in building
             services design
           </p>
@@ -413,7 +413,7 @@ const HNCModule2Section6_1 = () => {
                 Q<sub>total</sub> = Q<sub>fabric</sub> + Q<sub>infiltration</sub> + Q
                 <sub>ventilation</sub>
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where Q = heat loss rate (W), typically calculated at design ΔT
               </p>
             </div>
@@ -511,7 +511,7 @@ const HNCModule2Section6_1 = () => {
                   T<sub>sol-air</sub> = T<sub>ao</sub> + (α × I / h<sub>o</sub>) - (ε × ΔR / h
                   <sub>o</sub>)
                 </p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Where: T<sub>ao</sub> = outside air temp, α = solar absorptance, I = solar
                   intensity, h<sub>o</sub> = external heat transfer coefficient
                 </p>
@@ -603,7 +603,7 @@ const HNCModule2Section6_1 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 Q<sub>design</sub> = Q<sub>connected</sub> × Diversity Factor
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Example: 100kW connected small power × 0.7 diversity = 70kW design load
               </p>
             </div>
@@ -728,7 +728,7 @@ const HNCModule2Section6_1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Professional judgement:</strong> Balance the consequences of undersizing
               (comfort failure, complaints) against oversizing (inefficiency, cost). Document your
               margin decisions.
@@ -754,7 +754,7 @@ const HNCModule2Section6_1 = () => {
                 <strong>Question:</strong> Calculate the peak heating load for a 500m² office floor
                 in Birmingham with U-values: walls 0.25 W/m²K, windows 1.4 W/m²K, roof 0.18 W/m²K.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Design conditions: Internal 21°C, External -3°C, ΔT = 24K</p>
                 <p className="mt-2">Assume: Wall area 200m², Window area 80m², Roof 500m²</p>
                 <p className="mt-2">Fabric loss:</p>
@@ -767,7 +767,7 @@ const HNCModule2Section6_1 = () => {
                 <p className="mt-2">
                   Total: 1,200 + 2,688 + 2,160 + 2,970 = <strong>9,018W ≈ 9kW</strong>
                 </p>
-                <p className="mt-2 text-white/60">→ With 10% margin: 9.9kW design heating load</p>
+                <p className="mt-2 text-white">→ With 10% margin: 9.9kW design heating load</p>
               </div>
             </div>
 
@@ -779,7 +779,7 @@ const HNCModule2Section6_1 = () => {
                 <strong>Question:</strong> Calculate the internal gains for a 200m² open-plan office
                 with 20 workstations.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Connected loads:</p>
                 <p>Lighting: 200m² × 12 W/m² = 2,400W</p>
                 <p>Small power: 200m² × 20 W/m² = 4,000W</p>
@@ -792,7 +792,7 @@ const HNCModule2Section6_1 = () => {
                 <p className="mt-2">
                   Design internal gains: <strong>5,950W</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → Diversity reduced load from 8.2kW to 5.95kW (27% reduction)
                 </p>
               </div>
@@ -806,7 +806,7 @@ const HNCModule2Section6_1 = () => {
                 <strong>Question:</strong> Calculate the cooling load from fresh air for 20 people
                 at 12 l/s per person. External: 28°C/50%RH, Internal: 24°C/50%RH.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Fresh air rate: 20 × 12 = 240 l/s = 0.24 m³/s</p>
                 <p className="mt-2">Sensible cooling load:</p>
                 <p>
@@ -912,7 +912,7 @@ const HNCModule2Section6_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -958,7 +958,7 @@ const HNCModule2Section6_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section6">

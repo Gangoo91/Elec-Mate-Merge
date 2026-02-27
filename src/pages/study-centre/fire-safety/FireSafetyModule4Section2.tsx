@@ -190,7 +190,7 @@ export default function FireSafetyModule4Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-4">
@@ -213,7 +213,7 @@ export default function FireSafetyModule4Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Evacuation Procedures
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Evacuation strategies, escape routes and travel distances, fire drills, disability
             evacuation planning, and construction site evacuation under UK fire safety legislation
           </p>
@@ -310,7 +310,7 @@ export default function FireSafetyModule4Section2() {
                         1. Simultaneous Evacuation
                       </p>
                     </div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Everyone evacuates the building at the same time on hearing the alarm. The
                       simplest and most common strategy.
                     </p>
@@ -322,7 +322,7 @@ export default function FireSafetyModule4Section2() {
                         2. Phased / Staged Evacuation
                       </p>
                     </div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Fire floor evacuates first, then adjacent floors, then the rest. Used in tall
                       buildings with addressable alarm systems.
                     </p>
@@ -334,7 +334,7 @@ export default function FireSafetyModule4Section2() {
                         3. Progressive Horizontal Evacuation
                       </p>
                     </div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Occupants move horizontally through fire doors into an adjacent compartment.
                       Common in hospitals and care homes.
                     </p>
@@ -344,7 +344,7 @@ export default function FireSafetyModule4Section2() {
                       <Shield className="h-4 w-4 text-rose-400" />
                       <p className="text-sm font-semibold text-rose-400">4. Defend-in-Place</p>
                     </div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Occupants remain in their compartment unless directly affected by fire. Common
                       in purpose-built residential blocks.
                     </p>
@@ -356,7 +356,7 @@ export default function FireSafetyModule4Section2() {
                 <p className="text-sm font-medium text-rose-400 mb-3">
                   Factors Determining Strategy Choice
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -418,7 +418,7 @@ export default function FireSafetyModule4Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-400 mb-3">Key Characteristics</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -497,7 +497,7 @@ export default function FireSafetyModule4Section2() {
                 <p className="text-sm font-medium text-rose-400 mb-3">
                   Requirements for Phased Evacuation
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -566,7 +566,7 @@ export default function FireSafetyModule4Section2() {
                         {item.phase}
                       </span>
                       <span
-                        className="text-sm text-white/80 pt-0.5"
+                        className="text-sm text-white pt-0.5"
                         dangerouslySetInnerHTML={{ __html: item.desc }}
                       />
                     </div>
@@ -606,7 +606,7 @@ export default function FireSafetyModule4Section2() {
                 <p className="text-sm font-medium text-rose-400 mb-3">
                   Progressive Horizontal Evacuation
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -656,7 +656,7 @@ export default function FireSafetyModule4Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-400 mb-3">Defend-in-Place (Stay Put)</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -697,7 +697,7 @@ export default function FireSafetyModule4Section2() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Post-Grenfell Review</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The Grenfell Tower fire (14 June 2017) exposed critical failures in the
                   defend-in-place strategy when compartmentation is compromised. The fire spread
                   externally via combustible cladding, bypassing the compartmentation that the
@@ -780,18 +780,18 @@ export default function FireSafetyModule4Section2() {
                         className="grid grid-cols-3 gap-2 text-sm border-b border-white/5 pb-2 last:border-0"
                       >
                         <span
-                          className="text-white/80 col-span-1"
+                          className="text-white col-span-1"
                           dangerouslySetInnerHTML={{ __html: row.risk }}
                         />
                         <span className="text-white font-medium text-center">{row.dist}</span>
-                        <span className="text-white/60 text-center">
+                        <span className="text-white text-center">
                           {row.sprinkler} (sprinklers)
                         </span>
                       </div>
                     ))}
                   </div>
                 </div>
-                <p className="text-xs text-white/50 mt-3">
+                <p className="text-xs text-white mt-3">
                   * Some guidance allows extended distances with sprinklers and alternative routes
                   in low-risk areas. Always refer to the specific approved document and fire risk
                   assessment.
@@ -802,7 +802,7 @@ export default function FireSafetyModule4Section2() {
                 <p className="text-sm font-medium text-rose-400 mb-3">
                   Escape Route Width Requirements
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -840,7 +840,7 @@ export default function FireSafetyModule4Section2() {
                 <p className="text-sm font-medium text-rose-400 mb-3">
                   Direction of Opening &amp; Door Hardware
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -901,7 +901,7 @@ export default function FireSafetyModule4Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-400 mb-3">Fire Drill Requirements</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -940,7 +940,7 @@ export default function FireSafetyModule4Section2() {
                       <Clock className="h-4 w-4 text-rose-400" />
                       <p className="text-sm font-semibold text-rose-400">Announced</p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                         <span>Occupants know a drill will happen (but not the exact time)</span>
@@ -960,7 +960,7 @@ export default function FireSafetyModule4Section2() {
                       <AlertTriangle className="h-4 w-4 text-rose-400" />
                       <p className="text-sm font-semibold text-rose-400">Unannounced</p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                         <span>No advance warning &mdash; tests the genuine response</span>
@@ -984,7 +984,7 @@ export default function FireSafetyModule4Section2() {
                 <p className="text-sm font-medium text-rose-400 mb-3">
                   Record Keeping &amp; Debrief
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1055,7 +1055,7 @@ export default function FireSafetyModule4Section2() {
                 <p className="text-sm font-medium text-rose-400 mb-3">
                   Personal Emergency Evacuation Plans (PEEPs)
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1096,7 +1096,7 @@ export default function FireSafetyModule4Section2() {
                 <p className="text-sm font-medium text-rose-400 mb-3">
                   Generic Emergency Evacuation Plans (GEEPs)
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1128,7 +1128,7 @@ export default function FireSafetyModule4Section2() {
                 <p className="text-sm font-medium text-rose-400 mb-3">
                   Refuges, Equipment &amp; Communication
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1171,7 +1171,7 @@ export default function FireSafetyModule4Section2() {
                   <Accessibility className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Important</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Failure to provide a PEEP for an employee or a GEEP for a residential building may
                   constitute a breach of both the{' '}
                   <strong className="text-white">Equality Act 2010</strong> and the{' '}
@@ -1204,7 +1204,7 @@ export default function FireSafetyModule4Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-400 mb-3">Key Challenges</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1253,7 +1253,7 @@ export default function FireSafetyModule4Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-400 mb-3">CDM 2015 Requirements</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1294,7 +1294,7 @@ export default function FireSafetyModule4Section2() {
                   <HardHat className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Practical Tip</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   As an electrician on a construction site, you must familiarise yourself with the
                   site fire safety plan on your first day and after any significant changes. If you
                   are installing the temporary fire alarm system or the permanent system during
@@ -1338,13 +1338,13 @@ export default function FireSafetyModule4Section2() {
               <div className="grid grid-cols-2 gap-3 sm:gap-6">
                 <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg p-3 text-center">
                   <p className="text-xs font-bold text-rose-400 mb-1">SMALL / MEDIUM PREMISES</p>
-                  <p className="text-white/80 text-xs sm:text-sm">Single or low-rise buildings</p>
-                  <p className="text-white/60 text-xs mt-1">Offices, shops, restaurants</p>
+                  <p className="text-white text-xs sm:text-sm">Single or low-rise buildings</p>
+                  <p className="text-white text-xs mt-1">Offices, shops, restaurants</p>
                 </div>
                 <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg p-3 text-center">
                   <p className="text-xs font-bold text-rose-400 mb-1">TALL / LARGE / COMPLEX</p>
-                  <p className="text-white/80 text-xs sm:text-sm">Multi-storey or specialist use</p>
-                  <p className="text-white/60 text-xs mt-1">Towers, hospitals, flats</p>
+                  <p className="text-white text-xs sm:text-sm">Multi-storey or specialist use</p>
+                  <p className="text-white text-xs mt-1">Towers, hospitals, flats</p>
                 </div>
               </div>
 
@@ -1364,32 +1364,32 @@ export default function FireSafetyModule4Section2() {
                   <p className="text-white text-lg sm:text-xl font-bold">
                     <Siren className="h-5 w-5 mx-auto text-rose-400" />
                   </p>
-                  <p className="text-white/80 text-xs sm:text-sm mt-1">All out at once</p>
-                  <p className="text-white/60 text-xs mt-1">Small/medium, ambulant occupants</p>
+                  <p className="text-white text-xs sm:text-sm mt-1">All out at once</p>
+                  <p className="text-white text-xs mt-1">Small/medium, ambulant occupants</p>
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                   <p className="text-xs font-bold text-rose-400 mb-1">PHASED</p>
                   <p className="text-white text-lg sm:text-xl font-bold">
                     <Building className="h-5 w-5 mx-auto text-rose-400" />
                   </p>
-                  <p className="text-white/80 text-xs sm:text-sm mt-1">Fire floor first</p>
-                  <p className="text-white/60 text-xs mt-1">Tall buildings, addressable alarm</p>
+                  <p className="text-white text-xs sm:text-sm mt-1">Fire floor first</p>
+                  <p className="text-white text-xs mt-1">Tall buildings, addressable alarm</p>
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                   <p className="text-xs font-bold text-rose-400 mb-1">PROGRESSIVE HORIZONTAL</p>
                   <p className="text-white text-lg sm:text-xl font-bold">
                     <DoorOpen className="h-5 w-5 mx-auto text-rose-400" />
                   </p>
-                  <p className="text-white/80 text-xs sm:text-sm mt-1">Move to next compartment</p>
-                  <p className="text-white/60 text-xs mt-1">Hospitals, care homes</p>
+                  <p className="text-white text-xs sm:text-sm mt-1">Move to next compartment</p>
+                  <p className="text-white text-xs mt-1">Hospitals, care homes</p>
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                   <p className="text-xs font-bold text-rose-400 mb-1">DEFEND-IN-PLACE</p>
                   <p className="text-white text-lg sm:text-xl font-bold">
                     <Shield className="h-5 w-5 mx-auto text-rose-400" />
                   </p>
-                  <p className="text-white/80 text-xs sm:text-sm mt-1">Stay in compartment</p>
-                  <p className="text-white/60 text-xs mt-1">Purpose-built flats</p>
+                  <p className="text-white text-xs sm:text-sm mt-1">Stay in compartment</p>
+                  <p className="text-white text-xs mt-1">Purpose-built flats</p>
                 </div>
               </div>
 
@@ -1405,14 +1405,14 @@ export default function FireSafetyModule4Section2() {
               <div className="grid grid-cols-2 gap-3 sm:gap-6">
                 <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                   <p className="text-xs font-bold text-rose-400 mb-1">ALARM SYSTEM</p>
-                  <p className="text-white/80 text-xs sm:text-sm">
+                  <p className="text-white text-xs sm:text-sm">
                     Conventional (simultaneous) or addressable with zoned sounders &amp; voice alarm
                     (phased)
                   </p>
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                   <p className="text-xs font-bold text-rose-400 mb-1">COMPARTMENTATION</p>
-                  <p className="text-white/80 text-xs sm:text-sm">
+                  <p className="text-white text-xs sm:text-sm">
                     Minimum 60-minute fire resistance for phased, progressive horizontal, and
                     defend-in-place strategies
                   </p>
@@ -1429,7 +1429,7 @@ export default function FireSafetyModule4Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1443,7 +1443,7 @@ export default function FireSafetyModule4Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-4-section-1">

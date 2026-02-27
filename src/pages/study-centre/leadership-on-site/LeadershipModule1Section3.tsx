@@ -177,7 +177,7 @@ export default function LeadershipModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-1-section-2">
@@ -306,7 +306,7 @@ export default function LeadershipModule1Section3() {
                     <p className="text-rose-400 font-semibold text-sm mb-2">
                       Internal Self-Awareness
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       How clearly you see your own values, passions, aspirations, fit with your
                       environment, reactions, and impact on others. This is about knowing yourself
                       &mdash; your patterns, your triggers, your tendencies.
@@ -316,7 +316,7 @@ export default function LeadershipModule1Section3() {
                     <p className="text-blue-400 font-semibold text-sm mb-2">
                       External Self-Awareness
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Understanding how others see you. This is about knowing how your behaviour,
                       communication style, and decisions are perceived by the people around you. It
                       is the bridge between how you see yourself and how the world sees you.
@@ -364,11 +364,11 @@ export default function LeadershipModule1Section3() {
                     <p className="text-xs text-white font-medium mb-1">
                       Known to Self AND Known to Others
                     </p>
-                    <p className="text-white/80 text-xs mb-2">
+                    <p className="text-white text-xs mb-2">
                       This is your public self &mdash; the things that both you and your colleagues
                       are aware of. Your visible skills, known behaviours, and shared experiences.
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-white">On site:</strong> Everyone knows you are a
                       strong cable installer. You know it too. You are openly confident with
                       technical questions. The team knows your working style.
@@ -379,11 +379,11 @@ export default function LeadershipModule1Section3() {
                     <p className="text-xs text-white font-medium mb-1">
                       Known to Others but NOT Known to Self
                     </p>
-                    <p className="text-white/80 text-xs mb-2">
+                    <p className="text-white text-xs mb-2">
                       Things others can see about you but you cannot see in yourself. Habits,
                       mannerisms, impact on others that you are oblivious to.
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-white">On site:</strong> Your team notices you always
                       interrupt people mid-sentence. You do not realise you do it. They notice your
                       mood drops every Monday morning. You think you hide it well.
@@ -394,11 +394,11 @@ export default function LeadershipModule1Section3() {
                     <p className="text-xs text-white font-medium mb-1">
                       Known to Self but NOT Known to Others
                     </p>
-                    <p className="text-white/80 text-xs mb-2">
+                    <p className="text-white text-xs mb-2">
                       Things you know about yourself but keep hidden from others. Private feelings,
                       fears, insecurities, past experiences that shape your behaviour.
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-white">On site:</strong> You feel out of your depth as
                       a new supervisor but put on a brave face. You lack confidence with certain
                       technical tasks but avoid admitting it.
@@ -409,11 +409,11 @@ export default function LeadershipModule1Section3() {
                     <p className="text-xs text-white font-medium mb-1">
                       NOT Known to Self AND NOT Known to Others
                     </p>
-                    <p className="text-white/80 text-xs mb-2">
+                    <p className="text-white text-xs mb-2">
                       Undiscovered abilities, unconscious biases, untapped potential, and
                       deep-seated fears that neither you nor others are aware of.
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-white">On site:</strong> You might have a natural
                       talent for mentoring that has never been tested. You might have unconscious
                       biases you are not aware of. New challenges reveal unknown qualities.
@@ -429,7 +429,7 @@ export default function LeadershipModule1Section3() {
                     The Goal: Expand Your Open Area
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The aim is to make the Open/Arena quadrant as large as possible. You do this
                   through two practices: <strong className="text-white">seeking feedback</strong>{' '}
                   (which reduces your Blind Spot &mdash; others tell you what they see) and{' '}
@@ -465,21 +465,21 @@ export default function LeadershipModule1Section3() {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
                   <div className="bg-red-500/10 border border-red-500/30 p-3 rounded-lg">
                     <p className="text-red-400 font-semibold mb-1">Shaper</p>
-                    <p className="text-white/80 text-xs mb-1">
+                    <p className="text-white text-xs mb-1">
                       Challenging, dynamic, thrives on pressure. Pushes the team to overcome
                       obstacles.
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-white">On site:</strong> The supervisor who drives the
                       team through a tight deadline with energy and determination.
                     </p>
                   </div>
                   <div className="bg-red-500/10 border border-red-500/30 p-3 rounded-lg">
                     <p className="text-red-400 font-semibold mb-1">Implementer</p>
-                    <p className="text-white/80 text-xs mb-1">
+                    <p className="text-white text-xs mb-1">
                       Disciplined, reliable, efficient. Turns ideas into practical action plans.
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-white">On site:</strong> The electrician who takes the
                       plan and systematically works through it, step by step, on time and to
                       standard.
@@ -487,11 +487,11 @@ export default function LeadershipModule1Section3() {
                   </div>
                   <div className="bg-red-500/10 border border-red-500/30 p-3 rounded-lg">
                     <p className="text-red-400 font-semibold mb-1">Completer Finisher</p>
-                    <p className="text-white/80 text-xs mb-1">
+                    <p className="text-white text-xs mb-1">
                       Painstaking, conscientious, anxious. Searches out errors, polishes and
                       perfects.
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-white">On site:</strong> The person who checks every
                       termination, labels every circuit, and ensures the finished installation is
                       immaculate.
@@ -505,21 +505,21 @@ export default function LeadershipModule1Section3() {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
                   <div className="bg-blue-500/10 border border-blue-500/30 p-3 rounded-lg">
                     <p className="text-blue-400 font-semibold mb-1">Coordinator</p>
-                    <p className="text-white/80 text-xs mb-1">
+                    <p className="text-white text-xs mb-1">
                       Mature, confident, trusting. Clarifies goals, delegates well, promotes
                       decision-making.
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-white">On site:</strong> The natural chairperson who
                       runs effective meetings and ensures the right people are on the right tasks.
                     </p>
                   </div>
                   <div className="bg-blue-500/10 border border-blue-500/30 p-3 rounded-lg">
                     <p className="text-blue-400 font-semibold mb-1">Teamworker</p>
-                    <p className="text-white/80 text-xs mb-1">
+                    <p className="text-white text-xs mb-1">
                       Cooperative, mild, diplomatic. Listens, averts friction, builds relationships.
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-white">On site:</strong> The person who smooths
                       tensions between team members, includes everyone, and keeps the peace during
                       stressful periods.
@@ -527,11 +527,11 @@ export default function LeadershipModule1Section3() {
                   </div>
                   <div className="bg-blue-500/10 border border-blue-500/30 p-3 rounded-lg">
                     <p className="text-blue-400 font-semibold mb-1">Resource Investigator</p>
-                    <p className="text-white/80 text-xs mb-1">
+                    <p className="text-white text-xs mb-1">
                       Outgoing, enthusiastic, communicative. Explores opportunities, develops
                       contacts.
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-white">On site:</strong> The person who knows
                       everyone, can find materials at short notice, and always knows who to call to
                       solve a problem.
@@ -545,11 +545,11 @@ export default function LeadershipModule1Section3() {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
                   <div className="bg-purple-500/10 border border-purple-500/30 p-3 rounded-lg">
                     <p className="text-purple-400 font-semibold mb-1">Plant</p>
-                    <p className="text-white/80 text-xs mb-1">
+                    <p className="text-white text-xs mb-1">
                       Creative, imaginative, free-thinking. Generates ideas, solves difficult
                       problems.
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-white">On site:</strong> The electrician who comes up
                       with a creative workaround when the standard containment route will not work
                       due to site constraints.
@@ -557,10 +557,10 @@ export default function LeadershipModule1Section3() {
                   </div>
                   <div className="bg-purple-500/10 border border-purple-500/30 p-3 rounded-lg">
                     <p className="text-purple-400 font-semibold mb-1">Monitor Evaluator</p>
-                    <p className="text-white/80 text-xs mb-1">
+                    <p className="text-white text-xs mb-1">
                       Sober, strategic, discerning. Sees all options, judges accurately.
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-white">On site:</strong> The person who calmly
                       analyses the proposed approach, identifies the risks everyone else has missed,
                       and suggests a better alternative.
@@ -568,11 +568,11 @@ export default function LeadershipModule1Section3() {
                   </div>
                   <div className="bg-purple-500/10 border border-purple-500/30 p-3 rounded-lg">
                     <p className="text-purple-400 font-semibold mb-1">Specialist</p>
-                    <p className="text-white/80 text-xs mb-1">
+                    <p className="text-white text-xs mb-1">
                       Single-minded, self-starting, dedicated. Provides deep knowledge in a narrow
                       field.
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-white">On site:</strong> The expert in fire alarm
                       systems, or data cabling, or renewable energy installations. The person
                       everyone goes to for deep technical knowledge.
@@ -617,7 +617,7 @@ export default function LeadershipModule1Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Common Blind Spots for New Leaders on Site
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -678,7 +678,7 @@ export default function LeadershipModule1Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   How to Uncover Your Blind Spots
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -723,7 +723,7 @@ export default function LeadershipModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">The Discomfort Is the Point</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Confronting blind spots is uncomfortable. Your instinct will be to dismiss
                   feedback, rationalise your behaviour, or avoid the conversation altogether. This
                   is normal &mdash; but it is also exactly the reaction that keeps blind spots
@@ -760,7 +760,7 @@ export default function LeadershipModule1Section3() {
                 <p className="text-sm font-medium text-rose-400 mb-2">
                   Gallup&rsquo;s Research on Strengths
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Global research by Gallup involving over two million people found that people who
                   use their strengths every day are{' '}
                   <strong className="text-white">6 times more likely to be engaged</strong> at work.
@@ -780,7 +780,7 @@ export default function LeadershipModule1Section3() {
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -843,7 +843,7 @@ export default function LeadershipModule1Section3() {
                 built. The key points to remember are:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -914,7 +914,7 @@ export default function LeadershipModule1Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -928,7 +928,7 @@ export default function LeadershipModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-1-section-2">

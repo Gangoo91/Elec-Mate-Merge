@@ -192,7 +192,7 @@ const Module5Section3_3 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -209,13 +209,13 @@ const Module5Section3_3 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.3.3</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.3.3</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Planning Access and Working Platforms
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Learn to plan safe access routes and select appropriate working platforms for
               electrical installations while maintaining compliance.
             </p>
@@ -228,7 +228,7 @@ const Module5Section3_3 = () => {
               In 30 Seconds
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <ul className="text-white/80 space-y-2 list-disc pl-4">
+              <ul className="text-white space-y-2 list-disc pl-4">
                 <li>Plan safe access routes before starting work.</li>
                 <li>Choose appropriate platforms: ladders, podiums, scaffolds, MEWPs.</li>
                 <li>Follow Work at Height Regulations 2005.</li>
@@ -242,7 +242,7 @@ const Module5Section3_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Safe and efficient access to work areas is critical in electrical installation. Poor
                 planning of access can cause delays, create unsafe working conditions, and lead to
@@ -255,7 +255,7 @@ const Module5Section3_3 = () => {
                   <Hammer className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-elec-yellow mb-2">Why This Matters</p>
-                    <p className="text-white/70 text-sm">
+                    <p className="text-white text-sm">
                       Poor access planning is responsible for approximately 25% of construction site
                       accidents, making proper planning essential for safe electrical installations.
                     </p>
@@ -281,7 +281,7 @@ const Module5Section3_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <div className="text-white/80 space-y-2 leading-relaxed">
+            <div className="text-white space-y-2 leading-relaxed">
               <p className="mb-3">By the end of this subsection, you will be able to:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Explain why access planning is important on site.</li>
@@ -299,7 +299,7 @@ const Module5Section3_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Why Access Planning Matters
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Proper access planning is fundamental to safe and efficient electrical
                 installations:
@@ -331,7 +331,7 @@ const Module5Section3_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-green-500/10 border border-green-500/20">
                   <p className="font-medium text-green-400 mb-1">Industry Impact</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Sites with comprehensive access planning show 60% fewer accidents and 25% faster
                     completion times compared to those with poor planning.
                   </p>
@@ -346,7 +346,7 @@ const Module5Section3_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Types of Working Platforms
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Selecting the appropriate platform depends on task duration, height, stability
                 requirements, and site conditions:
@@ -481,7 +481,7 @@ const Module5Section3_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Planning Safe Access Routes
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Effective access route planning requires systematic consideration of multiple
                 factors:
@@ -535,7 +535,7 @@ const Module5Section3_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Working at Height Requirements
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 The Work at Height Regulations 2005 establish a comprehensive legal framework for
                 safe working at height:
@@ -549,7 +549,7 @@ const Module5Section3_3 = () => {
                     </div>
                     <div>
                       <p className="font-medium text-red-400">Avoid Work at Height</p>
-                      <p className="text-white/70">
+                      <p className="text-white">
                         Where reasonably practicable, complete work from ground level
                       </p>
                     </div>
@@ -560,7 +560,7 @@ const Module5Section3_3 = () => {
                     </div>
                     <div>
                       <p className="font-medium text-red-400">Prevent Falls</p>
-                      <p className="text-white/70">
+                      <p className="text-white">
                         Use guardrails, barriers, and working platforms
                       </p>
                     </div>
@@ -571,7 +571,7 @@ const Module5Section3_3 = () => {
                     </div>
                     <div>
                       <p className="font-medium text-red-400">Mitigate Fall Distance</p>
-                      <p className="text-white/70">Fall arrest systems, safety nets, air bags</p>
+                      <p className="text-white">Fall arrest systems, safety nets, air bags</p>
                     </div>
                   </div>
                 </div>
@@ -596,7 +596,7 @@ const Module5Section3_3 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-3">Daily Inspection Checklist</h3>
-                <ul className="list-disc pl-6 space-y-1 text-sm text-white/80">
+                <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                   <li>Visual inspection for damage, wear, or deformation</li>
                   <li>Check all locking mechanisms and safety systems</li>
                   <li>Verify stability and levelness of platforms</li>
@@ -607,7 +607,7 @@ const Module5Section3_3 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-3">Setup Best Practices</h3>
-                <ul className="list-disc pl-6 space-y-1 text-sm text-white/80">
+                <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                   <li>Establish exclusion zones around working areas</li>
                   <li>Position platforms to minimise reaching and stretching</li>
                   <li>Ensure adequate lighting for all work areas</li>
@@ -657,7 +657,7 @@ const Module5Section3_3 = () => {
                   className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50"
                 >
                   <p className="font-medium text-white mb-2">Q: {faq.question}</p>
-                  <p className="text-white/70 text-sm">A: {faq.answer}</p>
+                  <p className="text-white text-sm">A: {faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -686,7 +686,7 @@ const Module5Section3_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">11</span>
               Summary
             </h2>
-            <div className="text-white/80 leading-relaxed">
+            <div className="text-white leading-relaxed">
               <p>
                 In this subsection, you learned how to plan safe access and working platforms. You
                 now know the types of platforms available, the importance of clear access routes,
@@ -709,7 +709,7 @@ const Module5Section3_3 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../3-2">

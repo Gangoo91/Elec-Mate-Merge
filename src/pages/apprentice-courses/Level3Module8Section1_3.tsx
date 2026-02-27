@@ -341,7 +341,7 @@ const Level3Module8Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module8">
@@ -470,7 +470,7 @@ const Level3Module8Section1_3 = () => {
                   <Timer className="h-4 w-4 text-elec-yellow" />
                   <p className="text-sm font-medium text-white">Time Pressure Practice</p>
                 </div>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Set a visible countdown timer (15-30 seconds)</li>
                   <li>Answer immediately - don't deliberate</li>
                   <li>If time expires, mark as wrong regardless</li>
@@ -483,7 +483,7 @@ const Level3Module8Section1_3 = () => {
                   <Repeat className="h-4 w-4 text-elec-yellow" />
                   <p className="text-sm font-medium text-white">Spaced Repetition</p>
                 </div>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Review new material after 1 day</li>
                   <li>If correct, review again after 3 days</li>
                   <li>Continue increasing intervals for correct recalls</li>
@@ -515,7 +515,7 @@ const Level3Module8Section1_3 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Pro Tip:</strong> Practice at different times of day. If you always practice
               when alert and rested, you're not preparing for exam conditions where you might be
               nervous or tired. Some sessions when you're not at peak performance build robustness.
@@ -541,7 +541,7 @@ const Level3Module8Section1_3 = () => {
             <div className="grid grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="text-sm font-medium text-green-400 mb-2">Ideal for Quick Fire</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Regulation section numbers and requirements</li>
                   <li>Standard values (cable ratings, Zs limits)</li>
                   <li>Key definitions from BS 7671</li>
@@ -553,7 +553,7 @@ const Level3Module8Section1_3 = () => {
               </div>
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="text-sm font-medium text-red-400 mb-2">Not Suitable for Quick Fire</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Complex multi-step calculations</li>
                   <li>Design scenarios requiring judgement</li>
                   <li>Fault diagnosis reasoning</li>
@@ -627,7 +627,7 @@ const Level3Module8Section1_3 = () => {
                   <Target className="h-4 w-4 text-elec-yellow" />
                 </div>
                 <p className="font-medium text-white mb-1">Acquisition Phase</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Daily practice on new topics until 80%+ accuracy
                 </p>
               </div>
@@ -636,14 +636,14 @@ const Level3Module8Section1_3 = () => {
                   <Brain className="h-4 w-4 text-elec-yellow" />
                 </div>
                 <p className="font-medium text-white mb-1">Consolidation Phase</p>
-                <p className="text-white/90 text-xs">Spaced review to strengthen memory traces</p>
+                <p className="text-white text-xs">Spaced review to strengthen memory traces</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <div className="flex items-center justify-center gap-2 mb-2">
                   <Repeat className="h-4 w-4 text-elec-yellow" />
                 </div>
                 <p className="font-medium text-white mb-1">Maintenance Phase</p>
-                <p className="text-white/90 text-xs">Weekly review to prevent forgetting</p>
+                <p className="text-white text-xs">Weekly review to prevent forgetting</p>
               </div>
             </div>
 
@@ -677,7 +677,7 @@ const Level3Module8Section1_3 = () => {
               your maintenance sessions before you forget - not after.
             </p>
 
-            <p className="text-sm text-white/90 italic mt-4">
+            <p className="text-sm text-white italic mt-4">
               <strong>Exam Week Strategy:</strong> In the final week, shift from learning new
               material to maintaining existing knowledge. Quick fire sessions should focus on
               confident recall of well-known material to keep it fresh and build exam-day
@@ -707,7 +707,7 @@ const Level3Module8Section1_3 = () => {
                     {category.questionCount}+ questions
                   </span>
                 </div>
-                <ul className="text-xs text-white/70 space-y-0.5">
+                <ul className="text-xs text-white space-y-0.5">
                   {category.examples.map((example, i) => (
                     <li key={i}>{example}</li>
                   ))}
@@ -783,7 +783,7 @@ const Level3Module8Section1_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -832,7 +832,7 @@ const Level3Module8Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module8-section1-2">

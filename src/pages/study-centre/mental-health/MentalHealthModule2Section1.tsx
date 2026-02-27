@@ -235,7 +235,7 @@ export default function MentalHealthModule2Section1() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Understanding Depression
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Recognising clinical depression, understanding its types and symptoms, identifying risk
             factors, and knowing how the NICE stepped care model guides treatment in the UK
           </p>
@@ -408,7 +408,7 @@ export default function MentalHealthModule2Section1() {
                 <h3 className="font-semibold mb-2 text-purple-400">
                   Definition: Clinical Depression
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   <strong className="text-white">Clinical depression</strong> is a mood disorder
                   characterised by persistent low mood and/or loss of interest or pleasure in
                   activities (anhedonia), lasting at least{' '}
@@ -427,7 +427,7 @@ export default function MentalHealthModule2Section1() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <h4 className="text-white font-semibold mb-3 text-center">Normal Low Mood</h4>
-                    <ul className="text-white/80 text-sm space-y-2">
+                    <ul className="text-white text-sm space-y-2">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Usually linked to a specific cause or event</span>
@@ -454,7 +454,7 @@ export default function MentalHealthModule2Section1() {
                     <h4 className="text-purple-300 font-semibold mb-3 text-center">
                       Clinical Depression
                     </h4>
-                    <ul className="text-white/80 text-sm space-y-2">
+                    <ul className="text-white text-sm space-y-2">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                         <span>May have no obvious trigger or be disproportionate to events</span>
@@ -480,7 +480,7 @@ export default function MentalHealthModule2Section1() {
                     </ul>
                   </div>
                 </div>
-                <p className="text-white/50 text-xs text-center mt-4 italic">
+                <p className="text-white text-xs text-center mt-4 italic">
                   The 2-week, most-of-the-day, nearly-every-day threshold is used by GPs to
                   distinguish between normal low mood and clinical depression.
                 </p>
@@ -491,7 +491,7 @@ export default function MentalHealthModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Depression Is Not a Choice</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   One of the most damaging myths about depression is that people can simply
                   &ldquo;choose to be happy&rdquo; or &ldquo;pull themselves together&rdquo;.
                   Depression involves measurable changes in brain chemistry and function. Telling
@@ -538,17 +538,17 @@ export default function MentalHealthModule2Section1() {
                         <h4 className="text-purple-300 font-semibold mb-1">
                           Major Depressive Disorder (MDD)
                         </h4>
-                        <p className="text-white/70 text-sm mb-2">
-                          <strong className="text-white/90">Duration:</strong> At least 2 weeks per
+                        <p className="text-white text-sm mb-2">
+                          <strong className="text-white">Duration:</strong> At least 2 weeks per
                           episode
                         </p>
-                        <p className="text-white/70 text-sm mb-2">
-                          <strong className="text-white/90">Key features:</strong> Severe episodes
+                        <p className="text-white text-sm mb-2">
+                          <strong className="text-white">Key features:</strong> Severe episodes
                           of persistent low mood, anhedonia, and multiple associated symptoms. Can
                           be a single episode or recurrent. Most common form of depression.
                         </p>
-                        <p className="text-white/70 text-sm">
-                          <strong className="text-white/90">Severity:</strong> Mild, moderate, or
+                        <p className="text-white text-sm">
+                          <strong className="text-white">Severity:</strong> Mild, moderate, or
                           severe (with or without psychotic features)
                         </p>
                       </div>
@@ -567,18 +567,18 @@ export default function MentalHealthModule2Section1() {
                         <h4 className="text-violet-300 font-semibold mb-1">
                           Persistent Depressive Disorder (Dysthymia)
                         </h4>
-                        <p className="text-white/70 text-sm mb-2">
-                          <strong className="text-white/90">Duration:</strong> At least 2 years of
+                        <p className="text-white text-sm mb-2">
+                          <strong className="text-white">Duration:</strong> At least 2 years of
                           chronic low mood
                         </p>
-                        <p className="text-white/70 text-sm mb-2">
-                          <strong className="text-white/90">Key features:</strong> Lower-grade but
+                        <p className="text-white text-sm mb-2">
+                          <strong className="text-white">Key features:</strong> Lower-grade but
                           long-lasting depression. May feel like &ldquo;this is just how I
                           am&rdquo;. Can have episodes of major depression on top (&ldquo;double
                           depression&rdquo;).
                         </p>
-                        <p className="text-white/70 text-sm">
-                          <strong className="text-white/90">Severity:</strong> Generally milder than
+                        <p className="text-white text-sm">
+                          <strong className="text-white">Severity:</strong> Generally milder than
                           MDD but equally disabling due to chronicity
                         </p>
                       </div>
@@ -597,19 +597,19 @@ export default function MentalHealthModule2Section1() {
                         <h4 className="text-purple-300 font-semibold mb-1">
                           Seasonal Affective Disorder (SAD)
                         </h4>
-                        <p className="text-white/70 text-sm mb-2">
-                          <strong className="text-white/90">Duration:</strong> Seasonal pattern,
+                        <p className="text-white text-sm mb-2">
+                          <strong className="text-white">Duration:</strong> Seasonal pattern,
                           typically autumn/winter onset, remitting in spring
                         </p>
-                        <p className="text-white/70 text-sm mb-2">
-                          <strong className="text-white/90">Key features:</strong> Depression linked
+                        <p className="text-white text-sm mb-2">
+                          <strong className="text-white">Key features:</strong> Depression linked
                           to reduced daylight. Symptoms include oversleeping, carbohydrate cravings,
                           weight gain, and lethargy. Affects up to 6% of the UK population.
                           Particularly relevant for those working indoors or on sites with limited
                           natural light.
                         </p>
-                        <p className="text-white/70 text-sm">
-                          <strong className="text-white/90">Treatment:</strong> Light therapy (SAD
+                        <p className="text-white text-sm">
+                          <strong className="text-white">Treatment:</strong> Light therapy (SAD
                           lamps), CBT, antidepressants
                         </p>
                       </div>
@@ -626,18 +626,18 @@ export default function MentalHealthModule2Section1() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-violet-300 font-semibold mb-1">Postnatal Depression</h4>
-                        <p className="text-white/70 text-sm mb-2">
-                          <strong className="text-white/90">Duration:</strong> Develops within 12
+                        <p className="text-white text-sm mb-2">
+                          <strong className="text-white">Duration:</strong> Develops within 12
                           months of giving birth; can last months if untreated
                         </p>
-                        <p className="text-white/70 text-sm mb-2">
-                          <strong className="text-white/90">Key features:</strong> More severe and
+                        <p className="text-white text-sm mb-2">
+                          <strong className="text-white">Key features:</strong> More severe and
                           persistent than &ldquo;baby blues&rdquo;. Affects 1 in 10 women and can
                           also affect fathers/partners. Feelings of sadness, inadequacy, difficulty
                           bonding with the baby, and anxiety.
                         </p>
-                        <p className="text-white/70 text-sm">
-                          <strong className="text-white/90">Note:</strong> As a MHFA, you may
+                        <p className="text-white text-sm">
+                          <strong className="text-white">Note:</strong> As a MHFA, you may
                           encounter colleagues whose partners are affected
                         </p>
                       </div>
@@ -654,26 +654,26 @@ export default function MentalHealthModule2Section1() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-purple-300 font-semibold mb-1">Bipolar Depression</h4>
-                        <p className="text-white/70 text-sm mb-2">
-                          <strong className="text-white/90">Duration:</strong> Depressive episodes
+                        <p className="text-white text-sm mb-2">
+                          <strong className="text-white">Duration:</strong> Depressive episodes
                           alternate with periods of mania or hypomania
                         </p>
-                        <p className="text-white/70 text-sm mb-2">
-                          <strong className="text-white/90">Key features:</strong> The depressive
+                        <p className="text-white text-sm mb-2">
+                          <strong className="text-white">Key features:</strong> The depressive
                           episodes in bipolar disorder are identical to MDD. The crucial difference
                           is the presence of manic/hypomanic episodes (elevated mood, reduced need
                           for sleep, grandiosity, risky behaviour). Treatment differs significantly
                           from unipolar depression.
                         </p>
-                        <p className="text-white/70 text-sm">
-                          <strong className="text-white/90">Note:</strong> Covered in more detail in
+                        <p className="text-white text-sm">
+                          <strong className="text-white">Note:</strong> Covered in more detail in
                           Module 4. Antidepressants alone can trigger mania.
                         </p>
                       </div>
                     </div>
                   </div>
                 </div>
-                <p className="text-white/50 text-xs text-center mt-4 italic">
+                <p className="text-white text-xs text-center mt-4 italic">
                   All types of depression are treatable. The GP should always be the first point of
                   contact for assessment and diagnosis.
                 </p>
@@ -711,7 +711,7 @@ export default function MentalHealthModule2Section1() {
                       <Heart className="h-5 w-5 text-purple-400" />
                       <h4 className="text-purple-300 font-semibold">Emotional Symptoms</h4>
                     </div>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                         <span>Persistent sadness or &ldquo;empty&rdquo; feeling</span>
@@ -745,7 +745,7 @@ export default function MentalHealthModule2Section1() {
                       <Activity className="h-5 w-5 text-violet-400" />
                       <h4 className="text-violet-300 font-semibold">Physical Symptoms</h4>
                     </div>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                         <span>Persistent fatigue, even after rest</span>
@@ -781,7 +781,7 @@ export default function MentalHealthModule2Section1() {
                       <Brain className="h-5 w-5 text-purple-400" />
                       <h4 className="text-purple-300 font-semibold">Cognitive Symptoms</h4>
                     </div>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                         <span>Poor concentration and difficulty focusing</span>
@@ -815,7 +815,7 @@ export default function MentalHealthModule2Section1() {
                       <Users className="h-5 w-5 text-violet-400" />
                       <h4 className="text-violet-300 font-semibold">Behavioural Symptoms</h4>
                     </div>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                         <span>Social withdrawal and isolation</span>
@@ -850,7 +850,7 @@ export default function MentalHealthModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Suicide Risk</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Depression is the leading risk factor for suicide. If someone expresses thoughts
                   of suicide or self-harm, take it seriously. Do not be afraid to ask directly:
                   &ldquo;Are you thinking about ending your life?&rdquo; Asking does not plant the
@@ -863,7 +863,7 @@ export default function MentalHealthModule2Section1() {
 
               <div className="bg-purple-500/10 border border-purple-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-purple-400">Men and Depression</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Men often experience and express depression differently from women. Rather than
                   reporting sadness, men may present with{' '}
                   <strong className="text-white">
@@ -1020,7 +1020,7 @@ export default function MentalHealthModule2Section1() {
                   <Shield className="h-4 w-4 inline-block mr-2 -mt-0.5" />
                   Construction &amp; Electrical Trade-Specific Factors
                 </h3>
-                <ul className="text-white/80 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>
@@ -1104,7 +1104,7 @@ export default function MentalHealthModule2Section1() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="bg-purple-500/10 border border-purple-500/30 p-3 rounded-lg">
                     <h4 className="text-purple-300 font-semibold text-sm mb-2">Presenteeism</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Attending work while depressed. The person is physically present but
                       functioning at a fraction of their capacity. They may make more errors, take
                       longer to complete tasks, struggle with decisions, and be more prone to
@@ -1115,7 +1115,7 @@ export default function MentalHealthModule2Section1() {
                   </div>
                   <div className="bg-violet-500/10 border border-violet-500/30 p-3 rounded-lg">
                     <h4 className="text-violet-300 font-semibold text-sm mb-2">Absenteeism</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Being absent from work due to depression. In the UK, depression and anxiety
                       account for approximately{' '}
                       <strong className="text-white">
@@ -1134,7 +1134,7 @@ export default function MentalHealthModule2Section1() {
                   <AlertTriangle className="h-4 w-4 inline-block mr-2 -mt-0.5" />
                   Impact on Safety
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   In safety-critical environments like electrical installation and construction,
                   depression poses a direct risk to life. A depressed worker may experience:
                 </p>
@@ -1174,11 +1174,11 @@ export default function MentalHealthModule2Section1() {
                 <h3 className="text-purple-400 font-medium mb-3">
                   Signs a Colleague May Be Depressed
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   As a Mental Health First Aider, you do not need to diagnose depression. Instead,
                   look for changes in a colleague&rsquo;s usual behaviour. These may include:
                 </p>
-                <ul className="text-white/80 text-sm space-y-1.5">
+                <ul className="text-white text-sm space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>Becoming quieter or more withdrawn than usual</span>
@@ -1225,7 +1225,7 @@ export default function MentalHealthModule2Section1() {
                 <h3 className="font-semibold mb-2 text-purple-400">
                   The Hidden Nature of Depression in Male-Dominated Industries
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   In industries like construction and electrical contracting, depression is often
                   hidden behind a mask of competence. Many men have been socialised to equate
                   emotional expression with weakness. They may use humour to deflect, work harder to
@@ -1263,7 +1263,7 @@ export default function MentalHealthModule2Section1() {
                   <BookOpen className="h-4 w-4 inline-block mr-2 -mt-0.5" />
                   The GP as First Point of Contact
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The GP is the gateway to NHS treatment for depression. They will carry out an
                   initial assessment, often using validated screening tools such as the{' '}
                   <strong className="text-white">PHQ-9</strong> (Patient Health Questionnaire) which
@@ -1290,7 +1290,7 @@ export default function MentalHealthModule2Section1() {
                         <h4 className="text-purple-300 font-medium mb-1">
                           Severe, Complex, or Treatment-Resistant Depression
                         </h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Specialist mental health services, crisis teams, inpatient care,
                           electroconvulsive therapy (ECT), combination medication strategies,
                           intensive psychological therapy. For people who have not responded to
@@ -1310,7 +1310,7 @@ export default function MentalHealthModule2Section1() {
                         <h4 className="text-purple-300 font-medium mb-1">
                           Moderate to Severe Depression
                         </h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           High-intensity psychological interventions:{' '}
                           <strong className="text-white">CBT</strong> (Cognitive Behavioural
                           Therapy), <strong className="text-white">IPT</strong> (Interpersonal
@@ -1333,7 +1333,7 @@ export default function MentalHealthModule2Section1() {
                         <h4 className="text-purple-300 font-medium mb-1">
                           Persistent Sub-threshold or Mild to Moderate Depression
                         </h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Low-intensity psychological interventions: guided self-help based on CBT
                           principles, computerised CBT (e.g. Beating the Blues, SilverCloud),
                           structured group physical activity, group-based peer support.{' '}
@@ -1351,13 +1351,13 @@ export default function MentalHealthModule2Section1() {
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <div className="flex items-start gap-3">
                       <div className="w-10 h-10 rounded-full bg-white/10 border-2 border-white/20 flex items-center justify-center flex-shrink-0">
-                        <span className="text-white/70 font-bold text-sm">1</span>
+                        <span className="text-white font-bold text-sm">1</span>
                       </div>
                       <div className="flex-1">
-                        <h4 className="text-white/90 font-medium mb-1">
+                        <h4 className="text-white font-medium mb-1">
                           Recognition, Assessment &amp; Active Monitoring
                         </h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           All known and suspected cases of depression. GP assessment using validated
                           tools (PHQ-9), psychoeducation (helping the person understand their
                           condition), sleep hygiene advice, lifestyle guidance (exercise, routine,
@@ -1369,7 +1369,7 @@ export default function MentalHealthModule2Section1() {
                     </div>
                   </div>
                 </div>
-                <p className="text-white/50 text-xs text-center mt-4 italic">
+                <p className="text-white text-xs text-center mt-4 italic">
                   The model is &ldquo;stepped&rdquo; &mdash; people move up if they do not respond
                   to treatment at a lower step, and down as they recover.
                 </p>
@@ -1459,7 +1459,7 @@ export default function MentalHealthModule2Section1() {
 
               <div className="bg-purple-500/10 border border-purple-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-purple-400">Recovery Is Possible</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   With the right treatment,{' '}
                   <strong className="text-white">
                     the majority of people recover from depression
@@ -1490,7 +1490,7 @@ export default function MentalHealthModule2Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1506,7 +1506,7 @@ export default function MentalHealthModule2Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-2">

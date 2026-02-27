@@ -267,7 +267,7 @@ const HNCModule1Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section3">
@@ -289,7 +289,7 @@ const HNCModule1Section3_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Safety Culture and Leadership
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding the human factors that shape safety performance in organisations
           </p>
         </header>
@@ -786,7 +786,7 @@ const HNCModule1Section3_2 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Mature culture sign:</strong> Workers stop their own unsafe acts and those of
               colleagues - not because of rules, but because they genuinely care about everyone
               going home safely.
@@ -812,7 +812,7 @@ const HNCModule1Section3_2 = () => {
                 <strong>Problem:</strong> An electrical contractor has very few near-miss reports
                 despite many minor incidents.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p>
                   <strong>Analysis:</strong> Workers fear blame; previous reports led to
                   investigations focused on finding fault.
@@ -840,7 +840,7 @@ const HNCModule1Section3_2 = () => {
                 <strong>Objective:</strong> Demonstrate visible leadership commitment across
                 multiple sites.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p>
                   <strong>Programme Structure:</strong>
                 </p>
@@ -935,7 +935,7 @@ const HNCModule1Section3_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -981,7 +981,7 @@ const HNCModule1Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section3-1">

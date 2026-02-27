@@ -243,7 +243,7 @@ const HNCModule1Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section4">
@@ -265,7 +265,7 @@ const HNCModule1Section4_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Safety Representatives
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Roles, rights, consultation requirements and safety committees in building services
             organisations
           </p>
@@ -450,7 +450,7 @@ const HNCModule1Section4_3 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
               <p className="text-sm font-medium text-orange-300 mb-2">Important Distinction</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Safety representatives <strong>do not have enforcement powers</strong>. They cannot
                 issue notices or require work to stop. Their role is to represent employees,
                 investigate and raise concerns, and participate in consultation. Enforcement remains
@@ -529,7 +529,7 @@ const HNCModule1Section4_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Information Restrictions
               </p>
-              <p className="text-sm text-white/90 mb-3">Employers are NOT required to disclose:</p>
+              <p className="text-sm text-white mb-3">Employers are NOT required to disclose:</p>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                 <li className="pl-1">
                   Information that would cause <strong>substantial injury</strong> to the business
@@ -548,7 +548,7 @@ const HNCModule1Section4_3 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
               <p className="text-sm font-medium text-green-400 mb-2">Protection from Detriment</p>
-              <p className="text-sm text-white/90">Safety representatives are protected from:</p>
+              <p className="text-sm text-white">Safety representatives are protected from:</p>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5 mt-2">
                 <li className="pl-1">
                   <strong>Dismissal</strong> for performing safety representative functions
@@ -562,7 +562,7 @@ const HNCModule1Section4_3 = () => {
                   <strong>Victimisation</strong> for raising legitimate health and safety concerns
                 </li>
               </ul>
-              <p className="text-xs text-white/70 mt-2">
+              <p className="text-xs text-white mt-2">
                 These protections are provided by the Employment Rights Act 1996.
               </p>
             </div>
@@ -655,7 +655,7 @@ const HNCModule1Section4_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Effective Consultation Practice
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Consultation means more than just informing representatives of decisions already
                 made:
               </p>
@@ -686,7 +686,7 @@ const HNCModule1Section4_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
                   <p className="text-sm font-medium text-blue-400 mb-2">Direct Consultation</p>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-white">
                     Employers can consult directly with employees individually on health and safety
                     matters. Suitable for small workplaces or where issues affect individuals
                     specifically.
@@ -696,7 +696,7 @@ const HNCModule1Section4_3 = () => {
                   <p className="text-sm font-medium text-purple-400 mb-2">
                     Representatives of Employee Safety (ROES)
                   </p>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-white">
                     Elected by the employees they represent. Employers must inform employees of
                     names and provide facilities, training, and time off to perform their functions.
                   </p>
@@ -708,7 +708,7 @@ const HNCModule1Section4_3 = () => {
               <p className="text-sm font-medium text-orange-300 mb-2">
                 ROES vs Union Safety Representatives
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 ROES have consultation rights under the 1996 Regulations but generally have{' '}
                 <strong>fewer specific powers</strong> than union safety representatives under the
                 SRSC Regulations. For example, they do not have the same detailed inspection rights,
@@ -743,7 +743,7 @@ const HNCModule1Section4_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Establishing a Safety Committee
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Under SRSC Regulations, if <strong>two or more safety representatives</strong> make
                 a written request, the employer{' '}
                 <strong>must establish a safety committee within 3 months</strong>.
@@ -953,7 +953,7 @@ const HNCModule1Section4_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1003,7 +1003,7 @@ const HNCModule1Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section4-2">

@@ -45,7 +45,7 @@ const CommonFaultsGrid = ({ onSelectFault }: CommonFaultsGridProps) => {
     <motion.div className="space-y-6" variants={containerVariants} initial="hidden" animate="show">
       {/* Fault Types List */}
       <div>
-        <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+        <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
           Fault Types
         </p>
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
@@ -72,15 +72,15 @@ const CommonFaultsGrid = ({ onSelectFault }: CommonFaultsGridProps) => {
                   <h3 className="text-[15px] font-medium text-white leading-tight">
                     {fault.title}
                   </h3>
-                  <p className="text-[13px] text-white/50 leading-tight mt-0.5 line-clamp-1">
+                  <p className="text-[13px] text-white leading-tight mt-0.5 line-clamp-1">
                     {fault.description}
                   </p>
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0">
-                  <span className="text-[13px] text-white/30">
+                  <span className="text-[13px] text-white">
                     {fault.commonSymptoms.length} symptoms
                   </span>
-                  <ChevronRight className="h-4 w-4 text-white/20" />
+                  <ChevronRight className="h-4 w-4 text-white" />
                 </div>
               </motion.div>
             );

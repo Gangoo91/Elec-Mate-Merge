@@ -106,7 +106,7 @@ const EmptyState = ({ onBrowseJobs }: { onBrowseJobs?: () => void }) => (
 
     {/* Text */}
     <h3 className="text-xl font-bold text-white mb-2">No Saved Jobs</h3>
-    <p className="text-white/60 mb-6 max-w-xs">
+    <p className="text-white mb-6 max-w-xs">
       Save jobs you're interested in by swiping right or tapping the bookmark icon
     </p>
 
@@ -201,7 +201,7 @@ const SavedJobCard = ({
           </div>
 
           {/* Stats Row */}
-          <div className="flex items-center flex-wrap gap-3 text-xs text-white/50 mb-3">
+          <div className="flex items-center flex-wrap gap-3 text-xs text-white mb-3">
             <span className="flex items-center gap-1.5">
               <MapPin className="h-3.5 w-3.5" />
               <span className="line-clamp-1 max-w-[120px]">{job.location}</span>
@@ -217,11 +217,11 @@ const SavedJobCard = ({
             <div>
               {job.salary && job.salary !== 'Not specified' ? (
                 <>
-                  <span className="text-xs text-white/40 block">Salary</span>
+                  <span className="text-xs text-white block">Salary</span>
                   <span className="text-sm font-bold text-white">{job.salary}</span>
                 </>
               ) : (
-                <span className="text-sm text-white/40">Salary not specified</span>
+                <span className="text-sm text-white">Salary not specified</span>
               )}
             </div>
             <Button
@@ -290,7 +290,7 @@ const SavedJobsTab = ({
             variant="ghost"
             size="sm"
             onClick={onClearAll}
-            className="h-8 px-2 text-xs text-white/60 hover:text-red-400 hover:bg-red-500/10"
+            className="h-8 px-2 text-xs text-white hover:text-red-400 hover:bg-red-500/10"
           >
             <Trash2 className="h-3.5 w-3.5 mr-1" />
             Clear All
@@ -312,7 +312,7 @@ const SavedJobsTab = ({
                 'border transition-all duration-200',
                 isActive
                   ? 'bg-amber-500/30 border-amber-500/50 text-amber-300'
-                  : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10'
+                  : 'bg-white/5 border-white/10 text-white hover:bg-white/10'
               )}
             >
               <Icon className="h-3.5 w-3.5" />
@@ -351,7 +351,7 @@ const SavedJobsTab = ({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
-        className="flex items-center justify-center gap-2 py-4 text-xs text-white/40"
+        className="flex items-center justify-center gap-2 py-4 text-xs text-white"
       >
         <Sparkles className="h-3.5 w-3.5" />
         <span>Swipe left to remove a saved job</span>

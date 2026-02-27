@@ -122,7 +122,7 @@ const AssessmentBestPractices = () => {
                 </div>
                 <ul className="space-y-2">
                   {practice.items.map((item, itemIndex) => (
-                    <li key={itemIndex} className="flex items-start gap-2 text-sm text-white/70">
+                    <li key={itemIndex} className="flex items-start gap-2 text-sm text-white">
                       <span
                         className={`w-1.5 h-1.5 ${colorConfig.bg.replace('/10', '')} rounded-full mt-1.5 flex-shrink-0`}
                       />
@@ -144,7 +144,7 @@ const AssessmentBestPractices = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-orange-300 mb-2">When in Doubt, Stop and Ask</h3>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   If you're unsure about any aspect of the site assessment, don't proceed. Contact
                   your supervisor, mentor, or a qualified electrician for guidance. It's always
                   better to ask questions than to compromise safety.

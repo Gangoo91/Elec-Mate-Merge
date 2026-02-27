@@ -317,7 +317,7 @@ const Module4Section2_4 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -334,13 +334,13 @@ const Module4Section2_4 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 2.4</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 2.4</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Avoiding Common Errors in Measurement and Positioning
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Learn to identify and prevent common measurement and positioning errors for accuracy
               and professional results
             </p>
@@ -355,7 +355,7 @@ const Module4Section2_4 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2 text-sm">In 30 Seconds</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                <ul className="text-white text-sm space-y-1 list-disc pl-4">
                   <li>Common errors: wrong reference points, reading mistakes, alignment issues</li>
                   <li>Golden rule: measure twice, cut/drill once for accuracy</li>
                   <li>Cross-check with second person and verify against drawings</li>
@@ -363,7 +363,7 @@ const Module4Section2_4 = () => {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2 text-sm">Spot it / Use it</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                <ul className="text-white text-sm space-y-1 list-disc pl-4">
                   <li>
                     <strong>Spot:</strong> Error patterns, wrong reference points, alignment issues
                   </li>
@@ -385,7 +385,7 @@ const Module4Section2_4 = () => {
               Learning Outcomes
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <ul className="text-white/80 text-sm space-y-2 list-disc pl-4">
+              <ul className="text-white text-sm space-y-2 list-disc pl-4">
                 <li>Identify common measurement and positioning errors in electrical work</li>
                 <li>Understand the causes and consequences of these errors</li>
                 <li>Apply best practices to avoid mistakes</li>
@@ -403,15 +403,15 @@ const Module4Section2_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Common Measurement Errors
             </h2>
-            <p className="text-white/70 text-sm mb-4">
+            <p className="text-white text-sm mb-4">
               Understanding typical measurement mistakes helps prevent costly errors:
             </p>
             <div className="space-y-3">
               {measurementErrors.map((error, i) => (
                 <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                   <p className="font-medium text-elec-yellow mb-1">{error.error}</p>
-                  <p className="text-white/70 text-sm mb-2">{error.description}</p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-sm mb-2">{error.description}</p>
+                  <p className="text-white text-xs">
                     <strong>Example:</strong> {error.example} — <strong>Prevention:</strong>{' '}
                     {error.prevention}
                   </p>
@@ -426,15 +426,15 @@ const Module4Section2_4 = () => {
               <span className="text-green-400/80 text-sm font-normal">04</span>
               Common Positioning Errors
             </h2>
-            <p className="text-white/70 text-sm mb-4">
+            <p className="text-white text-sm mb-4">
               Positioning mistakes affect both appearance and compliance:
             </p>
             <div className="space-y-3">
               {positioningErrors.map((error, i) => (
                 <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
                   <p className="font-medium text-green-400 mb-1">{error.error}</p>
-                  <p className="text-white/70 text-sm mb-2">{error.description}</p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-sm mb-2">{error.description}</p>
+                  <p className="text-white text-xs">
                     <strong>Impact:</strong> {error.impact} — <strong>Prevention:</strong>{' '}
                     {error.prevention}
                   </p>
@@ -457,15 +457,15 @@ const Module4Section2_4 = () => {
               <span className="text-purple-400/80 text-sm font-normal">05</span>
               Causes of Errors
             </h2>
-            <p className="text-white/70 text-sm mb-4">
+            <p className="text-white text-sm mb-4">
               Understanding root causes helps develop effective prevention strategies:
             </p>
             <div className="space-y-3">
               {errorCauses.map((cause, i) => (
                 <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
                   <p className="font-medium text-purple-400 mb-1">{cause.cause}</p>
-                  <p className="text-white/70 text-sm mb-2">{cause.description}</p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-sm mb-2">{cause.description}</p>
+                  <p className="text-white text-xs">
                     <strong>Consequences:</strong> {cause.consequences.join(', ')} —{' '}
                     <strong>Solution:</strong> {cause.solution}
                   </p>
@@ -488,15 +488,15 @@ const Module4Section2_4 = () => {
               <span className="text-orange-400/80 text-sm font-normal">06</span>
               Best Practices to Avoid Errors
             </h2>
-            <p className="text-white/70 text-sm mb-4">
+            <p className="text-white text-sm mb-4">
               Proven methods to maintain accuracy and prevent mistakes:
             </p>
             <div className="space-y-3">
               {bestPractices.map((practice, i) => (
                 <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
                   <p className="font-medium text-orange-400 mb-1">{practice.practice}</p>
-                  <p className="text-white/70 text-sm mb-2">{practice.description}</p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-sm mb-2">{practice.description}</p>
+                  <p className="text-white text-xs">
                     <strong>Application:</strong> {practice.application} — <strong>Benefit:</strong>{' '}
                     {practice.benefit}
                   </p>
@@ -505,7 +505,7 @@ const Module4Section2_4 = () => {
             </div>
             <div className="mt-4 p-4 rounded-lg bg-white/5 border border-white/10">
               <p className="text-sm font-medium text-white mb-1">Additional Tips</p>
-              <p className="text-white/60 text-xs">
+              <p className="text-white text-xs">
                 Keep drawings nearby and mark off completed checks. Work in pairs for large-scale
                 measurements to avoid tape sag errors and provide verification.
               </p>
@@ -531,8 +531,8 @@ const Module4Section2_4 = () => {
               {crossCheckingMethods.map((method, i) => (
                 <div key={i} className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
                   <p className="font-medium text-red-400 mb-1">{method.method}</p>
-                  <p className="text-white/70 text-sm mb-2">{method.description}</p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-sm mb-2">{method.description}</p>
+                  <p className="text-white text-xs">
                     <strong>When:</strong> {method.when} — <strong>Effectiveness:</strong>{' '}
                     {method.effectiveness}
                   </p>
@@ -550,7 +550,7 @@ const Module4Section2_4 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
               <p className="font-medium text-red-400 mb-2">Impact of Measurement Errors</p>
-              <div className="text-white/80 text-sm space-y-2">
+              <div className="text-white text-sm space-y-2">
                 <p>
                   • <strong>Project delays</strong> due to rework requirements
                 </p>
@@ -581,7 +581,7 @@ const Module4Section2_4 = () => {
               Real-World Example
             </h2>
             <div className="p-4 rounded-lg bg-blue-500/10 border-l-2 border-blue-500/50">
-              <p className="text-white/80 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 On a new office fit-out, an electrician measured socket positions from the subfloor
                 rather than the final raised floor level. When the flooring was installed, all
                 sockets ended up 50 mm too low, requiring them to be removed and repositioned at a
@@ -600,7 +600,7 @@ const Module4Section2_4 = () => {
           {/* FAQs */}
           <section className="mb-10">
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-              <span className="text-white/40 text-sm font-normal">10</span>
+              <span className="text-white text-sm font-normal">10</span>
               Frequently Asked Questions
             </h2>
             <div className="space-y-4">
@@ -608,7 +608,7 @@ const Module4Section2_4 = () => {
                 <p className="font-medium text-white text-sm mb-1">
                   Q: If I'm confident in my measuring skills, do I still need to double-check?
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A: Yes — confidence is not a substitute for verification, especially on critical
                   dimensions.
                 </p>
@@ -617,7 +617,7 @@ const Module4Section2_4 = () => {
                 <p className="font-medium text-white text-sm mb-1">
                   Q: Can I use different measuring tools on the same job?
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A: It's best to stick to one tool type to avoid variations between devices.
                 </p>
               </div>
@@ -625,7 +625,7 @@ const Module4Section2_4 = () => {
                 <p className="font-medium text-white text-sm mb-1">
                   Q: What should I do if the drawing measurement conflicts with on-site conditions?
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A: Confirm with the site supervisor before making adjustments.
                 </p>
               </div>
@@ -635,11 +635,11 @@ const Module4Section2_4 = () => {
           {/* Summary */}
           <section className="mb-10">
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-              <span className="text-white/40 text-sm font-normal">11</span>
+              <span className="text-white text-sm font-normal">11</span>
               Summary
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 Avoiding measurement and positioning errors comes down to preparation, precision,
                 and verification. Consistency in methods, adherence to drawings, and cross-checking
                 will greatly reduce costly mistakes. Remember: measure twice, cut once, and always

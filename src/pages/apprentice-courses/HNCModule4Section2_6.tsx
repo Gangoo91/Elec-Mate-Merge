@@ -233,7 +233,7 @@ const HNCModule4Section2_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section2">
@@ -255,7 +255,7 @@ const HNCModule4Section2_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Cable Installation Methods
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Containment systems, supports, bending radii, segregation and labelling for professional
             installations
           </p>
@@ -516,7 +516,7 @@ const HNCModule4Section2_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Minimum Bending Radii</p>
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
-                  <p className="text-white/70 mb-1">Multicore Cables:</p>
+                  <p className="text-white mb-1">Multicore Cables:</p>
                   <ul className="text-white space-y-0.5">
                     <li>
                       • Fixed installation: <strong>6× OD</strong>
@@ -530,7 +530,7 @@ const HNCModule4Section2_6 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-white/70 mb-1">Single-Core Cables:</p>
+                  <p className="text-white mb-1">Single-Core Cables:</p>
                   <ul className="text-white space-y-0.5">
                     <li>
                       • 25mm² and below: <strong>6× OD</strong>
@@ -544,7 +544,7 @@ const HNCModule4Section2_6 = () => {
                   </ul>
                 </div>
               </div>
-              <p className="text-xs text-white/60 mt-2">OD = Overall Diameter of cable</p>
+              <p className="text-xs text-white mt-2">OD = Overall Diameter of cable</p>
             </div>
 
             <div className="my-6">
@@ -632,7 +632,7 @@ const HNCModule4Section2_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Segregation Methods</p>
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
-                  <p className="text-white/70 mb-1">Physical Separation:</p>
+                  <p className="text-white mb-1">Physical Separation:</p>
                   <ul className="text-white space-y-0.5">
                     <li>• 300mm minimum spacing</li>
                     <li>• Separate containment systems</li>
@@ -640,7 +640,7 @@ const HNCModule4Section2_6 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-white/70 mb-1">Barriers/Screening:</p>
+                  <p className="text-white mb-1">Barriers/Screening:</p>
                   <ul className="text-white space-y-0.5">
                     <li>• Metal dividers in shared trunking</li>
                     <li>• Screened cables (STP, SWA)</li>
@@ -805,13 +805,13 @@ const HNCModule4Section2_6 = () => {
                 <strong>Requirement:</strong> Power and data distribution for open-plan office,
                 500m² floor plate
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/70">Containment selection:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Containment selection:</p>
                 <p>- Floor trunking for workstation outlets (power)</p>
                 <p>- Raised floor void with basket for data cables</p>
                 <p>- Metal dado trunking around perimeter</p>
                 <p>- Segregation: minimum 50mm between power/data compartments</p>
-                <p className="mt-2 text-white/70">Installation notes:</p>
+                <p className="mt-2 text-white">Installation notes:</p>
                 <p>- Maintain 45% max fill in trunking</p>
                 <p>- Label all outlets to match floor plan references</p>
                 <p>- Fire-stop all penetrations to riser</p>
@@ -829,12 +829,12 @@ const HNCModule4Section2_6 = () => {
                 <strong>Requirement:</strong> 10-storey commercial building electrical riser,
                 sub-mains and small power
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/70">Containment selection:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Containment selection:</p>
                 <p>- Heavy-duty cable ladder for SWA sub-mains</p>
                 <p>- Perforated cable tray for final circuit cables</p>
                 <p>- Separate basket system for data/BMS</p>
-                <p className="mt-2 text-white/70">Installation notes:</p>
+                <p className="mt-2 text-white">Installation notes:</p>
                 <p>- Vertical support cleats every 2m for SWA</p>
                 <p>- Minimum bend radius 6× OD at floor entries</p>
                 <p>- Fire barriers at each floor with fire-stop</p>
@@ -853,12 +853,12 @@ const HNCModule4Section2_6 = () => {
                 <strong>Requirement:</strong> Basement plant room with multiple AHUs, pumps and
                 chillers
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/70">Containment selection:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Containment selection:</p>
                 <p>- Main cable tray routes from MCC</p>
                 <p>- Steel conduit drops to individual motors</p>
                 <p>- SWA clipped direct for short runs</p>
-                <p className="mt-2 text-white/70">Installation notes:</p>
+                <p className="mt-2 text-white">Installation notes:</p>
                 <p>- Support tray at 1.5m centres, cleats at drops</p>
                 <p>- Maintain 300mm clearance from hot surfaces</p>
                 <p>- IP-rated glands for damp environment</p>
@@ -930,7 +930,7 @@ const HNCModule4Section2_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -976,7 +976,7 @@ const HNCModule4Section2_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section2-5">

@@ -175,7 +175,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-3">
@@ -200,7 +200,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Platforms, Guard Rails &amp; Toe Boards
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Working platform specifications, board dimensions, guard rail heights, toe board
             requirements, and why every component matters for fall prevention
           </p>
@@ -288,7 +288,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
                 <p className="text-sm font-medium text-slate-400 mb-3">
                   Schedule 3 &mdash; Key Platform Requirements
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -345,7 +345,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Who Is Responsible?</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Under the Work at Height Regulations, every{' '}
                   <strong className="text-white">employer</strong> and every{' '}
                   <strong className="text-white">person who controls</strong> the way work at height
@@ -383,9 +383,9 @@ export default function ScaffoldingAwarenessModule3Section3() {
                   <div className="bg-white/5 rounded-lg p-3">
                     <div className="flex items-center justify-between mb-1">
                       <p className="text-base font-bold text-slate-400">W06</p>
-                      <p className="text-xs text-white/50">Min 600 mm</p>
+                      <p className="text-xs text-white">Min 600 mm</p>
                     </div>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Inspection, painting, and light work with no material storage on the platform.
                       Typically three boards wide.
                     </p>
@@ -393,9 +393,9 @@ export default function ScaffoldingAwarenessModule3Section3() {
                   <div className="bg-white/5 rounded-lg p-3">
                     <div className="flex items-center justify-between mb-1">
                       <p className="text-base font-bold text-slate-400">W09</p>
-                      <p className="text-xs text-white/50">Min 900 mm</p>
+                      <p className="text-xs text-white">Min 900 mm</p>
                     </div>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       General construction work including bricklaying and blockwork, where materials
                       are stored on the platform alongside the operative.
                     </p>
@@ -403,9 +403,9 @@ export default function ScaffoldingAwarenessModule3Section3() {
                   <div className="bg-white/5 rounded-lg p-3">
                     <div className="flex items-center justify-between mb-1">
                       <p className="text-base font-bold text-slate-400">W12</p>
-                      <p className="text-xs text-white/50">Min 1200 mm</p>
+                      <p className="text-xs text-white">Min 1200 mm</p>
                     </div>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Heavier construction activities with significant material storage, or where
                       operatives need to pass each other safely on the platform.
                     </p>
@@ -413,9 +413,9 @@ export default function ScaffoldingAwarenessModule3Section3() {
                   <div className="bg-white/5 rounded-lg p-3">
                     <div className="flex items-center justify-between mb-1">
                       <p className="text-base font-bold text-slate-400">W24+</p>
-                      <p className="text-xs text-white/50">Min 2400 mm</p>
+                      <p className="text-xs text-white">Min 2400 mm</p>
                     </div>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Loading bays and wide platforms used for hoisting materials or where plant and
                       equipment is operated on the platform.
                     </p>
@@ -436,7 +436,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
                 <p className="text-sm font-medium text-white mb-2">
                   Common Mistake &mdash; Narrow Platforms
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   One of the most common scaffold defects found on site is a platform that is too
                   narrow for the work being done. A bricklayer cannot safely work from a three-board
                   platform with blocks stacked beside them. An electrician installing external
@@ -473,28 +473,28 @@ export default function ScaffoldingAwarenessModule3Section3() {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-slate-400">Thickness</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       38 mm standard. Boards are also available in 50 mm and 63 mm for heavier-duty
                       applications.
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-slate-400">Width</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       225 mm (approximately 9 inches). This is the standard width used to calculate
                       platform widths in &ldquo;number of boards.&rdquo;
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-slate-400">Length</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Available in standard lengths of 2.4 m, 3.0 m, and 3.9 m. Lengths up to 4.8 m
                       exist but are less common.
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-slate-400">Material</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Typically whitewood (spruce) or redwood (pine). Must be straight-grained with
                       no significant defects.
                     </p>
@@ -506,7 +506,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Maximum Span &amp; Overhang Rules
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -552,7 +552,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
                     Board Condition &mdash; Reject Defective Boards
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Scaffold boards must be inspected before use. Reject any board that is{' '}
                   <strong className="text-white">
                     split, warped, twisted, excessively knotted, rotten, or has been weakened by
@@ -585,7 +585,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
 
               <div className="bg-slate-500/10 border border-slate-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-slate-400 mb-3">Board Clip Key Facts</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -631,7 +631,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">The 25 mm Rule</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The 25 mm maximum gap applies to <strong className="text-white">all gaps</strong>{' '}
                   on the platform &mdash; between adjacent boards, between the last board and the
                   scaffold standard, and between the end of a board and any structure or facade.
@@ -647,7 +647,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
                   <AlertTriangle className="h-5 w-5 text-slate-400" />
                   <p className="text-sm font-medium text-slate-400">Common On-Site Issue</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Boards are sometimes removed from platforms by other trades to pass materials
                   through, or they are displaced by heavy use and not repositioned. If you arrive at
                   a scaffold and find boards missing, displaced, or with gaps wider than 25 mm,{' '}
@@ -686,7 +686,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-slate-400">Minimum Height</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       The top guard rail must be at least{' '}
                       <strong className="text-white">950 mm</strong> above the platform surface.
                       This height places the rail above the centre of gravity for most adults.
@@ -694,7 +694,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-slate-400">Maximum Gap</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       The gap between the top rail and any intermediate rail, or between any
                       intermediate rail and the toe board, must not exceed{' '}
                       <strong className="text-white">470 mm</strong>.
@@ -702,14 +702,14 @@ export default function ScaffoldingAwarenessModule3Section3() {
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-slate-400">Material</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Guard rails are typically formed from standard scaffold tubes (48.3 mm OD
                       steel tube) secured with right-angle couplers to the scaffold standards.
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-slate-400">Strength</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Must be capable of withstanding the force of a person leaning against or
                       falling into the rail. Must not deform to the point where the person could
                       fall over or under it.
@@ -732,7 +732,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Never Remove Guard Rails</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Guard rails must <strong className="text-white">never be removed</strong> to
                   accommodate work tasks, pass materials, or gain access. If a guard rail needs to
                   be temporarily removed (for example, to load materials at a specific point), this
@@ -763,7 +763,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Mid Rails</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -800,7 +800,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
 
               <div className="bg-slate-500/10 border border-slate-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-slate-400 mb-3">Toe Boards</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -847,7 +847,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Brick Guards &amp; Mesh Panels
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -949,7 +949,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
                     >
                       <div className="h-2 bg-slate-400/40 rounded-full mx-2 sm:mx-4" />
                       <div className="flex justify-between items-start mt-1 px-0 sm:px-2">
-                        <span className="text-[9px] sm:text-[10px] text-white/60 font-medium">
+                        <span className="text-[9px] sm:text-[10px] text-white font-medium">
                           Mid rail
                         </span>
                         <span className="text-[9px] sm:text-[10px] text-red-400 font-medium">
@@ -979,10 +979,10 @@ export default function ScaffoldingAwarenessModule3Section3() {
                         <div className="flex-1 h-3 sm:h-4 bg-amber-800/50 border border-amber-700/40 rounded-sm" />
                       </div>
                       <div className="flex justify-between mt-0.5">
-                        <span className="text-[8px] sm:text-[9px] text-white/50">
+                        <span className="text-[8px] sm:text-[9px] text-white">
                           38 mm x 225 mm boards
                         </span>
-                        <span className="text-[8px] sm:text-[9px] text-white/50">
+                        <span className="text-[8px] sm:text-[9px] text-white">
                           max 25 mm gap
                         </span>
                       </div>
@@ -996,7 +996,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
                         <div className="w-2 h-2 bg-white/30 rounded-full" />
                       </div>
                       <div className="h-[1px] bg-white/20 mx-4 sm:mx-8 mt-0.5" />
-                      <span className="text-[8px] text-white/40 block text-center mt-0.5">
+                      <span className="text-[8px] text-white block text-center mt-0.5">
                         Transoms (supporting tubes)
                       </span>
                     </div>
@@ -1007,19 +1007,19 @@ export default function ScaffoldingAwarenessModule3Section3() {
                 <div className="flex flex-wrap gap-3 mt-3 justify-center">
                   <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 bg-slate-400/60 rounded-sm" />
-                    <span className="text-[10px] text-white/60">Guard rail / mid rail</span>
+                    <span className="text-[10px] text-white">Guard rail / mid rail</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 bg-amber-800/50 border border-amber-700/40 rounded-sm" />
-                    <span className="text-[10px] text-white/60">Scaffold boards</span>
+                    <span className="text-[10px] text-white">Scaffold boards</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 bg-amber-700/40 border border-amber-600/50 rounded-sm" />
-                    <span className="text-[10px] text-white/60">Toe board</span>
+                    <span className="text-[10px] text-white">Toe board</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 bg-white/20 rounded-full" />
-                    <span className="text-[10px] text-white/60">Standard / transom</span>
+                    <span className="text-[10px] text-white">Standard / transom</span>
                   </div>
                 </div>
               </div>
@@ -1063,7 +1063,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
                     {/* Mid rail with dimension */}
                     <div className="absolute left-3 sm:left-6 right-3 sm:right-6 top-[110px]">
                       <div className="h-2 bg-slate-400/60 rounded-full mx-2" />
-                      <p className="text-center text-[9px] sm:text-[10px] text-white/60 font-medium mt-1">
+                      <p className="text-center text-[9px] sm:text-[10px] text-white font-medium mt-1">
                         MID RAIL
                       </p>
                     </div>
@@ -1099,7 +1099,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
                         <div className="flex-1 h-3 bg-amber-800/50 border border-amber-700/40 rounded-sm" />
                         <div className="flex-1 h-3 bg-amber-800/50 border border-amber-700/40 rounded-sm" />
                       </div>
-                      <p className="text-center text-[8px] sm:text-[9px] text-white/40 mt-1">
+                      <p className="text-center text-[8px] sm:text-[9px] text-white mt-1">
                         PLATFORM SURFACE
                       </p>
                     </div>
@@ -1125,15 +1125,15 @@ export default function ScaffoldingAwarenessModule3Section3() {
                 <div className="mt-3 grid grid-cols-3 gap-2">
                   <div className="bg-slate-500/10 border border-slate-500/20 rounded p-2 text-center">
                     <p className="text-[10px] sm:text-xs text-slate-400 font-bold">950 mm</p>
-                    <p className="text-[8px] sm:text-[9px] text-white/50">min top rail height</p>
+                    <p className="text-[8px] sm:text-[9px] text-white">min top rail height</p>
                   </div>
                   <div className="bg-red-500/10 border border-red-500/20 rounded p-2 text-center">
                     <p className="text-[10px] sm:text-xs text-red-400 font-bold">470 mm</p>
-                    <p className="text-[8px] sm:text-[9px] text-white/50">max gap between rails</p>
+                    <p className="text-[8px] sm:text-[9px] text-white">max gap between rails</p>
                   </div>
                   <div className="bg-amber-500/10 border border-amber-500/20 rounded p-2 text-center">
                     <p className="text-[10px] sm:text-xs text-amber-400 font-bold">150 mm</p>
-                    <p className="text-[8px] sm:text-[9px] text-white/50">min toe board height</p>
+                    <p className="text-[8px] sm:text-[9px] text-white">min toe board height</p>
                   </div>
                 </div>
               </div>
@@ -1167,7 +1167,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
                     <p className="text-base font-bold text-slate-400">
                       Brick Guards (Steel Mesh Panels)
                     </p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Rigid steel mesh panels attached to the guard rail system, filling the gap
                       from the toe board to the top rail. Used where brickwork, blockwork, or loose
                       materials are handled on the platform. The mesh aperture must be small enough
@@ -1176,7 +1176,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-slate-400">Debris Netting</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Fine mesh netting draped over the scaffold face. Commonly used on scaffolds
                       over public areas to catch small items of debris. Debris netting is{' '}
                       <strong className="text-white">not a substitute</strong> for guard rails
@@ -1187,7 +1187,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
                     <p className="text-base font-bold text-slate-400">
                       Scaffold Sheeting (Monarflex)
                     </p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Solid or semi-solid sheeting attached to the scaffold face. Provides weather
                       protection and containment. Sheeting significantly increases the wind load on
                       the scaffold and must be accounted for in the scaffold design. Additional ties
@@ -1196,7 +1196,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-slate-400">Fan Protection</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       A horizontal platform projecting outward from the scaffold face to catch
                       falling objects. Used where scaffolds are erected over public highways or
                       pedestrian routes. Fan protection is specified in the scaffold design and must
@@ -1208,7 +1208,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Wind Loading Considerations</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Mesh panels, netting, and sheeting all increase the{' '}
                   <strong className="text-white">wind load acting on the scaffold</strong>. A
                   scaffold designed for open guard rails will experience significantly greater wind
@@ -1235,7 +1235,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Fundamental Rule</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A working platform must be{' '}
                   <strong className="text-white">fully completed before any person uses it</strong>.
                   There are no exceptions. An incomplete platform is an unsafe platform &mdash;
@@ -1247,7 +1247,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Platform Completion Checklist</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -1313,7 +1313,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
                 <p className="text-sm font-medium text-slate-400 mb-3">
                   Scaffold Tags &mdash; What They Tell You
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1351,7 +1351,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
                 <p className="text-sm font-medium text-white mb-2">
                   Your Responsibility as an Operative
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Even though you are not the scaffolder who erected the platform, you have a legal
                   duty under the Work at Height Regulations to{' '}
                   <strong className="text-white">check the scaffold before you use it</strong>.
@@ -1375,7 +1375,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1389,7 +1389,7 @@ export default function ScaffoldingAwarenessModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-3">

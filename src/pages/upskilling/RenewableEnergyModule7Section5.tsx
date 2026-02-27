@@ -241,7 +241,7 @@ const RenewableEnergyModule7Section5 = () => {
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
           Test Equipment & Diagnostics
         </h1>
-        <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+        <p className="text-white text-sm sm:text-base max-w-xl mx-auto">
           Selection and use of meters, test equipment, and diagnostic tools for renewable energy
           systems
         </p>
@@ -291,7 +291,7 @@ const RenewableEnergyModule7Section5 = () => {
           ].map((outcome, index) => (
             <div key={index} className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
-              <span className="text-white/80 text-sm">{outcome}</span>
+              <span className="text-white text-sm">{outcome}</span>
             </div>
           ))}
         </div>
@@ -304,7 +304,7 @@ const RenewableEnergyModule7Section5 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">01</span>
             <h2 className="text-xl font-semibold text-white">Essential Test Equipment</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Proper test equipment is essential for safe and effective diagnosis of renewable
               energy systems. Equipment must be rated for DC voltages and conditions present.
@@ -338,7 +338,7 @@ const RenewableEnergyModule7Section5 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">02</span>
             <h2 className="text-xl font-semibold text-white">Thermal Imaging Equipment</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Thermal imaging cameras reveal temperature anomalies that indicate developing faults
               before they cause system failures.
@@ -372,7 +372,7 @@ const RenewableEnergyModule7Section5 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">03</span>
             <h2 className="text-xl font-semibold text-white">Advanced Diagnostic Tools</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Specialised diagnostic tools enable detailed performance analysis beyond basic
               electrical measurements.
@@ -407,7 +407,7 @@ const RenewableEnergyModule7Section5 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">04</span>
             <h2 className="text-xl font-semibold text-white">Test Procedures and Techniques</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Correct test procedures ensure accurate results and safe working on energised or
               potentially energised systems.
@@ -441,7 +441,7 @@ const RenewableEnergyModule7Section5 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">05</span>
             <h2 className="text-xl font-semibold text-white">Equipment Care and Calibration</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Proper maintenance and calibration ensures test equipment provides accurate, reliable
               measurements.
@@ -471,7 +471,7 @@ const RenewableEnergyModule7Section5 = () => {
             <Zap className="w-4 h-4 text-elec-yellow" />
             Practical Guidance
           </h3>
-          <div className="space-y-2 text-white/80 text-sm">
+          <div className="space-y-2 text-white text-sm">
             <p>
               <span className="text-white font-medium">Building a test kit:</span> Start with
               essential equipment - multimeter, DC clamp, IR tester. Add specialised tools as
@@ -498,7 +498,7 @@ const RenewableEnergyModule7Section5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <h3 className="text-white font-medium mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>

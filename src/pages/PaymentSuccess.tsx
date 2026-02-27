@@ -242,7 +242,7 @@ const PaymentSuccess = () => {
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
               {isTrial ? 'Your 7-day free trial has started!' : 'Welcome to Elec-Mate!'}
             </h1>
-            <p className="text-white/60 text-[15px] sm:text-base">
+            <p className="text-white text-[15px] sm:text-base">
               {isTrial ? (
                 <>
                   You won&apos;t be charged until{' '}
@@ -283,7 +283,7 @@ const PaymentSuccess = () => {
               {/* Features list */}
               <div className="grid grid-cols-2 gap-2">
                 {plan.features.map((feature, idx) => (
-                  <div key={idx} className="flex items-center gap-2 text-[13px] text-white/70">
+                  <div key={idx} className="flex items-center gap-2 text-[13px] text-white">
                     <CheckCircle className="h-3.5 w-3.5 text-green-400 flex-shrink-0" />
                     <span>{feature}</span>
                   </div>
@@ -310,7 +310,7 @@ const PaymentSuccess = () => {
                 Account activated
               </span>
             ) : (
-              <span className="text-[13px] text-white/50 flex items-center gap-1.5">
+              <span className="text-[13px] text-white flex items-center gap-1.5">
                 <Loader2 className="h-3.5 w-3.5 animate-spin" />
                 Activating your account...
               </span>
@@ -345,7 +345,7 @@ const PaymentSuccess = () => {
             <Button
               variant="outline"
               asChild
-              className="w-full h-11 text-[14px] bg-white/[0.03] border-white/10 hover:bg-white/[0.06] text-white/80 rounded-xl touch-manipulation"
+              className="w-full h-11 text-[14px] bg-white/[0.03] border-white/10 hover:bg-white/[0.06] text-white rounded-xl touch-manipulation"
             >
               <Link to="/settings">Manage Subscription</Link>
             </Button>
@@ -358,14 +358,14 @@ const PaymentSuccess = () => {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="text-center mt-6 space-y-2"
           >
-            <p className="text-[12px] text-white/40">
+            <p className="text-[12px] text-white">
               A confirmation email has been sent to your inbox.
             </p>
-            <p className="text-[12px] text-white/40">
+            <p className="text-[12px] text-white">
               Need help? Email{' '}
               <a
                 href="mailto:info@elec-mate.com"
-                className="text-white/60 hover:text-white underline"
+                className="text-white hover:text-white underline"
               >
                 info@elec-mate.com
               </a>{' '}

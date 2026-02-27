@@ -58,7 +58,7 @@ const AM2Module1 = () => {
                 size="sm"
                 className={cn(
                   'min-h-[44px] min-w-[44px] p-2 -ml-2',
-                  'text-white/70 hover:text-white hover:bg-white/5',
+                  'text-white hover:text-white hover:bg-white/5',
                   'touch-manipulation active:scale-[0.98] transition-all duration-ios-normal ease-ios-ease'
                 )}
                 asChild
@@ -67,7 +67,7 @@ const AM2Module1 = () => {
                   <ArrowLeft className="w-5 h-5" />
                 </Link>
               </Button>
-              <span className="text-ios-footnote text-white/50">AM2 Course</span>
+              <span className="text-ios-footnote text-white">AM2 Course</span>
             </div>
           </div>
         </div>
@@ -99,7 +99,7 @@ const AM2Module1 = () => {
             </h1>
 
             {/* Description */}
-            <p className="text-ios-body text-white/70 leading-relaxed max-w-2xl ios-animate-in">
+            <p className="text-ios-body text-white leading-relaxed max-w-2xl ios-animate-in">
               Understanding the purpose, structure, marking criteria and common failure reasons for
               the AM2 assessment.
             </p>

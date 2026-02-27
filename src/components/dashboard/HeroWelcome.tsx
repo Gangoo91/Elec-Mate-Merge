@@ -117,7 +117,7 @@ export function HeroWelcome() {
                 {avatarUrl ? (
                   <img src={avatarUrl} alt="Profile" className="w-full h-full object-cover" />
                 ) : (
-                  <User className="w-6 h-6 sm:w-7 sm:h-7 text-white/40" />
+                  <User className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                 )}
               </div>
               {/* Camera overlay */}
@@ -148,7 +148,7 @@ export function HeroWelcome() {
               <span className="text-elec-yellow">{firstName}</span>
             </h1>
 
-            <p className="text-xs sm:text-sm text-white/40 mt-0.5 line-clamp-1">
+            <p className="text-xs sm:text-sm text-white mt-0.5 line-clamp-1">
               Let's get to work
             </p>
           </div>
@@ -156,7 +156,7 @@ export function HeroWelcome() {
           {/* Status indicator - desktop only */}
           <div className="hidden md:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.04] border border-elec-yellow/20 flex-shrink-0">
             <div className="w-1.5 h-1.5 rounded-full bg-green-500" />
-            <span className="text-[10px] text-white/50 font-medium">Online</span>
+            <span className="text-[10px] text-white font-medium">Online</span>
           </div>
         </div>
       </div>

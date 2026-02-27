@@ -191,7 +191,7 @@ export default function ManualHandlingModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-1">
@@ -216,7 +216,7 @@ export default function ManualHandlingModule1Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             What Is Manual Handling?
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The legal definition, the scale of the problem in UK workplaces, and why manual handling
             injuries remain the most common cause of occupational ill health
           </p>
@@ -320,7 +320,7 @@ export default function ManualHandlingModule1Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   The Six Types of Manual Handling
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">1. Lifting</p>
                     <p>
@@ -386,7 +386,7 @@ export default function ManualHandlingModule1Section1() {
                   <AlertTriangle className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">Common Misconception</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Many workers believe there is a legal maximum weight limit for manual handling
                   &mdash; often cited as 25 kg for men or 16 kg for women.{' '}
                   <strong className="text-white">This is not true.</strong> The HSE provides
@@ -433,25 +433,25 @@ export default function ManualHandlingModule1Section1() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">~500,000</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       workers suffering from work-related MSDs each year
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">~30%</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       of all workplace injuries are manual handling related
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">7.3m</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       working days lost to MSDs each year in the UK
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">&pound;5bn+</p>
-                    <p className="text-white/70 text-xs">estimated annual cost to the UK economy</p>
+                    <p className="text-white text-xs">estimated annual cost to the UK economy</p>
                   </div>
                 </div>
               </div>
@@ -497,7 +497,7 @@ export default function ManualHandlingModule1Section1() {
                         </span>
                       </div>
                     </div>
-                    <p className="text-xs text-white/50 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Disc injuries, muscle strains, ligament sprains, sciatica
                     </p>
                   </div>
@@ -515,7 +515,7 @@ export default function ManualHandlingModule1Section1() {
                         style={{ width: '25%' }}
                       ></div>
                     </div>
-                    <p className="text-xs text-white/50 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Rotator cuff tears, tennis elbow, carpal tunnel, tendonitis
                     </p>
                   </div>
@@ -531,7 +531,7 @@ export default function ManualHandlingModule1Section1() {
                         style={{ width: '20%' }}
                       ></div>
                     </div>
-                    <p className="text-xs text-white/50 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Knee meniscus injuries, ankle sprains, foot crush injuries
                     </p>
                   </div>
@@ -549,7 +549,7 @@ export default function ManualHandlingModule1Section1() {
                         style={{ width: '15%' }}
                       ></div>
                     </div>
-                    <p className="text-xs text-white/50 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Cervical disc problems, hernias, multi-site pain syndromes
                     </p>
                   </div>
@@ -557,7 +557,7 @@ export default function ManualHandlingModule1Section1() {
                 <div className="mt-4 p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
                   <div className="flex items-start gap-2">
                     <Activity className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       <strong className="text-red-400">Critical insight:</strong> The lower back
                       accounts for approximately 40% of all manual handling injuries. The lumbar
                       spine (particularly the L4/L5 and L5/S1 vertebral segments) bears the greatest
@@ -583,7 +583,7 @@ export default function ManualHandlingModule1Section1() {
                   <AlertTriangle className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">The Hidden Cost</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Beyond the headline statistics, manual handling injuries have a devastating impact
                   on individuals. Chronic back pain can last for years or become permanent,
                   preventing workers from continuing in their trade. Many electricians who develop
@@ -620,7 +620,7 @@ export default function ManualHandlingModule1Section1() {
                     Typical Electrician Manual Handling Tasks
                   </p>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">Cable Drums &amp; Reels</p>
                     <ul className="space-y-1.5">
@@ -704,7 +704,7 @@ export default function ManualHandlingModule1Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Additional Electrician Manual Handling Hazards
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -753,7 +753,7 @@ export default function ManualHandlingModule1Section1() {
                     Electrician-Specific Risk Factors
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Electricians face particular manual handling risks because their work frequently
                   involves <strong className="text-white">awkward postures</strong> (overhead
                   reaching, kneeling, bending into voids),{' '}
@@ -796,7 +796,7 @@ export default function ManualHandlingModule1Section1() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-emerald-400 text-xs font-semibold mb-1">Back Injuries</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Disc prolapse (slipped disc), muscle strains, ligament sprains, facet joint
                       dysfunction, sciatica (nerve compression). The lumbar spine is the most
                       vulnerable region.
@@ -804,7 +804,7 @@ export default function ManualHandlingModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-emerald-400 text-xs font-semibold mb-1">Shoulder Injuries</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Rotator cuff tears, impingement syndrome, frozen shoulder. Common in
                       electricians who work with arms raised overhead for prolonged periods.
                     </p>
@@ -813,7 +813,7 @@ export default function ManualHandlingModule1Section1() {
                     <p className="text-emerald-400 text-xs font-semibold mb-1">
                       Upper Limb Disorders
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Tennis elbow (lateral epicondylitis), carpal tunnel syndrome, tendonitis, De
                       Quervain&rsquo;s tenosynovitis. Often caused by repetitive gripping and
                       twisting.
@@ -823,7 +823,7 @@ export default function ManualHandlingModule1Section1() {
                     <p className="text-emerald-400 text-xs font-semibold mb-1">
                       Knee &amp; Lower Limb
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Knee bursitis (&ldquo;carpet layer&rsquo;s knee&rdquo;), meniscus tears, ankle
                       ligament sprains. Common in electricians who kneel for floor-level work.
                     </p>
@@ -840,7 +840,7 @@ export default function ManualHandlingModule1Section1() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <p className="text-red-400 font-semibold text-sm mb-2">Acute Injuries</p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                         <span>Result from a single event or incident</span>
@@ -867,7 +867,7 @@ export default function ManualHandlingModule1Section1() {
                     <p className="text-amber-400 font-semibold text-sm mb-2">
                       Chronic / Cumulative Injuries
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                         <span>Develop gradually over weeks, months, or years</span>
@@ -909,7 +909,7 @@ export default function ManualHandlingModule1Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Long-Term Consequences</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Chronic MSDs can be life-changing. Severe back injuries may require surgery and
                   lengthy rehabilitation. Nerve damage can cause permanent numbness, weakness, or
                   pain. Many affected workers are unable to return to manual trades, face reduced
@@ -941,7 +941,7 @@ export default function ManualHandlingModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Primary Risk Factors</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -1043,7 +1043,7 @@ export default function ManualHandlingModule1Section1() {
                 points to remember are:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -1111,7 +1111,7 @@ export default function ManualHandlingModule1Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1125,7 +1125,7 @@ export default function ManualHandlingModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-1">

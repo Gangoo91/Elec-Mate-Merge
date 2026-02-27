@@ -36,7 +36,7 @@ const QuizPerformanceAnalytics = ({ onViewReport }: QuizPerformanceAnalyticsProp
             <div key={index} className="space-y-2">
               <div className="flex justify-between text-xs sm:text-sm">
                 <span className="text-foreground">{subject.subject}</span>
-                <span className="text-white/80">
+                <span className="text-white">
                   {subject.score > 0 ? `${subject.score}%` : 'Not attempted'}
                 </span>
               </div>

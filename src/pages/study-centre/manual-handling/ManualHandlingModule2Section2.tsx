@@ -225,7 +225,7 @@ export default function ManualHandlingModule2Section2() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Pushing, Pulling &amp; Carrying
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto leading-relaxed">
+          <p className="text-white max-w-xl mx-auto leading-relaxed">
             Force thresholds, body positioning, reducing friction, safe carrying techniques,
             one-handed carrying risks, and stairway safety
           </p>
@@ -371,7 +371,7 @@ export default function ManualHandlingModule2Section2() {
                 <h3 className="font-semibold mb-2 text-emerald-400">
                   Why Pushing Is Generally Safer
                 </h3>
-                <ul className="text-white/80 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span className="leading-relaxed">
@@ -422,29 +422,29 @@ export default function ManualHandlingModule2Section2() {
                     </div>
                     <div className="space-y-3">
                       <div className="bg-white/5 rounded p-3">
-                        <p className="text-white/60 text-xs uppercase tracking-wider mb-1">
+                        <p className="text-white text-xs uppercase tracking-wider mb-1">
                           Starting Force
                         </p>
                         <div className="flex items-baseline gap-2">
                           <span className="text-emerald-400 font-bold text-2xl">~20 kg</span>
-                          <span className="text-white/60 text-xs">men</span>
+                          <span className="text-white text-xs">men</span>
                         </div>
                         <div className="flex items-baseline gap-2">
                           <span className="text-emerald-400 font-bold text-2xl">~15 kg</span>
-                          <span className="text-white/60 text-xs">women</span>
+                          <span className="text-white text-xs">women</span>
                         </div>
                       </div>
                       <div className="bg-white/5 rounded p-3">
-                        <p className="text-white/60 text-xs uppercase tracking-wider mb-1">
+                        <p className="text-white text-xs uppercase tracking-wider mb-1">
                           Sustained Force
                         </p>
                         <div className="flex items-baseline gap-2">
                           <span className="text-emerald-400 font-bold text-2xl">~10 kg</span>
-                          <span className="text-white/60 text-xs">men</span>
+                          <span className="text-white text-xs">men</span>
                         </div>
                         <div className="flex items-baseline gap-2">
                           <span className="text-emerald-400 font-bold text-2xl">~7 kg</span>
-                          <span className="text-white/60 text-xs">women</span>
+                          <span className="text-white text-xs">women</span>
                         </div>
                       </div>
                     </div>
@@ -460,10 +460,10 @@ export default function ManualHandlingModule2Section2() {
                     </div>
                     <div className="space-y-3">
                       <div className="bg-white/5 rounded p-3">
-                        <p className="text-white/60 text-xs uppercase tracking-wider mb-1">
+                        <p className="text-white text-xs uppercase tracking-wider mb-1">
                           Risk Factors
                         </p>
-                        <ul className="text-white/80 text-sm space-y-1.5">
+                        <ul className="text-white text-sm space-y-1.5">
                           <li className="flex items-start gap-2">
                             <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                             <span className="leading-relaxed">Reduced visibility behind you</span>
@@ -489,10 +489,10 @@ export default function ManualHandlingModule2Section2() {
                         </ul>
                       </div>
                       <div className="bg-white/5 rounded p-3">
-                        <p className="text-white/60 text-xs uppercase tracking-wider mb-1">
+                        <p className="text-white text-xs uppercase tracking-wider mb-1">
                           When Pulling Is Needed
                         </p>
-                        <ul className="text-white/80 text-sm space-y-1.5">
+                        <ul className="text-white text-sm space-y-1.5">
                           <li className="flex items-start gap-2">
                             <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                             <span className="leading-relaxed">Through doorways</span>
@@ -510,7 +510,7 @@ export default function ManualHandlingModule2Section2() {
                     </div>
                   </div>
                 </div>
-                <p className="text-white/50 text-xs text-center mt-4 italic">
+                <p className="text-white text-xs text-center mt-4 italic">
                   HSE guideline force thresholds for pushing and pulling. These are risk-assessment
                   thresholds, not absolute limits. Individual capability varies.
                 </p>
@@ -520,7 +520,7 @@ export default function ManualHandlingModule2Section2() {
                 <h3 className="text-emerald-400 font-medium mb-2">
                   Starting Force vs Sustained Force
                 </h3>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   The <strong className="text-white">starting force</strong> (also called
                   &ldquo;initial force&rdquo;) is the amount of effort needed to get a stationary
                   load moving. It is always higher than the sustained force because you must
@@ -564,7 +564,7 @@ export default function ManualHandlingModule2Section2() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-emerald-400/20 p-3 rounded-lg">
                     <h4 className="text-emerald-300 font-medium mb-1">Wheels &amp; Castors</h4>
-                    <p className="text-white/80 text-sm leading-relaxed">
+                    <p className="text-white text-sm leading-relaxed">
                       Wheeled equipment (trolleys, sack trucks, platform trucks) replaces sliding
                       friction with rolling friction, which requires{' '}
                       <strong className="text-white">far less force</strong>. Keep wheels and
@@ -576,7 +576,7 @@ export default function ManualHandlingModule2Section2() {
                   </div>
                   <div className="bg-white/5 border border-emerald-400/20 p-3 rounded-lg">
                     <h4 className="text-emerald-300 font-medium mb-1">Rollers &amp; Conveyors</h4>
-                    <p className="text-white/80 text-sm leading-relaxed">
+                    <p className="text-white text-sm leading-relaxed">
                       For heavy or bulky loads that cannot easily be placed on a trolley, rollers
                       (pipe rollers, skate rollers) or gravity conveyors can dramatically reduce the
                       effort needed. Cable drums, for example, can be placed on a drum roller or
@@ -585,7 +585,7 @@ export default function ManualHandlingModule2Section2() {
                   </div>
                   <div className="bg-white/5 border border-emerald-400/20 p-3 rounded-lg">
                     <h4 className="text-emerald-300 font-medium mb-1">Slides &amp; Chutes</h4>
-                    <p className="text-white/80 text-sm leading-relaxed">
+                    <p className="text-white text-sm leading-relaxed">
                       Low-friction slides or chutes can be used to move materials between levels
                       (e.g. from a delivery vehicle to ground level) without manual lifting. This is
                       especially useful for bundles of conduit, lengths of trunking, or boxes of
@@ -594,7 +594,7 @@ export default function ManualHandlingModule2Section2() {
                   </div>
                   <div className="bg-white/5 border border-emerald-400/20 p-3 rounded-lg">
                     <h4 className="text-emerald-300 font-medium mb-1">Surface Maintenance</h4>
-                    <p className="text-white/80 text-sm leading-relaxed">
+                    <p className="text-white text-sm leading-relaxed">
                       Keep floors and pathways clean, smooth, and free of debris. Grit, cable
                       offcuts, and spilt materials on the floor increase rolling resistance and can
                       jam wheels. On construction sites, laying plywood boards over soft or uneven
@@ -672,7 +672,7 @@ export default function ManualHandlingModule2Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">One-Handed Carrying Risks</h3>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Carrying a load in one hand creates an{' '}
                   <strong className="text-white">asymmetric load</strong> on the body. Your spine
                   bends laterally (sideways) to compensate, placing uneven compressive forces on the
@@ -688,7 +688,7 @@ export default function ManualHandlingModule2Section2() {
                 <h3 className="text-emerald-400 font-medium mb-2">
                   Carry Distance &amp; Frequency
                 </h3>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   The HSE recognises that the risk of injury increases with both the distance a load
                   is carried and the frequency of the carry. As a rule of thumb, if you are
                   regularly carrying loads more than{' '}
@@ -798,7 +798,7 @@ export default function ManualHandlingModule2Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Wet or Contaminated Stairs</h3>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Construction-site stairways are frequently wet, dusty, or contaminated with
                   building materials. This dramatically reduces the grip between your footwear and
                   the stair surface. If stairs are wet or contaminated, clean them before carrying
@@ -831,7 +831,7 @@ export default function ManualHandlingModule2Section2() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="bg-emerald-500/5 border border-emerald-400/20 p-3 rounded-lg">
                     <h4 className="text-emerald-300 font-medium mb-2">Platform Trolleys</h4>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span className="leading-relaxed">
@@ -854,7 +854,7 @@ export default function ManualHandlingModule2Section2() {
                   </div>
                   <div className="bg-emerald-500/5 border border-emerald-400/20 p-3 rounded-lg">
                     <h4 className="text-emerald-300 font-medium mb-2">Sack Trucks</h4>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span className="leading-relaxed">
@@ -877,7 +877,7 @@ export default function ManualHandlingModule2Section2() {
                   </div>
                   <div className="bg-emerald-500/5 border border-emerald-400/20 p-3 rounded-lg">
                     <h4 className="text-emerald-300 font-medium mb-2">Cable Drum Stands</h4>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span className="leading-relaxed">
@@ -900,7 +900,7 @@ export default function ManualHandlingModule2Section2() {
                   </div>
                   <div className="bg-emerald-500/5 border border-emerald-400/20 p-3 rounded-lg">
                     <h4 className="text-emerald-300 font-medium mb-2">Stair-Climbing Trolleys</h4>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span className="leading-relaxed">
@@ -929,7 +929,7 @@ export default function ManualHandlingModule2Section2() {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
                   <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3">
                     <p className="text-emerald-400 font-bold text-xl sm:text-2xl">20 kg</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Starting force
                       <br />
                       (men)
@@ -937,7 +937,7 @@ export default function ManualHandlingModule2Section2() {
                   </div>
                   <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3">
                     <p className="text-emerald-400 font-bold text-xl sm:text-2xl">10 kg</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Sustained force
                       <br />
                       (men)
@@ -945,7 +945,7 @@ export default function ManualHandlingModule2Section2() {
                   </div>
                   <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3">
                     <p className="text-emerald-400 font-bold text-xl sm:text-2xl">10 m</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Use a trolley
                       <br />
                       beyond this
@@ -953,7 +953,7 @@ export default function ManualHandlingModule2Section2() {
                   </div>
                   <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3">
                     <p className="text-emerald-400 font-bold text-xl sm:text-2xl">45&deg;</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Sack truck
                       <br />
                       tilt angle
@@ -975,7 +975,7 @@ export default function ManualHandlingModule2Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -991,7 +991,7 @@ export default function ManualHandlingModule2Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-2-section-1">

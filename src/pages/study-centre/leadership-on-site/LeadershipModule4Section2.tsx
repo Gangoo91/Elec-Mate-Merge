@@ -195,7 +195,7 @@ export default function LeadershipModule4Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-4-section-1">
@@ -218,7 +218,7 @@ export default function LeadershipModule4Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Problem-Solving on Site
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Systematic methods for diagnosing root causes, choosing the best solution, and knowing
             when the problem is people rather than process
           </p>
@@ -305,7 +305,7 @@ export default function LeadershipModule4Section2() {
                 <p className="text-sm font-medium text-rose-400 mb-2">
                   The Problem with Gut Instinct Alone
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Experienced supervisors develop strong intuition, and this has value. But gut
                   instinct alone is not enough &mdash; it produces inconsistent results, is prone to
                   bias, and often leads to treating symptoms rather than causes. Systematic methods
@@ -329,7 +329,7 @@ export default function LeadershipModule4Section2() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">The Reactive Trap</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Without systematic methods, supervisors tend to fall into a{' '}
                   <strong className="text-white">reactive pattern</strong>: problem appears,
                   immediate fix applied, move on, same problem appears again next week. This
@@ -344,7 +344,7 @@ export default function LeadershipModule4Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Common Site Problems That Need Systematic Solving
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">Programme Problems</p>
                     <p>
@@ -498,7 +498,7 @@ export default function LeadershipModule4Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Tips for Effective 5 Whys Analysis
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -574,7 +574,7 @@ export default function LeadershipModule4Section2() {
                     <p className="text-lg font-bold text-rose-400 mb-1">
                       D &mdash; Define the Problem
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Be specific. &ldquo;We are behind programme&rdquo; is too vague.
                       &ldquo;Second-fix in Zone B is two days behind because the plastering
                       overran&rdquo; is actionable.
@@ -584,7 +584,7 @@ export default function LeadershipModule4Section2() {
                     <p className="text-lg font-bold text-rose-400 mb-1">
                       E &mdash; Establish Criteria
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       What does a good solution look like? Example: no safety compromise, budget
                       increase under 5%, achievable this week, acceptable to the client.
                     </p>
@@ -593,7 +593,7 @@ export default function LeadershipModule4Section2() {
                     <p className="text-lg font-bold text-rose-400 mb-1">
                       C &mdash; Consider Alternatives
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Generate all viable options. Overtime? Extra labour? Resequence other tasks?
                       Negotiate a programme extension? Do not evaluate yet &mdash; just list them.
                     </p>
@@ -602,7 +602,7 @@ export default function LeadershipModule4Section2() {
                     <p className="text-lg font-bold text-rose-400 mb-1">
                       I &mdash; Identify the Best
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Evaluate each alternative against your criteria. Which option best satisfies
                       the constraints you established in step two?
                     </p>
@@ -611,7 +611,7 @@ export default function LeadershipModule4Section2() {
                     <p className="text-lg font-bold text-rose-400 mb-1">
                       D &mdash; Develop and Implement
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Create a clear plan with specific actions, responsibilities, and timescales.
                       Communicate it to everyone affected and execute.
                     </p>
@@ -620,7 +620,7 @@ export default function LeadershipModule4Section2() {
                     <p className="text-lg font-bold text-rose-400 mb-1">
                       E &mdash; Evaluate and Monitor
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Is it working? Check at defined intervals. If results are not as expected,
                       cycle back through the model with updated information.
                     </p>
@@ -632,7 +632,7 @@ export default function LeadershipModule4Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   DECIDE in Practice &mdash; Programme Recovery
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -707,7 +707,7 @@ export default function LeadershipModule4Section2() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-red-400 text-xs font-semibold mb-1">Symptom Treatment</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Cables keep failing megger tests &rarr; replace the cables each time. The
                       problem keeps recurring because the root cause (damp storage) is never
                       addressed.
@@ -717,7 +717,7 @@ export default function LeadershipModule4Section2() {
                     <p className="text-green-400 text-xs font-semibold mb-1">
                       Root Cause Treatment
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Cables keep failing megger tests &rarr; investigate storage conditions &rarr;
                       find damp in the compound &rarr; fix the storage &rarr; problem stops
                       recurring.
@@ -725,7 +725,7 @@ export default function LeadershipModule4Section2() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-red-400 text-xs font-semibold mb-1">Symptom Treatment</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Apprentice keeps making termination errors &rarr; redo the terminations each
                       time. The problem recurs because the root cause (inadequate supervision)
                       persists.
@@ -735,7 +735,7 @@ export default function LeadershipModule4Section2() {
                     <p className="text-green-400 text-xs font-semibold mb-1">
                       Root Cause Treatment
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Apprentice keeps making errors &rarr; investigate supervision arrangements
                       &rarr; pair with experienced electrician for coaching &rarr; quality improves
                       permanently.
@@ -758,37 +758,37 @@ export default function LeadershipModule4Section2() {
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm">
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-white font-medium">People</p>
-                    <p className="text-white/80 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Skills, training, supervision, fatigue, competence
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-white font-medium">Process</p>
-                    <p className="text-white/80 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Methods, procedures, inspections, approvals, sequences
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-white font-medium">Equipment</p>
-                    <p className="text-white/80 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Tool condition, calibration, suitability, availability
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-white font-medium">Materials</p>
-                    <p className="text-white/80 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Specification, quality, storage, supply, compatibility
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-white font-medium">Environment</p>
-                    <p className="text-white/80 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Temperature, humidity, lighting, access, noise
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-white font-medium">Management</p>
-                    <p className="text-white/80 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Planning, communication, resources, priorities, oversight
                     </p>
                   </div>
@@ -800,7 +800,7 @@ export default function LeadershipModule4Section2() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">The Recurring Problem Test</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If you keep solving the same problem, you are treating symptoms. Every time a
                   problem recurs, it is a signal that you have not found and fixed the root cause.
                   Step back, use the 5 Whys or a fishbone diagram, and look deeper. The root cause
@@ -840,7 +840,7 @@ export default function LeadershipModule4Section2() {
                 <div className="space-y-3 text-sm">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">GROW Model (Coaching)</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       <strong className="text-white">G</strong>oal &mdash; what does the person want
                       to achieve? <strong className="text-white">R</strong>eality &mdash; where are
                       they now? <strong className="text-white">O</strong>ptions &mdash; what could
@@ -851,7 +851,7 @@ export default function LeadershipModule4Section2() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">SBI Model (Feedback)</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       <strong className="text-white">S</strong>ituation &mdash; when and where did
                       it happen? <strong className="text-white">B</strong>ehaviour &mdash; what
                       specifically did they do? <strong className="text-white">I</strong>mpact
@@ -863,7 +863,7 @@ export default function LeadershipModule4Section2() {
                     <p className="text-white font-medium mb-1">
                       DESC Script (Difficult Conversations)
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       <strong className="text-white">D</strong>escribe the behaviour objectively.{' '}
                       <strong className="text-white">E</strong>xpress how it affects the team or
                       work. <strong className="text-white">S</strong>pecify what you need to change.{' '}
@@ -901,7 +901,7 @@ export default function LeadershipModule4Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Recognising People Problems vs Technical Problems
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-400 text-xs font-semibold mb-1">
                       Signs of a Technical/Process Problem
@@ -960,7 +960,7 @@ export default function LeadershipModule4Section2() {
                 under pressure. Your practical problem-solving toolkit:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -1025,7 +1025,7 @@ export default function LeadershipModule4Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1039,7 +1039,7 @@ export default function LeadershipModule4Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-4-section-1">

@@ -241,7 +241,7 @@ const HNCModule7Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section2">
@@ -263,7 +263,7 @@ const HNCModule7Section2_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Emergency Lighting Design
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             BS 5266 requirements, lux levels, duration, escape routes, open areas, and high-risk
             task areas
           </p>
@@ -571,14 +571,14 @@ const HNCModule7Section2_1 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">Duration Requirements</p>
               <div className="text-sm space-y-2">
                 <p>
-                  <span className="text-white/60">1 hour minimum:</span>{' '}
+                  <span className="text-white">1 hour minimum:</span>{' '}
                   <span className="text-white">
                     Most premises where evacuation is immediate and recharge occurs during normal
                     working hours
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">3 hours required:</span>{' '}
+                  <span className="text-white">3 hours required:</span>{' '}
                   <span className="text-white">
                     Sleeping accommodation, premises not evacuated immediately, areas where recharge
                     period exceeds normal working hours
@@ -792,7 +792,7 @@ const HNCModule7Section2_1 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Design verification:</strong> Always verify spacing using manufacturer
               photometric data and lighting design software. The 4x mounting height rule is a
               starting point, not a guaranteed solution.
@@ -818,8 +818,8 @@ const HNCModule7Section2_1 = () => {
                 <strong>Scenario:</strong> Design emergency lighting for a 1.5m wide corridor, 30m
                 long, with 2.8m ceiling height.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Step 1: Determine requirements</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Step 1: Determine requirements</p>
                 <p className="ml-4">
                   Route width: 1.5m (&lt;2m, so standard escape route requirements)
                 </p>
@@ -846,8 +846,8 @@ const HNCModule7Section2_1 = () => {
                 <strong>Scenario:</strong> Determine emergency lighting for a machine workshop with
                 400 lux task lighting.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Step 1: Calculate 10% requirement</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Step 1: Calculate 10% requirement</p>
                 <p className="ml-4">Normal task illuminance: 400 lux</p>
                 <p className="ml-4">10% = 40 lux</p>
                 <p className="mt-2">Step 2: Check against minimum</p>
@@ -870,8 +870,8 @@ const HNCModule7Section2_1 = () => {
                 <strong>Scenario:</strong> Design anti-panic lighting for a 15m x 12m open plan
                 office (180m2).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Step 1: Verify open area classification</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Step 1: Verify open area classification</p>
                 <p className="ml-4">Area: 180m2 (&gt;60m2, qualifies as open area)</p>
                 <p className="ml-4">Minimum illuminance: 0.5 lux</p>
                 <p className="mt-2">Step 2: Define core area (exclude 0.5m border)</p>
@@ -970,7 +970,7 @@ const HNCModule7Section2_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1016,7 +1016,7 @@ const HNCModule7Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section2">

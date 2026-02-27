@@ -275,7 +275,7 @@ export function StudentRequirementsPanel({
           ) : tutorRequirements.length === 0 ? (
             <Card className="bg-white/5 border-elec-gray/40">
               <CardContent className="py-12 text-center">
-                <UserCheck className="h-12 w-12 text-white/30 mx-auto mb-4" />
+                <UserCheck className="h-12 w-12 text-white mx-auto mb-4" />
                 <p className="text-white mb-2">No custom requirements assigned</p>
                 <p className="text-sm text-white mb-4">
                   Add specific evidence requirements for this student
@@ -336,7 +336,7 @@ export function StudentRequirementsPanel({
           ) : unitRequirements.length === 0 ? (
             <Card className="bg-white/5 border-elec-gray/40">
               <CardContent className="py-12 text-center">
-                <FileText className="h-12 w-12 text-white/30 mx-auto mb-4" />
+                <FileText className="h-12 w-12 text-white mx-auto mb-4" />
                 <p className="text-white">No unit-level evidence requirements defined</p>
               </CardContent>
             </Card>

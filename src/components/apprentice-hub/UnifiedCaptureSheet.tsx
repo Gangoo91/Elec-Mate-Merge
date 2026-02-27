@@ -452,7 +452,7 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                 />
 
                 {/* Info */}
-                <p className="text-xs text-white/80 text-center">
+                <p className="text-xs text-white text-center">
                   Max file size: 10MB. Supported: Images, Videos, PDFs, Documents
                 </p>
               </div>
@@ -571,7 +571,7 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                       <Briefcase
                         className={cn(
                           'h-5 w-5',
-                          linkTo === 'portfolio' ? 'text-elec-yellow' : 'text-white/80'
+                          linkTo === 'portfolio' ? 'text-elec-yellow' : 'text-white'
                         )}
                       />
                       <span className="text-xs font-medium">Portfolio</span>
@@ -588,7 +588,7 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                       <Clock
                         className={cn(
                           'h-5 w-5',
-                          linkTo === 'ojt' ? 'text-elec-yellow' : 'text-white/80'
+                          linkTo === 'ojt' ? 'text-elec-yellow' : 'text-white'
                         )}
                       />
                       <span className="text-xs font-medium">OJT Hours</span>
@@ -605,7 +605,7 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                       <Check
                         className={cn(
                           'h-5 w-5',
-                          linkTo === 'both' ? 'text-elec-yellow' : 'text-white/80'
+                          linkTo === 'both' ? 'text-elec-yellow' : 'text-white'
                         )}
                       />
                       <span className="text-xs font-medium">Both</span>
@@ -652,7 +652,7 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
 
                     {/* Why good evidence */}
                     {aiResult.whyGoodEvidence && (
-                      <p className="text-xs text-white/90 leading-relaxed">
+                      <p className="text-xs text-white leading-relaxed">
                         {aiResult.whyGoodEvidence}
                       </p>
                     )}
@@ -665,7 +665,7 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                           {selectedACs.length === aiResult.matchedCriteria.length ? (
                             <button
                               onClick={deselectAllACs}
-                              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-white/[0.06] text-white/70 touch-manipulation active:scale-95 transition-transform"
+                              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-white/[0.06] text-white touch-manipulation active:scale-95 transition-transform"
                             >
                               <Square className="h-3 w-3" />
                               Deselect All
@@ -673,7 +673,7 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                           ) : (
                             <button
                               onClick={selectAllACs}
-                              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-white/[0.06] text-white/70 touch-manipulation active:scale-95 transition-transform"
+                              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-white/[0.06] text-white touch-manipulation active:scale-95 transition-transform"
                             >
                               <ListChecks className="h-3 w-3" />
                               Select All
@@ -710,7 +710,7 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                           let acIndex = 0;
                           return Array.from(grouped.entries()).map(([unitCode, group]) => (
                             <div key={unitCode} className="space-y-2">
-                              <p className="text-xs font-semibold text-white/80 uppercase tracking-wide">
+                              <p className="text-xs font-semibold text-white uppercase tracking-wide">
                                 Unit {unitCode}
                                 {group.unitTitle !== 'Other' && ` — ${group.unitTitle}`}
                               </p>
@@ -746,7 +746,7 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                                       {isSelected ? (
                                         <CheckSquare className="h-5 w-5 text-elec-yellow shrink-0 mt-0.5" />
                                       ) : (
-                                        <Square className="h-5 w-5 text-white/40 shrink-0 mt-0.5" />
+                                        <Square className="h-5 w-5 text-white shrink-0 mt-0.5" />
                                       )}
                                     </motion.div>
                                     <div className="flex-1 min-w-0">
@@ -754,7 +754,7 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                                         {ac.acCode} {ac.acText}
                                       </p>
                                       <div className="flex items-center gap-2 mt-1">
-                                        <p className="text-xs text-white/60">
+                                        <p className="text-xs text-white">
                                           {ac.confidence}% match
                                         </p>
                                         {ac.confidence >= 80 && (
@@ -775,7 +775,7 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                         })()}
                       </div>
                     ) : (
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         No matching criteria found. Try adding a more specific title and
                         description.
                       </p>
@@ -784,11 +784,11 @@ export function UnifiedCaptureSheet({ open, onOpenChange, onComplete }: UnifiedC
                     {/* Quality Tips */}
                     {aiResult.qualityTips && aiResult.qualityTips.length > 0 && (
                       <div className="space-y-1 pt-1">
-                        <p className="text-xs font-medium text-white/70">
+                        <p className="text-xs font-medium text-white">
                           Tips to strengthen evidence:
                         </p>
                         {aiResult.qualityTips.map((tip: string, i: number) => (
-                          <p key={i} className="text-xs text-white/60 pl-3">
+                          <p key={i} className="text-xs text-white pl-3">
                             &bull; {tip}
                           </p>
                         ))}

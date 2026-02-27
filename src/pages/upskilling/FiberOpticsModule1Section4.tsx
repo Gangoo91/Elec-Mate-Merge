@@ -225,7 +225,7 @@ const FiberOpticsModule1Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/fiber-optics-module-1">
@@ -246,7 +246,7 @@ const FiberOpticsModule1Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Health & Safety in Fibre Work
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Essential safety practices to protect yourself and others when working with fibre optic
             systems
           </p>
@@ -689,7 +689,7 @@ const FiberOpticsModule1Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -735,7 +735,7 @@ const FiberOpticsModule1Section4 = () => {
         <section className="mb-10 p-6 rounded-lg bg-elec-yellow/5 border border-elec-yellow/30 text-center">
           <CheckCircle className="h-12 w-12 text-elec-yellow mx-auto mb-4" />
           <h3 className="text-xl font-bold text-white mb-2">Module 1 Complete!</h3>
-          <p className="text-white/80 mb-4">
+          <p className="text-white mb-4">
             You've completed the Introduction to Fibre Optics module. You now understand the
             fundamentals of fibre technology, its advantages, applications, and essential safety
             practices.
@@ -757,7 +757,7 @@ const FiberOpticsModule1Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../section-3">

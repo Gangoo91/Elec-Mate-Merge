@@ -274,7 +274,7 @@ const MOETModule1Section1_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module1-section1">
@@ -296,7 +296,7 @@ const MOETModule1Section1_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Working in Confined Spaces
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Safe entry, atmospheric monitoring, and rescue planning for electrical maintenance in
             enclosed environments
           </p>
@@ -654,7 +654,7 @@ const MOETModule1Section1_5 = () => {
                     <p className="text-xs font-medium text-blue-400 mb-1">
                       Oxygen Depletion Effects
                     </p>
-                    <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                    <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                       <li>20.9% — Normal atmosphere</li>
                       <li>19.5% — Minimum safe level for entry</li>
                       <li>16% — Impaired judgement, rapid breathing</li>
@@ -664,7 +664,7 @@ const MOETModule1Section1_5 = () => {
                   </div>
                   <div className="bg-black/30 p-3 rounded">
                     <p className="text-xs font-medium text-red-400 mb-1">Oxygen Enrichment Risks</p>
-                    <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                    <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                       <li>23.5% — Maximum safe level for entry</li>
                       <li>Above 23.5% — Greatly increased fire risk</li>
                       <li>Materials that do not normally burn will ignite</li>
@@ -746,7 +746,7 @@ const MOETModule1Section1_5 = () => {
               <div className="space-y-3">
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-1">1. Risk Assessment</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     A specific risk assessment for the particular confined space and task. This must
                     identify all foreseeable hazards, the persons at risk, and the control measures
                     required. A generic 'confined space risk assessment' is not sufficient — each
@@ -755,7 +755,7 @@ const MOETModule1Section1_5 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-1">2. Atmospheric Monitoring</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Pre-entry testing using a calibrated multi-gas detector (minimum: O2, LEL, CO,
                     H2S). The detector must be lowered into the space before anyone enters —
                     conditions at the top of a space may differ from the bottom. Continuous
@@ -765,7 +765,7 @@ const MOETModule1Section1_5 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-1">3. Ventilation</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Forced mechanical ventilation to provide a continuous supply of clean air. The
                     ventilation rate must be sufficient to maintain safe atmospheric conditions
                     throughout the work. Air intakes must be positioned away from contamination
@@ -775,7 +775,7 @@ const MOETModule1Section1_5 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-1">4. Isolation of Hazards</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Pipework blanked or disconnected (not just valved off). Electrical supplies
                     isolated and locked out. Mechanical equipment secured. Chemical feeds
                     disconnected. This goes beyond the standard LOTO procedure — in confined spaces,
@@ -785,7 +785,7 @@ const MOETModule1Section1_5 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-1">5. Communication</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Constant communication between the entrant(s) and the top man. Methods include:
                     visual contact, voice communication, radio, rope signals, or closed-circuit TV.
                     The communication method must work reliably in the specific space — radio may
@@ -796,7 +796,7 @@ const MOETModule1Section1_5 = () => {
                   <p className="text-sm font-medium text-white mb-1">
                     6. Personal Protective Equipment
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Appropriate PPE and RPE as identified by the risk assessment. This may include:
                     breathing apparatus (self-contained or airline), harness for rescue, head
                     protection, eye protection, knee pads, and appropriate clothing. RPE must be
@@ -954,7 +954,7 @@ const MOETModule1Section1_5 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-3">
+              <p className="text-xs text-white mt-3">
                 Note: These are typical alarm settings. The actual settings must be determined by
                 the risk assessment and may be more stringent depending on the specific hazards
                 identified.
@@ -963,7 +963,7 @@ const MOETModule1Section1_5 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <h3 className="text-sm font-medium text-elec-yellow/80 mb-3">Monitoring Procedure</h3>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p className="font-medium mb-2">Step-by-Step Atmospheric Monitoring:</p>
                 <p>
                   1. <strong>Calibration check</strong> — verify detector is within calibration date
@@ -1033,7 +1033,7 @@ const MOETModule1Section1_5 = () => {
               <div className="grid sm:grid-cols-2 gap-3">
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Standard Equipment</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Tripod and winch for vertical entry points</li>
                     <li>Rescue harness with attachment point for lifting</li>
                     <li>Self-contained breathing apparatus (SCBA)</li>
@@ -1046,7 +1046,7 @@ const MOETModule1Section1_5 = () => {
                   <p className="text-sm font-medium text-white mb-2">
                     Communication &amp; First Aid
                   </p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Two-way radio (intrinsically safe if ATEX zone)</li>
                     <li>Emergency whistle or audible alarm</li>
                     <li>First aid kit including oxygen therapy</li>
@@ -1237,7 +1237,7 @@ const MOETModule1Section1_5 = () => {
               <div className="grid sm:grid-cols-2 gap-3">
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Confined Space Competence</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Hazard recognition and risk assessment</li>
                     <li>Atmospheric monitoring equipment use</li>
                     <li>Emergency escape procedures</li>
@@ -1247,7 +1247,7 @@ const MOETModule1Section1_5 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Electrical Competence</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Safe isolation procedures (Module 1.1.2)</li>
                     <li>LOTO procedures (Module 1.1.3)</li>
                     <li>Arc flash awareness and PPE selection</li>
@@ -1258,7 +1258,7 @@ const MOETModule1Section1_5 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>ST1426 link:</strong> The Maintenance and Operations Engineering Technician
               standard requires awareness of confined space hazards, the ability to recognise when
               work constitutes confined space entry, and knowledge of the controls required. While
@@ -1327,7 +1327,7 @@ const MOETModule1Section1_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1346,7 +1346,7 @@ const MOETModule1Section1_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module1-section1-4">

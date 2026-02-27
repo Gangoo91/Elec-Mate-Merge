@@ -221,7 +221,7 @@ const HNCModule4Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section4">
@@ -243,7 +243,7 @@ const HNCModule4Section4_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Lighting Controls
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Digital control systems for energy efficiency, comfort and flexibility in modern
             building services
           </p>
@@ -400,7 +400,7 @@ const HNCModule4Section4_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">DALI vs 1-10V Dimming</p>
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
-                  <p className="text-white/70 mb-1">DALI advantages:</p>
+                  <p className="text-white mb-1">DALI advantages:</p>
                   <ul className="text-white space-y-0.5 list-disc list-outside ml-5">
                     <li className="pl-1">Individual addressing</li>
                     <li className="pl-1">Two-way communication</li>
@@ -410,7 +410,7 @@ const HNCModule4Section4_4 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-white/70 mb-1">1-10V limitations:</p>
+                  <p className="text-white mb-1">1-10V limitations:</p>
                   <ul className="text-white space-y-0.5 list-disc list-outside ml-5">
                     <li className="pl-1">No addressing (all together)</li>
                     <li className="pl-1">One-way only</li>
@@ -783,7 +783,7 @@ const HNCModule4Section4_4 = () => {
                 <strong>Brief:</strong> An open plan office has 48 luminaires to be controlled with
                 DALI. How many buses are required?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>DALI maximum: 64 devices per bus</p>
                 <p className="mt-2">Luminaires: 48</p>
                 <p>Additional devices required:</p>
@@ -795,7 +795,7 @@ const HNCModule4Section4_4 = () => {
                 </p>
                 <p className="mt-2">58 &lt; 64 limit</p>
                 <p className="text-green-400">✓ Single DALI bus sufficient</p>
-                <p className="mt-2 text-white/60">Note: Allow headroom for future expansion</p>
+                <p className="mt-2 text-white">Note: Allow headroom for future expansion</p>
               </div>
             </div>
 
@@ -807,7 +807,7 @@ const HNCModule4Section4_4 = () => {
                 <strong>Question:</strong> An office is 15m deep with windows on one side. How many
                 daylight control zones are appropriate?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Daylight penetration typically 4-6m effective depth</p>
                 <p className="mt-2">Room depth: 15m from window</p>
                 <p className="mt-2">
@@ -819,7 +819,7 @@ const HNCModule4Section4_4 = () => {
                 <p className="mt-2">
                   <strong>3 control zones recommended</strong>
                 </p>
-                <p className="mt-2 text-white/60">Each zone: separate photocell + DALI group</p>
+                <p className="mt-2 text-white">Each zone: separate photocell + DALI group</p>
               </div>
             </div>
 
@@ -831,7 +831,7 @@ const HNCModule4Section4_4 = () => {
                 <strong>Brief:</strong> Estimate annual energy savings for lighting controls in a
                 500m² office operating 2500 hours/year.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Base case (no controls): 10 W/m² × 500m² × 2500h = 12,500 kWh/year</p>
                 <p className="mt-2">Control savings estimates:</p>
                 <p>- Daylight linking (40% area): 30% saving = 1500 kWh</p>
@@ -843,7 +843,7 @@ const HNCModule4Section4_4 = () => {
                 <p className="mt-2">
                   Percentage saving: 4113/12500 = <strong>33%</strong>
                 </p>
-                <p className="mt-2 text-white/60">At £0.30/kWh = £1234/year cost saving</p>
+                <p className="mt-2 text-white">At £0.30/kWh = £1234/year cost saving</p>
               </div>
             </div>
           </div>
@@ -908,7 +908,7 @@ const HNCModule4Section4_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -955,7 +955,7 @@ const HNCModule4Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section4-3">

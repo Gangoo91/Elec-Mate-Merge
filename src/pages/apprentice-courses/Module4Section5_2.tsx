@@ -143,7 +143,7 @@ const Module4Section5_2 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -161,13 +161,13 @@ const Module4Section5_2 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.2</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.2</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Installing Lighting Points and Pendants
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master the installation of lighting points and pendants, combining functional wiring,
               safe support, and aesthetic placement according to BS 7671.
             </p>
@@ -175,7 +175,7 @@ const Module4Section5_2 = () => {
 
           {/* Quick Summary */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               <strong className="text-elec-yellow">Key points:</strong> Position lighting points for
               even illumination. Use appropriate fixings for ceiling construction and fitting
               weight. Provide mechanical support separate from electrical connections.
@@ -188,7 +188,7 @@ const Module4Section5_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Planning Location and Environmental Requirements
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Effective lighting design requires careful planning of position, coverage, and
                 environmental suitability.
@@ -232,7 +232,7 @@ const Module4Section5_2 = () => {
                   </li>
                   <li>• Heavy fittings require ceiling hooks or beam attachment</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-3 p-2 bg-black/20 rounded">
+                <p className="text-xs text-white mt-3 p-2 bg-black/20 rounded">
                   Safety requirement: Never rely solely on plasterboard for heavy lighting fixtures
                 </p>
               </div>
@@ -273,7 +273,7 @@ const Module4Section5_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Types of Lighting Points and Selection
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Selecting appropriate lighting points and fittings ensures optimal performance,
                 safety, and compliance.
@@ -290,7 +290,7 @@ const Module4Section5_2 = () => {
                   <li>• Integral cord grip for pendant support</li>
                   <li>• Heat-resistant construction suitable for lamp heat</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-3 p-2 bg-black/20 rounded">
+                <p className="text-xs text-white mt-3 p-2 bg-black/20 rounded">
                   Installation note: Ceiling roses must be securely fixed to ceiling structure, not
                   just plasterboard
                 </p>
@@ -330,7 +330,7 @@ const Module4Section5_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Wiring and Installation Procedures
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Systematic wiring and installation procedures ensure safety, compliance, and
                 reliable operation.
@@ -353,7 +353,7 @@ const Module4Section5_2 = () => {
                     • <strong>CPC:</strong> Green/yellow earthing all metalwork
                   </li>
                 </ul>
-                <p className="text-xs text-white/60 mt-3 p-2 bg-black/20 rounded">
+                <p className="text-xs text-white mt-3 p-2 bg-black/20 rounded">
                   Critical check: Verify switching operates correct lighting point before
                   commissioning
                 </p>
@@ -376,7 +376,7 @@ const Module4Section5_2 = () => {
                     conductors
                   </li>
                 </ul>
-                <p className="text-xs text-white/60 mt-3 p-2 bg-black/20 rounded">
+                <p className="text-xs text-white mt-3 p-2 bg-black/20 rounded">
                   Safety principle: Electrical connections must never carry mechanical loads
                 </p>
               </div>
@@ -397,7 +397,7 @@ const Module4Section5_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Testing and Safety Compliance
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-medium text-white mb-2">Electrical Testing Requirements</h4>
                 <ul className="space-y-2 text-sm">
@@ -427,13 +427,13 @@ const Module4Section5_2 = () => {
               Real-World Example
             </h2>
             <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
-              <p className="text-white/80 text-sm leading-relaxed mb-3">
+              <p className="text-white text-sm leading-relaxed mb-3">
                 In a restaurant installation, decorative pendants were fitted without additional
                 ceiling supports. The cable alone carried the load, which over time caused the
                 conductors to pull loose from terminals, leading to flickering lights and a safety
                 risk.
               </p>
-              <p className="text-white/80 text-sm leading-relaxed mb-3">
+              <p className="text-white text-sm leading-relaxed mb-3">
                 Investigation revealed the pendants weighed 3.5kg each, exceeding ceiling rose
                 support capacity. Constant movement from air conditioning caused gradual loosening
                 of electrical connections.
@@ -452,7 +452,7 @@ const Module4Section5_2 = () => {
           {/* Summary */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <h3 className="font-medium text-white mb-2">Summary</h3>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Installing lighting points and pendants requires both technical skill and an eye for
               presentation. Correct positioning for optimal illumination, secure fixing with
               appropriate mechanical support, safe wiring according to BS 7671, and compliance with

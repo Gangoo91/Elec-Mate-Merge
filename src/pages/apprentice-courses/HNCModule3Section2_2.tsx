@@ -211,7 +211,7 @@ const HNCModule3Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section2">
@@ -233,7 +233,7 @@ const HNCModule3Section2_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Reactance and Impedance in AC Circuits
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding opposition to AC current flow in reactive circuits and building services
             applications
           </p>
@@ -326,7 +326,7 @@ const HNCModule3Section2_2 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 X<sub>L</sub> = 2&pi;fL = &omega;L
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where: f = frequency (Hz), L = inductance (H), &omega; = 2&pi;f (rad/s)
               </p>
             </div>
@@ -420,7 +420,7 @@ const HNCModule3Section2_2 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 X<sub>C</sub> = 1/(2&pi;fC) = 1/(&omega;C)
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where: f = frequency (Hz), C = capacitance (F), &omega; = 2&pi;f (rad/s)
               </p>
             </div>
@@ -492,7 +492,7 @@ const HNCModule3Section2_2 = () => {
                   <p className="font-medium text-white mb-1">
                     Inductive (X<sub>L</sub>)
                   </p>
-                  <ul className="text-white/70 space-y-0.5">
+                  <ul className="text-white space-y-0.5">
                     <li>
                       50Hz: X<sub>L</sub> = 31.4&Omega;
                     </li>
@@ -503,13 +503,13 @@ const HNCModule3Section2_2 = () => {
                       150Hz: X<sub>L</sub> = 94.2&Omega;
                     </li>
                   </ul>
-                  <p className="text-xs mt-1 text-white/50">(L = 100mH)</p>
+                  <p className="text-xs mt-1 text-white">(L = 100mH)</p>
                 </div>
                 <div>
                   <p className="font-medium text-white mb-1">
                     Capacitive (X<sub>C</sub>)
                   </p>
-                  <ul className="text-white/70 space-y-0.5">
+                  <ul className="text-white space-y-0.5">
                     <li>
                       50Hz: X<sub>C</sub> = 31.8&Omega;
                     </li>
@@ -520,7 +520,7 @@ const HNCModule3Section2_2 = () => {
                       150Hz: X<sub>C</sub> = 10.6&Omega;
                     </li>
                   </ul>
-                  <p className="text-xs mt-1 text-white/50">(C = 100&mu;F)</p>
+                  <p className="text-xs mt-1 text-white">(C = 100&mu;F)</p>
                 </div>
               </div>
             </div>
@@ -551,22 +551,22 @@ const HNCModule3Section2_2 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Complex Impedance Form</p>
               <p className="font-mono text-center text-lg mb-2">Z = R + jX</p>
-              <p className="text-xs text-white/70 text-center mb-3">
+              <p className="text-xs text-white text-center mb-3">
                 Where: R = resistance, X = net reactance (X<sub>L</sub> - X<sub>C</sub>), j =
                 &radic;-1
               </p>
               <div className="grid grid-cols-2 gap-4 text-sm text-center">
                 <div className="p-2 rounded bg-black/20">
-                  <p className="text-white/90">
+                  <p className="text-white">
                     Inductive: Z = R + jX<sub>L</sub>
                   </p>
-                  <p className="text-xs text-white/50">Current lags voltage</p>
+                  <p className="text-xs text-white">Current lags voltage</p>
                 </div>
                 <div className="p-2 rounded bg-black/20">
-                  <p className="text-white/90">
+                  <p className="text-white">
                     Capacitive: Z = R - jX<sub>C</sub>
                   </p>
-                  <p className="text-xs text-white/50">Current leads voltage</p>
+                  <p className="text-xs text-white">Current leads voltage</p>
                 </div>
               </div>
             </div>
@@ -579,12 +579,12 @@ const HNCModule3Section2_2 = () => {
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">Magnitude</p>
                   <p className="font-mono">|Z| = &radic;(R&sup2; + X&sup2;)</p>
-                  <p className="text-white/70 text-xs mt-1">Total opposition in Ohms</p>
+                  <p className="text-white text-xs mt-1">Total opposition in Ohms</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">Phase Angle</p>
                   <p className="font-mono">&theta; = arctan(X/R)</p>
-                  <p className="text-white/70 text-xs mt-1">Angle between V and I</p>
+                  <p className="text-white text-xs mt-1">Angle between V and I</p>
                 </div>
               </div>
             </div>
@@ -610,7 +610,7 @@ const HNCModule3Section2_2 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Impedance Triangle</p>
               <div className="p-4 rounded bg-black/30 text-center">
-                <pre className="text-sm text-white/90 font-mono">
+                <pre className="text-sm text-white font-mono">
                   {`              |Z|
            /|
           / |
@@ -653,7 +653,7 @@ const HNCModule3Section2_2 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 Z<sub>T</sub> = Z<sub>1</sub> + Z<sub>2</sub> + Z<sub>3</sub> + ...
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Add complex impedances directly: (R<sub>1</sub> + jX<sub>1</sub>) + (R<sub>2</sub> +
                 jX<sub>2</sub>) = (R<sub>1</sub> + R<sub>2</sub>) + j(X<sub>1</sub> + X<sub>2</sub>)
               </p>
@@ -664,7 +664,7 @@ const HNCModule3Section2_2 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 1/Z<sub>T</sub> = 1/Z<sub>1</sub> + 1/Z<sub>2</sub> + 1/Z<sub>3</sub> + ...
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 For two impedances: Z<sub>T</sub> = (Z<sub>1</sub> &times; Z<sub>2</sub>)/(Z
                 <sub>1</sub> + Z<sub>2</sub>)
               </p>
@@ -765,7 +765,7 @@ const HNCModule3Section2_2 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/50 mt-2">
+              <p className="text-xs text-white mt-2">
                 Note: For larger cables, reactance becomes more significant relative to resistance.
               </p>
             </div>
@@ -797,7 +797,7 @@ const HNCModule3Section2_2 = () => {
                 and inductance L = 50mH. Calculate the impedance at 50Hz and the current drawn from
                 230V supply.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Calculate inductive reactance</p>
                 <p>
                   X<sub>L</sub> = 2&pi;fL = 2&pi; &times; 50 &times; 0.050 ={' '}
@@ -818,7 +818,7 @@ const HNCModule3Section2_2 = () => {
                 <p>
                   &theta; = arctan(X/R) = arctan(15.7/8) = <strong>63&deg;</strong> lagging
                 </p>
-                <p className="mt-2 text-white/60">&rarr; Power factor = cos(63&deg;) = 0.45</p>
+                <p className="mt-2 text-white">&rarr; Power factor = cos(63&deg;) = 0.45</p>
               </div>
             </div>
 
@@ -830,7 +830,7 @@ const HNCModule3Section2_2 = () => {
                 <strong>Question:</strong> A motor draws 20A at 0.7 power factor lagging from 230V
                 supply. Calculate the capacitor reactance needed to improve power factor to 0.95.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Calculate motor impedance</p>
                 <p>|Z| = V/I = 230/20 = 11.5&Omega;</p>
                 <p>
@@ -875,7 +875,7 @@ const HNCModule3Section2_2 = () => {
                 10. Calculate the equivalent resistance and reactance referred to the 400V
                 secondary.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Calculate base impedance</p>
                 <p>
                   Z<sub>base</sub> = V&sup2;/S = 400&sup2;/100000 = 1.6&Omega;
@@ -894,7 +894,7 @@ const HNCModule3Section2_2 = () => {
                 <p>
                   X = 10R = <strong>0.064&Omega; (64m&Omega;)</strong>
                 </p>
-                <p className="mt-2 text-white/60">&rarr; Z = 0.0064 + j0.064 &Omega;</p>
+                <p className="mt-2 text-white">&rarr; Z = 0.0064 + j0.064 &Omega;</p>
               </div>
             </div>
 
@@ -907,7 +907,7 @@ const HNCModule3Section2_2 = () => {
                 <sub>e</sub> = 0.35&Omega; and uses 30m of 4mm&sup2; cable (R = 4.61m&Omega;/m, X =
                 0.1m&Omega;/m). Calculate total Z<sub>s</sub>.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Calculate cable impedance (line + CPC)</p>
                 <p>
                   R<sub>cable</sub> = 30m &times; 2 &times; 4.61m&Omega;/m = 0.277&Omega;
@@ -929,7 +929,7 @@ const HNCModule3Section2_2 = () => {
                   |Z<sub>s</sub>| = &radic;(0.627&sup2; + 0.006&sup2;) ={' '}
                   <strong>0.627&Omega;</strong>
                 </p>
-                <p className="mt-2 text-white/60">&rarr; For 4mm&sup2; cable, X is negligible</p>
+                <p className="mt-2 text-white">&rarr; For 4mm&sup2; cable, X is negligible</p>
                 <p className="mt-2">Step 4: Calculate prospective fault current</p>
                 <p>
                   I<sub>pf</sub> = U<sub>0</sub>/Z<sub>s</sub> = 230/0.627 = <strong>367A</strong>
@@ -1048,7 +1048,7 @@ const HNCModule3Section2_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1102,7 +1102,7 @@ const HNCModule3Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section2-1">

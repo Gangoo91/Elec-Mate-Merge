@@ -380,7 +380,7 @@ export const StructuredDesignWizard = ({
                     isActive &&
                       'bg-elec-yellow text-black border-elec-yellow shadow-[0_0_0_4px_hsl(var(--elec-yellow)/0.2)]',
                     isCompleted && 'bg-elec-yellow/20 text-elec-yellow border-elec-yellow/40',
-                    !isActive && !isCompleted && 'bg-white/[0.03] text-white/40 border-white/[0.08]'
+                    !isActive && !isCompleted && 'bg-white/[0.03] text-white border-white/[0.08]'
                   )}
                 >
                   {isCompleted ? <Check className="w-4 h-4 sm:w-5 sm:h-5" /> : index + 1}
@@ -389,7 +389,7 @@ export const StructuredDesignWizard = ({
                 <span
                   className={cn(
                     'hidden sm:block mt-2 text-xs font-medium text-center transition-colors duration-ios-fast',
-                    isActive ? 'text-elec-yellow' : isCompleted ? 'text-white/60' : 'text-white/30'
+                    isActive ? 'text-elec-yellow' : isCompleted ? 'text-white' : 'text-white'
                   )}
                 >
                   {step.label}
@@ -455,14 +455,14 @@ export const StructuredDesignWizard = ({
 
             {/* Step indicator for mobile */}
             <div className="flex-1 flex justify-center sm:hidden">
-              <Badge variant="secondary" className="bg-white/5 text-white/80 border-0">
+              <Badge variant="secondary" className="bg-white/5 text-white border-0">
                 {currentStep + 1} / {STEPS.length}
               </Badge>
             </div>
 
             {/* Progress percentage for desktop */}
             <div className="hidden sm:flex flex-1 justify-center">
-              <Badge variant="secondary" className="bg-white/5 text-white/80 border-0 px-3 py-1">
+              <Badge variant="secondary" className="bg-white/5 text-white border-0 px-3 py-1">
                 {Math.round(progressPercentage)}% Complete
               </Badge>
             </div>
@@ -475,7 +475,7 @@ export const StructuredDesignWizard = ({
                   'gap-2 h-12 px-6 rounded-xl',
                   'bg-elec-yellow text-black font-semibold',
                   'hover:bg-elec-yellow/90',
-                  'disabled:opacity-30 disabled:bg-white/5 disabled:text-white/40',
+                  'disabled:opacity-30 disabled:bg-white/5 disabled:text-white',
                   'shadow-[0_2px_8px_rgba(0,0,0,0.2)]',
                   'active:scale-[0.98]',
                   'transition-all duration-ios-fast',
@@ -493,7 +493,7 @@ export const StructuredDesignWizard = ({
                   'gap-2 h-12 px-6 rounded-xl',
                   'bg-elec-yellow text-black font-semibold',
                   'hover:bg-elec-yellow/90',
-                  'disabled:opacity-30 disabled:bg-white/5 disabled:text-white/40',
+                  'disabled:opacity-30 disabled:bg-white/5 disabled:text-white',
                   'shadow-[0_4px_12px_rgba(0,0,0,0.3)]',
                   'active:scale-[0.98]',
                   'transition-all duration-ios-fast',

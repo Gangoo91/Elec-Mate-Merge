@@ -56,7 +56,7 @@ const Section2_6 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-foreground active:text-foreground p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -73,7 +73,7 @@ const Section2_6 = () => {
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
             Section 2.6 – Power, Energy, and Efficiency
           </h1>
-          <p className="text-xl text-white/80 max-w-4xl">
+          <p className="text-xl text-white max-w-4xl">
             Calculating electrical power consumption, energy usage, and system efficiency
           </p>
         </div>

@@ -218,7 +218,7 @@ const TestingStandardsSection = () => {
                           {testStandards.continuity.commonIssues.map((issue, index) => (
                             <div
                               key={index}
-                              className="text-sm text-white/80 flex items-center gap-2"
+                              className="text-sm text-white flex items-center gap-2"
                             >
                               <div className="w-1 h-1 bg-yellow-400 rounded-full" />
                               {issue}
@@ -304,7 +304,7 @@ const TestingStandardsSection = () => {
                           {testStandards.insulation.commonIssues.map((issue, index) => (
                             <div
                               key={index}
-                              className="text-sm text-white/80 flex items-center gap-2"
+                              className="text-sm text-white flex items-center gap-2"
                             >
                               <div className="w-1 h-1 bg-yellow-400 rounded-full" />
                               {issue}
@@ -390,7 +390,7 @@ const TestingStandardsSection = () => {
                           {testStandards.zs.commonIssues.map((issue, index) => (
                             <div
                               key={index}
-                              className="text-sm text-white/80 flex items-center gap-2"
+                              className="text-sm text-white flex items-center gap-2"
                             >
                               <div className="w-1 h-1 bg-yellow-400 rounded-full" />
                               {issue}
@@ -476,7 +476,7 @@ const TestingStandardsSection = () => {
                           {testStandards.rcd.commonIssues.map((issue, index) => (
                             <div
                               key={index}
-                              className="text-sm text-white/80 flex items-center gap-2"
+                              className="text-sm text-white flex items-center gap-2"
                             >
                               <div className="w-1 h-1 bg-yellow-400 rounded-full" />
                               {issue}
@@ -512,7 +512,7 @@ const TestingStandardsSection = () => {
                 <h4 className="font-medium text-foreground mb-2">{equipment.name}</h4>
                 <div className="space-y-2">
                   <div>
-                    <p className="text-xs text-white/80 mb-1">Used for:</p>
+                    <p className="text-xs text-white mb-1">Used for:</p>
                     <div className="flex flex-wrap gap-1">
                       {equipment.uses.map((use, idx) => (
                         <Badge key={idx} variant="secondary" className="text-xs">
@@ -521,11 +521,11 @@ const TestingStandardsSection = () => {
                       ))}
                     </div>
                   </div>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     <Clock className="inline h-3 w-3 mr-1" />
                     {equipment.calibration}
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     <CheckCircle className="inline h-3 w-3 mr-1" />
                     {equipment.standards}
                   </p>

@@ -216,7 +216,7 @@ const AsbestosModule4Section1 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Categories of Asbestos Work
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding the three categories of asbestos work under CAR 2012 &mdash; how to
             determine the correct category, what controls are required, and the consequences of
             getting it wrong
@@ -295,7 +295,7 @@ const AsbestosModule4Section1 = () => {
                 <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                 <h3 className="font-semibold text-red-300">If in Doubt &mdash; Go Higher</h3>
               </div>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 If there is <strong className="text-white">any doubt</strong> about which category
                 applies, always treat the work as the higher-risk category. It is far better to
                 apply more controls than necessary than to under-protect workers. A licensed
@@ -433,7 +433,7 @@ const AsbestosModule4Section1 = () => {
             <Layers className="h-5 w-5 text-orange-400" />
             3-Tier Work Categories at a Glance
           </h2>
-          <p className="text-white/80 mb-6 text-sm">
+          <p className="text-white mb-6 text-sm">
             The diagram below compares the three categories of asbestos work side by side. Use it as
             a quick reference when determining the category for a particular task.
           </p>
@@ -452,55 +452,55 @@ const AsbestosModule4Section1 = () => {
                   <p className="text-red-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Examples
                   </p>
-                  <p className="text-white/80">Sprayed coatings, pipe lagging, AIB (general)</p>
+                  <p className="text-white">Sprayed coatings, pipe lagging, AIB (general)</p>
                 </div>
                 <div>
                   <p className="text-red-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Notification
                   </p>
-                  <p className="text-white/80">14 days to HSE (ASB5)</p>
+                  <p className="text-white">14 days to HSE (ASB5)</p>
                 </div>
                 <div>
                   <p className="text-red-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Training
                   </p>
-                  <p className="text-white/80">Full asbestos training + competence</p>
+                  <p className="text-white">Full asbestos training + competence</p>
                 </div>
                 <div>
                   <p className="text-red-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Medical
                   </p>
-                  <p className="text-white/80">Surveillance every 2 years</p>
+                  <p className="text-white">Surveillance every 2 years</p>
                 </div>
                 <div>
                   <p className="text-red-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     RPE
                   </p>
-                  <p className="text-white/80">Full-face or powered air</p>
+                  <p className="text-white">Full-face or powered air</p>
                 </div>
                 <div>
                   <p className="text-red-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Enclosure
                   </p>
-                  <p className="text-white/80">Full enclosure may be required</p>
+                  <p className="text-white">Full enclosure may be required</p>
                 </div>
                 <div>
                   <p className="text-red-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Air Monitoring
                   </p>
-                  <p className="text-white/80">Required</p>
+                  <p className="text-white">Required</p>
                 </div>
                 <div>
                   <p className="text-red-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Clearance
                   </p>
-                  <p className="text-white/80">4-stage clearance</p>
+                  <p className="text-white">4-stage clearance</p>
                 </div>
                 <div>
                   <p className="text-red-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Records
                   </p>
-                  <p className="text-white/80">40 years</p>
+                  <p className="text-white">40 years</p>
                 </div>
               </div>
             </div>
@@ -518,7 +518,7 @@ const AsbestosModule4Section1 = () => {
                   <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Examples
                   </p>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     Textured coatings (power tools), AC with power tools, short-duration AIB work
                   </p>
                 </div>
@@ -526,49 +526,49 @@ const AsbestosModule4Section1 = () => {
                   <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Notification
                   </p>
-                  <p className="text-white/80">ASB5 online to HSE before work</p>
+                  <p className="text-white">ASB5 online to HSE before work</p>
                 </div>
                 <div>
                   <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Training
                   </p>
-                  <p className="text-white/80">Asbestos awareness + task-specific</p>
+                  <p className="text-white">Asbestos awareness + task-specific</p>
                 </div>
                 <div>
                   <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Medical
                   </p>
-                  <p className="text-white/80">Health records kept 40 years</p>
+                  <p className="text-white">Health records kept 40 years</p>
                 </div>
                 <div>
                   <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     RPE
                   </p>
-                  <p className="text-white/80">FFP3 minimum</p>
+                  <p className="text-white">FFP3 minimum</p>
                 </div>
                 <div>
                   <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Enclosure
                   </p>
-                  <p className="text-white/80">Mini-enclosure or localised controls</p>
+                  <p className="text-white">Mini-enclosure or localised controls</p>
                 </div>
                 <div>
                   <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Air Monitoring
                   </p>
-                  <p className="text-white/80">May be required</p>
+                  <p className="text-white">May be required</p>
                 </div>
                 <div>
                   <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Clearance
                   </p>
-                  <p className="text-white/80">Visual inspection + possible air test</p>
+                  <p className="text-white">Visual inspection + possible air test</p>
                 </div>
                 <div>
                   <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Records
                   </p>
-                  <p className="text-white/80">40 years</p>
+                  <p className="text-white">40 years</p>
                 </div>
               </div>
             </div>
@@ -586,7 +586,7 @@ const AsbestosModule4Section1 = () => {
                   <p className="text-green-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Examples
                   </p>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     AC sheets by hand, textured coatings by hand (wet), floor tiles
                   </p>
                 </div>
@@ -594,55 +594,55 @@ const AsbestosModule4Section1 = () => {
                   <p className="text-green-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Notification
                   </p>
-                  <p className="text-white/80">None required</p>
+                  <p className="text-white">None required</p>
                 </div>
                 <div>
                   <p className="text-green-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Training
                   </p>
-                  <p className="text-white/80">Asbestos awareness</p>
+                  <p className="text-white">Asbestos awareness</p>
                 </div>
                 <div>
                   <p className="text-green-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Medical
                   </p>
-                  <p className="text-white/80">Not required (but recommended)</p>
+                  <p className="text-white">Not required (but recommended)</p>
                 </div>
                 <div>
                   <p className="text-green-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     RPE
                   </p>
-                  <p className="text-white/80">FFP3 recommended</p>
+                  <p className="text-white">FFP3 recommended</p>
                 </div>
                 <div>
                   <p className="text-green-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Enclosure
                   </p>
-                  <p className="text-white/80">Not required &mdash; localised controls</p>
+                  <p className="text-white">Not required &mdash; localised controls</p>
                 </div>
                 <div>
                   <p className="text-green-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Air Monitoring
                   </p>
-                  <p className="text-white/80">Not usually required</p>
+                  <p className="text-white">Not usually required</p>
                 </div>
                 <div>
                   <p className="text-green-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Clearance
                   </p>
-                  <p className="text-white/80">Visual inspection</p>
+                  <p className="text-white">Visual inspection</p>
                 </div>
                 <div>
                   <p className="text-green-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Records
                   </p>
-                  <p className="text-white/80">Good practice to keep</p>
+                  <p className="text-white">Good practice to keep</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <p className="text-white/50 text-xs text-center mt-4 italic">
+          <p className="text-white text-xs text-center mt-4 italic">
             On mobile, scroll down to compare all three categories
           </p>
         </section>
@@ -689,7 +689,7 @@ const AsbestosModule4Section1 = () => {
                     </div>
                   </div>
                 </div>
-                <p className="text-white/60 text-xs mt-3">
+                <p className="text-white text-xs mt-3">
                   If any of these criteria are not met, the work must be treated as licensed work.
                 </p>
               </div>
@@ -867,7 +867,7 @@ const AsbestosModule4Section1 = () => {
                     &ldquo;Lowest Risk&rdquo; Is NOT &ldquo;No Risk&rdquo;
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The &ldquo;lowest risk&rdquo; category still involves working with a material that
                   causes fatal diseases. There is{' '}
                   <strong className="text-white">no safe level</strong> of asbestos exposure. Even
@@ -998,7 +998,7 @@ const AsbestosModule4Section1 = () => {
                       <h3 className="text-red-300 font-semibold mb-1">
                         Treating Licensed Work as Non-Licensed
                       </h3>
-                      <p className="text-white/80 text-sm">
+                      <p className="text-white text-sm">
                         This is the <strong className="text-white">most serious mistake</strong> and
                         constitutes a criminal offence. Workers are exposed to high-risk ACMs
                         without adequate controls, medical surveillance, or training. This can
@@ -1015,7 +1015,7 @@ const AsbestosModule4Section1 = () => {
                       <h3 className="text-amber-300 font-semibold mb-1">
                         Not Notifying NNLW to the HSE
                       </h3>
-                      <p className="text-white/80 text-sm">
+                      <p className="text-white text-sm">
                         Failing to submit an ASB5 notification before NNLW is a breach of CAR 2012.
                         It also means health records may not be properly established, depriving
                         workers of important long-term health monitoring.
@@ -1031,7 +1031,7 @@ const AsbestosModule4Section1 = () => {
                       <h3 className="text-amber-300 font-semibold mb-1">
                         Assuming Textured Coatings Are Always Non-Licensed
                       </h3>
-                      <p className="text-white/80 text-sm">
+                      <p className="text-white text-sm">
                         The category depends on the{' '}
                         <strong className="text-white">method of removal</strong>. Removing textured
                         coatings by hand using wet methods is typically non-licensed work. However,
@@ -1050,7 +1050,7 @@ const AsbestosModule4Section1 = () => {
                       <h3 className="text-amber-300 font-semibold mb-1">
                         Not Keeping Health Records for NNLW
                       </h3>
-                      <p className="text-white/80 text-sm">
+                      <p className="text-white text-sm">
                         Health records for NNLW must be kept for{' '}
                         <strong className="text-white">40 years</strong>. This is a legal
                         requirement, not optional. Many contractors fail to establish and maintain
@@ -1068,7 +1068,7 @@ const AsbestosModule4Section1 = () => {
                       <h3 className="text-orange-300 font-semibold mb-1">
                         Not Providing Adequate Training for Non-Licensed Work
                       </h3>
-                      <p className="text-white/80 text-sm">
+                      <p className="text-white text-sm">
                         Even the lowest-risk category requires asbestos awareness training. Workers
                         who have not been trained cannot recognise ACMs, understand the risks, or
                         apply the correct control measures. Untrained workers are far more likely to
@@ -1085,7 +1085,7 @@ const AsbestosModule4Section1 = () => {
                       <h3 className="text-orange-300 font-semibold mb-1">
                         Assuming &ldquo;Non-Licensed&rdquo; Means &ldquo;No Controls Needed&rdquo;
                       </h3>
-                      <p className="text-white/80 text-sm">
+                      <p className="text-white text-sm">
                         Every category of asbestos work requires appropriate controls. Non-licensed
                         work still needs a risk assessment, a plan of work, RPE, wet working
                         methods, and proper waste disposal. The word &ldquo;non-licensed&rdquo;
@@ -1170,7 +1170,7 @@ const AsbestosModule4Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1186,7 +1186,7 @@ const AsbestosModule4Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-3-section-4">

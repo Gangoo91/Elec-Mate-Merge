@@ -282,7 +282,7 @@ const HNCModule8Section1_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section1">
@@ -304,7 +304,7 @@ const HNCModule8Section1_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Boiler Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Boiler types, ErP efficiency ratings, cascade systems, flue requirements and safety
             controls for heating installations
           </p>
@@ -462,8 +462,8 @@ const HNCModule8Section1_1 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">Condensing Boiler Operation</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                 <div>
-                  <p className="text-white/80">Key principles:</p>
-                  <ul className="text-white/70 space-y-1 mt-2">
+                  <p className="text-white">Key principles:</p>
+                  <ul className="text-white space-y-1 mt-2">
                     <li>• Flue gas cooled below dew point (~55°C)</li>
                     <li>• Water vapour condenses releasing latent heat</li>
                     <li>• Requires low return temperature (&lt;55°C)</li>
@@ -471,8 +471,8 @@ const HNCModule8Section1_1 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-white/80">Efficiency factors:</p>
-                  <ul className="text-white/70 space-y-1 mt-2">
+                  <p className="text-white">Efficiency factors:</p>
+                  <ul className="text-white space-y-1 mt-2">
                     <li>• Return water temperature critical</li>
                     <li>• Weather compensation improves operation</li>
                     <li>• Oversized radiators enhance condensing</li>
@@ -597,7 +597,7 @@ const HNCModule8Section1_1 = () => {
                   <p className="text-sm font-medium text-orange-400 mb-1">
                     Weather Compensation Benefits
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Weather compensation adjusts boiler flow temperature based on external
                     conditions. In milder weather, lower flow temperatures (&lt;55°C) maximise
                     condensing operation, improving seasonal efficiency by 5-15%. Modern ErP
@@ -659,7 +659,7 @@ const HNCModule8Section1_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-white font-medium mb-1">Sequencing Control</p>
-                  <ul className="text-white/70 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>• Lead boiler fires on initial demand</li>
                     <li>• Lag boilers staged as load increases</li>
                     <li>• Time delay between staging (typically 3-5 mins)</li>
@@ -669,7 +669,7 @@ const HNCModule8Section1_1 = () => {
                 </div>
                 <div>
                   <p className="text-white font-medium mb-1">Lead-Lag Rotation</p>
-                  <ul className="text-white/70 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>• Periodic rotation of lead boiler</li>
                     <li>• Options: time-based, run-hours, demand-based</li>
                     <li>• Typical rotation: daily or weekly</li>
@@ -751,10 +751,10 @@ const HNCModule8Section1_1 = () => {
                 <strong>Scenario:</strong> Office building with 200 kW design heat load. Specify
                 cascade system.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Design heat load: 200 kW</p>
-                <p className="text-white/60">Diversity factor: 0.8 (typical office)</p>
-                <p className="text-white/60">Operating load: 200 × 0.8 = 160 kW</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Design heat load: 200 kW</p>
+                <p className="text-white">Diversity factor: 0.8 (typical office)</p>
+                <p className="text-white">Operating load: 200 × 0.8 = 160 kW</p>
                 <p className="mt-2">Option A: 3 × 80 kW boilers (240 kW total)</p>
                 <p> - Normal operation: 2 boilers at 80% = 128 kW</p>
                 <p> - Peak demand: All 3 boilers = 240 kW capacity</p>
@@ -887,7 +887,7 @@ const HNCModule8Section1_1 = () => {
                   <p className="text-sm font-medium text-red-400 mb-1">
                     Safety Controls - Mandatory Requirements
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1.5 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                     <li className="pl-1">
                       <strong>Flame supervision device:</strong> Ionisation probe or thermocouple -
                       shuts off gas if flame fails
@@ -977,7 +977,7 @@ const HNCModule8Section1_1 = () => {
                   <p className="text-sm font-medium text-white mb-1">
                     Condensate Drainage Requirements
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1.5 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                     <li className="pl-1">Minimum 22mm internal diameter pipework</li>
                     <li className="pl-1">PVC or ABS plastic (acid resistant)</li>
                     <li className="pl-1">Fall of 2.5° minimum (45mm per metre)</li>
@@ -1017,16 +1017,16 @@ const HNCModule8Section1_1 = () => {
                 <strong>Scenario:</strong> 3-bedroom semi-detached house with 2 bathrooms. Select
                 appropriate boiler type and size.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90 overflow-x-auto">
-                <p className="text-white/60">Property details:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white overflow-x-auto">
+                <p className="text-white">Property details:</p>
                 <p>- 3 bedrooms, 2 bathrooms (family bathroom + en-suite)</p>
                 <p>- Heat loss calculation: 12 kW space heating</p>
                 <p>- DHW demand: 2 showers potentially simultaneous</p>
-                <p className="mt-2 text-white/60">Analysis:</p>
+                <p className="mt-2 text-white">Analysis:</p>
                 <p>- Multiple bathrooms = higher DHW demand</p>
                 <p>- Combi may struggle with simultaneous demand</p>
                 <p>- System boiler with unvented cylinder provides better DHW</p>
-                <p className="mt-2 text-white/60">Recommendation:</p>
+                <p className="mt-2 text-white">Recommendation:</p>
                 <p>Option 1: 35 kW combi (if DHW priority acceptable)</p>
                 <p>Option 2: 24 kW system boiler + 180L unvented cylinder</p>
                 <p className="mt-2 text-green-400">
@@ -1044,16 +1044,16 @@ const HNCModule8Section1_1 = () => {
                 <strong>Scenario:</strong> 28 kW combi boiler to be installed in kitchen. Assess
                 flue terminal position.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">
                   Proposed location: External wall below kitchen window
                 </p>
-                <p className="text-white/60">Boiler output: 28 kW (14-70 kW category)</p>
+                <p className="text-white">Boiler output: 28 kW (14-70 kW category)</p>
                 <p className="mt-2">Distance requirements (Part J):</p>
                 <p>- Below opening window: 300mm min ✓</p>
                 <p>- Horizontally from opening: 600mm min</p>
                 <p>- Above ground level: 300mm min ✓</p>
-                <p className="mt-2 text-white/60">Site measurement:</p>
+                <p className="mt-2 text-white">Site measurement:</p>
                 <p>- Window sill height: 900mm</p>
                 <p>- Proposed terminal height: 500mm</p>
                 <p>- Vertical clearance: 400mm (300mm req) ✓</p>
@@ -1076,9 +1076,9 @@ const HNCModule8Section1_1 = () => {
                 <strong>Scenario:</strong> Configure cascade controller for 3 × 80 kW boilers
                 serving office building.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">System: 3 × 80 kW condensing boilers</p>
-                <p className="text-white/60">Design flow temp: 70°C, Return: 50°C (ΔT = 20K)</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">System: 3 × 80 kW condensing boilers</p>
+                <p className="text-white">Design flow temp: 70°C, Return: 50°C (ΔT = 20K)</p>
                 <p className="mt-2">Cascade controller parameters:</p>
                 <p>- Staging setpoint: 80% of current capacity</p>
                 <p>- De-staging setpoint: 30% of current capacity</p>
@@ -1103,9 +1103,9 @@ const HNCModule8Section1_1 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Design condensate drainage for external run to drain.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Boiler: 30 kW condensing combi</p>
-                <p className="text-white/60">Route: 2m internal + 3m external to gully</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Boiler: 30 kW condensing combi</p>
+                <p className="text-white">Route: 2m internal + 3m external to gully</p>
                 <p className="mt-2">Internal section (2m):</p>
                 <p>- Pipe: 22mm PVC overflow pipe</p>
                 <p>- Fall: 2.5° minimum (45mm per metre)</p>
@@ -1200,7 +1200,7 @@ const HNCModule8Section1_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1264,7 +1264,7 @@ const HNCModule8Section1_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section1">

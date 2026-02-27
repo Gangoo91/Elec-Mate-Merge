@@ -159,7 +159,7 @@ const Module2Section2_3 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Calculate V, I or R (Step by Step)
           </h1>
-          <p className="text-lg text-white/80 max-w-2xl mx-auto">
+          <p className="text-lg text-white max-w-2xl mx-auto">
             Identify known values, convert units, pick the formula, calculate, round, and
             sanity-check
           </p>
@@ -375,7 +375,7 @@ const Module2Section2_3 = () => {
               <p>
                 <strong>Check:</strong> Does 13A sound right for a 3kW heater? Yes!
               </p>
-              <p className="text-white/70 italic">
+              <p className="text-white italic">
                 This demonstrates how Ohm's Law helps verify equipment performance and spot
                 potential faults.
               </p>
@@ -465,7 +465,7 @@ const Module2Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level2/module2/section2/2-2">

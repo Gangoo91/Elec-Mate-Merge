@@ -151,7 +151,7 @@ const TutorReviewSystem = () => {
     return Array.from({ length: 5 }, (_, index) => (
       <Star
         key={index}
-        className={`h-4 w-4 ${index < rating ? 'fill-current text-yellow-500' : 'text-white/80'}`}
+        className={`h-4 w-4 ${index < rating ? 'fill-current text-yellow-500' : 'text-white'}`}
       />
     ));
   };

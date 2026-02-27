@@ -232,7 +232,7 @@ const HNCModule6Section2_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section2">
@@ -254,7 +254,7 @@ const HNCModule6Section2_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Small-Scale Wind
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Building-mounted and standalone turbines, site assessment, planning considerations, and
             grid connection
           </p>
@@ -340,11 +340,11 @@ const HNCModule6Section2_4 = () => {
                 <p>
                   <span className="text-white">P = ½ρAV³</span>
                 </p>
-                <p className="text-white/60 mt-2">Where:</p>
-                <p className="text-white/80">P = Power (W)</p>
-                <p className="text-white/80">ρ = Air density (≈1.225 kg/m³ at sea level)</p>
-                <p className="text-white/80">A = Swept area (m²) = πr² for HAWT</p>
-                <p className="text-white/80">V = Wind velocity (m/s)</p>
+                <p className="text-white mt-2">Where:</p>
+                <p className="text-white">P = Power (W)</p>
+                <p className="text-white">ρ = Air density (≈1.225 kg/m³ at sea level)</p>
+                <p className="text-white">A = Swept area (m²) = πr² for HAWT</p>
+                <p className="text-white">V = Wind velocity (m/s)</p>
               </div>
             </div>
 
@@ -461,11 +461,11 @@ const HNCModule6Section2_4 = () => {
                 <p>
                   <span className="text-white">f(V) = (k/c)(V/c)^(k-1) × e^(-(V/c)^k)</span>
                 </p>
-                <p className="text-white/60 mt-2">Where:</p>
-                <p className="text-white/80">k = Shape parameter (typically 1.8-2.5 in UK)</p>
-                <p className="text-white/80">c = Scale parameter (related to mean wind speed)</p>
-                <p className="text-white/80">V = Wind speed</p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">Where:</p>
+                <p className="text-white">k = Shape parameter (typically 1.8-2.5 in UK)</p>
+                <p className="text-white">c = Scale parameter (related to mean wind speed)</p>
+                <p className="text-white">V = Wind speed</p>
+                <p className="text-white mt-2">
                   When k = 2, this becomes the Rayleigh distribution
                 </p>
               </div>
@@ -698,7 +698,7 @@ const HNCModule6Section2_4 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Planning tip:</strong> Pre-application consultation with the Local Planning
               Authority can identify potential issues before incurring full application costs.
             </p>
@@ -803,7 +803,7 @@ const HNCModule6Section2_4 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">AC-Coupled (Synchronous)</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Turbine generates AC directly</li>
                     <li>Frequency varies with speed</li>
                     <li>Power electronics convert to grid frequency</li>
@@ -812,7 +812,7 @@ const HNCModule6Section2_4 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">DC-Coupled (PMG + Rectifier)</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Permanent magnet generator</li>
                     <li>Rectified to DC, then inverted</li>
                     <li>MPPT tracking for optimal power</li>
@@ -891,7 +891,7 @@ const HNCModule6Section2_4 = () => {
                 <strong>Scenario:</strong> NOABL data gives 5.2 m/s at 10m height. Calculate wind
                 speed at 15m hub height in suburban terrain (α = 0.25).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using wind shear power law:</p>
                 <p className="mt-2">V₂/V₁ = (h₂/h₁)^α</p>
                 <p className="mt-1">V₁₅/V₁₀ = (15/10)^0.25</p>
@@ -900,7 +900,7 @@ const HNCModule6Section2_4 = () => {
                 <p className="mt-2">
                   V₁₅ = 5.2 × 1.107 = <span className="text-green-400">5.76 m/s at hub height</span>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Note: This 11% increase in wind speed translates to (1.107)³ = 36% more available
                   power
                 </p>
@@ -915,7 +915,7 @@ const HNCModule6Section2_4 = () => {
                 <strong>Scenario:</strong> A 6 kW rated turbine is installed at a site with
                 estimated capacity factor of 0.24. Calculate annual energy yield.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Annual Energy Yield = Rated Power × Hours per Year × Capacity Factor</p>
                 <p className="mt-2">AEY = P_rated × 8760 × CF</p>
                 <p className="mt-1">AEY = 6 kW × 8760 h × 0.24</p>
@@ -942,7 +942,7 @@ const HNCModule6Section2_4 = () => {
                 <strong>Scenario:</strong> A site has Weibull parameters k = 2.1, c = 6.5 m/s.
                 Estimate percentage of time wind speed exceeds 4 m/s (turbine cut-in).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Probability P(V &gt; v) = e^(-(v/c)^k)</p>
                 <p className="mt-2">P(V &gt; 4) = e^(-(4/6.5)^2.1)</p>
                 <p className="mt-1">P(V &gt; 4) = e^(-(0.615)^2.1)</p>
@@ -950,10 +950,10 @@ const HNCModule6Section2_4 = () => {
                 <p className="mt-1">
                   P(V &gt; 4) = <span className="text-green-400">0.702 = 70.2% of the time</span>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   The turbine will operate approximately 70% of hours annually
                 </p>
-                <p className="mt-1 text-white/60">
+                <p className="mt-1 text-white">
                   Operating hours = 8760 × 0.702 = 6,150 hours/year
                 </p>
               </div>
@@ -967,7 +967,7 @@ const HNCModule6Section2_4 = () => {
                 <strong>Scenario:</strong> Calculate the theoretical power available in wind for a
                 5m diameter rotor at 8 m/s wind speed (air density 1.225 kg/m³).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Swept area A = πr² = π × 2.5² = 19.63 m²</p>
                 <p className="mt-2">Available power P = ½ρAV³</p>
                 <p className="mt-1">P = 0.5 × 1.225 × 19.63 × 8³</p>
@@ -1072,7 +1072,7 @@ const HNCModule6Section2_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1118,7 +1118,7 @@ const HNCModule6Section2_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section2">

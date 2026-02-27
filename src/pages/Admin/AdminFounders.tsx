@@ -281,7 +281,7 @@ export default function AdminFounders() {
 
             {/* Progress Bar */}
             <div className="mb-4">
-              <div className="flex items-center justify-between text-sm text-white/80 mb-2">
+              <div className="flex items-center justify-between text-sm text-white mb-2">
                 <span>Campaign Progress</span>
                 <span className="font-bold text-white">{progressPercent}%</span>
               </div>

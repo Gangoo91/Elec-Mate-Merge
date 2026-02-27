@@ -239,7 +239,7 @@ const HNCModule6Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section4">
@@ -261,7 +261,7 @@ const HNCModule6Section4_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Operational Carbon
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Energy-related emissions, regulated vs unregulated loads, benchmarking methodologies,
             and carbon reduction strategies
           </p>
@@ -605,11 +605,11 @@ const HNCModule6Section4_2 = () => {
               </p>
               <div className="font-mono text-sm space-y-2">
                 <p>
-                  <span className="text-white/60">EUI =</span> Total Annual Energy Consumption (kWh)
+                  <span className="text-white">EUI =</span> Total Annual Energy Consumption (kWh)
                   ÷ Gross Internal Area (m²)
                 </p>
                 <p className="mt-3">
-                  <span className="text-white/60">Example office building:</span>
+                  <span className="text-white">Example office building:</span>
                 </p>
                 <p>Annual electricity: 475,000 kWh</p>
                 <p>Annual gas: 300,000 kWh</p>
@@ -706,7 +706,7 @@ const HNCModule6Section4_2 = () => {
                     <strong>Retail:</strong> 70 kWh/m²/year
                   </li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   Total operational energy including unregulated
                 </p>
               </div>
@@ -734,7 +734,7 @@ const HNCModule6Section4_2 = () => {
                     <strong>1 star:</strong> Poor performance
                   </li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">Based on actual metered performance</p>
+                <p className="text-xs text-white mt-2">Based on actual metered performance</p>
               </div>
             </div>
 
@@ -794,7 +794,7 @@ const HNCModule6Section4_2 = () => {
                   </span>
                   <div>
                     <p className="text-sm font-medium text-white">Reduce Demand</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Fabric efficiency, controls optimisation, occupancy scheduling, behaviour
                       change
                     </p>
@@ -806,7 +806,7 @@ const HNCModule6Section4_2 = () => {
                   </span>
                   <div>
                     <p className="text-sm font-medium text-white">Improve Efficiency</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       LED lighting, variable speed drives, heat recovery, high-efficiency plant
                     </p>
                   </div>
@@ -817,7 +817,7 @@ const HNCModule6Section4_2 = () => {
                   </span>
                   <div>
                     <p className="text-sm font-medium text-white">Decarbonise Supply</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Heat pumps, solar PV, green tariffs, district heating, biomass
                     </p>
                   </div>
@@ -828,7 +828,7 @@ const HNCModule6Section4_2 = () => {
                   </span>
                   <div>
                     <p className="text-sm font-medium text-white">Offset Residual</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Carbon credits, verified offsets (last resort for unavoidable emissions)
                     </p>
                   </div>
@@ -960,7 +960,7 @@ const HNCModule6Section4_2 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Key principle:</strong> The cheapest and cleanest kilowatt-hour is the one you
               never use. Prioritise demand reduction before considering renewable generation.
             </p>
@@ -985,15 +985,15 @@ const HNCModule6Section4_2 = () => {
                 <strong>Scenario:</strong> Calculate annual operational carbon for an office
                 building.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given data:</p>
                 <p className="ml-4">Annual electricity: 450,000 kWh</p>
                 <p className="ml-4">Annual gas: 280,000 kWh</p>
                 <p className="ml-4">GIA: 4,000 m²</p>
-                <p className="mt-2 text-white/60">Carbon factors (2025):</p>
+                <p className="mt-2 text-white">Carbon factors (2025):</p>
                 <p className="ml-4">Electricity: 0.193 kgCO₂e/kWh</p>
                 <p className="ml-4">Gas: 0.183 kgCO₂e/kWh</p>
-                <p className="mt-2 text-white/60">Calculation:</p>
+                <p className="mt-2 text-white">Calculation:</p>
                 <p className="ml-4">Electricity carbon = 450,000 × 0.193 = 86,850 kgCO₂e</p>
                 <p className="ml-4">Gas carbon = 280,000 × 0.183 = 51,240 kgCO₂e</p>
                 <p className="ml-4">Total carbon = 86,850 + 51,240 = 138,090 kgCO₂e</p>
@@ -1014,14 +1014,14 @@ const HNCModule6Section4_2 = () => {
                 <strong>Scenario:</strong> Determine the DEC rating for a naturally ventilated
                 office.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Building data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Building data:</p>
                 <p className="ml-4">Actual electricity: 75 kWh/m²/year</p>
                 <p className="ml-4">Actual gas (heating): 95 kWh/m²/year</p>
-                <p className="mt-2 text-white/60">TM46 benchmarks (nat vent office):</p>
+                <p className="mt-2 text-white">TM46 benchmarks (nat vent office):</p>
                 <p className="ml-4">Electricity benchmark: 95 kWh/m²</p>
                 <p className="ml-4">Fossil-thermal benchmark: 120 kWh/m²</p>
-                <p className="mt-2 text-white/60">Calculate Operational Rating (OR):</p>
+                <p className="mt-2 text-white">Calculate Operational Rating (OR):</p>
                 <p className="ml-4">Electricity ratio = 75 ÷ 95 = 0.79</p>
                 <p className="ml-4">Gas ratio = 95 ÷ 120 = 0.79</p>
                 <p className="ml-4">Weighted OR ≈ 79</p>
@@ -1040,19 +1040,19 @@ const HNCModule6Section4_2 = () => {
                 <strong>Scenario:</strong> Calculate carbon and cost savings from LED lighting
                 upgrade.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Current system:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Current system:</p>
                 <p className="ml-4">Fluorescent lighting: 45,000 kWh/year</p>
                 <p className="ml-4">Operating hours: 2,500 hrs/year</p>
-                <p className="mt-2 text-white/60">LED system:</p>
+                <p className="mt-2 text-white">LED system:</p>
                 <p className="ml-4">Expected consumption: 18,000 kWh/year (60% reduction)</p>
-                <p className="mt-2 text-white/60">Carbon calculation:</p>
+                <p className="mt-2 text-white">Carbon calculation:</p>
                 <p className="ml-4">Current carbon = 45,000 × 0.193 = 8,685 kgCO₂e</p>
                 <p className="ml-4">LED carbon = 18,000 × 0.193 = 3,474 kgCO₂e</p>
                 <p className="ml-4 text-green-400">
                   Carbon saving = 5,211 kgCO₂e/year (60% reduction)
                 </p>
-                <p className="mt-2 text-white/60">Cost calculation (at £0.28/kWh):</p>
+                <p className="mt-2 text-white">Cost calculation (at £0.28/kWh):</p>
                 <p className="ml-4">Energy saving = 27,000 kWh/year</p>
                 <p className="ml-4 text-elec-yellow">Cost saving = £7,560/year</p>
                 <p className="ml-4">Project cost: £22,000</p>
@@ -1144,7 +1144,7 @@ const HNCModule6Section4_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1190,7 +1190,7 @@ const HNCModule6Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section4">

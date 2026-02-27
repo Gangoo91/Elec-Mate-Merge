@@ -272,7 +272,7 @@ const Level3Module5Section5_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module5-section5">
@@ -360,15 +360,15 @@ const Level3Module5Section5_1 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Regulation 644.1</p>
-                <p className="text-white/90 text-xs">Requires certificate for new work</p>
+                <p className="text-white text-xs">Requires certificate for new work</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Appendix 6</p>
-                <p className="text-white/90 text-xs">Model forms provided</p>
+                <p className="text-white text-xs">Model forms provided</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Building Regs</p>
-                <p className="text-white/90 text-xs">Part P compliance evidence</p>
+                <p className="text-white text-xs">Part P compliance evidence</p>
               </div>
             </div>
 
@@ -447,7 +447,7 @@ const Level3Module5Section5_1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A sole trader installing a new circuit designs, constructs,
               and inspects the work. They must complete all three declarations with their name,
               signature, and the date in each section - not just sign once and write 'as above'.
@@ -515,11 +515,11 @@ const Level3Module5Section5_1 = () => {
             <div className="grid grid-cols-2 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Typical Domestic Values</p>
-                <p className="text-white/90 text-xs">Ze: 0.35-0.8 ohms, Ipf: 1-16 kA</p>
+                <p className="text-white text-xs">Ze: 0.35-0.8 ohms, Ipf: 1-16 kA</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Next Inspection</p>
-                <p className="text-white/90 text-xs">Domestic: 10 years, Commercial: 5 years</p>
+                <p className="text-white text-xs">Domestic: 10 years, Commercial: 5 years</p>
               </div>
             </div>
 
@@ -593,7 +593,7 @@ const Level3Module5Section5_1 = () => {
               comparison during periodic inspection.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Note:</strong> Electronic certification systems generate schedules
               automatically from entered data. Ensure all fields are completed - blank fields on
               electronic systems are as problematic as on paper forms.
@@ -661,7 +661,7 @@ const Level3Module5Section5_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -706,7 +706,7 @@ const Level3Module5Section5_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module5-section5">

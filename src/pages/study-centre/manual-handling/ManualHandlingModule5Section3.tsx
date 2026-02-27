@@ -210,7 +210,7 @@ export default function ManualHandlingModule5Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-5">
@@ -235,7 +235,7 @@ export default function ManualHandlingModule5Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Incident Reporting &amp; Investigation
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             RIDDOR 2013 requirements, reporting processes, investigation techniques, root cause
             analysis, corrective actions, trend analysis, and building a near-miss reporting culture
           </p>
@@ -349,12 +349,12 @@ export default function ManualHandlingModule5Section3() {
                         Over-7-Day Incapacitation (Most Common)
                       </span>
                     </div>
-                    <p className="text-xs text-white/80 ml-8">
+                    <p className="text-xs text-white ml-8">
                       Worker incapacitated from normal work for more than 7 consecutive days (not
                       counting the day of injury). Report within{' '}
                       <strong className="text-white">15 days</strong>.
                     </p>
-                    <p className="text-xs text-white/60 ml-8 mt-1">
+                    <p className="text-xs text-white ml-8 mt-1">
                       Examples: severe back strain, disc herniation causing extended absence, torn
                       ligament
                     </p>
@@ -368,11 +368,11 @@ export default function ManualHandlingModule5Section3() {
                       </div>
                       <span className="text-sm font-semibold text-red-400">Specified Injuries</span>
                     </div>
-                    <p className="text-xs text-white/80 ml-8">
+                    <p className="text-xs text-white ml-8">
                       More serious injuries that must be reported{' '}
                       <strong className="text-white">immediately (within 24 hours)</strong>.
                     </p>
-                    <ul className="text-xs text-white/70 ml-8 mt-1 space-y-0.5">
+                    <ul className="text-xs text-white ml-8 mt-1 space-y-0.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                         <span>Fractures (other than fingers, thumbs, or toes)</span>
@@ -396,7 +396,7 @@ export default function ManualHandlingModule5Section3() {
                       </div>
                       <span className="text-sm font-semibold text-red-300">Fatal Injuries</span>
                     </div>
-                    <p className="text-xs text-white/80 ml-8">
+                    <p className="text-xs text-white ml-8">
                       Any death resulting from a workplace manual handling incident. Report{' '}
                       <strong className="text-white">immediately by telephone</strong>, followed by
                       F2508 within 24 hours.
@@ -427,7 +427,7 @@ export default function ManualHandlingModule5Section3() {
                   <Phone className="h-4 w-4 text-emerald-400" />
                   <p className="text-sm font-medium text-white">Reporting Methods</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -449,7 +449,7 @@ export default function ManualHandlingModule5Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">What the F2508 Form Requires</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Details of the injured person (name, occupation, age)</span>
@@ -497,13 +497,13 @@ export default function ManualHandlingModule5Section3() {
                   <ClipboardList className="h-4 w-4 text-emerald-400" />
                   <p className="text-sm font-medium text-white">The Accident Book</p>
                 </div>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Under the Social Security (Claims and Payments) Regulations 1979, every employer
                   must maintain an accident book and record{' '}
                   <strong className="text-white">all</strong> workplace accidents, no matter how
                   minor.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Details of the injured person</span>
@@ -532,12 +532,12 @@ export default function ManualHandlingModule5Section3() {
                   <FileWarning className="h-4 w-4 text-amber-400" />
                   <p className="text-sm font-medium text-white">Near-Miss Reports</p>
                 </div>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Near misses are incidents where no injury occurred{' '}
                   <strong className="text-white">but could have</strong>. They are arguably more
                   valuable than injury reports because they provide a warning before anyone is hurt.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>A load slips from the hands but is caught before hitting anyone</span>
@@ -588,7 +588,7 @@ export default function ManualHandlingModule5Section3() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">What happened?</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Establish the facts &mdash; who, what, where, when, how
                       </p>
                     </div>
@@ -599,7 +599,7 @@ export default function ManualHandlingModule5Section3() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Why did it happen?</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Identify the immediate causes (the unsafe act or condition)
                       </p>
                     </div>
@@ -610,7 +610,7 @@ export default function ManualHandlingModule5Section3() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">What was the root cause?</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Dig deeper &mdash; why did the immediate cause exist? What management system
                         failed?
                       </p>
@@ -624,7 +624,7 @@ export default function ManualHandlingModule5Section3() {
                       <p className="text-sm font-medium text-white">
                         What corrective actions are needed?
                       </p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         What changes to systems, procedures, equipment, or training will prevent
                         recurrence?
                       </p>
@@ -636,7 +636,7 @@ export default function ManualHandlingModule5Section3() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Implement and review</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Put corrective actions in place, assign responsibility, set a review date
                       </p>
                     </div>
@@ -668,7 +668,7 @@ export default function ManualHandlingModule5Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Frequently Identified Root Causes
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -748,7 +748,7 @@ export default function ManualHandlingModule5Section3() {
                   </div>
                   <div>
                     <p className="text-red-400 text-sm font-bold">INJURY OCCURS</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Immediate first aid &amp; make area safe
                     </p>
                   </div>
@@ -771,7 +771,7 @@ export default function ManualHandlingModule5Section3() {
                   </div>
                   <div>
                     <p className="text-orange-400 text-sm font-bold">REPORT INTERNALLY</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Accident book entry &amp; notify supervisor
                     </p>
                   </div>
@@ -794,7 +794,7 @@ export default function ManualHandlingModule5Section3() {
                   </div>
                   <div>
                     <p className="text-amber-400 text-sm font-bold">ASSESS RIDDOR THRESHOLD</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Over 7 days? Specified injury? Report if required
                     </p>
                   </div>
@@ -817,7 +817,7 @@ export default function ManualHandlingModule5Section3() {
                   </div>
                   <div>
                     <p className="text-emerald-400 text-sm font-bold">INVESTIGATE</p>
-                    <p className="text-xs text-white/60">What happened? Why? Root cause analysis</p>
+                    <p className="text-xs text-white">What happened? Why? Root cause analysis</p>
                   </div>
                 </div>
               </div>
@@ -838,7 +838,7 @@ export default function ManualHandlingModule5Section3() {
                   </div>
                   <div>
                     <p className="text-blue-400 text-sm font-bold">CORRECTIVE ACTIONS</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Changes to systems, procedures, equipment, or training
                     </p>
                   </div>
@@ -861,7 +861,7 @@ export default function ManualHandlingModule5Section3() {
                   </div>
                   <div>
                     <p className="text-purple-400 text-sm font-bold">REVIEW &amp; MONITOR</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Check actions are effective &amp; feed into trend analysis
                     </p>
                   </div>
@@ -869,7 +869,7 @@ export default function ManualHandlingModule5Section3() {
               </div>
             </div>
 
-            <p className="text-white/50 text-xs italic text-center mt-5">
+            <p className="text-white text-xs italic text-center mt-5">
               Every step must be documented. The investigation record becomes part of the
               organisation&rsquo;s safety management system.
             </p>
@@ -895,7 +895,7 @@ export default function ManualHandlingModule5Section3() {
                   <TrendingUp className="h-4 w-4 text-emerald-400" />
                   <p className="text-sm font-medium text-white">What Trend Analysis Can Reveal</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -962,7 +962,7 @@ export default function ManualHandlingModule5Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Building an Effective Near-Miss Reporting Culture
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -1020,7 +1020,7 @@ export default function ManualHandlingModule5Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1034,7 +1034,7 @@ export default function ManualHandlingModule5Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-5-section-2">

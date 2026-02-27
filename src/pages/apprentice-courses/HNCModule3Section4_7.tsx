@@ -213,7 +213,7 @@ const HNCModule3Section4_7 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section4">
@@ -235,7 +235,7 @@ const HNCModule3Section4_7 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Harmonics and Power Quality Issues
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding harmonic distortion sources, effects on three-phase systems, and
             mitigation techniques for building services
           </p>
@@ -483,7 +483,7 @@ const HNCModule3Section4_7 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Practical implication:</strong> 6-pulse VSDs produce predominantly 5th and 7th
               harmonics (6k±1 rule), which are negative and positive sequence respectively. The 5th
               harmonic causes motor counter-rotation effects.
@@ -578,7 +578,7 @@ const HNCModule3Section4_7 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Reference: BS 7671 Table 5.4a - Reduction factors for harmonic currents in four-core
                 and five-core cables
               </p>
@@ -659,7 +659,7 @@ const HNCModule3Section4_7 = () => {
                 I<sub>RMS</sub> = √(I<sub>1</sub>² + I<sub>3</sub>² + I<sub>5</sub>² + I<sub>7</sub>
                 ² + ...)
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where I1 is fundamental current and I3, I5, etc. are harmonic currents
               </p>
             </div>
@@ -703,12 +703,12 @@ const HNCModule3Section4_7 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Values vary with conductor size - larger conductors experience greater skin effect
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Derating requirement:</strong> Standard transformers must be derated when
               supplying non-linear loads. A transformer with 30% current THD may need to be derated
               to 70-80% of nameplate capacity to prevent overheating.
@@ -854,7 +854,7 @@ const HNCModule3Section4_7 = () => {
               <div className="space-y-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-1">Stage 1 - Simplified Assessment</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">
                       For installations with non-linear load &lt;25% of supply capacity
                     </li>
@@ -865,7 +865,7 @@ const HNCModule3Section4_7 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-1">Stage 2 - Detailed Assessment</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Required when Stage 1 limits exceeded</li>
                     <li className="pl-1">Calculate harmonic current emissions from each source</li>
                     <li className="pl-1">
@@ -876,7 +876,7 @@ const HNCModule3Section4_7 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-1">Stage 3 - Comprehensive Study</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">For large, complex, or critical installations</li>
                     <li className="pl-1">Full harmonic power flow analysis</li>
                     <li className="pl-1">Consider resonance risks with power factor correction</li>
@@ -933,7 +933,7 @@ const HNCModule3Section4_7 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Voltage distortion calculation:</strong> V<sub>h</sub> = I<sub>h</sub> × Z
               <sub>h</sub> where I<sub>h</sub> is harmonic current and Z<sub>h</sub> is network
               impedance at that harmonic frequency.
@@ -1092,7 +1092,7 @@ const HNCModule3Section4_7 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 K = Σ(I<sub>h</sub>²×h²) / Σ(I<sub>h</sub>²)
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where Ih is the per-unit current at harmonic h, and h is the harmonic order
               </p>
             </div>
@@ -1342,7 +1342,7 @@ const HNCModule3Section4_7 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Economic consideration:</strong> For large installations, the cost of harmonic
               mitigation at source (AFE drives) may be less than the cost of oversized cables,
               transformers, and central filtering required for standard 6-pulse drives.
@@ -1367,7 +1367,7 @@ const HNCModule3Section4_7 = () => {
                 non-linear loads. Each phase draws 100A fundamental and 45A third harmonic.
                 Calculate the neutral current.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Fundamental currents: 120° phase shift, cancel in neutral</p>
                 <p>
                   I<sub>N(fundamental)</sub> = 0A
@@ -1377,7 +1377,7 @@ const HNCModule3Section4_7 = () => {
                   I<sub>N(3rd)</sub> = 3 × 45A = <strong>135A</strong>
                 </p>
                 <p className="mt-2">Total neutral current = 135A (exceeds 100A phase current!)</p>
-                <p className="mt-2 text-white/60">→ Neutral must be sized for 135A minimum</p>
+                <p className="mt-2 text-white">→ Neutral must be sized for 135A minimum</p>
               </div>
             </div>
 
@@ -1390,7 +1390,7 @@ const HNCModule3Section4_7 = () => {
                 Fundamental 50A, 3rd harmonic 30A, 5th harmonic 25A, 7th harmonic 10A. Calculate the
                 THD(I) and RMS current.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   THD(I) = √(I<sub>3</sub>² + I<sub>5</sub>² + I<sub>7</sub>²) / I<sub>1</sub> ×
                   100%
@@ -1406,7 +1406,7 @@ const HNCModule3Section4_7 = () => {
                 <p>
                   RMS current = <strong>64.2A</strong>
                 </p>
-                <p className="mt-2 text-white/60">→ Cable must be rated for 64.2A, not 50A</p>
+                <p className="mt-2 text-white">→ Cable must be rated for 64.2A, not 50A</p>
               </div>
             </div>
 
@@ -1419,7 +1419,7 @@ const HNCModule3Section4_7 = () => {
                 harmonic current spectrum (per unit of fundamental): I1=1.0, I3=0.8, I5=0.6, I7=0.4,
                 I9=0.2.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   K = Σ(I<sub>h</sub>² × h²) / Σ(I<sub>h</sub>²)
                 </p>
@@ -1432,7 +1432,7 @@ const HNCModule3Section4_7 = () => {
                 <p className="mt-2">
                   K = 26.84 / 2.2 = <strong>K-12.2</strong>
                 </p>
-                <p className="mt-2 text-white/60">→ Specify K-13 rated transformer</p>
+                <p className="mt-2 text-white">→ Specify K-13 rated transformer</p>
               </div>
             </div>
           </div>
@@ -1525,7 +1525,7 @@ const HNCModule3Section4_7 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1571,7 +1571,7 @@ const HNCModule3Section4_7 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section4-6">

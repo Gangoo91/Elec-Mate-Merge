@@ -88,18 +88,18 @@ export function DiaryEntryCard({
               {entry.mood_rating && (
                 <span className="text-sm">{moodEmojis[entry.mood_rating]}</span>
               )}
-              <span className="text-white/40">·</span>
+              <span className="text-white">·</span>
               <div className="flex items-center gap-1 min-w-0 flex-1">
                 <MapPin className="h-3 w-3 text-elec-yellow flex-shrink-0" />
                 <span className="text-xs text-white truncate">{entry.site_name}</span>
               </div>
               {entry.photos && entry.photos.length > 0 && (
-                <span className="flex items-center gap-0.5 text-white/50 flex-shrink-0">
+                <span className="flex items-center gap-0.5 text-white flex-shrink-0">
                   <Camera className="h-3 w-3" />
                   <span className="text-[10px]">{entry.photos.length}</span>
                 </span>
               )}
-              <ChevronRight className="h-3.5 w-3.5 text-white/50 flex-shrink-0" />
+              <ChevronRight className="h-3.5 w-3.5 text-white flex-shrink-0" />
             </div>
 
             {/* Tasks as compact pills */}

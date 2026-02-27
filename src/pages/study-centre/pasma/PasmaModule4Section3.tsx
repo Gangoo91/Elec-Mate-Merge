@@ -201,7 +201,7 @@ export default function PasmaModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-4">
@@ -226,7 +226,7 @@ export default function PasmaModule4Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Storage &amp; Maintenance
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Correct storage, cleaning, segregation, and maintenance practices that protect tower
             components and prevent failures on the next use
           </p>
@@ -321,7 +321,7 @@ export default function PasmaModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Common Storage-Related Damage</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -373,7 +373,7 @@ export default function PasmaModule4Section3() {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-elec-yellow mb-3">What to Clean and How</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Concrete and plaster:</strong> Chip off dried
                     deposits carefully, avoiding damage to the galvanised surface. Use a stiff brush
@@ -399,7 +399,7 @@ export default function PasmaModule4Section3() {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-green-400 mb-2">Cleaning Reveals Defects</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Many defects are only visible once the component is clean. Cracks concealed under
                   paint splashes, corrosion hidden beneath concrete deposits, bent tubes masked by
                   plaster buildup &mdash; all are revealed during a thorough clean. This is why
@@ -437,7 +437,7 @@ export default function PasmaModule4Section3() {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-elec-yellow mb-3">Storage Requirements</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Under cover:</strong> A roof or canopy to protect
                     from rain and direct sunlight. Even a simple lean-to structure is significantly
@@ -469,7 +469,7 @@ export default function PasmaModule4Section3() {
                     Temperature Considerations for GRP
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   GRP (glass-reinforced plastic) components are sensitive to temperature extremes
                   and UV exposure. Store them away from direct sunlight and heat sources. High
                   temperatures can cause warping and deformation, while prolonged UV exposure
@@ -506,7 +506,7 @@ export default function PasmaModule4Section3() {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-elec-yellow mb-3">Storage Categories</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Frames:</strong> Store vertically on racking
                     where possible. If stored horizontally, do not stack more than the manufacturer
@@ -537,13 +537,13 @@ export default function PasmaModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Labelling Storage Locations</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Label each storage bay or rack with the component type and, if you have multiple
                   tower systems, the manufacturer and model. This prevents components from different
                   manufacturer systems being mixed &mdash; a serious safety hazard, as components
                   from different manufacturers are not interchangeable even if they appear similar.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -568,7 +568,7 @@ export default function PasmaModule4Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Warning</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Never mix components from different manufacturers. Even if frames and braces from
                   different systems appear to fit together, they have not been tested or certified
                   as a combined system. Using mixed components voids all manufacturer warranties and
@@ -601,7 +601,7 @@ export default function PasmaModule4Section3() {
                   <Tag className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Quarantine Process</p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">1. Separate immediately:</strong> Remove the
                     damaged item from the serviceable stock. Do not leave it where it could be
@@ -635,7 +635,7 @@ export default function PasmaModule4Section3() {
                 <p className="text-sm font-medium text-white mb-2">
                   Common Defects Requiring Quarantine
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -698,7 +698,7 @@ export default function PasmaModule4Section3() {
                 <p className="text-sm font-medium text-elec-yellow mb-3">
                   Routine Maintenance Tasks
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Castor lubrication:</strong> Apply a light
                     machine oil to castor axles and wheel bearings at intervals specified by the
@@ -729,7 +729,7 @@ export default function PasmaModule4Section3() {
                     Manufacturer&rsquo;s Maintenance Requirements
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The manufacturer&rsquo;s instruction manual will specify the maintenance schedule
                   and procedures for their specific tower system. Some manufacturers require annual
                   professional inspections in addition to routine user maintenance. Follow the
@@ -779,7 +779,7 @@ export default function PasmaModule4Section3() {
                 <p className="text-sm font-medium text-white mb-2">
                   What the Manufacturer Specifies
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -827,11 +827,11 @@ export default function PasmaModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Warranty Implications</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Manufacturer warranties typically cover defects in materials and workmanship, but
                   they contain conditions. The warranty can be voided by:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Improper storage (outdoor, damp, extreme temperatures)</span>
@@ -872,7 +872,7 @@ export default function PasmaModule4Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -886,7 +886,7 @@ export default function PasmaModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-4-section-2">

@@ -268,7 +268,7 @@ const MOETModule4Section7_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module4-section7">
@@ -288,7 +288,7 @@ const MOETModule4Section7_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Criticality Analysis of Equipment
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Ranking assets by failure consequences to focus maintenance where it matters most
           </p>
         </header>
@@ -546,7 +546,7 @@ const MOETModule4Section7_3 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Total score: 5-9 = General (C), 10-17 = Important (B), 18-25 = Critical (A). Safety
                 score of 5 automatically overrides to Critical (A) regardless of total.
               </p>
@@ -778,7 +778,7 @@ const MOETModule4Section7_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Note:</strong> Criticality analysis is not a one-off project — it is an
               ongoing management process. The initial analysis establishes the baseline, but the
               real value comes from using it daily to guide maintenance decisions, and updating it
@@ -799,7 +799,7 @@ const MOETModule4Section7_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -845,7 +845,7 @@ const MOETModule4Section7_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module4-section7-2">

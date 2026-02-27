@@ -208,7 +208,7 @@ export default function IpafModule5Section3() {
           <Button
             variant="ghost"
             size="icon"
-            className="min-h-[44px] min-w-[44px] text-white/70 hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] min-w-[44px] text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../ipaf-module-5">
@@ -216,7 +216,7 @@ export default function IpafModule5Section3() {
             </Link>
           </Button>
           <div className="flex-1 min-w-0">
-            <p className="text-xs text-white/40">Module 5 {'\u2022'} Section 3</p>
+            <p className="text-xs text-white">Module 5 {'\u2022'} Section 3</p>
             <h1 className="text-sm font-semibold text-white truncate">
               Rescue Procedures & Emergency Planning
             </h1>
@@ -239,7 +239,7 @@ export default function IpafModule5Section3() {
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Rescue Procedures & Emergency Planning
           </h2>
-          <p className="text-white/60 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Planning for the worst so everyone gets home safely — rescue hierarchy, communication,
             and emergency response for tower scaffold operations
           </p>
@@ -251,7 +251,7 @@ export default function IpafModule5Section3() {
             <Zap className="h-4 w-4" />
             In 30 Seconds
           </h3>
-          <p className="text-white/80 text-base leading-relaxed">
+          <p className="text-white text-base leading-relaxed">
             A written rescue plan is legally required before any work at height begins. The PASMA
             rescue hierarchy prioritises self-rescue, then assisted descent, then professional
             rescue. Every plan must be site-specific, include reliable communication methods,
@@ -266,7 +266,7 @@ export default function IpafModule5Section3() {
             <HardHat className="h-4 w-4" />
             On Site
           </h3>
-          <p className="text-white/80 text-base leading-relaxed">
+          <p className="text-white text-base leading-relaxed">
             Before anyone climbs the tower, ask: Does everyone know the rescue plan? Can we
             communicate from the platform to the ground? Is there mobile phone signal here? Do we
             have a first aid kit at ground level? Who is the designated ground-level buddy? What is
@@ -292,7 +292,7 @@ export default function IpafModule5Section3() {
             ].map((outcome, i) => (
               <li key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </li>
             ))}
           </ul>
@@ -309,7 +309,7 @@ export default function IpafModule5Section3() {
             <h3 className="text-xl font-semibold text-white">PASMA Rescue Hierarchy</h3>
           </div>
           <div className="border-l-2 border-emerald-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The PASMA rescue hierarchy provides a structured approach to rescue, starting with the
               simplest and fastest option and escalating when needed. The plan must address all
               three levels.
@@ -322,7 +322,7 @@ export default function IpafModule5Section3() {
                   </span>
                   <h4 className="font-semibold text-green-400">Self-Rescue</h4>
                 </div>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   The user descends the tower under their own power using the internal ladder or
                   stairway. This is the quickest and simplest rescue method. It applies when the
                   person is conscious, mobile, and able to climb down safely. Even for minor
@@ -337,7 +337,7 @@ export default function IpafModule5Section3() {
                   </span>
                   <h4 className="font-semibold text-blue-400">Assisted Descent</h4>
                 </div>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   A trained colleague assists the person to descend. This may involve verbal
                   guidance, physical support on the ladder, or helping them through platform
                   trapdoors. The assisting person must be trained, physically capable, and must not
@@ -352,7 +352,7 @@ export default function IpafModule5Section3() {
                   </span>
                   <h4 className="font-semibold text-red-400">Professional Rescue</h4>
                 </div>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   The fire brigade or a specialist rescue team is called. This is required when the
                   casualty is unconscious, seriously injured, or cannot be safely assisted down by
                   colleagues. Professional rescue teams have specialist equipment including
@@ -375,7 +375,7 @@ export default function IpafModule5Section3() {
             <h3 className="text-xl font-semibold text-white">Written Rescue Plan Requirements</h3>
           </div>
           <div className="border-l-2 border-blue-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The Work at Height Regulations 2005, Regulation 4, requires that work at height is
               properly planned. This includes planning for emergencies and rescue. A written rescue
               plan must be in place{' '}
@@ -387,7 +387,7 @@ export default function IpafModule5Section3() {
                 <Shield className="h-4 w-4 text-blue-400" />
                 What the Rescue Plan Must Include
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                   <span>
@@ -449,7 +449,7 @@ export default function IpafModule5Section3() {
                 <AlertTriangle className="h-4 w-4" />
                 Common Rescue Plan Failures
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                   <span>
@@ -506,7 +506,7 @@ export default function IpafModule5Section3() {
             <h3 className="text-xl font-semibold text-white">Communication Methods</h3>
           </div>
           <div className="border-l-2 border-purple-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Reliable communication between the tower user and ground level is essential. If the
               person on the tower cannot call for help, a minor incident can become a fatality.
             </p>
@@ -518,7 +518,7 @@ export default function IpafModule5Section3() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-purple-400 font-semibold text-sm">Mobile Phone</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Check signal strength at the working location before work begins. Ensure the
                     phone is fully charged. Keep it in a secure pocket, not balanced on the
                     platform.
@@ -526,14 +526,14 @@ export default function IpafModule5Section3() {
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-purple-400 font-semibold text-sm">Two-Way Radio</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Essential where mobile phone coverage is poor. Test range and clarity before
                     work starts. Agree a dedicated channel and check-in schedule.
                   </p>
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-purple-400 font-semibold text-sm">Buddy System</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     A designated ground-level person maintains visual and verbal contact with the
                     tower user at all times. The most reliable communication method for detecting
                     problems early.
@@ -541,7 +541,7 @@ export default function IpafModule5Section3() {
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-purple-400 font-semibold text-sm">Lone Worker Device</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     For situations where a buddy is not available. Devices with tilt sensors and
                     timed check-ins automatically raise an alarm if the worker becomes
                     incapacitated.
@@ -549,7 +549,7 @@ export default function IpafModule5Section3() {
                 </div>
               </div>
             </div>
-            <p className="text-white/70 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The rescue plan should specify both a{' '}
               <strong className="text-white">primary and backup</strong> communication method. If
               the primary method is a mobile phone, the backup might be a two-way radio or an agreed
@@ -571,7 +571,7 @@ export default function IpafModule5Section3() {
             </h3>
           </div>
           <div className="border-l-2 border-red-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               First aid provision must be planned and available before tower work begins. Under the
               Health and Safety (First-Aid) Regulations 1981, employers must provide adequate and
               appropriate first aid equipment, facilities, and personnel.
@@ -581,7 +581,7 @@ export default function IpafModule5Section3() {
                 <HeartPulse className="h-4 w-4 text-red-400" />
                 First Aid Requirements for Tower Work
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                   <span>Stocked first aid kit accessible at ground level near the tower</span>
@@ -638,7 +638,7 @@ export default function IpafModule5Section3() {
             </h3>
           </div>
           <div className="border-l-2 border-orange-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Discovering that someone has collapsed on a tower platform is a high-stress situation.
               Having a clear, rehearsed plan prevents panic and ensures the right actions are taken
               in the right order.
@@ -655,7 +655,7 @@ export default function IpafModule5Section3() {
                   </span>
                   <div>
                     <p className="text-white font-medium">Do NOT climb up without a plan</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       You could become a second casualty. The platform may be overloaded, the person
                       may have been affected by fumes or an electrical fault.
                     </p>
@@ -667,7 +667,7 @@ export default function IpafModule5Section3() {
                   </span>
                   <div>
                     <p className="text-white font-medium">Call 999 immediately</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       State: person collapsed at height, give exact location, tower height, nature
                       of emergency, access route for vehicles, and a callback number.
                     </p>
@@ -681,7 +681,7 @@ export default function IpafModule5Section3() {
                     <p className="text-white font-medium">
                       Maintain communication with the casualty
                     </p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Talk to them — even if unresponsive, they may be able to hear you. Continuous
                       verbal contact can help assess their condition and provide reassurance.
                     </p>
@@ -693,7 +693,7 @@ export default function IpafModule5Section3() {
                   </span>
                   <div>
                     <p className="text-white font-medium">Follow the rescue plan</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Execute the pre-planned steps — alert the first aider, clear access for
                       emergency vehicles, assign someone to meet and direct the ambulance/fire
                       brigade.
@@ -706,7 +706,7 @@ export default function IpafModule5Section3() {
                   </span>
                   <div>
                     <p className="text-white font-medium">Secure the area</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Keep others away from the tower base, prevent unauthorised rescue attempts,
                       and preserve the scene for investigation.
                     </p>
@@ -728,14 +728,14 @@ export default function IpafModule5Section3() {
             <h3 className="text-xl font-semibold text-white">Suspension Trauma Awareness</h3>
           </div>
           <div className="border-l-2 border-red-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Although harnesses are not typically used with correctly assembled mobile towers (the
               guardrails provide collective fall protection), there are situations where harnesses
               may be specified. Understanding suspension trauma is critical for rescue planning.
             </p>
             <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-white text-sm mb-2">What Is Suspension Trauma?</h4>
-              <p className="text-white/70 text-sm leading-relaxed mb-3">
+              <p className="text-white text-sm leading-relaxed mb-3">
                 Suspension trauma (orthostatic intolerance) occurs when a person hangs motionless in
                 a harness. The harness leg straps compress the femoral veins, and gravity causes
                 blood to pool in the lower limbs. With reduced blood returning to the heart and
@@ -744,15 +744,15 @@ export default function IpafModule5Section3() {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="bg-black/20 rounded-lg p-3 text-center">
                   <p className="text-red-400 font-bold text-lg">5-15 min</p>
-                  <p className="text-white/70 text-xs">Loss of consciousness possible</p>
+                  <p className="text-white text-xs">Loss of consciousness possible</p>
                 </div>
                 <div className="bg-black/20 rounded-lg p-3 text-center">
                   <p className="text-red-400 font-bold text-lg">15-30 min</p>
-                  <p className="text-white/70 text-xs">Death can occur without rescue</p>
+                  <p className="text-white text-xs">Death can occur without rescue</p>
                 </div>
                 <div className="bg-black/20 rounded-lg p-3 text-center">
                   <p className="text-amber-400 font-bold text-lg">Key Factor</p>
-                  <p className="text-white/70 text-xs">Inactivity — moving legs delays onset</p>
+                  <p className="text-white text-xs">Inactivity — moving legs delays onset</p>
                 </div>
               </div>
             </div>
@@ -760,7 +760,7 @@ export default function IpafModule5Section3() {
               <h4 className="font-semibold text-white text-sm mb-2">
                 After Rescue from Suspension
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 A person rescued from suspension must NOT be laid flat immediately — this can cause
                 a sudden rush of pooled, oxygen-depleted blood back to the heart, potentially
                 triggering cardiac arrest ("rescue death"). Place them in a semi-recumbent position
@@ -784,7 +784,7 @@ export default function IpafModule5Section3() {
             </h3>
           </div>
           <div className="border-l-2 border-amber-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Lowering an injured person from a tower platform is complex and carries significant
               risk of further injury. In most cases, this should be left to the emergency services
               who have specialist equipment and training.
@@ -794,7 +794,7 @@ export default function IpafModule5Section3() {
                 <Users className="h-4 w-4 text-amber-400" />
                 Key Principles
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                   <span>
@@ -853,40 +853,40 @@ export default function IpafModule5Section3() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
               <div className="bg-black/20 rounded-lg p-3">
                 <p className="text-purple-400 font-semibold text-xs">Emergency Services</p>
-                <p className="text-white/70 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   999 (or 112) — know exactly what to say and what information they need
                 </p>
               </div>
               <div className="bg-black/20 rounded-lg p-3">
                 <p className="text-purple-400 font-semibold text-xs">Site Manager / Supervisor</p>
-                <p className="text-white/70 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Name and mobile number — to authorise emergency response and coordinate site
                   access
                 </p>
               </div>
               <div className="bg-black/20 rounded-lg p-3">
                 <p className="text-purple-400 font-semibold text-xs">Qualified First Aider</p>
-                <p className="text-white/70 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Name, location on site, and mobile number — must be briefed on the rescue plan
                 </p>
               </div>
               <div className="bg-black/20 rounded-lg p-3">
                 <p className="text-purple-400 font-semibold text-xs">Nearest A&E Department</p>
-                <p className="text-white/70 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Hospital name, address, and driving route — especially important on rural or
                   remote sites
                 </p>
               </div>
               <div className="bg-black/20 rounded-lg p-3">
                 <p className="text-purple-400 font-semibold text-xs">Company Safety Officer</p>
-                <p className="text-white/70 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   For reporting and investigation — must be notified of any serious incident or
                   near-miss
                 </p>
               </div>
               <div className="bg-black/20 rounded-lg p-3">
                 <p className="text-purple-400 font-semibold text-xs">Site Location Details</p>
-                <p className="text-white/70 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Postcode, what3words, grid reference, gate access codes — written down, not just
                   memorised
                 </p>
@@ -906,14 +906,14 @@ export default function IpafModule5Section3() {
             <h3 className="text-xl font-semibold text-white">Lone Working at Height</h3>
           </div>
           <div className="border-l-2 border-purple-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Lone working on a tower scaffold presents unique rescue challenges. If the lone worker
               is injured or becomes unwell, there is no one to raise the alarm or provide immediate
               assistance. Additional precautions are essential.
             </p>
             <div className="bg-purple-500/10 border border-purple-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-white text-sm mb-2">Lone Worker Rescue Controls</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                   <span>
@@ -951,7 +951,7 @@ export default function IpafModule5Section3() {
               <h4 className="font-semibold text-red-400 text-sm mb-2">
                 When Lone Working Is Not Acceptable
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Consider prohibiting lone tower work when: the site is remote with poor mobile
                 signal, emergency response times exceed 20 minutes, the operative has a medical
                 condition that could cause sudden incapacity, the work involves assembly or
@@ -971,7 +971,7 @@ export default function IpafModule5Section3() {
             Rehearsing the Rescue Plan
           </h3>
           <div className="bg-gradient-to-br from-blue-500/10 to-emerald-500/10 border border-blue-500/20 rounded-xl p-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               A rescue plan that has never been practised is significantly less likely to work under
               the pressure of a real emergency. Regular rehearsal identifies gaps, builds
               confidence, and ensures everyone knows their role.
@@ -979,7 +979,7 @@ export default function IpafModule5Section3() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
               <div className="bg-black/20 rounded-lg p-3">
                 <p className="text-blue-400 font-semibold text-xs">Tabletop Exercise</p>
-                <p className="text-white/70 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Talk through the rescue plan step by step during the toolbox talk. Ask "what if"
                   questions: What if the phone has no signal? What if the casualty is unconscious?
                   What if it is raining heavily?
@@ -987,14 +987,14 @@ export default function IpafModule5Section3() {
               </div>
               <div className="bg-black/20 rounded-lg p-3">
                 <p className="text-emerald-400 font-semibold text-xs">Live Rehearsal</p>
-                <p className="text-white/70 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Periodically practise the rescue plan using a simulated scenario. Time the
                   response, test communications, and verify that emergency vehicle access routes are
                   clear and well-signed.
                 </p>
               </div>
             </div>
-            <p className="text-white/70 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               After each rehearsal, debrief with the team. What went well? What could be improved?
               Were there any surprises? Update the plan based on the lessons learned.
             </p>
@@ -1013,7 +1013,7 @@ export default function IpafModule5Section3() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-3">
                 <h4 className="font-medium text-white text-sm">Rescue Plan Pre-Start Checklist</h4>
-                <ul className="space-y-1 text-xs text-white/70">
+                <ul className="space-y-1 text-xs text-white">
                   <li>&#10003; Written rescue plan specific to this site and tower</li>
                   <li>&#10003; All workers briefed on the rescue plan</li>
                   <li>&#10003; Communication tested (mobile signal / radio range)</li>
@@ -1025,7 +1025,7 @@ export default function IpafModule5Section3() {
               </div>
               <div className="space-y-3">
                 <h4 className="font-medium text-white text-sm">Information for 999 Call</h4>
-                <ul className="space-y-1 text-xs text-white/70">
+                <ul className="space-y-1 text-xs text-white">
                   <li>&#10003; Service needed (ambulance and/or fire)</li>
                   <li>&#10003; Nature of emergency (person collapsed at height)</li>
                   <li>&#10003; Exact location — postcode, site name, what3words</li>
@@ -1053,7 +1053,7 @@ export default function IpafModule5Section3() {
                 <p className="text-elec-yellow font-semibold text-xs mb-1">
                   Work at Height Regulations 2005 — Regulation 4
                 </p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Work at height must be properly planned, including planning for emergencies and
                   rescue. This regulation is the primary legal basis requiring a rescue plan for
                   every tower operation.
@@ -1063,7 +1063,7 @@ export default function IpafModule5Section3() {
                 <p className="text-elec-yellow font-semibold text-xs mb-1">
                   Health and Safety (First-Aid) Regulations 1981
                 </p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Employers must provide adequate and appropriate first aid equipment, facilities,
                   and personnel. For tower work, this means a first aid kit at ground level and a
                   qualified first aider on or near the site.
@@ -1073,14 +1073,14 @@ export default function IpafModule5Section3() {
                 <p className="text-elec-yellow font-semibold text-xs mb-1">
                   Management of Health and Safety at Work Regulations 1999
                 </p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Regulation 8 — requires employers to establish procedures for serious and imminent
                   danger, including rescue arrangements. Workers must be informed of these
                   procedures.
                 </p>
               </div>
             </div>
-            <p className="text-white/60 text-xs mt-3 italic">
+            <p className="text-white text-xs mt-3 italic">
               Failure to have a rescue plan in place before work at height begins is a criminal
               offence under the Work at Height Regulations 2005. It is one of the most commonly
               cited failures in HSE enforcement actions following tower scaffold incidents.
@@ -1097,7 +1097,7 @@ export default function IpafModule5Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-xl p-4">
                 <h4 className="font-medium text-white mb-2 text-sm">{faq.question}</h4>
-                <p className="text-sm text-white/60 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

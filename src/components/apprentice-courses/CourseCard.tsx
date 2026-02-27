@@ -79,7 +79,7 @@ export function CourseCard({
         <h3
           className={cn(
             'font-bold text-[15px] leading-tight line-clamp-2 min-h-[2.5em]',
-            comingSoon ? 'text-white/40' : 'text-white'
+            comingSoon ? 'text-white' : 'text-white'
           )}
         >
           {title}
@@ -89,7 +89,7 @@ export function CourseCard({
         <p
           className={cn(
             'text-[12px] leading-snug mt-0.5 line-clamp-1',
-            comingSoon ? 'text-white/20' : 'text-white/50'
+            comingSoon ? 'text-white' : 'text-white'
           )}
         >
           {description}
@@ -99,11 +99,11 @@ export function CourseCard({
       {/* Arrow or Coming Soon */}
       <div className="flex-shrink-0 self-start mt-1">
         {comingSoon ? (
-          <span className="text-[10px] font-medium text-white/40 bg-white/10 px-2 py-1 rounded-full">
+          <span className="text-[10px] font-medium text-white bg-white/10 px-2 py-1 rounded-full">
             Soon
           </span>
         ) : (
-          <ChevronRight className="h-5 w-5 text-white/30" />
+          <ChevronRight className="h-5 w-5 text-white" />
         )}
       </div>
     </div>

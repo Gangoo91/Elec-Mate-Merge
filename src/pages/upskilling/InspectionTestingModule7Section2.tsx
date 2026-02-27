@@ -235,7 +235,7 @@ const InspectionTestingModule7Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-7">
@@ -257,7 +257,7 @@ const InspectionTestingModule7Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Single-Phase Polarity Verification
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Detailed techniques for socket outlets, lighting circuits, and switches
           </p>
         </header>
@@ -339,31 +339,31 @@ const InspectionTestingModule7Section2 = () => {
               <div className="grid grid-cols-1 gap-3 text-sm">
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Step 1</p>
-                  <p className="text-white/90 text-xs">
+                  <p className="text-white text-xs">
                     Isolate circuit, prove dead at each socket
                   </p>
                 </div>
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Step 2</p>
-                  <p className="text-white/90 text-xs">
+                  <p className="text-white text-xs">
                     Connect long lead to LINE terminal at CU outgoing
                   </p>
                 </div>
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Step 3</p>
-                  <p className="text-white/90 text-xs">
+                  <p className="text-white text-xs">
                     At socket: test to L terminal - should show continuity
                   </p>
                 </div>
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Step 4</p>
-                  <p className="text-white/90 text-xs">
+                  <p className="text-white text-xs">
                     Test to N and E - should show NO continuity (open circuit)
                   </p>
                 </div>
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Step 5</p>
-                  <p className="text-white/90 text-xs">
+                  <p className="text-white text-xs">
                     Repeat for N and E from their respective CU terminals
                   </p>
                 </div>
@@ -387,21 +387,21 @@ const InspectionTestingModule7Section2 = () => {
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Switch OFF</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   CU Line to Lamp centre = OPEN (no continuity)
                 </p>
-                <p className="text-xs text-white/60 mt-1">Proves switch is breaking the line</p>
+                <p className="text-xs text-white mt-1">Proves switch is breaking the line</p>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Switch ON</p>
-                <p className="text-sm text-white/90">CU Line to Lamp centre = CONTINUITY</p>
-                <p className="text-xs text-white/60 mt-1">Complete path through switch to lamp</p>
+                <p className="text-sm text-white">CU Line to Lamp centre = CONTINUITY</p>
+                <p className="text-xs text-white mt-1">Complete path through switch to lamp</p>
               </div>
             </div>
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Neutral Continuity</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 CU Neutral to Lamp outer sleeve = CONTINUITY (always, regardless of switch position)
               </p>
             </div>
@@ -473,7 +473,7 @@ const InspectionTestingModule7Section2 = () => {
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Cooker Control Unit</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   Verify the cooker switch breaks the line conductor to both the cooker outlet and
                   any integrated socket. The socket should have correct individual polarity.
                 </p>
@@ -604,7 +604,7 @@ const InspectionTestingModule7Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -650,7 +650,7 @@ const InspectionTestingModule7Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-7/section-1">

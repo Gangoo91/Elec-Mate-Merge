@@ -251,7 +251,7 @@ const RenewableEnergyModule9Section6 = () => {
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
           Tax Implications and Legal Considerations
         </h1>
-        <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+        <p className="text-white text-sm sm:text-base max-w-xl mx-auto">
           VAT, planning, consumer protection, and regulatory compliance
         </p>
       </div>
@@ -299,7 +299,7 @@ const RenewableEnergyModule9Section6 = () => {
           ].map((outcome, index) => (
             <div key={index} className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
-              <span className="text-white/80 text-sm">{outcome}</span>
+              <span className="text-white text-sm">{outcome}</span>
             </div>
           ))}
         </div>
@@ -312,7 +312,7 @@ const RenewableEnergyModule9Section6 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">01</span>
             <h2 className="text-xl font-semibold text-white">VAT Treatment</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               VAT treatment for renewable energy installations varies depending on the customer
               type, property, and technology. Understanding current rules ensures correct pricing
@@ -352,7 +352,7 @@ const RenewableEnergyModule9Section6 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">02</span>
             <h2 className="text-xl font-semibold text-white">Planning Permission</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Planning rules determine what can be installed without explicit permission.
               Understanding these rules prevents costly mistakes and customer disappointment.
@@ -399,7 +399,7 @@ const RenewableEnergyModule9Section6 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">03</span>
             <h2 className="text-xl font-semibold text-white">Consumer Protection</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Consumer protection law provides domestic customers with significant rights.
               Compliance is both a legal requirement and good business practice.
@@ -439,7 +439,7 @@ const RenewableEnergyModule9Section6 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">04</span>
             <h2 className="text-xl font-semibold text-white">Business Tax Considerations</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Business customers can access tax benefits that improve the financial case for
               renewable energy investment. Understanding these enables more compelling commercial
@@ -484,7 +484,7 @@ const RenewableEnergyModule9Section6 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">05</span>
             <h2 className="text-xl font-semibold text-white">Contracts and Insurance</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Proper contracts and insurance protect both you and your customers, providing clarity
               and recourse if problems arise.
@@ -525,7 +525,7 @@ const RenewableEnergyModule9Section6 = () => {
             <Zap className="w-4 h-4 text-elec-yellow" />
             Practical Guidance
           </h3>
-          <div className="space-y-2 text-white/80 text-sm">
+          <div className="space-y-2 text-white text-sm">
             <p>
               <span className="text-white font-medium">Check before you quote:</span> Verify
               planning status, VAT treatment, and any special considerations before providing
@@ -552,7 +552,7 @@ const RenewableEnergyModule9Section6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <h3 className="text-white font-medium mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>

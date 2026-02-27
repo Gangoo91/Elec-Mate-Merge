@@ -57,7 +57,7 @@ export function VideoPlayerSheet({
               onClick={() => onOpenChange(false)}
               className="absolute right-2 top-1.5 h-11 w-11 flex items-center justify-center rounded-full bg-black/30 backdrop-blur-sm active:bg-black/50 touch-manipulation z-10"
             >
-              <ChevronDown className="h-5 w-5 text-white/70" />
+              <ChevronDown className="h-5 w-5 text-white" />
             </button>
           </SheetHeader>
 
@@ -81,9 +81,9 @@ export function VideoPlayerSheet({
               </h3>
 
               <div className="flex items-center gap-2 flex-wrap">
-                <span className="text-[13px] text-white/45">{video.channel}</span>
+                <span className="text-[13px] text-white">{video.channel}</span>
                 <span className="text-white/15">|</span>
-                <span className="flex items-center gap-1 text-[13px] text-white/35">
+                <span className="flex items-center gap-1 text-[13px] text-white">
                   <Clock className="h-3.5 w-3.5" />
                   {video.duration}
                 </span>
@@ -103,7 +103,7 @@ export function VideoPlayerSheet({
                   className={`flex-1 flex items-center justify-center gap-2 h-12 rounded-xl border touch-manipulation active:scale-[0.98] transition-all ${
                     isBookmarked
                       ? 'bg-elec-yellow/15 border-elec-yellow/30 text-elec-yellow'
-                      : 'bg-white/[0.05] border-white/[0.08] text-white/60'
+                      : 'bg-white/[0.05] border-white/[0.08] text-white'
                   }`}
                 >
                   <Bookmark className={`h-4 w-4 ${isBookmarked ? 'fill-elec-yellow' : ''}`} />
@@ -113,7 +113,7 @@ export function VideoPlayerSheet({
                   href={`https://www.youtube.com/watch?v=${video.id}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl bg-white/[0.05] border border-white/[0.08] text-white/60 touch-manipulation active:scale-[0.98] transition-all"
+                  className="flex-1 flex items-center justify-center gap-2 h-12 rounded-xl bg-white/[0.05] border border-white/[0.08] text-white touch-manipulation active:scale-[0.98] transition-all"
                 >
                   <ExternalLink className="h-4 w-4" />
                   <span className="text-sm font-medium">Open in YouTube</span>
@@ -121,7 +121,7 @@ export function VideoPlayerSheet({
               </div>
 
               {video.description && (
-                <p className="text-[13px] text-white/45 leading-relaxed">{video.description}</p>
+                <p className="text-[13px] text-white leading-relaxed">{video.description}</p>
               )}
 
               {relatedVideos.length > 0 && (
@@ -180,7 +180,7 @@ function RelatedVideoRow({
         <h5 className="text-[12px] font-medium text-white leading-tight line-clamp-2">
           {video.title}
         </h5>
-        <p className="text-[10px] text-white/35 mt-1">{video.channel}</p>
+        <p className="text-[10px] text-white mt-1">{video.channel}</p>
       </button>
 
       <button
@@ -192,7 +192,7 @@ function RelatedVideoRow({
       >
         <Bookmark
           className={`h-3.5 w-3.5 ${
-            isBookmarked ? 'text-elec-yellow fill-elec-yellow' : 'text-white/30'
+            isBookmarked ? 'text-elec-yellow fill-elec-yellow' : 'text-white'
           }`}
         />
       </button>

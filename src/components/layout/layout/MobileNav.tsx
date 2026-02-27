@@ -41,7 +41,7 @@ export const MobileNav = () => {
                 'flex flex-col items-center justify-center flex-1 h-full gap-1',
                 'touch-manipulation select-none',
                 'transition-colors duration-200',
-                isActive ? 'text-elec-yellow' : 'text-white/50 active:text-white/70'
+                isActive ? 'text-elec-yellow' : 'text-white active:text-white'
               )}
             >
               <div className="relative">
@@ -63,7 +63,7 @@ export const MobileNav = () => {
               <span
                 className={cn(
                   'text-[10px] font-medium transition-all duration-200',
-                  isActive ? 'text-elec-yellow' : 'text-white/50'
+                  isActive ? 'text-elec-yellow' : 'text-white'
                 )}
               >
                 {item.label}

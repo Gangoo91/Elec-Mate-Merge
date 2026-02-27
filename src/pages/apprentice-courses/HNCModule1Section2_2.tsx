@@ -221,7 +221,7 @@ const HNCModule1Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section2">
@@ -243,7 +243,7 @@ const HNCModule1Section2_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Risk Assessment Process
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Systematic evaluation of workplace hazards using the HSE five-step approach for building
             services
           </p>
@@ -624,7 +624,7 @@ const HNCModule1Section2_2 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 3×3 matrix: scores 1-2 = Low, 3-4 = Medium, 6 = High, 9 = Very High
               </p>
             </div>
@@ -875,7 +875,7 @@ const HNCModule1Section2_2 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 L = Likelihood, S = Severity, R = Risk Score (L×S)
               </p>
             </div>
@@ -906,7 +906,7 @@ const HNCModule1Section2_2 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Legal note:</strong> Risk assessments must be readily accessible to those who
               need them - workers, safety representatives, and enforcement officers.
             </p>
@@ -932,7 +932,7 @@ const HNCModule1Section2_2 = () => {
               <p className="text-sm text-white mb-3">
                 <strong>Task:</strong> Replace existing consumer unit in occupied domestic property
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90 space-y-2">
+              <div className="bg-black/30 p-3 rounded text-sm text-white space-y-2">
                 <p>
                   <strong>Key Hazards Identified:</strong>
                 </p>
@@ -961,7 +961,7 @@ const HNCModule1Section2_2 = () => {
               <p className="text-sm text-white mb-3">
                 <strong>Task:</strong> Install new LED lighting system in occupied office building
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90 space-y-2">
+              <div className="bg-black/30 p-3 rounded text-sm text-white space-y-2">
                 <p>
                   <strong>Key Hazards Identified:</strong>
                 </p>
@@ -991,7 +991,7 @@ const HNCModule1Section2_2 = () => {
                 <strong>Task:</strong> Periodic inspection and testing of three-phase distribution
                 board
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90 space-y-2">
+              <div className="bg-black/30 p-3 rounded text-sm text-white space-y-2">
                 <p>
                   <strong>Key Hazards Identified:</strong>
                 </p>
@@ -1098,7 +1098,7 @@ const HNCModule1Section2_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1145,7 +1145,7 @@ const HNCModule1Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section2-1">

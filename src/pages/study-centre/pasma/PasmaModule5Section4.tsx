@@ -204,7 +204,7 @@ export default function PasmaModule5Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-5">
@@ -229,7 +229,7 @@ export default function PasmaModule5Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             TowerSure App &amp; Digital Inspection
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             PASMA&rsquo;s digital inspection platform &mdash; replacing paper forms with
             time-stamped, cloud-stored records that modernise compliance and simplify audit trails
           </p>
@@ -320,7 +320,7 @@ export default function PasmaModule5Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">TowerSure at a Glance</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -402,7 +402,7 @@ export default function PasmaModule5Section4() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-purple-400">Scan QR Code</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Open the TowerSure app and scan the QR code label attached to the tower.
                         This instantly identifies the tower and links the inspection to its unique
                         record history.
@@ -417,7 +417,7 @@ export default function PasmaModule5Section4() {
                       <p className="text-sm font-medium text-purple-400">
                         Answer Checklist Questions
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Work through the structured inspection checklist. Each question prompts you
                         to check a specific component or condition. Answer pass, fail, or N/A with
                         optional notes for each item.
@@ -430,7 +430,7 @@ export default function PasmaModule5Section4() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-purple-400">Take Photograph</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Capture a photograph of the tower showing its current condition and
                         location. The image is automatically time-stamped and GPS-tagged.
                       </p>
@@ -442,7 +442,7 @@ export default function PasmaModule5Section4() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-purple-400">Submit</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Review the completed inspection and submit. The record is signed digitally
                         with your TowerSure account credentials, providing attribution to the
                         competent person.
@@ -455,7 +455,7 @@ export default function PasmaModule5Section4() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-purple-400">Cloud Storage</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         The completed record is uploaded to secure cloud storage, where it is backed
                         up, searchable, and accessible to authorised users from any device.
                       </p>
@@ -873,7 +873,7 @@ export default function PasmaModule5Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Workflow in Practice</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The entire TowerSure workflow &mdash; from scanning the QR code to the record
                   being stored in the cloud &mdash; typically takes 3&ndash;5 minutes for a routine
                   inspection. If defects are found and additional notes or photographs are needed,
@@ -904,7 +904,7 @@ export default function PasmaModule5Section4() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-green-400 mb-2">TowerSure Advantages</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Time-stamped &mdash; records cannot be backdated</span>
@@ -941,7 +941,7 @@ export default function PasmaModule5Section4() {
                 </div>
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-red-400 mb-2">TowerSure Limitations</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Requires a smartphone or tablet</span>
@@ -996,7 +996,7 @@ export default function PasmaModule5Section4() {
                     Always Have a Paper Backup Plan
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Technology is not infallible. Phones break, batteries die, and apps occasionally
                   crash. You must always have paper inspection forms available as a backup. If
                   TowerSure is unavailable for any reason, the inspection must still be carried out
@@ -1036,7 +1036,7 @@ export default function PasmaModule5Section4() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Download the App</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Install TowerSure from the Apple App Store or Google Play Store. It is free
                         to download and does not require a paid subscription.
                       </p>
@@ -1048,7 +1048,7 @@ export default function PasmaModule5Section4() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Create Your Account</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Register with your name, company details, and contact information. This
                         creates your inspector profile which will be attributed to all records you
                         submit.
@@ -1061,7 +1061,7 @@ export default function PasmaModule5Section4() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Register Your Towers</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Add each tower to the system with its manufacturer, model, configuration,
                         and location. Attach a unique QR code label to each tower in a visible,
                         protected position.
@@ -1074,7 +1074,7 @@ export default function PasmaModule5Section4() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Set Up Inspection Schedules</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Configure the 7-day inspection interval for each tower. TowerSure will send
                         notifications when inspections are due, helping to prevent overdue
                         inspections.
@@ -1087,7 +1087,7 @@ export default function PasmaModule5Section4() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Add Team Members</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Invite other competent persons to join your TowerSure account so they can
                         carry out and record inspections. Set appropriate access levels for each
                         team member.
@@ -1100,7 +1100,7 @@ export default function PasmaModule5Section4() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Configure Notifications</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Set up alerts for overdue inspections, upcoming inspections, and any failed
                         inspection results that require follow-up action.
                       </p>
@@ -1142,7 +1142,7 @@ export default function PasmaModule5Section4() {
                   <Share2 className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Sharing Options</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1192,7 +1192,7 @@ export default function PasmaModule5Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Demonstrating Compliance During Audits
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   TowerSure&rsquo;s cloud-based system allows you to pull up the complete inspection
                   history of any tower, from its first registration through to the most recent
                   inspection. This longitudinal view shows the auditor that inspections have been
@@ -1227,7 +1227,7 @@ export default function PasmaModule5Section4() {
                   <Cpu className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">Emerging Technologies</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1287,7 +1287,7 @@ export default function PasmaModule5Section4() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-green-400 mb-2">What This Means for You</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Embrace digital tools now &mdash; they will become standard</span>
@@ -1312,7 +1312,7 @@ export default function PasmaModule5Section4() {
                   <p className="text-sm font-medium text-blue-400 mb-2">
                     The Human Element Remains
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Technology assists but does not replace the competent person</span>
@@ -1354,7 +1354,7 @@ export default function PasmaModule5Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1368,7 +1368,7 @@ export default function PasmaModule5Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-5-section-3">

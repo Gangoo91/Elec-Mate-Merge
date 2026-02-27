@@ -219,7 +219,7 @@ const Level3Module3Section5_3 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="../section5">
@@ -242,7 +242,7 @@ const Level3Module3Section5_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
             Energy Consumption and kWh
           </h1>
-          <p className="text-lg text-white/70 max-w-2xl">
+          <p className="text-lg text-white max-w-2xl">
             Understanding energy calculations, kilowatt-hours and practical energy consumption
             analysis
           </p>
@@ -258,7 +258,7 @@ const Level3Module3Section5_3 = () => {
                 <Zap className="w-4 h-4 text-blue-400" />
                 <span className="text-sm font-medium text-blue-400">Energy Formula</span>
               </div>
-              <p className="text-sm text-white/70">E = P x t (kWh = kW x hours)</p>
+              <p className="text-sm text-white">E = P x t (kWh = kW x hours)</p>
             </CardContent>
           </Card>
           <Card className="bg-green-500/10 border-green-500/20">
@@ -267,7 +267,7 @@ const Level3Module3Section5_3 = () => {
                 <Calculator className="w-4 h-4 text-green-400" />
                 <span className="text-sm font-medium text-green-400">Unit Conversion</span>
               </div>
-              <p className="text-sm text-white/70">1 kWh = 3,600,000 J = 3.6 MJ</p>
+              <p className="text-sm text-white">1 kWh = 3,600,000 J = 3.6 MJ</p>
             </CardContent>
           </Card>
           <Card className="bg-amber-500/10 border-amber-500/20">
@@ -276,7 +276,7 @@ const Level3Module3Section5_3 = () => {
                 <Clock className="w-4 h-4 text-amber-400" />
                 <span className="text-sm font-medium text-amber-400">Cost Calculation</span>
               </div>
-              <p className="text-sm text-white/70">Cost = kW x hours x rate (p/kWh)</p>
+              <p className="text-sm text-white">Cost = kW x hours x rate (p/kWh)</p>
             </CardContent>
           </Card>
         </div>
@@ -293,7 +293,7 @@ const Level3Module3Section5_3 = () => {
               </div>
               <div>
                 <h2 className="text-lg font-semibold text-white mb-3">Learning Outcomes</h2>
-                <ul className="space-y-2 text-white/80">
+                <ul className="space-y-2 text-white">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
                     <span>
@@ -332,7 +332,7 @@ const Level3Module3Section5_3 = () => {
               </h2>
             </div>
 
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               Power and energy are related but distinct concepts. Power is the rate at which energy
               is transferred or used, measured in watts. Energy is the total amount transferred over
               a period of time, measured in joules or kilowatt-hours.
@@ -344,7 +344,7 @@ const Level3Module3Section5_3 = () => {
                 <div className="bg-gradient-to-r from-blue-500/10 to-transparent p-4 rounded-lg border-l-4 border-blue-500 mb-4">
                   <p className="text-white font-medium mb-2">Fundamental Energy Relationship:</p>
                   <p className="text-blue-300 font-mono text-2xl mb-2">E = P x t</p>
-                  <div className="text-white/70 text-sm space-y-1">
+                  <div className="text-white text-sm space-y-1">
                     <p>E = Energy (joules or kWh)</p>
                     <p>P = Power (watts or kW)</p>
                     <p>t = Time (seconds or hours)</p>
@@ -353,13 +353,13 @@ const Level3Module3Section5_3 = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="p-3 bg-white/5 rounded-lg">
                     <p className="text-white font-medium mb-2">SI Units (Joules)</p>
-                    <p className="text-white/70 text-sm font-mono">E (J) = P (W) x t (s)</p>
-                    <p className="text-white/60 text-xs mt-2">1 joule = 1 watt-second</p>
+                    <p className="text-white text-sm font-mono">E (J) = P (W) x t (s)</p>
+                    <p className="text-white text-xs mt-2">1 joule = 1 watt-second</p>
                   </div>
                   <div className="p-3 bg-white/5 rounded-lg">
                     <p className="text-white font-medium mb-2">Practical Units (kWh)</p>
-                    <p className="text-white/70 text-sm font-mono">E (kWh) = P (kW) x t (h)</p>
-                    <p className="text-white/60 text-xs mt-2">1 kWh = 3,600,000 J = 3.6 MJ</p>
+                    <p className="text-white text-sm font-mono">E (kWh) = P (kW) x t (h)</p>
+                    <p className="text-white text-xs mt-2">1 kWh = 3,600,000 J = 3.6 MJ</p>
                   </div>
                 </div>
               </CardContent>
@@ -370,13 +370,13 @@ const Level3Module3Section5_3 = () => {
                 <h4 className="text-green-400 font-medium mb-3">
                   Worked Example: Energy Consumption
                 </h4>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Calculate the energy used by a 2.5 kW heater running for 6 hours.
                 </p>
                 <div className="space-y-2 text-sm font-mono">
-                  <p className="text-white/80">E = P x t</p>
-                  <p className="text-white/80">E = 2.5 kW x 6 h = 15 kWh</p>
-                  <p className="text-white/80">In joules: 15 x 3,600,000 = 54,000,000 J = 54 MJ</p>
+                  <p className="text-white">E = P x t</p>
+                  <p className="text-white">E = 2.5 kW x 6 h = 15 kWh</p>
+                  <p className="text-white">In joules: 15 x 3,600,000 = 54,000,000 J = 54 MJ</p>
                   <p className="text-green-400 mt-2">
                     The heater uses 15 kWh (54 MJ) of electrical energy
                   </p>
@@ -401,7 +401,7 @@ const Level3Module3Section5_3 = () => {
               <h2 className="text-xl font-semibold text-white m-0">Energy Unit Conversions</h2>
             </div>
 
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               The joule (J) is the SI unit of energy, but the kilowatt-hour (kWh) is more practical
               for electrical billing. Understanding conversions between these units is essential for
               energy calculations.
@@ -419,7 +419,7 @@ const Level3Module3Section5_3 = () => {
                         <th className="text-left p-2 text-white">Derivation</th>
                       </tr>
                     </thead>
-                    <tbody className="text-white/70">
+                    <tbody className="text-white">
                       <tr className="border-b border-white/10">
                         <td className="p-2">1 kWh to joules</td>
                         <td className="p-2 text-green-400">3,600,000 J</td>
@@ -452,10 +452,10 @@ const Level3Module3Section5_3 = () => {
                   <Info className="w-5 h-5 text-blue-400 mt-0.5 shrink-0" />
                   <div>
                     <h4 className="text-blue-400 font-medium mb-2">Why Use kWh?</h4>
-                    <p className="text-white/80 text-sm mb-3">
+                    <p className="text-white text-sm mb-3">
                       The joule is impractically small for everyday use. Consider:
                     </p>
-                    <ul className="text-white/70 text-sm space-y-1">
+                    <ul className="text-white text-sm space-y-1">
                       <li>A kettle boiling for 3 minutes uses 9,000,000 joules</li>
                       <li>The same kettle uses 2.5 kWh - much easier to work with</li>
                       <li>Household annual use: 3000-4000 kWh vs billions of joules</li>
@@ -484,7 +484,7 @@ const Level3Module3Section5_3 = () => {
               </h2>
             </div>
 
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               Electricity is billed based on energy consumed, typically in kilowatt-hours. The cost
               depends on the tariff rate and the energy used. Understanding these calculations helps
               identify opportunities for savings.
@@ -498,18 +498,18 @@ const Level3Module3Section5_3 = () => {
                   <p className="text-amber-300 font-mono text-lg mb-2">
                     Cost = Power (kW) x Time (hours) x Rate (p/kWh)
                   </p>
-                  <p className="text-white/70 text-sm">Or: Cost = Energy (kWh) x Rate (p/kWh)</p>
+                  <p className="text-white text-sm">Or: Cost = Energy (kWh) x Rate (p/kWh)</p>
                 </div>
                 <div className="p-4 bg-white/5 rounded-lg">
                   <h4 className="text-white font-medium mb-2">
                     Worked Example: Heater Running Costs
                   </h4>
-                  <p className="text-white/70 text-sm mb-3">
+                  <p className="text-white text-sm mb-3">
                     Calculate the cost to run a 2 kW fan heater for 5 hours at 16p/kWh.
                   </p>
                   <div className="space-y-2 text-sm font-mono">
-                    <p className="text-white/80">Energy = 2 kW x 5 h = 10 kWh</p>
-                    <p className="text-white/80">Cost = 10 kWh x 16p = 160p = 1.60 pounds</p>
+                    <p className="text-white">Energy = 2 kW x 5 h = 10 kWh</p>
+                    <p className="text-white">Cost = 10 kWh x 16p = 160p = 1.60 pounds</p>
                     <p className="text-green-400 mt-2">
                       The heater costs 1.60 pounds to run for 5 hours
                     </p>
@@ -527,7 +527,7 @@ const Level3Module3Section5_3 = () => {
                       Common Electricity Costs (Approximate)
                     </h4>
                     <div className="grid md:grid-cols-2 gap-4 text-sm">
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <p className="font-medium text-white mb-1">Domestic Appliances:</p>
                         <ul className="space-y-1">
                           <li>Kettle (3 kW, 3 min): 2.4p</li>
@@ -536,7 +536,7 @@ const Level3Module3Section5_3 = () => {
                           <li>LED TV (50 W, 4h): 3.2p</li>
                         </ul>
                       </div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <p className="font-medium text-white mb-1">Heating/Cooling:</p>
                         <ul className="space-y-1">
                           <li>Fan heater (2 kW, 1h): 32p</li>
@@ -546,7 +546,7 @@ const Level3Module3Section5_3 = () => {
                         </ul>
                       </div>
                     </div>
-                    <p className="text-white/60 text-xs mt-3">
+                    <p className="text-white text-xs mt-3">
                       Based on 16p/kWh typical rate (2024)
                     </p>
                   </div>
@@ -573,7 +573,7 @@ const Level3Module3Section5_3 = () => {
               </h2>
             </div>
 
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               Electricity bills comprise several elements beyond the simple unit rate. Understanding
               tariff structures helps in advising customers on the most economical options for their
               usage patterns.
@@ -585,28 +585,28 @@ const Level3Module3Section5_3 = () => {
                 <div className="space-y-4">
                   <div className="p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
                     <h4 className="text-blue-400 font-medium mb-2">Standing Charge</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Fixed daily charge (typically 30-50p/day) covering meter rental, connection
                       maintenance, and infrastructure costs. Payable regardless of consumption.
                     </p>
                   </div>
                   <div className="p-4 bg-green-500/10 rounded-lg border border-green-500/20">
                     <h4 className="text-green-400 font-medium mb-2">Unit Rate (kWh rate)</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Variable rate per kWh consumed. Typically 14-20p/kWh for domestic users. May
                       vary by time of use on certain tariffs.
                     </p>
                   </div>
                   <div className="p-4 bg-amber-500/10 rounded-lg border border-amber-500/20">
                     <h4 className="text-amber-400 font-medium mb-2">Maximum Demand (Commercial)</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Charge based on highest power drawn in a 30-minute period. Encourages load
                       management and peak reduction. Measured in kVA to account for power factor.
                     </p>
                   </div>
                   <div className="p-4 bg-purple-500/10 rounded-lg border border-purple-500/20">
                     <h4 className="text-purple-400 font-medium mb-2">Reactive Power Charge</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Penalty for poor power factor (typically below 0.9). Charged per kVArh of
                       reactive energy. Encourages power factor correction.
                     </p>
@@ -622,7 +622,7 @@ const Level3Module3Section5_3 = () => {
                   <div>
                     <h4 className="text-blue-400 font-medium mb-2">Time-of-Use Tariffs</h4>
                     <div className="grid md:grid-cols-2 gap-4 text-sm">
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <p className="font-medium text-white mb-1">Economy 7:</p>
                         <ul className="space-y-1">
                           <li>7 hours cheap rate (typically overnight)</li>
@@ -630,7 +630,7 @@ const Level3Module3Section5_3 = () => {
                           <li>Suits storage heaters, hot water</li>
                         </ul>
                       </div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <p className="font-medium text-white mb-1">Smart Time-of-Use:</p>
                         <ul className="space-y-1">
                           <li>Variable rates throughout day</li>
@@ -667,7 +667,7 @@ const Level3Module3Section5_3 = () => {
                     <div className="grid md:grid-cols-2 gap-4">
                       <div className="p-4 bg-white/5 rounded-lg">
                         <h4 className="text-green-400 font-medium mb-2">Quick Calculations</h4>
-                        <ul className="text-sm text-white/80 space-y-1">
+                        <ul className="text-sm text-white space-y-1">
                           <li>Hours in a year: 8760 (24 x 365)</li>
                           <li>1 kW running 24/7: ~8760 kWh/year</li>
                           <li>1 W saved continuously: ~8.76 kWh/year</li>
@@ -676,7 +676,7 @@ const Level3Module3Section5_3 = () => {
                       </div>
                       <div className="p-4 bg-white/5 rounded-lg">
                         <h4 className="text-green-400 font-medium mb-2">Advising Customers</h4>
-                        <ul className="text-sm text-white/80 space-y-1">
+                        <ul className="text-sm text-white space-y-1">
                           <li>Compare running costs of alternatives</li>
                           <li>Calculate payback on efficient equipment</li>
                           <li>Suggest time-of-use for high consumption</li>
@@ -707,7 +707,7 @@ const Level3Module3Section5_3 = () => {
                       <span className="text-blue-400 font-bold shrink-0">Q:</span>
                       {faq.question}
                     </h3>
-                    <p className="text-white/70 text-sm ml-6">{faq.answer}</p>
+                    <p className="text-white text-sm ml-6">{faq.answer}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -734,7 +734,7 @@ const Level3Module3Section5_3 = () => {
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
                       <h4 className="text-white font-medium mb-3">Energy Formulae</h4>
-                      <div className="space-y-2 text-sm font-mono text-white/80">
+                      <div className="space-y-2 text-sm font-mono text-white">
                         <p>E = P x t</p>
                         <p>kWh = kW x hours</p>
                         <p>J = W x seconds</p>
@@ -743,7 +743,7 @@ const Level3Module3Section5_3 = () => {
                     </div>
                     <div>
                       <h4 className="text-white font-medium mb-3">Cost Calculations</h4>
-                      <div className="space-y-2 text-sm font-mono text-white/80">
+                      <div className="space-y-2 text-sm font-mono text-white">
                         <p>Cost = kWh x rate</p>
                         <p>Cost = kW x h x p/kWh</p>
                         <p>Annual cost = P x 8760 x rate</p>
@@ -751,7 +751,7 @@ const Level3Module3Section5_3 = () => {
                     </div>
                     <div>
                       <h4 className="text-white font-medium mb-3">Useful Constants</h4>
-                      <div className="space-y-2 text-sm text-white/80">
+                      <div className="space-y-2 text-sm text-white">
                         <p>Hours per year: 8760</p>
                         <p>Hours per month: 720 (avg)</p>
                         <p>Hours per day: 24</p>
@@ -760,7 +760,7 @@ const Level3Module3Section5_3 = () => {
                     </div>
                     <div>
                       <h4 className="text-white font-medium mb-3">Typical Rates</h4>
-                      <div className="space-y-2 text-sm text-white/80">
+                      <div className="space-y-2 text-sm text-white">
                         <p>Domestic: 14-20p/kWh</p>
                         <p>Commercial: 12-18p/kWh</p>
                         <p>Economy 7 night: 8-12p/kWh</p>

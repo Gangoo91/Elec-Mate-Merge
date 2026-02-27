@@ -141,7 +141,7 @@ export const CostEngineerInput = ({
   const charCount = prompt.length;
 
   const getCharCountColor = () => {
-    if (charCount < 100) return 'text-white/40';
+    if (charCount < 100) return 'text-white';
     return 'text-emerald-400';
   };
 
@@ -195,7 +195,7 @@ export const CostEngineerInput = ({
             value={prompt}
             onChange={(e) => onPromptChange(e.target.value)}
             placeholder="Describe the electrical work needed in detail. Include scope, specifications, and any special requirements..."
-            className="min-h-[120px] text-sm bg-white/[0.03] border border-white/10 rounded-xl focus:border-elec-yellow/50 focus:ring-1 focus:ring-elec-yellow/20 transition-all text-white placeholder:text-white/30 resize-none touch-manipulation"
+            className="min-h-[120px] text-sm bg-white/[0.03] border border-white/10 rounded-xl focus:border-elec-yellow/50 focus:ring-1 focus:ring-elec-yellow/20 transition-all text-white placeholder:text-white resize-none touch-manipulation"
             autoComplete="off"
             spellCheck={true}
             maxLength={MAX_CHARS}
@@ -219,14 +219,14 @@ export const CostEngineerInput = ({
                 <div className="p-1.5 rounded-lg bg-elec-yellow/15">
                   <Lightbulb className="h-4 w-4 text-elec-yellow" />
                 </div>
-                <span className="text-sm font-medium text-white/80">Example Projects</span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-white/10 text-white/50">
+                <span className="text-sm font-medium text-white">Example Projects</span>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-white/10 text-white">
                   {filteredExamples.length}
                 </span>
               </div>
               <ChevronDown
                 className={cn(
-                  'h-4 w-4 text-white/40 transition-transform duration-200',
+                  'h-4 w-4 text-white transition-transform duration-200',
                   showExamples && 'rotate-180'
                 )}
               />
@@ -242,7 +242,7 @@ export const CostEngineerInput = ({
                     className="w-full p-3 bg-white/[0.03] hover:bg-white/[0.06] border border-white/5 hover:border-elec-yellow/30 rounded-xl transition-all text-left touch-manipulation"
                   >
                     <h4 className="text-sm font-medium text-white mb-1">{example.title}</h4>
-                    <p className="text-xs text-white/40 line-clamp-2">{example.description}</p>
+                    <p className="text-xs text-white line-clamp-2">{example.description}</p>
                   </button>
                 ))}
               </div>
@@ -262,16 +262,16 @@ export const CostEngineerInput = ({
             <CollapsibleTrigger className="w-full p-4 flex items-center justify-between touch-manipulation hover:bg-white/[0.02] transition-colors">
               <div className="flex items-center gap-2.5">
                 <div className="p-1.5 rounded-lg bg-white/10">
-                  <FileText className="h-4 w-4 text-white/60" />
+                  <FileText className="h-4 w-4 text-white" />
                 </div>
-                <span className="text-sm font-medium text-white/80">Optional Details</span>
-                <span className="text-xs px-2 py-0.5 rounded-full bg-white/10 text-white/40">
+                <span className="text-sm font-medium text-white">Optional Details</span>
+                <span className="text-xs px-2 py-0.5 rounded-full bg-white/10 text-white">
                   +Accuracy
                 </span>
               </div>
               <ChevronDown
                 className={cn(
-                  'h-4 w-4 text-white/40 transition-transform duration-200',
+                  'h-4 w-4 text-white transition-transform duration-200',
                   showOptionalDetails && 'rotate-180'
                 )}
               />
@@ -297,7 +297,7 @@ export const CostEngineerInput = ({
 
                 {/* Project Name */}
                 <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-white/50 flex items-center gap-1.5">
+                  <Label className="text-xs font-medium text-white flex items-center gap-1.5">
                     <FileText className="h-3 w-3" />
                     Project Name
                   </Label>
@@ -305,14 +305,14 @@ export const CostEngineerInput = ({
                     value={projectName}
                     onChange={(e) => onProjectNameChange(e.target.value)}
                     placeholder="e.g., Kitchen Rewire - 23 Oak Street"
-                    className="h-10 text-sm bg-white/[0.03] border border-white/10 rounded-lg focus:border-elec-yellow/50 text-white placeholder:text-white/30 touch-manipulation"
+                    className="h-10 text-sm bg-white/[0.03] border border-white/10 rounded-lg focus:border-elec-yellow/50 text-white placeholder:text-white touch-manipulation"
                     disabled={isProcessing}
                   />
                 </div>
 
                 {/* Client Info */}
                 <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-white/50 flex items-center gap-1.5">
+                  <Label className="text-xs font-medium text-white flex items-center gap-1.5">
                     <User className="h-3 w-3" />
                     Client Information
                   </Label>
@@ -320,14 +320,14 @@ export const CostEngineerInput = ({
                     value={clientInfo}
                     onChange={(e) => onClientInfoChange(e.target.value)}
                     placeholder="e.g., John Smith - 07700 900000"
-                    className="h-10 text-sm bg-white/[0.03] border border-white/10 rounded-lg focus:border-elec-yellow/50 text-white placeholder:text-white/30 touch-manipulation"
+                    className="h-10 text-sm bg-white/[0.03] border border-white/10 rounded-lg focus:border-elec-yellow/50 text-white placeholder:text-white touch-manipulation"
                     disabled={isProcessing}
                   />
                 </div>
 
                 {/* Location */}
                 <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-white/50 flex items-center gap-1.5">
+                  <Label className="text-xs font-medium text-white flex items-center gap-1.5">
                     <MapPin className="h-3 w-3" />
                     Location
                   </Label>
@@ -335,19 +335,19 @@ export const CostEngineerInput = ({
                     value={location}
                     onChange={(e) => onLocationChange(e.target.value)}
                     placeholder="e.g., London, Manchester..."
-                    className="h-10 text-sm bg-white/[0.03] border border-white/10 rounded-lg focus:border-elec-yellow/50 text-white placeholder:text-white/30 touch-manipulation"
+                    className="h-10 text-sm bg-white/[0.03] border border-white/10 rounded-lg focus:border-elec-yellow/50 text-white placeholder:text-white touch-manipulation"
                     disabled={isProcessing}
                   />
                 </div>
 
                 {/* Additional Notes */}
                 <div className="space-y-1.5">
-                  <Label className="text-xs font-medium text-white/50">Additional Notes</Label>
+                  <Label className="text-xs font-medium text-white">Additional Notes</Label>
                   <Textarea
                     value={additionalInfo}
                     onChange={(e) => onAdditionalInfoChange(e.target.value)}
                     placeholder="Any other details..."
-                    className="min-h-[80px] text-sm bg-white/[0.03] border border-white/10 rounded-lg focus:border-elec-yellow/50 text-white placeholder:text-white/30 resize-none touch-manipulation"
+                    className="min-h-[80px] text-sm bg-white/[0.03] border border-white/10 rounded-lg focus:border-elec-yellow/50 text-white placeholder:text-white resize-none touch-manipulation"
                     disabled={isProcessing}
                   />
                 </div>

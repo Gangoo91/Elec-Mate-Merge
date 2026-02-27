@@ -109,7 +109,7 @@ const AM2 = () => {
               size="sm"
               className={cn(
                 'min-h-[44px] min-w-[44px] p-2 -ml-2',
-                'text-white/70 hover:text-white hover:bg-white/5',
+                'text-white hover:text-white hover:bg-white/5',
                 'touch-manipulation active:scale-[0.98] transition-all duration-ios-normal ease-ios-ease'
               )}
               asChild
@@ -118,7 +118,7 @@ const AM2 = () => {
                 <ArrowLeft className="w-5 h-5" />
               </Link>
             </Button>
-            <span className="text-ios-footnote text-white/50">Study Centre</span>
+            <span className="text-ios-footnote text-white">Study Centre</span>
           </div>
         </div>
       </header>
@@ -147,7 +147,7 @@ const AM2 = () => {
                 <h1 className="text-2xl sm:text-3xl font-bold text-white tracking-tight">
                   AM2 Preparation
                 </h1>
-                <p className="mt-2 text-sm sm:text-base text-white/60 max-w-xl mx-auto leading-relaxed">
+                <p className="mt-2 text-sm sm:text-base text-white max-w-xl mx-auto leading-relaxed">
                   Complete preparation for the AM2 practical assessment. Master installation,
                   inspection, testing and fault diagnosis to pass first time.
                 </p>
@@ -166,7 +166,7 @@ const AM2 = () => {
                       <span className="text-base sm:text-lg font-bold text-elec-yellow">
                         {stat.value}
                       </span>
-                      <span className="text-[11px] sm:text-xs text-white/50 whitespace-nowrap">
+                      <span className="text-[11px] sm:text-xs text-white whitespace-nowrap">
                         {stat.label}
                       </span>
                     </div>
@@ -180,7 +180,7 @@ const AM2 = () => {
           <section className="px-4 sm:px-6 pb-6">
             <div className="flex gap-3 items-start bg-blue-500/10 border border-blue-500/20 rounded-xl p-4">
               <Info className="w-5 h-5 text-blue-400 shrink-0 mt-0.5" />
-              <p className="text-sm text-white/70 leading-relaxed">
+              <p className="text-sm text-white leading-relaxed">
                 Overseen by NET (National Electrotechnical Training). Competence-based practical
                 assessment required for NVQ Level 3 Electrotechnical qualification.
               </p>

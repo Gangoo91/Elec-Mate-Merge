@@ -121,7 +121,7 @@ const CollegePortfolioHub: React.FC = () => {
           </Button>
           <div>
             <h2 className="text-xl font-bold">{portfolioDetail?.studentName || 'Loading...'}</h2>
-            <p className="text-sm text-white/60">{portfolioDetail?.qualificationTitle}</p>
+            <p className="text-sm text-white">{portfolioDetail?.qualificationTitle}</p>
           </div>
         </div>
 
@@ -164,7 +164,7 @@ const CollegePortfolioHub: React.FC = () => {
           <Card className="bg-white/5 border-elec-gray/40">
             <CardContent className="py-12 text-center">
               <AlertTriangle className="h-12 w-12 text-amber-400 mx-auto mb-4" />
-              <p className="text-white/70">Unable to load student portfolio</p>
+              <p className="text-white">Unable to load student portfolio</p>
             </CardContent>
           </Card>
         )}
@@ -184,7 +184,7 @@ const CollegePortfolioHub: React.FC = () => {
                 <Users className="h-5 w-5 text-blue-400" />
               </div>
               <div>
-                <p className="text-xs text-white/60">Total Students</p>
+                <p className="text-xs text-white">Total Students</p>
                 <p className="text-2xl font-bold">{stats.totalStudents}</p>
               </div>
             </div>
@@ -198,7 +198,7 @@ const CollegePortfolioHub: React.FC = () => {
                 <FileCheck className="h-5 w-5 text-green-400" />
               </div>
               <div>
-                <p className="text-xs text-white/60">Active</p>
+                <p className="text-xs text-white">Active</p>
                 <p className="text-2xl font-bold">{stats.activeStudents}</p>
               </div>
             </div>
@@ -212,7 +212,7 @@ const CollegePortfolioHub: React.FC = () => {
                 <ClipboardCheck className="h-5 w-5 text-amber-400" />
               </div>
               <div>
-                <p className="text-xs text-white/60">Awaiting Review</p>
+                <p className="text-xs text-white">Awaiting Review</p>
                 <p className="text-2xl font-bold">{stats.awaitingReview}</p>
               </div>
             </div>
@@ -226,7 +226,7 @@ const CollegePortfolioHub: React.FC = () => {
                 <AlertTriangle className="h-5 w-5 text-red-400" />
               </div>
               <div>
-                <p className="text-xs text-white/60">At Risk</p>
+                <p className="text-xs text-white">At Risk</p>
                 <p className="text-2xl font-bold">{stats.atRiskStudents}</p>
               </div>
             </div>
@@ -240,7 +240,7 @@ const CollegePortfolioHub: React.FC = () => {
                 <Award className="h-5 w-5 text-elec-yellow" />
               </div>
               <div>
-                <p className="text-xs text-white/60">Completed</p>
+                <p className="text-xs text-white">Completed</p>
                 <p className="text-2xl font-bold">{stats.completedStudents}</p>
               </div>
             </div>
@@ -281,7 +281,7 @@ const CollegePortfolioHub: React.FC = () => {
           <div className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-1">
               {!searchTerm && (
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-white/40 pointer-events-none" />
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-white pointer-events-none" />
               )}
               <Input
                 placeholder="Search students..."
@@ -335,7 +335,7 @@ const CollegePortfolioHub: React.FC = () => {
                     <p className="font-medium text-red-300">
                       {atRiskStudents.length} student{atRiskStudents.length > 1 ? 's' : ''} at risk
                     </p>
-                    <p className="text-sm text-white/60">
+                    <p className="text-sm text-white">
                       These students may need additional support
                     </p>
                   </div>
@@ -348,8 +348,8 @@ const CollegePortfolioHub: React.FC = () => {
           {filteredPortfolios.length === 0 ? (
             <Card className="bg-white/5 border-elec-gray/40">
               <CardContent className="py-12 text-center">
-                <Users className="h-12 w-12 text-white/30 mx-auto mb-4" />
-                <p className="text-white/50">
+                <Users className="h-12 w-12 text-white mx-auto mb-4" />
+                <p className="text-white">
                   {studentPortfolios.length === 0
                     ? 'No students assigned to you yet'
                     : 'No students match your search'}
@@ -384,13 +384,13 @@ const CollegePortfolioHub: React.FC = () => {
                       <div className="flex items-center gap-4">
                         <div>
                           <p className="font-medium">{portfolio.studentName}</p>
-                          <p className="text-sm text-white/60">{portfolio.qualificationTitle}</p>
+                          <p className="text-sm text-white">{portfolio.qualificationTitle}</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-4">
                         <div className="text-right">
                           <p className="text-sm font-medium">{portfolio.completionPercentage}%</p>
-                          <p className="text-xs text-white/50">Complete</p>
+                          <p className="text-xs text-white">Complete</p>
                         </div>
                         {portfolio.submissionsAwaitingReview > 0 && (
                           <Badge className="bg-amber-500/20 text-amber-400">

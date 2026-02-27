@@ -236,7 +236,7 @@ const WagoConnectionMethods = () => {
                   </div>
                   {selectedConnector.name}
                 </CardTitle>
-                <p className="text-white/60 ml-12">{selectedConnector.description}</p>
+                <p className="text-white ml-12">{selectedConnector.description}</p>
               </div>
               <Button
                 variant="outline"
@@ -250,7 +250,7 @@ const WagoConnectionMethods = () => {
           <CardContent className="relative">
             <div className="p-4 rounded-xl bg-white/10 border border-white/10">
               <div className="flex justify-between text-sm mb-3">
-                <span className="text-white/60">Progress</span>
+                <span className="text-white">Progress</span>
                 <span className="text-orange-400 font-medium">
                   Step {activeStep + 1} of {selectedConnector.connectionSteps.length}
                 </span>
@@ -295,7 +295,7 @@ const WagoConnectionMethods = () => {
             <CardContent className="relative">
               <ul className="space-y-1.5">
                 {selectedConnector.applications.map((app, index) => (
-                  <li key={index} className="text-sm text-white/70 flex items-start gap-2">
+                  <li key={index} className="text-sm text-white flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-green-400 rounded-full mt-1.5 flex-shrink-0" />
                     {app}
                   </li>
@@ -317,7 +317,7 @@ const WagoConnectionMethods = () => {
             <CardContent className="relative">
               <ul className="space-y-1.5">
                 {selectedConnector.advantages.slice(0, 3).map((advantage, index) => (
-                  <li key={index} className="text-sm text-white/70 flex items-start gap-2">
+                  <li key={index} className="text-sm text-white flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-purple-400 rounded-full mt-1.5 flex-shrink-0" />
                     {advantage}
                   </li>
@@ -350,7 +350,7 @@ const WagoConnectionMethods = () => {
                       ? 'bg-elec-yellow text-black'
                       : index < activeStep
                         ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                        : 'bg-white/10 text-white/60 border border-white/10 hover:border-white/20'
+                        : 'bg-white/10 text-white border border-white/10 hover:border-white/20'
                   }`}
                 >
                   {index < activeStep && <CheckCircle className="h-3 w-3 inline mr-1" />}
@@ -371,7 +371,7 @@ const WagoConnectionMethods = () => {
                       <h3 className="text-lg font-semibold text-elec-yellow mb-2">
                         {currentStep.title}
                       </h3>
-                      <p className="text-white/70">{currentStep.description}</p>
+                      <p className="text-white">{currentStep.description}</p>
                     </div>
                   </div>
                 </div>
@@ -384,7 +384,7 @@ const WagoConnectionMethods = () => {
                       </div>
                       <div>
                         <h4 className="font-semibold text-red-400 mb-1">Safety Note</h4>
-                        <p className="text-sm text-white/70">{currentStep.safetyNote}</p>
+                        <p className="text-sm text-white">{currentStep.safetyNote}</p>
                       </div>
                     </div>
                   </div>
@@ -399,7 +399,7 @@ const WagoConnectionMethods = () => {
                   </div>
                   <ul className="space-y-2 ml-11">
                     {currentStep.tips.map((tip, index) => (
-                      <li key={index} className="text-sm text-white/70 flex items-start gap-2">
+                      <li key={index} className="text-sm text-white flex items-start gap-2">
                         <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full mt-1.5 flex-shrink-0" />
                         {tip}
                       </li>
@@ -451,7 +451,7 @@ const WagoConnectionMethods = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="relative space-y-4">
-          <p className="text-white/70">
+          <p className="text-white">
             Comprehensive guide to using Wago connector blocks for safe and reliable electrical
             connections during BS7671 testing procedures. These connectors provide secure, tool-free
             connections ideal for testing scenarios.
@@ -466,7 +466,7 @@ const WagoConnectionMethods = () => {
                 <h4 className="font-semibold text-elec-yellow mb-1">
                   Why Wago Connectors for Testing
                 </h4>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Wago connectors offer reliable, reusable connections that don't compromise
                   conductor integrity, making them ideal for testing where connections may need to
                   be made and unmade multiple times.
@@ -496,7 +496,7 @@ const WagoConnectionMethods = () => {
                     {connector.wireCapacity}
                   </Badge>
                 </div>
-                <p className="text-sm text-white/60">{connector.description}</p>
+                <p className="text-sm text-white">{connector.description}</p>
               </div>
             </CardHeader>
 
@@ -505,7 +505,7 @@ const WagoConnectionMethods = () => {
                 <h4 className="font-medium text-green-400 mb-2 text-sm">Key Applications</h4>
                 <ul className="space-y-1.5">
                   {connector.applications.slice(0, 3).map((app, index) => (
-                    <li key={index} className="text-sm text-white/70 flex items-start gap-2">
+                    <li key={index} className="text-sm text-white flex items-start gap-2">
                       <span className="w-1.5 h-1.5 bg-green-400 rounded-full mt-1.5 flex-shrink-0" />
                       {app}
                     </li>
@@ -517,7 +517,7 @@ const WagoConnectionMethods = () => {
                 <h4 className="font-medium text-blue-400 mb-2 text-sm">Advantages</h4>
                 <ul className="space-y-1.5">
                   {connector.advantages.slice(0, 2).map((advantage, index) => (
-                    <li key={index} className="text-xs text-white/70 flex items-start gap-2">
+                    <li key={index} className="text-xs text-white flex items-start gap-2">
                       <CheckCircle className="h-3 w-3 text-blue-400 mt-0.5 flex-shrink-0" />
                       {advantage}
                     </li>
@@ -564,7 +564,7 @@ const WagoConnectionMethods = () => {
                   'Ensure connector is suitable for the application',
                   'Verify wire gauge is within connector specifications',
                 ].map((item, index) => (
-                  <li key={index} className="text-sm text-white/70 flex items-start gap-2">
+                  <li key={index} className="text-sm text-white flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-red-400 rounded-full mt-1.5 flex-shrink-0" />
                     {item}
                   </li>
@@ -585,7 +585,7 @@ const WagoConnectionMethods = () => {
                   'Perform pull test to verify mechanical integrity',
                   'Label connections clearly for future reference',
                 ].map((item, index) => (
-                  <li key={index} className="text-sm text-white/70 flex items-start gap-2">
+                  <li key={index} className="text-sm text-white flex items-start gap-2">
                     <span className="w-1.5 h-1.5 bg-green-400 rounded-full mt-1.5 flex-shrink-0" />
                     {item}
                   </li>

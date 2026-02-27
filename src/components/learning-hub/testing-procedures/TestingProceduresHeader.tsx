@@ -23,7 +23,7 @@ const TestingProceduresHeader = ({ onBack }: TestingProceduresHeaderProps) => {
         </div>
         <div className="flex-1 min-w-0">
           <h1 className="text-base font-semibold text-white truncate">Testing Procedures</h1>
-          <p className="text-[11px] text-white/50">BS 7671 Part 6</p>
+          <p className="text-[11px] text-white">BS 7671 Part 6</p>
         </div>
       </div>
     </header>

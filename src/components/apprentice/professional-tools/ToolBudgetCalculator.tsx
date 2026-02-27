@@ -67,7 +67,7 @@ const ToolBudgetCalculator = () => {
           </div>
           Tool Budget Calculator
         </CardTitle>
-        <p className="text-sm text-white/60">
+        <p className="text-sm text-white">
           Plan your tool investments and see how your budget allocates
         </p>
       </CardHeader>
@@ -75,7 +75,7 @@ const ToolBudgetCalculator = () => {
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="monthly-budget" className="text-white/70">
+              <Label htmlFor="monthly-budget" className="text-white">
                 Monthly Budget (£)
               </Label>
               <Input
@@ -89,7 +89,7 @@ const ToolBudgetCalculator = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="timeframe" className="text-white/70">
+              <Label htmlFor="timeframe" className="text-white">
                 Timeframe (months)
               </Label>
               <Select value={timeframe} onValueChange={setTimeframe}>
@@ -106,7 +106,7 @@ const ToolBudgetCalculator = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="priority" className="text-white/70">
+              <Label htmlFor="priority" className="text-white">
                 Priority Level
               </Label>
               <Select value={priority} onValueChange={setPriority}>
@@ -150,7 +150,7 @@ const ToolBudgetCalculator = () => {
                 {Object.entries(breakdown).map(([tool, amount]) => (
                   <div key={tool} className="p-3 rounded-xl bg-white/10 border border-white/10">
                     <div className="flex justify-between text-sm mb-2">
-                      <span className="text-white/70">{tool}</span>
+                      <span className="text-white">{tool}</span>
                       <span className="text-elec-yellow font-medium">£{amount.toFixed(0)}</span>
                     </div>
                     <div className="h-2 bg-white/5 rounded-full overflow-hidden">

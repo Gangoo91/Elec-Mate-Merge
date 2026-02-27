@@ -245,7 +245,7 @@ const PracticalGuidance = () => {
       case 'advanced':
         return 'bg-red-500/20 text-red-400';
       default:
-        return 'bg-gray-500/20 text-white/80';
+        return 'bg-gray-500/20 text-white';
     }
   };
 
@@ -276,7 +276,7 @@ const PracticalGuidance = () => {
                 <Badge className={getComplexityColor(scenario.complexity)}>
                   {scenario.complexity.toUpperCase()}
                 </Badge>
-                <p className="text-xs text-white/80">{scenario.duration}</p>
+                <p className="text-xs text-white">{scenario.duration}</p>
               </div>
             </CardContent>
           </Card>
@@ -297,7 +297,7 @@ const PracticalGuidance = () => {
               <Badge className={getComplexityColor(currentScenario.complexity)}>
                 {currentScenario.complexity.toUpperCase()}
               </Badge>
-              <p className="text-sm text-white/80 mt-1">{currentScenario.duration}</p>
+              <p className="text-sm text-white mt-1">{currentScenario.duration}</p>
             </div>
           </div>
           <div className="flex flex-wrap gap-2 mt-4">
@@ -339,7 +339,7 @@ const PracticalGuidance = () => {
                           </h4>
                           <div className="space-y-1">
                             {step.regulations.map((reg, idx) => (
-                              <p key={idx} className="text-sm text-white/80">
+                              <p key={idx} className="text-sm text-white">
                                 {reg}
                               </p>
                             ))}
@@ -355,7 +355,7 @@ const PracticalGuidance = () => {
                             {step.tips.map((tip, idx) => (
                               <div key={idx} className="flex items-start gap-2">
                                 <div className="w-1 h-1 bg-elec-yellow rounded-full mt-2 flex-shrink-0" />
-                                <p className="text-sm text-white/80">{tip}</p>
+                                <p className="text-sm text-white">{tip}</p>
                               </div>
                             ))}
                           </div>

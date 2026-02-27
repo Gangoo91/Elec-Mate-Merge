@@ -218,7 +218,7 @@ const IndustrialElectricalModule1Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/industrial-electrical-module-1">
@@ -240,7 +240,7 @@ const IndustrialElectricalModule1Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Industrial vs Domestic Electrical Setup
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Key differences in voltage, protection, installation methods, and compliance
             requirements
           </p>
@@ -516,7 +516,7 @@ const IndustrialElectricalModule1Section1 = () => {
               <p className="text-sm font-medium text-white mb-2">
                 Discrimination (Selectivity) Explained
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Discrimination ensures that during a fault, only the protective device nearest to
                 the fault operates, leaving upstream devices closed and maintaining supply to
                 healthy circuits.
@@ -613,7 +613,7 @@ const IndustrialElectricalModule1Section1 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Cable Segregation Requirements</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 BS 7671 and EMC requirements mandate segregation of different cable types to prevent
                 electromagnetic interference and maintain circuit integrity.
               </p>
@@ -732,7 +732,7 @@ const IndustrialElectricalModule1Section1 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">BS EN 61439 Compliance</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Industrial switchgear and distribution boards must comply with BS EN 61439
                 (replacing the old BS EN 60439). This standard requires the original manufacturer or
                 a competent assembler to verify design through one of three methods: verification by
@@ -950,7 +950,7 @@ const IndustrialElectricalModule1Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -969,7 +969,7 @@ const IndustrialElectricalModule1Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/industrial-electrical-module-1">

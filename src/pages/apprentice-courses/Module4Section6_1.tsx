@@ -173,7 +173,7 @@ const Module4Section6_1 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -191,13 +191,13 @@ const Module4Section6_1 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.1</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.1</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Performing a Visual Inspection
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master systematic visual inspection techniques to ensure electrical installations are
               safe, compliant, and ready for testing
             </p>
@@ -209,7 +209,7 @@ const Module4Section6_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="grid sm:grid-cols-2 gap-4 text-white/80 leading-relaxed">
+            <div className="grid sm:grid-cols-2 gap-4 text-white leading-relaxed">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-5 space-y-1 text-sm">
@@ -248,7 +248,7 @@ const Module4Section6_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <ul className="list-disc pl-5 space-y-2 text-white/80 leading-relaxed">
+            <ul className="list-disc pl-5 space-y-2 text-white leading-relaxed">
               <li>
                 Explain the purpose and regulatory requirements of visual inspection in electrical
                 installation work
@@ -277,7 +277,7 @@ const Module4Section6_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Purpose and Regulatory Framework
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Visual inspection forms the foundation of electrical installation verification,
                 ensuring safety and compliance before energisation.
@@ -344,7 +344,7 @@ const Module4Section6_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Comprehensive Defect Identification
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Systematic examination of all installation elements ensures comprehensive defect
                 identification.
@@ -428,7 +428,7 @@ const Module4Section6_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Systematic Inspection Methodology
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Following a structured sequence ensures comprehensive coverage and maintains safety
                 throughout inspection.
@@ -490,7 +490,7 @@ const Module4Section6_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Documentation and Reporting Standards
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Accurate documentation ensures traceability, supports certification, and maintains
                 quality standards.
@@ -533,7 +533,7 @@ const Module4Section6_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Essential Tools and Equipment
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">Required Tools</p>
                 <ul className="list-disc pl-5 space-y-1 text-sm">
@@ -567,7 +567,7 @@ const Module4Section6_1 = () => {
               <p className="font-medium text-white mb-2">
                 Housing Development Project - Critical Defect Prevention
               </p>
-              <div className="text-white/80 text-sm space-y-2">
+              <div className="text-white text-sm space-y-2">
                 <p>
                   <strong>Situation:</strong> During a large housing development project, visual
                   inspection was scheduled before the electrical testing phase across 30 properties
@@ -599,7 +599,7 @@ const Module4Section6_1 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
               <p className="font-medium text-white mb-2">Key Regulatory Requirements</p>
-              <ul className="list-disc pl-5 space-y-1 text-sm text-white/80">
+              <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                 <li>
                   <strong>Regulation 611.3:</strong> Visual inspection shall precede testing and be
                   carried out with the installation de-energised
@@ -634,7 +634,7 @@ const Module4Section6_1 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Q: {faq.question}</p>
-                  <p className="text-sm text-white/70">{faq.answer}</p>
+                  <p className="text-sm text-white">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -649,7 +649,7 @@ const Module4Section6_1 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
                 <p className="font-medium text-green-400 mb-3">DO</p>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                     Follow systematic inspection sequence from main board to final circuits
@@ -674,7 +674,7 @@ const Module4Section6_1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
                 <p className="font-medium text-red-400 mb-3">DON'T</p>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <AlertTriangle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
                     Rush inspection process to meet deadlines - quality is paramount
@@ -707,7 +707,7 @@ const Module4Section6_1 = () => {
               Summary
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-white/80 leading-relaxed">
+              <p className="text-white leading-relaxed">
                 Visual inspection forms the foundation of electrical installation verification,
                 providing the first line of defence against safety hazards and non-compliance
                 issues. By systematically examining installations before testing begins, potential

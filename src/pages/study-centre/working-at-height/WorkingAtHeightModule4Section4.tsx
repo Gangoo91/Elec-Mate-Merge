@@ -204,7 +204,7 @@ export default function WorkingAtHeightModule4Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-4">
@@ -229,7 +229,7 @@ export default function WorkingAtHeightModule4Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Weather, Environment &amp; Site Conditions
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Beaufort scale wind thresholds, rain, ice, lightning, temperature extremes, ground
             conditions, overhead power lines, and protecting the public during work at height
           </p>
@@ -348,10 +348,10 @@ export default function WorkingAtHeightModule4Section4() {
                     <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
                       <div className="flex items-center gap-2 min-w-[140px]">
                         <span className="text-xs font-bold text-green-400 w-14">Force 0-1</span>
-                        <span className="text-xs text-white/60">0-3 mph</span>
+                        <span className="text-xs text-white">0-3 mph</span>
                       </div>
                       <div className="flex-1">
-                        <p className="text-xs text-white/70">
+                        <p className="text-xs text-white">
                           Calm to light air. Smoke rises vertically or drifts slightly.
                         </p>
                       </div>
@@ -366,10 +366,10 @@ export default function WorkingAtHeightModule4Section4() {
                     <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
                       <div className="flex items-center gap-2 min-w-[140px]">
                         <span className="text-xs font-bold text-green-400 w-14">Force 2-3</span>
-                        <span className="text-xs text-white/60">4-12 mph</span>
+                        <span className="text-xs text-white">4-12 mph</span>
                       </div>
                       <div className="flex-1">
-                        <p className="text-xs text-white/70">
+                        <p className="text-xs text-white">
                           Light to gentle breeze. Leaves rustle, small twigs move.
                         </p>
                       </div>
@@ -384,10 +384,10 @@ export default function WorkingAtHeightModule4Section4() {
                     <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
                       <div className="flex items-center gap-2 min-w-[140px]">
                         <span className="text-xs font-bold text-amber-400 w-14">Force 4</span>
-                        <span className="text-xs text-white/60">13-18 mph</span>
+                        <span className="text-xs text-white">13-18 mph</span>
                       </div>
                       <div className="flex-1">
-                        <p className="text-xs text-white/70">
+                        <p className="text-xs text-white">
                           Moderate breeze. Dust and paper raised, small branches move.
                         </p>
                       </div>
@@ -402,10 +402,10 @@ export default function WorkingAtHeightModule4Section4() {
                     <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
                       <div className="flex items-center gap-2 min-w-[140px]">
                         <span className="text-xs font-bold text-orange-400 w-14">Force 5</span>
-                        <span className="text-xs text-white/60">19-24 mph</span>
+                        <span className="text-xs text-white">19-24 mph</span>
                       </div>
                       <div className="flex-1">
-                        <p className="text-xs text-white/70">
+                        <p className="text-xs text-white">
                           Fresh breeze. Small trees in leaf sway, crested wavelets on water.
                         </p>
                       </div>
@@ -420,10 +420,10 @@ export default function WorkingAtHeightModule4Section4() {
                     <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
                       <div className="flex items-center gap-2 min-w-[140px]">
                         <span className="text-xs font-bold text-red-400 w-14">Force 6</span>
-                        <span className="text-xs text-white/60">25-31 mph</span>
+                        <span className="text-xs text-white">25-31 mph</span>
                       </div>
                       <div className="flex-1">
-                        <p className="text-xs text-white/70">
+                        <p className="text-xs text-white">
                           Strong breeze. Large branches move, whistling in wires, difficult to use
                           umbrella.
                         </p>
@@ -439,10 +439,10 @@ export default function WorkingAtHeightModule4Section4() {
                     <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
                       <div className="flex items-center gap-2 min-w-[140px]">
                         <span className="text-xs font-bold text-red-400 w-14">Force 7</span>
-                        <span className="text-xs text-white/60">32-38 mph</span>
+                        <span className="text-xs text-white">32-38 mph</span>
                       </div>
                       <div className="flex-1">
-                        <p className="text-xs text-white/70">
+                        <p className="text-xs text-white">
                           Near gale. Whole trees sway, difficulty walking against wind.
                         </p>
                       </div>
@@ -457,10 +457,10 @@ export default function WorkingAtHeightModule4Section4() {
                     <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
                       <div className="flex items-center gap-2 min-w-[140px]">
                         <span className="text-xs font-bold text-red-400 w-14">Force 8+</span>
-                        <span className="text-xs text-white/60">39+ mph</span>
+                        <span className="text-xs text-white">39+ mph</span>
                       </div>
                       <div className="flex-1">
-                        <p className="text-xs text-white/70">
+                        <p className="text-xs text-white">
                           Gale to storm. Twigs broken, structural damage possible.
                         </p>
                       </div>
@@ -472,7 +472,7 @@ export default function WorkingAtHeightModule4Section4() {
                 </div>
 
                 <div className="mt-4 p-3 bg-amber-500/5 border border-amber-500/10 rounded-lg">
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     <strong className="text-amber-400">Note:</strong> Crane operations typically
                     cease at lower wind speeds than general WAH (often Force 4 or as specified by
                     the crane manufacturer). Tower crane operators monitor wind speed continuously
@@ -503,7 +503,7 @@ export default function WorkingAtHeightModule4Section4() {
                   <Droplets className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">How Rain Affects WAH</p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Slippery surfaces:</strong> Wet scaffold boards,
                     ladder rungs, MEWP platforms, and roof surfaces all become significantly more
@@ -578,7 +578,7 @@ export default function WorkingAtHeightModule4Section4() {
                   <Snowflake className="h-5 w-5 text-cyan-400" />
                   <p className="text-sm font-medium text-cyan-400">Ice and Frost Hazards</p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Black ice:</strong> Thin, nearly invisible ice
                     that forms on metal and other smooth surfaces overnight. It can persist for
@@ -604,7 +604,7 @@ export default function WorkingAtHeightModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Managing Ice and Frost on Site
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -661,7 +661,7 @@ export default function WorkingAtHeightModule4Section4() {
                   <Zap className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">The 30/30 Rule</p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">First 30:</strong> If the time between seeing a
                     lightning flash and hearing the thunder is <strong>less than 30 seconds</strong>
@@ -679,7 +679,7 @@ export default function WorkingAtHeightModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Lightning Safety Actions</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>Cease all outdoor WAH and scaffold work during thunderstorms</span>
@@ -720,7 +720,7 @@ export default function WorkingAtHeightModule4Section4() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Warning</p>
                 </div>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   Lightning does not need to strike the worker directly to be fatal. A strike to
                   scaffold, a crane, or any metallic structure can travel through the structure and
                   electrocute anyone in contact with it. Ground current from a nearby strike can
@@ -754,7 +754,7 @@ export default function WorkingAtHeightModule4Section4() {
                     <Snowflake className="h-5 w-5 text-blue-400" />
                     <p className="text-sm font-semibold text-blue-400">Cold Conditions</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>
@@ -789,7 +789,7 @@ export default function WorkingAtHeightModule4Section4() {
                     <Thermometer className="h-5 w-5 text-orange-400" />
                     <p className="text-sm font-semibold text-orange-400">Hot Conditions</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>
@@ -847,7 +847,7 @@ export default function WorkingAtHeightModule4Section4() {
                   <Mountain className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Ground Condition Hazards</p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Soft ground:</strong> Clay, topsoil, sand, or
                     waterlogged ground may not support the concentrated point loads from scaffold
@@ -914,7 +914,7 @@ export default function WorkingAtHeightModule4Section4() {
                   <ShieldAlert className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Lethal Hazard</p>
                 </div>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   Contact with overhead power lines is the third most common cause of electrical
                   death on UK construction sites. A MEWP boom, scaffold tube, ladder, or even a long
                   piece of conduit raised at height can bridge the gap to an overhead line. The
@@ -930,7 +930,7 @@ export default function WorkingAtHeightModule4Section4() {
                     HSE GS6 &mdash; Key Requirements
                   </p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Minimum clearance distances:</strong> HSE
                     Guidance Note GS6 specifies minimum safe distances from overhead power lines.
@@ -965,7 +965,7 @@ export default function WorkingAtHeightModule4Section4() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Warning</p>
                 </div>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   Never assume an overhead line is dead or low voltage. Even apparently small, low
                   cables can carry lethal voltages. Never approach an overhead line to check &mdash;
                   treat every line as live until the DNO confirms otherwise. Rubber gloves, rubber
@@ -999,7 +999,7 @@ export default function WorkingAtHeightModule4Section4() {
                   <Eye className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Public Protection Measures</p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Exclusion zones:</strong> Physical barriers
                     (heras fencing, pedestrian barriers, traffic cones with tape) preventing the
@@ -1054,7 +1054,7 @@ export default function WorkingAtHeightModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Coordination with Local Authorities
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -1096,7 +1096,7 @@ export default function WorkingAtHeightModule4Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1110,7 +1110,7 @@ export default function WorkingAtHeightModule4Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-4-section-3">

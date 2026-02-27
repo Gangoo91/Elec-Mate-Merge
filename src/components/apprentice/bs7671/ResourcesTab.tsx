@@ -232,7 +232,7 @@ const ResourcesTab = () => {
       default:
         return {
           bg: 'bg-white/10',
-          text: 'text-white/70',
+          text: 'text-white',
           border: 'border-white/20',
           icon: <FileText className="h-4 w-4" />,
         };
@@ -256,7 +256,7 @@ const ResourcesTab = () => {
           border: 'border-elec-yellow/30',
         };
       default:
-        return { bg: 'bg-white/10', text: 'text-white/70', border: 'border-white/20' };
+        return { bg: 'bg-white/10', text: 'text-white', border: 'border-white/20' };
     }
   };
 
@@ -293,7 +293,7 @@ const ResourcesTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="relative space-y-6">
-          <p className="text-white/70">
+          <p className="text-white">
             Comprehensive collection of resources, guides, standards, and tools to support your
             BS7671 inspection and testing work. Includes detailed Wago connector guidance and
             professional testing procedures.
@@ -313,7 +313,7 @@ const ResourcesTab = () => {
                     <span className={config.text}>{config.icon}</span>
                   </div>
                   <div className="text-sm font-medium text-white">{category}</div>
-                  <div className="text-xs text-white/60">
+                  <div className="text-xs text-white">
                     {groupedResources[category].length} resources
                   </div>
                 </div>
@@ -363,14 +363,14 @@ const ResourcesTab = () => {
                           <CardTitle className="text-white text-base leading-tight">
                             {resource.title}
                           </CardTitle>
-                          <p className="text-sm text-white/60 mt-1">{resource.description}</p>
+                          <p className="text-sm text-white mt-1">{resource.description}</p>
                         </div>
                       </div>
                     </CardHeader>
 
                     <CardContent className="pt-0 relative">
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3 text-xs text-white/80">
+                        <div className="flex items-center gap-3 text-xs text-white">
                           {resource.fileSize && (
                             <span className="px-2 py-1 rounded-md bg-white/5">
                               {resource.fileSize}
@@ -421,7 +421,7 @@ const ResourcesTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="relative space-y-4">
-          <p className="text-white/70">
+          <p className="text-white">
             Specially curated resources for using Wago connectors in testing applications. These
             resources will help you make safe, reliable connections during BS7671 testing
             procedures.
@@ -442,7 +442,7 @@ const ResourcesTab = () => {
                   '222 Series: Permanent installations',
                   'Selection guide and troubleshooting',
                 ].map((item, index) => (
-                  <li key={index} className="flex items-start gap-2 text-sm text-white/70">
+                  <li key={index} className="flex items-start gap-2 text-sm text-white">
                     <span className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-1.5 flex-shrink-0" />
                     {item}
                   </li>
@@ -464,7 +464,7 @@ const ResourcesTab = () => {
                   'Visual verification of connection',
                   'Reduced risk of short circuits',
                 ].map((item, index) => (
-                  <li key={index} className="flex items-start gap-2 text-sm text-white/70">
+                  <li key={index} className="flex items-start gap-2 text-sm text-white">
                     <span className="w-1.5 h-1.5 bg-green-400 rounded-full mt-1.5 flex-shrink-0" />
                     {item}
                   </li>
@@ -486,7 +486,7 @@ const ResourcesTab = () => {
               </div>
               <div>
                 <h4 className="font-semibold text-elec-yellow mb-2">Important Disclaimer</h4>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Always ensure you have the latest versions of standards and guidance documents.
                   Some external links may require subscription or purchase. Verify the authenticity
                   of all downloaded resources and ensure they are from official sources.

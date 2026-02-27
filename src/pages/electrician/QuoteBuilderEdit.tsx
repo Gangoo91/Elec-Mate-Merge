@@ -125,10 +125,10 @@ const QuoteBuilderEdit = () => {
 
         <div className="px-4 py-12 text-center space-y-4">
           <div className="w-16 h-16 mx-auto rounded-2xl bg-white/[0.03] flex items-center justify-center">
-            <FileText className="h-8 w-8 text-white/30" />
+            <FileText className="h-8 w-8 text-white" />
           </div>
           <h2 className="text-xl font-semibold text-white">Quote Not Found</h2>
-          <p className="text-[14px] text-white/50">
+          <p className="text-[14px] text-white">
             The quote you're looking for doesn't exist or may have been deleted.
           </p>
           <Button
@@ -166,7 +166,7 @@ const QuoteBuilderEdit = () => {
             <h1 className="text-base font-semibold text-white truncate">
               Edit {quote.quoteNumber}
             </h1>
-            <p className="text-[11px] text-white/50">Make changes to your quote</p>
+            <p className="text-[11px] text-white">Make changes to your quote</p>
           </div>
         </div>
       </header>

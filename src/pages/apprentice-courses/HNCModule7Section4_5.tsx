@@ -253,7 +253,7 @@ const HNCModule7Section4_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section4">
@@ -275,7 +275,7 @@ const HNCModule7Section4_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Smart Lighting
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             IoT integration, wireless protocols, app control, data analytics, and predictive
             maintenance for intelligent lighting systems
           </p>
@@ -836,7 +836,7 @@ const HNCModule7Section4_5 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>GDPR compliance:</strong> Occupancy analytics must anonymise data. Use heat
               mapping and aggregated counting rather than individual tracking. Conduct Data
               Protection Impact Assessments for any personal data processing.
@@ -863,18 +863,18 @@ const HNCModule7Section4_5 = () => {
                 retrofit without rewiring. 150 luminaires, smartphone control required, moderate IT
                 integration.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Evaluation criteria:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Evaluation criteria:</p>
                 <p className="mt-2">Retrofit capability: No new wiring &gt; Wireless essential</p>
                 <p>Smartphone commissioning: Direct access &gt; Bluetooth Mesh advantage</p>
                 <p>Scale: 150 nodes &gt; All protocols support this</p>
                 <p>IT integration: Moderate &gt; Gateway acceptable</p>
                 <p>Cost: Retrofit budget &gt; Bluetooth Mesh lower gateway cost</p>
                 <p className="mt-2 text-green-400">Recommendation: Bluetooth Mesh</p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Justification: Smartphone-based commissioning, no hub
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   required for basic operation, easy installer adoption
                 </p>
               </div>
@@ -888,7 +888,7 @@ const HNCModule7Section4_5 = () => {
                 <strong>Scenario:</strong> Calculate annual energy savings from smart lighting
                 controls in an open-plan office.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Baseline consumption (no controls):</p>
                 <p className="ml-4">100 luminaires x 40W x 12 hours/day x 260 days</p>
                 <p className="ml-4">= 12,480 kWh/year</p>
@@ -898,7 +898,7 @@ const HNCModule7Section4_5 = () => {
                 <p className="ml-4">Task tuning: 10% reduction = 1,248 kWh</p>
                 <p className="mt-2">Total savings: 7,488 kWh (60% reduction)</p>
                 <p className="text-green-400 mt-2">At £0.28/kWh = £2,097/year energy cost saving</p>
-                <p className="text-white/60">Carbon reduction: 7,488 x 0.207 = 1,550 kg CO2e</p>
+                <p className="text-white">Carbon reduction: 7,488 x 0.207 = 1,550 kg CO2e</p>
               </div>
             </div>
 
@@ -910,7 +910,7 @@ const HNCModule7Section4_5 = () => {
                 <strong>Scenario:</strong> Analytics platform flags a luminaire for investigation.
                 Interpret the data.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Luminaire: LUM-3F-042</p>
                 <p>Operating hours: 38,500 (rated L70 @ 50,000h)</p>
                 <p className="mt-2">Anomaly indicators:</p>
@@ -1015,7 +1015,7 @@ const HNCModule7Section4_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1061,7 +1061,7 @@ const HNCModule7Section4_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section4">

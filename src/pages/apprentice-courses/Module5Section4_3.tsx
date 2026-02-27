@@ -241,7 +241,7 @@ const Module5Section4_3 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -259,13 +259,13 @@ const Module5Section4_3 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 4.3</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 4.3</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Tool Selection and Availability
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master proper tool selection and management to ensure safe, efficient electrical
               installations to professional standards.
             </p>
@@ -275,7 +275,7 @@ const Module5Section4_3 = () => {
           <section className="mb-10">
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-6">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="text-white/80 space-y-1 text-sm">
+              <ul className="text-white space-y-1 text-sm">
                 <li>• Use the right tool for each task - never compromise on safety.</li>
                 <li>• Plan tool availability and maintain spares of essential items.</li>
                 <li>• Inspect tools before use and maintain calibration records.</li>
@@ -289,14 +289,14 @@ const Module5Section4_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Learning Outcomes
             </h2>
-            <p className="text-white/80 mb-4">
+            <p className="text-white mb-4">
               By the end of this subsection, you will be able to:
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-6">
               <div className="space-y-3">
                 <h4 className="font-medium text-white">Tool Selection Skills</h4>
-                <ul className="space-y-2 text-white/80 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start">
                     <span className="text-elec-yellow mr-2">•</span>
                     Select the correct tools for common electrical installation tasks
@@ -318,7 +318,7 @@ const Module5Section4_3 = () => {
 
               <div className="space-y-3">
                 <h4 className="font-medium text-white">Tool Management</h4>
-                <ul className="space-y-2 text-white/80 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start">
                     <span className="text-elec-yellow mr-2">•</span>
                     Implement systems for managing tool availability on-site
@@ -340,7 +340,7 @@ const Module5Section4_3 = () => {
             </div>
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 <strong className="text-white">Competency Link:</strong> These outcomes support NVQ
                 Level 2 competencies for tool selection, maintenance, and safe working practices in
                 electrical installations.
@@ -355,7 +355,7 @@ const Module5Section4_3 = () => {
               Selecting the Right Tool
             </h2>
 
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Using the correct tool for each task is fundamental to safe and professional
               electrical work. Every tool is designed for specific purposes, and using the wrong
               tool can lead to poor results, damage, or injury.
@@ -366,25 +366,25 @@ const Module5Section4_3 = () => {
               <div className="grid sm:grid-cols-2 gap-3">
                 <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                   <p className="text-sm font-medium text-amber-400 mb-2">Safety</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Wrong tools can slip, break, or cause electrical hazards
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                   <p className="text-sm font-medium text-blue-400 mb-2">Quality</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Correct tools ensure precise connections and professional finish
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                   <p className="text-sm font-medium text-green-400 mb-2">Efficiency</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Right tools complete tasks faster with better results
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
                   <p className="text-sm font-medium text-purple-400 mb-2">Compliance</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Specialist tools may be required for BS 7671 compliance
                   </p>
                 </div>
@@ -393,7 +393,7 @@ const Module5Section4_3 = () => {
 
             <div className="p-4 rounded-lg bg-white/5 border border-white/10 mb-4">
               <h4 className="font-medium text-white mb-3">Common Tool Categories</h4>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm text-white/80">
+              <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
                 <div>
                   <p className="font-medium text-white mb-2">Hand Tools:</p>
                   <ul className="list-disc pl-4 space-y-1">
@@ -420,7 +420,7 @@ const Module5Section4_3 = () => {
                 <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="font-medium text-red-400 mb-2">Never Use Makeshift Alternatives</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Using the wrong tool or makeshift alternatives significantly increases injury
                     risk and can result in poor workmanship that fails compliance standards. Wait
                     for the correct tool to be available.
@@ -449,7 +449,7 @@ const Module5Section4_3 = () => {
               Specialist Tools
             </h2>
 
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Electrical work often requires specialist tools that may not be needed for general
               construction tasks. These tools are designed to meet the specific demands of
               electrical installation and ensure compliance with safety standards.
@@ -461,11 +461,11 @@ const Module5Section4_3 = () => {
 
                 <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                   <p className="font-medium text-blue-400 mb-2">Torque Screwdrivers</p>
-                  <p className="text-sm text-white/70 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Required for terminations that must meet specific torque values (e.g., MCB
                     connections, cable glands).
                   </p>
-                  <ul className="text-sm text-white/70 list-disc pl-4">
+                  <ul className="text-sm text-white list-disc pl-4">
                     <li>Must be calibrated to ensure accuracy</li>
                     <li>Different ranges for different applications</li>
                     <li>Essential for BS 7671 compliance</li>
@@ -474,10 +474,10 @@ const Module5Section4_3 = () => {
 
                 <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                   <p className="font-medium text-green-400 mb-2">Testing Equipment</p>
-                  <p className="text-sm text-white/70 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Multimeters, insulation testers, earth loop impedance testers.
                   </p>
-                  <ul className="text-sm text-white/70 list-disc pl-4">
+                  <ul className="text-sm text-white list-disc pl-4">
                     <li>Must be calibrated and certificated</li>
                     <li>Essential for verification testing</li>
                     <li>Required for electrical certificates</li>
@@ -492,7 +492,7 @@ const Module5Section4_3 = () => {
 
                 <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                   <p className="font-medium text-amber-400 mb-2">Mandatory Use</p>
-                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-4 space-y-1">
                     <li>When manufacturer instructions specify torque values</li>
                     <li>For safety-critical connections</li>
                     <li>During verification testing</li>
@@ -502,7 +502,7 @@ const Module5Section4_3 = () => {
 
                 <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
                   <p className="font-medium text-purple-400 mb-2">Quality Benefits</p>
-                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-4 space-y-1">
                     <li>Consistent, repeatable results</li>
                     <li>Reduced risk of over-tightening</li>
                     <li>Professional appearance</li>
@@ -517,7 +517,7 @@ const Module5Section4_3 = () => {
                 <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="font-medium text-yellow-400 mb-2">Calibration Requirements</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     All measuring and testing equipment must be calibrated regularly and have valid
                     calibration certificates. Uncalibrated equipment cannot be used for compliance
                     testing.
@@ -548,7 +548,7 @@ const Module5Section4_3 = () => {
               Tool Availability
             </h2>
 
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Having the right tools available when needed is crucial for maintaining productivity
               and quality. Poor tool availability leads to delays, frustration, and often results in
               using inappropriate alternatives that compromise safety and workmanship.
@@ -560,7 +560,7 @@ const Module5Section4_3 = () => {
 
                 <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                   <p className="font-medium text-blue-400 mb-2">Pre-Project Planning</p>
-                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-4 space-y-1">
                     <li>Review project specifications and drawings</li>
                     <li>Identify all required tools and equipment</li>
                     <li>Check availability and condition</li>
@@ -570,7 +570,7 @@ const Module5Section4_3 = () => {
 
                 <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                   <p className="font-medium text-green-400 mb-2">Daily Planning</p>
-                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-4 space-y-1">
                     <li>Check weather conditions for outdoor work</li>
                     <li>Confirm tool availability for daily tasks</li>
                     <li>Coordinate shared tool usage</li>
@@ -584,7 +584,7 @@ const Module5Section4_3 = () => {
 
                 <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                   <p className="font-medium text-amber-400 mb-2">Sign-in/Out Systems</p>
-                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-4 space-y-1">
                     <li>Track who has which tools</li>
                     <li>Monitor tool condition and calibration</li>
                     <li>Prevent loss and theft</li>
@@ -594,7 +594,7 @@ const Module5Section4_3 = () => {
 
                 <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
                   <p className="font-medium text-purple-400 mb-2">Backup Strategies</p>
-                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-4 space-y-1">
                     <li>Maintain spare essential tools</li>
                     <li>Establish emergency procurement procedures</li>
                     <li>Coordinate with other trades and suppliers</li>
@@ -609,7 +609,7 @@ const Module5Section4_3 = () => {
                 <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="font-medium text-red-400 mb-2">Impact of Poor Tool Planning</p>
-                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-4 space-y-1">
                     <li>Work delays and missed deadlines</li>
                     <li>Increased safety risks from using wrong tools</li>
                     <li>Poor workmanship and potential rework</li>
@@ -621,7 +621,7 @@ const Module5Section4_3 = () => {
 
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
               <h4 className="font-medium text-white mb-2">Best Practice Example</h4>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 <strong className="text-white">Tool Coordination Meeting:</strong> Start each day
                 with a brief team meeting to coordinate tool requirements, identify conflicts, and
                 plan sharing of specialist equipment. This prevents delays and ensures critical
@@ -661,7 +661,7 @@ const Module5Section4_3 = () => {
                 <div className="grid sm:grid-cols-2 gap-4 mb-4">
                   <div className="space-y-3">
                     <h4 className="font-medium text-white">Task Requirements:</h4>
-                    <ul className="text-sm text-white/70 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li>• Install 32A Type B MCB in consumer unit</li>
                       <li>• Connect 6mm² cable to MCB terminals</li>
                       <li>• Ensure connection meets manufacturer torque specification (2.5 Nm)</li>
@@ -671,7 +671,7 @@ const Module5Section4_3 = () => {
 
                   <div className="space-y-3">
                     <h4 className="font-medium text-white">Required Tools:</h4>
-                    <ul className="text-sm text-white/70 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li>✓ Insulated screwdrivers (slotted and Pozidriv)</li>
                       <li>✓ Calibrated torque screwdriver (0.5-3.0 Nm range)</li>
                       <li>✓ Cable strippers for 6mm² cable</li>
@@ -681,7 +681,7 @@ const Module5Section4_3 = () => {
                 </div>
 
                 <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 mb-3">
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     <strong className="text-amber-400">Critical Point:</strong> The torque
                     screwdriver must be calibrated and certificated. Using an uncalibrated tool
                     could result in over-tightening and terminal damage.
@@ -689,7 +689,7 @@ const Module5Section4_3 = () => {
                 </div>
 
                 <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     <strong className="text-green-400">Quality Outcome:</strong> Using correct tools
                     ensures BS 7671 compliance, reduces installation time by 30%, and prevents
                     common connection failures.
@@ -706,7 +706,7 @@ const Module5Section4_3 = () => {
                 <div className="grid sm:grid-cols-3 gap-3 mb-4">
                   <div>
                     <h4 className="font-medium text-white mb-2">Daily Checks</h4>
-                    <ul className="text-sm text-white/70 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li>✓ Visual inspection of tools</li>
                       <li>✓ Function test for power tools</li>
                       <li>✓ Battery levels and charging</li>
@@ -716,7 +716,7 @@ const Module5Section4_3 = () => {
 
                   <div>
                     <h4 className="font-medium text-white mb-2">Weekly Reviews</h4>
-                    <ul className="text-sm text-white/70 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li>✓ Tool inventory and location</li>
                       <li>✓ Maintenance requirements</li>
                       <li>✓ Calibration due dates</li>
@@ -726,7 +726,7 @@ const Module5Section4_3 = () => {
 
                   <div>
                     <h4 className="font-medium text-white mb-2">Monthly Actions</h4>
-                    <ul className="text-sm text-white/70 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li>✓ Formal tool audits</li>
                       <li>✓ Training updates</li>
                       <li>✓ Supplier performance review</li>
@@ -736,7 +736,7 @@ const Module5Section4_3 = () => {
                 </div>
 
                 <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     <strong className="text-blue-400">Management Benefit:</strong> Systematic tool
                     management reduces downtime by 40% and improves compliance with health and
                     safety requirements.
@@ -758,7 +758,7 @@ const Module5Section4_3 = () => {
                   key={index}
                   className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50"
                 >
-                  <p className="text-white/80 text-sm">{guidance}</p>
+                  <p className="text-white text-sm">{guidance}</p>
                 </div>
               ))}
             </div>
@@ -773,7 +773,7 @@ const Module5Section4_3 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <h3 className="font-medium text-blue-400 mb-2">Common Torque Values</h3>
-                <ul className="text-sm text-white/70 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• MCB terminals: 2.5 Nm (typically)</li>
                   <li>• Cable glands: 5-10 Nm (size dependent)</li>
                   <li>• Busbar connections: 10-25 Nm</li>
@@ -782,7 +782,7 @@ const Module5Section4_3 = () => {
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <h3 className="font-medium text-green-400 mb-2">Calibration Intervals</h3>
-                <ul className="text-sm text-white/70 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Torque tools: 12 months maximum</li>
                   <li>• Multimeters: 12 months</li>
                   <li>• Insulation testers: 12 months</li>
@@ -802,7 +802,7 @@ const Module5Section4_3 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                  <p className="text-white/70 text-sm">{faq.answer}</p>
+                  <p className="text-white text-sm">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -829,7 +829,7 @@ const Module5Section4_3 = () => {
               {pocketGuideItems.map((item, index) => (
                 <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-white/5">
                   <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <p className="text-sm text-white/80">{item}</p>
+                  <p className="text-sm text-white">{item}</p>
                 </div>
               ))}
             </div>
@@ -839,7 +839,7 @@ const Module5Section4_3 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../4-2">

@@ -141,7 +141,7 @@ const Module6Section7_3 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -159,13 +159,13 @@ const Module6Section7_3 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.7.3</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.7.3</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Minor Works Certificates (Awareness Level)
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Understanding Minor Works Certificates for small electrical alterations and additions
             </p>
           </header>
@@ -173,7 +173,7 @@ const Module6Section7_3 = () => {
           {/* Summary Box */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <h2 className="font-semibold text-white mb-3">Spot it in 30 Seconds</h2>
-            <ul className="space-y-2 text-sm text-white/80">
+            <ul className="space-y-2 text-sm text-white">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>MWC required for small alterations and additions</span>
@@ -199,7 +199,7 @@ const Module6Section7_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Introduction
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Not every electrical job is large enough to require a full Electrical Installation
                 Certificate (EIC). For smaller tasks, such as adding a socket to an existing
@@ -216,7 +216,7 @@ const Module6Section7_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               What a Minor Works Certificate Is
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 A Minor Works Certificate (MWC) is a simplified version of the Electrical
                 Installation Certificate. It is designed for small alterations and additions that do
@@ -227,7 +227,7 @@ const Module6Section7_3 = () => {
 
               <div className="p-4 rounded-lg bg-blue-500/10 border-l-2 border-blue-400/50">
                 <h4 className="font-medium text-blue-300 mb-2">Key Characteristics of an MWC</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-white/70">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-white">
                   <div>
                     <strong>Document Structure:</strong>
                     <ul className="mt-1 space-y-1 ml-4">
@@ -257,7 +257,7 @@ const Module6Section7_3 = () => {
 
               <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-400/50">
                 <h4 className="font-medium text-amber-300 mb-2">When MWC is NOT Suitable</h4>
-                <ul className="text-sm text-white/70 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Installing complete new circuits from the consumer unit</li>
                   <li>• Consumer unit replacements or upgrades</li>
                   <li>• Work involving special locations (bathrooms, swimming pools)</li>
@@ -286,7 +286,7 @@ const Module6Section7_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               When a MWC Must Be Issued
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>A MWC is required for jobs such as:</p>
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>Adding a new socket outlet to an existing ring final circuit</li>
@@ -297,7 +297,7 @@ const Module6Section7_3 = () => {
 
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-400/50">
                 <h4 className="font-medium text-green-300 mb-2">Common MWC Scenarios</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-white/70">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-white">
                   <div>
                     <strong>Typical Domestic Work:</strong>
                     <ul className="mt-1 space-y-1 ml-4">
@@ -328,14 +328,14 @@ const Module6Section7_3 = () => {
 
               <div className="p-4 rounded-lg bg-purple-500/10 border-l-2 border-purple-400/50">
                 <h4 className="font-medium text-purple-300 mb-2">Decision Guide - MWC vs EIC</h4>
-                <p className="font-medium text-white/80 mb-2">Ask yourself:</p>
-                <ul className="text-sm text-white/70 space-y-1">
+                <p className="font-medium text-white mb-2">Ask yourself:</p>
+                <ul className="text-sm text-white space-y-1">
                   <li>• Is this work limited to one existing circuit?</li>
                   <li>• Does it involve less than one-third of circuit length?</li>
                   <li>• Are you NOT creating new circuits?</li>
                   <li>• Is the consumer unit unchanged?</li>
                 </ul>
-                <p className="mt-2 text-sm font-medium text-white/80">
+                <p className="mt-2 text-sm font-medium text-white">
                   If all answers are "Yes" → use MWC | If any answer is "No" → use EIC
                 </p>
               </div>
@@ -361,7 +361,7 @@ const Module6Section7_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Information Recorded on a MWC
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>The Minor Works Certificate records:</p>
               <ul className="list-disc list-inside space-y-2 ml-4">
                 <li>The client and installation details</li>
@@ -379,7 +379,7 @@ const Module6Section7_3 = () => {
 
               <div className="p-4 rounded-lg bg-orange-500/10 border-l-2 border-orange-400/50">
                 <h4 className="font-medium text-orange-300 mb-2">Detailed MWC Sections</h4>
-                <div className="space-y-3 text-sm text-white/70">
+                <div className="space-y-3 text-sm text-white">
                   <div>
                     <strong>1. Installation Details:</strong>
                     <ul className="mt-1 space-y-1 ml-4">
@@ -418,7 +418,7 @@ const Module6Section7_3 = () => {
 
               <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-400/50">
                 <h4 className="font-medium text-amber-300 mb-2">Common Completion Errors:</h4>
-                <ul className="text-sm text-white/70 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Incomplete test result sections</li>
                   <li>• Vague work descriptions</li>
                   <li>• Missing circuit identification</li>
@@ -448,7 +448,7 @@ const Module6Section7_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Why MWCs Are Important
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 It can be tempting to treat small jobs informally, but every piece of electrical
                 work must be documented. An MWC proves that even minor alterations were carried out
@@ -458,7 +458,7 @@ const Module6Section7_3 = () => {
 
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-400/50">
                 <h4 className="font-medium text-red-300 mb-2">Consequences of Missing MWCs:</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-white/70">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-white">
                   <div>
                     <strong>For the Electrician:</strong>
                     <ul className="mt-1 space-y-1 ml-4">
@@ -490,7 +490,7 @@ const Module6Section7_3 = () => {
                 <h4 className="font-medium text-green-300 mb-2">
                   Professional Benefits of Proper Certification:
                 </h4>
-                <ul className="text-sm text-white/70 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>
                     <strong>Trust Building:</strong> Demonstrates professionalism and attention to
                     detail
@@ -531,22 +531,22 @@ const Module6Section7_3 = () => {
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Always issue an MWC for any minor works, no matter how small
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Fill out every section clearly and accurately
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Provide the client with a copy and retain one for your own records
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Treat the MWC with the same professionalism as a full EIC
                 </p>
               </div>
@@ -560,7 +560,7 @@ const Module6Section7_3 = () => {
               Real-World Example
             </h2>
             <div className="space-y-4">
-              <p className="text-white/80">
+              <p className="text-white">
                 An electrician was asked to add an extra socket to a kitchen ring final circuit. The
                 work was completed and tested, but no Minor Works Certificate was issued. Months
                 later, when the house was being sold, the buyer's surveyor asked for certification
@@ -569,13 +569,13 @@ const Module6Section7_3 = () => {
                 could proceed.
               </p>
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-400/50">
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   <strong className="text-red-300">Issue:</strong> No Minor Works Certificate issued
                   for socket addition, causing sale delays and additional costs for EICR.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-400/50">
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   <strong className="text-green-300">Lesson:</strong> Minor Works Certificates save
                   time, money, and disputes by proving compliance for small jobs.
                 </p>
@@ -594,7 +594,7 @@ const Module6Section7_3 = () => {
                 <h3 className="font-medium text-white mb-2">
                   Q: Is an MWC optional for very small jobs?
                 </h3>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A: No. All alterations, however small, require certification.
                 </p>
               </div>
@@ -602,7 +602,7 @@ const Module6Section7_3 = () => {
                 <h3 className="font-medium text-white mb-2">
                   Q: Who can sign a Minor Works Certificate?
                 </h3>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A: A competent person who carried out or supervised the work.
                 </p>
               </div>
@@ -610,7 +610,7 @@ const Module6Section7_3 = () => {
                 <h3 className="font-medium text-white mb-2">
                   Q: Does a Minor Works Certificate replace an EIC?
                 </h3>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A: No. It only applies to small additions or alterations; new circuits and major
                   works require an EIC.
                 </p>
@@ -622,7 +622,7 @@ const Module6Section7_3 = () => {
           <section className="mb-10">
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <h2 className="font-semibold text-white mb-3">Recap</h2>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 A Minor Works Certificate (MWC) is used for small alterations and additions, such as
                 adding a socket or lighting point. It records the work done, test results, and the
                 signature of the competent person. It is legally required under BS 7671 and provides
@@ -639,7 +639,7 @@ const Module6Section7_3 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../7-2">

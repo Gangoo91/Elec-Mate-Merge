@@ -223,7 +223,7 @@ const FiberOpticsModule7Section2 = () => {
             <ArrowLeft className="w-5 h-5" />
             <span className="font-medium">Module 7</span>
           </Link>
-          <span className="text-white/50 text-sm">Section 2 of 5</span>
+          <span className="text-white text-sm">Section 2 of 5</span>
         </div>
       </div>
 
@@ -236,7 +236,7 @@ const FiberOpticsModule7Section2 = () => {
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
             End-Face Contamination and Cleaning
           </h1>
-          <p className="text-white/70 text-lg">
+          <p className="text-white text-lg">
             Master inspection and cleaning techniques that prevent the majority of fibre problems
           </p>
         </div>
@@ -249,12 +249,12 @@ const FiberOpticsModule7Section2 = () => {
             <div className="bg-[#252525] rounded-lg p-4 border border-white/10">
               <Eye className="w-6 h-6 text-elec-yellow mb-2" />
               <h3 className="text-white font-semibold text-sm mb-1">Inspection</h3>
-              <p className="text-white/60 text-xs">200-400× magnification scopes and techniques</p>
+              <p className="text-white text-xs">200-400× magnification scopes and techniques</p>
             </div>
             <div className="bg-[#252525] rounded-lg p-4 border border-white/10">
               <Sparkles className="w-6 h-6 text-elec-yellow mb-2" />
               <h3 className="text-white font-semibold text-sm mb-1">Cleaning</h3>
-              <p className="text-white/60 text-xs">Dry and wet methods for all connector types</p>
+              <p className="text-white text-xs">Dry and wet methods for all connector types</p>
             </div>
           </div>
 
@@ -274,7 +274,7 @@ const FiberOpticsModule7Section2 = () => {
               ].map((outcome, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-white/80">{outcome}</span>
+                  <span className="text-white">{outcome}</span>
                 </li>
               ))}
             </ul>
@@ -287,7 +287,7 @@ const FiberOpticsModule7Section2 = () => {
               Why Cleaning Matters
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 Fibre optic connectors present an extremely small optical interface—the core of a
                 singlemode fibre is only 9 micrometres (µm) in diameter. For comparison, a human
@@ -305,13 +305,13 @@ const FiberOpticsModule7Section2 = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div className="text-center p-3 bg-[#1a1a1a] rounded-lg">
                   <div className="text-3xl font-bold text-red-400">~80%</div>
-                  <div className="text-white/60 text-sm">
+                  <div className="text-white text-sm">
                     of link failures caused by contamination
                   </div>
                 </div>
                 <div className="text-center p-3 bg-[#1a1a1a] rounded-lg">
                   <div className="text-3xl font-bold text-red-400">1 µm</div>
-                  <div className="text-white/60 text-sm">particle can cover 1% of SM core</div>
+                  <div className="text-white text-sm">particle can cover 1% of SM core</div>
                 </div>
               </div>
             </div>
@@ -326,12 +326,12 @@ const FiberOpticsModule7Section2 = () => {
                     className="flex-1 h-2 bg-elec-yellow/80 rounded"
                     style={{ width: '9%' }}
                   ></div>
-                  <span className="text-white/60 text-sm">Singlemode core</span>
+                  <span className="text-white text-sm">Singlemode core</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-16 text-right text-blue-400 font-mono text-sm">50 µm</div>
                   <div className="flex-1 h-2 bg-blue-500/80 rounded" style={{ width: '50%' }}></div>
-                  <span className="text-white/60 text-sm">Multimode core</span>
+                  <span className="text-white text-sm">Multimode core</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-16 text-right text-amber-400 font-mono text-sm">70 µm</div>
@@ -339,7 +339,7 @@ const FiberOpticsModule7Section2 = () => {
                     className="flex-1 h-2 bg-amber-500/80 rounded"
                     style={{ width: '70%' }}
                   ></div>
-                  <span className="text-white/60 text-sm">Human hair</span>
+                  <span className="text-white text-sm">Human hair</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="w-16 text-right text-green-400 font-mono text-sm">125 µm</div>
@@ -347,7 +347,7 @@ const FiberOpticsModule7Section2 = () => {
                     className="flex-1 h-2 bg-green-500/80 rounded"
                     style={{ width: '100%' }}
                   ></div>
-                  <span className="text-white/60 text-sm">Fibre cladding</span>
+                  <span className="text-white text-sm">Fibre cladding</span>
                 </div>
               </div>
             </div>
@@ -360,7 +360,7 @@ const FiberOpticsModule7Section2 = () => {
               Types of Contamination
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 Different contaminants require different cleaning approaches. Understanding what
                 you're looking at during inspection helps determine the correct response.
@@ -378,12 +378,12 @@ const FiberOpticsModule7Section2 = () => {
                     </div>
                     <div>
                       <h5 className="text-amber-400 font-medium">Dust and Particles</h5>
-                      <p className="text-white/60 text-sm">
+                      <p className="text-white text-sm">
                         Loose debris from environment—appears as distinct spots
                       </p>
                     </div>
                   </div>
-                  <p className="text-white/70 text-sm ml-11">
+                  <p className="text-white text-sm ml-11">
                     <strong>Cleaning:</strong> Usually removes with dry cleaning
                   </p>
                 </div>
@@ -395,12 +395,12 @@ const FiberOpticsModule7Section2 = () => {
                     </div>
                     <div>
                       <h5 className="text-blue-400 font-medium">Oils and Films</h5>
-                      <p className="text-white/60 text-sm">
+                      <p className="text-white text-sm">
                         From fingerprints, skin, lubricants—appears as hazy coating or smears
                       </p>
                     </div>
                   </div>
-                  <p className="text-white/70 text-sm ml-11">
+                  <p className="text-white text-sm ml-11">
                     <strong>Cleaning:</strong> Requires wet cleaning with IPA
                   </p>
                 </div>
@@ -412,12 +412,12 @@ const FiberOpticsModule7Section2 = () => {
                     </div>
                     <div>
                       <h5 className="text-purple-400 font-medium">Index Matching Gel Residue</h5>
-                      <p className="text-white/60 text-sm">
+                      <p className="text-white text-sm">
                         From mechanical splices or old connectors—sticky residue
                       </p>
                     </div>
                   </div>
-                  <p className="text-white/70 text-sm ml-11">
+                  <p className="text-white text-sm ml-11">
                     <strong>Cleaning:</strong> May require multiple wet cleaning cycles
                   </p>
                 </div>
@@ -429,12 +429,12 @@ const FiberOpticsModule7Section2 = () => {
                     </div>
                     <div>
                       <h5 className="text-green-400 font-medium">Buffer/Coating Residue</h5>
-                      <p className="text-white/60 text-sm">
+                      <p className="text-white text-sm">
                         From stripping process—usually at edges of end-face
                       </p>
                     </div>
                   </div>
-                  <p className="text-white/70 text-sm ml-11">
+                  <p className="text-white text-sm ml-11">
                     <strong>Cleaning:</strong> Wet cleaning; if persistent, re-termination may be
                     needed
                   </p>
@@ -447,12 +447,12 @@ const FiberOpticsModule7Section2 = () => {
                     </div>
                     <div>
                       <h5 className="text-red-400 font-medium">Permanent Damage</h5>
-                      <p className="text-white/60 text-sm">
+                      <p className="text-white text-sm">
                         Scratches, pits, chips, cracks—doesn't change with cleaning
                       </p>
                     </div>
                   </div>
-                  <p className="text-white/70 text-sm ml-11">
+                  <p className="text-white text-sm ml-11">
                     <strong>Action:</strong> Cannot be cleaned—connector requires replacement
                   </p>
                 </div>
@@ -465,7 +465,7 @@ const FiberOpticsModule7Section2 = () => {
                 <AlertTriangle className="w-4 h-4 text-elec-yellow" />
                 Common Contamination Sources
               </h4>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>• Touching end-faces with fingers (oils)</li>
                 <li>• Leaving connectors uncapped (dust)</li>
                 <li>• Dirty dust caps transferring contamination</li>
@@ -483,7 +483,7 @@ const FiberOpticsModule7Section2 = () => {
               Inspection Tools and Techniques
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 Proper inspection requires adequate magnification and good technique. The fibre core
                 is too small to assess with the naked eye or low-power magnification.
@@ -500,7 +500,7 @@ const FiberOpticsModule7Section2 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Handheld Microscope (200-400×)</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Optical scope for inspecting patch cords and accessible connectors. User looks
                       through eyepiece.
                     </p>
@@ -515,7 +515,7 @@ const FiberOpticsModule7Section2 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Video Probe / Tip Inspection Scope</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Probe tip inserts into adapters to view installed connectors. Image displayed
                       on screen or phone.
                     </p>
@@ -530,7 +530,7 @@ const FiberOpticsModule7Section2 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Automated Pass/Fail Scope</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Captures image and automatically analyses against IEC standards. Provides
                       objective pass/fail result.
                     </p>
@@ -548,30 +548,30 @@ const FiberOpticsModule7Section2 = () => {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
                 <div className="bg-red-500/20 p-3 rounded-lg border border-red-500/30 text-center">
                   <div className="text-red-400 font-bold text-sm">Zone A</div>
-                  <div className="text-white/80 text-xs">Core</div>
-                  <div className="text-white/60 text-xs mt-1">0-25µm (SM)</div>
+                  <div className="text-white text-xs">Core</div>
+                  <div className="text-white text-xs mt-1">0-25µm (SM)</div>
                   <div className="text-red-300 text-xs mt-1">No defects</div>
                 </div>
                 <div className="bg-amber-500/20 p-3 rounded-lg border border-amber-500/30 text-center">
                   <div className="text-amber-400 font-bold text-sm">Zone B</div>
-                  <div className="text-white/80 text-xs">Cladding</div>
-                  <div className="text-white/60 text-xs mt-1">25-120µm</div>
+                  <div className="text-white text-xs">Cladding</div>
+                  <div className="text-white text-xs mt-1">25-120µm</div>
                   <div className="text-amber-300 text-xs mt-1">Limited defects</div>
                 </div>
                 <div className="bg-blue-500/20 p-3 rounded-lg border border-blue-500/30 text-center">
                   <div className="text-blue-400 font-bold text-sm">Zone C</div>
-                  <div className="text-white/80 text-xs">Adhesive</div>
-                  <div className="text-white/60 text-xs mt-1">120-130µm</div>
+                  <div className="text-white text-xs">Adhesive</div>
+                  <div className="text-white text-xs mt-1">120-130µm</div>
                   <div className="text-blue-300 text-xs mt-1">More lenient</div>
                 </div>
                 <div className="bg-green-500/20 p-3 rounded-lg border border-green-500/30 text-center">
                   <div className="text-green-400 font-bold text-sm">Zone D</div>
-                  <div className="text-white/80 text-xs">Contact</div>
-                  <div className="text-white/60 text-xs mt-1">130-250µm</div>
+                  <div className="text-white text-xs">Contact</div>
+                  <div className="text-white text-xs mt-1">130-250µm</div>
                   <div className="text-green-300 text-xs mt-1">Scratches OK</div>
                 </div>
               </div>
-              <p className="text-white/60 text-sm">
+              <p className="text-white text-sm">
                 The core zone (A) is most critical—any contamination here directly affects the
                 optical signal. Outer zones are progressively more tolerant.
               </p>
@@ -592,7 +592,7 @@ const FiberOpticsModule7Section2 = () => {
               Dry Cleaning Methods
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 Dry cleaning is the preferred first-line method because it effectively removes most
                 contamination without risk of solvent residue. Several dry cleaning tools are
@@ -606,11 +606,11 @@ const FiberOpticsModule7Section2 = () => {
               <div className="space-y-4">
                 <div className="border-b border-white/10 pb-4">
                   <h5 className="text-elec-yellow font-medium mb-2">One-Click Cleaners</h5>
-                  <p className="text-white/60 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     Pen-style devices with replaceable cleaning cartridges. Press against end-face,
                     the cleaning tip rotates and advances automatically.
                   </p>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>✓ Fast and convenient for field use</li>
                     <li>✓ Consistent cleaning action</li>
                     <li>✓ Available for various connector types (LC, SC, MPO)</li>
@@ -620,11 +620,11 @@ const FiberOpticsModule7Section2 = () => {
                   <h5 className="text-elec-yellow font-medium mb-2">
                     Cassette Cleaners (Cletop Style)
                   </h5>
-                  <p className="text-white/60 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     Reel of cleaning tape in a cassette. Advance fresh tape for each use. Push
                     connector against tape with slight rotation.
                   </p>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>✓ Many cleans per cassette (500+)</li>
                     <li>✓ Very effective cleaning action</li>
                     <li>✓ Good for high-volume environments</li>
@@ -632,11 +632,11 @@ const FiberOpticsModule7Section2 = () => {
                 </div>
                 <div>
                   <h5 className="text-elec-yellow font-medium mb-2">Cleaning Sticks/Swabs</h5>
-                  <p className="text-white/60 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     Single-use sticks with lint-free tips. Available in various sizes for different
                     connector and adapter types.
                   </p>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>✓ Can reach inside adapters to clean both connectors</li>
                     <li>✓ Low cost per clean</li>
                     <li>✓ Essential for adapter/bulkhead cleaning</li>
@@ -651,7 +651,7 @@ const FiberOpticsModule7Section2 = () => {
                 <Sparkles className="w-4 h-4 text-elec-yellow" />
                 Dry Cleaning Procedure
               </h4>
-              <ol className="text-white/70 text-sm space-y-2">
+              <ol className="text-white text-sm space-y-2">
                 <li>
                   <span className="text-elec-yellow font-bold">1.</span> Inspect connector under
                   magnification—note contamination type and location
@@ -687,7 +687,7 @@ const FiberOpticsModule7Section2 = () => {
               Wet Cleaning Methods
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 When dry cleaning fails to remove contamination—particularly oils, films, or sticky
                 residues—wet cleaning is required. The most common solvent is isopropyl alcohol
@@ -702,26 +702,26 @@ const FiberOpticsModule7Section2 = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Solvent</th>
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Use Case</th>
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Notes</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">Solvent</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">Use Case</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">Notes</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3 text-elec-yellow">99%+ IPA</td>
                       <td className="py-2 px-3">General purpose, most contamination</td>
-                      <td className="py-2 px-3 text-white/60">Most common choice</td>
+                      <td className="py-2 px-3 text-white">Most common choice</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3 text-elec-yellow">Optical-grade IPA</td>
                       <td className="py-2 px-3">Critical applications</td>
-                      <td className="py-2 px-3 text-white/60">Higher purity, more expensive</td>
+                      <td className="py-2 px-3 text-white">Higher purity, more expensive</td>
                     </tr>
                     <tr>
                       <td className="py-2 px-3 text-elec-yellow">Specialist fibre cleaners</td>
                       <td className="py-2 px-3">Heavy contamination, residue</td>
-                      <td className="py-2 px-3 text-white/60">Formulated for fibre use</td>
+                      <td className="py-2 px-3 text-white">Formulated for fibre use</td>
                     </tr>
                   </tbody>
                 </table>
@@ -734,7 +734,7 @@ const FiberOpticsModule7Section2 = () => {
                 <AlertTriangle className="w-4 h-4" />
                 Important Warnings
               </h4>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>
                   • <strong className="text-white">Never use 70% IPA</strong>—water content leaves
                   residue
@@ -761,7 +761,7 @@ const FiberOpticsModule7Section2 = () => {
                 <Droplets className="w-4 h-4 text-elec-yellow" />
                 Wet-Dry Cleaning Procedure
               </h4>
-              <ol className="text-white/70 text-sm space-y-2">
+              <ol className="text-white text-sm space-y-2">
                 <li>
                   <span className="text-elec-yellow font-bold">1.</span> Apply small amount of IPA
                   to lint-free wipe or cleaning stick
@@ -807,11 +807,11 @@ const FiberOpticsModule7Section2 = () => {
             {/* MPO/MTP Connectors */}
             <div className="bg-[#252525] rounded-lg p-5 border border-white/10 mb-6">
               <h4 className="font-semibold text-white mb-4">MPO/MTP Connector Cleaning</h4>
-              <p className="text-white/60 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 MPO connectors have 12, 24, or more fibres in a rectangular array. Cleaning requires
                 special tools designed for the larger end-face.
               </p>
-              <ul className="text-white/70 text-sm space-y-2">
+              <ul className="text-white text-sm space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                   Use MPO-specific cleaning sticks or cassette cleaners
@@ -834,11 +834,11 @@ const FiberOpticsModule7Section2 = () => {
             {/* Adapter Cleaning */}
             <div className="bg-[#252525] rounded-lg p-5 border border-white/10 mb-6">
               <h4 className="font-semibold text-white mb-4">Adapter/Bulkhead Cleaning</h4>
-              <p className="text-white/60 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 The inside of adapter sleeves accumulates contamination and can transfer it to clean
                 connectors.
               </p>
-              <ul className="text-white/70 text-sm space-y-2">
+              <ul className="text-white text-sm space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                   Use long cleaning sticks designed for adapter cleaning
@@ -860,7 +860,7 @@ const FiberOpticsModule7Section2 = () => {
                 <BookOpen className="w-4 h-4" />
                 APC Connector Considerations
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 APC (Angled Physical Contact) connectors have an 8° angled end-face. Use cleaners
                 specifically designed for APC—they account for the angle and ensure proper contact
                 across the entire angled surface. Never use UPC cleaners on APC connectors.
@@ -891,7 +891,7 @@ const FiberOpticsModule7Section2 = () => {
                   </div>
                   <div>
                     <span className="text-white font-medium">Always inspect before connecting</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Never assume a connector is clean—always verify
                     </p>
                   </div>
@@ -902,7 +902,7 @@ const FiberOpticsModule7Section2 = () => {
                   </div>
                   <div>
                     <span className="text-white font-medium">Try dry cleaning first</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Use wet cleaning only if dry cleaning fails
                     </p>
                   </div>
@@ -913,7 +913,7 @@ const FiberOpticsModule7Section2 = () => {
                   </div>
                   <div>
                     <span className="text-white font-medium">Never re-use cleaning surfaces</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Fresh material for every cleaning action
                     </p>
                   </div>
@@ -924,7 +924,7 @@ const FiberOpticsModule7Section2 = () => {
                   </div>
                   <div>
                     <span className="text-white font-medium">Re-inspect after cleaning</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Confirm contamination is removed before connecting
                     </p>
                   </div>
@@ -935,7 +935,7 @@ const FiberOpticsModule7Section2 = () => {
                   </div>
                   <div>
                     <span className="text-white font-medium">Keep dust caps on</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Protect connectors until immediately before mating
                     </p>
                   </div>
@@ -954,7 +954,7 @@ const FiberOpticsModule7Section2 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="bg-[#252525] rounded-lg p-5 border border-white/10">
                   <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                  <p className="text-white/70 text-sm">{faq.answer}</p>
+                  <p className="text-white text-sm">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -970,7 +970,7 @@ const FiberOpticsModule7Section2 = () => {
               <div className="grid md:grid-cols-3 gap-4">
                 <div>
                   <h4 className="font-semibold text-white mb-2">1. Inspect</h4>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>• 200-400× magnification</li>
                     <li>• Note contamination type</li>
                     <li>• Check all zones</li>
@@ -978,7 +978,7 @@ const FiberOpticsModule7Section2 = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-white mb-2">2. Clean</h4>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>• Dry clean first</li>
                     <li>• Wet clean if needed</li>
                     <li>• Fresh surface each time</li>
@@ -986,7 +986,7 @@ const FiberOpticsModule7Section2 = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-white mb-2">3. Verify</h4>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>• Re-inspect after cleaning</li>
                     <li>• Replace dust cap</li>
                     <li>• Connect when confirmed clean</li>

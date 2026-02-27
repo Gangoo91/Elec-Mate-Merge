@@ -77,7 +77,7 @@ const KeyActionItems = ({ structuredData }: KeyActionItemsProps) => {
           </motion.div>
           <div>
             <h3 className="text-base sm:text-lg text-white font-bold">Key Action Items</h3>
-            <p className="text-xs sm:text-sm text-white/60">Priority tasks before starting</p>
+            <p className="text-xs sm:text-sm text-white">Priority tasks before starting</p>
           </div>
         </div>
       </div>

@@ -69,7 +69,7 @@ const CPDTracker = () => {
             </div>
             <div>
               <h1 className="text-lg font-bold text-white">CPD Tracker</h1>
-              <p className="text-xs text-white/70">Professional Development</p>
+              <p className="text-xs text-white">Professional Development</p>
             </div>
           </div>
         </div>
@@ -80,7 +80,7 @@ const CPDTracker = () => {
             <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2" />
             <button
               onClick={() => setShowComingSoonBanner(false)}
-              className="absolute top-3 right-3 text-white/60 hover:text-white transition-colors p-1"
+              className="absolute top-3 right-3 text-white hover:text-white transition-colors p-1"
               aria-label="Dismiss banner"
             >
               ✕
@@ -91,7 +91,7 @@ const CPDTracker = () => {
               </div>
               <div>
                 <h3 className="text-base font-bold text-amber-400 mb-1">Coming Soon</h3>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Enhanced CPD features are currently in development. All existing functionality
                   remains fully accessible below.
                 </p>
@@ -209,7 +209,7 @@ const CPDTracker = () => {
           </div>
           <h1 className="text-3xl font-bold text-white">CPD Tracker</h1>
         </div>
-        <p className="text-white/80 max-w-2xl mx-auto">
+        <p className="text-white max-w-2xl mx-auto">
           Track your Continuing Professional Development activities and maintain compliance with
           professional body requirements. Set goals, log activities, and monitor your progress.
         </p>
@@ -222,7 +222,7 @@ const CPDTracker = () => {
           <CardContent className="p-6 relative">
             <button
               onClick={() => setShowComingSoonBanner(false)}
-              className="absolute top-4 right-4 text-white/60 hover:text-white transition-colors p-1"
+              className="absolute top-4 right-4 text-white hover:text-white transition-colors p-1"
               aria-label="Dismiss banner"
             >
               ✕
@@ -233,7 +233,7 @@ const CPDTracker = () => {
               </div>
               <div>
                 <h3 className="text-xl font-bold text-amber-400 mb-1">Coming Soon</h3>
-                <p className="text-base text-white/80">
+                <p className="text-base text-white">
                   Enhanced CPD features are currently in development. All existing functionality
                   remains fully accessible below.
                 </p>

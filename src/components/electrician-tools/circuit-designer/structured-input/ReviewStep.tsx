@@ -25,7 +25,7 @@ export const ReviewStep = ({ inputs }: ReviewStepProps) => {
         </div>
         <div>
           <h2 className="text-lg font-semibold text-white">Review & Generate</h2>
-          <p className="text-sm text-white/50">Confirm your design parameters</p>
+          <p className="text-sm text-white">Confirm your design parameters</p>
         </div>
       </div>
 
@@ -72,13 +72,13 @@ export const ReviewStep = ({ inputs }: ReviewStepProps) => {
         <div className="space-y-3">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <p className="text-xs text-white/50 mb-1">Project Name</p>
+              <p className="text-xs text-white mb-1">Project Name</p>
               <p className="text-sm font-medium text-white">
                 {inputs.projectName || <span className="text-red-400">Not set</span>}
               </p>
             </div>
             <div>
-              <p className="text-xs text-white/50 mb-1">Location</p>
+              <p className="text-xs text-white mb-1">Location</p>
               <p className="text-sm font-medium text-white">
                 {inputs.location || <span className="text-red-400">Not set</span>}
               </p>
@@ -86,13 +86,13 @@ export const ReviewStep = ({ inputs }: ReviewStepProps) => {
           </div>
 
           <div className="pt-3 border-t border-white/10 flex flex-wrap items-center gap-2">
-            <Badge className="bg-white/10 text-white/80 border-0 text-xs capitalize">
+            <Badge className="bg-white/10 text-white border-0 text-xs capitalize">
               {inputs.propertyType}
             </Badge>
             <Badge className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/20 text-xs">
               {inputs.phases === 'single' ? 'Single Phase' : '3-Phase'} {inputs.voltage}V
             </Badge>
-            <Badge className="bg-white/10 text-white/80 border-0 text-xs">
+            <Badge className="bg-white/10 text-white border-0 text-xs">
               {inputs.earthingSystem}
             </Badge>
           </div>
@@ -122,7 +122,7 @@ export const ReviewStep = ({ inputs }: ReviewStepProps) => {
               <div className="flex items-center gap-2 mb-2">
                 <Badge
                   variant="outline"
-                  className="bg-white/5 text-white/60 border-white/10 text-xs px-2"
+                  className="bg-white/5 text-white border-white/10 text-xs px-2"
                 >
                   #{index + 1}
                 </Badge>
@@ -134,17 +134,17 @@ export const ReviewStep = ({ inputs }: ReviewStepProps) => {
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
                 <div>
-                  <span className="text-white/50">Power:</span>
+                  <span className="text-white">Power:</span>
                   <span className="ml-1.5 font-medium text-white">{circuit.loadPower}W</span>
                 </div>
                 <div>
-                  <span className="text-white/50">Length:</span>
+                  <span className="text-white">Length:</span>
                   <span className="ml-1.5 font-medium text-white">
                     {circuit.cableLength ? `${circuit.cableLength}m` : 'Auto'}
                   </span>
                 </div>
                 <div>
-                  <span className="text-white/50">Phase:</span>
+                  <span className="text-white">Phase:</span>
                   <span className="ml-1.5 font-medium text-white">
                     {circuit.phases === 'single' ? '1Φ' : '3Φ'}
                   </span>
@@ -202,7 +202,7 @@ export const ReviewStep = ({ inputs }: ReviewStepProps) => {
           ].map((item, index) => (
             <div key={index} className="flex items-start gap-2.5 text-sm">
               <CheckCircle2 className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-              <span className="text-white/80">{item}</span>
+              <span className="text-white">{item}</span>
             </div>
           ))}
         </div>

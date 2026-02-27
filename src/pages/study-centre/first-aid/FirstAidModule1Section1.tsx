@@ -205,7 +205,7 @@ export default function FirstAidModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-1">
@@ -228,7 +228,7 @@ export default function FirstAidModule1Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             The First Aider&rsquo;s Role &amp; Legal Framework
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The primary legislation governing workplace first aid in Great Britain, the two
             qualification levels, employer duties, and how to assess what first aid provision your
             workplace needs
@@ -330,7 +330,7 @@ export default function FirstAidModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">What the Regulations Require:</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -426,7 +426,7 @@ export default function FirstAidModule1Section1() {
                   <BookOpen className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">What L74 Covers</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -501,7 +501,7 @@ export default function FirstAidModule1Section1() {
                     <Shield className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">First Aid at Work (FAW)</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -547,7 +547,7 @@ export default function FirstAidModule1Section1() {
                       Emergency First Aid at Work (EFAW)
                     </p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -602,7 +602,7 @@ export default function FirstAidModule1Section1() {
                   <ClipboardList className="h-5 w-5 text-teal-400" />
                   <p className="text-sm font-medium text-teal-400">Requalification Rules</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -667,7 +667,7 @@ export default function FirstAidModule1Section1() {
                 <div className="space-y-3">
                   <div>
                     <p className="text-sm font-medium text-white">1. Equipment</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       At a minimum, a suitably stocked first aid kit must be provided. The contents
                       should reflect the hazards of the workplace. L74 provides guidance on minimum
                       kit contents. Kits must be checked regularly and replenished when items are
@@ -676,7 +676,7 @@ export default function FirstAidModule1Section1() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">2. Facilities</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       In higher-risk or larger workplaces, a dedicated first aid room may be
                       required. This must be easily accessible, clearly signposted with a white
                       cross on a green background, and equipped with a couch, blankets, a sink with
@@ -685,7 +685,7 @@ export default function FirstAidModule1Section1() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">3. Personnel</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Employers must ensure there are sufficient trained personnel &mdash; either
                       qualified first aiders (FAW or EFAW) or appointed persons &mdash; to provide
                       first aid cover at all times the workplace is occupied, including during
@@ -694,7 +694,7 @@ export default function FirstAidModule1Section1() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">4. Information</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       All employees must be told who the first aiders or appointed persons are,
                       where the first aid equipment is located, and what to do in an emergency. This
                       is typically communicated through signage, induction training, and the health
@@ -722,7 +722,7 @@ export default function FirstAidModule1Section1() {
                     Factors in a First Aid Needs Assessment
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -839,7 +839,7 @@ export default function FirstAidModule1Section1() {
                     Construction Site First Aid Requirements
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -890,7 +890,7 @@ export default function FirstAidModule1Section1() {
                     HSE-Approved Training Organisations Must:
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Deliver the full FAW or EFAW syllabus as specified by the HSE</span>
@@ -937,7 +937,7 @@ export default function FirstAidModule1Section1() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Self-Employed Persons</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If you are self-employed, the First-Aid Regulations 1981 require you to provide
                   adequate and appropriate equipment for administering first aid to yourself. In
                   practice, this means carrying a personal first aid kit that is appropriate to the
@@ -971,7 +971,7 @@ export default function FirstAidModule1Section1() {
                     <Shield className="h-5 w-5 text-green-400" />
                     <p className="text-sm font-medium text-green-400">First Aider</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1012,7 +1012,7 @@ export default function FirstAidModule1Section1() {
                     <Users className="h-5 w-5 text-amber-400" />
                     <p className="text-sm font-medium text-amber-400">Appointed Person</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1067,7 +1067,7 @@ export default function FirstAidModule1Section1() {
                     Legal Protection for First Aiders
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1119,7 +1119,7 @@ export default function FirstAidModule1Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Enforcement &amp; Consequences</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The Health and Safety Executive (HSE) enforces the First-Aid Regulations 1981.
                   Inspectors have the power to enter workplaces, examine first aid arrangements, and
                   take enforcement action where provision is inadequate. An employer who fails to
@@ -1143,7 +1143,7 @@ export default function FirstAidModule1Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1157,7 +1157,7 @@ export default function FirstAidModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-1">

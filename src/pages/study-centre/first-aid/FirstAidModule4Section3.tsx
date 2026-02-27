@@ -219,7 +219,7 @@ export default function FirstAidModule4Section3() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Electric Shock &amp; Electrical Injuries
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Scene safety for electrical incidents, emergency procedures for high-voltage and
             low-voltage contact, treatment of electrical burns, and first aid response to electric
             shock casualties
@@ -377,7 +377,7 @@ export default function FirstAidModule4Section3() {
                     CRITICAL: Never Approach Until Safe
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   <strong className="text-white">
                     NEVER touch or approach an electrical casualty until you are absolutely certain
                     the power source is off.
@@ -448,7 +448,7 @@ export default function FirstAidModule4Section3() {
             <div className="flex flex-col items-center">
               <div className="bg-rose-500/20 border-2 border-rose-400/60 rounded-lg px-6 py-3 text-center mb-3">
                 <p className="text-rose-300 font-bold text-sm">START</p>
-                <p className="text-white/80 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Is it HIGH voltage (&gt;1000V) or LOW voltage?
                 </p>
               </div>
@@ -460,26 +460,26 @@ export default function FirstAidModule4Section3() {
                   <div className="h-4 w-0.5 bg-red-400/60" />
                   <div className="bg-red-500/20 border border-red-500/40 rounded-lg p-3 w-full text-center mb-2">
                     <p className="text-red-300 font-bold text-xs sm:text-sm">HIGH VOLTAGE</p>
-                    <p className="text-white/60 text-[10px] sm:text-xs">
+                    <p className="text-white text-[10px] sm:text-xs">
                       Overhead lines, substations, railways
                     </p>
                   </div>
                   <div className="h-3 w-0.5 bg-red-400/40" />
                   <div className="bg-red-500/10 border border-red-500/30 rounded p-2 w-full text-center mb-2">
-                    <p className="text-white/80 text-[10px] sm:text-xs">
+                    <p className="text-white text-[10px] sm:text-xs">
                       Stay at least <strong className="text-red-300">25 metres</strong> away
                     </p>
                   </div>
                   <div className="h-3 w-0.5 bg-red-400/40" />
                   <div className="bg-red-500/10 border border-red-500/30 rounded p-2 w-full text-center mb-2">
-                    <p className="text-white/80 text-[10px] sm:text-xs">
+                    <p className="text-white text-[10px] sm:text-xs">
                       Call <strong className="text-red-300">999</strong> AND the{' '}
                       <strong className="text-red-300">DNO</strong>
                     </p>
                   </div>
                   <div className="h-3 w-0.5 bg-red-400/40" />
                   <div className="bg-red-500/10 border border-red-500/30 rounded p-2 w-full text-center mb-2">
-                    <p className="text-white/80 text-[10px] sm:text-xs">
+                    <p className="text-white text-[10px] sm:text-xs">
                       <strong className="text-red-300">Do NOT approach</strong> until confirmed safe
                       by DNO
                     </p>
@@ -497,20 +497,20 @@ export default function FirstAidModule4Section3() {
                   <div className="h-4 w-0.5 bg-amber-400/60" />
                   <div className="bg-amber-500/20 border border-amber-500/40 rounded-lg p-3 w-full text-center mb-2">
                     <p className="text-amber-300 font-bold text-xs sm:text-sm">LOW VOLTAGE</p>
-                    <p className="text-white/60 text-[10px] sm:text-xs">
+                    <p className="text-white text-[10px] sm:text-xs">
                       Domestic &amp; workplace (230V/400V)
                     </p>
                   </div>
                   <div className="h-3 w-0.5 bg-amber-400/40" />
                   <div className="bg-amber-500/10 border border-amber-500/30 rounded p-2 w-full text-center mb-2">
-                    <p className="text-white/80 text-[10px] sm:text-xs">
+                    <p className="text-white text-[10px] sm:text-xs">
                       Switch off at{' '}
                       <strong className="text-amber-300">mains/socket/isolator</strong>
                     </p>
                   </div>
                   <div className="h-3 w-0.5 bg-amber-400/40" />
                   <div className="bg-amber-500/10 border border-amber-500/30 rounded p-2 w-full text-center mb-2">
-                    <p className="text-white/80 text-[10px] sm:text-xs">
+                    <p className="text-white text-[10px] sm:text-xs">
                       If can&rsquo;t switch off: use{' '}
                       <strong className="text-amber-300">dry non-conductive object</strong> to
                       separate
@@ -518,7 +518,7 @@ export default function FirstAidModule4Section3() {
                   </div>
                   <div className="h-3 w-0.5 bg-amber-400/40" />
                   <div className="bg-amber-500/10 border border-amber-500/30 rounded p-2 w-full text-center mb-2">
-                    <p className="text-white/80 text-[10px] sm:text-xs">
+                    <p className="text-white text-[10px] sm:text-xs">
                       <strong className="text-amber-300">Do NOT touch</strong> casualty&rsquo;s skin
                       until separated
                     </p>
@@ -532,7 +532,7 @@ export default function FirstAidModule4Section3() {
                 </div>
               </div>
             </div>
-            <p className="text-white/50 text-xs text-center mt-4 italic">
+            <p className="text-white text-xs text-center mt-4 italic">
               The response depends entirely on whether the source is high or low voltage. Assess
               first, then act.
             </p>
@@ -561,7 +561,7 @@ export default function FirstAidModule4Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Stay at Least 25 Metres Away</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   High-voltage electricity can{' '}
                   <strong className="text-white">arc through the air</strong> over significant
                   distances. At 11kV, the arcing distance can be several metres. At 400kV (National
@@ -583,7 +583,7 @@ export default function FirstAidModule4Section3() {
                         <h4 className="text-rose-300 font-medium mb-1">
                           Stop &mdash; Maintain Distance
                         </h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Stay at least <strong className="text-white">25 metres</strong> away from
                           the source and the casualty. Keep other people away from the area. Do not
                           allow anyone to approach.
@@ -598,7 +598,7 @@ export default function FirstAidModule4Section3() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-rose-300 font-medium mb-1">Call 999 AND the DNO</h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Call 999 for emergency services. Also call the{' '}
                           <strong className="text-white">
                             Distribution Network Operator (DNO)
@@ -616,7 +616,7 @@ export default function FirstAidModule4Section3() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-rose-300 font-medium mb-1">Wait for Confirmation</h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           <strong className="text-white">Do NOT approach</strong> until the DNO has
                           confirmed the supply is isolated and earthed. Do not assume that fallen
                           wires are dead &mdash; they may still be live. Do not touch fences, metal
@@ -634,7 +634,7 @@ export default function FirstAidModule4Section3() {
                         <h4 className="text-green-300 font-medium mb-1">
                           Once Safe &mdash; Assess the Casualty
                         </h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Only when the DNO confirms the area is safe should you approach. Assess
                           using DR ABC. Be prepared to start CPR &mdash; cardiac arrest is a
                           significant risk with high-voltage shock.
@@ -649,10 +649,10 @@ export default function FirstAidModule4Section3() {
                 <h3 className="font-semibold mb-2 text-rose-400">
                   Vehicle in Contact with Power Lines
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   If a vehicle has driven into or is in contact with an overhead power line:
                 </p>
-                <ul className="text-white/80 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -709,7 +709,7 @@ export default function FirstAidModule4Section3() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-rose-300 font-medium mb-1">Isolate the Supply</h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Switch off at the <strong className="text-white">mains</strong>,{' '}
                           <strong className="text-white">socket</strong>, or{' '}
                           <strong className="text-white">isolator</strong>. Remove the plug from the
@@ -728,11 +728,11 @@ export default function FirstAidModule4Section3() {
                         <h4 className="text-rose-300 font-medium mb-1">
                           If You Cannot Isolate &mdash; Separate the Casualty
                         </h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Use a <strong className="text-white">non-conductive object</strong> to
                           push or pull the casualty away from the source. Suitable objects include:
                         </p>
-                        <ul className="text-white/80 text-sm mt-2 space-y-1">
+                        <ul className="text-white text-sm mt-2 space-y-1">
                           <li className="flex items-start gap-2">
                             <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                             <span>
@@ -768,7 +768,7 @@ export default function FirstAidModule4Section3() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-rose-300 font-medium mb-1">Protect Yourself</h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Stand on <strong className="text-white">dry insulating material</strong>{' '}
                           (rubber mat, dry wood, dry newspaper) while attempting to separate the
                           casualty. Do NOT use anything{' '}
@@ -787,7 +787,7 @@ export default function FirstAidModule4Section3() {
                         <h4 className="text-green-300 font-medium mb-1">
                           Once Safe &mdash; Assess the Casualty
                         </h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Only when the contact is broken should you assess the casualty using DR
                           ABC. Be prepared to start CPR. Call 999 &mdash; all electrical casualties
                           must go to hospital.
@@ -803,7 +803,7 @@ export default function FirstAidModule4Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Never Use Wet or Metallic Objects</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Water is a conductor. Wet wood, damp rope, or any metallic object will conduct
                   electricity to you.
                   <strong className="text-white">
@@ -829,7 +829,7 @@ export default function FirstAidModule4Section3() {
                 <Zap className="h-5 w-5 text-red-400" />
                 <h3 className="text-red-300 font-semibold text-sm">High Voltage (&gt;1000V)</h3>
               </div>
-              <ul className="text-white/80 text-sm space-y-2">
+              <ul className="text-white text-sm space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                   <span>Overhead lines, substations, railways, industrial HV supplies</span>
@@ -861,7 +861,7 @@ export default function FirstAidModule4Section3() {
                 <Zap className="h-5 w-5 text-amber-400" />
                 <h3 className="text-amber-300 font-semibold text-sm">Low Voltage (&lt;1000V)</h3>
               </div>
-              <ul className="text-white/80 text-sm space-y-2">
+              <ul className="text-white text-sm space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>Domestic (230V), workplace (400V), construction (110V)</span>
@@ -920,7 +920,7 @@ export default function FirstAidModule4Section3() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-rose-300 font-medium mb-1">Assess Using DR ABC</h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           <strong className="text-white">D</strong>anger (confirmed clear),{' '}
                           <strong className="text-white">R</strong>esponse (check for
                           responsiveness), <strong className="text-white">A</strong>irway (open the
@@ -940,7 +940,7 @@ export default function FirstAidModule4Section3() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-rose-300 font-medium mb-1">Be Prepared to Start CPR</h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           <strong className="text-white">
                             Cardiac arrest is a significant risk
                           </strong>{' '}
@@ -961,7 +961,7 @@ export default function FirstAidModule4Section3() {
                         <h4 className="text-rose-300 font-medium mb-1">
                           Treat Burns &mdash; Entry and Exit Wounds
                         </h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Electrical burns often have a small{' '}
                           <strong className="text-white">entry wound</strong> where the current
                           entered the body and an <strong className="text-white">exit wound</strong>{' '}
@@ -983,7 +983,7 @@ export default function FirstAidModule4Section3() {
                         <h4 className="text-rose-300 font-medium mb-1">
                           Call 999 &mdash; ALL Casualties to Hospital
                         </h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           <strong className="text-white">
                             Every electrical casualty should go to hospital
                           </strong>
@@ -1001,7 +1001,7 @@ export default function FirstAidModule4Section3() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-rose-400">Delayed Cardiac Effects</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Electric shock can cause <strong className="text-white">arrhythmias</strong>{' '}
                   (abnormal heart rhythms) that may not present immediately. A casualty who appears
                   completely well after an electric shock may develop a life-threatening arrhythmia
@@ -1016,7 +1016,7 @@ export default function FirstAidModule4Section3() {
                   <LinkIcon className="h-4 w-4 inline-block mr-2 -mt-0.5" />
                   HSE Electric Shock Poster
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The <strong className="text-white">HSE Electric Shock Poster</strong>{' '}
                   (&ldquo;Electric Shock: First Aid Procedures&rdquo;) is required to be displayed
                   in all electrical workplaces, switchrooms, substations, and any area where there
@@ -1050,7 +1050,7 @@ export default function FirstAidModule4Section3() {
                 <div className="space-y-4">
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-1">1. Electrocution</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       <strong className="text-white">Death</strong> caused by electric shock. The
                       term &ldquo;electrocution&rdquo; specifically means death &mdash; it is not a
                       synonym for electric shock. Electrocution most commonly results from cardiac
@@ -1059,7 +1059,7 @@ export default function FirstAidModule4Section3() {
                   </div>
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-1">2. Electric Shock</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Electric current passing through the body. Effects range from a mild tingling
                       sensation to cardiac arrest, depending on the voltage, current, pathway, and
                       duration of contact. Even a brief shock can cause arrhythmias that develop
@@ -1068,7 +1068,7 @@ export default function FirstAidModule4Section3() {
                   </div>
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-1">3. Electrical Burns</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Tissue damage from current flowing through the body or from an arc flash.
                       Electrical burns are deceptive &mdash; the{' '}
                       <strong className="text-white">entry wound may appear small</strong>, but the
@@ -1079,12 +1079,12 @@ export default function FirstAidModule4Section3() {
                   </div>
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-1">4. Arc Flash</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       An <strong className="text-white">explosive release of energy</strong> from an
                       electrical fault, where an arc forms between conductors or between a conductor
                       and earth. Temperatures at the arc can exceed 20,000&deg;C. Arc flash causes:
                     </p>
-                    <ul className="text-white/80 text-sm mt-2 space-y-1">
+                    <ul className="text-white text-sm mt-2 space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>
@@ -1123,7 +1123,7 @@ export default function FirstAidModule4Section3() {
                   </div>
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-1">5. Secondary Injuries</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Injuries that result from the electric shock but are not directly caused by
                       the current itself. Common secondary injuries include{' '}
                       <strong className="text-white">falls from height</strong> after shock
@@ -1144,37 +1144,37 @@ export default function FirstAidModule4Section3() {
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-300 font-medium text-sm mb-1">Voltage</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Higher voltage = greater force driving current through the body
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-300 font-medium text-sm mb-1">Current (Amperage)</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Current kills, not voltage. As little as 50mA across the heart can be fatal
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-300 font-medium text-sm mb-1">Body/Skin Resistance</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Wet skin has much lower resistance, allowing more current to flow
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-300 font-medium text-sm mb-1">Pathway Through Body</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Hand-to-hand (across heart) is the most dangerous pathway
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-300 font-medium text-sm mb-1">Duration of Contact</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Longer contact = more energy transferred = greater tissue damage
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-300 font-medium text-sm mb-1">AC vs DC</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       AC (50Hz) causes muscle contraction preventing release; generally more
                       dangerous than DC
                     </p>
@@ -1189,7 +1189,7 @@ export default function FirstAidModule4Section3() {
                     AC Muscle Contraction (&ldquo;Can&rsquo;t Let Go&rdquo;)
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Alternating current (AC) at 50&nbsp;Hz (UK mains frequency) causes involuntary
                   muscle contraction known as <strong className="text-white">tetanic spasm</strong>.
                   This can prevent the casualty from releasing their grip on the electrical source,
@@ -1219,7 +1219,7 @@ export default function FirstAidModule4Section3() {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center mb-4">
                   <div className="bg-rose-500/10 border border-rose-500/20 rounded-lg p-3">
                     <p className="text-rose-400 font-bold text-xl sm:text-2xl">~30</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       UK workplace
                       <br />
                       deaths/year
@@ -1227,7 +1227,7 @@ export default function FirstAidModule4Section3() {
                   </div>
                   <div className="bg-rose-500/10 border border-rose-500/20 rounded-lg p-3">
                     <p className="text-rose-400 font-bold text-xl sm:text-2xl">~10%</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Of construction
                       <br />
                       fatalities
@@ -1235,7 +1235,7 @@ export default function FirstAidModule4Section3() {
                   </div>
                   <div className="bg-rose-500/10 border border-rose-500/20 rounded-lg p-3">
                     <p className="text-rose-400 font-bold text-xl sm:text-2xl">230V</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Most common
                       <br />
                       fatal voltage
@@ -1243,7 +1243,7 @@ export default function FirstAidModule4Section3() {
                   </div>
                   <div className="bg-rose-500/10 border border-rose-500/20 rounded-lg p-3">
                     <p className="text-rose-400 font-bold text-xl sm:text-2xl">50mA</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Can be fatal
                       <br />
                       across heart
@@ -1253,7 +1253,7 @@ export default function FirstAidModule4Section3() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <p className="text-white font-medium text-sm mb-2">Highest Risk Groups</p>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Electricians and electrical engineers</span>
@@ -1270,7 +1270,7 @@ export default function FirstAidModule4Section3() {
                   </div>
                   <div>
                     <p className="text-white font-medium text-sm mb-2">Most Common Scenarios</p>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Contact with overhead power lines</span>
@@ -1297,14 +1297,14 @@ export default function FirstAidModule4Section3() {
                 <h3 className="font-semibold mb-2 text-rose-400">
                   110V Centre-Tapped Earth on UK Construction Sites
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   UK construction sites use a{' '}
                   <strong className="text-white">110V centre-tapped earth system</strong> instead of
                   230V. The secondary winding of the transformer has a centre tap connected to
                   earth, which splits the 110V equally &mdash; providing a maximum of{' '}
                   <strong className="text-white">55V to earth</strong>.
                 </p>
-                <ul className="text-white/80 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1343,12 +1343,12 @@ export default function FirstAidModule4Section3() {
                   <Zap className="h-4 w-4 inline-block mr-2 -mt-0.5" />
                   Lightning Strikes
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Lightning delivers a massive but extremely brief pulse of current (up to 200,000
                   amperes, lasting milliseconds). Treat a lightning strike casualty as a{' '}
                   <strong className="text-white">high-voltage injury</strong>.
                 </p>
-                <ul className="text-white/80 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-rose-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1387,7 +1387,7 @@ export default function FirstAidModule4Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Key Message for Electricians</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   As an electrician, you work with electricity every day. This familiarity can breed
                   complacency.
                   <strong className="text-white">
@@ -1417,7 +1417,7 @@ export default function FirstAidModule4Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1433,7 +1433,7 @@ export default function FirstAidModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-4">

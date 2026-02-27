@@ -203,7 +203,7 @@ export default function CdmRegulationsModule4Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-4">
@@ -226,7 +226,7 @@ export default function CdmRegulationsModule4Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Coordination &amp; Cooperation
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How duty holders coordinate their work and cooperate to manage health and safety risks
             across design and construction phases under CDM&nbsp;2015
           </p>
@@ -332,7 +332,7 @@ export default function CdmRegulationsModule4Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Common Interface Risks on Construction Projects
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -418,7 +418,7 @@ export default function CdmRegulationsModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">PD Coordination Duties</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -511,7 +511,7 @@ export default function CdmRegulationsModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">PC Coordination Duties</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -611,7 +611,7 @@ export default function CdmRegulationsModule4Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   What Cooperation Looks Like in Practice
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -662,7 +662,7 @@ export default function CdmRegulationsModule4Section4() {
                     Consequences of Failure to Cooperate
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -714,7 +714,7 @@ export default function CdmRegulationsModule4Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Design Coordination Meeting Framework
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -775,12 +775,12 @@ export default function CdmRegulationsModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Design Interface Register</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The design interface register is a key coordination document that records every
                   point where different designers&rsquo; work connects or overlaps. For each
                   interface, the register records:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>The two (or more) disciplines involved</span>
@@ -832,7 +832,7 @@ export default function CdmRegulationsModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Site Coordination Tools</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 w-5 h-5 rounded-full bg-blue-500/20 border border-blue-500/40 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-blue-400">
                       1
@@ -996,7 +996,7 @@ export default function CdmRegulationsModule4Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   What Information Must Be Shared
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -1045,7 +1045,7 @@ export default function CdmRegulationsModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">How Information Is Shared</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -1096,7 +1096,7 @@ export default function CdmRegulationsModule4Section4() {
                 <p className="text-sm font-medium text-white mb-4 text-center">
                   CDM Information Flow Map
                 </p>
-                <div className="text-xs text-white/80 space-y-3">
+                <div className="text-xs text-white space-y-3">
                   {/* Client at top */}
                   <div className="flex justify-center">
                     <div className="px-4 py-2.5 rounded-lg bg-blue-500/20 border border-blue-500/40 text-blue-400 font-semibold text-center min-w-[140px]">
@@ -1166,7 +1166,7 @@ export default function CdmRegulationsModule4Section4() {
                       Workers
                     </div>
                   </div>
-                  <p className="text-center text-white/50 text-[10px] mt-2">
+                  <p className="text-center text-white text-[10px] mt-2">
                     All arrows are bidirectional &mdash; information flows up as well as down. Every
                     duty holder communicates with those above and below them in the project
                     structure.
@@ -1196,7 +1196,7 @@ export default function CdmRegulationsModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Types of Conflict</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -1239,7 +1239,7 @@ export default function CdmRegulationsModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Escalation Procedure</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 w-5 h-5 rounded-full bg-blue-500/20 border border-blue-500/40 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-blue-400">
                       1
@@ -1331,7 +1331,7 @@ export default function CdmRegulationsModule4Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1347,7 +1347,7 @@ export default function CdmRegulationsModule4Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-4-section-3">

@@ -278,7 +278,7 @@ const Level3Module5Section6_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module5-section6">
@@ -375,11 +375,11 @@ const Level3Module5Section6_2 = () => {
             <div className="grid grid-cols-2 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Think First</p>
-                <p className="text-white/90 text-xs">Analyse before touching</p>
+                <p className="text-white text-xs">Analyse before touching</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Work Safely</p>
-                <p className="text-white/90 text-xs">Isolate and prove dead</p>
+                <p className="text-white text-xs">Isolate and prove dead</p>
               </div>
             </div>
 
@@ -440,7 +440,7 @@ const Level3Module5Section6_2 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Warning:</strong> Some faults (intermittent, load-related) may require
               energised investigation. This should be a last resort, performed only by those
               competent in live working, with proper risk assessment.
@@ -555,15 +555,15 @@ const Level3Module5Section6_2 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">100m Run</p>
-                <p className="text-white/90 text-xs">Max 7 tests to locate</p>
+                <p className="text-white text-xs">Max 7 tests to locate</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">50m Run</p>
-                <p className="text-white/90 text-xs">Max 6 tests to locate</p>
+                <p className="text-white text-xs">Max 6 tests to locate</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">10m Run</p>
-                <p className="text-white/90 text-xs">Max 4 tests to locate</p>
+                <p className="text-white text-xs">Max 4 tests to locate</p>
               </div>
             </div>
 
@@ -587,7 +587,7 @@ const Level3Module5Section6_2 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> Fault on 80m SWA cable. Test at 40m - fault in first half.
               Test at 20m - fault in second quarter. Test at 30m - fault between 20m and 30m. A few
               more tests pinpoint to within 1-2m.
@@ -659,7 +659,7 @@ const Level3Module5Section6_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -704,7 +704,7 @@ const Level3Module5Section6_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module5-section6">

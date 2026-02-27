@@ -208,7 +208,7 @@ export default function WorkingAtHeightModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-1">
@@ -233,7 +233,7 @@ export default function WorkingAtHeightModule1Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             The Hierarchy of Controls
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Avoid, prevent, mitigate &mdash; the three-tier approach to managing fall risks, with
             practical examples for electricians
           </p>
@@ -306,7 +306,7 @@ export default function WorkingAtHeightModule1Section4() {
             Hierarchy of Controls Pyramid
           </h2>
           <div className="bg-white/5 border border-white/10 p-4 sm:p-6 rounded-lg">
-            <p className="text-sm text-white/60 mb-6 text-center">
+            <p className="text-sm text-white mb-6 text-center">
               Work through the levels from top to bottom &mdash; only move to the next level if the
               one above is not reasonably practicable
             </p>
@@ -321,14 +321,14 @@ export default function WorkingAtHeightModule1Section4() {
                     </div>
                     <p className="text-green-400 font-bold text-sm sm:text-base">AVOID</p>
                   </div>
-                  <p className="text-xs text-white/60">Eliminate the need to work at height</p>
+                  <p className="text-xs text-white">Eliminate the need to work at height</p>
                   <p className="text-[10px] text-green-400/60 mt-1">MOST EFFECTIVE</p>
                 </div>
               </div>
 
               {/* Arrow */}
               <div className="flex justify-center">
-                <ArrowDown className="h-4 w-4 text-white/30" />
+                <ArrowDown className="h-4 w-4 text-white" />
               </div>
 
               {/* Pyramid Level 2 - PREVENT (wider) */}
@@ -340,8 +340,8 @@ export default function WorkingAtHeightModule1Section4() {
                     </div>
                     <p className="text-amber-400 font-bold text-sm sm:text-base">PREVENT</p>
                   </div>
-                  <p className="text-xs text-white/60">Stop falls with collective protection</p>
-                  <p className="text-[10px] text-white/40 mt-1">
+                  <p className="text-xs text-white">Stop falls with collective protection</p>
+                  <p className="text-[10px] text-white mt-1">
                     Guardrails, platforms, scaffolds, MEWPs
                   </p>
                 </div>
@@ -349,7 +349,7 @@ export default function WorkingAtHeightModule1Section4() {
 
               {/* Arrow */}
               <div className="flex justify-center">
-                <ArrowDown className="h-4 w-4 text-white/30" />
+                <ArrowDown className="h-4 w-4 text-white" />
               </div>
 
               {/* Pyramid Level 3 - MITIGATE (widest) */}
@@ -361,8 +361,8 @@ export default function WorkingAtHeightModule1Section4() {
                     </div>
                     <p className="text-red-400 font-bold text-sm sm:text-base">MITIGATE</p>
                   </div>
-                  <p className="text-xs text-white/60">Minimise fall distance and consequences</p>
-                  <p className="text-[10px] text-white/40 mt-1">
+                  <p className="text-xs text-white">Minimise fall distance and consequences</p>
+                  <p className="text-[10px] text-white mt-1">
                     Safety nets, airbags, harnesses &amp; lanyards
                   </p>
                   <p className="text-[10px] text-red-400/60 mt-1">LAST RESORT</p>
@@ -371,7 +371,7 @@ export default function WorkingAtHeightModule1Section4() {
             </div>
 
             <div className="mt-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg text-center">
-              <p className="text-xs text-white/70">
+              <p className="text-xs text-white">
                 <strong className="text-amber-400">Key principle:</strong> Always start at the top
                 of the pyramid. Only move to a lower level if the level above is not reasonably
                 practicable.
@@ -413,7 +413,7 @@ export default function WorkingAtHeightModule1Section4() {
                     Practical Avoidance Measures for Electricians
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                     <span>
@@ -500,7 +500,7 @@ export default function WorkingAtHeightModule1Section4() {
                     Why Collective Protection First?
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Regulation 7 of the Work at Height Regulations 2005 requires that collective
                   protection is given priority over personal protection. The reason is
                   straightforward: collective protection works{' '}
@@ -517,7 +517,7 @@ export default function WorkingAtHeightModule1Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Collective Protection Equipment
                 </p>
-                <div className="space-y-4 text-sm text-white/80">
+                <div className="space-y-4 text-sm text-white">
                   <div>
                     <p className="text-amber-400 font-medium mb-1">
                       Guardrails &amp; Edge Protection
@@ -681,7 +681,7 @@ export default function WorkingAtHeightModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Mitigation Is the Last Resort</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Mitigation measures — including harnesses, safety nets, and airbags — are the
                   <strong className="text-white"> least preferred option</strong> in the hierarchy.
                   They do not prevent the fall; they only reduce its consequences. They should only
@@ -693,7 +693,7 @@ export default function WorkingAtHeightModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Mitigation Equipment</p>
-                <div className="space-y-4 text-sm text-white/80">
+                <div className="space-y-4 text-sm text-white">
                   <div>
                     <p className="text-red-400 font-medium mb-1">
                       Safety Nets (Collective Mitigation)
@@ -797,12 +797,12 @@ export default function WorkingAtHeightModule1Section4() {
                   <Layers className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Fall Distance Calculation</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   When using a harness and energy-absorbing lanyard, you must calculate the
                   <strong className="text-white"> total fall distance</strong> to ensure there is
                   sufficient clearance below the anchor point. The total fall distance includes:
                 </p>
-                <div className="bg-white/5 border border-white/10 rounded-lg p-3 space-y-2 text-sm text-white/80">
+                <div className="bg-white/5 border border-white/10 rounded-lg p-3 space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -842,7 +842,7 @@ export default function WorkingAtHeightModule1Section4() {
                     </p>
                   </div>
                 </div>
-                <p className="text-xs text-white/50 mt-2">
+                <p className="text-xs text-white mt-2">
                   If the clearance below the anchor point is less than this, an SRL (self-retracting
                   lifeline) may reduce the required clearance. Always calculate before use.
                 </p>
@@ -872,12 +872,12 @@ export default function WorkingAtHeightModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Suspension Trauma Warning</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   <strong className="text-white">Suspension trauma</strong> (also called harness
                   hang syndrome or orthostatic intolerance) is a life-threatening condition that can
                   develop when a person hangs motionless in a harness after a fall arrest.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -914,7 +914,7 @@ export default function WorkingAtHeightModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Rescue Plan Requirements</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -1012,71 +1012,71 @@ export default function WorkingAtHeightModule1Section4() {
                     </div>
 
                     {/* Row 1 */}
-                    <div className="p-2 bg-white/5 rounded text-white/80">
+                    <div className="p-2 bg-white/5 rounded text-white">
                       Lamp replacement (office)
                     </div>
-                    <div className="p-2 bg-green-500/5 rounded text-white/60">
+                    <div className="p-2 bg-green-500/5 rounded text-white">
                       Lowering winch luminaire
                     </div>
-                    <div className="p-2 bg-amber-500/5 rounded text-white/60">
+                    <div className="p-2 bg-amber-500/5 rounded text-white">
                       Podium step / tower scaffold
                     </div>
-                    <div className="p-2 bg-red-500/5 rounded text-white/60">N/A for short task</div>
+                    <div className="p-2 bg-red-500/5 rounded text-white">N/A for short task</div>
 
                     {/* Row 2 */}
-                    <div className="p-2 bg-white/5 rounded text-white/80">
+                    <div className="p-2 bg-white/5 rounded text-white">
                       Cable tray at 4m (warehouse)
                     </div>
-                    <div className="p-2 bg-green-500/5 rounded text-white/60">
+                    <div className="p-2 bg-green-500/5 rounded text-white">
                       Pre-fab at ground, lift into position
                     </div>
-                    <div className="p-2 bg-amber-500/5 rounded text-white/60">
+                    <div className="p-2 bg-amber-500/5 rounded text-white">
                       Scissor lift MEWP or tower scaffold
                     </div>
-                    <div className="p-2 bg-red-500/5 rounded text-white/60">
+                    <div className="p-2 bg-red-500/5 rounded text-white">
                       Harness if MEWP not feasible
                     </div>
 
                     {/* Row 3 */}
-                    <div className="p-2 bg-white/5 rounded text-white/80">
+                    <div className="p-2 bg-white/5 rounded text-white">
                       Rooftop plant room wiring
                     </div>
-                    <div className="p-2 bg-green-500/5 rounded text-white/60">
+                    <div className="p-2 bg-green-500/5 rounded text-white">
                       Route cables internally where possible
                     </div>
-                    <div className="p-2 bg-amber-500/5 rounded text-white/60">
+                    <div className="p-2 bg-amber-500/5 rounded text-white">
                       Guardrails at roof edge, scaffold access
                     </div>
-                    <div className="p-2 bg-red-500/5 rounded text-white/60">
+                    <div className="p-2 bg-red-500/5 rounded text-white">
                       Harness to roof anchor during access
                     </div>
 
                     {/* Row 4 */}
-                    <div className="p-2 bg-white/5 rounded text-white/80">
+                    <div className="p-2 bg-white/5 rounded text-white">
                       Solar PV array wiring
                     </div>
-                    <div className="p-2 bg-green-500/5 rounded text-white/60">
+                    <div className="p-2 bg-green-500/5 rounded text-white">
                       Pre-wire at ground level
                     </div>
-                    <div className="p-2 bg-amber-500/5 rounded text-white/60">
+                    <div className="p-2 bg-amber-500/5 rounded text-white">
                       Edge protection + walkway system
                     </div>
-                    <div className="p-2 bg-red-500/5 rounded text-white/60">
+                    <div className="p-2 bg-red-500/5 rounded text-white">
                       Harness + SRL to ridge anchor
                     </div>
 
                     {/* Row 5 */}
-                    <div className="p-2 bg-white/5 rounded text-white/80">Smoke detector test</div>
-                    <div className="p-2 bg-green-500/5 rounded text-white/60">
+                    <div className="p-2 bg-white/5 rounded text-white">Smoke detector test</div>
+                    <div className="p-2 bg-green-500/5 rounded text-white">
                       Telescopic test pole from ground
                     </div>
-                    <div className="p-2 bg-amber-500/5 rounded text-white/60">
+                    <div className="p-2 bg-amber-500/5 rounded text-white">
                       N/A if telescopic pole used
                     </div>
-                    <div className="p-2 bg-red-500/5 rounded text-white/60">N/A</div>
+                    <div className="p-2 bg-red-500/5 rounded text-white">N/A</div>
                   </div>
                 </div>
-                <p className="text-[10px] text-white/40 mt-2 sm:hidden">
+                <p className="text-[10px] text-white mt-2 sm:hidden">
                   &larr; Scroll to view full table &rarr;
                 </p>
               </div>
@@ -1096,11 +1096,11 @@ export default function WorkingAtHeightModule1Section4() {
                   <HardHat className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">When Ladders Are Acceptable</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Ladders remain a common and sometimes appropriate piece of work at height
                   equipment, but only when the risk assessment confirms that:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -1150,7 +1150,7 @@ export default function WorkingAtHeightModule1Section4() {
           </h2>
           <div className="border-l-2 border-green-500/50 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -1222,7 +1222,7 @@ export default function WorkingAtHeightModule1Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1236,7 +1236,7 @@ export default function WorkingAtHeightModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-1-section-3">

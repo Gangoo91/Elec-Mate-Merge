@@ -266,7 +266,7 @@ const HNCModule8Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section3">
@@ -286,7 +286,7 @@ const HNCModule8Section3_2 = () => {
             <span>Module 8.3.2</span>
           </div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">DX Systems</h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Direct expansion air conditioning: split systems, multi-split, VRF/VRV technology and
             electrical requirements
           </p>
@@ -631,7 +631,7 @@ const HNCModule8Section3_2 = () => {
                   air
                 </li>
               </ul>
-              <p className="text-sm text-white/70 mt-3">
+              <p className="text-sm text-white mt-3">
                 Typical seasonal efficiency: SEER 6-8 (cooling), SCOP 4-5 (heating) for modern
                 systems.
               </p>
@@ -773,7 +773,7 @@ const HNCModule8Section3_2 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">VRF Piping Limitations</p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-xs font-medium text-white/70 mb-1">
+                  <p className="text-xs font-medium text-white mb-1">
                     Maximum Lengths (typical)
                   </p>
                   <ul className="text-sm text-white space-y-1">
@@ -783,7 +783,7 @@ const HNCModule8Section3_2 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-white/70 mb-1">
+                  <p className="text-xs font-medium text-white mb-1">
                     Height Differences (typical)
                   </p>
                   <ul className="text-sm text-white space-y-1">
@@ -793,7 +793,7 @@ const HNCModule8Section3_2 = () => {
                   </ul>
                 </div>
               </div>
-              <p className="text-xs text-white/60 mt-3">
+              <p className="text-xs text-white mt-3">
                 Note: Exact limits vary by manufacturer and system model - always consult specific
                 documentation.
               </p>
@@ -942,7 +942,7 @@ const HNCModule8Section3_2 = () => {
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-xs font-medium text-white/70 mb-1">Pre-Start Checks</p>
+                  <p className="text-xs font-medium text-white mb-1">Pre-Start Checks</p>
                   <ul className="text-sm text-white space-y-1">
                     <li>• Verify pipe pressure test records</li>
                     <li>• Confirm vacuum test completed</li>
@@ -952,7 +952,7 @@ const HNCModule8Section3_2 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-white/70 mb-1">Operational Tests</p>
+                  <p className="text-xs font-medium text-white mb-1">Operational Tests</p>
                   <ul className="text-sm text-white space-y-1">
                     <li>• Measure compressor current</li>
                     <li>• Verify superheat (5-10K typical)</li>
@@ -1018,7 +1018,7 @@ const HNCModule8Section3_2 = () => {
                 current of 12.5A and inrush current of 35A. Specify the electrical supply
                 requirements.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Operating current: 12.5A at 230V</p>
                 <p>Inrush current: 35A (inverter soft-start)</p>
                 <p className="mt-2">MCB selection:</p>
@@ -1043,17 +1043,17 @@ const HNCModule8Section3_2 = () => {
                 19.05mm suction line beyond the factory allowance. Calculate additional refrigerant
                 charge if the liquid line requires 90g/m.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Liquid line additional length: 85m</p>
                 <p>Charge rate for 9.52mm: 90 g/m</p>
                 <p className="mt-2">Additional charge calculation:</p>
                 <p>
                   Additional charge = 85m × 90 g/m = <strong>7,650g = 7.65 kg</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Note: Suction line length typically does not require
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   additional charge in most manufacturer calculations.
                 </p>
                 <p className="mt-2 text-green-400">→ Add 7.65 kg R410A to factory pre-charge</p>
@@ -1068,7 +1068,7 @@ const HNCModule8Section3_2 = () => {
                 <strong>Question:</strong> A 56kW VRF outdoor unit operates at 0.97 power factor on
                 400V three-phase. Calculate the line current and select appropriate protection.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using: P = √3 × VL × IL × cos φ</p>
                 <p className="mt-2">Rearranging: IL = P / (√3 × VL × cos φ)</p>
                 <p>IL = 56,000 / (1.732 × 400 × 0.97)</p>
@@ -1174,7 +1174,7 @@ const HNCModule8Section3_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1220,7 +1220,7 @@ const HNCModule8Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section3">

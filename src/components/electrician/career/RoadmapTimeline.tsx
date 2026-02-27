@@ -152,7 +152,7 @@ export const RoadmapTimeline: React.FC = () => {
                     <step.icon
                       className={cn(
                         'h-4 w-4 transition-colors',
-                        isActive ? stepStyles.icon : 'text-white/40'
+                        isActive ? stepStyles.icon : 'text-white'
                       )}
                     />
                   )}
@@ -162,7 +162,7 @@ export const RoadmapTimeline: React.FC = () => {
                 <span
                   className={cn(
                     'text-xs font-medium mt-2 transition-colors',
-                    isActive ? 'text-white' : 'text-white/40'
+                    isActive ? 'text-white' : 'text-white'
                   )}
                 >
                   {step.label}
@@ -187,14 +187,14 @@ export const RoadmapTimeline: React.FC = () => {
             {currentStep.items.map((item, index) => (
               <div key={index} className="flex items-start gap-3 py-2">
                 <div className={cn('w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0', styles.dot)} />
-                <span className="text-sm text-white/70">{item}</span>
+                <span className="text-sm text-white">{item}</span>
               </div>
             ))}
           </motion.div>
         </AnimatePresence>
 
         {/* Swipe Hint */}
-        <p className="text-center text-[11px] text-white/30 mt-3 sm:hidden">Swipe to navigate</p>
+        <p className="text-center text-[11px] text-white mt-3 sm:hidden">Swipe to navigate</p>
       </div>
     </motion.div>
   );

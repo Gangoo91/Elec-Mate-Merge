@@ -236,7 +236,7 @@ export default function Module7Section6_5() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -254,13 +254,13 @@ export default function Module7Section6_5() {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 7</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.5</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.5</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Following Up with Re-Testing or Certification (Awareness)
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Understanding retesting requirements and certification processes following fault
               rectification under supervision
             </p>
@@ -272,7 +272,7 @@ export default function Module7Section6_5() {
               <ClipboardCheck className="w-5 h-5 text-elec-yellow" />
               In 30 Seconds
             </h2>
-            <ul className="space-y-2 text-white/80 text-sm sm:text-base">
+            <ul className="space-y-2 text-white text-sm sm:text-base">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow mt-1">•</span>
                 <span>Always retest after repairs to prove faults are eliminated</span>
@@ -294,7 +294,7 @@ export default function Module7Section6_5() {
 
           {/* Introduction */}
           <section className="mb-10">
-            <p className="text-white/80 text-base sm:text-lg leading-relaxed">
+            <p className="text-white text-base sm:text-lg leading-relaxed">
               Finding and rectifying a fault is not the final step in the process. Every repair must
               be proven safe by retesting, and in some cases, certification updates are required to
               record the change. This ensures compliance with BS 7671 and provides documented
@@ -310,7 +310,7 @@ export default function Module7Section6_5() {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <p className="text-white/80 mb-4">
+            <p className="text-white mb-4">
               By the end of this subsection, you should be able to:
             </p>
             <div className="space-y-3">
@@ -320,7 +320,7 @@ export default function Module7Section6_5() {
                   <span className="text-white font-medium block">
                     Explain why follow-up testing is required after fault rectification
                   </span>
-                  <span className="text-white/60 text-sm">
+                  <span className="text-white text-sm">
                     Understand the critical role of verification in proving repairs
                   </span>
                 </div>
@@ -331,7 +331,7 @@ export default function Module7Section6_5() {
                   <span className="text-white font-medium block">
                     Describe the role of certification in electrical work
                   </span>
-                  <span className="text-white/60 text-sm">
+                  <span className="text-white text-sm">
                     Appreciate legal documentation and compliance requirements
                   </span>
                 </div>
@@ -342,7 +342,7 @@ export default function Module7Section6_5() {
                   <span className="text-white font-medium block">
                     Recognise the apprentice's part in supporting these processes under supervision
                   </span>
-                  <span className="text-white/60 text-sm">
+                  <span className="text-white text-sm">
                     Know boundaries and responsibilities in professional practice
                   </span>
                 </div>
@@ -356,7 +356,7 @@ export default function Module7Section6_5() {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               The Purpose of Retesting
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 After any fault repair, the circuit must be retested to prove that the fault has
                 been eliminated and that no new defects have been introduced. For example, if a
@@ -415,7 +415,7 @@ export default function Module7Section6_5() {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Certification Requirements
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 In many cases, test results form part of formal certification. If faults are
                 identified and corrected during initial verification, the corrected results are
@@ -472,7 +472,7 @@ export default function Module7Section6_5() {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               The Apprentice's Role in Follow-Up
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 At Level 2, apprentices support the process rather than taking full responsibility.
                 You may carry out the physical retests under supervision, record the values, and
@@ -484,7 +484,7 @@ export default function Module7Section6_5() {
               <div className="grid gap-4">
                 <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
                   <p className="font-semibold text-green-400 mb-2">What Apprentices Can Do:</p>
-                  <ul className="space-y-1.5 text-sm text-white/80">
+                  <ul className="space-y-1.5 text-sm text-white">
                     <li>• Carry out physical retests under direct supervision</li>
                     <li>• Record test values accurately and legibly</li>
                     <li>• Assist with updating test schedules and documentation</li>
@@ -496,7 +496,7 @@ export default function Module7Section6_5() {
 
                 <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
                   <p className="font-semibold text-red-400 mb-2">What Apprentices Must NOT Do:</p>
-                  <ul className="space-y-1.5 text-sm text-white/80">
+                  <ul className="space-y-1.5 text-sm text-white">
                     <li>• Sign or certify test results as valid</li>
                     <li>• Take independent responsibility for verification</li>
                     <li>• Issue certificates to clients or building control</li>
@@ -529,7 +529,7 @@ export default function Module7Section6_5() {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Professionalism and Accountability
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Retesting and certification are not just technical exercises; they are matters of
                 legal compliance and professional reputation. If faults are repaired but not
@@ -585,7 +585,7 @@ export default function Module7Section6_5() {
                   <TestTube className="w-5 h-5 text-elec-yellow" />
                   <h3 className="font-semibold text-white">Essential Testing Actions</h3>
                 </div>
-                <ul className="space-y-2 text-white/80 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow mt-1">•</span>
                     <span>
@@ -623,7 +623,7 @@ export default function Module7Section6_5() {
                   <ClipboardCheck className="w-5 h-5 text-green-400" />
                   <h3 className="font-semibold text-white">Documentation Support</h3>
                 </div>
-                <ul className="space-y-2 text-white/80 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start gap-2">
                     <span className="text-green-400 mt-1">•</span>
                     <span>
@@ -661,7 +661,7 @@ export default function Module7Section6_5() {
                   <CheckCircle className="w-5 h-5 text-elec-yellow" />
                   <h3 className="font-semibold text-white">Professional Development</h3>
                 </div>
-                <ul className="space-y-2 text-white/80 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow mt-1">•</span>
                     <span>
@@ -709,7 +709,7 @@ export default function Module7Section6_5() {
                   <CheckCircle className="w-5 h-5 text-elec-yellow" />
                   <h3 className="font-semibold text-white">Domestic Rewire Success Story</h3>
                 </div>
-                <div className="space-y-3 text-white/80 text-sm">
+                <div className="space-y-3 text-white text-sm">
                   <p>
                     <strong className="text-white">Situation:</strong> During testing on a domestic
                     rewire, a ring final circuit showed an open circuit on the CPC (earth
@@ -749,7 +749,7 @@ export default function Module7Section6_5() {
                   <AlertTriangle className="w-5 h-5 text-red-400" />
                   <h3 className="font-semibold text-white">Documentation Failure Consequences</h3>
                 </div>
-                <div className="space-y-3 text-white/80 text-sm">
+                <div className="space-y-3 text-white text-sm">
                   <p>
                     <strong className="text-white">Situation:</strong> A periodic inspection (EICR)
                     identified low insulation resistance on a lighting circuit in a commercial
@@ -802,7 +802,7 @@ export default function Module7Section6_5() {
                   className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50"
                 >
                   <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                  <p className="text-white/80 text-sm">{faq.answer}</p>
+                  <p className="text-white text-sm">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -814,7 +814,7 @@ export default function Module7Section6_5() {
               <span className="text-elec-yellow/80 text-sm font-normal">09</span>
               Recap
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Following up with re-testing and certification ensures that repaired faults are
                 proven safe, compliant, and fully documented. This critical final step transforms
@@ -904,7 +904,7 @@ export default function Module7Section6_5() {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../6-4">

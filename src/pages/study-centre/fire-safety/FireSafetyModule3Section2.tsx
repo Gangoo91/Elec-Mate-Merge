@@ -204,7 +204,7 @@ export default function FireSafetyModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-3">
@@ -227,7 +227,7 @@ export default function FireSafetyModule3Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Fire Detection Systems
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             System types, detector technologies, BS 5839 Part 1 categories, design principles,
             installation standards, commissioning, and the maintenance and testing regime
           </p>
@@ -300,7 +300,7 @@ export default function FireSafetyModule3Section2() {
             <div className="grid sm:grid-cols-3 gap-4">
               <div className="rounded-lg border border-rose-500/30 bg-rose-500/5 p-4">
                 <p className="text-sm font-semibold text-rose-300 mb-2">Conventional</p>
-                <ul className="text-xs text-white/70 space-y-1.5">
+                <ul className="text-xs text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>Zone identification only</span>
@@ -321,7 +321,7 @@ export default function FireSafetyModule3Section2() {
               </div>
               <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 p-4">
                 <p className="text-sm font-semibold text-amber-300 mb-2">Addressable</p>
-                <ul className="text-xs text-white/70 space-y-1.5">
+                <ul className="text-xs text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-amber-400" />
                     <span>Individual detector identification</span>
@@ -342,7 +342,7 @@ export default function FireSafetyModule3Section2() {
               </div>
               <div className="rounded-lg border border-green-500/30 bg-green-500/5 p-4">
                 <p className="text-sm font-semibold text-green-300 mb-2">Analogue-Addressable</p>
-                <ul className="text-xs text-white/70 space-y-1.5">
+                <ul className="text-xs text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>Continuous analogue values</span>
@@ -394,7 +394,7 @@ export default function FireSafetyModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Every Second Counts</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Smoke can fill a room in <strong className="text-white">2&ndash;3 minutes</strong>
                   . In a building fire, the time between ignition and conditions becoming
                   unsurvivable can be extraordinarily short. Fire detection systems buy critical
@@ -415,7 +415,7 @@ export default function FireSafetyModule3Section2() {
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-semibold text-white">Detection</p>
-                      <p className="text-xs text-white/60 mt-0.5">
+                      <p className="text-xs text-white mt-0.5">
                         Automatic detector or manual call point activates
                       </p>
                     </div>
@@ -426,7 +426,7 @@ export default function FireSafetyModule3Section2() {
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-semibold text-white">Alarm</p>
-                      <p className="text-xs text-white/60 mt-0.5">
+                      <p className="text-xs text-white mt-0.5">
                         Sounders and visual alarm devices activate throughout the building
                       </p>
                     </div>
@@ -437,7 +437,7 @@ export default function FireSafetyModule3Section2() {
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-semibold text-white">Evacuation</p>
-                      <p className="text-xs text-white/60 mt-0.5">
+                      <p className="text-xs text-white mt-0.5">
                         Occupants evacuate via designated escape routes to assembly points
                       </p>
                     </div>
@@ -448,7 +448,7 @@ export default function FireSafetyModule3Section2() {
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-semibold text-white">Fire Service</p>
-                      <p className="text-xs text-white/60 mt-0.5">
+                      <p className="text-xs text-white mt-0.5">
                         Signal transmitted to monitoring centre &rarr; fire service dispatched
                       </p>
                     </div>
@@ -458,7 +458,7 @@ export default function FireSafetyModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Automatic vs Manual Detection</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -520,7 +520,7 @@ export default function FireSafetyModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">How Conventional Systems Work</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -565,7 +565,7 @@ export default function FireSafetyModule3Section2() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <p className="text-xs font-semibold text-green-400 mb-2">Advantages</p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>Simple design and installation</span>
@@ -586,7 +586,7 @@ export default function FireSafetyModule3Section2() {
                   </div>
                   <div>
                     <p className="text-xs font-semibold text-red-400 mb-2">Limitations</p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                         <span>No individual detector identification</span>
@@ -640,7 +640,7 @@ export default function FireSafetyModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">How Addressable Systems Work</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -715,7 +715,7 @@ export default function FireSafetyModule3Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   How Analogue-Addressable Systems Work
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -776,7 +776,7 @@ export default function FireSafetyModule3Section2() {
                     Why Analogue-Addressable is the Standard
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The combination of continuous monitoring, intelligent alarm decisions, drift
                   compensation, pre-alarm capability, and day/night flexibility means
                   analogue-addressable systems deliver
@@ -814,12 +814,12 @@ export default function FireSafetyModule3Section2() {
                     <Eye className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-white">Optical Smoke Detectors</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     The most common type of smoke detector in modern installations. They operate on
                     the
                     <strong className="text-white"> light scatter principle</strong>:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>An LED emits a beam of light inside a sealed sensing chamber</span>
@@ -858,7 +858,7 @@ export default function FireSafetyModule3Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     Ionisation Smoke Detectors (Rarely Used)
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
@@ -888,7 +888,7 @@ export default function FireSafetyModule3Section2() {
                     <Thermometer className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-white">Heat Detectors</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
@@ -920,7 +920,7 @@ export default function FireSafetyModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Multi-Sensor Detectors</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
@@ -954,7 +954,7 @@ export default function FireSafetyModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Specialist Detector Types</p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
@@ -1038,7 +1038,7 @@ export default function FireSafetyModule3Section2() {
                     <p className="text-sm font-semibold text-rose-300">
                       L1 &mdash; Full Coverage (All Areas)
                     </p>
-                    <p className="text-xs text-white/70 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Automatic fire detection installed throughout all areas of the building,
                       including roof voids, ceiling voids, and floor voids. Provides the highest
                       level of life safety. Typically required for sleeping risk premises (care
@@ -1049,7 +1049,7 @@ export default function FireSafetyModule3Section2() {
                     <p className="text-sm font-semibold text-rose-300">
                       L2 &mdash; Escape Routes + High Fire Risk Areas
                     </p>
-                    <p className="text-xs text-white/70 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Detection in all escape routes plus any areas that present a high fire risk or
                       open onto escape routes. Goes beyond just escape route protection. The
                       specific areas covered are determined by the fire risk assessment.
@@ -1059,7 +1059,7 @@ export default function FireSafetyModule3Section2() {
                     <p className="text-sm font-semibold text-rose-300">
                       L3 &mdash; Escape Routes Only
                     </p>
-                    <p className="text-xs text-white/70 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Detection only within escape routes (corridors, stairwells, lobbies) to give
                       early warning that an escape route may be compromised by smoke or fire. Does
                       not detect fires in rooms until smoke reaches the escape route.
@@ -1069,7 +1069,7 @@ export default function FireSafetyModule3Section2() {
                     <p className="text-sm font-semibold text-rose-300">
                       L4 &mdash; Within Escape Routes Only
                     </p>
-                    <p className="text-xs text-white/70 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Detection only within the circulation areas that form escape routes. Similar
                       to L3 but with a more limited scope, typically used where the risk assessment
                       shows that fires are unlikely to develop rapidly.
@@ -1079,7 +1079,7 @@ export default function FireSafetyModule3Section2() {
                     <p className="text-sm font-semibold text-rose-300">
                       L5 &mdash; Engineered System
                     </p>
-                    <p className="text-xs text-white/70 mt-1">
+                    <p className="text-xs text-white mt-1">
                       A bespoke system designed to a specific fire engineering strategy. Coverage is
                       determined by fire engineering analysis rather than prescriptive category
                       rules. Used in complex buildings where standard categories do not provide the
@@ -1098,7 +1098,7 @@ export default function FireSafetyModule3Section2() {
                     <p className="text-sm font-semibold text-amber-300">
                       P1 &mdash; Full Property Protection
                     </p>
-                    <p className="text-xs text-white/70 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Automatic fire detection throughout all areas for the purpose of protecting
                       the building and its contents. Often specified by insurers to minimise damage
                       and business interruption. Detection coverage mirrors L1 but the primary
@@ -1109,7 +1109,7 @@ export default function FireSafetyModule3Section2() {
                     <p className="text-sm font-semibold text-amber-300">
                       P2 &mdash; Specific Areas Only
                     </p>
-                    <p className="text-xs text-white/70 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Detection in specific areas identified as high value or high risk by the fire
                       risk assessment or insurance requirements. Does not require full building
                       coverage. Areas typically include server rooms, archive stores, high-value
@@ -1127,7 +1127,7 @@ export default function FireSafetyModule3Section2() {
                   <p className="text-sm font-semibold text-white">
                     M &mdash; Manual Call Points Only
                   </p>
-                  <p className="text-xs text-white/70 mt-1">
+                  <p className="text-xs text-white mt-1">
                     No automatic detection. The system consists of manual call points (break glass
                     units) only, positioned at exits and on escape routes. Relies entirely on human
                     discovery and manual activation of the alarm. Used where automatic detection is
@@ -1176,7 +1176,7 @@ export default function FireSafetyModule3Section2() {
                   <Settings className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-white">Detector Siting Rules</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1219,7 +1219,7 @@ export default function FireSafetyModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Cabling Requirements</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1266,7 +1266,7 @@ export default function FireSafetyModule3Section2() {
                   <ClipboardCheck className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-white">Commissioning</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1347,7 +1347,7 @@ export default function FireSafetyModule3Section2() {
                       </span>
                       <div className="flex-1">
                         <p className="text-sm text-white font-medium">Alarm Test</p>
-                        <p className="text-xs text-white/70 mt-0.5">
+                        <p className="text-xs text-white mt-0.5">
                           Activate the system using a{' '}
                           <strong className="text-white">
                             different manual call point each week
@@ -1367,7 +1367,7 @@ export default function FireSafetyModule3Section2() {
                       </span>
                       <div className="flex-1">
                         <p className="text-sm text-white font-medium">Visual Inspection</p>
-                        <p className="text-xs text-white/70 mt-0.5">
+                        <p className="text-xs text-white mt-0.5">
                           Visual inspection of all detectors, call points, sounders, and the control
                           panel. Check that no devices are obstructed, damaged, painted over, or
                           missing. Confirm all indicator LEDs are functioning. Check the panel for
@@ -1385,7 +1385,7 @@ export default function FireSafetyModule3Section2() {
                         <p className="text-sm text-white font-medium">
                           25% Detector Functional Test
                         </p>
-                        <p className="text-xs text-white/70 mt-0.5">
+                        <p className="text-xs text-white mt-0.5">
                           Functionally test{' '}
                           <strong className="text-white">25% of all detectors</strong> each quarter
                           (ensuring 100% are tested within the year). This involves applying test
@@ -1404,7 +1404,7 @@ export default function FireSafetyModule3Section2() {
                         <p className="text-sm text-white font-medium">
                           Full System Test &amp; Inspection
                         </p>
-                        <p className="text-xs text-white/70 mt-0.5">
+                        <p className="text-xs text-white mt-0.5">
                           Comprehensive test of the entire system.{' '}
                           <strong className="text-white">All detectors functionally tested</strong>,
                           all call points tested, all sounders and visual alarm devices confirmed,
@@ -1423,7 +1423,7 @@ export default function FireSafetyModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Record Keeping is Mandatory</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   All test results, maintenance activities, faults, and remedial actions must be
                   recorded in the <strong className="text-white">fire alarm log book</strong>. This
                   log book is a legal document that may be inspected by the fire and rescue service,
@@ -1437,7 +1437,7 @@ export default function FireSafetyModule3Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Who Can Carry Out Maintenance?
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1493,12 +1493,12 @@ export default function FireSafetyModule3Section2() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/10">
-                    <th className="text-left text-white/60 py-2 pr-3 font-medium">Frequency</th>
-                    <th className="text-left text-white/60 py-2 pr-3 font-medium">Activity</th>
-                    <th className="text-left text-white/60 py-2 font-medium">Carried Out By</th>
+                    <th className="text-left text-white py-2 pr-3 font-medium">Frequency</th>
+                    <th className="text-left text-white py-2 pr-3 font-medium">Activity</th>
+                    <th className="text-left text-white py-2 font-medium">Carried Out By</th>
                   </tr>
                 </thead>
-                <tbody className="text-white/80">
+                <tbody className="text-white">
                   <tr className="border-b border-white/5">
                     <td className="py-2 pr-3 font-medium text-white">Weekly</td>
                     <td className="py-2 pr-3">Alarm test &mdash; different call point each week</td>
@@ -1536,7 +1536,7 @@ export default function FireSafetyModule3Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1550,7 +1550,7 @@ export default function FireSafetyModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-3-section-1">

@@ -235,13 +235,13 @@ export default function CdmRegulationsModule4Section3() {
           </div>
           <div className="inline-block bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-full text-sm font-semibold mb-4 ml-0">
             <span className="text-blue-400">MODULE 4</span>
-            <span className="text-white/40 mx-2">&middot;</span>
-            <span className="text-white/60">SECTION 3</span>
+            <span className="text-white mx-2">&middot;</span>
+            <span className="text-white">SECTION 3</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Buildability &amp; Maintainability
           </h1>
-          <p className="text-white/70 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Designing for safe construction, safe maintenance, safe cleaning, and eventual
             demolition &mdash; considering the whole lifecycle of the structure from build through
             to end of life
@@ -252,7 +252,7 @@ export default function CdmRegulationsModule4Section3() {
         <div className="grid sm:grid-cols-2 gap-4 mb-10">
           <div className="rounded-lg p-4 bg-blue-500/5 border-l-2 border-blue-500/50">
             <p className="font-semibold text-blue-400 mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -286,7 +286,7 @@ export default function CdmRegulationsModule4Section3() {
           </div>
           <div className="rounded-lg p-4 bg-blue-500/5 border-l-2 border-blue-500/50">
             <p className="font-semibold text-blue-400/90 mb-2">Key Facts</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -322,7 +322,7 @@ export default function CdmRegulationsModule4Section3() {
         {/* Learning Outcomes */}
         <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4">By the end of this section, you will be able to:</p>
+          <p className="text-white mb-4">By the end of this section, you will be able to:</p>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
               "Define buildability and explain its origins in CIRIA's 1983 definition and its legal basis under CDM 2015 Regulation 9",
@@ -336,7 +336,7 @@ export default function CdmRegulationsModule4Section3() {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-blue-400/70 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </div>
             ))}
           </div>
@@ -349,7 +349,7 @@ export default function CdmRegulationsModule4Section3() {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-2">
             Quick-Check Questions
           </h2>
-          <p className="text-white/60 text-sm mb-4">
+          <p className="text-white text-sm mb-4">
             These quick checks appear throughout the section to test your understanding as you read.
             You can attempt them now or return to them after studying the content.
           </p>
@@ -364,7 +364,7 @@ export default function CdmRegulationsModule4Section3() {
               <span className="text-blue-400/80 text-sm font-normal">01</span>
               What Is Buildability?
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">Buildability</strong> is the extent to which the
                 design of a building facilitates safe and efficient construction. The concept was
@@ -404,7 +404,7 @@ export default function CdmRegulationsModule4Section3() {
 
               <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-blue-400">Common Buildability Failures</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -448,7 +448,7 @@ export default function CdmRegulationsModule4Section3() {
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-start gap-2">
                   <AlertTriangle className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     <strong className="text-blue-400">Key Principle:</strong> Buildability is about
                     designing for the <strong className="text-white">process</strong> of
                     construction, not just the <strong className="text-white">product</strong>. The
@@ -471,7 +471,7 @@ export default function CdmRegulationsModule4Section3() {
               <span className="text-blue-400/80 text-sm font-normal">02</span>
               The Whole-Life Approach
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 CDM 2015 fundamentally changed the way designers must think about their work by
                 requiring a <strong className="text-white">whole-life approach</strong> to design.
@@ -497,7 +497,7 @@ export default function CdmRegulationsModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-blue-300 font-medium mb-3">Who Must the Designer Consider?</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -553,11 +553,11 @@ export default function CdmRegulationsModule4Section3() {
 
               <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-blue-400">The Regulation 9 Hierarchy</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   For each phase of the lifecycle, designers must apply the same hierarchy of risk
                   control:
                 </p>
-                <ol className="text-white/70 space-y-2 text-sm list-decimal list-inside">
+                <ol className="text-white space-y-2 text-sm list-decimal list-inside">
                   <li>
                     <strong className="text-white">Eliminate</strong> &mdash; design out the hazard
                     entirely (the preferred option)
@@ -588,7 +588,7 @@ export default function CdmRegulationsModule4Section3() {
               <span className="text-blue-400/80 text-sm font-normal">03</span>
               Designing for Safe Construction
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Designing for safe construction means making deliberate design choices that
                 eliminate or reduce the hazards workers will face during the construction process.
@@ -604,12 +604,12 @@ export default function CdmRegulationsModule4Section3() {
                 <h3 className="text-blue-300 font-medium mb-3">
                   Pre-fabrication &amp; Offsite Manufacture
                 </h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   One of the most powerful buildability strategies is to move work away from the
                   hazardous construction site environment into a controlled factory setting.
                   Pre-fabrication and offsite manufacture offer significant safety benefits:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -643,7 +643,7 @@ export default function CdmRegulationsModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-blue-300 font-medium mb-3">Standardised Components</h3>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Using consistent, repeatable details and dimensions throughout a design improves
                   safety because workers can develop familiar, safe routines. A consistent
                   floor-to-floor height means formwork and scaffolding can be reused in a standard
@@ -659,12 +659,12 @@ export default function CdmRegulationsModule4Section3() {
                 <h3 className="text-blue-300 font-medium mb-3">
                   Reducing Work at Height Through Design
                 </h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Falls from height remain the single largest cause of fatal injuries in the UK
                   construction industry. Designers can significantly reduce this risk through design
                   choices:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -718,7 +718,7 @@ export default function CdmRegulationsModule4Section3() {
               <span className="text-blue-400/80 text-sm font-normal">04</span>
               Designing for Safe Maintenance
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 A building&rsquo;s construction phase typically lasts one to three years. Its
                 operational life &mdash; during which it must be maintained, repaired, and serviced
@@ -732,11 +732,11 @@ export default function CdmRegulationsModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-blue-300 font-medium mb-3">Permanent Safe Access</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Designers must provide permanent, designed-in safe access to all areas that will
                   require regular maintenance:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -775,12 +775,12 @@ export default function CdmRegulationsModule4Section3() {
 
               <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-blue-400">Fall Protection in Design</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Designers should incorporate fall protection as a permanent feature of the
                   building fabric, not rely on temporary measures brought in by maintenance
                   contractors:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -846,7 +846,7 @@ export default function CdmRegulationsModule4Section3() {
               <span className="text-blue-400/80 text-sm font-normal">05</span>
               Designing for Safe Cleaning
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Cleaning &mdash; particularly glazing at height &mdash; is one of the most hazardous
                 routine maintenance activities. Every building with external glazing will require
@@ -863,12 +863,12 @@ export default function CdmRegulationsModule4Section3() {
                 <h3 className="text-blue-300 font-medium mb-3">
                   BS 8213-1: Designing Windows for Safe Cleaning
                 </h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   <strong className="text-white">BS 8213-1</strong> provides comprehensive guidance
                   on designing windows, doors, and rooflights for safety during use and cleaning.
                   Key provisions include:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -902,12 +902,12 @@ export default function CdmRegulationsModule4Section3() {
                 <h3 className="text-blue-300 font-medium mb-3">
                   Permanently Installed Cleaning Systems
                 </h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   For buildings where window cleaning from inside is not practicable &mdash;
                   typically high-rise buildings with curtain wall facades &mdash; the designer
                   should specify permanently installed cleaning systems:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -967,7 +967,7 @@ export default function CdmRegulationsModule4Section3() {
               <span className="text-blue-400/80 text-sm font-normal">06</span>
               Designing for Demolition
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 It may seem counterintuitive to think about demolishing a building before it has
                 even been built, but CDM 2015 requires exactly this. Regulation 9 requires designers
@@ -992,7 +992,7 @@ export default function CdmRegulationsModule4Section3() {
                 <h3 className="text-blue-300 font-medium mb-3">
                   Key Demolition Considerations for Designers
                 </h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1053,7 +1053,7 @@ export default function CdmRegulationsModule4Section3() {
               <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
                 <div className="flex items-start gap-2">
                   <AlertTriangle className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     <strong className="text-blue-400">Critical Point:</strong> Pre-stressed concrete
                     elements contain high-tension steel tendons that can release catastrophic energy
                     if cut without proper precautions. Several fatal incidents in the UK have
@@ -1079,7 +1079,7 @@ export default function CdmRegulationsModule4Section3() {
               <span className="text-blue-400/80 text-sm font-normal">07</span>
               The Health and Safety File
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The <strong className="text-white">Health and Safety File</strong> is the mechanism
                 by which buildability and maintainability information is preserved and communicated
@@ -1094,7 +1094,7 @@ export default function CdmRegulationsModule4Section3() {
                 <h3 className="text-blue-300 font-medium mb-3">
                   What Must the Health and Safety File Include?
                 </h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1165,7 +1165,7 @@ export default function CdmRegulationsModule4Section3() {
 
               <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-blue-400">A Living Document</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The Health and Safety File is not a static document that is produced at handover
                   and then forgotten. It must be{' '}
                   <strong className="text-white">updated whenever significant alterations</strong>{' '}
@@ -1189,7 +1189,7 @@ export default function CdmRegulationsModule4Section3() {
               <span className="text-blue-400/80 text-sm font-normal">08</span>
               Case Studies &amp; Practical Application
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The following case studies illustrate how buildability and maintainability
                 principles apply in real-world design situations. Each case demonstrates both good
@@ -1204,7 +1204,7 @@ export default function CdmRegulationsModule4Section3() {
                     Case Study 1: School Roof Access Design
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   A new secondary school was designed with rooftop air handling units (AHUs), solar
                   PV panels, and a green roof area. The original design provided roof access via an
                   external vertical ladder fixed to the building&rsquo;s rear elevation &mdash; a
@@ -1212,10 +1212,10 @@ export default function CdmRegulationsModule4Section3() {
                   an exposed ladder at height every time they serviced the AHUs (quarterly),
                   inspected the PV panels (annually), or maintained the green roof (seasonally).
                 </p>
-                <p className="text-sm text-white/70 mb-2">
+                <p className="text-sm text-white mb-2">
                   <strong>The CDM Intervention:</strong>
                 </p>
-                <ul className="space-y-1.5 text-sm text-white/70">
+                <ul className="space-y-1.5 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-blue-400" />
                     <span>
@@ -1248,7 +1248,7 @@ export default function CdmRegulationsModule4Section3() {
                     </span>
                   </li>
                 </ul>
-                <p className="text-xs text-white/50 mt-3">
+                <p className="text-xs text-white mt-3">
                   <strong>Lesson:</strong> Permanent safe access is almost always more
                   cost-effective than temporary access over the building&rsquo;s life. The
                   designer&rsquo;s CDM duty is to eliminate the hazard (climbing an exposed ladder)
@@ -1264,7 +1264,7 @@ export default function CdmRegulationsModule4Section3() {
                     Case Study 2: Office Building Facade Cleaning System
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   A 12-storey office building was designed with a fully glazed curtain wall facade.
                   The original specification included no provision for facade cleaning access
                   &mdash; the assumption was that the facilities management company would arrange
@@ -1272,10 +1272,10 @@ export default function CdmRegulationsModule4Section3() {
                   trained rope access technicians descending the full height of the building every
                   two to four weeks for the building&rsquo;s entire operational life.
                 </p>
-                <p className="text-sm text-white/70 mb-2">
+                <p className="text-sm text-white mb-2">
                   <strong>The CDM Intervention:</strong>
                 </p>
-                <ul className="space-y-1.5 text-sm text-white/70">
+                <ul className="space-y-1.5 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-blue-400" />
                     <span>
@@ -1301,7 +1301,7 @@ export default function CdmRegulationsModule4Section3() {
                     </span>
                   </li>
                 </ul>
-                <p className="text-xs text-white/50 mt-3">
+                <p className="text-xs text-white mt-3">
                   <strong>Lesson:</strong> The design stage is the only practical opportunity to
                   incorporate permanently installed facade access systems. Retrofitting a BMU to an
                   existing building requires structural modifications to support the cradle&rsquo;s
@@ -1318,7 +1318,7 @@ export default function CdmRegulationsModule4Section3() {
                     Case Study 3: Industrial Unit with Confined Plant Room
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   A new industrial warehouse included a plant room measuring just 3.5m &times; 2.5m,
                   housing a gas-fired boiler, an air handling unit, the main LV switchboard (1.6m
                   wide), a water treatment plant, and a BMS controller. The architect had allocated
@@ -1328,10 +1328,10 @@ export default function CdmRegulationsModule4Section3() {
                   enough for one person to stand, and completely inadequate for safe operation,
                   testing, and maintenance of the electrical installation.
                 </p>
-                <p className="text-sm text-white/70 mb-2">
+                <p className="text-sm text-white mb-2">
                   <strong>Resolution:</strong>
                 </p>
-                <ul className="space-y-1.5 text-sm text-white/70">
+                <ul className="space-y-1.5 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-blue-400" />
                     <span>
@@ -1363,7 +1363,7 @@ export default function CdmRegulationsModule4Section3() {
                     </span>
                   </li>
                 </ul>
-                <p className="text-xs text-white/50 mt-3">
+                <p className="text-xs text-white mt-3">
                   <strong>Lesson:</strong> Electrical designers must advocate for adequate plant
                   room space at the design stage. The BS 7671 and Electricity at Work Regulations
                   requirements for adequate working space are not suggestions &mdash; they are legal
@@ -1383,7 +1383,7 @@ export default function CdmRegulationsModule4Section3() {
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-6 text-center">
             Whole-Life Design Consideration
           </h2>
-          <p className="text-white/60 text-sm text-center mb-6">
+          <p className="text-white text-sm text-center mb-6">
             Designers must consider every phase of the structure&rsquo;s lifecycle. Each stage
             presents unique hazards that must be addressed through design.
           </p>
@@ -1427,7 +1427,7 @@ export default function CdmRegulationsModule4Section3() {
                     <p className="text-blue-400 text-xs font-bold mb-2 text-center">{item.stage}</p>
                     {/* Stage card */}
                     <div className="bg-blue-500/5 border border-blue-500/20 rounded-lg p-3 flex-1">
-                      <p className="text-white/70 text-xs leading-relaxed">{item.note}</p>
+                      <p className="text-white text-xs leading-relaxed">{item.note}</p>
                     </div>
                   </div>
                   {/* Arrow connector */}
@@ -1443,7 +1443,7 @@ export default function CdmRegulationsModule4Section3() {
           </div>
 
           <div className="mt-4 bg-white/5 border border-white/10 rounded-lg p-3 max-w-2xl mx-auto">
-            <p className="text-white/60 text-xs text-center">
+            <p className="text-white text-xs text-center">
               The <strong className="text-white">whole-life approach</strong> requires designers to
               apply the CDM hierarchy (eliminate &rarr; reduce &rarr; inform) at{' '}
               <strong className="text-white">every phase</strong> of the structure&rsquo;s
@@ -1464,7 +1464,7 @@ export default function CdmRegulationsModule4Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1484,7 +1484,7 @@ export default function CdmRegulationsModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-4-section-2">

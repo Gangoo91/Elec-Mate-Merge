@@ -138,7 +138,7 @@ const FunctionalSkillsModule3Section1 = () => {
             to="/study-centre/apprentice/functional-skills/module3"
             className="p-2 -ml-2 touch-manipulation"
           >
-            <ArrowLeft className="w-5 h-5 text-white/60" />
+            <ArrowLeft className="w-5 h-5 text-white" />
           </Link>
           <div>
             <p className="text-[11px] font-semibold text-green-400 uppercase tracking-wider">
@@ -164,7 +164,7 @@ const FunctionalSkillsModule3Section1 = () => {
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
               Computer Basics & File Management
             </h2>
-            <p className="text-sm text-white/50 max-w-lg mx-auto">
+            <p className="text-sm text-white max-w-lg mx-auto">
               Master the essential computer skills every electrician needs — from navigating your
               operating system to organising job files, backing up certificates, and troubleshooting
               common issues on site.
@@ -187,7 +187,7 @@ const FunctionalSkillsModule3Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Operating System Navigation</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Whether you use Windows, macOS, or a Linux-based system, understanding how to navigate
               your operating system (OS) is the foundation of all digital skills. As an electrician,
@@ -229,7 +229,7 @@ const FunctionalSkillsModule3Section1 = () => {
             </p>
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Spend 10 minutes each day exploring a feature of your OS you have not used before.
                 Familiarity breeds speed — and on a busy job site, every minute saved on admin means
                 more time for the work that matters.
@@ -266,7 +266,7 @@ const FunctionalSkillsModule3Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">File Types for Electricians</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Understanding file types is crucial for working efficiently and sharing documents
               correctly. Each file extension tells your computer which application to use when
@@ -342,7 +342,7 @@ const FunctionalSkillsModule3Section1 = () => {
             </ul>
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 If you receive a file type you do not recognise, never open it blindly — it could be
                 malware. Search for the extension online to understand what it is, and only open
                 files from trusted sources. When in doubt, ask the sender to resend in a common
@@ -378,7 +378,7 @@ const FunctionalSkillsModule3Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Cloud Storage Solutions</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Cloud storage has transformed how electricians manage their files. Instead of relying
               solely on a single computer or USB drive that can be lost, stolen, or damaged, cloud
@@ -459,7 +459,7 @@ const FunctionalSkillsModule3Section1 = () => {
             </p>
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Cloud storage is not just convenient — it is a professional necessity. Electrical
                 certificates must be retained for years. If your only copy is on a laptop that gets
                 stolen from your van, you lose irreplaceable records. Cloud storage provides
@@ -482,7 +482,7 @@ const FunctionalSkillsModule3Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">File Naming Conventions</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               A consistent file naming convention is one of the simplest yet most impactful digital
               skills you can develop. When you have hundreds of certificates, photographs, and
@@ -573,7 +573,7 @@ const FunctionalSkillsModule3Section1 = () => {
             </p>
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Adopt a naming convention on day one of your apprenticeship and stick to it
                 rigorously. Your future self — and any colleagues who need to find your files — will
                 thank you. A two-minute naming discipline saves hours of searching over a career.
@@ -608,7 +608,7 @@ const FunctionalSkillsModule3Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Folder Organisation</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               A well-organised folder structure is the digital equivalent of a tidy tool bag —
               everything has its place, and you can find what you need without rummaging. For
@@ -764,7 +764,7 @@ const FunctionalSkillsModule3Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Backup Strategies</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Data loss is not a question of "if" but "when." Hard drives fail, laptops get stolen
               from vans, phones get dropped on site, and ransomware can encrypt all your files. For
@@ -853,7 +853,7 @@ const FunctionalSkillsModule3Section1 = () => {
             </p>
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Set up automatic backups today — do not wait until you lose data. The 3-2-1 rule (3
                 copies, 2 media types, 1 off-site) is simple to implement and provides comprehensive
                 protection. An hour spent setting up backups can save weeks of recreating lost work.
@@ -888,7 +888,7 @@ const FunctionalSkillsModule3Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Keyboard Shortcuts</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Keyboard shortcuts dramatically speed up your work by eliminating the need to navigate
               menus with your mouse. Learning even a handful of essential shortcuts can save you
@@ -1034,7 +1034,7 @@ const FunctionalSkillsModule3Section1 = () => {
             </ul>
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 You do not need to memorise all shortcuts at once. Start with Ctrl+S, Ctrl+C,
                 Ctrl+V, Ctrl+Z, and Ctrl+F — these five cover the vast majority of daily tasks. Once
                 they become second nature, add more to your repertoire.
@@ -1056,7 +1056,7 @@ const FunctionalSkillsModule3Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Troubleshooting Common Issues</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Every computer user encounters problems, and knowing how to troubleshoot common issues
               saves time and money. You do not need to be an IT expert — most problems have simple
@@ -1118,7 +1118,7 @@ const FunctionalSkillsModule3Section1 = () => {
             </p>
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 The universal troubleshooting step is: restart. Restarting your computer, router,
                 printer, or application resolves the majority of common issues. If restarting does
                 not help, search for the exact error message online — chances are someone else has
@@ -1135,7 +1135,7 @@ const FunctionalSkillsModule3Section1 = () => {
         <div className="flex items-center justify-between pt-6 border-t border-white/10">
           <Link
             to="/study-centre/apprentice/functional-skills/module3"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Module

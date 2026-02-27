@@ -204,7 +204,7 @@ const IpafModule2Section1 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Types of Mobile Access Towers
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding the different tower types and knowing when to use each one for safe,
             efficient working at height
           </p>
@@ -385,7 +385,7 @@ const IpafModule2Section1 = () => {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Important Limitation</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Aluminium is an excellent electrical conductor. Standard aluminium towers must{' '}
                   <strong className="text-white">never</strong> be used in locations where there is
                   any risk of contact with live electrical conductors or equipment. If you are
@@ -447,7 +447,7 @@ const IpafModule2Section1 = () => {
                 <h3 className="text-green-300 font-medium mb-2">
                   Why GRP Matters for Electricians
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   As an electrician, you will frequently work in environments where live electrical
                   equipment is present nearby — even if the specific circuit you are working on has
                   been isolated. Consider these scenarios:
@@ -536,7 +536,7 @@ const IpafModule2Section1 = () => {
 
               <div className="bg-white/5 border border-elec-yellow/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-elec-yellow">Definition: GRP</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   <strong className="text-white">Glass Reinforced Plastic (GRP)</strong> — a
                   composite material made from a polymer matrix reinforced with glass fibres. It
                   combines the strength of glass with the flexibility of plastic, producing a
@@ -661,7 +661,7 @@ const IpafModule2Section1 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-elec-yellow">Choosing the Right Width</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The decision between single and double-width should be based on a practical
                   assessment of the work area:
                 </p>
@@ -760,7 +760,7 @@ const IpafModule2Section1 = () => {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Common Mistake</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Never attempt to level a standard tower on stairs by packing under the castors or
                   base plates with bricks, blocks, or timber. This is extremely dangerous and is one
                   of the most common causes of tower collapses. Always use a purpose-built stairwell
@@ -946,7 +946,7 @@ const IpafModule2Section1 = () => {
                 <h3 className="font-semibold mb-2 text-elec-yellow">
                   Definition: Low-Level Platform
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   A <strong className="text-white">low-level work platform</strong> (sometimes
                   called a podium step or low-level access platform) is a lightweight, portable
                   working platform with a guardrail and platform height typically not exceeding 1m.
@@ -976,14 +976,14 @@ const IpafModule2Section1 = () => {
                 <div className="space-y-3 min-w-0">
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <h4 className="text-elec-yellow font-medium mb-1">Standard Aluminium Tower</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       <strong className="text-white">Use when:</strong> General work at height, no
                       electrical hazards nearby, indoor or outdoor use.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-green-400/30 p-4 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-1">GRP (Fibreglass) Tower</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       <strong className="text-white">Use when:</strong> Any risk of contact with
                       live electrical conductors or equipment. Switchrooms, substations, data
                       centres.
@@ -991,28 +991,28 @@ const IpafModule2Section1 = () => {
                   </div>
                   <div className="bg-white/5 border border-blue-400/30 p-4 rounded-lg">
                     <h4 className="text-blue-300 font-medium mb-1">Single-Width Tower</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       <strong className="text-white">Use when:</strong> Narrow spaces (corridors,
                       between racking), needs to pass through doorways, single operative.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-blue-400/30 p-4 rounded-lg">
                     <h4 className="text-blue-300 font-medium mb-1">Double-Width Tower</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       <strong className="text-white">Use when:</strong> Larger workspace needed, two
                       operatives, materials storage on platform, higher reach required.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
                     <h4 className="text-purple-300 font-medium mb-1">Stairwell Tower</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       <strong className="text-white">Use when:</strong> Working on stairs, ramps, or
                       any sloping surface where a standard tower cannot sit level.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-cyan-400/30 p-4 rounded-lg">
                     <h4 className="text-cyan-300 font-medium mb-1">Folding / Low-Level Tower</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       <strong className="text-white">Use when:</strong> Low-height tasks (under
                       2.5m), frequent repositioning, limited storage space, quick setup needed.
                     </p>
@@ -1037,7 +1037,7 @@ const IpafModule2Section1 = () => {
               <div className="space-y-4">
                 <div>
                   <h3 className="font-semibold text-white mb-2">Before You Arrive on Site</h3>
-                  <ul className="space-y-1 text-white/80">
+                  <ul className="space-y-1 text-white">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Ask about the workspace — dimensions, floor type, obstacles</span>
@@ -1062,7 +1062,7 @@ const IpafModule2Section1 = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-white mb-2">On Site Checks</h3>
-                  <ul className="space-y-1 text-white/80">
+                  <ul className="space-y-1 text-white">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Verify the floor is level and can support the tower</span>
@@ -1091,7 +1091,7 @@ const IpafModule2Section1 = () => {
                   <h3 className="font-semibold text-white mb-2">
                     Common Electrician Tasks by Tower Type
                   </h3>
-                  <ul className="space-y-1 text-white/80">
+                  <ul className="space-y-1 text-white">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1131,7 +1131,7 @@ const IpafModule2Section1 = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-white mb-2">Documentation Required</h3>
-                  <ul className="space-y-1 text-white/80">
+                  <ul className="space-y-1 text-white">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Risk assessment covering work at height</span>
@@ -1169,7 +1169,7 @@ const IpafModule2Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1185,7 +1185,7 @@ const IpafModule2Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../ipaf-module-2">

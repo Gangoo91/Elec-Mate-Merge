@@ -218,7 +218,7 @@ const HNCModule4Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section4">
@@ -240,7 +240,7 @@ const HNCModule4Section4_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Interior Lighting Calculations
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Mastering the lumen method and modern software tools for accurate lighting design
             calculations
           </p>
@@ -777,7 +777,7 @@ const HNCModule4Section4_2 = () => {
                 <strong>Brief:</strong> Calculate luminaires for a 15m × 10m office, 2.8m ceiling,
                 using 600×600 LED panels (3600 lumens each). Target 500 lux maintained.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Step 1:</strong> Room area A = 15 × 10 = 150m²
                 </p>
@@ -808,7 +808,7 @@ const HNCModule4Section4_2 = () => {
                 <p>
                   N = 75000 / 1958.4 = <strong>38.3 → 39 luminaires</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Arrange as 6 × 7 = 42 or 5 × 8 = 40 for regular spacing
                 </p>
               </div>
@@ -822,7 +822,7 @@ const HNCModule4Section4_2 = () => {
                 <strong>Question:</strong> Check if 40 luminaires (5 × 8 grid) gives acceptable
                 spacing for the above room.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Room dimensions: 15m × 10m</p>
                 <p>Luminaire grid: 5 across (15m) × 8 along (10m)</p>
                 <p className="mt-2">
@@ -855,7 +855,7 @@ const HNCModule4Section4_2 = () => {
                 <strong>Brief:</strong> Warehouse 30m × 20m × 8m mounting height. Target 200 lux.
                 LED highbays at 24,000 lumens each. Determine quantity.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Area A = 30 × 20 = 600m²</p>
                 <p>Room index K = (30 × 20) / (8 × (30 + 20))</p>
                 <p>
@@ -871,7 +871,7 @@ const HNCModule4Section4_2 = () => {
                 <p>
                   N = 120000 / 9240 = <strong>13 luminaires</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Arrange as 3 × 5 = 15 or 4 × 4 = 16 for even spacing
                 </p>
                 <p>Spacing at 15: 10m × 4m (SHR = 1.25 × 0.5)</p>
@@ -942,7 +942,7 @@ const HNCModule4Section4_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -988,7 +988,7 @@ const HNCModule4Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section4-1">

@@ -112,9 +112,9 @@ const RecentUpdatesSection = () => {
                   <h4 className="font-semibold text-white mb-1.5 text-base sm:text-lg">
                     {update.title}
                   </h4>
-                  <p className="text-sm text-white/80 mb-3 leading-relaxed">{update.description}</p>
+                  <p className="text-sm text-white mb-3 leading-relaxed">{update.description}</p>
                   <div className="flex flex-wrap items-center gap-2 sm:gap-3">
-                    <span className="text-xs text-white/60 bg-white/5 px-2 py-1 rounded">
+                    <span className="text-xs text-white bg-white/5 px-2 py-1 rounded">
                       {update.date}
                     </span>
                     <Badge

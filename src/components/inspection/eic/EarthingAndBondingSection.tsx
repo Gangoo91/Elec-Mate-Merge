@@ -285,7 +285,7 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                 <Label className="font-medium text-sm text-purple-300">Earthing Conductor</Label>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="earthingConductorMaterial" className="text-xs text-white/60">
+                    <Label htmlFor="earthingConductorMaterial" className="text-xs text-white">
                       Material
                     </Label>
                     <Select
@@ -304,7 +304,7 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="earthingConductorCsa" className="text-xs text-white/60">
+                    <Label htmlFor="earthingConductorCsa" className="text-xs text-white">
                       csa (mm²)
                     </Label>
                     <Input
@@ -342,7 +342,7 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                 </Label>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="mainBondingMaterial" className="text-xs text-white/60">
+                    <Label htmlFor="mainBondingMaterial" className="text-xs text-white">
                       Material
                     </Label>
                     <Select
@@ -361,7 +361,7 @@ const EarthingAndBondingSection: React.FC<EarthingAndBondingSectionProps> = ({
                     </Select>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="mainBondingCsa" className="text-xs text-white/60">
+                    <Label htmlFor="mainBondingCsa" className="text-xs text-white">
                       csa (mm²)
                     </Label>
                     <Select

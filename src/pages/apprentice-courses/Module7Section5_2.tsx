@@ -146,7 +146,7 @@ const Module7Section5_2 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -165,13 +165,13 @@ const Module7Section5_2 = () => {
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <Search className="w-4 h-4" />
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 7</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.2</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.2</span>
             </div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
               Checking Instruments for Safety and Accuracy
             </h1>
-            <p className="text-white/70 text-base sm:text-lg max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg max-w-2xl mx-auto">
               Essential procedures for verifying test equipment safety and accuracy before use
             </p>
           </header>
@@ -179,7 +179,7 @@ const Module7Section5_2 = () => {
           {/* In 30 Seconds Summary */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 space-y-1 text-sm">
+            <ul className="text-white space-y-1 text-sm">
               <li>• Visual inspection: casing, leads, probes, fuses</li>
               <li>• Prove functionality with proving unit or known supply</li>
               <li>• Check calibration certificates and dates</li>
@@ -189,7 +189,7 @@ const Module7Section5_2 = () => {
 
           {/* Introduction */}
           <section className="mb-10">
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               Even the best test equipment is only useful if it is safe to use and provides accurate
               readings. Faulty or poorly maintained instruments can give misleading results, leading
               to unsafe conclusions, or worse, expose the user to electric shock. For apprentices,
@@ -205,10 +205,10 @@ const Module7Section5_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <p className="text-white/80 mb-4">
+            <p className="text-white mb-4">
               By the end of this subsection, you should be able to:
             </p>
-            <ul className="space-y-2 text-white/80">
+            <ul className="space-y-2 text-white">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">✓</span>
                 <span>Explain why checking instruments is essential for safe electrical work</span>
@@ -231,7 +231,7 @@ const Module7Section5_2 = () => {
               Visual Inspection and GS38 Compliance
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-4">
-              <div className="space-y-4 text-sm text-white/80">
+              <div className="space-y-4 text-sm text-white">
                 <p>
                   <strong className="text-white">Instrument casing integrity:</strong> Check for
                   cracks, missing battery covers, damaged displays, or broken selector switches that
@@ -279,7 +279,7 @@ const Module7Section5_2 = () => {
               Proving Functionality - The Prove-Test-Prove Method
             </h2>
             <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50 mb-4">
-              <div className="space-y-4 text-sm text-white/80">
+              <div className="space-y-4 text-sm text-white">
                 <p>
                   <strong className="text-white">Proving units and their importance:</strong>{' '}
                   Dedicated devices that generate known voltages to test instrument response.
@@ -333,7 +333,7 @@ const Module7Section5_2 = () => {
               Calibration and Accuracy Standards
             </h2>
             <div className="p-4 rounded-lg bg-amber-500/5 border-l-2 border-amber-500/50 mb-4">
-              <div className="space-y-4 text-sm text-white/80">
+              <div className="space-y-4 text-sm text-white">
                 <p>
                   <strong className="text-white">
                     Calibration certificates and documentation:
@@ -391,7 +391,7 @@ const Module7Section5_2 = () => {
               Safety Category Ratings and Energy Withstand
             </h2>
             <div className="p-4 rounded-lg bg-red-500/5 border-l-2 border-red-500/50 mb-4">
-              <div className="space-y-4 text-sm text-white/80">
+              <div className="space-y-4 text-sm text-white">
                 <p>
                   <strong className="text-white">CAT II - Local level equipment:</strong> Designed
                   for socket outlets, portable appliances, and similar loads. Maximum working
@@ -441,7 +441,7 @@ const Module7Section5_2 = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <h3 className="font-semibold text-elec-yellow mb-3">Before Testing</h3>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li>• Visual inspection of all equipment components</li>
                   <li>• Verify calibration certificates are current</li>
                   <li>• Check category rating matches test environment</li>
@@ -450,7 +450,7 @@ const Module7Section5_2 = () => {
               </div>
               <div className="p-4 rounded-lg bg-amber-500/5 border-l-2 border-amber-500/50">
                 <h3 className="font-semibold text-amber-400 mb-3">During Testing</h3>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li>• Follow Prove-Test-Prove procedure</li>
                   <li>• Handle instruments carefully and safely</li>
                   <li>• Monitor for unusual readings or behaviour</li>
@@ -459,7 +459,7 @@ const Module7Section5_2 = () => {
               </div>
               <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
                 <h3 className="font-semibold text-green-400 mb-3">After Testing</h3>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li>• Complete final proving check</li>
                   <li>• Store instruments safely and securely</li>
                   <li>• Report any faults or concerns immediately</li>
@@ -481,7 +481,7 @@ const Module7Section5_2 = () => {
                 <h3 className="font-semibold text-red-400 mb-3">
                   Case Study: Instrument Failure Leads to Shock
                 </h3>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   On a commercial site, an electrician used a voltage indicator that had not been
                   verified on a proving unit. It failed to register live voltage, and he mistakenly
                   believed the circuit was safe. He received an electric shock. Investigation showed
@@ -493,7 +493,7 @@ const Module7Section5_2 = () => {
                 <h3 className="font-semibold text-green-400 mb-3">
                   Case Study: Proper Procedure Prevents Accident
                 </h3>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   On another site, an apprentice followed the correct procedure. Before isolation
                   testing, he proved his voltage indicator on a proving unit, confirmed the circuit
                   was live, then rechecked after isolating to confirm it was dead. By doing so, he
@@ -516,19 +516,19 @@ const Module7Section5_2 = () => {
                   <p className="font-medium text-white mb-2">
                     Why must instruments be checked before use?
                   </p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     To ensure they are safe and provide accurate readings.
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-card/30 border border-white/10">
                   <p className="font-medium text-white mb-2">What should be inspected visually?</p>
-                  <p className="text-sm text-white/70">The casing, leads, probes, and fuses.</p>
+                  <p className="text-sm text-white">The casing, leads, probes, and fuses.</p>
                 </div>
               </div>
               <div className="space-y-4">
                 <div className="p-4 rounded-lg bg-card/30 border border-white/10">
                   <p className="font-medium text-white mb-2">How can accuracy be verified?</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     By testing the instrument against a proving unit or known supply.
                   </p>
                 </div>
@@ -536,7 +536,7 @@ const Module7Section5_2 = () => {
                   <p className="font-medium text-white mb-2">
                     What should be done if an instrument fails a check?
                   </p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Remove it from service and report it immediately.
                   </p>
                 </div>
@@ -551,7 +551,7 @@ const Module7Section5_2 = () => {
               Recap
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-white/80 leading-relaxed">
+              <p className="text-white leading-relaxed">
                 Checking instruments for safety and accuracy is a non-negotiable part of electrical
                 testing. Visual checks confirm the integrity of casings, leads, and probes. Proving
                 units or known supplies confirm instruments display correct readings. Calibration
@@ -575,7 +575,7 @@ const Module7Section5_2 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mt-10 pt-6 border-t border-white/10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../5-1">

@@ -102,7 +102,7 @@ const BS7671Module1Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bs7671-module-1">
@@ -123,7 +123,7 @@ const BS7671Module1Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Amendment 3 Highlights
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Bidirectional protection and consumer unit requirements (2024)
           </p>
         </header>
@@ -201,7 +201,7 @@ const BS7671Module1Section4 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
                 <p className="font-medium text-elec-yellow mb-2">Core Changes</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Bidirectional protective device definitions</li>
                   <li>Enhanced consumer unit requirements</li>
                   <li>Grid connection safety provisions</li>
@@ -210,7 +210,7 @@ const BS7671Module1Section4 = () => {
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="font-medium text-green-400 mb-2">Timeline</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>March 2022 - Amendment 2 published</li>
                   <li>July 31, 2024 - Amendment 3 effective</li>
                   <li>Now - Amendment 3 mandatory</li>
@@ -241,7 +241,7 @@ const BS7671Module1Section4 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="font-medium text-red-400 mb-2">Unidirectional (Traditional)</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Designed for one-way current flow</li>
                   <li>Suitable for conventional installations</li>
                   <li>Cannot detect reverse fault currents</li>
@@ -250,7 +250,7 @@ const BS7671Module1Section4 = () => {
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="font-medium text-green-400 mb-2">Bidirectional (Amendment 3)</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Detect faults in both directions</li>
                   <li>Essential for renewable energy systems</li>
                   <li>Protect against reverse fault currents</li>
@@ -265,7 +265,7 @@ const BS7671Module1Section4 = () => {
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-xs font-medium text-white/70 mb-1">Installation Types:</p>
+                  <p className="text-xs font-medium text-white mb-1">Installation Types:</p>
                   <ul className="text-sm text-white space-y-1 ml-4">
                     <li>Solar PV systems with grid export</li>
                     <li>Battery energy storage systems</li>
@@ -274,7 +274,7 @@ const BS7671Module1Section4 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-white/70 mb-1">Safety Considerations:</p>
+                  <p className="text-xs font-medium text-white mb-1">Safety Considerations:</p>
                   <ul className="text-sm text-white space-y-1 ml-4">
                     <li>Protection during export conditions</li>
                     <li>Fault detection in both directions</li>
@@ -341,7 +341,7 @@ const BS7671Module1Section4 = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
                 <p className="font-medium text-white text-sm mb-1">Solar PV Circuits</p>
-                <ul className="text-xs text-white/80 space-y-0.5">
+                <ul className="text-xs text-white space-y-0.5">
                   <li>Bidirectional protection required</li>
                   <li>Export limitation compliance</li>
                   <li>G99 connection requirements</li>
@@ -349,7 +349,7 @@ const BS7671Module1Section4 = () => {
               </div>
               <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="font-medium text-white text-sm mb-1">Battery Storage</p>
-                <ul className="text-xs text-white/80 space-y-0.5">
+                <ul className="text-xs text-white space-y-0.5">
                   <li>Charge/discharge protection</li>
                   <li>Emergency shutdown systems</li>
                   <li>Thermal management</li>
@@ -357,7 +357,7 @@ const BS7671Module1Section4 = () => {
               </div>
               <div className="p-3 rounded-lg bg-purple-500/10 border border-purple-500/20">
                 <p className="font-medium text-white text-sm mb-1">EV V2G Systems</p>
-                <ul className="text-xs text-white/80 space-y-0.5">
+                <ul className="text-xs text-white space-y-0.5">
                   <li>Vehicle-to-grid protection</li>
                   <li>Dynamic load management</li>
                   <li>Grid support functions</li>
@@ -380,7 +380,7 @@ const BS7671Module1Section4 = () => {
               <p className="text-sm font-medium text-red-400 mb-3">
                 Solar PV Installation with Inadequate Protection
               </p>
-              <div className="space-y-2 text-sm text-white/90">
+              <div className="space-y-2 text-sm text-white">
                 <p>
                   <strong>Situation:</strong> A contractor installs a 5kW solar PV system with
                   battery storage in September 2024, using standard unidirectional MCBs in the
@@ -394,7 +394,7 @@ const BS7671Module1Section4 = () => {
                 <p>
                   <strong>Consequences:</strong>
                 </p>
-                <ul className="text-sm text-white/80 space-y-1 ml-4">
+                <ul className="text-sm text-white space-y-1 ml-4">
                   <li>Inadequate protection against reverse fault currents</li>
                   <li>Non-compliance with Amendment 3 requirements</li>
                   <li>Potential fire risk and safety hazard</li>
@@ -426,7 +426,7 @@ const BS7671Module1Section4 = () => {
             <div className="grid sm:grid-cols-3 gap-3 my-6">
               <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="font-medium text-white text-sm mb-1">Renewable Growth</p>
-                <ul className="text-xs text-white/80 space-y-0.5">
+                <ul className="text-xs text-white space-y-0.5">
                   <li>Solar PV adoption</li>
                   <li>Battery storage proliferation</li>
                   <li>V2G development</li>
@@ -434,7 +434,7 @@ const BS7671Module1Section4 = () => {
               </div>
               <div className="p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
                 <p className="font-medium text-white text-sm mb-1">Safety Requirements</p>
-                <ul className="text-xs text-white/80 space-y-0.5">
+                <ul className="text-xs text-white space-y-0.5">
                   <li>Bidirectional fault protection</li>
                   <li>Grid interaction safety</li>
                   <li>Reverse current detection</li>
@@ -442,7 +442,7 @@ const BS7671Module1Section4 = () => {
               </div>
               <div className="p-3 rounded-lg bg-purple-500/10 border border-purple-500/20">
                 <p className="font-medium text-white text-sm mb-1">Grid Evolution</p>
-                <ul className="text-xs text-white/80 space-y-0.5">
+                <ul className="text-xs text-white space-y-0.5">
                   <li>Smart grid development</li>
                   <li>Distributed generation</li>
                   <li>Energy storage integration</li>
@@ -459,7 +459,7 @@ const BS7671Module1Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -471,7 +471,7 @@ const BS7671Module1Section4 = () => {
           <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
             <div>
               <p className="font-medium text-white mb-1">Amendment 3 Requirements</p>
-              <ul className="space-y-0.5 text-white/80">
+              <ul className="space-y-0.5 text-white">
                 <li>Bidirectional MCBs/RCBOs for generation</li>
                 <li>Enhanced breaking capacity</li>
                 <li>Proper labelling and isolation</li>
@@ -479,7 +479,7 @@ const BS7671Module1Section4 = () => {
             </div>
             <div>
               <p className="font-medium text-white mb-1">When Required</p>
-              <ul className="space-y-0.5 text-white/80">
+              <ul className="space-y-0.5 text-white">
                 <li>Solar PV with export</li>
                 <li>Battery storage systems</li>
                 <li>V2G charging points</li>
@@ -498,7 +498,7 @@ const BS7671Module1Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bs7671-module-1-section-3">

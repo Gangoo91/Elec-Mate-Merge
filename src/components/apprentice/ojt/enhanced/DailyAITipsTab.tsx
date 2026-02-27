@@ -462,7 +462,7 @@ const DailyAITipsTab = () => {
             <span className={`font-medium text-sm ${currentTheme.color}`}>
               {currentTheme.shortName}
             </span>
-            <span className="text-white/50 text-xs ml-2">{currentTheme.focus}</span>
+            <span className="text-white text-xs ml-2">{currentTheme.focus}</span>
           </div>
         </div>
         <div className="flex items-center gap-3">
@@ -537,7 +537,7 @@ const DailyAITipsTab = () => {
               </h2>
 
               {/* Content */}
-              <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4 flex-1 overflow-y-auto">
+              <p className="text-white text-sm sm:text-base leading-relaxed mb-4 flex-1 overflow-y-auto">
                 {currentTip.content}
               </p>
 
@@ -554,7 +554,7 @@ const DailyAITipsTab = () => {
                 <div className="bg-elec-yellow/10 border border-elec-yellow/20 rounded-xl p-3 mb-4">
                   <div className="flex items-start gap-2">
                     <Sparkles className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
-                    <p className="text-sm text-white/80">{currentTip.proTip}</p>
+                    <p className="text-sm text-white">{currentTip.proTip}</p>
                   </div>
                 </div>
               )}
@@ -563,7 +563,7 @@ const DailyAITipsTab = () => {
               <div className="bg-green-500/10 border border-green-500/20 rounded-xl p-3">
                 <div className="flex items-start gap-2 mb-2">
                   <Target className="h-4 w-4 text-green-400 shrink-0 mt-0.5" />
-                  <p className="text-sm text-white/80 flex-1">{currentTip.actionStep}</p>
+                  <p className="text-sm text-white flex-1">{currentTip.actionStep}</p>
                 </div>
                 <Button
                   size="sm"
@@ -639,7 +639,7 @@ const DailyAITipsTab = () => {
               <Trophy className="h-6 w-6 text-elec-yellow" />
               <div>
                 <p className="font-medium text-elec-yellow">All tips complete!</p>
-                <p className="text-xs text-white/60">Your streak continues tomorrow</p>
+                <p className="text-xs text-white">Your streak continues tomorrow</p>
               </div>
             </div>
           </motion.div>
@@ -647,7 +647,7 @@ const DailyAITipsTab = () => {
       </AnimatePresence>
 
       {/* Swipe Hint - Mobile Only */}
-      <p className="text-center text-xs text-white/30 pb-2 sm:hidden">
+      <p className="text-center text-xs text-white pb-2 sm:hidden">
         Swipe left or right to navigate
       </p>
     </div>

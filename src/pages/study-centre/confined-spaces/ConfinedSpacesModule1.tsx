@@ -50,7 +50,7 @@ export default function ConfinedSpacesModule1() {
             <Button
               variant="ghost"
               size="lg"
-              className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+              className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../confined-spaces-course">
@@ -67,15 +67,15 @@ export default function ConfinedSpacesModule1() {
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 mb-3">
               <span className="text-cyan-400 text-xs font-semibold">MODULE 1</span>
-              <span className="text-white/40 text-xs">&bull;</span>
-              <span className="text-white/60 text-xs">4 Sections</span>
-              <span className="text-white/40 text-xs">&bull;</span>
-              <span className="text-white/60 text-xs">30 mins</span>
+              <span className="text-white text-xs">&bull;</span>
+              <span className="text-white text-xs">4 Sections</span>
+              <span className="text-white text-xs">&bull;</span>
+              <span className="text-white text-xs">30 mins</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
               Understanding Confined Spaces
             </h1>
-            <p className="text-white/60 text-sm sm:text-base">
+            <p className="text-white text-sm sm:text-base">
               Learn what legally defines a confined space, explore common examples across the
               construction industry, understand why they are so dangerous, and discover the specific
               confined-space hazards faced by electricians.

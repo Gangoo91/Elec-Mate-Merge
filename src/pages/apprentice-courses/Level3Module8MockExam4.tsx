@@ -99,7 +99,7 @@ const Level3Module8MockExam4 = () => {
     const isCorrect = answer === examQuestions[index]?.correctAnswer;
     const isAnswered = answer !== -1;
 
-    if (!isAnswered) return { type: 'unanswered', color: 'text-white/70' };
+    if (!isAnswered) return { type: 'unanswered', color: 'text-white' };
     if (isCorrect) return { type: 'correct', color: 'text-green-500' };
     return { type: 'incorrect', color: 'text-elec-yellow' };
   };
@@ -188,19 +188,19 @@ const Level3Module8MockExam4 = () => {
                 <div className="grid gap-2 sm:gap-2">
                   <div className="flex items-start gap-2">
                     <div className="h-1.5 w-1.5 sm:h-1.5 sm:w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                    <p className="text-sm sm:text-sm text-white/70 leading-relaxed">
+                    <p className="text-sm sm:text-sm text-white leading-relaxed">
                       30 questions randomly selected from 200 Module 4 questions
                     </p>
                   </div>
                   <div className="flex items-start gap-2">
                     <div className="h-1.5 w-1.5 sm:h-1.5 sm:w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                    <p className="text-sm sm:text-sm text-white/70 leading-relaxed">
+                    <p className="text-sm sm:text-sm text-white leading-relaxed">
                       45 minutes time limit
                     </p>
                   </div>
                   <div className="flex items-start gap-2">
                     <div className="h-1.5 w-1.5 sm:h-1.5 sm:w-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0" />
-                    <p className="text-sm sm:text-sm text-white/70 leading-relaxed">
+                    <p className="text-sm sm:text-sm text-white leading-relaxed">
                       Topics: Fault Types, Diagnosis Methods, Safe Isolation, Test Equipment, Repair
                       Procedures
                     </p>
@@ -243,7 +243,7 @@ const Level3Module8MockExam4 = () => {
                   <h1 className="text-lg sm:text-lg sm:text-xl font-semibold text-white">
                     Review Answers
                   </h1>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Score: {percentage}% ({score}/{examQuestions.length})
                   </p>
                 </div>
@@ -251,7 +251,7 @@ const Level3Module8MockExam4 = () => {
                   onClick={() => setReviewMode(false)}
                   variant="ghost"
                   size="sm"
-                  className="text-white/70 hover:text-elec-yellow"
+                  className="text-white hover:text-elec-yellow"
                 >
                   <X className="h-4 w-4 mr-2" />
                   Exit Review
@@ -265,7 +265,7 @@ const Level3Module8MockExam4 = () => {
                 >
                   <CardContent className="p-3 text-center">
                     <div className="text-lg font-bold text-green-500">{stats.correct}</div>
-                    <div className="text-xs text-white/70">Correct</div>
+                    <div className="text-xs text-white">Correct</div>
                   </CardContent>
                 </Card>
                 <Card
@@ -276,7 +276,7 @@ const Level3Module8MockExam4 = () => {
                 >
                   <CardContent className="p-3 text-center">
                     <div className="text-lg font-bold text-elec-yellow">{stats.incorrect}</div>
-                    <div className="text-xs text-white/70">Incorrect</div>
+                    <div className="text-xs text-white">Incorrect</div>
                   </CardContent>
                 </Card>
                 <Card
@@ -286,8 +286,8 @@ const Level3Module8MockExam4 = () => {
                   }
                 >
                   <CardContent className="p-3 text-center">
-                    <div className="text-lg font-bold text-white/70">{stats.unanswered}</div>
-                    <div className="text-xs text-white/70">Unanswered</div>
+                    <div className="text-lg font-bold text-white">{stats.unanswered}</div>
+                    <div className="text-xs text-white">Unanswered</div>
                   </CardContent>
                 </Card>
                 <Card
@@ -296,7 +296,7 @@ const Level3Module8MockExam4 = () => {
                 >
                   <CardContent className="p-3 text-center">
                     <div className="text-lg font-bold text-elec-yellow">{stats.flagged}</div>
-                    <div className="text-xs text-white/70">Flagged</div>
+                    <div className="text-xs text-white">Flagged</div>
                   </CardContent>
                 </Card>
               </div>
@@ -334,7 +334,7 @@ const Level3Module8MockExam4 = () => {
                                 ? 'bg-green-500/20 text-green-500 border-green-500/40'
                                 : status.type === 'incorrect'
                                   ? 'bg-red-500/20 text-elec-yellow border-red-500/40'
-                                  : 'bg-muted/20 text-white/70 border-muted/40'
+                                  : 'bg-muted/20 text-white border-muted/40'
                             }
                           >
                             {status.type === 'correct'
@@ -388,7 +388,7 @@ const Level3Module8MockExam4 = () => {
                             </div>
                             <div>
                               <h4 className="text-sm font-semibold text-white mb-1">Explanation</h4>
-                              <p className="text-sm text-white/70 leading-relaxed">
+                              <p className="text-sm text-white leading-relaxed">
                                 {question.explanation}
                               </p>
                             </div>
@@ -426,7 +426,7 @@ const Level3Module8MockExam4 = () => {
                 <div className="text-3xl sm:text-4xl md:text-5xl font-bold text-elec-yellow mb-2">
                   {percentage}%
                 </div>
-                <p className="text-xs sm:text-sm text-white/70">
+                <p className="text-xs sm:text-sm text-white">
                   You scored {score} out of {examQuestions.length} questions correctly
                 </p>
               </div>
@@ -434,19 +434,19 @@ const Level3Module8MockExam4 = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3">
                 <div className="text-center p-3 bg-transparent rounded-lg border border-green-500/20">
                   <div className="text-lg font-bold text-green-500">{stats.correct}</div>
-                  <div className="text-xs text-white/70">Correct</div>
+                  <div className="text-xs text-white">Correct</div>
                 </div>
                 <div className="text-center p-3 bg-transparent rounded-lg border border-red-500/20">
                   <div className="text-lg font-bold text-elec-yellow">{stats.incorrect}</div>
-                  <div className="text-xs text-white/70">Incorrect</div>
+                  <div className="text-xs text-white">Incorrect</div>
                 </div>
                 <div className="text-center p-3 bg-muted/10 rounded-lg border border-muted/20">
-                  <div className="text-lg font-bold text-white/70">{stats.unanswered}</div>
-                  <div className="text-xs text-white/70">Unanswered</div>
+                  <div className="text-lg font-bold text-white">{stats.unanswered}</div>
+                  <div className="text-xs text-white">Unanswered</div>
                 </div>
                 <div className="text-center p-3 bg-elec-yellow/10 rounded-lg border border-elec-yellow/30">
                   <div className="text-lg font-bold text-elec-yellow">{stats.flagged}</div>
-                  <div className="text-xs text-white/70">Flagged</div>
+                  <div className="text-xs text-white">Flagged</div>
                 </div>
               </div>
 
@@ -505,7 +505,7 @@ const Level3Module8MockExam4 = () => {
           <div className="flex items-center justify-between">
             <Link
               to="/study-centre/apprentice/level3-course/module8-section4"
-              className="text-sm text-white/70 hover:text-elec-yellow transition-colors flex items-center gap-2"
+              className="text-sm text-white hover:text-elec-yellow transition-colors flex items-center gap-2"
             >
               <ArrowLeft className="h-4 w-4" />
               Exit Exam
@@ -526,7 +526,7 @@ const Level3Module8MockExam4 = () => {
                   <h2 className="text-lg font-semibold text-white">
                     Question {currentQuestion + 1} of {examQuestions.length}
                   </h2>
-                  <div className="text-sm text-white/70 mt-1">
+                  <div className="text-sm text-white mt-1">
                     Level 3 Module 4 • Fault Diagnosis
                   </div>
                 </div>
@@ -550,7 +550,7 @@ const Level3Module8MockExam4 = () => {
                     <button
                       key={index}
                       onClick={() => handleAnswerSelect(index)}
-                      className={`w-full p-4 text-left rounded-lg border transition-colors ${selectedAnswers[currentQuestion] === index ? 'bg-elec-yellow/20 border-elec-yellow text-white' : 'bg-[#1a1a1a]/30 border-elec-yellow/30 text-white/70 hover:bg-elec-yellow/10 hover:border-elec-yellow/40'}`}
+                      className={`w-full p-4 text-left rounded-lg border transition-colors ${selectedAnswers[currentQuestion] === index ? 'bg-elec-yellow/20 border-elec-yellow text-white' : 'bg-[#1a1a1a]/30 border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:border-elec-yellow/40'}`}
                     >
                       <div className="flex items-center gap-3">
                         <span className="text-sm font-semibold min-w-[20px]">
@@ -612,7 +612,7 @@ const Level3Module8MockExam4 = () => {
                     <div className="font-mono text-2xl font-bold text-elec-yellow">
                       {formatTime(timeRemaining)}
                     </div>
-                    <div className="text-xs text-white/70 mt-1">
+                    <div className="text-xs text-white mt-1">
                       {timeRemaining < 300 ? 'Final 5 minutes!' : 'Stay focused'}
                     </div>
                   </div>
@@ -627,7 +627,7 @@ const Level3Module8MockExam4 = () => {
                       </span>
                     </div>
                     <Progress value={progressPercentage} className="h-3 mb-3" />
-                    <div className="text-xs text-center text-white/70">
+                    <div className="text-xs text-center text-white">
                       {Math.round(progressPercentage)}% Complete
                     </div>
                   </div>
@@ -680,7 +680,7 @@ const Level3Module8MockExam4 = () => {
                         <button
                           key={index}
                           onClick={() => setCurrentQuestion(index)}
-                          className={`relative w-10 h-10 text-xs font-bold rounded-lg transition-all duration-200 border-2 ${isCurrent ? 'bg-elec-yellow text-black border-elec-yellow shadow-lg scale-110' : isAnswered ? 'bg-green-500/30 text-green-400 border-green-500/50 hover:bg-green-500/40' : 'bg-[#1a1a1a]/30 text-white/70 border-elec-yellow/30 hover:bg-elec-yellow/20 hover:border-elec-yellow/40'}`}
+                          className={`relative w-10 h-10 text-xs font-bold rounded-lg transition-all duration-200 border-2 ${isCurrent ? 'bg-elec-yellow text-black border-elec-yellow shadow-lg scale-110' : isAnswered ? 'bg-green-500/30 text-green-400 border-green-500/50 hover:bg-green-500/40' : 'bg-[#1a1a1a]/30 text-white border-elec-yellow/30 hover:bg-elec-yellow/20 hover:border-elec-yellow/40'}`}
                         >
                           {index + 1}
                           {isFlagged && (
@@ -705,7 +705,7 @@ const Level3Module8MockExam4 = () => {
                     <Flag className="h-3 w-3 mr-2" />
                     Next Flagged ({flaggedQuestions.size})
                   </Button>
-                  <div className="text-xs text-center text-white/70 pt-2 border-t border-elec-yellow/30">
+                  <div className="text-xs text-center text-white pt-2 border-t border-elec-yellow/30">
                     <div>Level 3 Module 4</div>
                     <div>Fault Diagnosis</div>
                   </div>

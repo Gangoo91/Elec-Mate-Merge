@@ -58,13 +58,13 @@ export const ProjectInfoStep = ({
         </div>
         <div>
           <h2 className="text-lg font-semibold text-white">Project Details</h2>
-          <p className="text-sm text-white/50">Basic information about your installation</p>
+          <p className="text-sm text-white">Basic information about your installation</p>
         </div>
       </div>
 
       {/* Installation Type Selection */}
       <div className="space-y-3">
-        <label className="block text-ios-subhead font-medium text-white/80">
+        <label className="block text-ios-subhead font-medium text-white">
           Installation Type *
         </label>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -90,7 +90,7 @@ export const ProjectInfoStep = ({
                   <div
                     className={cn(
                       'p-2 rounded-lg transition-colors duration-ios-fast',
-                      isSelected ? 'bg-elec-yellow text-black' : 'bg-white/10 text-white/60'
+                      isSelected ? 'bg-elec-yellow text-black' : 'bg-white/10 text-white'
                     )}
                   >
                     <Icon className="h-5 w-5" />
@@ -104,7 +104,7 @@ export const ProjectInfoStep = ({
                     >
                       {type.label}
                     </div>
-                    <div className="text-xs text-white/50 mt-0.5">{type.description}</div>
+                    <div className="text-xs text-white mt-0.5">{type.description}</div>
                   </div>
                 </div>
                 {/* Selection indicator */}

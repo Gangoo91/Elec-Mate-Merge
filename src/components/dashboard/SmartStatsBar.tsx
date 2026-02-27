@@ -69,7 +69,7 @@ function StatItem({ icon, value, label, color = 'text-elec-yellow', path }: Stat
       >
         <div className="flex items-center gap-1.5 mb-1">
           <span className={color}>{icon}</span>
-          <p className="text-[11px] sm:text-xs text-white/50 truncate">{label}</p>
+          <p className="text-[11px] sm:text-xs text-white truncate">{label}</p>
         </div>
 
         <span className={`text-xl sm:text-2xl font-bold tracking-tight ${color}`}>

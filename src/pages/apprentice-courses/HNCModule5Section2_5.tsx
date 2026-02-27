@@ -272,7 +272,7 @@ const HNCModule5Section2_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section2">
@@ -294,7 +294,7 @@ const HNCModule5Section2_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Tendering Process
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Invitation to tender, bid preparation, evaluation criteria, negotiation strategies, and
             contract award procedures
           </p>
@@ -460,7 +460,7 @@ const HNCModule5Section2_5 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Building Services Example: Hospital M&E ITT
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 A new hospital wing requires M&E services worth approximately £12M. The ITT package
                 includes: RIBA Stage 4 drawings, NRM2 Bills of Quantities, NEC4 Option A conditions,
                 6-week tender period, two-envelope submission (technical and commercial separate),
@@ -580,7 +580,7 @@ const HNCModule5Section2_5 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Building Services Example: Commercial Office Tender
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 An electrical contractor prepares a £2.4M tender for a commercial office fit-out.
                 The pricing breakdown: Labour 35% (£840k), Materials 40% (£960k), Plant 5% (£120k),
                 Preliminaries 12% (£288k), Overheads 5% (£120k), Profit 3% (£72k). The contractor
@@ -701,7 +701,7 @@ const HNCModule5Section2_5 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 Price Score = (Lowest Price / Tender Price) x Maximum Points
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Example: Lowest bid £1.8M, your bid £2.0M, max points 40. Score = (1.8/2.0) x 40 =
                 36 points
               </p>
@@ -753,7 +753,7 @@ const HNCModule5Section2_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-green-400 mb-2">Permitted</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Clarifying scope ambiguities</li>
                     <li>Refining programme details</li>
                     <li>Agreeing payment terms</li>
@@ -763,7 +763,7 @@ const HNCModule5Section2_5 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-red-400 mb-2">Not Permitted</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Fundamental scope changes</li>
                     <li>Cherry-picking from other bids</li>
                     <li>Price reduction without scope change</li>
@@ -847,7 +847,7 @@ const HNCModule5Section2_5 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Building Services Example: Retail Fit-Out Award
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 An M&E contractor wins a £1.6M retail fit-out tender. The client issues a Letter of
                 Intent capped at £75,000 to enable long-lead equipment ordering and design
                 development while the NEC4 contract is finalised. The LOI specifies: ordering of
@@ -883,7 +883,7 @@ const HNCModule5Section2_5 = () => {
                 Evaluation weighting: Quality 60%, Price 40%. Quality score: 72/100. Tender price:
                 £2.2M. Lowest price: £1.9M.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Quality Score = (72/100) x 60 = <strong>43.2 points</strong>
                 </p>
@@ -893,7 +893,7 @@ const HNCModule5Section2_5 = () => {
                 <p className="mt-2">
                   Total MEAT Score = 43.2 + 34.5 = <strong>77.7 points</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Compare against other bidders to determine ranking
                 </p>
               </div>
@@ -908,7 +908,7 @@ const HNCModule5Section2_5 = () => {
                 installation. Direct costs total £3.2M. Calculate the tender price using standard
                 mark-ups.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Direct costs: £3,200,000</p>
                 <p>Preliminaries (15%): £480,000</p>
                 <p>Subtotal: £3,680,000</p>
@@ -918,7 +918,7 @@ const HNCModule5Section2_5 = () => {
                 <p className="mt-2">
                   Tender Price: <strong>£4,158,400</strong>
                 </p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Margin on direct costs: 30% (competitive for specialist work)
                 </p>
               </div>
@@ -932,14 +932,14 @@ const HNCModule5Section2_5 = () => {
                 <strong>Question:</strong> A public sector client issues award notification on
                 Monday 5th January. When is the earliest date for contract signature?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Award notification: Monday 5th January (Day 0)</p>
                 <p>Standstill period: 10 calendar days minimum</p>
                 <p>Standstill ends: Thursday 15th January</p>
                 <p className="mt-2">
                   Earliest contract signature: <strong>Friday 16th January</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Note: If notification by post, extend to 15 days (20th January)
                 </p>
               </div>
@@ -1020,7 +1020,7 @@ const HNCModule5Section2_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1067,7 +1067,7 @@ const HNCModule5Section2_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section2">

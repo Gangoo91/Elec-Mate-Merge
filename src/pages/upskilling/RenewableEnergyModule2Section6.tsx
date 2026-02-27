@@ -114,7 +114,7 @@ const RenewableEnergyModule2Section6 = () => {
           <Button
             variant="ghost"
             size="sm"
-            className="text-white/70 hover:text-white hover:bg-white/10 -ml-2"
+            className="text-white hover:text-white hover:bg-white/10 -ml-2"
             asChild
           >
             <Link to="/electrician/upskilling/renewable-energy-module-2">
@@ -134,7 +134,7 @@ const RenewableEnergyModule2Section6 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Single-Line Diagrams &amp; Component Flow
           </h1>
-          <p className="text-white/60 text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Technical Documentation for PV Systems
           </p>
         </div>
@@ -161,19 +161,19 @@ const RenewableEnergyModule2Section6 = () => {
           <div className="space-y-2">
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-white/80 text-sm">
+              <span className="text-white text-sm">
                 Read and produce standard single-line diagrams (SLDs)
               </span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-white/80 text-sm">
+              <span className="text-white text-sm">
                 Trace component-level energy flows through PV systems
               </span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-white/80 text-sm">
+              <span className="text-white text-sm">
                 Communicate effectively with installation teams using technical diagrams
               </span>
             </div>
@@ -186,7 +186,7 @@ const RenewableEnergyModule2Section6 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">01</span>
             PV System Symbols &amp; Conventions
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Schematics are a PV designer&apos;s blueprint. SLDs make your design buildable and
               inspectable - they are your project&apos;s technical language.
@@ -254,7 +254,7 @@ const RenewableEnergyModule2Section6 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">02</span>
             Component Placement &amp; Energy Flow
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Understanding the energy flow sequence helps create logical, easy-to-follow diagrams.
             </p>
@@ -330,7 +330,7 @@ const RenewableEnergyModule2Section6 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">03</span>
             Metering &amp; Monitoring Systems
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Proper metering configuration is essential for system monitoring and grid compliance.
             </p>
@@ -385,7 +385,7 @@ const RenewableEnergyModule2Section6 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">04</span>
             Design Software &amp; Tools
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>Professional design tools ensure accurate, compliant documentation.</p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
@@ -435,7 +435,7 @@ const RenewableEnergyModule2Section6 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">05</span>
             Documentation Standards &amp; Compliance
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Compliance with documentation standards is essential for DNO approval and MCS
               certification.
@@ -494,7 +494,7 @@ const RenewableEnergyModule2Section6 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">06</span>
             Common Mistakes &amp; Best Practices
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <h4 className="text-white font-medium mb-2">Best Practices</h4>
@@ -525,7 +525,7 @@ const RenewableEnergyModule2Section6 = () => {
           <h3 className="text-white font-semibold mb-3">
             Case Study: 100kW Commercial Installation
           </h3>
-          <div className="text-white/80 text-sm space-y-2">
+          <div className="text-white text-sm space-y-2">
             <p>
               A factory rooftop installation with 250 x 400W panels, 4 x 25kW string inverters, and
               complex AC distribution requires detailed SLD documentation for DNO approval.
@@ -561,7 +561,7 @@ const RenewableEnergyModule2Section6 = () => {
               <h4 className="text-white font-medium mb-2">
                 Why are single-line diagrams important?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 SLDs provide a simplified representation of the electrical system, making it easier
                 to understand power flow, identify components, and plan maintenance. They are
                 required for DNO approval and MCS certification.
@@ -571,7 +571,7 @@ const RenewableEnergyModule2Section6 = () => {
               <h4 className="text-white font-medium mb-2">
                 What is the difference between an SLD and a wiring diagram?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 An SLD shows the system overview using single lines for multi-conductor connections,
                 focusing on component relationships. Wiring diagrams show detailed connections
                 including all conductors, terminals, and physical routing.
@@ -581,7 +581,7 @@ const RenewableEnergyModule2Section6 = () => {
               <h4 className="text-white font-medium mb-2">
                 What should as-built drawings include?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 As-built drawings record the final installation including any deviations from the
                 original design, actual cable routes, component locations, and any field
                 modifications made during installation.
@@ -589,7 +589,7 @@ const RenewableEnergyModule2Section6 = () => {
             </div>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
               <h4 className="text-white font-medium mb-2">How detailed should legends be?</h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Legends should define all symbols used, explain abbreviations, and include notes on
                 drawing conventions. Anyone reading the drawing should be able to understand it
                 without prior knowledge of your specific practices.
@@ -599,7 +599,7 @@ const RenewableEnergyModule2Section6 = () => {
               <h4 className="text-white font-medium mb-2">
                 When do I need a chartered engineer to sign off drawings?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Large commercial installations (typically over 50kWp), complex systems, and projects
                 requiring structural modifications usually need chartered engineer sign-off.
                 Requirements vary by DNO and local authority.
@@ -607,7 +607,7 @@ const RenewableEnergyModule2Section6 = () => {
             </div>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
               <h4 className="text-white font-medium mb-2">What revision control is needed?</h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Every revision should have a unique number, date, description of changes, and
                 approval signatures. Maintain a revision history table on the drawing and archive
                 superseded versions for traceability.
@@ -629,7 +629,7 @@ const RenewableEnergyModule2Section6 = () => {
         <div className="flex justify-between items-center pt-6 border-t border-white/10">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/10"
+            className="text-white hover:text-white hover:bg-white/10"
             asChild
           >
             <Link to="../section-5">

@@ -225,7 +225,7 @@ const Level3Module3Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section2">
@@ -370,15 +370,15 @@ const Level3Module3Section2_1 = () => {
               <div className="grid sm:grid-cols-3 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-elec-yellow/80 mb-1">P = V x I</p>
-                  <p className="text-xs text-white/80">Use when you know voltage and current</p>
+                  <p className="text-xs text-white">Use when you know voltage and current</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-elec-yellow/80 mb-1">P = I squared x R</p>
-                  <p className="text-xs text-white/80">Use when you know current and resistance</p>
+                  <p className="text-xs text-white">Use when you know current and resistance</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-elec-yellow/80 mb-1">P = V squared / R</p>
-                  <p className="text-xs text-white/80">Use when you know voltage and resistance</p>
+                  <p className="text-xs text-white">Use when you know voltage and resistance</p>
                 </div>
               </div>
             </div>
@@ -390,7 +390,7 @@ const Level3Module3Section2_1 = () => {
               implications for cable sizing and thermal management.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Worked Example:</strong> An immersion heater rated at 3kW operates on 230V
               supply. First, find the current: I = P/V = 3000/230 = 13.04A. Then find the
               resistance: R = V/I = 230/13.04 = 17.6 ohms. Verify: P = V squared / R = 230 squared /
@@ -441,19 +441,19 @@ const Level3Module3Section2_1 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Intentional Heating</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Heaters, ovens, kettles, soldering irons - designed to convert electricity to heat
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Unintentional Heating</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Cable losses, motor windings, connections - heating that reduces efficiency
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Damaging Heating</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Overloaded cables, poor connections - fire risks and equipment damage
                 </p>
               </div>
@@ -484,7 +484,7 @@ const Level3Module3Section2_1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A copper conductor has 0.5 ohms resistance at 20 degrees C.
               At 70 degrees C operating temperature: R_70 = 0.5[1 + 0.00393(70-20)] = 0.5[1 +
               0.1965] = 0.5 x 1.1965 = 0.598 ohms - a 20% increase affecting voltage drop and
@@ -649,7 +649,7 @@ const Level3Module3Section2_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -694,7 +694,7 @@ const Level3Module3Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section2">

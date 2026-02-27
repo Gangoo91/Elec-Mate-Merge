@@ -224,8 +224,8 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-white/5 border-l-2 border-white/30">
-            <p className="text-white/80 text-sm font-medium mb-2">You Will Learn</p>
-            <ul className="text-sm text-white/70 space-y-1">
+            <p className="text-white text-sm font-medium mb-2">You Will Learn</p>
+            <ul className="text-sm text-white space-y-1">
               <li>• Select appropriate thermal imaging equipment</li>
               <li>• Use power quality analysers effectively</li>
               <li>• Choose audit software platforms</li>
@@ -516,28 +516,28 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
                 <div className="grid gap-4">
                   <div className="border-l-2 border-elec-yellow pl-3">
                     <p className="font-medium text-white">Energy Elephant</p>
-                    <p className="text-white/70 text-sm">
+                    <p className="text-white text-sm">
                       From £99/month - UK-developed, excellent for multi-site management, automatic
                       utility bill analysis, carbon reporting, ISO 50001 compliance support.
                     </p>
                   </div>
                   <div className="border-l-2 border-elec-yellow pl-3">
                     <p className="font-medium text-white">ECON Energy</p>
-                    <p className="text-white/70 text-sm">
+                    <p className="text-white text-sm">
                       From £150/month - Comprehensive energy management, real-time monitoring
                       integration, targeting & reporting, widely used by UK local authorities.
                     </p>
                   </div>
                   <div className="border-l-2 border-elec-yellow pl-3">
                     <p className="font-medium text-white">Stark Group Platform</p>
-                    <p className="text-white/70 text-sm">
+                    <p className="text-white text-sm">
                       Custom pricing - Enterprise solution, bureau services available, utility
                       procurement integration, suitable for large portfolios.
                     </p>
                   </div>
                   <div className="border-l-2 border-elec-yellow pl-3">
                     <p className="font-medium text-white">eSight Energy</p>
-                    <p className="text-white/70 text-sm">
+                    <p className="text-white text-sm">
                       From £200/month - Advanced analytics, M&V capabilities, automatic meter
                       reading integration, used by major corporations.
                     </p>
@@ -550,23 +550,23 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <p className="font-medium text-white">Carbon Trust Tools</p>
-                    <p className="text-white/70 text-sm">
+                    <p className="text-white text-sm">
                       Free calculators and benchmarking tools for UK businesses
                     </p>
                   </div>
                   <div>
                     <p className="font-medium text-white">CIBSE TM22</p>
-                    <p className="text-white/70 text-sm">
+                    <p className="text-white text-sm">
                       Energy assessment methodology spreadsheet (member access)
                     </p>
                   </div>
                   <div>
                     <p className="font-medium text-white">Energy Performance Calculator</p>
-                    <p className="text-white/70 text-sm">Free Excel-based DEC calculation tools</p>
+                    <p className="text-white text-sm">Free Excel-based DEC calculation tools</p>
                   </div>
                   <div>
                     <p className="font-medium text-white">BEIS Energy Tools</p>
-                    <p className="text-white/70 text-sm">
+                    <p className="text-white text-sm">
                       Government benchmarking data and calculators
                     </p>
                   </div>
@@ -599,27 +599,27 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
                 <ul className="text-white text-sm space-y-3">
                   <li>
                     <strong className="text-white">iAuditor (SafetyCulture)</strong>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Free tier available. Customisable checklists, photo annotation, automatic
                       reports. Excellent for structured surveys.
                     </p>
                   </li>
                   <li>
                     <strong className="text-white">Fulcrum</strong>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       From £15/month. Powerful form builder, GPS tracking, offline capability. Great
                       for custom audit workflows.
                     </p>
                   </li>
                   <li>
                     <strong className="text-white">FLIR Tools Mobile</strong>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Free. Essential for FLIR camera users, image analysis, basic reporting.
                     </p>
                   </li>
                   <li>
                     <strong className="text-white">Fluke Connect</strong>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Free. Connects Fluke meters, trends data, team sharing. Useful for ongoing
                       monitoring.
                     </p>
@@ -635,25 +635,25 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
                 <ul className="text-white text-sm space-y-3">
                   <li>
                     <strong className="text-white">CamScanner/Adobe Scan</strong>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Digitise utility bills, equipment labels, and documents on site.
                     </p>
                   </li>
                   <li>
                     <strong className="text-white">Google Maps/What3Words</strong>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Location documentation, especially useful for external equipment surveys.
                     </p>
                   </li>
                   <li>
                     <strong className="text-white">Lux Meter Apps</strong>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Phone sensor-based light measurement (indicative only, not calibrated).
                     </p>
                   </li>
                   <li>
                     <strong className="text-white">Voice Recorder</strong>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Capture observations quickly, transcribe later. Faster than typing.
                     </p>
                   </li>
@@ -791,7 +791,7 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
               <code className="bg-white/5 px-3 py-2 rounded text-green-400 text-sm block overflow-x-auto">
                 =PERCENTILE(IF(HOUR(A:A)&gt;=23,B:B,IF(HOUR(A:A)&lt;=5,B:B,"")),0.1)
               </code>
-              <p className="text-white/60 text-xs mt-2">
+              <p className="text-white text-xs mt-2">
                 Array formula (Ctrl+Shift+Enter in older Excel) - finds 10th percentile of
                 23:00-05:00 readings
               </p>
@@ -971,7 +971,7 @@ const EnergyEfficiencyModule3Section4: React.FC = () => {
               <div key={index} className="bg-white/5 rounded-lg overflow-hidden">
                 <div className="p-4">
                   <h4 className="font-medium text-white mb-2">{faq.question}</h4>
-                  <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                  <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
                 </div>
               </div>
             ))}

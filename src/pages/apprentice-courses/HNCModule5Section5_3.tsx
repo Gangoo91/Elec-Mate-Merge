@@ -229,7 +229,7 @@ const HNCModule5Section5_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section5">
@@ -251,7 +251,7 @@ const HNCModule5Section5_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Mechanical Commissioning
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             CIBSE codes A, W and R, system balancing, flow measurement, pressure testing and
             performance verification
           </p>
@@ -404,7 +404,7 @@ const HNCModule5Section5_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Real-World Example: Office Building HVAC
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 A new 10-storey office block requires commissioning of: 4 AHUs (Code A), LTHW
                 heating circuit with 200 FCUs (Code W), CHW cooling circuit (Code W), 2 air-cooled
                 chillers (Code R), and BMS integration (Code C). The commissioning engineer must
@@ -514,10 +514,10 @@ const HNCModule5Section5_3 = () => {
                 Calculating Flow from Differential Pressure
               </p>
               <p className="font-mono text-center text-lg mb-2">Q = Kv x sqrt(dP)</p>
-              <p className="text-xs text-white/70 text-center mb-3">
+              <p className="text-xs text-white text-center mb-3">
                 Where Q = flow (m³/h), Kv = valve coefficient, dP = differential pressure (bar)
               </p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Example: A regulating valve with Kv = 2.5 shows dP = 0.16 bar. Flow = 2.5 x
                 sqrt(0.16) = 2.5 x 0.4 = 1.0 m³/h (0.28 l/s)
               </p>
@@ -568,7 +568,7 @@ const HNCModule5Section5_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">At Terminals</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Balometer (capture hood) - direct reading</li>
                     <li>Rotating vane anemometer with cone</li>
                     <li>Hot wire anemometer for low velocities</li>
@@ -577,7 +577,7 @@ const HNCModule5Section5_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">In Ductwork</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Pitot-static traverse (log-Tchebycheff)</li>
                     <li>Minimum 5D upstream, 2D downstream</li>
                     <li>Thermal anemometer traverse</li>
@@ -648,7 +648,7 @@ const HNCModule5Section5_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Real-World Example: VAV System
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 A 50-box VAV system serving open-plan offices. Commissioning sequence: (1) Set AHU
                 to 100% supply, (2) Drive all boxes to maximum, (3) Measure and record each box
                 flow, (4) Adjust main dampers for +/- 10%, (5) Test box minimum positions for
@@ -657,7 +657,7 @@ const HNCModule5Section5_3 = () => {
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Site tip:</strong> Always balance supply and extract systems together.
               Unbalanced pressures cause door opening issues, noise, and uncontrolled infiltration.
             </p>
@@ -782,7 +782,7 @@ const HNCModule5Section5_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Documentation Requirements
               </p>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 Complete commissioning handover includes:
               </p>
               <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
@@ -834,7 +834,7 @@ const HNCModule5Section5_3 = () => {
                 <strong>Question:</strong> A double regulating valve has Kv = 4.0. The manometer
                 reads 25 kPa differential pressure. What is the flow rate?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Convert pressure: 25 kPa = 0.25 bar</p>
                 <p className="mt-2">Q = Kv x sqrt(dP)</p>
                 <p>
@@ -854,7 +854,7 @@ const HNCModule5Section5_3 = () => {
                 <strong>Question:</strong> A supply grille has design flow of 120 l/s. Measured flow
                 with balometer is 108 l/s. Is this acceptable?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Deviation = ((Measured - Design) / Design) x 100%</p>
                 <p>
                   Deviation = ((108 - 120) / 120) x 100% = <strong>-10%</strong>
@@ -873,13 +873,13 @@ const HNCModule5Section5_3 = () => {
                 l/s. Measured flows with index valve (Circuit 1) fully open are: 1.2, 1.1, and 0.9
                 l/s. Calculate required flow ratios.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Design ratios (relative to index): 1.0/1.0=1.0, 0.8/1.0=0.8, 0.6/1.0=0.6</p>
                 <p className="mt-2">Current ratios: 1.2/1.2=1.0, 1.1/1.2=0.92, 0.9/1.2=0.75</p>
                 <p className="mt-2">Required adjustment:</p>
                 <p>Circuit 2: 0.8/0.92 = 0.87 (close valve to reduce flow)</p>
                 <p>Circuit 3: 0.6/0.75 = 0.80 (close valve to reduce flow)</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Adjust valves, re-measure, iterate until all within tolerance
                 </p>
               </div>
@@ -893,7 +893,7 @@ const HNCModule5Section5_3 = () => {
                 <strong>Question:</strong> R410A system shows suction pressure of 10 bar (saturation
                 temp 5°C) and suction line temperature of 12°C. What is the superheat?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Superheat = Actual temperature - Saturation temperature</p>
                 <p>
                   Superheat = 12°C - 5°C = <strong>7K</strong>
@@ -987,7 +987,7 @@ const HNCModule5Section5_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1033,7 +1033,7 @@ const HNCModule5Section5_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section5">

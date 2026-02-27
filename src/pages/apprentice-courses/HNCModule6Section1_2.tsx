@@ -259,7 +259,7 @@ const HNCModule6Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section1">
@@ -281,7 +281,7 @@ const HNCModule6Section1_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             SBEM Calculations
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Simplified Building Energy Model, NCM methodology, inputs and outputs, and Part L
             compliance demonstration
           </p>
@@ -572,26 +572,26 @@ const HNCModule6Section1_2 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">HVAC System Inputs</p>
               <div className="text-sm space-y-1 text-white">
                 <p>
-                  <span className="text-white/60">System type:</span> Boiler, heat pump, VRF,
+                  <span className="text-white">System type:</span> Boiler, heat pump, VRF,
                   chiller, etc.
                 </p>
                 <p>
-                  <span className="text-white/60">Heating efficiency:</span> Seasonal efficiency (%)
+                  <span className="text-white">Heating efficiency:</span> Seasonal efficiency (%)
                   or SCOP
                 </p>
                 <p>
-                  <span className="text-white/60">Cooling efficiency:</span> Seasonal EER or SEER
+                  <span className="text-white">Cooling efficiency:</span> Seasonal EER or SEER
                 </p>
                 <p>
-                  <span className="text-white/60">Fuel type:</span> Natural gas, electricity, oil,
+                  <span className="text-white">Fuel type:</span> Natural gas, electricity, oil,
                   biomass
                 </p>
                 <p>
-                  <span className="text-white/60">Distribution:</span> Pipework/ductwork losses,
+                  <span className="text-white">Distribution:</span> Pipework/ductwork losses,
                   pump/fan powers
                 </p>
                 <p>
-                  <span className="text-white/60">Controls:</span> Weather compensation, optimum
+                  <span className="text-white">Controls:</span> Weather compensation, optimum
                   start, zoning
                 </p>
               </div>
@@ -745,7 +745,7 @@ const HNCModule6Section1_2 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Target Emission Rate (TER)</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Same geometry as actual building</li>
                     <li>Standardised U-values (notional)</li>
                     <li>Standardised services efficiencies</li>
@@ -755,7 +755,7 @@ const HNCModule6Section1_2 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Building Emission Rate (BER)</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Actual proposed building design</li>
                     <li>Specified U-values</li>
                     <li>Specified services efficiencies</li>
@@ -772,7 +772,7 @@ const HNCModule6Section1_2 = () => {
               </p>
               <div className="font-mono text-sm space-y-1 text-white">
                 <p>Compliance Margin (%) = (TER - BER) / TER × 100</p>
-                <p className="mt-2 text-white/70">Example:</p>
+                <p className="mt-2 text-white">Example:</p>
                 <p>TER = 25.5 kgCO₂/m²/year</p>
                 <p>BER = 22.3 kgCO₂/m²/year</p>
                 <p>
@@ -858,7 +858,7 @@ const HNCModule6Section1_2 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Design stage vs as-built:</strong> Initial calculations use design
               specifications; as-built calculations must reflect actual installed equipment and
               measured air tightness test results.
@@ -884,18 +884,18 @@ const HNCModule6Section1_2 = () => {
                 <strong>Scenario:</strong> 2,500m² open plan office, 3 storeys, gas heating with VRF
                 cooling.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Building Geometry:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Building Geometry:</p>
                 <p className="ml-4">Total floor area: 2,500 m²</p>
                 <p className="ml-4">External wall area: 1,200 m²</p>
                 <p className="ml-4">Glazing ratio: 40% (480 m² windows)</p>
                 <p className="ml-4">Roof area: 833 m² (flat)</p>
-                <p className="mt-2 text-white/60">Fabric U-values:</p>
+                <p className="mt-2 text-white">Fabric U-values:</p>
                 <p className="ml-4">Walls: 0.22 W/m²K (below notional 0.26)</p>
                 <p className="ml-4">Roof: 0.15 W/m²K (below notional 0.18)</p>
                 <p className="ml-4">Windows: 1.2 W/m²K (below notional 1.4)</p>
                 <p className="ml-4">Air permeability: 4 m³/h/m² @ 50Pa</p>
-                <p className="mt-2 text-white/60">Services:</p>
+                <p className="mt-2 text-white">Services:</p>
                 <p className="ml-4">Heating: Condensing gas boilers, 95% efficiency</p>
                 <p className="ml-4">Cooling: VRF system, SEER 5.5</p>
                 <p className="ml-4">Lighting: LED throughout, 8 W/m² average LPD</p>
@@ -914,14 +914,14 @@ const HNCModule6Section1_2 = () => {
                 <strong>Scenario:</strong> Calculate PV system size needed to achieve 10% BER
                 reduction.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given data:</p>
                 <p className="ml-4">Building floor area: 2,500 m²</p>
                 <p className="ml-4">Baseline BER: 26.0 kgCO₂/m²/year</p>
                 <p className="ml-4">Target BER reduction: 10%</p>
                 <p className="ml-4">Grid electricity factor: 0.136 kgCO₂/kWh</p>
                 <p className="ml-4">PV yield (south, 30° tilt): 950 kWh/kWp/year</p>
-                <p className="mt-2 text-white/60">Calculation:</p>
+                <p className="mt-2 text-white">Calculation:</p>
                 <p className="ml-4">Required CO₂ offset = 26.0 × 0.10 = 2.6 kgCO₂/m²/year</p>
                 <p className="ml-4">Total offset = 2.6 × 2,500 = 6,500 kgCO₂/year</p>
                 <p className="ml-4">Electricity equivalent = 6,500 / 0.136 = 47,794 kWh/year</p>
@@ -929,7 +929,7 @@ const HNCModule6Section1_2 = () => {
                   PV capacity = 47,794 / 950 ={' '}
                   <span className="text-green-400">50.3 kWp required</span>
                 </p>
-                <p className="mt-2 text-white/60">Roof check:</p>
+                <p className="mt-2 text-white">Roof check:</p>
                 <p className="ml-4">Approx. 6 m²/kWp → 302 m² roof area needed</p>
                 <p className="ml-4 text-green-400">833 m² available - feasible installation</p>
               </div>
@@ -943,14 +943,14 @@ const HNCModule6Section1_2 = () => {
                 <strong>Scenario:</strong> Compare BER impact of fluorescent vs LED lighting in
                 retail unit.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Retail unit: 1,000 m², 3,000 operating hours/year</p>
-                <p className="mt-2 text-white/60">Option A - T5 Fluorescent:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Retail unit: 1,000 m², 3,000 operating hours/year</p>
+                <p className="mt-2 text-white">Option A - T5 Fluorescent:</p>
                 <p className="ml-4">LPD: 16 W/m²</p>
                 <p className="ml-4">Annual energy: 16 × 1,000 × 3,000 = 48,000 kWh</p>
                 <p className="ml-4">CO₂: 48,000 × 0.136 = 6,528 kgCO₂</p>
                 <p className="ml-4">Per m²: 6.53 kgCO₂/m²/year</p>
-                <p className="mt-2 text-white/60">Option B - LED with Controls:</p>
+                <p className="mt-2 text-white">Option B - LED with Controls:</p>
                 <p className="ml-4">LPD: 10 W/m²</p>
                 <p className="ml-4">Daylight dimming saving: 15%</p>
                 <p className="ml-4">Effective hours: 3,000 × 0.85 = 2,550 hours</p>
@@ -1043,7 +1043,7 @@ const HNCModule6Section1_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1089,7 +1089,7 @@ const HNCModule6Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section1">

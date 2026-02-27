@@ -98,7 +98,7 @@ const BS7671Module3Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bs7671-module-3">
@@ -119,7 +119,7 @@ const BS7671Module3Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Maximum Demand & Diversity
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Calculating realistic electrical loads for efficient design
           </p>
         </header>
@@ -272,32 +272,32 @@ const BS7671Module3Section2 = () => {
                   <tr className="border-t border-white/5">
                     <td className="p-3 font-medium">Lighting</td>
                     <td className="p-3">66% for circuits &gt;5A</td>
-                    <td className="p-3 text-white/70 text-xs">Minimum 5A per circuit</td>
+                    <td className="p-3 text-white text-xs">Minimum 5A per circuit</td>
                   </tr>
                   <tr className="border-t border-white/5">
                     <td className="p-3 font-medium">Socket Outlets</td>
                     <td className="p-3">66% first 10A + 40% remainder</td>
-                    <td className="p-3 text-white/70 text-xs">Per room or area</td>
+                    <td className="p-3 text-white text-xs">Per room or area</td>
                   </tr>
                   <tr className="border-t border-white/5">
                     <td className="p-3 font-medium">Cooker/Hob</td>
                     <td className="p-3">100% first 10A + 30% + 5A</td>
-                    <td className="p-3 text-white/70 text-xs">Socket outlet allowance</td>
+                    <td className="p-3 text-white text-xs">Socket outlet allowance</td>
                   </tr>
                   <tr className="border-t border-white/5">
                     <td className="p-3 font-medium">Water Heating</td>
                     <td className="p-3">100% or time control</td>
-                    <td className="p-3 text-white/70 text-xs">Consider off-peak</td>
+                    <td className="p-3 text-white text-xs">Consider off-peak</td>
                   </tr>
                   <tr className="border-t border-white/5">
                     <td className="p-3 font-medium">Space Heating</td>
                     <td className="p-3">100% first 10kW + 50%</td>
-                    <td className="p-3 text-white/70 text-xs">Thermostat assumed</td>
+                    <td className="p-3 text-white text-xs">Thermostat assumed</td>
                   </tr>
                   <tr className="border-t border-white/5">
                     <td className="p-3 font-medium">Motors</td>
                     <td className="p-3">100% largest + 50% others</td>
-                    <td className="p-3 text-white/70 text-xs">Consider starting currents</td>
+                    <td className="p-3 text-white text-xs">Consider starting currents</td>
                   </tr>
                 </tbody>
               </table>
@@ -379,7 +379,7 @@ const BS7671Module3Section2 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-2">Connected Loads:</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>• Lighting: 5kW</li>
                     <li>• Socket outlets: 15kW</li>
                     <li>• Air conditioning: 8kW</li>
@@ -392,7 +392,7 @@ const BS7671Module3Section2 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-2">Diversity Applied:</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>• Lighting: 5 × 90% = 4.5kW</li>
                     <li>• Sockets: 15 × 75% = 11.25kW</li>
                     <li>• A/C: 8 × 80% = 6.4kW</li>
@@ -404,7 +404,7 @@ const BS7671Module3Section2 = () => {
                   </ul>
                 </div>
               </div>
-              <p className="text-xs text-white/70 mt-3">
+              <p className="text-xs text-white mt-3">
                 Plus 10% safety margin = 29.1kW design capacity (vs 33kW connected)
               </p>
             </div>
@@ -477,7 +477,7 @@ const BS7671Module3Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -489,7 +489,7 @@ const BS7671Module3Section2 = () => {
           <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
             <div>
               <p className="font-medium text-elec-yellow mb-1">Key Domestic Factors</p>
-              <ul className="space-y-0.5 text-white/90">
+              <ul className="space-y-0.5 text-white">
                 <li>Lighting: 66% for &gt;5A circuits</li>
                 <li>Sockets: 66% first 10A, 40% remainder</li>
                 <li>Heating: 100% first 10kW, 50% remainder</li>
@@ -498,7 +498,7 @@ const BS7671Module3Section2 = () => {
             </div>
             <div>
               <p className="font-medium text-elec-yellow mb-1">No Diversity (100%)</p>
-              <ul className="space-y-0.5 text-white/90">
+              <ul className="space-y-0.5 text-white">
                 <li>Emergency lighting</li>
                 <li>Fire alarm systems</li>
                 <li>Life safety equipment</li>
@@ -523,7 +523,7 @@ const BS7671Module3Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bs7671-module-3-section-1">

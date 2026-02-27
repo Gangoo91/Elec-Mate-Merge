@@ -50,7 +50,7 @@ export const StudyCentrePreview = () => {
             <span className="text-sm font-medium text-blue-400">Study Centre</span>
           </div>
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">Learn, Train & Upskill</h2>
-          <p className="text-white/70 max-w-2xl mx-auto">
+          <p className="text-white max-w-2xl mx-auto">
             6,800+ practice questions across apprentice courses, 18th Edition, AM2 prep, and
             specialist upskilling modules.
           </p>
@@ -71,7 +71,7 @@ export const StudyCentrePreview = () => {
               >
                 <div className="flex items-center justify-between mb-2">
                   <h4 className="font-medium text-white text-sm">{topic.name}</h4>
-                  <span className="text-xs text-white/60">{topic.questions} questions</span>
+                  <span className="text-xs text-white">{topic.questions} questions</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="flex-1 h-2 bg-white/10 rounded-full overflow-hidden">
@@ -105,7 +105,7 @@ export const StudyCentrePreview = () => {
                     </div>
                     <div>
                       <h4 className="font-medium text-white">{feature.title}</h4>
-                      <p className="text-sm text-white/60">{feature.description}</p>
+                      <p className="text-sm text-white">{feature.description}</p>
                     </div>
                   </div>
                 ))}
@@ -114,7 +114,7 @@ export const StudyCentrePreview = () => {
 
             <div className="flex items-center gap-4 p-4 rounded-xl bg-green-500/10 border border-green-500/20">
               <CheckCircle className="w-6 h-6 text-green-400 flex-shrink-0" />
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 <span className="font-semibold text-green-400">93% pass rate</span> for users who
                 complete our practice tests
               </p>

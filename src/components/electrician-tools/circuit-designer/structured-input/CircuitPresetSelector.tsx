@@ -83,7 +83,7 @@ export const CircuitPresetSelector = ({
                     <h4 className="font-semibold text-base sm:text-sm text-white leading-tight">
                       {template.name}
                     </h4>
-                    <p className="text-xs text-white/60 mt-1.5 line-clamp-2">
+                    <p className="text-xs text-white mt-1.5 line-clamp-2">
                       {template.description}
                     </p>
 
@@ -92,7 +92,7 @@ export const CircuitPresetSelector = ({
                         <Badge
                           key={i}
                           variant="outline"
-                          className="text-xs font-medium border-elec-yellow/20 text-white/70 bg-elec-yellow/[0.05]"
+                          className="text-xs font-medium border-elec-yellow/20 text-white bg-elec-yellow/[0.05]"
                         >
                           {c.name}
                         </Badge>

@@ -207,7 +207,7 @@ const HNCModule3Section4_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section4">
@@ -229,7 +229,7 @@ const HNCModule3Section4_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Cable Sizing and Voltage Drop in Three-Phase Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Essential design calculations for three-phase distribution, submains and motor circuits
           </p>
         </header>
@@ -318,7 +318,7 @@ const HNCModule3Section4_5 = () => {
               <p className="font-mono text-center text-xl mb-2">
                 Vd = (mV/A/m × I<sub>b</sub> × L) / 1000
               </p>
-              <div className="grid sm:grid-cols-2 gap-2 mt-4 text-xs text-white/80">
+              <div className="grid sm:grid-cols-2 gap-2 mt-4 text-xs text-white">
                 <div>
                   <p>
                     <strong>Vd</strong> = Voltage drop (Volts)
@@ -345,7 +345,7 @@ const HNCModule3Section4_5 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Important: The √3 Factor
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 BS 7671 tables provide mV/A/m values that{' '}
                 <strong>already include the three-phase geometry factor</strong>. You do NOT
                 multiply by √3 when using table values. The √3 factor is only needed when
@@ -354,11 +354,11 @@ const HNCModule3Section4_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div className="p-3 rounded bg-green-500/10 border border-green-500/30">
                   <p className="font-medium text-green-400 mb-1">Correct (using tables)</p>
-                  <p className="font-mono text-white/80">Vd = mV/A/m × I × L / 1000</p>
+                  <p className="font-mono text-white">Vd = mV/A/m × I × L / 1000</p>
                 </div>
                 <div className="p-3 rounded bg-red-500/10 border border-red-500/30">
                   <p className="font-medium text-red-400 mb-1">Only if using Ω/m values</p>
-                  <p className="font-mono text-white/80">Vd = √3 × I × R × L</p>
+                  <p className="font-mono text-white">Vd = √3 × I × R × L</p>
                 </div>
               </div>
             </div>
@@ -421,7 +421,7 @@ const HNCModule3Section4_5 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Values shown are representative - always use BS 7671 tables for actual design
               </p>
             </div>
@@ -491,7 +491,7 @@ const HNCModule3Section4_5 = () => {
               <p className="text-sm font-medium text-orange-400 mb-2">
                 Important: Total Installation Drop
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 The voltage drop limits apply to the <strong>total</strong> drop from the origin of
                 the installation to the point of use. This includes the submain, distribution board
                 connections, and final circuit. In large installations, you must apportion the
@@ -559,7 +559,7 @@ const HNCModule3Section4_5 = () => {
                 I<sub>t</sub> ≥ I<sub>n</sub> / (C<sub>a</sub> × C<sub>g</sub> × C<sub>i</sub> × C
                 <sub>f</sub>)
               </p>
-              <div className="grid sm:grid-cols-2 gap-2 mt-4 text-xs text-white/80">
+              <div className="grid sm:grid-cols-2 gap-2 mt-4 text-xs text-white">
                 <div>
                   <p>
                     <strong>
@@ -684,7 +684,7 @@ const HNCModule3Section4_5 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Reference method E: On cable tray (spaced) in free air at 30°C ambient
               </p>
             </div>
@@ -1078,7 +1078,7 @@ const HNCModule3Section4_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Underground Installation</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Minimum 600mm depth (750mm under roads)</li>
                     <li className="pl-1">Cable warning tape 150mm above</li>
                     <li className="pl-1">Fine sand bedding and surround</li>
@@ -1087,7 +1087,7 @@ const HNCModule3Section4_5 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Surface Installation</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Cleats at maximum 450mm centres</li>
                     <li className="pl-1">Support within 300mm of terminations</li>
                     <li className="pl-1">Minimum bend radius = 6 × cable diameter</li>
@@ -1099,7 +1099,7 @@ const HNCModule3Section4_5 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
               <p className="text-sm font-medium text-red-400 mb-2">Critical Safety Point</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 The armour must be earthed at <strong>both ends</strong> of the cable. This provides
                 the low-impedance fault path required for protective device operation. Use the
                 armour earth tag connection and verify continuity during commissioning testing.
@@ -1232,7 +1232,7 @@ const HNCModule3Section4_5 = () => {
                 <p className="font-mono text-center text-lg mb-2">
                   L<sub>max</sub> = (V<sub>d max</sub> × 1000) / (mV/A/m × I<sub>b</sub>)
                 </p>
-                <p className="text-xs text-white/70 text-center mt-2">
+                <p className="text-xs text-white text-center mt-2">
                   Useful for determining if a given cable size can serve a distant load
                 </p>
               </div>
@@ -1340,19 +1340,19 @@ const HNCModule3Section4_5 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 *At 400V, 0.85 power factor. Starting current 6-8× full load for DOL start
               </p>
             </div>
 
             <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
               <p className="text-sm font-medium text-blue-400 mb-2">Variable Speed Drives (VSDs)</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 VSDs eliminate high starting currents and allow soft starting, but introduce
                 harmonic currents that can increase voltage drop and heating. When sizing cables for
                 VSD-fed motors:
               </p>
-              <ul className="text-sm text-white/90 mt-2 list-disc list-outside ml-5">
+              <ul className="text-sm text-white mt-2 list-disc list-outside ml-5">
                 <li className="pl-1">Apply 1.1-1.2 multiplier to calculated voltage drop</li>
                 <li className="pl-1">Consider screened cables for EMC compliance</li>
                 <li className="pl-1">Size neutral for harmonics in multi-drive installations</li>
@@ -1374,7 +1374,7 @@ const HNCModule3Section4_5 = () => {
                 <strong>Question:</strong> A 200A submain runs 65m from the main switchboard to a
                 distribution board. Select a suitable SWA/XLPE copper cable and verify voltage drop.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Design current I<sub>b</sub> = 200A
                 </p>
@@ -1411,7 +1411,7 @@ const HNCModule3Section4_5 = () => {
                 distribution board. The cable runs with 4 other circuits in trunking at 40°C
                 ambient. Size the cable.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   I<sub>b</sub> = 30000 / (1.732 × 400 × 0.85) = 50.9A
                 </p>
@@ -1451,7 +1451,7 @@ const HNCModule3Section4_5 = () => {
                 <strong>Question:</strong> What is the maximum run length for a 16mm² copper
                 SWA/XLPE cable supplying an 80A three-phase load with 3% voltage drop limit?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Maximum V<sub>d</sub> = 400V × 3% = 12V
                 </p>
@@ -1562,7 +1562,7 @@ const HNCModule3Section4_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1608,7 +1608,7 @@ const HNCModule3Section4_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section4-4">

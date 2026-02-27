@@ -205,7 +205,7 @@ export default function FirstAidModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-3">
@@ -228,7 +228,7 @@ export default function FirstAidModule3Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Shock &amp; Anaphylaxis
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Recognising and treating circulatory shock, understanding the different types of shock,
             managing anaphylaxis, and using adrenaline auto-injectors in line with UK Resuscitation
             Council guidelines
@@ -345,21 +345,21 @@ export default function FirstAidModule3Section4() {
                 <div className="grid sm:grid-cols-3 gap-3">
                   <div className="bg-black/30 rounded-lg p-3 text-center">
                     <p className="text-rose-400 font-semibold text-sm mb-1">The Pump</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       The heart must beat effectively to push blood around the body. If the heart
                       fails (cardiogenic shock), circulation collapses.
                     </p>
                   </div>
                   <div className="bg-black/30 rounded-lg p-3 text-center">
                     <p className="text-rose-400 font-semibold text-sm mb-1">The Volume</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       There must be enough blood in the system. Severe bleeding, burns or fluid loss
                       reduces blood volume (hypovolaemic shock).
                     </p>
                   </div>
                   <div className="bg-black/30 rounded-lg p-3 text-center">
                     <p className="text-rose-400 font-semibold text-sm mb-1">The Vessels</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Blood vessels must maintain tone and integrity. If they dilate excessively
                       (anaphylaxis, sepsis), blood pressure drops catastrophically.
                     </p>
@@ -394,7 +394,7 @@ export default function FirstAidModule3Section4() {
                     </span>
                     <p className="text-sm font-medium text-red-400">Hypovolaemic Shock</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Caused by severe loss of blood or body fluids, reducing the volume of
                     circulating blood below what is needed to maintain adequate perfusion. This is
                     the type of shock most commonly encountered by first aiders.
@@ -406,7 +406,7 @@ export default function FirstAidModule3Section4() {
                       'Severe dehydration',
                       'Prolonged vomiting or diarrhoea',
                     ].map((cause, i) => (
-                      <div key={i} className="flex items-start gap-2 text-xs text-white/70">
+                      <div key={i} className="flex items-start gap-2 text-xs text-white">
                         <span className="mt-1 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                         <span>{cause}</span>
                       </div>
@@ -420,7 +420,7 @@ export default function FirstAidModule3Section4() {
                     <Heart className="h-4 w-4 text-purple-400" />
                     <p className="text-sm font-medium text-purple-400">Cardiogenic Shock</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     The heart fails to pump blood effectively, so despite adequate blood volume and
                     intact vessels, circulation is insufficient. The pump itself has failed.
                   </p>
@@ -431,7 +431,7 @@ export default function FirstAidModule3Section4() {
                       'Serious cardiac arrhythmia',
                       'Cardiac tamponade',
                     ].map((cause, i) => (
-                      <div key={i} className="flex items-start gap-2 text-xs text-white/70">
+                      <div key={i} className="flex items-start gap-2 text-xs text-white">
                         <span className="mt-1 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                         <span>{cause}</span>
                       </div>
@@ -445,7 +445,7 @@ export default function FirstAidModule3Section4() {
                     <AlertTriangle className="h-4 w-4 text-orange-400" />
                     <p className="text-sm font-medium text-orange-400">Anaphylactic Shock</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     A severe, life-threatening allergic reaction causes widespread vasodilation
                     (blood vessels relax and widen) and swelling of the airway. Blood pressure drops
                     catastrophically because the vessels can no longer maintain adequate tone.
@@ -457,7 +457,7 @@ export default function FirstAidModule3Section4() {
                       'Medications (antibiotics, NSAIDs)',
                       'Latex, shellfish, certain foods',
                     ].map((cause, i) => (
-                      <div key={i} className="flex items-start gap-2 text-xs text-white/70">
+                      <div key={i} className="flex items-start gap-2 text-xs text-white">
                         <span className="mt-1 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                         <span>{cause}</span>
                       </div>
@@ -471,7 +471,7 @@ export default function FirstAidModule3Section4() {
                     <Shield className="h-4 w-4 text-blue-400" />
                     <p className="text-sm font-medium text-blue-400">Neurogenic Shock</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     A spinal cord injury disrupts the nervous system&rsquo;s control of blood vessel
                     tone. Without sympathetic nerve signals, blood vessels below the injury dilate
                     uncontrollably, causing blood pressure to drop.
@@ -481,7 +481,7 @@ export default function FirstAidModule3Section4() {
                       'Spinal cord injury (trauma to spine)',
                       'Severe head injury affecting brainstem',
                     ].map((cause, i) => (
-                      <div key={i} className="flex items-start gap-2 text-xs text-white/70">
+                      <div key={i} className="flex items-start gap-2 text-xs text-white">
                         <span className="mt-1 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                         <span>{cause}</span>
                       </div>
@@ -495,7 +495,7 @@ export default function FirstAidModule3Section4() {
                     <Shield className="h-4 w-4 text-teal-400" />
                     <p className="text-sm font-medium text-teal-400">Septic Shock</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     An overwhelming infection triggers a massive systemic inflammatory response.
                     Toxins released by bacteria cause widespread vasodilation and damage to blood
                     vessel walls, leading to dangerously low blood pressure.
@@ -503,7 +503,7 @@ export default function FirstAidModule3Section4() {
                   <div className="grid sm:grid-cols-2 gap-2">
                     {['Severe bacterial infection (sepsis)', 'Infected wounds, pneumonia, UTI'].map(
                       (cause, i) => (
-                        <div key={i} className="flex items-start gap-2 text-xs text-white/70">
+                        <div key={i} className="flex items-start gap-2 text-xs text-white">
                           <span className="mt-1 w-1 h-1 rounded-full bg-teal-400 flex-shrink-0" />
                           <span>{cause}</span>
                         </div>
@@ -532,42 +532,42 @@ export default function FirstAidModule3Section4() {
                   </div>
 
                   <div className="p-3 text-red-300 border-b border-white/10">Hypovolaemic</div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10">
+                  <div className="p-3 text-white border-b border-l border-white/10">
                     Low blood volume
                   </div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10">
+                  <div className="p-3 text-white border-b border-l border-white/10">
                     Bleeding, burns
                   </div>
 
                   <div className="p-3 text-purple-300 border-b border-white/10">Cardiogenic</div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10">
+                  <div className="p-3 text-white border-b border-l border-white/10">
                     Heart pump failure
                   </div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10">
+                  <div className="p-3 text-white border-b border-l border-white/10">
                     Heart attack
                   </div>
 
                   <div className="p-3 text-orange-300 border-b border-white/10">Anaphylactic</div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10">
+                  <div className="p-3 text-white border-b border-l border-white/10">
                     Vessel dilation + airway swelling
                   </div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10">
+                  <div className="p-3 text-white border-b border-l border-white/10">
                     Allergic reaction
                   </div>
 
                   <div className="p-3 text-blue-300 border-b border-white/10">Neurogenic</div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10">
+                  <div className="p-3 text-white border-b border-l border-white/10">
                     Loss of vessel tone
                   </div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10">
+                  <div className="p-3 text-white border-b border-l border-white/10">
                     Spinal injury
                   </div>
 
                   <div className="p-3 text-teal-300">Septic</div>
-                  <div className="p-3 text-white/80 border-l border-white/10">
+                  <div className="p-3 text-white border-l border-white/10">
                     Infection &rarr; inflammation
                   </div>
-                  <div className="p-3 text-white/80 border-l border-white/10">Severe infection</div>
+                  <div className="p-3 text-white border-l border-white/10">Severe infection</div>
                 </div>
               </div>
             </div>
@@ -643,7 +643,7 @@ export default function FirstAidModule3Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-rose-400 mb-1">{item.sign}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -656,11 +656,11 @@ export default function FirstAidModule3Section4() {
                     Late Signs &mdash; Shock Is Worsening
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   If the following signs develop, the casualty&rsquo;s condition is deteriorating
                   rapidly. CPR may be needed at any moment.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -693,12 +693,12 @@ export default function FirstAidModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
-                  <Shield className="h-5 w-5 text-white/60" />
+                  <Shield className="h-5 w-5 text-white" />
                   <p className="text-sm font-medium text-white">
                     Recognising Shock in Darker Skin Tones
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Pallor and cyanosis may not be visible on the skin surface in people with darker
                   skin tones. Instead, check the{' '}
                   <strong className="text-white">mucous membranes</strong>: gently pull down the
@@ -775,7 +775,7 @@ export default function FirstAidModule3Section4() {
                       </span>
                       <div>
                         <p className="text-sm font-medium text-white">{item.title}</p>
-                        <p className="text-sm text-white/80">{item.desc}</p>
+                        <p className="text-sm text-white">{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -786,7 +786,7 @@ export default function FirstAidModule3Section4() {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-green-400 mb-3">DO</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                       <span>Call 999 immediately</span>
@@ -815,7 +815,7 @@ export default function FirstAidModule3Section4() {
                 </div>
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-red-400 mb-3">DO NOT</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                       <span>Give food or drink (risk of vomiting; may need surgery)</span>
@@ -846,12 +846,12 @@ export default function FirstAidModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
-                  <Link2 className="h-5 w-5 text-white/60" />
+                  <Link2 className="h-5 w-5 text-white" />
                   <p className="text-sm font-medium text-white">
                     If the Casualty Becomes Unconscious
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -917,7 +917,7 @@ export default function FirstAidModule3Section4() {
                 <div className="grid sm:grid-cols-3 gap-3">
                   <div className="bg-black/30 rounded-lg p-3">
                     <p className="text-xs font-medium text-orange-400 mb-2">Insect Stings</p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                         <span>Bee stings</span>
@@ -930,7 +930,7 @@ export default function FirstAidModule3Section4() {
                   </div>
                   <div className="bg-black/30 rounded-lg p-3">
                     <p className="text-xs font-medium text-amber-400 mb-2">Foods</p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                         <span>Peanuts &amp; tree nuts</span>
@@ -947,7 +947,7 @@ export default function FirstAidModule3Section4() {
                   </div>
                   <div className="bg-black/30 rounded-lg p-3">
                     <p className="text-xs font-medium text-purple-400 mb-2">Other</p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                         <span>Latex</span>
@@ -977,7 +977,7 @@ export default function FirstAidModule3Section4() {
                       </span>
                     </div>
                     <div>
-                      <ul className="text-sm text-white/80 space-y-1">
+                      <ul className="text-sm text-white space-y-1">
                         <li className="flex items-start gap-2">
                           <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                           <span>Swelling of the tongue and/or throat</span>
@@ -1007,7 +1007,7 @@ export default function FirstAidModule3Section4() {
                       </span>
                     </div>
                     <div>
-                      <ul className="text-sm text-white/80 space-y-1">
+                      <ul className="text-sm text-white space-y-1">
                         <li className="flex items-start gap-2">
                           <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                           <span>Wheeze (bronchospasm)</span>
@@ -1037,7 +1037,7 @@ export default function FirstAidModule3Section4() {
                       </span>
                     </div>
                     <div>
-                      <ul className="text-sm text-white/80 space-y-1">
+                      <ul className="text-sm text-white space-y-1">
                         <li className="flex items-start gap-2">
                           <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                           <span>Dizziness, feeling faint</span>
@@ -1067,7 +1067,7 @@ export default function FirstAidModule3Section4() {
                       </span>
                     </div>
                     <div>
-                      <ul className="text-sm text-white/80 space-y-1">
+                      <ul className="text-sm text-white space-y-1">
                         <li className="flex items-start gap-2">
                           <span className="mt-1.5 w-1 h-1 rounded-full bg-pink-400 flex-shrink-0" />
                           <span>
@@ -1096,7 +1096,7 @@ export default function FirstAidModule3Section4() {
                       </span>
                     </div>
                     <div>
-                      <ul className="text-sm text-white/80 space-y-1">
+                      <ul className="text-sm text-white space-y-1">
                         <li className="flex items-start gap-2">
                           <span className="mt-1.5 w-1 h-1 rounded-full bg-teal-400 flex-shrink-0" />
                           <span>Abdominal pain, nausea, vomiting</span>
@@ -1141,7 +1141,7 @@ export default function FirstAidModule3Section4() {
                     Key Facts &mdash; Adrenaline Auto-Injectors
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1203,31 +1203,31 @@ export default function FirstAidModule3Section4() {
                   </div>
 
                   {/* Safety Cap */}
-                  <div className="p-3 text-white/80 border-b border-white/10">Safety cap</div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10 text-center">
+                  <div className="p-3 text-white border-b border-white/10">Safety cap</div>
+                  <div className="p-3 text-white border-b border-l border-white/10 text-center">
                     Blue cap (pull off)
                   </div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10 text-center">
+                  <div className="p-3 text-white border-b border-l border-white/10 text-center">
                     Yellow cap (pull off)
                   </div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10 text-center">
+                  <div className="p-3 text-white border-b border-l border-white/10 text-center">
                     Needle shield cap (pull off)
                   </div>
 
                   {/* Activation */}
-                  <div className="p-3 text-white/80 border-b border-white/10">Activation</div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10 text-center">
+                  <div className="p-3 text-white border-b border-white/10">Activation</div>
+                  <div className="p-3 text-white border-b border-l border-white/10 text-center">
                     Press orange tip firmly against thigh
                   </div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10 text-center">
+                  <div className="p-3 text-white border-b border-l border-white/10 text-center">
                     Press black tip firmly against thigh
                   </div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10 text-center">
+                  <div className="p-3 text-white border-b border-l border-white/10 text-center">
                     Press needle end firmly against thigh
                   </div>
 
                   {/* Hold Time */}
-                  <div className="p-3 text-white/80 border-b border-white/10">Hold time</div>
+                  <div className="p-3 text-white border-b border-white/10">Hold time</div>
                   <div className="p-3 text-amber-300 font-medium border-b border-l border-white/10 text-center">
                     10 seconds
                   </div>
@@ -1239,26 +1239,26 @@ export default function FirstAidModule3Section4() {
                   </div>
 
                   {/* Adult Dose */}
-                  <div className="p-3 text-white/80 border-b border-white/10">Adult dose</div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10 text-center">
+                  <div className="p-3 text-white border-b border-white/10">Adult dose</div>
+                  <div className="p-3 text-white border-b border-l border-white/10 text-center">
                     300&micro;g
                   </div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10 text-center">
+                  <div className="p-3 text-white border-b border-l border-white/10 text-center">
                     300&micro;g
                   </div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10 text-center">
+                  <div className="p-3 text-white border-b border-l border-white/10 text-center">
                     300&micro;g
                   </div>
 
                   {/* Junior Dose */}
-                  <div className="p-3 text-white/80">Junior dose</div>
-                  <div className="p-3 text-white/80 border-l border-white/10 text-center">
+                  <div className="p-3 text-white">Junior dose</div>
+                  <div className="p-3 text-white border-l border-white/10 text-center">
                     150&micro;g
                   </div>
-                  <div className="p-3 text-white/80 border-l border-white/10 text-center">
+                  <div className="p-3 text-white border-l border-white/10 text-center">
                     150&micro;g
                   </div>
-                  <div className="p-3 text-white/80 border-l border-white/10 text-center">
+                  <div className="p-3 text-white border-l border-white/10 text-center">
                     150&micro;g
                   </div>
                 </div>
@@ -1303,7 +1303,7 @@ export default function FirstAidModule3Section4() {
                       </span>
                       <div>
                         <p className="text-sm font-medium text-white">{item.title}</p>
-                        <p className="text-sm text-white/80">{item.desc}</p>
+                        <p className="text-sm text-white">{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -1315,7 +1315,7 @@ export default function FirstAidModule3Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Positioning the Casualty in Anaphylaxis
                 </p>
-                <p className="text-sm text-white/80 mb-4">
+                <p className="text-sm text-white mb-4">
                   The correct position depends on the casualty&rsquo;s predominant symptoms. Getting
                   the position wrong can worsen their condition.
                 </p>
@@ -1324,7 +1324,7 @@ export default function FirstAidModule3Section4() {
                     <p className="text-xs font-medium text-blue-400 mb-2">
                       Breathing Difficulty Predominant
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       <strong className="text-white">Sit upright.</strong> This position reduces the
                       work of breathing and uses gravity to help keep the airway open. Support the
                       casualty in a comfortable sitting position.
@@ -1334,7 +1334,7 @@ export default function FirstAidModule3Section4() {
                     <p className="text-xs font-medium text-purple-400 mb-2">
                       Feeling Faint or Dizzy
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       <strong className="text-white">Lie flat with legs raised.</strong> Low blood
                       pressure is the predominant problem. Raising the legs improves venous return
                       and helps maintain blood flow to the brain.
@@ -1344,14 +1344,14 @@ export default function FirstAidModule3Section4() {
                     <p className="text-xs font-medium text-green-400 mb-2">
                       Unconscious but Breathing
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       <strong className="text-white">Recovery position.</strong> Protect the airway
                       by placing the casualty on their side. Continue to monitor breathing closely.
                     </p>
                   </div>
                   <div className="bg-amber-500/10 border border-amber-500/30 p-3 rounded-lg">
                     <p className="text-xs font-medium text-amber-400 mb-2">Pregnant Casualty</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       <strong className="text-white">Left lateral position.</strong> Lie on the left
                       side to prevent the weight of the uterus from compressing the inferior vena
                       cava, which would further reduce blood return to the heart.
@@ -1367,7 +1367,7 @@ export default function FirstAidModule3Section4() {
                     NEVER Stand a Casualty with Anaphylaxis Up
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Standing or sitting upright suddenly (when the casualty is hypotensive) can cause
                   a fatal cardiac arrest. The already dangerously low blood pressure drops further
                   when the casualty stands, as blood pools in the legs due to gravity and the
@@ -1382,7 +1382,7 @@ export default function FirstAidModule3Section4() {
                 <p className="text-sm font-medium text-rose-400 mb-2">
                   Why ALWAYS Call 999 After Using an Auto-Injector?
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Even if the adrenaline works and the casualty&rsquo;s symptoms resolve completely,
                   a <strong className="text-white">biphasic reaction</strong> can occur &mdash; a
                   second wave of anaphylaxis that returns hours later (typically 4&ndash;12 hours,
@@ -1404,7 +1404,7 @@ export default function FirstAidModule3Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1418,7 +1418,7 @@ export default function FirstAidModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-3">

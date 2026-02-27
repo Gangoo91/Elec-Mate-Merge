@@ -197,7 +197,7 @@ const HNCModule3Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section4">
@@ -219,7 +219,7 @@ const HNCModule3Section4_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Calculations of Three-Phase Power
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Real power (kW), apparent power (kVA), reactive power (kVAr), and power factor in
             three-phase systems
           </p>
@@ -308,7 +308,7 @@ const HNCModule3Section4_4 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 P = √3 × V<sub>L</sub> × I<sub>L</sub> × cos φ
               </p>
-              <div className="text-xs text-white/70 text-center space-y-1">
+              <div className="text-xs text-white text-center space-y-1">
                 <p>P = Real power (watts)</p>
                 <p>VL = Line voltage (400V in UK)</p>
                 <p>IL = Line current (amps)</p>
@@ -318,7 +318,7 @@ const HNCModule3Section4_4 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Why √3 (1.732)?</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 The √3 factor arises from the 120° phase displacement between the three phases. In a
                 balanced three-phase system, power is delivered continuously (unlike single-phase
                 which pulsates). The mathematical derivation shows that total instantaneous power
@@ -398,7 +398,7 @@ const HNCModule3Section4_4 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 S = √3 × V<sub>L</sub> × I<sub>L</sub>
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Unit: Volt-Amperes (VA) or kilovolt-amperes (kVA)
               </p>
             </div>
@@ -505,7 +505,7 @@ const HNCModule3Section4_4 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 Q = √3 × V<sub>L</sub> × I<sub>L</sub> × sin φ
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Unit: Volt-Amperes Reactive (VAr) or kilovolt-amperes reactive (kVAr)
               </p>
             </div>
@@ -513,7 +513,7 @@ const HNCModule3Section4_4 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Power Triangle</p>
               <div className="p-4 bg-black/30 rounded text-center">
-                <pre className="text-sm font-mono text-white/90">
+                <pre className="text-sm font-mono text-white">
                   {`              S (kVA)
              /|
             / |
@@ -563,7 +563,7 @@ cos φ = P/S (Power Factor)`}
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Net reactive power:</strong> Q<sub>net</sub> = Q<sub>L</sub> - Q<sub>C</sub>.
               Power factor correction adds capacitive kVAr to cancel inductive kVAr.
             </p>
@@ -586,7 +586,7 @@ cos φ = P/S (Power Factor)`}
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Connection Arrangement</p>
               <div className="p-4 bg-black/30 rounded">
-                <pre className="text-sm font-mono text-white/90">
+                <pre className="text-sm font-mono text-white">
                   {`Three-Phase Supply          Load
      L1 ────────┬─────────────┐
                 │             │
@@ -613,13 +613,13 @@ W2: Current coil in L3, voltage coil L3-L2`}
                   <p className="font-mono text-center mb-1">
                     P<sub>total</sub> = W<sub>1</sub> + W<sub>2</sub>
                   </p>
-                  <p className="text-xs text-white/70 text-center">Total real power</p>
+                  <p className="text-xs text-white text-center">Total real power</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-mono text-center mb-1">
                     tan φ = √3 × (W<sub>1</sub> - W<sub>2</sub>) / (W<sub>1</sub> + W<sub>2</sub>)
                   </p>
-                  <p className="text-xs text-white/70 text-center">Power factor angle</p>
+                  <p className="text-xs text-white text-center">Power factor angle</p>
                 </div>
               </div>
             </div>
@@ -699,15 +699,15 @@ W2: Current coil in L3, voltage coil L3-L2`}
               <div className="grid grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">pf = P / S</p>
-                  <p className="text-white/70 text-xs">Basic definition</p>
+                  <p className="text-white text-xs">Basic definition</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">pf = cos φ</p>
-                  <p className="text-white/70 text-xs">Phase angle method</p>
+                  <p className="text-white text-xs">Phase angle method</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">pf = kW / kVA</p>
-                  <p className="text-white/70 text-xs">Practical form</p>
+                  <p className="text-white text-xs">Practical form</p>
                 </div>
               </div>
             </div>
@@ -834,11 +834,11 @@ W2: Current coil in L3, voltage coil L3-L2`}
               <div className="grid grid-cols-2 gap-4 text-center">
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-mono mb-1">kVA = kW / pf</p>
-                  <p className="text-xs text-white/70">kW to kVA</p>
+                  <p className="text-xs text-white">kW to kVA</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-mono mb-1">kW = kVA × pf</p>
-                  <p className="text-xs text-white/70">kVA to kW</p>
+                  <p className="text-xs text-white">kVA to kW</p>
                 </div>
               </div>
             </div>
@@ -847,7 +847,7 @@ W2: Current coil in L3, voltage coil L3-L2`}
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Example: Sizing a Transformer
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Building load: 200kW at 0.8 power factor</p>
                 <p className="mt-2">
                   Required kVA = 200 / 0.8 = <strong>250 kVA</strong>
@@ -855,11 +855,11 @@ W2: Current coil in L3, voltage coil L3-L2`}
                 <p className="mt-2">
                   Select transformer: <strong>315 kVA</strong> (next standard size)
                 </p>
-                <p className="mt-2 text-white/60">This provides ~25% spare capacity for growth</p>
+                <p className="mt-2 text-white">This provides ~25% spare capacity for growth</p>
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Common error:</strong> Specifying a 200kW generator for a 200kW load. At
               0.8pf, this load requires 250kVA, so a 250kVA (200kW) generator would be fully loaded.
             </p>
@@ -1003,7 +1003,7 @@ W2: Current coil in L3, voltage coil L3-L2`}
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Transformer Sizing Methodology
               </p>
-              <div className="bg-black/30 p-4 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-4 rounded text-sm text-white">
                 <ol className="space-y-2 list-decimal list-outside ml-5">
                   <li className="pl-1">Calculate maximum demand (kW) with diversity</li>
                   <li className="pl-1">Divide by expected power factor: kVA = kW / pf</li>
@@ -1072,7 +1072,7 @@ W2: Current coil in L3, voltage coil L3-L2`}
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Note: Full load current calculated at 400V three-phase: I = kVA × 1000 / (√3 × 400)
               </p>
             </div>
@@ -1124,7 +1124,7 @@ W2: Current coil in L3, voltage coil L3-L2`}
                 <strong>Question:</strong> A three-phase induction motor draws 45A at 400V with a
                 power factor of 0.85. Calculate the real, apparent, and reactive power.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Apparent power: S = √3 × VL × IL</p>
                 <p>
                   S = 1.732 × 400 × 45 = <strong>31,176 VA = 31.2 kVA</strong>
@@ -1138,7 +1138,7 @@ W2: Current coil in L3, voltage coil L3-L2`}
                 <p>
                   Q = 31.2 × 0.527 = <strong>16.4 kVAr</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Check: √(26.5² + 16.4²) = √(702 + 269) = √971 = 31.2 kVA ✓
                 </p>
               </div>
@@ -1152,7 +1152,7 @@ W2: Current coil in L3, voltage coil L3-L2`}
                 <strong>Question:</strong> Two wattmeters connected to a balanced three-phase load
                 read 42kW and 18kW. Calculate the total power and power factor.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Total power: P = W1 + W2</p>
                 <p>
                   P = 42 + 18 = <strong>60 kW</strong>
@@ -1176,7 +1176,7 @@ W2: Current coil in L3, voltage coil L3-L2`}
                 with: Lighting 80kW, Small power 120kW, HVAC 200kW, Lifts 60kW. Apply appropriate
                 diversity.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Apply diversity factors:</p>
                 <p>Lighting: 80 × 0.95 = 76 kW</p>
                 <p>Small power: 120 × 0.40 = 48 kW</p>
@@ -1205,7 +1205,7 @@ W2: Current coil in L3, voltage coil L3-L2`}
                 <strong>Question:</strong> A factory has a load of 500kW at 0.7 power factor.
                 Calculate the capacitor kVAr required to improve pf to 0.95.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Original reactive power:</p>
                 <p>φ1 = cos⁻¹(0.7) = 45.57°</p>
                 <p>
@@ -1220,7 +1220,7 @@ W2: Current coil in L3, voltage coil L3-L2`}
                 <p>
                   QC = 510 - 164 = <strong>346 kVAr</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This reduces kVA from 714 to 526 - a 26% reduction in demand
                 </p>
               </div>
@@ -1313,7 +1313,7 @@ W2: Current coil in L3, voltage coil L3-L2`}
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1359,7 +1359,7 @@ W2: Current coil in L3, voltage coil L3-L2`}
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section4-3">

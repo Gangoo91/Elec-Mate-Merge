@@ -75,7 +75,7 @@ const CVProgressRing = ({
     if (progress >= 75) return 'text-blue-400';
     if (progress >= 50) return 'text-cyan-400';
     if (progress >= 25) return 'text-amber-400';
-    return 'text-white/60';
+    return 'text-white';
   };
 
   return (
@@ -148,7 +148,7 @@ const CVProgressRing = ({
             <motion.span className={cn('text-2xl font-bold', getTextColor())} key={displayProgress}>
               {displayProgress}%
             </motion.span>
-            {children || <span className="text-xs text-white/50 mt-0.5">Complete</span>}
+            {children || <span className="text-xs text-white mt-0.5">Complete</span>}
           </div>
         ) : (
           children

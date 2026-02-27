@@ -73,14 +73,14 @@ export default function InspectionHome() {
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 Inspection & Testing
               </h1>
-              <p className="text-sm text-white/60">Create and manage electrical certificates</p>
+              <p className="text-sm text-white">Create and manage electrical certificates</p>
             </div>
           </div>
           <Link to="/electrician">
             <Button
               variant="outline"
               size="sm"
-              className="h-10 px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
+              className="h-10 px-4 border-white/20 text-white hover:text-white hover:bg-white/10 gap-2 touch-manipulation"
             >
               <ArrowLeft className="h-4 w-4" />
               Back to Hub
@@ -100,7 +100,7 @@ export default function InspectionHome() {
           <Button
             variant="outline"
             onClick={() => navigate('/electrician/inspection-testing/learning')}
-            className="border-white/20 text-white/80 hover:text-white hover:bg-white/10 gap-2 h-11 px-5 touch-manipulation"
+            className="border-white/20 text-white hover:text-white hover:bg-white/10 gap-2 h-11 px-5 touch-manipulation"
           >
             <BookOpen className="h-4 w-4" />
             Learning Hub
@@ -112,7 +112,7 @@ export default function InspectionHome() {
           {/* Search Bar */}
           <div className="relative">
             {!searchQuery && (
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
             )}
             <Input
               type="text"
@@ -120,7 +120,7 @@ export default function InspectionHome() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className={cn(
-                'h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-amber-500/50 focus:ring-amber-500/20',
+                'h-11 bg-white/5 border-white/10 text-white placeholder:text-white focus:border-amber-500/50 focus:ring-amber-500/20',
                 !searchQuery && 'pl-10'
               )}
             />
@@ -131,25 +131,25 @@ export default function InspectionHome() {
             <TabsList className="w-full sm:w-auto mb-6 bg-white/5 border border-white/10 p-1 h-auto flex-wrap">
               <TabsTrigger
                 value="all"
-                className="data-[state=active]:bg-amber-500 data-[state=active]:text-black text-white/70 text-sm px-3 py-2"
+                className="data-[state=active]:bg-amber-500 data-[state=active]:text-black text-white text-sm px-3 py-2"
               >
                 All ({filteredCertificates.length})
               </TabsTrigger>
               <TabsTrigger
                 value="eicr"
-                className="data-[state=active]:bg-amber-500 data-[state=active]:text-black text-white/70 text-sm px-3 py-2"
+                className="data-[state=active]:bg-amber-500 data-[state=active]:text-black text-white text-sm px-3 py-2"
               >
                 EICR ({filterByType('EICR').length})
               </TabsTrigger>
               <TabsTrigger
                 value="eic"
-                className="data-[state=active]:bg-amber-500 data-[state=active]:text-black text-white/70 text-sm px-3 py-2"
+                className="data-[state=active]:bg-amber-500 data-[state=active]:text-black text-white text-sm px-3 py-2"
               >
                 EIC ({filterByType('EIC').length})
               </TabsTrigger>
               <TabsTrigger
                 value="minor"
-                className="data-[state=active]:bg-amber-500 data-[state=active]:text-black text-white/70 text-sm px-3 py-2"
+                className="data-[state=active]:bg-amber-500 data-[state=active]:text-black text-white text-sm px-3 py-2"
               >
                 Minor Works ({filterByType('Minor Works').length})
               </TabsTrigger>
@@ -242,10 +242,10 @@ export default function InspectionHome() {
           {filteredCertificates.length === 0 && (
             <div className="text-center py-12 px-4">
               <div className="p-4 rounded-full bg-white/5 w-fit mx-auto mb-4">
-                <FileText className="h-12 w-12 text-white/30" />
+                <FileText className="h-12 w-12 text-white" />
               </div>
               <h3 className="text-lg font-semibold text-white mb-2">No certificates found</h3>
-              <p className="text-sm text-white/60 mb-6">
+              <p className="text-sm text-white mb-6">
                 {searchQuery
                   ? 'Try adjusting your search'
                   : 'Create your first certificate to get started'}

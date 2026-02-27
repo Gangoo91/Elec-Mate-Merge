@@ -208,7 +208,7 @@ export default function ManualHandlingModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-3">
@@ -233,7 +233,7 @@ export default function ManualHandlingModule3Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Designing Out Manual Handling
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How to reduce or eliminate manual handling risk through elimination, substitution,
             automation, delivery planning, storage design, workstation design, and packaging
             improvements
@@ -343,7 +343,7 @@ export default function ManualHandlingModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Examples of Elimination</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -413,7 +413,7 @@ export default function ManualHandlingModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Substitution Methods</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -477,7 +477,7 @@ export default function ManualHandlingModule3Section4() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-bold text-emerald-400 mb-2">Automation</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                       <span>Conveyor systems for material transport</span>
@@ -498,7 +498,7 @@ export default function ManualHandlingModule3Section4() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-bold text-emerald-400 mb-2">Mechanisation</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                       <span>Powered pallet trucks and stackers</span>
@@ -524,7 +524,7 @@ export default function ManualHandlingModule3Section4() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Important</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Automation and mechanisation introduce their own hazards (moving parts, electrical
                   energy, noise, maintenance requirements). These must be assessed and controlled.
                   The overall risk should still be lower than the original manual handling task
@@ -552,7 +552,7 @@ export default function ManualHandlingModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Delivery Planning Measures</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -623,7 +623,7 @@ export default function ManualHandlingModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Storage Design Principles</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -672,13 +672,13 @@ export default function ManualHandlingModule3Section4() {
                 <p className="text-sm font-medium text-white mb-2">The Power Zone</p>
                 <div className="bg-emerald-500/10 border border-emerald-500/30 p-3 rounded-lg text-center">
                   <div className="space-y-1 text-xs">
-                    <div className="py-2 px-4 bg-white/5 rounded border border-white/10 text-white/60">
+                    <div className="py-2 px-4 bg-white/5 rounded border border-white/10 text-white">
                       Above shoulder &mdash; LIGHT items only
                     </div>
                     <div className="py-3 px-4 bg-emerald-500/20 rounded border border-emerald-500/30 text-emerald-300 font-bold">
                       Waist to shoulder &mdash; HEAVY &amp; frequent items (POWER ZONE)
                     </div>
-                    <div className="py-2 px-4 bg-white/5 rounded border border-white/10 text-white/60">
+                    <div className="py-2 px-4 bg-white/5 rounded border border-white/10 text-white">
                       Knee to waist &mdash; Medium items
                     </div>
                     <div className="py-2 px-4 bg-red-500/10 rounded border border-red-500/20 text-red-300">
@@ -708,7 +708,7 @@ export default function ManualHandlingModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Workstation Design Principles</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -764,7 +764,7 @@ export default function ManualHandlingModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Packaging Design Measures</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -823,48 +823,48 @@ export default function ManualHandlingModule3Section4() {
             Hierarchy of MH Reduction
           </h2>
           <div className="bg-white/5 border border-emerald-500/30 rounded-xl p-4 sm:p-6">
-            <p className="text-xs text-white/60 text-center mb-4">
+            <p className="text-xs text-white text-center mb-4">
               Most effective at top, least effective at bottom
             </p>
             <div className="space-y-2 max-w-lg mx-auto">
               {/* Level 1 - Eliminate */}
               <div className="bg-emerald-500/20 border border-emerald-500/40 rounded-lg px-4 py-3 text-center">
                 <p className="text-sm font-bold text-emerald-300">ELIMINATE</p>
-                <p className="text-xs text-white/70">Remove the manual handling task entirely</p>
+                <p className="text-xs text-white">Remove the manual handling task entirely</p>
               </div>
 
-              <div className="text-center text-white/30 text-xs">&darr;</div>
+              <div className="text-center text-white text-xs">&darr;</div>
 
               {/* Level 2 - Automate */}
               <div className="bg-emerald-500/15 border border-emerald-500/30 rounded-lg px-4 py-3 text-center mx-4">
                 <p className="text-sm font-bold text-emerald-300/90">AUTOMATE</p>
-                <p className="text-xs text-white/70">Use powered systems with no human handling</p>
+                <p className="text-xs text-white">Use powered systems with no human handling</p>
               </div>
 
-              <div className="text-center text-white/30 text-xs">&darr;</div>
+              <div className="text-center text-white text-xs">&darr;</div>
 
               {/* Level 3 - Mechanise */}
               <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg px-4 py-3 text-center mx-8">
                 <p className="text-sm font-bold text-emerald-400/80">MECHANISE</p>
-                <p className="text-xs text-white/70">Use mechanical aids to assist the handler</p>
+                <p className="text-xs text-white">Use mechanical aids to assist the handler</p>
               </div>
 
-              <div className="text-center text-white/30 text-xs">&darr;</div>
+              <div className="text-center text-white text-xs">&darr;</div>
 
               {/* Level 4 - Improve Task */}
               <div className="bg-white/5 border border-white/10 rounded-lg px-4 py-3 text-center mx-12">
-                <p className="text-sm font-bold text-white/70">IMPROVE TASK</p>
-                <p className="text-xs text-white/60">
+                <p className="text-sm font-bold text-white">IMPROVE TASK</p>
+                <p className="text-xs text-white">
                   Better storage, delivery, packaging, workstation design
                 </p>
               </div>
             </div>
 
             <div className="mt-4 pt-4 border-t border-white/10">
-              <div className="flex items-start gap-2 text-xs text-white/60 max-w-lg mx-auto">
+              <div className="flex items-start gap-2 text-xs text-white max-w-lg mx-auto">
                 <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
                 <span>
-                  <strong className="text-white/80">Training alone</strong> is at the bottom of the
+                  <strong className="text-white">Training alone</strong> is at the bottom of the
                   hierarchy. It should only be relied upon after all higher-level controls have been
                   considered and applied so far as is reasonably practicable. Training supplements
                   good design &mdash; it does not replace it.
@@ -894,7 +894,7 @@ export default function ManualHandlingModule3Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Practical Application Checklist
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-500/70 mt-0.5 flex-shrink-0" />
                     <span>
@@ -944,7 +944,7 @@ export default function ManualHandlingModule3Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Final Reminder</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">Training is not a substitute for design.</strong>{' '}
                   Research consistently shows that &ldquo;correct lifting technique&rdquo; training
                   alone does not significantly reduce manual handling injuries. The most effective
@@ -964,7 +964,7 @@ export default function ManualHandlingModule3Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -978,7 +978,7 @@ export default function ManualHandlingModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-3-section-3">

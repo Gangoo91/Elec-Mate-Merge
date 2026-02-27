@@ -187,7 +187,7 @@ export default function CoshhAwarenessModule2Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-2">
@@ -212,7 +212,7 @@ export default function CoshhAwarenessModule2Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Safety Data Sheets
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The 16-section reference document that tells you everything you need to know about a
             hazardous substance &mdash; how to read it, what matters most on site, and why every
             electrician should know where to find one
@@ -359,7 +359,7 @@ export default function CoshhAwarenessModule2Section3() {
                 <p className="text-sm font-medium text-violet-400 mb-3">
                   An SDS Must Be Provided When:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -402,7 +402,7 @@ export default function CoshhAwarenessModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Employer&rsquo;s Duty</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Under the COSHH Regulations 2002, the <strong>employer</strong> has a duty to
                   obtain Safety Data Sheets for all hazardous substances used in the workplace and
                   to make them accessible to employees. If you are using a hazardous substance at
@@ -438,7 +438,7 @@ export default function CoshhAwarenessModule2Section3() {
                     Section 1 &mdash; Identification of the Substance/Mixture and of the
                     Company/Undertaking
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Product identifier (trade name and chemical name), relevant identified uses,
                     details of the supplier (name, address, telephone number), and the emergency
                     telephone number. This is where you confirm you have the right SDS for the
@@ -450,7 +450,7 @@ export default function CoshhAwarenessModule2Section3() {
                   <p className="text-sm font-medium text-violet-400 mb-1">
                     Section 2 &mdash; Hazards Identification
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The GHS classification of the substance or mixture, label elements (pictograms,
                     signal word, hazard and precautionary statements), and any other hazards not
                     covered by the classification system. This is one of the{' '}
@@ -463,7 +463,7 @@ export default function CoshhAwarenessModule2Section3() {
                   <p className="text-sm font-medium text-violet-400 mb-1">
                     Section 3 &mdash; Composition/Information on Ingredients
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Chemical identity and concentration of hazardous ingredients, including CAS
                     numbers, EC numbers, and REACH registration numbers. For mixtures, this section
                     lists each hazardous component and its concentration range.
@@ -474,7 +474,7 @@ export default function CoshhAwarenessModule2Section3() {
                   <p className="text-sm font-medium text-violet-400 mb-1">
                     Section 4 &mdash; First-Aid Measures
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     What to do if someone is exposed &mdash; specific first-aid instructions for
                     inhalation, skin contact, eye contact, and ingestion. Also describes the most
                     important symptoms and effects (both acute and delayed) and any immediate
@@ -488,7 +488,7 @@ export default function CoshhAwarenessModule2Section3() {
                   <p className="text-sm font-medium text-violet-400 mb-1">
                     Section 5 &mdash; Firefighting Measures
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Suitable (and unsuitable) extinguishing media, special hazards arising from the
                     substance during a fire (e.g. toxic fumes, explosive vapours), and advice for
                     firefighters including recommended protective equipment and precautions.
@@ -499,7 +499,7 @@ export default function CoshhAwarenessModule2Section3() {
                   <p className="text-sm font-medium text-violet-400 mb-1">
                     Section 6 &mdash; Accidental Release Measures
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     What to do in the event of a spill, leak, or accidental release &mdash; personal
                     precautions, protective equipment, environmental precautions (e.g. preventing
                     entry to drains), and methods for containment and clean-up.
@@ -510,7 +510,7 @@ export default function CoshhAwarenessModule2Section3() {
                   <p className="text-sm font-medium text-violet-400 mb-1">
                     Section 7 &mdash; Handling and Storage
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Precautions for safe handling (e.g. avoid ignition sources, use only in
                     well-ventilated areas), conditions for safe storage (temperature, incompatible
                     materials, container requirements), and specific end uses. This tells you{' '}
@@ -525,7 +525,7 @@ export default function CoshhAwarenessModule2Section3() {
                   <p className="text-sm font-medium text-violet-400 mb-1">
                     Section 8 &mdash; Exposure Controls/Personal Protection
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Occupational exposure limits (WELs in the UK), recommended engineering controls
                     (e.g. local exhaust ventilation), and detailed PPE requirements &mdash;
                     respiratory protection, hand protection (specific glove material and
@@ -541,7 +541,7 @@ export default function CoshhAwarenessModule2Section3() {
                   <p className="text-sm font-medium text-violet-400 mb-1">
                     Section 9 &mdash; Physical and Chemical Properties
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Appearance, odour, pH, melting/boiling point, flash point, flammability, vapour
                     pressure, density, solubility, and other physical characteristics. The flash
                     point is particularly relevant for electricians working near ignition sources.
@@ -552,7 +552,7 @@ export default function CoshhAwarenessModule2Section3() {
                   <p className="text-sm font-medium text-violet-400 mb-1">
                     Section 10 &mdash; Stability and Reactivity
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Chemical stability, conditions to avoid (e.g. heat, sparks), incompatible
                     materials that could cause dangerous reactions, and hazardous decomposition
                     products. Essential for understanding what NOT to mix or expose the substance
@@ -564,7 +564,7 @@ export default function CoshhAwarenessModule2Section3() {
                   <p className="text-sm font-medium text-violet-400 mb-1">
                     Section 11 &mdash; Toxicological Information
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Detailed information on the health effects of exposure &mdash; routes of
                     exposure, acute toxicity data (LD50/LC50 values), skin corrosion/irritation,
                     serious eye damage/irritation, sensitisation, carcinogenicity, reproductive
@@ -576,7 +576,7 @@ export default function CoshhAwarenessModule2Section3() {
                   <p className="text-sm font-medium text-violet-400 mb-1">
                     Section 12 &mdash; Ecological Information
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Environmental impact data &mdash; aquatic toxicity, persistence and
                     degradability, bioaccumulative potential, mobility in soil, and any other
                     adverse environmental effects. Relevant for preventing contamination of
@@ -588,7 +588,7 @@ export default function CoshhAwarenessModule2Section3() {
                   <p className="text-sm font-medium text-violet-400 mb-1">
                     Section 13 &mdash; Disposal Considerations
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     How to safely dispose of the substance, contaminated packaging, and any waste
                     generated. References relevant waste legislation and whether the substance is
                     classified as hazardous waste. Never pour hazardous substances down drains or
@@ -600,7 +600,7 @@ export default function CoshhAwarenessModule2Section3() {
                   <p className="text-sm font-medium text-violet-400 mb-1">
                     Section 14 &mdash; Transport Information
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     UN number, proper shipping name, transport hazard class, packing group, and any
                     special precautions for transport. Relevant if you need to transport hazardous
                     substances to or between sites.
@@ -611,7 +611,7 @@ export default function CoshhAwarenessModule2Section3() {
                   <p className="text-sm font-medium text-violet-400 mb-1">
                     Section 15 &mdash; Regulatory Information
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Safety, health, and environmental regulations specific to the substance,
                     including whether it is subject to authorisation or restriction under REACH, and
                     any national regulations that apply.
@@ -622,7 +622,7 @@ export default function CoshhAwarenessModule2Section3() {
                   <p className="text-sm font-medium text-violet-400 mb-1">
                     Section 16 &mdash; Other Information
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Date of preparation or last revision, version number, key abbreviations,
                     references to training requirements, and any other information the supplier
                     considers relevant. Check the date here to ensure your SDS is current.
@@ -642,7 +642,7 @@ export default function CoshhAwarenessModule2Section3() {
           <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
             <div className="bg-gradient-to-r from-violet-500/30 to-violet-400/20 border-b border-violet-500/30 px-4 py-3">
               <p className="text-violet-400 font-semibold text-base">The 16 Sections at a Glance</p>
-              <p className="text-white/60 text-xs">Grouped by purpose &mdash; know where to look</p>
+              <p className="text-white text-xs">Grouped by purpose &mdash; know where to look</p>
             </div>
             <div className="p-4 space-y-4">
               <div>
@@ -660,7 +660,7 @@ export default function CoshhAwarenessModule2Section3() {
                       className="bg-violet-500/10 border border-violet-500/20 rounded-lg px-3 py-2 text-center"
                     >
                       <p className="text-violet-400 text-lg font-bold">{s.num}</p>
-                      <p className="text-white/70 text-xs">{s.label}</p>
+                      <p className="text-white text-xs">{s.label}</p>
                     </div>
                   ))}
                 </div>
@@ -681,7 +681,7 @@ export default function CoshhAwarenessModule2Section3() {
                       className="bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2 text-center"
                     >
                       <p className="text-red-400 text-lg font-bold">{s.num}</p>
-                      <p className="text-white/70 text-xs">{s.label}</p>
+                      <p className="text-white text-xs">{s.label}</p>
                     </div>
                   ))}
                 </div>
@@ -701,7 +701,7 @@ export default function CoshhAwarenessModule2Section3() {
                       className="bg-green-500/10 border border-green-500/20 rounded-lg px-3 py-2 text-center"
                     >
                       <p className="text-green-400 text-lg font-bold">{s.num}</p>
-                      <p className="text-white/70 text-xs">{s.label}</p>
+                      <p className="text-white text-xs">{s.label}</p>
                     </div>
                   ))}
                 </div>
@@ -723,7 +723,7 @@ export default function CoshhAwarenessModule2Section3() {
                       className="bg-blue-500/10 border border-blue-500/20 rounded-lg px-3 py-2 text-center"
                     >
                       <p className="text-blue-400 text-lg font-bold">{s.num}</p>
-                      <p className="text-white/70 text-xs">{s.label}</p>
+                      <p className="text-white text-xs">{s.label}</p>
                     </div>
                   ))}
                 </div>
@@ -745,14 +745,14 @@ export default function CoshhAwarenessModule2Section3() {
                       className="bg-amber-500/10 border border-amber-500/20 rounded-lg px-3 py-2 text-center"
                     >
                       <p className="text-amber-400 text-lg font-bold">{s.num}</p>
-                      <p className="text-white/70 text-xs">{s.label}</p>
+                      <p className="text-white text-xs">{s.label}</p>
                     </div>
                   ))}
                 </div>
               </div>
             </div>
           </div>
-          <p className="text-center text-white/40 text-xs mt-3 sm:hidden">
+          <p className="text-center text-white text-xs mt-3 sm:hidden">
             Sections grouped by purpose for quick reference
           </p>
         </section>
@@ -777,7 +777,7 @@ export default function CoshhAwarenessModule2Section3() {
                 <p className="text-sm font-medium text-violet-400 mb-3">
                   The &ldquo;Must-Read&rdquo; Sections for On-Site Workers
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-violet-500/20 text-violet-400 text-xs font-bold flex-shrink-0">
                       1st
@@ -887,7 +887,7 @@ export default function CoshhAwarenessModule2Section3() {
               <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
                 <div className="bg-gradient-to-r from-violet-500/30 to-violet-400/20 border-b border-violet-500/30 px-4 py-3">
                   <p className="text-violet-400 font-semibold text-base">GHS Pictograms Grid</p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-xs">
                     9 standardised symbols &mdash; red diamond border, black symbol, white
                     background
                   </p>
@@ -982,15 +982,15 @@ export default function CoshhAwarenessModule2Section3() {
                         </span>
                         <div>
                           <p className="text-white font-medium text-sm">{p.name}</p>
-                          <p className="text-white/50 text-xs">{p.code}</p>
+                          <p className="text-white text-xs">{p.code}</p>
                         </div>
                       </div>
-                      <p className="text-white/60 text-xs italic">Symbol: {p.symbol}</p>
-                      <p className="text-white/80 text-xs leading-relaxed">{p.desc}</p>
+                      <p className="text-white text-xs italic">Symbol: {p.symbol}</p>
+                      <p className="text-white text-xs leading-relaxed">{p.desc}</p>
                       <p className="text-violet-400/80 text-xs">
                         <strong>Example:</strong> {p.example}
                       </p>
-                      <p className="text-white/50 text-xs">Signal word: {p.signal}</p>
+                      <p className="text-white text-xs">Signal word: {p.signal}</p>
                     </div>
                   ))}
                 </div>
@@ -1001,7 +1001,7 @@ export default function CoshhAwarenessModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Important Distinction</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong>GHS06 (skull and crossbones)</strong> and{' '}
                   <strong>GHS07 (exclamation mark)</strong> both relate to acute toxicity, but they
                   indicate <strong>different severity levels</strong>. GHS06 is for the most severe
@@ -1043,12 +1043,12 @@ export default function CoshhAwarenessModule2Section3() {
                 <p className="text-sm font-medium text-violet-400 mb-3">
                   Hazard Statements (H-codes)
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Hazard statements describe the <strong>nature and severity</strong> of the hazard.
                   Each is identified by a unique H-code. The numbering tells you the type of hazard
                   at a glance:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1087,11 +1087,11 @@ export default function CoshhAwarenessModule2Section3() {
                 <p className="text-sm font-medium text-violet-400 mb-3">
                   Precautionary Statements (P-codes)
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Precautionary statements describe the <strong>recommended measures</strong> to
                   minimise or prevent adverse effects. They are grouped into four categories:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1136,13 +1136,13 @@ export default function CoshhAwarenessModule2Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-violet-400 mb-3">Signal Words</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The GHS uses exactly two signal words, displayed prominently on the label:
                 </p>
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3">
                     <p className="text-red-400 font-bold text-lg mb-1">DANGER</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Used for the <strong>more severe</strong> hazard categories. Indicates a
                       greater level of risk. Examples: acute toxicity categories 1&ndash;3,
                       flammable liquids category 1, carcinogenicity category 1A/1B.
@@ -1150,14 +1150,14 @@ export default function CoshhAwarenessModule2Section3() {
                   </div>
                   <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
                     <p className="text-amber-400 font-bold text-lg mb-1">WARNING</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Used for <strong>less severe</strong> hazard categories (but still
                       significant). Examples: acute toxicity category 4, flammable liquids category
                       4, skin irritation category 2.
                     </p>
                   </div>
                 </div>
-                <p className="text-sm text-white/60 mt-3">
+                <p className="text-sm text-white mt-3">
                   Only one signal word appears on a label. If a product has multiple hazards with
                   different signal words, the most severe (&ldquo;Danger&rdquo;) takes precedence.
                   No substance carries both signal words simultaneously.
@@ -1189,7 +1189,7 @@ export default function CoshhAwarenessModule2Section3() {
                 <p className="text-sm font-medium text-violet-400 mb-3">
                   Required Label Elements (under CLP)
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1258,7 +1258,7 @@ export default function CoshhAwarenessModule2Section3() {
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg space-y-4">
                 <div>
                   <p className="text-sm font-medium text-violet-400 mb-1">PVC Solvent Cement</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Used to join PVC conduit and trunking. Contains tetrahydrofuran (THF) and/or
                     cyclohexanone. Typically classified as <strong>highly flammable</strong> (H225),{' '}
                     <strong>harmful if inhaled</strong> (H332), and causing{' '}
@@ -1272,7 +1272,7 @@ export default function CoshhAwarenessModule2Section3() {
                   <p className="text-sm font-medium text-violet-400 mb-1">
                     Cable Pulling Lubricant
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Used to reduce friction when pulling cables through conduit or trunking.
                     Water-based formulations are generally low hazard, but some may cause{' '}
                     <strong>skin irritation</strong> (H315) or <strong>eye irritation</strong>{' '}
@@ -1285,7 +1285,7 @@ export default function CoshhAwarenessModule2Section3() {
                   <p className="text-sm font-medium text-violet-400 mb-1">
                     Electrical Contact Cleaner
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Used to clean contacts, PCBs, and connectors. Typically aerosol-based,
                     containing solvents such as isopropyl alcohol or heptane. Usually classified as{' '}
                     <strong>extremely flammable</strong> (H222/H229),{' '}
@@ -1298,7 +1298,7 @@ export default function CoshhAwarenessModule2Section3() {
 
                 <div>
                   <p className="text-sm font-medium text-violet-400 mb-1">Silicone Sealant</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Used to seal cable entries, junction boxes, and penetrations. Acetoxy-cure
                     silicone sealants release acetic acid (vinegar smell) during curing, which can
                     cause <strong>eye irritation</strong> (H319) and{' '}
@@ -1324,7 +1324,7 @@ export default function CoshhAwarenessModule2Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-violet-400 mb-3">Digital vs Paper Storage</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1389,7 +1389,7 @@ export default function CoshhAwarenessModule2Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-violet-400 mb-3">From SDS to Safe Working</p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-violet-500/20 text-violet-400 text-xs font-bold flex-shrink-0">
                       1
@@ -1505,7 +1505,7 @@ export default function CoshhAwarenessModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Remember</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   You have the <strong>legal right</strong> to see the Safety Data Sheet for any
                   hazardous substance you are asked to use at work. Under the COSHH Regulations,
                   your employer must provide information, instruction, and training about the
@@ -1525,7 +1525,7 @@ export default function CoshhAwarenessModule2Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1539,7 +1539,7 @@ export default function CoshhAwarenessModule2Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-2-section-2">

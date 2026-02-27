@@ -254,7 +254,7 @@ const HNCModule1Section1_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section1">
@@ -276,7 +276,7 @@ const HNCModule1Section1_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Health and Safety at Work Act 1974
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             The foundation of UK workplace health and safety law and its application to building
             services engineering
           </p>
@@ -587,7 +587,7 @@ const HNCModule1Section1_1 = () => {
               <div className="space-y-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Section 7(a) - Duty of Care</p>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-white">
                     "To take reasonable care for the health and safety of himself and of other
                     persons who may be affected by his acts or omissions at work."
                   </p>
@@ -596,7 +596,7 @@ const HNCModule1Section1_1 = () => {
                   <p className="text-sm font-medium text-white mb-1">
                     Section 7(b) - Duty to Cooperate
                   </p>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-white">
                     "To cooperate with his employer so far as is necessary to enable any duty or
                     requirement imposed on the employer to be performed or complied with."
                   </p>
@@ -819,7 +819,7 @@ const HNCModule1Section1_1 = () => {
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Note:</strong> Corporate Manslaughter and Corporate Homicide Act 2007 creates
               a separate offence with unlimited fines for organisations whose gross breach causes
               death.
@@ -1003,7 +1003,7 @@ const HNCModule1Section1_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1049,7 +1049,7 @@ const HNCModule1Section1_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section1">

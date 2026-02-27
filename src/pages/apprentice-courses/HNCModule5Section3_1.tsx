@@ -266,7 +266,7 @@ const HNCModule5Section3_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section3">
@@ -288,7 +288,7 @@ const HNCModule5Section3_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Estimating Methods
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             First principles, benchmarking, and parametric techniques for building services cost
             estimation
           </p>
@@ -596,7 +596,7 @@ const HNCModule5Section3_1 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Note: National average figures. Apply BCIS location factors for regional projects.
               </p>
             </div>
@@ -715,7 +715,7 @@ const HNCModule5Section3_1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Worked Example: Parametric Estimate for Office Electrical
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p className="mb-2">Office building: 3,500m2 NIA, air-conditioned, Cat A fit-out</p>
                 <p className="mb-1">Lighting: 3,500m2 x 35/m2 = 122,500</p>
                 <p className="mb-1">Small power (1 per 10m2): 350 outlets x 120 = 42,000</p>
@@ -935,7 +935,7 @@ const HNCModule5Section3_1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Composite Rate Build-Up: Recessed LED Panel Luminaire
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p className="mb-1">Luminaire (600x600 LED panel, 40W): 85.00</p>
                 <p className="mb-1">Suspension kit and fixings: 8.50</p>
                 <p className="mb-1">Containment allocation (5m trunking): 18.00</p>
@@ -947,7 +947,7 @@ const HNCModule5Section3_1 = () => {
                 <p className="mt-2 border-t border-white/20 pt-2">
                   <strong>Net cost per luminaire: 163.50</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Add preliminaries, OH&P as per project requirements
                 </p>
               </div>
@@ -979,7 +979,7 @@ const HNCModule5Section3_1 = () => {
                 <strong>Question:</strong> Build up the rate for installing 100m of 3-core 6mm2 SWA
                 cable in surface-mounted tray.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p className="font-medium mb-2">Materials:</p>
                 <p>3C 6mm2 SWA cable (105m inc. waste): 105 x 4.20 = 441.00</p>
                 <p>Cable tray 100mm (105m): 105 x 8.50 = 892.50</p>
@@ -1006,7 +1006,7 @@ const HNCModule5Section3_1 = () => {
                 <strong>Question:</strong> Validate a detailed electrical estimate of 520,000 for a
                 4,200m2 office against BCIS data.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p className="mb-2">
                   Detailed estimate: 520,000 / 4,200m2 = <strong>123.81/m2</strong>
                 </p>
@@ -1015,7 +1015,7 @@ const HNCModule5Section3_1 = () => {
                 <p className="mt-2 text-green-400">
                   Result: Estimate falls within BCIS range, slightly below median
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Review: Check if specification is simpler than typical, or if rates are
                   competitive
                 </p>
@@ -1030,12 +1030,12 @@ const HNCModule5Section3_1 = () => {
                 <strong>Question:</strong> Adjust a national average estimate of 850,000 for a
                 project in Central London.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Base estimate (national average): 850,000</p>
                 <p>BCIS London location factor: 1.15</p>
                 <p className="mt-2">Adjusted estimate = 850,000 x 1.15</p>
                 <p className="mt-2 text-elec-yellow font-medium">London estimate: 977,500</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Note: Also consider London-specific factors like parking restrictions, congestion
                   charges, and security requirements
                 </p>
@@ -1125,7 +1125,7 @@ const HNCModule5Section3_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1171,7 +1171,7 @@ const HNCModule5Section3_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section3">

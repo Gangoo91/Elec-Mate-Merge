@@ -94,7 +94,7 @@ function ElectricalHero() {
           </div>
 
           {/* Greeting and Name */}
-          <p className="text-sm text-white/50 mb-0.5">{getGreeting()}</p>
+          <p className="text-sm text-white mb-0.5">{getGreeting()}</p>
           <h1 className="text-2xl sm:text-3xl font-bold text-white">{firstName}</h1>
 
           {/* Status badges - horizontal row */}
@@ -191,6 +191,11 @@ function ElectricalStatsBar() {
         const Icon = stat.icon;
         const isSuccess = stat.variant === 'success';
         const isDanger = stat.variant === 'danger';
+        const accentColor = isSuccess
+          ? 'text-green-500'
+          : isDanger
+            ? 'text-red-500'
+            : 'text-elec-yellow';
 
         return (
           <motion.button
@@ -204,52 +209,28 @@ function ElectricalStatsBar() {
           >
             <div
               className={cn(
-                'glass-premium rounded-xl p-4 h-[100px]',
-                'group-hover:bg-white/[0.04] group-active:bg-white/[0.02]',
-                'transition-all duration-200',
-                'group-hover:shadow-lg group-hover:shadow-elec-yellow/5'
+                'rounded-xl p-3 sm:p-4',
+                'bg-white/[0.04] border border-white/[0.06]',
+                'group-active:bg-white/[0.06]',
+                'transition-colors duration-150'
               )}
             >
-              <div className="flex flex-col items-center justify-center h-full text-center">
-                {/* Icon */}
-                <div
-                  className={cn(
-                    'p-2 rounded-lg mb-2 transition-colors',
-                    isSuccess
-                      ? 'bg-green-500/10 group-hover:bg-green-500/20'
-                      : isDanger
-                        ? 'bg-red-500/10 group-hover:bg-red-500/20'
-                        : 'bg-elec-yellow/10 group-hover:bg-elec-yellow/20'
-                  )}
-                >
-                  <Icon
-                    className={cn(
-                      'h-5 w-5',
-                      isSuccess ? 'text-green-500' : isDanger ? 'text-red-500' : 'text-elec-yellow'
-                    )}
-                  />
+              <div className="flex flex-col items-start text-left">
+                <div className="flex items-center gap-1.5 mb-1.5">
+                  <Icon className={cn('h-3.5 w-3.5', accentColor)} />
+                  <p className="text-[11px] sm:text-xs text-white">{stat.label}</p>
                 </div>
-                {/* Value and label - centered */}
                 {stat.formatAsCurrency ? (
-                  <span
-                    className={cn(
-                      'text-xl font-bold',
-                      isSuccess ? 'text-green-500' : isDanger ? 'text-red-500' : 'text-elec-yellow'
-                    )}
-                  >
+                  <span className={cn('text-xl sm:text-2xl font-bold tracking-tight', accentColor)}>
                     {business.formattedQuoteValue}
                   </span>
                 ) : (
                   <AnimatedCounter
                     value={stat.value}
                     prefix={stat.prefix}
-                    className={cn(
-                      'text-xl font-bold',
-                      isSuccess ? 'text-green-500' : isDanger ? 'text-red-500' : 'text-elec-yellow'
-                    )}
+                    className={cn('text-xl sm:text-2xl font-bold tracking-tight', accentColor)}
                   />
                 )}
-                <p className="text-[11px] text-white/60 mt-0.5">{stat.label}</p>
               </div>
             </div>
           </motion.button>
@@ -281,7 +262,7 @@ function FeaturedCard() {
           </div>
 
           <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">Elec-AI</h3>
-          <p className="text-sm text-white/70 max-w-md mx-auto mb-4">
+          <p className="text-sm text-white max-w-md mx-auto mb-4">
             Your personal electrical adviser — circuit design, fault finding, regs queries & more
           </p>
 
@@ -321,10 +302,10 @@ function ToolCard({ title, description, icon: Icon, link }: ToolCardProps) {
             <h3 className="text-base sm:text-lg font-semibold text-white mb-1 group-hover:text-elec-yellow group-active:text-elec-yellow transition-colors">
               {title}
             </h3>
-            <p className="text-sm text-white/70 leading-relaxed line-clamp-2">{description}</p>
+            <p className="text-sm text-white leading-relaxed line-clamp-2">{description}</p>
           </div>
 
-          <ChevronRight className="h-5 w-5 text-white/40 group-hover:text-elec-yellow group-hover:translate-x-1 group-active:text-elec-yellow group-active:translate-x-1 transition-all flex-shrink-0" />
+          <ChevronRight className="h-5 w-5 text-white group-hover:text-elec-yellow group-hover:translate-x-1 group-active:text-elec-yellow group-active:translate-x-1 transition-all flex-shrink-0" />
         </div>
       </motion.div>
     </Link>
@@ -348,7 +329,7 @@ function CompactToolCard({ title, description, icon: Icon, link }: ToolCardProps
           <h3 className="text-sm sm:text-base font-semibold text-white mb-1 group-hover:text-elec-yellow transition-colors">
             {title}
           </h3>
-          <p className="text-xs text-white/60 line-clamp-2 hidden sm:block">{description}</p>
+          <p className="text-xs text-white line-clamp-2 hidden sm:block">{description}</p>
         </div>
       </motion.div>
     </Link>
@@ -522,7 +503,7 @@ const ElectricalHub = () => {
             <Link to="/dashboard">
               <Button
                 variant="ghost"
-                className="text-white/70 hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
+                className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
               >
                 <ArrowLeft className="mr-2 h-5 w-5" />
                 Back to Dashboard
@@ -535,8 +516,8 @@ const ElectricalHub = () => {
             <ElectricalHero />
           </motion.section>
 
-          {/* Stats Bar - Now visible on mobile as carousel */}
-          <motion.section variants={itemVariants} className="sm:px-0">
+          {/* Stats Bar */}
+          <motion.section variants={itemVariants} className="px-4 sm:px-0">
             <ElectricalStatsBar />
           </motion.section>
 

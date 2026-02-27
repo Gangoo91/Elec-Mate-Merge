@@ -246,7 +246,7 @@ const HNCModule5Section3_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section3">
@@ -268,7 +268,7 @@ const HNCModule5Section3_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Cost Control
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Cost monitoring, progress reporting, forecasting techniques, cost value reconciliation
             and earned value analysis
           </p>
@@ -424,7 +424,7 @@ const HNCModule5Section3_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Building Services Example: Hospital M&E Package
               </p>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 A £2.5M mechanical installation on a hospital project requires robust cost
                 monitoring:
               </p>
@@ -465,7 +465,7 @@ const HNCModule5Section3_3 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">CVR Basic Formula</p>
               <p className="font-mono text-center text-lg mb-2">Margin = Value - Cost</p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where Value = certified work + variations + dayworks - retentions
               </p>
             </div>
@@ -589,7 +589,7 @@ const HNCModule5Section3_3 = () => {
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Cost Performance Index (CPI)</p>
                   <p className="font-mono text-lg text-center mb-2">CPI = EV / AC</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>CPI = 1.0: On budget</li>
                     <li>CPI &gt; 1.0: Under budget</li>
                     <li>CPI &lt; 1.0: Over budget</li>
@@ -598,7 +598,7 @@ const HNCModule5Section3_3 = () => {
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Schedule Performance Index (SPI)</p>
                   <p className="font-mono text-lg text-center mb-2">SPI = EV / PV</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>SPI = 1.0: On schedule</li>
                     <li>SPI &gt; 1.0: Ahead of schedule</li>
                     <li>SPI &lt; 1.0: Behind schedule</li>
@@ -649,10 +649,10 @@ const HNCModule5Section3_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Building Services Example: Office Electrical Installation
               </p>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 Month 4 of a £600,000 electrical installation:
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>BAC = £600,000 (total budget)</p>
                 <p>PV = £240,000 (planned progress by month 4)</p>
                 <p>EV = £210,000 (actual work completed, at budget rates)</p>
@@ -747,7 +747,7 @@ const HNCModule5Section3_3 = () => {
               </p>
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="font-mono text-center text-lg mb-2">TCPI = (BAC - EV) / (BAC - AC)</p>
-                <p className="text-xs text-white/70 text-center mb-3">
+                <p className="text-xs text-white text-center mb-3">
                   Required future efficiency to meet budget
                 </p>
                 <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
@@ -767,7 +767,7 @@ const HNCModule5Section3_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Executive Summary</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Current position vs budget</li>
                     <li>Key variances and causes</li>
                     <li>Forecast final cost</li>
@@ -776,7 +776,7 @@ const HNCModule5Section3_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Detailed Analysis</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Cost breakdown by category</li>
                     <li>Variance analysis by element</li>
                     <li>Cash flow forecast</li>
@@ -841,7 +841,7 @@ const HNCModule5Section3_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Reporting tip:</strong> Present trends graphically - an S-curve showing
               planned vs actual progress, or a chart of CPI/SPI over time, communicates status
               faster than tables alone.
@@ -868,7 +868,7 @@ const HNCModule5Section3_3 = () => {
                 variations approved £32,000, work certified £280,000. Costs to date: labour £95,000,
                 materials £120,000, subcontractors £45,000, plant £8,000. Calculate margin to date.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Value to date = Work certified = <strong>£280,000</strong>
                 </p>
@@ -897,7 +897,7 @@ const HNCModule5Section3_3 = () => {
                 <strong>Question:</strong> A mechanical installation has BAC = £800,000, PV =
                 £400,000, EV = £350,000, AC = £380,000. Calculate CPI, SPI, and EAC.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   CPI = EV / AC = £350,000 / £380,000 = <strong>0.92</strong>
                 </p>
@@ -922,13 +922,13 @@ const HNCModule5Section3_3 = () => {
                 <strong>Question:</strong> Using the same project: BAC = £800,000, EV = £350,000, AC
                 = £380,000. What efficiency is needed for remaining work to meet budget?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>TCPI = (BAC - EV) / (BAC - AC)</p>
                 <p>TCPI = (£800,000 - £350,000) / (£800,000 - £380,000)</p>
                 <p>
                   TCPI = £450,000 / £420,000 = <strong>1.07</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Remaining work must be completed at 107% efficiency
                 </p>
                 <p className="mt-2 text-green-400">
@@ -1006,7 +1006,7 @@ const HNCModule5Section3_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1053,7 +1053,7 @@ const HNCModule5Section3_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section3">

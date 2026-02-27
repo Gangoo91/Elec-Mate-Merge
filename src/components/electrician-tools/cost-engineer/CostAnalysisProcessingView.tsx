@@ -100,7 +100,7 @@ const CostAnalysisProcessingView = ({
             </div>
             <div className="space-y-2">
               <h3 className="text-xl font-bold text-white">Generation Failed</h3>
-              <p className="text-sm text-white/60 max-w-xs">
+              <p className="text-sm text-white max-w-xs">
                 {error || 'An unexpected error occurred. Please try again.'}
               </p>
             </div>
@@ -117,7 +117,7 @@ const CostAnalysisProcessingView = ({
               <Button
                 onClick={onCancel}
                 variant="ghost"
-                className="h-12 px-6 rounded-xl text-white/60 hover:text-white hover:bg-white/10"
+                className="h-12 px-6 rounded-xl text-white hover:text-white hover:bg-white/10"
               >
                 Cancel
               </Button>
@@ -135,7 +135,7 @@ const CostAnalysisProcessingView = ({
               className="text-center space-y-2"
             >
               <h2 className="text-xl font-bold text-white">AI Cost Analysis</h2>
-              <p className="text-xs text-white/50">Searching 45,000+ UK pricing items</p>
+              <p className="text-xs text-white">Searching 45,000+ UK pricing items</p>
             </motion.div>
 
             {/* Premium Processing Ring */}
@@ -157,8 +157,8 @@ const CostAnalysisProcessingView = ({
             >
               <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
                 <div className="flex items-center justify-center gap-1 mb-1">
-                  <Clock className="h-3 w-3 text-white/40" />
-                  <span className="text-[10px] text-white/40">Elapsed</span>
+                  <Clock className="h-3 w-3 text-white" />
+                  <span className="text-[10px] text-white">Elapsed</span>
                 </div>
                 <p className="text-lg font-bold text-white tabular-nums">
                   {formatTime(elapsedTime)}
@@ -166,8 +166,8 @@ const CostAnalysisProcessingView = ({
               </div>
               <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
                 <div className="flex items-center justify-center gap-1 mb-1">
-                  <Loader2 className="h-3 w-3 text-white/40 animate-spin" />
-                  <span className="text-[10px] text-white/40">Remaining</span>
+                  <Loader2 className="h-3 w-3 text-white animate-spin" />
+                  <span className="text-[10px] text-white">Remaining</span>
                 </div>
                 <p className="text-lg font-bold text-white tabular-nums">
                   ~{formatTime(remainingTime)}
@@ -195,7 +195,7 @@ const CostAnalysisProcessingView = ({
               transition={{ delay: 0.5 }}
               onClick={onCancel}
               disabled={isCancelling}
-              className="w-full py-3 text-xs text-white/40 hover:text-red-400 hover:bg-red-500/5 rounded-xl transition-all flex items-center justify-center gap-1.5 disabled:opacity-50 border border-white/5"
+              className="w-full py-3 text-xs text-white hover:text-red-400 hover:bg-red-500/5 rounded-xl transition-all flex items-center justify-center gap-1.5 disabled:opacity-50 border border-white/5"
             >
               {isCancelling ? (
                 <>

@@ -21,10 +21,10 @@ export function VideoGrid({ videos, isBookmarked, onVideoTap, onBookmarkToggle }
     return (
       <div className="flex flex-col items-center justify-center py-12 text-center">
         <div className="p-4 rounded-full bg-white/[0.05] mb-3">
-          <Video className="h-8 w-8 text-white/30" />
+          <Video className="h-8 w-8 text-white" />
         </div>
-        <p className="text-sm text-white/40 mb-1">No videos found</p>
-        <p className="text-xs text-white/25">Try a different search or category</p>
+        <p className="text-sm text-white mb-1">No videos found</p>
+        <p className="text-xs text-white">Try a different search or category</p>
       </div>
     );
   }

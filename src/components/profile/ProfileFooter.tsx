@@ -71,7 +71,7 @@ const ProfileFooter: React.FC<ProfileFooterProps> = ({
           <div className="w-1.5 h-1.5 rounded-full bg-slate-400" />
           <span className="font-semibold text-[15px] text-white">Where Your Details Appear</span>
         </div>
-        <p className="text-[13px] text-white/50 mt-1 ml-4">
+        <p className="text-[13px] text-white mt-1 ml-4">
           Your profile pre-fills these documents
         </p>
       </div>
@@ -104,10 +104,10 @@ const ProfileFooter: React.FC<ProfileFooterProps> = ({
                     <AlertCircle className="h-4 w-4 text-orange-400 flex-shrink-0" />
                   )}
                 </div>
-                <p className="text-[13px] text-white/50 mt-0.5">{item.description}</p>
+                <p className="text-[13px] text-white mt-0.5">{item.description}</p>
               </div>
 
-              <ChevronRight className="h-5 w-5 text-white/30 flex-shrink-0" />
+              <ChevronRight className="h-5 w-5 text-white flex-shrink-0" />
             </motion.button>
           );
         })}

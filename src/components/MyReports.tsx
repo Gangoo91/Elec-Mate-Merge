@@ -656,7 +656,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
               variant="ghost"
               size="icon"
               onClick={onBack}
-              className="-ml-2 text-white/60 touch-manipulation"
+              className="-ml-2 text-white touch-manipulation"
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
@@ -664,7 +664,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             {/* Title */}
             <div className="flex-1 ml-2">
               <h1 className="text-base font-semibold text-white">My Certificates</h1>
-              <p className="text-xs text-white/50">
+              <p className="text-xs text-white">
                 {totalCount} certificate{totalCount !== 1 ? 's' : ''}
               </p>
             </div>
@@ -679,7 +679,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
               }}
               className={cn(
                 'touch-manipulation',
-                showSearch ? 'text-elec-yellow' : 'text-white/60'
+                showSearch ? 'text-elec-yellow' : 'text-white'
               )}
             >
               <Search className="h-5 w-5" />
@@ -688,7 +688,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
             {/* Overflow Menu */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-white/60 touch-manipulation">
+                <Button variant="ghost" size="icon" className="text-white touch-manipulation">
                   <MoreVertical className="h-5 w-5" />
                 </Button>
               </DropdownMenuTrigger>
@@ -752,7 +752,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                 className="px-3 pb-3 overflow-hidden"
               >
                 <div className="relative">
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                   <Input
                     placeholder="Search by name, address, or certificate..."
                     value={searchQuery}
@@ -958,7 +958,7 @@ const MyReports: React.FC<MyReportsProps> = ({ onBack, onNavigate, onEditReport 
                 </div>
                 <div className="flex-1 text-left">
                   <p className="font-semibold text-white">{label}</p>
-                  <p className="text-xs text-white/50">{desc}</p>
+                  <p className="text-xs text-white">{desc}</p>
                 </div>
                 <ChevronRight className="h-5 w-5 text-elec-yellow/40" />
               </button>

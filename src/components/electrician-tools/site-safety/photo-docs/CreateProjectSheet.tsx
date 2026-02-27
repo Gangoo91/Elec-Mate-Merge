@@ -110,7 +110,7 @@ export default function CreateProjectSheet({
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. Kitchen Rewire"
-                className="mt-1.5 h-11 bg-white/5 border-white/10 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation text-white placeholder:text-white/40"
+                className="mt-1.5 h-11 bg-white/5 border-white/10 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation text-white placeholder:text-white"
                 autoFocus
               />
             </div>
@@ -137,7 +137,7 @@ export default function CreateProjectSheet({
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Brief description of the work"
-                className="mt-1.5 min-h-[80px] bg-white/5 border-white/10 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation resize-none text-white placeholder:text-white/40"
+                className="mt-1.5 min-h-[80px] bg-white/5 border-white/10 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation resize-none text-white placeholder:text-white"
               />
             </div>
 
@@ -151,7 +151,7 @@ export default function CreateProjectSheet({
                   value={jobReference}
                   onChange={(e) => setJobReference(e.target.value)}
                   placeholder={generateJobReference()}
-                  className="mt-1.5 h-11 bg-white/5 border-white/10 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation text-white placeholder:text-white/40"
+                  className="mt-1.5 h-11 bg-white/5 border-white/10 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation text-white placeholder:text-white"
                 />
               </div>
               <div>
@@ -162,7 +162,7 @@ export default function CreateProjectSheet({
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   placeholder="42 High St"
-                  className="mt-1.5 h-11 bg-white/5 border-white/10 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation text-white placeholder:text-white/40"
+                  className="mt-1.5 h-11 bg-white/5 border-white/10 focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 text-sm touch-manipulation text-white placeholder:text-white"
                 />
               </div>
             </div>

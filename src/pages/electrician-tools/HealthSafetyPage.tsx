@@ -34,7 +34,7 @@ const HealthSafetyPage = () => {
           </div>
           <div>
             <h1 className="text-xl font-bold text-white">Health & Safety</h1>
-            <p className="text-sm text-white/50">Risk assessments & RAMS documentation</p>
+            <p className="text-sm text-white">Risk assessments & RAMS documentation</p>
           </div>
         </div>
 

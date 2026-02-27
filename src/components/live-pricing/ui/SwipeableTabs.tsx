@@ -162,7 +162,7 @@ const SwipeableTabs = ({
                   'focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400/50',
                   isActive
                     ? 'text-yellow-400'
-                    : 'text-white/50 hover:text-white/70 active:text-white/80'
+                    : 'text-white hover:text-white active:text-white'
                 )}
               >
                 <div className={cn('transition-transform duration-200', isActive && 'scale-110')}>
@@ -171,7 +171,7 @@ const SwipeableTabs = ({
                 <span
                   className={cn(
                     'text-xs mt-1 font-medium truncate max-w-full',
-                    isActive ? 'text-yellow-400' : 'text-white/50'
+                    isActive ? 'text-yellow-400' : 'text-white'
                   )}
                 >
                   {tab.label}

@@ -863,7 +863,7 @@ export default function MentalHealthModule4Section3() {
                   </div>
                 </div>
 
-                <p className="text-white/50 text-xs text-center mt-4 italic">
+                <p className="text-white text-xs text-center mt-4 italic">
                   Research shows that the more ACEs a person has experienced, the greater the risk
                   of mental health difficulties in adulthood. This is a dose-response relationship
                   &mdash; more ACEs means more risk.

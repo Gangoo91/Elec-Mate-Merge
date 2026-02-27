@@ -283,7 +283,7 @@ const Module5Section4_4 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -301,13 +301,13 @@ const Module5Section4_4 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 4.4</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 4.4</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Managing Wastage and Shortages
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master material management strategies to minimise wastage, prevent shortages, and
               promote sustainable practices in electrical installations.
             </p>
@@ -317,7 +317,7 @@ const Module5Section4_4 = () => {
           <section className="mb-10">
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-6">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="text-white/80 space-y-1 text-sm">
+              <ul className="text-white space-y-1 text-sm">
                 <li>• Plan accurately to prevent both wastage and shortages.</li>
                 <li>• Store materials properly to prevent damage and loss.</li>
                 <li>• Monitor stock levels daily and implement sustainable practices.</li>
@@ -331,14 +331,14 @@ const Module5Section4_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Learning Outcomes
             </h2>
-            <p className="text-white/80 mb-4">
+            <p className="text-white mb-4">
               By the end of this subsection, you will be able to:
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-6">
               <div className="space-y-3">
                 <h4 className="font-medium text-white">Wastage Management</h4>
-                <ul className="space-y-2 text-white/80 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start">
                     <span className="text-elec-yellow mr-2">•</span>
                     Identify causes of material wastage in electrical installation
@@ -356,7 +356,7 @@ const Module5Section4_4 = () => {
 
               <div className="space-y-3">
                 <h4 className="font-medium text-white">Shortage Prevention</h4>
-                <ul className="space-y-2 text-white/80 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start">
                     <span className="text-elec-yellow mr-2">•</span>
                     Recognise the impact of shortages on project timelines and budgets
@@ -374,7 +374,7 @@ const Module5Section4_4 = () => {
             </div>
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 <strong className="text-white">Impact on Business:</strong> Effective material
                 management reduces project costs by 10-15% and improves sustainability through waste
                 reduction and recycling practices.
@@ -389,7 +389,7 @@ const Module5Section4_4 = () => {
               Causes of Wastage
             </h2>
 
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Material wastage is a significant cost driver in electrical projects. Understanding
               the common causes helps implement effective prevention strategies and maintain project
               profitability.
@@ -401,10 +401,10 @@ const Module5Section4_4 = () => {
 
                 <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                   <p className="font-medium text-red-400 mb-2">Over-ordering Materials</p>
-                  <p className="text-sm text-white/70 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Ordering excessive quantities due to poor planning or fear of shortages.
                   </p>
-                  <ul className="text-sm text-white/70 list-disc pl-4">
+                  <ul className="text-sm text-white list-disc pl-4">
                     <li>Inaccurate quantity calculations</li>
                     <li>Excessive safety margins</li>
                     <li>Poor communication with planning team</li>
@@ -413,10 +413,10 @@ const Module5Section4_4 = () => {
 
                 <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
                   <p className="font-medium text-orange-400 mb-2">Poor Storage Conditions</p>
-                  <p className="text-sm text-white/70 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Improper storage leading to material damage and deterioration.
                   </p>
-                  <ul className="text-sm text-white/70 list-disc pl-4">
+                  <ul className="text-sm text-white list-disc pl-4">
                     <li>Damp conditions damaging cables</li>
                     <li>UV exposure degrading materials</li>
                     <li>Physical damage from poor handling</li>
@@ -429,7 +429,7 @@ const Module5Section4_4 = () => {
 
                 <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                   <p className="font-medium text-amber-400 mb-2">Measuring and Cutting Errors</p>
-                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-4 space-y-1">
                     <li>Incorrect measurements leading to unusable pieces</li>
                     <li>Poor cutting techniques causing damage</li>
                     <li>Not allowing for termination lengths</li>
@@ -439,7 +439,7 @@ const Module5Section4_4 = () => {
 
                 <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
                   <p className="font-medium text-purple-400 mb-2">Transport and Handling</p>
-                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-4 space-y-1">
                     <li>Damage during site transport</li>
                     <li>Improper lifting and moving techniques</li>
                     <li>Inadequate protection during installation</li>
@@ -454,7 +454,7 @@ const Module5Section4_4 = () => {
                 <AlertTriangle className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="font-medium text-blue-400 mb-2">Cost Impact</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Material wastage typically accounts for 5-10% of total project costs. Effective
                     management can reduce this to 2-3%, providing significant savings on larger
                     projects.
@@ -485,7 +485,7 @@ const Module5Section4_4 = () => {
               Causes of Shortages
             </h2>
 
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Material shortages can halt work completely, causing costly delays and affecting
               project schedules. Understanding shortage causes enables better planning and
               prevention strategies.
@@ -497,10 +497,10 @@ const Module5Section4_4 = () => {
 
                 <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                   <p className="font-medium text-red-400 mb-2">Underestimating Requirements</p>
-                  <p className="text-sm text-white/70 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Insufficient material orders due to poor planning or calculation errors.
                   </p>
-                  <ul className="text-sm text-white/70 list-disc pl-4">
+                  <ul className="text-sm text-white list-disc pl-4">
                     <li>Incomplete drawing reviews</li>
                     <li>Missing allowances for testing</li>
                     <li>Underestimating cable routes</li>
@@ -510,10 +510,10 @@ const Module5Section4_4 = () => {
 
                 <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
                   <p className="font-medium text-orange-400 mb-2">Communication Failures</p>
-                  <p className="text-sm text-white/70 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Poor coordination between teams leading to missed requirements.
                   </p>
-                  <ul className="text-sm text-white/70 list-disc pl-4">
+                  <ul className="text-sm text-white list-disc pl-4">
                     <li>Site team and stores miscommunication</li>
                     <li>Design changes not communicated</li>
                     <li>Delivery schedule conflicts</li>
@@ -526,7 +526,7 @@ const Module5Section4_4 = () => {
 
                 <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                   <p className="font-medium text-amber-400 mb-2">Supplier Delays</p>
-                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-4 space-y-1">
                     <li>Manufacturing delays for specialist items</li>
                     <li>Transport and logistics problems</li>
                     <li>Stock availability issues</li>
@@ -536,7 +536,7 @@ const Module5Section4_4 = () => {
 
                 <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
                   <p className="font-medium text-purple-400 mb-2">Site Issues</p>
-                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-4 space-y-1">
                     <li>Theft or misplacement of materials</li>
                     <li>Damage requiring replacement</li>
                     <li>Unexpected site conditions</li>
@@ -551,7 +551,7 @@ const Module5Section4_4 = () => {
                 <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="font-medium text-red-400 mb-2">Impact of Shortages</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Material shortages can delay projects by days or weeks, incurring penalty costs
                     and affecting team productivity. Emergency procurement often costs 20-30% more
                     than planned orders.
@@ -582,7 +582,7 @@ const Module5Section4_4 = () => {
               Effects of Wastage and Shortages
             </h2>
 
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Both wastage and shortages have significant impacts on project success, affecting
               costs, timelines, safety, and environmental sustainability. Understanding these
               effects motivates better material management practices.
@@ -594,7 +594,7 @@ const Module5Section4_4 = () => {
 
                 <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                   <p className="font-medium text-red-400 mb-2">Increased Project Costs</p>
-                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-4 space-y-1">
                     <li>Direct cost of wasted materials</li>
                     <li>Emergency procurement at premium prices</li>
                     <li>Labour costs during delays</li>
@@ -605,7 +605,7 @@ const Module5Section4_4 = () => {
 
                 <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
                   <p className="font-medium text-orange-400 mb-2">Timeline Impact</p>
-                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-4 space-y-1">
                     <li>Work delays while waiting for replacements</li>
                     <li>Rescheduling of other trades</li>
                     <li>Penalty clauses for late completion</li>
@@ -619,7 +619,7 @@ const Module5Section4_4 = () => {
 
                 <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                   <p className="font-medium text-amber-400 mb-2">Safety Concerns</p>
-                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-4 space-y-1">
                     <li>Risk of using damaged materials</li>
                     <li>Pressure to use inappropriate alternatives</li>
                     <li>Rushed installations due to delays</li>
@@ -629,7 +629,7 @@ const Module5Section4_4 = () => {
 
                 <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                   <p className="font-medium text-green-400 mb-2">Environmental Impact</p>
-                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-4 space-y-1">
                     <li>Unnecessary waste going to landfill</li>
                     <li>Additional carbon footprint from waste</li>
                     <li>Resource depletion from over-consumption</li>
@@ -644,7 +644,7 @@ const Module5Section4_4 = () => {
                 <AlertTriangle className="w-5 h-5 text-purple-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="font-medium text-purple-400 mb-2">Business Reputation</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Poor material management affects client relationships, subcontractor
                     partnerships, and company reputation. Environmental responsibility is
                     increasingly important for winning contracts.
@@ -675,7 +675,7 @@ const Module5Section4_4 = () => {
               Strategies to Reduce Wastage
             </h2>
 
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Implementing effective wastage reduction strategies requires systematic approaches to
               planning, handling, storage, and team training. These strategies deliver immediate
               cost savings and environmental benefits.
@@ -687,10 +687,10 @@ const Module5Section4_4 = () => {
 
                 <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                   <p className="font-medium text-blue-400 mb-2">Measure and Cut Carefully</p>
-                  <p className="text-sm text-white/70 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Accurate measurement and cutting techniques prevent costly errors.
                   </p>
-                  <ul className="text-sm text-white/70 list-disc pl-4">
+                  <ul className="text-sm text-white list-disc pl-4">
                     <li>Use proper measuring tools and techniques</li>
                     <li>Double-check measurements before cutting</li>
                     <li>Allow for termination and connection lengths</li>
@@ -700,10 +700,10 @@ const Module5Section4_4 = () => {
 
                 <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                   <p className="font-medium text-green-400 mb-2">Proper Storage</p>
-                  <p className="text-sm text-white/70 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Protect materials from damage through appropriate storage conditions.
                   </p>
-                  <ul className="text-sm text-white/70 list-disc pl-4">
+                  <ul className="text-sm text-white list-disc pl-4">
                     <li>Dry, secure, ventilated storage areas</li>
                     <li>Pallets and racking for organisation</li>
                     <li>Protection from weather and UV</li>
@@ -717,7 +717,7 @@ const Module5Section4_4 = () => {
 
                 <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                   <p className="font-medium text-amber-400 mb-2">Reuse Offcuts</p>
-                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-4 space-y-1">
                     <li>Keep offcuts in organised storage for future use</li>
                     <li>Label offcuts with length and specification</li>
                     <li>Use offcuts for short runs and connections</li>
@@ -727,7 +727,7 @@ const Module5Section4_4 = () => {
 
                 <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
                   <p className="font-medium text-purple-400 mb-2">Staff Training</p>
-                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-4 space-y-1">
                     <li>Correct handling and installation techniques</li>
                     <li>Measurement and cutting best practices</li>
                     <li>Waste awareness and reduction mindset</li>
@@ -742,7 +742,7 @@ const Module5Section4_4 = () => {
                 <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="font-medium text-green-400 mb-2">Success Metric</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Well-implemented waste reduction strategies can reduce material waste from 8-10%
                     to 2-3% of total material costs, providing significant savings on medium to
                     large projects.
@@ -773,7 +773,7 @@ const Module5Section4_4 = () => {
               Strategies to Prevent Shortages
             </h2>
 
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Preventing material shortages requires proactive planning, systematic monitoring, and
               strong supplier relationships. These strategies ensure continuous work flow and
               prevent costly delays.
@@ -785,10 +785,10 @@ const Module5Section4_4 = () => {
 
                 <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                   <p className="font-medium text-blue-400 mb-2">Accurate Estimation</p>
-                  <p className="text-sm text-white/70 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Thorough planning during the estimation stage prevents shortages.
                   </p>
-                  <ul className="text-sm text-white/70 list-disc pl-4">
+                  <ul className="text-sm text-white list-disc pl-4">
                     <li>Detailed review of drawings and specifications</li>
                     <li>Include allowances for testing and commissioning</li>
                     <li>Account for waste factors and cutting losses</li>
@@ -798,10 +798,10 @@ const Module5Section4_4 = () => {
 
                 <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                   <p className="font-medium text-green-400 mb-2">Stock Monitoring</p>
-                  <p className="text-sm text-white/70 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Regular monitoring prevents unexpected shortages.
                   </p>
-                  <ul className="text-sm text-white/70 list-disc pl-4">
+                  <ul className="text-sm text-white list-disc pl-4">
                     <li>Keep a stock log updated daily</li>
                     <li>Set reorder points for critical items</li>
                     <li>Track usage rates and consumption patterns</li>
@@ -815,7 +815,7 @@ const Module5Section4_4 = () => {
 
                 <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                   <p className="font-medium text-amber-400 mb-2">Supplier Coordination</p>
-                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-4 space-y-1">
                     <li>Establish clear delivery schedules</li>
                     <li>Understand lead times for different items</li>
                     <li>Maintain backup supplier relationships</li>
@@ -825,7 +825,7 @@ const Module5Section4_4 = () => {
 
                 <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
                   <p className="font-medium text-purple-400 mb-2">Buffer Stock Strategy</p>
-                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-4 space-y-1">
                     <li>Hold small buffer stock of critical items</li>
                     <li>Focus on items with long lead times</li>
                     <li>Balance shortage risk with storage costs</li>
@@ -840,7 +840,7 @@ const Module5Section4_4 = () => {
                 <CheckCircle className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="font-medium text-blue-400 mb-2">Best Practice</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Implement weekly material planning meetings with the site team to review
                     upcoming requirements, check stock levels, and coordinate deliveries. This
                     prevents most shortage-related delays.
@@ -871,7 +871,7 @@ const Module5Section4_4 = () => {
               Sustainable Practices
             </h2>
 
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Sustainable material management reduces environmental impact while often providing
               cost benefits. Modern electrical contractors increasingly focus on sustainability to
               meet client requirements and environmental regulations.
@@ -883,10 +883,10 @@ const Module5Section4_4 = () => {
 
                 <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                   <p className="font-medium text-green-400 mb-2">Material Recycling</p>
-                  <p className="text-sm text-white/70 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Separate and recycle materials to reduce environmental impact.
                   </p>
-                  <ul className="text-sm text-white/70 list-disc pl-4">
+                  <ul className="text-sm text-white list-disc pl-4">
                     <li>Copper and aluminium cable offcuts</li>
                     <li>Steel and aluminium trunking and conduit</li>
                     <li>Plastic cable drums and packaging</li>
@@ -896,10 +896,10 @@ const Module5Section4_4 = () => {
 
                 <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                   <p className="font-medium text-blue-400 mb-2">Return Policies</p>
-                  <p className="text-sm text-white/70 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Work with suppliers to return unused materials.
                   </p>
-                  <ul className="text-sm text-white/70 list-disc pl-4">
+                  <ul className="text-sm text-white list-disc pl-4">
                     <li>Negotiate return agreements with suppliers</li>
                     <li>Maintain original packaging where possible</li>
                     <li>Process returns promptly to avoid restocking fees</li>
@@ -913,7 +913,7 @@ const Module5Section4_4 = () => {
 
                 <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                   <p className="font-medium text-amber-400 mb-2">Packaging Reduction</p>
-                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-4 space-y-1">
                     <li>Bulk ordering to reduce packaging waste</li>
                     <li>Reusable packaging systems with suppliers</li>
                     <li>Minimise single-use packaging materials</li>
@@ -923,7 +923,7 @@ const Module5Section4_4 = () => {
 
                 <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
                   <p className="font-medium text-purple-400 mb-2">Digital Documentation</p>
-                  <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-4 space-y-1">
                     <li>Electronic delivery notes and invoices</li>
                     <li>Digital stock management systems</li>
                     <li>Paperless material tracking</li>
@@ -938,7 +938,7 @@ const Module5Section4_4 = () => {
                 <Recycle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="font-medium text-green-400 mb-2">Business Advantage</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Many clients now require sustainability credentials for major contracts.
                     Demonstrating effective waste management and recycling practices can provide
                     competitive advantages in tendering.
@@ -977,7 +977,7 @@ const Module5Section4_4 = () => {
               <div className="grid sm:grid-cols-2 gap-4 mb-4">
                 <div className="space-y-3">
                   <h4 className="font-medium text-white">The Problem:</h4>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     On a 50-unit housing project, cable reels were stored in an uncovered area
                     during autumn. Heavy rain and humidity caused moisture ingress into several
                     cable drums, making the cables unsafe for installation.
@@ -985,7 +985,7 @@ const Module5Section4_4 = () => {
 
                   <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20">
                     <p className="text-sm font-medium text-red-400 mb-1">Consequences:</p>
-                    <ul className="text-sm text-white/70 list-disc pl-4">
+                    <ul className="text-sm text-white list-disc pl-4">
                       <li>£12,000 worth of cable unusable</li>
                       <li>2-week project delay</li>
                       <li>Emergency procurement at 25% premium</li>
@@ -996,7 +996,7 @@ const Module5Section4_4 = () => {
 
                 <div className="space-y-3">
                   <h4 className="font-medium text-white">The Solution:</h4>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Investment in a lockable, weatherproof storage container with proper ventilation
                     and racking systems would have prevented the damage completely.
                   </p>
@@ -1005,7 +1005,7 @@ const Module5Section4_4 = () => {
                     <p className="text-sm font-medium text-green-400 mb-1">
                       Investment vs Savings:
                     </p>
-                    <ul className="text-sm text-white/70 list-disc pl-4">
+                    <ul className="text-sm text-white list-disc pl-4">
                       <li>Storage container cost: £2,500</li>
                       <li>Total loss prevented: £15,000+</li>
                       <li>Return on investment: 600%</li>
@@ -1016,7 +1016,7 @@ const Module5Section4_4 = () => {
               </div>
 
               <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   <strong className="text-blue-400">Lesson Learned:</strong> Proper material storage
                   is an investment, not a cost. The project manager now includes weatherproof
                   storage in all project planning and has avoided similar losses on subsequent
@@ -1038,7 +1038,7 @@ const Module5Section4_4 = () => {
                   key={index}
                   className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50"
                 >
-                  <p className="text-white/80 text-sm">{guidance}</p>
+                  <p className="text-white text-sm">{guidance}</p>
                 </div>
               ))}
             </div>
@@ -1054,7 +1054,7 @@ const Module5Section4_4 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                  <p className="text-white/70 text-sm">{faq.answer}</p>
+                  <p className="text-white text-sm">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -1072,7 +1072,7 @@ const Module5Section4_4 = () => {
               {pocketGuideItems.map((item, index) => (
                 <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-white/5">
                   <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <p className="text-sm text-white/80">{item}</p>
+                  <p className="text-sm text-white">{item}</p>
                 </div>
               ))}
             </div>
@@ -1091,7 +1091,7 @@ const Module5Section4_4 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../4-3">

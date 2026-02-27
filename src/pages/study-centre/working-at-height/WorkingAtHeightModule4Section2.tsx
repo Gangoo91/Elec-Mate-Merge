@@ -209,7 +209,7 @@ export default function WorkingAtHeightModule4Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-4">
@@ -234,7 +234,7 @@ export default function WorkingAtHeightModule4Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Permit-to-Work Systems
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Formal documented safety systems for high-risk work at height including permit content,
             roles, lifecycle, cross-referencing, and common failures
           </p>
@@ -357,7 +357,7 @@ export default function WorkingAtHeightModule4Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">What a PTW System Provides</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -417,7 +417,7 @@ export default function WorkingAtHeightModule4Section2() {
                 <p className="text-sm font-medium text-amber-400 mb-3">
                   WAH Tasks That Typically Require a PTW
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Roof work:</strong> Any work on or adjacent to a
                     roof, including flat roofs, pitched roofs, and roof edges. Falls from roofs are
@@ -458,7 +458,7 @@ export default function WorkingAtHeightModule4Section2() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Warning</p>
                 </div>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   The absence of a specific regulatory requirement to use a permit does not mean one
                   is unnecessary. If the risk assessment identifies that a task is high-risk and
                   that a permit system would provide an additional layer of control, a permit should
@@ -492,7 +492,7 @@ export default function WorkingAtHeightModule4Section2() {
                   <FileText className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Essential Permit Content</p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Description of work:</strong> A clear, specific
                     description of the work to be carried out. Not &ldquo;roof work&rdquo; but
@@ -571,8 +571,8 @@ export default function WorkingAtHeightModule4Section2() {
                     <UserCheck className="h-5 w-5 text-blue-400" />
                     <p className="text-sm font-semibold text-blue-400">Permit Issuer</p>
                   </div>
-                  <p className="text-xs text-white/60 mb-2">(Authorising Authority)</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <p className="text-xs text-white mb-2">(Authorising Authority)</p>
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>
@@ -604,8 +604,8 @@ export default function WorkingAtHeightModule4Section2() {
                     <ClipboardCheck className="h-5 w-5 text-green-400" />
                     <p className="text-sm font-semibold text-green-400">Permit Holder</p>
                   </div>
-                  <p className="text-xs text-white/60 mb-2">(Person in charge of the work)</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <p className="text-xs text-white mb-2">(Person in charge of the work)</p>
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>
@@ -640,7 +640,7 @@ export default function WorkingAtHeightModule4Section2() {
                   <Wrench className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">Performing Authority</p>
                 </div>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   In some systems, a third role exists: the <strong>performing authority</strong>.
                   This is the person or team who physically carry out the work. They may be
                   different from the permit holder, who is the supervisory figure in charge. The
@@ -689,7 +689,7 @@ export default function WorkingAtHeightModule4Section2() {
                       </div>
                       <div>
                         <p className="text-sm font-semibold text-blue-400">Request</p>
-                        <p className="text-xs text-white/70">
+                        <p className="text-xs text-white">
                           Permit holder identifies need for permit and submits request to issuer
                           with task details
                         </p>
@@ -697,7 +697,7 @@ export default function WorkingAtHeightModule4Section2() {
                     </div>
                   </div>
                   <div className="flex justify-center">
-                    <ArrowRight className="h-4 w-4 text-white/30 rotate-90" />
+                    <ArrowRight className="h-4 w-4 text-white rotate-90" />
                   </div>
 
                   {/* Stage 2 */}
@@ -708,7 +708,7 @@ export default function WorkingAtHeightModule4Section2() {
                       </div>
                       <div>
                         <p className="text-sm font-semibold text-purple-400">Assessment</p>
-                        <p className="text-xs text-white/70">
+                        <p className="text-xs text-white">
                           Issuer visits the location, verifies hazards, checks controls are in
                           place, reviews cross-permits
                         </p>
@@ -716,7 +716,7 @@ export default function WorkingAtHeightModule4Section2() {
                     </div>
                   </div>
                   <div className="flex justify-center">
-                    <ArrowRight className="h-4 w-4 text-white/30 rotate-90" />
+                    <ArrowRight className="h-4 w-4 text-white rotate-90" />
                   </div>
 
                   {/* Stage 3 */}
@@ -727,7 +727,7 @@ export default function WorkingAtHeightModule4Section2() {
                       </div>
                       <div>
                         <p className="text-sm font-semibold text-green-400">Issue</p>
-                        <p className="text-xs text-white/70">
+                        <p className="text-xs text-white">
                           Issuer signs and issues the permit; holder counter-signs accepting the
                           conditions; validity period begins
                         </p>
@@ -735,7 +735,7 @@ export default function WorkingAtHeightModule4Section2() {
                     </div>
                   </div>
                   <div className="flex justify-center">
-                    <ArrowRight className="h-4 w-4 text-white/30 rotate-90" />
+                    <ArrowRight className="h-4 w-4 text-white rotate-90" />
                   </div>
 
                   {/* Stage 4 */}
@@ -746,7 +746,7 @@ export default function WorkingAtHeightModule4Section2() {
                       </div>
                       <div>
                         <p className="text-sm font-semibold text-amber-400">Work Proceeds</p>
-                        <p className="text-xs text-white/70">
+                        <p className="text-xs text-white">
                           Work carried out under permit conditions; holder monitors compliance;
                           conditions checked continuously
                         </p>
@@ -754,7 +754,7 @@ export default function WorkingAtHeightModule4Section2() {
                     </div>
                   </div>
                   <div className="flex justify-center">
-                    <ArrowRight className="h-4 w-4 text-white/30 rotate-90" />
+                    <ArrowRight className="h-4 w-4 text-white rotate-90" />
                   </div>
 
                   {/* Stage 5 */}
@@ -765,7 +765,7 @@ export default function WorkingAtHeightModule4Section2() {
                       </div>
                       <div>
                         <p className="text-sm font-semibold text-teal-400">Completion</p>
-                        <p className="text-xs text-white/70">
+                        <p className="text-xs text-white">
                           Work is finished; holder confirms area is left safe; equipment and
                           materials removed from the work location
                         </p>
@@ -773,7 +773,7 @@ export default function WorkingAtHeightModule4Section2() {
                     </div>
                   </div>
                   <div className="flex justify-center">
-                    <ArrowRight className="h-4 w-4 text-white/30 rotate-90" />
+                    <ArrowRight className="h-4 w-4 text-white rotate-90" />
                   </div>
 
                   {/* Stage 6 */}
@@ -784,7 +784,7 @@ export default function WorkingAtHeightModule4Section2() {
                       </div>
                       <div>
                         <p className="text-sm font-semibold text-red-400">Return / Cancel</p>
-                        <p className="text-xs text-white/70">
+                        <p className="text-xs text-white">
                           Permit returned to issuer who signs it off; filed as a permanent record;
                           area released for normal operations
                         </p>
@@ -826,7 +826,7 @@ export default function WorkingAtHeightModule4Section2() {
                     Dangerous Conflicts to Check For
                   </p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Hot work below WAH:</strong> If hot work
                     (welding, cutting, grinding) is being carried out directly below work at height,
@@ -885,7 +885,7 @@ export default function WorkingAtHeightModule4Section2() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-amber-400 mb-2">Permit Issuer Training</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Understanding of the PTW system structure and purpose</span>
@@ -910,7 +910,7 @@ export default function WorkingAtHeightModule4Section2() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-amber-400 mb-2">Permit Holder Training</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>How to read and understand a permit document</span>
@@ -964,7 +964,7 @@ export default function WorkingAtHeightModule4Section2() {
                   <XCircle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Common PTW System Failures</p>
                 </div>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <p>
                     <strong className="text-white">Permit fatigue:</strong> Permits are issued
                     routinely without genuine assessment. The issuer signs without visiting the
@@ -1004,7 +1004,7 @@ export default function WorkingAtHeightModule4Section2() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Warning</p>
                 </div>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   If you are asked to work under a permit that you have not read, that has expired,
                   or that does not match the work you are being asked to do &mdash;{' '}
                   <strong>stop and challenge</strong>. You have the right and the duty to refuse to
@@ -1023,7 +1023,7 @@ export default function WorkingAtHeightModule4Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1037,7 +1037,7 @@ export default function WorkingAtHeightModule4Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-4-section-1">

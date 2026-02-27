@@ -146,7 +146,7 @@ const Module7Section5_5 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -165,13 +165,13 @@ const Module7Section5_5 = () => {
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <Search className="w-4 h-4" />
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 7</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.5</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.5</span>
             </div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
               Avoiding Live Testing Where Possible
             </h1>
-            <p className="text-white/70 text-base sm:text-lg max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg max-w-2xl mx-auto">
               Safe isolation as the default; reduce live work to the absolute minimum
             </p>
           </header>
@@ -179,7 +179,7 @@ const Module7Section5_5 = () => {
           {/* In 30 Seconds Summary */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 space-y-1 text-sm">
+            <ul className="text-white space-y-1 text-sm">
               <li>• Confirm isolation is possible before starting</li>
               <li>• Check lock-off/permit systems are available</li>
               <li>• Ensure proving unit and voltage indicator are ready</li>
@@ -189,7 +189,7 @@ const Module7Section5_5 = () => {
 
           {/* Introduction */}
           <section className="mb-10">
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               Live testing is one of the most hazardous activities in electrical work. Whenever
               possible, circuits should be isolated and proved dead before any testing or
               investigation is carried out. While some specific tests do require circuits to be live
@@ -206,10 +206,10 @@ const Module7Section5_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <p className="text-white/80 mb-4">
+            <p className="text-white mb-4">
               By the end of this subsection, you should be able to:
             </p>
-            <ul className="space-y-2 text-white/80">
+            <ul className="space-y-2 text-white">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">✓</span>
                 <span>Explain why live testing is dangerous</span>
@@ -232,7 +232,7 @@ const Module7Section5_5 = () => {
               Safe Isolation as the Default Approach
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-4">
-              <div className="space-y-4 text-sm text-white/80">
+              <div className="space-y-4 text-sm text-white">
                 <p>
                   <strong className="text-white">Foundation of electrical safety:</strong> Safe
                   isolation is the foundation of electrical safety. Before investigating faults, the
@@ -288,7 +288,7 @@ const Module7Section5_5 = () => {
               When Live Testing is Unavoidable
             </h2>
             <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50 mb-4">
-              <div className="space-y-4 text-sm text-white/80">
+              <div className="space-y-4 text-sm text-white">
                 <p>
                   <strong className="text-white">Limited circumstances:</strong> There are limited
                   circumstances where live testing is unavoidable. Examples include measuring earth
@@ -342,7 +342,7 @@ const Module7Section5_5 = () => {
               Apprentices and Legal Obligations
             </h2>
             <div className="p-4 rounded-lg bg-amber-500/5 border-l-2 border-amber-500/50 mb-4">
-              <div className="space-y-4 text-sm text-white/80">
+              <div className="space-y-4 text-sm text-white">
                 <p>
                   <strong className="text-white">Close supervision required:</strong> Apprentices in
                   particular must not carry out live testing without close supervision from a
@@ -397,7 +397,7 @@ const Module7Section5_5 = () => {
               Practical Guidance and Documentation
             </h2>
             <div className="p-4 rounded-lg bg-purple-500/5 border-l-2 border-purple-500/50 mb-4">
-              <div className="space-y-4 text-sm text-white/80">
+              <div className="space-y-4 text-sm text-white">
                 <p>
                   <strong className="text-white">Professional approach:</strong> The professional
                   approach is always to ask: "Can this test be done with the power off?" If the
@@ -456,7 +456,7 @@ const Module7Section5_5 = () => {
                 <h3 className="font-semibold text-red-400 mb-3">
                   Case Study: Unnecessary Live Testing
                 </h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   On a refurbishment project, an electrician attempted to carry out continuity
                   testing on live socket circuits, believing it would save time. His probes slipped,
                   causing a short circuit that resulted in a flashover. He suffered burns to his
@@ -471,7 +471,7 @@ const Module7Section5_5 = () => {
                 <h3 className="font-semibold text-elec-yellow mb-3">
                   Case Study: Safe RCD Testing
                 </h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   On another site, an apprentice working under supervision needed to carry out RCD
                   trip-time testing. The supervisor ensured all non-essential people were kept
                   clear, the apprentice wore full PPE, and GS38-compliant leads were used. The test
@@ -494,14 +494,14 @@ const Module7Section5_5 = () => {
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-card/30 border border-white/10">
                 <p className="font-medium text-white mb-2">Why should live testing be avoided?</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Because it exposes electricians to shock, burns, and arc flash. Safe isolation
                   removes these risks completely.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-card/30 border border-white/10">
                 <p className="font-medium text-white mb-2">When is live testing unavoidable?</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   For tests such as earth fault loop impedance, polarity verification under load,
                   RCD trip times, and functional testing of equipment that must be energised.
                 </p>
@@ -510,7 +510,7 @@ const Module7Section5_5 = () => {
                 <p className="font-medium text-white mb-2">
                   What must always be done before any live test?
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Risk assessment, appropriate PPE must be worn, GS38-compliant equipment must be
                   used, and proper supervision arranged for apprentices.
                 </p>
@@ -519,7 +519,7 @@ const Module7Section5_5 = () => {
                 <p className="font-medium text-white mb-2">
                   Can apprentices perform live testing alone?
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   No. They must always be supervised by a competent person due to the high risks
                   involved.
                 </p>
@@ -528,7 +528,7 @@ const Module7Section5_5 = () => {
                 <p className="font-medium text-white mb-2">
                   What regulation governs avoiding live testing?
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   The Electricity at Work Regulations 1989, particularly Regulation 14, which states
                   that work should not be carried out on live conductors unless it is unreasonable
                   for it to be dead.
@@ -544,7 +544,7 @@ const Module7Section5_5 = () => {
               Key Takeaways
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <ul className="space-y-2 text-sm text-white/80">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">✓</span>
                   <span>
@@ -584,7 +584,7 @@ const Module7Section5_5 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mt-10 pt-6 border-t border-white/10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../5-4">

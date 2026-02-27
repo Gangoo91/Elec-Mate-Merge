@@ -167,7 +167,7 @@ const Module6Section5_4 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -185,13 +185,13 @@ const Module6Section5_4 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.5.4</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.5.4</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Interpreting Insulation Resistance Test Results
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Understanding minimum values, interpreting readings and making safety decisions
               against BS 7671
             </p>
@@ -199,12 +199,12 @@ const Module6Section5_4 = () => {
 
           {/* Summary Box */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
-            <p className="text-white/90 text-sm leading-relaxed mb-3">
+            <p className="text-white text-sm leading-relaxed mb-3">
               <strong className="text-elec-yellow">In 30 seconds:</strong> Minimum 1MΩ for most LV
               circuits. High readings = good insulation. Low readings = investigate before
               energising. Consider environmental factors.
             </p>
-            <ul className="text-white/80 text-sm space-y-1">
+            <ul className="text-white text-sm space-y-1">
               <li>
                 • <strong>Spot:</strong> Readings below 1MΩ or borderline values
               </li>
@@ -223,8 +223,8 @@ const Module6Section5_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <div className="text-white/80 space-y-3 leading-relaxed">
-              <p className="text-white/70 mb-4">
+            <div className="text-white space-y-3 leading-relaxed">
+              <p className="text-white mb-4">
                 By the end of this subsection, learners will be able to:
               </p>
               <ul className="space-y-2">
@@ -256,7 +256,7 @@ const Module6Section5_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Introduction
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Interpreting insulation resistance test results correctly is crucial for electrical
                 safety. BS 7671 provides minimum acceptable values, but understanding what these
@@ -272,7 +272,7 @@ const Module6Section5_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Minimum Values According to BS 7671
             </h2>
-            <div className="text-white/80 space-y-6 leading-relaxed">
+            <div className="text-white space-y-6 leading-relaxed">
               <p>
                 BS 7671 establishes clear minimum insulation resistance values. For circuits up to
                 500V, the absolute minimum is <strong>1MΩ</strong> when tested at 500V DC. Any
@@ -326,7 +326,7 @@ const Module6Section5_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Interpreting High and Low Readings
             </h2>
-            <div className="text-white/80 space-y-6 leading-relaxed">
+            <div className="text-white space-y-6 leading-relaxed">
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <h3 className="font-medium text-green-400 mb-3">
                   High Resistance Readings (Good Condition)
@@ -398,7 +398,7 @@ const Module6Section5_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Factors Affecting Results
             </h2>
-            <div className="text-white/80 space-y-6 leading-relaxed">
+            <div className="text-white space-y-6 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-3">Environmental Factors</h3>
                 <ul className="text-sm space-y-2">
@@ -455,7 +455,7 @@ const Module6Section5_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Making Safety Decisions
             </h2>
-            <div className="text-white/80 space-y-6 leading-relaxed">
+            <div className="text-white space-y-6 leading-relaxed">
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <h3 className="font-medium text-red-400 mb-3">
                   Immediate Action Required (Do NOT Energise)
@@ -513,7 +513,7 @@ const Module6Section5_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Practical Guidance
             </h2>
-            <div className="text-white/80 space-y-3 leading-relaxed">
+            <div className="text-white space-y-3 leading-relaxed">
               <div className="flex items-start gap-2">
                 <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-1" />
                 <span>
@@ -554,7 +554,7 @@ const Module6Section5_4 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
               <p className="text-white font-medium mb-3">Office Building - Moisture Issue</p>
-              <div className="text-white/80 text-sm space-y-3 leading-relaxed">
+              <div className="text-white text-sm space-y-3 leading-relaxed">
                 <p>
                   During a periodic inspection at an office building, an electrician found
                   insulation resistance readings of only 0.4MΩ on several lighting circuits.
@@ -590,7 +590,7 @@ const Module6Section5_4 = () => {
                   <AccordionTrigger className="text-white hover:text-elec-yellow text-left text-sm py-4">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-white/70 text-sm pb-4">
+                  <AccordionContent className="text-white text-sm pb-4">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -607,25 +607,25 @@ const Module6Section5_4 = () => {
             <div className="grid grid-cols-2 gap-3">
               <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
                 <h3 className="font-medium text-elec-yellow mb-2 text-sm">Minimum Values</h3>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   1MΩ minimum for LV circuits per BS 7671, higher values expected
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <h3 className="font-medium text-green-400 mb-2 text-sm">Interpretation</h3>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   High readings = good insulation, low readings = investigate
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <h3 className="font-medium text-blue-400 mb-2 text-sm">Factors</h3>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Environment, moisture, temperature affect readings
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <h3 className="font-medium text-red-400 mb-2 text-sm">Safety Decisions</h3>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   When in doubt, investigate - never compromise safety
                 </p>
               </div>
@@ -645,7 +645,7 @@ const Module6Section5_4 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../5-3">

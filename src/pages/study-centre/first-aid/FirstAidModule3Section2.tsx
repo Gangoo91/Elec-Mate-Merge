@@ -197,7 +197,7 @@ export default function FirstAidModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-3">
@@ -220,7 +220,7 @@ export default function FirstAidModule3Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Wound Management &amp; Infection Prevention
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Minor wound care, embedded objects, abdominal and chest wounds, scalp injuries,
             recognising infection, dressing selection, and preventing cross-contamination
           </p>
@@ -310,7 +310,7 @@ export default function FirstAidModule3Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Step-by-Step: Treating a Minor Wound
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -369,7 +369,7 @@ export default function FirstAidModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Tetanus Risk</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Any wound caused by a dirty or rusty object, a wound contaminated with soil or
                   manure, a deep puncture wound, or an animal bite carries a risk of tetanus
                   infection. If the casualty has not had a tetanus booster within the last 10 years
@@ -404,7 +404,7 @@ export default function FirstAidModule3Section2() {
                     Critical Rule: NEVER Remove an Embedded Object
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Never attempt to remove an embedded object from a wound. The object may be
                   plugging a damaged blood vessel, and removing it can cause catastrophic bleeding.
                   It may also be pressing against nerves, tendons, or organs, and removal could
@@ -418,7 +418,7 @@ export default function FirstAidModule3Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Step-by-Step: Managing an Embedded Object
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -517,7 +517,7 @@ export default function FirstAidModule3Section2() {
                     <AlertTriangle className="h-5 w-5 text-red-400" />
                     <p className="text-sm font-medium text-red-400">Open Abdominal Wound</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                       <span>
@@ -569,7 +569,7 @@ export default function FirstAidModule3Section2() {
                     <Shield className="h-5 w-5 text-amber-400" />
                     <p className="text-sm font-medium text-amber-400">Closed Abdominal Injury</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>
@@ -655,7 +655,7 @@ export default function FirstAidModule3Section2() {
                     Open Chest Wound &mdash; Immediate Action
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   You will recognise an open chest wound by a wound to the chest that
                   &ldquo;sucks&rdquo; or &ldquo;bubbles&rdquo; as the casualty breathes. There may
                   be a hissing or sucking sound. Blood may be frothy or bubbly. The casualty will be
@@ -667,7 +667,7 @@ export default function FirstAidModule3Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Step-by-Step: Treating an Open Chest Wound
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -740,7 +740,7 @@ export default function FirstAidModule3Section2() {
                     If Breathing Deteriorates After Sealing
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If the casualty&rsquo;s condition worsens after applying the three-sided seal
                   &mdash; increasing breathlessness, worsening colour, distended neck veins, or the
                   trachea (windpipe) appearing to shift to one side &mdash; suspect a tension
@@ -782,7 +782,7 @@ export default function FirstAidModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Treating a Scalp Wound</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -824,7 +824,7 @@ export default function FirstAidModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Signs of a Skull Fracture</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>Depression, deformity, or soft/boggy area on the skull</span>
@@ -888,7 +888,7 @@ export default function FirstAidModule3Section2() {
               <div className="space-y-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-rose-400 mb-1">Sterile Gauze Pads</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     General-purpose wound covering. Used to clean wounds, apply pressure, and cover
                     injuries of various sizes. Available in different sizes. Always use the sterile
                     (sealed) side against the wound. Can be layered for additional absorbency.
@@ -899,7 +899,7 @@ export default function FirstAidModule3Section2() {
                   <p className="text-sm font-medium text-rose-400 mb-1">
                     Adhesive Dressings (Plasters)
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     For minor cuts, grazes, and small wounds. The adhesive edges hold the dressing
                     in place without additional bandaging. Available in various shapes including
                     strip, square, and fingertip designs.{' '}
@@ -912,7 +912,7 @@ export default function FirstAidModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-rose-400 mb-1">Non-Adherent Dressings</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Specifically designed for{' '}
                     <strong className="text-white">burns and weeping wounds</strong>. The contact
                     layer will not stick to the wound bed, preventing further tissue damage and pain
@@ -925,7 +925,7 @@ export default function FirstAidModule3Section2() {
                   <p className="text-sm font-medium text-rose-400 mb-1">
                     Wound Closure Strips (Steri-Strips)
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Thin adhesive strips used to hold the edges of{' '}
                     <strong className="text-white">clean, straight cuts</strong> together. Applied
                     across the wound, pulling the edges into gentle contact. Not suitable for dirty,
@@ -936,7 +936,7 @@ export default function FirstAidModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-rose-400 mb-1">Triangular Bandages</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Versatile multi-purpose items. Used as{' '}
                     <strong className="text-white">arm slings</strong> (broad arm sling or elevation
                     sling), for securing dressings in place, as padding around embedded objects, or
@@ -947,7 +947,7 @@ export default function FirstAidModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-rose-400 mb-1">Conforming Bandages</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Lightweight, stretchy bandages used to{' '}
                     <strong className="text-white">hold dressings in place</strong> and provide
                     light support. They conform to the shape of the body and are comfortable to
@@ -957,7 +957,7 @@ export default function FirstAidModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-rose-400 mb-1">Crepe Bandages</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Heavier, elastic bandages providing{' '}
                     <strong className="text-white">support and compression</strong> for sprains,
                     strains, and soft tissue injuries. Applied in a spiral pattern, overlapping each
@@ -968,7 +968,7 @@ export default function FirstAidModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-rose-400 mb-1">Tubular Bandages</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Tubular-shaped bandages used primarily for{' '}
                     <strong className="text-white">finger and toe dressings</strong>. They hold a
                     small dressing securely in place without bulk. Applied using a tubular bandage
@@ -998,7 +998,7 @@ export default function FirstAidModule3Section2() {
               <AlertTriangle className="h-5 w-5 text-red-400" />
               <h2 className="text-lg font-semibold text-red-400">Recognising Wound Infection</h2>
             </div>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               Advise every casualty to monitor their wound for signs of infection in the days
               following treatment. If any of the following develop, they should see a GP or attend a
               minor injuries unit promptly:
@@ -1014,14 +1014,14 @@ export default function FirstAidModule3Section2() {
                 'Fever, chills, or feeling generally unwell',
                 'Swollen, tender lymph nodes (glands) near the wound — e.g. in the armpit for a hand wound, or in the groin for a leg wound',
               ].map((sign, i) => (
-                <div key={i} className="flex items-start gap-2 text-sm text-white/80">
+                <div key={i} className="flex items-start gap-2 text-sm text-white">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                   <span>{sign}</span>
                 </div>
               ))}
             </div>
             <div className="mt-4 bg-red-500/10 border border-red-500/20 p-3 rounded-lg">
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 <strong className="text-red-400">Lymphangitis Warning:</strong> Red streaks tracking
                 from a wound are a particularly concerning sign. This indicates infection is
                 spreading through the lymphatic system and can progress to{' '}
@@ -1052,7 +1052,7 @@ export default function FirstAidModule3Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Standard Precautions for Every Wound Treatment
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -1105,7 +1105,7 @@ export default function FirstAidModule3Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Blood Spillage &amp; Sharps Safety
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -1167,7 +1167,7 @@ export default function FirstAidModule3Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1181,7 +1181,7 @@ export default function FirstAidModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-3">

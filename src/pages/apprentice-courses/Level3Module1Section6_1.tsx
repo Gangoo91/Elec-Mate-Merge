@@ -268,7 +268,7 @@ const Level3Module1Section6_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/apprentice-courses/level-3-health-safety/module-1/section-6">
@@ -406,7 +406,7 @@ const Level3Module1Section6_1 = () => {
               employees.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Key point:</strong> These duties apply 'so far as is reasonably practicable' -
               but where risk is high and controls are available, there's little room for argument
               about what's practicable.
@@ -452,7 +452,7 @@ const Level3Module1Section6_1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> An electrician who removes guards from equipment, bypasses
               safety interlocks, or fails to isolate before working breaches these duties -
               regardless of whether an accident occurs.
@@ -477,14 +477,14 @@ const Level3Module1Section6_1 = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 my-6 text-sm">
               <div className="p-3 rounded bg-red-900/20 border border-red-500/30">
                 <p className="font-medium text-white mb-1">Criminal Liability</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Prosecution by HSE/Local Authority. Unlimited fines, imprisonment for individuals
                   up to 2 years (manslaughter: life)
                 </p>
               </div>
               <div className="p-3 rounded bg-orange-900/20 border border-orange-500/30">
                 <p className="font-medium text-white mb-1">Civil Liability</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Claims by injured parties. Compensation for injury, loss of earnings, pain and
                   suffering, ongoing care costs
                 </p>
@@ -580,7 +580,7 @@ const Level3Module1Section6_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -625,7 +625,7 @@ const Level3Module1Section6_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/apprentice-courses/level-3-health-safety/module-1/section-6">

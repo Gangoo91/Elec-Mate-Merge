@@ -57,7 +57,7 @@ const FeatureComparison = () => {
           <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
           <h2 className="text-lg sm:text-xl font-bold text-foreground">Compare plans</h2>
         </div>
-        <p className="text-sm text-white/50 ml-3.5">See exactly what you get with each tier</p>
+        <p className="text-sm text-white ml-3.5">See exactly what you get with each tier</p>
       </div>
 
       {/* Mobile: Accordion Cards */}
@@ -91,7 +91,7 @@ const FeatureComparison = () => {
                   )}
                 >
                   <plan.icon
-                    className={cn('h-4 w-4', plan.popular ? 'text-elec-yellow' : 'text-white/60')}
+                    className={cn('h-4 w-4', plan.popular ? 'text-elec-yellow' : 'text-white')}
                   />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -103,15 +103,15 @@ const FeatureComparison = () => {
                       </span>
                     )}
                   </div>
-                  <span className="text-xs text-white/40">{plan.price}</span>
+                  <span className="text-xs text-white">{plan.price}</span>
                 </div>
                 <div className="flex items-center gap-1.5 shrink-0">
-                  <span className="text-[11px] text-white/30 tabular-nums">
+                  <span className="text-[11px] text-white tabular-nums">
                     {included.length}/{features.length}
                   </span>
                   <ChevronDown
                     className={cn(
-                      'h-4 w-4 text-white/30 transition-transform duration-200',
+                      'h-4 w-4 text-white transition-transform duration-200',
                       isOpen && 'rotate-180'
                     )}
                   />
@@ -144,7 +144,7 @@ const FeatureComparison = () => {
       <div className="hidden md:block rounded-xl border border-white/[0.06] overflow-hidden">
         {/* Header Row */}
         <div className="grid grid-cols-[1fr_repeat(3,120px)] gap-0 bg-white/[0.03] border-b border-white/[0.06]">
-          <div className="px-4 py-3 text-xs font-medium text-white/40 uppercase tracking-wider">
+          <div className="px-4 py-3 text-xs font-medium text-white uppercase tracking-wider">
             Feature
           </div>
           {plans.map((plan) => (
@@ -154,7 +154,7 @@ const FeatureComparison = () => {
             >
               <div className="flex items-center justify-center gap-1.5">
                 <plan.icon
-                  className={cn('h-3.5 w-3.5', plan.popular ? 'text-elec-yellow' : 'text-white/50')}
+                  className={cn('h-3.5 w-3.5', plan.popular ? 'text-elec-yellow' : 'text-white')}
                 />
                 <span
                   className={cn(
@@ -165,7 +165,7 @@ const FeatureComparison = () => {
                   {plan.name}
                 </span>
               </div>
-              <div className="text-[11px] text-white/30 mt-0.5">{plan.price}</div>
+              <div className="text-[11px] text-white mt-0.5">{plan.price}</div>
             </div>
           ))}
         </div>

@@ -197,7 +197,7 @@ export default function StudyCentreHome() {
                 Apprentice Training
               </span>
             </h1>
-            <p className="text-sm text-white/50 max-w-[320px] mx-auto">
+            <p className="text-sm text-white max-w-[320px] mx-auto">
               Level 2 & AM2 study materials to support your electrical apprenticeship
             </p>
           </motion.div>
@@ -247,7 +247,7 @@ export default function StudyCentreHome() {
                     <stat.icon className="h-3.5 w-3.5 text-white" />
                   </div>
                   <span className="text-lg font-bold text-white">{stat.value}</span>
-                  <span className="text-[10px] text-white/50 uppercase tracking-wider font-medium">
+                  <span className="text-[10px] text-white uppercase tracking-wider font-medium">
                     {stat.label}
                   </span>
                 </div>
@@ -273,7 +273,7 @@ export default function StudyCentreHome() {
             </div>
             <div>
               <p className="text-sm font-medium text-white mb-1">Training Aid Notice</p>
-              <p className="text-xs text-white/50 leading-relaxed">
+              <p className="text-xs text-white leading-relaxed">
                 These materials are designed as a{' '}
                 <span className="text-amber-400 font-medium">supplementary training aid</span> to
                 support your college studies and on-the-job learning.
@@ -420,10 +420,10 @@ export default function StudyCentreHome() {
             className="text-center py-12"
           >
             <div className="p-4 rounded-2xl bg-white/5 inline-block mb-4">
-              <BookOpen className="h-12 w-12 text-white/30" />
+              <BookOpen className="h-12 w-12 text-white" />
             </div>
             <h3 className="text-lg font-semibold text-white mb-2">No topics found</h3>
-            <p className="text-sm text-white/50">Try adjusting your search</p>
+            <p className="text-sm text-white">Try adjusting your search</p>
           </motion.div>
         )}
 

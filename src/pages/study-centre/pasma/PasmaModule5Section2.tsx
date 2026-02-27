@@ -192,7 +192,7 @@ export default function PasmaModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-5">
@@ -217,7 +217,7 @@ export default function PasmaModule5Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Formal 7-Day Inspections
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The legally mandated Schedule 5 inspection regime &mdash; who can inspect, what must be
             checked, when inspections are triggered, and the consequences of non-compliance
           </p>
@@ -317,7 +317,7 @@ export default function PasmaModule5Section2() {
                   <BookOpen className="h-5 w-5 text-elec-yellow" />
                   <p className="text-sm font-medium text-elec-yellow">Key Legal Definitions</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -382,7 +382,7 @@ export default function PasmaModule5Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-purple-400">Sufficient Training</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Formal training in tower inspection, either through PASMA courses,
                         manufacturer training, or equivalent programmes that cover the specific
                         types of tower being inspected.
@@ -395,7 +395,7 @@ export default function PasmaModule5Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-purple-400">Sufficient Knowledge</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Understanding of the relevant legislation (WAHR 2005, Schedule 5),
                         manufacturer&rsquo;s instructions, EN 1004 requirements, and the principles
                         of tower stability and structural integrity.
@@ -408,7 +408,7 @@ export default function PasmaModule5Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-purple-400">Sufficient Experience</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Practical, hands-on experience of assembling, using, and inspecting the type
                         of tower in question. Theoretical knowledge alone is not sufficient.
                       </p>
@@ -420,7 +420,7 @@ export default function PasmaModule5Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-purple-400">Practical Ability</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         The ability to physically carry out the inspection, including climbing the
                         tower, testing components, and recognising defects through visual and
                         tactile examination.
@@ -437,7 +437,7 @@ export default function PasmaModule5Section2() {
                     Industry Guidance on Competence
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Although the law does not mandate a specific qualification, PASMA and the HSE
                   recommend that as a minimum the competent person should hold a PASMA Towers for
                   Users certificate. For complex tower configurations or towers used in high-risk
@@ -482,7 +482,7 @@ export default function PasmaModule5Section2() {
                   <ClipboardList className="h-5 w-5 text-teal-400" />
                   <p className="text-sm font-medium text-teal-400">Formal Inspection Scope</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -596,7 +596,7 @@ export default function PasmaModule5Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Before First Use on Site</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Every time a tower is erected on a new site or in a new location, it must
                         receive a formal inspection before anyone works from it. This applies even
                         if it was inspected at its previous location.
@@ -609,7 +609,7 @@ export default function PasmaModule5Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">After Substantial Alteration</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Any change to the tower configuration &mdash; adding a lift, removing a
                         lift, reconfiguring the base, or changing the platform height &mdash;
                         requires a new formal inspection before the tower is used again.
@@ -624,7 +624,7 @@ export default function PasmaModule5Section2() {
                       <p className="text-sm font-medium text-white">
                         After Any Event Likely to Affect Stability
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Any event that could have compromised the tower&rsquo;s structural integrity
                         or stability: severe weather (storm, heavy rain, snow), impact from vehicles
                         or plant, ground subsidence, or unauthorised interference.
@@ -639,7 +639,7 @@ export default function PasmaModule5Section2() {
                       <p className="text-sm font-medium text-white">
                         At Intervals Not Exceeding 7 Days
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         If the tower remains erected on site, a formal inspection must be carried
                         out at intervals of no more than 7 days from the date of the last
                         inspection.
@@ -652,7 +652,7 @@ export default function PasmaModule5Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">After Relocation</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Moving a tower to a new position on the same site counts as a change of
                         location. The new ground conditions, surroundings, and any stresses from the
                         move must be assessed through a formal inspection.
@@ -667,7 +667,7 @@ export default function PasmaModule5Section2() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Commonly Missed Triggers</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The most commonly missed inspection triggers on site are: towers relocated short
                   distances (&ldquo;we only moved it a few metres&rdquo;), towers left erected over
                   weekends or holiday periods (the 7-day clock still runs), and towers subjected to
@@ -687,7 +687,7 @@ export default function PasmaModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Practical Example</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A tower is erected on Monday and inspected. On Wednesday, it is moved 5 metres
                   along the building to follow the work. On Friday night, a severe storm hits the
                   site. On Monday morning, the 7-day interval expires. In this scenario, three
@@ -728,7 +728,7 @@ export default function PasmaModule5Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-cyan-400">During the Work</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Inspection records must be kept on site and available for examination
                         throughout the period the tower is in use at that location.
                       </p>
@@ -740,7 +740,7 @@ export default function PasmaModule5Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-cyan-400">After Completion</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Once the work is completed and the tower dismantled, records must be
                         retained for a minimum of 3 months from the date of completion.
                       </p>
@@ -752,7 +752,7 @@ export default function PasmaModule5Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-cyan-400">HSE Request</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         The HSE can request to see inspection records at any time during the work or
                         within the 3-month retention period. Failure to produce records when
                         requested is a criminal offence.
@@ -806,7 +806,7 @@ export default function PasmaModule5Section2() {
                 <div className="space-y-3">
                   <div>
                     <p className="text-sm font-medium text-amber-400">Improvement Notice</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Issued where the inspector identifies a breach of legislation. Specifies the
                       breach and sets a minimum 21-day deadline for the duty holder to remedy it.
                       Can be appealed to an employment tribunal.
@@ -814,7 +814,7 @@ export default function PasmaModule5Section2() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-red-400">Prohibition Notice</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Issued where the inspector believes there is a risk of serious personal
                       injury. Requires the activity to stop immediately. Takes effect immediately
                       (or can be deferred). Not dependent on a breach having occurred &mdash; risk
@@ -823,7 +823,7 @@ export default function PasmaModule5Section2() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-purple-400">Prosecution</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       For serious breaches, the HSE can prosecute in the criminal courts. Cases can
                       be heard in the magistrates&rsquo; court or the Crown Court depending on
                       severity.
@@ -837,7 +837,7 @@ export default function PasmaModule5Section2() {
                   <p className="text-sm font-medium text-red-400 mb-2">
                     Penalties for Organisations
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Unlimited fines in the Crown Court</span>
@@ -862,7 +862,7 @@ export default function PasmaModule5Section2() {
                 </div>
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-red-400 mb-2">Penalties for Individuals</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Unlimited fines</span>
@@ -892,7 +892,7 @@ export default function PasmaModule5Section2() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Fee for Intervention (FFI)</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Since October 2012, the HSE operates a Fee for Intervention scheme. If an
                   inspector identifies a material breach of health and safety legislation, the duty
                   holder is charged for the HSE&rsquo;s time at a rate of &pound;163 per hour
@@ -924,7 +924,7 @@ export default function PasmaModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Best Practice Measures</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -981,7 +981,7 @@ export default function PasmaModule5Section2() {
                   <p className="text-sm font-medium text-green-400 mb-2">
                     Benefits of Going Beyond
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Stronger legal defence if an incident occurs</span>
@@ -1004,7 +1004,7 @@ export default function PasmaModule5Section2() {
                   <p className="text-sm font-medium text-red-400 mb-2">
                     Risks of Minimum Compliance Only
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Gaps in records between 7-day intervals</span>
@@ -1046,7 +1046,7 @@ export default function PasmaModule5Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1060,7 +1060,7 @@ export default function PasmaModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-5-section-1">

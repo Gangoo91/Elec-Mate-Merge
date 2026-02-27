@@ -204,7 +204,7 @@ const HNCModule4Section4_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section4">
@@ -226,7 +226,7 @@ const HNCModule4Section4_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Lighting Design Criteria
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Establishing the quantitative and qualitative requirements for effective lighting design
             in building services
           </p>
@@ -559,7 +559,7 @@ const HNCModule4Section4_1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Factors Affecting UGR</p>
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
-                  <p className="text-white/70 mb-1">Increase UGR (worse):</p>
+                  <p className="text-white mb-1">Increase UGR (worse):</p>
                   <ul className="text-white space-y-0.5 list-disc list-outside ml-5">
                     <li className="pl-1">Higher luminaire luminance</li>
                     <li className="pl-1">Larger luminaire area</li>
@@ -568,7 +568,7 @@ const HNCModule4Section4_1 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-white/70 mb-1">Reduce UGR (better):</p>
+                  <p className="text-white mb-1">Reduce UGR (better):</p>
                   <ul className="text-white space-y-0.5 list-disc list-outside ml-5">
                     <li className="pl-1">Low-brightness diffusers/louvres</li>
                     <li className="pl-1">Indirect lighting component</li>
@@ -711,7 +711,7 @@ const HNCModule4Section4_1 = () => {
                 <strong>Brief:</strong> Specify lighting criteria for a new open-plan office with
                 VDU workstations.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>From CIBSE SLL and EN 12464-1:</p>
                 <p className="mt-2">
                   Maintained illuminance: <strong>500 lux</strong> on working plane (0.85m)
@@ -728,7 +728,7 @@ const HNCModule4Section4_1 = () => {
                 <p>
                   Colour temperature: <strong>4000K</strong> (neutral white)
                 </p>
-                <p className="mt-2 text-white/60">Additional VDU requirements:</p>
+                <p className="mt-2 text-white">Additional VDU requirements:</p>
                 <p>Luminaire luminance in offending zone: &lt;1500 cd/m²</p>
                 <p>Ceiling luminance ratio: ≤3:1</p>
               </div>
@@ -742,7 +742,7 @@ const HNCModule4Section4_1 = () => {
                 <strong>Question:</strong> A task area has illuminance measurements of: min 420 lux,
                 max 580 lux, average 510 lux. Check compliance.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Uniformity ratio Uo = Emin / Eav</p>
                 <p>
                   Uo = 420 / 510 = <strong>0.82</strong>
@@ -768,7 +768,7 @@ const HNCModule4Section4_1 = () => {
                 <strong>Question:</strong> Task area illuminance is 750 lux. What is the minimum
                 surrounding area illuminance?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Surrounding area requirement: ≥30% of task area</p>
                 <p className="mt-2">
                   Minimum = 750 × 0.3 = <strong>225 lux</strong>
@@ -778,7 +778,7 @@ const HNCModule4Section4_1 = () => {
                 <p className="mt-2 text-green-400">
                   ✓ Surrounding area requires minimum <strong>225 lux</strong>
                 </p>
-                <p className="mt-2 text-white/60">Uniformity in surrounding: Uo ≥ 0.5</p>
+                <p className="mt-2 text-white">Uniformity in surrounding: Uo ≥ 0.5</p>
               </div>
             </div>
           </div>
@@ -872,7 +872,7 @@ const HNCModule4Section4_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -918,7 +918,7 @@ const HNCModule4Section4_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section4">

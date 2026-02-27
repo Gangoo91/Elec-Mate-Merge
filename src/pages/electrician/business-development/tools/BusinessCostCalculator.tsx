@@ -204,7 +204,7 @@ const BusinessCostCalculator = () => {
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 Business Cost Calculator
               </h1>
-              <p className="text-sm text-white/70">Plan your contracting business costs</p>
+              <p className="text-sm text-white">Plan your contracting business costs</p>
             </div>
           </div>
           <SmartBackButton />

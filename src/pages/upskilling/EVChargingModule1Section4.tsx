@@ -92,7 +92,7 @@ const EVChargingModule1Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/ev-charging-module-1">
@@ -113,7 +113,7 @@ const EVChargingModule1Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Key Standards: BS 7671, IET CoP, G98/G99
           </h1>
-          <p className="text-white/80">Essential standards and codes of practice for EV charging</p>
+          <p className="text-white">Essential standards and codes of practice for EV charging</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -393,7 +393,7 @@ const EVChargingModule1Section4 = () => {
                   <th className="border border-white/20 p-3 text-left text-white">G98/G99</th>
                 </tr>
               </thead>
-              <tbody className="text-white/90">
+              <tbody className="text-white">
                 <tr>
                   <td className="border border-white/20 p-3 text-elec-yellow/80">Protection</td>
                   <td className="border border-white/20 p-3">RCD requirements</td>
@@ -499,7 +499,7 @@ const EVChargingModule1Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/ev-charging-module-1-section-3">

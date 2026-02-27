@@ -263,7 +263,7 @@ const HNCModule8Section1_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section1">
@@ -285,7 +285,7 @@ const HNCModule8Section1_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             System Commissioning
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Professional commissioning procedures for heating systems in compliance with BSRIA and
             Building Regulations
           </p>
@@ -457,7 +457,7 @@ const HNCModule8Section1_6 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Chemical Cleaning</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 For heavily contaminated systems or where water-only flushing is insufficient,
                 chemical cleaning may be required:
               </p>
@@ -588,7 +588,7 @@ const HNCModule8Section1_6 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Water Quality Testing</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Water quality should be tested and recorded at commissioning and during routine
                 maintenance:
               </p>
@@ -762,11 +762,11 @@ const HNCModule8Section1_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Design Flow Rate Calculation
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Flow rate (l/s) = Heat output (kW) / (Cp x delta-T)</p>
                 <p className="mt-2">Where: Cp = 4.19 kJ/kg.K for water</p>
                 <p>delta-T = Design temperature differential (typically 10-20 degrees C)</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Example: 10 kW radiator, 20 degrees C differential
                 </p>
                 <p>
@@ -869,7 +869,7 @@ const HNCModule8Section1_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Building Regulations Part L Requirements
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Part L of the Building Regulations requires heating systems to be commissioned and
                 documented:
               </p>
@@ -990,7 +990,7 @@ const HNCModule8Section1_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Client Training Requirements
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Handover should include training for building operators:
               </p>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
@@ -1041,7 +1041,7 @@ const HNCModule8Section1_6 = () => {
                 designed for 80 degrees C flow and 60 degrees C return temperatures. Calculate the
                 design flow rate.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Design delta-T = 80 - 60 = 20 degrees C</p>
                 <p className="mt-2">Flow rate = Heat output / (Cp x delta-T)</p>
                 <p>Flow rate = 2.5 kW / (4.19 kJ/kg.K x 20 K)</p>
@@ -1064,7 +1064,7 @@ const HNCModule8Section1_6 = () => {
                 2.5 bar and is protected by a 3 bar pressure relief valve. What test pressure should
                 be used and why?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Standard requirement: 1.5 x working pressure OR 3 bar minimum</p>
                 <p className="mt-2">Calculation: 1.5 x 2.5 bar = 3.75 bar</p>
                 <p className="mt-2">
@@ -1092,7 +1092,7 @@ const HNCModule8Section1_6 = () => {
                 fully open. When measured, it achieves 2.2 L/min. The second circuit reads 1.8 L/min
                 with its valve fully open. Calculate the required adjustment.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Index circuit: Design 2.0 L/min, Measured 2.2 L/min</p>
                 <p>Ratio = 2.2 / 2.0 = 1.10 (10% over design - acceptable)</p>
                 <p className="mt-2">Circuit 2: Design 1.5 L/min, Measured 1.8 L/min</p>
@@ -1101,10 +1101,10 @@ const HNCModule8Section1_6 = () => {
                 <p className="mt-2">
                   Action: Throttle Circuit 2 valve until flow reads <strong>1.65 L/min</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Note: After adjusting, recheck index circuit as system
                 </p>
-                <p className="text-white/60">resistance will have changed slightly.</p>
+                <p className="text-white">resistance will have changed slightly.</p>
               </div>
             </div>
 
@@ -1117,7 +1117,7 @@ const HNCModule8Section1_6 = () => {
                 available flushing pump delivers 15 L/min. Is this adequate for BSRIA-compliant
                 flushing?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>22mm copper pipe internal diameter approx 20mm = 0.02m</p>
                 <p>Cross-sectional area = pi x r squared</p>
                 <p>Area = 3.14159 x (0.01)squared = 0.000314 m squared</p>
@@ -1127,8 +1127,8 @@ const HNCModule8Section1_6 = () => {
                   Velocity = 0.00025 / 0.000314 = <strong>0.80 m/s</strong>
                 </p>
                 <p className="mt-2 text-amber-400">This is below the 1.0 m/s BSRIA minimum.</p>
-                <p className="text-white/60">Either use a higher capacity pump or flush smaller</p>
-                <p className="text-white/60">sections individually to achieve adequate velocity.</p>
+                <p className="text-white">Either use a higher capacity pump or flush smaller</p>
+                <p className="text-white">sections individually to achieve adequate velocity.</p>
               </div>
             </div>
           </div>
@@ -1240,7 +1240,7 @@ const HNCModule8Section1_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1286,7 +1286,7 @@ const HNCModule8Section1_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section1-5">

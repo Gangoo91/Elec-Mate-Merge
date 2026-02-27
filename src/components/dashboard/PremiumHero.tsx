@@ -193,7 +193,7 @@ export function PremiumHero() {
                         className="w-full h-full object-cover"
                       />
                     ) : (
-                      <User className="w-8 h-8 text-white/40" />
+                      <User className="w-8 h-8 text-white" />
                     )}
                   </div>
 
@@ -217,7 +217,7 @@ export function PremiumHero() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="text-sm text-white/50 mb-0.5"
+              className="text-sm text-white mb-0.5"
             >
               {greeting}
             </motion.p>

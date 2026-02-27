@@ -165,7 +165,7 @@ const BreakEvenCalculator: React.FC = () => {
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 Break-Even Calculator
               </h1>
-              <p className="text-sm text-white/70">Calculate your minimum profitable rate</p>
+              <p className="text-sm text-white">Calculate your minimum profitable rate</p>
             </div>
           </div>
           <SmartBackButton />
@@ -463,7 +463,7 @@ const BreakEvenCalculator: React.FC = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      'h-4 w-4 text-white/80 transition-transform duration-200',
+                      'h-4 w-4 text-white transition-transform duration-200',
                       showAdvanced && 'rotate-180'
                     )}
                   />
@@ -574,7 +574,7 @@ const BreakEvenCalculator: React.FC = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      'h-4 w-4 text-white/80 transition-transform duration-200',
+                      'h-4 w-4 text-white transition-transform duration-200',
                       showGuidance && 'rotate-180'
                     )}
                   />
@@ -629,7 +629,7 @@ const BreakEvenCalculator: React.FC = () => {
               </div>
               <ChevronDown
                 className={cn(
-                  'h-4 w-4 text-white/80 transition-transform duration-200',
+                  'h-4 w-4 text-white transition-transform duration-200',
                   showReference && 'rotate-180'
                 )}
               />

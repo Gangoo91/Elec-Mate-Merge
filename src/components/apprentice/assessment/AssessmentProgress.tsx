@@ -55,7 +55,7 @@ const AssessmentProgress = ({ tools, completedAssessments }: AssessmentProgressP
             <div className="text-2xl sm:text-3xl font-bold text-elec-yellow mb-1">
               {completedAssessments.length}
             </div>
-            <div className="text-xs sm:text-sm text-white/60">Completed</div>
+            <div className="text-xs sm:text-sm text-white">Completed</div>
             {/* Progress Bar */}
             <div className="mt-3 h-1.5 bg-white/10 rounded-full overflow-hidden">
               <div
@@ -69,7 +69,7 @@ const AssessmentProgress = ({ tools, completedAssessments }: AssessmentProgressP
             <div className="text-2xl sm:text-3xl font-bold text-green-400 mb-1">
               {essentialCompleted}/{essentialTotal}
             </div>
-            <div className="text-xs sm:text-sm text-white/60">Essential</div>
+            <div className="text-xs sm:text-sm text-white">Essential</div>
             {/* Progress Bar */}
             <div className="mt-3 h-1.5 bg-white/10 rounded-full overflow-hidden">
               <div
@@ -83,7 +83,7 @@ const AssessmentProgress = ({ tools, completedAssessments }: AssessmentProgressP
             <div className="text-2xl sm:text-3xl font-bold text-blue-400 mb-1">
               {Math.round(completionRate)}%
             </div>
-            <div className="text-xs sm:text-sm text-white/60">Overall</div>
+            <div className="text-xs sm:text-sm text-white">Overall</div>
             <div className="mt-2 flex items-center justify-center gap-1">
               <TrendingUp className="h-3 w-3 text-green-400" />
               <span className="text-xs text-green-400">Trending up</span>
@@ -107,7 +107,7 @@ const AssessmentProgress = ({ tools, completedAssessments }: AssessmentProgressP
               <div>
                 <h4 className="font-medium text-white">{getProgressMessage()}</h4>
                 {nextTool && completionRate < 100 && (
-                  <p className="text-sm text-white/60 mt-1">
+                  <p className="text-sm text-white mt-1">
                     Next recommended: <span className="text-elec-yellow">{nextTool.title}</span>
                   </p>
                 )}

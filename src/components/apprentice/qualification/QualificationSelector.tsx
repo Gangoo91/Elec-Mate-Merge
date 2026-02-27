@@ -124,7 +124,7 @@ const QualificationSelector = () => {
             </div>
             <div>
               <CardTitle className="text-lg">Loading Qualifications</CardTitle>
-              <p className="text-sm text-white/80">Fetching available courses...</p>
+              <p className="text-sm text-white">Fetching available courses...</p>
             </div>
           </div>
         </CardHeader>
@@ -151,7 +151,7 @@ const QualificationSelector = () => {
             </div>
             <div className="flex-1">
               <CardTitle className="text-lg">Current Qualification</CardTitle>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Your portfolio is tailored to these requirements
               </p>
             </div>
@@ -165,24 +165,24 @@ const QualificationSelector = () => {
                   <Badge className="bg-elec-yellow text-black font-semibold text-xs">
                     {userSelection.qualification?.level}
                   </Badge>
-                  <span className="text-xs text-white/80">
+                  <span className="text-xs text-white">
                     {userSelection.qualification?.awarding_body}
                   </span>
                 </div>
                 <h3 className="font-semibold text-foreground leading-tight">
                   {userSelection.qualification?.title}
                 </h3>
-                <p className="text-xs text-white/80">Code: {userSelection.qualification?.code}</p>
+                <p className="text-xs text-white">Code: {userSelection.qualification?.code}</p>
               </div>
               <div className="text-right">
                 <div className="text-2xl font-bold text-elec-yellow">
                   {userSelection.progress_percentage}%
                 </div>
-                <span className="text-xs text-white/80">Complete</span>
+                <span className="text-xs text-white">Complete</span>
               </div>
             </div>
             {userSelection.target_completion_date && (
-              <div className="flex items-center gap-2 text-sm text-white/80 pt-2 border-t border-border">
+              <div className="flex items-center gap-2 text-sm text-white pt-2 border-t border-border">
                 <CalendarDays className="h-4 w-4" />
                 Target:{' '}
                 {new Date(userSelection.target_completion_date).toLocaleDateString('en-GB', {
@@ -230,7 +230,7 @@ const QualificationSelector = () => {
           </div>
           <div>
             <CardTitle className="text-lg">Select Your Qualification</CardTitle>
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               Choose your course to get a tailored portfolio experience
             </p>
           </div>
@@ -239,7 +239,7 @@ const QualificationSelector = () => {
       <CardContent className="space-y-5">
         {Object.entries(awardingBodies).map(([body, quals]) => (
           <div key={body} className="space-y-2">
-            <h4 className="text-xs font-semibold text-white/70 uppercase tracking-wider px-1">
+            <h4 className="text-xs font-semibold text-white uppercase tracking-wider px-1">
               {body}
             </h4>
             <div className="space-y-2">
@@ -274,13 +274,13 @@ const QualificationSelector = () => {
                         <h3 className="font-semibold text-foreground leading-tight line-clamp-2">
                           {qualification.title}
                         </h3>
-                        <div className="flex items-center gap-2 text-xs text-white/80 flex-wrap">
+                        <div className="flex items-center gap-2 text-xs text-white flex-wrap">
                           {stats && (
                             <>
                               <span>{stats.acCount} Assessment Criteria</span>
-                              <span className="text-white/40">·</span>
+                              <span className="text-white">·</span>
                               <span>{stats.unitCount} units</span>
-                              <span className="text-white/40">·</span>
+                              <span className="text-white">·</span>
                             </>
                           )}
                           <span>{qualification.code}</span>

@@ -212,7 +212,7 @@ export default function WorkingAtHeightModule5Section4() {
           <Button
             variant="ghost"
             size="icon"
-            className="min-h-[44px] min-w-[44px] text-white/70 hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] min-w-[44px] text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-5">
@@ -220,7 +220,7 @@ export default function WorkingAtHeightModule5Section4() {
             </Link>
           </Button>
           <div className="flex-1 min-w-0">
-            <p className="text-xs text-white/40">Module 5 {'\u2022'} Section 4</p>
+            <p className="text-xs text-white">Module 5 {'\u2022'} Section 4</p>
             <h1 className="text-sm font-semibold text-white truncate">
               Inspection Regimes & Record Keeping
             </h1>
@@ -245,7 +245,7 @@ export default function WorkingAtHeightModule5Section4() {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Inspection Regimes & Record Keeping
           </h2>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding the layered inspection system — from daily pre-use checks through to LOLER
             thorough examinations — and the record keeping requirements that underpin legal
             compliance
@@ -258,7 +258,7 @@ export default function WorkingAtHeightModule5Section4() {
             <Zap className="h-4 w-4" />
             In 30 Seconds
           </h3>
-          <p className="text-white/80 text-base leading-relaxed">
+          <p className="text-white text-base leading-relaxed">
             Equipment for work at height is subject to a layered inspection regime: daily pre-use
             checks by the user, 7-day scaffold inspections by a competent person, and 6-monthly
             LOLER thorough examinations for harnesses, lanyards, MEWPs, and SRLs. Each layer
@@ -275,7 +275,7 @@ export default function WorkingAtHeightModule5Section4() {
             <Shield className="h-4 w-4" />
             Key Legislation
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white/70">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white">
             <div className="flex items-start gap-2">
               <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
               <span>
@@ -325,7 +325,7 @@ export default function WorkingAtHeightModule5Section4() {
             ].map((outcome, i) => (
               <li key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm leading-relaxed">{outcome}</span>
+                <span className="text-white text-sm leading-relaxed">{outcome}</span>
               </li>
             ))}
           </ul>
@@ -342,7 +342,7 @@ export default function WorkingAtHeightModule5Section4() {
             <h3 className="text-xl font-semibold text-white">Pre-Use Checks — Before Every Use</h3>
           </div>
           <div className="border-l-2 border-amber-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Pre-use checks are the first line of defence. They are carried out by the user before
               every use — every shift, every day. The purpose is to identify obvious defects,
               damage, or unsafe conditions that may have developed since the last formal inspection.
@@ -355,7 +355,7 @@ export default function WorkingAtHeightModule5Section4() {
                   <Eye className="h-4 w-4 text-amber-400" />
                   Ladders & Stepladders
                 </h4>
-                <ul className="space-y-1.5 text-sm text-white/70">
+                <ul className="space-y-1.5 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>Stiles straight, no bends, cracks, or corrosion</span>
@@ -389,7 +389,7 @@ export default function WorkingAtHeightModule5Section4() {
                   <Eye className="h-4 w-4 text-amber-400" />
                   Scaffolds & Towers
                 </h4>
-                <ul className="space-y-1.5 text-sm text-white/70">
+                <ul className="space-y-1.5 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>All guardrails, mid-rails, and toeboards in place</span>
@@ -423,7 +423,7 @@ export default function WorkingAtHeightModule5Section4() {
                   <Eye className="h-4 w-4 text-amber-400" />
                   Harnesses & Lanyards
                 </h4>
-                <ul className="space-y-1.5 text-sm text-white/70">
+                <ul className="space-y-1.5 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>Webbing free from cuts, fraying, burns, or chemical damage</span>
@@ -461,7 +461,7 @@ export default function WorkingAtHeightModule5Section4() {
                   <Eye className="h-4 w-4 text-amber-400" />
                   MEWPs (Cherry Pickers, Scissor Lifts)
                 </h4>
-                <ul className="space-y-1.5 text-sm text-white/70">
+                <ul className="space-y-1.5 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>All controls functioning correctly (ground and platform)</span>
@@ -497,7 +497,7 @@ export default function WorkingAtHeightModule5Section4() {
                 <AlertTriangle className="h-4 w-4" />
                 If a Defect Is Found
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 If any defect is found during a pre-use check, the equipment must be taken out of
                 service immediately. Tag it as defective, report it to the supervisor, and do not
                 allow anyone to use it until the defect has been repaired and the equipment
@@ -520,14 +520,14 @@ export default function WorkingAtHeightModule5Section4() {
             </h3>
           </div>
           <div className="border-l-2 border-blue-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Schedule 7 of the Work at Height Regulations 2005 requires that scaffolding from which
               a person could fall 2 metres or more must be inspected by a competent person at the
               following times:
             </p>
             <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-5">
               <h4 className="font-semibold text-white text-sm mb-3">When Inspection Is Required</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
@@ -565,7 +565,7 @@ export default function WorkingAtHeightModule5Section4() {
               <h4 className="font-semibold text-white text-sm mb-2">
                 What Must the Inspection Cover?
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>Foundations and base plates — firm, level, and not undermined</span>
@@ -606,7 +606,7 @@ export default function WorkingAtHeightModule5Section4() {
                 <FileText className="h-4 w-4 text-amber-400" />
                 The Inspection Report
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 The result of each inspection must be recorded in writing. The report must include
                 the name and address of the person for whom the inspection was carried out, the
                 location and description of the scaffold, the date and time of inspection, details
@@ -637,7 +637,7 @@ export default function WorkingAtHeightModule5Section4() {
             <h3 className="text-xl font-semibold text-white">LOLER 1998 — Thorough Examinations</h3>
           </div>
           <div className="border-l-2 border-green-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The Lifting Operations and Lifting Equipment Regulations 1998 (LOLER) require that all
               lifting equipment — including MEWPs, harnesses, lanyards, and self-retracting
               lifelines (SRLs) — is given a thorough examination by a competent person at prescribed
@@ -654,7 +654,7 @@ export default function WorkingAtHeightModule5Section4() {
                     <span className="text-green-400 font-bold min-w-[100px] text-xs flex-shrink-0">
                       6-Monthly
                     </span>
-                    <span className="text-white/70 text-xs">
+                    <span className="text-white text-xs">
                       Equipment used for lifting persons — MEWPs, harnesses, lanyards, SRLs, rescue
                       descent devices, man-riding winches
                     </span>
@@ -665,7 +665,7 @@ export default function WorkingAtHeightModule5Section4() {
                     <span className="text-green-400 font-bold min-w-[100px] text-xs flex-shrink-0">
                       12-Monthly
                     </span>
-                    <span className="text-white/70 text-xs">
+                    <span className="text-white text-xs">
                       All other lifting equipment — cranes, hoists, lifting accessories (slings,
                       shackles) not used for carrying persons
                     </span>
@@ -676,7 +676,7 @@ export default function WorkingAtHeightModule5Section4() {
                     <span className="text-amber-400 font-bold min-w-[100px] text-xs flex-shrink-0">
                       As specified
                     </span>
-                    <span className="text-white/70 text-xs">
+                    <span className="text-white text-xs">
                       Where a competent person determines that a shorter interval is needed due to
                       conditions of use, environment, or manufacturer's recommendations
                     </span>
@@ -689,11 +689,11 @@ export default function WorkingAtHeightModule5Section4() {
               <h4 className="font-semibold text-white text-sm mb-2">
                 What Does a Thorough Examination Involve?
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed mb-3">
+              <p className="text-white text-sm leading-relaxed mb-3">
                 A thorough examination is a detailed, systematic inspection that goes far beyond a
                 visual check. It may include:
               </p>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
@@ -728,7 +728,7 @@ export default function WorkingAtHeightModule5Section4() {
 
             <div className="bg-white/5 border border-white/10 rounded-lg p-4">
               <h4 className="font-semibold text-white text-sm mb-2">The Examination Report</h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 The competent person must produce a written report (traditionally using HSE Form F91
                 Part III, but equivalent formats are acceptable). The report must record: equipment
                 identification, date of examination, date of next examination due, description of
@@ -758,7 +758,7 @@ export default function WorkingAtHeightModule5Section4() {
             <h3 className="text-xl font-semibold text-white">Record Keeping Requirements</h3>
           </div>
           <div className="border-l-2 border-purple-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Each type of inspection produces records that must be retained for specific periods.
               These records serve as evidence of compliance and are essential in the event of an HSE
               investigation following an incident.
@@ -775,7 +775,7 @@ export default function WorkingAtHeightModule5Section4() {
                     <span className="text-purple-400 font-bold min-w-[180px] text-xs flex-shrink-0">
                       LOLER Reports
                     </span>
-                    <span className="text-white/70 text-xs leading-relaxed">
+                    <span className="text-white text-xs leading-relaxed">
                       Retained until the next thorough examination is carried out, plus 2 years
                       after that. If no further examination takes place, retained for 2 years from
                       the date of the last examination.
@@ -787,7 +787,7 @@ export default function WorkingAtHeightModule5Section4() {
                     <span className="text-purple-400 font-bold min-w-[180px] text-xs flex-shrink-0">
                       Scaffold Inspections
                     </span>
-                    <span className="text-white/70 text-xs leading-relaxed">
+                    <span className="text-white text-xs leading-relaxed">
                       Kept on site while the scaffold is in use, then retained for 3 months after
                       the work at that location is completed.
                     </span>
@@ -798,7 +798,7 @@ export default function WorkingAtHeightModule5Section4() {
                     <span className="text-purple-400 font-bold min-w-[180px] text-xs flex-shrink-0">
                       Training Records
                     </span>
-                    <span className="text-white/70 text-xs leading-relaxed">
+                    <span className="text-white text-xs leading-relaxed">
                       For the duration of the person's employment plus a reasonable period
                       afterwards (typically 3-6 years; some recommend retaining permanently for
                       asbestos and similar records).
@@ -810,7 +810,7 @@ export default function WorkingAtHeightModule5Section4() {
                     <span className="text-purple-400 font-bold min-w-[180px] text-xs flex-shrink-0">
                       Risk Assessments
                     </span>
-                    <span className="text-white/70 text-xs leading-relaxed">
+                    <span className="text-white text-xs leading-relaxed">
                       Must be reviewed regularly and kept up to date. Previous versions should be
                       retained as a record of the organisation's safety management — good practice
                       is to retain for at least 3 years.
@@ -822,7 +822,7 @@ export default function WorkingAtHeightModule5Section4() {
                     <span className="text-purple-400 font-bold min-w-[180px] text-xs flex-shrink-0">
                       Pre-Use Check Logs
                     </span>
-                    <span className="text-white/70 text-xs leading-relaxed">
+                    <span className="text-white text-xs leading-relaxed">
                       No specific statutory retention period, but good practice is to retain for at
                       least 12 months or until the next thorough examination, whichever is longer.
                     </span>
@@ -844,7 +844,7 @@ export default function WorkingAtHeightModule5Section4() {
             <h3 className="text-xl font-semibold text-white">Equipment Registers</h3>
           </div>
           <div className="border-l-2 border-orange-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               An equipment register is a central record of all work-at-height equipment, tracking
               each item from first use to withdrawal from service. It provides a complete lifecycle
               history that is essential for managing inspection schedules and demonstrating
@@ -855,7 +855,7 @@ export default function WorkingAtHeightModule5Section4() {
                 <Database className="h-4 w-4 text-orange-400" />
                 What the Register Should Contain
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
@@ -928,7 +928,7 @@ export default function WorkingAtHeightModule5Section4() {
             <h3 className="text-xl font-semibold text-white">Digital Record Keeping</h3>
           </div>
           <div className="border-l-2 border-cyan-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Digital record keeping systems offer significant advantages over paper-based systems.
               There is no legal requirement for records to be in any specific format — digital
               records are fully acceptable and increasingly preferred by both employers and
@@ -940,7 +940,7 @@ export default function WorkingAtHeightModule5Section4() {
                 Advantages of Digital Systems
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="flex items-start gap-2 text-sm text-white/70">
+                <div className="flex items-start gap-2 text-sm text-white">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
                     <strong className="text-white">Photo evidence</strong> — photographs with
@@ -948,35 +948,35 @@ export default function WorkingAtHeightModule5Section4() {
                     inspection
                   </span>
                 </div>
-                <div className="flex items-start gap-2 text-sm text-white/70">
+                <div className="flex items-start gap-2 text-sm text-white">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
                     <strong className="text-white">Automatic reminders</strong> — the system alerts
                     you when inspections or examinations are due, preventing overdue items
                   </span>
                 </div>
-                <div className="flex items-start gap-2 text-sm text-white/70">
+                <div className="flex items-start gap-2 text-sm text-white">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
                     <strong className="text-white">Audit trails</strong> — digital records show
                     exactly who entered data, when, and whether any changes were made
                   </span>
                 </div>
-                <div className="flex items-start gap-2 text-sm text-white/70">
+                <div className="flex items-start gap-2 text-sm text-white">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
                     <strong className="text-white">Searchability</strong> — find any record
                     instantly by equipment ID, date, inspector name, or defect type
                   </span>
                 </div>
-                <div className="flex items-start gap-2 text-sm text-white/70">
+                <div className="flex items-start gap-2 text-sm text-white">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
                     <strong className="text-white">Backup and resilience</strong> — cloud-based
                     systems protect against loss from fire, theft, or damage
                   </span>
                 </div>
-                <div className="flex items-start gap-2 text-sm text-white/70">
+                <div className="flex items-start gap-2 text-sm text-white">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
                     <strong className="text-white">Remote access</strong> — managers can view
@@ -1005,7 +1005,7 @@ export default function WorkingAtHeightModule5Section4() {
             Inspection Regime Timeline
           </h3>
           <div className="bg-gradient-to-br from-amber-500/5 to-green-500/5 border border-amber-500/20 rounded-xl p-5">
-            <p className="text-white/60 text-xs mb-4">
+            <p className="text-white text-xs mb-4">
               The layered inspection system ensures equipment is checked at appropriate intervals —
               from daily pre-use checks through to annual thorough examinations.
             </p>
@@ -1020,10 +1020,10 @@ export default function WorkingAtHeightModule5Section4() {
                   </div>
                   <div className="flex-1">
                     <h5 className="text-white font-semibold text-sm">Pre-Use Visual Check</h5>
-                    <p className="text-white/50 text-xs">By the user, before every use</p>
+                    <p className="text-white text-xs">By the user, before every use</p>
                   </div>
                 </div>
-                <div className="pl-[76px] text-xs text-white/60">
+                <div className="pl-[76px] text-xs text-white">
                   Ladders, scaffolds, harnesses, lanyards, MEWPs — visual and basic functional check
                   for obvious defects
                 </div>
@@ -1039,12 +1039,12 @@ export default function WorkingAtHeightModule5Section4() {
                     <h5 className="text-white font-semibold text-sm">
                       Scaffold Inspection (Schedule 7)
                     </h5>
-                    <p className="text-white/50 text-xs">
+                    <p className="text-white text-xs">
                       By a competent person, recorded in writing
                     </p>
                   </div>
                 </div>
-                <div className="pl-[76px] text-xs text-white/60">
+                <div className="pl-[76px] text-xs text-white">
                   Full structural inspection of all scaffold elements — foundations, standards,
                   ledgers, braces, ties, platforms, guardrails, access
                 </div>
@@ -1060,12 +1060,12 @@ export default function WorkingAtHeightModule5Section4() {
                     <h5 className="text-white font-semibold text-sm">
                       Detailed Harness Visual Inspection
                     </h5>
-                    <p className="text-white/50 text-xs">
+                    <p className="text-white text-xs">
                       By a trained inspector (good practice, not statutory)
                     </p>
                   </div>
                 </div>
-                <div className="pl-[76px] text-xs text-white/60">
+                <div className="pl-[76px] text-xs text-white">
                   More detailed than daily check — systematic inspection of all webbing, stitching,
                   buckles, D-rings, and labels. Recorded in the equipment register.
                 </div>
@@ -1079,12 +1079,12 @@ export default function WorkingAtHeightModule5Section4() {
                   </div>
                   <div className="flex-1">
                     <h5 className="text-white font-semibold text-sm">LOLER Thorough Examination</h5>
-                    <p className="text-white/50 text-xs">
+                    <p className="text-white text-xs">
                       By a competent person, formal written report
                     </p>
                   </div>
                 </div>
-                <div className="pl-[76px] text-xs text-white/60">
+                <div className="pl-[76px] text-xs text-white">
                   MEWPs, harnesses, lanyards, SRLs, rescue devices — detailed examination, may
                   include testing and measurement. Report produced (F91 Part III or equivalent).
                 </div>
@@ -1100,19 +1100,19 @@ export default function WorkingAtHeightModule5Section4() {
                     <h5 className="text-white font-semibold text-sm">
                       Annual Thorough Examination
                     </h5>
-                    <p className="text-white/50 text-xs">
+                    <p className="text-white text-xs">
                       For non-person-carrying lifting equipment
                     </p>
                   </div>
                 </div>
-                <div className="pl-[76px] text-xs text-white/60">
+                <div className="pl-[76px] text-xs text-white">
                   Lifting equipment not used for carrying persons (hoists, pulleys, gin wheels)
                   requires LOLER thorough examination at least every 12 months.
                 </div>
               </div>
             </div>
 
-            <p className="text-white/50 text-xs italic mt-4">
+            <p className="text-white text-xs italic mt-4">
               Note: Additional inspections are required after any event likely to have affected
               equipment safety (adverse weather, impact, overload, suspected fall arrest
               deployment).
@@ -1129,7 +1129,7 @@ export default function WorkingAtHeightModule5Section4() {
             Real-World Scenario
           </h3>
           <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-5 space-y-3">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               <strong className="text-amber-400">Scenario:</strong> An HSE inspector arrives on a
               construction site and asks to see the scaffold inspection records. The site manager
               says the records "are in the office" and cannot produce them on site. The inspector
@@ -1138,7 +1138,7 @@ export default function WorkingAtHeightModule5Section4() {
             </p>
             <div className="bg-black/20 rounded-lg p-4">
               <h4 className="font-semibold text-white text-sm mb-2">What are the legal issues?</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
@@ -1165,7 +1165,7 @@ export default function WorkingAtHeightModule5Section4() {
                 </li>
               </ul>
             </div>
-            <p className="text-white/60 text-xs italic">
+            <p className="text-white text-xs italic">
               This scenario illustrates why records must be available on site, not just "somewhere
               in the system." When hiring equipment, always obtain copies of the current thorough
               examination report before the equipment arrives on site.
@@ -1184,7 +1184,7 @@ export default function WorkingAtHeightModule5Section4() {
                 <span className="text-amber-400 font-bold min-w-[140px] flex-shrink-0">
                   LOLER 1998
                 </span>
-                <span className="text-white/70">
+                <span className="text-white">
                   Lifting Operations and Lifting Equipment Regulations 1998 — requires thorough
                   examination of lifting equipment at prescribed intervals
                 </span>
@@ -1193,7 +1193,7 @@ export default function WorkingAtHeightModule5Section4() {
                 <span className="text-amber-400 font-bold min-w-[140px] flex-shrink-0">
                   PUWER 1998
                 </span>
-                <span className="text-white/70">
+                <span className="text-white">
                   Provision and Use of Work Equipment Regulations 1998 — general duty to maintain
                   work equipment in safe condition and inspect at suitable intervals
                 </span>
@@ -1202,7 +1202,7 @@ export default function WorkingAtHeightModule5Section4() {
                 <span className="text-amber-400 font-bold min-w-[140px] flex-shrink-0">
                   Schedule 7
                 </span>
-                <span className="text-white/70">
+                <span className="text-white">
                   Schedule 7 of the Work at Height Regulations 2005 — specifies the inspection
                   requirements for scaffolding and related structures
                 </span>
@@ -1211,7 +1211,7 @@ export default function WorkingAtHeightModule5Section4() {
                 <span className="text-amber-400 font-bold min-w-[140px] flex-shrink-0">
                   F91 Part III
                 </span>
-                <span className="text-white/70">
+                <span className="text-white">
                   The traditional HSE form for recording the results of a LOLER thorough examination
                   — equivalent formats are acceptable
                 </span>
@@ -1220,14 +1220,14 @@ export default function WorkingAtHeightModule5Section4() {
                 <span className="text-amber-400 font-bold min-w-[140px] flex-shrink-0">
                   Thorough Exam
                 </span>
-                <span className="text-white/70">
+                <span className="text-white">
                   A detailed, systematic inspection by a competent person that may include
                   dismantling, testing, and measurement — far more comprehensive than a visual check
                 </span>
               </div>
               <div className="flex items-start gap-3 bg-black/20 rounded-lg p-3">
                 <span className="text-amber-400 font-bold min-w-[140px] flex-shrink-0">SRL</span>
-                <span className="text-white/70">
+                <span className="text-white">
                   Self-Retracting Lifeline — a fall arrest device containing a spring-loaded
                   retractable line that locks under sudden load, subject to LOLER thorough
                   examination
@@ -1246,7 +1246,7 @@ export default function WorkingAtHeightModule5Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-xl p-4">
                 <h4 className="font-medium text-white mb-2 text-sm">{faq.question}</h4>
-                <p className="text-sm text-white/60 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

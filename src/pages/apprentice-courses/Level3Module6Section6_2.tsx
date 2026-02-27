@@ -261,7 +261,7 @@ const Level3Module6Section6_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section6">
@@ -594,23 +594,23 @@ const Level3Module6Section6_2 = () => {
               <table className="w-full text-xs">
                 <tbody>
                   <tr>
-                    <td className="py-1 text-white/70">Wiring regulations</td>
+                    <td className="py-1 text-white">Wiring regulations</td>
                     <td className="py-1 text-white">BS 7671</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">Distribution boards</td>
+                    <td className="py-1 text-white">Distribution boards</td>
                     <td className="py-1 text-white">BS EN 61439</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">Cables</td>
+                    <td className="py-1 text-white">Cables</td>
                     <td className="py-1 text-white">BS 5467, BS 6724, BS 7211</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">Fire detection</td>
+                    <td className="py-1 text-white">Fire detection</td>
                     <td className="py-1 text-white">BS 5839</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">Emergency lighting</td>
+                    <td className="py-1 text-white">Emergency lighting</td>
                     <td className="py-1 text-white">BS 5266</td>
                   </tr>
                 </tbody>
@@ -621,23 +621,23 @@ const Level3Module6Section6_2 = () => {
               <table className="w-full text-xs">
                 <tbody>
                   <tr>
-                    <td className="py-1 text-white/70">Certificates</td>
+                    <td className="py-1 text-white">Certificates</td>
                     <td className="py-1 text-white">EIC, MEIWC as appropriate</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">Test results</td>
+                    <td className="py-1 text-white">Test results</td>
                     <td className="py-1 text-white">Schedule of test results</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">Drawings</td>
+                    <td className="py-1 text-white">Drawings</td>
                     <td className="py-1 text-white">As-built drawings</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">Schedules</td>
+                    <td className="py-1 text-white">Schedules</td>
                     <td className="py-1 text-white">Circuit schedules updated</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">Manuals</td>
+                    <td className="py-1 text-white">Manuals</td>
                     <td className="py-1 text-white">O&M documentation</td>
                   </tr>
                 </tbody>
@@ -654,7 +654,7 @@ const Level3Module6Section6_2 = () => {
             {faqs.map((faq, idx) => (
               <details key={idx} className="group p-3 rounded-lg bg-white/5 text-sm">
                 <summary className="cursor-pointer text-white font-medium">{faq.question}</summary>
-                <p className="mt-2 text-white/70">{faq.answer}</p>
+                <p className="mt-2 text-white">{faq.answer}</p>
               </details>
             ))}
           </div>

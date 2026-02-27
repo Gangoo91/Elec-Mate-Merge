@@ -202,7 +202,7 @@ export function QualificationRequirements({
   const progressColour = (pct: number) => {
     if (pct >= 75) return 'text-green-400 bg-green-400/10';
     if (pct >= 25) return 'text-amber-400 bg-amber-400/10';
-    return 'text-white/40 bg-white/[0.04]';
+    return 'text-white bg-white/[0.04]';
   };
 
   return (
@@ -222,18 +222,18 @@ export function QualificationRequirements({
                 <BookOpen className="h-4.5 w-4.5 text-elec-yellow" />
                 Qualification Requirements
               </SheetTitle>
-              <p className="text-xs text-white/50 mt-0.5">{qualificationCode || 'Loading...'}</p>
+              <p className="text-xs text-white mt-0.5">{qualificationCode || 'Loading...'}</p>
             </div>
 
             {/* Search */}
             <div className="px-4 pb-3">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/50" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                 <input
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Search units, outcomes, criteria..."
-                  className="w-full h-11 pl-10 pr-10 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white/50 focus:outline-none focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 touch-manipulation"
+                  className="w-full h-11 pl-10 pr-10 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white focus:outline-none focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 touch-manipulation"
                 />
                 {searchQuery && (
                   <button
@@ -255,8 +255,8 @@ export function QualificationRequirements({
               </div>
             ) : unitGroups.length === 0 ? (
               <div className="text-center py-12">
-                <BookOpen className="h-8 w-8 text-white/20 mx-auto mb-3" />
-                <p className="text-sm text-white/50">
+                <BookOpen className="h-8 w-8 text-white mx-auto mb-3" />
+                <p className="text-sm text-white">
                   {qualificationCode
                     ? 'No requirements found for this qualification'
                     : 'Select a qualification to view requirements'}
@@ -338,7 +338,7 @@ export function QualificationRequirements({
                                         {status === 'evidenced' ? (
                                           <CheckCircle2 className="h-3.5 w-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                                         ) : (
-                                          <Circle className="h-3.5 w-3.5 text-white/40 mt-0.5 flex-shrink-0" />
+                                          <Circle className="h-3.5 w-3.5 text-white mt-0.5 flex-shrink-0" />
                                         )}
                                         <p
                                           className={`text-[11px] leading-relaxed flex-1 min-w-0 ${

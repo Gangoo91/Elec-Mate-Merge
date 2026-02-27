@@ -193,7 +193,7 @@ const InspectionTestingModule3Section6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/inspection-testing-module-3">
@@ -215,7 +215,7 @@ const InspectionTestingModule3Section6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Interpreting Continuity Results
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Learn to analyse test results, calculate expected values, and identify faults from
             continuity data
           </p>
@@ -294,11 +294,11 @@ const InspectionTestingModule3Section6 = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/10">
-                    <th className="text-left py-2 text-white/60">CSA (mm²)</th>
+                    <th className="text-left py-2 text-white">CSA (mm²)</th>
                     <th className="text-right py-2 text-elec-yellow">mΩ/m</th>
                   </tr>
                 </thead>
-                <tbody className="text-white/80 font-mono">
+                <tbody className="text-white font-mono">
                   <tr className="border-b border-white/5">
                     <td className="py-2">1.0</td>
                     <td className="text-right text-elec-yellow">18.10</td>
@@ -345,10 +345,10 @@ const InspectionTestingModule3Section6 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-blue-500/10">
               <p className="text-sm font-medium text-blue-400 mb-2">Example Calculation</p>
-              <p className="text-sm text-white/70 mb-2">
+              <p className="text-sm text-white mb-2">
                 20m circuit using 2.5mm² line and 1.5mm² CPC:
               </p>
-              <div className="font-mono text-white/80 text-sm space-y-1">
+              <div className="font-mono text-white text-sm space-y-1">
                 <p>R1 = 7.41 x 20 = 148.2 mΩ</p>
                 <p>R2 = 12.10 x 20 = 242.0 mΩ</p>
                 <p className="text-elec-yellow font-semibold">R1+R2 = 390.2 mΩ = 0.39Ω</p>
@@ -371,20 +371,20 @@ const InspectionTestingModule3Section6 = () => {
             <div className="space-y-3">
               <div className="p-4 rounded-lg bg-green-500/10">
                 <p className="text-green-400 font-semibold mb-1">Lower than expected</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Usually acceptable - may indicate larger CSA conductor installed or shorter route
                   than estimated.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-amber-500/10">
                 <p className="text-amber-400 font-semibold mb-1">Within plus/minus 10-15%</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Normal variation due to actual vs nominal CSA, connections, and temperature.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-red-500/10">
                 <p className="text-red-400 font-semibold mb-1">Higher than expected</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Investigate! Could indicate poor connections, smaller CSA, longer route, or
                   damaged conductor.
                 </p>
@@ -407,13 +407,13 @@ const InspectionTestingModule3Section6 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Correction Factors:</p>
               <div className="grid grid-cols-2 gap-2 text-sm font-mono">
-                <span className="text-white/60">At 10 degrees C:</span>
-                <span className="text-white/80">x 0.96</span>
-                <span className="text-white/60">At 20 degrees C:</span>
-                <span className="text-white/80">x 1.00 (reference)</span>
-                <span className="text-white/60">At 30 degrees C:</span>
-                <span className="text-white/80">x 1.04</span>
-                <span className="text-white/60">At 70 degrees C (max):</span>
+                <span className="text-white">At 10 degrees C:</span>
+                <span className="text-white">x 0.96</span>
+                <span className="text-white">At 20 degrees C:</span>
+                <span className="text-white">x 1.00 (reference)</span>
+                <span className="text-white">At 30 degrees C:</span>
+                <span className="text-white">x 1.04</span>
+                <span className="text-white">At 70 degrees C (max):</span>
                 <span className="text-elec-yellow font-semibold">x 1.20</span>
               </div>
             </div>
@@ -439,19 +439,19 @@ const InspectionTestingModule3Section6 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/10 text-center">
               <p className="text-2xl font-mono text-elec-yellow mb-2">Zs = Ze + (R1+R2 x 1.2)</p>
-              <p className="text-white/60 text-sm">Temperature-corrected fault loop impedance</p>
+              <p className="text-white text-sm">Temperature-corrected fault loop impedance</p>
             </div>
 
             <div className="my-6 p-4 rounded-lg bg-blue-500/10">
               <p className="text-sm font-medium text-blue-400 mb-2">Example</p>
-              <div className="text-sm text-white/70 font-mono space-y-1">
+              <div className="text-sm text-white font-mono space-y-1">
                 <p>Ze = 0.35Ω (measured at origin)</p>
                 <p>R1+R2 = 0.39Ω (measured on circuit)</p>
                 <p className="text-elec-yellow font-semibold">
                   Zs = 0.35 + (0.39 x 1.2) = 0.35 + 0.47 = 0.82Ω
                 </p>
               </div>
-              <p className="text-white/60 text-sm mt-2">
+              <p className="text-white text-sm mt-2">
                 Compare this calculated Zs against maximum values from BS 7671 Chapter 41.
               </p>
             </div>
@@ -468,28 +468,28 @@ const InspectionTestingModule3Section6 = () => {
             <div className="space-y-4">
               <div className="border-l-4 border-red-500 pl-4">
                 <p className="text-red-400 font-semibold">Very High R1+R2</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Poor connection, loose terminal, corroded joint, or damaged conductor. Check all
                   terminations.
                 </p>
               </div>
               <div className="border-l-4 border-amber-500 pl-4">
                 <p className="text-amber-400 font-semibold">Inconsistent Readings</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Intermittent connection. Likely loose terminal or broken conductor strand making
                   variable contact.
                 </p>
               </div>
               <div className="border-l-4 border-blue-500 pl-4">
                 <p className="text-blue-400 font-semibold">Ring Circuit Variation</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Readings vary significantly around ring. Check for broken ring, crossed
                   connections, or interconnections.
                 </p>
               </div>
               <div className="border-l-4 border-purple-500 pl-4">
                 <p className="text-purple-400 font-semibold">OL / Open Circuit</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   No continuity. Broken conductor, disconnected terminal, or testing wrong circuit.
                 </p>
               </div>
@@ -572,7 +572,7 @@ const InspectionTestingModule3Section6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -613,7 +613,7 @@ const InspectionTestingModule3Section6 = () => {
           <div className="p-6 rounded-lg bg-green-500/10 text-center">
             <CheckCircle className="w-12 h-12 text-green-400 mx-auto mb-4" />
             <h3 className="text-xl font-bold text-white mb-2">Module 3 Complete!</h3>
-            <p className="text-white/70 mb-4">
+            <p className="text-white mb-4">
               You've completed all sections on Continuity Testing. Ready for Insulation Resistance
               Testing?
             </p>
@@ -630,7 +630,7 @@ const InspectionTestingModule3Section6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../section-5">

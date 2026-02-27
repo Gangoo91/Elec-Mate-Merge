@@ -186,7 +186,7 @@ export default function ConfinedSpacesModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-1">
@@ -209,7 +209,7 @@ export default function ConfinedSpacesModule1Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Why Confined Spaces Kill
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             UK fatality statistics, the deadly cascade rescue effect, invisible atmospheric hazards,
             and the human factors that turn routine entries into multiple-fatality incidents
           </p>
@@ -305,7 +305,7 @@ export default function ConfinedSpacesModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">The Most Shocking Statistic</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Of those who die in confined-space incidents, approximately
                   <strong> 60% are rescuers</strong> &mdash; people who were never in the confined
                   space in the first place. They entered to help a colleague in distress and were
@@ -355,7 +355,7 @@ export default function ConfinedSpacesModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-cyan-400 mb-1">{item.stat}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -424,7 +424,7 @@ export default function ConfinedSpacesModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Warning</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong>
                     The speed at which confined-space atmospheres incapacitate means that
                     self-rescue is frequently impossible.
@@ -471,7 +471,7 @@ export default function ConfinedSpacesModule1Section3() {
 
               {/* ── Oxygen Level Effects Diagram ──── */}
               <div className="bg-white/5 border border-white/10 rounded-xl p-4 sm:p-6 overflow-hidden">
-                <p className="text-xs text-white/50 uppercase tracking-wider mb-4 text-center">
+                <p className="text-xs text-white uppercase tracking-wider mb-4 text-center">
                   Oxygen Concentration &mdash; Effects on the Human Body
                 </p>
 
@@ -487,7 +487,7 @@ export default function ConfinedSpacesModule1Section3() {
                         </div>
                         <div>
                           <p className="text-sm font-medium text-green-400">Normal Atmosphere</p>
-                          <p className="text-xs text-white/70">
+                          <p className="text-xs text-white">
                             Standard atmospheric oxygen. No adverse effects. Full cognitive and
                             physical function.
                           </p>
@@ -505,7 +505,7 @@ export default function ConfinedSpacesModule1Section3() {
                         </div>
                         <div>
                           <p className="text-sm font-medium text-yellow-400">Minimum Safe Level</p>
-                          <p className="text-xs text-white/70">
+                          <p className="text-xs text-white">
                             Regulatory lower limit for safe entry. Subtle impairment may begin. Do
                             not enter below this level without breathing apparatus (BA).
                           </p>
@@ -525,7 +525,7 @@ export default function ConfinedSpacesModule1Section3() {
                           <p className="text-sm font-medium text-orange-400">
                             Impaired Judgement &amp; Coordination
                           </p>
-                          <p className="text-xs text-white/70">
+                          <p className="text-xs text-white">
                             Increased breathing rate, impaired attention, reduced coordination.
                             Judgement deteriorates &mdash; victim may not recognise they are in
                             danger. Loss of consciousness can occur suddenly.
@@ -544,7 +544,7 @@ export default function ConfinedSpacesModule1Section3() {
                         </div>
                         <div>
                           <p className="text-sm font-medium text-red-400">Unconsciousness</p>
-                          <p className="text-xs text-white/70">
+                          <p className="text-xs text-white">
                             Rapid onset of unconsciousness. Nausea, vomiting, inability to move or
                             call for help. Self-rescue extremely unlikely. Death will follow without
                             immediate assisted rescue and oxygen administration.
@@ -563,7 +563,7 @@ export default function ConfinedSpacesModule1Section3() {
                         </div>
                         <div>
                           <p className="text-sm font-medium text-red-300">Fatal Within Minutes</p>
-                          <p className="text-xs text-white/70">
+                          <p className="text-xs text-white">
                             Unconsciousness within seconds. Convulsions. Cessation of breathing.
                             Death within 6&ndash;8 minutes. Even with immediate rescue and
                             resuscitation, survival is unlikely at this level.
@@ -577,19 +577,19 @@ export default function ConfinedSpacesModule1Section3() {
                   <div className="flex flex-wrap items-center gap-4 mt-4 justify-center">
                     <div className="flex items-center gap-1.5">
                       <span className="w-3 h-3 rounded-full bg-green-500/30 border border-green-500/50" />
-                      <span className="text-[10px] text-white/50">Safe</span>
+                      <span className="text-[10px] text-white">Safe</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                       <span className="w-3 h-3 rounded-full bg-yellow-500/30 border border-yellow-500/50" />
-                      <span className="text-[10px] text-white/50">Action level</span>
+                      <span className="text-[10px] text-white">Action level</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                       <span className="w-3 h-3 rounded-full bg-orange-500/30 border border-orange-500/50" />
-                      <span className="text-[10px] text-white/50">Dangerous</span>
+                      <span className="text-[10px] text-white">Dangerous</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                       <span className="w-3 h-3 rounded-full bg-red-500/30 border border-red-500/50" />
-                      <span className="text-[10px] text-white/50">Life-threatening / fatal</span>
+                      <span className="text-[10px] text-white">Life-threatening / fatal</span>
                     </div>
                   </div>
                 </div>
@@ -608,7 +608,7 @@ export default function ConfinedSpacesModule1Section3() {
 
               <div className="bg-cyan-500/10 border border-cyan-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-2">The Deceptive Drop</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A reduction from 20.9% to 16% oxygen sounds small &mdash; less than a 5 percentage
                   point change. But this &lsquo;small&rsquo; change represents a{' '}
                   <strong>24% reduction in the oxygen available to your body</strong>. At 16%, you
@@ -696,15 +696,15 @@ export default function ConfinedSpacesModule1Section3() {
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-cyan-400 mb-1">{item.gas}</p>
                       <div className="space-y-1">
-                        <p className="text-xs text-white/70">
-                          <span className="text-white/50 font-medium">Properties:</span>{' '}
+                        <p className="text-xs text-white">
+                          <span className="text-white font-medium">Properties:</span>{' '}
                           {item.properties}
                         </p>
-                        <p className="text-xs text-white/70">
+                        <p className="text-xs text-white">
                           <span className="text-red-400/80 font-medium">Lethal:</span> {item.lethal}
                         </p>
-                        <p className="text-xs text-white/70">
-                          <span className="text-white/50 font-medium">Sources:</span> {item.sources}
+                        <p className="text-xs text-white">
+                          <span className="text-white font-medium">Sources:</span> {item.sources}
                         </p>
                       </div>
                     </div>
@@ -717,7 +717,7 @@ export default function ConfinedSpacesModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Heavier-Than-Air Gas Pooling</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Gases that are denser than air &mdash; such as H&#8322;S, CO&#8322;, propane, and
                   many solvent vapours &mdash; sink to the lowest point and <strong>pool</strong>.
                   In a pit, tank, or chamber, this creates an invisible layer of toxic atmosphere at
@@ -767,7 +767,7 @@ export default function ConfinedSpacesModule1Section3() {
                   </p>
                 </div>
                 <div className="p-4 space-y-3">
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     A maintenance worker at a water treatment facility was asked to check a valve
                     inside a below-ground chamber. The chamber had been entered many times before
                     without incident. No atmospheric testing was carried out. No confined-space
@@ -775,7 +775,7 @@ export default function ConfinedSpacesModule1Section3() {
                     A colleague immediately climbed down after him and also collapsed. A third
                     worker entered and was himself overcome.
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Emergency services were called. Firefighters wearing breathing apparatus
                     recovered all three men. The first entrant and the third &lsquo;rescuer&rsquo;
                     died. The second survived with permanent brain damage. The atmosphere in the
@@ -784,7 +784,7 @@ export default function ConfinedSpacesModule1Section3() {
                   </p>
                   <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3">
                     <p className="text-xs font-medium text-red-400 mb-1">Failures Identified</p>
-                    <ul className="text-xs text-white/70 space-y-1 list-disc list-inside">
+                    <ul className="text-xs text-white space-y-1 list-disc list-inside">
                       <li>No atmospheric testing before entry</li>
                       <li>No confined-space permit to work</li>
                       <li>Complacency &mdash; &lsquo;we&rsquo;ve always done it this way&rsquo;</li>
@@ -803,14 +803,14 @@ export default function ConfinedSpacesModule1Section3() {
                   </p>
                 </div>
                 <div className="p-4 space-y-3">
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Two workers were tasked with cleaning a storage tank at a chemical processing
                     facility. The tank had previously contained organic solvents. It had been
                     drained and the manway opened for several hours for &lsquo;natural
                     ventilation&rsquo;. No atmospheric testing was performed. No forced ventilation
                     was provided. No breathing apparatus was available.
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The first worker entered and began cleaning the tank floor. Within minutes he
                     became dizzy, confused, and collapsed. The second worker, stationed at the
                     manway as a &lsquo;top man&rsquo;, shouted down and received no response. He
@@ -822,7 +822,7 @@ export default function ConfinedSpacesModule1Section3() {
                   </p>
                   <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3">
                     <p className="text-xs font-medium text-red-400 mb-1">Failures Identified</p>
-                    <ul className="text-xs text-white/70 space-y-1 list-disc list-inside">
+                    <ul className="text-xs text-white space-y-1 list-disc list-inside">
                       <li>No atmospheric testing despite known chemical residues</li>
                       <li>Natural ventilation assumed to be adequate &mdash; it was not</li>
                       <li>No forced mechanical ventilation provided</li>
@@ -842,7 +842,7 @@ export default function ConfinedSpacesModule1Section3() {
                   </p>
                 </div>
                 <div className="p-4 space-y-3">
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     A farmer was agitating a slurry pit beneath a cattle shed when a pump became
                     blocked. He descended into the pit to clear the blockage. The agitation of
                     slurry releases large volumes of hydrogen sulphide &mdash; a fact well
@@ -850,7 +850,7 @@ export default function ConfinedSpacesModule1Section3() {
                     farmer. He was overcome within seconds by H&#8322;S at concentrations later
                     estimated at over 500 ppm.
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     His son, seeing his father collapse, entered the pit. He too was overcome. A
                     neighbouring farmer, alerted by the sound of distressed cattle, arrived and
                     found both men unconscious. He called 999 but then attempted to reach them. He
@@ -860,7 +860,7 @@ export default function ConfinedSpacesModule1Section3() {
                   </p>
                   <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
                     <p className="text-xs font-medium text-amber-400 mb-1">Failures Identified</p>
-                    <ul className="text-xs text-white/70 space-y-1 list-disc list-inside">
+                    <ul className="text-xs text-white space-y-1 list-disc list-inside">
                       <li>No knowledge of H&#8322;S risk from slurry agitation</li>
                       <li>No atmospheric monitoring</li>
                       <li>No confined-space risk assessment</li>
@@ -876,7 +876,7 @@ export default function ConfinedSpacesModule1Section3() {
 
               <div className="bg-cyan-500/10 border border-cyan-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-2">Common Thread</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Every case above shares the same root causes: no atmospheric testing, no rescue
                   plan, and the cascade effect. Every death was preventable. The victims were not
                   reckless people &mdash; they were workers and family members doing what seemed
@@ -953,7 +953,7 @@ export default function ConfinedSpacesModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-cyan-400 mb-1">{item.factor}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -964,7 +964,7 @@ export default function ConfinedSpacesModule1Section3() {
                   <ShieldAlert className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">The Normalisation of Deviance</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Sociologist Diane Vaughan coined the term &lsquo;normalisation of deviance&rsquo;
                   to describe how people and organisations gradually come to accept increasingly
                   risky behaviour as normal when nothing bad happens. In confined-space work, this
@@ -1000,7 +1000,7 @@ export default function ConfinedSpacesModule1Section3() {
 
               {/* ── Cascade Rescue Failure Diagram ── */}
               <div className="bg-white/5 border border-white/10 rounded-xl p-4 sm:p-6 overflow-hidden">
-                <p className="text-xs text-white/50 uppercase tracking-wider mb-4 text-center">
+                <p className="text-xs text-white uppercase tracking-wider mb-4 text-center">
                   The Cascade Rescue Failure &mdash; Anatomy of a Multiple-Fatality Incident
                 </p>
 
@@ -1016,7 +1016,7 @@ export default function ConfinedSpacesModule1Section3() {
                           <p className="text-sm font-medium text-cyan-400">
                             Worker A enters the confined space
                           </p>
-                          <p className="text-xs text-white/70">
+                          <p className="text-xs text-white">
                             No atmospheric testing has been carried out. The atmosphere appears
                             normal &mdash; no visible haze, no obvious smell. Worker A descends the
                             ladder or steps through the manway.
@@ -1033,7 +1033,7 @@ export default function ConfinedSpacesModule1Section3() {
                         </span>
                         <div>
                           <p className="text-sm font-medium text-orange-400">Worker A collapses</p>
-                          <p className="text-xs text-white/70">
+                          <p className="text-xs text-white">
                             Within seconds of entering the hazardous atmosphere, Worker A loses
                             consciousness. They fall to the floor of the space. They may or may not
                             have been able to shout. Collapse is sudden and complete.
@@ -1052,7 +1052,7 @@ export default function ConfinedSpacesModule1Section3() {
                           <p className="text-sm font-medium text-red-400">
                             Worker B enters to rescue Worker A
                           </p>
-                          <p className="text-xs text-white/70">
+                          <p className="text-xs text-white">
                             A colleague sees Worker A collapse or hears no response. Natural
                             instinct takes over. Worker B rushes in to help &mdash; no breathing
                             apparatus, no atmospheric testing, no rescue equipment. They enter the
@@ -1072,7 +1072,7 @@ export default function ConfinedSpacesModule1Section3() {
                           <p className="text-sm font-medium text-red-300">
                             Worker C enters to rescue Workers A and B
                           </p>
-                          <p className="text-xs text-white/70">
+                          <p className="text-xs text-white">
                             Now there are two unconscious people visible in the space. The urgency
                             is overwhelming. Worker C enters. The outcome is identical. Three
                             casualties. One incident. One hazardous atmosphere. The same pattern has
@@ -1092,7 +1092,7 @@ export default function ConfinedSpacesModule1Section3() {
                           <p className="text-sm font-medium text-red-300">
                             Result: Multiple fatalities from a single incident
                           </p>
-                          <p className="text-xs text-white/70">
+                          <p className="text-xs text-white">
                             Emergency services arrive. Firefighters in breathing apparatus recover
                             the casualties. One, two, or all three are dead. The atmosphere is
                             tested and found to be immediately dangerous to life. Every death after
@@ -1109,7 +1109,7 @@ export default function ConfinedSpacesModule1Section3() {
                       <Users className="h-4 w-4 text-cyan-400" />
                       <p className="text-xs font-medium text-cyan-400">Breaking the Cascade</p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       The cascade is broken by one thing:{' '}
                       <strong>
                         a pre-planned rescue procedure with trained personnel and breathing
@@ -1142,7 +1142,7 @@ export default function ConfinedSpacesModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Absolute Rule</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong>
                     NEVER attempt a confined-space rescue without breathing apparatus, a rescue
                     plan, and trained personnel.
@@ -1208,7 +1208,7 @@ export default function ConfinedSpacesModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-cyan-400 mb-1">{item.combo}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1255,7 +1255,7 @@ export default function ConfinedSpacesModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-cyan-400 mb-1">{item.cause}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1265,7 +1265,7 @@ export default function ConfinedSpacesModule1Section3() {
                 <p className="text-sm font-medium text-cyan-400 mb-2">
                   Why Continuous Monitoring Matters
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A single atmospheric reading taken before entry provides a snapshot of conditions
                   at one moment in time. It does not guarantee that conditions will remain the same
                   during the work. This is why <strong>continuous atmospheric monitoring</strong>{' '}
@@ -1281,12 +1281,12 @@ export default function ConfinedSpacesModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">The Key Lesson of This Section</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Every point covered in this section leads to the same two absolute rules. They are
                   non-negotiable. They apply to every confined-space entry, every time, without
                   exception:
                 </p>
-                <ol className="text-sm text-white/80 mt-2 space-y-2 list-decimal list-inside">
+                <ol className="text-sm text-white mt-2 space-y-2 list-decimal list-inside">
                   <li>
                     <strong>NEVER enter a confined space without atmospheric testing.</strong> Test
                     before entry. Test at multiple levels. Monitor continuously during entry. No
@@ -1315,7 +1315,7 @@ export default function ConfinedSpacesModule1Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1333,7 +1333,7 @@ export default function ConfinedSpacesModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-1-section-2">

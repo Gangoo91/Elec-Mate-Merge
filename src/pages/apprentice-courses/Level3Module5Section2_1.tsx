@@ -240,7 +240,7 @@ const Level3Module5Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module5-section2">
@@ -393,7 +393,7 @@ const Level3Module5Section2_1 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> Inspecting a bathroom installation, you would verify socket
               outlets are at least 3m from the bath (Zone 3), the pull cord switch is suitable for
               the location, all equipment has appropriate IP rating (minimum IPX4 in Zone 2), and
@@ -473,15 +473,15 @@ const Level3Module5Section2_1 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Tick</p>
-                <p className="text-white/90 text-xs">Item inspected and satisfactory</p>
+                <p className="text-white text-xs">Item inspected and satisfactory</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">N/A</p>
-                <p className="text-white/90 text-xs">Not applicable to this installation</p>
+                <p className="text-white text-xs">Not applicable to this installation</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">LIM</p>
-                <p className="text-white/90 text-xs">Limited - could not fully inspect</p>
+                <p className="text-white text-xs">Limited - could not fully inspect</p>
               </div>
             </div>
 
@@ -495,7 +495,7 @@ const Level3Module5Section2_1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> "Inspection limited to accessible parts. Cable routes in
               loft area could not be fully verified due to restricted access and presence of
               loose-fill insulation. Sample inspection of visible cables showed correct routing and
@@ -566,7 +566,7 @@ const Level3Module5Section2_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -608,7 +608,7 @@ const Level3Module5Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module5-section2">

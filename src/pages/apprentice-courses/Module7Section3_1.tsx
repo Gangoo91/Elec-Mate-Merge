@@ -213,7 +213,7 @@ const Module7Section3_1 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -231,13 +231,13 @@ const Module7Section3_1 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 7</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 3.1</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 3.1</span>
             </div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
               Tripping MCBs or RCDs
             </h1>
-            <p className="text-white/70 text-base sm:text-lg max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg max-w-2xl mx-auto">
               Understanding the causes and professional response to protective device operation in
               electrical installations.
             </p>
@@ -246,7 +246,7 @@ const Module7Section3_1 = () => {
           {/* In 30 Seconds Summary */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 space-y-1 text-sm list-disc pl-4">
+            <ul className="text-white space-y-1 text-sm list-disc pl-4">
               <li>MCBs and RCDs trip to prevent dangerous conditions, not as inconveniences.</li>
               <li>
                 MCBs protect against overcurrent; RCDs protect against earth leakage and shock.
@@ -264,7 +264,7 @@ const Module7Section3_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <ul className="text-white/80 space-y-2 text-sm list-disc pl-4">
+            <ul className="text-white space-y-2 text-sm list-disc pl-4">
               <li>Explain the function of MCBs and RCDs in electrical protection systems.</li>
               <li>
                 Describe the conditions that cause protective devices to trip and their warning
@@ -289,7 +289,7 @@ const Module7Section3_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Understanding MCB and RCD Functions
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 When a Miniature Circuit Breaker (MCB) or Residual Current Device (RCD) trips, it is
                 never just an inconvenience. These protective devices are designed to disconnect
@@ -343,7 +343,7 @@ const Module7Section3_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Common Causes and Investigation Requirements
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 When either device trips, the underlying reason must be investigated. Understanding
                 common causes helps direct fault-finding efforts.
@@ -403,7 +403,7 @@ const Module7Section3_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Professional Investigation Process
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 A professional electrician follows a clear, systematic process when protective
                 devices trip.
@@ -458,7 +458,7 @@ const Module7Section3_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Practical Guidance
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Electricians should also consider the information provided by occupants. For
                 example, if an RCD trips only when a certain appliance is in use, the fault may lie
@@ -492,19 +492,19 @@ const Module7Section3_1 = () => {
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50">
                 <p className="font-medium text-white mb-2">Student Flats RCD Tripping</p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   In a block of student flats, residents reported that the RCD protecting their
                   kitchen circuits tripped several times a day. Maintenance staff repeatedly reset
                   it without investigation, telling students to "just plug things in more
                   carefully."
                 </p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   Eventually, one student received a shock from the metal casing of a microwave,
                   which had developed an internal insulation fault. The RCD had been providing
                   repeated warnings that current was leaking to earth, but these were ignored until
                   someone was injured.
                 </p>
-                <p className="text-white/60 text-sm italic">
+                <p className="text-white text-sm italic">
                   A proper investigation at the first sign of tripping would have identified the
                   faulty appliance and prevented harm.
                 </p>
@@ -512,17 +512,17 @@ const Module7Section3_1 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
                 <p className="font-medium text-white mb-2">Office Circuit Overload</p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   An office experienced frequent tripping of a ring circuit breaker during winter.
                   Staff had plugged multiple portable heaters into extension leads, overloading the
                   circuit.
                 </p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   Instead of upgrading the breaker, the investigating electrician explained the
                   cause and arranged for additional circuits to be installed. By addressing the
                   underlying problem, the risk of overheating and fire was eliminated.
                 </p>
-                <p className="text-white/60 text-sm italic">
+                <p className="text-white text-sm italic">
                   Proper load assessment and circuit provision resolved the issue safely without
                   compromising protection.
                 </p>
@@ -540,7 +540,7 @@ const Module7Section3_1 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
                   <p className="font-medium text-white mb-2">{faq.question}</p>
-                  <p className="text-white/70 text-sm">{faq.answer}</p>
+                  <p className="text-white text-sm">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -553,7 +553,7 @@ const Module7Section3_1 = () => {
               Recap
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <div className="text-white/80 space-y-3 text-sm">
+              <div className="text-white space-y-3 text-sm">
                 <p>
                   Tripping MCBs and RCDs are not inconveniences; they are safety mechanisms designed
                   to signal dangerous conditions. An MCB trips when a circuit carries too much
@@ -583,7 +583,7 @@ const Module7Section3_1 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mt-10 pt-6 border-t border-white/10">
             <Button
               variant="ghost"
-              className="w-full sm:w-auto text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="w-full sm:w-auto text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="..">

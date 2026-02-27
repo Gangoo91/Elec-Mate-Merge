@@ -108,7 +108,7 @@ const ToolChecklistGenerator = () => {
           </div>
           Tool Checklist Generator
         </CardTitle>
-        <p className="text-sm text-white/60">
+        <p className="text-sm text-white">
           Create customised tool lists for any type of project
         </p>
       </CardHeader>
@@ -116,7 +116,7 @@ const ToolChecklistGenerator = () => {
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label htmlFor="project-name" className="text-white/70">
+              <Label htmlFor="project-name" className="text-white">
                 Project Name
               </Label>
               <Input
@@ -129,7 +129,7 @@ const ToolChecklistGenerator = () => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="project-type" className="text-white/70">
+              <Label htmlFor="project-type" className="text-white">
                 Project Type
               </Label>
               <Select value={projectType} onValueChange={setProjectType}>
@@ -203,7 +203,7 @@ const ToolChecklistGenerator = () => {
                       value={item.tool}
                       onChange={(e) => updateTool(item.id, 'tool', e.target.value)}
                       className={`flex-1 text-sm bg-transparent border-0 focus-visible:ring-0 ${
-                        item.checked ? 'text-white/80 line-through' : 'text-white'
+                        item.checked ? 'text-white line-through' : 'text-white'
                       }`}
                     />
                     {item.essential && (

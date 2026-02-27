@@ -146,7 +146,7 @@ const Module7Section2_1 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -164,18 +164,18 @@ const Module7Section2_1 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 7</span>
-              <span className="text-white/40">•</span>
+              <span className="text-white">•</span>
               <span>Section 2.1</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">Open Circuit Faults</h1>
-            <p className="text-white/60 max-w-xl mx-auto">
+            <p className="text-white max-w-xl mx-auto">
               Understanding detection, causes, and rectification of open circuit faults
             </p>
           </header>
 
           {/* Summary Box */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               An <strong className="text-white">open circuit fault</strong> occurs when there is a
               break in the electrical path, preventing current from flowing. These are among the
               most common faults in electrical systems and require systematic testing to locate and
@@ -189,7 +189,7 @@ const Module7Section2_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Definition and Characteristics
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 An open circuit fault occurs when the electrical path becomes incomplete, preventing
                 current from flowing. This can happen when a conductor is physically broken,
@@ -271,7 +271,7 @@ const Module7Section2_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Common Causes
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Open circuit faults can arise from various factors throughout the lifecycle of an
                 electrical installation:
@@ -348,7 +348,7 @@ const Module7Section2_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Effects and Safety Implications
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 While open circuits may seem less dangerous than short circuits, they can have
                 serious safety and operational consequences:
@@ -408,7 +408,7 @@ const Module7Section2_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Detection and Testing Methods
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Systematic testing approaches are essential for locating open circuit faults
                 efficiently and safely:
@@ -494,7 +494,7 @@ const Module7Section2_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Repair and Prevention
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Effective repair requires proper techniques and consideration of prevention
                 measures:
@@ -619,7 +619,7 @@ const Module7Section2_1 = () => {
                 <h4 className="font-medium text-white mb-2">
                   What's the difference between an open circuit and a short circuit?
                 </h4>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   An open circuit has a break in the path preventing current flow, while a short
                   circuit creates an unintended low-resistance path allowing excessive current flow.
                 </p>
@@ -627,7 +627,7 @@ const Module7Section2_1 = () => {
 
               <div className="bg-white/5 rounded-lg p-4 border border-white/10">
                 <h4 className="font-medium text-white mb-2">Can an open circuit be dangerous?</h4>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   While open circuits don't cause overcurrent, they can be dangerous if they affect
                   safety systems like emergency lighting or protective devices.
                 </p>
@@ -637,7 +637,7 @@ const Module7Section2_1 = () => {
                 <h4 className="font-medium text-white mb-2">
                   How do I test for continuity safely?
                 </h4>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Always isolate the circuit first, verify isolation, then use a multimeter set to
                   continuity mode. Never test continuity on live circuits.
                 </p>
@@ -647,7 +647,7 @@ const Module7Section2_1 = () => {
                 <h4 className="font-medium text-white mb-2">
                   What tools do I need for open circuit fault finding?
                 </h4>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Essential tools include a multimeter, continuity tester, voltage indicator, and
                   basic hand tools for accessing connections.
                 </p>
@@ -662,7 +662,7 @@ const Module7Section2_1 = () => {
                 <CheckCircle className="w-5 h-5 text-green-400" />
                 <h3 className="font-semibold text-white">Summary</h3>
               </div>
-              <p className="text-sm text-white/80 leading-relaxed">
+              <p className="text-sm text-white leading-relaxed">
                 Open circuit faults represent one of the most common electrical problems,
                 characterised by a complete break in the electrical path that prevents current flow.
                 These faults can occur due to loose connections, mechanical damage, component

@@ -197,7 +197,7 @@ export default function ConfinedSpacesModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-3">
@@ -220,7 +220,7 @@ export default function ConfinedSpacesModule3Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Non-Atmospheric Hazards
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Engulfment, entrapment, temperature extremes, noise, manual handling, biological
             hazards, mechanical and electrical dangers, falls from height, radiation, and structural
             collapse
@@ -388,7 +388,7 @@ export default function ConfinedSpacesModule3Section2() {
                     Fatal Hazard &mdash; Rapid Onset
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Drowning in confined spaces can occur in as little as{' '}
                   <strong className="text-white">60 seconds</strong>. Water can enter from burst
                   pipes, rising water tables, tidal ingress, storm surges, or the sudden release of
@@ -401,7 +401,7 @@ export default function ConfinedSpacesModule3Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Common Sources of Liquid Engulfment
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -479,7 +479,7 @@ export default function ConfinedSpacesModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Engulfment Kills in Seconds</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A worker can be engulfed to waist depth in{' '}
                   <strong className="text-white">under 5 seconds</strong> when grain or similar
                   material collapses. At waist depth, the force required to extract the person can
@@ -502,7 +502,7 @@ export default function ConfinedSpacesModule3Section2() {
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-semibold text-white">Surface Appears Stable</p>
-                      <p className="text-xs text-white/60 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Material in a silo or hopper may have formed a crust or bridge over a void
                         beneath. The surface looks solid and walkable, but is structurally
                         unsupported.
@@ -518,7 +518,7 @@ export default function ConfinedSpacesModule3Section2() {
                       <p className="text-sm font-semibold text-white">
                         Surface Collapse / Flow Initiated
                       </p>
-                      <p className="text-xs text-white/60 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Worker's weight breaks the bridge, or discharge equipment starts below,
                         drawing material downward. The worker begins to sink rapidly as the material
                         flows around them like quicksand.
@@ -534,7 +534,7 @@ export default function ConfinedSpacesModule3Section2() {
                       <p className="text-sm font-semibold text-white">
                         Waist-Deep Engulfment (Under 5 Seconds)
                       </p>
-                      <p className="text-xs text-white/60 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Extraction force now exceeds 400 kg. The worker cannot free themselves.
                         Rescue teams cannot simply pull the person out without causing serious
                         injury.
@@ -550,7 +550,7 @@ export default function ConfinedSpacesModule3Section2() {
                       <p className="text-sm font-semibold text-red-300">
                         Chest-Deep / Full Burial &mdash; Fatal
                       </p>
-                      <p className="text-xs text-white/60 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Compressive force on the thorax prevents breathing. Full burial causes
                         suffocation. Without immediate rescue (within 4&ndash;6 minutes), survival
                         is extremely unlikely.
@@ -574,7 +574,7 @@ export default function ConfinedSpacesModule3Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Materials That Cause Engulfment
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -647,7 +647,7 @@ export default function ConfinedSpacesModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Complex Internal Structures</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -677,7 +677,7 @@ export default function ConfinedSpacesModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Narrowing Passages</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -707,7 +707,7 @@ export default function ConfinedSpacesModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Collapse of Excavation Sides</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -772,11 +772,11 @@ export default function ConfinedSpacesModule3Section2() {
                     <Thermometer className="h-5 w-5 text-red-400" />
                     <p className="text-sm font-medium text-red-400">Heat Stress</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Heat stress occurs when the body cannot shed heat fast enough to maintain a safe
                     core temperature. In confined spaces, this is caused by:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -816,7 +816,7 @@ export default function ConfinedSpacesModule3Section2() {
                       <span className="text-xs font-bold text-amber-400 w-20 flex-shrink-0 mt-0.5">
                         37&ndash;38&deg;C
                       </span>
-                      <span className="text-sm text-white/80">
+                      <span className="text-sm text-white">
                         Normal range with light exertion &mdash; sweating, mild fatigue
                       </span>
                     </div>
@@ -824,7 +824,7 @@ export default function ConfinedSpacesModule3Section2() {
                       <span className="text-xs font-bold text-orange-400 w-20 flex-shrink-0 mt-0.5">
                         38&ndash;39&deg;C
                       </span>
-                      <span className="text-sm text-white/80">
+                      <span className="text-sm text-white">
                         Heat exhaustion &mdash; heavy sweating, weakness, nausea, headache, rapid
                         pulse
                       </span>
@@ -833,7 +833,7 @@ export default function ConfinedSpacesModule3Section2() {
                       <span className="text-xs font-bold text-red-400 w-20 flex-shrink-0 mt-0.5">
                         39&ndash;40&deg;C
                       </span>
-                      <span className="text-sm text-white/80">
+                      <span className="text-sm text-white">
                         Severe heat exhaustion &mdash; confusion, coordination loss, vomiting,
                         potential collapse
                       </span>
@@ -854,11 +854,11 @@ export default function ConfinedSpacesModule3Section2() {
                     <Thermometer className="h-5 w-5 text-blue-400" />
                     <p className="text-sm font-medium text-blue-400">Cold Stress</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Cold stress occurs when the body loses heat faster than it can produce it,
                     causing core temperature to fall. In confined spaces, this can occur in:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -926,7 +926,7 @@ export default function ConfinedSpacesModule3Section2() {
                     <Volume2 className="h-5 w-5 text-cyan-400" />
                     <p className="text-sm font-medium text-white">Noise in Enclosed Spaces</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Sound behaves differently in confined spaces compared to open air. Hard, close
                     surfaces{' '}
                     <strong className="text-white">
@@ -934,7 +934,7 @@ export default function ConfinedSpacesModule3Section2() {
                     </strong>
                     , creating significant reverberation and amplification.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -978,11 +978,11 @@ export default function ConfinedSpacesModule3Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     Manual Handling in Restricted Spaces
                   </p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Manual handling inside confined spaces is significantly more hazardous than in
                     open environments because of physical restrictions:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1054,7 +1054,7 @@ export default function ConfinedSpacesModule3Section2() {
                   <Bug className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Weil's Disease (Leptospirosis)</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Weil's disease is caused by <strong className="text-white">Leptospira</strong>{' '}
                   bacteria found in <strong className="text-white">rat urine</strong>. It enters the
                   body through cuts, abrasions, or mucous membranes (eyes, nose, mouth) when workers
@@ -1073,7 +1073,7 @@ export default function ConfinedSpacesModule3Section2() {
               <div className="space-y-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Legionella</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1102,7 +1102,7 @@ export default function ConfinedSpacesModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Sewage-Borne Pathogens</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1132,7 +1132,7 @@ export default function ConfinedSpacesModule3Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     Mould, Fungi, and Animal Hazards
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1192,13 +1192,13 @@ export default function ConfinedSpacesModule3Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     Mechanical Hazards &mdash; Moving Machinery
                   </p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Many confined spaces contain{' '}
                     <strong className="text-white">mechanical equipment</strong>
                     that can cause fatal crushing, entanglement, or cutting injuries if operated
                     while a person is inside:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1240,7 +1240,7 @@ export default function ConfinedSpacesModule3Section2() {
                       Lock Out / Tag Out (LOTO) is Mandatory
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     <strong className="text-white">ALL</strong> energy sources (electrical,
                     mechanical, hydraulic, pneumatic, thermal) must be physically isolated and
                     locked in the off position before anyone enters a confined space containing
@@ -1263,13 +1263,13 @@ export default function ConfinedSpacesModule3Section2() {
                     <Zap className="h-5 w-5 text-cyan-400" />
                     <p className="text-sm font-medium text-white">Electrical Hazards</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Electrical risk is{' '}
                     <strong className="text-white">significantly increased</strong>
                     in confined spaces due to environmental factors that reduce the body's
                     electrical resistance:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1305,14 +1305,14 @@ export default function ConfinedSpacesModule3Section2() {
                     <table className="w-full text-sm">
                       <thead>
                         <tr className="border-b border-white/10">
-                          <th className="text-left text-white/60 py-2 pr-3 font-medium">
+                          <th className="text-left text-white py-2 pr-3 font-medium">
                             Application
                           </th>
-                          <th className="text-left text-white/60 py-2 pr-3 font-medium">Voltage</th>
-                          <th className="text-left text-white/60 py-2 font-medium">Notes</th>
+                          <th className="text-left text-white py-2 pr-3 font-medium">Voltage</th>
+                          <th className="text-left text-white py-2 font-medium">Notes</th>
                         </tr>
                       </thead>
-                      <tbody className="text-white/80">
+                      <tbody className="text-white">
                         <tr className="border-b border-white/5">
                           <td className="py-2 pr-3">General site tools</td>
                           <td className="py-2 pr-3">
@@ -1379,11 +1379,11 @@ export default function ConfinedSpacesModule3Section2() {
                     <Waves className="h-5 w-5 text-cyan-400" />
                     <p className="text-sm font-medium text-white">Falls from Height</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Falls inside confined spaces are particularly dangerous because rescue access is
                     restricted and injuries are compounded by the confined environment:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1421,10 +1421,10 @@ export default function ConfinedSpacesModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Radiation Hazards</p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Radiation hazards in confined spaces fall into two categories:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1456,11 +1456,11 @@ export default function ConfinedSpacesModule3Section2() {
                     <AlertTriangle className="h-5 w-5 text-red-400" />
                     <p className="text-sm font-medium text-red-400">Structural Collapse</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     The physical structure of the confined space itself may present a collapse
                     hazard:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1523,12 +1523,12 @@ export default function ConfinedSpacesModule3Section2() {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/10">
-                    <th className="text-left text-white/60 py-2 pr-3 font-medium">Hazard</th>
-                    <th className="text-left text-white/60 py-2 pr-3 font-medium">Examples</th>
-                    <th className="text-left text-white/60 py-2 font-medium">Primary Control</th>
+                    <th className="text-left text-white py-2 pr-3 font-medium">Hazard</th>
+                    <th className="text-left text-white py-2 pr-3 font-medium">Examples</th>
+                    <th className="text-left text-white py-2 font-medium">Primary Control</th>
                   </tr>
                 </thead>
-                <tbody className="text-white/80">
+                <tbody className="text-white">
                   <tr className="border-b border-white/5">
                     <td className="py-2 pr-3 font-medium text-white">Engulfment (liquid)</td>
                     <td className="py-2 pr-3">Flooding, tidal ingress, burst pipes</td>
@@ -1597,7 +1597,7 @@ export default function ConfinedSpacesModule3Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1611,7 +1611,7 @@ export default function ConfinedSpacesModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-3-section-1">

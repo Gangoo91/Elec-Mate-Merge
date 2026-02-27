@@ -36,7 +36,7 @@ const InteractiveScenariosTab = () => {
               <AlertTriangle className="h-12 w-12 text-red-400" />
             </div>
             <h4 className="font-medium text-white mb-2">Failed to Load Scenarios</h4>
-            <p className="text-sm text-white/80 max-w-xs mx-auto">{error}</p>
+            <p className="text-sm text-white max-w-xs mx-auto">{error}</p>
           </CardContent>
         </Card>
       </SafetyCasesErrorBoundary>
@@ -66,7 +66,7 @@ const InteractiveScenariosTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6 relative">
-          <p className="text-white/70">
+          <p className="text-white">
             Experience realistic safety scenarios through interactive decision-making exercises.
             Each scenario is based on real incidents and provides valuable learning outcomes for
             electrical safety.
@@ -78,7 +78,7 @@ const InteractiveScenariosTab = () => {
               <div className="text-2xl sm:text-3xl font-bold text-elec-yellow mb-1">
                 {completedScenarios.length}
               </div>
-              <div className="text-xs sm:text-sm text-white/60">Completed</div>
+              <div className="text-xs sm:text-sm text-white">Completed</div>
               <div className="mt-3 h-1.5 bg-white/10 rounded-full overflow-hidden">
                 <div
                   className="h-full rounded-full bg-gradient-to-r from-elec-yellow to-elec-yellow/70 transition-all duration-500"
@@ -91,7 +91,7 @@ const InteractiveScenariosTab = () => {
               <div className="text-2xl sm:text-3xl font-bold text-blue-400 mb-1">
                 {allScenarios.length}
               </div>
-              <div className="text-xs sm:text-sm text-white/60">Total Scenarios</div>
+              <div className="text-xs sm:text-sm text-white">Total Scenarios</div>
               <div className="mt-2 flex items-center justify-center gap-1">
                 <Shield className="h-3 w-3 text-blue-400" />
                 <span className="text-xs text-blue-400">Safety First</span>
@@ -102,7 +102,7 @@ const InteractiveScenariosTab = () => {
               <div className="text-2xl sm:text-3xl font-bold text-purple-400 mb-1">
                 {completionPercentage}%
               </div>
-              <div className="text-xs sm:text-sm text-white/60">Progress</div>
+              <div className="text-xs sm:text-sm text-white">Progress</div>
               <div className="mt-2 flex items-center justify-center gap-1">
                 <TrendingUp className="h-3 w-3 text-green-400" />
                 <span className="text-xs text-green-400">On track</span>
@@ -171,7 +171,7 @@ const InteractiveScenariosTab = () => {
                   'Risk Assessment planning',
                   'Industry-specific scenarios',
                 ].map((item, index) => (
-                  <div key={index} className="flex items-center gap-2 text-sm text-white/70">
+                  <div key={index} className="flex items-center gap-2 text-sm text-white">
                     <span className="w-1.5 h-1.5 bg-green-400 rounded-full flex-shrink-0" />
                     {item}
                   </div>
@@ -194,7 +194,7 @@ const InteractiveScenariosTab = () => {
                   'Detailed feedback',
                   'Completion status indicators',
                 ].map((item, index) => (
-                  <div key={index} className="flex items-center gap-2 text-sm text-white/70">
+                  <div key={index} className="flex items-center gap-2 text-sm text-white">
                     <span className="w-1.5 h-1.5 bg-purple-400 rounded-full flex-shrink-0" />
                     {item}
                   </div>

@@ -195,7 +195,7 @@ export default function IpafModule5Section1() {
           <Button
             variant="ghost"
             size="icon"
-            className="min-h-[44px] min-w-[44px] text-white/70 hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] min-w-[44px] text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../ipaf-module-5">
@@ -203,7 +203,7 @@ export default function IpafModule5Section1() {
             </Link>
           </Button>
           <div className="flex-1 min-w-0">
-            <p className="text-xs text-white/40">Module 5 {'\u2022'} Section 1</p>
+            <p className="text-xs text-white">Module 5 {'\u2022'} Section 1</p>
             <h1 className="text-sm font-semibold text-white truncate">
               Common Hazards & Accident Causes
             </h1>
@@ -226,7 +226,7 @@ export default function IpafModule5Section1() {
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Common Hazards & Accident Causes
           </h2>
-          <p className="text-white/60 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding the most frequent causes of tower scaffold accidents and how to recognise
             hazards before they cause harm
           </p>
@@ -238,7 +238,7 @@ export default function IpafModule5Section1() {
             <Zap className="h-4 w-4" />
             In 30 Seconds
           </h3>
-          <p className="text-white/80 text-base leading-relaxed">
+          <p className="text-white text-base leading-relaxed">
             Falls from unguarded platforms are the number one killer in tower scaffold work. Tower
             collapse from incorrect assembly, overturning from wind or overloading, electrocution
             from overhead power lines, and being struck by falling objects make up the remaining
@@ -253,7 +253,7 @@ export default function IpafModule5Section1() {
             <HardHat className="h-4 w-4" />
             On Site
           </h3>
-          <p className="text-white/80 text-base leading-relaxed">
+          <p className="text-white text-base leading-relaxed">
             Before anyone climbs a tower, ask yourself: Are all guardrails in place? Are castors
             locked? Is the ground firm and level? Are there overhead power lines within 15 metres?
             Is the wind below Force 4? Has the tower been inspected today? If any answer is "no" or
@@ -278,7 +278,7 @@ export default function IpafModule5Section1() {
             ].map((outcome, i) => (
               <li key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </li>
             ))}
           </ul>
@@ -295,7 +295,7 @@ export default function IpafModule5Section1() {
             <h3 className="text-xl font-semibold text-white">Falls from Unguarded Platforms</h3>
           </div>
           <div className="border-l-2 border-red-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Falls from unguarded or partially guarded platforms are the{' '}
               <strong className="text-red-400">number one cause of deaths</strong> involving mobile
               access towers in the UK. HSE investigation reports consistently highlight the same
@@ -304,7 +304,7 @@ export default function IpafModule5Section1() {
             </p>
             <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-white text-sm mb-2">Why Falls Happen</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                   <span>Guardrails not installed at every working platform level</span>
@@ -329,7 +329,7 @@ export default function IpafModule5Section1() {
             </div>
             <div className="bg-white/5 border border-white/10 rounded-lg p-4">
               <h4 className="font-semibold text-white text-sm mb-2">Prevention</h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Every working platform must have full double guardrails (main guardrail at 950mm
                 minimum, intermediate guardrail at approximately 470mm) and toeboards at least 150mm
                 high on all open sides. The platform trapdoor must be closed whenever operatives are
@@ -353,7 +353,7 @@ export default function IpafModule5Section1() {
             </h3>
           </div>
           <div className="border-l-2 border-orange-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               A mobile access tower is an engineered structure. Every brace, frame, and platform
               works together to distribute loads safely. When components are missing, in the wrong
               position, or from the wrong manufacturer, the entire structure can fail
@@ -361,7 +361,7 @@ export default function IpafModule5Section1() {
             </p>
             <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-white text-sm mb-2">Common Assembly Failures</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                   <span>
@@ -400,7 +400,7 @@ export default function IpafModule5Section1() {
                 </li>
               </ul>
             </div>
-            <p className="text-white/70 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               HSE data indicates that approximately{' '}
               <strong className="text-white">25% of tower scaffold accidents</strong> are linked to
               incorrect assembly. Towers must only be assembled, altered, and dismantled by persons
@@ -420,7 +420,7 @@ export default function IpafModule5Section1() {
             <h3 className="text-xl font-semibold text-white">Overturning</h3>
           </div>
           <div className="border-l-2 border-amber-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Overturning occurs when external forces or weight distribution shifts the tower's
               centre of gravity beyond its base footprint. Once tipping begins, the tower
               accelerates and there is no practical way to stop it.
@@ -429,7 +429,7 @@ export default function IpafModule5Section1() {
               <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
                 <Wind className="h-5 w-5 text-amber-400 mb-2" />
                 <h4 className="font-semibold text-white text-sm mb-1">Wind Loading</h4>
-                <p className="text-white/70 text-xs leading-relaxed">
+                <p className="text-white text-xs leading-relaxed">
                   Wind creates lateral force on the tower structure, sheeting, and operatives. Force
                   increases with the square of wind speed — doubling the wind speed quadruples the
                   force. Sheeted towers are especially vulnerable.
@@ -438,7 +438,7 @@ export default function IpafModule5Section1() {
               <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
                 <AlertTriangle className="h-5 w-5 text-amber-400 mb-2" />
                 <h4 className="font-semibold text-white text-sm mb-1">Overloading</h4>
-                <p className="text-white/70 text-xs leading-relaxed">
+                <p className="text-white text-xs leading-relaxed">
                   Exceeding the safe working load (typically 275 kg per platform) or concentrating
                   weight on one side of the platform shifts the centre of gravity. Multiple users
                   must be aware of combined weight including tools and materials.
@@ -447,7 +447,7 @@ export default function IpafModule5Section1() {
               <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
                 <ShieldAlert className="h-5 w-5 text-amber-400 mb-2" />
                 <h4 className="font-semibold text-white text-sm mb-1">Uneven Ground</h4>
-                <p className="text-white/70 text-xs leading-relaxed">
+                <p className="text-white text-xs leading-relaxed">
                   Setting up on slopes, soft ground, drains, or uncompacted fill means the tower's
                   base is not uniformly supported. One leg can sink, instantly creating a tipping
                   moment. Always use base plates on firm, level ground.
@@ -456,7 +456,7 @@ export default function IpafModule5Section1() {
               <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
                 <Skull className="h-5 w-5 text-amber-400 mb-2" />
                 <h4 className="font-semibold text-white text-sm mb-1">Over-reaching</h4>
-                <p className="text-white/70 text-xs leading-relaxed">
+                <p className="text-white text-xs leading-relaxed">
                   Leaning beyond the platform edge moves the operative's weight outside the base
                   footprint. The correct response is always to reposition the tower, never to lean
                   further.
@@ -492,7 +492,7 @@ export default function IpafModule5Section1() {
             </h3>
           </div>
           <div className="border-l-2 border-yellow-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Contact with or proximity to overhead power lines causes some of the most severe tower
               scaffold accidents. Electricity can arc (flashover) across an air gap — direct
               physical contact is not required. Aluminium towers are excellent conductors, meaning
@@ -500,7 +500,7 @@ export default function IpafModule5Section1() {
             </p>
             <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-white text-sm mb-3">Clearance Requirements</h4>
-              <div className="space-y-2 text-sm text-white/70">
+              <div className="space-y-2 text-sm text-white">
                 <p>
                   <strong className="text-yellow-400">Minimum 15 metres</strong> clearance from
                   overhead power lines before any tower work begins
@@ -525,7 +525,7 @@ export default function IpafModule5Section1() {
             </div>
             <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-red-400 text-sm mb-2">Critical Warning</h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Overhead power lines can carry voltages from 230V (single-phase domestic) to 400kV
                 (National Grid). At higher voltages, flashover can occur at distances of several
                 metres. Never assume a line is "low voltage" based on appearance — always treat
@@ -547,14 +547,14 @@ export default function IpafModule5Section1() {
             <h3 className="text-xl font-semibold text-white">Struck by Falling Objects</h3>
           </div>
           <div className="border-l-2 border-blue-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Tools, materials, and debris falling from the platform can cause serious injury or
               death to anyone below. Even a small spanner dropped from 6 metres generates enough
               force to cause a fatal head injury.
             </p>
             <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-white text-sm mb-2">Prevention Controls</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                   <span>
@@ -624,7 +624,7 @@ export default function IpafModule5Section1() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="bg-purple-500/10 border border-purple-500/30 rounded-lg p-4">
                 <h4 className="font-semibold text-white text-sm mb-2">Unlocked Castors</h4>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Every castor must be locked before anyone climbs the tower. Even gentle movement
                   can cause the tower to roll into an obstacle, off level ground, or into a gap.
                   Castor locks must be checked as part of every pre-use inspection — they can work
@@ -635,7 +635,7 @@ export default function IpafModule5Section1() {
                 <h4 className="font-semibold text-white text-sm mb-2">
                   Climbing Outside the Tower
                 </h4>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Climbing on the outside of a tower is{' '}
                   <strong className="text-red-400">NEVER permitted</strong> — regardless of height,
                   urgency, or how quick the task seems. External climbing places the user outside
@@ -660,13 +660,13 @@ export default function IpafModule5Section1() {
             </h3>
           </div>
           <div className="border-l-2 border-emerald-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Towers are engineered systems designed and tested as complete assemblies. Any
               modification that was not specified by the manufacturer invalidates the structural
               design. This includes:
             </p>
             <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4">
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                   <span>Removing braces or guardrails to fit around obstacles</span>
@@ -695,7 +695,7 @@ export default function IpafModule5Section1() {
               <h4 className="font-semibold text-white text-sm mb-2">
                 Overloading & Multiple Users
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 The safe working load (SWL) of a tower platform is typically 275 kg for Class 3 (BS
                 EN 1004-1:2020). This must include the combined weight of all persons, tools,
                 materials, and equipment on the platform. Multiple users must coordinate to ensure
@@ -718,14 +718,14 @@ export default function IpafModule5Section1() {
             <h3 className="text-xl font-semibold text-white">Fatigue-Related Errors</h3>
           </div>
           <div className="border-l-2 border-sky-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Working at height demands sustained concentration, physical coordination, and good
               grip strength. Fatigue degrades all three, making accidents more likely as the day
               progresses or when operatives have not rested adequately.
             </p>
             <div className="bg-sky-500/10 border border-sky-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-white text-sm mb-2">Fatigue Risk Factors</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                   <span>Long shifts without adequate breaks (especially in hot weather)</span>
@@ -748,7 +748,7 @@ export default function IpafModule5Section1() {
                 </li>
               </ul>
             </div>
-            <p className="text-white/70 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Employers have a duty under the Working Time Regulations 1998 and the Management of
               Health and Safety at Work Regulations 1999 to manage fatigue. Operatives working at
               height should take regular breaks, stay hydrated, and report to their supervisor if
@@ -783,28 +783,28 @@ export default function IpafModule5Section1() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
               <div className="bg-black/20 rounded-lg p-3">
                 <p className="text-red-400 font-semibold mb-1">Falls from Height</p>
-                <p className="text-white/70">
+                <p className="text-white">
                   Account for the majority of fatal and major injuries from tower scaffolds — almost
                   all involving missing or incomplete guardrails
                 </p>
               </div>
               <div className="bg-black/20 rounded-lg p-3">
                 <p className="text-orange-400 font-semibold mb-1">Incorrect Assembly</p>
-                <p className="text-white/70">
+                <p className="text-white">
                   Linked to approximately 25% of all tower scaffold accidents, including many
                   fatalities from collapse
                 </p>
               </div>
               <div className="bg-black/20 rounded-lg p-3">
                 <p className="text-yellow-400 font-semibold mb-1">Electrocution</p>
-                <p className="text-white/70">
+                <p className="text-white">
                   Less frequent but with an extremely high fatality rate — most incidents involve
                   overhead power lines that were not identified during planning
                 </p>
               </div>
               <div className="bg-black/20 rounded-lg p-3">
                 <p className="text-blue-400 font-semibold mb-1">Falling Objects</p>
-                <p className="text-white/70">
+                <p className="text-white">
                   Significant cause of injury to ground-level workers and members of the public near
                   tower operations
                 </p>
@@ -812,7 +812,7 @@ export default function IpafModule5Section1() {
             </div>
             <div className="mt-4 bg-black/20 rounded-lg p-4">
               <h4 className="font-semibold text-white text-sm mb-2">Why These Numbers Matter</h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 HSE enforcement data shows that mobile tower scaffold incidents are one of the most
                 frequently investigated categories of work-at-height accidents. Prosecution rates
                 are high when investigations reveal a lack of training, missing risk assessments, or
@@ -833,7 +833,7 @@ export default function IpafModule5Section1() {
             Hazard Interactions — Compound Risk
           </h3>
           <div className="bg-white/5 border border-white/10 rounded-xl p-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               In practice, tower scaffold accidents rarely involve a single hazard in isolation.
               Most serious incidents result from two or more hazards combining to create a situation
               worse than either alone. Understanding these interactions is key to effective hazard
@@ -842,7 +842,7 @@ export default function IpafModule5Section1() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-3">
                 <h4 className="font-semibold text-orange-400 text-xs mb-1">Wind + Overloading</h4>
-                <p className="text-white/70 text-xs leading-relaxed">
+                <p className="text-white text-xs leading-relaxed">
                   A tower at its safe working load is more susceptible to overturning because its
                   centre of gravity is higher. If wind then applies a lateral force, the combined
                   effect can exceed the tower's stability margin. Either factor alone might be
@@ -853,7 +853,7 @@ export default function IpafModule5Section1() {
                 <h4 className="font-semibold text-orange-400 text-xs mb-1">
                   Fatigue + Incorrect Assembly
                 </h4>
-                <p className="text-white/70 text-xs leading-relaxed">
+                <p className="text-white text-xs leading-relaxed">
                   A fatigued assembler is more likely to miss a brace, fail to engage a lock, or
                   follow the wrong sequence. The resulting structural weakness may not be obvious
                   until the tower is loaded, at which point it can collapse without warning.
@@ -863,7 +863,7 @@ export default function IpafModule5Section1() {
                 <h4 className="font-semibold text-orange-400 text-xs mb-1">
                   Soft Ground + Unlocked Castors
                 </h4>
-                <p className="text-white/70 text-xs leading-relaxed">
+                <p className="text-white text-xs leading-relaxed">
                   On soft ground, an unlocked castor can roll into a depression or soft patch,
                   causing the tower to lean suddenly. On a firm surface, the same unlocked castor
                   might only cause a slow roll — on soft ground, the failure mode is sudden and
@@ -874,14 +874,14 @@ export default function IpafModule5Section1() {
                 <h4 className="font-semibold text-orange-400 text-xs mb-1">
                   Over-reaching + Missing Toeboard
                 </h4>
-                <p className="text-white/70 text-xs leading-relaxed">
+                <p className="text-white text-xs leading-relaxed">
                   Over-reaching shifts the user's weight to the platform edge. If toeboards are
                   missing, there is nothing to prevent their feet sliding under the guardrail. The
                   combination turns a recoverable over-reach into a fall from height.
                 </p>
               </div>
             </div>
-            <p className="text-white/70 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The key lesson: never assume a single small shortcoming is "not that bad." On site,
               hazards rarely occur alone — they interact, amplify each other, and create conditions
               where accidents become almost inevitable. Effective hazard management means addressing
@@ -899,14 +899,14 @@ export default function IpafModule5Section1() {
             <div className="grid grid-cols-1 gap-3 text-sm">
               <div className="flex items-start gap-3 bg-black/20 rounded-lg p-3">
                 <span className="text-elec-yellow font-bold min-w-[100px] flex-shrink-0">SWL</span>
-                <span className="text-white/70">
+                <span className="text-white">
                   Safe Working Load — the maximum load a platform can safely support, including
                   persons, tools, and materials (typically 275 kg for Class 3)
                 </span>
               </div>
               <div className="flex items-start gap-3 bg-black/20 rounded-lg p-3">
                 <span className="text-elec-yellow font-bold min-w-[100px] flex-shrink-0">DNO</span>
-                <span className="text-white/70">
+                <span className="text-white">
                   Distribution Network Operator — the company responsible for the local electricity
                   distribution network; must be contacted for guidance on working near their
                   overhead lines
@@ -916,7 +916,7 @@ export default function IpafModule5Section1() {
                 <span className="text-elec-yellow font-bold min-w-[100px] flex-shrink-0">
                   Beaufort F4
                 </span>
-                <span className="text-white/70">
+                <span className="text-white">
                   Moderate breeze (20-28 km/h) — the wind speed threshold above which tower work
                   should stop and towers should not be moved
                 </span>
@@ -925,7 +925,7 @@ export default function IpafModule5Section1() {
                 <span className="text-elec-yellow font-bold min-w-[100px] flex-shrink-0">
                   Flashover
                 </span>
-                <span className="text-white/70">
+                <span className="text-white">
                   Electrical discharge through the air from a high-voltage conductor to a nearby
                   object — can occur without physical contact with overhead power lines
                 </span>
@@ -934,7 +934,7 @@ export default function IpafModule5Section1() {
                 <span className="text-elec-yellow font-bold min-w-[100px] flex-shrink-0">
                   Dynamic Load
                 </span>
-                <span className="text-white/70">
+                <span className="text-white">
                   Forces generated by movement on the platform — walking, lifting, or moving
                   materials creates loads greater than the static weight of the items
                 </span>
@@ -943,7 +943,7 @@ export default function IpafModule5Section1() {
                 <span className="text-elec-yellow font-bold min-w-[100px] flex-shrink-0">
                   Racking
                 </span>
-                <span className="text-white/70">
+                <span className="text-white">
                   Sideways distortion of the tower frame caused by lateral forces — prevented by
                   properly installed diagonal braces
                 </span>
@@ -961,7 +961,7 @@ export default function IpafModule5Section1() {
             Real-World Scenario
           </h3>
           <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-5 space-y-3">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               <strong className="text-amber-400">Scenario:</strong> A maintenance contractor erects
               a mobile tower in a car park to access a first-floor guttering repair. The car park
               slopes slightly for drainage. It is a breezy morning, and the contractor decides to
@@ -969,11 +969,11 @@ export default function IpafModule5Section1() {
               stabilisers ("it's only 3 metres high"), leave the trapdoor open for quick access, and
               climb up carrying tools in both hands.
             </p>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               <strong className="text-white">How many hazards can you identify?</strong>
             </p>
             <div className="bg-black/20 rounded-lg p-4">
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                   <span>Sloping ground — not level, tower could lean or roll</span>
@@ -1013,7 +1013,7 @@ export default function IpafModule5Section1() {
                 </li>
               </ul>
             </div>
-            <p className="text-white/60 text-xs italic">
+            <p className="text-white text-xs italic">
               This scenario combines multiple hazards that individually might seem minor but
               together create conditions for a serious accident. Recognising hazard interactions is
               a key skill from this section.
@@ -1033,7 +1033,7 @@ export default function IpafModule5Section1() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-3">
                 <h4 className="font-medium text-white text-sm">Daily Hazard Checklist</h4>
-                <ul className="space-y-1 text-xs text-white/70">
+                <ul className="space-y-1 text-xs text-white">
                   <li>&#10003; Check weather forecast — wind, rain, ice</li>
                   <li>&#10003; Inspect ground conditions beneath and around tower</li>
                   <li>&#10003; Confirm overhead clearance from power lines and structures</li>
@@ -1045,7 +1045,7 @@ export default function IpafModule5Section1() {
               </div>
               <div className="space-y-3">
                 <h4 className="font-medium text-white text-sm">Stop Work Triggers</h4>
-                <ul className="space-y-1 text-xs text-white/70">
+                <ul className="space-y-1 text-xs text-white">
                   <li>&#10003; Wind reaches Beaufort Force 4 or above</li>
                   <li>&#10003; Any guardrail or toeboard missing or damaged</li>
                   <li>&#10003; Ground conditions change (rain softening, excavation nearby)</li>
@@ -1074,7 +1074,7 @@ export default function IpafModule5Section1() {
                     className="absolute inset-y-0 left-0 bg-red-500/30 rounded-l-lg"
                     style={{ width: '95%' }}
                   ></div>
-                  <p className="relative text-white/90 font-medium text-xs">
+                  <p className="relative text-white font-medium text-xs">
                     Falls from unguarded platforms
                   </p>
                 </div>
@@ -1085,7 +1085,7 @@ export default function IpafModule5Section1() {
                     className="absolute inset-y-0 left-0 bg-orange-500/30 rounded-l-lg"
                     style={{ width: '65%' }}
                   ></div>
-                  <p className="relative text-white/90 font-medium text-xs">
+                  <p className="relative text-white font-medium text-xs">
                     Tower collapse (incorrect assembly)
                   </p>
                 </div>
@@ -1096,7 +1096,7 @@ export default function IpafModule5Section1() {
                     className="absolute inset-y-0 left-0 bg-amber-500/30 rounded-l-lg"
                     style={{ width: '50%' }}
                   ></div>
-                  <p className="relative text-white/90 font-medium text-xs">
+                  <p className="relative text-white font-medium text-xs">
                     Overturning (wind, overload, uneven ground)
                   </p>
                 </div>
@@ -1107,7 +1107,7 @@ export default function IpafModule5Section1() {
                     className="absolute inset-y-0 left-0 bg-blue-500/30 rounded-l-lg"
                     style={{ width: '40%' }}
                   ></div>
-                  <p className="relative text-white/90 font-medium text-xs">
+                  <p className="relative text-white font-medium text-xs">
                     Struck by falling objects
                   </p>
                 </div>
@@ -1118,13 +1118,13 @@ export default function IpafModule5Section1() {
                     className="absolute inset-y-0 left-0 bg-yellow-500/30 rounded-l-lg"
                     style={{ width: '20%' }}
                   ></div>
-                  <p className="relative text-white/90 font-medium text-xs">
+                  <p className="relative text-white font-medium text-xs">
                     Electrocution (overhead power lines)
                   </p>
                 </div>
               </div>
             </div>
-            <p className="text-white/50 text-xs mt-3 italic">
+            <p className="text-white text-xs mt-3 italic">
               Note: Electrocution is least frequent but has the highest fatality rate per incident.
               Frequency of occurrence does not correlate with severity of outcome.
             </p>
@@ -1140,7 +1140,7 @@ export default function IpafModule5Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-xl p-4">
                 <h4 className="font-medium text-white mb-2 text-sm">{faq.question}</h4>
-                <p className="text-sm text-white/60 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

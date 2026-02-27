@@ -194,7 +194,7 @@ export default function CscsCardModule5Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-5">
@@ -219,7 +219,7 @@ export default function CscsCardModule5Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Demolition &amp; Emergency Procedures
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Safe demolition planning and methods, exclusion zones, first aid arrangements, emergency
             procedures, working with emergency services, and site evacuation and roll call processes
           </p>
@@ -312,7 +312,7 @@ export default function CscsCardModule5Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Principal Demolition Hazards</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -416,7 +416,7 @@ export default function CscsCardModule5Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">BS 6187 Planning Requirements</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -531,11 +531,11 @@ export default function CscsCardModule5Section4() {
                       Deliberate Controlled Collapse
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     The structure is weakened in a pre-planned sequence and then pulled or pushed
                     over in a controlled direction using wire ropes attached to mechanical plant.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -568,12 +568,12 @@ export default function CscsCardModule5Section4() {
                     <ClipboardList className="h-5 w-5 text-blue-400" />
                     <p className="text-sm font-medium text-blue-400">Piece-by-Piece Demolition</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     The structure is dismantled systematically from the top downwards, essentially
                     reversing the order of construction. Elements are removed one at a time and
                     lowered to the ground using cranes or placed in skips.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -608,12 +608,12 @@ export default function CscsCardModule5Section4() {
                     <Shield className="h-5 w-5 text-amber-400" />
                     <p className="text-sm font-medium text-amber-400">Machine Demolition</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Uses heavy plant machinery to demolish the structure. This includes high-reach
                     excavators (with long booms that can reach the top of tall buildings) and
                     hydraulic breakers mounted on excavators for breaking up concrete and masonry.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -650,11 +650,11 @@ export default function CscsCardModule5Section4() {
                     <Siren className="h-5 w-5 text-red-400" />
                     <p className="text-sm font-medium text-red-400">Demolition Ball</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     A heavy steel ball (wrecking ball) is swung from a crane into the structure to
                     break it apart. This is one of the oldest demolition methods.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -691,11 +691,11 @@ export default function CscsCardModule5Section4() {
                     <ClipboardList className="h-5 w-5 text-purple-400" />
                     <p className="text-sm font-medium text-purple-400">Hand Demolition</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Manual demolition using hand tools and small power tools. Workers physically
                     dismantle the structure by removing individual elements.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -757,7 +757,7 @@ export default function CscsCardModule5Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Exclusion Zone Requirements</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -865,7 +865,7 @@ export default function CscsCardModule5Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   First Aiders and Appointed Persons
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -895,7 +895,7 @@ export default function CscsCardModule5Section4() {
                 <p className="text-sm font-medium text-white mb-4 text-center">
                   First Aid Requirements by Workforce Size
                 </p>
-                <p className="text-xs text-white/50 text-center mb-6">
+                <p className="text-xs text-white text-center mb-6">
                   HSE guidance for higher-risk workplaces (including construction sites)
                 </p>
 
@@ -906,7 +906,7 @@ export default function CscsCardModule5Section4() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-white">Fewer than 5 workers</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         At least 1 appointed person + first aid kit
                       </p>
                     </div>
@@ -918,7 +918,7 @@ export default function CscsCardModule5Section4() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-white">5 to 50 workers</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         At least 1 qualified first aider (FAW) + first aid kit
                       </p>
                     </div>
@@ -930,7 +930,7 @@ export default function CscsCardModule5Section4() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-white">More than 50 workers</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         1 first aider per 50 workers (or part thereof) + additional first aid kits
                       </p>
                     </div>
@@ -942,7 +942,7 @@ export default function CscsCardModule5Section4() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-white">Remote or high-risk sites</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Additional provision may be needed &mdash; employer must complete a first
                         aid needs assessment
                       </p>
@@ -950,7 +950,7 @@ export default function CscsCardModule5Section4() {
                   </div>
                 </div>
 
-                <p className="text-xs text-white/40 text-center mt-4 italic">
+                <p className="text-xs text-white text-center mt-4 italic">
                   These are minimum requirements. The employer&rsquo;s first aid needs assessment
                   may identify the need for additional first aiders based on site-specific factors.
                 </p>
@@ -960,7 +960,7 @@ export default function CscsCardModule5Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   First Aid Kit Contents &amp; Location
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -997,7 +997,7 @@ export default function CscsCardModule5Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">What Every Worker Must Know</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1060,7 +1060,7 @@ export default function CscsCardModule5Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Types of Emergency Covered by the Site Plan
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1146,7 +1146,7 @@ export default function CscsCardModule5Section4() {
                 <p className="text-sm font-medium text-white mb-4 text-center">
                   Emergency Procedure Flowchart
                 </p>
-                <p className="text-xs text-white/50 text-center mb-6">
+                <p className="text-xs text-white text-center mb-6">
                   Standard response sequence for any site emergency
                 </p>
 
@@ -1154,7 +1154,7 @@ export default function CscsCardModule5Section4() {
                   {/* Step 1: Discovery */}
                   <div className="w-full max-w-[320px] bg-gradient-to-r from-red-500/20 to-red-400/10 border border-red-500/30 rounded-t-xl p-3 text-center">
                     <p className="text-xs font-bold text-red-400">1. DISCOVERY</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       An emergency is discovered or a hazard is identified
                     </p>
                   </div>
@@ -1166,7 +1166,7 @@ export default function CscsCardModule5Section4() {
                   {/* Step 2: Assess */}
                   <div className="w-full max-w-[320px] bg-gradient-to-r from-amber-500/20 to-amber-400/10 border border-amber-500/30 p-3 text-center">
                     <p className="text-xs font-bold text-amber-400">2. ASSESS</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       Quickly assess the situation &mdash; is it safe to approach? Are others in
                       danger?
                     </p>
@@ -1179,7 +1179,7 @@ export default function CscsCardModule5Section4() {
                   {/* Step 3: Alert */}
                   <div className="w-full max-w-[320px] bg-gradient-to-r from-orange-500/20 to-orange-400/10 border border-orange-500/30 p-3 text-center">
                     <p className="text-xs font-bold text-orange-400">3. ALERT</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       Raise the alarm &mdash; activate call point, shout &ldquo;Fire!&rdquo;, or
                       call 999/112
                     </p>
@@ -1192,7 +1192,7 @@ export default function CscsCardModule5Section4() {
                   {/* Step 4: Evacuate */}
                   <div className="w-full max-w-[320px] bg-gradient-to-r from-yellow-500/20 to-yellow-400/10 border border-yellow-500/30 p-3 text-center">
                     <p className="text-xs font-bold text-yellow-400">4. EVACUATE</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       Leave by the nearest safe exit route &mdash; do NOT collect belongings or use
                       lifts
                     </p>
@@ -1205,7 +1205,7 @@ export default function CscsCardModule5Section4() {
                   {/* Step 5: Assemble */}
                   <div className="w-full max-w-[320px] bg-gradient-to-r from-blue-500/20 to-blue-400/10 border border-blue-500/30 p-3 text-center">
                     <p className="text-xs font-bold text-blue-400">5. ASSEMBLE</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       Proceed to the designated assembly point and report to the fire warden
                     </p>
                   </div>
@@ -1217,14 +1217,14 @@ export default function CscsCardModule5Section4() {
                   {/* Step 6: Account */}
                   <div className="w-full max-w-[320px] bg-gradient-to-r from-green-500/20 to-green-400/10 border border-green-500/30 rounded-b-xl p-3 text-center">
                     <p className="text-xs font-bold text-green-400">6. ACCOUNT</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       Roll call to account for every person &mdash; report results to emergency
                       services
                     </p>
                   </div>
                 </div>
 
-                <p className="text-xs text-white/40 text-center mt-4 italic">
+                <p className="text-xs text-white text-center mt-4 italic">
                   Do NOT re-enter the site until the emergency services or responsible person has
                   confirmed it is safe to do so.
                 </p>
@@ -1234,7 +1234,7 @@ export default function CscsCardModule5Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Assembly Point Location &amp; Procedures
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1302,7 +1302,7 @@ export default function CscsCardModule5Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Calling 999 or 112</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1333,11 +1333,11 @@ export default function CscsCardModule5Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Providing Clear Location and Information
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   When calling the emergency services, provide the following information clearly and
                   calmly:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1392,7 +1392,7 @@ export default function CscsCardModule5Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Site Access for Emergency Vehicles
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1432,7 +1432,7 @@ export default function CscsCardModule5Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Designated Emergency Access Routes
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1496,7 +1496,7 @@ export default function CscsCardModule5Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Fire Alarm Signals</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1533,7 +1533,7 @@ export default function CscsCardModule5Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Evacuation Routes</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1573,7 +1573,7 @@ export default function CscsCardModule5Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Fire Warden/Marshal Roles</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1616,7 +1616,7 @@ export default function CscsCardModule5Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Roll Call Procedure</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1702,7 +1702,7 @@ export default function CscsCardModule5Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1716,7 +1716,7 @@ export default function CscsCardModule5Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-5">

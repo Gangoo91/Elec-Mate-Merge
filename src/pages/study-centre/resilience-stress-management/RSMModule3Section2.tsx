@@ -203,7 +203,7 @@ export default function RSMModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-3">
@@ -226,7 +226,7 @@ export default function RSMModule3Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Practical Mindfulness Techniques
           </h1>
-          <p className="text-white/80 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Step-by-step techniques you can use immediately: breathing spaces, box breathing,
             grounding exercises, body scans, and the mindful commute
           </p>
@@ -330,7 +330,7 @@ export default function RSMModule3Section2() {
                     sitting, standing, or even walking. Then ask yourself:{' '}
                     <em>&ldquo;What is my experience right now?&rdquo;</em>
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                       <span>
@@ -377,7 +377,7 @@ export default function RSMModule3Section2() {
                     Now narrow your attention from the broad awareness of stage one to a single
                     anchor point: the breath. Focus on the physical sensations of breathing.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                       <span>Feel the air entering and leaving through your nostrils</span>
@@ -422,7 +422,7 @@ export default function RSMModule3Section2() {
                     Now expand your awareness from the breath back outwards to include your whole
                     body, the space around you, and the activity you are about to engage in.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                       <span>
@@ -496,7 +496,7 @@ export default function RSMModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Step-by-Step Instructions</p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -649,7 +649,7 @@ export default function RSMModule3Section2() {
                       <p className="text-sm font-medium text-rose-400 mb-2">
                         2 Things You Can SMELL
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Identify two things you can smell:{' '}
                         <em>fresh plaster, coffee from the flask, dust, PVC from new cable.</em>{' '}
                         Smell is directly connected to the limbic system (the emotional brain) and
@@ -662,7 +662,7 @@ export default function RSMModule3Section2() {
                       <p className="text-sm font-medium text-rose-400 mb-2">
                         1 Thing You Can TASTE
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Notice one thing you can taste right now:{' '}
                         <em>
                           the remnant of your morning tea, toothpaste, the slight metallic tang from
@@ -725,7 +725,7 @@ export default function RSMModule3Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   10-Minute Body Scan: Step by Step
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -842,7 +842,7 @@ export default function RSMModule3Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   How to Practise the Mindful Commute
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -1069,7 +1069,7 @@ export default function RSMModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-3">

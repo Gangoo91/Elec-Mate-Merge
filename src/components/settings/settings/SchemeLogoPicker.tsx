@@ -82,7 +82,7 @@ export function SchemeLogoPicker({
               <Check className="w-3 h-3 text-white" />
             </div>
           )}
-          <span className="text-xs text-white/50 font-medium">None</span>
+          <span className="text-xs text-white font-medium">None</span>
         </button>
 
         {/* Scheme logos */}
@@ -133,7 +133,7 @@ export function SchemeLogoPicker({
               <Check className="w-3 h-3 text-white" />
             </div>
           )}
-          <span className="text-xs text-white/50 font-medium">Other</span>
+          <span className="text-xs text-white font-medium">Other</span>
         </button>
       </div>
 

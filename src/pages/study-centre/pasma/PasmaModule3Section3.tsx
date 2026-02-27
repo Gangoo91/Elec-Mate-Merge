@@ -202,7 +202,7 @@ export default function PasmaModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-3">
@@ -227,7 +227,7 @@ export default function PasmaModule3Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             AGR Method &mdash; Advance Guard Rail
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The safest assembly method &mdash; guardrail protection is deployed before the operative
             reaches each new level, eliminating exposure to unguarded edges
           </p>
@@ -324,7 +324,7 @@ export default function PasmaModule3Section3() {
                   <Shield className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Safety Advantage</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   With AGR, guardrail protection is always one step ahead of the operative. By the
                   time you climb to a new level, the guardrails are already there, fully deployed
                   and locked. This is particularly valuable for less experienced teams, higher
@@ -342,7 +342,7 @@ export default function PasmaModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">AGR in the PASMA Course</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Both the 3T and AGR methods are taught and assessed on the PASMA Towers for Users
                   course. Successful candidates will have demonstrated competence in both methods
                   during the practical assessment. Your PASMA card covers both methods, so you do
@@ -381,7 +381,7 @@ export default function PasmaModule3Section3() {
                   <Settings className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">Mechanical Operation</p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Folded state:</strong> The guardrail sections are
                     hinged downward against the end frame. The unit is similar in size and weight to
@@ -411,7 +411,7 @@ export default function PasmaModule3Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Critical Check</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Always confirm the locking mechanism has engaged after pushing up each guardrail
                   section. An unlocked AGR guardrail can fold back down under load, removing the
                   protection entirely. Pull gently on the guardrail after deployment to confirm it
@@ -430,7 +430,7 @@ export default function PasmaModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Weight Considerations</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   AGR frames are heavier than standard end frames due to the additional guardrail
                   sections and locking mechanisms. This affects manual handling during assembly and
                   transport. Ensure your team is aware of the increased weight and uses proper
@@ -470,7 +470,7 @@ export default function PasmaModule3Section3() {
                       <p className="text-sm font-medium text-white">
                         Base assembly (identical to 3T)
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Position castors, fit first end frames, install plan and horizontal braces,
                         level, lock castors.
                       </p>
@@ -484,7 +484,7 @@ export default function PasmaModule3Section3() {
                       <p className="text-sm font-medium text-white">
                         Fit AGR frames at the next level
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Install AGR end frames onto the spigots, with the guardrail sections in
                         their folded (down) position. Add horizontal and diagonal braces.
                       </p>
@@ -498,7 +498,7 @@ export default function PasmaModule3Section3() {
                       <p className="text-sm font-medium text-white">
                         Push up guardrail sections and lock
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         From the current level, push the guardrail sections upward until they lock
                         into the extended position. Confirm each lock has engaged by pulling gently.
                       </p>
@@ -512,7 +512,7 @@ export default function PasmaModule3Section3() {
                       <p className="text-sm font-medium text-white">
                         Install platform at the next level
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Fit the platform board at the new level. The guardrails are already in place
                         above it, providing full edge protection.
                       </p>
@@ -524,7 +524,7 @@ export default function PasmaModule3Section3() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Climb to the new platform</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Ascend to the new level. You arrive at a platform that is already fully
                         guarded &mdash; no additional guardrail fitting needed.
                       </p>
@@ -538,7 +538,7 @@ export default function PasmaModule3Section3() {
                       <p className="text-sm font-medium text-white">
                         Repeat for each additional lift
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Continue the sequence: fit next AGR frames, deploy guardrails, install
                         platform, climb. Repeat until the required height is reached.
                       </p>
@@ -551,7 +551,7 @@ export default function PasmaModule3Section3() {
               <div className="my-8 flex justify-center">
                 <svg
                   viewBox="0 0 500 400"
-                  className="w-full max-w-sm text-white/70"
+                  className="w-full max-w-sm text-white"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
@@ -773,49 +773,49 @@ export default function PasmaModule3Section3() {
                 </div>
                 <div className="space-y-4">
                   <div className="grid grid-cols-3 gap-2 text-sm">
-                    <div className="font-medium text-white/60">Factor</div>
+                    <div className="font-medium text-white">Factor</div>
                     <div className="font-medium text-center text-purple-400">3T Method</div>
                     <div className="font-medium text-center text-green-400">AGR Method</div>
                   </div>
                   <hr className="border-white/10" />
                   <div className="grid grid-cols-3 gap-2 text-sm">
                     <div className="text-white">Safety</div>
-                    <div className="text-center text-white/80">
+                    <div className="text-center text-white">
                       Good &mdash; waist protection via trapdoor
                     </div>
-                    <div className="text-center text-white/80">
+                    <div className="text-center text-white">
                       Best &mdash; full guardrails before climbing
                     </div>
                   </div>
                   <div className="grid grid-cols-3 gap-2 text-sm">
                     <div className="text-white">Speed</div>
-                    <div className="text-center text-white/80">
+                    <div className="text-center text-white">
                       Slower &mdash; guardrails fitted at each level
                     </div>
-                    <div className="text-center text-white/80">
+                    <div className="text-center text-white">
                       Faster &mdash; guardrails deploy from below
                     </div>
                   </div>
                   <div className="grid grid-cols-3 gap-2 text-sm">
                     <div className="text-white">Cost</div>
-                    <div className="text-center text-white/80">Lower &mdash; standard frames</div>
-                    <div className="text-center text-white/80">
+                    <div className="text-center text-white">Lower &mdash; standard frames</div>
+                    <div className="text-center text-white">
                       Higher &mdash; AGR frames cost more
                     </div>
                   </div>
                   <div className="grid grid-cols-3 gap-2 text-sm">
                     <div className="text-white">Compatibility</div>
-                    <div className="text-center text-white/80">
+                    <div className="text-center text-white">
                       Any tower with trapdoor platforms
                     </div>
-                    <div className="text-center text-white/80">
+                    <div className="text-center text-white">
                       Specific AGR-compatible systems only
                     </div>
                   </div>
                   <div className="grid grid-cols-3 gap-2 text-sm">
                     <div className="text-white">Training</div>
-                    <div className="text-center text-white/80">Covered in PASMA course</div>
-                    <div className="text-center text-white/80">Covered in PASMA course</div>
+                    <div className="text-center text-white">Covered in PASMA course</div>
+                    <div className="text-center text-white">Covered in PASMA course</div>
                   </div>
                 </div>
               </div>
@@ -840,7 +840,7 @@ export default function PasmaModule3Section3() {
                 <p className="text-sm font-medium text-white mb-2">
                   What Clients and Principal Contractors May Require
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Some principal contractors and clients now specify AGR as the required assembly
                   method on their sites. This is a commercial decision driven by the improved safety
                   profile of AGR. If AGR is specified in the contract or site rules, you must comply
@@ -872,7 +872,7 @@ export default function PasmaModule3Section3() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-green-400 mb-2">AGR Preferred For</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Regular, frequent tower use by the same team</span>
@@ -901,7 +901,7 @@ export default function PasmaModule3Section3() {
                 </div>
                 <div className="bg-purple-500/10 border border-purple-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-purple-400 mb-2">3T Still Valid For</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Older tower systems that predate AGR technology</span>
@@ -949,7 +949,7 @@ export default function PasmaModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Hire vs Ownership</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   When hiring towers, you may not always receive AGR-compatible frames. Discuss
                   equipment requirements with the hire company in advance. If AGR is specified in
                   your method statement but AGR frames are not available, do not substitute with
@@ -979,7 +979,7 @@ export default function PasmaModule3Section3() {
                 <p className="text-sm font-medium text-elec-yellow mb-3">
                   AGR Dismantling Sequence
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">1. Start at the top level:</strong> From the top
                     working platform with guardrails in place around you.
@@ -1014,7 +1014,7 @@ export default function PasmaModule3Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Safety Rule</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong>Never</strong> lower or remove guardrails while standing on the same level
                   as those guardrails. The operative must always be at the level below before
                   guardrails are lowered. Removing your own guardrails while standing on that
@@ -1033,7 +1033,7 @@ export default function PasmaModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Dismantling Checks</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1091,7 +1091,7 @@ export default function PasmaModule3Section3() {
                     AGR-Specific Inspection Points
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1139,7 +1139,7 @@ export default function PasmaModule3Section3() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-red-400 mb-2">AGR Reject Criteria</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Locking mechanism does not engage positively</span>
@@ -1168,7 +1168,7 @@ export default function PasmaModule3Section3() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Lubrication &amp; Care</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Lubricate hinge points as per manufacturer guidance</span>
@@ -1216,7 +1216,7 @@ export default function PasmaModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">AGR Inspection Frequency</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   AGR mechanisms should be checked during the pre-assembly component inspection
                   (before every use), during routine periodic inspections at intervals specified by
                   the manufacturer, and after any event that may have affected the mechanism
@@ -1245,7 +1245,7 @@ export default function PasmaModule3Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1259,7 +1259,7 @@ export default function PasmaModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-3-section-2">

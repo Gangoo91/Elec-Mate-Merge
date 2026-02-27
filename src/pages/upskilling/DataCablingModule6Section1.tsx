@@ -87,7 +87,7 @@ const DataCablingModule6Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/data-cabling-module-6">
@@ -108,7 +108,7 @@ const DataCablingModule6Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             TIA/EIA 568 and ISO/IEC 11801 Overview
           </h1>
-          <p className="text-white/80">International cabling standards and requirements</p>
+          <p className="text-white">International cabling standards and requirements</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -217,15 +217,15 @@ const DataCablingModule6Section1 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Cat 5e</p>
-                <p className="text-white/90 text-xs">100MHz, 1Gbps</p>
+                <p className="text-white text-xs">100MHz, 1Gbps</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Cat 6/6A</p>
-                <p className="text-white/90 text-xs">250/500MHz</p>
+                <p className="text-white text-xs">250/500MHz</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Cat 8</p>
-                <p className="text-white/90 text-xs">2000MHz, 30m</p>
+                <p className="text-white text-xs">2000MHz, 30m</p>
               </div>
             </div>
           </div>
@@ -309,7 +309,7 @@ const DataCablingModule6Section1 = () => {
               <div className="grid sm:grid-cols-2 gap-4 mt-3">
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">ISO Classes</p>
-                  <ul className="text-xs text-white/90 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>Class D: 100MHz (Cat 5e)</li>
                     <li>Class E: 250MHz (Cat 6)</li>
                     <li>Class EA: 500MHz (Cat 6A)</li>
@@ -319,7 +319,7 @@ const DataCablingModule6Section1 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Regional Implementation</p>
-                  <ul className="text-xs text-white/90 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>North America: TIA-568</li>
                     <li>Europe: EN 50173</li>
                     <li>International: ISO/IEC 11801</li>
@@ -386,7 +386,7 @@ const DataCablingModule6Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -425,7 +425,7 @@ const DataCablingModule6Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/data-cabling-module-5-section-5">

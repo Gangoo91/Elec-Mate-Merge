@@ -194,7 +194,7 @@ export default function FirstAidModule2Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-2">
@@ -217,7 +217,7 @@ export default function FirstAidModule2Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Using an Automated External Defibrillator (AED)
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How to use an AED safely and effectively during cardiac arrest &mdash; including pad
             placement, special circumstances, and legal protection
           </p>
@@ -311,7 +311,7 @@ export default function FirstAidModule2Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">AED Components</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -374,7 +374,7 @@ export default function FirstAidModule2Section2() {
                     <Zap className="h-5 w-5 text-rose-400" />
                     <h3 className="font-bold text-rose-300 text-sm">Shockable Rhythms</h3>
                   </div>
-                  <p className="text-white/70 text-xs mb-3">AED WILL deliver a shock</p>
+                  <p className="text-white text-xs mb-3">AED WILL deliver a shock</p>
                   <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
@@ -395,13 +395,13 @@ export default function FirstAidModule2Section2() {
                 </div>
                 <div className="bg-white/5 border-2 border-white/20 p-4 rounded-lg">
                   <div className="flex items-center gap-2 mb-2">
-                    <Heart className="h-5 w-5 text-white/60" />
-                    <h3 className="font-bold text-white/80 text-sm">Non-Shockable Rhythms</h3>
+                    <Heart className="h-5 w-5 text-white" />
+                    <h3 className="font-bold text-white text-sm">Non-Shockable Rhythms</h3>
                   </div>
-                  <p className="text-white/70 text-xs mb-3">
+                  <p className="text-white text-xs mb-3">
                     AED will NOT deliver a shock &mdash; continue CPR
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/40 flex-shrink-0" />
                       <span>
@@ -478,7 +478,7 @@ export default function FirstAidModule2Section2() {
 
                       {/* Clavicle lines */}
                       <div className="absolute top-3 left-4 right-4 h-[1px] bg-white/15" />
-                      <p className="absolute top-0 left-1/2 -translate-x-1/2 text-[8px] text-white/30 whitespace-nowrap">
+                      <p className="absolute top-0 left-1/2 -translate-x-1/2 text-[8px] text-white whitespace-nowrap">
                         clavicle line
                       </p>
 
@@ -544,7 +544,7 @@ export default function FirstAidModule2Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Pad Placement Rules</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -652,7 +652,7 @@ export default function FirstAidModule2Section2() {
                         <h4 className="font-semibold text-white text-sm sm:text-base mb-1">
                           {item.title}
                         </h4>
-                        <p className="text-white/80 text-sm leading-relaxed">{item.detail}</p>
+                        <p className="text-white text-sm leading-relaxed">{item.detail}</p>
                       </div>
                     </div>
                   </div>
@@ -696,7 +696,7 @@ export default function FirstAidModule2Section2() {
                   <Shield className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Before Every Shock</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -735,7 +735,7 @@ export default function FirstAidModule2Section2() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Common Safety Mistakes</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>Forgetting to visually check before pressing the shock button</span>
@@ -785,7 +785,7 @@ export default function FirstAidModule2Section2() {
                   <h3 className="text-blue-300 font-semibold text-sm mb-2">
                     Water / Wet Environment
                   </h3>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                       <span>Move the casualty out of any standing water</span>
@@ -811,7 +811,7 @@ export default function FirstAidModule2Section2() {
                 {/* Pacemaker / ICD */}
                 <div className="bg-purple-500/10 border border-purple-500/30 p-4 rounded-lg">
                   <h3 className="text-purple-300 font-semibold text-sm mb-2">Pacemaker / ICD</h3>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>Look for a scar or hard lump on the upper chest</span>
@@ -841,7 +841,7 @@ export default function FirstAidModule2Section2() {
                 {/* Medication Patches */}
                 <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg">
                   <h3 className="text-amber-300 font-semibold text-sm mb-2">Medication Patches</h3>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Common patches: GTN (heart), nicotine, HRT (hormone)</span>
@@ -866,7 +866,7 @@ export default function FirstAidModule2Section2() {
                 {/* Excessive Chest Hair */}
                 <div className="bg-teal-500/10 border border-teal-500/30 p-4 rounded-lg">
                   <h3 className="text-teal-300 font-semibold text-sm mb-2">Excessive Chest Hair</h3>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-teal-400 flex-shrink-0" />
                       <span>Chest hair can prevent good pad contact</span>
@@ -894,7 +894,7 @@ export default function FirstAidModule2Section2() {
                   <h3 className="text-green-300 font-semibold text-sm mb-2">
                     Children (1&ndash;8 Years)
                   </h3>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                       <span>
@@ -921,7 +921,7 @@ export default function FirstAidModule2Section2() {
                 {/* Infants (<1 year) */}
                 <div className="bg-pink-500/10 border border-pink-500/30 p-4 rounded-lg">
                   <h3 className="text-pink-300 font-semibold text-sm mb-2">Infants (&lt;1 Year)</h3>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-pink-400 flex-shrink-0" />
                       <span>Use paediatric pads if available</span>
@@ -947,7 +947,7 @@ export default function FirstAidModule2Section2() {
                 {/* Pregnancy */}
                 <div className="bg-cyan-500/10 border border-cyan-500/30 p-4 rounded-lg">
                   <h3 className="text-cyan-300 font-semibold text-sm mb-2">Pregnancy</h3>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                       <span>
@@ -974,7 +974,7 @@ export default function FirstAidModule2Section2() {
                   <h3 className="text-slate-300 font-semibold text-sm mb-2">
                     Jewellery &amp; Piercings
                   </h3>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                       <span>
@@ -1027,7 +1027,7 @@ export default function FirstAidModule2Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Where Public AEDs Are Located</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>Shopping centres, supermarkets, and retail parks</span>
@@ -1064,7 +1064,7 @@ export default function FirstAidModule2Section2() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-300 mb-2">How to Access a Public AED</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="font-bold text-rose-400 text-base mt-0">1.</span>
                     <span>
@@ -1091,7 +1091,7 @@ export default function FirstAidModule2Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   The Circuit &mdash; National AED Database
                 </p>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   <strong className="text-rose-300">The Circuit</strong> (thecircuit.uk) is the
                   national defibrillator network managed by the British Heart Foundation in
                   partnership with the NHS ambulance services. It maps every registered
@@ -1123,25 +1123,25 @@ export default function FirstAidModule2Section2() {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div className="text-center bg-rose-500/10 border border-rose-500/30 rounded-lg p-3 sm:p-4">
                   <div className="text-2xl sm:text-3xl font-bold text-rose-400">2-4&times;</div>
-                  <div className="text-xs text-white/60 mt-1">
+                  <div className="text-xs text-white mt-1">
                     survival increase with AED within 3-5 minutes
                   </div>
                 </div>
                 <div className="text-center bg-red-500/10 border border-red-500/30 rounded-lg p-3 sm:p-4">
                   <div className="text-2xl sm:text-3xl font-bold text-red-400">7-10%</div>
-                  <div className="text-xs text-white/60 mt-1">
+                  <div className="text-xs text-white mt-1">
                     survival drop per minute without defibrillation
                   </div>
                 </div>
                 <div className="text-center bg-white/5 border border-white/10 rounded-lg p-3 sm:p-4">
                   <div className="text-2xl sm:text-3xl font-bold text-white">~30k</div>
-                  <div className="text-xs text-white/60 mt-1">
+                  <div className="text-xs text-white mt-1">
                     out-of-hospital cardiac arrests per year in the UK
                   </div>
                 </div>
                 <div className="text-center bg-green-500/10 border border-green-500/30 rounded-lg p-3 sm:p-4">
                   <div className="text-2xl sm:text-3xl font-bold text-green-400">&lt;10%</div>
-                  <div className="text-xs text-white/60 mt-1">
+                  <div className="text-xs text-white mt-1">
                     current overall survival rate &mdash; AEDs can change this
                   </div>
                 </div>
@@ -1149,7 +1149,7 @@ export default function FirstAidModule2Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-rose-300 font-medium mb-3">The Chain of Survival</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Defibrillation is the <strong>third link</strong> in the Chain of Survival. Each
                   link must be strong for the best chance of survival:
                 </p>
@@ -1157,24 +1157,24 @@ export default function FirstAidModule2Section2() {
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                     <div className="text-lg font-bold text-rose-400 mb-1">1</div>
                     <p className="text-xs text-white font-medium">Early Recognition</p>
-                    <p className="text-[10px] text-white/50 mt-1">
+                    <p className="text-[10px] text-white mt-1">
                       Recognise cardiac arrest &amp; call 999
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                     <div className="text-lg font-bold text-rose-400 mb-1">2</div>
                     <p className="text-xs text-white font-medium">Early CPR</p>
-                    <p className="text-[10px] text-white/50 mt-1">Start compressions immediately</p>
+                    <p className="text-[10px] text-white mt-1">Start compressions immediately</p>
                   </div>
                   <div className="bg-rose-500/10 border-2 border-rose-500/40 rounded-lg p-3 text-center">
                     <div className="text-lg font-bold text-rose-400 mb-1">3</div>
                     <p className="text-xs text-white font-medium">Early Defibrillation</p>
-                    <p className="text-[10px] text-white/50 mt-1">AED use as soon as possible</p>
+                    <p className="text-[10px] text-white mt-1">AED use as soon as possible</p>
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                     <div className="text-lg font-bold text-rose-400 mb-1">4</div>
                     <p className="text-xs text-white font-medium">Post-Resuscitation Care</p>
-                    <p className="text-[10px] text-white/50 mt-1">Advanced care by paramedics</p>
+                    <p className="text-[10px] text-white mt-1">Advanced care by paramedics</p>
                   </div>
                 </div>
               </div>
@@ -1209,7 +1209,7 @@ export default function FirstAidModule2Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Monthly AED Checks</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -1260,7 +1260,7 @@ export default function FirstAidModule2Section2() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Do Not Forget</p>
                 </div>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   After an AED has been used on a casualty, it must be restocked with new electrode
                   pads before being returned to service. The used pads cannot be reused. Many AEDs
                   also store data from the event (ECG recordings, shock delivery times) which may be
@@ -1296,7 +1296,7 @@ export default function FirstAidModule2Section2() {
                     good faith on a person in cardiac arrest.
                   </strong>
                 </p>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   The Resuscitation Council UK, the British Heart Foundation, and NHS England all
                   strongly encourage bystanders to use an AED without hesitation. A person in
                   cardiac arrest is clinically dead &mdash; you cannot make the situation worse by
@@ -1311,7 +1311,7 @@ export default function FirstAidModule2Section2() {
                     <p className="text-sm font-medium text-rose-300">
                       Social Action, Responsibility and Heroism Act 2015 (SARAH Act)
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       This Act requires courts to consider whether a person was acting for the
                       benefit of society, demonstrated a generally responsible approach, or acted
                       heroically by intervening in an emergency. It provides significant protection
@@ -1322,7 +1322,7 @@ export default function FirstAidModule2Section2() {
                     <p className="text-sm font-medium text-rose-300">
                       Common Law &mdash; Duty of Care
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Under common law, a person who acts in good faith to assist someone in a
                       life-threatening emergency is judged against the standard of a reasonable
                       person in the same circumstances &mdash; not against the standard of a medical
@@ -1355,7 +1355,7 @@ export default function FirstAidModule2Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1369,7 +1369,7 @@ export default function FirstAidModule2Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-2">

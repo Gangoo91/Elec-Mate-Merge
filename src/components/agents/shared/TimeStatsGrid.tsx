@@ -21,7 +21,7 @@ export function TimeStatsGrid({ elapsedSeconds, remainingSeconds, className }: T
       <div className="bg-white/5 rounded-xl p-3 sm:p-4 text-center border border-white/10">
         <div className="flex items-center justify-center gap-2 mb-1">
           <Clock className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-purple-400" />
-          <span className="text-[10px] sm:text-xs text-white/60 uppercase tracking-wide">
+          <span className="text-[10px] sm:text-xs text-white uppercase tracking-wide">
             Elapsed
           </span>
         </div>
@@ -39,7 +39,7 @@ export function TimeStatsGrid({ elapsedSeconds, remainingSeconds, className }: T
       <div className="bg-white/5 rounded-xl p-3 sm:p-4 text-center border border-white/10">
         <div className="flex items-center justify-center gap-2 mb-1">
           <Timer className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-blue-400" />
-          <span className="text-[10px] sm:text-xs text-white/60 uppercase tracking-wide">
+          <span className="text-[10px] sm:text-xs text-white uppercase tracking-wide">
             Remaining
           </span>
         </div>

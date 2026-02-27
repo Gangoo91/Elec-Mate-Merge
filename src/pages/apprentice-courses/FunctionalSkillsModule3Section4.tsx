@@ -137,7 +137,7 @@ const FunctionalSkillsModule3Section4 = () => {
             to="/study-centre/apprentice/functional-skills/module3"
             className="p-2 -ml-2 touch-manipulation"
           >
-            <ArrowLeft className="w-5 h-5 text-white/60" />
+            <ArrowLeft className="w-5 h-5 text-white" />
           </Link>
           <div>
             <p className="text-[11px] font-semibold text-green-400 uppercase tracking-wider">
@@ -163,7 +163,7 @@ const FunctionalSkillsModule3Section4 = () => {
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
               Online Safety & Communication
             </h2>
-            <p className="text-sm text-white/50 max-w-lg mx-auto">
+            <p className="text-sm text-white max-w-lg mx-auto">
               Protect yourself and your customers online — from professional email communication and
               GDPR compliance to spotting phishing scams, securing passwords, and maintaining
               digital wellbeing.
@@ -186,7 +186,7 @@ const FunctionalSkillsModule3Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Email Etiquette for Professionals</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Email is the backbone of professional communication. As an electrician, you will use
               email to send quotations, confirm appointments, deliver certificates, communicate with
@@ -277,7 +277,7 @@ const FunctionalSkillsModule3Section4 = () => {
             </p>
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Always proofread your emails before sending. Spelling and grammar errors in
                 professional correspondence undermine client confidence. If the email is important,
                 draft it, wait 10 minutes, then re-read it before clicking send. Check that all
@@ -301,7 +301,7 @@ const FunctionalSkillsModule3Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Phishing & Scam Awareness</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Phishing attacks are one of the biggest cyber threats facing small businesses,
               including electrical contractors. Phishing is the practice of sending fraudulent
@@ -403,7 +403,7 @@ const FunctionalSkillsModule3Section4 = () => {
             </p>
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 When in doubt, do not click. Contact the supposed sender directly using a phone
                 number or website you already know (not one from the suspicious email). Electricians
                 are increasingly targeted because they are busy, often checking emails quickly on
@@ -440,7 +440,7 @@ const FunctionalSkillsModule3Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Password Security</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Weak passwords are the single biggest vulnerability in most people's digital security.
               As an electrician, your online accounts contain sensitive information: customer data,
@@ -528,7 +528,7 @@ const FunctionalSkillsModule3Section4 = () => {
             </p>
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Install a password manager today and start migrating your accounts to unique,
                 generated passwords. It takes about 30 minutes to set up and saves you from the
                 catastrophic consequences of a password breach. Combined with two-factor
@@ -551,7 +551,7 @@ const FunctionalSkillsModule3Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">GDPR for Electricians</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               The General Data Protection Regulation (GDPR), retained in UK law as the UK GDPR
               alongside the Data Protection Act 2018, applies to every business that handles
@@ -643,7 +643,7 @@ const FunctionalSkillsModule3Section4 = () => {
             </p>
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 GDPR compliance is not complicated for electricians — it mainly means being sensible
                 with customer information. Lock your devices, do not share customer details
                 unnecessarily, keep data only as long as needed, and register with the ICO. These
@@ -679,7 +679,7 @@ const FunctionalSkillsModule3Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Social Media Best Practice</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Social media is a powerful marketing tool for electricians. Platforms like Facebook,
               Instagram, and LinkedIn can generate enquiries, build your reputation, and showcase
@@ -782,7 +782,7 @@ const FunctionalSkillsModule3Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Video Conferencing</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Video conferencing has become a standard business communication tool. While
               electricians spend most of their time on site, there are many situations where video
@@ -871,7 +871,7 @@ const FunctionalSkillsModule3Section4 = () => {
             </p>
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Video calls can replace many face-to-face meetings, saving travel time and costs. A
                 15-minute video call to discuss a quotation with a potential client is far more
                 efficient than a 30-minute drive each way. Embrace video conferencing as a
@@ -907,7 +907,7 @@ const FunctionalSkillsModule3Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Online Training Platforms</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Online learning has opened up unprecedented access to training and CPD opportunities
               for electricians. Whether you are preparing for your AM2 assessment, studying for the
@@ -1002,7 +1002,7 @@ const FunctionalSkillsModule3Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Digital Wellbeing</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               As digital tools become an ever larger part of electrical work — from certification
               apps and email to social media and online learning — it is important to manage your
@@ -1124,7 +1124,7 @@ const FunctionalSkillsModule3Section4 = () => {
             </p>
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Technology should serve you — not the other way around. Use digital tools
                 purposefully during working hours, then switch off and recharge. An electrician who
                 is well-rested, focused, and mentally healthy does better work, makes fewer
@@ -1142,7 +1142,7 @@ const FunctionalSkillsModule3Section4 = () => {
         <div className="flex items-center justify-between pt-6 border-t border-white/10">
           <Link
             to="/study-centre/apprentice/functional-skills/module3/section3"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
           >
             <ArrowLeft className="w-4 h-4" />
             Documentation & Apps

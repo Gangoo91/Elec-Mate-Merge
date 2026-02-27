@@ -261,7 +261,7 @@ const HNCModule1Section3_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section3">
@@ -283,7 +283,7 @@ const HNCModule1Section3_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Emergency Procedures
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Planning for and responding to emergencies in building services environments
           </p>
         </header>
@@ -681,7 +681,7 @@ const HNCModule1Section3_5 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 EFAW = Emergency First Aid at Work (1 day). FAW = First Aid at Work (3 days).
               </p>
             </div>
@@ -846,7 +846,7 @@ const HNCModule1Section3_5 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Remember:</strong> All casualties of electric shock should be assessed at
               hospital, even if they appear unharmed. Internal injuries and cardiac effects may not
               be immediately apparent.
@@ -872,7 +872,7 @@ const HNCModule1Section3_5 = () => {
                 <strong>Scenario:</strong> A colleague is found unconscious, still holding a faulty
                 230V portable tool.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p>
                   <strong>Response Sequence:</strong>
                 </p>
@@ -901,7 +901,7 @@ const HNCModule1Section3_5 = () => {
                 <strong>Scenario:</strong> Fire breaks out in switchroom while working on
                 distribution board.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p>
                   <strong>Response:</strong>
                 </p>
@@ -993,7 +993,7 @@ const HNCModule1Section3_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1039,7 +1039,7 @@ const HNCModule1Section3_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section3-4">

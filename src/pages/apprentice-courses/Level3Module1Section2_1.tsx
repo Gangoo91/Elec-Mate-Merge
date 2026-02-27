@@ -288,7 +288,7 @@ const Level3Module1Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section2">
@@ -473,7 +473,7 @@ const Level3Module1Section2_1 = () => {
               working inside it. The same hazard can harm different people in different ways.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> During a consumer unit change in a busy office, the
               electrician faces shock and arc flash risks. Office workers could be harmed by
               trailing leads, tools left on stairs, or if isolation fails. The cleaner arriving at
@@ -506,7 +506,7 @@ const Level3Module1Section2_1 = () => {
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-elec-yellow/80 mb-2">Likelihood Scale (1-5)</p>
-                  <ul className="text-white/90 space-y-0.5 text-xs">
+                  <ul className="text-white space-y-0.5 text-xs">
                     <li>1 = Rare - hardly ever happens</li>
                     <li>2 = Unlikely - could happen but unusual</li>
                     <li>3 = Possible - might happen sometimes</li>
@@ -516,7 +516,7 @@ const Level3Module1Section2_1 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-elec-yellow/80 mb-2">Severity Scale (1-5)</p>
-                  <ul className="text-white/90 space-y-0.5 text-xs">
+                  <ul className="text-white space-y-0.5 text-xs">
                     <li>1 = Insignificant - first aid only</li>
                     <li>2 = Minor - medical treatment needed</li>
                     <li>3 = Moderate - lost time injury</li>
@@ -606,19 +606,19 @@ const Level3Module1Section2_1 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-1">Routine Review</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Annually for most work, more frequently for high-risk activities
                 </p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-1">Triggered Review</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   After accidents, near misses, or significant changes
                 </p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-1">Continuous</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Dynamic assessment as conditions change on site
                 </p>
               </div>
@@ -700,7 +700,7 @@ const Level3Module1Section2_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -753,7 +753,7 @@ const Level3Module1Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section2">

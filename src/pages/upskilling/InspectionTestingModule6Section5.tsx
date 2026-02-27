@@ -207,7 +207,7 @@ const InspectionTestingModule6Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-6">
@@ -229,7 +229,7 @@ const InspectionTestingModule6Section5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Discriminating & Selective RCDs
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Ensure correct sequential operation to maintain supply during faults
           </p>
         </header>
@@ -385,12 +385,12 @@ const InspectionTestingModule6Section5 = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/20">
-                    <th className="text-left py-2 text-white/60">Test Current</th>
-                    <th className="text-center py-2 text-white/60">Min Delay</th>
-                    <th className="text-center py-2 text-white/60">Max Trip</th>
+                    <th className="text-left py-2 text-white">Test Current</th>
+                    <th className="text-center py-2 text-white">Min Delay</th>
+                    <th className="text-center py-2 text-white">Max Trip</th>
                   </tr>
                 </thead>
-                <tbody className="text-white/80">
+                <tbody className="text-white">
                   <tr className="border-b border-white/10">
                     <td className="py-2">1xIdn</td>
                     <td className="py-2 text-center font-mono text-elec-yellow">130ms</td>
@@ -438,21 +438,21 @@ const InspectionTestingModule6Section5 = () => {
             <div className="my-6 space-y-4">
               <div className="border-l-4 border-emerald-500 pl-4">
                 <p className="text-emerald-400 font-semibold">Domestic with Split-Load Board</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   100mA S-type at incomer → 30mA RCBOs for final circuits
                 </p>
                 <p className="text-emerald-400/70 text-xs mt-1">Good discrimination</p>
               </div>
               <div className="border-l-4 border-emerald-500 pl-4">
                 <p className="text-emerald-400 font-semibold">Commercial Sub-Distribution</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   300mA S-type at sub-main → 100mA S-type at DB → 30mA general at final circuits
                 </p>
                 <p className="text-emerald-400/70 text-xs mt-1">Three-stage discrimination</p>
               </div>
               <div className="border-l-4 border-red-500 pl-4">
                 <p className="text-red-400 font-semibold">Poor Practice to Avoid</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   30mA general at incomer → 30mA general at final circuits
                 </p>
                 <p className="text-red-400/70 text-xs mt-1">No discrimination - both may trip</p>
@@ -490,12 +490,12 @@ const InspectionTestingModule6Section5 = () => {
                   <span className="w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-sm font-bold flex items-center justify-center flex-shrink-0">
                     {item.step}
                   </span>
-                  <span className="text-white/80">{item.text}</span>
+                  <span className="text-white">{item.text}</span>
                 </div>
               ))}
             </div>
 
-            <p className="text-sm text-white/80 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> If a 30mA downstream RCD trips at 24mA, and a 100mA upstream
               S-type won't trip below 50mA (50% of 100mA), discrimination is assured by current
               alone, plus the time delay provides additional margin.
@@ -580,7 +580,7 @@ const InspectionTestingModule6Section5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -625,7 +625,7 @@ const InspectionTestingModule6Section5 = () => {
               <Zap className="w-6 h-6 text-elec-yellow" />
             </div>
             <h3 className="text-xl font-bold text-white mb-2">Module 6 Complete!</h3>
-            <p className="text-white/70 mb-2">
+            <p className="text-white mb-2">
               You've mastered RCD testing including types, trip times, ramp testing, and
               discrimination.
             </p>
@@ -645,7 +645,7 @@ const InspectionTestingModule6Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-6/section-4">

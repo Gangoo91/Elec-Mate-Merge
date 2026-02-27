@@ -255,7 +255,7 @@ const HNCModule7Section6_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section6">
@@ -277,7 +277,7 @@ const HNCModule7Section6_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Earthing Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             TN-S, TN-C-S, TT, and IT systems, main earthing terminal, protective conductors,
             equipotential bonding, and earth electrode testing
           </p>
@@ -546,16 +546,16 @@ const HNCModule7Section6_3 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">Adiabatic Equation Method</p>
               <div className="font-mono text-sm space-y-2">
                 <p className="text-white">S = √(I²t) / k</p>
-                <p className="text-white/80">Where:</p>
-                <p className="text-white/80 ml-4">S = minimum cpc cross-sectional area (mm²)</p>
-                <p className="text-white/80 ml-4">I = prospective fault current (A)</p>
-                <p className="text-white/80 ml-4">t = disconnection time (s)</p>
-                <p className="text-white/80 ml-4">
+                <p className="text-white">Where:</p>
+                <p className="text-white ml-4">S = minimum cpc cross-sectional area (mm²)</p>
+                <p className="text-white ml-4">I = prospective fault current (A)</p>
+                <p className="text-white ml-4">t = disconnection time (s)</p>
+                <p className="text-white ml-4">
                   k = factor for conductor material and insulation
                 </p>
-                <p className="text-white/80 mt-2">Common k values (thermoplastic insulation):</p>
-                <p className="text-white/80 ml-4">Copper conductor: k = 115</p>
-                <p className="text-white/80 ml-4">Aluminium conductor: k = 76</p>
+                <p className="text-white mt-2">Common k values (thermoplastic insulation):</p>
+                <p className="text-white ml-4">Copper conductor: k = 115</p>
+                <p className="text-white ml-4">Aluminium conductor: k = 76</p>
               </div>
             </div>
 
@@ -687,7 +687,7 @@ const HNCModule7Section6_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Important:</strong> With PME supplies, the bonding requirements are critical.
               Loss of the PEN conductor could result in the neutral rising to a dangerous potential,
               and bonding ensures all metalwork rises equally, limiting touch voltages.
@@ -778,7 +778,7 @@ const HNCModule7Section6_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Fall of Potential Method</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>1. Disconnect electrode from installation</li>
                     <li>2. Place current spike (C) at least 10× electrode depth away</li>
                     <li>3. Place potential spike (P) at 62% of distance to C</li>
@@ -789,7 +789,7 @@ const HNCModule7Section6_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Maximum Electrode Resistance</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>TT with 30mA RCD: Ra ≤ 1667Ω (50V ÷ 0.03A)</li>
                     <li>Practical target: Ra &lt; 200Ω preferred</li>
                     <li>TT with 100mA RCD: Ra ≤ 500Ω</li>
@@ -874,7 +874,7 @@ const HNCModule7Section6_3 = () => {
                 <strong>Scenario:</strong> Calculate minimum cpc size for a circuit with Ipf =
                 2000A, disconnection time = 0.2s, thermoplastic copper (k=115).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given: I = 2000A, t = 0.2s, k = 115</p>
                 <p className="mt-2">S = √(I²t) / k</p>
                 <p>S = √(2000² × 0.2) / 115</p>
@@ -883,10 +883,10 @@ const HNCModule7Section6_3 = () => {
                 <p>S = 894.4 / 115</p>
                 <p>S = 7.78mm²</p>
                 <p className="mt-2 text-green-400">Select next standard size: 10mm² cpc</p>
-                <p className="text-white/60">
+                <p className="text-white">
                   Note: If line conductor is 4mm², Table 54.7 would require 4mm² cpc
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   Adiabatic calculation may permit reduction if other conditions met
                 </p>
               </div>
@@ -900,7 +900,7 @@ const HNCModule7Section6_3 = () => {
                 <strong>Scenario:</strong> Determine main bonding conductor size for a commercial
                 installation with 35mm² supply neutral.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Supply neutral: 35mm²</p>
                 <p>Main bonding requirement: not less than half neutral csa</p>
                 <p className="mt-2">Calculation:</p>
@@ -908,8 +908,8 @@ const HNCModule7Section6_3 = () => {
                 <p className="mt-2">Minimum requirement: 6mm² (always applies)</p>
                 <p>Maximum requirement: 25mm² (cap for main bonding)</p>
                 <p className="mt-2 text-green-400">Select: 16mm² main bonding conductor</p>
-                <p className="text-white/60">(17.5mm² rounds to 16mm² as nearest standard below,</p>
-                <p className="text-white/60">but some specify 25mm² for additional margin)</p>
+                <p className="text-white">(17.5mm² rounds to 16mm² as nearest standard below,</p>
+                <p className="text-white">but some specify 25mm² for additional margin)</p>
               </div>
             </div>
 
@@ -921,7 +921,7 @@ const HNCModule7Section6_3 = () => {
                 <strong>Scenario:</strong> Determine maximum earth electrode resistance for a TT
                 installation protected by a 30mA RCD.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>RCD rating: IΔn = 30mA = 0.03A</p>
                 <p>Maximum touch voltage limit: 50V</p>
                 <p className="mt-2">Formula: Ra × IΔn ≤ 50V</p>
@@ -929,8 +929,8 @@ const HNCModule7Section6_3 = () => {
                 <p>Ra ≤ 50 / 0.03</p>
                 <p>Ra ≤ 1666.7Ω</p>
                 <p className="mt-2 text-green-400">Maximum theoretical: 1667Ω</p>
-                <p className="text-white/60">Practical recommendation: Aim for Ra &lt; 200Ω</p>
-                <p className="text-white/60">
+                <p className="text-white">Practical recommendation: Aim for Ra &lt; 200Ω</p>
+                <p className="text-white">
                   This provides margin for seasonal variation and reliable RCD operation
                 </p>
               </div>
@@ -1027,7 +1027,7 @@ const HNCModule7Section6_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1073,7 +1073,7 @@ const HNCModule7Section6_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section6">

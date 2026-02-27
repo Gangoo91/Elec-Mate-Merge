@@ -133,7 +133,7 @@ function StarRating({ rating }: { rating: number }) {
           key={star}
           className={cn(
             'h-3 w-3',
-            star <= rating ? 'text-elec-yellow fill-elec-yellow' : 'text-white/20'
+            star <= rating ? 'text-elec-yellow fill-elec-yellow' : 'text-white'
           )}
         />
       ))}
@@ -227,7 +227,7 @@ export function PremiumCandidateCard({
             <Button
               variant="outline"
               size="sm"
-              className="h-11 text-xs bg-white/5 border-white/10 text-white/80"
+              className="h-11 text-xs bg-white/5 border-white/10 text-white"
               onClick={(e) => {
                 e.stopPropagation();
                 onMessage?.();
@@ -297,7 +297,7 @@ export function PremiumCandidateCard({
           <Button
             variant="outline"
             size="sm"
-            className="w-full h-11 text-xs bg-white/5 border-white/10 text-white/60"
+            className="w-full h-11 text-xs bg-white/5 border-white/10 text-white"
             onClick={(e) => {
               e.stopPropagation();
               onClick?.();
@@ -421,13 +421,13 @@ export function PremiumCandidateCard({
             </div>
 
             {/* Job applied for */}
-            <div className="flex items-center gap-1.5 mt-3 text-sm text-white/60">
+            <div className="flex items-center gap-1.5 mt-3 text-sm text-white">
               <Briefcase className="h-3.5 w-3.5 text-elec-yellow/70" />
               <span className="truncate">Applied: {vacancyTitle}</span>
             </div>
 
             {/* Meta info */}
-            <div className="flex items-center gap-4 mt-2 text-xs text-white/50">
+            <div className="flex items-center gap-4 mt-2 text-xs text-white">
               {experience && (
                 <span className="flex items-center gap-1">
                   <Clock className="h-3 w-3" />

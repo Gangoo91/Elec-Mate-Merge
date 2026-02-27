@@ -574,7 +574,7 @@ export default function MentalHealthModule3Section2() {
                     through.&rdquo;
                   </strong>
                 </p>
-                <p className="text-sm text-white/80 mt-2">
+                <p className="text-sm text-white mt-2">
                   This is the unspoken message that non-judgemental listening communicates. Even if
                   you never say these words explicitly, your body language, tone of voice, and
                   responses will convey this message if you are truly listening without judgement.
@@ -1056,7 +1056,7 @@ export default function MentalHealthModule3Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

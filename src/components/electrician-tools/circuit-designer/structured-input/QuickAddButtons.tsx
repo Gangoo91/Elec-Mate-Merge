@@ -103,7 +103,7 @@ export const QuickAddButtons = ({ installationType, onAddCircuit }: QuickAddButt
               <div className="p-1 rounded-md bg-elec-yellow/10">
                 <Icon className="h-3.5 w-3.5 text-elec-yellow" />
               </div>
-              <span className="text-sm font-medium text-white/90 truncate">{preset.label}</span>
+              <span className="text-sm font-medium text-white truncate">{preset.label}</span>
             </Button>
           );
         })}

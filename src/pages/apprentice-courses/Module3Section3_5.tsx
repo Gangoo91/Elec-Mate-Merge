@@ -229,7 +229,7 @@ const Module3Section3_5: React.FC = () => {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Safe Use, Transport, and Storage of Tools
           </h1>
-          <p className="text-white/70">
+          <p className="text-white">
             Essential practices for safe tool handling, transport methods and storage to prevent
             injury and extend tool life.
           </p>

@@ -143,7 +143,7 @@ const Module4Section4_6 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -161,13 +161,13 @@ const Module4Section4_6 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 4.6</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 4.6</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Earthing of Metallic Containment Systems
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master professional earthing techniques for metallic containment systems to ensure
               fault protection, comply with BS 7671 requirements, and maintain electrical safety in
               installations.
@@ -183,7 +183,7 @@ const Module4Section4_6 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2 text-sm">In 30 Seconds</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                <ul className="text-white text-sm space-y-1 list-disc pl-4">
                   <li>
                     Metallic containment can become live during faults, creating shock hazards
                   </li>
@@ -196,7 +196,7 @@ const Module4Section4_6 = () => {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2 text-sm">Spot it / Use it</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                <ul className="text-white text-sm space-y-1 list-disc pl-4">
                   <li>
                     <strong>Spot:</strong> Painted joints, flexible couplings, mixed materials, poor
                     continuity
@@ -220,7 +220,7 @@ const Module4Section4_6 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <div className="text-white/80 space-y-2 leading-relaxed">
+            <div className="text-white space-y-2 leading-relaxed">
               <ul className="list-disc pl-6 space-y-2">
                 <li>
                   Explain the fundamental safety requirements for earthing metallic containment
@@ -252,7 +252,7 @@ const Module4Section4_6 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Purpose and Legal Requirements for Earthing Metallic Containment
             </h2>
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Metallic containment earthing is a critical safety measure required by law and
               electrical standards:
             </p>
@@ -260,10 +260,10 @@ const Module4Section4_6 = () => {
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">Safety Protection Functions</p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Fault current management:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     Low-resistance path: {'<'}0.5Ω for most installations, enables rapid fault
                     clearing
@@ -281,10 +281,10 @@ const Module4Section4_6 = () => {
                     equipment
                   </li>
                 </ul>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Legal and compliance requirements:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     BS 7671 Regulation 411.3.1.2: All exposed-conductive-parts must be earthed
                   </li>
@@ -303,10 +303,10 @@ const Module4Section4_6 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50">
                 <p className="font-medium text-white mb-2">Fault Scenarios and Risk Assessment</p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Common fault conditions:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     Cable insulation failure: Direct contact with metallic containment surface
                   </li>
@@ -318,10 +318,10 @@ const Module4Section4_6 = () => {
                     Environmental degradation: Moisture ingress causing tracking to metallic parts
                   </li>
                 </ul>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Risk factors without proper earthing:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>Electric shock: 240V potential on containment surfaces during faults</li>
                   <li>Fire hazard: Arc faults sustained without protective device operation</li>
                   <li>Equipment damage: Sustained fault conditions damaging expensive equipment</li>
@@ -351,7 +351,7 @@ const Module4Section4_6 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               When Containment Can Act as Circuit Protective Conductor
             </h2>
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Containment can serve as CPC only when specific technical and mechanical criteria are
               met:
             </p>
@@ -361,10 +361,10 @@ const Module4Section4_6 = () => {
                 <p className="font-medium text-white mb-2">
                   Cross-Sectional Area and Current Rating Requirements
                 </p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>BS 7671 Table 54.7 minimum CPC areas:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>Line conductor ≤16mm²: CPC minimum 16mm² equivalent cross-section</li>
                   <li>Line conductor 16-35mm²: CPC minimum equal to line conductor area</li>
                   <li>Line conductor {'>'}35mm²: CPC minimum 50% of line conductor area</li>
@@ -373,10 +373,10 @@ const Module4Section4_6 = () => {
                     time
                   </li>
                 </ul>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Containment cross-section calculations:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     Steel conduit 20mm: 1.2mm wall = ~70mm² effective area (suitable for 6mm²
                     circuits)
@@ -401,10 +401,10 @@ const Module4Section4_6 = () => {
                 <p className="font-medium text-white mb-2">
                   Electrical Continuity and Joint Requirements
                 </p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Joint and connection standards:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     Mechanical connections: Minimum 4 bolts per joint for trunking, torque to
                     specification
@@ -419,10 +419,10 @@ const Module4Section4_6 = () => {
                     compatibility
                   </li>
                 </ul>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Continuity verification procedures:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     End-to-end testing: Maximum resistance varies with circuit length and
                     cross-section
@@ -449,10 +449,10 @@ const Module4Section4_6 = () => {
                 <p className="font-medium text-white mb-2">
                   Mechanical Robustness and Environmental Suitability
                 </p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Mechanical integrity requirements:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     Impact resistance: IK08 minimum for accessible areas, IK10 for industrial
                     environments
@@ -467,10 +467,10 @@ const Module4Section4_6 = () => {
                     connections
                   </li>
                 </ul>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Environmental assessment criteria:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>Moisture exposure: IP54 minimum for damp locations, IP65 for wet areas</li>
                   <li>
                     Chemical exposure: Material compatibility with cleaning agents and process
@@ -505,17 +505,17 @@ const Module4Section4_6 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               When to Install Separate Circuit Protective Conductors
             </h2>
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Separate CPCs are mandatory when containment cannot meet the technical requirements:
             </p>
 
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
                 <p className="font-medium text-white mb-2">Mechanical and Material Limitations</p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Insufficient mechanical robustness:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     Thin-wall conduit: {'<'}1.2mm wall thickness insufficient for large circuit CPCs
                   </li>
@@ -531,10 +531,10 @@ const Module4Section4_6 = () => {
                     Temporary installations: Portable systems require dedicated CPC for reliability
                   </li>
                 </ul>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Mixed material system issues:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     Steel/aluminium joints: Galvanic corrosion leads to high resistance connections
                   </li>
@@ -556,10 +556,10 @@ const Module4Section4_6 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50">
                 <p className="font-medium text-white mb-2">Environmental and Maintenance Factors</p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Corrosive environment impacts:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     Marine environments: Salt spray causing rapid degradation of joint surfaces
                   </li>
@@ -576,10 +576,10 @@ const Module4Section4_6 = () => {
                     performance
                   </li>
                 </ul>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Maintenance accessibility issues:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     Concealed joints: Inaccessible connections cannot be verified or maintained
                   </li>
@@ -607,7 +607,7 @@ const Module4Section4_6 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Professional Earthing Methods and Installation Techniques
             </h2>
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Proper installation techniques ensure reliable long-term performance and compliance:
             </p>
 
@@ -616,10 +616,10 @@ const Module4Section4_6 = () => {
                 <p className="font-medium text-white mb-2">
                   Earth Clamps and Bonding Conductor Selection
                 </p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Earth clamp specifications and installation:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     Clamp rating: Minimum 25A fault current capacity for final circuits, 63A+ for
                     submains
@@ -633,10 +633,10 @@ const Module4Section4_6 = () => {
                   </li>
                   <li>Installation torque: 10-15Nm for M8 bolts, use calibrated torque wrench</li>
                 </ul>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Bonding conductor sizing and installation:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>Main bonding: 10mm² minimum for domestic, 16mm² minimum for commercial</li>
                   <li>
                     Supplementary bonding: Equal to largest CPC in the circuit being protected
@@ -660,10 +660,10 @@ const Module4Section4_6 = () => {
                 <p className="font-medium text-white mb-2">
                   Earth Straps and Expansion Joint Management
                 </p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Flexible earth strap applications:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>Expansion joints: Braided copper strap rated for thermal movement range</li>
                   <li>
                     Vibrating equipment: Flexible connection maintaining earth continuity during
@@ -674,10 +674,10 @@ const Module4Section4_6 = () => {
                     Removable sections: Quick-disconnect earth links for maintenance access panels
                   </li>
                 </ul>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Earth strap specification and installation:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>Current rating: Match or exceed the containment CPC current rating</li>
                   <li>Flexibility: Tinned copper braid minimum 25mm wide for reliability</li>
                   <li>Length calculation: Maximum movement + 50% safety factor for routing</li>
@@ -695,10 +695,10 @@ const Module4Section4_6 = () => {
                 <p className="font-medium text-white mb-2">
                   Internal Earth Links and Specialist Solutions
                 </p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Internal earth link systems:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     Trunking earth links: Proprietary systems maintaining continuity across joints
                   </li>
@@ -714,10 +714,10 @@ const Module4Section4_6 = () => {
                     continuity
                   </li>
                 </ul>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Specialist earthing techniques:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     Welded earth connections: Permanent low-resistance connections for critical
                     applications
@@ -758,7 +758,7 @@ const Module4Section4_6 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Comprehensive Testing and Verification Procedures
             </h2>
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Systematic testing ensures containment earthing meets all safety and performance
               requirements:
             </p>
@@ -768,10 +768,10 @@ const Module4Section4_6 = () => {
                 <p className="font-medium text-white mb-2">
                   Continuity Testing Standards and Procedures
                 </p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Test equipment specifications:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>Low-resistance ohmmeter: 200mA ± 10% test current minimum, 1mΩ resolution</li>
                   <li>
                     Calibration requirements: Annual calibration with UKAS traceable certificate
@@ -785,10 +785,10 @@ const Module4Section4_6 = () => {
                     readings
                   </li>
                 </ul>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Testing methodology and acceptance criteria:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     End-to-end testing: Full containment length, compare with calculated values
                   </li>
@@ -811,10 +811,10 @@ const Module4Section4_6 = () => {
                 <p className="font-medium text-white mb-2">
                   Documentation and Compliance Verification
                 </p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Test record requirements:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     Installation certificate: BS 7671 compliance, test results, and limitations
                   </li>
@@ -825,10 +825,10 @@ const Module4Section4_6 = () => {
                   </li>
                   <li>Maintenance requirements: Re-test intervals and inspection procedures</li>
                 </ul>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Quality assurance and handover:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     Independent verification: Third-party testing for critical or complex
                     installations
@@ -860,33 +860,33 @@ const Module4Section4_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4 mb-4">
                 <div>
                   <p className="font-medium text-white mb-2">The Installation Issue</p>
-                  <p className="text-white/70 text-sm mb-3">
+                  <p className="text-white text-sm mb-3">
                     A contractor installed 200 metres of metallic trunking for a commercial lighting
                     system. To improve appearance, the entire system was painted after installation,
                     including all joint surfaces and mating faces.
                   </p>
-                  <p className="text-white/70 text-sm mb-3">
+                  <p className="text-white text-sm mb-3">
                     The painting broke electrical continuity at every joint, making the trunking
                     unusable as a CPC. During testing, earth continuity resistance measured {'>'}10Ω
                     instead of the required {'<'}0.5Ω.
                   </p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     The installation failed electrical inspection and could not be certified for
                     use.
                   </p>
                 </div>
                 <div>
                   <p className="font-medium text-white mb-2">Cost Impact and Resolution</p>
-                  <p className="text-white/70 text-sm mb-3">
+                  <p className="text-white text-sm mb-3">
                     <strong>Remedial work required:</strong>
                   </p>
-                  <ul className="text-white/70 text-sm space-y-1 list-disc pl-4 mb-3">
+                  <ul className="text-white text-sm space-y-1 list-disc pl-4 mb-3">
                     <li>Strip paint from all 50 joint interfaces</li>
                     <li>Install separate 4mm² CPC throughout system</li>
                     <li>Additional earth clamps and connections</li>
                     <li>Re-testing and certification</li>
                   </ul>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     <strong>Additional costs:</strong> £8,000 labour + £2,000 materials + 2-week
                     delay
                   </p>
@@ -897,8 +897,8 @@ const Module4Section4_6 = () => {
                 <p className="font-medium text-white mb-2">Prevention Analysis and Best Practice</p>
                 <div className="grid sm:grid-cols-3 gap-3">
                   <div>
-                    <p className="font-medium text-white/80 mb-1 text-sm">Correct Procedure</p>
-                    <ul className="text-white/60 text-xs space-y-1 list-disc pl-4">
+                    <p className="font-medium text-white mb-1 text-sm">Correct Procedure</p>
+                    <ul className="text-white text-xs space-y-1 list-disc pl-4">
                       <li>Clean joint surfaces before assembly</li>
                       <li>Test continuity before painting</li>
                       <li>Mask joint areas during painting</li>
@@ -906,8 +906,8 @@ const Module4Section4_6 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-white/80 mb-1 text-sm">Technical Solution</p>
-                    <ul className="text-white/60 text-xs space-y-1 list-disc pl-4">
+                    <p className="font-medium text-white mb-1 text-sm">Technical Solution</p>
+                    <ul className="text-white text-xs space-y-1 list-disc pl-4">
                       <li>Internal earth link kit: £300</li>
                       <li>Additional testing time: £200</li>
                       <li>Proper joint preparation: £500</li>
@@ -917,8 +917,8 @@ const Module4Section4_6 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-white/80 mb-1 text-sm">Learning Outcomes</p>
-                    <ul className="text-white/60 text-xs space-y-1 list-disc pl-4">
+                    <p className="font-medium text-white mb-1 text-sm">Learning Outcomes</p>
+                    <ul className="text-white text-xs space-y-1 list-disc pl-4">
                       <li>Plan earth continuity before decoration</li>
                       <li>Test before concealment or finishing</li>
                       <li>Use appropriate earth link systems</li>
@@ -938,7 +938,7 @@ const Module4Section4_6 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">09</span>
               Frequently Asked Questions
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="font-medium text-white mb-1">
                   Q: Can cable tray be used as a CPC in all installations?
@@ -999,7 +999,7 @@ const Module4Section4_6 = () => {
               Summary
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-white/80 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Earthing metallic containment systems is a fundamental safety requirement that
                 protects against electric shock and enables proper fault protection. Whether the
                 containment acts as the CPC or requires a separate conductor, electrical continuity

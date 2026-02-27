@@ -254,7 +254,7 @@ const HNCModule7Section4_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section4">
@@ -276,7 +276,7 @@ const HNCModule7Section4_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             BMS Integration
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Lighting control interfaces, communication protocols, scheduling, energy monitoring, and
             system optimisation
           </p>
@@ -552,27 +552,27 @@ const HNCModule7Section4_6 = () => {
               </p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Binary Output (BO):</span>{' '}
+                  <span className="text-white">Binary Output (BO):</span>{' '}
                   <span className="text-white">On/off switching control</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Analogue Output (AO):</span>{' '}
+                  <span className="text-white">Analogue Output (AO):</span>{' '}
                   <span className="text-white">Dimming level (0-100%)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Binary Input (BI):</span>{' '}
+                  <span className="text-white">Binary Input (BI):</span>{' '}
                   <span className="text-white">Switch/sensor status</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Analogue Input (AI):</span>{' '}
+                  <span className="text-white">Analogue Input (AI):</span>{' '}
                   <span className="text-white">Light level sensor (lux)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Schedule:</span>{' '}
+                  <span className="text-white">Schedule:</span>{' '}
                   <span className="text-white">Time-based automation</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Notification Class:</span>{' '}
+                  <span className="text-white">Notification Class:</span>{' '}
                   <span className="text-white">Alarm routing</span>
                 </p>
               </div>
@@ -739,7 +739,7 @@ const HNCModule7Section4_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Sub-metering</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Lighting circuit kWh meters</li>
                     <li>Zone or floor-level metering</li>
                     <li>CT-based power monitoring</li>
@@ -749,7 +749,7 @@ const HNCModule7Section4_6 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Data Analysis</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Baseline establishment</li>
                     <li>Consumption trending</li>
                     <li>Occupancy correlation</li>
@@ -824,23 +824,23 @@ const HNCModule7Section4_6 = () => {
               </p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Lighting Power Density:</span>{' '}
+                  <span className="text-white">Lighting Power Density:</span>{' '}
                   <span className="text-white">W/m² (target &lt; 10 W/m² for offices)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Operating hours:</span>{' '}
+                  <span className="text-white">Operating hours:</span>{' '}
                   <span className="text-white">Actual vs scheduled hours</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Occupancy ratio:</span>{' '}
+                  <span className="text-white">Occupancy ratio:</span>{' '}
                   <span className="text-white">Occupied hours / lit hours</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Energy per m²:</span>{' '}
+                  <span className="text-white">Energy per m²:</span>{' '}
                   <span className="text-white">kWh/m²/year for benchmarking</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Demand factor:</span>{' '}
+                  <span className="text-white">Demand factor:</span>{' '}
                   <span className="text-white">Peak demand / connected load</span>
                 </p>
               </div>
@@ -870,7 +870,7 @@ const HNCModule7Section4_6 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Measurement and verification (M&amp;V):</strong> Use IPMVP (International
               Performance Measurement and Verification Protocol) methodologies to quantify energy
               savings from optimisation measures.
@@ -896,8 +896,8 @@ const HNCModule7Section4_6 = () => {
                 <strong>Scenario:</strong> Integrate a DALI lighting system with a BACnet BMS in a
                 commercial office.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">System Architecture:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">System Architecture:</p>
                 <p className="mt-2">BMS Workstation (BACnet IP)</p>
                 <p className="ml-4">|</p>
                 <p className="ml-4">Ethernet Switch</p>
@@ -908,7 +908,7 @@ const HNCModule7Section4_6 = () => {
                 <p className="ml-4">├── Luminaires (addressed 1-50)</p>
                 <p className="ml-4">├── PIR sensors (addressed 51-55)</p>
                 <p className="ml-4">└── Lux sensors (addressed 56-58)</p>
-                <p className="mt-2 text-white/60">BACnet Point Mapping:</p>
+                <p className="mt-2 text-white">BACnet Point Mapping:</p>
                 <p>- AO1: Zone 1 dimming level (0-100%)</p>
                 <p>- BI1: Zone 1 occupancy status</p>
                 <p>- AI1: Zone 1 lux level</p>
@@ -927,17 +927,17 @@ const HNCModule7Section4_6 = () => {
                 <strong>Scenario:</strong> Configure lighting load shedding for grid demand response
                 events.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Demand Response Levels:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Demand Response Levels:</p>
                 <p className="mt-2">Level 0 (Normal): All lighting at normal control</p>
                 <p>Level 1 (Moderate): Reduce common areas to 80%</p>
                 <p>Level 2 (High): Reduce all non-critical to 60%</p>
                 <p>Level 3 (Critical): Non-essential lighting OFF</p>
-                <p className="mt-2 text-white/60">Priority Classification:</p>
+                <p className="mt-2 text-white">Priority Classification:</p>
                 <p>Essential: Reception, circulation (no reduction)</p>
                 <p>Important: Open-plan offices (reduce to 80% max)</p>
                 <p>Non-essential: Car park, plant rooms (can shed)</p>
-                <p className="mt-2 text-white/60">Trigger Source:</p>
+                <p className="mt-2 text-white">Trigger Source:</p>
                 <p>OpenADR signal from grid operator</p>
                 <p>OR building peak demand &gt; 500 kW</p>
                 <p>OR electricity tariff &gt; 30p/kWh</p>
@@ -955,8 +955,8 @@ const HNCModule7Section4_6 = () => {
                 <strong>Scenario:</strong> Specify BMS points for lighting energy monitoring on a
                 floor plate.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Point Schedule - Level 3 Lighting:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Point Schedule - Level 3 Lighting:</p>
                 <p className="mt-2">| Point ID | Description | Type | Units | Trend |</p>
                 <p>|----------|-------------|------|-------|-------|</p>
                 <p>| L3-kW | Floor 3 lighting power | AI | kW | 15min |</p>
@@ -965,7 +965,7 @@ const HNCModule7Section4_6 = () => {
                 <p>| L3-Lux | Average daylight level | AI | lux | 15min |</p>
                 <p>| L3-Dim | Average dimming level | AI | % | 15min |</p>
                 <p>| L3-OpHrs | Operating hours today | AI | hrs | Daily |</p>
-                <p className="mt-2 text-white/60">Calculated Values:</p>
+                <p className="mt-2 text-white">Calculated Values:</p>
                 <p>- W/m² = L3-kW × 1000 / floor area</p>
                 <p>- Occupancy ratio = occupied hours / lit hours</p>
                 <p className="mt-2 text-green-400">
@@ -1050,7 +1050,7 @@ const HNCModule7Section4_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1096,7 +1096,7 @@ const HNCModule7Section4_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section4">

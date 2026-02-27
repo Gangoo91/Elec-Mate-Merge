@@ -240,7 +240,7 @@ const FiberOpticsModule7Section4 = () => {
             <ArrowLeft className="w-5 h-5" />
             <span className="font-medium">Module 7</span>
           </Link>
-          <span className="text-white/50 text-sm">Section 4 of 5</span>
+          <span className="text-white text-sm">Section 4 of 5</span>
         </div>
       </div>
 
@@ -251,7 +251,7 @@ const FiberOpticsModule7Section4 = () => {
             MODULE 7 · SECTION 4
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Fibre Record-Keeping</h1>
-          <p className="text-white/70 text-lg">
+          <p className="text-white text-lg">
             Master the documentation practices that ensure long-term maintainability
           </p>
         </div>
@@ -264,12 +264,12 @@ const FiberOpticsModule7Section4 = () => {
             <div className="bg-[#252525] rounded-lg p-4 border border-white/10">
               <FileText className="w-6 h-6 text-elec-yellow mb-2" />
               <h3 className="text-white font-semibold text-sm mb-1">Documentation</h3>
-              <p className="text-white/60 text-xs">As-built drawings, test results, schedules</p>
+              <p className="text-white text-xs">As-built drawings, test results, schedules</p>
             </div>
             <div className="bg-[#252525] rounded-lg p-4 border border-white/10">
               <Tag className="w-6 h-6 text-elec-yellow mb-2" />
               <h3 className="text-white font-semibold text-sm mb-1">Labelling</h3>
-              <p className="text-white/60 text-xs">Standards-compliant identification</p>
+              <p className="text-white text-xs">Standards-compliant identification</p>
             </div>
           </div>
 
@@ -289,7 +289,7 @@ const FiberOpticsModule7Section4 = () => {
               ].map((outcome, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-white/80">{outcome}</span>
+                  <span className="text-white">{outcome}</span>
                 </li>
               ))}
             </ul>
@@ -302,7 +302,7 @@ const FiberOpticsModule7Section4 = () => {
               Why Documentation Matters
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 Fibre optic infrastructure is a long-term investment, typically expected to serve
                 for 15-25 years or more. Comprehensive documentation ensures that this investment
@@ -316,7 +316,7 @@ const FiberOpticsModule7Section4 = () => {
                 Benefits of Comprehensive Documentation
               </h4>
               <div className="grid md:grid-cols-2 gap-4">
-                <ul className="space-y-2 text-white/70 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                     Faster fault resolution—technicians can locate infrastructure quickly
@@ -330,7 +330,7 @@ const FiberOpticsModule7Section4 = () => {
                     Proof of compliant installation for warranty claims
                   </li>
                 </ul>
-                <ul className="space-y-2 text-white/70 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                     Planning data for future upgrades and expansions
@@ -353,7 +353,7 @@ const FiberOpticsModule7Section4 = () => {
                 <AlertTriangle className="w-4 h-4" />
                 The Cost of Poor Documentation
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Without proper records: troubleshooting takes longer (multiplied labour costs),
                 mistakes are more likely (wrong fibres disconnected), upgrades require expensive
                 surveys, and organisations become dependent on "tribal knowledge" that walks out the
@@ -369,7 +369,7 @@ const FiberOpticsModule7Section4 = () => {
               As-Built Documentation
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 <strong className="text-white">As-built drawings</strong> record what was actually
                 installed, which often differs from design drawings due to site conditions, changes,
@@ -390,7 +390,7 @@ const FiberOpticsModule7Section4 = () => {
                   </div>
                   <div>
                     <span className="text-white font-medium">Cable Routes</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Physical path of each cable with distances and reference points
                     </p>
                   </div>
@@ -401,7 +401,7 @@ const FiberOpticsModule7Section4 = () => {
                   </div>
                   <div>
                     <span className="text-white font-medium">Pathway Infrastructure</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Cable trays, conduits, ducts, risers, and penetrations
                     </p>
                   </div>
@@ -412,7 +412,7 @@ const FiberOpticsModule7Section4 = () => {
                   </div>
                   <div>
                     <span className="text-white font-medium">Equipment Locations</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Patch panels, splice enclosures, cabinets, and telecommunications rooms
                     </p>
                   </div>
@@ -423,7 +423,7 @@ const FiberOpticsModule7Section4 = () => {
                   </div>
                   <div>
                     <span className="text-white font-medium">Cable Details</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Cable type, fibre count, manufacturer, and specifications
                     </p>
                   </div>
@@ -434,7 +434,7 @@ const FiberOpticsModule7Section4 = () => {
                   </div>
                   <div>
                     <span className="text-white font-medium">Fibre Assignments</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Which fibre connects to which port at each end
                     </p>
                   </div>
@@ -449,39 +449,39 @@ const FiberOpticsModule7Section4 = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">
+                      <th className="text-left py-2 px-3 text-white font-medium">
                         Drawing Type
                       </th>
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Purpose</th>
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">
+                      <th className="text-left py-2 px-3 text-white font-medium">Purpose</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">
                         Typical Scale
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">Site/Campus Plan</td>
-                      <td className="py-2 px-3 text-white/60">
+                      <td className="py-2 px-3 text-white">
                         Building locations and inter-building routes
                       </td>
-                      <td className="py-2 px-3 text-white/60">1:500 to 1:2000</td>
+                      <td className="py-2 px-3 text-white">1:500 to 1:2000</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">Floor Plan</td>
-                      <td className="py-2 px-3 text-white/60">
+                      <td className="py-2 px-3 text-white">
                         Cable routes within building floors
                       </td>
-                      <td className="py-2 px-3 text-white/60">1:100 to 1:200</td>
+                      <td className="py-2 px-3 text-white">1:100 to 1:200</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">Riser Diagram</td>
-                      <td className="py-2 px-3 text-white/60">Vertical backbone connectivity</td>
-                      <td className="py-2 px-3 text-white/60">Schematic</td>
+                      <td className="py-2 px-3 text-white">Vertical backbone connectivity</td>
+                      <td className="py-2 px-3 text-white">Schematic</td>
                     </tr>
                     <tr>
                       <td className="py-2 px-3">Rack Elevation</td>
-                      <td className="py-2 px-3 text-white/60">Equipment positioning in cabinets</td>
-                      <td className="py-2 px-3 text-white/60">1:20 or schematic</td>
+                      <td className="py-2 px-3 text-white">Equipment positioning in cabinets</td>
+                      <td className="py-2 px-3 text-white">1:20 or schematic</td>
                     </tr>
                   </tbody>
                 </table>
@@ -503,7 +503,7 @@ const FiberOpticsModule7Section4 = () => {
               Test Result Documentation
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 Test results prove that the installation meets specifications and provide baseline
                 data for future troubleshooting. They should be retained for the lifetime of the
@@ -520,7 +520,7 @@ const FiberOpticsModule7Section4 = () => {
               <div className="space-y-4">
                 <div className="border-b border-white/10 pb-4">
                   <h5 className="text-elec-yellow font-medium mb-2">Link Identification</h5>
-                  <ul className="text-white/60 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>• Unique link/cable identifier</li>
                     <li>• Source and destination locations</li>
                     <li>• Fibre pair or strand number</li>
@@ -528,7 +528,7 @@ const FiberOpticsModule7Section4 = () => {
                 </div>
                 <div className="border-b border-white/10 pb-4">
                   <h5 className="text-elec-yellow font-medium mb-2">Test Conditions</h5>
-                  <ul className="text-white/60 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>• Date and time of test</li>
                     <li>• Technician name/ID</li>
                     <li>• Equipment used (make, model, serial number)</li>
@@ -539,7 +539,7 @@ const FiberOpticsModule7Section4 = () => {
                 </div>
                 <div className="border-b border-white/10 pb-4">
                   <h5 className="text-elec-yellow font-medium mb-2">Results</h5>
-                  <ul className="text-white/60 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>• Measured loss (dB) for each wavelength</li>
                     <li>• Length measurement</li>
                     <li>• Pass/fail status against specified limit</li>
@@ -548,7 +548,7 @@ const FiberOpticsModule7Section4 = () => {
                 </div>
                 <div>
                   <h5 className="text-elec-yellow font-medium mb-2">Additional Information</h5>
-                  <ul className="text-white/60 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>• Standard/specification tested against</li>
                     <li>• Notes on any anomalies or repairs</li>
                     <li>• Approval signatures if required</li>
@@ -563,7 +563,7 @@ const FiberOpticsModule7Section4 = () => {
                 <Database className="w-4 h-4 text-elec-yellow" />
                 Test Result Storage
               </h4>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>
                   • <strong className="text-white">Native format:</strong> Manufacturer's format for
                   maximum detail
@@ -598,7 +598,7 @@ const FiberOpticsModule7Section4 = () => {
               Labelling Standards and Practices
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 Consistent, standards-compliant labelling enables anyone to identify and trace fibre
                 infrastructure without prior knowledge of the specific installation.{' '}
@@ -616,19 +616,19 @@ const FiberOpticsModule7Section4 = () => {
               <div className="space-y-4">
                 <div className="bg-[#1a1a1a] p-4 rounded-lg">
                   <h5 className="text-elec-yellow font-medium mb-2">Labelling Hierarchy</h5>
-                  <div className="font-mono text-sm text-white/70">
+                  <div className="font-mono text-sm text-white">
                     <p className="mb-1">Building → Floor → Room → Rack → Panel → Port</p>
-                    <p className="text-white/50 mt-2">
+                    <p className="text-white mt-2">
                       Example: <span className="text-elec-yellow">BLD-A.02.TR-1.R03.FP01.12</span>
                     </p>
-                    <p className="text-white/50 text-xs">
+                    <p className="text-white text-xs">
                       Building A, Floor 2, TR-1, Rack 3, Panel 1, Port 12
                     </p>
                   </div>
                 </div>
                 <div>
                   <h5 className="text-white font-medium mb-2">What Must Be Labelled</h5>
-                  <ul className="text-white/60 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>• Every cable (both ends)</li>
                     <li>• Every port/connector</li>
                     <li>• Every patch panel</li>
@@ -648,7 +648,7 @@ const FiberOpticsModule7Section4 = () => {
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Durable materials</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Labels must withstand environment—laminated, UV-resistant where needed
                     </p>
                   </div>
@@ -657,7 +657,7 @@ const FiberOpticsModule7Section4 = () => {
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Legible text</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Print must be clear, correctly sized for viewing distance
                     </p>
                   </div>
@@ -666,7 +666,7 @@ const FiberOpticsModule7Section4 = () => {
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Consistent format</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Same labelling scheme used throughout installation
                     </p>
                   </div>
@@ -675,7 +675,7 @@ const FiberOpticsModule7Section4 = () => {
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Secure attachment</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Labels won't fall off or shift over time
                     </p>
                   </div>
@@ -689,10 +689,10 @@ const FiberOpticsModule7Section4 = () => {
                 <BookOpen className="w-4 h-4" />
                 Colour Coding (Optional but Helpful)
               </h4>
-              <p className="text-white/70 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 TIA-606 suggests colour coding for visual identification:
               </p>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>
                   • <span className="text-orange-400">Orange:</span> Demarcation point
                 </li>
@@ -726,7 +726,7 @@ const FiberOpticsModule7Section4 = () => {
               Creating and Maintaining a Labelling Schedule
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 A <strong className="text-white">labelling schedule</strong> is a database or
                 spreadsheet that provides full details for every labelled item. Physical labels
@@ -741,51 +741,51 @@ const FiberOpticsModule7Section4 = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Field</th>
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Example</th>
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Purpose</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">Field</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">Example</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">Purpose</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3 text-elec-yellow">Cable ID</td>
                       <td className="py-2 px-3">FC-A01-B03-001</td>
-                      <td className="py-2 px-3 text-white/60">Unique cable identifier</td>
+                      <td className="py-2 px-3 text-white">Unique cable identifier</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3 text-elec-yellow">A-End Location</td>
                       <td className="py-2 px-3">BLD-A, Floor 3, TR-1, Rack 2</td>
-                      <td className="py-2 px-3 text-white/60">Source termination</td>
+                      <td className="py-2 px-3 text-white">Source termination</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3 text-elec-yellow">A-End Panel/Port</td>
                       <td className="py-2 px-3">FP01, Ports 1-12</td>
-                      <td className="py-2 px-3 text-white/60">Connection points</td>
+                      <td className="py-2 px-3 text-white">Connection points</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3 text-elec-yellow">B-End Location</td>
                       <td className="py-2 px-3">BLD-B, Floor 1, MER, Rack 5</td>
-                      <td className="py-2 px-3 text-white/60">Destination termination</td>
+                      <td className="py-2 px-3 text-white">Destination termination</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3 text-elec-yellow">B-End Panel/Port</td>
                       <td className="py-2 px-3">FP03, Ports 1-12</td>
-                      <td className="py-2 px-3 text-white/60">Connection points</td>
+                      <td className="py-2 px-3 text-white">Connection points</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3 text-elec-yellow">Cable Type</td>
                       <td className="py-2 px-3">OS2, 12-fibre, loose tube</td>
-                      <td className="py-2 px-3 text-white/60">Cable specification</td>
+                      <td className="py-2 px-3 text-white">Cable specification</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3 text-elec-yellow">Length</td>
                       <td className="py-2 px-3">285m</td>
-                      <td className="py-2 px-3 text-white/60">Installed length</td>
+                      <td className="py-2 px-3 text-white">Installed length</td>
                     </tr>
                     <tr>
                       <td className="py-2 px-3 text-elec-yellow">Notes</td>
                       <td className="py-2 px-3">Via external duct route C</td>
-                      <td className="py-2 px-3 text-white/60">Additional info</td>
+                      <td className="py-2 px-3 text-white">Additional info</td>
                     </tr>
                   </tbody>
                 </table>
@@ -800,7 +800,7 @@ const FiberOpticsModule7Section4 = () => {
               Handover Documentation Package
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 When an installation is complete, a comprehensive documentation package must be
                 handed over to the client or building owner. This becomes the permanent record for
@@ -816,7 +816,7 @@ const FiberOpticsModule7Section4 = () => {
                   <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">As-Built Drawings</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Complete set showing actual installation
                     </p>
                   </div>
@@ -825,7 +825,7 @@ const FiberOpticsModule7Section4 = () => {
                   <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Test Results</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       All certification test results, OTDR traces, and power meter readings
                     </p>
                   </div>
@@ -834,7 +834,7 @@ const FiberOpticsModule7Section4 = () => {
                   <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Labelling Schedule</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Complete database of all cable and port identifiers
                     </p>
                   </div>
@@ -843,7 +843,7 @@ const FiberOpticsModule7Section4 = () => {
                   <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Material Certificates</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Manufacturer data sheets, cable specifications, compliance certificates
                     </p>
                   </div>
@@ -852,7 +852,7 @@ const FiberOpticsModule7Section4 = () => {
                   <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Warranties</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Product and installation warranties with terms and conditions
                     </p>
                   </div>
@@ -861,7 +861,7 @@ const FiberOpticsModule7Section4 = () => {
                   <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">O&M Documentation</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Operation and maintenance instructions, cleaning procedures
                     </p>
                   </div>
@@ -874,7 +874,7 @@ const FiberOpticsModule7Section4 = () => {
               <h4 className="font-semibold text-white mb-2">
                 Digital Documentation Best Practices
               </h4>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>• Provide documentation in both digital and printed formats</li>
                 <li>• Use non-proprietary file formats (PDF, DWG/DXF, Excel) where possible</li>
                 <li>• Include native test equipment files for maximum detail</li>
@@ -894,7 +894,7 @@ const FiberOpticsModule7Section4 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="bg-[#252525] rounded-lg p-5 border border-white/10">
                   <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                  <p className="text-white/70 text-sm">{faq.answer}</p>
+                  <p className="text-white text-sm">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -910,7 +910,7 @@ const FiberOpticsModule7Section4 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <h4 className="font-semibold text-white mb-2">Drawings</h4>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>□ Site/campus plan</li>
                     <li>□ Floor plans with routes</li>
                     <li>□ Riser diagrams</li>
@@ -920,7 +920,7 @@ const FiberOpticsModule7Section4 = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-white mb-2">Records</h4>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>□ All test results</li>
                     <li>□ Labelling schedule</li>
                     <li>□ Material certificates</li>

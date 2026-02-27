@@ -260,7 +260,7 @@ const HNCModule5Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section2">
@@ -282,7 +282,7 @@ const HNCModule5Section2_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             JCT Contracts
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Standard building contracts, intermediate forms, amendments, extensions of time and
             practical completion provisions
           </p>
@@ -444,7 +444,7 @@ const HNCModule5Section2_2 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Building Services Example: Hospital Extension
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 A 15 million pounds hospital extension uses JCT SBC with quantities. The M&E package
                 (approximately 5 million pounds) is let as a domestic subcontract to an M&E
                 contractor. Electrical design is provided by the employer's consulting engineers
@@ -569,7 +569,7 @@ const HNCModule5Section2_2 = () => {
               <p className="text-sm font-medium text-red-400 mb-2">
                 Warning: Pay-When-Paid Clauses
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Pay-when-paid clauses are largely prohibited under the Construction Act 1996 (except
                 in insolvency). If your subcontract contains such a clause, it may be unenforceable.
                 However, pay-when-certified clauses linking your payment to main contract
@@ -719,7 +719,7 @@ const HNCModule5Section2_2 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">
                 Building Services Example: Distribution Board Delay
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 An electrical subcontractor is delayed 4 weeks because the consulting engineer
                 issues revised distribution board schedules late. The subcontractor must: (1) notify
                 the main contractor in writing immediately, (2) provide programme impact analysis,
@@ -775,7 +775,7 @@ const HNCModule5Section2_2 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">For the Contractor</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>50% retention released</li>
                     <li>Liquidated damages liability ends</li>
                     <li>Insurance responsibilities may transfer</li>
@@ -785,7 +785,7 @@ const HNCModule5Section2_2 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">For the Employer</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Takes possession of the works</li>
                     <li>Assumes responsibility for security</li>
                     <li>Insurance responsibility may transfer</li>
@@ -868,7 +868,7 @@ const HNCModule5Section2_2 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Building Services Example: Electrical Defects
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Six months after practical completion, the building manager reports emergency
                 lighting failures. The electrical subcontractor must: (1) attend site promptly to
                 diagnose, (2) determine if the failure is a genuine defect (faulty component, poor
@@ -879,7 +879,7 @@ const HNCModule5Section2_2 = () => {
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Practical tip:</strong> Maintain good relationships with building managers
               during the defects period. Prompt response to genuine issues builds reputation and
               often leads to future work.
@@ -905,7 +905,7 @@ const HNCModule5Section2_2 = () => {
                 <strong>Scenario:</strong> Revised containment drawings issued 3 weeks late.
                 Electrical first fix delayed.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Original programme: First fix weeks 10-16</p>
                 <p>Information due: Week 8</p>
                 <p>Information received: Week 11 (3 weeks late)</p>
@@ -928,7 +928,7 @@ const HNCModule5Section2_2 = () => {
                 <strong>Scenario:</strong> Calculate loss and expense for 3-week delay caused by
                 late information.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Extended preliminaries:</strong>
                 </p>
@@ -957,7 +957,7 @@ const HNCModule5Section2_2 = () => {
                 <strong>Scenario:</strong> Subcontract value 500,000 pounds, retention 3%, defects
                 period 12 months.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Total retention held: 500,000 x 3% = <strong>15,000 pounds</strong>
                 </p>
@@ -1052,7 +1052,7 @@ const HNCModule5Section2_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1098,7 +1098,7 @@ const HNCModule5Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section2">

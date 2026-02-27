@@ -84,14 +84,14 @@ export const SectionCard: React.FC<SectionCardProps> = ({
 
             {/* Description */}
             {description && (
-              <p className="text-xs text-white/40 line-clamp-2 mb-auto leading-relaxed">
+              <p className="text-xs text-white line-clamp-2 mb-auto leading-relaxed">
                 {description}
               </p>
             )}
 
             {/* Arrow indicator */}
             <div className="flex items-center justify-end mt-auto pt-2">
-              <div className="flex items-center gap-1 text-white/30 group-hover:text-elec-yellow transition-colors">
+              <div className="flex items-center gap-1 text-white group-hover:text-elec-yellow transition-colors">
                 <span className="text-[11px] font-medium opacity-0 group-hover:opacity-100 transition-opacity">
                   Start
                 </span>

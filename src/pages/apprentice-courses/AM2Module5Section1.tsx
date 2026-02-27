@@ -231,7 +231,7 @@ const AM2Module5Section1 = () => {
       />
 
       {/* Additional Context */}
-      <p className="text-ios-body text-white/80 leading-relaxed -mt-4 mb-6">
+      <p className="text-ios-body text-white leading-relaxed -mt-4 mb-6">
         Understanding common fault types, their symptoms, and appropriate testing methods is
         essential for AM2 success. Assessors want to see systematic diagnosis, not guesswork.
       </p>
@@ -691,35 +691,35 @@ const AM2Module5Section1 = () => {
       {/* Common Fault Types */}
       <AM2ContentCard title="1. Common Fault Types in AM2" icon={Target} accent>
         <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-          <h4 className="text-ios-headline text-white/90 mb-3">
+          <h4 className="text-ios-headline text-white mb-3">
             TOP 4 Fault Categories You Must Know:
           </h4>
-          <ul className="space-y-3 text-ios-callout text-white/80">
+          <ul className="space-y-3 text-ios-callout text-white">
             <li className="flex items-start gap-3">
               <span className="text-elec-yellow font-bold">1.</span>
               <span>
-                <strong className="text-white/90">Open Circuits:</strong> Complete break in
+                <strong className="text-white">Open Circuits:</strong> Complete break in
                 conductor - circuit appears dead
               </span>
             </li>
             <li className="flex items-start gap-3">
               <span className="text-elec-yellow font-bold">2.</span>
               <span>
-                <strong className="text-white/90">High Resistance Connections:</strong> Poor joints
+                <strong className="text-white">High Resistance Connections:</strong> Poor joints
                 - circuit works but resistance too high
               </span>
             </li>
             <li className="flex items-start gap-3">
               <span className="text-elec-yellow font-bold">3.</span>
               <span>
-                <strong className="text-white/90">Short Circuits:</strong> Direct L-N or L-E contact
+                <strong className="text-white">Short Circuits:</strong> Direct L-N or L-E contact
                 - protective devices trip
               </span>
             </li>
             <li className="flex items-start gap-3">
               <span className="text-elec-yellow font-bold">4.</span>
               <span>
-                <strong className="text-white/90">Polarity Errors:</strong> Incorrect connections -
+                <strong className="text-white">Polarity Errors:</strong> Incorrect connections -
                 switches in neutral, reversed sockets
               </span>
             </li>
@@ -739,33 +739,33 @@ const AM2Module5Section1 = () => {
       <AM2ContentCard title="2. How to Test for Each Fault Type" icon={Eye}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3">Open Circuit Testing:</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <h4 className="text-ios-headline text-white mb-3">Open Circuit Testing:</h4>
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>
-                  <strong className="text-white/90">Primary test:</strong> Continuity between
+                  <strong className="text-white">Primary test:</strong> Continuity between
                   conductor ends
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>
-                  <strong className="text-white/90">Expected result:</strong> Infinite resistance/no
+                  <strong className="text-white">Expected result:</strong> Infinite resistance/no
                   reading
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>
-                  <strong className="text-white/90">Symptom:</strong> Circuit completely dead, no
+                  <strong className="text-white">Symptom:</strong> Circuit completely dead, no
                   power
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>
-                  <strong className="text-white/90">Location:</strong> Half-split method at junction
+                  <strong className="text-white">Location:</strong> Half-split method at junction
                   boxes
                 </span>
               </li>
@@ -773,33 +773,33 @@ const AM2Module5Section1 = () => {
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3">High Resistance Testing:</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <h4 className="text-ios-headline text-white mb-3">High Resistance Testing:</h4>
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>
-                  <strong className="text-white/90">Primary test:</strong> Continuity with 200mA
+                  <strong className="text-white">Primary test:</strong> Continuity with 200mA
                   current
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>
-                  <strong className="text-white/90">Expected result:</strong> Higher than normal
+                  <strong className="text-white">Expected result:</strong> Higher than normal
                   resistance
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>
-                  <strong className="text-white/90">Symptom:</strong> Circuit works but poor
+                  <strong className="text-white">Symptom:</strong> Circuit works but poor
                   performance
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>
-                  <strong className="text-white/90">Also check:</strong> Earth fault loop impedance
+                  <strong className="text-white">Also check:</strong> Earth fault loop impedance
                   (Zs)
                 </span>
               </li>
@@ -809,32 +809,32 @@ const AM2Module5Section1 = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3">Short Circuit Testing:</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <h4 className="text-ios-headline text-white mb-3">Short Circuit Testing:</h4>
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>
-                  <strong className="text-white/90">Primary test:</strong> Insulation resistance L-N
+                  <strong className="text-white">Primary test:</strong> Insulation resistance L-N
                   at 500V
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>
-                  <strong className="text-white/90">Expected result:</strong> Very low/zero reading
+                  <strong className="text-white">Expected result:</strong> Very low/zero reading
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>
-                  <strong className="text-white/90">Symptom:</strong> MCB trips immediately when
+                  <strong className="text-white">Symptom:</strong> MCB trips immediately when
                   energised
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>
-                  <strong className="text-white/90">Safety:</strong> Never energise confirmed short
+                  <strong className="text-white">Safety:</strong> Never energise confirmed short
                   circuits
                 </span>
               </li>
@@ -842,32 +842,32 @@ const AM2Module5Section1 = () => {
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3">Earth Fault Testing:</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <h4 className="text-ios-headline text-white mb-3">Earth Fault Testing:</h4>
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>
-                  <strong className="text-white/90">Primary test:</strong> Insulation resistance L-E
+                  <strong className="text-white">Primary test:</strong> Insulation resistance L-E
                   and N-E
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>
-                  <strong className="text-white/90">Expected result:</strong> Below 1MΩ to earth
+                  <strong className="text-white">Expected result:</strong> Below 1MΩ to earth
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>
-                  <strong className="text-white/90">Symptom:</strong> RCD trips when circuit
+                  <strong className="text-white">Symptom:</strong> RCD trips when circuit
                   energised
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>
-                  <strong className="text-white/90">Also check:</strong> RCD sensitivity and
+                  <strong className="text-white">Also check:</strong> RCD sensitivity and
                   operation time
                 </span>
               </li>
@@ -889,36 +889,36 @@ const AM2Module5Section1 = () => {
         <div className="space-y-4">
           <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
             <h4 className="text-ios-headline text-green-400 mb-3">The "Half-Split" Method:</h4>
-            <p className="text-ios-callout text-white/70 mb-3">
+            <p className="text-ios-callout text-white mb-3">
               The most efficient way to locate faults in long circuits. Start testing at the
               midpoint, then eliminate half the circuit each time.
             </p>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-green-400">•</span>
                 <span>
-                  <strong className="text-white/90">Step 1:</strong> Test continuity from origin to
+                  <strong className="text-white">Step 1:</strong> Test continuity from origin to
                   circuit midpoint
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400">•</span>
                 <span>
-                  <strong className="text-white/90">Step 2:</strong> If fault present, check first
+                  <strong className="text-white">Step 2:</strong> If fault present, check first
                   half; if clear, check second half
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400">•</span>
                 <span>
-                  <strong className="text-white/90">Step 3:</strong> Repeat halving process until
+                  <strong className="text-white">Step 3:</strong> Repeat halving process until
                   fault section isolated
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400">•</span>
                 <span>
-                  <strong className="text-white/90">Result:</strong> Locate fault in minimum number
+                  <strong className="text-white">Result:</strong> Locate fault in minimum number
                   of tests
                 </span>
               </li>
@@ -927,14 +927,14 @@ const AM2Module5Section1 = () => {
 
           <div className="bg-white/5 border border-amber-500/30 rounded-xl p-4">
             <h4 className="text-ios-headline text-amber-400 mb-3">Visual Inspection Priorities:</h4>
-            <p className="text-ios-callout text-white/70 mb-3">
+            <p className="text-ios-callout text-white mb-3">
               Before touching test instruments, your eyes are your best diagnostic tool. Look for
               obvious issues first.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <h5 className="text-ios-headline text-amber-400 mb-2">At Outlets:</h5>
-                <ul className="text-ios-callout text-white/70 space-y-1">
+                <ul className="text-ios-callout text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-amber-400">•</span>
                     <span>Loose terminal screws</span>
@@ -955,7 +955,7 @@ const AM2Module5Section1 = () => {
               </div>
               <div>
                 <h5 className="text-ios-headline text-amber-400 mb-2">In Junction Boxes:</h5>
-                <ul className="text-ios-callout text-white/70 space-y-1">
+                <ul className="text-ios-callout text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-amber-400">•</span>
                     <span>Disconnected conductors</span>
@@ -979,39 +979,39 @@ const AM2Module5Section1 = () => {
 
           <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
             <h4 className="text-ios-headline text-red-400 mb-3">Dangerous Assumptions to Avoid:</h4>
-            <ul className="text-ios-callout text-white/80 space-y-2">
+            <ul className="text-ios-callout text-white space-y-2">
               <li className="flex items-start gap-2">
                 <span className="text-red-400">•</span>
                 <span>
-                  <strong className="text-white/90">Never assume</strong> all circuits are the same
+                  <strong className="text-white">Never assume</strong> all circuits are the same
                   - test each individually
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400">•</span>
                 <span>
-                  <strong className="text-white/90">Never assume</strong> cables follow logical
+                  <strong className="text-white">Never assume</strong> cables follow logical
                   routes - physically trace them
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400">•</span>
                 <span>
-                  <strong className="text-white/90">Never assume</strong> colours indicate function
+                  <strong className="text-white">Never assume</strong> colours indicate function
                   - verify with testing
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400">•</span>
                 <span>
-                  <strong className="text-white/90">Never assume</strong> a circuit is dead - always
+                  <strong className="text-white">Never assume</strong> a circuit is dead - always
                   test before working
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400">•</span>
                 <span>
-                  <strong className="text-white/90">Never assume</strong> one fault = no other
+                  <strong className="text-white">Never assume</strong> one fault = no other
                   faults present
                 </span>
               </li>
@@ -1027,25 +1027,25 @@ const AM2Module5Section1 = () => {
             <h4 className="text-ios-headline text-blue-400 mb-3">
               Scenario 1: "Lighting Circuit Dead"
             </h4>
-            <div className="text-ios-callout text-white/70 space-y-2">
+            <div className="text-ios-callout text-white space-y-2">
               <p>
-                <strong className="text-white/90">Customer complaint:</strong> "Half the downstairs
+                <strong className="text-white">Customer complaint:</strong> "Half the downstairs
                 lights stopped working this morning"
               </p>
               <p>
-                <strong className="text-white/90">Your observation:</strong> MCB hasn't tripped,
+                <strong className="text-white">Your observation:</strong> MCB hasn't tripped,
                 other circuits working normally
               </p>
               <p>
-                <strong className="text-white/90">Likely fault:</strong> Open circuit in lighting
+                <strong className="text-white">Likely fault:</strong> Open circuit in lighting
                 final circuit
               </p>
               <p>
-                <strong className="text-white/90">Test approach:</strong> R1+R2 continuity from
+                <strong className="text-white">Test approach:</strong> R1+R2 continuity from
                 consumer unit to each light position
               </p>
               <p>
-                <strong className="text-white/90">Common location:</strong> Junction box under
+                <strong className="text-white">Common location:</strong> Junction box under
                 floorboards where cable has been damaged
               </p>
             </div>
@@ -1055,25 +1055,25 @@ const AM2Module5Section1 = () => {
             <h4 className="text-ios-headline text-orange-400 mb-3">
               Scenario 2: "Socket Keeps Tripping RCD"
             </h4>
-            <div className="text-ios-callout text-white/70 space-y-2">
+            <div className="text-ios-callout text-white space-y-2">
               <p>
-                <strong className="text-white/90">Customer complaint:</strong> "RCD trips every time
+                <strong className="text-white">Customer complaint:</strong> "RCD trips every time
                 I plug anything into the kitchen socket"
               </p>
               <p>
-                <strong className="text-white/90">Your observation:</strong> RCD operates
+                <strong className="text-white">Your observation:</strong> RCD operates
                 immediately, other sockets work fine
               </p>
               <p>
-                <strong className="text-white/90">Likely fault:</strong> Earth fault on that socket
+                <strong className="text-white">Likely fault:</strong> Earth fault on that socket
                 circuit
               </p>
               <p>
-                <strong className="text-white/90">Test approach:</strong> Insulation resistance L-E
+                <strong className="text-white">Test approach:</strong> Insulation resistance L-E
                 and N-E with socket isolated
               </p>
               <p>
-                <strong className="text-white/90">Common cause:</strong> Moisture ingress or damaged
+                <strong className="text-white">Common cause:</strong> Moisture ingress or damaged
                 cable insulation
               </p>
             </div>
@@ -1083,25 +1083,25 @@ const AM2Module5Section1 = () => {
             <h4 className="text-ios-headline text-purple-400 mb-3">
               Scenario 3: "Lights Work But Dim"
             </h4>
-            <div className="text-ios-callout text-white/70 space-y-2">
+            <div className="text-ios-callout text-white space-y-2">
               <p>
-                <strong className="text-white/90">Customer complaint:</strong> "Lights come on but
+                <strong className="text-white">Customer complaint:</strong> "Lights come on but
                 they're much dimmer than normal"
               </p>
               <p>
-                <strong className="text-white/90">Your observation:</strong> All lights on circuit
+                <strong className="text-white">Your observation:</strong> All lights on circuit
                 affected equally
               </p>
               <p>
-                <strong className="text-white/90">Likely fault:</strong> High resistance in neutral
+                <strong className="text-white">Likely fault:</strong> High resistance in neutral
                 or live conductor
               </p>
               <p>
-                <strong className="text-white/90">Test approach:</strong> Line and neutral
+                <strong className="text-white">Test approach:</strong> Line and neutral
                 continuity tests with 200mA
               </p>
               <p>
-                <strong className="text-white/90">Common cause:</strong> Loose neutral connection in
+                <strong className="text-white">Common cause:</strong> Loose neutral connection in
                 consumer unit or junction box
               </p>
             </div>
@@ -1112,50 +1112,50 @@ const AM2Module5Section1 = () => {
       {/* Where NET Typically Places Faults */}
       <AM2ContentCard title="5. Where NET Typically Places Faults" icon={Settings}>
         <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-          <h4 className="text-ios-headline text-white/90 mb-3">Most Common Locations:</h4>
+          <h4 className="text-ios-headline text-white mb-3">Most Common Locations:</h4>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <ul className="text-ios-callout text-white/70 space-y-2">
+            <ul className="text-ios-callout text-white space-y-2">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>
-                  <strong className="text-white/90">Junction boxes:</strong> Easy assessor access,
+                  <strong className="text-white">Junction boxes:</strong> Easy assessor access,
                   realistic
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>
-                  <strong className="text-white/90">Socket outlets:</strong> Terminal connections
+                  <strong className="text-white">Socket outlets:</strong> Terminal connections
                   visible
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>
-                  <strong className="text-white/90">Light fittings:</strong> Switch and rose
+                  <strong className="text-white">Light fittings:</strong> Switch and rose
                   connections
                 </span>
               </li>
             </ul>
-            <ul className="text-ios-callout text-white/70 space-y-2">
+            <ul className="text-ios-callout text-white space-y-2">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>
-                  <strong className="text-white/90">Consumer unit:</strong> MCB and neutral bar
+                  <strong className="text-white">Consumer unit:</strong> MCB and neutral bar
                   connections
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>
-                  <strong className="text-white/90">Cooker outlets:</strong> High current
+                  <strong className="text-white">Cooker outlets:</strong> High current
                   connections
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>
-                  <strong className="text-white/90">Motor controls:</strong> Stop/start and overload
+                  <strong className="text-white">Motor controls:</strong> Stop/start and overload
                   settings
                 </span>
               </li>
@@ -1177,7 +1177,7 @@ const AM2Module5Section1 = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
             <h4 className="text-ios-headline text-green-400 mb-3">What Assessors Want to See:</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-green-400">•</span>
                 <span>Systematic testing sequence - no random checking</span>
@@ -1198,10 +1198,10 @@ const AM2Module5Section1 = () => {
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3">
+            <h4 className="text-ios-headline text-white mb-3">
               Professional Qualities Demonstrated:
             </h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Methodical diagnosis under assessment pressure</span>
@@ -1231,7 +1231,7 @@ const AM2Module5Section1 = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <h5 className="text-ios-headline text-green-400 mb-2">Continuity Testing:</h5>
-                <ul className="text-ios-callout text-white/70 space-y-1">
+                <ul className="text-ios-callout text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-green-400">•</span>
                     <span>Use 200mA test current for accurate results</span>
@@ -1252,7 +1252,7 @@ const AM2Module5Section1 = () => {
               </div>
               <div>
                 <h5 className="text-ios-headline text-green-400 mb-2">Safe Isolation:</h5>
-                <ul className="text-ios-callout text-white/70 space-y-1">
+                <ul className="text-ios-callout text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-green-400">•</span>
                     <span>Test-Prove-Test sequence essential</span>
@@ -1275,44 +1275,44 @@ const AM2Module5Section1 = () => {
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3">Industry-Standard Approach:</h4>
-            <p className="text-ios-callout text-white/70 mb-3">
+            <h4 className="text-ios-headline text-white mb-3">Industry-Standard Approach:</h4>
+            <p className="text-ios-callout text-white mb-3">
               Professional electricians follow this systematic sequence for any fault-finding
               scenario:
             </p>
-            <ol className="text-ios-callout text-white/70 space-y-1">
+            <ol className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow font-bold">1.</span>
                 <span>
-                  <strong className="text-white/90">Visual inspection</strong> - Check obvious
+                  <strong className="text-white">Visual inspection</strong> - Check obvious
                   issues first (finds 70% of faults)
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow font-bold">2.</span>
                 <span>
-                  <strong className="text-white/90">Safe isolation</strong> - Proper isolation and
+                  <strong className="text-white">Safe isolation</strong> - Proper isolation and
                   proving procedures
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow font-bold">3.</span>
                 <span>
-                  <strong className="text-white/90">Dead testing</strong> - Continuity and
+                  <strong className="text-white">Dead testing</strong> - Continuity and
                   insulation resistance
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow font-bold">4.</span>
                 <span>
-                  <strong className="text-white/90">Live testing</strong> - Only when circuits
+                  <strong className="text-white">Live testing</strong> - Only when circuits
                   proven safe
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow font-bold">5.</span>
                 <span>
-                  <strong className="text-white/90">Documentation</strong> - Record results as you
+                  <strong className="text-white">Documentation</strong> - Record results as you
                   test
                 </span>
               </li>
@@ -1324,8 +1324,8 @@ const AM2Module5Section1 = () => {
       {/* Section Summary */}
       <AM2ContentCard title="8. Section Summary: AM2 Fault-Finding Success" icon={BookOpen}>
         <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-4">
-          <h4 className="text-ios-headline text-white/90 mb-3">Key Takeaways:</h4>
-          <ul className="text-ios-callout text-white/70 space-y-1">
+          <h4 className="text-ios-headline text-white mb-3">Key Takeaways:</h4>
+          <ul className="text-ios-callout text-white space-y-1">
             <li className="flex items-start gap-2">
               <span className="text-elec-yellow">•</span>
               <span>Most AM2 faults are open circuits - complete breaks in continuity</span>
@@ -1353,7 +1353,7 @@ const AM2Module5Section1 = () => {
 
         <div className="bg-white/5 border border-elec-yellow/30 rounded-xl p-4">
           <h4 className="text-ios-headline text-elec-yellow mb-3">Remember:</h4>
-          <p className="text-ios-callout text-white/80">
+          <p className="text-ios-callout text-white">
             Fault-finding in AM2 demonstrates your professional competence. Assessors want to see
             safe, systematic diagnosis - the same skills you'll use as a qualified electrician.
           </p>

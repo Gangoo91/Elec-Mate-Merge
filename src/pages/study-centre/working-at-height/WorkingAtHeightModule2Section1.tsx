@@ -205,7 +205,7 @@ export default function WorkingAtHeightModule2Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-2">
@@ -231,7 +231,7 @@ export default function WorkingAtHeightModule2Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Ladders &amp; Stepladders
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
             When ladders and stepladders are acceptable, the different types available, correct
             setup angles, securing methods, British Standards, and pre-use inspection procedures
           </p>
@@ -241,7 +241,7 @@ export default function WorkingAtHeightModule2Section1() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
           <div className="rounded-lg p-4 bg-amber-500/5 border-l-2 border-amber-500/50">
             <p className="font-semibold text-amber-400 mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-base space-y-1.5 leading-relaxed">
+            <ul className="text-white text-base space-y-1.5 leading-relaxed">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                 <span>
@@ -275,7 +275,7 @@ export default function WorkingAtHeightModule2Section1() {
 
           <div className="rounded-lg p-4 bg-amber-500/5 border-l-2 border-amber-500/50">
             <p className="font-semibold text-amber-400 mb-2">On Site</p>
-            <ul className="text-white/80 text-base space-y-1.5 leading-relaxed">
+            <ul className="text-white text-base space-y-1.5 leading-relaxed">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                 <span>
@@ -311,7 +311,7 @@ export default function WorkingAtHeightModule2Section1() {
         {/* ── Learning Outcomes ── */}
         <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4 leading-relaxed">
+          <p className="text-white mb-4 leading-relaxed">
             By the end of this section, you will be able to:
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -325,7 +325,7 @@ export default function WorkingAtHeightModule2Section1() {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-amber-400/70 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm leading-relaxed">{outcome}</span>
+                <span className="text-white text-sm leading-relaxed">{outcome}</span>
               </div>
             ))}
           </div>
@@ -342,7 +342,7 @@ export default function WorkingAtHeightModule2Section1() {
               <span className="text-amber-400/80 text-sm font-normal">01</span>
               When Are Ladders Acceptable?
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 Under the <strong className="text-white">Work at Height Regulations 2005</strong>,
                 ladders should only be used when the risk assessment shows that using more suitable
@@ -355,7 +355,7 @@ export default function WorkingAtHeightModule2Section1() {
                 <h3 className="font-semibold mb-2 text-amber-400">
                   Key Principle: Ladders as a Last Resort
                 </h3>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   The regulations require a hierarchy approach: (1) avoid working at height if
                   possible, (2) use collective fall prevention (guardrails, scaffolding), (3) use
                   personal fall protection (harnesses), and only then (4) use a ladder if the task
@@ -376,7 +376,7 @@ export default function WorkingAtHeightModule2Section1() {
                     <Ruler className="h-5 w-5 text-amber-400" />
                   </div>
                   <h3 className="text-amber-300 font-medium mb-1 text-sm">Short Duration</h3>
-                  <p className="text-white/60 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     Tasks should not exceed approximately 30 minutes of continuous work from the
                     ladder
                   </p>
@@ -386,7 +386,7 @@ export default function WorkingAtHeightModule2Section1() {
                     <Shield className="h-5 w-5 text-amber-400" />
                   </div>
                   <h3 className="text-amber-300 font-medium mb-1 text-sm">Light Work</h3>
-                  <p className="text-white/60 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     The work must not require both hands simultaneously or involve carrying heavy
                     loads up the ladder
                   </p>
@@ -396,7 +396,7 @@ export default function WorkingAtHeightModule2Section1() {
                     <Info className="h-5 w-5 text-amber-400" />
                   </div>
                   <h3 className="text-amber-300 font-medium mb-1 text-sm">3-Point Contact</h3>
-                  <p className="text-white/60 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     The user must be able to maintain three points of contact (two hands + one foot,
                     or two feet + one hand) at all times
                   </p>
@@ -414,7 +414,7 @@ export default function WorkingAtHeightModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Common Mistake</h3>
                 </div>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Electricians frequently use ladders for tasks that exceed 30 minutes or require
                   both hands — such as wiring a new light fitting at ceiling height. If you find
                   yourself working for extended periods or needing to release your grip to use
@@ -434,7 +434,7 @@ export default function WorkingAtHeightModule2Section1() {
               <span className="text-purple-400/80 text-sm font-normal">02</span>
               Types of Ladders &amp; Stepladders
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 There are several types of ladder and stepladder commonly used in the electrical
                 industry. Each has specific use cases, advantages, and limitations. Selecting the
@@ -447,7 +447,7 @@ export default function WorkingAtHeightModule2Section1() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
                   <h4 className="text-purple-300 font-medium mb-2">Single-Section Ladder</h4>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>One fixed length — no moving parts or extensions</span>
@@ -469,7 +469,7 @@ export default function WorkingAtHeightModule2Section1() {
 
                 <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
                   <h4 className="text-purple-300 font-medium mb-2">Extension Ladder</h4>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Two or three sections that slide to extend</span>
@@ -493,7 +493,7 @@ export default function WorkingAtHeightModule2Section1() {
 
                 <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg sm:col-span-2">
                   <h4 className="text-purple-300 font-medium mb-2">Combination Ladder</h4>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>
@@ -525,7 +525,7 @@ export default function WorkingAtHeightModule2Section1() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
                   <h4 className="text-purple-300 font-medium mb-2">Platform Stepladder</h4>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Flat platform at the top for standing with both feet</span>
@@ -547,7 +547,7 @@ export default function WorkingAtHeightModule2Section1() {
 
                 <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
                   <h4 className="text-purple-300 font-medium mb-2">Swing-Back Stepladder</h4>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Rear legs swing out to form an A-frame</span>
@@ -573,7 +573,7 @@ export default function WorkingAtHeightModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Never Stand on the Top 2 Treads</h3>
                 </div>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   On a swing-back stepladder, you must never stand on the top cap or the top two
                   treads. This raises your centre of gravity above the top of the stepladder, making
                   it extremely unstable. Platform stepladders are specifically designed so the
@@ -597,7 +597,7 @@ export default function WorkingAtHeightModule2Section1() {
               <span className="text-teal-400/80 text-sm font-normal">03</span>
               The 1-in-4 Rule (75&deg; Angle)
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 The <strong className="text-white">1-in-4 rule</strong> is the single most important
                 principle for setting up a leaning ladder safely. It determines the correct angle
@@ -607,7 +607,7 @@ export default function WorkingAtHeightModule2Section1() {
 
               <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-amber-400">The Rule Explained</h3>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   For every <strong className="text-white">4 units</strong> of vertical height (from
                   ground to the contact point on the wall), the base of the ladder must be{' '}
                   <strong className="text-white">1 unit</strong> out from the wall. For example, if
@@ -621,7 +621,7 @@ export default function WorkingAtHeightModule2Section1() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <h4 className="text-red-300 font-medium mb-2">Too Steep (&gt;80&deg;)</h4>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Ladder can fall backwards away from the wall</span>
@@ -639,7 +639,7 @@ export default function WorkingAtHeightModule2Section1() {
 
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <h4 className="text-red-300 font-medium mb-2">Too Shallow (&lt;70&deg;)</h4>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Base can slide outwards under the user's weight</span>
@@ -665,13 +665,13 @@ export default function WorkingAtHeightModule2Section1() {
                   <div className="relative w-[280px] sm:w-[340px] h-[360px] sm:h-[420px]">
                     {/* Wall */}
                     <div className="absolute left-0 top-0 bottom-[40px] w-[3px] bg-white/40" />
-                    <div className="absolute left-[-40px] top-[10px] text-xs text-white/40 -rotate-90 whitespace-nowrap">
+                    <div className="absolute left-[-40px] top-[10px] text-xs text-white -rotate-90 whitespace-nowrap">
                       WALL SURFACE
                     </div>
 
                     {/* Ground */}
                     <div className="absolute bottom-[40px] left-0 right-0 h-[3px] bg-white/40" />
-                    <div className="absolute bottom-[16px] left-[50%] -translate-x-1/2 text-xs text-white/40">
+                    <div className="absolute bottom-[16px] left-[50%] -translate-x-1/2 text-xs text-white">
                       GROUND LEVEL
                     </div>
 
@@ -745,15 +745,15 @@ export default function WorkingAtHeightModule2Section1() {
                 <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
                   <div className="bg-amber-500/10 border border-amber-500/20 px-3 py-2 rounded text-center">
                     <span className="text-amber-400 font-semibold">4m height</span>
-                    <span className="text-white/50"> = 1m base</span>
+                    <span className="text-white"> = 1m base</span>
                   </div>
                   <div className="bg-amber-500/10 border border-amber-500/20 px-3 py-2 rounded text-center">
                     <span className="text-amber-400 font-semibold">6m height</span>
-                    <span className="text-white/50"> = 1.5m base</span>
+                    <span className="text-white"> = 1.5m base</span>
                   </div>
                   <div className="bg-amber-500/10 border border-amber-500/20 px-3 py-2 rounded text-center">
                     <span className="text-amber-400 font-semibold">8m height</span>
-                    <span className="text-white/50"> = 2m base</span>
+                    <span className="text-white"> = 2m base</span>
                   </div>
                 </div>
               </div>
@@ -777,7 +777,7 @@ export default function WorkingAtHeightModule2Section1() {
               <span className="text-red-400/80 text-sm font-normal">04</span>
               Securing Ladders
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 An unsecured ladder is one of the most common causes of falls from height. The{' '}
                 <strong className="text-white">Work at Height Regulations 2005</strong> require that
@@ -789,7 +789,7 @@ export default function WorkingAtHeightModule2Section1() {
                   <h4 className="text-red-300 font-medium mb-2">
                     1. Securing at the Top (Preferred Method)
                   </h4>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>
@@ -818,7 +818,7 @@ export default function WorkingAtHeightModule2Section1() {
 
                 <div className="bg-white/5 border border-red-400/30 p-4 rounded-lg">
                   <h4 className="text-red-300 font-medium mb-2">2. Footing at the Base</h4>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>
@@ -848,7 +848,7 @@ export default function WorkingAtHeightModule2Section1() {
 
                 <div className="bg-white/5 border border-red-400/30 p-4 rounded-lg">
                   <h4 className="text-red-300 font-medium mb-2">3. Preventing Lateral Slip</h4>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>
@@ -882,7 +882,7 @@ export default function WorkingAtHeightModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Critical Safety Rule</h3>
                 </div>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   If a ladder cannot be secured by any of the above methods, it must not be used.
                   Select alternative access equipment instead. An unsecured ladder on a smooth floor
                   or soft ground is one of the most common causes of fatal falls in the construction
@@ -905,7 +905,7 @@ export default function WorkingAtHeightModule2Section1() {
               <span className="text-cyan-400/80 text-sm font-normal">05</span>
               BS EN 131 — Ladder Standards &amp; Classes
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 <strong className="text-white">BS EN 131</strong> is the European standard for
                 portable ladders, adopted in the UK. It sets out design, manufacturing, and
@@ -918,7 +918,7 @@ export default function WorkingAtHeightModule2Section1() {
                 <h3 className="font-semibold mb-2 text-amber-400">
                   Key Definition: BS EN 131 Classes
                 </h3>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   BS EN 131 classifies ladders into duty ratings based on their intended use. In the
                   UK, the two most common classes you will encounter are{' '}
                   <strong className="text-white">Class 1</strong> (industrial / heavy-duty
@@ -931,7 +931,7 @@ export default function WorkingAtHeightModule2Section1() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-green-400/30 p-4 rounded-lg">
                   <h4 className="text-green-300 font-medium mb-2">Class 1 — Industrial</h4>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Rated for heavy-duty professional and industrial use</span>
@@ -960,7 +960,7 @@ export default function WorkingAtHeightModule2Section1() {
 
                 <div className="bg-white/5 border border-red-400/30 p-4 rounded-lg">
                   <h4 className="text-red-300 font-medium mb-2">Class 3 — Domestic</h4>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Rated for light domestic use only (DIY, household tasks)</span>
@@ -993,7 +993,7 @@ export default function WorkingAtHeightModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Site Rule</h3>
                 </div>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Most principal contractors and site managers will not permit any ladder below
                   Class 1 on their construction sites. If you arrive with a Class 3 domestic ladder,
                   you will likely be asked to remove it. Always check the ladder label or markings
@@ -1020,7 +1020,7 @@ export default function WorkingAtHeightModule2Section1() {
               <span className="text-amber-400/80 text-sm font-normal">06</span>
               Pre-Use Inspection Checklist
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 A visual and physical inspection must be carried out{' '}
                 <strong className="text-white">before every use</strong>. This is the user's
@@ -1077,7 +1077,7 @@ export default function WorkingAtHeightModule2Section1() {
                         <Eye className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
                         <div>
                           <p className="text-white font-medium text-sm">{point.item}</p>
-                          <p className="text-white/60 text-xs leading-relaxed mt-1">
+                          <p className="text-white text-xs leading-relaxed mt-1">
                             {point.check}
                           </p>
                         </div>
@@ -1092,7 +1092,7 @@ export default function WorkingAtHeightModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Defect Found — What To Do</h3>
                 </div>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>Do not use the ladder — remove it from the work area immediately</span>
@@ -1139,7 +1139,7 @@ export default function WorkingAtHeightModule2Section1() {
               <span className="text-purple-400/80 text-sm font-normal">07</span>
               The 3-Rung Rule &amp; Safe Use Summary
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 When a ladder is used as a means of access to another level (such as a scaffold
                 platform, flat roof, or mezzanine), the ladder must extend at least{' '}
@@ -1150,7 +1150,7 @@ export default function WorkingAtHeightModule2Section1() {
 
               <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-amber-400">Why 3 Rungs?</h3>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Without the extension above the landing, the user must lean forward and twist to
                   step off the ladder — drastically increasing the risk of losing balance and
                   falling. The 3-rung extension provides something to hold onto while making the
@@ -1181,7 +1181,7 @@ export default function WorkingAtHeightModule2Section1() {
                   ].map((rule, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-amber-400/70 mt-0.5 flex-shrink-0" />
-                      <span className="text-white/70 leading-relaxed">{rule}</span>
+                      <span className="text-white leading-relaxed">{rule}</span>
                     </div>
                   ))}
                 </div>
@@ -1189,7 +1189,7 @@ export default function WorkingAtHeightModule2Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-amber-400 font-medium mb-2">Stepladder-Specific Rules</h3>
-                <ul className="text-white/70 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>Open fully and engage all locking devices before use</span>
@@ -1230,7 +1230,7 @@ export default function WorkingAtHeightModule2Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1246,7 +1246,7 @@ export default function WorkingAtHeightModule2Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-2">

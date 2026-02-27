@@ -189,7 +189,7 @@ const Module5Section2_1 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -206,13 +206,13 @@ const Module5Section2_1 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.2.1</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.2.1</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               What Makes a 'Safe and Functional' Design
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Understanding the principles that balance technical requirements, regulatory
               compliance, and user needs in electrical design.
             </p>
@@ -223,7 +223,7 @@ const Module5Section2_1 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                <ul className="text-white text-sm space-y-1 list-disc pl-4">
                   <li>Safe design prevents danger to people, property, and equipment.</li>
                   <li>Functional design meets user needs and intended use.</li>
                   <li>
@@ -233,7 +233,7 @@ const Module5Section2_1 = () => {
               </div>
               <div>
                 <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                <ul className="text-white text-sm space-y-1 list-disc pl-4">
                   <li>
                     <strong>Spot:</strong> Shock protection, overcurrent protection, fire prevention
                     measures.
@@ -256,7 +256,7 @@ const Module5Section2_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Learning Outcomes
             </h2>
-            <ul className="text-white/80 space-y-2 list-disc pl-6">
+            <ul className="text-white space-y-2 list-disc pl-6">
               <li>Explain the meaning of a "safe and functional" electrical design.</li>
               <li>
                 Identify key safety principles (shock protection, overload protection, fire
@@ -277,24 +277,24 @@ const Module5Section2_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Defining a Safe and Functional Design
             </h2>
-            <p className="text-white/80 mb-4">
+            <p className="text-white mb-4">
               A good electrical design must achieve two key objectives:
             </p>
 
             <div className="space-y-4 mb-6">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Safe Design</p>
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Prevents danger:</strong> Protects people, property, and equipment from
                   electrical hazards.
                 </p>
-                <ul className="text-white/70 text-sm space-y-1 list-disc pl-4">
+                <ul className="text-white text-sm space-y-1 list-disc pl-4">
                   <li>Shock protection through proper earthing and RCD protection</li>
                   <li>Fire prevention through correct cable sizing and protection</li>
                   <li>Overcurrent protection to prevent equipment damage</li>
                   <li>Compliance with BS 7671 Wiring Regulations</li>
                 </ul>
-                <div className="mt-3 p-2 bg-white/5 rounded text-sm text-white/70">
+                <div className="mt-3 p-2 bg-white/5 rounded text-sm text-white">
                   <strong>Key principle:</strong> Safety is never optional - it's the foundation of
                   all electrical design
                 </div>
@@ -302,17 +302,17 @@ const Module5Section2_1 = () => {
 
               <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
                 <p className="font-semibold text-green-400 mb-2">Functional Design</p>
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Meets user needs:</strong> Ensures the installation serves its intended
                   purpose effectively.
                 </p>
-                <ul className="text-white/70 text-sm space-y-1 list-disc pl-4">
+                <ul className="text-white text-sm space-y-1 list-disc pl-4">
                   <li>Sufficient socket outlets to avoid extension lead dependence</li>
                   <li>Appropriate lighting levels for the space and activities</li>
                   <li>Circuits planned to match electrical demand</li>
                   <li>Accessibility requirements under Building Regulations Part M</li>
                 </ul>
-                <div className="mt-3 p-2 bg-white/5 rounded text-sm text-white/70">
+                <div className="mt-3 p-2 bg-white/5 rounded text-sm text-white">
                   <strong>Key principle:</strong> Good design anticipates user needs and provides
                   practical solutions
                 </div>
@@ -334,7 +334,7 @@ const Module5Section2_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Core Safety Principles
             </h2>
-            <p className="text-white/80 mb-4">
+            <p className="text-white mb-4">
               Three fundamental safety principles underpin all electrical design decisions:
             </p>
 
@@ -343,8 +343,8 @@ const Module5Section2_1 = () => {
 
               <div className="space-y-4">
                 <div>
-                  <p className="text-white/80 font-medium mb-1">Shock Protection</p>
-                  <ul className="text-white/70 text-sm space-y-1 list-disc pl-4">
+                  <p className="text-white font-medium mb-1">Shock Protection</p>
+                  <ul className="text-white text-sm space-y-1 list-disc pl-4">
                     <li>Basic protection: insulation, enclosure, barriers</li>
                     <li>Fault protection: earthing, RCD protection, automatic disconnection</li>
                     <li>Additional protection: RCDs for socket outlets up to 32A</li>
@@ -352,8 +352,8 @@ const Module5Section2_1 = () => {
                 </div>
 
                 <div>
-                  <p className="text-white/80 font-medium mb-1">Overcurrent Protection</p>
-                  <ul className="text-white/70 text-sm space-y-1 list-disc pl-4">
+                  <p className="text-white font-medium mb-1">Overcurrent Protection</p>
+                  <ul className="text-white text-sm space-y-1 list-disc pl-4">
                     <li>Fuses and MCBs sized to protect cables and equipment</li>
                     <li>Discrimination to isolate faults without affecting healthy circuits</li>
                     <li>Breaking capacity adequate for prospective fault current</li>
@@ -361,8 +361,8 @@ const Module5Section2_1 = () => {
                 </div>
 
                 <div>
-                  <p className="text-white/80 font-medium mb-1">Fire Prevention</p>
-                  <ul className="text-white/70 text-sm space-y-1 list-disc pl-4">
+                  <p className="text-white font-medium mb-1">Fire Prevention</p>
+                  <ul className="text-white text-sm space-y-1 list-disc pl-4">
                     <li>Correct cable sizing for current-carrying capacity</li>
                     <li>Proper cable containment and fire barriers</li>
                     <li>Arc fault protection in high-risk applications</li>
@@ -370,7 +370,7 @@ const Module5Section2_1 = () => {
                 </div>
               </div>
 
-              <div className="mt-4 p-2 bg-white/5 rounded text-sm text-white/70">
+              <div className="mt-4 p-2 bg-white/5 rounded text-sm text-white">
                 <strong>Remember:</strong> All three principles work together to create
                 comprehensive protection
               </div>
@@ -391,7 +391,7 @@ const Module5Section2_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Functional Requirements
             </h2>
-            <p className="text-white/80 mb-4">
+            <p className="text-white mb-4">
               Functional design ensures the installation serves users effectively and efficiently:
             </p>
 
@@ -400,8 +400,8 @@ const Module5Section2_1 = () => {
 
               <div className="space-y-4">
                 <div>
-                  <p className="text-white/80 font-medium mb-1">Socket Outlet Provision</p>
-                  <ul className="text-white/70 text-sm space-y-1 list-disc pl-4">
+                  <p className="text-white font-medium mb-1">Socket Outlet Provision</p>
+                  <ul className="text-white text-sm space-y-1 list-disc pl-4">
                     <li>Avoid over-reliance on extension leads (safety hazard)</li>
                     <li>Consider furniture layout and room usage patterns</li>
                     <li>Plan for increased demand (more electrical devices over time)</li>
@@ -409,8 +409,8 @@ const Module5Section2_1 = () => {
                 </div>
 
                 <div>
-                  <p className="text-white/80 font-medium mb-1">Circuit Planning</p>
-                  <ul className="text-white/70 text-sm space-y-1 list-disc pl-4">
+                  <p className="text-white font-medium mb-1">Circuit Planning</p>
+                  <ul className="text-white text-sm space-y-1 list-disc pl-4">
                     <li>Separate high-demand areas (kitchens, workshops)</li>
                     <li>Ring final circuits for general use areas</li>
                     <li>Dedicated circuits for fixed appliances</li>
@@ -418,8 +418,8 @@ const Module5Section2_1 = () => {
                 </div>
 
                 <div>
-                  <p className="text-white/80 font-medium mb-1">Lighting Design</p>
-                  <ul className="text-white/70 text-sm space-y-1 list-disc pl-4">
+                  <p className="text-white font-medium mb-1">Lighting Design</p>
+                  <ul className="text-white text-sm space-y-1 list-disc pl-4">
                     <li>Adequate coverage without shadows or dark spots</li>
                     <li>Emergency lighting where required by regulations</li>
                     <li>Energy-efficient solutions and smart controls</li>
@@ -427,7 +427,7 @@ const Module5Section2_1 = () => {
                 </div>
               </div>
 
-              <div className="mt-4 p-2 bg-white/5 rounded text-sm text-white/70">
+              <div className="mt-4 p-2 bg-white/5 rounded text-sm text-white">
                 <strong>Design principle:</strong> Plan for real-world use, not just minimum
                 compliance
               </div>
@@ -448,12 +448,12 @@ const Module5Section2_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Design Standards and Regulations
             </h2>
-            <p className="text-white/80 mb-4">
+            <p className="text-white mb-4">
               UK electrical design must comply with multiple regulatory frameworks:
             </p>
 
             <div className="p-4 rounded-lg bg-white/5 border border-white/10 mb-4">
-              <ul className="text-white/80 space-y-2 text-sm">
+              <ul className="text-white space-y-2 text-sm">
                 <li>
                   <strong>BS 7671:</strong> Requires installations to be "safe, serviceable, and
                   meet user needs."
@@ -476,12 +476,12 @@ const Module5Section2_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Consequences of Poor Design
             </h2>
-            <p className="text-white/80 mb-4">
+            <p className="text-white mb-4">
               Poor design decisions create serious risks and costs:
             </p>
 
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30 mb-4">
-              <ul className="text-white/80 space-y-2 text-sm">
+              <ul className="text-white space-y-2 text-sm">
                 <li className="flex items-start gap-2">
                   <AlertTriangle className="w-4 h-4 text-red-400 flex-shrink-0 mt-0.5" />
                   <span>Unsafe conditions (shock, fire risk)</span>
@@ -512,7 +512,7 @@ const Module5Section2_1 = () => {
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-blue-500/5 border-l-2 border-blue-500/50">
                 <p className="font-semibold text-blue-400 mb-2">Step 1: Initial Assessment</p>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
                     <span>
@@ -546,7 +546,7 @@ const Module5Section2_1 = () => {
 
               <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
                 <p className="font-semibold text-green-400 mb-2">Step 2: Technical Planning</p>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
                     <span>
@@ -580,7 +580,7 @@ const Module5Section2_1 = () => {
 
               <div className="p-4 rounded-lg bg-purple-500/5 border-l-2 border-purple-500/50">
                 <p className="font-semibold text-purple-400 mb-2">Step 3: Future-Proofing</p>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
                     <span>
@@ -615,7 +615,7 @@ const Module5Section2_1 = () => {
                 <p className="font-semibold text-orange-400 mb-2">
                   Step 4: Accessibility Compliance
                 </p>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
                     <span>
@@ -657,7 +657,7 @@ const Module5Section2_1 = () => {
 
             <div className="p-4 rounded-lg bg-orange-500/5 border-l-2 border-orange-500/50">
               <p className="font-semibold text-orange-400 mb-2">The £50,000 Design Mistake</p>
-              <p className="text-white/80 mb-3 text-sm">
+              <p className="text-white mb-3 text-sm">
                 <strong>The Project:</strong> A 200-unit new build housing development in Manchester
                 where the electrical contractor installed minimal socket provision to meet basic
                 building regulations - just one double socket per bedroom and limited kitchen
@@ -666,7 +666,7 @@ const Module5Section2_1 = () => {
 
               <div className="p-3 bg-white/5 rounded mb-3">
                 <p className="font-medium text-white mb-2 text-sm">What Went Wrong:</p>
-                <ul className="text-white/70 text-sm space-y-1 list-disc pl-4">
+                <ul className="text-white text-sm space-y-1 list-disc pl-4">
                   <li>
                     <strong>Inadequate kitchen provision:</strong> Only 4 double sockets for modern
                     appliances
@@ -688,7 +688,7 @@ const Module5Section2_1 = () => {
 
               <div className="p-3 bg-red-500/10 rounded mb-3 border border-red-500/30">
                 <p className="font-medium text-red-400 mb-2 text-sm">The Consequences:</p>
-                <ul className="text-white/70 text-sm space-y-1 list-disc pl-4">
+                <ul className="text-white text-sm space-y-1 list-disc pl-4">
                   <li>
                     <strong>Safety hazards:</strong> Residents used dangerous daisy-chained
                     extension leads
@@ -712,7 +712,7 @@ const Module5Section2_1 = () => {
 
               <div className="p-3 bg-green-500/10 rounded border border-green-500/30">
                 <p className="font-medium text-green-400 mb-2 text-sm">The Better Approach:</p>
-                <ul className="text-white/70 text-sm space-y-1 list-disc pl-4">
+                <ul className="text-white text-sm space-y-1 list-disc pl-4">
                   <li>
                     <strong>User research:</strong> Survey typical household electrical usage
                     patterns
@@ -736,7 +736,7 @@ const Module5Section2_1 = () => {
                 </ul>
               </div>
 
-              <div className="mt-3 p-2 bg-white/5 rounded text-sm text-white/70">
+              <div className="mt-3 p-2 bg-white/5 rounded text-sm text-white">
                 <strong>Key lesson:</strong> Good design costs slightly more upfront but prevents
                 expensive problems later. Always design for real-world usage, not just regulatory
                 compliance.
@@ -754,7 +754,7 @@ const Module5Section2_1 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-green-500/5 border border-green-500/30">
                 <p className="font-semibold text-green-400 mb-2 text-sm">Safety Essentials</p>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>• Follow BS 7671 Wiring Regulations</li>
                   <li>• RCD protection for socket outlets ≤32A</li>
                   <li>• Size cables for current-carrying capacity</li>
@@ -765,7 +765,7 @@ const Module5Section2_1 = () => {
 
               <div className="p-4 rounded-lg bg-blue-500/5 border border-blue-500/30">
                 <p className="font-semibold text-blue-400 mb-2 text-sm">Functional Requirements</p>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>• Adequate socket outlets for room usage</li>
                   <li>• Sufficient lighting without dark spots</li>
                   <li>• Dedicated circuits for high-load appliances</li>
@@ -776,7 +776,7 @@ const Module5Section2_1 = () => {
 
               <div className="p-4 rounded-lg bg-purple-500/5 border border-purple-500/30">
                 <p className="font-semibold text-purple-400 mb-2 text-sm">Compliance & Quality</p>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>• Meet Building Regulations Part P & M</li>
                   <li>• Follow manufacturer instructions</li>
                   <li>• Ensure accessibility compliance</li>
@@ -787,7 +787,7 @@ const Module5Section2_1 = () => {
 
               <div className="p-4 rounded-lg bg-orange-500/5 border border-orange-500/30">
                 <p className="font-semibold text-orange-400 mb-2 text-sm">Future-Proofing</p>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>• Allow for EV charging points</li>
                   <li>• Plan for smart home technology</li>
                   <li>• Consider renewable energy provisions</li>
@@ -798,7 +798,7 @@ const Module5Section2_1 = () => {
             </div>
 
             <div className="mt-4 p-3 bg-white/5 rounded text-center">
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 <strong>Remember:</strong> Good design balances safety, functionality, compliance,
                 and future needs. Always consider real-world usage patterns, not just minimum
                 regulatory requirements.
@@ -812,7 +812,7 @@ const Module5Section2_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">09</span>
               Recap
             </h2>
-            <p className="text-white/80">
+            <p className="text-white">
               In this subsection, you learned what makes an electrical design both safe and
               functional. You covered the three main safety principles (shock protection,
               overload/fire protection), the importance of accessibility and usability, and the
@@ -836,11 +836,11 @@ const Module5Section2_1 = () => {
                   >
                     <span className="font-medium text-white text-sm pr-4">{faq.question}</span>
                     <ChevronDown
-                      className={`w-5 h-5 text-white/60 flex-shrink-0 transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
+                      className={`w-5 h-5 text-white flex-shrink-0 transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
                     />
                   </button>
                   {openFaq === index && (
-                    <div className="px-4 pb-4 text-white/70 text-sm">{faq.answer}</div>
+                    <div className="px-4 pb-4 text-white text-sm">{faq.answer}</div>
                   )}
                 </div>
               ))}
@@ -856,7 +856,7 @@ const Module5Section2_1 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="..">

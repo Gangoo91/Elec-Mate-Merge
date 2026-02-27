@@ -107,7 +107,7 @@ const Level2 = () => {
             <Button
               variant="ghost"
               size="sm"
-              className="mb-4 text-white/60 hover:text-white hover:bg-white/10 gap-2"
+              className="mb-4 text-white hover:text-white hover:bg-white/10 gap-2"
               asChild
             >
               <Link to="/study-centre/apprentice">
@@ -135,7 +135,7 @@ const Level2 = () => {
                 Level 2 Electrical Installation
               </span>
             </h1>
-            <p className="text-sm text-white/50 max-w-md mx-auto">
+            <p className="text-sm text-white max-w-md mx-auto">
               Foundation electrical installation skills and safety training modules
             </p>
           </motion.div>

@@ -308,7 +308,7 @@ export const InvoiceWizard = ({
           <div className="flex items-start justify-between gap-4">
             <div>
               <h3 className="font-semibold text-amber-400 mb-1">Recover Unsaved Invoice?</h3>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 You have an unsaved invoice draft
                 {recoveredDraft.client?.name && ` for ${recoveredDraft.client.name}`}. Would you
                 like to recover it?
@@ -319,7 +319,7 @@ export const InvoiceWizard = ({
                 size="sm"
                 variant="ghost"
                 onClick={handleDiscardDraft}
-                className="text-white/60 hover:text-white"
+                className="text-white hover:text-white"
               >
                 Discard
               </Button>

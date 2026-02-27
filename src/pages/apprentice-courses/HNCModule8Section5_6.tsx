@@ -259,7 +259,7 @@ const HNCModule8Section5_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section5">
@@ -281,7 +281,7 @@ const HNCModule8Section5_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             System Optimisation
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Energy monitoring, fault detection, performance analytics and continuous commissioning
           </p>
         </header>
@@ -473,23 +473,23 @@ const HNCModule8Section5_6 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">Key Dashboard Metrics</p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Energy Use Intensity (EUI):</span>{' '}
+                  <span className="text-white">Energy Use Intensity (EUI):</span>{' '}
                   <span className="text-white">kWh/m²/year - normalised consumption</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Peak Demand:</span>{' '}
+                  <span className="text-white">Peak Demand:</span>{' '}
                   <span className="text-white">kW maximum - capacity and charges</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Power Factor:</span>{' '}
+                  <span className="text-white">Power Factor:</span>{' '}
                   <span className="text-white">Target &gt; 0.95 - reactive charges</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Base Load Ratio:</span>{' '}
+                  <span className="text-white">Base Load Ratio:</span>{' '}
                   <span className="text-white">Night/day consumption - identifies waste</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Carbon Intensity:</span>{' '}
+                  <span className="text-white">Carbon Intensity:</span>{' '}
                   <span className="text-white">kgCO₂/m² - sustainability reporting</span>
                 </p>
               </div>
@@ -734,30 +734,30 @@ const HNCModule8Section5_6 = () => {
             <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
               <p className="text-sm font-medium text-blue-400 mb-2">CUSUM Analysis Example</p>
               <div className="font-mono text-sm space-y-1">
-                <p className="text-white/60">
+                <p className="text-white">
                   Purpose: Detect when performance deviates from baseline
                 </p>
                 <p className="mt-2">
                   <span className="text-white">Baseline model:</span>{' '}
-                  <span className="text-white/80">kWh = 1,500 + (25 × HDD)</span>
+                  <span className="text-white">kWh = 1,500 + (25 × HDD)</span>
                 </p>
                 <p>
                   <span className="text-white">Week 1 actual:</span>{' '}
-                  <span className="text-white/80">2,100 kWh, HDD = 20</span>
+                  <span className="text-white">2,100 kWh, HDD = 20</span>
                 </p>
                 <p>
                   <span className="text-white">Week 1 predicted:</span>{' '}
-                  <span className="text-white/80">1,500 + (25 × 20) = 2,000 kWh</span>
+                  <span className="text-white">1,500 + (25 × 20) = 2,000 kWh</span>
                 </p>
                 <p>
                   <span className="text-white">Week 1 variance:</span>{' '}
-                  <span className="text-white/80">2,100 - 2,000 = +100 kWh</span>
+                  <span className="text-white">2,100 - 2,000 = +100 kWh</span>
                 </p>
                 <p>
                   <span className="text-white">CUSUM after W1:</span>{' '}
-                  <span className="text-white/80">+100 kWh</span>
+                  <span className="text-white">+100 kWh</span>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Accumulate weekly variances - rising CUSUM indicates degradation
                 </p>
               </div>
@@ -770,7 +770,7 @@ const HNCModule8Section5_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-2">Data Integration</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>BMS via BACnet/Modbus/API</li>
                     <li>Utility meters (AMR/smart meters)</li>
                     <li>Weather data feeds</li>
@@ -780,7 +780,7 @@ const HNCModule8Section5_6 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-2">Analysis Capabilities</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Automated benchmarking</li>
                     <li>Fault detection and diagnostics</li>
                     <li>Energy modelling and M&amp;V</li>
@@ -940,14 +940,14 @@ const HNCModule8Section5_6 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">DEC Rating Calculation</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Step 1: Calculate building energy use</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Step 1: Calculate building energy use</p>
                 <p className="ml-4">Total kWh = Electricity kWh + (Gas kWh × 1.0)</p>
-                <p className="mt-2 text-white/60">Step 2: Calculate energy use intensity</p>
+                <p className="mt-2 text-white">Step 2: Calculate energy use intensity</p>
                 <p className="ml-4">EUI = Total kWh ÷ Gross Internal Area (m²)</p>
-                <p className="mt-2 text-white/60">Step 3: Compare to benchmark</p>
+                <p className="mt-2 text-white">Step 3: Compare to benchmark</p>
                 <p className="ml-4">Operational Rating = (EUI ÷ Benchmark EUI) × 100</p>
-                <p className="mt-2 text-white/60">Step 4: Convert to letter grade</p>
+                <p className="mt-2 text-white">Step 4: Convert to letter grade</p>
                 <p className="ml-4">A = 0-25, B = 26-50, C = 51-75, D = 76-100</p>
                 <p className="ml-4">E = 101-125, F = 126-150, G = &gt; 150</p>
               </div>
@@ -976,7 +976,7 @@ const HNCModule8Section5_6 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Performance principle:</strong> Buildings rarely maintain their
               as-commissioned efficiency without active management. CCx addresses the natural
               tendency for performance to degrade over time through operational drift, equipment
@@ -1003,16 +1003,16 @@ const HNCModule8Section5_6 = () => {
                 <strong>Scenario:</strong> Determine sub-metering coverage for a 5,000m² office
                 building.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Main meter reading:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Main meter reading:</p>
                 <p className="ml-4">Total building consumption: 850,000 kWh/year</p>
-                <p className="mt-2 text-white/60">Sub-meter readings:</p>
+                <p className="mt-2 text-white">Sub-meter readings:</p>
                 <p className="ml-4">Chiller plant: 280,000 kWh (33%)</p>
                 <p className="ml-4">AHU/FCU motors: 85,000 kWh (10%)</p>
                 <p className="ml-4">Lighting floors 1-3: 120,000 kWh (14%)</p>
                 <p className="ml-4">Lifts: 35,000 kWh (4%)</p>
                 <p className="ml-4">Small power/unmetered: 330,000 kWh (39%)</p>
-                <p className="mt-2 text-white/60">Coverage calculation:</p>
+                <p className="mt-2 text-white">Coverage calculation:</p>
                 <p className="ml-4">Metered load: 280k + 85k + 120k + 35k = 520,000 kWh</p>
                 <p className="ml-4">Coverage: 520,000 ÷ 850,000 = 61%</p>
                 <p className="mt-2 text-green-400">
@@ -1029,16 +1029,16 @@ const HNCModule8Section5_6 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Prioritise three detected faults by energy impact.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Fault A - Simultaneous heating/cooling:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Fault A - Simultaneous heating/cooling:</p>
                 <p className="ml-4">Duration: 8 hours/day × 5 days × 40 weeks = 1,600 hours</p>
                 <p className="ml-4">Wasted capacity: 15 kW heating + 12 kW cooling = 27 kW</p>
                 <p className="ml-4">Annual waste: 27 kW × 1,600 h = 43,200 kWh = £12,960</p>
-                <p className="mt-2 text-white/60">Fault B - Economiser disabled:</p>
+                <p className="mt-2 text-white">Fault B - Economiser disabled:</p>
                 <p className="ml-4">Free cooling hours lost: 800 hours/year</p>
                 <p className="ml-4">Additional chiller load: 25 kW</p>
                 <p className="ml-4">Annual waste: 25 kW × 800 h = 20,000 kWh = £6,000</p>
-                <p className="mt-2 text-white/60">Fault C - Out-of-hours operation:</p>
+                <p className="mt-2 text-white">Fault C - Out-of-hours operation:</p>
                 <p className="ml-4">Unnecessary runtime: 2 hours/day × 250 days = 500 hours</p>
                 <p className="ml-4">System load: 8 kW</p>
                 <p className="ml-4">Annual waste: 8 kW × 500 h = 4,000 kWh = £1,200</p>
@@ -1055,20 +1055,20 @@ const HNCModule8Section5_6 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Calculate DEC rating for a public building.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Building data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Building data:</p>
                 <p className="ml-4">Gross internal area: 2,500 m²</p>
                 <p className="ml-4">Building type: General office</p>
                 <p className="ml-4">Electricity: 425,000 kWh/year</p>
                 <p className="ml-4">Gas: 180,000 kWh/year</p>
-                <p className="mt-2 text-white/60">Step 1 - Total energy:</p>
+                <p className="mt-2 text-white">Step 1 - Total energy:</p>
                 <p className="ml-4">Total = 425,000 + 180,000 = 605,000 kWh/year</p>
-                <p className="mt-2 text-white/60">Step 2 - Energy Use Intensity:</p>
+                <p className="mt-2 text-white">Step 2 - Energy Use Intensity:</p>
                 <p className="ml-4">EUI = 605,000 ÷ 2,500 = 242 kWh/m²/year</p>
-                <p className="mt-2 text-white/60">Step 3 - Compare to benchmark (TM46):</p>
+                <p className="mt-2 text-white">Step 3 - Compare to benchmark (TM46):</p>
                 <p className="ml-4">General office benchmark: 210 kWh/m²/year</p>
                 <p className="ml-4">Operational Rating = (242 ÷ 210) × 100 = 115</p>
-                <p className="mt-2 text-white/60">Step 4 - DEC grade:</p>
+                <p className="mt-2 text-white">Step 4 - DEC grade:</p>
                 <p className="ml-4">Rating 115 falls in range 101-125</p>
                 <p className="mt-2 text-green-400">DEC Rating: E (Advisory report required)</p>
               </div>
@@ -1166,7 +1166,7 @@ const HNCModule8Section5_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1230,7 +1230,7 @@ const HNCModule8Section5_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section5">

@@ -226,7 +226,7 @@ function HistoryTab({ items, isLoading }: { items: HistoryItem[]; isLoading: boo
   if (items.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-16 px-4 space-y-3">
-        <Clock className="h-10 w-10 text-white/20" />
+        <Clock className="h-10 w-10 text-white" />
         <p className="text-sm text-white text-center">
           No mock sessions completed yet. Start a discussion or knowledge test to see your history.
         </p>

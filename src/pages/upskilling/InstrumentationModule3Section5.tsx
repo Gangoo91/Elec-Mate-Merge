@@ -104,7 +104,7 @@ const InstrumentationModule3Section5 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Signal Integrity: Noise, Grounding, and Shielding
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Protect signals from interference and maintain measurement quality
           </p>
         </div>

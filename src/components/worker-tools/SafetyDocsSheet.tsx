@@ -118,9 +118,9 @@ export function SafetyDocsSheet({ open, onOpenChange }: SafetyDocsSheetProps) {
                                 </Badge>
                               )}
                             </div>
-                            <p className="text-sm text-white/60">{doc.type}</p>
+                            <p className="text-sm text-white">{doc.type}</p>
                             {doc.description && (
-                              <p className="text-xs text-white/50 mt-1 line-clamp-2">
+                              <p className="text-xs text-white mt-1 line-clamp-2">
                                 {doc.description}
                               </p>
                             )}
@@ -161,7 +161,7 @@ export function SafetyDocsSheet({ open, onOpenChange }: SafetyDocsSheetProps) {
                   <div className="space-y-3">
                     <div className="flex items-center gap-2">
                       <ShieldCheck className="h-4 w-4 text-green-400" />
-                      <h3 className="text-sm font-medium text-white/80">
+                      <h3 className="text-sm font-medium text-white">
                         Acknowledged ({acknowledgedDocs.length})
                       </h3>
                     </div>
@@ -177,8 +177,8 @@ export function SafetyDocsSheet({ open, onOpenChange }: SafetyDocsSheetProps) {
                           </div>
                           <div className="flex-1 min-w-0">
                             <p className="font-medium text-white">{doc.title}</p>
-                            <p className="text-sm text-white/60">{doc.type}</p>
-                            <p className="text-xs text-white/40 mt-1">
+                            <p className="text-sm text-white">{doc.type}</p>
+                            <p className="text-xs text-white mt-1">
                               Acknowledged{' '}
                               {new Date(doc.acknowledged_at!).toLocaleDateString('en-GB', {
                                 day: 'numeric',
@@ -187,7 +187,7 @@ export function SafetyDocsSheet({ open, onOpenChange }: SafetyDocsSheetProps) {
                               })}
                             </p>
                           </div>
-                          <ChevronRight className="h-5 w-5 text-white/30 flex-shrink-0" />
+                          <ChevronRight className="h-5 w-5 text-white flex-shrink-0" />
                         </div>
                       </button>
                     ))}
@@ -201,7 +201,7 @@ export function SafetyDocsSheet({ open, onOpenChange }: SafetyDocsSheetProps) {
                       <ShieldCheck className="h-8 w-8 text-green-400" />
                     </div>
                     <p className="text-white font-medium mb-1">All Clear</p>
-                    <p className="text-white/60 text-sm">No safety documents require attention</p>
+                    <p className="text-white text-sm">No safety documents require attention</p>
                   </div>
                 )}
               </>

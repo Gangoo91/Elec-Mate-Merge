@@ -264,7 +264,7 @@ const HNCModule7Section1_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section1">
@@ -286,7 +286,7 @@ const HNCModule7Section1_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Load Assessment
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Maximum demand, diversity factors, supply capacity, and future expansion planning
           </p>
         </header>
@@ -437,16 +437,16 @@ const HNCModule7Section1_6 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">Maximum Demand Formula</p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Maximum Demand (MD):</span>
+                  <span className="text-white">Maximum Demand (MD):</span>
                 </p>
                 <p className="text-white">
                   MD = Σ(Connected Load × Diversity Factor × Utilisation Factor)
                 </p>
-                <p className="mt-2 text-white/60">Where:</p>
-                <p className="text-white/80">
+                <p className="mt-2 text-white">Where:</p>
+                <p className="text-white">
                   Diversity Factor = accounts for non-simultaneous operation
                 </p>
-                <p className="text-white/80">
+                <p className="text-white">
                   Utilisation Factor = proportion of rated capacity actually used
                 </p>
               </div>
@@ -649,23 +649,23 @@ const HNCModule7Section1_6 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">Standard DNO Supply Options</p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Single-phase domestic:</span>{' '}
+                  <span className="text-white">Single-phase domestic:</span>{' '}
                   <span className="text-white">60A, 80A, or 100A (230V)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Three-phase domestic:</span>{' '}
+                  <span className="text-white">Three-phase domestic:</span>{' '}
                   <span className="text-white">60A or 100A per phase (400V)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Small commercial LV:</span>{' '}
+                  <span className="text-white">Small commercial LV:</span>{' '}
                   <span className="text-white">Up to 150 kVA (typically)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Larger commercial LV:</span>{' '}
+                  <span className="text-white">Larger commercial LV:</span>{' '}
                   <span className="text-white">Up to 1 MVA (network dependent)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">HV supply:</span>{' '}
+                  <span className="text-white">HV supply:</span>{' '}
                   <span className="text-white">&gt;1 MVA, customer owns HV equipment</span>
                 </p>
               </div>
@@ -875,23 +875,23 @@ const HNCModule7Section1_6 = () => {
               </p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Current assessed maximum demand:</span>{' '}
+                  <span className="text-white">Current assessed maximum demand:</span>{' '}
                   <span className="text-white">200 kVA</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Growth allowance (20%):</span>{' '}
+                  <span className="text-white">Growth allowance (20%):</span>{' '}
                   <span className="text-white">40 kVA</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Design maximum demand:</span>{' '}
+                  <span className="text-white">Design maximum demand:</span>{' '}
                   <span className="text-white">240 kVA</span>
                 </p>
                 <p className="mt-2">
-                  <span className="text-white/60">With EV charging (10 × 7 kW):</span>{' '}
+                  <span className="text-white">With EV charging (10 × 7 kW):</span>{' '}
                   <span className="text-white">+70 kVA (with diversity 0.3 = 21 kVA)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Revised design MD:</span>{' '}
+                  <span className="text-white">Revised design MD:</span>{' '}
                   <span className="text-white">261 kVA → specify 300 kVA supply</span>
                 </p>
               </div>
@@ -915,7 +915,7 @@ const HNCModule7Section1_6 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Cost-benefit consideration:</strong> The marginal cost of specifying slightly
               larger infrastructure at installation is typically much less than retrofitting
               upgrades later.
@@ -942,7 +942,7 @@ const HNCModule7Section1_6 = () => {
                 electric cooker (12 kW), immersion heater (3 kW), electric shower (9.5 kW), and
                 standard ring circuits.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Lighting: 100 outlets × 100W = 10 kW × 66% ={' '}
                   <span className="text-green-400">6.6 kW</span>
@@ -982,7 +982,7 @@ const HNCModule7Section1_6 = () => {
                 <strong>Scenario:</strong> Assess maximum demand for a 2,000 m² office building with
                 HVAC.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Lighting: 12 W/m² × 2,000 m² × 0.9 diversity ={' '}
                   <span className="text-green-400">21.6 kW</span>
@@ -1021,7 +1021,7 @@ const HNCModule7Section1_6 = () => {
                 <strong>Scenario:</strong> Calculate maximum demand for a pump room with 3 motors:
                 22 kW, 15 kW, and 11 kW.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Motor ratings (assume pf 0.85, efficiency 0.9):</p>
                 <p className="ml-4">22 kW: I = 22000 / (√3 × 400 × 0.85 × 0.9) = 41.5A</p>
                 <p className="ml-4">15 kW: I = 15000 / (√3 × 400 × 0.85 × 0.9) = 28.3A</p>
@@ -1035,7 +1035,7 @@ const HNCModule7Section1_6 = () => {
                 <p className="mt-2">
                   In kVA: 101 × √3 × 400 / 1000 = <span className="text-green-400">70 kVA</span>
                 </p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Note: Starting current considerations may require higher short-term capacity
                 </p>
               </div>
@@ -1121,7 +1121,7 @@ const HNCModule7Section1_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1167,7 +1167,7 @@ const HNCModule7Section1_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section1">

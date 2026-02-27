@@ -189,7 +189,7 @@ export default function ManualHandlingModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-1">
@@ -214,7 +214,7 @@ export default function ManualHandlingModule1Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Anatomy &amp; Injury Mechanisms
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding the spine, how discs work, why the lumbar region is vulnerable, and the
             mechanisms that cause manual handling injuries
           </p>
@@ -294,7 +294,7 @@ export default function ManualHandlingModule1Section4() {
                 The Five Regions of the Spinal Column
               </p>
             </div>
-            <p className="text-sm text-white/60 mb-6 text-center">
+            <p className="text-sm text-white mb-6 text-center">
               33 vertebrae arranged in five regions, forming the natural S-curve
             </p>
 
@@ -304,10 +304,10 @@ export default function ManualHandlingModule1Section4() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-xs font-bold text-blue-400">CERVICAL (C1&ndash;C7)</p>
-                    <p className="text-[11px] text-white/60">7 vertebrae &middot; Neck region</p>
+                    <p className="text-[11px] text-white">7 vertebrae &middot; Neck region</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-[10px] text-white/40">Lordotic curve (inward)</p>
+                    <p className="text-[10px] text-white">Lordotic curve (inward)</p>
                     <p className="text-[10px] text-blue-400/70">
                       Supports head &middot; Greatest mobility
                     </p>
@@ -325,12 +325,12 @@ export default function ManualHandlingModule1Section4() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-xs font-bold text-purple-400">THORACIC (T1&ndash;T12)</p>
-                    <p className="text-[11px] text-white/60">
+                    <p className="text-[11px] text-white">
                       12 vertebrae &middot; Mid-back region
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="text-[10px] text-white/40">Kyphotic curve (outward)</p>
+                    <p className="text-[10px] text-white">Kyphotic curve (outward)</p>
                     <p className="text-[10px] text-purple-400/70">
                       Rib attachment &middot; Limited mobility
                     </p>
@@ -348,10 +348,10 @@ export default function ManualHandlingModule1Section4() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-xs font-bold text-red-400">LUMBAR (L1&ndash;L5)</p>
-                    <p className="text-[11px] text-white/60">5 vertebrae &middot; Lower back</p>
+                    <p className="text-[11px] text-white">5 vertebrae &middot; Lower back</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-[10px] text-white/40">Lordotic curve (inward)</p>
+                    <p className="text-[10px] text-white">Lordotic curve (inward)</p>
                     <p className="text-[10px] text-red-400/70">
                       Bears greatest load &middot; MOST VULNERABLE
                     </p>
@@ -374,10 +374,10 @@ export default function ManualHandlingModule1Section4() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-xs font-bold text-amber-400">SACRAL (S1&ndash;S5)</p>
-                    <p className="text-[11px] text-white/60">5 fused vertebrae &middot; Sacrum</p>
+                    <p className="text-[11px] text-white">5 fused vertebrae &middot; Sacrum</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-[10px] text-white/40">Kyphotic curve (outward)</p>
+                    <p className="text-[10px] text-white">Kyphotic curve (outward)</p>
                     <p className="text-[10px] text-amber-400/70">
                       Fused &middot; Connects to pelvis
                     </p>
@@ -395,10 +395,10 @@ export default function ManualHandlingModule1Section4() {
                 <div className="flex items-center justify-between">
                   <div>
                     <p className="text-xs font-bold text-emerald-400">COCCYGEAL (Co1&ndash;Co4)</p>
-                    <p className="text-[11px] text-white/60">4 fused vertebrae &middot; Tailbone</p>
+                    <p className="text-[11px] text-white">4 fused vertebrae &middot; Tailbone</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-[10px] text-white/40">Vestigial</p>
+                    <p className="text-[10px] text-white">Vestigial</p>
                     <p className="text-[10px] text-emerald-400/70">
                       Fused &middot; Muscle attachment
                     </p>
@@ -419,7 +419,7 @@ export default function ManualHandlingModule1Section4() {
                     <div className="w-5 h-5 rounded-full bg-emerald-400/40 border-2 border-emerald-400/60" />
                   </div>
                   <p className="text-xs font-bold text-emerald-400">ANNULUS FIBROSUS</p>
-                  <p className="text-[10px] text-white/60 mt-1">
+                  <p className="text-[10px] text-white mt-1">
                     Tough, multi-layered fibrous outer ring. Concentric layers of collagen fibres
                     arranged in alternating diagonal patterns. Contains and protects the nucleus.
                   </p>
@@ -429,7 +429,7 @@ export default function ManualHandlingModule1Section4() {
                     <div className="w-6 h-6 rounded-full bg-blue-400/50" />
                   </div>
                   <p className="text-xs font-bold text-blue-400">NUCLEUS PULPOSUS</p>
-                  <p className="text-[10px] text-white/60 mt-1">
+                  <p className="text-[10px] text-white mt-1">
                     Soft, gel-like centre. ~80% water. Acts as a hydraulic shock absorber,
                     distributing compressive forces evenly across the disc. Loses water content with
                     age.
@@ -438,7 +438,7 @@ export default function ManualHandlingModule1Section4() {
               </div>
             </div>
 
-            <p className="text-center text-white/40 text-xs mt-4">
+            <p className="text-center text-white text-xs mt-4">
               Between each pair of vertebrae (except C1/C2 and the fused sacral/coccygeal segments)
               sits an intervertebral disc that absorbs shock and allows movement
             </p>
@@ -462,7 +462,7 @@ export default function ManualHandlingModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">The Five Spinal Regions</p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[50px] h-7 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold flex-shrink-0">
                       C1&ndash;C7
@@ -566,7 +566,7 @@ export default function ManualHandlingModule1Section4() {
 
               <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-emerald-400 mb-2">Disc Structure</p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div>
                     <p className="text-white font-medium">Annulus Fibrosus (Outer Ring)</p>
                     <p>
@@ -595,12 +595,12 @@ export default function ManualHandlingModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">The Natural S-Curve</p>
-                <p className="text-sm text-white/80 leading-relaxed mb-3">
+                <p className="text-sm text-white leading-relaxed mb-3">
                   When viewed from the side, a healthy spine has a distinctive{' '}
                   <strong className="text-white">S-shaped curve</strong> formed by alternating
                   curves in each region:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -630,7 +630,7 @@ export default function ManualHandlingModule1Section4() {
                     </span>
                   </li>
                 </ul>
-                <p className="text-sm text-white/80 leading-relaxed mt-3">
+                <p className="text-sm text-white leading-relaxed mt-3">
                   This S-curve is not a flaw &mdash; it is a{' '}
                   <strong className="text-white">critical engineering feature</strong>. The
                   alternating curves act as a natural spring, absorbing shock and distributing
@@ -646,7 +646,7 @@ export default function ManualHandlingModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">Why Posture Matters</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   When you maintain the natural S-curve during lifting (by keeping your back
                   straight and bending at the knees and hips), compressive forces are distributed
                   <strong className="text-white"> evenly across the entire disc surface</strong>.
@@ -682,7 +682,7 @@ export default function ManualHandlingModule1Section4() {
 
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-red-400 mb-2">The Herniation Mechanism</p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium text-xs mb-1">Step 1: Spinal Flexion</p>
                     <p className="text-xs">
@@ -727,7 +727,7 @@ export default function ManualHandlingModule1Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Most Dangerous Movements for the Disc
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -770,7 +770,7 @@ export default function ManualHandlingModule1Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Compressive Forces During Lifting
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The forces on the lumbar disc during lifting are far greater than the weight of
                   the load alone, because of the{' '}
                   <strong className="text-white">lever-arm effect</strong>. When a load is held away
@@ -781,7 +781,7 @@ export default function ManualHandlingModule1Section4() {
                     <p className="text-emerald-400 font-semibold text-xs mb-1">
                       Standing Upright (no load)
                     </p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       L5/S1 compression: ~70 kg (body weight above L5)
                     </p>
                   </div>
@@ -789,7 +789,7 @@ export default function ManualHandlingModule1Section4() {
                     <p className="text-amber-400 font-semibold text-xs mb-1">
                       Bending Forward 20 deg (no load)
                     </p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       L5/S1 compression: ~150 kg (lever-arm effect of trunk weight)
                     </p>
                   </div>
@@ -797,7 +797,7 @@ export default function ManualHandlingModule1Section4() {
                     <p className="text-red-400 font-semibold text-xs mb-1">
                       Lifting 25 kg Close to Body
                     </p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       L5/S1 compression: ~340 kg (load + trunk weight + muscle force)
                     </p>
                   </div>
@@ -805,7 +805,7 @@ export default function ManualHandlingModule1Section4() {
                     <p className="text-red-400 font-semibold text-xs mb-1">
                       Lifting 25 kg at Arm&rsquo;s Length
                     </p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       L5/S1 compression: ~500+ kg (massively increased lever arm)
                     </p>
                   </div>
@@ -817,7 +817,7 @@ export default function ManualHandlingModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Key Insight</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Keeping the load <strong className="text-white">close to the body</strong> is not
                   just a training recommendation &mdash; it is a biomechanical necessity. Moving a
                   25 kg load from close to the body to arm&rsquo;s length increases the compressive
@@ -851,7 +851,7 @@ export default function ManualHandlingModule1Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Common Manual Handling Injuries
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <div className="flex items-center gap-2 mb-1">
                       <Heart className="h-4 w-4 text-red-400 flex-shrink-0" />
@@ -925,13 +925,13 @@ export default function ManualHandlingModule1Section4() {
                 <p className="text-sm font-medium text-red-400 mb-2">
                   Why L4/L5 and L5/S1 Are Most Vulnerable
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The lumbar region, and specifically the{' '}
                   <strong className="text-white">L4/L5 and L5/S1</strong> segments, accounts for the
                   vast majority of disc herniations from manual handling. This is not a coincidence
                   &mdash; it is a consequence of anatomy and biomechanics:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -985,7 +985,7 @@ export default function ManualHandlingModule1Section4() {
                   <CheckCircle className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">The Practical Lesson</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Understanding spinal anatomy explains <strong className="text-white">why</strong>
                   correct manual handling technique works. Every principle of safe lifting &mdash;
                   keeping the back straight, bending at the knees, keeping the load close, avoiding
@@ -1013,7 +1013,7 @@ export default function ManualHandlingModule1Section4() {
                 so important.
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -1082,7 +1082,7 @@ export default function ManualHandlingModule1Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1096,7 +1096,7 @@ export default function ManualHandlingModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-1-section-3">

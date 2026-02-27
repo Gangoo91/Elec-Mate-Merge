@@ -359,7 +359,7 @@ export function ExpenseAddSheet({ open, onOpenChange, onSave }: ExpenseAddSheetP
                     >
                       <div className="flex items-center gap-4">
                         <div className="w-14 h-14 rounded-xl bg-white/[0.08] flex items-center justify-center group-hover:bg-white/[0.12] transition-colors">
-                          <PenLine className="h-7 w-7 text-white/80" />
+                          <PenLine className="h-7 w-7 text-white" />
                         </div>
                         <div className="flex-1 text-left">
                           <p className="font-semibold text-foreground">Manual Entry</p>

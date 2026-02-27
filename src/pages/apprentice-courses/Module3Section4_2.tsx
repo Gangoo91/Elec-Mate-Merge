@@ -185,13 +185,13 @@ const Module3Section4_2: React.FC = () => {
         <header className="mb-6 sm:mb-8 text-center">
           <div className="inline-flex items-center justify-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/30 mb-4">
             <span className="text-elec-yellow text-sm font-medium">Module 3</span>
-            <span className="text-white/50">|</span>
-            <span className="text-white/70 text-sm">Section 3.4.2</span>
+            <span className="text-white">|</span>
+            <span className="text-white text-sm">Section 3.4.2</span>
           </div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             First Fix and Second Fix Explained
           </h1>
-          <p className="text-white/70">
+          <p className="text-white">
             Understanding the two-stage electrical installation approach for project planning and
             trade coordination.
           </p>
@@ -669,14 +669,14 @@ const Module3Section4_2: React.FC = () => {
               <p className="font-semibold mb-1">
                 Can First Fix and Second Fix be done in the same week?
               </p>
-              <p className="text-white/70">
+              <p className="text-white">
                 On small projects, yes — but usually they're separated to allow other trades to
                 finish their work in between.
               </p>
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-transparent border border-white/20">
               <p className="font-semibold mb-1">Do you test circuits in First Fix?</p>
-              <p className="text-white/70">
+              <p className="text-white">
                 Basic continuity and insulation resistance tests may be done during First Fix, but
                 full testing is carried out at Second Fix.
               </p>
@@ -685,7 +685,7 @@ const Module3Section4_2: React.FC = () => {
               <p className="font-semibold mb-1">
                 Is consumer unit installation part of First Fix or Second Fix?
               </p>
-              <p className="text-white/70">
+              <p className="text-white">
                 The consumer unit is usually mounted during First Fix, but final terminations and
                 energising are done during Second Fix.
               </p>
@@ -720,7 +720,7 @@ const Module3Section4_2: React.FC = () => {
                   <Hammer className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-white font-medium">Infrastructure Phase</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Install all cables, containment, and infrastructure before building finishes
                     </p>
                   </div>
@@ -729,7 +729,7 @@ const Module3Section4_2: React.FC = () => {
                   <Clock className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-white font-medium">Timing Critical</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Complete before plastering, decoration, or floor finishes
                     </p>
                   </div>
@@ -738,7 +738,7 @@ const Module3Section4_2: React.FC = () => {
                   <Shield className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-white font-medium">Protection Focus</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Safeguard installed cables from damage by other trades
                     </p>
                   </div>
@@ -757,7 +757,7 @@ const Module3Section4_2: React.FC = () => {
                   <Zap className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-white font-medium">Completion Phase</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Fit accessories, terminate circuits, and complete testing
                     </p>
                   </div>
@@ -766,7 +766,7 @@ const Module3Section4_2: React.FC = () => {
                   <Paintbrush className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-white font-medium">Finish Dependent</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Only begin after decoration and flooring complete
                     </p>
                   </div>
@@ -775,7 +775,7 @@ const Module3Section4_2: React.FC = () => {
                   <Search className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-white font-medium">Testing & Certification</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Complete full testing sequence and issue certificates
                     </p>
                   </div>

@@ -93,7 +93,7 @@ const BS7671Module3Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bs7671-module-3">
@@ -114,7 +114,7 @@ const BS7671Module3Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Voltage Drop & System Design Limits
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Calculating and managing voltage drop within BS 7671 limits
           </p>
         </header>
@@ -247,14 +247,14 @@ const BS7671Module3Section4 = () => {
               <h3 className="text-sm font-medium text-elec-yellow mb-3">The Formula</h3>
               <div className="text-center mb-4">
                 <p className="text-lg font-mono text-white">Vd = (mV/A/m) × I × L ÷ 1000</p>
-                <p className="text-sm text-white/70 mt-2">
+                <p className="text-sm text-white mt-2">
                   For single-phase: multiply by 2 (accounts for return conductor)
                 </p>
               </div>
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-2">Where:</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>
                       <strong>Vd:</strong> Voltage drop in volts
                     </li>
@@ -271,7 +271,7 @@ const BS7671Module3Section4 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-2">mV/A/m Values (typical):</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>
                       <strong>1.5mm²:</strong> 29 mV/A/m
                     </li>
@@ -343,7 +343,7 @@ const BS7671Module3Section4 = () => {
               <h3 className="text-sm font-medium text-elec-yellow mb-3">Three-Phase Formula</h3>
               <div className="text-center mb-4">
                 <p className="text-lg font-mono text-white">Vd = (mV/A/m) × I × L ÷ 1000</p>
-                <p className="text-sm text-white/70 mt-2">
+                <p className="text-sm text-white mt-2">
                   No ×2 multiplier for balanced three-phase loads
                 </p>
               </div>
@@ -480,7 +480,7 @@ const BS7671Module3Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -492,7 +492,7 @@ const BS7671Module3Section4 = () => {
           <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
             <div>
               <p className="font-medium text-elec-yellow mb-1">BS 7671 Limits</p>
-              <ul className="space-y-0.5 text-white/90">
+              <ul className="space-y-0.5 text-white">
                 <li>Lighting: 3% max (6.9V at 230V)</li>
                 <li>Other circuits: 5% max (11.5V)</li>
                 <li>Private supply: up to 8% total</li>
@@ -500,7 +500,7 @@ const BS7671Module3Section4 = () => {
             </div>
             <div>
               <p className="font-medium text-elec-yellow mb-1">Typical mV/A/m Values</p>
-              <ul className="space-y-0.5 text-white/90">
+              <ul className="space-y-0.5 text-white">
                 <li>1.5mm²: 29 | 2.5mm²: 18</li>
                 <li>4mm²: 11 | 6mm²: 7.3</li>
                 <li>10mm²: 4.4 | 16mm²: 2.8</li>
@@ -524,7 +524,7 @@ const BS7671Module3Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bs7671-module-3-section-3">

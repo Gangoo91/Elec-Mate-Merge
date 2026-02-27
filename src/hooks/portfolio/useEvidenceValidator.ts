@@ -177,7 +177,7 @@ export function getGradeColour(grade: string): { bg: string; text: string; borde
     default:
       return {
         bg: 'bg-muted',
-        text: 'text-white/80',
+        text: 'text-white',
         border: 'border-border',
       };
   }
@@ -195,7 +195,7 @@ export function getStatusColour(status: string): { bg: string; text: string } {
     case 'insufficient':
       return { bg: 'bg-red-500', text: 'text-red-400' };
     default:
-      return { bg: 'bg-muted', text: 'text-white/80' };
+      return { bg: 'bg-muted', text: 'text-white' };
   }
 }
 

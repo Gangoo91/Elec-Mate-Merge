@@ -143,7 +143,7 @@ const Module7Section5_1 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -162,13 +162,13 @@ const Module7Section5_1 = () => {
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <Search className="w-4 h-4" />
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 7</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.1</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.1</span>
             </div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
               Selection of Test Equipment for Basic Fault-Finding
             </h1>
-            <p className="text-white/70 text-base sm:text-lg max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg max-w-2xl mx-auto">
               Learn to select the correct test equipment for electrical fault-finding
             </p>
           </header>
@@ -176,7 +176,7 @@ const Module7Section5_1 = () => {
           {/* In 30 Seconds Summary */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 space-y-1 text-sm">
+            <ul className="text-white space-y-1 text-sm">
               <li>• Correct equipment prevents inaccurate results and safety risks</li>
               <li>• Continuity testers confirm conductor integrity</li>
               <li>• Insulation resistance testers assess insulation quality</li>
@@ -186,7 +186,7 @@ const Module7Section5_1 = () => {
 
           {/* Introduction */}
           <section className="mb-10">
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               Effective fault finding begins with choosing the right tools. Electrical testing is
               not guesswork; it relies on instruments designed to provide reliable and safe
               measurements. Selecting the wrong piece of equipment can lead to inaccurate results,
@@ -202,10 +202,10 @@ const Module7Section5_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <p className="text-white/80 mb-4">
+            <p className="text-white mb-4">
               By the end of this subsection, you should be able to:
             </p>
-            <ul className="space-y-2 text-white/80">
+            <ul className="space-y-2 text-white">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">✓</span>
                 <span>Explain why the correct selection of test equipment is essential</span>
@@ -228,7 +228,7 @@ const Module7Section5_1 = () => {
               Selecting the Right Instrument
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-4">
-              <div className="space-y-4 text-sm text-white/80">
+              <div className="space-y-4 text-sm text-white">
                 <p>
                   <strong className="text-white">
                     Match the instrument to the fault hypothesis:
@@ -281,7 +281,7 @@ const Module7Section5_1 = () => {
               Continuity and Polarity in Practice
             </h2>
             <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50 mb-4">
-              <div className="space-y-4 text-sm text-white/80">
+              <div className="space-y-4 text-sm text-white">
                 <p>
                   <strong className="text-white">
                     Understanding low-ohm continuity measurement:
@@ -361,7 +361,7 @@ const Module7Section5_1 = () => {
               Insulation Resistance for Diagnosis
             </h2>
             <div className="p-4 rounded-lg bg-amber-500/5 border-l-2 border-amber-500/50 mb-4">
-              <div className="space-y-4 text-sm text-white/80">
+              <div className="space-y-4 text-sm text-white">
                 <p>
                   <strong className="text-white">Understanding test voltage selection:</strong> Use
                   500 V DC for most low voltage circuits as specified in BS 7671. Apply 250 V DC
@@ -438,7 +438,7 @@ const Module7Section5_1 = () => {
               Earth Fault Loop and RCD Verification
             </h2>
             <div className="p-4 rounded-lg bg-purple-500/5 border-l-2 border-purple-500/50 mb-4">
-              <div className="space-y-4 text-sm text-white/80">
+              <div className="space-y-4 text-sm text-white">
                 <p>
                   <strong className="text-white">
                     Understanding loop impedance (Zs) verification:
@@ -523,7 +523,7 @@ const Module7Section5_1 = () => {
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <h3 className="font-semibold text-elec-yellow mb-3">Before You Test</h3>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li>
                     • Apply LOTO (Lock Out Tag Out) procedures and identify the specific circuit to
                     be tested
@@ -542,7 +542,7 @@ const Module7Section5_1 = () => {
 
               <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
                 <h3 className="font-semibold text-green-400 mb-3">During Testing</h3>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li>
                     • Perform prove-test-prove sequence for voltage indicators; null test leads for
                     continuity
@@ -564,7 +564,7 @@ const Module7Section5_1 = () => {
 
               <div className="p-4 rounded-lg bg-amber-500/5 border-l-2 border-amber-500/50">
                 <h3 className="font-semibold text-amber-400 mb-3">After Testing</h3>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li>• Discharge any capacitive circuits using instrument discharge facility</li>
                   <li>
                     • Restore all connections, barriers, and protective devices to original
@@ -594,7 +594,7 @@ const Module7Section5_1 = () => {
                 <h3 className="font-semibold text-elec-yellow mb-3">
                   Case 1: Lighting Circuit Fault
                 </h3>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <p>
                     <strong className="text-white">Situation:</strong> Multiple lighting fittings on
                     a ground floor circuit became inoperative after recent decorating work. The
@@ -621,7 +621,7 @@ const Module7Section5_1 = () => {
 
               <div className="p-4 rounded-lg bg-red-500/5 border-l-2 border-red-500/50">
                 <h3 className="font-semibold text-red-400 mb-3">Case 2: RCD Tripping Issue</h3>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <p>
                     <strong className="text-white">Situation:</strong> A domestic RCD protecting
                     garden circuits tripped intermittently during damp weather conditions.
@@ -658,7 +658,7 @@ const Module7Section5_1 = () => {
                 <p className="font-medium text-white mb-2">
                   Why is correct test equipment selection important?
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Because using the wrong instrument can give misleading results and create safety
                   risks.
                 </p>
@@ -667,7 +667,7 @@ const Module7Section5_1 = () => {
                 <p className="font-medium text-white mb-2">
                   What does a continuity tester measure?
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Whether conductors are continuous and properly connected.
                 </p>
               </div>
@@ -675,7 +675,7 @@ const Module7Section5_1 = () => {
                 <p className="font-medium text-white mb-2">
                   Why are multifunction testers widely used?
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   They combine several essential tests into one instrument.
                 </p>
               </div>
@@ -683,7 +683,7 @@ const Module7Section5_1 = () => {
                 <p className="font-medium text-white mb-2">
                   Are plug-in socket testers reliable on their own?
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   No. They are useful for quick checks but cannot replace proper calibrated testing.
                 </p>
               </div>
@@ -697,7 +697,7 @@ const Module7Section5_1 = () => {
               Recap
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-white/80 leading-relaxed">
+              <p className="text-white leading-relaxed">
                 The selection of test equipment is the foundation of safe and accurate fault
                 diagnosis. Different instruments serve different purposes: continuity testers
                 confirm conductor integrity, insulation testers measure insulation quality, loop
@@ -718,7 +718,7 @@ const Module7Section5_1 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mt-10 pt-6 border-t border-white/10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="..">

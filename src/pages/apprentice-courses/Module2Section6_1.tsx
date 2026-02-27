@@ -146,7 +146,7 @@ const Module2Section6_1: React.FC = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             What is Electrical Power? (Watts Explained)
           </h1>
-          <p className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-white max-w-2xl mx-auto">
             A practical, BS 7671-aligned guide to watts, kW and kWh with simple examples you can use
             on site
           </p>
@@ -736,7 +736,7 @@ const Module2Section6_1: React.FC = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5"
+            className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white hover:text-white hover:bg-white/5"
             asChild
           >
             <Link to="..">

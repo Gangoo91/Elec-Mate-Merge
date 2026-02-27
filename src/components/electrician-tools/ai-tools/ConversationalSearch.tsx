@@ -454,7 +454,7 @@ export default function ConversationalSearch() {
           </div>
           <div className="flex-1 min-w-0">
             <h1 className="text-base font-semibold text-white truncate">Elec-AI</h1>
-            <p className="text-[11px] text-white/50">Your electrical advisor</p>
+            <p className="text-[11px] text-white">Your electrical advisor</p>
           </div>
           {messages.length > 0 && !isStreaming && (
             <Button
@@ -464,7 +464,7 @@ export default function ConversationalSearch() {
               className="h-10 w-10 -mr-2 touch-manipulation active:scale-95 hover:bg-white/5"
               aria-label="New chat"
             >
-              <SquarePen className="h-5 w-5 text-white/70" />
+              <SquarePen className="h-5 w-5 text-white" />
             </Button>
           )}
         </div>

@@ -71,7 +71,7 @@ const HorizontalTabs = ({
                   'focus:outline-none focus-visible:ring-2 focus-visible:ring-yellow-400/50',
                   isActive
                     ? 'bg-yellow-400 text-black'
-                    : 'bg-white/5 text-white/70 hover:bg-white/10 hover:text-white border border-white/10'
+                    : 'bg-white/5 text-white hover:bg-white/10 hover:text-white border border-white/10'
                 )}
               >
                 {Icon && (

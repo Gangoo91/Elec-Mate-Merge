@@ -33,7 +33,7 @@ function QuickAccessItem({ title, icon, path, badge }: QuickAccessItemProps) {
         >
           {icon}
         </div>
-        <span className="text-xs sm:text-sm font-medium text-white/70 group-hover:text-white transition-colors truncate">
+        <span className="text-xs sm:text-sm font-medium text-white group-hover:text-white transition-colors truncate">
           {title}
         </span>
         {badge && (
@@ -83,7 +83,7 @@ export function SecondaryQuickAccess() {
 
   return (
     <div>
-      <h3 className="text-xs font-medium text-white/40 uppercase tracking-wider mb-2.5 px-0.5">
+      <h3 className="text-xs font-medium text-white uppercase tracking-wider mb-2.5 px-0.5">
         Quick Access
       </h3>
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">

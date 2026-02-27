@@ -206,7 +206,7 @@ const CareerProgression = () => {
               variant="ghost"
               size="icon"
               onClick={() => (activeSection ? handleBackToSections() : navigate('/electrician'))}
-              className="text-white/70 hover:text-white hover:bg-white/10 rounded-xl mr-3 h-11 w-11 touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/10 rounded-xl mr-3 h-11 w-11 touch-manipulation active:scale-[0.98]"
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
@@ -215,7 +215,7 @@ const CareerProgression = () => {
                 {activeSection ? 'Career Progression' : 'Career Progression'}
               </h1>
               {activeSection && (
-                <p className="text-xs text-white/50 hidden sm:block">
+                <p className="text-xs text-white hidden sm:block">
                   {careerSections.find((s) => s.id === activeSection)?.title}
                 </p>
               )}
@@ -234,7 +234,7 @@ const CareerProgression = () => {
                   <GraduationCap className="h-10 w-10 sm:h-12 sm:w-12 text-purple-400" />
                 </div>
                 <div className="text-center sm:text-left">
-                  <p className="text-base sm:text-lg text-white/70 max-w-2xl">
+                  <p className="text-base sm:text-lg text-white max-w-2xl">
                     Plan your electrical career journey from apprentice to specialist. Explore JIB
                     grades, qualifications, and high-demand roles.
                   </p>
@@ -247,7 +247,7 @@ const CareerProgression = () => {
           <main className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-8">
             {/* Career Sections - 2 columns on desktop */}
             <div>
-              <p className="text-xs font-medium text-white/40 uppercase tracking-wider mb-3 px-1">
+              <p className="text-xs font-medium text-white uppercase tracking-wider mb-3 px-1">
                 Explore
               </p>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -284,7 +284,7 @@ const CareerProgression = () => {
 
             {/* High-Demand Roles - 2 columns on desktop */}
             <div>
-              <p className="text-xs font-medium text-white/40 uppercase tracking-wider mb-3 px-1">
+              <p className="text-xs font-medium text-white uppercase tracking-wider mb-3 px-1">
                 High-Demand Roles
               </p>
               <div className="hidden lg:grid lg:grid-cols-2 gap-4">
@@ -300,7 +300,7 @@ const CareerProgression = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Development Roadmap */}
               <div>
-                <p className="text-xs font-medium text-white/40 uppercase tracking-wider mb-3 px-1">
+                <p className="text-xs font-medium text-white uppercase tracking-wider mb-3 px-1">
                   Your Roadmap
                 </p>
                 <RoadmapTimeline />
@@ -308,7 +308,7 @@ const CareerProgression = () => {
 
               {/* Market Insights */}
               <div>
-                <p className="text-xs font-medium text-white/40 uppercase tracking-wider mb-3 px-1">
+                <p className="text-xs font-medium text-white uppercase tracking-wider mb-3 px-1">
                   Market Insights
                 </p>
                 <div className="space-y-3">
@@ -326,7 +326,7 @@ const CareerProgression = () => {
                     <div className="divide-y divide-white/[0.06]">
                       {marketTrends.map((trend, i) => (
                         <div key={i} className="flex justify-between items-center px-4 py-3">
-                          <span className="text-sm text-white/70">{trend.label}</span>
+                          <span className="text-sm text-white">{trend.label}</span>
                           <span
                             className={cn(
                               'font-semibold text-sm',
@@ -356,7 +356,7 @@ const CareerProgression = () => {
                     <div className="divide-y divide-white/[0.06]">
                       {regionalRates.map((item, i) => (
                         <div key={i} className="flex justify-between items-center px-4 py-3">
-                          <span className="text-sm text-white/70">{item.region}</span>
+                          <span className="text-sm text-white">{item.region}</span>
                           <span className="font-semibold text-sm text-elec-yellow">
                             {item.rate}
                           </span>

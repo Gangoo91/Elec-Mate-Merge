@@ -219,13 +219,13 @@ const MewpModule2Section4 = () => {
           </div>
           <div className="inline-block bg-elec-yellow/10 border border-elec-yellow/20 px-3 py-1 rounded-full text-sm font-semibold mb-4 ml-0">
             <span className="text-elec-yellow">MODULE 2</span>
-            <span className="text-white/40 mx-2">&middot;</span>
-            <span className="text-white/60">SECTION 4</span>
+            <span className="text-white mx-2">&middot;</span>
+            <span className="text-white">SECTION 4</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Ground Conditions, Slopes & Weather Limits
           </h1>
-          <p className="text-white/70 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Assessing the ground beneath and the environment around your MEWP — the factors that
             determine whether it is safe to operate
           </p>
@@ -235,7 +235,7 @@ const MewpModule2Section4 = () => {
         <div className="grid sm:grid-cols-2 gap-4 mb-10">
           <div className="rounded-lg p-4 bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -268,7 +268,7 @@ const MewpModule2Section4 = () => {
           </div>
           <div className="rounded-lg p-4 bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="font-semibold text-elec-yellow/90 mb-2">On Site</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -304,7 +304,7 @@ const MewpModule2Section4 = () => {
         {/* Learning Outcomes */}
         <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4">By the end of this section, you will be able to:</p>
+          <p className="text-white mb-4">By the end of this section, you will be able to:</p>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
               'Assess ground conditions and identify hidden hazards before setting up a MEWP',
@@ -316,7 +316,7 @@ const MewpModule2Section4 = () => {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </div>
             ))}
           </div>
@@ -331,7 +331,7 @@ const MewpModule2Section4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Ground Conditions Assessment
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The ground beneath a MEWP must support the full weight of the machine, its
                 occupants, and the dynamic forces generated during operation. Unlike a person
@@ -347,14 +347,14 @@ const MewpModule2Section4 = () => {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="text-center">
                     <p className="text-elec-yellow text-lg font-bold mb-1">Firm & Level?</p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       Is the ground solid enough to support concentrated loads without sinking or
                       shifting?
                     </p>
                   </div>
                   <div className="text-center">
                     <p className="text-elec-yellow text-lg font-bold mb-1">Bearing Capacity</p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       Can the ground support the machine weight and outrigger point loads?
                     </p>
                   </div>
@@ -368,7 +368,7 @@ const MewpModule2Section4 = () => {
                     Hidden Hazards — Sub-Surface Dangers
                   </h3>
                 </div>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -410,7 +410,7 @@ const MewpModule2Section4 = () => {
               {/* Ground Assessment Checklist Info Box */}
               <div className="bg-white/5 border border-elec-yellow/30 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-3">Ground Assessment Checklist</h3>
-                <div className="space-y-2 text-sm text-white/70">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="text-elec-yellow font-mono text-xs mt-0.5">&#9744;</span>
                     <span>
@@ -463,7 +463,7 @@ const MewpModule2Section4 = () => {
               <span className="text-purple-400/80 text-sm font-normal">02</span>
               Outrigger and Stabiliser Setup
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Outriggers and stabilisers extend the effective base of the MEWP, dramatically
                 improving stability. Their correct deployment is critical to preventing overturning
@@ -475,7 +475,7 @@ const MewpModule2Section4 = () => {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Mandatory Requirements</h3>
                 </div>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -522,41 +522,41 @@ const MewpModule2Section4 = () => {
 
               <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
                 <h3 className="text-purple-300 font-medium mb-2">Poor Ground Solutions</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   When ground conditions are poor, additional foundations may be required beneath
                   the spreader pads:
                 </p>
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded p-3">
                     <p className="text-white font-medium">Timber Mats</p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       Heavy-duty timber platforms that distribute load over a very large area.
                       Suitable for soft ground, grass, and gravel.
                     </p>
                   </div>
                   <div className="bg-white/5 rounded p-3">
                     <p className="text-white font-medium">Proprietary Mats</p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       Engineered plastic or composite mats with known load ratings. Lightweight and
                       reusable.
                     </p>
                   </div>
                   <div className="bg-white/5 rounded p-3">
                     <p className="text-white font-medium">Steel Grillages</p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       Steel beam arrangements for very heavy machines on poor ground. Engineered for
                       the specific load.
                     </p>
                   </div>
                   <div className="bg-white/5 rounded p-3">
                     <p className="text-white font-medium">Concrete Pads</p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       Pre-cast or in-situ concrete foundations for permanent or long-term MEWP
                       positions.
                     </p>
                   </div>
                 </div>
-                <p className="text-white/50 text-xs mt-3 italic">
+                <p className="text-white text-xs mt-3 italic">
                   IPAF provides a Spreader Pad Calculator to help determine the correct pad size for
                   your machine and ground conditions.
                 </p>
@@ -611,14 +611,14 @@ const MewpModule2Section4 = () => {
                 <div className="flex justify-center gap-6 mt-4 text-xs">
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-3 bg-purple-400 rounded-full" />
-                    <span className="text-white/60">Outrigger foot</span>
+                    <span className="text-white">Outrigger foot</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-3 bg-elec-yellow/15 border border-elec-yellow/50 rounded" />
-                    <span className="text-white/60">Spreader pad</span>
+                    <span className="text-white">Spreader pad</span>
                   </div>
                 </div>
-                <p className="text-white/40 text-xs text-center mt-2">
+                <p className="text-white text-xs text-center mt-2">
                   All four outriggers fully deployed with spreader pads on firm, level ground
                 </p>
               </div>
@@ -635,7 +635,7 @@ const MewpModule2Section4 = () => {
               <span className="text-teal-400/80 text-sm font-normal">03</span>
               Slope and Gradient Limits
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 MEWPs are designed to operate on surfaces within specific gradient limits. Exceeding
                 these limits shifts the machine's centre of gravity outside the tipping line, with
@@ -649,21 +649,21 @@ const MewpModule2Section4 = () => {
                   <div className="bg-white/5 rounded p-3 flex justify-between items-center">
                     <div>
                       <p className="text-white font-medium">Standard MEWPs (no outriggers)</p>
-                      <p className="text-white/60">Most scissor lifts and self-propelled booms</p>
+                      <p className="text-white">Most scissor lifts and self-propelled booms</p>
                     </div>
                     <p className="text-teal-300 font-bold text-lg">5&deg;</p>
                   </div>
                   <div className="bg-white/5 rounded p-3 flex justify-between items-center">
                     <div>
                       <p className="text-white font-medium">MEWPs with outriggers/stabilisers</p>
-                      <p className="text-white/60">Boom lifts and truck-mounted platforms</p>
+                      <p className="text-white">Boom lifts and truck-mounted platforms</p>
                     </div>
                     <p className="text-teal-300 font-bold text-lg">~10&deg;</p>
                   </div>
                   <div className="bg-white/5 rounded p-3 flex justify-between items-center">
                     <div>
                       <p className="text-white font-medium">Specialist slope MEWPs</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Specifically designed for rough terrain and slopes
                       </p>
                     </div>
@@ -674,7 +674,7 @@ const MewpModule2Section4 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">Key Rules for Slopes</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
                     <div>
@@ -755,7 +755,7 @@ const MewpModule2Section4 = () => {
                         Above these limits: DO NOT elevate the platform
                       </span>
                     </div>
-                    <p className="text-white/50 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Function cutouts on modern machines will prevent operation — never override
                       safety systems
                     </p>
@@ -773,7 +773,7 @@ const MewpModule2Section4 = () => {
               <span className="text-red-400/80 text-sm font-normal">04</span>
               Wind Speed and Weather
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Wind is the single most dangerous environmental factor for MEWP operations. The
                 large surface area of the platform and boom acts as a sail, and wind forces increase
@@ -791,7 +791,7 @@ const MewpModule2Section4 = () => {
                     <p className="text-red-300 font-medium">
                       Maximum Design Wind Speed: 12.5 m/s (28 mph)
                     </p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       This is the absolute limit for outdoor-rated MEWPs. It is the speed at which
                       the machine's stability has been tested and verified.
                     </p>
@@ -803,7 +803,7 @@ const MewpModule2Section4 = () => {
                     <p className="text-white font-semibold">
                       Lower the platform IMMEDIATELY and cease all elevated operations.
                     </p>
-                    <p className="text-white/60 mt-1">
+                    <p className="text-white mt-1">
                       Do not wait for a lull. Do not attempt to finish the task. Lower immediately.
                     </p>
                   </div>
@@ -812,7 +812,7 @@ const MewpModule2Section4 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-3">Critical Wind Facts</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <Wind className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                     <div>
@@ -863,7 +863,7 @@ const MewpModule2Section4 = () => {
                   <div className="flex items-end gap-2 justify-centre">
                     {/* Ground level bar */}
                     <div className="flex-1 flex flex-col items-center">
-                      <div className="text-xs text-white/60 mb-1">Ground</div>
+                      <div className="text-xs text-white mb-1">Ground</div>
                       <div
                         className="w-full bg-green-500/30 border border-green-400/50 rounded-t"
                         style={{ height: '60px' }}
@@ -872,11 +872,11 @@ const MewpModule2Section4 = () => {
                           <span className="text-green-300 text-xs font-bold">20 mph</span>
                         </div>
                       </div>
-                      <div className="text-[10px] text-white/40 mt-1">0m</div>
+                      <div className="text-[10px] text-white mt-1">0m</div>
                     </div>
                     {/* 10m bar */}
                     <div className="flex-1 flex flex-col items-center">
-                      <div className="text-xs text-white/60 mb-1">10m</div>
+                      <div className="text-xs text-white mb-1">10m</div>
                       <div
                         className="w-full bg-amber-500/30 border border-amber-400/50 rounded-t"
                         style={{ height: '84px' }}
@@ -885,11 +885,11 @@ const MewpModule2Section4 = () => {
                           <span className="text-amber-300 text-xs font-bold">25 mph</span>
                         </div>
                       </div>
-                      <div className="text-[10px] text-white/40 mt-1">10m</div>
+                      <div className="text-[10px] text-white mt-1">10m</div>
                     </div>
                     {/* 20m bar */}
                     <div className="flex-1 flex flex-col items-center">
-                      <div className="text-xs text-white/60 mb-1">20m</div>
+                      <div className="text-xs text-white mb-1">20m</div>
                       <div
                         className="w-full bg-red-500/30 border border-red-400/50 rounded-t"
                         style={{ height: '108px' }}
@@ -898,7 +898,7 @@ const MewpModule2Section4 = () => {
                           <span className="text-red-300 text-xs font-bold">30 mph</span>
                         </div>
                       </div>
-                      <div className="text-[10px] text-white/40 mt-1">20m</div>
+                      <div className="text-[10px] text-white mt-1">20m</div>
                     </div>
                   </div>
                   {/* Base line */}
@@ -907,7 +907,7 @@ const MewpModule2Section4 = () => {
                     <span className="text-green-400 text-[10px]">Within limit</span>
                     <span className="text-red-400 text-[10px]">EXCEEDS 28 mph limit</span>
                   </div>
-                  <p className="text-white/40 text-xs text-center mt-2">
+                  <p className="text-white text-xs text-center mt-2">
                     Wind at 20m can be ~50% greater than at ground level — always apply height
                     correction
                   </p>
@@ -926,7 +926,7 @@ const MewpModule2Section4 = () => {
               <span className="text-cyan-400/80 text-sm font-normal">05</span>
               Working Near Excavations and Water
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Excavations and water features present specific hazards for MEWP operations. The
                 ground near excavation edges is inherently weakened, and water can conceal hazards
@@ -939,7 +939,7 @@ const MewpModule2Section4 = () => {
                   <Shield className="h-4 w-4" />
                   Excavation Hazards
                 </h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-cyan-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -977,12 +977,12 @@ const MewpModule2Section4 = () => {
                   <p className="text-white text-lg font-mono font-bold">
                     Distance from edge = Depth of excavation
                   </p>
-                  <p className="text-white/60 text-sm mt-1">
+                  <p className="text-white text-sm mt-1">
                     As a general rule, the MEWP should be positioned at least as far from the edge
                     as the excavation is deep
                   </p>
                 </div>
-                <p className="text-white/50 text-xs mt-2">
+                <p className="text-white text-xs mt-2">
                   Example: A 3m deep excavation requires at least 3m clearance from the edge to the
                   nearest MEWP support point. A geotechnical assessment may require greater
                   distances for deep excavations or poor ground.
@@ -994,7 +994,7 @@ const MewpModule2Section4 = () => {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Fragile Surfaces</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Do NOT position MEWPs on fragile surfaces such as flat roofs that are not designed
                   for concentrated point loads, glass panels, skylights, or lightweight cladding.
                   Even if the surface appears solid, it may not support the concentrated loads from
@@ -1005,7 +1005,7 @@ const MewpModule2Section4 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">Water Hazards</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <Droplets className="h-4 w-4 text-cyan-400 mt-1 flex-shrink-0" />
                     <div>
@@ -1040,7 +1040,7 @@ const MewpModule2Section4 = () => {
               <span className="text-amber-400/80 text-sm font-normal">06</span>
               Seasonal and Environmental Considerations
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 MEWP operations are affected by seasonal weather patterns and environmental
                 conditions throughout the year. Each season brings specific hazards that must be
@@ -1054,7 +1054,7 @@ const MewpModule2Section4 = () => {
                     <Droplets className="h-4 w-4" />
                     Rain
                   </h3>
-                  <ul className="text-white/70 space-y-1 text-sm">
+                  <ul className="text-white space-y-1 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                       <span>Softens ground — reduces bearing capacity</span>
@@ -1078,7 +1078,7 @@ const MewpModule2Section4 = () => {
                     <Thermometer className="h-4 w-4" />
                     Ice & Frost
                   </h3>
-                  <ul className="text-white/70 space-y-1 text-sm">
+                  <ul className="text-white space-y-1 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                       <span>Slippery platform surfaces and access routes</span>
@@ -1108,7 +1108,7 @@ const MewpModule2Section4 = () => {
                   <p className="text-white font-semibold text-sm mb-2">
                     Cease ALL elevated work immediately if lightning is observed within 10 miles.
                   </p>
-                  <ul className="text-white/70 space-y-1 text-sm">
+                  <ul className="text-white space-y-1 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                       <span>A MEWP at height acts as a lightning conductor</span>
@@ -1128,7 +1128,7 @@ const MewpModule2Section4 = () => {
                     <Thermometer className="h-4 w-4" />
                     Extreme Heat
                   </h3>
-                  <ul className="text-white/70 space-y-1 text-sm">
+                  <ul className="text-white space-y-1 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                       <span>Operator fatigue and dehydration at height</span>
@@ -1151,7 +1151,7 @@ const MewpModule2Section4 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-3">Darkness & Low Light</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
                     <div>
@@ -1179,7 +1179,7 @@ const MewpModule2Section4 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">UV Exposure</h3>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Operators working at height for extended periods are exposed to higher levels of
                   UV radiation than those at ground level. This is a particular welfare concern
                   during summer months. Provide sunscreen, UV-rated safety glasses, and appropriate
@@ -1202,7 +1202,7 @@ const MewpModule2Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1218,7 +1218,7 @@ const MewpModule2Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-2">

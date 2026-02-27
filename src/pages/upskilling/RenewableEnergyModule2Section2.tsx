@@ -111,7 +111,7 @@ const RenewableEnergyModule2Section2 = () => {
           <Button
             variant="ghost"
             size="sm"
-            className="text-white/70 hover:text-white hover:bg-white/10 -ml-2"
+            className="text-white hover:text-white hover:bg-white/10 -ml-2"
             asChild
           >
             <Link to="/electrician/upskilling/renewable-energy-module-2">
@@ -129,7 +129,7 @@ const RenewableEnergyModule2Section2 = () => {
             <Zap className="w-6 h-6 text-elec-yellow" />
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Site Assessment</h1>
-          <p className="text-white/60 text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Orientation, Shading &amp; Irradiance Analysis
           </p>
         </div>
@@ -156,19 +156,19 @@ const RenewableEnergyModule2Section2 = () => {
           <div className="space-y-2">
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-white/80 text-sm">
+              <span className="text-white text-sm">
                 Understand sun-path, azimuth, and tilt angles for optimal positioning
               </span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-white/80 text-sm">
+              <span className="text-white text-sm">
                 Identify and quantify shading risks throughout the year
               </span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-white/80 text-sm">
+              <span className="text-white text-sm">
                 Use irradiance data for accurate yield estimates
               </span>
             </div>
@@ -181,7 +181,7 @@ const RenewableEnergyModule2Section2 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">01</span>
             Optimal Orientation &amp; Azimuth
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Panel orientation is critical for maximising solar energy capture. In the UK,
               south-facing installations typically provide optimal performance. A great panel in the
@@ -256,7 +256,7 @@ const RenewableEnergyModule2Section2 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">02</span>
             Tilt Angles by Latitude
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               The tilt angle determines how much solar irradiance panels receive throughout the
               year. Optimal angles vary by latitude and seasonal preferences.
@@ -330,7 +330,7 @@ const RenewableEnergyModule2Section2 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">03</span>
             Shading Analysis
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Shading is one of the most critical factors affecting PV system performance. Even
               partial shading can dramatically reduce output due to the series-connected nature of
@@ -405,7 +405,7 @@ const RenewableEnergyModule2Section2 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">04</span>
             Analysis Tools &amp; Techniques
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Various tools and methods are available for conducting thorough site assessments, from
               simple manual instruments to sophisticated software simulation.
@@ -451,7 +451,7 @@ const RenewableEnergyModule2Section2 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">05</span>
             Irradiance &amp; Solar Resource Data
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Solar irradiance data is fundamental for accurate energy yield predictions and system
               sizing calculations.
@@ -521,7 +521,7 @@ const RenewableEnergyModule2Section2 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">06</span>
             Regional Performance Variations
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Local weather patterns and microclimates can significantly impact PV system
               performance beyond regional averages.
@@ -567,7 +567,7 @@ const RenewableEnergyModule2Section2 = () => {
         {/* Case Study */}
         <div className="mb-8 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
           <h3 className="text-white font-semibold mb-3">Case Study: Manchester Residential</h3>
-          <div className="text-white/80 text-sm space-y-2">
+          <div className="text-white text-sm space-y-2">
             <p>
               A residential property with south-west facing roof (225° azimuth) at 30° tilt. Large
               oak tree 15m to south-east causes morning shading November-February.
@@ -605,7 +605,7 @@ const RenewableEnergyModule2Section2 = () => {
               <h4 className="text-white font-medium mb-2">
                 Can I install solar on a north-facing roof?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 North-facing installations are generally not recommended in the UK as they receive
                 significantly less direct sunlight. However, east-west split arrays can work on
                 north-south pitched roofs.
@@ -615,7 +615,7 @@ const RenewableEnergyModule2Section2 = () => {
               <h4 className="text-white font-medium mb-2">
                 How do bypass diodes help with shading?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Bypass diodes allow current to flow around shaded cell groups rather than through
                 them. This limits the impact of partial shading to affected sub-strings rather than
                 the entire panel.
@@ -625,7 +625,7 @@ const RenewableEnergyModule2Section2 = () => {
               <h4 className="text-white font-medium mb-2">
                 What is the difference between GHI and POA irradiance?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 GHI (Global Horizontal Irradiance) measures total solar radiation on a flat surface.
                 POA (Plane of Array) measures irradiance on the tilted panel surface - this is what
                 your panels actually receive.
@@ -633,7 +633,7 @@ const RenewableEnergyModule2Section2 = () => {
             </div>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
               <h4 className="text-white font-medium mb-2">How accurate is PVGIS for UK sites?</h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 PVGIS uses satellite-derived data and is typically accurate within 5-10% for UK
                 locations. It is best for initial feasibility but professional software like PVsyst
                 provides more detailed analysis.
@@ -641,7 +641,7 @@ const RenewableEnergyModule2Section2 = () => {
             </div>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
               <h4 className="text-white font-medium mb-2">Should I prune trees causing shading?</h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Consider the annual shading loss versus tree value and local regulations. Deciduous
                 trees only shade in summer when yields are highest but sun is also highest.
                 Calculate the actual kWh impact before deciding.
@@ -651,7 +651,7 @@ const RenewableEnergyModule2Section2 = () => {
               <h4 className="text-white font-medium mb-2">
                 How does fog/mist affect solar output?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Fog reduces direct irradiance but increases diffuse radiation. Panels still generate
                 power but at reduced levels. Coastal areas with frequent marine layer may see 5-15%
                 lower annual yields.
@@ -673,7 +673,7 @@ const RenewableEnergyModule2Section2 = () => {
         <div className="flex justify-between items-center pt-6 border-t border-white/10">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/10"
+            className="text-white hover:text-white hover:bg-white/10"
             asChild
           >
             <Link to="../section-1">

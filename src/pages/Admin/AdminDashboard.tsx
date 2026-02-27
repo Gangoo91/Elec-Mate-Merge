@@ -398,7 +398,7 @@ export default function AdminDashboard() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-11 w-11 text-white/60 hover:text-white hover:bg-white/10 touch-manipulation"
+                className="h-11 w-11 text-white hover:text-white hover:bg-white/10 touch-manipulation"
                 onClick={(e) => {
                   e.stopPropagation();
                   handleRefresh();

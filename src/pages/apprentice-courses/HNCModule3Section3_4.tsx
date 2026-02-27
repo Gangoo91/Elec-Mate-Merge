@@ -209,7 +209,7 @@ const HNCModule3Section3_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section3">
@@ -231,7 +231,7 @@ const HNCModule3Section3_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Sinusoidal, Non-sinusoidal and Distorted Waveforms
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding waveform characteristics, harmonic analysis, and power quality in modern
             building services
           </p>
@@ -321,7 +321,7 @@ const HNCModule3Section3_4 = () => {
                 <p className="text-elec-yellow mb-2">
                   v(t) = V<sub>pk</sub> sin(2pift + phi)
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   where: V<sub>pk</sub> = peak voltage, f = frequency (50 Hz), phi = phase angle
                 </p>
               </div>
@@ -498,7 +498,7 @@ const HNCModule3Section3_4 = () => {
                   </p>
                   <p className="ml-4">sin(3 omega t)/3 + sin(5 omega t)/5 + ...]</p>
                 </div>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   Contains only odd harmonics, amplitudes decrease as 1/n
                 </p>
               </div>
@@ -546,7 +546,7 @@ const HNCModule3Section3_4 = () => {
                   t)]
                 </p>
               </div>
-              <div className="grid sm:grid-cols-3 gap-3 text-xs text-white/80">
+              <div className="grid sm:grid-cols-3 gap-3 text-xs text-white">
                 <div>
                   <strong>
                     a<sub>0</sub>
@@ -677,7 +677,7 @@ const HNCModule3Section3_4 = () => {
                   <sup>2</sup> + ...) / V<sub>1</sub> x 100%
                 </p>
               </div>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where V<sub>1</sub> = fundamental RMS, V<sub>2</sub>, V<sub>3</sub>, etc. = harmonic
                 RMS values
               </p>
@@ -921,7 +921,7 @@ const HNCModule3Section3_4 = () => {
                 <p className="text-elec-yellow">
                   I<sub>N</sub> = 3 x I<sub>3</sub> (for 3rd harmonic only)
                 </p>
-                <p className="text-sm text-white/70 mt-2">
+                <p className="text-sm text-white mt-2">
                   For balanced loads with only 3rd harmonic content
                 </p>
               </div>
@@ -1340,7 +1340,7 @@ const HNCModule3Section3_4 = () => {
                 <sub>1</sub> = 100A, I<sub>3</sub> = 40A, I<sub>5</sub> = 20A, I<sub>7</sub> = 14A.
                 Calculate the THD.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   THD = sqrt(I<sub>3</sub>
                   <sup>2</sup> + I<sub>5</sub>
@@ -1355,7 +1355,7 @@ const HNCModule3Section3_4 = () => {
                 <p>
                   THD = 46.86 / 100 x 100% = <strong>46.9%</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This is high THD typical of a single-phase SMPS load
                 </p>
               </div>
@@ -1369,7 +1369,7 @@ const HNCModule3Section3_4 = () => {
                 <strong>Question:</strong> A three-phase balanced lighting circuit has 20A per phase
                 with 35% third harmonic content. Calculate the neutral current.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>3rd harmonic current per phase = 20A x 0.35 = 7A</p>
                 <p className="mt-2">Fundamental neutral current = 0A (balanced)</p>
                 <p>
@@ -1381,7 +1381,7 @@ const HNCModule3Section3_4 = () => {
                 <p className="mt-2 text-red-400">
                   Neutral carries 21A while phases only carry 21.2A!
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   Neutral should be sized same as or larger than phases
                 </p>
               </div>
@@ -1395,16 +1395,16 @@ const HNCModule3Section3_4 = () => {
                 <strong>Question:</strong> A building has a 500kVA transformer. The installed
                 6-pulse VSD load is 180kW. Should harmonic mitigation be specified?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>VSD proportion = 180kW / (500kVA x 0.8 pf) x 100%</p>
                 <p>
                   VSD proportion = 180 / 400 x 100% = <strong>45%</strong>
                 </p>
-                <p className="mt-2 text-white/60">This exceeds the 30% guideline threshold</p>
+                <p className="mt-2 text-white">This exceeds the 30% guideline threshold</p>
                 <p className="mt-2 text-green-400">Recommendation: Specify either:</p>
-                <p className="text-white/60">- Active harmonic filters at main LV panel</p>
-                <p className="text-white/60">- Low-harmonic VSD variants (AFE or with filters)</p>
-                <p className="text-white/60">- 12-pulse drives for larger motors</p>
+                <p className="text-white">- Active harmonic filters at main LV panel</p>
+                <p className="text-white">- Low-harmonic VSD variants (AFE or with filters)</p>
+                <p className="text-white">- 12-pulse drives for larger motors</p>
               </div>
             </div>
 
@@ -1416,7 +1416,7 @@ const HNCModule3Section3_4 = () => {
                 <strong>Question:</strong> A voltage waveform has V<sub>1</sub> = 230V, V
                 <sub>5</sub> = 15V, V<sub>7</sub> = 10V. What is the true RMS voltage?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   V<sub>rms</sub> = sqrt(V<sub>1</sub>
                   <sup>2</sup> + V<sub>5</sub>
@@ -1537,7 +1537,7 @@ const HNCModule3Section3_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1587,7 +1587,7 @@ const HNCModule3Section3_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section3-3">

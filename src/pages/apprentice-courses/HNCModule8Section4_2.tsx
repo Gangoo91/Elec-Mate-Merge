@@ -254,7 +254,7 @@ const HNCModule8Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section4">
@@ -276,7 +276,7 @@ const HNCModule8Section4_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Starting Methods
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             DOL, star-delta, autotransformer, soft starters and starting current considerations
           </p>
         </header>
@@ -409,13 +409,13 @@ const HNCModule8Section4_2 = () => {
                 <p>
                   <strong>DOL starting current = Motor FLC × Starting current multiplier</strong>
                 </p>
-                <p className="text-white/70">
+                <p className="text-white">
                   Example: 15kW motor with FLC of 28A and 7× starting multiplier:
                 </p>
                 <p>
                   I<sub>start</sub> = 28A × 7 = <strong>196A</strong>
                 </p>
-                <p className="text-white/70 mt-2">
+                <p className="text-white mt-2">
                   This current flows until the motor reaches approximately 80% of full speed.
                 </p>
               </div>
@@ -502,7 +502,7 @@ const HNCModule8Section4_2 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Operating Principle</p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-sm font-medium text-white/90 mb-2">
+                  <p className="text-sm font-medium text-white mb-2">
                     Star Connection (Starting)
                   </p>
                   <ul className="text-sm space-y-1 list-disc list-outside ml-5">
@@ -515,7 +515,7 @@ const HNCModule8Section4_2 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-white/90 mb-2">
+                  <p className="text-sm font-medium text-white mb-2">
                     Delta Connection (Running)
                   </p>
                   <ul className="text-sm space-y-1 list-disc list-outside ml-5">
@@ -533,17 +533,17 @@ const HNCModule8Section4_2 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Star-Delta Mathematics</p>
               <div className="bg-black/30 p-4 rounded-lg space-y-2 text-sm font-mono">
-                <p className="text-white/60">Current reduction factor:</p>
+                <p className="text-white">Current reduction factor:</p>
                 <p>
                   I<sub>star</sub> = I<sub>DOL</sub> × (1/√3)² = I<sub>DOL</sub> ×{' '}
                   <strong>1/3</strong>
                 </p>
-                <p className="text-white/60 mt-3">Torque reduction factor:</p>
+                <p className="text-white mt-3">Torque reduction factor:</p>
                 <p>
                   T<sub>star</sub> = T<sub>DOL</sub> × (V<sub>star</sub>/V<sub>delta</sub>)² = T
                   <sub>DOL</sub> × <strong>1/3</strong>
                 </p>
-                <p className="text-white/60 mt-3">Example: Motor with 7× DOL starting current:</p>
+                <p className="text-white mt-3">Example: Motor with 7× DOL starting current:</p>
                 <p>
                   Star starting current = 7 × FLC × 1/3 = <strong>2.33 × FLC</strong>
                 </p>
@@ -654,19 +654,19 @@ const HNCModule8Section4_2 = () => {
                 Current and Torque Relationships
               </p>
               <div className="bg-black/30 p-3 rounded text-sm font-mono space-y-2">
-                <p className="text-white/60">Line current reduction (from supply):</p>
+                <p className="text-white">Line current reduction (from supply):</p>
                 <p>
                   I<sub>line</sub> = I<sub>DOL</sub> × (Tap setting)²
                 </p>
-                <p className="text-white/60 mt-2">Motor current (at reduced voltage):</p>
+                <p className="text-white mt-2">Motor current (at reduced voltage):</p>
                 <p>
                   I<sub>motor</sub> = I<sub>DOL</sub> × Tap setting
                 </p>
-                <p className="text-white/60 mt-2">Starting torque:</p>
+                <p className="text-white mt-2">Starting torque:</p>
                 <p>
                   T<sub>start</sub> = T<sub>DOL</sub> × (Tap setting)²
                 </p>
-                <p className="mt-3 text-white/60">Example at 65% tap:</p>
+                <p className="mt-3 text-white">Example at 65% tap:</p>
                 <p>
                   Line current = DOL × 0.65² = <strong>42% of DOL</strong>
                 </p>
@@ -939,15 +939,15 @@ const HNCModule8Section4_2 = () => {
                 Voltage Drop Calculation
               </p>
               <div className="bg-black/30 p-4 rounded-lg space-y-2 text-sm font-mono">
-                <p className="text-white/60">Simplified voltage drop formula:</p>
+                <p className="text-white">Simplified voltage drop formula:</p>
                 <p>
                   ΔV = I<sub>start</sub> × Z<sub>total</sub>
                 </p>
-                <p className="text-white/60 mt-2">Percentage voltage drop:</p>
+                <p className="text-white mt-2">Percentage voltage drop:</p>
                 <p>
                   ΔV% = (I<sub>start</sub> × Z<sub>total</sub> × 100) / V<sub>supply</sub>
                 </p>
-                <p className="text-white/60 mt-3">
+                <p className="text-white mt-3">
                   Where Z<sub>total</sub> includes:
                 </p>
                 <p>- Supply transformer impedance</p>
@@ -1001,11 +1001,11 @@ const HNCModule8Section4_2 = () => {
                 Worked Example: Voltage Drop Assessment
               </p>
               <div className="bg-black/30 p-3 rounded text-sm font-mono">
-                <p className="text-white/60">Given:</p>
+                <p className="text-white">Given:</p>
                 <p>22kW motor, FLC = 42A, 7× starting current multiplier</p>
                 <p>Supply: 400V, transformer 500kVA, 4% impedance</p>
                 <p>Cable: 50m of 16mm² (Z = 0.022Ω/m)</p>
-                <p className="mt-2 text-white/60">Calculate DOL starting voltage drop:</p>
+                <p className="mt-2 text-white">Calculate DOL starting voltage drop:</p>
                 <p>
                   I<sub>start</sub> = 42 × 7 = 294A
                 </p>
@@ -1094,20 +1094,20 @@ const HNCModule8Section4_2 = () => {
                 <strong>Scenario:</strong> Compare starting currents for a 37kW motor (FLC = 70A, 7×
                 DOL multiplier) using different starting methods.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">DOL Starting:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">DOL Starting:</p>
                 <p>
                   I<sub>start</sub> = 70A × 7 = <strong>490A</strong>
                 </p>
-                <p className="mt-2 text-white/60">Star-Delta Starting:</p>
+                <p className="mt-2 text-white">Star-Delta Starting:</p>
                 <p>
                   I<sub>start</sub> = 490A × 1/3 = <strong>163A</strong>
                 </p>
-                <p className="mt-2 text-white/60">Autotransformer (65% tap):</p>
+                <p className="mt-2 text-white">Autotransformer (65% tap):</p>
                 <p>
                   I<sub>start</sub> = 490A × 0.65² = <strong>207A</strong>
                 </p>
-                <p className="mt-2 text-white/60">Soft Starter (300% limit):</p>
+                <p className="mt-2 text-white">Soft Starter (300% limit):</p>
                 <p>
                   I<sub>start</sub> = 70A × 3 = <strong>210A</strong>
                 </p>
@@ -1126,14 +1126,14 @@ const HNCModule8Section4_2 = () => {
                 Requirements: prevent water hammer, supply authority limits starting current to
                 100A.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Motor data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Motor data:</p>
                 <p>15kW, FLC = 28A, DOL starting = 7× = 196A</p>
-                <p className="mt-2 text-white/60">Assessment:</p>
+                <p className="mt-2 text-white">Assessment:</p>
                 <p>DOL: 196A &gt; 100A limit - NOT SUITABLE</p>
                 <p>Star-delta: 196/3 = 65A &lt; 100A - Current OK</p>
                 <p>But: Open transition spike, no soft stop for water hammer</p>
-                <p className="mt-2 text-white/60">Soft starter assessment:</p>
+                <p className="mt-2 text-white">Soft starter assessment:</p>
                 <p>Set current limit to 350%: 28 × 3.5 = 98A &lt; 100A</p>
                 <p>Soft stop capability prevents water hammer</p>
                 <p>Ramp time 10-15 seconds for smooth acceleration</p>
@@ -1151,13 +1151,13 @@ const HNCModule8Section4_2 = () => {
                 <strong>Scenario:</strong> HVAC plant room with 3 × 22kW motors. Can they all start
                 DOL on a 200kVA transformer with 5% impedance?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Motor data (each):</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Motor data (each):</p>
                 <p>22kW, FLC = 42A, Starting = 7 × 42 = 294A</p>
-                <p className="mt-2 text-white/60">Transformer capacity:</p>
+                <p className="mt-2 text-white">Transformer capacity:</p>
                 <p>200kVA at 400V = 289A rated current</p>
                 <p>Single motor starting (294A) exceeds transformer rating!</p>
-                <p className="mt-2 text-white/60">Solution options:</p>
+                <p className="mt-2 text-white">Solution options:</p>
                 <p>1. Upgrade transformer to 400kVA minimum</p>
                 <p>2. Use soft starters with 200% current limit (84A each)</p>
                 <p>3. Implement sequential starting with time delays</p>
@@ -1257,7 +1257,7 @@ const HNCModule8Section4_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1303,7 +1303,7 @@ const HNCModule8Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section4">

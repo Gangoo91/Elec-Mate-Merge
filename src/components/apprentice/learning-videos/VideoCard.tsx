@@ -88,7 +88,7 @@ export function VideoCard({
       >
         <Bookmark
           className={`h-4 w-4 ${
-            isBookmarked ? 'text-elec-yellow fill-elec-yellow' : 'text-white/70'
+            isBookmarked ? 'text-elec-yellow fill-elec-yellow' : 'text-white'
           }`}
         />
       </button>
@@ -101,8 +101,8 @@ export function VideoCard({
           {video.title}
         </h4>
         <div className="flex items-center gap-2 mt-1.5">
-          <span className="text-[11px] text-white/45">{video.channel}</span>
-          <span className="text-white/20">·</span>
+          <span className="text-[11px] text-white">{video.channel}</span>
+          <span className="text-white">·</span>
           <span className={`flex items-center gap-1 text-[11px] ${levelColour}`}>
             <span className={`h-1.5 w-1.5 rounded-full ${levelDot}`} />
             {video.level.charAt(0).toUpperCase() + video.level.slice(1)}

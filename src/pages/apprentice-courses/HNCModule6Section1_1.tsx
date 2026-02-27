@@ -252,7 +252,7 @@ const HNCModule6Section1_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section1">
@@ -274,7 +274,7 @@ const HNCModule6Section1_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Introduction to Part L
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Part L structure, 2021 amendments, conservation of fuel and power, compliance routes,
             and building types
           </p>
@@ -540,19 +540,19 @@ const HNCModule6Section1_1 = () => {
               </p>
               <div className="text-sm space-y-2">
                 <p>
-                  <span className="text-white/60">Part L 2013:</span>{' '}
+                  <span className="text-white">Part L 2013:</span>{' '}
                   <span className="text-white">Baseline standard</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Part L 2021:</span>{' '}
+                  <span className="text-white">Part L 2021:</span>{' '}
                   <span className="text-white">31% improvement (current)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Future Homes 2025:</span>{' '}
+                  <span className="text-white">Future Homes 2025:</span>{' '}
                   <span className="text-white">75-80% improvement target</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Net Zero 2050:</span>{' '}
+                  <span className="text-white">Net Zero 2050:</span>{' '}
                   <span className="text-white">All homes zero carbon ready</span>
                 </p>
               </div>
@@ -789,7 +789,7 @@ const HNCModule6Section1_1 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-2">New Build Requirements</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Full SAP/SBEM calculation</li>
                   <li>Air permeability testing</li>
                   <li>Commissioning certificates</li>
@@ -800,7 +800,7 @@ const HNCModule6Section1_1 = () => {
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-2">Existing Building Triggers</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Controlled fittings replacement</li>
                   <li>Controlled services installation</li>
                   <li>Extensions and conservatories</li>
@@ -858,7 +858,7 @@ const HNCModule6Section1_1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>MEP coordination:</strong> Building services engineers must coordinate Part L
               compliance with architectural fabric design, ensuring systems are sized for the
               reduced heating loads of well-insulated buildings.
@@ -884,8 +884,8 @@ const HNCModule6Section1_1 = () => {
                 <strong>Scenario:</strong> Verify Part L compliance for a new 3-bedroom
                 semi-detached house.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given specifications:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given specifications:</p>
                 <p className="ml-4">Walls: U-value = 0.18 W/m²K</p>
                 <p className="ml-4">Roof: U-value = 0.12 W/m²K</p>
                 <p className="ml-4">Floor: U-value = 0.13 W/m²K</p>
@@ -893,12 +893,12 @@ const HNCModule6Section1_1 = () => {
                 <p className="ml-4">Air permeability: 4 m³/(h·m²) at 50 Pa</p>
                 <p className="ml-4">Heating: Air source heat pump (SCOP 3.5)</p>
                 <p className="ml-4">Ventilation: MVHR (85% efficiency)</p>
-                <p className="mt-2 text-white/60">SAP calculation results:</p>
+                <p className="mt-2 text-white">SAP calculation results:</p>
                 <p className="ml-4">TER (Target Emission Rate) = 12.5 kg CO₂/m²/year</p>
                 <p className="ml-4">DER (Dwelling Emission Rate) = 9.8 kg CO₂/m²/year</p>
                 <p className="ml-4">TPER (Target Primary Energy Rate) = 95 kWh/m²/year</p>
                 <p className="ml-4">DPER (Dwelling Primary Energy Rate) = 78 kWh/m²/year</p>
-                <p className="mt-2 text-white/60">Compliance check:</p>
+                <p className="mt-2 text-white">Compliance check:</p>
                 <p className="ml-4 text-green-400">DER (9.8) ≤ TER (12.5) ✓ PASS</p>
                 <p className="ml-4 text-green-400">DPER (78) ≤ TPER (95) ✓ PASS</p>
                 <p className="ml-4 text-green-400">All U-values within limiting values ✓</p>
@@ -914,22 +914,22 @@ const HNCModule6Section1_1 = () => {
                 <strong>Scenario:</strong> Calculate lighting efficacy for an office building to
                 meet Part L2.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Office lighting design:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Office lighting design:</p>
                 <p className="ml-4">Total floor area: 500 m²</p>
                 <p className="ml-4">Target illuminance: 500 lux (general office)</p>
                 <p className="ml-4">Luminaire type: LED panels 40W each</p>
                 <p className="ml-4">Luminaire output: 4,000 lumens each</p>
                 <p className="ml-4">Quantity required: 60 luminaires</p>
-                <p className="mt-2 text-white/60">Efficacy calculation:</p>
+                <p className="mt-2 text-white">Efficacy calculation:</p>
                 <p className="ml-4">Total luminaire lumens = 60 × 4,000 = 240,000 lm</p>
                 <p className="ml-4">Total circuit watts = 60 × 40W = 2,400 W</p>
                 <p className="ml-4">Lighting efficacy = 240,000 ÷ 2,400</p>
                 <p className="ml-4 text-green-400">= 100 luminaire-lumens per circuit-watt</p>
-                <p className="mt-2 text-white/60">Part L2 requirement:</p>
+                <p className="mt-2 text-white">Part L2 requirement:</p>
                 <p className="ml-4">Minimum efficacy = 45 lm/cW</p>
                 <p className="ml-4 text-green-400">100 lm/cW &gt; 45 lm/cW ✓ PASS</p>
-                <p className="mt-2 text-white/60">Additional controls required:</p>
+                <p className="mt-2 text-white">Additional controls required:</p>
                 <p className="ml-4">- Daylight dimming (perimeter zones)</p>
                 <p className="ml-4">- Presence/absence detection</p>
                 <p className="ml-4">- Time scheduling capability</p>
@@ -944,26 +944,26 @@ const HNCModule6Section1_1 = () => {
                 <strong>Scenario:</strong> Determine Part L requirements for a domestic kitchen
                 extension.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Extension details:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Extension details:</p>
                 <p className="ml-4">Type: Single-storey rear extension</p>
                 <p className="ml-4">Floor area: 35 m² (less than 50m² threshold)</p>
                 <p className="ml-4">Use: Kitchen extension to existing dwelling</p>
-                <p className="mt-2 text-white/60">Assessment:</p>
+                <p className="mt-2 text-white">Assessment:</p>
                 <p className="ml-4">Extension &lt; 50m² → Simplified compliance route</p>
-                <p className="mt-2 text-white/60">Requirements (elemental approach):</p>
+                <p className="mt-2 text-white">Requirements (elemental approach):</p>
                 <p className="ml-4">Walls: U ≤ 0.28 W/m²K</p>
                 <p className="ml-4">Roof: U ≤ 0.16 W/m²K</p>
                 <p className="ml-4">Floor: U ≤ 0.22 W/m²K</p>
                 <p className="ml-4">Windows: U ≤ 1.6 W/m²K</p>
                 <p className="ml-4">Rooflights: U ≤ 2.2 W/m²K</p>
                 <p className="ml-4">Glazed area ≤ 25% of floor area</p>
-                <p className="mt-2 text-white/60">Opening area calculation:</p>
+                <p className="mt-2 text-white">Opening area calculation:</p>
                 <p className="ml-4">25% of 35m² = 8.75 m² max glazing</p>
                 <p className="ml-4">Proposed: 2× bi-fold doors = 6m²</p>
                 <p className="ml-4 text-green-400">6m² &lt; 8.75m² ✓ WITHIN LIMIT</p>
-                <p className="mt-2 text-white/60">No SAP calculation required for extension</p>
-                <p className="text-white/60">Heating from existing system - check capacity</p>
+                <p className="mt-2 text-white">No SAP calculation required for extension</p>
+                <p className="text-white">Heating from existing system - check capacity</p>
               </div>
             </div>
           </div>
@@ -1054,7 +1054,7 @@ const HNCModule6Section1_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1100,7 +1100,7 @@ const HNCModule6Section1_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section1">

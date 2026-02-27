@@ -201,7 +201,7 @@ export default function WorkingAtHeightModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-1">
@@ -226,7 +226,7 @@ export default function WorkingAtHeightModule1Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Risk Assessment for Working at Height
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The five-step process for identifying hazards, evaluating risks, and implementing
             controls before any work at height begins
           </p>
@@ -299,7 +299,7 @@ export default function WorkingAtHeightModule1Section3() {
             Five-Step Risk Assessment Flowchart
           </h2>
           <div className="bg-white/5 border border-white/10 p-4 sm:p-6 rounded-lg">
-            <p className="text-sm text-white/60 mb-6 text-center">
+            <p className="text-sm text-white mb-6 text-center">
               The HSE&rsquo;s recommended approach to workplace risk assessment
             </p>
 
@@ -312,7 +312,7 @@ export default function WorkingAtHeightModule1Section3() {
                   </div>
                   <div>
                     <p className="text-white font-semibold text-sm">Identify the Hazards</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Walk the site, examine the task, identify what could cause harm
                     </p>
                   </div>
@@ -332,7 +332,7 @@ export default function WorkingAtHeightModule1Section3() {
                   </div>
                   <div>
                     <p className="text-white font-semibold text-sm">Decide Who Might Be Harmed</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Workers, apprentices, other trades, visitors, public
                     </p>
                   </div>
@@ -354,7 +354,7 @@ export default function WorkingAtHeightModule1Section3() {
                     <p className="text-white font-semibold text-sm">
                       Evaluate Risks &amp; Decide Precautions
                     </p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Apply the hierarchy: avoid, prevent, mitigate. Select controls.
                     </p>
                   </div>
@@ -374,7 +374,7 @@ export default function WorkingAtHeightModule1Section3() {
                   </div>
                   <div>
                     <p className="text-white font-semibold text-sm">Record Your Findings</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Document hazards, who is at risk, controls, and responsibilities
                     </p>
                   </div>
@@ -394,7 +394,7 @@ export default function WorkingAtHeightModule1Section3() {
                   </div>
                   <div>
                     <p className="text-white font-semibold text-sm">Review &amp; Update</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Revisit after incidents, changes, or at regular intervals
                     </p>
                   </div>
@@ -403,7 +403,7 @@ export default function WorkingAtHeightModule1Section3() {
 
               {/* Loop arrow back to Step 1 */}
               <div className="flex justify-center pt-2">
-                <div className="flex items-center gap-2 text-white/40 text-xs">
+                <div className="flex items-center gap-2 text-white text-xs">
                   <RefreshCw className="h-3 w-3" />
                   <span>Continuous cycle &mdash; review triggers return to Step 1</span>
                 </div>
@@ -443,7 +443,7 @@ export default function WorkingAtHeightModule1Section3() {
                     Common Hazards for Electricians Working at Height
                   </p>
                 </div>
-                <div className="grid sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-3 text-sm text-white">
                   <div>
                     <p className="text-white font-medium text-xs mb-1.5">Fall Hazards</p>
                     <ul className="space-y-1.5">
@@ -502,7 +502,7 @@ export default function WorkingAtHeightModule1Section3() {
                     Don&rsquo;t Forget Access and Egress
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Many risk assessments focus on the work itself but fail to assess the route
                   <strong className="text-white"> to and from</strong> the work position. How will
                   the electrician get to the roof? How will they carry tools and materials to
@@ -534,7 +534,7 @@ export default function WorkingAtHeightModule1Section3() {
                   <Users className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">People Who Might Be Harmed</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -588,7 +588,7 @@ export default function WorkingAtHeightModule1Section3() {
 
               <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-amber-500 mb-3">Risk Evaluation Matrix</p>
-                <p className="text-xs text-white/60 mb-3">
+                <p className="text-xs text-white mb-3">
                   Risk = Likelihood x Severity. Use this to prioritise which hazards need the most
                   attention.
                 </p>
@@ -596,17 +596,17 @@ export default function WorkingAtHeightModule1Section3() {
                   <div className="min-w-[300px]">
                     <div className="grid grid-cols-4 gap-1 text-center text-xs">
                       <div className="p-2 bg-white/5 rounded" />
-                      <div className="p-2 bg-white/5 rounded text-white/60 font-medium">
+                      <div className="p-2 bg-white/5 rounded text-white font-medium">
                         Low Severity
                       </div>
-                      <div className="p-2 bg-white/5 rounded text-white/60 font-medium">
+                      <div className="p-2 bg-white/5 rounded text-white font-medium">
                         Medium Severity
                       </div>
-                      <div className="p-2 bg-white/5 rounded text-white/60 font-medium">
+                      <div className="p-2 bg-white/5 rounded text-white font-medium">
                         High Severity
                       </div>
 
-                      <div className="p-2 bg-white/5 rounded text-white/60 font-medium">
+                      <div className="p-2 bg-white/5 rounded text-white font-medium">
                         Unlikely
                       </div>
                       <div className="p-2 bg-green-500/20 border border-green-500/30 rounded text-green-400 font-medium">
@@ -619,7 +619,7 @@ export default function WorkingAtHeightModule1Section3() {
                         MEDIUM
                       </div>
 
-                      <div className="p-2 bg-white/5 rounded text-white/60 font-medium">
+                      <div className="p-2 bg-white/5 rounded text-white font-medium">
                         Possible
                       </div>
                       <div className="p-2 bg-green-500/20 border border-green-500/30 rounded text-green-400 font-medium">
@@ -632,7 +632,7 @@ export default function WorkingAtHeightModule1Section3() {
                         HIGH
                       </div>
 
-                      <div className="p-2 bg-white/5 rounded text-white/60 font-medium">Likely</div>
+                      <div className="p-2 bg-white/5 rounded text-white font-medium">Likely</div>
                       <div className="p-2 bg-amber-500/20 border border-amber-500/30 rounded text-amber-400 font-medium">
                         MEDIUM
                       </div>
@@ -645,7 +645,7 @@ export default function WorkingAtHeightModule1Section3() {
                     </div>
                   </div>
                 </div>
-                <p className="text-xs text-white/50 mt-2">
+                <p className="text-xs text-white mt-2">
                   High and critical risks must be addressed before work commences
                 </p>
               </div>
@@ -672,7 +672,7 @@ export default function WorkingAtHeightModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-purple-400 mb-3">Site-Specific Factors</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -736,7 +736,7 @@ export default function WorkingAtHeightModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-blue-400 mb-3">Task-Specific Factors</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -795,7 +795,7 @@ export default function WorkingAtHeightModule1Section3() {
                   <CloudRain className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">Weather Considerations</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Weather is one of the most critical factors in work at height risk assessment. The
                   Work at Height Regulations 2005 specifically require that work at height is not
                   carried out when weather conditions could jeopardise safety.
@@ -803,7 +803,7 @@ export default function WorkingAtHeightModule1Section3() {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-red-400 text-xs font-semibold mb-1">Wind</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Stop most work at height above 23 mph (Force 5). MEWP limits vary by
                       manufacturer (typically 28 mph / 12.5 m/s). Wind is unpredictable at height
                       and on exposed sites. Gusts can be significantly stronger than sustained wind
@@ -812,7 +812,7 @@ export default function WorkingAtHeightModule1Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-red-400 text-xs font-semibold mb-1">Rain &amp; Ice</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Wet surfaces become slippery. Metal scaffolds, ladder rungs, and roof surfaces
                       are hazardous when wet. Ice is extremely dangerous &mdash; if ice is present
                       on any surface, work at height should not proceed until it has been cleared
@@ -821,7 +821,7 @@ export default function WorkingAtHeightModule1Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-red-400 text-xs font-semibold mb-1">Lightning</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       If lightning is forecast or observed, all work at height must stop
                       immediately. Workers on scaffolds, MEWPs, and rooftops are at extreme risk of
                       being struck. Do not resume until the storm has passed and the area is safe.
@@ -829,7 +829,7 @@ export default function WorkingAtHeightModule1Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-amber-400 text-xs font-semibold mb-1">Poor Visibility</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Fog, heavy rain, and fading light reduce visibility and increase the risk of
                       tripping, stepping onto fragile surfaces, or misjudging distances. Ensure
                       adequate lighting and consider postponing work if visibility is poor.
@@ -871,7 +871,7 @@ export default function WorkingAtHeightModule1Section3() {
                     When Dynamic Risk Assessment Is Triggered
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -922,28 +922,28 @@ export default function WorkingAtHeightModule1Section3() {
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-amber-400 font-bold text-lg mb-1">S</p>
                     <p className="text-white font-medium text-xs">STOP</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Pause and take a moment to assess the situation
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-amber-400 font-bold text-lg mb-1">T</p>
                     <p className="text-white font-medium text-xs">THINK</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       What has changed? What are the new risks?
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-amber-400 font-bold text-lg mb-1">A</p>
                     <p className="text-white font-medium text-xs">ACT</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Implement additional controls or stop work
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-amber-400 font-bold text-lg mb-1">R</p>
                     <p className="text-white font-medium text-xs">REVIEW</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Check that the new controls are effective before continuing
                     </p>
                   </div>
@@ -982,7 +982,7 @@ export default function WorkingAtHeightModule1Section3() {
                   <ClipboardList className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">What to Record</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -1046,7 +1046,7 @@ export default function WorkingAtHeightModule1Section3() {
 
               <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-amber-500 mb-2">Method Statements</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   For significant work at height tasks, a{' '}
                   <strong className="text-white">method statement</strong> (or safe system of work)
                   is often produced alongside the risk assessment. The method statement describes
@@ -1069,7 +1069,7 @@ export default function WorkingAtHeightModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Review Triggers</p>
-                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>An accident, incident, or near miss occurs</span>
@@ -1110,7 +1110,7 @@ export default function WorkingAtHeightModule1Section3() {
           </h2>
           <div className="border-l-2 border-amber-500/50 pl-4 sm:pl-6">
             <div className="text-white space-y-4 leading-relaxed">
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -1176,7 +1176,7 @@ export default function WorkingAtHeightModule1Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1190,7 +1190,7 @@ export default function WorkingAtHeightModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-1-section-2">

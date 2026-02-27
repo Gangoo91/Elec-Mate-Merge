@@ -228,7 +228,7 @@ const HNCModule4Section3_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section3">
@@ -250,7 +250,7 @@ const HNCModule4Section3_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Discrimination and Coordination
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Achieving selective protection to minimise disruption and maintain supply continuity
           </p>
         </header>
@@ -353,14 +353,14 @@ const HNCModule4Section3_4 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Full (Total) Discrimination</p>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-white">
                     The downstream device always operates before the upstream device, regardless of
                     fault current level up to the system maximum.
                   </p>
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Partial Discrimination</p>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-white">
                     Discrimination achieved up to a specific fault current level. Above this, both
                     devices may operate together.
                   </p>
@@ -448,7 +448,7 @@ const HNCModule4Section3_4 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 t<sub>upstream</sub> &gt; t<sub>downstream</sub> + Δt
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where Δt is a margin for tolerance (typically 50-100ms)
               </p>
             </div>
@@ -570,7 +570,7 @@ const HNCModule4Section3_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Example: Current Discrimination
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Main board MCCB: 100A, Im = 10 × Ir = 800A</p>
                 <p>Sub-board after 30m 35mm² cable:</p>
                 <p className="mt-2">Ipf at sub-board = 5kA</p>
@@ -587,7 +587,7 @@ const HNCModule4Section3_4 = () => {
                 Energy Let-Through (I²t)
               </p>
               <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   I²t represents the energy passing through a device during fault clearance. For
                   discrimination, the downstream device must clear with lower I²t than the upstream
                   device's let-through threshold.
@@ -744,7 +744,7 @@ const HNCModule4Section3_4 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/70 mt-2">
+              <p className="text-xs text-white mt-2">
                 Example only - always use actual manufacturer data
               </p>
             </div>
@@ -770,7 +770,7 @@ const HNCModule4Section3_4 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Design note:</strong> Always verify discrimination using manufacturer's
               specific tables for the actual devices specified. Generic guidance may not apply to
               all combinations.
@@ -796,7 +796,7 @@ const HNCModule4Section3_4 = () => {
                 <strong>Question:</strong> A 100A BS 88 fuse protects a sub-board with 32A Type B
                 MCBs. Ipf at sub-board is 8kA. Verify discrimination.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>From manufacturer selectivity table:</p>
                 <p>
                   100A HRC vs 32A Type B = <strong>"T" (Total)</strong>
@@ -821,7 +821,7 @@ const HNCModule4Section3_4 = () => {
                 <strong>Question:</strong> Set time discrimination between main MCCB (400A) and
                 sub-board MCCB (100A). Sub-board MCBs operate instantaneously.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Final circuit MCBs: Instantaneous (~10ms)</p>
                 <p className="mt-2">Sub-board 100A MCCB settings:</p>
                 <p>- STD = 100ms (allows MCBs to clear first)</p>
@@ -842,7 +842,7 @@ const HNCModule4Section3_4 = () => {
                 <strong>Question:</strong> A 6kA MCB is used where Ipf = 10kA. Verify cascade
                 protection with 80A HRC fuse upstream. Cable is 4mm² PVC/copper.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Check cascade table: 80A HRC + 32A MCB at 10kA</p>
                 <p>
                   Combined I²t let-through = <strong>25,000 A²s</strong>
@@ -855,7 +855,7 @@ const HNCModule4Section3_4 = () => {
                   25,000 &lt; 211,600 <span className="text-green-400">✓</span>
                 </p>
                 <p className="mt-2 text-green-400">✓ Cascade protection valid</p>
-                <p className="text-white/60">Cable protected from thermal damage</p>
+                <p className="text-white">Cable protected from thermal damage</p>
               </div>
             </div>
           </div>
@@ -944,7 +944,7 @@ const HNCModule4Section3_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -990,7 +990,7 @@ const HNCModule4Section3_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section3-3">

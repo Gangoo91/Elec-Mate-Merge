@@ -259,7 +259,7 @@ const HNCModule5Section1_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section1">
@@ -281,7 +281,7 @@ const HNCModule5Section1_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Building Services Coordination
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             MEP sequencing, interface management, clash detection, and installation priorities for
             complex building services
           </p>
@@ -697,7 +697,7 @@ const HNCModule5Section1_6 = () => {
                 Real-World Example: Hospital Corridor
               </p>
               <div className="p-3 rounded bg-white/5">
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   A hospital corridor has 600mm ceiling void depth. Services required:
                 </p>
                 <ul className="text-sm text-white space-y-1">
@@ -708,7 +708,7 @@ const HNCModule5Section1_6 = () => {
                   <li>Electrical containment (150mm tray)</li>
                   <li>Data cabling (basket tray)</li>
                 </ul>
-                <p className="text-sm text-white/80 mt-2">
+                <p className="text-sm text-white mt-2">
                   <strong>Solution:</strong> Soil pipe at highest level (for fall), duct below,
                   sprinkler/pipework mid-level, electrical low level with data below. Cross-overs
                   coordinated at specific points.
@@ -772,7 +772,7 @@ const HNCModule5Section1_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Service Zone Allocation Example
               </p>
-              <div className="font-mono text-xs text-white/90 bg-black/30 p-3 rounded">
+              <div className="font-mono text-xs text-white bg-black/30 p-3 rounded">
                 <p>Ceiling void depth: 600mm (FFL +3000 to structure +3600)</p>
                 <p className="mt-2">Zone allocation (from structure down):</p>
                 <p>+3600 to +3450: Drainage zone (150mm)</p>
@@ -870,7 +870,7 @@ const HNCModule5Section1_6 = () => {
               </ol>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Documentation tip:</strong> All coordination decisions must be recorded. If
               it's not documented, it didn't happen - and will likely cause disputes later.
             </p>
@@ -895,7 +895,7 @@ const HNCModule5Section1_6 = () => {
                 <strong>Problem:</strong> A 450mm supply duct clashes with a 150mm electrical cable
                 tray at the same level (+3200).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Priority assessment:</p>
                 <p>- Ductwork: Priority 2 (large, inflexible)</p>
                 <p>- Cable tray: Priority 5 (flexible routing)</p>
@@ -917,7 +917,7 @@ const HNCModule5Section1_6 = () => {
                 <strong>Problem:</strong> 2m x 1.5m electrical riser must accommodate main cables,
                 distribution boards, and metering.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Access requirements:</p>
                 <p>- Distribution boards: 750mm clear working space (BS 7671)</p>
                 <p>- Meters: visible and accessible from door</p>
@@ -941,7 +941,7 @@ const HNCModule5Section1_6 = () => {
                 <strong>Scenario:</strong> Plan installation sequence for a basement plant room with
                 chillers, pumps, switchgear, and controls.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Week 1-2: Builder's work complete (plinths, penetrations)</p>
                 <p>Week 3-4: Major plant delivery (chillers, AHUs)</p>
                 <p>Week 5-6: Pipework first fix (headers, main runs)</p>
@@ -1038,7 +1038,7 @@ const HNCModule5Section1_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1088,7 +1088,7 @@ const HNCModule5Section1_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section1">

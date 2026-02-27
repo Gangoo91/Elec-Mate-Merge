@@ -257,7 +257,7 @@ const Level3Module3Section6_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section6">
@@ -329,7 +329,7 @@ const Level3Module3Section6_2 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-elec-yellow/80 mb-1">Where:</p>
-                  <ul className="text-white/80 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>Vd = Voltage drop (volts)</li>
                     <li>I = Current (amperes)</li>
                     <li>R = Cable resistance (ohms)</li>
@@ -337,7 +337,7 @@ const Level3Module3Section6_2 = () => {
                 </div>
                 <div>
                   <p className="text-elec-yellow/80 mb-1">Remember:</p>
-                  <ul className="text-white/80 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>Voltage at load = Supply - Drop</li>
                     <li>Include both line AND neutral resistance</li>
                     <li>Higher current = higher drop</li>
@@ -348,12 +348,12 @@ const Level3Module3Section6_2 = () => {
 
             <div className="p-4 rounded-lg bg-transparent border border-white/10 my-6">
               <p className="text-sm font-medium text-white mb-2">Circuit Diagram Concept:</p>
-              <div className="text-xs text-white/80 font-mono space-y-2 p-3 bg-white/5 rounded">
+              <div className="text-xs text-white font-mono space-y-2 p-3 bg-white/5 rounded">
                 <p>Supply (230V) ----[R line]---- Load ----[R neutral]---- Supply Return</p>
                 <p className="mt-2">Voltage at Load = 230V - (I x R line) - (I x R neutral)</p>
                 <p>Voltage at Load = 230V - I x (R line + R neutral)</p>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 For single-phase, total cable R = R line + R neutral
               </p>
             </div>
@@ -385,9 +385,9 @@ const Level3Module3Section6_2 = () => {
               <div className="p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
                 <p className="text-sm font-medium text-yellow-400 mb-2">Lighting Circuits</p>
                 <p className="text-2xl font-bold text-white mb-1">3%</p>
-                <p className="text-xs text-white/80">of supply voltage</p>
+                <p className="text-xs text-white">of supply voltage</p>
                 <p className="text-lg font-mono text-white mt-2">= 6.9V (for 230V)</p>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   Lighting is sensitive to voltage - even small reductions significantly affect
                   light output
                 </p>
@@ -395,9 +395,9 @@ const Level3Module3Section6_2 = () => {
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <p className="text-sm font-medium text-blue-400 mb-2">Other Circuits (Power)</p>
                 <p className="text-2xl font-bold text-white mb-1">5%</p>
-                <p className="text-xs text-white/80">of supply voltage</p>
+                <p className="text-xs text-white">of supply voltage</p>
                 <p className="text-lg font-mono text-white mt-2">= 11.5V (for 230V)</p>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   Motors and other equipment can tolerate slightly greater voltage variation
                 </p>
               </div>
@@ -407,7 +407,7 @@ const Level3Module3Section6_2 = () => {
               <p className="text-sm font-medium text-red-400 mb-2">
                 Important: Combined Voltage Drop
               </p>
-              <p className="text-xs text-white/90">
+              <p className="text-xs text-white">
                 The limits apply to the total voltage drop from the origin of the installation to
                 the point of use. If an installation has distribution circuits feeding final
                 circuits, the combined drop must not exceed the limit. For example: if a
@@ -416,7 +416,7 @@ const Level3Module3Section6_2 = () => {
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Reference:</strong> BS 7671 Appendix 4 provides the voltage drop requirements
               and the mV/A/m values for different cable types and sizes.
             </p>
@@ -446,7 +446,7 @@ const Level3Module3Section6_2 = () => {
               <p className="text-xl text-white font-mono text-center mb-4">
                 Vd = (mV/A/m x Ib x L) / 1000
               </p>
-              <div className="text-sm text-white/80">
+              <div className="text-sm text-white">
                 <p>Where:</p>
                 <ul className="ml-4 mt-1 space-y-1">
                   <li>Vd = Voltage drop (volts)</li>
@@ -471,7 +471,7 @@ const Level3Module3Section6_2 = () => {
                       <th className="text-left py-2 text-elec-yellow/80">Typical Use</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/5">
                       <td className="py-2">1.5</td>
                       <td className="py-2">29</td>
@@ -500,18 +500,18 @@ const Level3Module3Section6_2 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Values from BS 7671 Table 4D5 for flat twin cable, method C
               </p>
             </div>
 
             <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20 my-6">
               <p className="text-sm font-medium text-green-400 mb-2">Worked Example</p>
-              <p className="text-xs text-white/90 mb-2">
+              <p className="text-xs text-white mb-2">
                 A 20m lighting circuit uses 1.5mm sq cable. Design current is 8A. Calculate voltage
                 drop.
               </p>
-              <div className="text-xs text-white/80 space-y-2 font-mono">
+              <div className="text-xs text-white space-y-2 font-mono">
                 <p>
                   <strong>Given:</strong> mV/A/m = 29, Ib = 8A, L = 20m
                 </p>
@@ -553,7 +553,7 @@ const Level3Module3Section6_2 = () => {
             <div className="my-6 space-y-3">
               <div className="p-3 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-white">Lighting</p>
-                <p className="text-xs text-white/70 mt-1">
+                <p className="text-xs text-white mt-1">
                   Light output varies approximately as the cube of voltage. A 10% voltage drop can
                   reduce light output by about 30%. Incandescent lamps are most affected; LED
                   drivers may compensate but have limits.
@@ -561,7 +561,7 @@ const Level3Module3Section6_2 = () => {
               </div>
               <div className="p-3 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-white">Motors</p>
-                <p className="text-xs text-white/70 mt-1">
+                <p className="text-xs text-white mt-1">
                   Motor torque varies as voltage squared. Under-voltage causes higher current draw,
                   overheating, and reduced life. Starting current increases and the motor may fail
                   to start under load.
@@ -569,14 +569,14 @@ const Level3Module3Section6_2 = () => {
               </div>
               <div className="p-3 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-white">Heating Elements</p>
-                <p className="text-xs text-white/70 mt-1">
+                <p className="text-xs text-white mt-1">
                   Power output varies as voltage squared. A 10% voltage reduction gives
                   approximately 19% less heat output, requiring longer heating times.
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-white">Electronic Equipment</p>
-                <p className="text-xs text-white/70 mt-1">
+                <p className="text-xs text-white mt-1">
                   Power supplies have minimum input voltage requirements. Below this, equipment may
                   malfunction, reset, or shut down. Computer equipment is particularly sensitive.
                 </p>
@@ -587,7 +587,7 @@ const Level3Module3Section6_2 = () => {
               <p className="text-sm font-medium text-red-400 mb-2">
                 Signs of Voltage Drop Problems
               </p>
-              <ul className="text-xs text-white/90 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>Lights dimming when large loads start</li>
                 <li>Motors running hot or failing to start</li>
                 <li>Electronic equipment resetting or behaving erratically</li>
@@ -596,7 +596,7 @@ const Level3Module3Section6_2 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Energy Loss:</strong> Power lost in cables = I squared x R. This wasted energy
               appears as heat and must be paid for. Minimising voltage drop also minimises energy
               waste.
@@ -669,7 +669,7 @@ const Level3Module3Section6_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -712,7 +712,7 @@ const Level3Module3Section6_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section6-1">

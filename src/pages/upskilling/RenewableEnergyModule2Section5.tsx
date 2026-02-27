@@ -117,7 +117,7 @@ const RenewableEnergyModule2Section5 = () => {
           <Button
             variant="ghost"
             size="sm"
-            className="text-white/70 hover:text-white hover:bg-white/10 -ml-2"
+            className="text-white hover:text-white hover:bg-white/10 -ml-2"
             asChild
           >
             <Link to="/electrician/upskilling/renewable-energy-module-2">
@@ -137,7 +137,7 @@ const RenewableEnergyModule2Section5 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             PV System Layouts: DC Side, AC Side &amp; Isolation
           </h1>
-          <p className="text-white/60 text-sm sm:text-base">Safety &amp; System Architecture</p>
+          <p className="text-white text-sm sm:text-base">Safety &amp; System Architecture</p>
         </div>
 
         {/* Quick Summary */}
@@ -162,19 +162,19 @@ const RenewableEnergyModule2Section5 = () => {
           <div className="space-y-2">
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-white/80 text-sm">
+              <span className="text-white text-sm">
                 Differentiate between DC and AC system layouts and components
               </span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-white/80 text-sm">
+              <span className="text-white text-sm">
                 Understand isolation requirements and safety procedures
               </span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-white/80 text-sm">
+              <span className="text-white text-sm">
                 Plan for safe maintenance access and system operation
               </span>
             </div>
@@ -187,7 +187,7 @@ const RenewableEnergyModule2Section5 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">01</span>
             DC Side Layout &amp; Components
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Layout planning is about safety and performance. A clear, well-labelled system is
               easier to operate, maintain, and inspect - and legally compliant.
@@ -254,7 +254,7 @@ const RenewableEnergyModule2Section5 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">02</span>
             AC Side Layout &amp; Components
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               The AC side handles the converted power from inverters to building loads and grid
               export.
@@ -317,7 +317,7 @@ const RenewableEnergyModule2Section5 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">03</span>
             System Architectures
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Modern PV systems employ various architectural approaches to optimise performance and
               reliability.
@@ -384,7 +384,7 @@ const RenewableEnergyModule2Section5 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">04</span>
             Isolation Requirements &amp; Safety
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>Proper isolation is critical for safe maintenance and emergency response.</p>
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
               <h4 className="text-red-400 font-medium mb-3">Essential Isolation Points:</h4>
@@ -429,7 +429,7 @@ const RenewableEnergyModule2Section5 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">05</span>
             Rapid Shutdown &amp; Arc Fault Protection
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Modern PV systems incorporate sophisticated safety mechanisms to protect against
               electrical hazards and fire risks.
@@ -465,7 +465,7 @@ const RenewableEnergyModule2Section5 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">06</span>
             Labelling &amp; Signage
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Clear labelling ensures safe operation and maintenance throughout the system
               lifecycle.
@@ -505,7 +505,7 @@ const RenewableEnergyModule2Section5 = () => {
         {/* Practical Guidance */}
         <div className="mb-8 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
           <h3 className="text-white font-semibold mb-3">Practical Guidance</h3>
-          <div className="space-y-2 text-white/80 text-sm">
+          <div className="space-y-2 text-white text-sm">
             <p>
               <strong className="text-white">Always verify isolation:</strong> Use a DC clamp meter
               to confirm zero current before working on any DC circuit - panels generate whenever
@@ -530,7 +530,7 @@ const RenewableEnergyModule2Section5 = () => {
               <h4 className="text-white font-medium mb-2">
                 Why are DC isolators required near the array?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Panels generate DC voltage whenever exposed to light and cannot be completely turned
                 off. A DC isolator near the array allows isolation before any internal building
                 wiring for safe maintenance and emergency response.
@@ -538,7 +538,7 @@ const RenewableEnergyModule2Section5 = () => {
             </div>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
               <h4 className="text-white font-medium mb-2">What is anti-islanding protection?</h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Anti-islanding prevents the PV system from exporting power during a grid outage,
                 protecting utility workers who may be repairing the network. Grid-tie inverters must
                 detect loss of mains and disconnect within specified times.
@@ -548,7 +548,7 @@ const RenewableEnergyModule2Section5 = () => {
               <h4 className="text-white font-medium mb-2">
                 When should I choose AC coupling over DC coupling for batteries?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 AC coupling is ideal for retrofitting to existing systems as it works with any
                 inverter. DC coupling is more efficient for new installations but requires a hybrid
                 inverter. Consider existing equipment, efficiency needs, and budget.
@@ -558,7 +558,7 @@ const RenewableEnergyModule2Section5 = () => {
               <h4 className="text-white font-medium mb-2">
                 What communication protocols do monitoring systems use?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Modbus RTU/TCP is the industrial standard. SunSpec Alliance provides standardised
                 interfaces. Modern systems also use WiFi, cellular, and cloud platforms for remote
                 monitoring and control.
@@ -568,7 +568,7 @@ const RenewableEnergyModule2Section5 = () => {
               <h4 className="text-white font-medium mb-2">
                 How does rapid shutdown improve safety?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Rapid shutdown reduces array voltage to less than 80V within 10 seconds of
                 activation, making it safer for firefighters to work near the array during
                 emergencies without risk of electric shock.
@@ -578,7 +578,7 @@ const RenewableEnergyModule2Section5 = () => {
               <h4 className="text-white font-medium mb-2">
                 What labels are legally required at the consumer unit?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 BS 7671 requires warning labels indicating that the installation has a dual supply
                 (grid and PV), location of DC isolator, and emergency switching instructions. These
                 must be durable and clearly visible.
@@ -600,7 +600,7 @@ const RenewableEnergyModule2Section5 = () => {
         <div className="flex justify-between items-center pt-6 border-t border-white/10">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/10"
+            className="text-white hover:text-white hover:bg-white/10"
             asChild
           >
             <Link to="../section-4">

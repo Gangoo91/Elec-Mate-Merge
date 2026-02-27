@@ -195,7 +195,7 @@ export default function ConfinedSpacesModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-5">
@@ -218,7 +218,7 @@ export default function ConfinedSpacesModule5Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Rescue Equipment &amp; Techniques
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Tripods, winches, davit arms, rescue harnesses, breathing apparatus, confined space
             stretchers, first aid provisions, and the critical requirement to pre-position all
             equipment before entry
@@ -317,7 +317,7 @@ export default function ConfinedSpacesModule5Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Safety Fact</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     Over 60% of confined space fatalities in the UK are would-be rescuers
                   </strong>{' '}
@@ -328,7 +328,7 @@ export default function ConfinedSpacesModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">How Non-Entry Rescue Works</p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-cyan-500/20 text-cyan-400 text-xs font-bold flex-shrink-0">
                       1
@@ -407,7 +407,7 @@ export default function ConfinedSpacesModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Tripod Requirements</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -441,7 +441,7 @@ export default function ConfinedSpacesModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Rescue Winch Requirements</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -514,14 +514,14 @@ export default function ConfinedSpacesModule5Section2() {
               <div className="flex flex-col items-center">
                 <div className="border-2 border-cyan-500/60 rounded-lg bg-cyan-500/10 px-4 py-2 text-centre">
                   <p className="text-sm font-medium text-cyan-400">Rescue Winch</p>
-                  <p className="text-[10px] text-white/50">
+                  <p className="text-[10px] text-white">
                     Man-riding certified &middot; 140-180 kg rated
                   </p>
                 </div>
                 <div className="w-px h-4 bg-cyan-500/40" />
                 <div className="border-2 border-white/30 rounded-lg bg-[#2a2a2a] px-6 py-3 text-centre">
-                  <p className="text-sm font-medium text-white/80">Tripod Apex</p>
-                  <p className="text-[10px] text-white/50">Pulley / sheave at top</p>
+                  <p className="text-sm font-medium text-white">Tripod Apex</p>
+                  <p className="text-[10px] text-white">Pulley / sheave at top</p>
                 </div>
               </div>
 
@@ -529,7 +529,7 @@ export default function ConfinedSpacesModule5Section2() {
               <div className="flex items-end justify-between px-4 sm:px-8">
                 <div className="flex flex-col items-center">
                   <div className="w-px h-10 bg-white/20 rotate-[25deg]" />
-                  <span className="text-[9px] text-white/40 mt-1">Leg A</span>
+                  <span className="text-[9px] text-white mt-1">Leg A</span>
                 </div>
                 <div className="flex flex-col items-center">
                   <div className="w-0.5 h-12 bg-cyan-400/50" />
@@ -537,31 +537,31 @@ export default function ConfinedSpacesModule5Section2() {
                 </div>
                 <div className="flex flex-col items-center">
                   <div className="w-px h-10 bg-white/20 rotate-[-25deg]" />
-                  <span className="text-[9px] text-white/40 mt-1">Leg B</span>
+                  <span className="text-[9px] text-white mt-1">Leg B</span>
                 </div>
               </div>
 
               {/* Safety chain */}
               <div className="flex items-center justify-center gap-2">
                 <div className="h-px flex-1 bg-white/10 border-dashed border-t border-white/20" />
-                <span className="text-[9px] text-white/40 px-2">Safety chain between legs</span>
+                <span className="text-[9px] text-white px-2">Safety chain between legs</span>
                 <div className="h-px flex-1 bg-white/10 border-dashed border-t border-white/20" />
               </div>
 
               {/* Ground / opening */}
               <div className="relative border-2 border-white/20 rounded-lg bg-[#222] p-3">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-[10px] text-white/50">Ground level</span>
-                  <span className="text-[10px] text-white/50">Manhole / hatch opening</span>
+                  <span className="text-[10px] text-white">Ground level</span>
+                  <span className="text-[10px] text-white">Manhole / hatch opening</span>
                 </div>
                 <div className="border-2 border-dashed border-cyan-500/30 rounded bg-cyan-500/5 p-3 text-centre">
                   <div className="flex flex-col items-center gap-1">
                     <div className="w-8 h-8 rounded-full border-2 border-cyan-400/50 bg-cyan-500/10 flex items-center justify-center">
                       <span className="text-[10px] text-cyan-400 font-bold">W</span>
                     </div>
-                    <p className="text-xs text-white/60">Worker</p>
+                    <p className="text-xs text-white">Worker</p>
                     <p className="text-[9px] text-cyan-400/80">Rescue harness with dorsal D-ring</p>
-                    <p className="text-[9px] text-white/40">
+                    <p className="text-[9px] text-white">
                       Lifeline connected to D-ring &rarr; up to winch
                     </p>
                   </div>
@@ -572,11 +572,11 @@ export default function ConfinedSpacesModule5Section2() {
               <div className="grid grid-cols-2 gap-2">
                 <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-2 text-centre">
                   <p className="text-[10px] text-cyan-400 font-medium">Fall Arrest</p>
-                  <p className="text-[9px] text-white/50">Integrated in winch</p>
+                  <p className="text-[9px] text-white">Integrated in winch</p>
                 </div>
                 <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-2 text-centre">
                   <p className="text-[10px] text-cyan-400 font-medium">LOLER Exam</p>
-                  <p className="text-[9px] text-white/50">Every 6 months (persons)</p>
+                  <p className="text-[9px] text-white">Every 6 months (persons)</p>
                 </div>
               </div>
             </div>
@@ -603,7 +603,7 @@ export default function ConfinedSpacesModule5Section2() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   Rescue Harness Requirements
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -641,7 +641,7 @@ export default function ConfinedSpacesModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Lifeline Requirements</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -674,7 +674,7 @@ export default function ConfinedSpacesModule5Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Suspension Trauma Risk</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">Suspension trauma (harness hang syndrome)</strong>{' '}
                   can develop within 15-20 minutes when a person is suspended motionless in a
                   harness. Blood pools in the legs, reducing venous return to the heart, and can
@@ -706,7 +706,7 @@ export default function ConfinedSpacesModule5Section2() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   Horizontal Retrieval Methods
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -774,7 +774,7 @@ export default function ConfinedSpacesModule5Section2() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   Self-Contained Breathing Apparatus (SCBA)
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -813,7 +813,7 @@ export default function ConfinedSpacesModule5Section2() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   Airline Breathing Apparatus (Airline BA)
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -843,7 +843,7 @@ export default function ConfinedSpacesModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Escape Sets (Self-Rescue)</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -876,7 +876,7 @@ export default function ConfinedSpacesModule5Section2() {
                     Filtering RPE Is Not Acceptable
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     Filtering facepieces (FFP masks) and powered air purifying respirators (PAPRs)
                     must NEVER be used for confined space rescue entry.
@@ -917,7 +917,7 @@ export default function ConfinedSpacesModule5Section2() {
                       </span>
                       <div>
                         <p className="text-sm font-medium text-white">Neil Robertson Stretcher</p>
-                        <p className="text-xs text-white/60 mt-0.5">
+                        <p className="text-xs text-white mt-0.5">
                           Rigid, narrow-profile, wraps around the casualty with integral straps.
                           Originally designed for ship&rsquo;s holds. Can be used vertically &mdash;
                           ideal for extraction through manholes. Provides some spinal
@@ -935,7 +935,7 @@ export default function ConfinedSpacesModule5Section2() {
                         <p className="text-sm font-medium text-white">
                           Basket Stretcher (Stokes Litter)
                         </p>
-                        <p className="text-xs text-white/60 mt-0.5">
+                        <p className="text-xs text-white mt-0.5">
                           Wire or plastic mesh basket with rigid frame. The casualty lies inside and
                           is secured with straps. Provides good protection during lifting. Can be
                           used vertically with appropriate rigging. Wider profile than Neil
@@ -951,7 +951,7 @@ export default function ConfinedSpacesModule5Section2() {
                       </span>
                       <div>
                         <p className="text-sm font-medium text-white">Scoop Stretcher</p>
-                        <p className="text-xs text-white/60 mt-0.5">
+                        <p className="text-xs text-white mt-0.5">
                           Splits into two halves that are &ldquo;scooped&rdquo; under the casualty
                           from each side without rolling them. Used where spinal injury is suspected
                           and minimal movement is critical. Not suitable for vertical lifting
@@ -994,7 +994,7 @@ export default function ConfinedSpacesModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">First Aid Provisions</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1041,7 +1041,7 @@ export default function ConfinedSpacesModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Communication Equipment</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1076,7 +1076,7 @@ export default function ConfinedSpacesModule5Section2() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   Additional Rescue Equipment
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1145,7 +1145,7 @@ export default function ConfinedSpacesModule5Section2() {
                     ].map((item, i) => (
                       <div key={i} className="flex items-center gap-2">
                         <ShieldCheck className="h-3.5 w-3.5 text-cyan-400/70 flex-shrink-0" />
-                        <span className="text-xs text-white/80">{item}</span>
+                        <span className="text-xs text-white">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -1166,7 +1166,7 @@ export default function ConfinedSpacesModule5Section2() {
                     ].map((item, i) => (
                       <div key={i} className="flex items-center gap-2">
                         <ShieldCheck className="h-3.5 w-3.5 text-cyan-400/70 flex-shrink-0" />
-                        <span className="text-xs text-white/80">{item}</span>
+                        <span className="text-xs text-white">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -1187,7 +1187,7 @@ export default function ConfinedSpacesModule5Section2() {
                     ].map((item, i) => (
                       <div key={i} className="flex items-center gap-2">
                         <ShieldCheck className="h-3.5 w-3.5 text-cyan-400/70 flex-shrink-0" />
-                        <span className="text-xs text-white/80">{item}</span>
+                        <span className="text-xs text-white">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -1208,7 +1208,7 @@ export default function ConfinedSpacesModule5Section2() {
                     ].map((item, i) => (
                       <div key={i} className="flex items-center gap-2">
                         <ShieldCheck className="h-3.5 w-3.5 text-cyan-400/70 flex-shrink-0" />
-                        <span className="text-xs text-white/80">{item}</span>
+                        <span className="text-xs text-white">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -1216,7 +1216,7 @@ export default function ConfinedSpacesModule5Section2() {
               </div>
 
               <div className="mt-3 bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-3 text-centre">
-                <p className="text-xs sm:text-sm text-white/80">
+                <p className="text-xs sm:text-sm text-white">
                   <strong className="text-cyan-400">Pre-Entry Check:</strong> The standby person
                   must confirm every item is present, functional, and ready for immediate use before
                   authorising entry
@@ -1244,7 +1244,7 @@ export default function ConfinedSpacesModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Pre-Use Checks</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1277,7 +1277,7 @@ export default function ConfinedSpacesModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Periodic Servicing</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1303,7 +1303,7 @@ export default function ConfinedSpacesModule5Section2() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   LOLER Thorough Examinations
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-3">
                     <div className="flex items-start gap-3">
                       <span className="text-cyan-400 font-bold text-sm mt-0.5 flex-shrink-0">
@@ -1311,7 +1311,7 @@ export default function ConfinedSpacesModule5Section2() {
                       </span>
                       <div>
                         <p className="text-sm font-medium text-white">Equipment Used for Persons</p>
-                        <p className="text-xs text-white/60 mt-0.5">
+                        <p className="text-xs text-white mt-0.5">
                           Rescue winches, tripods, davit arms, and all lifting accessories
                           (karabiners, shackles, connectors) used for raising or lowering persons
                           must be thoroughly examined by a competent person at least every{' '}
@@ -1327,7 +1327,7 @@ export default function ConfinedSpacesModule5Section2() {
                       </span>
                       <div>
                         <p className="text-sm font-medium text-white">Other Lifting Equipment</p>
-                        <p className="text-xs text-white/60 mt-0.5">
+                        <p className="text-xs text-white mt-0.5">
                           Lifting equipment not used for raising or lowering persons must be
                           thoroughly examined at least every{' '}
                           <strong className="text-cyan-400">12 months</strong>
@@ -1340,7 +1340,7 @@ export default function ConfinedSpacesModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Record Keeping</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1382,7 +1382,7 @@ export default function ConfinedSpacesModule5Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Out-of-Date Examinations</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     Equipment with an overdue LOLER thorough examination must not be used.
                   </strong>{' '}
@@ -1403,7 +1403,7 @@ export default function ConfinedSpacesModule5Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1417,7 +1417,7 @@ export default function ConfinedSpacesModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-5-section-1">

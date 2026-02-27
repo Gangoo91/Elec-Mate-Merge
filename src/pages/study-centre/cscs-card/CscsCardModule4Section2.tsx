@@ -209,11 +209,11 @@ const CscsCardModule4Section2 = () => {
           </div>
           <div className="inline-block bg-green-500/10 border border-green-500/20 px-3 py-1 rounded-full text-sm font-semibold mb-4 ml-0">
             <span className="text-green-400">MODULE 4</span>
-            <span className="text-white/40 mx-2">&middot;</span>
-            <span className="text-white/60">SECTION 2</span>
+            <span className="text-white mx-2">&middot;</span>
+            <span className="text-white">SECTION 2</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">Asbestos Awareness</h1>
-          <p className="text-white/70 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding asbestos types, health risks, where it is found on construction sites, the
             legal duty to manage, and the correct actions to take when you encounter suspected
             asbestos-containing materials
@@ -224,7 +224,7 @@ const CscsCardModule4Section2 = () => {
         <div className="grid sm:grid-cols-2 gap-4 mb-10">
           <div className="rounded-lg p-4 bg-green-500/5 border-l-2 border-green-500/50">
             <p className="font-semibold text-green-400 mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -257,7 +257,7 @@ const CscsCardModule4Section2 = () => {
           </div>
           <div className="rounded-lg p-4 bg-green-500/5 border-l-2 border-green-500/50">
             <p className="font-semibold text-green-400/90 mb-2">On Site</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -293,7 +293,7 @@ const CscsCardModule4Section2 = () => {
         {/* Learning Outcomes */}
         <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4">By the end of this section, you will be able to:</p>
+          <p className="text-white mb-4">By the end of this section, you will be able to:</p>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
               'Identify the three main types of asbestos and explain why asbestos was used so widely in construction',
@@ -307,7 +307,7 @@ const CscsCardModule4Section2 = () => {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400/70 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </div>
             ))}
           </div>
@@ -322,7 +322,7 @@ const CscsCardModule4Section2 = () => {
               <span className="text-green-400/80 text-sm font-normal">01</span>
               What Is Asbestos?
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">Asbestos</strong> is a naturally occurring mineral
                 fibre that was extensively used in the construction industry from the 1950s through
@@ -344,7 +344,7 @@ const CscsCardModule4Section2 = () => {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-green-400">Key Dates</h3>
-                <ul className="text-white/80 text-sm space-y-1.5">
+                <ul className="text-white text-sm space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -383,7 +383,7 @@ const CscsCardModule4Section2 = () => {
                       </div>
                       <div>
                         <p className="text-white font-semibold mb-1">Chrysotile (White Asbestos)</p>
-                        <ul className="text-white/60 text-sm space-y-1">
+                        <ul className="text-white text-sm space-y-1">
                           <li className="flex items-start gap-2">
                             <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                             <span>
@@ -415,7 +415,7 @@ const CscsCardModule4Section2 = () => {
                       </div>
                       <div>
                         <p className="text-white font-semibold mb-1">Amosite (Brown Asbestos)</p>
-                        <ul className="text-white/60 text-sm space-y-1">
+                        <ul className="text-white text-sm space-y-1">
                           <li className="flex items-start gap-2">
                             <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                             <span>
@@ -446,7 +446,7 @@ const CscsCardModule4Section2 = () => {
                       </div>
                       <div>
                         <p className="text-white font-semibold mb-1">Crocidolite (Blue Asbestos)</p>
-                        <ul className="text-white/60 text-sm space-y-1">
+                        <ul className="text-white text-sm space-y-1">
                           <li className="flex items-start gap-2">
                             <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                             <span>
@@ -494,7 +494,7 @@ const CscsCardModule4Section2 = () => {
               <span className="text-red-400/80 text-sm font-normal">02</span>
               Health Effects
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Asbestos exposure causes a range of serious and often fatal diseases. There is{' '}
                 <strong className="text-white">no safe level of exposure</strong> — even brief,
@@ -513,7 +513,7 @@ const CscsCardModule4Section2 = () => {
                     Approximately 5,000 Asbestos-Related Deaths Per Year in the UK
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Asbestos is the{' '}
                   <strong className="text-white">
                     single greatest cause of work-related death
@@ -533,7 +533,7 @@ const CscsCardModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Mesothelioma</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         A cancer of the lining of the lungs (pleura) or abdomen (peritoneum). Almost
                         exclusively caused by asbestos exposure. Always fatal — there is no cure.
                         Median survival time from diagnosis is 12 to 18 months. Can result from
@@ -547,7 +547,7 @@ const CscsCardModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Asbestosis</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         A chronic, progressive fibrosis (scarring) of the lung tissue caused by
                         prolonged inhalation of asbestos fibres. Causes increasing breathlessness,
                         coughing, and chest pain. Eventually leads to severe disability and can be
@@ -561,7 +561,7 @@ const CscsCardModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Asbestos-Related Lung Cancer</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Asbestos exposure significantly increases the risk of developing lung
                         cancer. The risk is multiplied if the worker also smokes — a smoker exposed
                         to asbestos has a dramatically higher risk than either factor alone.
@@ -576,7 +576,7 @@ const CscsCardModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Pleural Thickening</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Scarring and thickening of the membrane that surrounds the lungs (pleura).
                         Causes the lungs to become restricted, leading to breathlessness and chest
                         discomfort. Can be debilitating but is not usually fatal on its own.
@@ -589,7 +589,7 @@ const CscsCardModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Pleural Plaques</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Localised areas of scarring on the pleura. Generally symptom-free and not
                         life-threatening, but they are evidence that asbestos exposure has occurred
                         and indicate that more serious disease could develop in the future.
@@ -604,7 +604,7 @@ const CscsCardModule4Section2 = () => {
                   <AlertTriangle className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-green-300">Long Latency Period</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   The latency period for asbestos-related diseases is typically{' '}
                   <strong className="text-white">15 to 60 years</strong>. Mesothelioma is usually
                   diagnosed 30 to 40 years after initial exposure. This means that many of the
@@ -627,7 +627,7 @@ const CscsCardModule4Section2 = () => {
               <span className="text-amber-400/80 text-sm font-normal">03</span>
               Where Asbestos Is Found
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Asbestos was used in an enormous range of building products. In a pre-2000 building,
                 ACMs can be found almost anywhere — from the roof to the floor and everywhere in
@@ -640,7 +640,7 @@ const CscsCardModule4Section2 = () => {
                 <h3 className="text-amber-300 font-medium mb-3">
                   Common Locations of ACMs in Buildings
                 </h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -719,11 +719,11 @@ const CscsCardModule4Section2 = () => {
                 <h3 className="font-semibold mb-2 text-green-400">
                   Specific Risks for Electricians
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   As an electrician, you should be aware that asbestos was used in many electrical
                   components and in the areas where electrical work is typically carried out:
                 </p>
-                <ul className="text-white/70 text-sm space-y-1.5">
+                <ul className="text-white text-sm space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -770,7 +770,7 @@ const CscsCardModule4Section2 = () => {
               <span className="text-teal-400/80 text-sm font-normal">04</span>
               The Duty to Manage
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">Regulation 4</strong> of the Control of Asbestos
                 Regulations 2012 places a <strong className="text-white">duty to manage</strong>{' '}
@@ -782,14 +782,14 @@ const CscsCardModule4Section2 = () => {
 
               <div className="bg-white/5 border border-teal-400/30 p-4 rounded-lg">
                 <h3 className="text-teal-300 font-medium mb-3">What the Duty Holder Must Do</h3>
-                <ul className="text-white/70 space-y-3 text-sm">
+                <ul className="text-white space-y-3 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-6 h-6 rounded-full bg-teal-500/20 border border-teal-400/30 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-teal-300 text-xs font-bold">1</span>
                     </div>
                     <div>
                       <p className="text-white font-medium">Find or presume ACMs</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Take reasonable steps to find out whether the building contains
                         asbestos-containing materials. This usually means commissioning an asbestos
                         management survey. If materials cannot be accessed for sampling, they must
@@ -803,7 +803,7 @@ const CscsCardModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Assess the condition of ACMs</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Determine the condition of each ACM — is it in good condition, slightly
                         damaged, or significantly damaged? Assess the likelihood that it will be
                         disturbed by normal building activities or planned work.
@@ -816,7 +816,7 @@ const CscsCardModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Manage the risk</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Prepare a written management plan setting out how the ACMs will be managed.
                         This may involve leaving ACMs in place and monitoring them, encapsulating or
                         sealing them, or arranging for removal by a competent contractor.
@@ -829,7 +829,7 @@ const CscsCardModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Maintain a register</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Create and maintain an asbestos register that records the location, type,
                         condition, and management action for every ACM in the building. The register
                         must be kept up to date and readily available.
@@ -842,7 +842,7 @@ const CscsCardModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Inform workers</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Anyone who is likely to work on or disturb ACMs must be informed of the
                         location and condition of asbestos in their work area. This includes
                         maintenance workers, contractors, electricians, plumbers, and any other
@@ -858,7 +858,7 @@ const CscsCardModule4Section2 = () => {
                   <AlertTriangle className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-green-300">Your Right to Information</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   As a worker, you have the{' '}
                   <strong className="text-white">right to be informed</strong> about the presence
                   and location of asbestos in any building where you are working. Before you start
@@ -881,7 +881,7 @@ const CscsCardModule4Section2 = () => {
               <span className="text-red-400/80 text-sm font-normal">05</span>
               What To Do If You Find Suspected ACMs
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 If you discover a material during work that you suspect may contain asbestos, you
                 must follow a strict sequence of actions. The overriding principle is simple:{' '}
@@ -905,7 +905,7 @@ const CscsCardModule4Section2 = () => {
                       </div>
                       <div>
                         <p className="text-red-300 font-bold text-sm sm:text-base">STOP</p>
-                        <p className="text-white/60 text-xs sm:text-sm">
+                        <p className="text-white text-xs sm:text-sm">
                           Stop all work immediately. Put down your tools. Do not continue with any
                           task that could disturb the suspect material.
                         </p>
@@ -928,7 +928,7 @@ const CscsCardModule4Section2 = () => {
                         <p className="text-orange-300 font-bold text-sm sm:text-base">
                           DON'T TOUCH
                         </p>
-                        <p className="text-white/60 text-xs sm:text-sm">
+                        <p className="text-white text-xs sm:text-sm">
                           Do NOT disturb, move, break, drill, cut, scrape, or sample the material.
                           Do not attempt to clean up any dust or debris. Leave everything exactly as
                           it is.
@@ -952,7 +952,7 @@ const CscsCardModule4Section2 = () => {
                         <p className="text-yellow-300 font-bold text-sm sm:text-base">
                           LEAVE THE AREA
                         </p>
-                        <p className="text-white/60 text-xs sm:text-sm">
+                        <p className="text-white text-xs sm:text-sm">
                           Move away from the suspect material. Restrict access to the area — prevent
                           other workers and building occupants from entering. Close doors if
                           possible.
@@ -974,7 +974,7 @@ const CscsCardModule4Section2 = () => {
                       </div>
                       <div>
                         <p className="text-blue-300 font-bold text-sm sm:text-base">REPORT</p>
-                        <p className="text-white/60 text-xs sm:text-sm">
+                        <p className="text-white text-xs sm:text-sm">
                           Report immediately to your supervisor, site manager, or the building's
                           duty holder. Provide the location and describe the material. Record what
                           you found and when.
@@ -996,7 +996,7 @@ const CscsCardModule4Section2 = () => {
                       </div>
                       <div>
                         <p className="text-green-300 font-bold text-sm sm:text-base">WAIT</p>
-                        <p className="text-white/60 text-xs sm:text-sm">
+                        <p className="text-white text-xs sm:text-sm">
                           Do NOT resume work until the material has been identified by a competent
                           person and, if it contains asbestos, appropriate controls have been put in
                           place. The material is asbestos until proven otherwise.
@@ -1018,7 +1018,7 @@ const CscsCardModule4Section2 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-red-300 font-medium mb-2">What NOT To Do</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1066,7 +1066,7 @@ const CscsCardModule4Section2 = () => {
               <span className="text-purple-400/80 text-sm font-normal">06</span>
               Licensed vs Non-Licensed Work
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Asbestos work is divided into three categories under the Control of Asbestos
                 Regulations 2012. The category determines the level of training, equipment,
@@ -1080,7 +1080,7 @@ const CscsCardModule4Section2 = () => {
                   {/* Licensed Work */}
                   <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
                     <p className="text-red-300 font-bold mb-1">Licensed Work (Highest Risk)</p>
-                    <ul className="text-white/70 space-y-1.5">
+                    <ul className="text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -1119,7 +1119,7 @@ const CscsCardModule4Section2 = () => {
                     <p className="text-orange-300 font-bold mb-1">
                       Notifiable Non-Licensed Work (NNLW)
                     </p>
-                    <ul className="text-white/70 space-y-1.5">
+                    <ul className="text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -1157,7 +1157,7 @@ const CscsCardModule4Section2 = () => {
                   {/* Non-Licensed Work */}
                   <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
                     <p className="text-green-300 font-bold mb-1">Non-Licensed Work (Lower Risk)</p>
-                    <ul className="text-white/70 space-y-1.5">
+                    <ul className="text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -1195,7 +1195,7 @@ const CscsCardModule4Section2 = () => {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-green-400">Important for Electricians</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   As an electrician, you should <strong className="text-white">never</strong> carry
                   out any asbestos removal work unless you have received specific training for that
                   category of work. Your role when you discover or encounter ACMs is to{' '}
@@ -1220,7 +1220,7 @@ const CscsCardModule4Section2 = () => {
               <span className="text-cyan-400/80 text-sm font-normal">07</span>
               Risk Assessment & Safe Working
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Before starting any work that could disturb or come into contact with
                 asbestos-containing materials, a thorough{' '}
@@ -1232,7 +1232,7 @@ const CscsCardModule4Section2 = () => {
 
               <div className="bg-white/5 border border-cyan-400/30 p-4 rounded-lg">
                 <h3 className="text-cyan-300 font-medium mb-3">Before You Start Work</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1279,7 +1279,7 @@ const CscsCardModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Encapsulation</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Sealing ACMs with a specialist coating or enclosure to prevent fibre release
                         without removing the material. Used when ACMs are in reasonable condition
                         and can be safely managed in place. Avoids the risk associated with removing
@@ -1293,7 +1293,7 @@ const CscsCardModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Removal</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Physically removing ACMs from the building. Required when ACMs are damaged,
                         deteriorating, or will be disturbed by planned work that cannot be avoided.
                         Must be carried out by trained (non-licensed work) or licensed (licensed
@@ -1309,11 +1309,11 @@ const CscsCardModule4Section2 = () => {
                   <AlertTriangle className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-green-300">Safe Working Near ACMs</h3>
                 </div>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Even when you are not directly working with ACMs, your electrical work may take
                   place near them. Follow these principles:
                 </p>
-                <ul className="text-white/70 text-sm space-y-1.5">
+                <ul className="text-white text-sm space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1362,7 +1362,7 @@ const CscsCardModule4Section2 = () => {
               <span className="text-emerald-400/80 text-sm font-normal">08</span>
               Training Requirements
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The Control of Asbestos Regulations 2012 require that all workers who may encounter
                 asbestos during their work receive appropriate training. The level of training
@@ -1376,7 +1376,7 @@ const CscsCardModule4Section2 = () => {
                   {/* Category A */}
                   <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
                     <p className="text-green-300 font-bold mb-1">Category A — Asbestos Awareness</p>
-                    <ul className="text-white/70 space-y-1.5">
+                    <ul className="text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -1413,7 +1413,7 @@ const CscsCardModule4Section2 = () => {
                     <p className="text-orange-300 font-bold mb-1">
                       Category B — Non-Licensed Asbestos Work Training
                     </p>
-                    <ul className="text-white/70 space-y-1.5">
+                    <ul className="text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -1452,7 +1452,7 @@ const CscsCardModule4Section2 = () => {
                     <p className="text-red-300 font-bold mb-1">
                       Licensed Asbestos Removal Training
                     </p>
-                    <ul className="text-white/70 space-y-1.5">
+                    <ul className="text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -1490,7 +1490,7 @@ const CscsCardModule4Section2 = () => {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-green-400">Annual Refresher Requirement</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   All categories of asbestos training must be refreshed{' '}
                   <strong className="text-white">at least annually</strong>. This is a legal
                   requirement under Regulation 10 of CAR 2012. The purpose of annual refresher
@@ -1506,7 +1506,7 @@ const CscsCardModule4Section2 = () => {
                   <AlertTriangle className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-green-300">CSCS Card Requirement</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Asbestos Awareness training is a requirement for obtaining and maintaining a{' '}
                   <strong className="text-white">CSCS card</strong>. The CSCS Health, Safety and
                   Environment (HS&E) test includes questions on asbestos awareness. You are expected
@@ -1528,7 +1528,7 @@ const CscsCardModule4Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1544,7 +1544,7 @@ const CscsCardModule4Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-4">

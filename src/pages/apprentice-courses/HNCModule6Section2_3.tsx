@@ -245,7 +245,7 @@ const HNCModule6Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section2">
@@ -267,7 +267,7 @@ const HNCModule6Section2_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Biomass Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Biomass boilers, fuel storage, handling systems, emissions control and integration with
             building services
           </p>
@@ -401,7 +401,7 @@ const HNCModule6Section2_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Pellet Boilers (10-500kW)</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Fully automated operation</li>
                     <li>High modulation range (30-100%)</li>
                     <li>Compact fuel storage</li>
@@ -411,7 +411,7 @@ const HNCModule6Section2_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Chip Boilers (50kW-10MW)</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Lower fuel cost per kWh</li>
                     <li>Larger fuel store required</li>
                     <li>More robust feed systems</li>
@@ -600,22 +600,22 @@ const HNCModule6Section2_3 = () => {
               </p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Thermal input:</span>{' '}
+                  <span className="text-white">Thermal input:</span>{' '}
                   <span className="text-white">1-50 MW</span>
                 </p>
                 <p>
-                  <span className="text-white/60">NOx limit:</span>{' '}
+                  <span className="text-white">NOx limit:</span>{' '}
                   <span className="text-white">300 mg/Nm3 (new plant &gt;5MW)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">PM limit:</span>{' '}
+                  <span className="text-white">PM limit:</span>{' '}
                   <span className="text-white">30 mg/Nm3 (new plant &gt;5MW)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">SO2 limit:</span>{' '}
+                  <span className="text-white">SO2 limit:</span>{' '}
                   <span className="text-white">200 mg/Nm3</span>
                 </p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Note: Tighter limits apply in certain areas and for larger plant
                 </p>
               </div>
@@ -708,7 +708,7 @@ const HNCModule6Section2_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Planning consideration:</strong> Flue heights above 10m may require planning
               permission. Early consultation with local authority is recommended for installations
               over 200kW.
@@ -739,7 +739,7 @@ const HNCModule6Section2_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Buffer Vessel</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Prevents short-cycling (on/off)</li>
                     <li>Absorbs load variations</li>
                     <li>Size: 10-20 litres per kW</li>
@@ -749,7 +749,7 @@ const HNCModule6Section2_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Thermal Store</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Stratified temperature zones</li>
                     <li>Multiple heat source integration</li>
                     <li>DHW via internal coil possible</li>
@@ -894,15 +894,15 @@ const HNCModule6Section2_3 = () => {
                 <strong>Scenario:</strong> Calculate pellet storage for a 150kW boiler serving a
                 care home with 1,200,000 kWh annual heat demand.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Step 1: Calculate annual fuel requirement</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Step 1: Calculate annual fuel requirement</p>
                 <p className="ml-4">Annual heat demand: 1,200,000 kWh</p>
                 <p className="ml-4">Boiler efficiency: 90%</p>
                 <p className="ml-4">Fuel energy required: 1,200,000 / 0.90 = 1,333,333 kWh</p>
-                <p className="mt-2 text-white/60">Step 2: Convert to fuel mass</p>
+                <p className="mt-2 text-white">Step 2: Convert to fuel mass</p>
                 <p className="ml-4">Pellet calorific value: 4,800 kWh/tonne</p>
                 <p className="ml-4">Annual pellet requirement: 1,333,333 / 4,800 = 278 tonnes</p>
-                <p className="mt-2 text-white/60">Step 3: Size fuel store</p>
+                <p className="mt-2 text-white">Step 3: Size fuel store</p>
                 <p className="ml-4">Delivery capacity: 6 tonnes (blown delivery tanker)</p>
                 <p className="ml-4">Deliveries per year: 278 / 6 = 46 deliveries</p>
                 <p className="ml-4">Target: One delivery per week maximum in winter</p>
@@ -922,20 +922,20 @@ const HNCModule6Section2_3 = () => {
                 <strong>Scenario:</strong> Size a buffer vessel for a 200kW wood chip boiler with
                 minimum modulation of 40%.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Step 1: Determine minimum output</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Step 1: Determine minimum output</p>
                 <p className="ml-4">Minimum modulation: 40% of 200kW = 80kW</p>
                 <p className="ml-4">Building base load (summer): ~30kW</p>
                 <p className="ml-4">Excess heat when cycling: 80 - 30 = 50kW</p>
-                <p className="mt-2 text-white/60">Step 2: Calculate storage requirement</p>
+                <p className="mt-2 text-white">Step 2: Calculate storage requirement</p>
                 <p className="ml-4">Minimum run time (for clean burn): 30 minutes</p>
                 <p className="ml-4">Energy to store: 50kW x 0.5h = 25 kWh</p>
                 <p className="ml-4">Temperature differential: 80°C - 60°C = 20K</p>
                 <p className="ml-4">Water specific heat: 4.18 kJ/kg·K</p>
-                <p className="mt-2 text-white/60">Step 3: Size buffer</p>
+                <p className="mt-2 text-white">Step 3: Size buffer</p>
                 <p className="ml-4">Volume = (25 x 3600) / (4.18 x 20 x 1) = 1,076 litres</p>
                 <p className="ml-4 text-green-400">Recommended: 1,500 litre buffer vessel</p>
-                <p className="ml-4 text-white/60">
+                <p className="ml-4 text-white">
                   Check: 1,500 / 200 = 7.5 litres/kW (within 10-20 range)
                 </p>
               </div>
@@ -949,17 +949,17 @@ const HNCModule6Section2_3 = () => {
                 <strong>Scenario:</strong> Estimate ash bin emptying frequency for a 100kW pellet
                 boiler.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Step 1: Estimate fuel consumption</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Step 1: Estimate fuel consumption</p>
                 <p className="ml-4">Average load: 60kW (60% of rated output)</p>
                 <p className="ml-4">Daily operating hours: 12 hours average</p>
                 <p className="ml-4">Daily energy: 60 x 12 = 720 kWh</p>
                 <p className="ml-4">Daily pellet use: 720 / (4.8 x 0.9) = 167 kg</p>
-                <p className="mt-2 text-white/60">Step 2: Calculate ash production</p>
+                <p className="mt-2 text-white">Step 2: Calculate ash production</p>
                 <p className="ml-4">Pellet ash content (ENplus A1): 0.5%</p>
                 <p className="ml-4">Daily ash: 167 x 0.005 = 0.84 kg</p>
                 <p className="ml-4">Weekly ash: 0.84 x 7 = 5.9 kg</p>
-                <p className="mt-2 text-white/60">Step 3: Determine emptying frequency</p>
+                <p className="mt-2 text-white">Step 3: Determine emptying frequency</p>
                 <p className="ml-4">Ash bin capacity: 50 litres (typical)</p>
                 <p className="ml-4">Ash bulk density: ~300 kg/m3</p>
                 <p className="ml-4">Bin capacity by mass: 0.05 x 300 = 15 kg</p>
@@ -1062,7 +1062,7 @@ const HNCModule6Section2_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1108,7 +1108,7 @@ const HNCModule6Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section2">

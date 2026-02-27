@@ -155,7 +155,7 @@ const Module4Section5_5 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -173,13 +173,13 @@ const Module4Section5_5 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.5</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.5</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Dressing Cables Neatly Within Boxes and Enclosures
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master professional cable dressing techniques for safe, accessible, and compliant
               installations in all types of electrical enclosures.
             </p>
@@ -190,7 +190,7 @@ const Module4Section5_5 = () => {
             <div className="grid sm:grid-cols-2 gap-4 mb-6">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow text-sm mb-2">In 30 Seconds</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                <ul className="text-white text-sm space-y-1 list-disc pl-4">
                   <li>Cable dressing arranges conductors neatly and logically inside enclosures</li>
                   <li>Good dressing improves safety, accessibility, and compliance with BS 7671</li>
                   <li>
@@ -200,7 +200,7 @@ const Module4Section5_5 = () => {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow text-sm mb-2">Spot it / Use it</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                <ul className="text-white text-sm space-y-1 list-disc pl-4">
                   <li>
                     <strong>Spot:</strong> Cable entry points, circuit groupings, space constraints
                   </li>
@@ -222,7 +222,7 @@ const Module4Section5_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <ul className="text-white/80 space-y-2 leading-relaxed list-disc pl-6">
+            <ul className="text-white space-y-2 leading-relaxed list-disc pl-6">
               <li>
                 Explain why neat cable dressing is essential for safety, efficiency, and
                 professional standards
@@ -252,7 +252,7 @@ const Module4Section5_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Purpose and Benefits of Professional Cable Dressing
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Professional cable dressing provides multiple safety, operational, and maintenance
                 benefits:
@@ -313,7 +313,7 @@ const Module4Section5_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Planning and Layout Strategy
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Systematic planning ensures efficient use of space and logical cable arrangements:
               </p>
@@ -373,7 +373,7 @@ const Module4Section5_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Securing Methods and Cable Separation
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Proper securing and separation ensure safety, compliance, and optimal performance:
               </p>
@@ -433,7 +433,7 @@ const Module4Section5_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Avoiding Common Problems and Ensuring Compliance
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
                 <p className="font-medium text-red-400 mb-2">Common Dressing Problems to Avoid</p>
                 <ul className="text-sm space-y-1 list-disc pl-4">
@@ -466,7 +466,7 @@ const Module4Section5_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Enclosure-Specific Dressing Techniques
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">
                   Consumer Units and Distribution Boards
@@ -513,7 +513,7 @@ const Module4Section5_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Quality Assurance and Inspection Checklist
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Safety Compliance</p>
@@ -550,7 +550,7 @@ const Module4Section5_5 = () => {
           <section className="mb-10">
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <h2 className="text-lg font-semibold text-white mb-2">Summary</h2>
-              <p className="text-white/80 leading-relaxed">
+              <p className="text-white leading-relaxed">
                 Neat cable dressing is about safety, compliance, and professional efficiency.
                 Logical routing, proper securing, and adherence to BS 7671 standards make
                 installations easier to inspect, maintain, and troubleshoot — while leaving a
@@ -563,7 +563,7 @@ const Module4Section5_5 = () => {
           {/* Quiz */}
           <section className="mb-10">
             <h2 className="text-xl font-semibold text-white mb-4">Quiz (8 Questions)</h2>
-            <p className="text-white/70 mb-6">
+            <p className="text-white mb-6">
               Test your understanding of cable dressing techniques and requirements.
             </p>
             <Quiz questions={quizQuestions} />

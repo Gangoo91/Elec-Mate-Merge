@@ -1,5 +1,3 @@
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
 import {
   ArrowLeft,
   ArrowRight,
@@ -12,12 +10,14 @@ import {
   Settings,
   GraduationCap,
   Sparkles,
+  Lock,
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { SavedResultsCard } from '@/components/electrician-tools/saved-results';
+import { cn } from '@/lib/utils';
 
-// Animation variants - Smooth, fast entrance
+// Animation variants — fast, snappy entrance
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -39,8 +39,6 @@ interface Agent {
   id: string;
   name: string;
   icon: React.ComponentType<{ className?: string }>;
-  gradient: string;
-  bgGradient: string;
   description: string;
   expertise: string[];
   comingSoon?: boolean;
@@ -51,8 +49,6 @@ const AGENTS: Agent[] = [
     id: 'designer',
     name: 'Circuit Designer',
     icon: Zap,
-    gradient: 'from-amber-400 to-yellow-500',
-    bgGradient: 'from-amber-500/20 to-yellow-500/10',
     description: 'BS 7671 compliant circuit design and cable sizing',
     expertise: [
       'Circuit calculations',
@@ -65,8 +61,6 @@ const AGENTS: Agent[] = [
     id: 'cost-engineer',
     name: 'Cost Engineer',
     icon: Calculator,
-    gradient: 'from-emerald-400 to-green-500',
-    bgGradient: 'from-emerald-500/20 to-green-500/10',
     description: 'Full project quotes with materials, labour and timescales',
     expertise: ['Material pricing', 'Labour estimates', 'Project timescales', 'Quote generation'],
   },
@@ -74,8 +68,6 @@ const AGENTS: Agent[] = [
     id: 'installer',
     name: 'Installation Specialist',
     icon: Wrench,
-    gradient: 'from-blue-400 to-blue-500',
-    bgGradient: 'from-blue-500/20 to-blue-500/10',
     description: 'Step-by-step installation methods and practical guidance',
     expertise: ['Installation methods', 'Practical tips', 'Tool selection', 'Best practices'],
   },
@@ -83,8 +75,6 @@ const AGENTS: Agent[] = [
     id: 'maintenance',
     name: 'Maintenance Specialist',
     icon: Settings,
-    gradient: 'from-cyan-400 to-teal-500',
-    bgGradient: 'from-cyan-500/20 to-teal-500/10',
     description: 'Periodic inspections, preventive maintenance & fault diagnosis',
     expertise: [
       'Periodic inspections',
@@ -97,8 +87,6 @@ const AGENTS: Agent[] = [
     id: 'health-safety',
     name: 'Health & Safety',
     icon: Shield,
-    gradient: 'from-orange-400 to-red-500',
-    bgGradient: 'from-orange-500/20 to-red-500/10',
     description: 'Risk assessments, PPE requirements and safety procedures',
     expertise: ['Risk assessments', 'RAMS documents', 'PPE requirements', 'Emergency procedures'],
   },
@@ -106,8 +94,6 @@ const AGENTS: Agent[] = [
     id: 'commissioning',
     name: 'Testing & Commissioning',
     icon: CheckCircle2,
-    gradient: 'from-purple-400 to-purple-500',
-    bgGradient: 'from-purple-500/20 to-purple-500/10',
     description: 'Test procedures, EICR defect coding and fault diagnosis',
     expertise: [
       'Testing procedures',
@@ -121,8 +107,6 @@ const AGENTS: Agent[] = [
     id: 'project-manager',
     name: 'Project Manager',
     icon: Clipboard,
-    gradient: 'from-pink-400 to-rose-500',
-    bgGradient: 'from-pink-500/20 to-rose-500/10',
     description: 'Scheduling, coordination, handover documentation',
     expertise: ['Project planning', 'Coordination', 'Documentation', 'Client communication'],
     comingSoon: true,
@@ -131,8 +115,6 @@ const AGENTS: Agent[] = [
     id: 'tutor',
     name: 'Training Tutor',
     icon: GraduationCap,
-    gradient: 'from-indigo-400 to-indigo-500',
-    bgGradient: 'from-indigo-500/20 to-indigo-500/10',
     description: 'Educational guidance, exam prep & concept explanations',
     expertise: [
       'Level 3 guidance',
@@ -171,14 +153,13 @@ const AgentSelectorPage = () => {
     }
   };
 
-  // Separate available and coming soon agents
   const availableAgents = AGENTS.filter((a) => !a.comingSoon);
   const comingSoonAgents = AGENTS.filter((a) => a.comingSoon);
 
   return (
     <div className="-mt-3 sm:-mt-4 md:-mt-6 bg-background pb-24">
       {/* Sticky Header */}
-      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10 ">
+      <div className="sticky top-0 z-50 bg-background/95 backdrop-blur-sm border-b border-white/10">
         <div className="px-4 py-2">
           <button
             onClick={() => navigate('/electrician')}
@@ -203,9 +184,10 @@ const AgentSelectorPage = () => {
           </div>
           <div>
             <h1 className="text-xl font-bold text-white">AI Design Consultation</h1>
-            <p className="text-sm text-white/50">Choose your specialist agent</p>
+            <p className="text-sm text-white">Choose your specialist agent</p>
           </div>
         </motion.div>
+
         {/* Saved Results Card */}
         <motion.div variants={itemVariants}>
           <SavedResultsCard />
@@ -216,12 +198,9 @@ const AgentSelectorPage = () => {
           <div className="flex items-center gap-2.5">
             <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow" />
             <h2 className="text-base font-bold text-white">Build Partners</h2>
-            <Badge
-              variant="secondary"
-              className="bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30 text-xs"
-            >
+            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/20">
               {availableAgents.length} Active
-            </Badge>
+            </span>
           </div>
 
           <motion.div variants={containerVariants} className="space-y-3">
@@ -233,74 +212,36 @@ const AgentSelectorPage = () => {
                   variants={itemVariants}
                   whileTap={{ scale: 0.98 }}
                   onClick={() => handleAgentSelect(agent.id, agent.comingSoon)}
-                  className="w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-2xl touch-manipulation"
+                  className="w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-xl touch-manipulation"
                 >
                   <div
-                    className={`relative overflow-hidden rounded-2xl group active:scale-[0.99] transition-all duration-200`}
+                    className={cn(
+                      'rounded-xl p-4',
+                      'bg-white/[0.04] border border-white/[0.06]',
+                      'active:bg-white/[0.08]',
+                      'transition-colors duration-150',
+                      'group'
+                    )}
                   >
-                    {/* Gradient background layer */}
-                    <div
-                      className={`absolute inset-0 bg-gradient-to-br ${agent.bgGradient} opacity-60`}
-                    />
-
-                    {/* Glass effect overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-b from-white/[0.08] to-transparent" />
-
-                    {/* Border */}
-                    <div className="absolute inset-0 rounded-2xl border border-white/[0.12]" />
-
-                    {/* Content */}
-                    <div className="relative p-4">
-                      <div className="flex items-center gap-4">
-                        {/* Icon with enhanced styling */}
-                        <div className="relative flex-shrink-0">
-                          {/* Glow effect */}
-                          <div
-                            className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${agent.gradient} blur-lg opacity-40`}
-                          />
-                          <div
-                            className={`relative w-14 h-14 rounded-2xl flex items-center justify-center bg-gradient-to-br ${agent.gradient} shadow-lg`}
-                          >
-                            <IconComponent className="h-7 w-7 text-white drop-shadow-sm" />
-                          </div>
-                        </div>
-
-                        <div className="flex-1 min-w-0">
-                          {/* Agent Name */}
-                          <h3 className="text-base font-bold text-white tracking-tight">
-                            {agent.name}
-                          </h3>
-                          {/* Description */}
-                          <p className="text-[13px] text-white/60 line-clamp-1 mt-0.5">
-                            {agent.description}
-                          </p>
-                        </div>
-
-                        {/* Arrow indicator with gradient border */}
-                        <div className="flex-shrink-0 relative">
-                          <div
-                            className={`w-10 h-10 rounded-full bg-white/[0.06] backdrop-blur-sm flex items-center justify-center border border-white/[0.1] group-active:bg-white/[0.12] transition-all`}
-                          >
-                            <ArrowRight className="h-5 w-5 text-white/80" />
-                          </div>
-                        </div>
+                    <div className="flex items-center gap-3.5">
+                      {/* Icon */}
+                      <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center group-active:bg-elec-yellow/20 transition-colors">
+                        <IconComponent className="h-5 w-5 text-elec-yellow" />
                       </div>
 
-                      {/* Expertise Tags - enhanced styling */}
-                      <div className="flex gap-2 mt-4 overflow-x-auto scrollbar-hide -mx-1 px-1 pb-0.5">
-                        {agent.expertise.slice(0, 3).map((item, idx) => (
-                          <span
-                            key={idx}
-                            className="flex-shrink-0 px-3 py-1.5 text-[11px] font-medium bg-white/[0.08] text-white/90 rounded-full border border-white/[0.1] backdrop-blur-sm"
-                          >
-                            {item}
-                          </span>
-                        ))}
-                        {agent.expertise.length > 3 && (
-                          <span className="flex-shrink-0 px-3 py-1.5 text-[11px] font-medium bg-white/[0.05] text-white/50 rounded-full border border-white/[0.08]">
-                            +{agent.expertise.length - 3}
-                          </span>
-                        )}
+                      {/* Text */}
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-[15px] font-semibold text-white tracking-tight">
+                          {agent.name}
+                        </h3>
+                        <p className="text-[13px] text-white line-clamp-1 mt-0.5">
+                          {agent.description}
+                        </p>
+                      </div>
+
+                      {/* Arrow */}
+                      <div className="flex-shrink-0 w-9 h-9 rounded-full bg-white/[0.04] flex items-center justify-center border border-white/[0.06] group-active:bg-white/[0.08] transition-colors">
+                        <ArrowRight className="h-4 w-4 text-white group-active:text-elec-yellow transition-colors" />
                       </div>
                     </div>
                   </div>
@@ -313,56 +254,44 @@ const AgentSelectorPage = () => {
         {/* Coming Soon Section */}
         <motion.section variants={itemVariants} className="space-y-3">
           <div className="flex items-center gap-2.5">
-            <div className="h-1.5 w-1.5 rounded-full bg-white/30" />
-            <h2 className="text-base font-bold text-white/50">Coming Soon</h2>
-            <Badge
-              variant="secondary"
-              className="bg-white/10 text-white/40 border-white/10 text-xs"
-            >
+            <div className="h-1.5 w-1.5 rounded-full bg-white/20" />
+            <h2 className="text-base font-bold text-white">Coming Soon</h2>
+            <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-white/[0.06] text-white border border-white/[0.08]">
               {comingSoonAgents.length} Planned
-            </Badge>
+            </span>
           </div>
 
           <div className="space-y-3">
             {comingSoonAgents.map((agent) => {
               const IconComponent = agent.icon;
               return (
-                <div key={agent.id} className="relative overflow-hidden rounded-2xl">
-                  {/* Muted gradient background */}
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-br ${agent.bgGradient} opacity-20`}
-                  />
+                <div
+                  key={agent.id}
+                  className={cn(
+                    'rounded-xl p-4 opacity-40',
+                    'bg-white/[0.04] border border-white/[0.06]'
+                  )}
+                >
+                  <div className="flex items-center gap-3.5">
+                    {/* Icon — muted */}
+                    <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center">
+                      <IconComponent className="h-5 w-5 text-white" />
+                    </div>
 
-                  {/* Border */}
-                  <div className="absolute inset-0 rounded-2xl border border-white/[0.06]" />
-
-                  <div className="relative p-4">
-                    <div className="flex items-center gap-4">
-                      {/* Icon - muted */}
-                      <div
-                        className={`flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center bg-gradient-to-br ${agent.gradient} opacity-30`}
-                      >
-                        <IconComponent className="h-7 w-7 text-white/70" />
+                    {/* Text */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <h3 className="text-[15px] font-semibold text-white tracking-tight">
+                          {agent.name}
+                        </h3>
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-medium bg-white/[0.06] text-white border border-white/[0.08]">
+                          <Lock className="h-2.5 w-2.5" />
+                          Soon
+                        </span>
                       </div>
-
-                      <div className="flex-1 min-w-0">
-                        {/* Agent Name with Badge */}
-                        <div className="flex items-center gap-2">
-                          <h3 className="text-base font-bold text-white/50 tracking-tight">
-                            {agent.name}
-                          </h3>
-                          <Badge
-                            variant="secondary"
-                            className="bg-white/[0.08] text-white/40 border-white/[0.08] text-[10px] font-medium"
-                          >
-                            Coming Soon
-                          </Badge>
-                        </div>
-                        {/* Description */}
-                        <p className="text-[13px] text-white/30 line-clamp-1 mt-0.5">
-                          {agent.description}
-                        </p>
-                      </div>
+                      <p className="text-[13px] text-white line-clamp-1 mt-0.5">
+                        {agent.description}
+                      </p>
                     </div>
                   </div>
                 </div>

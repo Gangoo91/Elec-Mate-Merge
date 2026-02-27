@@ -301,7 +301,7 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
                           : option.color === 'yellow'
                             ? 'bg-yellow-500/10 text-yellow-400 border border-yellow-500/30'
                             : option.color === 'gray'
-                              ? 'bg-white/5 text-white/50 border border-white/10'
+                              ? 'bg-white/5 text-white border border-white/10'
                               : option.color === 'blue'
                                 ? 'bg-blue-500/10 text-blue-400 border border-blue-500/30'
                                 : 'bg-purple-500/10 text-purple-400 border border-purple-500/30'
@@ -325,7 +325,7 @@ const EnhancedInspectionItemCard: React.FC<EnhancedInspectionItemCardProps> = ({
                 onChange={(e) => handleNotesChange(e.target.value)}
                 rows={2}
                 style={{ fontSize: '16px' }}
-                className="text-base text-white bg-input border-white/10 focus:border-elec-yellow/50 placeholder:text-white/30 resize-none min-h-[70px]"
+                className="text-base text-white bg-input border-white/10 focus:border-elec-yellow/50 placeholder:text-white resize-none min-h-[70px]"
               />
             </div>
 

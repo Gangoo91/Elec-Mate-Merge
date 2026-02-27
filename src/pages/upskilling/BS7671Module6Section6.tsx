@@ -94,7 +94,7 @@ const BS7671Module6Section6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bs7671-module-6">
@@ -115,7 +115,7 @@ const BS7671Module6Section6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Limitations and Observations in Certificates
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Recording scope restrictions and safety defects for legal protection and client clarity
           </p>
         </header>
@@ -240,7 +240,7 @@ const BS7671Module6Section6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-xs font-medium text-white mb-1">Acceptable (&lt;10%)</p>
-                  <ul className="text-xs text-white/80 space-y-0.5">
+                  <ul className="text-xs text-white space-y-0.5">
                     <li>Minor access restrictions</li>
                     <li>Non-critical circuit elements</li>
                     <li>Temporary operational needs</li>
@@ -248,7 +248,7 @@ const BS7671Module6Section6 = () => {
                 </div>
                 <div>
                   <p className="text-xs font-medium text-white mb-1">Problematic (&gt;25%)</p>
-                  <ul className="text-xs text-white/80 space-y-0.5">
+                  <ul className="text-xs text-white space-y-0.5">
                     <li>Critical safety systems inaccessible</li>
                     <li>Main distribution restricted</li>
                     <li>Widespread access problems</li>
@@ -283,7 +283,7 @@ const BS7671Module6Section6 = () => {
                 </span>
                 <div>
                   <p className="font-medium text-white">Danger Present - Immediate Action</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Installation or circuits should be isolated immediately until remedial action is
                     completed
                   </p>
@@ -295,7 +295,7 @@ const BS7671Module6Section6 = () => {
                 </span>
                 <div>
                   <p className="font-medium text-white">Potentially Dangerous - Urgent Action</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Could become dangerous under fault conditions or with deterioration - rectify
                     urgently
                   </p>
@@ -307,7 +307,7 @@ const BS7671Module6Section6 = () => {
                 </span>
                 <div>
                   <p className="font-medium text-white">Improvement Recommended</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Does not comply with current standards but not dangerous - improvement would
                     enhance safety
                   </p>
@@ -319,7 +319,7 @@ const BS7671Module6Section6 = () => {
                 </span>
                 <div>
                   <p className="font-medium text-white">Further Investigation Required</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Requires additional investigation to determine if defect exists - may need
                     specialist assessment
                   </p>
@@ -375,18 +375,18 @@ const BS7671Module6Section6 = () => {
               <div className="grid grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-red-500/10 border border-red-500/20">
                   <p className="font-medium text-red-400/80 mb-1">C1 Actions</p>
-                  <p className="text-white/90 text-xs">Immediate isolation</p>
-                  <p className="text-white/90 text-xs">Emergency referral</p>
+                  <p className="text-white text-xs">Immediate isolation</p>
+                  <p className="text-white text-xs">Emergency referral</p>
                 </div>
                 <div className="p-3 rounded bg-orange-500/10 border border-orange-500/20">
                   <p className="font-medium text-orange-400/80 mb-1">C2 Actions</p>
-                  <p className="text-white/90 text-xs">Priority scheduling</p>
-                  <p className="text-white/90 text-xs">Urgent remediation</p>
+                  <p className="text-white text-xs">Priority scheduling</p>
+                  <p className="text-white text-xs">Urgent remediation</p>
                 </div>
                 <div className="p-3 rounded bg-elec-yellow/10 border border-elec-yellow/20">
                   <p className="font-medium text-elec-yellow/80 mb-1">C3 Actions</p>
-                  <p className="text-white/90 text-xs">Planned improvement</p>
-                  <p className="text-white/90 text-xs">Future consideration</p>
+                  <p className="text-white text-xs">Planned improvement</p>
+                  <p className="text-white text-xs">Future consideration</p>
                 </div>
               </div>
             </div>
@@ -473,7 +473,7 @@ const BS7671Module6Section6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -527,7 +527,7 @@ const BS7671Module6Section6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bs7671-module-6-section-5">

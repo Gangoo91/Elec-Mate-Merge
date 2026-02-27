@@ -38,7 +38,7 @@ export const QuoteCustomerSelector = ({
     return (
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider flex items-center gap-2">
+          <p className="text-[13px] font-medium text-white uppercase tracking-wider flex items-center gap-2">
             <Users className="h-3.5 w-3.5" />
             Select Existing Customer
           </p>
@@ -47,7 +47,7 @@ export const QuoteCustomerSelector = ({
             onClick={() => setShowSelector(false)}
             className="p-1 touch-manipulation"
           >
-            <X className="h-4 w-4 text-white/40" />
+            <X className="h-4 w-4 text-white" />
           </button>
         </div>
         <ClientSelector
@@ -67,7 +67,7 @@ export const QuoteCustomerSelector = ({
     <button
       type="button"
       onClick={() => setShowSelector(true)}
-      className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-dashed border-white/20 text-white/60 hover:border-elec-yellow/40 hover:text-white/80 transition-colors touch-manipulation active:scale-[0.98]"
+      className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-dashed border-white/20 text-white hover:border-elec-yellow/40 hover:text-white transition-colors touch-manipulation active:scale-[0.98]"
     >
       <Users className="h-4 w-4" />
       <span className="text-[13px] font-medium">Select Existing Customer</span>

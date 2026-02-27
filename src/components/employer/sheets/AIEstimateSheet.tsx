@@ -247,7 +247,7 @@ export function AIEstimateSheet({
                 </div>
                 <div>
                   <SheetTitle className="text-lg text-foreground">AI Cost Estimate</SheetTitle>
-                  <p className="text-sm text-white/70">{opportunity?.title?.substring(0, 40)}...</p>
+                  <p className="text-sm text-white">{opportunity?.title?.substring(0, 40)}...</p>
                 </div>
               </div>
               {estimate && (
@@ -275,7 +275,7 @@ export function AIEstimateSheet({
                   <h3 className="text-lg font-semibold mb-2 text-foreground">
                     AI-Powered Estimation
                   </h3>
-                  <p className="text-white/70 max-w-sm mx-auto mb-6">
+                  <p className="text-white max-w-sm mx-auto mb-6">
                     Generate a detailed cost breakdown using our pricing database, labour standards,
                     and regional adjustments.
                   </p>
@@ -287,12 +287,12 @@ export function AIEstimateSheet({
                       Project Context
                     </h4>
                     <div className="space-y-2 text-sm">
-                      <div className="flex items-center gap-2 text-white/80">
-                        <Building2 className="h-4 w-4 text-white/60" />
+                      <div className="flex items-center gap-2 text-white">
+                        <Building2 className="h-4 w-4 text-white" />
                         <span>{opportunity?.client_name}</span>
                       </div>
-                      <div className="flex items-center gap-2 text-white/80">
-                        <MapPin className="h-4 w-4 text-white/60" />
+                      <div className="flex items-center gap-2 text-white">
+                        <MapPin className="h-4 w-4 text-white" />
                         <span>{opportunity?.location_text || opportunity?.postcode || 'UK'}</span>
                       </div>
                       {opportunity?.categories && (
@@ -301,7 +301,7 @@ export function AIEstimateSheet({
                             <Badge
                               key={cat}
                               variant="outline"
-                              className="text-xs text-white/80 border-white/30"
+                              className="text-xs text-white border-white/30"
                             >
                               {cat.replace('_', ' ')}
                             </Badge>
@@ -328,7 +328,7 @@ export function AIEstimateSheet({
                   <h3 className="text-lg font-medium mb-2 text-foreground">
                     Generating Estimate...
                   </h3>
-                  <p className="text-sm text-white/70 max-w-sm mx-auto">
+                  <p className="text-sm text-white max-w-sm mx-auto">
                     Searching pricing database, calculating labour times, applying regional
                     adjustments...
                   </p>
@@ -340,7 +340,7 @@ export function AIEstimateSheet({
                 <div className="text-center py-12">
                   <AlertTriangle className="h-12 w-12 text-red-400 mx-auto mb-4" />
                   <h3 className="text-lg font-medium mb-2 text-foreground">Estimation Failed</h3>
-                  <p className="text-sm text-white/70 mb-6">{error}</p>
+                  <p className="text-sm text-white mb-6">{error}</p>
                   <Button onClick={generateEstimate} variant="outline">
                     Try Again
                   </Button>
@@ -353,7 +353,7 @@ export function AIEstimateSheet({
                   {/* Total & Confidence */}
                   <div className="bg-gradient-to-r from-elec-yellow/20 to-amber-600/20 border border-elec-yellow/30 rounded-xl p-4">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm text-white/80">Total Estimate</span>
+                      <span className="text-sm text-white">Total Estimate</span>
                       <Badge
                         variant="outline"
                         className={getConfidenceColor(displayEstimate.confidence)}
@@ -366,10 +366,10 @@ export function AIEstimateSheet({
                         £{displayEstimate.total_estimate?.toLocaleString()}
                       </span>
                       {metadata?.regional_multiplier && metadata.regional_multiplier !== 1 && (
-                        <span className="text-sm text-white/70">({metadata.region} rates)</span>
+                        <span className="text-sm text-white">({metadata.region} rates)</span>
                       )}
                     </div>
-                    <div className="flex items-center gap-4 mt-3 text-sm text-white/80">
+                    <div className="flex items-center gap-4 mt-3 text-sm text-white">
                       <span className="flex items-center gap-1">
                         <Clock className="h-4 w-4" />
                         {displayEstimate.programme}
@@ -393,22 +393,22 @@ export function AIEstimateSheet({
                           <p className="text-2xl font-bold text-foreground">
                             {teamData.electricians}
                           </p>
-                          <p className="text-xs text-white/70">Electricians</p>
+                          <p className="text-xs text-white">Electricians</p>
                         </div>
                         <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
                           <p className="text-2xl font-bold text-foreground">{teamData.mates}</p>
-                          <p className="text-xs text-white/70">Mates</p>
+                          <p className="text-xs text-white">Mates</p>
                         </div>
                         <div className="text-center p-3 bg-white/5 rounded-lg border border-white/10">
                           <p className="text-2xl font-bold text-foreground">
                             {teamData.supervisors}
                           </p>
-                          <p className="text-xs text-white/70">Supervisors</p>
+                          <p className="text-xs text-white">Supervisors</p>
                         </div>
                       </div>
                       {displayEstimate.labour_rate_used && (
                         <div className="mt-3 flex items-center justify-between text-sm">
-                          <span className="text-white/70">Labour rate</span>
+                          <span className="text-white">Labour rate</span>
                           <span className="text-foreground font-medium">
                             £{displayEstimate.labour_rate_used}/hr
                           </span>
@@ -442,7 +442,7 @@ export function AIEstimateSheet({
                     />
                     {/* Subtotal display */}
                     <div className="p-3 rounded-lg bg-card/50 border border-white/10">
-                      <div className="flex items-center gap-2 text-white/70 mb-1">
+                      <div className="flex items-center gap-2 text-white mb-1">
                         <PoundSterling className="h-4 w-4" />
                         <span className="text-xs">Subtotal</span>
                       </div>
@@ -461,7 +461,7 @@ export function AIEstimateSheet({
                   <div className="grid grid-cols-2 gap-3">
                     <div className="p-3 rounded-lg bg-card/50 border border-white/10">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm text-white/70">Overheads</span>
+                        <span className="text-sm text-white">Overheads</span>
                         <Select value={overheadPercent} onValueChange={handleOverheadChange}>
                           <SelectTrigger className="w-20 h-9 text-sm bg-background border-white/20">
                             <SelectValue />
@@ -482,7 +482,7 @@ export function AIEstimateSheet({
 
                     <div className="p-3 rounded-lg bg-card/50 border border-white/10">
                       <div className="flex items-center justify-between mb-2">
-                        <span className="text-sm text-white/70">Profit</span>
+                        <span className="text-sm text-white">Profit</span>
                         <Select value={profitPercent} onValueChange={handleProfitChange}>
                           <SelectTrigger className="w-20 h-9 text-sm bg-background border-white/20">
                             <SelectValue />
@@ -518,9 +518,9 @@ export function AIEstimateSheet({
                             <span className="font-medium text-foreground">Labour Breakdown</span>
                           </div>
                           {expandedSections.labour ? (
-                            <ChevronUp className="h-4 w-4 text-white/70" />
+                            <ChevronUp className="h-4 w-4 text-white" />
                           ) : (
-                            <ChevronDown className="h-4 w-4 text-white/70" />
+                            <ChevronDown className="h-4 w-4 text-white" />
                           )}
                         </CollapsibleTrigger>
                         <CollapsibleContent className="pt-2">
@@ -532,7 +532,7 @@ export function AIEstimateSheet({
                               >
                                 <span className="text-foreground font-medium">{item.task}</span>
                                 <div className="flex items-center gap-4">
-                                  <span className="text-xs text-white/60">
+                                  <span className="text-xs text-white">
                                     {item.hours}hrs @ £{item.rate}/hr
                                   </span>
                                   <span className="font-semibold text-foreground">
@@ -556,9 +556,9 @@ export function AIEstimateSheet({
                             <span className="font-medium text-foreground">Materials Breakdown</span>
                           </div>
                           {expandedSections.materials ? (
-                            <ChevronUp className="h-4 w-4 text-white/70" />
+                            <ChevronUp className="h-4 w-4 text-white" />
                           ) : (
-                            <ChevronDown className="h-4 w-4 text-white/70" />
+                            <ChevronDown className="h-4 w-4 text-white" />
                           )}
                         </CollapsibleTrigger>
                         <CollapsibleContent className="pt-2">
@@ -570,7 +570,7 @@ export function AIEstimateSheet({
                               >
                                 <span className="text-foreground font-medium">{item.item}</span>
                                 <div className="flex items-center gap-4">
-                                  <span className="text-xs text-white/60">
+                                  <span className="text-xs text-white">
                                     {item.quantity} {item.unit} @ £{item.unit_price}
                                   </span>
                                   <span className="font-semibold text-foreground">
@@ -628,7 +628,7 @@ export function AIEstimateSheet({
                           <CheckCircle2 className="h-4 w-4 text-blue-400" />
                           Confidence Factors
                         </h4>
-                        <ul className="space-y-1 text-sm text-white/80">
+                        <ul className="space-y-1 text-sm text-white">
                           {displayEstimate.confidence_factors.map((factor, idx) => (
                             <li key={idx}>• {factor}</li>
                           ))}
@@ -642,26 +642,26 @@ export function AIEstimateSheet({
                       <h4 className="text-sm font-medium mb-2 text-foreground">
                         Notes & Assumptions
                       </h4>
-                      <p className="text-sm text-white/80">{displayEstimate.notes}</p>
+                      <p className="text-sm text-white">{displayEstimate.notes}</p>
                     </div>
                   )}
 
                   {/* RAG Metadata */}
                   {metadata && (
                     <div className="flex flex-wrap gap-2 text-xs">
-                      <Badge variant="outline" className="bg-card/50 text-white/70 border-white/20">
+                      <Badge variant="outline" className="bg-card/50 text-white border-white/20">
                         Complexity: {metadata.complexity} ({metadata.complexity_score}/100)
                       </Badge>
-                      <Badge variant="outline" className="bg-card/50 text-white/70 border-white/20">
+                      <Badge variant="outline" className="bg-card/50 text-white border-white/20">
                         {metadata.rag_pricing_items} pricing items
                       </Badge>
-                      <Badge variant="outline" className="bg-card/50 text-white/70 border-white/20">
+                      <Badge variant="outline" className="bg-card/50 text-white border-white/20">
                         {metadata.rag_labour_items} labour standards
                       </Badge>
                       {metadata.labour_rate && (
                         <Badge
                           variant="outline"
-                          className="bg-card/50 text-white/70 border-white/20"
+                          className="bg-card/50 text-white border-white/20"
                         >
                           £{metadata.labour_rate}/hr rate
                         </Badge>
@@ -719,7 +719,7 @@ interface CostCardProps {
 function CostCard({ icon, label, value, isEditing, onEdit }: CostCardProps) {
   return (
     <div className="p-3 rounded-lg bg-card border border-white/10">
-      <div className="flex items-center gap-2 text-white/70 mb-1">
+      <div className="flex items-center gap-2 text-white mb-1">
         {icon}
         <span className="text-xs">{label}</span>
       </div>

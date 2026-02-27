@@ -223,7 +223,7 @@ const Level3Module6Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section3">
@@ -371,7 +371,7 @@ const Level3Module6Section3_2 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> 2.5mm2 twin and earth: Method A = 20A, Method B = 24A,
               Method C = 27A. Same cable, different installation = different capacity.
             </p>
@@ -451,19 +451,19 @@ const Level3Module6Section3_2 = () => {
             <div className="grid grid-cols-2 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Step 1</p>
-                <p className="text-white/90 text-xs">Identify cable construction type</p>
+                <p className="text-white text-xs">Identify cable construction type</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Step 2</p>
-                <p className="text-white/90 text-xs">Select correct table</p>
+                <p className="text-white text-xs">Select correct table</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Step 3</p>
-                <p className="text-white/90 text-xs">Determine reference method</p>
+                <p className="text-white text-xs">Determine reference method</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Step 4</p>
-                <p className="text-white/90 text-xs">Read It value for cable size</p>
+                <p className="text-white text-xs">Read It value for cable size</p>
               </div>
             </div>
 
@@ -551,7 +551,7 @@ const Level3Module6Section3_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -601,7 +601,7 @@ const Level3Module6Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section3-1">

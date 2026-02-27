@@ -204,7 +204,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-2">
@@ -229,7 +229,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             CDM 2015 &amp; Scaffold Design
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How the Construction (Design and Management) Regulations 2015 apply to scaffolding
             &mdash; duty holders, temporary works procedures, design review, erection sequences, and
             handover certification
@@ -333,7 +333,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
                 <p className="text-sm font-medium text-slate-400 mb-3">
                   The Five CDM 2015 Duty Holders
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -395,25 +395,25 @@ export default function ScaffoldingAwarenessModule2Section4() {
                 <div className="p-4 border-b border-white/5">
                   <p className="text-sm font-medium text-slate-400 mb-3">Client (Regulation 4)</p>
                   <div className="grid grid-cols-[1fr_auto] gap-2">
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Appoint principal designer &amp; principal contractor
                     </div>
                     <div className="text-sm font-bold text-slate-300 py-1.5 px-3 bg-slate-500/10 rounded text-center min-w-[64px]">
                       Pre-con
                     </div>
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Ensure sufficient time and resources for scaffold planning
                     </div>
                     <div className="text-sm font-bold text-slate-300 py-1.5 px-3 bg-slate-500/10 rounded text-center min-w-[64px]">
                       Pre-con
                     </div>
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Ensure welfare facilities are provided
                     </div>
                     <div className="text-sm font-bold text-slate-300 py-1.5 px-3 bg-slate-500/10 rounded text-center min-w-[64px]">
                       All phases
                     </div>
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Provide pre-construction information to designers
                     </div>
                     <div className="text-sm font-bold text-slate-300 py-1.5 px-3 bg-slate-500/10 rounded text-center min-w-[64px]">
@@ -428,19 +428,19 @@ export default function ScaffoldingAwarenessModule2Section4() {
                     Principal Designer (Regulation 11)
                   </p>
                   <div className="grid grid-cols-[1fr_auto] gap-2">
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Coordinate health &amp; safety during pre-construction
                     </div>
                     <div className="text-sm font-bold text-slate-300 py-1.5 px-3 bg-slate-500/10 rounded text-center min-w-[64px]">
                       Pre-con
                     </div>
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Ensure scaffold designers fulfil Regulation 9 duties
                     </div>
                     <div className="text-sm font-bold text-slate-300 py-1.5 px-3 bg-slate-500/10 rounded text-center min-w-[64px]">
                       Design
                     </div>
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Identify and communicate design risks (including from scaffolding loads on the
                       permanent structure)
                     </div>
@@ -456,25 +456,25 @@ export default function ScaffoldingAwarenessModule2Section4() {
                     Principal Contractor (Regulation 12)
                   </p>
                   <div className="grid grid-cols-[1fr_auto] gap-2">
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Plan, manage, and coordinate scaffold operations on site
                     </div>
                     <div className="text-sm font-bold text-slate-300 py-1.5 px-3 bg-slate-500/10 rounded text-center min-w-[64px]">
                       Build
                     </div>
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Maintain the scaffold register and temporary works log
                     </div>
                     <div className="text-sm font-bold text-slate-300 py-1.5 px-3 bg-slate-500/10 rounded text-center min-w-[64px]">
                       All phases
                     </div>
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Ensure scaffold inspections at required intervals (Reg. 12 + WAH Regs.)
                     </div>
                     <div className="text-sm font-bold text-slate-300 py-1.5 px-3 bg-slate-500/10 rounded text-center min-w-[64px]">
                       Build
                     </div>
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Prevent unauthorised access and unauthorised alterations
                     </div>
                     <div className="text-sm font-bold text-slate-300 py-1.5 px-3 bg-slate-500/10 rounded text-center min-w-[64px]">
@@ -489,19 +489,19 @@ export default function ScaffoldingAwarenessModule2Section4() {
                     Designer &mdash; Scaffold Designer (Regulation 9)
                   </p>
                   <div className="grid grid-cols-[1fr_auto] gap-2">
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Eliminate foreseeable risks in scaffold design
                     </div>
                     <div className="text-sm font-bold text-slate-300 py-1.5 px-3 bg-slate-500/10 rounded text-center min-w-[64px]">
                       Design
                     </div>
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Reduce risks that cannot be eliminated
                     </div>
                     <div className="text-sm font-bold text-slate-300 py-1.5 px-3 bg-slate-500/10 rounded text-center min-w-[64px]">
                       Design
                     </div>
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Provide information about remaining risks (design risk register)
                     </div>
                     <div className="text-sm font-bold text-slate-300 py-1.5 px-3 bg-slate-500/10 rounded text-center min-w-[64px]">
@@ -516,19 +516,19 @@ export default function ScaffoldingAwarenessModule2Section4() {
                     Contractor &mdash; Scaffolding Contractor (Regulation 13)
                   </p>
                   <div className="grid grid-cols-[1fr_auto] gap-2">
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Erect, alter, and dismantle scaffolds using competent persons (CISRS-carded)
                     </div>
                     <div className="text-sm font-bold text-slate-300 py-1.5 px-3 bg-slate-500/10 rounded text-center min-w-[64px]">
                       Build
                     </div>
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Follow the approved design and method statement
                     </div>
                     <div className="text-sm font-bold text-slate-300 py-1.5 px-3 bg-slate-500/10 rounded text-center min-w-[64px]">
                       Build
                     </div>
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Report completion to the TWC and cooperate with inspections
                     </div>
                     <div className="text-sm font-bold text-slate-300 py-1.5 px-3 bg-slate-500/10 rounded text-center min-w-[64px]">
@@ -563,7 +563,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Client Duties Relevant to Scaffolding
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-slate-500/20 text-slate-400 text-xs font-bold flex-shrink-0">
                       1
@@ -678,7 +678,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Regulation 9 &mdash; Designer Duties Applied to Scaffolding
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -719,7 +719,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   What a Scaffold Design Package Typically Includes
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -769,7 +769,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">No Design = No Scaffold</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A scaffold must <strong className="text-white">never</strong> be erected without a
                   design. For standard configurations that fall within the scope of TG20:21 (NASC
                   guidance), a TG20 compliance sheet may serve as the design. For anything outside
@@ -801,7 +801,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">PC Duties for Scaffolding</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -896,7 +896,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
                       Temporary Works Coordinator (TWC)
                     </p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                       <span>
@@ -946,7 +946,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
                       Temporary Works Supervisor (TWS)
                     </p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                       <span>
@@ -1048,7 +1048,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
                     </div>
                     <div className="pb-2">
                       <p className="text-sm font-medium text-white">Design Request (TW Brief)</p>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white">
                         The TWC identifies the need for a scaffold and issues a temporary works
                         brief to the scaffold designer, specifying the purpose, loads, access
                         requirements, duration, and any site constraints.
@@ -1066,7 +1066,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
                     </div>
                     <div className="pb-2">
                       <p className="text-sm font-medium text-white">Design Production</p>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white">
                         The scaffold designer produces the design package: drawings, calculations,
                         design risk assessment, and method statement (where required). The design
                         must comply with relevant standards (TG20:21, BS EN 12811, or BS 5975).
@@ -1084,7 +1084,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
                     </div>
                     <div className="pb-2">
                       <p className="text-sm font-medium text-white">Independent Design Check</p>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white">
                         A competent person who was not involved in producing the design carries out
                         an independent check. The level of check (Category 1, 2, or 3) depends on
                         the complexity and risk of the scaffold. The checker verifies the
@@ -1103,7 +1103,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
                     </div>
                     <div className="pb-2">
                       <p className="text-sm font-medium text-white">TWC Approval</p>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white">
                         The TWC reviews the design and the checker&rsquo;s report. If satisfied, the
                         TWC approves the design and authorises erection to proceed. The TWC records
                         the approval in the temporary works register.
@@ -1121,7 +1121,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
                     </div>
                     <div className="pb-2">
                       <p className="text-sm font-medium text-white">Erection (Supervised by TWS)</p>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white">
                         The scaffolding contractor erects the scaffold under the supervision of the
                         TWS, following the approved design and method statement. The TWS monitors
                         progress and checks material quality throughout.
@@ -1139,7 +1139,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
                     </div>
                     <div className="pb-2">
                       <p className="text-sm font-medium text-white">Completion &amp; Inspection</p>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white">
                         The TWS reports completion to the TWC. A competent person inspects the
                         scaffold against the design. Any defects or non-conformances are recorded
                         and rectified before the scaffold is approved.
@@ -1157,7 +1157,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
                     </div>
                     <div className="pb-2">
                       <p className="text-sm font-medium text-white">Permit to Load / Handover</p>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white">
                         The TWC issues a permit to load (or handover certificate). A scaffold tag is
                         attached confirming the scaffold is fit for purpose. The scaffold register
                         is updated. The scaffold may now be used.
@@ -1175,7 +1175,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
                     </div>
                     <div className="pb-2">
                       <p className="text-sm font-medium text-white">In-Use Inspections</p>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white">
                         The scaffold is inspected at the intervals required by the Work at Height
                         Regulations 2005 (before first use, every 7 days, and after any event that
                         could affect stability). Inspection results are recorded in the scaffold
@@ -1193,7 +1193,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Controlled Dismantling</p>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white">
                         When the scaffold is no longer needed, the TWC authorises dismantling. The
                         scaffold is taken down in a controlled sequence (reverse of erection or as
                         specified in the method statement), supervised by the TWS. The scaffold
@@ -1209,7 +1209,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Skipping Steps Costs Lives</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Every stage of the temporary works process exists because failures at that stage
                   have caused scaffold collapses, serious injuries, and fatalities. Skipping the
                   design check, omitting the handover inspection, or failing to maintain the
@@ -1245,7 +1245,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   When an Erection Sequence Is Required
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1309,7 +1309,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Handover Certificate (Scaffold Tag / Completion Certificate)
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1400,7 +1400,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   What the Scaffold Register Must Record
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1500,7 +1500,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Common Scaffold Register Failures
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-red-500/20 text-red-400 text-xs font-bold flex-shrink-0">
                       !
@@ -1573,7 +1573,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Enforcement Action</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The HSE and local authority inspectors routinely check scaffold registers during
                   site visits. An incomplete or missing register is a strong indicator that scaffold
                   management is inadequate and will often result in
@@ -1596,7 +1596,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1610,7 +1610,7 @@ export default function ScaffoldingAwarenessModule2Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-2">

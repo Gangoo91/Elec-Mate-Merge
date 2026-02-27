@@ -245,7 +245,7 @@ const HNCModule7Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section3">
@@ -267,7 +267,7 @@ const HNCModule7Section3_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Lumen Method Calculations
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Room index, utilisation factors, maintenance factors, and average illuminance
             calculations for interior lighting design
           </p>
@@ -676,7 +676,7 @@ const HNCModule7Section3_2 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Values are illustrative. Always use manufacturer's actual photometric data.
               </p>
             </div>
@@ -689,7 +689,7 @@ const HNCModule7Section3_2 = () => {
               <div className="font-mono text-sm text-white">
                 UF = UF₁ + [(K - K₁) / (K₂ - K₁)] × (UF₂ - UF₁)
               </div>
-              <p className="text-sm text-white/80 mt-2">
+              <p className="text-sm text-white mt-2">
                 Example: For K = 1.75 between K = 1.5 (UF = 0.57) and K = 2.0 (UF = 0.63):
                 <br />
                 UF = 0.57 + [(1.75 - 1.5) / (2.0 - 1.5)] × (0.63 - 0.57) = 0.57 + 0.5 × 0.06 = 0.60
@@ -871,32 +871,32 @@ const HNCModule7Section3_2 = () => {
                 ceiling height and 0.85m working plane. Required illuminance: 500 lux maintained.
                 Using LED panels rated at 4,000 lumens each.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Step 1: Calculate mounting height</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Step 1: Calculate mounting height</p>
                 <p>Hm = 3.0 - 0.85 = 2.15m</p>
-                <p className="mt-2 text-white/60">Step 2: Calculate room index</p>
+                <p className="mt-2 text-white">Step 2: Calculate room index</p>
                 <p>K = (L × W) / [Hm × (L + W)]</p>
                 <p>K = (15 × 12) / [2.15 × (15 + 12)]</p>
                 <p>K = 180 / (2.15 × 27) = 180 / 58.05</p>
                 <p className="text-green-400">K = 3.10</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Step 3: Determine UF (from table, C/W/F = 0.7/0.5/0.2)
                 </p>
                 <p>For K = 3.0, UF = 0.70 (interpolate if needed)</p>
                 <p className="text-green-400">UF = 0.70</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Step 4: Determine MF (clean office, 3-year maintenance)
                 </p>
                 <p className="text-green-400">MF = 0.80</p>
-                <p className="mt-2 text-white/60">Step 5: Calculate number of luminaires</p>
+                <p className="mt-2 text-white">Step 5: Calculate number of luminaires</p>
                 <p>n = (E × A) / (F × UF × MF)</p>
                 <p>n = (500 × 180) / (4,000 × 0.70 × 0.80)</p>
                 <p>n = 90,000 / 2,240</p>
                 <p className="text-green-400">n = 40.2 → Use 40 luminaires</p>
-                <p className="mt-2 text-white/60">Step 6: Verify illuminance with 40 luminaires</p>
+                <p className="mt-2 text-white">Step 6: Verify illuminance with 40 luminaires</p>
                 <p>E = (40 × 4,000 × 0.70 × 0.80) / 180</p>
                 <p className="text-green-400">E = 497 lux ✓ (acceptable, within 10% of target)</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Step 7: Arrange luminaires (5 rows × 8 columns)
                 </p>
                 <p>Spacing: 15m / 8 = 1.875m (along length)</p>
@@ -913,22 +913,22 @@ const HNCModule7Section3_2 = () => {
                 at 3,600 lumens. Ceiling height 3m, working plane 0.85m. Surface reflectances:
                 ceiling 0.7, walls 0.5, floor 0.2. Verify maintained illuminance with MF = 0.75.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Step 1: Calculate mounting height and room index</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Step 1: Calculate mounting height and room index</p>
                 <p>Hm = 3.0 - 0.85 = 2.15m</p>
                 <p>K = (10 × 8) / [2.15 × (10 + 8)]</p>
                 <p>K = 80 / 38.7 = 2.07</p>
                 <p className="text-green-400">K ≈ 2.0</p>
-                <p className="mt-2 text-white/60">Step 2: Determine UF from table</p>
+                <p className="mt-2 text-white">Step 2: Determine UF from table</p>
                 <p>For K = 2.0 and reflectances 0.7/0.5/0.2:</p>
                 <p className="text-green-400">UF = 0.63</p>
-                <p className="mt-2 text-white/60">Step 3: Calculate maintained illuminance</p>
+                <p className="mt-2 text-white">Step 3: Calculate maintained illuminance</p>
                 <p>A = 10 × 8 = 80 m²</p>
                 <p>E = (n × F × UF × MF) / A</p>
                 <p>E = (18 × 3,600 × 0.63 × 0.75) / 80</p>
                 <p>E = 30,618 / 80</p>
                 <p className="text-green-400">E = 383 lux</p>
-                <p className="mt-2 text-white/60">Step 4: Compare with standard requirement</p>
+                <p className="mt-2 text-white">Step 4: Compare with standard requirement</p>
                 <p>Classroom requirement (BS EN 12464-1): 300 lux minimum</p>
                 <p className="text-green-400">383 lux &gt; 300 lux ✓ Installation complies</p>
               </div>
@@ -943,30 +943,30 @@ const HNCModule7Section3_2 = () => {
                 ceiling height (floor-level working plane). Required: 300 lux. High-bay LED
                 luminaires rated at 20,000 lumens. Environment: normal industrial.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Step 1: Calculate room index</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Step 1: Calculate room index</p>
                 <p>Hm = 6.0m (working plane at floor)</p>
                 <p>K = (30 × 20) / [6.0 × (30 + 20)]</p>
                 <p>K = 600 / 300 = 2.0</p>
                 <p className="text-green-400">K = 2.0</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Step 2: Determine UF (darker industrial surfaces)
                 </p>
                 <p>Reflectances approximately 0.5/0.3/0.1</p>
                 <p className="text-green-400">UF = 0.52</p>
-                <p className="mt-2 text-white/60">Step 3: Determine MF (industrial environment)</p>
+                <p className="mt-2 text-white">Step 3: Determine MF (industrial environment)</p>
                 <p>Normal industrial, IP65 luminaires</p>
                 <p className="text-green-400">MF = 0.70</p>
-                <p className="mt-2 text-white/60">Step 4: Calculate number of luminaires</p>
+                <p className="mt-2 text-white">Step 4: Calculate number of luminaires</p>
                 <p>A = 30 × 20 = 600 m²</p>
                 <p>n = (E × A) / (F × UF × MF)</p>
                 <p>n = (300 × 600) / (20,000 × 0.52 × 0.70)</p>
                 <p>n = 180,000 / 7,280</p>
                 <p className="text-green-400">n = 24.7 → Use 25 luminaires</p>
-                <p className="mt-2 text-white/60">Step 5: Arrangement (5 × 5 grid)</p>
+                <p className="mt-2 text-white">Step 5: Arrangement (5 × 5 grid)</p>
                 <p>Spacing: 30m / 5 = 6m along length</p>
                 <p>Spacing: 20m / 5 = 4m along width</p>
-                <p className="mt-2 text-white/60">Step 6: Verify with 25 luminaires</p>
+                <p className="mt-2 text-white">Step 6: Verify with 25 luminaires</p>
                 <p>E = (25 × 20,000 × 0.52 × 0.70) / 600</p>
                 <p className="text-green-400">E = 303 lux ✓</p>
               </div>
@@ -1062,7 +1062,7 @@ const HNCModule7Section3_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1108,7 +1108,7 @@ const HNCModule7Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section3">

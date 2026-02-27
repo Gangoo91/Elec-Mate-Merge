@@ -250,7 +250,7 @@ const AM2Module5Section4 = () => {
       <div className="space-y-6">
         {/* Introduction */}
         <AM2ContentCard>
-          <p className="text-ios-body text-white/80 leading-relaxed">
+          <p className="text-ios-body text-white leading-relaxed">
             Your answers must be clear, precise, and professional - vague phrases like "fix it" or
             "replace" won't score marks.
           </p>
@@ -258,11 +258,11 @@ const AM2Module5Section4 = () => {
 
         {/* Critical Warning */}
         <AM2CriticalWarning title="CRITICAL: Professional Recording Required">
-          <p className="text-ios-callout text-white/80 mb-3 leading-relaxed">
+          <p className="text-ios-callout text-white mb-3 leading-relaxed">
             Vague phrases like "fix it" or "replace" score zero marks. Assessors want professional
             language that shows you understand both the problem and the complete solution.
           </p>
-          <p className="text-ios-callout text-white/80 font-medium leading-relaxed">
+          <p className="text-ios-callout text-white font-medium leading-relaxed">
             Every rectification statement must include: specific action + exact location + re-test
             procedure.
           </p>
@@ -273,7 +273,7 @@ const AM2Module5Section4 = () => {
 
         {/* What is Rectification */}
         <AM2ContentCard title="1. What Does Rectification Mean in AM2?" icon={Target}>
-          <p className="text-ios-body text-white/80 mb-4">
+          <p className="text-ios-body text-white mb-4">
             Rectification is about stating the practical action needed to restore the circuit to a
             safe, compliant condition:
           </p>
@@ -285,32 +285,32 @@ const AM2Module5Section4 = () => {
             <ul className="space-y-2">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
-                <span className="text-ios-callout text-white/80">
+                <span className="text-ios-callout text-white">
                   <strong className="text-white">Reconnecting</strong> a broken conductor
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
-                <span className="text-ios-callout text-white/80">
+                <span className="text-ios-callout text-white">
                   <strong className="text-white">Correcting</strong> polarity at a socket or switch
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
-                <span className="text-ios-callout text-white/80">
+                <span className="text-ios-callout text-white">
                   <strong className="text-white">Tightening or remaking</strong> a loose/high
                   resistance joint
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
-                <span className="text-ios-callout text-white/80">
+                <span className="text-ios-callout text-white">
                   <strong className="text-white">Replacing</strong> a damaged accessory
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
-                <span className="text-ios-callout text-white/80">
+                <span className="text-ios-callout text-white">
                   <strong className="text-white">Re-terminating</strong> CPCs correctly
                 </span>
               </li>
@@ -319,7 +319,7 @@ const AM2Module5Section4 = () => {
 
           <div className="bg-amber-950/20 border border-amber-800/30 rounded-xl p-4">
             <h4 className="text-ios-headline font-semibold text-amber-200 mb-3">Important Note:</h4>
-            <p className="text-ios-callout text-white/80">
+            <p className="text-ios-callout text-white">
               <strong className="text-white">You don't physically carry out the repair</strong> -
               you just state what would be done. The assessment is testing your knowledge of proper
               procedures, not your practical skills.
@@ -337,7 +337,7 @@ const AM2Module5Section4 = () => {
 
         {/* Professional Recording */}
         <AM2ContentCard title="2. Recording Rectification Professionally" icon={FileText}>
-          <p className="text-ios-body text-white/80 mb-4">
+          <p className="text-ios-body text-white mb-4">
             Your answer must be specific and professional. NET assessors want detail that shows you
             understand both the problem and the solution.
           </p>
@@ -350,23 +350,23 @@ const AM2Module5Section4 = () => {
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-red-400">•</span>
-                  <span className="text-ios-callout text-white/80">"Fix earth fault"</span>
+                  <span className="text-ios-callout text-white">"Fix earth fault"</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-red-400">•</span>
-                  <span className="text-ios-callout text-white/80">"Replace it"</span>
+                  <span className="text-ios-callout text-white">"Replace it"</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-red-400">•</span>
-                  <span className="text-ios-callout text-white/80">"Sort out the problem"</span>
+                  <span className="text-ios-callout text-white">"Sort out the problem"</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-red-400">•</span>
-                  <span className="text-ios-callout text-white/80">"Repair the connection"</span>
+                  <span className="text-ios-callout text-white">"Repair the connection"</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-red-400">•</span>
-                  <span className="text-ios-callout text-white/80">"Make it work"</span>
+                  <span className="text-ios-callout text-white">"Make it work"</span>
                 </li>
               </ul>
               <p className="text-ios-footnote text-red-300 mt-3 font-medium">
@@ -381,20 +381,20 @@ const AM2Module5Section4 = () => {
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     "Reconnect CPC into earth terminal at socket outlet and re-test insulation
                     resistance"
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     "Replace damaged luminaire with new unit and re-test circuit"
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     "Remake loose connection at socket terminal and re-test Zs"
                   </span>
                 </li>
@@ -411,14 +411,14 @@ const AM2Module5Section4 = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="text-ios-headline font-semibold text-white mb-3">Open Circuit:</h4>
-              <p className="text-ios-callout text-white/80">
+              <p className="text-ios-callout text-white">
                 "Reconnect line conductor at loose termination, then re-test continuity."
               </p>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="text-ios-headline font-semibold text-white mb-3">Short Circuit:</h4>
-              <p className="text-ios-callout text-white/80">
+              <p className="text-ios-callout text-white">
                 "Re-terminate damaged cable at luminaire, then re-test insulation resistance."
               </p>
             </div>
@@ -427,28 +427,28 @@ const AM2Module5Section4 = () => {
               <h4 className="text-ios-headline font-semibold text-white mb-3">
                 High Resistance Joint:
               </h4>
-              <p className="text-ios-callout text-white/80">
+              <p className="text-ios-callout text-white">
                 "Re-make loose connection at socket, then re-test Zs."
               </p>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="text-ios-headline font-semibold text-white mb-3">Polarity Fault:</h4>
-              <p className="text-ios-callout text-white/80">
+              <p className="text-ios-callout text-white">
                 "Swap conductors into correct terminals, then re-test polarity."
               </p>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="text-ios-headline font-semibold text-white mb-3">Earth Fault:</h4>
-              <p className="text-ios-callout text-white/80">
+              <p className="text-ios-callout text-white">
                 "Re-terminate line conductor away from earth bar, then re-test IR and RCD."
               </p>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="text-ios-headline font-semibold text-white mb-3">Faulty Accessory:</h4>
-              <p className="text-ios-callout text-white/80">
+              <p className="text-ios-callout text-white">
                 "Replace defective accessory with new unit, then re-test circuit."
               </p>
             </div>
@@ -465,7 +465,7 @@ const AM2Module5Section4 = () => {
 
         {/* Proving Rectification */}
         <AM2ContentCard title="4. Proving Rectification (Re-testing)" icon={CheckSquare}>
-          <p className="text-ios-body text-white/80 mb-4">
+          <p className="text-ios-body text-white mb-4">
             After stating rectification, you must also state how you would prove the circuit safe
             again:
           </p>
@@ -477,25 +477,25 @@ const AM2Module5Section4 = () => {
             <ol className="space-y-2">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow font-semibold">1.</span>
-                <span className="text-ios-callout text-white/80">
+                <span className="text-ios-callout text-white">
                   Repeat the appropriate test (continuity, IR, polarity, Zs, RCD)
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow font-semibold">2.</span>
-                <span className="text-ios-callout text-white/80">
+                <span className="text-ios-callout text-white">
                   Confirm results are now within BS 7671 limits
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow font-semibold">3.</span>
-                <span className="text-ios-callout text-white/80">
+                <span className="text-ios-callout text-white">
                   Record new results on certification
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow font-semibold">4.</span>
-                <span className="text-ios-callout text-white/80">
+                <span className="text-ios-callout text-white">
                   Leave installation safe before re-energising
                 </span>
               </li>
@@ -512,27 +512,27 @@ const AM2Module5Section4 = () => {
                 <ul className="space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
-                    <span className="text-ios-footnote text-white/70">
-                      <strong className="text-white/90">Open circuit</strong> → Continuity test
+                    <span className="text-ios-footnote text-white">
+                      <strong className="text-white">Open circuit</strong> → Continuity test
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
-                    <span className="text-ios-footnote text-white/70">
-                      <strong className="text-white/90">Short circuit</strong> → Insulation
+                    <span className="text-ios-footnote text-white">
+                      <strong className="text-white">Short circuit</strong> → Insulation
                       resistance
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
-                    <span className="text-ios-footnote text-white/70">
-                      <strong className="text-white/90">High resistance</strong> → Zs test
+                    <span className="text-ios-footnote text-white">
+                      <strong className="text-white">High resistance</strong> → Zs test
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
-                    <span className="text-ios-footnote text-white/70">
-                      <strong className="text-white/90">Polarity error</strong> → Polarity test
+                    <span className="text-ios-footnote text-white">
+                      <strong className="text-white">Polarity error</strong> → Polarity test
                     </span>
                   </li>
                 </ul>
@@ -544,27 +544,27 @@ const AM2Module5Section4 = () => {
                 <ul className="space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
-                    <span className="text-ios-footnote text-white/70">
-                      <strong className="text-white/90">Earth fault</strong> → IR + RCD test
+                    <span className="text-ios-footnote text-white">
+                      <strong className="text-white">Earth fault</strong> → IR + RCD test
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
-                    <span className="text-ios-footnote text-white/70">
-                      <strong className="text-white/90">Faulty RCD</strong> → Full RCD test sequence
+                    <span className="text-ios-footnote text-white">
+                      <strong className="text-white">Faulty RCD</strong> → Full RCD test sequence
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
-                    <span className="text-ios-footnote text-white/70">
-                      <strong className="text-white/90">Multiple faults</strong> → Complete test
+                    <span className="text-ios-footnote text-white">
+                      <strong className="text-white">Multiple faults</strong> → Complete test
                       schedule
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
-                    <span className="text-ios-footnote text-white/70">
-                      <strong className="text-white/90">New accessory</strong> → All relevant tests
+                    <span className="text-ios-footnote text-white">
+                      <strong className="text-white">New accessory</strong> → All relevant tests
                     </span>
                   </li>
                 </ul>
@@ -583,14 +583,14 @@ const AM2Module5Section4 = () => {
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Identify the exact action needed</strong> (not
                     vague wording)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">
                       Link the fault to the correct rectification method
                     </strong>
@@ -598,13 +598,13 @@ const AM2Module5Section4 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">State which test proves the repair</strong>
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">
                       Record clearly, in writing, for every fault
                     </strong>
@@ -612,7 +612,7 @@ const AM2Module5Section4 = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Leave no doubt</strong> that you understand the
                     whole process
                   </span>
@@ -630,23 +630,23 @@ const AM2Module5Section4 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Clear, precise language
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Professional terminology
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">Complete descriptions</span>
+                      <span className="text-ios-footnote text-white">Complete descriptions</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">Logical sequence</span>
+                      <span className="text-ios-footnote text-white">Logical sequence</span>
                     </li>
                   </ul>
                 </div>
@@ -657,23 +657,23 @@ const AM2Module5Section4 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Correct repair methods
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Appropriate test selection
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">Safety considerations</span>
+                      <span className="text-ios-footnote text-white">Safety considerations</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">Compliance awareness</span>
+                      <span className="text-ios-footnote text-white">Compliance awareness</span>
                     </li>
                   </ul>
                 </div>
@@ -702,31 +702,31 @@ const AM2Module5Section4 = () => {
                   <h5 className="text-ios-callout font-semibold text-white mb-2">
                     Multiple Faults on Same Circuit:
                   </h5>
-                  <p className="text-ios-footnote text-white/70 mb-2">
-                    <strong className="text-white/90">Example:</strong> Ring final with both open
+                  <p className="text-ios-footnote text-white mb-2">
+                    <strong className="text-white">Example:</strong> Ring final with both open
                     CPC and reversed polarity at socket
                   </p>
-                  <p className="text-ios-footnote text-white/70 mb-2">
-                    <strong className="text-white/90">Rectification:</strong> "1. Reconnect CPC at
+                  <p className="text-ios-footnote text-white mb-2">
+                    <strong className="text-white">Rectification:</strong> "1. Reconnect CPC at
                     loose terminal in socket backbox. 2. Correct L-N connections at same socket. 3.
                     Re-test continuity and polarity for entire ring."
                   </p>
                   <ul className="space-y-1 mt-2">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         List each fault separately with clear numbering
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         State logical repair sequence (safety-critical first)
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Include comprehensive re-testing of all affected parameters
                       </span>
                     </li>
@@ -736,12 +736,12 @@ const AM2Module5Section4 = () => {
                   <h5 className="text-ios-callout font-semibold text-white mb-2">
                     Cascading Effects:
                   </h5>
-                  <p className="text-ios-footnote text-white/70 mb-2">
-                    <strong className="text-white/90">Scenario:</strong> Main earthing conductor
+                  <p className="text-ios-footnote text-white mb-2">
+                    <strong className="text-white">Scenario:</strong> Main earthing conductor
                     disconnected affecting multiple circuits
                   </p>
-                  <p className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Rectification:</strong> "Reconnect main
+                  <p className="text-ios-footnote text-white">
+                    <strong className="text-white">Rectification:</strong> "Reconnect main
                     earthing conductor to MET and re-test Zs on all affected circuits to confirm
                     earth integrity restored."
                   </p>
@@ -759,20 +759,20 @@ const AM2Module5Section4 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         "Reconnect equipotential bonding to water service and re-test main bonding
                         continuity"
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         "Replace corroded earth electrode connection and re-test Ze"
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         "Repair PME earth connection at service head"
                       </span>
                     </li>
@@ -785,19 +785,19 @@ const AM2Module5Section4 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         "Replace non-IP rated accessory in bathroom with IP44 unit and re-test"
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         "Install missing 30mA RCD protection for garden circuit and test operation"
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         "Correct supplementary bonding in bathroom and re-test resistance"
                       </span>
                     </li>
@@ -818,24 +818,24 @@ const AM2Module5Section4 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
-                        <strong className="text-white/90">Damaged cable:</strong> "Replace section
+                      <span className="text-ios-footnote text-white">
+                        <strong className="text-white">Damaged cable:</strong> "Replace section
                         of damaged cable between junction boxes A and B with equivalent 2.5mm T&E
                         and re-test complete circuit"
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
-                        <strong className="text-white/90">Wrong cable type:</strong> "Replace
+                      <span className="text-ios-footnote text-white">
+                        <strong className="text-white">Wrong cable type:</strong> "Replace
                         non-LSF cable in escape route with LSF equivalent and re-test insulation
                         resistance"
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
-                        <strong className="text-white/90">Undersized cable:</strong> "Replace 1.5mm
+                      <span className="text-ios-footnote text-white">
+                        <strong className="text-white">Undersized cable:</strong> "Replace 1.5mm
                         cable with 2.5mm to meet load requirements and re-test Zs and voltage drop"
                       </span>
                     </li>
@@ -848,19 +848,19 @@ const AM2Module5Section4 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Always specify compliance standards in rectification
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Include IP ratings where relevant
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Specify protective device characteristics if replacing
                       </span>
                     </li>
@@ -886,29 +886,29 @@ const AM2Module5Section4 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
-                        <strong className="text-white/90">Test results:</strong> All affected test
+                      <span className="text-ios-footnote text-white">
+                        <strong className="text-white">Test results:</strong> All affected test
                         values must be re-recorded
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
-                        <strong className="text-white/90">Circuit details:</strong> Any changes to
+                      <span className="text-ios-footnote text-white">
+                        <strong className="text-white">Circuit details:</strong> Any changes to
                         cable routes, sizes, or accessories
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
-                        <strong className="text-white/90">Protection:</strong> Updates to protective
+                      <span className="text-ios-footnote text-white">
+                        <strong className="text-white">Protection:</strong> Updates to protective
                         device ratings or types
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
-                        <strong className="text-white/90">Compliance codes:</strong> C1, C2, C3
+                      <span className="text-ios-footnote text-white">
+                        <strong className="text-white">Compliance codes:</strong> C1, C2, C3
                         codes may change after rectification
                       </span>
                     </li>
@@ -921,25 +921,25 @@ const AM2Module5Section4 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Rectification description becomes part of legal documentation
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Must be sufficient for another electrician to understand
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Creates professional liability for accuracy and completeness
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Insurance claims may depend on quality of documentation
                       </span>
                     </li>
@@ -958,25 +958,25 @@ const AM2Module5Section4 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Must identify all safety-critical faults
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Cannot leave dangerous conditions unreported
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Must recommend appropriate remedial action
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Clear communication of urgency levels
                       </span>
                     </li>
@@ -989,25 +989,25 @@ const AM2Module5Section4 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         IET Code of Practice compliance
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         BS 7671 rectification requirements
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Building Control notification where required
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Scheme provider reporting obligations
                       </span>
                     </li>
@@ -1023,13 +1023,13 @@ const AM2Module5Section4 = () => {
           <div className="space-y-4">
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="text-ios-headline font-semibold text-white mb-3">The Golden Rule:</h4>
-              <p className="text-ios-body text-white/80 mb-3">
+              <p className="text-ios-body text-white mb-3">
                 <strong className="text-white">
                   Always phrase rectification as: Action + Location + Re-test
                 </strong>
               </p>
               <div className="bg-white/5 border border-white/10 rounded-lg p-3">
-                <p className="text-ios-callout text-white/80">
+                <p className="text-ios-callout text-white">
                   <strong className="text-white">Example:</strong> "Reconnect neutral at CU terminal
                   and re-test continuity and polarity."
                 </p>
@@ -1044,29 +1044,29 @@ const AM2Module5Section4 = () => {
                 <ul className="space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
-                    <span className="text-ios-footnote text-white/70">Be concise but specific</span>
+                    <span className="text-ios-footnote text-white">Be concise but specific</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
-                    <span className="text-ios-footnote text-white/70">
+                    <span className="text-ios-footnote text-white">
                       One or two clear sentences is enough
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
-                    <span className="text-ios-footnote text-white/70">
+                    <span className="text-ios-footnote text-white">
                       Don't use slang or shorthand
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
-                    <span className="text-ios-footnote text-white/70">
+                    <span className="text-ios-footnote text-white">
                       Write as if handing over to another electrician
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
-                    <span className="text-ios-footnote text-white/70">
+                    <span className="text-ios-footnote text-white">
                       Always include the re-test stage
                     </span>
                   </li>
@@ -1080,31 +1080,31 @@ const AM2Module5Section4 = () => {
                 <ul className="space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
-                    <span className="text-ios-footnote text-white/70">
+                    <span className="text-ios-footnote text-white">
                       Vague language ("fix", "sort")
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
-                    <span className="text-ios-footnote text-white/70">
+                    <span className="text-ios-footnote text-white">
                       Missing location details
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
-                    <span className="text-ios-footnote text-white/70">
+                    <span className="text-ios-footnote text-white">
                       Forgetting re-test requirements
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
-                    <span className="text-ios-footnote text-white/70">
+                    <span className="text-ios-footnote text-white">
                       Using informal terminology
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
-                    <span className="text-ios-footnote text-white/70">
+                    <span className="text-ios-footnote text-white">
                       Incomplete fault descriptions
                     </span>
                   </li>
@@ -1121,13 +1121,13 @@ const AM2Module5Section4 = () => {
               <h4 className="text-ios-headline font-semibold text-red-200 mb-3">
                 Example 1: Vague Recording
               </h4>
-              <p className="text-ios-callout text-white/80 mb-2">
+              <p className="text-ios-callout text-white mb-2">
                 <strong className="text-white">Candidate wrote:</strong> "Fix polarity."
               </p>
-              <p className="text-ios-callout text-white/80 mb-2">
+              <p className="text-ios-callout text-white mb-2">
                 <strong className="text-white">Result:</strong> Assessor gave 0 marks - too vague.
               </p>
-              <p className="text-ios-callout text-white/80 font-medium">
+              <p className="text-ios-callout text-white font-medium">
                 <strong className="text-white">Should have written:</strong> "Correct line/neutral
                 connections at socket outlet and re-test polarity."
               </p>
@@ -1137,15 +1137,15 @@ const AM2Module5Section4 = () => {
               <h4 className="text-ios-headline font-semibold text-green-200 mb-3">
                 Example 2: Professional Recording
               </h4>
-              <p className="text-ios-callout text-white/80 mb-2">
+              <p className="text-ios-callout text-white mb-2">
                 <strong className="text-white">Scenario:</strong> Candidate diagnosed open CPC
                 fault.
               </p>
-              <p className="text-ios-callout text-white/80 mb-2">
+              <p className="text-ios-callout text-white mb-2">
                 <strong className="text-white">Correctly stated:</strong> "Reconnect CPC at socket
                 and re-test continuity."
               </p>
-              <p className="text-ios-callout text-white/80 font-medium">
+              <p className="text-ios-callout text-white font-medium">
                 <strong className="text-white">Result:</strong> Full marks for clear, professional
                 recording.
               </p>
@@ -1155,15 +1155,15 @@ const AM2Module5Section4 = () => {
               <h4 className="text-ios-headline font-semibold text-amber-200 mb-3">
                 Example 3: Incomplete Recording
               </h4>
-              <p className="text-ios-callout text-white/80 mb-2">
+              <p className="text-ios-callout text-white mb-2">
                 <strong className="text-white">Scenario:</strong> Candidate identified faulty
                 luminaire.
               </p>
-              <p className="text-ios-callout text-white/80 mb-2">
+              <p className="text-ios-callout text-white mb-2">
                 <strong className="text-white">Problem:</strong> Mentioned fault but didn't mention
                 replacement or re-testing.
               </p>
-              <p className="text-ios-callout text-white/80 font-medium">
+              <p className="text-ios-callout text-white font-medium">
                 <strong className="text-white">Result:</strong> Lost marks for incomplete
                 rectification description.
               </p>
@@ -1173,15 +1173,15 @@ const AM2Module5Section4 = () => {
               <h4 className="text-ios-headline font-semibold text-white mb-3">
                 Example 4: Real-World Consequence
               </h4>
-              <p className="text-ios-callout text-white/80 mb-2">
+              <p className="text-ios-callout text-white mb-2">
                 <strong className="text-white">Scenario:</strong> On-site, an electrician repaired a
                 joint but didn't re-test Zs.
               </p>
-              <p className="text-ios-callout text-white/80 mb-2">
+              <p className="text-ios-callout text-white mb-2">
                 <strong className="text-white">Problem:</strong> High resistance fault remained
                 hidden, later caused equipment failure.
               </p>
-              <p className="text-ios-callout text-white/80 font-medium">
+              <p className="text-ios-callout text-white font-medium">
                 <strong className="text-white">Lesson:</strong> In AM2, skipping the re-test equals
                 lost marks - and in real work, potential danger.
               </p>
@@ -1197,7 +1197,7 @@ const AM2Module5Section4 = () => {
                 <h4 className="text-ios-headline font-semibold text-white mb-2">
                   Q{index + 1}: {faq.question}
                 </h4>
-                <p className="text-ios-callout text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-ios-callout text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1213,26 +1213,26 @@ const AM2Module5Section4 = () => {
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">State the repair clearly</strong> (e.g.
                     reconnect, replace, remake)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Specify the location</strong> exactly
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">State the re-test</strong> that proves safety
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Use professional language</strong> suitable for
                     certification
                   </span>
@@ -1244,7 +1244,7 @@ const AM2Module5Section4 = () => {
               <h4 className="text-ios-headline font-semibold text-amber-200 mb-3">
                 Remember the Complete Cycle:
               </h4>
-              <div className="flex items-center justify-center gap-2 text-ios-body text-white/80 font-medium">
+              <div className="flex items-center justify-center gap-2 text-ios-body text-white font-medium">
                 <span>Diagnose</span>
                 <span className="text-elec-yellow">→</span>
                 <span>Rectify</span>

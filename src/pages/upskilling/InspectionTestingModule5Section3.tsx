@@ -204,7 +204,7 @@ const InspectionTestingModule5Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-5">
@@ -226,7 +226,7 @@ const InspectionTestingModule5Section3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Ze Testing at Origin
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Measuring external earth fault loop impedance at the installation origin
           </p>
         </header>
@@ -313,7 +313,7 @@ const InspectionTestingModule5Section3 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow mb-2">Key point:</p>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 Ze is fixed by the supply - you cannot change it. It determines the "headroom"
                 available for your circuit wiring (R1+R2).
               </p>
@@ -332,12 +332,12 @@ const InspectionTestingModule5Section3 = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/20">
-                    <th className="text-left py-2 text-white/60">System</th>
-                    <th className="text-center py-2 text-white/60">Typical Ze</th>
-                    <th className="text-right py-2 text-white/60">Max (ESQCR)</th>
+                    <th className="text-left py-2 text-white">System</th>
+                    <th className="text-center py-2 text-white">Typical Ze</th>
+                    <th className="text-right py-2 text-white">Max (ESQCR)</th>
                   </tr>
                 </thead>
-                <tbody className="text-white/80">
+                <tbody className="text-white">
                   <tr className="border-b border-white/10">
                     <td className="py-3 font-semibold text-elec-yellow">TN-C-S (PME)</td>
                     <td className="text-center font-mono">0.35 ohm</td>
@@ -389,7 +389,7 @@ const InspectionTestingModule5Section3 = () => {
                     >
                       {i + 1}
                     </span>
-                    <span className="text-white/80">{item.text}</span>
+                    <span className="text-white">{item.text}</span>
                   </li>
                 ))}
               </ol>
@@ -397,7 +397,7 @@ const InspectionTestingModule5Section3 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-red-400 mb-1">Critical:</p>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 Never leave the earthing conductor disconnected. Reconnect and tighten before
                 re-energising.
               </p>
@@ -422,15 +422,15 @@ const InspectionTestingModule5Section3 = () => {
             <div className="grid grid-cols-2 gap-3 my-6 text-center">
               <div className="p-4 rounded bg-transparent">
                 <p className="text-orange-400 font-bold mb-1">Earth Connected</p>
-                <p className="text-white/60 text-sm">Measures Zs (Ze + installation)</p>
+                <p className="text-white text-sm">Measures Zs (Ze + installation)</p>
               </div>
               <div className="p-4 rounded bg-transparent">
                 <p className="text-emerald-400 font-bold mb-1">Earth Disconnected</p>
-                <p className="text-white/60 text-sm">Measures Ze (external only)</p>
+                <p className="text-white text-sm">Measures Ze (external only)</p>
               </div>
             </div>
 
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               Disconnecting removes your installation's earth path from the measurement circuit,
               leaving only the external supply impedance.
             </p>
@@ -450,12 +450,12 @@ const InspectionTestingModule5Section3 = () => {
               <p className="text-lg font-mono text-elec-yellow mb-2">
                 Max R1+R2 = (Max Zs - Ze) / 1.2
               </p>
-              <p className="text-sm text-white/60">Maximum circuit impedance allowed</p>
+              <p className="text-sm text-white">Maximum circuit impedance allowed</p>
             </div>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Example Calculation:</p>
-              <p className="text-sm text-white/70 font-mono">
+              <p className="text-sm text-white font-mono">
                 Max Zs = 1.09 ohm (32A Type B MCB)
                 <br />
                 Ze = 0.35 ohm (TN-C-S)
@@ -480,19 +480,19 @@ const InspectionTestingModule5Section3 = () => {
             <div className="my-6 space-y-4">
               <div>
                 <p className="text-sm font-medium text-amber-400 mb-1">Check Main Earth</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Verify the main earthing terminal and connections are secure.
                 </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-blue-400 mb-1">Inspect Service</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Check service head connections and cable condition where visible.
                 </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-red-400 mb-1">Report to DNO</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   If Ze exceeds ESQCR limits consistently, report to the Distribution Network
                   Operator.
                 </p>
@@ -547,7 +547,7 @@ const InspectionTestingModule5Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -604,7 +604,7 @@ const InspectionTestingModule5Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-5/section-2">

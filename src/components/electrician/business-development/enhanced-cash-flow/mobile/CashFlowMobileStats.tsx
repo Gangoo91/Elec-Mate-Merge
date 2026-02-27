@@ -67,7 +67,7 @@ export const CashFlowMobileStats = ({ financialMetrics, className }: CashFlowMob
               >
                 <Icon className={cn('h-4 w-4', stat.color)} />
                 <div>
-                  <p className="text-xs text-white/50">{stat.label}</p>
+                  <p className="text-xs text-white">{stat.label}</p>
                   <p className={cn('text-sm font-bold', stat.color)}>{stat.value}</p>
                 </div>
               </div>

@@ -254,7 +254,7 @@ const MOETModule6Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module6-section4">
@@ -275,7 +275,7 @@ const MOETModule6Section4_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Communicating with Supervisors and Engineers
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Professional upward communication, technical reporting, and escalation procedures
           </p>
         </header>
@@ -430,7 +430,7 @@ const MOETModule6Section4_2 = () => {
                       <th className="py-2 text-elec-yellow/80 font-medium">Example</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/90">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/5">
                       <td className="py-2 pr-4 font-medium">Equipment identity</td>
                       <td className="py-2">
@@ -755,7 +755,7 @@ const MOETModule6Section4_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -773,7 +773,7 @@ const MOETModule6Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module6-section4-1">

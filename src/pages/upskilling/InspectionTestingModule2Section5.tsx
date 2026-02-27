@@ -770,7 +770,7 @@ const InspectionTestingModule2Section5 = () => {
             {defined_faqs.map((faq, index) => (
               <div key={index} className="border border-border rounded-lg p-4">
                 <h4 className="font-medium text-foreground mb-2">{faq.question}</h4>
-                <p className="text-sm text-white/90">{faq.answer}</p>
+                <p className="text-sm text-white">{faq.answer}</p>
               </div>
             ))}
           </div>

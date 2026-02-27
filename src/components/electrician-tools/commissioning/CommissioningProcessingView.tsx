@@ -119,7 +119,7 @@ const CommissioningProcessingView = ({
           </div>
           <div>
             <h2 className="text-xl font-bold text-white">Testing & Commissioning</h2>
-            <p className="text-xs text-white/50 mt-1">Generating BS 7671 test procedures</p>
+            <p className="text-xs text-white mt-1">Generating BS 7671 test procedures</p>
           </div>
         </div>
 
@@ -193,7 +193,7 @@ const CommissioningProcessingView = ({
 
           {/* Activity Message */}
           <div className="text-center">
-            <span className="text-xs text-white/50">{getActivityMessage()}</span>
+            <span className="text-xs text-white">{getActivityMessage()}</span>
           </div>
         </div>
 
@@ -201,15 +201,15 @@ const CommissioningProcessingView = ({
         <div className="flex items-center justify-center gap-6">
           <div className="text-center">
             <div className="flex items-center justify-center gap-1 mb-1">
-              <Clock className="h-3 w-3 text-white/40" />
-              <span className="text-[10px] text-white/40">Elapsed</span>
+              <Clock className="h-3 w-3 text-white" />
+              <span className="text-[10px] text-white">Elapsed</span>
             </div>
             <p className="text-lg font-bold text-white tabular-nums">{formatTime(elapsedTime)}</p>
           </div>
           <div className="text-center">
             <div className="flex items-center justify-center gap-1 mb-1">
-              <Loader2 className="h-3 w-3 text-white/40 animate-spin" />
-              <span className="text-[10px] text-white/40">Remaining</span>
+              <Loader2 className="h-3 w-3 text-white animate-spin" />
+              <span className="text-[10px] text-white">Remaining</span>
             </div>
             <p className="text-lg font-bold text-white tabular-nums">
               ~{formatTime(remainingTime)}
@@ -235,7 +235,7 @@ const CommissioningProcessingView = ({
           <button
             onClick={onCancel}
             disabled={isCancelling}
-            className="w-full py-3 text-xs text-white/40 hover:text-red-400 hover:bg-red-500/5 rounded-xl transition-all flex items-center justify-center gap-1.5 disabled:opacity-50"
+            className="w-full py-3 text-xs text-white hover:text-red-400 hover:bg-red-500/5 rounded-xl transition-all flex items-center justify-center gap-1.5 disabled:opacity-50"
           >
             {isCancelling ? (
               <>

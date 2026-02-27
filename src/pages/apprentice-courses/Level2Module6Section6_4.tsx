@@ -168,7 +168,7 @@ const Level2Module6Section6_4 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/80 hover:text-foreground p-0 text-sm sm:text-base"
+            className="text-white hover:text-foreground p-0 text-sm sm:text-base"
             asChild
           >
             <Link to="..">
@@ -197,7 +197,7 @@ const Level2Module6Section6_4 = () => {
           <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
             Corrective Action and Retesting
           </h1>
-          <p className="text-white/80 text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Procedures for addressing test failures and importance of retesting
           </p>
         </header>
@@ -662,7 +662,7 @@ const Level2Module6Section6_4 = () => {
                 <p className="font-medium text-foreground text-sm sm:text-base">
                   Systematic Investigation
                 </p>
-                <p className="text-xs sm:text-sm text-white/80 mt-1">
+                <p className="text-xs sm:text-sm text-white mt-1">
                   Always investigate the root cause of test failures, not just the immediate
                   symptom. Use structured fault finding methods
                 </p>
@@ -675,7 +675,7 @@ const Level2Module6Section6_4 = () => {
                 <p className="font-medium text-foreground text-sm sm:text-base">
                   Comprehensive Retesting
                 </p>
-                <p className="text-xs sm:text-sm text-white/80 mt-1">
+                <p className="text-xs sm:text-sm text-white mt-1">
                   Retest comprehensively after any corrective action to verify effectiveness and
                   ensure no new problems created
                 </p>
@@ -688,7 +688,7 @@ const Level2Module6Section6_4 = () => {
                 <p className="font-medium text-foreground text-sm sm:text-base">
                   Competence Requirements
                 </p>
-                <p className="text-xs sm:text-sm text-white/80 mt-1">
+                <p className="text-xs sm:text-sm text-white mt-1">
                   Ensure you have the competence for any corrective action—involve specialists when
                   necessary for complex repairs
                 </p>
@@ -699,7 +699,7 @@ const Level2Module6Section6_4 = () => {
               <AlertTriangle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <p className="font-medium text-foreground text-sm sm:text-base">Safety Priority</p>
-                <p className="text-xs sm:text-sm text-white/80 mt-1">
+                <p className="text-xs sm:text-sm text-white mt-1">
                   Never energise circuits that haven't passed all required tests. Safety
                   requirements are absolute
                 </p>
@@ -712,7 +712,7 @@ const Level2Module6Section6_4 = () => {
                 <p className="font-medium text-foreground text-sm sm:text-base">
                   Documentation Standards
                 </p>
-                <p className="text-xs sm:text-sm text-white/80 mt-1">
+                <p className="text-xs sm:text-sm text-white mt-1">
                   Document everything clearly: fault details, action taken, and retest results with
                   dates and signatures
                 </p>
@@ -725,7 +725,7 @@ const Level2Module6Section6_4 = () => {
                 <p className="font-medium text-foreground text-sm sm:text-base">
                   Visual Inspection
                 </p>
-                <p className="text-xs sm:text-sm text-white/80 mt-1">
+                <p className="text-xs sm:text-sm text-white mt-1">
                   Combine systematic testing with thorough visual inspection to identify all related
                   problems
                 </p>
@@ -736,7 +736,7 @@ const Level2Module6Section6_4 = () => {
               <Shield className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <p className="font-medium text-foreground text-sm sm:text-base">Legal Compliance</p>
-                <p className="text-xs sm:text-sm text-white/80 mt-1">
+                <p className="text-xs sm:text-sm text-white mt-1">
                   Understand EAWR 1989 requirements and maintain compliance throughout corrective
                   action process
                 </p>
@@ -749,7 +749,7 @@ const Level2Module6Section6_4 = () => {
                 <p className="font-medium text-foreground text-sm sm:text-base">
                   Complete Verification
                 </p>
-                <p className="text-xs sm:text-sm text-white/80 mt-1">
+                <p className="text-xs sm:text-sm text-white mt-1">
                   Verify that all safety issues are resolved before energisation, regardless of
                   commercial pressures
                 </p>
@@ -764,7 +764,7 @@ const Level2Module6Section6_4 = () => {
                 <p className="font-medium text-foreground text-sm sm:text-base mb-2">
                   Professional Tip
                 </p>
-                <p className="text-xs sm:text-sm text-white/80">
+                <p className="text-xs sm:text-sm text-white">
                   Systematic corrective action and thorough retesting protect both your professional
                   reputation and public safety. Never compromise on safety requirements due to
                   commercial pressures or time constraints. Proper procedures today prevent serious
@@ -783,7 +783,7 @@ const Level2Module6Section6_4 = () => {
           <div className="space-y-4 sm:space-y-6">
             <div>
               <h4 className="font-semibold text-foreground mb-2">Situation</h4>
-              <p className="text-white/80">
+              <p className="text-white">
                 During testing of a recently extended domestic installation, multiple circuits
                 failed insulation resistance tests with readings between 0.6-0.8 MΩ. The electrician
                 initially suspected moisture ingress from recent heavy rain but found the consumer
@@ -792,7 +792,7 @@ const Level2Module6Section6_4 = () => {
             </div>
             <div>
               <h4 className="font-semibold text-foreground mb-2">Investigation</h4>
-              <p className="text-white/80">
+              <p className="text-white">
                 Systematic fault finding revealed that new cables had been run through existing
                 ducting without checking its condition. The ducting had been compromised by building
                 work, allowing moisture to affect multiple cables simultaneously. Additional testing
@@ -801,7 +801,7 @@ const Level2Module6Section6_4 = () => {
             </div>
             <div>
               <h4 className="font-semibold text-foreground mb-2">Initial Corrective Action</h4>
-              <p className="text-white/80">
+              <p className="text-white">
                 The electrician replaced the affected cable sections and improved the ducting
                 sealing. Initial retesting showed improved insulation resistance (2-3 MΩ) but
                 revealed that tightening connections during the cable replacement had increased loop
@@ -810,7 +810,7 @@ const Level2Module6Section6_4 = () => {
             </div>
             <div>
               <h4 className="font-semibold text-foreground mb-2">Further Issues Discovered</h4>
-              <p className="text-white/80">
+              <p className="text-white">
                 Comprehensive retesting revealed that the original earthing conductor was undersized
                 for the extended installation and had high resistance connections. What initially
                 appeared to be a simple moisture problem actually indicated fundamental earthing
@@ -819,7 +819,7 @@ const Level2Module6Section6_4 = () => {
             </div>
             <div>
               <h4 className="font-semibold text-foreground mb-2">Final Resolution</h4>
-              <p className="text-white/80">
+              <p className="text-white">
                 Complete earthing system upgrade was required, including new main earthing conductor
                 and improved bonding arrangements. Final testing confirmed all circuits met
                 requirements. Total corrective work took three days instead of the anticipated few
@@ -846,7 +846,7 @@ const Level2Module6Section6_4 = () => {
               <h4 className="font-semibold mb-2">
                 Q: Can I energise a circuit if most tests pass but one shows a borderline failure?
               </h4>
-              <p className="text-white/80">
+              <p className="text-white">
                 A: No. All tests must pass their specified criteria before any circuit can be safely
                 energised.
               </p>
@@ -856,7 +856,7 @@ const Level2Module6Section6_4 = () => {
                 Q: What if the customer pressures me to energise circuits that haven't passed
                 testing?
               </h4>
-              <p className="text-white/80">
+              <p className="text-white">
                 A: Customer pressure never justifies compromising safety. Explain the legal and
                 safety reasons why this cannot be done.
               </p>
@@ -865,7 +865,7 @@ const Level2Module6Section6_4 = () => {
               <h4 className="font-semibold mb-2">
                 Q: How long should I wait after corrective action before retesting?
               </h4>
-              <p className="text-white/80">
+              <p className="text-white">
                 A: This depends on the nature of the fault and correction. Moisture-related issues
                 may need drying time, while connection repairs can usually be retested immediately.
               </p>
@@ -874,7 +874,7 @@ const Level2Module6Section6_4 = () => {
               <h4 className="font-semibold mb-2">
                 Q: What if I don't have the skills to correct a particular fault?
               </h4>
-              <p className="text-white/80">
+              <p className="text-white">
                 A: Involve appropriately qualified specialists. Professional integrity means
                 recognising your limitations and seeking help when needed.
               </p>
@@ -901,7 +901,7 @@ const Level2Module6Section6_4 = () => {
                   <p className="font-medium text-foreground text-sm sm:text-base">
                     Systematic Approach
                   </p>
-                  <p className="text-xs sm:text-sm text-white/80 mt-1">
+                  <p className="text-xs sm:text-sm text-white mt-1">
                     Use structured fault finding methods to identify root causes
                   </p>
                 </div>
@@ -911,7 +911,7 @@ const Level2Module6Section6_4 = () => {
                 <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground text-sm sm:text-base">Always Retest</p>
-                  <p className="text-xs sm:text-sm text-white/80 mt-1">
+                  <p className="text-xs sm:text-sm text-white mt-1">
                     Verify corrective action success through comprehensive retesting
                   </p>
                 </div>
@@ -925,7 +925,7 @@ const Level2Module6Section6_4 = () => {
                   <p className="font-medium text-foreground text-sm sm:text-base">
                     Legal Requirements
                   </p>
-                  <p className="text-xs sm:text-sm text-white/80 mt-1">
+                  <p className="text-xs sm:text-sm text-white mt-1">
                     EAWR 1989 mandates safe systems before energisation
                   </p>
                 </div>
@@ -935,7 +935,7 @@ const Level2Module6Section6_4 = () => {
                 <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground text-sm sm:text-base">Documentation</p>
-                  <p className="text-xs sm:text-sm text-white/80 mt-1">
+                  <p className="text-xs sm:text-sm text-white mt-1">
                     Record all corrective actions and retest results clearly
                   </p>
                 </div>

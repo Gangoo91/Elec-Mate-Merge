@@ -195,7 +195,7 @@ export default function ConfinedSpacesModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-3">
@@ -218,7 +218,7 @@ export default function ConfinedSpacesModule3Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Ventilation in Confined Spaces
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Why ventilation is critical, how to choose between positive and negative pressure
             systems, duct placement strategies, and how to verify that ventilation is actually
             working
@@ -313,7 +313,7 @@ export default function ConfinedSpacesModule3Section4() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   Critical Functions of Ventilation
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -364,7 +364,7 @@ export default function ConfinedSpacesModule3Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Fatal Risk</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Failure to ventilate a confined space has been a direct cause of multiple
                   fatalities in the UK. Workers have died within seconds of entering spaces
                   containing oxygen-depleted or toxic atmospheres. The{' '}
@@ -409,7 +409,7 @@ export default function ConfinedSpacesModule3Section4() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   When Natural Ventilation May Be Adequate
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                     <span>
@@ -447,7 +447,7 @@ export default function ConfinedSpacesModule3Section4() {
                 <p className="text-sm font-medium text-red-400 mb-3">
                   Limitations of Natural Ventilation
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -528,7 +528,7 @@ export default function ConfinedSpacesModule3Section4() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   Advantages of Positive Pressure Ventilation
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                     <span>
@@ -582,14 +582,14 @@ export default function ConfinedSpacesModule3Section4() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   How Positive Pressure Works
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The fan draws clean air from outside, pushes it through the ducting and into the
                   space. The incoming air creates a slight overpressure. Contaminated air is then
                   pushed out through the entry point, vents, or other openings. The continuous flow
                   ensures that as contaminants are produced (e.g. from residues, work activities, or
                   seepage), they are constantly diluted and flushed out.
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   For maximum effectiveness, the duct outlet should be positioned to direct clean
                   air towards the{' '}
                   <strong className="text-white">
@@ -618,7 +618,7 @@ export default function ConfinedSpacesModule3Section4() {
               <div className="space-y-3">
                 <div className="bg-gradient-to-r from-cyan-500/30 to-cyan-400/20 border border-cyan-500/40 rounded-lg px-4 py-2.5 text-center">
                   <p className="text-cyan-400 font-semibold text-sm">POSITIVE PRESSURE</p>
-                  <p className="text-white/60 text-xs">Blowing Clean Air In</p>
+                  <p className="text-white text-xs">Blowing Clean Air In</p>
                 </div>
 
                 {/* Visual representation */}
@@ -627,12 +627,12 @@ export default function ConfinedSpacesModule3Section4() {
                   <div className="flex items-center gap-2 mb-3">
                     <div className="bg-green-500/20 border border-green-500/40 rounded-lg px-3 py-2 text-center">
                       <p className="text-green-400 text-xs font-bold">FAN</p>
-                      <p className="text-white/50 text-[10px]">Outside</p>
+                      <p className="text-white text-[10px]">Outside</p>
                     </div>
                     <div className="flex-1 flex items-center">
                       <div className="h-0.5 flex-1 bg-gradient-to-r from-green-400/60 to-cyan-400/60" />
                       <span className="text-green-400 text-xs mx-1">&rarr;</span>
-                      <span className="text-[10px] text-white/50">Clean air in via duct</span>
+                      <span className="text-[10px] text-white">Clean air in via duct</span>
                     </div>
                   </div>
 
@@ -641,7 +641,7 @@ export default function ConfinedSpacesModule3Section4() {
                     <p className="text-cyan-400 text-xs font-bold text-center mb-2">
                       CONFINED SPACE
                     </p>
-                    <div className="flex items-center justify-center gap-2 text-[10px] text-white/60">
+                    <div className="flex items-center justify-center gap-2 text-[10px] text-white">
                       <span className="text-green-400">&rarr;</span>
                       <span>Fresh air dilutes contaminants</span>
                       <span className="text-green-400">&rarr;</span>
@@ -653,7 +653,7 @@ export default function ConfinedSpacesModule3Section4() {
 
                   {/* Exhaust path */}
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] text-white/50">Contaminated air exits</span>
+                    <span className="text-[10px] text-white">Contaminated air exits</span>
                     <div className="h-0.5 flex-1 bg-gradient-to-r from-red-400/30 to-red-400/60" />
                     <span className="text-red-400/60 text-xs">&rarr;</span>
                     <div className="bg-red-500/10 border border-red-500/30 rounded px-2 py-1">
@@ -662,7 +662,7 @@ export default function ConfinedSpacesModule3Section4() {
                   </div>
                 </div>
 
-                <div className="space-y-1.5 text-xs text-white/70">
+                <div className="space-y-1.5 text-xs text-white">
                   <p className="flex items-start gap-1.5">
                     <span className="mt-1 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                     Preferred for most entries
@@ -682,7 +682,7 @@ export default function ConfinedSpacesModule3Section4() {
               <div className="space-y-3">
                 <div className="bg-gradient-to-r from-amber-500/30 to-amber-400/20 border border-amber-500/40 rounded-lg px-4 py-2.5 text-center">
                   <p className="text-amber-400 font-semibold text-sm">NEGATIVE PRESSURE</p>
-                  <p className="text-white/60 text-xs">Extracting Contaminated Air Out</p>
+                  <p className="text-white text-xs">Extracting Contaminated Air Out</p>
                 </div>
 
                 {/* Visual representation */}
@@ -694,7 +694,7 @@ export default function ConfinedSpacesModule3Section4() {
                     </div>
                     <span className="text-green-400/60 text-xs">&rarr;</span>
                     <div className="h-0.5 flex-1 bg-gradient-to-r from-green-400/60 to-green-400/30" />
-                    <span className="text-[10px] text-white/50">Fresh air drawn in passively</span>
+                    <span className="text-[10px] text-white">Fresh air drawn in passively</span>
                   </div>
 
                   {/* Confined space box */}
@@ -702,7 +702,7 @@ export default function ConfinedSpacesModule3Section4() {
                     <p className="text-amber-400 text-xs font-bold text-center mb-2">
                       CONFINED SPACE
                     </p>
-                    <div className="flex items-center justify-center gap-2 text-[10px] text-white/60">
+                    <div className="flex items-center justify-center gap-2 text-[10px] text-white">
                       <span className="text-amber-400">&larr;</span>
                       <span>Contaminated air extracted</span>
                       <span className="text-amber-400">&larr;</span>
@@ -714,17 +714,17 @@ export default function ConfinedSpacesModule3Section4() {
 
                   {/* Extraction path */}
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] text-white/50">Duct extracts from source</span>
+                    <span className="text-[10px] text-white">Duct extracts from source</span>
                     <div className="h-0.5 flex-1 bg-gradient-to-r from-red-400/60 to-red-400/30" />
                     <span className="text-red-400 text-xs">&rarr;</span>
                     <div className="bg-red-500/20 border border-red-500/40 rounded-lg px-3 py-2 text-center">
                       <p className="text-red-400 text-xs font-bold">FAN</p>
-                      <p className="text-white/50 text-[10px]">Outside</p>
+                      <p className="text-white text-[10px]">Outside</p>
                     </div>
                   </div>
                 </div>
 
-                <div className="space-y-1.5 text-xs text-white/70">
+                <div className="space-y-1.5 text-xs text-white">
                   <p className="flex items-start gap-1.5">
                     <span className="mt-1 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     Preferred when contaminant source is known
@@ -763,7 +763,7 @@ export default function ConfinedSpacesModule3Section4() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   When Negative Pressure Is Preferred
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -797,7 +797,7 @@ export default function ConfinedSpacesModule3Section4() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   Limitations of Negative Pressure
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -827,13 +827,13 @@ export default function ConfinedSpacesModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Combination Systems</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   In more complex or higher-risk confined space entries, a{' '}
                   <strong className="text-white">combination system</strong> may be used —
                   simultaneously blowing clean air in at one point (positive pressure) and
                   extracting contaminated air at another (negative pressure). This provides:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -891,7 +891,7 @@ export default function ConfinedSpacesModule3Section4() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   Clean Air Source — Positioning the Intake
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -938,7 +938,7 @@ export default function ConfinedSpacesModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Duct Routing</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -989,7 +989,7 @@ export default function ConfinedSpacesModule3Section4() {
                     Contaminated Intake — A Deadly Mistake
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Multiple fatalities have occurred because the ventilation system&rsquo;s air
                   intake was positioned near a running generator or vehicle exhaust, pumping{' '}
                   <strong>carbon monoxide</strong> directly into the confined space. Carbon monoxide
@@ -1024,7 +1024,7 @@ export default function ConfinedSpacesModule3Section4() {
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Minimum Recommendations</p>
                 <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-white/80 border-collapse">
+                  <table className="w-full text-sm text-white border-collapse">
                     <thead>
                       <tr className="border-b border-white/10">
                         <th className="text-left py-2 pr-4 text-cyan-400 font-medium text-xs">
@@ -1074,7 +1074,7 @@ export default function ConfinedSpacesModule3Section4() {
                     per Hour
                   </p>
                 </div>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="bg-cyan-500/10 border border-cyan-500/20 rounded-lg p-3">
                     <p className="text-cyan-400 text-xs font-bold mb-1.5">WORKED EXAMPLE 1</p>
                     <p>
@@ -1142,28 +1142,28 @@ export default function ConfinedSpacesModule3Section4() {
                   <div className="space-y-2">
                     <div className="bg-red-500/10 border border-red-500/30 rounded-lg px-3 py-2 text-center">
                       <p className="text-red-400 text-xs font-bold">HEAVIER-THAN-AIR GASES</p>
-                      <p className="text-white/50 text-[10px]">H&sub2;S, CO&sub2;, LPG, chlorine</p>
+                      <p className="text-white text-[10px]">H&sub2;S, CO&sub2;, LPG, chlorine</p>
                     </div>
                     <div className="bg-white/5 border border-white/10 rounded-lg overflow-hidden">
                       {/* Space visualisation */}
                       <div className="p-3 space-y-1">
                         <div className="bg-white/5 border border-white/5 rounded px-2 py-1.5 flex items-center justify-between">
-                          <span className="text-[10px] text-white/40">Top</span>
+                          <span className="text-[10px] text-white">Top</span>
                           <span className="text-[10px] text-green-400">Clean air</span>
                         </div>
                         <div className="bg-white/5 border border-white/5 rounded px-2 py-1.5 flex items-center justify-between">
-                          <span className="text-[10px] text-white/40">Middle</span>
+                          <span className="text-[10px] text-white">Middle</span>
                           <span className="text-[10px] text-amber-400/60">Transition zone</span>
                         </div>
                         <div className="bg-red-500/10 border border-red-500/20 rounded px-2 py-1.5 flex items-center justify-between">
-                          <span className="text-[10px] text-white/40">Bottom</span>
+                          <span className="text-[10px] text-white">Bottom</span>
                           <span className="text-[10px] text-red-400 font-bold">
                             Gas layer &larr; DUCT HERE
                           </span>
                         </div>
                       </div>
                     </div>
-                    <p className="text-xs text-white/60 text-center">
+                    <p className="text-xs text-white text-center">
                       Direct duct to the <strong className="text-red-400">bottom</strong> of the
                       space
                     </p>
@@ -1173,7 +1173,7 @@ export default function ConfinedSpacesModule3Section4() {
                   <div className="space-y-2">
                     <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg px-3 py-2 text-center">
                       <p className="text-amber-400 text-xs font-bold">LIGHTER-THAN-AIR GASES</p>
-                      <p className="text-white/50 text-[10px]">
+                      <p className="text-white text-[10px]">
                         Methane (CH&sub4;), hydrogen (H&sub2;)
                       </p>
                     </div>
@@ -1181,22 +1181,22 @@ export default function ConfinedSpacesModule3Section4() {
                       {/* Space visualisation */}
                       <div className="p-3 space-y-1">
                         <div className="bg-amber-500/10 border border-amber-500/20 rounded px-2 py-1.5 flex items-center justify-between">
-                          <span className="text-[10px] text-white/40">Top</span>
+                          <span className="text-[10px] text-white">Top</span>
                           <span className="text-[10px] text-amber-400 font-bold">
                             Gas layer &larr; DUCT HERE
                           </span>
                         </div>
                         <div className="bg-white/5 border border-white/5 rounded px-2 py-1.5 flex items-center justify-between">
-                          <span className="text-[10px] text-white/40">Middle</span>
+                          <span className="text-[10px] text-white">Middle</span>
                           <span className="text-[10px] text-amber-400/60">Transition zone</span>
                         </div>
                         <div className="bg-white/5 border border-white/5 rounded px-2 py-1.5 flex items-center justify-between">
-                          <span className="text-[10px] text-white/40">Bottom</span>
+                          <span className="text-[10px] text-white">Bottom</span>
                           <span className="text-[10px] text-green-400">Clean air</span>
                         </div>
                       </div>
                     </div>
-                    <p className="text-xs text-white/60 text-center">
+                    <p className="text-xs text-white text-center">
                       Direct duct to the <strong className="text-amber-400">top</strong> of the
                       space
                     </p>
@@ -1206,14 +1206,14 @@ export default function ConfinedSpacesModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Heavier-than-Air Gases</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Gases that are denser than air settle at the{' '}
                   <strong className="text-white">lowest points</strong> in the space — floor level,
                   sumps, pits, and trenches. These include hydrogen sulphide (H&sub2;S), carbon
                   dioxide (CO&sub2;), LPG, propane, butane, and chlorine. Workers are most at risk
                   at floor level where they stand, kneel, or lie.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1242,13 +1242,13 @@ export default function ConfinedSpacesModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Lighter-than-Air Gases</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Gases that are lighter than air rise and accumulate at the{' '}
                   <strong className="text-white">highest points</strong> in the space — the crown of
                   a vessel, the top of a shaft, or the ceiling of a chamber. The primary examples
                   are methane (CH&sub4;) and hydrogen (H&sub2;).
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1278,7 +1278,7 @@ export default function ConfinedSpacesModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Hot Environments</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   In spaces where heat is a hazard — such as boilers, kilns, ovens, or sun-heated
                   tanks — ventilation provides a vital{' '}
                   <strong className="text-white">cooling effect</strong>. The flow of cooler outside
@@ -1295,14 +1295,14 @@ export default function ConfinedSpacesModule3Section4() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   When Ventilation Alone Is Insufficient
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   There are situations where ventilation{' '}
                   <strong className="text-white">
                     cannot adequately control the atmospheric hazard
                   </strong>
                   , and additional respiratory protection is required:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -1338,7 +1338,7 @@ export default function ConfinedSpacesModule3Section4() {
                     </span>
                   </li>
                 </ul>
-                <p className="text-sm text-white/80 mt-3">
+                <p className="text-sm text-white mt-3">
                   In these situations, workers must use{' '}
                   <strong className="text-white">respiratory protective equipment (RPE)</strong> or{' '}
                   <strong className="text-white">breathing apparatus (BA)</strong> as specified in
@@ -1375,7 +1375,7 @@ export default function ConfinedSpacesModule3Section4() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/5 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Axial Fans</p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       The most common type for confined space ventilation. Lightweight, portable,
                       and effective for moving large volumes of air over short to medium duct
                       lengths. Air moves parallel to the fan blade axis. Typical sizes range from
@@ -1385,7 +1385,7 @@ export default function ConfinedSpacesModule3Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/5 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Centrifugal Blowers</p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       Generate higher pressure than axial fans, making them suitable for longer duct
                       runs, spaces with restricted access points, or situations requiring air to be
                       forced through multiple bends. They are heavier and more expensive than axial
@@ -1396,7 +1396,7 @@ export default function ConfinedSpacesModule3Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       Venturi-Type Ejectors (Air Movers)
                     </p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       Powered by compressed air rather than electricity. They have no moving parts
                       and no electrical components, making them inherently safe for use in flammable
                       and explosive atmospheres without the need for ATEX rating. They are less
@@ -1406,7 +1406,7 @@ export default function ConfinedSpacesModule3Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/5 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Flexible Ducting</p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       Available in PVC, polyester, neoprene-coated fabric, and anti-static
                       materials. Common diameters: 200mm (8&Prime;), 300mm (12&Prime;), and 400mm
                       (16&Prime;). Standard PVC ducting is suitable for non-flammable atmospheres.
@@ -1421,7 +1421,7 @@ export default function ConfinedSpacesModule3Section4() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   ATEX-Rated Equipment for Flammable Atmospheres
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Where a potentially flammable or explosive atmosphere is present or could develop
                   (e.g. from residual hydrocarbons, solvents, or flammable gases), all ventilation
                   equipment must comply with the{' '}
@@ -1431,7 +1431,7 @@ export default function ConfinedSpacesModule3Section4() {
                   and be{' '}
                   <strong className="text-white">ATEX-rated (Atmospheres Explosibles)</strong>.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1474,7 +1474,7 @@ export default function ConfinedSpacesModule3Section4() {
                     Non-ATEX Equipment = Ignition Source
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Using standard (non-ATEX) electrical equipment in a flammable atmosphere is{' '}
                   <strong>extremely dangerous</strong>. A standard fan motor can produce sparks when
                   it starts, stops, or experiences a fault. Standard PVC ducting can build up static
@@ -1486,12 +1486,12 @@ export default function ConfinedSpacesModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">The Ventilation Plan</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The ventilation arrangements must be documented as part of the{' '}
                   <strong className="text-white">method statement and safe system of work</strong>{' '}
                   for the confined space entry. The ventilation plan should specify:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1626,7 +1626,7 @@ export default function ConfinedSpacesModule3Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1640,7 +1640,7 @@ export default function ConfinedSpacesModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-3-section-3">

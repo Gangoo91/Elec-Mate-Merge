@@ -250,14 +250,14 @@ const AM2Module2Section2 = () => {
 
       {/* Critical Warning */}
       <AM2CriticalWarning title="RAMS Documentation Requirements">
-        <p className="text-ios-callout text-white/90 mb-3">
+        <p className="text-ios-callout text-white mb-3">
           Risk Assessments and Method Statements (RAMS) are about proving you can plan safe work
           before starting. In the AM2, you will be expected to complete RAMS documentation for given
           tasks. This isn't just paperwork - it's a legal requirement in industry under the
           Management of Health and Safety at Work Regulations 1999 and Electricity at Work
           Regulations 1989.
         </p>
-        <p className="text-ios-callout text-white/90 font-medium">
+        <p className="text-ios-callout text-white font-medium">
           Many candidates lose marks by rushing RAMS or writing vague answers. This section ensures
           you know how to complete them properly, both for AM2 and real-world site practice.
         </p>
@@ -269,11 +269,11 @@ const AM2Module2Section2 = () => {
       {/* Purpose of RAMS */}
       <AM2ContentCard>
         <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">1. Purpose of RAMS</h2>
-        <div className="space-y-4 text-ios-callout text-white/90">
+        <div className="space-y-4 text-ios-callout text-white">
           <div>
             <h3 className="text-ios-headline font-semibold text-white mb-2">Risk Assessment:</h3>
             <p className="mb-2">Identify hazards, assess likelihood/severity, put in controls.</p>
-            <p className="text-white/70">
+            <p className="text-white">
               A systematic examination of work activities to identify what could cause harm to
               people, property, or the environment. The assessment considers the likelihood of
               occurrence and potential severity of consequences.
@@ -282,7 +282,7 @@ const AM2Module2Section2 = () => {
           <div>
             <h3 className="text-ios-headline font-semibold text-white mb-2">Method Statement:</h3>
             <p className="mb-2">Step-by-step description of how the job will be done safely.</p>
-            <p className="text-white/70">
+            <p className="text-white">
               A detailed, logical sequence describing how work activities will be carried out,
               including safety measures, equipment required, and personnel responsibilities.
             </p>
@@ -292,7 +292,7 @@ const AM2Module2Section2 = () => {
             <p className="mb-2">
               RAMS shows you've thought through risks and how to mitigate them.
             </p>
-            <p className="text-white/70">
+            <p className="text-white">
               The combination demonstrates competent planning, legal compliance, and professional
               approach to electrical installation work.
             </p>
@@ -304,7 +304,7 @@ const AM2Module2Section2 = () => {
             <Scale className="w-4 h-4" />
             Legal Framework
           </h4>
-          <ul className="space-y-1 text-ios-callout text-white/80">
+          <ul className="space-y-1 text-ios-callout text-white">
             <li className="flex items-start gap-2">
               <span className="text-elec-yellow">•</span>
               <span>Management of Health and Safety at Work Regulations 1999 (Regulation 3)</span>
@@ -338,7 +338,7 @@ const AM2Module2Section2 = () => {
             <h3 className="text-ios-headline font-semibold text-white mb-3">
               Essential Documentation
             </h3>
-            <ul className="space-y-2 text-ios-callout text-white/80">
+            <ul className="space-y-2 text-ios-callout text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 RAMS form (provided by assessor)
@@ -363,7 +363,7 @@ const AM2Module2Section2 = () => {
           </div>
           <div>
             <h3 className="text-ios-headline font-semibold text-white mb-3">Reference Materials</h3>
-            <ul className="space-y-2 text-ios-callout text-white/80">
+            <ul className="space-y-2 text-ios-callout text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 BS 7671 IET Wiring Regulations
@@ -395,13 +395,13 @@ const AM2Module2Section2 = () => {
           <CheckSquare className="h-5 w-5" />
           Pre-RAMS Checklist
         </h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           Before completing your RAMS documentation, ensure you have:
         </p>
         <div className="grid md:grid-cols-2 gap-6">
           <div>
             <h3 className="text-ios-headline font-semibold text-white mb-3">Site Analysis</h3>
-            <ul className="space-y-2 text-ios-callout text-white/80">
+            <ul className="space-y-2 text-ios-callout text-white">
               <li className="flex items-start gap-2">
                 <CheckSquare className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                 Examined work location thoroughly
@@ -426,7 +426,7 @@ const AM2Module2Section2 = () => {
           </div>
           <div>
             <h3 className="text-ios-headline font-semibold text-white mb-3">Task Planning</h3>
-            <ul className="space-y-2 text-ios-callout text-white/80">
+            <ul className="space-y-2 text-ios-callout text-white">
               <li className="flex items-start gap-2">
                 <CheckSquare className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                 Understood work scope completely
@@ -462,7 +462,7 @@ const AM2Module2Section2 = () => {
             <h3 className="text-ios-headline font-semibold text-white mb-3">
               NET Assessment Structure
             </h3>
-            <p className="text-ios-callout text-white/80 mb-4">
+            <p className="text-ios-callout text-white mb-4">
               RAMS documentation is a mandatory component of every AM2 practical assessment.
               Candidates receive a RAMS form at the start of their assessment task and must complete
               it before beginning practical work.
@@ -472,7 +472,7 @@ const AM2Module2Section2 = () => {
                 <h4 className="text-ios-subheadline font-semibold text-elec-yellow mb-2">
                   Time Allocation
                 </h4>
-                <ul className="space-y-1 text-ios-footnote text-white/70">
+                <ul className="space-y-1 text-ios-footnote text-white">
                   <li>• Allow 15-20 minutes for completion</li>
                   <li>• Complete before starting practical work</li>
                   <li>• Cannot proceed without assessor approval</li>
@@ -483,7 +483,7 @@ const AM2Module2Section2 = () => {
                 <h4 className="text-ios-subheadline font-semibold text-elec-yellow mb-2">
                   Marking Weighting
                 </h4>
-                <ul className="space-y-1 text-ios-footnote text-white/70">
+                <ul className="space-y-1 text-ios-footnote text-white">
                   <li>• Significant marks allocation in assessment</li>
                   <li>• Poor RAMS can cause overall failure</li>
                   <li>• Assessed alongside practical work quality</li>
@@ -495,7 +495,7 @@ const AM2Module2Section2 = () => {
 
           <div>
             <h3 className="text-ios-headline font-semibold text-white mb-3">Must Include:</h3>
-            <ul className="space-y-2 text-ios-callout text-white/80">
+            <ul className="space-y-2 text-ios-callout text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Task description
@@ -541,7 +541,7 @@ const AM2Module2Section2 = () => {
               </div>
               Task Description
             </h3>
-            <p className="text-ios-callout text-white/80 mb-2">
+            <p className="text-ios-callout text-white mb-2">
               Write a clear, specific description of what you're doing:
             </p>
             <div className="p-3 rounded-xl border border-green-500/30 bg-green-500/10 mb-2">
@@ -564,7 +564,7 @@ const AM2Module2Section2 = () => {
               </div>
               Hazard Identification
             </h3>
-            <p className="text-ios-callout text-white/80 mb-3">
+            <p className="text-ios-callout text-white mb-3">
               Consider ALL potential hazards systematically:
             </p>
             <div className="grid md:grid-cols-2 gap-4">
@@ -572,7 +572,7 @@ const AM2Module2Section2 = () => {
                 <h4 className="text-ios-subheadline font-semibold text-white mb-2">
                   Electrical Hazards
                 </h4>
-                <ul className="space-y-1 text-ios-footnote text-white/70">
+                <ul className="space-y-1 text-ios-footnote text-white">
                   <li>• Electric shock from live conductors</li>
                   <li>• Burns from arcing/short circuits</li>
                   <li>• Fire from overheating connections</li>
@@ -583,7 +583,7 @@ const AM2Module2Section2 = () => {
                 <h4 className="text-ios-subheadline font-semibold text-white mb-2">
                   Physical Hazards
                 </h4>
-                <ul className="space-y-1 text-ios-footnote text-white/70">
+                <ul className="space-y-1 text-ios-footnote text-white">
                   <li>• Cuts from sharp edges/tools</li>
                   <li>• Eye injury from debris</li>
                   <li>• Manual handling strains</li>
@@ -594,7 +594,7 @@ const AM2Module2Section2 = () => {
                 <h4 className="text-ios-subheadline font-semibold text-white mb-2">
                   Environmental
                 </h4>
-                <ul className="space-y-1 text-ios-footnote text-white/70">
+                <ul className="space-y-1 text-ios-footnote text-white">
                   <li>• Dust inhalation</li>
                   <li>• Confined spaces</li>
                   <li>• Working at height</li>
@@ -605,7 +605,7 @@ const AM2Module2Section2 = () => {
                 <h4 className="text-ios-subheadline font-semibold text-white mb-2">
                   Human Factors
                 </h4>
-                <ul className="space-y-1 text-ios-footnote text-white/70">
+                <ul className="space-y-1 text-ios-footnote text-white">
                   <li>• Unauthorised access to work area</li>
                   <li>• Interference by building users</li>
                   <li>• Inadequate lighting</li>
@@ -622,10 +622,10 @@ const AM2Module2Section2 = () => {
               </div>
               Who May Be Harmed
             </h3>
-            <p className="text-ios-callout text-white/80 mb-2">
+            <p className="text-ios-callout text-white mb-2">
               Consider everyone who could be affected:
             </p>
-            <ul className="space-y-1 text-ios-callout text-white/80">
+            <ul className="space-y-1 text-ios-callout text-white">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Yourself (the electrician)</span>
@@ -660,7 +660,7 @@ const AM2Module2Section2 = () => {
               </div>
               Control Measures
             </h3>
-            <p className="text-ios-callout text-white/80 mb-3">
+            <p className="text-ios-callout text-white mb-3">
               Apply hierarchy of controls - be specific about each measure:
             </p>
             <div className="space-y-3">
@@ -668,7 +668,7 @@ const AM2Module2Section2 = () => {
                 <h4 className="text-ios-subheadline font-semibold text-green-400">
                   Elimination/Substitution
                 </h4>
-                <p className="text-ios-footnote text-white/70">
+                <p className="text-ios-footnote text-white">
                   Remove hazard completely or replace with safer alternative
                 </p>
               </div>
@@ -676,7 +676,7 @@ const AM2Module2Section2 = () => {
                 <h4 className="text-ios-subheadline font-semibold text-blue-400">
                   Engineering Controls
                 </h4>
-                <p className="text-ios-footnote text-white/70">
+                <p className="text-ios-footnote text-white">
                   Isolation procedures, earthing, RCD protection, barriers
                 </p>
               </div>
@@ -684,7 +684,7 @@ const AM2Module2Section2 = () => {
                 <h4 className="text-ios-subheadline font-semibold text-orange-400">
                   Administrative Controls
                 </h4>
-                <p className="text-ios-footnote text-white/70">
+                <p className="text-ios-footnote text-white">
                   Permits to work, signage, training, supervision, procedures
                 </p>
               </div>
@@ -692,7 +692,7 @@ const AM2Module2Section2 = () => {
                 <h4 className="text-ios-subheadline font-semibold text-red-400">
                   Personal Protective Equipment
                 </h4>
-                <p className="text-ios-footnote text-white/70">
+                <p className="text-ios-footnote text-white">
                   Last resort - specify exact type and purpose
                 </p>
               </div>
@@ -712,7 +712,7 @@ const AM2Module2Section2 = () => {
         <div className="grid md:grid-cols-2 gap-6">
           <div>
             <h3 className="text-ios-headline font-semibold text-red-400 mb-3">Critical Failures</h3>
-            <ul className="space-y-3 text-ios-callout text-white/80">
+            <ul className="space-y-3 text-ios-callout text-white">
               <li className="flex items-start gap-2">
                 <AlertTriangle className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
                 Writing "use PPE" without stating type (gloves, goggles, insulated mat)
@@ -733,7 +733,7 @@ const AM2Module2Section2 = () => {
           </div>
           <div>
             <h3 className="text-ios-headline font-semibold text-orange-400 mb-3">Common Errors</h3>
-            <ul className="space-y-3 text-ios-callout text-white/80">
+            <ul className="space-y-3 text-ios-callout text-white">
               <li className="flex items-start gap-2">
                 <AlertTriangle className="w-4 h-4 text-orange-400 mt-0.5 flex-shrink-0" />
                 Not writing a logical sequence in method statement
@@ -761,7 +761,7 @@ const AM2Module2Section2 = () => {
           <div className="grid md:grid-cols-2 gap-4 text-ios-callout">
             <div>
               <p className="font-semibold text-red-400 mb-1">Wrong:</p>
-              <ul className="space-y-1 text-white/70">
+              <ul className="space-y-1 text-white">
                 <li>• "Use appropriate PPE"</li>
                 <li>• "Be careful with electricity"</li>
                 <li>• "Follow safe working practices"</li>
@@ -770,7 +770,7 @@ const AM2Module2Section2 = () => {
             </div>
             <div>
               <p className="font-semibold text-green-400 mb-1">Correct:</p>
-              <ul className="space-y-1 text-white/70">
+              <ul className="space-y-1 text-white">
                 <li>• "Wear insulated gloves rated 1000V for testing"</li>
                 <li>• "Isolate circuit at MCB, verify dead with proving unit"</li>
                 <li>• "Display warning signs 'Electrician at Work'"</li>
@@ -789,7 +789,7 @@ const AM2Module2Section2 = () => {
           <Layers className="h-5 w-5" />
           5. RAMS Hazard Identification Matrix
         </h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           Use this systematic approach to ensure you identify all relevant hazards for AM2 tasks:
         </p>
         <div className="overflow-x-auto">
@@ -805,7 +805,7 @@ const AM2Module2Section2 = () => {
                 </th>
               </tr>
             </thead>
-            <tbody className="text-white/80">
+            <tbody className="text-white">
               <tr>
                 <td className="border border-white/20 p-3 font-semibold text-elec-yellow">
                   Electrical
@@ -891,13 +891,13 @@ const AM2Module2Section2 = () => {
           <Shield className="h-5 w-5" />
           6. Control Measures Library
         </h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           Specific control measures to use in your RAMS documentation:
         </p>
         <div className="grid md:grid-cols-2 gap-6">
           <div>
             <h3 className="text-ios-headline font-semibold text-white mb-3">Isolation Controls</h3>
-            <ul className="space-y-2 text-ios-callout text-white/80">
+            <ul className="space-y-2 text-ios-callout text-white">
               <li className="flex items-start gap-2">
                 <Shield className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                 "Isolate circuit at consumer unit MCB"
@@ -918,7 +918,7 @@ const AM2Module2Section2 = () => {
           </div>
           <div>
             <h3 className="text-ios-headline font-semibold text-white mb-3">PPE Specifications</h3>
-            <ul className="space-y-2 text-ios-callout text-white/80">
+            <ul className="space-y-2 text-ios-callout text-white">
               <li className="flex items-start gap-2">
                 <Shield className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                 "Insulated gloves rated 1000V for electrical testing"
@@ -939,7 +939,7 @@ const AM2Module2Section2 = () => {
           </div>
           <div>
             <h3 className="text-ios-headline font-semibold text-white mb-3">Access Control</h3>
-            <ul className="space-y-2 text-ios-callout text-white/80">
+            <ul className="space-y-2 text-ios-callout text-white">
               <li className="flex items-start gap-2">
                 <Shield className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                 "Display 'Electrician at Work' warning signs"
@@ -962,7 +962,7 @@ const AM2Module2Section2 = () => {
             <h3 className="text-ios-headline font-semibold text-white mb-3">
               Emergency Procedures
             </h3>
-            <ul className="space-y-2 text-ios-callout text-white/80">
+            <ul className="space-y-2 text-ios-callout text-white">
               <li className="flex items-start gap-2">
                 <Shield className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                 "Emergency contact: Site supervisor [number]"
@@ -992,13 +992,13 @@ const AM2Module2Section2 = () => {
           <Eye className="h-5 w-5" />
           7. What Assessors Look For
         </h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           Understanding assessment criteria helps you focus on what earns marks:
         </p>
         <div className="grid md:grid-cols-2 gap-6">
           <div>
             <h3 className="text-ios-headline font-semibold text-green-400 mb-3">What Gets Marks</h3>
-            <ul className="space-y-2 text-ios-callout text-white/80">
+            <ul className="space-y-2 text-ios-callout text-white">
               <li className="flex items-start gap-2">
                 <CheckSquare className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                 Specific, detailed hazard identification
@@ -1027,7 +1027,7 @@ const AM2Module2Section2 = () => {
           </div>
           <div>
             <h3 className="text-ios-headline font-semibold text-red-400 mb-3">What Loses Marks</h3>
-            <ul className="space-y-2 text-ios-callout text-white/80">
+            <ul className="space-y-2 text-ios-callout text-white">
               <li className="flex items-start gap-2">
                 <AlertTriangle className="w-4 h-4 text-red-400 mt-0.5 flex-shrink-0" />
                 Generic or vague descriptions
@@ -1060,7 +1060,7 @@ const AM2Module2Section2 = () => {
           <h4 className="text-ios-headline font-semibold text-elec-yellow mb-2">
             Time Management Tips
           </h4>
-          <ul className="space-y-1 text-ios-callout text-white/80">
+          <ul className="space-y-1 text-ios-callout text-white">
             <li className="flex items-start gap-2">
               <span className="text-elec-yellow">•</span>
               <span>Allow 15-20 minutes for RAMS completion</span>
@@ -1095,7 +1095,7 @@ const AM2Module2Section2 = () => {
             <h3 className="text-ios-headline text-white font-semibold mb-1">
               Q1: Do I need to list every possible hazard?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               A: Only the relevant ones - but think broadly (environment, tools, access, people).
             </p>
           </div>
@@ -1103,7 +1103,7 @@ const AM2Module2Section2 = () => {
             <h3 className="text-ios-headline text-white font-semibold mb-1">
               Q2: Can I copy generic RAMS wording from memory?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               A: No. Assessors want task-specific detail.
             </p>
           </div>
@@ -1111,7 +1111,7 @@ const AM2Module2Section2 = () => {
             <h3 className="text-ios-headline text-white font-semibold mb-1">
               Q3: How detailed should PPE entries be?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               A: State type and purpose: e.g., "insulated gloves for testing, safety glasses for
               drilling."
             </p>
@@ -1120,13 +1120,13 @@ const AM2Module2Section2 = () => {
             <h3 className="text-ios-headline text-white font-semibold mb-1">
               Q4: What's the biggest reason people lose marks in RAMS?
             </h3>
-            <p className="text-ios-callout text-white/70">A: Vague or incomplete entries.</p>
+            <p className="text-ios-callout text-white">A: Vague or incomplete entries.</p>
           </div>
           <div className="p-3 bg-white/5 rounded-xl border border-white/10">
             <h3 className="text-ios-headline text-white font-semibold mb-1">
               Q5: Will assessors mark spelling/grammar?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               A: No, but clarity matters - write plainly and logically.
             </p>
           </div>
@@ -1136,11 +1136,11 @@ const AM2Module2Section2 = () => {
       {/* Summary */}
       <AM2ContentCard accent>
         <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">Summary</h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           RAMS is about proving you can plan safe work. In AM2, weak RAMS entries = easy lost marks.
           Always:
         </p>
-        <ul className="space-y-2 text-ios-callout text-white/90">
+        <ul className="space-y-2 text-ios-callout text-white">
           <li className="flex items-start gap-2">
             <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
             Identify specific hazards
@@ -1158,7 +1158,7 @@ const AM2Module2Section2 = () => {
             Write a logical method sequence
           </li>
         </ul>
-        <p className="text-ios-body text-white/90 mt-4">
+        <p className="text-ios-body text-white mt-4">
           Done right, RAMS is quick, clear, and earns you marks while protecting you in real work.
         </p>
       </AM2ContentCard>

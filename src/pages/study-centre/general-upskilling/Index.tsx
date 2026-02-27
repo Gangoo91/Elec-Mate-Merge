@@ -218,7 +218,7 @@ export default function GeneralUpskillingIndex() {
                 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight mb-3">
                   General Upskilling
                 </h1>
-                <p className="text-base sm:text-lg text-white/50 leading-relaxed">
+                <p className="text-base sm:text-lg text-white leading-relaxed">
                   Cross-industry safety and professional development courses for tradespeople. Build
                   on your core skills with recognised certifications.
                 </p>
@@ -228,13 +228,13 @@ export default function GeneralUpskillingIndex() {
               <div className="hidden lg:flex items-center gap-3 pb-1">
                 <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08]">
                   <BookOpen className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-sm text-white/70">
+                  <span className="text-sm text-white">
                     <span className="font-semibold text-white">{activeCourses.length}</span>{' '}
                     available
                   </span>
                 </div>
                 <div className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white/[0.04] border border-white/[0.08]">
-                  <span className="text-sm text-white/70">
+                  <span className="text-sm text-white">
                     <span className="font-semibold text-white">{comingSoonCourses.length}</span>{' '}
                     coming soon
                   </span>
@@ -270,9 +270,9 @@ export default function GeneralUpskillingIndex() {
           <section>
             <div className="flex items-center gap-3 mb-5">
               <div className="w-2 h-2 rounded-full bg-white/20" />
-              <h2 className="text-lg sm:text-xl font-semibold text-white/40">Coming Soon</h2>
+              <h2 className="text-lg sm:text-xl font-semibold text-white">Coming Soon</h2>
               <div className="h-px flex-1 bg-white/[0.04]" />
-              <span className="text-xs text-white/25 uppercase tracking-wider font-medium hidden sm:block">
+              <span className="text-xs text-white uppercase tracking-wider font-medium hidden sm:block">
                 {comingSoonCourses.length} courses
               </span>
             </div>

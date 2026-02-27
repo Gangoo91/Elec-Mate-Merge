@@ -209,7 +209,7 @@ const HNCModule4Section5_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section5">
@@ -231,7 +231,7 @@ const HNCModule4Section5_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Distribution Board Design
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Designing distribution systems for reliable final circuit protection and power delivery
           </p>
         </header>
@@ -711,7 +711,7 @@ const HNCModule4Section5_2 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Accessibility note:</strong> Consider users with disabilities - ensure clear
               approach route, adequate lighting, and handles operable with one hand.
             </p>
@@ -735,7 +735,7 @@ const HNCModule4Section5_2 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Design a distribution board for a 400m² office floor.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Circuit count:</p>
                 <p>Lighting: 400m² ÷ 100m² per circuit = 4 circuits</p>
                 <p>Power: 400m² ÷ 50m² per circuit = 8 circuits</p>
@@ -755,7 +755,7 @@ const HNCModule4Section5_2 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Allocate circuits to achieve balanced phases.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Available loads:</p>
                 <p>• Lighting: 3 × 6A circuits (18A total)</p>
                 <p>• Sockets: 6 × 20A circuits (120A total)</p>
@@ -775,7 +775,7 @@ const HNCModule4Section5_2 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Calculate maximum demand for incoming cable sizing.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Connected loads:</p>
                 <p>Lighting: 6kW × 0.66 = 3.96kW</p>
                 <p>Sockets: First 10A (2.3kW) + (30A × 0.4 × 0.23) = 5.06kW</p>
@@ -787,7 +787,7 @@ const HNCModule4Section5_2 = () => {
                 <p>
                   Current at 230V: 19420 ÷ 230 = <strong>84.4A</strong>
                 </p>
-                <p className="text-white/60">Specify 100A incoming device</p>
+                <p className="text-white">Specify 100A incoming device</p>
               </div>
             </div>
           </div>
@@ -850,7 +850,7 @@ const HNCModule4Section5_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -896,7 +896,7 @@ const HNCModule4Section5_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section5-1">

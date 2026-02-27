@@ -279,7 +279,7 @@ const HNCModule8Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section1">
@@ -301,7 +301,7 @@ const HNCModule8Section1_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Heat Pump Integration
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Principles, system integration, buffer vessels, flow temperatures and hybrid systems for
             building services
           </p>
@@ -426,29 +426,29 @@ const HNCModule8Section1_2 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Refrigerant Cycle</p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm text-white/90">
+              <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
                 <div>
                   <p className="font-medium mb-1">1. Evaporator (Outdoor)</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Low-pressure liquid refrigerant absorbs heat from air/ground, becoming a gas
                   </p>
                 </div>
                 <div>
                   <p className="font-medium mb-1">2. Compressor</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Compresses the gas, raising its temperature significantly (this is where
                     electricity is used)
                   </p>
                 </div>
                 <div>
                   <p className="font-medium mb-1">3. Condenser (Indoor)</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Hot gas releases heat to heating water, condensing back to liquid
                   </p>
                 </div>
                 <div>
                   <p className="font-medium mb-1">4. Expansion Valve</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Pressure drops rapidly, cooling the refrigerant ready for evaporator
                   </p>
                 </div>
@@ -508,11 +508,11 @@ const HNCModule8Section1_2 = () => {
               <p className="font-mono text-center text-base mb-2">
                 COP = Q<sub>heat</sub> / W<sub>elec</sub>
               </p>
-              <p className="text-sm text-white/90 text-center mb-2">
+              <p className="text-sm text-white text-center mb-2">
                 If a heat pump uses 2.5kW electricity and outputs 10kW heat:
               </p>
               <p className="font-mono text-center text-lg text-elec-yellow">COP = 10 / 2.5 = 4.0</p>
-              <p className="text-xs text-white/70 text-center mt-2">
+              <p className="text-xs text-white text-center mt-2">
                 This means 7.5kW of "free" environmental heat is added to 2.5kW of electrical energy
               </p>
             </div>
@@ -576,15 +576,15 @@ const HNCModule8Section1_2 = () => {
               <div className="grid sm:grid-cols-2 gap-3 text-sm">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">Basic Rule of Thumb</p>
-                  <p className="text-white/70 text-xs">10-20 litres per kW of heat pump capacity</p>
-                  <p className="text-white/70 text-xs mt-1">12kW ASHP = 120-240 litre buffer</p>
+                  <p className="text-white text-xs">10-20 litres per kW of heat pump capacity</p>
+                  <p className="text-white text-xs mt-1">12kW ASHP = 120-240 litre buffer</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">MCS Minimum Calculation</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     V = (Q x t<sub>min</sub>) / (deltaT x 4.18)
                   </p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Where t<sub>min</sub> = minimum run time (6 mins)
                   </p>
                 </div>
@@ -670,7 +670,7 @@ const HNCModule8Section1_2 = () => {
                 <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="text-sm font-medium text-orange-300 mb-1">Critical Design Points</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-4">
                     <li>
                       Never bypass the buffer vessel - this leads to short cycling and compressor
                       damage
@@ -789,33 +789,33 @@ const HNCModule8Section1_2 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Radiator Output at Different Flow Temperatures
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Radiator output varies with the mean water temperature (MWT) difference from room
                 temperature. At lower flow temperatures, output drops significantly:
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center text-sm">
                 <div className="p-2 rounded bg-white/5">
                   <p className="text-elec-yellow font-bold">75degC flow</p>
-                  <p className="text-white/70 text-xs">100% output</p>
-                  <p className="text-white/60 text-xs">(MWT 60degC)</p>
+                  <p className="text-white text-xs">100% output</p>
+                  <p className="text-white text-xs">(MWT 60degC)</p>
                 </div>
                 <div className="p-2 rounded bg-white/5">
                   <p className="text-elec-yellow font-bold">55degC flow</p>
-                  <p className="text-white/70 text-xs">~60% output</p>
-                  <p className="text-white/60 text-xs">(MWT 45degC)</p>
+                  <p className="text-white text-xs">~60% output</p>
+                  <p className="text-white text-xs">(MWT 45degC)</p>
                 </div>
                 <div className="p-2 rounded bg-white/5">
                   <p className="text-elec-yellow font-bold">45degC flow</p>
-                  <p className="text-white/70 text-xs">~45% output</p>
-                  <p className="text-white/60 text-xs">(MWT 37degC)</p>
+                  <p className="text-white text-xs">~45% output</p>
+                  <p className="text-white text-xs">(MWT 37degC)</p>
                 </div>
                 <div className="p-2 rounded bg-white/5">
                   <p className="text-elec-yellow font-bold">35degC flow</p>
-                  <p className="text-white/70 text-xs">~25% output</p>
-                  <p className="text-white/60 text-xs">(MWT 30degC)</p>
+                  <p className="text-white text-xs">~25% output</p>
+                  <p className="text-white text-xs">(MWT 30degC)</p>
                 </div>
               </div>
-              <p className="text-xs text-white/60 mt-2 text-center">
+              <p className="text-xs text-white mt-2 text-center">
                 Based on Delta T50 rated output and 20degC room temperature
               </p>
             </div>
@@ -970,7 +970,7 @@ const HNCModule8Section1_2 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-1">Temperature-Based</p>
-                  <ul className="text-white/70 text-xs space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-white text-xs space-y-1 list-disc list-outside ml-4">
                     <li>HP only above bivalent point (e.g., -2degC)</li>
                     <li>Boiler assists below bivalent point</li>
                     <li>Boiler only below cut-off (e.g., -10degC)</li>
@@ -978,7 +978,7 @@ const HNCModule8Section1_2 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-1">Cost-Based</p>
-                  <ul className="text-white/70 text-xs space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-white text-xs space-y-1 list-disc list-outside ml-4">
                     <li>Calculates running cost at current COP</li>
                     <li>Compares with gas cost for same heat output</li>
                     <li>Selects cheapest option automatically</li>
@@ -1147,7 +1147,7 @@ const HNCModule8Section1_2 = () => {
                   <p className="text-sm font-medium text-orange-300 mb-1">
                     Common Compliance Issues
                   </p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-4">
                     <li>Oversized heat pump for heat loss (reduces efficiency)</li>
                     <li>Undersized emitters requiring high flow temperatures</li>
                     <li>Missing or incorrect weather compensation setup</li>
@@ -1185,7 +1185,7 @@ const HNCModule8Section1_2 = () => {
                 flow. Compare running cost with a 90% efficient gas boiler. Electricity = 28p/kWh,
                 Gas = 8p/kWh.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Heat pump electrical input:</p>
                 <p>
                   P<sub>elec</sub> = Heat output / COP = 10kW / 3.5 = <strong>2.86kW</strong>
@@ -1214,7 +1214,7 @@ const HNCModule8Section1_2 = () => {
                 <strong>Question:</strong> Size a buffer vessel for a 12kW ASHP with 6-minute
                 minimum run time and 5K temperature differential.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using MCS formula:</p>
                 <p>
                   V = (Q x t<sub>min</sub>) / (deltaT x 4.18)
@@ -1231,7 +1231,7 @@ const HNCModule8Section1_2 = () => {
                 <p>
                   V = 4320 / 20.9 = <strong>207 litres</strong>
                 </p>
-                <p className="mt-2 text-white/60">Select 200-250 litre buffer vessel</p>
+                <p className="mt-2 text-white">Select 200-250 litre buffer vessel</p>
               </div>
             </div>
 
@@ -1243,7 +1243,7 @@ const HNCModule8Section1_2 = () => {
                 <strong>Question:</strong> A room requires 2kW heat output. An existing radiator is
                 rated at 1.5kW at Delta T50 (75/65/20degC). Is it suitable for 45degC flow?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Original conditions (Delta T50):</p>
                 <p>Flow 75degC, Return 65degC, Room 20degC</p>
                 <p>Mean water temp = (75+65)/2 = 70degC</p>
@@ -1258,7 +1258,7 @@ const HNCModule8Section1_2 = () => {
                   New output = 1.5kW x 0.34 = <strong>0.51kW</strong>
                 </p>
                 <p className="mt-2 text-red-400">Radiator only provides 0.51kW vs 2kW required</p>
-                <p className="text-white/60">Need radiator 4x larger (6kW Delta T50 rating)</p>
+                <p className="text-white">Need radiator 4x larger (6kW Delta T50 rating)</p>
               </div>
             </div>
 
@@ -1270,7 +1270,7 @@ const HNCModule8Section1_2 = () => {
                 <strong>Question:</strong> Size the electrical circuit for a 12kW ASHP with maximum
                 electrical input of 4.2kW at 230V single-phase. Cable run is 25m.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Maximum current:</p>
                 <p>
                   I<sub>max</sub> = P / V = 4200W / 230V = <strong>18.3A</strong>
@@ -1299,7 +1299,7 @@ const HNCModule8Section1_2 = () => {
                 varies with outdoor temperature. Electricity 30p/kWh, Gas 10p/kWh, Boiler 90%
                 efficient.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Gas cost per kWh heat:</p>
                 <p>
                   Cost<sub>gas</sub> = 10p / 0.90 = <strong>11.1p/kWh</strong>
@@ -1316,10 +1316,10 @@ const HNCModule8Section1_2 = () => {
                 <p>
                   COP<sub>break</sub> = 30 / (10/0.9) = <strong>2.7</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Switch to gas when outdoor temp causes COP &lt; 2.7
                 </p>
-                <p className="text-white/60">Typically around -5degC to -7degC for most ASHPs</p>
+                <p className="text-white">Typically around -5degC to -7degC for most ASHPs</p>
               </div>
             </div>
           </div>
@@ -1428,7 +1428,7 @@ const HNCModule8Section1_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1496,7 +1496,7 @@ const HNCModule8Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section1-1">

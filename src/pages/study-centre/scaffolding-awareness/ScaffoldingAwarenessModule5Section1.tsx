@@ -191,7 +191,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-5">
@@ -216,7 +216,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Safe Working on Scaffolds
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Pre-use checks before starting work, safe access and egress, maintaining three points of
             contact, keeping platforms clear, avoiding overreaching, tool lanyards, and coordinating
             with others on the scaffold
@@ -313,7 +313,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
                       </div>
                       <p className="text-sm font-semibold text-green-400">Check the Scaffold Tag</p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1 ml-11">
+                    <ul className="text-sm text-white space-y-1 ml-11">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                         <span>
@@ -360,7 +360,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
                       </div>
                       <p className="text-sm font-semibold text-blue-400">Visual Inspection</p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1 ml-11">
+                    <ul className="text-sm text-white space-y-1 ml-11">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                         <span>
@@ -409,7 +409,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
                       </div>
                       <p className="text-sm font-semibold text-purple-400">Confirm Safe Access</p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1 ml-11">
+                    <ul className="text-sm text-white space-y-1 ml-11">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                         <span>
@@ -449,7 +449,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Never Assume</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Never assume a scaffold is safe just because someone else has been using it.
                   Conditions can change between shifts, overnight, or after weather events.{' '}
                   <strong className="text-white">
@@ -480,7 +480,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Internal Ladders</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -517,7 +517,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Secured External Ladders</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -555,7 +555,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Stair Towers</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -594,7 +594,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Improvised Access Kills</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">Never</strong> climb the scaffold standards, use
                   ledgers as footholds, jump between levels, or use an unsecured ladder leaning
                   against the scaffold. Improvised access is one of the{' '}
@@ -626,7 +626,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">How It Works</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -662,7 +662,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">What This Means in Practice</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -736,7 +736,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                     <p className="text-sm font-semibold text-green-400 mb-2">DO</p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                         <span>
@@ -778,7 +778,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
 
                   <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
                     <p className="text-sm font-semibold text-red-400 mb-2">DO NOT</p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                         <span>
@@ -863,7 +863,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Why Overreaching Is Dangerous</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -899,7 +899,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">The Safe Alternative</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -943,7 +943,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
                     The &ldquo;Just a Bit Further&rdquo; Trap
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Most overreaching incidents begin with the thought &ldquo;I can <em>just</em>{' '}
                   reach that if I lean a little further.&rdquo; This is a{' '}
                   <strong className="text-white">well-documented psychological trap</strong>. Moving
@@ -973,7 +973,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Platform Rules</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1017,7 +1017,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Platform Boards</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1084,7 +1084,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   The Physics of Dropped Objects
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1121,7 +1121,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Using Tool Lanyards</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1171,7 +1171,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Additional Dropped-Object Controls
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1226,7 +1226,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Coordinating With Other Teams</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1271,7 +1271,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Keeping Access Points Clear</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1319,7 +1319,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Emergency Egress</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   In the event of a fire, structural failure, or severe weather, every person on the
                   scaffold must be able to descend to ground level{' '}
                   <strong className="text-white">quickly and safely</strong>. Blocked access points,
@@ -1351,7 +1351,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1365,7 +1365,7 @@ export default function ScaffoldingAwarenessModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-5">

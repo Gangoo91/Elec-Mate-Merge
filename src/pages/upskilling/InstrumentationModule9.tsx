@@ -12,7 +12,7 @@ const InstrumentationModule9 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/instrumentation-course">
@@ -28,11 +28,11 @@ const InstrumentationModule9 = () => {
         <div className="mb-8">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/20 mb-3">
             <span className="text-elec-yellow text-xs font-semibold">MOCK EXAM</span>
-            <span className="text-white/40 text-xs">•</span>
-            <span className="text-white/60 text-xs">120 mins</span>
+            <span className="text-white text-xs">•</span>
+            <span className="text-white text-xs">120 mins</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Mock Exam</h1>
-          <p className="text-white/60 text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Comprehensive assessment covering all instrumentation course modules
           </p>
         </div>

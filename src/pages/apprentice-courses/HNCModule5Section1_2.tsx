@@ -264,7 +264,7 @@ const HNCModule5Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section1">
@@ -286,7 +286,7 @@ const HNCModule5Section1_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Programme Development
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Gantt charts, milestones, programme logic and scheduling techniques for MEP
             installations
           </p>
@@ -767,7 +767,7 @@ const HNCModule5Section1_2 = () => {
               </ol>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Coordination tip:</strong> Use BIM coordination meetings to resolve clashes
               before they affect the programme. Virtual clashes are far cheaper to resolve than site
               conflicts.
@@ -793,7 +793,7 @@ const HNCModule5Section1_2 = () => {
                 <strong>Question:</strong> Activity A takes 5 days. Activity B depends on A (FS) and
                 takes 3 days. Project must finish on Day 15. A can start Day 1. What is the float?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Early Start A = Day 1</p>
                 <p>Early Finish A = Day 1 + 5 = Day 6</p>
                 <p>Early Start B = Day 6</p>
@@ -813,14 +813,14 @@ const HNCModule5Section1_2 = () => {
                 <strong>Question:</strong> Containment installation takes 10 days. Cable pulling
                 takes 8 days but can start 3 days after containment starts. What dependency and lag?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Cable pulling starts when containment starts (not finishes)</p>
                 <p>This is a Start-to-Start (SS) relationship</p>
                 <p>3 days must elapse before cables can follow</p>
                 <p className="mt-2">
                   <strong>Answer: SS + 3 days lag</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This allows cable pulling to begin in areas where containment is complete, while
                   containment continues in other areas.
                 </p>
@@ -836,7 +836,7 @@ const HNCModule5Section1_2 = () => {
                 18d, (B) Switchboard delivery 12d + Install 3d = 15d, (C) Generator install 20d.
                 Which is critical?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Path A: 10 + 8 = 18 days</p>
                 <p>Path B: 12 + 3 = 15 days</p>
                 <p>Path C: 20 days</p>
@@ -927,7 +927,7 @@ const HNCModule5Section1_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -973,7 +973,7 @@ const HNCModule5Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section1">

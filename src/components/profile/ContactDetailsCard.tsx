@@ -94,7 +94,7 @@ const ContactDetailsCard: React.FC<ContactDetailsCardProps> = ({
             <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
             <span className="font-semibold text-[15px] text-white">Contact Details</span>
           </div>
-          <ChevronRight className="h-5 w-5 text-white/30" />
+          <ChevronRight className="h-5 w-5 text-white" />
         </button>
 
         <div className="border-t border-white/[0.06]">
@@ -112,12 +112,12 @@ const ContactDetailsCard: React.FC<ContactDetailsCardProps> = ({
                   <Icon className={`h-4 w-4 ${row.iconColor}`} />
                 </div>
                 <div className="flex-1 min-w-0 text-left">
-                  <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+                  <p className="text-[11px] font-medium text-white uppercase tracking-wide">
                     {row.label}
                   </p>
                   <p className="text-[15px] text-white truncate">{row.value}</p>
                   {row.subtitle && (
-                    <p className="text-[12px] text-white/40 mt-0.5">{row.subtitle}</p>
+                    <p className="text-[12px] text-white mt-0.5">{row.subtitle}</p>
                   )}
                 </div>
               </div>
@@ -166,17 +166,17 @@ const ContactDetailsCard: React.FC<ContactDetailsCardProps> = ({
 
           <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-6 space-y-6 pb-8">
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Personal Email
               </Label>
               <div className="h-[50px] flex items-center bg-white/[0.04] rounded-xl px-4 border border-white/[0.06]">
-                <p className="text-[17px] text-white/40">{user?.email || ''}</p>
+                <p className="text-[17px] text-white">{user?.email || ''}</p>
               </div>
-              <p className="text-[12px] text-white/40 px-1">Change in Settings → Account</p>
+              <p className="text-[12px] text-white px-1">Change in Settings → Account</p>
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Phone Number
               </Label>
               <Input
@@ -189,7 +189,7 @@ const ContactDetailsCard: React.FC<ContactDetailsCardProps> = ({
             </div>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Company Email
               </Label>
               <Input
@@ -199,7 +199,7 @@ const ContactDetailsCard: React.FC<ContactDetailsCardProps> = ({
                 onChange={(e) => setFormData({ ...formData, company_email: e.target.value })}
                 className="h-[50px] text-[17px] bg-input border-white/[0.08] rounded-xl px-4 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
               />
-              <p className="text-[12px] text-white/40 px-1">
+              <p className="text-[12px] text-white px-1">
                 This email appears on quotes and invoices
               </p>
             </div>

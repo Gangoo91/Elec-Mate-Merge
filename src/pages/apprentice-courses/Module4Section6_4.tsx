@@ -181,7 +181,7 @@ const Module4Section6_4 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -199,13 +199,13 @@ const Module4Section6_4 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.4</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.4</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Checking Fixings, Cable Routes, and Terminations
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master the final inspection techniques to ensure all fixings are secure, cable routes
               follow safe zones, and terminations meet BS 7671 standards
             </p>
@@ -217,7 +217,7 @@ const Module4Section6_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="grid md:grid-cols-2 gap-4 text-white/80">
+            <div className="grid md:grid-cols-2 gap-4 text-white">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
@@ -259,7 +259,7 @@ const Module4Section6_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <ul className="list-disc pl-6 space-y-2 text-white/80">
+            <ul className="list-disc pl-6 space-y-2 text-white">
               <li>Verify that all fixings are secure and suitable for the mounting surface</li>
               <li>Check that cable routes comply with safe wiring zones</li>
               <li>
@@ -276,7 +276,7 @@ const Module4Section6_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Checking Fixings
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Secure fixings are essential for mechanical protection and long-term reliability of
                 electrical installations.
@@ -332,7 +332,7 @@ const Module4Section6_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Cable Route Verification
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Proper cable routing ensures protection from damage and compliance with Building
                 Regulations.
@@ -390,7 +390,7 @@ const Module4Section6_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Termination Checks
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>Proper terminations are critical for electrical safety and system reliability.</p>
 
               <div className="p-4 rounded-lg bg-orange-500/5 border-l-2 border-orange-500/50">
@@ -439,7 +439,7 @@ const Module4Section6_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Testing Mechanical Security
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>Physical testing verifies the integrity of connections and fixings.</p>
 
               <div className="p-4 rounded-lg bg-purple-500/5 border-l-2 border-purple-500/50">
@@ -479,15 +479,15 @@ const Module4Section6_4 = () => {
             <div className="space-y-4">
               <div className="p-4 rounded-lg border border-white/10">
                 <p className="font-medium text-white mb-2">Essential Tools and Equipment</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   <strong>Basic tools:</strong> Screwdrivers (slotted and Phillips), torque
                   screwdriver, inspection torch, cable detector, measuring tape.
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   <strong>Testing equipment:</strong> Multimeter, insulation resistance tester,
                   socket tester, continuity tester.
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong>Installation materials:</strong> Cable ties, grommets, bushes, ferrules,
                   cable markers, warning labels.
                 </p>
@@ -495,7 +495,7 @@ const Module4Section6_4 = () => {
 
               <div className="p-4 rounded-lg border border-green-400/30 bg-green-500/5">
                 <p className="font-medium text-white mb-2">Inspection Sequence</p>
-                <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                <ul className="text-sm text-white space-y-1 list-disc pl-4">
                   <li>
                     <strong>1. Visual inspection:</strong> Check all visible fixings, cable routes,
                     and terminations before any testing
@@ -517,7 +517,7 @@ const Module4Section6_4 = () => {
 
               <div className="p-4 rounded-lg border border-amber-400/30 bg-amber-500/5">
                 <p className="font-medium text-white mb-2">Common Inspection Points</p>
-                <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                <ul className="text-sm text-white space-y-1 list-disc pl-4">
                   <li>
                     <strong>Consumer units:</strong> Check main switch, RCD, and MCB terminations.
                     Verify all conductors are secure
@@ -548,16 +548,16 @@ const Module4Section6_4 = () => {
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-white mb-2">Case Study 1: Hotel Refurbishment</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   <strong>Problem:</strong> During final testing, several sockets failed the
                   polarity test despite initial visual inspection appearing satisfactory.
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   <strong>Investigation:</strong> Detailed inspection revealed loose neutral
                   connections in several socket outlets. The terminals appeared connected but
                   weren't adequately tightened.
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong>Lesson:</strong> Visual inspection alone isn't sufficient — physical
                   testing of connections is essential, and time pressure never justifies shortcuts
                   in safety procedures.
@@ -568,16 +568,16 @@ const Module4Section6_4 = () => {
                 <p className="font-semibold text-white mb-2">
                   Case Study 2: Office Block Cable Damage
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   <strong>Problem:</strong> Six months after completion, an office block experienced
                   intermittent power failures.
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   <strong>Root cause:</strong> Cables had been routed diagonally to save time and
                   materials, without mechanical protection. Later fit-out work damaged these hidden
                   cables.
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong>Lesson:</strong> Safe zone compliance isn't just a regulation — it's
                   practical protection that prevents costly failures and safety hazards.
                 </p>
@@ -595,7 +595,7 @@ const Module4Section6_4 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h3 className="font-medium text-white mb-2">Q: {faq.question}</h3>
-                  <p className="text-sm text-white/80">A: {faq.answer}</p>
+                  <p className="text-sm text-white">A: {faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -614,7 +614,7 @@ const Module4Section6_4 = () => {
                     <CheckCircle className="w-5 h-5 text-green-500" />
                     <h3 className="font-semibold text-white">Fixing Verification Essentials</h3>
                   </div>
-                  <ul className="space-y-1 text-sm text-white/80 list-disc pl-4">
+                  <ul className="space-y-1 text-sm text-white list-disc pl-4">
                     <li>
                       <strong>Surface compatibility:</strong> Match fixing type to mounting surface
                     </li>
@@ -636,7 +636,7 @@ const Module4Section6_4 = () => {
                     <Target className="w-5 h-5 text-elec-yellow" />
                     <h3 className="font-semibold text-white">Safe Wiring Zone Compliance</h3>
                   </div>
-                  <ul className="space-y-1 text-sm text-white/80 list-disc pl-4">
+                  <ul className="space-y-1 text-sm text-white list-disc pl-4">
                     <li>
                       <strong>Horizontal zones:</strong> Within 150mm of ceiling and wall junctions
                     </li>
@@ -659,7 +659,7 @@ const Module4Section6_4 = () => {
                   <Wrench className="w-5 h-5 text-elec-yellow" />
                   <h3 className="font-semibold text-white">Termination Excellence</h3>
                 </div>
-                <div className="grid md:grid-cols-3 gap-4 text-sm text-white/80">
+                <div className="grid md:grid-cols-3 gap-4 text-sm text-white">
                   <div>
                     <p className="font-medium mb-2">Conductor Preparation:</p>
                     <ul className="space-y-1 list-disc pl-4">
@@ -695,7 +695,7 @@ const Module4Section6_4 = () => {
                   <Shield className="w-5 h-5 text-elec-yellow" />
                   <h3 className="font-semibold text-white">BS 7671 Compliance Requirements</h3>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     <strong>Regulation 526:</strong> All electrical connections must be suitable for
                     conditions and secure throughout installation lifetime
@@ -716,7 +716,7 @@ const Module4Section6_4 = () => {
                   Remember: Every fixing, route, and termination you inspect contributes to the
                   overall safety and reliability of the electrical installation.
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Systematic checking using proper tools and techniques ensures compliance, prevents
                   failures, and protects both property and people.
                 </p>

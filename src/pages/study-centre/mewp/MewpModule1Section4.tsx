@@ -189,7 +189,7 @@ export default function MewpModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-1">
@@ -214,7 +214,7 @@ export default function MewpModule1Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Power Sources, Operator Competence & the PAL Card
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding MEWP power types, IPAF training, the PAL card system, familiarisation
             requirements, operator fitness, and workplace roles and responsibilities
           </p>
@@ -296,7 +296,7 @@ export default function MewpModule1Section4() {
                     <Battery className="h-5 w-5 text-green-400" />
                     <p className="text-sm font-medium text-green-400">Electric (Battery)</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1 mb-3">
+                  <ul className="text-sm text-white space-y-1 mb-3">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Zero emissions &mdash; no exhaust fumes during operation</span>
@@ -328,7 +328,7 @@ export default function MewpModule1Section4() {
                     <Fuel className="h-5 w-5 text-orange-400" />
                     <p className="text-sm font-medium text-orange-400">Diesel</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1 mb-3">
+                  <ul className="text-sm text-white space-y-1 mb-3">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -364,7 +364,7 @@ export default function MewpModule1Section4() {
                     <Zap className="h-5 w-5 text-blue-400" />
                     <p className="text-sm font-medium text-blue-400">Hybrid (Electric/Diesel)</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1 mb-3">
+                  <ul className="text-sm text-white space-y-1 mb-3">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Dual electric and diesel capability</span>
@@ -395,7 +395,7 @@ export default function MewpModule1Section4() {
                 <p className="text-sm font-medium text-elec-yellow mb-2">
                   Charging Considerations (Electric & Hybrid)
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -463,7 +463,7 @@ export default function MewpModule1Section4() {
                 <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                   <div>
                     <p className="text-sm font-medium text-white mb-2">Theory Section & Test</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Available via eLearning or classroom delivery</span>
@@ -492,7 +492,7 @@ export default function MewpModule1Section4() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white mb-2">Practical Training & Test</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Conducted at an IPAF-approved training centre</span>
@@ -524,7 +524,7 @@ export default function MewpModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Course Duration</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Training typically takes <strong className="text-white">1 to 3 days</strong>{' '}
                   depending on the operator's existing experience, the complexity of the machine
                   category, and the number of categories being covered. Operators training on
@@ -557,7 +557,7 @@ export default function MewpModule1Section4() {
                   <CreditCard className="h-5 w-5 text-teal-400" />
                   <p className="text-sm font-medium text-teal-400">PAL Card Details</p>
                 </div>
-                <div className="grid sm:grid-cols-2 gap-4 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
                   <div>
                     <p className="text-white font-medium">Validity</p>
                     <p>5 years from date of successful completion</p>
@@ -582,12 +582,12 @@ export default function MewpModule1Section4() {
                   <ShieldCheck className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">PAL+ Advanced Training</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   PAL+ is an optional advanced training programme for operators working in
                   higher-risk environments. It builds on standard IPAF training and covers
                   additional competencies required for challenging conditions.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1 mb-3">
+                <ul className="text-sm text-white space-y-1 mb-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Steelwork and structural erection at height</span>
@@ -616,7 +616,7 @@ export default function MewpModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Renewal Warning</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   PAL cards must be renewed before they expire. If your card lapses, you will not be
                   able to demonstrate current competence and most sites will not permit you to
                   operate. Plan renewal training at least 3 months before your expiry date to avoid
@@ -660,7 +660,7 @@ export default function MewpModule1Section4() {
                     <BookOpen className="h-5 w-5 text-blue-400" />
                     <p className="text-sm font-medium text-blue-400">Training (IPAF Course)</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Formal course at approved training centre</span>
@@ -688,7 +688,7 @@ export default function MewpModule1Section4() {
                     <CheckCircle className="h-5 w-5 text-green-400" />
                     <p className="text-sm font-medium text-green-400">Familiarisation (On-site)</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Short activity on a specific make and model</span>
@@ -715,7 +715,7 @@ export default function MewpModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Familiarisation Must Cover:</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -774,7 +774,7 @@ export default function MewpModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Safety Warning</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Approximately{' '}
                   <strong className="text-white">
                     one third of rental company-reported accidents
@@ -813,10 +813,10 @@ export default function MewpModule1Section4() {
                     Conditions That May Affect Safe Operation
                   </p>
                 </div>
-                <p className="text-sm text-white/60 mb-3">
+                <p className="text-sm text-white mb-3">
                   Operators should be physically fit with no untreated problems with:
                 </p>
-                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Eyesight or hearing</span>
@@ -856,7 +856,7 @@ export default function MewpModule1Section4() {
                 <p className="text-sm font-medium text-elec-yellow mb-2">
                   Important: Assessment, Not Exclusion
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Having any of the conditions listed above does{' '}
                   <strong className="text-white">NOT automatically preclude</strong> someone from
                   operating a MEWP. The employer must carry out an individual assessment and
@@ -871,7 +871,7 @@ export default function MewpModule1Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   IPAF Health & Fitness Statement
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Operators must sign a health declaration before IPAF training</span>
@@ -910,7 +910,7 @@ export default function MewpModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Duty to Report</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Operators have a duty to report any changes in their health or fitness that may
                   affect their ability to operate a MEWP safely. This includes new medication,
                   changes in an existing condition, or temporary conditions (e.g. a broken limb,
@@ -943,7 +943,7 @@ export default function MewpModule1Section4() {
                     <Users className="h-5 w-5 text-blue-400" />
                     <p className="text-sm font-medium text-blue-400">Operator</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Hold a valid IPAF PAL card for the machine category</span>
@@ -974,7 +974,7 @@ export default function MewpModule1Section4() {
                     <ShieldCheck className="h-5 w-5 text-green-400" />
                     <p className="text-sm font-medium text-green-400">Employer / Site Manager</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Carry out risk assessment for all MEWP operations</span>
@@ -1003,7 +1003,7 @@ export default function MewpModule1Section4() {
                     <Users className="h-5 w-5 text-amber-400" />
                     <p className="text-sm font-medium text-amber-400">Banksman / Spotter</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Guide the operator during manoeuvring and positioning</span>
@@ -1028,7 +1028,7 @@ export default function MewpModule1Section4() {
                     <BookOpen className="h-5 w-5 text-purple-400" />
                     <p className="text-sm font-medium text-purple-400">Competent Person</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Carry out thorough examination under LOLER (every 6 months)</span>
@@ -1049,7 +1049,7 @@ export default function MewpModule1Section4() {
                     <CreditCard className="h-5 w-5 text-teal-400" />
                     <p className="text-sm font-medium text-teal-400">Hire Company</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Maintain equipment in safe working order</span>
@@ -1082,7 +1082,7 @@ export default function MewpModule1Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1096,7 +1096,7 @@ export default function MewpModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-1">

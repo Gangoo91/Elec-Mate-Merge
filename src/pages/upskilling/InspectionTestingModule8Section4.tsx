@@ -229,7 +229,7 @@ const InspectionTestingModule8Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../module-8">
@@ -251,7 +251,7 @@ const InspectionTestingModule8Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Electrical Installation Certificates
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Complete and issue EICs correctly for new installations and additions
           </p>
         </header>
@@ -357,28 +357,28 @@ const InspectionTestingModule8Section4 = () => {
             <div className="grid sm:grid-cols-3 gap-4 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">1. Designer</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Confirms the design complies with BS 7671, supply characteristics are checked and
                   recorded.
                 </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">2. Constructor</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Confirms the installation has been constructed in accordance with BS 7671, using
                   suitable materials.
                 </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">3. Inspector/Tester</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Confirms inspection and testing has been carried out, results are attached, and
                   installation is safe.
                 </p>
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Note:</strong> One competent person can sign all three parts if they
               personally undertook all three roles.
             </p>
@@ -466,23 +466,23 @@ const InspectionTestingModule8Section4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Typical Intervals</p>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <div className="p-2 rounded bg-transparent">
-                  <p className="text-white/90">Domestic</p>
+                  <p className="text-white">Domestic</p>
                   <p className="text-elec-yellow">5 years / change of occupancy</p>
                 </div>
                 <div className="p-2 rounded bg-transparent">
-                  <p className="text-white/90">Commercial</p>
+                  <p className="text-white">Commercial</p>
                   <p className="text-elec-yellow">5 years</p>
                 </div>
                 <div className="p-2 rounded bg-transparent">
-                  <p className="text-white/90">Industrial</p>
+                  <p className="text-white">Industrial</p>
                   <p className="text-elec-yellow">3 years</p>
                 </div>
                 <div className="p-2 rounded bg-transparent">
-                  <p className="text-white/90">Swimming pools</p>
+                  <p className="text-white">Swimming pools</p>
                   <p className="text-elec-yellow">1 year</p>
                 </div>
                 <div className="p-2 rounded bg-transparent">
-                  <p className="text-white/90">Construction sites</p>
+                  <p className="text-white">Construction sites</p>
                   <p className="text-elec-yellow">3 months</p>
                 </div>
               </div>
@@ -578,7 +578,7 @@ const InspectionTestingModule8Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -624,7 +624,7 @@ const InspectionTestingModule8Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-8/section-3">

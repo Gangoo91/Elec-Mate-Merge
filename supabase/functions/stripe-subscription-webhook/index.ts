@@ -377,7 +377,7 @@ serve(async (req) => {
         }
 
         // Determine if subscription is active
-        const isActive = ['active', 'trialing'].includes(subscription.status);
+        const isActive = ['active', 'trialing', 'past_due'].includes(subscription.status);
 
         // Get the price/tier
         const priceId = subscription.items.data[0]?.price?.id;

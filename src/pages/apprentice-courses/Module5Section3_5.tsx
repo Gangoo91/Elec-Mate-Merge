@@ -188,7 +188,7 @@ const Module5Section3_5 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -205,13 +205,13 @@ const Module5Section3_5 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.3.5</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.3.5</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Dealing with Variations and Unforeseen Issues
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed">
+            <p className="text-white text-base sm:text-lg leading-relaxed">
               Learn to manage project changes and unexpected challenges effectively while
               maintaining safety, quality, and compliance standards.
             </p>
@@ -224,7 +224,7 @@ const Module5Section3_5 = () => {
               In 30 Seconds
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <ul className="space-y-2 text-white/90">
+              <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-elec-yellow mt-1 flex-shrink-0" />
                   <span>Record all changes formally with written approval.</span>
@@ -247,7 +247,7 @@ const Module5Section3_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 No matter how well a project is planned, variations and unforeseen issues will
                 always arise. These may include design changes, unexpected site conditions, or
@@ -260,7 +260,7 @@ const Module5Section3_5 = () => {
                   <Settings className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-elec-yellow mb-2">Why This Matters</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Studies show that 75% of construction projects experience significant
                       variations, with poorly managed changes causing 40% of project delays and 35%
                       of cost overruns.
@@ -268,7 +268,7 @@ const Module5Section3_5 = () => {
                   </div>
                 </div>
               </div>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 <strong className="text-white">Industry Standard:</strong> JCT contracts and NEC
                 frameworks require systematic variation management to maintain legal compliance and
                 project governance.
@@ -282,7 +282,7 @@ const Module5Section3_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <div className="text-white/80 space-y-3 leading-relaxed">
+            <div className="text-white space-y-3 leading-relaxed">
               <p>By the end of this subsection, you will be able to:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Recognise common causes of variations and unforeseen issues on site.</li>
@@ -302,7 +302,7 @@ const Module5Section3_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               What Are Variations?
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Variations are fundamental changes that deviate from the original project scope and
                 require systematic management.
@@ -310,7 +310,7 @@ const Module5Section3_5 = () => {
 
               <div className="p-4 rounded-lg bg-card/50 border border-white/10">
                 <p className="font-medium text-white mb-3">Core Definition:</p>
-                <p className="text-sm text-white/80 mb-4">
+                <p className="text-sm text-white mb-4">
                   Any change to the agreed design, scope, or programme that differs from the
                   original contract or specification.
                 </p>
@@ -318,7 +318,7 @@ const Module5Section3_5 = () => {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <p className="font-medium text-white mb-2">Design Variations:</p>
-                    <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
+                    <ul className="text-sm text-white list-disc pl-5 space-y-1">
                       <li>Client requests additional sockets or switches</li>
                       <li>Moving lighting positions for aesthetic reasons</li>
                       <li>Upgrading cable sizes for increased loads</li>
@@ -328,7 +328,7 @@ const Module5Section3_5 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white mb-2">Scope Variations:</p>
-                    <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
+                    <ul className="text-sm text-white list-disc pl-5 space-y-1">
                       <li>Additional floors or areas to be serviced</li>
                       <li>Increased power requirements for equipment</li>
                       <li>Extra data and communication installations</li>
@@ -341,7 +341,7 @@ const Module5Section3_5 = () => {
 
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
                 <p className="font-medium text-green-400 mb-2">Financial Impact</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Well-managed variations can actually improve project profitability, while poorly
                   managed ones can result in losses of 10-20% of contract value.
                 </p>
@@ -355,7 +355,7 @@ const Module5Section3_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Variation Classification
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Understanding variation categories helps determine appropriate response and
                 management strategies:
@@ -364,7 +364,7 @@ const Module5Section3_5 = () => {
               <div className="grid sm:grid-cols-3 gap-3">
                 <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
                   <h3 className="font-medium text-green-400 mb-2">Minor Variations</h3>
-                  <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-5 space-y-1">
                     <li>Single socket additions</li>
                     <li>Switch position adjustments</li>
                     <li>Cable colour changes</li>
@@ -375,7 +375,7 @@ const Module5Section3_5 = () => {
 
                 <div className="p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/30">
                   <h3 className="font-medium text-yellow-400 mb-2">Moderate Variations</h3>
-                  <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-5 space-y-1">
                     <li>Room layout changes</li>
                     <li>Panel board relocations</li>
                     <li>Additional circuits</li>
@@ -386,7 +386,7 @@ const Module5Section3_5 = () => {
 
                 <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
                   <h3 className="font-medium text-red-400 mb-2">Major Variations</h3>
-                  <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-5 space-y-1">
                     <li>Complete system redesign</li>
                     <li>Additional building areas</li>
                     <li>Load increase requiring infrastructure changes</li>
@@ -412,7 +412,7 @@ const Module5Section3_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Unforeseen Issues
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Unforeseen issues are circumstances that could not have been reasonably anticipated
                 during planning:
@@ -424,7 +424,7 @@ const Module5Section3_5 = () => {
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
                       <p className="text-sm font-medium text-white mb-2">Structural Discoveries:</p>
-                      <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
+                      <ul className="text-sm text-white list-disc pl-5 space-y-1">
                         <li>Steel beams blocking planned cable routes</li>
                         <li>Concrete thickness preventing core drilling</li>
                         <li>Asbestos-containing materials in ceiling voids</li>
@@ -433,7 +433,7 @@ const Module5Section3_5 = () => {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white mb-2">Environmental Factors:</p>
-                      <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
+                      <ul className="text-sm text-white list-disc pl-5 space-y-1">
                         <li>Waterlogged ground conditions</li>
                         <li>Rock formations requiring specialist equipment</li>
                         <li>Contaminated soil requiring special handling</li>
@@ -450,7 +450,7 @@ const Module5Section3_5 = () => {
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
                       <p className="text-sm font-medium text-white mb-2">Material Challenges:</p>
-                      <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
+                      <ul className="text-sm text-white list-disc pl-5 space-y-1">
                         <li>Material shortages due to global supply issues</li>
                         <li>Late deliveries affecting critical path activities</li>
                         <li>Quality defects requiring replacement materials</li>
@@ -459,7 +459,7 @@ const Module5Section3_5 = () => {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white mb-2">Mitigation Strategies:</p>
-                      <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
+                      <ul className="text-sm text-white list-disc pl-5 space-y-1">
                         <li>Identify alternative suppliers and products</li>
                         <li>Maintain buffer stock for critical items</li>
                         <li>Develop substitute material specifications</li>
@@ -476,7 +476,7 @@ const Module5Section3_5 = () => {
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>
                       <p className="text-sm font-medium text-white mb-2">Weather-Related Delays:</p>
-                      <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
+                      <ul className="text-sm text-white list-disc pl-5 space-y-1">
                         <li>Extreme weather preventing external work</li>
                         <li>Flooding affecting site access</li>
                         <li>High winds restricting crane operations</li>
@@ -487,7 +487,7 @@ const Module5Section3_5 = () => {
                       <p className="text-sm font-medium text-white mb-2">
                         Third Party Dependencies:
                       </p>
-                      <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
+                      <ul className="text-sm text-white list-disc pl-5 space-y-1">
                         <li>Other trades not completing work on time</li>
                         <li>Utility company connection delays</li>
                         <li>Planning permission modifications</li>
@@ -514,7 +514,7 @@ const Module5Section3_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Risks of Poor Variation Management
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Understanding the full impact of poor variation management emphasises the importance
                 of systematic approaches:
@@ -523,7 +523,7 @@ const Module5Section3_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
                   <h3 className="font-medium text-red-400 mb-3">Safety and Compliance Risks</h3>
-                  <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-5 space-y-1">
                     <li>
                       <strong>Safety Compromises:</strong> Rushed changes bypassing risk assessments
                     </li>
@@ -544,7 +544,7 @@ const Module5Section3_5 = () => {
 
                 <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
                   <h3 className="font-medium text-orange-400 mb-3">Commercial and Legal Risks</h3>
-                  <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-5 space-y-1">
                     <li>
                       <strong>Cost Disputes:</strong> Disagreements over variation pricing
                     </li>
@@ -566,7 +566,7 @@ const Module5Section3_5 = () => {
                 <div className="grid sm:grid-cols-3 gap-4">
                   <div>
                     <p className="font-medium text-white mb-2">Time Impact:</p>
-                    <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
+                    <ul className="text-sm text-white list-disc pl-5 space-y-1">
                       <li>Project delays up to 30%</li>
                       <li>Extended site overheads</li>
                       <li>Cascade effects on other projects</li>
@@ -574,7 +574,7 @@ const Module5Section3_5 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white mb-2">Cost Impact:</p>
-                    <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
+                    <ul className="text-sm text-white list-disc pl-5 space-y-1">
                       <li>Rework costs 5-20% of value</li>
                       <li>Acceleration costs</li>
                       <li>Disruption claims</li>
@@ -582,7 +582,7 @@ const Module5Section3_5 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white mb-2">Quality Impact:</p>
-                    <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
+                    <ul className="text-sm text-white list-disc pl-5 space-y-1">
                       <li>Defect rates increase</li>
                       <li>System performance issues</li>
                       <li>Maintenance problems</li>
@@ -599,7 +599,7 @@ const Module5Section3_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Managing Variations
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Effective variation management requires structured processes and clear
                 accountability:
@@ -613,7 +613,7 @@ const Module5Section3_5 = () => {
                 <div className="space-y-4">
                   <div>
                     <p className="font-medium text-white mb-2">Documentation Requirements:</p>
-                    <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
+                    <ul className="text-sm text-white list-disc pl-5 space-y-1">
                       <li>
                         Record all changes formally using variation orders or site instructions
                       </li>
@@ -627,7 +627,7 @@ const Module5Section3_5 = () => {
 
                   <div>
                     <p className="font-medium text-white mb-2">Approval Hierarchy:</p>
-                    <ol className="text-sm text-white/70 list-decimal pl-5 space-y-1">
+                    <ol className="text-sm text-white list-decimal pl-5 space-y-1">
                       <li>
                         <strong>Site Level:</strong> Supervisor approval for minor variations (under
                         £500)
@@ -649,7 +649,7 @@ const Module5Section3_5 = () => {
 
                   <div className="p-3 rounded-lg bg-orange-500/10 border-l-2 border-orange-500/50">
                     <p className="font-medium text-orange-400 mb-1">Digital Management Systems</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Modern project management software can automate variation tracking, approval
                       workflows, and document distribution, reducing errors and improving
                       efficiency.
@@ -674,7 +674,7 @@ const Module5Section3_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">08</span>
               Communication and Stakeholder Management
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>Effective communication is critical for successful variation management:</p>
 
               <div className="p-4 rounded-lg bg-cyan-500/10 border border-cyan-500/30">
@@ -682,7 +682,7 @@ const Module5Section3_5 = () => {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <p className="font-medium text-cyan-400 mb-2">Internal Communication:</p>
-                    <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
+                    <ul className="text-sm text-white list-disc pl-5 space-y-1">
                       <li>Inform all affected parties early and completely</li>
                       <li>Use standardised communication templates</li>
                       <li>Establish clear escalation procedures</li>
@@ -692,7 +692,7 @@ const Module5Section3_5 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-cyan-400 mb-2">External Communication:</p>
-                    <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
+                    <ul className="text-sm text-white list-disc pl-5 space-y-1">
                       <li>Keep the client updated on time and cost implications</li>
                       <li>Coordinate with other contractors and consultants</li>
                       <li>Maintain records of all client instructions</li>
@@ -707,7 +707,7 @@ const Module5Section3_5 = () => {
                 <h3 className="font-medium text-indigo-400 mb-3">
                   Dispute Prevention and Resolution
                 </h3>
-                <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
+                <ul className="text-sm text-white list-disc pl-5 space-y-1">
                   <li>
                     <strong>Clear Documentation:</strong> Document discussions in writing to avoid
                     disputes
@@ -739,11 +739,11 @@ const Module5Section3_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">09</span>
               Advanced Practical Guidance
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-card/50 border border-white/10">
                   <h3 className="font-medium text-white mb-3">Daily Management Practices</h3>
-                  <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-5 space-y-1">
                     <li>Always carry a variation log and update it daily</li>
                     <li>Never make design changes without written approval</li>
                     <li>
@@ -757,7 +757,7 @@ const Module5Section3_5 = () => {
 
                 <div className="p-4 rounded-lg bg-card/50 border border-white/10">
                   <h3 className="font-medium text-white mb-3">Quality Assurance Measures</h3>
-                  <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-5 space-y-1">
                     <li>Verify compliance with BS 7671 for all variations</li>
                     <li>Update test schedules to reflect design changes</li>
                     <li>Ensure certification covers all varied work</li>
@@ -770,7 +770,7 @@ const Module5Section3_5 = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <h3 className="font-medium text-elec-yellow mb-3">Technology and Digital Tools</h3>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div>
                     <p className="font-medium text-elec-yellow">Mobile Documentation:</p>
                     <p>
@@ -808,7 +808,7 @@ const Module5Section3_5 = () => {
                 <h3 className="font-medium text-red-400 mb-2">
                   Case Study 1: Unauthorised Structural Modification
                 </h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   On a commercial project, electricians discovered steel beams obstructing the
                   planned cable route. Instead of stopping and reporting, they improvised by
                   drilling through the beam, creating a serious safety risk. The work had to be
@@ -816,7 +816,7 @@ const Module5Section3_5 = () => {
                 </p>
                 <div className="p-3 rounded bg-red-500/20">
                   <p className="font-medium text-red-400 mb-1">Lessons Learned:</p>
-                  <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-5 space-y-1">
                     <li>Never make structural modifications without engineering approval</li>
                     <li>Stop work immediately when unexpected conditions are encountered</li>
                     <li>Cost of proper procedures far less than cost of remedial work</li>
@@ -828,7 +828,7 @@ const Module5Section3_5 = () => {
                 <h3 className="font-medium text-green-400 mb-2">
                   Case Study 2: Proactive Material Shortage Management
                 </h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   During a hospital project, the electrical contractor identified potential delays
                   in specialist fire-rated cable delivery. They immediately raised a variation to
                   use alternative approved products, maintaining the project schedule while ensuring
@@ -836,7 +836,7 @@ const Module5Section3_5 = () => {
                 </p>
                 <div className="p-3 rounded bg-green-500/20">
                   <p className="font-medium text-green-400 mb-1">Success Factors:</p>
-                  <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-5 space-y-1">
                     <li>Early identification of potential supply chain issues</li>
                     <li>Proactive communication with design team and client</li>
                     <li>Formal variation process prevented compliance issues</li>
@@ -848,7 +848,7 @@ const Module5Section3_5 = () => {
                 <h3 className="font-medium text-blue-400 mb-2">
                   Case Study 3: Client-Driven Variation Management
                 </h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   A retail fit-out project experienced multiple client-requested changes to lighting
                   layouts. The electrical contractor implemented a systematic variation management
                   process, with regular client meetings and clear cost implications for each change.
@@ -856,7 +856,7 @@ const Module5Section3_5 = () => {
                 </p>
                 <div className="p-3 rounded bg-blue-500/20">
                   <p className="font-medium text-blue-400 mb-1">Key Strategies:</p>
-                  <ul className="text-sm text-white/70 list-disc pl-5 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-5 space-y-1">
                     <li>Structured variation approval process with clear pricing</li>
                     <li>Regular client communication to manage expectations</li>
                     <li>Detailed documentation of all changes and approvals</li>
@@ -879,7 +879,7 @@ const Module5Section3_5 = () => {
                   className="p-4 rounded-lg bg-card/50 border-l-2 border-elec-yellow/50"
                 >
                   <p className="font-medium text-white mb-2">Q: {faq.question}</p>
-                  <p className="text-sm text-white/80">A: {faq.answer}</p>
+                  <p className="text-sm text-white">A: {faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -924,7 +924,7 @@ const Module5Section3_5 = () => {
               Summary
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-white/90">
+              <p className="text-white">
                 In this subsection, you learned how to deal with variations and unforeseen issues by
                 recording them properly, getting approval, and maintaining clear communication. You
                 saw how ignoring or mishandling changes can lead to disputes, delays, and safety
@@ -947,7 +947,7 @@ const Module5Section3_5 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../3-4" className="flex items-center justify-center gap-2">

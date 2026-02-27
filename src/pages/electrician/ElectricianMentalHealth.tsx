@@ -236,7 +236,7 @@ const ElectricianMentalHealth = () => {
                 <h3 className="font-semibold text-red-400 text-sm sm:text-base">
                   Need immediate help?
                 </h3>
-                <p className="text-xs sm:text-sm text-white/80">
+                <p className="text-xs sm:text-sm text-white">
                   Call{' '}
                   <a href="tel:116123" className="font-bold text-red-400 hover:underline">
                     116 123
@@ -276,7 +276,7 @@ const ElectricianMentalHealth = () => {
               >
                 <action.icon className={`h-8 w-8 ${action.iconColor} mb-2`} />
                 <h3 className="font-semibold text-sm text-white">{action.title}</h3>
-                <p className="text-xs text-white/80 mt-0.5">{action.description}</p>
+                <p className="text-xs text-white mt-0.5">{action.description}</p>
               </button>
             ))}
           </div>
@@ -305,9 +305,9 @@ const ElectricianMentalHealth = () => {
                   </div>
                   <div className="flex-1 text-left min-w-0">
                     <h3 className="font-semibold text-white text-base">{section.title}</h3>
-                    <p className="text-sm text-white/80 truncate">{section.description}</p>
+                    <p className="text-sm text-white truncate">{section.description}</p>
                   </div>
-                  <ChevronRight className="h-5 w-5 text-white/70 flex-shrink-0" />
+                  <ChevronRight className="h-5 w-5 text-white flex-shrink-0" />
                 </div>
               </button>
             ))}
@@ -323,7 +323,7 @@ const ElectricianMentalHealth = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-green-400 text-sm mb-1">Daily Tip</h3>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Taking just 5 minutes for yourself each day can significantly reduce stress. Your
                   mental health is just as important as physical safety on site.
                 </p>
@@ -343,7 +343,7 @@ const ElectricianMentalHealth = () => {
                 <h3 className="font-semibold text-amber-400 text-sm mb-1">
                   For Electrical Professionals
                 </h3>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Construction and electrical workers face unique pressures. The{' '}
                   <strong>Electrical Industries Charity</strong> and <strong>Mates in Mind</strong>{' '}
                   offer industry-specific support.

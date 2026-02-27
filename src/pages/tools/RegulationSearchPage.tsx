@@ -24,13 +24,13 @@ const RegulationSearchPage = () => {
               <h1 className="text-xl sm:text-2xl md:text-3xl font-bold tracking-tight text-white">
                 Regulation Search
               </h1>
-              <p className="text-xs sm:text-sm text-white/60">AI-powered BS 7671 search</p>
+              <p className="text-xs sm:text-sm text-white">AI-powered BS 7671 search</p>
             </div>
           </div>
           <Button
             variant="outline"
             onClick={() => navigate(-1)}
-            className="h-10 sm:h-11 px-3 sm:px-4 border-white/20 text-white/70 hover:text-white hover:bg-white/10 gap-2 touch-manipulation active:scale-[0.98] min-h-[44px]"
+            className="h-10 sm:h-11 px-3 sm:px-4 border-white/20 text-white hover:text-white hover:bg-white/10 gap-2 touch-manipulation active:scale-[0.98] min-h-[44px]"
           >
             <ArrowLeft className="h-4 w-4" />
             <span className="hidden sm:inline">Back</span>

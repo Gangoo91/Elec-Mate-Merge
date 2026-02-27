@@ -216,7 +216,7 @@ const HNCModule6Section1_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section1">
@@ -238,7 +238,7 @@ const HNCModule6Section1_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Building Services Compliance
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Minimum efficiencies, controls requirements, metering, lighting and HVAC system
             specifications under Part L
           </p>
@@ -542,23 +542,23 @@ const HNCModule6Section1_5 = () => {
               </p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Extract only:</span>{' '}
+                  <span className="text-white">Extract only:</span>{' '}
                   <span className="text-white">0.5 W/(l/s)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Supply only:</span>{' '}
+                  <span className="text-white">Supply only:</span>{' '}
                   <span className="text-white">1.1 W/(l/s)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Supply and extract:</span>{' '}
+                  <span className="text-white">Supply and extract:</span>{' '}
                   <span className="text-white">1.8 W/(l/s)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">With heating/cooling:</span>{' '}
+                  <span className="text-white">With heating/cooling:</span>{' '}
                   <span className="text-white">2.0 W/(l/s)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">All air units:</span>{' '}
+                  <span className="text-white">All air units:</span>{' '}
                   <span className="text-white">2.2 W/(l/s)</span>
                 </p>
               </div>
@@ -685,7 +685,7 @@ const HNCModule6Section1_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Systems &gt;50 kW Output</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Individual sub-metering required</li>
                     <li>Heating plant fuel consumption</li>
                     <li>Cooling system electricity</li>
@@ -696,7 +696,7 @@ const HNCModule6Section1_5 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Systems &gt;100 kW Output</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>All above requirements</li>
                     <li>Automatic meter reading (AMR)</li>
                     <li>Half-hourly data collection</li>
@@ -780,7 +780,7 @@ const HNCModule6Section1_5 = () => {
                 <p>
                   <strong>Part L requires a building log book containing:</strong>
                 </p>
-                <ul className="text-sm text-white/80 space-y-1 ml-5 list-disc list-outside">
+                <ul className="text-sm text-white space-y-1 ml-5 list-disc list-outside">
                   <li>As-built drawings and equipment schedules</li>
                   <li>Commissioning records and test certificates</li>
                   <li>Operating and maintenance instructions</li>
@@ -792,7 +792,7 @@ const HNCModule6Section1_5 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Timing requirement:</strong> Commissioning must be complete before the
               building is occupied or any fixed building services are used. The commissioning
               certificate must be provided to building control.
@@ -818,19 +818,19 @@ const HNCModule6Section1_5 = () => {
                 <strong>Scenario:</strong> Verify if a proposed air source heat pump meets Part L
                 requirements.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Proposed ASHP specification:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Proposed ASHP specification:</p>
                 <p className="ml-4">Heating capacity: 45 kW at A7/W35</p>
                 <p className="ml-4">SCOP (at 55°C flow): 2.9</p>
                 <p className="ml-4">Design flow temperature: 55°C</p>
-                <p className="mt-2 text-white/60">Part L requirement check:</p>
+                <p className="mt-2 text-white">Part L requirement check:</p>
                 <p className="ml-4">Minimum ASHP SCOP: 2.8</p>
                 <p className="ml-4">Proposed SCOP: 2.9</p>
                 <p className="mt-2 text-green-400">
                   Result: COMPLIANT - SCOP exceeds minimum requirement
                 </p>
-                <p className="mt-2 text-white/60">Note: If design flow temp reduced to 45°C,</p>
-                <p className="text-white/60">SCOP would improve to approximately 3.4</p>
+                <p className="mt-2 text-white">Note: If design flow temp reduced to 45°C,</p>
+                <p className="text-white">SCOP would improve to approximately 3.4</p>
               </div>
             </div>
 
@@ -842,8 +842,8 @@ const HNCModule6Section1_5 = () => {
                 <strong>Scenario:</strong> Calculate whether a lighting scheme meets Part L
                 requirements.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Office lighting scheme:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Office lighting scheme:</p>
                 <p className="ml-4">Luminaire type: LED panel</p>
                 <p className="ml-4">Light output: 4,000 lumens</p>
                 <p className="ml-4">Power consumption: 36 W</p>
@@ -864,8 +864,8 @@ const HNCModule6Section1_5 = () => {
                 <strong>Scenario:</strong> Verify SFP for a supply and extract system with measured
                 data.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Commissioning measurements:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Commissioning measurements:</p>
                 <p className="ml-4">Supply fan power: 2.2 kW</p>
                 <p className="ml-4">Supply air flow: 2,000 l/s</p>
                 <p className="ml-4">Extract fan power: 1.8 kW</p>
@@ -876,8 +876,8 @@ const HNCModule6Section1_5 = () => {
                 <p className="ml-4">SFP = 4,000 W ÷ 2,000 l/s = 2.0 W/(l/s)</p>
                 <p className="mt-2">Part L limit for S&E: 1.8 W/(l/s)</p>
                 <p className="text-red-400">Result: NON-COMPLIANT - exceeds limit by 11%</p>
-                <p className="mt-2 text-white/60">Action: Review ductwork pressure drop,</p>
-                <p className="text-white/60">consider larger ductwork or more efficient fans</p>
+                <p className="mt-2 text-white">Action: Review ductwork pressure drop,</p>
+                <p className="text-white">consider larger ductwork or more efficient fans</p>
               </div>
             </div>
           </div>
@@ -972,7 +972,7 @@ const HNCModule6Section1_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1018,7 +1018,7 @@ const HNCModule6Section1_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section1">

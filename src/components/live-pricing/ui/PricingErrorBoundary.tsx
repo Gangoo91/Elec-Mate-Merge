@@ -43,7 +43,7 @@ class PricingErrorBoundary extends Component<Props, State> {
             <AlertTriangle className="h-10 w-10 text-rose-400" />
           </div>
           <h3 className="text-xl font-bold text-white mb-2">Something went wrong</h3>
-          <p className="text-white/60 text-sm mb-6 max-w-sm">
+          <p className="text-white text-sm mb-6 max-w-sm">
             We couldn't load this section. This might be a temporary issue.
           </p>
           <Button

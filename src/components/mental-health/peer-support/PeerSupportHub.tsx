@@ -295,7 +295,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
             <AlertTriangle className="w-8 h-8 text-amber-400" />
           </div>
           <h3 className="font-semibold text-white mb-2">Sign in Required</h3>
-          <p className="text-sm text-white/60 max-w-xs mx-auto">
+          <p className="text-sm text-white max-w-xs mx-auto">
             Please sign in to access Mental Health Mates and connect with peer supporters.
           </p>
         </div>
@@ -395,7 +395,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
         {/* Bio Section */}
         {selectedSupporter.bio && (
           <div className="mb-6 p-4 rounded-2xl bg-white/[0.03] border border-white/10">
-            <h3 className="text-sm font-medium text-white/60 mb-2">About</h3>
+            <h3 className="text-sm font-medium text-white mb-2">About</h3>
             <p className="text-white leading-relaxed">{selectedSupporter.bio}</p>
           </div>
         )}
@@ -403,7 +403,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
         {/* Topics Section */}
         {topics.length > 0 && (
           <div className="mb-6">
-            <h3 className="text-sm font-medium text-white/60 mb-3">Comfortable discussing</h3>
+            <h3 className="text-sm font-medium text-white mb-3">Comfortable discussing</h3>
             <div className="flex flex-wrap gap-2">
               {topics.map((topic) => (
                 <span
@@ -422,12 +422,12 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
           <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 text-center">
             <MessageCircle className="h-6 w-6 text-purple-400 mx-auto mb-2" />
             <p className="text-2xl font-bold text-white">{selectedSupporter.total_conversations}</p>
-            <p className="text-xs text-white/60">Chats completed</p>
+            <p className="text-xs text-white">Chats completed</p>
           </div>
           <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 text-center">
             <Shield className="h-6 w-6 text-green-400 mx-auto mb-2" />
             <p className="text-2xl font-bold text-white">Verified</p>
-            <p className="text-xs text-white/60">Peer supporter</p>
+            <p className="text-xs text-white">Peer supporter</p>
           </div>
         </div>
 
@@ -435,7 +435,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
         <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 mb-6">
           <div className="flex items-start gap-3">
             <AlertTriangle className="h-5 w-5 text-amber-400 shrink-0 mt-0.5" />
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               This is peer support, not professional therapy. All conversations are confidential.
             </p>
           </div>
@@ -486,7 +486,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
               lastSeen={partnerPresence?.last_seen}
               size="sm"
             />
-            <span className="text-xs text-white/60">
+            <span className="text-xs text-white">
               {partnerPresenceStatus === 'online'
                 ? 'Online now'
                 : partnerPresenceStatus === 'away'
@@ -498,12 +498,12 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
           {/* Messages Area */}
           <div className="flex-1 overflow-y-auto momentum-scroll-y px-4 py-3 space-y-3">
             {chatMessages.length === 0 ? (
-              <div className="text-center text-white/60 text-sm py-12">
+              <div className="text-center text-white text-sm py-12">
                 <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-pink-500/10 flex items-center justify-center">
                   <Heart className="h-8 w-8 text-pink-400/50" />
                 </div>
-                <p className="font-medium text-white/80 mb-1">Start a conversation</p>
-                <p className="text-sm text-white/50">Say hello with a warm, supportive message</p>
+                <p className="font-medium text-white mb-1">Start a conversation</p>
+                <p className="text-sm text-white">Say hello with a warm, supportive message</p>
               </div>
             ) : (
               chatMessages.map((msg) => {
@@ -527,7 +527,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                         )}
                       >
                         <span
-                          className={cn('text-[10px]', isOwn ? 'text-white/70' : 'text-white/50')}
+                          className={cn('text-[10px]', isOwn ? 'text-white' : 'text-white')}
                         >
                           {new Date(msg.created_at).toLocaleTimeString([], {
                             hour: '2-digit',
@@ -542,7 +542,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                               (msg as any).read_at,
                               isOptimistic
                             )}
-                            className={isOptimistic ? 'text-white/50' : 'text-white/70'}
+                            className={isOptimistic ? 'text-white' : 'text-white'}
                           />
                         )}
                       </div>
@@ -557,7 +557,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                 <div className="bg-white/10 rounded-2xl rounded-bl-md px-4 py-3">
                   <TypingIndicatorWithName
                     userName={getChatPartnerName()}
-                    className="text-white/60"
+                    className="text-white"
                   />
                 </div>
               </div>
@@ -585,7 +585,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                 }}
                 onBlur={() => setTyping(false)}
                 placeholder="Type a supportive message..."
-                className="flex-1 h-12 bg-white/5 border-white/20 text-white placeholder:text-white/50 touch-manipulation"
+                className="flex-1 h-12 bg-white/5 border-white/20 text-white placeholder:text-white touch-manipulation"
                 disabled={sendMessage.isPending}
               />
               <Button
@@ -658,7 +658,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                   <User
                     className={cn(
                       'h-6 w-6',
-                      myProfile.is_available ? 'text-white' : 'text-white/60'
+                      myProfile.is_available ? 'text-white' : 'text-white'
                     )}
                   />
                 )}
@@ -668,7 +668,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                 <p
                   className={cn(
                     'text-sm',
-                    myProfile.is_available ? 'text-green-400' : 'text-white/50'
+                    myProfile.is_available ? 'text-green-400' : 'text-white'
                   )}
                 >
                   {myProfile.is_available ? 'Available to help' : 'Currently offline'}
@@ -676,7 +676,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
               </div>
             </div>
             {isToggling ? (
-              <Loader2 className="w-5 h-5 animate-spin text-white/50" />
+              <Loader2 className="w-5 h-5 animate-spin text-white" />
             ) : (
               <Switch
                 checked={myProfile.is_available}
@@ -692,7 +692,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
               <MessageCircle className="h-5 w-5 text-purple-400" />
               <div>
                 <p className="text-lg font-bold text-white">{myProfile.total_conversations}</p>
-                <p className="text-xs text-white/60">Total chats</p>
+                <p className="text-xs text-white">Total chats</p>
               </div>
             </div>
             <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5">
@@ -703,7 +703,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                     ? formatDistanceToNow(new Date(myProfile.last_active_at), { addSuffix: false })
                     : 'Never'}
                 </p>
-                <p className="text-xs text-white/60">Last active</p>
+                <p className="text-xs text-white">Last active</p>
               </div>
             </div>
           </div>
@@ -718,7 +718,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
             'flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-medium transition-all touch-manipulation',
             activeTab === 'browse'
               ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
-              : 'text-white/60'
+              : 'text-white'
           )}
         >
           <Users className="h-4 w-4" />
@@ -730,7 +730,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
             'flex-1 flex items-center justify-center gap-2 py-3 rounded-lg text-sm font-medium transition-all touch-manipulation',
             activeTab === 'chats'
               ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg'
-              : 'text-white/60'
+              : 'text-white'
           )}
         >
           <MessageCircle className="h-4 w-4" />
@@ -776,7 +776,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                 <AlertTriangle className="w-8 h-8 text-red-400" />
               </div>
               <h3 className="font-semibold text-white mb-2">Couldn't load chats</h3>
-              <p className="text-sm text-white/60 max-w-xs mx-auto mb-4">
+              <p className="text-sm text-white max-w-xs mx-auto mb-4">
                 There was an error loading your conversations. Please try again.
               </p>
               <Button
@@ -793,7 +793,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                 <MessageCircle className="w-8 h-8 text-purple-400/50" />
               </div>
               <h3 className="font-semibold text-white mb-2">No conversations yet</h3>
-              <p className="text-sm text-white/60 max-w-xs mx-auto mb-4">
+              <p className="text-sm text-white max-w-xs mx-auto mb-4">
                 Connect with a Mental Health Mate to start chatting
               </p>
               <Button
@@ -834,11 +834,11 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
                           ? convo.seeker?.full_name?.split(' ')[0] || 'Mate'
                           : convo.supporter?.display_name || 'Supporter'}
                       </h4>
-                      <span className="text-xs text-white/40">
+                      <span className="text-xs text-white">
                         {formatConversationTime((convo as any).last_message_at)}
                       </span>
                     </div>
-                    <p className="text-sm text-white/60 truncate mt-0.5">
+                    <p className="text-sm text-white truncate mt-0.5">
                       {(convo as any).last_message ||
                         (convo.status === 'active' ? 'Start chatting...' : 'Conversation ended')}
                     </p>
@@ -865,7 +865,7 @@ const PeerSupportHub: React.FC<PeerSupportHubProps> = ({ onClose }) => {
           </div>
           <div>
             <p className="font-medium text-amber-300 mb-1">Important</p>
-            <p className="text-sm text-white/80 leading-relaxed">
+            <p className="text-sm text-white leading-relaxed">
               Mental Health Mates are peer supporters, not professional counsellors. If you're in
               crisis, call{' '}
               <a href="tel:116123" className="text-amber-300 font-semibold">

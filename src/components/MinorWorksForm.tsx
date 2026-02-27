@@ -944,7 +944,7 @@ const MinorWorksForm = ({
                   </div>
                   <div>
                     <h3 className="text-base font-semibold text-white">Generate Certificate</h3>
-                    <p className="text-xs text-white/50">Create your official Minor Works PDF</p>
+                    <p className="text-xs text-white">Create your official Minor Works PDF</p>
                   </div>
                 </div>
 

@@ -299,7 +299,7 @@ const Level3Module1Section2_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section2">
@@ -398,7 +398,7 @@ const Level3Module1Section2_4 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-elec-yellow/80 mb-2">Formal Risk Assessment</p>
-                <ul className="text-white/90 space-y-0.5 text-xs">
+                <ul className="text-white space-y-0.5 text-xs">
                   <li>- Done before work starts</li>
                   <li>- Written and documented</li>
                   <li>- Based on foreseeable hazards</li>
@@ -407,7 +407,7 @@ const Level3Module1Section2_4 = () => {
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-elec-yellow/80 mb-2">Dynamic Risk Assessment</p>
-                <ul className="text-white/90 space-y-0.5 text-xs">
+                <ul className="text-white space-y-0.5 text-xs">
                   <li>- Done continuously during work</li>
                   <li>- Mental process, usually unwritten</li>
                   <li>- Handles unexpected situations</li>
@@ -445,22 +445,22 @@ const Level3Module1Section2_4 = () => {
               <div className="p-3 rounded bg-white/5 text-center">
                 <p className="text-2xl font-bold text-elec-yellow mb-1">S</p>
                 <p className="font-medium text-white text-sm">Stop</p>
-                <p className="text-white/70 text-xs mt-1">Pause before acting</p>
+                <p className="text-white text-xs mt-1">Pause before acting</p>
               </div>
               <div className="p-3 rounded bg-white/5 text-center">
                 <p className="text-2xl font-bold text-elec-yellow mb-1">L</p>
                 <p className="font-medium text-white text-sm">Look</p>
-                <p className="text-white/70 text-xs mt-1">Identify the hazards</p>
+                <p className="text-white text-xs mt-1">Identify the hazards</p>
               </div>
               <div className="p-3 rounded bg-white/5 text-center">
                 <p className="text-2xl font-bold text-elec-yellow mb-1">A</p>
                 <p className="font-medium text-white text-sm">Assess</p>
-                <p className="text-white/70 text-xs mt-1">Evaluate the risks</p>
+                <p className="text-white text-xs mt-1">Evaluate the risks</p>
               </div>
               <div className="p-3 rounded bg-white/5 text-center">
                 <p className="text-2xl font-bold text-elec-yellow mb-1">M</p>
                 <p className="font-medium text-white text-sm">Manage</p>
-                <p className="text-white/70 text-xs mt-1">Control or stop</p>
+                <p className="text-white text-xs mt-1">Control or stop</p>
               </div>
             </div>
 
@@ -486,7 +486,7 @@ const Level3Module1Section2_4 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> You arrive to install a new socket. STOP before starting.
               LOOK - you notice the floor is wet from a leak. ASSESS - electrical work with a wet
               floor creates serious shock risk. MANAGE - don't proceed until the leak is fixed and
@@ -556,7 +556,7 @@ const Level3Module1Section2_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Electrical Trade Example - Unexpected Discovery
               </p>
-              <p className="text-xs text-white/90">
+              <p className="text-xs text-white">
                 You're chasing a wall to run a new cable. You break through and see what looks like
                 old insulation material that could be asbestos. STOP immediately. Don't disturb it
                 further. This is a hazard not covered by your original assessment. You need an
@@ -614,7 +614,7 @@ const Level3Module1Section2_4 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-green-400/80 mb-2">When You Should Stop</p>
-                <ul className="text-white/90 space-y-0.5 text-xs">
+                <ul className="text-white space-y-0.5 text-xs">
                   <li>- Conditions are unsafe and can't be controlled</li>
                   <li>- You identify a hazard not covered by controls</li>
                   <li>- Equipment or PPE is inadequate or damaged</li>
@@ -624,7 +624,7 @@ const Level3Module1Section2_4 = () => {
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-elec-yellow/80 mb-2">How to Exercise Stop-Work</p>
-                <ul className="text-white/90 space-y-0.5 text-xs">
+                <ul className="text-white space-y-0.5 text-xs">
                   <li>- Stop the work safely</li>
                   <li>- Make the area safe (isolate, barriers if needed)</li>
                   <li>- Explain your concerns clearly and specifically</li>
@@ -718,7 +718,7 @@ const Level3Module1Section2_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -772,7 +772,7 @@ const Level3Module1Section2_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section2-3">

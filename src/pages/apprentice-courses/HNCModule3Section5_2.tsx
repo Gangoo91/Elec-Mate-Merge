@@ -207,7 +207,7 @@ const HNCModule3Section5_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section5">
@@ -229,7 +229,7 @@ const HNCModule3Section5_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Transformer Theory, Losses and Efficiency
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding voltage transformation, losses and efficiency calculations for building
             services distribution systems
           </p>
@@ -319,7 +319,7 @@ const HNCModule3Section5_2 = () => {
                 <p className="font-mono text-xl mb-2">
                   V<sub>1</sub> / V<sub>2</sub> = N<sub>1</sub> / N<sub>2</sub>
                 </p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Primary voltage : Secondary voltage = Primary turns : Secondary turns
                 </p>
               </div>
@@ -411,7 +411,7 @@ const HNCModule3Section5_2 = () => {
                 <p className="font-mono text-xl mb-2">
                   I<sub>1</sub> / I<sub>2</sub> = N<sub>2</sub> / N<sub>1</sub>
                 </p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Current ratio is the inverse of the turns ratio
                 </p>
               </div>
@@ -552,15 +552,15 @@ const HNCModule3Section5_2 = () => {
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-sm font-medium text-white/80 mb-1">Constant Losses</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-sm font-medium text-white mb-1">Constant Losses</p>
+                  <p className="text-xs text-white">
                     Core losses depend on applied voltage (which determines flux), not on load
                     current. A transformer on no-load still experiences full core losses.
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm font-medium text-white/80 mb-1">Measured by No-Load Test</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-sm font-medium text-white mb-1">Measured by No-Load Test</p>
+                  <p className="text-xs text-white">
                     Open-circuit test at rated voltage measures core losses directly, as copper
                     losses are negligible with no secondary current flowing.
                   </p>
@@ -634,7 +634,7 @@ const HNCModule3Section5_2 = () => {
                   P<sub>cu</sub> = I<sub>1</sub> squared R<sub>1</sub> + I<sub>2</sub> squared R
                   <sub>2</sub>
                 </p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Total copper loss = Primary I squared R loss + Secondary I squared R loss
                 </p>
               </div>
@@ -704,7 +704,7 @@ const HNCModule3Section5_2 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Practical note:</strong> Full-load copper losses are typically 1-2% of
               transformer rating. For a 1000kVA transformer, expect 10-20kW copper loss at full
               load.
@@ -750,7 +750,7 @@ const HNCModule3Section5_2 = () => {
                 Since copper losses vary with load squared whilst core losses remain constant,
                 efficiency varies with load:
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>At fraction 'x' of full load:</p>
                 <p className="mt-2">
                   P<sub>out</sub> = x x S x cos phi (where S = rated kVA)
@@ -787,7 +787,7 @@ const HNCModule3Section5_2 = () => {
                 For transformers that operate at varying loads throughout the day, energy efficiency
                 is more relevant:
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   eta<sub>all-day</sub> = Energy output / Energy input x 100%
                 </p>
@@ -825,7 +825,7 @@ const HNCModule3Section5_2 = () => {
                 <p className="font-mono text-xl mb-2">
                   VR = (V<sub>no-load</sub> - V<sub>full-load</sub>) / V<sub>full-load</sub> x 100%
                 </p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Expressed as a percentage of full-load voltage
                 </p>
               </div>
@@ -967,22 +967,22 @@ const HNCModule3Section5_2 = () => {
                 <p className="font-mono text-lg">
                   Z% = (V<sub>sc</sub> / V<sub>rated</sub>) x 100%
                 </p>
-                <p className="text-xs text-white/70 mt-1">
+                <p className="text-xs text-white mt-1">
                   Voltage required to circulate rated current with secondary shorted
                 </p>
               </div>
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
-                  <p className="font-medium text-white/80 mb-1">Low Z% (3-4%)</p>
-                  <ul className="text-xs text-white/70 space-y-0.5">
+                  <p className="font-medium text-white mb-1">Low Z% (3-4%)</p>
+                  <ul className="text-xs text-white space-y-0.5">
                     <li>+ Better voltage regulation</li>
                     <li>- Higher fault currents</li>
                     <li>Used for: Small distribution</li>
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium text-white/80 mb-1">High Z% (6-8%)</p>
-                  <ul className="text-xs text-white/70 space-y-0.5">
+                  <p className="font-medium text-white mb-1">High Z% (6-8%)</p>
+                  <ul className="text-xs text-white space-y-0.5">
                     <li>+ Lower fault currents</li>
                     <li>- Poorer voltage regulation</li>
                     <li>Used for: Large substations</li>
@@ -995,7 +995,7 @@ const HNCModule3Section5_2 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Fault Current Calculation
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Short-circuit current at secondary:</p>
                 <p className="mt-2">
                   I<sub>sc</sub> = (100 / Z%) x I<sub>rated</sub>
@@ -1219,14 +1219,14 @@ const HNCModule3Section5_2 = () => {
                 <strong>Question:</strong> A commercial building has a maximum demand of 650kW at
                 0.85 power factor. What minimum transformer kVA rating is required?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Apparent power S = P / cos phi</p>
                 <p>S = 650 / 0.85 = 764.7 kVA</p>
                 <p className="mt-2">Standard sizes: 500, 750, 1000, 1250 kVA</p>
                 <p className="mt-2">
                   Select: <strong>1000 kVA</strong>
                 </p>
-                <p className="text-white/60 mt-2">Provides 31% spare capacity for future growth</p>
+                <p className="text-white mt-2">Provides 31% spare capacity for future growth</p>
               </div>
             </div>
 
@@ -1239,7 +1239,7 @@ const HNCModule3Section5_2 = () => {
                 full-load copper losses of 5.5kW. Calculate efficiency at 75% load with 0.8 power
                 factor.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Output power = 0.75 x 500 x 0.8 = 300 kW</p>
                 <p className="mt-2">Copper losses at 75% load:</p>
                 <p>
@@ -1262,7 +1262,7 @@ const HNCModule3Section5_2 = () => {
                 <strong>Question:</strong> Calculate the prospective fault current at the secondary
                 terminals of an 800kVA, 11kV/400V transformer with 5.5% impedance.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Full-load secondary current:</p>
                 <p>
                   I<sub>FL</sub> = S / (root 3 x V) = 800000 / (1.732 x 400) = 1155A
@@ -1277,7 +1277,7 @@ const HNCModule3Section5_2 = () => {
                 <p>
                   I<sub>sc</sub> = <strong>21 kA</strong>
                 </p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Switchgear must be rated at least 21kA fault withstand
                 </p>
               </div>
@@ -1291,7 +1291,7 @@ const HNCModule3Section5_2 = () => {
                 <strong>Question:</strong> A transformer has core losses of 2kW and full-load copper
                 losses of 8kW. At what percentage of full load does maximum efficiency occur?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Maximum efficiency when: x squared x P<sub>cu(FL)</sub> = P<sub>core</sub>
                 </p>
@@ -1300,7 +1300,7 @@ const HNCModule3Section5_2 = () => {
                 <p>
                   x = root of 0.25 = 0.5 = <strong>50% load</strong>
                 </p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   This transformer is most efficient at half load
                 </p>
               </div>
@@ -1396,7 +1396,7 @@ const HNCModule3Section5_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1442,7 +1442,7 @@ const HNCModule3Section5_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section5-1">

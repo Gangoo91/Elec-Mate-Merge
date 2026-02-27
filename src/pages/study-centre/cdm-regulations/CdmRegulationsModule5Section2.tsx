@@ -230,7 +230,7 @@ export default function CdmRegulationsModule5Section2() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Site Inductions &amp; Competence
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             How CDM 2015 ensures that every person on a construction site has the skills, knowledge,
             training, and experience to carry out their work safely &mdash; from inductions and CSCS
             cards through to supervision, toolbox talks, and organisational competence assessment
@@ -555,7 +555,7 @@ export default function CdmRegulationsModule5Section2() {
                   <AlertTriangle className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-blue-300">Language Barriers</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Where the workforce includes workers whose first language is not English, the
                   principal contractor must take{' '}
                   <strong className="text-white">reasonable steps</strong> to ensure that the
@@ -704,7 +704,7 @@ export default function CdmRegulationsModule5Section2() {
                   <CheckCircle className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-blue-300">Key Point</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   A CSCS card is{' '}
                   <strong className="text-white">
                     evidence of competence, not proof of competence
@@ -973,7 +973,7 @@ export default function CdmRegulationsModule5Section2() {
                   <AlertTriangle className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-blue-300">Supervision Is Not Optional</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The HSE has prosecuted numerous organisations for failing to provide adequate
                   supervision on construction sites. In many fatal accident investigations,
                   inadequate supervision has been identified as a{' '}
@@ -1337,7 +1337,7 @@ export default function CdmRegulationsModule5Section2() {
                     Case Study: The Cost of Competence Failure
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   In a widely reported HSE prosecution, a principal contractor was fined over
                   &pound;500,000 after an untrained agency worker fell through a fragile roof panel
                   and suffered life-changing injuries. The investigation found that the worker had
@@ -1362,7 +1362,7 @@ export default function CdmRegulationsModule5Section2() {
               Competence Assurance Model
             </h2>
             <div className="space-y-4 text-white">
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 The four elements of competence under CDM 2015 &mdash; skills, knowledge, training,
                 and experience &mdash; form a pyramid. Each layer supports those above it, and all
                 four must be present for a worker to be truly competent.
@@ -1375,7 +1375,7 @@ export default function CdmRegulationsModule5Section2() {
                     <p className="text-blue-300 font-bold text-sm uppercase tracking-wide">
                       Experience
                     </p>
-                    <p className="text-white/70 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Practical application, time served, supervision history, exposure to
                       real-world scenarios
                     </p>
@@ -1391,7 +1391,7 @@ export default function CdmRegulationsModule5Section2() {
                     <p className="text-blue-300 font-bold text-sm uppercase tracking-wide">
                       Knowledge
                     </p>
-                    <p className="text-white/70 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Understanding of risks, legislation, procedures, safe systems of work
                     </p>
                   </div>
@@ -1399,7 +1399,7 @@ export default function CdmRegulationsModule5Section2() {
                     <p className="text-blue-300 font-bold text-sm uppercase tracking-wide">
                       Training
                     </p>
-                    <p className="text-white/70 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Formal courses, refreshers, CPD, toolbox talks, recorded evidence
                     </p>
                   </div>
@@ -1414,7 +1414,7 @@ export default function CdmRegulationsModule5Section2() {
                     <p className="text-blue-300 font-bold text-sm uppercase tracking-wide">
                       Skills
                     </p>
-                    <p className="text-white/70 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Technical ability, qualifications (NVQ/SVQ), practical craft competence, tool
                       proficiency
                     </p>
@@ -1422,7 +1422,7 @@ export default function CdmRegulationsModule5Section2() {
                 </div>
                 {/* Label */}
                 <div className="flex justify-center mt-4">
-                  <p className="text-xs text-white/50 italic text-center">
+                  <p className="text-xs text-white italic text-center">
                     All four elements must be present &mdash; a qualified worker without experience,
                     or an experienced worker without current training, is not fully competent under
                     CDM 2015
@@ -1523,7 +1523,7 @@ export default function CdmRegulationsModule5Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1539,7 +1539,7 @@ export default function CdmRegulationsModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-5-section-1">

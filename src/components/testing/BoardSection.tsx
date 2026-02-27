@@ -152,7 +152,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                 <span className="font-semibold text-white truncate">
                   {board.reference || board.name}
                 </span>
-                <div className="flex items-center gap-2 text-xs text-white/50">
+                <div className="flex items-center gap-2 text-xs text-white">
                   <span>
                     {stats.total} circuit{stats.total !== 1 ? 's' : ''}
                   </span>
@@ -165,7 +165,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                             ? 'text-green-400'
                             : stats.percent > 50
                               ? 'text-amber-400'
-                              : 'text-white/50'
+                              : 'text-white'
                         )}
                       >
                         {stats.percent}% complete
@@ -193,7 +193,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
               )}
               <ChevronDown
                 className={cn(
-                  'h-5 w-5 text-white/50 transition-transform duration-200',
+                  'h-5 w-5 text-white transition-transform duration-200',
                   isExpanded && 'rotate-180'
                 )}
               />
@@ -245,7 +245,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                     placeholder="0.00"
                     className="h-11 bg-black/30 border-white/10 text-white placeholder:text-white/25 focus:border-elec-yellow/50 focus:bg-black/40 rounded-lg pr-10"
                   />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-sm font-medium">
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm font-medium">
                     Ω
                   </span>
                 </div>
@@ -265,7 +265,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
                     placeholder="0.0"
                     className="h-11 bg-black/30 border-white/10 text-white placeholder:text-white/25 focus:border-elec-yellow/50 focus:bg-black/40 rounded-lg pr-10"
                   />
-                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-sm font-medium">
+                  <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm font-medium">
                     kA
                   </span>
                 </div>
@@ -315,7 +315,7 @@ const BoardSection: React.FC<BoardSectionProps> = ({
 
             {/* SPD Section - Row 2 */}
             <div className={cn('flex items-center flex-wrap gap-2 mt-2', isMobile && 'gap-1.5')}>
-              <span className="text-xs text-muted-foreground mr-1">SPD:</span>
+              <span className="text-xs text-white mr-1">SPD:</span>
 
               {/* SPD N/A */}
               <button

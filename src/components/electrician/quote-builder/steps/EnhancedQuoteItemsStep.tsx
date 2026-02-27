@@ -402,8 +402,8 @@ export const EnhancedQuoteItemsStep = ({
               <PoundSterling className="h-5 w-5 text-black" />
             </div>
             <div>
-              <p className="text-[12px] text-white/70">Quote Total</p>
-              <p className="text-[13px] text-white/70">
+              <p className="text-[12px] text-white">Quote Total</p>
+              <p className="text-[13px] text-white">
                 {items.length} item{items.length !== 1 && 's'}
               </p>
             </div>
@@ -425,7 +425,7 @@ export const EnhancedQuoteItemsStep = ({
           </div>
           <div className="text-center">
             <p className="text-[14px] font-semibold text-white">Scan Invoice</p>
-            <p className="text-[11px] text-white/50">Photo or upload</p>
+            <p className="text-[11px] text-white">Photo or upload</p>
           </div>
         </button>
 
@@ -440,7 +440,7 @@ export const EnhancedQuoteItemsStep = ({
           </div>
           <div className="text-center">
             <p className="text-[14px] font-semibold text-white">Templates</p>
-            <p className="text-[11px] text-white/50">Common jobs</p>
+            <p className="text-[11px] text-white">Common jobs</p>
           </div>
         </button>
       </div>
@@ -450,7 +450,7 @@ export const EnhancedQuoteItemsStep = ({
         <div className="flex items-center justify-between p-3 rounded-xl bg-white/[0.03] border border-white/[0.06]">
           <div className="flex items-center gap-2">
             <TrendingUp className="h-4 w-4 text-elec-yellow" />
-            <span className="text-[13px] text-white/70">Material Markup</span>
+            <span className="text-[13px] text-white">Material Markup</span>
           </div>
           <div className="flex gap-1">
             {[0, 10, 15, 20].map((markup) => (
@@ -462,7 +462,7 @@ export const EnhancedQuoteItemsStep = ({
                   'px-3 py-1.5 rounded-lg text-[12px] font-semibold transition-all touch-manipulation active:scale-[0.97]',
                   priceAdjustment === markup
                     ? 'bg-elec-yellow text-black'
-                    : 'bg-white/[0.05] text-white/60'
+                    : 'bg-white/[0.05] text-white'
                 )}
               >
                 {markup}%
@@ -475,7 +475,7 @@ export const EnhancedQuoteItemsStep = ({
       {/* Section Header */}
       <div className="flex items-center gap-2 pt-2">
         <div className="h-px flex-1 bg-white/10" />
-        <span className="text-[11px] uppercase tracking-wider text-white/40 font-medium">
+        <span className="text-[11px] uppercase tracking-wider text-white font-medium">
           Add Items
         </span>
         <div className="h-px flex-1 bg-white/10" />
@@ -495,12 +495,12 @@ export const EnhancedQuoteItemsStep = ({
                 'flex flex-col items-center gap-1.5 py-3 px-2 rounded-xl transition-all touch-manipulation active:scale-[0.97]',
                 isActive
                   ? 'bg-elec-yellow text-black shadow-lg shadow-elec-yellow/20'
-                  : 'bg-white/[0.03] text-white/60 border border-white/[0.06]'
+                  : 'bg-white/[0.03] text-white border border-white/[0.06]'
               )}
             >
-              <Icon className={cn('h-5 w-5', isActive ? 'text-black' : 'text-white/60')} />
+              <Icon className={cn('h-5 w-5', isActive ? 'text-black' : 'text-white')} />
               <span
-                className={cn('text-[12px] font-medium', isActive ? 'text-black' : 'text-white/60')}
+                className={cn('text-[12px] font-medium', isActive ? 'text-black' : 'text-white')}
               >
                 {cat.label}
               </span>
@@ -516,7 +516,7 @@ export const EnhancedQuoteItemsStep = ({
           <div className="p-4 space-y-4">
             {/* Worker Type - Visual Pills */}
             <div>
-              <label className="text-[12px] text-white/50 uppercase tracking-wide mb-2 block">
+              <label className="text-[12px] text-white uppercase tracking-wide mb-2 block">
                 Worker Type
               </label>
               <div className="grid grid-cols-2 gap-2">
@@ -545,7 +545,7 @@ export const EnhancedQuoteItemsStep = ({
                       <span
                         className={cn(
                           'text-[12px] font-semibold',
-                          isSelected ? 'text-black/70' : 'text-white/50'
+                          isSelected ? 'text-black/70' : 'text-white'
                         )}
                       >
                         £{w.defaultHourlyRate}/hr
@@ -558,7 +558,7 @@ export const EnhancedQuoteItemsStep = ({
 
             {/* Hours - Visual Pills */}
             <div>
-              <label className="text-[12px] text-white/50 uppercase tracking-wide mb-2 block">
+              <label className="text-[12px] text-white uppercase tracking-wide mb-2 block">
                 Hours
               </label>
               <div className="flex flex-wrap gap-2">
@@ -573,7 +573,7 @@ export const EnhancedQuoteItemsStep = ({
                         'px-4 py-2.5 rounded-xl text-[13px] font-medium transition-all touch-manipulation active:scale-[0.97]',
                         isSelected
                           ? 'bg-elec-yellow text-black'
-                          : 'bg-white/[0.03] text-white/70 border border-white/[0.08]'
+                          : 'bg-white/[0.03] text-white border border-white/[0.08]'
                       )}
                     >
                       {opt.label}
@@ -590,7 +590,7 @@ export const EnhancedQuoteItemsStep = ({
           <div className="p-4 space-y-3">
             {/* Search Input - Full Width */}
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white" />
               <Input
                 placeholder="Search materials by name or code..."
                 value={materialSearch}
@@ -603,7 +603,7 @@ export const EnhancedQuoteItemsStep = ({
             {materialSearch.length >= 2 &&
               (filteredMaterials.length > 0 || ragResults.length > 0) && (
                 <div>
-                  <p className="text-[12px] text-white/40 mb-2">
+                  <p className="text-[12px] text-white mb-2">
                     {filteredMaterials.length + ragResults.length} results{' '}
                     {isSearchingRAG && '• Searching...'}
                   </p>
@@ -636,7 +636,7 @@ export const EnhancedQuoteItemsStep = ({
                               £{adjustedPrice.toFixed(2)}
                             </p>
                           </div>
-                          <p className="text-[12px] text-white/70 mt-0.5">{material.category}</p>
+                          <p className="text-[12px] text-white mt-0.5">{material.category}</p>
                         </button>
                       );
                     })}
@@ -668,7 +668,7 @@ export const EnhancedQuoteItemsStep = ({
                               £{adjustedPrice.toFixed(2)}
                             </p>
                           </div>
-                          <p className="text-[12px] text-white/70 mt-0.5">{material.supplier}</p>
+                          <p className="text-[12px] text-white mt-0.5">{material.supplier}</p>
                         </button>
                       );
                     })}
@@ -687,12 +687,12 @@ export const EnhancedQuoteItemsStep = ({
                 <Zap className="h-5 w-5 text-black" />
               </div>
               <div className="flex-1 min-w-0">
-                <label className="text-[12px] text-white/40 block">Equipment Category</label>
+                <label className="text-[12px] text-white block">Equipment Category</label>
                 <Select
                   value={newItem.subcategory || ''}
                   onValueChange={(value) => setNewItem((prev) => ({ ...prev, subcategory: value }))}
                 >
-                  <SelectTrigger className="w-full h-9 bg-transparent border-0 px-0 text-[15px] font-medium text-white focus:ring-0 focus:ring-offset-0 [&>svg]:text-white/30">
+                  <SelectTrigger className="w-full h-9 bg-transparent border-0 px-0 text-[15px] font-medium text-white focus:ring-0 focus:ring-offset-0 [&>svg]:text-white">
                     <SelectValue placeholder="Select category" />
                   </SelectTrigger>
                   <SelectContent className="z-[100] bg-elec-gray border-white/10 text-foreground">
@@ -715,12 +715,12 @@ export const EnhancedQuoteItemsStep = ({
                 <Package className="h-5 w-5 text-black" />
               </div>
               <div className="flex-1 min-w-0">
-                <label className="text-[12px] text-white/40 block">Equipment</label>
+                <label className="text-[12px] text-white block">Equipment</label>
                 <Select
                   value={newItem.equipmentCode || ''}
                   onValueChange={(value) => handleEquipmentSelect(value)}
                 >
-                  <SelectTrigger className="w-full h-9 bg-transparent border-0 px-0 text-[15px] font-medium text-white focus:ring-0 focus:ring-offset-0 [&>svg]:text-white/30">
+                  <SelectTrigger className="w-full h-9 bg-transparent border-0 px-0 text-[15px] font-medium text-white focus:ring-0 focus:ring-offset-0 [&>svg]:text-white">
                     <SelectValue placeholder="Select equipment" />
                   </SelectTrigger>
                   <SelectContent className="z-[100] bg-elec-gray border-white/10 text-foreground">
@@ -747,7 +747,7 @@ export const EnhancedQuoteItemsStep = ({
           <div className="divide-y divide-white/[0.06]">
             {/* Appears Under - Category Picker */}
             <div className="p-3.5">
-              <label className="text-[12px] text-white/50 uppercase tracking-wide mb-2 block">
+              <label className="text-[12px] text-white uppercase tracking-wide mb-2 block">
                 Appears Under (on PDF)
               </label>
               <div className="flex flex-wrap gap-2">
@@ -780,14 +780,14 @@ export const EnhancedQuoteItemsStep = ({
                   <FileText className="h-5 w-5 text-black" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <label className="text-[12px] text-white/40 block mb-1">Description *</label>
+                  <label className="text-[12px] text-white block mb-1">Description *</label>
                   <Textarea
                     placeholder="e.g., Site visit fee, Call-out charge"
                     value={newItem.description}
                     onChange={(e) =>
                       setNewItem((prev) => ({ ...prev, description: e.target.value }))
                     }
-                    className="min-h-[80px] px-0 border-0 bg-transparent text-[15px] text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:ring-offset-0 resize-none"
+                    className="min-h-[80px] px-0 border-0 bg-transparent text-[15px] text-white placeholder:text-white focus-visible:ring-0 focus-visible:ring-offset-0 resize-none"
                   />
                 </div>
               </div>
@@ -798,7 +798,7 @@ export const EnhancedQuoteItemsStep = ({
                 <Hash className="h-5 w-5 text-black" />
               </div>
               <div className="flex-1 min-w-0">
-                <label className="text-[12px] text-white/40 block">Quantity</label>
+                <label className="text-[12px] text-white block">Quantity</label>
                 <Input
                   type="text"
                   inputMode="decimal"
@@ -814,7 +814,7 @@ export const EnhancedQuoteItemsStep = ({
                     setQuantityInput(String(val));
                   }}
                   placeholder="1"
-                  className="h-9 px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:ring-offset-0"
+                  className="h-9 px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white focus-visible:ring-0 focus-visible:ring-offset-0"
                 />
               </div>
             </div>
@@ -824,7 +824,7 @@ export const EnhancedQuoteItemsStep = ({
                 <PoundSterling className="h-5 w-5 text-black" />
               </div>
               <div className="flex-1 min-w-0">
-                <label className="text-[12px] text-white/40 block">Unit Price (£)</label>
+                <label className="text-[12px] text-white block">Unit Price (£)</label>
                 <Input
                   type="text"
                   inputMode="decimal"
@@ -840,14 +840,14 @@ export const EnhancedQuoteItemsStep = ({
                     if (val > 0) setUnitPriceInput(val.toFixed(2));
                   }}
                   placeholder="0.00"
-                  className="h-9 px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:ring-offset-0"
+                  className="h-9 px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white focus-visible:ring-0 focus-visible:ring-offset-0"
                 />
               </div>
             </div>
             {/* Total Preview */}
             {newItem.quantity > 0 && newItem.unitPrice > 0 && (
               <div className="flex items-center justify-between p-3.5 bg-elec-yellow/5">
-                <span className="text-[14px] text-white/60">Item Total</span>
+                <span className="text-[14px] text-white">Item Total</span>
                 <span className="text-lg font-bold text-elec-yellow">
                   £{(newItem.quantity * newItem.unitPrice).toFixed(2)}
                 </span>
@@ -872,7 +872,7 @@ export const EnhancedQuoteItemsStep = ({
       {/* Items List */}
       {items.length > 0 && (
         <div>
-          <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider px-1 mb-2">
+          <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
             Added Items ({items.length})
           </p>
           <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
@@ -923,9 +923,9 @@ export const EnhancedQuoteItemsStep = ({
                         }}
                         className="w-12 h-8 text-center text-[13px] bg-[#1a1a1e] border border-white/[0.1] rounded-lg text-white touch-manipulation"
                       />
-                      <span className="text-[11px] text-white/50 w-8 truncate">{item.unit}</span>
-                      <span className="text-[12px] text-white/30">×</span>
-                      <span className="text-[11px] text-white/50">£</span>
+                      <span className="text-[11px] text-white w-8 truncate">{item.unit}</span>
+                      <span className="text-[12px] text-white">×</span>
+                      <span className="text-[11px] text-white">£</span>
                       <input
                         type="text"
                         inputMode="decimal"
@@ -951,7 +951,7 @@ export const EnhancedQuoteItemsStep = ({
                         className="w-9 h-9 rounded-lg bg-white/[0.05] flex items-center justify-center touch-manipulation active:bg-white/[0.1] active:scale-95 transition-transform"
                         aria-label="Duplicate item"
                       >
-                        <Copy className="h-4 w-4 text-white/60" />
+                        <Copy className="h-4 w-4 text-white" />
                       </button>
                       <button
                         type="button"
@@ -979,14 +979,14 @@ export const EnhancedQuoteItemsStep = ({
         >
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-white/[0.05] flex items-center justify-center">
-              <FileText className="h-5 w-5 text-white/40" />
+              <FileText className="h-5 w-5 text-white" />
             </div>
             <div className="text-left">
               <p className="text-[14px] font-medium text-white">Use Job Template</p>
-              <p className="text-[12px] text-white/70">Pre-built item sets for common jobs</p>
+              <p className="text-[12px] text-white">Pre-built item sets for common jobs</p>
             </div>
           </div>
-          <ChevronRight className="h-5 w-5 text-white/30" />
+          <ChevronRight className="h-5 w-5 text-white" />
         </button>
       ) : (
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">

@@ -117,7 +117,7 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
             <p className={cn('text-sm text-white text-left', !isExpanded && 'line-clamp-2')}>
               {item.description}
             </p>
-            {item.notes && isExpanded && <p className="text-xs text-white/50 mt-1">{item.notes}</p>}
+            {item.notes && isExpanded && <p className="text-xs text-white mt-1">{item.notes}</p>}
           </div>
           <Button
             variant="ghost"
@@ -131,7 +131,7 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
 
         <div className="flex items-center gap-3 text-xs">
           <div className="flex items-center gap-1">
-            <span className="text-white/50">Qty:</span>
+            <span className="text-white">Qty:</span>
             {isEditingQty ? (
               <Input
                 type="number"
@@ -158,7 +158,7 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
               </span>
             )}
           </div>
-          <span className="text-white/30">×</span>
+          <span className="text-white">×</span>
           <div className="flex items-center gap-1">
             {isEditingPrice ? (
               <Input
@@ -187,7 +187,7 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
               </span>
             )}
           </div>
-          <span className="text-white/30">=</span>
+          <span className="text-white">=</span>
           <span className="text-white font-semibold ml-auto">
             {formatCurrency(item.totalPrice)}
           </span>
@@ -204,12 +204,12 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
         AI Estimator
       </div>
       <div className="flex items-center gap-3">
-        {isEstimating && <span className="text-xs text-white/50">{elapsedSeconds}s</span>}
+        {isEstimating && <span className="text-xs text-white">{elapsedSeconds}s</span>}
         {!isMobile && (
           <button
             type="button"
             onClick={() => (isEstimating ? onCancel() : onOpenChange(false))}
-            className="h-11 w-11 rounded-lg flex items-center justify-center text-white/40 hover:text-white/70 hover:bg-white/10 transition-colors touch-manipulation"
+            className="h-11 w-11 rounded-lg flex items-center justify-center text-white hover:text-white hover:bg-white/10 transition-colors touch-manipulation"
           >
             <X className="h-4 w-4" />
           </button>
@@ -279,13 +279,13 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
                     ) : isActive ? (
                       <Loader2 className="h-4 w-4 animate-spin text-black" />
                     ) : (
-                      <span className="text-[10px] text-white/50">{i + 1}</span>
+                      <span className="text-[10px] text-white">{i + 1}</span>
                     )}
                   </div>
                   <span
                     className={cn(
                       'text-sm font-medium transition-colors duration-300',
-                      isActive ? 'text-white' : isComplete ? 'text-white/70' : 'text-white/30'
+                      isActive ? 'text-white' : isComplete ? 'text-white' : 'text-white'
                     )}
                   >
                     {step.label}
@@ -296,14 +296,14 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
           </div>
 
           {/* Timer */}
-          <div className="flex items-center gap-2 text-xs text-white/40">
+          <div className="flex items-center gap-2 text-xs text-white">
             <div className="w-1 h-1 rounded-full bg-elec-yellow animate-pulse" />
             <span>{elapsedSeconds}s / ~2 mins</span>
           </div>
 
           <Button
             variant="ghost"
-            className="h-11 px-6 text-white/70 hover:bg-white/10 touch-manipulation"
+            className="h-11 px-6 text-white hover:bg-white/10 touch-manipulation"
             onClick={onCancel}
           >
             Cancel
@@ -322,25 +322,25 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
             </h3>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <span className="text-xs text-white/50 block">Materials</span>
+                <span className="text-xs text-white block">Materials</span>
                 <span className="text-sm font-semibold text-white">
                   {formatCurrency(estimateResult.summary.totalMaterials)}
                 </span>
               </div>
               <div>
-                <span className="text-xs text-white/50 block">Labour</span>
+                <span className="text-xs text-white block">Labour</span>
                 <span className="text-sm font-semibold text-white">
                   {formatCurrency(estimateResult.summary.totalLabour)}
                 </span>
               </div>
               <div>
-                <span className="text-xs text-white/50 block">Total (ex VAT)</span>
+                <span className="text-xs text-white block">Total (ex VAT)</span>
                 <span className="text-base font-bold text-emerald-400">
                   {formatCurrency(estimateResult.summary.totalExVat)}
                 </span>
               </div>
               <div>
-                <span className="text-xs text-white/50 block">Defects processed</span>
+                <span className="text-xs text-white block">Defects processed</span>
                 <span className="text-sm font-semibold text-white">
                   {estimateResult.summary.defectsProcessed}
                 </span>
@@ -357,9 +357,9 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
               <FileText className="h-4 w-4 text-purple-400" />
               <span className="text-sm font-semibold text-white flex-1">Scope of Works</span>
               {scopeOpen ? (
-                <ChevronUp className="h-4 w-4 text-white/50" />
+                <ChevronUp className="h-4 w-4 text-white" />
               ) : (
-                <ChevronDown className="h-4 w-4 text-white/50" />
+                <ChevronDown className="h-4 w-4 text-white" />
               )}
             </button>
             {scopeOpen && (
@@ -384,9 +384,9 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
                   Materials ({materialItems.length})
                 </span>
                 {materialsOpen ? (
-                  <ChevronUp className="h-4 w-4 text-white/50" />
+                  <ChevronUp className="h-4 w-4 text-white" />
                 ) : (
-                  <ChevronDown className="h-4 w-4 text-white/50" />
+                  <ChevronDown className="h-4 w-4 text-white" />
                 )}
               </button>
               {materialsOpen && (
@@ -412,9 +412,9 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
                   Labour ({labourItems.length})
                 </span>
                 {labourOpen ? (
-                  <ChevronUp className="h-4 w-4 text-white/50" />
+                  <ChevronUp className="h-4 w-4 text-white" />
                 ) : (
-                  <ChevronDown className="h-4 w-4 text-white/50" />
+                  <ChevronDown className="h-4 w-4 text-white" />
                 )}
               </button>
               {labourOpen && (
@@ -443,7 +443,7 @@ const AIEstimatorSheet: React.FC<AIEstimatorSheetProps> = ({
       </Button>
       <Button
         variant="ghost"
-        className="w-full h-11 text-white/70 hover:bg-white/10 touch-manipulation"
+        className="w-full h-11 text-white hover:bg-white/10 touch-manipulation"
         onClick={() => onOpenChange(false)}
       >
         Close

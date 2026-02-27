@@ -16,7 +16,6 @@ import {
   User,
   Upload,
   X,
-  ChevronDown,
   Award,
   Building2,
   Palette,
@@ -32,6 +31,8 @@ import { cn } from '@/lib/utils';
 import { useIsMobile } from '@/hooks/use-mobile';
 import { useHaptics } from '@/hooks/useHaptics';
 import { useCompanyProfile } from '@/hooks/useCompanyProfile';
+import SectionTitle from '@/components/ui/SectionTitle';
+import FormField from '@/components/ui/FormField';
 
 interface EICRInspectorDetailsProps {
   formData: any;
@@ -39,66 +40,6 @@ interface EICRInspectorDetailsProps {
   isOpen?: boolean;
   onToggle?: () => void;
 }
-
-// Section header - MUST be outside main component to prevent focus loss
-const SectionTitle = ({
-  icon: Icon,
-  title,
-  color = 'blue',
-  isOpen,
-  badge,
-  isMobile,
-}: {
-  icon: React.ElementType;
-  title: string;
-  color?: string;
-  isOpen: boolean;
-  badge?: string;
-  isMobile: boolean;
-}) => (
-  <div
-    className={cn(
-      'w-full flex items-center gap-3 py-4 text-left touch-manipulation transition-colors cursor-pointer',
-      isMobile ? 'px-4 bg-card/30 border-y border-border/20' : 'pb-3 border-b border-border/30',
-      'active:bg-card/50'
-    )}
-  >
-    <div
-      className={cn('h-10 w-10 rounded-xl flex items-center justify-center', `bg-${color}-500/20`)}
-    >
-      <Icon className={cn('h-5 w-5', `text-${color}-400`)} />
-    </div>
-    <div className="flex-1 min-w-0">
-      <h3 className="font-semibold text-foreground">{title}</h3>
-      {badge && <span className="text-xs text-muted-foreground">{badge}</span>}
-    </div>
-    <ChevronDown
-      className={cn('h-5 w-5 text-muted-foreground transition-transform', isOpen && 'rotate-180')}
-    />
-  </div>
-);
-
-// Form field wrapper - MUST be outside main component to prevent focus loss
-const FormField = ({
-  label,
-  required,
-  hint,
-  children,
-}: {
-  label: string;
-  required?: boolean;
-  hint?: string;
-  children: React.ReactNode;
-}) => (
-  <div className="space-y-2">
-    <Label className="text-sm text-foreground/80">
-      {label}
-      {required && <span className="text-elec-yellow ml-1">*</span>}
-    </Label>
-    {children}
-    {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
-  </div>
-);
 
 const availableQualifications = [
   '18th Edition BS7671',

@@ -170,7 +170,7 @@ const Module6Section4_5 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -188,25 +188,25 @@ const Module6Section4_5 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.4.5</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.4.5</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Recording Results and Actions Required
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Documentation, record-keeping, and actions for continuity and polarity test results
             </p>
           </header>
 
           {/* Summary Box */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
-            <p className="text-white/90 text-sm leading-relaxed mb-3">
+            <p className="text-white text-sm leading-relaxed mb-3">
               <strong className="text-elec-yellow">In 30 seconds:</strong> All test results must be
               recorded accurately on EIC, MWC, or EICR certificates. Record actual measurements, not
               just pass/fail. Poor records = legal risk and safety hazards.
             </p>
-            <ul className="text-white/80 text-sm space-y-1">
+            <ul className="text-white text-sm space-y-1">
               <li>
                 • <strong>Spot:</strong> Missing records, illegible writing, incomplete data
               </li>
@@ -226,8 +226,8 @@ const Module6Section4_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <div className="text-white/80 space-y-3 leading-relaxed">
-              <p className="text-white/70 mb-4">
+            <div className="text-white space-y-3 leading-relaxed">
+              <p className="text-white mb-4">
                 By the end of this subsection, learners will be able to:
               </p>
               <ul className="space-y-2">
@@ -261,7 +261,7 @@ const Module6Section4_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Introduction
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Testing is only useful if results are accurately recorded and acted upon.
                 Documenting continuity and polarity test results provides evidence of compliance
@@ -281,7 +281,7 @@ const Module6Section4_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Importance of Recording
             </h2>
-            <div className="text-white/80 space-y-6 leading-relaxed">
+            <div className="text-white space-y-6 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-3">Legal and Regulatory Compliance</h3>
                 <ul className="text-sm space-y-2">
@@ -368,7 +368,7 @@ const Module6Section4_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Where Results Are Recorded
             </h2>
-            <div className="text-white/80 space-y-6 leading-relaxed">
+            <div className="text-white space-y-6 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-3">Primary Certification Documents</h3>
                 <ul className="text-sm space-y-2">
@@ -455,7 +455,7 @@ const Module6Section4_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               How to Record Correctly
             </h2>
-            <div className="text-white/80 space-y-6 leading-relaxed">
+            <div className="text-white space-y-6 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-3">Data Accuracy and Precision</h3>
                 <ul className="text-sm space-y-2">
@@ -540,7 +540,7 @@ const Module6Section4_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Actions Required
             </h2>
-            <div className="text-white/80 space-y-6 leading-relaxed">
+            <div className="text-white space-y-6 leading-relaxed">
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <h3 className="font-medium text-green-400 mb-3">
                   Satisfactory Results (Compliant)
@@ -602,7 +602,7 @@ const Module6Section4_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Consequences of Poor Record-Keeping
             </h2>
-            <div className="text-white/80 space-y-6 leading-relaxed">
+            <div className="text-white space-y-6 leading-relaxed">
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <h3 className="font-medium text-red-400 mb-3">Legal and Regulatory Consequences</h3>
                 <ul className="text-sm space-y-2">
@@ -644,7 +644,7 @@ const Module6Section4_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">08</span>
               Practical Guidance
             </h2>
-            <div className="text-white/80 space-y-3 leading-relaxed">
+            <div className="text-white space-y-3 leading-relaxed">
               <div className="flex items-start gap-2">
                 <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-1" />
                 <span>Use the test schedule templates in BS 7671 Appendix 6</span>
@@ -678,7 +678,7 @@ const Module6Section4_5 = () => {
               <p className="text-white font-medium mb-3">
                 Commercial Office Building - Record-Keeping Crisis
               </p>
-              <div className="text-white/80 text-sm space-y-3 leading-relaxed">
+              <div className="text-white text-sm space-y-3 leading-relaxed">
                 <p>
                   A major electrical contractor was working on a 15-storey commercial office
                   building with over 200 circuits. During the rush to complete the project on time,
@@ -726,7 +726,7 @@ const Module6Section4_5 = () => {
                   <AccordionTrigger className="text-white hover:text-elec-yellow text-left text-sm py-4">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-white/70 text-sm pb-4">
+                  <AccordionContent className="text-white text-sm pb-4">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -743,7 +743,7 @@ const Module6Section4_5 = () => {
             <div className="grid grid-cols-2 gap-3">
               <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
                 <h3 className="font-medium text-elec-yellow mb-2 text-sm">Legal Requirements</h3>
-                <ul className="text-white/70 text-xs space-y-1">
+                <ul className="text-white text-xs space-y-1">
                   <li>• BS 7671 compliance evidence</li>
                   <li>• EAWR 1989 obligations</li>
                   <li>• Legal certification requirements</li>
@@ -751,7 +751,7 @@ const Module6Section4_5 = () => {
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <h3 className="font-medium text-green-400 mb-2 text-sm">Documentation Types</h3>
-                <ul className="text-white/70 text-xs space-y-1">
+                <ul className="text-white text-xs space-y-1">
                   <li>• EIC for new installations</li>
                   <li>• MWC for alterations</li>
                   <li>• EICR for inspections</li>
@@ -759,7 +759,7 @@ const Module6Section4_5 = () => {
               </div>
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <h3 className="font-medium text-blue-400 mb-2 text-sm">Recording Standards</h3>
-                <ul className="text-white/70 text-xs space-y-1">
+                <ul className="text-white text-xs space-y-1">
                   <li>• Actual measured values</li>
                   <li>• Clear, legible entries</li>
                   <li>• Complete documentation</li>
@@ -767,7 +767,7 @@ const Module6Section4_5 = () => {
               </div>
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <h3 className="font-medium text-red-400 mb-2 text-sm">Consequences</h3>
-                <ul className="text-white/70 text-xs space-y-1">
+                <ul className="text-white text-xs space-y-1">
                   <li>• Legal prosecution risk</li>
                   <li>• Safety hazards</li>
                   <li>• Reputational damage</li>
@@ -789,7 +789,7 @@ const Module6Section4_5 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../4-4">

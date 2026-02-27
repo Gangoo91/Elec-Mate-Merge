@@ -87,11 +87,11 @@ const QuizAssessmentSection = ({ onBack }: QuizAssessmentSectionProps) => {
         </div>
         <div className="flex-1 min-w-0">
           <h3 className="text-[15px] font-medium text-white leading-tight">{assessment.title}</h3>
-          <p className="text-[13px] text-white/50 leading-tight mt-0.5">{assessment.regulation}</p>
+          <p className="text-[13px] text-white leading-tight mt-0.5">{assessment.regulation}</p>
         </div>
         <div className="flex items-center gap-2 flex-shrink-0">
-          <span className="text-[13px] text-white/30">{assessment.questions} Qs</span>
-          <ChevronRight className="h-4 w-4 text-white/20" />
+          <span className="text-[13px] text-white">{assessment.questions} Qs</span>
+          <ChevronRight className="h-4 w-4 text-white" />
         </div>
       </motion.div>
     );
@@ -115,7 +115,7 @@ const QuizAssessmentSection = ({ onBack }: QuizAssessmentSectionProps) => {
           </div>
           <div className="flex-1 min-w-0">
             <h1 className="text-base font-semibold text-white truncate">Knowledge Quiz</h1>
-            <p className="text-[11px] text-white/50">2391-style Questions</p>
+            <p className="text-[11px] text-white">2391-style Questions</p>
           </div>
         </div>
       </header>
@@ -129,7 +129,7 @@ const QuizAssessmentSection = ({ onBack }: QuizAssessmentSectionProps) => {
         {/* Beginner */}
         {beginnerAssessments.length > 0 && (
           <div>
-            <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+            <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
               Beginner
             </p>
             <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
@@ -141,7 +141,7 @@ const QuizAssessmentSection = ({ onBack }: QuizAssessmentSectionProps) => {
         {/* Intermediate */}
         {intermediateAssessments.length > 0 && (
           <div>
-            <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+            <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
               Intermediate
             </p>
             <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
@@ -153,7 +153,7 @@ const QuizAssessmentSection = ({ onBack }: QuizAssessmentSectionProps) => {
         {/* Advanced */}
         {advancedAssessments.length > 0 && (
           <div>
-            <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+            <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
               Advanced
             </p>
             <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
@@ -165,8 +165,8 @@ const QuizAssessmentSection = ({ onBack }: QuizAssessmentSectionProps) => {
         {/* Info notice */}
         <motion.div variants={itemVariants}>
           <div className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-white/[0.02]">
-            <Brain className="h-4 w-4 text-white/30 flex-shrink-0" />
-            <p className="text-[12px] text-white/40">
+            <Brain className="h-4 w-4 text-white flex-shrink-0" />
+            <p className="text-[12px] text-white">
               Each quiz contains 20 questions based on BS 7671:2018+A3:2024
             </p>
           </div>

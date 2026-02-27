@@ -189,7 +189,7 @@ export default function AsbestosModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-4">
@@ -214,7 +214,7 @@ export default function AsbestosModule4Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             RPE &amp; PPE Selection
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Choosing the right respiratory protective equipment and personal protective equipment
             for asbestos work &mdash; types, protection factors, face-fit testing, decontamination,
             and common mistakes
@@ -304,7 +304,7 @@ export default function AsbestosModule4Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Principle</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   RPE is <strong className="text-white">never</strong> a substitute for proper
                   engineering controls. It is the last line of defence, not the first. If you are
                   relying solely on an FFP3 mask with no other controls in place, the system of work
@@ -316,7 +316,7 @@ export default function AsbestosModule4Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Key RPE Requirements for Asbestos Work
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -390,7 +390,7 @@ export default function AsbestosModule4Section3() {
                 <p className="text-xs text-orange-400 font-semibold mb-3">
                   APF 20 &middot; Single-use &middot; Face-fit required
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -427,7 +427,7 @@ export default function AsbestosModule4Section3() {
                 <p className="text-xs text-orange-400 font-semibold mb-3">
                   APF 20 &middot; Reusable body &middot; Face-fit required
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -460,7 +460,7 @@ export default function AsbestosModule4Section3() {
                 <p className="text-xs text-orange-400 font-semibold mb-3">
                   APF 40 &middot; Reusable &middot; Face-fit required
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -498,7 +498,7 @@ export default function AsbestosModule4Section3() {
                   APF 40 &middot; Battery-powered &middot; No face-fit needed (loose-fitting
                   versions)
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -538,7 +538,7 @@ export default function AsbestosModule4Section3() {
                 <p className="text-xs text-orange-400 font-semibold mb-3">
                   APF 40+ &middot; External air supply &middot; Licensed work
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -593,14 +593,14 @@ export default function AsbestosModule4Section3() {
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-sm font-medium text-white">FFP3 Disposable</p>
                     <div className="flex items-center justify-between mt-1">
-                      <span className="text-xs text-white/60">APF 20</span>
+                      <span className="text-xs text-white">APF 20</span>
                       <span className="text-xs text-amber-400">Face-fit: Yes</span>
                     </div>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-sm font-medium text-white">Half-Mask P3</p>
                     <div className="flex items-center justify-between mt-1">
-                      <span className="text-xs text-white/60">APF 20</span>
+                      <span className="text-xs text-white">APF 20</span>
                       <span className="text-xs text-amber-400">Face-fit: Yes</span>
                     </div>
                   </div>
@@ -620,14 +620,14 @@ export default function AsbestosModule4Section3() {
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-sm font-medium text-white">Half-Mask P3</p>
                     <div className="flex items-center justify-between mt-1">
-                      <span className="text-xs text-white/60">APF 20</span>
+                      <span className="text-xs text-white">APF 20</span>
                       <span className="text-xs text-amber-400">Face-fit: Yes</span>
                     </div>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-sm font-medium text-white">Full-Face P3</p>
                     <div className="flex items-center justify-between mt-1">
-                      <span className="text-xs text-white/60">APF 40</span>
+                      <span className="text-xs text-white">APF 40</span>
                       <span className="text-xs text-amber-400">Face-fit: Yes</span>
                     </div>
                   </div>
@@ -647,14 +647,14 @@ export default function AsbestosModule4Section3() {
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-sm font-medium text-white">Full-Face P3</p>
                     <div className="flex items-center justify-between mt-1">
-                      <span className="text-xs text-white/60">APF 40</span>
+                      <span className="text-xs text-white">APF 40</span>
                       <span className="text-xs text-amber-400">Face-fit: Yes</span>
                     </div>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-sm font-medium text-white">PAPR</p>
                     <div className="flex items-center justify-between mt-1">
-                      <span className="text-xs text-white/60">APF 40</span>
+                      <span className="text-xs text-white">APF 40</span>
                       <span className="text-xs text-green-400">Face-fit: No*</span>
                     </div>
                   </div>
@@ -674,14 +674,14 @@ export default function AsbestosModule4Section3() {
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-sm font-medium text-white">PAPR</p>
                     <div className="flex items-center justify-between mt-1">
-                      <span className="text-xs text-white/60">APF 40</span>
+                      <span className="text-xs text-white">APF 40</span>
                       <span className="text-xs text-green-400">Face-fit: No*</span>
                     </div>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-sm font-medium text-white">Air-Fed</p>
                     <div className="flex items-center justify-between mt-1">
-                      <span className="text-xs text-white/60">APF 40+</span>
+                      <span className="text-xs text-white">APF 40+</span>
                       <span className="text-xs text-green-400">Face-fit: No*</span>
                     </div>
                   </div>
@@ -690,7 +690,7 @@ export default function AsbestosModule4Section3() {
             </div>
 
             <div className="px-4 py-3 bg-white/5">
-              <p className="text-xs text-white/50">
+              <p className="text-xs text-white">
                 * Loose-fitting hood/helmet versions do not require face-fit testing. Tight-fitting
                 versions of PAPR and air-fed devices still require face-fit testing.
               </p>
@@ -718,7 +718,7 @@ export default function AsbestosModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Two Testing Methods</p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[52px] h-7 rounded-full bg-orange-500/20 text-orange-400 text-xs font-bold flex-shrink-0">
                       QUAL
@@ -756,7 +756,7 @@ export default function AsbestosModule4Section3() {
                 <p className="text-sm font-medium text-orange-500 mb-3">
                   When Must Face-Fit Testing Be Repeated?
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>When the RPE model or size changes</span>
@@ -777,7 +777,7 @@ export default function AsbestosModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Face-Fit Testing Rules</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -813,7 +813,7 @@ export default function AsbestosModule4Section3() {
                     Facial Hair and Tight-Fitting RPE
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Workers with beards, stubble, sideburns, or any facial hair in the seal area of
                   the mask <strong className="text-white">cannot use tight-fitting RPE</strong>.
                   Facial hair prevents the mask from forming an airtight seal against the face,
@@ -845,7 +845,7 @@ export default function AsbestosModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Required PPE</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -881,7 +881,7 @@ export default function AsbestosModule4Section3() {
 
               <div className="bg-orange-500/10 border border-orange-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-orange-500 mb-3">Coverall Requirements</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -917,7 +917,7 @@ export default function AsbestosModule4Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Clothing Under Coveralls</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Do <strong className="text-white">NOT</strong> wear work clothes under disposable
                   coveralls if possible. Asbestos fibres can transfer from the coverall to the
                   clothing underneath, particularly if the coverall is damaged or if fibres enter
@@ -967,7 +967,7 @@ export default function AsbestosModule4Section3() {
                   <p className="text-sm font-medium text-white">
                     Damp-wipe the outside of the coverall
                   </p>
-                  <p className="text-xs text-white/60 mt-1">
+                  <p className="text-xs text-white mt-1">
                     Removes loose surface fibres before you start undressing. Use a damp cloth or
                     wet wipes, working from top to bottom.
                   </p>
@@ -984,7 +984,7 @@ export default function AsbestosModule4Section3() {
                 </div>
                 <div className="pb-5">
                   <p className="text-sm font-medium text-white">Remove boot covers</p>
-                  <p className="text-xs text-white/60 mt-1">
+                  <p className="text-xs text-white mt-1">
                     Roll down and remove boot covers carefully. Place directly into the asbestos
                     waste bag.
                   </p>
@@ -1003,7 +1003,7 @@ export default function AsbestosModule4Section3() {
                   <p className="text-sm font-medium text-white">
                     Remove outer gloves (if double-gloved)
                   </p>
-                  <p className="text-xs text-white/60 mt-1">
+                  <p className="text-xs text-white mt-1">
                     Peel off the outer pair of gloves, turning them inside-out as you remove them.
                     Place in waste bag.
                   </p>
@@ -1022,7 +1022,7 @@ export default function AsbestosModule4Section3() {
                   <p className="text-sm font-medium text-white">
                     Remove coverall &mdash; peel off inside-out from the hood
                   </p>
-                  <p className="text-xs text-white/60 mt-1">
+                  <p className="text-xs text-white mt-1">
                     Start by pulling the hood back and away from your head, then peel the coverall
                     down and off, rolling it inside-out. This traps fibres on the inside. Place in
                     waste bag.
@@ -1042,7 +1042,7 @@ export default function AsbestosModule4Section3() {
                   <p className="text-sm font-medium text-red-300">
                     Remove RPE &mdash; LAST item of protection removed
                   </p>
-                  <p className="text-xs text-white/60 mt-1">
+                  <p className="text-xs text-white mt-1">
                     Only now remove your mask or respirator. For disposable RPE, place in waste bag.
                     For reusable RPE, clean and store according to manufacturer&rsquo;s
                     instructions.
@@ -1060,7 +1060,7 @@ export default function AsbestosModule4Section3() {
                 </div>
                 <div className="pb-5">
                   <p className="text-sm font-medium text-white">Remove inner gloves</p>
-                  <p className="text-xs text-white/60 mt-1">
+                  <p className="text-xs text-white mt-1">
                     Peel off the inner gloves, turning inside-out. Place in waste bag.
                   </p>
                 </div>
@@ -1075,7 +1075,7 @@ export default function AsbestosModule4Section3() {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white">Bag all waste and seal</p>
-                  <p className="text-xs text-white/60 mt-1">
+                  <p className="text-xs text-white mt-1">
                     Seal the asbestos waste bag with tape or a cable tie. The bag must be labelled
                     with the asbestos warning and disposed of at a licensed hazardous waste
                     facility.
@@ -1090,7 +1090,7 @@ export default function AsbestosModule4Section3() {
                 <AlertTriangle className="h-5 w-5 text-red-400" />
                 <p className="text-sm font-medium text-red-400">Critical Rule</p>
               </div>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 <strong className="text-white">
                   RPE is the LAST item removed &mdash; never remove your mask before your suit.
                 </strong>{' '}
@@ -1119,7 +1119,7 @@ export default function AsbestosModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Maintenance Requirements</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -1208,7 +1208,7 @@ export default function AsbestosModule4Section3() {
                       <p className="text-sm font-medium text-red-300">
                         Removing RPE before decontamination is complete
                       </p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         The most dangerous mistake. Fibres become airborne during PPE removal. If
                         the mask is already off, you inhale them.
                       </p>
@@ -1225,7 +1225,7 @@ export default function AsbestosModule4Section3() {
                       <p className="text-sm font-medium text-red-300">
                         Using RPE without face-fit testing
                       </p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Without a face-fit test, contaminated air leaks past the seal. The mask
                         gives a false sense of security while providing little actual protection.
                       </p>
@@ -1242,7 +1242,7 @@ export default function AsbestosModule4Section3() {
                       <p className="text-sm font-medium text-red-300">
                         Wearing tight-fitting RPE with facial hair
                       </p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Even short stubble prevents an airtight seal. The RPE protection factor is
                         dramatically reduced, potentially to almost zero.
                       </p>
@@ -1259,7 +1259,7 @@ export default function AsbestosModule4Section3() {
                       <p className="text-sm font-medium text-red-300">
                         Reusing disposable FFP3 masks
                       </p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Disposable masks are single-use. The filter becomes loaded with fibres, the
                         elastic straps lose tension, and putting the mask back on can dislodge
                         trapped fibres back into your breathing zone.
@@ -1277,7 +1277,7 @@ export default function AsbestosModule4Section3() {
                       <p className="text-sm font-medium text-red-300">
                         Not replacing P3 filters regularly
                       </p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Overloaded filters restrict airflow and reduce protection. Filters must be
                         changed after each asbestos work session and according to the
                         manufacturer&rsquo;s schedule.
@@ -1295,7 +1295,7 @@ export default function AsbestosModule4Section3() {
                       <p className="text-sm font-medium text-red-300">
                         Wearing contaminated work clothes under coveralls
                       </p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Fibres can transfer from the coverall to clothing underneath. Those clothes
                         then carry fibres into your car, your home, and onto your family.
                       </p>
@@ -1312,7 +1312,7 @@ export default function AsbestosModule4Section3() {
                       <p className="text-sm font-medium text-red-300">
                         Taking contaminated PPE home
                       </p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         A major cause of secondary exposure. Family members &mdash; including
                         children &mdash; can inhale fibres from contaminated clothing and equipment
                         brought into the home.
@@ -1330,7 +1330,7 @@ export default function AsbestosModule4Section3() {
                       <p className="text-sm font-medium text-red-300">
                         Not decontaminating boots and tools
                       </p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Boots and tools used in the work area can carry fibres to clean areas. All
                         equipment must be thoroughly decontaminated (wiped, washed, or vacuumed with
                         a Type H HEPA vacuum) before leaving the work area.
@@ -1362,7 +1362,7 @@ export default function AsbestosModule4Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1376,7 +1376,7 @@ export default function AsbestosModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-4-section-2">

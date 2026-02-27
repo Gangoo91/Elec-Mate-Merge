@@ -98,7 +98,7 @@ const EVChargingModule6Section6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/ev-charging-module-6">
@@ -119,7 +119,7 @@ const EVChargingModule6Section6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Certificate, Test Sheet, and Handover Pack
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Completing documentation and ensuring professional customer handover
           </p>
         </header>
@@ -221,7 +221,7 @@ const EVChargingModule6Section6 = () => {
                 <p className="text-xs font-medium text-elec-yellow/80 mb-1">
                   Section 1: Installation Details
                 </p>
-                <p className="text-xs text-white/80">
+                <p className="text-xs text-white">
                   Customer name, address, description ("Installation of EV charging point(s)"),
                   date, extent of work
                 </p>
@@ -230,7 +230,7 @@ const EVChargingModule6Section6 = () => {
                 <p className="text-xs font-medium text-elec-yellow/80 mb-1">
                   Section 2: Design and Construction
                 </p>
-                <p className="text-xs text-white/80">
+                <p className="text-xs text-white">
                   BS 7671:2018+A2:2022 reference, IET Code of Practice, manufacturer's instructions,
                   Part 7 compliance
                 </p>
@@ -239,7 +239,7 @@ const EVChargingModule6Section6 = () => {
                 <p className="text-xs font-medium text-elec-yellow/80 mb-1">
                   Section 3: Inspection and Testing
                 </p>
-                <p className="text-xs text-white/80">
+                <p className="text-xs text-white">
                   All tests completed satisfactorily, results on schedule, limitations noted,
                   recommendations listed
                 </p>
@@ -248,7 +248,7 @@ const EVChargingModule6Section6 = () => {
                 <p className="text-xs font-medium text-elec-yellow/80 mb-1">
                   Section 4: Declarations
                 </p>
-                <p className="text-xs text-white/80">
+                <p className="text-xs text-white">
                   Designer, constructor, and inspector signatures with registration details
                 </p>
               </div>
@@ -373,7 +373,7 @@ const EVChargingModule6Section6 = () => {
 
             <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
               <p className="text-sm font-medium text-green-400 mb-2">Professional Tip</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Present documents in a branded folder or binder. Include your business card and a
                 follow-up care card. This professional touch increases referrals and repeat
                 business.
@@ -467,7 +467,7 @@ const EVChargingModule6Section6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/ev-charging-module-6-section-5">

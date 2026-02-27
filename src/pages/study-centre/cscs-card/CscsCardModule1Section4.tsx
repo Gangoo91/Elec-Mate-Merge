@@ -208,7 +208,7 @@ export default function CscsCardModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-1">
@@ -233,7 +233,7 @@ export default function CscsCardModule1Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Booking, Preparation &amp; Study Tips
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How to book the HS&amp;E test, what to bring on the day, proven study strategies, key
             topics to focus on, and what to do after you pass
           </p>
@@ -323,7 +323,7 @@ export default function CscsCardModule1Section4() {
                   <CalendarCheck className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Cancellation Policy</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   You can{' '}
                   <strong className="text-white">
                     cancel or reschedule up to 3 clear working days
@@ -336,7 +336,7 @@ export default function CscsCardModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Booking Summary</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -400,7 +400,7 @@ export default function CscsCardModule1Section4() {
                   <ClipboardCheck className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">ID Requirements</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   You must bring <strong className="text-white">two forms of ID</strong>. At least
                   one must be a <strong className="text-white">valid photo ID</strong> &mdash; a
                   passport, driving licence, or CSCS-approved biometric ID. The name on your ID must
@@ -416,7 +416,7 @@ export default function CscsCardModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Test Room Rules</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -468,7 +468,7 @@ export default function CscsCardModule1Section4() {
                     <p className="text-xs font-semibold text-green-300 mb-3 text-center uppercase tracking-wide">
                       Bring
                     </p>
-                    <ul className="text-xs text-white/80 space-y-2">
+                    <ul className="text-xs text-white space-y-2">
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-3.5 w-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                         <span>Photo ID (passport / licence)</span>
@@ -489,7 +489,7 @@ export default function CscsCardModule1Section4() {
                     <p className="text-xs font-semibold text-green-300 mb-3 text-center uppercase tracking-wide">
                       Expect
                     </p>
-                    <ul className="text-xs text-white/80 space-y-2">
+                    <ul className="text-xs text-white space-y-2">
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-3.5 w-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                         <span>Sign-in &amp; ID check</span>
@@ -510,7 +510,7 @@ export default function CscsCardModule1Section4() {
                     <p className="text-xs font-semibold text-green-300 mb-3 text-center uppercase tracking-wide">
                       Timing
                     </p>
-                    <ul className="text-xs text-white/80 space-y-2">
+                    <ul className="text-xs text-white space-y-2">
                       <li className="flex items-start gap-2">
                         <Clock className="h-3.5 w-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                         <span>Arrive 15 mins early</span>
@@ -527,7 +527,7 @@ export default function CscsCardModule1Section4() {
                   </div>
                 </div>
 
-                <p className="text-xs text-white/40 text-center mt-4">
+                <p className="text-xs text-white text-center mt-4">
                   Without correct ID you will not be allowed to sit the test
                 </p>
               </div>
@@ -558,7 +558,7 @@ export default function CscsCardModule1Section4() {
                   <BookOpen className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Recommended Study Methods</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -627,7 +627,7 @@ export default function CscsCardModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Common Mistakes</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The most common preparation mistakes are: relying solely on practice questions
                   without reading the underlying material; cramming everything the night before;
                   using outdated or unofficial study materials; and ignoring the behavioural case
@@ -671,7 +671,7 @@ export default function CscsCardModule1Section4() {
                     'Electrical safety',
                     'Behavioural responses to unsafe situations',
                   ].map((topic, i) => (
-                    <div key={i} className="flex items-start gap-2 text-sm text-white/80">
+                    <div key={i} className="flex items-start gap-2 text-sm text-white">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>{topic}</span>
                     </div>
@@ -681,11 +681,11 @@ export default function CscsCardModule1Section4() {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-green-400 mb-3">Key Regulations to Know</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   You do not need to memorise regulation numbers, but you should understand the
                   purpose, scope, and key requirements of each:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -749,7 +749,7 @@ export default function CscsCardModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Behavioural Questions</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Behavioural case study questions present a workplace scenario and ask what you
                   would do. There is often more than one &ldquo;reasonable&rdquo; answer, but only
                   one is the
@@ -782,7 +782,7 @@ export default function CscsCardModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Practice Test Strategy</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -826,7 +826,7 @@ export default function CscsCardModule1Section4() {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-green-400 mb-2">Why 90%?</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The pass mark for the HS&amp;E test varies depending on the card category, but
                   consistently scoring above 90% on practice tests gives you a{' '}
                   <strong className="text-white">comfortable margin</strong>. The real test may
@@ -838,7 +838,7 @@ export default function CscsCardModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Available Practice Resources</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -889,7 +889,7 @@ export default function CscsCardModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Reading Questions</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -921,7 +921,7 @@ export default function CscsCardModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Answering Strategy</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -961,7 +961,7 @@ export default function CscsCardModule1Section4() {
                   <Clock className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Time Management</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   You have <strong className="text-white">45 minutes for 50 questions</strong>,
                   which works out at approximately{' '}
                   <strong className="text-white">54 seconds per question</strong>. Most candidates
@@ -973,7 +973,7 @@ export default function CscsCardModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Staying Calm</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1030,7 +1030,7 @@ export default function CscsCardModule1Section4() {
                   <RefreshCw className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Re-Sit Process</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1079,7 +1079,7 @@ export default function CscsCardModule1Section4() {
                 <p className="text-sm font-medium text-green-400 mb-2">
                   Intensive Preparation Courses
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Many training providers offer{' '}
                   <strong className="text-white">intensive one-day CSCS preparation courses</strong>{' '}
                   specifically designed for candidates who have failed or who want additional
@@ -1094,7 +1094,7 @@ export default function CscsCardModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Common Reasons for Failure</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-amber-400" />
                     <span>
@@ -1146,11 +1146,11 @@ export default function CscsCardModule1Section4() {
                   <CreditCard className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Application Requirements</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Apply for your CSCS card online at{' '}
                   <strong className="text-white">cscs.uk.com</strong>. You will need:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1195,7 +1195,7 @@ export default function CscsCardModule1Section4() {
                   <Clock className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Processing Time</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Processing takes approximately{' '}
                   <strong className="text-white">10 working days</strong> from the date your
                   application is approved. Your card is posted to your{' '}
@@ -1207,7 +1207,7 @@ export default function CscsCardModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Important Timelines</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1256,7 +1256,7 @@ export default function CscsCardModule1Section4() {
                         Week 1 &mdash; Foundation
                       </p>
                     </div>
-                    <ul className="text-xs text-white/80 space-y-1.5 ml-10">
+                    <ul className="text-xs text-white space-y-1.5 ml-10">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>Read GE700 chapters on HASAWA, CDM, and risk assessment</span>
@@ -1282,7 +1282,7 @@ export default function CscsCardModule1Section4() {
                         Week 2 &mdash; Core Topics
                       </p>
                     </div>
-                    <ul className="text-xs text-white/80 space-y-1.5 ml-10">
+                    <ul className="text-xs text-white space-y-1.5 ml-10">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>Working at height, manual handling, fire safety</span>
@@ -1308,7 +1308,7 @@ export default function CscsCardModule1Section4() {
                         Week 3 &mdash; Specialist Topics
                       </p>
                     </div>
-                    <ul className="text-xs text-white/80 space-y-1.5 ml-10">
+                    <ul className="text-xs text-white space-y-1.5 ml-10">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>Asbestos, COSHH, electrical safety, PPE</span>
@@ -1334,7 +1334,7 @@ export default function CscsCardModule1Section4() {
                         Week 4 &mdash; Final Revision
                       </p>
                     </div>
-                    <ul className="text-xs text-white/80 space-y-1.5 ml-10">
+                    <ul className="text-xs text-white space-y-1.5 ml-10">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>Timed practice tests daily &mdash; aim for 90%+ consistently</span>
@@ -1353,7 +1353,7 @@ export default function CscsCardModule1Section4() {
                   </div>
                 </div>
 
-                <p className="text-xs text-white/40 text-center mt-4">
+                <p className="text-xs text-white text-center mt-4">
                   30&ndash;45 minutes of focused study per session &mdash; short sessions beat long
                   cramming
                 </p>
@@ -1364,7 +1364,7 @@ export default function CscsCardModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Don&rsquo;t Delay</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Apply for your card as soon as possible after passing the HS&amp;E test. Your
                   result is valid for 2 years, but delays can arise &mdash; for example, your
                   qualification may take time to be registered on the CTR, or there may be issues
@@ -1381,7 +1381,7 @@ export default function CscsCardModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-1">
@@ -1408,7 +1408,7 @@ export default function CscsCardModule1Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1422,7 +1422,7 @@ export default function CscsCardModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-1">

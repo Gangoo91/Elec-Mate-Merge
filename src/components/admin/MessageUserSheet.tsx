@@ -211,7 +211,7 @@ export default function MessageUserSheet({ open, onOpenChange, user }: MessageUs
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
                     placeholder="Enter message subject..."
-                    className="h-12 bg-white/[0.03] border-white/[0.06] text-white placeholder:text-white/30"
+                    className="h-12 bg-white/[0.03] border-white/[0.06] text-white placeholder:text-white"
                   />
                 </div>
 
@@ -223,7 +223,7 @@ export default function MessageUserSheet({ open, onOpenChange, user }: MessageUs
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="Type your message here..."
-                    className="min-h-[200px] bg-white/[0.03] border-white/[0.06] text-white placeholder:text-white/30 resize-none"
+                    className="min-h-[200px] bg-white/[0.03] border-white/[0.06] text-white placeholder:text-white resize-none"
                   />
                 </div>
 
@@ -259,7 +259,7 @@ export default function MessageUserSheet({ open, onOpenChange, user }: MessageUs
                           setSubject(template.subject);
                           setMessage(template.message);
                         }}
-                        className="px-3 py-1.5 rounded-lg bg-white/[0.05] text-xs text-white/70 hover:bg-white/[0.1] touch-manipulation"
+                        className="px-3 py-1.5 rounded-lg bg-white/[0.05] text-xs text-white hover:bg-white/[0.1] touch-manipulation"
                       >
                         {template.label}
                       </button>

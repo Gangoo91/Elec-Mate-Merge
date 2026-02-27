@@ -210,7 +210,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-1">
@@ -235,7 +235,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             What Is Scaffolding?
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The definition, history, UK industry landscape, legal framework, and safety culture that
             every construction worker and electrician needs to understand
           </p>
@@ -353,7 +353,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key Purposes of Scaffolding</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -409,7 +409,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
                   <BookOpen className="h-5 w-5 text-slate-400" />
                   <p className="text-sm font-medium text-slate-400">Historical Timeline</p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-3">
                     <span className="text-slate-400 font-mono text-xs min-w-[70px]">~2000 BC</span>
                     <span>
@@ -475,7 +475,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
                 risk:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                   <span>
@@ -516,7 +516,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">The Cost of Getting It Wrong</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   When scaffolding is poorly erected, inadequately inspected, or misused, the
                   consequences can be catastrophic. Scaffold failures and falls from scaffolds
                   result in fatalities, life- changing injuries, criminal prosecutions, unlimited
@@ -529,7 +529,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Why Collective Protection Matters
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -588,26 +588,26 @@ export default function ScaffoldingAwarenessModule1Section1() {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-slate-400">&pound;1bn+</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Annual value of the UK scaffold industry
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-slate-400">50,000+</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       People working in scaffolding across the UK
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-slate-400">NASC</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       National Access &amp; Scaffolding Confederation &mdash; the industry trade
                       body
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-slate-400">CISRS</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Construction Industry Scaffolders Record Scheme &mdash; manages competence
                       cards
                     </p>
@@ -634,7 +634,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">CISRS Card Levels</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -718,7 +718,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
                     Common Electrical Tasks Involving Scaffolds
                   </p>
                 </div>
-                <div className="grid sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-3 text-sm text-white">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">Wiring &amp; Containment</p>
                     <ul className="space-y-1.5">
@@ -797,7 +797,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
                     Key Risks for Electricians on Scaffolds
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                     <span>
@@ -870,10 +870,10 @@ export default function ScaffoldingAwarenessModule1Section1() {
                     Primary Legislation &amp; Standards
                   </p>
                 </div>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">Work at Height Regulations 2005</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       The principal regulations governing all work at height. Scaffolding is
                       recognised as the primary means of providing a safe working platform where
                       work at height cannot be avoided. The regulations require proper planning,
@@ -882,7 +882,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">CDM Regulations 2015</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       The Construction (Design and Management) Regulations 2015 classify scaffold
                       design as temporary works. The principal designer, principal contractor, and
                       scaffold designer all have defined duties to ensure scaffolding is designed,
@@ -893,7 +893,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
                     <p className="text-white font-medium mb-1">
                       Health and Safety at Work Act 1974 (HASAWA)
                     </p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       The overarching legislation that places general duties on employers to ensure
                       the health, safety, and welfare of employees and others affected by their work
                       activities. This includes the provision and maintenance of safe scaffolding.
@@ -903,7 +903,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
                     <p className="text-white font-medium mb-1">
                       BS EN 12811 &mdash; Design Standards
                     </p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       The European standard (adopted in the UK) covering the performance
                       requirements and general design of temporary works equipment including
                       scaffolding. It specifies load classes, dimensions, structural requirements,
@@ -914,7 +914,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
                     <p className="text-white font-medium mb-1">
                       NASC TG20 &mdash; Compliance Guidance
                     </p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       The NASC technical guidance document TG20 provides comprehensive compliance
                       guidance for tube and fitting scaffolds. It includes design tables, wind
                       loading calculations, tie patterns, and standard configurations that, when
@@ -929,7 +929,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
                 scaffolding:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                   <span>
@@ -967,7 +967,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
                   <ClipboardCheck className="h-5 w-5 text-slate-400" />
                   <p className="text-sm font-medium text-slate-400">Inspection Requirements</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Under the Work at Height Regulations 2005 (Schedule 7), scaffolds must be
                   inspected by a competent person{' '}
                   <strong className="text-white">
@@ -1004,7 +1004,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
                 other access methods when:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                   <span>
@@ -1060,12 +1060,12 @@ export default function ScaffoldingAwarenessModule1Section1() {
                   <div className="min-w-[500px] px-2">
                     {/* Header row */}
                     <div className="grid grid-cols-4 gap-2 mb-2 text-xs font-semibold">
-                      <div className="text-white/60 p-2">Criteria</div>
+                      <div className="text-white p-2">Criteria</div>
                       <div className="text-slate-400 p-2 bg-slate-500/10 rounded-t-lg text-center">
                         Full Scaffold
                       </div>
-                      <div className="text-white/60 p-2 text-center">Tower Scaffold</div>
-                      <div className="text-white/60 p-2 text-center">Podium / Ladder</div>
+                      <div className="text-white p-2 text-center">Tower Scaffold</div>
+                      <div className="text-white p-2 text-center">Podium / Ladder</div>
                     </div>
                     {/* Rows */}
                     {[
@@ -1118,18 +1118,18 @@ export default function ScaffoldingAwarenessModule1Section1() {
                           i % 2 === 0 ? 'bg-white/[0.02]' : ''
                         }`}
                       >
-                        <div className="text-white/60 p-2 font-medium">{row.criteria}</div>
+                        <div className="text-white p-2 font-medium">{row.criteria}</div>
                         <div className="text-white p-2 bg-slate-500/5 text-center">
                           {row.scaffold}
                         </div>
-                        <div className="text-white/70 p-2 text-center">{row.tower}</div>
-                        <div className="text-white/70 p-2 text-center">{row.podium}</div>
+                        <div className="text-white p-2 text-center">{row.tower}</div>
+                        <div className="text-white p-2 text-center">{row.podium}</div>
                       </div>
                     ))}
                   </div>
                 </div>
                 <div className="mt-3 p-3 bg-slate-500/10 border border-slate-500/20 rounded-lg">
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     <strong className="text-slate-400">Note:</strong> The correct access method must
                     always be determined by a risk assessment. A full scaffold is not always
                     necessary, but when the criteria above are met, it is almost always the safest
@@ -1143,7 +1143,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
                   <HardHat className="h-5 w-5 text-slate-400" />
                   <p className="text-sm font-medium text-slate-400">Electrician Consideration</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Electrical work almost always requires both hands free &mdash; for connecting
                   cables, tightening glands, operating test instruments, and using power tools. This
                   means that ladders are rarely suitable for electrical tasks at height. A scaffold
@@ -1183,25 +1183,25 @@ export default function ScaffoldingAwarenessModule1Section1() {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">~40</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Workers killed by falls from height each year in the UK (all access equipment)
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">~50%</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Of all construction fatalities involve falls from height
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-slate-400">5,000+</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Major injuries from falls at height each year across all UK industries
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-green-400">90%+</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Of scaffold accidents are preventable with proper inspection and use
                     </p>
                   </div>
@@ -1210,7 +1210,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
 
               <p>The most common categories of scaffold-related accident are:</p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                   <span>
@@ -1256,7 +1256,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
                     Most Scaffold Accidents Are Preventable
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The overwhelming majority of scaffold-related accidents are entirely preventable.
                   They result from a failure to inspect the scaffold before use, a failure to erect
                   it to the correct standard, unauthorised modifications by users, overloading, or a
@@ -1270,7 +1270,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Common Contributing Factors in Scaffold Incidents
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>Missing or incomplete guardrails and toe boards</span>
@@ -1342,7 +1342,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
                       <HardHat className="h-4 w-4 text-slate-400" />
                       <p className="text-white font-medium">Scaffolders</p>
                     </div>
-                    <ul className="text-white/80 space-y-1.5">
+                    <ul className="text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                         <span>Erect safely and to the correct standard</span>
@@ -1368,7 +1368,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
                         Users (Electricians &amp; Other Trades)
                       </p>
                     </div>
-                    <ul className="text-white/80 space-y-1.5">
+                    <ul className="text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                         <span>Check the scaffold tag and visual condition before use</span>
@@ -1392,7 +1392,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
                       <ClipboardCheck className="h-4 w-4 text-slate-400" />
                       <p className="text-white font-medium">Inspectors</p>
                     </div>
-                    <ul className="text-white/80 space-y-1.5">
+                    <ul className="text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                         <span>Carry out thorough inspections at the required intervals</span>
@@ -1416,7 +1416,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
                       <Shield className="h-4 w-4 text-slate-400" />
                       <p className="text-white font-medium">Managers</p>
                     </div>
-                    <ul className="text-white/80 space-y-1.5">
+                    <ul className="text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                         <span>Ensure compliance with regulations and standards</span>
@@ -1447,7 +1447,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
                     Golden Rules of Scaffold Safety
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                     <span>
@@ -1516,7 +1516,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
                 key points to carry forward are:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -1581,7 +1581,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-1">
@@ -1608,7 +1608,7 @@ export default function ScaffoldingAwarenessModule1Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

@@ -169,7 +169,7 @@ export default function AsbestosModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-1">
@@ -194,7 +194,7 @@ export default function AsbestosModule1Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             History, Properties &amp; Why It Was Used
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             From ancient Greece to twentieth-century industry &mdash; how a &ldquo;magic
             mineral&rdquo; became Britain&rsquo;s biggest workplace killer
           </p>
@@ -311,7 +311,7 @@ export default function AsbestosModule1Section1() {
                   <p className="text-sm font-medium text-orange-400 mb-2">
                     Serpentine Family (Curly Fibres)
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -327,7 +327,7 @@ export default function AsbestosModule1Section1() {
                   <p className="text-sm font-medium text-orange-400 mb-2">
                     Amphibole Family (Needle-Like Fibres)
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -384,7 +384,7 @@ export default function AsbestosModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Key Fact</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   All six types of asbestos are classified as{' '}
                   <strong className="text-red-400">Group 1 carcinogens</strong> by the International
                   Agency for Research on Cancer (IARC). There is no safe level of exposure. Even
@@ -421,7 +421,7 @@ export default function AsbestosModule1Section1() {
                     <Flame className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                     <div>
                       <p className="text-sm font-medium text-white">Fireproof / Heat Resistant</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Withstands temperatures up to 1,000&deg;C
                       </p>
                     </div>
@@ -430,7 +430,7 @@ export default function AsbestosModule1Section1() {
                     <Shield className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
                     <div>
                       <p className="text-sm font-medium text-white">Chemical Resistance</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Resistant to acids, alkalis, and most chemicals
                       </p>
                     </div>
@@ -441,7 +441,7 @@ export default function AsbestosModule1Section1() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Electrical Insulation</p>
-                      <p className="text-xs text-white/70">Excellent dielectric properties</p>
+                      <p className="text-xs text-white">Excellent dielectric properties</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
@@ -450,7 +450,7 @@ export default function AsbestosModule1Section1() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Sound Absorption</p>
-                      <p className="text-xs text-white/70">Effective acoustic insulation</p>
+                      <p className="text-xs text-white">Effective acoustic insulation</p>
                     </div>
                   </div>
                 </div>
@@ -458,7 +458,7 @@ export default function AsbestosModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Full Property List</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -545,7 +545,7 @@ export default function AsbestosModule1Section1() {
                     Why &ldquo;Magic Mineral&rdquo; Is a Dangerous Label
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Marketing materials throughout the twentieth century promoted asbestos as a
                   miracle material &mdash; safe, modern, and essential for progress. Manufacturers
                   published advertisements showing families living happily in asbestos-insulated
@@ -644,7 +644,7 @@ export default function AsbestosModule1Section1() {
                     >
                       <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-2 text-center">
                         <p className="text-orange-400 text-xs font-bold mb-0.5">{event.year}</p>
-                        <p className="text-white/80 text-[10px] leading-tight">{event.label}</p>
+                        <p className="text-white text-[10px] leading-tight">{event.label}</p>
                       </div>
                     </div>
                   </div>
@@ -653,7 +653,7 @@ export default function AsbestosModule1Section1() {
             </div>
 
             {/* Scroll hint for mobile */}
-            <p className="text-center text-white/40 text-xs mt-2 sm:hidden">
+            <p className="text-center text-white text-xs mt-2 sm:hidden">
               &larr; Scroll to view full timeline &rarr;
             </p>
           </div>
@@ -682,23 +682,23 @@ export default function AsbestosModule1Section1() {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-orange-400">6M</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       tonnes of asbestos imported (1900&ndash;1999)
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-orange-400">3,000+</p>
-                    <p className="text-white/70 text-xs">different products contained asbestos</p>
+                    <p className="text-white text-xs">different products contained asbestos</p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-orange-400">500,000+</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       non-domestic buildings still containing asbestos
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-orange-400">1950s&ndash;80s</p>
-                    <p className="text-white/70 text-xs">peak decades of UK asbestos usage</p>
+                    <p className="text-white text-xs">peak decades of UK asbestos usage</p>
                   </div>
                 </div>
               </div>
@@ -720,7 +720,7 @@ export default function AsbestosModule1Section1() {
                     Industries and Sectors That Used Asbestos
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -819,7 +819,7 @@ export default function AsbestosModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Timeline of Key Evidence</p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[52px] h-7 rounded-full bg-orange-500/20 text-orange-400 text-xs font-bold flex-shrink-0">
                       1898
@@ -937,7 +937,7 @@ export default function AsbestosModule1Section1() {
                   <Skull className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Industry Denial and Delay</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Despite the mounting evidence, the asbestos industry continued to promote its
                   products well into the 1970s. Internal company documents, uncovered during later
                   litigation, revealed that major manufacturers were aware of the health risks
@@ -988,7 +988,7 @@ export default function AsbestosModule1Section1() {
                     Asbestos Is NOT Just a Historical Problem
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Although asbestos has been banned in the UK since 1999, it was not removed from
                   existing buildings. Millions of tonnes of asbestos-containing materials remain in
                   place in homes, schools, hospitals, offices, factories, and public buildings
@@ -1017,23 +1017,23 @@ export default function AsbestosModule1Section1() {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">~5,000</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       asbestos-related deaths per year in the UK
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">~2,700</p>
-                    <p className="text-white/70 text-xs">mesothelioma deaths per year in the UK</p>
+                    <p className="text-white text-xs">mesothelioma deaths per year in the UK</p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">More</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       deaths than road traffic accidents annually
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">Rising</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       annual deaths still increasing (peak ~2020s)
                     </p>
                   </div>
@@ -1060,7 +1060,7 @@ export default function AsbestosModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Trades Most at Risk</p>
-                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -1119,7 +1119,7 @@ export default function AsbestosModule1Section1() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Remember</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   You <strong>cannot</strong> identify asbestos by looking at it. You cannot smell
                   it, taste it, or feel it in the air. The fibres that cause fatal disease are
                   invisible to the naked eye &mdash; a single asbestos fibre is approximately 700
@@ -1142,7 +1142,7 @@ export default function AsbestosModule1Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1156,7 +1156,7 @@ export default function AsbestosModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-1">

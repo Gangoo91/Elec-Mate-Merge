@@ -128,7 +128,7 @@ const CashFlowPlanner = () => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Wallet className="h-4 w-4 text-green-400" />
-                  <span className="text-sm font-medium text-white/80">Income Streams</span>
+                  <span className="text-sm font-medium text-white">Income Streams</span>
                 </div>
                 <button
                   onClick={() => openAddSheet('income')}
@@ -151,7 +151,7 @@ const CashFlowPlanner = () => {
                 </div>
               ) : (
                 <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-center">
-                  <p className="text-white/50 text-sm">No income streams added yet</p>
+                  <p className="text-white text-sm">No income streams added yet</p>
                 </div>
               )}
             </div>
@@ -161,7 +161,7 @@ const CashFlowPlanner = () => {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <PiggyBank className="h-4 w-4 text-red-400" />
-                  <span className="text-sm font-medium text-white/80">Expense Categories</span>
+                  <span className="text-sm font-medium text-white">Expense Categories</span>
                 </div>
                 <button
                   onClick={() => openAddSheet('expense')}
@@ -184,7 +184,7 @@ const CashFlowPlanner = () => {
                 </div>
               ) : (
                 <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-center">
-                  <p className="text-white/50 text-sm">No expenses added yet</p>
+                  <p className="text-white text-sm">No expenses added yet</p>
                 </div>
               )}
             </div>
@@ -290,7 +290,7 @@ const CashFlowPlanner = () => {
             <div className="p-8 rounded-2xl bg-white/5 border border-white/10 text-center">
               <Info className="h-10 w-10 text-blue-400 mx-auto mb-3 opacity-50" />
               <h3 className="text-white font-semibold mb-2">No Data Yet</h3>
-              <p className="text-white/50 text-sm">
+              <p className="text-white text-sm">
                 Add income and expenses to see your cash flow chart
               </p>
             </div>
@@ -317,7 +317,7 @@ const CashFlowPlanner = () => {
             <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-center">
               <Info className="h-8 w-8 text-blue-400 mx-auto mb-2 opacity-50" />
               <h3 className="text-white font-medium text-sm mb-1">Get Started</h3>
-              <p className="text-white/50 text-xs">
+              <p className="text-white text-xs">
                 Add income streams and expenses to see your financial health summary
               </p>
             </div>
@@ -341,7 +341,7 @@ const EmptyState = ({ onShowTemplates }: { onShowTemplates: () => void }) => (
   <div className="p-8 rounded-xl border border-white/10 bg-white/5 text-center">
     <Info className="h-10 w-10 text-blue-400 mx-auto mb-3 opacity-50" />
     <h3 className="text-white text-lg font-semibold mb-2">No Data Yet</h3>
-    <p className="text-white/50 text-sm mb-4">
+    <p className="text-white text-sm mb-4">
       Add income streams and expenses to see your projections.
     </p>
     <button

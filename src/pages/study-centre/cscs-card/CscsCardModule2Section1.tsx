@@ -219,7 +219,7 @@ export default function CscsCardModule2Section1() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Risk Assessment &amp; Method Statements
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             The 5-step risk assessment process, hierarchy of controls, RAMS preparation, dynamic
             risk assessment, and your legal responsibilities on site
           </p>
@@ -374,7 +374,7 @@ export default function CscsCardModule2Section1() {
                 <div className="space-y-3 text-sm">
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <p className="text-green-300 font-medium mb-1">Hazard</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Anything with the{' '}
                       <strong className="text-white">potential to cause harm</strong>. Examples
                       include trailing cables, working at height, live electrical conductors,
@@ -383,7 +383,7 @@ export default function CscsCardModule2Section1() {
                   </div>
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <p className="text-green-300 font-medium mb-1">Risk</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       The <strong className="text-white">likelihood</strong> that the hazard will
                       cause harm, combined with the <strong className="text-white">severity</strong>{' '}
                       of that harm. A high hazard with good controls in place may result in a low
@@ -435,7 +435,7 @@ export default function CscsCardModule2Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-green-400 font-medium mb-2">Employer Duties</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The Management of Health and Safety at Work Regulations 1999 require every
                   employer to:
                 </p>
@@ -476,7 +476,7 @@ export default function CscsCardModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">CSCS Test Tip</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The CSCS HS&amp;E test frequently asks about the difference between a hazard and a
                   risk. Remember: a <strong className="text-white">hazard</strong> is something that{' '}
                   <em>could</em> cause harm; a <strong className="text-white">risk</strong> is how{' '}
@@ -516,7 +516,7 @@ export default function CscsCardModule2Section1() {
                       </div>
                       <span className="text-green-300 font-semibold text-sm">Identify Hazards</span>
                     </div>
-                    <p className="text-white/60 text-xs">Walk the site. What could cause harm?</p>
+                    <p className="text-white text-xs">Walk the site. What could cause harm?</p>
                   </div>
                   {/* Arrow */}
                   <div className="flex items-center justify-center">
@@ -532,7 +532,7 @@ export default function CscsCardModule2Section1() {
                         Who Might Be Harmed?
                       </span>
                     </div>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Workers, visitors, public, vulnerable groups
                     </p>
                   </div>
@@ -550,7 +550,7 @@ export default function CscsCardModule2Section1() {
                         Evaluate Risks &amp; Decide Precautions
                       </span>
                     </div>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Apply Hierarchy of Controls. What more can be done?
                     </p>
                   </div>
@@ -568,7 +568,7 @@ export default function CscsCardModule2Section1() {
                         Record Your Findings
                       </span>
                     </div>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Written record required for 5+ employees
                     </p>
                   </div>
@@ -586,12 +586,12 @@ export default function CscsCardModule2Section1() {
                         Review &amp; Update
                       </span>
                     </div>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       After incidents, changes, or at least annually
                     </p>
                   </div>
                 </div>
-                <p className="text-white/50 text-xs text-center mt-4 italic">
+                <p className="text-white text-xs text-center mt-4 italic">
                   The 5-step process is cyclical &mdash; step 5 feeds back into step 1 when
                   conditions change.
                 </p>
@@ -611,7 +611,7 @@ export default function CscsCardModule2Section1() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-green-300 font-medium mb-1">Identify Hazards</h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Walk around the workplace or site, observe work activities, talk to
                           workers, check manufacturer instructions, review accident records, and
                           consider non-routine activities. On a construction site, common hazards
@@ -631,7 +631,7 @@ export default function CscsCardModule2Section1() {
                         <h4 className="text-green-300 font-medium mb-1">
                           Decide Who Might Be Harmed
                         </h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Consider everyone who could be affected: employees, contractors,
                           sub-contractors, visitors, members of the public, delivery drivers, and
                           anyone passing by. Pay particular attention to{' '}
@@ -651,7 +651,7 @@ export default function CscsCardModule2Section1() {
                         <h4 className="text-green-300 font-medium mb-1">
                           Evaluate Risks &amp; Decide Precautions
                         </h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           For each hazard, consider the existing controls already in place, then
                           evaluate whether the remaining (residual) risk is acceptable. If not,
                           decide what additional precautions are needed using the{' '}
@@ -676,7 +676,7 @@ export default function CscsCardModule2Section1() {
                         <h4 className="text-green-300 font-medium mb-1">
                           Record Your Significant Findings
                         </h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Employers with <strong className="text-white">5 or more employees</strong>{' '}
                           must record their risk assessment findings in writing. The record should
                           include the hazards identified, who might be harmed, the existing
@@ -695,7 +695,7 @@ export default function CscsCardModule2Section1() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-green-300 font-medium mb-1">Review &amp; Update</h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Risk assessments are{' '}
                           <strong className="text-white">living documents</strong> that must be
                           reviewed and updated regularly. Triggers for review include: after an
@@ -713,7 +713,7 @@ export default function CscsCardModule2Section1() {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-green-400">Construction Example</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   <strong className="text-white">Task:</strong> Installing a consumer unit in a
                   domestic property. <strong className="text-white">Hazard:</strong> Live electrical
                   conductors. <strong className="text-white">Who:</strong> Electrician, other trades
@@ -758,14 +758,14 @@ export default function CscsCardModule2Section1() {
                   {/* Level 1 - Elimination (narrowest) */}
                   <div className="w-[40%] sm:w-[35%] bg-green-500/25 border border-green-400/50 rounded-t-lg rounded-b-sm p-2 text-center">
                     <p className="text-green-300 font-semibold text-xs sm:text-sm">Elimination</p>
-                    <p className="text-white/50 text-[10px] sm:text-xs">
+                    <p className="text-white text-[10px] sm:text-xs">
                       Remove the hazard entirely
                     </p>
                   </div>
                   {/* Level 2 - Substitution */}
                   <div className="w-[52%] sm:w-[48%] bg-green-500/20 border border-green-400/40 rounded-sm p-2 text-center">
                     <p className="text-green-300 font-semibold text-xs sm:text-sm">Substitution</p>
-                    <p className="text-white/50 text-[10px] sm:text-xs">
+                    <p className="text-white text-[10px] sm:text-xs">
                       Replace with something less dangerous
                     </p>
                   </div>
@@ -774,7 +774,7 @@ export default function CscsCardModule2Section1() {
                     <p className="text-green-300 font-semibold text-xs sm:text-sm">
                       Engineering Controls
                     </p>
-                    <p className="text-white/50 text-[10px] sm:text-xs">
+                    <p className="text-white text-[10px] sm:text-xs">
                       Isolate people from the hazard
                     </p>
                   </div>
@@ -783,12 +783,12 @@ export default function CscsCardModule2Section1() {
                     <p className="text-green-300 font-semibold text-xs sm:text-sm">
                       Administrative Controls
                     </p>
-                    <p className="text-white/50 text-[10px] sm:text-xs">Change how people work</p>
+                    <p className="text-white text-[10px] sm:text-xs">Change how people work</p>
                   </div>
                   {/* Level 5 - PPE (widest) */}
                   <div className="w-[88%] sm:w-[87%] bg-green-500/5 border border-green-400/20 rounded-sm rounded-b-lg p-2 text-center">
                     <p className="text-green-300 font-semibold text-xs sm:text-sm">PPE</p>
-                    <p className="text-white/50 text-[10px] sm:text-xs">
+                    <p className="text-white text-[10px] sm:text-xs">
                       Last resort &mdash; protect the individual
                     </p>
                   </div>
@@ -802,7 +802,7 @@ export default function CscsCardModule2Section1() {
                     </span>
                   </div>
                 </div>
-                <p className="text-white/50 text-xs text-center mt-3 italic">
+                <p className="text-white text-xs text-center mt-3 italic">
                   Always start at the top. PPE should never be the first or only control measure.
                 </p>
               </div>
@@ -815,7 +815,7 @@ export default function CscsCardModule2Section1() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-1">1. Elimination</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Prefabricate components at ground level so that working at height is not
                       required. Design out the hazard entirely &mdash; for example, installing
                       services before a ceiling is fitted rather than working above a suspended
@@ -824,7 +824,7 @@ export default function CscsCardModule2Section1() {
                   </div>
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-1">2. Substitution</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Replace a solvent-based adhesive with a water-based alternative to reduce
                       harmful fume exposure. Use battery-powered tools instead of mains-powered
                       tools in wet conditions to reduce electrical risk. Use mechanical lifting
@@ -833,7 +833,7 @@ export default function CscsCardModule2Section1() {
                   </div>
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-1">3. Engineering Controls</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Install guardrails and edge protection on scaffolds. Use local exhaust
                       ventilation (LEV) to capture dust at source. Fit RCD protection on circuits.
                       Install physical barriers to separate pedestrians from moving vehicles on
@@ -842,7 +842,7 @@ export default function CscsCardModule2Section1() {
                   </div>
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-1">4. Administrative Controls</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Provide training and toolbox talks. Implement permit-to-work systems for
                       high-risk activities. Use signage and safety warnings. Rotate workers to
                       reduce exposure time to noise or vibration. Establish safe systems of work
@@ -851,7 +851,7 @@ export default function CscsCardModule2Section1() {
                   </div>
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-1">5. PPE (Last Resort)</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Hard hats, safety boots, hi-vis clothing, hearing protection, eye protection,
                       dust masks, gloves, and harnesses. PPE is the least effective control because
                       it only protects the individual wearing it, it depends on being worn
@@ -867,7 +867,7 @@ export default function CscsCardModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Common Mistake</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   A frequent failing on construction sites is jumping straight to PPE without
                   considering the higher-level controls. If an HSE inspector asks what controls are
                   in place and the answer is &ldquo;we gave everyone hard hats and hi-vis&rdquo;,
@@ -967,7 +967,7 @@ export default function CscsCardModule2Section1() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-2">Risk Assessment</h4>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -992,7 +992,7 @@ export default function CscsCardModule2Section1() {
                   </div>
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-2">Method Statement</h4>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -1019,7 +1019,7 @@ export default function CscsCardModule2Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-green-400 font-medium mb-2">Who Writes and Reviews RAMS?</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   RAMS are typically written by the contractor or sub-contractor carrying out the
                   work. They must be written by a{' '}
                   <strong className="text-white">competent person</strong> with relevant knowledge
@@ -1134,7 +1134,7 @@ export default function CscsCardModule2Section1() {
                       <span className="text-red-300 font-bold text-lg">S</span>
                     </div>
                     <p className="text-red-300 font-semibold text-sm mb-1">STOP</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Stop what you are doing immediately. Do not continue working if you have
                       identified a new or changed hazard.
                     </p>
@@ -1144,7 +1144,7 @@ export default function CscsCardModule2Section1() {
                       <span className="text-amber-300 font-bold text-lg">T</span>
                     </div>
                     <p className="text-amber-300 font-semibold text-sm mb-1">THINK</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Assess the new hazard. What is the risk? Can you control it? Is it safe to
                       continue? Do you need help or advice?
                     </p>
@@ -1154,20 +1154,20 @@ export default function CscsCardModule2Section1() {
                       <span className="text-green-300 font-bold text-lg">A</span>
                     </div>
                     <p className="text-green-300 font-semibold text-sm mb-1">ACT</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Either implement a safe control and continue, or stop work entirely and report
                       the issue to your supervisor.
                     </p>
                   </div>
                 </div>
-                <p className="text-white/50 text-xs text-center mt-4 italic">
+                <p className="text-white text-xs text-center mt-4 italic">
                   If in doubt, stop the job. No task is so urgent that it cannot be done safely.
                 </p>
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-green-400 font-medium mb-2">Communicating New Risks</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   When you identify a new risk through dynamic assessment, it is essential to
                   communicate it to others. This ensures that everyone on site is aware of the
                   changed conditions.
@@ -1207,7 +1207,7 @@ export default function CscsCardModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Your Right to Stop Work</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Every worker has the right &mdash; and the duty &mdash; to{' '}
                   <strong className="text-white">stop work</strong> if they believe there is a
                   serious and imminent danger that has not been adequately controlled. This right is
@@ -1237,7 +1237,7 @@ export default function CscsCardModule2Section1() {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-green-400">Written Records</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Under the Management of Health and Safety at Work Regulations 1999, employers with{' '}
                   <strong className="text-white">5 or more employees</strong> must record the
                   significant findings of their risk assessments in writing. The written record
@@ -1271,7 +1271,7 @@ export default function CscsCardModule2Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-green-400 font-medium mb-3">Communicating to Workers</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Risk assessment findings must be communicated to all workers who are affected.
                   There are several methods used on construction sites:
                 </p>
@@ -1320,7 +1320,7 @@ export default function CscsCardModule2Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-green-400 font-medium mb-2">Overcoming Language Barriers</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Construction sites often have a diverse workforce with workers whose first
                   language is not English. Employers have a duty to ensure that safety information
                   is understood by <strong className="text-white">all</strong> workers. This may
@@ -1360,7 +1360,7 @@ export default function CscsCardModule2Section1() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-1">1. Falls from Height</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       The single largest cause of fatal injuries in UK construction, accounting for
                       approximately <strong className="text-white">40&ndash;50%</strong> of all
                       construction deaths each year. Falls from roofs, scaffolds, ladders, and
@@ -1372,7 +1372,7 @@ export default function CscsCardModule2Section1() {
                   </div>
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-1">2. Struck by Moving Objects</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Being hit by falling materials, swinging loads from cranes, or moving vehicles
                       on site. This includes being struck by excavator buckets, reversing dumpers,
                       and objects falling from scaffolding. Controls include exclusion zones around
@@ -1382,7 +1382,7 @@ export default function CscsCardModule2Section1() {
                   </div>
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-1">3. Trapped by Collapse</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Being buried or trapped by the collapse of excavations, structures, or
                       temporary works. Trench collapses are particularly deadly &mdash; unsupported
                       trenches can collapse without warning and the weight of soil makes escape
@@ -1393,7 +1393,7 @@ export default function CscsCardModule2Section1() {
                   </div>
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-1">4. Manual Handling Injuries</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Musculoskeletal disorders caused by lifting, carrying, pushing, or pulling
                       heavy or awkward loads. Manual handling injuries are the most common cause of
                       <strong className="text-white"> non-fatal</strong> injuries in construction
@@ -1405,7 +1405,7 @@ export default function CscsCardModule2Section1() {
                   </div>
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-1">5. Electricity</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Contact with live electrical conductors, whether from overhead power lines,
                       underground cables, or the installation being worked on. Electric shock can
                       cause burns, cardiac arrest, and death. As an electrician, you are at
@@ -1424,7 +1424,7 @@ export default function CscsCardModule2Section1() {
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-1">Harmful Substances</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Asbestos, silica dust, cement, solvents, welding fumes, and lead. The Control
                       of Substances Hazardous to Health Regulations 2002 (COSHH) require employers
                       to assess and control exposure. Many construction health hazards have long
@@ -1433,7 +1433,7 @@ export default function CscsCardModule2Section1() {
                   </div>
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-1">Noise</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Prolonged exposure to high noise levels from power tools, machinery, and
                       demolition causes permanent hearing loss. The Control of Noise at Work
                       Regulations 2005 set exposure limits: 80 dB(A) lower action level, 85 dB(A)
@@ -1443,7 +1443,7 @@ export default function CscsCardModule2Section1() {
                   </div>
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-1">Fire</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Fire risks on construction sites are elevated due to the presence of flammable
                       materials, hot works (welding, cutting, grinding), temporary electrical
                       installations, and limited escape routes. The Regulatory Reform (Fire Safety)
@@ -1453,7 +1453,7 @@ export default function CscsCardModule2Section1() {
                   </div>
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <h4 className="text-green-300 font-medium mb-1">Vibration</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Hand-arm vibration from power tools (e.g. hammer drills, angle grinders,
                       breakers) can cause Hand-Arm Vibration Syndrome (HAVS) and vibration white
                       finger. The Control of Vibration at Work Regulations 2005 set daily exposure
@@ -1543,7 +1543,7 @@ export default function CscsCardModule2Section1() {
                     <h4 className="text-green-300 font-medium mb-2">
                       Section 2 &mdash; Employer Duties to Employees
                     </h4>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>Provide and maintain safe plant and safe systems of work</span>
@@ -1576,7 +1576,7 @@ export default function CscsCardModule2Section1() {
                     <h4 className="text-green-300 font-medium mb-2">
                       Section 7 &mdash; Employee Duties
                     </h4>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>Take reasonable care of your own health and safety</span>
@@ -1614,7 +1614,7 @@ export default function CscsCardModule2Section1() {
                 <h3 className="text-green-400 font-medium mb-2">
                   Section 3 &mdash; Duties to Non-Employees
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Section 3 of HASAWA 1974 extends the employer&rsquo;s duty of care beyond their
                   own employees. Employers must conduct their work in such a way that{' '}
                   <strong className="text-white">persons not in their employment</strong> &mdash;
@@ -1630,12 +1630,12 @@ export default function CscsCardModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Penalties for Non-Compliance</h3>
                 </div>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Failing to carry out suitable and sufficient risk assessments, or failing to
                   implement the controls identified, is a criminal offence. The consequences can be
                   severe:
                 </p>
-                <ul className="text-white/80 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                     <span>
@@ -1692,7 +1692,7 @@ export default function CscsCardModule2Section1() {
                     <span className="text-green-400 font-mono text-xs mt-0.5 w-5 text-right flex-shrink-0">
                       &bull;
                     </span>
-                    <span className="text-white/80">
+                    <span className="text-white">
                       <strong className="text-white">HASAWA 1974:</strong> The overarching Act that
                       places general duties on employers, employees, and the self-employed
                     </span>
@@ -1701,7 +1701,7 @@ export default function CscsCardModule2Section1() {
                     <span className="text-green-400 font-mono text-xs mt-0.5 w-5 text-right flex-shrink-0">
                       &bull;
                     </span>
-                    <span className="text-white/80">
+                    <span className="text-white">
                       <strong className="text-white">Management Regs 1999:</strong> Requires
                       employers to carry out risk assessments, appoint competent persons, and
                       implement preventive measures
@@ -1711,7 +1711,7 @@ export default function CscsCardModule2Section1() {
                     <span className="text-green-400 font-mono text-xs mt-0.5 w-5 text-right flex-shrink-0">
                       &bull;
                     </span>
-                    <span className="text-white/80">
+                    <span className="text-white">
                       <strong className="text-white">CDM 2015:</strong> Specific regulations for the
                       construction industry, covering roles, responsibilities, and safety planning
                     </span>
@@ -1720,7 +1720,7 @@ export default function CscsCardModule2Section1() {
                     <span className="text-green-400 font-mono text-xs mt-0.5 w-5 text-right flex-shrink-0">
                       &bull;
                     </span>
-                    <span className="text-white/80">
+                    <span className="text-white">
                       <strong className="text-white">Work at Height Regs 2005:</strong> Requires
                       planning, organisation, and risk control for all work at height
                     </span>
@@ -1729,7 +1729,7 @@ export default function CscsCardModule2Section1() {
                     <span className="text-green-400 font-mono text-xs mt-0.5 w-5 text-right flex-shrink-0">
                       &bull;
                     </span>
-                    <span className="text-white/80">
+                    <span className="text-white">
                       <strong className="text-white">COSHH 2002:</strong> Controls exposure to
                       hazardous substances in the workplace
                     </span>
@@ -1738,7 +1738,7 @@ export default function CscsCardModule2Section1() {
                     <span className="text-green-400 font-mono text-xs mt-0.5 w-5 text-right flex-shrink-0">
                       &bull;
                     </span>
-                    <span className="text-white/80">
+                    <span className="text-white">
                       <strong className="text-white">Electricity at Work Regs 1989:</strong>{' '}
                       Requires precautions to be taken against the risk of death or personal injury
                       from electricity
@@ -1760,7 +1760,7 @@ export default function CscsCardModule2Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1776,7 +1776,7 @@ export default function CscsCardModule2Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-2">

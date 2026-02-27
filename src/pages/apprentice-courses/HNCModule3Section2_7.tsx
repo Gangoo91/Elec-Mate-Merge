@@ -230,7 +230,7 @@ const HNCModule3Section2_7 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section2">
@@ -252,7 +252,7 @@ const HNCModule3Section2_7 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Applications in Lighting, HVAC and Motors
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Practical application of reactive component principles in building services equipment
             and systems
           </p>
@@ -474,13 +474,13 @@ const HNCModule3Section2_7 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 s = (N<sub>s</sub> - N<sub>r</sub>) / N<sub>s</sub>
               </p>
-              <p className="text-xs text-white/70 text-center mb-4">
+              <p className="text-xs text-white text-center mb-4">
                 Where Ns = synchronous speed, Nr = rotor speed
               </p>
               <p className="font-mono text-center text-lg mb-2">
                 N<sub>s</sub> = (120 × f) / p
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where f = frequency (Hz), p = number of poles
               </p>
             </div>
@@ -667,7 +667,7 @@ const HNCModule3Section2_7 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Basic Driver (no PFC)</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Simple rectifier-capacitor input</li>
                     <li>Power factor: 0.5-0.6</li>
                     <li>THD: 100%+ possible</li>
@@ -677,7 +677,7 @@ const HNCModule3Section2_7 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Quality Driver (with PFC)</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Active power factor correction</li>
                     <li>Power factor: 0.95+</li>
                     <li>THD: &lt;10%</li>
@@ -737,18 +737,18 @@ const HNCModule3Section2_7 = () => {
               <div className="grid grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">Q ∝ N</p>
-                  <p className="text-white/70 text-xs">Flow proportional to speed</p>
+                  <p className="text-white text-xs">Flow proportional to speed</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">H ∝ N²</p>
-                  <p className="text-white/70 text-xs">Head proportional to speed²</p>
+                  <p className="text-white text-xs">Head proportional to speed²</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">P ∝ N³</p>
-                  <p className="text-white/70 text-xs">Power proportional to speed³</p>
+                  <p className="text-white text-xs">Power proportional to speed³</p>
                 </div>
               </div>
-              <p className="text-sm text-white/80 mt-3">
+              <p className="text-sm text-white mt-3">
                 Example: Reducing fan speed by 20% reduces power consumption by 1 - 0.8³ = 49%
               </p>
             </div>
@@ -904,7 +904,7 @@ const HNCModule3Section2_7 = () => {
                 power factor 0.87 at full load. Calculate the full load current and expected DOL
                 starting current.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Input power = Output / Efficiency = 15000 / 0.91 = 16484W</p>
                 <p className="mt-2">Full load current:</p>
                 <p>IL = P / (√3 × VL × cos φ)</p>
@@ -916,10 +916,10 @@ const HNCModule3Section2_7 = () => {
                 <p>
                   Istart = 7 × 27.4 = <strong>192A</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → Protection device must allow 192A for ~5 seconds without tripping
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   → Consider Type D MCB or MCCB with adjustable magnetic trip
                 </p>
               </div>
@@ -934,7 +934,7 @@ const HNCModule3Section2_7 = () => {
                 If a VSD reduces speed to 75% for 60% of operating hours, calculate annual energy
                 savings.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Power at 75% speed (affinity law):</p>
                 <p>
                   P = 11kW × 0.75³ = 11 × 0.422 = <strong>4.64kW</strong>
@@ -964,7 +964,7 @@ const HNCModule3Section2_7 = () => {
                 45W driver. Compare the supply current with drivers having (a) pf = 0.55 and (b) pf
                 = 0.95.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Total power = 100 × 45W = 4500W = 4.5kW</p>
                 <p className="mt-2">(a) With poor power factor (0.55):</p>
                 <p>Apparent power S = P / pf = 4500 / 0.55 = 8182 VA</p>
@@ -976,10 +976,10 @@ const HNCModule3Section2_7 = () => {
                 <p>
                   Current I = S / V = 4737 / 230 = <strong>20.6A</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Good PFC reduces current by 42%, enabling smaller cables
                 </p>
-                <p className="text-white/60">and potentially fewer circuits</p>
+                <p className="text-white">and potentially fewer circuits</p>
               </div>
             </div>
 
@@ -991,7 +991,7 @@ const HNCModule3Section2_7 = () => {
                 <strong>Question:</strong> A 4-pole induction motor operates on 50Hz supply with
                 3.5% slip at full load. Calculate the synchronous speed and actual running speed.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Synchronous speed:</p>
                 <p>
                   Ns = (120 × f) / p = (120 × 50) / 4 = <strong>1500 rpm</strong>
@@ -1001,7 +1001,7 @@ const HNCModule3Section2_7 = () => {
                 <p>
                   Nr = 1500 × 0.965 = <strong>1447.5 rpm</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Nameplate would typically show 1450 rpm or 1440 rpm
                 </p>
               </div>
@@ -1122,7 +1122,7 @@ const HNCModule3Section2_7 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1186,7 +1186,7 @@ const HNCModule3Section2_7 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section2-6">

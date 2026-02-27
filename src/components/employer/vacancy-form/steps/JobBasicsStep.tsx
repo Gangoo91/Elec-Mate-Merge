@@ -48,7 +48,7 @@ export function JobBasicsStep() {
 
       {/* Employment Type */}
       <div className="space-y-3">
-        <Label className="text-white/80">Employment Type</Label>
+        <Label className="text-white">Employment Type</Label>
         <Controller
           name="type"
           control={control}
@@ -64,7 +64,7 @@ export function JobBasicsStep() {
                     'touch-manipulation min-h-[48px]',
                     selectedType === type
                       ? 'border-elec-yellow bg-elec-yellow/10 text-elec-yellow'
-                      : 'border-white/10 bg-white/5 text-white/70 hover:border-white/20'
+                      : 'border-white/10 bg-white/5 text-white hover:border-white/20'
                   )}
                 >
                   {type}
@@ -99,7 +99,7 @@ export function JobBasicsStep() {
 
       {/* Work Arrangement */}
       <div className="space-y-3">
-        <Label className="text-white/80">Work Arrangement</Label>
+        <Label className="text-white">Work Arrangement</Label>
         <Controller
           name="workArrangement"
           control={control}
@@ -116,7 +116,7 @@ export function JobBasicsStep() {
                     'touch-manipulation min-h-[80px]',
                     selectedArrangement === arrangement
                       ? 'border-elec-yellow bg-elec-yellow/10 text-elec-yellow'
-                      : 'border-white/10 bg-white/5 text-white/70 hover:border-white/20'
+                      : 'border-white/10 bg-white/5 text-white hover:border-white/20'
                   )}
                 >
                   {getWorkArrangementIcon(arrangement)}

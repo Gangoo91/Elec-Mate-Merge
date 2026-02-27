@@ -189,7 +189,7 @@ export default function IpafModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../ipaf-module-1">
@@ -214,7 +214,7 @@ export default function IpafModule1Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             PASMA & Competence Requirements
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding the industry training body, card types, competence standards, and employer
             responsibilities for mobile tower scaffold work
           </p>
@@ -300,7 +300,7 @@ export default function IpafModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">What PASMA Does:</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -368,7 +368,7 @@ export default function IpafModule1Section4() {
                 <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                   <div>
                     <p className="text-sm font-medium text-white mb-2">Theory Component</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Relevant legislation and regulations</span>
@@ -397,7 +397,7 @@ export default function IpafModule1Section4() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white mb-2">Practical Component</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Component identification and checking</span>
@@ -429,7 +429,7 @@ export default function IpafModule1Section4() {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Course Details</p>
-                <div className="grid sm:grid-cols-3 gap-4 text-sm text-white/80">
+                <div className="grid sm:grid-cols-3 gap-4 text-sm text-white">
                   <div>
                     <p className="text-white font-medium">Duration</p>
                     <p>1 day (typically 6-7 hours)</p>
@@ -447,7 +447,7 @@ export default function IpafModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">On Successful Completion:</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>PASMA photo ID card issued (posted within 10 working days)</span>
@@ -495,7 +495,7 @@ export default function IpafModule1Section4() {
                     <CreditCard className="h-5 w-5 text-blue-400" />
                     <p className="text-sm font-medium text-blue-400">Qualification</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>A certificate or card proving course completion</span>
@@ -527,7 +527,7 @@ export default function IpafModule1Section4() {
                     <CheckCircle className="h-5 w-5 text-green-400" />
                     <p className="text-sm font-medium text-green-400">Competence</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>The practical ability to carry out the work safely</span>
@@ -560,7 +560,7 @@ export default function IpafModule1Section4() {
                 <p className="text-sm font-medium text-elec-yellow mb-2">
                   The Four Pillars of Competence
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">1. Training:</strong> Formal instruction in the
                     correct methods (e.g. PASMA course)
@@ -586,7 +586,7 @@ export default function IpafModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Competence Can Be Lost</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A person who completed their PASMA course three years ago but has not assembled a
                   tower since may hold a valid card but may no longer be competent. Employers must
                   assess whether a worker's competence is current, not just whether their card is in
@@ -617,7 +617,7 @@ export default function IpafModule1Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Requirements for Supervising Trainees
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -658,7 +658,7 @@ export default function IpafModule1Section4() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-green-400 mb-2">Acceptable Supervision</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>PASMA-certified person standing alongside the trainee</span>
@@ -679,7 +679,7 @@ export default function IpafModule1Section4() {
                 </div>
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-red-400 mb-2">Unacceptable Supervision</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Supervisor on a different floor or area of the site</span>
@@ -727,7 +727,7 @@ export default function IpafModule1Section4() {
                 <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                   <div>
                     <p className="text-sm font-medium text-cyan-400 mb-2">Training Records</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>PASMA course type and date completed</span>
@@ -752,7 +752,7 @@ export default function IpafModule1Section4() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-cyan-400 mb-2">Competence Records</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>On-site competence assessments and observations</span>
@@ -791,7 +791,7 @@ export default function IpafModule1Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Tower Inspection Records (Separate)
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   In addition to training records, employers must maintain Schedule 5 inspection
                   records for every tower on site. These are separate documents and must include the
                   date, time, location, inspector details, and findings. Keep inspection records on
@@ -822,7 +822,7 @@ export default function IpafModule1Section4() {
                   <RefreshCw className="h-5 w-5 text-elec-yellow" />
                   <p className="text-sm font-medium text-elec-yellow">Renewal Timeline</p>
                 </div>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex items-start gap-3">
                     <span className="flex items-center justify-center w-7 h-7 rounded-full bg-green-500/20 text-green-400 text-xs font-bold flex-shrink-0">
                       1
@@ -871,7 +871,7 @@ export default function IpafModule1Section4() {
                     What Happens if Your Card Expires?
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>You lose your certified status on the PASMA register</span>
@@ -922,7 +922,7 @@ export default function IpafModule1Section4() {
                   <Users className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">Employer's Duty Includes:</p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">1. Identify training needs:</strong> Determine
                     which workers need PASMA training based on their job roles and the types of
@@ -961,7 +961,7 @@ export default function IpafModule1Section4() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-green-400 mb-2">Good Practice</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Training matrix with expiry date alerts</span>
@@ -986,7 +986,7 @@ export default function IpafModule1Section4() {
                 </div>
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-red-400 mb-2">Common Employer Failures</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Relying solely on a PASMA card without assessing competence</span>
@@ -1034,12 +1034,12 @@ export default function IpafModule1Section4() {
                     <CreditCard className="h-5 w-5 text-blue-400" />
                     <p className="text-sm font-medium text-blue-400">Towers for Users</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     The core PASMA course for anyone who will assemble, alter, dismantle, move,
                     inspect, or work from a mobile access tower. Includes both theory and practical
                     elements.
                   </p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Duration: 1 day | Validity: 5 years | Assessment: Theory + Practical
                   </p>
                 </div>
@@ -1049,11 +1049,11 @@ export default function IpafModule1Section4() {
                     <CreditCard className="h-5 w-5 text-green-400" />
                     <p className="text-sm font-medium text-green-400">Towers for Managers</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     A classroom-based course for supervisors, managers, and safety professionals who
                     need to understand tower safety but will not physically assemble towers.
                   </p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Duration: Half day | Validity: 5 years | Assessment: Theory only
                   </p>
                 </div>
@@ -1063,11 +1063,11 @@ export default function IpafModule1Section4() {
                     <CreditCard className="h-5 w-5 text-purple-400" />
                     <p className="text-sm font-medium text-purple-400">Work at Height Essentials</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     A general awareness course covering the fundamentals of working at height
                     safely. Suitable for all workers, not just those using towers.
                   </p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Duration: Half day | Validity: 5 years | Assessment: Theory
                   </p>
                 </div>
@@ -1079,12 +1079,12 @@ export default function IpafModule1Section4() {
                       Combined & Specialist Courses
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     PASMA also offers combined courses (e.g. Towers for Users + Low Level Access),
                     specialist courses for complex towers and cantilever configurations, and an
                     instructor course for those who wish to deliver PASMA training.
                   </p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Duration: Varies | Validity: 5 years | Prerequisites may apply
                   </p>
                 </div>
@@ -1094,7 +1094,7 @@ export default function IpafModule1Section4() {
                 <p className="text-sm font-medium text-elec-yellow mb-2">
                   PASMA Online Card Verification
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Every PASMA card can be verified online through the PASMA website. Site managers
                   and employers can enter the card number to confirm the holder's name, course type,
                   issue date, and expiry date. This provides an instant check of whether a worker's
@@ -1112,7 +1112,7 @@ export default function IpafModule1Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1126,7 +1126,7 @@ export default function IpafModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../ipaf-module-1-section-3">

@@ -218,7 +218,7 @@ const HNCModule4Section4_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section4">
@@ -240,7 +240,7 @@ const HNCModule4Section4_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Energy Efficient Lighting
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Designing sustainable lighting systems that meet Part L requirements while maintaining
             visual quality
           </p>
@@ -832,7 +832,7 @@ const HNCModule4Section4_6 = () => {
                 <strong>Brief:</strong> Calculate LENI for a 500m² office with 5kW installed
                 lighting, daylight dimming and absence detection.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given data:</p>
                 <p>- Floor area (A) = 500m²</p>
                 <p>- Installed power (W) = 5000W</p>
@@ -860,7 +860,7 @@ const HNCModule4Section4_6 = () => {
                 <strong>Question:</strong> A luminaire produces 4000 luminaire lumens and consumes
                 38W (including driver). Does it comply?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Luminaire efficacy = Luminaire lumens / Circuit watts</p>
                 <p>= 4000 / 38</p>
                 <p>
@@ -868,7 +868,7 @@ const HNCModule4Section4_6 = () => {
                 </p>
                 <p className="mt-2">Part L minimum (general lighting): 95 llm/W</p>
                 <p className="mt-2 text-green-400">✓ COMPLIANT (105 &gt; 95)</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Note: Circuit watts includes driver/control gear losses
                 </p>
               </div>
@@ -882,7 +882,7 @@ const HNCModule4Section4_6 = () => {
                 <strong>Brief:</strong> Estimate annual energy saving from adding absence detection
                 to a 10kW office lighting load.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Base case (manual control): FO = 1.0</p>
                 <p>With absence detection: FO = 0.7</p>
                 <p className="mt-2">Annual hours: 2500h</p>
@@ -894,7 +894,7 @@ const HNCModule4Section4_6 = () => {
                 <p>
                   = <strong>30% reduction</strong>
                 </p>
-                <p className="mt-2 text-white/60">At £0.30/kWh = £2,250/year cost saving</p>
+                <p className="mt-2 text-white">At £0.30/kWh = £2,250/year cost saving</p>
               </div>
             </div>
           </div>
@@ -962,7 +962,7 @@ const HNCModule4Section4_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1008,7 +1008,7 @@ const HNCModule4Section4_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section4-5">

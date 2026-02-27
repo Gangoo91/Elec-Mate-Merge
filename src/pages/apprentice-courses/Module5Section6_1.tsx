@@ -186,7 +186,7 @@ const Module5Section6_1 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -204,13 +204,13 @@ const Module5Section6_1 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.1</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.1</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Verbal Communication: Being Clear, Concise, and Professional
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master essential communication skills for electrical work environments
             </p>
           </header>
@@ -220,7 +220,7 @@ const Module5Section6_1 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-                <ul className="text-white/80 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>• Clear communication prevents installation mistakes</li>
                   <li>• Use simple language, avoid unnecessary jargon</li>
                   <li>• Always confirm understanding by repeating back</li>
@@ -229,7 +229,7 @@ const Module5Section6_1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-                <ul className="text-white/80 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>
                     • <strong>Spot:</strong> Plan your words before speaking
                   </li>
@@ -250,7 +250,7 @@ const Module5Section6_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Learning Outcomes
             </h2>
-            <ul className="text-white/80 space-y-2 leading-relaxed">
+            <ul className="text-white space-y-2 leading-relaxed">
               <li>
                 • Explain why professional verbal communication is essential in electrical work
               </li>
@@ -268,7 +268,7 @@ const Module5Section6_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Why Clear Verbal Communication Matters
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Effective communication is the foundation of safe and efficient electrical work.
                 Poor communication leads to serious consequences:
@@ -276,7 +276,7 @@ const Module5Section6_1 = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Safety Implications</p>
-                <ul className="text-sm space-y-1 text-white/70">
+                <ul className="text-sm space-y-1 text-white">
                   <li>
                     • Prevents mistakes in installation (e.g., misunderstanding circuit layouts)
                   </li>
@@ -288,7 +288,7 @@ const Module5Section6_1 = () => {
 
               <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
                 <p className="font-semibold text-green-400 mb-2">Project Efficiency</p>
-                <ul className="text-sm space-y-1 text-white/70">
+                <ul className="text-sm space-y-1 text-white">
                   <li>• Improves coordination with supervisors, clients, and other trades</li>
                   <li>• Reduces time wasted on clarification and rework</li>
                   <li>• Ensures materials and tools are available when needed</li>
@@ -304,7 +304,7 @@ const Module5Section6_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Characteristics of Professional Communication
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Professional communication has four key characteristics that distinguish it from
                 casual conversation:
@@ -313,28 +313,28 @@ const Module5Section6_1 = () => {
               <div className="space-y-3">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Clarity</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Speak in straightforward language. Avoid unnecessary jargon unless everyone
                     understands it. Use specific terms rather than vague descriptions.
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Conciseness</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Get to the point quickly. Deliver your message without rambling. Focus on
                     essential information first.
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Professional Tone</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Maintain a respectful, calm, and confident manner. Show respect for all team
                     members regardless of rank.
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Accuracy</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Use correct terminology. Reference specific locations, quantities, and
                     specifications. Double-check facts before communicating them.
                   </p>
@@ -351,7 +351,7 @@ const Module5Section6_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Barriers to Effective Communication
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Construction sites present unique challenges to clear communication. Understanding
                 these barriers helps you overcome them:
@@ -362,21 +362,21 @@ const Module5Section6_1 = () => {
                 <div className="space-y-3 text-sm">
                   <div>
                     <p className="font-medium text-white mb-1">Environmental</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Background noise, distance, poor lighting, interference from machinery and
                       tools.
                     </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Language and Cultural</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Technical jargon, language differences, varying levels of technical knowledge,
                       regional terminology.
                     </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Personal</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Not actively listening, assumptions about what others know, stress, fear of
                       asking questions.
                     </p>
@@ -394,13 +394,13 @@ const Module5Section6_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Techniques for Clear and Professional Speech
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>Master these practical techniques to improve your verbal communication on site:</p>
 
               <div className="space-y-3">
                 <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                   <p className="font-semibold text-elec-yellow mb-2">Preparation Techniques</p>
-                  <ul className="text-sm space-y-1 text-white/70">
+                  <ul className="text-sm space-y-1 text-white">
                     <li>• Plan before you speak – think through what needs to be said</li>
                     <li>• Organise information logically (most important first)</li>
                     <li>• Consider your audience and their level of knowledge</li>
@@ -409,7 +409,7 @@ const Module5Section6_1 = () => {
 
                 <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
                   <p className="font-semibold text-green-400 mb-2">Delivery Techniques</p>
-                  <ul className="text-sm space-y-1 text-white/70">
+                  <ul className="text-sm space-y-1 text-white">
                     <li>• Use simple, short sentences – especially when giving instructions</li>
                     <li>• Speak clearly and at appropriate volume for the environment</li>
                     <li>• Pause between key points to allow processing</li>
@@ -418,7 +418,7 @@ const Module5Section6_1 = () => {
 
                 <div className="p-4 rounded-lg bg-blue-500/5 border-l-2 border-blue-500/50">
                   <p className="font-semibold text-blue-400 mb-2">Confirmation Techniques</p>
-                  <ul className="text-sm space-y-1 text-white/70">
+                  <ul className="text-sm space-y-1 text-white">
                     <li>
                       • Check understanding – ask the listener to repeat back key instructions
                     </li>
@@ -440,7 +440,7 @@ const Module5Section6_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Active Listening Skills
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Active listening is just as important as speaking clearly. It ensures you fully
                 understand instructions and can respond appropriately:
@@ -451,21 +451,21 @@ const Module5Section6_1 = () => {
                 <div className="space-y-3 text-sm">
                   <div>
                     <p className="font-medium text-white mb-1">Physical Attention</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Give full attention (don't keep working when someone's talking to you). Face
                       the speaker and maintain appropriate eye contact.
                     </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Verbal and Non-Verbal Feedback</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Nod or give verbal cues ("yes," "I understand," "right"). Use appropriate
                       facial expressions to show engagement.
                     </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Confirmation and Clarification</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Repeat or paraphrase key points to confirm understanding. Ask specific
                       questions about unclear instructions.
                     </p>
@@ -483,7 +483,7 @@ const Module5Section6_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Practical Application: The "Who, What, When, Where" Structure
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>Use this structured approach for giving clear instructions:</p>
 
               <div className="p-4 rounded-lg bg-indigo-500/5 border-l-2 border-indigo-500/50">
@@ -492,28 +492,28 @@ const Module5Section6_1 = () => {
                     <p className="font-medium text-white mb-1">
                       WHO: Address the person specifically
                     </p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Use the person's name to get their attention. Ensure they are ready to receive
                       the instruction.
                     </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">WHAT: Describe the task clearly</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Be specific about materials (e.g., "2.5mm twin and earth cable"). Specify the
                       method or standard required.
                     </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">WHEN: Set clear timescales</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Give specific deadlines ("before lunch," "by 3pm"). Indicate priority level if
                       multiple tasks.
                     </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">WHERE: Specify exact locations</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Use specific references ("socket three on the north wall"). Reference drawings
                       or room numbers where available.
                     </p>
@@ -521,7 +521,7 @@ const Module5Section6_1 = () => {
                 </div>
 
                 <div className="mt-4 p-3 bg-white/5 rounded border border-white/10">
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     <strong className="text-white">Example:</strong> "John (WHO), I need you to run
                     2.5mm twin and earth cable from the consumer unit to socket three on the north
                     wall (WHAT), and get it done before lunch (WHEN). The socket location is marked
@@ -539,7 +539,7 @@ const Module5Section6_1 = () => {
               Pocket Guide
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <ul className="text-white/80 text-sm space-y-2">
+              <ul className="text-white text-sm space-y-2">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />
                   <span>Be clear, concise, professional</span>
@@ -571,8 +571,8 @@ const Module5Section6_1 = () => {
               Recap
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-white/80 text-sm mb-3">In this subsection, you've learned:</p>
-              <ul className="text-white/80 text-sm space-y-1">
+              <p className="text-white text-sm mb-3">In this subsection, you've learned:</p>
+              <ul className="text-white text-sm space-y-1">
                 <li>• Why clear and professional verbal communication is critical</li>
                 <li>• Common barriers and how to overcome them</li>
                 <li>• Techniques for giving instructions effectively</li>

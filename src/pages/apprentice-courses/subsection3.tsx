@@ -211,7 +211,7 @@ const Section1_3 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-foreground active:text-foreground p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -237,7 +237,7 @@ const Section1_3 = () => {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
             RIDDOR, PUWER & COSHH
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Master essential UK safety regulations for electrical work. Learn incident reporting,
             equipment safety, and hazardous substance controls.
           </p>

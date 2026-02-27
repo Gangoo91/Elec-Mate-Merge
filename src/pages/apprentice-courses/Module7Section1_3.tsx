@@ -201,7 +201,7 @@ const Module7Section1_3 = () => {
           <Button
             variant="ghost"
             size="sm"
-            className="min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5 -ml-2 px-3"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] text-white hover:text-white hover:bg-white/5 -ml-2 px-3"
             asChild
           >
             <Link to="..">
@@ -219,13 +219,13 @@ const Module7Section1_3 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="font-medium">Module 7</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/70">Section 1.3</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 1.3</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
               Risks and Consequences of Electrical Faults
             </h1>
-            <p className="text-white/70 max-w-xl mx-auto">
+            <p className="text-white max-w-xl mx-auto">
               Understanding the safety, legal, and business risks associated with electrical faults
               and their potential consequences.
             </p>
@@ -233,7 +233,7 @@ const Module7Section1_3 = () => {
 
           {/* Summary Box */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
-            <p className="text-white/90 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               <strong className="text-elec-yellow">Key Points:</strong> Electrical faults can cause
               shock, fire, and property damage. Legal consequences include prosecution and
               liability. Business impacts include downtime and reputation damage.
@@ -246,7 +246,7 @@ const Module7Section1_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Electrical faults are not just technical problems—they represent serious risks that
                 can have devastating consequences for safety, legal compliance, and business
@@ -276,7 +276,7 @@ const Module7Section1_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <div className="text-white/80 space-y-3 leading-relaxed">
+            <div className="text-white space-y-3 leading-relaxed">
               <p>By the end of this subsection, learners will be able to:</p>
               <ul className="list-disc pl-5 space-y-2">
                 <li>
@@ -313,7 +313,7 @@ const Module7Section1_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Safety Risks
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Electrical faults pose immediate and serious safety risks that can result in injury
                 or death. Understanding these risks is crucial for maintaining workplace safety and
@@ -323,25 +323,25 @@ const Module7Section1_3 = () => {
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Electric Shock</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Direct contact with live parts can cause cardiac arrest and death
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Fire Hazards</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Overheating and arcing can ignite surrounding materials
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Arc Flash</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Explosive energy release reaching 19,000°C temperatures
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Secondary Injuries</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Falls, burns, and trauma from shock incidents
                   </p>
                 </div>
@@ -349,7 +349,7 @@ const Module7Section1_3 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">HSE Statistics:</p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/70">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>Over 1,000 electrical workplace accidents annually in the UK</li>
                   <li>Approximately 30% of UK structural fires are electrical in origin</li>
                   <li>Voltages as low as 50V can be lethal under certain conditions</li>
@@ -384,7 +384,7 @@ const Module7Section1_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Legal and Financial Consequences
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Electrical faults that cause injury or damage can result in severe legal and
                 financial penalties.
@@ -393,7 +393,7 @@ const Module7Section1_3 = () => {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Criminal Prosecution</p>
-                  <ul className="list-disc pl-4 space-y-1 text-sm text-white/70">
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                     <li>Electricity at Work Regulations 1989 breaches</li>
                     <li>Health and Safety at Work Act violations</li>
                     <li>Corporate manslaughter in severe cases</li>
@@ -402,7 +402,7 @@ const Module7Section1_3 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Civil Liability</p>
-                  <ul className="list-disc pl-4 space-y-1 text-sm text-white/70">
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                     <li>Compensation claims for injury and damage</li>
                     <li>Property damage costs</li>
                     <li>Loss of earnings claims</li>
@@ -413,7 +413,7 @@ const Module7Section1_3 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Financial Impact:</p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/70">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>
                     <strong>Fines:</strong> Unlimited in Crown Court for serious EAWR breaches
                   </li>
@@ -456,7 +456,7 @@ const Module7Section1_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Impact on Business Operations and Reputation
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Electrical faults can severely disrupt business operations and cause lasting damage
                 to reputation.
@@ -465,25 +465,25 @@ const Module7Section1_3 = () => {
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Production Losses</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Equipment downtime, missed deadlines, and lost production capacity
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Data Loss</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Power surges and outages causing data corruption and system failures
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Reputation Damage</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Public incidents damaging company reputation and customer confidence
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Regulatory Scrutiny</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Increased inspection and monitoring by HSE and other authorities
                   </p>
                 </div>
@@ -516,7 +516,7 @@ const Module7Section1_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Practical Guidance
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div>
                 <p className="font-medium text-white mb-2">Risk Assessment and Management:</p>
                 <ul className="list-disc pl-5 space-y-2 text-sm">
@@ -567,7 +567,7 @@ const Module7Section1_3 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-500/50">
               <p className="font-medium text-white mb-3">Case Study: Manufacturing Plant Fire</p>
-              <div className="text-white/80 space-y-3 text-sm leading-relaxed">
+              <div className="text-white space-y-3 text-sm leading-relaxed">
                 <p>
                   A manufacturing plant ignored a recurring earth fault indication on their main
                   distribution board for several weeks, assuming it was a "nuisance trip." The fault
@@ -601,7 +601,7 @@ const Module7Section1_3 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">{faq.question}</p>
-                  <p className="text-sm text-white/70">{faq.answer}</p>
+                  <p className="text-sm text-white">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -614,7 +614,7 @@ const Module7Section1_3 = () => {
               Recap
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <ul className="list-disc pl-5 space-y-2 text-white/80 text-sm">
+              <ul className="list-disc pl-5 space-y-2 text-white text-sm">
                 <li>
                   Electrical faults pose serious safety risks including shock, fire, and arc flash
                   hazards that can cause injury or death.
@@ -648,7 +648,7 @@ const Module7Section1_3 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             <Button
               variant="ghost"
-              className="min-h-[48px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5 justify-start"
+              className="min-h-[48px] touch-manipulation active:scale-[0.98] text-white hover:text-white hover:bg-white/5 justify-start"
               asChild
             >
               <Link to="../1-2">

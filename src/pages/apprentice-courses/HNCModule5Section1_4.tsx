@@ -252,7 +252,7 @@ const HNCModule5Section1_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section1">
@@ -274,7 +274,7 @@ const HNCModule5Section1_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Resource Planning
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Labour allocation, materials procurement, plant requirements and resource optimisation
             for building services projects
           </p>
@@ -539,7 +539,7 @@ const HNCModule5Section1_4 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/70 mt-2">
+              <p className="text-xs text-white mt-2">
                 By delaying non-critical activities and extending durations, peaks of 12-14 are
                 reduced to maximum 8, matching available resources.
               </p>
@@ -805,12 +805,12 @@ const HNCModule5Section1_4 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 Adjusted Rate = Base Rate × Access Factor × Occupancy Factor
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Example: 40m/day × 0.65 (MEWP) × 0.80 (occupied) = 20.8m/day
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Planning tip:</strong> Match plant hire periods to actual need. A scissor lift
               needed for 3 weeks of first-fix should not be on hire for the entire project duration.
             </p>
@@ -835,7 +835,7 @@ const HNCModule5Section1_4 = () => {
                 <strong>Question:</strong> Calculate the labour duration for installing 450m of
                 cable tray at 4m height using scissor lifts. Base productivity is 40m/day.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Base productivity: 40m/day</p>
                 <p>MEWP factor: 0.65</p>
                 <p className="mt-2">
@@ -857,7 +857,7 @@ const HNCModule5Section1_4 = () => {
                 <strong>Question:</strong> Week 3 shows demand for 14 electricians but only 10 are
                 available. Activity B has 2 weeks float. How can this be resolved?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Resource conflict = 14 - 10 = 4 electricians over capacity</p>
                 <p className="mt-2">Activity B requires 5 electricians</p>
                 <p>Activity B has 2 weeks total float</p>
@@ -879,7 +879,7 @@ const HNCModule5Section1_4 = () => {
                 <strong>Question:</strong> Main LV switchgear is required on site by Week 20. Lead
                 time is 14 weeks. When must the order be placed and what precedes it?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Required on site: Week 20</p>
                 <p>Manufacturing lead time: 14 weeks</p>
                 <p className="mt-2">
@@ -970,7 +970,7 @@ const HNCModule5Section1_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1016,7 +1016,7 @@ const HNCModule5Section1_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section1">

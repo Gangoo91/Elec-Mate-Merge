@@ -186,7 +186,7 @@ export default function ConfinedSpacesModule4Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-4">
@@ -209,7 +209,7 @@ export default function ConfinedSpacesModule4Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Electrical Work in Confined Spaces
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Voltage reduction requirements, RCD protection, safe isolation, battery-powered tools,
             cable routing, temporary lighting, electrical testing, and emergency shutdown procedures
           </p>
@@ -289,7 +289,7 @@ export default function ConfinedSpacesModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Contributing Hazard Factors</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -348,7 +348,7 @@ export default function ConfinedSpacesModule4Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Combined Effect</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   It is the <strong className="text-white">combination</strong> of these factors
                   that makes electrical work in confined spaces so dangerous. A 230V contact that
                   might cause a painful but survivable shock in a dry, open workshop could easily be{' '}
@@ -382,7 +382,7 @@ export default function ConfinedSpacesModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   110V CTE (Centre-Tapped Earth) &mdash; Portable Tools
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -421,7 +421,7 @@ export default function ConfinedSpacesModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   25V &mdash; Portable Hand Lamps in Damp Confined Spaces
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -454,7 +454,7 @@ export default function ConfinedSpacesModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   12V &mdash; Hand Lamps in Very Wet / Flooded Confined Spaces
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -518,7 +518,7 @@ export default function ConfinedSpacesModule4Section4() {
                       <span className="text-sm sm:text-base font-bold text-yellow-400 block">
                         110V CTE
                       </span>
-                      <span className="text-[10px] sm:text-xs text-white/60 block">
+                      <span className="text-[10px] sm:text-xs text-white block">
                         Centre-Tapped Earth &mdash; max 55V to earth
                       </span>
                     </div>
@@ -540,7 +540,7 @@ export default function ConfinedSpacesModule4Section4() {
                       <span className="text-sm sm:text-base font-bold text-orange-400 block">
                         25V
                       </span>
-                      <span className="text-[10px] sm:text-xs text-white/60 block">
+                      <span className="text-[10px] sm:text-xs text-white block">
                         Safety isolating transformer
                       </span>
                     </div>
@@ -560,7 +560,7 @@ export default function ConfinedSpacesModule4Section4() {
                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
                     <div>
                       <span className="text-sm sm:text-base font-bold text-red-400 block">12V</span>
-                      <span className="text-[10px] sm:text-xs text-white/60 block">
+                      <span className="text-[10px] sm:text-xs text-white block">
                         Maximum protection &mdash; lowest voltage category
                       </span>
                     </div>
@@ -577,7 +577,7 @@ export default function ConfinedSpacesModule4Section4() {
               </div>
 
               {/* Scale indicator */}
-              <div className="mt-4 flex items-center justify-between text-[9px] text-white/40">
+              <div className="mt-4 flex items-center justify-between text-[9px] text-white">
                 <span>0V</span>
                 <span>&larr; Lower voltage = safer in confined spaces &rarr;</span>
                 <span>230V</span>
@@ -595,15 +595,15 @@ export default function ConfinedSpacesModule4Section4() {
               <div className="mt-3 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
                 <div className="flex items-center gap-1.5">
                   <div className="w-3 h-3 rounded bg-yellow-500/30 border border-yellow-500/50" />
-                  <span className="text-[9px] text-white/50">110V CTE (55V to earth)</span>
+                  <span className="text-[9px] text-white">110V CTE (55V to earth)</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-3 h-3 rounded bg-orange-500/30 border border-orange-500/50" />
-                  <span className="text-[9px] text-white/50">25V (damp)</span>
+                  <span className="text-[9px] text-white">25V (damp)</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-3 h-3 rounded bg-red-500/30 border border-red-500/50" />
-                  <span className="text-[9px] text-white/50">12V (very wet)</span>
+                  <span className="text-[9px] text-white">12V (very wet)</span>
                 </div>
               </div>
             </div>
@@ -631,7 +631,7 @@ export default function ConfinedSpacesModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   RCD Requirements for Confined Spaces
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -670,7 +670,7 @@ export default function ConfinedSpacesModule4Section4() {
                     Additional Protection &mdash; NOT a Replacement
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   RCD protection is{' '}
                   <strong className="text-white">additional protection only</strong>. It does NOT
                   replace the requirement for reduced voltage systems. Both measures must be applied
@@ -711,7 +711,7 @@ export default function ConfinedSpacesModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Advantages</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -745,7 +745,7 @@ export default function ConfinedSpacesModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Limitations</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -816,7 +816,7 @@ export default function ConfinedSpacesModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Step-by-Step Safe Isolation for Confined Space Entry
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 w-5 h-5 rounded-full bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-cyan-400">
                       1
@@ -882,7 +882,7 @@ export default function ConfinedSpacesModule4Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Personal Padlocks</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Each person entering the confined space must fit{' '}
                   <strong className="text-white">their own personal padlock</strong> to every
                   isolation point. No one else holds a key to that lock. The lock may only be
@@ -914,7 +914,7 @@ export default function ConfinedSpacesModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Cable Routing Requirements</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -964,7 +964,7 @@ export default function ConfinedSpacesModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Temporary Lighting Requirements
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1044,7 +1044,7 @@ export default function ConfinedSpacesModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Safe Testing Procedures</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1098,7 +1098,7 @@ export default function ConfinedSpacesModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Portable Appliance Considerations
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1141,7 +1141,7 @@ export default function ConfinedSpacesModule4Section4() {
                     Live Working &mdash; Generally PROHIBITED
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Working on or near live electrical equipment is{' '}
                   <strong className="text-white">generally prohibited in confined spaces</strong>.
                   The combination of conductive surroundings, damp conditions, restricted movement,
@@ -1181,7 +1181,7 @@ export default function ConfinedSpacesModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Emergency Shutdown Requirements
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1227,7 +1227,7 @@ export default function ConfinedSpacesModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Specific Scenarios</p>
-                <ul className="text-sm text-white/80 space-y-3">
+                <ul className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 w-5 h-5 rounded-full bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-cyan-400">
                       A
@@ -1327,7 +1327,7 @@ export default function ConfinedSpacesModule4Section4() {
                         <div className="mt-0.5 w-4 h-4 rounded border border-red-400/40 flex-shrink-0 flex items-center justify-center">
                           <CheckCircle className="w-3 h-3 text-red-400/60" />
                         </div>
-                        <span className="text-[10px] sm:text-xs text-white/70">{item}</span>
+                        <span className="text-[10px] sm:text-xs text-white">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -1356,7 +1356,7 @@ export default function ConfinedSpacesModule4Section4() {
                         <div className="mt-0.5 w-4 h-4 rounded border border-yellow-400/40 flex-shrink-0 flex items-center justify-center">
                           <CheckCircle className="w-3 h-3 text-yellow-400/60" />
                         </div>
-                        <span className="text-[10px] sm:text-xs text-white/70">{item}</span>
+                        <span className="text-[10px] sm:text-xs text-white">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -1385,7 +1385,7 @@ export default function ConfinedSpacesModule4Section4() {
                         <div className="mt-0.5 w-4 h-4 rounded border border-cyan-400/40 flex-shrink-0 flex items-center justify-center">
                           <CheckCircle className="w-3 h-3 text-cyan-400/60" />
                         </div>
-                        <span className="text-[10px] sm:text-xs text-white/70">{item}</span>
+                        <span className="text-[10px] sm:text-xs text-white">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -1414,7 +1414,7 @@ export default function ConfinedSpacesModule4Section4() {
                         <div className="mt-0.5 w-4 h-4 rounded border border-green-400/40 flex-shrink-0 flex items-center justify-center">
                           <CheckCircle className="w-3 h-3 text-green-400/60" />
                         </div>
-                        <span className="text-[10px] sm:text-xs text-white/70">{item}</span>
+                        <span className="text-[10px] sm:text-xs text-white">{item}</span>
                       </div>
                     ))}
                   </div>
@@ -1433,19 +1433,19 @@ export default function ConfinedSpacesModule4Section4() {
               <div className="mt-3 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
                 <div className="flex items-center gap-1.5">
                   <div className="w-3 h-3 rounded bg-red-500/20 border border-red-500/40" />
-                  <span className="text-[9px] text-white/50">Isolation</span>
+                  <span className="text-[9px] text-white">Isolation</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-3 h-3 rounded bg-yellow-500/20 border border-yellow-500/40" />
-                  <span className="text-[9px] text-white/50">Equipment</span>
+                  <span className="text-[9px] text-white">Equipment</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-3 h-3 rounded bg-cyan-500/20 border border-cyan-500/40" />
-                  <span className="text-[9px] text-white/50">Supply setup</span>
+                  <span className="text-[9px] text-white">Supply setup</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-3 h-3 rounded bg-green-500/20 border border-green-500/40" />
-                  <span className="text-[9px] text-white/50">Briefing &amp; entry</span>
+                  <span className="text-[9px] text-white">Briefing &amp; entry</span>
                 </div>
               </div>
             </div>
@@ -1459,7 +1459,7 @@ export default function ConfinedSpacesModule4Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1473,7 +1473,7 @@ export default function ConfinedSpacesModule4Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-4">

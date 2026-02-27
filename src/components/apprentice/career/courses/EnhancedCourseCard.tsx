@@ -102,7 +102,7 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
       </CardHeader>
 
       <CardContent className="pt-0 flex-grow flex flex-col space-y-4 relative">
-        <p className="text-sm text-white/70 leading-relaxed line-clamp-4 text-justify">
+        <p className="text-sm text-white leading-relaxed line-clamp-4 text-justify">
           {course.description}
         </p>
 
@@ -110,32 +110,32 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
         <div className="grid grid-cols-2 gap-2">
           <div className="flex items-center gap-2 p-2 rounded-lg bg-white/5 border border-white/10">
             <Clock className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0" />
-            <span className="text-xs text-white/80">{course.duration}</span>
+            <span className="text-xs text-white">{course.duration}</span>
           </div>
           <div className="flex items-center gap-2 p-2 rounded-lg bg-white/5 border border-white/10">
             <Users className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0" />
-            <span className="text-xs text-white/80">{course.level}</span>
+            <span className="text-xs text-white">{course.level}</span>
           </div>
           <div className="flex items-center gap-2 p-2 rounded-lg bg-white/5 border border-white/10">
             <BookOpen className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0" />
-            <span className="text-xs text-white/80">{course.format.split(',')[0]}</span>
+            <span className="text-xs text-white">{course.format.split(',')[0]}</span>
           </div>
           <div className="flex items-center gap-2 p-2 rounded-lg bg-white/5 border border-white/10">
             <TrendingUp className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0" />
-            <span className="text-xs text-white/80">Future: {course.futureProofing || 3}/5</span>
+            <span className="text-xs text-white">Future: {course.futureProofing || 3}/5</span>
           </div>
         </div>
 
         {/* Industry Demand & Career Impact */}
         <div className="space-y-2 p-3 rounded-xl bg-white/5 border border-white/10">
           <div className="flex items-center justify-between">
-            <span className="text-xs text-white/70">Industry Demand:</span>
+            <span className="text-xs text-white">Industry Demand:</span>
             <Badge className={`${getDemandColor(course.industryDemand)} text-xs border`}>
               {course.industryDemand}
             </Badge>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-xs text-white/70">Salary Impact:</span>
+            <span className="text-xs text-white">Salary Impact:</span>
             <span className="text-xs text-green-400 font-medium">{course.salaryImpact}</span>
           </div>
         </div>
@@ -154,11 +154,11 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
                 {course.careerOutcomes.slice(0, 2).map((outcome, idx) => (
                   <div key={idx} className="flex items-center gap-2 text-xs">
                     <CheckCircle className="h-3 w-3 text-green-400 flex-shrink-0" />
-                    <span className="text-white/80">{outcome}</span>
+                    <span className="text-white">{outcome}</span>
                   </div>
                 ))}
                 {course.careerOutcomes.length > 2 && (
-                  <div className="text-xs text-white/60">
+                  <div className="text-xs text-white">
                     +{course.careerOutcomes.length - 2} more outcomes
                   </div>
                 )}
@@ -166,7 +166,7 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
             ) : (
               <div className="flex items-center gap-2 text-xs">
                 <AlertCircle className="h-3 w-3 text-amber-400 flex-shrink-0" />
-                <span className="text-white/70">Contact provider for details</span>
+                <span className="text-white">Contact provider for details</span>
               </div>
             )}
           </div>
@@ -186,19 +186,19 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
                 {course.locations.slice(0, 4).map((location, idx) => (
                   <span
                     key={idx}
-                    className="text-xs bg-white/5 border border-white/10 px-2 py-1 rounded-md text-white/80"
+                    className="text-xs bg-white/5 border border-white/10 px-2 py-1 rounded-md text-white"
                   >
                     {location}
                   </span>
                 ))}
                 {course.locations.length > 4 && (
-                  <span className="text-xs bg-white/5 border border-white/10 px-2 py-1 rounded-md text-white/60">
+                  <span className="text-xs bg-white/5 border border-white/10 px-2 py-1 rounded-md text-white">
                     +{course.locations.length - 4} more
                   </span>
                 )}
               </>
             ) : (
-              <span className="text-xs text-white/60 italic">Contact provider for details</span>
+              <span className="text-xs text-white italic">Contact provider for details</span>
             )}
           </div>
         </div>
@@ -224,13 +224,13 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
                   </Badge>
                 ))}
                 {course.accreditation.length > 2 && (
-                  <span className="text-xs text-white/60">
+                  <span className="text-xs text-white">
                     +{course.accreditation.length - 2} more
                   </span>
                 )}
               </>
             ) : (
-              <span className="text-xs text-white/60 italic">Not specified by provider</span>
+              <span className="text-xs text-white italic">Not specified by provider</span>
             )}
           </div>
         </div>
@@ -249,13 +249,13 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
                 {course.nextDates.slice(0, 3).map((date, idx) => (
                   <span
                     key={idx}
-                    className="text-xs bg-white/5 border border-white/10 px-2 py-1 rounded-md text-white/80"
+                    className="text-xs bg-white/5 border border-white/10 px-2 py-1 rounded-md text-white"
                   >
                     {date}
                   </span>
                 ))}
                 {course.nextDates.length > 3 && (
-                  <span className="text-xs text-white/60">+{course.nextDates.length - 3} more</span>
+                  <span className="text-xs text-white">+{course.nextDates.length - 3} more</span>
                 )}
                 {(course as any).isLive && (
                   <Badge className="text-xs bg-blue-500/20 text-blue-400 border border-blue-500/30">
@@ -264,7 +264,7 @@ const EnhancedCourseCard = ({ course, onViewDetails }: EnhancedCourseCardProps) 
                 )}
               </>
             ) : (
-              <span className="text-xs text-white/60 italic">Contact provider for dates</span>
+              <span className="text-xs text-white italic">Contact provider for dates</span>
             )}
           </div>
         </div>

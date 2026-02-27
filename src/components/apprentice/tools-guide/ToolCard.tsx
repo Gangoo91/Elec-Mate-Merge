@@ -77,15 +77,15 @@ const ToolCard = ({
         <div className="flex items-center gap-2 mb-2">
           {icon}
           <div className="flex items-center gap-2">
-            <span className="text-xs text-white/60">RS Components</span>
+            <span className="text-xs text-white">RS Components</span>
             <div className="flex items-center gap-1">
               <Star className="w-3 h-3 fill-yellow-400 text-yellow-400" />
-              <span className="text-xs text-white/60">4.5</span>
+              <span className="text-xs text-white">4.5</span>
             </div>
           </div>
         </div>
         <CardTitle className="text-elec-yellow text-lg leading-tight">{title}</CardTitle>
-        <p className="text-sm text-white/70 leading-relaxed">{description}</p>
+        <p className="text-sm text-white leading-relaxed">{description}</p>
       </CardHeader>
 
       <CardContent className="space-y-4">
@@ -107,7 +107,7 @@ const ToolCard = ({
                 >
                   <div className="flex items-center gap-2">
                     {info.icon}
-                    <span className="text-xs text-white/60">{info.label}</span>
+                    <span className="text-xs text-white">{info.label}</span>
                   </div>
                   <p className="text-xs font-medium text-white">{info.value}</p>
                 </div>
@@ -116,12 +116,12 @@ const ToolCard = ({
 
             {/* Features List */}
             <div className="space-y-2">
-              <h5 className="text-xs font-medium text-white/60">Key Features:</h5>
+              <h5 className="text-xs font-medium text-white">Key Features:</h5>
               <div className="space-y-1">
                 {getFeatures(item).map((feature, idx) => (
                   <div key={idx} className="flex items-center gap-2">
                     <Check className="w-3 h-3 text-green-400" />
-                    <span className="text-xs text-white/70">{feature}</span>
+                    <span className="text-xs text-white">{feature}</span>
                   </div>
                 ))}
               </div>
@@ -131,7 +131,7 @@ const ToolCard = ({
             <div className="flex items-center justify-between pt-2 border-t border-white/10">
               <div className="flex flex-col">
                 <span className="text-lg font-bold text-elec-yellow">{item.priceRange}</span>
-                <span className="text-xs text-white/60">inc. VAT</span>
+                <span className="text-xs text-white">inc. VAT</span>
               </div>
               <Button size="sm" className="bg-elec-yellow hover:bg-elec-yellow/90 text-elec-dark">
                 View Product

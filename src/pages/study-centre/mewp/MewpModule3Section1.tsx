@@ -198,7 +198,7 @@ export default function MewpModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-3">
@@ -223,7 +223,7 @@ export default function MewpModule3Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Familiarisation &amp; the Pre-Use Inspection
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How to carry out a thorough familiarisation and systematic pre-use inspection on every
             MEWP before you operate it
           </p>
@@ -308,7 +308,7 @@ export default function MewpModule3Section1() {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <p className="text-sm font-medium text-white mb-1">Training</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       A formal, assessed course (e.g. IPAF) that teaches the skills and knowledge to
                       operate a <strong>category</strong> of MEWP (e.g. 3a scissor lift, 3b boom
                       lift). Typically one or more days. Results in a licence or certificate.
@@ -316,7 +316,7 @@ export default function MewpModule3Section1() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white mb-1">Familiarisation</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       A short, machine-specific activity carried out on the{' '}
                       <strong>individual make and model</strong> before first use. Covers that
                       machine&rsquo;s unique controls, features, limitations, warnings, and
@@ -334,7 +334,7 @@ export default function MewpModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Familiarisation Must Cover:</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -368,7 +368,7 @@ export default function MewpModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Delivery &amp; Collection Risk</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Approximately <strong>one third</strong> of rental company-reported MEWP accidents
                   occur during delivery and collection. This underlines why familiarisation with
                   each specific machine &mdash; including its transport, loading, and set-up
@@ -417,7 +417,7 @@ export default function MewpModule3Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   A Pre-Use Inspection Is Also Required:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>After any incident, collision, or near miss involving the MEWP</span>
@@ -461,7 +461,7 @@ export default function MewpModule3Section1() {
                   <ClipboardCheck className="h-5 w-5 text-teal-400" />
                   <p className="text-sm font-medium text-teal-400">Documentation Checklist</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -533,7 +533,7 @@ export default function MewpModule3Section1() {
                   <Wrench className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Wheels &amp; Tyres</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Security &mdash; wheel nuts tight, no missing or loose fixings</span>
@@ -560,7 +560,7 @@ export default function MewpModule3Section1() {
                   <Gauge className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Engine / Power Source</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -595,7 +595,7 @@ export default function MewpModule3Section1() {
                   <Wrench className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">Hydraulics</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -626,7 +626,7 @@ export default function MewpModule3Section1() {
                   <Wrench className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">Hoses &amp; Cables</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -655,7 +655,7 @@ export default function MewpModule3Section1() {
                     Structure / Boom / Scissor Pack
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -691,7 +691,7 @@ export default function MewpModule3Section1() {
                   <Shield className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Platform / Basket</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -751,7 +751,7 @@ export default function MewpModule3Section1() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   Controls (Platform AND Ground Level)
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -786,7 +786,7 @@ export default function MewpModule3Section1() {
               {/* Safety Systems */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-red-400 mb-3">Safety Systems</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -888,7 +888,7 @@ export default function MewpModule3Section1() {
                   <Shield className="h-5 w-5 text-elec-yellow" />
                   <p className="text-sm font-medium text-elec-yellow">Full Body Harness</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -922,7 +922,7 @@ export default function MewpModule3Section1() {
                   <Shield className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">Lanyard</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -960,7 +960,7 @@ export default function MewpModule3Section1() {
                   <Shield className="h-5 w-5 text-teal-400" />
                   <p className="text-sm font-medium text-teal-400">Anchor Point on MEWP</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1020,7 +1020,7 @@ export default function MewpModule3Section1() {
                       <p className="text-sm font-medium text-red-400">
                         ISOLATE the Machine Immediately
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Switch off the machine, remove the key (if applicable), and ensure all
                         controls are at neutral. Make the machine safe so it cannot be operated by
                         anyone else.
@@ -1033,7 +1033,7 @@ export default function MewpModule3Section1() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-orange-400">TAG the Equipment</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Attach a clearly visible &ldquo;Do Not Use&rdquo; or defect tag to the
                         machine to inform other operatives that it is out of service. Do not remove
                         the tag until the defect is rectified.
@@ -1046,7 +1046,7 @@ export default function MewpModule3Section1() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-amber-400">REPORT the Fault</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Report the defect to your employer/supervisor <strong>and</strong> to the
                         MEWP owner or hire company. Both parties need to know so that the fault can
                         be tracked, assessed, and rectified.
@@ -1061,7 +1061,7 @@ export default function MewpModule3Section1() {
                       <p className="text-sm font-medium text-blue-400">
                         Do NOT Use Until Rectified
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         The MEWP must not be returned to service until the defect has been properly
                         rectified by a competent person and the machine has been re-inspected and
                         confirmed safe to use.
@@ -1074,7 +1074,7 @@ export default function MewpModule3Section1() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-green-400">RECORD the Defect</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Record the defect in the inspection log or defect report book. Include the
                         date, time, machine identification, description of the fault, and your name.
                         This creates a written record for compliance and audit purposes.
@@ -1089,7 +1089,7 @@ export default function MewpModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Warning</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">Never operate a defective MEWP.</strong> Operating
                   a MEWP with a known defect puts you, your colleagues, and members of the public at
                   serious risk of injury or death. It is also a breach of the Work at Height
@@ -1108,7 +1108,7 @@ export default function MewpModule3Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1122,7 +1122,7 @@ export default function MewpModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-3">

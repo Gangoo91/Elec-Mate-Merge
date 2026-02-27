@@ -192,7 +192,7 @@ export default function CscsCardModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-5">
@@ -217,7 +217,7 @@ export default function CscsCardModule5Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Excavations &amp; Underground Services
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Excavation hazards and support methods, underground service detection using CAT and
             Genny, safe digging practices, overhead power lines, inspection requirements, and
             emergency procedures
@@ -305,7 +305,7 @@ export default function CscsCardModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Principal Excavation Hazards</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -373,7 +373,7 @@ export default function CscsCardModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">HSG47 Key Principle</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     No excavation work should begin until a thorough assessment of the ground
                     conditions, underground services, and surrounding hazards has been completed.
@@ -390,7 +390,7 @@ export default function CscsCardModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Spoil Heap Distance</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Excavated material (spoil) must be stored well away from the edge of the
                   excavation to prevent it from falling back in and to avoid placing additional
                   loading (surcharge) on the sides. As a general rule, spoil should be placed at
@@ -426,7 +426,7 @@ export default function CscsCardModule5Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Site Investigation &amp; Service Detection
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -494,7 +494,7 @@ export default function CscsCardModule5Section1() {
                         <span className="text-green-400 text-sm font-bold">1</span>
                       </div>
                       <p className="text-xs font-medium text-green-400 mb-1">Obtain Plans</p>
-                      <p className="text-[11px] text-white/60 leading-relaxed">
+                      <p className="text-[11px] text-white leading-relaxed">
                         Request up-to-date utility plans from all service providers. Mark expected
                         service routes on the ground.
                       </p>
@@ -505,10 +505,10 @@ export default function CscsCardModule5Section1() {
                         <span className="text-green-400 text-sm font-bold">2</span>
                       </div>
                       <p className="text-xs font-medium text-green-400 mb-1">CAT Scan (3 Modes)</p>
-                      <p className="text-[11px] text-white/60 leading-relaxed">
-                        Sweep the area using <strong className="text-white/80">Power</strong> mode
-                        (detects live cables), <strong className="text-white/80">Radio</strong> mode
-                        (metallic pipes), and <strong className="text-white/80">Genny</strong> mode
+                      <p className="text-[11px] text-white leading-relaxed">
+                        Sweep the area using <strong className="text-white">Power</strong> mode
+                        (detects live cables), <strong className="text-white">Radio</strong> mode
+                        (metallic pipes), and <strong className="text-white">Genny</strong> mode
                         (applied signal).
                       </p>
                     </div>
@@ -518,7 +518,7 @@ export default function CscsCardModule5Section1() {
                         <span className="text-green-400 text-sm font-bold">3</span>
                       </div>
                       <p className="text-xs font-medium text-green-400 mb-1">Trial Holes</p>
-                      <p className="text-[11px] text-white/60 leading-relaxed">
+                      <p className="text-[11px] text-white leading-relaxed">
                         Hand dig trial holes using insulated tools to confirm the exact position and
                         depth of detected services.
                       </p>
@@ -529,7 +529,7 @@ export default function CscsCardModule5Section1() {
                         <span className="text-green-400 text-sm font-bold">4</span>
                       </div>
                       <p className="text-xs font-medium text-green-400 mb-1">Mark &amp; Protect</p>
-                      <p className="text-[11px] text-white/60 leading-relaxed">
+                      <p className="text-[11px] text-white leading-relaxed">
                         Mark all confirmed service locations clearly on the ground. Establish 500mm
                         hand-dig exclusion zones around each service.
                       </p>
@@ -537,7 +537,7 @@ export default function CscsCardModule5Section1() {
                   </div>
 
                   <div className="mt-4 bg-amber-500/10 border border-amber-500/30 p-3 rounded-lg">
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       <strong className="text-amber-400">Important:</strong> The CAT and Genny must
                       be operated by a trained and competent person. The equipment must be checked
                       and calibrated before each use. A CAT scan alone is not sufficient &mdash; it
@@ -598,7 +598,7 @@ export default function CscsCardModule5Section1() {
                         <p className="text-sm font-medium text-emerald-400">
                           Battering (Sloping Sides)
                         </p>
-                        <p className="text-xs text-white/50">Angle depends on soil type</p>
+                        <p className="text-xs text-white">Angle depends on soil type</p>
                       </div>
                     </div>
                     <div className="bg-emerald-500/5 border border-emerald-500/20 rounded-lg p-3 mb-3">
@@ -606,7 +606,7 @@ export default function CscsCardModule5Section1() {
                         <div className="relative w-48 h-32">
                           {/* Ground level line */}
                           <div className="absolute top-4 left-0 right-0 h-0.5 bg-white/30" />
-                          <p className="absolute top-0 right-0 text-[9px] text-white/40">
+                          <p className="absolute top-0 right-0 text-[9px] text-white">
                             Ground level
                           </p>
                           {/* Left slope */}
@@ -622,13 +622,13 @@ export default function CscsCardModule5Section1() {
                           {/* Bottom of excavation */}
                           <div className="absolute bottom-4 left-20 right-20 h-0.5 bg-emerald-400/60" />
                           {/* Angle indicator */}
-                          <p className="absolute bottom-0 inset-x-0 text-center text-[9px] text-white/40">
+                          <p className="absolute bottom-0 inset-x-0 text-center text-[9px] text-white">
                             Sides sloped at safe angle
                           </p>
                         </div>
                       </div>
                     </div>
-                    <p className="text-xs text-white/60 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The sides are cut at an angle (batter) to reduce the risk of collapse.
                       Cohesive soils (clay) can sustain steeper angles than granular soils (sand,
                       gravel). Requires significantly more space than other methods.
@@ -643,7 +643,7 @@ export default function CscsCardModule5Section1() {
                       </div>
                       <div>
                         <p className="text-sm font-medium text-cyan-400">Stepping</p>
-                        <p className="text-xs text-white/50">Horizontal steps reduce face height</p>
+                        <p className="text-xs text-white">Horizontal steps reduce face height</p>
                       </div>
                     </div>
                     <div className="bg-cyan-500/5 border border-cyan-500/20 rounded-lg p-3 mb-3">
@@ -651,7 +651,7 @@ export default function CscsCardModule5Section1() {
                         <div className="relative w-48 h-32">
                           {/* Ground level line */}
                           <div className="absolute top-4 left-0 right-0 h-0.5 bg-white/30" />
-                          <p className="absolute top-0 right-0 text-[9px] text-white/40">
+                          <p className="absolute top-0 right-0 text-[9px] text-white">
                             Ground level
                           </p>
                           {/* Left steps */}
@@ -665,13 +665,13 @@ export default function CscsCardModule5Section1() {
                           {/* Bottom of excavation */}
                           <div className="absolute bottom-4 left-20 right-20 h-0.5 bg-cyan-400/60" />
                           {/* Label */}
-                          <p className="absolute bottom-0 inset-x-0 text-center text-[9px] text-white/40">
+                          <p className="absolute bottom-0 inset-x-0 text-center text-[9px] text-white">
                             Steps reduce unsupported face height
                           </p>
                         </div>
                       </div>
                     </div>
-                    <p className="text-xs text-white/60 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       A series of horizontal steps are cut into the sides. Each step reduces the
                       unsupported face height, making collapse less likely. Also requires additional
                       space beyond the excavation footprint.
@@ -686,7 +686,7 @@ export default function CscsCardModule5Section1() {
                       </div>
                       <div>
                         <p className="text-sm font-medium text-amber-400">Shoring</p>
-                        <p className="text-xs text-white/50">Props, trench sheets, or timber</p>
+                        <p className="text-xs text-white">Props, trench sheets, or timber</p>
                       </div>
                     </div>
                     <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-3 mb-3">
@@ -694,7 +694,7 @@ export default function CscsCardModule5Section1() {
                         <div className="relative w-48 h-32">
                           {/* Ground level line */}
                           <div className="absolute top-4 left-0 right-0 h-0.5 bg-white/30" />
-                          <p className="absolute top-0 right-0 text-[9px] text-white/40">
+                          <p className="absolute top-0 right-0 text-[9px] text-white">
                             Ground level
                           </p>
                           {/* Left wall — trench sheet */}
@@ -708,13 +708,13 @@ export default function CscsCardModule5Section1() {
                           {/* Bottom of excavation */}
                           <div className="absolute bottom-4 left-12 right-12 h-0.5 bg-amber-400/60" />
                           {/* Label */}
-                          <p className="absolute bottom-0 inset-x-0 text-center text-[9px] text-white/40">
+                          <p className="absolute bottom-0 inset-x-0 text-center text-[9px] text-white">
                             Trench sheets + hydraulic props
                           </p>
                         </div>
                       </div>
                     </div>
-                    <p className="text-xs text-white/60 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Trench sheets (steel or aluminium panels) are driven into the ground and held
                       apart by hydraulic props. Timber shoring uses walings and struts. Suitable for
                       deeper trenches where space is limited.
@@ -729,7 +729,7 @@ export default function CscsCardModule5Section1() {
                       </div>
                       <div>
                         <p className="text-sm font-medium text-violet-400">Trench Box</p>
-                        <p className="text-xs text-white/50">Prefabricated protective cage</p>
+                        <p className="text-xs text-white">Prefabricated protective cage</p>
                       </div>
                     </div>
                     <div className="bg-violet-500/5 border border-violet-500/20 rounded-lg p-3 mb-3">
@@ -737,7 +737,7 @@ export default function CscsCardModule5Section1() {
                         <div className="relative w-48 h-32">
                           {/* Ground level line */}
                           <div className="absolute top-4 left-0 right-0 h-0.5 bg-white/30" />
-                          <p className="absolute top-0 right-0 text-[9px] text-white/40">
+                          <p className="absolute top-0 right-0 text-[9px] text-white">
                             Ground level
                           </p>
                           {/* Box outline */}
@@ -748,13 +748,13 @@ export default function CscsCardModule5Section1() {
                           {/* Worker silhouette */}
                           <div className="absolute left-1/2 -translate-x-1/2 top-12 w-4 h-12 bg-violet-400/20 rounded-t-full" />
                           {/* Label */}
-                          <p className="absolute bottom-0 inset-x-0 text-center text-[9px] text-white/40">
+                          <p className="absolute bottom-0 inset-x-0 text-center text-[9px] text-white">
                             Prefabricated box protects workers inside
                           </p>
                         </div>
                       </div>
                     </div>
-                    <p className="text-xs text-white/60 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       A trench box is a prefabricated steel or aluminium cage placed into the
                       excavation. Workers operate inside the box, which protects them from side
                       collapse. Trench boxes can be dragged along the trench as work progresses.
@@ -767,7 +767,7 @@ export default function CscsCardModule5Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Factors Affecting Support Method Selection
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -832,7 +832,7 @@ export default function CscsCardModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Types of Underground Services</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -897,7 +897,7 @@ export default function CscsCardModule5Section1() {
                     </div>
                     <div>
                       <p className="text-xs font-medium text-red-400">Red</p>
-                      <p className="text-[11px] text-white/60">Electricity</p>
+                      <p className="text-[11px] text-white">Electricity</p>
                     </div>
                   </div>
                   <div className="p-3 bg-[#1a1a1a] flex items-center gap-3">
@@ -906,7 +906,7 @@ export default function CscsCardModule5Section1() {
                     </div>
                     <div>
                       <p className="text-xs font-medium text-yellow-400">Yellow</p>
-                      <p className="text-[11px] text-white/60">Gas</p>
+                      <p className="text-[11px] text-white">Gas</p>
                     </div>
                   </div>
                   <div className="p-3 bg-[#1a1a1a] flex items-center gap-3">
@@ -915,7 +915,7 @@ export default function CscsCardModule5Section1() {
                     </div>
                     <div>
                       <p className="text-xs font-medium text-blue-400">Blue</p>
-                      <p className="text-[11px] text-white/60">Water</p>
+                      <p className="text-[11px] text-white">Water</p>
                     </div>
                   </div>
                   <div className="p-3 bg-[#1a1a1a] flex items-center gap-3">
@@ -924,7 +924,7 @@ export default function CscsCardModule5Section1() {
                     </div>
                     <div>
                       <p className="text-xs font-medium text-green-400">Green</p>
-                      <p className="text-[11px] text-white/60">Telecoms / Data</p>
+                      <p className="text-[11px] text-white">Telecoms / Data</p>
                     </div>
                   </div>
                   <div className="p-3 bg-[#1a1a1a] flex items-center gap-3">
@@ -933,7 +933,7 @@ export default function CscsCardModule5Section1() {
                     </div>
                     <div>
                       <p className="text-xs font-medium text-gray-400">Brown / Grey</p>
-                      <p className="text-[11px] text-white/60">Sewers / Drainage</p>
+                      <p className="text-[11px] text-white">Sewers / Drainage</p>
                     </div>
                   </div>
                 </div>
@@ -944,7 +944,7 @@ export default function CscsCardModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">500mm Hand Digging Rule</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     All mechanical excavation must stop at 500mm from a known underground service.
                   </strong>{' '}
@@ -963,7 +963,7 @@ export default function CscsCardModule5Section1() {
                     Safe Approach to Exposed Services
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Once underground services are exposed in an excavation, they must be treated with
                   extreme care. Electricity cables must not be touched, pulled, or levered with
                   tools &mdash; even if they appear to be de-energised, they may still be live. Gas
@@ -996,7 +996,7 @@ export default function CscsCardModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Edge Protection Requirements</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1048,7 +1048,7 @@ export default function CscsCardModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Safe Access &amp; Egress</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1122,7 +1122,7 @@ export default function CscsCardModule5Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   When Must Inspections Take Place?
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1159,7 +1159,7 @@ export default function CscsCardModule5Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Competent Person &amp; Written Reports
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1206,7 +1206,7 @@ export default function CscsCardModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">No Entry Without Inspection</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     No worker may enter an excavation until it has been inspected and declared safe
                     by a competent person.
@@ -1252,21 +1252,21 @@ export default function CscsCardModule5Section1() {
                     <div className="bg-amber-500/10 border border-amber-500/30 p-3 rounded-lg text-center">
                       <p className="text-2xl font-bold text-amber-400 mb-1">3m</p>
                       <p className="text-xs font-medium text-amber-400 mb-1">Up to 33kV</p>
-                      <p className="text-[11px] text-white/60">
+                      <p className="text-[11px] text-white">
                         Most common distribution lines found in residential and commercial areas
                       </p>
                     </div>
                     <div className="bg-orange-500/10 border border-orange-500/30 p-3 rounded-lg text-center">
                       <p className="text-2xl font-bold text-orange-400 mb-1">3m</p>
                       <p className="text-xs font-medium text-orange-400 mb-1">132kV</p>
-                      <p className="text-[11px] text-white/60">
+                      <p className="text-[11px] text-white">
                         Regional transmission lines &mdash; larger pylons with greater clearance
                       </p>
                     </div>
                     <div className="bg-red-500/10 border border-red-500/30 p-3 rounded-lg text-center">
                       <p className="text-2xl font-bold text-red-400 mb-1">6m</p>
                       <p className="text-xs font-medium text-red-400 mb-1">275kV / 400kV</p>
-                      <p className="text-[11px] text-white/60">
+                      <p className="text-[11px] text-white">
                         National Grid transmission lines &mdash; the highest voltages carried on
                         large steel pylons
                       </p>
@@ -1279,7 +1279,7 @@ export default function CscsCardModule5Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Control Measures for Overhead Power Lines
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1335,7 +1335,7 @@ export default function CscsCardModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">If Contact or Arcing Occurs</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If plant or equipment contacts or comes close to an overhead power line:{' '}
                   <strong className="text-white">
                     the operator must stay in the cab and not touch any metal parts.
@@ -1373,7 +1373,7 @@ export default function CscsCardModule5Section1() {
                     Rescue from Collapsed Excavations
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-3">
+                <div className="text-sm text-white space-y-3">
                   <p>
                     <strong className="text-white">
                       NEVER enter a collapsed excavation to attempt a rescue.
@@ -1424,7 +1424,7 @@ export default function CscsCardModule5Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Gas Detection &amp; Hazardous Atmospheres
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1466,7 +1466,7 @@ export default function CscsCardModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Flooding Response</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1506,7 +1506,7 @@ export default function CscsCardModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Reporting Incidents</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1571,7 +1571,7 @@ export default function CscsCardModule5Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1585,7 +1585,7 @@ export default function CscsCardModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-5">

@@ -353,7 +353,7 @@ const Level3Module8Section3_2 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="../section3">
@@ -379,7 +379,7 @@ const Level3Module8Section3_2 = () => {
               </h1>
             </div>
           </div>
-          <p className="text-lg text-white/70">
+          <p className="text-lg text-white">
             Master the art of analysing exam questions to identify what's being asked, spot
             distractors, and select the correct answer with confidence.
           </p>
@@ -393,21 +393,21 @@ const Level3Module8Section3_2 = () => {
           </h2>
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 <span className="text-elec-yellow font-medium">Read carefully:</span> Identify
                 question type and keywords
               </p>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 <span className="text-elec-yellow font-medium">Predict first:</span> Think of answer
                 before reading options
               </p>
             </div>
             <div className="space-y-2">
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 <span className="text-elec-yellow font-medium">Eliminate:</span> Remove clearly
                 wrong options systematically
               </p>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 <span className="text-elec-yellow font-medium">Spot distractors:</span> Watch for
                 common misleading patterns
               </p>
@@ -431,7 +431,7 @@ const Level3Module8Section3_2 = () => {
             ].map((outcome, index) => (
               <li key={index} className="flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                <span className="text-white/80">{outcome}</span>
+                <span className="text-white">{outcome}</span>
               </li>
             ))}
           </ul>
@@ -447,7 +447,7 @@ const Level3Module8Section3_2 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none mb-6">
-            <p className="text-white/80">
+            <p className="text-white">
               Exam questions fall into distinct categories, each requiring a different approach.
               Recognising the question type immediately helps you allocate time appropriately and
               apply the right strategy. Don't treat every question the same way - adapt your
@@ -465,17 +465,17 @@ const Level3Module8Section3_2 = () => {
                     {item.keywords.map((kw, idx) => (
                       <span
                         key={idx}
-                        className="px-2 py-0.5 bg-white/10 text-white/60 text-xs rounded"
+                        className="px-2 py-0.5 bg-white/10 text-white text-xs rounded"
                       >
                         {kw}
                       </span>
                     ))}
                   </div>
                 </div>
-                <p className="text-white/70 text-sm mb-2">{item.description}</p>
+                <p className="text-white text-sm mb-2">{item.description}</p>
                 <div className="bg-white/5 rounded-lg p-3 mb-2">
-                  <p className="text-white/50 text-xs mb-1">Example:</p>
-                  <p className="text-white/80 text-sm italic">"{item.example}"</p>
+                  <p className="text-white text-xs mb-1">Example:</p>
+                  <p className="text-white text-sm italic">"{item.example}"</p>
                 </div>
                 <div className="flex items-start gap-2">
                   <Lightbulb className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
@@ -490,7 +490,7 @@ const Level3Module8Section3_2 = () => {
               <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="text-amber-400 font-medium mb-1">Watch for Negative Questions</h4>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Questions containing 'NOT', 'EXCEPT', or 'LEAST' are easily misread. Underline
                   these words when you see them. You're looking for the FALSE or INCORRECT
                   statement, not the correct one.
@@ -515,7 +515,7 @@ const Level3Module8Section3_2 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none mb-6">
-            <p className="text-white/80">
+            <p className="text-white">
               Command words tell you exactly what the examiner expects. Understanding the difference
               between 'State' and 'Explain' can mean the difference between full marks and losing
               marks. Use the right amount of detail for the command word given.
@@ -527,7 +527,7 @@ const Level3Module8Section3_2 = () => {
             {commandWords.map((item, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-3">
                 <h4 className="text-elec-yellow font-medium mb-1">{item.word}</h4>
-                <p className="text-white/70 text-sm">{item.meaning}</p>
+                <p className="text-white text-sm">{item.meaning}</p>
               </div>
             ))}
           </div>
@@ -539,7 +539,7 @@ const Level3Module8Section3_2 = () => {
                 <h4 className="text-blue-400 font-medium mb-1">
                   Key Distinction: State vs Explain
                 </h4>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   "State the minimum IR value" = "1.0 MΩ" (just the fact). "Explain why IR testing
                   is important" = "IR testing verifies insulation integrity to prevent leakage
                   currents that could cause electric shock or fire" (fact + reason).
@@ -554,20 +554,20 @@ const Level3Module8Section3_2 = () => {
               <span className="px-3 py-1 bg-green-500/20 text-green-400 text-sm rounded-full">
                 State / List / Identify
               </span>
-              <span className="text-white/40">→</span>
+              <span className="text-white">→</span>
               <span className="px-3 py-1 bg-yellow-500/20 text-yellow-400 text-sm rounded-full">
                 Describe / Determine
               </span>
-              <span className="text-white/40">→</span>
+              <span className="text-white">→</span>
               <span className="px-3 py-1 bg-orange-500/20 text-orange-400 text-sm rounded-full">
                 Explain / Compare
               </span>
-              <span className="text-white/40">→</span>
+              <span className="text-white">→</span>
               <span className="px-3 py-1 bg-red-500/20 text-red-400 text-sm rounded-full">
                 Evaluate / Justify
               </span>
             </div>
-            <p className="text-white/60 text-xs mt-2">
+            <p className="text-white text-xs mt-2">
               More depth and reasoning required as you move along the scale
             </p>
           </div>
@@ -588,7 +588,7 @@ const Level3Module8Section3_2 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none mb-6">
-            <p className="text-white/80">
+            <p className="text-white">
               Distractors are wrong answers designed to look right. Exam writers use predictable
               patterns to create plausible-sounding incorrect options. Learning to recognise these
               patterns helps you eliminate wrong answers quickly and confidently.
@@ -603,15 +603,15 @@ const Level3Module8Section3_2 = () => {
                   <XCircle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
                     <h4 className="text-white font-medium mb-1">{item.pattern}</h4>
-                    <p className="text-white/60 text-sm mb-2">{item.description}</p>
+                    <p className="text-white text-sm mb-2">{item.description}</p>
                     <div className="grid sm:grid-cols-2 gap-3 text-sm">
                       <div className="bg-white/5 rounded-lg p-2">
-                        <p className="text-white/50 text-xs mb-0.5">Example:</p>
-                        <p className="text-white/70 text-xs">{item.example}</p>
+                        <p className="text-white text-xs mb-0.5">Example:</p>
+                        <p className="text-white text-xs">{item.example}</p>
                       </div>
                       <div className="bg-green-500/10 rounded-lg p-2">
                         <p className="text-green-400/80 text-xs mb-0.5">How to spot:</p>
-                        <p className="text-white/70 text-xs">{item.howToSpot}</p>
+                        <p className="text-white text-xs">{item.howToSpot}</p>
                       </div>
                     </div>
                   </div>
@@ -625,7 +625,7 @@ const Level3Module8Section3_2 = () => {
               <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="text-green-400 font-medium mb-1">The Absolute Rule</h4>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Options containing absolute words like 'always', 'never', 'all', 'none', 'every',
                   'only' are usually incorrect. In electrical work, there are almost always
                   exceptions or qualifications to consider.
@@ -650,7 +650,7 @@ const Level3Module8Section3_2 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none mb-6">
-            <p className="text-white/80">
+            <p className="text-white">
               Even when you're unsure of the correct answer, systematic elimination can
               significantly improve your chances. By removing options you know are wrong, you
               increase the probability of selecting correctly - from 25% (random guess from 4) to
@@ -670,7 +670,7 @@ const Level3Module8Section3_2 = () => {
                 </span>
                 <div>
                   <h4 className="text-white font-medium">{item.action}</h4>
-                  <p className="text-white/60 text-sm">{item.detail}</p>
+                  <p className="text-white text-sm">{item.detail}</p>
                 </div>
               </div>
             ))}
@@ -683,13 +683,13 @@ const Level3Module8Section3_2 = () => {
             </h4>
             <div className="space-y-3">
               <div className="bg-white/5 rounded-lg p-3">
-                <p className="text-white/80 text-sm font-medium mb-2">
+                <p className="text-white text-sm font-medium mb-2">
                   Question: What is the minimum insulation resistance for a SELV circuit?
                 </p>
                 <div className="space-y-2">
                   <div className="flex items-center gap-2">
                     <span className="text-red-400 font-mono text-sm">A)</span>
-                    <span className="text-white/60 text-sm line-through">0.25 MΩ at 500V DC</span>
+                    <span className="text-white text-sm line-through">0.25 MΩ at 500V DC</span>
                     <span className="text-red-400 text-xs">(Wrong voltage)</span>
                   </div>
                   <div className="flex items-center gap-2">
@@ -699,17 +699,17 @@ const Level3Module8Section3_2 = () => {
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-red-400 font-mono text-sm">C)</span>
-                    <span className="text-white/60 text-sm line-through">1.0 MΩ at 500V DC</span>
+                    <span className="text-white text-sm line-through">1.0 MΩ at 500V DC</span>
                     <span className="text-red-400 text-xs">(Wrong voltage for SELV)</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-red-400 font-mono text-sm">D)</span>
-                    <span className="text-white/60 text-sm line-through">2.0 MΩ at 1000V DC</span>
+                    <span className="text-white text-sm line-through">2.0 MΩ at 1000V DC</span>
                     <span className="text-red-400 text-xs">(1000V for &gt;500V circuits)</span>
                   </div>
                 </div>
               </div>
-              <p className="text-white/60 text-xs">
+              <p className="text-white text-xs">
                 Knowing that SELV is tested at 250V DC immediately eliminates options A, C, and D,
                 leaving only B.
               </p>
@@ -731,7 +731,7 @@ const Level3Module8Section3_2 = () => {
           <div className="space-y-4">
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="text-white font-medium mb-2">Before Answering</h4>
-              <ul className="space-y-1 text-white/70 text-sm">
+              <ul className="space-y-1 text-white text-sm">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-3 h-3 text-green-400" /> Read the entire question
                   carefully
@@ -751,7 +751,7 @@ const Level3Module8Section3_2 = () => {
             </div>
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="text-white font-medium mb-2">When Reading Options</h4>
-              <ul className="space-y-1 text-white/70 text-sm">
+              <ul className="space-y-1 text-white text-sm">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-3 h-3 text-green-400" /> Read ALL options before
                   selecting
@@ -772,7 +772,7 @@ const Level3Module8Section3_2 = () => {
             </div>
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="text-white font-medium mb-2">When Stuck</h4>
-              <ul className="space-y-1 text-white/70 text-sm">
+              <ul className="space-y-1 text-white text-sm">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-3 h-3 text-green-400" /> Eliminate obviously wrong
                   options first
@@ -803,7 +803,7 @@ const Level3Module8Section3_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-0 last:pb-0">
                 <h4 className="text-white font-medium mb-2">{faq.question}</h4>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -815,7 +815,7 @@ const Level3Module8Section3_2 = () => {
           <div className="grid sm:grid-cols-2 gap-4">
             <div>
               <h4 className="text-red-400 font-medium mb-2 text-sm">Likely Wrong If...</h4>
-              <ul className="space-y-1 text-white/70 text-sm">
+              <ul className="space-y-1 text-white text-sm">
                 <li>- Contains absolute words (always, never)</li>
                 <li>- Uses unfamiliar complex terminology</li>
                 <li>- Includes obviously wrong values</li>
@@ -824,7 +824,7 @@ const Level3Module8Section3_2 = () => {
             </div>
             <div>
               <h4 className="text-green-400 font-medium mb-2 text-sm">Likely Correct If...</h4>
-              <ul className="space-y-1 text-white/70 text-sm">
+              <ul className="space-y-1 text-white text-sm">
                 <li>- Uses qualified language (usually, often)</li>
                 <li>- Matches your predicted answer</li>
                 <li>- Contains familiar regulation references</li>
@@ -839,7 +839,7 @@ const Level3Module8Section3_2 = () => {
           <h3 className="text-lg font-semibold text-white mb-4">Test Your Knowledge</h3>
           {!showQuiz ? (
             <div className="text-center">
-              <p className="text-white/70 mb-4">Ready to test your question analysis skills?</p>
+              <p className="text-white mb-4">Ready to test your question analysis skills?</p>
               <Button
                 onClick={() => setShowQuiz(true)}
                 className="bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90"

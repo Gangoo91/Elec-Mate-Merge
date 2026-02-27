@@ -64,7 +64,7 @@ const SubscriptionFAQ = () => {
             >
               {faq.q}
             </AccordionTrigger>
-            <AccordionContent className="text-sm text-white/60 pb-3.5 leading-relaxed">
+            <AccordionContent className="text-sm text-white pb-3.5 leading-relaxed">
               {faq.a}
             </AccordionContent>
           </AccordionItem>

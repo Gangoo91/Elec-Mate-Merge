@@ -204,7 +204,7 @@ const HNCModule2Section1_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section1">
@@ -226,7 +226,7 @@ const HNCModule2Section1_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             U-Values and Thermal Resistance
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding heat transfer through building elements for energy-efficient design and
             Part L compliance
           </p>
@@ -313,7 +313,7 @@ const HNCModule2Section1_4 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 U = Heat flow rate / (Area × Temperature difference)
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Unit: W/m²K (Watts per square metre per Kelvin)
               </p>
             </div>
@@ -422,7 +422,7 @@ const HNCModule2Section1_4 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">R-Value Calculation</p>
               <p className="font-mono text-center text-lg mb-2">R = d / λ</p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where d = thickness (m), λ = thermal conductivity (W/mK)
               </p>
             </div>
@@ -560,7 +560,7 @@ const HNCModule2Section1_4 = () => {
                   U = 1 / R<sub>T</sub>
                 </p>
               </div>
-              <p className="text-xs text-white/70 mt-2">
+              <p className="text-xs text-white mt-2">
                 Where Rsi = internal surface resistance, Rse = external surface resistance
               </p>
             </div>
@@ -776,7 +776,7 @@ const HNCModule2Section1_4 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 Q<sub>fabric</sub> = Σ(U × A × ΔT)
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where Q = heat loss (W), A = area (m²), ΔT = temperature difference (K)
               </p>
             </div>
@@ -789,7 +789,7 @@ const HNCModule2Section1_4 = () => {
                 Calculate fabric heat loss for an office: 5m × 4m, ceiling height 2.7m, one external
                 wall with window
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p className="mb-2">
                   <strong>Given:</strong>
                 </p>
@@ -809,7 +809,7 @@ const HNCModule2Section1_4 = () => {
                 <p className="mt-2 text-elec-yellow">
                   Total fabric loss = 66.6 + 80.6 = <strong>147.2 W</strong>
                 </p>
-                <p className="mt-3 text-white/60">
+                <p className="mt-3 text-white">
                   Note: Total heating load also includes ventilation heat loss and internal gains
                 </p>
               </div>
@@ -835,7 +835,7 @@ const HNCModule2Section1_4 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Building services impact:</strong> Better U-values reduce heating/cooling
               loads, allowing smaller HVAC systems, lower energy consumption, and reduced carbon
               emissions.
@@ -861,14 +861,14 @@ const HNCModule2Section1_4 = () => {
                 <strong>Question:</strong> A wall needs to achieve U = 0.20 W/m²K. Current layers
                 give RT = 1.2 m²K/W. What thickness of PIR insulation (λ = 0.022 W/mK) is needed?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Target RT = 1/U = 1/0.20 = 5.0 m²K/W</p>
                 <p>Additional R needed = 5.0 - 1.2 = 3.8 m²K/W</p>
                 <p className="mt-2">Using R = d/λ, rearranging: d = R × λ</p>
                 <p>
                   d = 3.8 × 0.022 = 0.0836m = <strong>84mm</strong>
                 </p>
-                <p className="mt-2 text-white/60">→ Specify 90mm PIR board (standard size)</p>
+                <p className="mt-2 text-white">→ Specify 90mm PIR board (standard size)</p>
               </div>
             </div>
 
@@ -880,7 +880,7 @@ const HNCModule2Section1_4 = () => {
                 <strong>Question:</strong> Flat roof construction: 150mm concrete deck | 120mm PIR |
                 waterproof membrane. Does it meet Part L?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Rsi (ceiling, upward flow) = 0.10 m²K/W</p>
                 <p>Concrete (λ = 1.13): R = 0.150/1.13 = 0.13 m²K/W</p>
                 <p>PIR (λ = 0.022): R = 0.120/0.022 = 5.45 m²K/W</p>
@@ -904,7 +904,7 @@ const HNCModule2Section1_4 = () => {
                 <strong>Question:</strong> Calculate total fabric heat loss for a small office
                 building. ΔT = 24K.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Building elements:</strong>
                 </p>
@@ -922,7 +922,7 @@ const HNCModule2Section1_4 = () => {
                 <p className="mt-2 text-elec-yellow">
                   <strong>Total fabric loss = 3,912 W (3.9 kW)</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → Add ventilation loss (~2-3 kW) for total heating load
                 </p>
               </div>
@@ -1011,7 +1011,7 @@ const HNCModule2Section1_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1057,7 +1057,7 @@ const HNCModule2Section1_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section1-3">

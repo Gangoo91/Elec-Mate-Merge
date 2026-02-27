@@ -223,7 +223,7 @@ const Module2Section4_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -245,14 +245,14 @@ const Module2Section4_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Safety Considerations & Testing Differences
           </h1>
-          <p className="text-base sm:text-lg text-white/70 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-white max-w-2xl mx-auto">
             Learn safety and testing differences between AC and DC electrical systems
           </p>
         </header>
 
         {/* Summary Box */}
         <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
-          <p className="text-sm text-white/80 leading-relaxed">
+          <p className="text-sm text-white leading-relaxed">
             <strong className="text-elec-yellow">Key Points:</strong> Safe isolation requires
             lock-off and prove dead (before/after) with a proving unit. DC hazards include sustained
             arcing - use DC-rated switching and PPE. Select correct CAT rating for instruments and
@@ -266,8 +266,8 @@ const Module2Section4_6 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">01</span>
             Learning Outcomes
           </h2>
-          <p className="text-white/70 mb-4">By the end of this section, you'll be able to:</p>
-          <ul className="space-y-3 text-white/80">
+          <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
+          <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Plan safe isolation and proving dead for AC and DC systems</span>
@@ -297,7 +297,7 @@ const Module2Section4_6 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">02</span>
             Safety Fundamentals for AC and DC Systems
           </h2>
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Safety procedures must be adapted for different current types. DC systems present
               unique challenges due to their ability to sustain arcs and the presence of multiple
@@ -348,7 +348,7 @@ const Module2Section4_6 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">03</span>
             Testing Differences Between AC and DC
           </h2>
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Different test methods and instruments are required for AC and DC systems.
               Understanding these differences is crucial for proper installation verification.
@@ -407,7 +407,7 @@ const Module2Section4_6 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">04</span>
             Instrument Selection and CAT Ratings
           </h2>
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Choosing the correct instruments with appropriate safety ratings is essential for safe
               testing. Different systems require different instrument capabilities and safety
@@ -441,7 +441,7 @@ const Module2Section4_6 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h4 className="font-semibold text-elec-yellow mb-2">CAT Rating Guide</h4>
-                <ul className="list-disc pl-4 space-y-1 text-sm text-white/70">
+                <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                   <li>
                     <strong>CAT III:</strong> Distribution boards, fixed equipment - most electrical
                     work
@@ -473,7 +473,7 @@ const Module2Section4_6 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">05</span>
             Special Installation Considerations
           </h2>
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Modern installations often include special systems covered by BS 7671 Part 7. These
               require additional safety measures and testing procedures.
@@ -482,7 +482,7 @@ const Module2Section4_6 = () => {
             <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h4 className="font-semibold text-elec-yellow mb-2">PV Systems (712)</h4>
-                <ul className="list-disc pl-4 space-y-1 text-sm text-white/70">
+                <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                   <li>High DC voltages (up to 1000V+)</li>
                   <li>Always live during daylight</li>
                   <li>DC isolation required</li>
@@ -491,7 +491,7 @@ const Module2Section4_6 = () => {
               </div>
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h4 className="font-semibold text-elec-yellow mb-2">EV Charging (722)</h4>
-                <ul className="list-disc pl-4 space-y-1 text-sm text-white/70">
+                <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                   <li>DC residual components possible</li>
                   <li>RCD type selection critical</li>
                   <li>High power DC charging</li>
@@ -500,7 +500,7 @@ const Module2Section4_6 = () => {
               </div>
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h4 className="font-semibold text-elec-yellow mb-2">Battery Storage</h4>
-                <ul className="list-disc pl-4 space-y-1 text-sm text-white/70">
+                <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                   <li>High prospective DC currents</li>
                   <li>Multiple energy sources</li>
                   <li>Ventilation requirements</li>
@@ -534,7 +534,7 @@ const Module2Section4_6 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <h4 className="font-semibold text-elec-yellow mb-2">Before Testing</h4>
-                  <ul className="list-disc pl-4 space-y-1 text-sm text-white/70">
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                     <li>Check instrument calibration dates and condition</li>
                     <li>Verify CAT rating suitable for the system</li>
                     <li>Prove instruments on known live source</li>
@@ -556,7 +556,7 @@ const Module2Section4_6 = () => {
             <div>
               <h3 className="text-lg font-semibold text-white mb-3">Common Mistakes to Avoid</h3>
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <ul className="list-disc pl-4 space-y-2 text-sm text-white/70">
+                <ul className="list-disc pl-4 space-y-2 text-sm text-white">
                   <li>
                     <strong>Wrong instrument type:</strong> Using AC instruments on DC systems or
                     vice versa
@@ -619,7 +619,7 @@ const Module2Section4_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="py-4 first:pt-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -631,7 +631,7 @@ const Module2Section4_6 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">08</span>
             AC/DC Safety & Testing Pocket Guide
           </h2>
-          <p className="text-sm text-white/70 mb-4">
+          <p className="text-sm text-white mb-4">
             Essential safety and testing reference for AC/DC electrical systems
           </p>
 
@@ -642,7 +642,7 @@ const Module2Section4_6 = () => {
                   <TestTube className="w-4 h-4" />
                   AC System Tests
                 </h4>
-                <ul className="space-y-1 text-white/70 text-xs">
+                <ul className="space-y-1 text-white text-xs">
                   <li>• Continuity (L/N/PE connections)</li>
                   <li>• Insulation resistance (DC test set)</li>
                   <li>• Loop impedance (Zs/Ze) for ADS</li>
@@ -656,7 +656,7 @@ const Module2Section4_6 = () => {
                   <Battery className="w-4 h-4" />
                   DC System Tests
                 </h4>
-                <ul className="space-y-1 text-white/70 text-xs">
+                <ul className="space-y-1 text-white text-xs">
                   <li>• Continuity (+/−/PE connections)</li>
                   <li>• Insulation resistance (specified voltage)</li>
                   <li>• No direct Zs testing applicable</li>
@@ -693,7 +693,7 @@ const Module2Section4_6 = () => {
                   <AlertTriangle className="w-4 h-4" />
                   Special Systems
                 </h4>
-                <ul className="space-y-1 text-white/70 text-xs">
+                <ul className="space-y-1 text-white text-xs">
                   <li>
                     • <strong>PV (712):</strong> High DC volts, always live
                   </li>
@@ -718,19 +718,19 @@ const Module2Section4_6 = () => {
             <div className="grid grid-cols-4 gap-4 text-xs">
               <div className="text-center">
                 <p className="font-semibold text-white">RCD Types</p>
-                <p className="text-white/70">AC/A/F/B for DC components</p>
+                <p className="text-white">AC/A/F/B for DC components</p>
               </div>
               <div className="text-center">
                 <p className="font-semibold text-white">CAT Ratings</p>
-                <p className="text-white/70">III/IV for system voltage</p>
+                <p className="text-white">III/IV for system voltage</p>
               </div>
               <div className="text-center">
                 <p className="font-semibold text-white">IR Test Volts</p>
-                <p className="text-white/70">250/500/1000V DC</p>
+                <p className="text-white">250/500/1000V DC</p>
               </div>
               <div className="text-center">
                 <p className="font-semibold text-white">Arc Hazard</p>
-                <p className="text-white/70">DC higher risk</p>
+                <p className="text-white">DC higher risk</p>
               </div>
             </div>
           </div>
@@ -749,7 +749,7 @@ const Module2Section4_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level2/module2/section4/4-5">

@@ -188,7 +188,7 @@ export default function IpafModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../ipaf-module-1">
@@ -213,7 +213,7 @@ export default function IpafModule1Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             HSWA 1974 & CDM 2015
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             General duties under the Health and Safety at Work Act and Construction (Design and
             Management) Regulations
           </p>
@@ -309,7 +309,7 @@ export default function IpafModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Key Features of HSWA 1974</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -369,11 +369,11 @@ export default function IpafModule1Section2() {
                       Section 2 &mdash; Employer's Duty to Employees
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Every employer shall ensure, so far as is reasonably practicable, the health,
                     safety, and welfare at work of all their employees.
                   </p>
-                  <div className="text-sm text-white/80 space-y-1">
+                  <div className="text-sm text-white space-y-1">
                     <p>
                       <strong className="text-white">Section 2(2) includes:</strong>
                     </p>
@@ -418,12 +418,12 @@ export default function IpafModule1Section2() {
                       Section 3 &mdash; Duty to Non-Employees
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Every employer shall conduct their undertaking so as to ensure, so far as is
                     reasonably practicable, that persons not in their employment are not exposed to
                     risks to health or safety.
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     <strong className="text-white">For tower work this means:</strong> You must
                     consider the safety of other contractors on site, visitors, members of the
                     public walking past, and anyone else who could be affected by your tower
@@ -438,11 +438,11 @@ export default function IpafModule1Section2() {
                       Section 7 &mdash; Employee's Duty
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Every employee shall take reasonable care for their own health and safety and
                     that of other persons who may be affected by their acts or omissions at work.
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     <strong className="text-white">Employees must also:</strong> Co-operate with
                     their employer so far as is necessary to enable the employer to comply with
                     their legal duties. This means following training, using equipment correctly,
@@ -457,11 +457,11 @@ export default function IpafModule1Section2() {
                       Section 8 &mdash; Interference and Misuse
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     No person shall intentionally or recklessly interfere with or misuse anything
                     provided in the interests of health, safety, or welfare.
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     <strong className="text-white">Examples relating to tower work:</strong>{' '}
                     Removing guardrails, climbing the outside of a tower, removing outriggers,
                     placing tools on the toe boards to create a tripping hazard, or disabling wheel
@@ -508,7 +508,7 @@ export default function IpafModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">CDM 2015 Applies When:</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Any construction work is carried out, regardless of project size</span>
@@ -560,10 +560,10 @@ export default function IpafModule1Section2() {
                     <Landmark className="h-5 w-5 text-amber-400" />
                     <p className="text-sm font-medium text-amber-400">Client</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     The person or organisation for whom the construction work is carried out.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Make suitable arrangements for managing the project</span>
@@ -593,7 +593,7 @@ export default function IpafModule1Section2() {
                 <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <p className="text-sm font-medium text-purple-400 mb-2">Principal Designer</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Plan, manage, and co-ordinate the pre-construction phase</span>
@@ -618,7 +618,7 @@ export default function IpafModule1Section2() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <p className="text-sm font-medium text-blue-400 mb-2">Designer</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Eliminate hazards through design where possible</span>
@@ -646,7 +646,7 @@ export default function IpafModule1Section2() {
                 <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <p className="text-sm font-medium text-green-400 mb-2">Principal Contractor</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Plan, manage, and co-ordinate the construction phase</span>
@@ -675,7 +675,7 @@ export default function IpafModule1Section2() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <p className="text-sm font-medium text-teal-400 mb-2">Contractor</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Plan, manage, and monitor own work safely</span>
@@ -738,7 +738,7 @@ export default function IpafModule1Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   CDM Requirements Specific to Tower Work
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-cyan-400">Construction Phase Plan:</strong> Must include
                     details of how towers will be managed, including assembly/dismantling methods,
@@ -772,7 +772,7 @@ export default function IpafModule1Section2() {
                   <p className="text-sm font-medium text-green-400 mb-2">
                     Design Considerations for Towers
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Can the design reduce the need for work at height?</span>
@@ -795,7 +795,7 @@ export default function IpafModule1Section2() {
                   <p className="text-sm font-medium text-blue-400 mb-2">
                     Construction Phase Plan Content
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Tower locations and working platform heights</span>
@@ -837,10 +837,10 @@ export default function IpafModule1Section2() {
                 <p className="text-sm font-medium text-elec-yellow mb-3">
                   Notification Thresholds (F10)
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   A project must be notified to the HSE if it meets either of these conditions:
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Threshold 1:</strong> The construction phase will
                     last more than 30 working days <strong>AND</strong> have more than 20 workers
@@ -857,7 +857,7 @@ export default function IpafModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   F10 Notification Must Include:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Date of forwarding the notice</span>
@@ -898,7 +898,7 @@ export default function IpafModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Important Note</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Even if a project does not need to be notified, CDM 2015 still applies in full.
                   The client still has duties, contractors must still be competent, and work must
                   still be properly planned and managed. Notification is simply an additional
@@ -933,7 +933,7 @@ export default function IpafModule1Section2() {
                 <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                   <div>
                     <p className="text-sm font-medium text-purple-400 mb-2">Site Information</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Ground conditions and bearing capacity</span>
@@ -958,7 +958,7 @@ export default function IpafModule1Section2() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-purple-400 mb-2">Hazard Information</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Asbestos survey results</span>
@@ -1008,7 +1008,7 @@ export default function IpafModule1Section2() {
                   <p className="text-sm font-medium text-teal-400 mb-2">
                     Your HSWA Duties in Practice
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Always follow the safe system of work provided</span>
@@ -1039,7 +1039,7 @@ export default function IpafModule1Section2() {
                   <p className="text-sm font-medium text-amber-400 mb-2">
                     Your CDM Duties in Practice
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Attend the site induction</span>
@@ -1076,7 +1076,7 @@ export default function IpafModule1Section2() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <p className="text-sm font-medium text-white mb-1">HSWA Penalties</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Unlimited fines for organisations</span>
@@ -1097,7 +1097,7 @@ export default function IpafModule1Section2() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white mb-1">CDM Penalties</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Unlimited fines for duty holders</span>
@@ -1129,7 +1129,7 @@ export default function IpafModule1Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1143,7 +1143,7 @@ export default function IpafModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../ipaf-module-1-section-1">

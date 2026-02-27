@@ -223,7 +223,7 @@ const HNCModule3Section6_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section6">
@@ -245,7 +245,7 @@ const HNCModule3Section6_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Smart Controls and Building Automation
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Intelligent systems for optimising energy use, comfort, and operational efficiency in
             modern buildings
           </p>
@@ -584,20 +584,20 @@ const HNCModule3Section6_5 = () => {
               <div className="grid sm:grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">P - Proportional</p>
-                  <p className="text-white/70 text-xs">Output proportional to error</p>
-                  <p className="text-white/90 text-xs mt-1">
+                  <p className="text-white text-xs">Output proportional to error</p>
+                  <p className="text-white text-xs mt-1">
                     Responds immediately but leaves offset
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">I - Integral</p>
-                  <p className="text-white/70 text-xs">Accumulates error over time</p>
-                  <p className="text-white/90 text-xs mt-1">Eliminates steady-state error</p>
+                  <p className="text-white text-xs">Accumulates error over time</p>
+                  <p className="text-white text-xs mt-1">Eliminates steady-state error</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">D - Derivative</p>
-                  <p className="text-white/70 text-xs">Rate of change of error</p>
-                  <p className="text-white/90 text-xs mt-1">Anticipates and dampens overshoot</p>
+                  <p className="text-white text-xs">Rate of change of error</p>
+                  <p className="text-white text-xs mt-1">Anticipates and dampens overshoot</p>
                 </div>
               </div>
             </div>
@@ -1460,7 +1460,7 @@ const HNCModule3Section6_5 = () => {
                 temperature 19°C, proportional band 4°C, and integral time 300 seconds. Calculate
                 the proportional output.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Error = Setpoint - Measured = 21 - 19 = <strong>2°C</strong>
                 </p>
@@ -1468,8 +1468,8 @@ const HNCModule3Section6_5 = () => {
                 <p>
                   = (2 / 4) × 100% = <strong>50% output</strong>
                 </p>
-                <p className="mt-2 text-white/60">The heating valve opens to 50% position</p>
-                <p className="text-white/60">
+                <p className="mt-2 text-white">The heating valve opens to 50% position</p>
+                <p className="text-white">
                   Integral action will gradually increase output if error persists
                 </p>
               </div>
@@ -1484,7 +1484,7 @@ const HNCModule3Section6_5 = () => {
                 Daylight harvesting achieves 35% average dimming over 2,500 occupied hours.
                 Calculate annual energy saving.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Lighting load = 200m² × 12 W/m² = <strong>2,400W = 2.4kW</strong>
                 </p>
@@ -1493,7 +1493,7 @@ const HNCModule3Section6_5 = () => {
                 <p className="mt-2">
                   Annual saving = 6,000 - 3,900 = <strong>2,100 kWh/year</strong>
                 </p>
-                <p className="mt-2 text-white/60">At £0.30/kWh = £630 annual cost saving</p>
+                <p className="mt-2 text-white">At £0.30/kWh = £630 annual cost saving</p>
               </div>
             </div>
 
@@ -1506,7 +1506,7 @@ const HNCModule3Section6_5 = () => {
                 when outside temperature is 5°C. Occupancy starts at 08:00. When should heating
                 start?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Required preheat time = <strong>3 hours</strong>
                 </p>
@@ -1514,12 +1514,12 @@ const HNCModule3Section6_5 = () => {
                 <p className="mt-2">
                   Heating start time = 08:00 - 3h = <strong>05:00</strong>
                 </p>
-                <p className="mt-2 text-white/60">Adaptive algorithm adjusts based on:</p>
-                <p className="text-white/60">
+                <p className="mt-2 text-white">Adaptive algorithm adjusts based on:</p>
+                <p className="text-white">
                   - Actual external temperature (warmer = later start)
                 </p>
-                <p className="text-white/60">- Previous day's performance data</p>
-                <p className="text-white/60">- Building thermal mass characteristics</p>
+                <p className="text-white">- Previous day's performance data</p>
+                <p className="text-white">- Building thermal mass characteristics</p>
               </div>
             </div>
 
@@ -1532,7 +1532,7 @@ const HNCModule3Section6_5 = () => {
                 average occupancy of 8. Fresh air rate is 10 l/s/person. Calculate the ventilation
                 reduction with demand control.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Design fresh air = 20 people × 10 l/s = <strong>200 l/s</strong>
                 </p>
@@ -1542,9 +1542,9 @@ const HNCModule3Section6_5 = () => {
                 <p className="mt-2">
                   Reduction = (200 - 80) / 200 × 100% = <strong>60% reduction</strong>
                 </p>
-                <p className="mt-2 text-white/60">Plus fan energy savings (cube law):</p>
-                <p className="text-white/60">Fan power at 40% = (0.4)³ = 6.4% of full power</p>
-                <p className="text-white/60">Fan energy saving ≈ 93% during reduced occupancy</p>
+                <p className="mt-2 text-white">Plus fan energy savings (cube law):</p>
+                <p className="text-white">Fan power at 40% = (0.4)³ = 6.4% of full power</p>
+                <p className="text-white">Fan energy saving ≈ 93% during reduced occupancy</p>
               </div>
             </div>
           </div>
@@ -1635,7 +1635,7 @@ const HNCModule3Section6_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1699,7 +1699,7 @@ const HNCModule3Section6_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section6-4">

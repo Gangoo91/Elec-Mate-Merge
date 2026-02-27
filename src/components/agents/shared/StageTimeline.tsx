@@ -66,7 +66,7 @@ export function StageTimeline({
                   className={cn(
                     compact ? 'h-4 w-4' : 'h-4 w-4 sm:h-5 sm:w-5',
                     isActive && config.colorClass,
-                    isPending && 'text-white/40'
+                    isPending && 'text-white'
                   )}
                   style={isActive ? { color: config.gradientFrom } : undefined}
                 />
@@ -89,7 +89,7 @@ export function StageTimeline({
                 'text-xs sm:text-sm font-medium transition-colors duration-300',
                 isCompleted && 'text-success',
                 isActive && 'text-white',
-                isPending && 'text-white/40'
+                isPending && 'text-white'
               )}
               style={isActive ? { color: config.gradientFrom } : undefined}
             >

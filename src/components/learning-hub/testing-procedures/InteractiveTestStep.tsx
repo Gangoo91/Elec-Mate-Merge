@@ -28,7 +28,7 @@ const InteractiveTestStep = ({
   const getStatusIcon = () => {
     if (isCompleted) return <CheckCircle className="h-5 w-5 text-green-400" />;
     if (isActive) return <Play className="h-5 w-5 text-elec-yellow" />;
-    return <Pause className="h-5 w-5 text-white/80" />;
+    return <Pause className="h-5 w-5 text-white" />;
   };
 
   const getCardStyle = () => {

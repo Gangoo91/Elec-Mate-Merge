@@ -231,7 +231,7 @@ const Level3Module6Section5_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section5">
@@ -566,23 +566,23 @@ const Level3Module6Section5_4 = () => {
               <table className="w-full text-xs">
                 <tbody>
                   <tr>
-                    <td className="py-1 text-white/70">Cable size</td>
+                    <td className="py-1 text-white">Cable size</td>
                     <td className="py-1 text-white">1.5mm² (or 1.0mm² if permitted)</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">Protective device</td>
+                    <td className="py-1 text-white">Protective device</td>
                     <td className="py-1 text-white">6A MCB Type B</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">Max Zs (6A Type B)</td>
+                    <td className="py-1 text-white">Max Zs (6A Type B)</td>
                     <td className="py-1 text-white">7.28 ohms</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">Voltage drop limit</td>
+                    <td className="py-1 text-white">Voltage drop limit</td>
                     <td className="py-1 text-white">3% (6.9V)</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">mV/A/m (1.5mm²)</td>
+                    <td className="py-1 text-white">mV/A/m (1.5mm²)</td>
                     <td className="py-1 text-white">29</td>
                   </tr>
                 </tbody>
@@ -593,23 +593,23 @@ const Level3Module6Section5_4 = () => {
               <table className="w-full text-xs">
                 <tbody>
                   <tr>
-                    <td className="py-1 text-white/70">One-way</td>
+                    <td className="py-1 text-white">One-way</td>
                     <td className="py-1 text-white">L (or C) and L1</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">Two-way</td>
+                    <td className="py-1 text-white">Two-way</td>
                     <td className="py-1 text-white">C (common), L1, L2</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">Intermediate</td>
+                    <td className="py-1 text-white">Intermediate</td>
                     <td className="py-1 text-white">L1, L2 (input), L1, L2 (output)</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">Strapper wires</td>
+                    <td className="py-1 text-white">Strapper wires</td>
                     <td className="py-1 text-white">L1 to L1, L2 to L2</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">Switch return</td>
+                    <td className="py-1 text-white">Switch return</td>
                     <td className="py-1 text-white">Sleeve blue core brown</td>
                   </tr>
                 </tbody>
@@ -626,7 +626,7 @@ const Level3Module6Section5_4 = () => {
             {faqs.map((faq, idx) => (
               <details key={idx} className="group p-3 rounded-lg bg-white/5 text-sm">
                 <summary className="cursor-pointer text-white font-medium">{faq.question}</summary>
-                <p className="mt-2 text-white/70">{faq.answer}</p>
+                <p className="mt-2 text-white">{faq.answer}</p>
               </details>
             ))}
           </div>

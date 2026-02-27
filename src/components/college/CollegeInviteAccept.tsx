@@ -100,7 +100,7 @@ export function CollegeInviteAccept({ onSuccess }: CollegeInviteAcceptProps) {
             onChange={(e) => setCode(e.target.value.toUpperCase())}
             maxLength={12}
             disabled={isSubmitting}
-            className="h-12 text-base font-mono tracking-[0.25em] text-center uppercase touch-manipulation bg-white/5 border-white/15 focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400/30 rounded-xl placeholder:tracking-normal placeholder:font-sans placeholder:text-white/25"
+            className="h-12 text-base font-mono tracking-[0.25em] text-center uppercase touch-manipulation bg-white/5 border-white/15 focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400/30 rounded-xl placeholder:tracking-normal placeholder:font-sans placeholder:text-white"
             onKeyDown={(e) => e.key === 'Enter' && handleSubmit()}
           />
         </div>

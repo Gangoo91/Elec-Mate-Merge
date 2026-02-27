@@ -35,7 +35,7 @@ const CircuitDesigner = () => {
           </div>
           <div>
             <h1 className="text-lg font-bold text-white">AI Circuit Designer</h1>
-            <p className="text-xs text-white/50">BS 7671 compliant circuit design</p>
+            <p className="text-xs text-white">BS 7671 compliant circuit design</p>
           </div>
         </div>
 

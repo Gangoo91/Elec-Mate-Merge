@@ -251,7 +251,7 @@ const RenewableEnergyModule8Section5 = () => {
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
           Handover Documentation & Operation Manuals
         </h1>
-        <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+        <p className="text-white text-sm sm:text-base max-w-xl mx-auto">
           Creating comprehensive documentation that empowers customers
         </p>
       </div>
@@ -299,7 +299,7 @@ const RenewableEnergyModule8Section5 = () => {
           ].map((outcome, index) => (
             <div key={index} className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
-              <span className="text-white/80 text-sm">{outcome}</span>
+              <span className="text-white text-sm">{outcome}</span>
             </div>
           ))}
         </div>
@@ -312,7 +312,7 @@ const RenewableEnergyModule8Section5 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">01</span>
             <h2 className="text-xl font-semibold text-white">Documentation Requirements</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Comprehensive handover documentation is both a professional obligation and an MCS
               requirement. It enables customers to understand, operate, and maintain their systems
@@ -357,7 +357,7 @@ const RenewableEnergyModule8Section5 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">02</span>
             <h2 className="text-xl font-semibold text-white">User Guides and Operation Manuals</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               User guides translate technical systems into practical information that customers can
               understand and use. Good user guides reduce support calls and help customers get the
@@ -402,7 +402,7 @@ const RenewableEnergyModule8Section5 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">03</span>
             <h2 className="text-xl font-semibold text-white">Commissioning Records</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Commissioning records document the system's condition at installation, providing
               baseline data for future maintenance and troubleshooting. They also demonstrate that
@@ -446,7 +446,7 @@ const RenewableEnergyModule8Section5 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">04</span>
             <h2 className="text-xl font-semibold text-white">Warranties and Maintenance</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Warranty documentation protects customers' investments and clarifies responsibilities.
               Maintenance information helps customers keep their systems in optimal condition.
@@ -489,7 +489,7 @@ const RenewableEnergyModule8Section5 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">05</span>
             <h2 className="text-xl font-semibold text-white">Conducting Handover Meetings</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               The handover meeting is your opportunity to ensure customers understand their system
               and feel confident operating it. A well-conducted handover reduces future support
@@ -532,7 +532,7 @@ const RenewableEnergyModule8Section5 = () => {
             <Zap className="w-4 h-4 text-elec-yellow" />
             Practical Guidance
           </h3>
-          <div className="space-y-2 text-white/80 text-sm">
+          <div className="space-y-2 text-white text-sm">
             <p>
               <span className="text-white font-medium">Professional presentation:</span> Quality
               documentation folders with your branding create a professional impression. This is
@@ -558,7 +558,7 @@ const RenewableEnergyModule8Section5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <h3 className="text-white font-medium mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>

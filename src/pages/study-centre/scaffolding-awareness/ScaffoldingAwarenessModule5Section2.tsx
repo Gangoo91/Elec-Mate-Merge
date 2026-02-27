@@ -207,7 +207,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-5">
@@ -232,7 +232,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Common Scaffold Hazards
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Identifying and understanding the eight most common hazards associated with scaffolding
             &mdash; from falls and falling objects to scaffold collapse, electrocution, and
             unauthorised modifications
@@ -307,7 +307,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                 Top Scaffold Hazards &mdash; UK Industry Statistics
               </h2>
             </div>
-            <p className="text-sm text-white/60 mb-5">
+            <p className="text-sm text-white mb-5">
               Based on HSE RIDDOR data and industry incident analysis. Percentages represent
               approximate share of all scaffold-related injuries and fatalities in the UK
               construction sector.
@@ -358,7 +358,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                 <div key={item.label}>
                   <div className="flex justify-between items-center mb-1">
                     <span className="text-sm text-white">{item.label}</span>
-                    <span className="text-sm font-semibold text-white/80">{item.percent}%</span>
+                    <span className="text-sm font-semibold text-white">{item.percent}%</span>
                   </div>
                   <div className="w-full h-3 rounded-full bg-white/10 overflow-hidden">
                     <div
@@ -369,7 +369,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                 </div>
               ))}
             </div>
-            <p className="text-xs text-white/40 mt-4">
+            <p className="text-xs text-white mt-4">
               Source: HSE RIDDOR reports, scaffold industry analysis. Figures are indicative and may
               vary year to year. &ldquo;Unauthorised modifications&rdquo; often contributes as an
               underlying factor in other categories, particularly collapse and falls.
@@ -397,7 +397,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                 <p className="text-sm font-medium text-slate-400 mb-3">
                   Primary Causes of Falls from Platforms
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -455,7 +455,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Warning</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Never access a scaffold platform that does not have full edge protection (top
                   rail, intermediate rail or equivalent, and toeboard) on all open sides. If any
                   guard rail, board, or toeboard is missing, the scaffold is not safe to use. Do not
@@ -504,7 +504,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Incomplete Edge Protection</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Guard rails cannot be installed until the standards and ledgers at that
                         level are in place. During erection, the scaffolder must work at the leading
                         edge without the benefit of full guard rails. During dismantling, guard
@@ -520,7 +520,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                       <p className="text-sm font-medium text-white">
                         Heavy Manual Handling at Height
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Scaffold tubes, fittings, and boards are heavy and unwieldy. Lifting and
                         positioning these components at height requires physical effort that can
                         cause loss of balance, especially on narrow, partially boarded platforms.
@@ -533,7 +533,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Transitional Instability</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         During erection the scaffold is not yet fully braced or tied, meaning its
                         structural stability is lower than the finished product. During dismantling,
                         ties and bracing are removed in sequence, and any error in the sequence can
@@ -547,7 +547,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Time Pressure</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Commercial pressure to erect or strike scaffolding quickly is a known factor
                         in scaffold accidents. Rushing leads to shortcuts, omissions, and failure to
                         follow the safe method of work. Competent supervision is essential.
@@ -564,7 +564,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                     Control Measures During Erection &amp; Dismantling
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -635,7 +635,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Types of Falling Objects</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -675,7 +675,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                 <p className="text-sm font-medium text-slate-400 mb-3">
                   Control Measures for Falling Objects
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -731,7 +731,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Public Protection</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Where scaffolding is adjacent to a public footpath, road, or area where members of
                   the public may pass, additional protection is mandatory. This typically includes a
                   covered walkway (gantry) at ground level with a solid roof and debris netting on
@@ -764,7 +764,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                 <p className="text-sm font-medium text-slate-400 mb-3">
                   Primary Causes of Scaffold Collapse
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -822,7 +822,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                   <ShieldAlert className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Never Remove Ties</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The removal of even a single tie can be catastrophic. Ties work as a system
                   &mdash; each tie shares the load with its neighbours. When one is removed, the
                   adjacent ties must carry the additional load, and if they are already near their
@@ -837,7 +837,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                   <BookOpen className="h-5 w-5 text-slate-400" />
                   <p className="text-sm font-medium text-slate-400">Real-World Example</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   In a widely reported UK incident, a scaffold wrapping an entire building facade
                   collapsed during high winds after several ties had been removed by a cladding
                   subcontractor over the preceding days. The scaffold fell into a busy street.
@@ -875,7 +875,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                   <Zap className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">Electrocution Risk Sources</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -939,7 +939,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                     </div>
                   ))}
                 </div>
-                <p className="text-xs text-white/40 mt-3">
+                <p className="text-xs text-white mt-3">
                   Distances measured from the nearest line conductor. If the voltage is unknown,
                   treat as the highest voltage. Always consult the electricity distributor before
                   commencing work.
@@ -951,7 +951,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Safety Rule</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Never assume overhead lines are dead or insulated. Even &ldquo;insulated&rdquo;
                   lines may have damaged or deteriorated insulation that is not visible from the
                   ground. The only safe approach is to maintain the full exclusion zone distance or
@@ -984,7 +984,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Common Causes of Slips and Trips on Scaffolding
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1061,7 +1061,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                 Scaffold Hazard Identification &mdash; Visual Guide
               </h2>
             </div>
-            <p className="text-sm text-white/60 mb-5">
+            <p className="text-sm text-white mb-5">
               Use this reference to quickly identify the eight primary hazard categories when
               approaching, inspecting, or working on any scaffold structure.
             </p>
@@ -1124,14 +1124,14 @@ export default function ScaffoldingAwarenessModule5Section2() {
                     className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full ${item.severity}/20 mb-2`}
                   >
                     <span className={`w-1.5 h-1.5 rounded-full ${item.severity}`} />
-                    <span className="text-[10px] font-bold text-white/70">{item.label}</span>
+                    <span className="text-[10px] font-bold text-white">{item.label}</span>
                   </div>
                   <p className="text-xs font-semibold text-white mb-1">{item.icon}</p>
-                  <p className="text-[11px] text-white/50">{item.check}</p>
+                  <p className="text-[11px] text-white">{item.check}</p>
                 </div>
               ))}
             </div>
-            <p className="text-xs text-white/40 mt-4">
+            <p className="text-xs text-white mt-4">
               Severity ratings based on potential consequence. CRITICAL = potential for fatality or
               life-changing injury. HIGH = potential for serious injury. MEDIUM = potential for
               moderate injury. All hazards require active management and appropriate control
@@ -1168,7 +1168,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Dropped Tubes and Fittings</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         During erection, scaffolders pass tubes and fittings up to the working
                         level. A tube that slips from a wet or gloved hand, or a fitting that is not
                         properly secured, can fall onto workers below. The exclusion zone beneath
@@ -1182,7 +1182,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Uncontrolled Board Movement</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Scaffold boards are long, heavy, and flexible. When being lifted, swung into
                         position, or stacked, they can strike workers at the same level or swing
                         downward and hit those below. Boards must be handled with care and lifted by
@@ -1198,7 +1198,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                       <p className="text-sm font-medium text-white">
                         Scaffold Section Collapse During Erection
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         If bracing or ties are not installed in the correct sequence, a partially
                         erected scaffold can become unstable and collapse onto the erection gang.
                         Following the manufacturer&rsquo;s erection sequence precisely is essential
@@ -1212,7 +1212,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Trapping Between Components</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Fingers, hands, and limbs can be trapped between scaffold tubes, between
                         tubes and the building, or in the jaws of scaffold fittings. Proper gloves,
                         good communication between team members, and careful positioning reduce this
@@ -1230,7 +1230,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                     Control Measures for Crushing Hazards
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1302,7 +1302,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                 <p className="text-sm font-medium text-slate-400 mb-3">
                   Examples of Unauthorised Modifications
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1367,7 +1367,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                   <ShieldAlert className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Legal Position</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Under the Work at Height Regulations 2005, Regulation 8, no person shall alter a
                   scaffold in such a way that it could become unsafe unless the alteration is
                   carried out under the direction of a competent person. Any person who makes an
@@ -1381,7 +1381,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Preventing Unauthorised Modifications
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1448,7 +1448,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1462,7 +1462,7 @@ export default function ScaffoldingAwarenessModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-5">

@@ -251,7 +251,7 @@ const HNCModule6Section2_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section2">
@@ -273,7 +273,7 @@ const HNCModule6Section2_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Battery Storage Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Battery technologies, system sizing, charge controllers, safety requirements, and grid
             services
           </p>
@@ -433,7 +433,7 @@ const HNCModule6Section2_5 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
               <p className="text-sm font-medium text-blue-400 mb-2">Flow Battery Characteristics</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Flow batteries store energy in liquid electrolytes in external tanks. Power output
                 is determined by the cell stack size, while energy capacity depends on tank volume.
                 This allows independent scaling of power (kW) and energy (kWh) - ideal for
@@ -557,7 +557,7 @@ const HNCModule6Section2_5 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Worked Example: Domestic System Sizing
               </p>
-              <div className="text-sm text-white/90 space-y-2">
+              <div className="text-sm text-white space-y-2">
                 <p>
                   <strong>Property:</strong> 4-bed house, 4,000kWh annual consumption, 4kWp PV
                   system
@@ -608,7 +608,7 @@ const HNCModule6Section2_5 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">
                 MPPT vs PWM Charge Controllers
               </p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm text-white/90">
+              <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
                 <div>
                   <p className="font-medium mb-1">PWM (Pulse Width Modulation)</p>
                   <ul className="list-disc ml-5 space-y-1">
@@ -715,7 +715,7 @@ const HNCModule6Section2_5 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Communication protocols:</strong> Modern BMS units communicate via CAN bus,
               RS485, or Modbus with inverters and monitoring systems, enabling real-time data
               logging and remote diagnostics.
@@ -745,7 +745,7 @@ const HNCModule6Section2_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Location Requirements</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>30-minute fire separation from occupied spaces</li>
                     <li>Away from escape routes</li>
                     <li>Not in loft spaces (heat accumulation)</li>
@@ -755,7 +755,7 @@ const HNCModule6Section2_5 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Ventilation Requirements</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Natural or mechanical ventilation</li>
                     <li>Prevent gas accumulation (hydrogen from lead-acid)</li>
                     <li>Thermal management airflow</li>
@@ -796,7 +796,7 @@ const HNCModule6Section2_5 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
               <p className="text-sm font-medium text-red-400 mb-2">Thermal Runaway Prevention</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Thermal runaway occurs when a cell overheats, triggering an exothermic reaction that
                 spreads to adjacent cells. Prevention measures include: operating within specified
                 temperature range (typically 0-45°C); adequate ventilation; BMS thermal monitoring
@@ -859,7 +859,7 @@ const HNCModule6Section2_5 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Revenue stacking:</strong> Domestic batteries can generate additional income
               through grid services while still prioritising self-consumption - typical earnings
               range from £50-200 per year depending on capacity and services enrolled.
@@ -885,7 +885,7 @@ const HNCModule6Section2_5 = () => {
                 <strong>Scenario:</strong> Calculate the usable AC energy from a 13.5kWh battery
                 system with 90% DoD and 95% inverter efficiency.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given:</p>
                 <p className="ml-4">Nominal capacity = 13.5kWh</p>
                 <p className="ml-4">Depth of Discharge = 90%</p>
@@ -894,7 +894,7 @@ const HNCModule6Section2_5 = () => {
                 <p className="ml-4">Usable DC energy = 13.5kWh × 0.90 = 12.15kWh</p>
                 <p className="ml-4">Usable AC energy = 12.15kWh × 0.95 = 11.54kWh</p>
                 <p className="mt-2 text-green-400">Result: 11.54kWh available for AC loads</p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Note: This represents 85.5% of nominal capacity as usable AC energy
                 </p>
               </div>
@@ -908,7 +908,7 @@ const HNCModule6Section2_5 = () => {
                 <strong>Scenario:</strong> A LiFePO4 battery is rated for 6,000 cycles at 80% DoD.
                 If cycled once daily, estimate the calendar life.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given:</p>
                 <p className="ml-4">Rated cycles = 6,000 at 80% DoD</p>
                 <p className="ml-4">Usage pattern = 1 cycle per day</p>
@@ -918,7 +918,7 @@ const HNCModule6Section2_5 = () => {
                 <p className="mt-2 text-green-400">
                   Result: ~16 years before reaching cycle life limit
                 </p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Note: Calendar ageing may limit actual life to 10-15 years regardless of cycles
                 </p>
               </div>
@@ -932,7 +932,7 @@ const HNCModule6Section2_5 = () => {
                 <strong>Scenario:</strong> A 10kWh battery system is discharging at 2.5kW. Calculate
                 the C-rate and expected discharge time.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given:</p>
                 <p className="ml-4">Battery capacity = 10kWh</p>
                 <p className="ml-4">Discharge power = 2.5kW</p>
@@ -942,7 +942,7 @@ const HNCModule6Section2_5 = () => {
                 <p className="mt-2">Discharge Time:</p>
                 <p className="ml-4">Time = Capacity ÷ Power = 10kWh ÷ 2.5kW = 4 hours</p>
                 <p className="mt-2 text-green-400">Result: C/4 rate with 4-hour discharge time</p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Note: Lower C-rates extend battery lifespan significantly
                 </p>
               </div>
@@ -956,7 +956,7 @@ const HNCModule6Section2_5 = () => {
                 <strong>Scenario:</strong> Size an MPPT controller for a 4kWp PV array (10 × 400W
                 panels in 2 strings of 5) with 48V battery system.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Panel specifications (example):</p>
                 <p className="ml-4">Voc = 49.5V, Vmp = 41.5V, Isc = 10.2A, Imp = 9.65A</p>
                 <p className="mt-2">Array Configuration (2 strings × 5 panels):</p>
@@ -1054,7 +1054,7 @@ const HNCModule6Section2_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1100,7 +1100,7 @@ const HNCModule6Section2_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section2">

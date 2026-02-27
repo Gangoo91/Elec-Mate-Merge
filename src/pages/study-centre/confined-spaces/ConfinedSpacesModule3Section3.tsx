@@ -187,7 +187,7 @@ export default function ConfinedSpacesModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-3">
@@ -210,7 +210,7 @@ export default function ConfinedSpacesModule3Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Gas Detection &amp; Monitoring
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Why atmospheric testing is mandatory, how gas detection instruments work, and how to
             interpret readings that could save your life
           </p>
@@ -292,7 +292,7 @@ export default function ConfinedSpacesModule3Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">The Invisible Killer</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The majority of confined space fatalities are caused by{' '}
                   <strong className="text-white">
                     atmospheric hazards that cannot be detected by human senses
@@ -350,7 +350,7 @@ export default function ConfinedSpacesModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">When Testing Is Required</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -413,7 +413,7 @@ export default function ConfinedSpacesModule3Section3() {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-cyan-400">Single-Gas Detectors</p>
-                    <p className="text-white/70 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Measure one specific gas only. Compact, clip-on design. Common for personal
                       monitoring of a single known hazard (e.g., CO detector for a boiler engineer).
                       Limited use for confined spaces where multiple hazards may be present.
@@ -421,7 +421,7 @@ export default function ConfinedSpacesModule3Section3() {
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-cyan-400">Multi-Gas (4-Gas) Detectors</p>
-                    <p className="text-white/70 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       The{' '}
                       <strong className="text-white">
                         standard instrument for confined space work
@@ -435,7 +435,7 @@ export default function ConfinedSpacesModule3Section3() {
                     <p className="text-base font-bold text-cyan-400">
                       Photoionisation Detectors (PIDs)
                     </p>
-                    <p className="text-white/70 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Detect volatile organic compounds (VOCs) at very low concentrations (parts per
                       billion). Used when the risk assessment identifies potential VOC exposure
                       &mdash; e.g., in chemical plants, fuel storage areas, or contaminated land.
@@ -443,7 +443,7 @@ export default function ConfinedSpacesModule3Section3() {
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-cyan-400">Infrared (IR) Gas Analysers</p>
-                    <p className="text-white/70 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Used for detecting carbon dioxide (CO&#8322;) and specific hydrocarbons. IR
                       sensors are not affected by oxygen levels and do not suffer from catalytic
                       bead limitations. Often fitted as a fifth channel on advanced multi-gas
@@ -465,7 +465,7 @@ export default function ConfinedSpacesModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Diffusion vs Sample Draw</p>
-                <div className="grid sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-3 text-sm text-white">
                   <div>
                     <p className="font-medium text-white mb-1">Diffusion Mode</p>
                     <p>
@@ -512,7 +512,7 @@ export default function ConfinedSpacesModule3Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Electrochemical Cells &mdash; Toxic Gas Detection (CO, H&#8322;S)
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Electrochemical cells are the standard sensor for detecting{' '}
                   <strong className="text-white">toxic gases</strong> such as carbon monoxide and
                   hydrogen sulphide. The target gas diffuses through a membrane into a liquid
@@ -520,7 +520,7 @@ export default function ConfinedSpacesModule3Section3() {
                   reaction generates a tiny electrical current that is proportional to the gas
                   concentration.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -543,7 +543,7 @@ export default function ConfinedSpacesModule3Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Catalytic Bead (Pellistor) Sensors &mdash; Flammable Gas Detection (LEL)
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Catalytic bead sensors detect{' '}
                   <strong className="text-white">flammable gases</strong> as a percentage of the
                   Lower Explosive Limit (LEL). They contain two heated beads &mdash; one active
@@ -552,7 +552,7 @@ export default function ConfinedSpacesModule3Section3() {
                   resulting resistance change between the two beads is measured and converted to a
                   gas concentration reading.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -585,7 +585,7 @@ export default function ConfinedSpacesModule3Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Paramagnetic / Galvanic Cells &mdash; Oxygen Detection (O&#8322;)
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Oxygen sensors in portable gas monitors typically use{' '}
                   <strong className="text-white">galvanic (fuel cell)</strong> technology. The
                   sensor contains a lead anode and a gold cathode in an electrolyte solution. Oxygen
@@ -595,7 +595,7 @@ export default function ConfinedSpacesModule3Section3() {
                   <strong className="text-white"> paramagnetic sensors</strong>, which exploit the
                   unique magnetic properties of oxygen molecules.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -619,7 +619,7 @@ export default function ConfinedSpacesModule3Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Infrared (NDIR) Sensors &mdash; CO&#8322; and Hydrocarbon Detection
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Non-dispersive infrared (NDIR) sensors pass infrared light through a sample
                   chamber. The target gas absorbs infrared energy at a specific wavelength. By
                   measuring the amount of infrared light absorbed, the sensor determines the gas
@@ -628,7 +628,7 @@ export default function ConfinedSpacesModule3Section3() {
                   as an alternative to catalytic bead sensors for
                   <strong className="text-white"> hydrocarbon detection</strong>.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -699,11 +699,11 @@ export default function ConfinedSpacesModule3Section3() {
                           <span className="text-[10px] font-bold text-cyan-300 bg-cyan-500/20 px-1.5 py-0.5 rounded">
                             O&#8322;
                           </span>
-                          <span className="text-[9px] text-white/40">Oxygen</span>
+                          <span className="text-[9px] text-white">Oxygen</span>
                         </div>
                         <div className="text-right">
                           <span className="text-lg font-mono font-bold text-green-400">20.9</span>
-                          <span className="text-[10px] text-white/40 ml-1">% vol</span>
+                          <span className="text-[10px] text-white ml-1">% vol</span>
                         </div>
                       </div>
 
@@ -713,11 +713,11 @@ export default function ConfinedSpacesModule3Section3() {
                           <span className="text-[10px] font-bold text-orange-300 bg-orange-500/20 px-1.5 py-0.5 rounded">
                             LEL
                           </span>
-                          <span className="text-[9px] text-white/40">Flammable</span>
+                          <span className="text-[9px] text-white">Flammable</span>
                         </div>
                         <div className="text-right">
                           <span className="text-lg font-mono font-bold text-green-400">0</span>
-                          <span className="text-[10px] text-white/40 ml-1">% LEL</span>
+                          <span className="text-[10px] text-white ml-1">% LEL</span>
                         </div>
                       </div>
 
@@ -727,11 +727,11 @@ export default function ConfinedSpacesModule3Section3() {
                           <span className="text-[10px] font-bold text-yellow-300 bg-yellow-500/20 px-1.5 py-0.5 rounded">
                             CO
                           </span>
-                          <span className="text-[9px] text-white/40">Carbon Monoxide</span>
+                          <span className="text-[9px] text-white">Carbon Monoxide</span>
                         </div>
                         <div className="text-right">
                           <span className="text-lg font-mono font-bold text-green-400">0</span>
-                          <span className="text-[10px] text-white/40 ml-1">ppm</span>
+                          <span className="text-[10px] text-white ml-1">ppm</span>
                         </div>
                       </div>
 
@@ -741,11 +741,11 @@ export default function ConfinedSpacesModule3Section3() {
                           <span className="text-[10px] font-bold text-purple-300 bg-purple-500/20 px-1.5 py-0.5 rounded">
                             H&#8322;S
                           </span>
-                          <span className="text-[9px] text-white/40">Hydrogen Sulphide</span>
+                          <span className="text-[9px] text-white">Hydrogen Sulphide</span>
                         </div>
                         <div className="text-right">
                           <span className="text-lg font-mono font-bold text-green-400">0</span>
-                          <span className="text-[10px] text-white/40 ml-1">ppm</span>
+                          <span className="text-[10px] text-white ml-1">ppm</span>
                         </div>
                       </div>
                     </div>
@@ -754,26 +754,26 @@ export default function ConfinedSpacesModule3Section3() {
                     <div className="flex justify-around mt-3">
                       <div className="flex flex-col items-center">
                         <div className="w-3 h-3 rounded-full bg-green-500/60 border border-green-400/40" />
-                        <span className="text-[8px] text-white/30 mt-0.5">Power</span>
+                        <span className="text-[8px] text-white mt-0.5">Power</span>
                       </div>
                       <div className="flex flex-col items-center">
                         <div className="w-3 h-3 rounded-full bg-white/10 border border-white/20" />
-                        <span className="text-[8px] text-white/30 mt-0.5">Low</span>
+                        <span className="text-[8px] text-white mt-0.5">Low</span>
                       </div>
                       <div className="flex flex-col items-center">
                         <div className="w-3 h-3 rounded-full bg-white/10 border border-white/20" />
-                        <span className="text-[8px] text-white/30 mt-0.5">High</span>
+                        <span className="text-[8px] text-white mt-0.5">High</span>
                       </div>
                       <div className="flex flex-col items-center">
                         <div className="w-3 h-3 rounded-full bg-white/10 border border-white/20" />
-                        <span className="text-[8px] text-white/30 mt-0.5">TWA</span>
+                        <span className="text-[8px] text-white mt-0.5">TWA</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Legend */}
                   <div className="mt-3 text-center">
-                    <span className="text-[10px] text-white/40">
+                    <span className="text-[10px] text-white">
                       All readings within safe limits &mdash; green = OK
                     </span>
                   </div>
@@ -784,7 +784,7 @@ export default function ConfinedSpacesModule3Section3() {
               <div className="bg-cyan-500/10 border border-cyan-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-500 mb-3">Standard Alarm Setpoints</p>
                 <div className="space-y-3 text-sm">
-                  <div className="grid grid-cols-4 gap-2 text-xs font-medium text-white/60 border-b border-white/10 pb-2">
+                  <div className="grid grid-cols-4 gap-2 text-xs font-medium text-white border-b border-white/10 pb-2">
                     <span>Channel</span>
                     <span>LOW Alarm</span>
                     <span>HIGH Alarm</span>
@@ -794,32 +794,32 @@ export default function ConfinedSpacesModule3Section3() {
                     <span className="text-cyan-300 font-medium">O&#8322;</span>
                     <span className="text-yellow-300">19.5%</span>
                     <span className="text-red-300">23.5%</span>
-                    <span className="text-white/60">20.9%</span>
+                    <span className="text-white">20.9%</span>
                   </div>
                   <div className="grid grid-cols-4 gap-2 text-sm">
                     <span className="text-orange-300 font-medium">LEL</span>
                     <span className="text-yellow-300">10%</span>
                     <span className="text-red-300">20%</span>
-                    <span className="text-white/60">0%</span>
+                    <span className="text-white">0%</span>
                   </div>
                   <div className="grid grid-cols-4 gap-2 text-sm">
                     <span className="text-yellow-300 font-medium">CO</span>
                     <span className="text-yellow-300">20 ppm</span>
                     <span className="text-red-300">100 ppm</span>
-                    <span className="text-white/60">0 ppm</span>
+                    <span className="text-white">0 ppm</span>
                   </div>
                   <div className="grid grid-cols-4 gap-2 text-sm">
                     <span className="text-purple-300 font-medium">H&#8322;S</span>
                     <span className="text-yellow-300">5 ppm</span>
                     <span className="text-red-300">10 ppm</span>
-                    <span className="text-white/60">0 ppm</span>
+                    <span className="text-white">0 ppm</span>
                   </div>
                 </div>
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">What Each Channel Measures</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -865,7 +865,7 @@ export default function ConfinedSpacesModule3Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">When an Alarm Sounds</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     If any alarm sounds on any channel &mdash; evacuate the space immediately.
                   </strong>{' '}
@@ -897,7 +897,7 @@ export default function ConfinedSpacesModule3Section3() {
 
               <div className="bg-cyan-500/10 border border-cyan-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-500 mb-3">What a Bump Test Confirms</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-cyan-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -933,7 +933,7 @@ export default function ConfinedSpacesModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">How to Perform a Bump Test</p>
-                <ol className="text-sm text-white/80 space-y-3">
+                <ol className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 w-6 h-6 rounded-full bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center flex-shrink-0 text-xs font-bold text-cyan-400">
                       1
@@ -1000,7 +1000,7 @@ export default function ConfinedSpacesModule3Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">If the Bump Test Fails</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If <strong className="text-white">any sensor fails</strong> to respond during the
                   bump test, or if the alarms do not activate, the instrument must{' '}
                   <strong className="text-white">NOT be used</strong>. It must be taken out of
@@ -1037,7 +1037,7 @@ export default function ConfinedSpacesModule3Section3() {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-cyan-500/5 border border-cyan-500/20 rounded-lg p-3">
                     <p className="text-base font-bold text-cyan-400 mb-2">Bump Test</p>
-                    <ul className="text-white/70 text-xs space-y-1">
+                    <ul className="text-white text-xs space-y-1">
                       <li>&bull; Quick functional check (~60 seconds)</li>
                       <li>&bull; Confirms sensors respond and alarms activate</li>
                       <li>&bull; Does NOT adjust readings</li>
@@ -1050,7 +1050,7 @@ export default function ConfinedSpacesModule3Section3() {
                   </div>
                   <div className="bg-cyan-500/5 border border-cyan-500/20 rounded-lg p-3">
                     <p className="text-base font-bold text-cyan-400 mb-2">Full Calibration</p>
-                    <ul className="text-white/70 text-xs space-y-1">
+                    <ul className="text-white text-xs space-y-1">
                       <li>&bull; Comprehensive accuracy adjustment (~5&ndash;15 minutes)</li>
                       <li>&bull; Adjusts sensor readings to match certified reference gas</li>
                       <li>&bull; Ensures readings are accurate, not just present</li>
@@ -1068,7 +1068,7 @@ export default function ConfinedSpacesModule3Section3() {
                 <p className="text-sm font-medium text-cyan-500 mb-3">
                   Calibration Key Requirements
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1120,7 +1120,7 @@ export default function ConfinedSpacesModule3Section3() {
                 <p className="text-sm font-medium text-white mb-2">
                   Calibration Records Must Include
                 </p>
-                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>Instrument serial number and model</span>
@@ -1191,7 +1191,7 @@ export default function ConfinedSpacesModule3Section3() {
                       <p className="text-xs font-medium text-white mb-1">
                         Operator Remains OUTSIDE
                       </p>
-                      <p className="text-[10px] text-white/60">
+                      <p className="text-[10px] text-white">
                         Connect extension probe / sample draw tubing to the pump inlet. Operator
                         stays at the entry point &mdash; never enters to test.
                       </p>
@@ -1236,7 +1236,7 @@ export default function ConfinedSpacesModule3Section3() {
                       </div>
                     </div>
                     <div className="mt-2 border-t border-white/10 pt-2">
-                      <p className="text-[9px] text-white/40 text-center">
+                      <p className="text-[9px] text-white text-center">
                         Gases stratify by density &mdash; test ALL THREE levels
                       </p>
                     </div>
@@ -1251,7 +1251,7 @@ export default function ConfinedSpacesModule3Section3() {
                       <p className="text-xs font-medium text-white mb-1">
                         Wait for Pump Response Time
                       </p>
-                      <p className="text-[10px] text-white/60">
+                      <p className="text-[10px] text-white">
                         The pump must draw the sample through the full length of tubing. Longer
                         tubing = longer wait. Do not read the display until the sample has reached
                         the sensors. Typical wait: 30 seconds per 10 metres of tubing.
@@ -1266,7 +1266,7 @@ export default function ConfinedSpacesModule3Section3() {
                     </div>
                     <div className="flex-1 border border-white/10 rounded-lg bg-white/5 p-3">
                       <p className="text-xs font-medium text-white mb-1">Record All Readings</p>
-                      <p className="text-[10px] text-white/60">
+                      <p className="text-[10px] text-white">
                         Log all four channels at each level (top, middle, bottom). Record on the
                         permit-to-work. ALL channels must be within safe limits at ALL levels before
                         entry is authorised.
@@ -1280,7 +1280,7 @@ export default function ConfinedSpacesModule3Section3() {
                 <p className="text-sm font-medium text-cyan-500 mb-3">
                   Pre-Entry Monitoring &mdash; Critical Points
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1325,7 +1325,7 @@ export default function ConfinedSpacesModule3Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Continuous Monitoring During Entry
                 </p>
-                <div className="text-sm text-white/80 space-y-3">
+                <div className="text-sm text-white space-y-3">
                   <p>
                     Once entry has been authorised, the atmosphere must be{' '}
                     <strong className="text-white">monitored continuously</strong> throughout the
@@ -1338,7 +1338,7 @@ export default function ConfinedSpacesModule3Section3() {
                         <Gauge className="h-4 w-4 text-cyan-400" />
                         <p className="text-xs font-medium text-white">Personal Monitors</p>
                       </div>
-                      <p className="text-[11px] text-white/70">
+                      <p className="text-[11px] text-white">
                         Worn by <strong className="text-white">every entrant</strong> in the
                         breathing zone (chest/collar level). Provide real-time warning to the
                         individual. If the alarm sounds, the entrant evacuates immediately. Personal
@@ -1350,7 +1350,7 @@ export default function ConfinedSpacesModule3Section3() {
                         <Radio className="h-4 w-4 text-cyan-400" />
                         <p className="text-xs font-medium text-white">Fixed / Area Monitors</p>
                       </div>
-                      <p className="text-[11px] text-white/70">
+                      <p className="text-[11px] text-white">
                         Positioned at the <strong className="text-white">entry point</strong> or
                         within the space. Visible to the top person / attendant outside. Provides a
                         continuous reading that can be monitored remotely. Some are connected to
@@ -1360,7 +1360,7 @@ export default function ConfinedSpacesModule3Section3() {
                   </div>
 
                   <div className="bg-red-500/10 border border-red-500/30 p-3 rounded-lg">
-                    <p className="text-[11px] text-white/80">
+                    <p className="text-[11px] text-white">
                       <strong className="text-red-300">Remember:</strong> Continuous monitoring does
                       not replace pre-entry testing. It supplements it. The atmosphere can change
                       during work due to the work activity itself (welding, grinding, painting,
@@ -1395,7 +1395,7 @@ export default function ConfinedSpacesModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Interpreting Readings</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1453,31 +1453,31 @@ export default function ConfinedSpacesModule3Section3() {
                   <p className="text-sm font-medium text-red-400">Evacuate Immediately When</p>
                 </div>
                 <div className="space-y-2">
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">&times;</span>
                     <span>Any alarm sounds on any channel &mdash; low or high</span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">&times;</span>
                     <span>Readings trend rapidly toward alarm setpoints</span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">&times;</span>
                     <span>
                       The monitor malfunctions, displays error codes, or shuts down unexpectedly
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">&times;</span>
                     <span>
                       The battery low warning sounds &mdash; a dead monitor provides zero protection
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">&times;</span>
                     <span>Ventilation fails or is interrupted for any reason</span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">&times;</span>
                     <span>
                       You feel unwell, dizzy, nauseous, or experience any symptoms of gas exposure
@@ -1488,7 +1488,7 @@ export default function ConfinedSpacesModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Instrument Limitations</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1541,7 +1541,7 @@ export default function ConfinedSpacesModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Instrument Maintenance</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1615,7 +1615,7 @@ export default function ConfinedSpacesModule3Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1629,7 +1629,7 @@ export default function ConfinedSpacesModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-3-section-2">

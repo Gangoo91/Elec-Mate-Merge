@@ -212,7 +212,7 @@ const HNCModule2Section1_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section1">
@@ -234,7 +234,7 @@ const HNCModule2Section1_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Thermal Bridging
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding heat loss pathways at building fabric junctions and service penetrations
           </p>
         </header>
@@ -328,7 +328,7 @@ const HNCModule2Section1_5 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Heat Loss Calculation</p>
               <p className="font-mono text-center text-lg mb-2">Q = ψ × L × ΔT</p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where Q = heat loss (W), L = length (m), ΔT = temperature difference (K)
               </p>
             </div>
@@ -428,7 +428,7 @@ const HNCModule2Section1_5 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Heat Loss Calculation</p>
               <p className="font-mono text-center text-lg mb-2">Q = χ × ΔT</p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where Q = heat loss (W), χ = point thermal transmittance (W/K), ΔT = temperature
                 difference (K)
               </p>
@@ -543,7 +543,7 @@ const HNCModule2Section1_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white text-sm mb-2">Junctions</p>
-                  <ul className="text-xs text-white/90 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Wall-to-floor junctions</li>
                     <li>Wall-to-roof junctions</li>
                     <li>External corners</li>
@@ -553,7 +553,7 @@ const HNCModule2Section1_5 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white text-sm mb-2">Around Openings</p>
-                  <ul className="text-xs text-white/90 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Window reveals (jambs, sills, heads)</li>
                     <li>Door thresholds</li>
                     <li>Lintels (especially uninsulated steel)</li>
@@ -571,7 +571,7 @@ const HNCModule2Section1_5 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 f<sub>Rsi</sub> = (T<sub>si</sub> - T<sub>e</sub>) / (T<sub>i</sub> - T<sub>e</sub>)
               </p>
-              <div className="text-xs text-white/70 text-center space-y-1">
+              <div className="text-xs text-white text-center space-y-1">
                 <p>
                   Where T<sub>si</sub> = internal surface temperature, T<sub>i</sub> = internal air
                   temperature, T<sub>e</sub> = external temperature
@@ -709,7 +709,7 @@ const HNCModule2Section1_5 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Y-value multiplied by total envelope area gives additional heat loss from thermal
                 bridges
               </p>
@@ -724,7 +724,7 @@ const HNCModule2Section1_5 = () => {
                   <p className="font-medium text-white text-sm mb-2">
                     Cable and Conduit Penetrations
                   </p>
-                  <ul className="text-xs text-white/90 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Use thermal break sleeves (neoprene, EPDM) around cables</li>
                     <li>Seal penetrations with expanding foam and intumescent mastic</li>
                     <li>Position entries away from corners and junctions</li>
@@ -736,7 +736,7 @@ const HNCModule2Section1_5 = () => {
                   <p className="font-medium text-white text-sm mb-2">
                     Cable Tray and Trunking Supports
                   </p>
-                  <ul className="text-xs text-white/90 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Use thermally broken brackets where fixing through insulation</li>
                     <li>Fix to internal structure where possible, avoiding thermal envelope</li>
                     <li>Specify GRP or composite brackets instead of steel</li>
@@ -745,7 +745,7 @@ const HNCModule2Section1_5 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white text-sm mb-2">Ductwork and Ventilation</p>
-                  <ul className="text-xs text-white/90 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Insulate ducts continuously through the thermal envelope</li>
                     <li>Use proprietary insulated duct sleeves at wall penetrations</li>
                     <li>Ensure vapour barriers are continuous and sealed</li>
@@ -754,7 +754,7 @@ const HNCModule2Section1_5 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white text-sm mb-2">External Equipment Mounting</p>
-                  <ul className="text-xs text-white/90 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Use stand-off brackets with thermal breaks for AC units</li>
                     <li>Mount solar PV and thermal systems on thermally isolated rails</li>
                     <li>Detail EV charger and external socket installations carefully</li>
@@ -792,7 +792,7 @@ const HNCModule2Section1_5 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Design coordination:</strong> Thermal bridging mitigation must be considered
               during early design stages. Retrofitting solutions is far more expensive and often
               less effective than designing details correctly from the outset.
@@ -819,7 +819,7 @@ const HNCModule2Section1_5 = () => {
                 0.08 W/mK. Calculate the annual heat loss if the average indoor-outdoor temperature
                 difference is 12K and the heating season is 5,400 hours.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Heat loss rate: Q = ψ × L × ΔT</p>
                 <p>
                   Q = 0.08 W/mK × 48m × 12K = <strong>46.1W</strong>
@@ -829,7 +829,7 @@ const HNCModule2Section1_5 = () => {
                 <p>
                   E = <strong>249 kWh/year</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → At £0.28/kWh = £70/year for this single junction
                 </p>
               </div>
@@ -844,7 +844,7 @@ const HNCModule2Section1_5 = () => {
                 penetrating the external wall insulation. Each bracket has χ = 0.06 W/K. Calculate
                 the total additional heat loss at design conditions (ΔT = 25K).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Total chi value: χ<sub>total</sub> = n × χ
                 </p>
@@ -855,7 +855,7 @@ const HNCModule2Section1_5 = () => {
                 <p>
                   Q = χ<sub>total</sub> × ΔT = 7.2 × 25 = <strong>180W</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → Equivalent to a small fan heater running continuously
                 </p>
               </div>
@@ -869,7 +869,7 @@ const HNCModule2Section1_5 = () => {
                 <strong>Question:</strong> A window reveal has fRsi = 0.72. With internal conditions
                 of 21°C and 60% RH, and external temperature of -2°C, will condensation occur?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Surface temperature: T<sub>si</sub> = T<sub>e</sub> + f<sub>Rsi</sub> × (T
                   <sub>i</sub> - T<sub>e</sub>)
@@ -901,11 +901,11 @@ const HNCModule2Section1_5 = () => {
                 thermal bridge heat loss using default y-value (0.15) vs ACDs (0.05). Assume average
                 ΔT = 12K, 5,400 heating hours.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Default detail:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Default detail:</p>
                 <p>Q = y × A × ΔT = 0.15 × 450 × 12 = 810W</p>
                 <p>E = 810 × 5400 = 4,374 kWh/year</p>
-                <p className="mt-2 text-white/60">With ACDs:</p>
+                <p className="mt-2 text-white">With ACDs:</p>
                 <p>Q = y × A × ΔT = 0.05 × 450 × 12 = 270W</p>
                 <p>E = 270 × 5400 = 1,458 kWh/year</p>
                 <p className="mt-2 text-green-400">
@@ -996,7 +996,7 @@ const HNCModule2Section1_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1042,7 +1042,7 @@ const HNCModule2Section1_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section1-4">

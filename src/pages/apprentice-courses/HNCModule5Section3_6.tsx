@@ -221,7 +221,7 @@ const HNCModule5Section3_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section3">
@@ -243,7 +243,7 @@ const HNCModule5Section3_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Value Engineering
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Options analysis, life cycle costing, whole life value assessment, and cost-benefit
             evaluation for building services
           </p>
@@ -329,7 +329,7 @@ const HNCModule5Section3_6 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Value Equation</p>
               <p className="font-mono text-center text-lg mb-2">Value = Function / Cost</p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Value increases when function rises or cost falls (or both)
               </p>
             </div>
@@ -443,8 +443,8 @@ const HNCModule5Section3_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Basic Functions</p>
-                  <p className="text-sm text-white/80 mb-2">The primary reason the system exists</p>
-                  <ul className="text-sm text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <p className="text-sm text-white mb-2">The primary reason the system exists</p>
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-4">
                     <li>Chiller: "Cool space"</li>
                     <li>Generator: "Provide power"</li>
                     <li>Lighting: "Illuminate area"</li>
@@ -453,10 +453,10 @@ const HNCModule5Section3_6 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Secondary Functions</p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Support the basic function or add features
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-4">
                     <li>Chiller: "Control humidity"</li>
                     <li>Generator: "Reduce noise"</li>
                     <li>Lighting: "Create ambience"</li>
@@ -612,7 +612,7 @@ const HNCModule5Section3_6 = () => {
               <p className="font-mono text-center text-base mb-2">
                 LCC = Capital + (Annual Operating × Years) + Replacements
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Does not account for time value of money - suitable for quick comparisons
               </p>
             </div>
@@ -624,7 +624,7 @@ const HNCModule5Section3_6 = () => {
               <p className="font-mono text-center text-base mb-2">
                 NPV = C0 + C1/(1+r) + C2/(1+r)² + ... + Cn/(1+r)ⁿ
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where C = cost in year n, r = discount rate
               </p>
             </div>
@@ -636,7 +636,7 @@ const HNCModule5Section3_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Public Sector (Green Book)</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Years 0-30: 3.5%</li>
                     <li>Years 31-75: 3.0%</li>
                     <li>Years 76-125: 2.5%</li>
@@ -645,7 +645,7 @@ const HNCModule5Section3_6 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Private Sector</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Typical WACC: 8-12%</li>
                     <li>Developer speculative: 10-15%</li>
                     <li>Owner-occupied: 6-10%</li>
@@ -683,7 +683,7 @@ const HNCModule5Section3_6 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 Payback = Additional Cost / Annual Saving
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Quick metric but ignores time value of money and savings beyond payback
               </p>
             </div>
@@ -795,7 +795,7 @@ const HNCModule5Section3_6 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Energy price sensitivity:</strong> Test LCC calculations with high and low
               energy price scenarios (e.g., +/-30%) to understand investment risk.
             </p>
@@ -820,13 +820,13 @@ const HNCModule5Section3_6 = () => {
                 <strong>Question:</strong> A heat pump costs £45,000 more than a gas boiler system
                 but saves £6,500/year in energy. Calculate the simple payback.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Simple payback = Additional cost / Annual saving</p>
                 <p className="mt-2">Payback = £45,000 / £6,500</p>
                 <p className="mt-2">
                   <strong>Payback = 6.9 years</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   With 20-year system life, total savings = £6,500 × (20-6.9) = £85,150
                 </p>
               </div>
@@ -841,7 +841,7 @@ const HNCModule5Section3_6 = () => {
                 method): Option A: £12,000 capital, £3,200/year energy, £800/year maintenance Option
                 B: £18,000 capital, £1,800/year energy, £600/year maintenance
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Option A LCC = Capital + (Energy + Maintenance) × Years</p>
                 <p>Option A = £12,000 + (£3,200 + £800) × 20</p>
                 <p>
@@ -865,7 +865,7 @@ const HNCModule5Section3_6 = () => {
                 <strong>Question:</strong> Calculate NPV of £10,000/year energy savings over 5 years
                 at 3.5% discount rate.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Year 1: £10,000 / 1.035 = £9,662</p>
                 <p>Year 2: £10,000 / 1.035² = £9,335</p>
                 <p>Year 3: £10,000 / 1.035³ = £9,019</p>
@@ -875,7 +875,7 @@ const HNCModule5Section3_6 = () => {
                 <p>
                   <strong>NPV = £45,150</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Compare to simple sum: £10,000 × 5 = £50,000. NPV reflects true present value.
                 </p>
               </div>
@@ -999,7 +999,7 @@ const HNCModule5Section3_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1045,7 +1045,7 @@ const HNCModule5Section3_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section3">

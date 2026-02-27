@@ -202,7 +202,7 @@ export default function PasmaModule6Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-6">
@@ -227,7 +227,7 @@ export default function PasmaModule6Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Common Hazards
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The seven most significant hazards associated with mobile access towers &mdash; from
             falls and collapse to electrocution, falling objects, and environmental factors
           </p>
@@ -308,7 +308,7 @@ export default function PasmaModule6Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">HSE Fatal Injury Statistics</p>
                 </div>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Falls from height typically account for approximately 25&ndash;30% of all
                   workplace fatalities each year in the UK. Construction remains the highest-risk
                   sector, and work from mobile towers contributes to these figures when towers are
@@ -320,7 +320,7 @@ export default function PasmaModule6Section1() {
                 <p className="text-sm font-medium text-elec-yellow mb-3">
                   Common Fall Scenarios from Mobile Towers
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -381,7 +381,7 @@ export default function PasmaModule6Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   The &ldquo;Just This Once&rdquo; Mentality
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Most falls from towers do not happen to untrained people. They happen to
                   experienced operatives who take a shortcut they have taken before without
                   consequence. Climbing the outside &ldquo;just to check something quickly,&rdquo;
@@ -395,7 +395,7 @@ export default function PasmaModule6Section1() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Fall Prevention Measures</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Full guardrail system installed before platform use</span>
@@ -420,7 +420,7 @@ export default function PasmaModule6Section1() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Fall Consequences</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Falls from 2m can cause fatal head injuries</span>
@@ -467,7 +467,7 @@ export default function PasmaModule6Section1() {
                 <p className="text-sm font-medium text-elec-yellow mb-3">
                   Primary Causes of Tower Collapse
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <p>
                     <strong className="text-white">Incorrect assembly:</strong> Missing braces,
                     diagonal members not installed, platforms not locked, or components assembled in
@@ -504,7 +504,7 @@ export default function PasmaModule6Section1() {
                     Case Study — Anonymised Incident
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   An operative was working from a 6-metre aluminium tower. Two diagonal braces had
                   been left out during assembly to &ldquo;make it quicker.&rdquo; When the operative
                   stepped to the edge of the platform to reach a light fitting, the tower buckled
@@ -518,7 +518,7 @@ export default function PasmaModule6Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Prevention Through Proper Assembly
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -550,7 +550,7 @@ export default function PasmaModule6Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Height-to-Base Ratio</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A tower&rsquo;s stability is directly related to its height-to-base ratio. PASMA
                   guidance states that for outdoor use, the maximum height-to-base ratio is 3:1
                   (with outriggers, this extends to 3.5:1). For indoor use on a firm, level floor,
@@ -589,7 +589,7 @@ export default function PasmaModule6Section1() {
                     15-Metre Minimum Exclusion Zone
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -627,14 +627,14 @@ export default function PasmaModule6Section1() {
                 <p className="text-sm font-medium text-elec-yellow mb-3">
                   Why Aluminium Towers Are Particularly Dangerous
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Aluminium is one of the best conductors of electricity commonly used in
                   construction equipment. An aluminium tower that contacts or approaches an overhead
                   power line creates a direct, low-resistance path for electrical current to flow
                   from the line, through the tower structure, through anyone touching the tower, and
                   into the ground.
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">GRP alternative:</strong> For work that must take
                   place near electrical hazards, glass-reinforced plastic (GRP) towers are
                   available. GRP is a non-conductive material that does not provide a path for
@@ -647,7 +647,7 @@ export default function PasmaModule6Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Real Incident: Tower Contact with Power Line
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   HSE records include numerous cases of fatalities involving mobile towers and
                   overhead power lines. In one anonymised case, an aluminium tower was being
                   repositioned on a flat roof when a frame section came within arcing distance of an
@@ -662,7 +662,7 @@ export default function PasmaModule6Section1() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Danger Zone Considerations</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Power line voltage affects the arc distance</span>
@@ -689,7 +689,7 @@ export default function PasmaModule6Section1() {
                   <p className="text-sm font-medium text-white mb-2">
                     If Work Near Power Lines Is Essential
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Contact the distribution network operator (DNO)</span>
@@ -738,7 +738,7 @@ export default function PasmaModule6Section1() {
                   <Package className="h-5 w-5 text-elec-yellow" />
                   <p className="text-sm font-medium text-elec-yellow">Sources of Falling Objects</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -781,7 +781,7 @@ export default function PasmaModule6Section1() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Toeboard Requirements</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Toeboards must be fitted to all open edges of the working platform. They must be
                     at least 150 mm high and fitted at the platform surface with no gap greater than
                     the toeboard height between the toeboard and the platform. Toeboards prevent
@@ -792,7 +792,7 @@ export default function PasmaModule6Section1() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Tool Tethering</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Tools should be tethered to the operative&rsquo;s tool belt or to a secure point
                     on the platform using proprietary tool lanyards rated for the weight of the
                     tool. This ensures that even if a tool is dropped, it cannot fall to ground
@@ -805,7 +805,7 @@ export default function PasmaModule6Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Exclusion Zones &amp; Netting</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   An exclusion zone must be established at the base of the tower and extending
                   beyond the platform footprint to account for objects that bounce or deflect. In
                   busy environments &mdash; such as occupied buildings, shopping centres, or areas
@@ -822,7 +822,7 @@ export default function PasmaModule6Section1() {
                     Impact Energy Increases with Height
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A 500g spanner dropped from a 6-metre platform hits the ground at approximately 39
                   km/h with an impact force that can fracture a skull, even through a hard hat. A 2
                   kg drill from the same height is equivalent to being struck by a brick thrown at
@@ -860,7 +860,7 @@ export default function PasmaModule6Section1() {
                     Common Manual Handling Injuries
                   </p>
                 </div>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <p>
                     <strong className="text-white">Back strain and disc injuries:</strong> The most
                     common injury, caused by lifting heavy frames and platforms with poor technique,
@@ -890,7 +890,7 @@ export default function PasmaModule6Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Correct Lifting Techniques for Tower Components
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -949,7 +949,7 @@ export default function PasmaModule6Section1() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Cumulative Damage</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Manual handling injuries are often cumulative rather than sudden. An operative who
                   lifts tower components with poor technique may not feel immediate pain, but over
                   weeks, months, and years, the repeated stress on the spine causes disc
@@ -984,7 +984,7 @@ export default function PasmaModule6Section1() {
                     Key Crush &amp; Entrapment Points
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1030,7 +1030,7 @@ export default function PasmaModule6Section1() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Correct Hand Positions</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Keep fingers clear of lock mechanisms until ready to engage</span>
@@ -1057,7 +1057,7 @@ export default function PasmaModule6Section1() {
                   <p className="text-sm font-medium text-white mb-2">
                     Glove &amp; Communication Requirements
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Wear suitable work gloves for handling metal components</span>
@@ -1087,7 +1087,7 @@ export default function PasmaModule6Section1() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Team Assembly Communication</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The majority of entrapment injuries during team assembly occur because one person
                   moves a component while another&rsquo;s hands are still in the pinch zone. Clear,
                   agreed verbal commands such as &ldquo;ready to lock,&rdquo; &ldquo;hands
@@ -1100,7 +1100,7 @@ export default function PasmaModule6Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Dismantling &mdash; Higher Risk of Entrapment
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Entrapment injuries are statistically more common during dismantling than
                   assembly. Components that have been under load may be tight in their connections.
                   Releasing locks under tension can cause sudden movement. Operatives are often
@@ -1114,7 +1114,7 @@ export default function PasmaModule6Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Cold Weather Entrapment Risk</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Cold weather significantly increases entrapment risk. Cold metal components are
                   harder to grip, meaning hands slip more easily into pinch zones. Cold hands are
                   stiffer and less dextrous, making precise hand positioning more difficult. Gloves
@@ -1150,7 +1150,7 @@ export default function PasmaModule6Section1() {
                   <ThermometerSun className="h-5 w-5 text-elec-yellow" />
                   <p className="text-sm font-medium text-elec-yellow">Environmental Factors</p>
                 </div>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <p>
                     <strong className="text-white">Heat stress in summer:</strong> Working on an
                     exposed platform in direct sunlight can raise body temperature rapidly. Symptoms
@@ -1185,7 +1185,7 @@ export default function PasmaModule6Section1() {
                   <p className="text-sm font-medium text-white mb-2">
                     Dehydration &amp; Concentration
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Drink water regularly, not just when thirsty</span>
@@ -1212,7 +1212,7 @@ export default function PasmaModule6Section1() {
                   <p className="text-sm font-medium text-white mb-2">
                     Rest Breaks &amp; Fitness for Work
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Take regular rest breaks &mdash; do not wait until exhausted</span>
@@ -1239,7 +1239,7 @@ export default function PasmaModule6Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Fatigue Risk Management</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Fatigue is insidious &mdash; it builds gradually and people often do not recognise
                   how impaired they have become until an accident occurs. Signs to watch for in
                   yourself and colleagues include: slower reactions, difficulty concentrating,
@@ -1251,7 +1251,7 @@ export default function PasmaModule6Section1() {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-elec-yellow mb-2">UV Exposure at Height</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Operatives working on open platforms are more exposed to ultraviolet radiation
                   than those at ground level because there is less shade and more reflected light.
                   Prolonged UV exposure causes sunburn, premature skin ageing, and increases the
@@ -1267,7 +1267,7 @@ export default function PasmaModule6Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Long Shifts and Travel Fatigue
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Many tower operatives travel long distances to reach site, then work a full shift
                   before driving home. This combination of travel fatigue, physical work, and the
                   concentration demanded by height work creates a compounding fatigue risk. If you
@@ -1280,7 +1280,7 @@ export default function PasmaModule6Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Noise and Vibration at Height</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Noise from power tools, building services, traffic, and other trades can impair
                   communication between team members and mask warning signals. If you cannot hear a
                   colleague calling &ldquo;hands clear&rdquo; because of background noise, the risk
@@ -1301,7 +1301,7 @@ export default function PasmaModule6Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1315,7 +1315,7 @@ export default function PasmaModule6Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-6">

@@ -142,7 +142,7 @@ const Module6Section1_5 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -160,13 +160,13 @@ const Module6Section1_5 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.1.5</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.1.5</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               What Level 2 Learners Are Expected to Know and Do
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Understanding the scope, responsibilities and limitations of Level 2 learners in
               electrical inspection and testing
             </p>
@@ -175,7 +175,7 @@ const Module6Section1_5 = () => {
           {/* Summary Box */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-sm space-y-1 list-disc pl-5">
+            <ul className="text-white text-sm space-y-1 list-disc pl-5">
               <li>
                 Level 2 = Learn + Assist under supervision, NOT certify or work independently.
               </li>
@@ -200,7 +200,7 @@ const Module6Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <div className="text-white/80 space-y-2 leading-relaxed">
+            <div className="text-white space-y-2 leading-relaxed">
               <ul className="list-disc pl-6 space-y-2 text-sm">
                 <li>Describe what Level 2 learners should know about inspection and testing.</li>
                 <li>
@@ -220,7 +220,7 @@ const Module6Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Knowledge Expected at Level 2
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Level 2 learners must develop a solid understanding of why inspection and testing
                 are essential, what processes are involved, and how they contribute to electrical
@@ -320,7 +320,7 @@ const Module6Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Practical Skills Expected
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 While Level 2 learners cannot work independently, they are expected to develop
                 practical skills that allow them to safely assist qualified electricians. These
@@ -420,7 +420,7 @@ const Module6Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Limitations of Level 2 Learners
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Understanding your limitations is as important as knowing your capabilities. Clear
                 boundaries protect both you and your employers, ensuring safety and legal compliance
@@ -508,7 +508,7 @@ const Module6Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Progression of Knowledge
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Level 2 is the foundation of a structured learning pathway. Understanding how your
                 current knowledge fits into the broader qualification framework helps you prepare
@@ -604,7 +604,7 @@ const Module6Section1_5 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-orange-500/10 border-l-2 border-orange-500/50">
               <h3 className="font-medium text-white mb-2">The Learning Experience</h3>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 A Level 2 apprentice was asked to help set up a continuity test. Under supervision,
                 they prepared the test instrument, selected the correct test leads, clipped onto the
                 conductors at both ends of the circuit, and read out the result while the supervisor
@@ -625,7 +625,7 @@ const Module6Section1_5 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
                 <p className="font-medium text-white mb-2">Level 2 Role Summary:</p>
-                <ul className="text-sm space-y-1 text-white/80">
+                <ul className="text-sm space-y-1 text-white">
                   <li>
                     <strong>Level 2</strong> = Learn + Assist, not certify
                   </li>
@@ -642,7 +642,7 @@ const Module6Section1_5 = () => {
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
                 <p className="font-medium text-white mb-2">Key Reminders:</p>
-                <ul className="text-sm space-y-1 text-white/80">
+                <ul className="text-sm space-y-1 text-white">
                   <li>• Always work under supervision</li>
                   <li>• Ask questions when unsure</li>
                   <li>• Record experiences for learning</li>
@@ -658,7 +658,7 @@ const Module6Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">08</span>
               Recap
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 In this subsection, you learned what Level 2 learners are expected to know and do in
                 inspection and testing. You explored the essential knowledge areas, practical skills
@@ -679,7 +679,7 @@ const Module6Section1_5 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../1-4">

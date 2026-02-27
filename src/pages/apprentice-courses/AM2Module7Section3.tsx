@@ -234,13 +234,13 @@ const AM2Module7Section3 = () => {
 
       {/* Why Safety is Everything */}
       <AM2ContentCard title="1. Why Safety is Everything in AM2" icon={Shield} accent>
-        <p className="text-ios-callout text-white/80 mb-4">
+        <p className="text-ios-callout text-white mb-4">
           NET's primary objective is to prove you are safe to work unsupervised:
         </p>
 
         <div className="bg-white/5 border border-blue-500/30 rounded-xl p-4 mb-4">
           <h4 className="text-ios-headline text-blue-400 mb-3">Key Safety Principles:</h4>
-          <ul className="text-ios-callout text-white/70 space-y-1">
+          <ul className="text-ios-callout text-white space-y-1">
             <li className="flex items-start gap-2">
               <span className="text-blue-400">•</span>
               <span>NET's primary objective is to prove you are safe to work unsupervised</span>
@@ -261,7 +261,7 @@ const AM2Module7Section3 = () => {
             <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
             <div>
               <h4 className="text-ios-headline text-green-400 mb-2">Remember:</h4>
-              <p className="text-ios-callout text-white/70">
+              <p className="text-ios-callout text-white">
                 Every action is being assessed for safety compliance. The assessor is constantly
                 evaluating whether you can be trusted to work safely without supervision.
               </p>
@@ -280,7 +280,7 @@ const AM2Module7Section3 = () => {
 
       {/* Key Safety Behaviours */}
       <AM2ContentCard title="2. Key Safety Behaviours Assessors Look For" icon={Eye}>
-        <p className="text-ios-callout text-white/80 mb-6">
+        <p className="text-ios-callout text-white mb-6">
           Assessors are trained to watch for these critical safety behaviours throughout your AM2
           exam:
         </p>
@@ -292,14 +292,14 @@ const AM2Module7Section3 = () => {
               1
             </div>
             <div className="flex-1">
-              <h5 className="text-ios-headline text-white/90 mb-2">Safe Isolation</h5>
-              <p className="text-ios-callout text-white/70 mb-3">
+              <h5 className="text-ios-headline text-white mb-2">Safe Isolation</h5>
+              <p className="text-ios-callout text-white mb-3">
                 Following the 10-step process, including prove/re-prove. This is the foundation of
                 electrical safety.
               </p>
               <div className="bg-white/5 border border-blue-500/30 rounded-xl p-3">
                 <strong className="text-blue-400 text-ios-callout">Critical Steps:</strong>
-                <ul className="text-ios-callout text-white/70 mt-2 space-y-1">
+                <ul className="text-ios-callout text-white mt-2 space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-blue-400">•</span>
                     <span>Select appropriate point of isolation</span>
@@ -331,12 +331,12 @@ const AM2Module7Section3 = () => {
               2
             </div>
             <div className="flex-1">
-              <h5 className="text-ios-headline text-white/90 mb-2">PPE and Tool Use</h5>
-              <p className="text-ios-callout text-white/70 mb-3">
+              <h5 className="text-ios-headline text-white mb-2">PPE and Tool Use</h5>
+              <p className="text-ios-callout text-white mb-3">
                 Correct PPE usage, proper tools, no makeshift shortcuts, no damaged equipment.
               </p>
               <div className="bg-white/5 border border-green-500/30 rounded-xl p-3">
-                <ul className="text-ios-callout text-white/70 space-y-1">
+                <ul className="text-ios-callout text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-green-400">•</span>
                     <span>Safety glasses when required</span>
@@ -364,12 +364,12 @@ const AM2Module7Section3 = () => {
               3
             </div>
             <div className="flex-1">
-              <h5 className="text-ios-headline text-white/90 mb-2">Work Area Management</h5>
-              <p className="text-ios-callout text-white/70 mb-3">
+              <h5 className="text-ios-headline text-white mb-2">Work Area Management</h5>
+              <p className="text-ios-callout text-white mb-3">
                 Tidy workspace, no trailing leads or trip hazards, organised approach.
               </p>
               <div className="bg-white/5 border border-orange-500/30 rounded-xl p-3">
-                <ul className="text-ios-callout text-white/70 space-y-1">
+                <ul className="text-ios-callout text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-orange-400">•</span>
                     <span>Keep walkways clear of tools and cables</span>
@@ -397,7 +397,7 @@ const AM2Module7Section3 = () => {
                 </ul>
                 <div className="mt-3 p-2 bg-orange-500/10 rounded">
                   <strong className="text-orange-400 text-ios-footnote">Remember:</strong>
-                  <p className="text-white/70 text-ios-footnote mt-1">
+                  <p className="text-white text-ios-footnote mt-1">
                     Untidy work areas suggest poor safety culture and can lead to accidents.
                   </p>
                 </div>
@@ -417,14 +417,14 @@ const AM2Module7Section3 = () => {
 
       {/* Instant Fail Errors */}
       <AM2ContentCard title="3. 'Instant Fail' Safety Errors (NET Published)" icon={AlertTriangle}>
-        <p className="text-ios-callout text-white/80 mb-6">
+        <p className="text-ios-callout text-white mb-6">
           These safety-critical errors result in immediate failure, regardless of performance
           elsewhere:
         </p>
 
         <div className="bg-white/5 border border-red-500/30 rounded-xl p-4 mb-4">
           <h4 className="text-ios-headline text-red-400 mb-3">Critical Safety Errors:</h4>
-          <ul className="text-ios-callout text-white/70 space-y-2">
+          <ul className="text-ios-callout text-white space-y-2">
             <li className="flex items-start gap-2">
               <span className="text-red-400">•</span>
               <span>Skipping any step in safe isolation</span>
@@ -459,7 +459,7 @@ const AM2Module7Section3 = () => {
             <AlertTriangle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
             <div>
               <h4 className="text-ios-headline text-yellow-400 mb-2">Warning:</h4>
-              <p className="text-ios-callout text-white/70">
+              <p className="text-ios-callout text-white">
                 These errors are not negotiable. Even if you complete everything else perfectly, any
                 of these safety violations will result in instant failure.
               </p>
@@ -478,7 +478,7 @@ const AM2Module7Section3 = () => {
 
       {/* Showing the Assessor */}
       <AM2ContentCard title="4. Showing the Assessor You Are Safe" icon={Target}>
-        <p className="text-ios-callout text-white/80 mb-6">
+        <p className="text-ios-callout text-white mb-6">
           It's not just about being safe - it's about making it clear to the assessor that safety is
           your priority:
         </p>
@@ -486,32 +486,32 @@ const AM2Module7Section3 = () => {
         <div className="space-y-4">
           <div className="bg-white/5 border border-blue-500/30 rounded-xl p-4">
             <h4 className="text-ios-headline text-blue-400 mb-3">Visible Safety Practices:</h4>
-            <ul className="text-ios-callout text-white/70 space-y-2">
+            <ul className="text-ios-callout text-white space-y-2">
               <li className="flex items-start gap-2">
                 <span className="text-blue-400">•</span>
                 <span>
-                  <strong className="text-white/90">Talk through steps:</strong> e.g., "I am now
+                  <strong className="text-white">Talk through steps:</strong> e.g., "I am now
                   proving my tester on a known live source"
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-blue-400">•</span>
                 <span>
-                  <strong className="text-white/90">Double-check visibly:</strong> show that you
+                  <strong className="text-white">Double-check visibly:</strong> show that you
                   re-sleeve CPCs, torque terminals, re-fit trunking lids
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-blue-400">•</span>
                 <span>
-                  <strong className="text-white/90">Label clearly:</strong> DBs, circuits, and
+                  <strong className="text-white">Label clearly:</strong> DBs, circuits, and
                   accessories must all be identifiable
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-blue-400">•</span>
                 <span>
-                  <strong className="text-white/90">Keep order:</strong> tidy work area shows
+                  <strong className="text-white">Keep order:</strong> tidy work area shows
                   professionalism and reduces risks
                 </span>
               </li>
@@ -520,7 +520,7 @@ const AM2Module7Section3 = () => {
 
           <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
             <h4 className="text-ios-headline text-green-400 mb-3">Professional Approach:</h4>
-            <ul className="text-ios-callout text-white/70 space-y-2">
+            <ul className="text-ios-callout text-white space-y-2">
               <li className="flex items-start gap-2">
                 <span className="text-green-400">•</span>
                 <span>Methodical, step-by-step approach to all tasks</span>
@@ -544,7 +544,7 @@ const AM2Module7Section3 = () => {
 
       {/* Practical Guidance */}
       <AM2ContentCard title="5. Practical Guidance" icon={Lightbulb}>
-        <p className="text-ios-callout text-white/80 mb-6">
+        <p className="text-ios-callout text-white mb-6">
           Think like you're on-site with a client or inspector watching - every action reflects your
           professionalism:
         </p>
@@ -556,17 +556,17 @@ const AM2Module7Section3 = () => {
               <Brain className="w-4 h-4" />
               Scenario: Beginning Any Task
             </h4>
-            <div className="text-ios-callout text-white/70 space-y-2">
+            <div className="text-ios-callout text-white space-y-2">
               <p>
-                <strong className="text-white/90">Do:</strong> Check your test equipment is
+                <strong className="text-white">Do:</strong> Check your test equipment is
                 GS38-compliant, prove on known live source
               </p>
               <p>
-                <strong className="text-white/90">Say:</strong> "I'm checking my tester before use
+                <strong className="text-white">Say:</strong> "I'm checking my tester before use
                 on this known live source"
               </p>
               <p>
-                <strong className="text-white/90">Why:</strong> Shows methodical approach and
+                <strong className="text-white">Why:</strong> Shows methodical approach and
                 compliance with safety standards
               </p>
             </div>
@@ -578,17 +578,17 @@ const AM2Module7Section3 = () => {
               <Wrench className="w-4 h-4" />
               Scenario: Making Connections
             </h4>
-            <div className="text-ios-callout text-white/70 space-y-2">
+            <div className="text-ios-callout text-white space-y-2">
               <p>
-                <strong className="text-white/90">Do:</strong> Connect CPCs first with proper
+                <strong className="text-white">Do:</strong> Connect CPCs first with proper
                 sleeving, torque terminals to spec
               </p>
               <p>
-                <strong className="text-white/90">Say:</strong> "Connecting the CPC first for
+                <strong className="text-white">Say:</strong> "Connecting the CPC first for
                 safety, using green/yellow sleeving"
               </p>
               <p>
-                <strong className="text-white/90">Why:</strong> Demonstrates understanding of safety
+                <strong className="text-white">Why:</strong> Demonstrates understanding of safety
                 hierarchy and BS 7671 compliance
               </p>
             </div>
@@ -600,17 +600,17 @@ const AM2Module7Section3 = () => {
               <TestTube className="w-4 h-4" />
               Scenario: Before Energising
             </h4>
-            <div className="text-ios-callout text-white/70 space-y-2">
+            <div className="text-ios-callout text-white space-y-2">
               <p>
-                <strong className="text-white/90">Do:</strong> Double-check all connections, verify
+                <strong className="text-white">Do:</strong> Double-check all connections, verify
                 CPC continuity, check polarity
               </p>
               <p>
-                <strong className="text-white/90">Say:</strong> "Checking all connections secure
+                <strong className="text-white">Say:</strong> "Checking all connections secure
                 before energising, verifying CPC continuity"
               </p>
               <p>
-                <strong className="text-white/90">Why:</strong> Prevents dangerous situations and
+                <strong className="text-white">Why:</strong> Prevents dangerous situations and
                 shows systematic approach
               </p>
             </div>
@@ -622,17 +622,17 @@ const AM2Module7Section3 = () => {
               <Users className="w-4 h-4" />
               Scenario: If You Make a Mistake
             </h4>
-            <div className="text-ios-callout text-white/70 space-y-2">
+            <div className="text-ios-callout text-white space-y-2">
               <p>
-                <strong className="text-white/90">Do:</strong> Stop immediately, isolate if
+                <strong className="text-white">Do:</strong> Stop immediately, isolate if
                 necessary, correct properly
               </p>
               <p>
-                <strong className="text-white/90">Say:</strong> "I need to isolate and correct this
+                <strong className="text-white">Say:</strong> "I need to isolate and correct this
                 connection properly"
               </p>
               <p>
-                <strong className="text-white/90">Why:</strong> Shows honesty, safety-first mindset,
+                <strong className="text-white">Why:</strong> Shows honesty, safety-first mindset,
                 and professional integrity
               </p>
             </div>
@@ -643,8 +643,8 @@ const AM2Module7Section3 = () => {
           <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-              <p className="text-ios-callout text-white/70">
-                <strong className="text-white/90">Practise safe isolation</strong> until it is
+              <p className="text-ios-callout text-white">
+                <strong className="text-white">Practise safe isolation</strong> until it is
                 second nature
               </p>
             </div>
@@ -653,8 +653,8 @@ const AM2Module7Section3 = () => {
           <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-              <p className="text-ios-callout text-white/70">
-                <strong className="text-white/90">Always sleeve CPCs immediately</strong> - don't
+              <p className="text-ios-callout text-white">
+                <strong className="text-white">Always sleeve CPCs immediately</strong> - don't
                 leave it until later
               </p>
             </div>
@@ -663,8 +663,8 @@ const AM2Module7Section3 = () => {
           <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-              <p className="text-ios-callout text-white/70">
-                <strong className="text-white/90">Never cut corners</strong> on test probe safety -
+              <p className="text-ios-callout text-white">
+                <strong className="text-white">Never cut corners</strong> on test probe safety -
                 keep fingers behind barriers
               </p>
             </div>
@@ -673,8 +673,8 @@ const AM2Module7Section3 = () => {
           <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
-              <p className="text-ios-callout text-white/70">
-                <strong className="text-white/90">Ask yourself:</strong> "Is this safe for another
+              <p className="text-ios-callout text-white">
+                <strong className="text-white">Ask yourself:</strong> "Is this safe for another
                 electrician to touch right now?"
               </p>
             </div>
@@ -686,21 +686,21 @@ const AM2Module7Section3 = () => {
       <AM2ContentCard title="6. Real-world Examples" icon={BookOpen}>
         <div className="space-y-4">
           <div className="border-l-4 border-red-500 bg-white/5 pl-4 py-3 rounded-r">
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               <strong className="text-red-400">Example 1:</strong> Candidate skipped re-prove of
               tester in safe isolation procedure - assessor stopped exam - fail.
             </p>
           </div>
 
           <div className="border-l-4 border-red-500 bg-white/5 pl-4 py-3 rounded-r">
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               <strong className="text-red-400">Example 2:</strong> Candidate completed installation
               correctly but left bare copper exposed in a socket - unsafe workmanship - marks lost.
             </p>
           </div>
 
           <div className="border-l-4 border-green-500 bg-white/5 pl-4 py-3 rounded-r">
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               <strong className="text-green-400">Example 3:</strong> Candidate explained each
               isolation step out loud, used GS38 leads correctly, and kept tidy work area - assessor
               noted professionalism - passed.
@@ -708,7 +708,7 @@ const AM2Module7Section3 = () => {
           </div>
 
           <div className="border-l-4 border-yellow-500 bg-white/5 pl-4 py-3 rounded-r">
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               <strong className="text-yellow-400">Example 4:</strong> In industry, an electrician
               energised a circuit with no CPC - shock incident. Same behaviour in AM2 = instant
               fail.
@@ -721,50 +721,50 @@ const AM2Module7Section3 = () => {
       <AM2ContentCard title="7. Frequently Asked Questions" icon={Brain}>
         <div className="space-y-6">
           <div>
-            <h3 className="text-ios-headline text-white/90 mb-2">
+            <h3 className="text-ios-headline text-white mb-2">
               Q1: Do assessors allow small safety mistakes?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               No - safety errors are heavily penalised, and critical errors result in instant
               failure. There are no "small" safety mistakes in electrical work.
             </p>
           </div>
 
           <div>
-            <h3 className="text-ios-headline text-white/90 mb-2">
+            <h3 className="text-ios-headline text-white mb-2">
               Q2: What if I realise I've made a safety error during the exam?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Stop immediately, inform the assessor, isolate if necessary, and correct it properly.
               Honesty and immediate correction show professional integrity.
             </p>
           </div>
 
           <div>
-            <h3 className="text-ios-headline text-white/90 mb-2">
+            <h3 className="text-ios-headline text-white mb-2">
               Q3: Is it better to be slow and safe, or fast and efficient?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Always slow and safe. Speed is never prioritised over safety in AM2. A methodical,
               safe approach will always score higher than rushing.
             </p>
           </div>
 
           <div>
-            <h3 className="text-ios-headline text-white/90 mb-2">
+            <h3 className="text-ios-headline text-white mb-2">
               Q4: Should I verbalise my safety steps?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Yes! Talking through safety steps like "proving my tester on known live source"
               clearly demonstrates your understanding to the assessor.
             </p>
           </div>
 
           <div>
-            <h3 className="text-ios-headline text-white/90 mb-2">
+            <h3 className="text-ios-headline text-white mb-2">
               Q5: What happens if my test equipment fails during the exam?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Stop work immediately, inform the assessor, and request replacement equipment. Never
               continue with faulty or unsafe test equipment.
             </p>
@@ -775,10 +775,10 @@ const AM2Module7Section3 = () => {
       {/* Summary */}
       <AM2ContentCard title="8. Summary" icon={CheckCircle}>
         <div className="bg-white/5 border border-blue-500/30 rounded-xl p-4">
-          <p className="text-ios-callout text-white/80 mb-4 font-medium">
+          <p className="text-ios-callout text-white mb-4 font-medium">
             In AM2, safety is the foundation of everything. You must:
           </p>
-          <ul className="text-ios-callout text-white/70 space-y-1">
+          <ul className="text-ios-callout text-white space-y-1">
             <li className="flex items-start gap-2">
               <span className="text-blue-400">•</span>
               <span>Follow safe isolation correctly</span>
@@ -803,7 +803,7 @@ const AM2Module7Section3 = () => {
               </span>
             </li>
           </ul>
-          <p className="text-ios-callout text-white/80 mt-4 font-bold">
+          <p className="text-ios-callout text-white mt-4 font-bold">
             Unsafe = fail. Safe = pass.
           </p>
         </div>

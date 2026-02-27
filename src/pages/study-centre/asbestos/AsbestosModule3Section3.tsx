@@ -203,7 +203,7 @@ export default function AsbestosModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-3">
@@ -228,7 +228,7 @@ export default function AsbestosModule3Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             ACMs in Electrical Installations
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Flash guards, backing boards, cable trenching, switchgear, and the pre-work checks that
             could save your life
           </p>
@@ -309,7 +309,7 @@ export default function AsbestosModule3Section3() {
                     Critical Information for Every Electrician
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Electricians are among the trades{' '}
                   <strong className="text-white">MOST at risk</strong> of asbestos exposure. This is
                   not a historical problem &mdash; it is a current, daily risk for anyone carrying
@@ -361,7 +361,7 @@ export default function AsbestosModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">The Bottom Line</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-orange-400">
                     Every electrical job in a pre-2000 building requires a pre-work asbestos check.
                   </strong>{' '}
@@ -395,25 +395,25 @@ export default function AsbestosModule3Section3() {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-orange-400">Purpose</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Prevent arcing between busbars and provide fire resistance
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-orange-400">Material</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Typically AIB containing amosite (brown asbestos)
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-orange-400">Found In</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Rewireable fuse boards, older MCB boards, commercial distribution boards
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-orange-400">Disturbed By</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Board changes, circuit mods, fuse replacement, inspection &amp; testing
                     </p>
                   </div>
@@ -447,7 +447,7 @@ export default function AsbestosModule3Section3() {
                     CRITICAL &mdash; Before Opening Any Pre-2000 Board
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Before opening <strong className="text-white">any</strong> pre-2000 consumer unit
                   or distribution board, you must check whether asbestos flash guards are present.
                   Consult the asbestos register. If there is no register, or if the board has not
@@ -459,7 +459,7 @@ export default function AsbestosModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">If Flash Guards Are Found</p>
-                <ol className="text-sm text-white/80 space-y-2">
+                <ol className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 w-6 h-6 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center flex-shrink-0 text-xs font-bold text-red-400">
                       1
@@ -521,15 +521,15 @@ export default function AsbestosModule3Section3() {
                   <div className="flex justify-around mb-2">
                     <div className="flex flex-col items-center">
                       <div className="w-4 h-6 border border-white/40 rounded-t-sm bg-white/5" />
-                      <span className="text-[9px] text-white/40 mt-0.5">Cable in</span>
+                      <span className="text-[9px] text-white mt-0.5">Cable in</span>
                     </div>
                     <div className="flex flex-col items-center">
                       <div className="w-4 h-6 border border-white/40 rounded-t-sm bg-white/5" />
-                      <span className="text-[9px] text-white/40 mt-0.5">Cable in</span>
+                      <span className="text-[9px] text-white mt-0.5">Cable in</span>
                     </div>
                     <div className="flex flex-col items-center">
                       <div className="w-4 h-6 border border-white/40 rounded-t-sm bg-white/5" />
-                      <span className="text-[9px] text-white/40 mt-0.5">Cable in</span>
+                      <span className="text-[9px] text-white mt-0.5">Cable in</span>
                     </div>
                   </div>
 
@@ -538,17 +538,17 @@ export default function AsbestosModule3Section3() {
                     {/* Left busbar section */}
                     <div className="flex-1 flex flex-col gap-1">
                       <div className="flex-1 border border-white/20 rounded bg-white/5 p-2 flex items-center justify-center">
-                        <span className="text-[10px] sm:text-xs text-white/60 text-center">
+                        <span className="text-[10px] sm:text-xs text-white text-center">
                           MCB / Fuse way
                         </span>
                       </div>
                       <div className="flex-1 border border-white/20 rounded bg-white/5 p-2 flex items-center justify-center">
-                        <span className="text-[10px] sm:text-xs text-white/60 text-center">
+                        <span className="text-[10px] sm:text-xs text-white text-center">
                           MCB / Fuse way
                         </span>
                       </div>
                       <div className="flex-1 border border-white/20 rounded bg-white/5 p-2 flex items-center justify-center">
-                        <span className="text-[10px] sm:text-xs text-white/60 text-center">
+                        <span className="text-[10px] sm:text-xs text-white text-center">
                           MCB / Fuse way
                         </span>
                       </div>
@@ -582,17 +582,17 @@ export default function AsbestosModule3Section3() {
                     {/* Right busbar section */}
                     <div className="flex-1 flex flex-col gap-1">
                       <div className="flex-1 border border-white/20 rounded bg-white/5 p-2 flex items-center justify-center">
-                        <span className="text-[10px] sm:text-xs text-white/60 text-center">
+                        <span className="text-[10px] sm:text-xs text-white text-center">
                           MCB / Fuse way
                         </span>
                       </div>
                       <div className="flex-1 border border-white/20 rounded bg-white/5 p-2 flex items-center justify-center">
-                        <span className="text-[10px] sm:text-xs text-white/60 text-center">
+                        <span className="text-[10px] sm:text-xs text-white text-center">
                           MCB / Fuse way
                         </span>
                       </div>
                       <div className="flex-1 border border-white/20 rounded bg-white/5 p-2 flex items-center justify-center">
-                        <span className="text-[10px] sm:text-xs text-white/60 text-center">
+                        <span className="text-[10px] sm:text-xs text-white text-center">
                           MCB / Fuse way
                         </span>
                       </div>
@@ -602,15 +602,15 @@ export default function AsbestosModule3Section3() {
                   {/* Cable entries bottom */}
                   <div className="flex justify-around mt-2">
                     <div className="flex flex-col items-center">
-                      <span className="text-[9px] text-white/40 mb-0.5">Cable out</span>
+                      <span className="text-[9px] text-white mb-0.5">Cable out</span>
                       <div className="w-4 h-6 border border-white/40 rounded-b-sm bg-white/5" />
                     </div>
                     <div className="flex flex-col items-center">
-                      <span className="text-[9px] text-white/40 mb-0.5">Cable out</span>
+                      <span className="text-[9px] text-white mb-0.5">Cable out</span>
                       <div className="w-4 h-6 border border-white/40 rounded-b-sm bg-white/5" />
                     </div>
                     <div className="flex flex-col items-center">
-                      <span className="text-[9px] text-white/40 mb-0.5">Cable out</span>
+                      <span className="text-[9px] text-white mb-0.5">Cable out</span>
                       <div className="w-4 h-6 border border-white/40 rounded-b-sm bg-white/5" />
                     </div>
                   </div>
@@ -627,15 +627,15 @@ export default function AsbestosModule3Section3() {
                 <div className="flex flex-wrap gap-3 mt-3 justify-center">
                   <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 border-2 border-orange-500 bg-orange-500/20 rounded-sm" />
-                    <span className="text-[10px] text-white/60">Possible ACM</span>
+                    <span className="text-[10px] text-white">Possible ACM</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 bg-red-500/60 rounded-sm" />
-                    <span className="text-[10px] text-white/60">Busbar</span>
+                    <span className="text-[10px] text-white">Busbar</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 border border-white/20 bg-white/5 rounded-sm" />
-                    <span className="text-[10px] text-white/60">MCB / Fuse way</span>
+                    <span className="text-[10px] text-white">MCB / Fuse way</span>
                   </div>
                 </div>
               </div>
@@ -650,7 +650,7 @@ export default function AsbestosModule3Section3() {
                 {/* Ceiling void */}
                 <div className="border border-white/20 rounded bg-white/5 p-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs text-white/60">Ceiling Void</span>
+                    <span className="text-xs text-white">Ceiling Void</span>
                     <div className="flex items-center gap-1.5">
                       <div className="w-2 h-2 rounded-full bg-orange-500" />
                       <span className="text-[10px] text-orange-400">
@@ -660,7 +660,7 @@ export default function AsbestosModule3Section3() {
                   </div>
                   <div className="mt-2 border-t border-dashed border-orange-400/40 pt-1">
                     <div className="h-1 bg-white/20 rounded mx-8" />
-                    <span className="text-[9px] text-white/40 block text-center mt-0.5">
+                    <span className="text-[9px] text-white block text-center mt-0.5">
                       Cable route through void
                     </span>
                   </div>
@@ -669,7 +669,7 @@ export default function AsbestosModule3Section3() {
                 {/* Wall partition */}
                 <div className="flex gap-2 items-stretch min-h-[60px]">
                   <div className="flex-1 border border-white/20 rounded bg-white/5 p-2 flex items-center justify-center">
-                    <span className="text-[10px] text-white/40">Room A</span>
+                    <span className="text-[10px] text-white">Room A</span>
                   </div>
                   <div className="w-8 border-2 border-orange-500 rounded bg-orange-500/20 flex items-center justify-center">
                     <span
@@ -680,14 +680,14 @@ export default function AsbestosModule3Section3() {
                     </span>
                   </div>
                   <div className="flex-1 border border-white/20 rounded bg-white/5 p-2 flex items-center justify-center">
-                    <span className="text-[10px] text-white/40">Room B</span>
+                    <span className="text-[10px] text-white">Room B</span>
                   </div>
                 </div>
 
                 {/* Floor duct */}
                 <div className="border border-white/20 rounded bg-white/5 p-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs text-white/60">Floor Level</span>
+                    <span className="text-xs text-white">Floor Level</span>
                     <div className="flex items-center gap-1.5">
                       <div className="w-2 h-2 rounded-full bg-orange-500" />
                       <span className="text-[10px] text-orange-400">AC cable trench covers</span>
@@ -705,7 +705,7 @@ export default function AsbestosModule3Section3() {
                     </div>
                   </div>
                   <div className="mt-1 h-4 border border-white/10 rounded bg-white/5 flex items-center justify-center">
-                    <span className="text-[8px] text-white/40">Cable duct below</span>
+                    <span className="text-[8px] text-white">Cable duct below</span>
                   </div>
                 </div>
               </div>
@@ -734,7 +734,7 @@ export default function AsbestosModule3Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Where Backing Boards Are Found
                 </p>
-                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -816,7 +816,7 @@ export default function AsbestosModule3Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Common Locations for AC Cable Trenching
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -868,7 +868,7 @@ export default function AsbestosModule3Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">When ACMs Are Disturbed</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Cable trench covers and floor ducts are disturbed when{' '}
                   <strong className="text-white">pulling new cables</strong>,{' '}
                   <strong className="text-white">accessing existing cables</strong> for testing or
@@ -901,7 +901,7 @@ export default function AsbestosModule3Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Asbestos in Switchgear Components
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -980,28 +980,28 @@ export default function AsbestosModule3Section3() {
                   Heating Equipment That May Contain Asbestos
                 </p>
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
-                  <div className="flex items-start gap-2 text-white/80">
+                  <div className="flex items-start gap-2 text-white">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
                       <strong className="text-white">Night storage heaters</strong> &mdash; may
                       contain asbestos insulation bricks that store and slowly release heat
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-white/80">
+                  <div className="flex items-start gap-2 text-white">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
                       <strong className="text-white">Electric heater panels</strong> &mdash; may
                       have asbestos backing boards providing thermal protection
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-white/80">
+                  <div className="flex items-start gap-2 text-white">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
                       <strong className="text-white">Immersion heater plates</strong> &mdash;
                       mounting plates may be AIB, providing insulation around the cylinder
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-white/80">
+                  <div className="flex items-start gap-2 text-white">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
                       <strong className="text-white">Electric fire surrounds</strong> &mdash; older
@@ -1018,7 +1018,7 @@ export default function AsbestosModule3Section3() {
                     Night Storage Heaters &mdash; Particular Risk
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Older night storage heaters are a{' '}
                   <strong className="text-white">particular risk</strong> for electricians. The
                   asbestos insulation bricks inside can weigh up to 100&nbsp;kg per heater, and they
@@ -1058,7 +1058,7 @@ export default function AsbestosModule3Section3() {
                     Before Starting ANY Work in a Pre-2000 Building
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The following checks are <strong className="text-white">mandatory</strong> for
                   every electrical job in a building constructed or refurbished before the year
                   2000. They are not optional and they are not only for large commercial projects
@@ -1071,7 +1071,7 @@ export default function AsbestosModule3Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   The 8-Step Pre-Work Asbestos Check
                 </p>
-                <ol className="text-sm text-white/80 space-y-3">
+                <ol className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 w-7 h-7 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center flex-shrink-0 text-xs font-bold text-orange-400">
                       1
@@ -1171,7 +1171,7 @@ export default function AsbestosModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Additional Controls</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -1210,14 +1210,14 @@ export default function AsbestosModule3Section3() {
                     Absolute Rules &mdash; No Exceptions
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The following actions must <strong className="text-white">NEVER</strong> be taken
                   by an electrician when encountering or suspecting asbestos-containing materials.
                   These rules apply regardless of time pressure, client demands, or workload.
                   Breaking these rules could expose you and others to lethal fibres.
                 </p>
                 <div className="space-y-2">
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">&times;</span>
                     <span>
                       <strong className="text-white">Never drill into suspected ACMs</strong>{' '}
@@ -1225,7 +1225,7 @@ export default function AsbestosModule3Section3() {
                       per cubic centimetre of air
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">&times;</span>
                     <span>
                       <strong className="text-white">
@@ -1235,7 +1235,7 @@ export default function AsbestosModule3Section3() {
                       length of the chase
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">&times;</span>
                     <span>
                       <strong className="text-white">
@@ -1244,7 +1244,7 @@ export default function AsbestosModule3Section3() {
                       &mdash; any mechanical action that damages ACMs releases fibres into the air
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">&times;</span>
                     <span>
                       <strong className="text-white">
@@ -1254,7 +1254,7 @@ export default function AsbestosModule3Section3() {
                       asbestos should be used, by trained personnel
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">&times;</span>
                     <span>
                       <strong className="text-white">
@@ -1264,7 +1264,7 @@ export default function AsbestosModule3Section3() {
                       contractor
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">&times;</span>
                     <span>
                       <strong className="text-white">
@@ -1275,7 +1275,7 @@ export default function AsbestosModule3Section3() {
                       Visual identification is unreliable
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">&times;</span>
                     <span>
                       <strong className="text-white">
@@ -1294,35 +1294,35 @@ export default function AsbestosModule3Section3() {
                   <p className="text-sm font-medium text-orange-400">What You SHOULD Do Instead</p>
                 </div>
                 <div className="space-y-2">
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-green-400 font-bold mt-0.5 flex-shrink-0">&#10003;</span>
                     <span>
                       <strong className="text-white">Always check the asbestos register</strong>{' '}
                       before starting any work in a pre-2000 building
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-green-400 font-bold mt-0.5 flex-shrink-0">&#10003;</span>
                     <span>
                       <strong className="text-white">Always stop work</strong> if you discover or
                       suspect any ACM during the course of your work
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-green-400 font-bold mt-0.5 flex-shrink-0">&#10003;</span>
                     <span>
                       <strong className="text-white">Always report suspected ACMs</strong> to your
                       supervisor and the dutyholder immediately
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-green-400 font-bold mt-0.5 flex-shrink-0">&#10003;</span>
                     <span>
                       <strong className="text-white">Always presume the worst</strong> when a
                       material cannot be identified &mdash; treat it as asbestos
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-green-400 font-bold mt-0.5 flex-shrink-0">&#10003;</span>
                     <span>
                       <strong className="text-white">
@@ -1346,7 +1346,7 @@ export default function AsbestosModule3Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1360,7 +1360,7 @@ export default function AsbestosModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-3-section-2">

@@ -223,7 +223,7 @@ export default function MentalHealthModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-1">
@@ -248,7 +248,7 @@ export default function MentalHealthModule1Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Communication Skills &amp; Active Listening
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The SOLER model, non-judgemental language, open questions, having difficult
             conversations, and cultural sensitivity in mental health first aid
           </p>
@@ -331,7 +331,7 @@ export default function MentalHealthModule1Section4() {
 
               <div className="bg-purple-500/10 border border-purple-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-purple-400 mb-2">The Construction Context</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The construction industry has one of the highest suicide rates of any occupation
                   in the UK. Male construction workers are approximately{' '}
                   <strong className="text-white">three times</strong> more likely to die by suicide
@@ -354,7 +354,7 @@ export default function MentalHealthModule1Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   What Good Communication Achieves
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>
@@ -391,7 +391,7 @@ export default function MentalHealthModule1Section4() {
                   <Brain className="h-5 w-5 text-violet-400" />
                   <p className="text-sm font-medium text-violet-400">Key Principle</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   You do not need to have the answers. You do not need to be a counsellor. The most
                   powerful thing you can do is <strong className="text-white">be present</strong>,{' '}
                   <strong className="text-white">listen without judgement</strong>, and{' '}
@@ -426,7 +426,7 @@ export default function MentalHealthModule1Section4() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="bg-green-500/10 border border-green-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-green-400 mb-2">Active Listening</p>
-                    <ul className="text-xs text-white/80 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                         <span>Full attention on the speaker</span>
@@ -451,7 +451,7 @@ export default function MentalHealthModule1Section4() {
                   </div>
                   <div className="bg-red-500/10 border border-red-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-red-400 mb-2">Passive Listening</p>
-                    <ul className="text-xs text-white/80 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                         <span>Distracted, mind wandering</span>
@@ -485,7 +485,7 @@ export default function MentalHealthModule1Section4() {
                     The SOLER Model &mdash; Gerard Egan
                   </p>
                 </div>
-                <p className="text-sm text-white/70 mb-5">
+                <p className="text-sm text-white mb-5">
                   Developed by psychologist Gerard Egan, the SOLER model provides a simple framework
                   for non-verbal communication that shows attentiveness and respect during
                   face-to-face conversations.
@@ -499,7 +499,7 @@ export default function MentalHealthModule1Section4() {
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-white">Sit Squarely</p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Face the person directly. This conveys the message &ldquo;I am here with you
                         and I am available to you.&rdquo; Angle your body towards them rather than
                         turning away.
@@ -513,7 +513,7 @@ export default function MentalHealthModule1Section4() {
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-white">Open Posture</p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Keep your arms and legs uncrossed. An open posture signals that you are
                         receptive and non-defensive. Crossed arms can unconsciously communicate a
                         barrier.
@@ -527,7 +527,7 @@ export default function MentalHealthModule1Section4() {
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-white">Lean In</p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Lean slightly towards the speaker. This shows interest and engagement.
                         Leaning back or slouching can suggest boredom or disinterest. Be natural
                         &mdash; do not invade personal space.
@@ -541,7 +541,7 @@ export default function MentalHealthModule1Section4() {
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-white">Eye Contact</p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Maintain comfortable, natural eye contact. This communicates sincerity and
                         interest. Avoid staring &mdash; look away occasionally to keep it natural.
                         Be aware that cultural norms around eye contact vary.
@@ -555,7 +555,7 @@ export default function MentalHealthModule1Section4() {
                     </div>
                     <div>
                       <p className="text-sm font-semibold text-white">Relax</p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Be at ease. If you appear tense or anxious, the other person will pick up on
                         it and may become more guarded. Take a breath, settle your body, and be
                         present. Your calm demeanour will help them feel safe.
@@ -578,7 +578,7 @@ export default function MentalHealthModule1Section4() {
                 <p className="text-sm font-medium text-purple-400 mb-2">
                   Verbal Cues That Show You Are Listening
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -635,7 +635,7 @@ export default function MentalHealthModule1Section4() {
                     Unconditional Positive Regard &mdash; Carl Rogers
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Psychologist Carl Rogers (1902&ndash;1987) identified{' '}
                   <strong className="text-white">unconditional positive regard</strong> as one of
                   the three core conditions for a therapeutic relationship (alongside empathy and
@@ -700,8 +700,8 @@ export default function MentalHealthModule1Section4() {
                       i % 2 === 0 ? 'bg-white/[0.02]' : ''
                     } ${i < 5 ? 'border-b border-white/5' : ''}`}
                   >
-                    <div className="p-2 sm:p-3 text-white/70">{row.avoid}</div>
-                    <div className="p-2 sm:p-3 text-white/70 border-l border-white/5">
+                    <div className="p-2 sm:p-3 text-white">{row.avoid}</div>
+                    <div className="p-2 sm:p-3 text-white border-l border-white/5">
                       {row.use}
                     </div>
                   </div>
@@ -710,12 +710,12 @@ export default function MentalHealthModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Validating Emotions</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Validation means acknowledging that someone&rsquo;s feelings are real and
                   understandable, even if you would feel differently in the same situation.
                   Validation is not agreement &mdash; it is respect.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>
@@ -768,7 +768,7 @@ export default function MentalHealthModule1Section4() {
                   <p className="text-sm font-medium text-green-400 mb-2">
                     Open Questions (Preferred)
                   </p>
-                  <ul className="text-xs text-white/80 space-y-2">
+                  <ul className="text-xs text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-3.5 w-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                       <span>&ldquo;How have you been feeling lately?&rdquo;</span>
@@ -795,7 +795,7 @@ export default function MentalHealthModule1Section4() {
                   <p className="text-sm font-medium text-red-400 mb-2">
                     Closed Questions (Limited Use)
                   </p>
-                  <ul className="text-xs text-white/80 space-y-2">
+                  <ul className="text-xs text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <AlertTriangle className="h-3.5 w-3.5 text-red-400 mt-0.5 flex-shrink-0" />
                       <span>
@@ -826,7 +826,7 @@ export default function MentalHealthModule1Section4() {
                 <p className="text-sm font-medium text-purple-400 mb-2">
                   The &ldquo;How&rdquo; and &ldquo;What&rdquo; Approach
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Questions beginning with <strong className="text-white">&ldquo;How&rdquo;</strong>{' '}
                   and <strong className="text-white">&ldquo;What&rdquo;</strong> tend to produce the
                   most helpful responses. They invite reflection and description without feeling
@@ -839,7 +839,7 @@ export default function MentalHealthModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">The Funnelling Technique</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Funnelling means starting with broad, general questions and gradually narrowing
                   down to more specific ones as the person becomes comfortable sharing. This feels
                   natural and non-intrusive.
@@ -868,7 +868,7 @@ export default function MentalHealthModule1Section4() {
                       <span className="text-xs font-semibold text-purple-400 whitespace-nowrap mt-0.5">
                         {item.step}
                       </span>
-                      <span className="text-xs text-white/70 italic">{item.example}</span>
+                      <span className="text-xs text-white italic">{item.example}</span>
                     </div>
                   ))}
                 </div>
@@ -878,7 +878,7 @@ export default function MentalHealthModule1Section4() {
                 <p className="text-sm font-medium text-violet-400 mb-2">
                   When Closed Questions Are Appropriate
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Closed questions do have their place. They are useful for clarifying specific
                   facts (&ldquo;Are you taking any medication at the moment?&rdquo;), assessing
                   immediate safety (&ldquo;Are you having thoughts of harming yourself?&rdquo;), and
@@ -914,10 +914,10 @@ export default function MentalHealthModule1Section4() {
                 <p className="text-sm font-medium text-purple-400 mb-3">
                   Starting the Conversation
                 </p>
-                <p className="text-sm text-white/60 mb-3">
+                <p className="text-sm text-white mb-3">
                   Use &ldquo;I&rdquo; statements to open the door without pressure or accusation:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>
@@ -950,11 +950,11 @@ export default function MentalHealthModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Responding to Disclosures</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   When someone opens up about their mental health, how you respond in the first few
                   seconds sets the tone for the entire conversation:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -993,7 +993,7 @@ export default function MentalHealthModule1Section4() {
                     If Someone Becomes Distressed
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1028,7 +1028,7 @@ export default function MentalHealthModule1Section4() {
 
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-red-400 mb-3">What NOT to Say</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -1072,7 +1072,7 @@ export default function MentalHealthModule1Section4() {
                   <ShieldCheck className="h-5 w-5 text-violet-400" />
                   <p className="text-sm font-medium text-violet-400">Silence Is OK</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   One of the hardest things about having a mental health conversation is resisting
                   the urge to fill every silence. But silence is not emptiness &mdash; it is
                   processing time. When someone pauses, they may be gathering the courage to say
@@ -1085,12 +1085,12 @@ export default function MentalHealthModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Showing Empathy</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Empathy is not the same as sympathy. Sympathy says &ldquo;I feel sorry for
                   you&rdquo;; empathy says &ldquo;I am trying to understand what it feels like to be
                   you.&rdquo; You can show empathy by:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1146,7 +1146,7 @@ export default function MentalHealthModule1Section4() {
                     Cultural Differences in Mental Health Expression
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1184,7 +1184,7 @@ export default function MentalHealthModule1Section4() {
 
               <div className="bg-purple-500/10 border border-purple-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-purple-400 mb-2">Language Barriers</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   When working with someone whose first language is not English, speak slowly, use
                   simple sentences, and avoid idioms and slang. Phrases like &ldquo;feeling under
                   the weather&rdquo; or &ldquo;at the end of your tether&rdquo; may not translate.
@@ -1198,13 +1198,13 @@ export default function MentalHealthModule1Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Religious &amp; Spiritual Perspectives
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   For many people, religious faith or spiritual beliefs are central to how they
                   understand and cope with mental distress. Some may view their experience through a
                   spiritual lens or prefer prayer, meditation, or guidance from a religious leader
                   as their primary support.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1235,7 +1235,7 @@ export default function MentalHealthModule1Section4() {
                     <Users className="h-5 w-5 text-violet-400" />
                     <p className="text-sm font-medium text-violet-400">LGBTQ+ Considerations</p>
                   </div>
-                  <ul className="text-xs text-white/80 space-y-2">
+                  <ul className="text-xs text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1271,7 +1271,7 @@ export default function MentalHealthModule1Section4() {
                     <Brain className="h-5 w-5 text-violet-400" />
                     <p className="text-sm font-medium text-violet-400">Neurodiversity</p>
                   </div>
-                  <ul className="text-xs text-white/80 space-y-2">
+                  <ul className="text-xs text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1307,7 +1307,7 @@ export default function MentalHealthModule1Section4() {
                     Adapting Without Stereotyping
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Cultural sensitivity is about <strong className="text-white">awareness</strong>{' '}
                   and <strong className="text-white">flexibility</strong>, not about making
                   assumptions based on someone&rsquo;s background. The best approach is always to
@@ -1330,7 +1330,7 @@ export default function MentalHealthModule1Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1344,7 +1344,7 @@ export default function MentalHealthModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-1">

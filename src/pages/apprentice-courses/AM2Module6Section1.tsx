@@ -205,7 +205,7 @@ const AM2Module6Section1 = () => {
       <div className="space-y-6">
         {/* Introduction */}
         <AM2ContentCard>
-          <p className="text-ios-body text-white/80 leading-relaxed">
+          <p className="text-ios-body text-white leading-relaxed">
             Understanding the test format is essential for managing your time and answering
             confidently. Many candidates fail this section not because they don't know the content,
             but because they mismanage their time or misunderstand the question style.
@@ -214,12 +214,12 @@ const AM2Module6Section1 = () => {
 
         {/* Critical Warning */}
         <AM2CriticalWarning title="CRITICAL: Time Management is Everything">
-          <p className="text-ios-callout text-white/80 mb-3 leading-relaxed">
+          <p className="text-ios-callout text-white mb-3 leading-relaxed">
             Many candidates fail the knowledge test not due to lack of knowledge, but poor time
             management. Getting stuck on difficult questions and leaving others blank is a
             guaranteed route to failure.
           </p>
-          <p className="text-ios-callout text-white/80 font-medium leading-relaxed">
+          <p className="text-ios-callout text-white font-medium leading-relaxed">
             You must attempt every question. There's no penalty for guessing, but blank answers
             guarantee lost marks.
           </p>
@@ -231,13 +231,13 @@ const AM2Module6Section1 = () => {
         {/* Test Structure */}
         <AM2ContentCard title="1. Understanding the Test Structure" icon={Monitor}>
           <div className="space-y-4">
-            <p className="text-ios-body text-white/80 leading-relaxed">
+            <p className="text-ios-body text-white leading-relaxed">
               The AM2 knowledge test is delivered in a controlled environment at approved assessment
               centres across the UK. Understanding exactly what to expect will help you feel more
               confident and perform better on the day.
             </p>
 
-            <p className="text-ios-callout text-white/80 leading-relaxed">
+            <p className="text-ios-callout text-white leading-relaxed">
               <strong className="text-white">Test Environment and Logistics:</strong> You'll be
               seated at a computer workstation in a quiet examination room. The test is supervised
               by qualified invigilators who will ensure fair conditions throughout. Before
@@ -252,41 +252,41 @@ const AM2Module6Section1 = () => {
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Duration:</strong> Exactly 60 minutes from when
                     you start the test
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Question Count:</strong> 30 questions
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Question Format:</strong> Multiple-choice with 4
                     possible answers per question
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Pass Mark:</strong> 70% (21 correct answers out
                     of 30)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Marking:</strong> One mark per correct answer, no
                     penalty for wrong answers
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Results:</strong> Available immediately upon
                     completion
                   </span>
@@ -298,7 +298,7 @@ const AM2Module6Section1 = () => {
               <h4 className="text-ios-headline font-semibold text-white mb-3">
                 Time Management Breakdown:
               </h4>
-              <p className="text-ios-callout text-white/80 mb-3 leading-relaxed">
+              <p className="text-ios-callout text-white mb-3 leading-relaxed">
                 With 60 minutes for 30 questions, you have exactly 2 minutes per question. However,
                 this doesn't mean you should spend exactly this time on each question. The most
                 effective approach is:
@@ -306,29 +306,29 @@ const AM2Module6Section1 = () => {
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Quick wins:</strong> Answer straightforward
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Quick wins:</strong> Answer straightforward
                     questions immediately (30-60 seconds)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Standard questions:</strong> Take 1-2 minutes
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Standard questions:</strong> Take 1-2 minutes
                     for typical questions
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Complex scenarios:</strong> Allow up to 3-4
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Complex scenarios:</strong> Allow up to 3-4
                     minutes for challenging questions
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Review time:</strong> Reserve 5-10 minutes at
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Review time:</strong> Reserve 5-10 minutes at
                     the end for flagged questions
                   </span>
                 </li>
@@ -342,31 +342,31 @@ const AM2Module6Section1 = () => {
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
+                  <span className="text-ios-footnote text-white">
                     No mobile phones, calculators, or reference materials allowed
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
+                  <span className="text-ios-footnote text-white">
                     You cannot pause the test once started
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
+                  <span className="text-ios-footnote text-white">
                     All questions must be attempted - blank answers receive zero marks
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
+                  <span className="text-ios-footnote text-white">
                     You can change answers until you submit the test
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
+                  <span className="text-ios-footnote text-white">
                     The test auto-submits when time expires
                   </span>
                 </li>
@@ -386,7 +386,7 @@ const AM2Module6Section1 = () => {
         {/* Question Types */}
         <AM2ContentCard title="2. Question Types and Content Areas" icon={FileText} accent>
           <div className="space-y-4">
-            <p className="text-ios-body text-white/80 leading-relaxed">
+            <p className="text-ios-body text-white leading-relaxed">
               The AM2 knowledge test covers five main types of questions, each designed to assess
               different aspects of your electrical knowledge and competence.
             </p>
@@ -395,22 +395,22 @@ const AM2Module6Section1 = () => {
               <h4 className="text-ios-headline font-semibold text-white mb-3">
                 Straight Knowledge Questions (25-30% of test)
               </h4>
-              <p className="text-ios-callout text-white/80 mb-2 leading-relaxed">
+              <p className="text-ios-callout text-white mb-2 leading-relaxed">
                 These questions test your direct recall of facts, figures, and regulations from BS
                 7671 and related standards.
               </p>
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Example topics:</strong> IP ratings, cable
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Example topics:</strong> IP ratings, cable
                     current ratings, diversity factors, protective device characteristics
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Strategy:</strong> These should be quick wins
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Strategy:</strong> These should be quick wins
                     - if you know it, answer immediately. If not, flag and move on
                   </span>
                 </li>
@@ -421,22 +421,22 @@ const AM2Module6Section1 = () => {
               <h4 className="text-ios-headline font-semibold text-white mb-3">
                 Applied Scenario Questions (35-40% of test)
               </h4>
-              <p className="text-ios-callout text-white/80 mb-2 leading-relaxed">
+              <p className="text-ios-callout text-white mb-2 leading-relaxed">
                 These questions present real-world electrical situations and ask you to apply your
                 knowledge to solve problems or make decisions.
               </p>
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Common scenarios:</strong> Test results
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Common scenarios:</strong> Test results
                     interpretation, fault symptoms, remedial actions, compliance issues
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Strategy:</strong> Read the scenario
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Strategy:</strong> Read the scenario
                     carefully, identify what's happening, then consider what regulations or
                     procedures apply
                   </span>
@@ -448,22 +448,22 @@ const AM2Module6Section1 = () => {
               <h4 className="text-ios-headline font-semibold text-white mb-3">
                 Regulation Reference Questions (15-20% of test)
               </h4>
-              <p className="text-ios-callout text-white/80 mb-2 leading-relaxed">
+              <p className="text-ios-callout text-white mb-2 leading-relaxed">
                 These questions require you to know which specific regulations apply in given
                 situations.
               </p>
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Example areas:</strong> Regulation numbers for
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Example areas:</strong> Regulation numbers for
                     specific requirements, table references, appendix content
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Strategy:</strong> Learn key regulation
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Strategy:</strong> Learn key regulation
                     numbers and their purposes rather than trying to memorise everything
                   </span>
                 </li>
@@ -474,22 +474,22 @@ const AM2Module6Section1 = () => {
               <h4 className="text-ios-headline font-semibold text-white mb-3">
                 Calculation and Science Questions (20-25% of test)
               </h4>
-              <p className="text-ios-callout text-white/80 mb-2 leading-relaxed">
+              <p className="text-ios-callout text-white mb-2 leading-relaxed">
                 These questions test your understanding of electrical principles and ability to
                 perform basic calculations.
               </p>
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Common topics:</strong> Ohm's law
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Common topics:</strong> Ohm's law
                     applications, power calculations, voltage drop, fault current, cable sizing
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Strategy:</strong> Show your working mentally
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Strategy:</strong> Show your working mentally
                     and double-check calculations
                   </span>
                 </li>
@@ -500,22 +500,22 @@ const AM2Module6Section1 = () => {
               <h4 className="text-ios-headline font-semibold text-white mb-3">
                 Health and Safety Questions (10-15% of test)
               </h4>
-              <p className="text-ios-callout text-white/80 mb-2 leading-relaxed">
+              <p className="text-ios-callout text-white mb-2 leading-relaxed">
                 These questions cover safe working practices, risk assessment, PPE requirements, and
                 legal obligations.
               </p>
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Key areas:</strong> CDM regulations, risk
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Key areas:</strong> CDM regulations, risk
                     assessment, safe isolation, PPE, working at height
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Strategy:</strong> Think about best practice
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Strategy:</strong> Think about best practice
                     and legal requirements - safety is always the priority
                   </span>
                 </li>
@@ -534,28 +534,28 @@ const AM2Module6Section1 = () => {
 
         {/* Assessor Expectations */}
         <AM2ContentCard title="3. Assessor Expectations" icon={Target}>
-          <p className="text-ios-callout text-white/80 mb-4 leading-relaxed">
+          <p className="text-ios-callout text-white mb-4 leading-relaxed">
             Assessors don't just want correct answers - they want to see that you:
           </p>
 
           <div className="space-y-3">
             <div className="flex items-start gap-3 p-3 bg-white/5 border border-white/10 rounded-xl">
               <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <p className="text-ios-callout text-white/80">
+              <p className="text-ios-callout text-white">
                 Understand how to approach scenario-based questions, not just memorise facts
               </p>
             </div>
 
             <div className="flex items-start gap-3 p-3 bg-white/5 border border-white/10 rounded-xl">
               <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <p className="text-ios-callout text-white/80">
+              <p className="text-ios-callout text-white">
                 Use regulation knowledge to choose the correct answer
               </p>
             </div>
 
             <div className="flex items-start gap-3 p-3 bg-white/5 border border-white/10 rounded-xl">
               <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-              <p className="text-ios-callout text-white/80">
+              <p className="text-ios-callout text-white">
                 Manage your time and attempt every question (no blanks)
               </p>
             </div>
@@ -565,7 +565,7 @@ const AM2Module6Section1 = () => {
         {/* Test-Taking Strategies */}
         <AM2ContentCard title="4. Test-Taking Strategies and Practical Guidance" icon={Lightbulb}>
           <div className="space-y-4">
-            <p className="text-ios-body text-white/80 leading-relaxed">
+            <p className="text-ios-body text-white leading-relaxed">
               Success in the AM2 knowledge test depends not just on what you know, but how
               effectively you apply your knowledge under time pressure.
             </p>
@@ -575,29 +575,29 @@ const AM2Module6Section1 = () => {
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Arrive early:</strong> Get to the test centre
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Arrive early:</strong> Get to the test centre
                     15-20 minutes before your appointment
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Listen to the briefing:</strong> Pay attention
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Listen to the briefing:</strong> Pay attention
                     to any last-minute instructions
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Familiarise with interface:</strong> Take the
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Familiarise with interface:</strong> Take the
                     practice questions seriously
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Mental preparation:</strong> Take a deep
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Mental preparation:</strong> Take a deep
                     breath and remind yourself you've prepared thoroughly
                   </span>
                 </li>
@@ -611,22 +611,22 @@ const AM2Module6Section1 = () => {
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Read the entire question:</strong> Don't
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Read the entire question:</strong> Don't
                     assume after reading the first few words
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Identify key words:</strong> Look for
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Identify key words:</strong> Look for
                     "minimum", "maximum", "not", "except", "best"
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Check for negatives:</strong> Questions asking
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Check for negatives:</strong> Questions asking
                     what "should NOT" be done catch many candidates
                   </span>
                 </li>
@@ -640,22 +640,22 @@ const AM2Module6Section1 = () => {
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Look for extreme values:</strong> Unusually
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Look for extreme values:</strong> Unusually
                     high or low answers are often incorrect
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Eliminate unsafe options:</strong> Any answer
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Eliminate unsafe options:</strong> Any answer
                     that would create a safety hazard is likely wrong
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Use your experience:</strong> What would you
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Use your experience:</strong> What would you
                     actually do in this situation on site?
                   </span>
                 </li>
@@ -669,29 +669,29 @@ const AM2Module6Section1 = () => {
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Quick scan first:</strong> Identify easy
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Quick scan first:</strong> Identify easy
                     questions you can answer immediately
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Set time checkpoints:</strong> 50% in 25
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Set time checkpoints:</strong> 50% in 25
                     minutes, 75% in 40 minutes
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Don't get stuck:</strong> If more than 3
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Don't get stuck:</strong> If more than 3
                     minutes on a question, flag it and move on
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
-                    <strong className="text-white/90">Save time for review:</strong> Finish with
+                  <span className="text-ios-footnote text-white">
+                    <strong className="text-white">Save time for review:</strong> Finish with
                     5-10 minutes for flagged questions
                   </span>
                 </li>
@@ -715,7 +715,7 @@ const AM2Module6Section1 = () => {
               <h4 className="text-ios-headline font-semibold text-red-200 mb-2">
                 Example 1: Poor Time Management
               </h4>
-              <p className="text-ios-callout text-white/80">
+              <p className="text-ios-callout text-white">
                 Candidate spent 15 minutes stuck on one science question, ran out of time, and left
                 5 unanswered. <strong className="text-white">Failed.</strong>
               </p>
@@ -725,7 +725,7 @@ const AM2Module6Section1 = () => {
               <h4 className="text-ios-headline font-semibold text-green-200 mb-2">
                 Example 2: Smart Strategy
               </h4>
-              <p className="text-ios-callout text-white/80">
+              <p className="text-ios-callout text-white">
                 Candidate flagged 3 questions, completed the rest, then came back with fresh focus
                 and answered correctly. <strong className="text-white">Passed.</strong>
               </p>
@@ -735,7 +735,7 @@ const AM2Module6Section1 = () => {
               <h4 className="text-ios-headline font-semibold text-amber-200 mb-2">
                 Example 3: Rushing Error
               </h4>
-              <p className="text-ios-callout text-white/80">
+              <p className="text-ios-callout text-white">
                 Candidate misread a question on Zs values and picked the maximum permitted value
                 instead of actual measured. Lost marks through rushing.
               </p>
@@ -750,21 +750,21 @@ const AM2Module6Section1 = () => {
               <h4 className="text-ios-headline font-semibold text-white mb-2">
                 Q1: How many questions are in the knowledge test?
               </h4>
-              <p className="text-ios-callout text-white/80">A: 30 questions.</p>
+              <p className="text-ios-callout text-white">A: 30 questions.</p>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="text-ios-headline font-semibold text-white mb-2">
                 Q2: How long do I have?
               </h4>
-              <p className="text-ios-callout text-white/80">A: 60 minutes.</p>
+              <p className="text-ios-callout text-white">A: 60 minutes.</p>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="text-ios-headline font-semibold text-white mb-2">
                 Q3: What's the pass mark?
               </h4>
-              <p className="text-ios-callout text-white/80">
+              <p className="text-ios-callout text-white">
                 A: 70% (21 correct answers out of 30).
               </p>
             </div>
@@ -773,14 +773,14 @@ const AM2Module6Section1 = () => {
               <h4 className="text-ios-headline font-semibold text-white mb-2">
                 Q4: Can I skip and return to questions?
               </h4>
-              <p className="text-ios-callout text-white/80">A: Yes - flag them in the system.</p>
+              <p className="text-ios-callout text-white">A: Yes - flag them in the system.</p>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="text-ios-headline font-semibold text-white mb-2">
                 Q5: Are questions only on regs?
               </h4>
-              <p className="text-ios-callout text-white/80">
+              <p className="text-ios-callout text-white">
                 A: No - they cover regs, science, and safety.
               </p>
             </div>
@@ -789,7 +789,7 @@ const AM2Module6Section1 = () => {
 
         {/* Summary */}
         <AM2ContentCard title="Summary" icon={BookOpen} accent>
-          <p className="text-ios-body text-white/80 leading-relaxed">
+          <p className="text-ios-body text-white leading-relaxed">
             The AM2 online knowledge test is a 60-minute, multiple-choice exam with 30 questions
             covering regs, science, and safety. You need 70% (21/30) to pass. Success depends not
             only on knowledge but also on managing your time and answering every question. Assessors

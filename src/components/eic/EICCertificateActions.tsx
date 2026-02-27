@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Alert, AlertDescription } from '@/components/ui/alert';
 import {
   FileText,
   Download,
@@ -911,191 +909,171 @@ const EICCertificateActions: React.FC<EICCertificateActionsProps> = ({
     });
   };
 
-  const getCompletionBadge = () => {
-    if (isFullyComplete) {
-      return (
-        <Badge className="bg-green-100 text-green-800 border-green-200">
-          <CheckCircle className="h-3 w-3 mr-1" />
-          Complete
-        </Badge>
-      );
-    } else if (canGenerateCertificate) {
-      return (
-        <Badge className="bg-amber-100 text-amber-800 border-amber-200">
-          <Clock className="h-3 w-3 mr-1" />
-          Ready to Generate
-        </Badge>
-      );
-    } else {
-      return (
-        <Badge variant="secondary">
-          <AlertTriangle className="h-3 w-3 mr-1" />
-          Incomplete
-        </Badge>
-      );
-    }
-  };
+  const completionSections = [
+    { label: 'Installation Details', done: hasRequiredInstallationDetails },
+    { label: 'Schedule of Inspections', done: hasCompletedInspections },
+    { label: 'Schedule of Testing', done: hasTestResults },
+    { label: 'Declarations & Signatures', done: hasRequiredDeclarations },
+  ];
 
   return (
     <>
-      <Card>
-        <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-lg font-semibold text-elec-gray flex items-center gap-2">
+      <div className={cn('space-y-5', isMobile ? '' : 'rounded-xl border border-white/10 bg-white/[0.02] p-5')}>
+        {/* Header */}
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <div className="h-10 w-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center shrink-0">
               <FileText className="h-5 w-5 text-elec-yellow" />
-              EIC Certificate Actions
-            </CardTitle>
-            {getCompletionBadge()}
-          </div>
-        </CardHeader>
-        <CardContent className="space-y-6">
-          {/* Completion Status */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="space-y-2">
-              <h4 className="font-medium text-sm">Section Completion</h4>
-              <div className="space-y-1 text-sm">
-                <div
-                  className={`flex items-center gap-2 ${hasRequiredInstallationDetails ? 'text-green-600' : 'text-gray-500'}`}
-                >
-                  {hasRequiredInstallationDetails ? (
-                    <CheckCircle className="h-4 w-4" />
-                  ) : (
-                    <Clock className="h-4 w-4" />
-                  )}
-                  Installation Details
-                </div>
-                <div
-                  className={`flex items-center gap-2 ${hasCompletedInspections ? 'text-green-600' : 'text-gray-500'}`}
-                >
-                  {hasCompletedInspections ? (
-                    <CheckCircle className="h-4 w-4" />
-                  ) : (
-                    <Clock className="h-4 w-4" />
-                  )}
-                  Schedule of Inspections
-                </div>
-                <div
-                  className={`flex items-center gap-2 ${hasTestResults ? 'text-green-600' : 'text-gray-500'}`}
-                >
-                  {hasTestResults ? (
-                    <CheckCircle className="h-4 w-4" />
-                  ) : (
-                    <Clock className="h-4 w-4" />
-                  )}
-                  Schedule of Testing
-                </div>
-                <div
-                  className={`flex items-center gap-2 ${hasRequiredDeclarations ? 'text-green-600' : 'text-gray-500'}`}
-                >
-                  {hasRequiredDeclarations ? (
-                    <CheckCircle className="h-4 w-4" />
-                  ) : (
-                    <Clock className="h-4 w-4" />
-                  )}
-                  Declarations & Signatures
-                </div>
-              </div>
             </div>
+            <h3 className="font-semibold text-white">Certificate Actions</h3>
+          </div>
+          <Badge
+            className={cn(
+              'gap-1.5 border',
+              isFullyComplete
+                ? 'bg-green-500/15 text-green-400 border-green-500/30'
+                : canGenerateCertificate
+                  ? 'bg-amber-500/15 text-amber-400 border-amber-500/30'
+                  : 'bg-white/5 text-white border-white/20'
+            )}
+          >
+            {isFullyComplete ? (
+              <><CheckCircle className="h-3 w-3" /> Complete</>
+            ) : canGenerateCertificate ? (
+              <><Clock className="h-3 w-3" /> Ready</>
+            ) : (
+              <><AlertTriangle className="h-3 w-3" /> Incomplete</>
+            )}
+          </Badge>
+        </div>
 
+        {/* Completion Status + Legal Compliance Grid */}
+        <div className={cn('grid gap-4', isMobile ? 'grid-cols-1' : 'grid-cols-2')}>
+          {/* Section Completion */}
+          <div className="space-y-3">
+            <h4 className="text-sm font-semibold text-white">Section Completion</h4>
             <div className="space-y-2">
-              <h4 className="font-medium text-sm">Legal Compliance</h4>
-              <div className="space-y-1 text-sm">
-                <div className="flex items-center gap-2 text-elec-yellow">
-                  <Shield className="h-4 w-4" />
-                  BS 7671:2018 Compliant
+              {completionSections.map((section) => (
+                <div key={section.label} className="flex items-center gap-2.5">
+                  {section.done ? (
+                    <CheckCircle className="h-4 w-4 text-green-400 shrink-0" />
+                  ) : (
+                    <Clock className="h-4 w-4 text-amber-400 shrink-0" />
+                  )}
+                  <span className={cn('text-sm', section.done ? 'text-green-400' : 'text-white')}>
+                    {section.label}
+                  </span>
                 </div>
-                <div className="flex items-center gap-2 text-elec-yellow">
-                  <Shield className="h-4 w-4" />
-                  Digital Signatures Valid
-                </div>
-                <div className="flex items-center gap-2 text-elec-yellow">
-                  <Shield className="h-4 w-4" />
-                  Building Regs Ready
-                </div>
-              </div>
+              ))}
             </div>
           </div>
 
-          {/* Validation Warnings */}
-          {!canGenerateCertificate && (
-            <Alert className="border-amber-200 bg-amber-50">
-              <AlertTriangle className="h-4 w-4 text-amber-600" />
-              <AlertDescription className="text-amber-800">
-                <strong>Required sections incomplete:</strong>
-                <ul className="mt-2 list-disc list-inside space-y-1">
+          {/* Legal Compliance */}
+          <div className="space-y-3">
+            <h4 className="text-sm font-semibold text-white">Legal Compliance</h4>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2.5">
+                <Shield className="h-4 w-4 text-elec-yellow shrink-0" />
+                <span className="text-sm text-white">BS 7671:2018 Compliant</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <Shield className="h-4 w-4 text-elec-yellow shrink-0" />
+                <span className="text-sm text-white">Digital Signatures Valid</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <Shield className="h-4 w-4 text-elec-yellow shrink-0" />
+                <span className="text-sm text-white">Building Regs Ready</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Validation Warning */}
+        {!canGenerateCertificate && (
+          <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 p-4">
+            <div className="flex items-start gap-3">
+              <AlertTriangle className="h-5 w-5 text-amber-400 mt-0.5 shrink-0" />
+              <div>
+                <p className="text-sm font-semibold text-amber-400 mb-2">Required sections incomplete:</p>
+                <ul className="space-y-1.5">
                   {!hasRequiredInstallationDetails && (
-                    <li>Complete client name, installation address, and installation date</li>
+                    <li className="text-sm text-white flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
+                      Complete client name, installation address, and installation date
+                    </li>
                   )}
                   {!hasRequiredDeclarations && (
-                    <li>Complete all three declarations with names and signatures</li>
+                    <li className="text-sm text-white flex items-center gap-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
+                      Complete all three declarations with names and signatures
+                    </li>
                   )}
                 </ul>
-              </AlertDescription>
-            </Alert>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Primary Action */}
+        <Button
+          onClick={handleGeneratePDF}
+          disabled={!canGenerateCertificate || isExporting}
+          className="h-14 w-full touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-semibold text-base rounded-xl active:scale-[0.98] transition-transform disabled:opacity-50"
+        >
+          <Download className="h-5 w-5 mr-2" />
+          {isExporting ? 'Generating...' : 'Generate EIC PDF'}
+        </Button>
+
+        {/* Secondary Actions */}
+        <div className={cn('grid gap-3', isMobile ? 'grid-cols-1' : 'grid-cols-3')}>
+          <Button
+            onClick={handleSaveDraft}
+            variant="outline"
+            className="h-12 touch-manipulation border-white/20 text-white hover:bg-white/5 rounded-xl active:scale-[0.98] transition-transform"
+          >
+            <Save className="h-4 w-4 mr-2" />
+            Save Draft
+          </Button>
+
+          <Button
+            onClick={handleEmailCertificate}
+            variant="outline"
+            disabled={!canGenerateCertificate}
+            className="h-12 touch-manipulation border-white/20 text-white hover:bg-white/5 rounded-xl active:scale-[0.98] transition-transform disabled:opacity-50"
+          >
+            <Mail className="h-4 w-4 mr-2" />
+            Email Certificate
+          </Button>
+
+          <Button
+            onClick={() => window.print()}
+            variant="outline"
+            disabled={!canGenerateCertificate}
+            className="h-12 touch-manipulation border-white/20 text-white hover:bg-white/5 rounded-xl active:scale-[0.98] transition-transform disabled:opacity-50"
+          >
+            <Printer className="h-4 w-4 mr-2" />
+            Print Preview
+          </Button>
+        </div>
+
+        {/* Certificate Info */}
+        <div className="pt-4 border-t border-white/10 space-y-1.5">
+          <p className="text-xs text-white">
+            <span className="font-medium">Certificate Type:</span> Electrical Installation Certificate (EIC)
+          </p>
+          <p className="text-xs text-white">
+            <span className="font-medium">Standard:</span> BS 7671:2018 (18th Edition)
+          </p>
+          <p className="text-xs text-white">
+            <span className="font-medium">Generated:</span> {new Date().toLocaleString('en-GB')}
+          </p>
+          {formData.clientName && (
+            <p className="text-xs text-white">
+              <span className="font-medium">Client:</span> {formData.clientName}
+            </p>
           )}
-
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Button
-              onClick={handleGeneratePDF}
-              disabled={!canGenerateCertificate || isExporting}
-              className="h-11 w-full sm:w-auto flex-1 touch-manipulation bg-elec-yellow hover:bg-elec-yellow/90 text-black font-medium"
-            >
-              <Download className="h-4 w-4 mr-2" />
-              {isExporting ? 'Generating...' : 'Generate EIC PDF'}
-            </Button>
-
-            <Button
-              onClick={handleSaveDraft}
-              variant="outline"
-              className="h-11 w-full sm:w-auto flex-1 touch-manipulation"
-            >
-              <Save className="h-4 w-4 mr-2" />
-              Save Draft
-            </Button>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Button
-              onClick={handleEmailCertificate}
-              variant="outline"
-              disabled={!canGenerateCertificate}
-              className="h-11 w-full sm:w-auto flex-1 touch-manipulation"
-            >
-              <Mail className="h-4 w-4 mr-2" />
-              Email Certificate
-            </Button>
-
-            <Button
-              onClick={() => window.print()}
-              variant="outline"
-              disabled={!canGenerateCertificate}
-              className="h-11 w-full sm:w-auto flex-1 touch-manipulation"
-            >
-              <Printer className="h-4 w-4 mr-2" />
-              Print Preview
-            </Button>
-          </div>
-
-          {/* Certificate Information */}
-          <div className="pt-4 border-t text-xs text-muted-foreground space-y-1">
-            <p>
-              <strong>Certificate Type:</strong> Electrical Installation Certificate (EIC)
-            </p>
-            <p>
-              <strong>Standard:</strong> BS 7671:2018 (18th Edition)
-            </p>
-            <p>
-              <strong>Generated:</strong> {new Date().toLocaleString('en-GB')}
-            </p>
-            {formData.clientName && (
-              <p>
-                <strong>Client:</strong> {formData.clientName}
-              </p>
-            )}
-          </div>
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       <PDFExportProgress
         isOpen={isExporting}

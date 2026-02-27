@@ -190,7 +190,7 @@ export default function Module7Section6_4() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Rectifying Minor Faults Within Scope
           </h1>
-          <p className="text-white/70 max-w-2xl mx-auto">
+          <p className="text-white max-w-2xl mx-auto">
             Safe rectification of loose connections, miswiring and other minor electrical faults
             under supervision
           </p>
@@ -199,7 +199,7 @@ export default function Module7Section6_4() {
         {/* In 30 Seconds Summary */}
         <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
           <h2 className="font-semibold text-white mb-2">In 30 Seconds</h2>
-          <ul className="text-white/80 space-y-1 text-sm">
+          <ul className="text-white space-y-1 text-sm">
             <li>• Always isolate safely and prove dead before starting work</li>
             <li>• Work only under supervision; never sign off certifications</li>
             <li>• Re-terminate loose connections to correct torque</li>
@@ -213,7 +213,7 @@ export default function Module7Section6_4() {
             <span className="text-elec-yellow/80 text-sm font-normal">01</span>
             Understanding Minor Faults
           </h2>
-          <div className="text-white/80 space-y-4 leading-relaxed">
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Minor faults are those that can be corrected quickly and safely without redesigning or
               replacing major parts of the installation. Examples include loose terminals in sockets
@@ -283,7 +283,7 @@ export default function Module7Section6_4() {
             <span className="text-elec-yellow/80 text-sm font-normal">02</span>
             Safe Rectification Practices
           </h2>
-          <div className="text-white/80 space-y-4 leading-relaxed">
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Before attempting to correct any fault, the circuit must be safely isolated and proved
               dead using a voltage indicator and proving unit. Once safe, the faulty connection
@@ -358,7 +358,7 @@ export default function Module7Section6_4() {
             <span className="text-elec-yellow/80 text-sm font-normal">03</span>
             Retesting After Repair
           </h2>
-          <div className="text-white/80 space-y-4 leading-relaxed">
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Rectification does not end once the conductor is tightened or reconnected. The same
               test that revealed the fault must be repeated to confirm it has been corrected. For a
@@ -439,7 +439,7 @@ export default function Module7Section6_4() {
             <span className="text-elec-yellow/80 text-sm font-normal">04</span>
             Limits of Apprentice Competence
           </h2>
-          <div className="text-white/80 space-y-4 leading-relaxed">
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               It is important to understand that apprentices are not authorised to take full
               responsibility for installations. You may correct loose or miswired connections, but
@@ -510,7 +510,7 @@ export default function Module7Section6_4() {
             Step-by-Step Fault Rectification Process
           </h2>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <ol className="text-white/80 space-y-2 text-sm">
+            <ol className="text-white space-y-2 text-sm">
               <li>
                 <strong>1. Safe Isolation:</strong> Isolate circuit, lock off, prove dead with
                 voltage indicator
@@ -557,24 +557,24 @@ export default function Module7Section6_4() {
               <h4 className="font-semibold text-green-400 mb-3">
                 Example 1: Domestic Socket Circuit - Loose Earth Connection
               </h4>
-              <p className="text-white/80 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 <strong>Situation:</strong> During a routine inspection of a domestic installation,
                 a socket circuit showed high earth continuity readings (2.5Ω instead of expected
                 &lt;0.1Ω). Investigation revealed a loose CPC at one outlet where the earth
                 conductor had worked loose over time.
               </p>
-              <p className="text-white/80 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 <strong>Action Taken:</strong> The apprentice, supervised by a qualified
                 electrician, safely isolated the circuit, removed the socket faceplate, and found
                 the green/yellow conductor barely held by a single thread in the terminal. The
                 conductor was properly stripped, re-terminated to the correct torque (1.0 Nm), and
                 the circuit retested.
               </p>
-              <p className="text-white/80 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 <strong>Result:</strong> Earth continuity reading dropped to 0.05Ω, well within
                 acceptable limits.
               </p>
-              <p className="text-white/60 text-xs">
+              <p className="text-white text-xs">
                 <strong>Lessons Learned:</strong> Regular testing reveals hidden faults; proper
                 termination prevents future problems; simple repairs can prevent serious safety
                 hazards.
@@ -585,23 +585,23 @@ export default function Module7Section6_4() {
               <h4 className="font-semibold text-red-400 mb-3">
                 Example 2: Lighting Circuit Miswiring - Dangerous Polarity Error
               </h4>
-              <p className="text-white/80 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 <strong>Situation:</strong> In a rental flat, a lighting point was miswired with the
                 switch connected in the neutral rather than the line conductor. The light functioned
                 normally, but polarity testing revealed the dangerous error. The lamp holder
                 remained live when switched off, creating a serious shock risk during maintenance.
               </p>
-              <p className="text-white/80 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 <strong>Action Taken:</strong> The apprentice correctly identified the fault using
                 polarity testing, then under supervision relocated the conductors so the switch
                 interrupted the line conductor. The circuit was retested to confirm correct polarity
                 before re-energisation.
               </p>
-              <p className="text-white/80 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 <strong>Result:</strong> Polarity testing confirmed the switch now correctly
                 controlled the line conductor, eliminating the shock hazard.
               </p>
-              <p className="text-white/60 text-xs">
+              <p className="text-white text-xs">
                 <strong>Lessons Learned:</strong> Functional testing alone is insufficient; polarity
                 testing is essential; proper wiring prevents shock hazards during maintenance.
               </p>
@@ -619,7 +619,7 @@ export default function Module7Section6_4() {
             {faqs.map((faq, index) => (
               <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-semibold text-white mb-2">{faq.question}</h4>
-                <p className="text-sm text-white/70">{faq.answer}</p>
+                <p className="text-sm text-white">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -629,7 +629,7 @@ export default function Module7Section6_4() {
         <section className="mb-10">
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <h2 className="font-semibold text-white mb-3">If You Only Remember 3 Things</h2>
-            <ul className="text-white/80 space-y-2 text-sm">
+            <ul className="text-white space-y-2 text-sm">
               <li>
                 • <strong>Safety First:</strong> Always isolate safely and prove dead before any
                 work

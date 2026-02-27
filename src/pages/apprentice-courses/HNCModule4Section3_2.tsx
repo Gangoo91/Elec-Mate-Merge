@@ -198,7 +198,7 @@ const HNCModule4Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section3">
@@ -220,7 +220,7 @@ const HNCModule4Section3_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Protective Device Selection
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             MCBs, MCCBs, HRC fuses - characteristics, selection criteria, and application guidelines
           </p>
         </header>
@@ -347,7 +347,7 @@ const HNCModule4Section3_2 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Thermal Element</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Bimetallic strip responds to heating</li>
                     <li className="pl-1">Provides time-delayed overload protection</li>
                     <li className="pl-1">Trips at 1.45 × In (conventional current)</li>
@@ -356,7 +356,7 @@ const HNCModule4Section3_2 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Magnetic Element</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Solenoid responds to high currents</li>
                     <li className="pl-1">Provides instantaneous fault protection</li>
                     <li className="pl-1">Trip point depends on MCB type</li>
@@ -587,7 +587,7 @@ const HNCModule4Section3_2 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Current-Limiting Operation
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 HRC fuses are excellent current-limiting devices. During a fault, the fuse element
                 melts and an arc forms within the silica sand filling. This arc rapidly increases
                 resistance, limiting the fault current before it reaches its prospective peak.
@@ -738,7 +738,7 @@ const HNCModule4Section3_2 = () => {
                     <strong>BS 3036 rewirable:</strong> 2.0
                   </li>
                 </ul>
-                <p className="text-xs text-white/70 mt-2">
+                <p className="text-xs text-white mt-2">
                   Higher fusing factor = larger cable required for same device rating
                 </p>
               </div>
@@ -815,7 +815,7 @@ const HNCModule4Section3_2 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Best practice:</strong> Always obtain manufacturer's time-current data and
               verify discrimination using overlaid curves or manufacturer's selectivity tables.
             </p>
@@ -840,7 +840,7 @@ const HNCModule4Section3_2 = () => {
                 <strong>Question:</strong> A 3kW three-phase motor (400V, 0.85 pf) has a starting
                 current of 6× FLC. Select the appropriate MCB type.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Full load current: I = P/(√3 × V × pf)</p>
                 <p>
                   I = 3000/(1.732 × 400 × 0.85) = <strong>5.1A</strong>
@@ -853,7 +853,7 @@ const HNCModule4Section3_2 = () => {
                 <p className="text-red-400">✗ May trip on start (30.6A)</p>
                 <p className="mt-2">Type C (5-10×In): trips at 30-60A</p>
                 <p className="text-green-400">✓ Will allow 30.6A start current</p>
-                <p className="mt-2 text-white/60">→ Select 6A Type C MCB</p>
+                <p className="mt-2 text-white">→ Select 6A Type C MCB</p>
               </div>
             </div>
 
@@ -866,7 +866,7 @@ const HNCModule4Section3_2 = () => {
                 final circuits. The cable Iz is 270A and normal load is 180A. Calculate appropriate
                 settings.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Frame size: In = 250A</p>
                 <p className="mt-2">Thermal setting (Ir):</p>
                 <p>Must be ≥ design current (180A)</p>
@@ -891,7 +891,7 @@ const HNCModule4Section3_2 = () => {
                 <strong>Question:</strong> A sub-distribution board is located 5m from a 500kVA
                 transformer. Ipf = 25kA. Which device is appropriate?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Prospective fault current: Ipf = <strong>25kA</strong>
                 </p>
@@ -905,8 +905,8 @@ const HNCModule4Section3_2 = () => {
                 <p className="mt-2">
                   HRC fuse (BS 88): 80kA <span className="text-green-400">✓ Adequate</span>
                 </p>
-                <p className="mt-2 text-white/60">→ HRC fuse-switch recommended for incomer</p>
-                <p className="text-white/60">→ MCB outgoing circuits OK (reduced Ipf)</p>
+                <p className="mt-2 text-white">→ HRC fuse-switch recommended for incomer</p>
+                <p className="text-white">→ MCB outgoing circuits OK (reduced Ipf)</p>
               </div>
             </div>
           </div>
@@ -993,7 +993,7 @@ const HNCModule4Section3_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1039,7 +1039,7 @@ const HNCModule4Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section3-1">

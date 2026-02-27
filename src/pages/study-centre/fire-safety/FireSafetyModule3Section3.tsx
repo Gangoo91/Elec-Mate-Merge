@@ -200,7 +200,7 @@ export default function FireSafetyModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-3">
@@ -223,7 +223,7 @@ export default function FireSafetyModule3Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Fire Alarm Systems
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Components, manual call points, sounders, visual alarm devices, control panels, zoning,
             false alarm management, voice alarm systems, and system integration
           </p>
@@ -318,7 +318,7 @@ export default function FireSafetyModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Core System Components</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -414,7 +414,7 @@ export default function FireSafetyModule3Section3() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Resettable Type</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>Plastic front element that flexes when pressed</span>
@@ -436,7 +436,7 @@ export default function FireSafetyModule3Section3() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Frangible Glass Type</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>Thin glass element that shatters when pressed</span>
@@ -471,7 +471,7 @@ export default function FireSafetyModule3Section3() {
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-xs font-bold flex-shrink-0">
                         {i + 1}
                       </span>
-                      <p className="text-sm text-white/80">{step}</p>
+                      <p className="text-sm text-white">{step}</p>
                     </div>
                   ))}
                 </div>
@@ -484,7 +484,7 @@ export default function FireSafetyModule3Section3() {
                     Green vs Red &mdash; Avoid Confusion
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">Red</strong> break-glass units are for fire alarm
                   activation. <strong className="text-white">Green</strong> break-seal units are for
                   emergency door release (allowing people to exit through security-locked doors in
@@ -524,7 +524,7 @@ export default function FireSafetyModule3Section3() {
                     <Bell className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">Bells</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>Traditional alarm sounder type</span>
@@ -549,7 +549,7 @@ export default function FireSafetyModule3Section3() {
                     <MonitorSpeaker className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">Electronic Sounders</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>Most common type in modern systems</span>
@@ -574,7 +574,7 @@ export default function FireSafetyModule3Section3() {
                     <Mic className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">Voice Alarm Speakers</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>Deliver spoken evacuation messages</span>
@@ -599,7 +599,7 @@ export default function FireSafetyModule3Section3() {
                 <p className="text-sm font-medium text-rose-400 mb-3">
                   Minimum Sound Levels (BS 5839 Part 1)
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -642,7 +642,7 @@ export default function FireSafetyModule3Section3() {
                     Visual Alarm Devices (VADs / Beacons)
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-3">
+                <div className="text-sm text-white space-y-3">
                   <p>
                     VADs are provided primarily for{' '}
                     <strong className="text-white">hearing-impaired persons</strong> who may not be
@@ -711,7 +711,7 @@ export default function FireSafetyModule3Section3() {
                 <div className="grid sm:grid-cols-3 gap-3">
                   <div className="bg-rose-500/10 border border-rose-500/30 p-3 rounded-lg">
                     <p className="text-sm font-medium text-rose-400 mb-1">Day Mode</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Normal daytime operation. An investigation delay may be active, allowing staff
                       a set time to investigate before full alarm activation. Appropriate when
                       trained staff are present to respond quickly.
@@ -719,7 +719,7 @@ export default function FireSafetyModule3Section3() {
                   </div>
                   <div className="bg-rose-500/10 border border-rose-500/30 p-3 rounded-lg">
                     <p className="text-sm font-medium text-rose-400 mb-1">Night Mode</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Automatic activation with no investigation delay. Used when the building is
                       unoccupied or when staff are sleeping. Ensures the fastest possible alarm
                       response.
@@ -727,7 +727,7 @@ export default function FireSafetyModule3Section3() {
                   </div>
                   <div className="bg-rose-500/10 border border-rose-500/30 p-3 rounded-lg">
                     <p className="text-sm font-medium text-rose-400 mb-1">Walk Test</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Allows individual devices to be tested without activating the full alarm
                       system. Used during weekly testing and maintenance. Each device activation
                       produces only a brief local indication.
@@ -738,7 +738,7 @@ export default function FireSafetyModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key Indicators</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -776,7 +776,7 @@ export default function FireSafetyModule3Section3() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Repeat &amp; Mimic Panels</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     <strong className="text-white">Repeat panels</strong> duplicate the information
                     displayed on the main control panel and are located at secondary positions
                     &mdash; typically at building entrances used by the fire service.{' '}
@@ -789,7 +789,7 @@ export default function FireSafetyModule3Section3() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Remote Monitoring</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Fire alarm systems can be connected to an alarm receiving centre (ARC) for
                     remote monitoring, in accordance with{' '}
                     <strong className="text-white">BS 5979</strong> and{' '}
@@ -806,7 +806,7 @@ export default function FireSafetyModule3Section3() {
                   <Settings className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Cause and Effect Programming</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The <strong className="text-white">cause-and-effect programme</strong> defines
                   what happens when each detector or call point activates. It specifies which
                   sounders operate, which VADs flash, which fire doors are released, which HVAC
@@ -844,7 +844,7 @@ export default function FireSafetyModule3Section3() {
                   <MapPin className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Zoning Principles</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -885,7 +885,7 @@ export default function FireSafetyModule3Section3() {
                 <p className="text-sm font-medium text-rose-400 mb-3">
                   Phased Evacuation &amp; Staged Alarms
                 </p>
-                <div className="text-sm text-white/80 space-y-3">
+                <div className="text-sm text-white space-y-3">
                   <p>
                     In large or complex buildings &mdash; particularly tall buildings &mdash; it may
                     be neither practical nor safe to evacuate all occupants simultaneously. Two
@@ -894,7 +894,7 @@ export default function FireSafetyModule3Section3() {
                   <div className="grid sm:grid-cols-2 gap-3">
                     <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                       <p className="text-sm font-medium text-white mb-1">Phased Evacuation</p>
-                      <p className="text-xs text-white/80">
+                      <p className="text-xs text-white">
                         The building is evacuated in phases: typically the fire floor and the floor
                         immediately above are evacuated first, then adjacent floors progressively.
                         This prevents dangerous overcrowding on stairways and allows the fire
@@ -906,7 +906,7 @@ export default function FireSafetyModule3Section3() {
                       <p className="text-sm font-medium text-white mb-1">
                         Two-Stage Alarm (Staged)
                       </p>
-                      <p className="text-xs text-white/80">
+                      <p className="text-xs text-white">
                         Uses two different signals. The first signal (&ldquo;alert&rdquo;) warns
                         designated staff to investigate. If the alarm is confirmed as genuine, the
                         second signal (&ldquo;evacuate&rdquo;) sounds throughout the building. This
@@ -972,7 +972,7 @@ export default function FireSafetyModule3Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-red-500/5 border border-red-500/20 p-3 rounded-lg">
                       <p className="text-sm font-medium text-red-300 mb-1">{item.cause}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -985,7 +985,7 @@ export default function FireSafetyModule3Section3() {
                     False Alarm Reduction Strategies
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1079,7 +1079,7 @@ export default function FireSafetyModule3Section3() {
                   <Mic className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Voice Alarm Features</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1123,7 +1123,7 @@ export default function FireSafetyModule3Section3() {
                   <p className="text-sm font-medium text-rose-400 mb-2">
                     Where Voice Alarm is Required
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>Complex buildings with multiple escape routes</span>
@@ -1151,7 +1151,7 @@ export default function FireSafetyModule3Section3() {
                   <p className="text-sm font-medium text-white mb-2">
                     Advantages Over Conventional Sounders
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>Clearer instruction &mdash; occupants know what to do</span>
@@ -1215,7 +1215,7 @@ export default function FireSafetyModule3Section3() {
                   <Link2 className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Integrated Systems</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1312,7 +1312,7 @@ export default function FireSafetyModule3Section3() {
                         Fire Alarm Control Panel (CIE)
                       </p>
                     </div>
-                    <p className="text-[10px] sm:text-xs text-white/60">
+                    <p className="text-[10px] sm:text-xs text-white">
                       Receives &bull; Processes &bull; Activates &bull; Indicates
                     </p>
                   </div>
@@ -1338,7 +1338,7 @@ export default function FireSafetyModule3Section3() {
                         key={i}
                         className="bg-white/5 border border-white/20 rounded-lg p-2 text-center"
                       >
-                        <p className="text-[10px] sm:text-xs text-white/80 font-medium">{label}</p>
+                        <p className="text-[10px] sm:text-xs text-white font-medium">{label}</p>
                       </div>
                     ))}
                   </div>
@@ -1347,12 +1347,12 @@ export default function FireSafetyModule3Section3() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-400 mb-3">Cause-and-Effect Matrix</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   The cause-and-effect matrix is a document that defines exactly what happens when
                   each input device activates. It is typically presented as a table or spreadsheet
                   showing:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>Which detectors and call points are in each zone (causes)</span>
@@ -1382,7 +1382,7 @@ export default function FireSafetyModule3Section3() {
                     Competent Design &amp; Commissioning
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The integration of fire alarm systems with other building systems is
                   safety-critical. It must be designed by a competent fire alarm engineer who
                   understands both the fire alarm system and the interfaced systems. All interfaces
@@ -1404,7 +1404,7 @@ export default function FireSafetyModule3Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1418,7 +1418,7 @@ export default function FireSafetyModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-3-section-2">

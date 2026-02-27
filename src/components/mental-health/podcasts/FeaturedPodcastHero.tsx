@@ -103,7 +103,7 @@ const FeaturedPodcastHero = ({ podcast }: FeaturedPodcastHeroProps) => {
               {podcast.topics.map((topic, idx) => (
                 <span
                   key={idx}
-                  className="text-xs sm:text-sm px-3 py-1 rounded-full bg-white/10 text-white/90 border border-white/10 backdrop-blur-sm"
+                  className="text-xs sm:text-sm px-3 py-1 rounded-full bg-white/10 text-white border border-white/10 backdrop-blur-sm"
                 >
                   {topic}
                 </span>

@@ -138,20 +138,20 @@ export const CourseCard: React.FC<CourseCardProps> = ({
         </h3>
 
         {/* Description - hidden on mobile */}
-        <p className="text-xs text-white/50 line-clamp-2 mb-auto leading-relaxed hidden sm:block">
+        <p className="text-xs text-white line-clamp-2 mb-auto leading-relaxed hidden sm:block">
           {description}
         </p>
 
         {/* Bottom row: Duration + Arrow/Soon */}
         <div className="flex items-center justify-between mt-auto pt-2 sm:pt-3">
-          <div className="flex items-center gap-1 sm:gap-1.5 text-white/40">
+          <div className="flex items-center gap-1 sm:gap-1.5 text-white">
             <Clock className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
             <span className="text-[10px] sm:text-xs">{duration}</span>
           </div>
           {comingSoon ? (
             <div className="w-2 h-2 rounded-full bg-amber-400/40" />
           ) : (
-            <ChevronRight className="w-4 h-4 text-white/30 group-hover:text-elec-yellow group-hover:translate-x-1 transition-all duration-200" />
+            <ChevronRight className="w-4 h-4 text-white group-hover:text-elec-yellow group-hover:translate-x-1 transition-all duration-200" />
           )}
         </div>
       </div>

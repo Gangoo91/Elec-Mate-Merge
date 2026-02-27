@@ -209,7 +209,7 @@ const InspectionTestingModule5Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-5">
@@ -231,7 +231,7 @@ const InspectionTestingModule5Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Zs Testing Methods
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Learn how to measure earth fault loop impedance safely and accurately
           </p>
         </header>
@@ -322,7 +322,7 @@ const InspectionTestingModule5Section2 = () => {
                     <span className="w-6 h-6 rounded-full bg-orange-500/20 text-orange-400 text-sm font-bold flex items-center justify-center flex-shrink-0">
                       {i + 1}
                     </span>
-                    <span className="text-white/80">{item}</span>
+                    <span className="text-white">{item}</span>
                   </li>
                 ))}
               </ol>
@@ -339,7 +339,7 @@ const InspectionTestingModule5Section2 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <div className="my-6">
               <p className="text-sm font-medium text-red-400 mb-2">Live Testing Hazards</p>
-              <ul className="text-sm text-white/70 space-y-1 ml-4">
+              <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Circuit is energised during testing</li>
                 <li>Risk of electric shock if probes slip</li>
                 <li>Ensure proper PPE and insulated probes</li>
@@ -372,7 +372,7 @@ const InspectionTestingModule5Section2 = () => {
               <p className="text-sm font-medium text-elec-yellow mb-2">
                 Standard Method: Line-Earth (L-E)
               </p>
-              <p className="text-sm text-white/70 mb-4">
+              <p className="text-sm text-white mb-4">
                 Connect between line terminal and earth (CPC). Tests the actual fault path. This is
                 the primary test method.
               </p>
@@ -382,13 +382,13 @@ const InspectionTestingModule5Section2 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">
                 Alternative: Line-Neutral (L-N)
               </p>
-              <p className="text-sm text-white/70 mb-4">
+              <p className="text-sm text-white mb-4">
                 2-wire test avoiding earth. Useful when RCDs trip on L-E test. Doesn't verify CPC
                 path.
               </p>
             </div>
 
-            <p className="text-sm text-white/60">
+            <p className="text-sm text-white">
               Test at the furthest point of the circuit for worst-case values.
             </p>
           </div>
@@ -408,21 +408,21 @@ const InspectionTestingModule5Section2 = () => {
             <div className="my-6 space-y-4">
               <div>
                 <p className="text-sm font-medium text-amber-400 mb-1">No-Trip Mode</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Modern testers have modes that balance current to avoid tripping. Select 'No-Trip'
                   or 'RCD' mode if available.
                 </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-blue-400 mb-1">2-Wire Method</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Test L-N instead of L-E. No earth leakage occurs, so RCD won't trip. Limited as
                   doesn't test CPC.
                 </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-purple-400 mb-1">Calculation Method</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Measure Ze at origin (upstream of RCD) and R1+R2 dead. Calculate: Zs = Ze + (R1+R2
                   x 1.2)
                 </p>
@@ -442,7 +442,7 @@ const InspectionTestingModule5Section2 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <div className="my-6 text-center">
               <p className="text-lg font-mono text-elec-yellow mb-2">Zs = Ze + (R1+R2 x 1.2)</p>
-              <p className="text-sm text-white/60">When calculating from measured values</p>
+              <p className="text-sm text-white">When calculating from measured values</p>
             </div>
 
             <p>
@@ -452,7 +452,7 @@ const InspectionTestingModule5Section2 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow mb-2">Direct measurement note:</p>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 If Zs is measured directly (not calculated), the reading is at ambient temperature -
                 already lower than worst-case operating conditions, so no correction needed for
                 comparison.
@@ -482,7 +482,7 @@ const InspectionTestingModule5Section2 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-emerald-400 mb-1">Pass Criteria:</p>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 Measured Zs must be less than or equal to maximum Zs from BS 7671 tables
               </p>
             </div>
@@ -535,7 +535,7 @@ const InspectionTestingModule5Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -591,7 +591,7 @@ const InspectionTestingModule5Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-5/section-1">

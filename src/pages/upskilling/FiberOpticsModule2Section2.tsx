@@ -179,7 +179,7 @@ const FiberOpticsModule2Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/fiber-optics-module-2">
@@ -200,7 +200,7 @@ const FiberOpticsModule2Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             OM and OS Standards Explained
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding fibre optic classifications for specification and installation
           </p>
         </header>
@@ -335,15 +335,15 @@ const FiberOpticsModule2Section2 = () => {
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm">
                 <div className="p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-                  <div className="text-white/70">Core</div>
+                  <div className="text-white">Core</div>
                   <div className="text-elec-yellow font-bold">62.5um</div>
                 </div>
                 <div className="p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-                  <div className="text-white/70">BW @850nm</div>
+                  <div className="text-white">BW @850nm</div>
                   <div className="text-elec-yellow font-bold">200 MHz.km</div>
                 </div>
                 <div className="p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-                  <div className="text-white/70">10G Distance</div>
+                  <div className="text-white">10G Distance</div>
                   <div className="text-elec-yellow font-bold">33m max</div>
                 </div>
               </div>
@@ -353,15 +353,15 @@ const FiberOpticsModule2Section2 = () => {
               <p className="text-sm font-medium text-white mb-3">OM2 Specifications (50/125um):</p>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm">
                 <div className="p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-                  <div className="text-white/70">Core</div>
+                  <div className="text-white">Core</div>
                   <div className="text-elec-yellow font-bold">50um</div>
                 </div>
                 <div className="p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-                  <div className="text-white/70">BW @850nm</div>
+                  <div className="text-white">BW @850nm</div>
                   <div className="text-elec-yellow font-bold">500 MHz.km</div>
                 </div>
                 <div className="p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-                  <div className="text-white/70">10G Distance</div>
+                  <div className="text-white">10G Distance</div>
                   <div className="text-elec-yellow font-bold">82m max</div>
                 </div>
               </div>
@@ -479,27 +479,27 @@ const FiberOpticsModule2Section2 = () => {
               <p className="text-sm font-medium text-white mb-3">OM5 Key Specifications:</p>
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm">
                 <div className="p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-                  <div className="text-white/70">Core</div>
+                  <div className="text-white">Core</div>
                   <div className="text-elec-yellow font-bold">50um</div>
                 </div>
                 <div className="p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-                  <div className="text-white/70">EMB @850nm</div>
+                  <div className="text-white">EMB @850nm</div>
                   <div className="text-elec-yellow font-bold">4700 MHz.km</div>
                 </div>
                 <div className="p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-                  <div className="text-white/70">EMB @953nm</div>
+                  <div className="text-white">EMB @953nm</div>
                   <div className="text-elec-yellow font-bold">2470 MHz.km</div>
                 </div>
                 <div className="p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-                  <div className="text-white/70">Wavelength</div>
+                  <div className="text-white">Wavelength</div>
                   <div className="text-elec-yellow font-bold">850-953nm</div>
                 </div>
                 <div className="p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-                  <div className="text-white/70">Jacket</div>
+                  <div className="text-white">Jacket</div>
                   <div className="text-elec-yellow font-bold">Lime Green</div>
                 </div>
                 <div className="p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-                  <div className="text-white/70">SWDM</div>
+                  <div className="text-white">SWDM</div>
                   <div className="text-elec-yellow font-bold">100G/400G</div>
                 </div>
               </div>
@@ -737,7 +737,7 @@ const FiberOpticsModule2Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -783,7 +783,7 @@ const FiberOpticsModule2Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../section-1">

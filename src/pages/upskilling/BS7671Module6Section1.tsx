@@ -98,7 +98,7 @@ const BS7671Module6Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bs7671-module-6">
@@ -119,7 +119,7 @@ const BS7671Module6Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Requirements for Initial Verification
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Mandatory verification before energising electrical installations
           </p>
         </header>
@@ -218,7 +218,7 @@ const BS7671Module6Section1 = () => {
               <p className="text-sm font-medium text-red-400 mb-2">
                 Consequences of Non-Compliance
               </p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm text-white/90">
+              <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
                 <ul className="space-y-1">
                   <li>• Criminal prosecution under EaWR</li>
                   <li>• Unlimited fines and imprisonment</li>
@@ -251,7 +251,7 @@ const BS7671Module6Section1 = () => {
             <div className="grid sm:grid-cols-3 gap-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-elec-yellow mb-2">New Installations</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• New build properties</li>
                   <li>• Complete rewiring</li>
                   <li>• New consumer units</li>
@@ -262,7 +262,7 @@ const BS7671Module6Section1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-orange-400 mb-2">Additions</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• New socket circuits</li>
                   <li>• New lighting circuits</li>
                   <li>• Cooker circuits</li>
@@ -273,7 +273,7 @@ const BS7671Module6Section1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-red-400 mb-2">Major Alterations</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• Distribution board replacement</li>
                   <li>• Earthing system changes</li>
                   <li>• RCD protection installation</li>
@@ -286,7 +286,7 @@ const BS7671Module6Section1 = () => {
 
             <div className="p-4 rounded-lg bg-transparent border border-white/10">
               <p className="text-sm font-medium text-white mb-2">Certificate Selection Guide</p>
-              <div className="grid sm:grid-cols-2 gap-4 text-xs text-white/80">
+              <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
                 <div>
                   <p className="font-medium text-elec-yellow mb-1">EIC Required</p>
                   <ul className="space-y-0.5">
@@ -374,19 +374,19 @@ const BS7671Module6Section1 = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-elec-yellow mb-1">1. Continuity</p>
-                  <p className="text-white/90 text-xs">Protective conductors</p>
+                  <p className="text-white text-xs">Protective conductors</p>
                 </div>
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-elec-yellow mb-1">2. Insulation</p>
-                  <p className="text-white/90 text-xs">Resistance ≥1MΩ</p>
+                  <p className="text-white text-xs">Resistance ≥1MΩ</p>
                 </div>
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-elec-yellow mb-1">3. Polarity</p>
-                  <p className="text-white/90 text-xs">Correct connections</p>
+                  <p className="text-white text-xs">Correct connections</p>
                 </div>
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-elec-yellow mb-1">4. Live Tests</p>
-                  <p className="text-white/90 text-xs">Zs, RCD, functional</p>
+                  <p className="text-white text-xs">Zs, RCD, functional</p>
                 </div>
               </div>
             </div>
@@ -442,13 +442,13 @@ const BS7671Module6Section1 = () => {
             <h3 className="text-sm font-medium text-elec-yellow mb-3">
               Office Complex Initial Verification
             </h3>
-            <p className="text-sm text-white/90 leading-relaxed mb-4">
+            <p className="text-sm text-white leading-relaxed mb-4">
               During initial verification of a 3-floor office fit-out, the electrician discovered
               multiple polarity issues and a poor earthing connection. Because verification was
               completed before handover, all defects were corrected before staff occupied the
               building.
             </p>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white/80">
+            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
               <div>
                 <p className="font-medium text-white mb-1">Issues Found</p>
                 <p>
@@ -474,7 +474,7 @@ const BS7671Module6Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -486,7 +486,7 @@ const BS7671Module6Section1 = () => {
           <div className="grid sm:grid-cols-3 gap-4 text-xs text-white">
             <div>
               <p className="font-medium text-white mb-1">EIC Required</p>
-              <ul className="space-y-0.5 text-white/80">
+              <ul className="space-y-0.5 text-white">
                 <li>• New installations</li>
                 <li>• New circuits</li>
                 <li>• Consumer unit changes</li>
@@ -494,7 +494,7 @@ const BS7671Module6Section1 = () => {
             </div>
             <div>
               <p className="font-medium text-white mb-1">Test Sequence</p>
-              <ul className="space-y-0.5 text-white/80">
+              <ul className="space-y-0.5 text-white">
                 <li>• Visual inspection first</li>
                 <li>• Dead tests second</li>
                 <li>• Live tests last</li>
@@ -502,7 +502,7 @@ const BS7671Module6Section1 = () => {
             </div>
             <div>
               <p className="font-medium text-white mb-1">Key Regulations</p>
-              <ul className="space-y-0.5 text-white/80">
+              <ul className="space-y-0.5 text-white">
                 <li>• EaWR 1989 Reg 4</li>
                 <li>• BS7671 Chapter 61</li>
                 <li>• Building Regs Part P</li>
@@ -526,7 +526,7 @@ const BS7671Module6Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bs7671-module-6">

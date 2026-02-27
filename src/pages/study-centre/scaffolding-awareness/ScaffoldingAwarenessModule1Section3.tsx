@@ -187,7 +187,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-1">
@@ -212,7 +212,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Scaffold Terminology
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The essential vocabulary of scaffolding &mdash; standards, ledgers, transoms, braces,
             guard rails, toe boards, base plates, sole boards, couplers, and boards &mdash; every
             component explained in detail
@@ -270,7 +270,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key Facts &mdash; Standards</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -334,7 +334,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-slate-400" />
                   <p className="text-sm font-medium text-slate-400">Critical Safety Point</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Standards must <strong>never</strong> be founded directly on loose fill, rubble,
                   frozen ground, or waterlogged soil without adequate preparation. The foundation
                   must support the total scaffold load including all live loads (workers, materials)
@@ -364,7 +364,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key Facts &mdash; Ledgers</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -429,7 +429,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                   <CheckCircle className="h-5 w-5 text-slate-400" />
                   <p className="text-sm font-medium text-slate-400">Inspection Tip</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   When inspecting a scaffold, check that <strong>all ledgers are level</strong> and
                   that every ledger-to-standard connection has a properly tightened right-angle
                   coupler. Missing or loose couplers compromise the entire scaffold&rsquo;s
@@ -461,7 +461,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key Facts &mdash; Transoms</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -506,7 +506,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Putlogs &mdash; A Special Type of Transom
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -574,7 +574,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                     <p className="text-sm font-medium text-slate-400 mb-2">
                       Ledger Braces (Facade Braces)
                     </p>
-                    <ul className="text-xs text-white/70 space-y-1.5">
+                    <ul className="text-xs text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                         <span>
@@ -612,7 +612,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                     <p className="text-sm font-medium text-slate-400 mb-2">
                       Plan Braces (Horizontal Braces)
                     </p>
-                    <ul className="text-xs text-white/70 space-y-1.5">
+                    <ul className="text-xs text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                         <span>
@@ -658,7 +658,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                     Why Braces Are Non-Negotiable
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The importance of bracing cannot be overstated. A scaffold without braces has
                   <strong> zero resistance to lateral forces</strong>. Even small forces &mdash;
                   such as wind load, the impact of materials being lifted onto the platform, or
@@ -676,7 +676,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   How Braces Work &mdash; Triangulation
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The principle behind bracing is <strong>triangulation</strong>. A rectangle
                   (formed by two standards and two ledgers) can easily distort into a parallelogram
                   &mdash; push the top to the left while the bottom stays fixed, and the rectangle
@@ -688,14 +688,14 @@ export default function ScaffoldingAwarenessModule1Section3() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="bg-black/30 rounded-lg p-3">
                     <p className="text-xs font-medium text-red-400 mb-1">Without Braces</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Rectangles distort freely under lateral load. The scaffold racks (leans)
                       progressively until it collapses. No lateral stability whatsoever.
                     </p>
                   </div>
                   <div className="bg-black/30 rounded-lg p-3">
                     <p className="text-xs font-medium text-green-400 mb-1">With Braces</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Diagonal braces triangulate the structure. Triangles are inherently rigid. The
                       scaffold resists lateral loads and maintains its rectangular geometry under
                       all conditions.
@@ -728,7 +728,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Guard Rail Requirements</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -760,7 +760,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Mid Rail Requirements</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -793,7 +793,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Toe Board Requirements</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -824,7 +824,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Brick Guards</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -855,7 +855,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                     Collective Protection Hierarchy
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Guard rails, mid rails, and toe boards are{' '}
                   <strong>collective fall prevention measures</strong>. This means they protect{' '}
                   <strong>everyone</strong> on the platform automatically, without requiring any
@@ -887,7 +887,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Base Plates</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -932,7 +932,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Sole Boards</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -980,7 +980,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-slate-400" />
                   <p className="text-sm font-medium text-slate-400">Foundation Loading</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The foundation beneath each standard must support the{' '}
                   <strong>total scaffold load</strong> at that point, including: the self-weight of
                   the scaffold structure above; the weight of all working platforms (boards); all
@@ -1051,7 +1051,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className={`text-xs font-medium ${item.colour} mb-1`}>{item.name}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1059,7 +1059,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
 
               {/* Coupler Types Reference Diagram */}
               <div className="bg-white/5 border border-white/10 rounded-xl p-4 sm:p-6 overflow-hidden">
-                <p className="text-xs text-white/50 uppercase tracking-wider mb-4 text-center">
+                <p className="text-xs text-white uppercase tracking-wider mb-4 text-center">
                   Coupler Types Reference &mdash; Visual Guide
                 </p>
 
@@ -1075,7 +1075,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-slate-500/20 border border-slate-500/40 flex items-center justify-center text-[10px] font-bold text-slate-400">
                             1
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Two half-couplers bolted at exactly 90&deg;
                           </span>
                         </div>
@@ -1083,7 +1083,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-slate-500/20 border border-slate-500/40 flex items-center justify-center text-[10px] font-bold text-slate-400">
                             2
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Highest SWL: 6.25 kN slip / 12.5 kN shear
                           </span>
                         </div>
@@ -1091,7 +1091,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-slate-500/20 border border-slate-500/40 flex items-center justify-center text-[10px] font-bold text-slate-400">
                             3
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Used at: standard-ledger, ledger-transom joints
                           </span>
                         </div>
@@ -1099,7 +1099,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-slate-500/20 border border-slate-500/40 flex items-center justify-center text-[10px] font-bold text-slate-400">
                             4
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Primary structural coupler in all scaffolds
                           </span>
                         </div>
@@ -1116,7 +1116,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-[10px] font-bold text-amber-400">
                             1
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Two half-couplers on a central pivot bolt
                           </span>
                         </div>
@@ -1124,7 +1124,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-[10px] font-bold text-amber-400">
                             2
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Connects tubes at any angle (not just 90&deg;)
                           </span>
                         </div>
@@ -1132,7 +1132,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-[10px] font-bold text-amber-400">
                             3
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Used for: diagonal braces, raking shores, fans
                           </span>
                         </div>
@@ -1140,7 +1140,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-[10px] font-bold text-amber-400">
                             4
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Lower SWL than right-angle &mdash; not interchangeable
                           </span>
                         </div>
@@ -1157,7 +1157,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/20 border border-blue-500/40 flex items-center justify-center text-[10px] font-bold text-blue-400">
                             1
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Single half-coupler gripping one tube
                           </span>
                         </div>
@@ -1165,7 +1165,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/20 border border-blue-500/40 flex items-center justify-center text-[10px] font-bold text-blue-400">
                             2
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Lowest SWL: 0.625 kN in slip
                           </span>
                         </div>
@@ -1173,7 +1173,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/20 border border-blue-500/40 flex items-center justify-center text-[10px] font-bold text-blue-400">
                             3
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Used for: connecting putlogs to ledgers
                           </span>
                         </div>
@@ -1181,7 +1181,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/20 border border-blue-500/40 flex items-center justify-center text-[10px] font-bold text-blue-400">
                             4
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Not for structural connections under high loads
                           </span>
                         </div>
@@ -1198,7 +1198,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center text-[10px] font-bold text-green-400">
                             1
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Internal spigot joining two tube ends
                           </span>
                         </div>
@@ -1206,7 +1206,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center text-[10px] font-bold text-green-400">
                             2
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Extends tubes in a straight line (end-to-end)
                           </span>
                         </div>
@@ -1214,7 +1214,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center text-[10px] font-bold text-green-400">
                             3
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Joints in adjacent standards must be staggered
                           </span>
                         </div>
@@ -1222,7 +1222,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center text-[10px] font-bold text-green-400">
                             4
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Position near a node point, not mid-span
                           </span>
                         </div>
@@ -1239,7 +1239,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-[10px] font-bold text-rose-400">
                             1
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Band clamps to scaffold tube, plate to wall
                           </span>
                         </div>
@@ -1247,7 +1247,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-[10px] font-bold text-rose-400">
                             2
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Ties scaffold to the building for lateral stability
                           </span>
                         </div>
@@ -1255,7 +1255,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-[10px] font-bold text-rose-400">
                             3
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Critical for wind resistance and pull-out loads
                           </span>
                         </div>
@@ -1263,7 +1263,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-[10px] font-bold text-rose-400">
                             4
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Spacing and pattern per scaffold designer&rsquo;s spec
                           </span>
                         </div>
@@ -1275,23 +1275,23 @@ export default function ScaffoldingAwarenessModule1Section3() {
                   <div className="flex flex-wrap items-center gap-4 mt-4 justify-center">
                     <div className="flex items-center gap-1.5">
                       <span className="w-3 h-3 rounded-full bg-slate-500/30 border border-slate-500/50" />
-                      <span className="text-[10px] text-white/50">Right-angle</span>
+                      <span className="text-[10px] text-white">Right-angle</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                       <span className="w-3 h-3 rounded-full bg-amber-500/30 border border-amber-500/50" />
-                      <span className="text-[10px] text-white/50">Swivel</span>
+                      <span className="text-[10px] text-white">Swivel</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                       <span className="w-3 h-3 rounded-full bg-blue-500/30 border border-blue-500/50" />
-                      <span className="text-[10px] text-white/50">Putlog</span>
+                      <span className="text-[10px] text-white">Putlog</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                       <span className="w-3 h-3 rounded-full bg-green-500/30 border border-green-500/50" />
-                      <span className="text-[10px] text-white/50">Sleeve</span>
+                      <span className="text-[10px] text-white">Sleeve</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                       <span className="w-3 h-3 rounded-full bg-rose-500/30 border border-rose-500/50" />
-                      <span className="text-[10px] text-white/50">Band-and-plate</span>
+                      <span className="text-[10px] text-white">Band-and-plate</span>
                     </div>
                   </div>
                 </div>
@@ -1302,7 +1302,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                   <Wrench className="h-5 w-5 text-slate-400" />
                   <p className="text-sm font-medium text-slate-400">Tightening Torque</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   All scaffold couplers must be tightened to the correct <strong>torque</strong>.
                   Under-tightened couplers can slip under load, causing joints to fail.
                   Over-tightened couplers can damage the tube surface (creating stress
@@ -1341,7 +1341,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                     <p className="text-sm font-medium text-slate-400 mb-2">
                       Dimensions &amp; Material
                     </p>
-                    <ul className="text-xs text-white/70 space-y-1.5">
+                    <ul className="text-xs text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                         <span>
@@ -1372,7 +1372,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                     <p className="text-sm font-medium text-slate-400 mb-2">
                       Loading &amp; Span Rules
                     </p>
-                    <ul className="text-xs text-white/70 space-y-1.5">
+                    <ul className="text-xs text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                         <span>
@@ -1409,7 +1409,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Overhang Rule</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Scaffold boards must <strong>not overhang their end supports</strong> by more than
                   <strong> four times their thickness</strong> or <strong>150 mm</strong>, whichever
                   is the lesser distance. For a standard 38 mm board, four times the thickness
@@ -1420,7 +1420,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                     <p className="text-xs font-medium text-red-400 mb-1">
                       Excessive Overhang &mdash; Danger
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       If a board overhangs too far beyond the last transom, a worker stepping on the
                       overhanging end acts as the effort on a lever. The support transom becomes the
                       fulcrum, and the other end of the board tips upward &mdash; potentially
@@ -1432,7 +1432,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                     <p className="text-xs font-medium text-green-400 mb-1">
                       Board Clips &mdash; Prevention
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       <strong>Board clips</strong> (also called board retaining clips or board
                       clamps) are fitted at each end of the scaffold board to prevent displacement
                       by wind uplift, accidental impact, or the see-saw effect. They clip over the
@@ -1445,7 +1445,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Access Arrangements</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -1492,7 +1492,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Hop-ups</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -1528,7 +1528,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-slate-400" />
                   <p className="text-sm font-medium text-slate-400">Board Inspection</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Scaffold boards must be inspected before each use. Reject any board that is
                   <strong>
                     {' '}
@@ -1549,7 +1549,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
         {/* Scaffold Component Diagram */}
         <section className="mb-10">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4 sm:p-6 overflow-hidden">
-            <p className="text-xs text-white/50 uppercase tracking-wider mb-6 text-center">
+            <p className="text-xs text-white uppercase tracking-wider mb-6 text-center">
               Scaffold Component Diagram &mdash; Labelled Elevation
             </p>
 
@@ -1565,7 +1565,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center text-[10px] font-bold text-red-400">
                         G
                       </span>
-                      <span className="text-xs text-white/80">
+                      <span className="text-xs text-white">
                         <strong>Guard rail</strong> &mdash; min 950 mm above platform
                       </span>
                     </div>
@@ -1573,7 +1573,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-[10px] font-bold text-amber-400">
                         M
                       </span>
-                      <span className="text-xs text-white/80">
+                      <span className="text-xs text-white">
                         <strong>Mid rail</strong> &mdash; no gap &gt; 470 mm
                       </span>
                     </div>
@@ -1581,7 +1581,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-blue-500/20 border border-blue-500/40 flex items-center justify-center text-[10px] font-bold text-blue-400">
                         T
                       </span>
-                      <span className="text-xs text-white/80">
+                      <span className="text-xs text-white">
                         <strong>Toe board</strong> &mdash; min 150 mm high
                       </span>
                     </div>
@@ -1598,7 +1598,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-slate-500/20 border border-slate-500/40 flex items-center justify-center text-[10px] font-bold text-slate-400">
                         S
                       </span>
-                      <span className="text-xs text-white/80">
+                      <span className="text-xs text-white">
                         <strong>Standards</strong> &mdash; vertical tubes carrying load to ground
                       </span>
                     </div>
@@ -1606,7 +1606,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center text-[10px] font-bold text-green-400">
                         L
                       </span>
-                      <span className="text-xs text-white/80">
+                      <span className="text-xs text-white">
                         <strong>Ledgers</strong> &mdash; horizontal tubes running along length
                       </span>
                     </div>
@@ -1614,7 +1614,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-violet-500/20 border border-violet-500/40 flex items-center justify-center text-[10px] font-bold text-violet-400">
                         X
                       </span>
-                      <span className="text-xs text-white/80">
+                      <span className="text-xs text-white">
                         <strong>Transoms</strong> &mdash; horizontal tubes running across width
                       </span>
                     </div>
@@ -1622,7 +1622,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-[10px] font-bold text-rose-400">
                         B
                       </span>
-                      <span className="text-xs text-white/80">
+                      <span className="text-xs text-white">
                         <strong>Braces</strong> &mdash; diagonal tubes preventing racking
                       </span>
                     </div>
@@ -1639,7 +1639,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-yellow-500/20 border border-yellow-500/40 flex items-center justify-center text-[10px] font-bold text-yellow-400">
                         P
                       </span>
-                      <span className="text-xs text-white/80">
+                      <span className="text-xs text-white">
                         <strong>Scaffold boards</strong> &mdash; 38 mm thick, 225 mm wide, max 3.9 m
                         span
                       </span>
@@ -1648,7 +1648,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-[10px] font-bold text-cyan-400">
                         C
                       </span>
-                      <span className="text-xs text-white/80">
+                      <span className="text-xs text-white">
                         <strong>Board clips</strong> &mdash; prevent displacement by wind or impact
                       </span>
                     </div>
@@ -1656,7 +1656,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[10px] font-bold text-orange-400">
                         A
                       </span>
-                      <span className="text-xs text-white/80">
+                      <span className="text-xs text-white">
                         <strong>Trap door</strong> &mdash; access hatch for ladders at platform
                         level
                       </span>
@@ -1665,7 +1665,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-teal-500/20 border border-teal-500/40 flex items-center justify-center text-[10px] font-bold text-teal-400">
                         D
                       </span>
-                      <span className="text-xs text-white/80">
+                      <span className="text-xs text-white">
                         <strong>Ladder</strong> &mdash; extends 1 m above platform, tied securely
                       </span>
                     </div>
@@ -1682,7 +1682,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-[10px] font-bold text-emerald-400">
                         F
                       </span>
-                      <span className="text-xs text-white/80">
+                      <span className="text-xs text-white">
                         <strong>Base plates</strong> &mdash; spread standard load
                       </span>
                     </div>
@@ -1690,7 +1690,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-lime-500/20 border border-lime-500/40 flex items-center justify-center text-[10px] font-bold text-lime-400">
                         W
                       </span>
-                      <span className="text-xs text-white/80">
+                      <span className="text-xs text-white">
                         <strong>Sole boards</strong> &mdash; distribute load on ground
                       </span>
                     </div>
@@ -1698,7 +1698,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-pink-500/20 border border-pink-500/40 flex items-center justify-center text-[10px] font-bold text-pink-400">
                         J
                       </span>
-                      <span className="text-xs text-white/80">
+                      <span className="text-xs text-white">
                         <strong>Adjustable base</strong> &mdash; screw jack for levelling
                       </span>
                     </div>
@@ -1710,19 +1710,19 @@ export default function ScaffoldingAwarenessModule1Section3() {
               <div className="flex flex-wrap items-center gap-3 mt-4 justify-center">
                 <div className="flex items-center gap-1.5">
                   <span className="w-3 h-3 rounded-full bg-slate-500/30 border border-slate-500/50" />
-                  <span className="text-[10px] text-white/50">Structure</span>
+                  <span className="text-[10px] text-white">Structure</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className="w-3 h-3 rounded-full bg-red-500/30 border border-red-500/50" />
-                  <span className="text-[10px] text-white/50">Edge protection</span>
+                  <span className="text-[10px] text-white">Edge protection</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className="w-3 h-3 rounded-full bg-yellow-500/30 border border-yellow-500/50" />
-                  <span className="text-[10px] text-white/50">Platform</span>
+                  <span className="text-[10px] text-white">Platform</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className="w-3 h-3 rounded-full bg-emerald-500/30 border border-emerald-500/50" />
-                  <span className="text-[10px] text-white/50">Foundation</span>
+                  <span className="text-[10px] text-white">Foundation</span>
                 </div>
               </div>
             </div>
@@ -1736,7 +1736,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1750,7 +1750,7 @@ export default function ScaffoldingAwarenessModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-1">

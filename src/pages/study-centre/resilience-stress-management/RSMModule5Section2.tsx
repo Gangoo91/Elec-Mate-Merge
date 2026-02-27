@@ -219,7 +219,7 @@ export default function RSMModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-5">
@@ -408,7 +408,7 @@ export default function RSMModule5Section2() {
                     Effective Transition Rituals for Electricians
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-3">
+                <ul className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -521,7 +521,7 @@ export default function RSMModule5Section2() {
                     Practical Digital Detox Strategies
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -615,7 +615,7 @@ export default function RSMModule5Section2() {
                     Why Construction Workers Are Particularly Vulnerable to Rumination
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -666,7 +666,7 @@ export default function RSMModule5Section2() {
                 <div className="space-y-4">
                   <div>
                     <p className="text-sm font-medium text-white mb-1">1. Scheduled Worry Time</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Designate a 15- to 20-minute window (not close to bedtime) as your
                       &ldquo;worry time.&rdquo; During this window, write down every work worry,
                       concern, or unresolved issue on paper. Outside this window, when a worry
@@ -677,7 +677,7 @@ export default function RSMModule5Section2() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white mb-1">2. Writing It Down</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Externalising worries onto paper is one of the most effective anti-rumination
                       strategies. When a thought is in your head, it feels urgent and overwhelming.
                       When it is written on paper, it becomes a concrete, manageable item on a list.
@@ -690,7 +690,7 @@ export default function RSMModule5Section2() {
                     <p className="text-sm font-medium text-white mb-1">
                       3. The 5-4-3-2-1 Grounding Technique
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       When rumination has you in its grip, use this sensory grounding exercise to
                       pull your attention back to the present moment. Identify: 5 things you can
                       see, 4 things you can touch, 3 things you can hear, 2 things you can smell,
@@ -701,7 +701,7 @@ export default function RSMModule5Section2() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white mb-1">4. Engaging Activity</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Activities that require enough concentration to fully absorb your attention
                       are powerful anti-rumination tools. Exercise, cooking, playing an instrument,
                       gaming, woodworking, fishing &mdash; anything that demands your focus pulls
@@ -754,7 +754,7 @@ export default function RSMModule5Section2() {
                   <Moon className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Creating Your Mental Commute</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -912,7 +912,7 @@ export default function RSMModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-5">

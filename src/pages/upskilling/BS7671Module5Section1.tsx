@@ -98,7 +98,7 @@ const BS7671Module5Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bs7671-module-5">
@@ -119,7 +119,7 @@ const BS7671Module5Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Equipment Ratings and Suitability
           </h1>
-          <p className="text-white/80">Ensuring Appropriate Equipment Selection</p>
+          <p className="text-white">Ensuring Appropriate Equipment Selection</p>
         </header>
 
         {/* Quick Summary */}
@@ -332,15 +332,15 @@ const BS7671Module5Section1 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">IP20</p>
-                <p className="text-white/90 text-xs">Indoor dry locations</p>
+                <p className="text-white text-xs">Indoor dry locations</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">IP44/IP65</p>
-                <p className="text-white/90 text-xs">Bathrooms/outdoor</p>
+                <p className="text-white text-xs">Bathrooms/outdoor</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">IP67</p>
-                <p className="text-white/90 text-xs">Underground</p>
+                <p className="text-white text-xs">Underground</p>
               </div>
             </div>
           </div>
@@ -469,7 +469,7 @@ const BS7671Module5Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -515,7 +515,7 @@ const BS7671Module5Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bs7671-module-5">

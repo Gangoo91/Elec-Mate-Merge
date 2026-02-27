@@ -237,7 +237,7 @@ const HNCModule8Section4_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section4">
@@ -259,7 +259,7 @@ const HNCModule8Section4_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Energy Efficiency
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Affinity laws, energy savings calculations and financial analysis for motor systems
           </p>
         </header>
@@ -346,21 +346,21 @@ const HNCModule8Section4_5 = () => {
               </p>
               <div className="grid sm:grid-cols-3 gap-4">
                 <div className="text-center p-3 bg-white/5 rounded-lg">
-                  <p className="text-xs text-white/60 mb-1">Flow Rate (Q)</p>
+                  <p className="text-xs text-white mb-1">Flow Rate (Q)</p>
                   <p className="font-mono text-lg mb-1">
                     Q<sub>2</sub>/Q<sub>1</sub> = N<sub>2</sub>/N<sub>1</sub>
                   </p>
                   <p className="text-xs text-elec-yellow/70">Linear relationship</p>
                 </div>
                 <div className="text-center p-3 bg-white/5 rounded-lg">
-                  <p className="text-xs text-white/60 mb-1">Pressure/Head (H)</p>
+                  <p className="text-xs text-white mb-1">Pressure/Head (H)</p>
                   <p className="font-mono text-lg mb-1">
                     H<sub>2</sub>/H<sub>1</sub> = (N<sub>2</sub>/N<sub>1</sub>)²
                   </p>
                   <p className="text-xs text-elec-yellow/70">Square relationship</p>
                 </div>
                 <div className="text-center p-3 bg-white/5 rounded-lg">
-                  <p className="text-xs text-white/60 mb-1">Power (P)</p>
+                  <p className="text-xs text-white mb-1">Power (P)</p>
                   <p className="font-mono text-lg mb-1">
                     P<sub>2</sub>/P<sub>1</sub> = (N<sub>2</sub>/N<sub>1</sub>)³
                   </p>
@@ -373,7 +373,7 @@ const HNCModule8Section4_5 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Understanding the Cubic Power Law
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 The cubic relationship between power and speed is the key to VSD energy savings.
                 Small speed reductions yield large power reductions because power varies with the{' '}
                 <strong>cube</strong> of speed.
@@ -439,7 +439,7 @@ const HNCModule8Section4_5 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
               <p className="text-sm font-medium text-blue-400 mb-2">Why VSDs Beat Throttling</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Traditional flow control uses dampers (fans) or throttle valves (pumps) to restrict
                 flow while the motor runs at full speed. This wastes energy as the motor does work
                 that is immediately dissipated as turbulence and noise. A VSD reduces motor speed to
@@ -584,7 +584,7 @@ const HNCModule8Section4_5 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 This profile shows 65% energy saving potential - typical for variable air volume
                 systems
               </p>
@@ -594,18 +594,18 @@ const HNCModule8Section4_5 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">
                 Worked Example: AHU Supply Fan
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Motor power: 15 kW</p>
                 <p>Annual running hours: 5,000</p>
                 <p>Electricity cost: £0.18/kWh</p>
-                <p className="mt-2 text-white/60">Fixed speed annual energy:</p>
+                <p className="mt-2 text-white">Fixed speed annual energy:</p>
                 <p>
                   E<sub>fixed</sub> = 15 kW × 5,000 h = 75,000 kWh
                 </p>
                 <p>
                   Cost = 75,000 × £0.18 = <strong>£13,500/year</strong>
                 </p>
-                <p className="mt-2 text-white/60">VSD annual energy (using profile above):</p>
+                <p className="mt-2 text-white">VSD annual energy (using profile above):</p>
                 <p>
                   E<sub>VSD</sub> = 15 × [(500×1.0) + (1500×0.512) + (2000×0.216) + (1000×0.064)]
                 </p>
@@ -623,7 +623,7 @@ const HNCModule8Section4_5 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
               <p className="text-sm font-medium text-orange-400 mb-2">Important: VSD Losses</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 VSDs are not 100% efficient. Typical VSD efficiency is 95-98% at full load but drops
                 at partial loads. Include VSD losses in calculations by applying approximately 3-5%
                 additional loss factor. Modern drives with active front ends have better partial
@@ -657,7 +657,7 @@ const HNCModule8Section4_5 = () => {
               <p className="font-mono text-center text-xl mb-2">
                 Payback Period = Capital Cost / Net Annual Savings
               </p>
-              <div className="grid sm:grid-cols-2 gap-2 mt-4 text-xs text-white/80">
+              <div className="grid sm:grid-cols-2 gap-2 mt-4 text-xs text-white">
                 <div>
                   <p>
                     <strong>Capital Cost</strong> = Equipment + Installation + Commissioning
@@ -733,15 +733,15 @@ const HNCModule8Section4_5 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">
                 Worked Example: Pump VSD Installation
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Capital costs:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Capital costs:</p>
                 <p>15 kW VSD supply and install: £3,800</p>
                 <p>Electrical modifications: £850</p>
                 <p>Commissioning and setup: £450</p>
                 <p>
                   Total capital cost: <strong>£5,100</strong>
                 </p>
-                <p className="mt-2 text-white/60">Annual savings:</p>
+                <p className="mt-2 text-white">Annual savings:</p>
                 <p>Energy saving: 32,000 kWh × £0.18 = £5,760</p>
                 <p>Additional filter changes (cleaner air): -£120</p>
                 <p>VSD maintenance allowance: -£150</p>
@@ -813,10 +813,10 @@ const HNCModule8Section4_5 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 NPV = Σ (Annual Savings / (1 + r)<sup>n</sup>) - Capital Cost
               </p>
-              <p className="text-xs text-white/70 text-center mt-2">
+              <p className="text-xs text-white text-center mt-2">
                 Or using present value factor: NPV = (Annual Savings × PV Factor) - Capital Cost
               </p>
-              <div className="mt-4 text-xs text-white/80">
+              <div className="mt-4 text-xs text-white">
                 <p>
                   <strong>r</strong> = Discount rate (typically 6-10% for commercial projects)
                 </p>
@@ -873,14 +873,14 @@ const HNCModule8Section4_5 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Multiply annual savings by factor to get present value of all future savings
               </p>
             </div>
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">NPV Worked Example</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>VSD installation cost: £5,100</p>
                 <p>Annual energy saving: £5,490</p>
                 <p>Equipment lifespan: 15 years</p>
@@ -902,7 +902,7 @@ const HNCModule8Section4_5 = () => {
                 <Leaf className="h-5 w-5 text-green-400" />
                 <p className="text-sm font-medium text-green-400">Carbon Savings Calculations</p>
               </div>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Carbon savings add environmental value to energy efficiency projects. The UK grid
                 carbon factor represents the CO₂ emissions per unit of electricity consumed.
               </p>
@@ -911,14 +911,14 @@ const HNCModule8Section4_5 = () => {
                 <p className="font-mono text-center mb-2">
                   Carbon Saving (kgCO₂) = Energy Saved (kWh) × Grid Carbon Factor (kgCO₂/kWh)
                 </p>
-                <p className="text-xs text-center text-white/70">
+                <p className="text-xs text-center text-white">
                   UK Grid Factor 2024: approximately 0.233 kgCO₂/kWh (declining as renewable share
                   increases)
                 </p>
               </div>
 
-              <div className="mt-4 bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Example calculation:</p>
+              <div className="mt-4 bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Example calculation:</p>
                 <p>Energy saved: 48,540 kWh/year</p>
                 <p>Carbon factor: 0.233 kgCO₂/kWh</p>
                 <p>
@@ -937,7 +937,7 @@ const HNCModule8Section4_5 = () => {
                 <FileCheck className="h-5 w-5 text-blue-400" />
                 <p className="text-sm font-medium text-blue-400">Part L Building Regulations</p>
               </div>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Part L of the Building Regulations sets minimum energy efficiency standards for
                 building services, including motors and their control systems.
               </p>
@@ -1060,7 +1060,7 @@ const HNCModule8Section4_5 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
               <p className="text-sm font-medium text-orange-400 mb-2">ErP Directive Requirements</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 The Energy-related Products (ErP) Directive sets minimum efficiency requirements for
                 motors placed on the EU/UK market. From July 2023, motors 75-200 kW must meet IE4.
                 Motors 0.12-0.75 kW must meet IE2. Check current requirements for your application
@@ -1097,15 +1097,15 @@ const HNCModule8Section4_5 = () => {
                 <strong>Scenario:</strong> A 22 kW chilled water pump operates 4,500 hours/year with
                 average 65% load. Evaluate VSD installation.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">
                   Current operation (fixed speed with throttle valve):
                 </p>
                 <p>Energy = 22 kW × 4,500 h = 99,000 kWh/year</p>
                 <p>
                   Cost @ £0.18/kWh = <strong>£17,820/year</strong>
                 </p>
-                <p className="mt-2 text-white/60">With VSD (average 65% flow = 65% speed):</p>
+                <p className="mt-2 text-white">With VSD (average 65% flow = 65% speed):</p>
                 <p>Power = 0.65³ × 22 = 0.274 × 22 = 6.04 kW average</p>
                 <p>Energy = 6.04 × 4,500 = 27,180 kWh/year</p>
                 <p>
@@ -1114,7 +1114,7 @@ const HNCModule8Section4_5 = () => {
                 <p className="mt-2 text-green-400">
                   Annual saving = £17,820 - £4,892 = <strong>£12,928 (72%)</strong>
                 </p>
-                <p className="mt-2 text-white/60">Investment analysis:</p>
+                <p className="mt-2 text-white">Investment analysis:</p>
                 <p>VSD cost installed: £6,200</p>
                 <p>
                   Simple payback = £6,200 / £12,928 = <strong>0.48 years (6 months)</strong>
@@ -1122,7 +1122,7 @@ const HNCModule8Section4_5 = () => {
                 <p className="mt-2">
                   NPV (15 years, 8%): (£12,928 × 8.56) - £6,200 = <strong>£104,464</strong>
                 </p>
-                <p className="mt-2 text-white/60">Carbon saving:</p>
+                <p className="mt-2 text-white">Carbon saving:</p>
                 <p>Energy saved = 99,000 - 27,180 = 71,820 kWh</p>
                 <p>
                   CO₂ saved = 71,820 × 0.233 = <strong>16,734 kgCO₂ (16.7 tonnes/year)</strong>
@@ -1138,14 +1138,14 @@ const HNCModule8Section4_5 = () => {
                 <strong>Scenario:</strong> Specify a 15 kW motor for 6,000 hours/year continuous
                 duty. Compare IE3 (91.2% efficiency) vs IE4 (93.3% efficiency).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">IE3 motor (91.2% efficient):</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">IE3 motor (91.2% efficient):</p>
                 <p>Input power = 15 / 0.912 = 16.45 kW</p>
                 <p>Annual energy = 16.45 × 6,000 = 98,700 kWh</p>
                 <p>
                   Annual cost = 98,700 × £0.18 = <strong>£17,766</strong>
                 </p>
-                <p className="mt-2 text-white/60">IE4 motor (93.3% efficient):</p>
+                <p className="mt-2 text-white">IE4 motor (93.3% efficient):</p>
                 <p>Input power = 15 / 0.933 = 16.08 kW</p>
                 <p>Annual energy = 16.08 × 6,000 = 96,480 kWh</p>
                 <p>
@@ -1172,10 +1172,10 @@ const HNCModule8Section4_5 = () => {
                 <strong>Scenario:</strong> A supply fan delivers 5.0 m³/s at 750 Pa, consuming 5.5
                 kW. The system requires only 4.0 m³/s. Calculate the new operating point.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Required flow reduction:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Required flow reduction:</p>
                 <p>Flow ratio = 4.0 / 5.0 = 0.80 (80%)</p>
-                <p className="mt-2 text-white/60">Apply affinity laws:</p>
+                <p className="mt-2 text-white">Apply affinity laws:</p>
                 <p>New speed = 0.80 × original speed (N₂ = 0.8N₁)</p>
                 <p>
                   New pressure = 0.80² × 750 = 0.64 × 750 = <strong>480 Pa</strong>
@@ -1186,7 +1186,7 @@ const HNCModule8Section4_5 = () => {
                 <p className="mt-2 text-green-400">
                   Power saving = 5.5 - 2.82 = <strong>2.68 kW (48.7%)</strong>
                 </p>
-                <p className="mt-2 text-white/60">Verify system pressure requirement:</p>
+                <p className="mt-2 text-white">Verify system pressure requirement:</p>
                 <p>If system needs 480 Pa at 4.0 m³/s, operation is satisfactory.</p>
                 <p>If higher pressure needed (e.g., filter dirty), speed must increase.</p>
               </div>
@@ -1275,7 +1275,7 @@ const HNCModule8Section4_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1321,7 +1321,7 @@ const HNCModule8Section4_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section4-4">

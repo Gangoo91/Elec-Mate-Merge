@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import SectionHeader from '@/components/ui/section-header';
+import SectionTitle from '@/components/ui/SectionTitle';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -37,56 +38,6 @@ interface EICDeclarationsProps {
   formData: any;
   onUpdate: (field: string, value: any) => void;
 }
-
-// Reusable glass card component for consistent styling
-const GlassCard = ({
-  children,
-  className,
-  color = 'white',
-}: {
-  children: React.ReactNode;
-  className?: string;
-  color?: string;
-}) => {
-  const borderColors: Record<string, string> = {
-    white: 'border-white/[0.08]',
-    blue: 'border-blue-500/20',
-    green: 'border-green-500/20',
-    amber: 'border-amber-500/20',
-    purple: 'border-purple-500/20',
-    orange: 'border-orange-500/20',
-  };
-
-  return (
-    <div
-      className={cn(
-        'rounded-xl bg-white/[0.02] backdrop-blur-sm border p-5',
-        borderColors[color] || borderColors.white,
-        className
-      )}
-    >
-      {children}
-    </div>
-  );
-};
-
-// Sub-section header component
-const SubSectionHeader = ({
-  icon: Icon,
-  title,
-  color,
-}: {
-  icon: any;
-  title: string;
-  color: string;
-}) => (
-  <div className="flex items-center gap-2.5 mb-4">
-    <div className={cn('p-1.5 rounded-lg', `bg-${color}/10`)}>
-      <Icon className={cn('h-4 w-4', `text-${color}`)} />
-    </div>
-    <h4 className={cn('text-sm font-semibold', `text-${color}`)}>{title}</h4>
-  </div>
-);
 
 const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate }) => {
   const isMobile = useIsMobile();
@@ -191,10 +142,10 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
   };
 
   return (
-    <div className={cn('space-y-4', isMobile && '-mx-4')}>
+    <div className={cn('space-y-2', isMobile && '-mx-4')}>
       {/* Legal Notice */}
       <div className={cn(isMobile && 'px-4')}>
-        <GlassCard color="amber" className="border-amber-500/30 bg-amber-500/5">
+        <div className="border-amber-500/30 bg-amber-500/5 border rounded-xl p-5">
           <div className="flex gap-3">
             <div className="p-2 rounded-lg bg-amber-500/10 h-fit">
               <Shield className="h-5 w-5 text-amber-400" />
@@ -207,7 +158,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
               </p>
             </div>
           </div>
-        </GlassCard>
+        </div>
       </div>
 
       {/* Use Saved Profile Button */}
@@ -241,40 +192,29 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
         <Collapsible open={openSections.designer} onOpenChange={() => toggleSection('designer')}>
           {isMobile ? (
             <CollapsibleTrigger className="w-full">
-              <div className="flex items-center gap-3 py-4 px-4 mx-4 my-1 rounded-xl bg-white/[0.04] border border-white/[0.08]">
-                <div className="h-10 w-10 rounded-xl bg-blue-500/15 flex items-center justify-center shrink-0">
-                  <PenTool className="h-5 w-5 text-blue-400" />
-                </div>
-                <div className="flex-1 text-left min-w-0">
-                  <h3 className="font-semibold text-foreground">Designer Declaration</h3>
-                  <span className="text-xs text-white">
-                    {getCompletionPercentage('designer')}% complete
-                  </span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
-                    openSections.designer && 'rotate-180'
-                  )}
-                />
-              </div>
-            </CollapsibleTrigger>
-          ) : (
-            <CollapsibleTrigger className="w-full">
-              <SectionHeader
-                title="Designer Declaration"
+              <SectionTitle
                 icon={PenTool}
+                title="Designer Declaration"
+                color="blue"
                 isOpen={openSections.designer}
-                color="blue-500"
-                completionPercentage={getCompletionPercentage('designer')}
+                badge={`${getCompletionPercentage('designer')}% complete`}
+                isMobile={isMobile}
               />
             </CollapsibleTrigger>
+          ) : (
+            <SectionHeader
+              title="Designer Declaration"
+              icon={PenTool}
+              isOpen={openSections.designer}
+              color="blue-500"
+              completionPercentage={getCompletionPercentage('designer')}
+            />
           )}
           <CollapsibleContent>
             <div className="p-4 sm:p-5 space-y-5">
               {/* Declaration Text */}
-              <GlassCard className="bg-blue-500/5 border-blue-500/20">
-                <p className="text-xs text-white/70 leading-relaxed">
+              {isMobile ? (
+                <p className="text-xs text-white leading-relaxed">
                   I being the person responsible for the design of the electrical installation,
                   having exercised reasonable skill and care when carrying out the design hereby
                   CERTIFY that the design work for which I have been responsible is to the best of
@@ -289,15 +229,32 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                   />{' '}
                   except for the departures, if any, detailed below.
                 </p>
-              </GlassCard>
+              ) : (
+                <div className="bg-blue-500/5 border-blue-500/20 border rounded-xl p-5">
+                  <p className="text-xs text-white leading-relaxed">
+                    I being the person responsible for the design of the electrical installation,
+                    having exercised reasonable skill and care when carrying out the design hereby
+                    CERTIFY that the design work for which I have been responsible is to the best of
+                    my knowledge and belief in accordance with{' '}
+                    <span className="text-blue-400 font-medium">BS 7671:2018</span>, amended to{' '}
+                    <Input
+                      id="designerBs7671Date"
+                      value={formData.designerBs7671Date || ''}
+                      onChange={(e) => onUpdate('designerBs7671Date', e.target.value)}
+                      placeholder="date"
+                      className="inline-block w-24 h-7 text-xs px-2 bg-white/5 border-blue-500/30 focus:border-blue-500 rounded-lg"
+                    />{' '}
+                    except for the departures, if any, detailed below.
+                  </p>
+                </div>
+              )}
 
               {/* Departures & Exceptions */}
-              <GlassCard color="blue">
-                <SubSectionHeader
-                  icon={FileWarning}
-                  title="Departures & Exceptions"
-                  color="blue-400"
-                />
+              <div className="space-y-4">
+                <h4 className="text-sm font-semibold text-blue-400 flex items-center gap-2 border-b border-white/10 pb-2">
+                  <FileWarning className="h-4 w-4" />
+                  Departures & Exceptions
+                </h4>
                 <div className="space-y-5">
                   <div className="space-y-2.5">
                     <Label className="text-sm text-white">
@@ -309,7 +266,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                       onChange={(e) => onUpdate('designerDepartures', e.target.value)}
                       placeholder="Enter departures or 'None'"
                       rows={2}
-                      className="text-base touch-manipulation min-h-[70px] bg-white/[0.03] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
+                      className="text-base touch-manipulation min-h-[70px]"
                     />
                   </div>
                   <div className="space-y-2.5">
@@ -322,7 +279,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                       onChange={(e) => onUpdate('permittedExceptions', e.target.value)}
                       placeholder="Enter exceptions or 'None'"
                       rows={2}
-                      className="text-base touch-manipulation min-h-[70px] bg-white/[0.03] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
+                      className="text-base touch-manipulation min-h-[70px]"
                     />
                   </div>
                   <label className="flex items-center gap-3 p-3 rounded-xl bg-purple-500/10 border border-purple-500/20 cursor-pointer touch-manipulation active:scale-[0.99] transition-transform">
@@ -337,12 +294,15 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                     </span>
                   </label>
                 </div>
-              </GlassCard>
+              </div>
 
               {/* Signatory Details */}
-              <GlassCard color="blue">
-                <div className="flex items-center justify-between mb-4">
-                  <SubSectionHeader icon={User} title="Signatory Details" color="blue-400" />
+              <div className="space-y-4">
+                <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                  <h4 className="text-sm font-semibold text-blue-400 flex items-center gap-2">
+                    <User className="h-4 w-4" />
+                    Signatory Details
+                  </h4>
                   <Button
                     onClick={() => handleFillFromProfile('designer')}
                     variant="outline"
@@ -364,7 +324,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                         value={formData.designerName || ''}
                         onChange={(e) => onUpdate('designerName', e.target.value)}
                         className={cn(
-                          'h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl',
+                          'h-11 text-base touch-manipulation',
                           !formData.designerName && 'border-red-500/30'
                         )}
                       />
@@ -376,7 +336,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                         placeholder="Company name"
                         value={formData.designerCompany || ''}
                         onChange={(e) => onUpdate('designerCompany', e.target.value)}
-                        className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
+                        className="h-11 text-base touch-manipulation"
                       />
                     </div>
                   </div>
@@ -390,7 +350,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                       onChange={(e) => onUpdate('designerAddress', e.target.value)}
                       placeholder="Full business address"
                       rows={2}
-                      className="text-base touch-manipulation min-h-[70px] bg-white/[0.03] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
+                      className="text-base touch-manipulation min-h-[70px]"
                     />
                   </div>
 
@@ -403,7 +363,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                         value={formData.designerPostcode || ''}
                         onChange={(e) => onUpdate('designerPostcode', e.target.value)}
                         placeholder="AB1 2CD"
-                        className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
+                        className="h-11 text-base touch-manipulation"
                       />
                     </div>
                     <div className="space-y-2.5">
@@ -414,7 +374,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                         value={formData.designerPhone || ''}
                         onChange={(e) => onUpdate('designerPhone', e.target.value)}
                         placeholder="Phone number"
-                        className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
+                        className="h-11 text-base touch-manipulation"
                       />
                     </div>
                     <div className="space-y-2.5">
@@ -424,29 +384,35 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                         type="date"
                         value={formData.designerDate || new Date().toISOString().split('T')[0]}
                         onChange={(e) => onUpdate('designerDate', e.target.value)}
-                        className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
+                        className="h-11 text-base touch-manipulation"
                       />
                     </div>
                   </div>
                 </div>
-              </GlassCard>
+              </div>
 
               {/* Signature */}
-              <GlassCard color="blue">
-                <SubSectionHeader icon={PenTool} title="Digital Signature *" color="blue-400" />
+              <div className="space-y-4">
+                <h4 className="text-sm font-semibold text-blue-400 flex items-center gap-2 border-b border-white/10 pb-2">
+                  <PenTool className="h-4 w-4" />
+                  Digital Signature *
+                </h4>
                 <SignatureInput
                   value={formData.designerSignature}
                   onChange={(signature) => onUpdate('designerSignature', signature)}
                   placeholder="Draw or type designer signature"
                   required={true}
                 />
-              </GlassCard>
+              </div>
 
               {/* Designer No 2 (Optional - for mutual responsibility) */}
-              <GlassCard color="blue" className="border-dashed">
-                <div className="flex items-center justify-between mb-4">
-                  <SubSectionHeader icon={User} title="Designer No 2 (Optional)" color="blue-400" />
-                  <span className="text-xs text-muted-foreground">
+              <div className="space-y-4 border-t border-dashed border-white/10 pt-5">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-sm font-semibold text-blue-400 flex items-center gap-2">
+                    <User className="h-4 w-4" />
+                    Designer No 2 (Optional)
+                  </h4>
+                  <span className="text-xs text-white">
                     For mutual design responsibility
                   </span>
                 </div>
@@ -459,7 +425,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                         placeholder="Second designer name (if applicable)"
                         value={formData.designer2Name || ''}
                         onChange={(e) => onUpdate('designer2Name', e.target.value)}
-                        className="h-11 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
+                        className="h-11 text-base touch-manipulation"
                       />
                     </div>
                     <div className="space-y-2">
@@ -469,7 +435,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                         placeholder="Company name"
                         value={formData.designer2Company || ''}
                         onChange={(e) => onUpdate('designer2Company', e.target.value)}
-                        className="h-11 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
+                        className="h-11 text-base touch-manipulation"
                       />
                     </div>
                   </div>
@@ -480,7 +446,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                       placeholder="Full business address"
                       value={formData.designer2Address || ''}
                       onChange={(e) => onUpdate('designer2Address', e.target.value)}
-                      className="h-11 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
+                      className="h-11 text-base touch-manipulation"
                     />
                   </div>
                   <div className={cn('grid gap-4', isMobile ? 'grid-cols-1' : 'grid-cols-3')}>
@@ -491,7 +457,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                         placeholder="AB1 2CD"
                         value={formData.designer2Postcode || ''}
                         onChange={(e) => onUpdate('designer2Postcode', e.target.value)}
-                        className="h-11 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
+                        className="h-11 text-base touch-manipulation"
                       />
                     </div>
                     <div className="space-y-2">
@@ -502,7 +468,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                         placeholder="Phone number"
                         value={formData.designer2Phone || ''}
                         onChange={(e) => onUpdate('designer2Phone', e.target.value)}
-                        className="h-11 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
+                        className="h-11 text-base touch-manipulation"
                       />
                     </div>
                     <div className="space-y-2">
@@ -512,7 +478,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                         type="date"
                         value={formData.designer2Date || ''}
                         onChange={(e) => onUpdate('designer2Date', e.target.value)}
-                        className="h-11 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-blue-500 focus:ring-blue-500/20 rounded-xl"
+                        className="h-11 text-base touch-manipulation"
                       />
                     </div>
                   </div>
@@ -528,7 +494,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                     </div>
                   )}
                 </div>
-              </GlassCard>
+              </div>
             </div>
           </CollapsibleContent>
         </Collapsible>
@@ -542,34 +508,23 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
         >
           {isMobile ? (
             <CollapsibleTrigger className="w-full">
-              <div className="flex items-center gap-3 py-4 px-4 mx-4 my-1 rounded-xl bg-white/[0.04] border border-white/[0.08]">
-                <div className="h-10 w-10 rounded-xl bg-orange-500/15 flex items-center justify-center shrink-0">
-                  <Wrench className="h-5 w-5 text-orange-400" />
-                </div>
-                <div className="flex-1 text-left min-w-0">
-                  <h3 className="font-semibold text-foreground">Constructor Declaration</h3>
-                  <span className="text-xs text-white">
-                    {getCompletionPercentage('constructor')}% complete
-                  </span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
-                    openSections.constructor && 'rotate-180'
-                  )}
-                />
-              </div>
-            </CollapsibleTrigger>
-          ) : (
-            <CollapsibleTrigger className="w-full">
-              <SectionHeader
+              <SectionTitle
+                icon={Wrench}
                 title="Constructor Declaration"
-                icon={Hammer}
+                color="orange"
                 isOpen={openSections.constructor}
-                color="green-500"
-                completionPercentage={getCompletionPercentage('constructor')}
+                badge={`${getCompletionPercentage('constructor')}% complete`}
+                isMobile={isMobile}
               />
             </CollapsibleTrigger>
+          ) : (
+            <SectionHeader
+              title="Constructor Declaration"
+              icon={Hammer}
+              isOpen={openSections.constructor}
+              color="green-500"
+              completionPercentage={getCompletionPercentage('constructor')}
+            />
           )}
           <CollapsibleContent>
             <div className={cn('space-y-5', isMobile ? 'px-4 py-4' : 'p-4 sm:p-5')}>
@@ -599,13 +554,8 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
               </label>
 
               {/* Declaration Text */}
-              <GlassCard
-                className={cn(
-                  'bg-green-500/5 border-green-500/20',
-                  formData.sameAsDesigner && 'opacity-50'
-                )}
-              >
-                <p className="text-xs text-white/70 leading-relaxed">
+              {isMobile ? (
+                <p className={cn('text-xs text-white leading-relaxed', formData.sameAsDesigner && 'opacity-50')}>
                   I being the person responsible for the construction of the electrical
                   installation, having exercised reasonable skill and care when carrying out the
                   construction work hereby CERTIFY that the construction work for which I have been
@@ -621,18 +571,43 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                   />{' '}
                   except for the departures, if any, detailed below.
                 </p>
-              </GlassCard>
+              ) : (
+                <div
+                  className={cn(
+                    'bg-green-500/5 border-green-500/20 border rounded-xl p-5',
+                    formData.sameAsDesigner && 'opacity-50'
+                  )}
+                >
+                  <p className="text-xs text-white leading-relaxed">
+                    I being the person responsible for the construction of the electrical
+                    installation, having exercised reasonable skill and care when carrying out the
+                    construction work hereby CERTIFY that the construction work for which I have been
+                    responsible is to the best of my knowledge and belief in accordance with{' '}
+                    <span className="text-green-400 font-medium">BS 7671:2018</span>, amended to{' '}
+                    <Input
+                      id="constructorBs7671Date"
+                      value={formData.constructorBs7671Date || ''}
+                      onChange={(e) => onUpdate('constructorBs7671Date', e.target.value)}
+                      placeholder="date"
+                      disabled={formData.sameAsDesigner}
+                      className="inline-block w-24 h-7 text-xs px-2 bg-white/5 border-green-500/30 focus:border-green-500 rounded-lg disabled:opacity-50"
+                    />{' '}
+                    except for the departures, if any, detailed below.
+                  </p>
+                </div>
+              )}
 
               {/* Departures */}
-              <GlassCard
-                color="green"
-                className={cn(formData.sameAsDesigner && 'opacity-50 pointer-events-none')}
+              <div
+                className={cn(
+                  'space-y-4',
+                  formData.sameAsDesigner && 'opacity-50 pointer-events-none'
+                )}
               >
-                <SubSectionHeader
-                  icon={FileWarning}
-                  title="Departures from BS 7671"
-                  color="green-400"
-                />
+                <h4 className="text-sm font-semibold text-green-400 flex items-center gap-2 border-b border-white/10 pb-2">
+                  <FileWarning className="h-4 w-4" />
+                  Departures from BS 7671
+                </h4>
                 <div className="space-y-2.5">
                   <Label className="text-sm text-white">
                     Details of departures (Regs 120.3, 133.1.3, 133.5):
@@ -644,18 +619,23 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                     placeholder="Enter departures or 'None'"
                     rows={2}
                     disabled={formData.sameAsDesigner}
-                    className="text-base touch-manipulation min-h-[70px] bg-white/[0.03] border-white/10 focus:border-green-500 focus:ring-green-500/20 rounded-xl"
+                    className="text-base touch-manipulation min-h-[70px]"
                   />
                 </div>
-              </GlassCard>
+              </div>
 
               {/* Signatory Details */}
-              <GlassCard
-                color="green"
-                className={cn(formData.sameAsDesigner && 'opacity-50 pointer-events-none')}
+              <div
+                className={cn(
+                  'space-y-4',
+                  formData.sameAsDesigner && 'opacity-50 pointer-events-none'
+                )}
               >
-                <div className="flex items-center justify-between mb-4">
-                  <SubSectionHeader icon={User} title="Signatory Details" color="green-400" />
+                <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                  <h4 className="text-sm font-semibold text-green-400 flex items-center gap-2">
+                    <User className="h-4 w-4" />
+                    Signatory Details
+                  </h4>
                   <Button
                     onClick={() => handleFillFromProfile('constructor')}
                     variant="outline"
@@ -679,7 +659,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                         onChange={(e) => onUpdate('constructorName', e.target.value)}
                         disabled={formData.sameAsDesigner}
                         className={cn(
-                          'h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-green-500 focus:ring-green-500/20 rounded-xl',
+                          'h-11 text-base touch-manipulation',
                           !formData.constructorName && 'border-red-500/30'
                         )}
                       />
@@ -692,7 +672,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                         value={formData.constructorCompany || ''}
                         onChange={(e) => onUpdate('constructorCompany', e.target.value)}
                         disabled={formData.sameAsDesigner}
-                        className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-green-500 focus:ring-green-500/20 rounded-xl"
+                        className="h-11 text-base touch-manipulation"
                       />
                     </div>
                   </div>
@@ -707,7 +687,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                       placeholder="Full business address"
                       rows={2}
                       disabled={formData.sameAsDesigner}
-                      className="text-base touch-manipulation min-h-[70px] bg-white/[0.03] border-white/10 focus:border-green-500 focus:ring-green-500/20 rounded-xl"
+                      className="text-base touch-manipulation min-h-[70px]"
                     />
                   </div>
 
@@ -721,7 +701,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                         onChange={(e) => onUpdate('constructorPostcode', e.target.value)}
                         placeholder="AB1 2CD"
                         disabled={formData.sameAsDesigner}
-                        className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-green-500 focus:ring-green-500/20 rounded-xl"
+                        className="h-11 text-base touch-manipulation"
                       />
                     </div>
                     <div className="space-y-2.5">
@@ -733,7 +713,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                         onChange={(e) => onUpdate('constructorPhone', e.target.value)}
                         placeholder="Phone number"
                         disabled={formData.sameAsDesigner}
-                        className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-green-500 focus:ring-green-500/20 rounded-xl"
+                        className="h-11 text-base touch-manipulation"
                       />
                     </div>
                     <div className="space-y-2.5">
@@ -744,26 +724,31 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                         value={formData.constructorDate || new Date().toISOString().split('T')[0]}
                         onChange={(e) => onUpdate('constructorDate', e.target.value)}
                         disabled={formData.sameAsDesigner}
-                        className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-green-500 focus:ring-green-500/20 rounded-xl"
+                        className="h-11 text-base touch-manipulation"
                       />
                     </div>
                   </div>
                 </div>
-              </GlassCard>
+              </div>
 
               {/* Signature */}
-              <GlassCard
-                color="green"
-                className={cn(formData.sameAsDesigner && 'opacity-50 pointer-events-none')}
+              <div
+                className={cn(
+                  'space-y-4',
+                  formData.sameAsDesigner && 'opacity-50 pointer-events-none'
+                )}
               >
-                <SubSectionHeader icon={PenTool} title="Digital Signature *" color="green-400" />
+                <h4 className="text-sm font-semibold text-green-400 flex items-center gap-2 border-b border-white/10 pb-2">
+                  <PenTool className="h-4 w-4" />
+                  Digital Signature *
+                </h4>
                 <SignatureInput
                   value={formData.constructorSignature}
                   onChange={(signature) => onUpdate('constructorSignature', signature)}
                   placeholder="Draw or type constructor signature"
                   required={true}
                 />
-              </GlassCard>
+              </div>
             </div>
           </CollapsibleContent>
         </Collapsible>
@@ -774,34 +759,23 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
         <Collapsible open={openSections.inspector} onOpenChange={() => toggleSection('inspector')}>
           {isMobile ? (
             <CollapsibleTrigger className="w-full">
-              <div className="flex items-center gap-3 py-4 px-4 mx-4 my-1 rounded-xl bg-white/[0.04] border border-white/[0.08]">
-                <div className="h-10 w-10 rounded-xl bg-green-500/15 flex items-center justify-center shrink-0">
-                  <UserCheck className="h-5 w-5 text-green-400" />
-                </div>
-                <div className="flex-1 text-left min-w-0">
-                  <h3 className="font-semibold text-foreground">Inspector Declaration</h3>
-                  <span className="text-xs text-white">
-                    {getCompletionPercentage('inspector')}% complete
-                  </span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
-                    openSections.inspector && 'rotate-180'
-                  )}
-                />
-              </div>
-            </CollapsibleTrigger>
-          ) : (
-            <CollapsibleTrigger className="w-full">
-              <SectionHeader
+              <SectionTitle
+                icon={UserCheck}
                 title="Inspector Declaration"
-                icon={Search}
+                color="amber"
                 isOpen={openSections.inspector}
-                color="amber-500"
-                completionPercentage={getCompletionPercentage('inspector')}
+                badge={`${getCompletionPercentage('inspector')}% complete`}
+                isMobile={isMobile}
               />
             </CollapsibleTrigger>
+          ) : (
+            <SectionHeader
+              title="Inspector Declaration"
+              icon={Search}
+              isOpen={openSections.inspector}
+              color="amber-500"
+              completionPercentage={getCompletionPercentage('inspector')}
+            />
           )}
           <CollapsibleContent>
             <div className={cn('space-y-5', isMobile ? 'px-4 py-4' : 'p-4 sm:p-5')}>
@@ -833,13 +807,8 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
               </label>
 
               {/* Declaration Text */}
-              <GlassCard
-                className={cn(
-                  'bg-amber-500/5 border-amber-500/20',
-                  formData.sameAsConstructor && 'opacity-50'
-                )}
-              >
-                <p className="text-xs text-white/70 leading-relaxed">
+              {isMobile ? (
+                <p className={cn('text-xs text-white leading-relaxed', formData.sameAsConstructor && 'opacity-50')}>
                   I being the person responsible for the inspection & testing of the electrical
                   installation, having exercised reasonable skill and care when carrying out the
                   inspection & testing hereby CERTIFY that the work for which I have been
@@ -855,18 +824,43 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                   />{' '}
                   except for the departures, if any, detailed below.
                 </p>
-              </GlassCard>
+              ) : (
+                <div
+                  className={cn(
+                    'bg-amber-500/5 border-amber-500/20 border rounded-xl p-5',
+                    formData.sameAsConstructor && 'opacity-50'
+                  )}
+                >
+                  <p className="text-xs text-white leading-relaxed">
+                    I being the person responsible for the inspection & testing of the electrical
+                    installation, having exercised reasonable skill and care when carrying out the
+                    inspection & testing hereby CERTIFY that the work for which I have been
+                    responsible is to the best of my knowledge and belief in accordance with{' '}
+                    <span className="text-amber-400 font-medium">BS 7671:2018</span>, amended to{' '}
+                    <Input
+                      id="inspectorBs7671Date"
+                      value={formData.inspectorBs7671Date || ''}
+                      onChange={(e) => onUpdate('inspectorBs7671Date', e.target.value)}
+                      placeholder="date"
+                      disabled={formData.sameAsConstructor}
+                      className="inline-block w-24 h-7 text-xs px-2 bg-white/5 border-amber-500/30 focus:border-amber-500 rounded-lg disabled:opacity-50"
+                    />{' '}
+                    except for the departures, if any, detailed below.
+                  </p>
+                </div>
+              )}
 
               {/* Departures */}
-              <GlassCard
-                color="amber"
-                className={cn(formData.sameAsConstructor && 'opacity-50 pointer-events-none')}
+              <div
+                className={cn(
+                  'space-y-4',
+                  formData.sameAsConstructor && 'opacity-50 pointer-events-none'
+                )}
               >
-                <SubSectionHeader
-                  icon={FileWarning}
-                  title="Departures from BS 7671"
-                  color="amber-400"
-                />
+                <h4 className="text-sm font-semibold text-amber-400 flex items-center gap-2 border-b border-white/10 pb-2">
+                  <FileWarning className="h-4 w-4" />
+                  Departures from BS 7671
+                </h4>
                 <div className="space-y-2.5">
                   <Label className="text-sm text-white">
                     Details of departures (Regs 120.3, 133.1.3, 133.5):
@@ -878,18 +872,23 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                     placeholder="Enter departures or 'None'"
                     rows={2}
                     disabled={formData.sameAsConstructor}
-                    className="text-base touch-manipulation min-h-[70px] bg-white/[0.03] border-white/10 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl"
+                    className="text-base touch-manipulation min-h-[70px]"
                   />
                 </div>
-              </GlassCard>
+              </div>
 
               {/* Signatory Details */}
-              <GlassCard
-                color="amber"
-                className={cn(formData.sameAsConstructor && 'opacity-50 pointer-events-none')}
+              <div
+                className={cn(
+                  'space-y-4',
+                  formData.sameAsConstructor && 'opacity-50 pointer-events-none'
+                )}
               >
-                <div className="flex items-center justify-between mb-4">
-                  <SubSectionHeader icon={User} title="Signatory Details" color="amber-400" />
+                <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                  <h4 className="text-sm font-semibold text-amber-400 flex items-center gap-2">
+                    <User className="h-4 w-4" />
+                    Signatory Details
+                  </h4>
                   <Button
                     onClick={() => handleFillFromProfile('inspector')}
                     variant="outline"
@@ -913,7 +912,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                         onChange={(e) => onUpdate('inspectorName', e.target.value)}
                         disabled={formData.sameAsConstructor}
                         className={cn(
-                          'h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl',
+                          'h-11 text-base touch-manipulation',
                           !formData.inspectorName && 'border-red-500/30'
                         )}
                       />
@@ -926,7 +925,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                         value={formData.inspectorCompany || ''}
                         onChange={(e) => onUpdate('inspectorCompany', e.target.value)}
                         disabled={formData.sameAsConstructor}
-                        className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl"
+                        className="h-11 text-base touch-manipulation"
                       />
                     </div>
                   </div>
@@ -941,7 +940,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                       placeholder="Full business address"
                       rows={2}
                       disabled={formData.sameAsConstructor}
-                      className="text-base touch-manipulation min-h-[70px] bg-white/[0.03] border-white/10 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl"
+                      className="text-base touch-manipulation min-h-[70px]"
                     />
                   </div>
 
@@ -955,7 +954,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                         onChange={(e) => onUpdate('inspectorPostcode', e.target.value)}
                         placeholder="AB1 2CD"
                         disabled={formData.sameAsConstructor}
-                        className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl"
+                        className="h-11 text-base touch-manipulation"
                       />
                     </div>
                     <div className="space-y-2.5">
@@ -967,7 +966,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                         onChange={(e) => onUpdate('inspectorPhone', e.target.value)}
                         placeholder="Phone number"
                         disabled={formData.sameAsConstructor}
-                        className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl"
+                        className="h-11 text-base touch-manipulation"
                       />
                     </div>
                     <div className="space-y-2.5">
@@ -978,16 +977,19 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                         value={formData.inspectorDate || new Date().toISOString().split('T')[0]}
                         onChange={(e) => onUpdate('inspectorDate', e.target.value)}
                         disabled={formData.sameAsConstructor}
-                        className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl"
+                        className="h-11 text-base touch-manipulation"
                       />
                     </div>
                   </div>
                 </div>
-              </GlassCard>
+              </div>
 
               {/* Next Inspection */}
-              <GlassCard color="purple">
-                <SubSectionHeader icon={Calendar} title="Next Inspection" color="purple-400" />
+              <div className="space-y-4">
+                <h4 className="text-sm font-semibold text-purple-400 flex items-center gap-2 border-b border-white/10 pb-2">
+                  <Calendar className="h-4 w-4" />
+                  Next Inspection
+                </h4>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2.5">
                     <Label className="text-sm text-white">Interval (months)</Label>
@@ -998,7 +1000,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                       value={formData.nextInspectionInterval || ''}
                       onChange={(e) => onUpdate('nextInspectionInterval', e.target.value)}
                       placeholder="e.g., 60"
-                      className="h-12 text-base touch-manipulation"
+                      className="h-11 text-base touch-manipulation"
                     />
                     <p className="text-xs text-white">60m domestic, 12-60m commercial</p>
                   </div>
@@ -1009,19 +1011,18 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                       type="date"
                       value={formData.nextInspectionDate || ''}
                       onChange={(e) => onUpdate('nextInspectionDate', e.target.value)}
-                      className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-purple-500 focus:ring-purple-500/20 rounded-xl"
+                      className="h-11 text-base touch-manipulation"
                     />
                   </div>
                 </div>
-              </GlassCard>
+              </div>
 
               {/* Comments on Existing Installation */}
-              <GlassCard color="orange">
-                <SubSectionHeader
-                  icon={ClipboardCheck}
-                  title="Comments on Existing Installation"
-                  color="orange-400"
-                />
+              <div className="space-y-4">
+                <h4 className="text-sm font-semibold text-orange-400 flex items-center gap-2 border-b border-white/10 pb-2">
+                  <ClipboardCheck className="h-4 w-4" />
+                  Comments on Existing Installation
+                </h4>
                 <div className="space-y-2.5">
                   <Label className="text-sm text-white">
                     Record observations about the existing installation (for additions/alterations):
@@ -1032,24 +1033,29 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                     onChange={(e) => onUpdate('existingInstallationComments', e.target.value)}
                     placeholder="Any observations affecting the new work..."
                     rows={3}
-                    className="text-base touch-manipulation min-h-[80px] bg-white/[0.03] border-white/10 focus:border-orange-500 focus:ring-orange-500/20 rounded-xl"
+                    className="text-base touch-manipulation min-h-[80px]"
                   />
                 </div>
-              </GlassCard>
+              </div>
 
               {/* Signature */}
-              <GlassCard
-                color="amber"
-                className={cn(formData.sameAsConstructor && 'opacity-50 pointer-events-none')}
+              <div
+                className={cn(
+                  'space-y-4',
+                  formData.sameAsConstructor && 'opacity-50 pointer-events-none'
+                )}
               >
-                <SubSectionHeader icon={PenTool} title="Digital Signature *" color="amber-400" />
+                <h4 className="text-sm font-semibold text-amber-400 flex items-center gap-2 border-b border-white/10 pb-2">
+                  <PenTool className="h-4 w-4" />
+                  Digital Signature *
+                </h4>
                 <SignatureInput
                   value={formData.inspectorSignature}
                   onChange={(signature) => onUpdate('inspectorSignature', signature)}
                   placeholder="Draw or type inspector signature"
                   required={true}
                 />
-              </GlassCard>
+              </div>
             </div>
           </CollapsibleContent>
         </Collapsible>
@@ -1063,33 +1069,22 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
         >
           {isMobile ? (
             <CollapsibleTrigger className="w-full">
-              <div className="flex items-center gap-3 py-4 px-4 mx-4 my-1 rounded-xl bg-white/[0.04] border border-white/[0.08]">
-                <div className="h-10 w-10 rounded-xl bg-purple-500/15 flex items-center justify-center shrink-0">
-                  <ClipboardCheck className="h-5 w-5 text-purple-400" />
-                </div>
-                <div className="flex-1 text-left min-w-0">
-                  <h3 className="font-semibold text-foreground">Inspected By</h3>
-                  <span className="text-xs text-white">
-                    Certificate signatory details
-                  </span>
-                </div>
-                <ChevronDown
-                  className={cn(
-                    'h-5 w-5 text-muted-foreground transition-transform shrink-0',
-                    openSections.inspectedBy && 'rotate-180'
-                  )}
-                />
-              </div>
-            </CollapsibleTrigger>
-          ) : (
-            <CollapsibleTrigger className="w-full">
-              <SectionHeader
-                title="Inspected By"
+              <SectionTitle
                 icon={ClipboardCheck}
+                title="Inspected By"
+                color="purple"
                 isOpen={openSections.inspectedBy}
-                color="purple-500"
+                badge="Certificate signatory details"
+                isMobile={isMobile}
               />
             </CollapsibleTrigger>
+          ) : (
+            <SectionHeader
+              title="Inspected By"
+              icon={ClipboardCheck}
+              isOpen={openSections.inspectedBy}
+              color="purple-500"
+            />
           )}
           <CollapsibleContent>
             <div className={cn('space-y-5', isMobile ? 'px-4 py-4' : 'p-4 sm:p-5')}>
@@ -1117,11 +1112,16 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
               </label>
 
               {/* Inspected By Details */}
-              <GlassCard
-                color="purple"
-                className={cn(formData.eicSameAsInspectedBy && 'opacity-50 pointer-events-none')}
+              <div
+                className={cn(
+                  'space-y-4',
+                  formData.eicSameAsInspectedBy && 'opacity-50 pointer-events-none'
+                )}
               >
-                <SubSectionHeader icon={User} title="Signatory Details" color="purple-400" />
+                <h4 className="text-sm font-semibold text-purple-400 flex items-center gap-2 border-b border-white/10 pb-2">
+                  <User className="h-4 w-4" />
+                  Signatory Details
+                </h4>
                 <div className="space-y-5">
                   {/* Name */}
                   <div className="space-y-2.5">
@@ -1132,7 +1132,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                       value={formData.inspectedByName || ''}
                       onChange={(e) => onUpdate('inspectedByName', e.target.value)}
                       disabled={formData.eicSameAsInspectedBy}
-                      className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-purple-500 focus:ring-purple-500/20 rounded-xl"
+                      className="h-11 text-base touch-manipulation"
                     />
                   </div>
 
@@ -1145,7 +1145,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                       value={formData.inspectedByPosition || ''}
                       onChange={(e) => onUpdate('inspectedByPosition', e.target.value)}
                       disabled={formData.eicSameAsInspectedBy}
-                      className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-purple-500 focus:ring-purple-500/20 rounded-xl"
+                      className="h-11 text-base touch-manipulation"
                     />
                   </div>
 
@@ -1158,7 +1158,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                       value={formData.inspectedByForOnBehalfOf || ''}
                       onChange={(e) => onUpdate('inspectedByForOnBehalfOf', e.target.value)}
                       disabled={formData.eicSameAsInspectedBy}
-                      className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-purple-500 focus:ring-purple-500/20 rounded-xl"
+                      className="h-11 text-base touch-manipulation"
                     />
                   </div>
 
@@ -1172,7 +1172,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                       placeholder="Full business address including postcode"
                       rows={2}
                       disabled={formData.eicSameAsInspectedBy}
-                      className="text-base touch-manipulation min-h-[70px] bg-white/[0.03] border-white/10 focus:border-purple-500 focus:ring-purple-500/20 rounded-xl"
+                      className="text-base touch-manipulation min-h-[70px]"
                     />
                   </div>
 
@@ -1205,27 +1205,32 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
                       onChange={(e) => onUpdate('inspectedByCpScheme', e.target.value)}
                       disabled={formData.eicSameAsInspectedBy || formData.inspectedByCpSchemeNA}
                       className={cn(
-                        'h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-purple-500 focus:ring-purple-500/20 rounded-xl',
+                        'h-11 text-base touch-manipulation',
                         formData.inspectedByCpSchemeNA && 'opacity-50'
                       )}
                     />
                   </div>
                 </div>
-              </GlassCard>
+              </div>
 
               {/* Signature */}
-              <GlassCard
-                color="purple"
-                className={cn(formData.eicSameAsInspectedBy && 'opacity-50 pointer-events-none')}
+              <div
+                className={cn(
+                  'space-y-4',
+                  formData.eicSameAsInspectedBy && 'opacity-50 pointer-events-none'
+                )}
               >
-                <SubSectionHeader icon={PenTool} title="Signature" color="purple-400" />
+                <h4 className="text-sm font-semibold text-purple-400 flex items-center gap-2 border-b border-white/10 pb-2">
+                  <PenTool className="h-4 w-4" />
+                  Signature
+                </h4>
                 <SignatureInput
                   value={formData.inspectedBySignature}
                   onChange={(signature) => onUpdate('inspectedBySignature', signature)}
                   placeholder="Draw or type signature"
                   required={false}
                 />
-              </GlassCard>
+              </div>
             </div>
           </CollapsibleContent>
         </Collapsible>
@@ -1233,7 +1238,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
 
       {/* Final Validation Summary */}
       {allDeclarationsComplete ? (
-        <GlassCard className="border-green-500/30 bg-green-500/10">
+        <div className={cn('border-green-500/30 bg-green-500/10 border rounded-xl p-5', isMobile && 'mx-4')}>
           <div className="flex gap-3">
             <div className="p-2 rounded-lg bg-green-500/20 h-fit">
               <FileCheck className="h-5 w-5 text-green-400" />
@@ -1246,9 +1251,9 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
               </p>
             </div>
           </div>
-        </GlassCard>
+        </div>
       ) : (
-        <GlassCard className="border-amber-500/30 bg-amber-500/10">
+        <div className={cn('border-amber-500/30 bg-amber-500/10 border rounded-xl p-5', isMobile && 'mx-4')}>
           <div className="flex gap-3">
             <div className="p-2 rounded-lg bg-amber-500/20 h-fit">
               <AlertTriangle className="h-5 w-5 text-amber-400" />
@@ -1261,7 +1266,7 @@ const EICDeclarations: React.FC<EICDeclarationsProps> = ({ formData, onUpdate })
               </p>
             </div>
           </div>
-        </GlassCard>
+        </div>
       )}
     </div>
   );

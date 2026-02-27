@@ -215,7 +215,7 @@ export default function MentalHealthModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-3">
@@ -240,7 +240,7 @@ export default function MentalHealthModule3Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Suicide Awareness &amp; Prevention
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             UK suicide statistics, construction industry rates, risk factors and protective factors,
             warning signs, myths about suicide, means restriction, and the role of the Mental Health
             First Aider in suicide prevention
@@ -253,7 +253,7 @@ export default function MentalHealthModule3Section3() {
             <Heart className="h-5 w-5 text-purple-400 mt-0.5 flex-shrink-0" />
             <div>
               <p className="text-sm font-medium text-purple-400 mb-1">Sensitive Topic</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 This section covers suicide awareness and prevention. The content is factual,
                 evidence-based, and written with compassion. If you find any of this material
                 distressing, you can take a break at any time. If you or someone you know is
@@ -341,19 +341,19 @@ export default function MentalHealthModule3Section3() {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <div className="bg-purple-500/10 border border-purple-500/30 p-3 rounded-lg text-center">
                   <p className="text-2xl font-bold text-purple-400">~6,000</p>
-                  <p className="text-[11px] text-white/60">Suicides per year in the UK</p>
+                  <p className="text-[11px] text-white">Suicides per year in the UK</p>
                 </div>
                 <div className="bg-purple-500/10 border border-purple-500/30 p-3 rounded-lg text-center">
                   <p className="text-2xl font-bold text-purple-400">~75%</p>
-                  <p className="text-[11px] text-white/60">Of suicides are male</p>
+                  <p className="text-[11px] text-white">Of suicides are male</p>
                 </div>
                 <div className="bg-purple-500/10 border border-purple-500/30 p-3 rounded-lg text-center">
                   <p className="text-2xl font-bold text-purple-400">45&ndash;49</p>
-                  <p className="text-[11px] text-white/60">Highest rate age group (men)</p>
+                  <p className="text-[11px] text-white">Highest rate age group (men)</p>
                 </div>
                 <div className="bg-red-500/10 border border-red-500/30 p-3 rounded-lg text-center">
                   <p className="text-2xl font-bold text-red-400">3.7&times;</p>
-                  <p className="text-[11px] text-white/60">Construction vs national average</p>
+                  <p className="text-[11px] text-white">Construction vs national average</p>
                 </div>
               </div>
 
@@ -364,7 +364,7 @@ export default function MentalHealthModule3Section3() {
                     ONS Data &mdash; Key Findings
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   {[
                     'Approximately 6,000 people die by suicide each year in the UK — that is around 16 people every day',
                     'Male suicides account for approximately three-quarters of all suicides — this disparity has been consistent for decades',
@@ -389,7 +389,7 @@ export default function MentalHealthModule3Section3() {
                     Construction Industry &mdash; Highest Risk
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-4">
+                <p className="text-sm text-white mb-4">
                   Construction has the{' '}
                   <strong className="text-white">highest suicide rate of any UK industry</strong>.
                   ONS data shows that men working in construction are approximately{' '}
@@ -400,7 +400,7 @@ export default function MentalHealthModule3Section3() {
                   <p className="text-sm font-medium text-white mb-2">
                     Why Is Construction So High-Risk?
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     {[
                       'Predominantly male workforce — male gender is a risk factor for suicide in the UK',
                       "Deeply embedded culture of stoicism — 'man up' attitudes discourage help-seeking",
@@ -554,7 +554,7 @@ export default function MentalHealthModule3Section3() {
                         >
                           {item.factor}
                         </p>
-                        <p className="text-sm text-white/70 mt-0.5">{item.detail}</p>
+                        <p className="text-sm text-white mt-0.5">{item.detail}</p>
                       </div>
                     </div>
                   ))}
@@ -671,7 +671,7 @@ export default function MentalHealthModule3Section3() {
                       <item.icon className={`h-5 w-5 ${item.colour}`} />
                       <p className={`text-sm font-medium ${item.colour}`}>{item.factor}</p>
                     </div>
-                    <p className="text-sm text-white/80">{item.detail}</p>
+                    <p className="text-sm text-white">{item.detail}</p>
                   </div>
                 ))}
               </div>
@@ -793,7 +793,7 @@ export default function MentalHealthModule3Section3() {
                         >
                           {item.sign}
                         </p>
-                        <p className="text-sm text-white/70 mt-0.5">{item.detail}</p>
+                        <p className="text-sm text-white mt-0.5">{item.detail}</p>
                       </div>
                     </div>
                   ))}
@@ -813,7 +813,7 @@ export default function MentalHealthModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">What to Look for on Site</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   {[
                     'Changes in work performance — becoming careless, missing deadlines, or losing interest',
                     'Arriving late or not turning up, particularly if previously reliable',
@@ -896,7 +896,7 @@ export default function MentalHealthModule3Section3() {
                               {item.mythLabel}
                             </span>
                           </div>
-                          <p className="text-sm text-white/80 italic">&ldquo;{item.myth}&rdquo;</p>
+                          <p className="text-sm text-white italic">&ldquo;{item.myth}&rdquo;</p>
                         </div>
                       </div>
                       {/* Fact */}
@@ -908,7 +908,7 @@ export default function MentalHealthModule3Section3() {
                               FACT
                             </span>
                           </div>
-                          <p className="text-sm text-white/80">{item.fact}</p>
+                          <p className="text-sm text-white">{item.fact}</p>
                         </div>
                       </div>
                     </div>
@@ -934,7 +934,7 @@ export default function MentalHealthModule3Section3() {
               {/* Additional Myths */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">More Myths to Be Aware Of</p>
-                <ul className="text-sm text-white/80 space-y-3">
+                <ul className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <Ban className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -998,7 +998,7 @@ export default function MentalHealthModule3Section3() {
                   <Shield className="h-6 w-6 text-green-400" />
                   <p className="text-base font-bold text-green-400">Why Means Restriction Works</p>
                 </div>
-                <div className="text-sm text-white/80 space-y-3">
+                <div className="text-sm text-white space-y-3">
                   <p>
                     Research consistently shows that suicidal crises are usually{' '}
                     <strong className="text-white">brief and time-limited</strong>. The period of
@@ -1026,7 +1026,7 @@ export default function MentalHealthModule3Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Evidence for Means Restriction
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   {[
                     'Barriers on bridges — installing barriers at known suicide locations has consistently reduced deaths, without significant increases at nearby locations',
                     'Medication packaging — the switch from bottles to blister packs for paracetamol in the UK (1998) led to a significant reduction in paracetamol-related suicide deaths',
@@ -1047,7 +1047,7 @@ export default function MentalHealthModule3Section3() {
                   <Lock className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Safe Storage of Medications</p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Safe storage of medications is a simple but effective means restriction measure.
                     On construction sites, this includes:
@@ -1074,7 +1074,7 @@ export default function MentalHealthModule3Section3() {
                   <Shield className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">Barriers at Heights</p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Falls from height are a recognised method of suicide. On construction sites,
                     workers have regular access to elevated positions — scaffolding, rooftops, open
@@ -1104,7 +1104,7 @@ export default function MentalHealthModule3Section3() {
                     Construction Site Considerations
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-3">
+                <div className="text-sm text-white space-y-3">
                   <p>
                     Construction sites present unique means restriction challenges because the
                     working environment inherently includes access to heights, tools, and
@@ -1113,7 +1113,7 @@ export default function MentalHealthModule3Section3() {
                   <div className="grid sm:grid-cols-3 gap-3">
                     <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                       <p className="text-xs font-semibold text-red-300 mb-2">Access to Heights</p>
-                      <ul className="text-xs text-white/70 space-y-1">
+                      <ul className="text-xs text-white space-y-1">
                         <li className="flex items-start gap-1.5">
                           <span className="mt-1 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                           <span>Scaffolding and working platforms</span>
@@ -1136,7 +1136,7 @@ export default function MentalHealthModule3Section3() {
                       <p className="text-xs font-semibold text-red-300 mb-2">
                         Tools &amp; Equipment
                       </p>
-                      <ul className="text-xs text-white/70 space-y-1">
+                      <ul className="text-xs text-white space-y-1">
                         <li className="flex items-start gap-1.5">
                           <span className="mt-1 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                           <span>Cutting tools and power tools</span>
@@ -1157,7 +1157,7 @@ export default function MentalHealthModule3Section3() {
                     </div>
                     <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                       <p className="text-xs font-semibold text-red-300 mb-2">Substances</p>
-                      <ul className="text-xs text-white/70 space-y-1">
+                      <ul className="text-xs text-white space-y-1">
                         <li className="flex items-start gap-1.5">
                           <span className="mt-1 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                           <span>COSHH chemicals and solvents</span>
@@ -1188,7 +1188,7 @@ export default function MentalHealthModule3Section3() {
                     The Role of the MHFA in Encouraging Safer Environments
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     As a Mental Health First Aider, you can advocate for means restriction on your
                     site. This does not mean implementing changes yourself — it means raising
@@ -1208,7 +1208,7 @@ export default function MentalHealthModule3Section3() {
                         <span className="flex items-center justify-center w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex-shrink-0">
                           {i + 1}
                         </span>
-                        <p className="text-sm text-white/80">{item}</p>
+                        <p className="text-sm text-white">{item}</p>
                       </div>
                     ))}
                   </div>
@@ -1241,27 +1241,27 @@ export default function MentalHealthModule3Section3() {
             <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
               <p className="text-sm font-medium text-white">Samaritans</p>
               <p className="text-purple-300 font-bold">116 123</p>
-              <p className="text-xs text-white/60">Free from any phone, 24 hours, 7 days</p>
+              <p className="text-xs text-white">Free from any phone, 24 hours, 7 days</p>
             </div>
             <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
               <p className="text-sm font-medium text-white">SHOUT Crisis Text Line</p>
               <p className="text-purple-300 font-bold">Text &ldquo;SHOUT&rdquo; to 85258</p>
-              <p className="text-xs text-white/60">Free, 24/7, confidential</p>
+              <p className="text-xs text-white">Free, 24/7, confidential</p>
             </div>
             <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
               <p className="text-sm font-medium text-white">
                 CALM (Campaign Against Living Miserably)
               </p>
               <p className="text-purple-300 font-bold">0800 58 58 58</p>
-              <p className="text-xs text-white/60">For men, 5pm&ndash;midnight daily</p>
+              <p className="text-xs text-white">For men, 5pm&ndash;midnight daily</p>
             </div>
             <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
               <p className="text-sm font-medium text-white">Lighthouse Club (Construction)</p>
               <p className="text-purple-300 font-bold">0345 605 1956</p>
-              <p className="text-xs text-white/60">Construction-specific, 24/7</p>
+              <p className="text-xs text-white">Construction-specific, 24/7</p>
             </div>
           </div>
-          <p className="text-xs text-white/50 mt-3">
+          <p className="text-xs text-white mt-3">
             In an immediate emergency where someone has harmed themselves or is about to, always
             call <strong className="text-white">999</strong>.
           </p>
@@ -1274,7 +1274,7 @@ export default function MentalHealthModule3Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1288,7 +1288,7 @@ export default function MentalHealthModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-3">

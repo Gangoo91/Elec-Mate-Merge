@@ -272,7 +272,7 @@ const Level3Module7Section5_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section5">
@@ -436,7 +436,7 @@ const Level3Module7Section5_1 = () => {
               leader".
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> "Completed domestic rewires and consumer unit upgrades,
               including Part P certification. Experience with solar PV installations and EV charger
               installations. Competent with Fluke testing equipment."
@@ -511,19 +511,19 @@ const Level3Module7Section5_1 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Before</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Plan route, arrive 10 min early, have documents ready
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">During</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Listen carefully, answer clearly, ask questions
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">After</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Send thank you, confirm interest, follow up if needed
                 </p>
               </div>
@@ -541,7 +541,7 @@ const Level3Module7Section5_1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>After the interview:</strong> Send a brief thank you email within 24 hours.
               Reiterate your interest and mention any key points from the discussion. If you don't
               hear back by the indicated time, a polite follow-up is appropriate.
@@ -603,7 +603,7 @@ const Level3Module7Section5_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -650,7 +650,7 @@ const Level3Module7Section5_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section5">

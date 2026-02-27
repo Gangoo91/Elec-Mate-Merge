@@ -239,7 +239,7 @@ const FirstAidModule4Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-4">
@@ -263,7 +263,7 @@ const FirstAidModule4Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Heat Exhaustion, Heat Stroke &amp; Hypothermia
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Recognising and treating temperature-related emergencies &mdash; from overheating on
             summer sites to hypothermia during winter outdoor work
           </p>
@@ -364,7 +364,7 @@ const FirstAidModule4Section4 = () => {
                   ].map((cause, idx) => (
                     <div key={idx} className="flex items-start gap-2 text-sm">
                       <div className="w-2 h-2 rounded-full bg-rose-400 mt-2 flex-shrink-0" />
-                      <span className="text-white/80">{cause}</span>
+                      <span className="text-white">{cause}</span>
                     </div>
                   ))}
                 </div>
@@ -372,7 +372,7 @@ const FirstAidModule4Section4 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-rose-300 font-medium mb-3">Recognition</h3>
-                <p className="text-white/60 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   A casualty suffering from heat exhaustion may display some or all of the following
                   signs and symptoms:
                 </p>
@@ -391,7 +391,7 @@ const FirstAidModule4Section4 = () => {
                   ].map((sign, idx) => (
                     <div key={idx} className="flex items-start gap-2 text-sm">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
-                      <span className="text-white/80">{sign}</span>
+                      <span className="text-white">{sign}</span>
                     </div>
                   ))}
                 </div>
@@ -463,7 +463,7 @@ const FirstAidModule4Section4 = () => {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">If NOT Improving Within 30 Minutes</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   If the casualty does not improve within 30 minutes of starting treatment, or if
                   they deteriorate (especially developing confusion or altered consciousness),{' '}
                   <strong className="text-white">call 999 immediately</strong>. They may be
@@ -495,7 +495,7 @@ const FirstAidModule4Section4 = () => {
 
               <div className="bg-white/5 border border-blue-400/30 p-4 rounded-lg">
                 <h3 className={`${headingColours[1]} font-medium mb-3`}>Recognition</h3>
-                <p className="text-white/60 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Heat stroke may develop from worsening heat exhaustion or present suddenly. Key
                   signs include:
                 </p>
@@ -514,7 +514,7 @@ const FirstAidModule4Section4 = () => {
                   ].map((sign, idx) => (
                     <div key={idx} className="flex items-start gap-2 text-sm">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
-                      <span className="text-white/80">{sign}</span>
+                      <span className="text-white">{sign}</span>
                     </div>
                   ))}
                 </div>
@@ -564,7 +564,7 @@ const FirstAidModule4Section4 = () => {
                     </span>
                   </li>
                 </ul>
-                <div className="ml-10 mt-2 space-y-1 text-sm text-white/80">
+                <div className="ml-10 mt-2 space-y-1 text-sm text-white">
                   <p>&bull; Cold water immersion if possible (most effective method)</p>
                   <p>
                     &bull; Cold/ice packs to the neck, armpits, and groin (large blood vessels near
@@ -601,7 +601,7 @@ const FirstAidModule4Section4 = () => {
 
               <div className="bg-white/5 border border-rose-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-rose-400">Why Rapid Cooling Is Critical</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Every minute of elevated core temperature above 40&deg;C causes progressive damage
                   to the brain and internal organs. Studies show that cooling within 30 minutes of
                   collapse reduces mortality from heat stroke to near zero, while delays beyond this
@@ -641,7 +641,7 @@ const FirstAidModule4Section4 = () => {
                     <Sun className="h-5 w-5 text-amber-400" />
                     <h3 className="font-semibold text-amber-300 text-base">Heat Exhaustion</h3>
                   </div>
-                  <ul className="space-y-2 text-sm text-white/80">
+                  <ul className="space-y-2 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>
@@ -691,7 +691,7 @@ const FirstAidModule4Section4 = () => {
                     <AlertTriangle className="h-5 w-5 text-red-400" />
                     <h3 className="font-semibold text-red-300 text-base">Heat Stroke</h3>
                   </div>
-                  <ul className="space-y-2 text-sm text-white/80">
+                  <ul className="space-y-2 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
                       <span>
@@ -743,7 +743,7 @@ const FirstAidModule4Section4 = () => {
                     When in Doubt &mdash; Treat as Heat Stroke
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   If you are unsure whether a casualty has heat exhaustion or heat stroke, always
                   treat as heat stroke. Start rapid cooling and call 999. It is far better to
                   over-treat heat exhaustion than to under-treat heat stroke. The presence of
@@ -790,7 +790,7 @@ const FirstAidModule4Section4 = () => {
                   ].map((cause, idx) => (
                     <div key={idx} className="flex items-start gap-2 text-sm">
                       <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0" />
-                      <span className="text-white/80">{cause}</span>
+                      <span className="text-white">{cause}</span>
                     </div>
                   ))}
                 </div>
@@ -811,7 +811,7 @@ const FirstAidModule4Section4 = () => {
                       <span className="text-blue-400/70 text-xs">35&deg;C &ndash; 32&deg;C</span>
                     </div>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                       <span>
@@ -850,7 +850,7 @@ const FirstAidModule4Section4 = () => {
                       <span className="text-indigo-400/70 text-xs">32&deg;C &ndash; 28&deg;C</span>
                     </div>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-indigo-400 flex-shrink-0" />
                       <span>
@@ -893,7 +893,7 @@ const FirstAidModule4Section4 = () => {
                       <span className="text-purple-400/70 text-xs">Below 28&deg;C</span>
                     </div>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>
@@ -1125,11 +1125,11 @@ const FirstAidModule4Section4 = () => {
 
               <div className="bg-white/5 border border-cyan-400/30 p-4 rounded-lg">
                 <h3 className={`${headingColours[4]} font-medium mb-2`}>Understanding Afterdrop</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Afterdrop is the phenomenon where core body temperature continues to fall even
                   after the casualty has been removed from the cold. It occurs because:
                 </p>
-                <ul className="text-white/80 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <span className="text-cyan-400 font-mono text-xs mt-0.5 flex-shrink-0 w-4 text-right">
                       1
@@ -1195,7 +1195,7 @@ const FirstAidModule4Section4 = () => {
 
               <div className="bg-white/5 border border-amber-400/30 p-4 rounded-lg">
                 <h3 className={`${headingColours[5]} font-medium mb-3`}>Recognition</h3>
-                <p className="text-white/60 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Frostbite develops progressively through the following stages:
                 </p>
                 <ul className="text-white space-y-3 text-sm">
@@ -1306,7 +1306,7 @@ const FirstAidModule4Section4 = () => {
                     Do NOT Rewarm If Risk of Refreezing
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   If there is any possibility that the frostbitten tissue may refreeze (for example,
                   if the casualty may need to go back outside before rescue arrives), do NOT attempt
                   to rewarm it. Refreezing after thawing causes dramatically worse tissue damage
@@ -1331,7 +1331,7 @@ const FirstAidModule4Section4 = () => {
                         Summer &mdash; Preventing Heat Illness
                       </h4>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                         <span>
@@ -1377,7 +1377,7 @@ const FirstAidModule4Section4 = () => {
                         Winter &mdash; Preventing Cold Injury
                       </h4>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                         <span>
@@ -1433,7 +1433,7 @@ const FirstAidModule4Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1451,7 +1451,7 @@ const FirstAidModule4Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-4">

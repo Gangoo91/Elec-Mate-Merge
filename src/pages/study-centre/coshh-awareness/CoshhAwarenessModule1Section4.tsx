@@ -197,7 +197,7 @@ export default function CoshhAwarenessModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-1">
@@ -222,7 +222,7 @@ export default function CoshhAwarenessModule1Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Health Effects of Hazardous Substances
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How hazardous substances damage the body, the difference between acute and chronic
             effects, occupational diseases of the lungs and skin, cancers, sensitisation, and why
             individual susceptibility matters
@@ -303,12 +303,12 @@ export default function CoshhAwarenessModule1Section4() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-violet-500/10 border border-violet-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-violet-400 mb-3">Acute Effects</p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Appear <strong className="text-white">rapidly</strong> &mdash; within minutes,
                     hours, or days &mdash; after a single or short-term exposure. They are usually
                     obvious and can often be treated if action is taken promptly.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400/60 flex-shrink-0" />
                       <span>Chemical burns to skin or eyes</span>
@@ -342,12 +342,12 @@ export default function CoshhAwarenessModule1Section4() {
 
                 <div className="bg-violet-500/10 border border-violet-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-violet-400 mb-3">Chronic Effects</p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Develop <strong className="text-white">gradually</strong> over weeks, months, or
                     years of repeated or prolonged exposure. Often irreversible by the time they are
                     detected.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400/60 flex-shrink-0" />
                       <span>Cancer (lung, bladder, skin, blood)</span>
@@ -385,7 +385,7 @@ export default function CoshhAwarenessModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-violet-400" />
                   <p className="text-sm font-medium text-violet-400">Key Point</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Many hazardous substances can cause <strong className="text-white">both</strong>{' '}
                   acute and chronic effects. For example, a solvent may cause immediate dizziness
                   and headaches (acute) at high concentrations, but repeated lower-level exposure
@@ -406,7 +406,7 @@ export default function CoshhAwarenessModule1Section4() {
                 <div className="space-y-6 max-w-lg mx-auto">
                   {/* Acute timeline */}
                   <div>
-                    <p className="text-xs text-white/70 mb-2 font-medium">Acute Effects</p>
+                    <p className="text-xs text-white mb-2 font-medium">Acute Effects</p>
                     <div className="flex items-center gap-0">
                       <div className="flex-1">
                         <div className="relative h-8 bg-white/5 rounded-full overflow-hidden">
@@ -414,13 +414,13 @@ export default function CoshhAwarenessModule1Section4() {
                             className="absolute h-full rounded-full bg-violet-400/40 border border-violet-400/50"
                             style={{ left: '0%', width: '15%' }}
                           />
-                          <span className="absolute inset-0 flex items-center justify-center text-[10px] text-white/60">
+                          <span className="absolute inset-0 flex items-center justify-center text-[10px] text-white">
                             Seconds to days
                           </span>
                         </div>
                       </div>
                     </div>
-                    <div className="flex justify-between text-[10px] text-white/40 mt-1 px-1">
+                    <div className="flex justify-between text-[10px] text-white mt-1 px-1">
                       <span>Exposure</span>
                       <span>Hours</span>
                       <span>Days</span>
@@ -432,7 +432,7 @@ export default function CoshhAwarenessModule1Section4() {
 
                   {/* Chronic timeline */}
                   <div>
-                    <p className="text-xs text-white/70 mb-2 font-medium">Chronic Effects</p>
+                    <p className="text-xs text-white mb-2 font-medium">Chronic Effects</p>
                     <div className="flex items-center gap-0">
                       <div className="flex-1">
                         <div className="relative h-8 bg-white/5 rounded-full overflow-hidden">
@@ -440,13 +440,13 @@ export default function CoshhAwarenessModule1Section4() {
                             className="absolute h-full rounded-full bg-violet-600/50 border border-violet-600/60"
                             style={{ left: '40%', width: '60%' }}
                           />
-                          <span className="absolute inset-0 flex items-center justify-center text-[10px] text-white/60">
+                          <span className="absolute inset-0 flex items-center justify-center text-[10px] text-white">
                             Months to decades
                           </span>
                         </div>
                       </div>
                     </div>
-                    <div className="flex justify-between text-[10px] text-white/40 mt-1 px-1">
+                    <div className="flex justify-between text-[10px] text-white mt-1 px-1">
                       <span>Exposure</span>
                       <span>Hours</span>
                       <span>Days</span>
@@ -458,7 +458,7 @@ export default function CoshhAwarenessModule1Section4() {
 
                   {/* Cancer latency */}
                   <div>
-                    <p className="text-xs text-white/70 mb-2 font-medium">
+                    <p className="text-xs text-white mb-2 font-medium">
                       Occupational Cancer Latency
                     </p>
                     <div className="flex items-center gap-0">
@@ -468,13 +468,13 @@ export default function CoshhAwarenessModule1Section4() {
                             className="absolute h-full rounded-full bg-red-500/50 border border-red-500/60"
                             style={{ left: '50%', width: '50%' }}
                           />
-                          <span className="absolute inset-0 flex items-center justify-center text-[10px] text-white/60">
+                          <span className="absolute inset-0 flex items-center justify-center text-[10px] text-white">
                             10&ndash;40+ years after first exposure
                           </span>
                         </div>
                       </div>
                     </div>
-                    <div className="flex justify-between text-[10px] text-white/40 mt-1 px-1">
+                    <div className="flex justify-between text-[10px] text-white mt-1 px-1">
                       <span>Exposure</span>
                       <span>Hours</span>
                       <span>Days</span>
@@ -526,8 +526,8 @@ export default function CoshhAwarenessModule1Section4() {
                     <p className="text-sm font-medium text-violet-300 mb-1">
                       Lungs (Respiratory System)
                     </p>
-                    <p className="text-xs text-white/60 mb-2">Primary route: Inhalation</p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <p className="text-xs text-white mb-2">Primary route: Inhalation</p>
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-violet-400/60 flex-shrink-0" />
                         <span>Fibrosis (scarring) &mdash; silicosis, asbestosis</span>
@@ -546,10 +546,10 @@ export default function CoshhAwarenessModule1Section4() {
                   {/* Skin */}
                   <div className="bg-violet-500/10 border border-violet-500/30 rounded-lg p-3">
                     <p className="text-sm font-medium text-violet-300 mb-1">Skin</p>
-                    <p className="text-xs text-white/60 mb-2">
+                    <p className="text-xs text-white mb-2">
                       Primary route: Direct contact, absorption
                     </p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-violet-400/60 flex-shrink-0" />
                         <span>Chemical burns (acids, alkalis)</span>
@@ -568,10 +568,10 @@ export default function CoshhAwarenessModule1Section4() {
                   {/* Liver */}
                   <div className="bg-violet-500/10 border border-violet-500/30 rounded-lg p-3">
                     <p className="text-sm font-medium text-violet-300 mb-1">Liver</p>
-                    <p className="text-xs text-white/60 mb-2">
+                    <p className="text-xs text-white mb-2">
                       Primary route: Ingestion, absorption
                     </p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-violet-400/60 flex-shrink-0" />
                         <span>Hepatotoxicity &mdash; solvents (carbon tetrachloride)</span>
@@ -590,10 +590,10 @@ export default function CoshhAwarenessModule1Section4() {
                   {/* Kidneys */}
                   <div className="bg-violet-500/10 border border-violet-500/30 rounded-lg p-3">
                     <p className="text-sm font-medium text-violet-300 mb-1">Kidneys</p>
-                    <p className="text-xs text-white/60 mb-2">
+                    <p className="text-xs text-white mb-2">
                       Primary route: Absorption, ingestion
                     </p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-violet-400/60 flex-shrink-0" />
                         <span>Nephrotoxicity &mdash; heavy metals (lead, cadmium, mercury)</span>
@@ -612,10 +612,10 @@ export default function CoshhAwarenessModule1Section4() {
                   {/* Nervous System */}
                   <div className="bg-violet-500/10 border border-violet-500/30 rounded-lg p-3">
                     <p className="text-sm font-medium text-violet-300 mb-1">Nervous System</p>
-                    <p className="text-xs text-white/60 mb-2">
+                    <p className="text-xs text-white mb-2">
                       Primary route: Inhalation, absorption
                     </p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-violet-400/60 flex-shrink-0" />
                         <span>Narcosis &mdash; solvents (drowsiness, confusion)</span>
@@ -634,10 +634,10 @@ export default function CoshhAwarenessModule1Section4() {
                   {/* Blood */}
                   <div className="bg-violet-500/10 border border-violet-500/30 rounded-lg p-3">
                     <p className="text-sm font-medium text-violet-300 mb-1">Blood</p>
-                    <p className="text-xs text-white/60 mb-2">
+                    <p className="text-xs text-white mb-2">
                       Primary route: Inhalation, absorption
                     </p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-violet-400/60 flex-shrink-0" />
                         <span>Anaemia &mdash; lead poisoning</span>
@@ -656,10 +656,10 @@ export default function CoshhAwarenessModule1Section4() {
                   {/* Reproductive System — spans full width */}
                   <div className="bg-violet-500/10 border border-violet-500/30 rounded-lg p-3 sm:col-span-2">
                     <p className="text-sm font-medium text-violet-300 mb-1">Reproductive System</p>
-                    <p className="text-xs text-white/60 mb-2">
+                    <p className="text-xs text-white mb-2">
                       Primary route: Inhalation, absorption, ingestion
                     </p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-violet-400/60 flex-shrink-0" />
                         <span>Reduced fertility &mdash; lead, certain solvents, glycol ethers</span>
@@ -678,7 +678,7 @@ export default function CoshhAwarenessModule1Section4() {
                   </div>
                 </div>
 
-                <p className="text-xs text-white/40 text-center mt-4">
+                <p className="text-xs text-white text-center mt-4">
                   Some substances affect multiple organs simultaneously &mdash; the dose, route of
                   entry, and individual susceptibility all influence the outcome
                 </p>
@@ -686,7 +686,7 @@ export default function CoshhAwarenessModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Routes of Entry Into the Body</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Hazardous substances enter the body through four main routes. The route of entry
                   determines which organs are affected first and how quickly the substance reaches
                   the bloodstream:
@@ -694,7 +694,7 @@ export default function CoshhAwarenessModule1Section4() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-violet-300">1. Inhalation</p>
-                    <p className="text-xs text-white/60 mt-1">
+                    <p className="text-xs text-white mt-1">
                       The most common and most dangerous route in the workplace. Dusts, fumes,
                       vapours, gases, and mists are breathed directly into the lungs, where they can
                       enter the bloodstream rapidly through the thin alveolar walls.
@@ -702,7 +702,7 @@ export default function CoshhAwarenessModule1Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-violet-300">2. Skin Absorption</p>
-                    <p className="text-xs text-white/60 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Many chemicals can pass through intact skin and enter the bloodstream.
                       Substances marked with &ldquo;Sk&rdquo; in EH40 can absorb through the skin.
                       Cuts, abrasions, and dermatitis significantly increase absorption rates.
@@ -710,7 +710,7 @@ export default function CoshhAwarenessModule1Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-violet-300">3. Ingestion</p>
-                    <p className="text-xs text-white/60 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Swallowing hazardous substances, often through poor hygiene &mdash; eating,
                       drinking, or smoking with contaminated hands. Lead exposure commonly occurs
                       this way.
@@ -718,7 +718,7 @@ export default function CoshhAwarenessModule1Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-violet-300">4. Injection</p>
-                    <p className="text-xs text-white/60 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Substances entering through broken skin via cuts, puncture wounds, or
                       needle-stick injuries. Less common but bypasses the body&rsquo;s skin barrier
                       entirely.
@@ -754,14 +754,14 @@ export default function CoshhAwarenessModule1Section4() {
               {/* Silicosis */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-violet-400 mb-2">Silicosis</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   A progressive, incurable fibrotic lung disease caused by inhaling{' '}
                   <strong className="text-white">respirable crystalline silica (RCS)</strong> dust.
                   Silica is found in concrete, stone, brick, mortar, and sandstone. Electricians are
                   at risk when chasing walls, drilling through concrete or masonry, or cutting block
                   and brickwork.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -789,7 +789,7 @@ export default function CoshhAwarenessModule1Section4() {
                   <ShieldAlert className="h-5 w-5 text-violet-400" />
                   <p className="text-sm font-medium text-violet-400">Asbestosis</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Asbestosis is another fibrotic lung disease, caused by inhaling asbestos fibres.
                   It requires heavy, prolonged exposure and has a latency period of 15&ndash;30
                   years. Asbestos-related diseases are covered in detail in the dedicated{' '}
@@ -803,14 +803,14 @@ export default function CoshhAwarenessModule1Section4() {
                 <p className="text-sm font-medium text-violet-400 mb-2">
                   Chronic Obstructive Pulmonary Disease (COPD)
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   COPD is a group of progressive lung conditions including{' '}
                   <strong className="text-white">chronic bronchitis</strong> and
                   <strong className="text-white"> emphysema</strong>. While commonly associated with
                   smoking, COPD can also be caused or worsened by long-term occupational exposure to
                   dusts, fumes, and gases.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Persistent breathlessness that worsens over time</span>
@@ -839,14 +839,14 @@ export default function CoshhAwarenessModule1Section4() {
               {/* Occupational Asthma */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-violet-400 mb-2">Occupational Asthma</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Occupational asthma is asthma caused directly by workplace exposure to specific
                   substances called
                   <strong className="text-white"> respiratory sensitisers</strong>. It is one of the
                   most common occupational lung diseases in the UK, with approximately 3,000 new
                   cases diagnosed each year.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -882,12 +882,12 @@ export default function CoshhAwarenessModule1Section4() {
                 <p className="text-sm font-medium text-violet-400 mb-2">
                   Extrinsic Allergic Alveolitis (Hypersensitivity Pneumonitis)
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   An inflammatory lung condition caused by inhaling organic dusts, moulds, or fungal
                   spores. The immune system overreacts to these inhaled particles, causing
                   inflammation deep in the lungs (in the alveoli).
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -912,13 +912,13 @@ export default function CoshhAwarenessModule1Section4() {
               {/* Metal Fume Fever */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-violet-400 mb-2">Metal Fume Fever</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   An acute condition caused by inhaling metal oxide fumes, most commonly from
                   welding or cutting galvanised (zinc-coated) steel. It is particularly relevant to
                   electricians working near welding operations or cutting galvanised cable tray and
                   trunking.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -949,7 +949,7 @@ export default function CoshhAwarenessModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Point</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Most occupational lung diseases are{' '}
                   <strong className="text-white">progressive and irreversible</strong>. There is no
                   cure for silicosis, asbestosis, or COPD. Occupational asthma is only potentially
@@ -989,13 +989,13 @@ export default function CoshhAwarenessModule1Section4() {
                 <p className="text-sm font-medium text-violet-400 mb-2">
                   Irritant Contact Dermatitis
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Caused by <strong className="text-white">direct chemical damage</strong> to the
                   skin. It does not involve the immune system and can affect{' '}
                   <strong className="text-white">anyone</strong> given sufficient exposure to the
                   irritant substance. It is the most common form of occupational dermatitis.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1032,13 +1032,13 @@ export default function CoshhAwarenessModule1Section4() {
                 <p className="text-sm font-medium text-violet-400 mb-2">
                   Allergic Contact Dermatitis
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   An <strong className="text-white">immune-mediated</strong> skin reaction. The
                   body&rsquo;s immune system becomes sensitised to a specific substance, and after
                   sensitisation, even very small amounts trigger a skin reaction. Unlike irritant
                   dermatitis, it only affects sensitised individuals.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Red, blistered, weeping, intensely itchy skin</span>
@@ -1073,12 +1073,12 @@ export default function CoshhAwarenessModule1Section4() {
                 <p className="text-sm font-medium text-violet-400 mb-2">
                   Urticaria (Contact Hives)
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   An immediate skin reaction characterised by raised, itchy welts (hives) that
                   appear within minutes of contact with the triggering substance. Unlike allergic
                   contact dermatitis, the reaction is immediate rather than delayed.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Can be caused by latex, certain plants, chemicals, and proteins</span>
@@ -1096,11 +1096,11 @@ export default function CoshhAwarenessModule1Section4() {
               {/* Skin Cancer */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-violet-400 mb-2">Occupational Skin Cancer</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Certain workplace substances can cause skin cancer after prolonged or repeated
                   exposure. The latency period is typically many years.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1128,13 +1128,13 @@ export default function CoshhAwarenessModule1Section4() {
               {/* Chrome Ulcers */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-violet-400 mb-2">Chrome Ulcers</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Deep, slow-healing ulcers caused by contact with{' '}
                   <strong className="text-white">chromium VI (hexavalent chromium)</strong>
                   compounds. Chromium VI is found in certain cements, paints, anti-corrosion
                   coatings, and stainless steel welding fumes.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Typically develop on the hands, fingers, and forearms</span>
@@ -1168,7 +1168,7 @@ export default function CoshhAwarenessModule1Section4() {
                     Damaged Skin = Increased Absorption
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Damaged skin is <strong className="text-white">far more permeable</strong> than
                   intact skin. Once dermatitis develops, the skin barrier is compromised, allowing
                   hazardous substances to absorb through the skin much more easily and enter the
@@ -1206,7 +1206,7 @@ export default function CoshhAwarenessModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Long Latency Periods</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Occupational cancers typically develop{' '}
                   <strong className="text-white">10 to 40 years</strong> after first exposure. Some,
                   such as mesothelioma, can take up to 60 years. This long delay means that workers
@@ -1221,7 +1221,7 @@ export default function CoshhAwarenessModule1Section4() {
                 <p className="text-sm font-medium text-violet-400 mb-3">
                   IARC Group 1 Carcinogens Relevant to the Trades
                 </p>
-                <p className="text-xs text-white/50 mb-3">
+                <p className="text-xs text-white mb-3">
                   IARC Group 1 = Sufficient evidence of carcinogenicity in humans
                 </p>
                 <div className="space-y-3">
@@ -1270,7 +1270,7 @@ export default function CoshhAwarenessModule1Section4() {
                     <div key={i} className="bg-white/5 border border-white/10 p-3 rounded-lg">
                       <p className="text-sm font-medium text-white">{item.substance}</p>
                       <p className="text-xs text-red-300 mt-1">Cancers: {item.cancers}</p>
-                      <p className="text-xs text-white/50 mt-0.5">Trades at risk: {item.trades}</p>
+                      <p className="text-xs text-white mt-0.5">Trades at risk: {item.trades}</p>
                     </div>
                   ))}
                 </div>
@@ -1280,7 +1280,7 @@ export default function CoshhAwarenessModule1Section4() {
                 <p className="text-sm font-medium text-violet-400 mb-2">
                   Why Accurate Records Matter
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Because of the long latency between exposure and cancer diagnosis, accurate
                   <strong className="text-white"> exposure records</strong> are critical. COSHH
                   Regulation 11 requires that health surveillance records are kept for{' '}
@@ -1319,7 +1319,7 @@ export default function CoshhAwarenessModule1Section4() {
                     <p className="text-sm font-medium text-violet-300">
                       Phase 1: Initial Exposure (No Symptoms)
                     </p>
-                    <p className="text-xs text-white/60 mt-1">
+                    <p className="text-xs text-white mt-1">
                       The worker is first exposed to a sensitising substance. There may be no
                       visible reaction at all. The immune system &ldquo;learns&rdquo; to recognise
                       the substance as a threat. This sensitisation phase can take days, weeks,
@@ -1332,7 +1332,7 @@ export default function CoshhAwarenessModule1Section4() {
                     <p className="text-sm font-medium text-violet-300">
                       Phase 2: Sensitisation Occurs
                     </p>
-                    <p className="text-xs text-white/60 mt-1">
+                    <p className="text-xs text-white mt-1">
                       The immune system becomes permanently programmed to react to the substance.
                       This change is irreversible. The worker is now &ldquo;sensitised&rdquo;
                       &mdash; their immune system will react aggressively to any future exposure, no
@@ -1343,7 +1343,7 @@ export default function CoshhAwarenessModule1Section4() {
                     <p className="text-sm font-medium text-red-300">
                       Phase 3: Allergic Reaction (Triggered by Tiny Amounts)
                     </p>
-                    <p className="text-xs text-white/60 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Any subsequent exposure &mdash; even to extremely small amounts far below the
                       workplace exposure limit &mdash; triggers a severe allergic reaction. For
                       respiratory sensitisers, this means occupational asthma (wheezing,
@@ -1360,7 +1360,7 @@ export default function CoshhAwarenessModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Permanent and Irreversible</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Sensitisation is <strong className="text-white">permanent</strong>. There is no
                   cure, no desensitisation treatment, and no safe level of exposure once the worker
                   is sensitised. RPE alone is
@@ -1411,8 +1411,8 @@ export default function CoshhAwarenessModule1Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 p-3 rounded-lg">
                       <p className="text-sm font-medium text-violet-300">{item.name}</p>
-                      <p className="text-xs text-white/50 mt-1">Source: {item.source}</p>
-                      <p className="text-xs text-white/50 mt-0.5">Effect: {item.effect}</p>
+                      <p className="text-xs text-white mt-1">Source: {item.source}</p>
+                      <p className="text-xs text-white mt-0.5">Effect: {item.effect}</p>
                     </div>
                   ))}
                 </div>
@@ -1422,7 +1422,7 @@ export default function CoshhAwarenessModule1Section4() {
                 <p className="text-sm font-medium text-violet-400 mb-2">
                   Identifying Sensitisers on Safety Data Sheets
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Substances that are respiratory sensitisers carry the GHS hazard statement
                   <strong className="text-white"> H334</strong> (&ldquo;May cause allergy or asthma
                   symptoms or breathing difficulties if inhaled&rdquo;). Skin sensitisers carry{' '}
@@ -1456,7 +1456,7 @@ export default function CoshhAwarenessModule1Section4() {
               {/* Reproductive Effects */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-violet-400 mb-3">Reproductive Effects</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Reproductive toxicity includes effects on fertility, sexual function, and the
                   development of offspring. These effects are classified into three main categories:
                 </p>
@@ -1464,7 +1464,7 @@ export default function CoshhAwarenessModule1Section4() {
                 <div className="space-y-3">
                   <div className="bg-violet-500/10 border border-violet-500/30 p-3 rounded-lg">
                     <p className="text-sm font-medium text-violet-300">Teratogenic Effects</p>
-                    <p className="text-xs text-white/60 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Harm to the developing foetus during pregnancy, causing structural birth
                       defects, growth restriction, or developmental problems. The first trimester is
                       the period of greatest vulnerability. Substances with teratogenic potential
@@ -1476,7 +1476,7 @@ export default function CoshhAwarenessModule1Section4() {
 
                   <div className="bg-violet-500/10 border border-violet-500/30 p-3 rounded-lg">
                     <p className="text-sm font-medium text-violet-300">Mutagenic Effects</p>
-                    <p className="text-xs text-white/60 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Changes to the worker&rsquo;s DNA (genetic material) that can potentially be
                       passed to future generations. Mutagenic substances damage chromosomes or
                       genes, which may lead to cancer in the worker and potentially heritable
@@ -1488,7 +1488,7 @@ export default function CoshhAwarenessModule1Section4() {
 
                   <div className="bg-violet-500/10 border border-violet-500/30 p-3 rounded-lg">
                     <p className="text-sm font-medium text-violet-300">Effects on Fertility</p>
-                    <p className="text-xs text-white/60 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Some substances can reduce fertility in both men and women. Lead is the
                       classic example &mdash; it can reduce sperm count and quality in men and
                       disrupt menstrual cycles in women. Certain glycol ethers (2-methoxyethanol,
@@ -1505,7 +1505,7 @@ export default function CoshhAwarenessModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Important: Affects Both Sexes</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Reproductive toxicity is{' '}
                   <strong className="text-white">not just a women&rsquo;s issue</strong>. Many
                   substances affect male fertility and sperm quality. Lead, certain solvents, and
@@ -1519,7 +1519,7 @@ export default function CoshhAwarenessModule1Section4() {
               {/* Neurological Effects */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-violet-400 mb-3">Neurological Effects</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Many workplace chemicals can damage the nervous system. Neurological effects range
                   from immediate symptoms (dizziness, narcosis) to permanent, irreversible damage
                   (peripheral neuropathy, chronic solvent encephalopathy).
@@ -1528,11 +1528,11 @@ export default function CoshhAwarenessModule1Section4() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white">Acute Neurological Effects</p>
-                    <ul className="text-xs text-white/70 mt-2 space-y-1">
+                    <ul className="text-xs text-white mt-2 space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-violet-400/60 flex-shrink-0" />
                         <span>
-                          <strong className="text-white/90">Narcosis:</strong> Drowsiness, impaired
+                          <strong className="text-white">Narcosis:</strong> Drowsiness, impaired
                           judgement, loss of consciousness &mdash; caused by solvent vapours in
                           poorly ventilated areas
                         </span>
@@ -1540,7 +1540,7 @@ export default function CoshhAwarenessModule1Section4() {
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-violet-400/60 flex-shrink-0" />
                         <span>
-                          <strong className="text-white/90">Headaches and dizziness:</strong> Very
+                          <strong className="text-white">Headaches and dizziness:</strong> Very
                           common with solvent exposure &mdash; a warning sign of inadequate
                           ventilation
                         </span>
@@ -1548,7 +1548,7 @@ export default function CoshhAwarenessModule1Section4() {
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-violet-400/60 flex-shrink-0" />
                         <span>
-                          <strong className="text-white/90">Convulsions:</strong> Severe acute
+                          <strong className="text-white">Convulsions:</strong> Severe acute
                           poisoning, e.g. organophosphate pesticides
                         </span>
                       </li>
@@ -1557,11 +1557,11 @@ export default function CoshhAwarenessModule1Section4() {
 
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white">Chronic Neurological Effects</p>
-                    <ul className="text-xs text-white/70 mt-2 space-y-1">
+                    <ul className="text-xs text-white mt-2 space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-violet-400/60 flex-shrink-0" />
                         <span>
-                          <strong className="text-white/90">Peripheral neuropathy:</strong>{' '}
+                          <strong className="text-white">Peripheral neuropathy:</strong>{' '}
                           Numbness, tingling, weakness in hands and feet &mdash; caused by lead,
                           n-hexane, acrylamide
                         </span>
@@ -1569,7 +1569,7 @@ export default function CoshhAwarenessModule1Section4() {
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-violet-400/60 flex-shrink-0" />
                         <span>
-                          <strong className="text-white/90">Chronic solvent encephalopathy:</strong>{' '}
+                          <strong className="text-white">Chronic solvent encephalopathy:</strong>{' '}
                           Progressive memory loss, difficulty concentrating, personality changes,
                           depression &mdash; from years of solvent exposure
                         </span>
@@ -1577,7 +1577,7 @@ export default function CoshhAwarenessModule1Section4() {
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-violet-400/60 flex-shrink-0" />
                         <span>
-                          <strong className="text-white/90">Parkinsonism:</strong> Tremors and
+                          <strong className="text-white">Parkinsonism:</strong> Tremors and
                           movement disorders &mdash; associated with manganese exposure (welding
                           fumes)
                         </span>
@@ -1594,7 +1594,7 @@ export default function CoshhAwarenessModule1Section4() {
                     Safety-Critical Implications
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Neurological effects have direct{' '}
                   <strong className="text-white">safety-critical implications</strong> for
                   electricians and trades workers. Dizziness, impaired judgement, and narcosis from
@@ -1672,7 +1672,7 @@ export default function CoshhAwarenessModule1Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 p-3 rounded-lg">
                       <p className="text-sm font-medium text-white">{item.factor}</p>
-                      <p className="text-xs text-white/60 mt-1">{item.detail}</p>
+                      <p className="text-xs text-white mt-1">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1682,7 +1682,7 @@ export default function CoshhAwarenessModule1Section4() {
                 <p className="text-sm font-medium text-violet-400 mb-2">
                   Implications for COSHH Assessments
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   COSHH assessments must not assume that all workers are equally healthy and equally
                   resistant to the effects of hazardous substances. The assessment should identify
                   whether any workers are particularly vulnerable &mdash; for example, those with
@@ -1700,7 +1700,7 @@ export default function CoshhAwarenessModule1Section4() {
                 <p className="text-sm font-medium text-violet-400 mb-3">
                   Health Surveillance: The Importance of Early Detection
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Health surveillance is a systematic programme of health checks designed to detect
                   early signs of work-related ill health. It is a legal requirement under{' '}
                   <strong className="text-white">COSHH Regulation 11</strong> where specific
@@ -1711,7 +1711,7 @@ export default function CoshhAwarenessModule1Section4() {
                   <p className="text-sm font-medium text-white mb-2">
                     Health surveillance is required when:
                   </p>
-                  <ul className="text-xs text-white/70 space-y-1.5">
+                  <ul className="text-xs text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1 w-1 h-1 rounded-full bg-violet-400/60 flex-shrink-0" />
                       <span>
@@ -1758,7 +1758,7 @@ export default function CoshhAwarenessModule1Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 p-3 rounded-lg">
                       <p className="text-sm font-medium text-violet-300">{item.type}</p>
-                      <p className="text-xs text-white/60 mt-1">{item.purpose}</p>
+                      <p className="text-xs text-white mt-1">{item.purpose}</p>
                     </div>
                   ))}
                 </div>
@@ -1771,7 +1771,7 @@ export default function CoshhAwarenessModule1Section4() {
                     Early Detection Saves Lives and Livelihoods
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The purpose of health surveillance is{' '}
                   <strong className="text-white">early detection</strong> &mdash; catching health
                   problems at a stage where further damage can be prevented. For occupational
@@ -1788,7 +1788,7 @@ export default function CoshhAwarenessModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Record Keeping</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Health surveillance records must be kept for{' '}
                   <strong className="text-white">40 years</strong> from the date of the last entry.
                   Individual workers have the right to access their own health records. Records must
@@ -1810,7 +1810,7 @@ export default function CoshhAwarenessModule1Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1824,7 +1824,7 @@ export default function CoshhAwarenessModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-1-section-3">

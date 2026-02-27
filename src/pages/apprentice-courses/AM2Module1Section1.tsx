@@ -107,32 +107,32 @@ const AM2Module1Section1 = () => {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
         <AM2ContentCard className="text-center">
           <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">15,000+</div>
-          <div className="text-ios-footnote text-white/70">Take AM2 annually</div>
+          <div className="text-ios-footnote text-white">Take AM2 annually</div>
         </AM2ContentCard>
         <AM2ContentCard className="text-center">
           <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">2½ Days</div>
-          <div className="text-ios-footnote text-white/70">16.5 hours total</div>
+          <div className="text-ios-footnote text-white">16.5 hours total</div>
         </AM2ContentCard>
         <AM2ContentCard className="text-center">
           <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">£8,000</div>
-          <div className="text-ios-footnote text-white/70">Avg salary increase</div>
+          <div className="text-ios-footnote text-white">Avg salary increase</div>
         </AM2ContentCard>
         <AM2ContentCard className="text-center">
           <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">NVQ 3</div>
-          <div className="text-ios-footnote text-white/70">Qualification level</div>
+          <div className="text-ios-footnote text-white">Qualification level</div>
         </AM2ContentCard>
       </div>
 
       {/* What is AM2? */}
       <AM2ContentCard accent>
         <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">What is AM2?</h2>
-        <p className="text-ios-body text-white/90 leading-relaxed mb-4">
+        <p className="text-ios-body text-white leading-relaxed mb-4">
           AM2 (Achievement Measurement 2) is a 2½-day practical assessment totalling 16.5 hours for
           electrical workers completing their NVQ Level 3. It proves your competency in electrical
           installation work and unlocks your ECS Gold Card.
         </p>
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
-          <p className="text-ios-callout text-white/90">
+          <p className="text-ios-callout text-white">
             <strong className="text-elec-yellow">Important:</strong> This isn't just a test - it's
             your final step to becoming a fully qualified electrician. The assessment simulates real
             workplace conditions and you'll be evaluated on safety, technical skill, and
@@ -146,7 +146,7 @@ const AM2Module1Section1 = () => {
         <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">
           AM2 Assessment Components
         </h2>
-        <p className="text-ios-body text-white/90 mb-6">
+        <p className="text-ios-body text-white mb-6">
           The AM2 assessment comprises 6 distinct sections totalling ~16.5 hours over 2½ days. Most
           of your time is spent on installation work, while other sections test how you finish,
           check, and fix your work.
@@ -154,7 +154,7 @@ const AM2Module1Section1 = () => {
         <AM2TestSequence steps={assessmentSteps} />
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4 mt-6">
           <p className="text-ios-footnote text-elec-yellow font-semibold mb-1">Important Note</p>
-          <p className="text-ios-callout text-white/80">
+          <p className="text-ios-callout text-white">
             These timings vary slightly by assessment centre, but the balance remains the same
             across all providers. The installation component always takes up the majority of your
             time.
@@ -165,7 +165,7 @@ const AM2Module1Section1 = () => {
       {/* Assessment Criteria */}
       <AM2ContentCard>
         <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">How You'll Be Assessed</h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           The AM2 uses competence-based assessment. Assessors judge each criterion as Competent or
           Not Yet Competent using objective Yes/No marking rather than percentage scores:
         </p>
@@ -176,7 +176,7 @@ const AM2Module1Section1 = () => {
               <p className="text-ios-footnote text-elec-yellow mb-2">
                 Each task assessed as Competent / Not Yet Competent
               </p>
-              <ul className="text-ios-callout text-white/80 space-y-1.5">
+              <ul className="text-ios-callout text-white space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>Installation techniques and cable management</span>
@@ -199,7 +199,7 @@ const AM2Module1Section1 = () => {
               <p className="text-ios-footnote text-elec-yellow mb-2">
                 Must demonstrate safe isolation and compliance throughout
               </p>
-              <ul className="text-ios-callout text-white/80 space-y-1.5">
+              <ul className="text-ios-callout text-white space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>Risk assessment completion</span>
@@ -222,7 +222,7 @@ const AM2Module1Section1 = () => {
               <p className="text-ios-footnote text-elec-yellow mb-2">
                 All test results must be within acceptable tolerances
               </p>
-              <ul className="text-ios-callout text-white/80 space-y-1.5">
+              <ul className="text-ios-callout text-white space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>Correct testing sequence per GN3</span>
@@ -245,7 +245,7 @@ const AM2Module1Section1 = () => {
               <p className="text-ios-footnote text-elec-yellow mb-2">
                 Work must meet BS 7671 requirements
               </p>
-              <ul className="text-ios-callout text-white/80 space-y-1.5">
+              <ul className="text-ios-callout text-white space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>Compliance with wiring regulations</span>
@@ -283,14 +283,14 @@ const AM2Module1Section1 = () => {
           <Users className="h-5 w-5" />
           Who Takes AM2?
         </h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           AM2 is designed for electrical workers at the final stage of their training or those
           seeking formal recognition of their skills.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <h3 className="text-ios-headline text-white font-semibold mb-3">Typical Candidates</h3>
-            <ul className="space-y-2 text-ios-callout text-white/80 mb-4">
+            <ul className="space-y-2 text-ios-callout text-white mb-4">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Final year electrical apprentices</span>
@@ -310,7 +310,7 @@ const AM2Module1Section1 = () => {
             </ul>
 
             <h3 className="text-ios-headline text-white font-semibold mb-2">Experience Level</h3>
-            <p className="text-ios-callout text-white/80">
+            <p className="text-ios-callout text-white">
               Most candidates have 2-4 years of electrical installation experience and are working
               towards completing their NVQ Level 3 qualification.
             </p>
@@ -319,7 +319,7 @@ const AM2Module1Section1 = () => {
             <h3 className="text-ios-headline text-white font-semibold mb-3">
               Essential Requirements
             </h3>
-            <ul className="space-y-2 text-ios-callout text-white/80 mb-4">
+            <ul className="space-y-2 text-ios-callout text-white mb-4">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Level 3 Electrical Installation Diploma</span>
@@ -342,7 +342,7 @@ const AM2Module1Section1 = () => {
               <p className="text-ios-footnote text-elec-yellow font-semibold mb-1">
                 Before You Book
               </p>
-              <p className="text-ios-callout text-white/80">
+              <p className="text-ios-callout text-white">
                 Ensure you're confident with practical installation work, testing procedures, and
                 can work independently to professional standards.
               </p>
@@ -357,7 +357,7 @@ const AM2Module1Section1 = () => {
           <Target className="h-5 w-5" />
           How to Prepare
         </h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           Success in AM2 comes from thorough preparation. Here's your roadmap to assessment
           readiness:
         </p>
@@ -365,7 +365,7 @@ const AM2Module1Section1 = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <h4 className="text-ios-headline text-white font-semibold mb-3">Technical Skills</h4>
-            <ul className="text-ios-callout text-white/80 space-y-1.5">
+            <ul className="text-ios-callout text-white space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Practice conduit bending techniques</span>
@@ -387,7 +387,7 @@ const AM2Module1Section1 = () => {
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <h4 className="text-ios-headline text-white font-semibold mb-3">Knowledge Review</h4>
-            <ul className="text-ios-callout text-white/80 space-y-1.5">
+            <ul className="text-ios-callout text-white space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Study BS 7671 key sections</span>
@@ -409,7 +409,7 @@ const AM2Module1Section1 = () => {
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <h4 className="text-ios-headline text-white font-semibold mb-3">Practical Prep</h4>
-            <ul className="text-ios-callout text-white/80 space-y-1.5">
+            <ul className="text-ios-callout text-white space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Complete mock assessments</span>
@@ -434,7 +434,7 @@ const AM2Module1Section1 = () => {
           <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
             Recommended Preparation Time
           </h4>
-          <p className="text-ios-callout text-white/80">
+          <p className="text-ios-callout text-white">
             Allow 3-6 months of focused preparation, including 40-60 hours of additional practice
             beyond your regular work. Many training centres offer AM2 preparation courses which can
             significantly boost your confidence.
@@ -461,7 +461,7 @@ const AM2Module1Section1 = () => {
           <TrendingUp className="h-5 w-5" />
           Why It Matters for Your Career
         </h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           Passing AM2 transforms your career prospects and opens doors that remain closed to
           unqualified electricians.
         </p>
@@ -474,7 +474,7 @@ const AM2Module1Section1 = () => {
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <span className="text-ios-body text-white font-medium">ECS Gold Card</span>
-                  <p className="text-ios-callout text-white/70">
+                  <p className="text-ios-callout text-white">
                     Access to construction sites nationwide
                   </p>
                 </div>
@@ -483,7 +483,7 @@ const AM2Module1Section1 = () => {
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <span className="text-ios-body text-white font-medium">JIB Recognition</span>
-                  <p className="text-ios-callout text-white/70">
+                  <p className="text-ios-callout text-white">
                     Industry-wide acceptance of your skills
                   </p>
                 </div>
@@ -492,7 +492,7 @@ const AM2Module1Section1 = () => {
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <span className="text-ios-body text-white font-medium">Insurance Benefits</span>
-                  <p className="text-ios-callout text-white/70">
+                  <p className="text-ios-callout text-white">
                     Lower rates for qualified tradespeople
                   </p>
                 </div>
@@ -509,7 +509,7 @@ const AM2Module1Section1 = () => {
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <span className="text-ios-body text-white font-medium">Self-Employment</span>
-                  <p className="text-ios-callout text-white/70">
+                  <p className="text-ios-callout text-white">
                     Start your own electrical business
                   </p>
                 </div>
@@ -518,7 +518,7 @@ const AM2Module1Section1 = () => {
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <span className="text-ios-body text-white font-medium">Management Roles</span>
-                  <p className="text-ios-callout text-white/70">
+                  <p className="text-ios-callout text-white">
                     Progress to supervisory positions
                   </p>
                 </div>
@@ -527,7 +527,7 @@ const AM2Module1Section1 = () => {
                 <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
                   <span className="text-ios-body text-white font-medium">Specialist Sectors</span>
-                  <p className="text-ios-callout text-white/70">
+                  <p className="text-ios-callout text-white">
                     Access high-value commercial projects
                   </p>
                 </div>
@@ -541,19 +541,19 @@ const AM2Module1Section1 = () => {
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 text-center">
             <div>
               <div className="text-ios-title-3 text-elec-yellow font-bold">£28-32k</div>
-              <div className="text-ios-footnote text-white/70">Newly Qualified</div>
+              <div className="text-ios-footnote text-white">Newly Qualified</div>
             </div>
             <div>
               <div className="text-ios-title-3 text-elec-yellow font-bold">£35-42k</div>
-              <div className="text-ios-footnote text-white/70">3-5 Years Experience</div>
+              <div className="text-ios-footnote text-white">3-5 Years Experience</div>
             </div>
             <div>
               <div className="text-ios-title-3 text-elec-yellow font-bold">£45-55k</div>
-              <div className="text-ios-footnote text-white/70">Senior/Specialist</div>
+              <div className="text-ios-footnote text-white">Senior/Specialist</div>
             </div>
             <div>
               <div className="text-ios-title-3 text-elec-yellow font-bold">£60k+</div>
-              <div className="text-ios-footnote text-white/70">Self-Employed</div>
+              <div className="text-ios-footnote text-white">Self-Employed</div>
             </div>
           </div>
         </div>
@@ -565,17 +565,17 @@ const AM2Module1Section1 = () => {
           <AlertTriangle className="h-5 w-5" />
           Common Challenges & How to Overcome Them
         </h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           Understanding common pitfalls helps you prepare more effectively and avoid typical
           mistakes.
         </p>
 
         <div className="space-y-3 mb-4">
           <AM2CriticalWarning title="Time Management Issues">
-            <p className="text-ios-callout text-white/80 mb-2">
+            <p className="text-ios-callout text-white mb-2">
               Many candidates struggle to complete all tasks within the allocated timeframe.
             </p>
-            <p className="text-ios-callout text-white/90">
+            <p className="text-ios-callout text-white">
               <strong>Solution:</strong> Practice timed installations, create a personal checklist,
               and prioritise safety-critical tasks first.
             </p>
@@ -585,10 +585,10 @@ const AM2Module1Section1 = () => {
             <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
               Testing Procedure Errors
             </h4>
-            <p className="text-ios-callout text-white/80 mb-2">
+            <p className="text-ios-callout text-white mb-2">
               Incorrect testing sequence or missed tests are common failure points.
             </p>
-            <p className="text-ios-callout text-white/90">
+            <p className="text-ios-callout text-white">
               <strong>Solution:</strong> Memorise the BS 7671 testing sequence and practice until it
               becomes automatic.
             </p>
@@ -598,10 +598,10 @@ const AM2Module1Section1 = () => {
             <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
               Documentation Quality
             </h4>
-            <p className="text-ios-callout text-white/80 mb-2">
+            <p className="text-ios-callout text-white mb-2">
               Poor handwriting, incomplete certificates, or calculation errors can cost marks.
             </p>
-            <p className="text-ios-callout text-white/90">
+            <p className="text-ios-callout text-white">
               <strong>Solution:</strong> Practice certificate completion and double-check all
               calculations and entries.
             </p>
@@ -610,7 +610,7 @@ const AM2Module1Section1 = () => {
 
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
           <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">Success Tips</h4>
-          <ul className="text-ios-callout text-white/80 space-y-1.5">
+          <ul className="text-ios-callout text-white space-y-1.5">
             <li className="flex items-start gap-2">
               <span className="text-elec-yellow">•</span>
               <span>Arrive early and familiarise yourself with the workspace</span>

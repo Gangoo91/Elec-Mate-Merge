@@ -257,10 +257,10 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
         <div className="flex items-center gap-2">
           <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
           <span className="text-[15px] font-semibold text-white">Quote Settings</span>
-          <span className="text-xs text-white/40 ml-2">{selectedCount} terms selected</span>
+          <span className="text-xs text-white ml-2">{selectedCount} terms selected</span>
         </div>
         <ChevronRight
-          className={cn('h-5 w-5 text-white/30 transition-transform', isExpanded && 'rotate-90')}
+          className={cn('h-5 w-5 text-white transition-transform', isExpanded && 'rotate-90')}
         />
       </button>
 
@@ -272,11 +272,11 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
               <FileText className="h-4 w-4 text-amber-400" />
             </div>
             <div className="flex-1">
-              <p className="text-[13px] text-white/50">Quote Validity</p>
+              <p className="text-[13px] text-white">Quote Validity</p>
               <p className="text-[15px] text-white font-medium">{quoteValidityDays} days</p>
             </div>
             <div className="text-right">
-              <p className="text-[13px] text-white/50">Deposit</p>
+              <p className="text-[13px] text-white">Deposit</p>
               <p className="text-[15px] text-white font-medium">{depositPercentage}%</p>
             </div>
           </div>
@@ -289,7 +289,7 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
           {/* Quote Settings */}
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
             <div className="space-y-1.5">
-              <Label className="text-white/70 text-xs sm:text-sm">Quote Valid (Days)</Label>
+              <Label className="text-white text-xs sm:text-sm">Quote Valid (Days)</Label>
               <Input
                 type="number"
                 min="1"
@@ -300,7 +300,7 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
               />
             </div>
             <div className="space-y-1.5">
-              <Label className="text-white/70 text-xs sm:text-sm">Deposit (%)</Label>
+              <Label className="text-white text-xs sm:text-sm">Deposit (%)</Label>
               <Input
                 type="number"
                 min="0"
@@ -311,7 +311,7 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
               />
             </div>
             <div className="space-y-1.5 col-span-2 sm:col-span-1">
-              <Label className="text-white/70 text-xs sm:text-sm">Warranty Period</Label>
+              <Label className="text-white text-xs sm:text-sm">Warranty Period</Label>
               <Input
                 value={warrantyPeriod}
                 onChange={(e) => setWarrantyPeriod(e.target.value)}
@@ -325,7 +325,7 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <Label className="text-white font-medium">Terms & Conditions</Label>
-              <span className="text-xs text-white/40">{selectedCount} selected</span>
+              <span className="text-xs text-white">{selectedCount} selected</span>
             </div>
 
             {/* Grouped Terms */}
@@ -363,16 +363,16 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
                             'text-xs px-1.5 py-0.5 rounded-full',
                             selectedInGroup > 0
                               ? 'bg-elec-yellow/20 text-elec-yellow'
-                              : 'bg-white/10 text-white/40'
+                              : 'bg-white/10 text-white'
                           )}
                         >
                           {selectedInGroup}/{groupTermIds.length}
                         </span>
                       </div>
                       {isGroupExpanded ? (
-                        <ChevronUp className="h-5 w-5 text-white/40" />
+                        <ChevronUp className="h-5 w-5 text-white" />
                       ) : (
-                        <ChevronDown className="h-5 w-5 text-white/40" />
+                        <ChevronDown className="h-5 w-5 text-white" />
                       )}
                     </div>
                   </CollapsibleTrigger>
@@ -394,7 +394,7 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
                               }}
                               className="mt-0.5 h-5 w-5 shrink-0 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
                             />
-                            <span className="text-[14px] sm:text-sm text-white/80 leading-relaxed text-left flex-1">
+                            <span className="text-[14px] sm:text-sm text-white leading-relaxed text-left flex-1">
                               {term.label}
                             </span>
                           </label>
@@ -410,7 +410,7 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
             <div className="pt-4 border-t border-white/10">
               <div className="flex items-center justify-between mb-3">
                 <Label className="text-white font-medium text-sm">Your Custom Terms</Label>
-                <span className="text-xs text-white/40">{customTerms.length} added</span>
+                <span className="text-xs text-white">{customTerms.length} added</span>
               </div>
 
               {/* Add custom term input - prominent position */}
@@ -457,7 +457,7 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
                           }}
                           className="mt-0.5 h-5 w-5 shrink-0 border-white/40 data-[state=checked]:bg-elec-yellow data-[state=checked]:border-elec-yellow data-[state=checked]:text-black"
                         />
-                        <span className="flex-1 text-[14px] sm:text-sm text-white/80 text-left leading-relaxed">
+                        <span className="flex-1 text-[14px] sm:text-sm text-white text-left leading-relaxed">
                           {term.label}
                         </span>
                         <button
@@ -466,7 +466,7 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
                             setCustomTerms((prev) => prev.filter((t) => t.id !== term.id));
                             setSelectedTerms((prev) => prev.filter((id) => id !== term.id));
                           }}
-                          className="p-2 -m-1 rounded-lg hover:bg-red-500/20 active:bg-red-500/30 text-white/40 hover:text-red-400 transition-colors touch-manipulation"
+                          className="p-2 -m-1 rounded-lg hover:bg-red-500/20 active:bg-red-500/30 text-white hover:text-red-400 transition-colors touch-manipulation"
                         >
                           <X className="h-4 w-4" />
                         </button>
@@ -477,7 +477,7 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
               )}
 
               {customTerms.length === 0 && (
-                <p className="text-xs text-white/40 text-center py-2">
+                <p className="text-xs text-white text-center py-2">
                   Add your own custom terms above
                 </p>
               )}
@@ -490,7 +490,7 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
                 variant="outline"
                 size="sm"
                 onClick={() => setSelectedTerms(ALL_DEFAULT_TERM_IDS)}
-                className="flex-1 h-10 text-xs sm:text-sm border-white/10 hover:bg-white/10 active:bg-white/20 text-white/70 touch-manipulation"
+                className="flex-1 h-10 text-xs sm:text-sm border-white/10 hover:bg-white/10 active:bg-white/20 text-white touch-manipulation"
               >
                 Select All Defaults
               </Button>
@@ -499,7 +499,7 @@ const QuoteSettingsCard: React.FC<QuoteSettingsCardProps> = ({
                 variant="outline"
                 size="sm"
                 onClick={() => setSelectedTerms([])}
-                className="flex-1 h-10 text-xs sm:text-sm border-white/10 hover:bg-white/10 active:bg-white/20 text-white/70 touch-manipulation"
+                className="flex-1 h-10 text-xs sm:text-sm border-white/10 hover:bg-white/10 active:bg-white/20 text-white touch-manipulation"
               >
                 Clear All
               </Button>

@@ -214,7 +214,7 @@ export default function CoshhAwarenessModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-3">
@@ -239,7 +239,7 @@ export default function CoshhAwarenessModule3Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Biological &amp; Environmental Hazards
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Bacteria, viruses, fungi, and other biological agents you may encounter on construction
             sites &mdash; and the control measures that protect you and your colleagues
           </p>
@@ -364,8 +364,8 @@ export default function CoshhAwarenessModule3Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-violet-400 mb-1">{item.type}</p>
-                      <p className="text-xs text-white/60 mb-2">{item.examples}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white mb-2">{item.examples}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -422,10 +422,10 @@ export default function CoshhAwarenessModule3Section4() {
                       </span>
                       <div>
                         <p className="text-sm font-medium text-green-400">Hazard Group 1</p>
-                        <p className="text-xs text-white/60">Unlikely to cause human disease</p>
+                        <p className="text-xs text-white">Unlikely to cause human disease</p>
                       </div>
                     </div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Agents in this group are{' '}
                       <strong className="text-white">
                         unlikely to cause disease in healthy workers
@@ -443,12 +443,12 @@ export default function CoshhAwarenessModule3Section4() {
                       </span>
                       <div>
                         <p className="text-sm font-medium text-amber-400">Hazard Group 2</p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           Can cause disease &mdash; treatment available
                         </p>
                       </div>
                     </div>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       Agents that{' '}
                       <strong className="text-white">
                         can cause human disease and may be a hazard to workers
@@ -456,7 +456,7 @@ export default function CoshhAwarenessModule3Section4() {
                       , but effective prophylaxis or treatment is normally available and the risk of
                       spread to the community is low.
                     </p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       <strong>Examples:</strong> Legionella pneumophila, E. coli, Staphylococcus
                       aureus, hepatitis A
                     </p>
@@ -470,12 +470,12 @@ export default function CoshhAwarenessModule3Section4() {
                       </span>
                       <div>
                         <p className="text-sm font-medium text-orange-400">Hazard Group 3</p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           Serious disease &mdash; may spread to community
                         </p>
                       </div>
                     </div>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       Agents that{' '}
                       <strong className="text-white">
                         can cause serious human disease and may present a risk of spreading to the
@@ -483,7 +483,7 @@ export default function CoshhAwarenessModule3Section4() {
                       </strong>
                       , but effective prophylaxis or treatment is usually available.
                     </p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       <strong>Examples:</strong> Hepatitis B &amp; C viruses, HIV, Mycobacterium
                       tuberculosis
                     </p>
@@ -497,12 +497,12 @@ export default function CoshhAwarenessModule3Section4() {
                       </span>
                       <div>
                         <p className="text-sm font-medium text-red-400">Hazard Group 4</p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           Serious disease &mdash; no effective treatment
                         </p>
                       </div>
                     </div>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       Agents that{' '}
                       <strong className="text-white">
                         cause serious human disease and present a serious hazard to workers
@@ -513,7 +513,7 @@ export default function CoshhAwarenessModule3Section4() {
                       </strong>
                       .
                     </p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       <strong>Examples:</strong> Ebola virus, Marburg virus (not encountered on
                       construction sites)
                     </p>
@@ -559,7 +559,7 @@ export default function CoshhAwarenessModule3Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Notifiable Disease</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Leptospirosis is a <strong>notifiable disease</strong> in the UK. Any confirmed or
                   suspected case must be reported to the local authority. If you develop flu-like
                   symptoms after working in drains, sewers, waterways, or any area with evidence of
@@ -573,7 +573,7 @@ export default function CoshhAwarenessModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-violet-400 mb-3">Who Is at Risk?</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   {[
                     'Workers in drains, sewers, and culverts',
                     'Workers in waterways, canals, rivers, and flood-damaged buildings',
@@ -595,7 +595,7 @@ export default function CoshhAwarenessModule3Section4() {
                   <p className="text-sm font-medium text-amber-400 mb-2">
                     Symptoms (7&ndash;12 day incubation)
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Sudden onset of flu-like illness (fever, headache, muscle aches)</span>
@@ -619,7 +619,7 @@ export default function CoshhAwarenessModule3Section4() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-green-400 mb-2">Prevention</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                       <span>
@@ -696,7 +696,7 @@ export default function CoshhAwarenessModule3Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-violet-400 mb-1">{item.source}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -804,7 +804,7 @@ export default function CoshhAwarenessModule3Section4() {
               {/* Mould & Aspergillus */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-violet-400 mb-3">Mould &amp; Aspergillus</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   <strong className="text-white">Aspergillus</strong> is a common mould found in
                   damp buildings, decaying vegetation, and soil. When buildings are demolished,
                   renovated, or disturbed, Aspergillus spores become airborne and can be inhaled. In
@@ -817,7 +817,7 @@ export default function CoshhAwarenessModule3Section4() {
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-black/30 rounded-lg p-3">
                     <p className="text-xs font-medium text-amber-400 mb-1">Health Effects</p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                         <span>Allergic bronchopulmonary aspergillosis (ABPA)</span>
@@ -834,7 +834,7 @@ export default function CoshhAwarenessModule3Section4() {
                   </div>
                   <div className="bg-black/30 rounded-lg p-3">
                     <p className="text-xs font-medium text-green-400 mb-1">Controls</p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                         <span>Dampen mouldy surfaces before disturbance</span>
@@ -855,7 +855,7 @@ export default function CoshhAwarenessModule3Section4() {
               {/* Sewage & Wastewater */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-violet-400 mb-3">Sewage &amp; Wastewater</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Raw sewage contains a wide range of pathogenic organisms including bacteria,
                   viruses, and parasites. Electricians working on drainage pump stations, sewage
                   treatment works, or in flooded basements are at particular risk.
@@ -885,8 +885,8 @@ export default function CoshhAwarenessModule3Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-red-400 mb-1">{item.pathogen}</p>
-                      <p className="text-xs text-white/60 mb-1">Route: {item.route}</p>
-                      <p className="text-xs text-white/70">{item.note}</p>
+                      <p className="text-xs text-white mb-1">Route: {item.route}</p>
+                      <p className="text-xs text-white">{item.note}</p>
                     </div>
                   ))}
                 </div>
@@ -899,7 +899,7 @@ export default function CoshhAwarenessModule3Section4() {
                     Vaccination Recommendations for Sewage Workers
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Workers who regularly come into contact with sewage or wastewater should be
                   offered <strong className="text-white">hepatitis A vaccination</strong> and their{' '}
                   <strong className="text-white">tetanus status</strong> should be confirmed as up
@@ -927,7 +927,7 @@ export default function CoshhAwarenessModule3Section4() {
               {/* Bird & Bat Droppings */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-violet-400 mb-3">Bird &amp; Bat Droppings</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Electricians frequently work on rooftops, in loft spaces, and in ceiling voids
                   where bird and bat droppings accumulate. When disturbed, dried droppings release
                   dust that can be inhaled, transmitting disease.
@@ -935,7 +935,7 @@ export default function CoshhAwarenessModule3Section4() {
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-black/30 rounded-lg p-3">
                     <p className="text-xs font-medium text-orange-400 mb-1">Histoplasmosis</p>
-                    <p className="text-xs text-white/70 mb-1">
+                    <p className="text-xs text-white mb-1">
                       Caused by <em>Histoplasma capsulatum</em> fungus, which thrives in soil
                       enriched with bird or bat droppings. Inhaling spores can cause respiratory
                       illness ranging from mild flu-like symptoms to serious lung disease.
@@ -945,7 +945,7 @@ export default function CoshhAwarenessModule3Section4() {
                     <p className="text-xs font-medium text-orange-400 mb-1">
                       Ornithosis (Psittacosis)
                     </p>
-                    <p className="text-xs text-white/70 mb-1">
+                    <p className="text-xs text-white mb-1">
                       Caused by <em>Chlamydophila psittaci</em> bacteria found in dried bird
                       droppings, feathers, and respiratory secretions. Causes atypical pneumonia
                       with fever, headache, and dry cough.
@@ -969,7 +969,7 @@ export default function CoshhAwarenessModule3Section4() {
                 <p className="text-sm font-medium text-violet-400 mb-3">Soil-Borne Hazards</p>
                 <div className="space-y-3">
                   <div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-white">Tetanus (Clostridium tetani):</strong> Tetanus
                       spores are present in soil, manure, and dust throughout the UK. They enter the
                       body through puncture wounds, cuts, or abrasions contaminated with soil.
@@ -980,7 +980,7 @@ export default function CoshhAwarenessModule3Section4() {
                     </p>
                   </div>
                   <div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-white">Anthrax (historic industrial sites):</strong>{' '}
                       Anthrax spores (<em>Bacillus anthracis</em>) can persist in soil for decades.
                       Whilst extremely rare in the UK today, there is a residual risk at historic
@@ -1000,7 +1000,7 @@ export default function CoshhAwarenessModule3Section4() {
                     Sharps &amp; Needle-Stick Injuries
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Discarded needles, syringes, and other sharps are increasingly found on
                   construction sites, particularly in urban areas, derelict buildings, and around
                   public spaces. A needle-stick injury can transmit serious blood-borne viruses:
@@ -1008,21 +1008,21 @@ export default function CoshhAwarenessModule3Section4() {
                 <div className="grid sm:grid-cols-3 gap-3 mb-3">
                   <div className="bg-black/30 rounded-lg p-3 text-center">
                     <p className="text-red-400 font-semibold text-sm mb-1">HIV</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Transmission risk approximately 0.3% per needle-stick. Post-exposure
                       prophylaxis (PEP) must be started within 72 hours (ideally within 1 hour).
                     </p>
                   </div>
                   <div className="bg-black/30 rounded-lg p-3 text-center">
                     <p className="text-red-400 font-semibold text-sm mb-1">Hepatitis B</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Transmission risk up to 30% per needle-stick. Vaccination provides effective
                       protection. Check your vaccination status.
                     </p>
                   </div>
                   <div className="bg-black/30 rounded-lg p-3 text-center">
                     <p className="text-red-400 font-semibold text-sm mb-1">Hepatitis C</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Transmission risk approximately 1.8% per needle-stick. No vaccine available.
                       Early treatment with antiviral drugs is effective.
                     </p>
@@ -1033,7 +1033,7 @@ export default function CoshhAwarenessModule3Section4() {
                   <p className="text-xs font-medium text-white mb-2">
                     Immediate Response to a Needle-Stick Injury:
                   </p>
-                  <div className="space-y-2 text-xs text-white/80">
+                  <div className="space-y-2 text-xs text-white">
                     {[
                       'Encourage the wound to bleed freely — do NOT suck the wound or squeeze it hard',
                       'Wash thoroughly with soap and running water — do NOT scrub the wound',
@@ -1095,7 +1095,7 @@ export default function CoshhAwarenessModule3Section4() {
                         Blue-Green Algae (Cyanobacteria)
                       </p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Found in rivers, canals, lakes, and reservoirs, particularly during warm
                       weather. Some species produce toxins that can cause skin rashes, eye
                       irritation, vomiting, diarrhoea, fever, and in severe cases, liver and nerve
@@ -1109,7 +1109,7 @@ export default function CoshhAwarenessModule3Section4() {
                       <Droplets className="h-4 w-4 text-amber-400" />
                       <p className="text-xs font-medium text-amber-400">Stagnant Water</p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Standing water on construction sites provides a breeding ground for bacteria,
                       mosquitoes, and other organisms. Excavations, basement sumps, and poorly
                       drained areas can accumulate stagnant water contaminated with soil bacteria,
@@ -1124,7 +1124,7 @@ export default function CoshhAwarenessModule3Section4() {
                         Agricultural Environments
                       </p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Electricians working on farms, agricultural buildings, or rural installations
                       may be exposed to animal pathogens including Leptospira (cattle, pigs),{' '}
                       <em>Chlamydophila abortus</em> (sheep &mdash; particularly during lambing),{' '}
@@ -1173,7 +1173,7 @@ export default function CoshhAwarenessModule3Section4() {
                         Elimination &amp; Avoidance
                       </p>
                     </div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Avoid work in contaminated areas where possible. Re-route cables to avoid
                       drainage runs. Schedule work to avoid known contaminated zones. Commission
                       specialist cleaning before electrical work begins in heavily contaminated
@@ -1188,7 +1188,7 @@ export default function CoshhAwarenessModule3Section4() {
                       </span>
                       <p className="text-sm font-medium text-violet-400">Engineering Controls</p>
                     </div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Ventilation in enclosed spaces. Suppression of dust and aerosol (dampen
                       surfaces before disturbance). Drainage and removal of standing water.
                       Temperature control of water systems (L8 compliance). Enclosure of
@@ -1203,13 +1203,13 @@ export default function CoshhAwarenessModule3Section4() {
                       </span>
                       <p className="text-sm font-medium text-violet-400">Hygiene &amp; Welfare</p>
                     </div>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       <strong className="text-white">
                         This is the single most important control for biological hazards on
                         construction sites.
                       </strong>
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       {[
                         'Thorough handwashing with soap and running water before eating, drinking, or smoking',
                         'All cuts, abrasions, and skin conditions covered with waterproof dressings',
@@ -1233,7 +1233,7 @@ export default function CoshhAwarenessModule3Section4() {
                       </span>
                       <p className="text-sm font-medium text-violet-400">Vaccination</p>
                     </div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Vaccination provides a critical additional layer of protection where
                       available. Employers should offer appropriate vaccinations based on risk
                       assessment: <strong className="text-white">hepatitis A</strong> for
@@ -1254,7 +1254,7 @@ export default function CoshhAwarenessModule3Section4() {
                         Personal Protective Equipment (PPE)
                       </p>
                     </div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-white">FFP3 respirator</strong> when disturbing
                       contaminated dust or mould.{' '}
                       <strong className="text-white">Waterproof gloves and boots</strong> for work
@@ -1275,7 +1275,7 @@ export default function CoshhAwarenessModule3Section4() {
                 <p className="text-sm font-medium text-violet-400 mb-3">
                   Special Considerations for Electricians
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Electricians encounter biological hazards in locations that other trades may not
                   routinely access. Understanding the specific risks in these environments is
                   critical.
@@ -1285,7 +1285,7 @@ export default function CoshhAwarenessModule3Section4() {
                     <p className="text-xs font-medium text-amber-400 mb-1">
                       Plant Rooms &amp; Boiler Rooms
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Proximity to water storage tanks, cooling systems, and hot water systems
                       creates Legionella risk. Standing water from leaks may harbour bacteria. Poor
                       ventilation can concentrate airborne biological agents. Check for unused or
@@ -1297,7 +1297,7 @@ export default function CoshhAwarenessModule3Section4() {
                     <p className="text-xs font-medium text-amber-400 mb-1">
                       Ceiling Voids &amp; Loft Spaces
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Bird droppings, bat guano, rodent droppings, and mould accumulate in
                       undisturbed spaces. Running cables through ceiling voids disturbs this
                       contamination. Carry out a visual inspection before entering. Wear FFP3
@@ -1309,7 +1309,7 @@ export default function CoshhAwarenessModule3Section4() {
                     <p className="text-xs font-medium text-amber-400 mb-1">
                       Drainage Pump Stations
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Direct contact with sewage and wastewater. Confined space hazards compound
                       biological risks. Leptospirosis risk from rat-contaminated water. Hepatitis A
                       risk from sewage. Ensure vaccination status is up to date. Wear waterproof
@@ -1344,7 +1344,7 @@ export default function CoshhAwarenessModule3Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1358,7 +1358,7 @@ export default function CoshhAwarenessModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-3">

@@ -217,7 +217,7 @@ const HNCModule3Section3_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section3">
@@ -239,7 +239,7 @@ const HNCModule3Section3_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             AC Waveform Characteristics
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             RMS, average and peak values - understanding the sinusoidal waveforms that power
             building services
           </p>
@@ -345,7 +345,7 @@ const HNCModule3Section3_1 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 v = V<sub>m</sub> sin(omega t) = V<sub>m</sub> sin(2 pi f t)
               </p>
-              <div className="grid grid-cols-2 gap-2 text-xs text-white/70 mt-3">
+              <div className="grid grid-cols-2 gap-2 text-xs text-white mt-3">
                 <div>
                   <strong>v</strong> = instantaneous voltage (V)
                 </div>
@@ -454,7 +454,7 @@ const HNCModule3Section3_1 = () => {
                   <p className="font-bold text-elec-yellow mb-1">
                     V<sub>RMS</sub> = V<sub>peak</sub> / sqrt(2)
                   </p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     = 0.707 x V<sub>peak</sub>
                   </p>
                 </div>
@@ -462,7 +462,7 @@ const HNCModule3Section3_1 = () => {
                   <p className="font-bold text-elec-yellow mb-1">
                     V<sub>peak</sub> = V<sub>RMS</sub> x sqrt(2)
                   </p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     = 1.414 x V<sub>RMS</sub>
                   </p>
                 </div>
@@ -533,7 +533,7 @@ const HNCModule3Section3_1 = () => {
               <p className="font-mono text-center text-base mb-2">
                 V<sub>RMS</sub> = sqrt(1/T integral from 0 to T of v squared dt)
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 For a sine wave, this evaluates to V<sub>peak</sub>/sqrt(2) = 0.707 x V
                 <sub>peak</sub>
               </p>
@@ -569,7 +569,7 @@ const HNCModule3Section3_1 = () => {
                 <p className="font-bold text-elec-yellow mb-1">
                   V<sub>avg</sub> = 0.637 x V<sub>peak</sub> = (2/pi) x V<sub>peak</sub>
                 </p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Only applies to half-cycle (rectified) waveforms
                 </p>
               </div>
@@ -580,7 +580,7 @@ const HNCModule3Section3_1 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Form Factor</p>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-2">Form Factor = RMS / Average</p>
-                  <ul className="text-xs text-white/70 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>
                       Pure sine wave: 0.707/0.637 = <strong>1.11</strong>
                     </li>
@@ -594,7 +594,7 @@ const HNCModule3Section3_1 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Crest Factor</p>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-2">Crest Factor = Peak / RMS</p>
-                  <ul className="text-xs text-white/70 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>
                       Pure sine wave: 1/0.707 = <strong>1.414</strong> (sqrt(2))
                     </li>
@@ -752,13 +752,13 @@ const HNCModule3Section3_1 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Energy Meter Operation</p>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 Building energy meters measure real power (kW) and energy (kWh) using voltage and
                 current transformers. They sample instantaneous v and i, multiply them, and
                 integrate over time to give true energy consumption regardless of waveform
                 distortion.
               </p>
-              <p className="text-xs text-white/70">
+              <p className="text-xs text-white">
                 Modern meters also measure kVA (apparent power), kVAr (reactive power), power
                 factor, and total harmonic distortion (THD).
               </p>
@@ -784,7 +784,7 @@ const HNCModule3Section3_1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Design tip:</strong> When specifying equipment for buildings with significant
               LED or VSD loads, always use true RMS instruments for measurements and consider
               harmonic filters if THD exceeds 5%.
@@ -809,7 +809,7 @@ const HNCModule3Section3_1 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Question:</strong> Calculate all voltage values for the UK 230V supply.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Given: V<sub>RMS</sub> = 230V
                 </p>
@@ -836,7 +836,7 @@ const HNCModule3Section3_1 = () => {
                 <strong>Question:</strong> A circuit draws 13A RMS. What is the peak current and
                 what current capacity must the cable withstand?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Peak current:</p>
                 <p>
                   I<sub>peak</sub> = I<sub>RMS</sub> x sqrt(2) = 13 x 1.414 = <strong>18.4A</strong>
@@ -845,7 +845,7 @@ const HNCModule3Section3_1 = () => {
                 <p>Cable rated for 13A RMS (continuous rating)</p>
                 <p>Thermal effects based on I squared R use RMS value</p>
                 <p>Peak current is brief and does not cause additional heating</p>
-                <p className="mt-2 text-white/60">Select cable based on 13A RMS, not peak</p>
+                <p className="mt-2 text-white">Select cable based on 13A RMS, not peak</p>
               </div>
             </div>
 
@@ -857,7 +857,7 @@ const HNCModule3Section3_1 = () => {
                 <strong>Question:</strong> A true RMS meter reads 228V while an average-responding
                 meter reads 243V on the same circuit. What does this indicate?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Average-responding meter assumes form factor 1.11</p>
                 <p>If pure sine: both meters should read same value</p>
                 <p className="mt-2">Actual form factor:</p>
@@ -866,13 +866,13 @@ const HNCModule3Section3_1 = () => {
                   Actual form factor = True RMS / Average = 228 / 219 = <strong>1.04</strong>
                 </p>
                 <p className="mt-2">Conclusion:</p>
-                <p className="text-white/60">
+                <p className="text-white">
                   Form factor less than 1.11 indicates flat-topped waveform
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   Likely cause: harmonic distortion from non-linear loads
                 </p>
-                <p className="text-white/60">Investigation needed if THD exceeds 5%</p>
+                <p className="text-white">Investigation needed if THD exceeds 5%</p>
               </div>
             </div>
 
@@ -883,7 +883,7 @@ const HNCModule3Section3_1 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Question:</strong> Calculate peak voltages for a 400V three-phase supply.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Line voltage (phase-to-phase):</p>
                 <p>
                   V<sub>L(RMS)</sub> = 400V
@@ -898,7 +898,7 @@ const HNCModule3Section3_1 = () => {
                 <p>
                   V<sub>P(peak)</sub> = 231 x 1.414 = <strong>327V</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Three-phase equipment must withstand 566V peaks between lines
                 </p>
               </div>
@@ -912,7 +912,7 @@ const HNCModule3Section3_1 = () => {
                 <strong>Question:</strong> A 46 ohm heating element is connected to 230V RMS.
                 Calculate the power dissipation.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using P = V squared / R with RMS values directly:</p>
                 <p>
                   P = (230) squared / 46 = 52900 / 46 = <strong>1150W</strong>
@@ -1033,7 +1033,7 @@ const HNCModule3Section3_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1081,7 +1081,7 @@ const HNCModule3Section3_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section2-7">

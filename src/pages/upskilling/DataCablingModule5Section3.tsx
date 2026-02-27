@@ -92,7 +92,7 @@ const DataCablingModule5Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/data-cabling-module-5">
@@ -113,7 +113,7 @@ const DataCablingModule5Section3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Patch Cord Design and Performance
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Specifications and requirements for professional installations
           </p>
         </header>
@@ -227,15 +227,15 @@ const DataCablingModule5Section3 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Cat 5e</p>
-                <p className="text-white/90 text-xs">100MHz, 1Gbps</p>
+                <p className="text-white text-xs">100MHz, 1Gbps</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Cat 6</p>
-                <p className="text-white/90 text-xs">250MHz, 1-10Gbps</p>
+                <p className="text-white text-xs">250MHz, 1-10Gbps</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Cat 6A</p>
-                <p className="text-white/90 text-xs">500MHz, 10Gbps</p>
+                <p className="text-white text-xs">500MHz, 10Gbps</p>
               </div>
             </div>
           </div>
@@ -262,7 +262,7 @@ const DataCablingModule5Section3 = () => {
               <div className="grid sm:grid-cols-2 gap-4 mt-3">
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Cat 6 @ 250MHz</p>
-                  <ul className="text-xs text-white/90 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>Insertion Loss: 0.8 dB max</li>
                     <li>NEXT: 39.9 dB min</li>
                     <li>Return Loss: 20.0 dB min</li>
@@ -270,7 +270,7 @@ const DataCablingModule5Section3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Cat 6A @ 500MHz</p>
-                  <ul className="text-xs text-white/90 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>Insertion Loss: 1.2 dB max</li>
                     <li>NEXT: 44.3 dB min</li>
                     <li>Return Loss: 20.0 dB min</li>
@@ -408,7 +408,7 @@ const DataCablingModule5Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -449,7 +449,7 @@ const DataCablingModule5Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/data-cabling-module-5-section-2">

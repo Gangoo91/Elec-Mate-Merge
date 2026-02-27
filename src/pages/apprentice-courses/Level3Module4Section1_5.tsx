@@ -282,7 +282,7 @@ const Level3Module4Section1_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section1">
@@ -465,7 +465,7 @@ const Level3Module4Section1_5 = () => {
               Minor Works Certificate.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> You diagnose a fault on a ring final circuit caused by
               rodent damage and replace a 3m section of cable. The circuit already existed - you
               haven't added anything new - so a Minor Electrical Installation Works Certificate is
@@ -526,13 +526,13 @@ const Level3Module4Section1_5 = () => {
             <div className="grid grid-cols-2 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Record Test Values</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Not just "pass" - record actual readings: R1+R2, Zs, IR, RCD trip time
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Before and After</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Record test results before repair and after - shows the improvement achieved
                 </p>
               </div>
@@ -619,7 +619,7 @@ const Level3Module4Section1_5 = () => {
               the customer keeps certificates with their property documents is good practice.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> Three years after your repair, the customer calls saying the
               fault has returned. Your records show you tested insulation resistance at 250 MΩ and
               earth fault loop impedance at 0.42Ω - both well within limits. This demonstrates you
@@ -707,7 +707,7 @@ const Level3Module4Section1_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -754,7 +754,7 @@ const Level3Module4Section1_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section1-4">

@@ -37,33 +37,27 @@ const AGENT_CONFIG: Record<
   AgentType,
   {
     icon: React.ComponentType<{ className?: string }>;
-    gradient: string;
     route: string;
   }
 > = {
   'circuit-designer': {
     icon: Zap,
-    gradient: 'from-amber-400 to-yellow-500',
     route: '/electrician/circuit-designer',
   },
   'cost-engineer': {
     icon: Calculator,
-    gradient: 'from-emerald-400 to-green-500',
     route: '/electrician/cost-engineer',
   },
   'health-safety': {
     icon: Shield,
-    gradient: 'from-orange-400 to-red-500',
     route: '/electrician/health-safety',
   },
   installer: {
     icon: Wrench,
-    gradient: 'from-blue-400 to-blue-500',
     route: '/electrician/installation-specialist',
   },
   maintenance: {
     icon: Settings,
-    gradient: 'from-cyan-400 to-teal-500',
     route: '/electrician/maintenance',
   },
 };
@@ -195,22 +189,20 @@ export const SavedResultItem: React.FC<SavedResultItemProps> = ({ result, onClos
       className="flex items-center gap-3 p-3 rounded-xl bg-white/[0.03] border border-white/[0.06] active:bg-white/[0.06] transition-colors"
     >
       {/* Agent Icon */}
-      <div
-        className={`flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center bg-gradient-to-br ${config.gradient}`}
-      >
-        <IconComponent className="h-5 w-5 text-white" />
+      <div className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center bg-elec-yellow/10 border border-elec-yellow/20">
+        <IconComponent className="h-5 w-5 text-elec-yellow" />
       </div>
 
       {/* Content */}
       <button onClick={handleViewResults} className="flex-1 min-w-0 text-left touch-manipulation">
         <h4 className="text-sm font-medium text-white truncate">{result.title}</h4>
-        <p className="text-xs text-white/50">{relativeDate}</p>
+        <p className="text-xs text-white">{relativeDate}</p>
       </button>
 
       {/* Actions Menu */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="flex-shrink-0 w-9 h-9 rounded-lg flex items-center justify-center text-white/50 hover:text-white hover:bg-white/[0.08] transition-colors touch-manipulation">
+          <button className="flex-shrink-0 w-11 h-11 rounded-lg flex items-center justify-center text-white hover:bg-white/[0.08] transition-colors touch-manipulation">
             <MoreVertical className="h-5 w-5" />
           </button>
         </DropdownMenuTrigger>

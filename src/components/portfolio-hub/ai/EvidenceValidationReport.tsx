@@ -101,7 +101,7 @@ export function EvidenceValidationReport({
                   <p className="text-sm font-medium text-foreground">
                     Analysing evidence quality...
                   </p>
-                  <p className="text-xs text-white/40 mt-1">
+                  <p className="text-xs text-white mt-1">
                     Checking each AC against assessor standards
                   </p>
                 </div>
@@ -113,7 +113,7 @@ export function EvidenceValidationReport({
                 </div>
                 <div className="text-center">
                   <p className="text-sm font-medium text-foreground">Validate your evidence</p>
-                  <p className="text-xs text-white/40 mt-1">
+                  <p className="text-xs text-white mt-1">
                     AI will check if your evidence meets each claimed AC
                   </p>
                 </div>
@@ -142,7 +142,7 @@ export function EvidenceValidationReport({
                     >
                       {result.overallGrade}
                     </span>
-                    <span className="text-[10px] text-white/40">{result.overallScore}/100</span>
+                    <span className="text-[10px] text-white">{result.overallScore}/100</span>
                   </div>
                   <div className="flex-1">
                     <p
@@ -153,7 +153,7 @@ export function EvidenceValidationReport({
                     >
                       {GRADE_LABELS[result.overallGrade]}
                     </p>
-                    <p className="text-xs text-white/40 mt-0.5">
+                    <p className="text-xs text-white mt-0.5">
                       {result.acValidations.length} assessment criteria checked
                     </p>
                   </div>
@@ -163,16 +163,16 @@ export function EvidenceValidationReport({
                 <div className="p-4 rounded-xl bg-white/[0.04] border border-white/10">
                   <div className="flex items-center gap-2 mb-2">
                     <Target className="h-4 w-4 text-elec-yellow" />
-                    <span className="text-xs font-semibold text-white/40 uppercase tracking-wider">
+                    <span className="text-xs font-semibold text-white uppercase tracking-wider">
                       Assessor Summary
                     </span>
                   </div>
-                  <p className="text-sm text-white/70 leading-relaxed">{result.assessorSummary}</p>
+                  <p className="text-sm text-white leading-relaxed">{result.assessorSummary}</p>
                 </div>
 
                 {/* Per-AC Breakdown */}
                 <div className="space-y-2">
-                  <h3 className="text-xs font-semibold text-white/40 uppercase tracking-wider">
+                  <h3 className="text-xs font-semibold text-white uppercase tracking-wider">
                     Per-AC Breakdown
                   </h3>
                   {result.acValidations.map((ac) => (
@@ -188,7 +188,7 @@ export function EvidenceValidationReport({
                 {/* Improvement Actions */}
                 {result.improvementActions.length > 0 && (
                   <div className="space-y-2">
-                    <h3 className="text-xs font-semibold text-white/40 uppercase tracking-wider flex items-center gap-1.5">
+                    <h3 className="text-xs font-semibold text-white uppercase tracking-wider flex items-center gap-1.5">
                       <Lightbulb className="h-3.5 w-3.5" />
                       Improvement Actions
                     </h3>
@@ -207,7 +207,7 @@ export function EvidenceValidationReport({
                           <div className="flex-1 min-w-0">
                             <p className="text-sm text-foreground">{action.action}</p>
                             {action.acCode && (
-                              <p className="text-[10px] text-white/30 mt-0.5">
+                              <p className="text-[10px] text-white mt-0.5">
                                 Related to: {action.acCode}
                               </p>
                             )}
@@ -222,7 +222,7 @@ export function EvidenceValidationReport({
                 )}
 
                 {/* Processing time */}
-                <p className="text-[10px] text-white/20 text-center">
+                <p className="text-[10px] text-white text-center">
                   Analysed in {(result.processingTimeMs / 1000).toFixed(1)}s
                 </p>
               </>
@@ -256,7 +256,7 @@ function ACValidationCard({
         <StatusIcon className={cn('h-4 w-4 shrink-0', statusColour.text)} />
         <div className="flex-1 min-w-0">
           <p className="text-sm font-medium text-foreground truncate">{ac.acCode}</p>
-          <p className="text-xs text-white/40 truncate">{ac.acText}</p>
+          <p className="text-xs text-white truncate">{ac.acText}</p>
         </div>
         <div className="flex items-center gap-2 shrink-0">
           {/* Score bar */}
@@ -266,11 +266,11 @@ function ACValidationCard({
               style={{ width: `${ac.sufficiencyScore}%` }}
             />
           </div>
-          <span className="text-xs text-white/40 w-8 text-right">{ac.sufficiencyScore}</span>
+          <span className="text-xs text-white w-8 text-right">{ac.sufficiencyScore}</span>
           {expanded ? (
-            <ChevronDown className="h-4 w-4 text-white/30" />
+            <ChevronDown className="h-4 w-4 text-white" />
           ) : (
-            <ChevronRight className="h-4 w-4 text-white/30" />
+            <ChevronRight className="h-4 w-4 text-white" />
           )}
         </div>
       </button>
@@ -280,14 +280,14 @@ function ACValidationCard({
           <Badge variant="outline" className={cn('text-[10px]', statusColour.text)}>
             {STATUS_LABELS[ac.status]}
           </Badge>
-          <p className="text-sm text-white/60">{ac.feedback}</p>
+          <p className="text-sm text-white">{ac.feedback}</p>
           {ac.suggestedAdditions?.length > 0 && (
             <div className="space-y-1">
-              <p className="text-[10px] text-white/30 font-semibold uppercase tracking-wider">
+              <p className="text-[10px] text-white font-semibold uppercase tracking-wider">
                 Suggested Additions
               </p>
               {ac.suggestedAdditions.map((addition, i) => (
-                <div key={i} className="flex items-start gap-2 text-xs text-white/50">
+                <div key={i} className="flex items-start gap-2 text-xs text-white">
                   <span className="text-elec-yellow mt-0.5">•</span>
                   {addition}
                 </div>

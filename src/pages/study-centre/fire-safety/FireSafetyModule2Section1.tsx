@@ -229,7 +229,7 @@ export default function FireSafetyModule2Section1() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             The Regulatory Reform (Fire Safety) Order 2005
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             The single most important piece of fire safety legislation in England and Wales &mdash;
             understanding its scope, key articles, enforcement powers, and post-Grenfell amendments
           </p>
@@ -480,7 +480,7 @@ export default function FireSafetyModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-rose-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-rose-300">Important Distinction</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The RRFSO applies to the <strong className="text-white">common areas</strong> of
                   blocks of flats (corridors, stairwells, lobbies, car parks) but{' '}
                   <strong className="text-white">not</strong> to individual flats themselves. This
@@ -516,7 +516,7 @@ export default function FireSafetyModule2Section1() {
                   Article 5 &mdash; The Responsible Person
                 </h3>
                 <div className="space-y-2 text-sm">
-                  <p className="text-white/80">
+                  <p className="text-white">
                     Article 5 defines who bears the primary duty for fire safety:
                   </p>
                   <ul className="text-white space-y-2">
@@ -543,7 +543,7 @@ export default function FireSafetyModule2Section1() {
                       </span>
                     </li>
                   </ul>
-                  <p className="text-white/80 mt-2">
+                  <p className="text-white mt-2">
                     In practice, the responsible person is usually the employer, the building owner,
                     the landlord, or the managing agent. In multi-tenanted buildings, there may be
                     more than one responsible person, each responsible for the areas under their
@@ -557,7 +557,7 @@ export default function FireSafetyModule2Section1() {
                   <FileText className="inline h-4 w-4 mr-1.5 -mt-0.5" />
                   Article 8 &mdash; Duty to Take General Fire Precautions
                 </h3>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     The responsible person must take such general fire precautions as will ensure,
                     so far as is reasonably practicable, the safety of any of their employees and,
@@ -577,7 +577,7 @@ export default function FireSafetyModule2Section1() {
                   <ClipboardList className="inline h-4 w-4 mr-1.5 -mt-0.5" />
                   Article 9 &mdash; Fire Risk Assessment (Mandatory)
                 </h3>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p className="text-rose-300 font-semibold text-xs uppercase tracking-wider mb-2">
                     The Cornerstone of the RRFSO
                   </p>
@@ -621,7 +621,7 @@ export default function FireSafetyModule2Section1() {
                   <FileText className="inline h-4 w-4 mr-1.5 -mt-0.5" />
                   Article 11 &mdash; Fire Safety Arrangements
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The responsible person must make and give effect to appropriate arrangements for
                   the effective planning, organisation, control, monitoring, and review of fire
                   safety measures. Where 5 or more employees, these arrangements must be recorded in
@@ -635,7 +635,7 @@ export default function FireSafetyModule2Section1() {
                   <p className="text-rose-400 font-semibold text-sm mb-1">
                     Article 13 &mdash; Fire-Fighting &amp; Detection
                   </p>
-                  <p className="text-white/80 text-xs">
+                  <p className="text-white text-xs">
                     Premises must be equipped with appropriate fire-fighting equipment and fire
                     detection and warning systems. Equipment must be easily accessible, simple to
                     use, and indicated by signs.
@@ -645,7 +645,7 @@ export default function FireSafetyModule2Section1() {
                   <p className="text-rose-400 font-semibold text-sm mb-1">
                     Article 14 &mdash; Emergency Routes &amp; Exits
                   </p>
-                  <p className="text-white/80 text-xs">
+                  <p className="text-white text-xs">
                     Routes to emergency exits and the exits themselves must be kept clear at all
                     times. Emergency doors must open in the direction of escape. Routes and exits
                     must be indicated by signs and adequately illuminated.
@@ -655,7 +655,7 @@ export default function FireSafetyModule2Section1() {
                   <p className="text-rose-400 font-semibold text-sm mb-1">
                     Article 15 &mdash; Serious &amp; Imminent Danger
                   </p>
-                  <p className="text-white/80 text-xs">
+                  <p className="text-white text-xs">
                     Procedures must be established for serious and imminent danger and for danger
                     areas. Nominated competent persons must implement evacuation procedures. Persons
                     must be able to stop work and proceed to a place of safety immediately.
@@ -665,7 +665,7 @@ export default function FireSafetyModule2Section1() {
                   <p className="text-rose-400 font-semibold text-sm mb-1">
                     Article 17 &mdash; Maintenance
                   </p>
-                  <p className="text-white/80 text-xs">
+                  <p className="text-white text-xs">
                     All facilities, equipment, and devices provided for fire safety must be
                     maintained in an efficient state, in efficient working order, and in good
                     repair. This includes fire alarms, emergency lighting, fire doors, and
@@ -676,7 +676,7 @@ export default function FireSafetyModule2Section1() {
                   <p className="text-rose-400 font-semibold text-sm mb-1">
                     Article 18 &mdash; Safety Assistance
                   </p>
-                  <p className="text-white/80 text-xs">
+                  <p className="text-white text-xs">
                     The responsible person must appoint one or more competent persons to assist them
                     in implementing the fire safety measures required by the Order. A person is
                     competent if they have sufficient training, experience, and knowledge.
@@ -686,7 +686,7 @@ export default function FireSafetyModule2Section1() {
                   <p className="text-rose-400 font-semibold text-sm mb-1">
                     Article 21 &mdash; Training
                   </p>
-                  <p className="text-white/80 text-xs">
+                  <p className="text-white text-xs">
                     The responsible person must ensure that employees are provided with adequate
                     fire safety training at the time they are first employed, and whenever exposed
                     to new or increased risks. Training must be repeated periodically and adapted to
@@ -699,7 +699,7 @@ export default function FireSafetyModule2Section1() {
                 <p className="text-rose-400 font-semibold text-sm mb-1">
                   Article 22 &mdash; Cooperation &amp; Coordination
                 </p>
-                <p className="text-white/80 text-xs">
+                <p className="text-white text-xs">
                   Where two or more responsible persons share or have duties in respect of the same
                   premises, they must cooperate with each other, coordinate their fire safety
                   measures, and inform each other of the risks they have identified. This is
@@ -789,7 +789,7 @@ export default function FireSafetyModule2Section1() {
                   <ShieldCheck className="h-5 w-5 text-rose-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-rose-300">Self-Compliance Model</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The RRFSO places the primary responsibility for fire safety on the
                   <strong className="text-white"> responsible person</strong>, not on the fire
                   authority. The responsible person must assess, plan, implement, and monitor fire
@@ -839,7 +839,7 @@ export default function FireSafetyModule2Section1() {
                       </div>
                       <div className="flex-1 bg-white/5 border border-white/10 p-2.5 rounded-lg">
                         <p className="text-rose-400 font-semibold text-sm">{item.title}</p>
-                        <p className="text-white/70 text-xs">{item.desc}</p>
+                        <p className="text-white text-xs">{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -871,7 +871,7 @@ export default function FireSafetyModule2Section1() {
                   <h3 className="text-rose-400 font-semibold mb-2">
                     Informal Advice &amp; Education
                   </h3>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     The first response to minor non-compliance is typically informal advice. The
                     fire inspector may advise the responsible person of areas for improvement and
                     provide guidance on how to comply. This is not a formal enforcement action but
@@ -884,7 +884,7 @@ export default function FireSafetyModule2Section1() {
                     <Gavel className="inline h-4 w-4 mr-1.5 -mt-0.5" />
                     Alteration Notice (Article 29)
                   </h3>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     An alteration notice may be served where the premises constitute a serious risk
                     or may constitute such a risk if there is a change in the use of the premises or
                     an increase in the quantities of dangerous substances stored. The notice
@@ -902,7 +902,7 @@ export default function FireSafetyModule2Section1() {
                     <Gavel className="inline h-4 w-4 mr-1.5 -mt-0.5" />
                     Enforcement Notice (Article 30)
                   </h3>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     An enforcement notice is served where the inspector is of the opinion that the
                     responsible person has failed to comply with any provision of the Order. The
                     notice specifies the steps that must be taken to remedy the failure and sets a
@@ -916,7 +916,7 @@ export default function FireSafetyModule2Section1() {
                     <AlertTriangle className="inline h-4 w-4 mr-1.5 -mt-0.5" />
                     Prohibition Notice (Article 31)
                   </h3>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     The most serious enforcement action. A prohibition notice can be served where
                     the use of premises involves or will involve a{' '}
                     <strong className="text-white">
@@ -936,7 +936,7 @@ export default function FireSafetyModule2Section1() {
                 <h3 className="text-red-300 font-semibold mb-2">
                   Criminal Offences &amp; Penalties
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Breach of the RRFSO constitutes a criminal offence. The penalties are severe:
                 </p>
                 <ul className="text-white space-y-2 text-sm">
@@ -984,7 +984,7 @@ export default function FireSafetyModule2Section1() {
                     <p className="text-rose-300 font-semibold mb-1">
                       R v. Knaresborough Properties Ltd (2020)
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       A residential landlord was fined{' '}
                       <strong className="text-white">&pound;150,000</strong> after a fire and rescue
                       authority audit found no fire risk assessment, no fire detection system in
@@ -997,7 +997,7 @@ export default function FireSafetyModule2Section1() {
                     <p className="text-rose-300 font-semibold mb-1">
                       LFB v. Shepherd&rsquo;s Bush Housing Group (2019)
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       A housing association was fined{' '}
                       <strong className="text-white">&pound;270,000</strong> following a fire in a
                       block of flats where the fire risk assessment had not been reviewed for over
@@ -1010,7 +1010,7 @@ export default function FireSafetyModule2Section1() {
                     <p className="text-rose-300 font-semibold mb-1">
                       R v. Horizon Housing Group (2021)
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       A care home operator received a fine of{' '}
                       <strong className="text-white">&pound;400,000</strong> after an inspection
                       revealed failures in fire detection, staff training, and personal emergency
@@ -1046,7 +1046,7 @@ export default function FireSafetyModule2Section1() {
                   Fire Safety Act 2021 (Amendment to RRFSO)
                 </h3>
                 <div className="space-y-3 text-sm">
-                  <p className="text-white/80">
+                  <p className="text-white">
                     The Fire Safety Act 2021 was a direct response to the legal ambiguity exposed by
                     the Grenfell Tower fire. Before this Act, there was uncertainty about whether
                     the <strong className="text-white">external walls</strong> and
@@ -1086,7 +1086,7 @@ export default function FireSafetyModule2Section1() {
                   <Building className="inline h-4 w-4 mr-1.5 -mt-0.5" />
                   Building Safety Act 2022
                 </h3>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     The Building Safety Act 2022 introduced a comprehensive new regime for
                     higher-risk buildings (defined as residential buildings at least 18 metres in
@@ -1131,7 +1131,7 @@ export default function FireSafetyModule2Section1() {
                   <FileText className="inline h-4 w-4 mr-1.5 -mt-0.5" />
                   Fire Safety (England) Regulations 2022
                 </h3>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     Made under the RRFSO (as amended by the Fire Safety Act 2021), these regulations
                     impose <strong className="text-white">specific new duties</strong> on
@@ -1178,7 +1178,7 @@ export default function FireSafetyModule2Section1() {
                 <h3 className="text-rose-400 font-medium mb-3">
                   Grenfell Tower Inquiry Recommendations
                 </h3>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     The Grenfell Tower Inquiry (Phase 1 and Phase 2 reports) made numerous
                     recommendations affecting fire safety, including:
@@ -1245,7 +1245,7 @@ export default function FireSafetyModule2Section1() {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-400 font-semibold text-sm mb-1">HASAWA 1974</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       The overarching health and safety framework. The RRFSO is the fire-specific
                       legislation, but HASAWA still applies to workplace fire safety in terms of the
                       employer&rsquo;s general duty of care (Section 2) and the duty to
@@ -1257,7 +1257,7 @@ export default function FireSafetyModule2Section1() {
                     <p className="text-rose-400 font-semibold text-sm mb-1">
                       Management of H&amp;S at Work Regs 1999
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       The general risk assessment duty under Regulation 3 complements the fire risk
                       assessment under RRFSO Article 9. The principles of competent assistance (Reg
                       7), information to employees (Reg 10), and cooperation and coordination
@@ -1267,7 +1267,7 @@ export default function FireSafetyModule2Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-400 font-semibold text-sm mb-1">CDM 2015</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       During the construction phase, fire safety falls under CDM 2015, not the
                       RRFSO. The principal contractor is responsible for fire safety on the
                       construction site. However, once the building is handed over and occupied, the
@@ -1279,7 +1279,7 @@ export default function FireSafetyModule2Section1() {
                     <p className="text-rose-400 font-semibold text-sm mb-1">
                       Building Regulations Part B
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Part B of the Building Regulations (Fire Safety) sets the standards for fire
                       safety in the design and construction of buildings. It covers means of
                       warning, means of escape, internal fire spread (linings and structure),
@@ -1290,7 +1290,7 @@ export default function FireSafetyModule2Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-400 font-semibold text-sm mb-1">Housing Act 2004</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       For HMOs (houses in multiple occupation), the Housing Act 2004 provides
                       additional fire safety requirements through the HMO licensing regime. The
                       Housing Health and Safety Rating System (HHSRS) assesses fire as a Category 1
@@ -1300,7 +1300,7 @@ export default function FireSafetyModule2Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-400 font-semibold text-sm mb-1">Licensing Act 2003</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Premises licensed for the sale of alcohol or the provision of entertainment
                       are subject to licensing conditions, which may include fire safety
                       requirements. The fire and rescue authority is a responsible authority under
@@ -1323,21 +1323,21 @@ export default function FireSafetyModule2Section1() {
                       title: 'Fire Precautions Act',
                       desc: 'Fire certificate system introduced &mdash; prescriptive approach',
                       colour: 'bg-white/20 border-white/30',
-                      textColour: 'text-white/60',
+                      textColour: 'text-white',
                     },
                     {
                       year: '1974',
                       title: 'HASAWA',
                       desc: 'Overarching health and safety framework established',
                       colour: 'bg-white/20 border-white/30',
-                      textColour: 'text-white/60',
+                      textColour: 'text-white',
                     },
                     {
                       year: '1997',
                       title: 'Fire Precautions (Workplace) Regs',
                       desc: 'Additional layer of workplace fire safety regulations',
                       colour: 'bg-white/20 border-white/30',
-                      textColour: 'text-white/60',
+                      textColour: 'text-white',
                     },
                     {
                       year: '2005',
@@ -1389,7 +1389,7 @@ export default function FireSafetyModule2Section1() {
                       </div>
                       <div className={`flex-1 border p-2.5 rounded-lg mb-1 ${item.colour}`}>
                         <p className={`font-semibold text-sm ${item.textColour}`}>{item.title}</p>
-                        <p className="text-white/60 text-xs">{item.desc}</p>
+                        <p className="text-white text-xs">{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -1405,14 +1405,14 @@ export default function FireSafetyModule2Section1() {
                   {/* Top Level */}
                   <div className="bg-rose-500/20 border border-rose-500/40 px-4 py-2 rounded-lg text-centre w-full max-w-md">
                     <p className="text-rose-400 font-bold text-sm">HASAWA 1974</p>
-                    <p className="text-white/60 text-xs">Overarching health and safety framework</p>
+                    <p className="text-white text-xs">Overarching health and safety framework</p>
                   </div>
                   <div className="w-0.5 h-4 bg-rose-500/30" />
 
                   {/* RRFSO Level */}
                   <div className="bg-rose-500/15 border-2 border-rose-500/50 px-4 py-3 rounded-lg text-centre w-full max-w-md">
                     <p className="text-rose-400 font-bold text-sm">RRFSO 2005 (as amended)</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Fire Safety Act 2021 + Fire Safety (England) Regulations 2022
                     </p>
                   </div>
@@ -1433,7 +1433,7 @@ export default function FireSafetyModule2Section1() {
                         className="bg-white/5 border border-white/15 px-2 py-2 rounded-lg text-centre"
                       >
                         <p className="text-rose-400 font-semibold text-xs">{reg.name}</p>
-                        <p className="text-white/50 text-[10px]">{reg.desc}</p>
+                        <p className="text-white text-[10px]">{reg.desc}</p>
                       </div>
                     ))}
                   </div>
@@ -1447,7 +1447,7 @@ export default function FireSafetyModule2Section1() {
                     For Electricians &amp; Fire Marshals
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   As an electrician working as a fire marshal, understanding the RRFSO is essential
                   because your electrical work directly affects fire safety. Electrical faults are
                   one of the most common causes of workplace fires. Your knowledge of BS 7671
@@ -1552,7 +1552,7 @@ export default function FireSafetyModule2Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1568,7 +1568,7 @@ export default function FireSafetyModule2Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-2">

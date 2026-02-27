@@ -244,7 +244,7 @@ const HNCModule8Section5_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section5">
@@ -266,7 +266,7 @@ const HNCModule8Section5_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             BMS Fundamentals
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding building management system architecture, components and integration
           </p>
         </header>
@@ -356,19 +356,19 @@ const HNCModule8Section5_1 = () => {
               <div className="grid gap-4">
                 <div className="p-3 rounded bg-white/5 border-l-2 border-blue-400/50">
                   <p className="font-medium text-blue-300 mb-1">Management Level (Top Tier)</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Head-end servers, operator workstations, enterprise integration
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5 border-l-2 border-green-400/50">
                   <p className="font-medium text-green-300 mb-1">Automation Level (Middle Tier)</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Outstations, controllers, local area networks
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5 border-l-2 border-orange-400/50">
                   <p className="font-medium text-orange-300 mb-1">Field Level (Bottom Tier)</p>
-                  <p className="text-sm text-white/80">Sensors, actuators, meters, field devices</p>
+                  <p className="text-sm text-white">Sensors, actuators, meters, field devices</p>
                 </div>
               </div>
             </div>
@@ -479,7 +479,7 @@ const HNCModule8Section5_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Hardware Points (Physical)</p>
-                  <ul className="text-white/80 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>
                       <strong>AI</strong> - Analogue Input (temperature, pressure)
                     </li>
@@ -496,7 +496,7 @@ const HNCModule8Section5_1 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Software Points (Virtual)</p>
-                  <ul className="text-white/80 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>
                       <strong>AV</strong> - Analogue Value (setpoints, timers)
                     </li>
@@ -666,7 +666,7 @@ const HNCModule8Section5_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Primary Functions</p>
-                  <ul className="text-sm text-white/80 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Execute control programs (PID, sequences)</li>
                     <li className="pl-1">Process sensor inputs and generate outputs</li>
                     <li className="pl-1">Implement time schedules locally</li>
@@ -676,7 +676,7 @@ const HNCModule8Section5_1 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Communication Functions</p>
-                  <ul className="text-sm text-white/80 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Report to head-end system</li>
                     <li className="pl-1">Peer-to-peer with other outstations</li>
                     <li className="pl-1">Interface with field bus devices</li>
@@ -816,7 +816,7 @@ const HNCModule8Section5_1 = () => {
                 <div className="p-3 rounded bg-white/5">
                   <Monitor className="h-5 w-5 text-blue-400 mb-2" />
                   <p className="font-medium text-white mb-1">Visualisation</p>
-                  <ul className="text-white/70 space-y-0.5 text-xs">
+                  <ul className="text-white space-y-0.5 text-xs">
                     <li>Dynamic graphics</li>
                     <li>Floor plans</li>
                     <li>Schematic diagrams</li>
@@ -826,7 +826,7 @@ const HNCModule8Section5_1 = () => {
                 <div className="p-3 rounded bg-white/5">
                   <Server className="h-5 w-5 text-green-400 mb-2" />
                   <p className="font-medium text-white mb-1">Data Management</p>
-                  <ul className="text-white/70 space-y-0.5 text-xs">
+                  <ul className="text-white space-y-0.5 text-xs">
                     <li>Historical trending</li>
                     <li>Alarm logging</li>
                     <li>Report generation</li>
@@ -836,7 +836,7 @@ const HNCModule8Section5_1 = () => {
                 <div className="p-3 rounded bg-white/5">
                   <Layers className="h-5 w-5 text-purple-400 mb-2" />
                   <p className="font-medium text-white mb-1">Supervision</p>
-                  <ul className="text-white/70 space-y-0.5 text-xs">
+                  <ul className="text-white space-y-0.5 text-xs">
                     <li>Global scheduling</li>
                     <li>Alarm management</li>
                     <li>User access control</li>
@@ -932,7 +932,7 @@ const HNCModule8Section5_1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Typical BMS Network Architecture
               </p>
-              <div className="space-y-3 text-sm text-white/90">
+              <div className="space-y-3 text-sm text-white">
                 <p>
                   <strong>Level 3 (Enterprise):</strong> Corporate LAN, IT integration, cloud
                   services
@@ -1095,13 +1095,13 @@ const HNCModule8Section5_1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Integration Example: Fire Alarm Interface
               </p>
-              <div className="space-y-2 text-sm text-white/90">
+              <div className="space-y-2 text-sm text-white">
                 <p>
                   <strong>Fire alarm panel</strong> &gt; <strong>Volt-free contacts</strong> &gt;{' '}
                   <strong>BMS controller DI</strong>
                 </p>
                 <p className="mt-2">When fire alarm activates:</p>
-                <ul className="text-white/80 space-y-1 list-disc list-outside ml-5">
+                <ul className="text-white space-y-1 list-disc list-outside ml-5">
                   <li className="pl-1">BMS receives fire alarm signal on digital input</li>
                   <li className="pl-1">AHU fans commanded to smoke control mode or shutdown</li>
                   <li className="pl-1">Fire dampers confirmed closed via end-switch feedback</li>
@@ -1199,7 +1199,7 @@ const HNCModule8Section5_1 = () => {
                 supply/extract temperatures, filter differential pressure, and supply air humidity.
                 How many I/O points are needed?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p className="mb-2">Counting I/O points:</p>
                 <p>
                   <strong>Digital Outputs (DO):</strong>
@@ -1228,8 +1228,8 @@ const HNCModule8Section5_1 = () => {
                 <p>
                   Total AI: <strong>4</strong>
                 </p>
-                <p className="mt-3 text-white/60">Minimum: 2 DO + 5 AO + 4 AI = 11 points</p>
-                <p className="text-white/60">
+                <p className="mt-3 text-white">Minimum: 2 DO + 5 AO + 4 AI = 11 points</p>
+                <p className="text-white">
                   With 20% spare: Select controller with at least 14 points
                 </p>
               </div>
@@ -1243,7 +1243,7 @@ const HNCModule8Section5_1 = () => {
                 <strong>Question:</strong> A three-storey office building has 4 AHUs, 40 FCUs, and
                 central boiler/chiller plant. Design an appropriate BMS network topology.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p className="mb-2">Recommended architecture:</p>
                 <p>
                   <strong>Management Level:</strong>
@@ -1264,7 +1264,7 @@ const HNCModule8Section5_1 = () => {
                 </p>
                 <p>- Direct wiring to controller I/O</p>
                 <p>- Energy meters on M-Bus or Modbus</p>
-                <p className="mt-3 text-white/60">
+                <p className="mt-3 text-white">
                   Topology: Tree/hierarchical with star switches per floor
                 </p>
               </div>
@@ -1278,7 +1278,7 @@ const HNCModule8Section5_1 = () => {
                 <strong>Question:</strong> Create a points schedule entry for monitoring boiler flow
                 temperature with high and low alarms.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90 overflow-x-auto">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white overflow-x-auto">
                 <table className="text-xs w-full">
                   <tbody>
                     <tr>
@@ -1426,7 +1426,7 @@ const HNCModule8Section5_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1490,7 +1490,7 @@ const HNCModule8Section5_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section5">

@@ -105,8 +105,8 @@ export const MethodStatementProcessingView: React.FC<MethodStatementProcessingVi
               className="flex items-center justify-center gap-2"
             >
               <span className="text-sm font-medium text-emerald-400">{currentStage.name}</span>
-              <span className="text-sm text-white/40">·</span>
-              <span className="text-sm text-white/50">{currentStage.description}</span>
+              <span className="text-sm text-white">·</span>
+              <span className="text-sm text-white">{currentStage.description}</span>
             </motion.div>
           </AnimatePresence>
         </div>
@@ -172,7 +172,7 @@ export const MethodStatementProcessingView: React.FC<MethodStatementProcessingVi
                     isComplete && 'bg-emerald-500/30 text-emerald-400',
                     isCurrent &&
                       'bg-emerald-500/40 text-emerald-300 shadow-md shadow-emerald-500/30',
-                    !isComplete && !isCurrent && 'bg-white/5 text-white/30'
+                    !isComplete && !isCurrent && 'bg-white/5 text-white'
                   )}
                 >
                   {isComplete ? (
@@ -189,12 +189,12 @@ export const MethodStatementProcessingView: React.FC<MethodStatementProcessingVi
         {/* Time Stats - Compact row */}
         <div className="flex items-center justify-center gap-6 mb-6 p-3 rounded-xl bg-white/[0.03] border border-white/10">
           <div className="text-center">
-            <p className="text-[10px] text-white/40 uppercase tracking-wide">Elapsed</p>
+            <p className="text-[10px] text-white uppercase tracking-wide">Elapsed</p>
             <p className="text-lg font-bold text-white tabular-nums">{formatTime(elapsedTime)}</p>
           </div>
           <div className="w-px h-8 bg-white/10" />
           <div className="text-center">
-            <p className="text-[10px] text-white/40 uppercase tracking-wide">Remaining</p>
+            <p className="text-[10px] text-white uppercase tracking-wide">Remaining</p>
             <p className="text-lg font-bold text-white tabular-nums">
               ~{formatTime(estimatedTimeRemaining)}
             </p>
@@ -209,7 +209,7 @@ export const MethodStatementProcessingView: React.FC<MethodStatementProcessingVi
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-4"
           >
-            <p className="text-xs text-white/50 flex items-center justify-center gap-2">
+            <p className="text-xs text-white flex items-center justify-center gap-2">
               <Loader2 className="h-3 w-3 animate-spin text-emerald-400" />
               {currentStep}
             </p>
@@ -234,7 +234,7 @@ export const MethodStatementProcessingView: React.FC<MethodStatementProcessingVi
           <button
             onClick={onCancel}
             disabled={isCancelling}
-            className="w-full h-12 text-sm text-white/40 hover:text-red-400 hover:bg-red-500/10 rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-50 touch-manipulation active:scale-[0.98]"
+            className="w-full h-12 text-sm text-white hover:text-red-400 hover:bg-red-500/10 rounded-xl transition-all flex items-center justify-center gap-2 disabled:opacity-50 touch-manipulation active:scale-[0.98]"
           >
             {isCancelling ? (
               <>

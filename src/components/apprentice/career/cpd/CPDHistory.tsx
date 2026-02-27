@@ -96,14 +96,14 @@ const CPDHistory = () => {
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
             <div className="relative md:col-span-2">
               {!searchTerm && (
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
               )}
               <Input
                 placeholder="Search activities..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className={cn(
-                  'h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40 focus:border-elec-yellow/50',
+                  'h-11 bg-white/5 border-white/20 text-white placeholder:text-white focus:border-elec-yellow/50',
                   !searchTerm && 'pl-10'
                 )}
               />
@@ -188,10 +188,10 @@ const CPDHistory = () => {
           <div className="absolute top-0 right-0 w-48 h-48 bg-elec-yellow/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
           <CardContent className="p-8 text-center relative">
             <div className="p-4 rounded-full bg-gradient-to-br from-white/10 to-white/5 border border-white/20 w-fit mx-auto mb-4">
-              <Search className="h-8 w-8 text-white/50" />
+              <Search className="h-8 w-8 text-white" />
             </div>
             <h3 className="text-lg font-semibold text-white mb-2">No entries found</h3>
-            <p className="text-white/70">
+            <p className="text-white">
               No CPD entries match your current filters. Try adjusting your search criteria.
             </p>
           </CardContent>
@@ -211,7 +211,7 @@ const CPDHistory = () => {
                       <div className="flex-1 min-w-0">
                         <h3 className="font-semibold text-white text-base">{entry.title}</h3>
                         {entry.description && (
-                          <p className="text-sm text-white/60 mt-1 line-clamp-2">
+                          <p className="text-sm text-white mt-1 line-clamp-2">
                             {entry.description}
                           </p>
                         )}
@@ -233,16 +233,16 @@ const CPDHistory = () => {
                     </div>
 
                     <div className="flex flex-wrap items-center gap-2 text-xs">
-                      <span className="px-2 py-1 rounded bg-white/5 text-white/80">
+                      <span className="px-2 py-1 rounded bg-white/5 text-white">
                         {format(new Date(entry.date_completed), 'dd MMM yyyy')}
                       </span>
                       <span className="px-2 py-1 rounded bg-elec-yellow/10 text-elec-yellow font-medium">
                         {entry.hours} hours
                       </span>
-                      <span className="px-2 py-1 rounded bg-white/5 text-white/80">
+                      <span className="px-2 py-1 rounded bg-white/5 text-white">
                         {categoryNames[entry.category] || entry.category}
                       </span>
-                      <span className="px-2 py-1 rounded bg-white/5 text-white/80">
+                      <span className="px-2 py-1 rounded bg-white/5 text-white">
                         {activityTypeNames[entry.activity_type] || entry.activity_type}
                       </span>
                     </div>
@@ -252,7 +252,7 @@ const CPDHistory = () => {
                         <span className="text-xs text-green-400 font-medium">
                           Learning outcomes:
                         </span>
-                        <p className="text-xs text-white/80 mt-1">
+                        <p className="text-xs text-white mt-1">
                           {entry.learning_outcomes.join(', ')}
                         </p>
                       </div>
@@ -264,7 +264,7 @@ const CPDHistory = () => {
                     size="sm"
                     className="h-10 w-10 p-0 border-white/20 hover:bg-white/10 hover:border-elec-yellow/30 flex-shrink-0 touch-manipulation"
                   >
-                    <Eye className="h-4 w-4 text-white/70" />
+                    <Eye className="h-4 w-4 text-white" />
                   </Button>
                 </div>
               </CardContent>

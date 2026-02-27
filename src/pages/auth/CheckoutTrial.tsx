@@ -149,7 +149,7 @@ const CheckoutTrial = () => {
             <Loader2 className="h-8 w-8 text-elec-yellow animate-spin" />
           </div>
           <h1 className="text-xl font-bold text-white mb-2">Setting up your trial...</h1>
-          <p className="text-white/50 text-[14px]">Redirecting to secure checkout</p>
+          <p className="text-white text-[14px]">Redirecting to secure checkout</p>
         </motion.div>
       </div>
     );
@@ -197,9 +197,9 @@ const CheckoutTrial = () => {
             <h1 className="text-[24px] font-bold text-white tracking-tight mb-2">
               Complete your free trial setup
             </h1>
-            <p className="text-[15px] text-white/50 leading-relaxed">
+            <p className="text-[15px] text-white leading-relaxed">
               Enter your card details to start your 7-day free trial. You won't be charged until{' '}
-              <span className="text-white/70 font-medium">{trialEndDate}</span>.
+              <span className="text-white font-medium">{trialEndDate}</span>.
             </p>
           </div>
 
@@ -218,7 +218,7 @@ const CheckoutTrial = () => {
           <div className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 mb-6">
             <div className="flex items-center gap-2 mb-3">
               <Zap className="h-4 w-4 text-elec-yellow" />
-              <span className="text-[13px] font-semibold text-white/70">What you get</span>
+              <span className="text-[13px] font-semibold text-white">What you get</span>
             </div>
             <div className="space-y-2.5">
               {[
@@ -231,7 +231,7 @@ const CheckoutTrial = () => {
                   <div className="w-5 h-5 rounded-full bg-green-500/15 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <Check className="h-3 w-3 text-green-400" />
                   </div>
-                  <span className="text-[14px] text-white/70 leading-snug">{item}</span>
+                  <span className="text-[14px] text-white leading-snug">{item}</span>
                 </div>
               ))}
             </div>
@@ -262,7 +262,7 @@ const CheckoutTrial = () => {
           </Button>
 
           {/* Trust signals */}
-          <div className="flex items-center justify-center gap-4 mt-4 text-[11px] text-white/30">
+          <div className="flex items-center justify-center gap-4 mt-4 text-[11px] text-white">
             <span className="flex items-center gap-1.5">
               <Shield className="h-3.5 w-3.5 text-green-500/60" />
               {isNative ? 'Secured by Apple / Google' : 'Secured by Stripe'}
@@ -273,7 +273,7 @@ const CheckoutTrial = () => {
 
           {/* Native IAP disclosure text (required by Apple/Google) */}
           {isNative && (
-            <p className="text-[10px] text-white/25 text-center mt-3 leading-relaxed">
+            <p className="text-[10px] text-white text-center mt-3 leading-relaxed">
               Payment will be charged to your{' '}
               {Capacitor.getPlatform() === 'ios' ? 'Apple ID' : 'Google account'} at confirmation of
               purchase. Subscription automatically renews unless cancelled at least 24 hours before
@@ -285,7 +285,7 @@ const CheckoutTrial = () => {
           <div className="mt-8 text-center">
             <button
               onClick={handleSignOut}
-              className="inline-flex items-center gap-1.5 text-[13px] text-white/30 hover:text-white/50 transition-colors touch-manipulation py-2 px-3 rounded-xl"
+              className="inline-flex items-center gap-1.5 text-[13px] text-white hover:text-white transition-colors touch-manipulation py-2 px-3 rounded-xl"
             >
               <LogOut className="h-3.5 w-3.5" />
               Sign out

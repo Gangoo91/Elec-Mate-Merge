@@ -205,13 +205,13 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
           </div>
           <div className="inline-block bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 rounded-full text-sm font-semibold mb-4 ml-0">
             <span className="text-emerald-400">MODULE 2</span>
-            <span className="text-white/40 mx-2">&middot;</span>
-            <span className="text-white/60">SECTION 2</span>
+            <span className="text-white mx-2">&middot;</span>
+            <span className="text-white">SECTION 2</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Duty of Care & Waste Transfer Notes
           </h1>
-          <p className="text-white/70 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding your legal obligations when handling, transferring, and disposing of waste
             &mdash; from duty of care documentation to fly-tipping enforcement
           </p>
@@ -221,7 +221,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
         <div className="grid sm:grid-cols-2 gap-4 mb-10">
           <div className="rounded-lg p-4 bg-emerald-500/5 border-l-2 border-emerald-500/50">
             <p className="font-semibold text-emerald-400 mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -254,7 +254,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
           </div>
           <div className="rounded-lg p-4 bg-emerald-500/5 border-l-2 border-emerald-500/50">
             <p className="font-semibold text-emerald-400/90 mb-2">On Site</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -290,7 +290,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
         {/* Learning Outcomes */}
         <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4">By the end of this section, you will be able to:</p>
+          <p className="text-white mb-4">By the end of this section, you will be able to:</p>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
               "Explain the duty of care under Section 34 of the Environmental Protection Act 1990 and the 'cradle to grave' principle",
@@ -304,7 +304,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-emerald-400/70 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </div>
             ))}
           </div>
@@ -319,7 +319,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
               <span className="text-emerald-400/80 text-sm font-normal">01</span>
               The Duty of Care
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">Section 34</strong> of the Environmental Protection
                 Act 1990 establishes the <strong className="text-white">duty of care</strong> for
@@ -337,7 +337,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
                 <h3 className="font-semibold mb-2 text-emerald-400">
                   Key Definition: Cradle to Grave
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The duty of care is often described as a{' '}
                   <strong className="text-white">&ldquo;cradle to grave&rdquo;</strong>{' '}
                   responsibility. This means that the original waste producer retains a legal
@@ -355,7 +355,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
                 <h3 className="text-emerald-400 font-medium mb-2">
                   Core Obligations Under the Duty of Care
                 </h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -408,7 +408,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
                     Applies to Electrical Contractors
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   As an electrical contractor, you produce waste on every job &mdash; cable offcuts,
                   packaging, old components, fluorescent tubes (hazardous), batteries, and WEEE. The
                   duty of care applies to all of this waste. You must ensure it is properly
@@ -429,7 +429,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
               <span className="text-teal-400/80 text-sm font-normal">02</span>
               Waste Transfer Notes
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 A <strong className="text-white">waste transfer note (WTN)</strong> is a legal
                 document that must accompany <strong className="text-white">every transfer</strong>{' '}
@@ -449,7 +449,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Description of Waste</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         A written description of the waste that is detailed enough for anyone
                         handling it to do so safely. Include the type, composition, and any
                         hazardous properties.
@@ -462,7 +462,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">SIC Code</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         The Standard Industrial Classification code of the business that produced
                         the waste. This identifies the industry sector (e.g. 43210 for electrical
                         installation).
@@ -475,7 +475,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Quantity of Waste</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         The weight (in kilograms or tonnes) or volume of waste being transferred. An
                         estimate is acceptable if an exact measurement is not practicable.
                       </p>
@@ -487,7 +487,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Container Type</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         How the waste is contained &mdash; skip, drum, bag, loose in a vehicle, etc.
                         This helps the receiving party prepare for safe handling.
                       </p>
@@ -499,7 +499,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Carrier Details</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         The name, address, and waste carrier registration number of the person or
                         company transporting the waste.
                       </p>
@@ -511,7 +511,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Producer Details</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         The name, address, and contact details of the person or business that
                         produced the waste. If using a broker, the broker&rsquo;s details must also
                         be included.
@@ -524,7 +524,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Place, Date & Signatures</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         The place and date of the transfer, plus the signatures of both the
                         transferor (person handing over the waste) and the transferee (person
                         receiving it).
@@ -536,7 +536,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
 
               <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-emerald-400">Retention Period: 2 Years</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Both the transferor and the transferee must keep a copy of the waste transfer note
                   for a minimum of <strong className="text-white">2 years</strong> from the date the
                   waste was transferred. The Environment Agency can request to see your waste
@@ -557,7 +557,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
               <span className="text-amber-400/80 text-sm font-normal">03</span>
               Consignment Notes
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 When waste is classified as <strong className="text-white">hazardous</strong>, a
                 standard waste transfer note is not sufficient. Instead, a{' '}
@@ -574,7 +574,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Part A &mdash; Notification</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         The consignment note code (obtained from the Environment Agency via
                         pre-notification), producer details, and waste description including EWC
                         codes.
@@ -587,7 +587,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Part B &mdash; Description of Waste</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Detailed description of the hazardous waste including physical form,
                         chemical composition, hazardous properties, quantity, and
                         packaging/container type.
@@ -600,7 +600,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Part C &mdash; Carrier Certificate</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         The carrier&rsquo;s registration details, vehicle registration, collection
                         date, and the carrier&rsquo;s signature confirming receipt.
                       </p>
@@ -612,7 +612,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Part D &mdash; Consignee Certificate</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Completed by the receiving facility to confirm the waste has been received.
                         Includes the permit/licence number of the receiving site.
                       </p>
@@ -624,7 +624,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Part E &mdash; Consignee Rejection</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Used if the receiving facility rejects the waste (e.g. because it does not
                         match the description or the facility is not authorised to accept it).
                       </p>
@@ -637,7 +637,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
                 <h3 className="font-semibold mb-2 text-amber-400">
                   Pre-Notification to the Environment Agency
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Before hazardous waste can be moved off site, the waste producer must{' '}
                   <strong className="text-white">pre-notify</strong> the Environment Agency. This is
                   done online and generates a{' '}
@@ -654,7 +654,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
                   <AlertTriangle className="h-5 w-5 text-emerald-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-emerald-300">Retention Period: 3 Years</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Consignment notes for hazardous waste must be retained for a minimum of{' '}
                   <strong className="text-white">3 years</strong> from the date of transfer. This is
                   one year longer than the 2-year requirement for standard waste transfer notes,
@@ -667,7 +667,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
                 <h3 className="text-emerald-400 font-medium mb-2">
                   Common Hazardous Waste from Electrical Work
                 </h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-amber-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -709,7 +709,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
               <span className="text-cyan-400/80 text-sm font-normal">04</span>
               Waste Carriers
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Anyone who transports controlled waste must be{' '}
                 <strong className="text-white">registered as a waste carrier</strong> with the
@@ -744,7 +744,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
                 <h3 className="font-semibold mb-2 text-emerald-400">
                   Checking Carrier Registration
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Before handing waste to any carrier, you{' '}
                   <strong className="text-white">must</strong> verify their registration. The
                   Environment Agency maintains a{' '}
@@ -763,11 +763,11 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
                     Penalties for Using Unregistered Carriers
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Using an unregistered waste carrier is a criminal offence under the duty of care.
                   Penalties include:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -812,7 +812,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
               <span className="text-purple-400/80 text-sm font-normal">05</span>
               Waste Brokers & Dealers
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 In addition to waste carriers, the law recognises{' '}
                 <strong className="text-white">waste brokers</strong> and{' '}
@@ -865,7 +865,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
 
               <div className="bg-purple-500/10 border border-purple-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-purple-400">Your Responsibility Remains</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Using a broker or dealer does <strong className="text-white">not</strong> remove
                   your duty of care as the waste producer. You remain legally responsible for
                   ensuring your waste reaches a lawful destination. If a broker arranges for an
@@ -884,7 +884,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
               <span className="text-sky-400/80 text-sm font-normal">06</span>
               Electronic Waste Tracking
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The UK government, through <strong className="text-white">DEFRA</strong> (Department
                 for Environment, Food & Rural Affairs), is introducing a{' '}
@@ -897,7 +897,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
                 <h3 className="text-sky-300 font-medium mb-3">
                   Digital Duty of Care Waste Information
                 </h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-sky-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -935,11 +935,11 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
 
               <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-emerald-400">Benefits of Digitalisation</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The move to digital waste tracking offers significant benefits for businesses,
                   regulators, and the environment:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -985,7 +985,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
               <span className="text-red-400/80 text-sm font-normal">07</span>
               Fly-Tipping
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">Fly-tipping</strong> is the illegal deposit of waste
                 on land that does not have a licence to accept it. It is a criminal offence under{' '}
@@ -998,7 +998,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Scale of the Problem</h3>
                 </div>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1069,7 +1069,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
 
               <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-emerald-400">Householder Duty of Care</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Since 2016, householders in England have a specific{' '}
                   <strong className="text-white">duty of care</strong> to take all reasonable steps
                   to ensure their waste is given only to an authorised person. If a householder
@@ -1088,7 +1088,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
                     Fly-Tipping and the Electrical Trade
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Construction and demolition waste is one of the most commonly fly-tipped
                   categories. As an electrical contractor, you must never leave waste on site unless
                   you have the landowner&rsquo;s permission and the waste is properly managed. You
@@ -1109,7 +1109,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
               <span className="text-emerald-400/80 text-sm font-normal">08</span>
               Practical Compliance
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Compliance with the duty of care is not just a legal obligation &mdash; it is good
                 business practice. Businesses that manage their waste well save money, avoid
@@ -1119,7 +1119,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
 
               <div className="bg-white/5 border border-emerald-400/30 p-4 rounded-lg">
                 <h3 className="text-emerald-300 font-medium mb-3">Record Keeping</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-emerald-400/60 mt-0.5 flex-shrink-0" />
                     <span>
@@ -1147,7 +1147,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
 
               <div className="bg-white/5 border border-emerald-400/30 p-4 rounded-lg">
                 <h3 className="text-emerald-300 font-medium mb-3">Waste Audits</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-emerald-400/60 mt-0.5 flex-shrink-0" />
                     <span>
@@ -1174,7 +1174,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
 
               <div className="bg-white/5 border border-emerald-400/30 p-4 rounded-lg">
                 <h3 className="text-emerald-300 font-medium mb-3">Training Staff</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-emerald-400/60 mt-0.5 flex-shrink-0" />
                     <span>
@@ -1201,7 +1201,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
 
               <div className="bg-white/5 border border-emerald-400/30 p-4 rounded-lg">
                 <h3 className="text-emerald-300 font-medium mb-3">Checking Waste Destinations</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-emerald-400/60 mt-0.5 flex-shrink-0" />
                     <span>
@@ -1228,13 +1228,13 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
 
               <div className="bg-white/5 border border-emerald-400/30 p-4 rounded-lg">
                 <h3 className="text-emerald-300 font-medium mb-3">Site Waste Management Plans</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Although no longer a mandatory legal requirement in England (the requirement was
                   removed in 2013), a{' '}
                   <strong className="text-white">site waste management plan (SWMP)</strong> remains
                   best practice for construction projects. A good SWMP should include:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-emerald-400/60 mt-0.5 flex-shrink-0" />
                     <span>
@@ -1271,7 +1271,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
           <div className="flex justify-center mb-3">
             <div className="bg-emerald-500/15 border-2 border-emerald-500/40 rounded-xl px-5 py-3 text-center max-w-sm">
               <p className="text-white font-semibold text-sm">Waste Produced on Site</p>
-              <p className="text-white/60 text-xs mt-1">
+              <p className="text-white text-xs mt-1">
                 Cable offcuts, packaging, old components, fluorescent tubes, batteries, etc.
               </p>
             </div>
@@ -1298,11 +1298,11 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
               </div>
               <div className="w-0.5 h-4 bg-emerald-400/30"></div>
               <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg px-3 py-2 text-center w-full">
-                <p className="text-white/80 text-xs">Complete a Waste Transfer Note (WTN)</p>
+                <p className="text-white text-xs">Complete a Waste Transfer Note (WTN)</p>
               </div>
               <div className="w-0.5 h-4 bg-emerald-400/30"></div>
               <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg px-3 py-2 text-center w-full">
-                <p className="text-white/80 text-xs">Retain WTN for 2 years</p>
+                <p className="text-white text-xs">Retain WTN for 2 years</p>
               </div>
             </div>
 
@@ -1313,13 +1313,13 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
               </div>
               <div className="w-0.5 h-4 bg-amber-400/30"></div>
               <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg px-3 py-2 text-center w-full">
-                <p className="text-white/80 text-xs">
+                <p className="text-white text-xs">
                   Pre-notify EA &amp; obtain consignment note code
                 </p>
               </div>
               <div className="w-0.5 h-4 bg-amber-400/30"></div>
               <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg px-3 py-2 text-center w-full">
-                <p className="text-white/80 text-xs">
+                <p className="text-white text-xs">
                   Complete 5-part Consignment Note &mdash; retain for 3 years
                 </p>
               </div>
@@ -1335,7 +1335,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
           <div className="flex justify-center mb-3">
             <div className="bg-emerald-500/10 border-2 border-emerald-500/30 rounded-xl px-5 py-3 text-center max-w-sm">
               <p className="text-emerald-400 font-semibold text-sm mb-1">Both Routes</p>
-              <p className="text-white/70 text-xs">
+              <p className="text-white text-xs">
                 Check carrier registration on EA public register before transfer
               </p>
             </div>
@@ -1348,7 +1348,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
           <div className="flex justify-center">
             <div className="bg-emerald-500/15 border-2 border-emerald-500/40 rounded-xl px-5 py-3 text-center max-w-sm">
               <p className="text-white font-semibold text-sm">Waste Reaches Authorised Facility</p>
-              <p className="text-white/60 text-xs mt-1">
+              <p className="text-white text-xs mt-1">
                 Licensed treatment, recovery, or disposal site
               </p>
             </div>
@@ -1365,7 +1365,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
             {/* Producer */}
             <div className="bg-emerald-500/15 border-2 border-emerald-500/40 rounded-xl px-4 py-3 text-center w-full sm:w-auto sm:min-w-[160px]">
               <p className="text-emerald-400 font-semibold text-sm">Producer</p>
-              <p className="text-white/60 text-xs mt-1">
+              <p className="text-white text-xs mt-1">
                 Creates the waste &amp; has cradle-to-grave responsibility
               </p>
             </div>
@@ -1377,7 +1377,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
             {/* Carrier */}
             <div className="bg-teal-500/15 border-2 border-teal-500/40 rounded-xl px-4 py-3 text-center w-full sm:w-auto sm:min-w-[160px]">
               <p className="text-teal-400 font-semibold text-sm">Carrier</p>
-              <p className="text-white/60 text-xs mt-1">
+              <p className="text-white text-xs mt-1">
                 Registered with EA &amp; transports waste safely
               </p>
             </div>
@@ -1389,14 +1389,14 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
             {/* Disposal / Recovery */}
             <div className="bg-cyan-500/15 border-2 border-cyan-500/40 rounded-xl px-4 py-3 text-center w-full sm:w-auto sm:min-w-[160px]">
               <p className="text-cyan-400 font-semibold text-sm">Disposal / Recovery</p>
-              <p className="text-white/60 text-xs mt-1">
+              <p className="text-white text-xs mt-1">
                 Licensed facility for treatment or final disposal
               </p>
             </div>
           </div>
 
           <div className="mt-4 bg-white/5 border border-white/10 rounded-lg p-3 max-w-2xl mx-auto">
-            <p className="text-white/60 text-xs text-center">
+            <p className="text-white text-xs text-center">
               The duty of care applies at <strong className="text-white">every link</strong> in this
               chain. Each party must ensure the waste is described accurately, contained securely,
               and transferred only to authorised persons. A waste transfer note (or consignment note
@@ -1414,7 +1414,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1430,7 +1430,7 @@ const EnvironmentalSustainabilityModule2Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-2-section-1">

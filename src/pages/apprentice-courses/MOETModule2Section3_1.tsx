@@ -246,7 +246,7 @@ const MOETModule2Section3_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module2-section3">
@@ -268,7 +268,7 @@ const MOETModule2Section3_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Transformers: Principles and Applications
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Electromagnetic induction, transformer construction, losses, efficiency, and maintenance
             testing for the electrical maintenance technician
           </p>
@@ -368,30 +368,30 @@ const MOETModule2Section3_1 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">The Turns Ratio</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 The voltage induced in each winding is proportional to the number of turns in that
                 winding. This gives us the fundamental transformer equation:
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90 mb-3">
+              <div className="bg-black/30 p-3 rounded text-sm text-white mb-3">
                 <p className="font-medium mb-2">Voltage Ratio:</p>
                 <p className="font-mono">Vs / Vp = Ns / Np</p>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   Where: Vs = secondary voltage, Vp = primary voltage, Ns = secondary turns, Np =
                   primary turns
                 </p>
               </div>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90 mb-3">
+              <div className="bg-black/30 p-3 rounded text-sm text-white mb-3">
                 <p className="font-medium mb-2">Current Ratio (for an ideal transformer):</p>
                 <p className="font-mono">Is / Ip = Np / Ns</p>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   Current is inversely proportional to the turns ratio — step down voltage, step up
                   current (and vice versa)
                 </p>
               </div>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p className="font-medium mb-2">Power (ideal transformer — no losses):</p>
                 <p className="font-mono">Vp x Ip = Vs x Is</p>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   Power in = Power out. A transformer cannot create power — it transforms voltage
                   and current.
                 </p>
@@ -426,7 +426,7 @@ const MOETModule2Section3_1 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-white mb-3">Worked Example</p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p className="mb-2">
                   <strong>Problem:</strong> A transformer has 2,000 primary turns and 100 secondary
                   turns. The primary supply is 11,000V. Calculate the secondary voltage and, if the
@@ -439,7 +439,7 @@ const MOETModule2Section3_1 = () => {
                 <p className="mb-1">
                   <strong>Primary current:</strong> Ip = Is x (Ns/Np) = 80 x (100/2,000) = 4A
                 </p>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   Check: Primary power = 11,000 x 4 = 44,000W. Secondary power = 550 x 80 = 44,000W.
                   Power balanced (ideal transformer).
                 </p>
@@ -494,13 +494,13 @@ const MOETModule2Section3_1 = () => {
 
               <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-500/50">
                 <p className="text-sm font-medium text-amber-400 mb-3">Iron Losses (Core Losses)</p>
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   Iron losses consist of two components, both occurring in the core:
                 </p>
                 <div className="space-y-3">
                   <div className="bg-black/30 p-3 rounded">
                     <p className="text-sm font-medium text-white mb-1">Eddy Current Losses</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       The changing flux induces small circulating currents (eddy currents) in the
                       core material, which cause I&sup2;R heating. Minimised by laminating the core
                       — each lamination is typically 0.35mm to 0.5mm thick, insulated from its
@@ -509,7 +509,7 @@ const MOETModule2Section3_1 = () => {
                   </div>
                   <div className="bg-black/30 p-3 rounded">
                     <p className="text-sm font-medium text-white mb-1">Hysteresis Losses</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Energy is lost as the magnetic domains in the core material are repeatedly
                       realigned by the alternating flux. Minimised by using grain-oriented silicon
                       steel (GOSS), which has low hysteresis loss. The area of the B-H loop for the
@@ -531,20 +531,20 @@ const MOETModule2Section3_1 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">Transformer Efficiency</p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90 mb-3">
+              <div className="bg-black/30 p-3 rounded text-sm text-white mb-3">
                 <p className="font-medium mb-2">Efficiency Formula:</p>
                 <p className="font-mono">Efficiency (%) = (Output Power / Input Power) x 100</p>
                 <p className="font-mono mt-1">
                   Efficiency (%) = Output / (Output + Copper Losses + Iron Losses) x 100
                 </p>
               </div>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Modern power transformers achieve efficiencies of 97% to over 99%. Maximum
                 efficiency occurs when copper losses equal iron losses. Since iron losses are
                 constant and copper losses vary with load, there is a specific load level at which
                 the transformer operates most efficiently.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p className="font-medium mb-2">Worked Example:</p>
                 <p className="mb-1">
                   A 100 kVA transformer has iron losses of 800W and full-load copper losses of
@@ -554,7 +554,7 @@ const MOETModule2Section3_1 = () => {
                   At full load: Efficiency = 100,000 / (100,000 + 800 + 1,200) x 100 ={' '}
                   <strong>98.04%</strong>
                 </p>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   Maximum efficiency occurs at: Load = Full load x sqrt(Iron losses / Copper losses)
                   = 1.0 x sqrt(800/1200) = 0.816 = 81.6% load.
                 </p>
@@ -567,12 +567,12 @@ const MOETModule2Section3_1 = () => {
                 <table className="w-full text-sm text-left">
                   <thead>
                     <tr className="border-b border-white/10">
-                      <th className="py-2 pr-4 text-white/70 font-medium">Code</th>
-                      <th className="py-2 pr-4 text-white/70 font-medium">Method</th>
-                      <th className="py-2 text-white/70 font-medium">Application</th>
+                      <th className="py-2 pr-4 text-white font-medium">Code</th>
+                      <th className="py-2 pr-4 text-white font-medium">Method</th>
+                      <th className="py-2 text-white font-medium">Application</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/90">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/5">
                       <td className="py-2 pr-4 font-mono">AN</td>
                       <td className="py-2 pr-4">Air Natural</td>
@@ -623,7 +623,7 @@ const MOETModule2Section3_1 = () => {
             <div className="my-6 space-y-4">
               <div className="p-4 rounded-lg bg-white/5">
                 <h3 className="text-sm font-medium text-blue-400 mb-3">Power Transformers</h3>
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   Used in electrical distribution to step voltage up or down between transmission,
                   distribution, and utilisation levels. Found in substations, from 132kV grid
                   transformers down to 11kV/400V distribution transformers.
@@ -644,7 +644,7 @@ const MOETModule2Section3_1 = () => {
                 <h3 className="text-sm font-medium text-red-400 mb-3">
                   Instrument Transformers — Current Transformers (CTs)
                 </h3>
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   CTs step down high primary currents to a standard secondary current (typically 5A
                   or 1A) for measurement instruments and protection relays.
                 </p>
@@ -661,7 +661,7 @@ const MOETModule2Section3_1 = () => {
                 </ul>
                 <div className="mt-3 p-3 rounded bg-red-500/10 border border-red-500/30">
                   <p className="text-sm font-medium text-red-400 mb-1">CRITICAL SAFETY WARNING</p>
-                  <p className="text-xs text-white/90">
+                  <p className="text-xs text-white">
                     NEVER open-circuit the secondary of a CT while the primary is energised. The
                     entire primary current becomes magnetising current, driving the core into deep
                     saturation. This induces extremely high voltages (several kilovolts) across the
@@ -675,7 +675,7 @@ const MOETModule2Section3_1 = () => {
                 <h3 className="text-sm font-medium text-purple-400 mb-3">
                   Instrument Transformers — Voltage Transformers (VTs)
                 </h3>
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   VTs step down high system voltages to a standard secondary voltage (typically
                   110V) for measurement instruments and protection relays.
                 </p>
@@ -695,7 +695,7 @@ const MOETModule2Section3_1 = () => {
 
               <div className="p-4 rounded-lg bg-white/5">
                 <h3 className="text-sm font-medium text-green-400 mb-3">Isolation Transformers</h3>
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   Provide galvanic isolation with a 1:1 turns ratio — the output voltage equals the
                   input voltage, but there is no direct electrical connection between primary and
                   secondary.
@@ -714,7 +714,7 @@ const MOETModule2Section3_1 = () => {
 
               <div className="p-4 rounded-lg bg-white/5">
                 <h3 className="text-sm font-medium text-amber-400 mb-3">Auto-Transformers</h3>
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   Use a single winding with a tapping point — part of the winding is common to both
                   the primary and secondary circuits. No galvanic isolation is provided.
                 </p>
@@ -797,7 +797,7 @@ const MOETModule2Section3_1 = () => {
                     <p className="text-sm font-medium text-blue-400 mb-1">
                       Insulation Resistance (IR) Test
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Measures the resistance of the winding insulation to earth and between
                       windings. Performed at the voltage specified by the manufacturer (typically
                       1kV for LV, 5kV for HV). Minimum acceptable values depend on the rated
@@ -809,7 +809,7 @@ const MOETModule2Section3_1 = () => {
                     <p className="text-sm font-medium text-blue-400 mb-1">
                       Polarisation Index (PI) Test
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Ratio of IR at 10 minutes to IR at 1 minute. A PI of 2.0 or greater indicates
                       good insulation. A PI close to 1.0 suggests moisture contamination. Useful for
                       large transformers where absolute IR values can be misleading due to the large
@@ -820,7 +820,7 @@ const MOETModule2Section3_1 = () => {
                     <p className="text-sm font-medium text-blue-400 mb-1">
                       Winding Resistance Test
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Measures the DC resistance of each winding using a low-resistance ohmmeter or
                       Kelvin bridge. All three phases should read within 2% of each other. A low
                       reading on one phase indicates inter-turn short circuits. High readings
@@ -829,7 +829,7 @@ const MOETModule2Section3_1 = () => {
                   </div>
                   <div className="bg-black/30 p-3 rounded">
                     <p className="text-sm font-medium text-blue-400 mb-1">Turns Ratio Test</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Verifies the actual turns ratio matches the nameplate ratio. Performed using a
                       turns ratio tester (TTR). Deviations greater than 0.5% indicate shorted turns
                       or tap changer problems. Test on each tap position.
@@ -845,7 +845,7 @@ const MOETModule2Section3_1 = () => {
                     <p className="text-sm font-medium text-amber-400 mb-1">
                       Dissolved Gas Analysis (DGA)
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       The most valuable diagnostic tool for oil-filled transformers. Different
                       internal faults produce different gases: hydrogen (partial discharge), methane
                       and ethane (thermal decomposition), ethylene (severe overheating), acetylene
@@ -856,7 +856,7 @@ const MOETModule2Section3_1 = () => {
                     <p className="text-sm font-medium text-amber-400 mb-1">
                       Dielectric Strength (Breakdown Voltage)
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Tests the oil's ability to withstand electrical stress. A sample is tested in
                       a standard test cell with electrodes 2.5mm apart. Minimum acceptable value is
                       typically 30kV for distribution transformers, 40-50kV for power transformers.
@@ -865,7 +865,7 @@ const MOETModule2Section3_1 = () => {
                   </div>
                   <div className="bg-black/30 p-3 rounded">
                     <p className="text-sm font-medium text-amber-400 mb-1">Moisture Content</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Measured in parts per million (ppm) using Karl Fischer titration. Moisture in
                       transformer oil dramatically reduces dielectric strength and accelerates
                       insulation ageing. Typical limits: less than 20 ppm for power transformers,
@@ -878,7 +878,7 @@ const MOETModule2Section3_1 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-white mb-3">Tap Changers</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Tap changers adjust the transformer output voltage by changing the effective number
                 of turns in the winding. They are one of the most maintenance-intensive components
                 of a power transformer.
@@ -939,12 +939,12 @@ const MOETModule2Section3_1 = () => {
                 <table className="w-full text-sm text-left">
                   <thead>
                     <tr className="border-b border-white/10">
-                      <th className="py-2 pr-4 text-white/70 font-medium">Symptom</th>
-                      <th className="py-2 pr-4 text-white/70 font-medium">Possible Cause</th>
-                      <th className="py-2 text-white/70 font-medium">Action</th>
+                      <th className="py-2 pr-4 text-white font-medium">Symptom</th>
+                      <th className="py-2 pr-4 text-white font-medium">Possible Cause</th>
+                      <th className="py-2 text-white font-medium">Action</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/90 text-xs">
+                  <tbody className="text-white text-xs">
                     <tr className="border-b border-white/5">
                       <td className="py-2 pr-4">Excessive heating</td>
                       <td className="py-2 pr-4">Overloading, blocked cooling, shorted turns</td>
@@ -989,7 +989,7 @@ const MOETModule2Section3_1 = () => {
               <p className="text-sm font-medium text-elec-yellow mb-2">
                 ST1426 Maintenance Competency
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 The Level 3 Electrical Engineering Maintenance Technician apprenticeship standard
                 (ST1426) requires you to understand transformer principles, carry out routine
                 maintenance inspections, interpret test results, and recognise the safety hazards
@@ -1041,7 +1041,7 @@ const MOETModule2Section3_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1060,7 +1060,7 @@ const MOETModule2Section3_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module2-section3">

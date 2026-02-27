@@ -230,7 +230,7 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
               <ArrowLeft className="h-5 w-5" />
             </Link>
           </Button>
-          <div className="flex items-center gap-2 text-sm text-white/70">
+          <div className="flex items-center gap-2 text-sm text-white">
             <FileBarChart className="h-4 w-4 text-elec-yellow" />
             <span>Module 2 • Section 5</span>
           </div>
@@ -244,7 +244,7 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
           <h1 className="text-2xl md:text-3xl font-bold text-white">
             Reporting Load Profiles and Variations
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Master professional reporting techniques to communicate load profile findings
             effectively
           </p>
@@ -291,14 +291,14 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
               <div className="space-y-3">
                 <div className="border-l-2 border-elec-yellow pl-3">
                   <p className="font-medium text-white">Line Charts</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Best for showing demand over time (24-hour profiles, weekly trends). Use
                     multiple lines to compare different days or periods.
                   </p>
                 </div>
                 <div className="border-l-2 border-blue-500 pl-3">
                   <p className="font-medium text-white">Heatmaps / Carpet Plots</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Ideal for showing patterns across two time dimensions (hour vs day). Colour
                     intensity represents consumption level - immediately reveals operational
                     patterns.
@@ -306,14 +306,14 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
                 </div>
                 <div className="border-l-2 border-green-500 pl-3">
                   <p className="font-medium text-white">Bar Charts</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Effective for comparing categories (monthly totals, equipment breakdown,
                     before/after comparisons). Easy for clients to understand.
                   </p>
                 </div>
                 <div className="border-l-2 border-purple-500 pl-3">
                   <p className="font-medium text-white">Stacked Area Charts</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Shows how different loads contribute to total consumption over time. Useful for
                     identifying which equipment dominates at different times.
                   </p>
@@ -400,7 +400,7 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
                   <Flame className="w-5 h-5 text-orange-500 mt-1 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-white">Elevated Baseload</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       High consumption during non-operational hours indicates equipment running
                       unnecessarily. Compare night/weekend loads to minimum possible (security,
                       refrigeration, etc.).
@@ -411,7 +411,7 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
                   <Zap className="w-5 h-5 text-yellow-500 mt-1 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-white">Unexplained Demand Spikes</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Sudden peaks not correlating with known activities may indicate equipment
                       faults, poor power factor, or uncontrolled motor starts.
                     </p>
@@ -421,7 +421,7 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
                   <Clock className="w-5 h-5 text-blue-500 mt-1 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-white">Schedule Misalignment</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       HVAC or lighting operating outside business hours, or starting too
                       early/finishing too late. Often indicates BMS or timer issues.
                     </p>
@@ -431,7 +431,7 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
                   <TrendingUp className="w-5 h-5 text-purple-500 mt-1 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-white">Consumption Creep</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Gradual increase in consumption over months/years without operational changes.
                       May indicate degrading equipment efficiency or control drift.
                     </p>
@@ -546,7 +546,7 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
                   <li>2 Star: 200-270 kWh/m²/year</li>
                   <li>1 Star: &gt;270 kWh/m²/year</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">*Varies by climate zone</p>
+                <p className="text-xs text-white mt-2">*Varies by climate zone</p>
               </div>
               <div className="bg-white/5 rounded-lg p-4">
                 <h4 className="font-medium text-white mb-2">Typical Baseload Ratios</h4>
@@ -609,7 +609,7 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
                   </span>
                   <div>
                     <p className="font-medium text-white">Executive Summary (1 page)</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Key findings, total savings potential, top 3 recommendations, payback overview
                     </p>
                   </div>
@@ -620,7 +620,7 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
                   </span>
                   <div>
                     <p className="font-medium text-white">Site Overview</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Building details, operational hours, major equipment, current energy costs
                     </p>
                   </div>
@@ -631,7 +631,7 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
                   </span>
                   <div>
                     <p className="font-medium text-white">Load Profile Analysis</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Visualisations, patterns identified, anomalies, benchmark comparisons
                     </p>
                   </div>
@@ -642,7 +642,7 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
                   </span>
                   <div>
                     <p className="font-medium text-white">Findings and Opportunities</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Detailed analysis of each issue, evidence, quantified waste
                     </p>
                   </div>
@@ -653,7 +653,7 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
                   </span>
                   <div>
                     <p className="font-medium text-white">Recommendations</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Prioritised actions with costs, savings, payback periods
                     </p>
                   </div>
@@ -664,7 +664,7 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
                   </span>
                   <div>
                     <p className="font-medium text-white">Appendices</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Raw data, detailed calculations, methodology, equipment lists
                     </p>
                   </div>
@@ -731,7 +731,7 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
               <div className="space-y-3">
                 <div className="border-l-2 border-elec-yellow pl-3">
                   <p className="font-medium text-white">Executive / Finance</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Focus on ROI, payback periods, risk reduction, compliance. Use dollar figures
                     prominently. Keep technical detail minimal. One-page summary with clear
                     recommendations.
@@ -739,7 +739,7 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
                 </div>
                 <div className="border-l-2 border-blue-500 pl-3">
                   <p className="font-medium text-white">Facility Managers</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Technical detail appreciated but practical focus essential. Emphasise
                     operational changes, BMS adjustments, maintenance implications. Show
                     before/after potential.
@@ -747,7 +747,7 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
                 </div>
                 <div className="border-l-2 border-green-500 pl-3">
                   <p className="font-medium text-white">Operations / Maintenance</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Detailed equipment-level findings. Specific faults, schedules to adjust,
                     maintenance requirements. Practical step-by-step guidance.
                   </p>
@@ -815,22 +815,22 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
                 <div className="bg-green-500/20 rounded p-3 text-center">
                   <p className="font-bold text-green-400">QUICK WINS</p>
                   <p className="text-white">Low Cost + High Savings</p>
-                  <p className="text-xs mt-1 text-white/70">Do First</p>
+                  <p className="text-xs mt-1 text-white">Do First</p>
                 </div>
                 <div className="bg-blue-500/20 rounded p-3 text-center">
                   <p className="font-bold text-blue-400">STRATEGIC</p>
                   <p className="text-white">High Cost + High Savings</p>
-                  <p className="text-xs mt-1 text-white/70">Plan & Budget</p>
+                  <p className="text-xs mt-1 text-white">Plan & Budget</p>
                 </div>
                 <div className="bg-yellow-500/20 rounded p-3 text-center">
                   <p className="font-bold text-yellow-400">CONSIDER</p>
                   <p className="text-white">Low Cost + Low Savings</p>
-                  <p className="text-xs mt-1 text-white/70">When Convenient</p>
+                  <p className="text-xs mt-1 text-white">When Convenient</p>
                 </div>
                 <div className="bg-red-500/20 rounded p-3 text-center">
                   <p className="font-bold text-red-400">QUESTION</p>
                   <p className="text-white">High Cost + Low Savings</p>
-                  <p className="text-xs mt-1 text-white/70">Justify Carefully</p>
+                  <p className="text-xs mt-1 text-white">Justify Carefully</p>
                 </div>
               </div>
             </div>
@@ -844,27 +844,27 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="text-white">
                     <p>
-                      <span className="text-white/60">Issue:</span> HVAC starts 2 hours before
+                      <span className="text-white">Issue:</span> HVAC starts 2 hours before
                       occupancy
                     </p>
                     <p>
-                      <span className="text-white/60">Action:</span> Adjust BMS start time to 7:00
+                      <span className="text-white">Action:</span> Adjust BMS start time to 7:00
                       AM
                     </p>
                     <p>
-                      <span className="text-white/60">Priority:</span>{' '}
+                      <span className="text-white">Priority:</span>{' '}
                       <span className="text-green-400">Quick Win</span>
                     </p>
                   </div>
                   <div className="text-white">
                     <p>
-                      <span className="text-white/60">Est. Cost:</span> $500 (BMS programming)
+                      <span className="text-white">Est. Cost:</span> $500 (BMS programming)
                     </p>
                     <p>
-                      <span className="text-white/60">Annual Savings:</span> $3,200
+                      <span className="text-white">Annual Savings:</span> $3,200
                     </p>
                     <p>
-                      <span className="text-white/60">Payback:</span> 2 months
+                      <span className="text-white">Payback:</span> 2 months
                     </p>
                   </div>
                 </div>
@@ -1008,7 +1008,7 @@ const EnergyEfficiencyModule2Section5: React.FC = () => {
               <div key={index} className="border border-white/10 rounded-lg overflow-hidden">
                 <div className="p-4">
                   <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                  <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                  <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
                 </div>
               </div>
             ))}

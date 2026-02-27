@@ -257,7 +257,7 @@ const HNCModule1Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section2">
@@ -279,7 +279,7 @@ const HNCModule1Section2_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Hierarchy of Control
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             The systematic approach to managing workplace hazards from most to least effective
             controls
           </p>
@@ -677,7 +677,7 @@ const HNCModule1Section2_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Administrative Controls
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 These are procedures, policies and practices that control how work is performed.
                 They reduce exposure by changing the way people work rather than eliminating or
                 engineering out the hazard.
@@ -687,7 +687,7 @@ const HNCModule1Section2_3 = () => {
                   <p className="text-xs font-medium text-white mb-2">
                     Types of Administrative Controls
                   </p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-inside">
+                  <ul className="text-xs text-white space-y-1 list-disc list-inside">
                     <li>Permit to work systems</li>
                     <li>Safe systems of work (method statements)</li>
                     <li>Training and competency assessment</li>
@@ -698,7 +698,7 @@ const HNCModule1Section2_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-xs font-medium text-white mb-2">Building Services Examples</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-inside">
+                  <ul className="text-xs text-white space-y-1 list-disc list-inside">
                     <li>Electrical isolation permits</li>
                     <li>Hot work permits</li>
                     <li>Confined space entry procedures</li>
@@ -714,7 +714,7 @@ const HNCModule1Section2_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Personal Protective Equipment (PPE)
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 PPE is the last line of defence. It protects only the individual wearing it and only
                 when correctly selected, fitted, worn and maintained. It should never be the sole
                 control measure for significant hazards.
@@ -826,7 +826,7 @@ const HNCModule1Section2_3 = () => {
               <div className="space-y-4">
                 <div className="bg-black/30 p-3 rounded">
                   <p className="text-xs font-medium text-green-400 mb-1">1. ELIMINATION</p>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-white">
                     Can we avoid live working? Consider: partial isolation of sections, out-of-hours
                     work when building is unoccupied, temporary supply from generator. If none
                     viable, proceed to next level.
@@ -835,7 +835,7 @@ const HNCModule1Section2_3 = () => {
 
                 <div className="bg-black/30 p-3 rounded">
                   <p className="text-xs font-medium text-blue-400 mb-1">2. SUBSTITUTION</p>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-white">
                     Can we reduce severity? Consider: pre-fabricate components to minimise live work
                     time, use plug-in devices where possible. Limited substitution options for this
                     scenario.
@@ -846,7 +846,7 @@ const HNCModule1Section2_3 = () => {
                   <p className="text-xs font-medium text-purple-400 mb-1">
                     3. ENGINEERING CONTROLS
                   </p>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-white">
                     Install temporary barriers around work area. Use insulated shrouds on adjacent
                     live parts. Ensure RCD protection is functional. Use insulated tools rated for
                     voltage.
@@ -857,7 +857,7 @@ const HNCModule1Section2_3 = () => {
                   <p className="text-xs font-medium text-orange-400 mb-1">
                     4. ADMINISTRATIVE CONTROLS
                   </p>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-white">
                     Implement permit to work system. Conduct risk assessment and method statement
                     review. Ensure only competent person (as per HSE GS38) undertakes work. Brief
                     accompanying persons on emergency procedures. Limit access to immediate work
@@ -867,7 +867,7 @@ const HNCModule1Section2_3 = () => {
 
                 <div className="bg-black/30 p-3 rounded">
                   <p className="text-xs font-medium text-red-400 mb-1">5. PPE (Last Resort)</p>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-white">
                     Insulating gloves rated for voltage (Class 0 minimum for 230V). Arc-rated face
                     shield. Arc-rated long-sleeved clothing. Safety footwear. Non-conductive matting
                     if available.
@@ -947,7 +947,7 @@ const HNCModule1Section2_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -996,7 +996,7 @@ const HNCModule1Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section2-2">

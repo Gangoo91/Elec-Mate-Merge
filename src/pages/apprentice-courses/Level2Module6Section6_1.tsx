@@ -151,7 +151,7 @@ const Level2Module6Section6_1 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/80 hover:text-foreground p-0 text-sm sm:text-base"
+            className="text-white hover:text-foreground p-0 text-sm sm:text-base"
             asChild
           >
             <Link to="..">
@@ -180,7 +180,7 @@ const Level2Module6Section6_1 = () => {
           <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
             Recording Electrical Test Results
           </h1>
-          <p className="text-white/80 text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Understanding the importance of accurate test documentation
           </p>
         </header>
@@ -656,7 +656,7 @@ const Level2Module6Section6_1 = () => {
               <summary className="cursor-pointer font-medium text-sm sm:text-base text-foreground group-hover:text-primary">
                 How long should I keep test records?
               </summary>
-              <p className="mt-2 text-xs sm:text-sm text-white/80">
+              <p className="mt-2 text-xs sm:text-sm text-white">
                 Test records should be kept for a minimum of 5 years, though some situations (such
                 as public buildings) may require longer retention periods. Always check specific
                 requirements for your type of work.
@@ -667,7 +667,7 @@ const Level2Module6Section6_1 = () => {
               <summary className="cursor-pointer font-medium text-sm sm:text-base text-foreground group-hover:text-primary">
                 Can I use digital records instead of paper?
               </summary>
-              <p className="mt-2 text-xs sm:text-sm text-white/80">
+              <p className="mt-2 text-xs sm:text-sm text-white">
                 Yes, digital records are acceptable provided they are properly backed up, cannot be
                 easily altered, and remain accessible for the required retention period.
               </p>
@@ -677,7 +677,7 @@ const Level2Module6Section6_1 = () => {
               <summary className="cursor-pointer font-medium text-sm sm:text-base text-foreground group-hover:text-primary">
                 What if I make a mistake in my records?
               </summary>
-              <p className="mt-2 text-xs sm:text-sm text-white/80">
+              <p className="mt-2 text-xs sm:text-sm text-white">
                 Never use correction fluid or erase mistakes. Cross through errors with a single
                 line, write the correction alongside, initial and date the correction.
               </p>
@@ -731,7 +731,7 @@ const Level2Module6Section6_1 = () => {
                   <p className="font-medium text-foreground text-sm sm:text-base">
                     Legal Requirement
                   </p>
-                  <p className="text-xs sm:text-sm text-white/80 mt-1">
+                  <p className="text-xs sm:text-sm text-white mt-1">
                     Test records are mandatory under EAWR 1989 and BS 7671
                   </p>
                 </div>
@@ -743,7 +743,7 @@ const Level2Module6Section6_1 = () => {
                   <p className="font-medium text-foreground text-sm sm:text-base">
                     Complete Documentation
                   </p>
-                  <p className="text-xs sm:text-sm text-white/80 mt-1">
+                  <p className="text-xs sm:text-sm text-white mt-1">
                     Date, time, readings, equipment, tester details required
                   </p>
                 </div>
@@ -757,7 +757,7 @@ const Level2Module6Section6_1 = () => {
                   <p className="font-medium text-foreground text-sm sm:text-base">
                     Serious Consequences
                   </p>
-                  <p className="text-xs sm:text-sm text-white/80 mt-1">
+                  <p className="text-xs sm:text-sm text-white mt-1">
                     Poor records risk prosecution, liability claims, lost registration
                   </p>
                 </div>
@@ -769,7 +769,7 @@ const Level2Module6Section6_1 = () => {
                   <p className="font-medium text-foreground text-sm sm:text-base">
                     Professional Protection
                   </p>
-                  <p className="text-xs sm:text-sm text-white/80 mt-1">
+                  <p className="text-xs sm:text-sm text-white mt-1">
                     Proper records protect career, reputation, and finances
                   </p>
                 </div>

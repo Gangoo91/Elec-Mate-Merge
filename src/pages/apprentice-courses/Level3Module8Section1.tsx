@@ -59,7 +59,7 @@ const Level3Module8Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module8">
@@ -88,10 +88,10 @@ const Level3Module8Section1 = () => {
                       </span>
                     </div>
                     <h3 className="text-lg font-bold text-white mb-1">Full Practice Exam</h3>
-                    <p className="text-sm text-white/60 mb-3">
+                    <p className="text-sm text-white mb-3">
                       40 questions from all 7 modules • 90 minutes • 60% pass mark
                     </p>
-                    <div className="flex items-center gap-4 text-xs text-white/50">
+                    <div className="flex items-center gap-4 text-xs text-white">
                       <span className="flex items-center gap-1">
                         <Clock className="h-3.5 w-3.5" />
                         90 mins

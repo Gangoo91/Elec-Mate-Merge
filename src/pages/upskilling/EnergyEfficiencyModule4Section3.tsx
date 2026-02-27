@@ -248,7 +248,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
       <div className="max-w-4xl mx-auto px-4 py-6 space-y-8">
         {/* Quick Summary */}
         <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
-          <p className="text-white/90 leading-relaxed">
+          <p className="text-white leading-relaxed">
             Effective building controls are essential for achieving energy efficiency targets and
             compliance with Part L of the Building Regulations. From simple time switches to
             sophisticated Building Management Systems, the right control strategy can deliver
@@ -266,7 +266,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
             Time Switch and Optimised Start/Stop Controls
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Time-based controls form the foundation of energy-efficient building operation in the
               UK. Part L requires heating systems to have appropriate time control, with more
@@ -315,13 +315,13 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
 
             <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
               <h4 className="text-blue-400 font-semibold mb-2">Optimum Start Algorithm</h4>
-              <p className="text-sm text-white/70 mb-3">
+              <p className="text-sm text-white mb-3">
                 Modern optimum start controllers use self-learning algorithms based on:
               </p>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white">Input Parameters:</p>
-                  <ul className="list-disc list-inside text-white/70 space-y-1">
+                  <ul className="list-disc list-inside text-white space-y-1">
                     <li>Current indoor temperature</li>
                     <li>Outdoor temperature</li>
                     <li>Required setpoint</li>
@@ -330,7 +330,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white">Adaptive Learning:</p>
-                  <ul className="list-disc list-inside text-white/70 space-y-1">
+                  <ul className="list-disc list-inside text-white space-y-1">
                     <li>Building thermal response rate</li>
                     <li>Seasonal adjustment factors</li>
                     <li>Equipment capacity variations</li>
@@ -345,7 +345,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                 <AlertTriangle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
                 <div>
                   <h4 className="text-amber-400 font-semibold">Part L Requirement</h4>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     For non-domestic buildings with heating systems over 45kW output, Part L
                     requires optimum start control. The controller must be capable of delaying
                     start-up based on internal and external conditions to minimise pre-conditioning
@@ -365,7 +365,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
             Building Management Systems (BMS) Fundamentals
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               A Building Management System (BMS), also known as Building Automation System (BAS) or
               Building Energy Management System (BEMS), provides centralised monitoring and control
@@ -381,7 +381,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white">Management Level</p>
-                    <p className="text-sm text-white/60">
+                    <p className="text-sm text-white">
                       Operator workstations, servers, data analytics, reporting, and remote access
                       interfaces.
                     </p>
@@ -393,7 +393,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white">Automation Level</p>
-                    <p className="text-sm text-white/60">
+                    <p className="text-sm text-white">
                       Network controllers, routers, and communication infrastructure connecting
                       subsystems.
                     </p>
@@ -405,7 +405,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white">Field Level</p>
-                    <p className="text-sm text-white/60">
+                    <p className="text-sm text-white">
                       Sensors (temperature, humidity, CO2), actuators (valves, dampers), and local
                       controllers.
                     </p>
@@ -417,7 +417,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                 <h4 className="text-green-400 font-semibold mb-2">Energy Saving Benefits</h4>
-                <ul className="text-sm text-white/70 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Optimised HVAC scheduling: 10-20%</li>
                   <li>Improved setpoint control: 5-10%</li>
                   <li>Fault detection & diagnostics: 5-15%</li>
@@ -427,7 +427,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
               </div>
               <div className="bg-purple-500/10 border border-purple-500/30 rounded-lg p-4">
                 <h4 className="text-purple-400 font-semibold mb-2">Key BMS Functions</h4>
-                <ul className="text-sm text-white/70 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Real-time monitoring & trending</li>
                   <li>Automatic scheduling control</li>
                   <li>Alarm management & notification</li>
@@ -456,7 +456,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
             BACnet, Modbus and LON Protocols Overview
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Understanding building automation protocols is essential for system integration and
               troubleshooting. The UK market predominantly uses BACnet for large commercial
@@ -472,13 +472,13 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                 </h3>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm text-white/70 mb-2">
+                    <p className="text-sm text-white mb-2">
                       ASHRAE Standard 135 / ISO 16484-5. Object-oriented protocol designed
                       specifically for building automation. Most widely used open protocol in UK
                       commercial buildings.
                     </p>
                     <p className="text-sm font-medium text-white mt-3">Transport Options:</p>
-                    <ul className="text-sm text-white/60 list-disc list-inside">
+                    <ul className="text-sm text-white list-disc list-inside">
                       <li>BACnet/IP (Ethernet/IP networks)</li>
                       <li>BACnet MS/TP (RS-485 serial)</li>
                       <li>BACnet/SC (Secure Connect)</li>
@@ -486,7 +486,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">Common Object Types:</p>
-                    <ul className="text-sm text-white/60 list-disc list-inside space-y-1">
+                    <ul className="text-sm text-white list-disc list-inside space-y-1">
                       <li>Analog Input/Output (AI/AO)</li>
                       <li>Binary Input/Output (BI/BO)</li>
                       <li>Multi-state Value (MSV)</li>
@@ -501,13 +501,13 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                 <h3 className="text-elec-yellow font-semibold mb-3">Modbus</h3>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm text-white/70 mb-2">
+                    <p className="text-sm text-white mb-2">
                       Simple, robust protocol widely used for equipment integration. Master/slave
                       architecture with register-based data model. Common for meters, VFDs, and
                       industrial equipment.
                     </p>
                     <p className="text-sm font-medium text-white mt-3">Variants:</p>
-                    <ul className="text-sm text-white/60 list-disc list-inside">
+                    <ul className="text-sm text-white list-disc list-inside">
                       <li>Modbus RTU (RS-485 serial)</li>
                       <li>Modbus TCP/IP (Ethernet)</li>
                       <li>Modbus ASCII (less common)</li>
@@ -515,7 +515,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">Register Types:</p>
-                    <ul className="text-sm text-white/60 list-disc list-inside space-y-1">
+                    <ul className="text-sm text-white list-disc list-inside space-y-1">
                       <li>Coils (discrete outputs)</li>
                       <li>Discrete Inputs</li>
                       <li>Input Registers (read-only)</li>
@@ -528,14 +528,14 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
               {/* LON */}
               <div className="bg-white/5 rounded-lg p-4">
                 <h3 className="text-elec-yellow font-semibold mb-3">LON (LonWorks)</h3>
-                <p className="text-sm text-white/70 mb-2">
+                <p className="text-sm text-white mb-2">
                   Peer-to-peer protocol (ISO/IEC 14908) with distributed intelligence. Less common
                   in new UK installations but still found in existing buildings. Uses Standard
                   Network Variable Types (SNVTs) for interoperability.
                 </p>
                 <div className="flex items-start gap-2 mt-3 p-3 bg-amber-500/10 border border-amber-500/30 rounded">
                   <AlertTriangle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     LON installations are declining in the UK market. When upgrading legacy LON
                     systems, consider migration to BACnet/IP with appropriate gateways.
                   </p>
@@ -553,7 +553,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                       <th className="text-left py-2 text-white">Recommended Protocol</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/70">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2">Large commercial BMS</td>
                       <td className="py-2">BACnet/IP</td>
@@ -594,7 +594,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
             Weather Compensation and Setback Strategies
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Weather compensation and temperature setback are fundamental energy-saving strategies
               required by Part L for heating systems over 45kW in new non-domestic buildings. These
@@ -603,7 +603,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
 
             <div className="bg-white/5 rounded-lg p-4">
               <h3 className="text-elec-yellow font-semibold mb-3">Weather Compensation Control</h3>
-              <p className="text-sm text-white/70 mb-3">
+              <p className="text-sm text-white mb-3">
                 Weather compensation adjusts heating flow temperature based on outdoor temperature.
                 As outdoor temperature rises, flow temperature decreases, reducing boiler cycling
                 and improving efficiency, particularly with condensing boilers.
@@ -612,8 +612,8 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                 <h4 className="text-white font-medium mb-2">Compensation Curve Setup</h4>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <div>
-                    <p className="text-white/60 mb-2">Typical UK Settings:</p>
-                    <ul className="space-y-1 text-white/70">
+                    <p className="text-white mb-2">Typical UK Settings:</p>
+                    <ul className="space-y-1 text-white">
                       <li>Design outdoor temp: -3C</li>
                       <li>Design flow temp: 75-80C</li>
                       <li>Changeover point: 15-18C outdoor</li>
@@ -621,8 +621,8 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-white/60 mb-2">Adjustment Factors:</p>
-                    <ul className="space-y-1 text-white/70">
+                    <p className="text-white mb-2">Adjustment Factors:</p>
+                    <ul className="space-y-1 text-white">
                       <li>Building insulation level</li>
                       <li>Emitter type (radiators vs underfloor)</li>
                       <li>Building thermal mass</li>
@@ -640,7 +640,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
               <div className="space-y-3">
                 <div className="p-3 bg-white/5 rounded-lg">
                   <h4 className="text-white font-medium">Night Setback</h4>
-                  <p className="text-sm text-white/60 mt-1">
+                  <p className="text-sm text-white mt-1">
                     Reduce heating setpoint during unoccupied night hours. CIBSE recommends 10-12C
                     for commercial offices (maintaining above 5C frost protection minimum). Savings
                     of 5-15% on heating costs depending on building type.
@@ -648,14 +648,14 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                 </div>
                 <div className="p-3 bg-white/5 rounded-lg">
                   <h4 className="text-white font-medium">Weekend/Holiday Setback</h4>
-                  <p className="text-sm text-white/60 mt-1">
+                  <p className="text-sm text-white mt-1">
                     Extended setback for longer unoccupied periods. Consider building thermal mass
                     and pre-heat requirements. Use calendar scheduling for bank holidays.
                   </p>
                 </div>
                 <div className="p-3 bg-white/5 rounded-lg">
                   <h4 className="text-white font-medium">Cooling Setpoint Adjustment</h4>
-                  <p className="text-sm text-white/60 mt-1">
+                  <p className="text-sm text-white mt-1">
                     Raise cooling setpoints during unoccupied periods (typically to 28-30C) or
                     disable entirely. Implement dead-band between heating and cooling setpoints
                     (minimum 2C separation recommended).
@@ -666,7 +666,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
               <h4 className="text-green-400 font-semibold mb-2">Part L Compliance Note</h4>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 For new non-domestic buildings with heating systems over 45kW, weather compensation
                 (or load compensation) control is mandatory under Part L. The compensation curve
                 must be adjustable to suit the building characteristics, and the sensor location
@@ -684,7 +684,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
             Demand Limiting and Load Cycling
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Maximum demand charges can represent 20-40% of commercial electricity bills in the UK.
               Demand limiting strategies help control peak consumption through intelligent load
@@ -694,13 +694,13 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-white/5 rounded-lg p-4">
                 <h3 className="text-elec-yellow font-semibold mb-3">Demand Limiting</h3>
-                <p className="text-sm text-white/70 mb-3">
+                <p className="text-sm text-white mb-3">
                   Automatically reduces electrical load when approaching maximum demand targets. The
                   BMS monitors real-time consumption and sheds non-essential loads in a
                   predetermined priority sequence.
                 </p>
                 <p className="text-sm font-medium text-white mb-2">Load Priority Hierarchy:</p>
-                <ol className="text-sm space-y-1 list-decimal list-inside text-white/60">
+                <ol className="text-sm space-y-1 list-decimal list-inside text-white">
                   <li>Electric heating elements</li>
                   <li>Non-essential lighting</li>
                   <li>Hot water heating</li>
@@ -711,12 +711,12 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
 
               <div className="bg-white/5 rounded-lg p-4">
                 <h3 className="text-elec-yellow font-semibold mb-3">Load Cycling</h3>
-                <p className="text-sm text-white/70 mb-3">
+                <p className="text-sm text-white mb-3">
                   Rotates equipment operation to spread electrical load while maintaining comfort.
                   Different from shedding as loads are rotated rather than removed entirely.
                 </p>
                 <p className="text-sm font-medium text-white mb-2">Common Applications:</p>
-                <ul className="text-sm space-y-1 list-disc list-inside text-white/60">
+                <ul className="text-sm space-y-1 list-disc list-inside text-white">
                   <li>Multiple chiller staging</li>
                   <li>AHU fan rotation</li>
                   <li>Packaged AC unit cycling</li>
@@ -734,7 +734,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                   <Settings className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-medium text-white">Demand Setpoint</p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       Set 5-10% below contracted maximum demand (kVA) to allow response time before
                       penalties.
                     </p>
@@ -744,7 +744,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                   <Settings className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-medium text-white">Monitoring Interval</p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       Half-hourly metering standard in UK. BMS should sample every 1-5 minutes with
                       predictive algorithms.
                     </p>
@@ -754,7 +754,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                   <Settings className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                   <div>
                     <p className="font-medium text-white">Restore Delay</p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       Stagger load restoration (typically 5-10 minute intervals) to prevent demand
                       spikes.
                     </p>
@@ -768,7 +768,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                 <Zap className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
                 <div>
                   <h4 className="text-amber-400 font-semibold">Grid Services Opportunity</h4>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Buildings with effective demand response capability may participate in National
                     Grid demand-side response schemes (DSR). This can provide additional revenue
                     streams while supporting grid stability. Contact your energy supplier or an
@@ -797,7 +797,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
             Integration with Renewable Energy Systems
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Modern BMS installations increasingly integrate with on-site renewable generation and
               battery storage to maximise self-consumption and reduce grid dependence. Effective
@@ -814,7 +814,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                     <Zap className="w-4 h-4 text-elec-yellow" />
                     Load Shifting to Generation Periods
                   </h4>
-                  <p className="text-sm text-white/60 mt-1">
+                  <p className="text-sm text-white mt-1">
                     Schedule flexible loads (water heating, HVAC pre-conditioning, EV charging)
                     during peak solar generation hours (typically 10:00-15:00 in UK). BMS monitors
                     PV output and automatically adjusts scheduling.
@@ -825,7 +825,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                     <Zap className="w-4 h-4 text-elec-yellow" />
                     Excess Generation Response
                   </h4>
-                  <p className="text-sm text-white/60 mt-1">
+                  <p className="text-sm text-white mt-1">
                     When generation exceeds demand, BMS can enable thermal storage charging, battery
                     storage, or bring forward scheduled loads to absorb surplus before export.
                   </p>
@@ -835,7 +835,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                     <Zap className="w-4 h-4 text-elec-yellow" />
                     Weather Forecast Integration
                   </h4>
-                  <p className="text-sm text-white/60 mt-1">
+                  <p className="text-sm text-white mt-1">
                     Advanced systems use weather forecasting APIs to predict solar generation and
                     adjust schedules proactively. Pre-condition buildings during expected high
                     generation periods.
@@ -847,7 +847,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-white/5 rounded-lg p-4">
                 <h3 className="text-elec-yellow font-semibold mb-3">Battery Storage Control</h3>
-                <ul className="text-sm space-y-2 text-white/60">
+                <ul className="text-sm space-y-2 text-white">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
                     <span>Peak shaving during high demand periods</span>
@@ -869,7 +869,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
 
               <div className="bg-white/5 rounded-lg p-4">
                 <h3 className="text-elec-yellow font-semibold mb-3">Heat Pump Optimisation</h3>
-                <ul className="text-sm space-y-2 text-white/60">
+                <ul className="text-sm space-y-2 text-white">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
                     <span>Run during high COP conditions</span>
@@ -897,7 +897,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
               <div className="grid md:grid-cols-3 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white">Solar PV:</p>
-                  <ul className="text-white/60 list-disc list-inside">
+                  <ul className="text-white list-disc list-inside">
                     <li>Instantaneous generation (kW)</li>
                     <li>Daily/monthly yield (kWh)</li>
                     <li>Inverter status/alarms</li>
@@ -905,7 +905,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white">Battery:</p>
-                  <ul className="text-white/60 list-disc list-inside">
+                  <ul className="text-white list-disc list-inside">
                     <li>State of charge (%)</li>
                     <li>Charge/discharge rate</li>
                     <li>Cycle count/health</li>
@@ -913,7 +913,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white">Grid Interface:</p>
-                  <ul className="text-white/60 list-disc list-inside">
+                  <ul className="text-white list-disc list-inside">
                     <li>Import/export power</li>
                     <li>Grid frequency</li>
                     <li>Tariff signal (where available)</li>
@@ -936,7 +936,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
               <h3 className="font-semibold text-white mb-2">
                 Part L Control Requirements (Non-Domestic)
               </h3>
-              <ul className="text-sm space-y-1 text-white/80">
+              <ul className="text-sm space-y-1 text-white">
                 <li>Time and temperature control mandatory</li>
                 <li>Zone control where practical</li>
                 <li>Weather/load compensation over 45kW</li>
@@ -948,7 +948,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
 
             <div>
               <h3 className="font-semibold text-white mb-2">Typical Energy Savings</h3>
-              <ul className="text-sm space-y-1 text-white/80">
+              <ul className="text-sm space-y-1 text-white">
                 <li>Optimum start: 5-10%</li>
                 <li>Weather compensation: 5-15%</li>
                 <li>Night setback: 5-15%</li>
@@ -960,7 +960,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
 
             <div>
               <h3 className="font-semibold text-white mb-2">Protocol Quick Guide</h3>
-              <ul className="text-sm space-y-1 text-white/80">
+              <ul className="text-sm space-y-1 text-white">
                 <li>BACnet/IP: Enterprise BMS networks</li>
                 <li>BACnet MS/TP: Field device networks</li>
                 <li>Modbus RTU: Equipment interfaces (RS-485)</li>
@@ -971,7 +971,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
 
             <div>
               <h3 className="font-semibold text-white mb-2">Key Standards & Guidance</h3>
-              <ul className="text-sm space-y-1 text-white/80">
+              <ul className="text-sm space-y-1 text-white">
                 <li>Building Regulations Part L</li>
                 <li>CIBSE Guide H: Building Control Systems</li>
                 <li>CIBSE TM63: Operational Performance</li>
@@ -985,19 +985,19 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
             <h3 className="font-semibold text-elec-yellow mb-2">CIBSE Recommended Setpoints</h3>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
               <div>
-                <p className="text-white/60">Office (occupied)</p>
+                <p className="text-white">Office (occupied)</p>
                 <p className="text-white font-medium">21-23C</p>
               </div>
               <div>
-                <p className="text-white/60">Office (setback)</p>
+                <p className="text-white">Office (setback)</p>
                 <p className="text-white font-medium">10-12C</p>
               </div>
               <div>
-                <p className="text-white/60">Retail (occupied)</p>
+                <p className="text-white">Retail (occupied)</p>
                 <p className="text-white font-medium">19-21C</p>
               </div>
               <div>
-                <p className="text-white/60">Frost protection</p>
+                <p className="text-white">Frost protection</p>
                 <p className="text-white font-medium">5C minimum</p>
               </div>
             </div>
@@ -1007,7 +1007,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
         {/* Quiz Section */}
         <section className="bg-white/5 rounded-xl p-5 border border-white/10">
           <h2 className="text-xl font-bold text-elec-yellow mb-4">Section Quiz</h2>
-          <p className="text-white/70 mb-6">
+          <p className="text-white mb-6">
             Test your understanding of energy-efficient controls, BMS systems, and building
             automation protocols. Complete all 10 questions to assess your knowledge.
           </p>
@@ -1025,7 +1025,7 @@ const EnergyEfficiencyModule4Section3: React.FC = () => {
               >
                 <div className="p-4">
                   <h3 className="font-medium text-white">{faq.question}</h3>
-                  <p className="text-white/60 text-sm leading-relaxed mt-2">{faq.answer}</p>
+                  <p className="text-white text-sm leading-relaxed mt-2">{faq.answer}</p>
                 </div>
               </div>
             ))}

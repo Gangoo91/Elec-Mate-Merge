@@ -221,7 +221,7 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
                   <div className="text-center py-12">
                     <GraduationCap className="h-16 w-16 text-white/10 mx-auto mb-4" />
                     <h3 className="text-lg font-semibold text-white mb-2">No programmes found</h3>
-                    <p className="text-sm text-white/50 max-w-xs mx-auto mb-4">
+                    <p className="text-sm text-white max-w-xs mx-auto mb-4">
                       Try adjusting your filters or search for something else
                     </p>
                     <Button
@@ -243,7 +243,7 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
                   >
                     {/* Results count */}
                     <div className="flex items-center justify-between">
-                      <p className="text-sm text-white/60">
+                      <p className="text-sm text-white">
                         {displayedProgrammes.length} programmes
                         {selectedCategory && ` in ${selectedCategory}`}
                       </p>
@@ -290,7 +290,7 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
               <div className="text-center py-12">
                 <Bookmark className="h-16 w-16 text-white/10 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-white mb-2">No saved programmes</h3>
-                <p className="text-sm text-white/50 max-w-xs mx-auto mb-4">
+                <p className="text-sm text-white max-w-xs mx-auto mb-4">
                   Swipe right on a programme card or tap the bookmark icon to save
                 </p>
                 <Button onClick={() => setActiveTab('explore')}>Browse Programmes</Button>
@@ -341,7 +341,7 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
               <div className="text-center py-12">
                 <GitCompare className="h-16 w-16 text-white/10 mx-auto mb-4" />
                 <h3 className="text-lg font-semibold text-white mb-2">No programmes to compare</h3>
-                <p className="text-sm text-white/50 max-w-xs mx-auto mb-4">
+                <p className="text-sm text-white max-w-xs mx-auto mb-4">
                   Swipe left on programme cards to add them to your comparison
                 </p>
                 <Button onClick={() => setActiveTab('explore')}>Browse Programmes</Button>
@@ -423,7 +423,7 @@ const PremiumEducationHub = ({ onBack }: PremiumEducationHubProps) => {
                     'relative flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium transition-all',
                     activeTab === tab.id
                       ? 'bg-purple-500 text-white'
-                      : 'text-white/60 hover:text-white'
+                      : 'text-white hover:text-white'
                   )}
                 >
                   <tab.icon className="h-4 w-4" />

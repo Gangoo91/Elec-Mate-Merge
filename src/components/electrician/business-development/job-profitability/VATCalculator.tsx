@@ -45,7 +45,7 @@ export function VATCalculator({
         </div>
         <div>
           <h3 className="text-ios-headline font-semibold text-white">VAT Calculation</h3>
-          <p className="text-ios-caption-1 text-white/50">Add VAT to your quote</p>
+          <p className="text-ios-caption-1 text-white">Add VAT to your quote</p>
         </div>
       </div>
 
@@ -54,7 +54,7 @@ export function VATCalculator({
         <div className="flex items-center justify-between">
           <div>
             <p className="text-ios-body font-medium text-white">VAT Registered</p>
-            <p className="text-ios-caption-1 text-white/50">Turnover &gt;£85,000</p>
+            <p className="text-ios-caption-1 text-white">Turnover &gt;£85,000</p>
           </div>
           <Switch
             checked={vatRegistered}
@@ -73,7 +73,7 @@ export function VATCalculator({
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.2 }}
           >
-            <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+            <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-3">
               VAT Rate
             </p>
             <div className="grid grid-cols-3 gap-2">
@@ -97,7 +97,7 @@ export function VATCalculator({
                   >
                     {btn.label}
                   </p>
-                  <p className="text-ios-caption-2 text-white/50 mt-1">{btn.desc}</p>
+                  <p className="text-ios-caption-2 text-white mt-1">{btn.desc}</p>
                 </button>
               ))}
             </div>
@@ -113,7 +113,7 @@ export function VATCalculator({
           className="bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-sm rounded-2xl border border-white/10 p-4 space-y-3"
         >
           <div className="flex justify-between items-center">
-            <span className="text-ios-body text-white/70">Net Amount</span>
+            <span className="text-ios-body text-white">Net Amount</span>
             <span className="text-ios-body font-medium text-white tabular-nums">
               £{quoteAmount.toFixed(2)}
             </span>
@@ -122,7 +122,7 @@ export function VATCalculator({
           <div className="h-px bg-white/10" />
 
           <div className="flex justify-between items-center">
-            <span className="text-ios-body text-white/70">VAT ({vatRate}%)</span>
+            <span className="text-ios-body text-white">VAT ({vatRate}%)</span>
             <span className="text-ios-body font-medium text-white tabular-nums">
               £{vatAmount.toFixed(2)}
             </span>

@@ -220,7 +220,7 @@ const InspectionTestingModule8Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../module-8">
@@ -242,7 +242,7 @@ const InspectionTestingModule8Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Initial Visual Inspection
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Perform thorough visual examination to identify defects before electrical testing
           </p>
         </header>
@@ -406,19 +406,19 @@ const InspectionTestingModule8Section1 = () => {
             <div className="grid sm:grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-red-500/30">
                 <p className="font-medium text-red-400 mb-1">C1 - Danger Present</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Exposed live conductors, fire hazards, immediate shock risk
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-amber-500/30">
                 <p className="font-medium text-amber-400 mb-1">C2 - Potentially Dangerous</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Damaged enclosures, missing earths, overloaded circuits
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-blue-500/30">
                 <p className="font-medium text-blue-400 mb-1">C3 - Improvement Recommended</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Outdated equipment, lack of RCD protection where now required
                 </p>
               </div>
@@ -469,7 +469,7 @@ const InspectionTestingModule8Section1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Tip:</strong> Start at the intake because the supply and main earthing
               arrangements affect the entire installation.
             </p>
@@ -615,7 +615,7 @@ const InspectionTestingModule8Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -661,7 +661,7 @@ const InspectionTestingModule8Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-7/section-5">

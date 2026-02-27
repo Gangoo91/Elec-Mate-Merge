@@ -138,7 +138,7 @@ export function MFTInstrument({
         <div className="relative px-3 pt-3 pb-3">
           {/* Brand label */}
           <p
-            className="text-[7px] font-bold tracking-[0.15em] text-white/40 mb-1 text-center"
+            className="text-[7px] font-bold tracking-[0.15em] text-white mb-1 text-center"
             style={{ textShadow: '0 1px 1px rgba(0,0,0,0.3)' }}
           >
             ELEC-MATE MFT

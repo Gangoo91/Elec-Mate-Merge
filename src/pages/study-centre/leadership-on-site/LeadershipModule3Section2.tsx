@@ -199,7 +199,7 @@ export default function LeadershipModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-3-section-1">
@@ -222,7 +222,7 @@ export default function LeadershipModule3Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Active Listening and Asking Questions
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How to truly hear what your team is telling you, ask questions that reveal the real
             picture, and read the signals people send without words
           </p>
@@ -339,7 +339,7 @@ export default function LeadershipModule3Section2() {
                   <Ear className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">The Leadership Difference</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Active listening is one of the most powerful leadership tools available to you.
                   When you genuinely listen to a team member, you learn what is really happening on
                   the ground. You build trust. You make people feel valued. And you get better
@@ -373,7 +373,7 @@ export default function LeadershipModule3Section2() {
                 <div className="space-y-3 text-sm">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-red-400 font-semibold mb-1">Level 1 &mdash; Ignoring</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Not listening at all. Making no effort to hear or engage with the speaker. On
                       site, this might look like continuing to text on your phone while someone is
                       reporting a concern.
@@ -383,7 +383,7 @@ export default function LeadershipModule3Section2() {
                     <p className="text-amber-400 font-semibold mb-1">
                       Level 2 &mdash; Pretend Listening
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Nodding and making listening noises (&ldquo;mmm&rdquo;, &ldquo;yeah&rdquo;)
                       while thinking about something else entirely. The body is present; the mind is
                       elsewhere. Very common on busy sites.
@@ -393,7 +393,7 @@ export default function LeadershipModule3Section2() {
                     <p className="text-amber-400 font-semibold mb-1">
                       Level 3 &mdash; Selective Listening
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Hearing only what you want to hear or what you expect to hear. Filtering
                       information through your own biases and assumptions. You catch the bits that
                       confirm what you already think and miss the rest.
@@ -403,7 +403,7 @@ export default function LeadershipModule3Section2() {
                     <p className="text-green-400 font-semibold mb-1">
                       Level 4 &mdash; Attentive Listening
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Fully focused on the speaker. Processing their words, following their logic,
                       and trying to understand the content of what they are saying. This is good
                       listening &mdash; but it focuses primarily on facts and information.
@@ -413,7 +413,7 @@ export default function LeadershipModule3Section2() {
                     <p className="text-rose-400 font-semibold mb-1">
                       Level 5 &mdash; Empathic Listening
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Seeking to understand the other person&rsquo;s perspective, feelings, and
                       underlying needs &mdash; not just their words. You are trying to see the
                       situation through their eyes. This is the deepest, most powerful form of
@@ -428,7 +428,7 @@ export default function LeadershipModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">The Workplace Reality</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Most workplace communication sits at{' '}
                   <strong className="text-white">levels 2 and 3</strong>. People pretend to listen
                   or selectively hear what suits them. Leaders need to consciously operate at{' '}
@@ -459,7 +459,7 @@ export default function LeadershipModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">The SOLER Model (Egan)</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-400 font-bold text-lg mb-1">S</p>
                     <p className="text-white font-medium mb-1">Sit/Stand Squarely</p>
@@ -511,7 +511,7 @@ export default function LeadershipModule3Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Verbal Active Listening Techniques
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -549,7 +549,7 @@ export default function LeadershipModule3Section2() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-500 mb-2">What to Avoid</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">Do not interrupt.</strong> Do not finish their
                   sentences. Do not jump to solutions before they have finished explaining the
                   problem. Each of these behaviours tells the speaker that what you have to say is
@@ -583,7 +583,7 @@ export default function LeadershipModule3Section2() {
                   <HelpCircle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Types of Questions</p>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">Closed Questions</p>
                     <p className="mb-2">
@@ -649,7 +649,7 @@ export default function LeadershipModule3Section2() {
                     The Danger of Leading Questions
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Leading questions are{' '}
                   <strong className="text-white">
                     particularly dangerous in safety-critical environments
@@ -687,7 +687,7 @@ export default function LeadershipModule3Section2() {
                   <Eye className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Non-Verbal Cues to Watch For</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -725,7 +725,7 @@ export default function LeadershipModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Signs Someone Is Struggling</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -761,7 +761,7 @@ export default function LeadershipModule3Section2() {
                 <p className="text-sm font-medium text-rose-500 mb-2">
                   Construction&rsquo;s Most Important Question
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The courage to say{' '}
                   <strong className="text-white">&ldquo;Are you alright, mate?&rdquo;</strong>
                   might be the most important thing you ever do as a leader. The construction
@@ -790,7 +790,7 @@ export default function LeadershipModule3Section2() {
                 team wellbeing. The key takeaways from this section are:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -859,7 +859,7 @@ export default function LeadershipModule3Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -873,7 +873,7 @@ export default function LeadershipModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-3-section-1">

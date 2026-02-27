@@ -183,7 +183,7 @@ export default function PasmaModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-1">
@@ -208,7 +208,7 @@ export default function PasmaModule1Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             CDM 2015 &amp; Duty Holders
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The Construction (Design and Management) Regulations 2015, the five duty holder roles,
             and how CDM applies to mobile tower work on construction projects
           </p>
@@ -295,7 +295,7 @@ export default function PasmaModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">CDM 2015 Applies To:</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>All construction projects in England, Wales, and Scotland</span>
@@ -354,7 +354,7 @@ export default function PasmaModule1Section4() {
                     </span>
                     <p className="text-sm font-medium text-blue-400">Client</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The person or organisation for whom the project is carried out. Must make
                     suitable arrangements for managing the project, ensure sufficient time and
                     resources are allocated, provide pre-construction information, and appoint a
@@ -370,7 +370,7 @@ export default function PasmaModule1Section4() {
                     </span>
                     <p className="text-sm font-medium text-purple-400">Principal Designer</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Appointed by the client on multi-contractor projects. Plans, manages, monitors,
                     and co-ordinates the pre-construction phase. Identifies, eliminates, and
                     controls foreseeable risks. Ensures designers comply with their CDM duties.
@@ -385,7 +385,7 @@ export default function PasmaModule1Section4() {
                     </span>
                     <p className="text-sm font-medium text-green-400">Principal Contractor</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Appointed by the client on multi-contractor projects. Plans, manages, monitors,
                     and co-ordinates the construction phase. Prepares the construction phase plan.
                     Ensures co-operation between contractors. Organises site inductions. Ensures
@@ -400,7 +400,7 @@ export default function PasmaModule1Section4() {
                     </span>
                     <p className="text-sm font-medium text-amber-400">Designer</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Anyone who prepares or modifies a design for a construction project. Must
                     eliminate foreseeable risks where possible. Must reduce risks that cannot be
                     eliminated. Must provide information about remaining risks to those who need it.
@@ -414,7 +414,7 @@ export default function PasmaModule1Section4() {
                     </span>
                     <p className="text-sm font-medium text-red-400">Contractor</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Anyone who carries out or manages construction work. Must plan, manage, and
                     monitor their own work. Must ensure workers have the skills, knowledge,
                     training, and experience needed. Must provide appropriate supervision and
@@ -458,7 +458,7 @@ export default function PasmaModule1Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   CDM Requirements for Tower Work:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -501,7 +501,7 @@ export default function PasmaModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Common Misconception</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   CDM 2015 does not only apply to large projects or projects lasting more than 30
                   days. Every construction project has CDM duties, even a one-day job with a single
                   contractor. The 30-day / 500 person-day threshold only determines whether the
@@ -532,7 +532,7 @@ export default function PasmaModule1Section4() {
                   <ClipboardList className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">What the CPP Must Contain</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -591,7 +591,7 @@ export default function PasmaModule1Section4() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-green-400 mb-2">Good CPP Practice</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Prepared before work starts on site</span>
@@ -612,7 +612,7 @@ export default function PasmaModule1Section4() {
                 </div>
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-red-400 mb-2">Poor CPP Practice</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Written after work has already started</span>
@@ -658,7 +658,7 @@ export default function PasmaModule1Section4() {
                   <Building className="h-5 w-5 text-cyan-400" />
                   <p className="text-sm font-medium text-cyan-400">What the Client Must Provide</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -741,7 +741,7 @@ export default function PasmaModule1Section4() {
                   <Users className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Consultation Requirements</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -774,7 +774,7 @@ export default function PasmaModule1Section4() {
                   <HardHat className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Competence Assessment</p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     CDM 2015 requires that workers have the appropriate{' '}
                     <strong className="text-white">
@@ -843,13 +843,13 @@ export default function PasmaModule1Section4() {
                 <p className="text-sm font-medium text-red-400 mb-3">
                   Scenario 1: Fire Alarm Installation
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   An electrical contractor is installing a fire alarm system in a new office
                   building. They need a mobile tower to reach ceiling-mounted detectors and sounders
                   at 4 metres.
                 </p>
                 <div className="bg-white/5 border border-white/10 p-3 rounded mt-2">
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -886,13 +886,13 @@ export default function PasmaModule1Section4() {
                 <p className="text-sm font-medium text-blue-400 mb-3">
                   Scenario 2: Office Painting
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   A single painting contractor is redecorating offices in an occupied building. They
                   use a mobile tower for walls above 2.5 metres. This is a single-contractor
                   project.
                 </p>
                 <div className="bg-white/5 border border-white/10 p-3 rounded mt-2">
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -929,13 +929,13 @@ export default function PasmaModule1Section4() {
                 <p className="text-sm font-medium text-green-400 mb-3">
                   Scenario 3: Lighting Maintenance
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   A facilities management company is maintaining emergency lighting in a warehouse.
                   Multiple contractors are on site carrying out different maintenance tasks
                   simultaneously.
                 </p>
                 <div className="bg-white/5 border border-white/10 p-3 rounded mt-2">
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -988,7 +988,7 @@ export default function PasmaModule1Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1002,7 +1002,7 @@ export default function PasmaModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-1-section-3">

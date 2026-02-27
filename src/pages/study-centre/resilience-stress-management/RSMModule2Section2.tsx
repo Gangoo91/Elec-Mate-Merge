@@ -196,7 +196,7 @@ export default function RSMModule2Section2() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="min-h-[44px] text-white/70 hover:text-white active:text-white p-0 -ml-1 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] text-white hover:text-white active:text-white p-0 -ml-1 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-2">
@@ -218,7 +218,7 @@ export default function RSMModule2Section2() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             The Science of Resilience
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Neuroplasticity, growth mindset, post-traumatic growth, learned optimism, and the
             cognitive traps that undermine resilience
           </p>
@@ -273,7 +273,7 @@ export default function RSMModule2Section2() {
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-rose-500/10 border-l-2 border-l-rose-500/50 border border-rose-500/30">
               <p className="font-semibold text-base text-rose-400 mb-2">Why It Matters</p>
-              <ul className="text-base text-white/80 space-y-1.5">
+              <ul className="text-base text-white space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                   <span>
@@ -405,7 +405,7 @@ export default function RSMModule2Section2() {
                   <Brain className="h-4 w-4 inline-block mr-2 -mt-0.5" />
                   Neuroplasticity in Everyday Life
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   You have already experienced neuroplasticity, even if you did not know the term.
                   Learning to drive a car, mastering cable termination techniques, or remembering
                   the colour codes for wiring &mdash; all of these involved creating and
@@ -442,7 +442,7 @@ export default function RSMModule2Section2() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="bg-white/5 border border-red-400/20 p-3 rounded-lg">
                     <h4 className="text-red-400 font-medium mb-2">Fixed Mindset</h4>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                         <span>&ldquo;I&rsquo;m just not good at maths&rdquo;</span>
@@ -470,7 +470,7 @@ export default function RSMModule2Section2() {
                   </div>
                   <div className="bg-white/5 border border-green-400/20 p-3 rounded-lg">
                     <h4 className="text-green-400 font-medium mb-2">Growth Mindset</h4>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                         <span>&ldquo;I can improve my maths with practice&rdquo;</span>
@@ -546,7 +546,7 @@ export default function RSMModule2Section2() {
                     <h4 className="text-rose-300 font-medium mb-1">
                       1. Greater Appreciation for Life
                     </h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Priorities shift toward what truly matters. Small pleasures become more
                       valued. People report a deeper sense of gratitude for everyday experiences
                       they previously took for granted.
@@ -554,7 +554,7 @@ export default function RSMModule2Section2() {
                   </div>
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-1">2. Improved Relationships</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Adversity often strengthens bonds with the people who supported you through
                       it. People report feeling closer to friends and family, more empathetic toward
                       others, and more willing to be vulnerable.
@@ -564,7 +564,7 @@ export default function RSMModule2Section2() {
                     <h4 className="text-rose-300 font-medium mb-1">
                       3. Increased Personal Strength
                     </h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Having survived adversity, people often discover they are stronger than they
                       believed. The experience provides evidence that they can handle difficult
                       situations, increasing confidence in their ability to cope with future
@@ -575,7 +575,7 @@ export default function RSMModule2Section2() {
                     <h4 className="text-rose-300 font-medium mb-1">
                       4. Recognition of New Possibilities
                     </h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Adversity can open doors that would otherwise have remained closed. People
                       discover new career paths, new interests, new relationships, or new roles
                       (such as mentoring others who face similar challenges).
@@ -585,7 +585,7 @@ export default function RSMModule2Section2() {
                     <h4 className="text-rose-300 font-medium mb-1">
                       5. Spiritual or Existential Change
                     </h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       People often engage more deeply with questions of meaning, purpose, and
                       values. This does not necessarily mean religious change &mdash; it can simply
                       mean a deeper engagement with what gives your life meaning.
@@ -636,7 +636,7 @@ export default function RSMModule2Section2() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-1">Permanent vs Temporary</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       <strong className="text-white">Pessimistic:</strong> &ldquo;I always mess
                       things up&rdquo; (permanent).{' '}
                       <strong className="text-white">Optimistic:</strong> &ldquo;I made a mistake
@@ -647,7 +647,7 @@ export default function RSMModule2Section2() {
                   </div>
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-1">Pervasive vs Specific</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       <strong className="text-white">Pessimistic:</strong> &ldquo;Everything in my
                       life is going wrong&rdquo; (pervasive).{' '}
                       <strong className="text-white">Optimistic:</strong> &ldquo;This particular
@@ -658,7 +658,7 @@ export default function RSMModule2Section2() {
                   </div>
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-1">Personal vs External</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       <strong className="text-white">Pessimistic:</strong> &ldquo;It&rsquo;s all my
                       fault&rdquo; (entirely personal).{' '}
                       <strong className="text-white">Optimistic:</strong> &ldquo;Several factors
@@ -708,11 +708,11 @@ export default function RSMModule2Section2() {
                     <h4 className="text-rose-300 font-medium mb-1">
                       1. Personalisation &mdash; &ldquo;It&rsquo;s all my fault&rdquo;
                     </h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       The tendency to blame yourself entirely for a negative outcome, ignoring the
                       role of external factors, other people, and circumstances beyond your control.
                     </p>
-                    <p className="text-white/80 text-sm mt-2">
+                    <p className="text-white text-sm mt-2">
                       <strong className="text-white">Construction example:</strong> &ldquo;I lost
                       that contract because I&rsquo;m not good enough&rdquo; &mdash; ignoring the
                       fact that the client went with the cheapest quote and your price was fair.
@@ -722,11 +722,11 @@ export default function RSMModule2Section2() {
                     <h4 className="text-rose-300 font-medium mb-1">
                       2. Pervasiveness &mdash; &ldquo;Everything is ruined&rdquo;
                     </h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       The tendency to believe that the negative event will affect every area of your
                       life, rather than being contained to one specific area.
                     </p>
-                    <p className="text-white/80 text-sm mt-2">
+                    <p className="text-white text-sm mt-2">
                       <strong className="text-white">Construction example:</strong> &ldquo;I failed
                       that inspection and now my whole career is a disaster&rdquo; &mdash; when in
                       reality, one failed inspection does not define your overall competence.
@@ -736,12 +736,12 @@ export default function RSMModule2Section2() {
                     <h4 className="text-rose-300 font-medium mb-1">
                       3. Permanence &mdash; &ldquo;It will never get better&rdquo;
                     </h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       The tendency to believe that the negative effects of the event will last
                       forever, that things will never improve, and that you are permanently damaged
                       by the experience.
                     </p>
-                    <p className="text-white/80 text-sm mt-2">
+                    <p className="text-white text-sm mt-2">
                       <strong className="text-white">Construction example:</strong>{' '}
                       &ldquo;I&rsquo;ll never find another decent contract again&rdquo; &mdash; when
                       the construction market fluctuates and opportunities regularly emerge.
@@ -836,7 +836,7 @@ export default function RSMModule2Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -852,7 +852,7 @@ export default function RSMModule2Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-2">

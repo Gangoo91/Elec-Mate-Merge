@@ -97,7 +97,7 @@ const EVChargingModule2Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/ev-charging-module-2">
@@ -118,7 +118,7 @@ const EVChargingModule2Section3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Smart Chargers, App Control & APIs
           </h1>
-          <p className="text-white/80">Connected charging systems and remote management</p>
+          <p className="text-white">Connected charging systems and remote management</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -363,15 +363,15 @@ const EVChargingModule2Section3 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">100A Supply</p>
-                <p className="text-white/90 text-xs">Total available</p>
+                <p className="text-white text-xs">Total available</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">4 × 32A</p>
-                <p className="text-white/90 text-xs">Max per charger</p>
+                <p className="text-white text-xs">Max per charger</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">25A each</p>
-                <p className="text-white/90 text-xs">When all active</p>
+                <p className="text-white text-xs">When all active</p>
               </div>
             </div>
 
@@ -469,7 +469,7 @@ const EVChargingModule2Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/ev-charging-module-2-section-2">

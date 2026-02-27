@@ -26,7 +26,7 @@ const Level2Module8Section2Section2 = () => {
         <div className="flex items-center gap-4 mb-6">
           <Link
             to=".."
-            className="inline-flex items-center text-white/80 hover:text-elec-yellow transition-colors"
+            className="inline-flex items-center text-white hover:text-elec-yellow transition-colors"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to How to Pass Exams
@@ -41,7 +41,7 @@ const Level2Module8Section2Section2 = () => {
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3">
             Question Analysis Techniques
           </h1>
-          <p className="text-white/80 max-w-2xl mx-auto leading-relaxed text-sm md:text-base">
+          <p className="text-white max-w-2xl mx-auto leading-relaxed text-sm md:text-base">
             Master the critical skill of question analysis to dramatically improve your exam
             performance. Learn systematic techniques for decoding questions, identifying key
             information, and applying proven analysis methods.
@@ -52,15 +52,15 @@ const Level2Module8Section2Section2 = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
           <div className="bg-card border border-elec-yellow/30 rounded-lg p-4 text-center">
             <div className="text-2xl font-bold text-elec-yellow mb-1">78%</div>
-            <div className="text-sm text-white/80">Improvement with analysis</div>
+            <div className="text-sm text-white">Improvement with analysis</div>
           </div>
           <div className="bg-card border border-elec-yellow/30 rounded-lg p-4 text-center">
             <div className="text-2xl font-bold text-elec-yellow mb-1">5-step</div>
-            <div className="text-sm text-white/80">Analysis process</div>
+            <div className="text-sm text-white">Analysis process</div>
           </div>
           <div className="bg-card border border-elec-yellow/30 rounded-lg p-4 text-center">
             <div className="text-2xl font-bold text-elec-yellow mb-1">45 secs</div>
-            <div className="text-sm text-white/80">Average analysis time</div>
+            <div className="text-sm text-white">Average analysis time</div>
           </div>
         </div>
 
@@ -85,10 +85,10 @@ const Level2Module8Section2Section2 = () => {
                       <div className="font-medium text-elec-yellow text-sm">
                         Pre-Reading Techniques
                       </div>
-                      <div className="text-sm text-white/80 mb-2">
+                      <div className="text-sm text-white mb-2">
                         Essential first steps before attempting any question
                       </div>
-                      <div className="text-xs text-white/80 space-y-1">
+                      <div className="text-xs text-white space-y-1">
                         <div>• Read question stem twice before viewing options</div>
                         <div>• Identify subject area (installation, testing, safety)</div>
                         <div>• Look for scenario clues (domestic, commercial, industrial)</div>
@@ -100,10 +100,10 @@ const Level2Module8Section2Section2 = () => {
                       <div className="font-medium text-elec-yellow text-sm">
                         Question Type Recognition
                       </div>
-                      <div className="text-sm text-white/80 mb-2">
+                      <div className="text-sm text-white mb-2">
                         Identify approach needed for different question types
                       </div>
-                      <div className="text-xs text-white/80 space-y-1">
+                      <div className="text-xs text-white space-y-1">
                         <div>• Knowledge: Direct recall of facts and regulations</div>
                         <div>• Application: Scenario-based practical problems</div>
                         <div>• Calculation: Mathematical solutions required</div>
@@ -115,10 +115,10 @@ const Level2Module8Section2Section2 = () => {
                       <div className="font-medium text-green-400 text-sm">
                         Command Word Understanding
                       </div>
-                      <div className="text-sm text-white/80 mb-2">
+                      <div className="text-sm text-white mb-2">
                         Master these key command words for accurate responses
                       </div>
-                      <div className="text-xs text-white/80 space-y-1">
+                      <div className="text-xs text-white space-y-1">
                         <div>• IDENTIFY/LIST: Name specific items without explanation</div>
                         <div>• EXPLAIN: Provide reasons why something happens</div>
                         <div>• DESCRIBE: Detail how something works or processes</div>
@@ -181,7 +181,7 @@ const Level2Module8Section2Section2 = () => {
                     <h5 className="font-semibold text-elec-yellow mb-2">
                       Question Analysis Checklist
                     </h5>
-                    <div className="text-sm text-white/80 space-y-1">
+                    <div className="text-sm text-white space-y-1">
                       <div>✓ Subject area identified (Part 1-7 BS7671)</div>
                       <div>✓ Installation context understood (domestic/commercial)</div>
                       <div>✓ Required calculation method determined</div>
@@ -196,12 +196,12 @@ const Level2Module8Section2Section2 = () => {
                 <h5 className="font-semibold text-elec-yellow mb-2">
                   Pro Tip: The 25% Rule & Elimination Strategy
                 </h5>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   If you can eliminate just one wrong answer from a 4-option multiple choice
                   question, your chances improve from 25% to 33% - that's a significant advantage
                   over random guessing!
                 </p>
-                <div className="text-xs text-white/80 space-y-1">
+                <div className="text-xs text-white space-y-1">
                   <div>
                     <strong>Level 1 Elimination:</strong> Remove obviously wrong answers (safety
                     violations, impossible values)
@@ -225,11 +225,11 @@ const Level2Module8Section2Section2 = () => {
                 <h5 className="font-semibold text-green-400 mb-2">
                   Question Pattern Recognition Matrix
                 </h5>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   C&G exams follow predictable patterns. Learning these can save precious analysis
                   time:
                 </p>
-                <div className="text-xs text-white/80 space-y-2">
+                <div className="text-xs text-white space-y-2">
                   <div>
                     <strong>Safety Questions (15-20%):</strong> Usually have obvious correct answers
                     - analyse quickly for compliance
@@ -277,14 +277,14 @@ const Level2Module8Section2Section2 = () => {
                       <h5 className="font-medium text-green-400 text-lg mb-2">
                         SCAN - Initial Question Assessment
                       </h5>
-                      <p className="text-sm text-white/80 mb-3">
+                      <p className="text-sm text-white mb-3">
                         Quickly assess question type, complexity, and required knowledge areas
                         before diving deep.
                       </p>
                       <div className="grid md:grid-cols-2 gap-3">
                         <div>
                           <h6 className="text-xs font-medium text-green-400 mb-1">IDENTIFY:</h6>
-                          <div className="space-y-1 text-xs text-white/80">
+                          <div className="space-y-1 text-xs text-white">
                             <div>• Subject area (Part of BS7671)</div>
                             <div>• Question complexity (1-5 scale)</div>
                             <div>• Time requirement estimate</div>
@@ -295,7 +295,7 @@ const Level2Module8Section2Section2 = () => {
                         </div>
                         <div>
                           <h6 className="text-xs font-medium text-green-400 mb-1">LOOK FOR:</h6>
-                          <div className="space-y-1 text-xs text-white/80">
+                          <div className="space-y-1 text-xs text-white">
                             <div>• Diagrams or circuit drawings</div>
                             <div>• Numerical values in question stem</div>
                             <div>• Specific regulation references</div>
@@ -319,7 +319,7 @@ const Level2Module8Section2Section2 = () => {
                       <h5 className="font-medium text-elec-yellow text-lg mb-2">
                         UNDERSTAND - Deep Question Analysis
                       </h5>
-                      <p className="text-sm text-white/80 mb-3">
+                      <p className="text-sm text-white mb-3">
                         Extract all relevant information and understand exactly what answer format
                         is required.
                       </p>
@@ -328,7 +328,7 @@ const Level2Module8Section2Section2 = () => {
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">
                             KEY INFORMATION EXTRACTION:
                           </h6>
-                          <div className="space-y-1 text-xs text-white/80">
+                          <div className="space-y-1 text-xs text-white">
                             <div>• Circuit details and specifications</div>
                             <div>• Installation type and environment</div>
                             <div>• Environmental conditions affecting installation</div>
@@ -340,7 +340,7 @@ const Level2Module8Section2Section2 = () => {
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">
                             CONTEXT ANALYSIS:
                           </h6>
-                          <div className="space-y-1 text-xs text-white/80">
+                          <div className="space-y-1 text-xs text-white">
                             <div>• Domestic (230V) vs commercial (400V) applications</div>
                             <div>• Special location requirements (bathrooms, etc.)</div>
                             <div>• Regulation parts that apply</div>
@@ -370,7 +370,7 @@ const Level2Module8Section2Section2 = () => {
                       <h5 className="font-medium text-elec-yellow text-lg mb-2">
                         PLAN - Solution Strategy Development
                       </h5>
-                      <p className="text-sm text-white/80 mb-3">
+                      <p className="text-sm text-white mb-3">
                         Determine your approach before looking at answer options to avoid being
                         misled by distractors.
                       </p>
@@ -379,7 +379,7 @@ const Level2Module8Section2Section2 = () => {
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">
                             FOR CALCULATIONS:
                           </h6>
-                          <div className="space-y-1 text-xs text-white/80">
+                          <div className="space-y-1 text-xs text-white">
                             <div>• Identify required formulas (Ohm's law, power, etc.)</div>
                             <div>• List all known values and units</div>
                             <div>• Plan calculation sequence and steps</div>
@@ -392,7 +392,7 @@ const Level2Module8Section2Section2 = () => {
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">
                             FOR REGULATIONS:
                           </h6>
-                          <div className="space-y-1 text-xs text-white/80">
+                          <div className="space-y-1 text-xs text-white">
                             <div>• Identify relevant BS7671 part and chapter</div>
                             <div>• Recall key regulation numbers</div>
                             <div>• Consider special installation conditions</div>
@@ -417,7 +417,7 @@ const Level2Module8Section2Section2 = () => {
                       <h5 className="font-medium text-elec-yellow text-lg mb-2">
                         EXECUTE - Systematic Answer Selection
                       </h5>
-                      <p className="text-sm text-white/80 mb-3">
+                      <p className="text-sm text-white mb-3">
                         Work through your planned approach systematically, using proven elimination
                         techniques effectively.
                       </p>
@@ -437,7 +437,7 @@ const Level2Module8Section2Section2 = () => {
                             <h6 className="text-xs font-medium text-elec-yellow mb-1">
                               ELIMINATION PRIORITIES:
                             </h6>
-                            <div className="space-y-1 text-xs text-white/80">
+                            <div className="space-y-1 text-xs text-white">
                               <div>1. Safety violations or dangerous practices</div>
                               <div>2. Regulation non-compliance</div>
                               <div>3. Mathematically impossible values</div>
@@ -448,7 +448,7 @@ const Level2Module8Section2Section2 = () => {
                             <h6 className="text-xs font-medium text-elec-yellow mb-1">
                               SELECTION CRITERIA:
                             </h6>
-                            <div className="space-y-1 text-xs text-white/80">
+                            <div className="space-y-1 text-xs text-white">
                               <div>• Most technically accurate option</div>
                               <div>• Best compliance with BS7671</div>
                               <div>• Safest installation practice</div>
@@ -468,7 +468,7 @@ const Level2Module8Section2Section2 = () => {
                       <h5 className="font-medium text-elec-yellow text-lg mb-2">
                         VERIFY - Comprehensive Answer Validation
                       </h5>
-                      <p className="text-sm text-white/80 mb-3">
+                      <p className="text-sm text-white mb-3">
                         Always double-check your answer makes complete sense in the context of the
                         question and real-world application.
                       </p>
@@ -477,7 +477,7 @@ const Level2Module8Section2Section2 = () => {
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">
                             TECHNICAL VERIFICATION:
                           </h6>
-                          <div className="space-y-1 text-xs text-white/80">
+                          <div className="space-y-1 text-xs text-white">
                             <div>• Answer matches the question asked</div>
                             <div>• Calculation units are correct</div>
                             <div>• Magnitude is reasonable for application</div>
@@ -489,7 +489,7 @@ const Level2Module8Section2Section2 = () => {
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">
                             SAFETY VERIFICATION:
                           </h6>
-                          <div className="space-y-1 text-xs text-white/80">
+                          <div className="space-y-1 text-xs text-white">
                             <div>• Answer ensures safe installation</div>
                             <div>• Protects against electrical hazards</div>
                             <div>• Meets protection requirements</div>
@@ -511,11 +511,11 @@ const Level2Module8Section2Section2 = () => {
                 <h5 className="font-semibold text-elec-yellow mb-2">
                   Pro Tip: BS7671 Reference Navigation for Question Analysis
                 </h5>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Efficient BS7671 navigation during question analysis can save 30-60 seconds per
                   regulation question:
                 </p>
-                <div className="grid md:grid-cols-2 gap-3 text-xs text-white/80">
+                <div className="grid md:grid-cols-2 gap-3 text-xs text-white">
                   <div>
                     <strong>Quick Finds:</strong> Use index for specific terms, use contents for
                     general topics
@@ -546,7 +546,7 @@ const Level2Module8Section2Section2 = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6 pt-6">
-              <p className="text-white/80">
+              <p className="text-white">
                 Practical assessments require comprehensive analysis of task briefs, understanding
                 of marking criteria, and strategic planning to demonstrate competency across all
                 assessment areas effectively within time constraints.
@@ -563,10 +563,10 @@ const Level2Module8Section2Section2 = () => {
                       <div className="font-medium text-elec-yellow text-sm">
                         Circuit Installation Requirements
                       </div>
-                      <div className="text-sm text-white/80 mb-2">
+                      <div className="text-sm text-white mb-2">
                         Complete analysis of installation specifications
                       </div>
-                      <div className="text-xs text-white/80 space-y-1">
+                      <div className="text-xs text-white space-y-1">
                         <div>
                           • Circuit type analysis (ring final, radial, lighting configurations)
                         </div>
@@ -581,10 +581,10 @@ const Level2Module8Section2Section2 = () => {
                       <div className="font-medium text-elec-yellow text-sm">
                         Testing Protocol Analysis
                       </div>
-                      <div className="text-sm text-white/80 mb-2">
+                      <div className="text-sm text-white mb-2">
                         Required tests and acceptable value ranges
                       </div>
-                      <div className="text-xs text-white/80 space-y-1">
+                      <div className="text-xs text-white space-y-1">
                         <div>• Continuity testing procedures and sequence</div>
                         <div>• Ring final circuit continuity verification methods</div>
                         <div>• Insulation resistance testing at multiple voltages</div>
@@ -597,10 +597,10 @@ const Level2Module8Section2Section2 = () => {
                       <div className="font-medium text-green-400 text-sm">
                         Documentation Requirements
                       </div>
-                      <div className="text-sm text-white/80 mb-2">
+                      <div className="text-sm text-white mb-2">
                         Certification and schedule completion standards
                       </div>
-                      <div className="text-xs text-white/80 space-y-1">
+                      <div className="text-xs text-white space-y-1">
                         <div>• Electrical Installation Certificate completion</div>
                         <div>• Schedule of Test Results accuracy</div>
                         <div>• Circuit schedule information requirements</div>
@@ -659,7 +659,7 @@ const Level2Module8Section2Section2 = () => {
                       <h5 className="font-semibold text-green-400 mb-2">
                         Strategic Time Allocation Analysis
                       </h5>
-                      <div className="text-sm text-white/80 space-y-1">
+                      <div className="text-sm text-white space-y-1">
                         <div>Hour 1-2: Planning analysis and initial installation setup</div>
                         <div>Hour 3-4: Main installation work and termination quality</div>
                         <div>Hour 5: Comprehensive testing and initial documentation</div>
@@ -673,7 +673,7 @@ const Level2Module8Section2Section2 = () => {
                       <h5 className="font-semibold text-elec-yellow mb-2">
                         Assessment Priority Matrix
                       </h5>
-                      <div className="text-sm text-white/80 space-y-1">
+                      <div className="text-sm text-white space-y-1">
                         <div>
                           <strong>High Impact:</strong> Safety compliance, circuit functionality,
                           test accuracy
@@ -695,10 +695,10 @@ const Level2Module8Section2Section2 = () => {
                 <h5 className="font-semibold text-elec-yellow mb-2">
                   Advanced Task Analysis Techniques
                 </h5>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Professional analysis methods for complex practical assessment scenarios:
                 </p>
-                <div className="grid md:grid-cols-2 gap-3 text-xs text-white/80">
+                <div className="grid md:grid-cols-2 gap-3 text-xs text-white">
                   <div>
                     <strong>Scenario Mapping:</strong> Link task requirements to real commercial
                     installations
@@ -844,7 +844,7 @@ const Level2Module8Section2Section2 = () => {
                   <h5 className="font-semibold text-elec-yellow mb-2">
                     Emergency Analysis Protocol - When Stuck or Short on Time
                   </h5>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     When you're stuck or running out of time, follow this systematic emergency
                     decision-making process:
                   </p>
@@ -853,7 +853,7 @@ const Level2Module8Section2Section2 = () => {
                       <h6 className="text-xs font-medium text-elec-yellow mb-1">
                         IMMEDIATE ACTIONS (10 seconds):
                       </h6>
-                      <div className="space-y-1 text-xs text-white/80">
+                      <div className="space-y-1 text-xs text-white">
                         <div>Step 1: Re-read question stem only (ignore options temporarily)</div>
                         <div>Step 2: Apply basic electrical safety principles first</div>
                         <div>Step 3: Use common sense and practical installation experience</div>
@@ -863,7 +863,7 @@ const Level2Module8Section2Section2 = () => {
                       <h6 className="text-xs font-medium text-elec-yellow mb-1">
                         DECISION CRITERIA (20 seconds):
                       </h6>
-                      <div className="space-y-1 text-xs text-white/80">
+                      <div className="space-y-1 text-xs text-white">
                         <div>Step 4: Choose most conservative/safest available option</div>
                         <div>Step 5: Eliminate any options violating basic regulations</div>
                         <div>Step 6: Select option with most specific technical detail</div>
@@ -876,10 +876,10 @@ const Level2Module8Section2Section2 = () => {
                   <h5 className="font-semibold text-elec-yellow mb-2">
                     Regulatory Compliance Quick Analysis
                   </h5>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Fast compliance checking for pressure situations:
                   </p>
-                  <div className="grid md:grid-cols-3 gap-3 text-xs text-white/80">
+                  <div className="grid md:grid-cols-3 gap-3 text-xs text-white">
                     <div>
                       <strong>Safety First:</strong> Does option ensure personal safety and prevent
                       danger?
@@ -899,7 +899,7 @@ const Level2Module8Section2Section2 = () => {
                   <h5 className="font-semibold text-green-400 mb-2">
                     Advanced Integration Strategies
                   </h5>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Professional-level analysis techniques for complex multi-factor questions:
                   </p>
                   <div className="space-y-2">

@@ -220,7 +220,7 @@ export default function RSMModule5Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-5">
@@ -545,7 +545,7 @@ export default function RSMModule5Section4() {
                 <div className="space-y-3">
                   <div>
                     <p className="text-sm font-medium text-white mb-1">1. Practical Support</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Someone who can help with the practical demands of work and life. A colleague
                       who can cover for you, a mate who can lend a hand on a job, a family member
                       who can help with childcare. This person helps reduce the <em>load</em> when
@@ -554,7 +554,7 @@ export default function RSMModule5Section4() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white mb-1">2. Emotional Support</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Someone you can be honest with about how you are feeling. A partner, a close
                       friend, a sibling &mdash; someone who will listen without judgement and
                       without immediately trying to fix the problem. This person helps you{' '}
@@ -563,7 +563,7 @@ export default function RSMModule5Section4() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white mb-1">3. Professional Support</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Someone who understands the trade and can provide guidance on work-related
                       challenges. A mentor, a former tutor, an experienced colleague, or a trade
                       association contact. This person helps you <em>navigate</em> the professional
@@ -630,7 +630,7 @@ export default function RSMModule5Section4() {
                     'Cutting corners at work — doing the minimum rather than your usual standard',
                     'Dreading work — Sunday evening dread that intensifies on Monday morning',
                   ].map((sign, i) => (
-                    <div key={i} className="flex items-start gap-2 text-sm text-white/80">
+                    <div key={i} className="flex items-start gap-2 text-sm text-white">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                       <span>{sign}</span>
                     </div>
@@ -649,7 +649,7 @@ export default function RSMModule5Section4() {
                   <Target className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Example If-Then Plans</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -713,7 +713,7 @@ export default function RSMModule5Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       1. Commitments Review (3 minutes)
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Look at your three SMART commitments. For each one, honestly answer: Did I
                       keep this commitment this month? If yes, well done &mdash; carry on. If no,
                       why not? Was it unrealistic? Did circumstances change? Do I need to adjust it?
@@ -723,7 +723,7 @@ export default function RSMModule5Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       2. Warning Signs Check (3 minutes)
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Review your list of personal warning signs. Have any of them been present this
                       month? If yes, which ones, and what action did you take? If the action was not
                       enough, escalate &mdash; talk to someone, book a GP appointment, or take time
@@ -734,7 +734,7 @@ export default function RSMModule5Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       3. Support Network Check (2 minutes)
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Have you been in contact with your three support people this month? If not,
                       reach out. Relationships need maintenance &mdash; you cannot call someone for
                       support after six months of silence and expect the same quality of connection.
@@ -742,7 +742,7 @@ export default function RSMModule5Section4() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white mb-1">4. Adjustment (2 minutes)</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Based on the review, do you need to change anything? Adjust a commitment? Add
                       a new warning sign? Change a support person? Update the plan and move on.
                     </p>
@@ -791,7 +791,7 @@ export default function RSMModule5Section4() {
                     Signposting: Where to Get Help
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-3">
+                <ul className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -941,7 +941,7 @@ export default function RSMModule5Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-5">

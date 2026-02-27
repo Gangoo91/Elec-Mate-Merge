@@ -218,7 +218,7 @@ export default function MentalHealthModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-1">
@@ -243,7 +243,7 @@ export default function MentalHealthModule1Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             The Mental Health First Aider&rsquo;s Role
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             What a Mental Health First Aider does, the ALGEE action plan, boundaries of the role,
             confidentiality obligations, duty of care, and the legal position in the UK
           </p>
@@ -344,7 +344,7 @@ export default function MentalHealthModule1Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   The Three Core Functions of an MHFA
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 w-6 h-6 rounded-full bg-purple-500/20 border border-purple-500/40 flex items-center justify-center flex-shrink-0 text-xs font-bold text-purple-400">
                       1
@@ -388,7 +388,7 @@ export default function MentalHealthModule1Section2() {
                     In the Construction &amp; Electrical Trades
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The construction industry has one of the highest suicide rates of any sector in
                   the UK. According to the Office for National Statistics, male construction workers
                   are{' '}
@@ -440,7 +440,7 @@ export default function MentalHealthModule1Section2() {
                     <p className="text-sm font-semibold text-white">
                       Approach, Assess &amp; Assist
                     </p>
-                    <p className="text-xs text-white/70 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Approach the person. Assess for risk of suicide or harm. Assist with any
                       immediate crisis before moving on.
                     </p>
@@ -454,7 +454,7 @@ export default function MentalHealthModule1Section2() {
                   <div className="w-full max-w-sm bg-gradient-to-r from-violet-500/20 to-violet-400/20 border border-violet-500/40 rounded-xl p-4 text-center">
                     <p className="text-lg font-bold text-violet-400">L</p>
                     <p className="text-sm font-semibold text-white">Listen Non-judgementally</p>
-                    <p className="text-xs text-white/70 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Give the person your full attention. Use active listening. Do not criticise,
                       dismiss, or give unsolicited advice.
                     </p>
@@ -470,7 +470,7 @@ export default function MentalHealthModule1Section2() {
                     <p className="text-sm font-semibold text-white">
                       Give Reassurance &amp; Information
                     </p>
-                    <p className="text-xs text-white/70 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Validate their feelings. Provide information about mental health. Challenge
                       stigma. Let them know help is available.
                     </p>
@@ -484,7 +484,7 @@ export default function MentalHealthModule1Section2() {
                   <div className="w-full max-w-sm bg-gradient-to-r from-violet-500/20 to-violet-400/20 border border-violet-500/40 rounded-xl p-4 text-center">
                     <p className="text-lg font-bold text-violet-400">E</p>
                     <p className="text-sm font-semibold text-white">Encourage Professional Help</p>
-                    <p className="text-xs text-white/70 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Signpost to GP, EAP, counselling, or specialist services. Offer to help make
                       the first appointment. Present options.
                     </p>
@@ -498,7 +498,7 @@ export default function MentalHealthModule1Section2() {
                   <div className="w-full max-w-sm bg-gradient-to-r from-purple-500/20 to-purple-400/20 border border-purple-500/40 rounded-xl p-4 text-center">
                     <p className="text-lg font-bold text-purple-400">E</p>
                     <p className="text-sm font-semibold text-white">Encourage Other Supports</p>
-                    <p className="text-xs text-white/70 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Self-help strategies, exercise, social connections, peer support groups,
                       family, friends, and community resources.
                     </p>
@@ -515,12 +515,12 @@ export default function MentalHealthModule1Section2() {
                       A &mdash; Approach, Assess &amp; Assist with Any Crisis
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     The first step is to approach the person in a non-threatening, caring way. Find
                     a quiet, private space where you will not be overheard. Then assess whether the
                     person may be at risk:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Are they having thoughts of suicide or self-harm?</span>
@@ -538,7 +538,7 @@ export default function MentalHealthModule1Section2() {
                       <span>Have they experienced a traumatic event?</span>
                     </li>
                   </ul>
-                  <p className="text-sm text-white/80 mt-2">
+                  <p className="text-sm text-white mt-2">
                     <strong className="text-white">Practical example:</strong> &ldquo;I&rsquo;ve
                     noticed you seem a bit different lately, and I wanted to check in with you. Is
                     there somewhere quiet we can talk?&rdquo;
@@ -552,12 +552,12 @@ export default function MentalHealthModule1Section2() {
                       L &mdash; Listen Non-judgementally
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Non-judgemental listening is the single most important skill for a Mental Health
                     First Aider. It means giving the person your full, undivided attention and
                     creating a space where they feel safe to share openly:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -597,12 +597,12 @@ export default function MentalHealthModule1Section2() {
                       G &mdash; Give Reassurance &amp; Information
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Many people experiencing mental health difficulties feel ashamed, isolated, or
                     believe they are the only one struggling. Your role is to normalise their
                     experience, reduce stigma, and provide helpful information:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -642,11 +642,11 @@ export default function MentalHealthModule1Section2() {
                       E &mdash; Encourage Professional Help
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Encourage the person to seek appropriate professional support. Present options
                     rather than dictating a single pathway:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -678,7 +678,7 @@ export default function MentalHealthModule1Section2() {
                       </span>
                     </li>
                   </ul>
-                  <p className="text-sm text-white/80 mt-2">
+                  <p className="text-sm text-white mt-2">
                     <strong className="text-white">Practical example:</strong> &ldquo;Would it help
                     if I sat with you while you called your GP? Or I can give you the number for the
                     EAP if you&rsquo;d prefer to speak to someone confidentially.&rdquo;
@@ -692,11 +692,11 @@ export default function MentalHealthModule1Section2() {
                       E &mdash; Encourage Other Supports
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Recovery from mental ill health is supported by a broad network of self-help
                     strategies and social connections, not just professional treatment:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -758,7 +758,7 @@ export default function MentalHealthModule1Section2() {
               <div className="grid sm:grid-cols-2 gap-3">
                 <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-green-400 mb-2">An MHFA IS...</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                       <span>A trained point of first contact</span>
@@ -784,7 +784,7 @@ export default function MentalHealthModule1Section2() {
 
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-red-400 mb-2">An MHFA is NOT...</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                       <span>A therapist, counsellor, or psychiatrist</span>
@@ -821,7 +821,7 @@ export default function MentalHealthModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Protecting Your Own Wellbeing</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -881,7 +881,7 @@ export default function MentalHealthModule1Section2() {
                   <Lock className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">General Rule</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Everything a person shares with you in an MHFA conversation is confidential. You
                   must not share it with managers, colleagues, HR, or anyone else without the
                   person&rsquo;s <strong className="text-white">explicit consent</strong>. This
@@ -896,11 +896,11 @@ export default function MentalHealthModule1Section2() {
                     When Confidentiality Can Be Broken
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Confidentiality may be broken in a limited number of serious circumstances. These
                   are:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400/60 flex-shrink-0" />
                     <span>
@@ -935,7 +935,7 @@ export default function MentalHealthModule1Section2() {
                     </span>
                   </li>
                 </ul>
-                <p className="text-sm text-white/80 mt-2">
+                <p className="text-sm text-white mt-2">
                   Even when breaking confidentiality, share only the minimum information necessary,
                   with the appropriate person (e.g. line manager, safeguarding lead, or emergency
                   services), and wherever possible, inform the person that you need to share this
@@ -948,12 +948,12 @@ export default function MentalHealthModule1Section2() {
                   <FileText className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">Data Protection &amp; GDPR</p>
                 </div>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Mental health information is classified as{' '}
                   <strong className="text-white">special category data</strong> under the UK General
                   Data Protection Regulation (UK GDPR) and the Data Protection Act 2018. This means:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1030,7 +1030,7 @@ export default function MentalHealthModule1Section2() {
                       Employer&rsquo;s Duty of Care
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Under the{' '}
                     <strong className="text-white">
                       Health and Safety at Work etc. Act 1974 (HSWA)
@@ -1039,7 +1039,7 @@ export default function MentalHealthModule1Section2() {
                     the health, safety, and welfare at work of all employees. This explicitly
                     includes mental health. Key obligations include:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1080,13 +1080,13 @@ export default function MentalHealthModule1Section2() {
                       The MHFA&rsquo;s Responsibility to Refer
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     The MHFA does not hold a formal legal duty of care as an employer does. However,
                     having accepted the role and received training, there is a moral and practical
                     responsibility to act competently and within the boundaries of your training.
                     This means:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1118,11 +1118,11 @@ export default function MentalHealthModule1Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Referral Pathways</p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Knowing where to refer is as important as knowing when. Key referral pathways in
                     the UK include:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1168,7 +1168,7 @@ export default function MentalHealthModule1Section2() {
                     <FileText className="h-5 w-5 text-purple-400" />
                     <p className="text-sm font-medium text-purple-400">Documentation</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Keep a brief, factual record of each MHFA interaction: the date and time, the
                     nature of the concern (in general terms), any actions agreed, and whether a
                     referral was made. This protects both you and the individual, provides an audit
@@ -1215,7 +1215,7 @@ export default function MentalHealthModule1Section2() {
                     <Shield className="h-5 w-5 text-purple-400" />
                     <p className="text-sm font-medium text-purple-400">Good Samaritan Principles</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     UK law has long recognised that people who act in good faith to help others
                     should not be unfairly penalised. While the UK does not have a specific
                     &ldquo;Good Samaritan law&rdquo; as some other countries do, the courts have
@@ -1234,7 +1234,7 @@ export default function MentalHealthModule1Section2() {
                       Social Action, Responsibility and Heroism Act 2015 (SARAH Act)
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     The{' '}
                     <strong className="text-white">
                       Social Action, Responsibility and Heroism Act 2015
@@ -1243,7 +1243,7 @@ export default function MentalHealthModule1Section2() {
                     volunteers and those who act to help others. When determining a negligence
                     claim, the court must consider whether:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1268,7 +1268,7 @@ export default function MentalHealthModule1Section2() {
                       </span>
                     </li>
                   </ul>
-                  <p className="text-sm text-white/80 mt-2">
+                  <p className="text-sm text-white mt-2">
                     The SARAH Act does <strong className="text-white">not</strong> grant immunity
                     from prosecution. It does, however, require courts to weigh these factors in
                     favour of the person who acted. For MHFAs acting within their training and in
@@ -1281,12 +1281,12 @@ export default function MentalHealthModule1Section2() {
                     <Scale className="h-5 w-5 text-purple-400" />
                     <p className="text-sm font-medium text-purple-400">Employer Liability</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     The primary duty of care rests with the{' '}
                     <strong className="text-white">employer</strong>, not the individual MHFA. Key
                     considerations for employers include:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1351,7 +1351,7 @@ export default function MentalHealthModule1Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1365,7 +1365,7 @@ export default function MentalHealthModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-1">

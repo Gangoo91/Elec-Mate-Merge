@@ -53,7 +53,7 @@ const regionColors: Record<string, { bg: string; text: string }> = {
 };
 
 const getRegionColor = (region: string) => {
-  return regionColors[region] || { bg: 'bg-white/10', text: 'text-white/70' };
+  return regionColors[region] || { bg: 'bg-white/10', text: 'text-white' };
 };
 
 const JobMarketInsights = () => {
@@ -63,7 +63,7 @@ const JobMarketInsights = () => {
     return (
       <div className="flex flex-col items-center justify-center py-16">
         <Loader2 className="h-8 w-8 animate-spin text-elec-yellow mb-3" />
-        <p className="text-white/60 text-sm">Loading market data...</p>
+        <p className="text-white text-sm">Loading market data...</p>
       </div>
     );
   }
@@ -71,9 +71,9 @@ const JobMarketInsights = () => {
   if (error || !analytics) {
     return (
       <div className="text-center py-16">
-        <BarChart3 className="h-12 w-12 mx-auto text-white/20 mb-4" />
+        <BarChart3 className="h-12 w-12 mx-auto text-white mb-4" />
         <h3 className="text-lg font-bold text-white mb-2">Unable to Load Data</h3>
-        <p className="text-sm text-white/60">Please try again later</p>
+        <p className="text-sm text-white">Please try again later</p>
       </div>
     );
   }
@@ -81,9 +81,9 @@ const JobMarketInsights = () => {
   if (analytics.totalJobs === 0) {
     return (
       <div className="text-center py-16">
-        <BarChart3 className="h-12 w-12 mx-auto text-white/20 mb-4" />
+        <BarChart3 className="h-12 w-12 mx-auto text-white mb-4" />
         <h3 className="text-lg font-bold text-white mb-2">No Data Yet</h3>
-        <p className="text-sm text-white/60">Job market data will appear once jobs are cached</p>
+        <p className="text-sm text-white">Job market data will appear once jobs are cached</p>
       </div>
     );
   }
@@ -101,7 +101,7 @@ const JobMarketInsights = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold text-white">{analytics.totalJobs}</p>
-                <p className="text-xs text-white/50">Total Jobs</p>
+                <p className="text-xs text-white">Total Jobs</p>
               </div>
             </div>
           </CardContent>
@@ -118,7 +118,7 @@ const JobMarketInsights = () => {
                 <p className="text-2xl font-bold text-white">
                   {formatCurrency(analytics.averageSalary)}
                 </p>
-                <p className="text-xs text-white/50">Avg Salary</p>
+                <p className="text-xs text-white">Avg Salary</p>
               </div>
             </div>
           </CardContent>
@@ -133,7 +133,7 @@ const JobMarketInsights = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold text-white">{analytics.newJobsThisWeek}</p>
-                <p className="text-xs text-white/50">This Week</p>
+                <p className="text-xs text-white">This Week</p>
               </div>
             </div>
           </CardContent>
@@ -148,7 +148,7 @@ const JobMarketInsights = () => {
               </div>
               <div>
                 <p className="text-2xl font-bold text-white">{analytics.newJobsToday}</p>
-                <p className="text-xs text-white/50">Today</p>
+                <p className="text-xs text-white">Today</p>
               </div>
             </div>
           </CardContent>
@@ -180,7 +180,7 @@ const JobMarketInsights = () => {
                     </Badge>
                   </div>
                   <div className="flex items-center gap-3 text-sm">
-                    <span className="text-white/60">{region.jobCount} jobs</span>
+                    <span className="text-white">{region.jobCount} jobs</span>
                     {region.avgSalary > 0 && (
                       <span className="text-green-400 font-medium">
                         {formatCurrency(region.avgSalary)}
@@ -203,7 +203,7 @@ const JobMarketInsights = () => {
               <PoundSterling className="h-4 w-4 text-green-400" />
             </div>
             <span>Salary Distribution</span>
-            <span className="ml-auto text-xs text-white/40 font-normal">
+            <span className="ml-auto text-xs text-white font-normal">
               Median: {formatCurrency(analytics.medianSalary)}
             </span>
           </CardTitle>
@@ -212,7 +212,7 @@ const JobMarketInsights = () => {
           <div className="space-y-2">
             {analytics.salaryBands.map((band) => (
               <div key={band.range} className="flex items-center gap-3">
-                <span className="text-xs text-white/60 w-16">{band.range}</span>
+                <span className="text-xs text-white w-16">{band.range}</span>
                 <div className="flex-1 h-6 bg-white/5 rounded-full overflow-hidden">
                   <div
                     className="h-full bg-gradient-to-r from-green-500/60 to-emerald-500/60 rounded-full flex items-center justify-end pr-2"
@@ -223,7 +223,7 @@ const JobMarketInsights = () => {
                     )}
                   </div>
                 </div>
-                <span className="text-xs text-white/40 w-8 text-right">{band.count}</span>
+                <span className="text-xs text-white w-8 text-right">{band.count}</span>
               </div>
             ))}
           </div>
@@ -253,11 +253,11 @@ const JobMarketInsights = () => {
                       ? 'bg-amber-500/15 text-amber-400'
                       : type.type === 'Temporary'
                         ? 'bg-orange-500/15 text-orange-400'
-                        : 'bg-white/10 text-white/70'
+                        : 'bg-white/10 text-white'
                 )}
               >
                 {type.type}
-                <span className="ml-2 text-white/50">{type.percentage}%</span>
+                <span className="ml-2 text-white">{type.percentage}%</span>
               </Badge>
             ))}
           </div>
@@ -282,10 +282,10 @@ const JobMarketInsights = () => {
                 className="flex items-center justify-between py-2 border-b border-white/5 last:border-0"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center text-xs text-white/40">
+                  <div className="w-6 h-6 rounded-full bg-white/5 flex items-center justify-center text-xs text-white">
                     {idx + 1}
                   </div>
-                  <span className="text-sm text-white/80 truncate max-w-[180px]">
+                  <span className="text-sm text-white truncate max-w-[180px]">
                     {company.company}
                   </span>
                 </div>
@@ -299,7 +299,7 @@ const JobMarketInsights = () => {
       </Card>
 
       {/* Last Updated */}
-      <p className="text-center text-xs text-white/30 py-2">
+      <p className="text-center text-xs text-white py-2">
         Data updated: {formatDate(analytics.lastUpdated)}
       </p>
     </div>

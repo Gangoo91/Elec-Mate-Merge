@@ -263,7 +263,7 @@ export function PortfolioDetailSheet({
   const comments = getCommentsForEvidence(entry.id) || [];
 
   const statusColors: Record<string, string> = {
-    draft: 'bg-muted text-white/80',
+    draft: 'bg-muted text-white',
     'in-progress': 'bg-blue-500/10 text-blue-500 border-blue-500/30',
     completed: 'bg-green-500/10 text-green-500 border-green-500/30',
     reviewed: 'bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30',
@@ -378,7 +378,7 @@ export function PortfolioDetailSheet({
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
-                <FileText className="h-16 w-16 text-white/80/30" />
+                <FileText className="h-16 w-16 text-white" />
               </div>
             )}
             <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
@@ -434,7 +434,7 @@ export function PortfolioDetailSheet({
                 'flex-1 h-11 text-sm font-medium border-b-2 transition-colors touch-manipulation',
                 activeTab === 'details'
                   ? 'border-elec-yellow text-elec-yellow'
-                  : 'border-transparent text-white/80'
+                  : 'border-transparent text-white'
               )}
             >
               Details
@@ -445,7 +445,7 @@ export function PortfolioDetailSheet({
                 'flex-1 h-11 text-sm font-medium border-b-2 transition-colors flex items-center justify-center gap-2 touch-manipulation',
                 activeTab === 'comments'
                   ? 'border-elec-yellow text-elec-yellow'
-                  : 'border-transparent text-white/80'
+                  : 'border-transparent text-white'
               )}
             >
               Comments
@@ -464,7 +464,7 @@ export function PortfolioDetailSheet({
                 {/* Description */}
                 {entry.description && (
                   <div className="space-y-2">
-                    <h3 className="text-sm font-medium text-white/80">Description</h3>
+                    <h3 className="text-sm font-medium text-white">Description</h3>
                     <p className="text-sm text-foreground">{entry.description}</p>
                   </div>
                 )}
@@ -472,7 +472,7 @@ export function PortfolioDetailSheet({
                 {/* Reflection */}
                 {entry.reflection && (
                   <div className="space-y-2">
-                    <h3 className="text-sm font-medium text-white/80">Reflection</h3>
+                    <h3 className="text-sm font-medium text-white">Reflection</h3>
                     <p className="text-sm text-foreground">{entry.reflection}</p>
                   </div>
                 )}
@@ -480,7 +480,7 @@ export function PortfolioDetailSheet({
                 {/* Metadata */}
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-1">
-                    <span className="text-xs text-white/80 flex items-center gap-1">
+                    <span className="text-xs text-white flex items-center gap-1">
                       <Calendar className="h-3 w-3" />
                       Created
                     </span>
@@ -494,7 +494,7 @@ export function PortfolioDetailSheet({
                   </div>
                   {entry.timeSpent && (
                     <div className="space-y-1">
-                      <span className="text-xs text-white/80 flex items-center gap-1">
+                      <span className="text-xs text-white flex items-center gap-1">
                         <Clock className="h-3 w-3" />
                         Time Spent
                       </span>
@@ -506,7 +506,7 @@ export function PortfolioDetailSheet({
                 {/* Skills / KSBs */}
                 {entry.skills?.length > 0 && (
                   <div className="space-y-2">
-                    <h3 className="text-sm font-medium text-white/80">Skills & KSBs</h3>
+                    <h3 className="text-sm font-medium text-white">Skills & KSBs</h3>
                     <div className="flex flex-wrap gap-2">
                       {entry.skills.map((skill: string, i: number) => (
                         <Badge key={i} variant="outline" className="text-xs">
@@ -520,7 +520,7 @@ export function PortfolioDetailSheet({
                 {/* Assessment Criteria */}
                 {entry.assessmentCriteria?.length > 0 && (
                   <div className="space-y-2">
-                    <h3 className="text-sm font-medium text-white/80 flex items-center gap-1.5">
+                    <h3 className="text-sm font-medium text-white flex items-center gap-1.5">
                       <CheckCircle2 className="h-3.5 w-3.5 text-green-500" />
                       Assessment Criteria ({entry.assessmentCriteria.length})
                     </h3>
@@ -547,7 +547,7 @@ export function PortfolioDetailSheet({
                                   {matchedDetail.acText}
                                 </p>
                                 {matchedDetail.reason && (
-                                  <p className="text-[11px] text-white/70 leading-relaxed">
+                                  <p className="text-[11px] text-white leading-relaxed">
                                     {matchedDetail.reason}
                                   </p>
                                 )}
@@ -563,7 +563,7 @@ export function PortfolioDetailSheet({
                               </div>
                             )}
                             {isExpanded && !matchedDetail && (
-                              <p className="mt-2 ml-6 text-xs text-white/60">
+                              <p className="mt-2 ml-6 text-xs text-white">
                                 Run AI analysis to see match details
                               </p>
                             )}
@@ -577,7 +577,7 @@ export function PortfolioDetailSheet({
                 {/* AI Analysis Results */}
                 {aiAnalysis && (
                   <div className="space-y-2">
-                    <h3 className="text-sm font-medium text-white/80 flex items-center gap-1.5">
+                    <h3 className="text-sm font-medium text-white flex items-center gap-1.5">
                       <Sparkles className="h-3.5 w-3.5 text-elec-yellow" />
                       AI Analysis
                     </h3>
@@ -665,7 +665,7 @@ export function PortfolioDetailSheet({
                                           ) : isSelected ? (
                                             <CheckCircle2 className="h-4 w-4 text-elec-yellow shrink-0 mt-0.5" />
                                           ) : (
-                                            <Circle className="h-4 w-4 text-white/30 shrink-0 mt-0.5" />
+                                            <Circle className="h-4 w-4 text-white shrink-0 mt-0.5" />
                                           )}
                                           <div className="flex-1 min-w-0">
                                             <div className="flex items-center gap-2">
@@ -689,7 +689,7 @@ export function PortfolioDetailSheet({
                                               {mc.acText}
                                             </p>
                                             {mc.reason && (
-                                              <p className="text-[11px] text-white/70 leading-relaxed mt-1">
+                                              <p className="text-[11px] text-white leading-relaxed mt-1">
                                                 {mc.reason}
                                               </p>
                                             )}
@@ -737,7 +737,7 @@ export function PortfolioDetailSheet({
                 {/* Learning Outcomes */}
                 {entry.learningOutcomes?.length > 0 && (
                   <div className="space-y-2">
-                    <h3 className="text-sm font-medium text-white/80 flex items-center gap-1.5">
+                    <h3 className="text-sm font-medium text-white flex items-center gap-1.5">
                       <BookOpen className="h-3.5 w-3.5 text-blue-500" />
                       Learning Outcomes ({entry.learningOutcomes.length})
                     </h3>
@@ -758,7 +758,7 @@ export function PortfolioDetailSheet({
                 {/* Tags */}
                 {entry.tags?.length > 0 && (
                   <div className="space-y-2">
-                    <h3 className="text-sm font-medium text-white/80 flex items-center gap-1.5">
+                    <h3 className="text-sm font-medium text-white flex items-center gap-1.5">
                       <Tag className="h-3.5 w-3.5" />
                       Tags
                     </h3>
@@ -775,7 +775,7 @@ export function PortfolioDetailSheet({
                 {/* Date Completed */}
                 {entry.dateCompleted && (
                   <div className="space-y-1">
-                    <span className="text-xs text-white/80 flex items-center gap-1">
+                    <span className="text-xs text-white flex items-center gap-1">
                       <FileCheck className="h-3 w-3 text-green-500" />
                       Completed
                     </span>
@@ -792,7 +792,7 @@ export function PortfolioDetailSheet({
                 {/* Evidence Files */}
                 {entry.evidenceFiles?.length > 0 && (
                   <div className="space-y-2">
-                    <h3 className="text-sm font-medium text-white/80">
+                    <h3 className="text-sm font-medium text-white">
                       Evidence Files ({entry.evidenceFiles.length})
                     </h3>
                     <div className="space-y-2">
@@ -808,7 +808,7 @@ export function PortfolioDetailSheet({
                           <span className="flex-1 text-sm text-foreground truncate">
                             {file.name || `File ${i + 1}`}
                           </span>
-                          <ExternalLink className="h-4 w-4 text-white/80" />
+                          <ExternalLink className="h-4 w-4 text-white" />
                         </a>
                       ))}
                     </div>
@@ -818,7 +818,7 @@ export function PortfolioDetailSheet({
                 {/* Supervisor Feedback */}
                 {entry.supervisorFeedback && (
                   <div className="space-y-2">
-                    <h3 className="text-sm font-medium text-white/80">Supervisor Feedback</h3>
+                    <h3 className="text-sm font-medium text-white">Supervisor Feedback</h3>
                     <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
                       <p className="text-sm text-foreground">{entry.supervisorFeedback}</p>
                     </div>
@@ -828,7 +828,7 @@ export function PortfolioDetailSheet({
                 {/* Supervisor Verification Status */}
                 {(isVerified || existingVerification) && (
                   <div className="space-y-2">
-                    <h3 className="text-sm font-medium text-white/80 flex items-center gap-1.5">
+                    <h3 className="text-sm font-medium text-white flex items-center gap-1.5">
                       <ShieldCheck className="h-3.5 w-3.5 text-emerald-500" />
                       Supervisor Verification
                     </h3>
@@ -841,19 +841,19 @@ export function PortfolioDetailSheet({
                           </span>
                         </div>
                         {existingVerification.supervisor_company && (
-                          <p className="text-xs text-white/50 ml-6">
+                          <p className="text-xs text-white ml-6">
                             {existingVerification.supervisor_company}
                           </p>
                         )}
                         {existingVerification.feedback_text && (
-                          <p className="text-sm text-white/70 ml-6 italic">
+                          <p className="text-sm text-white ml-6 italic">
                             "{existingVerification.feedback_text}"
                           </p>
                         )}
                         {existingVerification.verification_hash && (
                           <div className="flex items-center gap-1.5 ml-6 mt-1">
-                            <Hash className="h-3 w-3 text-white/30" />
-                            <span className="text-[9px] text-white/30 font-mono break-all">
+                            <Hash className="h-3 w-3 text-white" />
+                            <span className="text-[9px] text-white font-mono break-all">
                               {existingVerification.verification_hash}
                             </span>
                           </div>
@@ -865,7 +865,7 @@ export function PortfolioDetailSheet({
                         className="w-full p-3 rounded-lg bg-purple-500/10 border border-purple-500/20 text-left touch-manipulation active:scale-[0.98]"
                       >
                         <p className="text-sm text-purple-400 font-medium">Verification pending</p>
-                        <p className="text-xs text-white/40 mt-0.5">
+                        <p className="text-xs text-white mt-0.5">
                           Tap to show QR code or share link
                         </p>
                       </button>
@@ -878,9 +878,9 @@ export function PortfolioDetailSheet({
                 {/* Comments list */}
                 {comments.length === 0 ? (
                   <div className="text-center py-8 space-y-2">
-                    <MessageSquare className="h-8 w-8 text-white/80 mx-auto" />
-                    <p className="text-sm text-white/80">No comments yet</p>
-                    <p className="text-xs text-white/80">Start a discussion about this evidence</p>
+                    <MessageSquare className="h-8 w-8 text-white mx-auto" />
+                    <p className="text-sm text-white">No comments yet</p>
+                    <p className="text-xs text-white">Start a discussion about this evidence</p>
                   </div>
                 ) : (
                   <div className="space-y-4">
@@ -888,7 +888,7 @@ export function PortfolioDetailSheet({
                       <div key={comment.id} className="space-y-2">
                         <div className="flex items-start gap-3">
                           <div className="p-2 rounded-full bg-muted">
-                            <User className="h-4 w-4 text-white/80" />
+                            <User className="h-4 w-4 text-white" />
                           </div>
                           <div className="flex-1">
                             <div className="flex items-center gap-2">
@@ -898,7 +898,7 @@ export function PortfolioDetailSheet({
                               <Badge variant="outline" className="text-[10px]">
                                 {comment.authorRole}
                               </Badge>
-                              <span className="text-xs text-white/80">
+                              <span className="text-xs text-white">
                                 {formatDate(comment.createdAt)}
                               </span>
                             </div>
@@ -943,8 +943,8 @@ export function PortfolioDetailSheet({
                 onClick={handleShare}
                 className="flex flex-col items-center gap-0.5 min-w-[56px] py-1.5 rounded-lg hover:bg-muted/60 touch-manipulation active:scale-95 transition-colors"
               >
-                <Share2 className="h-5 w-5 text-white/80" />
-                <span className="text-[10px] text-white/60">Share</span>
+                <Share2 className="h-5 w-5 text-white" />
+                <span className="text-[10px] text-white">Share</span>
               </button>
 
               {entry.evidenceFiles?.length > 0 && (
@@ -993,8 +993,8 @@ export function PortfolioDetailSheet({
                 onClick={handleEdit}
                 className="flex flex-col items-center gap-0.5 min-w-[56px] py-1.5 rounded-lg hover:bg-muted/60 touch-manipulation active:scale-95 transition-colors"
               >
-                <Edit className="h-5 w-5 text-white/80" />
-                <span className="text-[10px] text-white/60">Edit</span>
+                <Edit className="h-5 w-5 text-white" />
+                <span className="text-[10px] text-white">Edit</span>
               </button>
 
               <button
@@ -1021,7 +1021,7 @@ export function PortfolioDetailSheet({
           <div className="space-y-4 py-4">
             {isCreatingShare ? (
               <div className="flex items-center justify-center py-8">
-                <Loader2 className="h-8 w-8 animate-spin text-white/80" />
+                <Loader2 className="h-8 w-8 animate-spin text-white" />
               </div>
             ) : shareUrl ? (
               <>
@@ -1031,12 +1031,12 @@ export function PortfolioDetailSheet({
                     {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
                   </Button>
                 </div>
-                <p className="text-xs text-white/80">
+                <p className="text-xs text-white">
                   This link expires in 7 days. Anyone with the link can view this evidence.
                 </p>
               </>
             ) : (
-              <p className="text-sm text-white/80 text-center py-4">
+              <p className="text-sm text-white text-center py-4">
                 Failed to create share link. Please try again.
               </p>
             )}
@@ -1106,7 +1106,7 @@ function FileIcon({ type }: { type?: string }) {
   if (type?.includes('pdf')) {
     return <FileText className="h-5 w-5 text-red-500" />;
   }
-  return <FileText className="h-5 w-5 text-white/80" />;
+  return <FileText className="h-5 w-5 text-white" />;
 }
 
 // Date formatter

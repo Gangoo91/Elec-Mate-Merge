@@ -259,7 +259,7 @@ const Level3Module4Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section2">
@@ -364,7 +364,7 @@ const Level3Module4Section2_1 = () => {
               potentially explosive - when a transient occurs.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Site example:</strong> You're checking voltage at a domestic consumer unit.
               Although the nominal voltage is 230V, switching transients from the DNO's network can
               momentarily produce spikes of several thousand volts. Your CAT III 600V meter is
@@ -494,7 +494,7 @@ const Level3Module4Section2_1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Site example:</strong> Testing a kitchen ring main, you get readings of 150 MR
               L-N, 180 MR L-E, but only 0.8 MR N-E. This indicates good insulation overall but a
               problem between neutral and earth - possibly a damaged cable where the neutral
@@ -561,25 +561,25 @@ const Level3Module4Section2_1 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Null Your Leads</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Zero out lead resistance before testing (typically 0.2-0.5R)
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Record R2 Values</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Add to Ze to calculate Zs for loop impedance verification
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Check All Points</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Test at every socket, light point, and accessory on the circuit
                 </p>
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Site example:</strong> Testing a radial power circuit, you get R2 values of
               0.25R at the first socket, 0.35R at the second, 0.52R at the third, but suddenly 25R
               at the fourth socket. This massive jump indicates a problem - likely a broken or
@@ -668,7 +668,7 @@ const Level3Module4Section2_1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Site example:</strong> Testing a ring in a 1970s house extension, you find the
               L and N end-to-end readings are correct (0.8R each) but the CPC end-to-end reads 4.5R
               instead of the expected 1.3R. Investigation reveals the ring was extended using
@@ -769,7 +769,7 @@ const Level3Module4Section2_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -814,7 +814,7 @@ const Level3Module4Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section1-5">

@@ -16,7 +16,7 @@ const Level3Module5Section6_4 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="../section6">
@@ -32,7 +32,7 @@ const Level3Module5Section6_4 = () => {
         <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-6">
           6.4 Re-testing and Updating Records
         </h1>
-        <p className="text-xl text-white/70 mb-8">
+        <p className="text-xl text-white mb-8">
           Re-testing procedures after rectification and updating documentation
         </p>
 

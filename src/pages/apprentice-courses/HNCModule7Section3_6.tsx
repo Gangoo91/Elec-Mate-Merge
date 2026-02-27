@@ -229,7 +229,7 @@ const HNCModule7Section3_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section3">
@@ -251,7 +251,7 @@ const HNCModule7Section3_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             CIBSE Standards
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Lighting Guide requirements, workplace standards, task lighting and SLL recommendations
           </p>
         </header>
@@ -560,22 +560,22 @@ const HNCModule7Section3_6 = () => {
                   <span className="text-white">MF = LLMF x LSF x LMF x RSMF</span>
                 </p>
                 <p className="mt-2">
-                  <span className="text-white/60">Where:</span>
+                  <span className="text-white">Where:</span>
                 </p>
                 <p>
-                  <span className="text-white/60">LLMF</span> = Lamp Lumen Maintenance Factor (LED
+                  <span className="text-white">LLMF</span> = Lamp Lumen Maintenance Factor (LED
                   typical: 0.90)
                 </p>
                 <p>
-                  <span className="text-white/60">LSF</span> = Lamp Survival Factor (planned
+                  <span className="text-white">LSF</span> = Lamp Survival Factor (planned
                   replacement: 1.0)
                 </p>
                 <p>
-                  <span className="text-white/60">LMF</span> = Luminaire Maintenance Factor (clean
+                  <span className="text-white">LMF</span> = Luminaire Maintenance Factor (clean
                   office: 0.90)
                 </p>
                 <p>
-                  <span className="text-white/60">RSMF</span> = Room Surface Maintenance Factor
+                  <span className="text-white">RSMF</span> = Room Surface Maintenance Factor
                   (typical: 0.95)
                 </p>
               </div>
@@ -740,7 +740,7 @@ const HNCModule7Section3_6 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-2">Task Lighting Benefits</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Higher illuminance where needed</li>
                   <li>Individual control for occupants</li>
                   <li>Energy savings vs. high ambient</li>
@@ -750,7 +750,7 @@ const HNCModule7Section3_6 = () => {
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-2">Design Considerations</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Task:surround ratio max 3:1</li>
                   <li>Avoid veiling reflections on screens</li>
                   <li>Position to avoid shadows</li>
@@ -777,14 +777,14 @@ const HNCModule7Section3_6 = () => {
                 <p>
                   <strong>Window to adjacent wall:</strong> Max 20:1
                 </p>
-                <p className="text-white/70 mt-2">
+                <p className="text-white mt-2">
                   These ratios ensure comfortable adaptation and prevent excessive contrast that
                   causes visual fatigue.
                 </p>
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Energy efficiency:</strong> Combining 300 lux ambient lighting with task
               lighting for desk work can reduce installed load by 20-30% compared to 500 lux uniform
               ambient.
@@ -810,7 +810,7 @@ const HNCModule7Section3_6 = () => {
                 <strong>Scenario:</strong> Specify lighting requirements for a 200m² open-plan
                 office with VDT workstations.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Requirements from BS EN 12464-1 / CIBSE LG7:</p>
                 <p className="mt-2 ml-4">Maintained illuminance (Em): 500 lux</p>
                 <p className="ml-4">Uniformity on task area (Uo): &gt; 0.6</p>
@@ -835,7 +835,7 @@ const HNCModule7Section3_6 = () => {
                 <strong>Scenario:</strong> Calculate MF for LED luminaires in a normal office with
                 3-year maintenance cycle.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Component factors (from CIBSE tables):</p>
                 <p className="mt-2 ml-4">LLMF (LED at 30,000 hrs): 0.90</p>
                 <p className="ml-4">LSF (group replacement): 1.0</p>
@@ -857,7 +857,7 @@ const HNCModule7Section3_6 = () => {
                 <strong>Scenario:</strong> Design combined ambient and task lighting for a drawing
                 office.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Requirements (technical drawing):</p>
                 <p className="ml-4">Total illuminance required: 750 lux</p>
                 <p className="ml-4">UGR limit: 16</p>
@@ -959,7 +959,7 @@ const HNCModule7Section3_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1005,7 +1005,7 @@ const HNCModule7Section3_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section3">

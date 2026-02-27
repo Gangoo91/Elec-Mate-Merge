@@ -109,14 +109,14 @@ const AccreditationSearchForm = ({
         <div className="flex flex-col sm:flex-row gap-3">
           <div className="relative flex-1">
             {!filters.searchTerm && (
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
             )}
             <Input
               placeholder="Search accreditations, providers, or specialities..."
               value={filters.searchTerm}
               onChange={(e) => setFilters((prev) => ({ ...prev, searchTerm: e.target.value }))}
               className={cn(
-                'h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40 focus:border-elec-yellow/50',
+                'h-11 bg-white/5 border-white/20 text-white placeholder:text-white focus:border-elec-yellow/50',
                 !filters.searchTerm && 'pl-10'
               )}
               onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
@@ -211,7 +211,7 @@ const AccreditationSearchForm = ({
           </label>
 
           <div className="flex items-center gap-3">
-            <span className="text-sm text-white/70">
+            <span className="text-sm text-white">
               <span className="text-elec-yellow font-medium">{resultsCount}</span>{' '}
               {resultsCount === 1 ? 'result' : 'results'}
             </span>
@@ -230,7 +230,7 @@ const AccreditationSearchForm = ({
         {/* Active Filters */}
         {activeFilters.length > 0 && (
           <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-white/10">
-            <span className="text-xs text-white/60">Active filters:</span>
+            <span className="text-xs text-white">Active filters:</span>
             {activeFilters.map((filter, idx) => (
               <Badge
                 key={idx}

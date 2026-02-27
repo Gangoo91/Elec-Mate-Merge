@@ -233,7 +233,7 @@ export default function MentalHealthModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-3">
@@ -256,7 +256,7 @@ export default function MentalHealthModule3Section2() {
             </span>
           </div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">Self-Harm</h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding self-harm, recognising different forms, responding with compassion,
             providing first aid for injuries, and supporting recovery through appropriate services
           </p>
@@ -268,7 +268,7 @@ export default function MentalHealthModule3Section2() {
             <Heart className="h-5 w-5 text-purple-400 mt-0.5 flex-shrink-0" />
             <div>
               <p className="text-sm font-medium text-purple-400 mb-1">Sensitive Content Notice</p>
-              <p className="text-sm text-white/80 leading-relaxed">
+              <p className="text-sm text-white leading-relaxed">
                 This section covers self-harm, which some learners may find distressing. The content
                 is presented with care and is designed to equip you with the knowledge to help
                 others. If you are personally affected by any of the topics discussed, please reach
@@ -381,7 +381,7 @@ export default function MentalHealthModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key Facts About Self-Harm</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>
@@ -433,7 +433,7 @@ export default function MentalHealthModule3Section2() {
                     Construction Industry Context
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The construction industry has a culture where emotional vulnerability is often
                   stigmatised. Workers may self-harm in private and never disclose it to colleagues
                   or supervisors. As a Mental Health First Aider on site, you may be the first
@@ -466,7 +466,7 @@ export default function MentalHealthModule3Section2() {
               <div className="grid sm:grid-cols-2 gap-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-purple-400 mb-2">Physical Injury</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>Cutting the skin</span>
@@ -490,7 +490,7 @@ export default function MentalHealthModule3Section2() {
                   <p className="text-sm font-medium text-purple-400 mb-2">
                     Ingestion &amp; Poisoning
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>Deliberate overdose of medication</span>
@@ -508,7 +508,7 @@ export default function MentalHealthModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-purple-400 mb-2">Repetitive Behaviours</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>Hair pulling (trichotillomania)</span>
@@ -526,7 +526,7 @@ export default function MentalHealthModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-purple-400 mb-2">Indirect / Behavioural</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>Excessive exercise to the point of injury</span>
@@ -586,7 +586,7 @@ export default function MentalHealthModule3Section2() {
                     <Activity className="h-4 w-4 text-violet-400" />
                     <p className="text-sm font-medium text-violet-400">Emotional Regulation</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The most commonly reported reason. When emotional pain becomes unbearable,
                     physical pain can provide a temporary release of tension. Some describe it as
                     &ldquo;letting the pressure out&rdquo; or &ldquo;turning emotional pain into
@@ -601,7 +601,7 @@ export default function MentalHealthModule3Section2() {
                     <Brain className="h-4 w-4 text-violet-400" />
                     <p className="text-sm font-medium text-violet-400">Communication of Distress</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Some people find it impossible to put their emotional pain into words. Self-harm
                     can be a way of communicating the depth of their suffering when language fails
                     them. This is not &ldquo;attention-seeking&rdquo; &mdash; it is a desperate
@@ -614,7 +614,7 @@ export default function MentalHealthModule3Section2() {
                     <Shield className="h-4 w-4 text-violet-400" />
                     <p className="text-sm font-medium text-violet-400">Self-Punishment</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     People who experience intense feelings of guilt, shame, or self-hatred may use
                     self-harm as a way of punishing themselves. This is particularly common in
                     people who have experienced abuse, where they may have internalised a belief
@@ -627,7 +627,7 @@ export default function MentalHealthModule3Section2() {
                     <HandHeart className="h-4 w-4 text-violet-400" />
                     <p className="text-sm font-medium text-violet-400">Feeling in Control</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     When life feels chaotic and out of control, self-harm can provide a sense of
                     agency. The person controls when, where, and how the pain happens. In
                     environments where individuals feel powerless &mdash; whether due to work
@@ -643,7 +643,7 @@ export default function MentalHealthModule3Section2() {
                       Feeling &ldquo;Real&rdquo; / Grounding
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Some people experience emotional numbness, dissociation, or a sense of being
                     &ldquo;disconnected&rdquo; from reality. Physical pain can serve as a way to
                     &ldquo;feel something&rdquo; and reconnect with their body and the present
@@ -659,7 +659,7 @@ export default function MentalHealthModule3Section2() {
                       Coping with Trauma or Abuse
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Self-harm is strongly associated with a history of trauma, including childhood
                     abuse, sexual violence, neglect, and bullying. It may develop as a survival
                     mechanism during or after traumatic experiences. Understanding this context is
@@ -706,7 +706,7 @@ export default function MentalHealthModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">What NOT to Do</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -757,7 +757,7 @@ export default function MentalHealthModule3Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   What TO Do &mdash; Non-Judgemental Response
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>
@@ -817,7 +817,7 @@ export default function MentalHealthModule3Section2() {
                 <h3 className="text-base font-semibold text-white mb-1 text-center">
                   MHFA Response to Self-Harm Disclosure
                 </h3>
-                <p className="text-xs text-white/50 mb-5 text-center">The ALGEE Framework</p>
+                <p className="text-xs text-white mb-5 text-center">The ALGEE Framework</p>
 
                 <div className="space-y-3">
                   {/* Step A */}
@@ -829,7 +829,7 @@ export default function MentalHealthModule3Section2() {
                       <p className="text-sm font-medium text-purple-400 mb-0.5">
                         Approach, Assess &amp; Assist
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Find a private, safe space. Assess any immediate physical injuries. If there
                         is a medical emergency (overdose, deep wound), call 999 first. Check for
                         suicidal thoughts.
@@ -851,7 +851,7 @@ export default function MentalHealthModule3Section2() {
                       <p className="text-sm font-medium text-purple-400 mb-0.5">
                         Listen Non-Judgementally
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Give your full attention. Let them speak at their own pace. Do not react
                         with shock or try to &ldquo;fix&rdquo; them. Use open questions. Reflect
                         back what you hear. Silence is okay.
@@ -873,7 +873,7 @@ export default function MentalHealthModule3Section2() {
                       <p className="text-sm font-medium text-purple-400 mb-0.5">
                         Give Reassurance &amp; Information
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         &ldquo;You are not alone. Self-harm is more common than you might think, and
                         there is support available.&rdquo; Normalise without minimising. Share that
                         recovery is possible. Do not promise confidentiality you cannot keep.
@@ -895,7 +895,7 @@ export default function MentalHealthModule3Section2() {
                       <p className="text-sm font-medium text-violet-400 mb-0.5">
                         Encourage Professional Help
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Suggest speaking with a GP as a first step. Mention NHS crisis services
                         (111, option 2). Offer to help them make the appointment. Provide helpline
                         numbers (Samaritans 116 123, Papyrus 0800 068 4141). Do not force &mdash;
@@ -918,7 +918,7 @@ export default function MentalHealthModule3Section2() {
                       <p className="text-sm font-medium text-violet-400 mb-0.5">
                         Encourage Self-Help &amp; Other Supports
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Discuss healthy coping strategies (exercise, talking to trusted friends,
                         creative outlets, mindfulness). Share apps like Calm Harm or Distract.
                         Encourage peer support groups. Follow up &mdash; check in with them in the
@@ -930,7 +930,7 @@ export default function MentalHealthModule3Section2() {
 
                 {/* Summary bar */}
                 <div className="mt-5 bg-purple-500/20 border border-purple-400/30 rounded-lg p-3 text-center">
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     <strong className="text-purple-400">Remember:</strong> You do not need to have
                     all the answers. Your role is to provide compassionate initial support and
                     bridge the gap to professional help.
@@ -978,7 +978,7 @@ export default function MentalHealthModule3Section2() {
                       Treating Cuts &amp; Lacerations
                     </p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>
@@ -1027,7 +1027,7 @@ export default function MentalHealthModule3Section2() {
                     <Phone className="h-5 w-5 text-red-400" />
                     <p className="text-sm font-medium text-red-400">When to Call 999</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                       <span>
@@ -1081,7 +1081,7 @@ export default function MentalHealthModule3Section2() {
                     Poisoning &amp; Overdose Response
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -1166,7 +1166,7 @@ export default function MentalHealthModule3Section2() {
               <div className="space-y-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-purple-400 mb-1">GP Referral</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     A GP appointment is the recommended first step for accessing mental health
                     support on the NHS. The GP can assess the person, provide initial treatment, and
                     refer to specialist services. They can also prescribe medication if appropriate
@@ -1178,7 +1178,7 @@ export default function MentalHealthModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-purple-400 mb-1">NHS Crisis Services</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     For urgent mental health crises, NHS 111 (press option 2 for mental health
                     crisis) provides 24/7 access to local crisis teams. Many areas also have crisis
                     cafes, safe spaces, and crisis houses where people can go for immediate support
@@ -1191,7 +1191,7 @@ export default function MentalHealthModule3Section2() {
                   <p className="text-sm font-medium text-purple-400 mb-1">
                     NICE Guidelines for Self-Harm
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The National Institute for Health and Care Excellence (NICE) publishes clinical
                     guidelines for the assessment and management of self-harm. Key recommendations
                     include: treating all self-harm episodes with the same care as any other medical
@@ -1204,7 +1204,7 @@ export default function MentalHealthModule3Section2() {
 
                 <div className="bg-purple-500/10 border border-purple-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-purple-400 mb-2">Talking Therapies</p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Several evidence-based talking therapies are effective for self-harm. They can
                     be accessed via GP referral, NHS self-referral (IAPT / Talking Therapies), or
                     privately.
@@ -1214,7 +1214,7 @@ export default function MentalHealthModule3Section2() {
                       <p className="text-sm font-medium text-violet-400 mb-0.5">
                         Dialectical Behaviour Therapy (DBT)
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Specifically designed for emotional dysregulation and self-harm. Teaches
                         four core skill sets: mindfulness, distress tolerance, emotional regulation,
                         and interpersonal effectiveness. Recommended by NICE as particularly
@@ -1225,7 +1225,7 @@ export default function MentalHealthModule3Section2() {
                       <p className="text-sm font-medium text-violet-400 mb-0.5">
                         Cognitive Behavioural Therapy (CBT)
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Helps identify and change unhelpful thought patterns and behaviours. Widely
                         available through NHS Talking Therapies (formerly IAPT). Self-referral is
                         possible in most areas without needing a GP appointment.
@@ -1235,7 +1235,7 @@ export default function MentalHealthModule3Section2() {
                       <p className="text-sm font-medium text-violet-400 mb-0.5">
                         Mentalisation-Based Therapy (MBT)
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Focuses on helping the person understand their own thoughts, feelings, and
                         motivations, and those of others. Particularly effective for people whose
                         self-harm is linked to relationship difficulties or borderline personality
@@ -1249,7 +1249,7 @@ export default function MentalHealthModule3Section2() {
                   <p className="text-sm font-medium text-purple-400 mb-1">
                     Harm Minimisation Approach
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Harm minimisation (or harm reduction) is an approach that acknowledges recovery
                     from self-harm is a process, not an overnight change. Rather than demanding
                     immediate abstinence, it focuses on reducing the physical risk associated with
@@ -1274,14 +1274,14 @@ export default function MentalHealthModule3Section2() {
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white">Samaritans</p>
                     <p className="text-xs text-purple-400 font-semibold">116 123</p>
-                    <p className="text-xs text-white/60 mt-0.5">
+                    <p className="text-xs text-white mt-0.5">
                       Free, 24/7, for anyone in distress. All ages.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white">Papyrus HOPELINEUK</p>
                     <p className="text-xs text-purple-400 font-semibold">0800 068 4141</p>
-                    <p className="text-xs text-white/60 mt-0.5">
+                    <p className="text-xs text-white mt-0.5">
                       For under-35s experiencing thoughts of self-harm or suicide, and anyone
                       concerned about a young person.
                     </p>
@@ -1289,21 +1289,21 @@ export default function MentalHealthModule3Section2() {
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white">Childline</p>
                     <p className="text-xs text-purple-400 font-semibold">0800 1111</p>
-                    <p className="text-xs text-white/60 mt-0.5">
+                    <p className="text-xs text-white mt-0.5">
                       Free, confidential, for under-19s. Available 24/7.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white">NHS Crisis Line</p>
                     <p className="text-xs text-purple-400 font-semibold">111 (option 2)</p>
-                    <p className="text-xs text-white/60 mt-0.5">
+                    <p className="text-xs text-white mt-0.5">
                       24/7 mental health crisis support. Connects to local crisis team.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white">SHOUT Crisis Text Line</p>
                     <p className="text-xs text-purple-400 font-semibold">Text SHOUT to 85258</p>
-                    <p className="text-xs text-white/60 mt-0.5">
+                    <p className="text-xs text-white mt-0.5">
                       Free, confidential, 24/7 text-based support for anyone in crisis.
                     </p>
                   </div>
@@ -1312,7 +1312,7 @@ export default function MentalHealthModule3Section2() {
                     <p className="text-xs text-purple-400 font-semibold">
                       selfinjurysupport.org.uk
                     </p>
-                    <p className="text-xs text-white/60 mt-0.5">
+                    <p className="text-xs text-white mt-0.5">
                       Specialist support for women and girls affected by self-harm. Online
                       resources, text line, and webchat.
                     </p>
@@ -1337,7 +1337,7 @@ export default function MentalHealthModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Looking After Yourself</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Supporting someone who self-harms can be emotionally demanding. It is normal to
                   feel worried, helpless, or distressed yourself. Make sure you access support for
                   your own wellbeing &mdash; talk to a colleague you trust, speak with your own GP,
@@ -1361,7 +1361,7 @@ export default function MentalHealthModule3Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1379,7 +1379,7 @@ export default function MentalHealthModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-3">

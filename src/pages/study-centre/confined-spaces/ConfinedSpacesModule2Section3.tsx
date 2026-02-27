@@ -200,7 +200,7 @@ export default function ConfinedSpacesModule2Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-2">
@@ -223,7 +223,7 @@ export default function ConfinedSpacesModule2Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Safe Systems of Work
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The 12 key elements of pre-entry planning that keep people alive in confined spaces
             &mdash; from isolation and atmospheric testing to communication and supervision
           </p>
@@ -318,7 +318,7 @@ export default function ConfinedSpacesModule2Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Why a SSoW Is Essential</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -405,7 +405,7 @@ export default function ConfinedSpacesModule2Section3() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   1. The Appointed Supervisor
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -445,7 +445,7 @@ export default function ConfinedSpacesModule2Section3() {
               {/* Entrants */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">2. The Entrant(s)</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -480,7 +480,7 @@ export default function ConfinedSpacesModule2Section3() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   3. The Top Person (Standby Person / Attendant)
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -521,7 +521,7 @@ export default function ConfinedSpacesModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Warning</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The top person must <strong>NEVER enter the confined space</strong>, even if the
                   entrant appears to be in trouble. Untrained or unequipped would-be rescuers
                   entering a hazardous atmosphere account for{' '}
@@ -557,7 +557,7 @@ export default function ConfinedSpacesModule2Section3() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   Types of Isolation Required
                 </p>
-                <ul className="text-sm text-white/80 space-y-3">
+                <ul className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -616,7 +616,7 @@ export default function ConfinedSpacesModule2Section3() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   LOTO Procedure &mdash; Key Steps
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-cyan-500/20 text-cyan-400 text-xs font-bold flex-shrink-0">
                       1
@@ -703,7 +703,7 @@ export default function ConfinedSpacesModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Fatal Consequence</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Failure to properly isolate has caused numerous fatalities. Workers have been
                   killed by: agitators starting up whilst they were inside vessels, toxic chemicals
                   flowing into spaces through unisolated pipework, and electrical equipment being
@@ -782,7 +782,7 @@ export default function ConfinedSpacesModule2Section3() {
                 </div>
               ))}
             </div>
-            <p className="text-center text-white/40 text-xs mt-4">
+            <p className="text-center text-white text-xs mt-4">
               After work: each person removes own lock &rarr; supervisor confirms all clear &rarr;
               reinstatement
             </p>
@@ -809,7 +809,7 @@ export default function ConfinedSpacesModule2Section3() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   Cleaning &amp; Purging Before Entry
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -846,7 +846,7 @@ export default function ConfinedSpacesModule2Section3() {
               {/* Ventilation */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Ventilation</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -919,7 +919,7 @@ export default function ConfinedSpacesModule2Section3() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   Pre-Entry Testing Requirements
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -958,7 +958,7 @@ export default function ConfinedSpacesModule2Section3() {
                       Oxygen (O₂)
                     </p>
                     <p className="text-white text-sm font-medium">19.5% &ndash; 20.9%</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Below 19.5% = oxygen deficient. Above 23.5% = oxygen enriched (fire/explosion
                       risk).
                     </p>
@@ -968,7 +968,7 @@ export default function ConfinedSpacesModule2Section3() {
                       Flammable Gases
                     </p>
                     <p className="text-white text-sm font-medium">&lt; 10% LEL</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       LEL = Lower Explosive Limit. Must be below 10% of LEL. At 100% LEL the
                       atmosphere is explosive.
                     </p>
@@ -978,7 +978,7 @@ export default function ConfinedSpacesModule2Section3() {
                       Toxic Gases
                     </p>
                     <p className="text-white text-sm font-medium">Below WEL</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Common: CO (&lt;30 ppm), H₂S (&lt;5 ppm). Must be below workplace exposure
                       limits.
                     </p>
@@ -990,7 +990,7 @@ export default function ConfinedSpacesModule2Section3() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   Continuous Monitoring During Entry
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1034,7 +1034,7 @@ export default function ConfinedSpacesModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Never Trust Your Senses</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Many of the most dangerous confined space gases &mdash; including carbon monoxide,
                   nitrogen, and argon &mdash; are{' '}
                   <strong>completely odourless and invisible</strong>. Hydrogen sulphide has a
@@ -1067,7 +1067,7 @@ export default function ConfinedSpacesModule2Section3() {
               {/* Access & Egress */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Access &amp; Egress</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1113,7 +1113,7 @@ export default function ConfinedSpacesModule2Section3() {
               {/* Lighting */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Lighting</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1157,7 +1157,7 @@ export default function ConfinedSpacesModule2Section3() {
               {/* Communication */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Communication</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1219,7 +1219,7 @@ export default function ConfinedSpacesModule2Section3() {
               {/* PPE & RPE */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">PPE &amp; RPE Selection</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1268,7 +1268,7 @@ export default function ConfinedSpacesModule2Section3() {
               {/* Tools & Equipment */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Tools &amp; Equipment</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1312,7 +1312,7 @@ export default function ConfinedSpacesModule2Section3() {
               {/* Time Limits */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Time Limits for Entry</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1359,7 +1359,7 @@ export default function ConfinedSpacesModule2Section3() {
             The 12-Element Safe System of Work
           </h2>
           <div className="bg-white/5 border border-white/10 rounded-xl p-4 sm:p-6">
-            <p className="text-white/60 text-xs text-center mb-4">
+            <p className="text-white text-xs text-center mb-4">
               Every confined space entry must address all 12 elements below
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -1434,7 +1434,7 @@ export default function ConfinedSpacesModule2Section3() {
                   </span>
                   <div>
                     <p className="text-white text-sm font-medium">{item.title}</p>
-                    <p className="text-white/60 text-xs mt-0.5">{item.desc}</p>
+                    <p className="text-white text-xs mt-0.5">{item.desc}</p>
                   </div>
                 </div>
               ))}
@@ -1469,7 +1469,7 @@ export default function ConfinedSpacesModule2Section3() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   Method Statement &mdash; Key Contents
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>Description of the confined space and the work to be carried out</span>
@@ -1524,7 +1524,7 @@ export default function ConfinedSpacesModule2Section3() {
               {/* Pre-Entry Briefing */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Pre-Entry Briefing</p>
-                <div className="text-sm text-white/80 space-y-3">
+                <div className="text-sm text-white space-y-3">
                   <p>
                     Immediately before every confined space entry, the supervisor must conduct a
                     <strong className="text-white"> pre-entry briefing</strong> (sometimes called a
@@ -1577,7 +1577,7 @@ export default function ConfinedSpacesModule2Section3() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   Supervision &amp; Monitoring During Work
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1637,7 +1637,7 @@ export default function ConfinedSpacesModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">The Human Factor</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Many confined space fatalities occur not because the SSoW was inadequate on paper,
                   but because it was not <strong>followed in practice</strong>. Common failures
                   include: skipping the pre-entry briefing because &ldquo;we&rsquo;ve done this
@@ -1659,7 +1659,7 @@ export default function ConfinedSpacesModule2Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1673,7 +1673,7 @@ export default function ConfinedSpacesModule2Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-2-section-2">

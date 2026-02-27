@@ -209,13 +209,13 @@ const PasmaModule2Section4 = () => {
           </div>
           <div className="inline-block bg-elec-yellow/10 border border-elec-yellow/20 px-3 py-1 rounded-full text-sm font-semibold mb-4 ml-0">
             <span className="text-elec-yellow">MODULE 2</span>
-            <span className="text-white/40 mx-2">&middot;</span>
-            <span className="text-white/60">SECTION 4</span>
+            <span className="text-white mx-2">&middot;</span>
+            <span className="text-white">SECTION 4</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Tower Selection & Planning
           </h1>
-          <p className="text-white/70 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Selecting the right tower for the task — considering location, dimensions, environment,
             ground conditions, and load requirements
           </p>
@@ -225,7 +225,7 @@ const PasmaModule2Section4 = () => {
         <div className="grid sm:grid-cols-2 gap-4 mb-10">
           <div className="rounded-lg p-4 bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -258,7 +258,7 @@ const PasmaModule2Section4 = () => {
           </div>
           <div className="rounded-lg p-4 bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="font-semibold text-elec-yellow/90 mb-2">On Site</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -294,7 +294,7 @@ const PasmaModule2Section4 = () => {
         {/* Learning Outcomes */}
         <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4">By the end of this section, you will be able to:</p>
+          <p className="text-white mb-4">By the end of this section, you will be able to:</p>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
               'Explain the key differences between indoor and outdoor tower use',
@@ -306,7 +306,7 @@ const PasmaModule2Section4 = () => {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </div>
             ))}
           </div>
@@ -321,7 +321,7 @@ const PasmaModule2Section4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Indoor vs Outdoor Considerations
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The distinction between indoor and outdoor tower use is one of the most important
                 factors in tower selection. It directly affects the maximum permissible height, the
@@ -331,7 +331,7 @@ const PasmaModule2Section4 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-elec-yellow/30 p-4 rounded-lg">
                   <h3 className="text-elec-yellow font-medium mb-2">Indoor Use</h3>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
                       <div>
@@ -371,7 +371,7 @@ const PasmaModule2Section4 = () => {
                 </div>
                 <div className="bg-white/5 border border-elec-yellow/30 p-4 rounded-lg">
                   <h3 className="text-elec-yellow font-medium mb-2">Outdoor Use</h3>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
                       <div>
@@ -416,7 +416,7 @@ const PasmaModule2Section4 = () => {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Semi-Outdoor Environments</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Be cautious with buildings that are partially open — loading bays with open
                   shutters, buildings under construction with missing cladding, or car parks with
                   open sides. These environments can experience significant wind effects and should
@@ -435,7 +435,7 @@ const PasmaModule2Section4 = () => {
               <span className="text-purple-400/80 text-sm font-normal">02</span>
               Single vs Double Width Selection
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The choice between single-width (0.74m) and double-width (1.35m) towers should be
                 based on a systematic assessment of the workspace, the task, and the safety
@@ -449,7 +449,7 @@ const PasmaModule2Section4 = () => {
                     <Ruler className="h-4 w-4 text-purple-400 mt-1 flex-shrink-0" />
                     <div>
                       <p className="text-white font-medium">Available Space</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Measure the working area. If the space is less than 1.0m wide, single-width
                         is the only option. If greater than 1.5m, double-width is generally
                         preferred.
@@ -460,7 +460,7 @@ const PasmaModule2Section4 = () => {
                     <ClipboardList className="h-4 w-4 text-purple-400 mt-1 flex-shrink-0" />
                     <div>
                       <p className="text-white font-medium">Task Requirements</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Consider workspace needed. Will you need to lay out tools? Is the task
                         stationary or will you move along the platform? Two operatives? Double-width
                         provides significantly more room.
@@ -471,7 +471,7 @@ const PasmaModule2Section4 = () => {
                     <MapPin className="h-4 w-4 text-purple-400 mt-1 flex-shrink-0" />
                     <div>
                       <p className="text-white font-medium">Height Required</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Single-width towers have lower maximum freestanding heights due to their
                         narrower base. If you need to reach higher, double-width may be required
                         regardless of space.
@@ -486,7 +486,7 @@ const PasmaModule2Section4 = () => {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded p-3">
                     <p className="text-white font-medium">Single-Width (0.74m)</p>
-                    <ul className="text-white/60 mt-1 space-y-1">
+                    <ul className="text-white mt-1 space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Corridors, narrow aisles</span>
@@ -511,7 +511,7 @@ const PasmaModule2Section4 = () => {
                   </div>
                   <div className="bg-white/5 rounded p-3">
                     <p className="text-white font-medium">Double-Width (1.35m)</p>
-                    <ul className="text-white/60 mt-1 space-y-1">
+                    <ul className="text-white mt-1 space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Open areas, workshops, externally</span>
@@ -555,7 +555,7 @@ const PasmaModule2Section4 = () => {
               <span className="text-teal-400/80 text-sm font-normal">03</span>
               Height Requirements & Calculations
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Correctly calculating the required tower height is essential for safe and efficient
                 work. The key distinction is between{' '}
@@ -570,7 +570,7 @@ const PasmaModule2Section4 = () => {
                   <p className="text-white text-lg font-mono font-bold">
                     Platform Height = Working Height - 2m
                   </p>
-                  <p className="text-white/60 text-sm mt-1">
+                  <p className="text-white text-sm mt-1">
                     The 2m accounts for the operative's reach above the platform
                   </p>
                 </div>
@@ -581,31 +581,31 @@ const PasmaModule2Section4 = () => {
                 <div className="space-y-3 text-sm">
                   <div className="bg-white/5 rounded p-3">
                     <p className="text-white font-medium">Example 1: Office Ceiling</p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       Ceiling height: 3.5m. Platform height needed: 3.5m - 2m ={' '}
                       <strong className="text-teal-300">1.5m</strong>
                     </p>
-                    <p className="text-white/50 italic">
+                    <p className="text-white italic">
                       A folding tower or low-level platform would suffice.
                     </p>
                   </div>
                   <div className="bg-white/5 rounded p-3">
                     <p className="text-white font-medium">Example 2: Warehouse Cable Tray</p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       Cable tray at 7m. Platform height needed: 7m - 2m ={' '}
                       <strong className="text-teal-300">5m</strong>
                     </p>
-                    <p className="text-white/50 italic">
+                    <p className="text-white italic">
                       A standard double-width tower at 5m platform height.
                     </p>
                   </div>
                   <div className="bg-white/5 rounded p-3">
                     <p className="text-white font-medium">Example 3: High-Bay Lighting</p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       Lights at 10m. Platform height needed: 10m - 2m ={' '}
                       <strong className="text-teal-300">8m</strong>
                     </p>
-                    <p className="text-white/50 italic">
+                    <p className="text-white italic">
                       A double-width tower at 8m — near the outdoor limit. Stabilisers may be
                       required.
                     </p>
@@ -617,7 +617,7 @@ const PasmaModule2Section4 = () => {
                 <h3 className="text-elec-yellow font-medium mb-2">
                   Maximum Heights per Configuration
                 </h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Typical maximum freestanding platform heights (check manufacturer's data for exact
                   figures):
                 </p>
@@ -625,12 +625,12 @@ const PasmaModule2Section4 = () => {
                   <table className="w-full text-sm text-left">
                     <thead>
                       <tr className="border-b border-white/10">
-                        <th className="text-white/60 pb-2 pr-4 font-medium">Configuration</th>
-                        <th className="text-white/60 pb-2 pr-4 font-medium">Indoor</th>
-                        <th className="text-white/60 pb-2 font-medium">Outdoor</th>
+                        <th className="text-white pb-2 pr-4 font-medium">Configuration</th>
+                        <th className="text-white pb-2 pr-4 font-medium">Indoor</th>
+                        <th className="text-white pb-2 font-medium">Outdoor</th>
                       </tr>
                     </thead>
-                    <tbody className="text-white/70">
+                    <tbody className="text-white">
                       <tr className="border-b border-white/5">
                         <td className="py-2 pr-4">Single-width (0.74m)</td>
                         <td className="py-2 pr-4">~6.2m</td>
@@ -650,7 +650,7 @@ const PasmaModule2Section4 = () => {
                     </tbody>
                   </table>
                 </div>
-                <p className="text-white/50 text-xs mt-2 italic">
+                <p className="text-white text-xs mt-2 italic">
                   These are indicative figures based on common tower systems. Always consult the
                   specific manufacturer's instruction manual.
                 </p>
@@ -666,7 +666,7 @@ const PasmaModule2Section4 = () => {
               <span className="text-red-400/80 text-sm font-normal">04</span>
               Environmental Factors
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Environmental conditions have a direct impact on both tower stability and operative
                 safety. Wind is the primary concern for outdoor towers, but temperature, rain, ice,
@@ -683,7 +683,7 @@ const PasmaModule2Section4 = () => {
                     <p className="text-amber-300 font-medium">
                       Cease Work: Beaufort 4 (Moderate Breeze)
                     </p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       13–18 mph / 20–28 kph. Loose papers blow, small branches move. Stop work,
                       descend, and secure the tower. Do not leave tools or materials on the
                       platform.
@@ -693,7 +693,7 @@ const PasmaModule2Section4 = () => {
                     <p className="text-red-300 font-medium">
                       Tower Maximum: Beaufort 6 (Strong Breeze)
                     </p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       25–31 mph / 39–49 kph. The tower structure is typically rated to withstand
                       this wind speed when unoccupied. Above Beaufort 6, the tower itself may be at
                       risk and should be dismantled or tied in.
@@ -707,7 +707,7 @@ const PasmaModule2Section4 = () => {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div>
                     <p className="text-white font-medium mb-1">Temperature</p>
-                    <ul className="text-white/60 space-y-1">
+                    <ul className="text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Extreme cold: reduced grip, numbed hands, ice on rungs</span>
@@ -726,7 +726,7 @@ const PasmaModule2Section4 = () => {
                   </div>
                   <div>
                     <p className="text-white font-medium mb-1">Rain and Ice</p>
-                    <ul className="text-white/60 space-y-1">
+                    <ul className="text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Wet platforms become slippery — non-slip decks preferred</span>
@@ -743,7 +743,7 @@ const PasmaModule2Section4 = () => {
                   </div>
                   <div>
                     <p className="text-white font-medium mb-1">Lighting</p>
-                    <ul className="text-white/60 space-y-1">
+                    <ul className="text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Adequate lighting for assembly and work is essential</span>
@@ -760,7 +760,7 @@ const PasmaModule2Section4 = () => {
                   </div>
                   <div>
                     <p className="text-white font-medium mb-1">Noise</p>
-                    <ul className="text-white/60 space-y-1">
+                    <ul className="text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Hearing protection if noise exceeds 85 dB(A)</span>
@@ -790,7 +790,7 @@ const PasmaModule2Section4 = () => {
               <span className="text-cyan-400/80 text-sm font-normal">05</span>
               Ground Conditions Assessment
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The ground beneath a tower must be <strong className="text-white">firm</strong>,
                 <strong className="text-white"> level</strong>, and capable of
@@ -804,19 +804,19 @@ const PasmaModule2Section4 = () => {
                 <div className="grid sm:grid-cols-3 gap-3 text-sm">
                   <div className="text-center">
                     <p className="text-elec-yellow text-xl font-bold mb-1">Firm</p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       Will not compress, deform, or sink under the tower's concentrated loads
                     </p>
                   </div>
                   <div className="text-center">
                     <p className="text-elec-yellow text-xl font-bold mb-1">Level</p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       Slope within the adjustable leg range — typically max 1:50 gradient
                     </p>
                   </div>
                   <div className="text-center">
                     <p className="text-elec-yellow text-xl font-bold mb-1">Load-Bearing</p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       Can support the point loads at each castor or base plate
                     </p>
                   </div>
@@ -825,11 +825,11 @@ const PasmaModule2Section4 = () => {
 
               <div className="bg-white/5 border border-cyan-400/30 p-4 rounded-lg">
                 <h3 className="text-cyan-300 font-medium mb-2">Soft Ground Solutions</h3>
-                <p className="text-white/70 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   If the ground is soft (grass, gravel, recently backfilled), sole boards must be
                   used:
                 </p>
-                <ul className="text-white/60 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -867,28 +867,28 @@ const PasmaModule2Section4 = () => {
                 <div className="space-y-2 text-sm">
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-green-400 mt-2 flex-shrink-0"></div>
-                    <div className="text-white/70">
+                    <div className="text-white">
                       <strong className="text-white">Solid concrete:</strong> Generally suitable —
                       check for cracks, holes, or degradation
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-amber-400 mt-2 flex-shrink-0"></div>
-                    <div className="text-white/70">
+                    <div className="text-white">
                       <strong className="text-white">Raised access floor:</strong> Check tile and
                       pedestal ratings against tower point loads — may need spreader plates
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-amber-400 mt-2 flex-shrink-0"></div>
-                    <div className="text-white/70">
+                    <div className="text-white">
                       <strong className="text-white">Suspended timber floor:</strong> Check joist
                       capacity — the tower concentrates load at the castor points
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
-                    <div className="text-white/70">
+                    <div className="text-white">
                       <strong className="text-white">Fragile surfaces:</strong> Never set up a tower
                       on glass roofs, skylights, ceiling tiles, or other fragile materials
                     </div>
@@ -906,7 +906,7 @@ const PasmaModule2Section4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Load Planning & Safe Working Loads
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Every tower platform has a maximum safe working load (SWL) that must not be
                 exceeded. The SWL includes the combined weight of operatives, tools, materials, and
@@ -923,21 +923,21 @@ const PasmaModule2Section4 = () => {
                   <div className="bg-white/5 rounded p-3 flex justify-between items-center">
                     <div>
                       <p className="text-white font-medium">Class 1 — Light Duty</p>
-                      <p className="text-white/60">Inspection, light maintenance</p>
+                      <p className="text-white">Inspection, light maintenance</p>
                     </div>
                     <p className="text-elec-yellow font-bold">150 kg/m&sup2;</p>
                   </div>
                   <div className="bg-white/5 rounded p-3 flex justify-between items-center">
                     <div>
                       <p className="text-white font-medium">Class 2 — Medium Duty</p>
-                      <p className="text-white/60">General construction, electrical installation</p>
+                      <p className="text-white">General construction, electrical installation</p>
                     </div>
                     <p className="text-elec-yellow font-bold">200 kg/m&sup2;</p>
                   </div>
                   <div className="bg-white/5 rounded p-3 flex justify-between items-center">
                     <div>
                       <p className="text-white font-medium">Class 3 — Heavy Duty</p>
-                      <p className="text-white/60">Heavy materials, masonry, plastering</p>
+                      <p className="text-white">Heavy materials, masonry, plastering</p>
                     </div>
                     <p className="text-elec-yellow font-bold">275 kg/m&sup2;</p>
                   </div>
@@ -946,18 +946,18 @@ const PasmaModule2Section4 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">Calculating Platform Loading</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   To check you are within the SWL, add up the total load on the platform:
                 </p>
                 <div className="bg-white/5 rounded p-3 text-sm">
                   <p className="text-white font-mono">
                     Total Load = Operative(s) weight + Tools + Materials + Equipment
                   </p>
-                  <p className="text-white/50 mt-2">
+                  <p className="text-white mt-2">
                     Example: 1 operative (85kg) + tool bag (15kg) + cable drum (20kg) + drill (5kg)
                     = 125kg
                   </p>
-                  <p className="text-white/50">
+                  <p className="text-white">
                     A Class 2 platform of 2.5m x 1.35m = 3.375m&sup2; has SWL of 200 x 3.375 = 675kg
                   </p>
                   <p className="text-green-400/70 mt-1">
@@ -968,7 +968,7 @@ const PasmaModule2Section4 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">Dynamic vs Static Loads</h3>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   The SWL accounts for <strong className="text-white">static loads</strong>{' '}
                   (stationary weight). However,
                   <strong className="text-white"> dynamic loads</strong> — caused by movement,
@@ -991,7 +991,7 @@ const PasmaModule2Section4 = () => {
               <span className="text-purple-400/80 text-sm font-normal">07</span>
               Pre-Use Planning Checklist
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Before any tower is erected on site, a systematic planning process must be followed.
                 This ensures the correct tower is selected, the location is suitable, risks are
@@ -1005,7 +1005,7 @@ const PasmaModule2Section4 = () => {
                 <div className="space-y-4 text-sm">
                   <div>
                     <p className="text-white font-medium mb-2">1. Task Assessment</p>
-                    <ul className="text-white/60 space-y-1">
+                    <ul className="text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>
@@ -1032,7 +1032,7 @@ const PasmaModule2Section4 = () => {
                   </div>
                   <div>
                     <p className="text-white font-medium mb-2">2. Location Assessment</p>
-                    <ul className="text-white/60 space-y-1">
+                    <ul className="text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>
@@ -1061,7 +1061,7 @@ const PasmaModule2Section4 = () => {
                   </div>
                   <div>
                     <p className="text-white font-medium mb-2">3. Tower Selection</p>
-                    <ul className="text-white/60 space-y-1">
+                    <ul className="text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Width: single or double? (Based on space and task)</span>
@@ -1092,7 +1092,7 @@ const PasmaModule2Section4 = () => {
                   </div>
                   <div>
                     <p className="text-white font-medium mb-2">4. Documentation</p>
-                    <ul className="text-white/60 space-y-1">
+                    <ul className="text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Risk assessment completed and communicated?</span>
@@ -1117,7 +1117,7 @@ const PasmaModule2Section4 = () => {
                   </div>
                   <div>
                     <p className="text-white font-medium mb-2">5. Communication</p>
-                    <ul className="text-white/60 space-y-1">
+                    <ul className="text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Site management informed of the tower erection plan?</span>
@@ -1145,10 +1145,10 @@ const PasmaModule2Section4 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">Method Statement Requirements</h3>
-                <p className="text-white/70 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   A method statement for tower work should cover, as a minimum:
                 </p>
-                <ul className="text-white/60 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1186,31 +1186,31 @@ const PasmaModule2Section4 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">Permit to Work Situations</h3>
-                <p className="text-white/70 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   A permit to work may be required when the tower work involves additional hazards:
                 </p>
                 <div className="grid sm:grid-cols-2 gap-2 text-sm">
-                  <div className="text-white/60 flex items-start gap-2">
+                  <div className="text-white flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Working near live electrical equipment</span>
                   </div>
-                  <div className="text-white/60 flex items-start gap-2">
+                  <div className="text-white flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Working in confined spaces accessed by tower</span>
                   </div>
-                  <div className="text-white/60 flex items-start gap-2">
+                  <div className="text-white flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Working near fragile surfaces (roof lights)</span>
                   </div>
-                  <div className="text-white/60 flex items-start gap-2">
+                  <div className="text-white flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Working over or near water</span>
                   </div>
-                  <div className="text-white/60 flex items-start gap-2">
+                  <div className="text-white flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Hot work from the platform (welding, cutting)</span>
                   </div>
-                  <div className="text-white/60 flex items-start gap-2">
+                  <div className="text-white flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Principal contractor site rules requiring permits</span>
                   </div>
@@ -1229,7 +1229,7 @@ const PasmaModule2Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1245,7 +1245,7 @@ const PasmaModule2Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-2-section-3">

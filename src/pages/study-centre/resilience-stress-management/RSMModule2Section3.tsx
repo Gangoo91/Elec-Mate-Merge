@@ -194,7 +194,7 @@ export default function RSMModule2Section3() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="min-h-[44px] text-white/70 hover:text-white active:text-white p-0 -ml-1 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] text-white hover:text-white active:text-white p-0 -ml-1 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-2">
@@ -216,7 +216,7 @@ export default function RSMModule2Section3() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Resilience Factors &amp; Protective Resources
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             The seven resilience abilities, protective and risk factors, and the resilience bucket
             metaphor &mdash; with real examples from the electrical trade
           </p>
@@ -265,7 +265,7 @@ export default function RSMModule2Section3() {
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-rose-500/10 border-l-2 border-l-rose-500/50 border border-rose-500/30">
               <p className="font-semibold text-base text-rose-400 mb-2">Why It Matters</p>
-              <ul className="text-base text-white/80 space-y-1.5">
+              <ul className="text-base text-white space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                   <span>
@@ -362,13 +362,13 @@ export default function RSMModule2Section3() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-1">1. Emotion Regulation</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       The ability to manage your emotional responses so they are proportionate to
                       the situation and do not overwhelm your capacity to think and act. This is not
                       about suppressing emotions &mdash; it is about experiencing them without being
                       controlled by them.
                     </p>
-                    <p className="text-white/80 text-sm mt-1">
+                    <p className="text-white text-sm mt-1">
                       <strong className="text-white">Trade example:</strong> Staying calm and
                       professional when a client unfairly blames you for a delay caused by the
                       builder.
@@ -376,12 +376,12 @@ export default function RSMModule2Section3() {
                   </div>
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-1">2. Impulse Control</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       The ability to resist the urge to act on your first emotional reaction and
                       instead respond thoughtfully. Closely linked to emotion regulation, but
                       specifically about the gap between feeling and action.
                     </p>
-                    <p className="text-white/80 text-sm mt-1">
+                    <p className="text-white text-sm mt-1">
                       <strong className="text-white">Trade example:</strong> Resisting the urge to
                       walk off a job when a main contractor speaks to you disrespectfully, and
                       instead addressing it calmly.
@@ -389,12 +389,12 @@ export default function RSMModule2Section3() {
                   </div>
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-1">3. Causal Analysis</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       The ability to accurately identify the real causes of problems without
                       oversimplifying, overgeneralising, or defaulting to self-blame. Good causal
                       analysis leads to more effective problem-solving.
                     </p>
-                    <p className="text-white/80 text-sm mt-1">
+                    <p className="text-white text-sm mt-1">
                       <strong className="text-white">Trade example:</strong> Analysing why an EICR
                       took twice as long as quoted, identifying that the property had undocumented
                       alterations, rather than concluding &ldquo;I&rsquo;m too slow.&rdquo;
@@ -402,12 +402,12 @@ export default function RSMModule2Section3() {
                   </div>
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-1">4. Self-Efficacy</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       The belief in your own ability to solve problems and manage situations
                       effectively. Self-efficacy is built through mastery experiences &mdash; each
                       time you successfully handle a challenge, your self-efficacy increases.
                     </p>
-                    <p className="text-white/80 text-sm mt-1">
+                    <p className="text-white text-sm mt-1">
                       <strong className="text-white">Trade example:</strong> Confidence in your
                       ability to diagnose a complex fault because you have successfully diagnosed
                       similar faults before.
@@ -415,12 +415,12 @@ export default function RSMModule2Section3() {
                   </div>
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-1">5. Realistic Optimism</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       The ability to maintain a positive outlook that is grounded in reality. This
                       is not blind optimism (&ldquo;everything will be fine&rdquo;) but a belief
                       that positive outcomes are achievable through effort and good judgement.
                     </p>
-                    <p className="text-white/80 text-sm mt-1">
+                    <p className="text-white text-sm mt-1">
                       <strong className="text-white">Trade example:</strong> Believing you can build
                       a successful business while also acknowledging that it will require hard work,
                       financial planning, and continuous learning.
@@ -428,12 +428,12 @@ export default function RSMModule2Section3() {
                   </div>
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-1">6. Empathy</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       The ability to understand and share the feelings of others. Empathy
                       strengthens relationships, improves communication, and helps you build the
                       social connections that are vital for resilience.
                     </p>
-                    <p className="text-white/80 text-sm mt-1">
+                    <p className="text-white text-sm mt-1">
                       <strong className="text-white">Trade example:</strong> Recognising that a
                       colleague who is unusually snappy might be struggling with something rather
                       than just being difficult.
@@ -441,12 +441,12 @@ export default function RSMModule2Section3() {
                   </div>
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-1">7. Reaching Out</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       The willingness and ability to seek help, support, and new experiences. This
                       includes asking for practical help, emotional support, mentoring, and taking
                       on new challenges that stretch your capabilities.
                     </p>
-                    <p className="text-white/80 text-sm mt-1">
+                    <p className="text-white text-sm mt-1">
                       <strong className="text-white">Trade example:</strong> Asking a more
                       experienced electrician for advice on a complex installation you have not
                       encountered before, rather than bluffing through it.
@@ -480,7 +480,7 @@ export default function RSMModule2Section3() {
                   <Heart className="h-4 w-4 inline-block mr-2 -mt-0.5" />
                   Key Protective Factors
                 </h3>
-                <ul className="text-white/80 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -573,7 +573,7 @@ export default function RSMModule2Section3() {
                   <AlertTriangle className="h-4 w-4 inline-block mr-2 -mt-0.5" />
                   Common Risk Factors
                 </h3>
-                <ul className="text-white/80 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -632,7 +632,7 @@ export default function RSMModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Risk Factor Accumulation</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Risk factors rarely appear in isolation. Financial pressure can lead to
                   relationship strain, which leads to isolation, which leads to substance misuse as
                   a coping mechanism, which leads to poorer physical health, which leads to reduced
@@ -686,27 +686,27 @@ export default function RSMModule2Section3() {
                 <div className="grid sm:grid-cols-3 gap-4 text-center">
                   <div className="bg-rose-500/10 border border-rose-500/20 rounded-lg p-4">
                     <p className="text-rose-400 font-bold text-lg mb-2">Drains</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Work stress, financial pressure, isolation, poor sleep, conflict, health
                       problems, substance misuse
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/20 rounded-lg p-4">
                     <p className="text-white font-bold text-lg mb-2">Your Bucket</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Current resilience level &mdash; fluctuates daily based on the balance between
                       drains and fills
                     </p>
                   </div>
                   <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
                     <p className="text-green-400 font-bold text-lg mb-2">Fills</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Social connection, exercise, good sleep, sense of purpose, hobbies, financial
                       stability, self-care
                     </p>
                   </div>
                 </div>
-                <p className="text-white/80 text-xs text-center mt-4 italic">
+                <p className="text-white text-xs text-center mt-4 italic">
                   When the bucket is full, you handle stress well. When it empties, you become
                   vulnerable to burnout and breakdown.
                 </p>
@@ -730,11 +730,11 @@ export default function RSMModule2Section3() {
                   <Users className="h-4 w-4 inline-block mr-2 -mt-0.5" />
                   Daily Bucket Management
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The practical application of the bucket metaphor is simple: monitor your bucket
                   level and take action before it gets too low. Ask yourself regularly:
                 </p>
-                <ul className="text-white/80 text-sm space-y-1.5">
+                <ul className="text-white text-sm space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>How full does my bucket feel right now? (Rate it 1-10)</span>
@@ -823,7 +823,7 @@ export default function RSMModule2Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -839,7 +839,7 @@ export default function RSMModule2Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-2">

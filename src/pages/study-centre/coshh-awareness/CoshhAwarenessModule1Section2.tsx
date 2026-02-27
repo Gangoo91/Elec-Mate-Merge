@@ -163,7 +163,7 @@ export default function CoshhAwarenessModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-1">
@@ -188,7 +188,7 @@ export default function CoshhAwarenessModule1Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Types of Hazardous Substances
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How hazardous substances are classified by physical form, the GHS/CLP system, chemical
             hazards, dusts, fumes, biological agents, CMRs, and sensitisers
           </p>
@@ -295,7 +295,7 @@ export default function CoshhAwarenessModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Substances Covered by COSHH Include
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -351,7 +351,7 @@ export default function CoshhAwarenessModule1Section2() {
               <div className="bg-white/5 border border-violet-500/30 rounded-xl overflow-hidden">
                 <div className="bg-violet-500/10 border-b border-violet-500/30 px-4 py-3 text-center">
                   <p className="text-sm font-bold text-violet-400">Physical Forms Classification</p>
-                  <p className="text-xs text-white/50 mt-1">Eight forms of hazardous substances</p>
+                  <p className="text-xs text-white mt-1">Eight forms of hazardous substances</p>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-0.5 p-0.5">
                   {[
@@ -398,8 +398,8 @@ export default function CoshhAwarenessModule1Section2() {
                   ].map((item) => (
                     <div key={item.form} className="bg-[#1a1a1a] p-3 sm:p-4">
                       <p className="text-sm font-semibold text-violet-400 mb-1">{item.form}</p>
-                      <p className="text-xs text-white/80 mb-1.5">{item.desc}</p>
-                      <p className="text-xs text-white/50">
+                      <p className="text-xs text-white mb-1.5">{item.desc}</p>
+                      <p className="text-xs text-white">
                         <em>e.g. {item.example}</em>
                       </p>
                     </div>
@@ -466,7 +466,7 @@ export default function CoshhAwarenessModule1Section2() {
                     <p className="text-sm font-semibold text-violet-400 mb-1">
                       1. Hazard Pictograms
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Red diamond-shaped symbols that give an immediate visual indication of the
                       type of hazard. There are 9 pictograms, each representing a different category
                       of hazard.
@@ -474,7 +474,7 @@ export default function CoshhAwarenessModule1Section2() {
                   </div>
                   <div className="bg-[#1a1a1a] p-3 rounded-lg">
                     <p className="text-sm font-semibold text-violet-400 mb-1">2. Signal Words</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Either <strong className="text-white">&ldquo;Danger&rdquo;</strong> (for the
                       most severe hazards) or{' '}
                       <strong className="text-white">&ldquo;Warning&rdquo;</strong> (for less severe
@@ -485,7 +485,7 @@ export default function CoshhAwarenessModule1Section2() {
                     <p className="text-sm font-semibold text-violet-400 mb-1">
                       3. Hazard &amp; Precautionary Statements
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       <strong className="text-white">H-codes</strong> (Hazard statements) describe
                       the nature of the hazard (e.g. H314: &ldquo;Causes severe skin burns and eye
                       damage&rdquo;). <strong className="text-white">P-codes</strong> (Precautionary
@@ -498,7 +498,7 @@ export default function CoshhAwarenessModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">H-Code Numbering System</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -530,7 +530,7 @@ export default function CoshhAwarenessModule1Section2() {
                     Safety Data Sheets (SDS) Are Mandatory
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Every hazardous substance supplied for workplace use must be accompanied by a{' '}
                   <strong className="text-white">Safety Data Sheet (SDS)</strong> in the required
                   CLP format. The SDS contains 16 sections covering identification, hazards,
@@ -566,7 +566,7 @@ export default function CoshhAwarenessModule1Section2() {
               <div className="bg-white/5 border border-violet-500/30 rounded-xl overflow-hidden">
                 <div className="bg-violet-500/10 border-b border-violet-500/30 px-4 py-3 text-center">
                   <p className="text-sm font-bold text-violet-400">GHS Pictograms Grid</p>
-                  <p className="text-xs text-white/50 mt-1">
+                  <p className="text-xs text-white mt-1">
                     Nine standardised hazard symbols under CLP
                   </p>
                 </div>
@@ -639,8 +639,8 @@ export default function CoshhAwarenessModule1Section2() {
                         </div>
                         <p className="text-sm font-semibold text-violet-400">{item.name}</p>
                       </div>
-                      <p className="text-xs text-white/80 mb-1.5">{item.hazards}</p>
-                      <p className="text-xs text-white/50">
+                      <p className="text-xs text-white mb-1.5">{item.hazards}</p>
+                      <p className="text-xs text-white">
                         <em>e.g. {item.example}</em>
                       </p>
                     </div>
@@ -690,7 +690,7 @@ export default function CoshhAwarenessModule1Section2() {
               <div className="space-y-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Acids</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                       <span>
@@ -718,7 +718,7 @@ export default function CoshhAwarenessModule1Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Alkalis (Bases)</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                       <span>
@@ -747,7 +747,7 @@ export default function CoshhAwarenessModule1Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Solvents</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                       <span>
@@ -778,7 +778,7 @@ export default function CoshhAwarenessModule1Section2() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <p className="text-sm font-medium text-white mb-2">Adhesives &amp; Resins</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                         <span>Epoxy resins (cable joints, potting compounds)</span>
@@ -802,7 +802,7 @@ export default function CoshhAwarenessModule1Section2() {
 
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <p className="text-sm font-medium text-white mb-2">Paints, Oils &amp; Fuels</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                         <span>Solvent-based paints (flammable, narcotic vapours)</span>
@@ -829,7 +829,7 @@ export default function CoshhAwarenessModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Never Mix Chemicals</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Mixing chemicals can create reactions that are far more dangerous than either
                   substance alone. Mixing acid with bleach produces toxic chlorine gas. Mixing
                   different solvents can increase fire risk. Even mixing cleaning products can
@@ -882,7 +882,7 @@ export default function CoshhAwarenessModule1Section2() {
                         WEL: 10 mg/m&sup3;
                       </span>
                     </div>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Particles that can enter the nose and mouth during breathing. Includes all
                       particle sizes up to about 100 micrometres. Trapped by the upper respiratory
                       tract (nose, throat, upper airways). Can cause rhinitis, pharyngitis, and
@@ -896,7 +896,7 @@ export default function CoshhAwarenessModule1Section2() {
                         WEL: 4 mg/m&sup3;
                       </span>
                     </div>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Particles small enough (less than ~10 micrometres) to penetrate past the upper
                       airways and reach the alveoli &mdash; the gas exchange region deep in the
                       lungs. These particles cannot be cleared by normal lung defences and
@@ -912,7 +912,7 @@ export default function CoshhAwarenessModule1Section2() {
                         WEL: 0.1 mg/m&sup3;
                       </span>
                     </div>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Classified as a <strong className="text-white">Group 1 carcinogen</strong> by
                       IARC. Generated when cutting, drilling, grinding, or chasing concrete, brick,
                       stone, mortar, or sandstone.{' '}
@@ -931,7 +931,7 @@ export default function CoshhAwarenessModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Other Specific Dusts With Lower WELs
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -971,7 +971,7 @@ export default function CoshhAwarenessModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Electricians and Silica Dust</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Electrical installers are among the most silica-exposed workers in construction.
                   Chasing walls for cables, drilling holes through concrete floors and blockwork,
                   cutting chases for trunking and conduit, and core drilling for containment all
@@ -1006,7 +1006,7 @@ export default function CoshhAwarenessModule1Section2() {
               <div className="space-y-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Fumes</p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Fumes are very fine solid particles formed when a material is heated to the
                     point of vaporisation and then condenses rapidly in the air. The particles are
                     typically less than 1 micrometre in diameter &mdash; far smaller than dust
@@ -1015,7 +1015,7 @@ export default function CoshhAwarenessModule1Section2() {
                   <div className="space-y-2">
                     <div className="bg-[#1a1a1a] p-3 rounded-lg">
                       <p className="text-xs font-semibold text-violet-400 mb-1">Welding Fume</p>
-                      <p className="text-xs text-white/80">
+                      <p className="text-xs text-white">
                         Generated by the intense heat of the welding arc, which vaporises the base
                         metal, filler material, coatings (zinc galvanising, paint, primer), and
                         flux. The vapour condenses into extremely fine metallic particles. Since{' '}
@@ -1027,7 +1027,7 @@ export default function CoshhAwarenessModule1Section2() {
                     </div>
                     <div className="bg-[#1a1a1a] p-3 rounded-lg">
                       <p className="text-xs font-semibold text-violet-400 mb-1">Solder Fume</p>
-                      <p className="text-xs text-white/80">
+                      <p className="text-xs text-white">
                         Produced when soldering electronic components or plumbing joints. The fume
                         comes primarily from the flux, not the solder itself. Rosin-based flux
                         (colophony) releases fume that is a potent respiratory sensitiser and a
@@ -1038,7 +1038,7 @@ export default function CoshhAwarenessModule1Section2() {
                     </div>
                     <div className="bg-[#1a1a1a] p-3 rounded-lg">
                       <p className="text-xs font-semibold text-violet-400 mb-1">PVC Fume</p>
-                      <p className="text-xs text-white/80">
+                      <p className="text-xs text-white">
                         Generated when PVC (polyvinyl chloride) is heated, burned, or cut with hot
                         tools. PVC is common in electrical cable insulation, conduit, and trunking.
                         When heated above 200&deg;C, PVC releases hydrogen chloride gas and other
@@ -1051,12 +1051,12 @@ export default function CoshhAwarenessModule1Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Vapours</p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Vapours are the gaseous form of substances that are normally liquid at room
                     temperature. They form when a liquid evaporates. The more volatile a liquid (the
                     lower its boiling point), the more readily it produces vapours.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                       <span>
@@ -1086,11 +1086,11 @@ export default function CoshhAwarenessModule1Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Gases</p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Gases are substances that exist in the gaseous state at normal room temperature
                     and pressure. They may be toxic, asphyxiant (displacing oxygen), or both.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                       <span>
@@ -1134,7 +1134,7 @@ export default function CoshhAwarenessModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Confined Spaces</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Gases, vapours, and fumes are particularly dangerous in confined spaces (tanks,
                   voids, risers, ceiling spaces, basements, ducts) where they can accumulate to
                   lethal concentrations. Electricians frequently work in confined or poorly
@@ -1166,7 +1166,7 @@ export default function CoshhAwarenessModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Types of Biological Agent</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1214,9 +1214,9 @@ export default function CoshhAwarenessModule1Section2() {
                       <span className="text-xs font-mono bg-green-500/20 text-green-300 px-2 py-0.5 rounded">
                         Group 1
                       </span>
-                      <span className="text-xs text-white/50">Lowest risk</span>
+                      <span className="text-xs text-white">Lowest risk</span>
                     </div>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Unlikely to cause human disease. No special precautions beyond standard
                       hygiene.
                     </p>
@@ -1226,9 +1226,9 @@ export default function CoshhAwarenessModule1Section2() {
                       <span className="text-xs font-mono bg-yellow-500/20 text-yellow-300 px-2 py-0.5 rounded">
                         Group 2
                       </span>
-                      <span className="text-xs text-white/50">Moderate risk</span>
+                      <span className="text-xs text-white">Moderate risk</span>
                     </div>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Can cause human disease. May be a hazard to workers but is unlikely to spread
                       to the community. Effective prophylaxis or treatment is usually available.
                       E.g. Legionella, Leptospira.
@@ -1239,9 +1239,9 @@ export default function CoshhAwarenessModule1Section2() {
                       <span className="text-xs font-mono bg-orange-500/20 text-orange-300 px-2 py-0.5 rounded">
                         Group 3
                       </span>
-                      <span className="text-xs text-white/50">High risk</span>
+                      <span className="text-xs text-white">High risk</span>
                     </div>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Can cause severe human disease. Presents a serious hazard to workers and may
                       spread to the community, but effective prophylaxis or treatment is usually
                       available. E.g. hepatitis B, tuberculosis, anthrax.
@@ -1252,9 +1252,9 @@ export default function CoshhAwarenessModule1Section2() {
                       <span className="text-xs font-mono bg-red-500/20 text-red-300 px-2 py-0.5 rounded">
                         Group 4
                       </span>
-                      <span className="text-xs text-white/50">Extreme risk</span>
+                      <span className="text-xs text-white">Extreme risk</span>
                     </div>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Causes severe human disease. Presents a serious hazard to workers. Likely to
                       spread to the community. No effective prophylaxis or treatment available. E.g.
                       Ebola virus, Marburg virus. (Extremely unlikely in construction but included
@@ -1301,7 +1301,7 @@ export default function CoshhAwarenessModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Carcinogens</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1338,7 +1338,7 @@ export default function CoshhAwarenessModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Mutagens</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1369,7 +1369,7 @@ export default function CoshhAwarenessModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Substances Toxic to Reproduction (Reprotoxins)
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1402,7 +1402,7 @@ export default function CoshhAwarenessModule1Section2() {
                     Special COSHH Requirements for CMRs
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     COSHH imposes additional requirements when working with CMR substances
                     (Regulation 11):
@@ -1450,7 +1450,7 @@ export default function CoshhAwarenessModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Sensitisers</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Sensitisers are substances that cause the immune system to develop a specific
                   allergic response. There are two types:
                 </p>
@@ -1459,11 +1459,11 @@ export default function CoshhAwarenessModule1Section2() {
                     <p className="text-xs font-semibold text-violet-400 mb-1">
                       Respiratory Sensitisers
                     </p>
-                    <p className="text-xs text-white/80 mb-2">
+                    <p className="text-xs text-white mb-2">
                       Cause occupational asthma. Once sensitised, even minute airborne exposures
                       trigger bronchospasm, wheezing, and breathlessness.
                     </p>
-                    <ul className="text-xs text-white/80 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                         <span>Isocyanates (spray foam, 2-pack paints)</span>
@@ -1481,18 +1481,18 @@ export default function CoshhAwarenessModule1Section2() {
                         <span>Wood dusts (especially western red cedar)</span>
                       </li>
                     </ul>
-                    <p className="text-xs text-white/50 mt-2">
+                    <p className="text-xs text-white mt-2">
                       H-code: H334 &mdash; &ldquo;May cause allergy or asthma symptoms or breathing
                       difficulties if inhaled&rdquo;
                     </p>
                   </div>
                   <div className="bg-[#1a1a1a] p-3 rounded-lg">
                     <p className="text-xs font-semibold text-violet-400 mb-1">Skin Sensitisers</p>
-                    <p className="text-xs text-white/80 mb-2">
+                    <p className="text-xs text-white mb-2">
                       Cause allergic contact dermatitis. Once sensitised, skin contact with even
                       tiny amounts triggers redness, itching, blistering, and cracking.
                     </p>
-                    <ul className="text-xs text-white/80 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                         <span>Epoxy resins (cable jointing, potting)</span>
@@ -1510,7 +1510,7 @@ export default function CoshhAwarenessModule1Section2() {
                         <span>Some acrylate adhesives</span>
                       </li>
                     </ul>
-                    <p className="text-xs text-white/50 mt-2">
+                    <p className="text-xs text-white mt-2">
                       H-code: H317 &mdash; &ldquo;May cause an allergic skin reaction&rdquo;
                     </p>
                   </div>
@@ -1522,7 +1522,7 @@ export default function CoshhAwarenessModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Sensitisation Is Irreversible</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Once you become sensitised to a substance, there is{' '}
                   <strong className="text-white">no cure</strong>. The immune system&rsquo;s
                   response is permanent. Even minute future exposures &mdash; far below the level
@@ -1561,7 +1561,7 @@ export default function CoshhAwarenessModule1Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1575,7 +1575,7 @@ export default function CoshhAwarenessModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-1-section-1">

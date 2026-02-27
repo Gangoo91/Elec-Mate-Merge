@@ -30,7 +30,7 @@ export const SocialValueBanner = () => {
             <br className="sm:hidden" /> going back to the trade
           </h2>
 
-          <p className="text-white/70 text-lg max-w-2xl mx-auto mb-8">
+          <p className="text-white text-lg max-w-2xl mx-auto mb-8">
             From month 6, we're committing £1 from every mobile app subscription to support mental
             health charities and help self-funded adult learners and apprentices pass their exams.
           </p>
@@ -47,7 +47,7 @@ export const SocialValueBanner = () => {
                 <Heart className="w-7 h-7 text-pink-400" />
               </div>
               <h3 className="font-semibold text-white text-lg mb-2">Mental Health Charities</h3>
-              <p className="text-sm text-white/60">
+              <p className="text-sm text-white">
                 Supporting Andy's Man Club, Mates in Mind, Electrical Industries Charity, and
                 Lighthouse Construction Industry Charity.
               </p>
@@ -63,7 +63,7 @@ export const SocialValueBanner = () => {
                 <GraduationCap className="w-7 h-7 text-purple-400" />
               </div>
               <h3 className="font-semibold text-white text-lg mb-2">Learner Support Fund</h3>
-              <p className="text-sm text-white/60">
+              <p className="text-sm text-white">
                 Helping self-funded adult learners and apprentices who are struggling to afford exam
                 fees or resits. Everyone deserves a fair chance to qualify.
               </p>
@@ -72,7 +72,7 @@ export const SocialValueBanner = () => {
 
           {/* Footer note */}
           <motion.p
-            className="mt-8 text-sm text-white/50"
+            className="mt-8 text-sm text-white"
             initial={{ opacity: 0 }}
             animate={isInView ? { opacity: 1 } : {}}
             transition={{ delay: 0.5 }}

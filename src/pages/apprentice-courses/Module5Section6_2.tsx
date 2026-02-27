@@ -181,7 +181,7 @@ const Module5Section6_2 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -199,13 +199,13 @@ const Module5Section6_2 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.2</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.2</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Written Instructions and Handovers
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Basic Notes, Labels, and Professional Communication
             </p>
           </header>
@@ -215,7 +215,7 @@ const Module5Section6_2 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-                <ul className="text-white/80 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>• Written communication creates permanent records</li>
                   <li>• Labels must be durable, legible, and follow BS 7671</li>
                   <li>• Handover notes ensure work continuity</li>
@@ -224,7 +224,7 @@ const Module5Section6_2 = () => {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-                <ul className="text-white/80 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>
                     • <strong>Spot:</strong> Unlabelled circuits or unclear handover notes
                   </li>
@@ -245,7 +245,7 @@ const Module5Section6_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Learning Outcomes
             </h2>
-            <ul className="text-white/80 space-y-2 leading-relaxed">
+            <ul className="text-white space-y-2 leading-relaxed">
               <li>
                 • Understand the role of written instructions and handovers in electrical work
               </li>
@@ -261,7 +261,7 @@ const Module5Section6_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Importance of Written Instructions
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Written communication is vital in electrical work for recording, passing on, and
                 confirming information. Unlike verbal instructions, written notes create permanent
@@ -270,7 +270,7 @@ const Module5Section6_2 = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Key Benefits</p>
-                <ul className="text-sm space-y-1 text-white/70">
+                <ul className="text-sm space-y-1 text-white">
                   <li>• Provides a permanent record of information that can be referred back to</li>
                   <li>• Reduces reliance on memory, which may be unreliable under pressure</li>
                   <li>• Ensures consistent communication across shifts and teams</li>
@@ -286,13 +286,13 @@ const Module5Section6_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Common Written Communication in Electrical Work
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>Several types of written communication are essential on electrical sites:</p>
 
               <div className="space-y-3">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Labels</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Marking distribution boards, circuits, isolators, and accessories. Must clearly
                     identify circuits, phases, and isolators. Follow BS 7671 and site-specific
                     requirements.
@@ -300,21 +300,21 @@ const Module5Section6_2 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Basic Notes</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Quick reminders left for colleagues. Example: "Do not energise – still under
                     test". Always include date, time, and your name.
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Handover Sheets</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Summarising progress for the next shift. Include work completed, outstanding
                     tasks, safety issues, and materials required.
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Record Books/Logs</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Used on larger sites for tracking works. Maintain project history, record
                     decisions and changes, track material usage.
                   </p>
@@ -331,7 +331,7 @@ const Module5Section6_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Qualities of Effective Written Communication
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Professional written communication requires specific qualities to be effective and
                 useful:
@@ -340,7 +340,7 @@ const Module5Section6_2 = () => {
               <div className="space-y-3">
                 <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                   <p className="font-semibold text-elec-yellow mb-2">Clarity</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Use simple, unambiguous wording. Avoid technical jargon unless universally
                     understood. Structure information logically. Break complex information into
                     clear steps.
@@ -348,7 +348,7 @@ const Module5Section6_2 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
                   <p className="font-semibold text-green-400 mb-2">Accuracy</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Double-check all details. Verify circuit numbers, ratings, and specifications.
                     Check names, dates, and locations. Correct any errors immediately when
                     discovered.
@@ -356,7 +356,7 @@ const Module5Section6_2 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-blue-500/5 border-l-2 border-blue-500/50">
                   <p className="font-semibold text-blue-400 mb-2">Legibility</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Ensure it can be read by anyone. Use printed labels where possible for
                     durability. If handwriting is necessary, use block capitals. Choose appropriate
                     pen/marker for conditions.
@@ -364,7 +364,7 @@ const Module5Section6_2 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-purple-500/5 border-l-2 border-purple-500/50">
                   <p className="font-semibold text-purple-400 mb-2">Professionalism</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Maintain appropriate tone. Avoid slang or casual language in formal notes. Use
                     accepted abbreviations (e.g., "DB" for Distribution Board). Follow company and
                     site standards.
@@ -382,14 +382,14 @@ const Module5Section6_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Handovers: Ensuring Continuity
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Proper handovers prevent duplication of work, missed tasks, and safety oversights:
               </p>
 
               <div className="p-4 rounded-lg bg-amber-500/5 border-l-2 border-amber-500/50">
                 <p className="font-semibold text-amber-400 mb-2">Why Handovers Matter</p>
-                <ul className="text-sm space-y-1 text-white/70">
+                <ul className="text-sm space-y-1 text-white">
                   <li>• Prevents duplication of work and wasted effort</li>
                   <li>• Ensures all safety issues are communicated</li>
                   <li>• Maintains project momentum between shifts</li>
@@ -399,7 +399,7 @@ const Module5Section6_2 = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Essential Handover Content</p>
-                <ul className="text-sm space-y-1 text-white/70">
+                <ul className="text-sm space-y-1 text-white">
                   <li>
                     • <strong className="text-white">Work completed:</strong> What has been finished
                     and tested
@@ -429,7 +429,7 @@ const Module5Section6_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Labelling Standards (Basic Awareness)
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Proper labelling is essential for safety and compliance with electrical standards:
               </p>
@@ -438,7 +438,7 @@ const Module5Section6_2 = () => {
                 <p className="font-semibold text-red-400 mb-2">
                   Requirements for Electrical Labels
                 </p>
-                <ul className="text-sm space-y-1 text-white/70">
+                <ul className="text-sm space-y-1 text-white">
                   <li>• Must be durable enough to withstand the electrical environment</li>
                   <li>• Must remain legible throughout the installation's life</li>
                   <li>• Follow BS 7671 and site-specific requirements</li>
@@ -448,7 +448,7 @@ const Module5Section6_2 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Types of Labels Commonly Used</p>
-                <ul className="text-sm space-y-1 text-white/70">
+                <ul className="text-sm space-y-1 text-white">
                   <li>• Circuit identification labels on distribution boards</li>
                   <li>• Warning labels for hazardous areas or equipment</li>
                   <li>• Isolation point identification labels</li>
@@ -468,14 +468,14 @@ const Module5Section6_2 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-amber-500/5 border-l-2 border-amber-500/50">
               <p className="font-semibold text-amber-400 mb-2">The Cost of Poor Communication</p>
-              <p className="text-white/80 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 On a commercial site, an apprentice leaves no handover note at the end of their
                 shift. The next morning, another team mistakenly energises a circuit still under
                 testing, causing equipment damage.
               </p>
               <div className="p-3 bg-red-500/10 rounded border border-red-500/20 mb-3">
                 <p className="text-sm text-red-300 font-medium mb-1">Consequences:</p>
-                <ul className="text-sm text-white/70 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• £2,000 worth of testing equipment damaged</li>
                   <li>• Project delayed by 2 days waiting for replacement</li>
                   <li>• Insurance claim affecting company premiums</li>
@@ -484,7 +484,7 @@ const Module5Section6_2 = () => {
               </div>
               <div className="p-3 bg-green-500/10 rounded border border-green-500/20">
                 <p className="text-sm text-green-300 font-medium mb-1">The Solution:</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A simple note stating "Circuit 3 DB2 still under test - DO NOT ENERGISE - Contact
                   J. Smith 07XXX XXXXXX" would have prevented this costly mistake.
                 </p>
@@ -499,7 +499,7 @@ const Module5Section6_2 = () => {
               Pocket Guide
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <ul className="text-white/80 text-sm space-y-2">
+              <ul className="text-white text-sm space-y-2">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />
                   <span>Always leave written notes/handovers when finishing work</span>
@@ -531,8 +531,8 @@ const Module5Section6_2 = () => {
               Recap
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-white/80 text-sm mb-3">In this subsection, you've learned:</p>
-              <ul className="text-white/80 text-sm space-y-1">
+              <p className="text-white text-sm mb-3">In this subsection, you've learned:</p>
+              <ul className="text-white text-sm space-y-1">
                 <li>• Why written instructions and handovers are essential for electrical work</li>
                 <li>
                   • The qualities of effective written communication: clarity, accuracy, legibility,

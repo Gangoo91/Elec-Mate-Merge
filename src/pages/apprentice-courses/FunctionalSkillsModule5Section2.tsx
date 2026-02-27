@@ -123,7 +123,7 @@ const FunctionalSkillsModule5Section2 = () => {
             to="/study-centre/apprentice/functional-skills/module5"
             className="p-2 -ml-2 touch-manipulation"
           >
-            <ArrowLeft className="w-5 h-5 text-white/60" />
+            <ArrowLeft className="w-5 h-5 text-white" />
           </Link>
           <div>
             <p className="text-[11px] font-semibold text-green-400 uppercase tracking-wider">
@@ -149,7 +149,7 @@ const FunctionalSkillsModule5Section2 = () => {
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
               Level 2 Functional Skills Practice
             </h2>
-            <p className="text-sm text-white/50 max-w-lg mx-auto">
+            <p className="text-sm text-white max-w-lg mx-auto">
               Step up to Level 2 standard with more challenging practice questions, multi-step
               problem solving, advanced writing tasks, and comprehensive exam day preparation.
             </p>
@@ -172,7 +172,7 @@ const FunctionalSkillsModule5Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Step Up to Level 2</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Level 2 Functional Skills is equivalent to a GCSE grade 4 (formerly grade C) and
               represents a significant step up from Level 1. Understanding the differences helps you
@@ -187,7 +187,7 @@ const FunctionalSkillsModule5Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 The jump from Level 1 to Level 2 is manageable with consistent practice. Most
                 apprentices who struggle do so because they do not practise enough under timed
                 conditions, not because the content is too difficult. Put in the hours and you will
@@ -276,7 +276,7 @@ const FunctionalSkillsModule5Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Level 2 Maths Format</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               The Level 2 Maths exam follows a similar structure to Level 1 but with more demanding
               questions. The exam is typically 1 hour 45 minutes to 2 hours, split into
@@ -293,7 +293,7 @@ const FunctionalSkillsModule5Section2 = () => {
                   <p className="text-xs font-semibold text-green-400 mb-1">
                     Section A — Non-Calculator (approx. 30-40 min)
                   </p>
-                  <ul className="space-y-1 text-xs text-white/70">
+                  <ul className="space-y-1 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <span className="text-green-400 mt-0.5">•</span>
                       <span>Harder mental arithmetic including working with negative numbers</span>
@@ -316,7 +316,7 @@ const FunctionalSkillsModule5Section2 = () => {
                   <p className="text-xs font-semibold text-green-400 mb-1">
                     Section B — Calculator Allowed (approx. 70-80 min)
                   </p>
-                  <ul className="space-y-1 text-xs text-white/70">
+                  <ul className="space-y-1 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <span className="text-green-400 mt-0.5">•</span>
                       <span>Multi-step problems requiring you to choose the method</span>
@@ -377,7 +377,7 @@ const FunctionalSkillsModule5Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 At Level 2, examiners award marks for method, accuracy, and interpretation. Even if
                 your final numerical answer is wrong, a correct method can earn you significant
                 marks. Always show every step of your working clearly.
@@ -405,7 +405,7 @@ const FunctionalSkillsModule5Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Level 2 Maths Practice Questions</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               These practice questions are set at Level 2 standard with multi-step problems in
               electrical work contexts. Work through each one carefully before checking the
@@ -417,13 +417,13 @@ const FunctionalSkillsModule5Section2 = () => {
                 <Target className="w-4 h-4 text-green-400" />
                 <p className="text-xs font-semibold text-green-400">Practice Question 1 — Ratio</p>
               </div>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Cement and sand are mixed in the ratio 1:4. If you need 30 kg of mix total, how much
                 cement and how much sand are needed?
               </p>
               <div className="bg-white/5 rounded-lg p-3 mt-2">
                 <p className="text-xs font-semibold text-green-400 mb-1">Worked Solution</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Total parts = 1 + 4 = 5<br />
                   Cement = 30 divided by 5 x 1 = <strong className="text-white">6 kg</strong>
                   <br />
@@ -441,14 +441,14 @@ const FunctionalSkillsModule5Section2 = () => {
                   Practice Question 2 — VAT and Labour
                 </p>
               </div>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 An electrician charges £45 per hour plus VAT at 20%. A job takes 3 hours and
                 requires £120 of materials (no VAT on materials). What is the total cost to the
                 customer?
               </p>
               <div className="bg-white/5 rounded-lg p-3 mt-2">
                 <p className="text-xs font-semibold text-green-400 mb-1">Worked Solution</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Step 1: Labour cost = 3 x £45 = £135
                   <br />
                   Step 2: VAT on labour = £135 x 0.20 = £27
@@ -468,14 +468,14 @@ const FunctionalSkillsModule5Section2 = () => {
                   Practice Question 3 — Percentage Decrease
                 </p>
               </div>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Electricity bills over 6 months were: Jan £85, Feb £78, Mar £72, Apr £65, May £58,
                 Jun £52. What is the percentage decrease from January to June? Round to one decimal
                 place.
               </p>
               <div className="bg-white/5 rounded-lg p-3 mt-2">
                 <p className="text-xs font-semibold text-green-400 mb-1">Worked Solution</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Step 1: Find the decrease = £85 - £52 = £33
                   <br />
                   Step 2: Percentage = (33 divided by 85) x 100 = 38.8235...
@@ -492,13 +492,13 @@ const FunctionalSkillsModule5Section2 = () => {
                   Practice Question 4 — Area with Wastage
                 </p>
               </div>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 A kitchen is 5.4 m by 3.8 m. Tiles cost £28.50 per square metre and there is a 15%
                 wastage allowance. How much will the tiles cost?
               </p>
               <div className="bg-white/5 rounded-lg p-3 mt-2">
                 <p className="text-xs font-semibold text-green-400 mb-1">Worked Solution</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Step 1: Area = 5.4 x 3.8 = 20.52 m²
                   <br />
                   Step 2: Add 15% wastage = 20.52 x 1.15 = 23.598 m²
@@ -517,13 +517,13 @@ const FunctionalSkillsModule5Section2 = () => {
                   Practice Question 5 — Probability
                 </p>
               </div>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 A box contains 3 red fuses, 5 blue fuses, and 2 green fuses. What is the probability
                 of picking a blue fuse at random? Express as both a fraction and a decimal.
               </p>
               <div className="bg-white/5 rounded-lg p-3 mt-2">
                 <p className="text-xs font-semibold text-green-400 mb-1">Worked Solution</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Total fuses = 3 + 5 + 2 = 10
                   <br />
                   P(blue) = 5/10 = <strong className="text-white">1/2 or 0.5</strong>
@@ -538,13 +538,13 @@ const FunctionalSkillsModule5Section2 = () => {
                   Practice Question 6 — Compound Measures
                 </p>
               </div>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 An electrician drives 84 miles to a job site in 1 hour 45 minutes. What was the
                 average speed in miles per hour?
               </p>
               <div className="bg-white/5 rounded-lg p-3 mt-2">
                 <p className="text-xs font-semibold text-green-400 mb-1">Worked Solution</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Step 1: Convert time to hours = 1 hour 45 min = 1.75 hours
                   <br />
                   Step 2: Speed = distance divided by time = 84 divided by 1.75 ={' '}
@@ -555,7 +555,7 @@ const FunctionalSkillsModule5Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 At Level 2, questions deliberately give you more information than you need, or
                 require you to decide which calculation method to use. Read the question carefully
                 and identify what is actually being asked before you start calculating. Planning
@@ -578,7 +578,7 @@ const FunctionalSkillsModule5Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Level 2 English Format</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Level 2 English demands greater sophistication in both reading comprehension and
               writing. You need to demonstrate analytical skills when reading and persuasive,
@@ -590,7 +590,7 @@ const FunctionalSkillsModule5Section2 = () => {
                 <BookOpen className="w-4 h-4 text-green-400" />
                 <h4 className="text-white font-semibold text-sm">Level 2 Reading Exam</h4>
               </div>
-              <ul className="space-y-2 text-xs text-white/70">
+              <ul className="space-y-2 text-xs text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">•</span>
                   <span>
@@ -626,7 +626,7 @@ const FunctionalSkillsModule5Section2 = () => {
                 <FileText className="w-4 h-4 text-green-400" />
                 <h4 className="text-white font-semibold text-sm">Level 2 Writing Exam</h4>
               </div>
-              <ul className="space-y-2 text-xs text-white/70">
+              <ul className="space-y-2 text-xs text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">•</span>
                   <span>
@@ -665,11 +665,11 @@ const FunctionalSkillsModule5Section2 = () => {
             </p>
             <div className="bg-white/5 border border-white/10 rounded-xl p-4 mt-2">
               <p className="text-xs font-semibold text-green-400 mb-1">Inference Example</p>
-              <p className="text-xs text-white/70 italic mb-2">
+              <p className="text-xs text-white italic mb-2">
                 Text: "The contractor arrived 45 minutes late, offered no apology, and began work
                 without consulting the site plan."
               </p>
-              <p className="text-xs text-white/70">
+              <p className="text-xs text-white">
                 Inference: The writer is criticising the contractor's unprofessional behaviour —
                 this is implied through the negative details chosen, even though the writer never
                 directly says "the contractor was unprofessional."
@@ -684,25 +684,25 @@ const FunctionalSkillsModule5Section2 = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
               <div className="bg-white/5 rounded-lg p-3">
                 <p className="text-xs font-semibold text-green-400 mb-1">P — Point</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   State your main idea or argument clearly in the first sentence
                 </p>
               </div>
               <div className="bg-white/5 rounded-lg p-3">
                 <p className="text-xs font-semibold text-green-400 mb-1">E — Evidence</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Support your point with facts, statistics, examples, or expert opinions
                 </p>
               </div>
               <div className="bg-white/5 rounded-lg p-3">
                 <p className="text-xs font-semibold text-green-400 mb-1">E — Explain</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Explain why this evidence supports your point and why it matters
                 </p>
               </div>
               <div className="bg-white/5 rounded-lg p-3">
                 <p className="text-xs font-semibold text-green-400 mb-1">L — Link</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Link back to your main argument or transition to the next point
                 </p>
               </div>
@@ -710,7 +710,7 @@ const FunctionalSkillsModule5Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 At Level 2, you must use a variety of connectives to link your ideas: however,
                 furthermore, in addition, consequently, nevertheless, moreover, on the other hand.
                 This shows the examiner you can construct a coherent, flowing argument.
@@ -738,7 +738,7 @@ const FunctionalSkillsModule5Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Level 2 English Practice Questions</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               These practice tasks are at Level 2 standard with more complex reading and writing
               requirements. They reflect the types of questions you will encounter in the exam.
@@ -748,7 +748,7 @@ const FunctionalSkillsModule5Section2 = () => {
               <p className="text-xs font-semibold text-green-400 mb-1">
                 Reading Practice — Comparing Sources
               </p>
-              <div className="bg-white/5 rounded-lg p-3 text-xs text-white/70 italic mb-2">
+              <div className="bg-white/5 rounded-lg p-3 text-xs text-white italic mb-2">
                 <p className="mb-1 font-semibold not-italic text-green-400">
                   Source A — Trade Magazine Article
                 </p>
@@ -769,20 +769,20 @@ const FunctionalSkillsModule5Section2 = () => {
                 </p>
               </div>
               <div className="space-y-2">
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">Q1:</strong> How do Source A and Source B differ in
                   their view of the skills shortage?
                 </p>
-                <p className="text-xs text-white/60 ml-4">
+                <p className="text-xs text-white ml-4">
                   Answer: Source A presents a pessimistic outlook, emphasising a long-term crisis
                   and the need for action. Source B is more balanced, acknowledging improvement in
                   apprenticeship numbers whilst noting concerns about training quality.
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">Q2:</strong> Which source is more persuasive, and
                   why?
                 </p>
-                <p className="text-xs text-white/60 ml-4">
+                <p className="text-xs text-white ml-4">
                   Answer: Source B is arguably more persuasive because it uses specific data (8%
                   rise) and presents both sides of the argument, giving it greater credibility.
                   Source A relies on general statements without specific evidence.
@@ -794,7 +794,7 @@ const FunctionalSkillsModule5Section2 = () => {
               <p className="text-xs font-semibold text-green-400 mb-1">
                 Writing Practice — Formal Report
               </p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Write a formal report to your site manager about a health and safety concern you
                 have observed on site. Include a title, introduction explaining the purpose of the
                 report, a description of what you observed, the potential risks, and your
@@ -802,7 +802,7 @@ const FunctionalSkillsModule5Section2 = () => {
               </p>
               <div className="bg-white/5 rounded-lg p-3 mt-2">
                 <p className="text-xs font-semibold text-green-400 mb-1">Model Structure</p>
-                <ul className="space-y-1 text-xs text-white/70">
+                <ul className="space-y-1 text-xs text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-green-400 mt-0.5">•</span>
                     <span>
@@ -850,7 +850,7 @@ const FunctionalSkillsModule5Section2 = () => {
               <p className="text-xs font-semibold text-green-400 mb-1">
                 Writing Practice — Persuasive Article
               </p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Write an article for your college newsletter arguing that all school leavers should
                 consider an apprenticeship in the electrical trade. Use persuasive techniques
                 including statistics, expert opinions, and rhetorical questions.
@@ -859,7 +859,7 @@ const FunctionalSkillsModule5Section2 = () => {
                 <p className="text-xs font-semibold text-green-400 mb-1">
                   Persuasive Techniques to Include
                 </p>
-                <ul className="space-y-1 text-xs text-white/70">
+                <ul className="space-y-1 text-xs text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-green-400 mt-0.5">•</span>
                     <span>
@@ -900,22 +900,22 @@ const FunctionalSkillsModule5Section2 = () => {
               Useful Connectives for Level 2 Writing
             </h4>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-              <div className="bg-white/5 rounded-lg p-2 text-center text-xs text-white/70">
+              <div className="bg-white/5 rounded-lg p-2 text-center text-xs text-white">
                 However
               </div>
-              <div className="bg-white/5 rounded-lg p-2 text-center text-xs text-white/70">
+              <div className="bg-white/5 rounded-lg p-2 text-center text-xs text-white">
                 Furthermore
               </div>
-              <div className="bg-white/5 rounded-lg p-2 text-center text-xs text-white/70">
+              <div className="bg-white/5 rounded-lg p-2 text-center text-xs text-white">
                 Consequently
               </div>
-              <div className="bg-white/5 rounded-lg p-2 text-center text-xs text-white/70">
+              <div className="bg-white/5 rounded-lg p-2 text-center text-xs text-white">
                 Nevertheless
               </div>
-              <div className="bg-white/5 rounded-lg p-2 text-center text-xs text-white/70">
+              <div className="bg-white/5 rounded-lg p-2 text-center text-xs text-white">
                 In addition
               </div>
-              <div className="bg-white/5 rounded-lg p-2 text-center text-xs text-white/70">
+              <div className="bg-white/5 rounded-lg p-2 text-center text-xs text-white">
                 On the other hand
               </div>
             </div>
@@ -935,7 +935,7 @@ const FunctionalSkillsModule5Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Level 2 Digital Skills Format</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               The Level 2 Digital Functional Skills assessment builds on Level 1 with more complex
               tasks. You need to demonstrate greater independence, problem-solving, and the ability
@@ -944,7 +944,7 @@ const FunctionalSkillsModule5Section2 = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="text-white font-semibold text-sm mb-3">Assessment Structure</h4>
-              <ul className="space-y-2 text-xs text-white/70">
+              <ul className="space-y-2 text-xs text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">•</span>
                   <span>
@@ -1006,7 +1006,7 @@ const FunctionalSkillsModule5Section2 = () => {
               <p className="text-xs font-semibold text-green-400 mb-1">
                 Practice Task — Spreadsheet
               </p>
-              <p className="text-xs text-white/70">
+              <p className="text-xs text-white">
                 Create a job costing spreadsheet for a domestic rewire. Include columns for: item
                 description, quantity, unit cost, total cost, and a VAT column that calculates 20%
                 automatically. Use SUM for the subtotal, a formula for VAT calculation, and a grand
@@ -1017,7 +1017,7 @@ const FunctionalSkillsModule5Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 At Level 2, you are expected to evaluate whether information from online sources is
                 reliable and appropriate. Consider who published it, when it was published, whether
                 it is fact or opinion, and whether the source has any bias. This applies to research
@@ -1046,7 +1046,7 @@ const FunctionalSkillsModule5Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Advanced Problem-Solving</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Level 2 problems often require you to combine multiple mathematical skills and
               complete several calculations to reach a final answer. The key difference from Level 1
@@ -1093,7 +1093,7 @@ const FunctionalSkillsModule5Section2 = () => {
                   Complex Problem — Full Quotation
                 </p>
               </div>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 An electrician needs to quote for rewiring a flat. The flat has 4 rooms averaging 12
                 m² each. Cable costs £1.85 per metre and each room needs approximately 15 metres of
                 cable. Labour is £40 per hour and the job will take 16 hours. A consumer unit costs
@@ -1102,7 +1102,7 @@ const FunctionalSkillsModule5Section2 = () => {
               </p>
               <div className="bg-white/5 rounded-lg p-3 mt-2">
                 <p className="text-xs font-semibold text-green-400 mb-1">Worked Solution</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Step 1: Cable needed = 4 rooms x 15 m = 60 m<br />
                   Step 2: Cable cost = 60 x £1.85 = £111.00
                   <br />
@@ -1128,7 +1128,7 @@ const FunctionalSkillsModule5Section2 = () => {
                 <BarChart3 className="w-4 h-4 text-green-400" />
                 <h4 className="text-white font-semibold text-sm">How Marks Are Awarded</h4>
               </div>
-              <ul className="space-y-2 text-xs text-white/70">
+              <ul className="space-y-2 text-xs text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">•</span>
                   <span>
@@ -1163,7 +1163,7 @@ const FunctionalSkillsModule5Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Method marks are your safety net. In a 5-mark multi-step question, the final answer
                 might only be worth 1 mark — the other 4 marks are for showing correct method at
                 each stage. Never skip steps in your working.
@@ -1185,7 +1185,7 @@ const FunctionalSkillsModule5Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Exam Day Preparation</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               What you do in the days and hours before your exam can significantly affect your
               performance. Good preparation reduces anxiety and helps you arrive calm, focused, and
@@ -1273,7 +1273,7 @@ const FunctionalSkillsModule5Section2 = () => {
 
             <h4 className="text-white font-semibold pt-2">Equipment Checklist</h4>
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <ul className="space-y-2 text-xs text-white/70">
+              <ul className="space-y-2 text-xs text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-3.5 h-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>Photo ID (driving licence or passport)</span>
@@ -1317,7 +1317,7 @@ const FunctionalSkillsModule5Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 After the exam, do not dwell on questions you found difficult. You cannot change
                 your answers now. Focus forward — if you have another exam coming up, switch your
                 attention to preparing for that. If it was your last exam, take time to relax and
@@ -1331,26 +1331,26 @@ const FunctionalSkillsModule5Section2 = () => {
                 <p className="text-xs font-semibold text-green-400 mb-1">
                   Weeks 1-2: Foundation Review
                 </p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Revise Level 1 topics. Aim for 90%+ on Level 1 practice papers before moving on.
                 </p>
               </div>
               <div className="bg-white/5 rounded-lg p-3">
                 <p className="text-xs font-semibold text-green-400 mb-1">Weeks 3-4: New Topics</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Learn Level 2 concepts one at a time. Work through examples before attempting
                   questions alone.
                 </p>
               </div>
               <div className="bg-white/5 rounded-lg p-3">
                 <p className="text-xs font-semibold text-green-400 mb-1">Weeks 5-6: Integration</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Practise mixed problems combining L1 and L2 skills. Complete timed sections.
                 </p>
               </div>
               <div className="bg-white/5 rounded-lg p-3">
                 <p className="text-xs font-semibold text-green-400 mb-1">Weeks 7-8: Mock Exams</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Full papers under exam conditions. Focus remaining time on identified weak spots.
                 </p>
               </div>
@@ -1365,7 +1365,7 @@ const FunctionalSkillsModule5Section2 = () => {
         <div className="flex items-center justify-between pt-6 border-t border-white/10">
           <Link
             to="/study-centre/apprentice/functional-skills/module5/section1"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
           >
             <ArrowLeft className="w-4 h-4" />
             Level 1 Practice

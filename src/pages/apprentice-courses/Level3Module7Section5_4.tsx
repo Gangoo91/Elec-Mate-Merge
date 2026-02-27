@@ -263,7 +263,7 @@ const Level3Module7Section5_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section5">
@@ -404,7 +404,7 @@ const Level3Module7Section5_4 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> For a rewire quote, you need to know: property size and
               construction, number of floors, loft access, whether decoration will be done after,
               existing consumer unit condition, and whether the client wants specific products or
@@ -432,15 +432,15 @@ const Level3Module7Section5_4 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Scope</p>
-                <p className="text-white/90 text-xs">What work will be done</p>
+                <p className="text-white text-xs">What work will be done</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Exclusions</p>
-                <p className="text-white/90 text-xs">What's NOT included</p>
+                <p className="text-white text-xs">What's NOT included</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Assumptions</p>
-                <p className="text-white/90 text-xs">What price is based on</p>
+                <p className="text-white text-xs">What price is based on</p>
               </div>
             </div>
 
@@ -508,7 +508,7 @@ const Level3Module7Section5_4 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> During a kitchen rewire, you discover the existing wiring is
               in poorer condition than expected and needs more work. Stop, document the issue with
               photos, explain to the client, provide a written variation price, and only proceed
@@ -586,7 +586,7 @@ const Level3Module7Section5_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -634,7 +634,7 @@ const Level3Module7Section5_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section5-3">

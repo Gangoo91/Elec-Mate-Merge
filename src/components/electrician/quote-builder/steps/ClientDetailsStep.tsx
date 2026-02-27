@@ -98,7 +98,7 @@ export const ClientDetailsStep = ({ client, onUpdate, quoteId }: ClientDetailsSt
   }, [form, onUpdate, customerId, savePromptDismissed]);
 
   const inputClassName =
-    'w-full h-8 bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white/50 caret-elec-yellow';
+    'w-full h-8 bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white caret-elec-yellow';
   const darkStyle: React.CSSProperties = {
     colorScheme: 'dark',
   };

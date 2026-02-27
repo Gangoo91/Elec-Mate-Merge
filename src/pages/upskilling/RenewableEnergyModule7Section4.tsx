@@ -258,7 +258,7 @@ const RenewableEnergyModule7Section4 = () => {
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
           Fault-Finding in Renewable Systems
         </h1>
-        <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+        <p className="text-white text-sm sm:text-base max-w-xl mx-auto">
           Systematic diagnostic techniques for PV, battery, and inverter systems
         </p>
       </div>
@@ -307,7 +307,7 @@ const RenewableEnergyModule7Section4 = () => {
           ].map((outcome, index) => (
             <div key={index} className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
-              <span className="text-white/80 text-sm">{outcome}</span>
+              <span className="text-white text-sm">{outcome}</span>
             </div>
           ))}
         </div>
@@ -320,7 +320,7 @@ const RenewableEnergyModule7Section4 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">01</span>
             <h2 className="text-xl font-semibold text-white">Systematic Fault-Finding Approach</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Effective fault-finding follows a systematic approach rather than random component
               replacement, saving time and avoiding unnecessary costs.
@@ -354,7 +354,7 @@ const RenewableEnergyModule7Section4 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">02</span>
             <h2 className="text-xl font-semibold text-white">PV Array Fault Diagnosis</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Array faults can be identified through voltage and current measurements combined with
               visual inspection and thermal imaging.
@@ -388,7 +388,7 @@ const RenewableEnergyModule7Section4 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">03</span>
             <h2 className="text-xl font-semibold text-white">Inverter Fault Diagnosis</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Inverters provide error codes and data that guide diagnosis, but symptoms must be
               interpreted in context rather than taken at face value.
@@ -423,7 +423,7 @@ const RenewableEnergyModule7Section4 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">04</span>
             <h2 className="text-xl font-semibold text-white">Battery System Fault Diagnosis</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Battery fault diagnosis requires particular care due to the safety hazards associated
               with battery systems.
@@ -457,7 +457,7 @@ const RenewableEnergyModule7Section4 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">05</span>
             <h2 className="text-xl font-semibold text-white">Post-Repair Verification</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Thorough verification after repairs ensures the fault is fully resolved and the system
               can be safely returned to service.
@@ -488,7 +488,7 @@ const RenewableEnergyModule7Section4 = () => {
             <Zap className="w-4 h-4 text-elec-yellow" />
             Practical Guidance
           </h3>
-          <div className="space-y-2 text-white/80 text-sm">
+          <div className="space-y-2 text-white text-sm">
             <p>
               <span className="text-white font-medium">Check simple causes first:</span> Soiling,
               tripped isolators, and loose connections cause more problems than component failures.
@@ -514,7 +514,7 @@ const RenewableEnergyModule7Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <h3 className="text-white font-medium mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>

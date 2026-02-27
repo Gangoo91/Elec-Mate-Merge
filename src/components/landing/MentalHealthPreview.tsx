@@ -63,7 +63,7 @@ export const MentalHealthPreview = () => {
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
             Your Wellbeing <span className="text-pink-400">Matters</span>
           </h2>
-          <p className="text-white/70 max-w-2xl mx-auto">
+          <p className="text-white max-w-2xl mx-auto">
             The electrical trade can be tough. Our Mental Health Hub gives you the tools, support,
             and community to look after yourself - because you can't pour from an empty cup.
           </p>
@@ -85,7 +85,7 @@ export const MentalHealthPreview = () => {
                 <feature.icon className={`w-6 h-6 ${feature.color}`} />
               </div>
               <h3 className="font-semibold text-white mb-1">{feature.title}</h3>
-              <p className="text-sm text-white/60">{feature.description}</p>
+              <p className="text-sm text-white">{feature.description}</p>
             </motion.div>
           ))}
         </div>
@@ -99,15 +99,15 @@ export const MentalHealthPreview = () => {
         >
           <div className="text-center">
             <div className="text-2xl sm:text-3xl font-bold text-pink-400">24/7</div>
-            <div className="text-xs sm:text-sm text-white/60">AI Support</div>
+            <div className="text-xs sm:text-sm text-white">AI Support</div>
           </div>
           <div className="text-center">
             <div className="text-2xl sm:text-3xl font-bold text-purple-400">100%</div>
-            <div className="text-xs sm:text-sm text-white/60">Confidential</div>
+            <div className="text-xs sm:text-sm text-white">Confidential</div>
           </div>
           <div className="text-center">
             <div className="text-2xl sm:text-3xl font-bold text-indigo-400">Free</div>
-            <div className="text-xs sm:text-sm text-white/60">For All Users</div>
+            <div className="text-xs sm:text-sm text-white">For All Users</div>
           </div>
         </motion.div>
 

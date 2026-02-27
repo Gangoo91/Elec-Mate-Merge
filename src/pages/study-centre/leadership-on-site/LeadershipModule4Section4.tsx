@@ -196,7 +196,7 @@ export default function LeadershipModule4Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-4-section-3">
@@ -219,7 +219,7 @@ export default function LeadershipModule4Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Taking Responsibility and Accountability
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The difference between responsibility and accountability, checking your assumptions,
             owning your mistakes, and building a culture where people learn from errors
           </p>
@@ -306,7 +306,7 @@ export default function LeadershipModule4Section4() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-lg font-bold text-rose-400">Responsibility</p>
-                    <p className="text-white/80 mt-1">
+                    <p className="text-white mt-1">
                       Who <strong className="text-white">does</strong> the task. Responsibility{' '}
                       <strong className="text-white">can be delegated</strong>. You assign an
                       electrician to install a distribution board &mdash; they are responsible for
@@ -315,7 +315,7 @@ export default function LeadershipModule4Section4() {
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-lg font-bold text-rose-400">Accountability</p>
-                    <p className="text-white/80 mt-1">
+                    <p className="text-white mt-1">
                       Who <strong className="text-white">answers for the outcome</strong>.
                       Accountability <strong className="text-white">cannot be delegated</strong>. As
                       the supervisor, you are accountable for the quality, safety, and timeliness of
@@ -338,7 +338,7 @@ export default function LeadershipModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">What This Means in Practice</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -377,7 +377,7 @@ export default function LeadershipModule4Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Common Accountability Failures
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -418,7 +418,7 @@ export default function LeadershipModule4Section4() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">The Delegation Trap</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Some supervisors confuse delegation with abdication.{' '}
                   <strong className="text-white">Delegation</strong> means assigning a task with
                   clear expectations, providing the right support, and following up to check
@@ -510,7 +510,7 @@ export default function LeadershipModule4Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   The Reflexive Loop &mdash; Construction Example
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   A supervisor sees a worker on their phone during working hours. They assume the
                   worker is not working. They give them a bollocking. But the worker was checking
                   the drawing on the project app. The supervisor&rsquo;s{' '}
@@ -570,7 +570,7 @@ export default function LeadershipModule4Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   What Owning Mistakes Looks Like in Practice
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -597,7 +597,7 @@ export default function LeadershipModule4Section4() {
                     </span>
                   </li>
                 </ul>
-                <p className="text-sm text-white/80 mt-2">
+                <p className="text-sm text-white mt-2">
                   Notice the pattern: acknowledge the error, state the impact, present the solution.
                   This is how leaders communicate when things go wrong &mdash; concisely, honestly,
                   and with a clear path forward.
@@ -611,7 +611,7 @@ export default function LeadershipModule4Section4() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <p className="text-red-400 font-semibold text-sm mb-2">Blame Culture</p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                         <span>People hide mistakes until they become crises</span>
@@ -634,7 +634,7 @@ export default function LeadershipModule4Section4() {
                     <p className="text-green-400 font-semibold text-sm mb-2">
                       Accountability Culture
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                         <span>Problems surface early when they are still manageable</span>
@@ -682,7 +682,7 @@ export default function LeadershipModule4Section4() {
                 <div className="space-y-3 text-sm">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">1. Set Clear Standards</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       People cannot meet expectations they do not know about. Be explicit about what
                       &ldquo;good&rdquo; looks like &mdash; quality, timescale, safety requirements,
                       and documentation. Vague standards produce vague results.
@@ -690,7 +690,7 @@ export default function LeadershipModule4Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">2. Communicate Them</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Ensure the team genuinely understands the standards, not just that they were
                       told once. Check understanding: &ldquo;Can you talk me through what you are
                       going to do?&rdquo; is more effective than &ldquo;Do you understand?&rdquo;
@@ -698,7 +698,7 @@ export default function LeadershipModule4Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">3. Follow Up</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Check whether the standards are being met. Walk the job, inspect the work,
                       review progress. Accountability without follow-up is meaningless &mdash;
                       people quickly learn which supervisors check and which do not.
@@ -706,7 +706,7 @@ export default function LeadershipModule4Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">4. Address Shortfalls Promptly</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       When standards are not met, address it immediately and directly. Delay makes
                       the conversation harder and sends the message that the standard is optional.
                       Be specific about the gap and what needs to change.
@@ -716,7 +716,7 @@ export default function LeadershipModule4Section4() {
                     <p className="text-white font-medium mb-1">
                       5. Apply Consequences Consistently
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       The same standards, the same follow-up, and the same consequences for
                       everyone. No favourites, no exceptions. This is the hardest step and the most
                       important.
@@ -730,7 +730,7 @@ export default function LeadershipModule4Section4() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">The Consistency Principle</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The worst thing you can do is hold some people accountable while letting others
                   slide. This destroys team trust faster than almost anything. If two electricians
                   produce the same quality of work but only one gets pulled up, the message is
@@ -746,10 +746,10 @@ export default function LeadershipModule4Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Accountability Conversations &mdash; A Practical Approach
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   When you need to address a shortfall, keep the conversation structured:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -813,42 +813,42 @@ export default function LeadershipModule4Section4() {
                   <Users className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Just Culture (Sidney Dekker)</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Not every mistake is a disciplinary matter. Just Culture provides a framework for
                   responding appropriately to different types of behaviour:
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-green-400 font-medium mb-1">Human Error</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Unintentional mistakes &mdash; slips, lapses, misunderstandings. The person
                       did not intend to make an error.
                     </p>
                     <p className="text-green-400 text-xs font-semibold mt-2">Response: CONSOLE</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Support the person, fix the error, improve the system to prevent recurrence.
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-amber-400 font-medium mb-1">At-Risk Behaviour</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Conscious choices where the risk is not appreciated or has become normalised.
                       Taking shortcuts that &ldquo;everyone does.&rdquo;
                     </p>
                     <p className="text-amber-400 text-xs font-semibold mt-2">Response: COACH</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Help the person understand the risk, why the shortcut is dangerous, and change
                       the behaviour.
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-red-400 font-medium mb-1">Reckless Behaviour</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Deliberate, conscious disregard of a known, substantial risk. The person knew
                       the risk and chose to proceed anyway.
                     </p>
                     <p className="text-red-400 text-xs font-semibold mt-2">Response: DISCIPLINE</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Formal action is appropriate. This is the only category where punishment is
                       the right response.
                     </p>
@@ -860,14 +860,14 @@ export default function LeadershipModule4Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Psychological Safety (Amy Edmondson)
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Harvard professor Amy Edmondson&rsquo;s research shows that{' '}
                   <strong className="text-white">psychological safety</strong> &mdash; the belief
                   that you will not be punished or humiliated for speaking up, asking questions, or
                   admitting mistakes &mdash; is the foundation of learning organisations and
                   high-performing teams.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -922,7 +922,7 @@ export default function LeadershipModule4Section4() {
                 section are:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -988,7 +988,7 @@ export default function LeadershipModule4Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1002,7 +1002,7 @@ export default function LeadershipModule4Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-4-section-3">

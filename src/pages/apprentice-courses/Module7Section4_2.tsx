@@ -230,7 +230,7 @@ const Module7Section4_2 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -248,13 +248,13 @@ const Module7Section4_2 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 7</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 4.2</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 4.2</span>
             </div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
               Understanding the Sequence of Operation
             </h1>
-            <p className="text-white/80 text-base sm:text-lg max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg max-w-2xl mx-auto">
               Analysing how electrical circuits should function normally to identify where faults
               occur.
             </p>
@@ -263,7 +263,7 @@ const Module7Section4_2 = () => {
           {/* In 30 Seconds Summary */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 space-y-1 text-sm">
+            <ul className="text-white space-y-1 text-sm">
               <li>
                 • Understanding normal circuit operation is essential for effective fault diagnosis.
               </li>
@@ -283,7 +283,7 @@ const Module7Section4_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Learning Outcomes
             </h2>
-            <ul className="text-white/80 space-y-2 leading-relaxed">
+            <ul className="text-white space-y-2 leading-relaxed">
               <li>• Explain what sequence of operation means in electrical systems.</li>
               <li>• Describe how understanding normal operation aids fault diagnosis.</li>
               <li>• Analyse simple and complex circuit operational sequences.</li>
@@ -298,7 +298,7 @@ const Module7Section4_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Understanding Sequence of Operation
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 The sequence of operation describes the intended flow of electrical events in a
                 circuit, from initial energisation through normal operation to controlled shutdown.
@@ -364,7 +364,7 @@ const Module7Section4_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Simple Circuit Operational Sequences
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Basic circuits follow predictable sequences that form the foundation for
                 understanding complex systems. Mastering these fundamental patterns enables
@@ -445,7 +445,7 @@ const Module7Section4_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Complex Control System Sequences
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Industrial and commercial systems involve intricate sequences with multiple decision
                 points, safety interlocks, and coordinated operations that require systematic
@@ -530,7 +530,7 @@ const Module7Section4_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Applying Sequence Analysis to Fault Finding
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Understanding normal sequences allows systematic identification of where faults
                 interrupt expected operation.
@@ -589,7 +589,7 @@ const Module7Section4_2 = () => {
               </p>
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
-                  <p className="font-medium text-white/90 mb-2">Reported Problem:</p>
+                  <p className="font-medium text-white mb-2">Reported Problem:</p>
                   <ul className="space-y-1 list-disc pl-4">
                     <li>Conveyor belt stops randomly during operation</li>
                     <li>No obvious pattern to failures</li>
@@ -598,7 +598,7 @@ const Module7Section4_2 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium text-white/90 mb-2">Sequence Analysis Applied:</p>
+                  <p className="font-medium text-white mb-2">Sequence Analysis Applied:</p>
                   <ol className="space-y-1 list-decimal pl-4">
                     <li>Traced expected sequence from start to stop</li>
                     <li>Identified sequence broke at safety guard verification</li>
@@ -628,7 +628,7 @@ const Module7Section4_2 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
                   <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                  <p className="text-sm text-white/70">{faq.answer}</p>
+                  <p className="text-sm text-white">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -643,7 +643,7 @@ const Module7Section4_2 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-3">Key Takeaways</h3>
-                <ul className="text-sm text-white/70 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li>• Sequence of operation describes how systems should function normally</li>
                   <li>• Understanding normal flow helps identify where faults occur</li>
                   <li>• Simple circuits provide foundation for complex system analysis</li>
@@ -652,7 +652,7 @@ const Module7Section4_2 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-3">Remember</h3>
-                <ul className="text-sm text-white/70 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li>• Map sequences before starting fault diagnosis</li>
                   <li>• Follow logical progression through systems</li>
                   <li>• Any deviation indicates potential fault location</li>
@@ -671,7 +671,7 @@ const Module7Section4_2 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mt-10 pt-6 border-t border-white/10">
             <Button
               variant="ghost"
-              className="w-full sm:w-auto text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="w-full sm:w-auto text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../4-1">

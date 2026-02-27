@@ -246,7 +246,7 @@ const HNCModule8Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section2">
@@ -268,7 +268,7 @@ const HNCModule8Section2_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Air Handling Units
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             AHU components, configurations, coil selection, filtration and acoustic considerations
           </p>
         </header>
@@ -469,8 +469,8 @@ const HNCModule8Section2_2 = () => {
               </p>
               <div className="grid grid-cols-2 gap-4 text-sm">
                 <div>
-                  <p className="text-white/80">Volume Control Dampers:</p>
-                  <ul className="text-white/70 space-y-1 mt-2">
+                  <p className="text-white">Volume Control Dampers:</p>
+                  <ul className="text-white space-y-1 mt-2">
                     <li>• Opposed blade - linear characteristic</li>
                     <li>• Parallel blade - quick acting</li>
                     <li>• Modulating for flow control</li>
@@ -478,8 +478,8 @@ const HNCModule8Section2_2 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-white/80">Fire and Smoke Dampers:</p>
-                  <ul className="text-white/70 space-y-1 mt-2">
+                  <p className="text-white">Fire and Smoke Dampers:</p>
+                  <ul className="text-white space-y-1 mt-2">
                     <li>• Fire dampers - fusible link/motorised</li>
                     <li>• Smoke dampers - BMS controlled</li>
                     <li>• Combined fire/smoke dampers</li>
@@ -585,15 +585,15 @@ const HNCModule8Section2_2 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Coil Capacity Calculation
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Sensible heat transfer:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Sensible heat transfer:</p>
                 <p>Q = m × Cp × ΔT</p>
                 <p className="mt-2">Where:</p>
                 <p>Q = Heat transfer rate (kW)</p>
                 <p>m = Mass flow rate of air (kg/s)</p>
                 <p>Cp = Specific heat capacity (1.02 kJ/kg·K for air)</p>
                 <p>ΔT = Temperature difference (K or °C)</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Example: 2.5 m³/s at 1.2 kg/m³, heating from 10°C to 20°C
                 </p>
                 <p>m = 2.5 × 1.2 = 3.0 kg/s</p>
@@ -714,7 +714,7 @@ const HNCModule8Section2_2 = () => {
               <div className="grid sm:grid-cols-3 gap-4 text-sm">
                 <div>
                   <p className="text-white font-medium mb-1">Stage 1: Pre-filter</p>
-                  <ul className="text-white/70 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>• G4 panel or bag filter</li>
                     <li>• Removes coarse particles (&gt;10μm)</li>
                     <li>• Protects main filter</li>
@@ -724,7 +724,7 @@ const HNCModule8Section2_2 = () => {
                 </div>
                 <div>
                   <p className="text-white font-medium mb-1">Stage 2: Main Filter</p>
-                  <ul className="text-white/70 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>• F7 or F9 bag/compact filter</li>
                     <li>• Removes fine particles (1-10μm)</li>
                     <li>• Main air quality protection</li>
@@ -734,7 +734,7 @@ const HNCModule8Section2_2 = () => {
                 </div>
                 <div>
                   <p className="text-white font-medium mb-1">Stage 3: Final Filter</p>
-                  <ul className="text-white/70 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>• HEPA terminal filter</li>
                     <li>• Removes ultrafine particles</li>
                     <li>• Critical applications only</li>
@@ -905,8 +905,8 @@ const HNCModule8Section2_2 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">Noise Transmission Paths</p>
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
-                  <p className="text-white/80">Airborne Paths:</p>
-                  <ul className="text-white/70 space-y-1 mt-2">
+                  <p className="text-white">Airborne Paths:</p>
+                  <ul className="text-white space-y-1 mt-2">
                     <li>• Supply ductwork to diffusers</li>
                     <li>• Return ductwork from grilles</li>
                     <li>• AHU casing breakout</li>
@@ -914,8 +914,8 @@ const HNCModule8Section2_2 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-white/80">Structure-borne Paths:</p>
-                  <ul className="text-white/70 space-y-1 mt-2">
+                  <p className="text-white">Structure-borne Paths:</p>
+                  <ul className="text-white space-y-1 mt-2">
                     <li>• Fan vibration through mounts</li>
                     <li>• Ductwork connections</li>
                     <li>• Pipework connections</li>
@@ -991,7 +991,7 @@ const HNCModule8Section2_2 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-white font-medium mb-1">Power Components</p>
-                  <ul className="text-white/80 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>• Main isolator (lockable)</li>
                     <li>• Motor starters or VSDs</li>
                     <li>• Motor protection (overload, phase loss)</li>
@@ -1001,7 +1001,7 @@ const HNCModule8Section2_2 = () => {
                 </div>
                 <div>
                   <p className="text-white font-medium mb-1">Control Components</p>
-                  <ul className="text-white/80 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>• BMS interface (BACnet/Modbus)</li>
                     <li>• Safety interlock relay</li>
                     <li>• Fire alarm interface</li>
@@ -1086,7 +1086,7 @@ const HNCModule8Section2_2 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-white font-medium mb-1">Draw-Through Configuration</p>
-                  <ul className="text-white/80 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>• Fan downstream of coils/filters</li>
                     <li>• Coil section under negative pressure</li>
                     <li>• More even airflow across coil face</li>
@@ -1096,7 +1096,7 @@ const HNCModule8Section2_2 = () => {
                 </div>
                 <div>
                   <p className="text-white font-medium mb-1">Blow-Through Configuration</p>
-                  <ul className="text-white/80 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>• Fan upstream of coils/filters</li>
                     <li>• Coil section under positive pressure</li>
                     <li>• Fan heat absorbed by coils</li>
@@ -1203,8 +1203,8 @@ const HNCModule8Section2_2 = () => {
 
             <div className="p-4 rounded-lg bg-white/5">
               <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Commissioning Tests</h3>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">AHU Commissioning Record</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">AHU Commissioning Record</p>
                 <p className="mt-2">AHU Reference: _____________ Location: _____________</p>
                 <p className="mt-2">Test | Design | Measured | Acceptable</p>
                 <p>-----|--------|----------|----------</p>
@@ -1216,7 +1216,7 @@ const HNCModule8Section2_2 = () => {
                 <p>Cooling coil on/off (°C) | ___/__ | ___/__ | ±1°C</p>
                 <p>Fresh air % | _____ | _____ | Per design</p>
                 <p>Noise level (dB(A)) | _____ | _____ | Per spec</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Safety interlocks tested: Fire □ Frost □ Smoke □ Filter □
                 </p>
               </div>
@@ -1257,7 +1257,7 @@ const HNCModule8Section2_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1321,7 +1321,7 @@ const HNCModule8Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section2">

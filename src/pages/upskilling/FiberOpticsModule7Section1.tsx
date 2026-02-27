@@ -235,7 +235,7 @@ const FiberOpticsModule7Section1 = () => {
             <ArrowLeft className="w-5 h-5" />
             <span className="font-medium">Module 7</span>
           </Link>
-          <span className="text-white/50 text-sm">Section 1 of 5</span>
+          <span className="text-white text-sm">Section 1 of 5</span>
         </div>
       </div>
 
@@ -248,7 +248,7 @@ const FiberOpticsModule7Section1 = () => {
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
             Common Fibre Faults and Symptoms
           </h1>
-          <p className="text-white/70 text-lg">
+          <p className="text-white text-lg">
             Recognise the signs of fibre problems and understand their root causes
           </p>
         </div>
@@ -261,12 +261,12 @@ const FiberOpticsModule7Section1 = () => {
             <div className="bg-[#252525] rounded-lg p-4 border border-white/10">
               <AlertTriangle className="w-6 h-6 text-amber-500 mb-2" />
               <h3 className="text-white font-semibold text-sm mb-1">Fault Types</h3>
-              <p className="text-white/60 text-xs">Bends, breaks, contamination, splices</p>
+              <p className="text-white text-xs">Bends, breaks, contamination, splices</p>
             </div>
             <div className="bg-[#252525] rounded-lg p-4 border border-white/10">
               <Search className="w-6 h-6 text-elec-yellow mb-2" />
               <h3 className="text-white font-semibold text-sm mb-1">Diagnosis</h3>
-              <p className="text-white/60 text-xs">Symptoms, testing, and root cause analysis</p>
+              <p className="text-white text-xs">Symptoms, testing, and root cause analysis</p>
             </div>
           </div>
 
@@ -286,7 +286,7 @@ const FiberOpticsModule7Section1 = () => {
               ].map((outcome, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-white/80">{outcome}</span>
+                  <span className="text-white">{outcome}</span>
                 </li>
               ))}
             </ul>
@@ -299,7 +299,7 @@ const FiberOpticsModule7Section1 = () => {
               Overview of Fibre Faults
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 Fibre optic faults fall into several categories, each with characteristic symptoms
                 and causes. Understanding these categories helps you diagnose problems quickly and
@@ -317,7 +317,7 @@ const FiberOpticsModule7Section1 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Complete Breaks</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Total signal loss - fibre is physically severed
                     </p>
                   </div>
@@ -328,7 +328,7 @@ const FiberOpticsModule7Section1 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Bend Losses</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Increased attenuation from macrobends or microbends
                     </p>
                   </div>
@@ -339,7 +339,7 @@ const FiberOpticsModule7Section1 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Connector Problems</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Contamination, damage, or poor mating causing loss
                     </p>
                   </div>
@@ -350,7 +350,7 @@ const FiberOpticsModule7Section1 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Splice Failures</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Poor fusion splices, failed mechanical splices
                     </p>
                   </div>
@@ -361,7 +361,7 @@ const FiberOpticsModule7Section1 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Cable Damage</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Crush, impact, water ingress, rodent damage
                     </p>
                   </div>
@@ -375,7 +375,7 @@ const FiberOpticsModule7Section1 = () => {
                 <Zap className="w-4 h-4 text-elec-yellow" />
                 The Number One Cause
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 <strong className="text-white">Connector contamination</strong> is consistently
                 identified as the leading cause of fibre optic link problems. Proper inspection and
                 cleaning practices prevent the majority of field failures.
@@ -390,7 +390,7 @@ const FiberOpticsModule7Section1 = () => {
               Macrobend Losses
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 <strong className="text-white">Macrobends</strong> are visible bends in the fibre
                 that exceed the minimum bend radius. When fibre is bent too sharply, light escapes
@@ -403,18 +403,18 @@ const FiberOpticsModule7Section1 = () => {
             <div className="bg-[#252525] rounded-lg p-5 border border-white/10 mb-6">
               <h4 className="font-semibold text-white mb-4">How Macrobend Loss Occurs</h4>
               <div className="bg-[#1a1a1a] p-4 rounded-lg mb-4">
-                <p className="text-white/60 text-sm text-center mb-2">
+                <p className="text-white text-sm text-center mb-2">
                   Light Ray Behaviour at a Bend
                 </p>
-                <div className="font-mono text-sm text-white/80 text-center">
+                <div className="font-mono text-sm text-white text-center">
                   <p>Normal fibre: Light reflects at core/cladding boundary</p>
-                  <p className="text-white/40 my-2">↓</p>
+                  <p className="text-white my-2">↓</p>
                   <p>Tight bend: Angle becomes too steep</p>
-                  <p className="text-white/40 my-2">↓</p>
+                  <p className="text-white my-2">↓</p>
                   <p className="text-red-400">Light escapes into cladding → LOSS</p>
                 </div>
               </div>
-              <p className="text-white/60 text-sm">
+              <p className="text-white text-sm">
                 The minimum bend radius depends on fibre type, wavelength, and whether the bend is
                 during installation (can be tighter) or long-term (must be larger to prevent
                 fatigue).
@@ -428,14 +428,14 @@ const FiberOpticsModule7Section1 = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Fibre Type</th>
-                      <th className="text-center py-2 px-3 text-white/60 font-medium">
+                      <th className="text-left py-2 px-3 text-white font-medium">Fibre Type</th>
+                      <th className="text-center py-2 px-3 text-white font-medium">
                         Installation
                       </th>
-                      <th className="text-center py-2 px-3 text-white/60 font-medium">Long-term</th>
+                      <th className="text-center py-2 px-3 text-white font-medium">Long-term</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">Standard SM (G.652)</td>
                       <td className="py-2 px-3 text-center">30mm</td>
@@ -467,7 +467,7 @@ const FiberOpticsModule7Section1 = () => {
                 <AlertTriangle className="w-4 h-4" />
                 Common Causes of Macrobends
               </h4>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>• Tight bends behind patch panels or in cabinets</li>
                 <li>• Fibre routed around sharp corners without proper radius formers</li>
                 <li>• Cable ties or clips crushing the cable into tight bends</li>
@@ -491,7 +491,7 @@ const FiberOpticsModule7Section1 = () => {
               Microbend Losses
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 <strong className="text-white">Microbends</strong> are small, localised deformations
                 of the fibre axis that are typically invisible to the naked eye. They cause loss by
@@ -504,23 +504,23 @@ const FiberOpticsModule7Section1 = () => {
               <ul className="space-y-3">
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-white/70">
+                  <span className="text-white">
                     Small axial displacements (micrometres) along the fibre
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-white/70">
+                  <span className="text-white">
                     Typically not visible—detected by loss measurements
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-white/70">Cumulative effect—many small bends add up</span>
+                  <span className="text-white">Cumulative effect—many small bends add up</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-white/70">
+                  <span className="text-white">
                     Can appear distributed on OTDR traces (increased slope)
                   </span>
                 </li>
@@ -533,7 +533,7 @@ const FiberOpticsModule7Section1 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="space-y-2">
                   <h5 className="text-elec-yellow font-medium text-sm">Installation Issues</h5>
-                  <ul className="text-white/60 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>• Over-tightened cable ties</li>
                     <li>• Fibre trapped under other cables</li>
                     <li>• Rough surfaces in conduit</li>
@@ -542,7 +542,7 @@ const FiberOpticsModule7Section1 = () => {
                 </div>
                 <div className="space-y-2">
                   <h5 className="text-elec-yellow font-medium text-sm">Environmental Factors</h5>
-                  <ul className="text-white/60 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>• Thermal expansion/contraction</li>
                     <li>• External pressure on cables</li>
                     <li>• Moisture causing jacket shrinkage</li>
@@ -558,7 +558,7 @@ const FiberOpticsModule7Section1 = () => {
                 <BookOpen className="w-4 h-4" />
                 Wavelength Sensitivity
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Both macrobends and microbends cause greater loss at longer wavelengths (1550nm,
                 1625nm) than shorter wavelengths (1310nm). This wavelength-dependent behaviour is a
                 key diagnostic indicator. If a link shows significantly higher loss at 1550nm than
@@ -581,7 +581,7 @@ const FiberOpticsModule7Section1 = () => {
               Connector Faults
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 Connectors are the most vulnerable points in a fibre link because they expose the
                 fibre end-face to contamination and mechanical damage. Understanding connector
@@ -595,39 +595,39 @@ const FiberOpticsModule7Section1 = () => {
               <div className="space-y-4">
                 <div className="border-b border-white/10 pb-4">
                   <h5 className="text-red-400 font-medium mb-2">Contamination</h5>
-                  <p className="text-white/60 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     Dust, oils, fingerprints, cleaning residue on end-face
                   </p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     <strong>Symptoms:</strong> Elevated insertion loss, high reflectance,
                     intermittent failures
                   </p>
                 </div>
                 <div className="border-b border-white/10 pb-4">
                   <h5 className="text-red-400 font-medium mb-2">Scratches and Damage</h5>
-                  <p className="text-white/60 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     Scratches, chips, cracks, or pits on end-face surface
                   </p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     <strong>Symptoms:</strong> High loss (especially if across core), high
                     reflectance, link failure
                   </p>
                 </div>
                 <div className="border-b border-white/10 pb-4">
                   <h5 className="text-red-400 font-medium mb-2">Physical Contact Failure</h5>
-                  <p className="text-white/60 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     Connectors not fully seated, worn springs, damaged ferrules
                   </p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     <strong>Symptoms:</strong> Very high reflectance (air gap), intermittent loss
                   </p>
                 </div>
                 <div className="pb-2">
                   <h5 className="text-red-400 font-medium mb-2">Fibre Protrusion or Recession</h5>
-                  <p className="text-white/60 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     Fibre extending past ferrule (protrusion) or recessed below surface
                   </p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     <strong>Symptoms:</strong> Damage to mating connector, high loss, contamination
                     trapping
                   </p>
@@ -643,21 +643,21 @@ const FiberOpticsModule7Section1 = () => {
               <div className="grid grid-cols-3 gap-3 text-center">
                 <div className="bg-red-500/20 p-3 rounded-lg border border-red-500/30">
                   <div className="text-red-400 font-bold mb-1">Core</div>
-                  <div className="text-white/60 text-xs">0-25µm SM</div>
-                  <div className="text-white/60 text-xs">0-65µm MM</div>
-                  <div className="text-white/80 text-xs mt-2">No defects allowed</div>
+                  <div className="text-white text-xs">0-25µm SM</div>
+                  <div className="text-white text-xs">0-65µm MM</div>
+                  <div className="text-white text-xs mt-2">No defects allowed</div>
                 </div>
                 <div className="bg-amber-500/20 p-3 rounded-lg border border-amber-500/30">
                   <div className="text-amber-400 font-bold mb-1">Cladding</div>
-                  <div className="text-white/60 text-xs">25-120µm SM</div>
-                  <div className="text-white/60 text-xs">65-120µm MM</div>
-                  <div className="text-white/80 text-xs mt-2">Limited defects OK</div>
+                  <div className="text-white text-xs">25-120µm SM</div>
+                  <div className="text-white text-xs">65-120µm MM</div>
+                  <div className="text-white text-xs mt-2">Limited defects OK</div>
                 </div>
                 <div className="bg-green-500/20 p-3 rounded-lg border border-green-500/30">
                   <div className="text-green-400 font-bold mb-1">Contact</div>
-                  <div className="text-white/60 text-xs">120-250µm</div>
-                  <div className="text-white/60 text-xs">(ferrule area)</div>
-                  <div className="text-white/80 text-xs mt-2">Scratches acceptable</div>
+                  <div className="text-white text-xs">120-250µm</div>
+                  <div className="text-white text-xs">(ferrule area)</div>
+                  <div className="text-white text-xs mt-2">Scratches acceptable</div>
                 </div>
               </div>
             </div>
@@ -677,7 +677,7 @@ const FiberOpticsModule7Section1 = () => {
               Splice Faults
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 Splices (both fusion and mechanical) can fail due to poor execution, environmental
                 stress, or equipment problems. Understanding splice failure modes helps diagnose
@@ -692,36 +692,36 @@ const FiberOpticsModule7Section1 = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Problem</th>
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Cause</th>
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Result</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">Problem</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">Cause</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">Result</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">Poor cleave quality</td>
-                      <td className="py-2 px-3 text-white/60">Dirty/worn cleaver blade</td>
-                      <td className="py-2 px-3 text-white/60">High loss splice</td>
+                      <td className="py-2 px-3 text-white">Dirty/worn cleaver blade</td>
+                      <td className="py-2 px-3 text-white">High loss splice</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">Contamination</td>
-                      <td className="py-2 px-3 text-white/60">Dirt on fibre end-face</td>
-                      <td className="py-2 px-3 text-white/60">Air bubbles, weak joint</td>
+                      <td className="py-2 px-3 text-white">Dirt on fibre end-face</td>
+                      <td className="py-2 px-3 text-white">Air bubbles, weak joint</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">Core misalignment</td>
-                      <td className="py-2 px-3 text-white/60">Splicer alignment failure</td>
-                      <td className="py-2 px-3 text-white/60">High loss</td>
+                      <td className="py-2 px-3 text-white">Splicer alignment failure</td>
+                      <td className="py-2 px-3 text-white">High loss</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">Weak splice</td>
-                      <td className="py-2 px-3 text-white/60">Wrong arc parameters</td>
-                      <td className="py-2 px-3 text-white/60">Breaks under stress</td>
+                      <td className="py-2 px-3 text-white">Wrong arc parameters</td>
+                      <td className="py-2 px-3 text-white">Breaks under stress</td>
                     </tr>
                     <tr>
                       <td className="py-2 px-3">Excess arc current</td>
-                      <td className="py-2 px-3 text-white/60">Burnt/thinned fibre</td>
-                      <td className="py-2 px-3 text-white/60">Weak, potentially high loss</td>
+                      <td className="py-2 px-3 text-white">Burnt/thinned fibre</td>
+                      <td className="py-2 px-3 text-white">Weak, potentially high loss</td>
                     </tr>
                   </tbody>
                 </table>
@@ -736,7 +736,7 @@ const FiberOpticsModule7Section1 = () => {
                   <XCircle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Index matching gel degradation</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Gel can dry out or degrade over time, increasing loss and reflectance
                     </p>
                   </div>
@@ -745,7 +745,7 @@ const FiberOpticsModule7Section1 = () => {
                   <XCircle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Fibre pullout</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Insufficient clamping allows fibre to pull free under tension
                     </p>
                   </div>
@@ -754,7 +754,7 @@ const FiberOpticsModule7Section1 = () => {
                   <XCircle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Contamination</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Dirt trapped in splice during assembly causes loss
                     </p>
                   </div>
@@ -770,7 +770,7 @@ const FiberOpticsModule7Section1 = () => {
               Cable Damage Types
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 Fibre cables can suffer various types of physical damage that affect optical
                 performance. Recognising damage types helps determine the appropriate repair
@@ -788,7 +788,7 @@ const FiberOpticsModule7Section1 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Crushing</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Heavy objects on cable, over-tightened ties, vehicle damage. Causes microbends
                       and potentially breaks.
                     </p>
@@ -800,7 +800,7 @@ const FiberOpticsModule7Section1 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Water Ingress</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Moisture entering through jacket damage. Causes hydrogen absorption loss,
                       freezing damage, and fibre weakening.
                     </p>
@@ -812,7 +812,7 @@ const FiberOpticsModule7Section1 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Thermal Damage</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Exposure to heat sources, fire damage. Causes jacket melting, fibre stress,
                       and potential breaks.
                     </p>
@@ -824,7 +824,7 @@ const FiberOpticsModule7Section1 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Rodent Damage</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Gnawing through cable sheath and elements. Common in outdoor and underground
                       installations.
                     </p>
@@ -836,7 +836,7 @@ const FiberOpticsModule7Section1 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Lightning/Electrical</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Armoured cables can conduct lightning strikes. Damages metallic elements and
                       can shatter fibre.
                     </p>
@@ -851,7 +851,7 @@ const FiberOpticsModule7Section1 = () => {
                 <AlertTriangle className="w-4 h-4" />
                 Fibre Fatigue - The Silent Killer
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 <strong className="text-white">Static fatigue</strong> is the slow growth of
                 microscopic cracks in glass fibre under sustained stress. Even stress well below the
                 immediate breaking point can cause gradual weakening over months or years,
@@ -874,43 +874,43 @@ const FiberOpticsModule7Section1 = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Symptom</th>
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">
+                      <th className="text-left py-2 px-3 text-white font-medium">Symptom</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">
                         Likely Cause
                       </th>
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">First Check</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">First Check</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">Complete signal loss</td>
-                      <td className="py-2 px-3 text-white/60">Break, connector disconnected</td>
-                      <td className="py-2 px-3 text-white/60">VFL to locate break</td>
+                      <td className="py-2 px-3 text-white">Break, connector disconnected</td>
+                      <td className="py-2 px-3 text-white">VFL to locate break</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">High loss, normal reflectance</td>
-                      <td className="py-2 px-3 text-white/60">Bend, bad splice, damaged fibre</td>
-                      <td className="py-2 px-3 text-white/60">OTDR to locate event</td>
+                      <td className="py-2 px-3 text-white">Bend, bad splice, damaged fibre</td>
+                      <td className="py-2 px-3 text-white">OTDR to locate event</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">High loss, high reflectance</td>
-                      <td className="py-2 px-3 text-white/60">Contaminated/damaged connector</td>
-                      <td className="py-2 px-3 text-white/60">Inspect and clean connectors</td>
+                      <td className="py-2 px-3 text-white">Contaminated/damaged connector</td>
+                      <td className="py-2 px-3 text-white">Inspect and clean connectors</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">Higher loss at 1550nm vs 1310nm</td>
-                      <td className="py-2 px-3 text-white/60">Bend or stress</td>
-                      <td className="py-2 px-3 text-white/60">Check cable routing</td>
+                      <td className="py-2 px-3 text-white">Bend or stress</td>
+                      <td className="py-2 px-3 text-white">Check cable routing</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">Intermittent failures</td>
-                      <td className="py-2 px-3 text-white/60">Loose connector, stress point</td>
-                      <td className="py-2 px-3 text-white/60">Check all connections</td>
+                      <td className="py-2 px-3 text-white">Loose connector, stress point</td>
+                      <td className="py-2 px-3 text-white">Check all connections</td>
                     </tr>
                     <tr>
                       <td className="py-2 px-3">Temperature-related failures</td>
-                      <td className="py-2 px-3 text-white/60">Thermal stress, poor splice</td>
-                      <td className="py-2 px-3 text-white/60">Test at different temps</td>
+                      <td className="py-2 px-3 text-white">Thermal stress, poor splice</td>
+                      <td className="py-2 px-3 text-white">Test at different temps</td>
                     </tr>
                   </tbody>
                 </table>
@@ -928,7 +928,7 @@ const FiberOpticsModule7Section1 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="bg-[#252525] rounded-lg p-5 border border-white/10">
                   <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                  <p className="text-white/70 text-sm">{faq.answer}</p>
+                  <p className="text-white text-sm">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -944,7 +944,7 @@ const FiberOpticsModule7Section1 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <h4 className="font-semibold text-white mb-2">Bend-Related</h4>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>• Loss increases at longer wavelengths</li>
                     <li>• OTDR shows loss event at bend point</li>
                     <li>• VFL shows light leakage</li>
@@ -953,7 +953,7 @@ const FiberOpticsModule7Section1 = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-white mb-2">Connector-Related</h4>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>• High reflectance (&lt;35 dB UPC)</li>
                     <li>• Visible contamination on inspection</li>
                     <li>• Loss reduces after cleaning</li>

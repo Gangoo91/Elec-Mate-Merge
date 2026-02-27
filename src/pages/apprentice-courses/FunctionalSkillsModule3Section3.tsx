@@ -135,7 +135,7 @@ const FunctionalSkillsModule3Section3 = () => {
             to="/study-centre/apprentice/functional-skills/module3"
             className="p-2 -ml-2 touch-manipulation"
           >
-            <ArrowLeft className="w-5 h-5 text-white/60" />
+            <ArrowLeft className="w-5 h-5 text-white" />
           </Link>
           <div>
             <p className="text-[11px] font-semibold text-green-400 uppercase tracking-wider">
@@ -161,7 +161,7 @@ const FunctionalSkillsModule3Section3 = () => {
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
               Digital Documentation & Apps
             </h2>
-            <p className="text-sm text-white/50 max-w-lg mx-auto">
+            <p className="text-sm text-white max-w-lg mx-auto">
               Discover the digital tools transforming electrical work — from certification software
               and BIM viewers to project management apps and professional photo documentation
               techniques.
@@ -184,7 +184,7 @@ const FunctionalSkillsModule3Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Certification Software</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Digital certification has largely replaced handwritten paper certificates in the UK
               electrical industry. Using certification software produces professional, legible, and
@@ -263,7 +263,7 @@ const FunctionalSkillsModule3Section3 = () => {
             </ul>
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Whichever certification software you choose, invest time in learning it thoroughly.
                 Complete a few practice certificates before using it on a real job. The time spent
                 learning the interface will be repaid many times over in faster, more accurate
@@ -286,7 +286,7 @@ const FunctionalSkillsModule3Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">PDF Annotation Tools</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               PDF documents are everywhere in electrical work — from regulation documents and
               manufacturer datasheets to floor plans and as-built drawings. Being able to annotate
@@ -377,7 +377,7 @@ const FunctionalSkillsModule3Section3 = () => {
             </ul>
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Annotating drawings digitally is faster, cleaner, and more professional than
                 hand-marking printed copies. It also creates a digital audit trail showing exactly
                 what was communicated and when — invaluable if disputes arise about what was agreed.
@@ -412,7 +412,7 @@ const FunctionalSkillsModule3Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Photo Evidence & Documentation</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Photographs are among the most powerful documentation tools available to electricians.
               A well-taken photograph provides unambiguous evidence of the condition of an
@@ -512,7 +512,7 @@ const FunctionalSkillsModule3Section3 = () => {
             </p>
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Take more photographs than you think you need. Storage is essentially free, and a
                 photograph you do not need costs nothing — but a photograph you need but did not
                 take could cost you dearly. Make site photography a habitual part of every job.
@@ -534,7 +534,7 @@ const FunctionalSkillsModule3Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Digital Signature Tools</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Digital signatures enable you to sign documents electronically without printing,
               signing by hand, and scanning. They are legally recognised in the UK and are
@@ -624,7 +624,7 @@ const FunctionalSkillsModule3Section3 = () => {
             </ul>
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Digital signatures eliminate the delay between completing work and obtaining signed
                 documentation. Instead of posting a certificate and waiting for a signed copy to be
                 returned, you can have the client sign on your tablet before you leave site. This
@@ -660,7 +660,7 @@ const FunctionalSkillsModule3Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Project Management Apps</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               As your career progresses and you take on larger or multiple simultaneous projects,
               project management tools become essential for keeping track of tasks, deadlines,
@@ -765,7 +765,7 @@ const FunctionalSkillsModule3Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Building Information Modelling (BIM)</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Building Information Modelling (BIM) is transforming how buildings are designed,
               constructed, and maintained. As an electrician, particularly if you work on commercial
@@ -836,7 +836,7 @@ const FunctionalSkillsModule3Section3 = () => {
             </p>
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 You do not need to become a BIM expert, but understanding the basics and being able
                 to navigate a BIM model using a free viewer gives you a significant advantage. BIM
                 adoption is growing rapidly, and electricians who can work with digital models are
@@ -872,7 +872,7 @@ const FunctionalSkillsModule3Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Electrical Design Software</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               While spreadsheets handle individual calculations well, dedicated electrical design
               software automates the entire design process — from cable sizing and voltage drop to
@@ -956,7 +956,7 @@ const FunctionalSkillsModule3Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Staying Current with Technology</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Technology in the electrical industry evolves rapidly. Smart home systems, renewable
               energy technologies, electric vehicle charging, energy storage, and the Internet of
@@ -1052,7 +1052,7 @@ const FunctionalSkillsModule3Section3 = () => {
             </ul>
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Dedicate at least 30 minutes per week to learning about new technologies and
                 industry developments. Follow relevant social media accounts, subscribe to trade
                 newsletters, and attend manufacturer training whenever possible. The electricians
@@ -1069,7 +1069,7 @@ const FunctionalSkillsModule3Section3 = () => {
         <div className="flex items-center justify-between pt-6 border-t border-white/10">
           <Link
             to="/study-centre/apprentice/functional-skills/module3/section2"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
           >
             <ArrowLeft className="w-4 h-4" />
             Spreadsheets

@@ -264,7 +264,7 @@ const MOETModule3Section6_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module3-section6">
@@ -286,7 +286,7 @@ const MOETModule3Section6_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Energy Storage Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Battery storage technology, safety and maintenance for electrical technicians
           </p>
         </header>
@@ -922,7 +922,7 @@ const MOETModule3Section6_3 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Note:</strong> Under ST1426, maintenance technicians must understand energy
               storage as part of the emerging technologies knowledge requirement. The rapid growth
               of BESS — both domestic (paired with solar PV) and grid-scale (providing frequency
@@ -1045,7 +1045,7 @@ const MOETModule3Section6_3 = () => {
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Note:</strong> Under ST1426, awareness of emerging energy storage technologies
               supports the standard's requirement for technicians to understand developing
               technologies and their maintenance implications. The storage landscape is evolving
@@ -1065,7 +1065,7 @@ const MOETModule3Section6_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1116,7 +1116,7 @@ const MOETModule3Section6_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module3-section6-2">

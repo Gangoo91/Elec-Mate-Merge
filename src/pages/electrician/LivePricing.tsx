@@ -39,7 +39,7 @@ const LivePricing = () => {
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 UK Live Pricing
               </h1>
-              <p className="text-sm text-white/60">Real-time market prices & rates</p>
+              <p className="text-sm text-white">Real-time market prices & rates</p>
             </div>
           </div>
           <div className="flex gap-2">

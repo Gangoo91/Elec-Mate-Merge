@@ -201,7 +201,7 @@ const HNCModule2Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section1">
@@ -223,7 +223,7 @@ const HNCModule2Section1_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Radiation Heat Transfer
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Electromagnetic heat transfer: from Stefan-Boltzmann law to radiant heating panels and
             low-e glazing
           </p>
@@ -310,7 +310,7 @@ const HNCModule2Section1_3 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Stefan-Boltzmann Law</p>
               <p className="font-mono text-center text-lg mb-2">Q = εσAT⁴</p>
-              <div className="text-xs text-white/70 space-y-1">
+              <div className="text-xs text-white space-y-1">
                 <p>
                   <strong>Q</strong> = Radiant power emitted (W)
                 </p>
@@ -351,7 +351,7 @@ const HNCModule2Section1_3 = () => {
               <p className="font-mono text-center text-base mb-2">
                 Q<sub>net</sub> = εσA(T₁⁴ - T₂⁴)
               </p>
-              <p className="text-sm text-white/70 text-center">
+              <p className="text-sm text-white text-center">
                 Net heat transfer from surface 1 (hot) to surface 2 (cold)
               </p>
             </div>
@@ -403,7 +403,7 @@ const HNCModule2Section1_3 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Kirchhoff's Law</p>
               <p className="font-mono text-center text-lg mb-2">α = ε</p>
-              <p className="text-sm text-white/70 text-center">
+              <p className="text-sm text-white text-center">
                 At thermal equilibrium, absorptivity equals emissivity at the same wavelength and
                 temperature
               </p>
@@ -511,10 +511,10 @@ const HNCModule2Section1_3 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 λ<sub>max</sub> = 2898 / T
               </p>
-              <p className="text-sm text-white/70 text-center">
+              <p className="text-sm text-white text-center">
                 Peak wavelength (μm) is inversely proportional to temperature (K)
               </p>
-              <div className="mt-3 text-xs text-white/60">
+              <div className="mt-3 text-xs text-white">
                 <p>Sun (5800K): λmax ≈ 0.5 μm (visible light)</p>
                 <p>Room surfaces (300K): λmax ≈ 10 μm (far infrared)</p>
               </div>
@@ -663,11 +663,11 @@ const HNCModule2Section1_3 = () => {
                 the same radiant heat as the actual non-uniform environment. It is critical for
                 thermal comfort.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Operative temperature ≈ (MRT + T<sub>air</sub>) / 2
                 </p>
-                <p className="text-white/60 text-xs mt-1">(simplified for low air velocities)</p>
+                <p className="text-white text-xs mt-1">(simplified for low air velocities)</p>
               </div>
             </div>
 
@@ -719,7 +719,7 @@ const HNCModule2Section1_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Surface temperature considerations:</strong> Cold internal surfaces (below
               14°C) cause radiant asymmetry discomfort and risk condensation. Well-insulated
               construction with low-e glazing maintains higher internal surface temperatures.
@@ -745,7 +745,7 @@ const HNCModule2Section1_3 = () => {
                 <strong>Question:</strong> A radiant ceiling panel (2m × 1m) operates at 60°C in a
                 room at 20°C. The panel has ε = 0.95. Calculate the net radiant heat output.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Convert to Kelvin:</p>
                 <p>T₁ = 60 + 273 = 333K</p>
                 <p>T₂ = 20 + 273 = 293K</p>
@@ -757,7 +757,7 @@ const HNCModule2Section1_3 = () => {
                 <p>
                   Q = <strong>531W</strong>
                 </p>
-                <p className="mt-2 text-white/60">Panel output: 266 W/m²</p>
+                <p className="mt-2 text-white">Panel output: 266 W/m²</p>
               </div>
             </div>
 
@@ -770,7 +770,7 @@ const HNCModule2Section1_3 = () => {
                 across a 16mm cavity with: (a) standard glass both sides (ε = 0.84), (b) one low-e
                 surface (ε = 0.05).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>For two parallel surfaces, effective emissivity:</p>
                 <p>
                   ε<sub>eff</sub> = 1 / (1/ε₁ + 1/ε₂ - 1)
@@ -802,7 +802,7 @@ const HNCModule2Section1_3 = () => {
                 heat absorbed by: (a) dark bitumen (α = 0.90), (b) white reflective coating (α =
                 0.25).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Heat absorbed = α × incident radiation</p>
                 <p className="mt-2">(a) Dark bitumen:</p>
                 <p>
@@ -815,7 +815,7 @@ const HNCModule2Section1_3 = () => {
                 <p className="mt-2">
                   Reduction = (540 - 150) / 540 = <strong>72% reduction</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → Significant cooling load reduction with reflective roof
                 </p>
               </div>
@@ -902,7 +902,7 @@ const HNCModule2Section1_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -948,7 +948,7 @@ const HNCModule2Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section1-2">

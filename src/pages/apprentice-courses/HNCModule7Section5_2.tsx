@@ -227,7 +227,7 @@ const HNCModule7Section5_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section5">
@@ -249,7 +249,7 @@ const HNCModule7Section5_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Power Factor Correction
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Reactive power fundamentals, capacitor bank sizing, automatic PFC systems, and harmonic
             considerations for industrial installations
           </p>
@@ -478,16 +478,16 @@ const HNCModule7Section5_2 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Capacitor Sizing Calculation
               </p>
-              <div className="bg-black/30 p-4 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Step 1: Determine existing power factor and target</p>
+              <div className="bg-black/30 p-4 rounded text-sm font-mono text-white">
+                <p className="text-white">Step 1: Determine existing power factor and target</p>
                 <p>Existing pf = 0.75 lagging → φ₁ = cos⁻¹(0.75) = 41.41°</p>
                 <p>Target pf = 0.95 lagging → φ₂ = cos⁻¹(0.95) = 18.19°</p>
-                <p className="mt-3 text-white/60">Step 2: Calculate tangent values</p>
+                <p className="mt-3 text-white">Step 2: Calculate tangent values</p>
                 <p>tan φ₁ = tan(41.41°) = 0.882</p>
                 <p>tan φ₂ = tan(18.19°) = 0.329</p>
-                <p className="mt-3 text-white/60">Step 3: Calculate required kVAr per kW of load</p>
+                <p className="mt-3 text-white">Step 3: Calculate required kVAr per kW of load</p>
                 <p>kVAr/kW = tan φ₁ - tan φ₂ = 0.882 - 0.329 = 0.553</p>
-                <p className="mt-3 text-white/60">Step 4: Apply to actual load</p>
+                <p className="mt-3 text-white">Step 4: Apply to actual load</p>
                 <p>
                   For 200 kW load: kVAr = 200 × 0.553 ={' '}
                   <span className="text-green-400">110.6 kVAr</span>
@@ -798,7 +798,7 @@ const HNCModule7Section5_2 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Detuned Reactors</p>
-                  <ul className="text-sm text-white/90 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Prevent resonance only</li>
                     <li>• Do not reduce harmonics</li>
                     <li>• Passive, reliable technology</li>
@@ -807,7 +807,7 @@ const HNCModule7Section5_2 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Active Harmonic Filters</p>
-                  <ul className="text-sm text-white/90 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Actively cancel harmonics</li>
                     <li>• Can provide reactive power</li>
                     <li>• Complex, require maintenance</li>
@@ -867,8 +867,8 @@ const HNCModule7Section5_2 = () => {
               <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Protection Device Sizing
               </h3>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Capacitor rated current calculation:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Capacitor rated current calculation:</p>
                 <p>
                   I<sub>c</sub> = kVAr × 1000 / (√3 × V<sub>L</sub>)
                 </p>
@@ -877,14 +877,14 @@ const HNCModule7Section5_2 = () => {
                   I<sub>c</sub> = 50,000 / (1.732 × 400) ={' '}
                   <span className="text-green-400">72.2 A</span>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Fuse/MCCB rating (1.5 × I<sub>c</sub> minimum):
                 </p>
                 <p>
                   I<sub>protection</sub> = 1.5 × 72.2 ={' '}
                   <span className="text-green-400">108 A (use 125A)</span>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Cable rating (1.5 × I<sub>c</sub> minimum):
                 </p>
                 <p>
@@ -939,22 +939,22 @@ const HNCModule7Section5_2 = () => {
                 <strong>Scenario:</strong> A factory has 300 kW load at 0.72 power factor. Calculate
                 capacitor bank size to achieve 0.95 pf.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given:</p>
                 <p>P = 300 kW, pf₁ = 0.72, pf₂ = 0.95 (target)</p>
-                <p className="mt-2 text-white/60">Step 1: Find phase angles</p>
+                <p className="mt-2 text-white">Step 1: Find phase angles</p>
                 <p>φ₁ = cos⁻¹(0.72) = 43.95°</p>
                 <p>φ₂ = cos⁻¹(0.95) = 18.19°</p>
-                <p className="mt-2 text-white/60">Step 2: Calculate tangent values</p>
+                <p className="mt-2 text-white">Step 2: Calculate tangent values</p>
                 <p>tan(43.95°) = 0.964</p>
                 <p>tan(18.19°) = 0.329</p>
-                <p className="mt-2 text-white/60">Step 3: Calculate kVAr required</p>
+                <p className="mt-2 text-white">Step 3: Calculate kVAr required</p>
                 <p>kVAr = P × (tan φ₁ - tan φ₂)</p>
                 <p>kVAr = 300 × (0.964 - 0.329)</p>
                 <p>
                   kVAr = 300 × 0.635 = <span className="text-green-400">190.5 kVAr</span>
                 </p>
-                <p className="mt-2 text-white/60">Step 4: Select bank configuration</p>
+                <p className="mt-2 text-white">Step 4: Select bank configuration</p>
                 <p>Option A: 8 × 25 kVAr = 200 kVAr (automatic)</p>
                 <p>Option B: 6 × 25 kVAr + 4 × 10 kVAr = 190 kVAr (finer control)</p>
               </div>
@@ -968,17 +968,17 @@ const HNCModule7Section5_2 = () => {
                 <strong>Scenario:</strong> Calculate annual savings and payback for a 200 kVAr PFC
                 installation.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Current situation:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Current situation:</p>
                 <p>Max demand: 500 kVA at 0.75 pf → P = 375 kW</p>
                 <p>kVA charge: £8/kVA/month × 500 kVA = £4,000/month</p>
                 <p>kVAr charge: £0.50/kVAr/month × 331 kVAr = £166/month</p>
-                <p className="mt-2 text-white/60">After PFC (200 kVAr correction):</p>
+                <p className="mt-2 text-white">After PFC (200 kVAr correction):</p>
                 <p>New pf ≈ 0.95, new kVA = 375/0.95 = 395 kVA</p>
                 <p>New kVA charge: £8 × 395 = £3,160/month</p>
                 <p>New kVAr: 331 - 200 = 131 kVAr</p>
                 <p>New kVAr charge: £0.50 × 131 = £66/month (or zero if &gt;0.95)</p>
-                <p className="mt-2 text-white/60">Annual savings:</p>
+                <p className="mt-2 text-white">Annual savings:</p>
                 <p>
                   kVA saving: (4,000 - 3,160) × 12 = <span className="text-green-400">£10,080</span>
                 </p>
@@ -988,7 +988,7 @@ const HNCModule7Section5_2 = () => {
                 <p>
                   Total annual saving: <span className="text-green-400">£11,280</span>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Payback (200 kVAr detuned bank ~£15,000 installed):
                 </p>
                 <p>
@@ -1005,16 +1005,16 @@ const HNCModule7Section5_2 = () => {
                 <strong>Scenario:</strong> Size a fixed capacitor for a 45 kW motor running at 0.82
                 pf.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Motor data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Motor data:</p>
                 <p>P = 45 kW, pf = 0.82, target pf = 0.95</p>
-                <p className="mt-2 text-white/60">Calculation:</p>
+                <p className="mt-2 text-white">Calculation:</p>
                 <p>φ₁ = cos⁻¹(0.82) = 34.92°, tan φ₁ = 0.698</p>
                 <p>φ₂ = cos⁻¹(0.95) = 18.19°, tan φ₂ = 0.329</p>
                 <p>
                   kVAr = 45 × (0.698 - 0.329) = <span className="text-green-400">16.6 kVAr</span>
                 </p>
-                <p className="mt-2 text-white/60">Selection:</p>
+                <p className="mt-2 text-white">Selection:</p>
                 <p>Use standard 15 kVAr capacitor (nearest lower value)</p>
                 <p className="text-yellow-400">
                   Note: Never exceed motor no-load magnetising current
@@ -1032,7 +1032,7 @@ const HNCModule7Section5_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1084,7 +1084,7 @@ const HNCModule7Section5_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section5">

@@ -636,7 +636,7 @@ export default function SolarPVCertificate() {
             <Button
               variant="ghost"
               size="sm"
-              className="text-white/60 hover:text-white hover:bg-white/10 -ml-2 h-11 px-3 touch-manipulation active:scale-[0.98] transition-transform"
+              className="text-white hover:text-white hover:bg-white/10 -ml-2 h-11 px-3 touch-manipulation active:scale-[0.98] transition-transform"
               onClick={() => navigate('/electrician/inspection-testing')}
             >
               <ArrowLeft className="w-4 h-4 mr-1" />
@@ -652,7 +652,7 @@ export default function SolarPVCertificate() {
                 onClick={handleSaveDraft}
                 disabled={isSaving}
                 aria-label="Save draft"
-                className="h-11 w-11 text-white/60 hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-transform"
+                className="h-11 w-11 text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98] transition-transform"
               >
                 {isSaving ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
@@ -687,7 +687,7 @@ export default function SolarPVCertificate() {
                 {isNew ? 'New Solar PV' : 'Solar PV'}
               </h1>
               <h1 className="text-base font-bold text-white -mt-0.5">Installation Certificate</h1>
-              <p className="text-[11px] text-white/50">MCS Compliance • BS EN 62446</p>
+              <p className="text-[11px] text-white">MCS Compliance • BS EN 62446</p>
             </div>
           </div>
         </div>

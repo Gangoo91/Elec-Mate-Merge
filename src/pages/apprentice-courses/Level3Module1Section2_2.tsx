@@ -293,7 +293,7 @@ const Level3Module1Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section2">
@@ -379,7 +379,7 @@ const Level3Module1Section2_2 = () => {
                   <p className="font-medium text-elec-yellow/80 mb-2">
                     Risk Assessment (WHAT might go wrong)
                   </p>
-                  <ul className="text-white/90 space-y-0.5 text-xs">
+                  <ul className="text-white space-y-0.5 text-xs">
                     <li>- Identifies hazards present</li>
                     <li>- Evaluates who might be harmed</li>
                     <li>- Calculates level of risk</li>
@@ -390,7 +390,7 @@ const Level3Module1Section2_2 = () => {
                   <p className="font-medium text-elec-yellow/80 mb-2">
                     Method Statement (HOW to work safely)
                   </p>
-                  <ul className="text-white/90 space-y-0.5 text-xs">
+                  <ul className="text-white space-y-0.5 text-xs">
                     <li>- Step-by-step work sequence</li>
                     <li>- Specific controls at each step</li>
                     <li>- Who does what and when</li>
@@ -476,7 +476,7 @@ const Level3Module1Section2_2 = () => {
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-red-400/80 mb-2">Vague (Inadequate)</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>- "Isolate the supply"</li>
                   <li>- "Use appropriate PPE"</li>
                   <li>- "Work safely at height"</li>
@@ -485,7 +485,7 @@ const Level3Module1Section2_2 = () => {
               </div>
               <div>
                 <p className="text-sm font-medium text-green-400/80 mb-2">Specific (Effective)</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>
                     - "Isolate at main switch, verify dead with Fluke T150, apply lock-off device"
                   </li>
@@ -496,7 +496,7 @@ const Level3Module1Section2_2 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> For a consumer unit change, the work sequence might include:
               1) Site survey and isolation point identification, 2) Client notification and
               power-off scheduling, 3) Safe isolation procedure (detailed sub-steps), 4) Existing CU
@@ -576,7 +576,7 @@ const Level3Module1Section2_2 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Writing Tips for Clarity
               </p>
-              <ul className="text-sm text-white/90 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>- Use simple, direct language - avoid jargon where possible</li>
                 <li>- One action per numbered step</li>
                 <li>- Include WHO does each step if multiple workers involved</li>
@@ -633,15 +633,15 @@ const Level3Module1Section2_2 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-1">Before Work</p>
-                <p className="text-white/90 text-xs">Read, question, sign only when satisfied</p>
+                <p className="text-white text-xs">Read, question, sign only when satisfied</p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-1">During Work</p>
-                <p className="text-white/90 text-xs">Follow exactly, stop if conditions change</p>
+                <p className="text-white text-xs">Follow exactly, stop if conditions change</p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-1">After Work</p>
-                <p className="text-white/90 text-xs">Note any issues for future revision</p>
+                <p className="text-white text-xs">Note any issues for future revision</p>
               </div>
             </div>
 
@@ -653,7 +653,7 @@ const Level3Module1Section2_2 = () => {
               confirm understanding.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> An incident investigation found the method statement was
               well-written but nobody had read it. The document was signed during site induction
               without explanation. The accident occurred because workers didn't know about a
@@ -734,7 +734,7 @@ const Level3Module1Section2_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -795,7 +795,7 @@ const Level3Module1Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section2-1">

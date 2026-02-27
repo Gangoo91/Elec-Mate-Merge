@@ -214,7 +214,7 @@ export default function MentalHealthModule2Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-2">
@@ -240,7 +240,7 @@ export default function MentalHealthModule2Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Anxiety Disorders
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding the different types of anxiety disorder, the body&rsquo;s
             fight-flight-freeze response, physical symptoms, panic attacks, and how OCD and PTSD
             relate to anxiety
@@ -325,7 +325,7 @@ export default function MentalHealthModule2Section2() {
               <p>
                 Anxiety becomes a <strong>disorder</strong> when it is:
               </p>
-              <ul className="space-y-2 text-white/90">
+              <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0" />
                   <span>
@@ -373,7 +373,7 @@ export default function MentalHealthModule2Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Risk Factors for Developing an Anxiety Disorder
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>
@@ -457,19 +457,19 @@ export default function MentalHealthModule2Section2() {
                     <div className="grid sm:grid-cols-3 gap-3 text-sm">
                       <div>
                         <p className="text-purple-400/80 text-xs font-medium mb-1">TRIGGER</p>
-                        <p className="text-white/80">
+                        <p className="text-white">
                           Wide range of everyday situations &mdash; health, work, finances, family
                         </p>
                       </div>
                       <div>
                         <p className="text-purple-400/80 text-xs font-medium mb-1">PATTERN</p>
-                        <p className="text-white/80">
+                        <p className="text-white">
                           Persistent, excessive worry on most days for &ge;6 months
                         </p>
                       </div>
                       <div>
                         <p className="text-purple-400/80 text-xs font-medium mb-1">KEY FEATURE</p>
-                        <p className="text-white/80">
+                        <p className="text-white">
                           &ldquo;Free-floating&rdquo; anxiety &mdash; not attached to one specific
                           trigger
                         </p>
@@ -486,20 +486,20 @@ export default function MentalHealthModule2Section2() {
                     <div className="grid sm:grid-cols-3 gap-3 text-sm">
                       <div>
                         <p className="text-red-400/80 text-xs font-medium mb-1">TRIGGER</p>
-                        <p className="text-white/80">
+                        <p className="text-white">
                           Often no clear trigger &mdash; attacks can come &ldquo;out of the
                           blue&rdquo;
                         </p>
                       </div>
                       <div>
                         <p className="text-red-400/80 text-xs font-medium mb-1">PATTERN</p>
-                        <p className="text-white/80">
+                        <p className="text-white">
                           Recurrent, unexpected panic attacks with fear of future attacks
                         </p>
                       </div>
                       <div>
                         <p className="text-red-400/80 text-xs font-medium mb-1">KEY FEATURE</p>
-                        <p className="text-white/80">
+                        <p className="text-white">
                           Intense terror peaking in minutes; avoidance of situations where attacks
                           occurred
                         </p>
@@ -516,19 +516,19 @@ export default function MentalHealthModule2Section2() {
                     <div className="grid sm:grid-cols-3 gap-3 text-sm">
                       <div>
                         <p className="text-violet-400/80 text-xs font-medium mb-1">TRIGGER</p>
-                        <p className="text-white/80">
+                        <p className="text-white">
                           Social situations where the person may be observed or judged by others
                         </p>
                       </div>
                       <div>
                         <p className="text-violet-400/80 text-xs font-medium mb-1">PATTERN</p>
-                        <p className="text-white/80">
+                        <p className="text-white">
                           Intense fear of embarrassment, humiliation, or negative evaluation
                         </p>
                       </div>
                       <div>
                         <p className="text-violet-400/80 text-xs font-medium mb-1">KEY FEATURE</p>
-                        <p className="text-white/80">
+                        <p className="text-white">
                           Fear is far beyond normal shyness; significant avoidance of social
                           situations
                         </p>
@@ -545,21 +545,21 @@ export default function MentalHealthModule2Section2() {
                     <div className="grid sm:grid-cols-3 gap-3 text-sm">
                       <div>
                         <p className="text-amber-400/80 text-xs font-medium mb-1">TRIGGER</p>
-                        <p className="text-white/80">
+                        <p className="text-white">
                           A particular object or situation &mdash; heights, needles, spiders,
                           flying, blood
                         </p>
                       </div>
                       <div>
                         <p className="text-amber-400/80 text-xs font-medium mb-1">PATTERN</p>
-                        <p className="text-white/80">
+                        <p className="text-white">
                           Immediate, intense fear response upon encountering or anticipating the
                           trigger
                         </p>
                       </div>
                       <div>
                         <p className="text-amber-400/80 text-xs font-medium mb-1">KEY FEATURE</p>
-                        <p className="text-white/80">
+                        <p className="text-white">
                           Extreme avoidance; fear is disproportionate; the person usually recognises
                           it is irrational
                         </p>
@@ -576,21 +576,21 @@ export default function MentalHealthModule2Section2() {
                     <div className="grid sm:grid-cols-3 gap-3 text-sm">
                       <div>
                         <p className="text-teal-400/80 text-xs font-medium mb-1">TRIGGER</p>
-                        <p className="text-white/80">
+                        <p className="text-white">
                           Situations where escape might be difficult &mdash; crowds, public
                           transport, open spaces
                         </p>
                       </div>
                       <div>
                         <p className="text-teal-400/80 text-xs font-medium mb-1">PATTERN</p>
-                        <p className="text-white/80">
+                        <p className="text-white">
                           Fear and avoidance of multiple situations; often develops after panic
                           attacks
                         </p>
                       </div>
                       <div>
                         <p className="text-teal-400/80 text-xs font-medium mb-1">KEY FEATURE</p>
-                        <p className="text-white/80">
+                        <p className="text-white">
                           Can become housebound in severe cases; not simply &ldquo;fear of open
                           spaces&rdquo;
                         </p>
@@ -663,7 +663,7 @@ export default function MentalHealthModule2Section2() {
 
               <div className="bg-purple-500/10 border border-purple-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-purple-300 mb-3">What Happens in the Body</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Within <strong>milliseconds</strong> of perceiving a threat, the adrenal glands
                   release <strong>adrenaline (epinephrine)</strong> and, shortly after,{' '}
                   <strong>cortisol</strong>. These hormones trigger a series of rapid changes:
@@ -706,7 +706,7 @@ export default function MentalHealthModule2Section2() {
                   ].map((item, idx) => (
                     <div key={idx} className="bg-white/5 border border-white/10 rounded-lg p-3">
                       <p className="text-sm font-medium text-purple-300 mb-1">{item.label}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -721,7 +721,7 @@ export default function MentalHealthModule2Section2() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-red-300">Fight</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         The body prepares to confront the threat &mdash; increased aggression,
                         clenched fists, jaw tightening. In modern life, this can manifest as
                         irritability, snapping at colleagues, or feeling &ldquo;wound up&rdquo;.
@@ -734,7 +734,7 @@ export default function MentalHealthModule2Section2() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-amber-300">Flight</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         The body prepares to escape &mdash; restless legs, urge to leave, inability
                         to sit still. In modern life, this manifests as avoidance behaviour, leaving
                         situations early, or the overwhelming urge to &ldquo;get out&rdquo;.
@@ -747,7 +747,7 @@ export default function MentalHealthModule2Section2() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-blue-300">Freeze</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         The body becomes still and immobile &mdash; like a &ldquo;rabbit in
                         headlights&rdquo;. Heart rate may actually slow, muscles lock, and the
                         person may feel unable to speak or move. This is an involuntary response,
@@ -765,7 +765,7 @@ export default function MentalHealthModule2Section2() {
                     <p className="text-sm font-medium text-purple-300 mb-1">
                       Why This Becomes Problematic in Anxiety Disorders
                     </p>
-                    <p className="text-sm text-white/80 leading-relaxed">
+                    <p className="text-sm text-white leading-relaxed">
                       The fight-flight-freeze response evolved to deal with
                       <strong> short-term physical threats</strong> &mdash; a predator, a wildfire,
                       a fall. It was designed to activate briefly and then switch off once the
@@ -872,7 +872,7 @@ export default function MentalHealthModule2Section2() {
                           <Icon className="h-4 w-4 text-purple-400 flex-shrink-0" />
                           <p className="text-sm font-medium text-white">{item.symptom}</p>
                         </div>
-                        <p className="text-xs text-white/60 pl-6">{item.why}</p>
+                        <p className="text-xs text-white pl-6">{item.why}</p>
                       </div>
                     );
                   })}
@@ -886,7 +886,7 @@ export default function MentalHealthModule2Section2() {
                     <p className="text-sm font-medium text-orange-300 mb-1">
                       Commonly Mistaken for Physical Illness
                     </p>
-                    <p className="text-sm text-white/80 leading-relaxed">
+                    <p className="text-sm text-white leading-relaxed">
                       Chest pain and palpitations are frequently mistaken for heart problems.
                       Breathlessness can be attributed to asthma or lung disease. Nausea and stomach
                       cramps lead many people to suspect gastrointestinal conditions. Headaches and
@@ -946,7 +946,7 @@ export default function MentalHealthModule2Section2() {
                     'Fear of dying',
                     "Fear of losing control or 'going mad'",
                   ].map((symptom, idx) => (
-                    <div key={idx} className="flex items-start gap-2 text-sm text-white/80">
+                    <div key={idx} className="flex items-start gap-2 text-sm text-white">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>{symptom}</span>
                     </div>
@@ -1011,7 +1011,7 @@ export default function MentalHealthModule2Section2() {
                         <h4 className="font-semibold text-white text-sm sm:text-base mb-1">
                           {item.title}
                         </h4>
-                        <p className="text-white/80 text-sm leading-relaxed">{item.detail}</p>
+                        <p className="text-white text-sm leading-relaxed">{item.detail}</p>
                       </div>
                     </div>
                   ))}
@@ -1025,7 +1025,7 @@ export default function MentalHealthModule2Section2() {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="bg-purple-500/10 border border-purple-500/30 p-3 rounded-lg">
                     <h4 className="text-purple-300 font-semibold text-sm mb-2">Panic Attack</h4>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                         <span>
@@ -1055,7 +1055,7 @@ export default function MentalHealthModule2Section2() {
                   </div>
                   <div className="bg-red-500/10 border border-red-500/30 p-3 rounded-lg">
                     <h4 className="text-red-300 font-semibold text-sm mb-2">Heart Attack</h4>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                         <span>
@@ -1125,7 +1125,7 @@ export default function MentalHealthModule2Section2() {
                       Obsessive-Compulsive Disorder (OCD)
                     </h3>
                   </div>
-                  <div className="space-y-3 text-sm text-white/80">
+                  <div className="space-y-3 text-sm text-white">
                     <div>
                       <p className="text-violet-400/80 text-xs font-medium mb-1">OBSESSIONS</p>
                       <p>
@@ -1176,7 +1176,7 @@ export default function MentalHealthModule2Section2() {
                       Post-Traumatic Stress Disorder (PTSD)
                     </h3>
                   </div>
-                  <div className="space-y-3 text-sm text-white/80">
+                  <div className="space-y-3 text-sm text-white">
                     <div>
                       <p className="text-purple-400/80 text-xs font-medium mb-1">WHAT IT IS</p>
                       <p>
@@ -1267,7 +1267,7 @@ export default function MentalHealthModule2Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1281,7 +1281,7 @@ export default function MentalHealthModule2Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-2">

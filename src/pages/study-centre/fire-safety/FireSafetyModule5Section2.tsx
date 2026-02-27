@@ -204,7 +204,7 @@ export default function FireSafetyModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-5">
@@ -229,7 +229,7 @@ export default function FireSafetyModule5Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Fire Blankets &amp; Hose Reels
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding the selection, deployment, and maintenance of fire blankets, hose reels,
             and fixed firefighting systems &mdash; essential knowledge for fire marshals and anyone
             responsible for workplace fire safety
@@ -344,7 +344,7 @@ export default function FireSafetyModule5Section2() {
                       <p className="text-sm font-medium text-white">Light Duty</p>
                       <p className="text-sm font-bold text-rose-400">0.9 &times; 0.9 m</p>
                     </div>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The smallest standard size. Suitable for small kitchen fires, small waste bin
                       fires, and general household or small office use. Adequate for covering a
                       standard domestic saucepan or small frying pan. This is the most commonly
@@ -356,7 +356,7 @@ export default function FireSafetyModule5Section2() {
                       <p className="text-sm font-medium text-white">Medium</p>
                       <p className="text-sm font-bold text-rose-400">1.2 &times; 1.2 m</p>
                     </div>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       A versatile mid-range size suitable for larger cooking appliances, small
                       workshops, and commercial kitchens with smaller equipment. This size can also
                       be used for wrapping around a person whose clothing is on fire, although the
@@ -368,7 +368,7 @@ export default function FireSafetyModule5Section2() {
                       <p className="text-sm font-medium text-white">Heavy Duty</p>
                       <p className="text-sm font-bold text-rose-400">1.8 &times; 1.2 m</p>
                     </div>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The largest standard size. Used in industrial settings, laboratories,
                       commercial kitchens with large equipment, and workshops where larger fires are
                       more likely. This size is particularly suitable for clothing fires, as it can
@@ -390,7 +390,7 @@ export default function FireSafetyModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Size Selection Principle</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The fire blanket must be large enough to completely cover the anticipated fire
                   with overlap on all sides. If any part of the fire is not covered, oxygen will
                   continue to reach the fuel through the gap, and the smothering action will fail.
@@ -429,7 +429,7 @@ export default function FireSafetyModule5Section2() {
                 following scenarios:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -470,7 +470,7 @@ export default function FireSafetyModule5Section2() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Critical Size Limitation</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A fire blanket can only extinguish a fire that is{' '}
                   <strong>smaller than the blanket itself</strong>. If the fire has spread beyond
                   the area the blanket can cover, the smothering action will be incomplete and the
@@ -492,7 +492,7 @@ export default function FireSafetyModule5Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   When NOT to Use a Fire Blanket
                 </p>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>Fires that are larger than the blanket can cover</span>
@@ -554,7 +554,7 @@ export default function FireSafetyModule5Section2() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Pull Tabs Downward</p>
-                      <p className="text-xs text-white/70 leading-relaxed">
+                      <p className="text-xs text-white leading-relaxed">
                         Grip both pull tabs firmly and pull straight down. This releases the blanket
                         from its container and allows it to unfold under its own weight. Hold the
                         blanket at arm&rsquo;s length in front of your body.
@@ -567,7 +567,7 @@ export default function FireSafetyModule5Section2() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Wrap Hands Behind Blanket</p>
-                      <p className="text-xs text-white/70 leading-relaxed">
+                      <p className="text-xs text-white leading-relaxed">
                         Fold the top edge of the blanket over your hands so they are protected
                         behind the blanket material. This shields your hands and forearms from heat
                         and flames as you approach the fire. Your hands should never be exposed in
@@ -581,7 +581,7 @@ export default function FireSafetyModule5Section2() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Place Gently Over Fire</p>
-                      <p className="text-xs text-white/70 leading-relaxed">
+                      <p className="text-xs text-white leading-relaxed">
                         Approach from the nearest edge. Place the blanket gently over the fire,
                         working from near to far. Do NOT throw the blanket &mdash; throwing can
                         displace burning material, splash burning liquids, and fan the flames.
@@ -597,7 +597,7 @@ export default function FireSafetyModule5Section2() {
                       <p className="text-sm font-medium text-white">
                         Leave in Place &mdash; Minimum 30 Minutes
                       </p>
-                      <p className="text-xs text-white/70 leading-relaxed">
+                      <p className="text-xs text-white leading-relaxed">
                         Once placed, do not lift or peek under the blanket. Leave it in place for a
                         minimum of 30 minutes to allow the fire and its fuel to cool below ignition
                         temperature. Removing the blanket too early allows oxygen to reach the
@@ -606,7 +606,7 @@ export default function FireSafetyModule5Section2() {
                     </div>
                   </div>
                 </div>
-                <p className="text-xs text-white/50 text-center mt-4">
+                <p className="text-xs text-white text-center mt-4">
                   After 30 minutes, carefully check whether the fire has been fully extinguished
                   before removing the blanket. If in doubt, leave it in place and await the fire and
                   rescue service.
@@ -618,11 +618,11 @@ export default function FireSafetyModule5Section2() {
                   <Flame className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Clothing Fire Procedure</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Clothing fires are extremely dangerous and require an immediate, specific
                   response:
                 </p>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -658,7 +658,7 @@ export default function FireSafetyModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Single Use Only</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Fire blankets must <strong>never be reused</strong> after contact with fire. The
                   extreme heat degrades the glass fibre structure and any coating, even if the
                   damage is not visible. A used blanket may fail catastrophically if deployed on
@@ -699,7 +699,7 @@ export default function FireSafetyModule5Section2() {
                     <p className="text-sm font-medium text-white mb-1">
                       Cooking Areas &amp; Kitchens
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Every kitchen — domestic, commercial, and workplace — should have a fire
                       blanket. Position it 1 to 1.5 metres from the cooking appliance so that it can
                       be reached without having to lean over the stove or pass through the fire
@@ -708,7 +708,7 @@ export default function FireSafetyModule5Section2() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Laboratories</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Laboratories handling flammable chemicals, solvents, or open flames (Bunsen
                       burners) should have fire blankets positioned near exits. Heavy-duty blankets
                       (1.8 &times; 1.2 m) are typically specified for laboratory environments.
@@ -718,7 +718,7 @@ export default function FireSafetyModule5Section2() {
                     <p className="text-sm font-medium text-white mb-1">
                       Workshops &amp; Industrial Areas
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Workshops where hot work (welding, grinding, soldering) is conducted, or where
                       flammable materials are stored or used. Position blankets on escape routes
                       near identified fire risks.
@@ -763,7 +763,7 @@ export default function FireSafetyModule5Section2() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 rounded-lg p-3">
                       <p className="text-sm font-medium text-white">{item.label}</p>
-                      <p className="text-xs text-white/70 mt-0.5">{item.desc}</p>
+                      <p className="text-xs text-white mt-0.5">{item.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -773,7 +773,7 @@ export default function FireSafetyModule5Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Monthly Visual Check Procedure
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   During each monthly check, verify: the container is securely mounted and
                   undamaged; the pull tabs are hanging freely and are not tucked inside or caught;
                   the location sign is visible and legible; access to the blanket is not obstructed
@@ -822,7 +822,7 @@ export default function FireSafetyModule5Section2() {
                       <p className="text-sm font-medium text-white">Hose Length</p>
                       <p className="text-sm font-bold text-rose-400">Typically 30 m</p>
                     </div>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Standard hose reels are fitted with approximately 30 metres of semi-rigid
                       hose, providing substantial reach from the wall-mounted reel to the fire. The
                       hose length should be sufficient to reach all parts of the area it is intended
@@ -834,7 +834,7 @@ export default function FireSafetyModule5Section2() {
                       <p className="text-sm font-medium text-white">Hose Diameter</p>
                       <p className="text-sm font-bold text-rose-400">19 mm or 25 mm</p>
                     </div>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The internal diameter of the hose determines the flow rate. A 19 mm hose is
                       suitable for most general-purpose applications; a 25 mm hose delivers a higher
                       flow rate and is used where a greater volume of water is required, such as in
@@ -846,7 +846,7 @@ export default function FireSafetyModule5Section2() {
                       <p className="text-sm font-medium text-white">Water Supply</p>
                       <p className="text-sm font-bold text-rose-400">Permanently connected</p>
                     </div>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Hose reels are permanently connected to the building&rsquo;s water supply,
                       either directly from the mains or from a dedicated fire service tank with a
                       pump. The supply valve may be automatic (opens when the hose is unreeled) or
@@ -870,7 +870,7 @@ export default function FireSafetyModule5Section2() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Trained Users Only</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Hose reels should only be operated by persons who have received{' '}
                   <strong>appropriate training</strong>. Unlike a fire blanket or a fire
                   extinguisher (which most people can use with basic instruction), a hose reel
@@ -916,7 +916,7 @@ export default function FireSafetyModule5Section2() {
                       <p className="text-sm font-medium text-white">
                         Check Water Supply Valve Is Open
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         For manual valve systems, turn the gate valve to the fully open position.
                         Some systems have automatic valves that open when the hose is pulled from
                         the reel. Ensure the valve is confirmed as open before proceeding.
@@ -929,7 +929,7 @@ export default function FireSafetyModule5Section2() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Unreel Sufficient Hose</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Pull the hose from the reel, unwinding enough length to reach the fire
                         comfortably. You do not need to unreel the entire hose — only enough to
                         reach the fire with some slack. Avoid sharp kinks in the hose that could
@@ -943,7 +943,7 @@ export default function FireSafetyModule5Section2() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Open Nozzle Valve</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         The nozzle at the end of the hose has its own on/off control and may have a
                         spray pattern adjustment (jet or spray). Open the nozzle to begin the water
                         flow. Use a jet pattern for longer range and penetration into deep-seated
@@ -958,7 +958,7 @@ export default function FireSafetyModule5Section2() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Direct Water at Base of Fire</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Aim the water jet at the base of the flames, not at the tips. The base is
                         where the fuel is burning, and cooling the fuel below its ignition
                         temperature is what extinguishes the fire. Sweep the jet systematically
@@ -973,7 +973,7 @@ export default function FireSafetyModule5Section2() {
                 <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg p-4">
                   <CheckCircle className="h-6 w-6 text-green-400 mb-2" />
                   <p className="text-sm font-semibold text-green-400 mb-2">Advantages</p>
-                  <ul className="space-y-2 text-sm text-white/70">
+                  <ul className="space-y-2 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
@@ -1007,7 +1007,7 @@ export default function FireSafetyModule5Section2() {
                 <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg p-4">
                   <AlertTriangle className="h-6 w-6 text-rose-400 mb-2" />
                   <p className="text-sm font-semibold text-rose-400 mb-2">Limitations</p>
-                  <ul className="space-y-2 text-sm text-white/70">
+                  <ul className="space-y-2 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
@@ -1042,7 +1042,7 @@ export default function FireSafetyModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Electrical Trade Relevance</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   As an electrician, you must be acutely aware that hose reels deliver water &mdash;
                   a conductor of electricity. If a fire involves or is near electrical equipment,{' '}
                   <strong>
@@ -1116,7 +1116,7 @@ export default function FireSafetyModule5Section2() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 rounded-lg p-3">
                       <p className="text-sm font-medium text-white">{item.label}</p>
-                      <p className="text-xs text-white/70 mt-0.5">{item.desc}</p>
+                      <p className="text-xs text-white mt-0.5">{item.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -1129,12 +1129,12 @@ export default function FireSafetyModule5Section2() {
                     Annual Service by Competent Person
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   In addition to monthly visual checks, hose reels require a comprehensive annual
                   service carried out by a <strong>competent person</strong> (typically a fire
                   extinguisher/hose reel service engineer). The annual service includes:
                 </p>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1176,7 +1176,7 @@ export default function FireSafetyModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Record Keeping</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   All inspections, tests, and maintenance activities must be{' '}
                   <strong>recorded in writing</strong>. The fire safety log book should contain: the
                   date of each inspection or service; the name of the person who carried it out; the
@@ -1223,7 +1223,7 @@ export default function FireSafetyModule5Section2() {
                     <p className="text-sm font-medium text-white mb-1">
                       Automatic Sprinkler Systems (BS EN 12845)
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The most common fixed system. Sprinkler heads are installed throughout the
                       building, typically at ceiling level. Each head contains a heat-sensitive
                       element (glass bulb or fusible link) that breaks at a specific temperature
@@ -1237,7 +1237,7 @@ export default function FireSafetyModule5Section2() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Gas Suppression Systems</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Used in areas where water would cause unacceptable damage, such as server
                       rooms, data centres, telecommunications rooms, and archive stores. Gas
                       suppression agents include FM-200 (HFC-227ea), Novec 1230, and inert gas
@@ -1249,7 +1249,7 @@ export default function FireSafetyModule5Section2() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Foam Systems</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Used in areas with significant flammable liquid risks, such as fuel storage
                       facilities, aircraft hangars, and petrochemical plants. Foam is generated by
                       mixing a foam concentrate with water and aerating the mixture. The foam
@@ -1260,7 +1260,7 @@ export default function FireSafetyModule5Section2() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Water Mist Systems</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       A newer technology that uses very fine water droplets (typically less than 1
                       mm diameter) delivered at high pressure. The fine mist absorbs heat extremely
                       efficiently due to its large surface area, while also displacing oxygen around
@@ -1280,11 +1280,11 @@ export default function FireSafetyModule5Section2() {
                     Electrician Awareness: Working Near Fixed Systems
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   As an electrician, you must be aware of the following when working in buildings
                   with fixed firefighting systems:
                 </p>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1330,7 +1330,7 @@ export default function FireSafetyModule5Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   How Fixed Systems Complement Portable Equipment
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Fixed firefighting systems and portable equipment serve complementary roles in a
                   building&rsquo;s fire protection strategy. Fixed systems provide{' '}
                   <strong>automatic, immediate response</strong> without requiring human
@@ -1356,7 +1356,7 @@ export default function FireSafetyModule5Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1374,7 +1374,7 @@ export default function FireSafetyModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-5-section-1">

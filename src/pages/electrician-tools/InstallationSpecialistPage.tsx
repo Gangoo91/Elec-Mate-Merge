@@ -71,7 +71,7 @@ const InstallationSpecialistPage = () => {
           </div>
           <div>
             <h1 className="text-xl font-bold text-white">Installation Specialist</h1>
-            <p className="text-sm text-white/50">Step-by-step installation guidance</p>
+            <p className="text-sm text-white">Step-by-step installation guidance</p>
           </div>
         </div>
 

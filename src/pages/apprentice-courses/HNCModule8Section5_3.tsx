@@ -291,7 +291,7 @@ const HNCModule8Section5_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section5">
@@ -313,7 +313,7 @@ const HNCModule8Section5_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Actuators and Output Devices
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Valve actuators, damper actuators, control signal types, spring return mechanisms, and
             actuator sizing
           </p>
@@ -500,7 +500,7 @@ const HNCModule8Section5_3 = () => {
                 <p className="mt-2">
                   <strong>Force:</strong> Must overcome valve close-off pressure
                 </p>
-                <p className="ml-4 text-white/70">
+                <p className="ml-4 text-white">
                   Force (N) = Pressure (kPa) × Valve seat area (cm²) × 10
                 </p>
               </div>
@@ -617,13 +617,13 @@ const HNCModule8Section5_3 = () => {
               </p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Given:</span>
+                  <span className="text-white">Given:</span>
                 </p>
                 <p className="ml-4">Damper size: 600mm × 400mm opposed blade</p>
                 <p className="ml-4">System static pressure: 400 Pa</p>
                 <p className="ml-4">Damper condition: Standard HVAC, clean</p>
                 <p className="mt-2">
-                  <span className="text-white/60">Calculation:</span>
+                  <span className="text-white">Calculation:</span>
                 </p>
                 <p className="ml-4">Damper area = 0.6m × 0.4m = 0.24 m²</p>
                 <p className="ml-4">Torque factor (low pressure opposed blade) = 6 Nm/m²</p>
@@ -802,7 +802,7 @@ const HNCModule8Section5_3 = () => {
                   <li className="pl-1">Neither energised: Actuator holds position</li>
                   <li className="pl-1">Controller estimates position by timing (no feedback)</li>
                 </ul>
-                <p className="mt-2 text-white/70">
+                <p className="mt-2 text-white">
                   Advantage: Uses simple relay outputs, no analogue channels required. Disadvantage:
                   Less precise, requires periodic recalibration to end stops.
                 </p>
@@ -934,7 +934,7 @@ const HNCModule8Section5_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-2">For Valve Actuators:</p>
-                  <ul className="text-white/80 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Stroke ≥ valve stem travel</li>
                     <li className="pl-1">Force ≥ close-off pressure requirement × 1.25</li>
                     <li className="pl-1">Running time appropriate for control loop</li>
@@ -945,7 +945,7 @@ const HNCModule8Section5_3 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-2">For Damper Actuators:</p>
-                  <ul className="text-white/80 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Torque ≥ calculated requirement × 1.25</li>
                     <li className="pl-1">Rotation angle matches damper (usually 90°)</li>
                     <li className="pl-1">Mounting type compatible (direct/linkage)</li>
@@ -1063,8 +1063,8 @@ const HNCModule8Section5_3 = () => {
                 <strong>Scenario:</strong> Select an actuator for a DN32 2-port LTHW valve on an AHU
                 heating coil with 400kPa differential pressure.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given data:</p>
                 <p className="ml-4">Valve: DN32, 2-port globe valve, 10mm stroke</p>
                 <p className="ml-4">Differential pressure: 400 kPa</p>
                 <p className="ml-4">Control: Modulating 0-10V from BMS</p>
@@ -1094,8 +1094,8 @@ const HNCModule8Section5_3 = () => {
                 <strong>Scenario:</strong> Size a direct-coupled actuator for an 800mm × 600mm fresh
                 air intake damper operating against 600Pa static pressure.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given data:</p>
                 <p className="ml-4">Damper: 800mm × 600mm opposed blade</p>
                 <p className="ml-4">Static pressure: 600 Pa (medium pressure)</p>
                 <p className="ml-4">Control: Modulating 2-10V</p>
@@ -1128,8 +1128,8 @@ const HNCModule8Section5_3 = () => {
                 <strong>Scenario:</strong> A modulating actuator with 2-10V feedback shows various
                 readings. Interpret the damper positions.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Signal interpretation (2-10V range):</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Signal interpretation (2-10V range):</p>
                 <p className="mt-2">Feedback reading: 2.0V</p>
                 <p className="ml-4">Position = (2.0 - 2) / (10 - 2) × 100% = 0%</p>
                 <p className="ml-4 text-green-400">Damper is fully closed</p>
@@ -1225,7 +1225,7 @@ const HNCModule8Section5_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1271,7 +1271,7 @@ const HNCModule8Section5_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section5">

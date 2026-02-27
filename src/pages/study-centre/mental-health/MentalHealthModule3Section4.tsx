@@ -218,7 +218,7 @@ export default function MentalHealthModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-3">
@@ -243,7 +243,7 @@ export default function MentalHealthModule3Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Suicide First Aid &amp; Crisis Response
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Practical skills for asking about suicide, using the TASC model, creating safety plans,
             knowing when to call 999, key UK helplines, and looking after yourself as a mental
             health first aider
@@ -256,7 +256,7 @@ export default function MentalHealthModule3Section4() {
             <Heart className="h-5 w-5 text-purple-400 mt-0.5 flex-shrink-0" />
             <div>
               <p className="text-sm font-medium text-purple-400 mb-1">Before You Begin</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 This section covers suicide and crisis response. The content is sensitive but
                 essential for anyone in a mental health first aider role. If you are personally
                 affected by any of the topics discussed, the Samaritans are available 24/7 on{' '}
@@ -345,7 +345,7 @@ export default function MentalHealthModule3Section4() {
 
               <div className="bg-purple-500/10 border border-purple-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-purple-400 mb-3">What the Research Says</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   A systematic review published in the <em>British Journal of Psychiatry</em>{' '}
                   examined whether asking about suicide increases suicidal ideation. The conclusion
                   was unequivocal: there is <strong className="text-white">no evidence</strong> that
@@ -353,7 +353,7 @@ export default function MentalHealthModule3Section4() {
                   Organisation, NICE, the Samaritans, and every major mental health organisation in
                   the UK support direct questioning as a safe and effective intervention.
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Many people who are suicidal describe feeling{' '}
                   <strong className="text-white">relieved</strong> when someone finally asks. The
                   thoughts have been building in silence, and a direct question communicates:
@@ -366,7 +366,7 @@ export default function MentalHealthModule3Section4() {
                   <MessageCircle className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-white">How to Phrase the Question</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Use clear, direct language. Do not use euphemisms. The goal is to be unambiguous
                   so the person knows exactly what you are asking.
                 </p>
@@ -375,7 +375,7 @@ export default function MentalHealthModule3Section4() {
                     <p className="text-xs font-medium text-green-400 mb-2">
                       Direct Language (Use These)
                     </p>
-                    <ul className="text-xs text-white/80 space-y-1.5">
+                    <ul className="text-xs text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                         <span>&ldquo;Are you thinking about suicide?&rdquo;</span>
@@ -401,7 +401,7 @@ export default function MentalHealthModule3Section4() {
                     <p className="text-xs font-medium text-red-400 mb-2">
                       Euphemisms (Avoid These)
                     </p>
-                    <ul className="text-xs text-white/80 space-y-1.5">
+                    <ul className="text-xs text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                         <span>
@@ -441,11 +441,11 @@ export default function MentalHealthModule3Section4() {
                 <p className="text-sm font-medium text-violet-400 mb-3">
                   Overcoming Your Own Fear of Asking
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   It is entirely normal to feel anxious about asking someone about suicide. You
                   might worry about:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5 mb-3">
+                <ul className="text-sm text-white space-y-1.5 mb-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -474,7 +474,7 @@ export default function MentalHealthModule3Section4() {
                     </span>
                   </li>
                 </ul>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Remember: the biggest risk is{' '}
                   <strong className="text-white">not asking at all</strong>. A person who is
                   suicidal and feels that nobody has noticed or cares is in a far more dangerous
@@ -512,7 +512,7 @@ export default function MentalHealthModule3Section4() {
                       <span className="text-purple-300 text-xl font-bold">T</span>
                     </div>
                     <p className="text-sm font-semibold text-purple-300 mb-1">Tell</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Tell the person you are concerned about them. Express genuine care without
                       judgement.
                     </p>
@@ -525,7 +525,7 @@ export default function MentalHealthModule3Section4() {
                       <span className="text-violet-300 text-xl font-bold">A</span>
                     </div>
                     <p className="text-sm font-semibold text-violet-300 mb-1">Ask</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Ask directly about suicide. Use clear, unambiguous language. Listen to the
                       response.
                     </p>
@@ -538,7 +538,7 @@ export default function MentalHealthModule3Section4() {
                       <span className="text-purple-300 text-xl font-bold">S</span>
                     </div>
                     <p className="text-sm font-semibold text-purple-300 mb-1">Safety Plan</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Help them create a safety plan with coping strategies, contacts, and reasons
                       for living.
                     </p>
@@ -551,7 +551,7 @@ export default function MentalHealthModule3Section4() {
                       <span className="text-violet-300 text-xl font-bold">C</span>
                     </div>
                     <p className="text-sm font-semibold text-violet-300 mb-1">Call</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Call for support &mdash; a helpline, GP, mental health service, or 999 if in
                       immediate danger.
                     </p>
@@ -571,14 +571,14 @@ export default function MentalHealthModule3Section4() {
                       Tell &mdash; Express Your Concern
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Start by telling the person you have noticed something and that you are worried
                     about them. Be specific about what you have observed &mdash; this shows you are
                     paying attention and that your concern is genuine.
                   </p>
                   <div className="bg-black/30 rounded-lg p-3">
                     <p className="text-xs font-medium text-purple-300 mb-2">Example Phrases</p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li>
                         &ldquo;I&rsquo;ve noticed you&rsquo;ve been very quiet lately and I&rsquo;m
                         worried about you.&rdquo;
@@ -605,7 +605,7 @@ export default function MentalHealthModule3Section4() {
                       Ask &mdash; Ask Directly About Suicide
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Ask the question directly. Use the word &ldquo;suicide&rdquo;. Do not beat
                     around the bush. If they say yes, stay calm, listen without judgement, and thank
                     them for telling you. Do not panic, do not immediately try to &ldquo;fix&rdquo;
@@ -613,7 +613,7 @@ export default function MentalHealthModule3Section4() {
                   </p>
                   <div className="bg-black/30 rounded-lg p-3">
                     <p className="text-xs font-medium text-violet-300 mb-2">If They Say Yes</p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li>Stay calm &mdash; your calmness will help them feel safer</li>
                       <li>
                         &ldquo;Thank you for telling me. That must have been really hard to
@@ -638,7 +638,7 @@ export default function MentalHealthModule3Section4() {
                       Safety Plan &mdash; Help Create a Safety Plan
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Work with the person to create a safety plan (covered in detail in Section 03
                     below). This is a collaborative process &mdash; you are helping them identify
                     their own resources, not telling them what to do. The safety plan gives them
@@ -656,7 +656,7 @@ export default function MentalHealthModule3Section4() {
                       Call &mdash; Call for Support
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Connect the person with professional support. This could be a helpline, their
                     GP, a mental health service, or &mdash; if they are in immediate danger &mdash;
                     999. Where possible, help them make the call rather than just giving them a
@@ -667,7 +667,7 @@ export default function MentalHealthModule3Section4() {
                     <p className="text-xs font-medium text-violet-300 mb-2">
                       Connecting to Support
                     </p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li>
                         &ldquo;Would you like me to sit with you while you call the
                         Samaritans?&rdquo;
@@ -706,7 +706,7 @@ export default function MentalHealthModule3Section4() {
 
               <div className="bg-purple-500/10 border border-purple-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-purple-400 mb-3">Why Safety Plans Work</p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>
@@ -783,7 +783,7 @@ export default function MentalHealthModule3Section4() {
                       </span>
                       <div>
                         <p className="text-sm font-medium text-white">{item.title}</p>
-                        <p className="text-sm text-white/80">{item.desc}</p>
+                        <p className="text-sm text-white">{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -795,7 +795,7 @@ export default function MentalHealthModule3Section4() {
                   <p className="text-sm font-medium text-green-400 mb-3">
                     Keeping the Plan Accessible
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                       <span>
@@ -820,7 +820,7 @@ export default function MentalHealthModule3Section4() {
                 </div>
                 <div className="bg-violet-500/10 border border-violet-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-violet-400 mb-3">Reviewing the Plan</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                       <span>
@@ -900,7 +900,7 @@ export default function MentalHealthModule3Section4() {
                       </span>
                       <div>
                         <p className="text-sm font-medium text-white">{item.title}</p>
-                        <p className="text-sm text-white/80">{item.desc}</p>
+                        <p className="text-sm text-white">{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -914,7 +914,7 @@ export default function MentalHealthModule3Section4() {
                     What to Say to the 999 Operator
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   When you call 999, the operator will guide you. Provide the following information
                   as clearly as you can:
                 </p>
@@ -927,7 +927,7 @@ export default function MentalHealthModule3Section4() {
                     "The person's current state — conscious, breathing, responsive, or deteriorating",
                     'Any known medical conditions, medications, or substances taken',
                   ].map((info, i) => (
-                    <div key={i} className="flex items-start gap-2 text-sm text-white/80">
+                    <div key={i} className="flex items-start gap-2 text-sm text-white">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>{info}</span>
                     </div>
@@ -937,10 +937,10 @@ export default function MentalHealthModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-3">
-                  <Users className="h-5 w-5 text-white/60" />
+                  <Users className="h-5 w-5 text-white" />
                   <p className="text-sm font-medium text-white">Staying with the Person</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1010,9 +1010,9 @@ export default function MentalHealthModule3Section4() {
                   <div className="flex items-center gap-3 mb-2">
                     <Phone className="h-4 w-4 text-green-400 flex-shrink-0" />
                     <span className="text-lg font-bold text-white">116 123</span>
-                    <span className="text-xs text-white/50">(free to call)</span>
+                    <span className="text-xs text-white">(free to call)</span>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Available 24 hours a day, 7 days a week, 365 days a year. Confidential emotional
                     support for anyone experiencing feelings of distress, despair, or suicidal
                     thoughts. You do not need to be suicidal to call. Also available by email:
@@ -1031,9 +1031,9 @@ export default function MentalHealthModule3Section4() {
                   <div className="flex items-center gap-3 mb-2">
                     <MessageCircle className="h-4 w-4 text-blue-400 flex-shrink-0" />
                     <span className="text-lg font-bold text-white">Text SHOUT to 85258</span>
-                    <span className="text-xs text-white/50">(free)</span>
+                    <span className="text-xs text-white">(free)</span>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Free, confidential, 24/7 text-based support. Particularly useful for people who
                     find it difficult to talk on the phone or who cannot make a call in their
                     current environment (e.g., on a noisy building site or in a shared space).
@@ -1053,9 +1053,9 @@ export default function MentalHealthModule3Section4() {
                   <div className="flex items-center gap-3 mb-2">
                     <Phone className="h-4 w-4 text-purple-400 flex-shrink-0" />
                     <span className="text-lg font-bold text-white">0800 58 58 58</span>
-                    <span className="text-xs text-white/50">(free)</span>
+                    <span className="text-xs text-white">(free)</span>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Open 5pm to midnight, 365 days a year. CALM provides support for anyone who is
                     struggling, with a particular focus on men who are at risk of suicide. Also
                     offers a webchat service at thecalmzone.net.
@@ -1073,9 +1073,9 @@ export default function MentalHealthModule3Section4() {
                   <div className="flex items-center gap-3 mb-2">
                     <Phone className="h-4 w-4 text-amber-400 flex-shrink-0" />
                     <span className="text-lg font-bold text-white">0800 068 4141</span>
-                    <span className="text-xs text-white/50">(9am&ndash;midnight)</span>
+                    <span className="text-xs text-white">(9am&ndash;midnight)</span>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Specifically for people under 35 who are experiencing suicidal thoughts, and for
                     anyone concerned about a young person. Available by phone, text (07860 039967),
                     and email (pat@papyrus-uk.org). Particularly relevant for apprentices and
@@ -1089,16 +1089,16 @@ export default function MentalHealthModule3Section4() {
                     <p className="text-sm font-semibold text-white">
                       NHS 111 &mdash; Mental Health Crisis
                     </p>
-                    <span className="inline-flex items-center px-2 py-0.5 rounded bg-white/20 text-white/80 text-xs font-bold">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded bg-white/20 text-white text-xs font-bold">
                       24/7
                     </span>
                   </div>
                   <div className="flex items-center gap-3 mb-2">
-                    <Phone className="h-4 w-4 text-white/60 flex-shrink-0" />
+                    <Phone className="h-4 w-4 text-white flex-shrink-0" />
                     <span className="text-lg font-bold text-white">111 &mdash; Option 2</span>
-                    <span className="text-xs text-white/50">(free)</span>
+                    <span className="text-xs text-white">(free)</span>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Dialling 111 and selecting option 2 connects you to the local mental health
                     crisis team. This is appropriate when someone needs urgent mental health support
                     but is not in immediate physical danger.
@@ -1118,10 +1118,10 @@ export default function MentalHealthModule3Section4() {
                       <p className="text-xs font-medium text-purple-300">Lighthouse Club</p>
                     </div>
                     <div className="flex items-center gap-2 mb-1">
-                      <Phone className="h-3 w-3 text-white/50" />
+                      <Phone className="h-3 w-3 text-white" />
                       <span className="text-sm font-bold text-white">0345 605 1956</span>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       The construction industry charity providing emotional, physical, and financial
                       wellbeing support for construction workers and their families. They understand
                       the unique pressures of the industry &mdash; long hours, time away from home,
@@ -1134,7 +1134,7 @@ export default function MentalHealthModule3Section4() {
                       <HeartHandshake className="h-4 w-4 text-purple-400" />
                       <p className="text-xs font-medium text-purple-300">Mates in Mind</p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       A UK charity focused on improving and promoting positive mental health in the
                       construction industry. They provide training, toolkits, and resources
                       specifically designed for the culture and environment of construction and
@@ -1164,44 +1164,44 @@ export default function MentalHealthModule3Section4() {
                   </div>
 
                   <div className="p-3 text-green-300 border-b border-white/10">Samaritans</div>
-                  <div className="p-3 text-white/80 font-medium border-b border-l border-white/10">
+                  <div className="p-3 text-white font-medium border-b border-l border-white/10">
                     116 123
                   </div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10">24/7</div>
+                  <div className="p-3 text-white border-b border-l border-white/10">24/7</div>
 
                   <div className="p-3 text-blue-300 border-b border-white/10">SHOUT</div>
-                  <div className="p-3 text-white/80 font-medium border-b border-l border-white/10">
+                  <div className="p-3 text-white font-medium border-b border-l border-white/10">
                     Text 85258
                   </div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10">24/7</div>
+                  <div className="p-3 text-white border-b border-l border-white/10">24/7</div>
 
                   <div className="p-3 text-purple-300 border-b border-white/10">CALM</div>
-                  <div className="p-3 text-white/80 font-medium border-b border-l border-white/10">
+                  <div className="p-3 text-white font-medium border-b border-l border-white/10">
                     0800 58 58 58
                   </div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10">
+                  <div className="p-3 text-white border-b border-l border-white/10">
                     5pm&ndash;midnight
                   </div>
 
                   <div className="p-3 text-amber-300 border-b border-white/10">Papyrus</div>
-                  <div className="p-3 text-white/80 font-medium border-b border-l border-white/10">
+                  <div className="p-3 text-white font-medium border-b border-l border-white/10">
                     0800 068 4141
                   </div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10">
+                  <div className="p-3 text-white border-b border-l border-white/10">
                     9am&ndash;midnight
                   </div>
 
-                  <div className="p-3 text-white/80 border-b border-white/10">NHS 111</div>
-                  <div className="p-3 text-white/80 font-medium border-b border-l border-white/10">
+                  <div className="p-3 text-white border-b border-white/10">NHS 111</div>
+                  <div className="p-3 text-white font-medium border-b border-l border-white/10">
                     111 (opt. 2)
                   </div>
-                  <div className="p-3 text-white/80 border-b border-l border-white/10">24/7</div>
+                  <div className="p-3 text-white border-b border-l border-white/10">24/7</div>
 
                   <div className="p-3 text-purple-300">Lighthouse</div>
-                  <div className="p-3 text-white/80 font-medium border-l border-white/10">
+                  <div className="p-3 text-white font-medium border-l border-white/10">
                     0345 605 1956
                   </div>
-                  <div className="p-3 text-white/80 border-l border-white/10">Mon&ndash;Fri</div>
+                  <div className="p-3 text-white border-l border-white/10">Mon&ndash;Fri</div>
                 </div>
               </div>
             </div>
@@ -1230,7 +1230,7 @@ export default function MentalHealthModule3Section4() {
                 <p className="text-sm font-medium text-purple-400 mb-3">
                   What Happens After a Crisis
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   After the immediate danger has passed and professional support has been engaged,
                   the situation does not simply &ldquo;go back to normal&rdquo;. The person who was
                   in crisis may feel:
@@ -1260,7 +1260,7 @@ export default function MentalHealthModule3Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-purple-400 mb-1">{item.feeling}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1269,10 +1269,10 @@ export default function MentalHealthModule3Section4() {
               {/* Following Up */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-3">
-                  <Users className="h-5 w-5 text-white/60" />
+                  <Users className="h-5 w-5 text-white" />
                   <p className="text-sm font-medium text-white">Following Up Appropriately</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>
@@ -1325,7 +1325,7 @@ export default function MentalHealthModule3Section4() {
                     The Impact on You as the First Aider
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   It is entirely normal and expected to be affected by supporting someone through a
                   suicidal crisis. Being affected is not a sign of weakness &mdash; it is a sign
                   that you are a compassionate human being. Common reactions include:
@@ -1365,7 +1365,7 @@ export default function MentalHealthModule3Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-violet-400 mb-1">{item.reaction}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1374,13 +1374,13 @@ export default function MentalHealthModule3Section4() {
               {/* Critical Incident Stress */}
               <div className="bg-purple-500/10 border border-purple-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-purple-400 mb-3">Critical Incident Stress</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   If a suicide attempt occurs on site, or if you are involved in a particularly
                   traumatic crisis response, you may experience{' '}
                   <strong className="text-white">critical incident stress</strong>. This is a normal
                   response to an abnormal event and can include:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>Flashbacks or intrusive images of the event</span>
@@ -1402,7 +1402,7 @@ export default function MentalHealthModule3Section4() {
                     <span>Increased use of alcohol or other substances to cope</span>
                   </li>
                 </ul>
-                <p className="text-sm text-white/80 mt-3">
+                <p className="text-sm text-white mt-3">
                   If these symptoms persist for more than a few weeks, or if they significantly
                   interfere with your daily life, seek support from your GP or a mental health
                   professional. You may benefit from a formal debriefing or trauma-focused therapy.
@@ -1415,7 +1415,7 @@ export default function MentalHealthModule3Section4() {
                   <p className="text-sm font-medium text-green-400 mb-3">
                     Seeking Debriefing &amp; Supervision
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                       <span>
@@ -1444,7 +1444,7 @@ export default function MentalHealthModule3Section4() {
                 </div>
                 <div className="bg-purple-500/10 border border-purple-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-purple-400 mb-3">Looking After Yourself</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>
@@ -1482,7 +1482,7 @@ export default function MentalHealthModule3Section4() {
                   <Heart className="h-5 w-5 text-violet-400" />
                   <p className="text-sm font-medium text-violet-400">A Final Word</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   You cannot pour from an empty cup. As a mental health first aider, your
                   willingness to sit with someone in their darkest moment is extraordinary. But you
                   must also protect your own wellbeing. Seeking support is not a sign of failure
@@ -1504,7 +1504,7 @@ export default function MentalHealthModule3Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1518,7 +1518,7 @@ export default function MentalHealthModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-3">

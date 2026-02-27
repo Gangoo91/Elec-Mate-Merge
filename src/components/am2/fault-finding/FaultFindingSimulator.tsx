@@ -626,7 +626,7 @@ function TimerBar({ timeRemaining }: { timeRemaining: number }) {
             ? 'bg-red-500/10 text-red-400'
             : isWarning
               ? 'bg-amber-500/10 text-amber-400'
-              : 'bg-white/[0.04] text-white/60'
+              : 'bg-white/[0.04] text-white'
       )}
     >
       <Clock className="h-3.5 w-3.5" />
@@ -773,7 +773,7 @@ function IntroPhase({ onStart }: { onStart: (mode: SessionMode) => void }) {
         </motion.div>
 
         <h2 className="text-xl font-bold text-white">Fault Finding Simulator</h2>
-        <p className="text-sm text-white/70 max-w-sm">
+        <p className="text-sm text-white max-w-sm">
           40% of AM2 failures happen here. Diagnose 7 faults from a bank of 30+ scenarios — every
           session is different.
         </p>
@@ -781,7 +781,7 @@ function IntroPhase({ onStart }: { onStart: (mode: SessionMode) => void }) {
 
       {/* Mode selection */}
       <div className="space-y-2">
-        <h4 className="text-xs font-semibold text-white/50 uppercase tracking-wider">
+        <h4 className="text-xs font-semibold text-white uppercase tracking-wider">
           Select mode
         </h4>
         {modes.map((mode) => {
@@ -823,7 +823,7 @@ function IntroPhase({ onStart }: { onStart: (mode: SessionMode) => void }) {
                         : mode.accent === 'red'
                           ? 'text-red-400'
                           : 'text-blue-400'
-                      : 'text-white/40'
+                      : 'text-white'
                   )}
                 />
               </div>
@@ -843,7 +843,7 @@ function IntroPhase({ onStart }: { onStart: (mode: SessionMode) => void }) {
                     />
                   )}
                 </div>
-                <p className="text-xs text-white/50">{mode.desc}</p>
+                <p className="text-xs text-white">{mode.desc}</p>
               </div>
             </button>
           );
@@ -856,7 +856,7 @@ function IntroPhase({ onStart }: { onStart: (mode: SessionMode) => void }) {
           <MapPin className="h-5 w-5 text-orange-400 shrink-0 mt-0.5" />
           <div>
             <p className="text-sm font-medium text-foreground">30+ scenarios, 8 circuit types</p>
-            <p className="text-xs text-white/60">
+            <p className="text-xs text-white">
               Ring main, lighting, motor, bonding, CO detector, data, 3-phase, S-plan
             </p>
           </div>
@@ -867,7 +867,7 @@ function IntroPhase({ onStart }: { onStart: (mode: SessionMode) => void }) {
             <p className="text-sm font-medium text-foreground">
               All wiring faults — no faulty parts
             </p>
-            <p className="text-xs text-white/60">
+            <p className="text-xs text-white">
               Open circuits, short circuits, reversed polarity, high resistance. 5 of 7 to pass.
             </p>
           </div>
@@ -950,7 +950,7 @@ function TestingPhase({
                 -{hintLevel} hint{hintLevel > 1 ? 's' : ''}
               </span>
             )}
-            <span className="text-xs text-white/40">
+            <span className="text-xs text-white">
               {testsPerformed.length} test{testsPerformed.length === 1 ? '' : 's'}
             </span>
           </div>
@@ -986,7 +986,7 @@ function TestingPhase({
           <AlertTriangle className="h-4 w-4 text-orange-400 shrink-0 mt-0.5" />
           <span className="text-xs font-semibold text-orange-400">{fault.circuitName}</span>
         </div>
-        <p className="text-sm text-white/90 leading-relaxed">&ldquo;{fault.symptom}&rdquo;</p>
+        <p className="text-sm text-white leading-relaxed">&ldquo;{fault.symptom}&rdquo;</p>
       </div>
 
       {/* Circuit Diagram */}
@@ -1017,7 +1017,7 @@ function TestingPhase({
 
       {/* Test Points */}
       <div className="space-y-1.5">
-        <h4 className="text-xs font-semibold text-white/60 uppercase tracking-wider">
+        <h4 className="text-xs font-semibold text-white uppercase tracking-wider">
           Test locations
         </h4>
         {fault.testPoints.map((point) => (
@@ -1094,15 +1094,15 @@ function TestPointCard({
             hasPerformed ? 'bg-orange-500/20' : 'bg-white/10'
           )}
         >
-          <MapPin className={cn('h-4 w-4', hasPerformed ? 'text-orange-400' : 'text-white/40')} />
+          <MapPin className={cn('h-4 w-4', hasPerformed ? 'text-orange-400' : 'text-white')} />
         </div>
         <div className="flex-1 min-w-0">
           <p className="text-sm font-medium text-foreground">{point.location}</p>
-          <p className="text-xs text-white/50 truncate">{point.description}</p>
+          <p className="text-xs text-white truncate">{point.description}</p>
         </div>
         <ChevronDown
           className={cn(
-            'h-4 w-4 text-white/30 shrink-0 transition-transform',
+            'h-4 w-4 text-white shrink-0 transition-transform',
             isExpanded && 'rotate-180'
           )}
         />
@@ -1119,7 +1119,7 @@ function TestPointCard({
           >
             <div className="px-3 pb-3 space-y-1.5">
               {availableTests.length === 0 ? (
-                <p className="text-xs text-white/40 py-2 text-center">
+                <p className="text-xs text-white py-2 text-center">
                   No {meterMode === 'continuity' ? 'continuity' : 'insulation'} tests available
                   here. Try switching mode.
                 </p>
@@ -1156,11 +1156,11 @@ function TestPointCard({
                             <CheckCircle2 className="h-3 w-3 text-emerald-400" />
                           )
                         ) : (
-                          <Zap className="h-3 w-3 text-white/30" />
+                          <Zap className="h-3 w-3 text-white" />
                         )}
                       </div>
 
-                      <span className="flex-1 text-xs text-white/80">{test.label}</span>
+                      <span className="flex-1 text-xs text-white">{test.label}</span>
 
                       {performed ? (
                         <span
@@ -1172,7 +1172,7 @@ function TestPointCard({
                           {test.reading} {test.reading !== 'OL' ? test.unit : ''}
                         </span>
                       ) : (
-                        <ArrowRight className="h-3 w-3 text-white/20 shrink-0" />
+                        <ArrowRight className="h-3 w-3 text-white shrink-0" />
                       )}
                     </button>
                   );
@@ -1237,7 +1237,7 @@ function FindingsSummary({
       className="space-y-2"
     >
       <div className="flex items-center justify-between">
-        <h4 className="text-xs font-semibold text-white/60 uppercase tracking-wider">Findings</h4>
+        <h4 className="text-xs font-semibold text-white uppercase tracking-wider">Findings</h4>
         {totalAbnormal > 0 && (
           <span className="text-[10px] font-semibold text-red-400 bg-red-500/10 px-2 py-0.5 rounded-full">
             {totalAbnormal} abnormal
@@ -1249,7 +1249,7 @@ function FindingsSummary({
         {groups.map((group, gi) => (
           <div key={gi}>
             <div className={cn('px-3 py-1.5 bg-white/[0.03]', gi > 0 && 'border-t border-white/5')}>
-              <p className="text-[10px] font-semibold text-white/40 uppercase tracking-wider">
+              <p className="text-[10px] font-semibold text-white uppercase tracking-wider">
                 {group.location}
               </p>
             </div>
@@ -1274,7 +1274,7 @@ function FindingsSummary({
                         r.isAbnormal ? 'bg-red-500' : 'bg-emerald-500'
                       )}
                     />
-                    <span className="flex-1 text-xs text-white/70 truncate">{r.label}</span>
+                    <span className="flex-1 text-xs text-white truncate">{r.label}</span>
                     <span
                       className={cn(
                         'text-xs font-mono font-bold shrink-0',
@@ -1325,7 +1325,7 @@ function DiagnosisPhase({
 
       <div>
         <h3 className="text-base font-bold text-white">What&apos;s the fault?</h3>
-        <p className="text-xs text-white/60 mt-1">{fault.circuitName}</p>
+        <p className="text-xs text-white mt-1">{fault.circuitName}</p>
       </div>
 
       {guidedTip && <GuidedTip tip={guidedTip} />}
@@ -1338,14 +1338,14 @@ function DiagnosisPhase({
             onClick={() => onSelect(option.id)}
             className="w-full p-4 rounded-xl bg-white/[0.03] border border-white/10 text-left touch-manipulation active:bg-white/[0.08] transition-colors"
           >
-            <p className="text-sm text-white/90">{option.label}</p>
+            <p className="text-sm text-white">{option.label}</p>
           </motion.button>
         ))}
       </div>
 
       <button
         onClick={onBack}
-        className="w-full h-11 rounded-xl text-white/50 text-sm font-medium touch-manipulation"
+        className="w-full h-11 rounded-xl text-white text-sm font-medium touch-manipulation"
       >
         Back to testing
       </button>
@@ -1402,7 +1402,7 @@ function FeedbackPhase({
         >
           {state.isCorrect ? 'Correct!' : 'Incorrect'}
         </p>
-        <p className="text-xs text-white/60">
+        <p className="text-xs text-white">
           {state.testsPerformed.length} test{state.testsPerformed.length === 1 ? '' : 's'} ·{' '}
           {state.timeTaken}s
           {state.hintsUsed > 0 &&
@@ -1413,22 +1413,22 @@ function FeedbackPhase({
       <div className="space-y-3">
         <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10">
           <p className="text-xs font-semibold text-orange-400 mb-1">Fault</p>
-          <p className="text-sm text-white/90">{fault.correctLocation}</p>
+          <p className="text-sm text-white">{fault.correctLocation}</p>
         </div>
 
         <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10">
           <p className="text-xs font-semibold text-cyan-400 mb-1">Rectification</p>
-          <p className="text-sm text-white/90">{fault.rectification}</p>
+          <p className="text-sm text-white">{fault.rectification}</p>
         </div>
 
         <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10">
           <p className="text-xs font-semibold text-blue-400 mb-1">How to find it</p>
-          <p className="text-sm text-white/80 leading-relaxed">{fault.explanation}</p>
+          <p className="text-sm text-white leading-relaxed">{fault.explanation}</p>
         </div>
 
         <div className="p-3.5 rounded-xl bg-cyan-500/10 border border-cyan-500/20">
           <p className="text-xs font-semibold text-cyan-400 mb-1">Optimal method</p>
-          <p className="text-xs text-white/70 whitespace-pre-line">{fault.optimalMethod}</p>
+          <p className="text-xs text-white whitespace-pre-line">{fault.optimalMethod}</p>
         </div>
       </div>
 
@@ -1558,7 +1558,7 @@ function ResultsPhase({
 
         {ranOutOfTime && <p className="text-sm font-semibold text-red-400">Time ran out!</p>}
 
-        <p className="text-sm text-white/60">
+        <p className="text-sm text-white">
           {passed
             ? 'You would pass the fault finding section'
             : correct >= 3
@@ -1566,16 +1566,16 @@ function ResultsPhase({
               : 'Keep practising — systematic testing is the key'}
         </p>
 
-        <div className="flex items-center gap-3 text-xs text-white/40">
+        <div className="flex items-center gap-3 text-xs text-white">
           <div className="flex items-center gap-1">
             <Timer className="h-3 w-3" />
             {minutes}m {seconds}s
           </div>
-          {sessionMode === 'exam' && <span className="text-white/20">|</span>}
+          {sessionMode === 'exam' && <span className="text-white">|</span>}
           {sessionMode !== 'practice' && <span className="capitalize">{sessionMode} mode</span>}
           {totalHints > 0 && (
             <>
-              <span className="text-white/20">|</span>
+              <span className="text-white">|</span>
               <span className="text-amber-400/60">
                 {totalHints} hint{totalHints > 1 ? 's' : ''} used
               </span>
@@ -1586,7 +1586,7 @@ function ResultsPhase({
 
       {/* Per-fault breakdown */}
       <div className="space-y-1.5">
-        <h3 className="text-xs font-semibold text-white/60 uppercase tracking-wider">Breakdown</h3>
+        <h3 className="text-xs font-semibold text-white uppercase tracking-wider">Breakdown</h3>
         {faultStates.map((state, i) => (
           <div
             key={i}
@@ -1611,7 +1611,7 @@ function ResultsPhase({
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm text-foreground truncate">{state.scenario.circuitName}</p>
-              <p className="text-[10px] text-white/50">
+              <p className="text-[10px] text-white">
                 {state.testsPerformed.length} tests · {state.timeTaken}s
                 {state.hintsUsed > 0 &&
                   ` · ${state.hintsUsed} hint${state.hintsUsed > 1 ? 's' : ''}`}
@@ -1629,7 +1629,7 @@ function ResultsPhase({
           transition={{ delay: 0.3 }}
           className="space-y-3"
         >
-          <h3 className="text-xs font-semibold text-white/60 uppercase tracking-wider flex items-center gap-1.5">
+          <h3 className="text-xs font-semibold text-white uppercase tracking-wider flex items-center gap-1.5">
             <TrendingUp className="h-3.5 w-3.5" />
             Your Progress
           </h3>
@@ -1637,7 +1637,7 @@ function ResultsPhase({
           <div className="grid grid-cols-2 gap-2">
             <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 text-center">
               <p className="text-2xl font-bold text-white">{totalSessions}</p>
-              <p className="text-[10px] text-white/40">Sessions</p>
+              <p className="text-[10px] text-white">Sessions</p>
             </div>
             <div className="p-3 rounded-xl bg-white/[0.03] border border-white/10 text-center">
               <p
@@ -1652,7 +1652,7 @@ function ResultsPhase({
               >
                 {avgScore}%
               </p>
-              <p className="text-[10px] text-white/40">Average</p>
+              <p className="text-[10px] text-white">Average</p>
             </div>
           </div>
 

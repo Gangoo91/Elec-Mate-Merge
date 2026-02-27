@@ -209,7 +209,7 @@ export default function ManualHandlingModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-4">
@@ -234,7 +234,7 @@ export default function ManualHandlingModule4Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Handling in Confined &amp; Restricted Spaces
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Safe handling in loft spaces, ceiling voids, under-floor access, riser shafts, plant
             rooms, and restricted working environments
           </p>
@@ -367,7 +367,7 @@ export default function ManualHandlingModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Loft Work Handling Controls</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -436,7 +436,7 @@ export default function ManualHandlingModule4Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Warning</p>
                 </div>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   <strong>
                     Never stand on, kneel on, or apply body weight to a suspended ceiling grid or
                     tile.
@@ -460,7 +460,7 @@ export default function ManualHandlingModule4Section3() {
                 <p className="text-sm font-medium text-white mb-2">
                   Ceiling Void Handling Best Practice
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -532,7 +532,7 @@ export default function ManualHandlingModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Under-Floor Access Controls</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -600,7 +600,7 @@ export default function ManualHandlingModule4Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Warning</p>
                 </div>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   <strong>Never throw or drop materials through a riser shaft.</strong> A falling
                   object gains significant kinetic energy even over a single floor height. A 5 kg
                   item dropped from 3 metres strikes with a force equivalent to many times its
@@ -612,7 +612,7 @@ export default function ManualHandlingModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Riser Shaft Handling Methods</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -691,7 +691,7 @@ export default function ManualHandlingModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Plant Room Handling Controls</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>Survey the route and measure clearances before the item arrives</span>
@@ -748,7 +748,7 @@ export default function ManualHandlingModule4Section3() {
                 <p className="text-sm font-medium text-white mb-2">
                   Access Equipment Selection for Handling Tasks
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -812,7 +812,7 @@ export default function ManualHandlingModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">When to Use Each Approach</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">One person (brief, light tasks):</strong> Quick
                     tasks under 15 minutes with very light loads (under 5 kg). For example, pulling
@@ -868,7 +868,7 @@ export default function ManualHandlingModule4Section3() {
                       <Home className="h-5 w-5 text-emerald-400" />
                       <p className="text-sm font-semibold text-emerald-400">Loft Spaces</p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                         <span>Clearance: 0.6&ndash;2.2 m (varies)</span>
@@ -894,7 +894,7 @@ export default function ManualHandlingModule4Section3() {
                       <Eye className="h-5 w-5 text-blue-400" />
                       <p className="text-sm font-semibold text-blue-400">Ceiling Voids</p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                         <span>Clearance: 0.3&ndash;0.8 m (void depth)</span>
@@ -922,7 +922,7 @@ export default function ManualHandlingModule4Section3() {
                         Under-Floor Crawl Spaces
                       </p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                         <span>Clearance: 0.3&ndash;0.6 m (crawling)</span>
@@ -950,7 +950,7 @@ export default function ManualHandlingModule4Section3() {
                         Riser &amp; Service Shafts
                       </p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                         <span>Direction: vertical between floors</span>
@@ -972,7 +972,7 @@ export default function ManualHandlingModule4Section3() {
                 </div>
 
                 <div className="mt-4 p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
-                  <p className="text-xs text-white/60 leading-relaxed">
+                  <p className="text-xs text-white leading-relaxed">
                     <strong className="text-emerald-400">Remember:</strong> Restricted space =
                     restricted capacity. The maximum recommended load in any restricted space is
                     significantly lower than the standard standing guideline. Always assess the
@@ -991,7 +991,7 @@ export default function ManualHandlingModule4Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1005,7 +1005,7 @@ export default function ManualHandlingModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-4">

@@ -40,7 +40,7 @@ const EnhancedEmergencyProcedures = () => {
       case 'specialist':
         return 'bg-blue-500/20 text-blue-300 border-blue-500/30';
       default:
-        return 'bg-white/10 text-white/80 border-white/20';
+        return 'bg-white/10 text-white border-white/20';
     }
   };
 

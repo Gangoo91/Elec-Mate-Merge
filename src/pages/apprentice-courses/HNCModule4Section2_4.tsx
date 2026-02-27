@@ -207,7 +207,7 @@ const HNCModule4Section2_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section2">
@@ -229,7 +229,7 @@ const HNCModule4Section2_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Short-Circuit Withstand
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Ensuring cables can safely withstand fault currents until protective devices operate
           </p>
         </header>
@@ -314,9 +314,9 @@ const HNCModule4Section2_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Adiabatic Equation</p>
               <div className="bg-black/30 p-4 rounded text-center">
                 <p className="font-mono text-xl mb-2">S = √(I²t) / k</p>
-                <p className="text-sm text-white/70">Or rearranged: k²S² ≥ I²t</p>
+                <p className="text-sm text-white">Or rearranged: k²S² ≥ I²t</p>
               </div>
-              <div className="mt-3 text-sm text-white/80 grid sm:grid-cols-2 gap-2">
+              <div className="mt-3 text-sm text-white grid sm:grid-cols-2 gap-2">
                 <div>
                   <p>
                     <strong>S</strong> = conductor cross-sectional area (mm²)
@@ -500,7 +500,7 @@ const HNCModule4Section2_4 = () => {
               <div className="bg-black/30 p-3 rounded text-center font-mono text-lg">
                 <p>I²t = I² × t</p>
               </div>
-              <p className="text-xs text-white/60 mt-2 text-center">
+              <p className="text-xs text-white mt-2 text-center">
                 Where I = RMS fault current (A) and t = disconnection time (s)
               </p>
             </div>
@@ -631,7 +631,7 @@ const HNCModule4Section2_4 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Example Verification</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Circuit: 32A MCB Type B protecting 4mm² Cu/PVC cable</p>
                 <p>PSCC at origin: 6kA</p>
                 <p className="mt-2">MCB I²t at 6kA (from data): 35,000 A²s</p>
@@ -669,7 +669,7 @@ const HNCModule4Section2_4 = () => {
                   t<sub>max</sub> = k²S² / I²
                 </p>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 The protective device must operate within this time at the given fault current.
               </p>
             </div>
@@ -699,7 +699,7 @@ const HNCModule4Section2_4 = () => {
                 <strong>Question:</strong> An MCB has I²t = 45,000 A²s. What is the minimum Cu/PVC
                 cable size?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using S = √(I²t) / k</p>
                 <p>S = √(45,000) / 115</p>
                 <p>
@@ -708,7 +708,7 @@ const HNCModule4Section2_4 = () => {
                 <p className="mt-2">
                   Next standard size up: <strong>2.5mm²</strong>
                 </p>
-                <p className="mt-2 text-white/60">Verify: k²S² = 115² × 2.5² = 82,656 A²s</p>
+                <p className="mt-2 text-white">Verify: k²S² = 115² × 2.5² = 82,656 A²s</p>
                 <p className="text-green-400">82,656 ≥ 45,000 ✓</p>
               </div>
             </div>
@@ -721,7 +721,7 @@ const HNCModule4Section2_4 = () => {
                 <strong>Question:</strong> A 6mm² Cu/XLPE cable experiences a 5kA fault. What is the
                 maximum permissible disconnection time?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>k for Cu/XLPE = 143</p>
                 <p>
                   k²S² = 143² × 6² = 20,449 × 36 = <strong>736,164 A²s</strong>
@@ -732,7 +732,7 @@ const HNCModule4Section2_4 = () => {
                 <p>
                   t = <strong>0.029s (29ms)</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → Protective device must clear within 29ms at 5kA
                 </p>
               </div>
@@ -746,14 +746,14 @@ const HNCModule4Section2_4 = () => {
                 <strong>Question:</strong> 100A MCCB protects 25mm² Cu/PVC sub-main. PSCC = 15kA.
                 I²t from data = 800,000 A²s. Is cable protected?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Cable k²S² = 115² × 25² = 13,225 × 625</p>
                 <p>
                   k²S² = <strong>8,265,625 A²s</strong>
                 </p>
                 <p className="mt-2">Check: 8,265,625 ≥ 800,000</p>
                 <p className="text-green-400">✓ Cable adequately protected (10× margin)</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Note: Large margin allows for higher PSCC or different MCCB
                 </p>
               </div>
@@ -834,7 +834,7 @@ const HNCModule4Section2_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -880,7 +880,7 @@ const HNCModule4Section2_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section2-3">

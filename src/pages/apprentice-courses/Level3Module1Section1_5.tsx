@@ -174,7 +174,7 @@ const Level3Module1Section1_5 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
           <Link
             to="/study-centre/apprentice/level3-module1-section1"
-            className="inline-flex items-center gap-2 text-white/70 hover:text-white active:text-elec-yellow text-sm sm:text-base min-h-[44px] touch-manipulation transition-colors"
+            className="inline-flex items-center gap-2 text-white hover:text-white active:text-elec-yellow text-sm sm:text-base min-h-[44px] touch-manipulation transition-colors"
           >
             <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
             <span>Back to Section 1</span>
@@ -196,7 +196,7 @@ const Level3Module1Section1_5 = () => {
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight">
               PUWER & LOLER
             </h1>
-            <p className="text-base sm:text-lg text-white/70 leading-relaxed">
+            <p className="text-base sm:text-lg text-white leading-relaxed">
               Provision and Use of Work Equipment Regulations 1998 & Lifting Operations and Lifting
               Equipment Regulations 1998
             </p>
@@ -209,7 +209,7 @@ const Level3Module1Section1_5 = () => {
                 <Clock className="w-5 h-5 text-elec-yellow" />
                 <h3 className="font-semibold text-white">In 30 Seconds</h3>
               </div>
-              <ul className="space-y-2 text-sm text-white/80">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow mt-1">*</span>
                   PUWER covers ALL work equipment - must be suitable, maintained, inspected
@@ -233,7 +233,7 @@ const Level3Module1Section1_5 = () => {
                 <FileCheck className="w-5 h-5 text-elec-yellow" />
                 <h3 className="font-semibold text-white">Spot it / Use it</h3>
               </div>
-              <ul className="space-y-2 text-sm text-white/80">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow mt-1">*</span>
                   <strong className="text-white">Spot:</strong> PAT labels, damage, thorough
@@ -259,7 +259,7 @@ const Level3Module1Section1_5 = () => {
               <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
               Learning Outcomes
             </h2>
-            <p className="text-white/70 mb-4 text-sm sm:text-base">
+            <p className="text-white mb-4 text-sm sm:text-base">
               By the end of this section, you will be able to:
             </p>
             <ul className="space-y-3">
@@ -273,7 +273,7 @@ const Level3Module1Section1_5 = () => {
               ].map((outcome, index) => (
                 <li key={index} className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span className="text-white/80 text-sm sm:text-base">{outcome}</span>
+                  <span className="text-white text-sm sm:text-base">{outcome}</span>
                 </li>
               ))}
             </ul>
@@ -290,7 +290,7 @@ const Level3Module1Section1_5 = () => {
               </h2>
             </div>
             <div className="p-4 sm:p-6 rounded-xl bg-white/5 border border-white/10 space-y-4">
-              <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+              <p className="text-white text-sm sm:text-base leading-relaxed">
                 The{' '}
                 <strong className="text-white">
                   Provision and Use of Work Equipment Regulations 1998 (PUWER)
@@ -304,7 +304,7 @@ const Level3Module1Section1_5 = () => {
                 <h4 className="font-semibold text-elec-yellow mb-3">
                   Why PUWER matters to electricians:
                 </h4>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Every tool you pick up - your multifunction tester, voltage indicator, power
                   drill, extension lead - is covered by PUWER. The legislation exists because
                   defective or unsuitable equipment causes hundreds of serious injuries every year.
@@ -316,7 +316,7 @@ const Level3Module1Section1_5 = () => {
               <div className="space-y-4 mt-4">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-semibold text-white mb-2">Regulation 4 - Suitability</h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     Equipment must be{' '}
                     <strong className="text-white">suitable for its intended purpose</strong>. For
                     electricians, this means using the RIGHT tool for the job. A voltage indicator
@@ -329,7 +329,7 @@ const Level3Module1Section1_5 = () => {
 
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-semibold text-white mb-2">Regulation 5 - Maintenance</h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     Work equipment must be maintained in an{' '}
                     <strong className="text-white">
                       efficient state, in efficient working order, and in good repair
@@ -342,7 +342,7 @@ const Level3Module1Section1_5 = () => {
 
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-semibold text-white mb-2">Regulation 6 - Inspection</h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     Where the safety of equipment depends on installation conditions, it must be{' '}
                     <strong className="text-white">
                       inspected after installation and at suitable intervals
@@ -381,7 +381,7 @@ const Level3Module1Section1_5 = () => {
               </h2>
             </div>
             <div className="p-4 sm:p-6 rounded-xl bg-white/5 border border-white/10 space-y-4">
-              <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+              <p className="text-white text-sm sm:text-base leading-relaxed">
                 Understanding how PUWER applies to your specific tools and equipment is essential
                 for safe working. Every piece of kit you use daily falls under these requirements -
                 and failure to comply puts both you and your employer at legal risk.
@@ -390,7 +390,7 @@ const Level3Module1Section1_5 = () => {
               <div className="space-y-4">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-semibold text-white mb-2">Test Instruments</h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     All electrical test equipment falls under PUWER - multifunction testers,
                     insulation resistance testers, RCD testers, voltage indicators, earth loop
                     impedance testers. They must be suitable for intended use (correct CAT rating),
@@ -403,7 +403,7 @@ const Level3Module1Section1_5 = () => {
 
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-semibold text-white mb-2">Power Tools</h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     Drills, grinders, circular saws, jigsaws, and other power tools are subject to
                     PUWER. Before use, check for: damaged cables or plugs, cracked casings, proper
                     guard function, correct blade/bit installation, and valid PAT labels. 110V tools
@@ -414,7 +414,7 @@ const Level3Module1Section1_5 = () => {
 
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-semibold text-white mb-2">Extension Leads</h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     Often overlooked, extension leads are work equipment under PUWER. They must be
                     of suitable rating for the intended load, inspected for cable damage before use,
                     fully unwound during use to prevent overheating, and included in PAT testing
@@ -427,7 +427,7 @@ const Level3Module1Section1_5 = () => {
                   <h4 className="font-semibold text-elec-yellow mb-2">
                     Portable Appliance Testing (PAT)
                   </h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     While PAT testing is not a specific legal requirement, it is a practical way to
                     demonstrate PUWER compliance for portable electrical equipment. Equipment should
                     be visually inspected before each use and formally tested at intervals
@@ -445,7 +445,7 @@ const Level3Module1Section1_5 = () => {
                     <h4 className="font-semibold text-red-400 mb-1">
                       Pre-Use Inspection - Every Time
                     </h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Every time you pick up a tool, perform a quick visual inspection: check cables
                       and connections, look for visible damage, ensure guards and safety features
                       are in place, verify any test dates are current. This takes seconds but
@@ -482,7 +482,7 @@ const Level3Module1Section1_5 = () => {
               </h2>
             </div>
             <div className="p-4 sm:p-6 rounded-xl bg-white/5 border border-white/10 space-y-4">
-              <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+              <p className="text-white text-sm sm:text-base leading-relaxed">
                 The{' '}
                 <strong className="text-white">
                   Lifting Operations and Lifting Equipment Regulations 1998 (LOLER)
@@ -495,7 +495,7 @@ const Level3Module1Section1_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                   <h4 className="font-semibold text-amber-400 mb-2">6-Month Examination</h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     Equipment used for <strong className="text-white">lifting persons</strong> must
                     be thoroughly examined at least every 6 months. This includes MEWPs (cherry
                     pickers, scissor lifts), personnel hoists, and cradles. The higher frequency
@@ -505,7 +505,7 @@ const Level3Module1Section1_5 = () => {
 
                 <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                   <h4 className="font-semibold text-blue-400 mb-2">12-Month Examination</h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     Equipment used for lifting{' '}
                     <strong className="text-white">materials only</strong> must be thoroughly
                     examined at least every 12 months. This includes scaffold hoists, cranes, and
@@ -517,7 +517,7 @@ const Level3Module1Section1_5 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-semibold text-white mb-2">Safe Working Load (SWL)</h4>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   All lifting equipment must be clearly marked with its{' '}
                   <strong className="text-white">Safe Working Load</strong>. Before using any
                   lifting equipment, you MUST check the SWL marking and ensure your intended load
@@ -529,7 +529,7 @@ const Level3Module1Section1_5 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-semibold text-white mb-2">Lifting Accessories</h4>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   LOLER also covers lifting accessories - chains, slings, shackles, eyebolts. These
                   must be examined every 6 months and marked with their SWL. Unlike other equipment,
                   damaged lifting accessories{' '}
@@ -541,7 +541,7 @@ const Level3Module1Section1_5 = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
                 <h4 className="font-semibold text-elec-yellow mb-2">Documentation Requirements</h4>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Reports of thorough examinations must be kept and made available. Before using
                   lifting equipment, verify that current examination certificates are available and
                   the equipment has not exceeded its examination due date. Operating equipment
@@ -571,7 +571,7 @@ const Level3Module1Section1_5 = () => {
               </h2>
             </div>
             <div className="p-4 sm:p-6 rounded-xl bg-white/5 border border-white/10 space-y-4">
-              <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+              <p className="text-white text-sm sm:text-base leading-relaxed">
                 Knowing the regulations is one thing - applying them on site every day is what keeps
                 you safe and legal. Here's how PUWER and LOLER translate into your daily work
                 routine.
@@ -580,7 +580,7 @@ const Level3Module1Section1_5 = () => {
               <div className="space-y-4">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-semibold text-white mb-2">Daily Pre-Use Checks</h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     Before starting work each day, visually inspect all equipment you will use.
                     Check power tool cables for cuts or damage, verify test instrument calibration
                     is current, inspect PPE for wear or damage, check any lifting equipment
@@ -591,7 +591,7 @@ const Level3Module1Section1_5 = () => {
 
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-semibold text-white mb-2">Using MEWPs (Cherry Pickers)</h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     When working from a MEWP, you must: verify the thorough examination is current
                     (within 6 months), check the SWL includes combined weight of operatives, tools
                     and materials, ensure you have received appropriate training and
@@ -602,7 +602,7 @@ const Level3Module1Section1_5 = () => {
 
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-semibold text-white mb-2">Using Scaffold Hoists</h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     When materials need to be lifted to height, scaffold hoists are commonly used.
                     Check the thorough examination certificate is current (12 months), verify the
                     SWL is adequate for your load, inspect the hoist rope or chain for damage,
@@ -613,7 +613,7 @@ const Level3Module1Section1_5 = () => {
 
                 <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                   <h4 className="font-semibold text-red-400 mb-2">Reporting Defects</h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     Any equipment defects discovered MUST be reported immediately to your employer
                     or site supervisor. Defective equipment must be labelled and removed from the
                     work area to prevent inadvertent use by others. Never attempt to repair lifting
@@ -624,7 +624,7 @@ const Level3Module1Section1_5 = () => {
 
                 <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
                   <h4 className="font-semibold text-elec-yellow mb-2">Competence and Training</h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     Both PUWER and LOLER require persons using work equipment to be adequately
                     trained and competent. For electricians, this includes training in specific test
                     instruments, safe use of power tools, and where using lifting equipment like
@@ -657,7 +657,7 @@ const Level3Module1Section1_5 = () => {
                 Real-World Case: The Overlooked Examination Date
               </h3>
             </div>
-            <div className="space-y-3 text-sm text-white/80">
+            <div className="space-y-3 text-sm text-white">
               <p>
                 <strong className="text-white">The Situation:</strong> An electrical contractor was
                 hired to install external lighting on a warehouse. The work required a cherry picker
@@ -694,7 +694,7 @@ const Level3Module1Section1_5 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-semibold text-elec-yellow mb-3">PUWER Compliance Checklist</h4>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
                     Visual inspection before each use
@@ -723,7 +723,7 @@ const Level3Module1Section1_5 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-semibold text-elec-yellow mb-3">LOLER Compliance Checklist</h4>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
                     Check thorough examination is current
@@ -766,7 +766,7 @@ const Level3Module1Section1_5 = () => {
                     +
                   </span>
                 </summary>
-                <p className="mt-2 text-white/70 text-sm pl-4 border-l-2 border-elec-yellow/30">
+                <p className="mt-2 text-white text-sm pl-4 border-l-2 border-elec-yellow/30">
                   The employer has the primary legal duty under PUWER to provide suitable,
                   maintained, and safe equipment. However, employees also have duties to use
                   equipment properly, report defects, and not misuse safety devices. If you're
@@ -780,7 +780,7 @@ const Level3Module1Section1_5 = () => {
                     +
                   </span>
                 </summary>
-                <p className="mt-2 text-white/70 text-sm pl-4 border-l-2 border-elec-yellow/30">
+                <p className="mt-2 text-white text-sm pl-4 border-l-2 border-elec-yellow/30">
                   Yes, but personal tools used for work are still subject to PUWER. They must be
                   suitable for the task, properly maintained, and included in inspection regimes.
                   Many employers require personal tools to be included in their PAT testing
@@ -794,7 +794,7 @@ const Level3Module1Section1_5 = () => {
                     +
                   </span>
                 </summary>
-                <p className="mt-2 text-white/70 text-sm pl-4 border-l-2 border-elec-yellow/30">
+                <p className="mt-2 text-white text-sm pl-4 border-l-2 border-elec-yellow/30">
                   LOLER requires operators to be adequately trained and competent. IPAF
                   (International Powered Access Federation) training is the industry standard for
                   MEWP operators. This covers safe operation, pre-use checks, emergency procedures,
@@ -808,7 +808,7 @@ const Level3Module1Section1_5 = () => {
                     +
                   </span>
                 </summary>
-                <p className="mt-2 text-white/70 text-sm pl-4 border-l-2 border-elec-yellow/30">
+                <p className="mt-2 text-white text-sm pl-4 border-l-2 border-elec-yellow/30">
                   No. Unlike most equipment, damaged lifting accessories such as chains, slings, and
                   shackles cannot be repaired and reused. They must be disposed of immediately. The
                   integrity of these items is critical - a repaired weak point could fail
@@ -822,7 +822,7 @@ const Level3Module1Section1_5 = () => {
                     +
                   </span>
                 </summary>
-                <p className="mt-2 text-white/70 text-sm pl-4 border-l-2 border-elec-yellow/30">
+                <p className="mt-2 text-white text-sm pl-4 border-l-2 border-elec-yellow/30">
                   You should refuse to use it. Using lifting equipment without valid documentation
                   is a breach of LOLER. Report the issue to your supervisor and document your
                   concerns. You cannot be disciplined for refusing to undertake work that you
@@ -840,7 +840,7 @@ const Level3Module1Section1_5 = () => {
             <div className="grid sm:grid-cols-2 gap-4 text-sm">
               <div className="space-y-2">
                 <h4 className="font-semibold text-elec-yellow">PUWER Key Points:</h4>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>
                     * <strong className="text-white">Reg 4:</strong> Equipment must be suitable for
                     purpose
@@ -858,7 +858,7 @@ const Level3Module1Section1_5 = () => {
               </div>
               <div className="space-y-2">
                 <h4 className="font-semibold text-elec-yellow">LOLER Key Points:</h4>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>
                     * <strong className="text-white">6 months:</strong> Lifting persons (MEWPs)
                   </li>
@@ -872,7 +872,7 @@ const Level3Module1Section1_5 = () => {
               </div>
             </div>
             <div className="mt-4 p-3 rounded-lg bg-[#1a1a1a] border border-white/10">
-              <p className="text-white/80 text-sm text-center">
+              <p className="text-white text-sm text-center">
                 <strong className="text-elec-yellow">Remember:</strong> PUWER = ALL work equipment |
                 LOLER = Lifting equipment | Both require suitable, maintained, examined equipment!
               </p>

@@ -237,7 +237,7 @@ const HNCModule8Section5_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section5">
@@ -259,7 +259,7 @@ const HNCModule8Section5_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Sensors and Measurement
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding HVAC sensors: temperature, humidity, pressure, flow and air quality
             measurement for BMS integration
           </p>
@@ -345,7 +345,7 @@ const HNCModule8Section5_2 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Resistance Temperature Detectors (RTDs)
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 RTDs use the principle that metal resistance increases with temperature. Platinum is
                 the most common material due to its stability, linearity and wide temperature range.
               </p>
@@ -411,7 +411,7 @@ const HNCModule8Section5_2 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">NTC Thermistors</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Negative Temperature Coefficient (NTC) thermistors decrease in resistance as
                 temperature rises. They offer high sensitivity but non-linear output requiring
                 linearisation.
@@ -434,7 +434,7 @@ const HNCModule8Section5_2 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Thermocouples</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Thermocouples generate a voltage (Seebeck effect) proportional to temperature
                 difference between the measurement junction and reference junction. They suit
                 high-temperature applications.
@@ -524,7 +524,7 @@ const HNCModule8Section5_2 = () => {
                     <Droplets className="h-4 w-4 text-elec-yellow/70" />
                     <p className="text-sm font-medium text-white">Capacitive Sensors</p>
                   </div>
-                  <ul className="text-sm text-white/90 space-y-1.5 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                     <li className="pl-1">Polymer film absorbs moisture</li>
                     <li className="pl-1">Capacitance changes with humidity</li>
                     <li className="pl-1">Accuracy: plus or minus 2-3% RH typical</li>
@@ -537,7 +537,7 @@ const HNCModule8Section5_2 = () => {
                     <Activity className="h-4 w-4 text-elec-yellow/70" />
                     <p className="text-sm font-medium text-white">Resistive Sensors</p>
                   </div>
-                  <ul className="text-sm text-white/90 space-y-1.5 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                     <li className="pl-1">Conductive polymer changes resistance</li>
                     <li className="pl-1">Lower cost than capacitive</li>
                     <li className="pl-1">Accuracy: plus or minus 3-5% RH</li>
@@ -597,7 +597,7 @@ const HNCModule8Section5_2 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 CO2 Sensors for Demand-Controlled Ventilation
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 CO2 concentration indicates occupancy and air quality. Non-dispersive infrared
                 (NDIR) sensors are standard for BMS applications, measuring CO2 absorption of
                 infrared light.
@@ -672,7 +672,7 @@ const HNCModule8Section5_2 = () => {
                     <Gauge className="h-4 w-4 text-elec-yellow/70" />
                     <p className="font-medium text-sm">Absolute</p>
                   </div>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Referenced to perfect vacuum. Used for altitude compensation.
                   </p>
                 </div>
@@ -681,7 +681,7 @@ const HNCModule8Section5_2 = () => {
                     <Gauge className="h-4 w-4 text-elec-yellow/70" />
                     <p className="font-medium text-sm">Gauge</p>
                   </div>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Referenced to atmospheric pressure. Pump head, vessel pressure.
                   </p>
                 </div>
@@ -690,7 +690,7 @@ const HNCModule8Section5_2 = () => {
                     <Gauge className="h-4 w-4 text-elec-yellow/70" />
                     <p className="font-medium text-sm">Differential</p>
                   </div>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Difference between two points. Filter DP, duct static.
                   </p>
                 </div>
@@ -771,7 +771,7 @@ const HNCModule8Section5_2 = () => {
                     <Wind className="h-4 w-4 text-elec-yellow/70" />
                     <p className="text-sm font-medium text-white">Air Flow</p>
                   </div>
-                  <ul className="text-sm text-white/90 space-y-1.5 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                     <li className="pl-1">
                       <strong>Pitot tube array:</strong> DP measurement across array
                     </li>
@@ -791,7 +791,7 @@ const HNCModule8Section5_2 = () => {
                     <Droplets className="h-4 w-4 text-elec-yellow/70" />
                     <p className="text-sm font-medium text-white">Water Flow</p>
                   </div>
-                  <ul className="text-sm text-white/90 space-y-1.5 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                     <li className="pl-1">
                       <strong>Electromagnetic:</strong> Conductive fluids, no moving parts
                     </li>
@@ -813,14 +813,14 @@ const HNCModule8Section5_2 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Flow-Pressure Relationship
               </p>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 For differential pressure flow measurement, flow is proportional to the square root
                 of pressure:
               </p>
               <p className="font-mono text-center text-lg text-elec-yellow mb-2">
                 Q = k x sqrt(delta P)
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where Q = flow rate, k = constant, delta P = differential pressure
               </p>
             </div>
@@ -925,7 +925,7 @@ const HNCModule8Section5_2 = () => {
                   <p className="font-mono text-sm text-elec-yellow">
                     Value = ((mA - 4) / 16) x Span + Zero
                   </p>
-                  <p className="text-xs text-white/70 mt-2">
+                  <p className="text-xs text-white mt-2">
                     Example: 12mA on 0-100 deg C sensor = ((12-4)/16) x 100 + 0 = 50 deg C
                   </p>
                 </div>
@@ -934,7 +934,7 @@ const HNCModule8Section5_2 = () => {
                   <p className="font-mono text-sm text-elec-yellow">
                     mA = ((Value - Zero) / Span) x 16 + 4
                   </p>
-                  <p className="text-xs text-white/70 mt-2">
+                  <p className="text-xs text-white mt-2">
                     Example: 75 deg C on 0-100 deg C sensor = ((75-0)/100) x 16 + 4 = 16mA
                   </p>
                 </div>
@@ -972,10 +972,10 @@ const HNCModule8Section5_2 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Accuracy Example</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 A pressure sensor has 0-10 bar range with 0.5% FS accuracy:
               </p>
-              <ul className="text-sm text-white/90 mt-2 space-y-1 list-disc list-outside ml-5">
+              <ul className="text-sm text-white mt-2 space-y-1 list-disc list-outside ml-5">
                 <li className="pl-1">
                   Maximum error = 0.5% x 10 bar = <strong>0.05 bar</strong> at any reading
                 </li>
@@ -1132,7 +1132,7 @@ const HNCModule8Section5_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1178,7 +1178,7 @@ const HNCModule8Section5_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section5">

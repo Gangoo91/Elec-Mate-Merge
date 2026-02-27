@@ -156,13 +156,13 @@ export function StatusSheet({ open, onOpenChange }: StatusSheetProps) {
               </div>
               <div>
                 <p className="font-medium text-white">{employee.name}</p>
-                <p className="text-sm text-white/60">{employee.role}</p>
+                <p className="text-sm text-white">{employee.role}</p>
               </div>
             </div>
 
             {/* Status options */}
             <div className="space-y-3">
-              <label className="text-sm font-medium text-white/80">Select Status</label>
+              <label className="text-sm font-medium text-white">Select Status</label>
               <div className="grid grid-cols-2 gap-3">
                 {STATUS_OPTIONS.map((option) => {
                   const Icon = option.icon;
@@ -181,12 +181,12 @@ export function StatusSheet({ open, onOpenChange }: StatusSheetProps) {
                       )}
                     >
                       <Icon
-                        className={cn('h-5 w-5', isSelected ? option.colour : 'text-white/60')}
+                        className={cn('h-5 w-5', isSelected ? option.colour : 'text-white')}
                       />
                       <span
                         className={cn(
                           'text-sm font-medium',
-                          isSelected ? 'text-white' : 'text-white/70'
+                          isSelected ? 'text-white' : 'text-white'
                         )}
                       >
                         {option.label}
@@ -207,7 +207,7 @@ export function StatusSheet({ open, onOpenChange }: StatusSheetProps) {
                   exit={{ opacity: 0, height: 0 }}
                   className="space-y-3 overflow-hidden"
                 >
-                  <label className="text-sm font-medium text-white/80">Select Job</label>
+                  <label className="text-sm font-medium text-white">Select Job</label>
                   <Select
                     value={selectedJobId}
                     onValueChange={setSelectedJobId}
@@ -229,7 +229,7 @@ export function StatusSheet({ open, onOpenChange }: StatusSheetProps) {
                     </SelectContent>
                   </Select>
                   {!jobs?.length && !jobsLoading && (
-                    <p className="text-sm text-white/50">No active jobs available</p>
+                    <p className="text-sm text-white">No active jobs available</p>
                   )}
                 </motion.div>
               )}
@@ -237,7 +237,7 @@ export function StatusSheet({ open, onOpenChange }: StatusSheetProps) {
 
             {/* Location info */}
             <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10">
-              <div className="flex items-center gap-3 text-white/60">
+              <div className="flex items-center gap-3 text-white">
                 <MapPin className="h-4 w-4" />
                 <p className="text-sm">
                   Your GPS location will be captured when you update your status

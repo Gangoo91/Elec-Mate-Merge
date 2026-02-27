@@ -293,7 +293,7 @@ const Level3Module1Section2_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section2">
@@ -376,19 +376,19 @@ const Level3Module1Section2_5 = () => {
               <div className="grid sm:grid-cols-3 gap-3">
                 <div className="p-3 rounded bg-white/5 text-center">
                   <p className="font-medium text-elec-yellow mb-1">Safe Person</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Competent, trained, fit, supervised appropriately
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5 text-center">
                   <p className="font-medium text-elec-yellow mb-1">Safe Place</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Hazards identified and controlled, environment suitable
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5 text-center">
                   <p className="font-medium text-elec-yellow mb-1">Safe Equipment</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Right tools, PPE, properly maintained and inspected
                   </p>
                 </div>
@@ -462,7 +462,7 @@ const Level3Module1Section2_5 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-elec-yellow/80 mb-2">Authorised Person (AP)</p>
-                <ul className="text-white/90 space-y-0.5 text-xs">
+                <ul className="text-white space-y-0.5 text-xs">
                   <li>- Issues and cancels permits</li>
                   <li>- Verifies isolation is in place</li>
                   <li>- Confirms equipment is safe to work on</li>
@@ -472,7 +472,7 @@ const Level3Module1Section2_5 = () => {
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-elec-yellow/80 mb-2">Competent Person (CP)</p>
-                <ul className="text-white/90 space-y-0.5 text-xs">
+                <ul className="text-white space-y-0.5 text-xs">
                   <li>- Receives the permit</li>
                   <li>- Responsible for the work and team</li>
                   <li>- Ensures controls are followed</li>
@@ -537,7 +537,7 @@ const Level3Module1Section2_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-elec-yellow/80 mb-2">Lock-Off</p>
-                  <ul className="text-white/90 space-y-0.5 text-xs">
+                  <ul className="text-white space-y-0.5 text-xs">
                     <li>- Physical lock preventing operation</li>
                     <li>- Personal lock with unique key</li>
                     <li>- Multi-lock hasp for multiple workers</li>
@@ -546,7 +546,7 @@ const Level3Module1Section2_5 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-elec-yellow/80 mb-2">Tag-Out</p>
-                  <ul className="text-white/90 space-y-0.5 text-xs">
+                  <ul className="text-white space-y-0.5 text-xs">
                     <li>- Warning tag attached with lock</li>
                     <li>- States: who, what work, when, contact</li>
                     <li>- Provides information to others</li>
@@ -566,7 +566,7 @@ const Level3Module1Section2_5 = () => {
 
             <div className="p-4 rounded bg-white/5 my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Multi-Worker Scenario</p>
-              <p className="text-xs text-white/90 mb-2">
+              <p className="text-xs text-white mb-2">
                 Three electricians are working on an isolated motor starter. Each applies their own
                 lock to the multi-lock hasp at the isolation point. Worker A finishes at 2pm and
                 removes their lock. Workers B and C continue working. Worker B finishes at 3pm and
@@ -670,7 +670,7 @@ const Level3Module1Section2_5 = () => {
                 <p className="font-medium text-elec-yellow/80 mb-2">
                   GS38 Test Equipment Requirements
                 </p>
-                <ul className="text-white/90 space-y-0.5 text-xs">
+                <ul className="text-white space-y-0.5 text-xs">
                   <li>- Two-pole voltage indicator recommended</li>
                   <li>- Max 4mm exposed probe tips</li>
                   <li>- Fused test leads</li>
@@ -680,7 +680,7 @@ const Level3Module1Section2_5 = () => {
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-elec-yellow/80 mb-2">Why Prove Before AND After?</p>
-                <ul className="text-white/90 space-y-0.5 text-xs">
+                <ul className="text-white space-y-0.5 text-xs">
                   <li>- Proving BEFORE confirms VI is working</li>
                   <li>- A 'dead' reading could be instrument failure</li>
                   <li>- Proving AFTER confirms VI was working during test</li>
@@ -689,7 +689,7 @@ const Level3Module1Section2_5 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Real incident:</strong> An electrician tested a circuit "dead" but didn't
               prove his tester. When he cut into the cable, it was live - the tester's battery had
               failed. He received serious burns. Had he proved the tester before and after, he would
@@ -770,7 +770,7 @@ const Level3Module1Section2_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -826,7 +826,7 @@ const Level3Module1Section2_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section2-4">

@@ -124,7 +124,7 @@ const Enhanced3PhaseTestingCard = ({
               <div key={index} className="flex items-center gap-2">
                 <span className="font-mono text-xs bg-muted px-2 py-1 rounded">{index + 1}</span>
                 <span className={step.color}>{step.phase}</span>
-                <ArrowRight className="h-3 w-3 text-white/60" />
+                <ArrowRight className="h-3 w-3 text-white" />
                 <span className="text-white">{step.description}</span>
               </div>
             ))}

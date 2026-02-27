@@ -253,7 +253,7 @@ const HNCModule2Section2_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section2">
@@ -275,7 +275,7 @@ const HNCModule2Section2_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Pump Characteristics
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding pump curves, types, efficiency and NPSH for building services design
           </p>
         </header>
@@ -582,15 +582,15 @@ const HNCModule2Section2_5 = () => {
               <div className="grid grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">Q₂/Q₁ = N₂/N₁</p>
-                  <p className="text-white/70 text-xs">Flow ∝ Speed</p>
+                  <p className="text-white text-xs">Flow ∝ Speed</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">H₂/H₁ = (N₂/N₁)²</p>
-                  <p className="text-white/70 text-xs">Head ∝ Speed²</p>
+                  <p className="text-white text-xs">Head ∝ Speed²</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">P₂/P₁ = (N₂/N₁)³</p>
-                  <p className="text-white/70 text-xs">Power ∝ Speed³</p>
+                  <p className="text-white text-xs">Power ∝ Speed³</p>
                 </div>
               </div>
             </div>
@@ -647,21 +647,21 @@ const HNCModule2Section2_5 = () => {
                 <p className="font-mono text-white mb-2">
                   Hydraulic Power: P<sub>h</sub> = ρgQH
                 </p>
-                <p className="text-white/70 text-xs mb-3">
+                <p className="text-white text-xs mb-3">
                   Where ρ = 1000 kg/m³ (water), g = 9.81 m/s², Q in m³/s, H in metres
                 </p>
 
                 <p className="font-mono text-white mb-2">
                   Shaft Power: P<sub>s</sub> = P<sub>h</sub> / η<sub>pump</sub>
                 </p>
-                <p className="text-white/70 text-xs mb-3">
+                <p className="text-white text-xs mb-3">
                   Accounts for pump mechanical and hydraulic efficiency
                 </p>
 
                 <p className="font-mono text-white mb-2">
                   Electrical Power: P<sub>e</sub> = P<sub>s</sub> / η<sub>motor</sub>
                 </p>
-                <p className="text-white/70 text-xs">Total power consumed from electrical supply</p>
+                <p className="text-white text-xs">Total power consumed from electrical supply</p>
               </div>
             </div>
 
@@ -705,7 +705,7 @@ const HNCModule2Section2_5 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 NPSHa = P<sub>atm</sub>/ρg + h<sub>s</sub> - h<sub>f</sub> - P<sub>v</sub>/ρg
               </p>
-              <div className="text-xs text-white/70 mt-3">
+              <div className="text-xs text-white mt-3">
                 <p>
                   <strong>
                     P<sub>atm</sub>/ρg
@@ -827,7 +827,7 @@ const HNCModule2Section2_5 = () => {
                 <strong>Question:</strong> Calculate the electrical power consumption for a pump
                 delivering 15 l/s at 22m head. Pump efficiency is 74%, motor efficiency is 92%.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Convert flow: Q = 15 l/s = 0.015 m³/s</p>
                 <p className="mt-2">Hydraulic power:</p>
                 <p>
@@ -843,7 +843,7 @@ const HNCModule2Section2_5 = () => {
                   P<sub>e</sub> = P<sub>s</sub> / η<sub>motor</sub> = 4.38 / 0.92 ={' '}
                   <strong>4.76 kW</strong>
                 </p>
-                <p className="mt-2 text-white/60">→ Select 5.5 kW motor to allow starting margin</p>
+                <p className="mt-2 text-white">→ Select 5.5 kW motor to allow starting margin</p>
               </div>
             </div>
 
@@ -855,7 +855,7 @@ const HNCModule2Section2_5 = () => {
                 <strong>Question:</strong> A pump runs at 1450 rpm delivering 20 l/s at 30m head
                 consuming 8 kW. What is the performance at 1160 rpm (80% speed)?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Speed ratio: N₂/N₁ = 1160/1450 = 0.80</p>
                 <p className="mt-2">New flow: Q₂ = Q₁ × (N₂/N₁)</p>
                 <p>
@@ -881,7 +881,7 @@ const HNCModule2Section2_5 = () => {
                 <strong>Question:</strong> A pump with NPSHr = 3.0m draws water at 60°C from a tank
                 1.5m below pump centreline. Suction pipe friction loss is 0.8m. Is NPSHa adequate?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   NPSHa = P<sub>atm</sub>/ρg + h<sub>s</sub> - h<sub>f</sub> - P<sub>v</sub>/ρg
                 </p>
@@ -992,7 +992,7 @@ const HNCModule2Section2_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1038,7 +1038,7 @@ const HNCModule2Section2_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section2-4">

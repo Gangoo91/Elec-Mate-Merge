@@ -188,7 +188,7 @@ export default function WorkingAtHeightModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-1">
@@ -213,7 +213,7 @@ export default function WorkingAtHeightModule1Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             The Legal Framework
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The Acts, Regulations, Approved Codes of Practice, and standards that govern working at
             height in the United Kingdom
           </p>
@@ -286,7 +286,7 @@ export default function WorkingAtHeightModule1Section2() {
             Legislation Hierarchy
           </h2>
           <div className="bg-white/5 border border-white/10 p-4 sm:p-6 rounded-lg">
-            <p className="text-sm text-white/60 mb-6 text-center">
+            <p className="text-sm text-white mb-6 text-center">
               UK health and safety law operates in a clear hierarchy of authority
             </p>
 
@@ -297,8 +297,8 @@ export default function WorkingAtHeightModule1Section2() {
                   LEVEL 1 &mdash; PRIMARY LEGISLATION
                 </p>
                 <p className="text-sm font-semibold text-white">Acts of Parliament</p>
-                <p className="text-xs text-white/60 mt-1">Health and Safety at Work Act 1974</p>
-                <p className="text-[10px] text-white/40 mt-0.5">
+                <p className="text-xs text-white mt-1">Health and Safety at Work Act 1974</p>
+                <p className="text-[10px] text-white mt-0.5">
                   Highest legal authority &mdash; sets overarching duties
                 </p>
               </div>
@@ -316,12 +316,12 @@ export default function WorkingAtHeightModule1Section2() {
                 <p className="text-sm font-semibold text-white">
                   Regulations (Statutory Instruments)
                 </p>
-                <div className="text-xs text-white/60 mt-1 space-y-0.5">
+                <div className="text-xs text-white mt-1 space-y-0.5">
                   <p>Work at Height Regulations 2005</p>
                   <p>Management of H&amp;S at Work Regulations 1999</p>
                   <p>CDM 2015 &bull; LOLER 1998 &bull; PUWER 1998</p>
                 </div>
-                <p className="text-[10px] text-white/40 mt-1">
+                <p className="text-[10px] text-white mt-1">
                   Legally binding &mdash; specific duties and requirements
                 </p>
               </div>
@@ -337,10 +337,10 @@ export default function WorkingAtHeightModule1Section2() {
                   LEVEL 3 &mdash; APPROVED CODES OF PRACTICE
                 </p>
                 <p className="text-sm font-semibold text-white">ACOPs</p>
-                <p className="text-xs text-white/60 mt-1">
+                <p className="text-xs text-white mt-1">
                   L5 &mdash; Managing Health and Safety at Work
                 </p>
-                <p className="text-[10px] text-white/40 mt-1">
+                <p className="text-[10px] text-white mt-1">
                   Special legal status &mdash; not following an ACOP can be used as evidence in
                   court
                 </p>
@@ -357,18 +357,18 @@ export default function WorkingAtHeightModule1Section2() {
                 <p className="text-sm font-semibold text-white">
                   HSE Guidance &amp; Industry Publications
                 </p>
-                <div className="text-xs text-white/60 mt-1 space-y-0.5">
+                <div className="text-xs text-white mt-1 space-y-0.5">
                   <p>INDG401 &mdash; Working at Height: A Brief Guide</p>
                   <p>HSG33 &mdash; Safety in Roof Work</p>
                   <p>Industry guidance from trade bodies</p>
                 </div>
-                <p className="text-[10px] text-white/40 mt-1">
+                <p className="text-[10px] text-white mt-1">
                   Advisory &mdash; practical advice on compliance, not legally binding per se
                 </p>
               </div>
             </div>
 
-            <p className="text-center text-white/40 text-xs mt-4">
+            <p className="text-center text-white text-xs mt-4">
               Higher levels take precedence over lower levels in the event of conflict
             </p>
           </div>
@@ -405,7 +405,7 @@ export default function WorkingAtHeightModule1Section2() {
                 <p className="text-sm font-medium text-amber-500 mb-3">
                   Key Sections for Working at Height
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[60px] h-7 rounded-full bg-amber-500/20 text-amber-400 text-xs font-bold flex-shrink-0">
                       S.2(1)
@@ -467,7 +467,7 @@ export default function WorkingAtHeightModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   &ldquo;So Far as Is Reasonably Practicable&rdquo;
                 </p>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   This phrase appears throughout health and safety law and is central to
                   understanding how duties work in practice. It means that an employer must weigh
                   the risk of harm against the cost (in time, money, and effort) of the measures
@@ -509,7 +509,7 @@ export default function WorkingAtHeightModule1Section2() {
                   <FileText className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">Key Regulations</p>
                 </div>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div>
                     <p className="text-white font-medium">
                       Regulation 4 &mdash; Organisation and Planning
@@ -605,7 +605,7 @@ export default function WorkingAtHeightModule1Section2() {
                   <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3 text-center">
                     <p className="text-green-400 text-xs font-bold">STEP 1</p>
                     <p className="text-white font-semibold">AVOID</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Do not work at height if there is a safer alternative
                     </p>
                   </div>
@@ -615,7 +615,7 @@ export default function WorkingAtHeightModule1Section2() {
                   <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 text-center">
                     <p className="text-amber-400 text-xs font-bold">STEP 2</p>
                     <p className="text-white font-semibold">PREVENT</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Use collective protection to prevent falls (guardrails, platforms)
                     </p>
                   </div>
@@ -625,7 +625,7 @@ export default function WorkingAtHeightModule1Section2() {
                   <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 text-center">
                     <p className="text-red-400 text-xs font-bold">STEP 3</p>
                     <p className="text-white font-semibold">MITIGATE</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Minimise fall distance and consequences (nets, airbags, harnesses)
                     </p>
                   </div>
@@ -660,7 +660,7 @@ export default function WorkingAtHeightModule1Section2() {
                     Management of Health and Safety at Work Regulations 1999
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -704,7 +704,7 @@ export default function WorkingAtHeightModule1Section2() {
                     Construction (Design and Management) Regulations 2015
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   CDM 2015 applies to all construction projects in Great Britain. For projects with
                   more than one contractor, a{' '}
                   <strong className="text-white">principal designer</strong> and
@@ -714,7 +714,7 @@ export default function WorkingAtHeightModule1Section2() {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-blue-400 text-xs font-semibold mb-1">Client</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Must make suitable arrangements for managing the project, including allocating
                       sufficient time and resources for work at height to be carried out safely.
                       Must ensure adequate welfare facilities.
@@ -722,7 +722,7 @@ export default function WorkingAtHeightModule1Section2() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-blue-400 text-xs font-semibold mb-1">Designer</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Must avoid foreseeable risks in designs, including risks from working at
                       height. For example, specifying equipment that can be maintained from ground
                       level, or designing out the need for work on roofs.
@@ -730,14 +730,14 @@ export default function WorkingAtHeightModule1Section2() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-blue-400 text-xs font-semibold mb-1">Principal Designer</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Must plan, manage, and monitor the pre-construction phase, coordinate health
                       and safety matters, and prepare or update the health and safety file.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-blue-400 text-xs font-semibold mb-1">Principal Contractor</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Must plan, manage, monitor, and coordinate the construction phase, including
                       all work at height activities. Must prepare the construction phase plan and
                       ensure site inductions address work at height risks.
@@ -754,12 +754,12 @@ export default function WorkingAtHeightModule1Section2() {
                     Lifting Operations and Lifting Equipment Regulations 1998 (LOLER)
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   LOLER applies whenever lifting equipment is used to lift or lower people. In the
                   context of working at height, this includes MEWPs (cherry pickers, scissor lifts),
                   mast climbers, suspended access platforms, and cradles.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -793,11 +793,11 @@ export default function WorkingAtHeightModule1Section2() {
                     Provision and Use of Work Equipment Regulations 1998 (PUWER)
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   PUWER applies to all work equipment, including equipment used for working at
                   height such as ladders, scaffolds, tower scaffolds, harnesses, and MEWPs.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -857,12 +857,12 @@ export default function WorkingAtHeightModule1Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Key Standards for Working at Height
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-amber-400 font-semibold text-xs mb-1">
                       BS EN 131 &mdash; Ladders
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Covers the design, construction, testing, and marking of portable ladders and
                       stepladders. All ladders used at work should comply with this standard. Look
                       for the EN 131 marking and the duty rating (Class 1 for
@@ -873,7 +873,7 @@ export default function WorkingAtHeightModule1Section2() {
                     <p className="text-amber-400 font-semibold text-xs mb-1">
                       BS EN 361 &mdash; Full Body Harnesses
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Specifies the requirements for full body harnesses used in personal fall
                       protection systems. Harnesses must have dorsal (back) and/or sternal (chest)
                       attachment points and be CE/UKCA marked.
@@ -883,7 +883,7 @@ export default function WorkingAtHeightModule1Section2() {
                     <p className="text-amber-400 font-semibold text-xs mb-1">
                       BS EN 354 &mdash; Lanyards
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Covers connecting lanyards used as part of a personal fall protection system.
                       Lanyards must not exceed 2 metres in length (before energy absorber
                       deployment).
@@ -893,7 +893,7 @@ export default function WorkingAtHeightModule1Section2() {
                     <p className="text-amber-400 font-semibold text-xs mb-1">
                       BS EN 355 &mdash; Energy Absorbers
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Specifies requirements for energy absorbers that are integral to or connected
                       to a lanyard. Energy absorbers limit the arrest force on the body to a maximum
                       of 6 kN during a fall.
@@ -903,7 +903,7 @@ export default function WorkingAtHeightModule1Section2() {
                     <p className="text-amber-400 font-semibold text-xs mb-1">
                       BS EN 360 &mdash; Retractable Type Fall Arresters
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Covers self-retracting lifeline (SRL) devices that automatically take up and
                       release a connecting line as the user moves, and lock in the event of a fall.
                     </p>
@@ -912,7 +912,7 @@ export default function WorkingAtHeightModule1Section2() {
                     <p className="text-amber-400 font-semibold text-xs mb-1">
                       BS EN 795 &mdash; Anchor Devices
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Specifies requirements for anchor devices and structural anchors used for
                       attaching personal fall protection equipment. Anchors must be rated for the
                       loads imposed during fall arrest (minimum 12 kN for a single user).
@@ -953,7 +953,7 @@ export default function WorkingAtHeightModule1Section2() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-amber-400 font-semibold text-sm mb-2">Employer Duties</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Plan, organise, and supervise all work at height</span>
@@ -986,7 +986,7 @@ export default function WorkingAtHeightModule1Section2() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-blue-400 font-semibold text-sm mb-2">Employee Duties</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                       <span>Take reasonable care for own health and safety</span>
@@ -1021,12 +1021,12 @@ export default function WorkingAtHeightModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-green-400 font-semibold text-sm mb-2">Self-Employed Duties</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Self-employed workers owe the same duties as employers in relation to their own
                   safety and the safety of others affected by their work. A self-employed
                   electrician must:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                     <span>Carry out their own risk assessments for work at height</span>
@@ -1055,7 +1055,7 @@ export default function WorkingAtHeightModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Important</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Both employers and employees can be prosecuted for breaching health and safety
                   law. An employee who deliberately ignores safety procedures, misuses equipment, or
                   removes safety measures can be prosecuted personally under Section 7 and Section 8
@@ -1082,7 +1082,7 @@ export default function WorkingAtHeightModule1Section2() {
                 work at height in the UK. The key points to remember are:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -1157,7 +1157,7 @@ export default function WorkingAtHeightModule1Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1171,7 +1171,7 @@ export default function WorkingAtHeightModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-1-section-1">

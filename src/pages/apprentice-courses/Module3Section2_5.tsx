@@ -153,7 +153,7 @@ const Module3Section2_5 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -171,13 +171,13 @@ const Module3Section2_5 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 3</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 3.2.5</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 3.2.5</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Underfloor and Dado Trunking Systems
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Understanding trunking systems for power and data distribution in commercial buildings
               and office environments.
             </p>
@@ -189,7 +189,7 @@ const Module3Section2_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="grid md:grid-cols-2 gap-4 text-sm text-white/90">
+            <div className="grid md:grid-cols-2 gap-4 text-sm text-white">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-5 space-y-1">
@@ -230,7 +230,7 @@ const Module3Section2_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <ul className="list-disc pl-6 space-y-2 text-sm text-white/90">
+            <ul className="list-disc pl-6 space-y-2 text-sm text-white">
               <li>
                 Calculate load requirements and support spacing for underfloor and dado trunking
                 systems.
@@ -262,7 +262,7 @@ const Module3Section2_5 = () => {
             <div className="space-y-4">
               <div className="rounded-lg p-4 bg-white/5 border border-white/10">
                 <p className="font-semibold text-white mb-3">Underfloor Trunking Systems</p>
-                <div className="space-y-3 text-sm text-white/90">
+                <div className="space-y-3 text-sm text-white">
                   <div>
                     <p className="font-medium text-elec-yellow mb-1">
                       Construction and Applications
@@ -297,7 +297,7 @@ const Module3Section2_5 = () => {
 
               <div className="rounded-lg p-4 bg-white/5 border border-green-400/30">
                 <p className="font-semibold text-white mb-3">Dado Trunking Systems</p>
-                <div className="space-y-3 text-sm text-white/90">
+                <div className="space-y-3 text-sm text-white">
                   <div>
                     <p className="font-medium text-green-300 mb-1">Construction and Applications</p>
                     <ul className="list-disc pl-5 space-y-1">
@@ -343,7 +343,7 @@ const Module3Section2_5 = () => {
             <div className="space-y-4">
               <div className="rounded-lg p-4 bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Load calculations and sizing</p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>
                     Calculate total cable cross-sectional area including separators and barriers
                   </li>
@@ -358,7 +358,7 @@ const Module3Section2_5 = () => {
 
               <div className="rounded-lg p-4 bg-white/5 border border-cyan-400/30">
                 <p className="font-medium text-cyan-300 mb-2">Segregation and compartmentation</p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>
                     Power circuits: Band I (up to 50V), Band II (over 50V) separation required
                   </li>
@@ -389,7 +389,7 @@ const Module3Section2_5 = () => {
                 <p className="font-semibold text-elec-yellow mb-2">
                   Support and structural calculations
                 </p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>
                     <strong>Support loading:</strong> Trunking weight + cable weight + 2.5 safety
                     factor
@@ -476,7 +476,7 @@ const Module3Section2_5 = () => {
             <div className="space-y-4">
               <div className="rounded-lg p-4 bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Installation errors</p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>
                     <strong>Overfilling trunking:</strong> Exceeding 45% fill factor causes
                     overheating and installation difficulties
@@ -502,7 +502,7 @@ const Module3Section2_5 = () => {
 
               <div className="rounded-lg p-4 bg-white/5 border border-amber-400/30">
                 <p className="font-medium text-amber-300 mb-2">Planning and design oversights</p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>
                     <strong>Insufficient access provision:</strong> Poor access cover placement
                     making maintenance difficult
@@ -537,7 +537,7 @@ const Module3Section2_5 = () => {
             <div className="space-y-4">
               <div className="rounded-lg p-4 bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Key standards and regulations</p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>
                     <strong>BS EN 50085:</strong> Cable trunking and ducting systems for electrical
                     installations
@@ -562,7 +562,7 @@ const Module3Section2_5 = () => {
                 <p className="font-medium text-green-300 mb-2">
                   Segregation and compatibility requirements
                 </p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>Band I circuits (ELV): Up to 50V including telecommunications and control</li>
                   <li>Band II circuits: Over 50V including power distribution circuits</li>
                   <li>Physical segregation: Separate compartments or 50mm minimum air gap</li>
@@ -578,7 +578,7 @@ const Module3Section2_5 = () => {
 
               <div className="rounded-lg p-4 bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Testing and compliance verification</p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>Earth continuity: &lt;0.05 ohm between all metallic sections</li>
                   <li>Insulation resistance: Minimum 1M ohm between segregated compartments</li>
                   <li>
@@ -603,14 +603,14 @@ const Module3Section2_5 = () => {
               <h3 className="font-medium text-white mb-2">
                 Open-plan office electrical distribution
               </h3>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 A financial services company requires electrical distribution for a new 800m2
                 trading floor with 60 workstations, each requiring power and dual data connections.
               </p>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-2">Underfloor power distribution</p>
-                  <ul className="list-disc pl-5 space-y-1 text-white/80">
+                  <ul className="list-disc pl-5 space-y-1 text-white">
                     <li>Compartmented trunking: 150 x 100mm steel construction</li>
                     <li>Power compartment: 32A radial circuits using 4mm2 T&E</li>
                     <li>Support spacing: 600mm centres due to 25kg/m load</li>
@@ -619,7 +619,7 @@ const Module3Section2_5 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-2">Data distribution system</p>
-                  <ul className="list-disc pl-5 space-y-1 text-white/80">
+                  <ul className="list-disc pl-5 space-y-1 text-white">
                     <li>Separate compartment: Cat6A cabling for high-speed trading</li>
                     <li>120 data points: Dual connections per workstation</li>
                     <li>Access covers: Every 3m for flexible outlet positioning</li>
@@ -643,7 +643,7 @@ const Module3Section2_5 = () => {
                   className="rounded-lg p-4 bg-elec-yellow/5 border-l-2 border-elec-yellow/50"
                 >
                   <p className="font-medium text-white mb-1">Q: {faq.q}</p>
-                  <p className="text-sm text-white/80">A: {faq.a}</p>
+                  <p className="text-sm text-white">A: {faq.a}</p>
                 </div>
               ))}
             </div>
@@ -655,7 +655,7 @@ const Module3Section2_5 = () => {
               <h2 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
                 <CheckCircle2 className="w-5 h-5 text-elec-yellow" /> Summary
               </h2>
-              <div className="space-y-3 text-sm text-white/90">
+              <div className="space-y-3 text-sm text-white">
                 <p>
                   <strong>Trunking systems</strong> provide organised, accessible distribution for
                   power and data cables in commercial buildings.
@@ -700,7 +700,7 @@ const Module3Section2_5 = () => {
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div className="rounded-lg p-4 bg-white/5 border border-green-400/30">
                 <h3 className="font-medium text-green-300 mb-3">DO</h3>
-                <ul className="space-y-2 text-white/90">
+                <ul className="space-y-2 text-white">
                   <li>- Calculate cable cross-sectional areas and ensure 45% maximum fill</li>
                   <li>- Maintain 50mm minimum segregation between power and data</li>
                   <li>- Install support brackets at 600mm centres maximum</li>
@@ -713,7 +713,7 @@ const Module3Section2_5 = () => {
               </div>
               <div className="rounded-lg p-4 bg-white/5 border border-red-400/30">
                 <h3 className="font-medium text-red-300 mb-3">DON'T</h3>
-                <ul className="space-y-2 text-white/90">
+                <ul className="space-y-2 text-white">
                   <li>- Exceed 45% fill factor - causes overheating risks</li>
                   <li>- Mix power and data cables without proper segregation</li>
                   <li>- Install with excessive support spacing causing sagging</li>
@@ -736,7 +736,7 @@ const Module3Section2_5 = () => {
             <div className="grid md:grid-cols-2 gap-4 text-xs">
               <div className="rounded-lg p-3 bg-white/5 border border-white/10">
                 <h4 className="font-medium text-white mb-2">Underfloor Trunking</h4>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>- Support spacing: 600mm max</li>
                   <li>- Fire barriers: Every 15m</li>
                   <li>- Access covers: Every 3-4m</li>
@@ -747,7 +747,7 @@ const Module3Section2_5 = () => {
               </div>
               <div className="rounded-lg p-3 bg-white/5 border border-green-400/30">
                 <h4 className="font-medium text-green-300 mb-2">Dado Trunking</h4>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>- Support spacing: 750mm max</li>
                   <li>- Height: 150-300mm above desk</li>
                   <li>- Level tolerance: +/-2mm/3m</li>
@@ -772,22 +772,22 @@ const Module3Section2_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">12</span>
               Key References
             </h2>
-            <div className="space-y-2 text-sm text-white/90">
+            <div className="space-y-2 text-sm text-white">
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-3 rounded bg-white/5 gap-1">
                 <span className="font-medium">BS EN 50085:2005</span>
-                <span className="text-white/70">Cable trunking and ducting systems</span>
+                <span className="text-white">Cable trunking and ducting systems</span>
               </div>
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-3 rounded bg-white/5 gap-1">
                 <span className="font-medium">BS 7671:2018+A2:2022</span>
-                <span className="text-white/70">IET Wiring Regulations (Section 521)</span>
+                <span className="text-white">IET Wiring Regulations (Section 521)</span>
               </div>
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-3 rounded bg-white/5 gap-1">
                 <span className="font-medium">Building Regulations Part B</span>
-                <span className="text-white/70">Fire safety and compartmentation</span>
+                <span className="text-white">Fire safety and compartmentation</span>
               </div>
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-3 rounded bg-white/5 gap-1">
                 <span className="font-medium">BS EN 61439-2</span>
-                <span className="text-white/70">Switchgear and controlgear assemblies</span>
+                <span className="text-white">Switchgear and controlgear assemblies</span>
               </div>
             </div>
           </section>

@@ -215,7 +215,7 @@ const HNCModule3Section4_8 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section4">
@@ -237,7 +237,7 @@ const HNCModule3Section4_8 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Applications in Building Distribution Boards
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Practical design and installation of three-phase distribution systems for commercial and
             industrial buildings
           </p>
@@ -674,11 +674,11 @@ const HNCModule3Section4_8 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Calculating Phase Imbalance
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Average load = (IL1 + IL2 + IL3) / 3</p>
                 <p>Maximum deviation = Max(|ILn - Average|)</p>
                 <p>Imbalance (%) = (Maximum deviation / Average) × 100</p>
-                <p className="mt-2 text-white/60">Target: Keep imbalance below 10-15%</p>
+                <p className="mt-2 text-white">Target: Keep imbalance below 10-15%</p>
               </div>
             </div>
 
@@ -689,7 +689,7 @@ const HNCModule3Section4_8 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Given loads:</strong> Lighting 45kVA, Small power 60kVA, HVAC 75kVA (3φ)
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Option 1 - Poor allocation:</p>
                 <p>L1: 45kVA (lighting) = 45kVA</p>
                 <p>L2: 60kVA (small power) = 60kVA</p>
@@ -748,7 +748,7 @@ const HNCModule3Section4_8 = () => {
                   <li className="pl-1">Suitable for non-critical installations</li>
                   <li className="pl-1">Easy fault location and isolation</li>
                 </ul>
-                <p className="text-sm text-white/70 italic">
+                <p className="text-sm text-white italic">
                   Application: Standard offices, retail, residential
                 </p>
               </div>
@@ -769,7 +769,7 @@ const HNCModule3Section4_8 = () => {
                   <li className="pl-1">Critical loads can be fed from either source</li>
                   <li className="pl-1">Higher capital cost, improved availability</li>
                 </ul>
-                <p className="text-sm text-white/70 italic">
+                <p className="text-sm text-white italic">
                   Application: Data centres, hospitals, critical infrastructure
                 </p>
               </div>
@@ -790,7 +790,7 @@ const HNCModule3Section4_8 = () => {
                   <li className="pl-1">Complex protection coordination required</li>
                   <li className="pl-1">Higher installation cost, improved reliability</li>
                 </ul>
-                <p className="text-sm text-white/70 italic">
+                <p className="text-sm text-white italic">
                   Application: Large industrial sites, campus distributions, hospitals
                 </p>
               </div>
@@ -1066,7 +1066,7 @@ const HNCModule3Section4_8 = () => {
                   <strong>Type:</strong> Ring, split-core, or Rogowski coil
                 </li>
               </ul>
-              <p className="text-sm text-white/70 italic mt-2">
+              <p className="text-sm text-white italic mt-2">
                 Note: CT secondary circuits must never be open-circuited when energised - dangerous
                 voltages develop.
               </p>
@@ -1082,7 +1082,7 @@ const HNCModule3Section4_8 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Energy & Power</p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-5">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-5">
                     <li className="pl-1">kWh (active energy)</li>
                     <li className="pl-1">kVArh (reactive energy)</li>
                     <li className="pl-1">kVAh (apparent energy)</li>
@@ -1092,7 +1092,7 @@ const HNCModule3Section4_8 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Power Quality</p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-5">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-5">
                     <li className="pl-1">THD (Total Harmonic Distortion)</li>
                     <li className="pl-1">Individual harmonics (up to 40th)</li>
                     <li className="pl-1">Voltage sags/swells</li>
@@ -1215,7 +1215,7 @@ const HNCModule3Section4_8 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Form 1-2</p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-5">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-5">
                     <li className="pl-1">Final distribution boards</li>
                     <li className="pl-1">Consumer units</li>
                     <li className="pl-1">Small sub-distribution</li>
@@ -1224,7 +1224,7 @@ const HNCModule3Section4_8 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Form 3-4</p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-5">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-5">
                     <li className="pl-1">Main switchboards</li>
                     <li className="pl-1">Motor control centres</li>
                     <li className="pl-1">Critical infrastructure</li>
@@ -1457,7 +1457,7 @@ const HNCModule3Section4_8 = () => {
                 with 45kW lighting, 60kW small power, and 30kW HVAC. Prospective fault current is
                 15kA.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Total connected load = 45 + 60 + 30 = 135kW</p>
                 <p>Apply diversity (0.8): 135 × 0.8 = 108kW</p>
                 <p className="mt-2">Design current at 400V 3φ:</p>
@@ -1465,7 +1465,7 @@ const HNCModule3Section4_8 = () => {
                 <p>
                   I = 108000 / 623.5 = <strong>173A</strong>
                 </p>
-                <p className="mt-2 text-white/60">Specification:</p>
+                <p className="mt-2 text-white">Specification:</p>
                 <p>• Main incomer: 250A MCCB, 3P+N</p>
                 <p>• Busbar rating: 250A, Icw ≥ 15kA for 1s</p>
                 <p>• Form of separation: Form 2b (sub-DB)</p>
@@ -1482,7 +1482,7 @@ const HNCModule3Section4_8 = () => {
                 <strong>Scenario:</strong> Select SPDs for a building with overhead line supply.
                 Data centre equipment (Category 1) is located 25m from the main DB.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Overhead line → Type 1 SPD required at origin</p>
                 <p className="mt-2">Main intake (MSB):</p>
                 <p>• Type 1+2 combined SPD</p>
@@ -1507,13 +1507,13 @@ const HNCModule3Section4_8 = () => {
                 <strong>Scenario:</strong> A panel schedule shows: L1 = 85A, L2 = 72A, L3 = 93A.
                 Calculate the imbalance and neutral current.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Average current = (85 + 72 + 93) / 3 = 83.3A</p>
                 <p className="mt-2">Maximum deviation = |93 - 83.3| = 9.7A</p>
                 <p>
                   Imbalance = (9.7 / 83.3) × 100 = <strong>11.6%</strong>
                 </p>
-                <p className="mt-2 text-white/60">Neutral current (simplified for unity pf):</p>
+                <p className="mt-2 text-white">Neutral current (simplified for unity pf):</p>
                 <p>IN = √(IL1² + IL2² + IL3² - IL1·IL2 - IL2·IL3 - IL3·IL1)</p>
                 <p>IN = √(7225 + 5184 + 8649 - 6120 - 6696 - 7905)</p>
                 <p>
@@ -1522,7 +1522,7 @@ const HNCModule3Section4_8 = () => {
                 <p className="mt-2 text-yellow-400">
                   Note: Acceptable imbalance (&lt;15%) but monitor
                 </p>
-                <p className="text-white/60">Consider moving 10A from L3 to L2</p>
+                <p className="text-white">Consider moving 10A from L3 to L2</p>
               </div>
             </div>
           </div>
@@ -1617,7 +1617,7 @@ const HNCModule3Section4_8 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1663,7 +1663,7 @@ const HNCModule3Section4_8 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section4-7">

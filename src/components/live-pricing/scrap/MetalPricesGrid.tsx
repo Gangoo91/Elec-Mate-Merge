@@ -213,7 +213,7 @@ const MetalPricesGrid = ({ className }: { className?: string }) => {
           size === 'sm' ? 'text-xs' : 'text-sm',
           isUp && 'text-emerald-400',
           isDown && 'text-rose-400',
-          !isUp && !isDown && 'text-white/50'
+          !isUp && !isDown && 'text-white'
         )}
       >
         {isUp && <TrendingUp className={iconSize} />}
@@ -274,7 +274,7 @@ const MetalPricesGrid = ({ className }: { className?: string }) => {
               </span>
             )}
           </div>
-          <p className="text-sm text-white/60 flex items-center gap-1.5 mt-1">
+          <p className="text-sm text-white flex items-center gap-1.5 mt-1">
             <Clock className="h-3.5 w-3.5" />
             {data?.lastUpdated || 'Loading...'}
           </p>
@@ -355,7 +355,7 @@ const MetalPricesGrid = ({ className }: { className?: string }) => {
                     <span className="font-bold text-white text-lg">{metal.name}</span>
                     <div className="flex items-center gap-2 mt-1">
                       <TrendIndicator value={metal.trend24h} size="sm" />
-                      <span className="text-xs text-white/50">24h</span>
+                      <span className="text-xs text-white">24h</span>
                     </div>
                   </div>
                 </div>
@@ -365,11 +365,11 @@ const MetalPricesGrid = ({ className }: { className?: string }) => {
                     <div className="text-2xl font-black text-white tracking-tight">
                       {formatPrice(metal.pricePerKg)}
                     </div>
-                    <div className="text-xs text-white/60 font-medium">per kg</div>
+                    <div className="text-xs text-white font-medium">per kg</div>
                   </div>
                   <ChevronDown
                     className={cn(
-                      'h-5 w-5 text-white/60 transition-transform',
+                      'h-5 w-5 text-white transition-transform',
                       expandedMetal === metal.name && 'rotate-180'
                     )}
                   />
@@ -394,7 +394,7 @@ const MetalPricesGrid = ({ className }: { className?: string }) => {
                     >
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
-                          <span className="text-xs font-bold text-white/70">{metal.icon}</span>
+                          <span className="text-xs font-bold text-white">{metal.icon}</span>
                         </div>
                         <span className="text-white font-medium">{grade.name}</span>
                       </div>
@@ -402,7 +402,7 @@ const MetalPricesGrid = ({ className }: { className?: string }) => {
                         <span className="text-lg font-bold text-white">
                           {formatPrice(gradePrice)}
                         </span>
-                        <span className="text-xs text-white/50">/kg</span>
+                        <span className="text-xs text-white">/kg</span>
                       </div>
                     </button>
                   );
@@ -420,7 +420,7 @@ const MetalPricesGrid = ({ className }: { className?: string }) => {
         </div>
         <div>
           <p className="text-sm font-semibold text-white">Tap a metal to see grades</p>
-          <p className="text-xs text-white/60">Different grades have different prices</p>
+          <p className="text-xs text-white">Different grades have different prices</p>
         </div>
       </div>
 
@@ -437,7 +437,7 @@ const MetalPricesGrid = ({ className }: { className?: string }) => {
         <div className="space-y-6">
           {/* Metal Selection */}
           <div>
-            <label className="text-sm text-white/70 font-semibold mb-3 block">Select Metal</label>
+            <label className="text-sm text-white font-semibold mb-3 block">Select Metal</label>
             <div className="grid grid-cols-3 gap-2">
               {metals.map((metal) => (
                 <button
@@ -462,7 +462,7 @@ const MetalPricesGrid = ({ className }: { className?: string }) => {
                     {metal.icon}
                   </div>
                   <span className="text-xs font-medium">{metal.name}</span>
-                  <span className="block text-[10px] text-white/50 mt-0.5">
+                  <span className="block text-[10px] text-white mt-0.5">
                     {formatPrice(metal.pricePerKg)}/kg
                   </span>
                 </button>
@@ -473,7 +473,7 @@ const MetalPricesGrid = ({ className }: { className?: string }) => {
           {/* Grade Selection (if metal selected and has grades) */}
           {calcMetal && metals.find((m) => m.name === calcMetal)?.grades?.length && (
             <div>
-              <label className="text-sm text-white/70 font-semibold mb-3 block">Select Grade</label>
+              <label className="text-sm text-white font-semibold mb-3 block">Select Grade</label>
               <div className="space-y-2">
                 {metals
                   .find((m) => m.name === calcMetal)
@@ -502,7 +502,7 @@ const MetalPricesGrid = ({ className }: { className?: string }) => {
 
           {/* Weight Input */}
           <div>
-            <label className="text-sm text-white/70 font-semibold mb-3 block">Weight (kg)</label>
+            <label className="text-sm text-white font-semibold mb-3 block">Weight (kg)</label>
             <input
               type="number"
               inputMode="decimal"
@@ -512,7 +512,7 @@ const MetalPricesGrid = ({ className }: { className?: string }) => {
               className={cn(
                 'w-full h-20 text-4xl text-center font-black rounded-2xl',
                 'bg-neutral-800 border-2 border-white/10 text-white',
-                'placeholder:text-white/20',
+                'placeholder:text-white',
                 'focus:outline-none focus:border-yellow-400/50'
               )}
             />
@@ -527,9 +527,9 @@ const MetalPricesGrid = ({ className }: { className?: string }) => {
                 'border-2 border-yellow-400/40'
               )}
             >
-              <p className="text-sm text-white/70 font-medium mb-2">Estimated Scrap Value</p>
+              <p className="text-sm text-white font-medium mb-2">Estimated Scrap Value</p>
               <p className="text-5xl font-black text-yellow-400 mb-2">£{calculateValue()}</p>
-              <div className="flex items-center justify-center gap-2 text-sm text-white/60 flex-wrap mb-4">
+              <div className="flex items-center justify-center gap-2 text-sm text-white flex-wrap mb-4">
                 <span className="font-semibold">{calcWeight} kg</span>
                 <span>of</span>
                 <span className="font-semibold">{calcGrade || calcMetal}</span>
@@ -565,7 +565,7 @@ const MetalPricesGrid = ({ className }: { className?: string }) => {
 
           {/* Common weights quick select */}
           <div>
-            <label className="text-xs text-white/50 font-medium mb-2 block">Quick weights</label>
+            <label className="text-xs text-white font-medium mb-2 block">Quick weights</label>
             <div className="flex gap-2 flex-wrap">
               {[1, 5, 10, 25, 50, 100].map((weight) => (
                 <button
@@ -584,7 +584,7 @@ const MetalPricesGrid = ({ className }: { className?: string }) => {
             </div>
           </div>
 
-          <p className="text-xs text-white/40 text-center">
+          <p className="text-xs text-white text-center">
             Prices vary by merchant and metal quality. Always confirm before selling.
           </p>
         </div>

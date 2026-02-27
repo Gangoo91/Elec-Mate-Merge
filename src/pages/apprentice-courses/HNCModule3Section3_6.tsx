@@ -189,7 +189,7 @@ const HNCModule3Section3_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section3">
@@ -211,7 +211,7 @@ const HNCModule3Section3_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             True, Reactive and Apparent Power in AC Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding power relationships essential for equipment sizing, energy management and
             DNO compliance in building services
           </p>
@@ -298,11 +298,11 @@ const HNCModule3Section3_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">True Power Formulae</p>
               <div className="grid sm:grid-cols-2 gap-4 text-center text-sm">
                 <div className="p-3 rounded bg-black/30">
-                  <p className="text-xs text-white/60 mb-1">Single-phase</p>
+                  <p className="text-xs text-white mb-1">Single-phase</p>
                   <p className="font-bold text-elec-yellow text-lg">P = V × I × cos φ</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
-                  <p className="text-xs text-white/60 mb-1">Three-phase</p>
+                  <p className="text-xs text-white mb-1">Three-phase</p>
                   <p className="font-bold text-elec-yellow text-lg">
                     P = √3 × V<sub>L</sub> × I<sub>L</sub> × cos φ
                   </p>
@@ -398,11 +398,11 @@ const HNCModule3Section3_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Reactive Power Formula</p>
               <div className="grid sm:grid-cols-2 gap-4 text-center text-sm">
                 <div className="p-3 rounded bg-black/30">
-                  <p className="text-xs text-white/60 mb-1">Single-phase</p>
+                  <p className="text-xs text-white mb-1">Single-phase</p>
                   <p className="font-bold text-elec-yellow text-lg">Q = V × I × sin φ</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
-                  <p className="text-xs text-white/60 mb-1">Three-phase</p>
+                  <p className="text-xs text-white mb-1">Three-phase</p>
                   <p className="font-bold text-elec-yellow text-lg">
                     Q = √3 × V<sub>L</sub> × I<sub>L</sub> × sin φ
                   </p>
@@ -478,11 +478,11 @@ const HNCModule3Section3_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Apparent Power Formula</p>
               <div className="grid sm:grid-cols-2 gap-4 text-center text-sm">
                 <div className="p-3 rounded bg-black/30">
-                  <p className="text-xs text-white/60 mb-1">Single-phase</p>
+                  <p className="text-xs text-white mb-1">Single-phase</p>
                   <p className="font-bold text-elec-yellow text-lg">S = V × I</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
-                  <p className="text-xs text-white/60 mb-1">Three-phase</p>
+                  <p className="text-xs text-white mb-1">Three-phase</p>
                   <p className="font-bold text-elec-yellow text-lg">
                     S = √3 × V<sub>L</sub> × I<sub>L</sub>
                   </p>
@@ -496,10 +496,10 @@ const HNCModule3Section3_6 = () => {
               </p>
               <div className="bg-black/30 p-4 rounded text-sm font-mono text-center">
                 <p className="mb-2">S² = P² + Q²</p>
-                <p className="text-white/60 text-xs">or equivalently:</p>
+                <p className="text-white text-xs">or equivalently:</p>
                 <p>S = √(P² + Q²)</p>
               </div>
-              <p className="text-xs text-white/70 mt-2 text-center">
+              <p className="text-xs text-white mt-2 text-center">
                 Apparent power is the vector sum of true and reactive power
               </p>
             </div>
@@ -598,15 +598,15 @@ const HNCModule3Section3_6 = () => {
               <div className="grid grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">pf = P/S</p>
-                  <p className="text-white/70 text-xs">From power values</p>
+                  <p className="text-white text-xs">From power values</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">pf = cos φ</p>
-                  <p className="text-white/70 text-xs">From phase angle</p>
+                  <p className="text-white text-xs">From phase angle</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">pf = R/Z</p>
-                  <p className="text-white/70 text-xs">From impedance</p>
+                  <p className="text-white text-xs">From impedance</p>
                 </div>
               </div>
             </div>
@@ -706,7 +706,7 @@ const HNCModule3Section3_6 = () => {
                 Wattmeter Operating Principle
               </p>
               <div className="bg-black/30 p-4 rounded text-sm">
-                <p className="text-white/90 mb-2">
+                <p className="text-white mb-2">
                   An electrodynamic wattmeter contains a current coil (in series with load) and a
                   voltage coil (in parallel with load). The torque produced is proportional to the
                   instantaneous product of V and I, giving a deflection proportional to average
@@ -740,7 +740,7 @@ const HNCModule3Section3_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Two-Wattmeter Method (Three-Phase)
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Total Power: P<sub>total</sub> = W<sub>1</sub> + W<sub>2</sub>
                 </p>
@@ -748,7 +748,7 @@ const HNCModule3Section3_6 = () => {
                   Power Factor: tan φ = √3 × (W<sub>1</sub> - W<sub>2</sub>) / (W<sub>1</sub> + W
                   <sub>2</sub>)
                 </p>
-                <p className="mt-2 text-white/60 text-xs">
+                <p className="mt-2 text-white text-xs">
                   Note: One reading may be negative at low power factors
                 </p>
               </div>
@@ -916,7 +916,7 @@ const HNCModule3Section3_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Why √3 in Three-Phase Formulae?
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 In a three-phase system, line voltage (400V) is √3 times phase voltage (230V). The
                 √3 factor (1.732) converts between line and phase values. For balanced loads, total
                 power equals 3 × phase power, but using line values: P = √3 × V<sub>L</sub> × I
@@ -1046,7 +1046,7 @@ const HNCModule3Section3_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Worked Example: Annual Energy Cost Impact of Power Factor
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Site: 500kW average load, 8760 hours/year</p>
                 <p className="mt-2">At pf = 0.75:</p>
                 <p className="ml-4">kVA = 500 / 0.75 = 667 kVA</p>
@@ -1145,7 +1145,7 @@ const HNCModule3Section3_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Power Monitoring Systems
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Modern buildings use sophisticated power monitoring to optimise energy use and
                 costs:
               </p>
@@ -1245,7 +1245,7 @@ const HNCModule3Section3_6 = () => {
                 <strong>Question:</strong> A single-phase motor draws 8.5A at 230V with a power
                 factor of 0.82. Calculate P, Q, and S.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Apparent power: S = V × I = 230 × 8.5 = <strong>1955 VA = 1.96 kVA</strong>
                 </p>
@@ -1257,7 +1257,7 @@ const HNCModule3Section3_6 = () => {
                 <p className="ml-4">
                   Q = 1955 × 0.572 = <strong>1118 VAr = 1.12 kVAr</strong>
                 </p>
-                <p className="mt-2 text-white/60">Check: S² = P² + Q² → 1955² = 1603² + 1118² ✓</p>
+                <p className="mt-2 text-white">Check: S² = P² + Q² → 1955² = 1603² + 1118² ✓</p>
               </div>
             </div>
 
@@ -1269,7 +1269,7 @@ const HNCModule3Section3_6 = () => {
                 <strong>Question:</strong> An AHU has a 22kW motor with power factor 0.88 on 400V
                 three-phase. What current does it draw?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Using: P = √3 × V<sub>L</sub> × I<sub>L</sub> × cos φ
                 </p>
@@ -1282,7 +1282,7 @@ const HNCModule3Section3_6 = () => {
                 <p>
                   I<sub>L</sub> = 22000 / 609.7 = <strong>36.1A per phase</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → Select 40A protective device and appropriate cable
                 </p>
               </div>
@@ -1296,7 +1296,7 @@ const HNCModule3Section3_6 = () => {
                 <strong>Question:</strong> Two-wattmeter method gives W1 = 45kW and W2 = 25kW. Find
                 total power and power factor.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Total power: P = W<sub>1</sub> + W<sub>2</sub> = 45 + 25 = <strong>70 kW</strong>
                 </p>
@@ -1320,7 +1320,7 @@ const HNCModule3Section3_6 = () => {
                 <strong>Question:</strong> A 150kW load at pf = 0.75 needs correction to pf = 0.95.
                 What capacitor kVAr is required?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>At pf = 0.75: φ₁ = arccos(0.75) = 41.4°, tan φ₁ = 0.882</p>
                 <p>Q₁ = P × tan φ₁ = 150 × 0.882 = 132.3 kVAr</p>
                 <p className="mt-2">At pf = 0.95: φ₂ = arccos(0.95) = 18.2°, tan φ₂ = 0.329</p>
@@ -1329,7 +1329,7 @@ const HNCModule3Section3_6 = () => {
                   Capacitor required: Q<sub>c</sub> = Q₁ - Q₂ = 132.3 - 49.4 ={' '}
                   <strong>82.9 kVAr</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → Specify 90kVAr automatic PFC panel with steps
                 </p>
               </div>
@@ -1425,7 +1425,7 @@ const HNCModule3Section3_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1471,7 +1471,7 @@ const HNCModule3Section3_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section3-5">

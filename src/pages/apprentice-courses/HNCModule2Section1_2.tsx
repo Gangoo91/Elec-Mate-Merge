@@ -247,7 +247,7 @@ const HNCModule2Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section1">
@@ -269,7 +269,7 @@ const HNCModule2Section1_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Convection Heat Transfer
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding heat transfer by fluid motion for heating, cooling and ventilation system
             design
           </p>
@@ -358,7 +358,7 @@ const HNCModule2Section1_2 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 Q = hA(T<sub>s</sub> - T<sub>∞</sub>)
               </p>
-              <div className="text-sm text-white/80 space-y-1">
+              <div className="text-sm text-white space-y-1">
                 <p>
                   <strong>Q</strong> = Heat transfer rate (W)
                 </p>
@@ -403,14 +403,14 @@ const HNCModule2Section1_2 = () => {
                 <strong>Question:</strong> A panel radiator has a surface area of 1.8m², operates at
                 65°C in a room at 21°C, with h = 8 W/m²K. Calculate the convective heat output.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Q = hA(Ts - T∞)</p>
                 <p>Q = 8 × 1.8 × (65 - 21)</p>
                 <p>Q = 8 × 1.8 × 44</p>
                 <p>
                   Q = <strong>633.6W convective</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This is the convective component; add radiant output for total
                 </p>
               </div>
@@ -505,7 +505,7 @@ const HNCModule2Section1_2 = () => {
                 <p className="font-mono">
                   ΔP = ρg·h·(T<sub>i</sub> - T<sub>o</sub>)/T<sub>o</sub>
                 </p>
-                <p className="text-xs text-white/60 mt-1">
+                <p className="text-xs text-white mt-1">
                   Where h = height, ρ = air density, g = gravity
                 </p>
               </div>
@@ -661,7 +661,7 @@ const HNCModule2Section1_2 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 R<sub>s</sub> = 1/h
               </p>
-              <div className="text-sm text-white/80 space-y-1">
+              <div className="text-sm text-white space-y-1">
                 <p>
                   <strong>
                     R<sub>s</sub>
@@ -730,7 +730,7 @@ const HNCModule2Section1_2 = () => {
                 <strong>Question:</strong> Calculate the U-value of a wall: 102mm brick (k=0.77),
                 50mm cavity (R=0.18), 100mm block (k=0.19), 12.5mm plasterboard (k=0.16).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Total R = Rsi + R(brick) + R(cavity) + R(block) + R(plaster) + Rso</p>
                 <p className="mt-1">R(brick) = 0.102/0.77 = 0.132 m²K/W</p>
                 <p>R(cavity) = 0.18 m²K/W (from tables)</p>
@@ -810,9 +810,9 @@ const HNCModule2Section1_2 = () => {
                 Coils in AHUs and fan coil units use forced convection to transfer heat between air
                 and water/refrigerant. Design involves optimising the heat transfer coefficient.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90 mb-3">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white mb-3">
                 <p>Coil capacity: Q = U × A × LMTD</p>
-                <p className="text-white/60 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Where LMTD = Log Mean Temperature Difference
                 </p>
               </div>
@@ -877,7 +877,7 @@ const HNCModule2Section1_2 = () => {
                 convection, estimate the convective heat output assuming 65% of total output is
                 convective.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Effective surface area (both panels): A = 2 × (1.4 × 0.6) = 1.68m²</p>
                 <p>Temperature difference: ΔT = 60 - 20 = 40K</p>
                 <p className="mt-2">Convective output: Q = hAΔT</p>
@@ -900,10 +900,10 @@ const HNCModule2Section1_2 = () => {
                 22°C. LTHW at 80/60°C is available. If overall U = 45 W/m²K and LMTD = 52K, what
                 coil area is required?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Heat required: Q = ṁ × cp × ΔT</p>
                 <p>Q = (1.5 × 1.2) × 1.005 × (22-5)</p>
-                <p className="text-white/60 text-xs">(ρ = 1.2 kg/m³, cp = 1.005 kJ/kgK)</p>
+                <p className="text-white text-xs">(ρ = 1.2 kg/m³, cp = 1.005 kJ/kgK)</p>
                 <p>
                   Q = 1.8 × 1.005 × 17 = 30.75 kW = <strong>30,750W</strong>
                 </p>
@@ -923,9 +923,9 @@ const HNCModule2Section1_2 = () => {
                 <strong>Question:</strong> An atrium is 15m tall. Indoor temperature is 22°C,
                 outdoor is 5°C. Estimate the stack pressure driving natural ventilation.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>ΔP = ρ × g × h × (Ti - To)/To</p>
-                <p className="text-white/60 text-xs">
+                <p className="text-white text-xs">
                   Using ρ = 1.2 kg/m³, g = 9.81 m/s², To in Kelvin
                 </p>
                 <p className="mt-2">ΔP = 1.2 × 9.81 × 15 × (22-5)/(273+5)</p>
@@ -933,7 +933,7 @@ const HNCModule2Section1_2 = () => {
                 <p>
                   ΔP = <strong>10.8 Pa</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This pressure difference drives airflow through openings
                 </p>
               </div>
@@ -948,7 +948,7 @@ const HNCModule2Section1_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -994,7 +994,7 @@ const HNCModule2Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section1-1">

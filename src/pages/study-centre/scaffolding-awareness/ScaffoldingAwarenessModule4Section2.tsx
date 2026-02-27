@@ -208,11 +208,11 @@ const ScaffoldingAwarenessModule4Section2 = () => {
           </div>
           <div className="inline-block bg-slate-500/10 border border-slate-500/20 px-3 py-1 rounded-full text-sm font-semibold mb-4 ml-0">
             <span className="text-slate-400">MODULE 4</span>
-            <span className="text-white/40 mx-2">&middot;</span>
-            <span className="text-white/60">SECTION 2</span>
+            <span className="text-white mx-2">&middot;</span>
+            <span className="text-white">SECTION 2</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">The Inspection Process</h1>
-          <p className="text-white/70 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             A systematic approach to scaffold inspection, working from the ground upward through
             every structural element to identify defects before they become failures
           </p>
@@ -222,7 +222,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
         <div className="grid sm:grid-cols-2 gap-4 mb-10">
           <div className="rounded-lg p-4 bg-slate-500/5 border-l-2 border-slate-500/50">
             <p className="font-semibold text-slate-400 mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                 <span>
@@ -256,7 +256,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
           </div>
           <div className="rounded-lg p-4 bg-slate-500/5 border-l-2 border-slate-500/50">
             <p className="font-semibold text-slate-400/90 mb-2">On Site</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                 <span>
@@ -293,7 +293,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
         {/* Learning Outcomes */}
         <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4">By the end of this section, you will be able to:</p>
+          <p className="text-white mb-4">By the end of this section, you will be able to:</p>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
               'Describe the correct sequence for a systematic scaffold inspection from ground level upward',
@@ -307,7 +307,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-slate-400/70 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </div>
             ))}
           </div>
@@ -322,7 +322,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
               <span className="text-slate-400/80 text-sm font-normal">01</span>
               The Systematic Approach
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 A scaffold inspection must be <strong className="text-white">systematic</strong> —
                 not a casual glance or a quick walk-around. The competent person must follow a
@@ -345,7 +345,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
                 <h3 className="font-semibold mb-2 text-slate-400">
                   Key Principle: Use a Checklist
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Never rely on memory during an inspection. A structured checklist ensures that
                   every element is checked in the correct order and that findings are recorded as
                   the inspection progresses. Many organisations use a standard inspection form based
@@ -357,10 +357,10 @@ const ScaffoldingAwarenessModule4Section2 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-slate-400 font-medium mb-2">The Inspection Sequence</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The following sequence should be followed for every formal inspection:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -467,77 +467,77 @@ const ScaffoldingAwarenessModule4Section2 = () => {
                   <div className="flex-1 space-y-1.5">
                     <div className="w-full rounded-lg bg-amber-500/15 border border-amber-400/30 px-3 sm:px-4 py-2.5">
                       <p className="text-amber-300 font-bold text-xs sm:text-sm">1. FOUNDATIONS</p>
-                      <p className="text-white/60 text-[11px] sm:text-xs">
+                      <p className="text-white text-[11px] sm:text-xs">
                         Sole boards, base plates, ground conditions, settlement
                       </p>
                     </div>
 
                     <div className="w-full rounded-lg bg-slate-500/15 border border-slate-400/30 px-3 sm:px-4 py-2.5">
                       <p className="text-slate-300 font-bold text-xs sm:text-sm">2. STANDARDS</p>
-                      <p className="text-white/60 text-[11px] sm:text-xs">
+                      <p className="text-white text-[11px] sm:text-xs">
                         Plumb, spacing, splices, tube condition
                       </p>
                     </div>
 
                     <div className="w-full rounded-lg bg-slate-500/15 border border-slate-400/30 px-3 sm:px-4 py-2.5">
                       <p className="text-slate-300 font-bold text-xs sm:text-sm">3. LEDGERS</p>
-                      <p className="text-white/60 text-[11px] sm:text-xs">
+                      <p className="text-white text-[11px] sm:text-xs">
                         Level, couplers tight, no missing members
                       </p>
                     </div>
 
                     <div className="w-full rounded-lg bg-slate-500/15 border border-slate-400/30 px-3 sm:px-4 py-2.5">
                       <p className="text-slate-300 font-bold text-xs sm:text-sm">4. TRANSOMS</p>
-                      <p className="text-white/60 text-[11px] sm:text-xs">
+                      <p className="text-white text-[11px] sm:text-xs">
                         Spacing, couplers, board support
                       </p>
                     </div>
 
                     <div className="w-full rounded-lg bg-blue-500/15 border border-blue-400/30 px-3 sm:px-4 py-2.5">
                       <p className="text-blue-300 font-bold text-xs sm:text-sm">5. BRACING</p>
-                      <p className="text-white/60 text-[11px] sm:text-xs">
+                      <p className="text-white text-[11px] sm:text-xs">
                         Complete as per design, couplers tight
                       </p>
                     </div>
 
                     <div className="w-full rounded-lg bg-red-500/15 border border-red-400/30 px-3 sm:px-4 py-2.5">
                       <p className="text-red-300 font-bold text-xs sm:text-sm">6. TIES</p>
-                      <p className="text-white/60 text-[11px] sm:text-xs">
+                      <p className="text-white text-[11px] sm:text-xs">
                         All present, tight, anchored, not removed
                       </p>
                     </div>
 
                     <div className="w-full rounded-lg bg-green-500/15 border border-green-400/30 px-3 sm:px-4 py-2.5">
                       <p className="text-green-300 font-bold text-xs sm:text-sm">7. PLATFORMS</p>
-                      <p className="text-white/60 text-[11px] sm:text-xs">
+                      <p className="text-white text-[11px] sm:text-xs">
                         Complete, no gaps &gt;25mm, boards sound
                       </p>
                     </div>
 
                     <div className="w-full rounded-lg bg-green-500/15 border border-green-400/30 px-3 sm:px-4 py-2.5">
                       <p className="text-green-300 font-bold text-xs sm:text-sm">8. GUARDRAILS</p>
-                      <p className="text-white/60 text-[11px] sm:text-xs">
+                      <p className="text-white text-[11px] sm:text-xs">
                         950mm height, mid-rails, toe boards
                       </p>
                     </div>
 
                     <div className="w-full rounded-lg bg-purple-500/15 border border-purple-400/30 px-3 sm:px-4 py-2.5">
                       <p className="text-purple-300 font-bold text-xs sm:text-sm">9. ACCESS</p>
-                      <p className="text-white/60 text-[11px] sm:text-xs">
+                      <p className="text-white text-[11px] sm:text-xs">
                         Ladders secured, trap doors, stairways
                       </p>
                     </div>
 
                     <div className="w-full rounded-lg bg-orange-500/15 border border-orange-400/30 px-3 sm:px-4 py-2.5">
                       <p className="text-orange-300 font-bold text-xs sm:text-sm">10. LOADING</p>
-                      <p className="text-white/60 text-[11px] sm:text-xs">
+                      <p className="text-white text-[11px] sm:text-xs">
                         Within limits, no overloading, signage
                       </p>
                     </div>
 
                     <div className="w-full rounded-lg bg-cyan-500/15 border border-cyan-400/30 px-3 sm:px-4 py-2.5">
                       <p className="text-cyan-300 font-bold text-xs sm:text-sm">11. OVERALL</p>
-                      <p className="text-white/60 text-[11px] sm:text-xs">
+                      <p className="text-white text-[11px] sm:text-xs">
                         General condition, signage, public protection
                       </p>
                     </div>
@@ -563,7 +563,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
               <span className="text-amber-400/80 text-sm font-normal">02</span>
               Inspecting Foundations
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The foundation is the most critical element of any scaffold. If the base fails, the
                 entire structure above it is compromised. Foundation inspection covers the ground
@@ -573,7 +573,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
 
               <div className="bg-white/5 border border-amber-400/30 p-4 rounded-lg">
                 <h3 className="text-amber-300 font-medium mb-3">Foundation Inspection Checklist</h3>
-                <ul className="text-white/70 space-y-3 text-sm">
+                <ul className="text-white space-y-3 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -640,7 +640,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
                     Makeshift Packing Is Never Acceptable
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Base plates must be supported on proper sole boards — never on bricks, concrete
                   blocks, off-cuts of timber, pallets, or other makeshift packing. These materials
                   can crack, shift, or collapse under load. If the ground is uneven, adjustable base
@@ -661,7 +661,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
               <span className="text-slate-400/80 text-sm font-normal">03</span>
               Inspecting Standards (Uprights)
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Standards are the vertical tubes that carry the weight of the scaffold, the
                 platforms, the workers, and any stored materials down to the foundations. If a
@@ -671,7 +671,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
 
               <div className="bg-white/5 border border-slate-400/30 p-4 rounded-lg">
                 <h3 className="text-slate-300 font-medium mb-3">Standards Inspection Points</h3>
-                <ul className="text-white/70 space-y-3 text-sm">
+                <ul className="text-white space-y-3 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -732,7 +732,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
               <span className="text-blue-400/80 text-sm font-normal">04</span>
               Inspecting Ledgers, Transoms & Bracing
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Ledgers, transoms, and bracing are the horizontal and diagonal members that connect
                 the standards, support the platforms, and provide stability against lateral and wind
@@ -742,12 +742,12 @@ const ScaffoldingAwarenessModule4Section2 = () => {
 
               <div className="bg-white/5 border border-blue-400/30 p-4 rounded-lg">
                 <h3 className="text-blue-300 font-medium mb-3">Ledgers</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Ledgers are the horizontal tubes that run along the length of the scaffold,
                   connecting standards at each lift height. They provide lateral restraint to the
                   standards and support the transoms.
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -779,12 +779,12 @@ const ScaffoldingAwarenessModule4Section2 = () => {
 
               <div className="bg-white/5 border border-blue-400/30 p-4 rounded-lg">
                 <h3 className="text-blue-300 font-medium mb-3">Transoms</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Transoms are the horizontal tubes that span across the scaffold from the inner row
                   to the outer row of standards. They support the scaffold boards that form the
                   working platform.
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -817,12 +817,12 @@ const ScaffoldingAwarenessModule4Section2 = () => {
 
               <div className="bg-white/5 border border-blue-400/30 p-4 rounded-lg">
                 <h3 className="text-blue-300 font-medium mb-3">Bracing</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Bracing provides diagonal stiffness to the scaffold, preventing it from racking
                   (distorting into a parallelogram shape) under lateral forces such as wind loading
                   or eccentric loading from workers and materials.
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -866,7 +866,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
               <span className="text-red-400/80 text-sm font-normal">05</span>
               Inspecting Ties
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Ties connect the scaffold to the building or structure, preventing it from pulling
                 away or overturning. They are one of the most safety-critical elements of any
@@ -879,7 +879,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Missing Ties Kill</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Every tie in a scaffold has been calculated as part of the structural design.
                   Removing even one tie changes the load path and can overload the remaining ties.
                   In high winds, a scaffold with missing ties can overturn completely — crushing
@@ -891,7 +891,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
 
               <div className="bg-white/5 border border-red-400/30 p-4 rounded-lg">
                 <h3 className="text-red-300 font-medium mb-3">Tie Inspection Points</h3>
-                <ul className="text-white/70 space-y-3 text-sm">
+                <ul className="text-white space-y-3 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -944,7 +944,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
 
               <div className="bg-slate-500/10 border border-slate-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-slate-400">Practical Tip: Tie Checks</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Ties should be checked at every inspection, but also whenever you notice other
                   trades working in areas where ties are located. If a plasterer, painter, or
                   cladder is working on the facade, check that they have not removed ties to do
@@ -966,7 +966,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
               <span className="text-green-400/80 text-sm font-normal">06</span>
               Inspecting Platforms & Guardrails
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Working platforms and guardrails are the elements that directly protect workers from
                 falls — the single greatest cause of death in the construction industry. A platform
@@ -976,7 +976,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
 
               <div className="bg-white/5 border border-green-400/30 p-4 rounded-lg">
                 <h3 className="text-green-300 font-medium mb-3">Platform Inspection Points</h3>
-                <ul className="text-white/70 space-y-3 text-sm">
+                <ul className="text-white space-y-3 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1039,7 +1039,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
 
               <div className="bg-white/5 border border-green-400/30 p-4 rounded-lg">
                 <h3 className="text-green-300 font-medium mb-3">Guardrail Inspection Points</h3>
-                <ul className="text-white/70 space-y-3 text-sm">
+                <ul className="text-white space-y-3 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1094,19 +1094,19 @@ const ScaffoldingAwarenessModule4Section2 = () => {
                 <div className="grid grid-cols-2 gap-3 text-sm mt-3">
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-2xl font-bold text-green-400">950mm</p>
-                    <p className="text-white/60 text-xs mt-1">Minimum guardrail height</p>
+                    <p className="text-white text-xs mt-1">Minimum guardrail height</p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-2xl font-bold text-green-400">470mm</p>
-                    <p className="text-white/60 text-xs mt-1">Maximum unprotected gap</p>
+                    <p className="text-white text-xs mt-1">Maximum unprotected gap</p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-2xl font-bold text-green-400">150mm</p>
-                    <p className="text-white/60 text-xs mt-1">Minimum toe board height</p>
+                    <p className="text-white text-xs mt-1">Minimum toe board height</p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-2xl font-bold text-green-400">25mm</p>
-                    <p className="text-white/60 text-xs mt-1">Maximum board gap</p>
+                    <p className="text-white text-xs mt-1">Maximum board gap</p>
                   </div>
                 </div>
               </div>
@@ -1121,7 +1121,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
               <span className="text-purple-400/80 text-sm font-normal">07</span>
               Inspecting Access & Loading
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Safe access to and from the working platform is essential. Workers must be able to
                 get on and off the scaffold safely at every level. Loading is equally important — a
@@ -1131,7 +1131,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
 
               <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
                 <h3 className="text-purple-300 font-medium mb-3">Access Inspection Points</h3>
-                <ul className="text-white/70 space-y-3 text-sm">
+                <ul className="text-white space-y-3 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1182,7 +1182,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
 
               <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
                 <h3 className="text-purple-300 font-medium mb-3">Loading Inspection Points</h3>
-                <ul className="text-white/70 space-y-3 text-sm">
+                <ul className="text-white space-y-3 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1232,7 +1232,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
                     Overloading Is Invisible Until It Is Too Late
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Scaffold overloading often happens gradually. A bricklayer stacks a few extra
                   packs of bricks. A roofer stores tiles on the platform overnight. A plasterer
                   fills a barrow with mortar. Individually, none of these may seem excessive — but
@@ -1254,7 +1254,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
               <span className="text-cyan-400/80 text-sm font-normal">08</span>
               Common Defects & Overall Condition
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 In addition to the systematic check of each structural element, the inspector must
                 assess the <strong className="text-white">overall condition</strong> of the scaffold
@@ -1278,7 +1278,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
                         CRITICAL — Do Not Use (Red Tag)
                       </p>
                     </div>
-                    <ul className="text-white/70 space-y-2 text-sm ml-5">
+                    <ul className="text-white space-y-2 text-sm ml-5">
                       <li className="flex items-start gap-3">
                         <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                         <span>
@@ -1326,7 +1326,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
                         SERIOUS — Restrict Use (Yellow Tag)
                       </p>
                     </div>
-                    <ul className="text-white/70 space-y-2 text-sm ml-5">
+                    <ul className="text-white space-y-2 text-sm ml-5">
                       <li className="flex items-start gap-3">
                         <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                         <span>
@@ -1372,7 +1372,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
                         MINOR — Report & Monitor
                       </p>
                     </div>
-                    <ul className="text-white/70 space-y-2 text-sm ml-5">
+                    <ul className="text-white space-y-2 text-sm ml-5">
                       <li className="flex items-start gap-3">
                         <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                         <span>
@@ -1408,11 +1408,11 @@ const ScaffoldingAwarenessModule4Section2 = () => {
 
               <div className="bg-white/5 border border-cyan-400/30 p-4 rounded-lg">
                 <h3 className="text-cyan-300 font-medium mb-3">Overall Condition Checks</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   After completing the systematic element-by-element inspection, step back and
                   assess the scaffold as a whole:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1477,7 +1477,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
                   <Eye className="h-5 w-5 text-slate-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-slate-300">The Inspector&rsquo;s Mindset</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A good scaffold inspector approaches every inspection with a{' '}
                   <strong className="text-white">critical eye</strong>. Do not start from the
                   assumption that the scaffold is safe — start from the assumption that defects may
@@ -1500,7 +1500,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1516,7 +1516,7 @@ const ScaffoldingAwarenessModule4Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-4">

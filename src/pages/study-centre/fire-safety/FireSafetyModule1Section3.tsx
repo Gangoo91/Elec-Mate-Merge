@@ -178,7 +178,7 @@ export default function FireSafetyModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-1">
@@ -201,7 +201,7 @@ export default function FireSafetyModule1Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Fire Behaviour &amp; Development
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding how fires ignite, grow, reach flashover, burn at full intensity, and decay
             &mdash; including the deadly phenomena of backdraught and the mechanisms by which fire
             spreads through buildings
@@ -329,7 +329,7 @@ export default function FireSafetyModule1Section3() {
                 ].map((item, i) => (
                   <div key={i} className={`p-3 rounded-lg border ${item.colour}`}>
                     <p className="text-xs font-bold mb-1">{item.phase}</p>
-                    <p className="text-xs text-white/70">{item.detail}</p>
+                    <p className="text-xs text-white">{item.detail}</p>
                   </div>
                 ))}
               </div>
@@ -351,7 +351,7 @@ export default function FireSafetyModule1Section3() {
                 <div className="relative w-full max-w-lg mx-auto">
                   {/* Y-axis label */}
                   <div className="absolute -left-1 top-0 bottom-8 flex items-center">
-                    <span className="text-[10px] text-white/50 -rotate-90 whitespace-nowrap">
+                    <span className="text-[10px] text-white -rotate-90 whitespace-nowrap">
                       Temperature (&deg;C)
                     </span>
                   </div>
@@ -361,12 +361,12 @@ export default function FireSafetyModule1Section3() {
                     <div className="flex flex-col justify-between h-48 sm:h-56 relative border-l border-b border-white/20">
                       {/* 1200 line */}
                       <div className="absolute top-0 left-0 right-0 flex items-center">
-                        <span className="text-[9px] text-white/40 -ml-7 w-6 text-right">1200</span>
+                        <span className="text-[9px] text-white -ml-7 w-6 text-right">1200</span>
                         <div className="flex-1 border-t border-dashed border-white/10 ml-1" />
                       </div>
                       {/* 800 line */}
                       <div className="absolute top-[16%] left-0 right-0 flex items-center">
-                        <span className="text-[9px] text-white/40 -ml-5 w-4 text-right">800</span>
+                        <span className="text-[9px] text-white -ml-5 w-4 text-right">800</span>
                         <div className="flex-1 border-t border-dashed border-white/10 ml-1" />
                       </div>
                       {/* 600 line - Flashover */}
@@ -379,7 +379,7 @@ export default function FireSafetyModule1Section3() {
                       </div>
                       {/* 300 line */}
                       <div className="absolute top-[65%] left-0 right-0 flex items-center">
-                        <span className="text-[9px] text-white/40 -ml-5 w-4 text-right">300</span>
+                        <span className="text-[9px] text-white -ml-5 w-4 text-right">300</span>
                         <div className="flex-1 border-t border-dashed border-white/10 ml-1" />
                       </div>
                       {/* Phase labels along the bottom */}
@@ -394,10 +394,10 @@ export default function FireSafetyModule1Section3() {
                       </div>
                     </div>
                     {/* X-axis label */}
-                    <p className="text-center text-[10px] text-white/50 mt-8">Time &rarr;</p>
+                    <p className="text-center text-[10px] text-white mt-8">Time &rarr;</p>
                   </div>
                 </div>
-                <p className="text-xs text-white/50 text-center mt-4">
+                <p className="text-xs text-white text-center mt-4">
                   Typical compartment fire: 3&ndash;5 minutes from ignition to flashover. Peak
                   temperatures 800&ndash;1200&deg;C during fully developed phase.
                 </p>
@@ -408,7 +408,7 @@ export default function FireSafetyModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Critical Fact</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The majority of fire casualties occur during the <strong>growth phase</strong>,
                   not during flashover or the fully developed phase. By the time flashover occurs,
                   the compartment of origin is already unsurvivable &mdash; but smoke from the
@@ -467,7 +467,7 @@ export default function FireSafetyModule1Section3() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="bg-black/30 rounded-lg p-3">
                     <p className="text-xs font-medium text-rose-400 mb-2">Smoke Detectors</p>
-                    <ul className="text-xs text-white/70 space-y-1.5">
+                    <ul className="text-xs text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                         <span>
@@ -496,7 +496,7 @@ export default function FireSafetyModule1Section3() {
                   </div>
                   <div className="bg-black/30 rounded-lg p-3">
                     <p className="text-xs font-medium text-rose-400 mb-2">Heat Detectors</p>
-                    <ul className="text-xs text-white/70 space-y-1.5">
+                    <ul className="text-xs text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                         <span>
@@ -530,7 +530,7 @@ export default function FireSafetyModule1Section3() {
                   <Zap className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-white">Electrician&apos;s Relevance</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Many electrical fires begin as smouldering, incipient fires. An overheated cable
                   in a ceiling void, a loose connection generating heat through resistance, or an
                   arcing fault behind a consumer unit can smoulder for <strong>hours</strong> before
@@ -607,7 +607,7 @@ export default function FireSafetyModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-rose-400 mb-1">{item.gas}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -625,7 +625,7 @@ export default function FireSafetyModule1Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Factors Affecting Rate of Growth
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -708,7 +708,7 @@ export default function FireSafetyModule1Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Warning Signs of Approaching Flashover
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -750,7 +750,7 @@ export default function FireSafetyModule1Section3() {
                   <ShieldAlert className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">No Survivability</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Once flashover occurs, the compartment is <strong>unsurvivable</strong>. No person
                   can remain in or enter the room after flashover. Even professional firefighters in
                   full protective equipment and breathing apparatus cannot safely enter a
@@ -798,7 +798,7 @@ export default function FireSafetyModule1Section3() {
                     <p className="text-xs font-bold text-amber-400 mb-1">
                       Fuel-Controlled (Pre-Flashover)
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       During the growth phase, the fire&apos;s intensity is limited by the{' '}
                       <strong>amount and type of fuel</strong> that is currently burning. There is
                       more oxygen available than the fire needs. Adding more fuel (or the fire
@@ -809,7 +809,7 @@ export default function FireSafetyModule1Section3() {
                     <p className="text-xs font-bold text-red-400 mb-1">
                       Ventilation-Controlled (Post-Flashover)
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       After flashover, all available fuel is burning and there is{' '}
                       <strong>more fuel than oxygen can support</strong>. The fire&apos;s intensity
                       is now limited by the rate at which fresh air (oxygen) can enter through
@@ -823,7 +823,7 @@ export default function FireSafetyModule1Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Characteristics of the Fully Developed Phase
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -870,7 +870,7 @@ export default function FireSafetyModule1Section3() {
                     Implication for Building Design
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The concept of ventilation-controlled burning is the reason why{' '}
                   <strong>fire compartmentation</strong> is so important in building design.
                   Fire-rated walls, floors, doors and fire stopping are designed to contain a fully
@@ -932,7 +932,7 @@ export default function FireSafetyModule1Section3() {
                   <Eye className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Backdraught Warning Signs</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Recognising the warning signs of potential backdraught can save your life. If you
                   observe any of the following, <strong>do NOT open doors or windows</strong> into
                   the affected area:
@@ -962,7 +962,7 @@ export default function FireSafetyModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-red-400 mb-1">{item.sign}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -973,7 +973,7 @@ export default function FireSafetyModule1Section3() {
                   <ShieldAlert className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">What to Do</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1035,11 +1035,11 @@ export default function FireSafetyModule1Section3() {
                     <Thermometer className="h-5 w-5 text-amber-400" />
                     <p className="text-sm font-medium text-amber-400">Conduction</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Heat transfer through direct contact with a solid material. Heat travels through
                     the material from the hot side to the cold side.
                   </p>
-                  <ul className="text-xs text-white/70 space-y-1.5">
+                  <ul className="text-xs text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>Steel beams conducting heat through fire-rated walls</span>
@@ -1065,11 +1065,11 @@ export default function FireSafetyModule1Section3() {
                     <Wind className="h-5 w-5 text-orange-400" />
                     <p className="text-sm font-medium text-orange-400">Convection</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Heat transfer through the movement of hot gases and air. Hot gases rise and
                     travel to remote areas through openings, shafts and voids.
                   </p>
-                  <ul className="text-xs text-white/70 space-y-1.5">
+                  <ul className="text-xs text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
@@ -1093,11 +1093,11 @@ export default function FireSafetyModule1Section3() {
                     <Flame className="h-5 w-5 text-red-400" />
                     <p className="text-sm font-medium text-red-400">Radiation</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Heat transfer through electromagnetic waves (infrared). Does not require a
                     medium &mdash; heat radiates through air and even through vacuum.
                   </p>
-                  <ul className="text-xs text-white/70 space-y-1.5">
+                  <ul className="text-xs text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
@@ -1125,11 +1125,11 @@ export default function FireSafetyModule1Section3() {
                       Direct Burning (Flame Contact)
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Fire spreads by direct flame impingement on adjacent combustible materials. The
                     simplest and most obvious spread mechanism.
                   </p>
-                  <ul className="text-xs text-white/70 space-y-1.5">
+                  <ul className="text-xs text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
@@ -1152,7 +1152,7 @@ export default function FireSafetyModule1Section3() {
                 <p className="text-sm font-medium text-rose-400 mb-3">
                   The Stack Effect in Buildings
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The <strong>stack effect</strong> is a natural air movement phenomenon in tall
                   buildings where warm air rises through vertical shafts (stairwells, lift shafts,
                   service risers) and is replaced by cooler air drawn in at lower levels. During a
@@ -1172,14 +1172,14 @@ export default function FireSafetyModule1Section3() {
                     Electricians
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Concealed spaces within buildings &mdash; ceiling voids, floor voids, wall
                   cavities, cable risers, trunking systems and ventilation ducts &mdash; are some of
                   the most significant pathways for fire spread. Fire can travel unseen through
                   these routes, bypassing fire-rated walls and floors and emerging in areas far from
                   the original fire.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1224,7 +1224,7 @@ export default function FireSafetyModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Real-World Consequence</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Many of the most devastating building fires in UK history were worsened by fire
                   spreading through concealed routes where fire stopping had been omitted, damaged
                   or incorrectly installed. Unsealed cable penetrations, missing fire collars on
@@ -1245,7 +1245,7 @@ export default function FireSafetyModule1Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1259,7 +1259,7 @@ export default function FireSafetyModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-1-section-2">

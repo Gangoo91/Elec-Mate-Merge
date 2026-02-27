@@ -215,7 +215,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-3">
@@ -240,7 +240,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Energy Use on Construction Sites
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding energy sources, carbon emissions, monitoring techniques, and practical
             strategies for reducing energy consumption across construction operations
           </p>
@@ -326,12 +326,12 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                     Primary Energy Sources on Site
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Construction sites typically rely on four main energy sources, each serving
                   different operational needs. The balance between these sources varies depending on
                   project type, location, duration, and phase of construction.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -381,7 +381,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                 <p className="text-sm font-medium text-emerald-400 mb-3 text-center">
                   Typical Site Energy Sources Breakdown
                 </p>
-                <p className="text-xs text-white/50 mb-4 text-center">
+                <p className="text-xs text-white mb-4 text-center">
                   Approximate energy consumption by source on a typical UK construction site
                 </p>
                 <div className="max-w-md mx-auto space-y-3">
@@ -393,7 +393,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                     { label: 'Other (renewables, etc.)', pct: 5, colour: 'bg-emerald-500' },
                   ].map((item, i) => (
                     <div key={i}>
-                      <div className="flex justify-between text-xs text-white/80 mb-1">
+                      <div className="flex justify-between text-xs text-white mb-1">
                         <span>{item.label}</span>
                         <span className="font-semibold">{item.pct}%</span>
                       </div>
@@ -406,7 +406,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                     </div>
                   ))}
                 </div>
-                <p className="text-xs text-white/40 mt-4 text-center">
+                <p className="text-xs text-white mt-4 text-center">
                   Diesel (generators + plant/vehicles) accounts for approximately 60-70% of total
                   site energy consumption
                 </p>
@@ -417,7 +417,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">Key Point</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Because diesel dominates construction site energy use, the{' '}
                   <strong className="text-white">
                     greatest opportunity for energy reduction lies in reducing diesel consumption
@@ -452,11 +452,11 @@ export default function EnvironmentalSustainabilityModule3Section1() {
               <div className="space-y-3">
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <p className="text-sm font-bold text-red-400 mb-2">Scope 1 — Direct Emissions</p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Emissions from sources directly owned or controlled by the organisation. On a
                     construction site, Scope 1 includes:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                       <span>Diesel burned in generators owned or hired by the contractor</span>
@@ -480,12 +480,12 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                   <p className="text-sm font-bold text-blue-400 mb-2">
                     Scope 2 — Purchased Electricity
                   </p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Indirect emissions from the generation of purchased electricity consumed on
                     site. The emissions occur at the power station, not on the construction site,
                     but the site is responsible because it consumes the electricity.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-blue-400" />
                       <span>Grid electricity for site power, lighting, and welfare</span>
@@ -511,12 +511,12 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                   <p className="text-sm font-bold text-amber-400 mb-2">
                     Scope 3 — Supply Chain &amp; Value Chain
                   </p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     All other indirect emissions in the organisation&rsquo;s value chain. For
                     construction, Scope 3 typically accounts for{' '}
                     <strong className="text-white">over 90%</strong> of total emissions:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-amber-400" />
                       <span>
@@ -545,7 +545,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">The Greenhouse Gas Protocol</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The Greenhouse Gas Protocol is the world&rsquo;s most widely used greenhouse gas
                   accounting framework. It provides standardised methods for measuring and reporting
                   emissions across all three scopes. In the UK construction industry, carbon
@@ -586,7 +586,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                     Metering &amp; Sub-Metering
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -623,11 +623,11 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Smart Monitoring &amp; Dashboards
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Modern construction sites increasingly use IoT (Internet of Things) sensors and
                   cloud-based dashboards to monitor energy consumption in real time:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -663,29 +663,29 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   Benchmarking (kWh/m&sup2;)
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Energy benchmarking normalises consumption against building size to enable
                   meaningful comparison between projects:
                 </p>
                 <div className="grid sm:grid-cols-3 gap-3">
                   <div className="bg-emerald-500/5 border border-emerald-500/20 p-3 rounded-lg text-center">
                     <p className="text-lg font-bold text-emerald-400 mb-1">80-120</p>
-                    <p className="text-xs text-white/70">kWh/m&sup2; &mdash; typical new-build</p>
+                    <p className="text-xs text-white">kWh/m&sup2; &mdash; typical new-build</p>
                   </div>
                   <div className="bg-emerald-500/5 border border-emerald-500/20 p-3 rounded-lg text-center">
                     <p className="text-lg font-bold text-emerald-400 mb-1">120-200</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       kWh/m&sup2; &mdash; complex refurbishment
                     </p>
                   </div>
                   <div className="bg-emerald-500/5 border border-emerald-500/20 p-3 rounded-lg text-center">
                     <p className="text-lg font-bold text-emerald-400 mb-1">&lt;60</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       kWh/m&sup2; &mdash; best practice target
                     </p>
                   </div>
                 </div>
-                <p className="text-xs text-white/50 mt-3">
+                <p className="text-xs text-white mt-3">
                   Benchmarks calculated as total site energy (all sources, converted to kWh)
                   &divide; gross internal floor area of the completed building
                 </p>
@@ -717,7 +717,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                   <Building className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">Modern Eco-Cabin Features</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -786,7 +786,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                   <Lightbulb className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">Practical Impact</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A fully specified eco-cabin with insulation, LED lighting, motion sensors, timer
                   controls, and efficient heating can reduce energy consumption by{' '}
                   <strong className="text-white">up to 70%</strong> compared to a standard
@@ -825,7 +825,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                     Modern Engine Standards: Tier 4 / Stage V
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The latest emission standards for non-road mobile machinery (NRMM) are{' '}
                   <strong className="text-white">Tier 4 Final</strong> (US standard) and{' '}
                   <strong className="text-white">EU Stage V</strong>. These standards require
@@ -836,20 +836,20 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                     <p className="text-sm font-bold text-emerald-400 mb-1">
                       Particulate Matter (PM)
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Reduced by up to 97% compared to pre-regulation engines. Stage V engines use
                       diesel particulate filters (DPF) to capture soot particles.
                     </p>
                   </div>
                   <div className="bg-emerald-500/5 border border-emerald-500/20 p-3 rounded-lg">
                     <p className="text-sm font-bold text-emerald-400 mb-1">Nitrogen Oxides (NOx)</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Reduced by up to 90%. Stage V engines use selective catalytic reduction (SCR)
                       with AdBlue/DEF to convert NOx into harmless nitrogen and water.
                     </p>
                   </div>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Many London boroughs and major clients now mandate Stage V compliance for all
                   plant on site through{' '}
                   <strong className="text-white">
@@ -865,7 +865,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Hybrid Plant &amp; Electric Tools
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -905,7 +905,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                   <p className="text-sm font-medium text-white mb-2">
                     Telematics for Utilisation Monitoring
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                       <span>GPS tracking shows actual vs. planned machine utilisation</span>
@@ -928,7 +928,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Stop-Start Technology</p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                       <span>
@@ -981,13 +981,13 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                     Generator Sizing (Right-Sizing)
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Generator right-sizing means matching the generator&rsquo;s rated capacity to the
                   actual electrical demand on site. This sounds obvious, but many construction sites
                   operate with grossly oversized generators — often specified based on peak demand
                   that occurs for only a small fraction of the project duration.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -1026,7 +1026,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="bg-emerald-500/5 border border-emerald-500/20 p-3 rounded-lg">
                     <p className="text-sm font-bold text-emerald-400 mb-2">Early Grid Connection</p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li>&bull; 2-3x more efficient than diesel generators</li>
                       <li>&bull; Significantly lower carbon intensity per kWh</li>
                       <li>&bull; Quieter operation — reduces noise complaints</li>
@@ -1037,7 +1037,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                   </div>
                   <div className="bg-red-500/5 border border-red-500/20 p-3 rounded-lg">
                     <p className="text-sm font-bold text-red-400 mb-2">Diesel Generator</p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li>&bull; 30-40% fuel-to-electricity conversion efficiency</li>
                       <li>&bull; High carbon emissions (approx. 0.7 kg CO&#8322;/kWh)</li>
                       <li>&bull; Noise and air pollution — neighbour complaints</li>
@@ -1054,11 +1054,11 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   Battery Energy Storage Systems (BESS) &amp; Solar Hybrid Generators
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Battery energy storage and solar-hybrid systems represent the fastest-growing
                   segment of temporary power solutions for construction sites:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -1128,13 +1128,13 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   Switching Off When Not in Use
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The single most impactful housekeeping measure is ensuring that plant, equipment,
                   lighting, and heating are switched off when not actively in use. Research
                   indicates that idle time can account for 30-40% of operating hours on poorly
                   managed sites.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -1170,7 +1170,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Maintenance &amp; Behavioural Measures
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -1209,7 +1209,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                   <Lightbulb className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">Energy Champions</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Appointing <strong className="text-white">energy champions</strong> on site gives
                   named individuals responsibility for monitoring energy use, identifying waste,
                   promoting good practice, and driving continuous improvement. Energy champions
@@ -1245,12 +1245,12 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                   <Sun className="h-5 w-5 text-yellow-400" />
                   <p className="text-sm font-medium text-yellow-400">Solar PV Panels</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Solar photovoltaic panels are the most established and widely deployed renewable
                   energy technology on UK construction sites. They convert sunlight directly into
                   electricity with no moving parts, no fuel, and no direct emissions.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -1286,13 +1286,13 @@ export default function EnvironmentalSustainabilityModule3Section1() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Wind Micro-Generation</p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Small-scale wind turbines can supplement site power in exposed locations with
                     consistent wind. However, urban construction sites typically have poor wind
                     conditions due to surrounding buildings. Wind is most viable on rural, coastal,
                     or elevated sites where average wind speeds exceed 5 m/s.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                       <span>Vertical-axis turbines suit turbulent urban wind conditions</span>
@@ -1305,12 +1305,12 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Hydrogen Fuel Cells</p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Hydrogen fuel cells generate electricity through an electrochemical reaction
                     between hydrogen and oxygen, producing only water vapour. They offer silent,
                     zero-emission power ideal for urban and noise-sensitive sites.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                       <span>Currently expensive — green hydrogen supply is still limited</span>
@@ -1326,13 +1326,13 @@ export default function EnvironmentalSustainabilityModule3Section1() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Biofuels for Plant</p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Hydrotreated Vegetable Oil (HVO) is a drop-in replacement for conventional
                     diesel that can be used in most modern construction plant without engine
                     modification. HVO reduces lifecycle carbon emissions by up to 90% compared to
                     fossil diesel.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                       <span>Compatible with Tier 4 / Stage V engines and DPF systems</span>
@@ -1347,12 +1347,12 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                   <p className="text-sm font-medium text-white mb-2">
                     Green Tariffs for Grid Electricity
                   </p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Purchasing grid electricity on a certified green tariff backed by Renewable
                     Energy Guarantees of Origin (REGOs) reduces reported Scope 2 emissions to near
                     zero. This is the simplest way to decarbonise grid electricity consumption.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                       <span>Backed by certificates proving renewable generation</span>
@@ -1372,7 +1372,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
         <section className="mb-10">
           <h2 className="text-xl font-semibold text-white mb-4">Energy Reduction Hierarchy</h2>
           <div className="bg-white/5 border border-white/10 rounded-lg p-4 sm:p-6">
-            <p className="text-sm text-white/60 mb-4 text-center">
+            <p className="text-sm text-white mb-4 text-center">
               The hierarchy of energy reduction on construction sites — most effective at the top
             </p>
             <div className="max-w-lg mx-auto space-y-2">
@@ -1383,7 +1383,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                     1. Eliminate
                   </span>
                 </div>
-                <p className="text-xs sm:text-sm text-white/80">
+                <p className="text-xs sm:text-sm text-white">
                   Remove the need for energy entirely &mdash; off-hire unused plant, remove
                   unnecessary temporary lighting, avoid heating unoccupied spaces
                 </p>
@@ -1396,7 +1396,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                     2. Reduce
                   </span>
                 </div>
-                <p className="text-xs sm:text-sm text-white/80">
+                <p className="text-xs sm:text-sm text-white">
                   Use less energy for the same output &mdash; insulate cabins, right-size
                   generators, maintain equipment, LED lighting, timer controls
                 </p>
@@ -1409,7 +1409,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                     3. Replace
                   </span>
                 </div>
-                <p className="text-xs sm:text-sm text-white/80">
+                <p className="text-xs sm:text-sm text-white">
                   Switch to lower-carbon energy sources &mdash; grid connections, HVO biofuel,
                   electric plant, hybrid machinery, green electricity tariffs
                 </p>
@@ -1422,7 +1422,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                     4. Renewable
                   </span>
                 </div>
-                <p className="text-xs sm:text-sm text-white/80">
+                <p className="text-xs sm:text-sm text-white">
                   Generate clean energy on site &mdash; solar PV panels, battery storage systems,
                   wind micro-generation, hydrogen fuel cells
                 </p>
@@ -1435,7 +1435,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
                     5. Offset (Last Resort)
                   </span>
                 </div>
-                <p className="text-xs sm:text-sm text-white/80">
+                <p className="text-xs sm:text-sm text-white">
                   Compensate for remaining emissions &mdash; verified carbon offset schemes, tree
                   planting, carbon capture &mdash; only after all other measures exhausted
                 </p>
@@ -1443,7 +1443,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
             </div>
 
             <div className="mt-4 text-center">
-              <p className="text-xs text-white/50">
+              <p className="text-xs text-white">
                 &uarr; Most effective &mdash; always start at the top of the hierarchy and work
                 downwards &darr;
               </p>
@@ -1458,7 +1458,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1472,7 +1472,7 @@ export default function EnvironmentalSustainabilityModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-3">

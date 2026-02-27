@@ -141,7 +141,7 @@ export function AgentSuccessDialog({
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.25 }}
-                  className="text-center text-white/50 text-sm mb-6"
+                  className="text-center text-white text-sm mb-6"
                 >
                   Your professional document is ready to view
                 </motion.p>
@@ -167,7 +167,7 @@ export function AgentSuccessDialog({
                         <p className="text-sm font-semibold text-white leading-tight">
                           {stat.value}
                         </p>
-                        <p className="text-[10px] text-white/40 uppercase tracking-wide">
+                        <p className="text-[10px] text-white uppercase tracking-wide">
                           {stat.label}
                         </p>
                       </div>

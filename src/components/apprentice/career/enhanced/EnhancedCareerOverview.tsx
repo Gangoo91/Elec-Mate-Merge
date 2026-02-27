@@ -396,7 +396,7 @@ const EnhancedCareerOverview = () => {
             <div className={`${isMobile ? 'text-xs' : 'text-sm'} font-medium text-white`}>
               {metric.metric}
             </div>
-            <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white/80`}>{metric.data}</div>
+            <div className={`${isMobile ? 'text-xs' : 'text-sm'} text-white`}>{metric.data}</div>
           </Card>
         ))}
       </div>

@@ -387,7 +387,7 @@ const Level3Module8Section1_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module8">
@@ -550,7 +550,7 @@ const Level3Module8Section1_1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic mt-4">
+            <p className="text-sm text-white italic mt-4">
               <strong>Pro Tip:</strong> Keep a revision log noting which topics you've studied and
               your mock exam scores over time. This visual record of improvement is motivating and
               helps identify persistent weak areas needing extra attention.
@@ -656,15 +656,15 @@ const Level3Module8Section1_1 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">First Pass</p>
-                <p className="text-white/90 text-xs">70% of time - Answer all questions you know</p>
+                <p className="text-white text-xs">70% of time - Answer all questions you know</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Second Pass</p>
-                <p className="text-white/90 text-xs">20% of time - Return to flagged questions</p>
+                <p className="text-white text-xs">20% of time - Return to flagged questions</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Final Review</p>
-                <p className="text-white/90 text-xs">10% of time - Check and verify answers</p>
+                <p className="text-white text-xs">10% of time - Check and verify answers</p>
               </div>
             </div>
 
@@ -697,7 +697,7 @@ const Level3Module8Section1_1 = () => {
               behind, pick up pace. If ahead, slow down and read more carefully.
             </p>
 
-            <p className="text-sm text-white/90 italic mt-4">
+            <p className="text-sm text-white italic mt-4">
               <strong>Real-World Wisdom:</strong> Experienced assessors note that many candidates
               fail not because they don't know the material, but because they run out of time.
               Practice with strict timing until it becomes second nature. Your mock exam performance
@@ -720,19 +720,19 @@ const Level3Module8Section1_1 = () => {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
               <div className="text-center">
                 <div className="text-2xl font-bold text-elec-yellow">1,400+</div>
-                <div className="text-xs text-white/70">Total Questions</div>
+                <div className="text-xs text-white">Total Questions</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-elec-yellow">8</div>
-                <div className="text-xs text-white/70">Mock Exams</div>
+                <div className="text-xs text-white">Mock Exams</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-elec-yellow">30</div>
-                <div className="text-xs text-white/70">Questions/Exam</div>
+                <div className="text-xs text-white">Questions/Exam</div>
               </div>
               <div className="text-center">
                 <div className="text-2xl font-bold text-elec-yellow">45</div>
-                <div className="text-xs text-white/70">Minutes/Exam</div>
+                <div className="text-xs text-white">Minutes/Exam</div>
               </div>
             </div>
           </div>
@@ -749,18 +749,18 @@ const Level3Module8Section1_1 = () => {
                       <div className={`p-2.5 rounded-xl ${exam.bgColor}`}>
                         <exam.icon className={`h-5 w-5 ${exam.color}`} />
                       </div>
-                      <span className="text-xs font-semibold text-white/70 bg-muted/30 px-2 py-1 rounded-full">
+                      <span className="text-xs font-semibold text-white bg-muted/30 px-2 py-1 rounded-full">
                         Exam {exam.number}
                       </span>
                     </div>
                     <CardTitle className="text-base text-white">{exam.title}</CardTitle>
                   </CardHeader>
                   <CardContent className="pt-0">
-                    <p className="text-xs text-white/70 leading-relaxed mb-3">{exam.description}</p>
-                    <div className="flex items-center gap-2 text-xs text-white/70">
+                    <p className="text-xs text-white leading-relaxed mb-3">{exam.description}</p>
+                    <div className="flex items-center gap-2 text-xs text-white">
                       <Clock className="h-3 w-3" />
                       <span>45 mins</span>
-                      <span className="text-white/50">|</span>
+                      <span className="text-white">|</span>
                       <span>30 questions</span>
                     </div>
                   </CardContent>
@@ -835,7 +835,7 @@ const Level3Module8Section1_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -884,7 +884,7 @@ const Level3Module8Section1_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module8">

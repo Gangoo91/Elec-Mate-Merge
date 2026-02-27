@@ -146,7 +146,7 @@ const FunctionalSkillsModule2Section3 = () => {
             to="/study-centre/apprentice/functional-skills/module2"
             className="p-2 -ml-2 touch-manipulation"
           >
-            <ArrowLeft className="w-5 h-5 text-white/60" />
+            <ArrowLeft className="w-5 h-5 text-white" />
           </Link>
           <div>
             <p className="text-[11px] font-semibold text-green-400 uppercase tracking-wider">
@@ -170,7 +170,7 @@ const FunctionalSkillsModule2Section3 = () => {
               </div>
             </div>
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">Communication Skills</h2>
-            <p className="text-sm text-white/50 max-w-lg mx-auto">
+            <p className="text-sm text-white max-w-lg mx-auto">
               Master the verbal and interpersonal skills needed to communicate effectively with
               clients, colleagues, and other trades on site.
             </p>
@@ -193,7 +193,7 @@ const FunctionalSkillsModule2Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Professional Communication</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Communication is the foundation of professional success in the electrical trade. Your
               technical knowledge means nothing if you cannot explain it to clients, coordinate
@@ -215,14 +215,14 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Be clear:</strong> Say what you mean in simple,
+                  <strong className="text-white">Be clear:</strong> Say what you mean in simple,
                   direct language. Avoid unnecessary jargon when speaking to non-technical people.
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Be honest:</strong> If you do not know
+                  <strong className="text-white">Be honest:</strong> If you do not know
                   something, say so. If there is a problem, raise it early. Honesty builds trust;
                   dishonesty destroys it.
                 </span>
@@ -230,7 +230,7 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Be respectful:</strong> Treat everyone with
+                  <strong className="text-white">Be respectful:</strong> Treat everyone with
                   courtesy, regardless of their role. The labourer, the client, and the project
                   director all deserve your respect.
                 </span>
@@ -238,14 +238,14 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Be concise:</strong> Get to the point. Busy
+                  <strong className="text-white">Be concise:</strong> Get to the point. Busy
                   people appreciate communication that is clear and efficient. Do not waffle.
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Listen actively:</strong> Communication is not
+                  <strong className="text-white">Listen actively:</strong> Communication is not
                   just about talking. Listen to what others are saying, ask clarifying questions,
                   and show that you have understood.
                 </span>
@@ -254,7 +254,7 @@ const FunctionalSkillsModule2Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Your communication skills are as important to your career as your technical skills.
                 Clients hire electricians they trust and feel comfortable with. Colleagues want to
                 work with people who communicate clearly and reliably. Good communication is a
@@ -272,7 +272,7 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">With clients:</strong> Use plain English, avoid
+                  <strong className="text-white">With clients:</strong> Use plain English, avoid
                   jargon, explain the "why" behind your recommendations, and be patient with
                   questions
                 </span>
@@ -280,21 +280,21 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">With colleagues:</strong> Use technical language
+                  <strong className="text-white">With colleagues:</strong> Use technical language
                   as appropriate, be direct, and focus on the practical details
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">With project managers:</strong> Be professional,
+                  <strong className="text-white">With project managers:</strong> Be professional,
                   focus on progress, timelines, and any issues that need resolving
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">With other trades:</strong> Be respectful of
+                  <strong className="text-white">With other trades:</strong> Be respectful of
                   their expertise, coordinate clearly, and work collaboratively
                 </span>
               </li>
@@ -315,7 +315,7 @@ const FunctionalSkillsModule2Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Client Communication</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Client communication is where your interpersonal skills matter most. For domestic
               clients in particular, having an electrician in their home can feel stressful. They
@@ -329,28 +329,28 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Arrive on time:</strong> Punctuality shows
+                  <strong className="text-white">Arrive on time:</strong> Punctuality shows
                   respect for your client's time. If you will be late, call ahead to let them know.
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Introduce yourself:</strong> "Good morning, I'm
+                  <strong className="text-white">Introduce yourself:</strong> "Good morning, I'm
                   [name] from [company]. I'm here to [purpose of visit]."
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Wear clean, branded workwear:</strong> Your
+                  <strong className="text-white">Wear clean, branded workwear:</strong> Your
                   appearance reflects your professionalism.
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Use shoe covers or ask:</strong> "Would you like
+                  <strong className="text-white">Use shoe covers or ask:</strong> "Would you like
                   me to remove my boots?" shows consideration for their home.
                 </span>
               </li>
@@ -360,15 +360,15 @@ const FunctionalSkillsModule2Section3 = () => {
               Scenario: Explaining why a rewire is needed
             </h4>
             <div className="bg-white/5 border border-white/10 rounded-xl p-4 mt-2">
-              <p className="text-white/90 font-semibold mb-2">The situation:</p>
-              <p className="text-white/70 mb-3">
+              <p className="text-white font-semibold mb-2">The situation:</p>
+              <p className="text-white mb-3">
                 You are carrying out an EICR on a 1960s property. You discover that the original
                 rubber-insulated wiring is still in use, insulation resistance values are very low,
                 and there is no RCD protection. The installation needs a full rewire. The homeowner,
                 Mrs Davis, is a retired pensioner on a limited income.
               </p>
-              <p className="text-white/90 font-semibold mb-2">How to explain it:</p>
-              <p className="text-white/70 italic">
+              <p className="text-white font-semibold mb-2">How to explain it:</p>
+              <p className="text-white italic">
                 "Mrs Davis, I've completed the inspection and I need to discuss some of the findings
                 with you. The wiring in your home is the original wiring from when the house was
                 built in the 1960s. Over sixty years, the insulation around the cables has
@@ -388,7 +388,7 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Explain in plain English:</strong> "The
+                  <strong className="text-white">Explain in plain English:</strong> "The
                   insulation around the cables has broken down" is better than "Your R2 values are
                   non-compliant"
                 </span>
@@ -396,28 +396,28 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Focus on safety benefits:</strong> Clients
+                  <strong className="text-white">Focus on safety benefits:</strong> Clients
                   respond to understanding how the work protects their family
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Offer options where possible:</strong> Phased
+                  <strong className="text-white">Offer options where possible:</strong> Phased
                   work, payment plans, or prioritising the most critical items first
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Never use scare tactics:</strong> Be factual and
+                  <strong className="text-white">Never use scare tactics:</strong> Be factual and
                   honest without exaggerating the danger to pressure a sale
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Put it in writing:</strong> Follow up verbal
+                  <strong className="text-white">Put it in writing:</strong> Follow up verbal
                   conversations with a written summary (email or letter) so there is a clear record
                 </span>
               </li>
@@ -425,7 +425,7 @@ const FunctionalSkillsModule2Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 The best client communication combines technical accuracy with empathy. You are not
                 just telling someone their wiring is dangerous — you are helping them understand a
                 situation they know nothing about and supporting them in making an informed
@@ -462,7 +462,7 @@ const FunctionalSkillsModule2Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Site Meetings</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               On commercial and industrial projects, regular site meetings are held to review
               progress, coordinate between trades, and resolve issues. As an electrical apprentice
@@ -475,7 +475,7 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Progress meetings:</strong> Usually weekly.
+                  <strong className="text-white">Progress meetings:</strong> Usually weekly.
                   Review what has been completed, what is planned for the coming week, and any
                   issues affecting the programme.
                 </span>
@@ -483,7 +483,7 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Coordination meetings:</strong> Focus on how
+                  <strong className="text-white">Coordination meetings:</strong> Focus on how
                   different trades will work together — especially important when multiple trades
                   need access to the same areas.
                 </span>
@@ -491,7 +491,7 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Health and safety meetings:</strong> Review
+                  <strong className="text-white">Health and safety meetings:</strong> Review
                   safety performance, discuss incidents or near misses, and plan for upcoming
                   high-risk activities.
                 </span>
@@ -499,14 +499,14 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Design meetings:</strong> Discuss design
+                  <strong className="text-white">Design meetings:</strong> Discuss design
                   changes, resolve clashes between services, and agree solutions.
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Toolbox talks:</strong> Short, focused safety
+                  <strong className="text-white">Toolbox talks:</strong> Short, focused safety
                   briefings on specific topics — often delivered at the start of a shift or before a
                   particular task.
                 </span>
@@ -518,14 +518,14 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Prepare:</strong> Know what work your team has
+                  <strong className="text-white">Prepare:</strong> Know what work your team has
                   completed, what is planned next, and any issues you need to raise
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Be factual:</strong> Report on what has
+                  <strong className="text-white">Be factual:</strong> Report on what has
                   happened, not what you hope will happen. If you are behind programme, say so and
                   explain why.
                 </span>
@@ -533,21 +533,21 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Raise issues early:</strong> If you can see a
+                  <strong className="text-white">Raise issues early:</strong> If you can see a
                   problem coming, raise it before it becomes a crisis
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Take notes:</strong> Record any decisions or
+                  <strong className="text-white">Take notes:</strong> Record any decisions or
                   actions that affect your work. Do not rely on memory alone.
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Follow up:</strong> If you are given an action,
+                  <strong className="text-white">Follow up:</strong> If you are given an action,
                   do it and confirm completion.
                 </span>
               </li>
@@ -587,7 +587,7 @@ const FunctionalSkillsModule2Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 The most respected people in site meetings are those who speak honestly, raise
                 issues early, and follow through on their commitments. You do not need to say a lot
                 — you need to say the right things at the right time.
@@ -609,7 +609,7 @@ const FunctionalSkillsModule2Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Telephone Skills</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Telephone communication is essential in the electrical trade. You will use the phone
               to arrange site visits, discuss work with clients, coordinate with suppliers, report
@@ -622,28 +622,28 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Identify yourself:</strong> "Good morning,
+                  <strong className="text-white">Identify yourself:</strong> "Good morning,
                   [Company Name], [Your Name] speaking. How can I help?"
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Answer promptly:</strong> Try to answer within
+                  <strong className="text-white">Answer promptly:</strong> Try to answer within
                   three or four rings. If you cannot answer, call back as soon as possible.
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Listen first:</strong> Let the caller explain
+                  <strong className="text-white">Listen first:</strong> Let the caller explain
                   their situation before you start asking questions or offering solutions.
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Take notes:</strong> Have a notepad and pen by
+                  <strong className="text-white">Take notes:</strong> Have a notepad and pen by
                   the phone. Write down names, numbers, addresses, and key details.
                 </span>
               </li>
@@ -654,21 +654,21 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Plan before calling:</strong> Know what you need
+                  <strong className="text-white">Plan before calling:</strong> Know what you need
                   to say and what information you need.
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">State your purpose:</strong> "Hi, this is [Name]
+                  <strong className="text-white">State your purpose:</strong> "Hi, this is [Name]
                   from [Company]. I'm calling about the electrical work at [Address]."
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Confirm key details:</strong> Repeat back
+                  <strong className="text-white">Confirm key details:</strong> Repeat back
                   important information: "So that's 27 Elm Street, next Tuesday at 9am — is that
                   correct?"
                 </span>
@@ -676,7 +676,7 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">End professionally:</strong> Summarise what was
+                  <strong className="text-white">End professionally:</strong> Summarise what was
                   agreed and thank the person for their time.
                 </span>
               </li>
@@ -717,7 +717,7 @@ const FunctionalSkillsModule2Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 On the phone, your voice is your only tool. Speak clearly, use a friendly but
                 professional tone, and always confirm important details by repeating them back. A
                 missed detail on a phone call can lead to wasted journeys, wrong materials, or
@@ -754,7 +754,7 @@ const FunctionalSkillsModule2Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Explaining Technical Work</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               One of the most valuable skills you can develop is the ability to explain complex
               technical concepts in simple terms. Whether you are describing a fault to a homeowner,
@@ -768,14 +768,14 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Use analogies:</strong> "An RCD is like a safety
+                  <strong className="text-white">Use analogies:</strong> "An RCD is like a safety
                   net — if a fault develops, it catches it before it can cause harm"
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Relate to their experience:</strong> "You know
+                  <strong className="text-white">Relate to their experience:</strong> "You know
                   how a fuse in a plug blows when something goes wrong? An MCB does the same job,
                   but you can just switch it back on instead of replacing it"
                 </span>
@@ -783,14 +783,14 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Start with the "why":</strong> Explain why the
+                  <strong className="text-white">Start with the "why":</strong> Explain why the
                   work matters before explaining what it involves
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Use visual aids:</strong> Show the client what
+                  <strong className="text-white">Use visual aids:</strong> Show the client what
                   you are talking about. Point to the consumer unit, show them the old cable vs the
                   new cable
                 </span>
@@ -798,7 +798,7 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Check understanding:</strong> Ask "Does that
+                  <strong className="text-white">Check understanding:</strong> Ask "Does that
                   make sense?" or "Do you have any questions about that?"
                 </span>
               </li>
@@ -810,20 +810,20 @@ const FunctionalSkillsModule2Section3 = () => {
             <div className="bg-white/5 border border-white/10 rounded-xl p-4 mt-2">
               <div className="space-y-3">
                 <div>
-                  <p className="text-white/90 font-semibold text-xs mb-1">
+                  <p className="text-white font-semibold text-xs mb-1">
                     Why the power needs to be off:
                   </p>
-                  <p className="text-white/70 italic">
+                  <p className="text-white italic">
                     "I need to switch off the power to work safely. For your protection and mine, I
                     cannot work on live electrics. It will be off for approximately [time]. I'll let
                     you know before I switch it off and as soon as it's back on."
                   </p>
                 </div>
                 <div className="border-t border-white/10 pt-3">
-                  <p className="text-white/90 font-semibold text-xs mb-1">
+                  <p className="text-white font-semibold text-xs mb-1">
                     Why additional work is needed:
                   </p>
-                  <p className="text-white/70 italic">
+                  <p className="text-white italic">
                     "While carrying out the work, I've discovered that [description of issue]. This
                     wasn't visible before I started, but it needs to be addressed to make the
                     installation safe. I'd recommend [solution]. The additional cost would be
@@ -831,10 +831,10 @@ const FunctionalSkillsModule2Section3 = () => {
                   </p>
                 </div>
                 <div className="border-t border-white/10 pt-3">
-                  <p className="text-white/90 font-semibold text-xs mb-1">
+                  <p className="text-white font-semibold text-xs mb-1">
                     What the test results mean:
                   </p>
-                  <p className="text-white/70 italic">
+                  <p className="text-white italic">
                     "I've tested your installation and everything is within the safe limits set by
                     the regulations. The main thing I check is that all the safety devices are
                     working correctly, the wiring is in good condition, and the earthing system is
@@ -847,7 +847,7 @@ const FunctionalSkillsModule2Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 The ability to explain technical concepts in plain English is one of the most
                 valuable skills you can develop. Clients who understand what you are doing and why
                 you are doing it are more likely to trust your recommendations, approve additional
@@ -870,7 +870,7 @@ const FunctionalSkillsModule2Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Dealing with Complaints</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               No matter how good you are at your job, at some point you will receive a complaint.
               How you handle it will determine whether you lose a client or strengthen the
@@ -885,7 +885,7 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Listen:</strong> Let the client explain their
+                  <strong className="text-white">Listen:</strong> Let the client explain their
                   concern fully without interrupting. Show that you are listening by nodding, making
                   eye contact, and not looking at your phone.
                 </span>
@@ -893,7 +893,7 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Empathise:</strong> Acknowledge their
+                  <strong className="text-white">Empathise:</strong> Acknowledge their
                   frustration. "I understand that must be frustrating" or "I can see why you're
                   concerned about that."
                 </span>
@@ -901,7 +901,7 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Apologise (if appropriate):</strong> If you or
+                  <strong className="text-white">Apologise (if appropriate):</strong> If you or
                   your company made an error, apologise sincerely. "I'm sorry that happened. Let me
                   put it right."
                 </span>
@@ -909,7 +909,7 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Problem-solve:</strong> Offer a clear plan to
+                  <strong className="text-white">Problem-solve:</strong> Offer a clear plan to
                   resolve the issue. "Here's what I'm going to do..." and then follow through.
                 </span>
               </li>
@@ -920,21 +920,21 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Work not completed on time:</strong> Apologise
+                  <strong className="text-white">Work not completed on time:</strong> Apologise
                   for the delay, explain the reason honestly, and provide a firm new completion date
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Mess left behind:</strong> Apologise and return
+                  <strong className="text-white">Mess left behind:</strong> Apologise and return
                   to clean up properly. Going forward, clean as you go
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Something not working after your visit:</strong>{' '}
+                  <strong className="text-white">Something not working after your visit:</strong>{' '}
                   Return promptly, investigate, and fix the issue. If it was caused by your work, do
                   it at no additional charge
                 </span>
@@ -942,7 +942,7 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Cost higher than quoted:</strong> This should
+                  <strong className="text-white">Cost higher than quoted:</strong> This should
                   not happen if you quoted properly. If additional work was needed, you should have
                   communicated the additional cost before doing the work
                 </span>
@@ -971,7 +971,7 @@ const FunctionalSkillsModule2Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 A complaint handled well can turn a dissatisfied client into your strongest
                 advocate. The key is to listen, empathise, and act. Most people do not expect
                 perfection — they expect you to care when things go wrong and to take responsibility
@@ -1008,7 +1008,7 @@ const FunctionalSkillsModule2Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Working with Other Trades</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               On most construction sites, you will work alongside plumbers, carpenters, plasterers,
               bricklayers, roofers, mechanical engineers, and many other trades. Effective
@@ -1021,7 +1021,7 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Cable routes vs pipework:</strong> Plumbers and
+                  <strong className="text-white">Cable routes vs pipework:</strong> Plumbers and
                   electricians often need the same routes through walls, floors, and ceilings.
                   Coordinate early to avoid clashes.
                 </span>
@@ -1029,7 +1029,7 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Timing of first and second fix:</strong>{' '}
+                  <strong className="text-white">Timing of first and second fix:</strong>{' '}
                   Electrical first fix must be complete before plasterboard is installed. Second fix
                   happens after plastering and painting.
                 </span>
@@ -1037,7 +1037,7 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Shared spaces:</strong> Consumer units, boilers,
+                  <strong className="text-white">Shared spaces:</strong> Consumer units, boilers,
                   and plumbing manifolds often share the same utility area. Agree the layout before
                   installation begins.
                 </span>
@@ -1045,7 +1045,7 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Damage to completed work:</strong> Other trades
+                  <strong className="text-white">Damage to completed work:</strong> Other trades
                   may inadvertently damage your cables, containment, or accessories. Clear marking
                   and communication help prevent this.
                 </span>
@@ -1054,13 +1054,13 @@ const FunctionalSkillsModule2Section3 = () => {
 
             <h4 className="text-white font-semibold pt-2">Scenario: Coordinating with a plumber</h4>
             <div className="bg-white/5 border border-white/10 rounded-xl p-4 mt-2">
-              <p className="text-white/90 font-semibold mb-2">The situation:</p>
-              <p className="text-white/70 mb-3">
+              <p className="text-white font-semibold mb-2">The situation:</p>
+              <p className="text-white mb-3">
                 You are working on a new-build house. The plumber has installed pipework through a
                 floor void that now blocks your planned cable route to the kitchen sockets.
               </p>
-              <p className="text-white/90 font-semibold mb-2">Professional approach:</p>
-              <p className="text-white/70 italic">
+              <p className="text-white font-semibold mb-2">Professional approach:</p>
+              <p className="text-white italic">
                 "Hi Dave, I've noticed the hot water pipes in the void under the kitchen are running
                 across where I need to route my cables. Can we have a look together and see if we
                 can find a route that works for both of us? If not, I'll raise it with the site
@@ -1075,35 +1075,35 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Communicate early:</strong> The earlier you
+                  <strong className="text-white">Communicate early:</strong> The earlier you
                   coordinate, the easier problems are to solve
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Respect their work:</strong> Treat other trades'
+                  <strong className="text-white">Respect their work:</strong> Treat other trades'
                   installations with the same care you want them to treat yours
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Be flexible:</strong> Construction is a
+                  <strong className="text-white">Be flexible:</strong> Construction is a
                   collaborative process. Be willing to adjust your plans when possible
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Keep the site tidy:</strong> Clear your waste,
+                  <strong className="text-white">Keep the site tidy:</strong> Clear your waste,
                   tidy your cables, and leave shared areas in good condition
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Resolve conflicts professionally:</strong> If a
+                  <strong className="text-white">Resolve conflicts professionally:</strong> If a
                   disagreement arises, discuss it calmly. If you cannot agree, escalate to the site
                   manager
                 </span>
@@ -1112,7 +1112,7 @@ const FunctionalSkillsModule2Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 The electricians who are most valued on site are those who communicate well with
                 other trades, coordinate proactively, and contribute to a positive working
                 environment. Your reputation follows you from site to site — make sure it is a good
@@ -1135,7 +1135,7 @@ const FunctionalSkillsModule2Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Building Professional Relationships</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Your career in the electrical trade will be built on relationships as much as
               technical skill. The clients who recommend you, the contractors who employ you, the
@@ -1149,7 +1149,7 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Do what you say you will do:</strong> If you
+                  <strong className="text-white">Do what you say you will do:</strong> If you
                   promise to arrive at 9am, arrive at 9am. If you say you will send a quote by
                   Friday, send it by Friday.
                 </span>
@@ -1157,7 +1157,7 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Keep clients informed:</strong> A quick text
+                  <strong className="text-white">Keep clients informed:</strong> A quick text
                   saying "Running 15 minutes late" or "Work completed today, certificate will follow
                   by email" keeps clients feeling valued.
                 </span>
@@ -1165,7 +1165,7 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Follow up after completion:</strong> A week
+                  <strong className="text-white">Follow up after completion:</strong> A week
                   after completing work, a brief call or message asking "Everything working well?"
                   shows you care about quality.
                 </span>
@@ -1173,7 +1173,7 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Ask for reviews:</strong> Happy clients are
+                  <strong className="text-white">Ask for reviews:</strong> Happy clients are
                   usually willing to leave a review if you ask politely.
                 </span>
               </li>
@@ -1184,21 +1184,21 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Industry events:</strong> Attend trade shows,
+                  <strong className="text-white">Industry events:</strong> Attend trade shows,
                   manufacturer training days, and industry seminars
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Professional bodies:</strong> Join the IET,
+                  <strong className="text-white">Professional bodies:</strong> Join the IET,
                   attend local branch meetings, and engage with CPD opportunities
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Online communities:</strong> Participate in
+                  <strong className="text-white">Online communities:</strong> Participate in
                   professional forums and social media groups. Share your knowledge and build your
                   reputation
                 </span>
@@ -1206,7 +1206,7 @@ const FunctionalSkillsModule2Section3 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Mentoring:</strong> As you gain experience,
+                  <strong className="text-white">Mentoring:</strong> As you gain experience,
                   mentoring apprentices strengthens your own knowledge and gives back to the trade
                 </span>
               </li>
@@ -1246,7 +1246,7 @@ const FunctionalSkillsModule2Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 The electrical trade is built on trust and reputation. Your technical skills get you
                 through the door, but your communication skills, reliability, and professionalism
                 keep you there. Invest in your relationships as seriously as you invest in your
@@ -1263,7 +1263,7 @@ const FunctionalSkillsModule2Section3 = () => {
         <div className="flex items-center justify-between pt-6 border-t border-white/10">
           <Link
             to="/study-centre/apprentice/functional-skills/module2/section2"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
           >
             <ArrowLeft className="w-4 h-4" />
             Technical Writing

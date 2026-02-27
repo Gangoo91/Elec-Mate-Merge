@@ -150,7 +150,7 @@ const Module5Section1_1 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -168,13 +168,13 @@ const Module5Section1_1 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.1.1</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.1.1</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               What Is a Specification and Why It Matters
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Understanding electrical specifications - the formal documents that define how work
               must be carried out for compliance and safety.
             </p>
@@ -183,7 +183,7 @@ const Module5Section1_1 = () => {
           {/* Summary Box */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 space-y-1 text-sm">
+            <ul className="text-white space-y-1 text-sm">
               <li>
                 • Specifications define materials, methods and standards for electrical
                 installations
@@ -201,7 +201,7 @@ const Module5Section1_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Learning Outcomes
             </h2>
-            <ul className="text-white/80 space-y-2">
+            <ul className="text-white space-y-2">
               <li className="flex items-start gap-2">
                 <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
                 <span>
@@ -231,7 +231,7 @@ const Module5Section1_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Definition of a Specification
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 A specification is a formal document that outlines the materials, standards,
                 methods, and performance criteria for an installation.
@@ -262,7 +262,7 @@ const Module5Section1_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Types of Specifications
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Performance Specification</p>
                 <p className="text-sm mb-2">Defines the required outcome or result:</p>
@@ -309,7 +309,7 @@ const Module5Section1_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Why Specifications Matter
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="grid gap-4">
                 <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500">
                   <p className="font-medium text-white">Compliance</p>
@@ -348,7 +348,7 @@ const Module5Section1_1 = () => {
             <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500">
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" />
-                <div className="text-white/80 space-y-2 text-sm">
+                <div className="text-white space-y-2 text-sm">
                   <p>
                     <strong className="text-white">Failed inspections:</strong> Building Control
                     rejection requiring rectification
@@ -378,12 +378,12 @@ const Module5Section1_1 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
               <p className="font-medium text-white mb-2">Office Project Specification Breach</p>
-              <p className="text-white/80 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 On a large office project, electricians installed standard PVC clips instead of the
                 specified metal fire-resistant clips. Building Control rejected the installation,
                 requiring complete reinstallation.
               </p>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 <strong className="text-white">Result:</strong> 3 weeks delay, £15,000 additional
                 costs, liquidated damages of £2,000/day.
               </p>
@@ -408,11 +408,11 @@ const Module5Section1_1 = () => {
                   >
                     <span className="font-medium text-white text-sm">{faq.question}</span>
                     <ChevronDown
-                      className={`w-4 h-4 text-white/60 transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
+                      className={`w-4 h-4 text-white transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
                     />
                   </button>
                   {openFaq === index && (
-                    <div className="px-4 pb-4 text-white/70 text-sm">{faq.answer}</div>
+                    <div className="px-4 pb-4 text-white text-sm">{faq.answer}</div>
                   )}
                 </div>
               ))}
@@ -426,7 +426,7 @@ const Module5Section1_1 = () => {
               Pocket Guide
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <ul className="space-y-2 text-sm text-white/80">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
                   <span>
@@ -469,7 +469,7 @@ const Module5Section1_1 = () => {
           <section className="mb-10">
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="font-medium text-elec-yellow mb-2">Recap</p>
-              <ul className="text-white/80 space-y-1 text-sm">
+              <ul className="text-white space-y-1 text-sm">
                 <li>• Specifications define materials, standards, methods for installations</li>
                 <li>• Different types: performance, prescriptive, and hybrid</li>
                 <li>• Must be used with drawings for complete information</li>
@@ -487,7 +487,7 @@ const Module5Section1_1 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="..">

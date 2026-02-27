@@ -143,7 +143,7 @@ const AM2Module1Section2 = () => {
           <AM2ContentCard key={index} className="text-center">
             <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">{stat.number}</div>
             <div className="text-ios-footnote font-semibold text-white mb-1">{stat.label}</div>
-            <div className="text-ios-footnote text-white/70">{stat.description}</div>
+            <div className="text-ios-footnote text-white">{stat.description}</div>
           </AM2ContentCard>
         ))}
       </div>
@@ -153,7 +153,7 @@ const AM2Module1Section2 = () => {
         <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">
           How the AM2 Is Structured
         </h2>
-        <p className="text-ios-body text-white/90 mb-6">
+        <p className="text-ios-body text-white mb-6">
           The AM2 is divided into five main sections (A through E). Each section tests a different
           set of skills, but together they prove you are safe, competent, and ready for industry.
         </p>
@@ -176,7 +176,7 @@ const AM2Module1Section2 = () => {
                       {section.duration}
                     </span>
                   </div>
-                  <p className="text-ios-callout text-white/80 leading-relaxed">
+                  <p className="text-ios-callout text-white leading-relaxed">
                     {section.description}
                   </p>
                 </div>
@@ -189,7 +189,7 @@ const AM2Module1Section2 = () => {
       {/* Total Time */}
       <AM2ContentCard>
         <h3 className="text-ios-headline font-semibold text-white mb-3">Total Time</h3>
-        <p className="text-ios-body text-white/90">
+        <p className="text-ios-body text-white">
           The overall duration of the AM2 is around{' '}
           <span className="text-elec-yellow font-semibold">~16.5 hours</span>, normally spread
           across <span className="text-elec-yellow font-semibold">two and a half days</span>. Some
@@ -210,7 +210,7 @@ const AM2Module1Section2 = () => {
                 </div>
                 <div>
                   <h3 className="text-ios-headline font-semibold text-white mb-2">{tip.title}</h3>
-                  <p className="text-ios-callout text-white/80">{tip.description}</p>
+                  <p className="text-ios-callout text-white">{tip.description}</p>
                 </div>
               </div>
             </div>
@@ -224,17 +224,17 @@ const AM2Module1Section2 = () => {
           Additional Time Management Strategies
         </h3>
         <div className="space-y-4">
-          <p className="text-ios-body text-white/90">
+          <p className="text-ios-body text-white">
             <span className="text-elec-yellow font-semibold">Treat each section as a reset.</span>{' '}
             If one task doesn't go perfectly, don't carry the stress into the next. The AM2 is
             marked section by section, not on overall impression.
           </p>
-          <p className="text-ios-body text-white/90">
+          <p className="text-ios-body text-white">
             <span className="text-elec-yellow font-semibold">Practice under time pressure.</span>{' '}
             During your preparation, time yourself on practice tasks to get used to working
             efficiently under pressure.
           </p>
-          <p className="text-ios-body text-white/90">
+          <p className="text-ios-body text-white">
             <span className="text-elec-yellow font-semibold">Know your weak areas.</span> Spend
             extra time practicing the sections you find most challenging, but don't neglect the
             areas you're confident in.
@@ -250,7 +250,7 @@ const AM2Module1Section2 = () => {
         <div className="grid gap-4 md:grid-cols-3">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <h3 className="text-ios-headline font-semibold text-white mb-3">Day 1 (6-7 hours)</h3>
-            <ul className="space-y-2 text-ios-callout text-white/80">
+            <ul className="space-y-2 text-ios-callout text-white">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Installation Work begins (6-7 hours)</span>
@@ -263,7 +263,7 @@ const AM2Module1Section2 = () => {
           </div>
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <h3 className="text-ios-headline font-semibold text-white mb-3">Day 2 (6-7 hours)</h3>
-            <ul className="space-y-2 text-ios-callout text-white/80">
+            <ul className="space-y-2 text-ios-callout text-white">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Continue Installation Work (2.5-3.5 hours)</span>
@@ -280,7 +280,7 @@ const AM2Module1Section2 = () => {
           </div>
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <h3 className="text-ios-headline font-semibold text-white mb-3">Day 3 (3-4 hours)</h3>
-            <ul className="space-y-2 text-ios-callout text-white/80">
+            <ul className="space-y-2 text-ios-callout text-white">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Safe Isolation of Circuits (45 min)</span>
@@ -309,7 +309,7 @@ const AM2Module1Section2 = () => {
               <AlertTriangle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="font-semibold text-white text-ios-callout mb-1">Poor Planning</h4>
-                <p className="text-ios-footnote text-white/70">
+                <p className="text-ios-footnote text-white">
                   Not reading the entire brief before starting work
                 </p>
               </div>
@@ -320,7 +320,7 @@ const AM2Module1Section2 = () => {
                 <h4 className="font-semibold text-white text-ios-callout mb-1">
                   Tool Organisation
                 </h4>
-                <p className="text-ios-footnote text-white/70">
+                <p className="text-ios-footnote text-white">
                   Wasting time looking for tools or components
                 </p>
               </div>
@@ -331,7 +331,7 @@ const AM2Module1Section2 = () => {
                 <h4 className="font-semibold text-white text-ios-callout mb-1">
                   Measurement Errors
                 </h4>
-                <p className="text-ios-footnote text-white/70">
+                <p className="text-ios-footnote text-white">
                   Having to re-run cables due to incorrect measurements
                 </p>
               </div>
@@ -342,7 +342,7 @@ const AM2Module1Section2 = () => {
               <AlertTriangle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="font-semibold text-white text-ios-callout mb-1">Perfectionism</h4>
-                <p className="text-ios-footnote text-white/70">
+                <p className="text-ios-footnote text-white">
                   Spending too long on cosmetic improvements
                 </p>
               </div>
@@ -353,7 +353,7 @@ const AM2Module1Section2 = () => {
                 <h4 className="font-semibold text-white text-ios-callout mb-1">
                   Test Equipment Issues
                 </h4>
-                <p className="text-ios-footnote text-white/70">
+                <p className="text-ios-footnote text-white">
                   Not checking equipment functionality beforehand
                 </p>
               </div>
@@ -362,7 +362,7 @@ const AM2Module1Section2 = () => {
               <AlertTriangle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="font-semibold text-white text-ios-callout mb-1">Paperwork Panic</h4>
-                <p className="text-ios-footnote text-white/70">
+                <p className="text-ios-footnote text-white">
                   Leaving insufficient time for test certificates
                 </p>
               </div>
@@ -381,7 +381,7 @@ const AM2Module1Section2 = () => {
             <h4 className="font-semibold text-elec-yellow text-ios-callout mb-2">
               Practice with Realistic Timings
             </h4>
-            <p className="text-ios-body text-white/90">
+            <p className="text-ios-body text-white">
               Set yourself challenges during training: "Can I complete this ring final in 45
               minutes?" Time yourself regularly to build realistic expectations.
             </p>
@@ -390,7 +390,7 @@ const AM2Module1Section2 = () => {
             <h4 className="font-semibold text-elec-yellow text-ios-callout mb-2">
               Master Your Test Equipment
             </h4>
-            <p className="text-ios-body text-white/90">
+            <p className="text-ios-body text-white">
               Know exactly which buttons to press and in what sequence. Practice until testing
               procedures become automatic.
             </p>
@@ -399,7 +399,7 @@ const AM2Module1Section2 = () => {
             <h4 className="font-semibold text-elec-yellow text-ios-callout mb-2">
               Memorise Key Calculations
             </h4>
-            <p className="text-ios-body text-white/90">
+            <p className="text-ios-body text-white">
               Know cable length calculations, volt drop formulas, and certification requirements by
               heart. No time to look these up during the assessment.
             </p>
@@ -408,7 +408,7 @@ const AM2Module1Section2 = () => {
             <h4 className="font-semibold text-elec-yellow text-ios-callout mb-2">
               Develop Work Sequences
             </h4>
-            <p className="text-ios-body text-white/90">
+            <p className="text-ios-body text-white">
               Create standard approaches for common tasks. Always do risk assessment, isolation,
               installation, testing, and certification in that order.
             </p>
@@ -423,7 +423,7 @@ const AM2Module1Section2 = () => {
           {checklistItems.map((item, index) => (
             <div key={index} className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-ios-body text-white/90">{item}</span>
+              <span className="text-ios-body text-white">{item}</span>
             </div>
           ))}
         </div>

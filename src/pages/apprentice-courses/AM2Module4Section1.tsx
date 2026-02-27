@@ -205,12 +205,12 @@ const AM2Module4Section1 = () => {
 
       {/* Critical Warning */}
       <AM2CriticalWarning title="CRITICAL: Test Sequence Determines AM2 Success">
-        <p className="text-ios-callout text-white/80 mb-2">
+        <p className="text-ios-callout text-white mb-2">
           The test sequence follows IET Guidance Note 3 and BS 7671 Part 6 exactly. Deviation from
           this order will result in assessment failure. Live testing must ONLY be carried out after
           all dead tests are complete and satisfactory.
         </p>
-        <p className="text-ios-callout text-white/90 font-medium">
+        <p className="text-ios-callout text-white font-medium">
           Assessors observe whether you can follow safe working practices and systematic procedures.
           Any unsafe practice results in immediate failure.
         </p>
@@ -667,7 +667,7 @@ const AM2Module4Section1 = () => {
                 <h5 className="font-medium text-white mb-1">
                   Continuity of Protective Conductors (R1 + R2)
                 </h5>
-                <p className="text-ios-footnote text-white/80 mb-2">
+                <p className="text-ios-footnote text-white mb-2">
                   Test CPC continuity from consumer unit to all points. Use low resistance ohmmeter.
                 </p>
                 <div className="bg-white/5 rounded p-2 text-ios-footnote">
@@ -685,7 +685,7 @@ const AM2Module4Section1 = () => {
                 <h5 className="font-medium text-white mb-1">
                   Continuity of Ring Final Circuit Conductors
                 </h5>
-                <p className="text-ios-footnote text-white/80 mb-2">
+                <p className="text-ios-footnote text-white mb-2">
                   Test ring continuity for line, neutral and CPC. Calculate (R1 + R2) values.
                 </p>
                 <div className="bg-white/5 rounded p-2 text-ios-footnote">
@@ -701,7 +701,7 @@ const AM2Module4Section1 = () => {
               </div>
               <div className="flex-1">
                 <h5 className="font-medium text-white mb-1">Insulation Resistance</h5>
-                <p className="text-ios-footnote text-white/80 mb-2">
+                <p className="text-ios-footnote text-white mb-2">
                   Test at 500V DC minimum for circuits up to 500V. Test between all conductors and
                   to earth.
                 </p>
@@ -727,7 +727,7 @@ const AM2Module4Section1 = () => {
               </div>
               <div className="flex-1">
                 <h5 className="font-medium text-white mb-1">Polarity</h5>
-                <p className="text-ios-footnote text-white/80 mb-2">
+                <p className="text-ios-footnote text-white mb-2">
                   Verify correct polarity at all single-pole devices, lampholders and socket
                   outlets.
                 </p>
@@ -746,7 +746,7 @@ const AM2Module4Section1 = () => {
                 <h5 className="font-medium text-white mb-1">
                   Earth Electrode Resistance (where applicable)
                 </h5>
-                <p className="text-ios-footnote text-white/80 mb-2">
+                <p className="text-ios-footnote text-white mb-2">
                   For TT systems only. Test electrode resistance using appropriate earth tester.
                 </p>
                 <div className="bg-white/5 rounded p-2 text-ios-footnote">
@@ -788,7 +788,7 @@ const AM2Module4Section1 = () => {
               </div>
               <div className="flex-1">
                 <h5 className="font-medium text-white mb-1">Earth Fault Loop Impedance (Zs)</h5>
-                <p className="text-ios-footnote text-white/80 mb-2">
+                <p className="text-ios-footnote text-white mb-2">
                   Measure Zs at furthest point of each circuit. Compare against BS 7671 maximum
                   values.
                 </p>
@@ -812,7 +812,7 @@ const AM2Module4Section1 = () => {
               </div>
               <div className="flex-1">
                 <h5 className="font-medium text-white mb-1">RCD Operation and Timing</h5>
-                <p className="text-ios-footnote text-white/80 mb-2">
+                <p className="text-ios-footnote text-white mb-2">
                   Test RCD trip current and time at rated current and 5x rated current.
                 </p>
                 <div className="bg-white/5 rounded p-2 text-ios-footnote space-y-1">
@@ -835,7 +835,7 @@ const AM2Module4Section1 = () => {
               </div>
               <div className="flex-1">
                 <h5 className="font-medium text-white mb-1">Voltage Measurements</h5>
-                <p className="text-ios-footnote text-white/80 mb-2">
+                <p className="text-ios-footnote text-white mb-2">
                   Verify supply voltage at consumer unit and at extremities of circuits.
                 </p>
                 <div className="bg-white/5 rounded p-2 text-ios-footnote space-y-1">
@@ -859,7 +859,7 @@ const AM2Module4Section1 = () => {
               </div>
               <div className="flex-1">
                 <h5 className="font-medium text-white mb-1">Phase Sequence (3-Phase Only)</h5>
-                <p className="text-ios-footnote text-white/80 mb-2">
+                <p className="text-ios-footnote text-white mb-2">
                   Verify correct phase rotation for 3-phase installations.
                 </p>
                 <div className="bg-white/5 rounded p-2 text-ios-footnote">
@@ -874,7 +874,7 @@ const AM2Module4Section1 = () => {
               </div>
               <div className="flex-1">
                 <h5 className="font-medium text-white mb-1">Functional Testing</h5>
-                <p className="text-ios-footnote text-white/80 mb-2">
+                <p className="text-ios-footnote text-white mb-2">
                   Test operation of switches, controls, and protective devices.
                 </p>
                 <div className="bg-white/5 rounded p-2 text-ios-footnote">
@@ -908,7 +908,7 @@ const AM2Module4Section1 = () => {
               <h5 className="font-medium text-white">Insulation Resistance Testing</h5>
               <span className="text-sm font-medium text-elec-yellow">500V DC</span>
             </div>
-            <ul className="space-y-1 text-ios-footnote text-white/80">
+            <ul className="space-y-1 text-ios-footnote text-white">
               <li>Test voltage: 500V DC for circuits up to 500V</li>
               <li>Minimum acceptable value: 1.0 MΩ (most circuits)</li>
               <li>Test sequence: L-N, L-E, N-E</li>
@@ -921,7 +921,7 @@ const AM2Module4Section1 = () => {
               <h5 className="font-medium text-white">Continuity Testing</h5>
               <span className="text-sm font-medium text-green-400">Low Resistance</span>
             </div>
-            <ul className="space-y-1 text-ios-footnote text-white/80">
+            <ul className="space-y-1 text-ios-footnote text-white">
               <li>Use low-resistance ohmmeter or continuity tester</li>
               <li>Nullify test leads before measurement</li>
               <li>Record R1+R2 values for each circuit</li>
@@ -934,7 +934,7 @@ const AM2Module4Section1 = () => {
               <h5 className="font-medium text-white">RCD Testing</h5>
               <span className="text-sm font-medium text-elec-yellow">Trip Time</span>
             </div>
-            <ul className="space-y-1 text-ios-footnote text-white/80">
+            <ul className="space-y-1 text-ios-footnote text-white">
               <li>Test at 1/2 x IΔn (should not trip)</li>
               <li>Test at 1 x IΔn (must trip within 300ms)</li>
               <li>Test at 5 x IΔn (must trip within 40ms)</li>
@@ -947,7 +947,7 @@ const AM2Module4Section1 = () => {
               <h5 className="font-medium text-white">Earth Fault Loop Impedance</h5>
               <span className="text-sm font-medium text-elec-yellow">Zs Values</span>
             </div>
-            <ul className="space-y-1 text-ios-footnote text-white/80">
+            <ul className="space-y-1 text-ios-footnote text-white">
               <li>Measure Ze (external loop impedance) first</li>
               <li>Measure Zs at furthest points on each circuit</li>
               <li>Verify Zs is less than or equal to maximum values in BS 7671</li>
@@ -975,7 +975,7 @@ const AM2Module4Section1 = () => {
         <div className="space-y-4">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <h4 className="font-medium text-elec-yellow mb-2">What Assessors Evaluate</h4>
-            <ul className="space-y-2 text-ios-callout text-white/80">
+            <ul className="space-y-2 text-ios-callout text-white">
               <li className="flex gap-2">
                 <span className="font-medium text-green-400 min-w-[20px]">&#10003;</span>
                 <div>
@@ -1068,7 +1068,7 @@ const AM2Module4Section1 = () => {
                 <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
                 <div>
                   <h5 className="font-medium text-white mb-1">Safe Working Practices</h5>
-                  <p className="text-ios-footnote text-white/80">
+                  <p className="text-ios-footnote text-white">
                     Demonstrating isolation, proving dead, appropriate PPE, and risk assessment
                     procedures consistently throughout the assessment.
                   </p>
@@ -1079,7 +1079,7 @@ const AM2Module4Section1 = () => {
                 <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
                 <div>
                   <h5 className="font-medium text-white mb-1">Methodical Test Sequence</h5>
-                  <p className="text-ios-footnote text-white/80">
+                  <p className="text-ios-footnote text-white">
                     Following GN3 sequence exactly - dead tests completely finished before ANY live
                     testing commences.
                   </p>
@@ -1090,7 +1090,7 @@ const AM2Module4Section1 = () => {
                 <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
                 <div>
                   <h5 className="font-medium text-white mb-1">Correct Equipment Use</h5>
-                  <p className="text-ios-footnote text-white/80">
+                  <p className="text-ios-footnote text-white">
                     Appropriate test instruments, correct settings, proper lead connections, and
                     understanding equipment limitations.
                   </p>
@@ -1101,7 +1101,7 @@ const AM2Module4Section1 = () => {
                 <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
                 <div>
                   <h5 className="font-medium text-white mb-1">Accurate Documentation</h5>
-                  <p className="text-ios-footnote text-white/80">
+                  <p className="text-ios-footnote text-white">
                     Recording results systematically, understanding what values mean, and
                     identifying when results require investigation.
                   </p>
@@ -1112,7 +1112,7 @@ const AM2Module4Section1 = () => {
                 <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
                 <div>
                   <h5 className="font-medium text-white mb-1">Professional Communication</h5>
-                  <p className="text-ios-footnote text-white/80">
+                  <p className="text-ios-footnote text-white">
                     Explaining procedures, discussing findings, and demonstrating understanding of
                     regulations and standards.
                   </p>
@@ -1199,7 +1199,7 @@ const AM2Module4Section1 = () => {
 
         <div className="bg-white/5 border border-white/10 rounded-xl p-4">
           <h4 className="font-medium text-elec-yellow mb-3">Next Steps</h4>
-          <p className="text-ios-callout text-white/80 mb-3">
+          <p className="text-ios-callout text-white mb-3">
             Having mastered the testing sequence, you should now focus on practical application and
             timing. The next section covers specific test procedures and common scenarios you will
             encounter during your AM2 assessment.

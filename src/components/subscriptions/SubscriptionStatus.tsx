@@ -79,7 +79,7 @@ const SubscriptionStatus = () => {
               variant="ghost"
               size="sm"
               disabled={isLoading}
-              className="h-10 px-3 text-sm text-white/70 hover:text-white hover:bg-green-500/20 active:bg-green-500/30 touch-manipulation"
+              className="h-10 px-3 text-sm text-white hover:text-white hover:bg-green-500/20 active:bg-green-500/30 touch-manipulation"
             >
               {isLoading ? (
                 <Loader2 className="h-3 w-3 animate-spin" />
@@ -96,7 +96,7 @@ const SubscriptionStatus = () => {
               variant="ghost"
               size="sm"
               disabled={isCanceling}
-              className="h-10 w-10 px-0 text-white/40 hover:text-red-400 hover:bg-red-500/10 active:bg-red-500/20 touch-manipulation"
+              className="h-10 w-10 px-0 text-white hover:text-red-400 hover:bg-red-500/10 active:bg-red-500/20 touch-manipulation"
             >
               {isCanceling ? (
                 <Loader2 className="h-3 w-3 animate-spin" />
@@ -121,7 +121,7 @@ const SubscriptionStatus = () => {
     return (
       <div className="inline-flex items-center gap-2.5 bg-amber-500/10 border border-amber-500/20 rounded-xl py-2.5 px-4">
         <Clock className="h-4 w-4 text-amber-400" />
-        <span className="text-sm text-white/70">
+        <span className="text-sm text-white">
           Trial: <span className="font-medium text-amber-400">{daysRemaining} days left</span>
         </span>
       </div>
@@ -138,7 +138,7 @@ const SubscriptionStatus = () => {
 
       <div className="h-4 w-px bg-red-500/20" />
 
-      <span className="text-sm text-white/70">Choose a plan below</span>
+      <span className="text-sm text-white">Choose a plan below</span>
     </div>
   );
 };

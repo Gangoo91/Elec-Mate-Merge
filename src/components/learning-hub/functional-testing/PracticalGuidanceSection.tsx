@@ -222,21 +222,21 @@ const PracticalGuidanceSection = () => {
                       <span className="font-medium">RCD Test Buttons</span>
                       <span className="text-green-400 text-xs">Monthly</span>
                     </div>
-                    <p className="text-xs text-white/80">Quick test during routine maintenance</p>
+                    <p className="text-xs text-white">Quick test during routine maintenance</p>
                   </div>
                   <div className="p-2 bg-blue-500/10 border border-blue-500/20 rounded">
                     <div className="flex justify-between items-center mb-1">
                       <span className="font-medium">Emergency Stops</span>
                       <span className="text-blue-400 text-xs">Quarterly</span>
                     </div>
-                    <p className="text-xs text-white/80">During planned maintenance windows</p>
+                    <p className="text-xs text-white">During planned maintenance windows</p>
                   </div>
                   <div className="p-2 bg-purple-500/10 border border-purple-500/20 rounded">
                     <div className="flex justify-between items-center mb-1">
                       <span className="font-medium">Control Systems</span>
                       <span className="text-purple-400 text-xs">Annually</span>
                     </div>
-                    <p className="text-xs text-white/80">Part of annual inspection</p>
+                    <p className="text-xs text-white">Part of annual inspection</p>
                   </div>
                 </div>
               </div>

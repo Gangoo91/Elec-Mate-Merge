@@ -192,7 +192,7 @@ export default function AsbestosModule2Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-2">
@@ -217,7 +217,7 @@ export default function AsbestosModule2Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Asbestos Surveys
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How asbestos-containing materials are found, assessed, and recorded &mdash; the two
             survey types every tradesperson must understand
           </p>
@@ -303,7 +303,7 @@ export default function AsbestosModule2Section3() {
               <p>The legal requirement for surveys arises from two main pieces of legislation:</p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <ul className="text-sm text-white/80 space-y-3">
+                <ul className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -357,7 +357,7 @@ export default function AsbestosModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Point</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Without a survey, the dutyholder must{' '}
                   <strong>presume that materials contain asbestos</strong>. This presumption applies
                   to all suspect materials in all areas of the building. In practice, this means
@@ -393,7 +393,7 @@ export default function AsbestosModule2Section3() {
                 <p className="text-sm font-medium text-orange-400 mb-3">
                   Management Survey &mdash; Key Features
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -451,7 +451,7 @@ export default function AsbestosModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Important Limitation</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A management survey does <strong>NOT</strong> look behind walls, above ceilings
                   without access, or in hidden voids unless specifically instructed to do so. It is
                   not designed to find every single ACM in the building &mdash; only those that are
@@ -495,7 +495,7 @@ export default function AsbestosModule2Section3() {
                 <p className="text-sm font-medium text-orange-400 mb-3">
                   Refurbishment &amp; Demolition Survey &mdash; Key Features
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -554,7 +554,7 @@ export default function AsbestosModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Requirement</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A refurbishment and demolition survey{' '}
                   <strong>MUST be completed before work begins</strong>. It <strong>cannot</strong>{' '}
                   be done progressively during the work. All ACMs in the work area must be
@@ -589,56 +589,56 @@ export default function AsbestosModule2Section3() {
             <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
               <div className="bg-gradient-to-r from-orange-500/30 to-orange-400/20 border-b border-orange-500/30 px-4 py-3">
                 <p className="text-orange-400 font-semibold text-base">Management Survey</p>
-                <p className="text-white/60 text-xs">Formerly Type 2</p>
+                <p className="text-white text-xs">Formerly Type 2</p>
               </div>
               <div className="p-4 space-y-3 text-sm">
                 <div>
                   <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Purpose
                   </p>
-                  <p className="text-white/80">Manage ACMs during normal occupation</p>
+                  <p className="text-white">Manage ACMs during normal occupation</p>
                 </div>
                 <div>
                   <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Scope
                   </p>
-                  <p className="text-white/80">Whole building or specified areas</p>
+                  <p className="text-white">Whole building or specified areas</p>
                 </div>
                 <div>
                   <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Method
                   </p>
-                  <p className="text-white/80">Visual + sampling (non-destructive)</p>
+                  <p className="text-white">Visual + sampling (non-destructive)</p>
                 </div>
                 <div>
                   <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     When
                   </p>
-                  <p className="text-white/80">Before occupation / routine maintenance</p>
+                  <p className="text-white">Before occupation / routine maintenance</p>
                 </div>
                 <div>
                   <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Invasiveness
                   </p>
-                  <p className="text-white/80">Minimal &mdash; no destructive inspection</p>
+                  <p className="text-white">Minimal &mdash; no destructive inspection</p>
                 </div>
                 <div>
                   <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Building Status
                   </p>
-                  <p className="text-white/80">Occupied during survey</p>
+                  <p className="text-white">Occupied during survey</p>
                 </div>
                 <div>
                   <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Outcome
                   </p>
-                  <p className="text-white/80">Register of ACMs with condition ratings</p>
+                  <p className="text-white">Register of ACMs with condition ratings</p>
                 </div>
                 <div>
                   <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Re-inspection
                   </p>
-                  <p className="text-white/80">Typically annual</p>
+                  <p className="text-white">Typically annual</p>
                 </div>
               </div>
             </div>
@@ -649,63 +649,63 @@ export default function AsbestosModule2Section3() {
                 <p className="text-orange-400 font-semibold text-base">
                   Refurbishment &amp; Demolition Survey
                 </p>
-                <p className="text-white/60 text-xs">Formerly Type 3</p>
+                <p className="text-white text-xs">Formerly Type 3</p>
               </div>
               <div className="p-4 space-y-3 text-sm">
                 <div>
                   <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Purpose
                   </p>
-                  <p className="text-white/80">Find ALL ACMs before work starts</p>
+                  <p className="text-white">Find ALL ACMs before work starts</p>
                 </div>
                 <div>
                   <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Scope
                   </p>
-                  <p className="text-white/80">Specific area of planned work</p>
+                  <p className="text-white">Specific area of planned work</p>
                 </div>
                 <div>
                   <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Method
                   </p>
-                  <p className="text-white/80">Fully intrusive / destructive</p>
+                  <p className="text-white">Fully intrusive / destructive</p>
                 </div>
                 <div>
                   <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     When
                   </p>
-                  <p className="text-white/80">Before refurbishment or demolition</p>
+                  <p className="text-white">Before refurbishment or demolition</p>
                 </div>
                 <div>
                   <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Invasiveness
                   </p>
-                  <p className="text-white/80">High &mdash; opens up structure</p>
+                  <p className="text-white">High &mdash; opens up structure</p>
                 </div>
                 <div>
                   <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Building Status
                   </p>
-                  <p className="text-white/80">May need vacating</p>
+                  <p className="text-white">May need vacating</p>
                 </div>
                 <div>
                   <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Outcome
                   </p>
-                  <p className="text-white/80">Complete ACM inventory for work area</p>
+                  <p className="text-white">Complete ACM inventory for work area</p>
                 </div>
                 <div>
                   <p className="text-orange-400/80 text-xs font-medium uppercase tracking-wide mb-1">
                     Re-inspection
                   </p>
-                  <p className="text-white/80">Not applicable (one-off)</p>
+                  <p className="text-white">Not applicable (one-off)</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Scroll hint for mobile */}
-          <p className="text-center text-white/40 text-xs mt-3 md:hidden">
+          <p className="text-center text-white text-xs mt-3 md:hidden">
             Scroll down to compare both survey types
           </p>
         </section>
@@ -739,7 +739,7 @@ export default function AsbestosModule2Section3() {
                 <p className="text-sm font-medium text-orange-400 mb-3">
                   What to Look for in a Competent Surveyor
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -821,7 +821,7 @@ export default function AsbestosModule2Section3() {
                 <p className="text-sm font-medium text-orange-400 mb-3">
                   Key Limitations to Understand
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -873,7 +873,7 @@ export default function AsbestosModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Ongoing Responsibility</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The dutyholder must keep the survey <strong>up to date</strong> and commission new
                   surveys when needed. A survey is not a one-off document that can be filed away and
                   forgotten. The asbestos register must be maintained as a{' '}
@@ -904,7 +904,7 @@ export default function AsbestosModule2Section3() {
                 <p className="text-sm font-medium text-orange-400 mb-3">
                   After the Survey &mdash; Step by Step
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-orange-500/20 text-orange-400 text-xs font-bold flex-shrink-0">
                       1
@@ -1028,7 +1028,7 @@ export default function AsbestosModule2Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1042,7 +1042,7 @@ export default function AsbestosModule2Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-2-section-2">

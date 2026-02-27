@@ -217,7 +217,7 @@ const Module1Section5_4 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -235,8 +235,8 @@ const Module1Section5_4 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Section 5.4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Safe Isolation Procedures</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Safe Isolation Procedures</span>
             </div>
             <div className="flex justify-center mb-4">
               <div className="p-3 rounded-full bg-elec-yellow/10">
@@ -246,7 +246,7 @@ const Module1Section5_4 = () => {
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Site Safety Procedures and Protocols
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master essential site safety procedures, emergency protocols, and safety management
               systems for electrical work environments.
             </p>
@@ -261,7 +261,7 @@ const Module1Section5_4 = () => {
             <div className="grid md:grid-cols-2 gap-4 text-white">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-                <ul className="list-disc pl-6 space-y-1 text-white/80">
+                <ul className="list-disc pl-6 space-y-1 text-white">
                   <li>
                     Site safety procedures are mandatory systems that protect all workers on
                     construction sites.
@@ -277,7 +277,7 @@ const Module1Section5_4 = () => {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-                <ul className="list-disc pl-6 space-y-1 text-white/80">
+                <ul className="list-disc pl-6 space-y-1 text-white">
                   <li>
                     <strong>Spot:</strong> Safety notices, prohibition signs, emergency assembly
                     points, first aid stations.
@@ -301,7 +301,7 @@ const Module1Section5_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <ul className="list-disc pl-6 space-y-2 text-white/80">
+            <ul className="list-disc pl-6 space-y-2 text-white">
               <li>Understand the importance and legal requirements for site safety procedures.</li>
               <li>Identify key components of site induction and safety briefing systems.</li>
               <li>Recognise different types of safety notices and their meanings.</li>
@@ -316,7 +316,7 @@ const Module1Section5_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Site Induction and Safety Briefings
             </h2>
-            <p className="text-white/80 mb-6">
+            <p className="text-white mb-6">
               Site induction is a legal requirement that ensures all workers understand
               site-specific hazards and safety procedures.
             </p>
@@ -325,37 +325,37 @@ const Module1Section5_4 = () => {
               <h3 className="font-semibold text-elec-yellow mb-3">
                 Mandatory Induction Requirements
               </h3>
-              <p className="text-white/80 mb-2">
+              <p className="text-white mb-2">
                 <strong className="text-white">Legal requirement:</strong> No one can work on site
                 without proper induction.
               </p>
-              <ul className="text-sm text-white/70 ml-4 mb-4 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 mb-4 list-disc space-y-1">
                 <li>Must be completed before any work activities begin</li>
                 <li>Covers site-specific hazards and control measures</li>
                 <li>Explains emergency procedures and assembly points</li>
                 <li>Details PPE requirements and welfare facilities</li>
               </ul>
-              <p className="text-white/80 mb-2">
+              <p className="text-white mb-2">
                 <strong className="text-white">Key induction topics:</strong> Essential information
                 for safe working.
               </p>
-              <ul className="text-sm text-white/70 ml-4 mb-4 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 mb-4 list-disc space-y-1">
                 <li>Site layout, access routes, and restricted areas</li>
                 <li>Emergency procedures, first aid, and fire safety</li>
                 <li>Permit to work systems and high-risk activities</li>
                 <li>Environmental hazards and protection measures</li>
               </ul>
-              <p className="text-white/80 mb-2">
+              <p className="text-white mb-2">
                 <strong className="text-white">Documentation and records:</strong> Proof of
                 competence and compliance.
               </p>
-              <ul className="text-sm text-white/70 ml-4 mb-2 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 mb-2 list-disc space-y-1">
                 <li>Induction certificates must be carried on site</li>
                 <li>Records kept of all personnel inducted</li>
                 <li>Refresher training required for extended absences</li>
                 <li>Site-specific competency cards may be issued</li>
               </ul>
-              <div className="text-sm text-white/80 bg-white/5 p-3 rounded mt-4">
+              <div className="text-sm text-white bg-white/5 p-3 rounded mt-4">
                 <strong className="text-elec-yellow">Key principle:</strong> Induction protects
                 workers by ensuring everyone understands site-specific risks
               </div>
@@ -376,7 +376,7 @@ const Module1Section5_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Safety Notices and Warning Systems
             </h2>
-            <p className="text-white/80 mb-6">
+            <p className="text-white mb-6">
               Construction sites use various notice and warning systems to communicate hazards and
               safety requirements.
             </p>
@@ -386,51 +386,51 @@ const Module1Section5_4 = () => {
                 Types of Safety Notices and Their Meanings
               </h3>
 
-              <p className="text-white/80 mb-2">
+              <p className="text-white mb-2">
                 <strong className="text-white">Prohibition notices (Red):</strong> Activities that
                 are forbidden.
               </p>
-              <ul className="text-sm text-white/70 ml-4 mb-4 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 mb-4 list-disc space-y-1">
                 <li>Equipment that must not be used due to safety defects</li>
                 <li>Areas that are out of bounds or dangerous</li>
                 <li>Activities that are temporarily prohibited</li>
                 <li>Can only be removed by competent persons after hazard resolution</li>
               </ul>
 
-              <p className="text-white/80 mb-2">
+              <p className="text-white mb-2">
                 <strong className="text-white">Warning notices (Yellow/Orange):</strong> Alert to
                 hazards present.
               </p>
-              <ul className="text-sm text-white/70 ml-4 mb-4 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 mb-4 list-disc space-y-1">
                 <li>Indicate specific hazards like overhead lines, excavations</li>
                 <li>Warn of temporary dangers during work activities</li>
                 <li>Highlight areas requiring special precautions</li>
                 <li>Must be clearly visible and regularly maintained</li>
               </ul>
 
-              <p className="text-white/80 mb-2">
+              <p className="text-white mb-2">
                 <strong className="text-white">Mandatory notices (Blue):</strong> Required actions
                 or equipment.
               </p>
-              <ul className="text-sm text-white/70 ml-4 mb-4 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 mb-4 list-disc space-y-1">
                 <li>PPE requirements for specific areas or activities</li>
                 <li>Mandatory safety procedures that must be followed</li>
                 <li>Required qualifications or competencies for work areas</li>
                 <li>Safety equipment that must be used</li>
               </ul>
 
-              <p className="text-white/80 mb-2">
+              <p className="text-white mb-2">
                 <strong className="text-white">Information notices (Green):</strong> Safety guidance
                 and emergency information.
               </p>
-              <ul className="text-sm text-white/70 ml-4 mb-2 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 mb-2 list-disc space-y-1">
                 <li>Emergency assembly points and evacuation routes</li>
                 <li>First aid stations and emergency contact numbers</li>
                 <li>Safety equipment locations and instructions</li>
                 <li>General safety reminders and best practices</li>
               </ul>
 
-              <div className="text-sm text-white/80 bg-white/5 p-3 rounded mt-4">
+              <div className="text-sm text-white bg-white/5 p-3 rounded mt-4">
                 <strong className="text-elec-yellow">Key principle:</strong> Safety notices provide
                 critical information - always read and follow them
               </div>
@@ -451,7 +451,7 @@ const Module1Section5_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Emergency Procedures and Incident Management
             </h2>
-            <p className="text-white/80 mb-6">
+            <p className="text-white mb-6">
               Effective emergency procedures and incident management are essential for workplace
               safety.
             </p>
@@ -461,11 +461,11 @@ const Module1Section5_4 = () => {
                 Emergency Response and Incident Reporting
               </h3>
 
-              <p className="text-white/80 mb-2">
+              <p className="text-white mb-2">
                 <strong className="text-white">Emergency procedures:</strong> Clear actions for
                 different emergency types.
               </p>
-              <ul className="text-sm text-white/70 ml-4 mb-4 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 mb-4 list-disc space-y-1">
                 <li>Fire emergency - raise alarm, evacuate, assemble at designated point</li>
                 <li>
                   Medical emergency - secure area, call first aider, contact emergency services
@@ -474,29 +474,29 @@ const Module1Section5_4 = () => {
                 <li>Structural collapse - evacuate immediately, call emergency services</li>
               </ul>
 
-              <p className="text-white/80 mb-2">
+              <p className="text-white mb-2">
                 <strong className="text-white">Incident reporting:</strong> Legal requirement to
                 report accidents and near misses.
               </p>
-              <ul className="text-sm text-white/70 ml-4 mb-4 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 mb-4 list-disc space-y-1">
                 <li>All accidents must be recorded in accident book immediately</li>
                 <li>Near misses help prevent future accidents and should be reported</li>
                 <li>Serious incidents must be reported to HSE within specified timeframes</li>
                 <li>Investigation required to identify causes and prevent recurrence</li>
               </ul>
 
-              <p className="text-white/80 mb-2">
+              <p className="text-white mb-2">
                 <strong className="text-white">First aid arrangements:</strong> Ensuring adequate
                 emergency care.
               </p>
-              <ul className="text-sm text-white/70 ml-4 mb-2 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 mb-2 list-disc space-y-1">
                 <li>Qualified first aiders must be available during all working hours</li>
                 <li>First aid equipment maintained and easily accessible</li>
                 <li>Emergency contact numbers clearly displayed</li>
                 <li>Arrangements for remote or high-risk locations</li>
               </ul>
 
-              <div className="text-sm text-white/80 bg-white/5 p-3 rounded mt-4">
+              <div className="text-sm text-white bg-white/5 p-3 rounded mt-4">
                 <strong className="text-elec-yellow">Key principle:</strong> Quick, appropriate
                 emergency response can save lives and prevent serious injuries
               </div>
@@ -524,7 +524,7 @@ const Module1Section5_4 = () => {
                   Hospital Extension Project Safety Management
                 </h3>
               </div>
-              <div className="space-y-3 text-white/80">
+              <div className="space-y-3 text-white">
                 <p className="font-medium text-white">
                   Situation: Electrical installation in a new hospital wing adjacent to operating
                   areas.
@@ -577,40 +577,40 @@ const Module1Section5_4 = () => {
                 Understanding Permit to Work Systems
               </h3>
 
-              <p className="text-white/80 mb-2">
+              <p className="text-white mb-2">
                 <strong className="text-white">Purpose and scope:</strong> Formal control of
                 high-risk activities.
               </p>
-              <ul className="text-sm text-white/70 ml-4 mb-4 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 mb-4 list-disc space-y-1">
                 <li>Legal document authorising specific high-risk work</li>
                 <li>Ensures proper planning, risk assessment, and control measures</li>
                 <li>Defines responsibilities, competence requirements, and supervision</li>
                 <li>Provides clear start/stop authority for dangerous work</li>
               </ul>
 
-              <p className="text-white/80 mb-2">
+              <p className="text-white mb-2">
                 <strong className="text-white">When permits are required:</strong> High-risk
                 electrical activities.
               </p>
-              <ul className="text-sm text-white/70 ml-4 mb-4 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 mb-4 list-disc space-y-1">
                 <li>Live working on electrical systems above certain voltages</li>
                 <li>Work in confined spaces with electrical hazards</li>
                 <li>Hot work (welding, cutting) near electrical equipment</li>
                 <li>Excavation work near underground electrical cables</li>
               </ul>
 
-              <p className="text-white/80 mb-2">
+              <p className="text-white mb-2">
                 <strong className="text-white">Permit process:</strong> Systematic approach to risk
                 control.
               </p>
-              <ul className="text-sm text-white/70 ml-4 mb-2 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 mb-2 list-disc space-y-1">
                 <li>Application by competent person details work scope and hazards</li>
                 <li>Assessment by authorised person confirms control measures</li>
                 <li>Issue of permit with specific conditions and time limits</li>
                 <li>Close-out process when work is completed safely</li>
               </ul>
 
-              <div className="text-sm text-white/80 bg-white/5 p-3 rounded mt-4">
+              <div className="text-sm text-white bg-white/5 p-3 rounded mt-4">
                 <strong className="text-elec-yellow">Key principle:</strong> Permits ensure
                 high-risk work is properly planned, controlled, and supervised
               </div>
@@ -628,9 +628,9 @@ const Module1Section5_4 = () => {
                 <details key={index} className="group border border-white/10 rounded-lg">
                   <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-white/5 active:bg-white/10 transition-all min-h-[44px] touch-manipulation">
                     <span className="font-medium text-white pr-4">{faq.question}</span>
-                    <AlertTriangle className="w-5 h-5 text-white/70 group-open:rotate-180 transition-transform flex-shrink-0" />
+                    <AlertTriangle className="w-5 h-5 text-white group-open:rotate-180 transition-transform flex-shrink-0" />
                   </summary>
-                  <div className="px-4 pb-4 text-white/70 border-t border-white/10 pt-4">
+                  <div className="px-4 pb-4 text-white border-t border-white/10 pt-4">
                     {faq.answer}
                   </div>
                 </details>
@@ -644,9 +644,9 @@ const Module1Section5_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">09</span>
               Recap
             </h2>
-            <p className="text-white/80 mb-4">In this section, you learned about:</p>
+            <p className="text-white mb-4">In this section, you learned about:</p>
             <div className="grid md:grid-cols-2 gap-4">
-              <ul className="list-disc pl-6 space-y-2 text-white/80">
+              <ul className="list-disc pl-6 space-y-2 text-white">
                 <li>The importance and legal requirements for site safety procedures</li>
                 <li>Site induction requirements and key safety briefing topics</li>
                 <li>Different types of safety notices and their meanings</li>
@@ -654,7 +654,7 @@ const Module1Section5_4 = () => {
               </ul>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">Key takeaway:</p>
-                <p className="text-white/80">
+                <p className="text-white">
                   Site safety procedures are not just paperwork - they are essential systems that
                   protect lives and ensure legal compliance. Following procedures prevents accidents
                   and creates a safer working environment for everyone on site.
@@ -673,7 +673,7 @@ const Module1Section5_4 = () => {
             <Button
               variant="ghost"
               size="lg"
-              className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+              className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="..">

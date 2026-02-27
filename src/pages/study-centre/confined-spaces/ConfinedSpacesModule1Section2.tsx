@@ -226,7 +226,7 @@ export default function ConfinedSpacesModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-1">
@@ -249,7 +249,7 @@ export default function ConfinedSpacesModule1Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Common Confined Space Examples
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Industrial, utility, construction, building, agricultural, and marine examples &mdash;
             plus how to identify confined spaces on a walkround and build a site-specific register
           </p>
@@ -334,7 +334,7 @@ export default function ConfinedSpacesModule1Section2() {
                   <Factory className="h-5 w-5 text-cyan-400" />
                   <p className="text-sm font-medium text-cyan-400">Common Industrial Examples</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The following are standard examples found across UK industrial sites. Each one is
                   substantially enclosed, has limited access/egress, and presents at least one
                   foreseeable specified risk.
@@ -344,7 +344,7 @@ export default function ConfinedSpacesModule1Section2() {
               {/* Storage Tanks */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Storage Tanks</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -379,7 +379,7 @@ export default function ConfinedSpacesModule1Section2() {
               {/* Silos */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Silos</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -409,7 +409,7 @@ export default function ConfinedSpacesModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Reaction Vessels &amp; Process Vessels
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -437,7 +437,7 @@ export default function ConfinedSpacesModule1Section2() {
               {/* Boilers & Condensers */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Boilers &amp; Condensers</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -470,7 +470,7 @@ export default function ConfinedSpacesModule1Section2() {
                     The &ldquo;Empty Tank&rdquo; Myth
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   An &ldquo;empty&rdquo; tank is never truly empty. Residual liquids, sludge, scale,
                   and coatings can release toxic or flammable vapours. Rusting steel consumes
                   oxygen. Purging with nitrogen or CO₂ creates an oxygen-depleted atmosphere that
@@ -506,7 +506,7 @@ export default function ConfinedSpacesModule1Section2() {
                   <Wrench className="h-5 w-5 text-cyan-400" />
                   <p className="text-sm font-medium text-cyan-400">Common Utility Examples</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Utility confined spaces often have unpredictable atmospheres because the
                   conditions change with weather, flow rates, seasonal temperature, and upstream
                   activity.
@@ -516,7 +516,7 @@ export default function ConfinedSpacesModule1Section2() {
               {/* Sewers */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Sewers &amp; Manholes</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -547,7 +547,7 @@ export default function ConfinedSpacesModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Inspection Chambers &amp; Valve Chambers
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -575,7 +575,7 @@ export default function ConfinedSpacesModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Water Mains, Gas Mains &amp; Pumping Stations
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -605,7 +605,7 @@ export default function ConfinedSpacesModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Sewer Fatalities</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Sewers have caused more confined space fatalities in the UK than any other single
                   category of space. The combination of H₂S (which paralyses the olfactory nerve at
                   high concentrations, removing your ability to smell it), sudden flooding from
@@ -645,7 +645,7 @@ export default function ConfinedSpacesModule1Section2() {
                   <HardHat className="h-5 w-5 text-cyan-400" />
                   <p className="text-sm font-medium text-cyan-400">Common Construction Examples</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Construction confined spaces are often temporary or changing &mdash; the confined
                   space register must be updated as the project progresses through each phase.
                 </p>
@@ -656,7 +656,7 @@ export default function ConfinedSpacesModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Excavations &amp; Trenches (Deeper Than 1.2&thinsp;m)
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -690,7 +690,7 @@ export default function ConfinedSpacesModule1Section2() {
               {/* Tunnels & Shafts */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Tunnels &amp; Shafts</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Used for services routing, transport infrastructure, and mining</span>
@@ -715,7 +715,7 @@ export default function ConfinedSpacesModule1Section2() {
               {/* Caissons & Piling Rigs */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Caissons &amp; Piling Rigs</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -779,7 +779,7 @@ export default function ConfinedSpacesModule1Section2() {
                   <Building2 className="h-5 w-5 text-cyan-400" />
                   <p className="text-sm font-medium text-cyan-400">Common Building Examples</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   These spaces are often accessed routinely and may not be formally recognised as
                   confined spaces in workplace risk assessments. This is a common gap.
                 </p>
@@ -790,7 +790,7 @@ export default function ConfinedSpacesModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Ceiling Voids &amp; Roof Spaces
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -819,7 +819,7 @@ export default function ConfinedSpacesModule1Section2() {
               {/* Ducts & Risers */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Ducts &amp; Risers</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -847,7 +847,7 @@ export default function ConfinedSpacesModule1Section2() {
               {/* Lift Shafts */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Lift Shafts</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Entered for lift installation, maintenance, and inspection</span>
@@ -869,7 +869,7 @@ export default function ConfinedSpacesModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Basements &amp; Unventilated Rooms
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -900,7 +900,7 @@ export default function ConfinedSpacesModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Electricians Take Note</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Electrical work frequently takes place in ceiling voids, ducts, risers, lift
                   shafts, and basement switch rooms. If you are working in any of these spaces,
                   consider whether it meets the confined space definition.{' '}
@@ -937,7 +937,7 @@ export default function ConfinedSpacesModule1Section2() {
                   <Wheat className="h-5 w-5 text-cyan-400" />
                   <p className="text-sm font-medium text-cyan-400">Agricultural Examples</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Farm confined spaces are often accessed without any formal risk assessment,
                   permit, or atmospheric monitoring &mdash; which is why fatality rates in
                   agriculture remain disproportionately high.
@@ -947,7 +947,7 @@ export default function ConfinedSpacesModule1Section2() {
               {/* Grain Stores */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Grain Stores &amp; Silos</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -977,7 +977,7 @@ export default function ConfinedSpacesModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Slurry Pits &amp; Slurry Tanks
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Underground or partially covered pits storing animal waste (slurry)</span>
@@ -1004,7 +1004,7 @@ export default function ConfinedSpacesModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Multiple Fatality Events</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Slurry pits have caused multiple-fatality events in the UK where a second or third
                   person has been killed attempting to rescue someone who has already collapsed.{' '}
                   <strong className="text-white">
@@ -1045,7 +1045,7 @@ export default function ConfinedSpacesModule1Section2() {
                   <Ship className="h-5 w-5 text-cyan-400" />
                   <p className="text-sm font-medium text-cyan-400">Marine Examples</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Maritime confined space fatalities occur globally every year. The International
                   Maritime Organisation (IMO) has identified enclosed space entry as one of the
                   highest-risk activities on board ships.
@@ -1055,7 +1055,7 @@ export default function ConfinedSpacesModule1Section2() {
               {/* Ballast Tanks */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Ballast Tanks</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1084,7 +1084,7 @@ export default function ConfinedSpacesModule1Section2() {
               {/* Cargo Holds */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Cargo Holds</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1118,7 +1118,7 @@ export default function ConfinedSpacesModule1Section2() {
                     Rusting Steel &amp; Oxygen Depletion
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The oxidation (rusting) of bare steel surfaces in ballast tanks is one of the most
                   common causes of oxygen depletion in marine confined spaces. A freshly coated tank
                   that has been sealed can have its oxygen level reduced from the normal 20.9% to
@@ -1189,9 +1189,9 @@ export default function ConfinedSpacesModule1Section2() {
                 key={cat.label}
                 className={`bg-gradient-to-br ${cat.colour} border ${cat.border} rounded-xl p-4 text-center`}
               >
-                <cat.icon className="h-6 w-6 mx-auto mb-2 text-white/80" />
+                <cat.icon className="h-6 w-6 mx-auto mb-2 text-white" />
                 <p className="text-sm font-bold text-white mb-1">{cat.label}</p>
-                <p className="text-[11px] text-white/60 leading-snug">{cat.examples}</p>
+                <p className="text-[11px] text-white leading-snug">{cat.examples}</p>
               </div>
             ))}
           </div>
@@ -1220,7 +1220,7 @@ export default function ConfinedSpacesModule1Section2() {
                   <Search className="h-5 w-5 text-cyan-400" />
                   <p className="text-sm font-medium text-cyan-400">The Assessment Process</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Follow these steps to identify all confined spaces on your site. This process
                   should be completed by a competent person and reviewed whenever the site changes.
                 </p>
@@ -1272,7 +1272,7 @@ export default function ConfinedSpacesModule1Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">{s.title}</p>
-                      <p className="text-sm text-white/80 mt-0.5">{s.detail}</p>
+                      <p className="text-sm text-white mt-0.5">{s.detail}</p>
                     </div>
                   </div>
                 ))}
@@ -1293,16 +1293,16 @@ export default function ConfinedSpacesModule1Section2() {
                       <div className="w-px h-4 bg-cyan-500/40" />
                     </div>
                     <div className="flex flex-col items-center gap-1">
-                      <span className="text-white/40 font-bold">NO</span>
+                      <span className="text-white font-bold">NO</span>
                       <div className="w-px h-4 bg-white/20" />
-                      <div className="rounded-lg bg-white/5 border border-white/10 px-3 py-2 text-center text-white/60">
+                      <div className="rounded-lg bg-white/5 border border-white/10 px-3 py-2 text-center text-white">
                         Not a confined space
                       </div>
                     </div>
                   </div>
                   <div className="w-full max-w-xs rounded-lg bg-cyan-500/15 border border-cyan-500/30 px-4 py-2.5 text-center">
                     <strong>Is there a foreseeable specified risk?</strong>
-                    <p className="text-[10px] text-white/60 mt-1">
+                    <p className="text-[10px] text-white mt-1">
                       (Toxic gas, O₂ depletion, flooding, engulfment, fire, excessive heat)
                     </p>
                   </div>
@@ -1312,15 +1312,15 @@ export default function ConfinedSpacesModule1Section2() {
                       <div className="w-px h-4 bg-cyan-500/40" />
                       <div className="rounded-lg bg-red-500/15 border border-red-500/30 px-3 py-2 text-center">
                         <strong className="text-red-400">CONFINED SPACE</strong>
-                        <p className="text-[10px] text-white/60 mt-1">
+                        <p className="text-[10px] text-white mt-1">
                           Add to register, risk assess, control entry
                         </p>
                       </div>
                     </div>
                     <div className="flex flex-col items-center gap-1">
-                      <span className="text-white/40 font-bold">NO</span>
+                      <span className="text-white font-bold">NO</span>
                       <div className="w-px h-4 bg-white/20" />
-                      <div className="rounded-lg bg-white/5 border border-white/10 px-3 py-2 text-center text-white/60">
+                      <div className="rounded-lg bg-white/5 border border-white/10 px-3 py-2 text-center text-white">
                         Not a confined space (but review if conditions change)
                       </div>
                     </div>
@@ -1370,7 +1370,7 @@ export default function ConfinedSpacesModule1Section2() {
                     Commonly Missed Confined Spaces
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   These examples share a common feature: they do not &ldquo;look&rdquo; like
                   traditional confined spaces, but they meet the legal definition.
                 </p>
@@ -1381,7 +1381,7 @@ export default function ConfinedSpacesModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Large Rooms with Poor Ventilation
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1411,7 +1411,7 @@ export default function ConfinedSpacesModule1Section2() {
               {/* Cold Stores */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Cold Stores</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1442,7 +1442,7 @@ export default function ConfinedSpacesModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Spray Booths &amp; Paint Shops
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1478,7 +1478,7 @@ export default function ConfinedSpacesModule1Section2() {
                     The Site-Specific Confined Space Register
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Every workplace that contains confined spaces should maintain a register. This is
                   a live document that records all identified confined spaces and links each one to
                   its specific risk assessment and safe system of work.
@@ -1489,7 +1489,7 @@ export default function ConfinedSpacesModule1Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   What the Register Should Contain
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1545,7 +1545,7 @@ export default function ConfinedSpacesModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">When to Review the Register</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>After any construction, demolition, or structural change</span>
@@ -1576,7 +1576,7 @@ export default function ConfinedSpacesModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">A Register Is Not a Substitute</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The confined space register is a management and planning tool. It does{' '}
                   <strong className="text-white">not replace</strong> the requirement for an
                   individual risk assessment for each space, a written safe system of work,
@@ -1595,19 +1595,19 @@ export default function ConfinedSpacesModule1Section2() {
                 </div>
                 <div className="p-4 space-y-3 text-xs">
                   <div className="flex justify-between items-start">
-                    <span className="text-white/50 w-28 flex-shrink-0">ID</span>
+                    <span className="text-white w-28 flex-shrink-0">ID</span>
                     <span className="text-white font-medium text-right">CS-007</span>
                   </div>
                   <hr className="border-white/5" />
                   <div className="flex justify-between items-start">
-                    <span className="text-white/50 w-28 flex-shrink-0">Location</span>
+                    <span className="text-white w-28 flex-shrink-0">Location</span>
                     <span className="text-white font-medium text-right">
                       Building 3, Basement Level -1, Plant Room B
                     </span>
                   </div>
                   <hr className="border-white/5" />
                   <div className="flex justify-between items-start">
-                    <span className="text-white/50 w-28 flex-shrink-0">Description</span>
+                    <span className="text-white w-28 flex-shrink-0">Description</span>
                     <span className="text-white font-medium text-right">
                       Underground plant room (6m x 4m x 2.4m) containing chiller units with R-410A
                       refrigerant. Single stairway access.
@@ -1615,7 +1615,7 @@ export default function ConfinedSpacesModule1Section2() {
                   </div>
                   <hr className="border-white/5" />
                   <div className="flex justify-between items-start">
-                    <span className="text-white/50 w-28 flex-shrink-0">Hazards</span>
+                    <span className="text-white w-28 flex-shrink-0">Hazards</span>
                     <span className="text-white font-medium text-right">
                       Refrigerant leak &rarr; oxygen displacement. No natural ventilation. Single
                       egress point.
@@ -1623,7 +1623,7 @@ export default function ConfinedSpacesModule1Section2() {
                   </div>
                   <hr className="border-white/5" />
                   <div className="flex justify-between items-start">
-                    <span className="text-white/50 w-28 flex-shrink-0">Controls</span>
+                    <span className="text-white w-28 flex-shrink-0">Controls</span>
                     <span className="text-white font-medium text-right">
                       Permit to work, portable gas monitor (O₂), mechanical ventilation, standby
                       person, emergency rescue plan
@@ -1631,12 +1631,12 @@ export default function ConfinedSpacesModule1Section2() {
                   </div>
                   <hr className="border-white/5" />
                   <div className="flex justify-between items-start">
-                    <span className="text-white/50 w-28 flex-shrink-0">RA Reference</span>
+                    <span className="text-white w-28 flex-shrink-0">RA Reference</span>
                     <span className="text-white font-medium text-right">CS-RA-007 Rev 3</span>
                   </div>
                   <hr className="border-white/5" />
                   <div className="flex justify-between items-start">
-                    <span className="text-white/50 w-28 flex-shrink-0">Last Review</span>
+                    <span className="text-white w-28 flex-shrink-0">Last Review</span>
                     <span className="text-white font-medium text-right">14 November 2025</span>
                   </div>
                 </div>
@@ -1652,7 +1652,7 @@ export default function ConfinedSpacesModule1Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1662,7 +1662,7 @@ export default function ConfinedSpacesModule1Section2() {
         <section className="mb-10">
           <div className="p-5 rounded-xl bg-gradient-to-br from-cyan-500/10 via-cyan-400/5 to-transparent border border-cyan-500/15">
             <h2 className="text-lg font-semibold text-white mb-3">Section Summary</h2>
-            <ul className="text-sm text-white/80 space-y-2">
+            <ul className="text-sm text-white space-y-2">
               <li className="flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-cyan-400/70 mt-0.5 flex-shrink-0" />
                 <span>
@@ -1721,7 +1721,7 @@ export default function ConfinedSpacesModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-1-section-1">

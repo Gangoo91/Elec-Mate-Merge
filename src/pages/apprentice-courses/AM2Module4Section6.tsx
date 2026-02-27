@@ -220,7 +220,7 @@ const AM2Module4Section6 = () => {
       />
 
       {/* Additional Context */}
-      <p className="text-ios-body text-white/80 leading-relaxed -mt-4 mb-6">
+      <p className="text-ios-body text-white leading-relaxed -mt-4 mb-6">
         The assessor wants to see you work methodically, safely, and efficiently — not rushing, but
         not stalling either. In real life, electricians are expected to test thoroughly and still
         hand over jobs on time.
@@ -239,10 +239,10 @@ const AM2Module4Section6 = () => {
       <AM2ContentCard title="1. Why Time Management Matters" icon={Target}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3">
+            <h4 className="text-ios-headline text-white mb-3">
               Consequences of Poor Time Management:
             </h4>
-            <ul className="space-y-2 text-ios-callout text-white/70">
+            <ul className="space-y-2 text-ios-callout text-white">
               <li className="flex items-start gap-2">
                 <span className="text-red-400">•</span>
                 <span>Testing is marked on both procedure and paperwork</span>
@@ -265,10 +265,10 @@ const AM2Module4Section6 = () => {
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3">
+            <h4 className="text-ios-headline text-white mb-3">
               Benefits of Good Time Management:
             </h4>
-            <ul className="space-y-2 text-ios-callout text-white/70">
+            <ul className="space-y-2 text-ios-callout text-white">
               <li className="flex items-start gap-2">
                 <span className="text-green-400">•</span>
                 <span>Complete all required tests safely</span>
@@ -301,11 +301,11 @@ const AM2Module4Section6 = () => {
       {/* Typical Time Breakdown */}
       <AM2ContentCard title="2. Typical Time Breakdown (approx 3.5 hrs)" icon={Timer} accent>
         <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-6">
-          <h4 className="text-ios-headline text-white/90 mb-2 flex items-center gap-2">
+          <h4 className="text-ios-headline text-white mb-2 flex items-center gap-2">
             <Timer className="w-4 h-4 text-elec-yellow" />
             Recommended Time Allocation
           </h4>
-          <p className="text-ios-callout text-white/70">
+          <p className="text-ios-callout text-white">
             These timings are guidelines based on NET experience. Use them as targets to pace
             yourself, but prioritise safety and completeness over speed.
           </p>
@@ -314,7 +314,7 @@ const AM2Module4Section6 = () => {
         <div className="space-y-3">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-              <span className="text-ios-body text-white/90 font-medium border-l-4 border-blue-400 pl-3">
+              <span className="text-ios-body text-white font-medium border-l-4 border-blue-400 pl-3">
                 Visual inspection & preparation:
               </span>
               <span className="font-bold text-blue-400 text-ios-headline pl-7 sm:pl-0">
@@ -324,7 +324,7 @@ const AM2Module4Section6 = () => {
           </div>
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-              <span className="text-ios-body text-white/90 font-medium border-l-4 border-green-400 pl-3">
+              <span className="text-ios-body text-white font-medium border-l-4 border-green-400 pl-3">
                 Continuity tests (CPC, ring):
               </span>
               <span className="font-bold text-green-400 text-ios-headline pl-7 sm:pl-0">
@@ -334,7 +334,7 @@ const AM2Module4Section6 = () => {
           </div>
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-              <span className="text-ios-body text-white/90 font-medium border-l-4 border-purple-400 pl-3">
+              <span className="text-ios-body text-white font-medium border-l-4 border-purple-400 pl-3">
                 Insulation resistance:
               </span>
               <span className="font-bold text-purple-400 text-ios-headline pl-7 sm:pl-0">
@@ -344,7 +344,7 @@ const AM2Module4Section6 = () => {
           </div>
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-              <span className="text-ios-body text-white/90 font-medium border-l-4 border-orange-400 pl-3">
+              <span className="text-ios-body text-white font-medium border-l-4 border-orange-400 pl-3">
                 Polarity checks:
               </span>
               <span className="font-bold text-orange-400 text-ios-headline pl-7 sm:pl-0">
@@ -354,7 +354,7 @@ const AM2Module4Section6 = () => {
           </div>
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-              <span className="text-ios-body text-white/90 font-medium border-l-4 border-red-400 pl-3">
+              <span className="text-ios-body text-white font-medium border-l-4 border-red-400 pl-3">
                 Earth fault loop & PSC/PSCC:
               </span>
               <span className="font-bold text-red-400 text-ios-headline pl-7 sm:pl-0">
@@ -364,7 +364,7 @@ const AM2Module4Section6 = () => {
           </div>
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-              <span className="text-ios-body text-white/90 font-medium border-l-4 border-elec-yellow pl-3">
+              <span className="text-ios-body text-white font-medium border-l-4 border-elec-yellow pl-3">
                 RCD testing:
               </span>
               <span className="font-bold text-elec-yellow text-ios-headline pl-7 sm:pl-0">
@@ -374,7 +374,7 @@ const AM2Module4Section6 = () => {
           </div>
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-              <span className="text-ios-body text-white/90 font-medium border-l-4 border-pink-400 pl-3">
+              <span className="text-ios-body text-white font-medium border-l-4 border-pink-400 pl-3">
                 Functional testing:
               </span>
               <span className="font-bold text-pink-400 text-ios-headline pl-7 sm:pl-0">
@@ -384,7 +384,7 @@ const AM2Module4Section6 = () => {
           </div>
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
-              <span className="text-ios-body text-white/90 font-medium border-l-4 border-teal-400 pl-3">
+              <span className="text-ios-body text-white font-medium border-l-4 border-teal-400 pl-3">
                 Paperwork completion:
               </span>
               <span className="font-bold text-teal-400 text-ios-headline pl-7 sm:pl-0">
@@ -399,7 +399,7 @@ const AM2Module4Section6 = () => {
       <AM2ContentCard title="3. Common Time Mistakes (NET findings)" icon={AlertTriangle}>
         <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
           <h4 className="text-ios-headline text-red-400 mb-3">TOP 5 Time Management Failures:</h4>
-          <ul className="space-y-3 text-ios-callout text-white/80">
+          <ul className="space-y-3 text-ios-callout text-white">
             <li className="flex items-start gap-3">
               <span className="text-elec-yellow font-bold">1.</span>
               <span>Spending too long setting up first tests - panicking later</span>
@@ -429,7 +429,7 @@ const AM2Module4Section6 = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
             <h4 className="text-ios-headline text-green-400 mb-3">What Assessors Want to See:</h4>
-            <ul className="space-y-2 text-ios-callout text-white/70">
+            <ul className="space-y-2 text-ios-callout text-white">
               <li className="flex items-start gap-2">
                 <span className="text-green-400">•</span>
                 <span>Work steady and systematic - no shortcuts</span>
@@ -452,10 +452,10 @@ const AM2Module4Section6 = () => {
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3">
+            <h4 className="text-ios-headline text-white mb-3">
               Professional Qualities Demonstrated:
             </h4>
-            <ul className="space-y-2 text-ios-callout text-white/70">
+            <ul className="space-y-2 text-ios-callout text-white">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Methodical approach under pressure</span>
@@ -494,17 +494,17 @@ const AM2Module4Section6 = () => {
                 <Lightbulb className="w-4 h-4" />
                 Planning Strategies
               </h4>
-              <ul className="text-ios-callout text-white/70 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li>
-                  <strong className="text-white/90">Have a plan:</strong> Break tasks into stages
+                  <strong className="text-white">Have a plan:</strong> Break tasks into stages
                   with time targets
                 </li>
                 <li>
-                  <strong className="text-white/90">Check off sequence:</strong> Use the GN3 order
+                  <strong className="text-white">Check off sequence:</strong> Use the GN3 order
                   like a checklist
                 </li>
                 <li>
-                  <strong className="text-white/90">Don't over-engineer:</strong> Professional
+                  <strong className="text-white">Don't over-engineer:</strong> Professional
                   standard is enough
                 </li>
               </ul>
@@ -515,17 +515,17 @@ const AM2Module4Section6 = () => {
                 <BookOpen className="w-4 h-4" />
                 Recording Strategies
               </h4>
-              <ul className="text-ios-callout text-white/70 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li>
-                  <strong className="text-white/90">Record immediately:</strong> Enter values as you
+                  <strong className="text-white">Record immediately:</strong> Enter values as you
                   test, not afterwards
                 </li>
                 <li>
-                  <strong className="text-white/90">Work cleanly:</strong> Avoid wasted time
+                  <strong className="text-white">Work cleanly:</strong> Avoid wasted time
                   untangling leads
                 </li>
                 <li>
-                  <strong className="text-white/90">Clear handwriting:</strong> Practice legible
+                  <strong className="text-white">Clear handwriting:</strong> Practice legible
                   recording under pressure
                 </li>
               </ul>
@@ -534,21 +534,21 @@ const AM2Module4Section6 = () => {
 
           <div className="space-y-4">
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline text-white/90 mb-2 flex items-center gap-2">
+              <h4 className="text-ios-headline text-white mb-2 flex items-center gap-2">
                 <Target className="w-4 h-4 text-elec-yellow" />
                 Mental Strategies
               </h4>
-              <ul className="text-ios-callout text-white/70 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li>
-                  <strong className="text-white/90">Stay calm:</strong> Panic leads to skipped steps
+                  <strong className="text-white">Stay calm:</strong> Panic leads to skipped steps
                   and unsafe practice
                 </li>
                 <li>
-                  <strong className="text-white/90">Focus on one circuit:</strong> Complete each
+                  <strong className="text-white">Focus on one circuit:</strong> Complete each
                   fully before moving on
                 </li>
                 <li>
-                  <strong className="text-white/90">Commentary:</strong> Talk through actions to
+                  <strong className="text-white">Commentary:</strong> Talk through actions to
                   maintain focus
                 </li>
               </ul>
@@ -559,17 +559,17 @@ const AM2Module4Section6 = () => {
                 <Wrench className="w-4 h-4" />
                 Equipment Strategies
               </h4>
-              <ul className="text-ios-callout text-white/70 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li>
-                  <strong className="text-white/90">Organised setup:</strong> Keep tools and leads
+                  <strong className="text-white">Organised setup:</strong> Keep tools and leads
                   tidy
                 </li>
                 <li>
-                  <strong className="text-white/90">Pre-check equipment:</strong> Verify operation
+                  <strong className="text-white">Pre-check equipment:</strong> Verify operation
                   before starting
                 </li>
                 <li>
-                  <strong className="text-white/90">Backup plans:</strong> Know alternative test
+                  <strong className="text-white">Backup plans:</strong> Know alternative test
                   methods
                 </li>
               </ul>
@@ -586,12 +586,12 @@ const AM2Module4Section6 = () => {
               <h4 className="text-ios-headline text-red-400 mb-2">
                 Example 1: Ring Continuity Obsession
               </h4>
-              <p className="text-ios-callout text-white/70 mb-2">
+              <p className="text-ios-callout text-white mb-2">
                 Candidate spent 45 mins just on ring continuity, re-checking measurements multiple
                 times. Ran out of time, left RCD tests incomplete -{' '}
                 <strong className="text-red-400">fail</strong>.
               </p>
-              <p className="text-ios-footnote text-white/60 italic">
+              <p className="text-ios-footnote text-white italic">
                 Lesson: Don't chase perfection on one test at the expense of completing all
                 requirements.
               </p>
@@ -601,12 +601,12 @@ const AM2Module4Section6 = () => {
               <h4 className="text-ios-headline text-red-400 mb-2">
                 Example 2: Paperwork Left Until End
               </h4>
-              <p className="text-ios-callout text-white/70 mb-2">
+              <p className="text-ios-callout text-white mb-2">
                 Candidate tested correctly but left all paperwork until the end. Results rushed,
                 illegible, several mistakes -{' '}
                 <strong className="text-red-400">lost easy marks</strong>.
               </p>
-              <p className="text-ios-footnote text-white/60 italic">
+              <p className="text-ios-footnote text-white italic">
                 Lesson: Record results immediately while values are fresh in memory.
               </p>
             </div>
@@ -617,7 +617,7 @@ const AM2Module4Section6 = () => {
               <h4 className="text-ios-headline text-green-400 mb-2">
                 Example 3: Methodical Success
               </h4>
-              <p className="text-ios-callout text-white/70 mb-2">
+              <p className="text-ios-callout text-white mb-2">
                 Candidate kept to time blocks, recorded as they went, talked through each stage
                 clearly. Completed all tests and paperwork on time -{' '}
                 <strong className="text-green-400">pass</strong>.
@@ -628,15 +628,15 @@ const AM2Module4Section6 = () => {
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline text-white/90 mb-2">
+              <h4 className="text-ios-headline text-white mb-2">
                 Example 4: Real-world Parallel
               </h4>
-              <p className="text-ios-callout text-white/70 mb-2">
+              <p className="text-ios-callout text-white mb-2">
                 In real work, a contractor failed a NICEIC audit because test sheets were
                 incomplete. Same issue in AM2 ={' '}
                 <strong className="text-elec-yellow">marks lost</strong>.
               </p>
-              <p className="text-ios-footnote text-white/60 italic">
+              <p className="text-ios-footnote text-white italic">
                 Reality: Incomplete documentation fails in both AM2 and professional practice.
               </p>
             </div>
@@ -656,10 +656,10 @@ const AM2Module4Section6 = () => {
       <AM2ContentCard title="Advanced Time Management Techniques" icon={BookOpen}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3">
+            <h4 className="text-ios-headline text-white mb-3">
               Pre-Test Preparation (5-10 mins investment saves 20+ mins later)
             </h4>
-            <ul className="text-ios-callout text-white/70 space-y-2">
+            <ul className="text-ios-callout text-white space-y-2">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Set up test equipment systematically in logical order</span>
@@ -684,8 +684,8 @@ const AM2Module4Section6 = () => {
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3">Efficient Recording Methods</h4>
-            <ul className="text-ios-callout text-white/70 space-y-2">
+            <h4 className="text-ios-headline text-white mb-3">Efficient Recording Methods</h4>
+            <ul className="text-ios-callout text-white space-y-2">
               <li className="flex items-start gap-2">
                 <span className="text-green-400">•</span>
                 <span>Use consistent abbreviations that you practise beforehand</span>
@@ -713,40 +713,40 @@ const AM2Module4Section6 = () => {
 
       {/* Troubleshooting Time Issues */}
       <AM2ContentCard title="Troubleshooting Time Issues" icon={Wrench}>
-        <h3 className="text-ios-headline text-white/90 mb-4">Common Problems and Solutions</h3>
+        <h3 className="text-ios-headline text-white mb-4">Common Problems and Solutions</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4 border-l-4 border-l-red-500">
-            <p className="text-ios-headline text-white/90 mb-2">
+            <p className="text-ios-headline text-white mb-2">
               Problem: Test equipment malfunction
             </p>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Solution: Always have backup instruments and check equipment functionality before
               starting formal testing
             </p>
           </div>
           <div className="bg-white/5 border border-white/10 rounded-xl p-4 border-l-4 border-l-orange-500">
-            <p className="text-ios-headline text-white/90 mb-2">
+            <p className="text-ios-headline text-white mb-2">
               Problem: Unexpected circuit complexities
             </p>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Solution: Spend adequate time on visual inspection to understand the installation
               layout fully
             </p>
           </div>
           <div className="bg-white/5 border border-white/10 rounded-xl p-4 border-l-4 border-l-yellow-500">
-            <p className="text-ios-headline text-white/90 mb-2">
+            <p className="text-ios-headline text-white mb-2">
               Problem: Illegible handwriting under pressure
             </p>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Solution: Practice writing test results clearly and consider using block capitals for
               critical values
             </p>
           </div>
           <div className="bg-white/5 border border-white/10 rounded-xl p-4 border-l-4 border-l-green-500">
-            <p className="text-ios-headline text-white/90 mb-2">
+            <p className="text-ios-headline text-white mb-2">
               Problem: Forgetting test sequences
             </p>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Solution: Create a personal checklist and stick rigidly to GN3 testing order
             </p>
           </div>
@@ -757,43 +757,43 @@ const AM2Module4Section6 = () => {
       <AM2ContentCard title="Frequently Asked Questions" icon={BookOpen}>
         <div className="space-y-4">
           <div className="border-l-4 border-elec-yellow pl-4">
-            <h3 className="text-ios-headline text-white/90 mb-2">
+            <h3 className="text-ios-headline text-white mb-2">
               Q1: Can I ask for extra time if I'm running behind?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               A: No - the schedule is fixed. AM2 assessments run to strict timelines that cannot be
               extended.
             </p>
           </div>
           <div className="border-l-4 border-elec-yellow pl-4">
-            <h3 className="text-ios-headline text-white/90 mb-2">
+            <h3 className="text-ios-headline text-white mb-2">
               Q2: Should I speed up if I see I'm running out of time?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               A: No - unsafe shortcuts = fail. Prioritise safety over completion every time.
             </p>
           </div>
           <div className="border-l-4 border-elec-yellow pl-4">
-            <h3 className="text-ios-headline text-white/90 mb-2">
+            <h3 className="text-ios-headline text-white mb-2">
               Q3: Can I skip functional tests if I've done electrical tests?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               A: No - functional tests are mandatory. All prescribed tests must be completed.
             </p>
           </div>
           <div className="border-l-4 border-elec-yellow pl-4">
-            <h3 className="text-ios-headline text-white/90 mb-2">
+            <h3 className="text-ios-headline text-white mb-2">
               Q4: Do I lose marks for working slowly but completing everything?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               A: Not directly, but you risk running out of time for later tests or paperwork.
             </p>
           </div>
           <div className="border-l-4 border-elec-yellow pl-4">
-            <h3 className="text-ios-headline text-white/90 mb-2">
+            <h3 className="text-ios-headline text-white mb-2">
               Q5: What's the golden rule if you're behind schedule?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               A: Keep work safe. Incomplete but safe is always better than rushed and unsafe.
             </p>
           </div>
@@ -803,10 +803,10 @@ const AM2Module4Section6 = () => {
       {/* Summary */}
       <AM2ContentCard title="Summary" icon={CheckCircle} accent>
         <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
-          <p className="text-ios-callout text-white/80 mb-4">
+          <p className="text-ios-callout text-white mb-4">
             Time management in AM2 testing is about method, not speed. Assessors want to see:
           </p>
-          <ul className="space-y-2 text-ios-callout text-white/80">
+          <ul className="space-y-2 text-ios-callout text-white">
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 mt-0.5 flex-shrink-0 text-green-400" />
               <span>Tests completed in correct sequence</span>
@@ -824,7 +824,7 @@ const AM2Module4Section6 = () => {
               <span>Certificates fully completed and legible</span>
             </li>
           </ul>
-          <p className="text-ios-callout text-white/80 mt-4 font-medium">
+          <p className="text-ios-callout text-white mt-4 font-medium">
             Remember: you're not only being tested on knowledge - you're being tested on how you
             work under pressure.
           </p>

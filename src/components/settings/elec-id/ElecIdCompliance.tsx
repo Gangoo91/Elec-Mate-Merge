@@ -262,7 +262,7 @@ const ElecIdCompliance = ({ onNavigateToTab }: ElecIdComplianceProps = {}) => {
       case 'training':
         return { label: 'Training', color: 'bg-cyan-500/20 text-cyan-400 border-cyan-500/30' };
       default:
-        return { label: type, color: 'bg-white/10 text-white/60 border-white/20' };
+        return { label: type, color: 'bg-white/10 text-white border-white/20' };
     }
   };
 

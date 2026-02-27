@@ -45,7 +45,7 @@ const TestProcedureWizard = ({ procedure, onBack }: TestProcedureWizardProps) =>
       case 'Required':
         return 'text-blue-400 bg-blue-400/10';
       default:
-        return 'text-white/80 bg-gray-400/10';
+        return 'text-white bg-gray-400/10';
     }
   };
 

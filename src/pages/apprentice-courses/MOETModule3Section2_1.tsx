@@ -203,7 +203,7 @@ const MOETModule3Section2_1 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 p-0 -ml-1 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module3-section2">
@@ -227,7 +227,7 @@ const MOETModule3Section2_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             3.2.1 Motor Construction and Operation
           </h1>
-          <p className="text-white/80 text-base sm:text-lg max-w-2xl mx-auto">
+          <p className="text-white text-base sm:text-lg max-w-2xl mx-auto">
             Stator, rotor, bearings, cooling, terminal connections, nameplate data, mounting and
             shaft alignment
           </p>
@@ -664,7 +664,7 @@ const MOETModule3Section2_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4 sm:p-5">
                 <h3 className="text-white font-semibold mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -731,7 +731,7 @@ const MOETModule3Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module3-section2">

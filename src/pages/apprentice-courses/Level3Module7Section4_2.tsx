@@ -272,7 +272,7 @@ const Level3Module7Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section4">
@@ -429,7 +429,7 @@ const Level3Module7Section4_2 = () => {
               and course structure. Good providers are happy to explain what they offer.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> For an 18th Edition update, a City & Guilds approved centre
               with experienced trainers and hands-on examples will likely provide more value than an
               unknown provider offering the same content for half the price.
@@ -502,17 +502,17 @@ const Level3Module7Section4_2 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Before</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Review materials, identify goals, prepare questions
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">During</p>
-                <p className="text-white/90 text-xs">Engage actively, take notes, ask questions</p>
+                <p className="text-white text-xs">Engage actively, take notes, ask questions</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">After</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Review notes, apply learning, share knowledge
                 </p>
               </div>
@@ -524,7 +524,7 @@ const Level3Module7Section4_2 = () => {
               more you engage, the more you retain and the more value you extract.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Application is key:</strong> Research shows we forget most of what we learn
               within weeks if we don't apply it. Look for opportunities to use new knowledge
               immediately. Discuss it with colleagues. Refer back to course materials. Active
@@ -590,7 +590,7 @@ const Level3Module7Section4_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -637,7 +637,7 @@ const Level3Module7Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section4-1">

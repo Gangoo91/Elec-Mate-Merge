@@ -179,14 +179,14 @@ const RiskAssessmentTab = () => {
               <CardTitle className="text-xl sm:text-2xl font-bold text-white">
                 Risk Assessment <span className="text-red-400">Tools</span>
               </CardTitle>
-              <p className="text-sm text-white/60 mt-1">
+              <p className="text-sm text-white mt-1">
                 HSE Guidelines & BS EN ISO 31000 Compliant
               </p>
             </div>
           </div>
         </CardHeader>
         <CardContent className="relative">
-          <p className="text-white/70">
+          <p className="text-white">
             Comprehensive risk assessment tools following HSE guidelines and BS EN ISO 31000
             standards. Identify hazards, calculate risk levels, and implement effective control
             measures.
@@ -260,7 +260,7 @@ const RiskAssessmentTab = () => {
                             </div>
                           </div>
                           <h3 className="font-semibold text-white mb-2">{step.title}</h3>
-                          <p className="text-sm text-white/60 leading-relaxed">
+                          <p className="text-sm text-white leading-relaxed">
                             {step.description}
                           </p>
                         </CardContent>
@@ -299,7 +299,7 @@ const RiskAssessmentTab = () => {
                         <div className="p-1.5 rounded-lg bg-blue-500/20">
                           <ReqIcon className="h-3.5 w-3.5 text-blue-400" />
                         </div>
-                        <span className="text-sm text-white/80">{req.text}</span>
+                        <span className="text-sm text-white">{req.text}</span>
                       </li>
                     );
                   })}
@@ -326,7 +326,7 @@ const RiskAssessmentTab = () => {
                       <div className="p-1.5 rounded-lg bg-green-500/20">
                         <CheckCircle className="h-3.5 w-3.5 text-green-400" />
                       </div>
-                      <span className="text-sm text-white/80">{practice}</span>
+                      <span className="text-sm text-white">{practice}</span>
                     </li>
                   ))}
                 </ul>
@@ -348,7 +348,7 @@ const RiskAssessmentTab = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-elec-yellow mb-1">Selected Hazard</h4>
-                    <p className="text-sm text-white/80">{selectedHazard}</p>
+                    <p className="text-sm text-white">{selectedHazard}</p>
                   </div>
                 </div>
               </CardContent>
@@ -373,10 +373,10 @@ const RiskAssessmentTab = () => {
             <Card className="bg-gradient-to-br from-elec-gray to-elec-card border-white/10">
               <CardContent className="text-center py-12">
                 <div className="p-4 rounded-xl bg-white/5 inline-block mb-4">
-                  <AlertTriangle className="h-12 w-12 text-white/30" />
+                  <AlertTriangle className="h-12 w-12 text-white" />
                 </div>
-                <h3 className="text-lg font-semibold text-white/70 mb-2">No Assessment Data</h3>
-                <p className="text-white/80 text-sm">
+                <h3 className="text-lg font-semibold text-white mb-2">No Assessment Data</h3>
+                <p className="text-white text-sm">
                   Complete a risk assessment in the Assessment tab to view guidance
                 </p>
               </CardContent>

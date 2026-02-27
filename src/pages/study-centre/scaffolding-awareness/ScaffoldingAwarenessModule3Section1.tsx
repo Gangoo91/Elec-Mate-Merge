@@ -197,7 +197,7 @@ const ScaffoldingAwarenessModule3Section1 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Tubes, Couplers & Fittings
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Steel and aluminium scaffold tubes, coupler types and their safe working loads, torque
             requirements, inspection procedures, and rejecting defective fittings
           </p>
@@ -763,7 +763,7 @@ const ScaffoldingAwarenessModule3Section1 = () => {
                       </div>
                       <h4 className="font-semibold text-slate-400 text-sm">Right-Angle Coupler</h4>
                     </div>
-                    <ul className="text-xs space-y-1 text-white/80">
+                    <ul className="text-xs space-y-1 text-white">
                       <li className="flex items-start gap-1.5">
                         <span className="mt-1 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                         <span>Joins two tubes at fixed 90°</span>
@@ -791,7 +791,7 @@ const ScaffoldingAwarenessModule3Section1 = () => {
                       </div>
                       <h4 className="font-semibold text-slate-400 text-sm">Swivel Coupler</h4>
                     </div>
-                    <ul className="text-xs space-y-1 text-white/80">
+                    <ul className="text-xs space-y-1 text-white">
                       <li className="flex items-start gap-1.5">
                         <span className="mt-1 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                         <span>Joins two tubes at any angle</span>
@@ -819,7 +819,7 @@ const ScaffoldingAwarenessModule3Section1 = () => {
                       </div>
                       <h4 className="font-semibold text-slate-400 text-sm">Putlog Coupler</h4>
                     </div>
-                    <ul className="text-xs space-y-1 text-white/80">
+                    <ul className="text-xs space-y-1 text-white">
                       <li className="flex items-start gap-1.5">
                         <span className="mt-1 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                         <span>Connects single tube (transom) to ledger</span>
@@ -847,7 +847,7 @@ const ScaffoldingAwarenessModule3Section1 = () => {
                       </div>
                       <h4 className="font-semibold text-slate-400 text-sm">Sleeve Coupler</h4>
                     </div>
-                    <ul className="text-xs space-y-1 text-white/80">
+                    <ul className="text-xs space-y-1 text-white">
                       <li className="flex items-start gap-1.5">
                         <span className="mt-1 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                         <span>Joins two tubes end to end (in-line)</span>
@@ -877,7 +877,7 @@ const ScaffoldingAwarenessModule3Section1 = () => {
                         Band-and-Plate Coupler
                       </h4>
                     </div>
-                    <ul className="text-xs space-y-1 text-white/80">
+                    <ul className="text-xs space-y-1 text-white">
                       <li className="flex items-start gap-1.5">
                         <span className="mt-1 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                         <span>Connects tube to flat surface or steelwork</span>
@@ -905,7 +905,7 @@ const ScaffoldingAwarenessModule3Section1 = () => {
                       </div>
                       <h4 className="font-semibold text-slate-400 text-sm">Girder Coupler</h4>
                     </div>
-                    <ul className="text-xs space-y-1 text-white/80">
+                    <ul className="text-xs space-y-1 text-white">
                       <li className="flex items-start gap-1.5">
                         <span className="mt-1 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                         <span>Attaches tube to I-beam or H-section flange</span>
@@ -934,7 +934,7 @@ const ScaffoldingAwarenessModule3Section1 = () => {
                       <h4 className="font-semibold text-slate-400 text-sm">Beam Coupler</h4>
                     </div>
                     <div className="grid sm:grid-cols-2 gap-3">
-                      <ul className="text-xs space-y-1 text-white/80">
+                      <ul className="text-xs space-y-1 text-white">
                         <li className="flex items-start gap-1.5">
                           <span className="mt-1 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                           <span>
@@ -947,7 +947,7 @@ const ScaffoldingAwarenessModule3Section1 = () => {
                           <span>SWL: Varies — check manufacturer's data</span>
                         </li>
                       </ul>
-                      <ul className="text-xs space-y-1 text-white/80">
+                      <ul className="text-xs space-y-1 text-white">
                         <li className="flex items-start gap-1.5">
                           <span className="mt-1 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                           <span>
@@ -1003,7 +1003,7 @@ const ScaffoldingAwarenessModule3Section1 = () => {
                     </div>
                   </div>
                 </div>
-                <p className="text-white/60 text-xs mt-3">
+                <p className="text-white text-xs mt-3">
                   All SWL values shown are slip loads at 50 Nm bolt torque to BS EN 74. Actual
                   working loads may be lower due to factors of safety applied in the scaffold
                   design.
@@ -1341,7 +1341,7 @@ const ScaffoldingAwarenessModule3Section1 = () => {
                   prohibited. A repaired coupler has not been tested and cannot be relied upon to
                   carry its rated safe working load.
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   The cost of a replacement coupler is negligible compared to the consequences of a
                   structural failure. When in doubt, reject and replace.
                 </p>
@@ -1465,7 +1465,7 @@ const ScaffoldingAwarenessModule3Section1 = () => {
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
                   <h4 className="font-semibold text-white mb-2">Tube Dimensions to Remember</h4>
-                  <ul className="space-y-1 text-white/80">
+                  <ul className="space-y-1 text-white">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                       <span>
@@ -1494,7 +1494,7 @@ const ScaffoldingAwarenessModule3Section1 = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-white mb-2">Coupler Facts to Remember</h4>
-                  <ul className="space-y-1 text-white/80">
+                  <ul className="space-y-1 text-white">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                       <span>
@@ -1536,7 +1536,7 @@ const ScaffoldingAwarenessModule3Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1552,7 +1552,7 @@ const ScaffoldingAwarenessModule3Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-3">

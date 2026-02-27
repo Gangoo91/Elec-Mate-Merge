@@ -52,13 +52,13 @@ const CourseSearchForm = ({ locations, onSearch }: CourseSearchFormProps) => {
                 <FormItem className="flex-1">
                   <div className="relative">
                     {!field.value && (
-                      <Search className="absolute left-3 top-3 h-4 w-4 text-white/40 pointer-events-none" />
+                      <Search className="absolute left-3 top-3 h-4 w-4 text-white pointer-events-none" />
                     )}
                     <FormControl>
                       <Input
                         placeholder="Search courses or centers..."
                         className={cn(
-                          'h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40',
+                          'h-11 bg-white/5 border-white/20 text-white placeholder:text-white',
                           !field.value && 'pl-10'
                         )}
                         {...field}
@@ -74,7 +74,7 @@ const CourseSearchForm = ({ locations, onSearch }: CourseSearchFormProps) => {
               render={({ field }) => (
                 <FormItem className="w-full md:w-56">
                   <div className="relative">
-                    <MapPin className="absolute left-3 top-3 h-4 w-4 text-white/40 z-10" />
+                    <MapPin className="absolute left-3 top-3 h-4 w-4 text-white z-10" />
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger className="w-full h-11 pl-10 bg-white/5 border-white/20 text-white">

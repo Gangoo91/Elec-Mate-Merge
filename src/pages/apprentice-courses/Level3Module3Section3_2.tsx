@@ -215,7 +215,7 @@ const Level3Module3Section3_2 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section3">
@@ -234,7 +234,7 @@ const Level3Module3Section3_2 = () => {
         <h1 className="text-2xl md:text-3xl font-bold text-white mb-6">
           3.2 Electromagnetic Induction
         </h1>
-        <p className="text-xl text-white/70 mb-8">
+        <p className="text-xl text-white mb-8">
           Faraday's and Lenz's Laws - the foundation of electrical generation and transformation
         </p>
 
@@ -244,7 +244,7 @@ const Level3Module3Section3_2 = () => {
             <Zap className="w-5 h-5" />
             Quick Summary
           </h3>
-          <ul className="text-white/80 space-y-2">
+          <ul className="text-white space-y-2">
             <li>Faraday's Law: EMF = -N x (change in Phi / change in t) - rate of flux change</li>
             <li>Lenz's Law: Induced EMF opposes the change causing it (the negative sign)</li>
             <li>Dynamically induced: EMF = B x l x v (conductor moving in field)</li>
@@ -256,7 +256,7 @@ const Level3Module3Section3_2 = () => {
         {/* Learning Outcomes */}
         <div className="bg-blue-900/30 border border-blue-500/50 rounded-lg p-6 mb-8">
           <h3 className="text-lg font-semibold text-blue-400 mb-3">Learning Outcomes</h3>
-          <ul className="text-white/80 space-y-2">
+          <ul className="text-white space-y-2">
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 mt-1 text-green-400 flex-shrink-0" />
               State and apply Faraday's Law of electromagnetic induction
@@ -295,7 +295,7 @@ const Level3Module3Section3_2 = () => {
               Faraday's Law of Electromagnetic Induction
             </h2>
             <div className="bg-[#242424] rounded-lg p-6 border border-white/10">
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 <strong>Faraday's Law</strong> states that when the magnetic flux linking a circuit
                 changes, an electromotive force (EMF) is induced. The magnitude of this EMF is
                 proportional to the rate of change of flux linkage.
@@ -304,18 +304,18 @@ const Level3Module3Section3_2 = () => {
               <h4 className="text-lg font-semibold text-green-400 mb-3">Mathematical Expression</h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4 text-center">
                 <p className="text-green-400 font-mono text-lg mb-2">e = -N x (d(Phi) / dt)</p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Where e = induced EMF (V), N = number of turns, d(Phi)/dt = rate of flux change
                   (Wb/s)
                 </p>
               </div>
 
-              <p className="text-white/80 mb-4">For calculations with average values:</p>
+              <p className="text-white mb-4">For calculations with average values:</p>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4 text-center">
                 <p className="text-green-400 font-mono text-lg mb-2">
                   E(average) = N x (change in Phi / change in t)
                 </p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Change in Phi = Phi2 - Phi1 (the change in flux in Webers)
                 </p>
               </div>
@@ -323,7 +323,7 @@ const Level3Module3Section3_2 = () => {
               <h4 className="text-lg font-semibold text-green-400 mb-3">
                 Key Points from Faraday's Experiments
               </h4>
-              <ul className="text-white/80 space-y-2 mb-4">
+              <ul className="text-white space-y-2 mb-4">
                 <li>
                   EMF is induced only when flux is <strong>changing</strong> - steady flux induces
                   nothing
@@ -338,14 +338,14 @@ const Level3Module3Section3_2 = () => {
 
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
                 <h5 className="font-semibold text-white mb-2">Worked Example</h5>
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   A coil of 300 turns has its flux changed from 0.02 Wb to 0.005 Wb in 5 ms.
                   Calculate the average induced EMF.
                 </p>
-                <p className="text-white/70 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   Change in Phi = 0.02 - 0.005 = 0.015 Wb
                 </p>
-                <p className="text-white/70 text-sm mb-2">Change in t = 5 ms = 0.005 s</p>
+                <p className="text-white text-sm mb-2">Change in t = 5 ms = 0.005 s</p>
                 <p className="text-green-400 font-mono">
                   E = N x (delta Phi / delta t) = 300 x (0.015 / 0.005) = 300 x 3 = 900 V
                 </p>
@@ -369,7 +369,7 @@ const Level3Module3Section3_2 = () => {
               Lenz's Law and Energy Conservation
             </h2>
             <div className="bg-[#242424] rounded-lg p-6 border border-white/10">
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 <strong>Lenz's Law</strong> states that the direction of the induced EMF (and hence
                 induced current in a closed circuit) is always such as to oppose the change
                 producing it. This is represented by the negative sign in Faraday's equation.
@@ -381,14 +381,14 @@ const Level3Module3Section3_2 = () => {
               <div className="grid md:grid-cols-2 gap-4 mb-4">
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">If Flux is Increasing</h5>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Induced current creates a field that <strong>opposes</strong> the increase (in
                     opposite direction to the applied field)
                   </p>
                 </div>
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">If Flux is Decreasing</h5>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Induced current creates a field that <strong>supports</strong> the original
                     field (opposing the decrease)
                   </p>
@@ -398,7 +398,7 @@ const Level3Module3Section3_2 = () => {
               <h4 className="text-lg font-semibold text-green-400 mb-3">
                 Why Lenz's Law Must Be True
               </h4>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 Lenz's Law is a consequence of the <strong>conservation of energy</strong>. If the
                 induced current assisted rather than opposed the change, it would create more flux
                 change, inducing more current, creating more flux... - a perpetual motion machine!
@@ -407,7 +407,7 @@ const Level3Module3Section3_2 = () => {
 
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
                 <h5 className="font-semibold text-white mb-2">Practical Examples</h5>
-                <ul className="text-white/70 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li>
                     <strong>Generator:</strong> Induced current creates force opposing rotation -
                     mechanical work required to overcome this
@@ -450,7 +450,7 @@ const Level3Module3Section3_2 = () => {
               Dynamically Induced EMF
             </h2>
             <div className="bg-[#242424] rounded-lg p-6 border border-white/10">
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 <strong>Dynamically induced EMF</strong> occurs when a conductor moves through a
                 magnetic field, cutting through lines of flux. This is the principle behind
                 electrical generators.
@@ -461,19 +461,19 @@ const Level3Module3Section3_2 = () => {
               </h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4 text-center">
                 <p className="text-green-400 font-mono text-lg mb-2">e = B x l x v</p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Where e = EMF (V), B = flux density (T), l = conductor length (m), v = velocity
                   (m/s)
                 </p>
               </div>
 
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 This formula assumes the conductor moves perpendicular to both the field and its own
                 length. For movement at an angle theta:
               </p>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4 text-center">
                 <p className="text-green-400 font-mono text-lg mb-2">e = B x l x v x sin(theta)</p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Maximum EMF when theta = 90 degrees (perpendicular motion)
                 </p>
               </div>
@@ -482,11 +482,11 @@ const Level3Module3Section3_2 = () => {
                 Fleming's Right-Hand Rule (Generators)
               </h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   Hold your right hand with thumb, first finger and second finger mutually
                   perpendicular:
                 </p>
-                <ul className="text-white/70 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li>
                     <strong>thuMb:</strong> Motion of conductor
                   </li>
@@ -497,13 +497,13 @@ const Level3Module3Section3_2 = () => {
                     <strong>sEcond finger:</strong> EMF (and current) direction
                   </li>
                 </ul>
-                <p className="text-white/70 text-sm mt-3">
+                <p className="text-white text-sm mt-3">
                   Remember: Right hand for generators (EMF), Left hand for motors (Force)
                 </p>
               </div>
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">EMF in a Rotating Coil</h4>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 For a coil rotating in a magnetic field (AC generator):
               </p>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
@@ -513,7 +513,7 @@ const Level3Module3Section3_2 = () => {
                 <p className="text-green-400 font-mono mb-2">
                   Maximum EMF: E(max) = N x B x A x omega = 2 x pi x f x N x B x A
                 </p>
-                <p className="text-white/80 text-sm mt-2">
+                <p className="text-white text-sm mt-2">
                   Where omega = angular velocity (rad/s), A = coil area (m squared)
                 </p>
               </div>
@@ -536,7 +536,7 @@ const Level3Module3Section3_2 = () => {
               Statically Induced EMF and Applications
             </h2>
             <div className="bg-[#242424] rounded-lg p-6 border border-white/10">
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 <strong>Statically induced EMF</strong> occurs when the conductor is stationary but
                 the magnetic flux through it changes. This is the principle behind transformers and
                 inductors.
@@ -548,14 +548,14 @@ const Level3Module3Section3_2 = () => {
               <div className="grid md:grid-cols-2 gap-4 mb-4">
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Self-Induction</h5>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     EMF induced in a coil by its own changing current. The coil opposes changes in
                     its own current. This is inductance (L).
                   </p>
                 </div>
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Mutual Induction</h5>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     EMF induced in one coil by changing current in another nearby coil. The basis of
                     transformer operation. Characterised by mutual inductance (M).
                   </p>
@@ -564,7 +564,7 @@ const Level3Module3Section3_2 = () => {
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Practical Applications</h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <ul className="text-white/80 space-y-3">
+                <ul className="text-white space-y-3">
                   <li>
                     <strong>Transformers:</strong> AC in primary creates changing flux in core. This
                     links with secondary winding, inducing EMF. Voltage transformation = turns
@@ -591,7 +591,7 @@ const Level3Module3Section3_2 = () => {
               </div>
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Eddy Currents</h4>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 When a changing magnetic field passes through a solid conductor, it induces
                 circulating currents called <strong>eddy currents</strong>. These can be useful or
                 problematic:
@@ -599,7 +599,7 @@ const Level3Module3Section3_2 = () => {
               <div className="grid md:grid-cols-2 gap-4 mb-4">
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Useful Applications</h5>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>Induction heating</li>
                     <li>Electromagnetic braking</li>
                     <li>Metal detectors</li>
@@ -608,7 +608,7 @@ const Level3Module3Section3_2 = () => {
                 </div>
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Reducing Unwanted Eddy Currents</h5>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>Laminated cores (transformers/motors)</li>
                     <li>Ferrite materials (high resistivity)</li>
                     <li>Powdered iron cores</li>
@@ -638,7 +638,7 @@ const Level3Module3Section3_2 = () => {
               <h4 className="text-lg font-semibold text-yellow-400 mb-3">
                 Safety and Installation Considerations
               </h4>
-              <ul className="text-white/80 space-y-2">
+              <ul className="text-white space-y-2">
                 <li>
                   <strong>Back-EMF in motors:</strong> At standstill, motor current is very high (no
                   back-EMF). DOL starters must handle starting current of 6-8 times full load.
@@ -670,7 +670,7 @@ const Level3Module3Section3_2 = () => {
               {faqItems.map((faq, index) => (
                 <div key={index} className="bg-[#242424] rounded-lg p-4 border border-white/10">
                   <h4 className="font-semibold text-white mb-2">{faq.question}</h4>
-                  <p className="text-white/70 text-sm">{faq.answer}</p>
+                  <p className="text-white text-sm">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -683,7 +683,7 @@ const Level3Module3Section3_2 = () => {
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <h4 className="font-semibold text-green-400 mb-3">Essential Formulas</h4>
-                  <ul className="text-white/70 text-sm space-y-2 font-mono">
+                  <ul className="text-white text-sm space-y-2 font-mono">
                     <li>e = -N x (dPhi/dt)</li>
                     <li>e = N x (delta Phi / delta t)</li>
                     <li>e = B x l x v</li>
@@ -694,7 +694,7 @@ const Level3Module3Section3_2 = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-green-400 mb-3">Key Rules</h4>
-                  <ul className="text-white/70 text-sm space-y-2">
+                  <ul className="text-white text-sm space-y-2">
                     <li>Faraday: EMF = rate of flux change</li>
                     <li>Lenz: EMF opposes the change</li>
                     <li>Right-hand rule: Generators</li>
@@ -711,7 +711,7 @@ const Level3Module3Section3_2 = () => {
         {/* Quiz Section */}
         <div className="mb-12">
           <h2 className="text-xl font-semibold text-white mb-4">Test Your Knowledge</h2>
-          <p className="text-white/70 mb-4">
+          <p className="text-white mb-4">
             Complete this quiz to check your understanding of electromagnetic induction:
           </p>
           <Quiz questions={quizQuestions} moduleId="L3M3S3.2" />

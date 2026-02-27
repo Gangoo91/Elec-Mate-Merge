@@ -70,7 +70,7 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
       <div className="space-y-4">
         {/* VAT Settings Section */}
         <div>
-          <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider px-1 mb-2 flex items-center gap-2">
+          <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2 flex items-center gap-2">
             <Receipt className="h-3.5 w-3.5" />
             VAT Settings
           </p>
@@ -92,7 +92,7 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-[15px] font-medium text-white">VAT Registered</p>
-                      <p className="text-[13px] text-white/70">Add VAT to this quote</p>
+                      <p className="text-[13px] text-white">Add VAT to this quote</p>
                     </div>
                     <FormControl>
                       <Switch
@@ -118,14 +118,14 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
                         <Percent className="h-5 w-5 text-black" />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <label className="text-[12px] text-white/40 block">VAT Rate (%)</label>
+                        <label className="text-[12px] text-white block">VAT Rate (%)</label>
                         <FormControl>
                           <Input
                             type="number"
                             inputMode="decimal"
                             step="0.1"
                             placeholder="20"
-                            className="h-9 px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:ring-offset-0 max-w-[100px]"
+                            className="h-9 px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white focus-visible:ring-0 focus-visible:ring-offset-0 max-w-[100px]"
                             value={field.value}
                             onChange={(e) => {
                               const value = e.target.value;
@@ -145,7 +145,7 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
 
         {/* Display Settings Section */}
         <div>
-          <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider px-1 mb-2 flex items-center gap-2">
+          <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2 flex items-center gap-2">
             <Settings className="h-3.5 w-3.5" />
             Display Options
           </p>
@@ -167,7 +167,7 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-[15px] font-medium text-white">Show Materials Breakdown</p>
-                      <p className="text-[13px] text-white/70">
+                      <p className="text-[13px] text-white">
                         Display each material as a separate line item
                       </p>
                     </div>
@@ -187,7 +187,7 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
 
         {/* Deductions & Discounts Section */}
         <div>
-          <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider px-1 mb-2 flex items-center gap-2">
+          <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2 flex items-center gap-2">
             <BadgePercent className="h-3.5 w-3.5" />
             Deductions & Discounts
           </p>
@@ -209,7 +209,7 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-[15px] font-medium text-white">Apply Deduction/Discount</p>
-                      <p className="text-[13px] text-white/70">CIS, OAP discount, etc.</p>
+                      <p className="text-[13px] text-white">CIS, OAP discount, etc.</p>
                     </div>
                     <FormControl>
                       <Switch
@@ -227,7 +227,7 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
               <>
                 {/* Quick CIS Presets */}
                 <div className="p-3.5">
-                  <label className="text-[12px] text-white/40 block mb-2">Quick Presets</label>
+                  <label className="text-[12px] text-white block mb-2">Quick Presets</label>
                   <div className="flex gap-2">
                     <button
                       type="button"
@@ -248,7 +248,7 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
 
                 {/* Type Picker */}
                 <div className="p-3.5">
-                  <label className="text-[12px] text-white/40 block mb-2">Type</label>
+                  <label className="text-[12px] text-white block mb-2">Type</label>
                   <div className="flex gap-2">
                     {([
                       { id: 'percentage' as const, label: 'Percentage', icon: Percent },
@@ -287,7 +287,7 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
                           )}
                         </div>
                         <div className="flex-1 min-w-0">
-                          <label className="text-[12px] text-white/40 block">
+                          <label className="text-[12px] text-white block">
                             {discountType === 'percentage' ? 'Percentage (%)' : 'Amount (£)'}
                           </label>
                           <FormControl>
@@ -296,7 +296,7 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
                               inputMode="decimal"
                               step="0.1"
                               placeholder={discountType === 'percentage' ? '20' : '150.00'}
-                              className="h-9 px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:ring-offset-0 max-w-[120px]"
+                              className="h-9 px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white focus-visible:ring-0 focus-visible:ring-offset-0 max-w-[120px]"
                               value={field.value || ''}
                               onChange={(e) => {
                                 const value = e.target.value;
@@ -321,12 +321,12 @@ export const QuoteSettingsStep = ({ settings, onUpdate }: QuoteSettingsStepProps
                           <Settings className="h-5 w-5 text-black" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <label className="text-[12px] text-white/40 block">Label (shown on PDF)</label>
+                          <label className="text-[12px] text-white block">Label (shown on PDF)</label>
                           <FormControl>
                             <Input
                               type="text"
                               placeholder="e.g. CIS Deduction (20%)"
-                              className="h-9 px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:ring-offset-0"
+                              className="h-9 px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white focus-visible:ring-0 focus-visible:ring-offset-0"
                               value={field.value || ''}
                               onChange={(e) => field.onChange(e.target.value)}
                             />

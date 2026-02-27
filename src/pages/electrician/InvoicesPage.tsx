@@ -506,7 +506,7 @@ const InvoicesPage = () => {
                 aria-label="Search invoices"
                 className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation"
               >
-                <Search className="h-5 w-5 text-white/80" />
+                <Search className="h-5 w-5 text-white" />
               </button>
               <button
                 onClick={() => navigate('/electrician/invoice-builder/create')}
@@ -562,7 +562,7 @@ const InvoicesPage = () => {
                 className="h-8 w-8 flex items-center justify-center rounded-lg hover:bg-white/[0.08] active:scale-[0.98] transition-all touch-manipulation disabled:opacity-50"
               >
                 <RefreshCw
-                  className={cn('h-4 w-4 text-white/60', isRefreshing && 'animate-spin')}
+                  className={cn('h-4 w-4 text-white', isRefreshing && 'animate-spin')}
                 />
               </button>
               <VoiceHeaderButton

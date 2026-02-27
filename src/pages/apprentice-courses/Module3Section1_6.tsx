@@ -158,7 +158,7 @@ const Module3Section1_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -180,7 +180,7 @@ const Module3Section1_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Data, Signal, and Low Voltage Cabling
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Basic awareness of data networks, signal systems and extra-low voltage installations for
             modern buildings
           </p>
@@ -255,7 +255,7 @@ const Module3Section1_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="font-medium text-white text-xs mb-2">Common Categories</p>
-                  <ul className="text-xs text-white/80 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>
                       <strong>Cat5e:</strong> Enhanced Category 5, supports up to 1 Gigabit Ethernet
                       (1000BASE-T)
@@ -282,7 +282,7 @@ const Module3Section1_6 = () => {
                   <p className="font-medium text-white text-xs mb-2">
                     Applications and Specifications
                   </p>
-                  <ul className="text-xs text-white/80 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>
                       <strong>Computer networks:</strong> Gigabit/10-Gigabit Ethernet connections
                     </li>
@@ -328,7 +328,7 @@ const Module3Section1_6 = () => {
             <div className="grid sm:grid-cols-2 gap-3 my-6">
               <div className="p-3 rounded bg-green-500/10 border border-green-400/30">
                 <p className="font-medium text-white text-sm mb-2">Signal Cables</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>
                     <strong>Alarm cables:</strong> Multi-core PVC sheathed (4-8 core typical) for
                     intruder alarms, access control, and intercoms
@@ -357,7 +357,7 @@ const Module3Section1_6 = () => {
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white text-sm mb-2">Low Voltage Power Cables</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>
                     <strong>ELV (Extra-Low Voltage):</strong> Below 50 V AC or 120 V DC for enhanced
                     safety
@@ -390,7 +390,7 @@ const Module3Section1_6 = () => {
             <div className="p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-white mb-2">Specialist Applications:</p>
               <div className="grid sm:grid-cols-2 gap-4">
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>
                     <strong>Access control:</strong> Card readers, electric locks, biometric
                     scanners
@@ -406,7 +406,7 @@ const Module3Section1_6 = () => {
                     <strong>Digital signage:</strong> Network displays, wayfinding systems
                   </li>
                 </ul>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>
                     <strong>Nurse call systems:</strong> Healthcare communication networks
                   </li>
@@ -447,7 +447,7 @@ const Module3Section1_6 = () => {
                 <p className="font-medium text-white text-sm mb-2">
                   Physical and Electrical Characteristics
                 </p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>
                     <strong>Conductor size:</strong> Much smaller (typically 22-26 AWG) due to low
                     current requirements
@@ -474,7 +474,7 @@ const Module3Section1_6 = () => {
                 <p className="font-medium text-white text-sm mb-2">
                   Performance and Safety Requirements
                 </p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>
                     <strong>Fire performance:</strong> LSZH (Low Smoke Zero Halogen) for escape
                     routes
@@ -503,7 +503,7 @@ const Module3Section1_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="font-medium text-white text-xs mb-2">Safety Considerations</p>
-                  <ul className="text-xs text-white/80 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>
                       <strong>Voltage levels:</strong> ELV systems below 50V AC/120V DC eliminate
                       shock risk
@@ -524,7 +524,7 @@ const Module3Section1_6 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white text-xs mb-2">Standards and Compliance</p>
-                  <ul className="text-xs text-white/80 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>
                       <strong>BS EN 50173:</strong> Structured cabling systems for buildings
                     </li>
@@ -572,7 +572,7 @@ const Module3Section1_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="font-medium text-white text-xs mb-2">Why Separation is Essential</p>
-                  <ul className="text-xs text-white/80 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>
                       <strong>Electromagnetic interference (EMI):</strong> Mains cables create 50Hz
                       magnetic fields
@@ -599,7 +599,7 @@ const Module3Section1_6 = () => {
                   <p className="font-medium text-white text-xs mb-2">
                     Separation Methods and Distances
                   </p>
-                  <ul className="text-xs text-white/80 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>
                       <strong>Physical separation:</strong> Minimum 50mm from mains, 300mm from
                       high-power circuits
@@ -628,7 +628,7 @@ const Module3Section1_6 = () => {
             <div className="grid sm:grid-cols-3 gap-3 my-6">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white text-sm mb-2">Cable Management Systems</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>
                     <strong>Perforated cable trays:</strong> Excellent ventilation and access
                   </li>
@@ -652,7 +652,7 @@ const Module3Section1_6 = () => {
               </div>
               <div className="p-3 rounded bg-green-500/10 border border-green-400/30">
                 <p className="font-medium text-white text-sm mb-2">Installation Standards</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>
                     <strong>Bend radius:</strong> Minimum 4x cable diameter for Cat6 (typically
                     25mm)
@@ -677,7 +677,7 @@ const Module3Section1_6 = () => {
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white text-sm mb-2">Environmental Factors</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>
                     <strong>Temperature effects:</strong> High temperatures reduce transmission
                     distance
@@ -710,7 +710,7 @@ const Module3Section1_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="font-medium text-white text-xs mb-2">Performance Testing</p>
-                  <ul className="text-xs text-white/80 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>
                       <strong>Link certification:</strong> End-to-end performance verification using
                       calibrated testers
@@ -732,7 +732,7 @@ const Module3Section1_6 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white text-xs mb-2">Documentation Requirements</p>
-                  <ul className="text-xs text-white/80 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>
                       <strong>Test certificates:</strong> Pass/fail results for every cable link
                     </li>
@@ -892,7 +892,7 @@ const Module3Section1_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.q}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.a}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.a}</p>
               </div>
             ))}
           </div>
@@ -931,7 +931,7 @@ const Module3Section1_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">

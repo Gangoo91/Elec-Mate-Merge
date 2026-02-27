@@ -208,7 +208,7 @@ const HNCModule4Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section4">
@@ -230,7 +230,7 @@ const HNCModule4Section4_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Emergency Lighting Design
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Designing life safety systems to BS 5266 for safe evacuation during power failure
           </p>
         </header>
@@ -713,7 +713,7 @@ const HNCModule4Section4_3 = () => {
                 <strong>Brief:</strong> Design emergency lighting for a 30m corridor, 2m wide, with
                 exit at one end and a change of direction midway.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Requirements (BS 5266):</p>
                 <p>- Minimum 1 lux on centre line</p>
                 <p>- Uniformity maximum 40:1</p>
@@ -729,7 +729,7 @@ const HNCModule4Section4_3 = () => {
                 <p>
                   <strong>Total: 3 emergency luminaires + signage</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Verify with manufacturer spacing data for 1 lux compliance
                 </p>
               </div>
@@ -743,7 +743,7 @@ const HNCModule4Section4_3 = () => {
                 <strong>Question:</strong> An open plan office is 20m × 15m (300m²). Determine
                 emergency lighting requirements.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Area = 300m² &gt; 60m² threshold</p>
                 <p className="text-green-400">✓ Anti-panic lighting required</p>
                 <p className="mt-2">Core area (excluding 0.5m perimeter):</p>
@@ -753,7 +753,7 @@ const HNCModule4Section4_3 = () => {
                 <p>
                   Grid: 3 across × 2 along = <strong>6 luminaires</strong>
                 </p>
-                <p className="mt-2 text-white/60">Plus escape route lighting to exits</p>
+                <p className="mt-2 text-white">Plus escape route lighting to exits</p>
               </div>
             </div>
 
@@ -765,7 +765,7 @@ const HNCModule4Section4_3 = () => {
                 <strong>Brief:</strong> A machine workshop operates at 500 lux. Calculate emergency
                 lighting requirement for safe shutdown.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>High-risk task area requirement:</p>
                 <p>10% of normal = 500 × 0.1 = 50 lux</p>
                 <p className="mt-2">Check against minimum:</p>
@@ -775,8 +775,8 @@ const HNCModule4Section4_3 = () => {
                 </p>
                 <p>Uniformity maximum 10:1</p>
                 <p>Response time: 0.5 seconds to full output</p>
-                <p className="mt-2 text-white/60">Self-contained may not achieve 0.5s response.</p>
-                <p className="text-white/60">Consider central battery or UPS-backed system.</p>
+                <p className="mt-2 text-white">Self-contained may not achieve 0.5s response.</p>
+                <p className="text-white">Consider central battery or UPS-backed system.</p>
               </div>
             </div>
           </div>
@@ -843,7 +843,7 @@ const HNCModule4Section4_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -889,7 +889,7 @@ const HNCModule4Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section4-2">

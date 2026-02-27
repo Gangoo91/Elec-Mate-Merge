@@ -44,7 +44,7 @@ const InfoList = ({ items, variant = 'default', className }: InfoListProps) => {
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-white">{item.title}</p>
               {item.description && (
-                <p className="text-sm text-white/80 mt-1 leading-relaxed">{item.description}</p>
+                <p className="text-sm text-white mt-1 leading-relaxed">{item.description}</p>
               )}
               {item.detail && (
                 <p className="text-xs text-yellow-400/90 mt-2 font-medium">{item.detail}</p>

@@ -109,7 +109,7 @@ const PowerToolsTab = () => {
     <div className="p-6 space-y-6">
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-semibold text-elec-yellow">Power Tools</h2>
-        <p className="text-white/80 max-w-3xl mx-auto leading-relaxed">
+        <p className="text-white max-w-3xl mx-auto leading-relaxed">
           Whilst your employer often provides larger power tools, having some basics of your own
           gives you flexibility and ensures you're never without essential equipment.
         </p>
@@ -149,7 +149,7 @@ const PowerToolsTab = () => {
           <CircuitBoard className="h-5 w-5" />
           Power Tool Safety & Maintenance
         </h3>
-        <div className="space-y-2 text-sm text-white/80 leading-relaxed">
+        <div className="space-y-2 text-sm text-white leading-relaxed">
           <p>
             <strong className="text-red-300">PAT Testing:</strong> All portable electrical tools
             must be PAT tested annually (or as per company policy). Keep records and labels up to
@@ -179,7 +179,7 @@ const PowerToolsTab = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
           <div>
             <h4 className="font-medium text-green-200 mb-2">Year 1-2: Basics (£150-250)</h4>
-            <ul className="space-y-1 text-white/80">
+            <ul className="space-y-1 text-white">
               <li>• Cordless drill with 2 batteries</li>
               <li>• LED torch</li>
               <li>• Basic drill bits and screwdriver bits</li>
@@ -188,7 +188,7 @@ const PowerToolsTab = () => {
           </div>
           <div>
             <h4 className="font-medium text-green-200 mb-2">Year 3-4: Expansion (£200-400)</h4>
-            <ul className="space-y-1 text-white/80">
+            <ul className="space-y-1 text-white">
               <li>• Additional batteries and faster charger</li>
               <li>• More comprehensive bit sets</li>
               <li>• Advanced inspection equipment</li>

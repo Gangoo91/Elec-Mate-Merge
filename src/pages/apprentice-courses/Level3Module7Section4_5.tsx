@@ -255,7 +255,7 @@ const Level3Module7Section4_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section4">
@@ -403,7 +403,7 @@ const Level3Module7Section4_5 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> Adding a new socket outlet to an existing ring circuit in a
               living room is non-notifiable. Installing a new circuit for an electric shower in a
               bathroom is notifiable and requires certification.
@@ -489,15 +489,15 @@ const Level3Module7Section4_5 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">C&G 2391</p>
-                <p className="text-white/90 text-xs">Inspection and Testing</p>
+                <p className="text-white text-xs">Inspection and Testing</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">C&G 2919</p>
-                <p className="text-white/90 text-xs">EV Charging Installation</p>
+                <p className="text-white text-xs">EV Charging Installation</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">C&G 2399</p>
-                <p className="text-white/90 text-xs">Solar PV Installation</p>
+                <p className="text-white text-xs">Solar PV Installation</p>
               </div>
             </div>
 
@@ -525,7 +525,7 @@ const Level3Module7Section4_5 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> To install EV charging points professionally, you need core
               electrical qualifications plus C&G 2919 (or equivalent). To be OZEV-approved (for
               government grants), you must work for an approved installer and meet additional
@@ -598,7 +598,7 @@ const Level3Module7Section4_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -645,7 +645,7 @@ const Level3Module7Section4_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section4-4">

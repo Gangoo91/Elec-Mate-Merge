@@ -356,7 +356,7 @@ const BusinessApprentices = () => {
             </h2>
 
             <div className="p-4 rounded-xl bg-yellow-400/10 border border-yellow-400/20">
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Strategic recruitment reduces time-to-hire by 40% and increases apprentice
                 completion rates to 85%+.
               </p>
@@ -393,11 +393,11 @@ const BusinessApprentices = () => {
                   <h4 className="text-sm font-medium text-white mb-1">
                     Government Digital Gateway
                   </h4>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Find an Apprenticeship (Gov.uk) - Free automated matching and application
                     tracking
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Apprenticeship Service Portal - Employer dashboard for vacancy and provider
                     management
                   </p>
@@ -406,11 +406,11 @@ const BusinessApprentices = () => {
                   <h4 className="text-sm font-medium text-white mb-1">
                     Social & Professional Networks
                   </h4>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     LinkedIn Business (£150-400/month) - Skills-based targeting and employer
                     branding
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     TikTok For Business (£200-500/month) - Gen Z recruitment through authentic video
                     content
                   </p>
@@ -427,17 +427,17 @@ const BusinessApprentices = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="text-sm font-medium text-white mb-2">Recruitment Costs</h4>
-                  <ul className="space-y-1 text-xs text-white/80">
+                  <ul className="space-y-1 text-xs text-white">
                     <li>Job advertising: £800-1,500/campaign</li>
                     <li>Assessment tools: £300-600/year</li>
                     <li>Interview resources: £400-800/hire</li>
                     <li>Background checks: £200-400/hire</li>
-                    <li className="font-medium text-white/80 pt-1">Total: £1,700-3,300/hire</li>
+                    <li className="font-medium text-white pt-1">Total: £1,700-3,300/hire</li>
                   </ul>
                 </div>
                 <div className="p-3 rounded-lg bg-yellow-400/10 border border-yellow-400/20">
                   <h4 className="text-sm font-medium text-white mb-2">Government Support</h4>
-                  <ul className="space-y-1 text-xs text-white/80">
+                  <ul className="space-y-1 text-xs text-white">
                     <li>16-18 incentive: £3,000/apprentice</li>
                     <li>Small employer bonus: £1,000</li>
                     <li>Training funding: 95-100%</li>
@@ -457,7 +457,7 @@ const BusinessApprentices = () => {
             </h2>
 
             <div className="p-4 rounded-xl bg-red-500/10 border border-red-500/20">
-              <p className="text-sm text-white/80 flex items-center gap-2">
+              <p className="text-sm text-white flex items-center gap-2">
                 <AlertTriangle className="h-4 w-4 text-red-400 flex-shrink-0" />
                 Legal compliance is strictly enforced with severe penalties. Proper systems prevent
                 90% of violations.
@@ -493,7 +493,7 @@ const BusinessApprentices = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="text-sm font-medium text-white mb-2">Compliance Support</h4>
-                  <ul className="space-y-1 text-xs text-white/80">
+                  <ul className="space-y-1 text-xs text-white">
                     <li>ACAS Employment Law Guidance (Free)</li>
                     <li>CITB Safety Training (Subsidised)</li>
                     <li>Phone, online, face-to-face consultations</li>
@@ -501,7 +501,7 @@ const BusinessApprentices = () => {
                 </div>
                 <div className="p-3 rounded-lg bg-yellow-400/10 border border-yellow-400/20">
                   <h4 className="text-sm font-medium text-white mb-2">Financial Incentives</h4>
-                  <ul className="space-y-1 text-xs text-white/80">
+                  <ul className="space-y-1 text-xs text-white">
                     <li>£3,000 for 16-18 year olds</li>
                     <li>£1,500 for 19-24 year olds</li>
                     <li>95-100% training funding</li>
@@ -519,23 +519,23 @@ const BusinessApprentices = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="text-xs font-medium text-white">England - ESFA</h4>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Levy compliance, ESFA rules, Ofsted readiness
                   </p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="text-xs font-medium text-white">Scotland - SDS</h4>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Scottish standards, enhanced funding rates
                   </p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="text-xs font-medium text-white">Wales - Welsh Gov</h4>
-                  <p className="text-xs text-white/70">Working Wales standards, Welsh language</p>
+                  <p className="text-xs text-white">Working Wales standards, Welsh language</p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="text-xs font-medium text-white">N. Ireland - DfE</h4>
-                  <p className="text-xs text-white/70">Apprenticeship NI, separate system</p>
+                  <p className="text-xs text-white">Apprenticeship NI, separate system</p>
                 </div>
               </div>
             </ContentBlock>
@@ -549,7 +549,7 @@ const BusinessApprentices = () => {
             </h2>
 
             <div className="p-4 rounded-xl bg-yellow-400/10 border border-yellow-400/20">
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Modern training approaches improve apprentice completion rates by 25% and reduce
                 time to competency.
               </p>
@@ -584,37 +584,37 @@ const BusinessApprentices = () => {
               <div className="space-y-3">
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="text-sm font-medium text-white mb-1">Safety Leadership</h4>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Foundation: H&S awareness, PPE competency, risk identification
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Practitioner: Risk assessment creation, safety training delivery
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Expert: Safety culture development, policy creation, audits
                   </p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="text-sm font-medium text-white mb-1">Technical Excellence</h4>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Foundation: Basic theory, simple circuits, basic testing
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Practitioner: Complex design, advanced testing, fault diagnosis
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Expert: System design, innovation projects, technical mentoring
                   </p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="text-sm font-medium text-white mb-1">Business & Customer Focus</h4>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Foundation: Customer service basics, communication skills
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Practitioner: Consultation, quote preparation, project management
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Expert: Business development, team leadership, process improvement
                   </p>
                 </div>
@@ -630,21 +630,21 @@ const BusinessApprentices = () => {
               <div className="space-y-3">
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="text-sm font-medium text-white">Digital Mentoring Platform</h4>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Daily progress logging, video coaching, AI recommendations, peer networking. 40%
                     improvement in engagement.
                   </p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="text-sm font-medium text-white">Structured Competency Pathways</h4>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Skills matrix, monthly assessments, personalised planning, recognition systems.
                     Faster skill development.
                   </p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="text-sm font-medium text-white">Industry Exposure Programme</h4>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Project rotation, industry events, guest experts, tech demonstrations. Broader
                     skills base.
                   </p>
@@ -661,7 +661,7 @@ const BusinessApprentices = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="text-sm font-medium text-white mb-2">Direct Training Costs</h4>
-                  <ul className="space-y-1 text-xs text-white/80">
+                  <ul className="space-y-1 text-xs text-white">
                     <li>Provider fees: £4,500-7,000/year (95-100% funded)</li>
                     <li>Assessment/EPA: £1,500-2,500 total</li>
                     <li>Materials: £800-1,200/year</li>
@@ -670,7 +670,7 @@ const BusinessApprentices = () => {
                 </div>
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="text-sm font-medium text-white mb-2">Indirect Costs</h4>
-                  <ul className="space-y-1 text-xs text-white/80">
+                  <ul className="space-y-1 text-xs text-white">
                     <li>Mentor time: £6,000-9,000/year</li>
                     <li>Reduced productivity (Year 1): £3,000-5,000</li>
                     <li>Equipment/tools: £1,500-2,500 total</li>
@@ -689,7 +689,7 @@ const BusinessApprentices = () => {
             </h2>
 
             <div className="p-4 rounded-xl bg-yellow-400/10 border border-yellow-400/20">
-              <p className="text-sm text-white/80 flex items-center gap-2">
+              <p className="text-sm text-white flex items-center gap-2">
                 <Heart className="h-4 w-4 text-yellow-400 flex-shrink-0" />
                 Early support intervention prevents 75% of apprentice failures. Getting help quickly
                 makes all the difference.
@@ -718,7 +718,7 @@ const BusinessApprentices = () => {
                   <h4 className="text-sm font-medium text-white mb-1">
                     Professional & Career Support
                   </h4>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Career development guidance from CITB, industry mentorship, professional bodies.
                     Skills development support from training providers and employer coordinators.
                   </p>
@@ -727,14 +727,14 @@ const BusinessApprentices = () => {
                   <h4 className="text-sm font-medium text-white mb-1">
                     Personal & Mental Wellbeing
                   </h4>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     NHS psychological services, industry wellbeing programmes, employer assistance.
                     Financial guidance from Citizens Advice and hardship funds.
                   </p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="text-sm font-medium text-white mb-1">Legal & Employment Rights</h4>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     ACAS, trade unions, employment law specialists. Training & assessment support
                     from Apprenticeship Support Service and Ofsted.
                   </p>
@@ -755,7 +755,7 @@ const BusinessApprentices = () => {
                     className="p-3 rounded-lg bg-red-500/10 border border-red-500/20"
                   >
                     <h4 className="text-sm font-medium text-white">{contact.title}</h4>
-                    <p className="text-xs text-white/70 mt-1">{contact.description}</p>
+                    <p className="text-xs text-white mt-1">{contact.description}</p>
                   </div>
                 ))}
               </div>
@@ -778,7 +778,7 @@ const BusinessApprentices = () => {
                   <ExternalLink className="h-4 w-4 mr-3 text-yellow-400 flex-shrink-0" />
                   <div className="text-left flex-1 min-w-0">
                     <div className="text-sm text-white">Apprenticeship Support Service Portal</div>
-                    <div className="text-xs text-white/70">
+                    <div className="text-xs text-white">
                       Live chat, resource library, progress tracking
                     </div>
                   </div>
@@ -793,7 +793,7 @@ const BusinessApprentices = () => {
                   <ExternalLink className="h-4 w-4 mr-3 text-yellow-400 flex-shrink-0" />
                   <div className="text-left flex-1 min-w-0">
                     <div className="text-sm text-white">CITB Apprentice Support Hub</div>
-                    <div className="text-xs text-white/70">
+                    <div className="text-xs text-white">
                       Career guidance, training support, financial assistance
                     </div>
                   </div>
@@ -810,7 +810,7 @@ const BusinessApprentices = () => {
             </h2>
 
             <div className="p-4 rounded-xl bg-yellow-400/10 border border-yellow-400/20">
-              <p className="text-sm text-white/80 flex items-center gap-2">
+              <p className="text-sm text-white flex items-center gap-2">
                 <Eye className="h-4 w-4 text-yellow-400 flex-shrink-0" />
                 Effective assessment tracking increases completion rates by 19% and provides clear
                 ROI visibility.
@@ -840,7 +840,7 @@ const BusinessApprentices = () => {
                     <h4 className="text-sm font-medium text-white">Skills Bank Pro</h4>
                     <span className="text-xs text-yellow-400">£25/month</span>
                   </div>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     EPA-aligned digital assessment. Real-time tracking, automated reporting,
                     competency mapping. Reduces admin by 60%.
                   </p>
@@ -850,7 +850,7 @@ const BusinessApprentices = () => {
                     <h4 className="text-sm font-medium text-white">OneFile Portfolio</h4>
                     <span className="text-xs text-yellow-400">£20/month</span>
                   </div>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Industry-standard digital portfolio. Mobile evidence capture, supervisor
                     sign-off, progress analytics.
                   </p>
@@ -862,7 +862,7 @@ const BusinessApprentices = () => {
                     </h4>
                     <span className="text-xs text-yellow-400">£150/month</span>
                   </div>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Real-time employer monitoring. Progress visualisation, risk alerts, ROI
                     tracking. Early intervention enabled.
                   </p>
@@ -879,21 +879,21 @@ const BusinessApprentices = () => {
               <div className="space-y-3">
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="text-sm font-medium text-white">Teaching Quality</h4>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Look for Good/Outstanding Ofsted, 85%+ pass rates, high student satisfaction,
                     strong industry partnerships.
                   </p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="text-sm font-medium text-white">Assessment Standards</h4>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Target 80%+ EPA pass rate, 95%+ portfolio completion, efficient time to gateway,
                     consistent assessment.
                   </p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="text-sm font-medium text-white">Support Systems</h4>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Same-day employer query response, strong apprentice support, effective digital
                     platforms, weekly progress updates.
                   </p>
@@ -919,7 +919,7 @@ const BusinessApprentices = () => {
             </h2>
 
             <div className="p-4 rounded-xl bg-yellow-400/10 border border-yellow-400/20">
-              <p className="text-sm text-white/80 flex items-center gap-2">
+              <p className="text-sm text-white flex items-center gap-2">
                 <Zap className="h-4 w-4 text-yellow-400 flex-shrink-0" />
                 Advanced 2025 tools for apprentice planning, cost optimization, and compliance
                 management.
@@ -973,7 +973,7 @@ const BusinessApprentices = () => {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="text-sm font-medium text-white mb-2">Financial Benefits</h4>
-                  <ul className="space-y-1 text-xs text-white/80">
+                  <ul className="space-y-1 text-xs text-white">
                     <li>287% ROI over 5 years</li>
                     <li>£15,000 saved vs. external</li>
                     <li>Up to £4,000 gov incentives</li>
@@ -982,7 +982,7 @@ const BusinessApprentices = () => {
                 </div>
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="text-sm font-medium text-white mb-2">Operational Advantages</h4>
-                  <ul className="space-y-1 text-xs text-white/80">
+                  <ul className="space-y-1 text-xs text-white">
                     <li>Skills tailored to needs</li>
                     <li>Higher retention rates</li>
                     <li>Improved company culture</li>
@@ -991,7 +991,7 @@ const BusinessApprentices = () => {
                 </div>
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="text-sm font-medium text-white mb-2">Strategic Impact</h4>
-                  <ul className="space-y-1 text-xs text-white/80">
+                  <ul className="space-y-1 text-xs text-white">
                     <li>Future workforce dev</li>
                     <li>Recruitment advantage</li>
                     <li>Fresh perspectives</li>
@@ -1011,7 +1011,7 @@ const BusinessApprentices = () => {
             </div>
             <div>
               <h3 className="text-sm font-semibold text-white mb-1">Need Additional Support?</h3>
-              <p className="text-xs text-white/80 leading-relaxed">
+              <p className="text-xs text-white leading-relaxed">
                 Managing apprentices successfully requires ongoing support. Contact CITB, local
                 training providers, or government resources for help with recruitment, training, or
                 compliance.

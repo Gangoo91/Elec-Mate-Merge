@@ -218,7 +218,7 @@ export default function ManualHandlingModule5Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-5">
@@ -243,7 +243,7 @@ export default function ManualHandlingModule5Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Roles, Responsibilities &amp; Training
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Employer and employee duties under MHOR 1992, competent persons for assessment, training
             requirements, toolbox talks, and the role of supervision and monitoring
           </p>
@@ -350,10 +350,10 @@ export default function ManualHandlingModule5Section4() {
                     </div>
                     <div>
                       <p className="text-emerald-400 text-base font-bold">AVOID</p>
-                      <p className="text-xs text-white/60">So far as is reasonably practicable</p>
+                      <p className="text-xs text-white">So far as is reasonably practicable</p>
                     </div>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1 ml-11">
+                  <ul className="text-sm text-white space-y-1 ml-11">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                       <span>Can the manual handling be eliminated entirely?</span>
@@ -377,12 +377,12 @@ export default function ManualHandlingModule5Section4() {
                     </div>
                     <div>
                       <p className="text-amber-400 text-base font-bold">ASSESS</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Any remaining manual handling that cannot be avoided
                       </p>
                     </div>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1 ml-11">
+                  <ul className="text-sm text-white space-y-1 ml-11">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Use the TILE framework: Task, Individual, Load, Environment</span>
@@ -406,12 +406,12 @@ export default function ManualHandlingModule5Section4() {
                     </div>
                     <div>
                       <p className="text-orange-400 text-base font-bold">REDUCE</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Risk to the lowest level reasonably practicable
                       </p>
                     </div>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1 ml-11">
+                  <ul className="text-sm text-white space-y-1 ml-11">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                       <span>Provide mechanical aids (trolleys, hoists, conveyors)</span>
@@ -439,12 +439,12 @@ export default function ManualHandlingModule5Section4() {
                     </div>
                     <div>
                       <p className="text-blue-400 text-base font-bold">INFORM</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Provide information on load weight and centre of gravity
                       </p>
                     </div>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1 ml-11">
+                  <ul className="text-sm text-white space-y-1 ml-11">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                       <span>Label loads with their weight</span>
@@ -485,7 +485,7 @@ export default function ManualHandlingModule5Section4() {
                   <Users className="h-4 w-4 text-emerald-400" />
                   <p className="text-sm font-medium text-white">Employee Responsibilities</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -542,7 +542,7 @@ export default function ManualHandlingModule5Section4() {
                     Consequences of Not Following Duties
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Employees who deliberately ignore safe systems of work, bypass mechanical aids, or
                   fail to cooperate with training can face disciplinary action from their employer.
                   In serious cases, employees can also be prosecuted under Section 7 of the Health
@@ -573,7 +573,7 @@ export default function ManualHandlingModule5Section4() {
                   <ClipboardCheck className="h-4 w-4 text-emerald-400" />
                   <p className="text-sm font-medium text-white">What Makes a Person Competent?</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -644,7 +644,7 @@ export default function ManualHandlingModule5Section4() {
                     <p className="text-sm font-medium text-emerald-400 mb-1">
                       Initial Induction Training
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Provided to all new workers before they carry out any manual handling. Covers
                       the basics: legislation, TILE, kinetic technique, how to use mechanical aids,
                       and reporting procedures.
@@ -654,7 +654,7 @@ export default function ManualHandlingModule5Section4() {
                     <p className="text-sm font-medium text-amber-400 mb-1">
                       Task-Specific Training
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Focused on the specific manual handling tasks the worker will actually
                       perform. Includes practical demonstration and supervised practice with the
                       actual loads, equipment, and working conditions.
@@ -664,7 +664,7 @@ export default function ManualHandlingModule5Section4() {
                     <p className="text-sm font-medium text-blue-400 mb-1">
                       Practical Demonstration
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Workers must practise correct technique under supervision. Observation,
                       feedback, and correction are essential. A worker cannot be considered trained
                       if they have only watched a video or read a handout.
@@ -677,7 +677,7 @@ export default function ManualHandlingModule5Section4() {
                         Refresher Training (Every 1&ndash;3 Years)
                       </p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Reinforces correct technique, addresses any bad habits that have developed,
                       covers any changes to tasks, equipment, or legislation, and incorporates
                       lessons learned from recent incidents.
@@ -704,7 +704,7 @@ export default function ManualHandlingModule5Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Core Training Content</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -798,7 +798,7 @@ export default function ManualHandlingModule5Section4() {
                   </div>
                   <div>
                     <p className="text-emerald-400 text-sm font-bold">Can you AVOID it?</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Eliminate, automate, or redesign the task
                     </p>
                   </div>
@@ -822,7 +822,7 @@ export default function ManualHandlingModule5Section4() {
                   </div>
                   <div>
                     <p className="text-amber-400 text-sm font-bold">ASSESS the risk (TILE)</p>
-                    <p className="text-xs text-white/60">Task, Individual, Load, Environment</p>
+                    <p className="text-xs text-white">Task, Individual, Load, Environment</p>
                   </div>
                 </div>
               </div>
@@ -842,7 +842,7 @@ export default function ManualHandlingModule5Section4() {
                   </div>
                   <div>
                     <p className="text-orange-400 text-sm font-bold">REDUCE risk to lowest ALARP</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Mechanical aids, task redesign, team lifts
                     </p>
                   </div>
@@ -864,7 +864,7 @@ export default function ManualHandlingModule5Section4() {
                   </div>
                   <div>
                     <p className="text-blue-400 text-sm font-bold">INFORM workers</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Load weight, centre of gravity, training
                     </p>
                   </div>
@@ -886,7 +886,7 @@ export default function ManualHandlingModule5Section4() {
                   </div>
                   <div>
                     <p className="text-purple-400 text-sm font-bold">REVIEW regularly</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       When tasks change, after incidents, or at least annually
                     </p>
                   </div>
@@ -894,7 +894,7 @@ export default function ManualHandlingModule5Section4() {
               </div>
             </div>
 
-            <p className="text-white/50 text-xs italic text-center mt-5">
+            <p className="text-white text-xs italic text-center mt-5">
               This hierarchy must be followed in order. Training and PPE are NOT substitutes for
               avoidance, assessment, and risk reduction.
             </p>
@@ -922,27 +922,27 @@ export default function ManualHandlingModule5Section4() {
                   Effective Manual Handling Toolbox Talk Topics
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>Correct technique for a specific task</span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>How to use a new mechanical aid</span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>Lessons learned from a recent near miss</span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>Fatigue management and rest break scheduling</span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>Team lifting coordination for a specific load</span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>Seasonal risks (cold weather, hot weather)</span>
                   </div>
@@ -982,7 +982,7 @@ export default function ManualHandlingModule5Section4() {
                   <Eye className="h-4 w-4 text-emerald-400" />
                   <p className="text-sm font-medium text-white">What Supervision Should Check</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -1041,7 +1041,7 @@ export default function ManualHandlingModule5Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1055,7 +1055,7 @@ export default function ManualHandlingModule5Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-5-section-3">

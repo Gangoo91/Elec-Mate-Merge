@@ -219,7 +219,7 @@ export default function Module5Section7_4() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -237,13 +237,13 @@ export default function Module5Section7_4() {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 7.4</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 7.4</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Updating As-Built Drawings (Basic Awareness)
             </h1>
-            <p className="text-white/80 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Learn about as-built drawings and their importance in maintaining accurate records of
               electrical installations for future maintenance and compliance.
             </p>
@@ -255,7 +255,7 @@ export default function Module5Section7_4() {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Introduction
             </h2>
-            <div className="grid sm:grid-cols-2 gap-4 text-white/90">
+            <div className="grid sm:grid-cols-2 gap-4 text-white">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-5 space-y-1 text-sm">
@@ -291,7 +291,7 @@ export default function Module5Section7_4() {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <ul className="list-disc pl-6 space-y-2 text-white/90">
+            <ul className="list-disc pl-6 space-y-2 text-white">
               <li>
                 Explain what as-built drawings are and why they are important for electrical
                 installations.
@@ -315,7 +315,7 @@ export default function Module5Section7_4() {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               What Are As-Built Drawings?
             </h2>
-            <p className="text-white/90 mb-4">
+            <p className="text-white mb-4">
               As-built drawings are the final, updated versions of the original design drawings that
               accurately reflect the completed electrical installation:
             </p>
@@ -324,11 +324,11 @@ export default function Module5Section7_4() {
               <p className="font-semibold text-elec-yellow mb-2">
                 Definition and Purpose of As-Built Drawings
               </p>
-              <p className="text-white/90 mb-2">
+              <p className="text-white mb-2">
                 <strong>Final documentation:</strong> The definitive record of the completed
                 installation.
               </p>
-              <ul className="text-sm text-white/80 ml-4 mb-3 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 mb-3 list-disc space-y-1">
                 <li>Updated versions of the original design drawings and specifications</li>
                 <li>
                   Show the electrical installation exactly as it exists on site after completion
@@ -338,11 +338,11 @@ export default function Module5Section7_4() {
                   Provide accurate reference for future maintenance, testing, and modifications
                 </li>
               </ul>
-              <p className="text-white/90 mb-2">
+              <p className="text-white mb-2">
                 <strong>Key differences from design drawings:</strong> Reflecting reality rather
                 than intention.
               </p>
-              <ul className="text-sm text-white/80 ml-4 mb-3 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 mb-3 list-disc space-y-1">
                 <li>Design drawings show the intended installation before construction starts</li>
                 <li>
                   As-built drawings show the actual installation after construction is complete
@@ -352,11 +352,11 @@ export default function Module5Section7_4() {
                 </li>
                 <li>Account for practical adjustments made by installation teams during work</li>
               </ul>
-              <p className="text-white/90 mb-2">
+              <p className="text-white mb-2">
                 <strong>Documentation scope:</strong> Comprehensive coverage of all installation
                 aspects.
               </p>
-              <ul className="text-sm text-white/80 ml-4 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 list-disc space-y-1">
                 <li>Rerouted cables where different from original design routes</li>
                 <li>Changes to distribution board and equipment locations</li>
                 <li>Alterations to containment systems and cable management</li>
@@ -364,7 +364,7 @@ export default function Module5Section7_4() {
               </ul>
             </div>
 
-            <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-sm text-white/80">
+            <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-sm text-white">
               <strong>Essential record:</strong> As-built drawings are the authoritative source for
               understanding any electrical installation
             </div>
@@ -386,7 +386,7 @@ export default function Module5Section7_4() {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Why Updating Matters
             </h2>
-            <p className="text-white/90 mb-4">
+            <p className="text-white mb-4">
               Keeping as-built drawings accurate and up-to-date is crucial for multiple reasons
               affecting safety, compliance, and operational efficiency:
             </p>
@@ -395,20 +395,20 @@ export default function Module5Section7_4() {
               <p className="font-semibold text-green-400 mb-2">
                 Critical Importance of Accurate As-Built Documentation
               </p>
-              <p className="text-white/90 mb-2">
+              <p className="text-white mb-2">
                 <strong>Compliance requirements:</strong> Meeting legal and regulatory obligations.
               </p>
-              <ul className="text-sm text-white/80 ml-4 mb-3 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 mb-3 list-disc space-y-1">
                 <li>Ensures records match the actual installation for inspection purposes</li>
                 <li>Demonstrates compliance with BS 7671 and building regulations</li>
                 <li>Provides evidence of completed work for certification processes</li>
                 <li>Required for building control sign-off and completion certificates</li>
               </ul>
-              <p className="text-white/90 mb-2">
+              <p className="text-white mb-2">
                 <strong>Safety considerations:</strong> Protecting maintenance teams and future
                 workers.
               </p>
-              <ul className="text-sm text-white/80 ml-4 mb-3 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 mb-3 list-disc space-y-1">
                 <li>Provides accurate details for safe isolation procedures during maintenance</li>
                 <li>
                   Shows correct circuit routing to prevent accidental damage during other works
@@ -416,20 +416,20 @@ export default function Module5Section7_4() {
                 <li>Identifies emergency isolation points and safety critical circuits</li>
                 <li>Enables proper risk assessment for future modification work</li>
               </ul>
-              <p className="text-white/90 mb-2">
+              <p className="text-white mb-2">
                 <strong>Future works planning:</strong> Essential information for system
                 modifications.
               </p>
-              <ul className="text-sm text-white/80 ml-4 mb-3 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 mb-3 list-disc space-y-1">
                 <li>Accurate load calculations for additional circuits and equipment</li>
                 <li>Proper planning of cable routes for extensions and modifications</li>
                 <li>Understanding of existing containment capacity and constraints</li>
                 <li>Coordination with other building services and structural elements</li>
               </ul>
-              <p className="text-white/90 mb-2">
+              <p className="text-white mb-2">
                 <strong>Legal protection:</strong> Documentation for disputes and liability issues.
               </p>
-              <ul className="text-sm text-white/80 ml-4 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 list-disc space-y-1">
                 <li>Acts as proof of what was actually installed if disputes arise</li>
                 <li>Demonstrates professional standards and due diligence</li>
                 <li>Supports insurance claims and warranty issues</li>
@@ -437,7 +437,7 @@ export default function Module5Section7_4() {
               </ul>
             </div>
 
-            <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-sm text-white/80">
+            <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-sm text-white">
               <strong>Multiple benefits:</strong> Accurate as-built drawings serve safety,
               compliance, and business protection needs
             </div>
@@ -459,7 +459,7 @@ export default function Module5Section7_4() {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               What Should Be Updated
             </h2>
-            <p className="text-white/90 mb-4">
+            <p className="text-white mb-4">
               Comprehensive updating requires attention to all aspects of the installation that
               differ from the original design:
             </p>
@@ -468,11 +468,11 @@ export default function Module5Section7_4() {
               <p className="font-semibold text-amber-400 mb-2">
                 Key Elements Requiring Documentation Updates
               </p>
-              <p className="text-white/90 mb-2">
+              <p className="text-white mb-2">
                 <strong>Equipment and distribution locations:</strong> Recording actual positions
                 and installations.
               </p>
-              <ul className="text-sm text-white/80 ml-4 mb-3 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 mb-3 list-disc space-y-1">
                 <li>
                   Final locations of distribution boards, consumer units, and sub-mains equipment
                 </li>
@@ -480,31 +480,31 @@ export default function Module5Section7_4() {
                 <li>Actual equipment ratings and specifications where different from design</li>
                 <li>Additional or relocated isolation switches and emergency controls</li>
               </ul>
-              <p className="text-white/90 mb-2">
+              <p className="text-white mb-2">
                 <strong>Cable routing and installation details:</strong> Documenting actual cable
                 paths.
               </p>
-              <ul className="text-sm text-white/80 ml-4 mb-3 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 mb-3 list-disc space-y-1">
                 <li>Routing of cables where different from original design drawings</li>
                 <li>Underground cable routes with accurate depths and positions</li>
                 <li>Cable sizes and types where upgraded or changed during installation</li>
                 <li>Joint locations, pull-boxes, and inspection chambers</li>
               </ul>
-              <p className="text-white/90 mb-2">
+              <p className="text-white mb-2">
                 <strong>Circuit modifications and additions:</strong> Accurate circuit
                 documentation.
               </p>
-              <ul className="text-sm text-white/80 ml-4 mb-3 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 mb-3 list-disc space-y-1">
                 <li>Changes to circuit numbering systems and labelling conventions</li>
                 <li>Additional circuits added during installation for extra loads</li>
                 <li>Modified protection ratings and trip characteristics</li>
                 <li>Changes to earthing and bonding arrangements</li>
               </ul>
-              <p className="text-white/90 mb-2">
+              <p className="text-white mb-2">
                 <strong>Accessories and outlet positions:</strong> Recording final installation
                 details.
               </p>
-              <ul className="text-sm text-white/80 ml-4 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 list-disc space-y-1">
                 <li>Alterations to socket outlet and switch positions</li>
                 <li>Additional or relocated lighting points and controls</li>
                 <li>Changes to equipment connections and supply arrangements</li>
@@ -512,7 +512,7 @@ export default function Module5Section7_4() {
               </ul>
             </div>
 
-            <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-sm text-white/80">
+            <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-sm text-white">
               <strong>Comprehensive coverage:</strong> Every aspect that differs from the original
               design must be accurately recorded
             </div>
@@ -534,7 +534,7 @@ export default function Module5Section7_4() {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Consequences of Out-of-Date Drawings
             </h2>
-            <p className="text-white/90 mb-4">
+            <p className="text-white mb-4">
               Failing to maintain accurate as-built documentation creates serious risks and problems
               for future operations:
             </p>
@@ -543,39 +543,39 @@ export default function Module5Section7_4() {
               <p className="font-semibold text-red-400 mb-2">
                 Serious Risks from Inaccurate Documentation
               </p>
-              <p className="text-white/90 mb-2">
+              <p className="text-white mb-2">
                 <strong>Safety hazards:</strong> Increased risk of accidents and incidents.
               </p>
-              <ul className="text-sm text-white/80 ml-4 mb-3 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 mb-3 list-disc space-y-1">
                 <li>Wrong isolation procedures due to incorrect circuit information</li>
                 <li>Accidental damage to live conductors during excavation or building work</li>
                 <li>Inability to locate emergency isolation points during incidents</li>
                 <li>Incorrect assumptions about system earthing and bonding arrangements</li>
               </ul>
-              <p className="text-white/90 mb-2">
+              <p className="text-white mb-2">
                 <strong>Operational inefficiency:</strong> Time and cost impacts from poor
                 documentation.
               </p>
-              <ul className="text-sm text-white/80 ml-4 mb-3 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 mb-3 list-disc space-y-1">
                 <li>Time wasted manually tracing circuits and cable routes</li>
                 <li>Delayed maintenance work due to uncertainty about installations</li>
                 <li>Increased costs for investigative work before modifications</li>
                 <li>Repeated call-outs to resolve issues that could have been avoided</li>
               </ul>
-              <p className="text-white/90 mb-2">
+              <p className="text-white mb-2">
                 <strong>Compliance failures:</strong> Regulatory and audit issues.
               </p>
-              <ul className="text-sm text-white/80 ml-4 mb-3 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 mb-3 list-disc space-y-1">
                 <li>Failed audits or compliance inspections due to documentation gaps</li>
                 <li>Difficulty demonstrating compliance with BS 7671 and building regulations</li>
                 <li>Problems with insurance claims due to inadequate records</li>
                 <li>Potential enforcement action from regulatory authorities</li>
               </ul>
-              <p className="text-white/90 mb-2">
+              <p className="text-white mb-2">
                 <strong>Future project impacts:</strong> Complications for system modifications and
                 extensions.
               </p>
-              <ul className="text-sm text-white/80 ml-4 list-disc space-y-1">
+              <ul className="text-sm text-white ml-4 list-disc space-y-1">
                 <li>Costly rework when modifications conflict with existing installations</li>
                 <li>Incorrect load calculations leading to undersized or oversized equipment</li>
                 <li>Damage to existing installations during new work</li>
@@ -583,7 +583,7 @@ export default function Module5Section7_4() {
               </ul>
             </div>
 
-            <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-sm text-white/80">
+            <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-sm text-white">
               <strong>Serious consequences:</strong> Poor documentation creates safety, cost, and
               legal risks that far outweigh the effort of keeping records accurate
             </div>
@@ -601,16 +601,16 @@ export default function Module5Section7_4() {
                 <h3 className="font-medium text-white mb-2">
                   Hospital Emergency - Wrong Isolation
                 </h3>
-                <p className="text-white/90 mb-2">
+                <p className="text-white mb-2">
                   <strong>Situation:</strong> On a hospital refurbishment project, electrical
                   drawings were never updated after last-minute changes during construction.
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   <strong>The Problem:</strong> When a maintenance team later tried to isolate a
                   lighting circuit for repairs, they switched off the wrong breaker based on the
                   outdated drawings and accidentally cut power to critical life-support equipment.
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   This serious incident highlighted how dangerous out-of-date drawings can be in
                   critical environments. Patient safety was compromised due to poor documentation
                   practices.
@@ -619,17 +619,17 @@ export default function Module5Section7_4() {
 
               <div className="p-4 rounded-lg bg-amber-500/5 border border-amber-500/30">
                 <h3 className="font-medium text-white mb-2">Office Extension - Cable Damage</h3>
-                <p className="text-white/90 mb-2">
+                <p className="text-white mb-2">
                   <strong>Situation:</strong> An office building extension required new foundations
                   to be excavated near the existing building.
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   <strong>The Problem:</strong> The as-built drawings showed the main electrical
                   supply entering the building from the opposite side to where it actually was.
                   Excavation work severed the main incoming supply, causing a complete power outage
                   and expensive emergency repairs.
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Accurate as-built drawings would have prevented this costly mistake and the
                   business disruption that followed.
                 </p>
@@ -637,17 +637,17 @@ export default function Module5Section7_4() {
 
               <div className="p-4 rounded-lg bg-green-500/5 border border-green-500/30">
                 <h3 className="font-medium text-white mb-2">Good Practice - Regular Updates</h3>
-                <p className="text-white/90 mb-2">
+                <p className="text-white mb-2">
                   <strong>Situation:</strong> A large retail installation team made daily updates to
                   their as-built drawings, marking changes in red pen and submitting copies to the
                   site engineer each week.
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   <strong>The Result:</strong> When the client requested additional electrical
                   supplies for new equipment six months later, the contractor could provide accurate
                   load calculations and cable routes immediately, winning the additional work.
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Good documentation practices not only prevent problems but can also create
                   business opportunities by demonstrating professionalism and reliability.
                 </p>
@@ -665,7 +665,7 @@ export default function Module5Section7_4() {
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
                 <h3 className="font-medium text-white mb-3">Daily Update Practices</h3>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 mt-0.5 text-green-500 flex-shrink-0" />
                     Mark changes on drawings as work progresses, not at the end
@@ -687,7 +687,7 @@ export default function Module5Section7_4() {
 
               <div>
                 <h3 className="font-medium text-white mb-3">Quality Assurance</h3>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <Target className="w-4 h-4 mt-0.5 text-elec-yellow flex-shrink-0" />
                     Always double-check updates before final submission
@@ -717,19 +717,19 @@ export default function Module5Section7_4() {
                 <div className="space-y-3">
                   <div className="flex items-start gap-2">
                     <CheckCircle className="w-5 h-5 mt-0.5 text-green-500 flex-shrink-0" />
-                    <span className="text-sm text-white/90">
+                    <span className="text-sm text-white">
                       As-built drawings = show the installation exactly as finished
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="w-5 h-5 mt-0.5 text-green-500 flex-shrink-0" />
-                    <span className="text-sm text-white/90">
+                    <span className="text-sm text-white">
                       Always record changes (routes, circuits, positions)
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="w-5 h-5 mt-0.5 text-green-500 flex-shrink-0" />
-                    <span className="text-sm text-white/90">
+                    <span className="text-sm text-white">
                       Keep updates current – don't leave it until project completion
                     </span>
                   </div>
@@ -737,13 +737,13 @@ export default function Module5Section7_4() {
                 <div className="space-y-3">
                   <div className="flex items-start gap-2">
                     <CheckCircle className="w-5 h-5 mt-0.5 text-green-500 flex-shrink-0" />
-                    <span className="text-sm text-white/90">
+                    <span className="text-sm text-white">
                       Submit updates to site management regularly
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="w-5 h-5 mt-0.5 text-green-500 flex-shrink-0" />
-                    <span className="text-sm text-white/90">
+                    <span className="text-sm text-white">
                       Accurate drawings = safer, more efficient future work
                     </span>
                   </div>
@@ -762,7 +762,7 @@ export default function Module5Section7_4() {
               {faqs.map((faq, index) => (
                 <div key={index} className="p-4 rounded-lg bg-white/5 border-l-2 border-white/20">
                   <h3 className="font-medium text-white mb-2">Q: {faq.question}</h3>
-                  <p className="text-sm text-white/80">A: {faq.answer}</p>
+                  <p className="text-sm text-white">A: {faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -775,12 +775,12 @@ export default function Module5Section7_4() {
               Recap
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-white/90 mb-4">
+              <p className="text-white mb-4">
                 In this subsection, you learned that as-built drawings must reflect the final
                 installation, not the original design. They are critical for compliance, safety, and
                 future works. Poor or missing updates create risks, delays, and potential hazards.
               </p>
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 mt-0.5 text-green-500 flex-shrink-0" />
                   As-built drawings show installations exactly as completed, including all changes

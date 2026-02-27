@@ -159,7 +159,7 @@ const EssentialToolsTab = () => {
           </div>
           <div>
             <p className="font-medium text-elec-yellow mb-1">Essential Tools Guide</p>
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               Essential tools form the foundation of your professional toolkit. This comprehensive
               guide covers specifications, maintenance, and strategic purchasing advice.
             </p>
@@ -223,7 +223,7 @@ const EssentialToolsTab = () => {
             </div>
             Apprentice Tool Progression Timeline
           </CardTitle>
-          <p className="text-sm text-white/60">
+          <p className="text-sm text-white">
             Strategic toolkit development aligned with your learning journey
           </p>
         </CardHeader>
@@ -237,7 +237,7 @@ const EssentialToolsTab = () => {
                 <div className="flex items-start justify-between flex-wrap gap-2 mb-3">
                   <div>
                     <h3 className="font-semibold text-white">{milestone.milestone}</h3>
-                    <p className="text-sm text-white/60">{milestone.competency}</p>
+                    <p className="text-sm text-white">{milestone.competency}</p>
                   </div>
                   <Badge
                     variant="outline"
@@ -250,7 +250,7 @@ const EssentialToolsTab = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="p-3 rounded-lg bg-white/10 border border-white/10">
                     <h4 className="text-sm font-medium text-blue-400 mb-2">Key Items:</h4>
-                    <ul className="text-sm text-white/60 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       {milestone.items.map((item, idx) => (
                         <li key={idx} className="flex items-start gap-2">
                           <span className="text-blue-400">•</span> {item}
@@ -260,7 +260,7 @@ const EssentialToolsTab = () => {
                   </div>
                   <div className="p-3 rounded-lg bg-white/10 border border-white/10">
                     <h4 className="text-sm font-medium text-blue-400 mb-2">Next Focus:</h4>
-                    <p className="text-sm text-white/60">{milestone.nextStep}</p>
+                    <p className="text-sm text-white">{milestone.nextStep}</p>
                   </div>
                 </div>
               </div>
@@ -279,7 +279,7 @@ const EssentialToolsTab = () => {
             </div>
             Comprehensive Tool Maintenance Schedule
           </CardTitle>
-          <p className="text-sm text-white/60">
+          <p className="text-sm text-white">
             Proper maintenance extends tool life and ensures safety compliance
           </p>
         </CardHeader>
@@ -299,7 +299,7 @@ const EssentialToolsTab = () => {
                     {item.frequency}
                   </Badge>
                 </div>
-                <p className="text-sm text-white/60 mb-2">{item.task}</p>
+                <p className="text-sm text-white mb-2">{item.task}</p>
                 <div className="text-sm text-green-400">
                   <span className="font-medium">Annual Cost:</span> {item.cost}
                 </div>
@@ -319,7 +319,7 @@ const EssentialToolsTab = () => {
             </div>
             UK Certification Requirements & Consequences
           </CardTitle>
-          <p className="text-sm text-white/60">
+          <p className="text-sm text-white">
             Understanding compliance requirements and the risks of non-compliance
           </p>
         </CardHeader>
@@ -339,7 +339,7 @@ const EssentialToolsTab = () => {
                   </Badge>
                   <span className="font-semibold text-white text-sm">{cert.applies}</span>
                 </div>
-                <p className="text-sm text-white/70 mb-3">{cert.requirement}</p>
+                <p className="text-sm text-white mb-3">{cert.requirement}</p>
                 <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/30">
                   <span className="text-xs font-medium text-red-400">Risk of Non-Compliance:</span>
                   <p className="text-sm text-red-200 mt-1">{cert.penalty}</p>
@@ -358,7 +358,7 @@ const EssentialToolsTab = () => {
           </div>
           <div>
             <p className="font-medium text-orange-400 mb-1">Investment Strategy</p>
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               Total essential toolkit cost: £1050-2700. Focus on quality over quantity, spread
               purchases strategically, and prioritise safety-critical items first. Your tools are an
               investment in your professional future.

@@ -322,7 +322,7 @@ const TaxNIEstimator = () => {
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 Tax & NI Estimator
               </h1>
-              <p className="text-sm text-white/70">Estimate your UK tax liabilities</p>
+              <p className="text-sm text-white">Estimate your UK tax liabilities</p>
             </div>
           </div>
           <SmartBackButton />
@@ -443,7 +443,7 @@ const TaxNIEstimator = () => {
               </div>
               <ChevronDown
                 className={cn(
-                  'h-4 w-4 text-white/80 transition-transform duration-200',
+                  'h-4 w-4 text-white transition-transform duration-200',
                   showAdvanced && 'rotate-180'
                 )}
               />
@@ -526,7 +526,7 @@ const TaxNIEstimator = () => {
                     className="h-4 w-4 rounded border-white/20 bg-white/10 text-blue-500 focus:ring-blue-500/50"
                   />
                   <div>
-                    <span className="text-sm text-white/80">Marriage Allowance</span>
+                    <span className="text-sm text-white">Marriage Allowance</span>
                     <p className="text-xs text-white">Receiving unused allowance from spouse</p>
                   </div>
                 </label>
@@ -541,7 +541,7 @@ const TaxNIEstimator = () => {
               disabled={!isValid}
               className={cn(
                 'flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation',
-                isValid ? 'text-black' : 'bg-white/10 text-white/30 cursor-not-allowed'
+                isValid ? 'text-black' : 'bg-white/10 text-white cursor-not-allowed'
               )}
               style={
                 isValid
@@ -689,7 +689,7 @@ const TaxNIEstimator = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      'h-4 w-4 text-white/80 transition-transform duration-200',
+                      'h-4 w-4 text-white transition-transform duration-200',
                       showGuidance && 'rotate-180'
                     )}
                   />
@@ -754,7 +754,7 @@ const TaxNIEstimator = () => {
               </div>
               <ChevronDown
                 className={cn(
-                  'h-4 w-4 text-white/80 transition-transform duration-200',
+                  'h-4 w-4 text-white transition-transform duration-200',
                   showReference && 'rotate-180'
                 )}
               />

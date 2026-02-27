@@ -193,7 +193,7 @@ export default function MentalHealthModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-4">
@@ -218,7 +218,7 @@ export default function MentalHealthModule4Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Psychosis &amp; Schizophrenia
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding psychosis, recognising hallucinations and delusions, schizophrenia,
             drug-induced psychosis, first episode psychosis, and how to support someone experiencing
             a psychotic episode safely
@@ -316,7 +316,7 @@ export default function MentalHealthModule4Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Common Misconception</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Psychosis is <strong>NOT</strong> &ldquo;split personality&rdquo;. This is one of
                   the most widespread and damaging myths about psychosis and schizophrenia. The
                   confusion likely stems from the Greek roots of &ldquo;schizophrenia&rdquo;
@@ -346,7 +346,7 @@ export default function MentalHealthModule4Section1() {
                     Conditions That Can Include Psychosis
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -433,10 +433,10 @@ export default function MentalHealthModule4Section1() {
                       </div>
                       <p className="text-sm font-semibold text-violet-400">Positive Symptoms</p>
                     </div>
-                    <p className="text-xs text-white/50 mb-3 italic">
+                    <p className="text-xs text-white mb-3 italic">
                       Experiences added to normal perception
                     </p>
-                    <ul className="text-sm text-white/80 space-y-2">
+                    <ul className="text-sm text-white space-y-2">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-violet-400 flex-shrink-0" />
                         <span>Hallucinations</span>
@@ -463,10 +463,10 @@ export default function MentalHealthModule4Section1() {
                       </div>
                       <p className="text-sm font-semibold text-purple-400">Negative Symptoms</p>
                     </div>
-                    <p className="text-xs text-white/50 mb-3 italic">
+                    <p className="text-xs text-white mb-3 italic">
                       Normal functions reduced or lost
                     </p>
-                    <ul className="text-sm text-white/80 space-y-2">
+                    <ul className="text-sm text-white space-y-2">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0" />
                         <span>Flat affect (reduced emotion)</span>
@@ -500,7 +500,7 @@ export default function MentalHealthModule4Section1() {
                   <Eye className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">Types of Hallucination</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -554,7 +554,7 @@ export default function MentalHealthModule4Section1() {
                   <Brain className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">Types of Delusion</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -593,7 +593,7 @@ export default function MentalHealthModule4Section1() {
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -638,7 +638,7 @@ export default function MentalHealthModule4Section1() {
               </p>
 
               <div className="bg-purple-500/10 border border-purple-500/30 p-4 rounded-lg">
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -719,7 +719,7 @@ export default function MentalHealthModule4Section1() {
                     Key Facts About Schizophrenia
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -771,7 +771,7 @@ export default function MentalHealthModule4Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Stigma and Misconceptions</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Schizophrenia is one of the most stigmatised conditions in mental health. Common
                   misconceptions include that people with schizophrenia are violent, dangerous, or
                   unpredictable. In reality, people with schizophrenia are{' '}
@@ -825,7 +825,7 @@ export default function MentalHealthModule4Section1() {
                     Substances Linked to Psychosis
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -880,7 +880,7 @@ export default function MentalHealthModule4Section1() {
                   <Shield className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Construction Site Relevance</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The construction industry has higher-than-average rates of substance use,
                   including cannabis and cocaine. Workers may use substances to cope with stress,
                   physical pain, long hours, or mental health difficulties. Drug-induced psychosis
@@ -939,7 +939,7 @@ export default function MentalHealthModule4Section1() {
                     The Critical Period: First 3 to 5 Years
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The first <strong>3 to 5 years</strong> after the onset of psychosis are known as
                   the <strong>&ldquo;critical period&rdquo;</strong>. This is the window during
                   which intervention has the greatest impact on long-term outcomes. During this
@@ -959,7 +959,7 @@ export default function MentalHealthModule4Section1() {
                     Early Intervention in Psychosis (EIP) Services
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1050,7 +1050,7 @@ export default function MentalHealthModule4Section1() {
                 <div className="space-y-3">
                   <div>
                     <p className="text-sm font-medium text-white">1. Stay Calm</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Your calmness is contagious. If you appear anxious, frightened, or agitated,
                       it will increase the person&rsquo;s distress. Speak in a calm, steady tone.
                       Maintain a relaxed, open posture. Move slowly and avoid sudden movements.
@@ -1060,7 +1060,7 @@ export default function MentalHealthModule4Section1() {
                     <p className="text-sm font-medium text-white">
                       2. Do Not Argue with Delusions or Deny Hallucinations
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Never say &ldquo;That&rsquo;s not real&rdquo;, &ldquo;You&rsquo;re imagining
                       things&rdquo;, or &ldquo;That&rsquo;s ridiculous&rdquo;. These responses will
                       increase agitation and destroy trust. Instead, acknowledge their emotional
@@ -1071,7 +1071,7 @@ export default function MentalHealthModule4Section1() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">3. Speak Simply and Clearly</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Use short, simple sentences. Avoid complex questions, metaphors, or ambiguous
                       language. The person may have difficulty processing information, so speak
                       slowly and give them time to respond. Ask one question at a time and wait
@@ -1080,7 +1080,7 @@ export default function MentalHealthModule4Section1() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">4. Ensure Safety</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Assess the environment for immediate hazards. On a construction site, gently
                       guide the person away from heights, machinery, electrical equipment, and
                       roadways. Ensure that the area is as safe as possible. If necessary, clear
@@ -1090,7 +1090,7 @@ export default function MentalHealthModule4Section1() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">5. Reduce Stimulation</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Move the person to a quiet, calm space if possible. Turn off loud radios or
                       machinery. Reduce the number of people present &mdash; having many people
                       crowding around is likely to increase paranoia and distress. Keep the
@@ -1101,7 +1101,7 @@ export default function MentalHealthModule4Section1() {
                     <p className="text-sm font-medium text-white">
                       6. Do Not Touch Without Permission
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Someone experiencing psychosis may interpret physical contact as threatening,
                       especially if they are experiencing paranoid delusions or tactile
                       hallucinations. Always ask before making any physical contact: &ldquo;Is it OK
@@ -1112,7 +1112,7 @@ export default function MentalHealthModule4Section1() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">7. Stay with Them and Monitor</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Do not leave the person alone if they are distressed or confused. Stay with
                       them until professional help arrives or they are safely connected with someone
                       who can support them. Monitor their behaviour for any signs of escalation or
@@ -1127,10 +1127,10 @@ export default function MentalHealthModule4Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">When to Call 999</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Call 999 immediately if any of the following apply:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -1175,7 +1175,7 @@ export default function MentalHealthModule4Section1() {
                   <Users className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">Referral Pathways</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1252,7 +1252,7 @@ export default function MentalHealthModule4Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1266,7 +1266,7 @@ export default function MentalHealthModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-4">

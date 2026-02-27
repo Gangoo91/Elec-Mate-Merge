@@ -290,7 +290,7 @@ const QualificationConfirmationDialog = ({
                               {expandedUnits.has(unit.unitCode) ? (
                                 <ChevronDown className="h-4 w-4 text-elec-yellow" />
                               ) : (
-                                <ChevronRight className="h-4 w-4 text-white/50" />
+                                <ChevronRight className="h-4 w-4 text-white" />
                               )}
                             </div>
                             <div className="flex-1 min-w-0">
@@ -342,7 +342,7 @@ const QualificationConfirmationDialog = ({
               <Label className="flex items-center gap-2 text-sm font-medium text-white">
                 <CalendarDays className="h-4 w-4 text-elec-yellow" />
                 Target Completion Date
-                <span className="text-white/50 font-normal">(Optional)</span>
+                <span className="text-white font-normal">(Optional)</span>
               </Label>
 
               <div className="flex gap-2">
@@ -373,7 +373,7 @@ const QualificationConfirmationDialog = ({
                 className="bg-background border-white/15 h-11 touch-manipulation"
               />
 
-              <p className="text-xs text-white/50">
+              <p className="text-xs text-white">
                 Set a goal to track your progress. You can change this later.
               </p>
             </div>

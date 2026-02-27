@@ -202,7 +202,7 @@ export default function MewpModule4Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-4">
@@ -227,7 +227,7 @@ export default function MewpModule4Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Travelling, Elevating & Platform Loading
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Safe travel procedures, elevating and positioning techniques, SWL management, driving
             while elevated, and loading/unloading MEWPs from transport
           </p>
@@ -319,7 +319,7 @@ export default function MewpModule4Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Pre-Travel Checks</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -354,7 +354,7 @@ export default function MewpModule4Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Slopes and Gradients</p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     When travelling on slopes,{' '}
                     <strong className="text-white">
@@ -405,7 +405,7 @@ export default function MewpModule4Section2() {
                     Proportional Control Technique
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -441,7 +441,7 @@ export default function MewpModule4Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Boom-Type MEWPs: Elevating Sequence
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -505,7 +505,7 @@ export default function MewpModule4Section2() {
                   <Weight className="h-5 w-5 text-teal-400" />
                   <p className="text-sm font-medium text-teal-400">SWL Calculation</p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p className="font-medium text-white">
                     SWL = Weight of ALL operator(s) + Weight of ALL tools + Weight of ALL materials
                   </p>
@@ -546,7 +546,7 @@ export default function MewpModule4Section2() {
                     Warning: Consequences of Overloading
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>Exceeding the SWL can result in any of the following:</p>
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
@@ -609,7 +609,7 @@ export default function MewpModule4Section2() {
                     Critical: Never Drive 1A/1B While Elevated
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Category 1A and 1B machines are <strong className="text-white">static</strong>{' '}
                   MEWPs. They are <strong className="text-red-300">NOT</strong> designed to be
                   driven while elevated. Attempting to move a static MEWP with the platform raised
@@ -623,10 +623,10 @@ export default function MewpModule4Section2() {
                   <Navigation className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Elevated Driving Awareness</p>
                 </div>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   When driving a 3A or 3B machine while elevated, maintain constant awareness of:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -663,7 +663,7 @@ export default function MewpModule4Section2() {
                   <p className="text-sm font-medium text-amber-400 mb-2">
                     Sharp Turns &mdash; Tip-Over Risk
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     <strong className="text-white">Avoid sharp turns</strong>, especially with a
                     boom extended. Centrifugal forces act on the elevated boom and platform during
                     turning. With the weight high up and out from the machine&rsquo;s centre of
@@ -677,7 +677,7 @@ export default function MewpModule4Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     Banksman / Spotter Requirements
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Use a banksman or spotter for blind spots &mdash; the operator&rsquo;s view of
                     the ground is significantly impaired when the platform is elevated, particularly
                     on boom-type machines. The banksman must have clear line of sight to both the
@@ -690,7 +690,7 @@ export default function MewpModule4Section2() {
                   <p className="text-sm font-medium text-teal-400 mb-2">
                     Scissor Lifts: Pothole Protection System
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Category 3A scissor lifts are fitted with a{' '}
                     <strong className="text-white">pothole protection system</strong>. This monitors
                     the tilt of the machine during elevated travel. If the tilt exceeds a safe limit
@@ -728,7 +728,7 @@ export default function MewpModule4Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">High-Risk Activity</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   About <strong className="text-red-300">one third</strong> of rental
                   company-reported MEWP accidents occur during delivery and collection. The hire
                   company driver typically loads and unloads the machine.{' '}
@@ -744,7 +744,7 @@ export default function MewpModule4Section2() {
                     Requirements for Loading/Unloading
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -826,10 +826,10 @@ export default function MewpModule4Section2() {
                     <Truck className="h-5 w-5 text-amber-400" />
                     <p className="text-sm font-medium text-amber-400">Static Machines (1A/1B)</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     The full sequence <strong className="text-white">MUST</strong> be followed:
                   </p>
-                  <ol className="text-sm text-white/80 space-y-1 list-decimal list-inside">
+                  <ol className="text-sm text-white space-y-1 list-decimal list-inside">
                     <li>Lower the platform fully</li>
                     <li>Retract the boom or scissor mechanism</li>
                     <li>Retract all outriggers</li>
@@ -844,10 +844,10 @@ export default function MewpModule4Section2() {
                     <RotateCcw className="h-5 w-5 text-green-400" />
                     <p className="text-sm font-medium text-green-400">Mobile Machines (3A/3B)</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Can reposition while elevated, but must observe:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>All elevated driving precautions (Section 04)</span>
@@ -894,7 +894,7 @@ export default function MewpModule4Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -908,7 +908,7 @@ export default function MewpModule4Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-4">

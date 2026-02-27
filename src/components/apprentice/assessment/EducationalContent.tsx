@@ -132,7 +132,7 @@ const EducationalContent = () => {
                 </h4>
                 <ul className="space-y-2">
                   {regulations.bs7671.map((item, index) => (
-                    <li key={index} className="flex items-center gap-2 text-sm text-white/70">
+                    <li key={index} className="flex items-center gap-2 text-sm text-white">
                       <Badge className="bg-elec-yellow/10 text-elec-yellow border-elec-yellow/30 text-xs">
                         {item.section}
                       </Badge>
@@ -151,7 +151,7 @@ const EducationalContent = () => {
                 </h4>
                 <ul className="space-y-2">
                   {regulations.healthSafety.map((item, index) => (
-                    <li key={index} className="flex items-start gap-2 text-sm text-white/70">
+                    <li key={index} className="flex items-start gap-2 text-sm text-white">
                       <span className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-1.5 flex-shrink-0" />
                       {item}
                     </li>
@@ -172,7 +172,7 @@ const EducationalContent = () => {
                   <h4 className="font-semibold text-red-400 mb-3">High Risk Hazards</h4>
                   <ul className="space-y-2">
                     {highRiskHazards.map((item, index) => (
-                      <li key={index} className="flex items-start gap-2 text-sm text-white/70">
+                      <li key={index} className="flex items-start gap-2 text-sm text-white">
                         <span className="w-1.5 h-1.5 bg-red-400 rounded-full mt-1.5 flex-shrink-0" />
                         {item}
                       </li>
@@ -191,7 +191,7 @@ const EducationalContent = () => {
                   <h4 className="font-semibold text-elec-yellow mb-3">Medium Risk Hazards</h4>
                   <ul className="space-y-2">
                     {mediumRiskHazards.map((item, index) => (
-                      <li key={index} className="flex items-start gap-2 text-sm text-white/70">
+                      <li key={index} className="flex items-start gap-2 text-sm text-white">
                         <span className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-1.5 flex-shrink-0" />
                         {item}
                       </li>
@@ -216,7 +216,7 @@ const EducationalContent = () => {
                   {essentialPPE.map((item, index) => (
                     <li key={index} className="text-sm">
                       <span className="font-medium text-white">{item.item}:</span>
-                      <span className="text-white/60 ml-1">{item.spec}</span>
+                      <span className="text-white ml-1">{item.spec}</span>
                     </li>
                   ))}
                 </ul>
@@ -231,7 +231,7 @@ const EducationalContent = () => {
                 </h4>
                 <ul className="space-y-2">
                   {ppeInspectionTips.map((item, index) => (
-                    <li key={index} className="flex items-start gap-2 text-sm text-white/70">
+                    <li key={index} className="flex items-start gap-2 text-sm text-white">
                       <span className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-1.5 flex-shrink-0" />
                       {item}
                     </li>
@@ -252,7 +252,7 @@ const EducationalContent = () => {
                   <h4 className="font-semibold text-blue-400 mb-3">Assessment Best Practices</h4>
                   <ul className="space-y-2">
                     {assessmentTips.map((item, index) => (
-                      <li key={index} className="flex items-start gap-2 text-sm text-white/70">
+                      <li key={index} className="flex items-start gap-2 text-sm text-white">
                         <span className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-1.5 flex-shrink-0" />
                         {item}
                       </li>
@@ -271,7 +271,7 @@ const EducationalContent = () => {
                   <h4 className="font-semibold text-green-400 mb-3">Documentation Tips</h4>
                   <ul className="space-y-2">
                     {documentationTips.map((item, index) => (
-                      <li key={index} className="flex items-start gap-2 text-sm text-white/70">
+                      <li key={index} className="flex items-start gap-2 text-sm text-white">
                         <span className="w-1.5 h-1.5 bg-green-400 rounded-full mt-1.5 flex-shrink-0" />
                         {item}
                       </li>

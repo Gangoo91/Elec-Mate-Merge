@@ -261,7 +261,7 @@ const HNCModule7Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section4">
@@ -283,7 +283,7 @@ const HNCModule7Section4_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Scene Setting
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Scene controllers, preset configurations, tunable white, colour changing, and circadian
             lighting for human-centric design
           </p>
@@ -442,19 +442,19 @@ const HNCModule7Section4_4 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">DALI Scene Commands</p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Recall scene 1:</span>{' '}
+                  <span className="text-white">Recall scene 1:</span>{' '}
                   <span className="text-white">GOTO SCENE 0 (broadcast to group)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Store current as scene 2:</span>{' '}
+                  <span className="text-white">Store current as scene 2:</span>{' '}
                   <span className="text-white">STORE DTR AS SCENE 1</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Scene storage:</span>{' '}
+                  <span className="text-white">Scene storage:</span>{' '}
                   <span className="text-white">16 scenes per DALI group (0-15)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Fade time:</span>{' '}
+                  <span className="text-white">Fade time:</span>{' '}
                   <span className="text-white">Configurable 0-90 seconds</span>
                 </p>
               </div>
@@ -625,19 +625,19 @@ const HNCModule7Section4_4 = () => {
               </p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Red + Green =</span>{' '}
+                  <span className="text-white">Red + Green =</span>{' '}
                   <span className="text-yellow-400">Yellow</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Red + Blue =</span>{' '}
+                  <span className="text-white">Red + Blue =</span>{' '}
                   <span className="text-purple-400">Magenta</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Green + Blue =</span>{' '}
+                  <span className="text-white">Green + Blue =</span>{' '}
                   <span className="text-cyan-400">Cyan</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Red + Green + Blue =</span>{' '}
+                  <span className="text-white">Red + Green + Blue =</span>{' '}
                   <span className="text-white">White (approximate)</span>
                 </p>
               </div>
@@ -721,7 +721,7 @@ const HNCModule7Section4_4 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-2">Colour Changing Applications</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>- Facade and architectural lighting</li>
                   <li>- Retail brand colour implementation</li>
                   <li>- Entertainment and event venues</li>
@@ -731,7 +731,7 @@ const HNCModule7Section4_4 = () => {
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-2">Control Options</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>- DMX controllers with show playback</li>
                   <li>- DALI DT8 colour control</li>
                   <li>- Standalone pixel controllers</li>
@@ -741,7 +741,7 @@ const HNCModule7Section4_4 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Installation note:</strong> RGB/RGBW installations require careful attention
               to colour consistency between luminaires. Specify binning requirements and consider
               calibration during commissioning.
@@ -916,7 +916,7 @@ const HNCModule7Section4_4 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-2">Healthcare Applications</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>- Patient recovery rooms (sleep support)</li>
                   <li>- Dementia care units (orientation)</li>
                   <li>- Neonatal intensive care</li>
@@ -926,7 +926,7 @@ const HNCModule7Section4_4 = () => {
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-2">Workplace Applications</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>- Deep-plan offices (limited daylight)</li>
                   <li>- Control rooms (24-hour operation)</li>
                   <li>- Schools (student concentration)</li>
@@ -962,8 +962,8 @@ const HNCModule7Section4_4 = () => {
                 <strong>Scenario:</strong> Configure 4 scenes for a 20-person boardroom with tunable
                 white luminaires.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Scene configuration:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Scene configuration:</p>
                 <p className="mt-2">Scene 1 - "Meeting" (default)</p>
                 <p className="ml-4">General: 80%, 4000K | Downlights: 70% | Perimeter: 60%</p>
                 <p className="ml-4">Fade time: 3 seconds</p>
@@ -989,8 +989,8 @@ const HNCModule7Section4_4 = () => {
                 <strong>Scenario:</strong> Design a circadian lighting schedule for an open-plan
                 office.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Automatic time-based schedule (BMS controlled):</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Automatic time-based schedule (BMS controlled):</p>
                 <p className="mt-2">07:00 - Morning boost</p>
                 <p className="ml-4">CCT: 6000K | Level: 100% | Melanopic EDI: ~180 lux</p>
                 <p className="mt-2">09:00 - Working day</p>
@@ -1015,8 +1015,8 @@ const HNCModule7Section4_4 = () => {
                 <strong>Scenario:</strong> Specify colour changing linear luminaires for building
                 facade.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Specification requirements:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Specification requirements:</p>
                 <p className="mt-2">Luminaire: RGBW linear, IP66 rated</p>
                 <p className="ml-4">Length: 1000mm modules</p>
                 <p className="ml-4">Output: 1500lm/m (white), full colour gamut</p>
@@ -1114,7 +1114,7 @@ const HNCModule7Section4_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1160,7 +1160,7 @@ const HNCModule7Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section4">

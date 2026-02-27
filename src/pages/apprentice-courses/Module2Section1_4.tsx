@@ -132,7 +132,7 @@ const Module2Section1_4 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             SI Prefixes and Conversions
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Master milli-, kilo-, mega- prefixes for accurate electrical measurements and
             calculations
           </p>
@@ -358,7 +358,7 @@ const Module2Section1_4 = () => {
                     <p className="text-elec-yellow font-medium mb-2">
                       Rule: Divide by the multiplier
                     </p>
-                    <div className="space-y-2 text-white/80">
+                    <div className="space-y-2 text-white">
                       <p>• 5,000 W → 5 kW (÷ 1,000)</p>
                       <p>• 2,000,000 Ω → 2 MΩ (÷ 1,000,000)</p>
                       <p>• 500 mA → 0.5 A (÷ 1,000)</p>
@@ -372,7 +372,7 @@ const Module2Section1_4 = () => {
                     <p className="text-green-300 font-medium mb-2">
                       Rule: Multiply by the multiplier
                     </p>
-                    <div className="space-y-2 text-white/80">
+                    <div className="space-y-2 text-white">
                       <p>• 3 kV → 3,000 V (× 1,000)</p>
                       <p>• 1.5 MΩ → 1,500,000 Ω (× 1,000,000)</p>
                       <p>• 0.25 A → 250 mA (× 1,000)</p>
@@ -483,13 +483,13 @@ const Module2Section1_4 = () => {
                 <div className="grid md:grid-cols-2 gap-4 text-white text-sm">
                   <div>
                     <p className="font-medium mb-1">Wrong Direction:</p>
-                    <p className="text-white/80">• 5 kW ≠ 5,000 mW (should be 5,000,000 mW)</p>
-                    <p className="text-white/80">• 100 mA ≠ 100,000 A (should be 0.1 A)</p>
+                    <p className="text-white">• 5 kW ≠ 5,000 mW (should be 5,000,000 mW)</p>
+                    <p className="text-white">• 100 mA ≠ 100,000 A (should be 0.1 A)</p>
                   </div>
                   <div>
                     <p className="font-medium mb-1">Symbol Confusion:</p>
-                    <p className="text-white/80">• m ≠ M (milli vs mega = factor of 1 billion!)</p>
-                    <p className="text-white/80">• µ ≠ m (micro vs milli = factor of 1,000)</p>
+                    <p className="text-white">• m ≠ M (milli vs mega = factor of 1 billion!)</p>
+                    <p className="text-white">• µ ≠ m (micro vs milli = factor of 1,000)</p>
                   </div>
                 </div>
               </div>
@@ -510,7 +510,7 @@ const Module2Section1_4 = () => {
           <div className="bg-white/5 border border-white/10 rounded-lg p-4">
             <UnitPrefixConverter />
           </div>
-          <p className="text-sm text-white/70 mt-4">
+          <p className="text-sm text-white mt-4">
             <strong>Try:</strong> Convert common values like 500mA to A, or 2.5kW to W to build
             confidence.
           </p>
@@ -586,7 +586,7 @@ const Module2Section1_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level2/module2/section1/1-3">

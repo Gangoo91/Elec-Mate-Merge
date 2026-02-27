@@ -201,7 +201,7 @@ export default function RSMModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-1">
@@ -316,7 +316,7 @@ export default function RSMModule1Section2() {
                     point. When arousal becomes too high, performance decreases.&rdquo;
                   </strong>
                 </p>
-                <p className="text-sm text-white/80 mt-2">
+                <p className="text-sm text-white mt-2">
                   This creates an <strong className="text-white">inverted-U</strong> (bell curve)
                   when plotted on a graph, with arousal/stress on the horizontal axis and
                   performance on the vertical axis. The peak of the curve is the{' '}
@@ -365,7 +365,7 @@ export default function RSMModule1Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Characteristics of Under-Arousal
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -413,7 +413,7 @@ export default function RSMModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Construction Example</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   An experienced electrician on the third consecutive day of installing identical
                   socket outlets in a large new-build development. The work is well within their
                   skill level, there is no time pressure, and every room is the same. By
@@ -461,7 +461,7 @@ export default function RSMModule1Section2() {
                     Characteristics of the Optimal Zone
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                     <span>
@@ -507,7 +507,7 @@ export default function RSMModule1Section2() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-400 mb-2">Construction Example</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   An electrician preparing for their AM2 practical assessment. They are nervous
                   &mdash; the assessment matters and the standard is high. But they have prepared
                   well, they know the content, and they feel ready. The nerves sharpen their focus
@@ -554,7 +554,7 @@ export default function RSMModule1Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Characteristics of Over-Arousal
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -606,7 +606,7 @@ export default function RSMModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Construction Example</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A self-employed electrician is juggling three active jobs. Job 1 has a furious
                   client demanding they come back to fix a snag list. Job 2 has a main contractor
                   threatening back-charges for delays. Job 3 has materials that have not been
@@ -654,11 +654,11 @@ export default function RSMModule1Section2() {
                   <Activity className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-white">Individual Differences</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Everyone&rsquo;s curve is slightly different. The factors that influence where
                   your optimal zone sits include:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -702,7 +702,7 @@ export default function RSMModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Task Complexity</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Yerkes and Dodson also found that the optimal arousal level varies with the
                   difficulty of the task. This refinement is critical for construction work:
                 </p>
@@ -711,11 +711,11 @@ export default function RSMModule1Section2() {
                     <p className="text-white font-semibold text-sm mb-2">
                       Simple / Well-Practised Tasks
                     </p>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       Optimal arousal is <strong className="text-white">higher</strong>. More
                       pressure can be tolerated without significant performance decline.
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Examples: running cables in pre-chased walls, installing back boxes, fitting
                       accessories, labelling circuits.
                     </p>
@@ -724,12 +724,12 @@ export default function RSMModule1Section2() {
                     <p className="text-white font-semibold text-sm mb-2">
                       Complex / Unfamiliar Tasks
                     </p>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       Optimal arousal is <strong className="text-white">lower</strong>. Even
                       moderate stress can impair performance on tasks requiring fine judgement,
                       precision, or creative problem-solving.
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Examples: fault-finding on a three-phase system, designing a complex
                       distribution board, writing an EICR report, interpreting test results.
                     </p>
@@ -739,7 +739,7 @@ export default function RSMModule1Section2() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-400 mb-2">Practical Implication</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If you are about to do complex, safety-critical work &mdash; testing a
                   distribution board, fault-finding, writing a report &mdash; you need to actively
                   manage your stress levels downward. Take a break first. Have a cup of tea. Ensure
@@ -769,7 +769,7 @@ export default function RSMModule1Section2() {
                 how stress affects your work. The key points to take forward are:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -839,7 +839,7 @@ export default function RSMModule1Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -853,7 +853,7 @@ export default function RSMModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-1">

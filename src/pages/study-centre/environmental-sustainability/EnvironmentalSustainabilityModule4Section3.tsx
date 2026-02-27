@@ -201,7 +201,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-4">
@@ -226,7 +226,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Noise &amp; Vibration Control
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Construction noise legislation, Section 61 prior consent, BS 5228 assessment
             methodology, noise and vibration control measures, and effective community engagement
           </p>
@@ -323,7 +323,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                   <Volume2 className="h-4 w-4 inline-block mr-2 -mt-0.5 text-emerald-400" />
                   The Decibel Scale
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Sound is measured in <strong className="text-white">decibels (dB)</strong>. The
                   decibel scale is logarithmic, not linear, which means that small changes in dB
                   represent large changes in actual sound energy. An increase of 3 dB represents a{' '}
@@ -411,7 +411,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                     },
                   ].map((row, i) => (
                     <div key={i} className="flex items-center gap-3">
-                      <span className="text-xs text-white/70 w-20 text-right flex-shrink-0 font-mono">
+                      <span className="text-xs text-white w-20 text-right flex-shrink-0 font-mono">
                         {row.level}
                       </span>
                       <div
@@ -424,7 +424,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                     </div>
                   ))}
                 </div>
-                <p className="text-xs text-white/50 mt-3 text-center">
+                <p className="text-xs text-white mt-3 text-center">
                   Note: Actual levels vary with equipment model, condition, and operating mode.
                   Values shown are typical.
                 </p>
@@ -434,7 +434,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Health Effects of Noise Exposure
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -493,7 +493,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Community Impact</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Construction noise affects not only workers but also the surrounding community.
                   Residents, businesses, schools, and hospitals near construction sites may
                   experience <strong className="text-white">significant disturbance</strong> that
@@ -530,7 +530,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                   <Scale className="h-4 w-4 inline-block mr-2 -mt-0.5 text-emerald-400" />
                   Control of Pollution Act 1974 (CoPA) &mdash; Sections 60 &amp; 61
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -569,7 +569,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                   <Shield className="h-4 w-4 inline-block mr-2 -mt-0.5 text-emerald-400" />
                   Environmental Protection Act 1990 (EPA)
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Part III of the EPA deals with{' '}
                   <strong className="text-white">statutory nuisance</strong>. Noise that amounts to
                   a nuisance, or noise that is prejudicial to health, from any premises (including
@@ -586,7 +586,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                   <BookOpen className="h-4 w-4 inline-block mr-2 -mt-0.5 text-emerald-400" />
                   BS 5228:2009+A1:2014 &mdash; Parts 1 &amp; 2
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">Part 1 (Noise)</strong> provides guidance on the
                   prediction, assessment, and control of noise from construction and open sites. It
                   includes a comprehensive database of noise levels from construction plant and
@@ -605,12 +605,12 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   Control of Noise at Work Regulations 2005
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   These regulations protect <strong className="text-white">workers</strong> from
                   noise exposure on site. They set two key exposure action values based on the daily
                   personal noise exposure (L<sub>EPd</sub>):
                 </p>
-                <ul className="text-sm text-white/80 space-y-2 mt-2">
+                <ul className="text-sm text-white space-y-2 mt-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -672,7 +672,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                   <FileText className="h-4 w-4 inline-block mr-2 -mt-0.5 text-emerald-400" />
                   Content of a Section 61 Application
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -731,7 +731,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   Best Practicable Means (BPM)
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   BPM is a central concept in construction noise management. It requires the
                   contractor to take{' '}
                   <strong className="text-white">all reasonably practicable steps</strong> to
@@ -749,7 +749,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Advantages of Section 61 Prior Consent
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -809,7 +809,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                   <BarChart3 className="h-4 w-4 inline-block mr-2 -mt-0.5 text-emerald-400" />
                   BS 5228 Assessment Methodology
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="flex items-center justify-center min-w-[24px] h-6 rounded bg-emerald-500/20 text-emerald-400 text-xs font-bold flex-shrink-0 mt-0.5">
                       1
@@ -862,12 +862,12 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                 <h3 className="text-emerald-400 font-medium mb-4 text-center text-sm uppercase tracking-wider">
                   The ABC Method &mdash; Significance Criteria
                 </h3>
-                <p className="text-sm text-white/80 mb-4 text-center">
+                <p className="text-sm text-white mb-4 text-center">
                   The ABC method sets noise thresholds based on the existing ambient noise level at
                   the receptor
                 </p>
                 <div className="overflow-x-auto">
-                  <table className="w-full text-sm text-white/80 border-collapse">
+                  <table className="w-full text-sm text-white border-collapse">
                     <thead>
                       <tr>
                         <th className="text-left p-2 border-b border-white/10 text-emerald-400 font-medium">
@@ -912,7 +912,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                     </tbody>
                   </table>
                 </div>
-                <p className="text-xs text-white/50 mt-3 text-center">
+                <p className="text-xs text-white mt-3 text-center">
                   If predicted construction noise exceeds the threshold for the applicable category,
                   the impact is considered potentially significant and additional mitigation is
                   required.
@@ -970,24 +970,24 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                         Source Control (Most Effective)
                       </p>
                     </div>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       Reduce or eliminate noise at the point where it is generated.
                     </p>
                     <div className="grid sm:grid-cols-2 gap-2">
-                      <div className="bg-white/5 rounded p-2 text-xs text-white/70">
+                      <div className="bg-white/5 rounded p-2 text-xs text-white">
                         <strong className="text-white">Quieter plant:</strong> Select equipment with
                         lower sound power levels (check manufacturer data)
                       </div>
-                      <div className="bg-white/5 rounded p-2 text-xs text-white/70">
+                      <div className="bg-white/5 rounded p-2 text-xs text-white">
                         <strong className="text-white">Electric tools:</strong> Replace
                         diesel-powered plant with electric alternatives where possible
                       </div>
-                      <div className="bg-white/5 rounded p-2 text-xs text-white/70">
+                      <div className="bg-white/5 rounded p-2 text-xs text-white">
                         <strong className="text-white">Method change:</strong> Use hydraulic
                         crushing instead of impact breaking, rotary bored piles instead of driven
                         piles
                       </div>
-                      <div className="bg-white/5 rounded p-2 text-xs text-white/70">
+                      <div className="bg-white/5 rounded p-2 text-xs text-white">
                         <strong className="text-white">Maintenance:</strong> Well-maintained plant
                         is quieter; worn bearings, loose panels, and blunt cutting tools increase
                         noise
@@ -1010,25 +1010,25 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                         Path Control (Transmission)
                       </p>
                     </div>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       Reduce noise as it travels from the source to the receiver.
                     </p>
                     <div className="grid sm:grid-cols-2 gap-2">
-                      <div className="bg-white/5 rounded p-2 text-xs text-white/70">
+                      <div className="bg-white/5 rounded p-2 text-xs text-white">
                         <strong className="text-white">Barriers:</strong> Temporary acoustic
                         barriers or hoarding around the site perimeter (typically 5 to 15 dB
                         reduction)
                       </div>
-                      <div className="bg-white/5 rounded p-2 text-xs text-white/70">
+                      <div className="bg-white/5 rounded p-2 text-xs text-white">
                         <strong className="text-white">Enclosures:</strong> Acoustic enclosures
                         around particularly noisy fixed plant (generators, compressors, pumps)
                       </div>
-                      <div className="bg-white/5 rounded p-2 text-xs text-white/70">
+                      <div className="bg-white/5 rounded p-2 text-xs text-white">
                         <strong className="text-white">Distance:</strong> Maximise the distance
                         between noisy plant and sensitive receptors; noise reduces by approximately
                         6 dB with each doubling of distance
                       </div>
-                      <div className="bg-white/5 rounded p-2 text-xs text-white/70">
+                      <div className="bg-white/5 rounded p-2 text-xs text-white">
                         <strong className="text-white">Orientation:</strong> Position plant so that
                         the noisiest side faces away from sensitive receptors; use buildings as
                         natural screens
@@ -1051,25 +1051,25 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                         Receiver Protection (Last Resort)
                       </p>
                     </div>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       Protect or compensate the people affected by the noise.
                     </p>
                     <div className="grid sm:grid-cols-2 gap-2">
-                      <div className="bg-white/5 rounded p-2 text-xs text-white/70">
+                      <div className="bg-white/5 rounded p-2 text-xs text-white">
                         <strong className="text-white">Timing:</strong> Restrict the noisiest
                         activities to times when residents are less likely to be disturbed (not
                         early morning, not evenings, not weekends)
                       </div>
-                      <div className="bg-white/5 rounded p-2 text-xs text-white/70">
+                      <div className="bg-white/5 rounded p-2 text-xs text-white">
                         <strong className="text-white">Notification:</strong> Advance warning to
                         affected residents about particularly noisy works, including expected
                         duration
                       </div>
-                      <div className="bg-white/5 rounded p-2 text-xs text-white/70">
+                      <div className="bg-white/5 rounded p-2 text-xs text-white">
                         <strong className="text-white">Glazing:</strong> Temporary secondary glazing
                         for the most affected properties during the noisiest phases
                       </div>
-                      <div className="bg-white/5 rounded p-2 text-xs text-white/70">
+                      <div className="bg-white/5 rounded p-2 text-xs text-white">
                         <strong className="text-white">Relocation:</strong> In extreme cases,
                         temporary alternative accommodation for the most severely affected residents
                       </div>
@@ -1120,7 +1120,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                   <Activity className="h-4 w-4 inline-block mr-2 -mt-0.5 text-emerald-400" />
                   Common Sources of Construction Vibration
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -1173,7 +1173,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Peak Particle Velocity (PPV) &mdash; Key Thresholds
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Vibration is measured in terms of{' '}
                   <strong className="text-white">peak particle velocity (PPV)</strong>, expressed in
                   millimetres per second (mm/s). PPV measures the maximum speed at which a particle
@@ -1184,7 +1184,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                     <span className="text-xs font-mono text-emerald-400 w-16 text-right flex-shrink-0 mt-0.5">
                       0.3 mm/s
                     </span>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-white">Human perception threshold:</strong> Vibration
                       can just be felt by a person who is stationary and paying attention.
                     </p>
@@ -1193,7 +1193,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                     <span className="text-xs font-mono text-yellow-400 w-16 text-right flex-shrink-0 mt-0.5">
                       1.0 mm/s
                     </span>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-white">Distinctly perceptible:</strong> Most people
                       will readily feel the vibration. Complaints likely in residential areas.
                     </p>
@@ -1202,7 +1202,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                     <span className="text-xs font-mono text-orange-400 w-16 text-right flex-shrink-0 mt-0.5">
                       10 mm/s
                     </span>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-white">Strongly perceptible:</strong> Vibration is
                       readily felt, rattling of windows and crockery may occur. High complaint
                       levels expected.
@@ -1212,7 +1212,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                     <span className="text-xs font-mono text-red-400 w-16 text-right flex-shrink-0 mt-0.5">
                       15 mm/s
                     </span>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-white">Cosmetic damage threshold:</strong> Below 15
                       mm/s PPV at low frequencies (4&ndash;15 Hz), cosmetic damage to typical
                       residential buildings is unlikely (BS 7385-2).
@@ -1222,7 +1222,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                     <span className="text-xs font-mono text-red-400 w-16 text-right flex-shrink-0 mt-0.5">
                       50 mm/s
                     </span>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-white">Major structural damage:</strong> At this
                       level, structural damage becomes a real possibility. Very rarely encountered
                       from normal construction activities at typical working distances.
@@ -1236,7 +1236,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">The Complaint Gap</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The most important thing to understand about construction vibration is the{' '}
                   <strong className="text-white">enormous gap between perception and damage</strong>
                   . People feel vibration at 0.3 mm/s and complain at 1 to 2 mm/s, but cosmetic
@@ -1276,7 +1276,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                   <BarChart3 className="h-4 w-4 inline-block mr-2 -mt-0.5 text-emerald-400" />
                   Vibration Assessment Process
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -1321,10 +1321,10 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Trigger Levels and Action Levels
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   A tiered monitoring system is used to manage vibration during construction:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="flex items-center justify-center min-w-[24px] h-6 rounded bg-yellow-500/20 text-yellow-400 text-xs font-bold flex-shrink-0 mt-0.5">
                       T
@@ -1358,11 +1358,11 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   BS 7385-2 &mdash; Building Damage Criteria
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   BS 7385-2 provides guidance on the vibration levels at which damage to buildings
                   may occur. It distinguishes between:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-yellow-400 flex-shrink-0" />
                     <span>
@@ -1401,7 +1401,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   Vibration Monitoring in Practice
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Vibration monitors (geophones or accelerometers) are installed at the nearest
                   sensitive receptors and on the construction site boundary. They continuously
                   record PPV in three orthogonal axes and transmit data in real time to a central
@@ -1443,7 +1443,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                   <Users className="h-4 w-4 inline-block mr-2 -mt-0.5 text-emerald-400" />
                   Section 61 Consultation
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   As part of the Section 61 prior consent process, the local authority typically
                   expects the contractor to have engaged with the local community before the
                   application is submitted. This includes identifying the nearest noise-sensitive
@@ -1457,7 +1457,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Advance Notification</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -1491,7 +1491,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Complaint Procedures</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -1526,7 +1526,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Community Liaison Officer (CLO)
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   On major projects, a dedicated{' '}
                   <strong className="text-white">community liaison officer</strong> is appointed as
                   the single point of contact between the project and the community. The CLO manages
@@ -1542,7 +1542,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   Considerate Working Hours
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -1575,7 +1575,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Monitoring Reports</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Regular monitoring reports should be produced summarising noise and vibration
                   levels recorded at the nearest receptors, any exceedances of agreed limits or
                   trigger levels, the cause of any exceedances and the corrective action taken, a
@@ -1598,7 +1598,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1612,7 +1612,7 @@ export default function EnvironmentalSustainabilityModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-4-section-2">

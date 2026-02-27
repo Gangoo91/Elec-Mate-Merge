@@ -199,7 +199,7 @@ export default function Module7Section6_2() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Reporting Faults to Supervisors or Duty Holders
           </h1>
-          <p className="text-white/70 max-w-2xl mx-auto">
+          <p className="text-white max-w-2xl mx-auto">
             Prompt, factual reporting to the correct person — with clear documentation and
             escalation
           </p>
@@ -208,7 +208,7 @@ export default function Module7Section6_2() {
         {/* In 30 Seconds Summary */}
         <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
           <h2 className="font-semibold text-white mb-2">In 30 Seconds</h2>
-          <ul className="text-white/80 space-y-1 text-sm">
+          <ul className="text-white space-y-1 text-sm">
             <li>• Identify the duty holder/supervisor for this site/job</li>
             <li>• Make safe or isolate if needed; never leave a hazard energised</li>
             <li>• Capture circuit ref, board ID, exact location and brief facts</li>
@@ -222,7 +222,7 @@ export default function Module7Section6_2() {
             <span className="text-elec-yellow/80 text-sm font-normal">01</span>
             The Importance of Prompt Reporting
           </h2>
-          <div className="text-white/80 space-y-4 leading-relaxed">
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Faults must always be reported as soon as they are identified. Even something that
               appears minor — such as a socket faceplate showing slight discolouration — could
@@ -273,7 +273,7 @@ export default function Module7Section6_2() {
             <span className="text-elec-yellow/80 text-sm font-normal">02</span>
             Identifying the Correct Person to Report To
           </h2>
-          <div className="text-white/80 space-y-4 leading-relaxed">
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               It is not enough to notice a fault; the electrician must know who to report it to. The
               reporting structure depends on the type of installation and work environment. Clear
@@ -337,7 +337,7 @@ export default function Module7Section6_2() {
             <span className="text-elec-yellow/80 text-sm font-normal">03</span>
             Communicating Clearly and Professionally
           </h2>
-          <div className="text-white/80 space-y-4 leading-relaxed">
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Reports must be factual, specific, and free from vague or casual language.
               Professional communication ensures the fault is understood correctly and action can be
@@ -354,7 +354,7 @@ export default function Module7Section6_2() {
             </ul>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10 my-4">
               <p className="text-white font-medium mb-2">Example professional report:</p>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 "Circuit 2 (ring final) — socket in living room shows signs of overheating at the
                 neutral terminal. Circuit isolated and labelled 'DO NOT USE'. Requires investigation
                 and repair by competent electrician before re-energising."
@@ -397,7 +397,7 @@ export default function Module7Section6_2() {
             <span className="text-elec-yellow/80 text-sm font-normal">04</span>
             Documenting and Transferring Responsibility
           </h2>
-          <div className="text-white/80 space-y-4 leading-relaxed">
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Accurate documentation ensures that responsibility for the fault is formally passed to
               the supervisor or duty holder. This protects the apprentice legally and ensures no
@@ -477,7 +477,7 @@ export default function Module7Section6_2() {
             Step-by-Step Reporting Process
           </h2>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <ol className="space-y-2 text-white/80 text-sm">
+            <ol className="space-y-2 text-white text-sm">
               <li>
                 <strong>1. Make Safe:</strong> Isolate circuits if dangerous, apply locks/labels,
                 prevent access to live parts
@@ -515,14 +515,14 @@ export default function Module7Section6_2() {
           <div className="space-y-6">
             <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
               <h4 className="font-semibold text-red-400 mb-3">Poor Practice</h4>
-              <p className="text-white/80 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 On a commercial refurbishment project, an apprentice noticed scorching on a socket
                 but only mentioned it casually to another colleague. Because it was not formally
                 reported, no action was taken. Weeks later, the socket overheated and caused a small
                 fire. Investigators found the defect had been observed earlier but not reported,
                 leading to reputational and financial damage for the contractor.
               </p>
-              <p className="text-white/60 text-xs">
+              <p className="text-white text-xs">
                 <strong>Key Issues:</strong> No formal reporting, no documentation, no
                 responsibility transfer
               </p>
@@ -530,14 +530,14 @@ export default function Module7Section6_2() {
 
             <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
               <h4 className="font-semibold text-green-400 mb-3">Good Practice</h4>
-              <p className="text-white/80 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 An apprentice testing a school installation recorded an insulation resistance
                 reading below the required 1 MΩ. He immediately informed his supervisor, who
                 isolated the circuit, documented the fault, and arranged for it to be rectified
                 before handover. This prevented the energisation of a dangerous circuit and
                 demonstrated the value of prompt, professional reporting.
               </p>
-              <p className="text-white/60 text-xs">
+              <p className="text-white text-xs">
                 <strong>Key Strengths:</strong> Prompt escalation, immediate isolation, clear
                 documentation, safe outcome
               </p>
@@ -555,7 +555,7 @@ export default function Module7Section6_2() {
             {faqs.map((faq, index) => (
               <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-semibold text-white mb-2">{faq.question}</h4>
-                <p className="text-sm text-white/70">{faq.answer}</p>
+                <p className="text-sm text-white">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -565,7 +565,7 @@ export default function Module7Section6_2() {
         <section className="mb-10">
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <h2 className="font-semibold text-white mb-3">Key Takeaways</h2>
-            <ul className="text-white/80 space-y-2 text-sm">
+            <ul className="text-white space-y-2 text-sm">
               <li>• Report faults immediately — small signs can indicate serious risk</li>
               <li>
                 • Always report to the correct person (supervisor/duty holder) and transfer

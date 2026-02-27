@@ -261,7 +261,7 @@ const Level3Module3Section6_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section6">
@@ -333,7 +333,7 @@ const Level3Module3Section6_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-elec-yellow/80 mb-1">Where:</p>
-                  <ul className="text-white/80 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>R = Resistance (ohms)</li>
                     <li>rho = Resistivity (ohm metres)</li>
                     <li>L = Length (metres)</li>
@@ -342,7 +342,7 @@ const Level3Module3Section6_1 = () => {
                 </div>
                 <div>
                   <p className="text-elec-yellow/80 mb-1">Key Points:</p>
-                  <ul className="text-white/80 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>Longer conductors = higher resistance</li>
                     <li>Larger area = lower resistance</li>
                     <li>Convert mm squared to m squared (divide by 10^6)</li>
@@ -366,7 +366,7 @@ const Level3Module3Section6_1 = () => {
                       <th className="text-left py-2 text-elec-yellow/80">Relative to Copper</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/5">
                       <td className="py-2">Copper</td>
                       <td className="py-2">1.72 x 10^-8</td>
@@ -420,10 +420,10 @@ const Level3Module3Section6_1 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-green-400 mb-2">Length Effect</p>
-                <p className="text-xs text-white/80 mb-2">
+                <p className="text-xs text-white mb-2">
                   Resistance is directly proportional to length:
                 </p>
-                <ul className="text-xs text-white/70 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Double the length = double the resistance</li>
                   <li>Half the length = half the resistance</li>
                   <li>Electrons travel further, encountering more atomic collisions</li>
@@ -431,10 +431,10 @@ const Level3Module3Section6_1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-blue-400 mb-2">Area Effect</p>
-                <p className="text-xs text-white/80 mb-2">
+                <p className="text-xs text-white mb-2">
                   Resistance is inversely proportional to area:
                 </p>
-                <ul className="text-xs text-white/70 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Double the area = half the resistance</li>
                   <li>Half the area = double the resistance</li>
                   <li>More pathways available for electron flow</li>
@@ -446,10 +446,10 @@ const Level3Module3Section6_1 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Worked Example: Calculating Conductor Resistance
               </p>
-              <p className="text-xs text-white/90 mb-2">
+              <p className="text-xs text-white mb-2">
                 Calculate the resistance of 25 metres of 4mm squared copper cable at 20 degrees C.
               </p>
-              <div className="text-xs text-white/80 space-y-2 font-mono">
+              <div className="text-xs text-white space-y-2 font-mono">
                 <p>
                   <strong>Given:</strong>
                 </p>
@@ -469,7 +469,7 @@ const Level3Module3Section6_1 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Practical Note:</strong> In practice, we rarely calculate from first
               principles. Tables in BS 7671 Appendix 4 and the IET On-Site Guide provide resistance
               values for common cable types and sizes.
@@ -499,7 +499,7 @@ const Level3Module3Section6_1 = () => {
               <p className="text-xl text-white font-mono text-center mb-4">
                 Rt = R20 x (1 + alpha x (T - 20))
               </p>
-              <div className="text-sm text-white/80">
+              <div className="text-sm text-white">
                 <p>Where:</p>
                 <ul className="ml-4 mt-1 space-y-1">
                   <li>Rt = Resistance at temperature T</li>
@@ -521,7 +521,7 @@ const Level3Module3Section6_1 = () => {
                       <th className="text-left py-2 text-elec-yellow/80">Correction Factor</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/5">
                       <td className="py-2">Thermoplastic (PVC) 70 degrees C</td>
                       <td className="py-2">70 degrees C</td>
@@ -546,7 +546,7 @@ const Level3Module3Section6_1 = () => {
               <p className="text-sm font-medium text-red-400 mb-2">
                 Important for Earth Fault Loop Impedance
               </p>
-              <p className="text-xs text-white/90">
+              <p className="text-xs text-white">
                 When calculating Zs (earth fault loop impedance) to verify protective device
                 operation, measured or calculated values at 20 degrees C must be multiplied by the
                 temperature correction factor. BS 7671 Regulation 522.1.5 refers to this
@@ -594,7 +594,7 @@ const Level3Module3Section6_1 = () => {
                       <th className="text-left py-2 text-elec-yellow/80">R1+R2 (mOhms/m)</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/5">
                       <td className="py-2">1.5</td>
                       <td className="py-2">1.0</td>
@@ -623,7 +623,7 @@ const Level3Module3Section6_1 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Values at 20 degrees C for copper conductors
               </p>
             </div>
@@ -632,11 +632,11 @@ const Level3Module3Section6_1 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Worked Example: Circuit Resistance Calculation
               </p>
-              <p className="text-xs text-white/90 mb-2">
+              <p className="text-xs text-white mb-2">
                 Calculate R1+R2 for a 20m circuit using 2.5/1.5mm squared cable, corrected for
                 operating temperature.
               </p>
-              <div className="text-xs text-white/80 space-y-2 font-mono">
+              <div className="text-xs text-white space-y-2 font-mono">
                 <p>
                   <strong>Step 1:</strong> Find R1+R2 from Table I1
                 </p>
@@ -656,7 +656,7 @@ const Level3Module3Section6_1 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Remember:</strong> Table values are at 20 degrees C. Always apply the
               temperature correction factor when calculating earth fault loop impedance for
               protective device verification.
@@ -730,7 +730,7 @@ const Level3Module3Section6_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -775,7 +775,7 @@ const Level3Module3Section6_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section6">

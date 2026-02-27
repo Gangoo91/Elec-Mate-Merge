@@ -193,7 +193,7 @@ export default function CscsCardModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-3">
@@ -218,7 +218,7 @@ export default function CscsCardModule3Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Manual Handling Assessment
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The Manual Handling Operations Regulations 1992, TILEO assessment factors, HSE guideline
             weights, safe lifting technique, reducing risks, team handling, common injuries, and
             record keeping
@@ -322,7 +322,7 @@ export default function CscsCardModule3Section3() {
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-green-500/20 text-green-400 text-xs font-bold flex-shrink-0">
                         {i + 1}
                       </span>
-                      <p className="text-sm text-white/80">{step}</p>
+                      <p className="text-sm text-white">{step}</p>
                     </div>
                   ))}
                 </div>
@@ -330,7 +330,7 @@ export default function CscsCardModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Employee Duties</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -416,7 +416,7 @@ export default function CscsCardModule3Section3() {
                       <span className="text-lg font-bold text-green-400">T</span>
                     </div>
                     <p className="text-xs font-semibold text-green-400 mb-1">Task</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       What is the activity? Holding, twisting, stooping, reaching, carrying
                       distance, repetition, rest periods
                     </p>
@@ -428,7 +428,7 @@ export default function CscsCardModule3Section3() {
                       <span className="text-lg font-bold text-blue-400">I</span>
                     </div>
                     <p className="text-xs font-semibold text-blue-400 mb-1">Individual</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       Capability, health, fitness, strength, age, pregnancy, existing injuries or
                       conditions
                     </p>
@@ -440,7 +440,7 @@ export default function CscsCardModule3Section3() {
                       <span className="text-lg font-bold text-amber-400">L</span>
                     </div>
                     <p className="text-xs font-semibold text-amber-400 mb-1">Load</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       Weight, shape, size, grip points, centre of gravity, stability, sharp edges,
                       hot or cold
                     </p>
@@ -452,7 +452,7 @@ export default function CscsCardModule3Section3() {
                       <span className="text-lg font-bold text-purple-400">E</span>
                     </div>
                     <p className="text-xs font-semibold text-purple-400 mb-1">Environment</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       Space constraints, floor condition, slopes, steps, temperature, lighting,
                       weather, obstacles
                     </p>
@@ -464,7 +464,7 @@ export default function CscsCardModule3Section3() {
                       <span className="text-lg font-bold text-rose-400">O</span>
                     </div>
                     <p className="text-xs font-semibold text-rose-400 mb-1">Other</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       PPE restricting movement, team handling needs, time pressure, training level,
                       unusual conditions
                     </p>
@@ -472,14 +472,14 @@ export default function CscsCardModule3Section3() {
                 </div>
 
                 {/* Legend */}
-                <p className="text-[11px] text-white/40 text-center mt-4">
+                <p className="text-[11px] text-white text-center mt-4">
                   All five factors must be considered in every manual handling risk assessment
                 </p>
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Task Factors in Detail</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -513,7 +513,7 @@ export default function CscsCardModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Individual Factors in Detail</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -547,7 +547,7 @@ export default function CscsCardModule3Section3() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-3">Load Factors</p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>How heavy is the load? Is the weight marked on it?</span>
@@ -573,7 +573,7 @@ export default function CscsCardModule3Section3() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-3">Environment &amp; Other</p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>Is there sufficient space to adopt a good posture?</span>
@@ -627,7 +627,7 @@ export default function CscsCardModule3Section3() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="bg-blue-500/10 border border-blue-500/30 p-3 rounded-lg">
                     <p className="text-sm font-medium text-blue-400 mb-2">Men</p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -657,7 +657,7 @@ export default function CscsCardModule3Section3() {
 
                   <div className="bg-rose-500/10 border border-rose-500/30 p-3 rounded-lg">
                     <p className="text-sm font-medium text-rose-400 mb-2">Women</p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -694,7 +694,7 @@ export default function CscsCardModule3Section3() {
                     The MAC Tool (Manual Handling Assessment Charts)
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     The <strong className="text-white">MAC tool</strong> is a free, practical risk
                     assessment tool published by the HSE. It helps assessors evaluate the most
@@ -704,19 +704,19 @@ export default function CscsCardModule3Section3() {
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3">
                     <div className="bg-green-500/15 border border-green-500/30 p-2 rounded text-center">
                       <p className="text-xs font-bold text-green-400">Green</p>
-                      <p className="text-[10px] text-white/60">Low risk</p>
+                      <p className="text-[10px] text-white">Low risk</p>
                     </div>
                     <div className="bg-amber-500/15 border border-amber-500/30 p-2 rounded text-center">
                       <p className="text-xs font-bold text-amber-400">Amber</p>
-                      <p className="text-[10px] text-white/60">Medium risk</p>
+                      <p className="text-[10px] text-white">Medium risk</p>
                     </div>
                     <div className="bg-red-500/15 border border-red-500/30 p-2 rounded text-center">
                       <p className="text-xs font-bold text-red-400">Red</p>
-                      <p className="text-[10px] text-white/60">High risk</p>
+                      <p className="text-[10px] text-white">High risk</p>
                     </div>
                     <div className="bg-purple-500/15 border border-purple-500/30 p-2 rounded text-center">
                       <p className="text-xs font-bold text-purple-400">Purple</p>
-                      <p className="text-[10px] text-white/60">Very high risk</p>
+                      <p className="text-[10px] text-white">Very high risk</p>
                     </div>
                   </div>
                   <p className="mt-2">
@@ -771,7 +771,7 @@ export default function CscsCardModule3Section3() {
                       <span className="text-sm font-bold text-green-400">1</span>
                     </div>
                     <p className="text-xs font-semibold text-green-400 mb-1">Plan</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       Think before lifting. Check the weight, route, and destination. Remove
                       obstacles.
                     </p>
@@ -783,7 +783,7 @@ export default function CscsCardModule3Section3() {
                       <span className="text-sm font-bold text-green-400">2</span>
                     </div>
                     <p className="text-xs font-semibold text-green-400 mb-1">Position Feet</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       Feet shoulder-width apart, one foot slightly forward for balance and
                       stability.
                     </p>
@@ -795,7 +795,7 @@ export default function CscsCardModule3Section3() {
                       <span className="text-sm font-bold text-green-400">3</span>
                     </div>
                     <p className="text-xs font-semibold text-green-400 mb-1">Bend Knees</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       Bend the knees, not the back. Keep the back straight with its natural curve.
                     </p>
                   </div>
@@ -806,7 +806,7 @@ export default function CscsCardModule3Section3() {
                       <span className="text-sm font-bold text-green-400">4</span>
                     </div>
                     <p className="text-xs font-semibold text-green-400 mb-1">Grip Firmly</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       Use the whole hand, not just fingertips. A hook grip or handle provides better
                       control.
                     </p>
@@ -818,7 +818,7 @@ export default function CscsCardModule3Section3() {
                       <span className="text-sm font-bold text-green-400">5</span>
                     </div>
                     <p className="text-xs font-semibold text-green-400 mb-1">Keep Close</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       Keep the load as close to the body as possible. The further away, the greater
                       the strain.
                     </p>
@@ -830,7 +830,7 @@ export default function CscsCardModule3Section3() {
                       <span className="text-sm font-bold text-green-400">6</span>
                     </div>
                     <p className="text-xs font-semibold text-green-400 mb-1">Lift Smoothly</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       Lift using the legs, not the back. Smooth, controlled movement &mdash; no
                       jerking.
                     </p>
@@ -842,7 +842,7 @@ export default function CscsCardModule3Section3() {
                       <span className="text-sm font-bold text-green-400">7</span>
                     </div>
                     <p className="text-xs font-semibold text-green-400 mb-1">Avoid Twisting</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       Move the feet to turn &mdash; do not twist the trunk. Twisting under load is a
                       major injury cause.
                     </p>
@@ -854,7 +854,7 @@ export default function CscsCardModule3Section3() {
                       <span className="text-sm font-bold text-green-400">8</span>
                     </div>
                     <p className="text-xs font-semibold text-green-400 mb-1">Set Down</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       Set the load down carefully, then adjust position. Reverse the lifting
                       technique.
                     </p>
@@ -866,7 +866,7 @@ export default function CscsCardModule3Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Practical Demonstration Approach
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -911,7 +911,7 @@ export default function CscsCardModule3Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Common Lifting Mistakes</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -973,7 +973,7 @@ export default function CscsCardModule3Section3() {
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white mb-2">Transport Aids</p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -1000,7 +1000,7 @@ export default function CscsCardModule3Section3() {
 
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white mb-2">Lifting Aids</p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -1030,7 +1030,7 @@ export default function CscsCardModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Task Redesign Measures</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1119,7 +1119,7 @@ export default function CscsCardModule3Section3() {
                   <Users className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">When to Use Team Lifting</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1167,7 +1167,7 @@ export default function CscsCardModule3Section3() {
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-green-500/20 text-green-400 text-xs font-bold flex-shrink-0">
                         {i + 1}
                       </span>
-                      <p className="text-sm text-white/80">{step}</p>
+                      <p className="text-sm text-white">{step}</p>
                     </div>
                   ))}
                 </div>
@@ -1178,7 +1178,7 @@ export default function CscsCardModule3Section3() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Limitations of Team Handling</p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Team lifting does <strong className="text-white">not</strong> simply divide the
                     load weight equally among the team members. Research shows that in a two-person
@@ -1224,7 +1224,7 @@ export default function CscsCardModule3Section3() {
                     <Dumbbell className="h-5 w-5 text-red-400" />
                     <p className="text-sm font-medium text-red-400">Back Injuries</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -1258,7 +1258,7 @@ export default function CscsCardModule3Section3() {
                     <AlertTriangle className="h-5 w-5 text-amber-400" />
                     <p className="text-sm font-medium text-amber-400">Other Injuries</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -1289,7 +1289,7 @@ export default function CscsCardModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Cost to Industry</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1327,7 +1327,7 @@ export default function CscsCardModule3Section3() {
                   <ShieldCheck className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Prevention Strategies</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1395,7 +1395,7 @@ export default function CscsCardModule3Section3() {
                   <ClipboardList className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Recording Assessments</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1431,7 +1431,7 @@ export default function CscsCardModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Training Requirements</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1472,7 +1472,7 @@ export default function CscsCardModule3Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Health Monitoring &amp; Reporting
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1531,7 +1531,7 @@ export default function CscsCardModule3Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1545,7 +1545,7 @@ export default function CscsCardModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-3">

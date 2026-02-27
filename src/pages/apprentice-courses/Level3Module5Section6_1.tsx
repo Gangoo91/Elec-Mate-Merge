@@ -283,7 +283,7 @@ const Level3Module5Section6_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module5-section6">
@@ -376,15 +376,15 @@ const Level3Module5Section6_1 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Repeat</p>
-                <p className="text-white/90 text-xs">Confirm the result</p>
+                <p className="text-white text-xs">Confirm the result</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Verify</p>
-                <p className="text-white/90 text-xs">Check test setup</p>
+                <p className="text-white text-xs">Check test setup</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Investigate</p>
-                <p className="text-white/90 text-xs">If result persists</p>
+                <p className="text-white text-xs">If result persists</p>
               </div>
             </div>
 
@@ -459,7 +459,7 @@ const Level3Module5Section6_1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Tip:</strong> If one circuit shows unexpected results while similar circuits
               test normally, the problem is likely specific to that circuit - focus investigation
               there.
@@ -570,13 +570,13 @@ const Level3Module5Section6_1 = () => {
             <div className="grid grid-cols-2 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Sources of Help</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Senior electricians, scheme helplines, manufacturers
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Never</p>
-                <p className="text-white/90 text-xs">Certify what you don't understand</p>
+                <p className="text-white text-xs">Certify what you don't understand</p>
               </div>
             </div>
 
@@ -601,7 +601,7 @@ const Level3Module5Section6_1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Note:</strong> When seeking help, provide full details: what you've measured,
               what you've tried, what you expected, what you found. The more information you
               provide, the better assistance you'll receive.
@@ -669,7 +669,7 @@ const Level3Module5Section6_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -715,7 +715,7 @@ const Level3Module5Section6_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module5-section6">

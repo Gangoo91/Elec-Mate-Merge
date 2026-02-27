@@ -210,7 +210,7 @@ export default function ManualHandlingModule4Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-4">
@@ -235,7 +235,7 @@ export default function ManualHandlingModule4Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Working in Construction Environments
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Site-specific manual handling risks including uneven ground, PPE constraints, weather
             effects, scaffold platforms, congestion, and delivery coordination
           </p>
@@ -353,7 +353,7 @@ export default function ManualHandlingModule4Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Uneven Ground Controls</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -423,7 +423,7 @@ export default function ManualHandlingModule4Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Congestion Control Measures</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>Designated carrying routes marked with signage or tape</span>
@@ -474,7 +474,7 @@ export default function ManualHandlingModule4Section2() {
                   <CloudRain className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">Weather Risk Factors</p>
                 </div>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="p-3 bg-white/5 rounded-lg">
                     <p className="font-medium text-white mb-1">Wet Conditions</p>
                     <p>
@@ -544,7 +544,7 @@ export default function ManualHandlingModule4Section2() {
                   <Shield className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">PPE Effects on Handling</p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Gloves (20&ndash;30% grip reduction):</strong>{' '}
                     Standard rigger gloves and cut-resistant gloves reduce grip strength by
@@ -587,7 +587,7 @@ export default function ManualHandlingModule4Section2() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Warning</p>
                 </div>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   Never remove PPE to make a manual handling task easier. The correct response is to
                   adjust the task (reduce the weight, use mechanical aids, or change the method)
                   rather than removing protection. Removing gloves to get a better grip exposes the
@@ -630,7 +630,7 @@ export default function ManualHandlingModule4Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Scaffold Platform Handling Rules
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -738,7 +738,7 @@ export default function ManualHandlingModule4Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Delivery Coordination Checklist
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>Identify the point of use before ordering materials</span>
@@ -808,7 +808,7 @@ export default function ManualHandlingModule4Section2() {
                         Delivery &amp; Unloading Zone
                       </p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                         <span>Vehicle reversing &mdash; pedestrian exclusion zone needed</span>
@@ -830,7 +830,7 @@ export default function ManualHandlingModule4Section2() {
                       <Layers className="h-5 w-5 text-amber-400" />
                       <p className="text-sm font-semibold text-amber-400">Material Storage Zone</p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                         <span>Stacking height &mdash; items above head height require steps</span>
@@ -854,7 +854,7 @@ export default function ManualHandlingModule4Section2() {
                         Carrying Routes &amp; Corridors
                       </p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                         <span>Uneven ground, temporary ramps, and loose debris</span>
@@ -876,7 +876,7 @@ export default function ManualHandlingModule4Section2() {
                       <Users className="h-5 w-5 text-emerald-400" />
                       <p className="text-sm font-semibold text-emerald-400">Active Work Area</p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                         <span>Multiple trades in same space &mdash; congestion</span>
@@ -896,7 +896,7 @@ export default function ManualHandlingModule4Section2() {
                 </div>
 
                 <div className="mt-4 p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
-                  <p className="text-xs text-white/60 leading-relaxed">
+                  <p className="text-xs text-white leading-relaxed">
                     <strong className="text-emerald-400">Planning Tip:</strong> Walk the full route
                     from delivery point to final work position before any materials arrive. Identify
                     every risk zone, clear or control the hazards, and brief the team on the planned
@@ -915,7 +915,7 @@ export default function ManualHandlingModule4Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -929,7 +929,7 @@ export default function ManualHandlingModule4Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-4">

@@ -191,7 +191,7 @@ export default function AsbestosModule4Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-4">
@@ -216,7 +216,7 @@ export default function AsbestosModule4Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Controlled Work Techniques
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Wet working methods, shadow vacuuming, glove bags, full enclosures, Class&nbsp;H
             vacuums, prohibited tools, and work area preparation
           </p>
@@ -295,7 +295,7 @@ export default function AsbestosModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Wetting Methods</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -323,7 +323,7 @@ export default function AsbestosModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Key Principles</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -369,7 +369,7 @@ export default function AsbestosModule4Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">RPE Must Still Be Worn</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Wetting <strong className="text-white">does not eliminate the hazard</strong>. It
                   significantly reduces airborne fibre levels, but some fibres will still become
                   airborne during physical disturbance.{' '}
@@ -399,7 +399,7 @@ export default function AsbestosModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">How It Works</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -430,7 +430,7 @@ export default function AsbestosModule4Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Type&nbsp;H Only</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The vacuum <strong className="text-white">MUST be a Type&nbsp;H (HEPA)</strong>{' '}
                   vacuum cleaner. Ordinary vacuum cleaners &mdash; including industrial models
                   without HEPA filtration &mdash;{' '}
@@ -463,7 +463,7 @@ export default function AsbestosModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">How the Glove Bag Works</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -552,7 +552,7 @@ export default function AsbestosModule4Section4() {
                 <div className="flex flex-col gap-4 sm:gap-5">
                   {/* 3-Stage Airlock */}
                   <div>
-                    <p className="text-[10px] text-white/50 mb-2 font-medium">
+                    <p className="text-[10px] text-white mb-2 font-medium">
                       Personnel Entry / Exit
                     </p>
                     <div className="flex items-stretch gap-0">
@@ -560,26 +560,26 @@ export default function AsbestosModule4Section4() {
                         <span className="text-[10px] sm:text-xs font-bold text-green-400 block">
                           Clean End
                         </span>
-                        <span className="text-[9px] text-white/50 block mt-0.5">Stage 3</span>
+                        <span className="text-[9px] text-white block mt-0.5">Stage 3</span>
                       </div>
                       <div className="w-[2px] bg-white/20" />
                       <div className="flex-1 border-y-2 border-blue-400/50 bg-blue-500/10 p-2 sm:p-3 text-center min-h-[56px] flex flex-col items-center justify-center">
                         <span className="text-[10px] sm:text-xs font-bold text-blue-400 block">
                           Shower
                         </span>
-                        <span className="text-[9px] text-white/50 block mt-0.5">Stage 2</span>
+                        <span className="text-[9px] text-white block mt-0.5">Stage 2</span>
                       </div>
                       <div className="w-[2px] bg-white/20" />
                       <div className="flex-1 border-2 border-red-400/50 bg-red-500/10 rounded-r-lg p-2 sm:p-3 text-center min-h-[56px] flex flex-col items-center justify-center">
                         <span className="text-[10px] sm:text-xs font-bold text-red-400 block">
                           Dirty End
                         </span>
-                        <span className="text-[9px] text-white/50 block mt-0.5">Stage 1</span>
+                        <span className="text-[9px] text-white block mt-0.5">Stage 1</span>
                       </div>
                     </div>
                     <div className="flex items-center justify-center gap-1 mt-1">
                       <span className="text-[9px] text-green-400">&larr; Clean</span>
-                      <span className="text-[9px] text-white/30">|</span>
+                      <span className="text-[9px] text-white">|</span>
                       <span className="text-[9px] text-red-400">Dirty &rarr;</span>
                     </div>
                   </div>
@@ -591,10 +591,10 @@ export default function AsbestosModule4Section4() {
                         Main Work Area
                       </span>
                     </div>
-                    <p className="text-[10px] sm:text-xs text-white/50 text-center mt-2">
+                    <p className="text-[10px] sm:text-xs text-white text-center mt-2">
                       Full polythene sheeting on walls, floor &amp; ceiling
                     </p>
-                    <p className="text-[10px] sm:text-xs text-white/40 text-center mt-1">
+                    <p className="text-[10px] sm:text-xs text-white text-center mt-1">
                       (min 125&nbsp;&mu;m, preferably 250&nbsp;&mu;m)
                     </p>
 
@@ -618,8 +618,8 @@ export default function AsbestosModule4Section4() {
                       <span className="text-[10px] sm:text-xs font-bold text-purple-400 block">
                         NPU
                       </span>
-                      <span className="text-[9px] text-white/50 block">Negative Pressure Unit</span>
-                      <span className="text-[9px] text-white/40 block">(HEPA filtered)</span>
+                      <span className="text-[9px] text-white block">Negative Pressure Unit</span>
+                      <span className="text-[9px] text-white block">(HEPA filtered)</span>
                       <div className="flex items-center justify-center gap-1 mt-2">
                         <span className="text-[10px] text-purple-300">Air flow OUT &rarr;</span>
                       </div>
@@ -631,7 +631,7 @@ export default function AsbestosModule4Section4() {
                         <span className="text-[10px] sm:text-xs font-bold text-amber-400 block">
                           Waste Airlock
                         </span>
-                        <span className="text-[9px] text-white/50 block mt-0.5">
+                        <span className="text-[9px] text-white block mt-0.5">
                           Double-bagged waste
                         </span>
                       </div>
@@ -642,7 +642,7 @@ export default function AsbestosModule4Section4() {
                         <span className="text-[10px] sm:text-xs font-bold text-amber-400 block">
                           Skip / Collection
                         </span>
-                        <span className="text-[9px] text-white/50 block mt-0.5">
+                        <span className="text-[9px] text-white block mt-0.5">
                           Licensed disposal
                         </span>
                       </div>
@@ -670,15 +670,15 @@ export default function AsbestosModule4Section4() {
               <div className="mt-3 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
                 <div className="flex items-center gap-1.5">
                   <div className="w-2.5 h-2.5 rounded-full bg-cyan-400" />
-                  <span className="text-[9px] text-white/50">Air monitoring</span>
+                  <span className="text-[9px] text-white">Air monitoring</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-4 h-[2px] border-t-2 border-dashed border-orange-400/40" />
-                  <span className="text-[9px] text-white/50">Polythene sheeting</span>
+                  <span className="text-[9px] text-white">Polythene sheeting</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-4 h-[2px] bg-orange-400/60" />
-                  <span className="text-[9px] text-white/50">Controlled area boundary</span>
+                  <span className="text-[9px] text-white">Controlled area boundary</span>
                 </div>
               </div>
             </div>
@@ -702,7 +702,7 @@ export default function AsbestosModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Enclosure Construction</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -736,7 +736,7 @@ export default function AsbestosModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Engineering Controls</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -795,7 +795,7 @@ export default function AsbestosModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Specifications</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -823,7 +823,7 @@ export default function AsbestosModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Uses</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Shadow vacuuming during asbestos work</span>
@@ -845,7 +845,7 @@ export default function AsbestosModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Maintenance &amp; Disposal</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Regular filter changes and maintenance required</span>
@@ -869,7 +869,7 @@ export default function AsbestosModule4Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Never Use Ordinary Vacuums</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">Ordinary vacuum cleaners MUST NOT be used</strong>{' '}
                   for any asbestos-related cleaning. Standard vacuums &mdash; even those marketed as
                   &ldquo;industrial&rdquo; &mdash; lack the sealed construction and HEPA filtration
@@ -909,7 +909,7 @@ export default function AsbestosModule4Section4() {
                     PROHIBITED &mdash; Do NOT Use on ACMs
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 w-5 h-5 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-red-400">
                       &times;
@@ -1008,7 +1008,7 @@ export default function AsbestosModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Preparation Steps</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 w-5 h-5 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-orange-400">
                       1
@@ -1095,7 +1095,7 @@ export default function AsbestosModule4Section4() {
                     Do NOT Start Work Until Preparation Is Complete
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   All preparation steps must be{' '}
                   <strong className="text-white">
                     completed and verified before any asbestos work begins
@@ -1117,7 +1117,7 @@ export default function AsbestosModule4Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1131,7 +1131,7 @@ export default function AsbestosModule4Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-4-section-3">

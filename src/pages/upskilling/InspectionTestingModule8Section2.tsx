@@ -214,7 +214,7 @@ const InspectionTestingModule8Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../module-8">
@@ -236,7 +236,7 @@ const InspectionTestingModule8Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Identification & Labelling
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Ensure proper identification of circuits, conductors, and equipment with clear, durable
             labelling
           </p>
@@ -383,7 +383,7 @@ const InspectionTestingModule8Section2 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Note:</strong> Old UK colours (red/yellow/blue for 3-phase, red/black for
               single-phase) are still found in existing installations.
             </p>
@@ -404,7 +404,7 @@ const InspectionTestingModule8Section2 = () => {
             <div className="my-6 space-y-4">
               <div className="p-3 rounded bg-transparent border border-amber-500/30">
                 <p className="text-sm font-medium text-amber-400 mb-2">At Origin (Reg 514.12.1)</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Type of earthing arrangement</li>
                   <li>Nominal voltage and frequency</li>
                   <li>RCD test button notice (quarterly testing)</li>
@@ -414,7 +414,7 @@ const InspectionTestingModule8Section2 = () => {
                 <p className="text-sm font-medium text-amber-400 mb-2">
                   Mixed Colours (Reg 514.14.1)
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   "CAUTION - This installation has wiring colours to two versions of BS 7671. Great
                   care should be taken before undertaking extension, alteration, or repair."
                 </p>
@@ -423,7 +423,7 @@ const InspectionTestingModule8Section2 = () => {
                 <p className="text-sm font-medium text-amber-400 mb-2">
                   Multiple Supplies (Reg 514.15.1)
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   "WARNING - This installation has more than one source of supply. Isolate all
                   supplies before working."
                 </p>
@@ -587,7 +587,7 @@ const InspectionTestingModule8Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -633,7 +633,7 @@ const InspectionTestingModule8Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-8/section-1">

@@ -175,7 +175,7 @@ const HNCModule3Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section1">
@@ -195,7 +195,7 @@ const HNCModule3Section1_2 = () => {
             <span>Module 3.1.2</span>
           </div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">Ohm's Law</h1>
-          <p className="text-white/80">
+          <p className="text-white">
             The fundamental relationship between voltage, current and resistance that governs all
             electrical circuits
           </p>
@@ -279,15 +279,15 @@ const HNCModule3Section1_2 = () => {
               <div className="grid grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-black/30 border border-elec-yellow/30">
                   <p className="text-xl font-bold text-elec-yellow mb-1">V = I × R</p>
-                  <p className="text-white/70 text-xs">Find voltage</p>
+                  <p className="text-white text-xs">Find voltage</p>
                 </div>
                 <div className="p-3 rounded bg-black/30 border border-blue-500/30">
                   <p className="text-xl font-bold text-blue-400 mb-1">I = V / R</p>
-                  <p className="text-white/70 text-xs">Find current</p>
+                  <p className="text-white text-xs">Find current</p>
                 </div>
                 <div className="p-3 rounded bg-black/30 border border-green-500/30">
                   <p className="text-xl font-bold text-green-400 mb-1">R = V / I</p>
-                  <p className="text-white/70 text-xs">Find resistance</p>
+                  <p className="text-white text-xs">Find resistance</p>
                 </div>
               </div>
             </div>
@@ -309,11 +309,11 @@ const HNCModule3Section1_2 = () => {
                   {/* Division line */}
                   <div className="absolute top-12 left-1/2 -translate-x-1/2 w-20 h-0.5 bg-white/40"></div>
                   {/* Multiplication symbol */}
-                  <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-white/60 text-lg">
+                  <div className="absolute bottom-3 left-1/2 -translate-x-1/2 text-white text-lg">
                     ×
                   </div>
                 </div>
-                <p className="text-xs text-white/60 mt-2 text-center">
+                <p className="text-xs text-white mt-2 text-center">
                   Cover what you want to find - the remaining show the formula
                 </p>
               </div>
@@ -354,7 +354,7 @@ const HNCModule3Section1_2 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
                 <p className="text-sm font-medium text-green-400 mb-2">Ohmic (Linear) Devices</p>
-                <p className="text-xs text-white/80 mb-2">Resistance remains constant:</p>
+                <p className="text-xs text-white mb-2">Resistance remains constant:</p>
                 <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                   <li className="pl-1">
                     <strong>Fixed resistors</strong> - Carbon, metal film
@@ -369,7 +369,7 @@ const HNCModule3Section1_2 = () => {
                     <strong>Potentiometers</strong> - At fixed setting
                   </li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   V-I Graph: Straight line through origin
                 </p>
               </div>
@@ -377,7 +377,7 @@ const HNCModule3Section1_2 = () => {
                 <p className="text-sm font-medium text-amber-400 mb-2">
                   Non-Ohmic (Non-Linear) Devices
                 </p>
-                <p className="text-xs text-white/80 mb-2">Resistance varies with conditions:</p>
+                <p className="text-xs text-white mb-2">Resistance varies with conditions:</p>
                 <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                   <li className="pl-1">
                     <strong>LEDs</strong> - R drops when forward biased
@@ -392,7 +392,7 @@ const HNCModule3Section1_2 = () => {
                     <strong>Lamps</strong> - R increases when hot
                   </li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">V-I Graph: Curved line, slope varies</p>
+                <p className="text-xs text-white mt-2">V-I Graph: Curved line, slope varies</p>
               </div>
             </div>
 
@@ -428,12 +428,12 @@ const HNCModule3Section1_2 = () => {
                     Voltage Drop = I × R<sub>cable</sub> × 2
                   </strong>
                 </p>
-                <p className="text-xs text-white/60 mt-1">
+                <p className="text-xs text-white mt-1">
                   (×2 accounts for line and neutral conductors)
                 </p>
               </div>
               <p className="text-sm font-medium text-white mb-2">Worked Example:</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Given:</strong> 20A load, 30m cable run, 2.5mm² copper
                 </p>
@@ -449,7 +449,7 @@ const HNCModule3Section1_2 = () => {
                 </p>
                 <p className="text-green-400 mt-1">✓ Within 5% limit for power circuits</p>
               </div>
-              <div className="mt-3 text-xs text-white/70">
+              <div className="mt-3 text-xs text-white">
                 <strong>BS 7671 Limits:</strong> Lighting circuits: 3% (6.9V) | Other circuits: 5%
                 (11.5V)
               </div>
@@ -470,12 +470,12 @@ const HNCModule3Section1_2 = () => {
                     I<sub>f</sub> = U₀ / Z<sub>s</sub>
                   </strong>
                 </p>
-                <p className="text-xs text-white/60 mt-1">
+                <p className="text-xs text-white mt-1">
                   Fault current = Nominal voltage ÷ Earth fault loop impedance
                 </p>
               </div>
               <p className="text-sm font-medium text-white mb-2">Worked Example:</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Given:</strong> Z<sub>s</sub> measured = 1.2Ω, U₀ = 230V
                 </p>
@@ -508,7 +508,7 @@ const HNCModule3Section1_2 = () => {
                 </p>
               </div>
               <p className="text-sm font-medium text-white mb-2">Worked Example:</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Given:</strong> 24V DC supply, green LED (V<sub>f</sub>=2.2V, I=20mA)
                 </p>
@@ -520,9 +520,9 @@ const HNCModule3Section1_2 = () => {
                   Use nearest standard value: <strong>1.1kΩ</strong>
                 </p>
                 <p className="mt-2">Power dissipation: P = I²R = 0.02² × 1100 = 0.44W</p>
-                <p className="text-white/60">Use 0.5W or 1W rated resistor</p>
+                <p className="text-white">Use 0.5W or 1W rated resistor</p>
               </div>
-              <p className="text-xs text-white/70 mt-3">
+              <p className="text-xs text-white mt-3">
                 <strong>BMS Application:</strong> Status indicator LEDs on control panels commonly
                 use this calculation.
               </p>
@@ -552,7 +552,7 @@ const HNCModule3Section1_2 = () => {
                 <p className="font-mono">
                   R<sub>t</sub> = R<sub>20</sub> × [1 + α(t - 20)]
                 </p>
-                <p className="text-xs text-white/60 mt-1">Where α = 0.00393/°C for copper</p>
+                <p className="text-xs text-white mt-1">Where α = 0.00393/°C for copper</p>
               </div>
 
               <p className="text-sm font-medium text-white mb-2">Practical Implications:</p>
@@ -566,13 +566,13 @@ const HNCModule3Section1_2 = () => {
               </ul>
 
               <p className="text-sm font-medium text-white mb-2 mt-4">Worked Example:</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Cable measured at 20°C: R = 0.5Ω</p>
                 <p>Operating at 70°C: R = 0.5 × [1 + 0.00393 × 50]</p>
                 <p>
                   R = 0.5 × 1.197 = <strong>0.6Ω</strong>
                 </p>
-                <p className="text-white/60 mt-1">(Or use quick factor: 0.5 × 1.2 = 0.6Ω)</p>
+                <p className="text-white mt-1">(Or use quick factor: 0.5 × 1.2 = 0.6Ω)</p>
               </div>
             </div>
           </div>
@@ -634,7 +634,7 @@ const HNCModule3Section1_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -678,7 +678,7 @@ const HNCModule3Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section1-1">

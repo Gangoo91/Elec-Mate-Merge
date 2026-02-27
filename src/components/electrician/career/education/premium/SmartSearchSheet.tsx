@@ -78,7 +78,7 @@ const MiniResultCard = ({
     <div className="flex-1 min-w-0">
       <h4 className="text-sm font-medium text-white line-clamp-1">{programme.title}</h4>
       <p className="text-xs text-purple-400 line-clamp-1">{programme.institution}</p>
-      <div className="flex items-center gap-2 mt-1 text-xs text-white/50">
+      <div className="flex items-center gap-2 mt-1 text-xs text-white">
         <span className="flex items-center gap-0.5">
           <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
           {programme.rating?.toFixed(1)}
@@ -89,7 +89,7 @@ const MiniResultCard = ({
     </div>
 
     {/* Arrow */}
-    <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+    <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
   </motion.button>
 );
 
@@ -259,7 +259,7 @@ const SmartSearchSheet = ({
                       'border transition-all duration-200',
                       isActive
                         ? 'bg-purple-500 text-white border-purple-500'
-                        : 'bg-white/5 text-white/70 border-white/10 hover:bg-white/10'
+                        : 'bg-white/5 text-white border-white/10 hover:bg-white/10'
                     )}
                   >
                     <Icon className="h-4 w-4" />
@@ -283,7 +283,7 @@ const SmartSearchSheet = ({
                   className="space-y-4"
                 >
                   <div className="flex items-center justify-between">
-                    <h3 className="text-sm font-medium text-white/60">
+                    <h3 className="text-sm font-medium text-white">
                       {isSearching ? 'Searching...' : `${searchResults.length} results`}
                     </h3>
                     {searchResults.length > 0 && (
@@ -312,9 +312,9 @@ const SmartSearchSheet = ({
 
                     {!isSearching && searchResults.length === 0 && (
                       <div className="text-center py-8">
-                        <Search className="h-12 w-12 text-white/20 mx-auto mb-3" />
-                        <p className="text-white/60">No programmes found</p>
-                        <p className="text-sm text-white/40 mt-1">Try different keywords</p>
+                        <Search className="h-12 w-12 text-white mx-auto mb-3" />
+                        <p className="text-white">No programmes found</p>
+                        <p className="text-sm text-white mt-1">Try different keywords</p>
                       </div>
                     )}
                   </div>
@@ -336,14 +336,14 @@ const SmartSearchSheet = ({
                     <div>
                       <div className="flex items-center justify-between mb-3">
                         <h3 className="text-sm font-medium text-white flex items-center gap-2">
-                          <Clock className="h-4 w-4 text-white/40" />
+                          <Clock className="h-4 w-4 text-white" />
                           Recent Searches
                         </h3>
                         <Button
                           variant="ghost"
                           size="sm"
                           onClick={onClearRecentSearches}
-                          className="text-xs text-white/40 hover:text-white/60"
+                          className="text-xs text-white hover:text-white"
                         >
                           Clear all
                         </Button>
@@ -359,8 +359,8 @@ const SmartSearchSheet = ({
                             onClick={() => handleRecentSearchClick(term)}
                             className="flex items-center gap-2 px-3 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
                           >
-                            <Clock className="h-3 w-3 text-white/40" />
-                            <span className="text-sm text-white/70">{term}</span>
+                            <Clock className="h-3 w-3 text-white" />
+                            <span className="text-sm text-white">{term}</span>
                           </motion.button>
                         ))}
                       </div>
@@ -392,7 +392,7 @@ const SmartSearchSheet = ({
                               <p className="text-sm font-medium text-white truncate">
                                 {category.name}
                               </p>
-                              <p className="text-xs text-white/50">{category.count} programmes</p>
+                              <p className="text-xs text-white">{category.count} programmes</p>
                             </div>
                           </motion.button>
                         ))}
@@ -402,7 +402,7 @@ const SmartSearchSheet = ({
 
                   {/* Browse All Prompt */}
                   <div className="text-center pt-4">
-                    <p className="text-sm text-white/40">
+                    <p className="text-sm text-white">
                       Or{' '}
                       <button
                         onClick={() => onOpenChange(false)}

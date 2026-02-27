@@ -39,7 +39,7 @@ const InstrumentationModule5Section2 = () => {
             <Zap className="h-4 w-4 text-elec-yellow" />
             Quick Summary
           </h2>
-          <p className="text-white/80 text-sm">
+          <p className="text-white text-sm">
             Every control loop has three essential components: the Process Variable (PV) - what we
             measure, the Setpoint (SP) - what we want, and the Output (OP) - the control action
             taken. Understanding how these interact is fundamental to effective process control.
@@ -60,7 +60,7 @@ const InstrumentationModule5Section2 = () => {
               <Activity className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-medium text-white mb-2">What is the Process Variable?</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The Process Variable (PV) is the actual measured value of the parameter being
                   controlled. It represents the current state of the system that we want to maintain
                   or adjust. Sensors and transmitters measure the PV and send this information to
@@ -74,27 +74,27 @@ const InstrumentationModule5Section2 = () => {
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                 <div className="bg-white/5 rounded p-2 text-center">
                   <p className="text-white font-medium text-sm">Temperature</p>
-                  <p className="text-white/70 text-xs">65°C</p>
+                  <p className="text-white text-xs">65°C</p>
                 </div>
                 <div className="bg-white/5 rounded p-2 text-center">
                   <p className="text-white font-medium text-sm">Pressure</p>
-                  <p className="text-white/70 text-xs">150 kPa</p>
+                  <p className="text-white text-xs">150 kPa</p>
                 </div>
                 <div className="bg-white/5 rounded p-2 text-center">
                   <p className="text-white font-medium text-sm">Flow Rate</p>
-                  <p className="text-white/70 text-xs">50 L/min</p>
+                  <p className="text-white text-xs">50 L/min</p>
                 </div>
                 <div className="bg-white/5 rounded p-2 text-center">
                   <p className="text-white font-medium text-sm">Level</p>
-                  <p className="text-white/70 text-xs">75% full</p>
+                  <p className="text-white text-xs">75% full</p>
                 </div>
                 <div className="bg-white/5 rounded p-2 text-center">
                   <p className="text-white font-medium text-sm">Speed</p>
-                  <p className="text-white/70 text-xs">1500 RPM</p>
+                  <p className="text-white text-xs">1500 RPM</p>
                 </div>
                 <div className="bg-white/5 rounded p-2 text-center">
                   <p className="text-white font-medium text-sm">pH Value</p>
-                  <p className="text-white/70 text-xs">7.2</p>
+                  <p className="text-white text-xs">7.2</p>
                 </div>
               </div>
             </div>
@@ -104,23 +104,23 @@ const InstrumentationModule5Section2 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-elec-yellow font-medium text-sm">Temperature</p>
-                  <p className="text-white/70 text-xs">RTDs, Thermocouples, Thermistors</p>
-                  <p className="text-white/50 text-xs">Accuracy: ±0.1°C to ±2°C</p>
+                  <p className="text-white text-xs">RTDs, Thermocouples, Thermistors</p>
+                  <p className="text-white text-xs">Accuracy: ±0.1°C to ±2°C</p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-elec-yellow font-medium text-sm">Pressure</p>
-                  <p className="text-white/70 text-xs">Strain gauge, Capacitive, Piezoelectric</p>
-                  <p className="text-white/50 text-xs">Accuracy: ±0.05% to ±0.5% FS</p>
+                  <p className="text-white text-xs">Strain gauge, Capacitive, Piezoelectric</p>
+                  <p className="text-white text-xs">Accuracy: ±0.05% to ±0.5% FS</p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-elec-yellow font-medium text-sm">Flow</p>
-                  <p className="text-white/70 text-xs">Electromagnetic, Ultrasonic, Turbine</p>
-                  <p className="text-white/50 text-xs">Accuracy: ±0.2% to ±2%</p>
+                  <p className="text-white text-xs">Electromagnetic, Ultrasonic, Turbine</p>
+                  <p className="text-white text-xs">Accuracy: ±0.2% to ±2%</p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-elec-yellow font-medium text-sm">Level</p>
-                  <p className="text-white/70 text-xs">Radar, Ultrasonic, Float switches</p>
-                  <p className="text-white/50 text-xs">Accuracy: ±1mm to ±10mm</p>
+                  <p className="text-white text-xs">Radar, Ultrasonic, Float switches</p>
+                  <p className="text-white text-xs">Accuracy: ±1mm to ±10mm</p>
                 </div>
               </div>
             </div>
@@ -130,7 +130,7 @@ const InstrumentationModule5Section2 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-white font-medium text-sm mb-2">Analogue Signals</p>
-                  <ul className="space-y-1 text-white/70 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>4-20mA current loop (most common)</li>
                     <li>0-10V or 0-5V voltage signals</li>
                     <li>1-5V DC signals</li>
@@ -139,7 +139,7 @@ const InstrumentationModule5Section2 = () => {
                 </div>
                 <div>
                   <p className="text-white font-medium text-sm mb-2">Digital Signals</p>
-                  <ul className="space-y-1 text-white/70 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>HART protocol (over 4-20mA)</li>
                     <li>Profibus, Foundation Fieldbus</li>
                     <li>Modbus RTU/TCP</li>
@@ -172,7 +172,7 @@ const InstrumentationModule5Section2 = () => {
               <Target className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-medium text-white mb-2">What is the Setpoint?</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The Setpoint (SP) is the desired target value for the process variable. It
                   represents what we want the system to achieve and maintain. The controller
                   compares the PV to the SP to determine what action to take.
@@ -184,19 +184,19 @@ const InstrumentationModule5Section2 = () => {
               <h4 className="font-medium text-white mb-3">Setpoint Examples</h4>
               <div className="space-y-2">
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-white/80">Room Temperature:</span>
+                  <span className="text-white">Room Temperature:</span>
                   <span className="text-elec-yellow font-medium">22°C</span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-white/80">Tank Pressure:</span>
+                  <span className="text-white">Tank Pressure:</span>
                   <span className="text-elec-yellow font-medium">200 kPa</span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-white/80">Motor Speed:</span>
+                  <span className="text-white">Motor Speed:</span>
                   <span className="text-elec-yellow font-medium">1800 RPM</span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-white/80">Water Level:</span>
+                  <span className="text-white">Water Level:</span>
                   <span className="text-elec-yellow font-medium">80%</span>
                 </div>
               </div>
@@ -207,19 +207,19 @@ const InstrumentationModule5Section2 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Local Manual Entry</p>
-                  <p className="text-white/70 text-xs">Operator sets value through HMI or panel</p>
+                  <p className="text-white text-xs">Operator sets value through HMI or panel</p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Remote/Cascade Control</p>
-                  <p className="text-white/70 text-xs">Another controller provides the setpoint</p>
+                  <p className="text-white text-xs">Another controller provides the setpoint</p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Scheduled/Programmed</p>
-                  <p className="text-white/70 text-xs">Time-based or condition-based changes</p>
+                  <p className="text-white text-xs">Time-based or condition-based changes</p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Adaptive/Calculated</p>
-                  <p className="text-white/70 text-xs">Based on other process conditions</p>
+                  <p className="text-white text-xs">Based on other process conditions</p>
                 </div>
               </div>
             </div>
@@ -229,7 +229,7 @@ const InstrumentationModule5Section2 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-white font-medium text-sm mb-2">Safety Limits</p>
-                  <ul className="space-y-1 text-white/70 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-3 w-3 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>High/Low limits prevent unsafe operation</span>
@@ -246,7 +246,7 @@ const InstrumentationModule5Section2 = () => {
                 </div>
                 <div>
                   <p className="text-white font-medium text-sm mb-2">Optimisation Factors</p>
-                  <ul className="space-y-1 text-white/70 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-3 w-3 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>Energy efficiency considerations</span>
@@ -287,7 +287,7 @@ const InstrumentationModule5Section2 = () => {
               <Settings className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-medium text-white mb-2">What is the Controller Output?</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The Output (OP) is the control action taken by the controller to bring the process
                   variable closer to the setpoint. It's the controller's response to the error
                   between PV and SP, sent to actuators like valves, motors, or dampers.
@@ -299,15 +299,15 @@ const InstrumentationModule5Section2 = () => {
               <h4 className="font-medium text-white mb-3">Output Actions</h4>
               <div className="space-y-2">
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-white/80">If PV &lt; SP:</span>
+                  <span className="text-white">If PV &lt; SP:</span>
                   <span className="text-green-400 font-medium">Increase Output</span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-white/80">If PV &gt; SP:</span>
+                  <span className="text-white">If PV &gt; SP:</span>
                   <span className="text-red-400 font-medium">Decrease Output</span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-white/80">If PV = SP:</span>
+                  <span className="text-white">If PV = SP:</span>
                   <span className="text-blue-400 font-medium">Maintain Output</span>
                 </div>
               </div>
@@ -318,23 +318,23 @@ const InstrumentationModule5Section2 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Control Valves</p>
-                  <p className="text-white/70 text-xs">Adjust flow rates in piping systems</p>
-                  <p className="text-white/50 text-xs">Response: 1-30 seconds</p>
+                  <p className="text-white text-xs">Adjust flow rates in piping systems</p>
+                  <p className="text-white text-xs">Response: 1-30 seconds</p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Variable Frequency Drives</p>
-                  <p className="text-white/70 text-xs">Control motor speed and power</p>
-                  <p className="text-white/50 text-xs">Response: 0.1-5 seconds</p>
+                  <p className="text-white text-xs">Control motor speed and power</p>
+                  <p className="text-white text-xs">Response: 0.1-5 seconds</p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Dampers & Louvres</p>
-                  <p className="text-white/70 text-xs">Control airflow in HVAC systems</p>
-                  <p className="text-white/50 text-xs">Response: 5-60 seconds</p>
+                  <p className="text-white text-xs">Control airflow in HVAC systems</p>
+                  <p className="text-white text-xs">Response: 5-60 seconds</p>
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium text-sm">Heating Elements</p>
-                  <p className="text-white/70 text-xs">Electric or steam heating control</p>
-                  <p className="text-white/50 text-xs">Response: 10-300 seconds</p>
+                  <p className="text-white text-xs">Electric or steam heating control</p>
+                  <p className="text-white text-xs">Response: 10-300 seconds</p>
                 </div>
               </div>
             </div>
@@ -344,21 +344,21 @@ const InstrumentationModule5Section2 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
                   <p className="text-white font-medium text-sm mb-1">Analogue</p>
-                  <ul className="text-white/70 text-xs space-y-1">
+                  <ul className="text-white text-xs space-y-1">
                     <li>4-20mA to I/P converters</li>
                     <li>0-10V DC signals</li>
                   </ul>
                 </div>
                 <div>
                   <p className="text-white font-medium text-sm mb-1">Digital</p>
-                  <ul className="text-white/70 text-xs space-y-1">
+                  <ul className="text-white text-xs space-y-1">
                     <li>PWM (Pulse Width)</li>
                     <li>Step/Direction</li>
                   </ul>
                 </div>
                 <div>
                   <p className="text-white font-medium text-sm mb-1">On/Off</p>
-                  <ul className="text-white/70 text-xs space-y-1">
+                  <ul className="text-white text-xs space-y-1">
                     <li>Relay contacts</li>
                     <li>Solenoid control</li>
                   </ul>
@@ -385,7 +385,7 @@ const InstrumentationModule5Section2 = () => {
           </div>
 
           <div className="space-y-4">
-            <p className="text-white/80 text-sm">
+            <p className="text-white text-sm">
               Understanding how sensors, controllers, and actuators work together to maintain
               control:
             </p>
@@ -398,7 +398,7 @@ const InstrumentationModule5Section2 = () => {
                   </span>
                   <div>
                     <p className="text-white font-medium text-sm">Sensor Measures PV</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Temperature sensor reads actual temperature: 18°C
                     </p>
                   </div>
@@ -409,7 +409,7 @@ const InstrumentationModule5Section2 = () => {
                   </span>
                   <div>
                     <p className="text-white font-medium text-sm">Controller Compares PV to SP</p>
-                    <p className="text-white/70 text-xs">Error = SP - PV = 22°C - 18°C = 4°C</p>
+                    <p className="text-white text-xs">Error = SP - PV = 22°C - 18°C = 4°C</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -418,7 +418,7 @@ const InstrumentationModule5Section2 = () => {
                   </span>
                   <div>
                     <p className="text-white font-medium text-sm">Controller Calculates Output</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Determines how much to open heating valve
                     </p>
                   </div>
@@ -429,7 +429,7 @@ const InstrumentationModule5Section2 = () => {
                   </span>
                   <div>
                     <p className="text-white font-medium text-sm">Actuator Responds</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Valve opens to increase heating, process repeats
                     </p>
                   </div>
@@ -447,15 +447,15 @@ const InstrumentationModule5Section2 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
                 <div className="text-center">
                   <p className="text-white font-medium">Positive Error</p>
-                  <p className="text-white/70 text-xs">PV below SP - Increase output</p>
+                  <p className="text-white text-xs">PV below SP - Increase output</p>
                 </div>
                 <div className="text-center">
                   <p className="text-white font-medium">Zero Error</p>
-                  <p className="text-white/70 text-xs">PV equals SP - Maintain output</p>
+                  <p className="text-white text-xs">PV equals SP - Maintain output</p>
                 </div>
                 <div className="text-center">
                   <p className="text-white font-medium">Negative Error</p>
-                  <p className="text-white/70 text-xs">PV above SP - Decrease output</p>
+                  <p className="text-white text-xs">PV above SP - Decrease output</p>
                 </div>
               </div>
             </div>
@@ -472,7 +472,7 @@ const InstrumentationModule5Section2 = () => {
           <div className="space-y-4">
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-medium text-white mb-2">Who measures the Process Variable?</h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 The sensor or transmitter measures the Process Variable and converts it to a
                 standard signal (typically 4-20mA) that is sent to the controller for comparison
                 with the setpoint.
@@ -483,7 +483,7 @@ const InstrumentationModule5Section2 = () => {
               <h4 className="font-medium text-white mb-2">
                 What is the relationship between error and controller output?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 In most control systems, larger errors between PV and SP produce proportionally
                 larger changes in controller output. The exact relationship depends on the
                 controller type and tuning parameters (P, I, D gains).
@@ -494,7 +494,7 @@ const InstrumentationModule5Section2 = () => {
               <h4 className="font-medium text-white mb-2">
                 What happens when the setpoint changes?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 When the setpoint changes, the controller immediately calculates a new error (SP-PV)
                 and adjusts its output accordingly to drive the process variable to the new target
                 value.

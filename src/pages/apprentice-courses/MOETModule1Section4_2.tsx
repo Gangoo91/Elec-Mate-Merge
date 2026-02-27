@@ -268,7 +268,7 @@ const MOETModule1Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module1-section4">
@@ -290,7 +290,7 @@ const MOETModule1Section4_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Electricity at Work Regulations 1989
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             The principal regulations governing electrical safety in the workplace
           </p>
         </header>
@@ -769,7 +769,7 @@ const MOETModule1Section4_2 = () => {
                   </li>
                   <li className="pl-1">Verifying correct phase rotation on a live supply</li>
                 </ul>
-                <p className="text-sm text-white/70 mt-2">
+                <p className="text-sm text-white mt-2">
                   Note: Customer inconvenience, loss of production, or cost of overtime are
                   generally NOT sufficient justification. The test is "unreasonable in all the
                   circumstances" — a high threshold.
@@ -848,7 +848,7 @@ const MOETModule1Section4_2 = () => {
                     incident
                   </li>
                 </ul>
-                <p className="text-sm text-white/70 mt-2">
+                <p className="text-sm text-white mt-2">
                   A common breach: switchrooms filled with boxes, stored materials, or cleaning
                   equipment blocking access to distribution boards. Report this immediately — it
                   breaches Regulation 15.
@@ -933,7 +933,7 @@ const MOETModule1Section4_2 = () => {
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>ST1426 note:</strong> The EAWR 1989 are the most directly relevant statutory
               regulations for your role as a maintenance technician. Your End Point Assessment will
               expect you to demonstrate knowledge of the key regulations (especially 4, 12, 13, 14,
@@ -1088,7 +1088,7 @@ const MOETModule1Section4_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1139,7 +1139,7 @@ const MOETModule1Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module1-section4-1">

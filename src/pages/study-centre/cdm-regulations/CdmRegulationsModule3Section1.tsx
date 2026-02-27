@@ -230,7 +230,7 @@ const CdmRegulationsModule3Section1 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Pre-Construction Information
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             What pre-construction information is, who must provide it, what it must contain, how it
             is distributed, and how electricians use it in practice on rewires, refurbishments, and
             new builds
@@ -377,7 +377,7 @@ const CdmRegulationsModule3Section1 = () => {
                       </div>
                       <h4 className="font-semibold text-blue-400 text-sm">Project Description</h4>
                     </div>
-                    <ul className="text-xs space-y-1 text-white/80">
+                    <ul className="text-xs space-y-1 text-white">
                       <li className="flex items-start gap-1.5">
                         <span className="mt-1 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                         <span>Nature and scope of the works</span>
@@ -402,7 +402,7 @@ const CdmRegulationsModule3Section1 = () => {
                         Existing Drawings & Plans
                       </h4>
                     </div>
-                    <ul className="text-xs space-y-1 text-white/80">
+                    <ul className="text-xs space-y-1 text-white">
                       <li className="flex items-start gap-1.5">
                         <span className="mt-1 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                         <span>Floor plans, elevations, sections</span>
@@ -425,7 +425,7 @@ const CdmRegulationsModule3Section1 = () => {
                       </div>
                       <h4 className="font-semibold text-blue-400 text-sm">Structural Surveys</h4>
                     </div>
-                    <ul className="text-xs space-y-1 text-white/80">
+                    <ul className="text-xs space-y-1 text-white">
                       <li className="flex items-start gap-1.5">
                         <span className="mt-1 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                         <span>Structural condition reports</span>
@@ -448,7 +448,7 @@ const CdmRegulationsModule3Section1 = () => {
                       </div>
                       <h4 className="font-semibold text-blue-400 text-sm">Asbestos Information</h4>
                     </div>
-                    <ul className="text-xs space-y-1 text-white/80">
+                    <ul className="text-xs space-y-1 text-white">
                       <li className="flex items-start gap-1.5">
                         <span className="mt-1 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                         <span>Asbestos register and management survey</span>
@@ -471,7 +471,7 @@ const CdmRegulationsModule3Section1 = () => {
                       </div>
                       <h4 className="font-semibold text-blue-400 text-sm">Utilities & Services</h4>
                     </div>
-                    <ul className="text-xs space-y-1 text-white/80">
+                    <ul className="text-xs space-y-1 text-white">
                       <li className="flex items-start gap-1.5">
                         <span className="mt-1 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                         <span>Location of underground and overhead services</span>
@@ -496,7 +496,7 @@ const CdmRegulationsModule3Section1 = () => {
                         Ground Conditions & Access
                       </h4>
                     </div>
-                    <ul className="text-xs space-y-1 text-white/80">
+                    <ul className="text-xs space-y-1 text-white">
                       <li className="flex items-start gap-1.5">
                         <span className="mt-1 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                         <span>Ground investigation and bore-hole data</span>
@@ -521,7 +521,7 @@ const CdmRegulationsModule3Section1 = () => {
                       </div>
                       <h4 className="font-semibold text-blue-400 text-sm">Previous H&S File</h4>
                     </div>
-                    <ul className="text-xs space-y-1 text-white/80">
+                    <ul className="text-xs space-y-1 text-white">
                       <li className="flex items-start gap-1.5">
                         <span className="mt-1 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                         <span>Records from previous construction work</span>
@@ -544,7 +544,7 @@ const CdmRegulationsModule3Section1 = () => {
                       </div>
                       <h4 className="font-semibold text-blue-400 text-sm">Known Hazards & Risks</h4>
                     </div>
-                    <ul className="text-xs space-y-1 text-white/80">
+                    <ul className="text-xs space-y-1 text-white">
                       <li className="flex items-start gap-1.5">
                         <span className="mt-1 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                         <span>Hazardous materials (lead paint, PCBs)</span>
@@ -964,7 +964,7 @@ const CdmRegulationsModule3Section1 = () => {
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <div>
                     <h4 className="font-semibold text-white mb-2">Greenfield Site</h4>
-                    <ul className="space-y-1 text-white/80">
+                    <ul className="space-y-1 text-white">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                         <span>No previous development — lower contamination risk</span>
@@ -985,7 +985,7 @@ const CdmRegulationsModule3Section1 = () => {
                   </div>
                   <div>
                     <h4 className="font-semibold text-white mb-2">Brownfield Site</h4>
-                    <ul className="space-y-1 text-white/80">
+                    <ul className="space-y-1 text-white">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                         <span>Previous development — higher contamination risk</span>
@@ -1036,7 +1036,7 @@ const CdmRegulationsModule3Section1 = () => {
                   {/* Client */}
                   <div className="w-full max-w-md bg-blue-500/20 border-2 border-blue-400/50 p-4 rounded-lg text-center">
                     <h4 className="font-bold text-blue-300 text-base">CLIENT</h4>
-                    <p className="text-xs text-white/70 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Gathers and provides PCI (Regulation 4(4))
                     </p>
                   </div>
@@ -1057,11 +1057,11 @@ const CdmRegulationsModule3Section1 = () => {
                   <div className="grid grid-cols-2 gap-4 w-full max-w-md">
                     <div className="bg-green-500/20 border-2 border-green-400/50 p-3 rounded-lg text-center">
                       <h4 className="font-bold text-green-300 text-sm">PRINCIPAL DESIGNER</h4>
-                      <p className="text-xs text-white/70 mt-1">Distributes to all designers</p>
+                      <p className="text-xs text-white mt-1">Distributes to all designers</p>
                     </div>
                     <div className="bg-amber-500/20 border-2 border-amber-400/50 p-3 rounded-lg text-center">
                       <h4 className="font-bold text-amber-300 text-sm">PRINCIPAL CONTRACTOR</h4>
-                      <p className="text-xs text-white/70 mt-1">Distributes to all contractors</p>
+                      <p className="text-xs text-white mt-1">Distributes to all contractors</p>
                     </div>
                   </div>
 
@@ -1081,20 +1081,20 @@ const CdmRegulationsModule3Section1 = () => {
                   <div className="grid grid-cols-2 gap-4 w-full max-w-md">
                     <div className="bg-green-500/10 border border-green-400/30 p-3 rounded-lg text-center">
                       <h4 className="font-semibold text-green-300 text-sm">ALL DESIGNERS</h4>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Architects, engineers, M&E designers
                       </p>
                     </div>
                     <div className="bg-amber-500/10 border border-amber-400/30 p-3 rounded-lg text-center">
                       <h4 className="font-semibold text-amber-300 text-sm">ALL CONTRACTORS</h4>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Main contractor, subcontractors, specialists
                       </p>
                     </div>
                   </div>
                 </div>
 
-                <div className="mt-4 bg-white/5 border border-white/10 p-3 rounded-lg text-sm text-white/80">
+                <div className="mt-4 bg-white/5 border border-white/10 p-3 rounded-lg text-sm text-white">
                   <strong className="text-white">Non-notifiable projects:</strong> Where there is no
                   principal designer or principal contractor (single-contractor projects), the
                   client provides PCI directly to the designer(s) and contractor(s). The
@@ -1242,7 +1242,7 @@ const CdmRegulationsModule3Section1 = () => {
                   <AlertTriangle className="h-5 w-5" />
                   Why Gaps and Assumptions Matter
                 </h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Recording gaps and assumptions is not an admission of failure — it is professional
                   risk management. If an assumption later proves wrong (for example, the floor void
                   is actually only 150 mm, not 300 mm), the team can trace back to the documented
@@ -1250,7 +1250,7 @@ const CdmRegulationsModule3Section1 = () => {
                   Without this record, the same mistake may be repeated, or blame may fall on the
                   wrong party.
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The HSE will look favourably on a project where gaps were identified, assumptions
                   documented, and reasonable steps taken to manage the risk — even if an incident
                   occurs. They will look much less favourably on a project where no PCI register
@@ -1292,7 +1292,7 @@ const CdmRegulationsModule3Section1 = () => {
                     <h4 className="font-semibold text-white mb-2">
                       PCI Received by the Electrical Contractor:
                     </h4>
-                    <ul className="space-y-2 text-white/80">
+                    <ul className="space-y-2 text-white">
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                         <span>
@@ -1339,7 +1339,7 @@ const CdmRegulationsModule3Section1 = () => {
                       </li>
                     </ul>
                   </div>
-                  <p className="text-white/70 italic">
+                  <p className="text-white italic">
                     Without this PCI, the electrician could have drilled into a post-tensioned slab
                     (risking catastrophic structural failure), disturbed asbestos ceiling tiles
                     (risking mesothelioma exposure), or planned work during occupied hours (risking
@@ -1361,7 +1361,7 @@ const CdmRegulationsModule3Section1 = () => {
                   </p>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <h4 className="font-semibold text-white mb-2">PCI Package Contents:</h4>
-                    <ul className="space-y-2 text-white/80">
+                    <ul className="space-y-2 text-white">
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                         <span>
@@ -1425,7 +1425,7 @@ const CdmRegulationsModule3Section1 = () => {
                   </p>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <h4 className="font-semibold text-white mb-2">PCI Provided:</h4>
-                    <ul className="space-y-2 text-white/80">
+                    <ul className="space-y-2 text-white">
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                         <span>
@@ -1467,7 +1467,7 @@ const CdmRegulationsModule3Section1 = () => {
                       </li>
                     </ul>
                   </div>
-                  <p className="text-white/70 italic">
+                  <p className="text-white italic">
                     This example shows how even a relatively small project has significant PCI
                     requirements. The asbestos information alone dictates which areas can be worked
                     in freely and which require specialist removal first. The access constraints
@@ -1490,7 +1490,7 @@ const CdmRegulationsModule3Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1506,7 +1506,7 @@ const CdmRegulationsModule3Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-3">

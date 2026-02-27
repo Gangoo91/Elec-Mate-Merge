@@ -33,7 +33,7 @@ const LabourPlanTable = ({ tasks }: LabourPlanTableProps) => {
           </motion.div>
           <div>
             <h3 className="text-base sm:text-lg text-white font-bold">Labour Plan</h3>
-            <p className="text-xs sm:text-sm text-white/60">
+            <p className="text-xs sm:text-sm text-white">
               {tasks.length} tasks • {totalHours.toFixed(1)} hours
             </p>
           </div>
@@ -56,26 +56,26 @@ const LabourPlanTable = ({ tasks }: LabourPlanTableProps) => {
               </div>
               <div className="grid grid-cols-3 gap-2 text-center">
                 <div className="p-2.5 rounded-lg bg-white/5">
-                  <div className="text-xs text-white/60 mb-1">Hours</div>
+                  <div className="text-xs text-white mb-1">Hours</div>
                   <div className="font-mono text-xs font-medium text-white">
                     {task.hours.toFixed(1)}h
                   </div>
                 </div>
                 <div className="p-2.5 rounded-lg bg-white/5">
-                  <div className="text-xs text-white/60 mb-1">Rate</div>
+                  <div className="text-xs text-white mb-1">Rate</div>
                   <div className="font-mono text-xs font-medium text-white">
                     £{task.rate?.toFixed(0)}/hr
                   </div>
                 </div>
                 <div className="p-2.5 rounded-lg bg-white/5">
-                  <div className="text-xs text-white/60 mb-1">Total</div>
+                  <div className="text-xs text-white mb-1">Total</div>
                   <div className="font-mono text-xs font-bold text-orange-400">
                     £{task.total?.toFixed(0)}
                   </div>
                 </div>
               </div>
               {(task.electricianHours || task.apprenticeHours) && (
-                <div className="text-xs text-white/60 mt-3 pt-3 border-t border-white/5">
+                <div className="text-xs text-white mt-3 pt-3 border-t border-white/5">
                   {task.electricianHours && `Electrician: ${task.electricianHours.toFixed(1)}h `}
                   {task.apprenticeHours && `Apprentice: ${task.apprenticeHours.toFixed(1)}h`}
                 </div>
@@ -87,7 +87,7 @@ const LabourPlanTable = ({ tasks }: LabourPlanTableProps) => {
             <div className="flex justify-between items-center">
               <span className="text-sm font-semibold text-white">Total Labour</span>
               <div className="text-right">
-                <div className="text-xs text-white/60">{totalHours.toFixed(1)} hours</div>
+                <div className="text-xs text-white">{totalHours.toFixed(1)} hours</div>
                 <div className="text-xl font-bold text-orange-400">£{totalCost.toFixed(2)}</div>
               </div>
             </div>
@@ -99,16 +99,16 @@ const LabourPlanTable = ({ tasks }: LabourPlanTableProps) => {
           <Table>
             <TableHeader>
               <TableRow className="border-white/10">
-                <TableHead className="text-left text-white/70 font-semibold text-xs">
+                <TableHead className="text-left text-white font-semibold text-xs">
                   Task
                 </TableHead>
-                <TableHead className="text-right text-white/70 font-semibold text-xs">
+                <TableHead className="text-right text-white font-semibold text-xs">
                   Hours
                 </TableHead>
-                <TableHead className="text-right text-white/70 font-semibold text-xs">
+                <TableHead className="text-right text-white font-semibold text-xs">
                   Rate
                 </TableHead>
-                <TableHead className="text-right text-white/70 font-semibold text-xs">
+                <TableHead className="text-right text-white font-semibold text-xs">
                   Total
                 </TableHead>
               </TableRow>
@@ -119,7 +119,7 @@ const LabourPlanTable = ({ tasks }: LabourPlanTableProps) => {
                   <TableCell className="font-medium text-sm text-white text-left py-4">
                     {task.description}
                     {(task.electricianHours || task.apprenticeHours) && (
-                      <div className="text-xs text-white/60 text-left">
+                      <div className="text-xs text-white text-left">
                         {task.electricianHours &&
                           `Electrician: ${task.electricianHours.toFixed(2)}h `}
                         {task.apprenticeHours && `Apprentice: ${task.apprenticeHours.toFixed(2)}h`}

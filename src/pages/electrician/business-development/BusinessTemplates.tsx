@@ -133,7 +133,7 @@ const BusinessTemplates = () => {
                       <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">
                         PDF
                       </span>
-                      <span className="px-2 py-1 text-xs bg-white/5 text-white/90 rounded-lg border border-white/10">
+                      <span className="px-2 py-1 text-xs bg-white/5 text-white rounded-lg border border-white/10">
                         Word
                       </span>
                     </div>
@@ -153,7 +153,7 @@ const BusinessTemplates = () => {
                       <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">
                         PDF
                       </span>
-                      <span className="px-2 py-1 text-xs bg-white/5 text-white/90 rounded-lg border border-white/10">
+                      <span className="px-2 py-1 text-xs bg-white/5 text-white rounded-lg border border-white/10">
                         Word
                       </span>
                     </div>
@@ -170,7 +170,7 @@ const BusinessTemplates = () => {
                       <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">
                         PDF
                       </span>
-                      <span className="px-2 py-1 text-xs bg-white/5 text-white/90 rounded-lg border border-white/10">
+                      <span className="px-2 py-1 text-xs bg-white/5 text-white rounded-lg border border-white/10">
                         Word
                       </span>
                     </div>
@@ -188,7 +188,7 @@ const BusinessTemplates = () => {
                       <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">
                         PDF
                       </span>
-                      <span className="px-2 py-1 text-xs bg-white/5 text-white/90 rounded-lg border border-white/10">
+                      <span className="px-2 py-1 text-xs bg-white/5 text-white rounded-lg border border-white/10">
                         Word
                       </span>
                     </div>
@@ -451,22 +451,22 @@ const BusinessTemplates = () => {
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <Calculator className="h-6 w-6 text-yellow-400 mx-auto mb-2" />
                   <p className="text-sm font-semibold text-white">Quote Tracker</p>
-                  <p className="text-xs text-white/90 mt-1">Monitor conversions</p>
+                  <p className="text-xs text-white mt-1">Monitor conversions</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <Calendar className="h-6 w-6 text-yellow-400 mx-auto mb-2" />
                   <p className="text-sm font-semibold text-white">Job Scheduler</p>
-                  <p className="text-xs text-white/90 mt-1">Plan your week</p>
+                  <p className="text-xs text-white mt-1">Plan your week</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <PoundSterling className="h-6 w-6 text-yellow-400 mx-auto mb-2" />
                   <p className="text-sm font-semibold text-white">Income Tracker</p>
-                  <p className="text-xs text-white/90 mt-1">Monitor cash flow</p>
+                  <p className="text-xs text-white mt-1">Monitor cash flow</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <Clock className="h-6 w-6 text-yellow-400 mx-auto mb-2" />
                   <p className="text-sm font-semibold text-white">Expense Log</p>
-                  <p className="text-xs text-white/90 mt-1">Track deductibles</p>
+                  <p className="text-xs text-white mt-1">Track deductibles</p>
                 </div>
               </div>
             </div>

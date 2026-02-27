@@ -220,7 +220,7 @@ const InspectionTestingModule6Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-6">
@@ -242,7 +242,7 @@ const InspectionTestingModule6Section3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             RCD Ramp Testing
           </h1>
-          <p className="text-white/80">Determine the actual trip current sensitivity of RCDs</p>
+          <p className="text-white">Determine the actual trip current sensitivity of RCDs</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -350,11 +350,11 @@ const InspectionTestingModule6Section3 = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/20">
-                    <th className="text-left py-2 text-white/60">RCD Rating</th>
-                    <th className="text-left py-2 text-white/60">Acceptable Range</th>
+                    <th className="text-left py-2 text-white">RCD Rating</th>
+                    <th className="text-left py-2 text-white">Acceptable Range</th>
                   </tr>
                 </thead>
-                <tbody className="text-white/80">
+                <tbody className="text-white">
                   <tr className="border-b border-white/10">
                     <td className="py-2 font-semibold text-elec-yellow">30mA</td>
                     <td className="py-2 font-mono">15mA - 30mA</td>
@@ -375,7 +375,7 @@ const InspectionTestingModule6Section3 = () => {
               </table>
             </div>
 
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               An RCD tripping at any current within its range is functioning correctly. The wide
               tolerance accounts for manufacturing variations whilst ensuring protection is
               provided.
@@ -686,7 +686,7 @@ const InspectionTestingModule6Section3 = () => {
               ≤ 150ms
             </text>
           </svg>
-          <p className="text-xs text-white/40 mt-3">
+          <p className="text-xs text-white mt-3">
             RCD tester connects between Line and PE at a socket downstream of the RCD. Test at both
             0° and 180° — record the longer trip time. Press the RCD test button first as a
             functional check.
@@ -717,7 +717,7 @@ const InspectionTestingModule6Section3 = () => {
                   <span className="w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-sm font-bold flex items-center justify-center flex-shrink-0">
                     {item.step}
                   </span>
-                  <span className="text-white/80">{item.text}</span>
+                  <span className="text-white">{item.text}</span>
                 </div>
               ))}
             </div>
@@ -774,7 +774,7 @@ const InspectionTestingModule6Section3 = () => {
 
             <div className="my-6 border-l-4 border-amber-500 pl-4">
               <p className="text-amber-400 font-semibold mb-2">Accounting for Standing Leakage</p>
-              <ul className="text-sm text-white/70 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>Measure standing leakage with clamp meter before testing</li>
                 <li>Add standing leakage to instrument reading for true trip current</li>
                 <li>Consider disconnecting loads for accurate sensitivity measurement</li>
@@ -782,7 +782,7 @@ const InspectionTestingModule6Section3 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/80 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> If standing leakage is 8mA and a 30mA RCD trips at 14mA
               applied test current, the actual trip current is 14mA + 8mA = 22mA, which is within
               the acceptable 15-30mA range.
@@ -814,7 +814,7 @@ const InspectionTestingModule6Section3 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               Recording actual values allows comparison during future periodic inspections to
               identify any degradation in RCD sensitivity over time.
             </p>
@@ -869,7 +869,7 @@ const InspectionTestingModule6Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -916,7 +916,7 @@ const InspectionTestingModule6Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-6/section-2">

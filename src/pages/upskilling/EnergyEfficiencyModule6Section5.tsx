@@ -227,7 +227,7 @@ const EnergyEfficiencyModule6Section5: React.FC = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/energy-efficiency-module-6">
@@ -249,7 +249,7 @@ const EnergyEfficiencyModule6Section5: React.FC = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Compliance Reporting and Audit Trails
           </h1>
-          <p className="text-white/80">Maintaining evidence and meeting reporting requirements</p>
+          <p className="text-white">Maintaining evidence and meeting reporting requirements</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -723,7 +723,7 @@ const EnergyEfficiencyModule6Section5: React.FC = () => {
                   )}
                 </button>
                 {expandedFAQ === index && (
-                  <p className="text-sm text-white/90 leading-relaxed mt-2">{faq.answer}</p>
+                  <p className="text-sm text-white leading-relaxed mt-2">{faq.answer}</p>
                 )}
               </div>
             ))}
@@ -767,7 +767,7 @@ const EnergyEfficiencyModule6Section5: React.FC = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../section-4">

@@ -241,7 +241,7 @@ const HNCModule6Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section4">
@@ -263,7 +263,7 @@ const HNCModule6Section4_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Embodied Carbon
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Whole life carbon, material selection, life cycle stages, EPDs, and reduction strategies
             for sustainable MEP design
           </p>
@@ -607,7 +607,7 @@ const HNCModule6Section4_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-1">Electrical Materials</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>Copper cable (virgin): 2.5-3.0 kgCO₂e/kg</li>
                     <li>Copper cable (recycled): 1.2-1.8 kgCO₂e/kg</li>
                     <li>Aluminium cable: 8.0-10.0 kgCO₂e/kg</li>
@@ -618,7 +618,7 @@ const HNCModule6Section4_3 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-1">Mechanical Materials</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>Steel ductwork: 2.0-2.8 kgCO₂e/kg</li>
                     <li>Copper pipework: 2.5-3.5 kgCO₂e/kg</li>
                     <li>Galvanised steel pipe: 2.2-3.0 kgCO₂e/kg</li>
@@ -740,25 +740,25 @@ const HNCModule6Section4_3 = () => {
               <div className="space-y-3">
                 <div className="p-3 rounded bg-green-500/10 border-l-4 border-green-500">
                   <p className="font-medium text-green-400">1. Build Less / Avoid</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Question the need - can existing systems be retained or refurbished?
                   </p>
                 </div>
                 <div className="p-3 rounded bg-blue-500/10 border-l-4 border-blue-500">
                   <p className="font-medium text-blue-400">2. Design Efficiently</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Reduce loads through passive design, right-size systems, optimise routing
                   </p>
                 </div>
                 <div className="p-3 rounded bg-yellow-500/10 border-l-4 border-yellow-500">
                   <p className="font-medium text-yellow-400">3. Specify Low-Carbon</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Choose materials with EPDs, high recycled content, low-GWP refrigerants
                   </p>
                 </div>
                 <div className="p-3 rounded bg-purple-500/10 border-l-4 border-purple-500">
                   <p className="font-medium text-purple-400">4. Design for Longevity</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Extend component life, design for maintenance access, future adaptability
                   </p>
                 </div>
@@ -848,7 +848,7 @@ const HNCModule6Section4_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Early action imperative:</strong> 80% of embodied carbon is determined by RIBA
               Stage 3. By Stage 5, only marginal improvements through product substitution remain
               possible.
@@ -874,15 +874,15 @@ const HNCModule6Section4_3 = () => {
                 <strong>Scenario:</strong> Calculate embodied carbon for 500m of 95mm² 4-core
                 armoured cable.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given:</p>
                 <p>Cable mass: 4.2 kg/m</p>
                 <p>Total mass: 500m × 4.2 kg/m = 2,100 kg</p>
                 <p className="mt-2">Virgin copper coefficient: 2.8 kgCO₂e/kg</p>
-                <p className="mt-2 text-white/60">Calculation (A1-A3):</p>
+                <p className="mt-2 text-white">Calculation (A1-A3):</p>
                 <p>Embodied carbon = 2,100 kg × 2.8 kgCO₂e/kg</p>
                 <p className="text-green-400">= 5,880 kgCO₂e</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   With 50% recycled content (coefficient 2.0 kgCO₂e/kg):
                 </p>
                 <p>= 2,100 kg × 2.0 kgCO₂e/kg</p>
@@ -898,19 +898,19 @@ const HNCModule6Section4_3 = () => {
                 <strong>Scenario:</strong> Compare whole life refrigerant carbon for R410A vs R32
                 VRF system.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">System parameters:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">System parameters:</p>
                 <p>Refrigerant charge: 45 kg</p>
                 <p>Annual leakage rate: 3%</p>
                 <p>Service life: 20 years</p>
                 <p>End of life recovery: 80%</p>
-                <p className="mt-2 text-white/60">R410A (GWP 2088):</p>
+                <p className="mt-2 text-white">R410A (GWP 2088):</p>
                 <p>Initial charge: 45 × 2,088 = 93,960 kgCO₂e</p>
                 <p>Annual leakage: 1.35 kg × 2,088 = 2,819 kgCO₂e/yr</p>
                 <p>20-year leakage: 56,380 kgCO₂e</p>
                 <p>End of life loss (20%): 9 kg × 2,088 = 18,792 kgCO₂e</p>
                 <p className="text-red-400">Total: 169,132 kgCO₂e</p>
-                <p className="mt-2 text-white/60">R32 (GWP 675):</p>
+                <p className="mt-2 text-white">R32 (GWP 675):</p>
                 <p>Initial charge: 45 × 675 = 30,375 kgCO₂e</p>
                 <p>20-year leakage: 18,225 kgCO₂e</p>
                 <p>End of life loss: 6,075 kgCO₂e</p>
@@ -926,15 +926,15 @@ const HNCModule6Section4_3 = () => {
                 <strong>Scenario:</strong> Calculate whole life embodied carbon including
                 replacements for lighting.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Installation parameters:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Installation parameters:</p>
                 <p>Number of luminaires: 200</p>
                 <p>Carbon per luminaire (A1-A3): 25 kgCO₂e</p>
                 <p>Building reference period: 60 years</p>
-                <p className="mt-2 text-white/60">Option A - Standard LED (15-year life):</p>
+                <p className="mt-2 text-white">Option A - Standard LED (15-year life):</p>
                 <p>Replacements in 60 years: 3 cycles (initial + 3)</p>
                 <p>Total luminaire carbon: 200 × 25 × 4 = 20,000 kgCO₂e</p>
-                <p className="mt-2 text-white/60">Option B - Premium LED (25-year life):</p>
+                <p className="mt-2 text-white">Option B - Premium LED (25-year life):</p>
                 <p>Carbon per luminaire: 32 kgCO₂e (higher quality)</p>
                 <p>Replacements in 60 years: 2 cycles (initial + 1)</p>
                 <p>Total luminaire carbon: 200 × 32 × 2.4 = 15,360 kgCO₂e</p>
@@ -1025,7 +1025,7 @@ const HNCModule6Section4_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1072,7 +1072,7 @@ const HNCModule6Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section4">

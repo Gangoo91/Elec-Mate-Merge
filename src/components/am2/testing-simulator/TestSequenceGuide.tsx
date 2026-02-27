@@ -28,12 +28,12 @@ export function TestSequenceGuide({ currentStep, className }: TestSequenceGuideP
       <div
         className={cn(
           'w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold',
-          currentStep === 0 ? 'bg-white/10 text-white/40' : 'bg-cyan-500/20 text-cyan-400'
+          currentStep === 0 ? 'bg-white/10 text-white' : 'bg-cyan-500/20 text-cyan-400'
         )}
       >
         {currentStep}
       </div>
-      <span className="text-[10px] font-medium text-white/60 max-w-[120px] truncate">
+      <span className="text-[10px] font-medium text-white max-w-[120px] truncate">
         {stepLabel}
       </span>
     </div>

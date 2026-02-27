@@ -199,7 +199,7 @@ function PremiumHubCard({
           <span
             className={cn(
               'text-[10px] sm:text-xs font-medium',
-              'text-white/70 uppercase tracking-wider',
+              'text-white uppercase tracking-wider',
               'px-2 py-1 rounded-md bg-white/[0.04]'
             )}
           >
@@ -217,7 +217,7 @@ function PremiumHubCard({
           >
             {hub.title}
           </h3>
-          <p className="text-xs sm:text-sm text-white/70 leading-relaxed line-clamp-2">
+          <p className="text-xs sm:text-sm text-white leading-relaxed line-clamp-2">
             {hub.description}
           </p>
         </div>
@@ -234,8 +234,8 @@ function PremiumHubCard({
               'bg-white/[0.05] border border-white/[0.08]'
             )}
           >
-            <stat.icon className="h-3 w-3 text-white/60" />
-            <span className="text-[10px] sm:text-xs text-white/80">{stat.label}:</span>
+            <stat.icon className="h-3 w-3 text-white" />
+            <span className="text-[10px] sm:text-xs text-white">{stat.label}:</span>
             <span className={cn('text-[10px] sm:text-xs font-semibold', hub.iconColor)}>
               {stat.value}
             </span>
@@ -264,7 +264,7 @@ function PremiumHubCard({
           >
             <ChevronRight
               className={cn(
-                'w-4 h-4 text-white/60',
+                'w-4 h-4 text-white',
                 'group-hover:text-black group-hover:translate-x-0.5',
                 'transition-all'
               )}

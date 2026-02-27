@@ -236,7 +236,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
       <div className="max-w-4xl mx-auto px-4 py-6 space-y-8">
         {/* Quick Summary */}
         <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
-          <p className="text-white/90 leading-relaxed">
+          <p className="text-white leading-relaxed">
             Lighting typically accounts for{' '}
             <span className="text-elec-yellow font-semibold">
               15-25% of a commercial building's electricity consumption
@@ -256,7 +256,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
           </h2>
 
           <div className="bg-white/5 rounded-xl p-5 space-y-4">
-            <p className="text-white/80">
+            <p className="text-white">
               LED (Light Emitting Diode) technology has revolutionised the lighting industry.
               Understanding efficacy comparisons is essential for specifying appropriate
               replacements and calculating energy savings.
@@ -271,11 +271,11 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 text-white/70">Technology</th>
-                      <th className="text-right py-2 text-white/70">lm/W</th>
+                      <th className="text-left py-2 text-white">Technology</th>
+                      <th className="text-right py-2 text-white">lm/W</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2">Incandescent</td>
                       <td className="text-right">10-17</td>
@@ -309,7 +309,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                   <TrendingUp className="w-5 h-5" />
                   Key LED Advantages
                 </h3>
-                <ul className="space-y-2 text-white/80 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                     <span>
@@ -360,7 +360,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
               <h4 className="text-elec-yellow font-semibold mb-2">
                 Understanding L70 and Lumen Maintenance
               </h4>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 L70 indicates the point at which LED light output has degraded to 70% of its initial
                 lumens. A 50,000-hour L70 rating means the LED will still produce 70% of original
                 output after 50,000 hours. For critical applications, specify L80 or L90 ratings.
@@ -388,7 +388,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
           </h2>
 
           <div className="bg-white/5 rounded-xl p-5 space-y-4">
-            <p className="text-white/80">
+            <p className="text-white">
               Choosing between retrofit lamps and complete luminaire replacement requires careful
               assessment of the existing installation, desired outcomes, and total cost of
               ownership.
@@ -397,7 +397,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-6">
               <div className="bg-white/5 rounded-lg p-4">
                 <h3 className="text-green-400 font-semibold mb-3">Lamp Retrofit - When Suitable</h3>
-                <ul className="space-y-2 text-white/80 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                     Luminaires less than 10 years old in good condition
@@ -430,7 +430,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 <h3 className="text-elec-yellow font-semibold mb-3">
                   Full Luminaire Replacement - When Required
                 </h3>
-                <ul className="space-y-2 text-white/80 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start gap-2">
                     <AlertTriangle className="w-4 h-4 text-yellow-500 mt-0.5 flex-shrink-0" />
                     Magnetic ballasts (incompatible with LED retrofit)
@@ -467,21 +467,21 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 Critical: LED Tube Retrofit Types
               </h4>
               <div className="grid md:grid-cols-3 gap-4 text-sm">
-                <div className="text-white/80">
+                <div className="text-white">
                   <strong className="text-white">Type A (Plug and Play)</strong>
                   <p>
                     Works with existing ballast. Quick install but limited compatibility and reduced
                     efficiency.
                   </p>
                 </div>
-                <div className="text-white/80">
+                <div className="text-white">
                   <strong className="text-white">Type B (Ballast Bypass)</strong>
                   <p>
                     Direct mains connection. Requires rewiring but more efficient. Fitting becomes
                     new product.
                   </p>
                 </div>
-                <div className="text-white/80">
+                <div className="text-white">
                   <strong className="text-white">Type C (External Driver)</strong>
                   <p>
                     Uses separate LED driver. Most flexible and efficient but highest installation
@@ -501,7 +501,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
           </h2>
 
           <div className="bg-white/5 rounded-xl p-5 space-y-4">
-            <p className="text-white/80">
+            <p className="text-white">
               Effective lighting controls can save an additional 30-50% beyond the LED lamp savings.
               Understanding each technology's strengths enables optimal system design.
             </p>
@@ -516,7 +516,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 <div className="grid md:grid-cols-3 gap-4 text-sm">
                   <div className="bg-white/5 rounded p-3">
                     <h4 className="text-white font-medium mb-2">PIR (Passive Infrared)</h4>
-                    <ul className="text-white/70 space-y-1">
+                    <ul className="text-white space-y-1">
                       <li>- Detects body heat movement</li>
                       <li>- Line-of-sight required</li>
                       <li>- Best for: offices, corridors</li>
@@ -526,7 +526,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                   </div>
                   <div className="bg-white/5 rounded p-3">
                     <h4 className="text-white font-medium mb-2">Microwave</h4>
-                    <ul className="text-white/70 space-y-1">
+                    <ul className="text-white space-y-1">
                       <li>- Detects any movement</li>
                       <li>- Works through partitions</li>
                       <li>- Best for: open areas, WCs</li>
@@ -536,7 +536,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                   </div>
                   <div className="bg-white/5 rounded p-3">
                     <h4 className="text-white font-medium mb-2">Dual Technology</h4>
-                    <ul className="text-white/70 space-y-1">
+                    <ul className="text-white space-y-1">
                       <li>- Combines PIR + microwave</li>
                       <li>- Reduces false triggers</li>
                       <li>- Best for: high-reliability needs</li>
@@ -553,17 +553,17 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                   <Sun className="w-5 h-5" />
                   Daylight Harvesting/Linking
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Photocells measure ambient light levels and automatically dim artificial lighting
                   to maintain target lux levels while maximising daylight use. Savings of 20-40% are
                   typical in daylit spaces.
                 </p>
                 <div className="grid md:grid-cols-2 gap-4">
-                  <div className="text-sm text-white/80">
+                  <div className="text-sm text-white">
                     <strong className="text-white">Open Loop</strong>
                     <p>Sensor faces window, measures daylight only. Simple but less accurate.</p>
                   </div>
-                  <div className="text-sm text-white/80">
+                  <div className="text-sm text-white">
                     <strong className="text-white">Closed Loop</strong>
                     <p>
                       Sensor faces task area, measures combined light. More accurate, requires
@@ -583,12 +583,12 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b border-white/20">
-                        <th className="text-left py-2 text-white/70">Feature</th>
-                        <th className="text-center py-2 text-white/70">1-10V</th>
+                        <th className="text-left py-2 text-white">Feature</th>
+                        <th className="text-center py-2 text-white">1-10V</th>
                         <th className="text-center py-2 text-elec-yellow">DALI</th>
                       </tr>
                     </thead>
-                    <tbody className="text-white/80">
+                    <tbody className="text-white">
                       <tr className="border-b border-white/10">
                         <td className="py-2">Communication</td>
                         <td className="text-center">One-way (analogue)</td>
@@ -644,7 +644,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
           </h2>
 
           <div className="bg-white/5 rounded-xl p-5 space-y-4">
-            <p className="text-white/80">
+            <p className="text-white">
               UK Building Regulations Part L sets minimum energy efficiency standards for lighting
               in new and refurbished buildings. Understanding these requirements is essential for
               compliant installations.
@@ -655,7 +655,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 <FileCheck className="w-5 h-5" />
                 Part L 2021 Key Requirements (Non-Domestic)
               </h3>
-              <ul className="space-y-2 text-white/80">
+              <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
                   <Target className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
@@ -703,11 +703,11 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 <table className="text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 text-white/70">Space Type</th>
-                      <th className="text-right py-2 text-white/70">Lux</th>
+                      <th className="text-left py-2 text-white">Space Type</th>
+                      <th className="text-right py-2 text-white">Lux</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-1">Corridors</td>
                       <td className="text-right">100</td>
@@ -733,11 +733,11 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 <table className="text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 text-white/70">Space Type</th>
-                      <th className="text-right py-2 text-white/70">Lux</th>
+                      <th className="text-left py-2 text-white">Space Type</th>
+                      <th className="text-right py-2 text-white">Lux</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-1">Storage/archives</td>
                       <td className="text-right">100</td>
@@ -765,7 +765,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
 
             <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
               <h4 className="text-blue-400 font-semibold mb-2">Calculating Circuit Watts</h4>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 Circuit watts = lamp watts + control gear losses. For LED luminaires, this is
                 typically the stated luminaire wattage. For older technology with separate ballasts,
                 add ballast losses (typically 10-15% for electronic, 20-25% for magnetic). The 60
@@ -794,7 +794,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
           </h2>
 
           <div className="bg-white/5 rounded-xl p-5 space-y-4">
-            <p className="text-white/80">
+            <p className="text-white">
               Demonstrating financial returns is often key to securing approval for lighting
               upgrades. Understanding payback calculations helps you make compelling business cases.
             </p>
@@ -814,7 +814,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 <h4 className="text-green-400 font-semibold mb-2">
                   Worked Example: Office Lighting Upgrade
                 </h4>
-                <div className="grid md:grid-cols-2 gap-4 text-sm text-white/80">
+                <div className="grid md:grid-cols-2 gap-4 text-sm text-white">
                   <div>
                     <strong className="text-white">Existing System:</strong>
                     <ul className="mt-1 space-y-1">
@@ -839,15 +839,15 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 <div className="mt-4 pt-4 border-t border-green-500/30">
                   <div className="flex flex-wrap gap-4 justify-center text-center">
                     <div>
-                      <p className="text-white/60 text-xs">Annual Savings</p>
+                      <p className="text-white text-xs">Annual Savings</p>
                       <p className="text-green-400 font-bold text-xl">£3,000</p>
                     </div>
                     <div>
-                      <p className="text-white/60 text-xs">Project Cost</p>
+                      <p className="text-white text-xs">Project Cost</p>
                       <p className="text-white font-bold text-xl">£8,000</p>
                     </div>
                     <div>
-                      <p className="text-white/60 text-xs">Simple Payback</p>
+                      <p className="text-white text-xs">Simple Payback</p>
                       <p className="text-elec-yellow font-bold text-xl">2.7 years</p>
                     </div>
                   </div>
@@ -861,7 +861,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 Additional Savings to Consider
               </h3>
               <div className="grid md:grid-cols-2 gap-4">
-                <div className="text-sm text-white/80">
+                <div className="text-sm text-white">
                   <strong className="text-white">Maintenance Savings</strong>
                   <ul className="mt-1 space-y-1">
                     <li>- Reduced lamp replacement frequency</li>
@@ -870,7 +870,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                     <li>- Typical saving: £500-2,000/year for 100 fittings</li>
                   </ul>
                 </div>
-                <div className="text-sm text-white/80">
+                <div className="text-sm text-white">
                   <strong className="text-white">Control System Savings</strong>
                   <ul className="mt-1 space-y-1">
                     <li>- Occupancy sensing: 20-30% additional</li>
@@ -887,7 +887,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 <Clock className="w-5 h-5" />
                 Lifecycle Cost Analysis
               </h4>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 For a more complete picture, calculate Total Cost of Ownership (TCO) over 10-15
                 years, including: initial purchase and installation, energy costs, lamp/driver
                 replacements, maintenance labour, and disposal costs. LED systems typically show
@@ -905,7 +905,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
           </h2>
 
           <div className="bg-white/5 rounded-xl p-5 space-y-4">
-            <p className="text-white/80">
+            <p className="text-white">
               Learning from common mistakes helps ensure successful installations. Here are the most
               frequent issues encountered in LED and lighting control projects.
             </p>
@@ -915,7 +915,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 <h4 className="text-red-400 font-semibold mb-2">
                   Pitfall 1: Dimmer Compatibility Issues
                 </h4>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Problem:</strong> Flickering, buzzing, or limited dimming range when using
                   existing dimmers with LED lamps.
                 </p>
@@ -930,7 +930,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 <h4 className="text-red-400 font-semibold mb-2">
                   Pitfall 2: Thermal Management Failures
                 </h4>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Problem:</strong> Premature LED failure due to overheating in enclosed
                   fittings or insulated ceilings.
                 </p>
@@ -945,7 +945,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 <h4 className="text-red-400 font-semibold mb-2">
                   Pitfall 3: Incorrect Colour Temperature Selection
                 </h4>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Problem:</strong> Mixed colour temperatures creating uneven appearance, or
                   wrong colour for application.
                 </p>
@@ -960,7 +960,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 <h4 className="text-red-400 font-semibold mb-2">
                   Pitfall 4: Emergency Lighting Compatibility
                 </h4>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Problem:</strong> Existing emergency inverters/batteries incompatible with
                   LED loads.
                 </p>
@@ -975,7 +975,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
                 <h4 className="text-red-400 font-semibold mb-2">
                   Pitfall 5: Control System Commissioning Failures
                 </h4>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Problem:</strong> DALI systems not functioning correctly due to addressing
                   errors or sensor placement.
                 </p>
@@ -988,7 +988,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
 
               <div className="bg-white/5 rounded-lg p-4 border-l-4 border-red-500">
                 <h4 className="text-red-400 font-semibold mb-2">Pitfall 6: Over-Lighting Spaces</h4>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Problem:</strong> Replacing like-for-like without considering LED's
                   superior efficacy, resulting in excessive light levels.
                 </p>
@@ -1013,7 +1013,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
             <div>
               <h4 className="text-white font-semibold mb-2">LED Lamp Equivalents</h4>
               <table className="w-full text-sm">
-                <tbody className="text-white/80">
+                <tbody className="text-white">
                   <tr className="border-b border-white/20">
                     <td className="py-1">40W incandescent</td>
                     <td className="text-right">= 5-6W LED</td>
@@ -1045,7 +1045,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
             <div>
               <h4 className="text-white font-semibold mb-2">Key Colour Temperatures</h4>
               <table className="w-full text-sm">
-                <tbody className="text-white/80">
+                <tbody className="text-white">
                   <tr className="border-b border-white/20">
                     <td className="py-1">2700K</td>
                     <td className="text-right">Warm White (residential)</td>
@@ -1072,7 +1072,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
 
             <div>
               <h4 className="text-white font-semibold mb-2">Part L Checklist</h4>
-              <ul className="text-sm text-white/80 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-elec-yellow" />
                   60+ luminaire lm/circuit watt
@@ -1098,7 +1098,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
 
             <div>
               <h4 className="text-white font-semibold mb-2">DALI Quick Facts</h4>
-              <ul className="text-sm text-white/80 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li className="flex items-center gap-2">
                   <Zap className="w-4 h-4 text-elec-yellow" />
                   Max 64 devices per DALI line
@@ -1136,7 +1136,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
               <div key={index} className="bg-white/5 rounded-lg overflow-hidden">
                 <div className="p-4">
                   <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                  <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                  <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
                 </div>
               </div>
             ))}
@@ -1149,7 +1149,7 @@ const EnergyEfficiencyModule4Section1: React.FC = () => {
             <CheckCircle2 className="w-6 h-6" />
             Section Knowledge Check
           </h2>
-          <p className="text-white/80 mb-6">
+          <p className="text-white mb-6">
             Test your understanding of LED technology and lighting controls with this 10-question
             quiz.
           </p>

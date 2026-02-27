@@ -206,7 +206,7 @@ export default function RSMModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-4">
@@ -342,7 +342,7 @@ export default function RSMModule4Section3() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 p-3 rounded">
                     <p className="text-xs font-medium text-rose-400 mb-1">1. Fear of Losing Work</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       &ldquo;If I say no, they will find someone else and never call me
                       again.&rdquo; In reality, clients who value your work will wait or rebook.
                       Clients who go elsewhere because you are not immediately available are usually
@@ -353,7 +353,7 @@ export default function RSMModule4Section3() {
                     <p className="text-xs font-medium text-rose-400 mb-1">
                       2. Fear of Reputation Damage
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       &ldquo;People will say I am unreliable or lazy.&rdquo; In reality, being
                       booked up is a sign of success, not failure. An electrician who says &ldquo;I
                       am fully booked for the next three weeks but I can start on the 15th&rdquo;
@@ -366,7 +366,7 @@ export default function RSMModule4Section3() {
                     <p className="text-xs font-medium text-rose-400 mb-1">
                       3. Fear of Letting People Down
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       &ldquo;They are relying on me. I cannot let them down.&rdquo; This is
                       especially powerful when the work involves people you know personally or have
                       a long relationship with. But consistently saying yes when you should say no
@@ -426,7 +426,7 @@ export default function RSMModule4Section3() {
                     <p className="text-xs font-medium text-rose-400 mb-1">
                       Maximum Working Week: 48 Hours
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       The maximum average working week is 48 hours, calculated over a 17-week
                       reference period. This means you can work more than 48 hours in some weeks as
                       long as the average over 17 weeks does not exceed 48. Workers can sign a
@@ -439,7 +439,7 @@ export default function RSMModule4Section3() {
                     <p className="text-xs font-medium text-rose-400 mb-1">
                       Daily Rest: 11 Consecutive Hours
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Workers are entitled to 11 consecutive hours of rest between finishing one
                       shift and starting the next. If you finish at 7pm, you should not start before
                       6am the following day. This rest period is essential for sleep recovery and is
@@ -450,7 +450,7 @@ export default function RSMModule4Section3() {
                     <p className="text-xs font-medium text-rose-400 mb-1">
                       Weekly Rest: 1 Day Off Per Week
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Workers are entitled to at least one uninterrupted 24-hour period off in each
                       7-day period, or two uninterrupted 24-hour periods in each 14-day period.
                       Working 7 days a week continuously is not just exhausting &mdash; it is a
@@ -461,7 +461,7 @@ export default function RSMModule4Section3() {
                     <p className="text-xs font-medium text-rose-400 mb-1">
                       In-Work Rest: 20 Minutes Per 6 Hours
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Workers are entitled to a minimum 20-minute uninterrupted rest break during
                       any shift lasting more than 6 hours. This break should be taken away from the
                       workstation and cannot be taken at the start or end of the shift.
@@ -524,7 +524,7 @@ export default function RSMModule4Section3() {
                     Practical Strategies for Realistic Quoting
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -604,7 +604,7 @@ export default function RSMModule4Section3() {
                     Setting Effective Digital Boundaries
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -697,28 +697,28 @@ export default function RSMModule4Section3() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 p-3 rounded">
                     <p className="text-xs font-medium text-rose-400 mb-1">Up to 50 Hours</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Output per hour remains roughly constant. Working 50 hours produces
                       proportionally more output than working 40 hours.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded">
                     <p className="text-xs font-medium text-rose-400 mb-1">50-55 Hours</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Productivity per hour starts to fall sharply. The extra hours produce
                       significantly less output per hour than the first 50.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded">
                     <p className="text-xs font-medium text-rose-400 mb-1">55-60 Hours</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Total output is barely higher than at 50 hours. The additional 5&ndash;10
                       hours produce almost no measurable increase in output.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded">
                     <p className="text-xs font-medium text-rose-400 mb-1">Beyond 60 Hours</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Total output actually <em>decreases</em> compared to a 50-hour week. The
                       errors, rework, accidents and health consequences of excessive hours more than
                       offset any additional output. You are literally getting less done by working
@@ -741,7 +741,7 @@ export default function RSMModule4Section3() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">The Hidden Costs of Overwork</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -806,7 +806,7 @@ export default function RSMModule4Section3() {
                   <CheckCircle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Summary of Key Principles</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -848,7 +848,7 @@ export default function RSMModule4Section3() {
                 <p className="text-sm font-medium text-white mb-2">
                   Coming Next: Financial Stress &amp; Practical Problem-Solving
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Financial stress is the number one stressor for self-employed tradespeople. In
                   Section 4, we cover building emergency funds, CIS tax planning, debt management,
                   insurance protection, and where to get financial help when you need it.
@@ -882,7 +882,7 @@ export default function RSMModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-4">

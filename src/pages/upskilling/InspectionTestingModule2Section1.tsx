@@ -224,7 +224,7 @@ const InspectionTestingModule2Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-2">
@@ -246,7 +246,7 @@ const InspectionTestingModule2Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Principles of Safe Isolation
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding why safe isolation is essential and the fundamental principles that
             protect lives
           </p>
@@ -328,7 +328,7 @@ const InspectionTestingModule2Section1 = () => {
                 <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="text-white font-semibold">Critical Safety Principle</p>
-                  <p className="text-white/80 mt-1 text-sm">
+                  <p className="text-white mt-1 text-sm">
                     Every year in the UK, electrical accidents cause approximately 30 deaths and
                     350,000 injuries. Many of these could be prevented by proper safe isolation
                     procedures.
@@ -341,7 +341,7 @@ const InspectionTestingModule2Section1 = () => {
               <p className="text-sm font-medium text-white mb-2">
                 Safe Isolation Is More Than Switching Off
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Simply switching off is NOT safe isolation. Safe isolation includes:
               </p>
               <ul className="text-sm text-white space-y-2 ml-4">
@@ -395,25 +395,25 @@ const InspectionTestingModule2Section1 = () => {
               <div className="grid sm:grid-cols-2 gap-3">
                 <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20">
                   <p className="text-white font-medium text-sm">Circuit Not Actually Isolated</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Switch handle moved but contacts didn't open, or wrong circuit isolated.
                   </p>
                 </div>
                 <div className="p-3 rounded-lg bg-orange-500/10 border border-orange-500/20">
                   <p className="text-white font-medium text-sm">Supply Restored During Work</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Someone else switches the supply back on, not knowing work is being done.
                   </p>
                 </div>
                 <div className="p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
                   <p className="text-white font-medium text-sm">Unknown Supply Source</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Equipment fed from multiple sources - only one was isolated.
                   </p>
                 </div>
                 <div className="p-3 rounded-lg bg-purple-500/10 border border-purple-500/20">
                   <p className="text-white font-medium text-sm">Stored Energy</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Capacitors retain charge even after isolation - can deliver fatal shock.
                   </p>
                 </div>
@@ -422,7 +422,7 @@ const InspectionTestingModule2Section1 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Consequences</p>
-              <ul className="text-sm text-white/90 space-y-1 ml-4">
+              <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Electric shock - potentially fatal</li>
                 <li>Arc flash - severe burns, blindness</li>
                 <li>Falls from height after shock</li>
@@ -530,7 +530,7 @@ const InspectionTestingModule2Section1 = () => {
             <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
               <div className="flex items-start gap-3">
                 <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   <strong className="text-white">Solar PV Warning:</strong> PV systems generate
                   electricity whenever exposed to light. Even with the mains isolated, DC conductors
                   from panels to inverter can be live. AC may back-feed if the system isn't properly
@@ -562,7 +562,7 @@ const InspectionTestingModule2Section1 = () => {
                   </span>
                   <div>
                     <p className="text-white font-semibold text-sm">IDENTIFY</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Identify the circuit/equipment and ALL sources of supply
                     </p>
                   </div>
@@ -573,7 +573,7 @@ const InspectionTestingModule2Section1 = () => {
                   </span>
                   <div>
                     <p className="text-white font-semibold text-sm">ISOLATE</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Disconnect from all supplies using appropriate isolation devices
                     </p>
                   </div>
@@ -584,7 +584,7 @@ const InspectionTestingModule2Section1 = () => {
                   </span>
                   <div>
                     <p className="text-white font-semibold text-sm">SECURE</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Lock off isolation devices and apply warning labels
                     </p>
                   </div>
@@ -595,7 +595,7 @@ const InspectionTestingModule2Section1 = () => {
                   </span>
                   <div>
                     <p className="text-white font-semibold text-sm">PROVE</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Prove your voltage indicator works on a known live source
                     </p>
                   </div>
@@ -606,7 +606,7 @@ const InspectionTestingModule2Section1 = () => {
                   </span>
                   <div>
                     <p className="text-white font-semibold text-sm">TEST</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Test the circuit dead at the point of work
                     </p>
                   </div>
@@ -617,7 +617,7 @@ const InspectionTestingModule2Section1 = () => {
                   </span>
                   <div>
                     <p className="text-white font-semibold text-sm">RE-PROVE</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Prove your voltage indicator still works on the known live source
                     </p>
                   </div>
@@ -627,7 +627,7 @@ const InspectionTestingModule2Section1 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
               <p className="text-white font-semibold text-sm">Prove-Test-Prove</p>
-              <p className="text-white/80 mt-2 text-sm">
+              <p className="text-white mt-2 text-sm">
                 The prove-test-prove procedure (steps 4-6) is critical. It confirms your test
                 equipment was working before you tested the circuit, and is still working after. If
                 the tester failed between the tests, you'd know your "dead" reading was unreliable.
@@ -912,7 +912,7 @@ const InspectionTestingModule2Section1 = () => {
               </marker>
             </defs>
           </svg>
-          <p className="text-xs text-white/40 mt-3">
+          <p className="text-xs text-white mt-3">
             The six essential steps of safe isolation per HSE GS38. Steps 4–6 form the critical
             prove-test-prove sequence.
           </p>
@@ -937,7 +937,7 @@ const InspectionTestingModule2Section1 = () => {
                 <p className="text-elec-yellow font-semibold text-sm">
                   Regulation 12 - Means of Cutting Off Supply
                 </p>
-                <p className="text-white/80 mt-1 text-xs">
+                <p className="text-white mt-1 text-xs">
                   Where necessary to prevent danger, suitable means must be available for cutting
                   off the electrical supply to any electrical equipment.
                 </p>
@@ -946,7 +946,7 @@ const InspectionTestingModule2Section1 = () => {
                 <p className="text-elec-yellow font-semibold text-sm">
                   Regulation 13 - Precautions for Work on Dead Equipment
                 </p>
-                <p className="text-white/80 mt-1 text-xs">
+                <p className="text-white mt-1 text-xs">
                   Adequate precautions must be taken to prevent equipment being made live while work
                   is being carried out.
                 </p>
@@ -955,7 +955,7 @@ const InspectionTestingModule2Section1 = () => {
                 <p className="text-elec-yellow font-semibold text-sm">
                   Regulation 14 - Work on or Near Live Conductors
                 </p>
-                <p className="text-white/80 mt-1 text-xs">
+                <p className="text-white mt-1 text-xs">
                   Live working is only permitted when it's unreasonable to work dead AND suitable
                   precautions are taken.
                 </p>
@@ -965,7 +965,7 @@ const InspectionTestingModule2Section1 = () => {
             <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/20">
               <div className="flex items-start gap-3">
                 <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   <strong className="text-white">Personal Responsibility:</strong> GS38 emphasises
                   that each person is responsible for their own safety. You must personally verify
                   isolation - don't rely on others.
@@ -1022,7 +1022,7 @@ const InspectionTestingModule2Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1058,7 +1058,7 @@ const InspectionTestingModule2Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-1/section-5">

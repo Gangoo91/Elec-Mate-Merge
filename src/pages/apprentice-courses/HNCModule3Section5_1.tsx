@@ -215,7 +215,7 @@ const HNCModule3Section5_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section5">
@@ -237,7 +237,7 @@ const HNCModule3Section5_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Principles of Electromagnetic Induction
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             The fundamental principles behind generators, transformers and motors in building
             services
           </p>
@@ -325,7 +325,7 @@ const HNCModule3Section5_1 = () => {
                 Faraday's Law Statement
               </p>
               <p className="font-mono text-center text-lg mb-2">e = -N &#215; (d&#934;/dt)</p>
-              <div className="text-sm text-white/70 text-center space-y-1">
+              <div className="text-sm text-white text-center space-y-1">
                 <p>e = induced EMF (Volts)</p>
                 <p>N = number of turns in the coil</p>
                 <p>d&#934;/dt = rate of change of magnetic flux (Wb/s)</p>
@@ -420,7 +420,7 @@ const HNCModule3Section5_1 = () => {
               <p className="text-center italic mb-2">
                 "The direction of the induced EMF is such that it opposes the change producing it."
               </p>
-              <p className="text-sm text-white/70 text-center">
+              <p className="text-sm text-white text-center">
                 This is a consequence of energy conservation - energy cannot be created from
                 nothing.
               </p>
@@ -491,7 +491,7 @@ const HNCModule3Section5_1 = () => {
                 Flux Linkage Definition
               </p>
               <p className="font-mono text-center text-lg mb-2">&#923; = N &#215; &#934;</p>
-              <div className="text-sm text-white/70 text-center space-y-1">
+              <div className="text-sm text-white text-center space-y-1">
                 <p>&#923; (Lambda, flux linkage) = Weber-turns (Wb-turns)</p>
                 <p>N = number of turns</p>
                 <p>&#934; = magnetic flux through one turn (Wb)</p>
@@ -520,7 +520,7 @@ const HNCModule3Section5_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-mono text-center mb-1">e = -d&#923;/dt</p>
-                  <p className="text-white/70 text-xs text-center">
+                  <p className="text-white text-xs text-center">
                     EMF equals rate of change of flux linkage
                   </p>
                 </div>
@@ -528,7 +528,7 @@ const HNCModule3Section5_1 = () => {
                   <p className="font-mono text-center mb-1">
                     e = -(&#923;&#8322; - &#923;&#8321;) / t
                   </p>
-                  <p className="text-white/70 text-xs text-center">
+                  <p className="text-white text-xs text-center">
                     For average EMF over time interval t
                   </p>
                 </div>
@@ -557,7 +557,7 @@ const HNCModule3Section5_1 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Motional EMF Equation</p>
               <p className="font-mono text-center text-lg mb-2">e = B &#215; l &#215; v</p>
-              <div className="text-sm text-white/70 text-center space-y-1">
+              <div className="text-sm text-white text-center space-y-1">
                 <p>e = induced EMF (Volts)</p>
                 <p>B = magnetic flux density (Tesla)</p>
                 <p>l = length of conductor in field (metres)</p>
@@ -643,14 +643,14 @@ const HNCModule3Section5_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-center">
                 <div>
                   <p className="font-mono text-lg mb-1">e&#8321; = -N&#8321; &#215; (d&#934;/dt)</p>
-                  <p className="text-xs text-white/70">Primary EMF</p>
+                  <p className="text-xs text-white">Primary EMF</p>
                 </div>
                 <div>
                   <p className="font-mono text-lg mb-1">e&#8322; = -N&#8322; &#215; (d&#934;/dt)</p>
-                  <p className="text-xs text-white/70">Secondary EMF</p>
+                  <p className="text-xs text-white">Secondary EMF</p>
                 </div>
               </div>
-              <p className="text-sm text-white/70 text-center mt-3">
+              <p className="text-sm text-white text-center mt-3">
                 Same flux links both windings, so: e&#8322;/e&#8321; = N&#8322;/N&#8321;
               </p>
             </div>
@@ -746,7 +746,7 @@ const HNCModule3Section5_1 = () => {
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Self-Inductance (L)</p>
                 <p className="font-mono text-center text-lg mb-2">e = -L &#215; (di/dt)</p>
-                <div className="text-xs text-white/70 space-y-1">
+                <div className="text-xs text-white space-y-1">
                   <p>L = self-inductance (Henrys)</p>
                   <p>di/dt = rate of change of current</p>
                   <p>e = back-EMF opposing change</p>
@@ -759,7 +759,7 @@ const HNCModule3Section5_1 = () => {
                 <p className="font-mono text-center text-lg mb-2">
                   e&#8322; = -M &#215; (di&#8321;/dt)
                 </p>
-                <div className="text-xs text-white/70 space-y-1">
+                <div className="text-xs text-white space-y-1">
                   <p>M = mutual inductance (Henrys)</p>
                   <p>di&#8321;/dt = rate of change in coil 1</p>
                   <p>e&#8322; = EMF induced in coil 2</p>
@@ -848,7 +848,7 @@ const HNCModule3Section5_1 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Eddy Current Formation</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 When a changing magnetic field passes through a conductor, EMF is induced throughout
                 the material. This drives circulating currents (eddies) that follow closed loops
                 within the conductor, generating heat through I&#178;R losses.
@@ -1115,7 +1115,7 @@ const HNCModule3Section5_1 = () => {
                 rotating at the edge of a 0.15m radius drum at 1500 rpm in a 0.9T field. Calculate
                 the average EMF per conductor.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Calculate velocity</p>
                 <p>
                   v = 2 &#215; &#960; &#215; r &#215; (rpm/60) = 2 &#215; 3.14 &#215; 0.15 &#215;
@@ -1128,7 +1128,7 @@ const HNCModule3Section5_1 = () => {
                 <p>
                   e = Blv = 0.9 &#215; 0.3 &#215; 23.6 = <strong>6.4V</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Total EMF depends on series/parallel conductor arrangement
                 </p>
               </div>
@@ -1142,14 +1142,14 @@ const HNCModule3Section5_1 = () => {
                 <strong>Question:</strong> A bell transformer has 1150 turns on the primary and 40
                 turns on the secondary. If connected to 230V mains, what is the secondary voltage?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using transformer equation: V&#8322;/V&#8321; = N&#8322;/N&#8321;</p>
                 <p className="mt-2">V&#8322; = V&#8321; &#215; (N&#8322;/N&#8321;)</p>
                 <p>V&#8322; = 230 &#215; (40/1150)</p>
                 <p>
                   V&#8322; = 230 &#215; 0.0348 = <strong>8V</strong>
                 </p>
-                <p className="mt-2 text-white/60">Suitable for door bells and chimes</p>
+                <p className="mt-2 text-white">Suitable for door bells and chimes</p>
               </div>
             </div>
 
@@ -1161,7 +1161,7 @@ const HNCModule3Section5_1 = () => {
                 <strong>Question:</strong> A 400-turn coil is in a magnetic field. The flux through
                 the coil changes from 0.08Wb to 0.02Wb in 50ms. Calculate the induced EMF.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Change in flux: d&#934; = 0.02 - 0.08 = -0.06Wb</p>
                 <p>Time: dt = 50ms = 0.05s</p>
                 <p className="mt-2">e = -N &#215; (d&#934;/dt)</p>
@@ -1169,7 +1169,7 @@ const HNCModule3Section5_1 = () => {
                 <p>
                   e = -400 &#215; (-1.2) = <strong>480V</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   The positive result indicates EMF opposes the decreasing flux
                 </p>
               </div>
@@ -1183,7 +1183,7 @@ const HNCModule3Section5_1 = () => {
                 <strong>Question:</strong> A relay coil has inductance of 0.5H. When the circuit is
                 opened, the current falls from 0.2A to zero in 5ms. What back-EMF is generated?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using: e = -L &#215; (di/dt)</p>
                 <p className="mt-2">di = 0 - 0.2 = -0.2A</p>
                 <p>dt = 5ms = 0.005s</p>
@@ -1191,7 +1191,7 @@ const HNCModule3Section5_1 = () => {
                 <p>
                   e = -0.5 &#215; (-40) = <strong>20V</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This is why relay contacts arc - the back-EMF can be much higher than supply
                 </p>
               </div>
@@ -1281,7 +1281,7 @@ const HNCModule3Section5_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1327,7 +1327,7 @@ const HNCModule3Section5_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section4-8">

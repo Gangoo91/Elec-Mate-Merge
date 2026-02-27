@@ -194,7 +194,7 @@ const InspectorDetailsCard: React.FC<InspectorDetailsCardProps> = ({
             <div className="w-1.5 h-1.5 rounded-full bg-teal-400" />
             <span className="font-semibold text-[15px] text-white">Inspector Details</span>
           </div>
-          <ChevronRight className="h-5 w-5 text-white/30" />
+          <ChevronRight className="h-5 w-5 text-white" />
         </button>
 
         <div className="border-t border-white/[0.06]">
@@ -204,7 +204,7 @@ const InspectorDetailsCard: React.FC<InspectorDetailsCardProps> = ({
               <User className="h-4 w-4 text-teal-400" />
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+              <p className="text-[11px] font-medium text-white uppercase tracking-wide">
                 Inspector Name
               </p>
               <p className="text-[15px] text-white">
@@ -219,7 +219,7 @@ const InspectorDetailsCard: React.FC<InspectorDetailsCardProps> = ({
               <PenTool className="h-4 w-4 text-indigo-400" />
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+              <p className="text-[11px] font-medium text-white uppercase tracking-wide">
                 Signature
               </p>
               {companyProfile?.signature_data ? (
@@ -277,12 +277,12 @@ const InspectorDetailsCard: React.FC<InspectorDetailsCardProps> = ({
           </div>
 
           <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-6 space-y-6 pb-8">
-            <p className="text-[13px] text-white/50 px-1">
+            <p className="text-[13px] text-white px-1">
               These details auto-fill EICR, EIC, and Minor Works certificates.
             </p>
 
             <div className="space-y-2">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Inspector Name
               </Label>
               <Input
@@ -296,13 +296,13 @@ const InspectorDetailsCard: React.FC<InspectorDetailsCardProps> = ({
             {/* Signature Pad */}
             <div className="space-y-3">
               <div className="flex items-center justify-between px-1">
-                <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide">
+                <Label className="text-[13px] font-medium text-white uppercase tracking-wide">
                   Signature for Certificates
                 </Label>
                 <motion.button
                   whileTap={{ scale: 0.95 }}
                   onClick={clearSignature}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.06] text-[13px] text-white/50 active:bg-white/[0.1] touch-manipulation"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.06] text-[13px] text-white active:bg-white/[0.1] touch-manipulation"
                 >
                   <RotateCcw className="h-3.5 w-3.5" />
                   Clear
@@ -323,7 +323,7 @@ const InspectorDetailsCard: React.FC<InspectorDetailsCardProps> = ({
                   onTouchEnd={stopDrawing}
                 />
               </div>
-              <p className="text-[13px] text-white/40 px-1">
+              <p className="text-[13px] text-white px-1">
                 Sign above. This signature will appear on EICR, EIC, and Minor Works certificates.
               </p>
             </div>

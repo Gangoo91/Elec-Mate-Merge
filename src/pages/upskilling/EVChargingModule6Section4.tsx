@@ -88,7 +88,7 @@ const EVChargingModule6Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/ev-charging-module-6">
@@ -109,7 +109,7 @@ const EVChargingModule6Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             RCD and Functional Testing
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Testing protective devices and EV-specific safety equipment
           </p>
         </header>
@@ -272,7 +272,7 @@ const EVChargingModule6Section4 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Why test both phase angles?</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 RCDs can have slightly different operating characteristics at 0° and 180° of the AC
                 waveform. Testing both angles (using the instrument's phase selector) ensures the
                 RCD operates correctly regardless of when in the cycle the fault occurs.
@@ -330,7 +330,7 @@ const EVChargingModule6Section4 = () => {
 
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
               <p className="text-sm font-medium text-red-400 mb-2">Important: Test Equipment</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Standard multifunction testers cannot test Type B RCD DC functions. A dedicated Type
                 B RCD tester is required for full verification. If not available, verify the
                 charger's built-in DC detection device is operational.
@@ -499,7 +499,7 @@ const EVChargingModule6Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/ev-charging-module-6-section-3">

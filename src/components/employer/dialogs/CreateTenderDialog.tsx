@@ -125,7 +125,7 @@ export function CreateTenderDialog({ open, onOpenChange, initialData }: CreateTe
                     </Badge>
                   )}
                 </SheetTitle>
-                <SheetDescription className="text-white/70 text-sm">
+                <SheetDescription className="text-white text-sm">
                   {isFromOpportunity
                     ? 'Review and confirm tender details before tracking.'
                     : 'Add a new tender opportunity to track.'}
@@ -182,7 +182,7 @@ export function CreateTenderDialog({ open, onOpenChange, initialData }: CreateTe
                     Estimated Value
                   </Label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/50">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white">
                       £
                     </span>
                     <Input

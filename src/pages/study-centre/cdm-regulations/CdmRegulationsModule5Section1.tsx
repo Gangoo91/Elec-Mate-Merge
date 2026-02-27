@@ -230,7 +230,7 @@ export default function CdmRegulationsModule5Section1() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Managing the Construction Phase
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             How the principal contractor plans, manages, monitors, and coordinates the construction
             phase &mdash; implementing the construction phase plan and managing subcontractors to
             ensure health and safety on site
@@ -301,7 +301,7 @@ export default function CdmRegulationsModule5Section1() {
         {/* ─── Learning Outcomes ─── */}
         <div className="mb-12 bg-blue-500/10 border border-blue-500/30 rounded-lg p-4 sm:p-5">
           <h2 className="text-lg font-semibold text-blue-400 mb-3">Learning Outcomes</h2>
-          <p className="text-white/80 text-sm mb-3">
+          <p className="text-white text-sm mb-3">
             By the end of this section, you will be able to:
           </p>
           <ul className="text-sm text-white space-y-2">
@@ -358,7 +358,7 @@ export default function CdmRegulationsModule5Section1() {
         {/* ─── Quick-Check Questions ─── */}
         <div className="mb-12 bg-white/5 border border-white/10 rounded-lg p-4 sm:p-5">
           <h2 className="text-lg font-semibold text-white mb-2">Before You Begin</h2>
-          <p className="text-white/70 text-sm mb-4">
+          <p className="text-white text-sm mb-4">
             Test your existing knowledge with these quick-check questions. Don&rsquo;t worry if you
             don&rsquo;t know the answers yet &mdash; you will by the end of this section.
           </p>
@@ -539,7 +539,7 @@ export default function CdmRegulationsModule5Section1() {
                   <CheckCircle className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-blue-300">Proportionality</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The CPP must be{' '}
                   <strong className="text-white">proportionate to the project</strong>. A small,
                   straightforward project (such as a domestic extension) needs a short, simple plan
@@ -680,7 +680,7 @@ export default function CdmRegulationsModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-blue-300">Monitoring Performance</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The PC must <strong className="text-white">actively monitor</strong> subcontractor
                   performance throughout the construction phase. This includes regular site
                   inspections, checking that RAMS are being followed, observing working practices,
@@ -802,7 +802,7 @@ export default function CdmRegulationsModule5Section1() {
                   <CheckCircle className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-blue-300">Ongoing Toolbox Talks</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Beyond the initial induction, the PC should arrange regular{' '}
                   <strong className="text-white">toolbox talks</strong> to address specific hazards
                   relevant to the current phase of work. Toolbox talks are short, focused safety
@@ -1027,7 +1027,7 @@ export default function CdmRegulationsModule5Section1() {
                     The Site Health and Safety Adviser
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   On larger projects, the PC may appoint a dedicated{' '}
                   <strong className="text-white">site health and safety adviser</strong> to support
                   the site management team. The adviser&rsquo;s role is to provide competent health
@@ -1141,7 +1141,7 @@ export default function CdmRegulationsModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-blue-300">Why Worker Engagement Matters</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Research consistently shows that sites with high levels of worker engagement have
                   <strong className="text-white"> significantly lower accident rates</strong> than
                   those where management operates in isolation. Workers are the people closest to
@@ -1287,7 +1287,7 @@ export default function CdmRegulationsModule5Section1() {
                     Stop-Work Authority &amp; the HSE Inspector
                   </h3>
                 </div>
-                <div className="text-white/80 text-sm space-y-3">
+                <div className="text-white text-sm space-y-3">
                   <p>
                     <strong className="text-white">Stop-work authority:</strong> Every worker on
                     site should understand that they have the right &mdash; and the duty &mdash; to
@@ -1321,7 +1321,7 @@ export default function CdmRegulationsModule5Section1() {
             <HardHat className="h-5 w-5 text-blue-400" />
             Construction Phase Management Cycle
           </h2>
-          <p className="text-white/80 mb-6 text-sm">
+          <p className="text-white mb-6 text-sm">
             The principal contractor&rsquo;s management of the construction phase follows a
             continuous improvement cycle. Each step feeds into the next, creating a self-reinforcing
             system that drives ongoing improvement in health and safety performance throughout the
@@ -1336,7 +1336,7 @@ export default function CdmRegulationsModule5Section1() {
                 <div className="bg-blue-500/20 border-b border-blue-500/30 px-4 py-2.5">
                   <p className="text-blue-400 font-bold text-base">1. PLAN</p>
                 </div>
-                <div className="p-4 text-sm text-white/80">
+                <div className="p-4 text-sm text-white">
                   <ul className="space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
@@ -1365,7 +1365,7 @@ export default function CdmRegulationsModule5Section1() {
                 <div className="bg-blue-500/20 border-b border-blue-500/30 px-4 py-2.5">
                   <p className="text-blue-400 font-bold text-base">2. COMMUNICATE</p>
                 </div>
-                <div className="p-4 text-sm text-white/80">
+                <div className="p-4 text-sm text-white">
                   <ul className="space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
@@ -1394,7 +1394,7 @@ export default function CdmRegulationsModule5Section1() {
                 <div className="bg-blue-500/20 border-b border-blue-500/30 px-4 py-2.5">
                   <p className="text-blue-400 font-bold text-base">3. MONITOR</p>
                 </div>
-                <div className="p-4 text-sm text-white/80">
+                <div className="p-4 text-sm text-white">
                   <ul className="space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
@@ -1421,7 +1421,7 @@ export default function CdmRegulationsModule5Section1() {
                 <div className="bg-blue-500/20 border-b border-blue-500/30 px-4 py-2.5">
                   <p className="text-blue-400 font-bold text-base">4. REVIEW</p>
                 </div>
-                <div className="p-4 text-sm text-white/80">
+                <div className="p-4 text-sm text-white">
                   <ul className="space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
@@ -1452,7 +1452,7 @@ export default function CdmRegulationsModule5Section1() {
                 <div className="bg-blue-500/20 border-b border-blue-500/30 px-4 py-2.5">
                   <p className="text-blue-400 font-bold text-base">5. IMPROVE</p>
                 </div>
-                <div className="p-4 text-sm text-white/80">
+                <div className="p-4 text-sm text-white">
                   <ul className="space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
@@ -1476,7 +1476,7 @@ export default function CdmRegulationsModule5Section1() {
             {/* Cycle indicator */}
             <div className="mt-4 flex items-center justify-center gap-2">
               <div className="h-px w-8 bg-blue-500/30" />
-              <p className="text-xs text-white/50 italic text-center">
+              <p className="text-xs text-white italic text-center">
                 The cycle repeats continuously throughout the construction phase, driving ongoing
                 improvement
               </p>
@@ -1495,7 +1495,7 @@ export default function CdmRegulationsModule5Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1511,7 +1511,7 @@ export default function CdmRegulationsModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-5">

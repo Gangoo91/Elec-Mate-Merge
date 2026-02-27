@@ -198,7 +198,7 @@ const Module5Section5_3 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -216,13 +216,13 @@ const Module5Section5_3 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.3</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.3</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Coordinating with Joiners, Plumbers, Plasterers, etc.
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master essential coordination skills for working effectively with other trades on
               construction sites.
             </p>
@@ -233,7 +233,7 @@ const Module5Section5_3 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc ml-4">
+                <ul className="text-white text-sm space-y-1 list-disc ml-4">
                   <li>
                     Multi-trade coordination prevents costly clashes and delays on construction
                     sites.
@@ -247,7 +247,7 @@ const Module5Section5_3 = () => {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc ml-4">
+                <ul className="text-white text-sm space-y-1 list-disc ml-4">
                   <li>
                     <strong>Spot:</strong> Conduit vs pipe clashes, boxes being plastered over,
                     access blockages.
@@ -271,7 +271,7 @@ const Module5Section5_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Learning Outcomes
             </h2>
-            <ul className="space-y-2 text-white/80">
+            <ul className="space-y-2 text-white">
               <li className="flex items-start">
                 <span className="text-elec-yellow mr-2">•</span>Recognise the roles and
                 responsibilities of common building trades.
@@ -297,7 +297,7 @@ const Module5Section5_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Understanding Other Trades
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="space-y-3">
                 <div className="flex items-start gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
                   <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
@@ -330,7 +330,7 @@ const Module5Section5_3 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   <strong>Key Principle:</strong> Each trade has specific installation sequences and
                   requirements that directly impact electrical work timing and positioning.
                 </p>
@@ -352,7 +352,7 @@ const Module5Section5_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Trade Sequencing and Planning
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="space-y-3">
                 <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                   <p className="font-semibold text-elec-yellow mb-2">First Fix Phase</p>
@@ -363,14 +363,14 @@ const Module5Section5_3 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border-l-2 border-white/20">
                   <p className="font-semibold text-white mb-2">Coordination Phase</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Multiple trades working simultaneously - the most critical coordination period.
                     Requires constant communication and schedule awareness.
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
                   <p className="font-semibold text-green-400 mb-2">Second Fix Phase</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Final connections, accessories installation, testing and commissioning after
                     finishes are applied.
                   </p>
@@ -380,7 +380,7 @@ const Module5Section5_3 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-semibold text-elec-yellow mb-3">Typical Sequence</h4>
-                  <ol className="space-y-1 text-sm text-white/70 list-decimal pl-4">
+                  <ol className="space-y-1 text-sm text-white list-decimal pl-4">
                     <li>Structural/building fabric completion</li>
                     <li>Electrical first fix (cables, conduits, boxes)</li>
                     <li>Plumbing first fix (pipes, waste, heating)</li>
@@ -395,7 +395,7 @@ const Module5Section5_3 = () => {
                   <h4 className="font-semibold text-elec-yellow mb-3">
                     Critical Coordination Points
                   </h4>
-                  <ul className="space-y-1 text-sm text-white/70">
+                  <ul className="space-y-1 text-sm text-white">
                     <li>• Cable route planning - avoid HVAC and plumbing</li>
                     <li>• Ceiling void access coordination</li>
                     <li>• Wall cavity usage sharing</li>
@@ -408,7 +408,7 @@ const Module5Section5_3 = () => {
 
               <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                 <h4 className="font-semibold text-amber-400 mb-2">Real-World Scheduling Example</h4>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   On a typical office fit-out, electricians install cable containment in weeks 3-4,
                   plumbers install heating pipes in weeks 4-5, and plasterers start in week 7. This
                   overlap requires daily coordination to prevent the electrical trunking blocking
@@ -437,7 +437,7 @@ const Module5Section5_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Communication and Documentation
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
@@ -445,7 +445,7 @@ const Module5Section5_3 = () => {
                     <h4 className="font-semibold text-red-400 mb-2">
                       Critical Communication Requirements
                     </h4>
-                    <ul className="text-sm text-white/70 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li>• Always inform other trades before starting work that affects them</li>
                       <li>• Mark out electrical positions clearly using spray markers or tape</li>
                       <li>• Check site programmes to understand other trades' schedules</li>
@@ -476,7 +476,7 @@ const Module5Section5_3 = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2">Spot it / Use it</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Look for coordination meetings on site programmes. These are your opportunities to
                   raise concerns and understand how your work fits with other trades.
                 </p>
@@ -503,7 +503,7 @@ const Module5Section5_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Common Coordination Issues
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="space-y-2">
                 <p>
                   <strong>Service clashes:</strong> Cable routes conflicting with plumbing, HVAC
@@ -526,7 +526,7 @@ const Module5Section5_3 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-semibold text-white mb-2">Prevention Strategies</h4>
-                  <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                  <ul className="text-sm text-white list-disc ml-4 space-y-1">
                     <li>Review drawings for potential clashes</li>
                     <li>Attend coordination meetings</li>
                     <li>Mark positions before installation</li>
@@ -536,7 +536,7 @@ const Module5Section5_3 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-semibold text-white mb-2">Resolution Process</h4>
-                  <ol className="text-sm text-white/70 list-decimal ml-4 space-y-1">
+                  <ol className="text-sm text-white list-decimal ml-4 space-y-1">
                     <li>Stop work immediately</li>
                     <li>Document the issue</li>
                     <li>Report to supervisor</li>
@@ -567,7 +567,7 @@ const Module5Section5_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Site Safety and Professional Relationships
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="space-y-2">
                 <p>
                   <strong>Respect boundaries:</strong> Never interfere with another trade's work,
@@ -589,7 +589,7 @@ const Module5Section5_3 = () => {
 
               <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                 <h4 className="font-semibold text-amber-400 mb-2">Professional Benefits</h4>
-                <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                <ul className="text-sm text-white list-disc ml-4 space-y-1">
                   <li>Builds positive working relationships for future projects</li>
                   <li>Creates collaborative problem-solving opportunities</li>
                   <li>Reduces site conflicts and tension</li>
@@ -624,7 +624,7 @@ const Module5Section5_3 = () => {
                 <Users className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="font-medium text-amber-400 mb-2">The Cable Tray Clash Crisis</p>
-                  <p className="text-white/80 mb-3">
+                  <p className="text-white mb-3">
                     On a new office building project, an apprentice electrician installed a large
                     cable tray across a ceiling void without checking the mechanical drawings. When
                     the HVAC contractors arrived to install their main ductwork, they found their
@@ -632,7 +632,7 @@ const Module5Section5_3 = () => {
                   </p>
                   <div className="p-3 rounded bg-white/5 border border-white/10 mb-3">
                     <p className="font-medium text-white mb-2">Consequences:</p>
-                    <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                    <ul className="text-sm text-white list-disc ml-4 space-y-1">
                       <li>Complete removal and reinstallation of 150m of cable tray</li>
                       <li>Two-day delay to the HVAC installation programme</li>
                       <li>Additional scaffold hire costs for reworking</li>
@@ -640,7 +640,7 @@ const Module5Section5_3 = () => {
                       <li>Client complaint about poor coordination</li>
                     </ul>
                   </div>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     <strong>Total cost: £2,800</strong> in materials, labour, and programme delays.
                     This could have been prevented by checking coordination drawings and attending
                     the weekly trade coordination meeting.
@@ -660,7 +660,7 @@ const Module5Section5_3 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-semibold text-white mb-2">Q: {faq.question}</p>
-                  <p className="text-sm text-white/70">A: {faq.answer}</p>
+                  <p className="text-sm text-white">A: {faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -677,25 +677,25 @@ const Module5Section5_3 = () => {
                 <div className="space-y-2">
                   <div className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       Know the construction sequence and your place in it
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       Mark electrical positions clearly before other trades start
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       Check site programmes regularly for trade schedules
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       Report clashes to supervisors immediately
                     </span>
                   </div>
@@ -705,25 +705,25 @@ const Module5Section5_3 = () => {
                 <div className="space-y-2">
                   <div className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       Never move another trade's work without permission
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       Attend coordination meetings when possible
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       Protect your installations from other trades' work
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       Build positive professional relationships
                     </span>
                   </div>
@@ -742,15 +742,15 @@ const Module5Section5_3 = () => {
               <div className="flex items-start gap-3">
                 <BookOpen className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="text-white/80 mb-3">In this subsection, you learned:</p>
-                  <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                  <p className="text-white mb-3">In this subsection, you learned:</p>
+                  <ul className="text-sm text-white list-disc ml-4 space-y-1">
                     <li>The roles and responsibilities of common building trades</li>
                     <li>The importance of trade sequencing and programme coordination</li>
                     <li>Effective communication techniques for multi-trade environments</li>
                     <li>Common coordination issues and how to prevent them</li>
                     <li>Professional approaches to building positive working relationships</li>
                   </ul>
-                  <p className="text-white/80 mt-3">
+                  <p className="text-white mt-3">
                     <strong>
                       Effective multi-trade coordination ensures project success, maintains safety
                       standards, and builds your reputation as a professional electrician.

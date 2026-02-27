@@ -237,7 +237,7 @@ const Module4Section3_1 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -254,13 +254,13 @@ const Module4Section3_1 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 3.1</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 3.1</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Types of Bends and When to Use Them
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Learn about different types of conduit bends, their applications, and when to use each
               bend type for optimal cable routing.
             </p>
@@ -272,7 +272,7 @@ const Module4Section3_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="grid sm:grid-cols-2 gap-4 text-sm text-white/80">
+            <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-5 space-y-1">
@@ -310,7 +310,7 @@ const Module4Section3_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <ul className="list-disc pl-6 space-y-2 text-sm text-white/80">
+            <ul className="list-disc pl-6 space-y-2 text-sm text-white">
               <li>Identify the main bend types used in electrical conduit installations</li>
               <li>Understand the applications and benefits of each bend type</li>
               <li>Apply correct bend selection to various site conditions</li>
@@ -325,20 +325,20 @@ const Module4Section3_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Common Bend Types and Applications
             </h2>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               Understanding the different bend types and their specific applications:
             </p>
             <div className="space-y-4">
               {bendTypes.map((bend, i) => (
                 <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                   <p className="font-medium text-elec-yellow mb-2">{bend.type}</p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     <strong>Purpose:</strong> {bend.purpose}
                   </p>
-                  <div className="text-xs text-white/60 mb-2">
+                  <div className="text-xs text-white mb-2">
                     <strong>Applications:</strong> {bend.applications.join(', ')}
                   </div>
-                  <div className="text-xs text-white/60">
+                  <div className="text-xs text-white">
                     <strong>Considerations:</strong> {bend.considerations}
                   </div>
                 </div>
@@ -352,15 +352,15 @@ const Module4Section3_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Factors Influencing Bend Selection
             </h2>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               Multiple factors determine the most appropriate bend type for each situation:
             </p>
             <div className="space-y-4">
               {selectionFactors.map((factor, i) => (
                 <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
                   <p className="font-medium text-green-400 mb-2">{factor.factor}</p>
-                  <p className="text-sm text-white/80 mb-2">{factor.description}</p>
-                  <div className="text-xs text-white/60">
+                  <p className="text-sm text-white mb-2">{factor.description}</p>
+                  <div className="text-xs text-white">
                     <strong>Consideration:</strong> {factor.consideration} -{' '}
                     <strong>Impact:</strong> {factor.impact}
                   </div>
@@ -385,15 +385,15 @@ const Module4Section3_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Best Practice in Bend Production
             </h2>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               Following best practices ensures professional results and compliance:
             </p>
             <div className="space-y-4">
               {bestPractices.map((practice, i) => (
                 <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
                   <p className="font-medium text-purple-400 mb-2">{practice.practice}</p>
-                  <p className="text-sm text-white/80 mb-2">{practice.description}</p>
-                  <div className="text-xs text-white/60">
+                  <p className="text-sm text-white mb-2">{practice.description}</p>
+                  <div className="text-xs text-white">
                     <strong>Application:</strong> {practice.application} - <strong>Benefit:</strong>{' '}
                     {practice.benefit}
                   </div>
@@ -429,7 +429,7 @@ const Module4Section3_1 = () => {
               Real-World Example
             </h2>
             <div className="p-4 rounded-lg bg-blue-500/10 border-l-2 border-blue-500/50">
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 During an office refit, the electrical team had to run conduit above suspended
                 ceilings, with multiple water pipes crossing the planned route. Instead of rerouting
                 the entire run, the installer used double saddle bends, maintaining neatness and
@@ -450,7 +450,7 @@ const Module4Section3_1 = () => {
                 <p className="font-medium text-white mb-1">
                   Q: Can I form bends by hand without tools?
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A: Only with small adjustments in flexible conduit. Rigid steel or PVC conduit
                   requires bending tools.
                 </p>
@@ -459,7 +459,7 @@ const Module4Section3_1 = () => {
                 <p className="font-medium text-white mb-1">
                   Q: What happens if I bend conduit too tightly?
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A: It can damage the cable insulation, reduce internal space, and breach BS 7671
                   requirements.
                 </p>
@@ -468,7 +468,7 @@ const Module4Section3_1 = () => {
                 <p className="font-medium text-white mb-1">
                   Q: How can I make sure my bends match?
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A: Use consistent measurement marks and the same tool settings each time.
                 </p>
               </div>
@@ -482,7 +482,7 @@ const Module4Section3_1 = () => {
               Summary
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Each bend type serves a specific function. Selecting the correct bend based on site
                 conditions, obstacles, and design requirements is key to efficiency, safety, and
                 compliance. Accurate bending keeps cables safe, maintains installation standards,

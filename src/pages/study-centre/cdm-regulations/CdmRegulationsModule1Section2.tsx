@@ -197,7 +197,7 @@ export default function CdmRegulationsModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-1">
@@ -220,7 +220,7 @@ export default function CdmRegulationsModule1Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             History &amp; Evolution
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How CDM regulations evolved from pre-CDM legislation through CDM 1994 and CDM 2007 to
             the current CDM 2015 framework, and the key changes at each stage
           </p>
@@ -299,7 +299,7 @@ export default function CdmRegulationsModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Key Pre-CDM Legislation</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400/60 flex-shrink-0" />
                     <span>
@@ -344,7 +344,7 @@ export default function CdmRegulationsModule1Section2() {
                     Construction: The Most Dangerous Industry
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Throughout the 1980s and early 1990s, construction consistently had the highest
                   rate of fatal and serious injuries of any UK industry. Workers were being killed
                   and seriously injured at a rate far exceeding other sectors. The existing
@@ -397,7 +397,7 @@ export default function CdmRegulationsModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Key Requirements of the Directive
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400/60 flex-shrink-0" />
                     <span>
@@ -481,7 +481,7 @@ export default function CdmRegulationsModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Key Features of CDM 1994</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400/60 flex-shrink-0" />
                     <span>
@@ -563,7 +563,7 @@ export default function CdmRegulationsModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Key Criticisms</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400/60 flex-shrink-0" />
                     <span>
@@ -619,7 +619,7 @@ export default function CdmRegulationsModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">The Core Failure</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The fundamental problem was that CDM 1994 created a structure of roles and
                   documents, but the industry often treated these as administrative requirements
                   rather than as tools for genuinely managing risk. The planning supervisor became a
@@ -656,7 +656,7 @@ export default function CdmRegulationsModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Key Changes in CDM 2007</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400/60 flex-shrink-0" />
                     <span>
@@ -740,7 +740,7 @@ export default function CdmRegulationsModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Continuing Problems</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400/60 flex-shrink-0" />
                     <span>
@@ -792,7 +792,7 @@ export default function CdmRegulationsModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">The Lofstedt Review</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   In 2011, Professor Ragnar Lofstedt published his independent review of health and
                   safety legislation, <em>&ldquo;Reclaiming Health and Safety for All&rdquo;</em>.
                   The review recommended that CDM be revised to reduce bureaucracy, improve clarity,
@@ -831,7 +831,7 @@ export default function CdmRegulationsModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Key Features of CDM 2015</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400/60 flex-shrink-0" />
                     <span>
@@ -998,13 +998,13 @@ export default function CdmRegulationsModule1Section2() {
                       <div className="text-sm font-medium text-blue-400 sm:text-white">
                         {row.area}
                       </div>
-                      <div className="text-xs sm:text-sm text-white/60">
-                        <span className="sm:hidden text-white/40 font-medium text-[10px] uppercase tracking-wide">
+                      <div className="text-xs sm:text-sm text-white">
+                        <span className="sm:hidden text-white font-medium text-[10px] uppercase tracking-wide">
                           2007:{' '}
                         </span>
                         {row.cdm2007}
                       </div>
-                      <div className="text-xs sm:text-sm text-white/80">
+                      <div className="text-xs sm:text-sm text-white">
                         <span className="sm:hidden text-blue-400/60 font-medium text-[10px] uppercase tracking-wide">
                           2015:{' '}
                         </span>
@@ -1014,7 +1014,7 @@ export default function CdmRegulationsModule1Section2() {
                   ))}
                 </div>
                 {/* Table header for desktop */}
-                <div className="hidden sm:grid grid-cols-3 gap-4 px-4 py-2 bg-white/5 border-t border-white/10 text-[10px] uppercase tracking-widest text-white/40">
+                <div className="hidden sm:grid grid-cols-3 gap-4 px-4 py-2 bg-white/5 border-t border-white/10 text-[10px] uppercase tracking-widest text-white">
                   <span>Area</span>
                   <span>CDM 2007</span>
                   <span>CDM 2015</span>
@@ -1025,7 +1025,7 @@ export default function CdmRegulationsModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Principal Designer vs CDM Coordinator &mdash; The Critical Difference
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400/60 flex-shrink-0" />
                     <span>
@@ -1094,9 +1094,9 @@ export default function CdmRegulationsModule1Section2() {
             <div className="relative pl-8 pb-8 border-l-2 border-white/10 ml-3">
               <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-white/20 border-2 border-white/40" />
               <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-                <p className="text-xs text-white/40 mb-1">Pre-1995</p>
+                <p className="text-xs text-white mb-1">Pre-1995</p>
                 <p className="text-sm font-semibold text-white mb-1">Before CDM</p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   Factories Act 1961, Construction (General Provisions) Regulations 1961, HSWA 1974.
                   No specific duties on clients or designers. Construction was the most dangerous UK
                   industry.
@@ -1110,7 +1110,7 @@ export default function CdmRegulationsModule1Section2() {
               <div className="bg-blue-500/5 border border-blue-500/20 rounded-xl p-4">
                 <p className="text-xs text-blue-400/60 mb-1">1992</p>
                 <p className="text-sm font-semibold text-blue-400 mb-1">EU Directive 92/57/EEC</p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   Minimum health and safety requirements for temporary or mobile construction sites.
                   UK obliged to transpose into national law.
                 </p>
@@ -1123,22 +1123,22 @@ export default function CdmRegulationsModule1Section2() {
               <div className="bg-blue-500/5 border border-blue-500/20 rounded-xl p-4">
                 <p className="text-xs text-blue-400/60 mb-1">31 March 1995</p>
                 <p className="text-sm font-semibold text-blue-400 mb-1">CDM 1994</p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   First UK implementation. Introduced planning supervisor, principal contractor,
                   health and safety plan, health and safety file. Clients and designers given duties
                   for the first time.
                 </p>
                 <div className="mt-2 flex flex-wrap gap-1">
-                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white/50">
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white">
                     Planning supervisor
                   </span>
-                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white/50">
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white">
                     Principal contractor
                   </span>
-                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white/50">
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white">
                     H&amp;S plan
                   </span>
-                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white/50">
+                  <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/10 text-white">
                     H&amp;S file
                   </span>
                 </div>
@@ -1151,7 +1151,7 @@ export default function CdmRegulationsModule1Section2() {
               <div className="bg-blue-500/5 border border-blue-500/20 rounded-xl p-4">
                 <p className="text-xs text-blue-400/60 mb-1">6 April 2007</p>
                 <p className="text-sm font-semibold text-blue-400 mb-1">CDM 2007</p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   CDM coordinator replaced planning supervisor. New ACoP L144. Notification
                   threshold introduced (&gt;30 days or &gt;500 person-days). Consolidated with
                   welfare regulations.
@@ -1176,7 +1176,7 @@ export default function CdmRegulationsModule1Section2() {
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-4">
                 <p className="text-xs text-blue-400/60 mb-1">6 April 2015</p>
                 <p className="text-sm font-semibold text-blue-400 mb-1">CDM 2015 (Current)</p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   Principal designer replaced CDM coordinator. Domestic clients brought into scope.
                   Worker duties added. Simpler structure. L153 guidance. Notification threshold
                   retained.
@@ -1255,19 +1255,19 @@ export default function CdmRegulationsModule1Section2() {
               ].map((row, i) => (
                 <div key={i} className="grid grid-cols-1 sm:grid-cols-4 gap-1 sm:gap-3 px-4 py-3">
                   <div className="text-sm font-medium text-blue-400 sm:text-white">{row.role}</div>
-                  <div className="text-xs sm:text-sm text-white/50">
-                    <span className="sm:hidden text-white/30 font-medium text-[10px] uppercase tracking-wide">
+                  <div className="text-xs sm:text-sm text-white">
+                    <span className="sm:hidden text-white font-medium text-[10px] uppercase tracking-wide">
                       1994:{' '}
                     </span>
                     {row.v1994}
                   </div>
-                  <div className="text-xs sm:text-sm text-white/60">
-                    <span className="sm:hidden text-white/40 font-medium text-[10px] uppercase tracking-wide">
+                  <div className="text-xs sm:text-sm text-white">
+                    <span className="sm:hidden text-white font-medium text-[10px] uppercase tracking-wide">
                       2007:{' '}
                     </span>
                     {row.v2007}
                   </div>
-                  <div className="text-xs sm:text-sm text-white/80">
+                  <div className="text-xs sm:text-sm text-white">
                     <span className="sm:hidden text-blue-400/60 font-medium text-[10px] uppercase tracking-wide">
                       2015:{' '}
                     </span>
@@ -1276,7 +1276,7 @@ export default function CdmRegulationsModule1Section2() {
                 </div>
               ))}
             </div>
-            <div className="hidden sm:grid grid-cols-4 gap-3 px-4 py-2 bg-white/5 border-t border-white/10 text-[10px] uppercase tracking-widest text-white/40">
+            <div className="hidden sm:grid grid-cols-4 gap-3 px-4 py-2 bg-white/5 border-t border-white/10 text-[10px] uppercase tracking-widest text-white">
               <span>Role / Feature</span>
               <span>CDM 1994</span>
               <span>CDM 2007</span>
@@ -1294,7 +1294,7 @@ export default function CdmRegulationsModule1Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1312,7 +1312,7 @@ export default function CdmRegulationsModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-1-section-1">

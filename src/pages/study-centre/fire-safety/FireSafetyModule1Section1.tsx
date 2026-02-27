@@ -221,7 +221,7 @@ export default function FireSafetyModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-1">
@@ -246,7 +246,7 @@ export default function FireSafetyModule1Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             The Fire Triangle
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding the fundamental model of combustion &mdash; the three elements that every
             fire needs, how they interact, the expanded tetrahedron model, and how to apply this
             knowledge to fire prevention and firefighting
@@ -346,21 +346,21 @@ export default function FireSafetyModule1Section1() {
                 <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg p-4 text-center">
                   <Thermometer className="h-6 w-6 text-rose-400 mx-auto mb-2" />
                   <p className="text-sm font-semibold text-rose-400 mb-1">HEAT</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     An ignition source that raises the fuel to its ignition temperature
                   </p>
                 </div>
                 <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg p-4 text-center">
                   <Flame className="h-6 w-6 text-rose-400 mx-auto mb-2" />
                   <p className="text-sm font-semibold text-rose-400 mb-1">FUEL</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     A combustible material that can undergo oxidation
                   </p>
                 </div>
                 <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg p-4 text-center">
                   <Wind className="h-6 w-6 text-rose-400 mx-auto mb-2" />
                   <p className="text-sm font-semibold text-rose-400 mb-1">OXYGEN</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     An oxidising agent, usually the oxygen in atmospheric air
                   </p>
                 </div>
@@ -411,7 +411,7 @@ export default function FireSafetyModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Historical Context</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The fire triangle concept was first formally described in the early 20th century,
                   though the underlying chemistry of combustion had been understood since Antoine
                   Lavoisier identified the role of oxygen in the 1770s. The triangle became the
@@ -461,7 +461,7 @@ export default function FireSafetyModule1Section1() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Electrical Faults</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Electrical faults are among the most significant ignition sources in the UK.
                       <strong> Arcing</strong> occurs when electrical current jumps across a gap
                       &mdash; for example, across a loose terminal, a damaged conductor, or a
@@ -481,7 +481,7 @@ export default function FireSafetyModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Hot Works</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Hot works encompass any work that produces heat, sparks, or open flame.
                       <strong> Welding</strong> (arc welding, MIG, TIG) generates extreme
                       temperatures and showers of molten metal particles. <strong>Cutting</strong>{' '}
@@ -496,7 +496,7 @@ export default function FireSafetyModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Friction</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Friction between moving parts generates heat. Overheated bearings, misaligned
                       rotating equipment, conveyor belts, and power tools (particularly when cutting
                       or drilling into materials) can all generate sufficient heat to ignite nearby
@@ -507,7 +507,7 @@ export default function FireSafetyModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Chemical Reactions</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Certain chemical reactions are exothermic &mdash; they release heat as a
                       byproduct. Some reactions can generate enough heat to cause spontaneous
                       ignition. Examples include the reaction between oxidising agents and organic
@@ -519,7 +519,7 @@ export default function FireSafetyModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Radiant Heat</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Heat energy transmitted by electromagnetic radiation (infrared) can ignite
                       combustible materials at a distance from the original heat source. Industrial
                       heaters, process ovens, furnaces, hot pipework, and even concentrated sunlight
@@ -530,7 +530,7 @@ export default function FireSafetyModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Static Electricity</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Static electrical charges can accumulate on persons, equipment, and materials,
                       particularly in low-humidity environments. When the accumulated charge
                       discharges (a spark), it can ignite flammable vapours, gases, or dust clouds.
@@ -544,7 +544,7 @@ export default function FireSafetyModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Smoking Materials &amp; Arson
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Discarded cigarettes, matches, and lighters remain a significant ignition
                       source, particularly on construction sites and in areas where smoking
                       restrictions are not enforced. Arson (deliberate fire-setting) is the single
@@ -560,7 +560,7 @@ export default function FireSafetyModule1Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Electrical Trade Focus: Arc Fault Detection Devices (AFDDs)
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The 18th Edition of BS 7671 (the IET Wiring Regulations) introduced
                   recommendations for the use of{' '}
                   <strong>Arc Fault Detection Devices (AFDDs)</strong> in certain types of
@@ -609,7 +609,7 @@ export default function FireSafetyModule1Section1() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Solid Fuels</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Solid fuels are the most commonly encountered combustible materials in
                       buildings and on construction sites. They include <strong>wood</strong>{' '}
                       (structural timber, joists, battens, plywood, chipboard, MDF),{' '}
@@ -629,7 +629,7 @@ export default function FireSafetyModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Liquid Fuels</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Liquid fuels do not themselves burn &mdash; it is the <strong>vapour</strong>
                       given off by the liquid that mixes with air and ignites. This is a critical
                       distinction. Common liquid fuels encountered in construction and electrical
@@ -647,7 +647,7 @@ export default function FireSafetyModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Gaseous Fuels</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Gaseous fuels present the highest immediate fire and explosion risk because
                       they are already in a state that can mix intimately with air to form ignitable
                       mixtures. Common gaseous fuels include <strong>natural gas</strong> (methane
@@ -669,7 +669,7 @@ export default function FireSafetyModule1Section1() {
                   <BookOpen className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Key Definitions</p>
                 </div>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div>
                     <p className="font-medium text-white">Flash Point</p>
                     <p>
@@ -716,7 +716,7 @@ export default function FireSafetyModule1Section1() {
                 risk assessment, and implement appropriate control measures. This includes:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -765,7 +765,7 @@ export default function FireSafetyModule1Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Electrical Trade Focus: Cable Sheathing as Fuel
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   PVC (polyvinyl chloride) is the most common sheathing material for electrical
                   cables in the UK. PVC is a thermoplastic that will burn when exposed to sufficient
                   heat, producing thick black smoke and hydrogen chloride gas (a toxic, corrosive
@@ -809,28 +809,28 @@ export default function FireSafetyModule1Section1() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-rose-400">20.9%</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Normal oxygen concentration in atmospheric air. This is the baseline &mdash;
                       fires behave &ldquo;normally&rdquo; at this level
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-rose-400">~16%</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Approximate minimum oxygen concentration for sustained flaming combustion.
                       Below this level, most fires will self-extinguish
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-rose-400">23.5%</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       The threshold above which an atmosphere is classified as oxygen-enriched. Fire
                       risk increases dramatically above this level
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-rose-400">100%</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Pure oxygen. Materials that are barely combustible in normal air can burn with
                       explosive ferocity in pure oxygen. Steel and iron can burn
                     </p>
@@ -856,11 +856,11 @@ export default function FireSafetyModule1Section1() {
                     Danger: Oxygen-Enriched Atmospheres
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   An oxygen-enriched atmosphere (above 23.5%) is extremely dangerous. The effects
                   are dramatic and disproportionate to the increase in concentration:
                 </p>
-                <ul className="space-y-2 text-sm text-white/70 mt-3">
+                <ul className="space-y-2 text-sm text-white mt-3">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                     <span>
@@ -895,7 +895,7 @@ export default function FireSafetyModule1Section1() {
                 workplace include:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -936,7 +936,7 @@ export default function FireSafetyModule1Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Oxygen and Electrical Environments
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Electricians should be particularly aware of oxygen enrichment risks when working
                   in or near medical facilities, laboratories, and any location where compressed
                   gases are stored or used. An apparently routine electrical task &mdash; such as
@@ -995,22 +995,22 @@ export default function FireSafetyModule1Section1() {
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                     <Thermometer className="h-5 w-5 text-rose-400 mx-auto mb-1" />
                     <p className="text-xs font-semibold text-white">HEAT</p>
-                    <p className="text-[10px] text-white/60 mt-1">Ignition source</p>
+                    <p className="text-[10px] text-white mt-1">Ignition source</p>
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                     <Flame className="h-5 w-5 text-rose-400 mx-auto mb-1" />
                     <p className="text-xs font-semibold text-white">FUEL</p>
-                    <p className="text-[10px] text-white/60 mt-1">Combustible material</p>
+                    <p className="text-[10px] text-white mt-1">Combustible material</p>
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                     <Wind className="h-5 w-5 text-rose-400 mx-auto mb-1" />
                     <p className="text-xs font-semibold text-white">OXYGEN</p>
-                    <p className="text-[10px] text-white/60 mt-1">Oxidising agent</p>
+                    <p className="text-[10px] text-white mt-1">Oxidising agent</p>
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                     <Triangle className="h-5 w-5 text-rose-400 mx-auto mb-1" />
                     <p className="text-xs font-semibold text-white">CHAIN REACTION</p>
-                    <p className="text-[10px] text-white/60 mt-1">Free radical chain reaction</p>
+                    <p className="text-[10px] text-white mt-1">Free radical chain reaction</p>
                   </div>
                 </div>
               </div>
@@ -1055,7 +1055,7 @@ export default function FireSafetyModule1Section1() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Halon (Now Banned)</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Halon (halogenated hydrocarbons such as Halon 1211 and Halon 1301) was one of
                       the most effective fire suppression agents ever developed. It worked primarily
                       by chemically interrupting the chain reaction: halon molecules decompose in
@@ -1069,7 +1069,7 @@ export default function FireSafetyModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Dry Powder (Dry Chemical)</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Dry powder extinguishers (typically containing sodium bicarbonate, potassium
                       bicarbonate, or monoammonium phosphate) work through multiple mechanisms, but
                       their primary mode of action is interruption of the chemical chain reaction.
@@ -1085,7 +1085,7 @@ export default function FireSafetyModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Clean Agents (Halon Replacements)
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Following the ban on halon, several replacement agents have been developed.
                       These include halocarbon agents (such as FM-200/HFC-227ea and Novec
                       1230/FK-5-1-12) and inert gas systems (such as IG-541/Inergen,
@@ -1104,7 +1104,7 @@ export default function FireSafetyModule1Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Triangle vs. Tetrahedron: When to Use Which
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The fire triangle remains the standard model for teaching fire prevention, fire
                   risk assessment, and basic firefighting. It is used in CITB Site Safety Plus
                   courses, IOSH courses, fire marshal training, and most workplace fire awareness
@@ -1151,7 +1151,7 @@ export default function FireSafetyModule1Section1() {
                     <div className="bg-rose-500/20 border border-rose-500/40 rounded-lg px-4 py-2 text-center">
                       <Thermometer className="h-5 w-5 text-rose-400 mx-auto mb-1" />
                       <p className="text-xs font-bold text-rose-400">HEAT</p>
-                      <p className="text-[10px] text-white/50">Ignition source</p>
+                      <p className="text-[10px] text-white">Ignition source</p>
                     </div>
                   </div>
                   {/* Connecting lines (visual representation using borders) */}
@@ -1163,7 +1163,7 @@ export default function FireSafetyModule1Section1() {
                     <div className="bg-rose-500/20 border border-rose-500/40 rounded-lg px-3 py-2 text-center">
                       <Flame className="h-5 w-5 text-rose-400 mx-auto mb-1" />
                       <p className="text-xs font-bold text-rose-400">FUEL</p>
-                      <p className="text-[10px] text-white/50">
+                      <p className="text-[10px] text-white">
                         Combustible
                         <br />
                         material
@@ -1172,7 +1172,7 @@ export default function FireSafetyModule1Section1() {
                     <div className="bg-rose-500/20 border border-rose-500/40 rounded-lg px-3 py-2 text-center">
                       <Wind className="h-5 w-5 text-rose-400 mx-auto mb-1" />
                       <p className="text-xs font-bold text-rose-400">OXYGEN</p>
-                      <p className="text-[10px] text-white/50">
+                      <p className="text-[10px] text-white">
                         Oxidising
                         <br />
                         agent
@@ -1189,7 +1189,7 @@ export default function FireSafetyModule1Section1() {
                     </div>
                   </div>
                 </div>
-                <p className="text-xs text-white/50 text-center mt-4">
+                <p className="text-xs text-white text-center mt-4">
                   Remove any one element and the fire cannot exist. This is the basis of all fire
                   prevention and firefighting.
                 </p>
@@ -1207,11 +1207,11 @@ export default function FireSafetyModule1Section1() {
                         Remove HEAT &mdash; Cooling
                       </p>
                     </div>
-                    <p className="text-sm text-white/80 mb-3">
+                    <p className="text-sm text-white mb-3">
                       Reducing the temperature of the burning material below its ignition point
                       stops the combustion reaction. This is the most common firefighting strategy.
                     </p>
-                    <ul className="space-y-2 text-sm text-white/70">
+                    <ul className="space-y-2 text-sm text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-blue-400" />
                         <span>
@@ -1244,11 +1244,11 @@ export default function FireSafetyModule1Section1() {
                         Remove FUEL &mdash; Starvation / Isolation
                       </p>
                     </div>
-                    <p className="text-sm text-white/80 mb-3">
+                    <p className="text-sm text-white mb-3">
                       Removing the fuel from the fire, or removing the fire from the fuel, starves
                       the combustion reaction.
                     </p>
-                    <ul className="space-y-2 text-sm text-white/70">
+                    <ul className="space-y-2 text-sm text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-amber-400" />
                         <span>
@@ -1287,11 +1287,11 @@ export default function FireSafetyModule1Section1() {
                         Remove OXYGEN &mdash; Smothering
                       </p>
                     </div>
-                    <p className="text-sm text-white/80 mb-3">
+                    <p className="text-sm text-white mb-3">
                       Excluding oxygen from the fire or reducing the oxygen concentration below the
                       level needed for combustion.
                     </p>
-                    <ul className="space-y-2 text-sm text-white/70">
+                    <ul className="space-y-2 text-sm text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -1334,10 +1334,10 @@ export default function FireSafetyModule1Section1() {
                         Break the CHAIN REACTION (Tetrahedron)
                       </p>
                     </div>
-                    <p className="text-sm text-white/80 mb-3">
+                    <p className="text-sm text-white mb-3">
                       Interrupting the chemical chain reaction at the molecular level.
                     </p>
-                    <ul className="space-y-2 text-sm text-white/70">
+                    <ul className="space-y-2 text-sm text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-purple-400" />
                         <span>
@@ -1361,11 +1361,11 @@ export default function FireSafetyModule1Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Practical Application for Electrical Workers
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Electricians can apply the fire triangle to every aspect of their work. Consider
                   these everyday examples:
                 </p>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1434,7 +1434,7 @@ export default function FireSafetyModule1Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1452,7 +1452,7 @@ export default function FireSafetyModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-1">

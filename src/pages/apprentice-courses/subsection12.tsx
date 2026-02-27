@@ -255,7 +255,7 @@ const Section3_3 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-foreground active:text-foreground p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -278,7 +278,7 @@ const Section3_3 = () => {
               <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
                 Method Statements
               </h1>
-              <p className="text-xl text-white/80 max-w-4xl mt-2">
+              <p className="text-xl text-white max-w-4xl mt-2">
                 Comprehensive guide to creating and implementing effective method statements for
                 electrical work
               </p>
@@ -336,7 +336,7 @@ const Section3_3 = () => {
           <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
             Learning Outcomes
           </h2>
-          <p className="text-white/80 mb-4">By the end of this section, you'll be able to:</p>
+          <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
           <ul className="space-y-3 text-foreground">
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
@@ -706,7 +706,7 @@ const Section3_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="space-y-2">
                 <h3 className="font-medium text-foreground">{faq.question}</h3>
-                <p className="text-sm text-white/80">{faq.answer}</p>
+                <p className="text-sm text-white">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -721,7 +721,7 @@ const Section3_3 = () => {
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
             <div className="space-y-3">
               <h3 className="font-semibold text-foreground">Essential Components:</h3>
-              <ul className="space-y-1 text-white/80">
+              <ul className="space-y-1 text-white">
                 <li>• Work description and scope</li>
                 <li>• Personnel roles and competencies</li>
                 <li>• Required equipment and PPE</li>
@@ -731,7 +731,7 @@ const Section3_3 = () => {
             </div>
             <div className="space-y-3">
               <h3 className="font-semibold text-foreground">Key Requirements:</h3>
-              <ul className="space-y-1 text-white/80">
+              <ul className="space-y-1 text-white">
                 <li>• Link to risk assessment</li>
                 <li>• Clear, understandable language</li>
                 <li>• Review and approval process</li>
@@ -754,7 +754,7 @@ const Section3_3 = () => {
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6 text-sm">
               <div>
                 <h3 className="font-semibold mb-2">Remember:</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>• Method statements complement, don't replace, risk assessments</li>
                   <li>• They must be specific to the actual work and conditions</li>
                   <li>• All personnel must understand and follow the procedures</li>
@@ -763,7 +763,7 @@ const Section3_3 = () => {
               </div>
               <div>
                 <h3 className="font-semibold mb-2">Next Steps:</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>• Practice creating method statements for common electrical tasks</li>
                   <li>• Review examples from your workplace or training materials</li>
                   <li>• Understand your company's specific requirements and templates</li>

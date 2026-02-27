@@ -181,7 +181,7 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
           <Button
             variant="ghost"
             size="sm"
-            className="h-11 px-3 text-xs text-white/70 hover:bg-white/10 touch-manipulation gap-1.5"
+            className="h-11 px-3 text-xs text-white hover:bg-white/10 touch-manipulation gap-1.5"
             onClick={onRetry}
           >
             <RotateCcw className="h-3.5 w-3.5" />
@@ -192,7 +192,7 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
           <button
             type="button"
             onClick={() => onOpenChange(false)}
-            className="h-11 w-11 rounded-lg flex items-center justify-center text-white/40 hover:text-white/70 hover:bg-white/10 transition-colors touch-manipulation"
+            className="h-11 w-11 rounded-lg flex items-center justify-center text-white hover:text-white hover:bg-white/10 transition-colors touch-manipulation"
           >
             <X className="h-4 w-4" />
           </button>
@@ -262,13 +262,13 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
                     ) : isActive ? (
                       <Loader2 className="h-4 w-4 animate-spin text-black" />
                     ) : (
-                      <span className="text-[10px] text-white/50">{i + 1}</span>
+                      <span className="text-[10px] text-white">{i + 1}</span>
                     )}
                   </div>
                   <span
                     className={cn(
                       'text-sm font-medium transition-colors duration-300',
-                      isActive ? 'text-white' : isComplete ? 'text-white/70' : 'text-white/30'
+                      isActive ? 'text-white' : isComplete ? 'text-white' : 'text-white'
                     )}
                   >
                     {step.label}
@@ -279,7 +279,7 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
           </div>
 
           {/* Timer */}
-          <div className="flex items-center gap-2 text-xs text-white/40">
+          <div className="flex items-center gap-2 text-xs text-white">
             <div className="w-1 h-1 rounded-full bg-elec-yellow animate-pulse" />
             <span>{elapsedSeconds}s / ~30s</span>
           </div>
@@ -321,7 +321,7 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
                   >
                     {currentCode}
                   </Badge>
-                  <ArrowRight className="h-4 w-4 text-white/50" />
+                  <ArrowRight className="h-4 w-4 text-white" />
                 </>
               )}
               <Badge
@@ -330,7 +330,7 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
               >
                 {suggestions.suggestedCode}
               </Badge>
-              <span className="text-xs text-white/70 ml-1">
+              <span className="text-xs text-white ml-1">
                 {Math.round(suggestions.confidence * 100)}% confidence
               </span>
               {codeChanged && !accepted.has('code') && (
@@ -376,11 +376,11 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
             </div>
             <div className="space-y-3 text-left">
               <div>
-                <p className="text-[10px] uppercase tracking-wider text-white/50 mb-1">Current</p>
+                <p className="text-[10px] uppercase tracking-wider text-white mb-1">Current</p>
                 <p
                   className={cn(
                     'text-sm leading-relaxed text-left',
-                    accepted.has('description') ? 'text-white/40 line-through' : 'text-white/70'
+                    accepted.has('description') ? 'text-white line-through' : 'text-white'
                   )}
                 >
                   {currentDescription}
@@ -409,7 +409,7 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-11 px-4 text-xs text-white/70 hover:bg-white/10 touch-manipulation"
+                  className="h-11 px-4 text-xs text-white hover:bg-white/10 touch-manipulation"
                   onClick={() => handleCopy(suggestions.enhancedDescription, 'Description')}
                 >
                   <Copy className="h-3.5 w-3.5 mr-1" />
@@ -433,14 +433,14 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-11 px-4 text-xs text-white/70 hover:bg-white/10 touch-manipulation"
+                  className="h-11 px-4 text-xs text-white hover:bg-white/10 touch-manipulation"
                   onClick={() => handleCopy(suggestions.clientExplanation, 'Client explanation')}
                 >
                   <Copy className="h-3.5 w-3.5 mr-1" />
                   Copy to clipboard
                 </Button>
               </div>
-              <p className="text-[10px] text-white/40 mt-2">
+              <p className="text-[10px] text-white mt-2">
                 Use in client reports or emails — not written to the certificate.
               </p>
             </section>
@@ -485,7 +485,7 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-11 px-4 text-xs text-white/70 hover:bg-white/10 touch-manipulation"
+                    className="h-11 px-4 text-xs text-white hover:bg-white/10 touch-manipulation"
                     onClick={() => handleCopy(suggestions.recommendation, 'Recommendation')}
                   >
                     <Copy className="h-3.5 w-3.5 mr-1" />
@@ -537,7 +537,7 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
                     <span className="text-xs text-white leading-relaxed flex-1">
                       {ref.title || ref.relevance}
                     </span>
-                    <Copy className="h-3 w-3 text-white/30 flex-shrink-0 mt-0.5" />
+                    <Copy className="h-3 w-3 text-white flex-shrink-0 mt-0.5" />
                   </button>
                 ))}
               </div>
@@ -554,7 +554,7 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
                   </Button>
                 </div>
               ) : (
-                <p className="text-[10px] text-white/40 mt-3">Tap a reference to copy it.</p>
+                <p className="text-[10px] text-white mt-3">Tap a reference to copy it.</p>
               )}
             </section>
           )}
@@ -567,7 +567,7 @@ const AIEnhanceObservationSheet: React.FC<AIEnhanceObservationSheetProps> = ({
   const footerContent = suggestions && !isEnhancing && (
     <div className="px-4 md:px-5 py-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] border-t border-white/10 bg-background flex-shrink-0">
       {accepted.size > 0 && accepted.size < totalFields && (
-        <p className="text-[10px] text-white/50 text-center mb-2">
+        <p className="text-[10px] text-white text-center mb-2">
           {accepted.size} of {totalFields} applied — tap below to accept remaining
         </p>
       )}

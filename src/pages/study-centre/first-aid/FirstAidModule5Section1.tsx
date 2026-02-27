@@ -197,7 +197,7 @@ export default function FirstAidModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-5">
@@ -220,7 +220,7 @@ export default function FirstAidModule5Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Fractures, Dislocations &amp; Soft Tissue Injuries
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Recognising and treating fractures, applying slings and immobilisation, managing sprains
             and strains with the PRICE protocol, and responding to dislocations in the workplace
           </p>
@@ -305,7 +305,7 @@ export default function FirstAidModule5Section1() {
                     <Shield className="h-5 w-5 text-amber-400" />
                     <p className="text-sm font-medium text-amber-400">Closed Fracture</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>
@@ -341,7 +341,7 @@ export default function FirstAidModule5Section1() {
                     <AlertTriangle className="h-5 w-5 text-red-400" />
                     <p className="text-sm font-medium text-red-400">Open (Compound) Fracture</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                       <span>
@@ -381,7 +381,7 @@ export default function FirstAidModule5Section1() {
                     Critical Rule: NEVER Push Bone Back In
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If a bone is protruding from a wound, you must{' '}
                   <strong className="text-white">
                     never attempt to push it back under the skin
@@ -429,7 +429,7 @@ export default function FirstAidModule5Section1() {
                     'Unnatural movement — the limb moves where it should not',
                     'Guarding — the casualty instinctively protects the injured area',
                   ].map((sign, i) => (
-                    <div key={i} className="flex items-start gap-2 text-sm text-white/80">
+                    <div key={i} className="flex items-start gap-2 text-sm text-white">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                       <span>{sign}</span>
                     </div>
@@ -452,7 +452,7 @@ export default function FirstAidModule5Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   General Fracture Treatment Principles
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -550,7 +550,7 @@ export default function FirstAidModule5Section1() {
                         <p className="text-sm font-medium text-blue-400">
                           Arm Sling (Broad Arm Sling)
                         </p>
-                        <p className="text-xs text-white/50">Forearm, wrist, or hand injuries</p>
+                        <p className="text-xs text-white">Forearm, wrist, or hand injuries</p>
                       </div>
                     </div>
                     <div className="bg-blue-500/5 border border-blue-500/20 rounded-lg p-3 mb-3">
@@ -570,13 +570,13 @@ export default function FirstAidModule5Section1() {
                           {/* Tie at neck */}
                           <div className="absolute top-4 right-6 w-3 h-3 rounded-full bg-blue-400/80" />
                           {/* Label */}
-                          <p className="absolute -bottom-1 inset-x-0 text-center text-[10px] text-white/40">
+                          <p className="absolute -bottom-1 inset-x-0 text-center text-[10px] text-white">
                             Arm across chest, triangle supports weight
                           </p>
                         </div>
                       </div>
                     </div>
-                    <p className="text-xs text-white/60 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The arm rests across the chest at approximately a right angle. The triangular
                       bandage supports the weight of the forearm. The knot is tied at the hollow
                       above the collarbone on the <strong className="text-white">injured</strong>{' '}
@@ -592,7 +592,7 @@ export default function FirstAidModule5Section1() {
                       </div>
                       <div>
                         <p className="text-sm font-medium text-emerald-400">Elevated Sling</p>
-                        <p className="text-xs text-white/50">
+                        <p className="text-xs text-white">
                           Hand/finger injuries or to reduce swelling
                         </p>
                       </div>
@@ -614,13 +614,13 @@ export default function FirstAidModule5Section1() {
                           {/* Tie at shoulder */}
                           <div className="absolute top-2 right-4 w-3 h-3 rounded-full bg-emerald-400/80" />
                           {/* Label */}
-                          <p className="absolute -bottom-1 inset-x-0 text-center text-[10px] text-white/40">
+                          <p className="absolute -bottom-1 inset-x-0 text-center text-[10px] text-white">
                             Hand at opposite shoulder, elevated
                           </p>
                         </div>
                       </div>
                     </div>
-                    <p className="text-xs text-white/60 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The hand is raised to the{' '}
                       <strong className="text-white">opposite shoulder</strong>. The triangular
                       bandage supports the forearm in an elevated position, keeping the hand above
@@ -634,7 +634,7 @@ export default function FirstAidModule5Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Arm Sling Application &mdash; Step by Step
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -686,7 +686,7 @@ export default function FirstAidModule5Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Elevated Sling Application &mdash; Step by Step
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -747,7 +747,7 @@ export default function FirstAidModule5Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Splinting &mdash; Key Principles
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>Only apply a splint if you have been trained to do so</span>
@@ -800,7 +800,7 @@ export default function FirstAidModule5Section1() {
               <div className="space-y-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-rose-400 mb-1">Collarbone (Clavicle)</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Common in falls where the casualty lands on an outstretched hand or directly on
                     the shoulder. The casualty typically supports the arm on the injured side and
                     tilts their head towards the injury. Treatment:{' '}
@@ -811,7 +811,7 @@ export default function FirstAidModule5Section1() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-rose-400 mb-1">Upper Arm (Humerus)</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Often caused by a direct blow or a fall onto the arm. Significant pain and
                     swelling in the upper arm, with inability to use the arm. Treatment:{' '}
                     <strong className="text-white">arm sling</strong>, bandage the upper arm gently
@@ -822,7 +822,7 @@ export default function FirstAidModule5Section1() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-rose-400 mb-1">Forearm &amp; Wrist</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Very common workplace fractures, especially from falls. The Colles&rsquo;
                     fracture (distal radius) produces a characteristic &ldquo;dinner fork&rdquo;
                     deformity at the wrist. Treatment:{' '}
@@ -834,7 +834,7 @@ export default function FirstAidModule5Section1() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-rose-400 mb-1">Hand &amp; Fingers</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Common from crushing injuries, machinery, and impacts. Treatment:{' '}
                     <strong className="text-white">elevated sling</strong> to keep the hand raised
                     and reduce swelling. Pad between injured fingers and bandage gently. Do not try
@@ -849,7 +849,7 @@ export default function FirstAidModule5Section1() {
                     <AlertTriangle className="h-5 w-5 text-amber-400" />
                     <p className="text-sm font-medium text-amber-400">Ribs</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Often caused by direct impacts or falls. The casualty will have sharp pain on
                     breathing and may be reluctant to take deep breaths. Treatment: help the
                     casualty into a <strong className="text-white">comfortable position</strong>{' '}
@@ -867,7 +867,7 @@ export default function FirstAidModule5Section1() {
                     <AlertTriangle className="h-5 w-5 text-red-400" />
                     <p className="text-sm font-medium text-red-400">Pelvis &mdash; Do NOT Move</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Pelvic fractures are serious, life-threatening injuries caused by high-energy
                     impacts such as falls from height or vehicle collisions. The pelvis has a very
                     rich blood supply, and a fracture can cause massive internal bleeding.{' '}
@@ -886,7 +886,7 @@ export default function FirstAidModule5Section1() {
                       Femur (Thigh Bone) &mdash; 999 Emergency
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The femur is the largest and strongest bone in the body. A fracture requires
                     significant force and is always a serious emergency. A femur fracture can cause{' '}
                     <strong className="text-white">1 to 2 litres of blood loss</strong> internally
@@ -904,7 +904,7 @@ export default function FirstAidModule5Section1() {
                   <p className="text-sm font-medium text-rose-400 mb-1">
                     Lower Leg (Tibia &amp; Fibula)
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The tibia (shin bone) is the most commonly fractured long bone. Treatment:
                     immobilise using padding and bandages placed above and below the fracture site.
                     If trained, apply a splint. Support the leg in the position found and do not
@@ -938,7 +938,7 @@ export default function FirstAidModule5Section1() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-blue-400 mb-2">Sprain</p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                       <span>
@@ -966,7 +966,7 @@ export default function FirstAidModule5Section1() {
 
                 <div className="bg-purple-500/10 border border-purple-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-purple-400 mb-2">Strain</p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>
@@ -1004,7 +1004,7 @@ export default function FirstAidModule5Section1() {
                     'Bruising — may appear immediately or develop later',
                     'Reduced movement — the casualty has difficulty using the affected area',
                   ].map((sign, i) => (
-                    <div key={i} className="flex items-start gap-2 text-sm text-white/80">
+                    <div key={i} className="flex items-start gap-2 text-sm text-white">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                       <span>{sign}</span>
                     </div>
@@ -1025,7 +1025,7 @@ export default function FirstAidModule5Section1() {
                       <span className="text-red-400 text-sm font-bold">P</span>
                     </div>
                     <p className="text-xs font-medium text-red-400 mb-1">Protection</p>
-                    <p className="text-[11px] text-white/60 leading-relaxed">
+                    <p className="text-[11px] text-white leading-relaxed">
                       Prevent further injury. Stop the activity. Remove from danger. Protect the
                       injured area from further knocks.
                     </p>
@@ -1035,7 +1035,7 @@ export default function FirstAidModule5Section1() {
                       <span className="text-orange-400 text-sm font-bold">R</span>
                     </div>
                     <p className="text-xs font-medium text-orange-400 mb-1">Rest</p>
-                    <p className="text-[11px] text-white/60 leading-relaxed">
+                    <p className="text-[11px] text-white leading-relaxed">
                       Stop using the injured area. Avoid weight-bearing on an injured leg. Rest the
                       arm if a wrist or hand is affected.
                     </p>
@@ -1045,7 +1045,7 @@ export default function FirstAidModule5Section1() {
                       <span className="text-cyan-400 text-sm font-bold">I</span>
                     </div>
                     <p className="text-xs font-medium text-cyan-400 mb-1">Ice</p>
-                    <p className="text-[11px] text-white/60 leading-relaxed">
+                    <p className="text-[11px] text-white leading-relaxed">
                       Apply a wrapped ice pack or bag of frozen peas for 15&ndash;20 minutes. Wrap
                       in a cloth &mdash; NEVER apply ice directly to skin.
                     </p>
@@ -1055,7 +1055,7 @@ export default function FirstAidModule5Section1() {
                       <span className="text-emerald-400 text-sm font-bold">C</span>
                     </div>
                     <p className="text-xs font-medium text-emerald-400 mb-1">Comfortable Support</p>
-                    <p className="text-[11px] text-white/60 leading-relaxed">
+                    <p className="text-[11px] text-white leading-relaxed">
                       Apply a supportive bandage (crepe bandage). Firm but not tight &mdash; check
                       circulation. Slide a finger underneath.
                     </p>
@@ -1065,7 +1065,7 @@ export default function FirstAidModule5Section1() {
                       <span className="text-violet-400 text-sm font-bold">E</span>
                     </div>
                     <p className="text-xs font-medium text-violet-400 mb-1">Elevation</p>
-                    <p className="text-[11px] text-white/60 leading-relaxed">
+                    <p className="text-[11px] text-white leading-relaxed">
                       Raise the injured area above heart level where possible. Use pillows, a chair,
                       or cushions to support the elevated limb.
                     </p>
@@ -1080,7 +1080,7 @@ export default function FirstAidModule5Section1() {
                     When to Seek Medical Assessment
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Refer the casualty for medical assessment (A&amp;E or minor injuries unit) if they
                   are <strong className="text-white">unable to bear weight</strong> on the injured
                   limb, if there is <strong className="text-white">significant swelling</strong>{' '}
@@ -1114,7 +1114,7 @@ export default function FirstAidModule5Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Recognition: Signs of a Dislocation
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -1161,7 +1161,7 @@ export default function FirstAidModule5Section1() {
                     Critical Rule: NEVER Attempt to Relocate a Dislocated Joint
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     Do NOT attempt to push the bone back into the joint socket.
                   </strong>{' '}
@@ -1178,7 +1178,7 @@ export default function FirstAidModule5Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   First Aid Treatment for Dislocations
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -1266,7 +1266,7 @@ export default function FirstAidModule5Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1280,7 +1280,7 @@ export default function FirstAidModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-5">

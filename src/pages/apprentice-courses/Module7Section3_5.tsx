@@ -222,7 +222,7 @@ const Module7Section3_5 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -240,13 +240,13 @@ const Module7Section3_5 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 7</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 3.5</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 3.5</span>
             </div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
               Understanding User Complaints
             </h1>
-            <p className="text-white/70 text-base sm:text-lg max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg max-w-2xl mx-auto">
               Using user complaints as early indicators of electrical faults and implementing
               effective investigation procedures.
             </p>
@@ -255,7 +255,7 @@ const Module7Section3_5 = () => {
           {/* In 30 Seconds Summary */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 space-y-1 text-sm list-disc pl-4">
+            <ul className="text-white space-y-1 text-sm list-disc pl-4">
               <li>User complaints provide early warning of developing electrical faults.</li>
               <li>Proper investigation of complaints prevents minor issues becoming dangerous.</li>
               <li>Systematic questioning reveals patterns that guide effective fault diagnosis.</li>
@@ -268,7 +268,7 @@ const Module7Section3_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <ul className="text-white/80 space-y-2 text-sm list-disc pl-4">
+            <ul className="text-white space-y-2 text-sm list-disc pl-4">
               <li>
                 Recognise the value of user complaints as early indicators of developing electrical
                 faults.
@@ -298,7 +298,7 @@ const Module7Section3_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Recognising the Value of User Complaints
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 User complaints represent one of the most valuable sources of information for early
                 electrical fault detection. Users often notice subtle changes in electrical system
@@ -371,7 +371,7 @@ const Module7Section3_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Systematic Investigation of User Reports
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Effective investigation of user complaints requires systematic questioning and
                 documentation to extract maximum diagnostic value from reported symptoms.
@@ -437,7 +437,7 @@ const Module7Section3_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Recognising Common Complaint Patterns
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Different types of electrical faults produce characteristic patterns of user
                 complaints that help guide investigation priorities and testing approaches.
@@ -516,7 +516,7 @@ const Module7Section3_5 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">Communication Techniques</p>
-                <ul className="text-sm list-disc pl-4 space-y-1 text-white/80">
+                <ul className="text-sm list-disc pl-4 space-y-1 text-white">
                   <li>Use open-ended questions to encourage detailed descriptions</li>
                   <li>Ask for demonstrations or recreating conditions if safe to do so</li>
                   <li>Translate technical language to user-friendly terms</li>
@@ -526,7 +526,7 @@ const Module7Section3_5 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
                 <p className="font-medium text-white mb-2">Follow-up Actions</p>
-                <ul className="text-sm list-disc pl-4 space-y-1 text-white/80">
+                <ul className="text-sm list-disc pl-4 space-y-1 text-white">
                   <li>Prioritise complaints indicating safety risks (shocks, burning smells)</li>
                   <li>Schedule investigations based on fault severity and safety implications</li>
                   <li>Follow-up questions reveal patterns that guide effective testing</li>
@@ -545,22 +545,22 @@ const Module7Section3_5 = () => {
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">Office Computer Problems</p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong className="text-elec-yellow">Complaints:</strong> Multiple office workers
                   reported computers randomly restarting, particularly during morning startup
                   periods.
                 </p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong className="text-orange-400">Investigation:</strong> Pattern analysis
                   revealed problems coincided with high heating load startup and specific
                   workstation clusters.
                 </p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong className="text-green-400">Findings:</strong> Loose neutral connections in
                   distribution board caused voltage variations affecting sensitive electronic
                   equipment.
                 </p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   <strong className="text-purple-400">Resolution:</strong> Re-termination of all
                   neutral connections eliminated voltage variations and computer problems.
                 </p>
@@ -568,20 +568,20 @@ const Module7Section3_5 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
                 <p className="font-medium text-white mb-2">Residential Tripping Issues</p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong className="text-elec-yellow">Complaints:</strong> Homeowner reported RCD
                   tripping "only when it rains" and "slight tingles" from washing machine.
                 </p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong className="text-orange-400">Investigation:</strong> Weather correlation
                   suggested water ingress, while shock reports indicated earth fault development.
                 </p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong className="text-green-400">Findings:</strong> Damaged cable in external
                   wall allowed water penetration, creating earth leakage path to washing machine
                   circuit.
                 </p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   <strong className="text-purple-400">Resolution:</strong> Cable replacement and
                   improved weatherproofing eliminated both tripping and shock hazard.
                 </p>
@@ -599,7 +599,7 @@ const Module7Section3_5 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
                   <p className="font-medium text-white mb-2">{faq.question}</p>
-                  <p className="text-white/70 text-sm">{faq.answer}</p>
+                  <p className="text-white text-sm">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -614,7 +614,7 @@ const Module7Section3_5 = () => {
             <div className="grid sm:grid-cols-3 gap-3">
               <div className="p-3 rounded-lg bg-white/5">
                 <p className="font-medium text-green-400 text-sm mb-1">Early Warning Value</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   User complaints provide early detection of developing electrical faults before
                   they become dangerous.
                 </p>
@@ -623,14 +623,14 @@ const Module7Section3_5 = () => {
                 <p className="font-medium text-elec-yellow text-sm mb-1">
                   Systematic Investigation
                 </p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Comprehensive questioning about what, when, where, and under what conditions
                   reveals diagnostic patterns.
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-white/5">
                 <p className="font-medium text-amber-400 text-sm mb-1">Safety Priority</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Complaints about shocks, burning smells, or progressive symptoms require immediate
                   priority investigation.
                 </p>
@@ -647,7 +647,7 @@ const Module7Section3_5 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mt-10 pt-6 border-t border-white/10">
             <Button
               variant="ghost"
-              className="w-full sm:w-auto text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="w-full sm:w-auto text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../3-4">

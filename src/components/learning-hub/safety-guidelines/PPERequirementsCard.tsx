@@ -65,7 +65,7 @@ const PPERequirementsCard = () => {
                   ))}
                 </div>
                 <div className="mt-3 pt-2 border-t border-border">
-                  <span className="text-xs text-white/80">Standard: {category.regulation}</span>
+                  <span className="text-xs text-white">Standard: {category.regulation}</span>
                 </div>
               </div>
             );

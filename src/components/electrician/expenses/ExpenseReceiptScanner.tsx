@@ -477,7 +477,7 @@ export function ExpenseReceiptScanner({ onComplete, onCancel }: ExpenseReceiptSc
         >
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 rounded-xl bg-white/[0.08] flex items-center justify-center">
-              <Upload className="h-7 w-7 text-white/80" />
+              <Upload className="h-7 w-7 text-white" />
             </div>
             <div className="flex-1 text-left">
               <p className="font-semibold text-foreground">Upload from Gallery</p>

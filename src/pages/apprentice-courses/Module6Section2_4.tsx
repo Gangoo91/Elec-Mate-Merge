@@ -134,7 +134,7 @@ const Module6Section2_4 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -151,13 +151,13 @@ const Module6Section2_4 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.2.4</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.2.4</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Verifying Correct Terminations and Polarity
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Ensuring correct terminations and polarity for safe and compliant electrical
               installations
             </p>
@@ -166,7 +166,7 @@ const Module6Section2_4 = () => {
           {/* Summary Box */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-medium text-elec-yellow mb-2">Quick Reference</p>
-            <div className="grid sm:grid-cols-2 gap-4 text-sm text-white/80">
+            <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
               <div>
                 <p className="font-medium text-white mb-1">In 30 Seconds</p>
                 <ul className="list-disc pl-4 space-y-1">
@@ -195,7 +195,7 @@ const Module6Section2_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Once cables are routed and installed, ensuring correct terminations and polarity is
                 essential. Poor terminations lead to overheating, arcing, and failures, while
@@ -210,7 +210,7 @@ const Module6Section2_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <ul className="list-disc pl-6 space-y-2 text-white/80">
+            <ul className="list-disc pl-6 space-y-2 text-white">
               <li>Explain the importance of correct terminations in electrical safety</li>
               <li>Recognise common termination faults (loose, over-tightened, or damaged)</li>
               <li>
@@ -228,7 +228,7 @@ const Module6Section2_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Terminations
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Electrical terminations must be mechanically sound, electrically secure, and
                 properly identified to ensure safe operation and prevent failures.
@@ -287,7 +287,7 @@ const Module6Section2_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Polarity
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Correct polarity ensures that switches and protective devices operate on the live
                 conductor, maintaining safety when circuits are supposedly isolated.
@@ -348,7 +348,7 @@ const Module6Section2_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Common Faults
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="font-medium text-red-400 mb-3">Termination Problems:</p>
                 <ul className="list-disc pl-4 space-y-1 text-sm">
@@ -409,7 +409,7 @@ const Module6Section2_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Inspection Points
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Visual Inspection:</p>
                 <ul className="list-disc pl-4 space-y-1 text-sm">
@@ -462,7 +462,7 @@ const Module6Section2_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Practical Guidance
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10 space-y-3">
                 <p>
                   <strong>Tool Selection:</strong> Always use the correct screwdriver size to avoid
@@ -491,12 +491,12 @@ const Module6Section2_4 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
               <p className="font-medium text-red-400 mb-3">Commercial Office Incident</p>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 In a commercial office fit-out, a lighting circuit was wired with reversed polarity.
                 When an electrician replaced a lamp, the fitting remained live even though the
                 switch was off, leading to an electric shock incident.
               </p>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 Investigation found the live and neutral reversed at a junction box.
               </p>
               <p className="text-sm font-medium text-white">
@@ -514,21 +514,21 @@ const Module6Section2_4 = () => {
             </h2>
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <div className="flex items-center gap-2 text-sm text-white/80">
+                <div className="flex items-center gap-2 text-sm text-white">
                   <span className="text-green-400">✓</span>
                   <span>Tight, secure, and correctly sleeved conductors</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-white/80">
+                <div className="flex items-center gap-2 text-sm text-white">
                   <span className="text-green-400">✓</span>
                   <span>Switches must break the live conductor</span>
                 </div>
               </div>
               <div className="space-y-2">
-                <div className="flex items-center gap-2 text-sm text-white/80">
+                <div className="flex items-center gap-2 text-sm text-white">
                   <span className="text-green-400">✓</span>
                   <span>Earth always connected and correctly sleeved</span>
                 </div>
-                <div className="flex items-center gap-2 text-sm text-white/80">
+                <div className="flex items-center gap-2 text-sm text-white">
                   <span className="text-green-400">✓</span>
                   <span>Confirm polarity with test instruments</span>
                 </div>
@@ -545,7 +545,7 @@ const Module6Section2_4 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../2-3">

@@ -186,7 +186,7 @@ const PreJobSafetyTab = () => {
                 <CardTitle className="text-xl sm:text-2xl font-bold text-white">
                   Pre-Job <span className="text-elec-yellow">Safety Assessment</span>
                 </CardTitle>
-                <p className="text-sm text-white/60 mt-1">
+                <p className="text-sm text-white mt-1">
                   Electricity at Work Regulations 1989 & CDM 2015
                 </p>
               </div>
@@ -202,7 +202,7 @@ const PreJobSafetyTab = () => {
           </div>
         </CardHeader>
         <CardContent className="relative">
-          <p className="text-white/70 mb-6">
+          <p className="text-white mb-6">
             Complete this comprehensive safety checklist before starting any electrical work. Each
             item must be verified to ensure a safe working environment.
           </p>
@@ -211,23 +211,23 @@ const PreJobSafetyTab = () => {
               <div className="text-2xl sm:text-3xl font-bold text-elec-yellow mb-1">
                 {checkedItems.length}
               </div>
-              <div className="text-xs text-white/60">Checked</div>
+              <div className="text-xs text-white">Checked</div>
             </div>
             <div className="bg-white/10 rounded-xl p-4 border border-white/10 text-center">
               <div className="text-2xl sm:text-3xl font-bold text-green-400 mb-1">{totalItems}</div>
-              <div className="text-xs text-white/60">Total Items</div>
+              <div className="text-xs text-white">Total Items</div>
             </div>
             <div className="bg-white/10 rounded-xl p-4 border border-white/10 text-center">
               <div className="flex items-center justify-center gap-1">
                 <Clock className="h-5 w-5 text-blue-400" />
               </div>
-              <div className="text-xs text-white/60 mt-1">15-20 mins</div>
+              <div className="text-xs text-white mt-1">15-20 mins</div>
             </div>
           </div>
 
           {/* Progress Bar */}
           <div className="mt-6 space-y-2">
-            <div className="flex justify-between text-xs text-white/60">
+            <div className="flex justify-between text-xs text-white">
               <span>Progress</span>
               <span>
                 {checkedItems.length} of {totalItems}
@@ -305,7 +305,7 @@ const PreJobSafetyTab = () => {
                         {isChecked && <CheckCircle className="h-4 w-4 text-white" />}
                       </div>
                       <span
-                        className={`text-sm text-left ${isChecked ? 'text-green-400' : 'text-white/70'}`}
+                        className={`text-sm text-left ${isChecked ? 'text-green-400' : 'text-white'}`}
                       >
                         {item}
                       </span>
@@ -346,7 +346,7 @@ const PreJobSafetyTab = () => {
                     </div>
                     <div>
                       <h4 className={`font-semibold ${tipConfig.text} mb-1`}>{tip.title}</h4>
-                      <p className="text-sm text-white/70">{tip.content}</p>
+                      <p className="text-sm text-white">{tip.content}</p>
                     </div>
                   </div>
                 </div>
@@ -401,7 +401,7 @@ const PreJobSafetyTab = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-red-300 mb-1">Assessment Incomplete</h3>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   You must complete all safety checks before proceeding with electrical work.{' '}
                   <span className="font-medium text-red-300">
                     {totalItems - checkedItems.length} items remaining.
@@ -423,7 +423,7 @@ const PreJobSafetyTab = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-green-300 mb-1">Assessment Complete</h3>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   All safety checks have been verified. You may proceed with work while maintaining{' '}
                   <span className="font-medium text-green-300">continuous vigilance</span>.
                 </p>

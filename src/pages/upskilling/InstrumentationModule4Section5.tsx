@@ -44,7 +44,7 @@ const InstrumentationModule4Section5 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Interpreting and Logging Readings in Real-World Systems
           </h1>
-          <p className="text-white/70 max-w-2xl mx-auto">
+          <p className="text-white max-w-2xl mx-auto">
             Measurements mean little without interpretation. Learn how to apply data to real
             scenarios and document effectively for maintenance and compliance.
           </p>
@@ -56,7 +56,7 @@ const InstrumentationModule4Section5 = () => {
             <CheckCircle className="h-4 w-4 text-elec-yellow" />
             What You Will Learn
           </h2>
-          <ul className="text-white/80 text-sm space-y-1">
+          <ul className="text-white text-sm space-y-1">
             <li>- Analysing readings for system status and performance indicators</li>
             <li>- Identifying patterns, trends, and anomalies in measurement data</li>
             <li>- Implementing proper logging and reporting procedures</li>
@@ -74,7 +74,7 @@ const InstrumentationModule4Section5 = () => {
             <h2 className="text-xl font-semibold text-white">Comparing Readings to Baselines</h2>
           </div>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Baseline measurements provide reference points for comparison. Without knowing what is
               normal, it is impossible to identify abnormal readings or developing problems.
@@ -86,7 +86,7 @@ const InstrumentationModule4Section5 = () => {
                   <BarChart className="h-4 w-4" />
                   Initial Commissioning Data
                 </h3>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Motor current at rated load</li>
                   <li>- System operating temperatures</li>
                   <li>- Voltage levels under normal conditions</li>
@@ -95,7 +95,7 @@ const InstrumentationModule4Section5 = () => {
               </div>
               <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
                 <h3 className="text-green-300 font-medium mb-3">Performance Standards</h3>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Manufacturer specifications</li>
                   <li>- Industry standard values</li>
                   <li>- Historical performance data</li>
@@ -139,11 +139,11 @@ const InstrumentationModule4Section5 = () => {
             <h2 className="text-xl font-semibold text-white">Recognising Anomalies and Patterns</h2>
           </div>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
                 <h3 className="text-red-300 font-medium mb-2">Voltage Dips</h3>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Starting of large motors</li>
                   <li>- Transformer overloading</li>
                   <li>- Poor connections developing</li>
@@ -152,7 +152,7 @@ const InstrumentationModule4Section5 = () => {
               </div>
               <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4">
                 <h3 className="text-orange-300 font-medium mb-2">Current Surges</h3>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Motor bearing deterioration</li>
                   <li>- Pump cavitation or blockage</li>
                   <li>- Insulation breakdown starting</li>
@@ -169,19 +169,19 @@ const InstrumentationModule4Section5 = () => {
               <div className="space-y-3">
                 <div>
                   <h4 className="text-white text-sm font-medium">Gradual Increase</h4>
-                  <p className="text-white/60 text-sm">
+                  <p className="text-white text-sm">
                     Often indicates wear, dirt accumulation, or developing mechanical problems
                   </p>
                 </div>
                 <div>
                   <h4 className="text-white text-sm font-medium">Cyclic Variations</h4>
-                  <p className="text-white/60 text-sm">
+                  <p className="text-white text-sm">
                     May indicate temperature effects, load cycling, or seasonal influences
                   </p>
                 </div>
                 <div>
                   <h4 className="text-white text-sm font-medium">Sudden Changes</h4>
-                  <p className="text-white/60 text-sm">
+                  <p className="text-white text-sm">
                     Usually indicate specific events: repairs, adjustments, or component failures
                   </p>
                 </div>
@@ -205,7 +205,7 @@ const InstrumentationModule4Section5 = () => {
             <h2 className="text-xl font-semibold text-white">Documentation and Logging Systems</h2>
           </div>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <div className="bg-white/5 rounded-lg p-4">
               <h3 className="text-white font-medium mb-3 flex items-center gap-2">
                 <Database className="h-4 w-4 text-elec-yellow" />
@@ -216,42 +216,42 @@ const InstrumentationModule4Section5 = () => {
                   <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <div>
                     <span className="text-white font-medium">Timestamp</span>
-                    <p className="text-white/60">Date, time, and duration of measurement</p>
+                    <p className="text-white">Date, time, and duration of measurement</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <div>
                     <span className="text-white font-medium">Equipment ID</span>
-                    <p className="text-white/60">Clear identification and location</p>
+                    <p className="text-white">Clear identification and location</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <div>
                     <span className="text-white font-medium">Operating Conditions</span>
-                    <p className="text-white/60">Load, temperature, environmental factors</p>
+                    <p className="text-white">Load, temperature, environmental factors</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <div>
                     <span className="text-white font-medium">Measurement Values</span>
-                    <p className="text-white/60">Actual readings with units and accuracy</p>
+                    <p className="text-white">Actual readings with units and accuracy</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <div>
                     <span className="text-white font-medium">Technician Details</span>
-                    <p className="text-white/60">Who performed the measurement</p>
+                    <p className="text-white">Who performed the measurement</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <div>
                     <span className="text-white font-medium">Observations</span>
-                    <p className="text-white/60">Unusual conditions or concerns noted</p>
+                    <p className="text-white">Unusual conditions or concerns noted</p>
                   </div>
                 </div>
               </div>
@@ -260,7 +260,7 @@ const InstrumentationModule4Section5 = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
                 <h3 className="text-blue-300 font-medium mb-2">Data Loggers</h3>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Automatic data collection</li>
                   <li>- Long-term monitoring</li>
                   <li>- Battery powered operation</li>
@@ -269,7 +269,7 @@ const InstrumentationModule4Section5 = () => {
               </div>
               <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
                 <h3 className="text-green-300 font-medium mb-2">SCADA Systems</h3>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Real-time monitoring</li>
                   <li>- Centralised data collection</li>
                   <li>- Alarm and notification</li>
@@ -278,7 +278,7 @@ const InstrumentationModule4Section5 = () => {
               </div>
               <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
                 <h3 className="text-purple-300 font-medium mb-2">Mobile Apps</h3>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Field data entry</li>
                   <li>- Photo documentation</li>
                   <li>- Instant report generation</li>
@@ -304,7 +304,7 @@ const InstrumentationModule4Section5 = () => {
             <h2 className="text-xl font-semibold text-white">Building Comprehensive Diagnoses</h2>
           </div>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Effective diagnosis requires correlation of multiple measurements. Individual readings
               only tell part of the story - patterns across multiple parameters reveal the true
@@ -317,7 +317,7 @@ const InstrumentationModule4Section5 = () => {
                 <div className="flex items-center justify-between py-2 border-b border-white/10">
                   <div className="flex items-center gap-2">
                     <span className="text-white">Motor Current ↑</span>
-                    <span className="text-white/40">+</span>
+                    <span className="text-white">+</span>
                     <span className="text-white">Vibration ↑</span>
                   </div>
                   <span className="text-red-400">=</span>
@@ -326,7 +326,7 @@ const InstrumentationModule4Section5 = () => {
                 <div className="flex items-center justify-between py-2 border-b border-white/10">
                   <div className="flex items-center gap-2">
                     <span className="text-white">Voltage ↓</span>
-                    <span className="text-white/40">+</span>
+                    <span className="text-white">+</span>
                     <span className="text-white">Current ↑</span>
                   </div>
                   <span className="text-yellow-400">=</span>
@@ -335,7 +335,7 @@ const InstrumentationModule4Section5 = () => {
                 <div className="flex items-center justify-between py-2">
                   <div className="flex items-center gap-2">
                     <span className="text-white">Temperature ↑</span>
-                    <span className="text-white/40">+</span>
+                    <span className="text-white">+</span>
                     <span className="text-white">Resistance ↓</span>
                   </div>
                   <span className="text-orange-400">=</span>
@@ -355,7 +355,7 @@ const InstrumentationModule4Section5 = () => {
             <h2 className="text-xl font-semibold text-white">Predictive Maintenance Benefits</h2>
           </div>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Systematic logging and trend analysis enable predictive maintenance - identifying
               developing issues before they cause failures. This approach reduces unplanned downtime
@@ -365,7 +365,7 @@ const InstrumentationModule4Section5 = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="bg-green-500/10 border-l-2 border-green-500/50 rounded-r-lg p-4">
                 <h3 className="text-green-300 font-medium mb-2">Benefits</h3>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Reduced unplanned downtime</li>
                   <li>- Optimised maintenance scheduling</li>
                   <li>- Extended equipment lifespan</li>
@@ -375,7 +375,7 @@ const InstrumentationModule4Section5 = () => {
               </div>
               <div className="bg-blue-500/10 border-l-2 border-blue-500/50 rounded-r-lg p-4">
                 <h3 className="text-blue-300 font-medium mb-2">Key Indicators</h3>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>- Gradual current increases</li>
                   <li>- Temperature rise trends</li>
                   <li>- Vibration signature changes</li>
@@ -398,7 +398,7 @@ const InstrumentationModule4Section5 = () => {
 
           <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg p-4">
             <h3 className="text-white font-medium mb-2">Power Substation Monitoring</h3>
-            <p className="text-white/70">
+            <p className="text-white">
               In a power substation, engineers track current draw hourly. A gradual rise over three
               days signals a failing pump motor. By analysing the trend data and correlating with
               vibration readings, they schedule maintenance during a planned outage rather than
@@ -418,7 +418,7 @@ const InstrumentationModule4Section5 = () => {
           <div className="space-y-4">
             <div className="bg-white/5 rounded-lg p-4">
               <h3 className="text-white font-medium mb-2">How often should I log measurements?</h3>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 It depends on the application. Critical equipment may need continuous monitoring.
                 Routine maintenance logs are typically daily, weekly, or monthly. Establish
                 frequency based on equipment criticality, failure history, and regulatory
@@ -429,7 +429,7 @@ const InstrumentationModule4Section5 = () => {
               <h3 className="text-white font-medium mb-2">
                 What is the benefit of trending data over time?
               </h3>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Trending reveals gradual changes that indicate developing problems, enabling
                 predictive maintenance before failures occur. Single snapshots cannot show whether a
                 reading is stable, improving, or deteriorating.
@@ -439,7 +439,7 @@ const InstrumentationModule4Section5 = () => {
               <h3 className="text-white font-medium mb-2">
                 How can logging prevent unplanned downtime?
               </h3>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 By identifying developing issues early, logging allows planned maintenance before
                 unexpected failures occur. This enables scheduling repairs during convenient times
                 rather than emergency situations.
@@ -451,7 +451,7 @@ const InstrumentationModule4Section5 = () => {
         {/* Summary */}
         <div className="bg-white/5 rounded-lg p-4 mb-8">
           <h2 className="text-white font-semibold mb-2">Summary</h2>
-          <p className="text-white/70">
+          <p className="text-white">
             Correct interpretation transforms raw numbers into action. Good logging supports
             predictive maintenance and regulatory compliance. By establishing baselines, recognising
             patterns, and maintaining comprehensive documentation, instrumentation professionals can

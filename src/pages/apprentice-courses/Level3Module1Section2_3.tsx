@@ -276,7 +276,7 @@ const Level3Module1Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section2">
@@ -388,7 +388,7 @@ const Level3Module1Section2_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Electrical Trade Example - Consumer Unit Change
               </p>
-              <ul className="text-sm text-white/90 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>
                   Without elimination: Working with 230V/400V present = major shock and arc flash
                   risk
@@ -458,7 +458,7 @@ const Level3Module1Section2_3 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-red-400/80 mb-2">Higher Risk</p>
-                <ul className="text-white/90 space-y-0.5 text-xs">
+                <ul className="text-white space-y-0.5 text-xs">
                   <li>230V portable tools on construction site</li>
                   <li>Chasing walls in unknown building</li>
                   <li>Traditional tube fluorescent lights</li>
@@ -467,7 +467,7 @@ const Level3Module1Section2_3 = () => {
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-green-400/80 mb-2">Lower Risk (Substituted)</p>
-                <ul className="text-white/90 space-y-0.5 text-xs">
+                <ul className="text-white space-y-0.5 text-xs">
                   <li>110V CTE tools or battery powered</li>
                   <li>Surface trunking or existing routes</li>
                   <li>LED replacement tubes or fittings</li>
@@ -476,7 +476,7 @@ const Level3Module1Section2_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> On a construction site, the client specifies chasing for new
               cables. You identify the walls may contain asbestos. Substitution: propose
               surface-mounted mini-trunking instead. The aesthetic impact is minimal, but the
@@ -543,7 +543,7 @@ const Level3Module1Section2_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Key Point: Engineering vs Elimination
               </p>
-              <p className="text-xs text-white/90">
+              <p className="text-xs text-white">
                 Engineering controls keep you separated from a hazard that still exists. A locked
                 switchroom door (engineering) keeps people away from energised equipment - the
                 electrical hazard is still present. Safe isolation (elimination) removes the
@@ -626,7 +626,7 @@ const Level3Module1Section2_3 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-elec-yellow/80 mb-2">PPE Limitations</p>
-                <ul className="text-white/90 space-y-0.5 text-xs">
+                <ul className="text-white space-y-0.5 text-xs">
                   <li>- Only protects the individual wearer</li>
                   <li>- Depends on correct selection for hazard</li>
                   <li>- Requires proper fit and adjustment</li>
@@ -638,7 +638,7 @@ const Level3Module1Section2_3 = () => {
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-elec-yellow/80 mb-2">Common Electrical PPE</p>
-                <ul className="text-white/90 space-y-0.5 text-xs">
+                <ul className="text-white space-y-0.5 text-xs">
                   <li>- Insulated gloves (class-rated for voltage)</li>
                   <li>- Arc flash face shields</li>
                   <li>- Arc-rated clothing</li>
@@ -650,7 +650,7 @@ const Level3Module1Section2_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> For a consumer unit change, the control strategy might be:
               Isolation (elimination) + lock-off (engineering) + permit/method statement
               (administrative) + insulated tools as backup (PPE). If isolation fails to be proved
@@ -737,7 +737,7 @@ const Level3Module1Section2_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -760,7 +760,7 @@ const Level3Module1Section2_3 = () => {
                 </span>
                 <div>
                   <p className="font-medium">Elimination</p>
-                  <p className="text-white/70">
+                  <p className="text-white">
                     Remove hazard completely - safe isolation, design out
                   </p>
                 </div>
@@ -771,7 +771,7 @@ const Level3Module1Section2_3 = () => {
                 </span>
                 <div>
                   <p className="font-medium">Substitution</p>
-                  <p className="text-white/70">Replace with less hazardous - 110V, battery tools</p>
+                  <p className="text-white">Replace with less hazardous - 110V, battery tools</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
@@ -780,7 +780,7 @@ const Level3Module1Section2_3 = () => {
                 </span>
                 <div>
                   <p className="font-medium">Engineering</p>
-                  <p className="text-white/70">
+                  <p className="text-white">
                     Physical barriers - RCDs, interlocks, lock-offs, guards
                   </p>
                 </div>
@@ -791,7 +791,7 @@ const Level3Module1Section2_3 = () => {
                 </span>
                 <div>
                   <p className="font-medium">Administrative</p>
-                  <p className="text-white/70">
+                  <p className="text-white">
                     Procedures - permits, training, signs, supervision
                   </p>
                 </div>
@@ -802,7 +802,7 @@ const Level3Module1Section2_3 = () => {
                 </span>
                 <div>
                   <p className="font-medium">PPE</p>
-                  <p className="text-white/70">Last resort - insulated gloves, arc flash PPE</p>
+                  <p className="text-white">Last resort - insulated gloves, arc flash PPE</p>
                 </div>
               </div>
             </div>
@@ -823,7 +823,7 @@ const Level3Module1Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section2-2">

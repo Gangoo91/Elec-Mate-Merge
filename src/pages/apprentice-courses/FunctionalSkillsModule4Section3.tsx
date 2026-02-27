@@ -118,7 +118,7 @@ const FunctionalSkillsModule4Section3 = () => {
             to="/study-centre/apprentice/functional-skills/module4"
             className="p-2 -ml-2 touch-manipulation"
           >
-            <ArrowLeft className="w-5 h-5 text-white/60" />
+            <ArrowLeft className="w-5 h-5 text-white" />
           </Link>
           <div>
             <p className="text-[11px] font-semibold text-green-400 uppercase tracking-wider">
@@ -142,7 +142,7 @@ const FunctionalSkillsModule4Section3 = () => {
               </div>
             </div>
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">Costing &amp; Quoting</h2>
-            <p className="text-sm text-white/50 max-w-lg mx-auto">
+            <p className="text-sm text-white max-w-lg mx-auto">
               Learn the mathematics of running an electrical business &mdash; from material takeoffs
               and labour rates to margins, VAT and professional quoting.
             </p>
@@ -165,7 +165,7 @@ const FunctionalSkillsModule4Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Material Takeoffs</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               A material takeoff (MTO) is a detailed list of every material item needed for a job,
               with quantities and costs. Getting this right is the foundation of accurate quoting.
@@ -176,7 +176,7 @@ const FunctionalSkillsModule4Section3 = () => {
               <h4 className="font-medium text-green-400 mb-2">
                 How to Do a Material Takeoff from Drawings
               </h4>
-              <ul className="space-y-2 text-sm text-white/80">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
@@ -220,31 +220,31 @@ const FunctionalSkillsModule4Section3 = () => {
               </h4>
               <div className="space-y-1 text-sm">
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Shower isolator switch</span>
+                  <span className="text-white">Shower isolator switch</span>
                   <span className="text-green-400">1 &times; &pound;8.50 = &pound;8.50</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">45A DP switch (shower)</span>
+                  <span className="text-white">45A DP switch (shower)</span>
                   <span className="text-green-400">1 &times; &pound;12.00 = &pound;12.00</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">10.0mm&sup2; T&amp;E cable (15m)</span>
+                  <span className="text-white">10.0mm&sup2; T&amp;E cable (15m)</span>
                   <span className="text-green-400">1 &times; &pound;52.50 = &pound;52.50</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">IP65 downlights</span>
+                  <span className="text-white">IP65 downlights</span>
                   <span className="text-green-400">4 &times; &pound;14.00 = &pound;56.00</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">1.5mm&sup2; T&amp;E cable (25m)</span>
+                  <span className="text-white">1.5mm&sup2; T&amp;E cable (25m)</span>
                   <span className="text-green-400">1 &times; &pound;18.75 = &pound;18.75</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Fan isolator switch</span>
+                  <span className="text-white">Fan isolator switch</span>
                   <span className="text-green-400">1 &times; &pound;9.50 = &pound;9.50</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Sundries (clips, fixings, connectors)</span>
+                  <span className="text-white">Sundries (clips, fixings, connectors)</span>
                   <span className="text-green-400">1 &times; &pound;15.00 = &pound;15.00</span>
                 </div>
                 <div className="flex justify-between pt-2 font-medium">
@@ -256,7 +256,7 @@ const FunctionalSkillsModule4Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Always add a contingency of 5&ndash;10% for waste, breakages and unforeseen items. A
                 &pound;172 material list becomes approximately &pound;190 with 10% contingency. This
                 small buffer prevents you from going back to the wholesaler mid-job.
@@ -278,7 +278,7 @@ const FunctionalSkillsModule4Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Labour Rate Calculations</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Your hourly rate must cover more than just the money you want in your pocket. It needs
               to account for all business overheads, non-billable time, holidays, and your desired
@@ -289,29 +289,29 @@ const FunctionalSkillsModule4Section3 = () => {
               <h4 className="font-medium text-green-400 mb-3">Calculating Your True Hourly Rate</h4>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Desired annual salary</span>
+                  <span className="text-white">Desired annual salary</span>
                   <span className="text-green-400">&pound;35,000</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">
+                  <span className="text-white">
                     Vehicle costs (fuel, insurance, maintenance)
                   </span>
                   <span className="text-green-400">&pound;6,000</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Tools and equipment</span>
+                  <span className="text-white">Tools and equipment</span>
                   <span className="text-green-400">&pound;2,000</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Insurance (public liability, PI)</span>
+                  <span className="text-white">Insurance (public liability, PI)</span>
                   <span className="text-green-400">&pound;1,500</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Accounting, software, phone</span>
+                  <span className="text-white">Accounting, software, phone</span>
                   <span className="text-green-400">&pound;2,500</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Training and certification</span>
+                  <span className="text-white">Training and certification</span>
                   <span className="text-green-400">&pound;1,000</span>
                 </div>
                 <div className="flex justify-between pt-2 font-medium border-t border-white/10 mt-1">
@@ -323,7 +323,7 @@ const FunctionalSkillsModule4Section3 = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-2">Converting to an Hourly Rate</h4>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
@@ -354,7 +354,7 @@ const FunctionalSkillsModule4Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 This &pound;33.13/hr is your <em>break-even</em> rate with zero profit. You then
                 need to add a profit margin on top (typically 15&ndash;25%) to build the business,
                 cover unexpected costs, and invest in growth. At 20% profit margin, you would charge
@@ -386,7 +386,7 @@ const FunctionalSkillsModule4Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Markup vs Margin</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               These two terms are often confused, but they mean very different things. Understanding
               the distinction is essential for pricing your work correctly and maintaining
@@ -396,7 +396,7 @@ const FunctionalSkillsModule4Section3 = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
                 <h4 className="font-medium text-green-400 mb-2 text-center">Markup</h4>
-                <p className="text-sm text-white/80 text-center mb-2">
+                <p className="text-sm text-white text-center mb-2">
                   Percentage added to <strong className="text-white">cost price</strong>
                 </p>
                 <div className="bg-white/5 rounded-lg p-2 text-center">
@@ -407,7 +407,7 @@ const FunctionalSkillsModule4Section3 = () => {
               </div>
               <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
                 <h4 className="font-medium text-green-400 mb-2 text-center">Margin</h4>
-                <p className="text-sm text-white/80 text-center mb-2">
+                <p className="text-sm text-white text-center mb-2">
                   Profit as percentage of <strong className="text-white">selling price</strong>
                 </p>
                 <div className="bg-white/5 rounded-lg p-2 text-center">
@@ -422,11 +422,11 @@ const FunctionalSkillsModule4Section3 = () => {
               <h4 className="font-medium text-green-400 mb-2">
                 Worked Example &mdash; The Difference Matters
               </h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 Materials cost &pound;400. You apply a 20% markup. What is the selling price and
                 what is the actual margin?
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>20% markup: &pound;400 &times; 1.20 = &pound;480 selling price</span>
@@ -453,23 +453,23 @@ const FunctionalSkillsModule4Section3 = () => {
               <h4 className="font-medium text-green-400 mb-2">Common Conversions</h4>
               <div className="space-y-1 text-sm">
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">20% markup</span>
+                  <span className="text-white">20% markup</span>
                   <span className="text-green-400">= 16.67% margin</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">25% markup</span>
+                  <span className="text-white">25% markup</span>
                   <span className="text-green-400">= 20% margin</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">33.3% markup</span>
+                  <span className="text-white">33.3% markup</span>
                   <span className="text-green-400">= 25% margin</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">50% markup</span>
+                  <span className="text-white">50% markup</span>
                   <span className="text-green-400">= 33.3% margin</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/80">100% markup</span>
+                  <span className="text-white">100% markup</span>
                   <span className="text-green-400">= 50% margin</span>
                 </div>
               </div>
@@ -477,7 +477,7 @@ const FunctionalSkillsModule4Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 If you want a 20% profit margin on a &pound;1,000 cost, you need to sell at
                 &pound;1,250 (which is a 25% markup). Many electricians lose money because they
                 apply a 20% markup thinking it gives a 20% margin &mdash; it does not.
@@ -499,7 +499,7 @@ const FunctionalSkillsModule4Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">VAT Calculations</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Value Added Tax (VAT) is currently charged at 20% in the UK. If you are VAT registered
               (required once turnover exceeds &pound;90,000), you must charge VAT on your invoices
@@ -513,7 +513,7 @@ const FunctionalSkillsModule4Section3 = () => {
                 <p className="text-green-400 font-mono text-center text-sm mb-1">
                   Gross = Net &times; 1.20
                 </p>
-                <p className="text-xs text-white/60 text-center">
+                <p className="text-xs text-white text-center">
                   &pound;1,000 net = &pound;1,200 gross
                 </p>
               </div>
@@ -522,7 +522,7 @@ const FunctionalSkillsModule4Section3 = () => {
                 <p className="text-green-400 font-mono text-center text-sm mb-1">
                   Net = Gross / 1.20
                 </p>
-                <p className="text-xs text-white/60 text-center">
+                <p className="text-xs text-white text-center">
                   &pound;1,200 gross = &pound;1,000 net
                 </p>
               </div>
@@ -534,11 +534,11 @@ const FunctionalSkillsModule4Section3 = () => {
               </h4>
               <div className="space-y-1 text-sm">
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Materials (net)</span>
+                  <span className="text-white">Materials (net)</span>
                   <span className="text-green-400">&pound;850.00</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Labour: 16 hours &times; &pound;45/hr</span>
+                  <span className="text-white">Labour: 16 hours &times; &pound;45/hr</span>
                   <span className="text-green-400">&pound;720.00</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1 font-medium">
@@ -546,7 +546,7 @@ const FunctionalSkillsModule4Section3 = () => {
                   <span className="text-green-400">&pound;1,570.00</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">VAT at 20%</span>
+                  <span className="text-white">VAT at 20%</span>
                   <span className="text-green-400">&pound;314.00</span>
                 </div>
                 <div className="flex justify-between pt-1 font-bold">
@@ -558,7 +558,7 @@ const FunctionalSkillsModule4Section3 = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-2">Reduced Rate VAT (5%)</h4>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Some energy-saving installations qualify for the reduced 5% VAT rate instead of 20%.
                 This includes solar panels, heat pumps, and insulation when installed in qualifying
                 residential properties. Always check HMRC guidance for current eligibility criteria
@@ -568,7 +568,7 @@ const FunctionalSkillsModule4Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 VAT is not your money &mdash; it belongs to HMRC. Set aside 20% of every invoice
                 payment into a separate account so you are never caught short on your quarterly
                 return. A common mistake is spending VAT receipts as if they were income.
@@ -599,7 +599,7 @@ const FunctionalSkillsModule4Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Creating Professional Quotes</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               A professional quote protects you legally and helps win work. It should be clear,
               detailed, and leave no room for misunderstanding. Always put your quotes in writing.
@@ -610,42 +610,42 @@ const FunctionalSkillsModule4Section3 = () => {
               <div className="space-y-3">
                 <div className="border-b border-white/10 pb-2">
                   <p className="text-white font-medium text-sm">Header</p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Your business name, address, phone, email, registration numbers (NICEIC/NAPIT),
                     VAT number
                   </p>
                 </div>
                 <div className="border-b border-white/10 pb-2">
                   <p className="text-white font-medium text-sm">Customer Details</p>
-                  <p className="text-xs text-white/60">Name, property address, contact details</p>
+                  <p className="text-xs text-white">Name, property address, contact details</p>
                 </div>
                 <div className="border-b border-white/10 pb-2">
                   <p className="text-white font-medium text-sm">Scope of Works</p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Detailed description of all work to be carried out &mdash; be specific
                   </p>
                 </div>
                 <div className="border-b border-white/10 pb-2">
                   <p className="text-white font-medium text-sm">Price Breakdown</p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Materials, labour, any sub-contract costs, subtotal, VAT, total
                   </p>
                 </div>
                 <div className="border-b border-white/10 pb-2">
                   <p className="text-white font-medium text-sm">Exclusions</p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Clearly state what is NOT included (making good, decorating, etc.)
                   </p>
                 </div>
                 <div className="border-b border-white/10 pb-2">
                   <p className="text-white font-medium text-sm">Terms</p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Payment terms, validity period, cancellation policy
                   </p>
                 </div>
                 <div>
                   <p className="text-white font-medium text-sm">Warranty</p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Workmanship guarantee period (typically 12 months)
                   </p>
                 </div>
@@ -654,7 +654,7 @@ const FunctionalSkillsModule4Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 A quote is legally binding once accepted &mdash; you cannot increase the price
                 unless the scope changes. An estimate, by contrast, is an approximation and can
                 change. Use the correct term and make sure your customer understands which they are
@@ -677,7 +677,7 @@ const FunctionalSkillsModule4Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Day Rates vs Fixed Price</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Choosing between day rate and fixed price depends on the nature of the job. Each has
               advantages and risks. As an electrician, understanding when to use each model is
@@ -687,7 +687,7 @@ const FunctionalSkillsModule4Section3 = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="bg-white/5 border border-white/10 rounded-xl p-4">
                 <h4 className="font-medium text-green-400 mb-2">Day Rate</h4>
-                <ul className="space-y-1 text-sm text-white/80">
+                <ul className="space-y-1 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-green-400 mt-0.5">&bull;</span>
                     <span>Best for: fault finding, maintenance, uncertain scope</span>
@@ -708,7 +708,7 @@ const FunctionalSkillsModule4Section3 = () => {
               </div>
               <div className="bg-white/5 border border-white/10 rounded-xl p-4">
                 <h4 className="font-medium text-green-400 mb-2">Fixed Price</h4>
-                <ul className="space-y-1 text-sm text-white/80">
+                <ul className="space-y-1 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-green-400 mt-0.5">&bull;</span>
                     <span>Best for: new installations, rewires, defined scope</span>
@@ -733,20 +733,20 @@ const FunctionalSkillsModule4Section3 = () => {
               <h4 className="font-medium text-green-400 mb-2">
                 Worked Example &mdash; Comparing Approaches
               </h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 Full house rewire. You estimate 5 days of work.
               </p>
               <div className="space-y-1 text-sm">
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Day rate: 5 days &times; &pound;300/day</span>
+                  <span className="text-white">Day rate: 5 days &times; &pound;300/day</span>
                   <span className="text-green-400">&pound;1,500 + materials</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/80">Fixed price (with 10% contingency)</span>
+                  <span className="text-white">Fixed price (with 10% contingency)</span>
                   <span className="text-green-400">&pound;4,200 all-in</span>
                 </div>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 If the job takes 4 days, fixed price earns you more. If it takes 7 days, day rate
                 protects you. Experience helps you estimate accurately.
               </p>
@@ -754,7 +754,7 @@ const FunctionalSkillsModule4Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 As your experience grows, fixed pricing becomes more profitable because you complete
                 work faster than your quoted time. This is the reward for becoming more skilled and
                 efficient &mdash; your effective hourly rate increases with experience.
@@ -785,7 +785,7 @@ const FunctionalSkillsModule4Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Managing Variations</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Variations (also called change orders) occur when the customer requests additional
               work, or when unforeseen conditions require changes to the original scope. How you
@@ -794,7 +794,7 @@ const FunctionalSkillsModule4Section3 = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-2">The Variation Process</h4>
-              <ul className="space-y-2 text-sm text-white/80">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
@@ -835,23 +835,23 @@ const FunctionalSkillsModule4Section3 = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-2">Worked Example</h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 During a rewire, you discover the consumer unit back box is corroded and needs
                 replacing. This was not visible during the survey.
               </p>
               <div className="space-y-1 text-sm">
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">New metal enclosure</span>
+                  <span className="text-white">New metal enclosure</span>
                   <span className="text-green-400">&pound;85.00</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">
+                  <span className="text-white">
                     Additional labour (2 hours &times; &pound;45)
                   </span>
                   <span className="text-green-400">&pound;90.00</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Materials markup (25%)</span>
+                  <span className="text-white">Materials markup (25%)</span>
                   <span className="text-green-400">&pound;21.25</span>
                 </div>
                 <div className="flex justify-between pt-1 font-medium">
@@ -863,7 +863,7 @@ const FunctionalSkillsModule4Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Never do additional work without a signed variation order. Verbal agreements lead to
                 disputes. If the customer refuses to pay for necessary additional work, document
                 that you advised them and let them decide. Protect yourself in writing every time.
@@ -885,7 +885,7 @@ const FunctionalSkillsModule4Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Pricing Strategy</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Pricing is not just about covering costs &mdash; it is about positioning your
               business. Competing purely on price leads to a race to the bottom. Instead, focus on
@@ -902,15 +902,15 @@ const FunctionalSkillsModule4Section3 = () => {
               </div>
               <div className="space-y-1 text-sm">
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Materials (with markup)</span>
+                  <span className="text-white">Materials (with markup)</span>
                   <span className="text-green-400">&pound;950</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Labour (3 days &times; &pound;300)</span>
+                  <span className="text-white">Labour (3 days &times; &pound;300)</span>
                   <span className="text-green-400">&pound;900</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Overheads allocation</span>
+                  <span className="text-white">Overheads allocation</span>
                   <span className="text-green-400">&pound;150</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1 font-medium">
@@ -918,7 +918,7 @@ const FunctionalSkillsModule4Section3 = () => {
                   <span className="text-green-400">&pound;2,000</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Profit margin (20%)</span>
+                  <span className="text-white">Profit margin (20%)</span>
                   <span className="text-green-400">&pound;500</span>
                 </div>
                 <div className="flex justify-between pt-1 font-bold">
@@ -933,7 +933,7 @@ const FunctionalSkillsModule4Section3 = () => {
                 <BookOpen className="w-4 h-4 text-green-400" />
                 Key Takeaways
               </h4>
-              <ul className="space-y-2 text-sm text-white/80">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
@@ -979,7 +979,7 @@ const FunctionalSkillsModule4Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 The electricians who earn the most are not necessarily the cheapest. They are the
                 ones who provide excellent communication, turn up on time, produce clean work, and
                 make the customer feel confident. Your pricing should reflect the full value of your
@@ -996,7 +996,7 @@ const FunctionalSkillsModule4Section3 = () => {
         <div className="flex items-center justify-between pt-6 border-t border-white/10">
           <Link
             to="/study-centre/apprentice/functional-skills/module4/section2"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
           >
             <ArrowLeft className="w-4 h-4" />
             Cable Sizing &amp; Selection

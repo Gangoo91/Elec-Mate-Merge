@@ -203,7 +203,7 @@ export default function PasmaModule4Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-4">
@@ -228,7 +228,7 @@ export default function PasmaModule4Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Moving &amp; Repositioning
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Safe procedures for moving mobile scaffold towers including pre-move conditions, route
             planning, post-move verification, and absolute rules that must never be broken
           </p>
@@ -323,7 +323,7 @@ export default function PasmaModule4Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Who Decides If a Tower Can Be Moved?
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The decision to move a tower rests with the competent person in charge of the
                   tower. This is typically the PASMA-trained operative who assembled the tower or
                   the site tower coordinator. The decision must be based on a check of all the
@@ -351,7 +351,7 @@ export default function PasmaModule4Section2() {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-elec-yellow mb-3">ALL Must Be True</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">1. No persons on the tower:</strong> Nobody may
                     be on the platform, on the access system, or anywhere on the tower structure
@@ -395,7 +395,7 @@ export default function PasmaModule4Section2() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Warning</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Stabilisers and outriggers must be retracted or removed before moving. A tower
                   cannot be moved with stabilisers extended &mdash; they will catch on ground
                   obstructions and can overturn the tower. However, if the manufacturer requires
@@ -425,7 +425,7 @@ export default function PasmaModule4Section2() {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-elec-yellow mb-3">Moving Procedure</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Step 1:</strong> Unlock all four castors. Verify
                     each one is fully disengaged from its brake.
@@ -458,7 +458,7 @@ export default function PasmaModule4Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Why Push at Base Level?</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Pushing a tower from a higher point creates a turning moment around the base. The
                   higher the push point, the greater the turning moment, and the greater the risk of
                   overturning. Pushing at the base keeps the force line close to the ground,
@@ -494,7 +494,7 @@ export default function PasmaModule4Section2() {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-elec-yellow mb-3">Post-Move Checklist</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Lock all castors:</strong> Every castor must be
                     locked and checked. Test each one by trying to push the tower &mdash; it should
@@ -531,7 +531,7 @@ export default function PasmaModule4Section2() {
                 <p className="text-sm font-medium text-red-400 mb-2">
                   Never Skip the Post-Move Check
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A tower that was perfectly safe in its original position may be dangerous in its
                   new one. Different ground conditions, overhead services, proximity to traffic, and
                   loosened connections from the move all create new hazards. The post-move check is
@@ -571,7 +571,7 @@ export default function PasmaModule4Section2() {
                   <ShieldAlert className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Absolute Prohibitions</p>
                 </div>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div>
                     <p className="font-medium text-white">NEVER move with anyone on the tower</p>
                     <p>
@@ -611,7 +611,7 @@ export default function PasmaModule4Section2() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Warning</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   &ldquo;We only need to move it a couple of metres&rdquo; is the most common
                   justification given for breaking these rules. Distance is irrelevant. A tower can
                   overturn in a fraction of a second, even during a move of less than one metre. The
@@ -623,7 +623,7 @@ export default function PasmaModule4Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Consequences of Breaking Zero-Tolerance Rules
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Immediate removal from site (most main contractors)</span>
@@ -671,7 +671,7 @@ export default function PasmaModule4Section2() {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-elec-yellow mb-3">Route Survey Checklist</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Floor transitions:</strong> Thresholds, expansion
                     joints, ramps, steps, changes from concrete to tarmac, carpet edges, raised
@@ -705,11 +705,11 @@ export default function PasmaModule4Section2() {
                   <Route className="h-5 w-5 text-cyan-400" />
                   <p className="text-sm font-medium text-cyan-400">Spotter Positions</p>
                 </div>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   For longer moves or moves through areas with limited visibility, station spotters
                   at key points along the route:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>At blind corners where the tower cannot be seen by other workers</span>
@@ -761,7 +761,7 @@ export default function PasmaModule4Section2() {
                   <ClipboardList className="h-5 w-5 text-cyan-400" />
                   <p className="text-sm font-medium text-cyan-400">Documentation Requirements</p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Inspection log update:</strong> Record the date
                     and time of the move, the old position, the new position, who authorised the
@@ -806,7 +806,7 @@ export default function PasmaModule4Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Communication Checklist</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Site manager or principal contractor informed</span>
@@ -840,7 +840,7 @@ export default function PasmaModule4Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -854,7 +854,7 @@ export default function PasmaModule4Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-4-section-1">

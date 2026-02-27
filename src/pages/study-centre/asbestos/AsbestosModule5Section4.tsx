@@ -221,7 +221,7 @@ const AsbestosModule5Section4 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Roles, Responsibilities &amp; Your Legal Duties
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding who is responsible for what in asbestos management &mdash; from employer
             obligations and employee duties to HSE enforcement powers and your personal right to
             raise concerns
@@ -323,7 +323,7 @@ const AsbestosModule5Section4 = () => {
                 <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                 <h3 className="font-semibold text-orange-300">Employer Accountability</h3>
               </div>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 Employer duties are <strong className="text-white">non-delegable</strong>. This
                 means the employer cannot avoid liability by delegating the task to someone else.
                 Even if a competent contractor is engaged, the employer retains responsibility for
@@ -427,7 +427,7 @@ const AsbestosModule5Section4 = () => {
                   <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-green-300">Your Right to Refuse Unsafe Work</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   If you believe you are being asked to work unsafely with asbestos, you have the{' '}
                   <strong className="text-white">right to stop work</strong>. Under the Employment
                   Rights Act 1996, you are protected from dismissal or detriment for raising genuine
@@ -448,7 +448,7 @@ const AsbestosModule5Section4 = () => {
             <Users className="h-5 w-5 text-orange-400" />
             RACI Responsibility Matrix
           </h2>
-          <p className="text-white/80 mb-4 text-sm">
+          <p className="text-white mb-4 text-sm">
             The matrix below shows who is Responsible, Accountable, Consulted, or Informed for each
             key asbestos management activity. Use it as a quick reference to understand your role
             and the roles of others.
@@ -498,10 +498,10 @@ const AsbestosModule5Section4 = () => {
                   <p className="text-white text-xs sm:text-sm font-medium">Asbestos Register</p>
                 </div>
                 <div className="bg-white/5 px-3 py-2.5 text-center border-b border-white/5">
-                  <span className="text-white/40 text-xs">&mdash;</span>
+                  <span className="text-white text-xs">&mdash;</span>
                 </div>
                 <div className="bg-white/5 px-3 py-2.5 text-center border-b border-white/5">
-                  <span className="text-white/40 text-xs">&mdash;</span>
+                  <span className="text-white text-xs">&mdash;</span>
                 </div>
                 <div className="bg-orange-500/10 px-3 py-2.5 text-center border-b border-white/5">
                   <span className="inline-block px-2 py-0.5 rounded text-xs font-semibold bg-orange-500/20 text-orange-300">
@@ -584,10 +584,10 @@ const AsbestosModule5Section4 = () => {
                   </span>
                 </div>
                 <div className="bg-white/[0.03] px-3 py-2.5 text-center border-b border-white/5">
-                  <span className="text-white/40 text-xs">&mdash;</span>
+                  <span className="text-white text-xs">&mdash;</span>
                 </div>
                 <div className="bg-white/[0.03] px-3 py-2.5 text-center border-b border-white/5">
-                  <span className="text-white/40 text-xs">&mdash;</span>
+                  <span className="text-white text-xs">&mdash;</span>
                 </div>
                 <div className="bg-green-500/5 px-3 py-2.5 text-center border-b border-white/5">
                   <span className="inline-block px-2 py-0.5 rounded text-xs font-semibold bg-green-500/20 text-green-300">
@@ -612,10 +612,10 @@ const AsbestosModule5Section4 = () => {
                   </span>
                 </div>
                 <div className="bg-white/5 px-3 py-2.5 text-center border-b border-white/5">
-                  <span className="text-white/40 text-xs">&mdash;</span>
+                  <span className="text-white text-xs">&mdash;</span>
                 </div>
                 <div className="bg-white/5 px-3 py-2.5 text-center border-b border-white/5">
-                  <span className="text-white/40 text-xs">&mdash;</span>
+                  <span className="text-white text-xs">&mdash;</span>
                 </div>
               </div>
 
@@ -635,7 +635,7 @@ const AsbestosModule5Section4 = () => {
                   </span>
                 </div>
                 <div className="bg-white/[0.03] px-3 py-2.5 text-center border-b border-white/5">
-                  <span className="text-white/40 text-xs">&mdash;</span>
+                  <span className="text-white text-xs">&mdash;</span>
                 </div>
                 <div className="bg-green-500/5 px-3 py-2.5 text-center border-b border-white/5">
                   <span className="inline-block px-2 py-0.5 rounded text-xs font-semibold bg-green-500/20 text-green-300">
@@ -704,13 +704,13 @@ const AsbestosModule5Section4 = () => {
                   <p className="text-white text-xs sm:text-sm font-medium">Enforcement</p>
                 </div>
                 <div className="bg-white/5 px-3 py-2.5 text-center border-b border-white/5">
-                  <span className="text-white/40 text-xs">&mdash;</span>
+                  <span className="text-white text-xs">&mdash;</span>
                 </div>
                 <div className="bg-white/5 px-3 py-2.5 text-center border-b border-white/5">
-                  <span className="text-white/40 text-xs">&mdash;</span>
+                  <span className="text-white text-xs">&mdash;</span>
                 </div>
                 <div className="bg-white/5 px-3 py-2.5 text-center border-b border-white/5">
-                  <span className="text-white/40 text-xs">&mdash;</span>
+                  <span className="text-white text-xs">&mdash;</span>
                 </div>
                 <div className="bg-orange-500/10 px-3 py-2.5 text-center border-b border-white/5">
                   <span className="inline-block px-2 py-0.5 rounded text-xs font-semibold bg-orange-500/20 text-orange-300">
@@ -730,7 +730,7 @@ const AsbestosModule5Section4 = () => {
                   </span>
                 </div>
                 <div className="bg-white/[0.03] px-3 py-2.5 text-center">
-                  <span className="text-white/40 text-xs">&mdash;</span>
+                  <span className="text-white text-xs">&mdash;</span>
                 </div>
                 <div className="bg-orange-500/10 px-3 py-2.5 text-center">
                   <span className="inline-block px-2 py-0.5 rounded text-xs font-semibold bg-orange-500/20 text-orange-300">
@@ -746,7 +746,7 @@ const AsbestosModule5Section4 = () => {
             </div>
           </div>
 
-          <p className="text-white/50 text-xs text-center mt-3 italic">
+          <p className="text-white text-xs text-center mt-3 italic">
             On mobile, scroll horizontally to view all columns
           </p>
         </section>
@@ -821,7 +821,7 @@ const AsbestosModule5Section4 = () => {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Dutyholder &ne; Employer</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The dutyholder is{' '}
                   <strong className="text-white">NOT necessarily the employer</strong> of the
                   workers in the building. The dutyholder is whoever has responsibility for the
@@ -895,7 +895,7 @@ const AsbestosModule5Section4 = () => {
                   <CheckCircle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-medium text-orange-300">Domestic Clients</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   CDM 2015 duties apply whether the client is a commercial organisation or a
                   domestic client (e.g. a homeowner commissioning building work). However, for
                   domestic clients, the duties{' '}
@@ -964,7 +964,7 @@ const AsbestosModule5Section4 = () => {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Penalties</h3>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                     <span>
@@ -1001,7 +1001,7 @@ const AsbestosModule5Section4 = () => {
                   <p className="font-semibold text-base text-orange-400 mb-2">
                     Unannounced Inspections
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The HSE can visit{' '}
                     <strong className="text-white">any workplace without notice</strong> and inspect
                     asbestos management arrangements. Inspectors have the legal power to enter
@@ -1014,7 +1014,7 @@ const AsbestosModule5Section4 = () => {
                   <p className="font-semibold text-base text-orange-400 mb-2">
                     Fee for Intervention (FFI)
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     If an HSE inspector identifies a{' '}
                     <strong className="text-white">material breach</strong> of health and safety
                     law, the dutyholder or employer must pay for the time the HSE spends
@@ -1085,7 +1085,7 @@ const AsbestosModule5Section4 = () => {
                     Legal Protection for Whistleblowers
                   </h3>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     The{' '}
                     <strong className="text-white">
@@ -1144,13 +1144,13 @@ const AsbestosModule5Section4 = () => {
                     <p className="text-green-400 font-bold text-base">Awareness Training</p>
                   </div>
                   <div className="p-4 space-y-2 text-sm">
-                    <p className="text-white/80">
+                    <p className="text-white">
                       For workers who may encounter ACMs but do not carry out asbestos work
                     </p>
                     <p className="text-green-300 font-semibold text-lg text-center py-2">
                       Annual Refresher
                     </p>
-                    <p className="text-white/60 text-xs text-center">Recommended by the HSE</p>
+                    <p className="text-white text-xs text-center">Recommended by the HSE</p>
                   </div>
                 </div>
 
@@ -1160,13 +1160,13 @@ const AsbestosModule5Section4 = () => {
                     <p className="text-amber-400 font-bold text-base">Detailed Training</p>
                   </div>
                   <div className="p-4 space-y-2 text-sm">
-                    <p className="text-white/80">
+                    <p className="text-white">
                       For workers who carry out asbestos work (NNLW or non-licensed)
                     </p>
                     <p className="text-amber-300 font-semibold text-lg text-center py-2">
                       Every 3 Years
                     </p>
-                    <p className="text-white/60 text-xs text-center">Full refresher as a minimum</p>
+                    <p className="text-white text-xs text-center">Full refresher as a minimum</p>
                   </div>
                 </div>
 
@@ -1176,13 +1176,13 @@ const AsbestosModule5Section4 = () => {
                     <p className="text-red-400 font-bold text-base">Licensed Workers</p>
                   </div>
                   <div className="p-4 space-y-2 text-sm">
-                    <p className="text-white/80">
+                    <p className="text-white">
                       For workers carrying out licensed asbestos removal work
                     </p>
                     <p className="text-red-300 font-semibold text-lg text-center py-2">
                       As Condition of Licence
                     </p>
-                    <p className="text-white/60 text-xs text-center">
+                    <p className="text-white text-xs text-center">
                       Renewal requires evidence of training
                     </p>
                   </div>
@@ -1232,7 +1232,7 @@ const AsbestosModule5Section4 = () => {
                     Refresher Training Is a Legal Requirement
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Refresher training is <strong className="text-white">not optional</strong>. It is
                   a legal requirement under Regulation 10 of CAR 2012. Training records must be kept
                   and made available for inspection by the HSE. If an employer cannot demonstrate
@@ -1356,7 +1356,7 @@ const AsbestosModule5Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1372,7 +1372,7 @@ const AsbestosModule5Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-5-section-3">

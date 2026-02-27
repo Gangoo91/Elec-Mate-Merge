@@ -30,7 +30,7 @@ const RegulationReferenceHeader = () => {
             <div key={index} className="bg-card rounded-lg p-3 sm:p-4 border border-border">
               <IconComponent className={`h-5 w-5 sm:h-6 sm:w-6 ${stat.color} mx-auto mb-2`} />
               <div className="text-base sm:text-lg font-bold text-foreground">{stat.value}</div>
-              <div className="text-xs text-white/80">{stat.label}</div>
+              <div className="text-xs text-white">{stat.label}</div>
             </div>
           );
         })}

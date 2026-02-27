@@ -270,7 +270,7 @@ const Level3Module7Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section2">
@@ -414,7 +414,7 @@ const Level3Module7Section2_3 = () => {
               to indicate severity.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Note:</strong> Since 2020, EICRs are legally required for rental properties in
               England. Landlords must obtain an EICR before new tenancies and at least every 5
               years, with a satisfactory report required.
@@ -480,21 +480,21 @@ const Level3Module7Section2_3 = () => {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-red-500/30">
                 <p className="font-medium text-red-400 mb-1">C1</p>
-                <p className="text-white/90 text-xs">Danger present - immediate action required</p>
+                <p className="text-white text-xs">Danger present - immediate action required</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-orange-500/30">
                 <p className="font-medium text-orange-400 mb-1">C2</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Potentially dangerous - urgent action required
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-yellow-500/30">
                 <p className="font-medium text-yellow-400 mb-1">C3</p>
-                <p className="text-white/90 text-xs">Improvement recommended</p>
+                <p className="text-white text-xs">Improvement recommended</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-blue-500/30">
                 <p className="font-medium text-blue-400 mb-1">FI</p>
-                <p className="text-white/90 text-xs">Further investigation required</p>
+                <p className="text-white text-xs">Further investigation required</p>
               </div>
             </div>
 
@@ -505,7 +505,7 @@ const Level3Module7Section2_3 = () => {
               it unsatisfactory.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> An EICR reveals: one C2 (missing earth on a socket), two C3
               items (lack of RCD protection on older circuits, missing circuit chart). The overall
               classification must be 'Unsatisfactory' due to the C2 observation.
@@ -571,7 +571,7 @@ const Level3Module7Section2_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -618,7 +618,7 @@ const Level3Module7Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section2-2">

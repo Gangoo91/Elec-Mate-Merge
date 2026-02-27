@@ -204,7 +204,7 @@ export default function LeadershipModule2Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-2">
@@ -390,27 +390,27 @@ export default function LeadershipModule2Section1() {
                 <div className="space-y-2 text-sm">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium">5. Inattention to Results</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Team members put individual goals (ego, career, recognition) ahead of
                       collective outcomes.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium">4. Avoidance of Accountability</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Team members do not hold each other to high standards or call out poor
                       behaviour.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium">3. Lack of Commitment</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Without genuine buy-in from healthy debate, people do not commit to decisions.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium">2. Fear of Conflict</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Without trust, people avoid honest disagreement, leading to artificial harmony
                       and poor decisions.
                     </p>
@@ -419,7 +419,7 @@ export default function LeadershipModule2Section1() {
                     <p className="text-rose-400 font-medium">
                       1. Absence of Trust &mdash; THE FOUNDATION
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Without vulnerability-based trust, nothing above can function. This is where
                       leaders must start.
                     </p>
@@ -465,7 +465,7 @@ export default function LeadershipModule2Section1() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-white font-medium mb-1">Credibility</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Your expertise, qualifications, and knowledge. Do people believe you know what
                       you are talking about? On site: do you understand the technical work, the
                       regulations, the programme?
@@ -473,7 +473,7 @@ export default function LeadershipModule2Section1() {
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-white font-medium mb-1">Reliability</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Do you do what you say you will do? Consistently? On time? Every time? On
                       site: if you promise materials will arrive Monday, do they? If you say you
                       will raise an issue with the PM, do you?
@@ -481,7 +481,7 @@ export default function LeadershipModule2Section1() {
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-white font-medium mb-1">Intimacy</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       How safe people feel sharing with you. Will you keep confidences? Can people
                       be honest without fear? On site: can someone tell you they are struggling
                       without it being held against them?
@@ -489,7 +489,7 @@ export default function LeadershipModule2Section1() {
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-white font-medium mb-1">Self-Orientation (denominator)</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       How focused you are on yourself vs others. The MORE self-oriented you are, the
                       LESS trustworthy you appear. On site: is the supervisor focused on their
                       bonus, or on the team&rsquo;s success?
@@ -643,7 +643,7 @@ export default function LeadershipModule2Section1() {
                     Servant Leadership (Robert Greenleaf)
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Robert Greenleaf introduced the concept of{' '}
                   <strong className="text-white">servant leadership</strong> in 1970. The core idea:
                   the leader&rsquo;s primary role is to serve the team, not the other way around. A
@@ -725,7 +725,7 @@ export default function LeadershipModule2Section1() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-white font-medium mb-1">Saying One Thing, Doing Another</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       The single biggest trust-destroyer. If you promise something and do not
                       deliver, if you say you value safety but cut corners, if you claim to be fair
                       but play favourites &mdash; people notice every time.
@@ -733,7 +733,7 @@ export default function LeadershipModule2Section1() {
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-white font-medium mb-1">Playing Favourites</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Giving better tasks, overlooking mistakes, or offering overtime selectively
                       based on personal preference rather than fairness. The rest of the team will
                       see it immediately and resent it deeply.
@@ -743,7 +743,7 @@ export default function LeadershipModule2Section1() {
                     <p className="text-white font-medium mb-1">
                       Taking Credit for Others&rsquo; Work
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Presenting the team&rsquo;s achievements as your own to senior management.
                       This gets back to the team very quickly and destroys any goodwill you had
                       built.
@@ -751,7 +751,7 @@ export default function LeadershipModule2Section1() {
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-white font-medium mb-1">Breaking Confidences</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       If someone tells you something in confidence and you share it, you will never
                       be trusted with sensitive information again. On site, this could involve
                       personal issues, health concerns, or honest feedback.
@@ -761,14 +761,14 @@ export default function LeadershipModule2Section1() {
                     <p className="text-white font-medium mb-1">
                       Undermining People Behind Their Backs
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Criticising team members to others when they are not present. If you talk
                       about people behind their backs, everyone assumes you do the same about them.
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-white font-medium mb-1">Inconsistent Standards</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Enforcing rules strictly one day and ignoring them the next. Applying
                       different standards to different people. People need to know where they stand.
                     </p>
@@ -781,7 +781,7 @@ export default function LeadershipModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Rebuilding Broken Trust</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Once trust is broken, rebuilding it requires{' '}
                   <strong className="text-white">sustained, visible change over time</strong>. A
                   simple apology is not enough. The person or team must see a consistent pattern of
@@ -873,7 +873,7 @@ export default function LeadershipModule2Section1() {
                   <Heart className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Early Actions Set the Tone</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Your earliest actions as a new leader are watched more closely than anything you
                   will do later. If your first act is to crack down on timekeeping, the team learns
                   you are a clock-watcher. If your first act is to sort out the welfare facilities,
@@ -1022,7 +1022,7 @@ export default function LeadershipModule2Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1036,7 +1036,7 @@ export default function LeadershipModule2Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-2">

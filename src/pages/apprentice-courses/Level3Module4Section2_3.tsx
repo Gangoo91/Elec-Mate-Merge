@@ -283,7 +283,7 @@ const Level3Module4Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section2">
@@ -383,7 +383,7 @@ const Level3Module4Section2_3 = () => {
               returning via neutral.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Site example:</strong> Investigating a circuit suspected of overloading, you
               clamp around the line conductor at the consumer unit. The meter shows 28A on a 32A
               circuit - high but acceptable. You recommend monitoring during peak use and
@@ -489,7 +489,7 @@ const Level3Module4Section2_3 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Site example:</strong> A 30mA RCD keeps tripping. Clamping all downstream
               conductors shows 35mA total leakage - just over the threshold. Testing individual
               circuits reveals the kitchen ring has 18mA, lounge has 8mA, and others are minimal. On
@@ -552,25 +552,25 @@ const Level3Module4Section2_3 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Temperature Difference</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Delta T compared to similar components is more meaningful than absolute values
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Load Conditions</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Survey at typical maximum load - faults don't show when cold
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Emissivity</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Shiny surfaces need adjustment or comparative analysis
                 </p>
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Site example:</strong> During a periodic inspection thermal survey of an
               industrial distribution board, you notice one contactor is 35 degrees C hotter than
               identical contactors on adjacent phases. Investigation reveals a loose incoming
@@ -653,7 +653,7 @@ const Level3Module4Section2_3 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Site example:</strong> A thermal survey of motor control centres reveals a
               contactor showing 28 degrees C above ambient and 22 degrees C above similar
               contactors. This falls into the 'repair immediately' category. Further investigation
@@ -737,7 +737,7 @@ const Level3Module4Section2_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -782,7 +782,7 @@ const Level3Module4Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section2-2">

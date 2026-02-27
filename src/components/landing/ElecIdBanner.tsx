@@ -39,7 +39,7 @@ export const ElecIdBanner = () => {
               </span>
             </h2>
 
-            <p className="text-white/70 text-lg mb-6 leading-relaxed">
+            <p className="text-white text-lg mb-6 leading-relaxed">
               A professional identity for UK electricians. Verify your qualifications, share
               credentials instantly, and build trust with clients.
             </p>
@@ -51,7 +51,7 @@ export const ElecIdBanner = () => {
                   className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10"
                 >
                   <benefit.icon className="w-4 h-4 text-yellow-400" />
-                  <span className="text-sm text-white/80">{benefit.text}</span>
+                  <span className="text-sm text-white">{benefit.text}</span>
                 </div>
               ))}
             </div>
@@ -79,7 +79,7 @@ export const ElecIdBanner = () => {
                 {/* Top row */}
                 <div className="flex items-start justify-between">
                   <div>
-                    <div className="text-xs text-white/50 uppercase tracking-wider mb-1">
+                    <div className="text-xs text-white uppercase tracking-wider mb-1">
                       UK Electrical Professional
                     </div>
                     <div className="text-lg font-bold text-white">ELEC-ID</div>
@@ -92,13 +92,13 @@ export const ElecIdBanner = () => {
                 {/* Middle */}
                 <div className="space-y-1">
                   <div className="text-white font-semibold">John Smith</div>
-                  <div className="text-white/60 text-sm">Qualified Electrician</div>
+                  <div className="text-white text-sm">Qualified Electrician</div>
                 </div>
 
                 {/* Bottom row */}
                 <div className="flex items-end justify-between">
                   <div>
-                    <div className="text-xs text-white/50 uppercase tracking-wider">ID Number</div>
+                    <div className="text-xs text-white uppercase tracking-wider">ID Number</div>
                     <div className="text-white font-mono text-sm">EM-2024-XXXXX</div>
                   </div>
                   <div className="flex items-center gap-1 text-green-400">

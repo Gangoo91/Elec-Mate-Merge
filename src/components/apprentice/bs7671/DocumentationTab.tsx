@@ -126,7 +126,7 @@ const DocumentationTab = () => {
       Testing: { bg: 'bg-cyan-500/10', text: 'text-cyan-400', border: 'border-cyan-500/30' },
     };
     return (
-      configs[category] || { bg: 'bg-white/10', text: 'text-white/70', border: 'border-white/20' }
+      configs[category] || { bg: 'bg-white/10', text: 'text-white', border: 'border-white/20' }
     );
   };
 
@@ -144,7 +144,7 @@ const DocumentationTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-4 relative">
-          <p className="text-white/70">
+          <p className="text-white">
             Complete documentation is essential for BS7671 compliance. Use these templates and
             follow the completion checklist to ensure all requirements are met.
           </p>
@@ -156,7 +156,7 @@ const DocumentationTab = () => {
               <div className="text-2xl font-bold text-red-400">
                 {documents.filter((d) => d.status === 'required').length}
               </div>
-              <div className="text-xs text-white/60">Required</div>
+              <div className="text-xs text-white">Required</div>
             </div>
             <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
               <div className="p-2 rounded-lg bg-elec-yellow/20 inline-block mb-2">
@@ -165,14 +165,14 @@ const DocumentationTab = () => {
               <div className="text-2xl font-bold text-elec-yellow">
                 {documents.filter((d) => d.status === 'conditional').length}
               </div>
-              <div className="text-xs text-white/60">Conditional</div>
+              <div className="text-xs text-white">Conditional</div>
             </div>
             <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
               <div className="p-2 rounded-lg bg-blue-500/20 inline-block mb-2">
                 <Scale className="h-5 w-5 text-blue-400" />
               </div>
               <div className="text-2xl font-bold text-blue-400">BS 7671</div>
-              <div className="text-xs text-white/60">Standard</div>
+              <div className="text-xs text-white">Standard</div>
             </div>
           </div>
         </CardContent>
@@ -202,7 +202,7 @@ const DocumentationTab = () => {
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex-1">
                       <h4 className="font-semibold text-white mb-1">{doc.name}</h4>
-                      <p className="text-sm text-white/60 mb-3">{doc.description}</p>
+                      <p className="text-sm text-white mb-3">{doc.description}</p>
                       <div className="flex items-center gap-2">
                         <Badge
                           className={`${categoryConfig.bg} ${categoryConfig.text} border ${categoryConfig.border}`}
@@ -262,7 +262,7 @@ const DocumentationTab = () => {
               </div>
               <div className="flex-1">
                 <h4 className="font-semibold text-white">{step.title}</h4>
-                <p className="text-sm text-white/60">{step.description}</p>
+                <p className="text-sm text-white">{step.description}</p>
               </div>
               <Button
                 size="sm"
@@ -306,7 +306,7 @@ const DocumentationTab = () => {
                   'Competent person scheme registration',
                   'Building Control approval',
                 ].map((item, index) => (
-                  <li key={index} className="flex items-start gap-2 text-sm text-white/70">
+                  <li key={index} className="flex items-start gap-2 text-sm text-white">
                     <span className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-1.5 flex-shrink-0" />
                     {item}
                   </li>
@@ -327,7 +327,7 @@ const DocumentationTab = () => {
                   'Digital copies recommended',
                   'Inspection intervals documented',
                 ].map((item, index) => (
-                  <li key={index} className="flex items-start gap-2 text-sm text-white/70">
+                  <li key={index} className="flex items-start gap-2 text-sm text-white">
                     <span className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-1.5 flex-shrink-0" />
                     {item}
                   </li>

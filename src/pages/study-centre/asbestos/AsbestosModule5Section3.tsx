@@ -222,7 +222,7 @@ const AsbestosModule5Section3 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Health Surveillance &amp; Medical Monitoring
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding who needs health surveillance, what medical examinations involve, how to
             screen for asbestos-related diseases, and the compensation routes available to affected
             workers
@@ -309,7 +309,7 @@ const AsbestosModule5Section3 = () => {
                   Surveillance Detects &mdash; It Does Not Prevent
                 </h3>
               </div>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 Health surveillance is about <strong className="text-white">early detection</strong>
                 , not prevention. Once asbestos fibres have been inhaled, they remain in the lungs
                 permanently. No medical examination can remove them or reverse the damage. The only
@@ -381,7 +381,7 @@ const AsbestosModule5Section3 = () => {
                   <CheckCircle className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-blue-300">Confidentiality of Results</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Medical results are{' '}
                   <strong className="text-white">
                     confidential between the worker and the examining doctor
@@ -403,7 +403,7 @@ const AsbestosModule5Section3 = () => {
             <HeartPulse className="h-5 w-5 text-orange-400" />
             Health Surveillance Pathway
           </h2>
-          <p className="text-white/80 mb-6 text-sm">
+          <p className="text-white mb-6 text-sm">
             The diagram below shows the pathway from initial asbestos exposure through to ongoing
             health monitoring, investigation, and record keeping.
           </p>
@@ -413,14 +413,14 @@ const AsbestosModule5Section3 = () => {
             {/* Step 1 — Exposure */}
             <div className="flex items-start gap-3 sm:gap-4">
               <div className="flex flex-col items-center">
-                <div className="w-10 h-10 rounded-full bg-white/10 border-2 border-white/30 flex items-center justify-center text-white/70 text-sm font-bold flex-shrink-0">
+                <div className="w-10 h-10 rounded-full bg-white/10 border-2 border-white/30 flex items-center justify-center text-white text-sm font-bold flex-shrink-0">
                   1
                 </div>
                 <div className="w-0.5 h-8 bg-orange-500/40"></div>
               </div>
               <div className="bg-white/5 border border-white/10 rounded-lg p-3 flex-1 mb-2">
                 <p className="text-white font-medium text-sm">Exposure occurs</p>
-                <p className="text-white/60 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Worker is exposed to asbestos fibres during work activity
                 </p>
               </div>
@@ -438,7 +438,7 @@ const AsbestosModule5Section3 = () => {
                 <p className="text-orange-400 font-medium text-sm">
                   Exposure recorded in health records
                 </p>
-                <p className="text-white/60 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Details of the exposure event, date, type of ACM, and duration are recorded
                 </p>
               </div>
@@ -454,7 +454,7 @@ const AsbestosModule5Section3 = () => {
               </div>
               <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-3 flex-1 mb-2">
                 <p className="text-orange-400 font-medium text-sm">Medical examination arranged</p>
-                <p className="text-white/60 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Employer arranges examination with an HSE-appointed or experienced doctor
                 </p>
               </div>
@@ -470,7 +470,7 @@ const AsbestosModule5Section3 = () => {
               </div>
               <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-3 flex-1 mb-2">
                 <p className="text-orange-400 font-medium text-sm">Regular screening schedule</p>
-                <p className="text-white/60 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Every 2 years for licensed workers &mdash; ongoing for NNLW workers
                 </p>
               </div>
@@ -486,7 +486,7 @@ const AsbestosModule5Section3 = () => {
               </div>
               <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-3 flex-1 mb-2">
                 <p className="text-orange-400 font-medium text-sm">Ongoing monitoring</p>
-                <p className="text-white/60 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Spirometry, respiratory questionnaire, chest examination at each review
                 </p>
               </div>
@@ -503,26 +503,26 @@ const AsbestosModule5Section3 = () => {
               <div className="flex-1 mb-2">
                 <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 mb-3">
                   <p className="text-red-400 font-medium text-sm">If abnormality detected</p>
-                  <p className="text-white/60 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Findings warrant further investigation and specialist input
                   </p>
                 </div>
                 <div className="grid sm:grid-cols-3 gap-2 ml-4 sm:ml-6">
                   <div className="bg-red-500/5 border border-red-500/20 rounded-lg p-2.5">
                     <p className="text-red-300 text-xs font-medium">Further investigation</p>
-                    <p className="text-white/50 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       CT scan, specialist referral, biopsy
                     </p>
                   </div>
                   <div className="bg-red-500/5 border border-red-500/20 rounded-lg p-2.5">
                     <p className="text-red-300 text-xs font-medium">Treatment &amp; support</p>
-                    <p className="text-white/50 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Medical treatment, symptom management, counselling
                     </p>
                   </div>
                   <div className="bg-red-500/5 border border-red-500/20 rounded-lg p-2.5">
                     <p className="text-red-300 text-xs font-medium">Compensation claim</p>
-                    <p className="text-white/50 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       IIDB, civil claim, DMPS if appropriate
                     </p>
                   </div>
@@ -539,7 +539,7 @@ const AsbestosModule5Section3 = () => {
               </div>
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3 flex-1">
                 <p className="text-blue-400 font-medium text-sm">Records kept for 40 years</p>
-                <p className="text-white/60 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   All health records, exposure data, and examination results must be securely
                   retained for at least 40 years from the date of the last entry
                 </p>
@@ -547,7 +547,7 @@ const AsbestosModule5Section3 = () => {
             </div>
           </div>
 
-          <p className="text-white/50 text-xs text-center mt-4 italic">
+          <p className="text-white text-xs text-center mt-4 italic">
             Health surveillance pathway from exposure to long-term record keeping
           </p>
         </section>
@@ -614,7 +614,7 @@ const AsbestosModule5Section3 = () => {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Report New Symptoms Promptly</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Workers should report any new or worsening symptoms{' '}
                   <strong className="text-white">immediately</strong> &mdash; do not wait for the
                   next scheduled examination. Key symptoms to watch for include:{' '}
@@ -692,7 +692,7 @@ const AsbestosModule5Section3 = () => {
                   <CheckCircle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">What to Tell Your GP</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   When informing your GP, provide as much detail as possible:{' '}
                   <strong className="text-white">when</strong> you were exposed,{' '}
                   <strong className="text-white">where</strong> (workplace, employer),{' '}
@@ -786,7 +786,7 @@ const AsbestosModule5Section3 = () => {
                   <AlertTriangle className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-amber-300">If the Employer Ceases Trading</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   If the employer ceases trading, health records{' '}
                   <strong className="text-white">must be transferred to the HSE</strong> for
                   safekeeping for the remainder of the 40-year retention period. Workers have the
@@ -823,7 +823,7 @@ const AsbestosModule5Section3 = () => {
                       <h3 className="text-orange-400 font-semibold mb-1">
                         Industrial Injuries Disablement Benefit (IIDB)
                       </h3>
-                      <p className="text-white/80 text-sm">
+                      <p className="text-white text-sm">
                         A government benefit for workers disabled by an industrial disease,
                         including asbestosis and mesothelioma. The benefit is paid based on the
                         degree of disablement and does not depend on proving employer negligence.
@@ -837,7 +837,7 @@ const AsbestosModule5Section3 = () => {
                     <div className="w-2 h-2 rounded-full bg-orange-500 mt-2 flex-shrink-0"></div>
                     <div>
                       <h3 className="text-orange-400 font-semibold mb-1">Civil Claims</h3>
-                      <p className="text-white/80 text-sm">
+                      <p className="text-white text-sm">
                         Workers (or their families) can sue the employer for negligence. There is{' '}
                         <strong className="text-white">no time limit</strong> for mesothelioma
                         claims. Most other asbestos-related claims must be brought within{' '}
@@ -855,7 +855,7 @@ const AsbestosModule5Section3 = () => {
                       <h3 className="text-orange-400 font-semibold mb-1">
                         Diffuse Mesothelioma Payment Scheme (DMPS)
                       </h3>
-                      <p className="text-white/80 text-sm">
+                      <p className="text-white text-sm">
                         A government scheme providing lump-sum payments for mesothelioma sufferers
                         who <strong className="text-white">cannot trace their employer</strong> or
                         the employer&apos;s insurer. This scheme recognises that many companies that
@@ -870,7 +870,7 @@ const AsbestosModule5Section3 = () => {
                     <div className="w-2 h-2 rounded-full bg-orange-500 mt-2 flex-shrink-0"></div>
                     <div>
                       <h3 className="text-orange-400 font-semibold mb-1">Legal Advice</h3>
-                      <p className="text-white/80 text-sm">
+                      <p className="text-white text-sm">
                         Specialist asbestos disease solicitors can advise on the best compensation
                         route. Many operate on a{' '}
                         <strong className="text-white">no-win-no-fee basis</strong>, meaning there
@@ -902,7 +902,7 @@ const AsbestosModule5Section3 = () => {
               <div className="grid md:grid-cols-2 gap-3 sm:gap-4">
                 <div className="bg-white/5 border border-white/10 rounded-lg p-4">
                   <h3 className="text-orange-400 font-semibold text-sm mb-2">Mesothelioma UK</h3>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     National charity providing a dedicated helpline, specialist mesothelioma nurse
                     support, information resources, and advocacy for mesothelioma patients and their
                     families.
@@ -912,7 +912,7 @@ const AsbestosModule5Section3 = () => {
                   <h3 className="text-orange-400 font-semibold text-sm mb-2">
                     Asbestos Victims Support Groups
                   </h3>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     Regional groups across the UK providing practical and emotional support,
                     benefits advice, and help navigating the legal and medical systems for
                     asbestos-affected workers and families.
@@ -922,7 +922,7 @@ const AsbestosModule5Section3 = () => {
                   <h3 className="text-orange-400 font-semibold text-sm mb-2">
                     Macmillan Cancer Support
                   </h3>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     Provides support for asbestos-related cancers including mesothelioma and lung
                     cancer. Offers specialist nurses, financial guidance, and emotional support
                     services.
@@ -930,7 +930,7 @@ const AsbestosModule5Section3 = () => {
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-lg p-4">
                   <h3 className="text-orange-400 font-semibold text-sm mb-2">HSE Guidance</h3>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     The Health and Safety Executive provides comprehensive guidance on rights,
                     responsibilities, compensation routes, and legal requirements for
                     asbestos-exposed workers and employers.
@@ -938,7 +938,7 @@ const AsbestosModule5Section3 = () => {
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-lg p-4">
                   <h3 className="text-orange-400 font-semibold text-sm mb-2">Trade Unions</h3>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     Trade unions often provide legal support and advocacy for members diagnosed with
                     asbestos-related diseases, including assistance with compensation claims and
                     workplace rights.
@@ -946,7 +946,7 @@ const AsbestosModule5Section3 = () => {
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-lg p-4">
                   <h3 className="text-orange-400 font-semibold text-sm mb-2">Citizens Advice</h3>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     Offers help with benefits claims (including IIDB), legal rights, and signposting
                     to specialist services for asbestos-affected workers and their families.
                   </p>
@@ -958,7 +958,7 @@ const AsbestosModule5Section3 = () => {
                   <CheckCircle className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-blue-300">Seek Support Early</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   If you or someone you know has been affected by asbestos exposure,{' '}
                   <strong className="text-white">do not wait</strong> until symptoms appear to seek
                   support. Many of these organisations can provide guidance on health monitoring,
@@ -1045,7 +1045,7 @@ const AsbestosModule5Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1061,7 +1061,7 @@ const AsbestosModule5Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-5-section-2">

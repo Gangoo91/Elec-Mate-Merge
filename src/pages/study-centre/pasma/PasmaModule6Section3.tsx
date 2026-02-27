@@ -201,7 +201,7 @@ export default function PasmaModule6Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-6">
@@ -226,7 +226,7 @@ export default function PasmaModule6Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Rescue Procedures
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Planning, practising, and executing rescue procedures for mobile tower emergencies
             &mdash; from legal requirements to suspension trauma and first aid at height
           </p>
@@ -311,7 +311,7 @@ export default function PasmaModule6Section3() {
                     Why You Cannot Rely on Emergency Services Alone
                   </p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     Emergency service response times are variable and depend on location, demand,
                     and access. In urban areas, an ambulance may arrive in 8&ndash;15 minutes. In
@@ -329,7 +329,7 @@ export default function PasmaModule6Section3() {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Planning Saves Lives</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A well-prepared rescue plan reduces the time between an incident occurring and the
                   casualty receiving help. It ensures equipment is available and accessible, team
                   members know their roles, communication methods are established, and emergency
@@ -343,7 +343,7 @@ export default function PasmaModule6Section3() {
                   <p className="text-sm font-medium text-white mb-2">
                     Regulation 4 &mdash; Key Requirements
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Work at height must be properly planned</span>
@@ -368,7 +368,7 @@ export default function PasmaModule6Section3() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">What Happens Without a Plan</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Panic and confusion delay the rescue response</span>
@@ -419,7 +419,7 @@ export default function PasmaModule6Section3() {
                     </span>
                     <p className="text-sm font-medium text-green-300">Self-Rescue</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The operative is conscious, mobile, and able to descend the tower unaided using
                     the internal ladder. This is the quickest form of rescue and should be
                     facilitated wherever possible &mdash; keep the internal ladder route clear at
@@ -437,7 +437,7 @@ export default function PasmaModule6Section3() {
                     </span>
                     <p className="text-sm font-medium text-amber-300">Assisted Rescue</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The operative is unable to descend unaided — perhaps due to injury, illness, or
                     incapacitation. Colleagues on site carry out a rescue using pre-planned
                     procedures and equipment. This may involve climbing the tower to assist the
@@ -454,7 +454,7 @@ export default function PasmaModule6Section3() {
                     </span>
                     <p className="text-sm font-medium text-red-300">Professional Rescue</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Emergency services attend to carry out the rescue. This is the last resort and
                     typically involves the fire service with specialist rescue equipment. While
                     waiting for emergency services, the on-site team should provide first aid,
@@ -491,7 +491,7 @@ export default function PasmaModule6Section3() {
                   <FileWarning className="h-5 w-5 text-elec-yellow" />
                   <p className="text-sm font-medium text-elec-yellow">Rescue Plan Must Cover</p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Rescue team:</strong> Named individuals who form
                     the on-site rescue team, their training and competence, and how they will be
@@ -527,7 +527,7 @@ export default function PasmaModule6Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">The Plan Must Be Accessible</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The rescue plan should be kept at the work location, not locked in an office.
                   Every member of the team must know where it is and have read it before work
                   begins. In an emergency, no one should have to search for instructions. Key
@@ -538,7 +538,7 @@ export default function PasmaModule6Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Site-Specific Considerations</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The rescue plan must account for the specific challenges of the site. On a roof,
                   how will the casualty be brought down from the roof level as well as from the
                   tower? In a building under construction, are stairwells complete and passable for
@@ -551,7 +551,7 @@ export default function PasmaModule6Section3() {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Lone Working and Rescue</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If an operative is working alone on or near a tower, the rescue plan becomes even
                   more critical. Who will raise the alarm if the lone worker becomes incapacitated?
                   Regular check-in calls, personal alarm devices, and buddy systems at defined
@@ -563,7 +563,7 @@ export default function PasmaModule6Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Multi-Tower Sites</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   On sites where multiple towers are in use simultaneously, the rescue plan must
                   cover all towers. This includes ensuring there are enough trained rescuers to
                   respond to an incident on any tower, that rescue equipment is available near each
@@ -577,7 +577,7 @@ export default function PasmaModule6Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Night Work and Rescue</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If tower work takes place during hours of darkness or reduced visibility, the
                   rescue plan must account for the additional challenges. Adequate lighting must be
                   available at the tower and along the rescue route. Torches should be immediately
@@ -589,7 +589,7 @@ export default function PasmaModule6Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Rescue Equipment Checklist</p>
-                <div className="grid md:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid md:grid-cols-2 gap-3 text-sm text-white">
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
@@ -662,7 +662,7 @@ export default function PasmaModule6Section3() {
                     5&ndash;15 Minutes to Circulatory Failure
                   </p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     When a person hangs motionless in a harness, the leg straps compress the femoral
                     veins in the upper thighs. This prevents blood in the legs from returning to the
@@ -683,7 +683,7 @@ export default function PasmaModule6Section3() {
                 <p className="text-sm font-medium text-elec-yellow mb-3">
                   Symptoms — Progressive Deterioration
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -722,7 +722,7 @@ export default function PasmaModule6Section3() {
                     Recovery Position — Do NOT Lay Flat
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   After rescue, the casualty must NOT be laid flat on their back. The sudden return
                   of pooled, oxygen-depleted, acid-rich blood from the legs to the heart can trigger
                   cardiac arrest &mdash; known as &ldquo;reflow syndrome.&rdquo; Instead, place the
@@ -736,7 +736,7 @@ export default function PasmaModule6Section3() {
                 <p className="text-sm font-medium text-white mb-2">
                   Suspension Trauma Prevention Measures
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   While rapid rescue is the primary response, suspension trauma risk can be reduced
                   through: using a harness with wider leg straps that distribute pressure more
                   evenly, fitting trauma straps (stirrups) that allow the suspended person to stand
@@ -751,7 +751,7 @@ export default function PasmaModule6Section3() {
                 <p className="text-sm font-medium text-white mb-2">
                   Hospital Follow-Up Is Essential
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Any person who has been suspended in a harness for more than a few minutes must be
                   taken to hospital, even if they appear to have recovered fully. The effects of
                   suspension trauma can be delayed &mdash; kidney damage from the breakdown products
@@ -786,7 +786,7 @@ export default function PasmaModule6Section3() {
                   <Phone className="h-5 w-5 text-elec-yellow" />
                   <p className="text-sm font-medium text-elec-yellow">Raising the Alarm</p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Mobile phone:</strong> Check signal coverage at
                     the exact working location and at platform height. Store emergency numbers in
@@ -815,7 +815,7 @@ export default function PasmaModule6Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Who to Call and in What Order</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -845,7 +845,7 @@ export default function PasmaModule6Section3() {
                     </span>
                   </li>
                 </ul>
-                <p className="text-sm text-white/80 mt-2">
+                <p className="text-sm text-white mt-2">
                   Steps 1 and 2 should happen simultaneously if there are enough people. One person
                   begins the rescue while another calls 999. Do not delay the physical rescue to
                   make phone calls.
@@ -854,7 +854,7 @@ export default function PasmaModule6Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Information for the 999 Call</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   When calling emergency services, provide: the exact location (address, postcode,
                   what3words or grid reference), the nature of the emergency (fall from height,
                   person suspended, medical emergency), the number of casualties, the height
@@ -873,7 +873,7 @@ export default function PasmaModule6Section3() {
                     Communication Equipment Checks
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Communication equipment must be tested before each work session. Confirm mobile
                   phone signal at the working location and at platform height. Charge two-way radio
                   batteries fully. Test whistle audibility from the platform to the ground-level
@@ -908,7 +908,7 @@ export default function PasmaModule6Section3() {
                     First-Aid Considerations on a Tower Platform
                   </p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Space limitations:</strong> Tower platforms are
                     typically 0.85m &times; 1.8m or 1.35m &times; 1.8m — barely enough room for one
@@ -933,7 +933,7 @@ export default function PasmaModule6Section3() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Treat in Situ When:</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>The casualty has a suspected spinal injury &mdash; do not move</span>
@@ -954,7 +954,7 @@ export default function PasmaModule6Section3() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Lower to Ground When:</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>CPR is needed and cannot be effectively performed on the platform</span>
@@ -984,7 +984,7 @@ export default function PasmaModule6Section3() {
                     Spinal Injury Considerations
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If a fall or impact has occurred, always suspect spinal injury until proven
                   otherwise. Do not move the casualty unless there is an immediate threat to life
                   (fire, further collapse). Keep the casualty still, support the head and neck in a
@@ -995,7 +995,7 @@ export default function PasmaModule6Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Bleeding Control at Height</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Serious bleeding from a fall or impact with tower components requires immediate
                   action. Apply direct pressure with a clean pad or trauma dressing. If blood soaks
                   through, add another pad on top &mdash; do not remove the first one. Elevate the
@@ -1008,7 +1008,7 @@ export default function PasmaModule6Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Keep the Casualty Informed</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Even if the casualty appears unconscious, speak to them calmly and explain what is
                   happening. Tell them help is on the way, that you are with them, and what you are
                   doing. Reassurance reduces anxiety and may help prevent shock from worsening. If
@@ -1042,7 +1042,7 @@ export default function PasmaModule6Section3() {
                   <GraduationCap className="h-5 w-5 text-elec-yellow" />
                   <p className="text-sm font-medium text-elec-yellow">Rescue Drill Requirements</p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Frequency:</strong> As a minimum, rescue drills
                     should be conducted annually. For high-risk work or when team composition
@@ -1074,7 +1074,7 @@ export default function PasmaModule6Section3() {
                   <p className="text-sm font-medium text-white mb-2">
                     Common Problems Found in Drills
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Rescue equipment stored in a locked room with no key</span>
@@ -1101,7 +1101,7 @@ export default function PasmaModule6Section3() {
                   <p className="text-sm font-medium text-white mb-2">
                     Involving Emergency Services
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Invite the local fire service to observe drills</span>
@@ -1130,7 +1130,7 @@ export default function PasmaModule6Section3() {
                 <p className="text-sm font-medium text-white mb-2">
                   Updating the Plan After Practice
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Every drill should result in at least one improvement to the rescue plan. If a
                   drill reveals no issues, the scenario was probably not challenging enough. Record
                   the drill date, participants, scenario, observations, and actions taken to improve
@@ -1143,7 +1143,7 @@ export default function PasmaModule6Section3() {
                 <p className="text-sm font-medium text-elec-yellow mb-2">
                   Psychological Preparedness
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Rescue is not just a physical skill &mdash; it is a psychological one. In a real
                   emergency, people experience stress, fear, tunnel vision, and impaired
                   decision-making. Drill practice builds not just physical competence but
@@ -1157,7 +1157,7 @@ export default function PasmaModule6Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Post-Incident Support</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   After a rescue or serious incident, the people involved &mdash; the casualty, the
                   rescuers, and witnesses &mdash; may experience significant psychological effects
                   including flashbacks, anxiety, difficulty sleeping, and reluctance to return to
@@ -1171,7 +1171,7 @@ export default function PasmaModule6Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Documenting Rescue Readiness</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Maintain records of: the current rescue plan for each work location, all rescue
                   drills conducted (date, participants, scenario, outcome, actions), the training
                   and competence records of rescue team members, equipment inspection dates and
@@ -1193,7 +1193,7 @@ export default function PasmaModule6Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1207,7 +1207,7 @@ export default function PasmaModule6Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-6-section-2">

@@ -31,7 +31,7 @@ const FunctionalSkillsModule6 = () => {
             <Button
               variant="ghost"
               size="sm"
-              className="mb-4 text-white/60 hover:text-white hover:bg-white/10 gap-2"
+              className="mb-4 text-white hover:text-white hover:bg-white/10 gap-2"
               asChild
             >
               <Link to="/study-centre/apprentice/functional-skills">
@@ -59,7 +59,7 @@ const FunctionalSkillsModule6 = () => {
                 Mock Examination
               </span>
             </h1>
-            <p className="text-sm text-white/50 max-w-lg mx-auto">
+            <p className="text-sm text-white max-w-lg mx-auto">
               Practice examination with 20 random questions from a 200-question bank covering all
               five modules
             </p>

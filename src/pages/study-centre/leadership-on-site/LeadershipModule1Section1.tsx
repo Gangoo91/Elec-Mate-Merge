@@ -204,7 +204,7 @@ export default function LeadershipModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-1">
@@ -319,7 +319,7 @@ export default function LeadershipModule1Section1() {
                     way.&rdquo;
                   </strong>
                 </p>
-                <p className="text-sm text-white/80 mt-2">
+                <p className="text-sm text-white mt-2">
                   This captures the three essential elements of leadership:{' '}
                   <strong className="text-white">vision</strong> (knowing the way),{' '}
                   <strong className="text-white">personal example</strong> (going the way), and
@@ -340,7 +340,7 @@ export default function LeadershipModule1Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Core Characteristics of Leadership
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -421,12 +421,12 @@ export default function LeadershipModule1Section1() {
                     Henry Fayol&rsquo;s Five Functions of Management
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   French industrialist Henri Fayol (1841&ndash;1925) identified five core functions
                   that define the work of management. These remain the foundation of management
                   theory today:
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">1. Planning</p>
                     <p>
@@ -485,7 +485,7 @@ export default function LeadershipModule1Section1() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Common Misconception</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Management is sometimes seen as less glamorous or less important than leadership.
                   This is wrong. On a construction site, poor management kills projects. A brilliant
                   visionary leader who cannot plan a programme, control a budget, or organise
@@ -533,7 +533,7 @@ export default function LeadershipModule1Section1() {
                     <p className="text-rose-400 font-semibold text-sm mb-3">
                       Management: Coping with Complexity
                     </p>
-                    <ul className="text-sm text-white/80 space-y-2">
+                    <ul className="text-sm text-white space-y-2">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                         <span>
@@ -562,7 +562,7 @@ export default function LeadershipModule1Section1() {
                     <p className="text-blue-400 font-semibold text-sm mb-3">
                       Leadership: Coping with Change
                     </p>
-                    <ul className="text-sm text-white/80 space-y-2">
+                    <ul className="text-sm text-white space-y-2">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                         <span>
@@ -601,7 +601,7 @@ export default function LeadershipModule1Section1() {
                     &ldquo;Managers do things right; leaders do the right thing.&rdquo;
                   </strong>
                 </p>
-                <p className="text-sm text-white/80 mt-2">
+                <p className="text-sm text-white mt-2">
                   This elegantly captures the difference between{' '}
                   <strong className="text-white">efficiency</strong> (doing things right &mdash;
                   executing tasks correctly, following procedures, staying within parameters) and
@@ -629,26 +629,26 @@ export default function LeadershipModule1Section1() {
                   <div className="bg-white/5 p-2 rounded text-white text-center font-medium">
                     Leadership
                   </div>
-                  <div className="bg-white/5 p-2 rounded text-white/80">Focuses on systems</div>
-                  <div className="bg-white/5 p-2 rounded text-white/80">Focuses on people</div>
-                  <div className="bg-white/5 p-2 rounded text-white/80">Relies on control</div>
-                  <div className="bg-white/5 p-2 rounded text-white/80">Relies on trust</div>
-                  <div className="bg-white/5 p-2 rounded text-white/80">
+                  <div className="bg-white/5 p-2 rounded text-white">Focuses on systems</div>
+                  <div className="bg-white/5 p-2 rounded text-white">Focuses on people</div>
+                  <div className="bg-white/5 p-2 rounded text-white">Relies on control</div>
+                  <div className="bg-white/5 p-2 rounded text-white">Relies on trust</div>
+                  <div className="bg-white/5 p-2 rounded text-white">
                     Asks &ldquo;how?&rdquo; and &ldquo;when?&rdquo;
                   </div>
-                  <div className="bg-white/5 p-2 rounded text-white/80">
+                  <div className="bg-white/5 p-2 rounded text-white">
                     Asks &ldquo;why?&rdquo; and &ldquo;what if?&rdquo;
                   </div>
-                  <div className="bg-white/5 p-2 rounded text-white/80">
+                  <div className="bg-white/5 p-2 rounded text-white">
                     Maintains the status quo
                   </div>
-                  <div className="bg-white/5 p-2 rounded text-white/80">
+                  <div className="bg-white/5 p-2 rounded text-white">
                     Challenges the status quo
                   </div>
-                  <div className="bg-white/5 p-2 rounded text-white/80">Short-term focus</div>
-                  <div className="bg-white/5 p-2 rounded text-white/80">Long-term focus</div>
-                  <div className="bg-white/5 p-2 rounded text-white/80">Administers</div>
-                  <div className="bg-white/5 p-2 rounded text-white/80">Innovates</div>
+                  <div className="bg-white/5 p-2 rounded text-white">Short-term focus</div>
+                  <div className="bg-white/5 p-2 rounded text-white">Long-term focus</div>
+                  <div className="bg-white/5 p-2 rounded text-white">Administers</div>
+                  <div className="bg-white/5 p-2 rounded text-white">Innovates</div>
                 </div>
               </div>
             </div>
@@ -678,7 +678,7 @@ export default function LeadershipModule1Section1() {
                     <p className="text-red-400 font-semibold text-sm mb-2">
                       Well-Managed but Poorly Led
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                         <span>Tasks completed to specification and on programme</span>
@@ -705,7 +705,7 @@ export default function LeadershipModule1Section1() {
                     <p className="text-amber-400 font-semibold text-sm mb-2">
                       Well-Led but Poorly Managed
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                         <span>Team is inspired, morale is high, people care</span>
@@ -746,7 +746,7 @@ export default function LeadershipModule1Section1() {
                   <Users className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">The Construction Reality</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Construction is a people business delivered through systems. You need leadership
                   to get the best out of people &mdash; to build trust, to motivate through
                   difficulty, to develop talent, to create a culture where people want to do their
@@ -780,11 +780,11 @@ export default function LeadershipModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Reflection Questions</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Consider the following questions honestly. There are no right or wrong answers
                   &mdash; they are designed to help you understand your natural tendencies.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -869,7 +869,7 @@ export default function LeadershipModule1Section1() {
                 points to remember are:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -936,7 +936,7 @@ export default function LeadershipModule1Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -950,7 +950,7 @@ export default function LeadershipModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-1">

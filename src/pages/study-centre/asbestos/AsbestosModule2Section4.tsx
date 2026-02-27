@@ -181,7 +181,7 @@ export default function AsbestosModule2Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-2">
@@ -206,7 +206,7 @@ export default function AsbestosModule2Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             The Asbestos Register &amp; Management Plan
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How ACMs are recorded, assessed, and managed &mdash; from the written register to the
             practical decisions that keep workers safe
           </p>
@@ -302,7 +302,7 @@ export default function AsbestosModule2Section4() {
 
               <div className="bg-orange-500/10 border border-orange-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-orange-500 mb-3">The Register Must Record</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -348,11 +348,11 @@ export default function AsbestosModule2Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Who Must Have Access?</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The register must be <strong className="text-white">readily accessible</strong> to
                   anyone who needs it. This includes:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1 mt-2">
+                <ul className="text-sm text-white space-y-1 mt-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -389,7 +389,7 @@ export default function AsbestosModule2Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Rule for Tradespeople</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     Never start work in a pre-2000 building without checking the asbestos register.
                   </strong>{' '}
@@ -433,7 +433,7 @@ export default function AsbestosModule2Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">The Four Variables</p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-orange-500/20 text-orange-400 text-xs font-bold flex-shrink-0">
                       1
@@ -500,31 +500,31 @@ export default function AsbestosModule2Section4() {
                     Variable 1 &mdash; Product Type
                   </p>
                   <div className="grid grid-cols-[1fr_auto] gap-2">
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Sprayed coating / lagging
                     </div>
                     <div className="text-sm font-bold text-red-400 py-1.5 px-3 bg-red-500/10 rounded text-center min-w-[48px]">
                       12
                     </div>
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Insulating board (AIB)
                     </div>
                     <div className="text-sm font-bold text-red-400 py-1.5 px-3 bg-red-500/10 rounded text-center min-w-[48px]">
                       10
                     </div>
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Textiles / gaskets
                     </div>
                     <div className="text-sm font-bold text-orange-400 py-1.5 px-3 bg-orange-500/10 rounded text-center min-w-[48px]">
                       8
                     </div>
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Cement products
                     </div>
                     <div className="text-sm font-bold text-yellow-400 py-1.5 px-3 bg-yellow-500/10 rounded text-center min-w-[48px]">
                       6
                     </div>
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Floor tiles
                     </div>
                     <div className="text-sm font-bold text-green-400 py-1.5 px-3 bg-green-500/10 rounded text-center min-w-[48px]">
@@ -539,25 +539,25 @@ export default function AsbestosModule2Section4() {
                     Variable 2 &mdash; Damage / Deterioration
                   </p>
                   <div className="grid grid-cols-[1fr_auto] gap-2">
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Good condition
                     </div>
                     <div className="text-sm font-bold text-green-400 py-1.5 px-3 bg-green-500/10 rounded text-center min-w-[48px]">
                       0
                     </div>
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Low damage
                     </div>
                     <div className="text-sm font-bold text-yellow-400 py-1.5 px-3 bg-yellow-500/10 rounded text-center min-w-[48px]">
                       1
                     </div>
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Medium damage
                     </div>
                     <div className="text-sm font-bold text-orange-400 py-1.5 px-3 bg-orange-500/10 rounded text-center min-w-[48px]">
                       2
                     </div>
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       High damage / delaminating
                     </div>
                     <div className="text-sm font-bold text-red-400 py-1.5 px-3 bg-red-500/10 rounded text-center min-w-[48px]">
@@ -572,25 +572,25 @@ export default function AsbestosModule2Section4() {
                     Variable 3 &mdash; Surface Treatment
                   </p>
                   <div className="grid grid-cols-[1fr_auto] gap-2">
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Composite material (sealed in matrix)
                     </div>
                     <div className="text-sm font-bold text-green-400 py-1.5 px-3 bg-green-500/10 rounded text-center min-w-[48px]">
                       0
                     </div>
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Enclosed (boxed in, painted over)
                     </div>
                     <div className="text-sm font-bold text-yellow-400 py-1.5 px-3 bg-yellow-500/10 rounded text-center min-w-[48px]">
                       1
                     </div>
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Exposed but undamaged
                     </div>
                     <div className="text-sm font-bold text-orange-400 py-1.5 px-3 bg-orange-500/10 rounded text-center min-w-[48px]">
                       2
                     </div>
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Exposed and damaged
                     </div>
                     <div className="text-sm font-bold text-red-400 py-1.5 px-3 bg-red-500/10 rounded text-center min-w-[48px]">
@@ -605,19 +605,19 @@ export default function AsbestosModule2Section4() {
                     Variable 4 &mdash; Asbestos Type
                   </p>
                   <div className="grid grid-cols-[1fr_auto] gap-2">
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Chrysotile (white)
                     </div>
                     <div className="text-sm font-bold text-green-400 py-1.5 px-3 bg-green-500/10 rounded text-center min-w-[48px]">
                       1
                     </div>
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Amosite (brown)
                     </div>
                     <div className="text-sm font-bold text-orange-400 py-1.5 px-3 bg-orange-500/10 rounded text-center min-w-[48px]">
                       2
                     </div>
-                    <div className="text-sm text-white/80 py-1.5 px-2 bg-white/5 rounded">
+                    <div className="text-sm text-white py-1.5 px-2 bg-white/5 rounded">
                       Crocidolite (blue)
                     </div>
                     <div className="text-sm font-bold text-red-400 py-1.5 px-3 bg-red-500/10 rounded text-center min-w-[48px]">
@@ -695,7 +695,7 @@ export default function AsbestosModule2Section4() {
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <div className="space-y-4 text-sm text-white/80">
+                <div className="space-y-4 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-orange-500/20 text-orange-400 text-xs font-bold flex-shrink-0">
                       1
@@ -794,7 +794,7 @@ export default function AsbestosModule2Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">The Plan Must Include</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -844,7 +844,7 @@ export default function AsbestosModule2Section4() {
                   <p className="text-sm font-medium text-green-400 mb-2">
                     1. Leave in Situ &amp; Manage
                   </p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Monitor the condition regularly, label the ACM where appropriate, and inform all
                     workers of its location. This is the{' '}
                     <strong className="text-white">lowest-cost option</strong> and is suitable for
@@ -856,7 +856,7 @@ export default function AsbestosModule2Section4() {
                 </div>
                 <div className="bg-yellow-500/10 border border-yellow-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-yellow-400 mb-2">2. Encapsulate</p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Seal the surface of the ACM to prevent fibre release. This can be done using a
                     <strong className="text-white"> surface sealant</strong> (coating the outside)
                     or a<strong className="text-white"> penetrating sealant</strong> (binding fibres
@@ -869,7 +869,7 @@ export default function AsbestosModule2Section4() {
                 </div>
                 <div className="bg-orange-500/10 border border-orange-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-orange-400 mb-2">3. Enclose</p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Build a <strong className="text-white">physical barrier</strong> around the ACM
                     to prevent access and fibre release. Examples include boxing in pipe lagging,
                     installing false ceilings below sprayed coatings, or constructing sealed panels
@@ -881,7 +881,7 @@ export default function AsbestosModule2Section4() {
                 </div>
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-red-400 mb-2">4. Remove</p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Complete removal of the ACM by a{' '}
                     <strong className="text-white">licensed or competent contractor</strong>{' '}
                     (depending on the type and quantity of asbestos). This is the{' '}
@@ -932,7 +932,7 @@ export default function AsbestosModule2Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Events That Trigger a Review</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-3">
                     <span className="flex items-center justify-center min-w-[24px] h-6 rounded bg-orange-500/20 text-orange-400 text-xs font-bold flex-shrink-0">
                       1
@@ -1023,7 +1023,7 @@ export default function AsbestosModule2Section4() {
                     Out-of-Date Registers Are Dangerous
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   An out-of-date register can be{' '}
                   <strong className="text-white">worse than no register at all</strong>, because it
                   gives a false sense of security. If a register does not reflect the current
@@ -1055,7 +1055,7 @@ export default function AsbestosModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   How the Register Should Be Shared
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -1097,7 +1097,7 @@ export default function AsbestosModule2Section4() {
                 <p className="text-sm font-medium text-orange-500 mb-3">
                   Practical Communication Methods
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -1141,7 +1141,7 @@ export default function AsbestosModule2Section4() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Your Right to Information</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   As an electrician or tradesperson, you have a{' '}
                   <strong className="text-white">legal right</strong> to be shown the asbestos
                   register before carrying out work that could disturb building materials. If a duty
@@ -1164,7 +1164,7 @@ export default function AsbestosModule2Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1178,7 +1178,7 @@ export default function AsbestosModule2Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-2-section-3">

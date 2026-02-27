@@ -2434,9 +2434,9 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                       {boardCircuits.length === 0 ? (
                         <div className="p-8 text-center">
                           <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mx-auto mb-3">
-                            <Zap className="h-6 w-6 text-white/30" />
+                            <Zap className="h-6 w-6 text-white" />
                           </div>
-                          <p className="text-sm text-white/50 mb-3">No circuits yet</p>
+                          <p className="text-sm text-white mb-3">No circuits yet</p>
                           <Button
                             onClick={() => addCircuitToBoard(board.id)}
                             className="h-11 bg-elec-yellow text-black font-medium hover:bg-elec-yellow/90 touch-manipulation"
@@ -2472,7 +2472,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                           <Button
                             onClick={() => addCircuitToBoard(board.id)}
                             variant="outline"
-                            className="w-full h-11 border-dashed border-white/20 text-white/60 hover:bg-white/5 touch-manipulation"
+                            className="w-full h-11 border-dashed border-white/20 text-white hover:bg-white/5 touch-manipulation"
                           >
                             <Plus className="h-4 w-4 mr-2" />
                             Add Circuit to {board.name}
@@ -2509,7 +2509,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
               <Button
                 onClick={handleAddBoard}
                 variant="outline"
-                className="w-full h-12 border-dashed border-white/20 text-white/60 hover:bg-white/5 touch-manipulation"
+                className="w-full h-12 border-dashed border-white/20 text-white hover:bg-white/5 touch-manipulation"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Distribution Board
@@ -2548,7 +2548,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold text-white">Schedule of Tests</h2>
-                    <p className="text-sm text-white/60">
+                    <p className="text-sm text-white">
                       BS 7671 compliant circuit testing & verification
                     </p>
                   </div>
@@ -2558,19 +2558,19 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                 <div className="flex gap-3">
                   <div className="testing-stat-card min-w-[80px]">
                     <span className="text-2xl font-bold text-white">{testResults.length}</span>
-                    <span className="text-xs text-white/50">Circuits</span>
+                    <span className="text-xs text-white">Circuits</span>
                   </div>
                   <div className="testing-stat-card min-w-[80px]">
                     <span className="text-2xl font-bold text-green-400">{completedCount}</span>
-                    <span className="text-xs text-white/50">Complete</span>
+                    <span className="text-xs text-white">Complete</span>
                   </div>
                   <div className="testing-stat-card min-w-[80px]">
                     <span className="text-2xl font-bold text-amber-400">{pendingCount}</span>
-                    <span className="text-xs text-white/50">Pending</span>
+                    <span className="text-xs text-white">Pending</span>
                   </div>
                   <div className="testing-stat-card min-w-[80px]">
                     <span className="text-2xl font-bold text-elec-yellow">{progressPercent}%</span>
-                    <span className="text-xs text-white/50">Progress</span>
+                    <span className="text-xs text-white">Progress</span>
                   </div>
                 </div>
               </div>
@@ -2617,7 +2617,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-9 text-white/60 hover:text-white hover:bg-white/10"
+                    className="h-9 text-white hover:text-white hover:bg-white/10"
                     onClick={() => setShowRcdPresetsDialog(true)}
                   >
                     <Shield className="h-4 w-4 mr-2" />
@@ -2626,7 +2626,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-9 text-white/60 hover:text-white hover:bg-white/10"
+                    className="h-9 text-white hover:text-white hover:bg-white/10"
                     onClick={() => setShowAnalytics(!showAnalytics)}
                   >
                     <BarChart3 className="h-4 w-4 mr-2" />
@@ -2635,7 +2635,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                   <Button
                     variant="ghost"
                     size="sm"
-                    className={`h-9 ${voiceActive ? 'text-green-400 bg-green-500/10' : voiceConnecting ? 'text-yellow-400 animate-pulse' : 'text-white/60 hover:text-white hover:bg-white/10'}`}
+                    className={`h-9 ${voiceActive ? 'text-green-400 bg-green-500/10' : voiceConnecting ? 'text-yellow-400 animate-pulse' : 'text-white hover:text-white hover:bg-white/10'}`}
                     onClick={toggleVoice}
                     disabled={voiceConnecting}
                   >
@@ -2748,7 +2748,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
         /* Desktop: Horizontal Card Grid */
         <div className="grid grid-cols-2 gap-4 mt-6">
           <div className="testing-info-section p-4">
-            <h3 className="text-sm font-semibold text-white/90 flex items-center gap-2 mb-4">
+            <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-4">
               <Wrench className="h-4 w-4 text-elec-yellow" />
               Test Instruments
             </h3>
@@ -2756,7 +2756,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
           </div>
 
           <div className="testing-info-section p-4">
-            <h3 className="text-sm font-semibold text-white/90 flex items-center gap-2 mb-4">
+            <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-4">
               <FileText className="h-4 w-4 text-elec-yellow" />
               Test Method & Notes
             </h3>
@@ -2811,7 +2811,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                 variant="ghost"
                 size="icon"
                 onClick={() => setShowBoardCapture(false)}
-                className="text-white/70 hover:text-white hover:bg-white/10"
+                className="text-white hover:text-white hover:bg-white/10"
               >
                 <X className="h-5 w-5" />
               </Button>
@@ -2842,7 +2842,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                 variant="ghost"
                 size="icon"
                 onClick={() => setShowTestResultsScan(false)}
-                className="text-white/70 hover:text-white hover:bg-white/10"
+                className="text-white hover:text-white hover:bg-white/10"
               >
                 <X className="h-5 w-5" />
               </Button>
@@ -2921,7 +2921,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                 variant="ghost"
                 size="icon"
                 onClick={() => setShowSmartAutoFillDialog(false)}
-                className="text-white/70 hover:text-white hover:bg-white/10"
+                className="text-white hover:text-white hover:bg-white/10"
               >
                 <X className="h-5 w-5" />
               </Button>
@@ -2948,7 +2948,7 @@ const EICRScheduleOfTests = ({ formData, onUpdate, onOpenBoardScan }: EICRSchedu
                 variant="ghost"
                 size="icon"
                 onClick={() => setShowRcdPresetsDialog(false)}
-                className="text-white/70 hover:text-white hover:bg-white/10"
+                className="text-white hover:text-white hover:bg-white/10"
               >
                 <X className="h-5 w-5" />
               </Button>

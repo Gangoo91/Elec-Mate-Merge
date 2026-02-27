@@ -243,8 +243,8 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-white/5 border-l-2 border-white/30">
-            <p className="text-white/80 text-sm font-medium mb-2">You Will Learn</p>
-            <ul className="text-sm text-white/70 space-y-1">
+            <p className="text-white text-sm font-medium mb-2">You Will Learn</p>
+            <ul className="text-sm text-white space-y-1">
               <li>• Apply UK building energy benchmarks</li>
               <li>• Weather-correct consumption data</li>
               <li>• Analyse electricity tariff components</li>
@@ -312,31 +312,31 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-sm">
                 <div className="bg-green-900/30 rounded p-2 text-center">
                   <span className="font-bold text-green-400">A</span>
-                  <p className="text-white/70">0-25</p>
+                  <p className="text-white">0-25</p>
                 </div>
                 <div className="bg-green-800/30 rounded p-2 text-center">
                   <span className="font-bold text-green-500">B</span>
-                  <p className="text-white/70">26-50</p>
+                  <p className="text-white">26-50</p>
                 </div>
                 <div className="bg-yellow-900/30 rounded p-2 text-center">
                   <span className="font-bold text-yellow-400">C</span>
-                  <p className="text-white/70">51-75</p>
+                  <p className="text-white">51-75</p>
                 </div>
                 <div className="bg-yellow-800/30 rounded p-2 text-center">
                   <span className="font-bold text-yellow-500">D</span>
-                  <p className="text-white/70">76-100</p>
+                  <p className="text-white">76-100</p>
                 </div>
                 <div className="bg-orange-900/30 rounded p-2 text-center">
                   <span className="font-bold text-orange-400">E</span>
-                  <p className="text-white/70">101-125</p>
+                  <p className="text-white">101-125</p>
                 </div>
                 <div className="bg-orange-800/30 rounded p-2 text-center">
                   <span className="font-bold text-orange-500">F</span>
-                  <p className="text-white/70">126-150</p>
+                  <p className="text-white">126-150</p>
                 </div>
                 <div className="bg-red-900/30 rounded p-2 text-center col-span-2">
                   <span className="font-bold text-red-400">G</span>
-                  <p className="text-white/70">Over 150</p>
+                  <p className="text-white">Over 150</p>
                 </div>
               </div>
             </div>
@@ -370,7 +370,7 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
                 <span className="text-elec-yellow">Energy Intensity</span> = Total Annual
                 Consumption (kWh) ÷ Gross Internal Area (m²)
               </div>
-              <p className="text-white/70 text-sm mt-2">
+              <p className="text-white text-sm mt-2">
                 Example: 150,000 kWh ÷ 2,000 m² = 75 kWh/m²/year
               </p>
             </div>
@@ -396,7 +396,7 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
                 <span className="text-elec-yellow">Corrected Consumption</span> = Actual Consumption
                 × (Long-term Average DD ÷ Actual Period DD)
               </div>
-              <p className="text-white/70 text-sm mt-3">
+              <p className="text-white text-sm mt-3">
                 <strong>Example:</strong> A building used 80,000 kWh in a mild year with 1,800
                 degree days. The 20-year average is 2,000 degree days.
                 <br />
@@ -735,7 +735,7 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
                   </span>
                   <div>
                     <p className="font-medium text-white">Against benchmark</p>
-                    <p className="text-white/70 text-sm">
+                    <p className="text-white text-sm">
                       Show where client sits vs. typical and good practice values
                     </p>
                   </div>
@@ -746,7 +746,7 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
                   </span>
                   <div>
                     <p className="font-medium text-white">Against historical performance</p>
-                    <p className="text-white/70 text-sm">
+                    <p className="text-white text-sm">
                       Weather-corrected year-on-year trends with clear baselines
                     </p>
                   </div>
@@ -757,7 +757,7 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
                   </span>
                   <div>
                     <p className="font-medium text-white">Against targets</p>
-                    <p className="text-white/70 text-sm">
+                    <p className="text-white text-sm">
                       Progress towards client's own efficiency or carbon goals
                     </p>
                   </div>
@@ -768,7 +768,7 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
                   </span>
                   <div>
                     <p className="font-medium text-white">Against portfolio</p>
-                    <p className="text-white/70 text-sm">
+                    <p className="text-white text-sm">
                       For multi-site clients, compare similar sites to identify outliers
                     </p>
                   </div>
@@ -956,7 +956,7 @@ const EnergyEfficiencyModule3Section3: React.FC = () => {
               <div key={index} className="bg-white/5 rounded-lg overflow-hidden">
                 <div className="p-4">
                   <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                  <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                  <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
                 </div>
               </div>
             ))}

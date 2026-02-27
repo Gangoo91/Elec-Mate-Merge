@@ -265,7 +265,7 @@ export const SupplyDetailsStep = ({
             ]}
           />
         </div>
-        <p className="text-ios-caption-1 text-white/50">AI will auto-select if not specified</p>
+        <p className="text-ios-caption-1 text-white">AI will auto-select if not specified</p>
       </div>
 
       {/* Earthing System */}
@@ -317,12 +317,12 @@ export const SupplyDetailsStep = ({
               'touch-manipulation'
             )}
           >
-            <span className="flex items-center gap-2 font-medium text-white/80">
+            <span className="flex items-center gap-2 font-medium text-white">
               Advanced Settings
             </span>
             <ChevronDown
               className={cn(
-                'h-4 w-4 text-white/60 transition-transform duration-ios-normal',
+                'h-4 w-4 text-white transition-transform duration-ios-normal',
                 showAdvanced && 'rotate-180'
               )}
             />

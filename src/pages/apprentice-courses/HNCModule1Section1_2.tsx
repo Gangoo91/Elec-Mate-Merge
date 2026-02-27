@@ -254,7 +254,7 @@ const HNCModule1Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section1">
@@ -276,7 +276,7 @@ const HNCModule1Section1_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Electricity at Work Regulations 1989
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Criminal law provisions for electrical safety in the workplace - duties, defences and
             building services applications
           </p>
@@ -472,7 +472,7 @@ const HNCModule1Section1_2 = () => {
                   <strong>4(2):</strong> All systems shall be maintained so as to prevent, so far as
                   is reasonably practicable, such danger.
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   This regulation covers the entire electrical system including all electrical
                   equipment. 'Maintained' includes regular inspection, testing, repair and
                   replacement as necessary.
@@ -652,7 +652,7 @@ const HNCModule1Section1_2 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 p-3 rounded-lg">
                   <p className="font-medium text-white text-sm mb-2">Technical Controls</p>
-                  <ul className="text-xs text-white/90 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Insulated tools (1000V rated)</li>
                     <li>Insulating matting</li>
                     <li>Barriers and screens</li>
@@ -662,7 +662,7 @@ const HNCModule1Section1_2 = () => {
                 </div>
                 <div className="bg-white/5 p-3 rounded-lg">
                   <p className="font-medium text-white text-sm mb-2">Administrative Controls</p>
-                  <ul className="text-xs text-white/90 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Written risk assessment</li>
                     <li>Safe system of work / method statement</li>
                     <li>Competent person undertaking work</li>
@@ -677,11 +677,11 @@ const HNCModule1Section1_2 = () => {
               <p className="text-sm font-medium text-white mb-2">
                 Regulation 13: Precautions for Dead Working
               </p>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 Before Regulation 14 applies, Regulation 13 requires adequate precautions to prevent
                 conductors becoming live during work:
               </p>
-              <ol className="text-sm text-white/90 space-y-1 list-decimal list-outside ml-5">
+              <ol className="text-sm text-white space-y-1 list-decimal list-outside ml-5">
                 <li className="pl-1">Identify the circuit to be worked on</li>
                 <li className="pl-1">Isolate from all points of supply</li>
                 <li className="pl-1">Prove the isolation is effective</li>
@@ -690,7 +690,7 @@ const HNCModule1Section1_2 = () => {
               </ol>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>HSE Guidance:</strong> The HSE memorandum of guidance on EAWR (HSR25) states
               that live working should be the exception, not the rule. Convenience or cost savings
               alone do not justify live working.
@@ -732,19 +732,19 @@ const HNCModule1Section1_2 = () => {
               <div className="grid sm:grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">Technical Knowledge</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Understanding of electrical principles, regulations and standards
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">Experience</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Practical skills developed through hands-on work
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">Ability to Prevent Danger</p>
-                  <p className="text-white/70 text-xs">Judgement to recognise and avoid hazards</p>
+                  <p className="text-white text-xs">Judgement to recognise and avoid hazards</p>
                 </div>
               </div>
             </div>
@@ -811,7 +811,7 @@ const HNCModule1Section1_2 = () => {
                 taken and all due diligence was exercised to avoid committing the offence.
               </p>
               <p className="text-sm font-medium text-white mb-2">Evidence required:</p>
-              <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+              <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                 <li className="pl-1">Documented risk assessments and method statements</li>
                 <li className="pl-1">Records of inspection and testing (EICR certificates)</li>
                 <li className="pl-1">Training records and competence assessments</li>
@@ -876,7 +876,7 @@ const HNCModule1Section1_2 = () => {
                 <strong>Scenario:</strong> Managing electrical safety in a multi-tenancy office
                 building
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p className="mb-2">
                   <strong>EAWR duties include:</strong>
                 </p>
@@ -897,7 +897,7 @@ const HNCModule1Section1_2 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> HVAC system maintenance in a manufacturing plant
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p className="mb-2">
                   <strong>Key considerations:</strong>
                 </p>
@@ -920,7 +920,7 @@ const HNCModule1Section1_2 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Electrical safety in hospital building services
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p className="mb-2">
                   <strong>Enhanced requirements:</strong>
                 </p>
@@ -1019,7 +1019,7 @@ const HNCModule1Section1_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1067,7 +1067,7 @@ const HNCModule1Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section1-1">

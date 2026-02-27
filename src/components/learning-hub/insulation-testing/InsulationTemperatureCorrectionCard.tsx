@@ -45,7 +45,7 @@ const InsulationTemperatureCorrectionCard = ({
                 Correction Factor:{' '}
                 <span className="text-foreground">{correctionFactor.toFixed(3)}</span>
               </p>
-              <p className="text-xs text-white/80">Formula: Factor = 1.07^(20-T_measured)</p>
+              <p className="text-xs text-white">Formula: Factor = 1.07^(20-T_measured)</p>
             </div>
             <div>
               <p className="text-white mb-2">Temperature Effect:</p>
@@ -59,7 +59,7 @@ const InsulationTemperatureCorrectionCard = ({
                 {temp > 20 && (
                   <p className="text-red-400">• Warm conditions: Lower resistance readings</p>
                 )}
-                <p className="text-white/80">• 7% change per °C temperature difference</p>
+                <p className="text-white">• 7% change per °C temperature difference</p>
               </div>
             </div>
           </div>

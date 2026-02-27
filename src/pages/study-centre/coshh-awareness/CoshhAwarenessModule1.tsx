@@ -50,7 +50,7 @@ export default function CoshhAwarenessModule1() {
             <Button
               variant="ghost"
               size="lg"
-              className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+              className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../coshh-awareness-course">
@@ -67,13 +67,13 @@ export default function CoshhAwarenessModule1() {
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 mb-3">
               <span className="text-violet-400 text-xs font-semibold">MODULE 1</span>
-              <span className="text-white/40 text-xs">&bull;</span>
-              <span className="text-white/60 text-xs">4 Sections</span>
-              <span className="text-white/40 text-xs">&bull;</span>
-              <span className="text-white/60 text-xs">30 mins</span>
+              <span className="text-white text-xs">&bull;</span>
+              <span className="text-white text-xs">4 Sections</span>
+              <span className="text-white text-xs">&bull;</span>
+              <span className="text-white text-xs">30 mins</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Understanding COSHH</h1>
-            <p className="text-white/60 text-sm sm:text-base">
+            <p className="text-white text-sm sm:text-base">
               The fundamentals of the Control of Substances Hazardous to Health — what COSHH covers,
               the substances involved, how they enter the body, and the damage they can cause
             </p>

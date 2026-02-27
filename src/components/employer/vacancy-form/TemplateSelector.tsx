@@ -133,7 +133,7 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
           variant="outline"
           size="sm"
           className={cn(
-            'gap-2 text-white/70 border-white/20 hover:bg-white/10',
+            'gap-2 text-white border-white/20 hover:bg-white/10',
             'hover:text-white'
           )}
         >
@@ -148,7 +148,7 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="end" className="w-72 bg-elec-gray border-white/10">
-        <DropdownMenuLabel className="text-white/60 text-xs font-normal">
+        <DropdownMenuLabel className="text-white text-xs font-normal">
           Start from a template
         </DropdownMenuLabel>
 
@@ -156,7 +156,7 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
         {systemTemplates.length > 0 && (
           <>
             <DropdownMenuSeparator className="bg-white/10" />
-            <DropdownMenuLabel className="text-white/40 text-xs">
+            <DropdownMenuLabel className="text-white text-xs">
               <Sparkles className="h-3 w-3 inline mr-1" />
               Pre-built Templates
             </DropdownMenuLabel>
@@ -166,7 +166,7 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
                 onClick={() => handleSelect(template)}
                 className={cn(
                   'cursor-pointer py-3',
-                  'text-white/80 hover:text-white hover:bg-white/10',
+                  'text-white hover:text-white hover:bg-white/10',
                   'focus:text-white focus:bg-white/10'
                 )}
               >
@@ -176,7 +176,7 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-medium truncate">{template.name}</p>
-                    <p className="text-xs text-white/50 mt-0.5">
+                    <p className="text-xs text-white mt-0.5">
                       {template.type} • {template.experience_level || 'Any'} level
                     </p>
                   </div>
@@ -190,30 +190,30 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
         {userTemplates.length > 0 && (
           <>
             <DropdownMenuSeparator className="bg-white/10" />
-            <DropdownMenuLabel className="text-white/40 text-xs">Your Templates</DropdownMenuLabel>
+            <DropdownMenuLabel className="text-white text-xs">Your Templates</DropdownMenuLabel>
             {userTemplates.map((template) => (
               <DropdownMenuItem
                 key={template.id}
                 onClick={() => handleSelect(template)}
                 className={cn(
                   'cursor-pointer py-3 group',
-                  'text-white/80 hover:text-white hover:bg-white/10',
+                  'text-white hover:text-white hover:bg-white/10',
                   'focus:text-white focus:bg-white/10'
                 )}
               >
                 <div className="flex items-start gap-3 w-full">
-                  <div className="p-1.5 rounded-lg bg-white/10 text-white/60">
+                  <div className="p-1.5 rounded-lg bg-white/10 text-white">
                     {getTemplateIcon(template)}
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="font-medium truncate">{template.name}</p>
-                    <p className="text-xs text-white/50 mt-0.5">{template.type}</p>
+                    <p className="text-xs text-white mt-0.5">{template.type}</p>
                   </div>
                   <button
                     onClick={(e) => handleDelete(e, template)}
                     className={cn(
                       'p-1.5 rounded-lg opacity-0 group-hover:opacity-100',
-                      'text-white/40 hover:text-red-400 hover:bg-red-500/10',
+                      'text-white hover:text-red-400 hover:bg-red-500/10',
                       'transition-opacity'
                     )}
                   >
@@ -226,7 +226,7 @@ export function TemplateSelector({ onSelect }: TemplateSelectorProps) {
         )}
 
         {templates.length === 0 && !isLoading && (
-          <div className="p-4 text-center text-white/50 text-sm">No templates available</div>
+          <div className="p-4 text-center text-white text-sm">No templates available</div>
         )}
       </DropdownMenuContent>
     </DropdownMenu>

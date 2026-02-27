@@ -209,7 +209,7 @@ const InspectionTestingModule4Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-4">
@@ -231,7 +231,7 @@ const InspectionTestingModule4Section3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             IR Testing Procedure
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Step-by-step insulation resistance testing procedure for safe, accurate results
           </p>
         </header>
@@ -355,7 +355,7 @@ const InspectionTestingModule4Section3 = () => {
                 'Alarm panels',
                 'Smart home devices',
               ].map((item, i) => (
-                <div key={i} className="text-sm text-white/80">
+                <div key={i} className="text-sm text-white">
                   {item}
                 </div>
               ))}
@@ -379,7 +379,7 @@ const InspectionTestingModule4Section3 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-1">
                   Test 1: Line to Earth (L-E)
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Connect between line conductor and earth. Verifies phase insulation to earth.
                 </p>
               </div>
@@ -387,7 +387,7 @@ const InspectionTestingModule4Section3 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-1">
                   Test 2: Neutral to Earth (N-E)
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Connect between neutral and earth. Verifies neutral insulation to earth.
                 </p>
               </div>
@@ -395,7 +395,7 @@ const InspectionTestingModule4Section3 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-1">
                   Test 3: Line to Neutral (L-N)
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Connect between line and neutral. Verifies insulation between live conductors.
                 </p>
               </div>
@@ -465,7 +465,7 @@ const InspectionTestingModule4Section3 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/10 text-center">
               <p className="text-elec-yellow font-semibold mb-1">Minimum Acceptable: &ge;1.0 MΩ</p>
-              <p className="text-white/60 text-sm">Each individual test must meet this minimum</p>
+              <p className="text-white text-sm">Each individual test must meet this minimum</p>
             </div>
           </div>
         </section>
@@ -565,7 +565,7 @@ const InspectionTestingModule4Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -611,7 +611,7 @@ const InspectionTestingModule4Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-4/section-2">

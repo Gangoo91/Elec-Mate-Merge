@@ -328,7 +328,7 @@ export function ElectricianSiteDiary({ onBack }: ElectricianSiteDiaryProps) {
                   disabled={isFuture}
                   className={`flex-shrink-0 w-12 h-16 flex flex-col items-center justify-center rounded-xl text-center touch-manipulation active:scale-95 transition-all ${
                     isFuture
-                      ? 'bg-white/[0.02] text-white/20 pointer-events-none'
+                      ? 'bg-white/[0.02] text-white pointer-events-none'
                       : isSelected
                         ? 'bg-elec-yellow text-black'
                         : isToday

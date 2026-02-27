@@ -538,13 +538,13 @@ export default function AdminUserMessages() {
                               <span
                                 className={cn(
                                   'text-xs',
-                                  isFromUser ? 'text-white' : 'text-white/70'
+                                  isFromUser ? 'text-white' : 'text-white'
                                 )}
                               >
                                 {format(new Date(msg.created_at), 'h:mm a')}
                               </span>
                               {!isFromUser && msg.read_at && (
-                                <CheckCheck className="h-3.5 w-3.5 text-white/70" />
+                                <CheckCheck className="h-3.5 w-3.5 text-white" />
                               )}
                             </div>
                           </div>

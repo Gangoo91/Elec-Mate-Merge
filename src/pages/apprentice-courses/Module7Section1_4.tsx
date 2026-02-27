@@ -217,7 +217,7 @@ const Module7Section1_4 = () => {
           <Button
             variant="ghost"
             size="sm"
-            className="min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5 -ml-2 px-3"
+            className="min-h-[44px] touch-manipulation active:scale-[0.98] text-white hover:text-white hover:bg-white/5 -ml-2 px-3"
             asChild
           >
             <Link to="..">
@@ -235,20 +235,20 @@ const Module7Section1_4 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="font-medium">Module 7</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/70">Section 1.4</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 1.4</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
               Categories of Electrical Faults
             </h1>
-            <p className="text-white/70 max-w-xl mx-auto">
+            <p className="text-white max-w-xl mx-auto">
               Learn about the four main categories of electrical faults and their characteristics.
             </p>
           </header>
 
           {/* Summary Box */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
-            <p className="text-white/90 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               <strong className="text-elec-yellow">Key Points:</strong> Four main categories:
               design, installation, deterioration, external damage. Each category has different
               causes and prevention strategies. Understanding categories helps with fault finding
@@ -262,7 +262,7 @@ const Module7Section1_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Not all electrical faults are the same—they arise from different causes and require
                 different approaches for prevention and correction. Understanding the four main
@@ -293,7 +293,7 @@ const Module7Section1_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <div className="text-white/80 space-y-3 leading-relaxed">
+            <div className="text-white space-y-3 leading-relaxed">
               <p>By the end of this subsection, learners will be able to:</p>
               <ul className="list-disc pl-5 space-y-2">
                 <li>Identify and describe the four main categories of electrical faults.</li>
@@ -317,7 +317,7 @@ const Module7Section1_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Design Faults
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Design faults occur before installation begins—they are errors in the planning and
                 specification phase.
@@ -326,25 +326,25 @@ const Module7Section1_4 = () => {
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Undersized Cables</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Cable ratings insufficient for intended loads
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Inadequate Protection</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Protective devices not sized for fault conditions
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Poor Load Assessment</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Incorrect calculation of anticipated loads
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Environmental Neglect</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Failure to account for environmental conditions
                   </p>
                 </div>
@@ -352,7 +352,7 @@ const Module7Section1_4 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Key Characteristics:</p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/70">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>Present from day one of installation</li>
                   <li>Often require complete redesign to correct</li>
                   <li>Can be detected through proper design review</li>
@@ -386,7 +386,7 @@ const Module7Section1_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Installation Faults
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Installation faults arise during construction and are typically caused by poor
                 workmanship.
@@ -395,7 +395,7 @@ const Module7Section1_4 = () => {
               <div className="grid gap-4 sm:grid-cols-2">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Workmanship Issues</p>
-                  <ul className="list-disc pl-4 space-y-1 text-sm text-white/70">
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                     <li>Loose terminal connections</li>
                     <li>Incorrect polarity connections</li>
                     <li>Damaged cables during installation</li>
@@ -404,7 +404,7 @@ const Module7Section1_4 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">System Errors</p>
-                  <ul className="list-disc pl-4 space-y-1 text-sm text-white/70">
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                     <li>Missing or incorrect earthing</li>
                     <li>Cross-connected circuits</li>
                     <li>Inadequate IP ratings for location</li>
@@ -416,13 +416,13 @@ const Module7Section1_4 = () => {
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Detection Methods</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Initial testing and inspection reveals most installation faults
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Prevention</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Proper training, supervision, and quality control procedures
                   </p>
                 </div>
@@ -454,31 +454,31 @@ const Module7Section1_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Deterioration Faults
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>Deterioration faults develop over time as systems age and components degrade.</p>
 
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Environmental Factors</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Heat, moisture, chemicals, and UV causing material degradation
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Operational Stress</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Thermal cycling, vibration, and electrical stress over time
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Material Aging</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Natural degradation of insulation, conductors, and protective devices
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Corrosion</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Electrochemical processes affecting connections and components
                   </p>
                 </div>
@@ -486,7 +486,7 @@ const Module7Section1_4 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Management Strategy:</p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/70">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>Regular inspection and testing programs</li>
                   <li>Planned maintenance and component replacement</li>
                   <li>Environmental protection measures</li>
@@ -520,7 +520,7 @@ const Module7Section1_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               External Damage Faults
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 External damage faults are caused by influences outside the electrical system
                 itself.
@@ -529,25 +529,25 @@ const Module7Section1_4 = () => {
               <div className="grid gap-3 sm:grid-cols-2">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Physical Impact</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Construction work, vehicle impact, or accidental damage to equipment
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Penetration Damage</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Nails, screws, or drilling through concealed cables
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Animal Damage</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Rodents chewing through cables or nesting in equipment
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Environmental Events</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Flooding, fire, lightning, or extreme weather damage
                   </p>
                 </div>
@@ -555,7 +555,7 @@ const Module7Section1_4 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Protection Strategies:</p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/70">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>Proper cable routing and mechanical protection</li>
                   <li>Adequate IP ratings for environmental conditions</li>
                   <li>Physical barriers and enclosures</li>
@@ -589,7 +589,7 @@ const Module7Section1_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Practical Guidance
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div>
                 <p className="font-medium text-white mb-2">
                   Fault Identification and Classification:
@@ -656,7 +656,7 @@ const Module7Section1_4 = () => {
               <p className="font-medium text-white mb-3">
                 Case Study: Office Building Fault Investigation
               </p>
-              <div className="text-white/80 space-y-3 text-sm leading-relaxed">
+              <div className="text-white space-y-3 text-sm leading-relaxed">
                 <p>
                   During testing of an office refurbishment, electricians found multiple faults that
                   clearly demonstrated all four categories:
@@ -702,7 +702,7 @@ const Module7Section1_4 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">{faq.question}</p>
-                  <p className="text-sm text-white/70">{faq.answer}</p>
+                  <p className="text-sm text-white">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -715,7 +715,7 @@ const Module7Section1_4 = () => {
               Recap
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <ul className="list-disc pl-5 space-y-2 text-white/80 text-sm">
+              <ul className="list-disc pl-5 space-y-2 text-white text-sm">
                 <li>
                   Design faults occur during planning and typically require redesign to correct
                   properly.
@@ -749,7 +749,7 @@ const Module7Section1_4 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             <Button
               variant="ghost"
-              className="min-h-[48px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5 justify-start"
+              className="min-h-[48px] touch-manipulation active:scale-[0.98] text-white hover:text-white hover:bg-white/5 justify-start"
               asChild
             >
               <Link to="../1-3">

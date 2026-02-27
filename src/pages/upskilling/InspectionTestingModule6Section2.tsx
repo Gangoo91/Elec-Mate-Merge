@@ -173,7 +173,7 @@ const InspectionTestingModule6Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-6">
@@ -195,7 +195,7 @@ const InspectionTestingModule6Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             RCD Trip Time Testing
           </h1>
-          <p className="text-white/80">How to test and verify RCD trip times for compliance</p>
+          <p className="text-white">How to test and verify RCD trip times for compliance</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -275,12 +275,12 @@ const InspectionTestingModule6Section2 = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/20">
-                    <th className="text-left py-2 text-white/60">Test Current</th>
-                    <th className="text-center py-2 text-white/60">Standard RCD</th>
-                    <th className="text-center py-2 text-white/60">S-Type</th>
+                    <th className="text-left py-2 text-white">Test Current</th>
+                    <th className="text-center py-2 text-white">Standard RCD</th>
+                    <th className="text-center py-2 text-white">S-Type</th>
                   </tr>
                 </thead>
-                <tbody className="text-white/80">
+                <tbody className="text-white">
                   <tr className="border-b border-white/10">
                     <td className="py-2">x1/2 IΔn</td>
                     <td className="text-center text-emerald-400">No trip</td>
@@ -327,7 +327,7 @@ const InspectionTestingModule6Section2 = () => {
                   <span className="w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-sm font-bold flex items-center justify-center flex-shrink-0">
                     {item.step}
                   </span>
-                  <span className="text-white/80">{item.text}</span>
+                  <span className="text-white">{item.text}</span>
                 </div>
               ))}
             </div>
@@ -346,19 +346,19 @@ const InspectionTestingModule6Section2 = () => {
             <div className="my-6 space-y-4">
               <div className="border-l-4 border-emerald-500 pl-4">
                 <p className="text-emerald-400 font-semibold">x1/2 Test (15mA for 30mA RCD)</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Confirms RCD does NOT trip at normal leakage levels. No trip should occur.
                 </p>
               </div>
               <div className="border-l-4 border-elec-yellow pl-4">
                 <p className="text-elec-yellow font-semibold">x1 Test (30mA for 30mA RCD)</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Standard trip test at rated current. Must trip within 300ms.
                 </p>
               </div>
               <div className="border-l-4 border-cyan-500 pl-4">
                 <p className="text-cyan-400 font-semibold">x5 Test (150mA for 30mA RCD)</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Fast trip test for higher faults. Must trip within 40ms.
                 </p>
               </div>
@@ -383,11 +383,11 @@ const InspectionTestingModule6Section2 = () => {
             <div className="grid grid-cols-2 gap-4 my-6 text-center">
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="text-elec-yellow font-bold text-2xl">0 deg</p>
-                <p className="text-white/60 text-sm">Positive half-cycle</p>
+                <p className="text-white text-sm">Positive half-cycle</p>
               </div>
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="text-cyan-400 font-bold text-2xl">180 deg</p>
-                <p className="text-white/60 text-sm">Negative half-cycle</p>
+                <p className="text-white text-sm">Negative half-cycle</p>
               </div>
             </div>
 
@@ -466,7 +466,7 @@ const InspectionTestingModule6Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -512,7 +512,7 @@ const InspectionTestingModule6Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-6/section-1">

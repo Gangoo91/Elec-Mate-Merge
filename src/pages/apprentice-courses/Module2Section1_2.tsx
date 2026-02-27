@@ -210,7 +210,7 @@ const Module2Section1_2 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Voltage, Current, and Resistance
           </h1>
-          <p className="text-lg text-white/80 max-w-2xl mx-auto">
+          <p className="text-lg text-white max-w-2xl mx-auto">
             Definitions and Relationships – The Foundation of All Electrical Work
           </p>
         </div>
@@ -739,7 +739,7 @@ const Module2Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level2/module2/section1/1-1">

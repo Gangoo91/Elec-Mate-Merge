@@ -254,7 +254,7 @@ const Level3Module1Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section4">
@@ -425,7 +425,7 @@ const Level3Module1Section4_4 = () => {
               may then be suitable.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A fire started in a distribution board due to a loose
               connection. The first responder grabbed a water extinguisher from the corridor.
               Fortunately, a colleague stopped them and found the CO2 extinguisher. Using water
@@ -468,19 +468,19 @@ const Level3Module1Section4_4 = () => {
             <div className="grid grid-cols-4 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">P - Pull</p>
-                <p className="text-white/90 text-xs">Pull the safety pin from the handle</p>
+                <p className="text-white text-xs">Pull the safety pin from the handle</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">A - Aim</p>
-                <p className="text-white/90 text-xs">Aim at the BASE of the fire, not flames</p>
+                <p className="text-white text-xs">Aim at the BASE of the fire, not flames</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">S - Squeeze</p>
-                <p className="text-white/90 text-xs">Squeeze the handle to discharge</p>
+                <p className="text-white text-xs">Squeeze the handle to discharge</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">S - Sweep</p>
-                <p className="text-white/90 text-xs">Sweep from side to side at the base</p>
+                <p className="text-white text-xs">Sweep from side to side at the base</p>
               </div>
             </div>
 
@@ -543,7 +543,7 @@ const Level3Module1Section4_4 = () => {
               any missing colleagues to fire wardens who will inform fire services.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> During a fire at a construction site, most workers evacuated
               promptly to the assembly point. However, one electrician continued working in a
               ceiling void, unaware of the alarm. Because he did not report to the assembly point,
@@ -613,7 +613,7 @@ const Level3Module1Section4_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -658,7 +658,7 @@ const Level3Module1Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section4-3">

@@ -216,7 +216,7 @@ const HNCModule3Section3_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section3">
@@ -238,7 +238,7 @@ const HNCModule3Section3_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Harmonics - Sources, Effects and Mitigation
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding and managing harmonic distortion in modern building electrical systems
           </p>
         </header>
@@ -443,8 +443,8 @@ const HNCModule3Section3_5 = () => {
             <div className="grid sm:grid-cols-3 gap-4 my-6">
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="font-medium text-elec-yellow mb-2">Odd Harmonics</p>
-                <p className="text-sm text-white/90 mb-2">3rd, 5th, 7th, 9th, 11th...</p>
-                <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                <p className="text-sm text-white mb-2">3rd, 5th, 7th, 9th, 11th...</p>
+                <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                   <li>Predominant in most non-linear loads</li>
                   <li>Result from half-wave symmetry</li>
                   <li>Most significant for power quality</li>
@@ -452,8 +452,8 @@ const HNCModule3Section3_5 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="font-medium text-elec-yellow mb-2">Even Harmonics</p>
-                <p className="text-sm text-white/90 mb-2">2nd, 4th, 6th, 8th...</p>
-                <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                <p className="text-sm text-white mb-2">2nd, 4th, 6th, 8th...</p>
+                <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                   <li>Rare - indicate asymmetrical operation</li>
                   <li>Present in half-wave rectifiers</li>
                   <li>May indicate equipment faults</li>
@@ -461,8 +461,8 @@ const HNCModule3Section3_5 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="font-medium text-elec-yellow mb-2">Triplen Harmonics</p>
-                <p className="text-sm text-white/90 mb-2">3rd, 9th, 15th, 21st...</p>
-                <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                <p className="text-sm text-white mb-2">3rd, 9th, 15th, 21st...</p>
+                <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                   <li>Zero-sequence (in-phase)</li>
                   <li>Add arithmetically in neutral</li>
                   <li>Critical for neutral sizing</li>
@@ -474,11 +474,11 @@ const HNCModule3Section3_5 = () => {
               <p className="text-sm font-medium text-red-400 mb-2">
                 Critical: Triplen Harmonics and Neutral Current
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 In a balanced three-phase system, fundamental currents cancel in the neutral.
                 However, triplen harmonics are all in-phase (zero-sequence) and ADD together:
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Neutral current (triplen) = 3 × Phase triplen current</p>
                 <p className="mt-2">Example: If each phase has 40A of 3rd harmonic current:</p>
                 <p>
@@ -494,7 +494,7 @@ const HNCModule3Section3_5 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Why Odd Harmonics Dominate
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Most electronic loads draw current symmetrically on both half-cycles of the AC
                 waveform. This half-wave symmetry means the positive and negative half-cycles are
                 mirror images, which mathematically results in only odd harmonic components. Even
@@ -615,12 +615,12 @@ const HNCModule3Section3_5 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 IT Equipment and Data Centres
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Server power supplies use switch-mode rectification, drawing current only at the
                 peak of each half-cycle. This creates a characteristic current waveform with very
                 high 3rd harmonic content - often 80% of the fundamental or more.
               </p>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 A data centre with 1MW of IT load may generate 800kW equivalent of 3rd harmonic
                 current, requiring careful neutral conductor sizing and transformer specification.
               </p>
@@ -739,7 +739,7 @@ const HNCModule3Section3_5 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
               <p className="text-sm font-medium text-orange-400 mb-2">Energy Metering Errors</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Traditional electromechanical meters were calibrated for sinusoidal waveforms. In
                 harmonic-rich environments, they may under-register actual energy consumption by
                 10-15%, resulting in revenue loss for utilities and inaccurate energy management
@@ -797,14 +797,14 @@ const HNCModule3Section3_5 = () => {
                 Passive Harmonic Filters
               </p>
               <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   Tuned LC circuits providing a low-impedance path for specific harmonic
                   frequencies, diverting them from the supply.
                 </p>
                 <div className="grid sm:grid-cols-2 gap-4 text-sm">
                   <div>
                     <p className="font-medium text-white mb-1">Advantages</p>
-                    <ul className="text-white/80 space-y-0.5 list-disc list-outside ml-4 text-xs">
+                    <ul className="text-white space-y-0.5 list-disc list-outside ml-4 text-xs">
                       <li>Simple, robust technology</li>
                       <li>No power electronics</li>
                       <li>Also provide reactive power compensation</li>
@@ -813,7 +813,7 @@ const HNCModule3Section3_5 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Limitations</p>
-                    <ul className="text-white/80 space-y-0.5 list-disc list-outside ml-4 text-xs">
+                    <ul className="text-white space-y-0.5 list-disc list-outside ml-4 text-xs">
                       <li>Must be tuned to specific frequency</li>
                       <li>Risk of resonance at other frequencies</li>
                       <li>Large physical size</li>
@@ -829,14 +829,14 @@ const HNCModule3Section3_5 = () => {
                 Active Harmonic Filters
               </p>
               <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   Power electronic devices that inject currents equal and opposite to measured
                   harmonics, actively cancelling distortion.
                 </p>
                 <div className="grid sm:grid-cols-2 gap-4 text-sm">
                   <div>
                     <p className="font-medium text-white mb-1">Advantages</p>
-                    <ul className="text-white/80 space-y-0.5 list-disc list-outside ml-4 text-xs">
+                    <ul className="text-white space-y-0.5 list-disc list-outside ml-4 text-xs">
                       <li>Adapts to changing loads</li>
                       <li>Corrects multiple harmonics simultaneously</li>
                       <li>Compact size</li>
@@ -845,7 +845,7 @@ const HNCModule3Section3_5 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Limitations</p>
-                    <ul className="text-white/80 space-y-0.5 list-disc list-outside ml-4 text-xs">
+                    <ul className="text-white space-y-0.5 list-disc list-outside ml-4 text-xs">
                       <li>Higher initial cost</li>
                       <li>Requires maintenance</li>
                       <li>Power electronics can fail</li>
@@ -906,7 +906,7 @@ const HNCModule3Section3_5 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/70 mt-2">
+              <p className="text-xs text-white mt-2">
                 K-factor indicates increased heating capacity. A K-13 transformer can handle
                 harmonic loads that would cause a K-1 transformer to overheat by 13 times.
               </p>
@@ -916,7 +916,7 @@ const HNCModule3Section3_5 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Phase-Shifting Transformers
               </p>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 Using multiple transformers with different phase shifts can cancel specific
                 harmonics. A delta-star and delta-delta pair with 30° phase shift eliminates 5th and
                 7th harmonics when loads are balanced.
@@ -977,12 +977,12 @@ const HNCModule3Section3_5 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">
                 Regulation 523.6.3 - Neutral Conductor Sizing
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Where the third harmonic content of line conductors is greater than 15%, the neutral
                 conductor shall have a cross-sectional area at least equal to that of the line
                 conductors.
               </p>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 Where third harmonic content exceeds 33%, the neutral current may exceed the phase
                 current. In such cases, the neutral conductor may need to be sized based on the
                 neutral current rather than the phase current, potentially requiring a larger
@@ -1049,7 +1049,7 @@ const HNCModule3Section3_5 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Engineering Recommendation G5/5
               </p>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 Published by the Energy Networks Association, G5/5 sets limits for harmonic
                 distortion at the point of common coupling (PCC) with the distribution network:
               </p>
@@ -1073,7 +1073,7 @@ const HNCModule3Section3_5 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Neutral Sizing Decision Process
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>1. Determine third harmonic content (I₃) as % of fundamental (I₁)</p>
                 <p className="mt-2">2. If I₃ ≤ 15%:</p>
                 <p className="ml-4">Neutral = Standard sizing per Appendix 4</p>
@@ -1112,7 +1112,7 @@ const HNCModule3Section3_5 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Data Centres</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 The most demanding environment for harmonic management, with IT loads often
                 representing 70-90% of total building consumption.
               </p>
@@ -1139,7 +1139,7 @@ const HNCModule3Section3_5 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Modern Office Buildings
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 High concentration of computers, LED lighting, and variable air volume (VAV) systems
                 create cumulative harmonic loading.
               </p>
@@ -1161,7 +1161,7 @@ const HNCModule3Section3_5 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Industrial Facilities</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Variable speed drives for motors often dominate the harmonic profile, but loads are
                 typically more predictable than commercial buildings.
               </p>
@@ -1232,7 +1232,7 @@ const HNCModule3Section3_5 = () => {
                 <strong>Question:</strong> A three-phase 100A per phase lighting circuit has LED
                 drivers generating 40% third harmonic current. Calculate the neutral current.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Third harmonic current per phase:</p>
                 <p>I₃ = 100A × 0.40 = 40A per phase</p>
                 <p className="mt-2">Fundamental neutral current (balanced): 0A (cancels)</p>
@@ -1245,7 +1245,7 @@ const HNCModule3Section3_5 = () => {
                   I<sub>N</sub> ≈ <strong>120A</strong>
                 </p>
                 <p className="mt-2 text-red-400">Neutral current exceeds phase current!</p>
-                <p className="text-white/60">→ Neutral must be sized for 120A minimum</p>
+                <p className="text-white">→ Neutral must be sized for 120A minimum</p>
               </div>
             </div>
 
@@ -1257,10 +1257,10 @@ const HNCModule3Section3_5 = () => {
                 <strong>Question:</strong> A transformer supplies a data centre with the following
                 harmonic profile. Calculate the K-factor and recommend transformer rating.
               </p>
-              <div className="text-xs text-white/80 mb-2">
+              <div className="text-xs text-white mb-2">
                 I₁ = 100%, I₃ = 80%, I₅ = 60%, I₇ = 40%, I₉ = 20%
               </div>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>K-factor = Σ(Iₕ² × h²) / Σ(Iₕ²)</p>
                 <p className="mt-2">Numerator:</p>
                 <p>= (1² × 1²) + (0.8² × 3²) + (0.6² × 5²) + (0.4² × 7²) + (0.2² × 9²)</p>
@@ -1284,7 +1284,7 @@ const HNCModule3Section3_5 = () => {
                 <strong>Question:</strong> A VSD draws the following harmonic currents: I₁ = 100A,
                 I₅ = 25A, I₇ = 14A, I₁₁ = 9A, I₁₃ = 7A. Calculate the THD.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>THD = √(I₅² + I₇² + I₁₁² + I₁₃² + ...) / I₁ × 100%</p>
                 <p className="mt-2">Harmonic sum of squares:</p>
                 <p>= 25² + 14² + 9² + 7² = 625 + 196 + 81 + 49 = 951</p>
@@ -1292,10 +1292,10 @@ const HNCModule3Section3_5 = () => {
                 <p>
                   THD = 30.8 / 100 × 100% = <strong>30.8%</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This is typical for a 6-pulse VSD without filtering
                 </p>
-                <p className="text-white/60">→ Consider 3% line reactor to reduce to ~20%</p>
+                <p className="text-white">→ Consider 3% line reactor to reduce to ~20%</p>
               </div>
             </div>
           </div>
@@ -1387,7 +1387,7 @@ const HNCModule3Section3_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1435,7 +1435,7 @@ const HNCModule3Section3_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section3-4">

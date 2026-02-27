@@ -312,7 +312,7 @@ const MWDetailsTab: React.FC<MWDetailsTabProps> = ({ formData, onUpdate, isMobil
                           <div className="flex flex-col gap-1">
                             <span className="font-semibold text-white">{opt.label}</span>
                             {opt.description && (
-                              <span className="text-[13px] text-white/60 leading-snug">
+                              <span className="text-[13px] text-white leading-snug">
                                 {opt.description}
                               </span>
                             )}

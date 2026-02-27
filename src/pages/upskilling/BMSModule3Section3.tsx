@@ -90,7 +90,7 @@ const BMSModule3Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bms-module-3">
@@ -340,7 +340,7 @@ const BMSModule3Section3 = () => {
                 <p className="text-sm text-white font-mono">
                   Energy Savings (%) = (Design Airflow - Actual Airflow) / Design Airflow × 100
                 </p>
-                <p className="text-xs text-white/70 mt-2">
+                <p className="text-xs text-white mt-2">
                   Example: 100-person conference room with 20% average occupancy = 80% reduction in
                   ventilation energy
                 </p>
@@ -463,7 +463,7 @@ const BMSModule3Section3 = () => {
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 my-3">
                 <div>
-                  <p className="text-xs text-white/70 mb-1">Energy Savings</p>
+                  <p className="text-xs text-white mb-1">Energy Savings</p>
                   <ul className="text-xs space-y-0.5">
                     <li>Lighting: 35%</li>
                     <li>HVAC: 28%</li>
@@ -474,7 +474,7 @@ const BMSModule3Section3 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs text-white/70 mb-1">Project Details</p>
+                  <p className="text-xs text-white mb-1">Project Details</p>
                   <ul className="text-xs space-y-0.5">
                     <li>Installation: 3 days</li>
                     <li>Commissioning: 2 weeks</li>
@@ -536,7 +536,7 @@ const BMSModule3Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bms-module-3-section-2">

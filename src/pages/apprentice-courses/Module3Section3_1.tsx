@@ -199,7 +199,7 @@ const Module3Section3_1: React.FC = () => {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Essential Hand Tools (Strippers, Cutters, Drivers)
           </h1>
-          <p className="text-white/70">
+          <p className="text-white">
             Master the essential hand tools for safe, efficient electrical installation work.
           </p>
         </header>

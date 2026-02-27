@@ -160,7 +160,7 @@ const ProfessionalLanguageBuilder = ({ onBack }: ProfessionalLanguageBuilderProp
       case 'communication':
         return 'bg-green-500/20 text-green-300';
       default:
-        return 'bg-white/10 text-white/80';
+        return 'bg-white/10 text-white';
     }
   };
 
@@ -219,7 +219,7 @@ const ProfessionalLanguageBuilder = ({ onBack }: ProfessionalLanguageBuilderProp
             </Button>
             <div>
               <h2 className="text-2xl font-bold text-white">Quiz Complete!</h2>
-              <p className="text-white/60">Your vocabulary knowledge results</p>
+              <p className="text-white">Your vocabulary knowledge results</p>
             </div>
           </div>
 
@@ -299,7 +299,7 @@ const ProfessionalLanguageBuilder = ({ onBack }: ProfessionalLanguageBuilderProp
           </Button>
           <div>
             <h2 className="text-2xl font-bold text-white">Vocabulary Quiz</h2>
-            <p className="text-white/60">Question {quizQuestion + 1} of 5</p>
+            <p className="text-white">Question {quizQuestion + 1} of 5</p>
           </div>
         </div>
 
@@ -355,7 +355,7 @@ const ProfessionalLanguageBuilder = ({ onBack }: ProfessionalLanguageBuilderProp
             </div>
 
             <div className="flex justify-between items-center pt-4 border-t border-white/10">
-              <div className="text-sm text-white/60">
+              <div className="text-sm text-white">
                 Score: <span className="text-purple-400 font-semibold">{quizScore}</span>/
                 {quizQuestion + (selectedAnswer ? 1 : 0)}
               </div>
@@ -383,7 +383,7 @@ const ProfessionalLanguageBuilder = ({ onBack }: ProfessionalLanguageBuilderProp
           </Button>
           <div>
             <h2 className="text-2xl font-bold text-white">Flashcard Study</h2>
-            <p className="text-white/60">
+            <p className="text-white">
               Card {currentTermIndex + 1} of {filteredTerms.length}
             </p>
           </div>
@@ -417,18 +417,18 @@ const ProfessionalLanguageBuilder = ({ onBack }: ProfessionalLanguageBuilderProp
                     {currentTerm.category}
                   </Badge>
                 </div>
-                <p className="text-white/80 text-sm">Tap to reveal definition</p>
+                <p className="text-white text-sm">Tap to reveal definition</p>
               </div>
             ) : (
               <div className="animate-fade-in">
                 <h3 className="text-2xl font-bold text-white mb-4">{currentTerm.term}</h3>
-                <p className="text-lg text-white/70 mb-6">{currentTerm.definition}</p>
+                <p className="text-lg text-white mb-6">{currentTerm.definition}</p>
                 <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20 text-left">
                   <p className="text-blue-300 text-sm">
                     <strong className="text-blue-400">Usage:</strong> {currentTerm.context}
                   </p>
                 </div>
-                <p className="text-white/80 text-sm mt-6">Tap to hide definition</p>
+                <p className="text-white text-sm mt-6">Tap to hide definition</p>
               </div>
             )}
           </CardContent>
@@ -474,7 +474,7 @@ const ProfessionalLanguageBuilder = ({ onBack }: ProfessionalLanguageBuilderProp
         </Button>
         <div>
           <h2 className="text-2xl font-bold text-white">Professional Language Builder</h2>
-          <p className="text-white/60">Build your electrical industry vocabulary</p>
+          <p className="text-white">Build your electrical industry vocabulary</p>
         </div>
       </div>
 
@@ -490,7 +490,7 @@ const ProfessionalLanguageBuilder = ({ onBack }: ProfessionalLanguageBuilderProp
               <BookOpen className="h-6 w-6 text-blue-400" />
             </div>
             <h3 className="font-semibold text-white mb-1">Browse Terms</h3>
-            <p className="text-sm text-white/60">Explore vocabulary by category</p>
+            <p className="text-sm text-white">Explore vocabulary by category</p>
           </CardContent>
         </Card>
 
@@ -504,7 +504,7 @@ const ProfessionalLanguageBuilder = ({ onBack }: ProfessionalLanguageBuilderProp
               <Target className="h-6 w-6 text-green-400" />
             </div>
             <h3 className="font-semibold text-white mb-1">Flashcards</h3>
-            <p className="text-sm text-white/60">Study with interactive cards</p>
+            <p className="text-sm text-white">Study with interactive cards</p>
           </CardContent>
         </Card>
 
@@ -518,7 +518,7 @@ const ProfessionalLanguageBuilder = ({ onBack }: ProfessionalLanguageBuilderProp
               <Lightbulb className="h-6 w-6 text-purple-400" />
             </div>
             <h3 className="font-semibold text-white mb-1">Take Quiz</h3>
-            <p className="text-sm text-white/60">Test your knowledge</p>
+            <p className="text-sm text-white">Test your knowledge</p>
           </CardContent>
         </Card>
       </div>
@@ -554,7 +554,7 @@ const ProfessionalLanguageBuilder = ({ onBack }: ProfessionalLanguageBuilderProp
                   className={`ml-2 ${
                     selectedCategory === category.id
                       ? 'bg-purple-500/20 text-purple-400 border-purple-500/30'
-                      : 'bg-white/5 text-white/60 border-white/10'
+                      : 'bg-white/5 text-white border-white/10'
                   }`}
                 >
                   {category.count}
@@ -586,7 +586,7 @@ const ProfessionalLanguageBuilder = ({ onBack }: ProfessionalLanguageBuilderProp
                       variant="ghost"
                       className="p-1 h-auto hover:bg-elec-yellow/10"
                     >
-                      <Volume2 className="h-3 w-3 text-white/80" />
+                      <Volume2 className="h-3 w-3 text-white" />
                     </Button>
                   </CardTitle>
                   <div className="flex gap-2 mt-3">
@@ -601,7 +601,7 @@ const ProfessionalLanguageBuilder = ({ onBack }: ProfessionalLanguageBuilderProp
               </div>
             </CardHeader>
             <CardContent className="relative">
-              <p className="text-white/70 mb-4">{term.definition}</p>
+              <p className="text-white mb-4">{term.definition}</p>
               <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
                 <p className="text-blue-300 text-sm">
                   <strong className="text-blue-400">Usage:</strong> {term.context}

@@ -92,7 +92,7 @@ const SupporterCard: React.FC<SupporterCardProps> = ({
 
       {/* Bio - 2 lines max */}
       {supporter.bio && (
-        <p className="text-xs text-white/70 mt-2 line-clamp-2 leading-relaxed">"{supporter.bio}"</p>
+        <p className="text-xs text-white mt-2 line-clamp-2 leading-relaxed">"{supporter.bio}"</p>
       )}
 
       {/* Topics - compact with +N overflow indicator */}
@@ -107,7 +107,7 @@ const SupporterCard: React.FC<SupporterCardProps> = ({
             </span>
           ))}
           {topics.length > 3 && (
-            <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/5 text-white/40">
+            <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/5 text-white">
               +{topics.length - 3}
             </span>
           )}
@@ -116,7 +116,7 @@ const SupporterCard: React.FC<SupporterCardProps> = ({
 
       {/* Bottom: Stats + Compact CTA */}
       <div className="flex items-center justify-between mt-3 pt-2 border-t border-white/5">
-        <span className="text-[10px] text-white/50 flex items-center gap-1">
+        <span className="text-[10px] text-white flex items-center gap-1">
           <MessageCircle className="w-3 h-3" />
           {supporter.total_conversations} chats
         </span>

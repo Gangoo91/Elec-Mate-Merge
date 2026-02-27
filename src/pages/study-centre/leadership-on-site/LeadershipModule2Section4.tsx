@@ -205,7 +205,7 @@ export default function LeadershipModule2Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-2-section-3">
@@ -383,7 +383,7 @@ export default function LeadershipModule2Section4() {
                     <p className="text-red-400 font-semibold text-xs mb-1">
                       When Problems Go Unaddressed
                     </p>
-                    <ul className="text-white/80 text-xs space-y-1">
+                    <ul className="text-white text-xs space-y-1">
                       <li>Poor workmanship continues and becomes normalised</li>
                       <li>
                         Good workers become resentful when poor performers face no consequences
@@ -396,7 +396,7 @@ export default function LeadershipModule2Section4() {
                     <p className="text-amber-400 font-semibold text-xs mb-1">
                       When Good Work Goes Unrecognised
                     </p>
-                    <ul className="text-white/80 text-xs space-y-1">
+                    <ul className="text-white text-xs space-y-1">
                       <li>People stop going the extra mile because nobody notices</li>
                       <li>Motivation drops to minimum compliance levels</li>
                       <li>Best workers leave for employers who value them</li>
@@ -429,7 +429,7 @@ export default function LeadershipModule2Section4() {
                 <div className="space-y-3 text-sm">
                   <div className="bg-blue-500/10 border border-blue-500/30 p-3 rounded-lg">
                     <p className="text-blue-400 font-semibold mb-1">S &mdash; Situation</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Anchor the feedback in a specific time and place. This prevents the
                       conversation from becoming vague or generalised.
                     </p>
@@ -441,7 +441,7 @@ export default function LeadershipModule2Section4() {
                   </div>
                   <div className="bg-purple-500/10 border border-purple-500/30 p-3 rounded-lg">
                     <p className="text-purple-400 font-semibold mb-1">B &mdash; Behaviour</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Describe what you actually OBSERVED — what the person did or said. Not your
                       interpretation of it, not their attitude, not their personality. Observable,
                       factual behaviour.
@@ -454,7 +454,7 @@ export default function LeadershipModule2Section4() {
                   </div>
                   <div className="bg-green-500/10 border border-green-500/30 p-3 rounded-lg">
                     <p className="text-green-400 font-semibold mb-1">I &mdash; Impact</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Explain the effect the behaviour had — on you, the team, the project, safety,
                       or the person themselves.
                     </p>
@@ -471,7 +471,7 @@ export default function LeadershipModule2Section4() {
                 <p className="text-sm font-medium text-rose-400 mb-2">
                   Extended SBII &mdash; Adding Intent
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The extended model adds a fourth element:{' '}
                   <strong className="text-white">Intent</strong>. After describing the situation,
                   behaviour, and impact, ask a genuine question: &ldquo;Can you help me understand
@@ -535,7 +535,7 @@ export default function LeadershipModule2Section4() {
                     <p className="text-red-400 font-semibold text-sm mb-2">
                       Corrective SBI Example
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-white">S:</strong> &ldquo;During the toolbox talk this
                       morning...&rdquo;
                       <br />
@@ -553,7 +553,7 @@ export default function LeadershipModule2Section4() {
                     <p className="text-green-400 font-semibold text-sm mb-2">
                       Positive SBI Example
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-white">S:</strong> &ldquo;During the inspection
                       today...&rdquo;
                       <br />
@@ -597,7 +597,7 @@ export default function LeadershipModule2Section4() {
                 <div className="space-y-3 text-sm">
                   <div className="bg-blue-500/10 border border-blue-500/30 p-3 rounded-lg">
                     <p className="text-blue-400 font-semibold mb-1">G &mdash; Goal</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       &ldquo;What do you want to achieve?&rdquo; Define the specific outcome the
                       person is working towards.
                     </p>
@@ -609,7 +609,7 @@ export default function LeadershipModule2Section4() {
                   </div>
                   <div className="bg-amber-500/10 border border-amber-500/30 p-3 rounded-lg">
                     <p className="text-amber-400 font-semibold mb-1">R &mdash; Reality</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       &ldquo;What is happening now?&rdquo; Explore the current situation honestly —
                       where they are, what they have tried, what is getting in the way.
                     </p>
@@ -621,7 +621,7 @@ export default function LeadershipModule2Section4() {
                   </div>
                   <div className="bg-green-500/10 border border-green-500/30 p-3 rounded-lg">
                     <p className="text-green-400 font-semibold mb-1">O &mdash; Options</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       &ldquo;What could you do?&rdquo; Brainstorm possible actions — without judging
                       them. The more options generated, the better.
                     </p>
@@ -633,7 +633,7 @@ export default function LeadershipModule2Section4() {
                   </div>
                   <div className="bg-purple-500/10 border border-purple-500/30 p-3 rounded-lg">
                     <p className="text-purple-400 font-semibold mb-1">W &mdash; Will</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       &ldquo;What WILL you do? By when?&rdquo; Convert the conversation into a firm
                       commitment to specific action with a deadline.
                     </p>
@@ -651,7 +651,7 @@ export default function LeadershipModule2Section4() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Will, Not Wish</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Whitmore was emphatic that{' '}
                   <strong className="text-white">W = Will (commitment), not Wish</strong>. The
                   difference is crucial. A wish is: &ldquo;I will try to do better.&rdquo; A will
@@ -669,7 +669,7 @@ export default function LeadershipModule2Section4() {
                 <div className="space-y-2 text-sm">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-blue-400 font-semibold text-xs mb-1">G &mdash; Goal</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Supervisor: &ldquo;What would you like to be able to do?&rdquo; Apprentice:
                       &ldquo;I want to be confident enough to do a full EICR inspection on my own
                       without needing to ask for help at every stage.&rdquo;
@@ -677,7 +677,7 @@ export default function LeadershipModule2Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-amber-400 font-semibold text-xs mb-1">R &mdash; Reality</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Supervisor: &ldquo;Where are you with that right now?&rdquo; Apprentice:
                       &ldquo;I can do the testing OK, but I struggle with coding the observations
                       and I am not confident with the Zs readings.&rdquo;
@@ -685,7 +685,7 @@ export default function LeadershipModule2Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-green-400 font-semibold text-xs mb-1">O &mdash; Options</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Supervisor: &ldquo;What could you do to get more confident?&rdquo; Apprentice:
                       &ldquo;I could shadow Dave on his next three inspections, I could study the
                       coding guidelines, or I could practise on the empty flats before
@@ -694,7 +694,7 @@ export default function LeadershipModule2Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-purple-400 font-semibold text-xs mb-1">W &mdash; Will</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Supervisor: &ldquo;Which of those WILL you do? By when?&rdquo; Apprentice:
                       &ldquo;I will shadow Dave on Monday and Wednesday, study the codes Tuesday
                       evening, and do a practice inspection on flat 4B by Thursday. I will show you
@@ -775,7 +775,7 @@ export default function LeadershipModule2Section4() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-400 mb-2">What to Use Instead</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Use direct, kind, specific feedback using the SBI model. You do not need to
                   &ldquo;sugar coat&rdquo; corrective feedback with praise. You need to be{' '}
                   <strong className="text-white">honest, specific, and respectful</strong>. Give
@@ -789,24 +789,24 @@ export default function LeadershipModule2Section4() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <p className="text-red-400 font-semibold text-sm mb-2">Feedback Sandwich</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       &ldquo;Your containment work was really neat this morning. But the cable runs
                       in area C were messy and need redoing. Anyway, you are doing a great job
                       overall.&rdquo;
                     </p>
-                    <p className="text-xs text-white/80 mt-2">
+                    <p className="text-xs text-white mt-2">
                       The person hears: &ldquo;neat containment&rdquo; and &ldquo;great job
                       overall.&rdquo; The critical message about area C is lost in the middle.
                     </p>
                   </div>
                   <div>
                     <p className="text-green-400 font-semibold text-sm mb-2">Direct SBI Instead</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       &ldquo;When you were running the cables in area C this morning, the runs were
                       not up to the standard we agreed. It means we will need to redo them before
                       inspection. Can you help me understand what happened?&rdquo;
                     </p>
-                    <p className="text-xs text-white/80 mt-2">
+                    <p className="text-xs text-white mt-2">
                       Clear, specific, factual, non-judgemental. Opens a dialogue. No mixed
                       messages. Give separate positive SBI about the neat containment at a different
                       time.
@@ -843,7 +843,7 @@ export default function LeadershipModule2Section4() {
                 <div className="space-y-3 text-sm">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">The Approach</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Instead of: &ldquo;Your toolbox talk this morning was disorganised and people
                       switched off halfway through.&rdquo;
                     </p>
@@ -854,7 +854,7 @@ export default function LeadershipModule2Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">The Rules</p>
-                    <ul className="text-white/80 text-xs space-y-1.5">
+                    <ul className="text-white text-xs space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                         <span>
@@ -885,7 +885,7 @@ export default function LeadershipModule2Section4() {
 
               <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-amber-400 mb-2">When to Use Feedforward</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Feedforward is particularly effective with{' '}
                   <strong className="text-white">
                     experienced people who resist being told what they did wrong
@@ -910,7 +910,7 @@ export default function LeadershipModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">Feedforward Examples on Site</p>
                 <div className="space-y-2 text-sm">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-white">Instead of:</strong> &ldquo;Your toolbox talk
                       was disorganised and people lost interest.&rdquo;
                     </p>
@@ -920,7 +920,7 @@ export default function LeadershipModule2Section4() {
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-white">Instead of:</strong> &ldquo;Your cable runs on
                       floor 2 were messy and needed rework.&rdquo;
                     </p>
@@ -930,7 +930,7 @@ export default function LeadershipModule2Section4() {
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-white">Instead of:</strong> &ldquo;You did not follow
                       the isolation procedure properly last week.&rdquo;
                     </p>
@@ -947,7 +947,7 @@ export default function LeadershipModule2Section4() {
                   <RefreshCw className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">When NOT to Use Feedforward</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Feedforward is not appropriate for everything.{' '}
                   <strong className="text-white">
                     Safety violations require direct, immediate corrective feedback
@@ -1075,7 +1075,7 @@ export default function LeadershipModule2Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1089,7 +1089,7 @@ export default function LeadershipModule2Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-2-section-3">

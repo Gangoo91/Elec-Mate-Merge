@@ -238,7 +238,7 @@ const HNCModule7Section3_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section3">
@@ -260,7 +260,7 @@ const HNCModule7Section3_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Lighting Fundamentals
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Photometric quantities, luminous efficacy, colour temperature, and colour rendering for
             building services lighting design
           </p>
@@ -847,7 +847,7 @@ const HNCModule7Section3_1 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Design consideration:</strong> CCT and CRI are independent. A 3000K lamp can
               have poor or excellent CRI. Always specify both parameters when colour quality
               matters.
@@ -874,7 +874,7 @@ const HNCModule7Section3_1 = () => {
                 downward direction. Calculate the illuminance on a horizontal surface directly below
                 at distances of 2m and 4m.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using E = I / d²</p>
                 <p className="mt-2">At 2m distance:</p>
                 <p className="ml-4">E = 2500 / 2² = 2500 / 4 = 625 lux</p>
@@ -894,7 +894,7 @@ const HNCModule7Section3_1 = () => {
                 <strong>Problem:</strong> Compare the energy consumption of lighting a space with
                 60W incandescent lamps versus LED equivalents, both producing 800 lumens.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Incandescent: η = 800 lm / 60 W = 13.3 lm/W</p>
                 <p>LED (modern): η = 800 lm / 8 W = 100 lm/W</p>
                 <p className="mt-2">Power saving per lamp: 60 - 8 = 52 W</p>
@@ -914,7 +914,7 @@ const HNCModule7Section3_1 = () => {
                 <strong>Scenario:</strong> Specify CCT and CRI for a supermarket with different
                 zones.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Zone requirements:</p>
                 <p className="mt-2">Fresh meat/fish counter:</p>
                 <p className="ml-4">CCT: 3000K (enhances warm colours)</p>
@@ -1021,7 +1021,7 @@ const HNCModule7Section3_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1067,7 +1067,7 @@ const HNCModule7Section3_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section3">

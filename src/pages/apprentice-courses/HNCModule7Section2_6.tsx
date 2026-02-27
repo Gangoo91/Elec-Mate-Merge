@@ -249,7 +249,7 @@ const HNCModule7Section2_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section2">
@@ -271,7 +271,7 @@ const HNCModule7Section2_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Testing and Compliance
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Periodic testing schedules, documentation requirements, fire risk assessment
             coordination, and regulatory compliance
           </p>
@@ -667,7 +667,7 @@ const HNCModule7Section2_6 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
               <p className="text-sm font-medium text-blue-400 mb-2">Log Book Best Practice</p>
-              <div className="text-sm text-white/90 space-y-2">
+              <div className="text-sm text-white space-y-2">
                 <p>The log book should be:</p>
                 <ul className="list-disc list-outside ml-5 space-y-1">
                   <li>Kept at or near the main control panel</li>
@@ -818,7 +818,7 @@ const HNCModule7Section2_6 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
               <p className="text-sm font-medium text-red-400 mb-2">Critical Compliance Point</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 The fire risk assessment must be reviewed whenever there is reason to suspect it is
                 no longer valid, or there has been a significant change to the premises. Emergency
                 system modifications, test failures, or changes in testing arrangements are all
@@ -826,7 +826,7 @@ const HNCModule7Section2_6 = () => {
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>PAS 79-1:2020:</strong> Provides guidance on fire risk assessment methodology
               and should be followed when conducting or reviewing assessments for non-residential
               premises.
@@ -852,14 +852,14 @@ const HNCModule7Section2_6 = () => {
                 <strong>Scenario:</strong> Develop an annual testing schedule for a 4-storey office
                 building with emergency lighting and Category L3 fire alarm system.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Emergency Lighting (BS 5266-1):</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Emergency Lighting (BS 5266-1):</p>
                 <p className="ml-4">Daily: Visual check of indicator lamps</p>
                 <p className="ml-4">Monthly: Functional test (simulate mains failure)</p>
                 <p className="ml-4">
                   Annually: Full 3-hour duration test (January - low occupancy)
                 </p>
-                <p className="mt-2 text-white/60">Fire Alarm (BS 5839-1):</p>
+                <p className="mt-2 text-white">Fire Alarm (BS 5839-1):</p>
                 <p className="ml-4">Weekly: Different call point each Monday at 10:00</p>
                 <p className="ml-4">Monthly: Check panel indicators, battery voltages</p>
                 <p className="ml-4">Six-monthly: Full service (June and December)</p>
@@ -876,16 +876,16 @@ const HNCModule7Section2_6 = () => {
                 <strong>Scenario:</strong> During the annual duration test, 8 of 45 emergency
                 luminaires fail before reaching the 3-hour duration.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Immediate actions:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Immediate actions:</p>
                 <p className="ml-4">1. Record all failures in log book with locations</p>
                 <p className="ml-4">2. Assess if affected areas have adequate coverage</p>
                 <p className="ml-4">3. Implement temporary measures if required</p>
-                <p className="mt-2 text-white/60">Investigation:</p>
+                <p className="mt-2 text-white">Investigation:</p>
                 <p className="ml-4">- Check battery age (typically 4-year life)</p>
                 <p className="ml-4">- Verify charging circuits functioning</p>
                 <p className="ml-4">- Assess if failures indicate batch problem</p>
-                <p className="mt-2 text-white/60">Rectification:</p>
+                <p className="mt-2 text-white">Rectification:</p>
                 <p className="ml-4">- Replace failed batteries or luminaires</p>
                 <p className="ml-4">- Re-test replaced units</p>
                 <p className="ml-4">- Update FRA if system reliability is concern</p>
@@ -903,17 +903,17 @@ const HNCModule7Section2_6 = () => {
                 <strong>Scenario:</strong> A new server room has been added to a commercial
                 building, requiring fire alarm system extension.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">System changes:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">System changes:</p>
                 <p className="ml-4">- Additional aspirating detection system installed</p>
                 <p className="ml-4">- Gas suppression system integrated</p>
                 <p className="ml-4">- Cause and effect matrix updated</p>
-                <p className="mt-2 text-white/60">FRA review considerations:</p>
+                <p className="mt-2 text-white">FRA review considerations:</p>
                 <p className="ml-4">- New fire risk from electrical equipment</p>
                 <p className="ml-4">- Detection coverage for server room</p>
                 <p className="ml-4">- Emergency procedures for gas discharge</p>
                 <p className="ml-4">- Staff training requirements</p>
-                <p className="mt-2 text-white/60">Documentation updates:</p>
+                <p className="mt-2 text-white">Documentation updates:</p>
                 <p className="ml-4">- As-installed drawings revised</p>
                 <p className="ml-4">- Cause and effect documentation updated</p>
                 <p className="ml-4">- FRA updated with new risks and controls</p>
@@ -1009,7 +1009,7 @@ const HNCModule7Section2_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1055,7 +1055,7 @@ const HNCModule7Section2_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section2">

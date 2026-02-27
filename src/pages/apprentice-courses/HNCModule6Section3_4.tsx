@@ -254,7 +254,7 @@ const HNCModule6Section3_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section3">
@@ -276,7 +276,7 @@ const HNCModule6Section3_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             BREEAM Materials and Waste
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Responsible sourcing, life cycle impacts, construction waste management, operational
             waste, and circular economy principles
           </p>
@@ -778,7 +778,7 @@ const HNCModule6Section3_4 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Design for Disassembly</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>- Mechanical fixings over adhesives</li>
                     <li>- Modular, replaceable components</li>
                     <li>- Accessible connections</li>
@@ -788,7 +788,7 @@ const HNCModule6Section3_4 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Material Recovery Potential</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>- Copper: Infinitely recyclable</li>
                     <li>- Steel: High recycling rates</li>
                     <li>- Aluminium: Full recyclability</li>
@@ -890,7 +890,7 @@ const HNCModule6Section3_4 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Future-proofing:</strong> Design flexibility into MEP systems to accommodate
               future technology changes without complete replacement, extending useful life and
               deferring material consumption.
@@ -916,7 +916,7 @@ const HNCModule6Section3_4 = () => {
                 <strong>Scenario:</strong> Compare two cable suppliers for 100m of 4-core 16mm2
                 armoured cable based on EPD data.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Supplier A EPD (per 100m cable):</p>
                 <p className="ml-4">GWP (A1-A3): 245 kg CO2eq</p>
                 <p className="ml-4">Recycled copper content: 25%</p>
@@ -942,7 +942,7 @@ const HNCModule6Section3_4 = () => {
                 <strong>Scenario:</strong> Forecast MEP waste for 5,000m2 office fit-out and set
                 diversion targets.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Forecast waste by type:</p>
                 <p className="ml-4">Copper cable offcuts: 150 kg → 100% recycling</p>
                 <p className="ml-4">Steel containment offcuts: 400 kg → 100% recycling</p>
@@ -966,7 +966,7 @@ const HNCModule6Section3_4 = () => {
                 <strong>Scenario:</strong> Design lighting installation for future adaptability and
                 end-of-life recovery.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Traditional approach:</p>
                 <p className="ml-4">- Recessed fittings with plaster-in frames</p>
                 <p className="ml-4">- Hardwired connections</p>
@@ -1066,7 +1066,7 @@ const HNCModule6Section3_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1112,7 +1112,7 @@ const HNCModule6Section3_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section3">

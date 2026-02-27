@@ -199,7 +199,7 @@ const HNCModule3Section1_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section1">
@@ -221,7 +221,7 @@ const HNCModule3Section1_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Parallel Circuits
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding voltage distribution, current division, and equivalent resistance in
             parallel networks
           </p>
@@ -310,15 +310,15 @@ const HNCModule3Section1_4 = () => {
               <div className="grid sm:grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-black/30 border border-blue-500/30">
                   <p className="text-lg font-bold text-blue-400 mb-1">VT = V1 = V2 = V3</p>
-                  <p className="text-white/70 text-xs">Voltage is the SAME</p>
+                  <p className="text-white text-xs">Voltage is the SAME</p>
                 </div>
                 <div className="p-3 rounded bg-black/30 border border-green-500/30">
                   <p className="text-lg font-bold text-green-400 mb-1">IT = I1 + I2 + I3</p>
-                  <p className="text-white/70 text-xs">Currents ADD up</p>
+                  <p className="text-white text-xs">Currents ADD up</p>
                 </div>
                 <div className="p-3 rounded bg-black/30 border border-elec-yellow/30">
                   <p className="text-lg font-bold text-elec-yellow mb-1">RT &lt; Rsmallest</p>
-                  <p className="text-white/70 text-xs">Total R is LESS</p>
+                  <p className="text-white text-xs">Total R is LESS</p>
                 </div>
               </div>
             </div>
@@ -383,10 +383,10 @@ const HNCModule3Section1_4 = () => {
                   <strong>1/RT = 1/R1 + 1/R2 + 1/R3 + ...</strong>
                 </p>
               </div>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 Calculate the sum of reciprocals, then take the reciprocal of the result.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Example:</strong> 20 ohms, 30 ohms, and 60 ohms in parallel
                 </p>
@@ -395,7 +395,7 @@ const HNCModule3Section1_4 = () => {
                 <p>
                   RT = 1/0.1 = <strong>10 ohms</strong>
                 </p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Note: 10 ohms &lt; 20 ohms (the smallest resistor)
                 </p>
               </div>
@@ -410,10 +410,10 @@ const HNCModule3Section1_4 = () => {
                   <strong>RT = (R1 x R2) / (R1 + R2)</strong>
                 </p>
               </div>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 Quick method for two resistors - multiply then divide by sum.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Example:</strong> 40 ohms and 60 ohms in parallel
                 </p>
@@ -432,11 +432,11 @@ const HNCModule3Section1_4 = () => {
                 <p className="font-mono text-lg">
                   <strong>RT = R / n</strong>
                 </p>
-                <p className="text-xs text-white/60 mt-1">
+                <p className="text-xs text-white mt-1">
                   (Where n = number of identical resistors)
                 </p>
               </div>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Example:</strong> Four 100 ohm resistors in parallel
                 </p>
@@ -517,7 +517,7 @@ const HNCModule3Section1_4 = () => {
                 <p className="font-mono text-lg">
                   <strong>I1 = IT x (R2 / (R1 + R2))</strong>
                 </p>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   Note: Current through R1 uses R2 in the numerator (opposite to voltage divider)
                 </p>
               </div>
@@ -538,14 +538,14 @@ const HNCModule3Section1_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">
                 Alternative Method: Using Ohm's Law
               </p>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 Since voltage is the same across all branches, you can calculate each branch current
                 directly:
               </p>
               <div className="bg-black/30 p-3 rounded text-center mb-3">
                 <p className="font-mono text-lg">I1 = V / R1 and I2 = V / R2</p>
               </div>
-              <p className="text-xs text-white/60">
+              <p className="text-xs text-white">
                 This is often easier when you know the supply voltage.
               </p>
             </div>
@@ -554,7 +554,7 @@ const HNCModule3Section1_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Worked Example: Current Division
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Given:</strong> IT = 15A divides between 20 ohms and 30 ohms
                 </p>
@@ -612,7 +612,7 @@ const HNCModule3Section1_4 = () => {
               <p className="text-sm font-medium text-white mb-2">
                 Worked Example: Office Lighting Analysis
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Given:</strong> 12 LED luminaires, each 45W at 230V
                 </p>
@@ -634,7 +634,7 @@ const HNCModule3Section1_4 = () => {
                 </p>
               </div>
 
-              <div className="mt-3 text-xs text-white/70">
+              <div className="mt-3 text-xs text-white">
                 <strong>Practical note:</strong> Even if one luminaire fails, others continue
                 working - a key benefit of parallel connection.
               </div>
@@ -653,7 +653,7 @@ const HNCModule3Section1_4 = () => {
               <p className="text-sm font-medium text-white mb-2">
                 Worked Example: Ring Circuit Calculation
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Given:</strong> 2.5mm squared ring, 50m total length, 32A load at far
                   point
@@ -672,10 +672,10 @@ const HNCModule3Section1_4 = () => {
                   Voltage drop: V = 16A x 0.0925 ohms x 2 = <strong>2.96V</strong>
                 </p>
                 <p className="text-green-400 mt-2">Only 1.3% drop (within 5% limit)</p>
-                <p className="mt-3 text-white/60">
+                <p className="mt-3 text-white">
                   <strong>If broken to radial:</strong>
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   V = 32A x (50m x 0.00741) x 2 = 23.7V (10.3% - fails!)
                 </p>
               </div>
@@ -694,7 +694,7 @@ const HNCModule3Section1_4 = () => {
               <p className="text-sm font-medium text-white mb-2">
                 Worked Example: Three-Phase Load Balancing
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Loads to distribute:</strong>
                 </p>
@@ -783,7 +783,7 @@ const HNCModule3Section1_4 = () => {
                 <strong>Question:</strong> Three 2kW panel heaters are to be installed on a single
                 circuit at 230V. Calculate the total current and recommend the MCB rating.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Individual heater current: I = P/V = 2000/230 = 8.7A each</p>
                 <p className="mt-2">Heaters in parallel, currents add:</p>
                 <p>
@@ -807,7 +807,7 @@ const HNCModule3Section1_4 = () => {
                 in parallel to supply a sub-board. Calculate the combined resistance and voltage
                 drop at 100A.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Single cable resistance (go + return):</p>
                 <p>R = 80m x 2 x 0.524 milliohms = 83.8 milliohms = 0.0838 ohms</p>
                 <p className="mt-2">Parallel cables:</p>
@@ -834,7 +834,7 @@ const HNCModule3Section1_4 = () => {
                 decorative pendants (40W each), and 1 feature wall light (60W). Calculate total
                 current and verify 6A MCB is adequate.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>LED downlights: 6 x 10W = 60W, I = 60/230 = 0.26A</p>
                 <p>Pendants: 2 x 40W = 80W, I = 80/230 = 0.35A</p>
                 <p>Wall light: 1 x 60W = 60W, I = 60/230 = 0.26A</p>
@@ -846,7 +846,7 @@ const HNCModule3Section1_4 = () => {
                   Total power: PT = 60 + 80 + 60 = <strong>200W</strong>
                 </p>
                 <p className="text-green-400 mt-2">0.87A is well within 6A MCB capacity</p>
-                <p className="text-white/60 mt-1">Could add many more luminaires within rating</p>
+                <p className="text-white mt-1">Could add many more luminaires within rating</p>
               </div>
             </div>
           </div>
@@ -933,7 +933,7 @@ const HNCModule3Section1_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -979,7 +979,7 @@ const HNCModule3Section1_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section1-3">

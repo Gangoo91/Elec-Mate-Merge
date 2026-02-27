@@ -214,7 +214,7 @@ const HNCModule3Section6_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section6">
@@ -236,7 +236,7 @@ const HNCModule3Section6_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Energy-Efficient Motor and Lighting Design
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Specifying high-efficiency motors and lighting systems to minimise building energy
             consumption
           </p>
@@ -465,7 +465,7 @@ const HNCModule3Section6_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Standard Motor Sizes (kW)
               </p>
-              <p className="text-sm text-white/70 mb-2">IEC standard frame sizes:</p>
+              <p className="text-sm text-white mb-2">IEC standard frame sizes:</p>
               <p className="text-sm font-mono text-white">
                 0.37, 0.55, 0.75, 1.1, 1.5, 2.2, 3, 4, 5.5, 7.5, 11, 15, 18.5, 22, 30, 37, 45, 55,
                 75, 90, 110, 132, 160, 200, 250, 315, 375
@@ -1074,7 +1074,7 @@ const HNCModule3Section6_4 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 LENI = (W<sub>L</sub> + W<sub>P</sub>) / A (kWh/m2/year)
               </p>
-              <p className="text-sm text-white/70 text-center mb-4">
+              <p className="text-sm text-white text-center mb-4">
                 Where W<sub>L</sub> = Lighting energy, W<sub>P</sub> = Parasitic energy, A = Floor
                 area
               </p>
@@ -1218,7 +1218,7 @@ const HNCModule3Section6_4 = () => {
                 <strong>Question:</strong> Compare annual energy costs for an 11kW pump motor
                 running 6000 hours/year using IE2 (89.8%) versus IE4 (93.3%) efficiency at 12p/kWh.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>IE2 input power = 11kW / 0.898 = 12.25kW</p>
                 <p>IE2 annual energy = 12.25 x 6000 = 73,500 kWh</p>
                 <p>
@@ -1232,7 +1232,7 @@ const HNCModule3Section6_4 = () => {
                 <p className="mt-2">
                   Annual saving = GBP 8,820 - GBP 8,489 = <strong>GBP 331/year</strong>
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   Typical IE4 premium of GBP 400-600 pays back in 1.2-1.8 years
                 </p>
               </div>
@@ -1246,7 +1246,7 @@ const HNCModule3Section6_4 = () => {
                 <strong>Question:</strong> Calculate installed lighting load for a 400m2 office
                 requiring 400 lux average, using 130 lm/W luminaires with UF 0.65 and MF 0.75.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Required maintained illuminance = 400 lux</p>
                 <p>Total lumens needed = (E x A) / (UF x MF)</p>
                 <p>= (400 x 400) / (0.65 x 0.75)</p>
@@ -1260,7 +1260,7 @@ const HNCModule3Section6_4 = () => {
                 <p className="mt-2">
                   Power density = 2525 / 400 = <strong>6.3 W/m2</strong>
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   Excellent result - well below typical 10-12 W/m2 benchmark
                 </p>
               </div>
@@ -1275,7 +1275,7 @@ const HNCModule3Section6_4 = () => {
                 lighting, operating 2500 hours/year with 0.8 occupancy factor and 0.7 daylight
                 factor.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Installed power = 1000m2 x 8 W/m2 = 8000W = 8kW</p>
                 <p className="mt-2">
                   Effective operating factor = F<sub>O</sub> x F<sub>D</sub> = 0.8 x 0.7 = 0.56
@@ -1301,7 +1301,7 @@ const HNCModule3Section6_4 = () => {
                 <strong>Question:</strong> A 22kW supply fan operates at 80% speed for 6000
                 hours/year. Calculate energy saved compared to full speed with damper control.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Affinity law for fans: Power varies with speed cubed</p>
                 <p>
                   P<sub>2</sub> / P<sub>1</sub> = (n<sub>2</sub> / n<sub>1</sub>)3
@@ -1315,7 +1315,7 @@ const HNCModule3Section6_4 = () => {
                 <p className="mt-2">
                   Annual saving = 132,000 - 67,800 = <strong>64,200 kWh</strong>
                 </p>
-                <p className="text-white/60">At 15p/kWh = GBP 9,630/year saving</p>
+                <p className="text-white">At 15p/kWh = GBP 9,630/year saving</p>
               </div>
             </div>
           </div>
@@ -1412,7 +1412,7 @@ const HNCModule3Section6_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1458,7 +1458,7 @@ const HNCModule3Section6_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section6-3">

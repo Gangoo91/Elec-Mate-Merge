@@ -266,7 +266,7 @@ const HNCModule8Section3_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section3">
@@ -288,7 +288,7 @@ const HNCModule8Section3_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Terminal Units
           </h1>
-          <p className="text-white/80 text-lg">
+          <p className="text-white text-lg">
             Fan coil units, chilled beams, cassettes, unit selection and control strategies
           </p>
         </header>
@@ -454,23 +454,23 @@ const HNCModule8Section3_4 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">Typical FCU Specifications</p>
               <div className="text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Cooling capacity:</span>{' '}
+                  <span className="text-white">Cooling capacity:</span>{' '}
                   <span className="text-white">1.5 - 15 kW sensible (typical office units)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Fan motor:</span>{' '}
+                  <span className="text-white">Fan motor:</span>{' '}
                   <span className="text-white">20 - 150W (EC motors preferred)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Airflow:</span>{' '}
+                  <span className="text-white">Airflow:</span>{' '}
                   <span className="text-white">150 - 1500 m³/h (3-speed or variable)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Coil pressure drop:</span>{' '}
+                  <span className="text-white">Coil pressure drop:</span>{' '}
                   <span className="text-white">20 - 50 kPa at design flow</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Noise level:</span>{' '}
+                  <span className="text-white">Noise level:</span>{' '}
                   <span className="text-white">30 - 45 dB(A) at 1m (speed dependent)</span>
                 </p>
               </div>
@@ -1088,25 +1088,25 @@ const HNCModule8Section3_4 = () => {
               </p>
               <div className="text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Supply:</span>{' '}
+                  <span className="text-white">Supply:</span>{' '}
                   <span className="text-white">230V single phase (check unit requirements)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Protection:</span>{' '}
+                  <span className="text-white">Protection:</span>{' '}
                   <span className="text-white">
                     MCB 6-16A depending on load, RCD where applicable
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">Isolation:</span>{' '}
+                  <span className="text-white">Isolation:</span>{' '}
                   <span className="text-white">Local isolator within 1m of unit</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Control wiring:</span>{' '}
+                  <span className="text-white">Control wiring:</span>{' '}
                   <span className="text-white">0-10V fan speed, valve actuator, room sensor</span>
                 </p>
                 <p>
-                  <span className="text-white/60">BMS connection:</span>{' '}
+                  <span className="text-white">BMS connection:</span>{' '}
                   <span className="text-white">Status, alarms, setpoint adjustment</span>
                 </p>
               </div>
@@ -1139,14 +1139,14 @@ const HNCModule8Section3_4 = () => {
                 kW sensible cooling load and 2 kW heating load. The system uses 4-pipe chilled/hot
                 water with 2-way valves.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given requirements:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given requirements:</p>
                 <p className="ml-4">Cooling load: 6 kW sensible</p>
                 <p className="ml-4">Heating load: 2 kW</p>
                 <p className="ml-4">CHW: 6°C flow, 12°C return</p>
                 <p className="ml-4">HHW: 70°C flow, 50°C return</p>
                 <p className="ml-4">Room condition: 24°C, 50% RH</p>
-                <p className="mt-2 text-white/60">Selection process:</p>
+                <p className="mt-2 text-white">Selection process:</p>
                 <p className="ml-4">
                   1. Select FCU with cooling capacity &gt;6 kW at design conditions
                 </p>
@@ -1171,11 +1171,11 @@ const HNCModule8Section3_4 = () => {
                 <strong>Scenario:</strong> Determine the minimum chilled water temperature for
                 passive chilled beams in a meeting room designed for 22°C, 50% RH.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given conditions:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given conditions:</p>
                 <p className="ml-4">Room temperature: 22°C</p>
                 <p className="ml-4">Relative humidity: 50%</p>
-                <p className="mt-2 text-white/60">Dewpoint calculation:</p>
+                <p className="mt-2 text-white">Dewpoint calculation:</p>
                 <p className="ml-4">Using psychrometric chart or formula:</p>
                 <p className="ml-4">Dewpoint = T - ((100 - RH)/5)</p>
                 <p className="ml-4">
@@ -1186,7 +1186,7 @@ const HNCModule8Section3_4 = () => {
                 <p className="mt-2">Safety margin (typically 2-3°C above dewpoint):</p>
                 <p className="ml-4 text-green-400">Minimum CHW temperature = 11.1 + 3 = 14.1°C</p>
                 <p className="ml-4 text-green-400">Specify: CHW not below 14°C</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Implement dewpoint sensor to modulate CHW valve if humidity varies.
                 </p>
               </div>
@@ -1200,16 +1200,16 @@ const HNCModule8Section3_4 = () => {
                 <strong>Scenario:</strong> Size a 2-way control valve for an FCU with design water
                 flow rate of 0.15 l/s and target valve pressure drop of 15 kPa.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given data:</p>
                 <p className="ml-4">Water flow rate: 0.15 l/s = 0.54 m³/h</p>
                 <p className="ml-4">Target valve ΔP: 15 kPa = 1.5 bar</p>
                 <p className="ml-4">Coil ΔP at design flow: 20 kPa = 2.0 bar</p>
-                <p className="mt-2 text-white/60">Kvs calculation:</p>
+                <p className="mt-2 text-white">Kvs calculation:</p>
                 <p className="ml-4">Kvs = Q × √(1/ΔP)</p>
                 <p className="ml-4">Where Q in m³/h, ΔP in bar</p>
                 <p className="ml-4">Kvs = 0.54 × √(1/1.5) = 0.54 × 0.816 = 0.44</p>
-                <p className="mt-2 text-white/60">Valve authority check:</p>
+                <p className="mt-2 text-white">Valve authority check:</p>
                 <p className="ml-4">Authority = Valve ΔP / (Valve ΔP + Coil ΔP)</p>
                 <p className="ml-4">Authority = 15 / (15 + 20) = 15/35 = 0.43</p>
                 <p className="ml-4 text-orange-400">Authority 0.43 is acceptable but borderline</p>
@@ -1228,8 +1228,8 @@ const HNCModule8Section3_4 = () => {
                 <strong>Scenario:</strong> Compare annual energy consumption of EC and AC motors for
                 an FCU operating at 60% average speed for 3000 hours per year.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Motor specifications:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Motor specifications:</p>
                 <p className="ml-4">Full speed power: 80W</p>
                 <p className="ml-4">Operating speed: 60% average</p>
                 <p className="ml-4">Operating hours: 3000 h/year</p>
@@ -1424,7 +1424,7 @@ const HNCModule8Section3_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1472,7 +1472,7 @@ const HNCModule8Section3_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section3-3">

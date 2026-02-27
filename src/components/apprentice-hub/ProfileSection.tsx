@@ -724,7 +724,7 @@ export function ProfileSection() {
             {comments.length === 0 ? (
               <div className="flex flex-col items-center justify-center py-12 text-center">
                 <div className="p-4 rounded-full bg-muted mb-4">
-                  <MessageSquare className="h-8 w-8 text-white/20" />
+                  <MessageSquare className="h-8 w-8 text-white" />
                 </div>
                 <p className="text-sm font-medium text-foreground">No messages yet</p>
                 <p className="text-xs text-white mt-1">

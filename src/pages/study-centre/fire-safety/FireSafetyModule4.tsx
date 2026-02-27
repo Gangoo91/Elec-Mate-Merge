@@ -50,7 +50,7 @@ export default function FireSafetyModule4() {
             <Button
               variant="ghost"
               size="lg"
-              className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+              className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../fire-safety-course">
@@ -67,15 +67,15 @@ export default function FireSafetyModule4() {
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 mb-3">
               <span className="text-rose-400 text-xs font-semibold">MODULE 4</span>
-              <span className="text-white/40 text-xs">&bull;</span>
-              <span className="text-white/60 text-xs">4 Sections</span>
-              <span className="text-white/40 text-xs">&bull;</span>
-              <span className="text-white/60 text-xs">30 mins</span>
+              <span className="text-white text-xs">&bull;</span>
+              <span className="text-white text-xs">4 Sections</span>
+              <span className="text-white text-xs">&bull;</span>
+              <span className="text-white text-xs">30 mins</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
               Fire Marshal Duties & Evacuation
             </h1>
-            <p className="text-white/60 text-sm sm:text-base">
+            <p className="text-white text-sm sm:text-base">
               Understand the fire marshal role and its responsibilities, learn the different
               evacuation strategies, master assembly point and roll call procedures, and develop
               personal emergency evacuation plans for persons with disabilities.

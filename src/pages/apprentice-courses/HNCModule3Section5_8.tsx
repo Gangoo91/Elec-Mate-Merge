@@ -220,7 +220,7 @@ const HNCModule3Section5_8 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section5">
@@ -242,7 +242,7 @@ const HNCModule3Section5_8 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Maintenance, Testing and Fault Diagnosis
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Preventive maintenance practices, diagnostic techniques and condition monitoring for
             electrical machines in building services
           </p>
@@ -503,7 +503,7 @@ const HNCModule3Section5_8 = () => {
                   <strong>Temperature correction:</strong> Standardise to 20°C or 25°C reference
                 </li>
               </ul>
-              <p className="text-sm text-white/70 mt-3">
+              <p className="text-sm text-white mt-3">
                 Temperature correction formula: R<sub>2</sub> = R<sub>1</sub> × (234.5 + T
                 <sub>2</sub>) / (234.5 + T<sub>1</sub>) for copper
               </p>
@@ -602,22 +602,22 @@ const HNCModule3Section5_8 = () => {
               <div className="grid grid-cols-2 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">BPFO</p>
-                  <p className="text-white/70 text-xs">Ball Pass Frequency Outer Race</p>
+                  <p className="text-white text-xs">Ball Pass Frequency Outer Race</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">BPFI</p>
-                  <p className="text-white/70 text-xs">Ball Pass Frequency Inner Race</p>
+                  <p className="text-white text-xs">Ball Pass Frequency Inner Race</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">BSF</p>
-                  <p className="text-white/70 text-xs">Ball Spin Frequency</p>
+                  <p className="text-white text-xs">Ball Spin Frequency</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">FTF</p>
-                  <p className="text-white/70 text-xs">Fundamental Train Frequency (Cage)</p>
+                  <p className="text-white text-xs">Fundamental Train Frequency (Cage)</p>
                 </div>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 These frequencies are calculated from bearing geometry - number of rolling elements,
                 contact angle, and bearing dimensions.
               </p>
@@ -811,7 +811,7 @@ const HNCModule3Section5_8 = () => {
                 waveform, specific fault frequencies can be identified as sidebands around the
                 fundamental supply frequency.
               </p>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 For example, broken rotor bars create sidebands at frequencies: f<sub>brb</sub> = f
                 × (1 ± 2s) where f is supply frequency and s is slip.
               </p>
@@ -968,7 +968,7 @@ const HNCModule3Section5_8 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Lubrication Issues (36%)</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Insufficient or excessive grease</li>
                     <li className="pl-1">Wrong lubricant type</li>
                     <li className="pl-1">Contamination</li>
@@ -977,7 +977,7 @@ const HNCModule3Section5_8 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Contamination (14%)</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Moisture ingress</li>
                     <li className="pl-1">Dirt and debris</li>
                     <li className="pl-1">Seal failure</li>
@@ -986,7 +986,7 @@ const HNCModule3Section5_8 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Misalignment (16%)</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Shaft misalignment</li>
                     <li className="pl-1">Bearing housing issues</li>
                     <li className="pl-1">Thermal growth</li>
@@ -995,7 +995,7 @@ const HNCModule3Section5_8 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Electrical Damage (10%)</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">VSD-induced shaft currents</li>
                     <li className="pl-1">Fluting (EDM damage)</li>
                     <li className="pl-1">Frosting patterns</li>
@@ -1346,7 +1346,7 @@ const HNCModule3Section5_8 = () => {
                 readings: Phase A-E: 45 MΩ, Phase B-E: 42 MΩ, Phase C-E: 8 MΩ. All tested at 500V
                 DC.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Analysis:</strong>
                 </p>
@@ -1378,7 +1378,7 @@ const HNCModule3Section5_8 = () => {
                 <strong>Scenario:</strong> A chilled water pump (1450 rpm, 4-pole) shows dominant
                 vibration at 24.2 Hz with amplitude of 3.2 mm/s RMS.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Analysis:</strong>
                 </p>
@@ -1414,7 +1414,7 @@ const HNCModule3Section5_8 = () => {
                 with Phase A at 85°C, Phase B at 52°C, and Phase C at 48°C. Ambient temperature is
                 25°C.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Analysis:</strong>
                 </p>
@@ -1456,7 +1456,7 @@ const HNCModule3Section5_8 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1520,7 +1520,7 @@ const HNCModule3Section5_8 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section5-7">

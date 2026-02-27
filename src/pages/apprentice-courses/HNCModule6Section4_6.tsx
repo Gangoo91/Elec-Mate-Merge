@@ -265,7 +265,7 @@ const HNCModule6Section4_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section4">
@@ -287,7 +287,7 @@ const HNCModule6Section4_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Net-Zero Pathways
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Carbon hierarchy, reduction roadmaps, technology options, interim targets, and
             verification frameworks for building decarbonisation
           </p>
@@ -771,7 +771,7 @@ const HNCModule6Section4_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Net-Zero Construction</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Calculate embodied carbon (A1-A5)</li>
                     <li>Reduce through design optimisation</li>
                     <li>Specify low-carbon materials</li>
@@ -781,7 +781,7 @@ const HNCModule6Section4_6 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Net-Zero Operation</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Reduce operational energy demand</li>
                     <li>Increase renewable supply</li>
                     <li>Measure actual performance</li>
@@ -893,7 +893,7 @@ const HNCModule6Section4_6 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Verification importance:</strong> Third-party verification ensures net-zero
               claims are credible, comparable, and defensible against accusations of greenwashing -
               essential for reputation and stakeholder trust.
@@ -919,8 +919,8 @@ const HNCModule6Section4_6 = () => {
                 <strong>Scenario:</strong> A university is planning a new teaching building and
                 wants to achieve net-zero operation. Apply the hierarchy.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Carbon Hierarchy Application:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Carbon Hierarchy Application:</p>
                 <p className="mt-2 text-green-400">1. AVOID:</p>
                 <p className="ml-4">- No gas connection - all-electric design</p>
                 <p className="ml-4">- Optimise building form to minimise heat loss</p>
@@ -951,7 +951,7 @@ const HNCModule6Section4_6 = () => {
                 <strong>Scenario:</strong> A commercial property owner has set a 2040 net-zero
                 target. Develop interim milestones.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Portfolio baseline (2024): 25,000 tonnes CO2/year</p>
                 <p>Net-zero target: 2040</p>
                 <p className="mt-2">Interim Milestones:</p>
@@ -981,7 +981,7 @@ const HNCModule6Section4_6 = () => {
                 <strong>Scenario:</strong> Calculate annual operational carbon for an office
                 building.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Energy consumption data:</p>
                 <p className="ml-4">Gas (heating): 500,000 kWh/year</p>
                 <p className="ml-4">Electricity: 800,000 kWh/year</p>
@@ -1081,7 +1081,7 @@ const HNCModule6Section4_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1127,7 +1127,7 @@ const HNCModule6Section4_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section4">

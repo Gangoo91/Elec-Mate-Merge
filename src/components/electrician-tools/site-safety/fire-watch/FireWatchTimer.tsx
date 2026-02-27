@@ -323,7 +323,7 @@ export function FireWatchTimer({ onBack }: FireWatchTimerProps) {
                       </h3>
                       <Input
                         placeholder="e.g. Plant Room 2, 3rd Floor"
-                        className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40 touch-manipulation focus:ring-1 focus:ring-elec-yellow/50"
+                        className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white touch-manipulation focus:ring-1 focus:ring-elec-yellow/50"
                         value={location}
                         onChange={(e) => setLocation(e.target.value)}
                       />

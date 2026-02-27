@@ -205,11 +205,11 @@ const PasmaModule2Section1 = () => {
           </div>
           <div className="inline-block bg-elec-yellow/10 border border-elec-yellow/20 px-3 py-1 rounded-full text-sm font-semibold mb-4 ml-0">
             <span className="text-elec-yellow">MODULE 2</span>
-            <span className="text-white/40 mx-2">&middot;</span>
-            <span className="text-white/60">SECTION 1</span>
+            <span className="text-white mx-2">&middot;</span>
+            <span className="text-white">SECTION 1</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">Tower Classifications</h1>
-          <p className="text-white/70 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding the different tower types, configurations, and materials — and knowing
             which to select for each task
           </p>
@@ -219,7 +219,7 @@ const PasmaModule2Section1 = () => {
         <div className="grid sm:grid-cols-2 gap-4 mb-10">
           <div className="rounded-lg p-4 bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -252,7 +252,7 @@ const PasmaModule2Section1 = () => {
           </div>
           <div className="rounded-lg p-4 bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="font-semibold text-elec-yellow/90 mb-2">On Site</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -288,7 +288,7 @@ const PasmaModule2Section1 = () => {
         {/* Learning Outcomes */}
         <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4">By the end of this section, you will be able to:</p>
+          <p className="text-white mb-4">By the end of this section, you will be able to:</p>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
               'Identify and describe the main tower classifications used on UK sites',
@@ -300,7 +300,7 @@ const PasmaModule2Section1 = () => {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </div>
             ))}
           </div>
@@ -315,7 +315,7 @@ const PasmaModule2Section1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Overview of Tower Types
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Mobile access towers come in many configurations, each designed for specific working
                 conditions and tasks. Choosing the right type is not just a matter of convenience —
@@ -328,7 +328,7 @@ const PasmaModule2Section1 = () => {
                 <h3 className="font-semibold mb-2 text-elec-yellow">
                   Key Definition: Mobile Access Tower
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   A <strong className="text-white">mobile access tower</strong> is a freestanding,
                   lightweight scaffold structure mounted on castors or base plates, designed to
                   provide temporary access for working at height. Towers are assembled from
@@ -353,7 +353,7 @@ const PasmaModule2Section1 = () => {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div>
                     <p className="text-white font-medium mb-1">By Width</p>
-                    <ul className="space-y-1 text-white/70">
+                    <ul className="space-y-1 text-white">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Single-width: 0.74m platform</span>
@@ -366,7 +366,7 @@ const PasmaModule2Section1 = () => {
                   </div>
                   <div>
                     <p className="text-white font-medium mb-1">By Material</p>
-                    <ul className="space-y-1 text-white/70">
+                    <ul className="space-y-1 text-white">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Aluminium: lightweight, conductive</span>
@@ -379,7 +379,7 @@ const PasmaModule2Section1 = () => {
                   </div>
                   <div>
                     <p className="text-white font-medium mb-1">By Configuration</p>
-                    <ul className="space-y-1 text-white/70">
+                    <ul className="space-y-1 text-white">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Standard, linked, bridge</span>
@@ -392,7 +392,7 @@ const PasmaModule2Section1 = () => {
                   </div>
                   <div>
                     <p className="text-white font-medium mb-1">By Deployment</p>
-                    <ul className="space-y-1 text-white/70">
+                    <ul className="space-y-1 text-white">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Modular (component assembly)</span>
@@ -416,7 +416,7 @@ const PasmaModule2Section1 = () => {
               <span className="text-purple-400/80 text-sm font-normal">02</span>
               Standard Towers
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Standard mobile access towers are the workhorses of the industry. They are the most
                 commonly encountered type on construction sites, in maintenance operations, and
@@ -430,7 +430,7 @@ const PasmaModule2Section1 = () => {
                   <h3 className="text-purple-300 font-medium mb-2">
                     Single-Width (0.74m Platform)
                   </h3>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <div className="w-1.5 h-1.5 rounded-full bg-purple-400 mt-2 flex-shrink-0"></div>
                       <span>Platform width approximately 0.74m (740mm)</span>
@@ -457,7 +457,7 @@ const PasmaModule2Section1 = () => {
                   <h3 className="text-purple-300 font-medium mb-2">
                     Double-Width (1.35m Platform)
                   </h3>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <div className="w-1.5 h-1.5 rounded-full bg-purple-400 mt-2 flex-shrink-0"></div>
                       <span>Platform width approximately 1.35m (1350mm)</span>
@@ -484,29 +484,29 @@ const PasmaModule2Section1 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">Height Limitations by Width</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Maximum permissible heights vary by manufacturer, but typical limits for standard
                   configurations are:
                 </p>
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded p-3">
                     <p className="text-white font-medium">Single-Width Indoors</p>
-                    <p className="text-white/60">Up to approx. 6.2m platform height</p>
+                    <p className="text-white">Up to approx. 6.2m platform height</p>
                   </div>
                   <div className="bg-white/5 rounded p-3">
                     <p className="text-white font-medium">Single-Width Outdoors</p>
-                    <p className="text-white/60">Up to approx. 3.9m platform height</p>
+                    <p className="text-white">Up to approx. 3.9m platform height</p>
                   </div>
                   <div className="bg-white/5 rounded p-3">
                     <p className="text-white font-medium">Double-Width Indoors</p>
-                    <p className="text-white/60">Up to approx. 12.2m platform height</p>
+                    <p className="text-white">Up to approx. 12.2m platform height</p>
                   </div>
                   <div className="bg-white/5 rounded p-3">
                     <p className="text-white font-medium">Double-Width Outdoors</p>
-                    <p className="text-white/60">Up to approx. 8.2m platform height</p>
+                    <p className="text-white">Up to approx. 8.2m platform height</p>
                   </div>
                 </div>
-                <p className="text-white/50 text-xs mt-2 italic">
+                <p className="text-white text-xs mt-2 italic">
                   These are indicative figures. Always consult the manufacturer's instruction manual
                   for the specific tower system.
                 </p>
@@ -532,7 +532,7 @@ const PasmaModule2Section1 = () => {
               <span className="text-teal-400/80 text-sm font-normal">03</span>
               Specialist Tower Configurations
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Beyond standard single and double-width towers, several specialist configurations
                 exist for situations where a standard tower cannot safely or efficiently meet the
@@ -542,13 +542,13 @@ const PasmaModule2Section1 = () => {
 
               <div className="bg-teal-500/10 border border-teal-500/30 p-4 rounded-lg">
                 <h3 className="text-teal-300 font-medium mb-3">Linked Towers</h3>
-                <p className="text-white/70 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   Two or more standard towers connected together using horizontal linking braces.
                   This creates a wider working platform spanning both towers. Linked towers are used
                   when a single tower does not provide sufficient platform area — for example, when
                   installing long runs of cable tray or carrying out extensive ceiling work.
                 </p>
-                <ul className="text-white/60 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Requires specific linking components from the same manufacturer</span>
@@ -566,13 +566,13 @@ const PasmaModule2Section1 = () => {
 
               <div className="bg-teal-500/10 border border-teal-500/30 p-4 rounded-lg">
                 <h3 className="text-teal-300 font-medium mb-3">Bridge Towers</h3>
-                <p className="text-white/70 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   Two towers positioned apart with a bridging section spanning the gap. Unlike
                   linked towers (side by side), bridge towers span an opening — allowing work to be
                   carried out above machinery, doorways, conveyors, or access routes without
                   obstructing the area below.
                 </p>
-                <ul className="text-white/60 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>The bridging section must be designed for the span</span>
@@ -591,24 +591,24 @@ const PasmaModule2Section1 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <h3 className="text-elec-yellow font-medium mb-2">High Clearance Towers</h3>
-                  <p className="text-white/70 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     Feature a raised base section that elevates the entire tower above ground-level
                     obstructions. The base frame is taller than standard, allowing the tower to
                     straddle machinery, workbenches, or other fixed equipment.
                   </p>
-                  <p className="text-white/50 text-xs italic">
+                  <p className="text-white text-xs italic">
                     Often used in manufacturing environments where production equipment cannot be
                     moved.
                   </p>
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <h3 className="text-elec-yellow font-medium mb-2">Room Scaffolds</h3>
-                  <p className="text-white/70 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     A low-level platform system that spans an entire room, providing full-area
                     access at a uniform height. Used for ceiling work across large areas — painting,
                     installing lighting grids, or fitting cable containment systems.
                   </p>
-                  <p className="text-white/50 text-xs italic">
+                  <p className="text-white text-xs italic">
                     Essentially multiple linked towers covering the full floor area.
                   </p>
                 </div>
@@ -616,7 +616,7 @@ const PasmaModule2Section1 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">Cantilever Towers</h3>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A cantilever tower extends the working platform beyond the base footprint of the
                   tower. This allows work to be carried out over an obstruction at ground level —
                   for example, reaching over a parapet wall or working above a fixed structure.
@@ -631,7 +631,7 @@ const PasmaModule2Section1 = () => {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Critical Rule</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   All specialist configurations must be assembled strictly in accordance with the
                   manufacturer's instructions. Do not attempt to improvise specialist setups using
                   standard components. Each configuration has specific structural requirements,
@@ -649,7 +649,7 @@ const PasmaModule2Section1 = () => {
               <span className="text-red-400/80 text-sm font-normal">04</span>
               Stairway Towers
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Stairway towers (also called staircase towers) provide{' '}
                 <strong className="text-white">internal staircase access</strong> instead of the
@@ -663,7 +663,7 @@ const PasmaModule2Section1 = () => {
                 <h3 className="font-semibold mb-2 text-elec-yellow">
                   Key Definition: Stairway Tower
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   A <strong className="text-white">stairway tower</strong> is a mobile access tower
                   incorporating internal staircase flights between levels instead of ladder access
                   via end frames. The staircases are typically positioned alternately on each level,
@@ -674,7 +674,7 @@ const PasmaModule2Section1 = () => {
 
               <div className="bg-white/5 border border-red-400/30 p-4 rounded-lg">
                 <h3 className="text-red-300 font-medium mb-3">Benefits of Stairway Access</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -714,7 +714,7 @@ const PasmaModule2Section1 = () => {
                 <h3 className="text-elec-yellow font-medium mb-2">
                   When Stairway Towers Are Required
                 </h3>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -773,7 +773,7 @@ const PasmaModule2Section1 = () => {
               <span className="text-cyan-400/80 text-sm font-normal">05</span>
               Aluminium vs GRP Towers
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The two principal materials used for mobile access tower construction are{' '}
                 <strong className="text-white">aluminium alloy</strong> and{' '}
@@ -788,7 +788,7 @@ const PasmaModule2Section1 = () => {
                     <Zap className="h-4 w-4" />
                     Aluminium Towers
                   </h3>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -835,7 +835,7 @@ const PasmaModule2Section1 = () => {
                     <Info className="h-4 w-4" />
                     GRP (Fibreglass) Towers
                   </h3>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -886,12 +886,12 @@ const PasmaModule2Section1 = () => {
                 <table className="w-full text-sm text-left">
                   <thead>
                     <tr className="border-b border-white/10">
-                      <th className="text-white/60 pb-2 pr-4 font-medium">Property</th>
-                      <th className="text-white/60 pb-2 pr-4 font-medium">Aluminium</th>
-                      <th className="text-white/60 pb-2 font-medium">GRP</th>
+                      <th className="text-white pb-2 pr-4 font-medium">Property</th>
+                      <th className="text-white pb-2 pr-4 font-medium">Aluminium</th>
+                      <th className="text-white pb-2 font-medium">GRP</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/70">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/5">
                       <td className="py-2 pr-4">Weight</td>
                       <td className="py-2 pr-4 text-green-400">Lighter</td>
@@ -931,7 +931,7 @@ const PasmaModule2Section1 = () => {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">GRP Maintenance Warning</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A GRP tower's non-conductive properties can be compromised by contamination. Metal
                   filings, wet grime, or conductive coatings on the surface can create a conductive
                   path. Always inspect and clean GRP components before use, and never assume a dirty
@@ -949,7 +949,7 @@ const PasmaModule2Section1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Folding & Low-Level Towers
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Folding towers (also called pop-up towers) and low-level platforms fill the gap
                 between stepladders and full-height mobile access towers. They provide a safer, more
@@ -960,7 +960,7 @@ const PasmaModule2Section1 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-elec-yellow/30 p-4 rounded-lg">
                   <h3 className="text-elec-yellow font-medium mb-2">Folding / Pop-Up Towers</h3>
-                  <ul className="text-white/70 space-y-1 text-sm">
+                  <ul className="text-white space-y-1 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Pre-assembled frame that folds flat for transport</span>
@@ -989,7 +989,7 @@ const PasmaModule2Section1 = () => {
                 </div>
                 <div className="bg-white/5 border border-elec-yellow/30 p-4 rounded-lg">
                   <h3 className="text-elec-yellow font-medium mb-2">Low-Level Platforms</h3>
-                  <ul className="text-white/70 space-y-1 text-sm">
+                  <ul className="text-white space-y-1 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Simple, robust platforms with integrated steps</span>
@@ -1020,7 +1020,7 @@ const PasmaModule2Section1 = () => {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-elec-yellow">Key Definition: Podium Step</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   A <strong className="text-white">podium step</strong> (or podium platform) is a
                   low-level access platform with a large working platform, enclosed guardrails, and
                   integrated steps. It is designed as a safer alternative to stepladders for
@@ -1036,7 +1036,7 @@ const PasmaModule2Section1 = () => {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div>
                     <p className="text-white font-medium mb-1">Choose a Podium Step When:</p>
-                    <ul className="text-white/60 space-y-1">
+                    <ul className="text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Platform height under 1m is sufficient</span>
@@ -1057,7 +1057,7 @@ const PasmaModule2Section1 = () => {
                   </div>
                   <div>
                     <p className="text-white font-medium mb-1">Choose a Tower When:</p>
-                    <ul className="text-white/60 space-y-1">
+                    <ul className="text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Platform height over 1m is required</span>
@@ -1098,7 +1098,7 @@ const PasmaModule2Section1 = () => {
               <span className="text-purple-400/80 text-sm font-normal">07</span>
               Selecting the Right Tower Type
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Selecting the correct tower type is a critical planning decision. The wrong choice
                 can create serious hazards, compromise work quality, and lead to costly delays. A
@@ -1112,7 +1112,7 @@ const PasmaModule2Section1 = () => {
                     <Ruler className="h-4 w-4 text-purple-400 mt-1 flex-shrink-0" />
                     <div>
                       <p className="text-white font-medium">Height Required</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Working height = platform height + 2m reach. Calculate the platform height
                         needed, then check which tower types and widths can achieve it.
                       </p>
@@ -1122,7 +1122,7 @@ const PasmaModule2Section1 = () => {
                     <Building2 className="h-4 w-4 text-purple-400 mt-1 flex-shrink-0" />
                     <div>
                       <p className="text-white font-medium">Indoor or Outdoor</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Indoor towers can typically be built higher (no wind loading). Outdoor
                         towers have reduced maximum heights and may need stabilisers or outriggers.
                       </p>
@@ -1132,7 +1132,7 @@ const PasmaModule2Section1 = () => {
                     <Zap className="h-4 w-4 text-purple-400 mt-1 flex-shrink-0" />
                     <div>
                       <p className="text-white font-medium">Electrical Hazards</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         If any risk of contact with live conductors exists, a GRP tower is
                         mandatory. No exceptions.
                       </p>
@@ -1143,7 +1143,7 @@ const PasmaModule2Section1 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-3">Selection Flowchart (Text)</h3>
-                <div className="space-y-2 text-sm text-white/70">
+                <div className="space-y-2 text-sm text-white">
                   <p className="text-white font-medium">
                     Step 1: Determine the working height required
                   </p>
@@ -1188,42 +1188,42 @@ const PasmaModule2Section1 = () => {
                 <div className="space-y-2 text-sm">
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
-                    <div className="text-white/70">
+                    <div className="text-white">
                       <strong className="text-white">Office ceiling work:</strong> Folding tower or
                       double-width standard
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
-                    <div className="text-white/70">
+                    <div className="text-white">
                       <strong className="text-white">Corridor lighting:</strong> Single-width
                       aluminium
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
-                    <div className="text-white/70">
+                    <div className="text-white">
                       <strong className="text-white">Switchroom cable tray:</strong> GRP single or
                       double-width
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
-                    <div className="text-white/70">
+                    <div className="text-white">
                       <strong className="text-white">Staircase emergency lighting:</strong>{' '}
                       Stairwell tower
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
-                    <div className="text-white/70">
+                    <div className="text-white">
                       <strong className="text-white">Warehouse high-bay lighting:</strong>{' '}
                       Double-width with stairway access
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
-                    <div className="text-white/70">
+                    <div className="text-white">
                       <strong className="text-white">Over production line:</strong> Bridge tower or
                       high clearance
                     </div>
@@ -1243,7 +1243,7 @@ const PasmaModule2Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1259,7 +1259,7 @@ const PasmaModule2Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-2">

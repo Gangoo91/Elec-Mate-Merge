@@ -240,7 +240,7 @@ const AM2Module7Section2 = () => {
 
       {/* Why Nerves Matter */}
       <AM2ContentCard title="1. Why Nerves Matter in AM2" icon={AlertTriangle} accent>
-        <p className="text-ios-callout text-white/80 mb-4">
+        <p className="text-ios-callout text-white mb-4">
           Nerves create physical and mental reactions that can directly affect your performance:
         </p>
 
@@ -248,7 +248,7 @@ const AM2Module7Section2 = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
               <h4 className="text-ios-headline text-red-400 mb-3">Physical Effects:</h4>
-              <ul className="text-ios-callout text-white/70 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-red-400">•</span>
                   <span>Shaking hands make terminations sloppy or unsafe</span>
@@ -266,7 +266,7 @@ const AM2Module7Section2 = () => {
 
             <div className="bg-white/5 border border-orange-500/30 rounded-xl p-4">
               <h4 className="text-ios-headline text-orange-400 mb-3">Mental Effects:</h4>
-              <ul className="text-ios-callout text-white/70 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-orange-400">•</span>
                   <span>Brain fog causes forgotten steps in safe isolation</span>
@@ -285,7 +285,7 @@ const AM2Module7Section2 = () => {
 
           <div className="bg-white/5 border border-yellow-500/30 rounded-xl p-4">
             <h4 className="text-ios-headline text-yellow-400 mb-3">Behavioural Consequences:</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-yellow-400">•</span>
                 <span>
@@ -309,7 +309,7 @@ const AM2Module7Section2 = () => {
               <CheckCircle className="w-5 h-5 text-green-400 mt-0.5 flex-shrink-0" />
               <div>
                 <h4 className="text-ios-headline text-green-400 mb-2">Key Point:</h4>
-                <p className="text-ios-callout text-white/70">
+                <p className="text-ios-callout text-white">
                   NET's marking system rewards steady, professional behaviour. Being slightly slow
                   but safe still earns marks; rushing and unsafe = instant fail.
                 </p>
@@ -329,7 +329,7 @@ const AM2Module7Section2 = () => {
 
       {/* Strategies to Reduce Nerves Before Exam */}
       <AM2ContentCard title="2. Strategies to Reduce Nerves Before the Exam" icon={Timer}>
-        <p className="text-ios-callout text-white/80 mb-6">
+        <p className="text-ios-callout text-white mb-6">
           The way you prepare in the days leading up to AM2 will directly influence your stress
           level on the day.
         </p>
@@ -341,16 +341,16 @@ const AM2Module7Section2 = () => {
               1
             </div>
             <div className="flex-1">
-              <h5 className="text-ios-headline text-white/90 mb-2">
+              <h5 className="text-ios-headline text-white mb-2">
                 Preparation Builds Confidence
               </h5>
-              <p className="text-ios-callout text-white/70 mb-3">
+              <p className="text-ios-callout text-white mb-3">
                 Practise safe isolation daily and run through testing procedures until they feel
                 automatic. The more natural the task feels, the less nerves will interfere.
               </p>
               <div className="bg-white/5 border border-blue-500/30 rounded-xl p-3">
                 <strong className="text-blue-400 text-ios-callout">Daily Practice Routine:</strong>
-                <ul className="text-ios-callout text-white/70 mt-2 space-y-1">
+                <ul className="text-ios-callout text-white mt-2 space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-blue-400">•</span>
                     <span>Safe isolation sequence every morning</span>
@@ -378,14 +378,14 @@ const AM2Module7Section2 = () => {
               2
             </div>
             <div className="flex-1">
-              <h5 className="text-ios-headline text-white/90 mb-2">Sleep and Rest</h5>
-              <p className="text-ios-callout text-white/70 mb-3">
+              <h5 className="text-ios-headline text-white mb-2">Sleep and Rest</h5>
+              <p className="text-ios-callout text-white mb-3">
                 Avoid last-minute all-night revision. A tired candidate makes more mistakes than a
                 calm, rested one.
               </p>
               <div className="bg-white/5 border border-green-500/30 rounded-xl p-3">
                 <strong className="text-green-400 text-ios-callout">Sleep Strategy:</strong>
-                <ul className="text-ios-callout text-white/70 mt-2 space-y-1">
+                <ul className="text-ios-callout text-white mt-2 space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-green-400">•</span>
                     <span>7-8 hours sleep for 3 nights before AM2</span>
@@ -409,14 +409,14 @@ const AM2Module7Section2 = () => {
               3
             </div>
             <div className="flex-1">
-              <h5 className="text-ios-headline text-white/90 mb-2">Fuel Your Body</h5>
-              <p className="text-ios-callout text-white/70 mb-3">
+              <h5 className="text-ios-headline text-white mb-2">Fuel Your Body</h5>
+              <p className="text-ios-callout text-white mb-3">
                 Eat a balanced meal before the exam. High sugar or energy drinks can cause shakes
                 and crashes mid-assessment.
               </p>
               <div className="bg-white/5 border border-purple-500/30 rounded-xl p-3">
                 <strong className="text-purple-400 text-ios-callout">Nutrition Plan:</strong>
-                <ul className="text-ios-callout text-white/70 mt-2 space-y-1">
+                <ul className="text-ios-callout text-white mt-2 space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-purple-400">•</span>
                     <span>Complex carbohydrates for sustained energy</span>
@@ -444,13 +444,13 @@ const AM2Module7Section2 = () => {
               4
             </div>
             <div className="flex-1">
-              <h5 className="text-ios-headline text-white/90 mb-2">Plan Your Arrival</h5>
-              <p className="text-ios-callout text-white/70 mb-3">
+              <h5 className="text-ios-headline text-white mb-2">Plan Your Arrival</h5>
+              <p className="text-ios-callout text-white mb-3">
                 Get to the centre early so you're not rushing, which adds unnecessary stress.
               </p>
               <div className="bg-white/5 border border-orange-500/30 rounded-xl p-3">
                 <strong className="text-orange-400 text-ios-callout">Arrival Strategy:</strong>
-                <ul className="text-ios-callout text-white/70 mt-2 space-y-1">
+                <ul className="text-ios-callout text-white mt-2 space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-orange-400">•</span>
                     <span>Arrive 30 minutes early minimum</span>
@@ -484,7 +484,7 @@ const AM2Module7Section2 = () => {
 
       {/* Techniques During Exam */}
       <AM2ContentCard title="3. Techniques During the Exam" icon={Heart}>
-        <p className="text-ios-callout text-white/80 mb-6">
+        <p className="text-ios-callout text-white mb-6">
           When nerves hit during AM2, you need quick techniques to keep control.
         </p>
 
@@ -494,7 +494,7 @@ const AM2Module7Section2 = () => {
               <Lightbulb className="w-5 h-5 text-blue-400" />
               <h4 className="text-ios-headline text-blue-400">Controlled Breathing</h4>
             </div>
-            <p className="text-ios-callout text-white/70 mb-3">
+            <p className="text-ios-callout text-white mb-3">
               If panic rises, step back for 10 seconds, inhale slowly through your nose, exhale
               slowly through your mouth. This resets your focus.
             </p>
@@ -508,7 +508,7 @@ const AM2Module7Section2 = () => {
               <Target className="w-5 h-5 text-green-400" />
               <h4 className="text-ios-headline text-green-400">Break Tasks into Chunks</h4>
             </div>
-            <p className="text-ios-callout text-white/70 mb-3">
+            <p className="text-ios-callout text-white mb-3">
               Instead of thinking about an 8.5-hour install, focus on the next step: mark out,
               containment, wiring, terminations.
             </p>
@@ -522,7 +522,7 @@ const AM2Module7Section2 = () => {
               <Brain className="w-5 h-5 text-purple-400" />
               <h4 className="text-ios-headline text-purple-400">Positive Self-Talk</h4>
             </div>
-            <p className="text-ios-callout text-white/70 mb-3">
+            <p className="text-ios-callout text-white mb-3">
               Replace "I'm messing this up" with "I know the process, I've trained for this." Simple
               but stops panic spirals.
             </p>
@@ -536,7 +536,7 @@ const AM2Module7Section2 = () => {
               <Shield className="w-5 h-5 text-orange-400" />
               <h4 className="text-ios-headline text-orange-400">Ignore Others</h4>
             </div>
-            <p className="text-ios-callout text-white/70 mb-3">
+            <p className="text-ios-callout text-white mb-3">
               Don't compare your speed with other candidates. The assessor only marks your work, not
               relative performance.
             </p>
@@ -549,7 +549,7 @@ const AM2Module7Section2 = () => {
 
       {/* Assessor Expectations */}
       <AM2ContentCard title="4. Assessor Expectations" icon={Users}>
-        <p className="text-ios-callout text-white/80 mb-6">
+        <p className="text-ios-callout text-white mb-6">
           NET assessors don't mark nerves - they mark your work. They expect you to:
         </p>
 
@@ -557,7 +557,7 @@ const AM2Module7Section2 = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
               <h4 className="text-ios-headline text-green-400 mb-3">Professional Behaviour:</h4>
-              <ul className="text-ios-callout text-white/70 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400">•</span>
                   <span>Work steadily and safely, even if you look anxious</span>
@@ -575,7 +575,7 @@ const AM2Module7Section2 = () => {
 
             <div className="bg-white/5 border border-blue-500/30 rounded-xl p-4">
               <h4 className="text-ios-headline text-blue-400 mb-3">Safety Compliance:</h4>
-              <ul className="text-ios-callout text-white/70 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-blue-400">•</span>
                   <span>Keep to procedure (safe isolation, GN3 sequence) without skipping</span>
@@ -594,7 +594,7 @@ const AM2Module7Section2 = () => {
 
           <div className="bg-white/5 border border-purple-500/30 rounded-xl p-4">
             <h4 className="text-ios-headline text-purple-400 mb-3">Time Management:</h4>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Complete sections within the set time without rushing. Quality and safety take
               priority over speed.
             </p>
@@ -617,7 +617,7 @@ const AM2Module7Section2 = () => {
             <Lightbulb className="w-4 h-4" />
             Think of AM2 Like a Real Job Handover
           </h4>
-          <p className="text-ios-callout text-white/70">
+          <p className="text-ios-callout text-white">
             On-site, you may feel pressure from deadlines or customers, but you wouldn't skip
             earthing or rush unsafe terminations to finish quicker. Treat AM2 the same way - safe,
             steady, professional.
@@ -625,7 +625,7 @@ const AM2Module7Section2 = () => {
         </div>
 
         <div className="space-y-4">
-          <h4 className="text-ios-headline text-white/90">Practical things you can do:</h4>
+          <h4 className="text-ios-headline text-white">Practical things you can do:</h4>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="space-y-3">
@@ -634,8 +634,8 @@ const AM2Module7Section2 = () => {
                   1
                 </div>
                 <div>
-                  <h5 className="text-ios-headline text-white/90">Mental Checklists</h5>
-                  <p className="text-ios-footnote text-white/70">
+                  <h5 className="text-ios-headline text-white">Mental Checklists</h5>
+                  <p className="text-ios-footnote text-white">
                     Make checklists in your head: safe isolation steps, test order. Stick to them
                     regardless of nerves.
                   </p>
@@ -647,8 +647,8 @@ const AM2Module7Section2 = () => {
                   2
                 </div>
                 <div>
-                  <h5 className="text-ios-headline text-white/90">If You Get Stuck</h5>
-                  <p className="text-ios-footnote text-white/70">
+                  <h5 className="text-ios-headline text-white">If You Get Stuck</h5>
+                  <p className="text-ios-footnote text-white">
                     Don't freeze. Move on, complete another part, and come back later.
                   </p>
                 </div>
@@ -661,8 +661,8 @@ const AM2Module7Section2 = () => {
                   3
                 </div>
                 <div>
-                  <h5 className="text-ios-headline text-white/90">Record Results</h5>
-                  <p className="text-ios-footnote text-white/70">
+                  <h5 className="text-ios-headline text-white">Record Results</h5>
+                  <p className="text-ios-footnote text-white">
                     Write down test results as you go so you don't forget under pressure.
                   </p>
                 </div>
@@ -673,8 +673,8 @@ const AM2Module7Section2 = () => {
                   4
                 </div>
                 <div>
-                  <h5 className="text-ios-headline text-white/90">Stay Hydrated</h5>
-                  <p className="text-ios-footnote text-white/70">
+                  <h5 className="text-ios-headline text-white">Stay Hydrated</h5>
+                  <p className="text-ios-footnote text-white">
                     Dehydration increases stress. Keep water with you throughout the assessment.
                   </p>
                 </div>
@@ -693,14 +693,14 @@ const AM2Module7Section2 = () => {
 
             <div className="bg-white/5 border border-red-500/30 rounded-xl p-3">
               <h5 className="text-ios-headline text-red-400 mb-2">Example 1:</h5>
-              <p className="text-ios-footnote text-white/70">
+              <p className="text-ios-footnote text-white">
                 Candidate skipped re-proving tester in safe isolation due to nerves - instant fail.
               </p>
             </div>
 
             <div className="bg-white/5 border border-red-500/30 rounded-xl p-3">
               <h5 className="text-ios-headline text-red-400 mb-2">Example 2:</h5>
-              <p className="text-ios-footnote text-white/70">
+              <p className="text-ios-footnote text-white">
                 Candidate felt behind on time in the install section, rushed SWA glanding, armour
                 not earthed - marks lost.
               </p>
@@ -713,7 +713,7 @@ const AM2Module7Section2 = () => {
 
             <div className="bg-white/5 border border-green-500/30 rounded-xl p-3">
               <h5 className="text-ios-headline text-green-400 mb-2">Example 3:</h5>
-              <p className="text-ios-footnote text-white/70">
+              <p className="text-ios-footnote text-white">
                 Candidate paused for breathing, slowed pace, completed all sections safely - passed
                 comfortably.
               </p>
@@ -721,7 +721,7 @@ const AM2Module7Section2 = () => {
 
             <div className="bg-white/5 border border-green-500/30 rounded-xl p-3">
               <h5 className="text-ios-headline text-green-400 mb-2">Example 4:</h5>
-              <p className="text-ios-footnote text-white/70">
+              <p className="text-ios-footnote text-white">
                 On-site, an electrician under deadline pressure maintained safety standards despite
                 client pressure. Same approach in AM2 = success.
               </p>
@@ -734,44 +734,44 @@ const AM2Module7Section2 = () => {
       <AM2ContentCard title="7. Frequently Asked Questions" icon={BookOpen}>
         <div className="space-y-4">
           <div className="border-l-4 border-elec-yellow pl-4">
-            <h5 className="text-ios-headline text-white/90 mb-1">
+            <h5 className="text-ios-headline text-white mb-1">
               Q1: Will assessors fail me just for looking nervous?
             </h5>
-            <p className="text-ios-footnote text-white/70">
+            <p className="text-ios-footnote text-white">
               No - they only fail you if nerves cause unsafe or incomplete work.
             </p>
           </div>
 
           <div className="border-l-4 border-green-500 pl-4">
-            <h5 className="text-ios-headline text-white/90 mb-1">
+            <h5 className="text-ios-headline text-white mb-1">
               Q2: What if I forget steps in testing because of panic?
             </h5>
-            <p className="text-ios-footnote text-white/70">
+            <p className="text-ios-footnote text-white">
               Pause, breathe, reset. Assessors prefer slow but correct over rushed and wrong.
             </p>
           </div>
 
           <div className="border-l-4 border-purple-500 pl-4">
-            <h5 className="text-ios-headline text-white/90 mb-1">
+            <h5 className="text-ios-headline text-white mb-1">
               Q3: Should I copy other candidates' pace?
             </h5>
-            <p className="text-ios-footnote text-white/70">
+            <p className="text-ios-footnote text-white">
               No - focus only on your own work. Comparing speeds adds unnecessary stress.
             </p>
           </div>
 
           <div className="border-l-4 border-orange-500 pl-4">
-            <h5 className="text-ios-headline text-white/90 mb-1">Q4: Is feeling anxious normal?</h5>
-            <p className="text-ios-footnote text-white/70">
+            <h5 className="text-ios-headline text-white mb-1">Q4: Is feeling anxious normal?</h5>
+            <p className="text-ios-footnote text-white">
               Yes - every candidate feels it. The difference is how you manage it.
             </p>
           </div>
 
           <div className="border-l-4 border-red-500 pl-4">
-            <h5 className="text-ios-headline text-white/90 mb-1">
+            <h5 className="text-ios-headline text-white mb-1">
               Q5: What's the best way to reduce nerves overall?
             </h5>
-            <p className="text-ios-footnote text-white/70">
+            <p className="text-ios-footnote text-white">
               Consistent practice until procedures become automatic - especially safe isolation and
               GN3 testing.
             </p>
@@ -781,7 +781,7 @@ const AM2Module7Section2 = () => {
 
       {/* Summary */}
       <AM2ContentCard title="8. Summary" icon={CheckCircle}>
-        <p className="text-ios-callout text-white/80 mb-4">
+        <p className="text-ios-callout text-white mb-4">
           Nerves are normal in AM2, but you must control them. NET wants to see that you can:
         </p>
 
@@ -789,19 +789,19 @@ const AM2Module7Section2 = () => {
           <div className="space-y-2">
             <div className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
-              <span className="text-ios-callout text-white/80">
+              <span className="text-ios-callout text-white">
                 Stay safe and methodical under pressure
               </span>
             </div>
             <div className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
-              <span className="text-ios-callout text-white/80">
+              <span className="text-ios-callout text-white">
                 Use breathing, chunking, and positive self-talk to reset focus
               </span>
             </div>
             <div className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
-              <span className="text-ios-callout text-white/80">
+              <span className="text-ios-callout text-white">
                 Avoid rushing or skipping steps due to panic
               </span>
             </div>
@@ -810,13 +810,13 @@ const AM2Module7Section2 = () => {
           <div className="space-y-2">
             <div className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
-              <span className="text-ios-callout text-white/80">
+              <span className="text-ios-callout text-white">
                 Treat the exam like a professional job handover
               </span>
             </div>
             <div className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
-              <span className="text-ios-callout text-white/80">
+              <span className="text-ios-callout text-white">
                 Remember: Safe and steady will pass; rushed and unsafe will fail
               </span>
             </div>
@@ -828,7 +828,7 @@ const AM2Module7Section2 = () => {
             <Target className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <div>
               <h4 className="text-ios-headline text-elec-yellow mb-2">Key Takeaway:</h4>
-              <p className="text-ios-callout text-white/80">
+              <p className="text-ios-callout text-white">
                 NET assessors understand that you will feel nervous. What they're testing is your
                 ability to work safely and professionally despite those nerves - just like you would
                 on a real job site under pressure.

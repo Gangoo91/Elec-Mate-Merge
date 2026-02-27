@@ -194,7 +194,7 @@ export default function CoshhAwarenessModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-4">
@@ -219,7 +219,7 @@ export default function CoshhAwarenessModule4Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             RPE &amp; PPE Selection
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Choosing the right respiratory protective equipment and personal protective equipment
             for COSHH-regulated work &mdash; types, assigned protection factors, face-fit testing,
             glove selection, eye and body protection, and common mistakes
@@ -315,7 +315,7 @@ export default function CoshhAwarenessModule4Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Principle</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   RPE and PPE are <strong className="text-white">never</strong> a substitute for
                   proper engineering and administrative controls. If a COSHH assessment identifies
                   that workers need RPE, it should be because higher-level controls have already
@@ -327,7 +327,7 @@ export default function CoshhAwarenessModule4Section3() {
               <p>There are three main situations where RPE/PPE is required under COSHH:</p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <ul className="text-sm text-white/80 space-y-3">
+                <ul className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -364,7 +364,7 @@ export default function CoshhAwarenessModule4Section3() {
                 <p className="text-sm font-medium text-violet-400 mb-2">
                   COSHH Regulation 7(3) &mdash; Adequate Control
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Regulation 7(3) defines &ldquo;adequate control&rdquo; as ensuring that exposure
                   is{' '}
                   <strong className="text-white">below the workplace exposure limit (WEL)</strong>{' '}
@@ -412,7 +412,7 @@ export default function CoshhAwarenessModule4Section3() {
                 <p className="text-xs text-violet-400 font-semibold mb-3">
                   Disposable &middot; Particulate protection only &middot; Face-fit required
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -460,7 +460,7 @@ export default function CoshhAwarenessModule4Section3() {
                 <p className="text-xs text-violet-400 font-semibold mb-3">
                   APF 10 &middot; Replaceable filters &middot; Face-fit required
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -510,7 +510,7 @@ export default function CoshhAwarenessModule4Section3() {
                 <p className="text-xs text-violet-400 font-semibold mb-3">
                   APF 20&ndash;40 &middot; Eye + respiratory protection &middot; Face-fit required
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -560,7 +560,7 @@ export default function CoshhAwarenessModule4Section3() {
                 <p className="text-xs text-violet-400 font-semibold mb-3">
                   TH1 (APF 10) &middot; TH2 (APF 20) &middot; TH3 (APF 40) &middot; Battery-powered
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -610,7 +610,7 @@ export default function CoshhAwarenessModule4Section3() {
                 <p className="text-xs text-violet-400 font-semibold mb-3">
                   Airline &middot; SCBA &middot; IDLH atmospheres &middot; confined spaces
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -680,7 +680,7 @@ export default function CoshhAwarenessModule4Section3() {
                 <p className="text-sm font-medium text-violet-400 mb-2">
                   How to Use APFs for RPE Selection
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Divide the measured or estimated workplace concentration by the WEL. The result is
                   the <strong className="text-white">minimum protection factor</strong> you need.
                   Then select RPE with an APF that{' '}
@@ -713,16 +713,16 @@ export default function CoshhAwarenessModule4Section3() {
             {/* Table Header */}
             <div className="hidden sm:grid grid-cols-4 gap-px bg-white/5">
               <div className="bg-[#1a1a1a] px-4 py-2">
-                <p className="text-xs font-semibold text-white/60">RPE Type</p>
+                <p className="text-xs font-semibold text-white">RPE Type</p>
               </div>
               <div className="bg-[#1a1a1a] px-4 py-2">
-                <p className="text-xs font-semibold text-white/60">APF</p>
+                <p className="text-xs font-semibold text-white">APF</p>
               </div>
               <div className="bg-[#1a1a1a] px-4 py-2">
-                <p className="text-xs font-semibold text-white/60">Face-Fit?</p>
+                <p className="text-xs font-semibold text-white">Face-Fit?</p>
               </div>
               <div className="bg-[#1a1a1a] px-4 py-2">
-                <p className="text-xs font-semibold text-white/60">Protects Against</p>
+                <p className="text-xs font-semibold text-white">Protects Against</p>
               </div>
             </div>
 
@@ -799,16 +799,16 @@ export default function CoshhAwarenessModule4Section3() {
                   </span>
                 </div>
                 <div className="bg-[#1a1a1a] px-4 py-2.5">
-                  <p className="text-xs text-white/70">{row.fit}</p>
+                  <p className="text-xs text-white">{row.fit}</p>
                 </div>
                 <div className="bg-[#1a1a1a] px-4 py-2.5">
-                  <p className="text-xs text-white/70">{row.protects}</p>
+                  <p className="text-xs text-white">{row.protects}</p>
                 </div>
               </div>
             ))}
 
             <div className="px-4 py-3 bg-white/5">
-              <p className="text-xs text-white/50">
+              <p className="text-xs text-white">
                 * With appropriate gas/vapour filter cartridges fitted. APFs for loose-fitting PAPRs
                 apply only to versions with hoods or helmets; tight-fitting PAPR facepieces require
                 face-fit testing.
@@ -837,7 +837,7 @@ export default function CoshhAwarenessModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Two Testing Methods</p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[52px] h-7 rounded-full bg-violet-500/20 text-violet-400 text-xs font-bold flex-shrink-0">
                       QUAL
@@ -881,7 +881,7 @@ export default function CoshhAwarenessModule4Section3() {
                 <p className="text-sm font-medium text-violet-400 mb-3">
                   When Must a Face-Fit Test Be Repeated?
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -921,7 +921,7 @@ export default function CoshhAwarenessModule4Section3() {
                     Facial Hair and Tight-Fitting RPE
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Workers with beards, stubble, sideburns, or any facial hair in the seal area of
                   the mask <strong className="text-white">cannot use tight-fitting RPE</strong>.
                   Even a day&rsquo;s stubble growth can prevent the mask from forming an airtight
@@ -936,7 +936,7 @@ export default function CoshhAwarenessModule4Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   RPE Maintenance, Inspection &amp; Storage
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1007,7 +1007,7 @@ export default function CoshhAwarenessModule4Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Glove Materials &amp; Chemical Resistance
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[64px] h-7 rounded-full bg-violet-500/20 text-violet-400 text-xs font-bold flex-shrink-0">
                       NITRILE
@@ -1089,7 +1089,7 @@ export default function CoshhAwarenessModule4Section3() {
                 <p className="text-sm font-medium text-violet-400 mb-2">
                   Breakthrough Time &mdash; The Critical Concept
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Breakthrough time is the measured time it takes for a specific chemical to
                   permeate through the glove material from the outer surface to the inner surface.
                   It is determined by standardised laboratory testing under EN 374. A glove that has
@@ -1097,7 +1097,7 @@ export default function CoshhAwarenessModule4Section3() {
                   reaching the inside of the glove after approximately 120 minutes of continuous
                   contact.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1133,7 +1133,7 @@ export default function CoshhAwarenessModule4Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   EN 374 Standard &mdash; What Is Tested?
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1165,7 +1165,7 @@ export default function CoshhAwarenessModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Single-Use vs Reusable Gloves</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1221,7 +1221,7 @@ export default function CoshhAwarenessModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Types of Eye Protection</p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[52px] h-7 rounded-full bg-violet-500/20 text-violet-400 text-xs font-bold flex-shrink-0">
                       SPEC
@@ -1307,7 +1307,7 @@ export default function CoshhAwarenessModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Types of Body Protection</p>
-                <ul className="text-sm text-white/80 space-y-3">
+                <ul className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1393,7 +1393,7 @@ export default function CoshhAwarenessModule4Section3() {
                       >
                         {suit.type}
                       </span>
-                      <p className="text-sm text-white/80">{suit.desc}</p>
+                      <p className="text-sm text-white">{suit.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -1401,7 +1401,7 @@ export default function CoshhAwarenessModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Aprons</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1458,7 +1458,7 @@ export default function CoshhAwarenessModule4Section3() {
                 </div>
                 <div className="pb-5">
                   <p className="text-sm font-medium text-white">Identify the hazard</p>
-                  <p className="text-xs text-white/60 mt-1">
+                  <p className="text-xs text-white mt-1">
                     What is the substance? What form does it take (dust, vapour, liquid, gas, mist)?
                     What are the health effects? Is it absorbed through the skin? Refer to the COSHH
                     assessment and the substance&rsquo;s safety data sheet (SDS).
@@ -1478,7 +1478,7 @@ export default function CoshhAwarenessModule4Section3() {
                   <p className="text-sm font-medium text-white">
                     Check the safety data sheet (SDS)
                   </p>
-                  <p className="text-xs text-white/60 mt-1">
+                  <p className="text-xs text-white mt-1">
                     Section 8 of the SDS specifies the recommended PPE including glove material and
                     breakthrough time, respiratory protection type and filter class, eye protection,
                     and body protection. This is your primary source for PPE selection.
@@ -1498,7 +1498,7 @@ export default function CoshhAwarenessModule4Section3() {
                   <p className="text-sm font-medium text-white">
                     Determine the protection level needed
                   </p>
-                  <p className="text-xs text-white/60 mt-1">
+                  <p className="text-xs text-white mt-1">
                     For RPE: calculate the required protection factor (workplace concentration
                     &divide; WEL). For gloves: identify the required breakthrough time based on
                     duration of contact. For eye/body protection: determine if the risk is splash,
@@ -1517,7 +1517,7 @@ export default function CoshhAwarenessModule4Section3() {
                 </div>
                 <div className="pb-5">
                   <p className="text-sm font-medium text-white">Select the equipment</p>
-                  <p className="text-xs text-white/60 mt-1">
+                  <p className="text-xs text-white mt-1">
                     Choose RPE with an APF that meets or exceeds the required protection factor.
                     Choose gloves with a breakthrough time that exceeds the expected duration of
                     contact. Choose eye and body protection that matches the physical form of the
@@ -1536,7 +1536,7 @@ export default function CoshhAwarenessModule4Section3() {
                 </div>
                 <div className="pb-5">
                   <p className="text-sm font-medium text-white">Face-fit test and train</p>
-                  <p className="text-xs text-white/60 mt-1">
+                  <p className="text-xs text-white mt-1">
                     All tight-fitting RPE must be face-fit tested for each individual wearer. All
                     workers must be trained in the correct use, donning, doffing, and limitations of
                     the PPE provided. Training must be documented.
@@ -1553,7 +1553,7 @@ export default function CoshhAwarenessModule4Section3() {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white">Maintain, inspect, and replace</p>
-                  <p className="text-xs text-white/60 mt-1">
+                  <p className="text-xs text-white mt-1">
                     Establish a maintenance schedule for reusable RPE. Inspect all PPE before each
                     use. Replace filters, gloves, and disposable items on schedule. Keep records of
                     maintenance, inspection, and replacement. Remove damaged equipment from service
@@ -1591,7 +1591,7 @@ export default function CoshhAwarenessModule4Section3() {
                       <p className="text-sm font-medium text-red-300">
                         Using RPE as the sole control measure
                       </p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         The most common and serious mistake. RPE must be the last resort in the
                         hierarchy of control, not the first response. If higher-level controls have
                         not been applied, the COSHH assessment is inadequate and the employer is in
@@ -1610,7 +1610,7 @@ export default function CoshhAwarenessModule4Section3() {
                       <p className="text-sm font-medium text-red-300">
                         Selecting the wrong glove material for the chemical
                       </p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Using nitrile gloves when handling ketones, or latex gloves with organic
                         solvents. The glove may look intact but offers little or no barrier to
                         permeation. Always check the SDS and manufacturer&rsquo;s permeation data.
@@ -1628,7 +1628,7 @@ export default function CoshhAwarenessModule4Section3() {
                       <p className="text-sm font-medium text-red-300">
                         Using FFP masks against vapours or gases
                       </p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         FFP masks (FFP1, FFP2, FFP3) only filter particles. They provide no
                         protection against gases or vapours. For vapour hazards, a respirator with
                         appropriate gas/vapour filter cartridges (A, B, E, or K type) is required.
@@ -1646,7 +1646,7 @@ export default function CoshhAwarenessModule4Section3() {
                       <p className="text-sm font-medium text-red-300">
                         Wearing tight-fitting RPE with facial hair
                       </p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Even short stubble prevents an airtight seal. The stated APF becomes
                         meaningless because contaminated air bypasses the filter entirely through
                         the gap between the face and the mask seal.
@@ -1664,7 +1664,7 @@ export default function CoshhAwarenessModule4Section3() {
                       <p className="text-sm font-medium text-red-300">
                         Not replacing gloves before breakthrough time
                       </p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Workers continue wearing gloves long after the breakthrough time has passed,
                         resulting in prolonged skin exposure to the chemical. Workplace conditions
                         (heat, abrasion) typically reduce breakthrough time compared to laboratory
@@ -1683,7 +1683,7 @@ export default function CoshhAwarenessModule4Section3() {
                       <p className="text-sm font-medium text-red-300">
                         Using safety spectacles instead of goggles for chemical splash
                       </p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Safety spectacles leave gaps around the lenses where splashed liquid can
                         reach the eyes. Chemical splash goggles that seal around the eyes are the
                         minimum standard for any liquid chemical splash risk.
@@ -1701,7 +1701,7 @@ export default function CoshhAwarenessModule4Section3() {
                       <p className="text-sm font-medium text-red-300">
                         Not reading the SDS before selecting PPE
                       </p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Section 8 of the safety data sheet provides specific PPE recommendations
                         from the manufacturer. Guessing or using generic PPE without consulting the
                         SDS leads to under-protection or over-protection (which wastes money and can
@@ -1720,7 +1720,7 @@ export default function CoshhAwarenessModule4Section3() {
                       <p className="text-sm font-medium text-red-300">
                         Using RPE without face-fit testing
                       </p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Without a face-fit test, there is no confirmation that the RPE seals
                         properly on the wearer&rsquo;s face. The mask may appear to fit but in
                         reality allows contaminated air to leak past the seal, providing a fraction
@@ -1752,7 +1752,7 @@ export default function CoshhAwarenessModule4Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1766,7 +1766,7 @@ export default function CoshhAwarenessModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-4-section-2">

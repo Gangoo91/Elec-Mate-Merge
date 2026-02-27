@@ -252,7 +252,7 @@ const TestingEnvironmentSafety = ({ onBack }: TestingEnvironmentSafetyProps) => 
                                     className={`p-2 h-auto ${
                                       completedChecks.includes(item.id)
                                         ? 'text-green-400 hover:text-green-300'
-                                        : 'text-white/80 hover:text-white'
+                                        : 'text-white hover:text-white'
                                     }`}
                                   >
                                     <CheckCircle

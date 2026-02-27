@@ -53,7 +53,7 @@ export const AM2LearningOutcomes = memo(function AM2LearningOutcomes({
             </div>
 
             {/* Outcome Text */}
-            <span className="text-ios-body text-white/80 leading-relaxed flex-1">{outcome}</span>
+            <span className="text-ios-body text-white leading-relaxed flex-1">{outcome}</span>
           </li>
         ))}
       </ul>
@@ -66,7 +66,7 @@ export const AM2LearningOutcomes = memo(function AM2LearningOutcomes({
           onClick={() => setIsExpanded(!isExpanded)}
           className={cn(
             'w-full sm:w-auto min-h-[44px] px-4',
-            'text-white/60 hover:text-white hover:bg-white/5',
+            'text-white hover:text-white hover:bg-white/5',
             'ios-pressable transition-all duration-ios-normal ease-ios-ease',
             'touch-manipulation'
           )}
@@ -85,7 +85,7 @@ export const AM2LearningOutcomes = memo(function AM2LearningOutcomes({
 
       {/* Hidden count indicator (when collapsed) */}
       {shouldShowExpandButton && !isExpanded && (
-        <p className="text-ios-footnote text-white/40 pl-8">
+        <p className="text-ios-footnote text-white pl-8">
           + {outcomes.length - initialVisibleCount} more outcomes
         </p>
       )}

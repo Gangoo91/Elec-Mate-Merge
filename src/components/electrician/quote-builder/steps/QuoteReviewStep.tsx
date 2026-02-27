@@ -146,7 +146,7 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
       <div className="rounded-2xl bg-gradient-to-br from-elec-yellow/20 to-elec-yellow/5 border border-elec-yellow/30 p-5">
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-[13px] text-white/70 mb-1">Quote Total</p>
+            <p className="text-[13px] text-white mb-1">Quote Total</p>
             <p className="text-4xl font-bold text-elec-yellow">£{(quote.total || 0).toFixed(2)}</p>
           </div>
           <div className="w-12 h-12 rounded-2xl bg-elec-yellow flex items-center justify-center">
@@ -157,7 +157,7 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
         {/* Pricing Breakdown */}
         <div className="mt-4 pt-4 border-t border-white/[0.1] space-y-2">
           <div className="flex justify-between text-[14px]">
-            <span className="text-white/60">Subtotal</span>
+            <span className="text-white">Subtotal</span>
             <span className="text-white">£{(quote.subtotal || 0).toFixed(2)}</span>
           </div>
           {quote.settings?.discountEnabled && (quote.discountAmount || 0) > 0 && (
@@ -170,7 +170,7 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
           )}
           {quote.settings?.vatRegistered && (
             <div className="flex justify-between text-[14px]">
-              <span className="text-white/60">VAT ({quote.settings.vatRate}%)</span>
+              <span className="text-white">VAT ({quote.settings.vatRate}%)</span>
               <span className="text-white">£{(quote.vatAmount || 0).toFixed(2)}</span>
             </div>
           )}
@@ -179,7 +179,7 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
 
       {/* Client Summary */}
       <div>
-        <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider px-1 mb-2 flex items-center gap-2">
+        <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2 flex items-center gap-2">
           <User className="h-3.5 w-3.5" />
           Client
         </p>
@@ -190,7 +190,7 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[15px] font-medium text-white">{quote.client?.name}</p>
-              <p className="text-[13px] text-white/70">{quote.client?.email}</p>
+              <p className="text-[13px] text-white">{quote.client?.email}</p>
             </div>
           </div>
         </div>
@@ -199,7 +199,7 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
       {/* Job Details Summary */}
       {quote.jobDetails?.title && (
         <div>
-          <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider px-1 mb-2 flex items-center gap-2">
+          <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2 flex items-center gap-2">
             <Briefcase className="h-3.5 w-3.5" />
             Job Details
           </p>
@@ -211,7 +211,7 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="text-[15px] font-medium text-white">{quote.jobDetails.title}</p>
-                  <p className="text-[13px] text-white/70 line-clamp-2 mt-0.5">
+                  <p className="text-[13px] text-white line-clamp-2 mt-0.5">
                     {quote.jobDetails.description}
                   </p>
                 </div>
@@ -223,7 +223,7 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
                   <Clock className="h-5 w-5 text-black" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-[12px] text-white/40">Duration</p>
+                  <p className="text-[12px] text-white">Duration</p>
                   <p className="text-[15px] font-medium text-white">
                     {quote.jobDetails.estimatedDuration}
                   </p>
@@ -236,7 +236,7 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
 
       {/* Items Breakdown - Grouped by category */}
       <div>
-        <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider px-1 mb-2 flex items-center gap-2">
+        <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2 flex items-center gap-2">
           <FileText className="h-3.5 w-3.5" />
           Items Breakdown
         </p>
@@ -262,7 +262,7 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-[15px] font-medium text-white">{categoryLabels[category] || category}</p>
-                    <p className="text-[12px] text-white/70">
+                    <p className="text-[12px] text-white">
                       {categoryItems.length} item{categoryItems.length !== 1 && 's'}
                     </p>
                   </div>
@@ -274,10 +274,10 @@ export const QuoteReviewStep = ({ quote }: QuoteReviewStepProps) => {
                 <div className="ml-[52px] space-y-2">
                   {categoryItems.map((item) => (
                     <div key={item.id} className="flex justify-between items-center">
-                      <span className="text-[13px] text-white/70 truncate flex-1 mr-3">
+                      <span className="text-[13px] text-white truncate flex-1 mr-3">
                         {item.description}
                       </span>
-                      <span className="text-[13px] text-white/90 shrink-0">
+                      <span className="text-[13px] text-white shrink-0">
                         £{item.totalPrice.toFixed(2)}
                       </span>
                     </div>

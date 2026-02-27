@@ -57,7 +57,7 @@ export function RequirementsStep() {
     <div className="space-y-6">
       {/* Experience Level */}
       <div className="space-y-3">
-        <Label className="text-white/80 text-base">Experience Level</Label>
+        <Label className="text-white text-base">Experience Level</Label>
         <Controller
           name="experienceLevel"
           control={control}
@@ -73,7 +73,7 @@ export function RequirementsStep() {
                     'touch-manipulation min-h-[48px]',
                     selectedLevel === level
                       ? 'border-elec-yellow bg-elec-yellow/10 text-elec-yellow'
-                      : 'border-white/10 bg-white/5 text-white/70 hover:border-white/20'
+                      : 'border-white/10 bg-white/5 text-white hover:border-white/20'
                   )}
                 >
                   {level}
@@ -90,8 +90,8 @@ export function RequirementsStep() {
       {/* Required Qualifications */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <Label className="text-white/80 text-base">Required Qualifications</Label>
-          <span className="text-xs text-white/50">{selectedRequirements.length} selected</span>
+          <Label className="text-white text-base">Required Qualifications</Label>
+          <span className="text-xs text-white">{selectedRequirements.length} selected</span>
         </div>
 
         <div className="flex flex-wrap gap-2">
@@ -108,7 +108,7 @@ export function RequirementsStep() {
                   'touch-manipulation',
                   isSelected
                     ? 'bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30'
-                    : 'bg-white/5 text-white/60 border border-white/10 hover:bg-white/10'
+                    : 'bg-white/5 text-white border border-white/10 hover:bg-white/10'
                 )}
               >
                 {isSelected && <Check className="h-3.5 w-3.5" />}
@@ -126,8 +126,8 @@ export function RequirementsStep() {
       {/* Nice to Have (Optional) */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <Label className="text-white/60 text-sm">Nice to Have (optional)</Label>
-          <span className="text-xs text-white/40">{selectedNiceToHave.length} selected</span>
+          <Label className="text-white text-sm">Nice to Have (optional)</Label>
+          <span className="text-xs text-white">{selectedNiceToHave.length} selected</span>
         </div>
 
         <div className="flex flex-wrap gap-2">
@@ -146,8 +146,8 @@ export function RequirementsStep() {
                     'text-xs font-medium transition-all duration-200',
                     'touch-manipulation',
                     isSelected
-                      ? 'bg-white/15 text-white/80 border border-white/20'
-                      : 'bg-white/5 text-white/40 border border-white/5 hover:bg-white/10'
+                      ? 'bg-white/15 text-white border border-white/20'
+                      : 'bg-white/5 text-white border border-white/5 hover:bg-white/10'
                   )}
                 >
                   {isSelected && <Check className="h-3 w-3" />}
@@ -161,7 +161,7 @@ export function RequirementsStep() {
       {/* Job Description */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <Label className="text-white/80 text-base">Job Description</Label>
+          <Label className="text-white text-base">Job Description</Label>
           <AIDescriptionGenerator
             jobTitle={jobTitle}
             requirements={selectedRequirements}

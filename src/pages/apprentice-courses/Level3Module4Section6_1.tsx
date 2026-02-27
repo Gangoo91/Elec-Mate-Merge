@@ -263,7 +263,7 @@ const Level3Module4Section6_1 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section6">
@@ -289,7 +289,7 @@ const Level3Module4Section6_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
             Communication with Clients and Customers
           </h1>
-          <p className="text-lg sm:text-xl text-white/70">
+          <p className="text-lg sm:text-xl text-white">
             Effective communication skills for explaining faults and remedial work to clients
           </p>
         </header>
@@ -300,31 +300,31 @@ const Level3Module4Section6_1 = () => {
           <ul className="space-y-2 sm:space-y-3">
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/80 text-sm sm:text-base">
+              <span className="text-white text-sm sm:text-base">
                 Translate technical findings into clear, understandable explanations
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/80 text-sm sm:text-base">
+              <span className="text-white text-sm sm:text-base">
                 Manage customer expectations throughout the fault diagnosis process
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/80 text-sm sm:text-base">
+              <span className="text-white text-sm sm:text-base">
                 Handle difficult conversations about costs, delays, and additional work
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/80 text-sm sm:text-base">
+              <span className="text-white text-sm sm:text-base">
                 Build trust and maintain professional relationships with clients
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/80 text-sm sm:text-base">
+              <span className="text-white text-sm sm:text-base">
                 Provide appropriate documentation and handover information
               </span>
             </li>
@@ -343,7 +343,7 @@ const Level3Module4Section6_1 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
               Effective communication is as important as technical competence in professional
               electrical work. The ability to explain complex findings clearly, manage expectations,
               and build trust determines how customers perceive your work and whether they recommend
@@ -356,12 +356,12 @@ const Level3Module4Section6_1 = () => {
 
             <div className="bg-white/5 rounded-lg p-4 mb-4">
               <h4 className="text-white font-semibold mb-2">Clarity</h4>
-              <p className="text-white/70 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 Express yourself in plain language that the customer can understand. Avoid jargon,
                 acronyms, and technical terms unless you explain them. Remember that what seems
                 obvious to you may be completely unknown to someone outside the trade.
               </p>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+              <ul className="list-disc pl-5 text-white text-sm space-y-1">
                 <li>Use simple, direct language</li>
                 <li>Explain technical terms when they must be used</li>
                 <li>Check understanding by asking questions</li>
@@ -371,12 +371,12 @@ const Level3Module4Section6_1 = () => {
 
             <div className="bg-white/5 rounded-lg p-4 mb-4">
               <h4 className="text-white font-semibold mb-2">Honesty</h4>
-              <p className="text-white/70 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 Always be truthful about findings, costs, and timescales. If you don't know
                 something, say so and explain how you'll find out. Customers respect honesty even
                 when the news isn't what they wanted to hear.
               </p>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+              <ul className="list-disc pl-5 text-white text-sm space-y-1">
                 <li>Report findings accurately, even if unwelcome</li>
                 <li>Give realistic timescales rather than optimistic ones</li>
                 <li>Admit uncertainty when appropriate</li>
@@ -386,11 +386,11 @@ const Level3Module4Section6_1 = () => {
 
             <div className="bg-white/5 rounded-lg p-4 mb-4">
               <h4 className="text-white font-semibold mb-2">Respect</h4>
-              <p className="text-white/70 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 Treat every customer with respect regardless of their technical knowledge, property
                 type, or demeanour. Listen actively to their concerns and take them seriously.
               </p>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+              <ul className="list-disc pl-5 text-white text-sm space-y-1">
                 <li>Listen without interrupting</li>
                 <li>Acknowledge their concerns as valid</li>
                 <li>Avoid patronising or condescending language</li>
@@ -400,11 +400,11 @@ const Level3Module4Section6_1 = () => {
 
             <div className="bg-white/5 rounded-lg p-4 mb-4">
               <h4 className="text-white font-semibold mb-2">Professionalism</h4>
-              <p className="text-white/70 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 Maintain professional boundaries while being approachable and helpful. Your conduct
                 reflects on the entire industry.
               </p>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+              <ul className="list-disc pl-5 text-white text-sm space-y-1">
                 <li>Dress appropriately and maintain clean appearance</li>
                 <li>Arrive on time and communicate if delayed</li>
                 <li>Keep conversations focused and appropriate</li>
@@ -434,7 +434,7 @@ const Level3Module4Section6_1 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
               Translating technical findings into understandable terms is a core skill. Customers
               need to understand what's wrong, why it matters, and what needs to be done, without
               requiring electrical qualifications themselves.
@@ -443,13 +443,13 @@ const Level3Module4Section6_1 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               Using Analogies and Comparisons
             </h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               Analogies help customers grasp unfamiliar concepts by relating them to everyday
               experiences:
             </p>
 
             <div className="overflow-x-auto mb-6">
-              <table className="w-full text-sm text-white/80 border border-white/20">
+              <table className="w-full text-sm text-white border border-white/20">
                 <thead>
                   <tr className="bg-white/10">
                     <th className="border border-white/20 p-2 text-left">Technical Concept</th>
@@ -507,12 +507,12 @@ const Level3Module4Section6_1 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               Explaining Risk and Urgency
             </h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               When discussing safety issues, be clear about risks without causing unnecessary alarm:
             </p>
             <div className="bg-gradient-to-r from-red-500/10 to-orange-500/10 rounded-lg p-4 border border-red-500/20 mb-4">
               <h4 className="text-white font-semibold mb-2">Risk Communication Framework</h4>
-              <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>
                   <strong>Immediate danger:</strong> "This needs to be isolated now - I can't leave
                   this energised as there's a serious risk of electric shock or fire"
@@ -535,10 +535,10 @@ const Level3Module4Section6_1 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               Visual Aids and Demonstrations
             </h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               Where safe and appropriate, showing is more effective than telling:
             </p>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>Show the damaged component (disconnected from power)</li>
               <li>Take photos of issues found for their records</li>
               <li>Draw simple diagrams to explain circuit arrangements</li>
@@ -566,18 +566,18 @@ const Level3Module4Section6_1 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
               Customer satisfaction often depends more on managing expectations than on the work
               itself. Setting realistic expectations from the start and communicating changes
               promptly prevents disappointment and disputes.
             </p>
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Initial Contact</h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               The first conversation sets the tone for the entire job:
             </p>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>Listen carefully to their description of the problem</li>
                 <li>Ask clarifying questions to understand the situation</li>
                 <li>Explain that fault diagnosis is investigative and may take time</li>
@@ -588,11 +588,11 @@ const Level3Module4Section6_1 = () => {
             </div>
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">During the Work</h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               Keep customers informed as the job progresses:
             </p>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>Provide regular updates, especially on longer jobs</li>
                 <li>Communicate immediately if you find additional problems</li>
                 <li>Obtain approval before undertaking work beyond the original scope</li>
@@ -605,12 +605,12 @@ const Level3Module4Section6_1 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               Handling Additional Findings
             </h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               When you discover additional faults beyond the original issue:
             </p>
             <div className="bg-gradient-to-r from-yellow-400/10 to-amber-500/10 rounded-lg p-4 border border-yellow-400/20 mb-4">
               <h4 className="text-white font-semibold mb-2">Recommended Approach:</h4>
-              <ol className="list-decimal pl-5 text-white/80 text-sm space-y-2">
+              <ol className="list-decimal pl-5 text-white text-sm space-y-2">
                 <li>
                   <strong>Stop and communicate:</strong> Don't proceed with additional work without
                   discussion
@@ -637,10 +637,10 @@ const Level3Module4Section6_1 = () => {
             </div>
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Time Estimates</h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               Be realistic about how long work will take:
             </p>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>Give ranges rather than precise times: "This typically takes 2-3 hours"</li>
               <li>Explain factors that could affect duration</li>
               <li>Build in contingency for unexpected complications</li>
@@ -668,7 +668,7 @@ const Level3Module4Section6_1 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
               Not every conversation is easy. Customers may be frustrated, costs may be higher than
               expected, or you may need to deliver unwelcome news. Handling these situations
               professionally is essential.
@@ -678,7 +678,7 @@ const Level3Module4Section6_1 = () => {
               Dealing with Frustrated Customers
             </h3>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>
                   <strong>Stay calm:</strong> Don't match their emotional level - remain
                   professional
@@ -704,11 +704,11 @@ const Level3Module4Section6_1 = () => {
             </div>
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Breaking Bad News</h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               When you need to deliver unwelcome information:
             </p>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>
                   <strong>Be direct:</strong> Don't delay or soften the message excessively
                 </li>
@@ -732,11 +732,11 @@ const Level3Module4Section6_1 = () => {
             </div>
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Cost Discussions</h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               Money is often a sensitive topic. Handle cost discussions professionally:
             </p>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>Be transparent about how you charge (hourly rate, fixed price, etc.)</li>
                 <li>Provide itemised quotations where possible</li>
                 <li>Explain what is included and what might be extra</li>
@@ -749,9 +749,9 @@ const Level3Module4Section6_1 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               Disagreements About Diagnosis
             </h3>
-            <p className="text-white/80 text-sm mb-3">If a customer questions your findings:</p>
+            <p className="text-white text-sm mb-3">If a customer questions your findings:</p>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>Listen to their perspective without becoming defensive</li>
                 <li>Show evidence: test results, damaged components, photos</li>
                 <li>Explain your reasoning step by step</li>
@@ -781,7 +781,7 @@ const Level3Module4Section6_1 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
               Professional communication extends beyond conversation to written documentation.
               Clear, accurate records protect both you and the customer while demonstrating your
               professionalism.
@@ -790,7 +790,7 @@ const Level3Module4Section6_1 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Quotations and Estimates</h3>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
               <h4 className="text-white font-semibold mb-2">Professional Quotation Contents:</h4>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+              <ul className="list-disc pl-5 text-white text-sm space-y-1">
                 <li>Clear description of work to be undertaken</li>
                 <li>Itemised breakdown of labour and materials where appropriate</li>
                 <li>Total cost including VAT (if VAT registered)</li>
@@ -803,11 +803,11 @@ const Level3Module4Section6_1 = () => {
             </div>
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Certificates and Reports</h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               Provide appropriate documentation for all completed work:
             </p>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>
                   <strong>Electrical Installation Certificate (EIC):</strong> For new circuits or
                   installations
@@ -827,12 +827,12 @@ const Level3Module4Section6_1 = () => {
             </div>
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Work Completion Handover</h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               When finishing a job, ensure proper handover:
             </p>
             <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-lg p-4 border border-green-500/20 mb-4">
               <h4 className="text-white font-semibold mb-2">Handover Checklist:</h4>
-              <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>Walk through the completed work with the customer</li>
                 <li>Demonstrate how equipment operates (switches, RCDs, etc.)</li>
                 <li>Explain what was done and why</li>
@@ -845,10 +845,10 @@ const Level3Module4Section6_1 = () => {
             </div>
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Follow-Up Communication</h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               Maintain the relationship after completing work:
             </p>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>Send certificates promptly if not provided on site</li>
               <li>Follow up on any outstanding items or recommendations</li>
               <li>Be available to answer questions that arise after completion</li>
@@ -865,7 +865,7 @@ const Level3Module4Section6_1 = () => {
           <div className="space-y-4">
             <div>
               <h3 className="text-white font-semibold mb-2">First Impressions Matter</h3>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Arrive on time, dressed appropriately, with clean footwear. Introduce yourself
                 clearly and confirm the customer's name. A professional first impression sets
                 positive expectations for the entire job.
@@ -874,7 +874,7 @@ const Level3Module4Section6_1 = () => {
 
             <div>
               <h3 className="text-white font-semibold mb-2">Active Listening</h3>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Listen more than you talk, especially initially. Let customers describe their
                 concerns fully before offering solutions. Repeat back key points to confirm
                 understanding. This shows respect and ensures you don't miss important information.
@@ -883,7 +883,7 @@ const Level3Module4Section6_1 = () => {
 
             <div>
               <h3 className="text-white font-semibold mb-2">Written Confirmation</h3>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Confirm important agreements in writing, especially costs and scope changes. A
                 simple email or text confirming key points protects both parties and prevents
                 misunderstandings.
@@ -901,7 +901,7 @@ const Level3Module4Section6_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 rounded-lg p-4 sm:p-6">
                 <h3 className="text-white font-semibold mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -913,7 +913,7 @@ const Level3Module4Section6_1 = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <h3 className="text-white font-semibold mb-2">Communication Essentials</h3>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>Clarity - explain in plain language</li>
                 <li>Honesty - always be truthful</li>
                 <li>Respect - treat everyone professionally</li>
@@ -922,7 +922,7 @@ const Level3Module4Section6_1 = () => {
             </div>
             <div>
               <h3 className="text-white font-semibold mb-2">Before Starting Work</h3>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>Confirm scope and expectations</li>
                 <li>Agree pricing structure</li>
                 <li>Set realistic timescales</li>
@@ -931,7 +931,7 @@ const Level3Module4Section6_1 = () => {
             </div>
             <div>
               <h3 className="text-white font-semibold mb-2">During Work</h3>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>Provide regular updates</li>
                 <li>Communicate changes promptly</li>
                 <li>Obtain approval for extras</li>
@@ -940,7 +940,7 @@ const Level3Module4Section6_1 = () => {
             </div>
             <div>
               <h3 className="text-white font-semibold mb-2">After Completion</h3>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>Walk through completed work</li>
                 <li>Provide all certificates</li>
                 <li>Explain operation and maintenance</li>

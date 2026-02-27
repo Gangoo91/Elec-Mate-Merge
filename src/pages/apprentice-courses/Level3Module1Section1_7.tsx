@@ -172,7 +172,7 @@ const Level3Module1Section1_7 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
           <Link
             to="/study-centre/apprentice/level3-module1-section1"
-            className="inline-flex items-center gap-2 text-white/70 hover:text-white active:text-elec-yellow text-sm sm:text-base min-h-[44px] touch-manipulation transition-colors"
+            className="inline-flex items-center gap-2 text-white hover:text-white active:text-elec-yellow text-sm sm:text-base min-h-[44px] touch-manipulation transition-colors"
           >
             <ArrowLeft className="w-4 h-4 sm:w-5 sm:h-5" />
             <span>Back to Section 1</span>
@@ -194,7 +194,7 @@ const Level3Module1Section1_7 = () => {
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight">
               Employer vs Employee Responsibilities
             </h1>
-            <p className="text-base sm:text-lg text-white/70 leading-relaxed">
+            <p className="text-base sm:text-lg text-white leading-relaxed">
               Understanding the legal duties of employers and employees under HASAWA 1974
             </p>
           </header>
@@ -206,7 +206,7 @@ const Level3Module1Section1_7 = () => {
                 <Clock className="w-5 h-5 text-elec-yellow" />
                 <h3 className="font-semibold text-white">In 30 Seconds</h3>
               </div>
-              <ul className="space-y-2 text-sm text-white/80">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow mt-1">*</span>
                   Employers: safe systems, training, PPE, risk assessments
@@ -230,7 +230,7 @@ const Level3Module1Section1_7 = () => {
                 <Scale className="w-5 h-5 text-elec-yellow" />
                 <h3 className="font-semibold text-white">Spot it / Use it</h3>
               </div>
-              <ul className="space-y-2 text-sm text-white/80">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow mt-1">*</span>
                   <strong className="text-white">Spot:</strong> Missing PPE, untrained workers,
@@ -256,7 +256,7 @@ const Level3Module1Section1_7 = () => {
               <CheckCircle2 className="w-5 h-5 text-elec-yellow" />
               Learning Outcomes
             </h2>
-            <p className="text-white/70 mb-4 text-sm sm:text-base">
+            <p className="text-white mb-4 text-sm sm:text-base">
               By the end of this section, you will be able to:
             </p>
             <ul className="space-y-3">
@@ -270,7 +270,7 @@ const Level3Module1Section1_7 = () => {
               ].map((outcome, index) => (
                 <li key={index} className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-                  <span className="text-white/80 text-sm sm:text-base">{outcome}</span>
+                  <span className="text-white text-sm sm:text-base">{outcome}</span>
                 </li>
               ))}
             </ul>
@@ -287,7 +287,7 @@ const Level3Module1Section1_7 = () => {
               </h2>
             </div>
             <div className="p-4 sm:p-6 rounded-xl bg-white/5 border border-white/10 space-y-4">
-              <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+              <p className="text-white text-sm sm:text-base leading-relaxed">
                 Section 2 of HASAWA places a <strong className="text-white">general duty</strong> on
                 employers to ensure, so far as is reasonably practicable, the health, safety, and
                 welfare at work of all their employees. This is the cornerstone of workplace safety
@@ -298,7 +298,7 @@ const Level3Module1Section1_7 = () => {
                 <h4 className="font-semibold text-elec-yellow mb-2">
                   Key Phrase: "So far as is reasonably practicable"
                 </h4>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   This doesn't mean "do everything possible regardless of cost". It means employers
                   must weigh the risk against the cost, time, and effort of measures to eliminate
                   it. Where risks are high, almost any cost is justified. Where risks are low,
@@ -309,7 +309,7 @@ const Level3Module1Section1_7 = () => {
               <div className="space-y-4 mt-4">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-semibold text-white mb-2">Safe plant and systems of work</h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     Provide and maintain machinery, equipment, tools, and working procedures that
                     are safe. For electricians, this includes test instruments, power tools, safe
                     isolation procedures, and permit-to-work systems.
@@ -320,7 +320,7 @@ const Level3Module1Section1_7 = () => {
                   <h4 className="font-semibold text-white mb-2">
                     Safe handling, storage, and transport of substances
                   </h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     Ensure safety when using, handling, storing, and transporting articles and
                     substances. This covers everything from chemicals and solvents to heavy
                     equipment and materials.
@@ -331,7 +331,7 @@ const Level3Module1Section1_7 = () => {
                   <h4 className="font-semibold text-white mb-2">
                     Information, instruction, training, and supervision
                   </h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     Provide whatever information, instruction, training, and supervision is
                     necessary. This includes induction training, ongoing safety training, and
                     competent supervision - especially important for apprentices and less
@@ -343,7 +343,7 @@ const Level3Module1Section1_7 = () => {
                   <h4 className="font-semibold text-white mb-2">
                     Safe workplace with adequate access and egress
                   </h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     Maintain the workplace in safe condition, including the means of getting in and
                     out. Fire exits, walkways, working areas, and access routes must be kept clear
                     and safe.
@@ -352,7 +352,7 @@ const Level3Module1Section1_7 = () => {
 
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-semibold text-white mb-2">Adequate welfare facilities</h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     Provide a safe working environment with adequate welfare facilities - toilets,
                     washing facilities, drinking water, rest areas, and first aid provisions.
                   </p>
@@ -362,14 +362,14 @@ const Level3Module1Section1_7 = () => {
               <div className="grid sm:grid-cols-2 gap-4 mt-4">
                 <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                   <h4 className="font-semibold text-amber-400 mb-2">Risk Assessments</h4>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     Under the Management of H&S at Work Regulations 1999, employers must conduct
                     suitable and sufficient risk assessments and implement appropriate controls.
                   </p>
                 </div>
                 <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                   <h4 className="font-semibold text-blue-400 mb-2">Written Safety Policy</h4>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     Employers with 5 or more employees must have a written H&S policy that is
                     communicated to all staff and reviewed regularly.
                   </p>
@@ -402,7 +402,7 @@ const Level3Module1Section1_7 = () => {
               </h2>
             </div>
             <div className="p-4 sm:p-6 rounded-xl bg-white/5 border border-white/10 space-y-4">
-              <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+              <p className="text-white text-sm sm:text-base leading-relaxed">
                 While employers carry the primary responsibility, HASAWA also places{' '}
                 <strong className="text-white">important duties on employees</strong>. These
                 recognise that employees have a vital role in maintaining safe workplaces - safety
@@ -413,7 +413,7 @@ const Level3Module1Section1_7 = () => {
                 <h4 className="font-semibold text-green-400 mb-2">
                   Section 7 - Duty to Take Reasonable Care
                 </h4>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Every employee while at work has a duty to take{' '}
                   <strong className="text-white">reasonable care</strong> for the health and safety
                   of themselves AND of other persons who may be affected by their acts or omissions
@@ -423,7 +423,7 @@ const Level3Module1Section1_7 = () => {
 
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <h4 className="font-semibold text-blue-400 mb-2">Section 7 - Duty to Cooperate</h4>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Employees must{' '}
                   <strong className="text-white">cooperate with their employer</strong> so far as is
                   necessary to enable the employer to comply with their legal duties. This means
@@ -439,7 +439,7 @@ const Level3Module1Section1_7 = () => {
                     <h4 className="font-semibold text-red-400 mb-1">
                       Section 8 - Not to Interfere
                     </h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       No person shall{' '}
                       <strong className="text-white">
                         intentionally or recklessly interfere with or misuse
@@ -454,7 +454,7 @@ const Level3Module1Section1_7 = () => {
 
               <div className="space-y-3 mt-4">
                 <h4 className="font-semibold text-white">Additional Employee Duties:</h4>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">*</span>
                     <strong className="text-white">Report hazards and defects:</strong> Promptly
@@ -505,7 +505,7 @@ const Level3Module1Section1_7 = () => {
               </h2>
             </div>
             <div className="p-4 sm:p-6 rounded-xl bg-white/5 border border-white/10 space-y-4">
-              <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+              <p className="text-white text-sm sm:text-base leading-relaxed">
                 Workplace safety is most effective when employers and employees{' '}
                 <strong className="text-white">work together</strong>. The law creates interlocking
                 duties that require cooperation from both parties - neither can achieve safety
@@ -514,7 +514,7 @@ const Level3Module1Section1_7 = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
                 <h4 className="font-semibold text-elec-yellow mb-2">The Safety Partnership</h4>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Think of it like this: Employers provide the framework - policies, training,
                   equipment, and resources. Employees bring it to life - following procedures,
                   reporting problems, and maintaining awareness. A positive safety culture requires
@@ -525,7 +525,7 @@ const Level3Module1Section1_7 = () => {
               <div className="space-y-4 mt-4">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-semibold text-white mb-2">Communication</h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     Employers must consult with employees on safety matters. Employees must
                     communicate hazards and concerns upward. Two-way communication ensures problems
                     are identified and resolved quickly - before accidents happen.
@@ -534,7 +534,7 @@ const Level3Module1Section1_7 = () => {
 
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-semibold text-white mb-2">Risk Assessment Participation</h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     While employers are responsible for conducting risk assessments, employees often
                     have the best practical knowledge of hazards in their work. Their input is
                     valuable and should be actively sought.
@@ -543,7 +543,7 @@ const Level3Module1Section1_7 = () => {
 
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-semibold text-white mb-2">Training Effectiveness</h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     Employers must provide adequate training, but employees must engage with it,
                     apply what they learn, and ask questions when unclear. Training only works when
                     both parties commit to it.
@@ -552,7 +552,7 @@ const Level3Module1Section1_7 = () => {
 
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-semibold text-white mb-2">PPE Usage</h4>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     Employers must provide suitable PPE free of charge, maintain it, and train
                     employees in its use. Employees must wear it correctly, store it properly, and
                     report any damage or defects. Both have duties.
@@ -586,7 +586,7 @@ const Level3Module1Section1_7 = () => {
               </h2>
             </div>
             <div className="p-4 sm:p-6 rounded-xl bg-white/5 border border-white/10 space-y-4">
-              <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+              <p className="text-white text-sm sm:text-base leading-relaxed">
                 Both employers and employees can face{' '}
                 <strong className="text-white">serious consequences</strong> for breaching health
                 and safety law. The severity of penalties reflects the importance society places on
@@ -595,7 +595,7 @@ const Level3Module1Section1_7 = () => {
 
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <h4 className="font-semibold text-red-400 mb-3">Consequences for Employers</h4>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-red-400">*</span>
                     <strong className="text-white">HSE Prosecution:</strong> The HSE can prosecute
@@ -627,7 +627,7 @@ const Level3Module1Section1_7 = () => {
 
               <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                 <h4 className="font-semibold text-amber-400 mb-3">Consequences for Employees</h4>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-amber-400">*</span>
                     <strong className="text-white">Disciplinary Action:</strong> Warnings, final
@@ -679,7 +679,7 @@ const Level3Module1Section1_7 = () => {
                 Real-World Case: Shared Responsibility Failure
               </h3>
             </div>
-            <div className="space-y-3 text-sm text-white/80">
+            <div className="space-y-3 text-sm text-white">
               <p>
                 <strong className="text-white">The Situation:</strong> An electrical contractor was
                 working on a commercial installation. The employer had provided arc flash PPE but
@@ -714,7 +714,7 @@ const Level3Module1Section1_7 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-semibold text-elec-yellow mb-3">For Employers - Key Actions</h4>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
                     Conduct and regularly review risk assessments
@@ -743,7 +743,7 @@ const Level3Module1Section1_7 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-semibold text-elec-yellow mb-3">For Employees - Key Actions</h4>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-400 flex-shrink-0 mt-0.5" />
                     Follow all safety procedures and instructions
@@ -786,7 +786,7 @@ const Level3Module1Section1_7 = () => {
                     +
                   </span>
                 </summary>
-                <p className="mt-2 text-white/70 text-sm pl-4 border-l-2 border-elec-yellow/30">
+                <p className="mt-2 text-white text-sm pl-4 border-l-2 border-elec-yellow/30">
                   Yes, you have the right to refuse work you reasonably believe poses serious and
                   imminent danger. Report your concerns to your employer immediately. The Employment
                   Rights Act 1996 protects employees from dismissal or detriment for raising genuine
@@ -800,7 +800,7 @@ const Level3Module1Section1_7 = () => {
                     +
                   </span>
                 </summary>
-                <p className="mt-2 text-white/70 text-sm pl-4 border-l-2 border-elec-yellow/30">
+                <p className="mt-2 text-white text-sm pl-4 border-l-2 border-elec-yellow/30">
                   The employer has a duty to provide safe equipment. However, if you noticed the
                   fault and continued using the tool without reporting it, you may share some
                   responsibility. Always report defective equipment immediately and do not use it.
@@ -813,7 +813,7 @@ const Level3Module1Section1_7 = () => {
                     +
                   </span>
                 </summary>
-                <p className="mt-2 text-white/70 text-sm pl-4 border-l-2 border-elec-yellow/30">
+                <p className="mt-2 text-white text-sm pl-4 border-l-2 border-elec-yellow/30">
                   Employers must provide suitable PPE free of charge. If they don't, raise it with
                   them in writing, contact your safety representative, or report to the HSE. You
                   should not work in situations requiring PPE if it hasn't been provided.
@@ -826,7 +826,7 @@ const Level3Module1Section1_7 = () => {
                     +
                   </span>
                 </summary>
-                <p className="mt-2 text-white/70 text-sm pl-4 border-l-2 border-elec-yellow/30">
+                <p className="mt-2 text-white text-sm pl-4 border-l-2 border-elec-yellow/30">
                   Dismissing an employee for raising genuine health and safety concerns is
                   automatically unfair dismissal. Whistleblowing legislation provides additional
                   protection. However, concerns must be genuine and raised appropriately - not as an
@@ -842,7 +842,7 @@ const Level3Module1Section1_7 = () => {
                     +
                   </span>
                 </summary>
-                <p className="mt-2 text-white/70 text-sm pl-4 border-l-2 border-elec-yellow/30">
+                <p className="mt-2 text-white text-sm pl-4 border-l-2 border-elec-yellow/30">
                   An Improvement Notice gives time to fix a problem - typically 21 days. A
                   Prohibition Notice stops dangerous work immediately until the risk is eliminated.
                   Prohibition Notices are used when there is risk of serious personal injury.
@@ -859,7 +859,7 @@ const Level3Module1Section1_7 = () => {
             <div className="grid sm:grid-cols-2 gap-4 text-sm">
               <div className="space-y-2">
                 <h4 className="font-semibold text-elec-yellow">Employer Must:</h4>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>* Provide safe plant and systems</li>
                   <li>* Ensure safe substance handling</li>
                   <li>* Give information, training, supervision</li>
@@ -871,7 +871,7 @@ const Level3Module1Section1_7 = () => {
               </div>
               <div className="space-y-2">
                 <h4 className="font-semibold text-elec-yellow">Employee Must:</h4>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>* Take reasonable care (S.7)</li>
                   <li>* Cooperate with employer (S.7)</li>
                   <li>* Not interfere with safety kit (S.8)</li>
@@ -883,7 +883,7 @@ const Level3Module1Section1_7 = () => {
               </div>
             </div>
             <div className="mt-4 p-3 rounded-lg bg-[#1a1a1a] border border-white/10">
-              <p className="text-white/80 text-sm text-center">
+              <p className="text-white text-sm text-center">
                 <strong className="text-elec-yellow">Remember:</strong> Workplace safety is a
                 partnership - employers provide the framework, employees make it work. Both can face
                 prosecution for failures!

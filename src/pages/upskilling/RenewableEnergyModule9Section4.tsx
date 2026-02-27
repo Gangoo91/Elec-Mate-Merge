@@ -251,7 +251,7 @@ const RenewableEnergyModule9Section4 = () => {
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
           Tools for Estimating Yield and Return
         </h1>
-        <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+        <p className="text-white text-sm sm:text-base max-w-xl mx-auto">
           Software and methodologies for accurate performance predictions
         </p>
       </div>
@@ -299,7 +299,7 @@ const RenewableEnergyModule9Section4 = () => {
           ].map((outcome, index) => (
             <div key={index} className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
-              <span className="text-white/80 text-sm">{outcome}</span>
+              <span className="text-white text-sm">{outcome}</span>
             </div>
           ))}
         </div>
@@ -312,7 +312,7 @@ const RenewableEnergyModule9Section4 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">01</span>
             <h2 className="text-xl font-semibold text-white">Professional Design Software</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Professional yield estimation software provides comprehensive tools for system design,
               performance prediction, and financial modelling. These tools are essential for
@@ -353,7 +353,7 @@ const RenewableEnergyModule9Section4 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">02</span>
             <h2 className="text-xl font-semibold text-white">Free Online Tools</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Free online tools provide accessible yield estimation for initial assessments and
               simpler installations. While less comprehensive than professional software, they offer
@@ -394,7 +394,7 @@ const RenewableEnergyModule9Section4 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">03</span>
             <h2 className="text-xl font-semibold text-white">MCS Yield Estimation Method</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               MCS provides standardised yield estimation methodology that ensures consistent,
               credible estimates across the industry. Understanding this methodology is essential
@@ -435,7 +435,7 @@ const RenewableEnergyModule9Section4 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">04</span>
             <h2 className="text-xl font-semibold text-white">SAP and Heat Pump Calculations</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Heat pump installations require different estimation approaches focusing on building
               heat demand and system efficiency rather than solar irradiance.
@@ -475,7 +475,7 @@ const RenewableEnergyModule9Section4 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">05</span>
             <h2 className="text-xl font-semibold text-white">Best Practice for Yield Estimation</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Accurate yield estimation requires careful attention to inputs, appropriate tool
               selection, and honest communication of results and limitations.
@@ -519,7 +519,7 @@ const RenewableEnergyModule9Section4 = () => {
             <Zap className="w-4 h-4 text-elec-yellow" />
             Practical Guidance
           </h3>
-          <div className="space-y-2 text-white/80 text-sm">
+          <div className="space-y-2 text-white text-sm">
             <p>
               <span className="text-white font-medium">Invest in skills:</span> Time spent learning
               your estimation tools thoroughly pays dividends in accuracy and efficiency. Attend
@@ -546,7 +546,7 @@ const RenewableEnergyModule9Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <h3 className="text-white font-medium mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>

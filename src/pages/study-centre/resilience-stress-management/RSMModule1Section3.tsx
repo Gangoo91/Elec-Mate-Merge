@@ -195,7 +195,7 @@ export default function RSMModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-1">
@@ -305,7 +305,7 @@ export default function RSMModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Key Statistics</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -386,7 +386,7 @@ export default function RSMModule1Section3() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">Tight Deadlines</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Programme pressures, penalty clauses, liquidated damages, and the constant
                       push to complete work faster and cheaper. Main contractors squeeze
                       subcontractors, who squeeze their workers. The pressure cascades down.
@@ -394,7 +394,7 @@ export default function RSMModule1Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">Financial Insecurity</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       CIS self-employment means no sick pay, no holiday pay, unpredictable income,
                       late payments, and the constant pressure to find the next job. The
                       feast-and-famine cycle &mdash; overwhelmed with work one month, nothing the
@@ -403,7 +403,7 @@ export default function RSMModule1Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">Physical Demands</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Heavy lifting, working in awkward positions (ceiling voids, under floors),
                       exposure to weather, noise, dust, and vibration. Physical fatigue compounds
                       psychological stress and reduces the body&rsquo;s capacity to cope.
@@ -411,7 +411,7 @@ export default function RSMModule1Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">Job Insecurity</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Short-term contracts, project-based work, the threat of redundancy when a
                       project ends, and the knowledge that you are only as good as your last job. No
                       work means no income, and there is often no safety net.
@@ -419,7 +419,7 @@ export default function RSMModule1Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">Long Commutes &amp; Time Away</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Construction work is where the project is, not where you live. Long commutes,
                       working away from home during the week, and missing family events all create
                       strain on relationships and reduce recovery time.
@@ -427,7 +427,7 @@ export default function RSMModule1Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">Safety Risks</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Working at height, working with electricity, confined spaces, moving plant
                       &mdash; the knowledge that a mistake could kill you or someone else is a
                       background stressor that never fully switches off. Near-misses and incidents
@@ -439,7 +439,7 @@ export default function RSMModule1Section3() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-400 mb-2">Construction Scenario</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Consider a self-employed electrician working on CIS. They have two active jobs and
                   are quoting for a third. One client is withholding payment on a completed job
                   because of a disputed snag. Their van insurance is due next week. They are working
@@ -484,7 +484,7 @@ export default function RSMModule1Section3() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <p className="text-white font-medium mb-1">1. Demands</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Workload, work patterns, and the working environment. Workers should be able
                       to cope with the demands of their jobs. In construction: unrealistic
                       deadlines, undermanning, excessive overtime, physically demanding conditions,
@@ -493,7 +493,7 @@ export default function RSMModule1Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <p className="text-white font-medium mb-1">2. Control</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       How much say the person has in the way they do their work. Workers should have
                       some autonomy and influence over their tasks. In construction: being told
                       exactly what to do and when, with no input into methods, scheduling, or
@@ -503,7 +503,7 @@ export default function RSMModule1Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <p className="text-white font-medium mb-1">3. Support</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       The encouragement, sponsorship, and resources provided by the organisation,
                       line management, and colleagues. In construction: lack of mentoring for
                       apprentices, absent or unsupportive supervisors, no access to occupational
@@ -513,7 +513,7 @@ export default function RSMModule1Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <p className="text-white font-medium mb-1">4. Relationships</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Promoting positive working relationships and dealing with unacceptable
                       behaviour. In construction: bullying by site managers, conflict between
                       trades, aggressive communication styles, discrimination, and
@@ -522,7 +522,7 @@ export default function RSMModule1Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <p className="text-white font-medium mb-1">5. Role</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Whether people understand their role within the organisation and whether the
                       organisation ensures that conflicting roles are avoided. In construction:
                       unclear scope of work, being asked to do tasks outside your competence or
@@ -532,7 +532,7 @@ export default function RSMModule1Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <p className="text-white font-medium mb-1">6. Change</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       How organisational change is managed and communicated. In construction: sudden
                       programme changes, variations to scope with no notice, teams being broken up
                       and reformed, company restructures, and changes to working conditions imposed
@@ -574,7 +574,7 @@ export default function RSMModule1Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Cultural Barriers to Help-Seeking
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>
@@ -626,7 +626,7 @@ export default function RSMModule1Section3() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-400 mb-2">Construction Scenario</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A main contractor squeezes margins on an electrical subcontract, forcing the
                   subcontractor to understaff the job. The electrical team is working 10-hour days,
                   six days a week, to hit an unrealistic programme. One of the electricians has been
@@ -678,7 +678,7 @@ export default function RSMModule1Section3() {
                     <p className="text-white font-medium mb-1">
                       Health and Safety at Work etc. Act 1974 (HSWA) &mdash; Section 2
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       The general duty: employers must ensure, so far as is reasonably practicable,
                       the health, safety, and welfare at work of all their employees. The term
                       &ldquo;health&rdquo; includes mental health. This means employers must
@@ -691,7 +691,7 @@ export default function RSMModule1Section3() {
                       Management of Health and Safety at Work Regulations 1999 (MHSWR) &mdash;
                       Regulation 3
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Employers must carry out a suitable and sufficient assessment of the risks to
                       the health and safety of their employees. This includes the risk of
                       work-related stress. The HSE Management Standards provide the framework for
@@ -701,7 +701,7 @@ export default function RSMModule1Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <p className="text-white font-medium mb-1">Working Time Regulations 1998</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Sets maximum working hours (48 hours per week averaged over 17 weeks, with an
                       opt-out), requires rest breaks (20 minutes for every 6 hours worked), daily
                       rest (11 consecutive hours), and weekly rest (24 consecutive hours per week).
@@ -719,7 +719,7 @@ export default function RSMModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Important Note</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The legal framework is clear: employers have a duty to assess and manage the risk
                   of work-related stress. But enforcement in practice is weak, particularly for
                   small subcontractors and self-employed workers who fall outside the scope of many
@@ -751,7 +751,7 @@ export default function RSMModule1Section3() {
                 risks. The key points are:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -820,7 +820,7 @@ export default function RSMModule1Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -834,7 +834,7 @@ export default function RSMModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-1">

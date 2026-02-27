@@ -180,7 +180,7 @@ const Module3Section2_3: React.FC = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -202,7 +202,7 @@ const Module3Section2_3: React.FC = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Plastic and Steel Trunking Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Enclosed channels for cable routing, protection and organised access for maintenance and
             modifications
           </p>
@@ -277,10 +277,10 @@ const Module3Section2_3: React.FC = () => {
                 <p className="font-medium text-white text-sm mb-3">Plastic (PVC) Trunking</p>
                 <div className="space-y-3">
                   <div>
-                    <p className="font-medium text-white/80 text-xs mb-1">
+                    <p className="font-medium text-white text-xs mb-1">
                       Material Characteristics
                     </p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li>Rigid PVC construction with snap-on or clip-on lids</li>
                       <li>Available profiles: mini, standard, maxi, skirting, dado</li>
                       <li>Standard colours: white, ivory, brown, grey</li>
@@ -288,8 +288,8 @@ const Module3Section2_3: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-white/80 text-xs mb-1">Key Advantages</p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <p className="font-medium text-white text-xs mb-1">Key Advantages</p>
+                    <ul className="text-xs text-white space-y-1">
                       <li>Lightweight - easy to handle and install</li>
                       <li>Simple cutting with hacksaw or PVC cutter</li>
                       <li>Non-conductive - no earthing requirements</li>
@@ -299,8 +299,8 @@ const Module3Section2_3: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-white/80 text-xs mb-1">Limitations</p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <p className="font-medium text-white text-xs mb-1">Limitations</p>
+                    <ul className="text-xs text-white space-y-1">
                       <li>Limited mechanical strength against impacts</li>
                       <li>UV degradation without stabilisers</li>
                       <li>Can warp under excessive heat (&gt;70C)</li>
@@ -308,8 +308,8 @@ const Module3Section2_3: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-white/80 text-xs mb-1">Best Applications</p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <p className="font-medium text-white text-xs mb-1">Best Applications</p>
+                    <ul className="text-xs text-white space-y-1">
                       <li>Domestic installations - living areas</li>
                       <li>Office environments - desk and dado height</li>
                       <li>Retail spaces - customer areas</li>
@@ -323,10 +323,10 @@ const Module3Section2_3: React.FC = () => {
                 <p className="font-medium text-white text-sm mb-3">Steel Trunking</p>
                 <div className="space-y-3">
                   <div>
-                    <p className="font-medium text-white/80 text-xs mb-1">
+                    <p className="font-medium text-white text-xs mb-1">
                       Material Characteristics
                     </p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li>Galvanised or powder-coated steel construction</li>
                       <li>Bolted or clip-on steel lids with gasket seals</li>
                       <li>Heavy-duty profiles from 50x50mm to 300x100mm</li>
@@ -334,8 +334,8 @@ const Module3Section2_3: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-white/80 text-xs mb-1">Key Advantages</p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <p className="font-medium text-white text-xs mb-1">Key Advantages</p>
+                    <ul className="text-xs text-white space-y-1">
                       <li>Excellent mechanical protection against impacts</li>
                       <li>Fire resistant - will not melt or burn</li>
                       <li>Can serve as protective conductor (earth path)</li>
@@ -345,8 +345,8 @@ const Module3Section2_3: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-white/80 text-xs mb-1">Limitations</p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <p className="font-medium text-white text-xs mb-1">Limitations</p>
+                    <ul className="text-xs text-white space-y-1">
                       <li>Heavier and more labour-intensive to install</li>
                       <li>Higher material costs than PVC</li>
                       <li>Requires earthing and continuity testing</li>
@@ -354,8 +354,8 @@ const Module3Section2_3: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-white/80 text-xs mb-1">Best Applications</p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <p className="font-medium text-white text-xs mb-1">Best Applications</p>
+                    <ul className="text-xs text-white space-y-1">
                       <li>Industrial workshops and factories</li>
                       <li>Plant and machinery rooms</li>
                       <li>High-traffic or vandal-prone areas</li>
@@ -381,8 +381,8 @@ const Module3Section2_3: React.FC = () => {
               <p className="font-medium text-white text-sm mb-3">Route Planning and Support</p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="font-medium text-white/80 text-xs mb-1">Route Planning</p>
-                  <ul className="text-xs text-white/70 space-y-1">
+                  <p className="font-medium text-white text-xs mb-1">Route Planning</p>
+                  <ul className="text-xs text-white space-y-1">
                     <li>Minimise bends and junctions for easier cable pulling</li>
                     <li>Plan for future expansion and cable additions</li>
                     <li>Avoid areas with excessive heat or moisture</li>
@@ -391,8 +391,8 @@ const Module3Section2_3: React.FC = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium text-white/80 text-xs mb-1">Support Requirements</p>
-                  <ul className="text-xs text-white/70 space-y-1">
+                  <p className="font-medium text-white text-xs mb-1">Support Requirements</p>
+                  <ul className="text-xs text-white space-y-1">
                     <li>PVC: maximum 500mm spacing for small profiles</li>
                     <li>Steel: maximum 1200mm spacing for standard sizes</li>
                     <li>Additional support at changes of direction</li>
@@ -409,8 +409,8 @@ const Module3Section2_3: React.FC = () => {
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="font-medium text-white/80 text-xs mb-1">Fill Factor Calculations</p>
-                  <ul className="text-xs text-white/70 space-y-1">
+                  <p className="font-medium text-white text-xs mb-1">Fill Factor Calculations</p>
+                  <ul className="text-xs text-white space-y-1">
                     <li>Maximum 45% of internal cross-sectional area</li>
                     <li>Calculate total cable areas including insulation</li>
                     <li>Allow space for heat dissipation</li>
@@ -419,8 +419,8 @@ const Module3Section2_3: React.FC = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium text-white/80 text-xs mb-1">Cable Organisation</p>
-                  <ul className="text-xs text-white/70 space-y-1">
+                  <p className="font-medium text-white text-xs mb-1">Cable Organisation</p>
+                  <ul className="text-xs text-white space-y-1">
                     <li>Group similar cable types together</li>
                     <li>Use cable ties at regular intervals</li>
                     <li>Label cables clearly at access points</li>
@@ -435,8 +435,8 @@ const Module3Section2_3: React.FC = () => {
               <p className="font-medium text-white text-sm mb-3">Segregation and Barriers</p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="font-medium text-white/80 text-xs mb-1">Segregation Requirements</p>
-                  <ul className="text-xs text-white/70 space-y-1">
+                  <p className="font-medium text-white text-xs mb-1">Segregation Requirements</p>
+                  <ul className="text-xs text-white space-y-1">
                     <li>Separate power and data cables with barriers</li>
                     <li>Use different compartments for different voltages</li>
                     <li>Maintain minimum separation distances per BS 7671</li>
@@ -445,8 +445,8 @@ const Module3Section2_3: React.FC = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium text-white/80 text-xs mb-1">Barrier Installation</p>
-                  <ul className="text-xs text-white/70 space-y-1">
+                  <p className="font-medium text-white text-xs mb-1">Barrier Installation</p>
+                  <ul className="text-xs text-white space-y-1">
                     <li>Fit rigid barriers between compartments</li>
                     <li>Ensure barriers extend full length of run</li>
                     <li>Seal barrier joints to prevent crossover</li>
@@ -472,10 +472,10 @@ const Module3Section2_3: React.FC = () => {
               <p className="font-medium text-white text-sm mb-3">Earthing Requirements</p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="font-medium text-white/80 text-xs mb-1">
+                  <p className="font-medium text-white text-xs mb-1">
                     Installation Requirements
                   </p>
-                  <ul className="text-xs text-white/70 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>All joints must be electrically continuous</li>
                     <li>Clean mating surfaces before assembly</li>
                     <li>Use star washers or serrated nuts at connections</li>
@@ -484,8 +484,8 @@ const Module3Section2_3: React.FC = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium text-white/80 text-xs mb-1">Testing and Verification</p>
-                  <ul className="text-xs text-white/70 space-y-1">
+                  <p className="font-medium text-white text-xs mb-1">Testing and Verification</p>
+                  <ul className="text-xs text-white space-y-1">
                     <li>Test continuity between all sections</li>
                     <li>Maximum resistance: 0.05 Ohm per joint</li>
                     <li>Verify earth connection to main earthing terminal</li>
@@ -511,7 +511,7 @@ const Module3Section2_3: React.FC = () => {
               <p className="font-medium text-elec-yellow text-sm mb-2">
                 Overfilling trunking beyond capacity
               </p>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>Exceeding 45% fill factor causing overheating and difficult access</li>
                 <li>Not allowing for future cable additions</li>
                 <li>
@@ -525,7 +525,7 @@ const Module3Section2_3: React.FC = () => {
               <p className="font-medium text-amber-300 text-sm mb-2">
                 Poor segregation of different services
               </p>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>Mixing power and data cables without barriers</li>
                 <li>Electromagnetic interference affecting sensitive circuits</li>
                 <li>
@@ -539,7 +539,7 @@ const Module3Section2_3: React.FC = () => {
               <p className="font-medium text-elec-yellow text-sm mb-2">
                 Inadequate support spacing
               </p>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>Trunking sagging due to excessive support intervals</li>
                 <li>Lids becoming difficult to remove or replace</li>
                 <li>
@@ -553,7 +553,7 @@ const Module3Section2_3: React.FC = () => {
               <p className="font-medium text-elec-yellow text-sm mb-2">
                 Steel trunking earthing failures
               </p>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>Poor electrical continuity through painted or corroded joints</li>
                 <li>Missing earth bonds at main positions</li>
                 <li>
@@ -630,11 +630,11 @@ const Module3Section2_3: React.FC = () => {
               <Building className="w-6 h-6 text-elec-yellow mt-1 flex-shrink-0" />
               <div>
                 <p className="font-medium text-white mb-2">The Project</p>
-                <p className="text-sm text-white/90 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   A modern office complex required comprehensive electrical and data infrastructure
                   across 5 floors. Different areas had varying requirements:
                 </p>
-                <ul className="list-disc pl-4 mt-2 text-sm text-white/80 space-y-1">
+                <ul className="list-disc pl-4 mt-2 text-sm text-white space-y-1">
                   <li>Open plan offices: Desk-level power and data access</li>
                   <li>Meeting rooms: AV equipment and presentation systems</li>
                   <li>Server room: High-density cabling with EMC requirements</li>
@@ -646,7 +646,7 @@ const Module3Section2_3: React.FC = () => {
             <div className="grid sm:grid-cols-2 gap-4 mb-4">
               <div className="p-3 rounded bg-green-500/10 border border-green-400/20">
                 <p className="font-medium text-green-300 text-sm mb-2">Smart Trunking Strategy</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Office areas: Dado-height PVC trunking with twin compartments</li>
                   <li>Power compartment: 13A sockets every 2 metres</li>
                   <li>Data compartment: Cat6 outlets with future capacity</li>
@@ -668,7 +668,7 @@ const Module3Section2_3: React.FC = () => {
 
             <div className="p-3 rounded bg-teal-500/10 border border-teal-400/20">
               <p className="font-medium text-teal-300 text-sm mb-1">Future-Proofing Success</p>
-              <p className="text-white/80 text-xs">
+              <p className="text-white text-xs">
                 After 3 years, the installation has supported major IT upgrades, office
                 reconfigurations, and 40% staff growth without requiring additional trunking -
                 demonstrating excellent planning and specification.
@@ -684,7 +684,7 @@ const Module3Section2_3: React.FC = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -716,7 +716,7 @@ const Module3Section2_3: React.FC = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../2-2">

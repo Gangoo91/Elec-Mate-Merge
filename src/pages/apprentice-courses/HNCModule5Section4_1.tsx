@@ -257,7 +257,7 @@ const HNCModule5Section4_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section4">
@@ -279,7 +279,7 @@ const HNCModule5Section4_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Quality Management Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             ISO 9001 requirements, quality procedures, documentation control and continual
             improvement for building services
           </p>
@@ -704,7 +704,7 @@ const HNCModule5Section4_1 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-2">Documents (Controlled)</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Quality procedures</li>
                   <li>Work instructions</li>
                   <li>Drawings and specifications</li>
@@ -714,7 +714,7 @@ const HNCModule5Section4_1 = () => {
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-2">Records (Evidence)</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Completed test certificates</li>
                   <li>Inspection reports</li>
                   <li>NCRs and corrective actions</li>
@@ -747,7 +747,7 @@ const HNCModule5Section4_1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Common issue:</strong> Operatives working from superseded drawings is a
               frequent cause of rework. Establish a clear process for removing old drawings when new
               revisions are issued.
@@ -1035,7 +1035,7 @@ const HNCModule5Section4_1 = () => {
                 board installation includes a hold point for pre-energisation inspection. What must
                 happen?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Hold Point: Pre-energisation Inspection (H)</p>
                 <p className="mt-2">Requirements:</p>
                 <p>• Work must STOP until inspection completed</p>
@@ -1057,7 +1057,7 @@ const HNCModule5Section4_1 = () => {
                 <strong>Scenario:</strong> Containment installed at 2.7m height instead of specified
                 3.0m. How should this be managed?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>NCR-2024-0047: Cable Containment at Incorrect Height</p>
                 <p className="mt-2">
                   Description: 25m of cable tray installed at 2.7m instead of 3.0m per DWG-E-201 Rev
@@ -1087,7 +1087,7 @@ const HNCModule5Section4_1 = () => {
                 <strong>Scenario:</strong> Internal audit finds 3 superseded drawings in site
                 office. How should this be addressed?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Audit Finding: AF-2024-012</p>
                 <p className="mt-2">
                   Observation: 3 superseded drawings found in active use folder
@@ -1179,7 +1179,7 @@ const HNCModule5Section4_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1228,7 +1228,7 @@ const HNCModule5Section4_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section4">

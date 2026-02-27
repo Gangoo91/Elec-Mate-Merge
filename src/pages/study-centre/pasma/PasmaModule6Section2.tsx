@@ -203,7 +203,7 @@ export default function PasmaModule6Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-6">
@@ -228,7 +228,7 @@ export default function PasmaModule6Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Risk Assessment
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The systematic process of identifying hazards, evaluating risks, and implementing
             controls &mdash; from the HSE 5-step method to dynamic on-site reassessment
           </p>
@@ -312,7 +312,7 @@ export default function PasmaModule6Section2() {
                     </span>
                     <p className="text-sm font-medium text-green-300">Identify the Hazards</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Walk the work area and look for anything that could cause harm. For tower work,
                     this includes: ground conditions, overhead obstructions and power lines, weather
                     exposure, nearby traffic and pedestrians, manual handling demands, access
@@ -331,7 +331,7 @@ export default function PasmaModule6Section2() {
                       Decide Who Might Be Harmed and How
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Consider everyone who could be affected: the assembly team, the tower users,
                     other trades working nearby, members of the public, site visitors, and
                     maintenance staff. Think about how each group could be harmed &mdash; a falling
@@ -350,7 +350,7 @@ export default function PasmaModule6Section2() {
                       Evaluate the Risks and Decide on Controls
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     For each hazard, assess how likely it is to cause harm and how severe the
                     consequences could be. Use the hierarchy of control to select the most effective
                     measures: eliminate, substitute, engineer, administrate, PPE. Record the
@@ -366,7 +366,7 @@ export default function PasmaModule6Section2() {
                     </span>
                     <p className="text-sm font-medium text-purple-300">Record Your Findings</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Write down the significant hazards, who is at risk, and the control measures in
                     place or planned. The record must be specific enough to be useful &mdash;
                     &ldquo;risk of falls&rdquo; is not enough; &ldquo;risk of falls from platform at
@@ -384,7 +384,7 @@ export default function PasmaModule6Section2() {
                     </span>
                     <p className="text-sm font-medium text-teal-300">Review and Update</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Risk assessment is not a one-off exercise. Review the assessment whenever the
                     work changes, the location changes, new hazards are identified, after any
                     incident or near-miss, or at regular intervals for ongoing work. An outdated
@@ -416,7 +416,7 @@ export default function PasmaModule6Section2() {
                 <p className="text-sm font-medium text-elec-yellow mb-3">
                   Comprehensive Tower Hazard Checklist
                 </p>
-                <div className="grid md:grid-cols-2 gap-4 text-sm text-white/80">
+                <div className="grid md:grid-cols-2 gap-4 text-sm text-white">
                   <ul className="space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
@@ -502,7 +502,7 @@ export default function PasmaModule6Section2() {
                     Do Not Forget the Human Factors
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The risk assessment must also consider human factors: competence and training
                   levels of the team, fitness for work, fatigue from long shifts or travel,
                   familiarity with the specific tower system being used, and language barriers in
@@ -513,7 +513,7 @@ export default function PasmaModule6Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Seasonal Hazard Variations</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The hazard profile of a tower work location changes with the seasons. Summer
                   brings heat stress, UV exposure, dehydration, and thunderstorms. Autumn brings
                   early darkness, wet leaves on ground surfaces, and increasing wind. Winter
@@ -527,7 +527,7 @@ export default function PasmaModule6Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Concurrent Activities on Site</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Construction sites are dynamic environments with multiple trades working
                   simultaneously. A risk assessment for tower work must consider what else is
                   happening nearby: crane operations that may swing loads over the tower, excavation
@@ -565,7 +565,7 @@ export default function PasmaModule6Section2() {
                     Likelihood Scale (1&ndash;5)
                   </p>
                 </div>
-                <div className="space-y-1 text-sm text-white/80">
+                <div className="space-y-1 text-sm text-white">
                   <p>
                     <strong className="text-white">1 &mdash; Very unlikely:</strong> Could happen
                     but only in exceptional circumstances
@@ -593,7 +593,7 @@ export default function PasmaModule6Section2() {
                 <p className="text-sm font-medium text-elec-yellow mb-3">
                   Severity Scale (1&ndash;5)
                 </p>
-                <div className="space-y-1 text-sm text-white/80">
+                <div className="space-y-1 text-sm text-white">
                   <p>
                     <strong className="text-white">1 &mdash; Negligible:</strong> Minor injury
                     requiring first aid only (small cut, bruise)
@@ -625,21 +625,21 @@ export default function PasmaModule6Section2() {
                   <div className="bg-green-500/15 border border-green-500/30 p-3 rounded-lg text-center">
                     <p className="font-bold text-green-300 mb-1">1&ndash;4</p>
                     <p className="text-green-300 text-xs font-medium">LOW RISK</p>
-                    <p className="text-white/70 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Acceptable &mdash; monitor and maintain existing controls
                     </p>
                   </div>
                   <div className="bg-amber-500/15 border border-amber-500/30 p-3 rounded-lg text-center">
                     <p className="font-bold text-amber-300 mb-1">5&ndash;12</p>
                     <p className="text-amber-300 text-xs font-medium">MEDIUM RISK</p>
-                    <p className="text-white/70 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Reduce if reasonably practicable &mdash; implement additional controls
                     </p>
                   </div>
                   <div className="bg-red-500/15 border border-red-500/30 p-3 rounded-lg text-center">
                     <p className="font-bold text-red-300 mb-1">13&ndash;25</p>
                     <p className="text-red-300 text-xs font-medium">HIGH RISK</p>
-                    <p className="text-white/70 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Do not proceed until risk is reduced to an acceptable level
                     </p>
                   </div>
@@ -657,7 +657,7 @@ export default function PasmaModule6Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Worked Example &mdash; Falls from Platform
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Hazard:</strong> Fall from working platform at 6
                     metres
@@ -712,7 +712,7 @@ export default function PasmaModule6Section2() {
                     Hierarchy of Control &mdash; Tower Examples
                   </p>
                 </div>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <p>
                     <strong className="text-white">1. Eliminate:</strong> Can the work at height be
                     avoided entirely? Can the task be done from ground level instead? Can
@@ -744,7 +744,7 @@ export default function PasmaModule6Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Cost-Benefit of Controls</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The cost of implementing controls must be weighed against the risk. Under UK law,
                   the principle of &ldquo;so far as is reasonably practicable&rdquo; (SFAIRP)
                   applies: a risk must be reduced unless the cost of doing so is grossly
@@ -759,7 +759,7 @@ export default function PasmaModule6Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     Tower-Specific Elimination Examples
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Use telescopic tools from ground level instead of climbing</span>
@@ -782,7 +782,7 @@ export default function PasmaModule6Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     Tower-Specific Engineering Controls
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Guardrails and toeboards on all open platform edges</span>
@@ -831,7 +831,7 @@ export default function PasmaModule6Section2() {
                     Tower Method Statement Contents
                   </p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Assembly sequence:</strong> The exact order in
                     which components are installed, from base setup through to completion. This must
@@ -863,7 +863,7 @@ export default function PasmaModule6Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   The Relationship Between Risk Assessment and Method Statement
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The risk assessment identifies the hazards and determines what controls are
                   needed. The method statement describes exactly how the work will be done,
                   incorporating those controls into the work procedure. Together, they form the RAMS
@@ -881,7 +881,7 @@ export default function PasmaModule6Section2() {
                     The Method Statement Must Be Site-Specific
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A generic method statement that has been copied from a template without being
                   tailored to the actual site conditions is worthless. It may even be dangerous if
                   it leads people to believe risks have been assessed when they have not. The method
@@ -894,7 +894,7 @@ export default function PasmaModule6Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Method Statement Template Structure
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   While each method statement must be site-specific, using a consistent template
                   ensures nothing is forgotten. A good template includes sections for: project
                   details, tower specification, site conditions, task description, step-by-step
@@ -909,7 +909,7 @@ export default function PasmaModule6Section2() {
                 <p className="text-sm font-medium text-elec-yellow mb-2">
                   Reviewing the Method Statement on Site
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The method statement is a living document. Before assembly begins, the assembly
                   lead should walk the team through each step at the actual assembly location. This
                   &ldquo;toolbox talk&rdquo; confirms that the method statement matches the
@@ -947,7 +947,7 @@ export default function PasmaModule6Section2() {
                     When to Carry Out Dynamic Risk Assessment
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -989,7 +989,7 @@ export default function PasmaModule6Section2() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Authority to Stop Work</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Every person on site has the authority and the duty to stop work if they believe
                     conditions have become unsafe. This is not limited to supervisors or managers.
                     An apprentice, a labourer, or a visiting subcontractor all have the same
@@ -999,7 +999,7 @@ export default function PasmaModule6Section2() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Re-Assessment Process</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Stop the current activity safely</span>
@@ -1036,7 +1036,7 @@ export default function PasmaModule6Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   The &ldquo;What If?&rdquo; Mindset
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Dynamic risk assessment is most effective when operatives develop a &ldquo;what
                   if?&rdquo; mindset — continuously asking: what if the wind picks up? What if that
                   vehicle reverses towards the tower? What if the ground becomes waterlogged from
@@ -1054,7 +1054,7 @@ export default function PasmaModule6Section2() {
                     No Repercussions for Stopping Work
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A culture where people are criticised for stopping work creates a culture where
                   people continue working in dangerous conditions. Any organisation that penalises
                   an operative for exercising their stop-work authority is creating the conditions
@@ -1091,7 +1091,7 @@ export default function PasmaModule6Section2() {
                     Who Needs to See the Risk Assessment?
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1133,7 +1133,7 @@ export default function PasmaModule6Section2() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Briefing Workers</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Briefing must be face-to-face, not just a document</span>
@@ -1160,7 +1160,7 @@ export default function PasmaModule6Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     Recording Near-Misses &amp; Incidents
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Every near-miss is a warning &mdash; record it</span>
@@ -1187,7 +1187,7 @@ export default function PasmaModule6Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Review Triggers</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The risk assessment must be reviewed and updated: after any incident or near-miss,
                   when the work activity or location changes, when new information about a hazard
                   becomes available (such as updated HSE guidance), when there is a significant
@@ -1199,7 +1199,7 @@ export default function PasmaModule6Section2() {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-elec-yellow mb-2">RIDDOR Reporting</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Under the Reporting of Injuries, Diseases and Dangerous Occurrences Regulations
                   2013 (RIDDOR), certain events must be reported to the HSE. For tower work, this
                   includes: any fatality, any specified injury (fracture other than
@@ -1215,7 +1215,7 @@ export default function PasmaModule6Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Risk Assessment as a Legal Document
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A risk assessment is not just a safety management tool &mdash; it is a legal
                   document. In the event of an accident, the risk assessment will be examined by the
                   HSE, by insurance investigators, and potentially by the courts. It needs to
@@ -1229,7 +1229,7 @@ export default function PasmaModule6Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Lessons Learned</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Every incident, near-miss, and completed risk assessment review is an opportunity
                   to learn. Share findings across the team and the wider organisation. What went
                   wrong? What nearly went wrong? What can be improved? A learning culture treats
@@ -1249,7 +1249,7 @@ export default function PasmaModule6Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1263,7 +1263,7 @@ export default function PasmaModule6Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-6-section-1">

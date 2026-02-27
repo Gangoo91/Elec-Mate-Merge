@@ -253,7 +253,7 @@ const FiberOpticsModule7Section5 = () => {
             <ArrowLeft className="w-5 h-5" />
             <span className="font-medium">Module 7</span>
           </Link>
-          <span className="text-white/50 text-sm">Section 5 of 5</span>
+          <span className="text-white text-sm">Section 5 of 5</span>
         </div>
       </div>
 
@@ -266,7 +266,7 @@ const FiberOpticsModule7Section5 = () => {
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
             Upgrade Planning and Network Expansion
           </h1>
-          <p className="text-white/70 text-lg">
+          <p className="text-white text-lg">
             Plan strategically for growing bandwidth demands and technology evolution
           </p>
         </div>
@@ -279,12 +279,12 @@ const FiberOpticsModule7Section5 = () => {
             <div className="bg-[#252525] rounded-lg p-4 border border-white/10">
               <TrendingUp className="w-6 h-6 text-green-500 mb-2" />
               <h3 className="text-white font-semibold text-sm mb-1">Capacity Planning</h3>
-              <p className="text-white/60 text-xs">Assess and plan for growth</p>
+              <p className="text-white text-xs">Assess and plan for growth</p>
             </div>
             <div className="bg-[#252525] rounded-lg p-4 border border-white/10">
               <ArrowUpRight className="w-6 h-6 text-elec-yellow mb-2" />
               <h3 className="text-white font-semibold text-sm mb-1">Migration Paths</h3>
-              <p className="text-white/60 text-xs">Speed and technology upgrades</p>
+              <p className="text-white text-xs">Speed and technology upgrades</p>
             </div>
           </div>
 
@@ -304,7 +304,7 @@ const FiberOpticsModule7Section5 = () => {
               ].map((outcome, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-white/80">{outcome}</span>
+                  <span className="text-white">{outcome}</span>
                 </li>
               ))}
             </ul>
@@ -317,7 +317,7 @@ const FiberOpticsModule7Section5 = () => {
               Capacity Assessment
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 Before planning any upgrade, thoroughly assess the current infrastructure.
                 Understanding what you have determines what options are available and
@@ -338,7 +338,7 @@ const FiberOpticsModule7Section5 = () => {
                   </div>
                   <div>
                     <span className="text-white font-medium">Fibre Inventory</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       How many fibres exist? How many are in use? How many spare?
                     </p>
                   </div>
@@ -349,7 +349,7 @@ const FiberOpticsModule7Section5 = () => {
                   </div>
                   <div>
                     <span className="text-white font-medium">Fibre Type and Grade</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Multimode (OM1/2/3/4/5) or singlemode (OS1/OS2)? What are the limitations?
                     </p>
                   </div>
@@ -360,7 +360,7 @@ const FiberOpticsModule7Section5 = () => {
                   </div>
                   <div>
                     <span className="text-white font-medium">Current Performance</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       OTDR test results, loss measurements, any marginal links?
                     </p>
                   </div>
@@ -371,7 +371,7 @@ const FiberOpticsModule7Section5 = () => {
                   </div>
                   <div>
                     <span className="text-white font-medium">Link Lengths</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Actual distances—do they fall within limits for higher speeds?
                     </p>
                   </div>
@@ -382,7 +382,7 @@ const FiberOpticsModule7Section5 = () => {
                   </div>
                   <div>
                     <span className="text-white font-medium">Pathway Capacity</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Space in trays, conduits, and ducts for additional cables if needed?
                     </p>
                   </div>
@@ -393,7 +393,7 @@ const FiberOpticsModule7Section5 = () => {
                   </div>
                   <div>
                     <span className="text-white font-medium">Documentation Status</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Are as-built drawings accurate? Is there a current labelling schedule?
                     </p>
                   </div>
@@ -407,7 +407,7 @@ const FiberOpticsModule7Section5 = () => {
                 <Zap className="w-4 h-4 text-elec-yellow" />
                 The Key Question
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 <strong className="text-white">
                   Can existing infrastructure support the required upgrade, or is new infrastructure
                   needed?
@@ -432,7 +432,7 @@ const FiberOpticsModule7Section5 = () => {
               Speed Upgrade Paths
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 Network speed requirements continue to grow. Understanding upgrade paths helps plan
                 cost-effective migrations while maximising existing infrastructure investment.
@@ -460,7 +460,7 @@ const FiberOpticsModule7Section5 = () => {
                     <span className="text-elec-yellow font-bold">40/100G</span>
                   </div>
                 </div>
-                <div className="text-white/60 text-sm">
+                <div className="text-white text-sm">
                   <p>
                     <strong className="text-white">1G → 10G:</strong> Usually straightforward—most
                     MM links support 10G with just transceiver upgrade
@@ -498,7 +498,7 @@ const FiberOpticsModule7Section5 = () => {
                     <span className="text-elec-yellow font-bold">100G+</span>
                   </div>
                 </div>
-                <div className="text-white/60 text-sm">
+                <div className="text-white text-sm">
                   <p>
                     <strong className="text-white">All speeds on duplex fibre:</strong> Singlemode
                     supports all speeds on 2 fibres using different transceiver technologies
@@ -524,13 +524,13 @@ const FiberOpticsModule7Section5 = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Speed</th>
-                      <th className="text-center py-2 px-3 text-white/60 font-medium">OM3</th>
-                      <th className="text-center py-2 px-3 text-white/60 font-medium">OM4</th>
-                      <th className="text-center py-2 px-3 text-white/60 font-medium">OM5</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">Speed</th>
+                      <th className="text-center py-2 px-3 text-white font-medium">OM3</th>
+                      <th className="text-center py-2 px-3 text-white font-medium">OM4</th>
+                      <th className="text-center py-2 px-3 text-white font-medium">OM5</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">10 Gbps</td>
                       <td className="py-2 px-3 text-center">300m</td>
@@ -575,7 +575,7 @@ const FiberOpticsModule7Section5 = () => {
               Capacity Expansion Options
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 When more fibre capacity is needed, several options exist—ranging from maximising
                 existing infrastructure to installing completely new cables.
@@ -591,35 +591,35 @@ const FiberOpticsModule7Section5 = () => {
               <div className="space-y-4">
                 <div className="border-l-4 border-green-500 pl-4">
                   <h5 className="text-green-400 font-medium">1. Upgrade Transceivers</h5>
-                  <p className="text-white/60 text-sm">
+                  <p className="text-white text-sm">
                     Replace electronics to run higher speeds on existing fibres. Lowest cost,
                     minimal disruption.
                   </p>
                 </div>
                 <div className="border-l-4 border-blue-500 pl-4">
                   <h5 className="text-blue-400 font-medium">2. Implement WDM</h5>
-                  <p className="text-white/60 text-sm">
+                  <p className="text-white text-sm">
                     Add wavelength multiplexing to existing fibres. BiDi transceivers or CWDM/DWDM
                     systems.
                   </p>
                 </div>
                 <div className="border-l-4 border-purple-500 pl-4">
                   <h5 className="text-purple-400 font-medium">3. Light Up Dark Fibres</h5>
-                  <p className="text-white/60 text-sm">
+                  <p className="text-white text-sm">
                     Use spare fibres installed during original construction. Requires only new
                     transceivers and patching.
                   </p>
                 </div>
                 <div className="border-l-4 border-amber-500 pl-4">
                   <h5 className="text-amber-400 font-medium">4. Add Cables to Existing Pathways</h5>
-                  <p className="text-white/60 text-sm">
+                  <p className="text-white text-sm">
                     Pull new cables through existing trays, conduits, and ducts where capacity
                     permits.
                   </p>
                 </div>
                 <div className="border-l-4 border-red-500 pl-4">
                   <h5 className="text-red-400 font-medium">5. Install New Pathways and Cables</h5>
-                  <p className="text-white/60 text-sm">
+                  <p className="text-white text-sm">
                     New infrastructure when existing pathways are full. Highest cost, most
                     disruptive.
                   </p>
@@ -633,7 +633,7 @@ const FiberOpticsModule7Section5 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="bg-[#1a1a1a] p-4 rounded-lg">
                   <h5 className="text-elec-yellow font-medium mb-2">BiDi (Bidirectional)</h5>
-                  <ul className="text-white/60 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>• Full duplex on single fibre</li>
                     <li>• 2 wavelengths (e.g., 1310/1550nm)</li>
                     <li>• Doubles effective fibre count</li>
@@ -642,7 +642,7 @@ const FiberOpticsModule7Section5 = () => {
                 </div>
                 <div className="bg-[#1a1a1a] p-4 rounded-lg">
                   <h5 className="text-elec-yellow font-medium mb-2">CWDM/DWDM</h5>
-                  <ul className="text-white/60 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>• Multiple channels per fibre</li>
                     <li>• CWDM: 8-18 channels typical</li>
                     <li>• DWDM: 40+ channels possible</li>
@@ -667,7 +667,7 @@ const FiberOpticsModule7Section5 = () => {
               Migration Strategies
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 Successful network upgrades require careful planning to minimise service disruption.
                 A phased approach reduces risk and allows learning from early stages.
@@ -687,7 +687,7 @@ const FiberOpticsModule7Section5 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Phase 1: Assessment and Planning</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Document current state, test existing infrastructure, identify requirements,
                       develop detailed plan
                     </p>
@@ -699,7 +699,7 @@ const FiberOpticsModule7Section5 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Phase 2: Pilot Deployment</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Upgrade a non-critical link first, validate procedures, train staff, identify
                       issues
                     </p>
@@ -711,7 +711,7 @@ const FiberOpticsModule7Section5 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Phase 3: Priority Links</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Upgrade critical backbone links during maintenance windows, verify performance
                     </p>
                   </div>
@@ -722,7 +722,7 @@ const FiberOpticsModule7Section5 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Phase 4: General Rollout</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Complete remaining links, typically building by building or zone by zone
                     </p>
                   </div>
@@ -733,7 +733,7 @@ const FiberOpticsModule7Section5 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Phase 5: Documentation and Closeout</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Update all documentation, final testing and certification, handover and
                       training
                     </p>
@@ -748,7 +748,7 @@ const FiberOpticsModule7Section5 = () => {
                 <AlertTriangle className="w-4 h-4" />
                 Risk Mitigation During Migration
               </h4>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>
                   • <strong className="text-white">Maintain rollback capability</strong>—keep old
                   equipment available until new system is proven
@@ -776,7 +776,7 @@ const FiberOpticsModule7Section5 = () => {
               Future-Proofing Principles
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 Network requirements continue to grow. Designing with future flexibility in mind
                 reduces the cost and disruption of future upgrades.
@@ -793,7 +793,7 @@ const FiberOpticsModule7Section5 = () => {
                     <span className="text-white font-medium">
                       Install more fibres than currently needed
                     </span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Marginal cost increase now vs major expense later. 2-3× current requirement is
                       common.
                     </p>
@@ -803,7 +803,7 @@ const FiberOpticsModule7Section5 = () => {
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Choose high-grade fibre types</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       OS2 for singlemode, OM4/OM5 for multimode. Higher grades support more upgrade
                       options.
                     </p>
@@ -815,7 +815,7 @@ const FiberOpticsModule7Section5 = () => {
                     <span className="text-white font-medium">
                       Provide pathway capacity for additional cables
                     </span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Install larger conduits and trays than needed. Include spare ducts for future
                       cables.
                     </p>
@@ -825,7 +825,7 @@ const FiberOpticsModule7Section5 = () => {
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Minimise connections</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Fewer connectors means lower loss, enabling higher speeds over longer
                       distances.
                     </p>
@@ -835,7 +835,7 @@ const FiberOpticsModule7Section5 = () => {
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Document thoroughly</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Accurate records enable efficient future planning. Include spare fibre
                       locations.
                     </p>
@@ -850,7 +850,7 @@ const FiberOpticsModule7Section5 = () => {
                 <BookOpen className="w-4 h-4" />
                 The Singlemode Question
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 For new installations, seriously consider singlemode even for short distances. While
                 transceivers cost more, singlemode has no distance or bandwidth limitations for any
                 foreseeable application. As transceiver costs decrease, the total cost of ownership
@@ -869,7 +869,7 @@ const FiberOpticsModule7Section5 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="bg-[#252525] rounded-lg p-5 border border-white/10">
                   <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                  <p className="text-white/70 text-sm">{faq.answer}</p>
+                  <p className="text-white text-sm">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -885,29 +885,29 @@ const FiberOpticsModule7Section5 = () => {
               <div className="space-y-3 text-sm">
                 <div className="flex items-center gap-3">
                   <span className="text-elec-yellow font-bold">1.</span>
-                  <span className="text-white/80">
+                  <span className="text-white">
                     Can existing fibre support required speed at current distance?
                   </span>
                   <span className="text-green-400">→ Upgrade transceivers</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="text-elec-yellow font-bold">2.</span>
-                  <span className="text-white/80">Need more capacity on existing fibres?</span>
+                  <span className="text-white">Need more capacity on existing fibres?</span>
                   <span className="text-green-400">→ Implement WDM</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="text-elec-yellow font-bold">3.</span>
-                  <span className="text-white/80">Spare dark fibres available?</span>
+                  <span className="text-white">Spare dark fibres available?</span>
                   <span className="text-green-400">→ Light them up</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="text-elec-yellow font-bold">4.</span>
-                  <span className="text-white/80">Pathway space available?</span>
+                  <span className="text-white">Pathway space available?</span>
                   <span className="text-green-400">→ Pull new cables</span>
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="text-elec-yellow font-bold">5.</span>
-                  <span className="text-white/80">No other options?</span>
+                  <span className="text-white">No other options?</span>
                   <span className="text-amber-400">→ New infrastructure required</span>
                 </div>
               </div>

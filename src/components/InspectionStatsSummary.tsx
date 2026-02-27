@@ -82,10 +82,10 @@ const InspectionStatsSummary = ({ inspectionItems }: InspectionStatsSummaryProps
           <div className="w-px h-4 bg-white/20" />
 
           <div className="flex items-center gap-1.5">
-            <span className="text-xs text-white/50">{progressPercent}%</span>
+            <span className="text-xs text-white">{progressPercent}%</span>
             <ChevronUp
               className={cn(
-                'h-4 w-4 text-white/50 transition-transform',
+                'h-4 w-4 text-white transition-transform',
                 isExpanded && 'rotate-180'
               )}
             />
@@ -104,7 +104,7 @@ const InspectionStatsSummary = ({ inspectionItems }: InspectionStatsSummaryProps
             {/* Progress Bar */}
             <div className="mb-4">
               <div className="flex items-center justify-between text-xs mb-1.5">
-                <span className="text-white/50">
+                <span className="text-white">
                   {completed} of {total} items
                 </span>
                 <span className="text-elec-yellow font-semibold">{progressPercent}%</span>
@@ -140,16 +140,16 @@ const InspectionStatsSummary = ({ inspectionItems }: InspectionStatsSummaryProps
             {/* Secondary Stats */}
             <div className="flex items-center justify-center gap-4 mt-3 pt-3 border-t border-white/10">
               <div className="flex items-center gap-1.5">
-                <Circle className="h-3 w-3 text-white/40" />
-                <span className="text-xs text-white/50">{notApplicable} N/A</span>
+                <Circle className="h-3 w-3 text-white" />
+                <span className="text-xs text-white">{notApplicable} N/A</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <AlertCircle className="h-3 w-3 text-blue-400" />
-                <span className="text-xs text-white/50">{notVerified} N/V</span>
+                <span className="text-xs text-white">{notVerified} N/V</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <AlertCircle className="h-3 w-3 text-purple-400" />
-                <span className="text-xs text-white/50">{limitation} LIM</span>
+                <span className="text-xs text-white">{limitation} LIM</span>
               </div>
             </div>
           </div>
@@ -178,7 +178,7 @@ const InspectionStatsSummary = ({ inspectionItems }: InspectionStatsSummaryProps
               style={{ width: `${progressPercent}%` }}
             />
           </div>
-          <div className="flex items-center justify-between text-xs text-white/50 mt-1.5">
+          <div className="flex items-center justify-between text-xs text-white mt-1.5">
             <span>{completed} completed</span>
             <span>{total - completed} remaining</span>
           </div>
@@ -191,7 +191,7 @@ const InspectionStatsSummary = ({ inspectionItems }: InspectionStatsSummaryProps
               <Check className="h-3.5 w-3.5 text-green-400" />
             </div>
             <span className="text-sm font-semibold text-green-400">{satisfactory}</span>
-            <span className="text-xs text-white/40">OK</span>
+            <span className="text-xs text-white">OK</span>
           </div>
 
           {c1Count > 0 && (
@@ -200,7 +200,7 @@ const InspectionStatsSummary = ({ inspectionItems }: InspectionStatsSummaryProps
                 <XCircle className="h-3.5 w-3.5 text-red-400" />
               </div>
               <span className="text-sm font-semibold text-red-400">{c1Count}</span>
-              <span className="text-xs text-white/40">C1</span>
+              <span className="text-xs text-white">C1</span>
             </div>
           )}
 
@@ -210,7 +210,7 @@ const InspectionStatsSummary = ({ inspectionItems }: InspectionStatsSummaryProps
                 <AlertTriangle className="h-3.5 w-3.5 text-orange-400" />
               </div>
               <span className="text-sm font-semibold text-orange-400">{c2Count}</span>
-              <span className="text-xs text-white/40">C2</span>
+              <span className="text-xs text-white">C2</span>
             </div>
           )}
 
@@ -220,12 +220,12 @@ const InspectionStatsSummary = ({ inspectionItems }: InspectionStatsSummaryProps
                 <AlertCircle className="h-3.5 w-3.5 text-yellow-400" />
               </div>
               <span className="text-sm font-semibold text-yellow-400">{c3Count}</span>
-              <span className="text-xs text-white/40">C3</span>
+              <span className="text-xs text-white">C3</span>
             </div>
           )}
 
           {notApplicable > 0 && (
-            <div className="flex items-center gap-1.5 text-white/50">
+            <div className="flex items-center gap-1.5 text-white">
               <span className="text-sm font-semibold">{notApplicable}</span>
               <span className="text-xs">N/A</span>
             </div>

@@ -209,7 +209,7 @@ const IpafModule3Section4 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Dismantling & Safe Lowering
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Safe dismantling in reverse sequence, controlled lowering of components, and
             post-dismantling site clearance
           </p>
@@ -395,7 +395,7 @@ const IpafModule3Section4 = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <h4 className="text-sm font-medium text-green-300 mb-2">Assembly Order</h4>
-                    <ol className="text-sm space-y-1 list-decimal ml-4 text-white/80">
+                    <ol className="text-sm space-y-1 list-decimal ml-4 text-white">
                       <li>Castors and base</li>
                       <li>First frames and braces</li>
                       <li>Guardrails (from below)</li>
@@ -410,7 +410,7 @@ const IpafModule3Section4 = () => {
                     <h4 className="text-sm font-medium text-red-300 mb-2">
                       Dismantling Order (Reverse)
                     </h4>
-                    <ol className="text-sm space-y-1 list-decimal ml-4 text-white/80">
+                    <ol className="text-sm space-y-1 list-decimal ml-4 text-white">
                       <li>Top guardrails (from below)</li>
                       <li>Top platform</li>
                       <li>Upper guardrails (from below)</li>
@@ -1067,7 +1067,7 @@ const IpafModule3Section4 = () => {
             <div className="space-y-4">
               <div>
                 <h3 className="font-semibold text-white mb-2">Dismantling Golden Rules</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1109,7 +1109,7 @@ const IpafModule3Section4 = () => {
 
               <div>
                 <h3 className="font-semibold text-white mb-2">Lowering Methods</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1136,7 +1136,7 @@ const IpafModule3Section4 = () => {
             <div className="space-y-4">
               <div>
                 <h3 className="font-semibold text-white mb-2">Post-Dismantling Checklist</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Inspect all components</span>
@@ -1174,7 +1174,7 @@ const IpafModule3Section4 = () => {
 
               <div>
                 <h3 className="font-semibold text-white mb-2">Stop Work If</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Wind exceeds manufacturer's limit</span>
@@ -1211,7 +1211,7 @@ const IpafModule3Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1227,7 +1227,7 @@ const IpafModule3Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../ipaf-module-3-section-3">

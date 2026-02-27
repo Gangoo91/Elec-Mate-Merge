@@ -142,7 +142,7 @@ const Module6Section7_1 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -160,13 +160,13 @@ const Module6Section7_1 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.7.1</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.7.1</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Why Certification Is Required (BS 7671 Compliance)
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Understanding the legal requirement for electrical certification
             </p>
           </header>
@@ -174,7 +174,7 @@ const Module6Section7_1 = () => {
           {/* Summary Box */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <h2 className="font-semibold text-white mb-3">Spot it in 30 Seconds</h2>
-            <ul className="space-y-2 text-sm text-white/80">
+            <ul className="space-y-2 text-sm text-white">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Certification is a legal requirement under EAWR 1989</span>
@@ -200,7 +200,7 @@ const Module6Section7_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Introduction
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Electrical certification is not optional paperwork — it is a legal requirement.
                 Every new installation, alteration, or addition must be verified, tested, and
@@ -217,7 +217,7 @@ const Module6Section7_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               The Purpose of Certification
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Certification exists to prove that an installation is safe, compliant, and fit for
                 use. It confirms that testing has been carried out and that results meet the
@@ -228,7 +228,7 @@ const Module6Section7_1 = () => {
 
               <div className="p-4 rounded-lg bg-blue-500/10 border-l-2 border-blue-400/50">
                 <h4 className="font-medium text-blue-300 mb-2">Key Functions of Certification:</h4>
-                <ul className="text-sm text-white/70 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>
                     • <strong>Legal Evidence:</strong> Proves compliance with statutory requirements
                   </li>
@@ -283,7 +283,7 @@ const Module6Section7_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Legal and Regulatory Framework
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 BS 7671 sets out the technical requirements for electrical installations, including
                 mandatory testing and certification. The Electricity at Work Regulations 1989 (EAWR)
@@ -295,7 +295,7 @@ const Module6Section7_1 = () => {
 
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-400/50">
                 <h4 className="font-medium text-green-300 mb-2">Key Regulations and Standards:</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-white/70">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-white">
                   <div>
                     <strong>BS 7671 (18th Edition):</strong>
                     <ul className="mt-1 space-y-1 ml-4">
@@ -326,7 +326,7 @@ const Module6Section7_1 = () => {
                 <h4 className="font-medium text-amber-300 mb-2">
                   Legal Consequences of Non-Compliance:
                 </h4>
-                <ul className="text-sm text-white/70 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Prosecution under EAWR with unlimited fines</li>
                   <li>• Personal imprisonment for up to 6 months</li>
                   <li>• Civil liability for damages and injuries</li>
@@ -357,7 +357,7 @@ const Module6Section7_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Proving Compliance and Accountability
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Certificates provide accountability by showing who carried out or supervised the
                 work and when it was tested. They include details of the installation, the test
@@ -370,7 +370,7 @@ const Module6Section7_1 = () => {
                 <h4 className="font-medium text-orange-300 mb-2">
                   Accountability Elements in Certification:
                 </h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-white/70">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-white">
                   <div>
                     <strong>Designer Accountability:</strong>
                     <ul className="mt-1 space-y-1 ml-4">
@@ -399,7 +399,7 @@ const Module6Section7_1 = () => {
 
               <div className="p-4 rounded-lg bg-purple-500/10 border-l-2 border-purple-400/50">
                 <h4 className="font-medium text-purple-300 mb-2">Certificate as Legal Evidence:</h4>
-                <ul className="text-sm text-white/70 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Admissible in court proceedings as evidence of compliance</li>
                   <li>• Demonstrates due diligence in safety matters</li>
                   <li>• Shows professional competence and proper procedures</li>
@@ -429,7 +429,7 @@ const Module6Section7_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Consequences of Non-Certification
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Failing to provide certification has serious consequences. Work may be deemed
                 non-compliant and illegal. Clients may refuse payment, insurers may deny cover, and
@@ -440,7 +440,7 @@ const Module6Section7_1 = () => {
 
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-400/50">
                 <h4 className="font-medium text-red-300 mb-2">Immediate Consequences:</h4>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-white/70">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-white">
                   <div>
                     <strong>Financial Impact:</strong>
                     <ul className="mt-1 space-y-1 ml-4">
@@ -491,26 +491,26 @@ const Module6Section7_1 = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-medium text-white mb-2">Use Correct Certificate Type</h4>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Always use the correct certificate type (EIC, MWC, or EICR) for the work carried
                   out.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-medium text-white mb-2">Complete All Sections</h4>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Make sure all sections of the certificate are completed clearly and accurately.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-medium text-white mb-2">No Energising Without Certification</h4>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Never energise a new installation until certification is complete.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-medium text-white mb-2">Part of the Installation</h4>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Treat certification as part of the installation, not an optional extra.
                 </p>
               </div>
@@ -528,7 +528,7 @@ const Module6Section7_1 = () => {
                 <h4 className="font-medium text-red-300 mb-2">
                   Certification Failure Leads to Personal Liability
                 </h4>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A small electrical contractor completed a new shop fit-out but failed to issue an
                   Electrical Installation Certificate. Months later, a fire broke out in the
                   premises. During the investigation, the contractor had no documentation to prove
@@ -538,7 +538,7 @@ const Module6Section7_1 = () => {
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-400/50">
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   <strong className="text-green-300">Lesson:</strong> Certification protects
                   electricians legally and financially as much as it protects the client.
                 </p>
@@ -557,7 +557,7 @@ const Module6Section7_1 = () => {
                 <h3 className="font-medium text-white mb-2">
                   Q: Is certification required for all electrical work?
                 </h3>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A: Yes. All new installations, alterations, and additions must be certified.
                 </p>
               </div>
@@ -565,14 +565,14 @@ const Module6Section7_1 = () => {
                 <h3 className="font-medium text-white mb-2">
                   Q: Does BS 7671 itself have the force of law?
                 </h3>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A: BS 7671 is not law, but compliance with it is widely recognised as the standard
                   for meeting legal duties under EAWR 1989.
                 </p>
               </div>
               <div>
                 <h3 className="font-medium text-white mb-2">Q: Who can sign a certificate?</h3>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A: Only a competent person who carried out or supervised the work and testing.
                 </p>
               </div>
@@ -583,7 +583,7 @@ const Module6Section7_1 = () => {
           <section className="mb-10">
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <h2 className="font-semibold text-white mb-3">Recap</h2>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Certification is a legal requirement under BS 7671 and EAWR 1989. It proves that
                 installations have been tested, meet safety standards, and are compliant.
                 Certificates provide accountability by recording test results, installation details,
@@ -600,7 +600,7 @@ const Module6Section7_1 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="..">

@@ -281,7 +281,7 @@ const Level3Module4Section5_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section5">
@@ -439,7 +439,7 @@ const Level3Module4Section5_2 = () => {
               verification that Zs is still acceptable.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> Replacing a socket outlet requires verifying: correct
               polarity, earth continuity to the new socket, insulation resistance (that the new
               connection hasn't introduced a fault), and confirmation that Zs at the socket is
@@ -501,19 +501,19 @@ const Level3Module4Section5_2 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">C1 - Danger Present</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Risk of injury - immediate action required to make safe
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">C2 - Potentially Dangerous</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Could become dangerous - urgent remedial action
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">C3 - Improvement Recommended</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Non-compliance but not dangerous - advise improvement
                 </p>
               </div>
@@ -579,7 +579,7 @@ const Level3Module4Section5_2 = () => {
               its location.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> An installation has 16kA prospective fault current at the
               main switch. A circuit with 0.5 ohms total impedance would have a reduced prospective
               fault current. If replacing an MCB on this circuit, verify the MCB's rated breaking
@@ -728,7 +728,7 @@ const Level3Module4Section5_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -775,7 +775,7 @@ const Level3Module4Section5_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section5-1">

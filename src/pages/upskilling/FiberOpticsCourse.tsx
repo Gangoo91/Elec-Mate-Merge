@@ -90,7 +90,7 @@ const FiberOpticsCourse = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling">
@@ -107,7 +107,7 @@ const FiberOpticsCourse = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Fiber Optics Technology
           </h1>
-          <p className="text-white/60 text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Optical fiber installation, fusion splicing, and OTDR testing procedures
           </p>
         </div>

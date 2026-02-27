@@ -122,7 +122,7 @@ export function StatCard({
         {/* Icon + Label row */}
         <div className="flex items-center gap-1.5 mb-1">
           <Icon className={cn('h-4 w-4', styles.iconColor)} />
-          <p className="text-[11px] sm:text-xs text-white/50 truncate">{label}</p>
+          <p className="text-[11px] sm:text-xs text-white truncate">{label}</p>
         </div>
 
         {/* Value - prominent, left-aligned */}
@@ -136,7 +136,7 @@ export function StatCard({
         />
 
         {/* Subtitle */}
-        {subtitle && <p className="text-[10px] text-white/40 mt-1 truncate">{subtitle}</p>}
+        {subtitle && <p className="text-[10px] text-white mt-1 truncate">{subtitle}</p>}
 
         {/* Trend indicator */}
         {trendDirection && (
@@ -145,7 +145,7 @@ export function StatCard({
               'inline-flex items-center gap-0.5 mt-1 text-[10px] font-medium',
               trendDirection === 'up' && 'text-green-400',
               trendDirection === 'down' && 'text-red-400',
-              trendDirection === 'neutral' && 'text-white/60'
+              trendDirection === 'neutral' && 'text-white'
             )}
           >
             {trendDirection === 'up' && <TrendingUp className="h-3 w-3" />}
@@ -205,7 +205,7 @@ export function CompactStat({
       )}
     >
       <Icon className={cn('h-3.5 w-3.5 sm:h-4 sm:w-4', styles.iconColor)} />
-      <span className="text-xs sm:text-sm text-white/90">{label}:</span>
+      <span className="text-xs sm:text-sm text-white">{label}:</span>
       <span className={cn('text-xs sm:text-sm font-semibold', styles.accentColor)}>
         {typeof value === 'number' ? value.toLocaleString() : value}
       </span>

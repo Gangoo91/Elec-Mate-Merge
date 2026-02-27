@@ -173,7 +173,7 @@ const Module3Section2_7 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -191,13 +191,13 @@ const Module3Section2_7 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 3</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 3.2.7</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 3.2.7</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Good Practice for Installing Containment
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Professional installation techniques ensuring safety, compliance, accessibility and
               future-proofing for electrical containment systems.
             </p>
@@ -209,7 +209,7 @@ const Module3Section2_7 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="grid md:grid-cols-2 gap-4 text-sm text-white/90">
+            <div className="grid md:grid-cols-2 gap-4 text-sm text-white">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-5 space-y-1">
@@ -251,7 +251,7 @@ const Module3Section2_7 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <ul className="list-disc pl-6 space-y-2 text-sm text-white/90">
+            <ul className="list-disc pl-6 space-y-2 text-sm text-white">
               <li>
                 Explain why good containment practice is important for safety, compliance and
                 professional standards.
@@ -285,7 +285,7 @@ const Module3Section2_7 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="rounded-lg p-4 bg-white/5 border border-white/10">
                   <p className="font-semibold text-white mb-3">Pre-Installation Planning</p>
-                  <div className="space-y-3 text-sm text-white/90">
+                  <div className="space-y-3 text-sm text-white">
                     <div>
                       <p className="font-medium text-elec-yellow mb-1">Site Assessment</p>
                       <ul className="list-disc pl-5 space-y-1">
@@ -309,7 +309,7 @@ const Module3Section2_7 = () => {
 
                 <div className="rounded-lg p-4 bg-white/5 border border-green-400/30">
                   <p className="font-semibold text-white mb-3">Capacity and Future-Proofing</p>
-                  <div className="space-y-3 text-sm text-white/90">
+                  <div className="space-y-3 text-sm text-white">
                     <div>
                       <p className="font-medium text-green-300 mb-1">Spare Capacity Planning</p>
                       <ul className="list-disc pl-5 space-y-1">
@@ -347,7 +347,7 @@ const Module3Section2_7 = () => {
             <div className="space-y-4">
               <div className="rounded-lg p-4 bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Professional installation standards</p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>
                     Quality reflects competency - poor containment indicates poor electrical work
                   </li>
@@ -362,7 +362,7 @@ const Module3Section2_7 = () => {
 
               <div className="rounded-lg p-4 bg-white/5 border border-cyan-400/30">
                 <p className="font-medium text-cyan-300 mb-2">Coordination with other trades</p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>Plumbing: Avoid conflicts and maintain clearances from water services</li>
                   <li>HVAC: Consider thermal effects and maintain access to ductwork</li>
                   <li>IT/Data: Plan segregation and coordinate cable routing requirements</li>
@@ -387,7 +387,7 @@ const Module3Section2_7 = () => {
                 <p className="font-semibold text-elec-yellow mb-2">
                   Alignment and spacing standards
                 </p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>
                     <strong>Straight runs:</strong> Use string lines and levels for accurate
                     alignment
@@ -463,7 +463,7 @@ const Module3Section2_7 = () => {
             <div className="space-y-4">
               <div className="rounded-lg p-4 bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Planning and design failures</p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>
                     <strong>Inadequate capacity planning:</strong> Sizing containment too small for
                     future needs
@@ -489,7 +489,7 @@ const Module3Section2_7 = () => {
 
               <div className="rounded-lg p-4 bg-white/5 border border-amber-400/30">
                 <p className="font-medium text-amber-300 mb-2">Installation quality issues</p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>
                     <strong>Poor alignment:</strong> Crooked or sagging containment creating
                     unprofessional appearance
@@ -524,7 +524,7 @@ const Module3Section2_7 = () => {
             <div className="space-y-4">
               <div className="rounded-lg p-4 bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Regulatory requirements</p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>
                     <strong>Section 521:</strong> Selection and erection of wiring systems
                   </li>
@@ -547,7 +547,7 @@ const Module3Section2_7 = () => {
                 <p className="font-medium text-green-300 mb-2">
                   Professional standards and best practice
                 </p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>
                     Quality workmanship reflects professional competency and attention to detail
                   </li>
@@ -562,7 +562,7 @@ const Module3Section2_7 = () => {
 
               <div className="rounded-lg p-4 bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-2">Inspection and testing considerations</p>
-                <ul className="list-disc pl-5 space-y-1 text-sm text-white/90">
+                <ul className="list-disc pl-5 space-y-1 text-sm text-white">
                   <li>Visual inspection easier when installation is neat and well-organised</li>
                   <li>Testing access provided through removable covers and accessible routing</li>
                   <li>Cable identification simplified through logical grouping and labelling</li>
@@ -583,7 +583,7 @@ const Module3Section2_7 = () => {
               <h3 className="font-medium text-white mb-2">
                 Office fit-out capacity planning failure
               </h3>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 In a large office fit-out, the initial installation used trunking that was filled to
                 maximum capacity on day one. Six months later, adding new data cabling required an
                 expensive and disruptive full replacement of the trunking system.
@@ -591,7 +591,7 @@ const Module3Section2_7 = () => {
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-2">Original installation problems</p>
-                  <ul className="list-disc pl-5 space-y-1 text-white/80">
+                  <ul className="list-disc pl-5 space-y-1 text-white">
                     <li>Trunking sized exactly for initial cable count</li>
                     <li>No consideration for future expansion requirements</li>
                     <li>Cables at 100% fill capacity restricting heat dissipation</li>
@@ -600,7 +600,7 @@ const Module3Section2_7 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-2">Improved approach on next project</p>
-                  <ul className="list-disc pl-5 space-y-1 text-white/80">
+                  <ul className="list-disc pl-5 space-y-1 text-white">
                     <li>30% spare capacity allowed for future installations</li>
                     <li>Modular design enabling easy system extension</li>
                     <li>Quick, inexpensive additions without disruption</li>
@@ -624,7 +624,7 @@ const Module3Section2_7 = () => {
                   className="rounded-lg p-4 bg-elec-yellow/5 border-l-2 border-elec-yellow/50"
                 >
                   <p className="font-medium text-white mb-1">Q: {faq.q}</p>
-                  <p className="text-sm text-white/80">A: {faq.a}</p>
+                  <p className="text-sm text-white">A: {faq.a}</p>
                 </div>
               ))}
             </div>
@@ -636,7 +636,7 @@ const Module3Section2_7 = () => {
               <h2 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
                 <CheckCircle2 className="w-5 h-5 text-elec-yellow" /> Summary
               </h2>
-              <div className="space-y-3 text-sm text-white/90">
+              <div className="space-y-3 text-sm text-white">
                 <p>
                   <strong>Good containment practice</strong> ensures safety, compliance, and
                   professional quality in electrical installations.
@@ -681,7 +681,7 @@ const Module3Section2_7 = () => {
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div className="rounded-lg p-4 bg-white/5 border border-green-400/30">
                 <h3 className="font-medium text-green-300 mb-3">DO</h3>
-                <ul className="space-y-2 text-white/90">
+                <ul className="space-y-2 text-white">
                   <li>- Plan cable routes and assess site constraints before starting</li>
                   <li>- Allow 25-30% spare capacity for future cable additions</li>
                   <li>- Maintain straight, level runs with consistent spacing</li>
@@ -694,7 +694,7 @@ const Module3Section2_7 = () => {
               </div>
               <div className="rounded-lg p-4 bg-white/5 border border-red-400/30">
                 <h3 className="font-medium text-red-300 mb-3">DON'T</h3>
-                <ul className="space-y-2 text-white/90">
+                <ul className="space-y-2 text-white">
                   <li>- Size containment exactly for initial cable requirements</li>
                   <li>- Install crooked or poorly aligned containment runs</li>
                   <li>- Overfill containment beyond recommended capacity</li>
@@ -717,7 +717,7 @@ const Module3Section2_7 = () => {
             <div className="grid md:grid-cols-2 gap-4 text-xs">
               <div className="rounded-lg p-3 bg-white/5 border border-white/10">
                 <h4 className="font-medium text-white mb-2">Planning Essentials</h4>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>- Survey site and existing services</li>
                   <li>- Plan logical cable routes</li>
                   <li>- Allow 25-30% spare capacity</li>
@@ -728,7 +728,7 @@ const Module3Section2_7 = () => {
               </div>
               <div className="rounded-lg p-3 bg-white/5 border border-green-400/30">
                 <h4 className="font-medium text-green-300 mb-2">Installation Quality</h4>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>- Straight, level alignment (+/-2mm/3m)</li>
                   <li>- Consistent support spacing</li>
                   <li>- Separate power/data cables</li>
@@ -753,24 +753,24 @@ const Module3Section2_7 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">12</span>
               Key References
             </h2>
-            <div className="space-y-2 text-sm text-white/90">
+            <div className="space-y-2 text-sm text-white">
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-3 rounded bg-white/5 gap-1">
                 <span className="font-medium">BS 7671:2018+A2:2022</span>
-                <span className="text-white/70">
+                <span className="text-white">
                   IET Wiring Regulations (Section 521, 527, 528)
                 </span>
               </div>
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-3 rounded bg-white/5 gap-1">
                 <span className="font-medium">BS EN 61537:2006</span>
-                <span className="text-white/70">Cable management systems</span>
+                <span className="text-white">Cable management systems</span>
               </div>
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-3 rounded bg-white/5 gap-1">
                 <span className="font-medium">BS EN 50085:2005</span>
-                <span className="text-white/70">Cable trunking and ducting systems</span>
+                <span className="text-white">Cable trunking and ducting systems</span>
               </div>
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center p-3 rounded bg-white/5 gap-1">
                 <span className="font-medium">IET Code of Practice</span>
-                <span className="text-white/70">Electrical installation work best practices</span>
+                <span className="text-white">Electrical installation work best practices</span>
               </div>
             </div>
           </section>

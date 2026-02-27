@@ -219,7 +219,7 @@ export default function ScaffoldingAwarenessModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-4">
@@ -246,7 +246,7 @@ export default function ScaffoldingAwarenessModule4Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Scaffold Tags &amp; Status
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding the scaffold tag colour system, what information tags must contain, where
             they must be placed, and why you must never use a scaffold that does not have a valid,
             current tag displayed
@@ -360,7 +360,7 @@ export default function ScaffoldingAwarenessModule4Section3() {
                 that all construction workers must understand:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                   <span>
@@ -425,7 +425,7 @@ export default function ScaffoldingAwarenessModule4Section3() {
                 time of the most recent inspection, the scaffold met all of the following criteria:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                   <span>
@@ -527,7 +527,7 @@ export default function ScaffoldingAwarenessModule4Section3() {
                 <strong>Common reasons for a yellow tag include:</strong>
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                   <span>
@@ -623,7 +623,7 @@ export default function ScaffoldingAwarenessModule4Section3() {
                 <strong>Situations that require a red tag include:</strong>
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                   <span>
@@ -730,7 +730,7 @@ export default function ScaffoldingAwarenessModule4Section3() {
                 <strong>Tag placement rules:</strong>
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                   <span>
@@ -831,7 +831,7 @@ export default function ScaffoldingAwarenessModule4Section3() {
                   <FileCheck className="h-5 w-5 text-slate-400" />
                   <p className="text-sm font-medium text-slate-400">Tag Information Fields</p>
                 </div>
-                <p className="text-xs text-white/50 mb-4">
+                <p className="text-xs text-white mb-4">
                   All fields required on a properly completed scaffold tag
                 </p>
                 <div className="space-y-3">
@@ -842,7 +842,7 @@ export default function ScaffoldingAwarenessModule4Section3() {
                       </div>
                       <p className="text-sm font-bold text-slate-400">Status Colour</p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Green (safe to use), Yellow/Amber (restrictions apply), or Red (do not use).
                       The colour must be immediately visible and unambiguous &mdash; this is the
                       first thing a worker should see when approaching the scaffold.
@@ -856,7 +856,7 @@ export default function ScaffoldingAwarenessModule4Section3() {
                       </div>
                       <p className="text-sm font-bold text-slate-400">Date of Inspection</p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       The exact date on which the most recent inspection was carried out. This
                       allows anyone to verify that the inspection is current (within seven days). If
                       the inspection date is more than seven days old, the scaffold must be treated
@@ -873,7 +873,7 @@ export default function ScaffoldingAwarenessModule4Section3() {
                         Inspector&rsquo;s Name &amp; Credentials
                       </p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       The full name, signature, and CISRS card number (or equivalent qualification
                       reference) of the competent person who carried out the inspection. This
                       establishes personal accountability and allows the inspection to be traced
@@ -888,7 +888,7 @@ export default function ScaffoldingAwarenessModule4Section3() {
                       </div>
                       <p className="text-sm font-bold text-slate-400">Next Inspection Due Date</p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       The date by which the next inspection must be carried out &mdash; no later
                       than seven days after the most recent inspection. This allows workers and
                       supervisors to verify that the scaffold remains within its inspection validity
@@ -906,7 +906,7 @@ export default function ScaffoldingAwarenessModule4Section3() {
                         Restrictions (if applicable)
                       </p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       For yellow (amber) tags, a clear and specific statement of which areas,
                       levels, bays, or features are restricted. Must describe the restriction in
                       plain language that any worker can understand. For example: &ldquo;Lifts
@@ -921,7 +921,7 @@ export default function ScaffoldingAwarenessModule4Section3() {
                       </div>
                       <p className="text-sm font-bold text-slate-400">Additional Information</p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Scaffold location or identification reference, scaffolding contractor&rsquo;s
                       name, maximum permitted loading class, scaffold design reference number, and
                       unique tag serial number (for traceability). Some tags also include the
@@ -968,7 +968,7 @@ export default function ScaffoldingAwarenessModule4Section3() {
               <Eye className="h-5 w-5 text-slate-400" />
               <p className="text-sm font-medium text-slate-400">Scaffold Tag Colour Reference</p>
             </div>
-            <p className="text-xs text-white/50 mb-4">
+            <p className="text-xs text-white mb-4">
               Quick-reference guide to the three tag colours and the correct response for each
             </p>
             <div className="space-y-3">
@@ -980,12 +980,12 @@ export default function ScaffoldingAwarenessModule4Section3() {
                   </div>
                   <div>
                     <p className="text-sm font-bold text-green-400">GREEN &mdash; Safe to Use</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Inspected &bull; Complete &bull; No restrictions
                     </p>
                   </div>
                 </div>
-                <ul className="space-y-1 text-xs text-white/70 ml-13">
+                <ul className="space-y-1 text-xs text-white ml-13">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1018,12 +1018,12 @@ export default function ScaffoldingAwarenessModule4Section3() {
                     <p className="text-sm font-bold text-yellow-400">
                       YELLOW (AMBER) &mdash; Restrictions Apply
                     </p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Partial scaffold &bull; Read the tag &bull; Avoid restricted areas
                     </p>
                   </div>
                 </div>
-                <ul className="space-y-1 text-xs text-white/70 ml-13">
+                <ul className="space-y-1 text-xs text-white ml-13">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-yellow-400" />
                     <span>Some areas are safe to use, others are restricted or incomplete</span>
@@ -1052,12 +1052,12 @@ export default function ScaffoldingAwarenessModule4Section3() {
                   </div>
                   <div>
                     <p className="text-sm font-bold text-red-400">RED &mdash; Do Not Use</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Unsafe &bull; Under erection/dismantling &bull; Condemned
                     </p>
                   </div>
                 </div>
-                <ul className="space-y-1 text-xs text-white/70 ml-13">
+                <ul className="space-y-1 text-xs text-white ml-13">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                     <span>
@@ -1084,16 +1084,16 @@ export default function ScaffoldingAwarenessModule4Section3() {
               <div className="bg-white/5 border border-white/20 rounded-lg p-4">
                 <div className="flex items-center gap-3 mb-2">
                   <div className="flex items-center justify-center w-10 h-10 rounded-full bg-white/10 border-2 border-white/30">
-                    <AlertTriangle className="h-5 w-5 text-white/70" />
+                    <AlertTriangle className="h-5 w-5 text-white" />
                   </div>
                   <div>
-                    <p className="text-sm font-bold text-white/80">NO TAG &mdash; Do Not Use</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-sm font-bold text-white">NO TAG &mdash; Do Not Use</p>
+                    <p className="text-xs text-white">
                       Unknown status &bull; Uninspected &bull; Treat as RED
                     </p>
                   </div>
                 </div>
-                <ul className="space-y-1 text-xs text-white/70 ml-13">
+                <ul className="space-y-1 text-xs text-white ml-13">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-white/50" />
                     <span>The scaffold&rsquo;s status is unknown — it may be unsafe</span>
@@ -1144,7 +1144,7 @@ export default function ScaffoldingAwarenessModule4Section3() {
                 <strong>Key features of the NASC/CISRS Scafftag system:</strong>
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                   <span>
@@ -1207,7 +1207,7 @@ export default function ScaffoldingAwarenessModule4Section3() {
                   <p className="text-sm font-semibold text-slate-400 mb-1">
                     Advantages Over Bespoke Systems
                   </p>
-                  <ul className="space-y-1 text-xs text-white/70">
+                  <ul className="space-y-1 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                       <span>Standardised format prevents omission of critical information</span>
@@ -1231,7 +1231,7 @@ export default function ScaffoldingAwarenessModule4Section3() {
                   <p className="text-sm font-semibold text-slate-400 mb-1">
                     HSE &amp; Industry Endorsement
                   </p>
-                  <ul className="space-y-1 text-xs text-white/70">
+                  <ul className="space-y-1 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                       <span>
@@ -1292,7 +1292,7 @@ export default function ScaffoldingAwarenessModule4Section3() {
                 typically means a person who holds one of the following CISRS qualifications:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                   <span>
@@ -1337,7 +1337,7 @@ export default function ScaffoldingAwarenessModule4Section3() {
                 findings in a written report. The inspection covers:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                   <span>
@@ -1449,7 +1449,7 @@ export default function ScaffoldingAwarenessModule4Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1467,7 +1467,7 @@ export default function ScaffoldingAwarenessModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-4">

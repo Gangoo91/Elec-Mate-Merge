@@ -211,7 +211,7 @@ export default function CdmRegulationsModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-1">
@@ -234,7 +234,7 @@ export default function CdmRegulationsModule1Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             When CDM Applies
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding which projects CDM applies to, single and multiple contractor scenarios,
             notification thresholds, domestic projects, and how CDM affects everyday electrical work
           </p>
@@ -323,7 +323,7 @@ export default function CdmRegulationsModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">Proportionate Application</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   &ldquo;Proportionate&rdquo; means the effort and formality of CDM compliance
                   should match the risk. A full rewire of a commercial building requires detailed
                   planning, a written construction phase plan, and formal appointments. Replacing a
@@ -341,7 +341,7 @@ export default function CdmRegulationsModule1Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   What Counts as Construction Work?
                 </p>
-                <p className="text-sm text-white/60 mb-3">
+                <p className="text-sm text-white mb-3">
                   As covered in Section 3, &ldquo;construction work&rdquo; under CDM 2015 includes:
                 </p>
                 <div className="grid sm:grid-cols-2 gap-2">
@@ -355,7 +355,7 @@ export default function CdmRegulationsModule1Section4() {
                     'Painting and decorating',
                     'Temporary works (scaffolding, formwork)',
                   ].map((item, i) => (
-                    <div key={i} className="flex items-start gap-2 text-sm text-white/80">
+                    <div key={i} className="flex items-start gap-2 text-sm text-white">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400/60 flex-shrink-0" />
                       <span>{item}</span>
                     </div>
@@ -365,7 +365,7 @@ export default function CdmRegulationsModule1Section4() {
 
               <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-blue-400 mb-2">The Key Principle</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If the work falls within the definition of construction work &mdash; and virtually
                   all electrical installation, maintenance, and repair work does &mdash; then CDM
                   applies. The question is never <em>&ldquo;Does CDM apply?&rdquo;</em> but rather
@@ -400,7 +400,7 @@ export default function CdmRegulationsModule1Section4() {
                 <div className="flex flex-col items-center gap-0 max-w-sm mx-auto">
                   <div className="w-full bg-blue-500/10 border border-blue-500/30 rounded-lg p-3 text-center">
                     <p className="text-sm font-medium text-blue-300">Client</p>
-                    <p className="text-xs text-white/60">Commissions the project</p>
+                    <p className="text-xs text-white">Commissions the project</p>
                   </div>
 
                   <div className="flex flex-col items-center py-1">
@@ -410,7 +410,7 @@ export default function CdmRegulationsModule1Section4() {
 
                   <div className="w-full bg-blue-500/15 border border-blue-500/40 rounded-lg p-3 text-center">
                     <p className="text-sm font-medium text-blue-300">Single Contractor</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Plans, manages &amp; carries out the work
                     </p>
                     <div className="mt-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-blue-500/20 border border-blue-500/30">
@@ -420,7 +420,7 @@ export default function CdmRegulationsModule1Section4() {
                     </div>
                   </div>
                 </div>
-                <p className="text-xs text-white/40 text-center mt-4">
+                <p className="text-xs text-white text-center mt-4">
                   No PD or PC appointment required
                 </p>
               </div>
@@ -429,7 +429,7 @@ export default function CdmRegulationsModule1Section4() {
                 <p className="text-sm font-medium text-blue-400 mb-2">
                   What the Single Contractor Must Do
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -495,7 +495,7 @@ export default function CdmRegulationsModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Mandatory Written Appointments</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The client <strong className="text-white">must</strong> appoint a{' '}
                   <strong className="text-white">principal designer (PD)</strong> and a{' '}
                   <strong className="text-white">principal contractor (PC)</strong> in writing.
@@ -517,7 +517,7 @@ export default function CdmRegulationsModule1Section4() {
                   {/* Client */}
                   <div className="w-full bg-blue-500/10 border border-blue-500/30 rounded-lg p-3 text-center">
                     <p className="text-sm font-medium text-blue-300">Client</p>
-                    <p className="text-xs text-white/60">Appoints PD &amp; PC in writing</p>
+                    <p className="text-xs text-white">Appoints PD &amp; PC in writing</p>
                   </div>
 
                   {/* Branch arrows */}
@@ -536,11 +536,11 @@ export default function CdmRegulationsModule1Section4() {
                   <div className="grid grid-cols-2 gap-3 w-full">
                     <div className="bg-blue-500/15 border border-blue-500/40 rounded-lg p-3 text-center">
                       <p className="text-sm font-medium text-blue-300">Principal Designer</p>
-                      <p className="text-xs text-white/60">Pre-construction phase coordination</p>
+                      <p className="text-xs text-white">Pre-construction phase coordination</p>
                     </div>
                     <div className="bg-blue-500/15 border border-blue-500/40 rounded-lg p-3 text-center">
                       <p className="text-sm font-medium text-blue-300">Principal Contractor</p>
-                      <p className="text-xs text-white/60">Construction phase coordination</p>
+                      <p className="text-xs text-white">Construction phase coordination</p>
                     </div>
                   </div>
 
@@ -553,21 +553,21 @@ export default function CdmRegulationsModule1Section4() {
                   {/* Contractors row */}
                   <div className="grid grid-cols-3 gap-2 w-full">
                     <div className="bg-white/5 border border-white/10 rounded-lg p-2 text-center">
-                      <p className="text-xs font-medium text-white/80">Contractor A</p>
-                      <p className="text-[10px] text-white/50">e.g. Electrician</p>
+                      <p className="text-xs font-medium text-white">Contractor A</p>
+                      <p className="text-[10px] text-white">e.g. Electrician</p>
                     </div>
                     <div className="bg-white/5 border border-white/10 rounded-lg p-2 text-center">
-                      <p className="text-xs font-medium text-white/80">Contractor B</p>
-                      <p className="text-[10px] text-white/50">e.g. Plumber</p>
+                      <p className="text-xs font-medium text-white">Contractor B</p>
+                      <p className="text-[10px] text-white">e.g. Plumber</p>
                     </div>
                     <div className="bg-white/5 border border-white/10 rounded-lg p-2 text-center">
-                      <p className="text-xs font-medium text-white/80">Contractor C</p>
-                      <p className="text-[10px] text-white/50">e.g. Builder</p>
+                      <p className="text-xs font-medium text-white">Contractor C</p>
+                      <p className="text-[10px] text-white">e.g. Builder</p>
                     </div>
                   </div>
                 </div>
 
-                <p className="text-xs text-white/40 text-center mt-4">
+                <p className="text-xs text-white text-center mt-4">
                   PD coordinates design risk &mdash; PC coordinates on-site health &amp; safety
                 </p>
               </div>
@@ -576,7 +576,7 @@ export default function CdmRegulationsModule1Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Key Requirements for Multi-Contractor Projects
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -641,7 +641,7 @@ export default function CdmRegulationsModule1Section4() {
 
               <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-blue-400 mb-3">Notification Thresholds</p>
-                <p className="text-sm text-white/60 mb-3">
+                <p className="text-sm text-white mb-3">
                   A project is notifiable if <strong className="text-white">EITHER</strong>{' '}
                   threshold is exceeded:
                 </p>
@@ -664,10 +664,10 @@ export default function CdmRegulationsModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">What Is a Person-Day?</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   A person-day is one individual working for one normal working day. For example:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>10 workers for 50 days = 500 person-days (notifiable)</span>
@@ -690,12 +690,12 @@ export default function CdmRegulationsModule1Section4() {
                   <ClipboardList className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">The F10 Notification</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The notification is made using an <strong className="text-white">F10 form</strong>
                   , submitted to the HSE as soon as practicable before the construction phase
                   begins. The F10 must include:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Project address and description of the work</span>
@@ -724,7 +724,7 @@ export default function CdmRegulationsModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Site Display Requirement</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A copy of the F10 notification (or the details contained within it) must be
                   <strong className="text-white"> displayed on site</strong> throughout the
                   construction phase. This is typically posted in the site office or on the health
@@ -760,7 +760,7 @@ export default function CdmRegulationsModule1Section4() {
                   <Home className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">Automatic Transfer of Duties</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   On domestic projects, the client&rsquo;s CDM duties{' '}
                   <strong className="text-white">automatically transfer</strong> to the
                   professionals carrying out the work:
@@ -768,14 +768,14 @@ export default function CdmRegulationsModule1Section4() {
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-blue-300 mb-1">Single Contractor</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Client duties transfer to the{' '}
                       <strong className="text-white">contractor</strong>
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-blue-300 mb-1">Multiple Contractors</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Client duties transfer to the{' '}
                       <strong className="text-white">principal contractor</strong>
                     </p>
@@ -787,14 +787,14 @@ export default function CdmRegulationsModule1Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   The Exception: Appointing a PD in Writing
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   A domestic client can choose to appoint a{' '}
                   <strong className="text-white">principal designer in writing</strong>. If they do
                   so, the client duties transfer to the PD instead of the contractor or PC. This is
                   the only way a domestic client can redirect the transfer of duties. Common
                   scenarios where this occurs include:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Large domestic extensions managed by an architect</span>
@@ -817,7 +817,7 @@ export default function CdmRegulationsModule1Section4() {
                     Practical Impact for Electricians
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   When you are the sole electrical contractor working on a domestic property, the
                   homeowner&rsquo;s CDM duties transfer to{' '}
                   <strong className="text-white">you</strong>. This means you are responsible for
@@ -856,7 +856,7 @@ export default function CdmRegulationsModule1Section4() {
                   {/* Rewires */}
                   <div className="bg-blue-500/5 border border-blue-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-blue-300 mb-2">Full Rewires</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Always construction work under CDM</span>
@@ -883,7 +883,7 @@ export default function CdmRegulationsModule1Section4() {
                     <p className="text-sm font-medium text-blue-300 mb-2">
                       New Installations (Part of a Larger Project)
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>
@@ -909,7 +909,7 @@ export default function CdmRegulationsModule1Section4() {
                     <p className="text-sm font-medium text-blue-300 mb-2">
                       Maintenance &amp; Periodic Testing
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>
@@ -943,7 +943,7 @@ export default function CdmRegulationsModule1Section4() {
                     <div className="w-6 h-6 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-[10px] text-green-400 font-bold">NO</span>
                     </div>
-                    <div className="text-sm text-white/80">
+                    <div className="text-sm text-white">
                       <strong className="text-white">Single electrical contractor only</strong>{' '}
                       &mdash; you are the only firm on the project. No PD or PC needed.
                     </div>
@@ -952,7 +952,7 @@ export default function CdmRegulationsModule1Section4() {
                     <div className="w-6 h-6 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-[10px] text-red-400 font-bold">YES</span>
                     </div>
-                    <div className="text-sm text-white/80">
+                    <div className="text-sm text-white">
                       <strong className="text-white">You plus any other contractor</strong> &mdash;
                       e.g. electrician + plumber, electrician + builder, electrician + decorator. PD
                       and PC must be appointed in writing.
@@ -989,28 +989,28 @@ export default function CdmRegulationsModule1Section4() {
                       Example 1: Office Refurbishment
                     </p>
                   </div>
-                  <p className="text-sm text-white/60 mb-3">
+                  <p className="text-sm text-white mb-3">
                     A landlord is refurbishing 3 floors of a commercial office building. The project
                     involves an electrical contractor, a plumbing contractor, a joinery firm, and a
                     painting contractor. The work will take 8 weeks with up to 15 workers on site at
                     any time.
                   </p>
                   <div className="bg-blue-500/5 border border-blue-500/20 p-3 rounded-lg space-y-2">
-                    <div className="flex items-start gap-2 text-sm text-white/80">
+                    <div className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-blue-400/70 mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">CDM applies:</strong> Yes &mdash;
                         construction work
                       </span>
                     </div>
-                    <div className="flex items-start gap-2 text-sm text-white/80">
+                    <div className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-blue-400/70 mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">Multiple contractors:</strong> Yes &mdash; PD
                         and PC must be appointed in writing
                       </span>
                     </div>
-                    <div className="flex items-start gap-2 text-sm text-white/80">
+                    <div className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-blue-400/70 mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">Notifiable:</strong> No &mdash; 40 working
@@ -1019,7 +1019,7 @@ export default function CdmRegulationsModule1Section4() {
                         person-days)
                       </span>
                     </div>
-                    <div className="flex items-start gap-2 text-sm text-white/80">
+                    <div className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-blue-400/70 mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">Actions:</strong> Client appoints PD + PC in
@@ -1036,33 +1036,33 @@ export default function CdmRegulationsModule1Section4() {
                     <Home className="h-5 w-5 text-blue-400" />
                     <p className="text-sm font-medium text-blue-400">Example 2: House Extension</p>
                   </div>
-                  <p className="text-sm text-white/60 mb-3">
+                  <p className="text-sm text-white mb-3">
                     A homeowner is having a single-storey kitchen extension built. The project
                     involves a builder, an electrician, and a plumber. The work will take 6 weeks
                     with up to 5 workers.
                   </p>
                   <div className="bg-blue-500/5 border border-blue-500/20 p-3 rounded-lg space-y-2">
-                    <div className="flex items-start gap-2 text-sm text-white/80">
+                    <div className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-blue-400/70 mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">CDM applies:</strong> Yes
                       </span>
                     </div>
-                    <div className="flex items-start gap-2 text-sm text-white/80">
+                    <div className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-blue-400/70 mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">Domestic client:</strong> Yes &mdash; duties
                         transfer to PC
                       </span>
                     </div>
-                    <div className="flex items-start gap-2 text-sm text-white/80">
+                    <div className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-blue-400/70 mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">Multiple contractors:</strong> Yes &mdash; PD
                         and PC must be appointed in writing (likely the builder as PC)
                       </span>
                     </div>
-                    <div className="flex items-start gap-2 text-sm text-white/80">
+                    <div className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-blue-400/70 mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">Notifiable:</strong> No &mdash; 30 working
@@ -1080,32 +1080,32 @@ export default function CdmRegulationsModule1Section4() {
                       Example 3: New Build Commercial Unit
                     </p>
                   </div>
-                  <p className="text-sm text-white/60 mb-3">
+                  <p className="text-sm text-white mb-3">
                     A developer is building a new retail unit. Multiple trades over 6 months, up to
                     30 workers on site at peak times.
                   </p>
                   <div className="bg-blue-500/5 border border-blue-500/20 p-3 rounded-lg space-y-2">
-                    <div className="flex items-start gap-2 text-sm text-white/80">
+                    <div className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-blue-400/70 mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">CDM applies:</strong> Yes
                       </span>
                     </div>
-                    <div className="flex items-start gap-2 text-sm text-white/80">
+                    <div className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-blue-400/70 mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">Multiple contractors:</strong> Yes &mdash; PD
                         and PC appointed in writing
                       </span>
                     </div>
-                    <div className="flex items-start gap-2 text-sm text-white/80">
+                    <div className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-blue-400/70 mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">Notifiable:</strong> Yes &mdash; exceeds both
                         thresholds (&gt;30 days with &gt;20 workers, and well over 500 person-days)
                       </span>
                     </div>
-                    <div className="flex items-start gap-2 text-sm text-white/80">
+                    <div className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-blue-400/70 mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">Full CDM:</strong> F10 submitted, health and
@@ -1124,34 +1124,34 @@ export default function CdmRegulationsModule1Section4() {
                       Example 4: Electrical Maintenance Contract
                     </p>
                   </div>
-                  <p className="text-sm text-white/60 mb-3">
+                  <p className="text-sm text-white mb-3">
                     An electrical contractor holds a maintenance contract for 20 commercial
                     properties. A single electrician attends each site for periodic testing and
                     minor repairs.
                   </p>
                   <div className="bg-blue-500/5 border border-blue-500/20 p-3 rounded-lg space-y-2">
-                    <div className="flex items-start gap-2 text-sm text-white/80">
+                    <div className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-blue-400/70 mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">CDM applies:</strong> Yes &mdash; maintenance
                         IS construction work
                       </span>
                     </div>
-                    <div className="flex items-start gap-2 text-sm text-white/80">
+                    <div className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-blue-400/70 mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">Single contractor per site:</strong> No PD/PC
                         needed at each site
                       </span>
                     </div>
-                    <div className="flex items-start gap-2 text-sm text-white/80">
+                    <div className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-blue-400/70 mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">Notifiable:</strong> No &mdash; individual
                         site visits are short with one worker
                       </span>
                     </div>
-                    <div className="flex items-start gap-2 text-sm text-white/80">
+                    <div className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-blue-400/70 mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">Proportionate:</strong> Risk assessment, safe
@@ -1169,26 +1169,26 @@ export default function CdmRegulationsModule1Section4() {
                       Example 5: Emergency Repair
                     </p>
                   </div>
-                  <p className="text-sm text-white/60 mb-3">
+                  <p className="text-sm text-white mb-3">
                     A factory calls out an electrician to repair a failed distribution board that
                     has shut down production. The work is urgent and completed in one day.
                   </p>
                   <div className="bg-blue-500/5 border border-blue-500/20 p-3 rounded-lg space-y-2">
-                    <div className="flex items-start gap-2 text-sm text-white/80">
+                    <div className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-blue-400/70 mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">CDM applies:</strong> Yes &mdash; even
                         emergency work is construction work
                       </span>
                     </div>
-                    <div className="flex items-start gap-2 text-sm text-white/80">
+                    <div className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-blue-400/70 mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">Proportionate:</strong> Dynamic risk
                         assessment, safe isolation, permit to work if required
                       </span>
                     </div>
-                    <div className="flex items-start gap-2 text-sm text-white/80">
+                    <div className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-blue-400/70 mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">Key point:</strong> Urgency does not remove
@@ -1207,27 +1207,27 @@ export default function CdmRegulationsModule1Section4() {
                       Example 6: Demolition Project
                     </p>
                   </div>
-                  <p className="text-sm text-white/60 mb-3">
+                  <p className="text-sm text-white mb-3">
                     An electrician is engaged to disconnect and make safe all electrical services
                     before a building is demolished. A demolition contractor will carry out the
                     demolition.
                   </p>
                   <div className="bg-blue-500/5 border border-blue-500/20 p-3 rounded-lg space-y-2">
-                    <div className="flex items-start gap-2 text-sm text-white/80">
+                    <div className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-blue-400/70 mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">CDM applies:</strong> Yes &mdash; demolition
                         is specifically listed as construction work
                       </span>
                     </div>
-                    <div className="flex items-start gap-2 text-sm text-white/80">
+                    <div className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-blue-400/70 mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">Multiple contractors:</strong> Yes &mdash;
                         electrician + demolition contractor, so PD and PC required
                       </span>
                     </div>
-                    <div className="flex items-start gap-2 text-sm text-white/80">
+                    <div className="flex items-start gap-2 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-blue-400/70 mt-0.5 flex-shrink-0" />
                       <span>
                         <strong className="text-white">High risk:</strong> Demolition work requires
@@ -1265,7 +1265,7 @@ export default function CdmRegulationsModule1Section4() {
                       Failing to Appoint PD/PC in Writing
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The most common breach is clients failing to appoint a principal designer and
                     principal contractor in writing on multi-contractor projects. Verbal agreements,
                     assumptions, and &ldquo;I thought the builder was doing that&rdquo; are not
@@ -1281,7 +1281,7 @@ export default function CdmRegulationsModule1Section4() {
                     <XCircle className="h-5 w-5 text-red-400" />
                     <p className="text-sm font-medium text-red-400">Late Appointments</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The PD and PC must be appointed{' '}
                     <strong className="text-white">before the construction phase begins</strong>.
                     Appointing them after work has started &mdash; or worse, retrospectively when an
@@ -1299,7 +1299,7 @@ export default function CdmRegulationsModule1Section4() {
                       Assuming CDM Doesn&rsquo;t Apply to Small Works
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     &ldquo;It&rsquo;s only a small job&rdquo; is never a valid reason to ignore CDM.
                     The regulations apply to <strong className="text-white">all</strong>{' '}
                     construction projects. Many electricians incorrectly believe CDM only applies to
@@ -1316,7 +1316,7 @@ export default function CdmRegulationsModule1Section4() {
                     <XCircle className="h-5 w-5 text-red-400" />
                     <p className="text-sm font-medium text-red-400">Not Notifying the HSE</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     When a project exceeds the notification thresholds, the F10 must be submitted to
                     the HSE before the construction phase begins. Failure to notify is an offence.
                     Common errors include: not calculating person-days correctly, forgetting to
@@ -1334,7 +1334,7 @@ export default function CdmRegulationsModule1Section4() {
                       Paperwork Without Substance
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Perhaps the most insidious mistake is treating CDM as a{' '}
                     <strong className="text-white">paperwork exercise</strong> rather than a genuine
                     health and safety management system. Having a construction phase plan that sits
@@ -1358,7 +1358,7 @@ export default function CdmRegulationsModule1Section4() {
                   {/* Start */}
                   <div className="w-full bg-blue-500/10 border border-blue-500/30 rounded-lg p-3 text-center">
                     <p className="text-sm font-medium text-blue-300">Is it construction work?</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       (Installation, maintenance, repair, demolition, etc.)
                     </p>
                   </div>
@@ -1371,19 +1371,19 @@ export default function CdmRegulationsModule1Section4() {
 
                   <div className="w-full bg-blue-500/15 border border-blue-500/40 rounded-lg p-3 text-center">
                     <p className="text-sm font-medium text-blue-300">CDM applies</p>
-                    <p className="text-xs text-white/60">How many contractors?</p>
+                    <p className="text-xs text-white">How many contractors?</p>
                   </div>
 
                   {/* Branch */}
                   <div className="grid grid-cols-2 gap-3 w-full mt-2">
                     {/* Single contractor path */}
                     <div className="flex flex-col items-center gap-1">
-                      <span className="text-[10px] text-white/50">1 contractor</span>
+                      <span className="text-[10px] text-white">1 contractor</span>
                       <div className="w-0.5 h-3 bg-blue-400/40" />
                       <div className="w-0 h-0 border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-t-[6px] border-t-blue-400/60" />
                       <div className="w-full bg-green-500/10 border border-green-500/30 rounded-lg p-2 text-center">
                         <p className="text-xs font-medium text-green-300">No PD/PC needed</p>
-                        <p className="text-[10px] text-white/50">
+                        <p className="text-[10px] text-white">
                           Contractor takes on additional duties
                         </p>
                       </div>
@@ -1391,12 +1391,12 @@ export default function CdmRegulationsModule1Section4() {
 
                     {/* Multiple contractor path */}
                     <div className="flex flex-col items-center gap-1">
-                      <span className="text-[10px] text-white/50">&gt;1 contractor</span>
+                      <span className="text-[10px] text-white">&gt;1 contractor</span>
                       <div className="w-0.5 h-3 bg-blue-400/40" />
                       <div className="w-0 h-0 border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-t-[6px] border-t-blue-400/60" />
                       <div className="w-full bg-red-500/10 border border-red-500/30 rounded-lg p-2 text-center">
                         <p className="text-xs font-medium text-red-300">PD + PC required</p>
-                        <p className="text-[10px] text-white/50">Appointed in writing by client</p>
+                        <p className="text-[10px] text-white">Appointed in writing by client</p>
                       </div>
                     </div>
                   </div>
@@ -1411,30 +1411,30 @@ export default function CdmRegulationsModule1Section4() {
                     <p className="text-sm font-medium text-blue-300">
                       Exceeds notification thresholds?
                     </p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       &gt;30 days/20 workers OR &gt;500 person-days
                     </p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-3 w-full mt-2">
                     <div className="flex flex-col items-center gap-1">
-                      <span className="text-[10px] text-white/50">NO</span>
+                      <span className="text-[10px] text-white">NO</span>
                       <div className="w-0.5 h-3 bg-blue-400/40" />
                       <div className="w-0 h-0 border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-t-[6px] border-t-blue-400/60" />
                       <div className="w-full bg-green-500/10 border border-green-500/30 rounded-lg p-2 text-center">
                         <p className="text-xs font-medium text-green-300">Not notifiable</p>
-                        <p className="text-[10px] text-white/50">
+                        <p className="text-[10px] text-white">
                           CDM still applies proportionately
                         </p>
                       </div>
                     </div>
                     <div className="flex flex-col items-center gap-1">
-                      <span className="text-[10px] text-white/50">YES</span>
+                      <span className="text-[10px] text-white">YES</span>
                       <div className="w-0.5 h-3 bg-blue-400/40" />
                       <div className="w-0 h-0 border-l-[5px] border-l-transparent border-r-[5px] border-r-transparent border-t-[6px] border-t-blue-400/60" />
                       <div className="w-full bg-orange-500/10 border border-orange-500/30 rounded-lg p-2 text-center">
                         <p className="text-xs font-medium text-orange-300">Notifiable</p>
-                        <p className="text-[10px] text-white/50">
+                        <p className="text-[10px] text-white">
                           Submit F10 to HSE &amp; display on site
                         </p>
                       </div>
@@ -1442,7 +1442,7 @@ export default function CdmRegulationsModule1Section4() {
                   </div>
                 </div>
 
-                <p className="text-xs text-white/40 text-center mt-4">
+                <p className="text-xs text-white text-center mt-4">
                   CDM always applies &mdash; the question is what level of compliance is
                   proportionate
                 </p>
@@ -1461,21 +1461,21 @@ export default function CdmRegulationsModule1Section4() {
 
                 {/* Table Header */}
                 <div className="grid grid-cols-4 gap-0 border-b border-white/10 text-xs font-semibold">
-                  <div className="p-2 sm:p-3 text-white/60">Requirement</div>
+                  <div className="p-2 sm:p-3 text-white">Requirement</div>
                   <div className="p-2 sm:p-3 text-center text-green-400 border-l border-white/10">
                     Single
                     <br />
-                    <span className="text-white/40 font-normal">Contractor</span>
+                    <span className="text-white font-normal">Contractor</span>
                   </div>
                   <div className="p-2 sm:p-3 text-center text-amber-400 border-l border-white/10">
                     Multi
                     <br />
-                    <span className="text-white/40 font-normal">Contractor</span>
+                    <span className="text-white font-normal">Contractor</span>
                   </div>
                   <div className="p-2 sm:p-3 text-center text-red-400 border-l border-white/10">
                     Notifiable
                     <br />
-                    <span className="text-white/40 font-normal">Project</span>
+                    <span className="text-white font-normal">Project</span>
                   </div>
                 </div>
 
@@ -1531,21 +1531,21 @@ export default function CdmRegulationsModule1Section4() {
                     key={i}
                     className={`grid grid-cols-4 gap-0 text-xs sm:text-sm ${i % 2 === 0 ? 'bg-white/[0.02]' : ''} ${i < 9 ? 'border-b border-white/5' : ''}`}
                   >
-                    <div className="p-2 sm:p-3 text-white/80">{row.item}</div>
-                    <div className="p-2 sm:p-3 text-center text-white/70 border-l border-white/5">
+                    <div className="p-2 sm:p-3 text-white">{row.item}</div>
+                    <div className="p-2 sm:p-3 text-center text-white border-l border-white/5">
                       {row.single}
                     </div>
-                    <div className="p-2 sm:p-3 text-center text-white/70 border-l border-white/5">
+                    <div className="p-2 sm:p-3 text-center text-white border-l border-white/5">
                       {row.multi}
                     </div>
-                    <div className="p-2 sm:p-3 text-center text-white/70 border-l border-white/5">
+                    <div className="p-2 sm:p-3 text-center text-white border-l border-white/5">
                       {row.notifiable}
                     </div>
                   </div>
                 ))}
 
                 <div className="p-3 border-t border-white/10">
-                  <p className="text-[10px] text-white/40">
+                  <p className="text-[10px] text-white">
                     * Proportionate &mdash; may be a simple method statement for low-risk work
                     <br />
                     ** A health and safety file is only required when there is a PD appointed to
@@ -1564,7 +1564,7 @@ export default function CdmRegulationsModule1Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1578,7 +1578,7 @@ export default function CdmRegulationsModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-1-section-3">

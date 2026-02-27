@@ -156,7 +156,7 @@ const Module2Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -178,7 +178,7 @@ const Module2Section4_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Frequency & UK Mains
           </h1>
-          <p className="text-base sm:text-lg text-white/70 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-white max-w-2xl mx-auto">
             50Hz fundamentals, period calculations, motor speeds and timing — practical frequency
             knowledge for electricians
           </p>
@@ -186,7 +186,7 @@ const Module2Section4_4 = () => {
 
         {/* Summary Box */}
         <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
-          <p className="text-sm text-white/80 leading-relaxed">
+          <p className="text-sm text-white leading-relaxed">
             <strong className="text-elec-yellow">Key Points:</strong> UK mains operates at 50Hz ±1%
             with a 20ms period. Motor synchronous speed = 120 × f ÷ poles. Small frequency
             variations are normal. Use Hz function on CAT-rated meters for measurement.
@@ -199,8 +199,8 @@ const Module2Section4_4 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">01</span>
             Learning Outcomes
           </h2>
-          <p className="text-white/70 mb-4">By the end of this section, you'll be able to:</p>
-          <ul className="space-y-3 text-white/80">
+          <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
+          <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>State UK mains frequency and calculate period using T = 1/f</span>
@@ -234,7 +234,7 @@ const Module2Section4_4 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">02</span>
             UK Mains Frequency and Period Relationships
           </h2>
-          <div className="space-y-6 text-white/80">
+          <div className="space-y-6 text-white">
             <p>
               UK mains operates at 50Hz with period T = 1/f = 20ms. Understanding this relationship
               is fundamental for motor calculations, timing circuits, and system analysis.
@@ -256,7 +256,7 @@ const Module2Section4_4 = () => {
                     <p className="text-white text-sm mb-2">
                       <strong>Basic Relationships:</strong>
                     </p>
-                    <ul className="list-disc pl-6 space-y-1 text-sm text-white/70">
+                    <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                       <li>
                         <strong>Frequency (f):</strong> Number of complete cycles per second (Hz)
                       </li>
@@ -279,7 +279,7 @@ const Module2Section4_4 = () => {
                     <p className="text-white text-sm mb-2">
                       <strong>Grid Frequency Control:</strong>
                     </p>
-                    <ul className="list-disc pl-6 space-y-1 text-sm text-white/70">
+                    <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                       <li>
                         <strong>Target:</strong> 50.00Hz but ±1% variation normal
                       </li>
@@ -311,7 +311,7 @@ const Module2Section4_4 = () => {
                     <p className="text-white text-sm mb-2">
                       <strong>Worked Examples:</strong>
                     </p>
-                    <ul className="list-disc pl-6 space-y-1 text-sm text-white/70">
+                    <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                       <li>
                         <strong>25Hz period:</strong> T = 1/25 = 0.04s = 40ms (half of 50Hz period)
                       </li>
@@ -353,7 +353,7 @@ const Module2Section4_4 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">03</span>
             Motor Speed Calculations and Applications
           </h2>
-          <div className="space-y-6 text-white/80">
+          <div className="space-y-6 text-white">
             <p>
               Motor speed is directly related to supply frequency through the synchronous speed
               formula. Understanding this relationship is essential for motor selection and
@@ -370,7 +370,7 @@ const Module2Section4_4 = () => {
                     <p className="text-elec-yellow text-sm mb-2">
                       <strong>Formula: ns = 120 × f ÷ poles</strong>
                     </p>
-                    <ul className="list-disc pl-6 space-y-1 text-sm text-white/80">
+                    <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                       <li>
                         <strong>ns:</strong> Synchronous speed in rpm
                       </li>
@@ -394,7 +394,7 @@ const Module2Section4_4 = () => {
                     <p className="text-white text-sm mb-2">
                       <strong>Standard 50Hz Synchronous Speeds:</strong>
                     </p>
-                    <ul className="list-disc pl-6 space-y-1 text-sm text-white/70">
+                    <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                       <li>
                         <strong>2-pole:</strong> 120 × 50 ÷ 2 = 3000 rpm (high speed applications)
                       </li>
@@ -421,7 +421,7 @@ const Module2Section4_4 = () => {
                     <p className="text-elec-yellow text-sm mb-2">
                       <strong>Slip Characteristics:</strong>
                     </p>
-                    <ul className="list-disc pl-6 space-y-1 text-sm text-white/80">
+                    <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                       <li>
                         <strong>Definition:</strong> Difference between synchronous and actual speed
                       </li>
@@ -445,7 +445,7 @@ const Module2Section4_4 = () => {
                     <p className="text-white text-sm mb-2">
                       <strong>Factors Affecting Slip:</strong>
                     </p>
-                    <ul className="list-disc pl-6 space-y-1 text-sm text-white/70">
+                    <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                       <li>
                         <strong>Load torque:</strong> Higher load = higher slip
                       </li>
@@ -486,7 +486,7 @@ const Module2Section4_4 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">04</span>
             Frequency Measurement and Monitoring
           </h2>
-          <div className="space-y-6 text-white/80">
+          <div className="space-y-6 text-white">
             <p>
               Accurate frequency measurement requires proper instrument selection and safe
               measurement techniques. Understanding normal variations helps distinguish between
@@ -528,7 +528,7 @@ const Module2Section4_4 = () => {
                     <p className="text-white text-sm mb-2">
                       <strong>Safety Requirements:</strong>
                     </p>
-                    <ul className="list-disc pl-6 space-y-1 text-sm text-white/70">
+                    <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                       <li>
                         <strong>CAT rating:</strong> CAT III 600V minimum for distribution boards
                       </li>
@@ -583,7 +583,7 @@ const Module2Section4_4 = () => {
                     <p className="text-white text-sm mb-2">
                       <strong>When to Investigate Further:</strong>
                     </p>
-                    <ul className="list-disc pl-6 space-y-1 text-sm text-white/70">
+                    <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                       <li>
                         <strong>Persistent low frequency:</strong> Below 49.5Hz for extended periods
                       </li>
@@ -620,7 +620,7 @@ const Module2Section4_4 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">05</span>
             Equipment Compatibility and Timing Applications
           </h2>
-          <div className="space-y-6 text-white/80">
+          <div className="space-y-6 text-white">
             <p>
               Frequency affects equipment operation, timing accuracy, and compatibility.
               Understanding these relationships helps with proper equipment selection and
@@ -665,7 +665,7 @@ const Module2Section4_4 = () => {
                     <p className="text-white text-sm mb-2">
                       <strong>Nameplate Identification:</strong>
                     </p>
-                    <ul className="list-disc pl-6 space-y-1 text-sm text-white/70">
+                    <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                       <li>
                         <strong>Check ratings:</strong> Look for "50Hz", "60Hz", or "50/60Hz"
                         markings
@@ -767,10 +767,10 @@ const Module2Section4_4 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">06</span>
             Real-world Examples
           </h2>
-          <div className="space-y-6 text-white/80">
+          <div className="space-y-6 text-white">
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
               <h3 className="text-elec-yellow font-semibold mb-2">Motor Speed Troubleshooting</h3>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 <strong>Situation:</strong> Factory conveyor running 5% slower than expected,
                 affecting production line timing.
                 <br />
@@ -792,7 +792,7 @@ const Module2Section4_4 = () => {
               <h3 className="text-elec-yellow font-semibold mb-2">
                 Import Equipment Frequency Issues
               </h3>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 <strong>Situation:</strong> 60Hz equipment from North America installed in UK
                 facility without frequency compatibility check.
                 <br />
@@ -822,7 +822,7 @@ const Module2Section4_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 last:border-b-0 pb-4 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -834,7 +834,7 @@ const Module2Section4_4 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">08</span>
             Frequency — Pocket Guide
           </h2>
-          <div className="grid md:grid-cols-2 gap-4 text-xs sm:text-sm text-white/80">
+          <div className="grid md:grid-cols-2 gap-4 text-xs sm:text-sm text-white">
             <div className="space-y-2">
               <h3 className="font-semibold text-white">Quick Calculations</h3>
               <ul className="list-disc pl-6 space-y-1">
@@ -866,7 +866,7 @@ const Module2Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level2/module2/section4/4-3">

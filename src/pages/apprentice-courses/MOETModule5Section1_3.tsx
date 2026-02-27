@@ -259,7 +259,7 @@ const MOETModule5Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module5-section1">
@@ -281,7 +281,7 @@ const MOETModule5Section1_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Temperature and Pressure Sensors
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Thermocouples, RTDs, thermistors, pressure transmitters and calibration fundamentals
           </p>
         </header>
@@ -881,7 +881,7 @@ const MOETModule5Section1_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Note:</strong> Under ST1426, maintenance technicians should be able to carry
               out basic calibration checks using portable calibration equipment, interpret
               calibration certificates, and understand when an instrument requires recalibration.
@@ -901,7 +901,7 @@ const MOETModule5Section1_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -920,7 +920,7 @@ const MOETModule5Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module5-section1-2">

@@ -82,7 +82,7 @@ const PPETab = () => {
     <div className="p-6 space-y-6">
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-semibold text-elec-yellow">PPE & Safety Equipment</h2>
-        <p className="text-white/80 max-w-3xl mx-auto leading-relaxed">
+        <p className="text-white max-w-3xl mx-auto leading-relaxed">
           Personal Protective Equipment is essential for every UK electrical apprentice. Your safety
           is paramount - never compromise on PPE quality or suitability.
         </p>
@@ -113,7 +113,7 @@ const PPETab = () => {
           <Shield className="h-5 w-5" />
           PPE Regulations & Best Practices in the UK
         </h3>
-        <div className="space-y-2 text-sm text-white/80 leading-relaxed">
+        <div className="space-y-2 text-sm text-white leading-relaxed">
           <p>
             <strong className="text-orange-300">Legal Requirements:</strong> The Personal Protective
             Equipment at Work Regulations 1992 (amended in 2022) requires employers to provide
@@ -142,7 +142,7 @@ const PPETab = () => {
           <AlertTriangle className="h-5 w-5" />
           Critical PPE Safety Points
         </h3>
-        <ul className="space-y-1 text-sm text-white/80">
+        <ul className="space-y-1 text-sm text-white">
           <li>• Never work without appropriate PPE - no job is worth an injury</li>
           <li>
             • Regular work gloves are NOT suitable for electrical work - use insulated gloves when

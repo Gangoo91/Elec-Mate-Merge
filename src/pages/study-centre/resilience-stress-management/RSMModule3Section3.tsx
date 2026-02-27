@@ -194,7 +194,7 @@ export default function RSMModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-3">
@@ -217,7 +217,7 @@ export default function RSMModule3Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Cognitive Strategies &amp; Reframing
           </h1>
-          <p className="text-white/80 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How your thoughts shape your emotions, common thinking traps in construction, and
             practical techniques for reframing unhelpful thought patterns
           </p>
@@ -323,11 +323,11 @@ export default function RSMModule3Section3() {
                   <Brain className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-white">The CBT Triangle</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Beck proposed that thoughts, feelings, and behaviours are interconnected in a
                   cycle. Each one influences the other two:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -351,7 +351,7 @@ export default function RSMModule3Section3() {
                     </span>
                   </li>
                 </ul>
-                <p className="text-sm text-white/80 mt-3">
+                <p className="text-sm text-white mt-3">
                   The good news is that this cycle works in both directions. By changing one element
                   &mdash; particularly the thought &mdash; you can change the entire cycle. This is
                   the basis of cognitive reframing: change the thought, and the feeling and
@@ -371,7 +371,7 @@ export default function RSMModule3Section3() {
                 <div className="grid sm:grid-cols-2 gap-3 mt-3">
                   <div className="bg-red-500/10 border border-red-500/20 p-3 rounded-lg">
                     <p className="text-xs font-medium text-red-400 mb-1">Distorted Response</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       <strong>Thought:</strong> &ldquo;I am a terrible electrician. I cannot even
                       get a basic EICR right.&rdquo;
                       <br />
@@ -382,7 +382,7 @@ export default function RSMModule3Section3() {
                   </div>
                   <div className="bg-green-500/10 border border-green-500/20 p-3 rounded-lg">
                     <p className="text-xs font-medium text-green-400 mb-1">Balanced Response</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       <strong>Thought:</strong> &ldquo;The C2 observations are useful feedback. I
                       need to review these specific areas and improve my approach for next
                       time.&rdquo;
@@ -429,13 +429,13 @@ export default function RSMModule3Section3() {
                     <AlertTriangle className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">1. Catastrophising</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Jumping to the worst possible outcome and treating it as the most likely
                     outcome. Catastrophising takes a problem and rapidly escalates it to a disaster,
                     skipping over all the intermediate steps and alternative outcomes.
                   </p>
                   <div className="bg-white/5 border border-white/10 p-2 rounded">
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       <strong className="text-rose-400">On site:</strong> &ldquo;I failed this EICR.
                       The client will complain. They will leave a bad review. I will lose all my
                       customers. My business will fail. I will lose my house.&rdquo; In reality, a
@@ -449,13 +449,13 @@ export default function RSMModule3Section3() {
                     <AlertTriangle className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">2. Black-and-White Thinking</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Also called all-or-nothing thinking. Viewing situations in only two categories
                     rather than on a continuum. Everything is either perfect or a complete failure;
                     there is no middle ground, no partial success, no grey area.
                   </p>
                   <div className="bg-white/5 border border-white/10 p-2 rounded">
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       <strong className="text-rose-400">On site:</strong> &ldquo;If this
                       installation is not absolutely perfect, it is rubbish.&rdquo; In reality, work
                       exists on a spectrum from compliant through to excellent. A competent
@@ -470,13 +470,13 @@ export default function RSMModule3Section3() {
                     <AlertTriangle className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">3. Mind Reading</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Assuming you know what other people are thinking or feeling without any actual
                     evidence. Mind reading often leads to defensive or avoidant behaviour based on
                     imagined rather than actual attitudes.
                   </p>
                   <div className="bg-white/5 border border-white/10 p-2 rounded">
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       <strong className="text-rose-400">On site:</strong> &ldquo;The client is going
                       to complain about everything I do. They clearly think I do not know what I am
                       doing.&rdquo; In reality, you have no evidence of what the client thinks. They
@@ -491,14 +491,14 @@ export default function RSMModule3Section3() {
                     <AlertTriangle className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">4. Personalisation</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Taking personal responsibility for events that are not your fault, or
                     attributing excessive blame to yourself for outcomes that were influenced by
                     many factors. Personalisation makes you the centre of blame for things that are
                     outside your control.
                   </p>
                   <div className="bg-white/5 border border-white/10 p-2 rounded">
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       <strong className="text-rose-400">On site:</strong> &ldquo;The project is
                       behind schedule. It must be because I am too slow.&rdquo; In reality, the
                       delay is caused by multiple factors: late material deliveries, other trades
@@ -513,14 +513,14 @@ export default function RSMModule3Section3() {
                     <AlertTriangle className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">5. Overgeneralisation</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Taking a single event and generalising it into a universal rule. Characterised
                     by words like &ldquo;always,&rdquo; &ldquo;never,&rdquo;
                     &ldquo;everything,&rdquo; and &ldquo;everyone.&rdquo; One negative experience
                     becomes proof of a permanent, unchangeable pattern.
                   </p>
                   <div className="bg-white/5 border border-white/10 p-2 rounded">
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       <strong className="text-rose-400">On site:</strong> &ldquo;I made a mistake on
                       this circuit. I always make mistakes. I will never be good enough.&rdquo; In
                       reality, one mistake on one circuit is a single, specific event that does not
@@ -534,7 +534,7 @@ export default function RSMModule3Section3() {
                     <AlertTriangle className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">6. Should Statements</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Imposing arbitrary rules on yourself (or others) about how things
                     &ldquo;should&rdquo; be, &ldquo;must&rdquo; be, or &ldquo;ought&rdquo; to be.
                     Should statements create guilt, frustration, and resentment because they set
@@ -542,7 +542,7 @@ export default function RSMModule3Section3() {
                     than evidence.
                   </p>
                   <div className="bg-white/5 border border-white/10 p-2 rounded">
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       <strong className="text-rose-400">On site:</strong> &ldquo;I should be faster
                       at wiring boards by now. Other sparks my age are much quicker.&rdquo; In
                       reality, speed varies based on experience, the specific type of board, working
@@ -584,7 +584,7 @@ export default function RSMModule3Section3() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Activating Event</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         The external event or situation that triggers the process. This is the
                         objective reality of what happened &mdash; stripped of interpretation. For
                         example: &ldquo;The client phoned and said they were unhappy with the
@@ -598,7 +598,7 @@ export default function RSMModule3Section3() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Beliefs</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Your thoughts, interpretations, assumptions, and beliefs about the
                         activating event. This is the critical mediating step &mdash; the filter
                         through which you process the event. For example: &ldquo;They think I am
@@ -613,7 +613,7 @@ export default function RSMModule3Section3() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Consequences</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         The emotional and behavioural results that follow from your beliefs. These
                         are not caused directly by A; they are caused by B. For example: feeling
                         anxious and ashamed (emotional consequence) and avoiding the client&rsquo;s
@@ -640,7 +640,7 @@ export default function RSMModule3Section3() {
                   </p>
                 </div>
                 <div className="space-y-2 mt-3">
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     <strong className="text-rose-400">A (Activating Event):</strong> A client phones
                     to say they are unhappy with the position of two sockets.
                   </p>
@@ -649,7 +649,7 @@ export default function RSMModule3Section3() {
                       <p className="text-xs font-medium text-red-400 mb-1">
                         Distorted Beliefs &rarr; Harmful Consequences
                       </p>
-                      <p className="text-xs text-white/80">
+                      <p className="text-xs text-white">
                         <strong>B:</strong> &ldquo;They think I am useless. They are going to leave
                         a terrible review. Everyone will find out.&rdquo;
                         <br />
@@ -661,7 +661,7 @@ export default function RSMModule3Section3() {
                       <p className="text-xs font-medium text-green-400 mb-1">
                         Balanced Beliefs &rarr; Constructive Consequences
                       </p>
-                      <p className="text-xs text-white/80">
+                      <p className="text-xs text-white">
                         <strong>B:</strong> &ldquo;The client has a preference about socket
                         positions. This is a minor issue that I can resolve quickly.&rdquo;
                         <br />
@@ -705,7 +705,7 @@ export default function RSMModule3Section3() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Identify the Distortion</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Catch the automatic thought and name the distortion. Ask yourself:
                         &ldquo;What just went through my mind?&rdquo; and then &ldquo;Which
                         distortion is this?&rdquo; Simply naming the distortion (&ldquo;That is
@@ -720,7 +720,7 @@ export default function RSMModule3Section3() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Challenge the Thought</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Test the thought against evidence. Ask: &ldquo;What is the actual evidence
                         for this thought? What is the evidence against it? What would I say to a
                         colleague who told me they were thinking this? Is there another way to look
@@ -737,7 +737,7 @@ export default function RSMModule3Section3() {
                       <p className="text-sm font-medium text-white">
                         Replace with a Balanced Thought
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Formulate a new thought that accounts for all the evidence &mdash; both for
                         and against. The balanced thought is not artificially positive; it is simply
                         more accurate and proportionate than the distorted original. It acknowledges
@@ -761,7 +761,7 @@ export default function RSMModule3Section3() {
                     <p className="text-xs font-medium text-rose-400 mb-1">
                       Example 1: Catastrophising
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       <strong>Distorted:</strong> &ldquo;The EICR failure means I am terrible at my
                       job. My career is over.&rdquo;
                       <br />
@@ -779,7 +779,7 @@ export default function RSMModule3Section3() {
                     <p className="text-xs font-medium text-rose-400 mb-1">
                       Example 2: Mind Reading
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       <strong>Distorted:</strong> &ldquo;The client is going to complain about
                       everything I do. They clearly think I do not know what I am doing.&rdquo;
                       <br />
@@ -797,7 +797,7 @@ export default function RSMModule3Section3() {
                     <p className="text-xs font-medium text-rose-400 mb-1">
                       Example 3: Should Statement
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       <strong>Distorted:</strong> &ldquo;I should be faster at this. Other
                       electricians my age would have finished by now.&rdquo;
                       <br />
@@ -846,21 +846,21 @@ export default function RSMModule3Section3() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 p-3 rounded">
                     <p className="text-xs font-medium text-rose-400">1. Situation</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       What happened? When? Where? Who was involved? Describe the facts of the
                       situation objectively, as if a camera were recording it.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded">
                     <p className="text-xs font-medium text-rose-400">2. Automatic Thought</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       What thought went through your mind? What was the first thing you said to
                       yourself? Write it down exactly, in the words you actually thought.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded">
                     <p className="text-xs font-medium text-rose-400">3. Emotion</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       What emotion did you feel? Rate its intensity from 0 to 100%. Name the
                       specific emotion (not &ldquo;bad&rdquo; but &ldquo;anxious,&rdquo;
                       &ldquo;angry,&rdquo; &ldquo;ashamed,&rdquo; etc.).
@@ -868,14 +868,14 @@ export default function RSMModule3Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded">
                     <p className="text-xs font-medium text-rose-400">4. Evidence For</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       What facts support the automatic thought? Be honest &mdash; there may be some
                       genuine evidence. List only observable facts, not feelings or assumptions.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded">
                     <p className="text-xs font-medium text-rose-400">5. Evidence Against</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       What facts contradict the automatic thought? What would a trusted colleague
                       say? Are there alternative explanations? Have you handled similar situations
                       successfully before?
@@ -883,7 +883,7 @@ export default function RSMModule3Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded">
                     <p className="text-xs font-medium text-rose-400">6. Balanced Thought</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Write a new thought that accounts for all the evidence &mdash; both for and
                       against. Rate your belief in this new thought (0-100%) and re-rate the
                       intensity of the original emotion.
@@ -897,37 +897,37 @@ export default function RSMModule3Section3() {
                   Completed Example: Thought Record
                 </p>
                 <div className="space-y-2 text-sm">
-                  <p className="text-white/80">
+                  <p className="text-white">
                     <strong className="text-rose-400">Situation:</strong> Tuesday, 2:30pm. Received
                     a phone call from a client saying the kitchen lights are not working properly,
                     two weeks after I completed the installation.
                   </p>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     <strong className="text-rose-400">Automatic Thought:</strong> &ldquo;I have done
                     a terrible job. I am losing my touch. The client will never hire me again and
                     will tell everyone I am unreliable.&rdquo;
                   </p>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     <strong className="text-rose-400">Emotion:</strong> Anxiety (75%), Shame (60%)
                   </p>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     <strong className="text-rose-400">Evidence For:</strong> The lights are not
                     working correctly. I did install them. The client has a genuine issue.
                   </p>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     <strong className="text-rose-400">Evidence Against:</strong> I have completed
                     hundreds of installations with no callbacks. Faults can develop after
                     installation for many reasons (faulty component, power surge, user error). The
                     client called me directly, which suggests they trust me enough to fix it. One
                     callback does not mean I am &ldquo;losing my touch.&rdquo;
                   </p>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     <strong className="text-rose-400">Balanced Thought:</strong> &ldquo;A callback
                     is inconvenient but normal in this trade. I will go back, diagnose the issue,
                     and fix it promptly. This is how you maintain client relationships. One issue
                     does not erase hundreds of successful installations.&rdquo;
                   </p>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     <strong className="text-rose-400">Re-rated Emotion:</strong> Anxiety (25%),
                     Shame (10%)
                   </p>
@@ -1010,7 +1010,7 @@ export default function RSMModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-3">

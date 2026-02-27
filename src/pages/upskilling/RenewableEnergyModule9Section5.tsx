@@ -252,7 +252,7 @@ const RenewableEnergyModule9Section5 = () => {
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
           Green Finance and Funding Options
         </h1>
-        <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+        <p className="text-white text-sm sm:text-base max-w-xl mx-auto">
           Government schemes, loans, and funding for renewable energy investment
         </p>
       </div>
@@ -300,7 +300,7 @@ const RenewableEnergyModule9Section5 = () => {
           ].map((outcome, index) => (
             <div key={index} className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
-              <span className="text-white/80 text-sm">{outcome}</span>
+              <span className="text-white text-sm">{outcome}</span>
             </div>
           ))}
         </div>
@@ -313,7 +313,7 @@ const RenewableEnergyModule9Section5 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">01</span>
             <h2 className="text-xl font-semibold text-white">Government Grant Schemes</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Government grants reduce the upfront cost of renewable energy installations, making
               them more accessible to a wider range of customers. Understanding current schemes is
@@ -355,7 +355,7 @@ const RenewableEnergyModule9Section5 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">02</span>
             <h2 className="text-xl font-semibold text-white">Green Loans and Finance Products</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Green loans are financial products specifically designed to fund environmental
               improvements. They may offer preferential terms compared to standard personal loans,
@@ -395,7 +395,7 @@ const RenewableEnergyModule9Section5 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">03</span>
             <h2 className="text-xl font-semibold text-white">Energy Company Obligation (ECO)</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               The Energy Company Obligation requires large energy suppliers to fund energy
               efficiency improvements in eligible households. This creates opportunities for fully
@@ -436,7 +436,7 @@ const RenewableEnergyModule9Section5 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">04</span>
             <h2 className="text-xl font-semibold text-white">Commercial and Innovative Finance</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Commercial customers have access to additional financing mechanisms that can enable
               renewable energy investment without significant upfront capital outlay.
@@ -476,7 +476,7 @@ const RenewableEnergyModule9Section5 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">05</span>
             <h2 className="text-xl font-semibold text-white">Ethical Finance Guidance</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Presenting finance options ethically is essential for customer protection, regulatory
               compliance, and maintaining professional reputation.
@@ -519,7 +519,7 @@ const RenewableEnergyModule9Section5 = () => {
             <Zap className="w-4 h-4 text-elec-yellow" />
             Practical Guidance
           </h3>
-          <div className="space-y-2 text-white/80 text-sm">
+          <div className="space-y-2 text-white text-sm">
             <p>
               <span className="text-white font-medium">Stay current:</span> Government schemes
               change frequently. Bookmark key scheme websites and check regularly. Incorrect
@@ -546,7 +546,7 @@ const RenewableEnergyModule9Section5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <h3 className="text-white font-medium mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>

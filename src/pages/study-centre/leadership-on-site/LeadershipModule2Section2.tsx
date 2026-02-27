@@ -208,7 +208,7 @@ export default function LeadershipModule2Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-2-section-1">
@@ -397,7 +397,7 @@ export default function LeadershipModule2Section2() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">The Bottleneck Test</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Ask yourself: &ldquo;If I were off sick for a week, would the work
                   continue?&rdquo; If the answer is no &mdash; if everything would grind to a halt
                   because only you know how to do certain things or make certain decisions &mdash;
@@ -439,7 +439,7 @@ export default function LeadershipModule2Section2() {
                     <p className="text-green-400 font-semibold mb-1">
                       High Will, Low Skill &rarr; GUIDE
                     </p>
-                    <p className="text-white/80 text-xs mb-2">
+                    <p className="text-white text-xs mb-2">
                       The enthusiastic beginner. Motivated and keen but lacks technical ability.
                     </p>
                     <p className="text-white text-xs">
@@ -456,7 +456,7 @@ export default function LeadershipModule2Section2() {
                     <p className="text-blue-400 font-semibold mb-1">
                       High Will, High Skill &rarr; DELEGATE
                     </p>
-                    <p className="text-white/80 text-xs mb-2">
+                    <p className="text-white text-xs mb-2">
                       The dream team member. Skilled, experienced, and motivated.
                     </p>
                     <p className="text-white text-xs">
@@ -472,7 +472,7 @@ export default function LeadershipModule2Section2() {
                     <p className="text-amber-400 font-semibold mb-1">
                       Low Will, High Skill &rarr; EXCITE
                     </p>
-                    <p className="text-white/80 text-xs mb-2">
+                    <p className="text-white text-xs mb-2">
                       Skilled but disengaged. Knows the work but has lost motivation.
                     </p>
                     <p className="text-white text-xs">
@@ -489,7 +489,7 @@ export default function LeadershipModule2Section2() {
                     <p className="text-red-400 font-semibold mb-1">
                       Low Will, Low Skill &rarr; DIRECT
                     </p>
-                    <p className="text-white/80 text-xs mb-2">
+                    <p className="text-white text-xs mb-2">
                       Lacks both ability and motivation. Needs the most support.
                     </p>
                     <p className="text-white text-xs">
@@ -509,7 +509,7 @@ export default function LeadershipModule2Section2() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Critical Insight</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The most common mistake is treating an &ldquo;Excite&rdquo; person (high skill,
                   low will) like a &ldquo;Guide&rdquo; (high will, low skill) &mdash; giving them
                   instruction when what they actually need is motivation and meaning. Telling an
@@ -591,7 +591,7 @@ export default function LeadershipModule2Section2() {
                 <div className="space-y-3 text-sm">
                   <div className="bg-red-500/10 border border-red-500/20 p-3 rounded-lg">
                     <p className="text-white font-medium">Level 1: Tell</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       &ldquo;Do this exactly as I say.&rdquo; You make the decision, no discussion.
                       Use for: safety-critical tasks, emergencies, regulatory compliance.
                     </p>
@@ -603,7 +603,7 @@ export default function LeadershipModule2Section2() {
                   </div>
                   <div className="bg-orange-500/10 border border-orange-500/20 p-3 rounded-lg">
                     <p className="text-white font-medium">Level 2: Sell</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       &ldquo;Do this, and here is why.&rdquo; You make the decision but explain your
                       reasoning to gain buy-in.
                     </p>
@@ -615,7 +615,7 @@ export default function LeadershipModule2Section2() {
                   </div>
                   <div className="bg-yellow-500/10 border border-yellow-500/20 p-3 rounded-lg">
                     <p className="text-white font-medium">Level 3: Consult</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       &ldquo;I need your input before I decide.&rdquo; You seek opinions but retain
                       the final decision.
                     </p>
@@ -627,7 +627,7 @@ export default function LeadershipModule2Section2() {
                   </div>
                   <div className="bg-green-500/10 border border-green-500/20 p-3 rounded-lg">
                     <p className="text-white font-medium">Level 4: Agree</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       &ldquo;Let us decide together.&rdquo; The decision is made jointly as equals.
                     </p>
                     <p className="text-white text-xs mt-1">
@@ -638,7 +638,7 @@ export default function LeadershipModule2Section2() {
                   </div>
                   <div className="bg-teal-500/10 border border-teal-500/20 p-3 rounded-lg">
                     <p className="text-white font-medium">Level 5: Advise</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       &ldquo;I will give my opinion, but you decide.&rdquo; You offer guidance but
                       the person owns the decision.
                     </p>
@@ -650,7 +650,7 @@ export default function LeadershipModule2Section2() {
                   </div>
                   <div className="bg-blue-500/10 border border-blue-500/20 p-3 rounded-lg">
                     <p className="text-white font-medium">Level 6: Inquire</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       &ldquo;You decide, but tell me about it.&rdquo; Full autonomy on the decision,
                       with a reporting requirement.
                     </p>
@@ -662,7 +662,7 @@ export default function LeadershipModule2Section2() {
                   </div>
                   <div className="bg-purple-500/10 border border-purple-500/20 p-3 rounded-lg">
                     <p className="text-white font-medium">Level 7: Delegate</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       &ldquo;You decide. No need to tell me.&rdquo; Complete autonomy and ownership.
                       Maximum trust.
                     </p>
@@ -687,7 +687,7 @@ export default function LeadershipModule2Section2() {
                   <Layers className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Matching Levels to Situations</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The same person may require different delegation levels for different tasks. An
                   experienced electrician might be at Level 7 for first fix wiring (their core
                   competence) but Level 2 for a new fire alarm system they have not worked with
@@ -702,7 +702,7 @@ export default function LeadershipModule2Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">The Development Path</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Over time, your goal is to progressively move people up the delegation levels:
                 </p>
                 <ul className="text-sm text-white space-y-1.5">
@@ -761,7 +761,7 @@ export default function LeadershipModule2Section2() {
                 <div className="space-y-3 text-sm">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-400 font-semibold mb-1">S &mdash; Specific</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Exactly what needs doing. Not &ldquo;sort out area B&rdquo; but
                       &ldquo;complete the first fix wiring in area B, connecting all socket outlets
                       to DB-3 per drawing E-101.&rdquo;
@@ -769,28 +769,28 @@ export default function LeadershipModule2Section2() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-400 font-semibold mb-1">M &mdash; Measurable</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       How you will know it is done correctly. &ldquo;All 24 socket outlets
                       connected, containment complete, cables labelled, ready for inspection.&rdquo;
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-400 font-semibold mb-1">A &mdash; Achievable</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       The person has the skills, tools, materials, and authority to complete it. Do
                       not delegate a task if the person lacks what they need to succeed.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-400 font-semibold mb-1">R &mdash; Relevant</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       The person understands why this task matters to the project. &ldquo;This area
                       is on the critical path &mdash; plasterers need access by Friday.&rdquo;
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-400 font-semibold mb-1">T &mdash; Time-bound</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       A clear deadline. Not &ldquo;when you get a chance&rdquo; but &ldquo;completed
                       by 14:00 on Thursday.&rdquo;
                     </p>
@@ -802,23 +802,23 @@ export default function LeadershipModule2Section2() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <p className="text-red-400 font-semibold text-sm mb-2">Poor Delegation</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       &ldquo;Can you sort out the wiring in area B sometime this week?
                       Cheers.&rdquo;
                     </p>
-                    <p className="text-xs text-white/80 mt-2">
+                    <p className="text-xs text-white mt-2">
                       Not specific (what wiring?), not measurable (how will we know it is done?), no
                       deadline (sometime this week?), no context (why does it matter?).
                     </p>
                   </div>
                   <div>
                     <p className="text-green-400 font-semibold text-sm mb-2">SMART Delegation</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       &ldquo;Complete the first fix wiring for all 24 socket outlets in area B to
                       drawing E-101. Materials are in the store. Plasterers need access by Friday,
                       so I need this done by Thursday at 14:00. Can you manage that?&rdquo;
                     </p>
-                    <p className="text-xs text-white/80 mt-2">
+                    <p className="text-xs text-white mt-2">
                       Specific, measurable, achievable (materials available), relevant (plasterers
                       waiting), time-bound (Thursday 14:00).
                     </p>
@@ -843,7 +843,7 @@ export default function LeadershipModule2Section2() {
                     The Check-In, Not the Check-Up
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   After delegating a SMART task, schedule a brief check-in at the midpoint. This is
                   not micromanaging &mdash; it is responsible follow-up. A two-minute conversation
                   on Tuesday (&ldquo;How is area B going? Anything you need from me?&rdquo;) catches
@@ -942,7 +942,7 @@ export default function LeadershipModule2Section2() {
                     The Monkey on the Back (Harvard Business Review)
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   William Oncken Jr. and Donald Wass described how every time a supervisor takes
                   back a delegated task (&ldquo;Leave it with me&rdquo;), the{' '}
                   <strong className="text-white">
@@ -1076,7 +1076,7 @@ export default function LeadershipModule2Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1090,7 +1090,7 @@ export default function LeadershipModule2Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-2-section-1">

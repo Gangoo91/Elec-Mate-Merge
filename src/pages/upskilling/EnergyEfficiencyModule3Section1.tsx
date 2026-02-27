@@ -226,7 +226,7 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
               <ArrowLeft className="h-5 w-5" />
             </Link>
           </Button>
-          <div className="flex items-center gap-2 text-sm text-white/70">
+          <div className="flex items-center gap-2 text-sm text-white">
             <ClipboardList className="h-4 w-4 text-elec-yellow" />
             <span>Module 3 • Section 1</span>
           </div>
@@ -240,7 +240,7 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
           <h1 className="text-2xl md:text-3xl font-bold text-white">
             Walkthrough and Inventory Surveys
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Master professional energy audit survey techniques compliant with BS EN 16247
           </p>
         </div>
@@ -271,7 +271,7 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
             <Eye className="w-8 h-8 text-elec-yellow flex-shrink-0 mt-1" />
             <div>
               <h2 className="text-xl font-semibold mb-2 text-white">Learning Objectives</h2>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 The walkthrough survey is the foundation of any energy audit. This section equips
                 you with systematic methodologies for conducting professional site surveys, creating
                 comprehensive equipment inventories, and identifying energy-saving opportunities
@@ -1073,7 +1073,7 @@ const EnergyEfficiencyModule3Section1: React.FC = () => {
               <div key={index} className="border border-white/10 rounded-lg overflow-hidden">
                 <div className="p-4">
                   <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                  <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                  <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
                 </div>
               </div>
             ))}

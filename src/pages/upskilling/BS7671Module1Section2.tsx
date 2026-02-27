@@ -96,7 +96,7 @@ const BS7671Module1Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bs7671-module-1">
@@ -117,7 +117,7 @@ const BS7671Module1Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Scope and Application
           </h1>
-          <p className="text-white/80">Understanding where BS 7671 applies and its limitations</p>
+          <p className="text-white">Understanding where BS 7671 applies and its limitations</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -184,7 +184,7 @@ const BS7671Module1Section2 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="font-medium text-green-400 mb-2">Domestic Installations</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Houses, flats, and apartments</li>
                   <li>Garages and outbuildings</li>
                   <li>Gardens and outdoor areas</li>
@@ -194,7 +194,7 @@ const BS7671Module1Section2 = () => {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
                 <p className="font-medium text-elec-yellow mb-2">Commercial & Industrial</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Offices, shops, and retail spaces</li>
                   <li>Factories and manufacturing facilities</li>
                   <li>Schools, colleges, and universities</li>
@@ -204,7 +204,7 @@ const BS7671Module1Section2 = () => {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
                 <p className="font-medium text-elec-yellow mb-2">Specialised Buildings</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Churches and places of worship</li>
                   <li>Sports facilities and gymnasiums</li>
                   <li>Theatres and entertainment venues</li>
@@ -214,7 +214,7 @@ const BS7671Module1Section2 = () => {
               </div>
               <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
                 <p className="font-medium text-orange-400 mb-2">Special Locations (Part 7)</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Swimming pools and fountains</li>
                   <li>Agricultural and horticultural premises</li>
                   <li>Caravan and camping sites</li>
@@ -253,49 +253,49 @@ const BS7671Module1Section2 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">Distribution Networks</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>National Grid transmission systems</li>
                   <li>DNO equipment and substations</li>
                   <li>High voltage transmission lines</li>
                   <li>Street lighting (DNO owned)</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2 italic">
+                <p className="text-xs text-white mt-2 italic">
                   Use: Electricity Supply Regulations
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">Transport Applications</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Aircraft electrical systems</li>
                   <li>Ships and boats (hull wiring)</li>
                   <li>Road vehicles and HGVs</li>
                   <li>Railway traction systems</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2 italic">
+                <p className="text-xs text-white mt-2 italic">
                   Use: Vehicle/marine/aviation standards
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">Specialist Systems</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Lift installations and control systems</li>
                   <li>Mine and quarry electrical systems</li>
                   <li>Explosive atmosphere installations</li>
                   <li>Radio and telecommunications equipment</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2 italic">
+                <p className="text-xs text-white mt-2 italic">
                   Use: BS EN 81, Mining Regs, ATEX
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">Appliances & Equipment</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Internal wiring of appliances</li>
                   <li>Manufactured equipment internals</li>
                   <li>Electronic equipment circuits</li>
                   <li>Audio/visual equipment internals</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2 italic">
+                <p className="text-xs text-white mt-2 italic">
                   Use: Product-specific safety standards
                 </p>
               </div>
@@ -343,14 +343,14 @@ const BS7671Module1Section2 = () => {
             <div className="space-y-3 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">BS 7430 - Protective Earthing</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Detailed guidance on earthing systems, earth electrode design, and soil
                   resistivity. Used for complex earthing systems and TT installations.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">BS EN 60204 - Machinery Safety</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Covers electrical equipment of machines including control circuits and motor
                   control. Used for industrial machinery, production lines, and automated equipment.
                 </p>
@@ -359,7 +359,7 @@ const BS7671Module1Section2 = () => {
                 <p className="font-medium text-white mb-1">
                   ATEX Directive - Explosive Atmospheres
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Governs electrical equipment in potentially explosive atmospheres. Used for
                   chemical plants, grain stores, paint shops, and fuel storage.
                 </p>
@@ -369,7 +369,7 @@ const BS7671Module1Section2 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Working Together</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>BS 7671 provides the base requirements</li>
                   <li>Specialist standards add specific requirements</li>
                   <li>Most restrictive requirement takes precedence</li>
@@ -378,7 +378,7 @@ const BS7671Module1Section2 = () => {
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="text-sm font-medium text-green-400 mb-2">Professional Approach</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Identify all applicable standards</li>
                   <li>Understand hierarchy and precedence</li>
                   <li>Document standards used in design</li>
@@ -402,7 +402,7 @@ const BS7671Module1Section2 = () => {
               <p className="text-sm font-medium text-orange-400 mb-3">
                 Scenario: Food Truck Wiring Mistake
               </p>
-              <div className="space-y-2 text-sm text-white/90">
+              <div className="space-y-2 text-sm text-white">
                 <p>
                   <strong>Situation:</strong> An electrician wires a food truck using BS 7671
                   methods including standard socket outlets and consumer unit installation.
@@ -426,7 +426,7 @@ const BS7671Module1Section2 = () => {
               <p className="text-sm font-medium text-red-400 mb-3">
                 Scenario: Marina Connection Confusion
               </p>
-              <div className="space-y-2 text-sm text-white/90">
+              <div className="space-y-2 text-sm text-white">
                 <p>
                   <strong>Situation:</strong> A contractor installs standard 16A socket outlets at a
                   marina using domestic wiring methods.
@@ -455,7 +455,7 @@ const BS7671Module1Section2 = () => {
               <p className="text-sm font-medium text-elec-yellow mb-3">
                 Does BS 7671 Apply? Step-by-Step
               </p>
-              <ol className="text-sm text-white/90 space-y-2 ml-4 list-decimal">
+              <ol className="text-sm text-white space-y-2 ml-4 list-decimal">
                 <li>
                   <strong>Check voltage:</strong> Is it within 1000V AC / 1500V DC?
                 </li>
@@ -480,7 +480,7 @@ const BS7671Module1Section2 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="text-sm font-medium text-green-400 mb-2">BS 7671 Applies When</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Fixed building installations</li>
                   <li>Within voltage limits</li>
                   <li>No specific sector standards</li>
@@ -489,7 +489,7 @@ const BS7671Module1Section2 = () => {
               </div>
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="text-sm font-medium text-red-400 mb-2">Look Elsewhere When</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Mobile/vehicle applications</li>
                   <li>Specialist environments</li>
                   <li>Sector-specific regulations exist</li>
@@ -507,7 +507,7 @@ const BS7671Module1Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -519,7 +519,7 @@ const BS7671Module1Section2 = () => {
           <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
             <div>
               <p className="font-medium text-white mb-1">Covered by BS 7671</p>
-              <ul className="space-y-0.5 text-white/80">
+              <ul className="space-y-0.5 text-white">
                 <li>Buildings (domestic/commercial/industrial)</li>
                 <li>Special locations (Part 7)</li>
                 <li>Temporary installations</li>
@@ -528,7 +528,7 @@ const BS7671Module1Section2 = () => {
             </div>
             <div>
               <p className="font-medium text-white mb-1">NOT Covered</p>
-              <ul className="space-y-0.5 text-white/80">
+              <ul className="space-y-0.5 text-white">
                 <li>Vehicles, aircraft, ships</li>
                 <li>Lifts, mines, explosives</li>
                 <li>Appliance internals</li>
@@ -548,7 +548,7 @@ const BS7671Module1Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bs7671-module-1-section-1">

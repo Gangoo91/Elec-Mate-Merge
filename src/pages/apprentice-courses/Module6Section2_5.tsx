@@ -135,7 +135,7 @@ const Module6Section2_5 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -152,13 +152,13 @@ const Module6Section2_5 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.2.5</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.2.5</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Confirming Circuit Labelling and Identification
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               BS 7671 labelling and identification requirements for DBs, devices, and isolation
             </p>
           </header>
@@ -166,7 +166,7 @@ const Module6Section2_5 = () => {
           {/* Summary Box */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-medium text-elec-yellow mb-2">Quick Reference</p>
-            <div className="grid sm:grid-cols-2 gap-4 text-sm text-white/80">
+            <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
               <div>
                 <p className="font-medium text-white mb-1">In 30 Seconds</p>
                 <ul className="list-disc pl-4 space-y-1">
@@ -195,7 +195,7 @@ const Module6Section2_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Clear and accurate labelling of circuits is vital for safety, compliance, and
                 efficiency. Labels allow electricians, inspectors, and end users to quickly identify
@@ -211,7 +211,7 @@ const Module6Section2_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <ul className="list-disc pl-6 space-y-2 text-white/80">
+            <ul className="list-disc pl-6 space-y-2 text-white">
               <li>Explain why circuit labelling and identification are important</li>
               <li>Recognise what information should appear on labels</li>
               <li>Identify where labels should be fixed according to BS 7671</li>
@@ -226,7 +226,7 @@ const Module6Section2_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Why Labelling Matters
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Safety Benefits:</p>
                 <ul className="list-disc pl-4 space-y-1 text-sm">
@@ -288,7 +288,7 @@ const Module6Section2_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               What Labels Should Include
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Circuit Identification:</p>
                 <ul className="list-disc pl-4 space-y-1 text-sm">
@@ -340,7 +340,7 @@ const Module6Section2_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Where Labelling is Required
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Distribution Boards (DBs):</p>
                 <ul className="list-disc pl-4 space-y-1 text-sm">
@@ -402,7 +402,7 @@ const Module6Section2_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Risks of Poor or Missing Labelling
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="font-medium text-red-400 mb-3">Safety Hazards:</p>
                 <ul className="list-disc pl-4 space-y-1 text-sm">
@@ -465,7 +465,7 @@ const Module6Section2_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Practical Guidance
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Installation Process:</p>
                 <ul className="list-disc pl-4 space-y-1 text-sm">
@@ -505,12 +505,12 @@ const Module6Section2_5 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
               <p className="font-medium text-red-400 mb-3">School Emergency Lighting Incident</p>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 During routine maintenance in a school, an electrician attempted to isolate the
                 lighting in a classroom. Due to poor labelling, they accidentally isolated the
                 emergency lighting circuit instead.
               </p>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 This left an area of the building without safety lighting during evacuation drills.
                 The emergency lighting remained off for several hours before the error was
                 discovered.
@@ -529,23 +529,23 @@ const Module6Section2_5 = () => {
               Pocket Guide - Labelling Essentials
             </h2>
             <div className="space-y-2">
-              <div className="flex items-center gap-2 text-sm text-white/80">
+              <div className="flex items-center gap-2 text-sm text-white">
                 <span className="text-green-400">✓</span>
                 <span>Label all circuits, breakers, and isolators</span>
               </div>
-              <div className="flex items-center gap-2 text-sm text-white/80">
+              <div className="flex items-center gap-2 text-sm text-white">
                 <span className="text-green-400">✓</span>
                 <span>Use clear descriptions (e.g., "Sockets - Office")</span>
               </div>
-              <div className="flex items-center gap-2 text-sm text-white/80">
+              <div className="flex items-center gap-2 text-sm text-white">
                 <span className="text-green-400">✓</span>
                 <span>Include device ratings and RCD protection details</span>
               </div>
-              <div className="flex items-center gap-2 text-sm text-white/80">
+              <div className="flex items-center gap-2 text-sm text-white">
                 <span className="text-green-400">✓</span>
                 <span>Fix a circuit schedule inside each DB</span>
               </div>
-              <div className="flex items-center gap-2 text-sm text-white/80">
+              <div className="flex items-center gap-2 text-sm text-white">
                 <span className="text-green-400">✓</span>
                 <span>Keep labels updated after alterations</span>
               </div>
@@ -561,7 +561,7 @@ const Module6Section2_5 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../2-4">

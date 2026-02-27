@@ -99,7 +99,7 @@ export function MFTTestButton({ onTest, disabled, isActive, fullWidth }: MFTTest
           {/* TEST label */}
           <div className="absolute inset-0 flex items-center justify-center gap-2">
             <span
-              className="text-xs font-bold tracking-widest text-white/90 select-none"
+              className="text-xs font-bold tracking-widest text-white select-none"
               style={{ textShadow: '0 1px 2px rgba(0,0,0,0.4)' }}
             >
               HOLD TO TEST
@@ -173,7 +173,7 @@ export function MFTTestButton({ onTest, disabled, isActive, fullWidth }: MFTTest
         {/* TEST label */}
         <div className="absolute inset-0 flex items-center justify-center">
           <span
-            className="text-[10px] font-bold tracking-wider text-white/90 select-none"
+            className="text-[10px] font-bold tracking-wider text-white select-none"
             style={{ textShadow: '0 1px 2px rgba(0,0,0,0.4)' }}
           >
             TEST

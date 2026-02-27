@@ -119,7 +119,7 @@ const FunctionalSkillsModule4Section2 = () => {
             to="/study-centre/apprentice/functional-skills/module4"
             className="p-2 -ml-2 touch-manipulation"
           >
-            <ArrowLeft className="w-5 h-5 text-white/60" />
+            <ArrowLeft className="w-5 h-5 text-white" />
           </Link>
           <div>
             <p className="text-[11px] font-semibold text-green-400 uppercase tracking-wider">
@@ -145,7 +145,7 @@ const FunctionalSkillsModule4Section2 = () => {
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
               Cable Sizing &amp; Selection
             </h2>
-            <p className="text-sm text-white/50 max-w-lg mx-auto">
+            <p className="text-sm text-white max-w-lg mx-auto">
               Understand how to correctly size cables using BS 7671 tables, correction factors, and
               voltage drop checks &mdash; the process every electrician must master.
             </p>
@@ -168,7 +168,7 @@ const FunctionalSkillsModule4Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Current-Carrying Capacity</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Every cable has a maximum current it can safely carry without its insulation exceeding
               its rated temperature. This is the current-carrying capacity, and it depends on the
@@ -178,7 +178,7 @@ const FunctionalSkillsModule4Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 The fundamental cable sizing rule from BS 7671 is:{' '}
                 <strong className="text-white">Ib &le; In &le; Iz</strong>, where Ib is the design
                 current, In is the protective device rating, and Iz is the cable&rsquo;s effective
@@ -190,36 +190,36 @@ const FunctionalSkillsModule4Section2 = () => {
               <h4 className="font-medium text-green-400 mb-2">
                 Table 4D2A &mdash; Twin &amp; Earth (Copper, 70&deg;C PVC)
               </h4>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 Reference Method C (clipped direct to a surface):
               </p>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">1.0mm&sup2;</span>
+                  <span className="text-white">1.0mm&sup2;</span>
                   <span className="text-green-400 font-medium">15.5A</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">1.5mm&sup2;</span>
+                  <span className="text-white">1.5mm&sup2;</span>
                   <span className="text-green-400 font-medium">20A</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">2.5mm&sup2;</span>
+                  <span className="text-white">2.5mm&sup2;</span>
                   <span className="text-green-400 font-medium">27A</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">4.0mm&sup2;</span>
+                  <span className="text-white">4.0mm&sup2;</span>
                   <span className="text-green-400 font-medium">36A</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">6.0mm&sup2;</span>
+                  <span className="text-white">6.0mm&sup2;</span>
                   <span className="text-green-400 font-medium">47A</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">10.0mm&sup2;</span>
+                  <span className="text-white">10.0mm&sup2;</span>
                   <span className="text-green-400 font-medium">64A</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/80">16.0mm&sup2;</span>
+                  <span className="text-white">16.0mm&sup2;</span>
                   <span className="text-green-400 font-medium">85A</span>
                 </div>
               </div>
@@ -247,7 +247,7 @@ const FunctionalSkillsModule4Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Installation Methods</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               The way a cable is installed has a significant impact on its ability to dissipate
               heat. BS 7671 Table 4A2 defines reference installation methods, each with different
@@ -262,7 +262,7 @@ const FunctionalSkillsModule4Section2 = () => {
                   <p className="text-white font-medium text-sm">
                     Method A &mdash; Enclosed in Insulation
                   </p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Cable in conduit within a thermally insulating wall. Lowest current ratings.
                   </p>
                 </div>
@@ -270,13 +270,13 @@ const FunctionalSkillsModule4Section2 = () => {
                   <p className="text-white font-medium text-sm">
                     Method B &mdash; Enclosed in Conduit on Wall
                   </p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Cable in conduit or trunking fixed to a wall surface. Moderate ratings.
                   </p>
                 </div>
                 <div className="border-b border-white/10 pb-2">
                   <p className="text-white font-medium text-sm">Method C &mdash; Clipped Direct</p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Cable clipped directly to a surface (most common domestic method). Good ratings.
                   </p>
                 </div>
@@ -284,7 +284,7 @@ const FunctionalSkillsModule4Section2 = () => {
                   <p className="text-white font-medium text-sm">
                     Method E &mdash; Free Air (Horizontal)
                   </p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Cable on cable tray or ladder. Best heat dissipation, highest ratings.
                   </p>
                 </div>
@@ -292,7 +292,7 @@ const FunctionalSkillsModule4Section2 = () => {
                   <p className="text-white font-medium text-sm">
                     Method 100 &mdash; Enclosed in Building Void
                   </p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Cable in ceiling voids or floor voids. Treated similarly to Method B.
                   </p>
                 </div>
@@ -305,23 +305,23 @@ const FunctionalSkillsModule4Section2 = () => {
               </h4>
               <div className="space-y-1 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-white/80">Method A (in insulated wall):</span>
+                  <span className="text-white">Method A (in insulated wall):</span>
                   <span className="text-green-400">20A</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/80">Method B (in conduit on wall):</span>
+                  <span className="text-white">Method B (in conduit on wall):</span>
                   <span className="text-green-400">24A</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/80">Method C (clipped direct):</span>
+                  <span className="text-white">Method C (clipped direct):</span>
                   <span className="text-green-400">27A</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/80">Method E (free air on tray):</span>
+                  <span className="text-white">Method E (free air on tray):</span>
                   <span className="text-green-400">30A</span>
                 </div>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 The same 2.5mm&sup2; cable can carry 50% more current in free air than when enclosed
                 in an insulated wall. This is why installation method matters so much.
               </p>
@@ -329,7 +329,7 @@ const FunctionalSkillsModule4Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 If a cable passes through different installation methods along its route, you must
                 use the most restrictive method for the entire length. For example, if a cable is
                 clipped direct for most of its run but passes through a joist for 200mm, the
@@ -368,7 +368,7 @@ const FunctionalSkillsModule4Section2 = () => {
               Correction Factor Ca (Ambient Temperature)
             </h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               BS 7671 tables assume a 30&deg;C ambient temperature. If the environment is warmer,
               the cable cannot dissipate heat as effectively and its current rating must be reduced.
@@ -381,31 +381,31 @@ const FunctionalSkillsModule4Section2 = () => {
               </h4>
               <div className="space-y-1 text-sm">
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">25&deg;C</span>
+                  <span className="text-white">25&deg;C</span>
                   <span className="text-green-400 font-medium">1.03</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">30&deg;C (reference)</span>
+                  <span className="text-white">30&deg;C (reference)</span>
                   <span className="text-green-400 font-medium">1.00</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">35&deg;C</span>
+                  <span className="text-white">35&deg;C</span>
                   <span className="text-green-400 font-medium">0.94</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">40&deg;C</span>
+                  <span className="text-white">40&deg;C</span>
                   <span className="text-green-400 font-medium">0.87</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">45&deg;C</span>
+                  <span className="text-white">45&deg;C</span>
                   <span className="text-green-400 font-medium">0.79</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">50&deg;C</span>
+                  <span className="text-white">50&deg;C</span>
                   <span className="text-green-400 font-medium">0.71</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/80">55&deg;C</span>
+                  <span className="text-white">55&deg;C</span>
                   <span className="text-green-400 font-medium">0.61</span>
                 </div>
               </div>
@@ -413,12 +413,12 @@ const FunctionalSkillsModule4Section2 = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-2">Worked Example</h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 A 6.0mm&sup2; T&amp;E cable (Method C, It = 47A) is installed in a boiler house
                 where the ambient temperature is 40&deg;C. What is the effective current-carrying
                 capacity?
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>Ca at 40&deg;C = 0.87</span>
@@ -443,7 +443,7 @@ const FunctionalSkillsModule4Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 In a standard UK domestic installation at 30&deg;C, Ca = 1.0 so no correction is
                 needed. However, cables in loft spaces (which can reach 40&deg;C+ in summer), near
                 boilers, in commercial kitchens, or in plant rooms will need the Ca factor applied.
@@ -465,7 +465,7 @@ const FunctionalSkillsModule4Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Correction Factor Cg (Grouping)</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               When multiple loaded cables are bundled together, they heat each other up. The
               grouping correction factor Cg accounts for this mutual heating effect. The more
@@ -479,35 +479,35 @@ const FunctionalSkillsModule4Section2 = () => {
               </h4>
               <div className="space-y-1 text-sm">
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">1 circuit</span>
+                  <span className="text-white">1 circuit</span>
                   <span className="text-green-400 font-medium">1.00</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">2 circuits</span>
+                  <span className="text-white">2 circuits</span>
                   <span className="text-green-400 font-medium">0.80</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">3 circuits</span>
+                  <span className="text-white">3 circuits</span>
                   <span className="text-green-400 font-medium">0.70</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">4 circuits</span>
+                  <span className="text-white">4 circuits</span>
                   <span className="text-green-400 font-medium">0.65</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">5 circuits</span>
+                  <span className="text-white">5 circuits</span>
                   <span className="text-green-400 font-medium">0.60</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">6 circuits</span>
+                  <span className="text-white">6 circuits</span>
                   <span className="text-green-400 font-medium">0.57</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">7 circuits</span>
+                  <span className="text-white">7 circuits</span>
                   <span className="text-green-400 font-medium">0.54</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/80">9+ circuits</span>
+                  <span className="text-white">9+ circuits</span>
                   <span className="text-green-400 font-medium">0.50</span>
                 </div>
               </div>
@@ -515,11 +515,11 @@ const FunctionalSkillsModule4Section2 = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-2">Worked Example</h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 Three 2.5mm&sup2; T&amp;E circuits are clipped together along a joist run. Cable
                 rating Method C = 27A. What is the effective capacity of each cable?
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>Cg for 3 circuits = 0.70</span>
@@ -546,7 +546,7 @@ const FunctionalSkillsModule4Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Grouping is one of the most commonly overlooked factors on site. When running
                 multiple cables through the same hole in a joist, along the same route, or through a
                 common conduit, you must apply the grouping factor. Spacing cables by at least one
@@ -578,7 +578,7 @@ const FunctionalSkillsModule4Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Correction Factor Ci (Insulation)</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               When cables pass through or are surrounded by thermal insulation (loft insulation,
               wall cavity insulation), their ability to dissipate heat is severely restricted. BS
@@ -590,27 +590,27 @@ const FunctionalSkillsModule4Section2 = () => {
               <h4 className="font-medium text-green-400 mb-3">Table 52.2 &mdash; Ci Values</h4>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Cable touching insulation on one side only</span>
+                  <span className="text-white">Cable touching insulation on one side only</span>
                   <span className="text-green-400 font-medium">0.75</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Cable enclosed in insulation &lt; 100mm</span>
+                  <span className="text-white">Cable enclosed in insulation &lt; 100mm</span>
                   <span className="text-green-400 font-medium">0.89</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">
+                  <span className="text-white">
                     Cable enclosed in insulation 100&ndash;200mm
                   </span>
                   <span className="text-green-400 font-medium">0.81</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">
+                  <span className="text-white">
                     Cable enclosed in insulation 200&ndash;400mm
                   </span>
                   <span className="text-green-400 font-medium">0.68</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/80">Cable enclosed in insulation &gt; 400mm</span>
+                  <span className="text-white">Cable enclosed in insulation &gt; 400mm</span>
                   <span className="text-green-400 font-medium">0.55</span>
                 </div>
               </div>
@@ -620,11 +620,11 @@ const FunctionalSkillsModule4Section2 = () => {
               <h4 className="font-medium text-green-400 mb-2">
                 Worked Example &mdash; Loft Installation
               </h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 A lighting circuit in 1.5mm&sup2; T&amp;E runs across a loft. The cable passes
                 through 150mm of loft insulation for a distance of 2m. What is the derated capacity?
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>It for 1.5mm&sup2; Method C = 20A</span>
@@ -646,7 +646,7 @@ const FunctionalSkillsModule4Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 With modern UK loft insulation depths of 270mm or more, Ci can be as low as 0.55 for
                 cables buried in insulation. Where possible, run cables above the insulation or use
                 raised cable clips to keep the cable clear. This avoids the need for the Ci derating
@@ -669,7 +669,7 @@ const FunctionalSkillsModule4Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Volt Drop Calculations</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Even when a cable passes the current-carrying capacity check, it may fail on voltage
               drop. Long cable runs with high currents can result in unacceptable voltage loss. This
@@ -680,7 +680,7 @@ const FunctionalSkillsModule4Section2 = () => {
               <p className="text-green-400 font-mono text-lg mb-1">
                 VD = mV/A/m &times; Ib &times; L / 1000
               </p>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 Result in volts. Must be &le; 6.9V (lighting) or &le; 11.5V (other circuits)
               </p>
             </div>
@@ -689,31 +689,31 @@ const FunctionalSkillsModule4Section2 = () => {
               <h4 className="font-medium text-green-400 mb-2">mV/A/m Values (Table 4D2B)</h4>
               <div className="space-y-1 text-sm">
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">1.0mm&sup2;</span>
+                  <span className="text-white">1.0mm&sup2;</span>
                   <span className="text-green-400">44 mV/A/m</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">1.5mm&sup2;</span>
+                  <span className="text-white">1.5mm&sup2;</span>
                   <span className="text-green-400">29 mV/A/m</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">2.5mm&sup2;</span>
+                  <span className="text-white">2.5mm&sup2;</span>
                   <span className="text-green-400">18 mV/A/m</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">4.0mm&sup2;</span>
+                  <span className="text-white">4.0mm&sup2;</span>
                   <span className="text-green-400">11 mV/A/m</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">6.0mm&sup2;</span>
+                  <span className="text-white">6.0mm&sup2;</span>
                   <span className="text-green-400">7.3 mV/A/m</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">10.0mm&sup2;</span>
+                  <span className="text-white">10.0mm&sup2;</span>
                   <span className="text-green-400">4.4 mV/A/m</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/80">16.0mm&sup2;</span>
+                  <span className="text-white">16.0mm&sup2;</span>
                   <span className="text-green-400">2.8 mV/A/m</span>
                 </div>
               </div>
@@ -723,10 +723,10 @@ const FunctionalSkillsModule4Section2 = () => {
               <h4 className="font-medium text-green-400 mb-2">
                 Worked Example &mdash; Long Lighting Run
               </h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 A 1.5mm&sup2; lighting circuit supplies 8A over a 30m cable run. Does it pass?
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>VD = 29 &times; 8 &times; 30 / 1000 = 6.96V</span>
@@ -753,7 +753,7 @@ const FunctionalSkillsModule4Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 On long runs, voltage drop often forces you to select a larger cable than the
                 current rating alone requires. Always check both conditions: current capacity first,
                 then volt drop. The cable must satisfy both criteria to be compliant.
@@ -789,7 +789,7 @@ const FunctionalSkillsModule4Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Worked Cable Sizing Examples</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Let us work through two complete cable sizing exercises step by step &mdash; a shower
               circuit and a cooker circuit. These are two of the most demanding domestic circuits
@@ -798,7 +798,7 @@ const FunctionalSkillsModule4Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-3">Example 1: 9.5kW Electric Shower</h4>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 <strong className="text-white">Scenario:</strong> 9.5kW shower, 15m cable run from
                 consumer unit, TN-C-S supply, cable clipped direct (Method C), 30&deg;C ambient,
                 single circuit, no insulation.
@@ -808,13 +808,13 @@ const FunctionalSkillsModule4Section2 = () => {
                   <p className="text-sm text-green-400 font-medium mb-1">
                     Step 1 &mdash; Design Current (Ib)
                   </p>
-                  <p className="text-sm text-white/80">Ib = P / V = 9500 / 230 = 41.3A</p>
+                  <p className="text-sm text-white">Ib = P / V = 9500 / 230 = 41.3A</p>
                 </div>
                 <div>
                   <p className="text-sm text-green-400 font-medium mb-1">
                     Step 2 &mdash; Select Protective Device (In)
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Next standard MCB &ge; 41.3A &rarr; In = 45A Type B
                   </p>
                 </div>
@@ -822,7 +822,7 @@ const FunctionalSkillsModule4Section2 = () => {
                   <p className="text-sm text-green-400 font-medium mb-1">
                     Step 3 &mdash; Correction Factors
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Ca = 1.0, Cg = 1.0, Ci = 1.0 &rarr; Required It &ge; 45 / 1.0 = 45A
                   </p>
                 </div>
@@ -830,7 +830,7 @@ const FunctionalSkillsModule4Section2 = () => {
                   <p className="text-sm text-green-400 font-medium mb-1">
                     Step 4 &mdash; Select Cable
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     6.0mm&sup2; = 47A &ge; 45A &mdash; pass. Or 10.0mm&sup2; = 64A (more headroom).
                   </p>
                 </div>
@@ -838,7 +838,7 @@ const FunctionalSkillsModule4Section2 = () => {
                   <p className="text-sm text-green-400 font-medium mb-1">
                     Step 5 &mdash; Check Voltage Drop
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     6.0mm&sup2;: VD = 7.3 &times; 41.3 &times; 15 / 1000 = 4.52V (&le; 11.5V &mdash;
                     pass)
                     <br />
@@ -847,7 +847,7 @@ const FunctionalSkillsModule4Section2 = () => {
                 </div>
                 <div>
                   <p className="text-sm text-green-400 font-medium mb-1">Result</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     <strong className="text-white">6.0mm&sup2; is the minimum.</strong> In practice,
                     10.0mm&sup2; is commonly used to allow for future shower upgrades (e.g., 10.5kW
                     or 11kW models).
@@ -858,7 +858,7 @@ const FunctionalSkillsModule4Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-3">Example 2: 12kW Electric Cooker</h4>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 <strong className="text-white">Scenario:</strong> 12kW cooker, 18m cable run, Method
                 C but passes through 200mm loft insulation for 1m. Ambient 35&deg;C in loft. Grouped
                 with one other circuit for 3m.
@@ -868,13 +868,13 @@ const FunctionalSkillsModule4Section2 = () => {
                   <p className="text-sm text-green-400 font-medium mb-1">
                     Step 1 &mdash; Design Current
                   </p>
-                  <p className="text-sm text-white/80">Ib = 12000 / 230 = 52.17A</p>
+                  <p className="text-sm text-white">Ib = 12000 / 230 = 52.17A</p>
                 </div>
                 <div>
                   <p className="text-sm text-green-400 font-medium mb-1">
                     Step 2 &mdash; Protective Device
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     In = 60A (nearest standard MCB &ge; 52.17A)
                   </p>
                 </div>
@@ -882,7 +882,7 @@ const FunctionalSkillsModule4Section2 = () => {
                   <p className="text-sm text-green-400 font-medium mb-1">
                     Step 3 &mdash; Worst-Case Correction Factors
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Ca = 0.94 (35&deg;C), Cg = 0.80 (2 circuits), Ci = 0.68 (200mm insulation)
                     <br />
                     Combined = 0.94 &times; 0.80 &times; 0.68 = 0.511
@@ -894,7 +894,7 @@ const FunctionalSkillsModule4Section2 = () => {
                   <p className="text-sm text-green-400 font-medium mb-1">
                     Step 4 &mdash; The Practical Solution
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     117.4A is impractical for domestic cable. Rerouting to avoid insulation and
                     grouping gives: It = 60 / 0.94 = 63.8A &rarr; 16.0mm&sup2; (85A) would work.
                     Better route planning saves significant cable cost.
@@ -918,7 +918,7 @@ const FunctionalSkillsModule4Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Cable Selection Summary</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Here is the complete cable sizing procedure distilled into a step-by-step process you
               can follow for any circuit. This is the method used in exams and on site.
@@ -933,7 +933,7 @@ const FunctionalSkillsModule4Section2 = () => {
                   </span>
                   <div>
                     <p className="text-white font-medium text-sm">Calculate design current (Ib)</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Ib = P / V for single phase; Ib = P / (&radic;3 &times; VL) for three phase
                     </p>
                   </div>
@@ -944,7 +944,7 @@ const FunctionalSkillsModule4Section2 = () => {
                   </span>
                   <div>
                     <p className="text-white font-medium text-sm">Select protective device (In)</p>
-                    <p className="text-xs text-white/60">Choose the next standard rating &ge; Ib</p>
+                    <p className="text-xs text-white">Choose the next standard rating &ge; Ib</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -953,7 +953,7 @@ const FunctionalSkillsModule4Section2 = () => {
                   </span>
                   <div>
                     <p className="text-white font-medium text-sm">Determine installation method</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Table 4A2 &mdash; how the cable is installed along its route
                     </p>
                   </div>
@@ -966,7 +966,7 @@ const FunctionalSkillsModule4Section2 = () => {
                     <p className="text-white font-medium text-sm">
                       Apply correction factors (Ca, Cg, Ci)
                     </p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Required It = In / (Ca &times; Cg &times; Ci)
                     </p>
                   </div>
@@ -977,7 +977,7 @@ const FunctionalSkillsModule4Section2 = () => {
                   </span>
                   <div>
                     <p className="text-white font-medium text-sm">Select cable from tables</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Smallest cable with tabulated It &ge; required value
                     </p>
                   </div>
@@ -988,7 +988,7 @@ const FunctionalSkillsModule4Section2 = () => {
                   </span>
                   <div>
                     <p className="text-white font-medium text-sm">Check voltage drop</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       VD = mV/A/m &times; Ib &times; L / 1000 &le; 6.9V (lighting) or 11.5V (other)
                     </p>
                   </div>
@@ -1001,7 +1001,7 @@ const FunctionalSkillsModule4Section2 = () => {
                     <p className="text-white font-medium text-sm">
                       Check earth fault loop impedance
                     </p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Zs = Ze + (R1+R2) &times; 1.20 must not exceed maximum for the device
                     </p>
                   </div>
@@ -1013,31 +1013,31 @@ const FunctionalSkillsModule4Section2 = () => {
               <h4 className="font-medium text-green-400 mb-2">Common Domestic Cable Sizes</h4>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Lighting circuits</span>
+                  <span className="text-white">Lighting circuits</span>
                   <span className="text-white font-medium">1.0mm&sup2; or 1.5mm&sup2;</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Ring final circuits</span>
+                  <span className="text-white">Ring final circuits</span>
                   <span className="text-white font-medium">2.5mm&sup2;</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Radial sockets (20A)</span>
+                  <span className="text-white">Radial sockets (20A)</span>
                   <span className="text-white font-medium">2.5mm&sup2; or 4.0mm&sup2;</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Immersion heater</span>
+                  <span className="text-white">Immersion heater</span>
                   <span className="text-white font-medium">2.5mm&sup2;</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Cooker circuit</span>
+                  <span className="text-white">Cooker circuit</span>
                   <span className="text-white font-medium">6.0mm&sup2; or 10.0mm&sup2;</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-1">
-                  <span className="text-white/80">Shower (up to 9.5kW)</span>
+                  <span className="text-white">Shower (up to 9.5kW)</span>
                   <span className="text-white font-medium">6.0mm&sup2; or 10.0mm&sup2;</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/80">EV charger (7kW, 32A)</span>
+                  <span className="text-white">EV charger (7kW, 32A)</span>
                   <span className="text-white font-medium">6.0mm&sup2; or 10.0mm&sup2;</span>
                 </div>
               </div>
@@ -1048,7 +1048,7 @@ const FunctionalSkillsModule4Section2 = () => {
                 <BookOpen className="w-4 h-4 text-green-400" />
                 Key Takeaways
               </h4>
-              <ul className="space-y-2 text-sm text-white/80">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>The basic rule is always Ib &le; In &le; Iz &mdash; memorise this</span>
@@ -1098,7 +1098,7 @@ const FunctionalSkillsModule4Section2 = () => {
         <div className="flex items-center justify-between pt-6 border-t border-white/10">
           <Link
             to="/study-centre/apprentice/functional-skills/module4/section1"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
           >
             <ArrowLeft className="w-4 h-4" />
             Electrical Calculations

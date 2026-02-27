@@ -102,7 +102,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = 'Quick Quiz' }) =
             {percentage}%
           </div>
           <div>
-            <p className="text-lg text-white/80 mb-2">
+            <p className="text-lg text-white mb-2">
               You scored {score} out of {questions.length} questions correctly
             </p>
             <div
@@ -183,7 +183,7 @@ export const Quiz: React.FC<QuizProps> = ({ questions, title = 'Quick Quiz' }) =
                       : 'bg-elec-yellow/20 border-elec-yellow/50 text-elec-yellow'
                     : showResult && index === correctIndex
                       ? 'bg-green-500/20 border-green-400/50 text-green-300'
-                      : 'bg-white/5 border-white/10 hover:border-elec-yellow/30 text-white/80 hover:text-white'
+                      : 'bg-white/5 border-white/10 hover:border-elec-yellow/30 text-white hover:text-white'
                 }`}
               >
                 <div className="flex items-center gap-3">

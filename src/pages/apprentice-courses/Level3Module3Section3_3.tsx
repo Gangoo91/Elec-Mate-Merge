@@ -189,7 +189,7 @@ const Level3Module3Section3_3 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section3">
@@ -208,7 +208,7 @@ const Level3Module3Section3_3 = () => {
         <h1 className="text-2xl md:text-3xl font-bold text-white mb-6">
           3.3 Self and Mutual Inductance
         </h1>
-        <p className="text-xl text-white/70 mb-8">
+        <p className="text-xl text-white mb-8">
           Understanding inductance in single circuits and the magnetic interaction between coupled
           circuits
         </p>
@@ -219,7 +219,7 @@ const Level3Module3Section3_3 = () => {
             <Zap className="w-5 h-5" />
             Quick Summary
           </h3>
-          <ul className="text-white/80 space-y-2">
+          <ul className="text-white space-y-2">
             <li>Self-inductance L = N x Phi / I, measured in Henrys (H)</li>
             <li>Self-induced EMF: e = -L x (dI/dt) - opposes current change</li>
             <li>Mutual inductance M = k x sqrt(L1 x L2), depends on coupling</li>
@@ -231,7 +231,7 @@ const Level3Module3Section3_3 = () => {
         {/* Learning Outcomes */}
         <div className="bg-blue-900/30 border border-blue-500/50 rounded-lg p-6 mb-8">
           <h3 className="text-lg font-semibold text-blue-400 mb-3">Learning Outcomes</h3>
-          <ul className="text-white/80 space-y-2">
+          <ul className="text-white space-y-2">
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 mt-1 text-green-400 flex-shrink-0" />
               Define self-inductance and calculate its value for simple coils
@@ -270,7 +270,7 @@ const Level3Module3Section3_3 = () => {
               Self-Inductance
             </h2>
             <div className="bg-[#242424] rounded-lg p-6 border border-white/10">
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 <strong>Self-inductance (L)</strong> is the property of a circuit, particularly a
                 coil, that opposes any change in current through it. When current changes, the
                 resulting change in magnetic flux induces an EMF that opposes the change - this is
@@ -279,13 +279,13 @@ const Level3Module3Section3_3 = () => {
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Definition and Units</h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Symbol:</strong> L
                 </p>
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Unit:</strong> Henry (H) = Wb/A = V.s/A
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A circuit has an inductance of 1 Henry if a current change of 1 A/s induces an EMF
                   of 1 V.
                 </p>
@@ -296,11 +296,11 @@ const Level3Module3Section3_3 = () => {
               </h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
                 <p className="text-green-400 font-mono mb-2">L = N x Phi / I</p>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Inductance equals flux linkage per ampere
                 </p>
                 <p className="text-green-400 font-mono mb-2">L = (N squared x mu x A) / l</p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   For a coil: N = turns, mu = permeability, A = cross-sectional area, l = magnetic
                   path length
                 </p>
@@ -309,16 +309,16 @@ const Level3Module3Section3_3 = () => {
               <h4 className="text-lg font-semibold text-green-400 mb-3">Self-Induced EMF</h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4 text-center">
                 <p className="text-green-400 font-mono text-lg mb-2">e = -L x (dI / dt)</p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The negative sign indicates opposition to current change (Lenz's Law)
                 </p>
               </div>
 
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 The larger the inductance, the greater the opposition to current change. This is
                 why:
               </p>
-              <ul className="text-white/80 space-y-2 mb-4">
+              <ul className="text-white space-y-2 mb-4">
                 <li>More turns = higher inductance (proportional to N squared)</li>
                 <li>Higher permeability core = higher inductance</li>
                 <li>Larger cross-sectional area = higher inductance</li>
@@ -343,7 +343,7 @@ const Level3Module3Section3_3 = () => {
               Mutual Inductance
             </h2>
             <div className="bg-[#242424] rounded-lg p-6 border border-white/10">
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 <strong>Mutual inductance (M)</strong> exists between two magnetically coupled
                 circuits. When current in one coil changes, some of its flux links with the second
                 coil, inducing an EMF in it.
@@ -354,18 +354,18 @@ const Level3Module3Section3_3 = () => {
               </h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4 text-center">
                 <p className="text-green-400 font-mono text-lg mb-2">M = k x sqrt(L1 x L2)</p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Where k = coefficient of coupling (0 to 1), L1 and L2 are self-inductances
                 </p>
               </div>
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Coefficient of Coupling</h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   The coefficient of coupling k indicates how much of the flux from one coil links
                   with the other:
                 </p>
-                <ul className="text-white/70 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li>
                     <strong>k = 1 (unity):</strong> Perfect coupling - all flux links both coils
                     (theoretical ideal)
@@ -386,13 +386,13 @@ const Level3Module3Section3_3 = () => {
               <h4 className="text-lg font-semibold text-green-400 mb-3">Mutually Induced EMF</h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4 text-center">
                 <p className="text-green-400 font-mono text-lg mb-2">e2 = -M x (dI1 / dt)</p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   EMF induced in coil 2 by rate of current change in coil 1
                 </p>
               </div>
 
-              <p className="text-white/80 mb-4">Key applications of mutual inductance:</p>
-              <ul className="text-white/80 space-y-2 mb-4">
+              <p className="text-white mb-4">Key applications of mutual inductance:</p>
+              <ul className="text-white space-y-2 mb-4">
                 <li>
                   <strong>Transformers:</strong> High k transfers energy efficiently between
                   windings
@@ -427,20 +427,20 @@ const Level3Module3Section3_3 = () => {
               <h4 className="text-lg font-semibold text-green-400 mb-3">
                 Energy Stored in an Inductor
               </h4>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 An inductor stores energy in its magnetic field when current flows through it. This
                 energy is released when the current decreases.
               </p>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4 text-center">
                 <p className="text-green-400 font-mono text-lg mb-2">W = 0.5 x L x I squared</p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Where W = energy (Joules), L = inductance (H), I = current (A)
                 </p>
               </div>
 
               <div className="bg-yellow-900/30 border border-yellow-500/50 rounded-lg p-4 mb-4">
                 <h5 className="font-semibold text-yellow-400 mb-2">Warning: Stored Energy</h5>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   When an inductive circuit is interrupted, the stored energy must go somewhere.
                   This can cause dangerous voltage spikes across opening contacts. A 10H inductor
                   carrying 10A stores 500J - enough to cause serious arcing or equipment damage.
@@ -448,13 +448,13 @@ const Level3Module3Section3_3 = () => {
               </div>
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">The RL Time Constant</h4>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 When a DC voltage is applied to an RL circuit, current doesn't change instantly. The{' '}
                 <strong>time constant (tau)</strong> characterises how quickly current can change.
               </p>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4 text-center">
                 <p className="text-green-400 font-mono text-lg mb-2">tau = L / R</p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Where tau = time constant (s), L = inductance (H), R = resistance (ohms)
                 </p>
               </div>
@@ -463,15 +463,15 @@ const Level3Module3Section3_3 = () => {
                 Current Growth and Decay
               </h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   <strong>Current growth</strong> (switch on):
                 </p>
                 <p className="text-green-400 font-mono mb-3">i = I(final) x (1 - e^(-t/tau))</p>
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   <strong>Current decay</strong> (switch off):
                 </p>
                 <p className="text-green-400 font-mono mb-3">i = I(initial) x e^(-t/tau)</p>
-                <table className="w-full text-white/80 text-sm mt-4">
+                <table className="w-full text-white text-sm mt-4">
                   <thead>
                     <tr>
                       <th className="text-left pb-2">Time</th>
@@ -523,20 +523,20 @@ const Level3Module3Section3_3 = () => {
             </h2>
             <div className="bg-[#242424] rounded-lg p-6 border border-white/10">
               <h4 className="text-lg font-semibold text-green-400 mb-3">Series Connection</h4>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 When inductors are connected in series, their effects add. However, if they are
                 magnetically coupled, mutual inductance must be considered:
               </p>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>No coupling (or far apart):</strong>
                 </p>
                 <p className="text-green-400 font-mono mb-3">L(total) = L1 + L2</p>
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Series aiding</strong> (fluxes in same direction):
                 </p>
                 <p className="text-green-400 font-mono mb-3">L(total) = L1 + L2 + 2M</p>
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Series opposing</strong> (fluxes in opposite directions):
                 </p>
                 <p className="text-green-400 font-mono">L(total) = L1 + L2 - 2M</p>
@@ -544,14 +544,14 @@ const Level3Module3Section3_3 = () => {
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Parallel Connection</h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>No mutual coupling:</strong>
                 </p>
                 <p className="text-green-400 font-mono mb-3">1/L(total) = 1/L1 + 1/L2</p>
                 <p className="text-green-400 font-mono mb-3">
                   Or: L(total) = (L1 x L2) / (L1 + L2)
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   With mutual coupling, the formulas become more complex and depend on the
                   orientation of windings.
                 </p>
@@ -561,7 +561,7 @@ const Level3Module3Section3_3 = () => {
               <div className="grid md:grid-cols-2 gap-4 mb-4">
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Series Aiding</h5>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>Auto-transformers (boost)</li>
                     <li>Increased inductance</li>
                     <li>Higher voltage rating</li>
@@ -569,7 +569,7 @@ const Level3Module3Section3_3 = () => {
                 </div>
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Series Opposing</h5>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>Auto-transformers (buck)</li>
                     <li>Reduced inductance</li>
                     <li>Used to find M by measurement</li>
@@ -593,7 +593,7 @@ const Level3Module3Section3_3 = () => {
               <h4 className="text-lg font-semibold text-yellow-400 mb-3">
                 Installation Considerations
               </h4>
-              <ul className="text-white/80 space-y-2">
+              <ul className="text-white space-y-2">
                 <li>
                   <strong>Suppression:</strong> Use flywheel diodes across DC inductors, snubbers
                   across AC coils to absorb stored energy when switching off.
@@ -626,7 +626,7 @@ const Level3Module3Section3_3 = () => {
               {faqItems.map((faq, index) => (
                 <div key={index} className="bg-[#242424] rounded-lg p-4 border border-white/10">
                   <h4 className="font-semibold text-white mb-2">{faq.question}</h4>
-                  <p className="text-white/70 text-sm">{faq.answer}</p>
+                  <p className="text-white text-sm">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -639,7 +639,7 @@ const Level3Module3Section3_3 = () => {
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <h4 className="font-semibold text-green-400 mb-3">Essential Formulas</h4>
-                  <ul className="text-white/70 text-sm space-y-2 font-mono">
+                  <ul className="text-white text-sm space-y-2 font-mono">
                     <li>L = N x Phi / I</li>
                     <li>e = -L x (dI/dt)</li>
                     <li>M = k x sqrt(L1 x L2)</li>
@@ -651,7 +651,7 @@ const Level3Module3Section3_3 = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-green-400 mb-3">Key Values</h4>
-                  <ul className="text-white/70 text-sm space-y-2">
+                  <ul className="text-white text-sm space-y-2">
                     <li>1 tau = 63.2% of final</li>
                     <li>3 tau = 95% of final</li>
                     <li>5 tau = 99.3% of final</li>
@@ -668,7 +668,7 @@ const Level3Module3Section3_3 = () => {
         {/* Quiz Section */}
         <div className="mb-12">
           <h2 className="text-xl font-semibold text-white mb-4">Test Your Knowledge</h2>
-          <p className="text-white/70 mb-4">
+          <p className="text-white mb-4">
             Complete this quiz to check your understanding of self and mutual inductance:
           </p>
           <Quiz questions={quizQuestions} moduleId="L3M3S3.3" />

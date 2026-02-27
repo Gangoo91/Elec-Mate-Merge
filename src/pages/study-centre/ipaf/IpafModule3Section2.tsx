@@ -208,7 +208,7 @@ const IpafModule3Section2 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             3T Method (Through The Trap)
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Step-by-step 3T assembly sequence — installing guardrails from a protected position at
             every level
           </p>
@@ -820,7 +820,7 @@ const IpafModule3Section2 = () => {
               </svg>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg text-sm">
-                <p className="text-white/80">
+                <p className="text-white">
                   <strong className="text-elec-yellow">Key:</strong> The operative (yellow) stands
                   on the lower platform (green) protected by existing guardrails (grey). Their upper
                   body passes through the trapdoor opening, and their arms reach out to install the
@@ -856,7 +856,7 @@ const IpafModule3Section2 = () => {
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg text-sm">
-                <p className="text-white/80">
+                <p className="text-white">
                   <strong className="text-elec-yellow">Note:</strong> This video is provided for
                   educational reference. Always follow the specific instruction manual for your
                   tower system — there may be differences in component design and assembly sequence
@@ -1076,7 +1076,7 @@ const IpafModule3Section2 = () => {
             <div className="space-y-4">
               <div>
                 <h3 className="font-semibold text-white mb-2">3T Assembly Sequence</h3>
-                <ol className="space-y-1 text-white/80 list-decimal ml-4">
+                <ol className="space-y-1 text-white list-decimal ml-4">
                   <li>Lock castors and level base</li>
                   <li>Fit first frames and braces</li>
                   <li>Add guardrails (from below via trap)</li>
@@ -1089,7 +1089,7 @@ const IpafModule3Section2 = () => {
 
               <div>
                 <h3 className="font-semibold text-white mb-2">Golden Rules</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1121,7 +1121,7 @@ const IpafModule3Section2 = () => {
             <div className="space-y-4">
               <div>
                 <h3 className="font-semibold text-white mb-2">Base Assembly Checklist</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Castors positioned and locked</span>
@@ -1151,7 +1151,7 @@ const IpafModule3Section2 = () => {
 
               <div>
                 <h3 className="font-semibold text-white mb-2">Check at Every Level</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Tower is plumb (vertical)</span>
@@ -1192,7 +1192,7 @@ const IpafModule3Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1208,7 +1208,7 @@ const IpafModule3Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../ipaf-module-3-section-1">

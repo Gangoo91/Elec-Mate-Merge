@@ -59,7 +59,7 @@ export const AM2SectionLayout = memo(function AM2SectionLayout({
               size="sm"
               className={cn(
                 'min-h-[44px] min-w-[44px] p-2 -ml-2',
-                'text-white/70 hover:text-white hover:bg-white/5',
+                'text-white hover:text-white hover:bg-white/5',
                 'touch-manipulation active:scale-[0.98] transition-all duration-ios-normal ease-ios-ease'
               )}
               asChild
@@ -79,14 +79,14 @@ export const AM2SectionLayout = memo(function AM2SectionLayout({
                 return (
                   <React.Fragment key={index}>
                     {index > 0 && (
-                      <ChevronRight className="w-3.5 h-3.5 text-white/30 flex-shrink-0" />
+                      <ChevronRight className="w-3.5 h-3.5 text-white flex-shrink-0" />
                     )}
                     {href && !isLast ? (
                       <Link
                         to={href}
                         className={cn(
-                          'text-ios-footnote whitespace-nowrap text-white/50',
-                          'hover:text-white/70 transition-colors'
+                          'text-ios-footnote whitespace-nowrap text-white',
+                          'hover:text-white transition-colors'
                         )}
                       >
                         {label}
@@ -95,7 +95,7 @@ export const AM2SectionLayout = memo(function AM2SectionLayout({
                       <span
                         className={cn(
                           'text-ios-footnote whitespace-nowrap',
-                          isLast ? 'text-white font-medium' : 'text-white/50'
+                          isLast ? 'text-white font-medium' : 'text-white'
                         )}
                       >
                         {label}

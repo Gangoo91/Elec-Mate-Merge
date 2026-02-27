@@ -200,7 +200,7 @@ export default function CdmRegulationsModule2Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-2">
@@ -223,7 +223,7 @@ export default function CdmRegulationsModule2Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Designers, Contractors &amp; Workers
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Who counts as a designer, what contractors must do, and the duties every worker carries
             on a CDM project &mdash; including when electricians become designers
           </p>
@@ -321,7 +321,7 @@ export default function CdmRegulationsModule2Section4() {
                 <p className="text-sm font-medium text-blue-400 mb-3">
                   People Who Can Be Designers Under CDM
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -395,7 +395,7 @@ export default function CdmRegulationsModule2Section4() {
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold flex-shrink-0">
                       1
                     </span>
-                    <div className="text-sm text-white/80">
+                    <div className="text-sm text-white">
                       <p className="text-white font-medium">
                         Do you prepare or modify drawings, specifications, details, or bills of
                         quantities?
@@ -411,7 +411,7 @@ export default function CdmRegulationsModule2Section4() {
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold flex-shrink-0">
                       2
                     </span>
-                    <div className="text-sm text-white/80">
+                    <div className="text-sm text-white">
                       <p className="text-white font-medium">
                         Does the work relate to a structure (building, civil engineering work, or
                         temporary works)?
@@ -426,7 +426,7 @@ export default function CdmRegulationsModule2Section4() {
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold flex-shrink-0">
                       3
                     </span>
-                    <div className="text-sm text-white/80">
+                    <div className="text-sm text-white">
                       <p className="text-white font-medium">
                         Are you doing this in the course of a business (not a domestic client doing
                         their own DIY)?
@@ -442,7 +442,7 @@ export default function CdmRegulationsModule2Section4() {
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold flex-shrink-0">
                       4
                     </span>
-                    <div className="text-sm text-white/80">
+                    <div className="text-sm text-white">
                       <p className="text-white font-medium">
                         Could your design decisions affect health and safety during construction or
                         maintenance?
@@ -496,7 +496,7 @@ export default function CdmRegulationsModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   The Designer&rsquo;s Hierarchy (Regulation 9)
                 </p>
-                <div className="space-y-4 text-sm text-white/80">
+                <div className="space-y-4 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-green-500/20 text-green-400 text-xs font-bold flex-shrink-0">
                       1
@@ -549,12 +549,12 @@ export default function CdmRegulationsModule2Section4() {
                 <p className="text-sm font-medium text-blue-400 mb-3">
                   General Principles of Prevention
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Designers must take account of the general principles of prevention set out in
                   Schedule 1 of the Management of Health and Safety at Work Regulations 1999. These
                   include:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>Avoiding risks altogether where possible</span>
@@ -603,7 +603,7 @@ export default function CdmRegulationsModule2Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Common Misconception</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">Designer duties do not require zero risk.</strong>{' '}
                   The test is &ldquo;so far as is reasonably practicable&rdquo; (SFAIRP). Designers
                   must balance the risk against the cost, time, and difficulty of eliminating or
@@ -638,7 +638,7 @@ export default function CdmRegulationsModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   When Is an Electrician a Designer?
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold flex-shrink-0">
                       1
@@ -711,7 +711,7 @@ export default function CdmRegulationsModule2Section4() {
                 <p className="text-sm font-medium text-blue-400 mb-3">
                   Practical Implications for Electricians
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -753,7 +753,7 @@ export default function CdmRegulationsModule2Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Example: Designing Out Risk</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   An electrician is asked to install new lighting in a warehouse with a 10-metre
                   ceiling. The original plan calls for luminaires mounted directly to the ceiling,
                   requiring a mobile elevated work platform (MEWP) for installation and every future
@@ -788,7 +788,7 @@ export default function CdmRegulationsModule2Section4() {
               <p>The definition includes:</p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -830,13 +830,13 @@ export default function CdmRegulationsModule2Section4() {
 
               <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-blue-400 mb-3">Appointment Requirements</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Under CDM 2015, the appointment of a contractor must be{' '}
                   <strong className="text-white">in writing</strong>. The person making the
                   appointment (whether the client, the principal contractor, or another contractor
                   further down the chain) must satisfy themselves that the contractor has the:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -874,7 +874,7 @@ export default function CdmRegulationsModule2Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Single Contractor Projects</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If there is only <strong className="text-white">one contractor</strong> on a
                   project, that contractor must fulfil the{' '}
                   <strong className="text-white">principal contractor duties</strong> as well as the
@@ -909,7 +909,7 @@ export default function CdmRegulationsModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Core Contractor Duties Under Regulation 15
                 </p>
-                <div className="space-y-4 text-sm text-white/80">
+                <div className="space-y-4 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold flex-shrink-0">
                       1
@@ -1024,10 +1024,10 @@ export default function CdmRegulationsModule2Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Contractor Checklist Before Starting Work
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Before starting construction work on any project, ask yourself:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5 mt-2">
+                <ul className="text-sm text-white space-y-1.5 mt-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
                     <span>Is the client aware of their CDM duties?</span>
@@ -1079,7 +1079,7 @@ export default function CdmRegulationsModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Worker Duties Under Regulation 14(2)
                 </p>
-                <div className="space-y-4 text-sm text-white/80">
+                <div className="space-y-4 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold flex-shrink-0">
                       1
@@ -1151,7 +1151,7 @@ export default function CdmRegulationsModule2Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Personal Liability</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Worker duties are <strong className="text-white">personal</strong>. An individual
                   worker can be prosecuted by the HSE for failing to comply with these duties. The
                   defence &ldquo;my employer told me to do it&rdquo; is not sufficient if you knew
@@ -1196,7 +1196,7 @@ export default function CdmRegulationsModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Common Multiple-Role Scenarios
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold flex-shrink-0">
                       1
@@ -1273,62 +1273,62 @@ export default function CdmRegulationsModule2Section4() {
                     <div className="flex justify-center">
                       <div className="rounded-lg border-2 border-blue-500/40 bg-blue-500/10 px-4 py-2 text-center">
                         <p className="text-sm font-bold text-blue-400">Client</p>
-                        <p className="text-xs text-white/60">Appoints all other duty holders</p>
+                        <p className="text-xs text-white">Appoints all other duty holders</p>
                       </div>
                     </div>
                     {/* Arrow down */}
                     <div className="flex justify-center">
-                      <div className="text-white/30 text-sm">&darr; appoints &darr;</div>
+                      <div className="text-white text-sm">&darr; appoints &darr;</div>
                     </div>
                     {/* PD and PC */}
                     <div className="grid grid-cols-2 gap-4">
                       <div className="rounded-lg border-2 border-purple-500/40 bg-purple-500/10 px-3 py-2 text-center">
                         <p className="text-sm font-bold text-purple-400">Principal Designer</p>
-                        <p className="text-xs text-white/60">Coordinates pre-construction</p>
+                        <p className="text-xs text-white">Coordinates pre-construction</p>
                       </div>
                       <div className="rounded-lg border-2 border-orange-500/40 bg-orange-500/10 px-3 py-2 text-center">
                         <p className="text-sm font-bold text-orange-400">Principal Contractor</p>
-                        <p className="text-xs text-white/60">Coordinates construction phase</p>
+                        <p className="text-xs text-white">Coordinates construction phase</p>
                       </div>
                     </div>
                     {/* Arrows down */}
                     <div className="grid grid-cols-2 gap-4">
                       <div className="flex justify-center">
-                        <div className="text-white/30 text-sm">&darr; coordinates &darr;</div>
+                        <div className="text-white text-sm">&darr; coordinates &darr;</div>
                       </div>
                       <div className="flex justify-center">
-                        <div className="text-white/30 text-sm">&darr; manages &darr;</div>
+                        <div className="text-white text-sm">&darr; manages &darr;</div>
                       </div>
                     </div>
                     {/* Designers and Contractors */}
                     <div className="grid grid-cols-2 gap-4">
                       <div className="rounded-lg border-2 border-green-500/40 bg-green-500/10 px-3 py-2 text-center">
                         <p className="text-sm font-bold text-green-400">Designers</p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           Eliminate &amp; reduce risk by design
                         </p>
                       </div>
                       <div className="rounded-lg border-2 border-yellow-500/40 bg-yellow-500/10 px-3 py-2 text-center">
                         <p className="text-sm font-bold text-yellow-400">Contractors</p>
-                        <p className="text-xs text-white/60">Plan, manage &amp; monitor work</p>
+                        <p className="text-xs text-white">Plan, manage &amp; monitor work</p>
                       </div>
                     </div>
                     {/* Arrow to workers */}
                     <div className="flex justify-center">
-                      <div className="text-white/30 text-sm">&darr; supervise &darr;</div>
+                      <div className="text-white text-sm">&darr; supervise &darr;</div>
                     </div>
                     {/* Workers */}
                     <div className="flex justify-center">
                       <div className="rounded-lg border-2 border-cyan-500/40 bg-cyan-500/10 px-4 py-2 text-center">
                         <p className="text-sm font-bold text-cyan-400">Workers</p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           Cooperate, report hazards, take care
                         </p>
                       </div>
                     </div>
                     {/* Overlap note */}
                     <div className="mt-3 bg-blue-500/10 border border-blue-500/30 p-3 rounded-lg">
-                      <p className="text-xs text-white/80 text-center">
+                      <p className="text-xs text-white text-center">
                         <strong className="text-blue-400">Roles can overlap:</strong> A
                         design-and-build contractor may be Designer + Contractor + Principal
                         Contractor simultaneously. An electrician on a small project may be Designer
@@ -1384,7 +1384,7 @@ export default function CdmRegulationsModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   The Four Elements of Competence Under CDM
                 </p>
-                <div className="space-y-4 text-sm text-white/80">
+                <div className="space-y-4 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-blue-500/20 text-blue-400 text-xs font-bold flex-shrink-0">
                       1
@@ -1448,7 +1448,7 @@ export default function CdmRegulationsModule2Section4() {
                 <p className="text-sm font-medium text-blue-400 mb-3">
                   CSCS/ECS Cards &mdash; The Reality
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The{' '}
                   <strong className="text-white">
                     Construction Skills Certification Scheme (CSCS)
@@ -1461,7 +1461,7 @@ export default function CdmRegulationsModule2Section4() {
                   Most principal contractors require workers to hold a valid card before they will
                   be permitted on site. However, the legal position is clear:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -1502,14 +1502,14 @@ export default function CdmRegulationsModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Continuing Professional Development (CPD)
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Competence is not a one-off achievement &mdash; it must be{' '}
                   <strong className="text-white">maintained and developed</strong> throughout a
                   person&rsquo;s career. Regulations, standards, materials, techniques, and
                   technology all change over time. A person who was competent five years ago may not
                   be competent today if they have not kept their knowledge and skills up to date.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -1548,7 +1548,7 @@ export default function CdmRegulationsModule2Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Duty on the Appointer</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The duty to check competence falls on{' '}
                   <strong className="text-white">the person making the appointment</strong>, not on
                   the person being appointed. If a client appoints a contractor who turns out to be
@@ -1570,7 +1570,7 @@ export default function CdmRegulationsModule2Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1584,7 +1584,7 @@ export default function CdmRegulationsModule2Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-2-section-3">

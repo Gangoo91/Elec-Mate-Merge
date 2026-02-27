@@ -147,7 +147,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                     Electrician Name *
                   </label>
                   <Input
@@ -161,7 +161,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                     Company Name
                   </label>
                   <Input
@@ -174,7 +174,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                   Position *
                 </label>
                 <Input
@@ -190,7 +190,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                     Qualification Level
                   </label>
                   <Select
@@ -210,7 +210,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
                   </Select>
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                     Scheme Provider
                   </label>
                   <Select
@@ -232,7 +232,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                   Registration Number
                 </label>
                 <Input
@@ -245,7 +245,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
 
               {/* Contractor Address */}
               <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                   Contractor Address
                 </label>
                 <Textarea
@@ -260,7 +260,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
               {/* Contact Details */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                     Contact Telephone
                   </label>
                   <Input
@@ -272,7 +272,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
                   />
                 </div>
                 <div className="space-y-1.5">
-                  <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                  <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                     Email Address
                   </label>
                   <Input
@@ -317,7 +317,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
                     />
                     <label
                       htmlFor="ietDeclaration"
-                      className="text-sm cursor-pointer leading-relaxed text-white/80 text-left"
+                      className="text-sm cursor-pointer leading-relaxed text-white text-left"
                     >
                       I/We <span className="text-green-400 font-medium">CERTIFY</span> that the work
                       does not impair the safety of the existing installation and that the work has
@@ -342,7 +342,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
                       />
                       <label
                         htmlFor="partPNotification"
-                        className="text-sm cursor-pointer text-white/70"
+                        className="text-sm cursor-pointer text-white"
                       >
                         Part P notification made
                       </label>
@@ -359,7 +359,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
                       />
                       <label
                         htmlFor="copyProvided"
-                        className="text-sm cursor-pointer text-white/70"
+                        className="text-sm cursor-pointer text-white"
                       >
                         Copy provided to client
                       </label>
@@ -370,7 +370,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
 
               {/* Additional Notes */}
               <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                   Additional Notes
                 </label>
                 <Textarea
@@ -400,7 +400,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
           <CollapsibleContent>
             <div className="p-4 sm:p-5 md:p-6 space-y-5">
               <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                   Signature Date *
                 </label>
                 <Input
@@ -415,7 +415,7 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
               </div>
 
               <div className="space-y-1.5">
-                <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                   Signature *
                 </label>
                 <SignatureInput
@@ -437,18 +437,18 @@ const MWDeclarationTab: React.FC<MWDeclarationTabProps> = ({
                       Certificate Signed
                     </span>
                   </div>
-                  <div className="text-sm text-white/70">
+                  <div className="text-sm text-white">
                     Signed by{' '}
                     <span className="text-white font-medium">{formData.electricianName}</span>
                     {formData.position && (
-                      <span className="text-white/50"> ({formData.position})</span>
+                      <span className="text-white"> ({formData.position})</span>
                     )}{' '}
                     on{' '}
                     <span className="text-white font-medium">
                       {new Date(formData.signatureDate).toLocaleDateString('en-GB')}
                     </span>
                     {formData.schemeProvider && formData.schemeProvider !== 'none' && (
-                      <span className="text-white/50">
+                      <span className="text-white">
                         {' '}
                         •{' '}
                         {SCHEME_PROVIDERS.find((s) => s.value === formData.schemeProvider)?.label ||

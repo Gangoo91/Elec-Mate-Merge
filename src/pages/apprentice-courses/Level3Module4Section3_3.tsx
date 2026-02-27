@@ -289,7 +289,7 @@ const Level3Module4Section3_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section3">
@@ -452,7 +452,7 @@ const Level3Module4Section3_3 = () => {
               circuit one by one. This systematic approach finds faults faster than random testing.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> An RCD trips randomly. Using a clamp meter, you measure 24mA
               leakage with all loads connected. Disconnecting the electric shower reduces it to
               12mA. Disconnecting the washing machine reduces it to 3mA. Individually each appliance
@@ -583,7 +583,7 @@ const Level3Module4Section3_3 = () => {
               design is inadequate (too many loads on one RCD, undersized cables, etc.).
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A consumer reports their electrics "keep tripping".
               Investigation reveals only the cooker RCBO trips, and only when both ovens are used
               simultaneously. Load calculation shows 52A total demand on a 45A RCBO. This is correct
@@ -657,7 +657,7 @@ const Level3Module4Section3_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -702,7 +702,7 @@ const Level3Module4Section3_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section3-2">

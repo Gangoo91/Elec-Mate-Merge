@@ -216,7 +216,7 @@ const HNCModule4Section1_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section1">
@@ -238,7 +238,7 @@ const HNCModule4Section1_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Building Services Load Profiles
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Analysing how electrical demand varies by time, season, and building type in commercial
             installations
           </p>
@@ -391,7 +391,7 @@ const HNCModule4Section1_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">External Factors</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Ambient temperature (heating/cooling)</li>
                     <li>Solar gain through glazing</li>
                     <li>Humidity (latent cooling)</li>
@@ -400,7 +400,7 @@ const HNCModule4Section1_6 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Internal Factors</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Occupancy (people heat gain)</li>
                     <li>Equipment (IT, lighting heat)</li>
                     <li>Fresh air requirement</li>
@@ -711,7 +711,7 @@ const HNCModule4Section1_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Desk Equipment (per workstation)</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>PC/laptop: 50-150W</li>
                     <li>Monitor(s): 30-80W each</li>
                     <li>Docking station: 20-40W</li>
@@ -721,7 +721,7 @@ const HNCModule4Section1_6 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Shared Equipment</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Printers/MFDs: 200-1500W</li>
                     <li>Vending machines: 300-800W</li>
                     <li>Water coolers: 100-200W</li>
@@ -921,14 +921,14 @@ const HNCModule4Section1_6 = () => {
                   <li className="pl-1">Data centre: 0.85-0.95 (very consistent)</li>
                   <li className="pl-1">Industrial (continuous): 0.70-0.85</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   Higher load factor = flatter profile = less diversity benefit but more predictable
                   demand
                 </p>
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Tariff implication:</strong> Buildings with low load factor benefit from
               time-of-use tariffs; high load factor buildings may prefer simple kWh rates.
             </p>
@@ -953,7 +953,7 @@ const HNCModule4Section1_6 = () => {
                 <strong>Question:</strong> An office has HVAC 200kW, lighting 60kW, small power 80kW
                 installed. Estimate 3pm summer demand.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>3pm summer estimates:</p>
                 <p>HVAC: 200kW × 95% (near peak) = 190kW</p>
                 <p>Lighting: 60kW × 70% (daylight available) = 42kW</p>
@@ -961,7 +961,7 @@ const HNCModule4Section1_6 = () => {
                 <p className="mt-2">
                   Total = 190 + 42 + 36 = <strong>268kW</strong>
                 </p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Compare to connected load: 340kW (79% diversity)
                 </p>
               </div>
@@ -975,14 +975,14 @@ const HNCModule4Section1_6 = () => {
                 <strong>Question:</strong> An office uses 50,000 kWh/month. Peak demand is 280kW.
                 Calculate load factor.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Hours in month: ~720 hours</p>
                 <p>Average demand = 50,000 kWh ÷ 720h = 69.4kW</p>
                 <p className="mt-2">Load factor = Average ÷ Peak</p>
                 <p>
                   Load factor = 69.4 ÷ 280 = <strong>0.25 (25%)</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Low load factor indicates significant daily variation
                 </p>
                 <p className="text-green-400">Opportunity for demand management and TOU tariffs</p>
@@ -997,7 +997,7 @@ const HNCModule4Section1_6 = () => {
                 <strong>Question:</strong> An office has 350kW summer peak (cooling) and 280kW
                 winter peak (gas heating). What supply capacity?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Annual peak = higher of summer/winter = 350kW</p>
                 <p>Summer/winter ratio = 350/280 = 1.25</p>
                 <p className="mt-2">Supply sizing:</p>
@@ -1086,7 +1086,7 @@ const HNCModule4Section1_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1132,7 +1132,7 @@ const HNCModule4Section1_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section1-5">

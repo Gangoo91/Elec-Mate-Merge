@@ -48,7 +48,7 @@ export const CompanyProfileSummary = () => {
           </div>
           <div className="flex-1 min-w-0 text-left">
             <p className="text-[15px] font-medium text-amber-400">Set Up Company Profile</p>
-            <p className="text-[13px] text-white/50">Add your details for professional quotes</p>
+            <p className="text-[13px] text-white">Add your details for professional quotes</p>
           </div>
           <ChevronRight className="h-4 w-4 text-amber-400/50" />
         </div>
@@ -89,14 +89,14 @@ export const CompanyProfileSummary = () => {
               </div>
             )}
           </div>
-          <p className="text-[13px] text-white/50 truncate">
+          <p className="text-[13px] text-white truncate">
             {companyProfile.company_email || 'Tap to expand'}
           </p>
         </div>
 
         {/* Chevron */}
         <ChevronRight
-          className={cn('h-4 w-4 text-white/20 transition-transform', isExpanded && 'rotate-90')}
+          className={cn('h-4 w-4 text-white transition-transform', isExpanded && 'rotate-90')}
         />
       </button>
 
@@ -110,7 +110,7 @@ export const CompanyProfileSummary = () => {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-[14px] text-white truncate">{companyProfile.company_email}</p>
-                <p className="text-[12px] text-white/40">Email</p>
+                <p className="text-[12px] text-white">Email</p>
               </div>
             </div>
           )}
@@ -121,7 +121,7 @@ export const CompanyProfileSummary = () => {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-[14px] text-white">{companyProfile.company_phone}</p>
-                <p className="text-[12px] text-white/40">Phone</p>
+                <p className="text-[12px] text-white">Phone</p>
               </div>
             </div>
           )}
@@ -132,7 +132,7 @@ export const CompanyProfileSummary = () => {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-[14px] text-white truncate">{companyProfile.company_address}</p>
-                <p className="text-[12px] text-white/40">Address</p>
+                <p className="text-[12px] text-white">Address</p>
               </div>
             </div>
           )}
@@ -143,7 +143,7 @@ export const CompanyProfileSummary = () => {
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-[14px] text-white">{companyProfile.vat_number}</p>
-                <p className="text-[12px] text-white/40">VAT Number</p>
+                <p className="text-[12px] text-white">VAT Number</p>
               </div>
             </div>
           )}

@@ -241,7 +241,7 @@ const HNCModule2Section5_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section5">
@@ -263,7 +263,7 @@ const HNCModule2Section5_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Thermal Comfort
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding and achieving comfortable thermal environments for building occupants
           </p>
         </header>
@@ -466,7 +466,7 @@ const HNCModule2Section5_5 = () => {
               <p className="font-mono text-center text-sm mb-2">
                 T<sub>op</sub> = (T<sub>a</sub> + T<sub>r</sub>) / 2
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 For low air velocity (&lt;0.2 m/s). More complex formula for higher velocities.
               </p>
             </div>
@@ -590,10 +590,10 @@ const HNCModule2Section5_5 = () => {
               <p className="font-mono text-center text-sm mb-2">
                 T<sub>comf</sub> = 0.33 × θ<sub>rm</sub> + 18.8
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where θrm = exponentially weighted running mean outdoor temperature
               </p>
-              <p className="text-xs text-white/70 text-center mt-2">
+              <p className="text-xs text-white text-center mt-2">
                 Upper limit (Cat II) = Tcomf + 3°C; Lower limit = Tcomf - 4°C
               </p>
             </div>
@@ -739,7 +739,7 @@ const HNCModule2Section5_5 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Climate change:</strong> TM59 recommends using DSY1 (2020s high emissions) or
               DSY2/3 for future-proofing. What passes today may not remain comfortable by 2050.
             </p>
@@ -764,12 +764,12 @@ const HNCModule2Section5_5 = () => {
                 <strong>Question:</strong> An office has air temperature 22°C and mean radiant
                 temperature 24°C (due to warm ceiling). Calculate operative temperature.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>For low air velocity, Top = (Ta + Tr) / 2</p>
                 <p>
                   Top = (22 + 24) / 2 = <strong>23°C</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Within CIBSE summer comfort range for offices (23-25°C)
                 </p>
               </div>
@@ -783,13 +783,13 @@ const HNCModule2Section5_5 = () => {
                 <strong>Question:</strong> The running mean outdoor temperature is 18°C. Calculate
                 the Category II adaptive comfort upper limit.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Comfort temperature: Tcomf = 0.33 × θrm + 18.8</p>
                 <p>Tcomf = 0.33 × 18 + 18.8 = 24.7°C</p>
                 <p className="mt-2">
                   Upper limit (Cat II) = Tcomf + 3 = 24.7 + 3 = <strong>27.7°C</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Temperatures above 27.7°C count as overheating hours
                 </p>
               </div>
@@ -804,13 +804,13 @@ const HNCModule2Section5_5 = () => {
                 approximately how much higher temperature can be tolerated while maintaining
                 comfort?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Rule of thumb: 0.3°C per 0.1 m/s increase</p>
                 <p>Velocity increase = 0.4 - 0.1 = 0.3 m/s</p>
                 <p>
                   Temperature offset = 0.3 × 3 = <strong>~0.9°C higher acceptable</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Ceiling fans can extend acceptable range by 2-3°C in summer
                 </p>
               </div>
@@ -825,12 +825,12 @@ const HNCModule2Section5_5 = () => {
                 simulation shows 120 hours above the adaptive comfort limit. Does it pass Criterion
                 1?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Criterion 1 limit = 3% of occupied hours</p>
                 <p>3% of 3000 = 90 hours maximum</p>
                 <p>Actual exceedance = 120 hours</p>
                 <p className="mt-2 text-red-400">FAIL: 120 &gt; 90 hours (4% exceedance)</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Building requires design changes to reduce overheating
                 </p>
               </div>
@@ -910,7 +910,7 @@ const HNCModule2Section5_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -956,7 +956,7 @@ const HNCModule2Section5_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section5-4">

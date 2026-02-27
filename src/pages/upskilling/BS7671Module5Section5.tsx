@@ -93,7 +93,7 @@ const BS7671Module5Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bs7671-module-5">
@@ -114,7 +114,7 @@ const BS7671Module5Section5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Environmental Protection
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             IP ratings, fire resistance, and protecting electrical equipment
           </p>
         </header>
@@ -268,8 +268,8 @@ const BS7671Module5Section5 = () => {
             <div className="grid sm:grid-cols-3 gap-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-elec-yellow mb-2">Bathrooms</p>
-                <p className="text-sm text-white/90 mb-3">Zone-based requirements</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <p className="text-sm text-white mb-3">Zone-based requirements</p>
+                <ul className="text-xs text-white space-y-1">
                   <li>• Zone 0: IPX7 (immersion)</li>
                   <li>• Zone 1: IPX4 minimum</li>
                   <li>• Zone 2: IPX4 minimum</li>
@@ -278,8 +278,8 @@ const BS7671Module5Section5 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-orange-400 mb-2">External Installations</p>
-                <p className="text-sm text-white/90 mb-3">Weather exposure</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <p className="text-sm text-white mb-3">Weather exposure</p>
+                <ul className="text-xs text-white space-y-1">
                   <li>• General outdoor: IP65 minimum</li>
                   <li>• Exposed locations: IP66</li>
                   <li>• Ground level: IP67 consideration</li>
@@ -288,8 +288,8 @@ const BS7671Module5Section5 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-red-400 mb-2">Industrial Environments</p>
-                <p className="text-sm text-white/90 mb-3">High-risk areas</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <p className="text-sm text-white mb-3">High-risk areas</p>
+                <ul className="text-xs text-white space-y-1">
                   <li>• Food processing: IP66/IP67</li>
                   <li>• Chemical plants: IP66 + corrosion</li>
                   <li>• Car washes: IP66 minimum</li>
@@ -363,19 +363,19 @@ const BS7671Module5Section5 = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-white mb-1">Fire Alarms</p>
-                  <p className="text-white/90 text-xs">Detection and warning</p>
+                  <p className="text-white text-xs">Detection and warning</p>
                 </div>
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-white mb-1">Emergency Lighting</p>
-                  <p className="text-white/90 text-xs">Escape route illumination</p>
+                  <p className="text-white text-xs">Escape route illumination</p>
                 </div>
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-white mb-1">Smoke Extract</p>
-                  <p className="text-white/90 text-xs">Ventilation systems</p>
+                  <p className="text-white text-xs">Ventilation systems</p>
                 </div>
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-white mb-1">Voice Systems</p>
-                  <p className="text-white/90 text-xs">Emergency communication</p>
+                  <p className="text-white text-xs">Emergency communication</p>
                 </div>
               </div>
             </div>
@@ -437,7 +437,7 @@ const BS7671Module5Section5 = () => {
 
             <div className="p-4 rounded-lg bg-transparent border border-white/10">
               <p className="text-sm font-medium text-white mb-2">Selection Considerations</p>
-              <ul className="text-sm text-white/90 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>
                   <strong>Materials:</strong> UV-stable polymers, corrosion-resistant metals
                 </li>
@@ -459,12 +459,12 @@ const BS7671Module5Section5 = () => {
             <h3 className="text-sm font-medium text-elec-yellow mb-3">
               Underground Car Park Lighting Control
             </h3>
-            <p className="text-sm text-white/90 leading-relaxed mb-4">
+            <p className="text-sm text-white leading-relaxed mb-4">
               A lighting control panel is installed in an underground car park. Due to humidity,
               frequent vehicle wash-downs, and poor ventilation, the equipment must meet IP66 and
               corrosion resistance requirements.
             </p>
-            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white/80">
+            <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
               <div>
                 <p className="font-medium text-white mb-1">Environment Analysis</p>
                 <p>
@@ -490,7 +490,7 @@ const BS7671Module5Section5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -504,7 +504,7 @@ const BS7671Module5Section5 = () => {
           <div className="grid sm:grid-cols-3 gap-4 text-xs text-white">
             <div>
               <p className="font-medium text-white mb-1">Indoor</p>
-              <ul className="space-y-0.5 text-white/80">
+              <ul className="space-y-0.5 text-white">
                 <li>• IP20: Standard equipment</li>
                 <li>• IP44: Kitchens, utility areas</li>
                 <li>• IP54: Dusty environments</li>
@@ -512,7 +512,7 @@ const BS7671Module5Section5 = () => {
             </div>
             <div>
               <p className="font-medium text-white mb-1">Bathrooms</p>
-              <ul className="space-y-0.5 text-white/80">
+              <ul className="space-y-0.5 text-white">
                 <li>• Zone 0: IPX7</li>
                 <li>• Zone 1-2: IPX4</li>
                 <li>• Outside zones: IP44</li>
@@ -520,7 +520,7 @@ const BS7671Module5Section5 = () => {
             </div>
             <div>
               <p className="font-medium text-white mb-1">Outdoor</p>
-              <ul className="space-y-0.5 text-white/80">
+              <ul className="space-y-0.5 text-white">
                 <li>• General: IP65</li>
                 <li>• Exposed: IP66</li>
                 <li>• Ground level: IP67</li>
@@ -544,7 +544,7 @@ const BS7671Module5Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bs7671-module-5-section-4">

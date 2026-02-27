@@ -272,7 +272,7 @@ const Level3Module7Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section2">
@@ -422,7 +422,7 @@ const Level3Module7Section2_2 = () => {
               without needing the full BS 7671 document.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Career tip:</strong> Invest in key Guidance Notes relevant to your work. They
               demonstrate professional commitment and provide invaluable reference material. Many
               employers expect their electricians to have access to at least the On-Site Guide and
@@ -496,17 +496,17 @@ const Level3Module7Section2_2 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Acts of Parliament</p>
-                <p className="text-white/90 text-xs">Primary legislation - the law itself</p>
+                <p className="text-white text-xs">Primary legislation - the law itself</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Regulations</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Secondary legislation - detailed legal requirements
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">ACoPs & Standards</p>
-                <p className="text-white/90 text-xs">Practical guidance - presumed compliance</p>
+                <p className="text-white text-xs">Practical guidance - presumed compliance</p>
               </div>
             </div>
 
@@ -517,7 +517,7 @@ const Level3Module7Section2_2 = () => {
               simplest and safest approach.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> The Memorandum of Guidance on the Electricity at Work
               Regulations (HSR25) explains how to comply with the EWR 1989. Following its guidance
               means you can demonstrate you met the legal requirements. Deviating requires you to
@@ -584,7 +584,7 @@ const Level3Module7Section2_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -631,7 +631,7 @@ const Level3Module7Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section2-1">

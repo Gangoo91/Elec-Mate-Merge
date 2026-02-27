@@ -66,7 +66,7 @@ const CVBuilderHero = ({
               strokeWidth={6}
               className="flex-shrink-0"
             >
-              <span className="text-[10px] text-white/50">of CV</span>
+              <span className="text-[10px] text-white">of CV</span>
             </CVProgressRing>
 
             {/* Title & Status */}
@@ -84,7 +84,7 @@ const CVBuilderHero = ({
                 </Badge>
               </div>
 
-              <p className="text-sm text-white/60 mb-4">
+              <p className="text-sm text-white mb-4">
                 {isComplete
                   ? 'Your professional CV is ready!'
                   : hasDraft
@@ -96,13 +96,13 @@ const CVBuilderHero = ({
               <div className="flex items-center gap-4 text-sm">
                 <div className="flex items-center gap-1.5">
                   <div className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
-                  <span className="text-white/60">
+                  <span className="text-white">
                     Step {currentStep} of {totalSteps}
                   </span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <Check className="h-4 w-4 text-emerald-400" />
-                  <span className="text-white/60">
+                  <span className="text-white">
                     {steps.filter((s) => s.completed).length} completed
                   </span>
                 </div>
@@ -136,7 +136,7 @@ const CVBuilderHero = ({
                       ? 'bg-emerald-500 text-black'
                       : index === currentStep - 1
                         ? 'bg-blue-500 text-black'
-                        : 'bg-white/10 text-white/50'
+                        : 'bg-white/10 text-white'
                   )}
                 >
                   {step.completed ? <Check className="h-3 w-3" /> : index + 1}
@@ -148,7 +148,7 @@ const CVBuilderHero = ({
                       ? 'text-emerald-300'
                       : index === currentStep - 1
                         ? 'text-blue-300'
-                        : 'text-white/50'
+                        : 'text-white'
                   )}
                 >
                   {step.title}
@@ -219,7 +219,7 @@ const CVBuilderHero = ({
             </div>
             <div className="flex-1">
               <p className="text-sm font-medium text-white">Draft Saved</p>
-              <p className="text-xs text-white/50">
+              <p className="text-xs text-white">
                 Your progress has been saved. Continue anytime.
               </p>
             </div>

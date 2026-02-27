@@ -197,7 +197,7 @@ export default function ConfinedSpacesModule2Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-2">
@@ -220,7 +220,7 @@ export default function ConfinedSpacesModule2Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Permit-to-Work Systems
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The formal documented procedure that controls entry into confined spaces &mdash; from
             the permit document and defined roles to the full lifecycle, cross-referencing, and
             audit
@@ -318,7 +318,7 @@ export default function ConfinedSpacesModule2Section4() {
 
               <div className="bg-cyan-500/10 border border-cyan-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-500 mb-3">A PTW Is NOT</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -368,7 +368,7 @@ export default function ConfinedSpacesModule2Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Rule</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     Never enter a confined space without a valid permit-to-work.
                   </strong>{' '}
@@ -402,7 +402,7 @@ export default function ConfinedSpacesModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Eight Elements of the Permit Document
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-cyan-500/20 text-cyan-400 text-xs font-bold flex-shrink-0">
                       1
@@ -572,7 +572,7 @@ export default function ConfinedSpacesModule2Section4() {
                     <p className="text-sm font-medium text-cyan-400 mb-2">
                       Permit Issuer (Authorising Authority)
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                         <span>Assesses the hazards and determines the precautions required</span>
@@ -612,7 +612,7 @@ export default function ConfinedSpacesModule2Section4() {
                     <p className="text-sm font-medium text-cyan-400 mb-2">
                       Permit Holder (Entrant / Team Leader)
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                         <span>
@@ -652,7 +652,7 @@ export default function ConfinedSpacesModule2Section4() {
                     <p className="text-sm font-medium text-cyan-400 mb-2">
                       Top Person / Safety Attendant
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                         <span>
@@ -688,7 +688,7 @@ export default function ConfinedSpacesModule2Section4() {
                   {/* Role 4 — Performing Authority */}
                   <div className="bg-cyan-500/10 border border-cyan-500/30 p-4 rounded-lg">
                     <p className="text-sm font-medium text-cyan-400 mb-2">Performing Authority</p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                         <span>
@@ -724,7 +724,7 @@ export default function ConfinedSpacesModule2Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Separation of Roles</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     The permit issuer must not be the same person as the permit holder.
                   </strong>{' '}
@@ -763,7 +763,7 @@ export default function ConfinedSpacesModule2Section4() {
                     {/* Stage 1 — Request */}
                     <div className="w-full max-w-md bg-cyan-500/15 border border-cyan-500/30 rounded-lg p-3 text-center">
                       <p className="text-sm font-semibold text-cyan-400">1. Request</p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         The performing authority / team leader requests a permit for the planned
                         work
                       </p>
@@ -773,7 +773,7 @@ export default function ConfinedSpacesModule2Section4() {
                     {/* Stage 2 — Assessment */}
                     <div className="w-full max-w-md bg-cyan-500/15 border border-cyan-500/30 rounded-lg p-3 text-center">
                       <p className="text-sm font-semibold text-cyan-400">2. Assessment</p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         The permit issuer visits the site, assesses the hazards, and determines the
                         precautions required
                       </p>
@@ -783,7 +783,7 @@ export default function ConfinedSpacesModule2Section4() {
                     {/* Stage 3 — Issue */}
                     <div className="w-full max-w-md bg-cyan-500/15 border border-cyan-500/30 rounded-lg p-3 text-center">
                       <p className="text-sm font-semibold text-cyan-400">3. Issue</p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         The permit issuer signs the permit, confirming precautions are in place. The
                         permit holder accepts and co-signs.
                       </p>
@@ -793,7 +793,7 @@ export default function ConfinedSpacesModule2Section4() {
                     {/* Stage 4 — Work Under Permit */}
                     <div className="w-full max-w-md bg-green-500/15 border border-green-500/30 rounded-lg p-3 text-center">
                       <p className="text-sm font-semibold text-green-400">4. Work Under Permit</p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         The work is carried out strictly within the permit conditions &mdash; scope,
                         time, precautions
                       </p>
@@ -805,7 +805,7 @@ export default function ConfinedSpacesModule2Section4() {
                       <p className="text-sm font-semibold text-yellow-400">
                         5. Extension (If Needed)
                       </p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         If the work overruns, a formal extension is requested and authorised &mdash;
                         conditions are reassessed
                       </p>
@@ -815,7 +815,7 @@ export default function ConfinedSpacesModule2Section4() {
                     {/* Stage 6 — Closure */}
                     <div className="w-full max-w-md bg-cyan-500/15 border border-cyan-500/30 rounded-lg p-3 text-center">
                       <p className="text-sm font-semibold text-cyan-400">6. Closure</p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-xs text-white mt-1">
                         Work is complete. The permit holder returns the permit. All personnel have
                         exited. The space is made safe.
                       </p>
@@ -824,8 +824,8 @@ export default function ConfinedSpacesModule2Section4() {
 
                     {/* Stage 7 — Cancellation */}
                     <div className="w-full max-w-md bg-white/10 border border-white/20 rounded-lg p-3 text-center">
-                      <p className="text-sm font-semibold text-white/80">7. Cancellation</p>
-                      <p className="text-xs text-white/70 mt-1">
+                      <p className="text-sm font-semibold text-white">7. Cancellation</p>
+                      <p className="text-xs text-white mt-1">
                         The permit is formally cancelled, signed off, and filed for audit and
                         record-keeping purposes
                       </p>
@@ -836,7 +836,7 @@ export default function ConfinedSpacesModule2Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key Rules of the Lifecycle</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -907,7 +907,7 @@ export default function ConfinedSpacesModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Common Cross-Referenced Permits
                 </p>
-                <div className="space-y-4 text-sm text-white/80">
+                <div className="space-y-4 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-red-500/20 text-red-400 text-xs font-bold flex-shrink-0">
                       HW
@@ -971,7 +971,7 @@ export default function ConfinedSpacesModule2Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Cross-Reference Failures Kill</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Failure to cross-reference permits has been identified as a contributing factor in
                   numerous fatal incidents. In one well-documented case, an electrical isolation was
                   removed while workers were still inside a confined space because the electrical
@@ -1009,7 +1009,7 @@ export default function ConfinedSpacesModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   The Most Common Permit Failures
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-red-500/20 text-red-400 text-xs font-bold flex-shrink-0">
                       1
@@ -1123,14 +1123,14 @@ export default function ConfinedSpacesModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Hot Work in Confined Spaces &mdash; Additional Requirements
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Hot work (welding, cutting, brazing, grinding, or any operation producing flame,
                   sparks, or significant heat) inside a confined space presents extreme risks. The
                   enclosed environment means that heat, fumes, and sparks have nowhere to dissipate,
                   and any flammable atmosphere can ignite catastrophically. The following additional
                   controls are required:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -1197,7 +1197,7 @@ export default function ConfinedSpacesModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Electrical Isolation Permits &mdash; Relationship to BS 7671
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Many confined spaces contain or are adjacent to electrical equipment that must be
                   isolated before entry to prevent electric shock, arc flash, or inadvertent
                   start-up of machinery. The electrical isolation permit documents that the{' '}
@@ -1205,7 +1205,7 @@ export default function ConfinedSpacesModule2Section4() {
                   out in accordance with BS 7671 (the IET Wiring Regulations) and HSE guidance note
                   GS 38.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-yellow-400 flex-shrink-0" />
                     <span>
@@ -1240,7 +1240,7 @@ export default function ConfinedSpacesModule2Section4() {
                   </li>
                 </ul>
                 <div className="mt-3 p-3 bg-cyan-500/10 border border-cyan-500/20 rounded-lg">
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     <strong className="text-cyan-400">Cross-reference:</strong> The electrical
                     isolation permit must reference the confined space permit number. The confined
                     space permit must reference the electrical isolation permit number. Neither
@@ -1256,7 +1256,7 @@ export default function ConfinedSpacesModule2Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Stored Energy</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Electrical isolation alone is not sufficient if the system contains stored energy.
                   Capacitors, batteries, UPS systems, solar PV arrays (which generate voltage
                   whenever exposed to light), and back-fed supplies can all remain energised even
@@ -1290,7 +1290,7 @@ export default function ConfinedSpacesModule2Section4() {
               {/* Display */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Display of the Permit</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1327,7 +1327,7 @@ export default function ConfinedSpacesModule2Section4() {
               {/* Accessibility */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Accessibility</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1358,13 +1358,13 @@ export default function ConfinedSpacesModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Audit of the Permit-to-Work System
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The permit-to-work system should be{' '}
                   <strong className="text-white">audited regularly</strong> to confirm that it is
                   being followed in practice, not just on paper. An effective audit programme should
                   include:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1405,7 +1405,7 @@ export default function ConfinedSpacesModule2Section4() {
               {/* Record Keeping */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Record Keeping</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1464,7 +1464,7 @@ export default function ConfinedSpacesModule2Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1478,7 +1478,7 @@ export default function ConfinedSpacesModule2Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-2-section-3">

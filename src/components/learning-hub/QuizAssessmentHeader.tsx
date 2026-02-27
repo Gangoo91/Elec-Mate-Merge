@@ -29,7 +29,7 @@ const QuizAssessmentHeader = () => {
           <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-white">
             Knowledge Assessment
           </h1>
-          <p className="text-sm sm:text-base text-white/80 mt-1">
+          <p className="text-sm sm:text-base text-white mt-1">
             Inspection & Testing Quiz Centre
           </p>
         </div>

@@ -264,7 +264,7 @@ const Level3Module5Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module5-section4">
@@ -355,15 +355,15 @@ const Level3Module5Section4_2 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Properly Mounted</p>
-                <p className="text-white/90 text-xs">Secure, level, accessible</p>
+                <p className="text-white text-xs">Secure, level, accessible</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Correctly Adjusted</p>
-                <p className="text-white/90 text-xs">Settings match specification</p>
+                <p className="text-white text-xs">Settings match specification</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Functions Correctly</p>
-                <p className="text-white/90 text-xs">Performs intended operation</p>
+                <p className="text-white text-xs">Performs intended operation</p>
               </div>
             </div>
 
@@ -437,7 +437,7 @@ const Level3Module5Section4_2 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>User advice:</strong> Regulation 514.12.2 requires a notice advising users to
               test RCDs periodically (typically quarterly). This ongoing functional test by the user
               helps ensure continued safe operation between inspections.
@@ -552,15 +552,15 @@ const Level3Module5Section4_2 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">DOL Starters</p>
-                <p className="text-white/90 text-xs">Check overload trip setting matches motor</p>
+                <p className="text-white text-xs">Check overload trip setting matches motor</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Star-Delta</p>
-                <p className="text-white/90 text-xs">Verify changeover timing correct</p>
+                <p className="text-white text-xs">Verify changeover timing correct</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">VSDs</p>
-                <p className="text-white/90 text-xs">Check ramp times, limits, protections</p>
+                <p className="text-white text-xs">Check ramp times, limits, protections</p>
               </div>
             </div>
 
@@ -570,7 +570,7 @@ const Level3Module5Section4_2 = () => {
               other rotating equipment. Always check rotation before coupling to mechanical loads.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Tip:</strong> Phase rotation testers provide a quick way to confirm correct
               ABC sequence before starting motors. Much safer than briefly energising to check
               rotation direction.
@@ -637,7 +637,7 @@ const Level3Module5Section4_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -682,7 +682,7 @@ const Level3Module5Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module5-section4">

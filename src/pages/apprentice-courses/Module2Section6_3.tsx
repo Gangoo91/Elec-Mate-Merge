@@ -199,7 +199,7 @@ const Module2Section6_3: React.FC = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Efficiency - Why it Matters
           </h1>
-          <p className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-white max-w-2xl mx-auto">
             Plain-English efficiency for Level 2: input vs useful output, where losses go, and how
             it affects current, sizing and costs
           </p>
@@ -646,7 +646,7 @@ const Module2Section6_3: React.FC = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5"
+            className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white hover:text-white hover:bg-white/5"
             asChild
           >
             <Link to="/study-centre/apprentice/level2/module2/section6/6-2">

@@ -242,7 +242,7 @@ const HNCModule2Section6_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section6">
@@ -264,7 +264,7 @@ const HNCModule2Section6_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Compliance and Verification
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Building Regulations, BREEAM, NABERS, post-occupancy evaluation, and performance
             verification
           </p>
@@ -542,23 +542,23 @@ const HNCModule2Section6_6 = () => {
               <div className="grid grid-cols-5 gap-2 text-center text-sm">
                 <div className="p-2 rounded bg-white/5">
                   <p className="font-bold text-white">Pass</p>
-                  <p className="text-white/70 text-xs">≥30%</p>
+                  <p className="text-white text-xs">≥30%</p>
                 </div>
                 <div className="p-2 rounded bg-white/5">
                   <p className="font-bold text-white">Good</p>
-                  <p className="text-white/70 text-xs">≥45%</p>
+                  <p className="text-white text-xs">≥45%</p>
                 </div>
                 <div className="p-2 rounded bg-white/5">
                   <p className="font-bold text-white">Very Good</p>
-                  <p className="text-white/70 text-xs">≥55%</p>
+                  <p className="text-white text-xs">≥55%</p>
                 </div>
                 <div className="p-2 rounded bg-white/5">
                   <p className="font-bold text-green-400">Excellent</p>
-                  <p className="text-white/70 text-xs">≥70%</p>
+                  <p className="text-white text-xs">≥70%</p>
                 </div>
                 <div className="p-2 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow">Outstanding</p>
-                  <p className="text-white/70 text-xs">≥85%</p>
+                  <p className="text-white text-xs">≥85%</p>
                 </div>
               </div>
             </div>
@@ -666,7 +666,7 @@ const HNCModule2Section6_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-1">EPC (Asset Rating)</p>
-                  <ul className="text-white/80 space-y-0.5 list-disc list-outside ml-5">
+                  <ul className="text-white space-y-0.5 list-disc list-outside ml-5">
                     <li>Based on design calculations</li>
                     <li>Standard occupancy assumptions</li>
                     <li>Valid 10 years</li>
@@ -675,7 +675,7 @@ const HNCModule2Section6_6 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-1">DEC (Operational Rating)</p>
-                  <ul className="text-white/80 space-y-0.5 list-disc list-outside ml-5">
+                  <ul className="text-white space-y-0.5 list-disc list-outside ml-5">
                     <li>Based on actual consumption</li>
                     <li>Reflects real operation</li>
                     <li>Valid 1 year</li>
@@ -795,7 +795,7 @@ const HNCModule2Section6_6 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>BREEAM credit:</strong> Man 04 provides credits for Soft Landings commitment,
               recognising the value of structured aftercare in achieving design performance.
             </p>
@@ -819,7 +819,7 @@ const HNCModule2Section6_6 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> New office building SBEM results.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Calculation results:</p>
                 <p>TER (Target Emission Rate): 28.5 kgCO₂/m²/year</p>
                 <p>BER (Building Emission Rate): 25.2 kgCO₂/m²/year</p>
@@ -840,7 +840,7 @@ const HNCModule2Section6_6 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> School building annual energy consumption.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Building data:</p>
                 <p>Floor area: 3,500 m² (GIA)</p>
                 <p>Electricity: 185,000 kWh/year</p>
@@ -867,7 +867,7 @@ const HNCModule2Section6_6 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Office targeting BREEAM Excellent - Ene 01 credits.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Ene 01 credit requirements:</p>
                 <p className="mt-2">EPRNC (Energy Performance Ratio - New Construction)</p>
                 <p>= (BER × 1.0 + BBER × 0.5) / (TER × 1.0 + BTBER × 0.5)</p>
@@ -940,7 +940,7 @@ const HNCModule2Section6_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -986,7 +986,7 @@ const HNCModule2Section6_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section6-5">

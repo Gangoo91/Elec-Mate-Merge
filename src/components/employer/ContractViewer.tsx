@@ -127,8 +127,8 @@ export function ContractViewer({
         class: cn(
           'prose prose-invert prose-sm max-w-none focus:outline-none',
           'prose-headings:text-white prose-headings:font-semibold',
-          'prose-p:text-white/80 prose-p:leading-relaxed',
-          'prose-li:text-white/80',
+          'prose-p:text-white prose-p:leading-relaxed',
+          'prose-li:text-white',
           'prose-strong:text-white prose-strong:font-semibold',
           '[&_h1]:text-xl [&_h1]:font-bold [&_h1]:mb-4',
           '[&_h2]:text-lg [&_h2]:font-semibold [&_h2]:mt-6 [&_h2]:mb-3',
@@ -344,7 +344,7 @@ export function ContractViewer({
         'h-8 w-8 p-0 rounded-lg touch-manipulation',
         isActive
           ? 'bg-elec-yellow/20 text-elec-yellow'
-          : 'text-white/60 hover:text-white hover:bg-white/10'
+          : 'text-white hover:text-white hover:bg-white/10'
       )}
     >
       {children}

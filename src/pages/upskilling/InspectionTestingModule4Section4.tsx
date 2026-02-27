@@ -214,7 +214,7 @@ const InspectionTestingModule4Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-4">
@@ -236,7 +236,7 @@ const InspectionTestingModule4Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Testing Sensitive Equipment
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             How to safely test circuits containing SERDs and electronic equipment
           </p>
         </header>
@@ -311,7 +311,7 @@ const InspectionTestingModule4Section4 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/10">
               <p className="text-elec-yellow font-semibold">SERD</p>
-              <p className="text-white/60 text-sm">Surge and Electronically Rated Device</p>
+              <p className="text-white text-sm">Surge and Electronically Rated Device</p>
             </div>
 
             <p>
@@ -337,7 +337,7 @@ const InspectionTestingModule4Section4 = () => {
                   'Alarm panels',
                   'Smart home devices',
                 ].map((item, i) => (
-                  <div key={i} className="text-sm text-white/80">
+                  <div key={i} className="text-sm text-white">
                     {item}
                   </div>
                 ))}
@@ -361,19 +361,19 @@ const InspectionTestingModule4Section4 = () => {
             <div className="space-y-3 my-6">
               <div className="p-3 rounded-lg bg-red-500/10">
                 <p className="text-red-400 font-medium text-sm">MOVs (in SPDs)</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Designed to conduct at 275-400V. 500V test voltage triggers them repeatedly.
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-amber-500/10">
                 <p className="text-amber-400 font-medium text-sm">Capacitors</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Often rated 250-400V. 500V can cause breakdown or reduced lifespan.
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-elec-yellow/10">
                 <p className="text-elec-yellow font-medium text-sm">Semiconductors</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Gate voltages often under 50V. 500V causes immediate damage.
                 </p>
               </div>
@@ -423,21 +423,21 @@ const InspectionTestingModule4Section4 = () => {
             <div className="space-y-4 my-6">
               <div className="border-l-2 border-emerald-500 pl-4">
                 <p className="text-emerald-400 font-medium text-sm">Option 1: Disconnect</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Physically disconnect all SERDs, test wiring at 500V, then reconnect. Best for
                   accurate results.
                 </p>
               </div>
               <div className="border-l-2 border-blue-400 pl-4">
                 <p className="text-blue-400 font-medium text-sm">Option 2: SERD Mode</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Use instrument's SERD function. Quick but readings may be affected by connected
                   electronics.
                 </p>
               </div>
               <div className="border-l-2 border-amber-400 pl-4">
                 <p className="text-amber-400 font-medium text-sm">Option 3: 250V Range</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   If no SERD mode, use 250V setting. Less stress on equipment but not full
                   compliance.
                 </p>
@@ -446,7 +446,7 @@ const InspectionTestingModule4Section4 = () => {
                 <p className="text-elec-yellow font-medium text-sm">
                   Option 4: Document Limitation
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   If testing cannot be safely performed, document this clearly with reasons.
                 </p>
               </div>
@@ -475,7 +475,7 @@ const InspectionTestingModule4Section4 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/10">
               <p className="text-elec-yellow text-sm font-semibold">Certificate Note Example:</p>
-              <p className="text-white/70 text-sm mt-1">
+              <p className="text-white text-sm mt-1">
                 "Circuit 5: IR test at 250V DC (SERD mode) due to integral LED drivers. Reading
                 &gt;200MΩ with equipment connected."
               </p>
@@ -497,7 +497,7 @@ const InspectionTestingModule4Section4 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-1">
                   Test Before Installing
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   IR test cables before connecting equipment. Much easier than disconnecting later.
                 </p>
               </div>
@@ -505,14 +505,14 @@ const InspectionTestingModule4Section4 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-1">
                   Fused Connection Units
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Where FCUs supply SERDs, remove the fuse to isolate equipment while testing the
                   circuit wiring.
                 </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-1">SPD Location</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   SPDs at the consumer unit affect all circuits. Disconnect the SPD before
                   whole-installation IR testing.
                 </p>
@@ -531,7 +531,7 @@ const InspectionTestingModule4Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -577,7 +577,7 @@ const InspectionTestingModule4Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-4/section-3">

@@ -233,7 +233,7 @@ export default function MentalHealthModule5Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-5">
@@ -258,7 +258,7 @@ export default function MentalHealthModule5Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Building a Mentally Healthy Workplace
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Five Ways to Wellbeing, mental health policy development, toolbox talks on mental
             health, promoting openness, reducing presenteeism, and the physical-mental health
             connection
@@ -396,7 +396,7 @@ export default function MentalHealthModule5Section3() {
                           <way.icon className={`h-6 w-6 ${way.colour}`} />
                         </div>
                         <p className={`text-sm font-semibold ${way.colour}`}>{way.label}</p>
-                        <p className="text-xs text-white/60">{way.desc}</p>
+                        <p className="text-xs text-white">{way.desc}</p>
                       </div>
                     ))}
                   </div>
@@ -412,14 +412,14 @@ export default function MentalHealthModule5Section3() {
                       1. Connect &mdash; Build Social Relationships
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Strong social connections are one of the most important protective factors for
                     mental health. Feeling connected to others reduces feelings of isolation and
                     provides a support network during difficult times.
                   </p>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-xs font-medium text-white mb-1.5">Workplace Examples:</p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       {[
                         'Team lunches and informal breaks together on site',
                         'Buddy systems for new starters and apprentices',
@@ -443,7 +443,7 @@ export default function MentalHealthModule5Section3() {
                       2. Be Active &mdash; Engage in Physical Activity
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Regular physical activity is strongly linked to improved mental health. Exercise
                     releases endorphins, reduces cortisol, improves sleep quality, and provides a
                     sense of achievement. Even small amounts of physical activity can make a
@@ -451,7 +451,7 @@ export default function MentalHealthModule5Section3() {
                   </p>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-xs font-medium text-white mb-1.5">Workplace Examples:</p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       {[
                         'Walking meetings instead of sitting in a site cabin',
                         'Encouraging active commuting (cycling, walking to site)',
@@ -475,7 +475,7 @@ export default function MentalHealthModule5Section3() {
                       3. Take Notice &mdash; Practise Mindfulness and Awareness
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Taking notice means being aware of the world around you, savouring the moment,
                     and reflecting on your experiences. It is closely linked to mindfulness &mdash;
                     paying attention to the present moment without judgement. Research shows this
@@ -483,7 +483,7 @@ export default function MentalHealthModule5Section3() {
                   </p>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-xs font-medium text-white mb-1.5">Workplace Examples:</p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       {[
                         'Encouraging workers to take proper breaks rather than eating at their workstation',
                         "Brief end-of-day reflections — 'What went well today?'",
@@ -507,7 +507,7 @@ export default function MentalHealthModule5Section3() {
                       4. Keep Learning &mdash; Develop New Skills and Curiosity
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Continued learning throughout life enhances self-esteem, encourages social
                     interaction, and promotes a more active and engaged life. It does not have to be
                     formal education &mdash; learning a new skill, taking on a new challenge, or
@@ -515,7 +515,7 @@ export default function MentalHealthModule5Section3() {
                   </p>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-xs font-medium text-white mb-1.5">Workplace Examples:</p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       {[
                         'Skills swap sessions where team members teach each other new techniques',
                         'Support for professional development and qualifications (e.g., 18th Edition, AM2)',
@@ -539,7 +539,7 @@ export default function MentalHealthModule5Section3() {
                       5. Give &mdash; Help Others and Volunteer
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Acts of giving &mdash; whether time, effort, words of encouragement, or
                     practical help &mdash; are strongly linked to improved mental wellbeing for the
                     giver as well as the receiver. Helping others creates a sense of purpose and
@@ -547,7 +547,7 @@ export default function MentalHealthModule5Section3() {
                   </p>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-xs font-medium text-white mb-1.5">Workplace Examples:</p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       {[
                         'Mentoring apprentices and new starters — sharing knowledge and experience',
                         'Team charity events (sponsored walks, Movember, construction industry fundraisers)',
@@ -603,7 +603,7 @@ export default function MentalHealthModule5Section3() {
                     Why Every Workplace Needs a Mental Health Policy
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   {[
                     'Demonstrates organisational commitment to employee mental health — not just words, but a documented standard',
                     'Provides a clear framework for managers and employees to follow when mental health issues arise',
@@ -682,7 +682,7 @@ export default function MentalHealthModule5Section3() {
                       <p className={`text-xs font-semibold ${element.colour} mb-1`}>
                         {element.title}
                       </p>
-                      <p className="text-sm text-white/80">{element.text}</p>
+                      <p className="text-sm text-white">{element.text}</p>
                     </div>
                   ))}
                 </div>
@@ -691,7 +691,7 @@ export default function MentalHealthModule5Section3() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Reviewing and Updating</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     {[
                       'Review the policy at least annually',
                       'Update after any significant incident or organisational change',
@@ -709,7 +709,7 @@ export default function MentalHealthModule5Section3() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Employee Input</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     {[
                       'Consult employees during policy development — they know what support they need',
                       'Include trade union representatives where applicable',
@@ -797,7 +797,7 @@ export default function MentalHealthModule5Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 p-3 rounded-lg">
                       <p className="text-xs font-semibold text-purple-400 mb-1">{item.topic}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -821,7 +821,7 @@ export default function MentalHealthModule5Section3() {
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-purple-500/20 text-purple-400 text-xs font-bold flex-shrink-0">
                         {i + 1}
                       </span>
-                      <p className="text-sm text-white/80">{step}</p>
+                      <p className="text-sm text-white">{step}</p>
                     </div>
                   ))}
                 </div>
@@ -834,7 +834,7 @@ export default function MentalHealthModule5Section3() {
                     Overcoming Resistance in Male-Dominated Environments
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Construction remains one of the most male-dominated industries in the UK.
                     Traditional masculine norms &mdash; &ldquo;toughing it out&rdquo;, not showing
@@ -883,7 +883,7 @@ export default function MentalHealthModule5Section3() {
                   <Megaphone className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">Leadership Role-Modelling</p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Culture change starts at the top. When senior leaders and managers are open
                     about the importance of mental health &mdash; and, where they choose to, about
@@ -909,7 +909,7 @@ export default function MentalHealthModule5Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Sharing Stories (With Consent)
                 </p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Personal stories are one of the most powerful tools for reducing stigma. When a
                     colleague, a manager, or an industry figure shares their experience of a mental
@@ -935,7 +935,7 @@ export default function MentalHealthModule5Section3() {
                     Mental Health Awareness Events
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Participating in national awareness events provides ready-made content and a
                     reason to start conversations. Key dates include:
@@ -969,8 +969,8 @@ export default function MentalHealthModule5Section3() {
                     ].map((item, i) => (
                       <div key={i} className="bg-white/5 border border-white/10 p-3 rounded-lg">
                         <p className="text-xs font-semibold text-violet-400">{item.event}</p>
-                        <p className="text-xs text-white/60 mb-1">{item.date}</p>
-                        <p className="text-xs text-white/70">{item.detail}</p>
+                        <p className="text-xs text-white mb-1">{item.date}</p>
+                        <p className="text-xs text-white">{item.detail}</p>
                       </div>
                     ))}
                   </div>
@@ -1021,19 +1021,19 @@ export default function MentalHealthModule5Section3() {
                   <div>
                     <p className="text-sm font-medium text-white mb-2">Presenteeism Costs</p>
                     <p className="text-2xl font-bold text-red-400 mb-1">&pound;21.2 billion</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       per year to UK employers (Centre for Mental Health)
                     </p>
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white mb-2">Absenteeism Costs</p>
                     <p className="text-2xl font-bold text-amber-400 mb-1">&pound;10.6 billion</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       per year to UK employers (Centre for Mental Health)
                     </p>
                   </div>
                 </div>
-                <p className="text-sm text-white/80 mt-3">
+                <p className="text-sm text-white mt-3">
                   Presenteeism costs approximately{' '}
                   <strong className="text-white">1.5 to 2 times more</strong> than absenteeism. Yet
                   most organisations focus their attention and monitoring on absence, while
@@ -1043,7 +1043,7 @@ export default function MentalHealthModule5Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Why Presenteeism Is So Costly</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   {[
                     'Reduced productivity — employees working while unwell are significantly less productive, but the reduction is invisible because they are at their workstation',
                     'Increased error rate — poor concentration and cognitive impairment (common in depression, anxiety, and sleep deprivation) lead to more mistakes and rework',
@@ -1096,7 +1096,7 @@ export default function MentalHealthModule5Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 p-3 rounded-lg">
                       <p className="text-xs font-semibold text-purple-400 mb-1">{item.strategy}</p>
-                      <p className="text-sm text-white/80">{item.detail}</p>
+                      <p className="text-sm text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1142,7 +1142,7 @@ export default function MentalHealthModule5Section3() {
                     <Dumbbell className="h-5 w-5 text-green-400" />
                     <p className="text-sm font-medium text-green-400">Exercise and Mental Health</p>
                   </div>
-                  <div className="text-sm text-white/80 space-y-2">
+                  <div className="text-sm text-white space-y-2">
                     <p>
                       The evidence base for exercise as a treatment for mental health conditions is
                       strong and growing:
@@ -1172,7 +1172,7 @@ export default function MentalHealthModule5Section3() {
                       Nutrition and Mental Health
                     </p>
                   </div>
-                  <div className="text-sm text-white/80 space-y-2">
+                  <div className="text-sm text-white space-y-2">
                     <p>
                       Emerging research in nutritional psychiatry shows a clear link between diet
                       and mental health:
@@ -1199,7 +1199,7 @@ export default function MentalHealthModule5Section3() {
                     <Moon className="h-5 w-5 text-blue-400" />
                     <p className="text-sm font-medium text-blue-400">Sleep and Mental Health</p>
                   </div>
-                  <div className="text-sm text-white/80 space-y-2">
+                  <div className="text-sm text-white space-y-2">
                     <p>
                       Sleep and mental health have a bidirectional relationship &mdash; poor sleep
                       worsens mental health, and poor mental health disrupts sleep:
@@ -1228,7 +1228,7 @@ export default function MentalHealthModule5Section3() {
                       Substance Use and Mental Health
                     </p>
                   </div>
-                  <div className="text-sm text-white/80 space-y-2">
+                  <div className="text-sm text-white space-y-2">
                     <p>
                       Alcohol and drug use are closely intertwined with mental health, particularly
                       in the construction industry:
@@ -1257,7 +1257,7 @@ export default function MentalHealthModule5Section3() {
                   <Brain className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-white">Chronic Pain and Depression</p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Chronic pain and depression frequently co-occur and create a vicious cycle.
                     Chronic pain (lasting 12 weeks or more) is extremely common in construction
@@ -1292,7 +1292,7 @@ export default function MentalHealthModule5Section3() {
                   </div>
                 </div>
                 <div className="p-4">
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     The whole-person approach recognises that physical health, mental health, social
                     connection, and environmental factors are all interconnected. Effective
                     workplace wellbeing programmes address all of these areas rather than treating
@@ -1335,7 +1335,7 @@ export default function MentalHealthModule5Section3() {
                     ].map((item, i) => (
                       <div key={i} className={`${item.bg} border ${item.border} p-3 rounded-lg`}>
                         <p className={`text-xs font-semibold ${item.colour} mb-1`}>{item.area}</p>
-                        <p className="text-xs text-white/70">{item.examples}</p>
+                        <p className="text-xs text-white">{item.examples}</p>
                       </div>
                     ))}
                   </div>
@@ -1382,7 +1382,7 @@ export default function MentalHealthModule5Section3() {
                       <p className="text-xs font-semibold text-purple-400 mb-1">
                         {item.initiative}
                       </p>
-                      <p className="text-sm text-white/80">{item.detail}</p>
+                      <p className="text-sm text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1410,7 +1410,7 @@ export default function MentalHealthModule5Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1424,7 +1424,7 @@ export default function MentalHealthModule5Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-5">

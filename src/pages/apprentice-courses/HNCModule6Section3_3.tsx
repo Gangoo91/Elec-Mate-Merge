@@ -240,7 +240,7 @@ const HNCModule6Section3_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section3">
@@ -262,7 +262,7 @@ const HNCModule6Section3_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             BREEAM Energy Category
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Energy performance (Ene 01), sub-metering (Ene 02), external lighting (Ene 03), and low
             carbon technologies (Ene 04)
           </p>
@@ -434,7 +434,7 @@ const HNCModule6Section3_3 = () => {
                   <li>Primary energy consumption comparison</li>
                   <li>Building fabric and services specifications used</li>
                 </ul>
-                <p className="mt-2 text-white/70">
+                <p className="mt-2 text-white">
                   BRUKL must demonstrate BER ≤ TER for Part L compliance; BREEAM rewards BER
                   significantly below TER.
                 </p>
@@ -655,7 +655,7 @@ const HNCModule6Section3_3 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Efficacy Calculation Example:</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>External lighting schedule:</p>
                 <p className="mt-2">Car park: 20 × LED luminaires @ 80W, 120 lm/W = 1,600W</p>
                 <p>Pathways: 15 × LED luminaires @ 40W, 110 lm/W = 600W</p>
@@ -699,7 +699,7 @@ const HNCModule6Section3_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Electricity Generation</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Solar photovoltaic (PV) systems</li>
                     <li>Wind turbines (building-mounted/standalone)</li>
                     <li>Combined heat and power (CHP)</li>
@@ -709,7 +709,7 @@ const HNCModule6Section3_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Heat Generation</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Air source heat pumps (ASHP)</li>
                     <li>Ground source heat pumps (GSHP)</li>
                     <li>Water source heat pumps</li>
@@ -815,7 +815,7 @@ const HNCModule6Section3_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Technology selection:</strong> Heat pumps typically offer highest carbon
               savings due to grid decarbonisation trajectory. Solar PV provides excellent returns
               where roof area permits and complements electrified heating.
@@ -841,8 +841,8 @@ const HNCModule6Section3_3 = () => {
                 <strong>Scenario:</strong> Specify energy modelling approach for a 5,000m² office
                 building targeting BREEAM Excellent.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Energy Modelling Approach:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Energy Modelling Approach:</p>
                 <p className="mt-2">
                   Building type: Naturally ventilated office with local cooling
                 </p>
@@ -854,7 +854,7 @@ const HNCModule6Section3_3 = () => {
                 <p className="ml-4">- HVAC: VRF system, SCOP 4.5</p>
                 <p className="ml-4">- Ventilation: MVHR, 85% heat recovery</p>
                 <p className="ml-4">- Renewables: 100 kWp rooftop PV</p>
-                <p className="mt-2 text-white/60">Outputs required:</p>
+                <p className="mt-2 text-white">Outputs required:</p>
                 <p className="ml-4 text-green-400">- BRUKL document showing BER vs TER</p>
                 <p className="ml-4 text-green-400">- EPR calculation for Ene 01 credits</p>
                 <p className="ml-4 text-green-400">- LZC contribution percentage</p>
@@ -869,7 +869,7 @@ const HNCModule6Section3_3 = () => {
                 <strong>Scenario:</strong> Develop sub-metering schedule for multi-tenanted retail
                 development.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Meter Ref | Description | Location | Output</p>
                 <p>----------|-------------|----------|--------</p>
                 <p>M-01 | Main incomer | MSB | Modbus RTU</p>
@@ -896,7 +896,7 @@ const HNCModule6Section3_3 = () => {
                 <strong>Scenario:</strong> Compare LZC options for school building (1,500m², 200,000
                 kWh annual demand).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Technology Assessment Summary:</p>
                 <p className="mt-2">Option A: Rooftop Solar PV (50 kWp)</p>
                 <p className="ml-4">- Annual yield: 42,500 kWh (21% of demand)</p>
@@ -999,7 +999,7 @@ const HNCModule6Section3_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1045,7 +1045,7 @@ const HNCModule6Section3_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section3">

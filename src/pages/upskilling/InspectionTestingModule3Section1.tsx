@@ -219,7 +219,7 @@ const InspectionTestingModule3Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/inspection-testing-module-3">
@@ -241,7 +241,7 @@ const InspectionTestingModule3Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Protective Conductor Continuity (R1+R2)
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Measure and verify the critical earth fault path resistance
           </p>
         </header>
@@ -660,7 +660,7 @@ const InspectionTestingModule3Section1 = () => {
               Add to Ze for Zs verification: Zs = Ze + (R1+R2)
             </text>
           </svg>
-          <p className="text-xs text-white/40 mt-3">
+          <p className="text-xs text-white mt-3">
             Method 1 (GN3 Figure 2.13): Temporarily link L and CPC at the DB. Measure between L and
             E at the furthest point. Reading gives R1+R2 directly. Always remove the link before
             re-energising.
@@ -686,7 +686,7 @@ const InspectionTestingModule3Section1 = () => {
               <p className="text-center font-mono text-elec-yellow">
                 R1+R2 = Length (m) x (r1 + r2) m\u03A9/m
               </p>
-              <p className="text-xs text-white/60 text-center mt-2">
+              <p className="text-xs text-white text-center mt-2">
                 Where r1 and r2 are from cable data tables
               </p>
             </div>
@@ -699,13 +699,13 @@ const InspectionTestingModule3Section1 = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/10">
-                      <th className="text-left text-white/60 py-2 px-1">Cable</th>
-                      <th className="text-center text-white/60 py-2 px-1">r1</th>
-                      <th className="text-center text-white/60 py-2 px-1">r2</th>
+                      <th className="text-left text-white py-2 px-1">Cable</th>
+                      <th className="text-center text-white py-2 px-1">r1</th>
+                      <th className="text-center text-white py-2 px-1">r2</th>
                       <th className="text-center text-elec-yellow py-2 px-1">r1+r2</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/5">
                       <td className="py-2 px-1">1.0/1.0mm\u00B2</td>
                       <td className="text-center py-2 px-1">18.1</td>
@@ -739,7 +739,7 @@ const InspectionTestingModule3Section1 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-white/50 text-xs mt-2">
+              <p className="text-white text-xs mt-2">
                 Values from OSG Table I1 for copper conductors at 20\u00B0C
               </p>
             </div>
@@ -779,7 +779,7 @@ const InspectionTestingModule3Section1 = () => {
             <div className="my-6 p-4 rounded-lg bg-transparent border border-white/10">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Zs Formula</p>
               <p className="text-center font-mono text-elec-yellow text-xl">Zs = Ze + (R1 + R2)</p>
-              <p className="text-xs text-white/60 text-center mt-2">
+              <p className="text-xs text-white text-center mt-2">
                 Where Ze is measured at the origin
               </p>
             </div>
@@ -834,7 +834,7 @@ const InspectionTestingModule3Section1 = () => {
             <div className="my-6 space-y-3">
               <div className="p-3 rounded-lg bg-green-500/10">
                 <p className="text-green-400 font-medium text-sm">Expected Value - Pass</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Reading matches calculation within tolerance. Circuit passes.
                 </p>
               </div>
@@ -842,19 +842,19 @@ const InspectionTestingModule3Section1 = () => {
                 <p className="text-amber-400 font-medium text-sm">
                   Higher Than Expected - Investigate
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Poor connections, wrong cable size, longer route, or damaged conductor.
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-amber-500/10">
                 <p className="text-amber-400 font-medium text-sm">Lower Than Expected - Verify</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Parallel earth paths, cable shorter than thought, or testing wrong circuit.
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-red-500/10">
                 <p className="text-red-400 font-medium text-sm">Open Circuit (\u221E) - Fail</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   No continuity - broken conductor, disconnected terminal, or wrong test point.
                 </p>
               </div>
@@ -989,7 +989,7 @@ const InspectionTestingModule3Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1035,7 +1035,7 @@ const InspectionTestingModule3Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../module-2/section-6">

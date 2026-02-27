@@ -30,7 +30,7 @@ const OriginalRequestCard = ({ query, projectContext, timestamp }: OriginalReque
           </motion.div>
           <div>
             <h3 className="text-base sm:text-lg text-white font-bold">Original Request</h3>
-            <p className="text-xs sm:text-sm text-white/60">Analysed by AI Cost Engineer</p>
+            <p className="text-xs sm:text-sm text-white">Analysed by AI Cost Engineer</p>
           </div>
         </div>
       </div>
@@ -41,19 +41,19 @@ const OriginalRequestCard = ({ query, projectContext, timestamp }: OriginalReque
           {projectContext.projectName && (
             <div className="flex items-center gap-1.5">
               <User className="h-3.5 w-3.5 text-blue-400" />
-              <span className="text-xs text-white/70">{projectContext.projectName}</span>
+              <span className="text-xs text-white">{projectContext.projectName}</span>
             </div>
           )}
           {projectContext.location && (
             <div className="flex items-center gap-1.5">
               <MapPin className="h-3.5 w-3.5 text-blue-400" />
-              <span className="text-xs text-white/70">{projectContext.location}</span>
+              <span className="text-xs text-white">{projectContext.location}</span>
             </div>
           )}
           {timestamp && (
             <div className="flex items-center gap-1.5">
               <Calendar className="h-3.5 w-3.5 text-blue-400" />
-              <span className="text-xs text-white/70">
+              <span className="text-xs text-white">
                 {format(new Date(timestamp), 'dd MMM yyyy, HH:mm')}
               </span>
             </div>
@@ -72,7 +72,7 @@ const OriginalRequestCard = ({ query, projectContext, timestamp }: OriginalReque
         {/* Additional Info if present */}
         {projectContext?.additionalInfo && (
           <div className="pt-3 border-t border-white/5">
-            <p className="text-xs sm:text-sm font-semibold text-white/70 mb-2">
+            <p className="text-xs sm:text-sm font-semibold text-white mb-2">
               Additional Requirements:
             </p>
             <p className="text-sm sm:text-base text-white whitespace-pre-wrap">

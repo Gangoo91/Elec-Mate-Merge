@@ -233,7 +233,7 @@ const HNCModule4Section6_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section6">
@@ -255,7 +255,7 @@ const HNCModule4Section6_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             NBS Specifications
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Mastering structured specification writing for building services electrical
             installations
           </p>
@@ -467,7 +467,7 @@ const HNCModule4Section6_1 = () => {
                 </p>
                 <div className="bg-white/5 p-3 rounded text-sm font-mono">
                   <p>Y71/210 - Distribution boards</p>
-                  <p className="text-white/60 mt-1">Section/Clause number</p>
+                  <p className="text-white mt-1">Section/Clause number</p>
                   <p className="mt-2">Y71 = LV supply section</p>
                   <p>210 = Product clause</p>
                 </div>
@@ -726,7 +726,7 @@ const HNCModule4Section6_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -773,7 +773,7 @@ const HNCModule4Section6_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section6">

@@ -249,13 +249,13 @@ const MentalHealthModule2Section4 = () => {
           </div>
           <div className="inline-block bg-purple-500/10 border border-purple-500/20 px-3 py-1 rounded-full text-sm font-semibold mb-4 ml-0">
             <span className="text-purple-400">MODULE 2</span>
-            <span className="text-white/40 mx-2">&middot;</span>
-            <span className="text-white/60">SECTION 4</span>
+            <span className="text-white mx-2">&middot;</span>
+            <span className="text-white">SECTION 4</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Supporting Someone with Depression or Anxiety
           </h1>
-          <p className="text-white/70 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Practical skills for approaching, supporting, and guiding colleagues towards
             professional help using the ALGEE action plan
           </p>
@@ -265,7 +265,7 @@ const MentalHealthModule2Section4 = () => {
         <div className="grid sm:grid-cols-2 gap-4 mb-10">
           <div className="rounded-lg p-4 bg-purple-500/5 border-l-2 border-purple-500/50">
             <p className="font-semibold text-purple-400 mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -298,7 +298,7 @@ const MentalHealthModule2Section4 = () => {
           </div>
           <div className="rounded-lg p-4 bg-purple-500/5 border-l-2 border-purple-500/50">
             <p className="font-semibold text-purple-400/90 mb-2">ALGEE Action Plan</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -339,7 +339,7 @@ const MentalHealthModule2Section4 = () => {
         {/* Learning Outcomes */}
         <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4">By the end of this section, you will be able to:</p>
+          <p className="text-white mb-4">By the end of this section, you will be able to:</p>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
               'Apply the ALGEE action plan specifically for depression and anxiety, including choosing the right time, place, and approach',
@@ -351,7 +351,7 @@ const MentalHealthModule2Section4 = () => {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-purple-400/70 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </div>
             ))}
           </div>
@@ -368,7 +368,7 @@ const MentalHealthModule2Section4 = () => {
               <span className="text-purple-400/80 text-sm font-normal">01</span>
               ALGEE in Practice
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 ALGEE is the core action plan of Mental Health First Aid. While you may have learned
                 the framework in earlier modules, this section focuses on applying it{' '}
@@ -418,7 +418,7 @@ const MentalHealthModule2Section4 = () => {
                       </div>
                       <div>
                         <p className="text-white font-medium text-sm">{title}</p>
-                        <p className="text-white/60 text-sm">{detail}</p>
+                        <p className="text-white text-sm">{detail}</p>
                       </div>
                     </div>
                   ))}
@@ -430,7 +430,7 @@ const MentalHealthModule2Section4 = () => {
                   <Shield className="h-5 w-5 text-purple-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-purple-300">Privacy Considerations</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Everything someone shares with you in confidence should remain private unless
                   there is an immediate risk to life. Do <strong className="text-white">not</strong>{' '}
                   discuss their situation with other colleagues, supervisors, or managers without
@@ -454,7 +454,7 @@ const MentalHealthModule2Section4 = () => {
               <span className="text-purple-400/80 text-sm font-normal">02</span>
               What to Say (and What NOT to Say)
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The words you choose when speaking to someone about their mental health can either
                 open a door or slam it shut. Many people are afraid to talk about depression or
@@ -511,7 +511,7 @@ const MentalHealthModule2Section4 = () => {
                           <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                           <div>
                             <p className="text-green-300 font-medium">{phrase}</p>
-                            <p className="text-white/50 text-xs">{why}</p>
+                            <p className="text-white text-xs">{why}</p>
                           </div>
                         </div>
                       ))}
@@ -559,7 +559,7 @@ const MentalHealthModule2Section4 = () => {
                           <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                           <div>
                             <p className="text-red-300 font-medium">{phrase}</p>
-                            <p className="text-white/50 text-xs">{why}</p>
+                            <p className="text-white text-xs">{why}</p>
                           </div>
                         </div>
                       ))}
@@ -568,7 +568,7 @@ const MentalHealthModule2Section4 = () => {
                 </div>
 
                 <div className="mt-4 bg-purple-500/10 border border-purple-500/30 p-3 rounded-lg">
-                  <p className="text-white/70 text-sm text-center">
+                  <p className="text-white text-sm text-center">
                     <strong className="text-purple-300">Why this matters:</strong> In the
                     construction industry, men are 3 times more likely to die by suicide than women.
                     Language that dismisses mental health struggles reinforces the stigma that
@@ -580,11 +580,11 @@ const MentalHealthModule2Section4 = () => {
 
               <div className="bg-white/5 border border-purple-500/30 p-4 rounded-lg">
                 <h3 className="text-purple-400 font-medium mb-2">The Art of Active Listening</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   What you say matters, but <strong className="text-white">how you listen</strong>{' '}
                   matters even more. Active listening means:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-purple-400 mt-1 flex-shrink-0" />
                     <div>
@@ -637,7 +637,7 @@ const MentalHealthModule2Section4 = () => {
               <span className="text-purple-400/80 text-sm font-normal">03</span>
               Encouraging Professional Help
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 One of the most important things a Mental Health First Aider can do is gently
                 encourage someone to seek professional help. For many people &mdash; particularly in
@@ -651,7 +651,7 @@ const MentalHealthModule2Section4 = () => {
                   <Stethoscope className="h-5 w-5" />
                   How to Suggest Seeing a GP
                 </h3>
-                <div className="space-y-2 text-sm text-white/70">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     Bringing up the idea of professional help requires sensitivity. Here are
                     approaches that work well:
@@ -699,7 +699,7 @@ const MentalHealthModule2Section4 = () => {
 
               <div className="bg-white/5 border border-purple-500/30 p-4 rounded-lg">
                 <h3 className="text-purple-400 font-medium mb-3">Overcoming Resistance</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   It is common for someone to resist the idea of professional help. Here are typical
                   objections and how you might respond:
                 </p>
@@ -708,7 +708,7 @@ const MentalHealthModule2Section4 = () => {
                     <p className="text-red-300 font-medium mb-1">
                       &ldquo;I don&rsquo;t need a doctor — I&rsquo;m not crazy.&rdquo;
                     </p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       &rarr; &ldquo;Seeing a GP about your mental health is exactly like seeing them
                       about a bad back. It&rsquo;s just your brain that needs some support, not your
                       spine.&rdquo;
@@ -718,7 +718,7 @@ const MentalHealthModule2Section4 = () => {
                     <p className="text-red-300 font-medium mb-1">
                       &ldquo;I don&rsquo;t want to be put on medication.&rdquo;
                     </p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       &rarr; &ldquo;The GP won&rsquo;t force medication on you. They&rsquo;ll talk
                       through your options — therapy is often the first recommendation. You&rsquo;re
                       always in control of your treatment.&rdquo;
@@ -728,7 +728,7 @@ const MentalHealthModule2Section4 = () => {
                     <p className="text-red-300 font-medium mb-1">
                       &ldquo;I can&rsquo;t take time off work for appointments.&rdquo;
                     </p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       &rarr; &ldquo;Many GP surgeries offer early morning, evening, or telephone
                       appointments. NHS Talking Therapies also offer evening and weekend sessions.
                       It&rsquo;s worth asking about flexible options.&rdquo;
@@ -739,7 +739,7 @@ const MentalHealthModule2Section4 = () => {
 
               <div className="bg-purple-500/10 border border-purple-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-3 text-purple-400">The GP Appointment Process</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   If someone has never spoken to a GP about mental health, explaining what to expect
                   can reduce anxiety about the appointment:
                 </p>
@@ -782,7 +782,7 @@ const MentalHealthModule2Section4 = () => {
                       </div>
                       <div>
                         <p className="text-white font-medium text-sm">{title}</p>
-                        <p className="text-white/60 text-sm">{detail}</p>
+                        <p className="text-white text-sm">{detail}</p>
                       </div>
                     </div>
                   ))}
@@ -794,13 +794,13 @@ const MentalHealthModule2Section4 = () => {
                   <BookOpen className="h-5 w-5" />
                   NHS Talking Therapies (Self-Referral)
                 </h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Formerly known as IAPT (Improving Access to Psychological Therapies), NHS Talking
                   Therapies is a free NHS service offering evidence-based treatments for depression
                   and anxiety. Crucially,
                   <strong className="text-white"> you can self-refer without seeing a GP</strong>.
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -840,7 +840,7 @@ const MentalHealthModule2Section4 = () => {
               <span className="text-purple-400/80 text-sm font-normal">04</span>
               Talking Therapies
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 &ldquo;Talking therapy&rdquo; is the umbrella term for psychological treatments
                 where a trained therapist helps you work through mental health difficulties by
@@ -856,7 +856,7 @@ const MentalHealthModule2Section4 = () => {
                     <Brain className="h-4 w-4" />
                     CBT (Cognitive Behavioural Therapy)
                   </h3>
-                  <p className="text-white/70 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     <strong className="text-white">
                       Most commonly offered for depression and anxiety.
                     </strong>{' '}
@@ -864,25 +864,25 @@ const MentalHealthModule2Section4 = () => {
                     interconnected. By identifying and challenging unhelpful thought patterns, you
                     can change how you feel and behave.
                   </p>
-                  <ul className="text-white/60 space-y-1 text-sm">
+                  <ul className="text-white space-y-1 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>
-                        <strong className="text-white/80">Duration:</strong> typically 6&ndash;20
+                        <strong className="text-white">Duration:</strong> typically 6&ndash;20
                         sessions
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>
-                        <strong className="text-white/80">Format:</strong> structured,
+                        <strong className="text-white">Format:</strong> structured,
                         goal-oriented, includes &ldquo;homework&rdquo;
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>
-                        <strong className="text-white/80">Access:</strong> NHS Talking Therapies, GP
+                        <strong className="text-white">Access:</strong> NHS Talking Therapies, GP
                         referral, or private
                       </span>
                     </li>
@@ -895,32 +895,32 @@ const MentalHealthModule2Section4 = () => {
                     <MessageCircle className="h-4 w-4" />
                     Counselling
                   </h3>
-                  <p className="text-white/70 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     <strong className="text-white">A safe space to explore feelings.</strong>{' '}
                     Counselling is less structured than CBT. A trained counsellor helps you talk
                     through problems and feelings in a supportive, confidential environment. It does
                     not focus on changing thought patterns but on understanding and processing
                     emotions.
                   </p>
-                  <ul className="text-white/60 space-y-1 text-sm">
+                  <ul className="text-white space-y-1 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>
-                        <strong className="text-white/80">Duration:</strong> typically 6&ndash;12
+                        <strong className="text-white">Duration:</strong> typically 6&ndash;12
                         sessions
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>
-                        <strong className="text-white/80">Format:</strong> person-centred,
+                        <strong className="text-white">Format:</strong> person-centred,
                         non-directive
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>
-                        <strong className="text-white/80">Access:</strong> NHS, GP referral,
+                        <strong className="text-white">Access:</strong> NHS, GP referral,
                         charities, or private
                       </span>
                     </li>
@@ -933,7 +933,7 @@ const MentalHealthModule2Section4 = () => {
                     <Users className="h-4 w-4" />
                     IPT (Interpersonal Therapy)
                   </h3>
-                  <p className="text-white/70 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     <strong className="text-white">
                       Focuses on relationships and social roles.
                     </strong>{' '}
@@ -941,25 +941,25 @@ const MentalHealthModule2Section4 = () => {
                     relationships with others. It helps identify patterns in relationships that
                     contribute to depression and develop healthier ways of relating to people.
                   </p>
-                  <ul className="text-white/60 space-y-1 text-sm">
+                  <ul className="text-white space-y-1 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>
-                        <strong className="text-white/80">Duration:</strong> typically 12&ndash;16
+                        <strong className="text-white">Duration:</strong> typically 12&ndash;16
                         sessions
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>
-                        <strong className="text-white/80">Format:</strong> structured, focuses on 4
+                        <strong className="text-white">Format:</strong> structured, focuses on 4
                         key areas (grief, disputes, role transitions, isolation)
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>
-                        <strong className="text-white/80">Access:</strong> NHS Talking Therapies or
+                        <strong className="text-white">Access:</strong> NHS Talking Therapies or
                         private
                       </span>
                     </li>
@@ -972,32 +972,32 @@ const MentalHealthModule2Section4 = () => {
                     <Activity className="h-4 w-4" />
                     EMDR (Eye Movement Desensitisation &amp; Reprocessing)
                   </h3>
-                  <p className="text-white/70 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     <strong className="text-white">Primarily for trauma and PTSD.</strong> EMDR uses
                     bilateral stimulation (typically guided eye movements) while recalling traumatic
                     memories. This helps the brain reprocess the memory so it becomes less
                     distressing. It can also be effective for anxiety and depression linked to
                     trauma.
                   </p>
-                  <ul className="text-white/60 space-y-1 text-sm">
+                  <ul className="text-white space-y-1 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>
-                        <strong className="text-white/80">Duration:</strong> typically 8&ndash;12
+                        <strong className="text-white">Duration:</strong> typically 8&ndash;12
                         sessions
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>
-                        <strong className="text-white/80">Format:</strong> structured 8-phase
+                        <strong className="text-white">Format:</strong> structured 8-phase
                         protocol
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>
-                        <strong className="text-white/80">Access:</strong> NHS (for PTSD), GP
+                        <strong className="text-white">Access:</strong> NHS (for PTSD), GP
                         referral, or private
                       </span>
                     </li>
@@ -1011,7 +1011,7 @@ const MentalHealthModule2Section4 = () => {
                   <Users className="h-5 w-5" />
                   Group Therapy
                 </h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Group therapy involves a therapist working with a small group of people (usually
                   6&ndash;12) who share similar difficulties. It is particularly effective because
                   participants realise they are not alone, learn from others&rsquo; experiences, and
@@ -1020,19 +1020,19 @@ const MentalHealthModule2Section4 = () => {
                 <div className="grid sm:grid-cols-3 gap-3 text-sm">
                   <div className="bg-purple-500/10 border border-purple-500/20 p-3 rounded">
                     <p className="text-purple-300 font-medium text-xs mb-1">Duration</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       8&ndash;12 weekly sessions, typically 90 minutes each
                     </p>
                   </div>
                   <div className="bg-purple-500/10 border border-purple-500/20 p-3 rounded">
                     <p className="text-purple-300 font-medium text-xs mb-1">Best for</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Social anxiety, depression, bereavement, anger management
                     </p>
                   </div>
                   <div className="bg-purple-500/10 border border-purple-500/20 p-3 rounded">
                     <p className="text-purple-300 font-medium text-xs mb-1">Access</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       NHS Talking Therapies, charities (Mind, SANE), or private
                     </p>
                   </div>
@@ -1046,7 +1046,7 @@ const MentalHealthModule2Section4 = () => {
                 <div className="grid sm:grid-cols-2 gap-4 text-sm">
                   <div>
                     <p className="text-purple-300 font-medium mb-2">NHS (Free)</p>
-                    <ul className="text-white/70 space-y-1">
+                    <ul className="text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                         <span>Self-refer via NHS Talking Therapies or GP referral</span>
@@ -1067,7 +1067,7 @@ const MentalHealthModule2Section4 = () => {
                   </div>
                   <div>
                     <p className="text-purple-300 font-medium mb-2">Private</p>
-                    <ul className="text-white/70 space-y-1">
+                    <ul className="text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                         <span>No waiting list — typically begin within 1&ndash;2 weeks</span>
@@ -1101,7 +1101,7 @@ const MentalHealthModule2Section4 = () => {
               <span className="text-purple-400/80 text-sm font-normal">05</span>
               Medication Awareness
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 As a Mental Health First Aider, you will{' '}
                 <strong className="text-white">never</strong> advise someone on medication. That is
@@ -1115,7 +1115,7 @@ const MentalHealthModule2Section4 = () => {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Critical Boundary</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Your role as a Mental Health First Aider is to{' '}
                   <strong className="text-white">understand</strong> what someone may be going
                   through, <strong className="text-white">not</strong> to advise on medication.
@@ -1131,13 +1131,13 @@ const MentalHealthModule2Section4 = () => {
                   <Pill className="h-5 w-5" />
                   SSRIs (Selective Serotonin Reuptake Inhibitors)
                 </h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   SSRIs are the{' '}
                   <strong className="text-white">most commonly prescribed antidepressants</strong>{' '}
                   in the UK. Common examples include sertraline, fluoxetine (Prozac), citalopram,
                   escitalopram, and paroxetine.
                 </p>
-                <div className="space-y-2 text-sm text-white/70">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1173,12 +1173,12 @@ const MentalHealthModule2Section4 = () => {
                   <Pill className="h-5 w-5" />
                   SNRIs (Serotonin &amp; Noradrenaline Reuptake Inhibitors)
                 </h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   SNRIs such as venlafaxine and duloxetine work similarly to SSRIs but also affect
                   noradrenaline. They may be prescribed when SSRIs have not been effective or for
                   certain types of anxiety.
                 </p>
-                <div className="space-y-2 text-sm text-white/70">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1203,7 +1203,7 @@ const MentalHealthModule2Section4 = () => {
                 <h3 className="text-purple-400 font-medium mb-3">
                   Not Addictive — but Withdrawal Effects Are Real
                 </h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Antidepressants are <strong className="text-white">not addictive</strong> in the
                   way that substances like opioids or benzodiazepines are. You will not crave them
                   or need increasing doses. However, stopping them suddenly &mdash; particularly
@@ -1211,7 +1211,7 @@ const MentalHealthModule2Section4 = () => {
                   <strong className="text-white"> discontinuation symptoms</strong>:
                 </p>
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
-                  <ul className="text-white/70 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>Dizziness and light-headedness</span>
@@ -1225,7 +1225,7 @@ const MentalHealthModule2Section4 = () => {
                       <span>&ldquo;Brain zaps&rdquo; (electric shock sensations)</span>
                     </li>
                   </ul>
-                  <ul className="text-white/70 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>Flu-like symptoms</span>
@@ -1240,7 +1240,7 @@ const MentalHealthModule2Section4 = () => {
                     </li>
                   </ul>
                 </div>
-                <p className="text-white/50 text-xs mt-3 italic">
+                <p className="text-white text-xs mt-3 italic">
                   This is why GPs always recommend tapering (gradually reducing the dose) rather
                   than stopping abruptly. If someone tells you they have stopped taking their
                   medication suddenly, encourage them to contact their GP as soon as possible.
@@ -1261,7 +1261,7 @@ const MentalHealthModule2Section4 = () => {
               <span className="text-purple-400/80 text-sm font-normal">06</span>
               Self-Help and Other Supports
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Professional help is vital, but self-help strategies and other supports play a
                 crucial complementary role in recovery from depression and anxiety. As a Mental
@@ -1275,13 +1275,13 @@ const MentalHealthModule2Section4 = () => {
                   <Activity className="h-5 w-5" />
                   Exercise — The Strongest Evidence Base
                 </h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Regular physical exercise is recommended by{' '}
                   <strong className="text-white">NICE guidelines</strong> as a treatment for mild to
                   moderate depression. The evidence is so strong that some GP surgeries now offer
                   &ldquo;exercise on prescription&rdquo; through local leisure centres.
                 </p>
-                <div className="space-y-2 text-sm text-white/70">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1320,11 +1320,11 @@ const MentalHealthModule2Section4 = () => {
               {/* Sleep Hygiene */}
               <div className="bg-white/5 border border-purple-500/30 p-4 rounded-lg">
                 <h3 className="text-purple-400 font-medium mb-3">Sleep Hygiene</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Poor sleep is both a symptom and a driver of depression and anxiety. Improving
                   sleep habits (&ldquo;sleep hygiene&rdquo;) can break this cycle:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <CheckCircle className="h-4 w-4 text-purple-400 mt-1 flex-shrink-0" />
                     <div>
@@ -1366,12 +1366,12 @@ const MentalHealthModule2Section4 = () => {
               {/* Mindfulness and Meditation */}
               <div className="bg-white/5 border border-purple-500/30 p-4 rounded-lg">
                 <h3 className="text-purple-400 font-medium mb-3">Mindfulness and Meditation</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Mindfulness-Based Cognitive Therapy (MBCT) is recommended by NICE for preventing
                   relapse in recurrent depression. Even informal mindfulness practice can help
                   reduce anxiety and improve emotional regulation.
                 </p>
-                <div className="space-y-2 text-sm text-white/70">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1402,7 +1402,7 @@ const MentalHealthModule2Section4 = () => {
               {/* Peer Support Groups */}
               <div className="bg-white/5 border border-purple-500/30 p-4 rounded-lg">
                 <h3 className="text-purple-400 font-medium mb-3">Peer Support Groups</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Peer support brings together people with shared experiences. It reduces isolation,
                   provides practical coping strategies, and normalises mental health struggles.
                   Construction-specific groups are available through charities such as the
@@ -1411,13 +1411,13 @@ const MentalHealthModule2Section4 = () => {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-purple-500/10 border border-purple-500/20 p-3 rounded">
                     <p className="text-purple-300 font-medium text-xs mb-1">In-person groups</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Mind local groups, Andy&rsquo;s Man Club (free, men-only), local IAPT groups
                     </p>
                   </div>
                   <div className="bg-purple-500/10 border border-purple-500/20 p-3 rounded">
                     <p className="text-purple-300 font-medium text-xs mb-1">Online communities</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Mind Side by Side, Anxiety UK forums, Big White Wall (now Togetherall)
                     </p>
                   </div>
@@ -1430,7 +1430,7 @@ const MentalHealthModule2Section4 = () => {
                   <BookOpen className="h-5 w-5" />
                   Trusted Online Resources
                 </h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Signposting someone to reliable, evidence-based resources is a valuable part of
                   your role as a Mental Health First Aider. Here are the most trusted UK sources:
                 </p>
@@ -1439,7 +1439,7 @@ const MentalHealthModule2Section4 = () => {
                     <CheckCircle className="h-4 w-4 text-violet-400 mt-1 flex-shrink-0" />
                     <div>
                       <strong className="text-white">Every Mind Matters (NHS)</strong>
-                      <span className="text-white/50">
+                      <span className="text-white">
                         {' '}
                         — personalised mental health action plan, free self-help tools, quizzes and
                         videos
@@ -1450,7 +1450,7 @@ const MentalHealthModule2Section4 = () => {
                     <CheckCircle className="h-4 w-4 text-violet-400 mt-1 flex-shrink-0" />
                     <div>
                       <strong className="text-white">Mind</strong>
-                      <span className="text-white/50">
+                      <span className="text-white">
                         {' '}
                         — comprehensive information on every mental health condition, local
                         services, legal rights at work, helpline
@@ -1461,7 +1461,7 @@ const MentalHealthModule2Section4 = () => {
                     <CheckCircle className="h-4 w-4 text-violet-400 mt-1 flex-shrink-0" />
                     <div>
                       <strong className="text-white">Anxiety UK</strong>
-                      <span className="text-white/50">
+                      <span className="text-white">
                         {' '}
                         — specialist charity for anxiety disorders, helpline, therapy access,
                         self-help resources
@@ -1472,7 +1472,7 @@ const MentalHealthModule2Section4 = () => {
                     <CheckCircle className="h-4 w-4 text-violet-400 mt-1 flex-shrink-0" />
                     <div>
                       <strong className="text-white">Samaritans (116 123)</strong>
-                      <span className="text-white/50">
+                      <span className="text-white">
                         {' '}
                         — free, confidential, 24/7 listening service for anyone in distress, not
                         just those who are suicidal
@@ -1483,7 +1483,7 @@ const MentalHealthModule2Section4 = () => {
                     <CheckCircle className="h-4 w-4 text-violet-400 mt-1 flex-shrink-0" />
                     <div>
                       <strong className="text-white">Mates in Mind</strong>
-                      <span className="text-white/50">
+                      <span className="text-white">
                         {' '}
                         — construction-industry-specific mental health charity, workplace training,
                         resources for employers and workers
@@ -1496,33 +1496,33 @@ const MentalHealthModule2Section4 = () => {
               {/* Apps */}
               <div className="bg-white/5 border border-purple-500/30 p-4 rounded-lg">
                 <h3 className="text-purple-400 font-medium mb-3">Recommended Apps</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Digital tools can complement professional treatment. These apps are
                   evidence-informed and widely recommended by NHS professionals:
                 </p>
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-purple-500/10 border border-purple-500/20 p-3 rounded">
                     <p className="text-purple-300 font-medium mb-1">Calm</p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       Guided meditation, sleep stories, breathing exercises. Free tier available.
                     </p>
                   </div>
                   <div className="bg-purple-500/10 border border-purple-500/20 p-3 rounded">
                     <p className="text-purple-300 font-medium mb-1">Headspace</p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       Structured mindfulness courses, animations explaining mental health. Free
                       basics.
                     </p>
                   </div>
                   <div className="bg-purple-500/10 border border-purple-500/20 p-3 rounded">
                     <p className="text-purple-300 font-medium mb-1">NHS Every Mind Matters</p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       Free personalised action plan. Completely free, evidence-based, NHS-developed.
                     </p>
                   </div>
                   <div className="bg-purple-500/10 border border-purple-500/20 p-3 rounded">
                     <p className="text-purple-300 font-medium mb-1">Togetherall</p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       Monitored peer support community with self-help courses. Free via many NHS
                       trusts.
                     </p>
@@ -1535,7 +1535,7 @@ const MentalHealthModule2Section4 = () => {
                 <h3 className="font-semibold mb-2 text-purple-400">
                   Social Connection — The Foundation
                 </h3>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Human connection is one of the most powerful protections against depression and
                   anxiety. Isolation amplifies mental health problems; connection reduces them.
                   Encourage someone who is struggling to maintain their social relationships, even
@@ -1560,7 +1560,7 @@ const MentalHealthModule2Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1579,7 +1579,7 @@ const MentalHealthModule2Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-2">

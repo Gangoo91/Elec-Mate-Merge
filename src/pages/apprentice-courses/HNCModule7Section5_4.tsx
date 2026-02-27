@@ -233,7 +233,7 @@ const HNCModule7Section5_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section5">
@@ -255,7 +255,7 @@ const HNCModule7Section5_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Energy Metering
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Meter types, accuracy classes, CT connections, data communications, and sub-metering
             strategies
           </p>
@@ -783,28 +783,28 @@ const HNCModule7Section5_4 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Level 1: Fiscal Meter</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Main incoming supply</li>
                     <li>MID-approved, utility interface</li>
                   </ul>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Level 2: Distribution</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Main switchboard outgoings</li>
                     <li>Landlord vs tenant split</li>
                   </ul>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Level 3: End Use</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>HVAC, lighting, small power</li>
                     <li>Per floor or zone</li>
                   </ul>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Level 4: Equipment</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Individual chillers, AHUs</li>
                     <li>Server room, kitchen loads</li>
                   </ul>
@@ -812,7 +812,7 @@ const HNCModule7Section5_4 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Data strategy:</strong> Collect half-hourly (or finer) interval data for
               detailed analysis. Daily totals are insufficient for effective monitoring and
               targeting programmes.
@@ -838,18 +838,18 @@ const HNCModule7Section5_4 = () => {
                 <strong>Scenario:</strong> Select CTs for metering a 400A TP+N distribution board
                 with typical load of 280A.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given:</p>
                 <p className="ml-4">Nominal load = 280A</p>
                 <p className="ml-4">Maximum load = 400A (circuit rating)</p>
                 <p className="ml-4">Meter location = 20m from board</p>
                 <p className="ml-4">Meter accuracy = Class 1.0</p>
-                <p className="mt-2 text-white/60">CT Selection:</p>
+                <p className="mt-2 text-white">CT Selection:</p>
                 <p className="ml-4">Primary: 400/1A (280A = 70% loading) or 500/1A (56% loading)</p>
                 <p className="ml-4">Choose 400/1A for better accuracy at normal load</p>
                 <p className="ml-4">Secondary: 1A preferred for 20m cable run</p>
                 <p className="ml-4">Accuracy: Class 0.5 (exceeds meter requirement)</p>
-                <p className="mt-2 text-white/60">Burden calculation:</p>
+                <p className="mt-2 text-white">Burden calculation:</p>
                 <p className="ml-4">Meter burden: 0.2 VA</p>
                 <p className="ml-4">Cable (2.5mm², 40m loop): 0.3 VA at 1A</p>
                 <p className="ml-4">Connections: 0.1 VA</p>
@@ -868,22 +868,22 @@ const HNCModule7Section5_4 = () => {
                 <strong>Scenario:</strong> Design Modbus RTU network for 24 meters across a
                 commercial building.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Requirements:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Requirements:</p>
                 <p className="ml-4">24 meters across 4 floors</p>
                 <p className="ml-4">Maximum cable run: 800m</p>
                 <p className="ml-4">Polling interval: 15 seconds per meter</p>
-                <p className="mt-2 text-white/60">Network design:</p>
+                <p className="mt-2 text-white">Network design:</p>
                 <p className="ml-4">Physical layer: RS-485 (supports 1,200m)</p>
                 <p className="ml-4">Topology: Single daisy-chain from BMS room</p>
                 <p className="ml-4">Cable: CAT5 or dedicated RS-485 shielded pair</p>
                 <p className="ml-4">Termination: 120Ω at first and last device</p>
-                <p className="mt-2 text-white/60">Addressing:</p>
+                <p className="mt-2 text-white">Addressing:</p>
                 <p className="ml-4">Ground floor: Addresses 1-6</p>
                 <p className="ml-4">First floor: Addresses 11-16</p>
                 <p className="ml-4">Second floor: Addresses 21-26</p>
                 <p className="ml-4">Third floor: Addresses 31-36</p>
-                <p className="mt-2 text-white/60">Polling calculation:</p>
+                <p className="mt-2 text-white">Polling calculation:</p>
                 <p className="ml-4">24 meters × 15 sec = 360 seconds (6 min cycle)</p>
                 <p className="ml-4">Acceptable for M&T but consider faster baud for real-time</p>
                 <p className="mt-2 text-green-400">
@@ -900,12 +900,12 @@ const HNCModule7Section5_4 = () => {
                 <strong>Scenario:</strong> Develop sub-metering schedule for a 10,000m² office
                 building.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Building profile:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Building profile:</p>
                 <p className="ml-4">Fiscal supply: 800 kVA</p>
                 <p className="ml-4">5 tenants + landlord areas</p>
                 <p className="ml-4">Central HVAC (chillers, AHUs, pumps)</p>
-                <p className="mt-2 text-white/60">Sub-metering schedule:</p>
+                <p className="mt-2 text-white">Sub-metering schedule:</p>
                 <p className="mt-2">Level 2 - Distribution (6 meters):</p>
                 <p className="ml-4">M01: Tenant A supply</p>
                 <p className="ml-4">M02: Tenant B supply</p>
@@ -924,7 +924,7 @@ const HNCModule7Section5_4 = () => {
                 <p className="ml-4">M14: Server room</p>
                 <p className="ml-4">M15: Kitchen/catering</p>
                 <p className="ml-4">M16: External lighting</p>
-                <p className="mt-2 text-white/60">Coverage check:</p>
+                <p className="mt-2 text-white">Coverage check:</p>
                 <p className="ml-4">Sub-metered: 780 kVA (97.5% of supply)</p>
                 <p className="mt-2 text-green-400">Meets CIBSE TM39 &gt;90% coverage requirement</p>
               </div>
@@ -1011,7 +1011,7 @@ const HNCModule7Section5_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1057,7 +1057,7 @@ const HNCModule7Section5_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section5">

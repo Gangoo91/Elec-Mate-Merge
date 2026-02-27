@@ -99,7 +99,7 @@ const FunctionalSkillsModule1Section2 = () => {
             to="/study-centre/apprentice/functional-skills/module1"
             className="p-2 -ml-2 touch-manipulation"
           >
-            <ArrowLeft className="w-5 h-5 text-white/60" />
+            <ArrowLeft className="w-5 h-5 text-white" />
           </Link>
           <div>
             <p className="text-[11px] font-semibold text-green-400 uppercase tracking-wider">
@@ -125,7 +125,7 @@ const FunctionalSkillsModule1Section2 = () => {
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
               Units &amp; Measurement
             </h2>
-            <p className="text-sm text-white/50 max-w-lg mx-auto">
+            <p className="text-sm text-white max-w-lg mx-auto">
               Master the measurement systems that underpin every electrical installation &mdash;
               from SI base units to reading scale drawings and working within tolerances.
             </p>
@@ -148,7 +148,7 @@ const FunctionalSkillsModule1Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">SI Units for Electricians</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               The <strong className="text-white">Système International d&apos;Unités (SI)</strong>{' '}
               is the internationally agreed measurement system used across science, engineering and
@@ -217,7 +217,7 @@ const FunctionalSkillsModule1Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Why SI Matters on Site</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Using SI units consistently prevents dangerous errors. If you mix up milliamps with
                 amps when setting an RCD, a 30&thinsp;mA device could be confused with 30&thinsp;A
                 &mdash; a 1,000-fold error that could be lethal. Always include the correct prefix
@@ -282,7 +282,7 @@ const FunctionalSkillsModule1Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Electrical Units Explained</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Beyond the base SI units, electricians work with a number of{' '}
               <strong className="text-white">derived units</strong> that describe the key quantities
@@ -352,7 +352,7 @@ const FunctionalSkillsModule1Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">The Electrical Triangle</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Voltage (V), Current (I) and Resistance (R) are linked by Ohm&apos;s Law: V = I
                 &times; R. Power (P), Voltage and Current are linked by: P = V &times; I. These
                 relationships mean that if you know any two quantities, you can always calculate the
@@ -402,7 +402,7 @@ const FunctionalSkillsModule1Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Imperial to Metric Conversion</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Although the UK has officially adopted the metric system, many older buildings,
               American-manufactured equipment and some traditional trades still use{' '}
@@ -470,7 +470,7 @@ const FunctionalSkillsModule1Section2 = () => {
                   <p className="text-xs font-semibold text-yellow-400 mb-1">
                     Common Conversion Mistake
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     When converting inches to millimetres, some apprentices accidentally divide
                     instead of multiply. Remember: metric units are smaller than imperial
                     equivalents for length, so the number should get <em>bigger</em> when converting
@@ -528,7 +528,7 @@ const FunctionalSkillsModule1Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Area &amp; Volume Calculations</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               <strong className="text-white">Area</strong> is measured in square units (m², mm²,
               cm²) and is essential for a range of electrical calculations: determining floor area
@@ -619,7 +619,7 @@ const FunctionalSkillsModule1Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Practical Tip</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 When calculating conduit or trunking capacity, always use the
                 <em> internal</em> dimensions, not the external. The wall thickness reduces the
                 usable space significantly, especially on smaller sizes.
@@ -650,7 +650,7 @@ const FunctionalSkillsModule1Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Perimeter &amp; Cable Runs</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               The <strong className="text-white">perimeter</strong> of a shape is the total distance
               around its outside edge. In electrical installation, perimeter calculations are used
@@ -722,7 +722,7 @@ const FunctionalSkillsModule1Section2 = () => {
               <p className="text-xs font-semibold text-green-400 mb-1">
                 Worked Example &mdash; Ring Final Circuit
               </p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 A ring final circuit serves a room measuring 7&thinsp;m &times; 5&thinsp;m. The
                 cable leaves the consumer unit (on one wall), runs around the perimeter at socket
                 level (about 0.3&thinsp;m above floor), and returns to the CU. Perimeter = 2(7 + 5)
@@ -763,7 +763,7 @@ const FunctionalSkillsModule1Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Scale Drawings</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Electricians work with <strong className="text-white">scale drawings</strong> on
               almost every job. Architects produce floor plans, building sections and elevations at
@@ -832,7 +832,7 @@ const FunctionalSkillsModule1Section2 = () => {
               <p className="text-xs font-semibold text-green-400 mb-1">
                 Worked Example &mdash; Reading a 1:50 Drawing
               </p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 On a 1:50 floor plan, the distance from the consumer unit to a socket outlet
                 measures 8.4&thinsp;cm on paper. Actual distance = 8.4 &times; 50 = 420&thinsp;cm =
                 4.2&thinsp;m. Add vertical drops (0.3&thinsp;m from skirting to socket +
@@ -884,7 +884,7 @@ const FunctionalSkillsModule1Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Tolerances &amp; Accuracy</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               No measurement is perfectly exact. Every ruler, tape measure and digital instrument
               has a degree of <strong className="text-white">uncertainty</strong>. In electrical
@@ -969,7 +969,7 @@ const FunctionalSkillsModule1Section2 = () => {
                 <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="text-xs font-semibold text-yellow-400 mb-1">Calibration Warning</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Test instruments must be calibrated regularly (typically annually) to maintain
                     accuracy within their stated tolerance. Using an out-of-calibration meter could
                     produce measurements outside the acceptable range, potentially leading to
@@ -1004,7 +1004,7 @@ const FunctionalSkillsModule1Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Practical Measurement Tasks</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               This final section brings together all the measurement skills covered in this section
               through realistic scenarios you will encounter on site. Work through each example step
@@ -1147,7 +1147,7 @@ const FunctionalSkillsModule1Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Takeaway</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Every measurement you take on site feeds into a calculation that affects safety,
                 compliance and cost. Mastering SI units, conversions, area, volume, perimeter, scale
                 drawings and tolerances will make you a more confident, accurate and efficient
@@ -1165,7 +1165,7 @@ const FunctionalSkillsModule1Section2 = () => {
         <div className="flex items-center justify-between pt-6 border-t border-white/10">
           <Link
             to="/study-centre/apprentice/functional-skills/module1/section1"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
           >
             <ArrowLeft className="w-4 h-4" />
             Number Systems

@@ -45,7 +45,7 @@ const RealWorldGrid = ({ onSelectCategory }: RealWorldGridProps) => {
     <motion.div className="space-y-6" variants={containerVariants} initial="hidden" animate="show">
       {/* Case Categories */}
       <div>
-        <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+        <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
           Case Study Categories
         </p>
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
@@ -72,15 +72,15 @@ const RealWorldGrid = ({ onSelectCategory }: RealWorldGridProps) => {
                   <h3 className="text-[15px] font-medium text-white leading-tight">
                     {category.title}
                   </h3>
-                  <p className="text-[13px] text-white/50 leading-tight mt-0.5 line-clamp-1">
+                  <p className="text-[13px] text-white leading-tight mt-0.5 line-clamp-1">
                     {category.description}
                   </p>
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0">
-                  <span className="text-[13px] text-white/30">
+                  <span className="text-[13px] text-white">
                     {category.examples.length} cases
                   </span>
-                  <ChevronRight className="h-4 w-4 text-white/20" />
+                  <ChevronRight className="h-4 w-4 text-white" />
                 </div>
               </motion.div>
             );
@@ -91,8 +91,8 @@ const RealWorldGrid = ({ onSelectCategory }: RealWorldGridProps) => {
       {/* Info notice */}
       <motion.div variants={itemVariants}>
         <div className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-white/[0.02]">
-          <Target className="h-4 w-4 text-white/30 flex-shrink-0" />
-          <p className="text-[12px] text-white/40">
+          <Target className="h-4 w-4 text-white flex-shrink-0" />
+          <p className="text-[12px] text-white">
             Based on real fault-finding scenarios with detailed solutions
           </p>
         </div>

@@ -180,7 +180,7 @@ export default function LeadershipModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-4">
@@ -203,7 +203,7 @@ export default function LeadershipModule4Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Making Decisions Under Pressure
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How effective site leaders make good decisions quickly, own the outcomes, and avoid the
             traps that derail decision-making
           </p>
@@ -288,7 +288,7 @@ export default function LeadershipModule4Section1() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-400 mb-2">The Cost of Indecision</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Indecision is itself a decision &mdash; and usually the worst one. When a
                   supervisor fails to decide, work stalls, the team loses confidence, and the
                   problem often gets worse. A team waiting for direction is a team not working. On a
@@ -308,7 +308,7 @@ export default function LeadershipModule4Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Types of Site Decisions</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">Routine Decisions</p>
                     <p>
@@ -357,7 +357,7 @@ export default function LeadershipModule4Section1() {
                   <Target className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Key Principle</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Decision-making is a <strong className="text-white">skill, not a talent</strong>.
                   Some people seem naturally decisive, but what they actually have is experience and
                   frameworks. The good news is that both can be learned. Every decision you make
@@ -396,7 +396,7 @@ export default function LeadershipModule4Section1() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-lg font-bold text-rose-400">O &mdash; Observe</p>
-                    <p className="text-white/80 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Gather raw data. Walk the job, check progress against programme, talk to the
                       team, read the reports, look at the weather forecast. What is actually
                       happening right now? Not what you assumed would happen &mdash; what is
@@ -405,7 +405,7 @@ export default function LeadershipModule4Section1() {
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-lg font-bold text-rose-400">O &mdash; Orient</p>
-                    <p className="text-white/80 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Make sense of the data through experience and context. &ldquo;Cable delivery
                       is late, ceiling going in tomorrow, three electricians idle.&rdquo; This is
                       where experience matters most &mdash; the ability to see patterns and
@@ -414,7 +414,7 @@ export default function LeadershipModule4Section1() {
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-lg font-bold text-rose-400">D &mdash; Decide</p>
-                    <p className="text-white/80 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Choose a course of action from the options available. Commit to a direction.
                       Do not hedge or half-commit &mdash; a clear decision, communicated clearly, is
                       what the team needs from you.
@@ -422,7 +422,7 @@ export default function LeadershipModule4Section1() {
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-lg font-bold text-rose-400">A &mdash; Act</p>
-                    <p className="text-white/80 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Execute the decision, then immediately loop back to Observe. Did it work? What
                       has changed? The loop is iterative &mdash; you cycle through it continuously,
                       refining your approach with each pass.
@@ -443,7 +443,7 @@ export default function LeadershipModule4Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   OODA Loop &mdash; Site Example
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -492,13 +492,13 @@ export default function LeadershipModule4Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Why Orient Is the Most Important Stage
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Boyd considered Orient the most critical stage because it is where experience,
                   training, culture, and previous observations combine to create meaning from raw
                   data. Two supervisors can observe the same situation and orient completely
                   differently based on their experience.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -516,7 +516,7 @@ export default function LeadershipModule4Section1() {
                     </span>
                   </li>
                 </ul>
-                <p className="text-sm text-white/80 mt-2">
+                <p className="text-sm text-white mt-2">
                   This is why experience matters so much in supervision &mdash; and why every
                   decision you make, right or wrong, builds your ability to orient faster next time.
                 </p>
@@ -527,7 +527,7 @@ export default function LeadershipModule4Section1() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Common OODA Mistake</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The most common mistake is getting stuck in the{' '}
                   <strong className="text-white">Observe</strong> stage &mdash; endlessly gathering
                   data without moving to Orient and Decide. On a construction site, you will never
@@ -585,7 +585,7 @@ export default function LeadershipModule4Section1() {
                     <p className="text-rose-400 font-semibold text-sm mb-2">
                       Speed Wins (70% Rule Applies)
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                         <span>Programme sequencing and daily task allocation</span>
@@ -612,7 +612,7 @@ export default function LeadershipModule4Section1() {
                     <p className="text-blue-400 font-semibold text-sm mb-2">
                       Accuracy Wins (Get It Right)
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                         <span>Safety-critical method statements and permits</span>
@@ -643,7 +643,7 @@ export default function LeadershipModule4Section1() {
                   <Shield className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">The Safety Exception</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   For{' '}
                   <strong className="text-white">
                     safety-critical decisions, there is no rush &mdash; get it right.
@@ -706,7 +706,7 @@ export default function LeadershipModule4Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">How to Own a Wrong Decision</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -761,7 +761,7 @@ export default function LeadershipModule4Section1() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Decision Documentation</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   For significant decisions, document your reasoning &mdash; even briefly. A note in
                   your site diary explaining what you decided, why, and what information you had at
                   the time protects you if the decision is later questioned. It also helps you learn
@@ -797,7 +797,7 @@ export default function LeadershipModule4Section1() {
                 <div className="space-y-3 text-sm">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-400 font-medium mb-1">1. Analysis Paralysis</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Overthinking a decision until the moment to act has passed. The supervisor who
                       needs &ldquo;just one more piece of information&rdquo; before committing,
                       while the team stands idle and the programme slips.{' '}
@@ -808,7 +808,7 @@ export default function LeadershipModule4Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-400 font-medium mb-1">2. Groupthink</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Going along with the consensus even when you suspect it is wrong. On site,
                       this happens in progress meetings where nobody wants to be the one who raises
                       the awkward question. <strong className="text-white">Defence:</strong>{' '}
@@ -818,7 +818,7 @@ export default function LeadershipModule4Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-400 font-medium mb-1">3. Confirmation Bias</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Seeking information that supports what you already believe and ignoring
                       evidence that contradicts it. If you have already decided the subcontractor is
                       the problem, you will only see evidence confirming that view.{' '}
@@ -829,7 +829,7 @@ export default function LeadershipModule4Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-400 font-medium mb-1">4. Sunk Cost Fallacy</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Continuing with a failing approach because you have already invested time,
                       money, or effort. &ldquo;We have spent three weeks on this method, we cannot
                       change now.&rdquo; The three weeks are gone regardless.{' '}
@@ -839,7 +839,7 @@ export default function LeadershipModule4Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-400 font-medium mb-1">5. Anchoring</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Over-relying on the first piece of information you receive. If the first
                       estimate says the job will take four weeks, every subsequent estimate is
                       mentally compared to that anchor, even if the original was wrong.{' '}
@@ -885,7 +885,7 @@ export default function LeadershipModule4Section1() {
                 outcomes. The key points from this section are:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -953,7 +953,7 @@ export default function LeadershipModule4Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -967,7 +967,7 @@ export default function LeadershipModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-4">

@@ -178,7 +178,7 @@ export default function CoshhAwarenessModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-3">
@@ -203,7 +203,7 @@ export default function CoshhAwarenessModule3Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Common Construction Hazards
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Identifying and controlling the most common hazardous substances found on construction
             sites &mdash; from cement and silica dust to solvents, insulation materials, and diesel
             exhaust emissions
@@ -322,21 +322,21 @@ export default function CoshhAwarenessModule3Section1() {
                 <div className="grid sm:grid-cols-3 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-lg font-bold text-violet-400">Inhalation</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Dust, fumes, vapours, mists &middot; Most common route &middot; Often
                       invisible particles
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-lg font-bold text-violet-400">Skin</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Direct contact, splashes, immersion &middot; Burns, dermatitis, sensitisation
                       &middot; Absorption into bloodstream
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-lg font-bold text-violet-400">Ingestion</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Contaminated hands, food, drink &middot; Smoking on site &middot; Poor hygiene
                       practices
                     </p>
@@ -349,7 +349,7 @@ export default function CoshhAwarenessModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Latency Period</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Many occupational diseases caused by construction hazardous substances have a{' '}
                   <strong className="text-white">long latency period</strong>. Silicosis,
                   occupational cancers, and chronic respiratory diseases may not develop symptoms
@@ -380,7 +380,7 @@ export default function CoshhAwarenessModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Cement Burns (Alkaline Burns)</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -421,7 +421,7 @@ export default function CoshhAwarenessModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Hexavalent Chromium &mdash; Cr(VI)
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -465,7 +465,7 @@ export default function CoshhAwarenessModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Preventive Measures for Cement Work
                 </p>
-                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>Alkali-resistant gloves (not standard latex)</span>
@@ -506,7 +506,7 @@ export default function CoshhAwarenessModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Never Kneel in Wet Cement</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Some of the most severe cement burns occur when workers kneel in wet cement or
                   allow cement to get inside their boots. The prolonged, trapped contact against the
                   skin at pH 12&ndash;13 can cause{' '}
@@ -552,7 +552,7 @@ export default function CoshhAwarenessModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Health Effects of Silica Exposure
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -592,7 +592,7 @@ export default function CoshhAwarenessModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Activities Generating Silica Dust
                 </p>
-                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Cutting concrete, brick, or block with disc cutters</span>
@@ -632,7 +632,7 @@ export default function CoshhAwarenessModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Control Measures for Silica Dust
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -702,26 +702,26 @@ export default function CoshhAwarenessModule3Section1() {
                 <div className="bg-white/5 border border-red-500/30 rounded-xl overflow-hidden">
                   <div className="bg-red-500/10 border-b border-red-500/30 px-4 py-3 text-center">
                     <p className="text-sm font-bold text-red-400">Hardwood Dust</p>
-                    <p className="text-xs text-white/60">Higher risk &mdash; Carcinogenic</p>
+                    <p className="text-xs text-white">Higher risk &mdash; Carcinogenic</p>
                   </div>
-                  <div className="px-4 py-3 space-y-2 text-xs text-white/80">
+                  <div className="px-4 py-3 space-y-2 text-xs text-white">
                     <div className="flex justify-between">
-                      <span className="text-white/50">WEL (8-hr TWA)</span>
+                      <span className="text-white">WEL (8-hr TWA)</span>
                       <span className="text-red-400 font-bold">3 mg/m&sup3;</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-white/50">Cancer risk</span>
+                      <span className="text-white">Cancer risk</span>
                       <span className="text-red-300 font-medium">
                         Nasal cancer (adenocarcinoma)
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-white/50">Examples</span>
+                      <span className="text-white">Examples</span>
                       <span className="text-white font-medium">Oak, beech, mahogany, teak</span>
                     </div>
                     <hr className="border-white/10" />
                     <div>
-                      <span className="text-white/50">Other effects</span>
+                      <span className="text-white">Other effects</span>
                       <p className="text-white mt-1">
                         Asthma, rhinitis, dermatitis, nasal irritation
                       </p>
@@ -732,24 +732,24 @@ export default function CoshhAwarenessModule3Section1() {
                 <div className="bg-white/5 border border-amber-500/30 rounded-xl overflow-hidden">
                   <div className="bg-amber-500/10 border-b border-amber-500/30 px-4 py-3 text-center">
                     <p className="text-sm font-bold text-amber-400">Softwood Dust</p>
-                    <p className="text-xs text-white/60">Lower WEL &mdash; Still harmful</p>
+                    <p className="text-xs text-white">Lower WEL &mdash; Still harmful</p>
                   </div>
-                  <div className="px-4 py-3 space-y-2 text-xs text-white/80">
+                  <div className="px-4 py-3 space-y-2 text-xs text-white">
                     <div className="flex justify-between">
-                      <span className="text-white/50">WEL (8-hr TWA)</span>
+                      <span className="text-white">WEL (8-hr TWA)</span>
                       <span className="text-amber-400 font-bold">5 mg/m&sup3;</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-white/50">Cancer risk</span>
+                      <span className="text-white">Cancer risk</span>
                       <span className="text-white font-medium">Not classified as carcinogenic</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-white/50">Examples</span>
+                      <span className="text-white">Examples</span>
                       <span className="text-white font-medium">Pine, spruce, cedar, larch</span>
                     </div>
                     <hr className="border-white/10" />
                     <div>
-                      <span className="text-white/50">Other effects</span>
+                      <span className="text-white">Other effects</span>
                       <p className="text-white mt-1">
                         Asthma (esp. western red cedar), rhinitis, dermatitis
                       </p>
@@ -772,7 +772,7 @@ export default function CoshhAwarenessModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Control Measures for Wood Dust
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -827,7 +827,7 @@ export default function CoshhAwarenessModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Common Construction Solvents</p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[80px] h-7 rounded-full bg-violet-500/20 text-violet-400 text-xs font-bold flex-shrink-0">
                       White spirit
@@ -872,7 +872,7 @@ export default function CoshhAwarenessModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Health Effects of Solvent Exposure
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -904,7 +904,7 @@ export default function CoshhAwarenessModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Flash Points &mdash; Fire Risk
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The flash point is the lowest temperature at which a liquid gives off enough
                   vapour to ignite. Many construction solvents have dangerously low flash points:
                 </p>
@@ -930,7 +930,7 @@ export default function CoshhAwarenessModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Solvent Control Measures</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -999,7 +999,7 @@ export default function CoshhAwarenessModule3Section1() {
                   <p className="text-sm font-medium text-white mb-2">
                     Cyanoacrylates (Super Glues)
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1027,7 +1027,7 @@ export default function CoshhAwarenessModule3Section1() {
                   <p className="text-sm font-medium text-white mb-2">
                     Epoxy Resins (Two-Part Adhesives)
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1056,7 +1056,7 @@ export default function CoshhAwarenessModule3Section1() {
                   <p className="text-sm font-medium text-white mb-2">
                     Polyurethane Adhesives &amp; Isocyanates
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                       <span>
@@ -1091,7 +1091,7 @@ export default function CoshhAwarenessModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Paints &amp; Coatings</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1137,7 +1137,7 @@ export default function CoshhAwarenessModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Sensitisation Is Permanent</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Sensitisation to isocyanates or epoxy resins is{' '}
                   <strong className="text-white">irreversible and permanent</strong>. Once you
                   become sensitised, your immune system will react to even the smallest subsequent
@@ -1170,7 +1170,7 @@ export default function CoshhAwarenessModule3Section1() {
                   <p className="text-sm font-medium text-white mb-2">
                     Mineral Wool (Glass Wool &amp; Rock Wool)
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                       <span>
@@ -1198,7 +1198,7 @@ export default function CoshhAwarenessModule3Section1() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Spray Foam Insulation (SPF)</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                       <span>
@@ -1232,7 +1232,7 @@ export default function CoshhAwarenessModule3Section1() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">PIR/PUR Insulation Boards</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                       <span>
@@ -1269,7 +1269,7 @@ export default function CoshhAwarenessModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Plaster &amp; Gypsum Dust</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1343,7 +1343,7 @@ export default function CoshhAwarenessModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">IARC Group 1 Carcinogen</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   In 2012, the International Agency for Research on Cancer (IARC) reclassified
                   diesel exhaust emissions from{' '}
                   <strong className="text-white">
@@ -1359,7 +1359,7 @@ export default function CoshhAwarenessModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Health Effects of Diesel Exhaust
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -1398,7 +1398,7 @@ export default function CoshhAwarenessModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   High-Risk Scenarios on Construction Sites
                 </p>
-                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>Tunnelling and underground works</span>
@@ -1430,7 +1430,7 @@ export default function CoshhAwarenessModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Ventilation &amp; Control Requirements
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1491,19 +1491,19 @@ export default function CoshhAwarenessModule3Section1() {
                 <div className="grid grid-cols-3 gap-2 text-xs text-center">
                   <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
                     <p className="font-bold text-green-400 mb-1">Open Air</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Natural dispersion &middot; Lower risk &middot; Still minimise exposure
                     </p>
                   </div>
                   <div className="bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
                     <p className="font-bold text-amber-400 mb-1">Semi-Enclosed</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Partial walls/roof &middot; Moderate risk &middot; Ventilation needed
                     </p>
                   </div>
                   <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
                     <p className="font-bold text-red-400 mb-1">Enclosed</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Tunnels, basements &middot; High risk &middot; Forced ventilation essential
                     </p>
                   </div>
@@ -1514,7 +1514,7 @@ export default function CoshhAwarenessModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Other Fumes on Construction Sites
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1564,7 +1564,7 @@ export default function CoshhAwarenessModule3Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1578,7 +1578,7 @@ export default function CoshhAwarenessModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-2-section-4">

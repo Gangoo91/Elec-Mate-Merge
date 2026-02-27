@@ -218,7 +218,7 @@ const HNCModule3Section4_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section4">
@@ -240,7 +240,7 @@ const HNCModule3Section4_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Earthing and Protective Devices in Distribution
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Safety systems, protection coordination and automatic disconnection in three-phase
             distribution networks
           </p>
@@ -394,7 +394,7 @@ const HNCModule3Section4_6 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">TN-S System</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 The most reliable earthing arrangement with a dedicated protective earth conductor
                 (typically the cable sheath or armour) running from the supply transformer to the
                 installation.
@@ -411,7 +411,7 @@ const HNCModule3Section4_6 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">TN-C-S System (PME)</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Protective Multiple Earthing is the most common UK system. The supply uses a
                 combined PEN conductor which separates into PE and N at the consumer's main earthing
                 terminal.
@@ -435,7 +435,7 @@ const HNCModule3Section4_6 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">TT System</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 The installation uses a local earth electrode with no connection to the supply
                 earth. Common where PME is not available or not permitted.
               </p>
@@ -485,7 +485,7 @@ const HNCModule3Section4_6 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
               <p className="text-sm font-medium text-orange-400 mb-2">Open PEN Conductor Hazard</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 If the PEN conductor breaks between the transformer and the installation, any
                 current flowing to the neutral will raise the installation earth potential. With
                 typical domestic loads, this can result in a touch voltage of up to 230V on all
@@ -611,7 +611,7 @@ const HNCModule3Section4_6 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Earth Fault Loop</p>
               <p className="font-mono text-center text-lg mb-2">Zs = Ze + (R1 + R2)</p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where Ze = external impedance, R1 = line conductor, R2 = CPC
               </p>
             </div>
@@ -699,7 +699,7 @@ const HNCModule3Section4_6 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">The 80% Rule</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 BS 7671 Guidance Note 3 recommends limiting design Zs to 80% of tabulated maximum
                 values. This accounts for increased conductor resistance at operating temperature
                 (cables heat up during fault conditions) and measurement tolerances.
@@ -730,7 +730,7 @@ const HNCModule3Section4_6 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Protection Hierarchy</p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p className="mb-2">
                   <strong>Level 1:</strong> Main incomer (MCCB/ACB) - highest rating, longest delay
                 </p>
@@ -805,7 +805,7 @@ const HNCModule3Section4_6 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Back-up Protection</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Where full discrimination cannot be achieved (common with high fault levels),
                 back-up protection ensures the upstream device provides protection if the downstream
                 device fails or has insufficient breaking capacity. The let-through energy (I
@@ -899,7 +899,7 @@ const HNCModule3Section4_6 = () => {
               <p className="text-sm font-medium text-orange-400 mb-2">
                 Critical: VSD and Inverter Circuits
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Three-phase variable speed drives (VSDs) and inverters can produce smooth DC fault
                 currents that Type AC and Type A RCDs cannot detect.{' '}
                 <strong>Type B RCDs are mandatory</strong> for circuits supplying three-phase VSDs,
@@ -1111,12 +1111,12 @@ const HNCModule3Section4_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Typical Discrimination Hierarchy
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p className="mb-1">Main incomer: 400A MCCB (adjustable trip)</p>
                 <p className="mb-1">Sub-main: 160A MCCB (adjustable trip)</p>
                 <p className="mb-1">Distribution board: 100A MCCB or switch-disconnector</p>
                 <p className="mb-1">Final circuits: 32A Type B MCB</p>
-                <p className="mt-3 text-white/60">
+                <p className="mt-3 text-white">
                   Ratio check: 400:160:100:32 = 2.5:1.6:3.1 (discrimination likely)
                 </p>
               </div>
@@ -1258,7 +1258,7 @@ const HNCModule3Section4_6 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Note: Buried earthing conductors require additional protection or larger sizes
               </p>
             </div>
@@ -1267,7 +1267,7 @@ const HNCModule3Section4_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Circuit Protective Conductors (CPCs)
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 CPCs provide the fault return path for each circuit. They may be separate
                 conductors, cable armouring, metallic conduit/trunking (if verified), or a
                 combination.
@@ -1338,7 +1338,7 @@ const HNCModule3Section4_6 = () => {
                 ohms, circuit length 30m using 4mm squared/1.5mm squared cable. Verify automatic
                 disconnection.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   From tables: 4mm squared (R1) = 4.61 m ohm per m, 1.5mm squared (R2) = 12.1 m ohm
                   per m
@@ -1365,7 +1365,7 @@ const HNCModule3Section4_6 = () => {
                 <strong>Question:</strong> A TT installation has earth electrode resistance Ra = 150
                 ohms. Determine the maximum RCD rating for 50V touch voltage limit.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Touch voltage limit: Ut = 50V (AC)</p>
                 <p className="mt-2">Using: Ra x I delta n less than or equal to 50V</p>
                 <p>
@@ -1375,7 +1375,7 @@ const HNCModule3Section4_6 = () => {
                 <p className="mt-2">
                   Select next lower standard rating: <strong>300mA RCD</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Note: 30mA RCD provides additional protection and wider safety margin
                 </p>
               </div>
@@ -1390,7 +1390,7 @@ const HNCModule3Section4_6 = () => {
                 25mm squared supply conductors. Determine the minimum main protective bonding
                 conductor size.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Supply neutral: 25mm squared copper</p>
                 <p className="mt-2">From BS 7671 Table 54.8:</p>
                 <p>
@@ -1413,7 +1413,7 @@ const HNCModule3Section4_6 = () => {
                 <strong>Question:</strong> Calculate the prospective fault current at a distribution
                 board where Zs = 0.25 ohms on a 400V three-phase supply.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>For single-phase to earth fault (phase to CPC):</p>
                 <p>
                   If = Uo / Zs = 230 / 0.25 = <strong>920A</strong>
@@ -1426,7 +1426,7 @@ const HNCModule3Section4_6 = () => {
                 <p>
                   If = Uo / Zs = 230 / 0.25 = <strong>920A per phase</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Device breaking capacity must exceed highest prospective fault current
                 </p>
               </div>
@@ -1521,7 +1521,7 @@ const HNCModule3Section4_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1567,7 +1567,7 @@ const HNCModule3Section4_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section4-5">

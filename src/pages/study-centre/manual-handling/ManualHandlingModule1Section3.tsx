@@ -199,7 +199,7 @@ export default function ManualHandlingModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-1">
@@ -224,7 +224,7 @@ export default function ManualHandlingModule1Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Manual Handling Risk Assessment
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The TILE framework, the five-step assessment process, and the HSE MAC tool for
             evaluating manual handling risks
           </p>
@@ -304,7 +304,7 @@ export default function ManualHandlingModule1Section3() {
                 The Four Quadrants of Manual Handling Risk Assessment
               </p>
             </div>
-            <p className="text-sm text-white/60 mb-6 text-center">
+            <p className="text-sm text-white mb-6 text-center">
               Every manual handling task must be assessed against all four TILE categories
             </p>
 
@@ -317,10 +317,10 @@ export default function ManualHandlingModule1Section3() {
                   </div>
                   <div>
                     <p className="text-xs font-bold text-emerald-400">T &mdash; TASK</p>
-                    <p className="text-[10px] text-white/50">What is being done?</p>
+                    <p className="text-[10px] text-white">What is being done?</p>
                   </div>
                 </div>
-                <ul className="text-xs text-white/70 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li className="flex items-start gap-1.5">
                     <span className="mt-1 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>Posture (bending, twisting, reaching)</span>
@@ -348,10 +348,10 @@ export default function ManualHandlingModule1Section3() {
                   </div>
                   <div>
                     <p className="text-xs font-bold text-blue-400">I &mdash; INDIVIDUAL</p>
-                    <p className="text-[10px] text-white/50">Who is doing it?</p>
+                    <p className="text-[10px] text-white">Who is doing it?</p>
                   </div>
                 </div>
-                <ul className="text-xs text-white/70 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li className="flex items-start gap-1.5">
                     <span className="mt-1 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>Physical capability &amp; fitness</span>
@@ -379,10 +379,10 @@ export default function ManualHandlingModule1Section3() {
                   </div>
                   <div>
                     <p className="text-xs font-bold text-amber-400">L &mdash; LOAD</p>
-                    <p className="text-[10px] text-white/50">What is being handled?</p>
+                    <p className="text-[10px] text-white">What is being handled?</p>
                   </div>
                 </div>
-                <ul className="text-xs text-white/70 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li className="flex items-start gap-1.5">
                     <span className="mt-1 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>Weight and size</span>
@@ -410,10 +410,10 @@ export default function ManualHandlingModule1Section3() {
                   </div>
                   <div>
                     <p className="text-xs font-bold text-purple-400">E &mdash; ENVIRONMENT</p>
-                    <p className="text-[10px] text-white/50">Where is it being done?</p>
+                    <p className="text-[10px] text-white">Where is it being done?</p>
                   </div>
                 </div>
-                <ul className="text-xs text-white/70 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li className="flex items-start gap-1.5">
                     <span className="mt-1 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>Space constraints</span>
@@ -434,7 +434,7 @@ export default function ManualHandlingModule1Section3() {
               </div>
             </div>
 
-            <p className="text-center text-white/40 text-xs mt-4">
+            <p className="text-center text-white text-xs mt-4">
               All four quadrants must be assessed together &mdash; a risk factor in any single
               category can make the overall task high-risk
             </p>
@@ -460,12 +460,12 @@ export default function ManualHandlingModule1Section3() {
               {/* Task */}
               <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-emerald-400 mb-2">T &mdash; Task</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The Task element examines{' '}
                   <strong className="text-white">what is being done</strong>
                   &mdash; the physical demands, movements, and working methods involved.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>Does the task involve bending, stooping, or twisting the trunk?</span>
@@ -508,12 +508,12 @@ export default function ManualHandlingModule1Section3() {
               {/* Individual */}
               <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-blue-400 mb-2">I &mdash; Individual</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The Individual element considers{' '}
                   <strong className="text-white">who is doing the task</strong> &mdash; their
                   personal characteristics, capabilities, and limitations.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>Does the task require unusual physical strength or height?</span>
@@ -547,12 +547,12 @@ export default function ManualHandlingModule1Section3() {
               {/* Load */}
               <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-amber-400 mb-2">L &mdash; Load</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The Load element examines{' '}
                   <strong className="text-white">what is being handled</strong>
                   &mdash; the physical characteristics of the object being moved.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -587,12 +587,12 @@ export default function ManualHandlingModule1Section3() {
               {/* Environment */}
               <div className="bg-purple-500/10 border border-purple-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-purple-400 mb-2">E &mdash; Environment</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The Environment element considers{' '}
                   <strong className="text-white">where the task is being done</strong> &mdash; the
                   physical conditions of the workplace.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>Are there space constraints that restrict posture or movement?</span>
@@ -647,7 +647,7 @@ export default function ManualHandlingModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">The Five Steps</p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3">
                     <p className="text-emerald-400 text-xs font-bold mb-1">
                       STEP 1: Identify the Hazards
@@ -738,7 +738,7 @@ export default function ManualHandlingModule1Section3() {
                     </div>
                     <div>
                       <p className="text-green-400 text-sm font-semibold">GREEN &mdash; Low Risk</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         The task is within acceptable limits. No immediate action needed, but
                         continue to monitor.
                       </p>
@@ -752,7 +752,7 @@ export default function ManualHandlingModule1Section3() {
                       <p className="text-amber-400 text-sm font-semibold">
                         AMBER &mdash; Medium Risk
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Examine the task more closely. Consider improvements to reduce risk. Monitor
                         for signs of injury.
                       </p>
@@ -764,7 +764,7 @@ export default function ManualHandlingModule1Section3() {
                     </div>
                     <div>
                       <p className="text-red-400 text-sm font-semibold">RED &mdash; High Risk</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Prompt action needed. The task presents a significant risk and must be
                         improved as a priority.
                       </p>
@@ -778,7 +778,7 @@ export default function ManualHandlingModule1Section3() {
                       <p className="text-purple-400 text-sm font-semibold">
                         PURPLE &mdash; Very High Risk
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Immediate action required. The task should be stopped and redesigned before
                         any further handling.
                       </p>
@@ -789,7 +789,7 @@ export default function ManualHandlingModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">MAC Tool Assessment Factors</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The MAC tool assesses each operation against a series of risk factors, scoring
                   each one with a colour code. The factors assessed depend on the type of operation:
                 </p>
@@ -798,7 +798,7 @@ export default function ManualHandlingModule1Section3() {
                     <p className="text-emerald-400 font-semibold text-xs mb-1">
                       Lifting Operations
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Load weight/frequency, hand distance from lower back, vertical lift region,
                       trunk twisting/sideways bending, postural constraints, grip on load, floor
                       surface.
@@ -808,7 +808,7 @@ export default function ManualHandlingModule1Section3() {
                     <p className="text-emerald-400 font-semibold text-xs mb-1">
                       Carrying Operations
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Load weight/frequency, hand distance from lower back, asymmetric trunk/load,
                       postural constraints, grip on load, floor surface, carry distance, obstacles
                       on route.
@@ -818,7 +818,7 @@ export default function ManualHandlingModule1Section3() {
                     <p className="text-emerald-400 font-semibold text-xs mb-1">
                       Team Handling Operations
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Load weight/frequency per person, hand distance from lower back, vertical lift
                       region, trunk twisting/sideways bending, postural constraints, grip on load,
                       floor surface, communication/coordination/control.
@@ -864,7 +864,7 @@ export default function ManualHandlingModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">What to Record</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -930,7 +930,7 @@ export default function ManualHandlingModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">When to Review</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>After an injury, incident, or near miss related to the task</span>
@@ -972,7 +972,7 @@ export default function ManualHandlingModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">Practical Tip</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   On construction sites, manual handling conditions change frequently as the project
                   progresses. A risk assessment completed at the start of a project may be
                   completely invalid two weeks later if access routes have changed, floor levels
@@ -998,7 +998,7 @@ export default function ManualHandlingModule1Section3() {
                 The key points to remember are:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -1065,7 +1065,7 @@ export default function ManualHandlingModule1Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1079,7 +1079,7 @@ export default function ManualHandlingModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-1-section-2">

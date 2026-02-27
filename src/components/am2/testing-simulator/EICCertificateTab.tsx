@@ -15,8 +15,8 @@ interface EICCertificateTabProps {
 function Field({ label, value }: { label: string; value: string }) {
   return (
     <div className="flex flex-col gap-0.5">
-      <span className="text-[10px] text-white/40 font-medium">{label}</span>
-      <div className="px-2.5 py-1.5 rounded-md bg-white/[0.03] border border-white/5 text-sm text-white/70">
+      <span className="text-[10px] text-white font-medium">{label}</span>
+      <div className="px-2.5 py-1.5 rounded-md bg-white/[0.03] border border-white/5 text-sm text-white">
         {value || '—'}
       </div>
     </div>
@@ -27,7 +27,7 @@ function SectionTitle({ title }: { title: string }) {
   return (
     <div className="flex items-center gap-2 pt-3 pb-1">
       <div className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
-      <h3 className="text-xs font-bold text-white/60 uppercase tracking-wider">{title}</h3>
+      <h3 className="text-xs font-bold text-white uppercase tracking-wider">{title}</h3>
     </div>
   );
 }
@@ -62,7 +62,7 @@ export function EICCertificateTab({ certificate }: EICCertificateTabProps) {
       </div>
 
       <div className="pt-4 pb-2">
-        <p className="text-[10px] text-white/30 text-center italic">
+        <p className="text-[10px] text-white text-center italic">
           This certificate is pre-filled for the AM2 assessment scenario. In a real inspection, all
           fields would be completed by the qualified persons responsible.
         </p>

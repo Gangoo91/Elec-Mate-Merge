@@ -256,7 +256,7 @@ const HNCModule1Section1_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section1">
@@ -278,7 +278,7 @@ const HNCModule1Section1_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             PUWER and Work Equipment
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             The Provision and Use of Work Equipment Regulations 1998 - essential requirements for
             building services
           </p>
@@ -944,7 +944,7 @@ const HNCModule1Section1_5 = () => {
               <div className="space-y-3">
                 <div className="p-3 rounded bg-green-500/10 border-l-4 border-green-500">
                   <p className="text-sm font-medium text-green-400">1. Fixed Enclosing Guards</p>
-                  <p className="text-sm text-white/80 mt-1">
+                  <p className="text-sm text-white mt-1">
                     Where practicable, use fixed guards that can only be removed with tools. These
                     completely enclose the danger zone. Example: guards on bench grinders.
                   </p>
@@ -953,7 +953,7 @@ const HNCModule1Section1_5 = () => {
                   <p className="text-sm font-medium text-blue-400">
                     2. Other Guards or Protection Devices
                   </p>
-                  <p className="text-sm text-white/80 mt-1">
+                  <p className="text-sm text-white mt-1">
                     Where fixed guards are not practicable: interlocking guards (stop machine when
                     opened), adjustable guards, self-adjusting guards, photoelectric devices,
                     pressure mats, or two-hand controls.
@@ -961,7 +961,7 @@ const HNCModule1Section1_5 = () => {
                 </div>
                 <div className="p-3 rounded bg-amber-500/10 border-l-4 border-amber-500">
                   <p className="text-sm font-medium text-amber-400">3. Protection Appliances</p>
-                  <p className="text-sm text-white/80 mt-1">
+                  <p className="text-sm text-white mt-1">
                     Jigs, holders, push sticks - devices that keep hands away from danger zones
                     while allowing the work to proceed.
                   </p>
@@ -970,7 +970,7 @@ const HNCModule1Section1_5 = () => {
                   <p className="text-sm font-medium text-purple-400">
                     4. Information, Instruction, Training, Supervision
                   </p>
-                  <p className="text-sm text-white/80 mt-1">
+                  <p className="text-sm text-white mt-1">
                     When engineering controls alone cannot provide adequate protection, these must
                     supplement (not replace) physical measures.
                   </p>
@@ -1052,7 +1052,7 @@ const HNCModule1Section1_5 = () => {
                   persons
                 </li>
               </ul>
-              <p className="text-sm text-white/80 mt-2">
+              <p className="text-sm text-white mt-2">
                 Example: Only trained and authorised persons should operate MEWPs or high-voltage
                 test equipment.
               </p>
@@ -1177,7 +1177,7 @@ const HNCModule1Section1_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1225,7 +1225,7 @@ const HNCModule1Section1_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section1-4">

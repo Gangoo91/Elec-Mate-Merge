@@ -218,7 +218,7 @@ export default function FireSafetyModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-1">
@@ -241,7 +241,7 @@ export default function FireSafetyModule1Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Classes of Fire
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding fire classification under BS EN 2, the fuels associated with each class,
             why using the wrong extinguishing agent can be lethal, and how to select the correct
             extinguisher for every scenario
@@ -327,7 +327,7 @@ export default function FireSafetyModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Real-World Dangers</p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Directing a{' '}
                     <strong className="text-white">water jet at burning cooking oil</strong> causes
@@ -380,7 +380,7 @@ export default function FireSafetyModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">UK Fire Classes at a Glance</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -448,7 +448,7 @@ export default function FireSafetyModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Typical Class A Fuels</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -512,7 +512,7 @@ export default function FireSafetyModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Suitable Extinguishers for Class A
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -569,7 +569,7 @@ export default function FireSafetyModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Typical Class B Fuels</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -612,13 +612,13 @@ export default function FireSafetyModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Flash Point &amp; Auto-Ignition
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Two critical temperatures determine how dangerous a flammable liquid is:
                 </p>
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-rose-500/10 border border-rose-500/30 p-3 rounded-lg">
                     <p className="text-sm font-medium text-rose-400 mb-1">Flash Point</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       The lowest temperature at which a liquid produces enough vapour to form a
                       flammable mixture with air near its surface. At this temperature, the vapour
                       will ignite briefly if an external ignition source is applied. Petrol has a
@@ -630,7 +630,7 @@ export default function FireSafetyModule1Section2() {
                     <p className="text-sm font-medium text-amber-400 mb-1">
                       Auto-Ignition Temperature
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       The minimum temperature at which a substance will spontaneously ignite without
                       any external spark or flame. This is always significantly higher than the
                       flash point. Petrol auto-ignites at approximately 280&deg;C. Diesel
@@ -662,7 +662,7 @@ export default function FireSafetyModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Warning</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     NEVER use a water jet on a burning liquid pool.
                   </strong>{' '}
@@ -678,7 +678,7 @@ export default function FireSafetyModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Suitable Extinguishers for Class B
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -728,7 +728,7 @@ export default function FireSafetyModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Typical Class C Fuels</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -771,7 +771,7 @@ export default function FireSafetyModule1Section2() {
                     Critical: Why Not to Extinguish
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     If a gas fire is extinguished while the gas supply is still flowing, the gas
                     continues to escape into the surrounding area. Gas accumulates in enclosed
@@ -794,11 +794,11 @@ export default function FireSafetyModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">LEL &amp; UEL Explained</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Every flammable gas has a specific range of concentrations in air within which it
                   can ignite or explode:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -864,7 +864,7 @@ export default function FireSafetyModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Typical Class D Fuels</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -921,7 +921,7 @@ export default function FireSafetyModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Specialist Class D Extinguishing Agents
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -954,7 +954,7 @@ export default function FireSafetyModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Lithium Battery Fires</p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     As an electrician, you are increasingly likely to encounter lithium-ion
                     batteries &mdash; in cordless power tools, battery storage systems (BESS),
@@ -1040,7 +1040,7 @@ export default function FireSafetyModule1Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Common Causes of Electrical Fires
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1092,7 +1092,7 @@ export default function FireSafetyModule1Section2() {
                     <span className="mt-0.5 w-6 h-6 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center flex-shrink-0 text-xs font-bold text-rose-400">
                       1
                     </span>
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong className="text-white">Raise the alarm</strong> &mdash; activate the
                       nearest fire alarm call point and alert others in the area
                     </span>
@@ -1101,7 +1101,7 @@ export default function FireSafetyModule1Section2() {
                     <span className="mt-0.5 w-6 h-6 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center flex-shrink-0 text-xs font-bold text-rose-400">
                       2
                     </span>
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong className="text-white">De-energise if safe</strong> &mdash; isolate
                       the electrical supply at the distribution board, consumer unit, or emergency
                       stop. Do NOT touch the equipment directly
@@ -1111,7 +1111,7 @@ export default function FireSafetyModule1Section2() {
                     <span className="mt-0.5 w-6 h-6 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center flex-shrink-0 text-xs font-bold text-rose-400">
                       3
                     </span>
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong className="text-white">If de-energised</strong> &mdash; treat the fire
                       according to its underlying fuel class (usually Class A for cable insulation
                       or Class B for transformer oil)
@@ -1121,7 +1121,7 @@ export default function FireSafetyModule1Section2() {
                     <span className="mt-0.5 w-6 h-6 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center flex-shrink-0 text-xs font-bold text-rose-400">
                       4
                     </span>
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong className="text-white">If still energised</strong> &mdash; use only{' '}
                       <strong>CO2 (black label)</strong> or <strong>dry powder (blue label)</strong>{' '}
                       extinguishers. These agents are non-conductive and safe to use on live
@@ -1132,7 +1132,7 @@ export default function FireSafetyModule1Section2() {
                     <span className="mt-0.5 w-6 h-6 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center flex-shrink-0 text-xs font-bold text-rose-400">
                       5
                     </span>
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong className="text-white">NEVER use water or foam</strong> on live
                       electrical equipment &mdash; water conducts electricity and creates a direct
                       electrocution risk to the person holding the extinguisher
@@ -1146,7 +1146,7 @@ export default function FireSafetyModule1Section2() {
                   <Zap className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">High Voltage Fires</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   For fires involving high voltage equipment (above 1,000 V AC or 1,500 V DC), do
                   not attempt to fight the fire yourself. Evacuate the area, maintain a safe
                   distance of at least 25 metres, call 999, and contact the electricity network
@@ -1196,7 +1196,7 @@ export default function FireSafetyModule1Section2() {
                     NEVER Use Water on a Class F Fire
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     This is one of the most critical safety messages in fire training. When water
                     comes into contact with burning cooking oil at temperatures exceeding 300&deg;C,
@@ -1220,12 +1220,12 @@ export default function FireSafetyModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Wet Chemical Extinguisher &amp; Saponification
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The wet chemical extinguisher (yellow label) was developed specifically for Class
                   F fires. It works through a chemical process called{' '}
                   <strong className="text-white">saponification</strong>:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1314,7 +1314,7 @@ export default function FireSafetyModule1Section2() {
                       </span>
                       <div>
                         <p className="text-sm font-semibold text-white">Ordinary Combustibles</p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           Wood, paper, textiles, rubber, plastics
                         </p>
                       </div>
@@ -1340,7 +1340,7 @@ export default function FireSafetyModule1Section2() {
                       </span>
                       <div>
                         <p className="text-sm font-semibold text-white">Flammable Liquids</p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           Petrol, diesel, solvents, paints, oils
                         </p>
                       </div>
@@ -1366,7 +1366,7 @@ export default function FireSafetyModule1Section2() {
                       </span>
                       <div>
                         <p className="text-sm font-semibold text-white">Flammable Gases</p>
-                        <p className="text-xs text-white/60">Methane, propane, butane, acetylene</p>
+                        <p className="text-xs text-white">Methane, propane, butane, acetylene</p>
                       </div>
                     </div>
                     <div className="flex flex-wrap gap-2 mt-2">
@@ -1387,7 +1387,7 @@ export default function FireSafetyModule1Section2() {
                       </span>
                       <div>
                         <p className="text-sm font-semibold text-white">Combustible Metals</p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           Magnesium, lithium, sodium, aluminium
                         </p>
                       </div>
@@ -1410,7 +1410,7 @@ export default function FireSafetyModule1Section2() {
                       </span>
                       <div>
                         <p className="text-sm font-semibold text-white">Electrical Fires</p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           Energised equipment &mdash; de-energise first
                         </p>
                       </div>
@@ -1436,7 +1436,7 @@ export default function FireSafetyModule1Section2() {
                       </span>
                       <div>
                         <p className="text-sm font-semibold text-white">Cooking Oils &amp; Fats</p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           Deep fat fryers, chip pans, cooking oils
                         </p>
                       </div>
@@ -1472,7 +1472,7 @@ export default function FireSafetyModule1Section2() {
                     Key &ldquo;Never Do&rdquo; Rules
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                     <span>
@@ -1521,7 +1521,7 @@ export default function FireSafetyModule1Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1535,7 +1535,7 @@ export default function FireSafetyModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-1-section-1">

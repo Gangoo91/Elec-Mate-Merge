@@ -131,7 +131,7 @@ const InsightsDashboard = ({ className }: { className?: string }) => {
           'flex items-center gap-1 text-sm font-bold',
           isUp && 'text-emerald-400',
           isDown && 'text-rose-400',
-          !isUp && !isDown && 'text-white/50'
+          !isUp && !isDown && 'text-white'
         )}
       >
         {isUp && <TrendingUp className="h-4 w-4" />}
@@ -151,7 +151,7 @@ const InsightsDashboard = ({ className }: { className?: string }) => {
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-white">Your Insights</h2>
-          <p className="text-sm text-white/70 mt-1">Track your community impact</p>
+          <p className="text-sm text-white mt-1">Track your community impact</p>
         </div>
         <Button
           variant="outline"
@@ -174,7 +174,7 @@ const InsightsDashboard = ({ className }: { className?: string }) => {
               <BarChart3 className="h-5 w-5 text-white" />
             </div>
             <p className="text-4xl font-black text-white">{userStats.totalContributions}</p>
-            <p className="text-sm text-white/80 font-medium mt-1">Contributions</p>
+            <p className="text-sm text-white font-medium mt-1">Contributions</p>
           </div>
         </div>
 
@@ -186,7 +186,7 @@ const InsightsDashboard = ({ className }: { className?: string }) => {
               <Zap className="h-5 w-5 text-white" />
             </div>
             <p className="text-4xl font-black text-white">{userStats.impactScore}</p>
-            <p className="text-sm text-white/80 font-medium mt-1">Impact Score</p>
+            <p className="text-sm text-white font-medium mt-1">Impact Score</p>
           </div>
         </div>
 
@@ -198,7 +198,7 @@ const InsightsDashboard = ({ className }: { className?: string }) => {
               <MapPin className="h-5 w-5 text-white" />
             </div>
             <p className="text-4xl font-black text-white">{userStats.areasContributed}</p>
-            <p className="text-sm text-white/80 font-medium mt-1">Areas Covered</p>
+            <p className="text-sm text-white font-medium mt-1">Areas Covered</p>
           </div>
         </div>
 
@@ -210,7 +210,7 @@ const InsightsDashboard = ({ className }: { className?: string }) => {
               <Trophy className="h-5 w-5 text-white" />
             </div>
             <p className="text-4xl font-black text-white">{userStats.badges.length}</p>
-            <p className="text-sm text-white/80 font-medium mt-1">Badges Earned</p>
+            <p className="text-sm text-white font-medium mt-1">Badges Earned</p>
           </div>
         </div>
       </div>
@@ -218,7 +218,7 @@ const InsightsDashboard = ({ className }: { className?: string }) => {
       {/* Badges Display */}
       {userStats.badges.length > 0 && (
         <div className="space-y-3">
-          <h3 className="text-sm font-semibold text-white/70 uppercase tracking-wider">
+          <h3 className="text-sm font-semibold text-white uppercase tracking-wider">
             Your Badges
           </h3>
           <div className="flex flex-wrap gap-2">
@@ -243,7 +243,7 @@ const InsightsDashboard = ({ className }: { className?: string }) => {
           </div>
           <div>
             <h3 className="text-lg font-bold text-white">Market Intelligence</h3>
-            <p className="text-xs text-white/60">Live pricing trends across the UK</p>
+            <p className="text-xs text-white">Live pricing trends across the UK</p>
           </div>
         </div>
 
@@ -253,15 +253,15 @@ const InsightsDashboard = ({ className }: { className?: string }) => {
             <p className="text-3xl font-black text-white">
               {marketStats.totalSubmissions.toLocaleString()}
             </p>
-            <p className="text-xs text-white/60 font-medium mt-1">Total Prices</p>
+            <p className="text-xs text-white font-medium mt-1">Total Prices</p>
           </div>
           <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-center">
             <p className="text-3xl font-black text-white">{marketStats.regionsWithData}</p>
-            <p className="text-xs text-white/60 font-medium mt-1">UK Regions</p>
+            <p className="text-xs text-white font-medium mt-1">UK Regions</p>
           </div>
           <div className="p-4 rounded-2xl bg-white/5 border border-white/10 text-center">
             <TrendIndicator value={marketStats.averagePriceChange} />
-            <p className="text-xs text-white/60 font-medium mt-1">Avg Change</p>
+            <p className="text-xs text-white font-medium mt-1">Avg Change</p>
           </div>
         </div>
 
@@ -283,14 +283,14 @@ const InsightsDashboard = ({ className }: { className?: string }) => {
                         index === 0 && 'bg-yellow-400 text-black',
                         index === 1 && 'bg-white/30 text-white',
                         index === 2 && 'bg-orange-500 text-white',
-                        index > 2 && 'bg-white/10 text-white/70'
+                        index > 2 && 'bg-white/10 text-white'
                       )}
                     >
                       {index + 1}
                     </span>
                     <span className="text-white font-medium">{job.job}</span>
                   </div>
-                  <span className="text-sm text-white/50 font-semibold">
+                  <span className="text-sm text-white font-semibold">
                     {job.searches.toLocaleString()}
                   </span>
                 </div>
@@ -325,7 +325,7 @@ const InsightsDashboard = ({ className }: { className?: string }) => {
             </div>
             <div>
               <h4 className="font-bold text-white text-xl">Start Contributing!</h4>
-              <p className="text-white/70 mt-2 leading-relaxed">
+              <p className="text-white mt-2 leading-relaxed">
                 Submit your first job price to help fellow electricians and start earning badges.
                 Your contributions make the community stronger.
               </p>

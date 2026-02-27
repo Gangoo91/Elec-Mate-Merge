@@ -259,7 +259,7 @@ const Level3Module2Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module2-section2">
@@ -404,7 +404,7 @@ const Level3Module2Section2_1 = () => {
               space usage and occupancy patterns.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A commercial toilet block with constant fluorescent lighting
               running 24/7 consumes 876 kWh per year. Adding PIR sensors that operate lights only
               when occupied might achieve 80% reduction - saving approximately 700 kWh and over 100
@@ -453,19 +453,19 @@ const Level3Module2Section2_1 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Leading Edge</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   TRIAC dimmer - common but needs compatible driver
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Trailing Edge</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Electronic dimmer - smoother, better LED compatibility
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">DALI</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Digital protocol - precise control, addressable
                 </p>
               </div>
@@ -538,7 +538,7 @@ const Level3Module2Section2_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -583,7 +583,7 @@ const Level3Module2Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module2-section2">

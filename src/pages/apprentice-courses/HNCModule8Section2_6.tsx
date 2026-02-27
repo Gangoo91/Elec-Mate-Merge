@@ -256,7 +256,7 @@ const HNCModule8Section2_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section2">
@@ -278,7 +278,7 @@ const HNCModule8Section2_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             System Balancing
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Air balancing procedures, commissioning processes, and documentation requirements
           </p>
         </header>
@@ -388,7 +388,7 @@ const HNCModule8Section2_6 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Balancing Hierarchy</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Air balancing should proceed in a logical sequence from the fan to the terminals:
               </p>
               <div className="grid sm:grid-cols-4 gap-4 text-sm">
@@ -397,28 +397,28 @@ const HNCModule8Section2_6 = () => {
                     <span className="text-elec-yellow font-bold">1</span>
                   </div>
                   <p className="font-medium text-white">Fan</p>
-                  <p className="text-xs text-white/70">Set total system flow</p>
+                  <p className="text-xs text-white">Set total system flow</p>
                 </div>
                 <div className="text-center">
                   <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center mx-auto mb-2">
                     <span className="text-elec-yellow font-bold">2</span>
                   </div>
                   <p className="font-medium text-white">Main branches</p>
-                  <p className="text-xs text-white/70">Balance major duct runs</p>
+                  <p className="text-xs text-white">Balance major duct runs</p>
                 </div>
                 <div className="text-center">
                   <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center mx-auto mb-2">
                     <span className="text-elec-yellow font-bold">3</span>
                   </div>
                   <p className="font-medium text-white">Sub-branches</p>
-                  <p className="text-xs text-white/70">Fine-tune distribution</p>
+                  <p className="text-xs text-white">Fine-tune distribution</p>
                 </div>
                 <div className="text-center">
                   <div className="w-8 h-8 rounded-full bg-elec-yellow/20 flex items-center justify-center mx-auto mb-2">
                     <span className="text-elec-yellow font-bold">4</span>
                   </div>
                   <p className="font-medium text-white">Terminals</p>
-                  <p className="text-xs text-white/70">Final adjustment</p>
+                  <p className="text-xs text-white">Final adjustment</p>
                 </div>
               </div>
             </div>
@@ -547,24 +547,24 @@ const HNCModule8Section2_6 = () => {
                 <p className="font-medium text-elec-yellow mb-2">
                   Calculating Proportional Balance
                 </p>
-                <div className="text-sm text-white/90 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>For each terminal, calculate:</p>
                   <p className="font-mono bg-black/30 p-2 rounded">
                     % of design = (Measured / Design) x 100
                   </p>
-                  <p className="mt-2 text-xs text-white/70">
+                  <p className="mt-2 text-xs text-white">
                     Example: If design is 100 l/s and measured is 85 l/s, the percentage is 85%.
                   </p>
                 </div>
               </div>
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="font-medium text-elec-yellow mb-2">Adjusting to Match Index</p>
-                <div className="text-sm text-white/90 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>Target flow for non-index terminals:</p>
                   <p className="font-mono bg-black/30 p-2 rounded">
                     Target = Design x (Index % / 100)
                   </p>
-                  <p className="mt-2 text-xs text-white/70">
+                  <p className="mt-2 text-xs text-white">
                     Example: If index is at 85% and design is 150 l/s, target = 150 x 0.85 = 127.5
                     l/s
                   </p>
@@ -664,7 +664,7 @@ const HNCModule8Section2_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-white/5">
                   <p className="font-medium text-elec-yellow mb-2">Phase 1: Pre-commissioning</p>
-                  <ul className="text-xs text-white/90 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Review design documentation and specifications</li>
                     <li>Inspect installation for completeness</li>
                     <li>Verify ductwork is sealed and pressure tested</li>
@@ -676,7 +676,7 @@ const HNCModule8Section2_6 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5">
                   <p className="font-medium text-elec-yellow mb-2">Phase 2: Setting to Work</p>
-                  <ul className="text-xs text-white/90 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Energise and run plant safely</li>
                     <li>Check fan rotation and operation</li>
                     <li>Verify motor currents within limits</li>
@@ -690,7 +690,7 @@ const HNCModule8Section2_6 = () => {
                   <p className="font-medium text-elec-yellow mb-2">
                     Phase 3: Regulation (Balancing)
                   </p>
-                  <ul className="text-xs text-white/90 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Measure air flows throughout system</li>
                     <li>Apply proportional balancing method</li>
                     <li>Adjust dampers to achieve design flows</li>
@@ -704,7 +704,7 @@ const HNCModule8Section2_6 = () => {
                   <p className="font-medium text-elec-yellow mb-2">
                     Phase 4: Testing and Verification
                   </p>
-                  <ul className="text-xs text-white/90 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Witness testing with client representative</li>
                     <li>Verify performance against specification</li>
                     <li>Test control sequences under various conditions</li>
@@ -724,7 +724,7 @@ const HNCModule8Section2_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-1">Ductwork</p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
                     <li>Installation complete and sealed</li>
                     <li>Pressure test passed (Class B or C)</li>
                     <li>Fire dampers installed and accessible</li>
@@ -734,7 +734,7 @@ const HNCModule8Section2_6 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-1">Air handling unit</p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
                     <li>Filters installed (correct grade)</li>
                     <li>Fan belts tensioned correctly</li>
                     <li>Coils clean and connected</li>
@@ -744,7 +744,7 @@ const HNCModule8Section2_6 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-1">Controls</p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
                     <li>Sensors installed and connected</li>
                     <li>Actuators installed and stroked</li>
                     <li>BMS points commissioned</li>
@@ -754,7 +754,7 @@ const HNCModule8Section2_6 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-1">Terminals</p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
                     <li>All grilles and diffusers installed</li>
                     <li>Balancing dampers accessible</li>
                     <li>VAV boxes connected and calibrated</li>
@@ -767,7 +767,7 @@ const HNCModule8Section2_6 = () => {
 
             <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
               <p className="text-sm font-medium text-amber-400 mb-1">Commissioning Tolerances</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Typical commissioning tolerances per BSRIA guidelines:
                 <br />
                 <strong>Individual terminals:</strong> +/- 10% of design flow
@@ -895,13 +895,13 @@ const HNCModule8Section2_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Commissioning Record Requirements
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Each commissioning record sheet should include the following information:
               </p>
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-1">Project information</p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
                     <li>Project name and address</li>
                     <li>System reference and description</li>
                     <li>Commissioning engineer name and company</li>
@@ -911,7 +911,7 @@ const HNCModule8Section2_6 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-1">Equipment data</p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
                     <li>AHU/fan reference and location</li>
                     <li>Fan motor details and measured current</li>
                     <li>Fan speed setting</li>
@@ -921,7 +921,7 @@ const HNCModule8Section2_6 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-1">Air flow measurements</p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
                     <li>Terminal/grille reference</li>
                     <li>Location description</li>
                     <li>Design air flow rate</li>
@@ -931,7 +931,7 @@ const HNCModule8Section2_6 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-1">Damper settings</p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
                     <li>Damper reference/location</li>
                     <li>Final position (angle/turns/scale)</li>
                     <li>Confirmation damper locked</li>
@@ -946,7 +946,7 @@ const HNCModule8Section2_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 O&amp;M Manual Contents
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 The Operation and Maintenance manual should include:
               </p>
               <div className="overflow-x-auto">
@@ -1037,7 +1037,7 @@ const HNCModule8Section2_6 = () => {
               <p className="text-sm font-medium text-green-400 mb-1">
                 Building Regulations Compliance
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Approved Document F requires that commissioning notice be given to Building Control
                 and that a commissioning certificate is provided demonstrating the ventilation
                 system has been properly commissioned. The O&amp;M manual forms part of the building
@@ -1065,7 +1065,7 @@ const HNCModule8Section2_6 = () => {
                 <strong>Scenario:</strong> A system has four terminals with the following design and
                 measured flows:
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90 mb-3">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white mb-3">
                 <p>Terminal A: Design 200 l/s, Measured 190 l/s = 95%</p>
                 <p>Terminal B: Design 150 l/s, Measured 160 l/s = 107%</p>
                 <p>Terminal C: Design 100 l/s, Measured 78 l/s = 78% (INDEX)</p>
@@ -1075,14 +1075,14 @@ const HNCModule8Section2_6 = () => {
                 <strong>Solution:</strong> Terminal C at 78% is the index. Adjust other terminals to
                 78%:
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Terminal A target: 200 x 0.78 = 156 l/s (reduce from 190)</p>
                 <p>Terminal B target: 150 x 0.78 = 117 l/s (reduce from 160)</p>
                 <p>Terminal D target: 150 x 0.78 = 117 l/s (reduce from 142)</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   After balancing, increase fan speed to bring index to 100 l/s
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   All terminals will then rise proportionally to design values
                 </p>
               </div>
@@ -1096,7 +1096,7 @@ const HNCModule8Section2_6 = () => {
                 <strong>Scenario:</strong> A rectangular duct measuring 600mm x 400mm has the
                 following velocity pressure readings from a 9-point traverse:
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90 mb-3">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white mb-3">
                 <p>Velocity pressures (Pa): 45, 52, 48, 50, 58, 52, 44, 50, 46</p>
                 <p className="mt-2">Step 1: Calculate velocity from each pressure:</p>
                 <p>v = 1.29 x sqrt(Pv) for standard air density</p>
@@ -1104,7 +1104,7 @@ const HNCModule8Section2_6 = () => {
                   Velocities (m/s): 8.65, 9.30, 8.94, 9.12, 9.82, 9.30, 8.56, 9.12, 8.75
                 </p>
               </div>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 2: Calculate average velocity:</p>
                 <p>v_avg = (8.65+9.30+8.94+9.12+9.82+9.30+8.56+9.12+8.75) / 9 = 9.06 m/s</p>
                 <p className="mt-2">Step 3: Calculate volume flow rate:</p>
@@ -1123,7 +1123,7 @@ const HNCModule8Section2_6 = () => {
                 <strong>Scenario:</strong> An AHU has total supply of 5000 l/s. The minimum fresh
                 air requirement is 20% (1000 l/s). Measured fresh air intake is 1150 l/s.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Actual fresh air percentage:</p>
                 <p>% Fresh air = (1150 / 5000) x 100 = 23%</p>
                 <p className="mt-2">Verification:</p>
@@ -1149,7 +1149,7 @@ const HNCModule8Section2_6 = () => {
               <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Problem: Index Terminal Cannot Reach Design Flow
               </h3>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 <strong>Possible causes:</strong>
               </p>
               <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5 mb-2">
@@ -1168,7 +1168,7 @@ const HNCModule8Section2_6 = () => {
               <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Problem: Excessive Noise at Balanced Terminals
               </h3>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 <strong>Possible causes:</strong>
               </p>
               <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5 mb-2">
@@ -1188,7 +1188,7 @@ const HNCModule8Section2_6 = () => {
               <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Problem: System Flow Changes After Balancing
               </h3>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 <strong>Possible causes:</strong>
               </p>
               <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5 mb-2">
@@ -1212,7 +1212,7 @@ const HNCModule8Section2_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1279,7 +1279,7 @@ const HNCModule8Section2_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section2-5">

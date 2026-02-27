@@ -215,7 +215,7 @@ export default function ManualHandlingModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-5">
@@ -240,7 +240,7 @@ export default function ManualHandlingModule5Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Musculoskeletal Disorders
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding the types, symptoms, treatment, and long-term management of
             musculoskeletal disorders caused by manual handling activities in the workplace
           </p>
@@ -353,7 +353,7 @@ export default function ManualHandlingModule5Section1() {
                 <p className="text-sm font-medium text-emerald-400 mb-2">
                   Structures Affected by MSDs
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-white/80">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -435,13 +435,13 @@ export default function ManualHandlingModule5Section1() {
                   <Bone className="h-4 w-4 text-emerald-400" />
                   <p className="text-sm font-medium text-white">Back Pain &amp; Disc Herniation</p>
                 </div>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   The most common MSD in manual handling. The lumbar spine (lower back) bears the
                   greatest load during lifting, bending, and twisting. The intervertebral discs at{' '}
                   <strong className="text-white">L4/L5</strong> and{' '}
                   <strong className="text-white">L5/S1</strong> are most frequently affected.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -470,13 +470,13 @@ export default function ManualHandlingModule5Section1() {
               {/* Shoulder Impingement */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Shoulder Impingement</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Caused by repeated overhead work &mdash; the tendons and bursa in the shoulder
                   become compressed between the bones of the joint. Electricians are particularly at
                   risk due to frequent overhead cable installation, trunking work, and distribution
                   board mounting.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Pain when lifting the arm above shoulder height</span>
@@ -495,12 +495,12 @@ export default function ManualHandlingModule5Section1() {
               {/* Carpal Tunnel Syndrome */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Carpal Tunnel Syndrome</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Compression of the median nerve as it passes through the carpal tunnel in the
                   wrist. Caused by repetitive hand and wrist movements, vibrating tools, and
                   sustained gripping.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Tingling and numbness in the thumb, index, and middle fingers</span>
@@ -521,12 +521,12 @@ export default function ManualHandlingModule5Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Lateral Epicondylitis (Tennis Elbow)
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Inflammation of the tendons on the outside of the elbow, caused by repetitive
                   gripping, twisting, and lifting movements. Common in trades that involve frequent
                   use of hand tools, screwdrivers, and cable pulling.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Pain on the outer elbow that radiates down the forearm</span>
@@ -543,12 +543,12 @@ export default function ManualHandlingModule5Section1() {
               {/* Knee Injuries */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Knee Injuries</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Prolonged kneeling, squatting, and carrying heavy loads all place strain on the
                   knee joints. Electricians frequently kneel to install floor-level sockets,
                   under-floor cabling, and ground-level distribution equipment.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -576,12 +576,12 @@ export default function ManualHandlingModule5Section1() {
               {/* Neck Pain */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Neck Pain (Cervical Strain)</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Sustained awkward neck positions &mdash; looking up at ceiling work, looking down
                   at floor-level tasks, or carrying loads on one shoulder &mdash; strain the
                   cervical spine and surrounding muscles.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Stiffness and restricted movement of the neck</span>
@@ -618,14 +618,14 @@ export default function ManualHandlingModule5Section1() {
               <div className="flex items-center gap-3 mb-3">
                 <div className="flex-1 text-right">
                   <span className="text-xs text-emerald-400 font-semibold">NECK</span>
-                  <p className="text-xs text-white/60">Cervical strain</p>
+                  <p className="text-xs text-white">Cervical strain</p>
                 </div>
                 <div className="w-10 h-10 rounded-full bg-emerald-500/20 border-2 border-emerald-500/40 flex items-center justify-center flex-shrink-0">
                   <span className="text-emerald-400 text-xs font-bold">C</span>
                 </div>
                 <div className="flex-1">
-                  <span className="text-xs text-white/50 font-semibold">Headaches</span>
-                  <p className="text-xs text-white/40">Nerve referral pain</p>
+                  <span className="text-xs text-white font-semibold">Headaches</span>
+                  <p className="text-xs text-white">Nerve referral pain</p>
                 </div>
               </div>
 
@@ -633,7 +633,7 @@ export default function ManualHandlingModule5Section1() {
               <div className="flex items-center gap-2 mb-3">
                 <div className="flex-1 text-right">
                   <span className="text-xs text-amber-400 font-semibold">SHOULDER</span>
-                  <p className="text-xs text-white/60">Impingement / rotator cuff</p>
+                  <p className="text-xs text-white">Impingement / rotator cuff</p>
                 </div>
                 <div className="flex items-center gap-1">
                   <div className="w-8 h-8 rounded-full bg-amber-500/20 border-2 border-amber-500/40 flex items-center justify-center flex-shrink-0">
@@ -646,7 +646,7 @@ export default function ManualHandlingModule5Section1() {
                 </div>
                 <div className="flex-1">
                   <span className="text-xs text-amber-400 font-semibold">SHOULDER</span>
-                  <p className="text-xs text-white/60">Overhead work risk</p>
+                  <p className="text-xs text-white">Overhead work risk</p>
                 </div>
               </div>
 
@@ -654,14 +654,14 @@ export default function ManualHandlingModule5Section1() {
               <div className="flex items-center gap-3 mb-3">
                 <div className="flex-1 text-right">
                   <span className="text-xs text-orange-400 font-semibold">ELBOW</span>
-                  <p className="text-xs text-white/60">Tennis elbow</p>
+                  <p className="text-xs text-white">Tennis elbow</p>
                 </div>
                 <div className="w-8 h-8 rounded-full bg-orange-500/20 border-2 border-orange-500/40 flex items-center justify-center flex-shrink-0">
                   <span className="text-orange-400 text-xs font-bold">E</span>
                 </div>
                 <div className="flex-1">
-                  <span className="text-xs text-white/50 font-semibold">Lateral epicondylitis</span>
-                  <p className="text-xs text-white/40">Repetitive gripping</p>
+                  <span className="text-xs text-white font-semibold">Lateral epicondylitis</span>
+                  <p className="text-xs text-white">Repetitive gripping</p>
                 </div>
               </div>
 
@@ -669,14 +669,14 @@ export default function ManualHandlingModule5Section1() {
               <div className="flex items-center gap-3 mb-3">
                 <div className="flex-1 text-right">
                   <span className="text-xs text-purple-400 font-semibold">WRIST &amp; HAND</span>
-                  <p className="text-xs text-white/60">Carpal tunnel</p>
+                  <p className="text-xs text-white">Carpal tunnel</p>
                 </div>
                 <div className="w-8 h-8 rounded-full bg-purple-500/20 border-2 border-purple-500/40 flex items-center justify-center flex-shrink-0">
                   <span className="text-purple-400 text-xs font-bold">W</span>
                 </div>
                 <div className="flex-1">
-                  <span className="text-xs text-white/50 font-semibold">Median nerve</span>
-                  <p className="text-xs text-white/40">Tingling &amp; numbness</p>
+                  <span className="text-xs text-white font-semibold">Median nerve</span>
+                  <p className="text-xs text-white">Tingling &amp; numbness</p>
                 </div>
               </div>
 
@@ -684,14 +684,14 @@ export default function ManualHandlingModule5Section1() {
               <div className="flex items-center gap-3 mb-3">
                 <div className="flex-1 text-right">
                   <span className="text-xs text-red-400 font-semibold">LOWER BACK</span>
-                  <p className="text-xs text-white/60">L4/L5 &amp; L5/S1 discs</p>
+                  <p className="text-xs text-white">L4/L5 &amp; L5/S1 discs</p>
                 </div>
                 <div className="w-12 h-12 rounded-lg bg-red-500/20 border-2 border-red-500/40 flex items-center justify-center flex-shrink-0">
                   <span className="text-red-400 text-sm font-bold">LB</span>
                 </div>
                 <div className="flex-1">
                   <span className="text-xs text-red-400 font-semibold">HIGHEST RISK</span>
-                  <p className="text-xs text-white/60">Herniation &amp; sciatica</p>
+                  <p className="text-xs text-white">Herniation &amp; sciatica</p>
                 </div>
               </div>
 
@@ -699,7 +699,7 @@ export default function ManualHandlingModule5Section1() {
               <div className="flex items-center gap-3">
                 <div className="flex-1 text-right">
                   <span className="text-xs text-blue-400 font-semibold">KNEE</span>
-                  <p className="text-xs text-white/60">Bursitis &amp; meniscal</p>
+                  <p className="text-xs text-white">Bursitis &amp; meniscal</p>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="w-8 h-8 rounded-full bg-blue-500/20 border-2 border-blue-500/40 flex items-center justify-center flex-shrink-0">
@@ -711,12 +711,12 @@ export default function ManualHandlingModule5Section1() {
                 </div>
                 <div className="flex-1">
                   <span className="text-xs text-blue-400 font-semibold">KNEE</span>
-                  <p className="text-xs text-white/60">Kneeling &amp; squatting</p>
+                  <p className="text-xs text-white">Kneeling &amp; squatting</p>
                 </div>
               </div>
             </div>
 
-            <p className="text-white/50 text-xs italic text-center mt-5">
+            <p className="text-white text-xs italic text-center mt-5">
               The lower back (lumbar spine) is the highest-risk area for manual handling injuries,
               followed by the shoulders and knees.
             </p>
@@ -743,49 +743,49 @@ export default function ManualHandlingModule5Section1() {
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key MSD Symptoms to Watch For</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
                     <span>
                       <strong className="text-white">Pain</strong> &mdash; aching, sharp, burning,
                       or throbbing in muscles or joints
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
                     <span>
                       <strong className="text-white">Stiffness</strong> &mdash; difficulty moving a
                       joint or muscle, especially in the morning
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
                     <span>
                       <strong className="text-white">Tingling</strong> &mdash; pins and needles
                       sensation, often in hands or feet
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
                     <span>
                       <strong className="text-white">Numbness</strong> &mdash; loss of sensation,
                       indicating nerve compression
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
                     <span>
                       <strong className="text-white">Weakness</strong> &mdash; reduced strength,
                       difficulty gripping or lifting
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
                     <span>
                       <strong className="text-white">Swelling</strong> &mdash; visible inflammation
                       around joints or tendons
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
                     <span>
                       <strong className="text-white">Reduced range of motion</strong> &mdash;
@@ -802,7 +802,7 @@ export default function ManualHandlingModule5Section1() {
                     Red Flag Symptoms &mdash; Seek Immediate Medical Attention
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -851,7 +851,7 @@ export default function ManualHandlingModule5Section1() {
                     Why Early Reporting Matters
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -931,7 +931,7 @@ export default function ManualHandlingModule5Section1() {
                       Rest &amp; Activity Modification
                     </p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                       <span>Reduce or avoid the aggravating activity</span>
@@ -958,7 +958,7 @@ export default function ManualHandlingModule5Section1() {
                     </div>
                     <p className="text-sm font-medium text-emerald-400">Physiotherapy</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                       <span>Tailored exercise programmes to strengthen and rehabilitate</span>
@@ -982,7 +982,7 @@ export default function ManualHandlingModule5Section1() {
                     </div>
                     <p className="text-sm font-medium text-amber-400">Medication</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Anti-inflammatory medication (NSAIDs) to reduce swelling and pain</span>
@@ -1006,7 +1006,7 @@ export default function ManualHandlingModule5Section1() {
                     </div>
                     <p className="text-sm font-medium text-red-400">Surgery (Last Resort)</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                       <span>Disc surgery (discectomy/microdiscectomy) for severe herniation</span>
@@ -1048,7 +1048,7 @@ export default function ManualHandlingModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Components of a Phased Return</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -1121,7 +1121,7 @@ export default function ManualHandlingModule5Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Long-Term Management Strategies
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -1187,7 +1187,7 @@ export default function ManualHandlingModule5Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1201,7 +1201,7 @@ export default function ManualHandlingModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-4-section-4">

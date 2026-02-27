@@ -310,7 +310,7 @@ const Module4Section2_1 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -327,13 +327,13 @@ const Module4Section2_1 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 2.1</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 2.1</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Using Measurement Tools and Marking Equipment
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master the foundation of precise electrical installations through proper tool
               selection, use, and maintenance
             </p>
@@ -348,7 +348,7 @@ const Module4Section2_1 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2 text-sm">In 30 Seconds</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                <ul className="text-white text-sm space-y-1 list-disc pl-4">
                   <li>Always measure twice before cutting or drilling</li>
                   <li>Use the same tape measure throughout a project for consistency</li>
                   <li>Keep tools clean and check accuracy regularly for precision</li>
@@ -356,7 +356,7 @@ const Module4Section2_1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2 text-sm">Spot it / Use it</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                <ul className="text-white text-sm space-y-1 list-disc pl-4">
                   <li>
                     <strong>Spot:</strong> Measurement requirements, marking surfaces, tool
                     condition
@@ -380,7 +380,7 @@ const Module4Section2_1 = () => {
               Learning Outcomes
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <ul className="text-white/80 text-sm space-y-2 list-disc pl-4">
+              <ul className="text-white text-sm space-y-2 list-disc pl-4">
                 <li>
                   Identify common measurement and marking tools used in electrical installation
                 </li>
@@ -399,15 +399,15 @@ const Module4Section2_1 = () => {
               <Ruler className="w-5 h-5" />
               Common Measurement Tools
             </h2>
-            <p className="text-white/70 text-sm mb-4">
+            <p className="text-white text-sm mb-4">
               Proper tool selection ensures accurate measurement and professional results:
             </p>
             <div className="space-y-3">
               {measurementTools.map((tool, i) => (
                 <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                   <p className="font-medium text-elec-yellow mb-1">{tool.name}</p>
-                  <p className="text-white/70 text-sm mb-2">{tool.purpose}</p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-sm mb-2">{tool.purpose}</p>
+                  <p className="text-white text-xs">
                     <strong>Applications:</strong> {tool.applications.join(', ')} —{' '}
                     {tool.bestPractices[0]}
                   </p>
@@ -416,7 +416,7 @@ const Module4Section2_1 = () => {
             </div>
             <div className="mt-4 p-4 rounded-lg bg-white/5 border border-white/10">
               <p className="text-sm font-medium text-white mb-1">Tool Selection Tips</p>
-              <p className="text-white/60 text-xs">
+              <p className="text-white text-xs">
                 Choose tools based on precision requirements: tape measures for general work, steel
                 rules for precision, spirit levels for alignment, laser levels for long distances,
                 and calipers for component measurement.
@@ -430,15 +430,15 @@ const Module4Section2_1 = () => {
               <span className="text-green-400/80 text-sm font-normal">04</span>
               Marking Equipment
             </h2>
-            <p className="text-white/70 text-sm mb-4">
+            <p className="text-white text-sm mb-4">
               Selecting appropriate marking tools ensures clear, lasting reference points:
             </p>
             <div className="space-y-3">
               {markingEquipment.map((equipment, i) => (
                 <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
                   <p className="font-medium text-green-400 mb-1">{equipment.name}</p>
-                  <p className="text-white/70 text-sm mb-2">{equipment.purpose}</p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-sm mb-2">{equipment.purpose}</p>
+                  <p className="text-white text-xs">
                     <strong>Best for:</strong> {equipment.applications.join(', ')} —{' '}
                     {equipment.advantages[0]}
                   </p>
@@ -461,15 +461,15 @@ const Module4Section2_1 = () => {
               <span className="text-purple-400/80 text-sm font-normal">05</span>
               Best Practices for Accurate Measurement
             </h2>
-            <p className="text-white/70 text-sm mb-4">
+            <p className="text-white text-sm mb-4">
               Following proven practices ensures consistent accuracy and professional results:
             </p>
             <div className="space-y-3">
               {bestPractices.map((practice, i) => (
                 <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
                   <p className="font-medium text-purple-400 mb-1">{practice.practice}</p>
-                  <p className="text-white/70 text-sm mb-2">{practice.reason}</p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-sm mb-2">{practice.reason}</p>
+                  <p className="text-white text-xs">
                     <strong>Application:</strong> {practice.application} — {practice.compliance}
                   </p>
                 </div>
@@ -491,15 +491,15 @@ const Module4Section2_1 = () => {
               <span className="text-orange-400/80 text-sm font-normal">06</span>
               Maintaining Accuracy
             </h2>
-            <p className="text-white/70 text-sm mb-4">
+            <p className="text-white text-sm mb-4">
               Regular maintenance ensures tools remain accurate and reliable:
             </p>
             <div className="space-y-3">
               {maintenanceRequirements.map((requirement, i) => (
                 <div key={i} className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
                   <p className="font-medium text-orange-400 mb-1">{requirement.aspect}</p>
-                  <p className="text-white/70 text-sm mb-2">{requirement.requirement}</p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-sm mb-2">{requirement.requirement}</p>
+                  <p className="text-white text-xs">
                     <strong>Frequency:</strong> {requirement.frequency} — {requirement.purpose}
                   </p>
                 </div>
@@ -524,10 +524,10 @@ const Module4Section2_1 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
               <p className="font-medium text-red-400 mb-2">BS 7671 Compliance Requirements</p>
-              <p className="text-white/70 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 Accurate measurement is essential for safety and regulatory compliance.
               </p>
-              <p className="text-white/60 text-xs">
+              <p className="text-white text-xs">
                 <strong>Critical areas:</strong> Safe zone compliance, spacing requirements, and
                 professional workmanship standards. Poor measurement can create safety hazards and
                 regulation breaches.
@@ -543,7 +543,7 @@ const Module4Section2_1 = () => {
               Real-World Example
             </h2>
             <div className="p-4 rounded-lg bg-blue-500/10 border-l-2 border-blue-500/50">
-              <p className="text-white/80 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 On a commercial lighting installation, incorrect marking of containment led to the
                 trunking being 10mm off alignment over a 15m run. The misalignment meant that the
                 ceiling panels would not fit correctly, leading to a full day of rework.
@@ -561,7 +561,7 @@ const Module4Section2_1 = () => {
           {/* FAQs */}
           <section className="mb-10">
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-              <span className="text-white/40 text-sm font-normal">09</span>
+              <span className="text-white text-sm font-normal">09</span>
               Frequently Asked Questions
             </h2>
             <div className="space-y-4">
@@ -569,7 +569,7 @@ const Module4Section2_1 = () => {
                 <p className="font-medium text-white text-sm mb-1">
                   Q: Can I use a pen instead of a pencil for marking?
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A: Yes, but ensure the mark is visible and appropriate for the surface. Pencil is
                   preferred for surfaces where permanent marks are not desired.
                 </p>
@@ -578,7 +578,7 @@ const Module4Section2_1 = () => {
                 <p className="font-medium text-white text-sm mb-1">
                   Q: Are laser levels worth the investment?
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A: For larger projects, yes. They save time and improve accuracy over long
                   distances.
                 </p>
@@ -587,7 +587,7 @@ const Module4Section2_1 = () => {
                 <p className="font-medium text-white text-sm mb-1">
                   Q: Should I trust measurements on pre-marked building plans?
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A: Always verify on-site before cutting or fixing. Plans may not reflect actual
                   conditions.
                 </p>
@@ -598,11 +598,11 @@ const Module4Section2_1 = () => {
           {/* Summary */}
           <section className="mb-10">
             <h2 className="text-xl font-semibold text-white mb-4 flex items-center gap-3">
-              <span className="text-white/40 text-sm font-normal">10</span>
+              <span className="text-white text-sm font-normal">10</span>
               Summary
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 Accurate measurement and marking underpin every successful electrical installation.
                 Using the correct tools, maintaining them properly, and applying best practices
                 ensures precision, compliance, and a professional finish. Remember: measure twice,

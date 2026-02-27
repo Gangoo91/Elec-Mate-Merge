@@ -201,14 +201,14 @@ const Level2Module8MockExam4 = () => {
                 <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
                   Module 4: Installing Wiring Systems & Enclosures
                 </h1>
-                <p className="text-white/80">Level 2 Electrical Installation - Mock Exam 4</p>
+                <p className="text-white">Level 2 Electrical Installation - Mock Exam 4</p>
               </div>
 
               <div className="bg-background/50 p-6 rounded-lg border border-elec-yellow/30">
                 <h2 className="text-lg sm:text-xl font-semibold text-foreground mb-4">
                   Exam Instructions
                 </h2>
-                <ul className="text-sm text-white/80 space-y-2 text-left">
+                <ul className="text-sm text-white space-y-2 text-left">
                   <li>• 30 questions covering wiring systems, cables, and enclosures</li>
                   <li>• 45 minutes time limit</li>
                   <li>• You can flag questions for review</li>
@@ -251,7 +251,7 @@ const Level2Module8MockExam4 = () => {
                   <h1 className="text-lg sm:text-lg sm:text-xl font-semibold text-foreground">
                     Review Answers
                   </h1>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Score: {percentage}% ({score.correct}/{examQuestions.length})
                   </p>
                 </div>
@@ -259,7 +259,7 @@ const Level2Module8MockExam4 = () => {
                   onClick={() => setReviewMode(false)}
                   variant="ghost"
                   size="sm"
-                  className="text-white/80 hover:text-elec-yellow"
+                  className="text-white hover:text-elec-yellow"
                 >
                   <X className="h-4 w-4 mr-2" />
                   Exit Review
@@ -278,7 +278,7 @@ const Level2Module8MockExam4 = () => {
                     <div className="text-lg font-bold text-green-500">
                       {stats.answered - (stats.answered - score.correct)}
                     </div>
-                    <div className="text-xs text-white/80">Correct</div>
+                    <div className="text-xs text-white">Correct</div>
                   </CardContent>
                 </Card>
                 <Card
@@ -293,7 +293,7 @@ const Level2Module8MockExam4 = () => {
                     <div className="text-lg font-bold text-elec-yellow">
                       {stats.answered - score.correct}
                     </div>
-                    <div className="text-xs text-white/80">Incorrect</div>
+                    <div className="text-xs text-white">Incorrect</div>
                   </CardContent>
                 </Card>
                 <Card
@@ -305,8 +305,8 @@ const Level2Module8MockExam4 = () => {
                   }
                 >
                   <CardContent className="p-3 text-center">
-                    <div className="text-lg font-bold text-white/80">{stats.unanswered}</div>
-                    <div className="text-xs text-white/80">Unanswered</div>
+                    <div className="text-lg font-bold text-white">{stats.unanswered}</div>
+                    <div className="text-xs text-white">Unanswered</div>
                   </CardContent>
                 </Card>
                 <Card
@@ -317,7 +317,7 @@ const Level2Module8MockExam4 = () => {
                 >
                   <CardContent className="p-3 text-center">
                     <div className="text-lg font-bold text-elec-yellow">{stats.flagged}</div>
-                    <div className="text-xs text-white/80">Flagged</div>
+                    <div className="text-xs text-white">Flagged</div>
                   </CardContent>
                 </Card>
               </div>
@@ -356,7 +356,7 @@ const Level2Module8MockExam4 = () => {
                                 ? 'bg-green-500/20 text-green-500 border-green-500/40'
                                 : status.type === 'incorrect'
                                   ? 'bg-red-500/20 text-elec-yellow border-red-500/40'
-                                  : 'bg-muted/20 text-white/80 border-muted/40'
+                                  : 'bg-muted/20 text-white border-muted/40'
                             }
                           >
                             {status.type === 'correct'
@@ -425,7 +425,7 @@ const Level2Module8MockExam4 = () => {
                               <h4 className="text-sm font-semibold text-foreground mb-1">
                                 Explanation
                               </h4>
-                              <p className="text-sm text-white/80 leading-relaxed">
+                              <p className="text-sm text-white leading-relaxed">
                                 {question.explanation}
                               </p>
                             </div>
@@ -461,7 +461,7 @@ const Level2Module8MockExam4 = () => {
                   {score.correct}/{examQuestions.length}
                 </div>
                 <div className="text-xl text-foreground mb-2">{percentage}%</div>
-                <div className="text-sm text-white/80">
+                <div className="text-sm text-white">
                   {percentage >= 70 ? 'Pass - Well done!' : 'Additional study recommended'}
                 </div>
               </div>
@@ -469,21 +469,21 @@ const Level2Module8MockExam4 = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
                 <div className="bg-card p-3 rounded-lg border border-green-500/20 text-center">
                   <div className="text-lg font-bold text-green-500">{score.correct}</div>
-                  <div className="text-xs text-white/80">Correct</div>
+                  <div className="text-xs text-white">Correct</div>
                 </div>
                 <div className="bg-card p-3 rounded-lg border border-red-500/20 text-center">
                   <div className="text-lg font-bold text-elec-yellow">
                     {stats.answered - score.correct}
                   </div>
-                  <div className="text-xs text-white/80">Incorrect</div>
+                  <div className="text-xs text-white">Incorrect</div>
                 </div>
                 <div className="bg-muted/10 p-3 rounded-lg border border-muted/20 text-center">
-                  <div className="text-lg font-bold text-white/80">{stats.unanswered}</div>
-                  <div className="text-xs text-white/80">Unanswered</div>
+                  <div className="text-lg font-bold text-white">{stats.unanswered}</div>
+                  <div className="text-xs text-white">Unanswered</div>
                 </div>
                 <div className="bg-elec-yellow/10 p-3 rounded-lg border border-elec-yellow/30 text-center">
                   <div className="text-lg font-bold text-elec-yellow">{stats.flagged}</div>
-                  <div className="text-xs text-white/80">Flagged</div>
+                  <div className="text-xs text-white">Flagged</div>
                 </div>
               </div>
 
@@ -508,7 +508,7 @@ const Level2Module8MockExam4 = () => {
               <div className="text-center">
                 <Link
                   to=".."
-                  className="inline-flex items-center gap-2 text-sm text-white/80 hover:text-elec-yellow transition-colors"
+                  className="inline-flex items-center gap-2 text-sm text-white hover:text-elec-yellow transition-colors"
                 >
                   <ArrowLeft className="h-4 w-4" />
                   Back to Mock Examinations
@@ -535,7 +535,7 @@ const Level2Module8MockExam4 = () => {
           <div className="flex items-center gap-4">
             <Link
               to=".."
-              className="inline-flex items-center text-white/80 hover:text-foreground transition-colors"
+              className="inline-flex items-center text-white hover:text-foreground transition-colors"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Exit Exam
@@ -558,7 +558,7 @@ const Level2Module8MockExam4 = () => {
                   <h2 className="text-lg font-semibold text-foreground">
                     Question {currentQuestion + 1} of {examQuestions.length}
                   </h2>
-                  <div className="text-sm text-white/80 mt-1">
+                  <div className="text-sm text-white mt-1">
                     Section {currentQ?.section} • {currentQ?.difficulty} • {currentQ?.topic}
                   </div>
                 </div>
@@ -588,7 +588,7 @@ const Level2Module8MockExam4 = () => {
                       className={`w-full p-4 text-left rounded-lg border transition-colors ${
                         selectedAnswers[currentQuestion] === index
                           ? 'bg-elec-yellow/20 border-elec-yellow text-foreground'
-                          : 'bg-background/30 border-elec-yellow/30 text-white/80 hover:bg-elec-yellow/10 hover:border-elec-yellow/40'
+                          : 'bg-background/30 border-elec-yellow/30 text-white hover:bg-elec-yellow/10 hover:border-elec-yellow/40'
                       }`}
                     >
                       <div className="flex items-center gap-3">
@@ -655,7 +655,7 @@ const Level2Module8MockExam4 = () => {
                     <div className="font-mono text-2xl font-bold text-elec-yellow">
                       {formatTime(timeRemaining)}
                     </div>
-                    <div className="text-xs text-white/80 mt-1">
+                    <div className="text-xs text-white mt-1">
                       {timeRemaining < 300 ? 'Final 5 minutes!' : 'Stay focused'}
                     </div>
                   </div>
@@ -671,7 +671,7 @@ const Level2Module8MockExam4 = () => {
                       </span>
                     </div>
                     <Progress value={progressPercentage} className="h-3 mb-3" />
-                    <div className="text-xs text-center text-white/80">
+                    <div className="text-xs text-center text-white">
                       {Math.round(progressPercentage)}% Complete
                     </div>
                   </div>
@@ -734,7 +734,7 @@ const Level2Module8MockExam4 = () => {
                                 ? 'bg-elec-yellow text-black border-elec-yellow shadow-lg scale-110'
                                 : isAnswered
                                   ? 'bg-green-500/30 text-green-400 border-green-500/50 hover:bg-green-500/40'
-                                  : 'bg-background/30 text-white/80 border-elec-yellow/30 hover:bg-elec-yellow/20 hover:border-elec-yellow/40'
+                                  : 'bg-background/30 text-white border-elec-yellow/30 hover:bg-elec-yellow/20 hover:border-elec-yellow/40'
                             }
                           `}
                         >
@@ -763,7 +763,7 @@ const Level2Module8MockExam4 = () => {
                     Next Flagged ({flaggedQuestions.size})
                   </Button>
 
-                  <div className="text-xs text-center text-white/80 pt-2 border-t border-elec-yellow/30">
+                  <div className="text-xs text-center text-white pt-2 border-t border-elec-yellow/30">
                     <div>Exam: Module 4</div>
                     <div>Wiring Systems & Enclosures</div>
                   </div>

@@ -273,7 +273,7 @@ const Level3Module5Section5_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module5-section5">
@@ -365,11 +365,11 @@ const Level3Module5Section5_4 = () => {
             <div className="grid grid-cols-2 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Same Content</p>
-                <p className="text-white/90 text-xs">Both must contain all required information</p>
+                <p className="text-white text-xs">Both must contain all required information</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Same Validity</p>
-                <p className="text-white/90 text-xs">Legally equivalent when properly completed</p>
+                <p className="text-white text-xs">Legally equivalent when properly completed</p>
               </div>
             </div>
 
@@ -443,7 +443,7 @@ const Level3Module5Section5_4 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> Many electronic systems flag if you enter a Zs value that
               exceeds the limit for the protective device you've specified, prompting you to check
               the reading or device selection before completing the certificate.
@@ -488,15 +488,15 @@ const Level3Module5Section5_4 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Domestic</p>
-                <p className="text-white/90 text-xs">Often prefer printed copy</p>
+                <p className="text-white text-xs">Often prefer printed copy</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Commercial</p>
-                <p className="text-white/90 text-xs">Usually accept electronic</p>
+                <p className="text-white text-xs">Usually accept electronic</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Landlords</p>
-                <p className="text-white/90 text-xs">Need accessible records</p>
+                <p className="text-white text-xs">Need accessible records</p>
               </div>
             </div>
 
@@ -576,7 +576,7 @@ const Level3Module5Section5_4 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Note:</strong> If a certification provider fails or discontinues service, you
               need access to your records. Regularly export data in portable formats (PDF, CSV) and
               maintain local backups of important certificates.
@@ -642,7 +642,7 @@ const Level3Module5Section5_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -687,7 +687,7 @@ const Level3Module5Section5_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module5-section5">

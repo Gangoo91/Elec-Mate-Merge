@@ -202,7 +202,7 @@ export default function ConfinedSpacesModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-5">
@@ -225,7 +225,7 @@ export default function ConfinedSpacesModule5Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Emergency Planning
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             CSR 1997 Regulation 5 emergency arrangements, rescue team requirements, alarm cascades,
             rehearsal planning, first aid provision, casualty handling, and the written emergency
             plan
@@ -309,7 +309,7 @@ export default function ConfinedSpacesModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Absolute Rule</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">No entry without a rescue plan.</strong> There is
                   no exception to this requirement. It does not matter how quick the job is, how
                   simple the space appears, or how experienced the entrant is. If emergency
@@ -363,12 +363,12 @@ export default function ConfinedSpacesModule5Section1() {
                     <p className="text-red-400 text-lg font-bold">
                       of confined space deaths are rescuers
                     </p>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       HSE data &mdash; the single most important reason for emergency planning
                     </p>
                   </div>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   When a colleague collapses in a confined space, the natural human instinct is to
                   rush in and help. But if that person collapsed because of a{' '}
                   <strong className="text-white">toxic atmosphere or oxygen deficiency</strong>, the
@@ -383,7 +383,7 @@ export default function ConfinedSpacesModule5Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   How Emergency Planning Prevents This
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -463,7 +463,7 @@ export default function ConfinedSpacesModule5Section1() {
                       </div>
                       <p className="text-sm font-semibold text-white">Foreseeable Emergencies</p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       All hazards that could cause an emergency in this specific space
                     </p>
                   </div>
@@ -476,7 +476,7 @@ export default function ConfinedSpacesModule5Section1() {
                       </div>
                       <p className="text-sm font-semibold text-white">Rescue Methods</p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Specific rescue method for each foreseeable scenario
                     </p>
                   </div>
@@ -489,7 +489,7 @@ export default function ConfinedSpacesModule5Section1() {
                       </div>
                       <p className="text-sm font-semibold text-white">Rescue Equipment</p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       All equipment required, checked, and available at the entry point
                     </p>
                   </div>
@@ -502,7 +502,7 @@ export default function ConfinedSpacesModule5Section1() {
                       </div>
                       <p className="text-sm font-semibold text-white">Rescue Team</p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Number, competence, and physical fitness of the rescue team
                     </p>
                   </div>
@@ -515,7 +515,7 @@ export default function ConfinedSpacesModule5Section1() {
                       </div>
                       <p className="text-sm font-semibold text-white">Communication Plan</p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       How to contact emergency services and the alarm cascade
                     </p>
                   </div>
@@ -528,7 +528,7 @@ export default function ConfinedSpacesModule5Section1() {
                       </div>
                       <p className="text-sm font-semibold text-white">Hospital &amp; Services</p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Nearest hospital with relevant capabilities identified
                     </p>
                   </div>
@@ -539,7 +539,7 @@ export default function ConfinedSpacesModule5Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Foreseeable Emergencies to Address
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -614,7 +614,7 @@ export default function ConfinedSpacesModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Training Requirements</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-cyan-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -655,12 +655,12 @@ export default function ConfinedSpacesModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Physical Fitness</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Confined space rescue is{' '}
                   <strong className="text-white">physically demanding</strong>. Rescuers must be fit
                   enough to:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Wear and operate breathing apparatus under stress</span>
@@ -691,7 +691,7 @@ export default function ConfinedSpacesModule5Section1() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Minimum: Annually</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         At the very least, the full rescue team must practise together once per year
                       </p>
                     </div>
@@ -702,7 +702,7 @@ export default function ConfinedSpacesModule5Section1() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Ideal: Quarterly</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Best practice is quarterly rehearsals to maintain skills and confidence
                       </p>
                     </div>
@@ -712,7 +712,7 @@ export default function ConfinedSpacesModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Familiarity</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -767,7 +767,7 @@ export default function ConfinedSpacesModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Time is Critical</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   In a <strong className="text-white">toxic atmosphere</strong> (hydrogen sulphide,
                   carbon monoxide) or an{' '}
                   <strong className="text-white">oxygen-deficient environment</strong>,
@@ -783,7 +783,7 @@ export default function ConfinedSpacesModule5Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   On-Site Rescue &mdash; The Primary Method
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -861,7 +861,7 @@ export default function ConfinedSpacesModule5Section1() {
                         <p className="text-sm font-bold text-white">
                           Top Person (Attendant) Raises Alarm
                         </p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           Detects the emergency, activates rescue procedure, does NOT enter the
                           space
                         </p>
@@ -887,7 +887,7 @@ export default function ConfinedSpacesModule5Section1() {
                         <p className="text-sm font-bold text-white">
                           Site Supervisor / Rescue Team Leader
                         </p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           Coordinates on-site rescue, mobilises the rescue team and equipment
                         </p>
                       </div>
@@ -912,7 +912,7 @@ export default function ConfinedSpacesModule5Section1() {
                         <p className="text-sm font-bold text-white">
                           Emergency Services &mdash; 999
                         </p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           Called immediately &mdash; request ambulance and fire service, provide
                           exact location and nature of emergency
                         </p>
@@ -938,7 +938,7 @@ export default function ConfinedSpacesModule5Section1() {
                         <p className="text-sm font-bold text-white">
                           Meeting Point for Emergency Vehicles
                         </p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           Designated person meets emergency services at the site entrance and guides
                           them to the confined space
                         </p>
@@ -950,7 +950,7 @@ export default function ConfinedSpacesModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Communication Methods</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -991,7 +991,7 @@ export default function ConfinedSpacesModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Communication Failure</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If communication with the entrant is{' '}
                   <strong className="text-white">lost at any time</strong>, this must be treated as
                   an emergency. The entrant must be recalled immediately. Loss of communication may
@@ -1022,7 +1022,7 @@ export default function ConfinedSpacesModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Rehearsal Requirements</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-cyan-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -1078,7 +1078,7 @@ export default function ConfinedSpacesModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">First Aid Provision</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1115,7 +1115,7 @@ export default function ConfinedSpacesModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Casualty Handling Plan</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1171,7 +1171,7 @@ export default function ConfinedSpacesModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Written Plan Requirements</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-cyan-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -1219,7 +1219,7 @@ export default function ConfinedSpacesModule5Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   What the Written Plan Should Contain
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1299,7 +1299,7 @@ export default function ConfinedSpacesModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">No Plan = No Entry</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If the written emergency plan is not in place, is not specific to the space, or
                   has not been briefed to all personnel,{' '}
                   <strong className="text-white">entry must not take place</strong>. Any person has
@@ -1331,7 +1331,7 @@ export default function ConfinedSpacesModule5Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1345,7 +1345,7 @@ export default function ConfinedSpacesModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-5">

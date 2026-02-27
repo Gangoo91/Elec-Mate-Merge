@@ -243,13 +243,13 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
   };
 
   return (
-    <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : '')}>
+    <div className="space-y-4">
       {/* Profile Banner - Both Mobile & Desktop */}
       {profileInstrument && (
-        <div className="flex items-center justify-between gap-3 p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
+        <div className="flex items-center justify-between gap-3 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20">
           <div className="flex items-center gap-2 min-w-0">
-            <User className="h-4 w-4 text-blue-400 flex-shrink-0" />
-            <span className="text-sm text-blue-300 truncate">
+            <User className="h-4 w-4 text-amber-400 flex-shrink-0" />
+            <span className="text-sm text-white truncate">
               {profileInstrument.make} {profileInstrument.model}
             </span>
           </div>
@@ -257,7 +257,7 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
             variant="outline"
             size="sm"
             onClick={handleAutoFillFromProfile}
-            className="h-8 px-3 text-xs bg-blue-500/20 border-blue-500/30 text-blue-300 hover:bg-blue-500/30 hover:text-blue-200 flex-shrink-0"
+            className="h-9 px-3 text-xs bg-amber-500/20 border-amber-500/30 text-amber-300 hover:bg-amber-500/30 hover:text-amber-200 flex-shrink-0 touch-manipulation"
           >
             {hasAutoFilled ? (
               <>
@@ -278,7 +278,7 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
       <div className="space-y-3">
         {/* Test Instrument - Full Width */}
         <div className="space-y-1.5">
-          <Label htmlFor="testInstrumentMake" className="text-xs font-medium text-foreground/70">
+          <Label htmlFor="testInstrumentMake" className="text-sm text-white">
             Test Instrument
           </Label>
           {!isOtherSelected ? (
@@ -306,7 +306,7 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
           ) : (
             <div className="space-y-2">
               <Input
-                className="h-10 text-sm touch-manipulation bg-card/50 border-border/30"
+                className="h-11 text-base touch-manipulation border-white/30"
                 placeholder="Enter make/model"
                 value={formData.customTestInstrument || ''}
                 onChange={(e) => onUpdate('customTestInstrument', e.target.value)}
@@ -331,7 +331,7 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
 
         {/* Serial Number - Full Width */}
         <div className="space-y-1.5">
-          <Label htmlFor="testInstrumentSerial" className="text-xs font-medium text-foreground/70">
+          <Label htmlFor="testInstrumentSerial" className="text-sm text-white">
             Serial Number
           </Label>
           <Input
@@ -339,14 +339,14 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
             value={formData.testInstrumentSerial || ''}
             onChange={(e) => onUpdate('testInstrumentSerial', e.target.value)}
             placeholder="Enter serial number"
-            className="h-10 text-sm touch-manipulation bg-card/50 border-border/30"
+            className="h-11 text-base touch-manipulation border-white/30"
           />
         </div>
 
         {/* Calibration & Temperature - 2 Column Grid */}
         <div className="grid grid-cols-2 gap-3">
           <div className="space-y-1.5">
-            <Label htmlFor="calibrationDate" className="text-xs font-medium text-foreground/70">
+            <Label htmlFor="calibrationDate" className="text-sm text-white">
               Calibration Date
             </Label>
             <Input
@@ -354,12 +354,12 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
               type="date"
               value={formData.calibrationDate || ''}
               onChange={(e) => onUpdate('calibrationDate', e.target.value)}
-              className="h-10 text-sm touch-manipulation bg-card/50 border-border/30"
+              className="h-11 text-base touch-manipulation border-white/30"
             />
           </div>
 
           <div className="space-y-1.5">
-            <Label htmlFor="testTemperature" className="text-xs font-medium text-foreground/70">
+            <Label htmlFor="testTemperature" className="text-sm text-white">
               Temperature (°C)
             </Label>
             <Input
@@ -367,7 +367,7 @@ const TestInstrumentInfo = ({ formData, onUpdate }: TestInstrumentInfoProps) => 
               value={formData.testTemperature || ''}
               onChange={(e) => onUpdate('testTemperature', e.target.value)}
               placeholder="20°C"
-              className="h-10 text-sm touch-manipulation bg-card/50 border-border/30"
+              className="h-11 text-base touch-manipulation border-white/30"
             />
           </div>
         </div>

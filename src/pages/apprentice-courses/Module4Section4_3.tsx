@@ -156,7 +156,7 @@ const Module4Section4_3 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -174,13 +174,13 @@ const Module4Section4_3 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 4.3</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 4.3</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Assembling and Joining Containment
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master the use of couplers, saddles, and bushes for safe containment assembly,
               maintaining mechanical strength and electrical continuity.
             </p>
@@ -195,7 +195,7 @@ const Module4Section4_3 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">In 30 Seconds</p>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>• Couplers, saddles, and bushes ensure safe containment assembly</li>
                   <li>• Correct joining maintains mechanical strength and electrical continuity</li>
                   <li>• Poor assembly leads to cable damage and failed inspections</li>
@@ -203,7 +203,7 @@ const Module4Section4_3 = () => {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">Spot it / Use it</p>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>
                     • <strong>Spot:</strong> Cut containment ends, joining points, cable entry
                     points
@@ -227,7 +227,7 @@ const Module4Section4_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <ul className="text-white/80 space-y-2">
+            <ul className="text-white space-y-2">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
                 <span>
@@ -271,7 +271,7 @@ const Module4Section4_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Couplers and Basic Assembly Principles
             </h2>
-            <div className="text-white/80 space-y-6">
+            <div className="text-white space-y-6">
               <p>
                 Couplers are essential for joining containment sections and must ensure both
                 mechanical strength and electrical continuity.
@@ -297,7 +297,7 @@ const Module4Section4_3 = () => {
                   <li>• Expansion couplers: allow 5mm movement per 10°C change</li>
                   <li>• Flexible couplers: accommodate 15° angular movement</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Critical requirement:</strong> All couplers must maintain IP rating of
                   containment system
                 </p>
@@ -323,7 +323,7 @@ const Module4Section4_3 = () => {
                   <li>• Check alignment before final tightening</li>
                   <li>• Maximum 2mm deviation per metre allowed</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Professional tip:</strong> Mark conduit orientation before cutting to
                   maintain consistent alignment
                 </p>
@@ -349,7 +349,7 @@ const Module4Section4_3 = () => {
                   <li>• Gasket seals: IP54 rating minimum for damp locations</li>
                   <li>• Earth continuity: &lt;0.1Ω resistance through joints</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Load consideration:</strong> Reduce coupler spacing by 25% for fully
                   loaded tray systems
                 </p>
@@ -371,7 +371,7 @@ const Module4Section4_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Saddles and Support Systems
             </h2>
-            <div className="text-white/80 space-y-6">
+            <div className="text-white space-y-6">
               <p>
                 Saddles provide critical support and must be correctly specified for load, material,
                 and environmental conditions.
@@ -397,7 +397,7 @@ const Module4Section4_3 = () => {
                   <li>• Locking mechanism: prevents loosening under vibration</li>
                   <li>• Rotation capability: ±15° angular adjustment</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Safety factor:</strong> Select saddles rated at 150% of maximum
                   anticipated load
                 </p>
@@ -425,7 +425,7 @@ const Module4Section4_3 = () => {
                   <li>• Earthing continuity: &lt;0.1Ω through saddle to mounting</li>
                   <li>• Bi-metallic protection: nylon washers prevent galvanic corrosion</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Environmental rating:</strong> IP65 minimum for outdoor saddle assemblies
                 </p>
               </div>
@@ -446,7 +446,7 @@ const Module4Section4_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Bushes and Cable Protection
             </h2>
-            <div className="text-white/80 space-y-6">
+            <div className="text-white space-y-6">
               <p>
                 Bushes are mandatory for cable protection and must be correctly specified for
                 containment type and application.
@@ -472,7 +472,7 @@ const Module4Section4_3 = () => {
                   <li>• Brass bushes: steel conduit, earthed installations, marine grade</li>
                   <li>• Rubber grommets: flexible entries, IP65 sealing capability</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Critical requirement:</strong> Bush must be fitted before cable
                   installation to prevent damage
                 </p>
@@ -498,7 +498,7 @@ const Module4Section4_3 = () => {
                   <li>• Data cables: EMC screened bushes maintain integrity</li>
                   <li>• Wall penetrations: both sides protection mandatory</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Quality indicator:</strong> No visible cable indentation or stress points
                   at bush interface
                 </p>
@@ -520,7 +520,7 @@ const Module4Section4_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Electrical Continuity and Professional Assembly
             </h2>
-            <div className="text-white/80 space-y-6">
+            <div className="text-white space-y-6">
               <p>
                 Maintaining electrical continuity and professional assembly standards ensures safety
                 and regulatory compliance.
@@ -548,7 +548,7 @@ const Module4Section4_3 = () => {
                   <li>• Star washers: ensure positive electrical contact</li>
                   <li>• Identification: green/yellow sleeving required</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Paint removal:</strong> 25mm minimum area around electrical contact points
                 </p>
               </div>
@@ -578,7 +578,7 @@ const Module4Section4_3 = () => {
                   <li>• Missing earth straps: where paint interrupts continuity</li>
                   <li>• Inadequate support: at changes of direction</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Professional standard:</strong> All joints should appear factory-made when
                   complete
                 </p>
@@ -593,7 +593,7 @@ const Module4Section4_3 = () => {
               Real-World Example
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
-              <div className="text-white/80 space-y-4 text-sm">
+              <div className="text-white space-y-4 text-sm">
                 <p>
                   In a warehouse installation, PVC conduit was cut without deburring, and bushes
                   were not fitted at cable entry points. Over time, the sharp edges cut into the
@@ -627,7 +627,7 @@ const Module4Section4_3 = () => {
               Summary
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 Correct assembly of containment systems using appropriate couplers, saddles, and
                 bushes ensures mechanical strength, electrical continuity, and cable protection.
                 Following manufacturer specifications, maintaining proper torque settings, and

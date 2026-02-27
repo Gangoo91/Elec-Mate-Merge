@@ -255,7 +255,7 @@ const Level3Module4Section6_3 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section6">
@@ -281,7 +281,7 @@ const Level3Module4Section6_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
             Costing and Explaining Remedial Work
           </h1>
-          <p className="text-lg sm:text-xl text-white/70">
+          <p className="text-lg sm:text-xl text-white">
             Accurately costing repairs and clearly explaining work requirements to customers
           </p>
         </header>
@@ -292,31 +292,31 @@ const Level3Module4Section6_3 = () => {
           <ul className="space-y-2 sm:space-y-3">
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/80 text-sm sm:text-base">
+              <span className="text-white text-sm sm:text-base">
                 Calculate accurate and sustainable prices for remedial work
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/80 text-sm sm:text-base">
+              <span className="text-white text-sm sm:text-base">
                 Prepare professional quotations that protect you and inform customers
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/80 text-sm sm:text-base">
+              <span className="text-white text-sm sm:text-base">
                 Explain costs clearly and justify pricing professionally
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/80 text-sm sm:text-base">
+              <span className="text-white text-sm sm:text-base">
                 Handle price objections and negotiations effectively
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/80 text-sm sm:text-base">
+              <span className="text-white text-sm sm:text-base">
                 Manage variations and additional work discovered during repairs
               </span>
             </li>
@@ -335,7 +335,7 @@ const Level3Module4Section6_3 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
               Accurate costing requires understanding all the elements that contribute to a job's
               true cost. Underpricing leads to unsustainable business practices, while overpricing
               loses work. Finding the right balance requires systematic analysis of all cost
@@ -345,7 +345,7 @@ const Level3Module4Section6_3 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Direct Costs</h3>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
               <h4 className="text-white font-semibold mb-2">Materials</h4>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+              <ul className="list-disc pl-5 text-white text-sm space-y-1">
                 <li>Cost of all materials required for the repair</li>
                 <li>Cable, accessories, protective devices, consumables</li>
                 <li>Allow for waste and contingency (typically 5-10%)</li>
@@ -356,7 +356,7 @@ const Level3Module4Section6_3 = () => {
 
             <div className="bg-white/5 rounded-lg p-4 mb-4">
               <h4 className="text-white font-semibold mb-2">Labour</h4>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+              <ul className="list-disc pl-5 text-white text-sm space-y-1">
                 <li>Time on site performing the work</li>
                 <li>Travel time to and from the job</li>
                 <li>Time for testing, commissioning, and handover</li>
@@ -369,7 +369,7 @@ const Level3Module4Section6_3 = () => {
               Indirect Costs (Overheads)
             </h3>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>
                   <strong>Insurance:</strong> Public liability, employer's liability, professional
                   indemnity
@@ -402,10 +402,10 @@ const Level3Module4Section6_3 = () => {
             </div>
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Profit Margin</h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               A sustainable profit margin is essential for:
             </p>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>Business growth and development</li>
               <li>Investment in equipment and training</li>
               <li>Financial security during quiet periods</li>
@@ -435,7 +435,7 @@ const Level3Module4Section6_3 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
               A professional quotation protects both you and the customer by clearly defining what
               work will be done, at what cost, and under what terms. Well-prepared quotations reduce
               disputes and demonstrate professionalism.
@@ -446,7 +446,7 @@ const Level3Module4Section6_3 = () => {
             </h3>
             <div className="bg-gradient-to-r from-yellow-400/10 to-amber-500/10 rounded-lg p-4 border border-yellow-400/20 mb-4">
               <h4 className="text-white font-semibold mb-2">Professional Quotation Contents:</h4>
-              <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>
                   <strong>Your details:</strong> Business name, address, contact information,
                   registration numbers
@@ -487,7 +487,7 @@ const Level3Module4Section6_3 = () => {
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Quotation vs Estimate</h3>
             <div className="overflow-x-auto mb-6">
-              <table className="w-full text-sm text-white/80 border border-white/20">
+              <table className="w-full text-sm text-white border border-white/20">
                 <thead>
                   <tr className="bg-white/10">
                     <th className="border border-white/20 p-2 text-left">Quotation</th>
@@ -527,7 +527,7 @@ const Level3Module4Section6_3 = () => {
               Common Quotation Mistakes
             </h3>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>Vague scope descriptions leading to disputes</li>
                 <li>Forgetting to include all cost elements</li>
                 <li>No validity period leaving you exposed to price changes</li>
@@ -560,18 +560,18 @@ const Level3Module4Section6_3 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
               How you explain costs significantly affects customer perception and satisfaction.
               Focus on value and benefits rather than just price. Help customers understand what
               they're paying for and why it matters.
             </p>
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Value-Based Explanation</h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               When discussing costs, emphasise the value provided:
             </p>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>
                   <strong>Safety:</strong> "This repair ensures your installation is safe for your
                   family"
@@ -598,11 +598,11 @@ const Level3Module4Section6_3 = () => {
             </div>
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Breaking Down Costs</h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               Help customers understand what contributes to the price:
             </p>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>
                   <strong>Materials:</strong> Explain the specification and why quality matters
                 </li>
@@ -625,12 +625,12 @@ const Level3Module4Section6_3 = () => {
             </div>
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Presenting Options</h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               Where appropriate, offer options at different price points:
             </p>
             <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-lg p-4 border border-green-500/20 mb-4">
               <h4 className="text-white font-semibold mb-2">Option Presentation Example:</h4>
-              <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>
                   <strong>Option A - Essential:</strong> "This addresses the immediate safety
                   concern and ensures compliance. Cost: X"
@@ -647,7 +647,7 @@ const Level3Module4Section6_3 = () => {
             </div>
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Avoiding Common Pitfalls</h3>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>Don't apologise for your prices - they reflect value</li>
               <li>Don't criticise competitors' lower prices</li>
               <li>Don't make customers feel they're being overcharged</li>
@@ -675,7 +675,7 @@ const Level3Module4Section6_3 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
               Price objections are common and don't necessarily mean you're too expensive.
               Understanding why customers object helps you respond appropriately and often convert
               objections into confirmed work.
@@ -687,7 +687,7 @@ const Level3Module4Section6_3 = () => {
 
             <div className="bg-white/5 rounded-lg p-4 mb-4">
               <h4 className="text-white font-semibold mb-2">"That's more than I expected"</h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Acknowledge their concern and ask what they were expecting. Explain what's included
                 in your price and why electrical work costs what it does. Help them understand the
                 value they're receiving.
@@ -696,7 +696,7 @@ const Level3Module4Section6_3 = () => {
 
             <div className="bg-white/5 rounded-lg p-4 mb-4">
               <h4 className="text-white font-semibold mb-2">"I've had a lower quote elsewhere"</h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Ask about the other quote: Does it include the same scope? Same quality materials?
                 Certification? Insurance? Often lower quotes exclude essential elements. Explain
                 what makes your quote comprehensive without criticising competitors.
@@ -705,7 +705,7 @@ const Level3Module4Section6_3 = () => {
 
             <div className="bg-white/5 rounded-lg p-4 mb-4">
               <h4 className="text-white font-semibold mb-2">"Can you do it cheaper?"</h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Explain what contributes to your price and why reducing it would compromise quality
                 or safety. Offer alternative solutions at different price points if possible, or
                 suggest phased work. Don't reduce price without reducing scope.
@@ -714,7 +714,7 @@ const Level3Module4Section6_3 = () => {
 
             <div className="bg-white/5 rounded-lg p-4 mb-4">
               <h4 className="text-white font-semibold mb-2">"I can't afford that right now"</h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Discuss priorities: what's essential for safety versus what could wait? Explore
                 phased approaches or payment plans if you offer them. Help them find a workable
                 solution while maintaining safety requirements.
@@ -723,7 +723,7 @@ const Level3Module4Section6_3 = () => {
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Negotiation Principles</h3>
             <div className="bg-gradient-to-r from-yellow-400/10 to-amber-500/10 rounded-lg p-4 border border-yellow-400/20 mb-4">
-              <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>
                   <strong>Value first:</strong> Ensure they understand the value before discussing
                   price
@@ -749,10 +749,10 @@ const Level3Module4Section6_3 = () => {
             </div>
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">When to Walk Away</h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               Sometimes the right decision is not to take the work:
             </p>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>When the price required wouldn't cover your costs</li>
               <li>When pressure to reduce price would compromise quality or safety</li>
               <li>When the customer's expectations are unrealistic</li>
@@ -782,16 +782,16 @@ const Level3Module4Section6_3 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
               Remedial work often uncovers additional issues not visible during initial assessment.
               Managing these variations professionally maintains customer trust and ensures fair
               compensation for work done.
             </p>
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Identifying Variations</h3>
-            <p className="text-white/80 text-sm mb-3">Variations may arise from:</p>
+            <p className="text-white text-sm mb-3">Variations may arise from:</p>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>Additional faults discovered during investigation</li>
                 <li>Hidden conditions not visible until work commenced</li>
                 <li>Customer requests for additional work</li>
@@ -804,7 +804,7 @@ const Level3Module4Section6_3 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Variation Process</h3>
             <div className="bg-gradient-to-r from-yellow-400/10 to-amber-500/10 rounded-lg p-4 border border-yellow-400/20 mb-4">
               <h4 className="text-white font-semibold mb-2">Steps for Managing Variations:</h4>
-              <ol className="list-decimal pl-5 text-white/80 text-sm space-y-2">
+              <ol className="list-decimal pl-5 text-white text-sm space-y-2">
                 <li>
                   <strong>Identify:</strong> Recognise that additional work is needed beyond scope
                 </li>
@@ -837,8 +837,8 @@ const Level3Module4Section6_3 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               Documentation for Variations
             </h3>
-            <p className="text-white/80 text-sm mb-3">Good documentation protects both parties:</p>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <p className="text-white text-sm mb-3">Good documentation protects both parties:</p>
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>Photographs of discovered conditions</li>
               <li>Written description of additional work required</li>
               <li>Clear pricing for the additional work</li>
@@ -850,10 +850,10 @@ const Level3Module4Section6_3 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               When Customers Decline Additional Work
             </h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               If the customer declines recommended additional work:
             </p>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>Complete the originally quoted work as agreed</li>
               <li>Document your recommendations clearly</li>
               <li>Explain any implications for safety or compliance</li>
@@ -871,7 +871,7 @@ const Level3Module4Section6_3 = () => {
           <div className="space-y-4">
             <div>
               <h3 className="text-white font-semibold mb-2">Building Long-Term Relationships</h3>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Fair, transparent pricing builds trust and repeat business. Customers who understand
                 the value of your work become loyal clients and refer others. Invest time in
                 explaining costs properly rather than just quoting and hoping.
@@ -880,7 +880,7 @@ const Level3Module4Section6_3 = () => {
 
             <div>
               <h3 className="text-white font-semibold mb-2">Learning from Quotes</h3>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Track which quotes are accepted and why others aren't. Review completed jobs against
                 estimates to improve future accuracy. If you're consistently under or over
                 estimating, adjust your approach.
@@ -889,7 +889,7 @@ const Level3Module4Section6_3 = () => {
 
             <div>
               <h3 className="text-white font-semibold mb-2">Payment Security</h3>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Consider credit checks for large jobs, require deposits for significant work, and
                 stage payments for extended projects. Clear payment terms reduce disputes and bad
                 debt.
@@ -907,7 +907,7 @@ const Level3Module4Section6_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 rounded-lg p-4 sm:p-6">
                 <h3 className="text-white font-semibold mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -919,7 +919,7 @@ const Level3Module4Section6_3 = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <h3 className="text-white font-semibold mb-2">Quotation Essentials</h3>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>Clear scope of work</li>
                 <li>Itemised costs</li>
                 <li>Validity period</li>
@@ -929,7 +929,7 @@ const Level3Module4Section6_3 = () => {
             </div>
             <div>
               <h3 className="text-white font-semibold mb-2">Cost Components</h3>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>Materials + contingency</li>
                 <li>Labour (all time)</li>
                 <li>Overheads contribution</li>
@@ -938,7 +938,7 @@ const Level3Module4Section6_3 = () => {
             </div>
             <div>
               <h3 className="text-white font-semibold mb-2">Variation Process</h3>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>Stop and document</li>
                 <li>Explain to customer</li>
                 <li>Provide clear price</li>
@@ -947,7 +947,7 @@ const Level3Module4Section6_3 = () => {
             </div>
             <div>
               <h3 className="text-white font-semibold mb-2">Value Communication</h3>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>Focus on safety and compliance</li>
                 <li>Explain quality benefits</li>
                 <li>Mention certification</li>

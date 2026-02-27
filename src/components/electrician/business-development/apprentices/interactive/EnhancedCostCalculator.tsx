@@ -296,7 +296,7 @@ const EnhancedCostCalculator = () => {
           >
             {opt.label}
           </p>
-          {opt.sublabel && <p className="text-ios-caption-2 text-white/50">{opt.sublabel}</p>}
+          {opt.sublabel && <p className="text-ios-caption-2 text-white">{opt.sublabel}</p>}
         </button>
       ))}
     </div>
@@ -325,7 +325,7 @@ const EnhancedCostCalculator = () => {
           <span className="text-ios-headline font-semibold text-white">{title}</span>
         </div>
         <motion.div animate={{ rotate: expandedSection === id ? 180 : 0 }}>
-          <ChevronDown className="h-5 w-5 text-white/50" />
+          <ChevronDown className="h-5 w-5 text-white" />
         </motion.div>
       </button>
       <AnimatePresence>
@@ -354,7 +354,7 @@ const EnhancedCostCalculator = () => {
             variant="ghost"
             size="icon"
             onClick={() => navigate(-1)}
-            className="text-white/70 hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
+            className="text-white hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
           >
             <ChevronLeft className="h-6 w-6" />
           </Button>
@@ -363,7 +363,7 @@ const EnhancedCostCalculator = () => {
             variant="ghost"
             size="icon"
             onClick={resetCalculator}
-            className="text-white/70 hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
+            className="text-white hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
           >
             <RotateCcw className="h-5 w-5" />
           </Button>
@@ -383,7 +383,7 @@ const EnhancedCostCalculator = () => {
             <div className="relative space-y-4">
               <div className="flex justify-between items-start">
                 <div>
-                  <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">
+                  <p className="text-ios-caption-1 text-white uppercase tracking-wide">
                     Year 1 Investment
                   </p>
                   <p className="text-3xl sm:text-4xl font-bold text-white mt-1 tabular-nums">
@@ -407,8 +407,8 @@ const EnhancedCostCalculator = () => {
           </motion.div>
         ) : (
           <div className="bg-white/5 border border-white/10 rounded-3xl p-6 text-center">
-            <Calculator className="h-12 w-12 text-white/30 mx-auto mb-3" />
-            <p className="text-ios-body text-white/50">
+            <Calculator className="h-12 w-12 text-white mx-auto mb-3" />
+            <p className="text-ios-body text-white">
               Complete all sections to see your cost projection
             </p>
           </div>
@@ -465,7 +465,7 @@ const EnhancedCostCalculator = () => {
 
         {/* Basic Info Section */}
         <CollapsibleSection id="basic" title="Basic Information" icon={Users}>
-          <p className="text-ios-footnote text-white/50 uppercase tracking-wide mb-2">Age Range</p>
+          <p className="text-ios-footnote text-white uppercase tracking-wide mb-2">Age Range</p>
           <SelectButton<AgeRange>
             value={apprenticeAge}
             onChange={setApprenticeAge}
@@ -477,7 +477,7 @@ const EnhancedCostCalculator = () => {
             ]}
           />
 
-          <p className="text-ios-footnote text-white/50 uppercase tracking-wide mb-2 mt-4">
+          <p className="text-ios-footnote text-white uppercase tracking-wide mb-2 mt-4">
             Business Size
           </p>
           <SelectButton<BusinessSize>
@@ -491,7 +491,7 @@ const EnhancedCostCalculator = () => {
             ]}
           />
 
-          <p className="text-ios-footnote text-white/50 uppercase tracking-wide mb-2 mt-4">
+          <p className="text-ios-footnote text-white uppercase tracking-wide mb-2 mt-4">
             Region
           </p>
           <SelectButton<Region>
@@ -514,7 +514,7 @@ const EnhancedCostCalculator = () => {
 
         {/* Training Section */}
         <CollapsibleSection id="training" title="Training Details" icon={GraduationCap}>
-          <p className="text-ios-footnote text-white/50 uppercase tracking-wide mb-2">Level</p>
+          <p className="text-ios-footnote text-white uppercase tracking-wide mb-2">Level</p>
           <SelectButton<Level>
             value={apprenticeshipLevel}
             onChange={setApprenticeshipLevel}
@@ -526,7 +526,7 @@ const EnhancedCostCalculator = () => {
             ]}
           />
 
-          <p className="text-ios-footnote text-white/50 uppercase tracking-wide mb-2 mt-4">
+          <p className="text-ios-footnote text-white uppercase tracking-wide mb-2 mt-4">
             Provider Type
           </p>
           <SelectButton<Provider>
@@ -541,7 +541,7 @@ const EnhancedCostCalculator = () => {
             ]}
           />
 
-          <p className="text-ios-footnote text-white/50 uppercase tracking-wide mb-2 mt-4">
+          <p className="text-ios-footnote text-white uppercase tracking-wide mb-2 mt-4">
             Sector
           </p>
           <SelectButton<Sector>
@@ -560,7 +560,7 @@ const EnhancedCostCalculator = () => {
 
         {/* Experience Section */}
         <CollapsibleSection id="experience" title="Experience & Pattern" icon={Clock}>
-          <p className="text-ios-footnote text-white/50 uppercase tracking-wide mb-2">
+          <p className="text-ios-footnote text-white uppercase tracking-wide mb-2">
             Previous Experience
           </p>
           <SelectButton<Experience>
@@ -575,7 +575,7 @@ const EnhancedCostCalculator = () => {
             ]}
           />
 
-          <p className="text-ios-footnote text-white/50 uppercase tracking-wide mb-2 mt-4">
+          <p className="text-ios-footnote text-white uppercase tracking-wide mb-2 mt-4">
             Working Pattern
           </p>
           <SelectButton<Pattern>
@@ -604,7 +604,7 @@ const EnhancedCostCalculator = () => {
 
         {/* Benefits Section */}
         <CollapsibleSection id="benefits" title="Additional Benefits" icon={Award}>
-          <p className="text-ios-caption-1 text-white/50 mb-3">
+          <p className="text-ios-caption-1 text-white mb-3">
             Optional benefits to include in cost calculation
           </p>
           <div className="grid grid-cols-2 gap-2">
@@ -625,7 +625,7 @@ const EnhancedCostCalculator = () => {
                     <div className="flex items-center gap-2 mb-1">
                       {isSelected && <CheckCircle className="h-4 w-4 text-elec-yellow" />}
                       <Icon
-                        className={`h-4 w-4 ${isSelected ? 'text-elec-yellow' : 'text-white/50'}`}
+                        className={`h-4 w-4 ${isSelected ? 'text-elec-yellow' : 'text-white'}`}
                       />
                     </div>
                     <p
@@ -633,7 +633,7 @@ const EnhancedCostCalculator = () => {
                     >
                       {benefit.label}
                     </p>
-                    <p className="text-ios-caption-2 text-white/50">£{benefit.cost}/yr</p>
+                    <p className="text-ios-caption-2 text-white">£{benefit.cost}/yr</p>
                   </button>
                 );
               }
@@ -644,7 +644,7 @@ const EnhancedCostCalculator = () => {
         {/* Cash Flow Analysis */}
         {calculatedResults && (
           <section>
-            <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+            <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-3">
               Yearly Cash Flow
             </p>
             <div className="space-y-2">
@@ -669,7 +669,7 @@ const EnhancedCostCalculator = () => {
                         {item.year}
                       </span>
                     </div>
-                    <span className="text-ios-body text-white/70">{item.note}</span>
+                    <span className="text-ios-body text-white">{item.note}</span>
                   </div>
                   <span className="text-ios-body font-semibold text-white tabular-nums">
                     £{item.cost.toLocaleString(undefined, { maximumFractionDigits: 0 })}

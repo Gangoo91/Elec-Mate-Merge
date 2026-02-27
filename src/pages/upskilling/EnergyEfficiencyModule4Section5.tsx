@@ -230,7 +230,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
       <div className="max-w-4xl mx-auto px-4 py-6 space-y-8">
         {/* Quick Summary */}
         <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
-          <p className="text-white/90 leading-relaxed">
+          <p className="text-white leading-relaxed">
             Master the financial tools and calculations needed to evaluate and justify energy
             efficiency investments. Learn to calculate payback periods, NPV, IRR, and build
             compelling business cases that convince decision-makers.
@@ -254,7 +254,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
             ].map((objective, index) => (
               <li key={index} className="flex items-start gap-3">
                 <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
-                <span className="text-white/80">{objective}</span>
+                <span className="text-white">{objective}</span>
               </li>
             ))}
           </ul>
@@ -268,7 +268,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
             Simple Payback Period Calculations
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Simple payback period is the most commonly used metric in energy efficiency,
               representing the time required for energy savings to recover the initial investment
@@ -284,7 +284,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                   Payback Period = Initial Cost / Annual Savings
                 </span>
               </div>
-              <p className="text-sm text-white/60 mt-2">
+              <p className="text-sm text-white mt-2">
                 Result expressed in years (or months if multiplied by 12)
               </p>
             </div>
@@ -295,14 +295,14 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                 <Lightbulb className="w-5 h-5" />
                 Worked Example: LED Lighting Retrofit
               </h4>
-              <div className="space-y-3 text-white/70">
+              <div className="space-y-3 text-white">
                 <p>
                   <strong className="text-white">Scenario:</strong> A warehouse replaces 100
                   fluorescent fittings with LED equivalents.
                 </p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="bg-white/5 p-3 rounded">
-                    <p className="text-sm text-white/60">Project Costs:</p>
+                    <p className="text-sm text-white">Project Costs:</p>
                     <ul className="text-sm mt-1 space-y-1">
                       <li>LED fittings: 8,000</li>
                       <li>Installation: 2,500</li>
@@ -312,7 +312,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                     </ul>
                   </div>
                   <div className="bg-white/5 p-3 rounded">
-                    <p className="text-sm text-white/60">Annual Savings:</p>
+                    <p className="text-sm text-white">Annual Savings:</p>
                     <ul className="text-sm mt-1 space-y-1">
                       <li>Energy reduction: 25,000 kWh</li>
                       <li>At 0.14/kWh: 3,500/year</li>
@@ -333,7 +333,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
             {/* Limitations */}
             <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-amber-400 mb-2">Key Limitations to Consider</h4>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>
                   Does not account for the time value of money (1 today worth more than 1 in 5
                   years)
@@ -363,7 +363,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
             Net Present Value (NPV) and Discount Rates
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               NPV accounts for the fact that money received in the future is worth less than money
               today. By discounting future cash flows, NPV provides the true value of an investment
@@ -379,7 +379,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                   NPV = -Initial Cost + Sum of [Cash Flow / (1 + r)^n]
                 </span>
               </div>
-              <p className="text-sm text-white/60 mt-2">Where r = discount rate, n = year number</p>
+              <p className="text-sm text-white mt-2">Where r = discount rate, n = year number</p>
             </div>
 
             {/* UK Discount Rates */}
@@ -389,20 +389,20 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                 <div className="bg-white/5 p-4 rounded border border-blue-500/30">
                   <h5 className="text-blue-400 font-semibold mb-2">Public Sector</h5>
                   <p className="text-2xl font-bold text-white mb-1">3.5%</p>
-                  <p className="text-sm text-white/60">
+                  <p className="text-sm text-white">
                     HM Treasury Green Book standard rate for projects up to 30 years
                   </p>
-                  <p className="text-xs text-white/50 mt-2">
+                  <p className="text-xs text-white mt-2">
                     Declining rate schedule for longer-term projects: 3.0% for years 31-75
                   </p>
                 </div>
                 <div className="bg-white/5 p-4 rounded border border-green-500/30">
                   <h5 className="text-green-400 font-semibold mb-2">Private Sector</h5>
                   <p className="text-2xl font-bold text-white mb-1">8-15%</p>
-                  <p className="text-sm text-white/60">
+                  <p className="text-sm text-white">
                     Varies by organisation, typically based on WACC or hurdle rate
                   </p>
-                  <p className="text-xs text-white/50 mt-2">
+                  <p className="text-xs text-white mt-2">
                     Higher rates reflect risk premium and opportunity cost of capital
                   </p>
                 </div>
@@ -415,7 +415,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                 <Lightbulb className="w-5 h-5" />
                 Worked Example: HVAC Upgrade NPV Calculation
               </h4>
-              <div className="space-y-3 text-white/70">
+              <div className="space-y-3 text-white">
                 <p>
                   <strong className="text-white">Scenario:</strong> Council building HVAC
                   replacement, 10-year analysis at 3.5% discount rate
@@ -430,13 +430,13 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b border-white/20">
-                        <th className="text-left py-2 text-white/60">Year</th>
-                        <th className="text-right py-2 text-white/60">Cash Flow</th>
-                        <th className="text-right py-2 text-white/60">Discount Factor</th>
-                        <th className="text-right py-2 text-white/60">Present Value</th>
+                        <th className="text-left py-2 text-white">Year</th>
+                        <th className="text-right py-2 text-white">Cash Flow</th>
+                        <th className="text-right py-2 text-white">Discount Factor</th>
+                        <th className="text-right py-2 text-white">Present Value</th>
                       </tr>
                     </thead>
-                    <tbody className="text-white/70">
+                    <tbody className="text-white">
                       <tr className="border-b border-white/10">
                         <td className="py-2">0</td>
                         <td className="text-right text-red-400">-50,000</td>
@@ -456,10 +456,10 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                         <td className="text-right">7,469</td>
                       </tr>
                       <tr className="border-b border-white/10">
-                        <td className="py-2 text-white/50">...</td>
-                        <td className="text-right text-white/50">...</td>
-                        <td className="text-right text-white/50">...</td>
-                        <td className="text-right text-white/50">...</td>
+                        <td className="py-2 text-white">...</td>
+                        <td className="text-right text-white">...</td>
+                        <td className="text-right text-white">...</td>
+                        <td className="text-right text-white">...</td>
                       </tr>
                       <tr className="border-b border-white/10">
                         <td className="py-2">10</td>
@@ -475,7 +475,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                   <p className="font-semibold text-green-400">
                     Total NPV = 16,289 (Positive NPV = Financially Viable)
                   </p>
-                  <p className="text-sm text-white/60 mt-1">
+                  <p className="text-sm text-white mt-1">
                     Excel formula: =NPV(0.035, B2:B11) + B1 (where B1 is the initial cost as
                     negative)
                   </p>
@@ -502,7 +502,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
             Internal Rate of Return (IRR) for Project Comparison
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               IRR is the discount rate at which NPV equals zero. It represents the project's
               effective annual return, making it ideal for comparing investments of different sizes.
@@ -515,13 +515,13 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
               <div className="grid md:grid-cols-2 gap-4 mt-3">
                 <div className="bg-green-500/10 border border-green-500/30 rounded p-3">
                   <p className="text-green-400 font-semibold">IRR &gt; Hurdle Rate</p>
-                  <p className="text-sm text-white/70 mt-1">
+                  <p className="text-sm text-white mt-1">
                     Accept project - returns exceed minimum requirements
                   </p>
                 </div>
                 <div className="bg-red-500/10 border border-red-500/30 rounded p-3">
                   <p className="text-red-400 font-semibold">IRR &lt; Hurdle Rate</p>
-                  <p className="text-sm text-white/70 mt-1">
+                  <p className="text-sm text-white mt-1">
                     Reject project - returns fall below minimum threshold
                   </p>
                 </div>
@@ -534,7 +534,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                 <Lightbulb className="w-5 h-5" />
                 Worked Example: Comparing Two Projects
               </h4>
-              <div className="space-y-4 text-white/70">
+              <div className="space-y-4 text-white">
                 <p>
                   <strong className="text-white">Scenario:</strong> Choose between two energy
                   efficiency options with different scales
@@ -576,11 +576,11 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                 </div>
 
                 <div className="bg-white/5 p-3 rounded border border-white/10">
-                  <p className="text-sm text-white/60">
+                  <p className="text-sm text-white">
                     <strong className="text-white">Excel Formula:</strong> =IRR(range of cash flows)
                     where the first value is the negative initial investment
                   </p>
-                  <p className="text-sm text-white/60 mt-1">
+                  <p className="text-sm text-white mt-1">
                     Example: =IRR(A1:A9) where A1=-15000 and A2:A9 contain 4500
                   </p>
                 </div>
@@ -606,7 +606,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
             Life Cycle Cost Analysis
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Life Cycle Cost (LCC) analysis captures all costs associated with an asset from
               acquisition through disposal. This comprehensive approach reveals the true cost of
@@ -620,19 +620,19 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <div className="bg-white/5 p-3 rounded text-center">
                   <p className="text-elec-yellow font-semibold">Acquisition</p>
-                  <p className="text-xs text-white/60 mt-1">Purchase, delivery, installation</p>
+                  <p className="text-xs text-white mt-1">Purchase, delivery, installation</p>
                 </div>
                 <div className="bg-white/5 p-3 rounded text-center">
                   <p className="text-elec-yellow font-semibold">Operating</p>
-                  <p className="text-xs text-white/60 mt-1">Energy, water, consumables</p>
+                  <p className="text-xs text-white mt-1">Energy, water, consumables</p>
                 </div>
                 <div className="bg-white/5 p-3 rounded text-center">
                   <p className="text-elec-yellow font-semibold">Maintenance</p>
-                  <p className="text-xs text-white/60 mt-1">Servicing, repairs, parts</p>
+                  <p className="text-xs text-white mt-1">Servicing, repairs, parts</p>
                 </div>
                 <div className="bg-white/5 p-3 rounded text-center">
                   <p className="text-elec-yellow font-semibold">End of Life</p>
-                  <p className="text-xs text-white/60 mt-1">Disposal, recycling, salvage</p>
+                  <p className="text-xs text-white mt-1">Disposal, recycling, salvage</p>
                 </div>
               </div>
             </div>
@@ -643,7 +643,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                 <Lightbulb className="w-5 h-5" />
                 Worked Example: Motor Selection LCC Comparison
               </h4>
-              <div className="space-y-4 text-white/70">
+              <div className="space-y-4 text-white">
                 <p>
                   <strong className="text-white">Scenario:</strong> Selecting a 15kW motor with
                   20-year life, 4,000 operating hours/year
@@ -653,12 +653,12 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b border-white/20">
-                        <th className="text-left py-2 text-white/60">Cost Element</th>
-                        <th className="text-right py-2 text-white/60">Standard Motor (IE2)</th>
-                        <th className="text-right py-2 text-white/60">High Efficiency (IE4)</th>
+                        <th className="text-left py-2 text-white">Cost Element</th>
+                        <th className="text-right py-2 text-white">Standard Motor (IE2)</th>
+                        <th className="text-right py-2 text-white">High Efficiency (IE4)</th>
                       </tr>
                     </thead>
-                    <tbody className="text-white/70">
+                    <tbody className="text-white">
                       <tr className="border-b border-white/10">
                         <td className="py-2">Purchase Price</td>
                         <td className="text-right">800</td>
@@ -693,7 +693,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                   </table>
                 </div>
 
-                <p className="text-xs text-white/50">
+                <p className="text-xs text-white">
                   *Based on efficiency of 89% (IE2) vs 92% (IE4), electricity at 0.14/kWh
                 </p>
 
@@ -701,7 +701,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                   <p className="font-semibold text-green-400">
                     LCC Savings with IE4: 13,040 over 20 years
                   </p>
-                  <p className="text-sm text-white/60 mt-1">
+                  <p className="text-sm text-white mt-1">
                     The 600 premium delivers 22x return over the motor's lifetime
                   </p>
                 </div>
@@ -718,7 +718,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
             Free Online Calculation Tools and Resources
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Numerous free tools are available to support energy efficiency calculations. Knowing
               which tool to use for each situation saves time and improves accuracy.
@@ -731,21 +731,21 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                   <ExternalLink className="w-4 h-4" />
                   Carbon Trust Resources
                 </h4>
-                <ul className="text-sm text-white/70 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
-                    <ArrowRight className="w-4 h-4 text-white/50 flex-shrink-0 mt-0.5" />
+                    <ArrowRight className="w-4 h-4 text-white flex-shrink-0 mt-0.5" />
                     <span>Energy efficiency calculators for lighting, motors, HVAC</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ArrowRight className="w-4 h-4 text-white/50 flex-shrink-0 mt-0.5" />
+                    <ArrowRight className="w-4 h-4 text-white flex-shrink-0 mt-0.5" />
                     <span>Carbon footprint calculation tools</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ArrowRight className="w-4 h-4 text-white/50 flex-shrink-0 mt-0.5" />
+                    <ArrowRight className="w-4 h-4 text-white flex-shrink-0 mt-0.5" />
                     <span>Technology guides with ROI benchmarks</span>
                   </li>
                 </ul>
-                <p className="text-xs text-white/50 mt-2">carbontrust.com/resources</p>
+                <p className="text-xs text-white mt-2">carbontrust.com/resources</p>
               </div>
 
               <div className="bg-white/5 p-4 rounded-lg border border-white/10">
@@ -753,21 +753,21 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                   <ExternalLink className="w-4 h-4" />
                   Excel/Google Sheets Functions
                 </h4>
-                <ul className="text-sm text-white/70 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
-                    <ArrowRight className="w-4 h-4 text-white/50 flex-shrink-0 mt-0.5" />
+                    <ArrowRight className="w-4 h-4 text-white flex-shrink-0 mt-0.5" />
                     <span>=NPV(rate, values) - Net Present Value</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ArrowRight className="w-4 h-4 text-white/50 flex-shrink-0 mt-0.5" />
+                    <ArrowRight className="w-4 h-4 text-white flex-shrink-0 mt-0.5" />
                     <span>=IRR(values) - Internal Rate of Return</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ArrowRight className="w-4 h-4 text-white/50 flex-shrink-0 mt-0.5" />
+                    <ArrowRight className="w-4 h-4 text-white flex-shrink-0 mt-0.5" />
                     <span>=PMT(rate, nper, pv) - Payment calculations</span>
                   </li>
                 </ul>
-                <p className="text-xs text-white/50 mt-2">Free and universally accessible</p>
+                <p className="text-xs text-white mt-2">Free and universally accessible</p>
               </div>
 
               <div className="bg-white/5 p-4 rounded-lg border border-white/10">
@@ -775,21 +775,21 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                   <ExternalLink className="w-4 h-4" />
                   CIBSE Tools
                 </h4>
-                <ul className="text-sm text-white/70 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
-                    <ArrowRight className="w-4 h-4 text-white/50 flex-shrink-0 mt-0.5" />
+                    <ArrowRight className="w-4 h-4 text-white flex-shrink-0 mt-0.5" />
                     <span>TM54 operational energy prediction</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ArrowRight className="w-4 h-4 text-white/50 flex-shrink-0 mt-0.5" />
+                    <ArrowRight className="w-4 h-4 text-white flex-shrink-0 mt-0.5" />
                     <span>Benchmarking databases for building types</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ArrowRight className="w-4 h-4 text-white/50 flex-shrink-0 mt-0.5" />
+                    <ArrowRight className="w-4 h-4 text-white flex-shrink-0 mt-0.5" />
                     <span>Degree day data for normalisation</span>
                   </li>
                 </ul>
-                <p className="text-xs text-white/50 mt-2">
+                <p className="text-xs text-white mt-2">
                   cibse.org - some tools require membership
                 </p>
               </div>
@@ -799,21 +799,21 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                   <ExternalLink className="w-4 h-4" />
                   Government Resources
                 </h4>
-                <ul className="text-sm text-white/70 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
-                    <ArrowRight className="w-4 h-4 text-white/50 flex-shrink-0 mt-0.5" />
+                    <ArrowRight className="w-4 h-4 text-white flex-shrink-0 mt-0.5" />
                     <span>BEIS conversion factors (emissions)</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ArrowRight className="w-4 h-4 text-white/50 flex-shrink-0 mt-0.5" />
+                    <ArrowRight className="w-4 h-4 text-white flex-shrink-0 mt-0.5" />
                     <span>Green Book supplementary guidance</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <ArrowRight className="w-4 h-4 text-white/50 flex-shrink-0 mt-0.5" />
+                    <ArrowRight className="w-4 h-4 text-white flex-shrink-0 mt-0.5" />
                     <span>Salix Finance project criteria tools</span>
                   </li>
                 </ul>
-                <p className="text-xs text-white/50 mt-2">gov.uk/guidance</p>
+                <p className="text-xs text-white mt-2">gov.uk/guidance</p>
               </div>
             </div>
 
@@ -824,11 +824,11 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 text-white/60">Task</th>
-                      <th className="text-left py-2 text-white/60">Recommended Tool</th>
+                      <th className="text-left py-2 text-white">Task</th>
+                      <th className="text-left py-2 text-white">Recommended Tool</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/70">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2">Quick payback estimate</td>
                       <td>Simple calculator or Excel formula</td>
@@ -864,7 +864,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
             Building Business Cases for Efficiency Investments
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Technical excellence alone rarely secures project approval. A compelling business case
               speaks the language of finance, addresses risks, and aligns with organisational
@@ -913,7 +913,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                     </div>
                     <div>
                       <p className="font-semibold text-white">{item.title}</p>
-                      <p className="text-sm text-white/60">{item.desc}</p>
+                      <p className="text-sm text-white">{item.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -929,7 +929,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                     <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
                     <div>
                       <p className="font-semibold text-white">Frame as Risk Reduction</p>
-                      <p className="text-sm text-white/60">
+                      <p className="text-sm text-white">
                         Emphasise protection against energy price volatility
                       </p>
                     </div>
@@ -938,7 +938,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                     <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
                     <div>
                       <p className="font-semibold text-white">Show Multiple Scenarios</p>
-                      <p className="text-sm text-white/60">
+                      <p className="text-sm text-white">
                         Conservative, expected, and optimistic projections
                       </p>
                     </div>
@@ -947,7 +947,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                     <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
                     <div>
                       <p className="font-semibold text-white">Include Co-Benefits</p>
-                      <p className="text-sm text-white/60">
+                      <p className="text-sm text-white">
                         Maintenance savings, comfort, compliance, reputation
                       </p>
                     </div>
@@ -958,7 +958,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                     <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
                     <div>
                       <p className="font-semibold text-white">Use Credible Sources</p>
-                      <p className="text-sm text-white/60">
+                      <p className="text-sm text-white">
                         Reference Carbon Trust, BEIS, manufacturer data
                       </p>
                     </div>
@@ -967,14 +967,14 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                     <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
                     <div>
                       <p className="font-semibold text-white">Address the 'Do Nothing' Cost</p>
-                      <p className="text-sm text-white/60">Show ongoing costs of inaction</p>
+                      <p className="text-sm text-white">Show ongoing costs of inaction</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
                     <div>
                       <p className="font-semibold text-white">Highlight Funding Options</p>
-                      <p className="text-sm text-white/60">Grants, Salix loans, green finance</p>
+                      <p className="text-sm text-white">Grants, Salix loans, green finance</p>
                     </div>
                   </div>
                 </div>
@@ -987,20 +987,20 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                 <TrendingUp className="w-5 h-5" />
                 Sensitivity Analysis Example
               </h4>
-              <p className="text-white/70 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 Show decision-makers how project viability changes with different assumptions:
               </p>
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 text-white/60">Scenario</th>
-                      <th className="text-right py-2 text-white/60">Energy Price</th>
-                      <th className="text-right py-2 text-white/60">NPV</th>
-                      <th className="text-right py-2 text-white/60">Payback</th>
+                      <th className="text-left py-2 text-white">Scenario</th>
+                      <th className="text-right py-2 text-white">Energy Price</th>
+                      <th className="text-right py-2 text-white">NPV</th>
+                      <th className="text-right py-2 text-white">Payback</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/70">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2 text-red-400">Conservative</td>
                       <td className="text-right">0.12/kWh</td>
@@ -1022,7 +1022,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/50 mt-2">
+              <p className="text-xs text-white mt-2">
                 Even conservative estimates show positive NPV, reducing perceived risk
               </p>
             </div>
@@ -1041,36 +1041,36 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
               <p className="font-mono text-elec-yellow text-sm">
                 Payback = Initial Cost / Annual Savings
               </p>
-              <p className="text-xs text-white/60 mt-1">Result in years</p>
+              <p className="text-xs text-white mt-1">Result in years</p>
             </div>
             <div className="bg-white/10 p-4 rounded-lg">
               <h3 className="font-semibold text-white mb-2">Discount Factor</h3>
               <p className="font-mono text-elec-yellow text-sm">DF = 1 / (1 + r)^n</p>
-              <p className="text-xs text-white/60 mt-1">r = rate, n = year number</p>
+              <p className="text-xs text-white mt-1">r = rate, n = year number</p>
             </div>
             <div className="bg-white/10 p-4 rounded-lg">
               <h3 className="font-semibold text-white mb-2">NPV (Excel)</h3>
               <p className="font-mono text-elec-yellow text-sm">
                 =NPV(rate, cash_flows) + initial_cost
               </p>
-              <p className="text-xs text-white/60 mt-1">Initial cost as negative value</p>
+              <p className="text-xs text-white mt-1">Initial cost as negative value</p>
             </div>
             <div className="bg-white/10 p-4 rounded-lg">
               <h3 className="font-semibold text-white mb-2">IRR (Excel)</h3>
               <p className="font-mono text-elec-yellow text-sm">=IRR(all_cash_flows)</p>
-              <p className="text-xs text-white/60 mt-1">Include initial cost in range</p>
+              <p className="text-xs text-white mt-1">Include initial cost in range</p>
             </div>
             <div className="bg-white/10 p-4 rounded-lg">
               <h3 className="font-semibold text-white mb-2">Annual Savings</h3>
               <p className="font-mono text-elec-yellow text-sm">
                 Savings = kWh_reduced x price/kWh
               </p>
-              <p className="text-xs text-white/60 mt-1">Use actual tariff rates</p>
+              <p className="text-xs text-white mt-1">Use actual tariff rates</p>
             </div>
             <div className="bg-white/10 p-4 rounded-lg">
               <h3 className="font-semibold text-white mb-2">UK Public Sector Rate</h3>
               <p className="font-mono text-elec-yellow text-sm">Discount Rate = 3.5%</p>
-              <p className="text-xs text-white/60 mt-1">HM Treasury Green Book standard</p>
+              <p className="text-xs text-white mt-1">HM Treasury Green Book standard</p>
             </div>
           </div>
         </section>
@@ -1089,7 +1089,7 @@ const EnergyEfficiencyModule4Section5: React.FC = () => {
               >
                 <div className="p-4">
                   <h3 className="font-medium text-white">{faq.question}</h3>
-                  <p className="text-white/60 text-sm leading-relaxed mt-2">{faq.answer}</p>
+                  <p className="text-white text-sm leading-relaxed mt-2">{faq.answer}</p>
                 </div>
               </div>
             ))}

@@ -238,7 +238,7 @@ const HNCModule5Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section4">
@@ -260,7 +260,7 @@ const HNCModule5Section4_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Inspection and Test Plans
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             ITP development, hold points, witness points, notification procedures, and inspection
             scheduling for MEP works
           </p>
@@ -695,26 +695,26 @@ const HNCModule5Section4_2 = () => {
               <div className="grid sm:grid-cols-4 gap-2">
                 <div className="p-3 rounded bg-white/5 text-center">
                   <p className="font-medium text-white mb-1">1. Prepare</p>
-                  <p className="text-xs text-white/70">Complete work, gather records</p>
+                  <p className="text-xs text-white">Complete work, gather records</p>
                 </div>
                 <div className="p-3 rounded bg-white/5 text-center">
                   <p className="font-medium text-white mb-1">2. Notify</p>
-                  <p className="text-xs text-white/70">Issue formal notification</p>
+                  <p className="text-xs text-white">Issue formal notification</p>
                 </div>
                 <div className="p-3 rounded bg-white/5 text-center">
                   <p className="font-medium text-white mb-1">3. Confirm</p>
-                  <p className="text-xs text-white/70">Receive acknowledgement</p>
+                  <p className="text-xs text-white">Receive acknowledgement</p>
                 </div>
                 <div className="p-3 rounded bg-white/5 text-center">
                   <p className="font-medium text-white mb-1">4. Inspect</p>
-                  <p className="text-xs text-white/70">Conduct inspection, sign-off</p>
+                  <p className="text-xs text-white">Conduct inspection, sign-off</p>
                 </div>
               </div>
             </div>
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-white mb-2">Digital Notification Systems</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Modern projects often use digital platforms for ITP management. These provide
                 automatic notifications, acknowledgement tracking, audit trails, and dashboard
                 visibility of inspection status. Common platforms include Aconex, Procore, and
@@ -859,7 +859,7 @@ const HNCModule5Section4_2 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Minor Non-Conformance</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Record on inspection sheet</li>
                     <li>May allow conditional sign-off</li>
                     <li>Rectify and close out</li>
@@ -868,7 +868,7 @@ const HNCModule5Section4_2 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Major Non-Conformance</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Raise formal NCR</li>
                     <li>Hold Point not released</li>
                     <li>Requires re-inspection after rectification</li>
@@ -878,7 +878,7 @@ const HNCModule5Section4_2 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Audit trail:</strong> The completed ITP with all sign-offs, NCRs, and
               supporting records forms a key part of the O&M manual and demonstrates quality
               compliance throughout the project.
@@ -904,22 +904,22 @@ const HNCModule5Section4_2 = () => {
                 <strong>Scenario:</strong> Develop Hold Points for a Category L1 fire alarm system
                 in a care home.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p className="text-green-400">Required Hold Points:</p>
                 <p className="mt-2">H1: First fix cabling pre-concealment</p>
-                <p className="ml-4 text-white/60">- Verify correct cable types (FP200)</p>
-                <p className="ml-4 text-white/60">- Check fire stopping penetrations</p>
+                <p className="ml-4 text-white">- Verify correct cable types (FP200)</p>
+                <p className="ml-4 text-white">- Check fire stopping penetrations</p>
                 <p className="mt-2">H2: Device installation complete</p>
-                <p className="ml-4 text-white/60">- Detector spacing per BS 5839-1</p>
-                <p className="ml-4 text-white/60">- Sounder coverage verification</p>
+                <p className="ml-4 text-white">- Detector spacing per BS 5839-1</p>
+                <p className="ml-4 text-white">- Sounder coverage verification</p>
                 <p className="mt-2">H3: Cause and effect testing</p>
-                <p className="ml-4 text-white/60">- All zones activate correct outputs</p>
-                <p className="ml-4 text-white/60">- Integration with door holders, HVAC</p>
+                <p className="ml-4 text-white">- All zones activate correct outputs</p>
+                <p className="ml-4 text-white">- Integration with door holders, HVAC</p>
                 <p className="mt-2">H4: Fire authority witness test</p>
-                <p className="ml-4 text-white/60">- Minimum 5 days notice to authority</p>
-                <p className="ml-4 text-white/60">- Authority sign-off required</p>
+                <p className="ml-4 text-white">- Minimum 5 days notice to authority</p>
+                <p className="ml-4 text-white">- Authority sign-off required</p>
                 <p className="mt-2">H5: Final certificate issue</p>
-                <p className="ml-4 text-white/60">- BS 5839-1 certificate complete</p>
+                <p className="ml-4 text-white">- BS 5839-1 certificate complete</p>
               </div>
             </div>
 
@@ -930,10 +930,10 @@ const HNCModule5Section4_2 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Draft notification for pre-energisation Hold Point.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">To: Project Manager</p>
-                <p className="text-white/60">Date: [Current date]</p>
-                <p className="text-white/60">Ref: ITP-E-001 / HP-007</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">To: Project Manager</p>
+                <p className="text-white">Date: [Current date]</p>
+                <p className="text-white">Ref: ITP-E-001 / HP-007</p>
                 <p className="mt-2">
                   <strong>HOLD POINT NOTIFICATION</strong>
                 </p>
@@ -961,13 +961,13 @@ const HNCModule5Section4_2 = () => {
                 <strong>Question:</strong> A 5-day cabling activity requires a pre-cover Hold Point
                 with 48hr notice. How should this be programmed?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Day 1-4: Cable installation</p>
                 <p>Day 3: Issue Hold Point notification (48hr notice)</p>
                 <p>Day 5: Complete installation, await inspection</p>
                 <p>Day 5: Hold Point inspection (if inspector available)</p>
-                <p className="mt-2 text-white/60">Programme duration: 5 days minimum</p>
-                <p className="text-white/60">
+                <p className="mt-2 text-white">Programme duration: 5 days minimum</p>
+                <p className="text-white">
                   If Hold Point fails: +2 days for rectification and re-inspection
                 </p>
                 <p className="mt-2 text-green-400">
@@ -1053,7 +1053,7 @@ const HNCModule5Section4_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1099,7 +1099,7 @@ const HNCModule5Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section4">

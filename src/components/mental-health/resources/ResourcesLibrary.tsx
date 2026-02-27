@@ -163,20 +163,20 @@ const ResourcesLibrary = () => {
           <BookOpen className="h-6 w-6 text-blue-400" />
         </div>
         <h2 className="text-xl font-bold text-white mb-1">Resources Library</h2>
-        <p className="text-sm text-white/70">Comprehensive mental health support and guidance</p>
+        <p className="text-sm text-white">Comprehensive mental health support and guidance</p>
       </div>
 
       {/* Search */}
       <div className="relative">
         {!searchTerm && (
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/60 pointer-events-none" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
         )}
         <Input
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search resources..."
           className={cn(
-            'h-12 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-white/20 focus:ring-1 focus:ring-white/10 touch-manipulation',
+            'h-12 bg-white/5 border-white/10 text-white placeholder:text-white focus:border-white/20 focus:ring-1 focus:ring-white/10 touch-manipulation',
             !searchTerm && 'pl-10'
           )}
         />
@@ -190,7 +190,7 @@ const ResourcesLibrary = () => {
             'px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95',
             selectedCategory === 'all'
               ? 'bg-blue-500 text-white'
-              : 'bg-white/10 text-white/70 hover:bg-white/15'
+              : 'bg-white/10 text-white hover:bg-white/15'
           )}
         >
           All Resources
@@ -201,7 +201,7 @@ const ResourcesLibrary = () => {
             'px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95',
             selectedCategory === 'external'
               ? 'bg-blue-500 text-white'
-              : 'bg-white/10 text-white/70 hover:bg-white/15'
+              : 'bg-white/10 text-white hover:bg-white/15'
           )}
         >
           External Support
@@ -212,7 +212,7 @@ const ResourcesLibrary = () => {
             'px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95',
             selectedCategory === 'guides'
               ? 'bg-green-500 text-white'
-              : 'bg-white/10 text-white/70 hover:bg-white/15'
+              : 'bg-white/10 text-white hover:bg-white/15'
           )}
         >
           Guides
@@ -223,7 +223,7 @@ const ResourcesLibrary = () => {
             'px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95',
             selectedCategory === 'videos'
               ? 'bg-purple-500 text-white'
-              : 'bg-white/10 text-white/70 hover:bg-white/15'
+              : 'bg-white/10 text-white hover:bg-white/15'
           )}
         >
           Videos
@@ -234,7 +234,7 @@ const ResourcesLibrary = () => {
             'px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95',
             selectedCategory === 'audio'
               ? 'bg-orange-500 text-white'
-              : 'bg-white/10 text-white/70 hover:bg-white/15'
+              : 'bg-white/10 text-white hover:bg-white/15'
           )}
         >
           Audio
@@ -245,7 +245,7 @@ const ResourcesLibrary = () => {
             'px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all touch-manipulation active:scale-95',
             selectedCategory === 'tools'
               ? 'bg-pink-500 text-white'
-              : 'bg-white/10 text-white/70 hover:bg-white/15'
+              : 'bg-white/10 text-white hover:bg-white/15'
           )}
         >
           Tools
@@ -259,7 +259,7 @@ const ResourcesLibrary = () => {
             <AlertCircle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
             <div>
               <h3 className="font-semibold text-red-400 text-sm mb-1">In Crisis?</h3>
-              <p className="text-xs text-white/70">
+              <p className="text-xs text-white">
                 If you're in immediate danger or experiencing a mental health crisis, contact
                 emergency services
               </p>
@@ -286,7 +286,7 @@ const ResourcesLibrary = () => {
               >
                 <div className="flex-1">
                   <div className="text-sm font-semibold text-white">{resource.title}</div>
-                  <div className="text-xs text-white/70 mt-0.5">{resource.description}</div>
+                  <div className="text-xs text-white mt-0.5">{resource.description}</div>
                 </div>
                 <div
                   className={cn(
@@ -324,7 +324,7 @@ const ResourcesLibrary = () => {
                     <div className="flex justify-between items-start mb-3">
                       <div className="flex-1">
                         <h4 className="font-semibold text-white text-sm mb-1">{resource.title}</h4>
-                        <p className="text-sm text-white/70">{resource.description}</p>
+                        <p className="text-sm text-white">{resource.description}</p>
                       </div>
                       <span className="text-xs px-2 py-1 bg-blue-500/10 rounded-md text-blue-400 ml-3 whitespace-nowrap">
                         {resource.type}
@@ -367,7 +367,7 @@ const ResourcesLibrary = () => {
                     <div className="flex justify-between items-start mb-3">
                       <div className="flex-1">
                         <h4 className="font-semibold text-white text-sm mb-1">{resource.title}</h4>
-                        <p className="text-sm text-white/70">{resource.description}</p>
+                        <p className="text-sm text-white">{resource.description}</p>
                       </div>
                       <span className="text-xs px-2 py-1 bg-green-500/10 rounded-md text-green-400 ml-3 whitespace-nowrap">
                         {resource.type}
@@ -391,8 +391,8 @@ const ResourcesLibrary = () => {
       {filteredResources.length === 0 && (
         <Card className="border-white/10 bg-white/5">
           <CardContent className="text-center py-8">
-            <Search className="h-10 w-10 text-white/60 mx-auto mb-3" />
-            <p className="text-sm text-white/70">No resources found matching your search</p>
+            <Search className="h-10 w-10 text-white mx-auto mb-3" />
+            <p className="text-sm text-white">No resources found matching your search</p>
             <Button
               variant="outline"
               size="sm"
@@ -415,7 +415,7 @@ const ResourcesLibrary = () => {
             <BookOpen className="h-5 w-5 text-purple-400 flex-shrink-0 mt-0.5" />
             <div>
               <h4 className="font-medium text-purple-400 text-sm mb-1">About These Resources</h4>
-              <p className="text-xs text-white/70">
+              <p className="text-xs text-white">
                 All external resources are verified UK mental health services and charities.
                 Self-help resources are designed specifically for electrical workers and
                 tradespeople. Remember: these resources complement professional help but don't

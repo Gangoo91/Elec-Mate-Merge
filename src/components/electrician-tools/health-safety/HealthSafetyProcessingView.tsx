@@ -77,7 +77,7 @@ export const HealthSafetyProcessingView = ({
             </div>
             <div className="space-y-2">
               <h3 className="text-xl font-bold text-white">Generation Failed</h3>
-              <p className="text-sm text-white/60 max-w-xs">
+              <p className="text-sm text-white max-w-xs">
                 {error || 'An unexpected error occurred. Please try again.'}
               </p>
             </div>
@@ -94,7 +94,7 @@ export const HealthSafetyProcessingView = ({
               <Button
                 onClick={onCancel}
                 variant="ghost"
-                className="h-12 px-6 rounded-xl text-white/60 hover:text-white hover:bg-white/10"
+                className="h-12 px-6 rounded-xl text-white hover:text-white hover:bg-white/10"
               >
                 Cancel
               </Button>
@@ -143,7 +143,7 @@ export const HealthSafetyProcessingView = ({
               </div>
               <div>
                 <h2 className="text-xl font-bold text-white">Generating Safety Assessment</h2>
-                <p className="text-xs text-white/50 mt-1">Analysing BS 7671 requirements</p>
+                <p className="text-xs text-white mt-1">Analysing BS 7671 requirements</p>
               </div>
             </div>
 
@@ -220,8 +220,8 @@ export const HealthSafetyProcessingView = ({
             <div className="flex items-center justify-center gap-6">
               <div className="text-center">
                 <div className="flex items-center justify-center gap-1 mb-1">
-                  <Clock className="h-3 w-3 text-white/40" />
-                  <span className="text-[10px] text-white/40">Elapsed</span>
+                  <Clock className="h-3 w-3 text-white" />
+                  <span className="text-[10px] text-white">Elapsed</span>
                 </div>
                 <p className="text-lg font-bold text-white tabular-nums">
                   {formatTime(elapsedTime)}
@@ -229,8 +229,8 @@ export const HealthSafetyProcessingView = ({
               </div>
               <div className="text-center">
                 <div className="flex items-center justify-center gap-1 mb-1">
-                  <Loader2 className="h-3 w-3 text-white/40 animate-spin" />
-                  <span className="text-[10px] text-white/40">Remaining</span>
+                  <Loader2 className="h-3 w-3 text-white animate-spin" />
+                  <span className="text-[10px] text-white">Remaining</span>
                 </div>
                 <p className="text-lg font-bold text-white tabular-nums">
                   ~{formatTime(remainingTime)}
@@ -255,7 +255,7 @@ export const HealthSafetyProcessingView = ({
             <button
               onClick={onCancel}
               disabled={isCancelling}
-              className="w-full py-3 text-xs text-white/40 hover:text-red-400 hover:bg-red-500/5 rounded-xl transition-all flex items-center justify-center gap-1.5 disabled:opacity-50"
+              className="w-full py-3 text-xs text-white hover:text-red-400 hover:bg-red-500/5 rounded-xl transition-all flex items-center justify-center gap-1.5 disabled:opacity-50"
             >
               {isCancelling ? (
                 <>

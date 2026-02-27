@@ -122,12 +122,12 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
 
       <CardContent className="space-y-4 relative">
         <div className="space-y-2">
-          <Label htmlFor="location-search" className="text-white/80">
+          <Label htmlFor="location-search" className="text-white">
             Location
           </Label>
           <div className="flex gap-2">
             <div className="relative flex-1">
-              <MapPin className="absolute left-3 top-3.5 h-4 w-4 text-white/40" />
+              <MapPin className="absolute left-3 top-3.5 h-4 w-4 text-white" />
               <Input
                 ref={inputRef}
                 id="location-search"
@@ -137,7 +137,7 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleManualSearch()}
-                className="pl-10 h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40"
+                className="pl-10 h-11 bg-white/5 border-white/20 text-white placeholder:text-white"
                 disabled={isAutoDetecting}
               />
             </div>
@@ -188,7 +188,7 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
         )}
 
         <div className="space-y-3">
-          <Label className="text-white/80">Search Radius</Label>
+          <Label className="text-white">Search Radius</Label>
           <div className="flex flex-wrap gap-2">
             {radiusOptions.map((radius) => (
               <Badge
@@ -207,7 +207,7 @@ const LocationBasedCourseSearch: React.FC<LocationBasedCourseSearchProps> = ({
           </div>
         </div>
 
-        <div className="text-xs text-white/60 p-3 rounded-lg bg-white/5 border border-white/10">
+        <div className="text-xs text-white p-3 rounded-lg bg-white/5 border border-white/10">
           Use the search above to find training courses and colleges near your location. Results
           will be filtered based on your selected radius.
         </div>

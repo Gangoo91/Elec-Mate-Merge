@@ -206,7 +206,7 @@ export default function LeadershipModule5Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-5-section-3">
@@ -229,7 +229,7 @@ export default function LeadershipModule5Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Supporting Apprentices and New Starters
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Why developing the next generation matters, how people learn, mentoring effectively,
             setting development goals, and the enormous impact you have on retention
           </p>
@@ -331,7 +331,7 @@ export default function LeadershipModule5Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Why It Matters to You Personally
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -372,7 +372,7 @@ export default function LeadershipModule5Section4() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">The Numbers Are Stark</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   CITB research estimates the UK construction industry needs to recruit
                   approximately 225,000 new workers by 2027 just to meet demand. The electrification
                   of transport, heating, and energy systems means demand for qualified electricians
@@ -405,14 +405,14 @@ export default function LeadershipModule5Section4() {
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-2xl font-bold text-rose-400">1</p>
                     <p className="text-white font-medium text-xs mt-1">Concrete Experience</p>
-                    <p className="text-white/80 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Doing the task &mdash; hands-on practical work
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-2xl font-bold text-rose-400">2</p>
                     <p className="text-white font-medium text-xs mt-1">Reflective Observation</p>
-                    <p className="text-white/80 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Thinking about what happened and why
                     </p>
                   </div>
@@ -421,14 +421,14 @@ export default function LeadershipModule5Section4() {
                     <p className="text-white font-medium text-xs mt-1">
                       Abstract Conceptualisation
                     </p>
-                    <p className="text-white/80 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Understanding the theory behind the practice
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-2xl font-bold text-rose-400">4</p>
                     <p className="text-white font-medium text-xs mt-1">Active Experimentation</p>
-                    <p className="text-white/80 text-xs mt-1">Trying a new or improved approach</p>
+                    <p className="text-white text-xs mt-1">Trying a new or improved approach</p>
                   </div>
                 </div>
               </div>
@@ -443,7 +443,7 @@ export default function LeadershipModule5Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Applying Kolb in Practice</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -488,22 +488,22 @@ export default function LeadershipModule5Section4() {
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-2xl font-bold text-rose-400">70%</p>
                     <p className="text-white text-xs font-medium mt-1">On the Job</p>
-                    <p className="text-white/80 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Hands-on experience, doing real work
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-2xl font-bold text-rose-400">20%</p>
                     <p className="text-white text-xs font-medium mt-1">From Others</p>
-                    <p className="text-white/80 text-xs mt-1">Mentoring, feedback, observation</p>
+                    <p className="text-white text-xs mt-1">Mentoring, feedback, observation</p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-2xl font-bold text-rose-400">10%</p>
                     <p className="text-white text-xs font-medium mt-1">Formal Training</p>
-                    <p className="text-white/80 text-xs mt-1">College, courses, qualifications</p>
+                    <p className="text-white text-xs mt-1">College, courses, qualifications</p>
                   </div>
                 </div>
-                <p className="text-sm text-white/80 mt-3">
+                <p className="text-sm text-white mt-3">
                   This means <strong className="text-white">you</strong> &mdash; the supervisor on
                   site &mdash; have a far greater impact on the apprentice&rsquo;s development than
                   their college. Ninety per cent of their learning happens outside the classroom,
@@ -533,7 +533,7 @@ export default function LeadershipModule5Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key Mentoring Skills</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -592,7 +592,7 @@ export default function LeadershipModule5Section4() {
                     Using the GROW Model for Mentoring
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   The GROW model (from Module 2) works brilliantly for structured mentoring
                   conversations:
                 </p>
@@ -600,22 +600,22 @@ export default function LeadershipModule5Section4() {
                   <div className="bg-white/5 rounded-lg p-2 text-center">
                     <p className="text-lg font-bold text-rose-400">G</p>
                     <p className="text-white text-xs font-medium">Goal</p>
-                    <p className="text-white/80 text-xs">What do you want to achieve?</p>
+                    <p className="text-white text-xs">What do you want to achieve?</p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-2 text-center">
                     <p className="text-lg font-bold text-rose-400">R</p>
                     <p className="text-white text-xs font-medium">Reality</p>
-                    <p className="text-white/80 text-xs">Where are you now?</p>
+                    <p className="text-white text-xs">Where are you now?</p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-2 text-center">
                     <p className="text-lg font-bold text-rose-400">O</p>
                     <p className="text-white text-xs font-medium">Options</p>
-                    <p className="text-white/80 text-xs">What could you do?</p>
+                    <p className="text-white text-xs">What could you do?</p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-2 text-center">
                     <p className="text-lg font-bold text-rose-400">W</p>
                     <p className="text-white text-xs font-medium">Will</p>
-                    <p className="text-white/80 text-xs">What will you do?</p>
+                    <p className="text-white text-xs">What will you do?</p>
                   </div>
                 </div>
               </div>
@@ -641,7 +641,7 @@ export default function LeadershipModule5Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Four Areas of Development</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-400 text-xs font-semibold mb-1">Technical Skills</p>
                     <ul className="space-y-1.5">
@@ -728,7 +728,7 @@ export default function LeadershipModule5Section4() {
                   <Target className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">SMART Goals Example</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Instead of: &ldquo;Get better at testing.&rdquo; Use: &ldquo;By the end of March,
                   independently complete a full EICR test schedule for a single-phase domestic
                   consumer unit, including insulation resistance, earth fault loop impedance, RCD
@@ -769,7 +769,7 @@ export default function LeadershipModule5Section4() {
                     Your Influence Is Disproportionate
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   You have more influence on whether an apprentice stays or goes than anyone else
                   &mdash; more than their college, more than their employer, more than their pay. A
                   supportive, patient, encouraging supervisor can sustain an apprentice through the
@@ -780,7 +780,7 @@ export default function LeadershipModule5Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">What Drives Apprentices Away</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -824,7 +824,7 @@ export default function LeadershipModule5Section4() {
                     Be the Supervisor You Wished You Had Had
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Think back to your own apprenticeship. If you had a great mentor, pass on that
                   gift. If you had a terrible one, make sure nobody under your supervision has the
                   same experience. Every apprentice who leaves the trade because of poor supervision
@@ -834,7 +834,7 @@ export default function LeadershipModule5Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">What Makes Apprentices Stay</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -895,7 +895,7 @@ export default function LeadershipModule5Section4() {
                 this section are:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -971,7 +971,7 @@ export default function LeadershipModule5Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -985,7 +985,7 @@ export default function LeadershipModule5Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-5-section-3">

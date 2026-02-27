@@ -280,7 +280,7 @@ const Level3Module7Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section2">
@@ -422,7 +422,7 @@ const Level3Module7Section2_1 = () => {
               safety matters. You cannot simply blame your employer if you knowingly do unsafe work.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> Your employer tells you to rush a job and skip testing. If
               an incident occurs, both you and your employer could be prosecuted - the employer for
               inadequate supervision and pressure, and you for failing to follow safe practices. "My
@@ -510,19 +510,19 @@ const Level3Module7Section2_1 = () => {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">ECS Trainee</p>
-                <p className="text-white/90 text-xs">Apprentices in training</p>
+                <p className="text-white text-xs">Apprentices in training</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Provisional</p>
-                <p className="text-white/90 text-xs">Newly qualified, gaining experience</p>
+                <p className="text-white text-xs">Newly qualified, gaining experience</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Installation Electrician</p>
-                <p className="text-white/90 text-xs">Fully qualified Level 3</p>
+                <p className="text-white text-xs">Fully qualified Level 3</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Approved Electrician</p>
-                <p className="text-white/90 text-xs">Additional experience and testing</p>
+                <p className="text-white text-xs">Additional experience and testing</p>
               </div>
             </div>
 
@@ -533,7 +533,7 @@ const Level3Module7Section2_1 = () => {
               current with industry changes.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Career tip:</strong> Your ECS card grade affects your earning potential and
               job opportunities. Progressing from Installation Electrician to Approved Electrician
               demonstrates commitment to the profession and can open doors to supervisory roles.
@@ -603,7 +603,7 @@ const Level3Module7Section2_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -648,7 +648,7 @@ const Level3Module7Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section2">

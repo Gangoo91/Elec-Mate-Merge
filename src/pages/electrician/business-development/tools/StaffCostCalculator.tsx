@@ -126,7 +126,7 @@ const StaffCostCalculator: React.FC = () => {
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 Staff Cost Calculator
               </h1>
-              <p className="text-sm text-white/70">Calculate true employment costs</p>
+              <p className="text-sm text-white">Calculate true employment costs</p>
             </div>
           </div>
           <SmartBackButton />
@@ -141,7 +141,7 @@ const StaffCostCalculator: React.FC = () => {
           {/* Basic Pay Section */}
           <div className="flex items-center gap-2 mb-3">
             <Users className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white/80">Basic Pay Details</span>
+            <span className="text-sm font-medium text-white">Basic Pay Details</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -191,7 +191,7 @@ const StaffCostCalculator: React.FC = () => {
           {/* Employment Costs Section */}
           <div className="flex items-center gap-2 mb-3 mt-6 pt-4 border-t border-white/10">
             <Receipt className="h-4 w-4 text-purple-400" />
-            <span className="text-sm font-medium text-white/80">Employment Costs</span>
+            <span className="text-sm font-medium text-white">Employment Costs</span>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -255,7 +255,7 @@ const StaffCostCalculator: React.FC = () => {
           {/* Equipment Section */}
           <div className="flex items-center gap-2 mb-3 mt-6 pt-4 border-t border-white/10">
             <Wrench className="h-4 w-4 text-orange-400" />
-            <span className="text-sm font-medium text-white/80">Equipment & Overheads</span>
+            <span className="text-sm font-medium text-white">Equipment & Overheads</span>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -319,7 +319,7 @@ const StaffCostCalculator: React.FC = () => {
           {/* Efficiency Section */}
           <div className="flex items-center gap-2 mb-3 mt-6 pt-4 border-t border-white/10">
             <Target className="h-4 w-4 text-green-400" />
-            <span className="text-sm font-medium text-white/80">Efficiency & Margins</span>
+            <span className="text-sm font-medium text-white">Efficiency & Margins</span>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -359,7 +359,7 @@ const StaffCostCalculator: React.FC = () => {
               disabled={!isValid}
               className={cn(
                 'flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation',
-                isValid ? 'text-black' : 'bg-white/10 text-white/30 cursor-not-allowed'
+                isValid ? 'text-black' : 'bg-white/10 text-white cursor-not-allowed'
               )}
               style={
                 isValid
@@ -374,7 +374,7 @@ const StaffCostCalculator: React.FC = () => {
             </button>
             <button
               onClick={handleReset}
-              className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/90 hover:bg-white/10 transition-colors touch-manipulation"
+              className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation"
             >
               <RotateCcw className="h-5 w-5" />
             </button>
@@ -457,7 +457,7 @@ const StaffCostCalculator: React.FC = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      'h-4 w-4 text-white/80 transition-transform duration-200',
+                      'h-4 w-4 text-white transition-transform duration-200',
                       showBreakdown && 'rotate-180'
                     )}
                   />
@@ -469,33 +469,33 @@ const StaffCostCalculator: React.FC = () => {
                       Annual Costs
                     </h4>
                     <div className="flex justify-between items-center py-2 border-b border-white/10 min-w-0 gap-2">
-                      <span className="text-white/80 truncate min-w-0">
+                      <span className="text-white truncate min-w-0">
                         Base Pay ({basePayHrNum}/hr × {weeklyHoursNum}hrs × {paidWeeksNum}wks)
                       </span>
                       <span className="text-white font-mono shrink-0">{currency(annualBase)}</span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-white/10">
-                      <span className="text-white/80">Employer NI ({niRateNum}%)</span>
+                      <span className="text-white">Employer NI ({niRateNum}%)</span>
                       <span className="text-white font-mono">+ {currency(oncostNI)}</span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-white/10">
-                      <span className="text-white/80">Pension ({pensionRateNum}%)</span>
+                      <span className="text-white">Pension ({pensionRateNum}%)</span>
                       <span className="text-white font-mono">+ {currency(pension)}</span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-white/10">
-                      <span className="text-white/80">Van costs</span>
+                      <span className="text-white">Van costs</span>
                       <span className="text-white font-mono">+ {currency(vanYearNum)}</span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-white/10">
-                      <span className="text-white/80">Tools & equipment</span>
+                      <span className="text-white">Tools & equipment</span>
                       <span className="text-white font-mono">+ {currency(toolsYearNum)}</span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-white/10">
-                      <span className="text-white/80">Insurance</span>
+                      <span className="text-white">Insurance</span>
                       <span className="text-white font-mono">+ {currency(insuranceYearNum)}</span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-white/10">
-                      <span className="text-white/80">Training</span>
+                      <span className="text-white">Training</span>
                       <span className="text-white font-mono">+ {currency(trainingYearNum)}</span>
                     </div>
                     <div className="flex justify-between items-center py-2 font-medium bg-white/5 px-2 rounded">
@@ -507,7 +507,7 @@ const StaffCostCalculator: React.FC = () => {
                       Hourly Calculation
                     </h4>
                     <div className="flex justify-between items-center py-2 border-b border-white/10 min-w-0 gap-2">
-                      <span className="text-white/80 truncate min-w-0">
+                      <span className="text-white truncate min-w-0">
                         Total Hours ({weeklyHoursNum}hrs × {paidWeeksNum}wks)
                       </span>
                       <span className="text-white font-mono shrink-0">
@@ -515,7 +515,7 @@ const StaffCostCalculator: React.FC = () => {
                       </span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-white/10">
-                      <span className="text-white/80">Billable at {utilisationNum}%</span>
+                      <span className="text-white">Billable at {utilisationNum}%</span>
                       <span className="text-white font-mono">{effectiveHours.toFixed(0)} hrs</span>
                     </div>
                     <div className="flex justify-between items-center py-2 font-medium bg-blue-500/10 px-2 rounded">
@@ -561,7 +561,7 @@ const StaffCostCalculator: React.FC = () => {
               </div>
               <ChevronDown
                 className={cn(
-                  'h-4 w-4 text-white/80 transition-transform duration-200',
+                  'h-4 w-4 text-white transition-transform duration-200',
                   showReference && 'rotate-180'
                 )}
               />

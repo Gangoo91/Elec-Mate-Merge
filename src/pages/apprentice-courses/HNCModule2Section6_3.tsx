@@ -269,7 +269,7 @@ const HNCModule2Section6_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section6">
@@ -291,7 +291,7 @@ const HNCModule2Section6_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Building Simulation
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Dynamic thermal simulation principles, validation methods, and understanding modelling
             uncertainty
           </p>
@@ -451,7 +451,7 @@ const HNCModule2Section6_3 = () => {
                 Q<sub>stored</sub> = Q<sub>solar</sub> + Q<sub>internal</sub> + Q<sub>HVAC</sub> - Q
                 <sub>fabric</sub> - Q<sub>ventilation</sub>
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Solved at each timestep for each thermal zone
               </p>
             </div>
@@ -531,7 +531,7 @@ const HNCModule2Section6_3 = () => {
               <p className="text-sm font-medium text-white mb-2">Essential Simulation Inputs:</p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-xs font-medium text-white/60 mb-2">Geometry & Construction</p>
+                  <p className="text-xs font-medium text-white mb-2">Geometry & Construction</p>
                   <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li>Building geometry (3D model)</li>
                     <li>Construction layers and properties</li>
@@ -540,7 +540,7 @@ const HNCModule2Section6_3 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-white/60 mb-2">Operations & Systems</p>
+                  <p className="text-xs font-medium text-white mb-2">Operations & Systems</p>
                   <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li>Occupancy schedules</li>
                     <li>Equipment and lighting loads</li>
@@ -777,7 +777,7 @@ const HNCModule2Section6_3 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Professional responsibility:</strong> Communicate uncertainty to clients.
               Don't present simulation results with false precision - acknowledge the limitations of
               the analysis.
@@ -803,7 +803,7 @@ const HNCModule2Section6_3 = () => {
                 <strong>Question:</strong> A 2,000m² open-plan office has south and north facades.
                 How should it be zoned?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Considerations:</p>
                 <p>- South perimeter receives high solar gains</p>
                 <p>- North perimeter has minimal solar</p>
@@ -812,7 +812,7 @@ const HNCModule2Section6_3 = () => {
                 <p>1. South perimeter zone (4-5m depth)</p>
                 <p>2. North perimeter zone (4-5m depth)</p>
                 <p>3. Core zone (remainder)</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → Minimum 3 zones to capture different thermal conditions
                 </p>
                 <p className="mt-2">For TM52 assessment, may need finer perimeter</p>
@@ -828,7 +828,7 @@ const HNCModule2Section6_3 = () => {
                 <strong>Question:</strong> How do you present uncertainty in cooling load
                 predictions?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Base case cooling load: 150 kW</p>
                 <p className="mt-2">Sensitivity runs:</p>
                 <p>- Small power +20%: 162 kW (+8%)</p>
@@ -838,7 +838,7 @@ const HNCModule2Section6_3 = () => {
                 <p>- Infiltration doubled: 155 kW (+3%)</p>
                 <p className="mt-2">Report as range:</p>
                 <p className="text-green-400">Design cooling: 150 kW (range 135-175 kW)</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → Small power and future climate have greatest impact
                 </p>
               </div>
@@ -851,7 +851,7 @@ const HNCModule2Section6_3 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Question:</strong> Which weather files for a new London office assessment?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Analysis requirements and weather files:</p>
                 <p className="mt-2">1. Annual energy estimate</p>
                 <p className="text-green-400"> → London TRY (typical conditions)</p>
@@ -861,7 +861,7 @@ const HNCModule2Section6_3 = () => {
                 <p className="text-green-400"> → London DSY1 (moderate warm year)</p>
                 <p className="mt-2">4. Future-proofing assessment</p>
                 <p className="text-green-400"> → London DSY1 2050s medium scenario</p>
-                <p className="mt-2 text-white/60">Document weather files in report appendix</p>
+                <p className="mt-2 text-white">Document weather files in report appendix</p>
               </div>
             </div>
           </div>
@@ -935,7 +935,7 @@ const HNCModule2Section6_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -981,7 +981,7 @@ const HNCModule2Section6_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section6-2">

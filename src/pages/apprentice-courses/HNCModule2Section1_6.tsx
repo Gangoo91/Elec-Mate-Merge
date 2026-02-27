@@ -209,7 +209,7 @@ const HNCModule2Section1_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section1">
@@ -231,7 +231,7 @@ const HNCModule2Section1_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Heat Loss Calculations
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Calculating building heat loads for heating system design using CIBSE methods
           </p>
         </header>
@@ -317,7 +317,7 @@ const HNCModule2Section1_6 = () => {
                 Fabric Heat Loss Formula
               </p>
               <p className="font-mono text-center text-lg mb-2">Q = U × A × ΔT</p>
-              <div className="text-xs text-white/70 text-center space-y-1">
+              <div className="text-xs text-white text-center space-y-1">
                 <p>Q = Heat loss (Watts)</p>
                 <p>U = U-value (W/m²K)</p>
                 <p>A = Area (m²)</p>
@@ -422,7 +422,7 @@ const HNCModule2Section1_6 = () => {
                 Ventilation Heat Loss Formula
               </p>
               <p className="font-mono text-center text-lg mb-2">Q = 0.33 × n × V × ΔT</p>
-              <div className="text-xs text-white/70 text-center space-y-1">
+              <div className="text-xs text-white text-center space-y-1">
                 <p>Q = Heat loss (Watts)</p>
                 <p>0.33 = Volumetric specific heat of air (Wh/m³K)</p>
                 <p>n = Air changes per hour (ACH)</p>
@@ -624,7 +624,7 @@ const HNCModule2Section1_6 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 ΔT = t<sub>i</sub> - t<sub>e</sub>
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90 mt-3">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white mt-3">
                 <p>Example: Office in Manchester</p>
                 <p>Internal: 22°C, External: -3°C</p>
                 <p>
@@ -663,7 +663,7 @@ const HNCModule2Section1_6 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 Q<sub>total</sub> = Q<sub>fabric</sub> + Q<sub>ventilation</sub>
               </p>
-              <div className="text-xs text-white/70 text-center mt-2">
+              <div className="text-xs text-white text-center mt-2">
                 <p>Add margins for pre-heat (10-20%) and distribution losses (5-10%)</p>
               </div>
             </div>
@@ -755,7 +755,7 @@ const HNCModule2Section1_6 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Rule of thumb:</strong> Modern well-insulated homes need approximately 40-60
               W/m² floor area. A 100m² home would need 4-6kW heating capacity.
             </p>
@@ -781,7 +781,7 @@ const HNCModule2Section1_6 = () => {
                 External wall 12m² (U=0.3), window 4m² (U=1.4), floor 20m² (U=0.2), ceiling 20m²
                 (U=0.15). Internal temp 21°C, external -3°C.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>ΔT = 21 - (-3) = 24K</p>
                 <p className="mt-2">Wall loss: 0.3 × 12 × 24 = 86.4W</p>
                 <p>Window loss: 1.4 × 4 × 24 = 134.4W</p>
@@ -790,7 +790,7 @@ const HNCModule2Section1_6 = () => {
                 <p className="mt-2">
                   Total fabric loss = 86.4 + 134.4 + 96 + 72 = <strong>388.8W</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Note: Window contributes 35% of loss despite being 7% of envelope area
                 </p>
               </div>
@@ -804,7 +804,7 @@ const HNCModule2Section1_6 = () => {
                 <strong>Question:</strong> The same living room is 5m × 4m × 2.4m with 1.0 air
                 change per hour. Calculate the ventilation heat loss.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Volume = 5 × 4 × 2.4 = 48m³</p>
                 <p>ΔT = 24K (from previous example)</p>
                 <p className="mt-2">Q = 0.33 × n × V × ΔT</p>
@@ -812,7 +812,7 @@ const HNCModule2Section1_6 = () => {
                 <p>
                   Q = <strong>380.2W</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Ventilation loss is almost equal to fabric loss in this example
                 </p>
               </div>
@@ -826,7 +826,7 @@ const HNCModule2Section1_6 = () => {
                 <strong>Question:</strong> Using the results above, calculate the total heat load
                 and recommended radiator size with a 10% margin.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Total heat loss = Fabric + Ventilation</p>
                 <p>Total = 388.8 + 380.2 = 769W</p>
                 <p className="mt-2">With 10% margin:</p>
@@ -836,7 +836,7 @@ const HNCModule2Section1_6 = () => {
                 <p className="mt-2">
                   Recommended radiator: <strong>900W-1000W output</strong>
                 </p>
-                <p className="text-white/60">(Select next size up from manufacturer's range)</p>
+                <p className="text-white">(Select next size up from manufacturer's range)</p>
               </div>
             </div>
 
@@ -848,7 +848,7 @@ const HNCModule2Section1_6 = () => {
                 <strong>Question:</strong> A 120m² house has calculated room-by-room heat losses
                 totalling 7.2kW. Size the boiler with appropriate margins for intermittent heating.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Base heat load: 7.2kW</p>
                 <p className="mt-2">Pre-heat margin (15%): 7.2 × 0.15 = 1.08kW</p>
                 <p>Distribution losses (5%): 7.2 × 0.05 = 0.36kW</p>
@@ -859,7 +859,7 @@ const HNCModule2Section1_6 = () => {
                 <p className="mt-2 text-green-400">
                   Recommended: <strong>12-15kW combi boiler</strong>
                 </p>
-                <p className="text-white/60">Or 9-10kW system boiler with separate DHW cylinder</p>
+                <p className="text-white">Or 9-10kW system boiler with separate DHW cylinder</p>
               </div>
             </div>
           </div>
@@ -953,7 +953,7 @@ const HNCModule2Section1_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1001,7 +1001,7 @@ const HNCModule2Section1_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section1-5">

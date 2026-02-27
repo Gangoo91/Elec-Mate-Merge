@@ -21,10 +21,10 @@ const CodeBlock = ({ code, language }: { code: string; language?: string }) => {
   return (
     <div className="relative my-3 rounded-lg overflow-hidden bg-black/40 border border-white/10">
       <div className="flex items-center justify-between px-3 py-1.5 bg-white/5 border-b border-white/10">
-        <span className="text-xs text-white/50 font-mono">{language || 'code'}</span>
+        <span className="text-xs text-white font-mono">{language || 'code'}</span>
         <button
           onClick={handleCopy}
-          className="flex items-center gap-1 text-xs text-white/50 hover:text-white/80 transition-colors touch-manipulation"
+          className="flex items-center gap-1 text-xs text-white hover:text-white transition-colors touch-manipulation"
         >
           {copied ? (
             <Check className="h-3.5 w-3.5 text-green-400" />
@@ -180,7 +180,7 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
           return (
             <blockquote
               key={index}
-              className="border-l-4 border-elec-yellow/50 pl-4 py-2 my-2 bg-elec-yellow/5 rounded-r italic text-white/80"
+              className="border-l-4 border-elec-yellow/50 pl-4 py-2 my-2 bg-elec-yellow/5 rounded-r italic text-white"
             >
               {quoteText}
             </blockquote>
@@ -250,7 +250,7 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
                 {stepNum}
               </span>
               <span
-                className="text-white/90 text-sm leading-relaxed"
+                className="text-white text-sm leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: processed }}
               />
             </div>
@@ -279,7 +279,7 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
             <div key={index} className="mb-1.5 flex items-start gap-2 ml-1">
               <span className="text-elec-yellow text-xs mt-1.5">●</span>
               <span
-                className="text-white/90 text-sm leading-relaxed"
+                className="text-white text-sm leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: processed }}
               />
             </div>
@@ -321,7 +321,7 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
           return (
             <p
               key={index}
-              className="mb-2 text-sm text-white/90 leading-relaxed"
+              className="mb-2 text-sm text-white leading-relaxed"
               dangerouslySetInnerHTML={{ __html: processed }}
             />
           );
@@ -332,7 +332,7 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
           return (
             <div key={index} className="mb-1.5 flex items-start gap-2 ml-1">
               <span className="text-green-400 text-sm shrink-0">✓</span>
-              <span className="text-white/90 text-sm">{trimmed.replace(/^[✅✓]\s*/, '')}</span>
+              <span className="text-white text-sm">{trimmed.replace(/^[✅✓]\s*/, '')}</span>
             </div>
           );
         }
@@ -341,7 +341,7 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
           return (
             <div key={index} className="mb-1.5 flex items-start gap-2 ml-1">
               <span className="text-red-400 text-sm shrink-0">✗</span>
-              <span className="text-white/90 text-sm">{trimmed.replace(/^[❌✗]\s*/, '')}</span>
+              <span className="text-white text-sm">{trimmed.replace(/^[❌✗]\s*/, '')}</span>
             </div>
           );
         }
@@ -365,7 +365,7 @@ const ChatMessageRenderer = ({ content, isUser }: ChatMessageRendererProps) => {
         return (
           <p
             key={index}
-            className="mb-2 text-sm text-white/90 leading-relaxed"
+            className="mb-2 text-sm text-white leading-relaxed"
             dangerouslySetInnerHTML={{ __html: processed }}
           />
         );

@@ -185,7 +185,7 @@ const CourseSelectionTips = () => {
                     <tip.icon className={`h-5 w-5 ${colors.icon}`} />
                   </div>
                   <h4 className="font-semibold text-sm text-white mb-2">{tip.title}</h4>
-                  <p className="text-xs text-white/70 leading-relaxed">{tip.description}</p>
+                  <p className="text-xs text-white leading-relaxed">{tip.description}</p>
                 </div>
               );
             })}
@@ -213,11 +213,11 @@ const CourseSelectionTips = () => {
                   <h4 className={`font-semibold text-sm ${colors.icon} mb-3`}>{item.category}</h4>
                   <div className="space-y-2">
                     <div className="flex justify-between items-center">
-                      <span className="text-xs text-white/60">Cost:</span>
+                      <span className="text-xs text-white">Cost:</span>
                       <span className="text-xs text-white font-medium">{item.cost}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-xs text-white/60">Duration:</span>
+                      <span className="text-xs text-white">Duration:</span>
                       <span className="text-xs text-white font-medium">{item.duration}</span>
                     </div>
                     <div className="pt-2 border-t border-white/10">
@@ -250,7 +250,7 @@ const CourseSelectionTips = () => {
                 className="flex items-start gap-3 p-3 rounded-xl bg-purple-500/5 border border-purple-500/20"
               >
                 <CheckCircle className="h-4 w-4 text-purple-400 flex-shrink-0 mt-0.5" />
-                <p className="text-sm text-white/80">{indicator}</p>
+                <p className="text-sm text-white">{indicator}</p>
               </div>
             ))}
           </div>
@@ -280,28 +280,28 @@ const CourseSelectionTips = () => {
                   +65% Growth
                 </Badge>
                 <p className="text-xs text-white font-medium">EV Charging Infrastructure</p>
-                <p className="text-[10px] text-white/60 mt-1">£35-55k for specialists</p>
+                <p className="text-[10px] text-white mt-1">£35-55k for specialists</p>
               </div>
               <div className="p-3 rounded-lg bg-white/5">
                 <Badge className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] mb-2">
                   +45% Growth
                 </Badge>
                 <p className="text-xs text-white font-medium">Renewable Energy Systems</p>
-                <p className="text-[10px] text-white/60 mt-1">Solar and battery storage</p>
+                <p className="text-[10px] text-white mt-1">Solar and battery storage</p>
               </div>
               <div className="p-3 rounded-lg bg-white/5">
                 <Badge className="bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[10px] mb-2">
                   +40% Growth
                 </Badge>
                 <p className="text-xs text-white font-medium">Smart Building Technology</p>
-                <p className="text-[10px] text-white/60 mt-1">Commercial and residential</p>
+                <p className="text-[10px] text-white mt-1">Commercial and residential</p>
               </div>
               <div className="p-3 rounded-lg bg-white/5">
                 <Badge className="bg-purple-500/10 text-purple-400 border border-purple-500/30 text-[10px] mb-2">
                   Critical Shortage
                 </Badge>
                 <p className="text-xs text-white font-medium">Data Centre Infrastructure</p>
-                <p className="text-[10px] text-white/60 mt-1">£40-65k for qualified engineers</p>
+                <p className="text-[10px] text-white mt-1">£40-65k for qualified engineers</p>
               </div>
             </div>
           </div>
@@ -316,7 +316,7 @@ const CourseSelectionTips = () => {
                 >
                   London
                 </Badge>
-                <span className="text-white/70">
+                <span className="text-white">
                   Highest salaries but intense competition and higher course costs
                 </span>
               </div>
@@ -327,7 +327,7 @@ const CourseSelectionTips = () => {
                 >
                   North
                 </Badge>
-                <span className="text-white/70">
+                <span className="text-white">
                   Strong demand for manufacturing and renewable energy skills
                 </span>
               </div>
@@ -338,7 +338,7 @@ const CourseSelectionTips = () => {
                 >
                   Scotland
                 </Badge>
-                <span className="text-white/70">
+                <span className="text-white">
                   Offshore wind and renewable energy opportunities, government funding
                 </span>
               </div>
@@ -349,7 +349,7 @@ const CourseSelectionTips = () => {
                 >
                   Wales
                 </Badge>
-                <span className="text-white/70">
+                <span className="text-white">
                   Growing green energy sector with apprenticeship support
                 </span>
               </div>

@@ -79,7 +79,7 @@ const BusinessCalculator = () => {
             variant="ghost"
             size="icon"
             onClick={() => navigate(-1)}
-            className="text-white/70 hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
+            className="text-white hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
           >
             <ChevronLeft className="h-6 w-6" />
           </Button>
@@ -88,7 +88,7 @@ const BusinessCalculator = () => {
             variant="ghost"
             size="icon"
             onClick={resetCalculator}
-            className="text-white/70 hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
+            className="text-white hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
           >
             <RotateCcw className="h-5 w-5" />
           </Button>
@@ -107,7 +107,7 @@ const BusinessCalculator = () => {
           <div className="relative space-y-4">
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">
+                <p className="text-ios-caption-1 text-white uppercase tracking-wide">
                   Annual Profit
                 </p>
                 <p
@@ -151,13 +151,13 @@ const BusinessCalculator = () => {
             </p>
           </div>
           <div className="flex-shrink-0 bg-white/5 border border-white/10 rounded-2xl p-4 min-w-[120px]">
-            <p className="text-ios-caption-1 text-white/50">Break-even</p>
+            <p className="text-ios-caption-1 text-white">Break-even</p>
             <p className="text-ios-title-3 font-semibold text-white mt-1 tabular-nums">
               {breakEvenHours.toFixed(0)}h/mo
             </p>
           </div>
           <div className="flex-shrink-0 bg-white/5 border border-white/10 rounded-2xl p-4 min-w-[120px]">
-            <p className="text-ios-caption-1 text-white/50">Hours/yr</p>
+            <p className="text-ios-caption-1 text-white">Hours/yr</p>
             <p className="text-ios-title-3 font-semibold text-white mt-1 tabular-nums">
               {annualHours.toLocaleString()}
             </p>
@@ -166,7 +166,7 @@ const BusinessCalculator = () => {
 
         {/* Income Section */}
         <section>
-          <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+          <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-3">
             Income Parameters
           </p>
           <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 divide-y divide-white/10">
@@ -199,7 +199,7 @@ const BusinessCalculator = () => {
 
         {/* Expenses Section */}
         <section>
-          <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+          <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-3">
             Business Costs
           </p>
           <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 divide-y divide-white/10">

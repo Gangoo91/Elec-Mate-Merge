@@ -96,7 +96,7 @@ const EVChargingModule2Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/ev-charging-module-2">
@@ -117,7 +117,7 @@ const EVChargingModule2Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             IEC 61851, 62196 Connectors
           </h1>
-          <p className="text-white/80">International charging standards and connector types</p>
+          <p className="text-white">International charging standards and connector types</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -315,7 +315,7 @@ const EVChargingModule2Section4 = () => {
             <div className="grid sm:grid-cols-3 gap-4 my-6">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">CHAdeMO</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Origin: Japan</li>
                   <li>Power: Up to 500kW</li>
                   <li>Protocol: CAN bus</li>
@@ -325,7 +325,7 @@ const EVChargingModule2Section4 = () => {
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">CCS1 (Combo 1)</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Origin: North America</li>
                   <li>Power: Up to 500kW</li>
                   <li>Protocol: PLC (ISO 15118)</li>
@@ -335,7 +335,7 @@ const EVChargingModule2Section4 = () => {
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">CCS2 (Combo 2)</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Origin: Europe</li>
                   <li>Power: Up to 500kW</li>
                   <li>Protocol: PLC (ISO 15118)</li>
@@ -352,19 +352,19 @@ const EVChargingModule2Section4 = () => {
               <div className="grid grid-cols-4 gap-2 text-center text-xs">
                 <div className="p-2 rounded bg-white/5">
                   <p className="font-medium">10%</p>
-                  <p className="text-white/70">6A</p>
+                  <p className="text-white">6A</p>
                 </div>
                 <div className="p-2 rounded bg-white/5">
                   <p className="font-medium">25%</p>
-                  <p className="text-white/70">~15A</p>
+                  <p className="text-white">~15A</p>
                 </div>
                 <div className="p-2 rounded bg-white/5">
                   <p className="font-medium">50%</p>
-                  <p className="text-white/70">32A</p>
+                  <p className="text-white">32A</p>
                 </div>
                 <div className="p-2 rounded bg-white/5">
                   <p className="font-medium">90%</p>
-                  <p className="text-white/70">57A</p>
+                  <p className="text-white">57A</p>
                 </div>
               </div>
             </div>
@@ -452,7 +452,7 @@ const EVChargingModule2Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/ev-charging-module-2-section-3">

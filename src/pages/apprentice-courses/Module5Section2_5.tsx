@@ -192,7 +192,7 @@ const Module5Section2_5 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -209,13 +209,13 @@ const Module5Section2_5 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.2.5</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.2.5</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Designing for Expansion, Maintenance, and Accessibility
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Learn to design electrical installations for future expansion, easy maintenance, and
               accessibility compliance with BS 7671 and Building Regulations Part M.
             </p>
@@ -224,7 +224,7 @@ const Module5Section2_5 = () => {
           {/* Quick Reference */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-semibold text-elec-yellow mb-3">Quick Reference</p>
-            <div className="grid sm:grid-cols-2 gap-4 text-white/80 text-sm">
+            <div className="grid sm:grid-cols-2 gap-4 text-white text-sm">
               <div>
                 <p className="font-medium text-white mb-1">In 30 Seconds:</p>
                 <ul className="list-disc pl-5 space-y-1">
@@ -256,7 +256,7 @@ const Module5Section2_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Introduction
             </h2>
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               Electrical installations should not only meet today's requirements but also allow for
               future expansion, easy maintenance, and user accessibility. A design that overlooks
               these factors may quickly become outdated, difficult to service, or even unsafe. This
@@ -271,7 +271,7 @@ const Module5Section2_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <ul className="list-disc pl-6 space-y-2 text-white/80">
+            <ul className="list-disc pl-6 space-y-2 text-white">
               <li>Recognise why planning for expansion is important</li>
               <li>Understand accessibility requirements under Building Regulations</li>
               <li>Design circuits and layouts that allow for safe maintenance</li>
@@ -286,7 +286,7 @@ const Module5Section2_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Designing for Expansion
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Future-proofing electrical installations is essential for accommodating
                 technological changes, increased electrical demand, and evolving user needs. Poor
@@ -452,7 +452,7 @@ const Module5Section2_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Maintenance Considerations
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Safe and accessible maintenance is crucial for both safety and regulatory
                 compliance. BS 7671 requires that installations can be safely maintained, inspected,
@@ -585,7 +585,7 @@ const Module5Section2_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Accessibility for Users
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Building Regulations Part M sets specific requirements for accessibility in new
                 buildings and major renovations. These requirements ensure electrical installations
@@ -722,7 +722,7 @@ const Module5Section2_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               BS 7671 Considerations
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 BS 7671 contains specific regulations that directly impact design for expansion,
                 maintenance, and accessibility. Understanding these requirements ensures legal
@@ -846,23 +846,23 @@ const Module5Section2_5 = () => {
             <div className="space-y-3">
               <div className="flex items-center gap-3 p-3 bg-red-500/10 rounded border border-red-500/30">
                 <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0" />
-                <span className="text-sm text-white/80">Costly upgrades in the future</span>
+                <span className="text-sm text-white">Costly upgrades in the future</span>
               </div>
               <div className="flex items-center gap-3 p-3 bg-red-500/10 rounded border border-red-500/30">
                 <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0" />
-                <span className="text-sm text-white/80">
+                <span className="text-sm text-white">
                   Unsafe working conditions for maintenance engineers
                 </span>
               </div>
               <div className="flex items-center gap-3 p-3 bg-red-500/10 rounded border border-red-500/30">
                 <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0" />
-                <span className="text-sm text-white/80">
+                <span className="text-sm text-white">
                   Non-compliance with Building Regulations
                 </span>
               </div>
               <div className="flex items-center gap-3 p-3 bg-red-500/10 rounded border border-red-500/30">
                 <AlertTriangle className="w-5 h-5 text-red-400 flex-shrink-0" />
-                <span className="text-sm text-white/80">
+                <span className="text-sm text-white">
                   User dissatisfaction and accessibility issues
                 </span>
               </div>
@@ -881,7 +881,7 @@ const Module5Section2_5 = () => {
                 <p className="font-semibold text-blue-400 mb-2 text-sm">
                   Expansion Planning Checklist
                 </p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• Leave at least 20–25% spare capacity in distribution boards</li>
                   <li>• Plan for EV charging (32A), heat pumps (40A+), solar PV (16-32A)</li>
                   <li>• Size main supply cable for 120% expected maximum demand</li>
@@ -894,7 +894,7 @@ const Module5Section2_5 = () => {
                 <p className="font-semibold text-green-400 mb-2 text-sm">
                   Maintenance & Accessibility
                 </p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• Avoid fully filling trunking — allow 30–40% spare space</li>
                   <li>• Install local isolators within 3m of fixed equipment</li>
                   <li>• Follow Part M socket heights: 450-1200mm above FFL</li>
@@ -917,7 +917,7 @@ const Module5Section2_5 = () => {
                 <p className="font-medium text-orange-400 mb-2">
                   Example 1: Commercial Office Retrofit
                 </p>
-                <p className="text-sm text-white/70 italic">
+                <p className="text-sm text-white italic">
                   A commercial office was designed with no spare ways in the distribution board. Two
                   years later, the client requested EV charging points, but there was no capacity.
                   The entire board had to be replaced at great cost, causing significant business
@@ -929,7 +929,7 @@ const Module5Section2_5 = () => {
                 <p className="font-medium text-orange-400 mb-2">
                   Example 2: Accessible Housing Design
                 </p>
-                <p className="text-sm text-white/70 italic">
+                <p className="text-sm text-white italic">
                   A new housing development initially had standard socket heights (150mm above
                   skirting). Following Part M requirements, sockets were repositioned to 600mm
                   height. This simple change eliminated the need for costly adaptations and made the
@@ -941,7 +941,7 @@ const Module5Section2_5 = () => {
                 <p className="font-medium text-orange-400 mb-2">
                   Example 3: Industrial Maintenance Access
                 </p>
-                <p className="text-sm text-white/70 italic">
+                <p className="text-sm text-white italic">
                   A factory installation placed the main distribution board 3 meters high with no
                   platform access. During an emergency shutdown, maintenance staff could not safely
                   reach the isolators. The installation was non-compliant with BS 7671 Reg 132.9 and
@@ -961,7 +961,7 @@ const Module5Section2_5 = () => {
             <div className="grid sm:grid-cols-3 gap-4">
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
                 <p className="font-semibold text-blue-400 mb-2 text-sm">Expansion Planning</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• 20-25% spare ways minimum</li>
                   <li>• Size for future 3-phase upgrade</li>
                   <li>• EV charger: 32A way</li>
@@ -973,7 +973,7 @@ const Module5Section2_5 = () => {
 
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
                 <p className="font-semibold text-green-400 mb-2 text-sm">Maintenance Access</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• Front: 1000mm minimum</li>
                   <li>• Side: 500mm where required</li>
                   <li>• Height: 2000mm headroom</li>
@@ -985,7 +985,7 @@ const Module5Section2_5 = () => {
 
               <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/30">
                 <p className="font-semibold text-purple-400 mb-2 text-sm">Accessibility (Part M)</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>• Sockets: 450-1200mm above FFL</li>
                   <li>• Optimum: 600-1000mm</li>
                   <li>• Light switches: 900-1200mm</li>
@@ -999,7 +999,7 @@ const Module5Section2_5 = () => {
             <div className="grid sm:grid-cols-2 gap-4 mt-4">
               <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
                 <p className="font-semibold text-amber-400 mb-2 text-sm">Key BS 7671 Regulations</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>
                     <strong>132.9:</strong> Safe operation, maintenance & repair
                   </li>
@@ -1022,7 +1022,7 @@ const Module5Section2_5 = () => {
                 <p className="font-semibold text-purple-400 mb-2 text-sm">
                   Building Categories (Part M)
                 </p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>
                     <strong>Category 1:</strong> Basic accessibility (visitable)
                   </li>
@@ -1044,7 +1044,7 @@ const Module5Section2_5 = () => {
 
             <div className="p-4 rounded-lg bg-white/5 border border-white/10 mt-4">
               <p className="font-medium text-white mb-2 text-sm">Design Review Checklist</p>
-              <div className="grid sm:grid-cols-4 gap-3 text-xs text-white/70">
+              <div className="grid sm:grid-cols-4 gap-3 text-xs text-white">
                 <div>
                   <p className="font-medium mb-1">Expansion Ready?</p>
                   <ul className="space-y-0.5">
@@ -1087,7 +1087,7 @@ const Module5Section2_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Recap
             </h2>
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               In this subsection, you learned the importance of designing for future expansion, safe
               and easy maintenance, and user accessibility. You explored BS 7671 and Part M
               requirements, considered practical guidance for real-world installations, and saw the
@@ -1104,7 +1104,7 @@ const Module5Section2_5 = () => {
             >
               <span className="font-semibold text-white">Frequently Asked Questions</span>
               <ChevronDown
-                className={`w-5 h-5 text-white/60 transition-transform ${showFaqs ? 'rotate-180' : ''}`}
+                className={`w-5 h-5 text-white transition-transform ${showFaqs ? 'rotate-180' : ''}`}
               />
             </button>
 
@@ -1116,7 +1116,7 @@ const Module5Section2_5 = () => {
                     className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50"
                   >
                     <p className="font-medium text-white mb-2">Q: {faq.question}</p>
-                    <p className="text-sm text-white/70">A: {faq.answer}</p>
+                    <p className="text-sm text-white">A: {faq.answer}</p>
                   </div>
                 ))}
               </div>
@@ -1130,7 +1130,7 @@ const Module5Section2_5 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../2-4">

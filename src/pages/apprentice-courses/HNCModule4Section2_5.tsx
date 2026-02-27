@@ -215,7 +215,7 @@ const HNCModule4Section2_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section2">
@@ -237,7 +237,7 @@ const HNCModule4Section2_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Cable Types and Selection
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding insulation materials, armoured cables and fire-resistant constructions
           </p>
         </header>
@@ -762,7 +762,7 @@ const HNCModule4Section2_5 = () => {
               </p>
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
-                  <p className="text-white/70 mb-1">Advantages:</p>
+                  <p className="text-white mb-1">Advantages:</p>
                   <ul className="text-white space-y-0.5 text-xs">
                     <li>+ Completely fireproof</li>
                     <li>+ Very high temperature rating</li>
@@ -771,7 +771,7 @@ const HNCModule4Section2_5 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-white/70 mb-1">Disadvantages:</p>
+                  <p className="text-white mb-1">Disadvantages:</p>
                   <ul className="text-white space-y-0.5 text-xs">
                     <li>- Expensive</li>
                     <li>- Specialist termination required</li>
@@ -808,8 +808,8 @@ const HNCModule4Section2_5 = () => {
                 <strong>Requirement:</strong> 100A 3-phase sub-main, 45m in riser, 35°C ambient,
                 grouped with 5 other circuits
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/70">Decision factors:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Decision factors:</p>
                 <p>- Elevated ambient: favour XLPE (90°C rating)</p>
                 <p>- Grouped circuits: XLPE capacity advantage helps</p>
                 <p>- Riser location: LSF for fire safety</p>
@@ -826,8 +826,8 @@ const HNCModule4Section2_5 = () => {
                 <strong>Requirement:</strong> Emergency lighting circuit in hospital, 80m route
                 through ceiling void and corridor
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/70">Decision factors:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Decision factors:</p>
                 <p>- Life safety circuit: fire performance required</p>
                 <p>- BS 5266: enhanced fire resistance needed</p>
                 <p>- Hospital: maximum smoke safety required</p>
@@ -835,7 +835,7 @@ const HNCModule4Section2_5 = () => {
                 <p className="mt-2 text-green-400">
                   → Select: FP200 Gold (2-core + CPC) Category 1
                 </p>
-                <p className="text-white/60">Or MICC where budget allows maximum protection</p>
+                <p className="text-white">Or MICC where budget allows maximum protection</p>
               </div>
             </div>
 
@@ -847,14 +847,14 @@ const HNCModule4Section2_5 = () => {
                 <strong>Requirement:</strong> 45kW chiller on roof, supply from basement, 60m route
                 including 30m underground
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/70">Decision factors:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Decision factors:</p>
                 <p>- Underground section: needs SWA protection</p>
                 <p>- External/roof: weatherproof required</p>
                 <p>- 60m length: check voltage drop (favour XLPE)</p>
                 <p>- High fault level near main: verify k²S² (XLPE helps)</p>
                 <p className="mt-2 text-green-400">→ Select: 4-core 16mm² XLPE/SWA throughout</p>
-                <p className="text-white/60">Use E1W weatherproof glands externally</p>
+                <p className="text-white">Use E1W weatherproof glands externally</p>
               </div>
             </div>
           </div>
@@ -939,7 +939,7 @@ const HNCModule4Section2_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -985,7 +985,7 @@ const HNCModule4Section2_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section2-4">

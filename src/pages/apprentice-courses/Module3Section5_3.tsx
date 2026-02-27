@@ -189,7 +189,7 @@ export default function Module3Section5_3() {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             UV, Temperature, and Mechanical Damage Risks
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understand environmental stresses affecting electrical installations including UV
             degradation, temperature extremes, and mechanical damage, with comprehensive protective
             measures per BS 7671.
@@ -1055,7 +1055,7 @@ export default function Module3Section5_3() {
             Summary
           </h2>
           <div className="rounded-lg p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
-            <p className="text-white/90">
+            <p className="text-white">
               UV radiation, temperature extremes, and mechanical forces pose significant threats to
               electrical installations. Understanding these degradation mechanisms and implementing
               appropriate protective measures through material selection, installation techniques,

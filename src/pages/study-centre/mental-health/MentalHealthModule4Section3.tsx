@@ -243,7 +243,7 @@ export default function MentalHealthModule4Section3() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Personality Disorders &amp; Complex Needs
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding personality disorders, the role of trauma, emotional dysregulation,
             validation skills, and how to provide compassionate, stigma-free support
           </p>
@@ -403,14 +403,14 @@ export default function MentalHealthModule4Section3() {
                 <div className="grid sm:grid-cols-2 gap-3 mt-3">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-purple-300 font-medium text-sm mb-1">Cognition</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       The way a person perceives and interprets themselves, other people, and events
                       around them
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-purple-300 font-medium text-sm mb-1">Emotional Responses</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       The range, intensity, instability, and appropriateness of emotional reactions
                     </p>
                   </div>
@@ -418,13 +418,13 @@ export default function MentalHealthModule4Section3() {
                     <p className="text-purple-300 font-medium text-sm mb-1">
                       Interpersonal Functioning
                     </p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       The ability to form and maintain relationships with other people
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-purple-300 font-medium text-sm mb-1">Impulse Control</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       The ability to manage urges, reactions, and behaviours in the moment
                     </p>
                   </div>
@@ -446,7 +446,7 @@ export default function MentalHealthModule4Section3() {
                     Critical Understanding: NOT a Character Flaw
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   A personality disorder is{' '}
                   <strong className="text-white">
                     not a character flaw, a moral failing, a sign of weakness, or a choice
@@ -464,7 +464,7 @@ export default function MentalHealthModule4Section3() {
                   <Shield className="h-4 w-4 inline-block mr-2 -mt-0.5" />
                   Types of Personality Disorder
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The diagnostic manuals describe several types of personality disorder, grouped
                   into three clusters. In practice, many people present with features from more than
                   one type:
@@ -474,7 +474,7 @@ export default function MentalHealthModule4Section3() {
                     <h4 className="text-purple-300 font-medium mb-1 text-sm">
                       Cluster A &mdash; &lsquo;Suspicious&rsquo;
                     </h4>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Paranoid, schizoid, schizotypal personality disorders. Patterns of odd or
                       eccentric thinking and behaviour.
                     </p>
@@ -483,7 +483,7 @@ export default function MentalHealthModule4Section3() {
                     <h4 className="text-purple-300 font-medium mb-1 text-sm">
                       Cluster B &mdash; &lsquo;Emotional and Impulsive&rsquo;
                     </h4>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Borderline (BPD/EUPD), antisocial, histrionic, narcissistic personality
                       disorders. Patterns of dramatic, erratic behaviour and difficulty regulating
                       emotions. BPD/EUPD is the most commonly encountered.
@@ -493,7 +493,7 @@ export default function MentalHealthModule4Section3() {
                     <h4 className="text-purple-300 font-medium mb-1 text-sm">
                       Cluster C &mdash; &lsquo;Anxious&rsquo;
                     </h4>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Avoidant, dependent, obsessive-compulsive personality disorders. Patterns of
                       anxious, fearful thinking and behaviour.
                     </p>
@@ -536,7 +536,7 @@ export default function MentalHealthModule4Section3() {
                         <h4 className="text-purple-300 font-medium mb-1">
                           Intense and Unstable Relationships
                         </h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Relationships are often characterised by alternating between idealisation
                           (&ldquo;you are the best person in my life&rdquo;) and devaluation
                           (&ldquo;you don&rsquo;t care about me at all&rdquo;). This pattern &mdash;
@@ -553,7 +553,7 @@ export default function MentalHealthModule4Section3() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-purple-300 font-medium mb-1">Fear of Abandonment</h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           A pervasive, often overwhelming fear of being abandoned, rejected, or left
                           alone. This fear can be triggered by seemingly minor events &mdash; a late
                           reply to a message, a cancelled plan, or a colleague leaving the team. The
@@ -569,7 +569,7 @@ export default function MentalHealthModule4Section3() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-purple-300 font-medium mb-1">Emotional Instability</h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Rapid, intense mood changes that can happen within hours or even minutes.
                           The person may shift from calm to severely distressed, from joy to
                           despair, in response to events that others might consider minor. The
@@ -586,7 +586,7 @@ export default function MentalHealthModule4Section3() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-purple-300 font-medium mb-1">Impulsivity</h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Acting without thinking, often driven by intense emotional states. This
                           can include reckless spending, substance use, binge eating, dangerous
                           driving, or other behaviours that the person may later regret.
@@ -601,7 +601,7 @@ export default function MentalHealthModule4Section3() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-purple-300 font-medium mb-1">Self-Harm</h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Self-harm is common among people with BPD/EUPD. It is typically a{' '}
                           <strong className="text-white">coping mechanism</strong> for managing
                           overwhelming emotional pain &mdash; NOT attention-seeking or manipulation.
@@ -617,7 +617,7 @@ export default function MentalHealthModule4Section3() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-purple-300 font-medium mb-1">Identity Disturbance</h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           An unstable sense of self &mdash; the person may feel uncertain about who
                           they are, what they value, what they want from life, or where they fit in.
                           They may dramatically change their goals, career plans, values, or
@@ -633,7 +633,7 @@ export default function MentalHealthModule4Section3() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-purple-300 font-medium mb-1">Dissociation</h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Feeling disconnected from reality, from one&rsquo;s own body, or from
                           one&rsquo;s emotions. This is often a protective response to overwhelming
                           stress or emotional pain. The person may describe feeling
@@ -649,7 +649,7 @@ export default function MentalHealthModule4Section3() {
                 <h3 className="font-semibold mb-2 text-violet-400">
                   Stigma Within Mental Health Services
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   BPD/EUPD is one of the most stigmatised diagnoses in mental health. Shockingly,
                   this stigma exists
                   <strong className="text-white">
@@ -693,10 +693,10 @@ export default function MentalHealthModule4Section3() {
                   <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg text-center">
                     <Ban className="h-6 w-6 text-red-400 mx-auto mb-2" />
                     <p className="text-red-300 font-semibold text-sm mb-1">Old Approach</p>
-                    <p className="text-white/80 text-lg font-bold">
+                    <p className="text-white text-lg font-bold">
                       &ldquo;What&rsquo;s wrong with you?&rdquo;
                     </p>
-                    <p className="text-white/60 text-xs mt-2">
+                    <p className="text-white text-xs mt-2">
                       Blames the individual, focuses on deficit, implies the person is flawed
                     </p>
                   </div>
@@ -705,10 +705,10 @@ export default function MentalHealthModule4Section3() {
                     <p className="text-green-300 font-semibold text-sm mb-1">
                       Trauma-Informed Approach
                     </p>
-                    <p className="text-white/80 text-lg font-bold">
+                    <p className="text-white text-lg font-bold">
                       &ldquo;What happened to you?&rdquo;
                     </p>
-                    <p className="text-white/60 text-xs mt-2">
+                    <p className="text-white text-xs mt-2">
                       Seeks to understand experiences, recognises survival responses, focuses on
                       compassion
                     </p>
@@ -739,7 +739,7 @@ export default function MentalHealthModule4Section3() {
                     <p className="text-purple-300 font-bold text-sm">
                       ADVERSE CHILDHOOD EXPERIENCES (ACEs)
                     </p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Events occurring during childhood (ages 0&ndash;17)
                     </p>
                   </div>
@@ -750,7 +750,7 @@ export default function MentalHealthModule4Section3() {
                       <div className="h-4 w-0.5 bg-purple-400/60" />
                       <div className="bg-red-500/15 border border-red-500/30 rounded-lg p-2 sm:p-3 w-full text-center">
                         <p className="text-red-300 font-bold text-[10px] sm:text-xs">ABUSE</p>
-                        <ul className="text-white/60 text-[9px] sm:text-[10px] mt-1.5 space-y-0.5">
+                        <ul className="text-white text-[9px] sm:text-[10px] mt-1.5 space-y-0.5">
                           <li>Physical</li>
                           <li>Emotional</li>
                           <li>Sexual</li>
@@ -761,7 +761,7 @@ export default function MentalHealthModule4Section3() {
                       <div className="h-4 w-0.5 bg-purple-400/60" />
                       <div className="bg-amber-500/15 border border-amber-500/30 rounded-lg p-2 sm:p-3 w-full text-center">
                         <p className="text-amber-300 font-bold text-[10px] sm:text-xs">NEGLECT</p>
-                        <ul className="text-white/60 text-[9px] sm:text-[10px] mt-1.5 space-y-0.5">
+                        <ul className="text-white text-[9px] sm:text-[10px] mt-1.5 space-y-0.5">
                           <li>Physical</li>
                           <li>Emotional</li>
                         </ul>
@@ -773,7 +773,7 @@ export default function MentalHealthModule4Section3() {
                         <p className="text-violet-300 font-bold text-[10px] sm:text-xs">
                           HOUSEHOLD DYSFUNCTION
                         </p>
-                        <ul className="text-white/60 text-[9px] sm:text-[10px] mt-1.5 space-y-0.5">
+                        <ul className="text-white text-[9px] sm:text-[10px] mt-1.5 space-y-0.5">
                           <li>Domestic violence</li>
                           <li>Substance misuse</li>
                           <li>Mental illness</li>
@@ -799,19 +799,19 @@ export default function MentalHealthModule4Section3() {
                   <div className="bg-white/5 border border-purple-400/20 rounded-lg p-3 w-full max-w-lg text-center mb-3">
                     <p className="text-purple-300 font-medium text-xs mb-2">Developmental Impact</p>
                     <div className="flex flex-wrap justify-center gap-2">
-                      <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-2.5 py-1 text-white/70 text-[10px] sm:text-xs">
+                      <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-2.5 py-1 text-white text-[10px] sm:text-xs">
                         Difficulty regulating emotions
                       </span>
-                      <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-2.5 py-1 text-white/70 text-[10px] sm:text-xs">
+                      <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-2.5 py-1 text-white text-[10px] sm:text-xs">
                         Insecure attachment
                       </span>
-                      <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-2.5 py-1 text-white/70 text-[10px] sm:text-xs">
+                      <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-2.5 py-1 text-white text-[10px] sm:text-xs">
                         Hypervigilance
                       </span>
-                      <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-2.5 py-1 text-white/70 text-[10px] sm:text-xs">
+                      <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-2.5 py-1 text-white text-[10px] sm:text-xs">
                         Low self-worth
                       </span>
-                      <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-2.5 py-1 text-white/70 text-[10px] sm:text-xs">
+                      <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-2.5 py-1 text-white text-[10px] sm:text-xs">
                         Difficulty trusting others
                       </span>
                     </div>
@@ -863,7 +863,7 @@ export default function MentalHealthModule4Section3() {
                   </div>
                 </div>
 
-                <p className="text-white/50 text-xs text-center mt-4 italic">
+                <p className="text-white text-xs text-center mt-4 italic">
                   Research shows that the more ACEs a person has experienced, the greater the risk
                   of mental health difficulties in adulthood. This is a dose-response relationship
                   &mdash; more ACEs means more risk.
@@ -875,7 +875,7 @@ export default function MentalHealthModule4Section3() {
                   <Shield className="h-4 w-4 inline-block mr-2 -mt-0.5" />
                   Why Trauma-Informed Care Is Essential
                 </h3>
-                <ul className="text-white/80 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -944,21 +944,21 @@ export default function MentalHealthModule4Section3() {
                 <div className="grid sm:grid-cols-3 gap-3">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg text-center">
                     <p className="text-purple-300 font-bold text-2xl mb-1">Intensity</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Emotions are felt at a much higher level than most people experience. Where
                       someone might feel mildly annoyed, a person with dysregulation feels furious.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg text-center">
                     <p className="text-purple-300 font-bold text-2xl mb-1">Duration</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Emotional reactions last much longer. Recovery from an emotional event that
                       might take minutes for most people can take hours or even days.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg text-center">
                     <p className="text-purple-300 font-bold text-2xl mb-1">Sensitivity</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Emotional reactions are triggered more easily. Events that others might not
                       notice at all can trigger an intense emotional response.
                     </p>
@@ -971,12 +971,12 @@ export default function MentalHealthModule4Section3() {
                   <Brain className="h-4 w-4 inline-block mr-2 -mt-0.5" />
                   The &ldquo;Emotional Bus&rdquo; Analogy
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Imagine you are a bus driver. Most people&rsquo;s emotional passengers sit quietly
                   in the back. When something happens, a few passengers might stand up and shout,
                   but they settle down fairly quickly and the driver can maintain control.
                 </p>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   For someone with emotional dysregulation, the bus is packed with passengers who
                   are{' '}
                   <strong className="text-white">
@@ -986,7 +986,7 @@ export default function MentalHealthModule4Section3() {
                   manage. The driver (the person) is doing their absolute best to keep the bus on
                   the road, but sometimes the passengers overwhelm them.
                 </p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   This analogy helps illustrate why telling someone to &ldquo;just calm down&rdquo;
                   is unhelpful &mdash; they are already fighting with everything they have to manage
                   the overwhelming noise inside.
@@ -996,31 +996,31 @@ export default function MentalHealthModule4Section3() {
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-purple-400 font-medium mb-2">Common Triggers</h3>
                 <div className="flex flex-wrap gap-2 mt-2">
-                  <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-3 py-1.5 text-white/80 text-xs">
+                  <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-3 py-1.5 text-white text-xs">
                     Perceived rejection
                   </span>
-                  <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-3 py-1.5 text-white/80 text-xs">
+                  <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-3 py-1.5 text-white text-xs">
                     Feeling ignored
                   </span>
-                  <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-3 py-1.5 text-white/80 text-xs">
+                  <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-3 py-1.5 text-white text-xs">
                     Change in plans
                   </span>
-                  <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-3 py-1.5 text-white/80 text-xs">
+                  <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-3 py-1.5 text-white text-xs">
                     Criticism
                   </span>
-                  <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-3 py-1.5 text-white/80 text-xs">
+                  <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-3 py-1.5 text-white text-xs">
                     Conflict
                   </span>
-                  <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-3 py-1.5 text-white/80 text-xs">
+                  <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-3 py-1.5 text-white text-xs">
                     Being left out
                   </span>
-                  <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-3 py-1.5 text-white/80 text-xs">
+                  <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-3 py-1.5 text-white text-xs">
                     Uncertainty
                   </span>
-                  <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-3 py-1.5 text-white/80 text-xs">
+                  <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-3 py-1.5 text-white text-xs">
                     Feeling misunderstood
                   </span>
-                  <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-3 py-1.5 text-white/80 text-xs">
+                  <span className="bg-purple-500/20 border border-purple-400/30 rounded-full px-3 py-1.5 text-white text-xs">
                     Reminders of past trauma
                   </span>
                 </div>
@@ -1033,13 +1033,13 @@ export default function MentalHealthModule4Section3() {
                     Why &ldquo;Calm Down&rdquo; Does Not Work
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Traditional advice to &ldquo;calm down&rdquo;, &ldquo;take a deep breath&rdquo;,
                   or &ldquo;just relax&rdquo; is{' '}
                   <strong className="text-white">counterproductive</strong> for someone experiencing
                   emotional dysregulation. Here is why:
                 </p>
-                <ul className="text-white/80 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -1076,13 +1076,13 @@ export default function MentalHealthModule4Section3() {
 
               <div className="bg-purple-500/10 border border-purple-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-purple-400">Distress Tolerance Skills</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Rather than trying to eliminate the emotion (which is not possible in the moment),{' '}
                   <strong className="text-white">distress tolerance</strong> skills help a person
                   survive an emotional crisis without making things worse. These are skills taught
                   in DBT and include:
                 </p>
-                <ul className="text-white/80 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>
@@ -1141,7 +1141,7 @@ export default function MentalHealthModule4Section3() {
                     Validation &mdash; The Single Most Important Skill
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Validation means{' '}
                   <strong className="text-white">
                     acknowledging that the person&rsquo;s feelings are real and understandable
@@ -1149,7 +1149,7 @@ export default function MentalHealthModule4Section3() {
                   , even if you cannot fully understand the intensity of their reaction. Validation
                   does NOT mean:
                 </p>
-                <ul className="text-white/80 text-sm space-y-2 mb-3">
+                <ul className="text-white text-sm space-y-2 mb-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Agreeing with everything they say or do</span>
@@ -1168,7 +1168,7 @@ export default function MentalHealthModule4Section3() {
                     <p className="text-red-300 font-semibold text-sm mb-2">
                       Invalidating Responses
                     </p>
-                    <ul className="text-white/60 text-xs space-y-1.5">
+                    <ul className="text-white text-xs space-y-1.5">
                       <li>&ldquo;You&rsquo;re overreacting.&rdquo;</li>
                       <li>&ldquo;It&rsquo;s not that big a deal.&rdquo;</li>
                       <li>&ldquo;Just calm down.&rdquo;</li>
@@ -1180,7 +1180,7 @@ export default function MentalHealthModule4Section3() {
                     <p className="text-green-300 font-semibold text-sm mb-2">
                       Validating Responses
                     </p>
-                    <ul className="text-white/60 text-xs space-y-1.5">
+                    <ul className="text-white text-xs space-y-1.5">
                       <li>&ldquo;I can see you are in a lot of pain right now.&rdquo;</li>
                       <li>&ldquo;That sounds really difficult.&rdquo;</li>
                       <li>&ldquo;It makes sense that you feel that way.&rdquo;</li>
@@ -1206,7 +1206,7 @@ export default function MentalHealthModule4Section3() {
                         <h4 className="text-purple-300 font-medium mb-1">
                           Consistency and Reliability
                         </h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Be someone the person can depend on. If you say you will do something, do
                           it. If you say you will be there, be there. Inconsistency can trigger fear
                           of abandonment and erode trust. A reliable presence is profoundly
@@ -1222,7 +1222,7 @@ export default function MentalHealthModule4Section3() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-purple-300 font-medium mb-1">Clear Boundaries</h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Boundaries are not punishment &mdash; they are a framework that provides
                           safety and predictability for both you and the person you are supporting.
                           State boundaries clearly and kindly: &ldquo;I care about you, and I need
@@ -1245,7 +1245,7 @@ export default function MentalHealthModule4Section3() {
                         <h4 className="text-purple-300 font-medium mb-1">
                           Avoid Rejection and Abandonment Triggers
                         </h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Be mindful that seemingly small actions can trigger intense abandonment
                           fear. Give notice before changes. Explain absences. Avoid sudden
                           withdrawals of support. If you need to end a conversation or leave,
@@ -1263,7 +1263,7 @@ export default function MentalHealthModule4Section3() {
                         <h4 className="text-purple-300 font-medium mb-1">
                           Don&rsquo;t Take Behaviours Personally
                         </h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           When someone with BPD/EUPD lashes out, withdraws, or says hurtful things,
                           it is almost always driven by{' '}
                           <strong className="text-white">fear, pain, or an emotional crisis</strong>{' '}
@@ -1280,7 +1280,7 @@ export default function MentalHealthModule4Section3() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-purple-300 font-medium mb-1">Patience</h4>
-                        <p className="text-white/80 text-sm">
+                        <p className="text-white text-sm">
                           Progress is often slow and non-linear. There will be setbacks. The person
                           may test your reliability (often unconsciously) because their past
                           experience has taught them that people leave. Your continued, patient
@@ -1297,7 +1297,7 @@ export default function MentalHealthModule4Section3() {
                   <MessageCircle className="h-4 w-4 inline-block mr-2 -mt-0.5" />
                   Specialist Support
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Whilst your support as a mental health first aider is valuable, personality
                   disorders benefit from specialist therapeutic input. The two most effective
                   evidence-based therapies are:
@@ -1307,7 +1307,7 @@ export default function MentalHealthModule4Section3() {
                     <p className="text-violet-300 font-medium text-sm mb-1">
                       Dialectical Behaviour Therapy (DBT)
                     </p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Developed specifically for BPD/EUPD. Combines cognitive behavioural techniques
                       with mindfulness. Teaches four key skill sets: mindfulness, distress
                       tolerance, emotional regulation, and interpersonal effectiveness. The most
@@ -1316,7 +1316,7 @@ export default function MentalHealthModule4Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-violet-300 font-medium text-sm mb-1">Schema Therapy</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Integrates elements from CBT, attachment theory, and experiential therapy.
                       Focuses on identifying and changing deeply held patterns
                       (&ldquo;schemas&rdquo;) that developed in childhood and now cause distress.
@@ -1352,7 +1352,7 @@ export default function MentalHealthModule4Section3() {
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-red-500/10 border border-red-500/30 p-3 rounded-lg">
                     <p className="text-red-300 font-semibold text-sm mb-2">Never Say</p>
-                    <ul className="text-white/60 text-xs space-y-1.5">
+                    <ul className="text-white text-xs space-y-1.5">
                       <li className="flex items-start gap-2">
                         <Ban className="h-3 w-3 text-red-400 mt-0.5 flex-shrink-0" />
                         <span>&ldquo;She&rsquo;s a borderline.&rdquo;</span>
@@ -1377,7 +1377,7 @@ export default function MentalHealthModule4Section3() {
                   </div>
                   <div className="bg-green-500/10 border border-green-500/30 p-3 rounded-lg">
                     <p className="text-green-300 font-semibold text-sm mb-2">Instead Say</p>
-                    <ul className="text-white/60 text-xs space-y-1.5">
+                    <ul className="text-white text-xs space-y-1.5">
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-3 w-3 text-green-400 mt-0.5 flex-shrink-0" />
                         <span>&ldquo;A person with BPD.&rdquo;</span>
@@ -1408,7 +1408,7 @@ export default function MentalHealthModule4Section3() {
                   <AlertTriangle className="h-4 w-4 inline-block mr-2 -mt-0.5" />
                   The Danger of &ldquo;Difficult Patient&rdquo; Narratives
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   When a person is labelled as &ldquo;difficult&rdquo;, &ldquo;manipulative&rdquo;,
                   or &ldquo;attention-seeking&rdquo;, it fundamentally changes how others interact
                   with them. Staff may become dismissive, avoidant, or hostile. The person picks up
@@ -1462,13 +1462,13 @@ export default function MentalHealthModule4Section3() {
                   <Heart className="h-4 w-4 inline-block mr-2 -mt-0.5" />
                   Recovery and Hope
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   It is essential to know and communicate that{' '}
                   <strong className="text-white">recovery and progress are possible</strong>. The
                   outdated belief that personality disorders are &ldquo;untreatable&rdquo; is both
                   inaccurate and harmful. Research shows:
                 </p>
-                <ul className="text-white/80 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                     <span>
@@ -1511,7 +1511,7 @@ export default function MentalHealthModule4Section3() {
                     Every Person Deserves Compassion
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Regardless of diagnosis, behaviour, or history,{' '}
                   <strong className="text-white">
                     every person deserves to be treated with compassion and dignity
@@ -1538,7 +1538,7 @@ export default function MentalHealthModule4Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1554,7 +1554,7 @@ export default function MentalHealthModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-4">

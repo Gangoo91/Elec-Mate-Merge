@@ -272,7 +272,7 @@ const HNCModule5Section6_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section6">
@@ -294,7 +294,7 @@ const HNCModule5Section6_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Interface Coordination
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Coordination with other trades, client operations interface, occupied premises and live
             services management
           </p>
@@ -466,7 +466,7 @@ const HNCModule5Section6_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Real-World Example: Office Refurbishment
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 On a 10-floor office refurbishment, weekly M&E coordination meetings identified that
                 electrical containment routes clashed with new ductwork on floors 3-5. Early
                 identification allowed the design team to modify the containment routing before
@@ -645,7 +645,7 @@ const HNCModule5Section6_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Commercial Offices</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Work often restricted to out-of-hours</li>
                     <li>Noise limits during business hours</li>
                     <li>Data and IT systems protection critical</li>
@@ -654,7 +654,7 @@ const HNCModule5Section6_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Healthcare Facilities</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>24/7 operations - no fully quiet periods</li>
                     <li>Critical life safety systems</li>
                     <li>Infection control requirements</li>
@@ -663,7 +663,7 @@ const HNCModule5Section6_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Retail Environments</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Customer safety paramount</li>
                     <li>Stock protection requirements</li>
                     <li>Trading hours restrictions</li>
@@ -672,7 +672,7 @@ const HNCModule5Section6_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Educational Buildings</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Safeguarding requirements (DBS checks)</li>
                     <li>Term time vs holiday working</li>
                     <li>Exam period restrictions</li>
@@ -719,7 +719,7 @@ const HNCModule5Section6_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Real-World Example: Hospital Theatre Upgrade
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Upgrading the electrical infrastructure to operating theatres required careful
                 coordination with clinical staff. Work was scheduled during planned maintenance
                 shutdowns, with backup power from mobile generators for adjacent theatres. Each
@@ -907,7 +907,7 @@ const HNCModule5Section6_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Real-World Example: Data Centre Upgrade
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 A data centre electrical upgrade required work during a two-hour maintenance window
                 each Sunday. The client liaison protocol included: 48-hour advance confirmation of
                 the window, pre-agreed rollback procedures if work overran, direct communication
@@ -916,7 +916,7 @@ const HNCModule5Section6_3 = () => {
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Communication tip:</strong> Over-communicate rather than under-communicate.
               Clients prefer to know about potential issues early, even if they don't materialise,
               rather than be surprised by problems.
@@ -942,7 +942,7 @@ const HNCModule5Section6_3 = () => {
                 <strong>Scenario:</strong> The mechanical contractor reports they cannot install
                 ductwork on Level 2 because electrical containment is incomplete.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p className="text-elec-yellow">Issue raised:</p>
                 <p>Level 2 ductwork installation blocked by incomplete containment</p>
                 <p className="mt-2 text-elec-yellow">Discussion:</p>
@@ -968,7 +968,7 @@ const HNCModule5Section6_3 = () => {
                 <strong>Scenario:</strong> Need to replace a distribution board in an occupied
                 office, requiring a 4-hour shutdown of half the floor.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p className="text-elec-yellow">Isolation Request Form:</p>
                 <p>Date of request: Monday 15th January</p>
                 <p>Requested isolation date: Saturday 27th January</p>
@@ -998,7 +998,7 @@ const HNCModule5Section6_3 = () => {
                 <strong>Question:</strong> Who is responsible for the control wiring between the BMS
                 panel and the AHU motor control centre?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p className="text-elec-yellow">Interface Matrix Entry:</p>
                 <p>Interface: BMS to AHU control wiring</p>
                 <p className="mt-2">Electrical contractor responsibility:</p>
@@ -1088,7 +1088,7 @@ const HNCModule5Section6_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1134,7 +1134,7 @@ const HNCModule5Section6_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section6">

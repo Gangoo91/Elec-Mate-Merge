@@ -265,7 +265,7 @@ const Module4Section1_4 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -283,13 +283,13 @@ const Module4Section1_4 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 1.4</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 1.4</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Planning Workflow and Sequencing Tasks
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master effective workflow planning and task sequencing for electrical installations to
               maximise efficiency and safety.
             </p>
@@ -301,7 +301,7 @@ const Module4Section1_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="grid md:grid-cols-2 gap-4 text-sm text-white/90">
+            <div className="grid md:grid-cols-2 gap-4 text-sm text-white">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-5 space-y-1">
@@ -335,7 +335,7 @@ const Module4Section1_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <ul className="list-disc pl-6 space-y-2 text-sm text-white/90">
+            <ul className="list-disc pl-6 space-y-2 text-sm text-white">
               <li>Break down an installation into logical, manageable stages.</li>
               <li>Sequence tasks to maximise efficiency and safety.</li>
               <li>Coordinate with other site activities and trades.</li>
@@ -352,7 +352,7 @@ const Module4Section1_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               <Calendar className="w-5 h-5" /> Understanding Workflow in Electrical Installations
             </h2>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               Electrical installations follow a logical sequence of phases, each with specific
               activities, timeframes, and dependencies. Understanding this workflow is crucial for
               effective planning.
@@ -367,11 +367,11 @@ const Module4Section1_4 = () => {
                     </span>
                     <div className="flex-1">
                       <p className="font-semibold text-elec-yellow mb-1">{phase.phase}</p>
-                      <p className="text-sm text-white/80 mb-2">{phase.description}</p>
-                      <div className="text-xs text-white/70 bg-black/20 p-2 rounded mb-2">
+                      <p className="text-sm text-white mb-2">{phase.description}</p>
+                      <div className="text-xs text-white bg-black/20 p-2 rounded mb-2">
                         <strong>Activities:</strong> {phase.activities}
                       </div>
-                      <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                      <div className="text-xs text-white bg-black/20 p-2 rounded">
                         <strong>Typical timeframe:</strong> {phase.timeframe}
                       </div>
                     </div>
@@ -382,7 +382,7 @@ const Module4Section1_4 = () => {
 
             <div className="mt-4 p-4 bg-white/5 border border-white/10 rounded-lg">
               <p className="text-sm font-medium text-white mb-1">Workflow Success Factors</p>
-              <p className="text-xs text-white/70">
+              <p className="text-xs text-white">
                 Clear phase boundaries, adequate resources for each phase, proper handover
                 procedures, quality gates between phases, and flexibility to adapt to changing
                 conditions.
@@ -400,7 +400,7 @@ const Module4Section1_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               <Clock className="w-5 h-5" /> Task Sequencing Principles
             </h2>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               Effective task sequencing prevents conflicts, reduces rework, and maximises
               productivity by following logical construction principles and maintaining safety.
             </p>
@@ -417,8 +417,8 @@ const Module4Section1_4 = () => {
                     </span>
                     <div className="flex-1">
                       <p className="font-semibold text-green-400 mb-1">{principle.principle}</p>
-                      <p className="text-sm text-white/80 mb-2">{principle.description}</p>
-                      <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                      <p className="text-sm text-white mb-2">{principle.description}</p>
+                      <div className="text-xs text-white bg-black/20 p-2 rounded">
                         <strong>Rationale:</strong> {principle.rationale}
                       </div>
                     </div>
@@ -429,7 +429,7 @@ const Module4Section1_4 = () => {
 
             <div className="mt-4 p-4 bg-green-500/10 border border-green-500/30 rounded-lg">
               <p className="text-sm font-medium text-white mb-1">Sequencing Flexibility</p>
-              <p className="text-xs text-white/80">
+              <p className="text-xs text-white">
                 While following principles is important, maintain flexibility to adapt to site
                 conditions, weather, material availability, and coordination requirements. Always
                 prioritise safety.
@@ -447,7 +447,7 @@ const Module4Section1_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               <Users className="w-5 h-5" /> Coordination with Other Trades
             </h2>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               Successful electrical installations require effective coordination with multiple
               trades. Poor coordination leads to clashes, delays, damage, and cost overruns.
             </p>
@@ -464,10 +464,10 @@ const Module4Section1_4 = () => {
                     </span>
                     <div className="flex-1">
                       <p className="font-semibold text-purple-400 mb-1">{aspect.trade}</p>
-                      <p className="text-sm text-white/80 mb-2">
+                      <p className="text-sm text-white mb-2">
                         <strong>Activities:</strong> {aspect.activities}
                       </p>
-                      <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                      <div className="text-xs text-white bg-black/20 p-2 rounded">
                         <strong>Coordination needs:</strong> {aspect.coordinationNeeds}
                       </div>
                     </div>
@@ -478,7 +478,7 @@ const Module4Section1_4 = () => {
 
             <div className="mt-4 p-4 bg-white/5 border border-white/10 rounded-lg">
               <p className="text-sm font-medium text-white mb-1">Coordination Success Factors</p>
-              <p className="text-xs text-white/70">
+              <p className="text-xs text-white">
                 Regular coordination meetings, shared project schedules, clear communication
                 protocols, 3D modelling for clash detection, and mutual respect between trades.
               </p>
@@ -495,7 +495,7 @@ const Module4Section1_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               <CheckCircle className="w-5 h-5" /> Planning Tools and Techniques
             </h2>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               Effective planning requires appropriate tools and techniques to visualise, track, and
               manage complex electrical installation projects.
             </p>
@@ -512,8 +512,8 @@ const Module4Section1_4 = () => {
                     </span>
                     <div className="flex-1">
                       <p className="font-semibold text-orange-400 mb-1">{tool.tool}</p>
-                      <p className="text-sm text-white/80 mb-2">{tool.purpose}</p>
-                      <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                      <p className="text-sm text-white mb-2">{tool.purpose}</p>
+                      <div className="text-xs text-white bg-black/20 p-2 rounded">
                         <strong>Applications:</strong> {tool.applications}
                       </div>
                     </div>
@@ -524,7 +524,7 @@ const Module4Section1_4 = () => {
 
             <div className="mt-4 p-4 bg-white/5 border border-white/10 rounded-lg">
               <p className="text-sm font-medium text-white mb-1">Tool Selection Strategy</p>
-              <p className="text-xs text-white/70">
+              <p className="text-xs text-white">
                 Choose tools appropriate to project complexity, team size, and client requirements.
                 Simple projects may only need basic scheduling, while complex projects require
                 sophisticated planning tools.
@@ -544,13 +544,13 @@ const Module4Section1_4 = () => {
                 <h4 className="font-medium text-white mb-2">
                   Case Study 1: Poor Sequencing Consequences
                 </h4>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   An electrician installed floor trunking before the concrete pour date was
                   confirmed. During the concrete pour, the trunking was damaged by the concrete
                   contractor's equipment and had to be completely removed and reinstalled, costing
                   an additional £3,000 in labour and materials plus a 2-week project delay.
                 </p>
-                <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                <div className="text-xs text-white bg-black/20 p-2 rounded">
                   <strong>Lesson:</strong> Always confirm sequencing with other trades before
                   proceeding. Floor installations should be coordinated with concrete contractors to
                   ensure proper timing and protection.
@@ -561,13 +561,13 @@ const Module4Section1_4 = () => {
                 <h4 className="font-medium text-white mb-2">
                   Case Study 2: Trade Coordination Failure
                 </h4>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   A major office refurbishment suffered 6 weeks delay when electrical and HVAC
                   contractors both claimed the same ceiling space. Neither had coordinated routes,
                   resulting in impossible installation conflicts that required complete redesign and
                   rework.
                 </p>
-                <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                <div className="text-xs text-white bg-black/20 p-2 rounded">
                   <strong>Lesson:</strong> 3D coordination and regular trade meetings are essential.
                   The £50,000 delay cost far exceeded the investment needed for proper coordination.
                 </div>
@@ -577,13 +577,13 @@ const Module4Section1_4 = () => {
                 <h4 className="font-medium text-white mb-2">
                   Success Story: Effective Workflow Planning
                 </h4>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   A data centre project used detailed Gantt charts, weekly coordination meetings,
                   and look-ahead scheduling to complete 3 weeks early. Excellent coordination
                   allowed trades to work efficiently without conflicts, materials arrived
                   just-in-time, and quality was excellent.
                 </p>
-                <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                <div className="text-xs text-white bg-black/20 p-2 rounded">
                   <strong>Result:</strong> Early completion bonus of £100,000, excellent client
                   relationships, and follow-on contracts worth £2M. Good planning pays for itself
                   many times over.
@@ -603,7 +603,7 @@ const Module4Section1_4 = () => {
                 <p className="font-medium text-white mb-1">
                   Can sequencing change once work begins?
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Yes – sequencing should be adaptable to changing site conditions, but changes must
                   be properly risk-assessed and communicated to all stakeholders.
                 </p>
@@ -612,7 +612,7 @@ const Module4Section1_4 = () => {
                 <p className="font-medium text-white mb-1">
                   What happens if critical path tasks are delayed?
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   The entire project may be delayed unless recovery actions are taken immediately.
                   Critical path delays affect the final completion date directly.
                 </p>
@@ -621,7 +621,7 @@ const Module4Section1_4 = () => {
                 <p className="font-medium text-white mb-1">
                   Who is responsible for the overall site workflow?
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Usually the main contractor or site manager coordinates overall workflow, but
                   electricians must plan their own work within this framework.
                 </p>
@@ -630,7 +630,7 @@ const Module4Section1_4 = () => {
                 <p className="font-medium text-white mb-1">
                   How far ahead should electrical work be planned?
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Detailed planning should extend 3-6 weeks ahead, with outline planning for the
                   entire project duration to identify long-lead items and critical activities.
                 </p>
@@ -644,7 +644,7 @@ const Module4Section1_4 = () => {
               <h2 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
                 <CheckCircle className="w-5 h-5 text-elec-yellow" /> Summary
               </h2>
-              <div className="space-y-2 text-sm text-white/80">
+              <div className="space-y-2 text-sm text-white">
                 <p>
                   <strong>Workflow planning</strong> is essential for all electrical projects
                   regardless of size. Proper sequencing prevents conflicts, reduces costs, and

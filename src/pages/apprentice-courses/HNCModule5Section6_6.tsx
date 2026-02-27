@@ -235,7 +235,7 @@ const HNCModule5Section6_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section6">
@@ -257,7 +257,7 @@ const HNCModule5Section6_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Practical Completion
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Completion requirements, defects liability period, sectional completion and handover
             procedures
           </p>
@@ -666,7 +666,7 @@ const HNCModule5Section6_6 = () => {
               </p>
               <div className="p-3 rounded bg-white/5">
                 <p className="text-sm text-white mb-2">A new hospital building with three wings:</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>
                     <strong>Section 1 (Outpatients):</strong> Completion 1st March - Must have
                     independent power, lighting, fire alarm, HVAC
@@ -754,7 +754,7 @@ const HNCModule5Section6_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-green-400 mb-1">Contractor Liability</p>
-                  <ul className="text-sm text-white/80 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">
                       Poor workmanship (loose connections, incorrect installation)
                     </li>
@@ -767,7 +767,7 @@ const HNCModule5Section6_6 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-red-400 mb-1">Not Contractor Liability</p>
-                  <ul className="text-sm text-white/80 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Normal wear and tear</li>
                     <li className="pl-1">User damage or misuse</li>
                     <li className="pl-1">Consumables (lamps, filters, fuses)</li>
@@ -855,7 +855,7 @@ const HNCModule5Section6_6 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Commercial tip:</strong> Maintain detailed records of all defect
               notifications, responses, and rectification work. Disputes often arise about whether
               defects were notified within the DLP.
@@ -881,7 +881,7 @@ const HNCModule5Section6_6 = () => {
                 <strong>Scenario:</strong> Electrical subcontractor preparing for practical
                 completion of a 10,000m² office building.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p className="text-elec-yellow/80">Documentation checklist:</p>
                 <p className="mt-2">1. Electrical Installation Certificate (BS 7671)</p>
                 <p>2. Schedule of test results - all circuits</p>
@@ -905,7 +905,7 @@ const HNCModule5Section6_6 = () => {
                 <strong>Scenario:</strong> Building with sectional completion - when does each
                 section's DLP end?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Section A practical completion: 15th January 2024</p>
                 <p>Section B practical completion: 1st April 2024</p>
                 <p>Section C practical completion: 1st July 2024</p>
@@ -933,7 +933,7 @@ const HNCModule5Section6_6 = () => {
                 <strong>Scenario:</strong> Client takes early possession of ground floor (25% of
                 building value) 8 weeks before planned completion.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Contract value: £4,000,000</p>
                 <p>Retention: 3% = £120,000</p>
                 <p>Liquidated damages: £10,000 per week</p>
@@ -1026,7 +1026,7 @@ const HNCModule5Section6_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1072,7 +1072,7 @@ const HNCModule5Section6_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section6">

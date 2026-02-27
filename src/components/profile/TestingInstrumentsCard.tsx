@@ -217,19 +217,19 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
           </div>
           <div className="flex items-center gap-2">
             {savedInstruments.length > 0 && (
-              <span className="text-[13px] text-white/50 bg-white/[0.06] px-2 py-0.5 rounded-full">
+              <span className="text-[13px] text-white bg-white/[0.06] px-2 py-0.5 rounded-full">
                 {savedInstruments.length}
               </span>
             )}
-            <ChevronRight className="h-5 w-5 text-white/30" />
+            <ChevronRight className="h-5 w-5 text-white" />
           </div>
         </button>
 
         <div className="border-t border-white/[0.06]">
           {savedInstruments.length === 0 ? (
             <div className="px-4 py-4 text-center">
-              <p className="text-[13px] text-white/40">No testing instruments configured</p>
-              <p className="text-[12px] text-white/30 mt-1">
+              <p className="text-[13px] text-white">No testing instruments configured</p>
+              <p className="text-[12px] text-white mt-1">
                 Add your testers to autofill certificates
               </p>
             </div>
@@ -241,7 +241,7 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
                   <Wrench className="h-4 w-4 text-orange-400" />
                 </div>
                 <div className="flex-1 min-w-0 text-left">
-                  <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+                  <p className="text-[11px] font-medium text-white uppercase tracking-wide">
                     {getInstrumentLabel(primaryInstrument.instrument_type)}
                   </p>
                   <p className="text-[15px] text-white truncate">
@@ -256,7 +256,7 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
                   <Hash className="h-4 w-4 text-blue-400" />
                 </div>
                 <div className="flex-1 min-w-0 text-left">
-                  <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+                  <p className="text-[11px] font-medium text-white uppercase tracking-wide">
                     Serial Number
                   </p>
                   <p className="text-[15px] text-white">
@@ -270,7 +270,7 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
                   <Calendar className="h-4 w-4 text-green-400" />
                 </div>
                 <div className="flex-1 min-w-0 text-left">
-                  <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+                  <p className="text-[11px] font-medium text-white uppercase tracking-wide">
                     Calibration Date
                   </p>
                   <p className="text-[15px] text-white">
@@ -283,7 +283,7 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
 
               {savedInstruments.length > 1 && (
                 <div className="px-4 py-2 bg-white/[0.02]">
-                  <p className="text-[12px] text-white/40 text-center">
+                  <p className="text-[12px] text-white text-center">
                     +{savedInstruments.length - 1} more instrument
                     {savedInstruments.length > 2 ? 's' : ''}
                   </p>
@@ -333,7 +333,7 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
           </div>
 
           <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 space-y-4 pb-8">
-            <p className="text-[13px] text-white/50 px-1">
+            <p className="text-[13px] text-white px-1">
               Add your testing instruments. The first instrument will be used to autofill EICR, EIC,
               and Minor Works certificates.
             </p>
@@ -362,7 +362,7 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
                             ? `${instrument.make} ${instrument.model}`
                             : 'New Instrument'}
                         </p>
-                        <p className="text-[12px] text-white/50">
+                        <p className="text-[12px] text-white">
                           {getInstrumentLabel(instrument.instrument_type)}
                         </p>
                       </div>
@@ -374,7 +374,7 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
                         </span>
                       )}
                       <ChevronRight
-                        className={`h-5 w-5 text-white/30 transition-transform ${editingIndex === index ? 'rotate-90' : ''}`}
+                        className={`h-5 w-5 text-white transition-transform ${editingIndex === index ? 'rotate-90' : ''}`}
                       />
                     </div>
                   </button>
@@ -391,7 +391,7 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
                         <div className="px-4 pb-4 space-y-4 border-t border-white/[0.06] pt-4">
                           {/* Instrument Type */}
                           <div className="space-y-2">
-                            <Label className="text-[12px] font-medium text-white/50 uppercase tracking-wide">
+                            <Label className="text-[12px] font-medium text-white uppercase tracking-wide">
                               Instrument Type
                             </Label>
                             <Select
@@ -421,7 +421,7 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
 
                           {/* Make */}
                           <div className="space-y-2">
-                            <Label className="text-[12px] font-medium text-white/50 uppercase tracking-wide">
+                            <Label className="text-[12px] font-medium text-white uppercase tracking-wide">
                               Make
                             </Label>
                             <Select
@@ -445,7 +445,7 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
 
                           {/* Model */}
                           <div className="space-y-2">
-                            <Label className="text-[12px] font-medium text-white/50 uppercase tracking-wide">
+                            <Label className="text-[12px] font-medium text-white uppercase tracking-wide">
                               Model
                             </Label>
                             {instrument.make &&
@@ -464,7 +464,7 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
                                       {model}
                                     </SelectItem>
                                   ))}
-                                  <SelectItem value="other_model" className="text-white/50 italic">
+                                  <SelectItem value="other_model" className="text-white italic">
                                     Other (type manually)
                                   </SelectItem>
                                 </SelectContent>
@@ -490,7 +490,7 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
 
                           {/* Serial Number */}
                           <div className="space-y-2">
-                            <Label className="text-[12px] font-medium text-white/50 uppercase tracking-wide">
+                            <Label className="text-[12px] font-medium text-white uppercase tracking-wide">
                               Serial Number
                             </Label>
                             <Input
@@ -505,7 +505,7 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
 
                           {/* Calibration Date */}
                           <div className="space-y-2">
-                            <Label className="text-[12px] font-medium text-white/50 uppercase tracking-wide">
+                            <Label className="text-[12px] font-medium text-white uppercase tracking-wide">
                               Calibration Date
                             </Label>
                             <Input
@@ -539,7 +539,7 @@ const TestingInstrumentsCard: React.FC<TestingInstrumentsCardProps> = ({
             <motion.button
               whileTap={{ scale: 0.98 }}
               onClick={addInstrument}
-              className="w-full flex items-center justify-center gap-2 h-[50px] rounded-xl border-2 border-dashed border-white/[0.15] text-white/60 text-[15px] font-medium active:bg-white/[0.04] touch-manipulation"
+              className="w-full flex items-center justify-center gap-2 h-[50px] rounded-xl border-2 border-dashed border-white/[0.15] text-white text-[15px] font-medium active:bg-white/[0.04] touch-manipulation"
             >
               <Plus className="h-5 w-5" />
               Add Instrument

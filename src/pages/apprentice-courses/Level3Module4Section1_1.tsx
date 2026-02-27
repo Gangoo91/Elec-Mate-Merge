@@ -271,7 +271,7 @@ const Level3Module4Section1_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section1">
@@ -415,7 +415,7 @@ const Level3Module4Section1_1 = () => {
               devices can handle the available fault current.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A nail driven through a cable in a wall creates a direct
               short between line and neutral. Current jumps from perhaps 10A (normal load) to 800A
               (fault current). The 32A MCB detects this massive overcurrent and trips within
@@ -496,19 +496,19 @@ const Level3Module4Section1_1 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Voltage Drop</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   V = IR at the fault causes reduced voltage at the load
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Heat Generation</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   P = I²R concentrates heat at the high-resistance point
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Progressive Damage</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Heat damages insulation, worsening the fault
                 </p>
               </div>
@@ -522,7 +522,7 @@ const Level3Module4Section1_1 = () => {
               plastic accessory.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A 13A socket with a loose terminal connection develops 0.5Ω
               resistance at the joint. Drawing 13A, the power dissipated at the joint is P = 13² ×
               0.5 = 84.5W - like having a small heater inside your socket. Over time, this melts
@@ -602,7 +602,7 @@ const Level3Module4Section1_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -647,7 +647,7 @@ const Level3Module4Section1_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section1">

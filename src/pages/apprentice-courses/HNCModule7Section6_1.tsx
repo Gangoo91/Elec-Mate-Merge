@@ -262,7 +262,7 @@ const HNCModule7Section6_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section6">
@@ -284,7 +284,7 @@ const HNCModule7Section6_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Distribution Board Design
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Board layouts, circuit groupings, labelling, IP ratings, and installation considerations
             for electrical distribution
           </p>
@@ -706,7 +706,7 @@ const HNCModule7Section6_1 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Design tip:</strong> Use dual RCD consumer units or split-load boards to
               distribute circuits across two RCDs, ensuring loss of one RCD does not cause total
               loss of lighting or power.
@@ -736,7 +736,7 @@ const HNCModule7Section6_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Mandatory Elements</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>- Circuit number/reference</li>
                     <li>- Type of protective device (MCB, RCBO, etc.)</li>
                     <li>- Nominal current rating (In)</li>
@@ -747,7 +747,7 @@ const HNCModule7Section6_1 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Additional Best Practice</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>- Cable type and size</li>
                     <li>- RCD rating if applicable</li>
                     <li>- Test results summary</li>
@@ -874,8 +874,8 @@ const HNCModule7Section6_1 = () => {
                 <strong>Scenario:</strong> Specify a consumer unit for a 3-bedroom house with 12
                 circuits including lighting, sockets, cooker, shower, and outdoor supplies.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Requirements Analysis:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Requirements Analysis:</p>
                 <p className="mt-2">Circuits required: 12</p>
                 <p>Spare capacity (20%): 12 × 0.2 = 2.4 ≈ 3 spare ways</p>
                 <p>Total ways needed: 12 + 3 = 15 ways minimum</p>
@@ -906,8 +906,8 @@ const HNCModule7Section6_1 = () => {
                 <strong>Scenario:</strong> Select appropriate IP rating for a distribution board in
                 an exposed car park location.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Environmental Assessment:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Environmental Assessment:</p>
                 <p className="mt-2">Location: External car park, no shelter</p>
                 <p>Exposure: Direct rain, wind-driven spray</p>
                 <p>Dust/debris: Moderate (vehicle movements)</p>
@@ -934,8 +934,8 @@ const HNCModule7Section6_1 = () => {
                 <strong>Scenario:</strong> Design circuit allocation for a small commercial
                 three-phase distribution board.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Load Schedule:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Load Schedule:</p>
                 <p className="mt-2">Single-phase loads:</p>
                 <p className="ml-4">- Lighting: 3 × 10A circuits (3.6kW each max)</p>
                 <p className="ml-4">- Socket circuits: 6 × 32A ring finals</p>
@@ -1033,7 +1033,7 @@ const HNCModule7Section6_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1079,7 +1079,7 @@ const HNCModule7Section6_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section6">

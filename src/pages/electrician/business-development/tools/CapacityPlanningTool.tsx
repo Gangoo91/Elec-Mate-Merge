@@ -238,7 +238,7 @@ const CapacityPlanningTool = () => {
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 Capacity Planning Tool
               </h1>
-              <p className="text-sm text-white/70">Plan workforce capacity & utilisation</p>
+              <p className="text-sm text-white">Plan workforce capacity & utilisation</p>
             </div>
           </div>
           <SmartBackButton />
@@ -253,7 +253,7 @@ const CapacityPlanningTool = () => {
           {/* Team Structure */}
           <div className="flex items-center gap-2 mb-3">
             <Users className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white/80">Team Structure</span>
+            <span className="text-sm font-medium text-white">Team Structure</span>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -303,7 +303,7 @@ const CapacityPlanningTool = () => {
           {/* Time Allocation */}
           <div className="flex items-center gap-2 mb-3 mt-4">
             <Clock className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white/80">Time Allocation</span>
+            <span className="text-sm font-medium text-white">Time Allocation</span>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -333,7 +333,7 @@ const CapacityPlanningTool = () => {
           {/* Time Off */}
           <div className="flex items-center gap-2 mb-3 mt-4">
             <Calendar className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white/80">Time Off (Days/Year)</span>
+            <span className="text-sm font-medium text-white">Time Off (Days/Year)</span>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -371,7 +371,7 @@ const CapacityPlanningTool = () => {
           {/* Work Profile */}
           <div className="flex items-center gap-2 mb-3 mt-4">
             <Briefcase className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white/80">Work Profile</span>
+            <span className="text-sm font-medium text-white">Work Profile</span>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -429,7 +429,7 @@ const CapacityPlanningTool = () => {
               disabled={!isValid}
               className={cn(
                 'flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation',
-                isValid ? 'text-black' : 'bg-white/10 text-white/30 cursor-not-allowed'
+                isValid ? 'text-black' : 'bg-white/10 text-white cursor-not-allowed'
               )}
               style={
                 isValid
@@ -444,13 +444,13 @@ const CapacityPlanningTool = () => {
             </button>
             <button
               onClick={loadExample}
-              className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/90 hover:bg-white/10 transition-colors touch-manipulation text-sm"
+              className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation text-sm"
             >
               Example
             </button>
             <button
               onClick={resetTool}
-              className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/90 hover:bg-white/10 transition-colors touch-manipulation"
+              className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation"
             >
               <RotateCcw className="h-5 w-5" />
             </button>
@@ -530,15 +530,15 @@ const CapacityPlanningTool = () => {
                   <div className="space-y-2">
                     <p className="text-white text-xs font-medium">Annual Hours</p>
                     <div className="flex justify-between">
-                      <span className="text-white/70">Total Available:</span>
+                      <span className="text-white">Total Available:</span>
                       <span className="text-white">{metrics.totalAvailableHours.toFixed(0)}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-white/70">Billable:</span>
+                      <span className="text-white">Billable:</span>
                       <span className="text-green-400">{metrics.billableHours.toFixed(0)}</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-white/70">Non-billable:</span>
+                      <span className="text-white">Non-billable:</span>
                       <span className="text-red-400">{metrics.nonBillableHours.toFixed(0)}</span>
                     </div>
                   </div>
@@ -546,19 +546,19 @@ const CapacityPlanningTool = () => {
                   <div className="space-y-2">
                     <p className="text-white text-xs font-medium">Work Distribution</p>
                     <div className="flex justify-between">
-                      <span className="text-white/70">Emergency:</span>
+                      <span className="text-white">Emergency:</span>
                       <span className="text-red-300">
                         {metrics.emergencyCapacity.toFixed(0)} hrs
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-white/70">Maintenance:</span>
+                      <span className="text-white">Maintenance:</span>
                       <span className="text-blue-300">
                         {metrics.maintenanceCapacity.toFixed(0)} hrs
                       </span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-white/70">New Projects:</span>
+                      <span className="text-white">New Projects:</span>
                       <span className="text-green-300">
                         {metrics.newWorkCapacity.toFixed(0)} hrs
                       </span>
@@ -574,7 +574,7 @@ const CapacityPlanningTool = () => {
                 <Lightbulb className="h-5 w-5 text-blue-400 mt-0.5" />
                 <div>
                   <h4 className="text-white font-medium mb-2">Planning Insight</h4>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     {metrics.utilizationRate >= 85
                       ? 'Consider hiring additional staff or reducing workload to prevent burnout and maintain quality standards. High utilization can lead to mistakes and safety issues.'
                       : metrics.utilizationRate >= 70
@@ -599,7 +599,7 @@ const CapacityPlanningTool = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      'h-4 w-4 text-white/80 transition-transform duration-200',
+                      'h-4 w-4 text-white transition-transform duration-200',
                       showGuidance && 'rotate-180'
                     )}
                   />
@@ -646,7 +646,7 @@ const CapacityPlanningTool = () => {
               </div>
               <ChevronDown
                 className={cn(
-                  'h-4 w-4 text-white/80 transition-transform duration-200',
+                  'h-4 w-4 text-white transition-transform duration-200',
                   showReference && 'rotate-180'
                 )}
               />

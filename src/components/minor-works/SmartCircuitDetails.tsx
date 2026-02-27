@@ -104,7 +104,7 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
                           <div className="flex flex-col">
                             <span>{d.label}</span>
                             {d.description && (
-                              <span className="text-xs text-white/50">{d.description}</span>
+                              <span className="text-xs text-white">{d.description}</span>
                             )}
                           </div>
                         </SelectItem>
@@ -127,7 +127,7 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
                         <SelectItem key={r.value} value={r.value}>
                           <div className="flex flex-col">
                             <span>{r.label}</span>
-                            <span className="text-xs text-white/50">
+                            <span className="text-xs text-white">
                               Typical: {r.typical.join(', ')}
                             </span>
                           </div>
@@ -150,13 +150,13 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
                       <SelectItem value="6">
                         <div className="flex flex-col">
                           <span>6kA</span>
-                          <span className="text-xs text-white/50">Standard domestic</span>
+                          <span className="text-xs text-white">Standard domestic</span>
                         </div>
                       </SelectItem>
                       <SelectItem value="10">
                         <div className="flex flex-col">
                           <span>10kA</span>
-                          <span className="text-xs text-white/50">
+                          <span className="text-xs text-white">
                             Enhanced domestic/light commercial
                           </span>
                         </div>
@@ -164,7 +164,7 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
                       <SelectItem value="16">
                         <div className="flex flex-col">
                           <span>16kA</span>
-                          <span className="text-xs text-white/50">Commercial</span>
+                          <span className="text-xs text-white">Commercial</span>
                         </div>
                       </SelectItem>
                     </SelectContent>
@@ -311,7 +311,7 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
                           <div className="flex flex-col">
                             <span>{c.label}</span>
                             {c.description && (
-                              <span className="text-xs text-white/50">{c.description}</span>
+                              <span className="text-xs text-white">{c.description}</span>
                             )}
                           </div>
                         </SelectItem>
@@ -359,7 +359,7 @@ export const SmartCircuitDetails: React.FC<SmartCircuitDetailsProps> = ({
                       <div className="flex flex-col">
                         <span>{m.label}</span>
                         {m.description && (
-                          <span className="text-xs text-white/50">{m.description}</span>
+                          <span className="text-xs text-white">{m.description}</span>
                         )}
                       </div>
                     </SelectItem>

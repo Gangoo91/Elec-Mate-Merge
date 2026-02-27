@@ -185,7 +185,7 @@ const Module7Section4_5 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -204,19 +204,19 @@ const Module7Section4_5 = () => {
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <Eye className="w-4 h-4" />
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 7</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 4.5</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 4.5</span>
             </div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
               Interpreting Test Readings
             </h1>
-            <p className="text-white/70 text-lg">Understanding what electrical test results mean</p>
+            <p className="text-white text-lg">Understanding what electrical test results mean</p>
           </header>
 
           {/* In 30 Seconds Summary */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 space-y-1 text-sm">
+            <ul className="text-white space-y-1 text-sm">
               <li>• Readings significantly outside normal ranges need investigation</li>
               <li>• Inconsistent results between similar circuits indicate problems</li>
               <li>• Values approaching or exceeding maximum limits are concerning</li>
@@ -227,7 +227,7 @@ const Module7Section4_5 = () => {
           {/* Why This Matters */}
           <div className="p-4 rounded-lg bg-blue-500/10 border-l-2 border-blue-500/50 mb-10">
             <p className="font-medium text-blue-400 mb-2">Why This Matters</p>
-            <p className="text-white/80 text-sm">
+            <p className="text-white text-sm">
               Proper interpretation of test readings prevents 85% of electrical faults from going
               undetected and ensures installations meet safety standards. Accurate reading
               interpretation reduces callback rates by 60% and prevents potential electrical hazards
@@ -241,7 +241,7 @@ const Module7Section4_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Learning Outcomes
             </h2>
-            <ul className="text-white/80 space-y-2">
+            <ul className="text-white space-y-2">
               <li>
                 • Interpret test readings for continuity, insulation resistance, and earth fault
                 loop impedance
@@ -259,7 +259,7 @@ const Module7Section4_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Understanding Test Readings
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Test readings tell us whether electrical installations are safe and compliant. Each
                 test has specific limits and normal ranges that must be understood to make accurate
@@ -270,8 +270,8 @@ const Module7Section4_5 = () => {
                 <p className="font-medium text-white mb-3">Continuity Testing</p>
                 <div className="space-y-4">
                   <div>
-                    <p className="text-sm font-medium text-white/90 mb-2">Acceptable readings:</p>
-                    <ul className="text-sm text-white/70 space-y-1">
+                    <p className="text-sm font-medium text-white mb-2">Acceptable readings:</p>
+                    <ul className="text-sm text-white space-y-1">
                       <li>
                         • Ring final circuits: Initial reading of R1 + R2 within expected range
                       </li>
@@ -280,7 +280,7 @@ const Module7Section4_5 = () => {
                     </ul>
                   </div>
                   <div className="p-3 rounded bg-green-500/10 border border-green-500/20">
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-green-400">Good Practice:</strong> Compare readings
                       between similar circuits - significant variations may indicate connection
                       problems.
@@ -297,7 +297,7 @@ const Module7Section4_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Insulation Resistance Interpretation
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Insulation resistance readings indicate the quality of insulation between conductors
                 and earth. These readings are crucial for identifying potential breakdown or
@@ -307,21 +307,21 @@ const Module7Section4_5 = () => {
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">BS 7671 Requirements</p>
                 <div className="p-3 rounded bg-white/5 border border-white/10">
-                  <p className="text-sm font-medium text-white/90 mb-2">Reading interpretation:</p>
-                  <ul className="text-sm text-white/70 space-y-1">
+                  <p className="text-sm font-medium text-white mb-2">Reading interpretation:</p>
+                  <ul className="text-sm text-white space-y-1">
                     <li>
-                      • <strong className="text-white/90">Minimum acceptable:</strong> 1MΩ (BS 7671
+                      • <strong className="text-white">Minimum acceptable:</strong> 1MΩ (BS 7671
                       requirement)
                     </li>
                     <li>
-                      • <strong className="text-white/90">Good reading:</strong> 10MΩ or higher
+                      • <strong className="text-white">Good reading:</strong> 10MΩ or higher
                     </li>
                     <li>
-                      • <strong className="text-white/90">Excellent reading:</strong> &gt;999MΩ or
+                      • <strong className="text-white">Excellent reading:</strong> &gt;999MΩ or
                       above
                     </li>
                     <li>
-                      • <strong className="text-white/90">Investigate if:</strong> Below 2MΩ
+                      • <strong className="text-white">Investigate if:</strong> Below 2MΩ
                       (potential deterioration)
                     </li>
                   </ul>
@@ -346,7 +346,7 @@ const Module7Section4_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Earth Fault Loop Impedance (Zs)
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Zs readings determine whether protective devices will operate quickly enough to
                 prevent danger. These must be compared to maximum values specified in BS 7671.
@@ -356,8 +356,8 @@ const Module7Section4_5 = () => {
                 <p className="font-medium text-white mb-3">Maximum Values</p>
                 <div className="space-y-4">
                   <div>
-                    <p className="text-sm font-medium text-white/90 mb-2">Critical factors:</p>
-                    <ul className="text-sm text-white/70 space-y-1">
+                    <p className="text-sm font-medium text-white mb-2">Critical factors:</p>
+                    <ul className="text-sm text-white space-y-1">
                       <li>• Must not exceed BS 7671 maximum values for the protection device</li>
                       <li>• Consider circuit voltage and disconnection time requirements</li>
                       <li>• Account for temperature correction factors</li>
@@ -365,7 +365,7 @@ const Module7Section4_5 = () => {
                     </ul>
                   </div>
                   <div className="p-3 rounded bg-orange-500/10 border border-orange-500/20">
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-orange-400">Safety Margin:</strong> Readings above 80%
                       of maximum should be investigated as they may indicate developing earth
                       faults.
@@ -392,7 +392,7 @@ const Module7Section4_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               When to Investigate Further
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Professional judgement is required to determine when readings warrant investigation.
                 Not all readings that pass minimum requirements are acceptable in context.
@@ -402,8 +402,8 @@ const Module7Section4_5 = () => {
                 <p className="font-medium text-white mb-3">Investigation Triggers</p>
                 <div className="space-y-4">
                   <div>
-                    <p className="text-sm font-medium text-white/90 mb-2">Investigate when:</p>
-                    <ul className="text-sm text-white/70 space-y-1">
+                    <p className="text-sm font-medium text-white mb-2">Investigate when:</p>
+                    <ul className="text-sm text-white space-y-1">
                       <li>• Readings approach or exceed maximum limits</li>
                       <li>• Significant variations between similar circuits</li>
                       <li>• Results differ from previous test records</li>
@@ -411,7 +411,7 @@ const Module7Section4_5 = () => {
                     </ul>
                   </div>
                   <div className="p-3 rounded bg-red-500/10 border border-red-500/20">
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-red-400">Professional Responsibility:</strong> When in
                       doubt, investigate. It's better to find nothing wrong than miss a developing
                       fault.
@@ -441,7 +441,7 @@ const Module7Section4_5 = () => {
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">For Apprentices:</p>
-                <ul className="text-sm text-white/70 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li>• Always record readings exactly as displayed on the meter</li>
                   <li>• Compare results with BS 7671 tables and previous records</li>
                   <li>• Report unexpected or borderline readings to your supervisor</li>
@@ -451,7 +451,7 @@ const Module7Section4_5 = () => {
 
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <p className="font-medium text-blue-400 mb-3">Common Mistakes to Avoid:</p>
-                <ul className="text-sm text-white/70 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Accepting borderline readings without investigation</li>
                   <li>• Assuming all similar circuits should give identical readings</li>
                   <li>• Ignoring temperature effects on resistance measurements</li>
@@ -471,7 +471,7 @@ const Module7Section4_5 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                  <p className="text-sm text-white/70">{faq.answer}</p>
+                  <p className="text-sm text-white">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -485,7 +485,7 @@ const Module7Section4_5 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="font-medium text-white mb-3">Key Points to Remember:</p>
-              <ul className="text-white/80 space-y-2 text-sm">
+              <ul className="text-white space-y-2 text-sm">
                 <li>• Know the acceptable ranges for each type of test</li>
                 <li>• Look for patterns and consistency in readings</li>
                 <li>• Understand when readings require investigation</li>
@@ -493,7 +493,7 @@ const Module7Section4_5 = () => {
                 <li>• When in doubt, investigate further or seek guidance</li>
               </ul>
               <div className="mt-4 pt-4 border-t border-white/10">
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   <strong className="text-white">Best Practice:</strong> Record all readings
                   clearly, note any unusual results, and always err on the side of caution when
                   interpreting borderline readings. Professional competence includes knowing when to
@@ -510,7 +510,7 @@ const Module7Section4_5 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mt-10 pt-6 border-t border-white/10">
             <Button
               variant="ghost"
-              className="w-full sm:w-auto text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="w-full sm:w-auto text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../4-4">

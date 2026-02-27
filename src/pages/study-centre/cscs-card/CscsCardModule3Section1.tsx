@@ -190,7 +190,7 @@ export default function CscsCardModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-3">
@@ -215,7 +215,7 @@ export default function CscsCardModule3Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Working at Height Regulations
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The Work at Height Regulations 2005, the hierarchy of controls, duty holders, fall
             prevention and mitigation, fragile surfaces, and inspection requirements
           </p>
@@ -307,12 +307,12 @@ export default function CscsCardModule3Section1() {
 
               {/* Falls Statistics Diagram */}
               <div className="bg-white/5 border border-white/10 rounded-lg p-4 sm:p-6">
-                <p className="text-sm text-white/60 mb-4 text-center">
+                <p className="text-sm text-white mb-4 text-center">
                   Falls from Height &mdash; UK Fatalities by Height Band
                 </p>
                 <div className="max-w-md mx-auto space-y-3">
                   <div className="flex items-center gap-3">
-                    <span className="text-xs text-white/60 w-20 text-right shrink-0">
+                    <span className="text-xs text-white w-20 text-right shrink-0">
                       Below 2 m
                     </span>
                     <div className="flex-1 bg-white/5 rounded-full h-7 overflow-hidden">
@@ -325,7 +325,7 @@ export default function CscsCardModule3Section1() {
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="text-xs text-white/60 w-20 text-right shrink-0">
+                    <span className="text-xs text-white w-20 text-right shrink-0">
                       2&ndash;5 m
                     </span>
                     <div className="flex-1 bg-white/5 rounded-full h-7 overflow-hidden">
@@ -338,7 +338,7 @@ export default function CscsCardModule3Section1() {
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="text-xs text-white/60 w-20 text-right shrink-0">
+                    <span className="text-xs text-white w-20 text-right shrink-0">
                       5&ndash;10 m
                     </span>
                     <div className="flex-1 bg-white/5 rounded-full h-7 overflow-hidden">
@@ -351,7 +351,7 @@ export default function CscsCardModule3Section1() {
                     </div>
                   </div>
                   <div className="flex items-center gap-3">
-                    <span className="text-xs text-white/60 w-20 text-right shrink-0">
+                    <span className="text-xs text-white w-20 text-right shrink-0">
                       Above 10 m
                     </span>
                     <div className="flex-1 bg-white/5 rounded-full h-7 overflow-hidden">
@@ -364,7 +364,7 @@ export default function CscsCardModule3Section1() {
                     </div>
                   </div>
                 </div>
-                <p className="text-[10px] text-white/40 text-center mt-3">
+                <p className="text-[10px] text-white text-center mt-3">
                   Source: HSE RIDDOR data &mdash; approximate distribution of fatal falls by height
                   band
                 </p>
@@ -375,7 +375,7 @@ export default function CscsCardModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Common Causes of Falls</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -428,7 +428,7 @@ export default function CscsCardModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Key Point</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Working at height is the{' '}
                   <strong className="text-white">
                     number one killer in the UK construction industry
@@ -465,14 +465,14 @@ export default function CscsCardModule3Section1() {
                   <ClipboardCheck className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Key Definitions</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The regulations define{' '}
                   <strong className="text-white">&ldquo;work at height&rdquo;</strong> as work at
                   any place where, if precautions were not taken, a person could fall a distance
                   liable to cause personal injury. This definition is deliberately broad and
                   includes:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -534,12 +534,12 @@ export default function CscsCardModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Scope of the Regulations</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The regulations apply to{' '}
                   <strong className="text-white">all work at height</strong>, not just extreme
                   heights or construction work. Key points about scope:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -606,7 +606,7 @@ export default function CscsCardModule3Section1() {
 
               {/* Working at Height Hierarchy Pyramid */}
               <div className="bg-white/5 border border-white/10 rounded-lg p-4 sm:p-6">
-                <p className="text-sm text-white/60 mb-4 text-center">
+                <p className="text-sm text-white mb-4 text-center">
                   The Hierarchy for Working at Height &mdash; follow in strict order
                 </p>
                 <div className="max-w-lg mx-auto space-y-2">
@@ -617,7 +617,7 @@ export default function CscsCardModule3Section1() {
                         1. Avoid Work at Height
                       </span>
                     </div>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       Eliminate the need to work at height entirely &mdash; assemble at ground
                       level, use long-reach tools, design out the hazard
                     </p>
@@ -630,7 +630,7 @@ export default function CscsCardModule3Section1() {
                         2. Prevent Falls
                       </span>
                     </div>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       Use collective protection first &mdash; guard rails, working platforms,
                       scaffolding, edge protection, MEWPs
                     </p>
@@ -643,7 +643,7 @@ export default function CscsCardModule3Section1() {
                         3. Mitigate Falls
                       </span>
                     </div>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       Reduce consequences if a fall does occur &mdash; safety nets, airbags,
                       personal fall arrest systems (harnesses)
                     </p>
@@ -651,7 +651,7 @@ export default function CscsCardModule3Section1() {
                 </div>
 
                 <div className="mt-4 text-center">
-                  <p className="text-xs text-white/50">
+                  <p className="text-xs text-white">
                     &uarr; Most effective &mdash; always start at the top and work downwards &darr;
                   </p>
                 </div>
@@ -662,11 +662,11 @@ export default function CscsCardModule3Section1() {
                 <p className="text-sm font-medium text-green-400 mb-3">
                   Tier 1: Avoid Work at Height
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The most effective control is to avoid the need to work at height altogether. This
                   should always be the first consideration. Examples include:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -706,13 +706,13 @@ export default function CscsCardModule3Section1() {
               {/* Tier 2 Detail */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-blue-400 mb-3">Tier 2: Prevent Falls</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Where work at height cannot be avoided, the next step is to use measures that
                   prevent a person from falling. Collective protection (measures that protect
                   everyone in the area) is always preferred over personal protection (measures that
                   protect only the individual wearing them):
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -761,11 +761,11 @@ export default function CscsCardModule3Section1() {
               {/* Tier 3 Detail */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-amber-400 mb-3">Tier 3: Mitigate Falls</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   If it is not reasonably practicable to prevent falls, the final tier is to
                   minimise the distance and consequences of any fall that does occur:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -799,7 +799,7 @@ export default function CscsCardModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Warning</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The hierarchy must be followed{' '}
                   <strong className="text-white">in strict order</strong>. It is{' '}
                   <strong className="text-red-300">
@@ -836,7 +836,7 @@ export default function CscsCardModule3Section1() {
                 <div className="space-y-3">
                   <div className="bg-green-500/5 border border-green-500/20 p-3 rounded-lg">
                     <p className="text-sm font-bold text-green-400 mb-1">Employers</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Must ensure that all work at height is properly planned, organised, and
                       supervised. Must provide suitable equipment, training, and competent
                       supervision. Must carry out risk assessments and implement the hierarchy of
@@ -846,7 +846,7 @@ export default function CscsCardModule3Section1() {
                   </div>
                   <div className="bg-green-500/5 border border-green-500/20 p-3 rounded-lg">
                     <p className="text-sm font-bold text-green-400 mb-1">Employees</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Must report any hazards or defects in equipment to their employer. Must use
                       all equipment and protection provided in accordance with their training. Must
                       not take unnecessary risks or interfere with safety measures. Must follow the
@@ -855,7 +855,7 @@ export default function CscsCardModule3Section1() {
                   </div>
                   <div className="bg-green-500/5 border border-green-500/20 p-3 rounded-lg">
                     <p className="text-sm font-bold text-green-400 mb-1">Self-Employed Persons</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Have the same duties as both employers and employees. Must ensure that any
                       work at height they carry out is properly planned, that they use appropriate
                       equipment, and that they are competent to carry out the work safely.
@@ -865,7 +865,7 @@ export default function CscsCardModule3Section1() {
                     <p className="text-sm font-bold text-green-400 mb-1">
                       Building Occupants &amp; Facilities Managers
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Must ensure that anyone carrying out work at height on their premises does so
                       safely. Must provide information about the building (such as the location of
                       fragile surfaces, anchor points, and access restrictions) to contractors
@@ -880,13 +880,13 @@ export default function CscsCardModule3Section1() {
                   <HardHat className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">The Competent Person</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The regulations require that a{' '}
                   <strong className="text-white">competent person</strong> must plan, organise, and
                   supervise all work at height. A competent person is someone with sufficient
                   training, experience, knowledge, and other qualities to carry out the task safely.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -918,13 +918,13 @@ export default function CscsCardModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Factors to Consider When Planning
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The competent person must take account of a range of factors when planning work at
                   height:
                 </p>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <ul className="text-sm text-white/80 space-y-2">
+                    <ul className="text-sm text-white space-y-2">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -944,7 +944,7 @@ export default function CscsCardModule3Section1() {
                     </ul>
                   </div>
                   <div>
-                    <ul className="text-sm text-white/80 space-y-2">
+                    <ul className="text-sm text-white space-y-2">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -993,7 +993,7 @@ export default function CscsCardModule3Section1() {
                   <Shield className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Guard Rail Specification</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Guard rails are the most common form of collective fall prevention. The Work at
                   Height Regulations specify the following minimum requirements for guard rail
                   systems:
@@ -1001,25 +1001,25 @@ export default function CscsCardModule3Section1() {
                 <div className="grid sm:grid-cols-3 gap-3 mb-3">
                   <div className="bg-green-500/5 border border-green-500/20 p-3 rounded-lg text-center">
                     <p className="text-lg font-bold text-green-400 mb-1">950 mm</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Minimum top rail height above the working platform surface
                     </p>
                   </div>
                   <div className="bg-green-500/5 border border-green-500/20 p-3 rounded-lg text-center">
                     <p className="text-lg font-bold text-green-400 mb-1">Mid Rail</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Intermediate rail to prevent a person falling between the top rail and
                       platform
                     </p>
                   </div>
                   <div className="bg-green-500/5 border border-green-500/20 p-3 rounded-lg text-center">
                     <p className="text-lg font-bold text-green-400 mb-1">150 mm</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Minimum toe board height to prevent tools and materials falling from the edge
                     </p>
                   </div>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1050,7 +1050,7 @@ export default function CscsCardModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Collective Prevention Measures
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1107,7 +1107,7 @@ export default function CscsCardModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Key Point</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     Collective protection always takes priority over personal protection.
                   </strong>{' '}
@@ -1139,12 +1139,12 @@ export default function CscsCardModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-green-400 mb-3">Safety Nets</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Safety nets are positioned below the work area to catch a falling person. They are
                   a form of collective mitigation &mdash; they protect everyone working above them
                   without requiring individual action.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1171,12 +1171,12 @@ export default function CscsCardModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Soft Landing Systems</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Inflatable airbags, bean bag systems, and other soft landing solutions are used
                   where safety nets are not practical &mdash; for example, in confined spaces or
                   where there is insufficient clearance below the working area.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1197,13 +1197,13 @@ export default function CscsCardModule3Section1() {
                 <p className="text-sm font-medium text-amber-400 mb-3">
                   Personal Fall Arrest Systems (Harnesses)
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   A personal fall arrest system consists of a full-body harness connected by an
                   energy-absorbing lanyard or retractable fall arrester to a secure anchor point. It
                   arrests a fall after it has begun, limiting the distance fallen and the forces on
                   the body.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1247,7 +1247,7 @@ export default function CscsCardModule3Section1() {
                     Critical Warning &mdash; Rescue Plans
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A <strong className="text-white">rescue plan must always be in place</strong>{' '}
                   before any work involving personal fall arrest equipment begins. If a worker falls
                   and is suspended in a harness, they can suffer{' '}
@@ -1287,13 +1287,13 @@ export default function CscsCardModule3Section1() {
                   <Eye className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Common Fragile Surfaces</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The following materials and surfaces must always be assumed to be fragile unless a
                   competent person has confirmed otherwise through inspection and testing:
                 </p>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <ul className="text-sm text-white/80 space-y-2">
+                    <ul className="text-sm text-white space-y-2">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -1313,7 +1313,7 @@ export default function CscsCardModule3Section1() {
                     </ul>
                   </div>
                   <div>
-                    <ul className="text-sm text-white/80 space-y-2">
+                    <ul className="text-sm text-white space-y-2">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -1339,7 +1339,7 @@ export default function CscsCardModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   The Golden Rule: Assume Fragile Unless Proven Otherwise
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   This is one of the most important principles in working at height. If you cannot
                   confirm that a surface will support the required loads, you must treat it as
                   fragile and implement appropriate controls. &ldquo;It looks solid&rdquo; is never
@@ -1354,7 +1354,7 @@ export default function CscsCardModule3Section1() {
                     Controls for Fragile Surfaces
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1405,7 +1405,7 @@ export default function CscsCardModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Warning</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Falls through fragile surfaces are{' '}
                   <strong className="text-white">almost always fatal</strong>. The person falls
                   without warning, has no time to react, and lands on a hard surface below &mdash;
@@ -1440,12 +1440,12 @@ export default function CscsCardModule3Section1() {
                   <ClipboardCheck className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Pre-Use Checks</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Every person who uses equipment for working at height must carry out a visual
                   pre-use check before each use. This is the user&rsquo;s personal responsibility
                   and cannot be delegated.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1488,11 +1488,11 @@ export default function CscsCardModule3Section1() {
                   <Layers className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Scaffold Inspections</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Scaffolding requires formal, recorded inspections by a competent person at
                   specific intervals:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1531,12 +1531,12 @@ export default function CscsCardModule3Section1() {
                 <p className="text-sm font-medium text-amber-400 mb-3">
                   LOLER &mdash; Thorough Examination of Fall Arrest Equipment
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The Lifting Operations and Lifting Equipment Regulations 1998 (LOLER) apply to
                   equipment used for arresting falls, including harnesses, lanyards, retractable
                   fall arresters, and anchor devices. LOLER requires:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1582,29 +1582,29 @@ export default function CscsCardModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">Inspection Frequency Summary</p>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between bg-green-500/5 border border-green-500/20 p-3 rounded-lg">
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       Pre-use visual check (all equipment)
                     </span>
                     <span className="text-xs font-bold text-green-400">Every use</span>
                   </div>
                   <div className="flex items-center justify-between bg-green-500/5 border border-green-500/20 p-3 rounded-lg">
-                    <span className="text-sm text-white/80">Scaffold formal inspection</span>
+                    <span className="text-sm text-white">Scaffold formal inspection</span>
                     <span className="text-xs font-bold text-green-400">Every 7 days</span>
                   </div>
                   <div className="flex items-center justify-between bg-green-500/5 border border-green-500/20 p-3 rounded-lg">
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       Scaffold &mdash; after weather/alteration
                     </span>
                     <span className="text-xs font-bold text-green-400">Immediately</span>
                   </div>
                   <div className="flex items-center justify-between bg-green-500/5 border border-green-500/20 p-3 rounded-lg">
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       Harness/lanyard thorough examination (LOLER)
                     </span>
                     <span className="text-xs font-bold text-green-400">Every 6 months</span>
                   </div>
                   <div className="flex items-center justify-between bg-green-500/5 border border-green-500/20 p-3 rounded-lg">
-                    <span className="text-sm text-white/80">After any fall arrest event</span>
+                    <span className="text-sm text-white">After any fall arrest event</span>
                     <span className="text-xs font-bold text-green-400">Before reuse</span>
                   </div>
                 </div>
@@ -1630,7 +1630,7 @@ export default function CscsCardModule3Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1644,7 +1644,7 @@ export default function CscsCardModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-3">

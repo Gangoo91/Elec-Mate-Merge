@@ -96,7 +96,7 @@ export const CareerListItem: React.FC<CareerListItemProps> = ({
             </span>
           )}
         </div>
-        <span className="text-[13px] text-white/50 line-clamp-1">{subtitle}</span>
+        <span className="text-[13px] text-white line-clamp-1">{subtitle}</span>
       </div>
 
       {/* Badge + Chevron */}
@@ -106,7 +106,7 @@ export const CareerListItem: React.FC<CareerListItemProps> = ({
             {badge}
           </span>
         )}
-        <ChevronRight className="h-5 w-5 text-white/30" />
+        <ChevronRight className="h-5 w-5 text-white" />
       </div>
     </button>
   );

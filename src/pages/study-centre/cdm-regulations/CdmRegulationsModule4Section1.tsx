@@ -237,7 +237,7 @@ const CdmRegulationsModule4Section1 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Designers&rsquo; Duties
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding the designer&rsquo;s legal duties under CDM 2015 &mdash; the hierarchy of
             eliminate, reduce, and inform, the General Principles of Prevention, and how these
             duties apply to electrical design
@@ -318,7 +318,7 @@ const CdmRegulationsModule4Section1 = () => {
                 <Info className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
                 <h3 className="font-semibold text-blue-300">Who Is a &ldquo;Designer&rdquo;?</h3>
               </div>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 Under CDM 2015, a <strong className="text-white">designer</strong> is anyone who
                 prepares or modifies a design, including drawings, design details, specifications,
                 and bills of quantities relating to a structure. This is much broader than many
@@ -449,7 +449,7 @@ const CdmRegulationsModule4Section1 = () => {
                     Practical Application for Designers
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The General Principles of Prevention are not abstract concepts &mdash; they must
                   inform <strong className="text-white">every design decision</strong>. When a
                   designer chooses a material, specifies a construction method, determines a layout,
@@ -532,7 +532,7 @@ const CdmRegulationsModule4Section1 = () => {
                   <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-green-300">Elimination Is Always Preferred</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Elimination removes the hazard <strong className="text-white">permanently</strong>
                   . Unlike control measures (which can fail, be removed, or be bypassed), a design
                   that eliminates a hazard provides protection that does not depend on
@@ -613,7 +613,7 @@ const CdmRegulationsModule4Section1 = () => {
                     Reduction Is Not Enough on Its Own
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Reducing a risk is valuable, but it{' '}
                   <strong className="text-white">does not remove the duty to inform</strong>.
                   Wherever a risk has been reduced but not eliminated, the designer must still
@@ -695,7 +695,7 @@ const CdmRegulationsModule4Section1 = () => {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">What NOT to Do</h3>
                 </div>
-                <ul className="text-white/80 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -732,7 +732,7 @@ const CdmRegulationsModule4Section1 = () => {
             <Shield className="h-5 w-5 text-blue-400" />
             Designer&rsquo;s Risk Management Hierarchy
           </h2>
-          <p className="text-white/80 mb-6 text-sm">
+          <p className="text-white mb-6 text-sm">
             This diagram illustrates the three-tier hierarchy that every designer must follow under
             Regulation 9. The hierarchy must be applied in order &mdash; elimination first, then
             reduction, then information.
@@ -747,7 +747,7 @@ const CdmRegulationsModule4Section1 = () => {
                   Most Effective &mdash; Highest Priority
                 </p>
               </div>
-              <div className="p-4 text-sm text-white/80">
+              <div className="p-4 text-sm text-white">
                 <p>
                   Remove the hazard entirely through design decisions. No residual risk remains
                   because the hazard no longer exists. Examples: pre-fabrication at ground level,
@@ -757,7 +757,7 @@ const CdmRegulationsModule4Section1 = () => {
             </div>
 
             <div className="flex justify-center">
-              <ArrowDown className="h-6 w-6 text-white/30" />
+              <ArrowDown className="h-6 w-6 text-white" />
             </div>
 
             {/* Tier 2 — Reduce */}
@@ -768,7 +768,7 @@ const CdmRegulationsModule4Section1 = () => {
                   Where Elimination Is Not Reasonably Practicable
                 </p>
               </div>
-              <div className="p-4 text-sm text-white/80">
+              <div className="p-4 text-sm text-white">
                 <p>
                   Lower the severity, likelihood, or duration of exposure through design choices.
                   Residual risk remains but is minimised. Examples: lighter materials, safer access
@@ -778,7 +778,7 @@ const CdmRegulationsModule4Section1 = () => {
             </div>
 
             <div className="flex justify-center">
-              <ArrowDown className="h-6 w-6 text-white/30" />
+              <ArrowDown className="h-6 w-6 text-white" />
             </div>
 
             {/* Tier 3 — Inform */}
@@ -789,7 +789,7 @@ const CdmRegulationsModule4Section1 = () => {
                   For Significant Residual Risks That Remain
                 </p>
               </div>
-              <div className="p-4 text-sm text-white/80">
+              <div className="p-4 text-sm text-white">
                 <p>
                   Communicate remaining significant risks to those who need to know &mdash; through
                   design risk registers, drawing annotations, and the health and safety file. Focus
@@ -799,7 +799,7 @@ const CdmRegulationsModule4Section1 = () => {
             </div>
           </div>
 
-          <p className="text-white/50 text-xs text-center mt-4 italic">
+          <p className="text-white text-xs text-center mt-4 italic">
             The hierarchy must be applied in order &mdash; always try to eliminate before reducing,
             and only inform when risks cannot be further reduced
           </p>
@@ -892,45 +892,45 @@ const CdmRegulationsModule4Section1 = () => {
                     <p className="text-red-400 text-xs font-semibold uppercase tracking-wider mb-1">
                       Hazard Identified
                     </p>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Distribution board located in a ceiling void, requiring ladder access and
                       working in a confined space for maintenance and testing
                     </p>
                   </div>
                   <div className="flex justify-center">
-                    <ArrowDown className="h-5 w-5 text-white/30" />
+                    <ArrowDown className="h-5 w-5 text-white" />
                   </div>
                   <div className="bg-green-500/10 border border-green-500/20 p-3 rounded-lg">
                     <p className="text-green-400 text-xs font-semibold uppercase tracking-wider mb-1">
                       Step 1 &mdash; Eliminate
                     </p>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Relocate the distribution board to a dedicated cupboard at ground level,
                       accessible from a corridor. This eliminates both work at height and confined
                       space entry.
                     </p>
                   </div>
                   <div className="flex justify-center">
-                    <ArrowDown className="h-5 w-5 text-white/30" />
+                    <ArrowDown className="h-5 w-5 text-white" />
                   </div>
                   <div className="bg-amber-500/10 border border-amber-500/20 p-3 rounded-lg">
                     <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
                       Step 2 &mdash; Reduce (If Relocation Not Possible)
                     </p>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       If the board must remain at height, design a permanent access platform with
                       guardrails and adequate headroom. Ensure the void has sufficient ventilation
                       and is not classified as a confined space.
                     </p>
                   </div>
                   <div className="flex justify-center">
-                    <ArrowDown className="h-5 w-5 text-white/30" />
+                    <ArrowDown className="h-5 w-5 text-white" />
                   </div>
                   <div className="bg-blue-500/10 border border-blue-500/20 p-3 rounded-lg">
                     <p className="text-blue-400 text-xs font-semibold uppercase tracking-wider mb-1">
                       Step 3 &mdash; Inform
                     </p>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Record the residual risk in the design risk register. Annotate the drawings
                       with the board location, access requirements, and any special precautions.
                       Include the information in the health and safety file for future maintenance
@@ -1022,7 +1022,7 @@ const CdmRegulationsModule4Section1 = () => {
                     Why Coordination Matters for Electrical Designers
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Electrical installations interact with virtually every other building system.
                   Cable routes pass through structural elements, electrical plant shares space with
                   mechanical equipment, fire alarm designs interface with architectural layouts, and
@@ -1131,7 +1131,7 @@ const CdmRegulationsModule4Section1 = () => {
                   <Info className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-blue-300">Professional Judgement Is Key</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   CDM 2015 deliberately avoids prescriptive requirements for designer competence.
                   The test is whether the designer has{' '}
                   <strong className="text-white">adequate</strong> skills, knowledge, and experience
@@ -1149,7 +1149,7 @@ const CdmRegulationsModule4Section1 = () => {
                     Common Misconceptions About Proportionality
                   </h3>
                 </div>
-                <ul className="text-white/80 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -1251,7 +1251,7 @@ const CdmRegulationsModule4Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1267,7 +1267,7 @@ const CdmRegulationsModule4Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-4">

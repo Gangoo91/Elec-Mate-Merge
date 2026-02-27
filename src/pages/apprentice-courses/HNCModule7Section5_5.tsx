@@ -263,7 +263,7 @@ const HNCModule7Section5_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section5">
@@ -285,7 +285,7 @@ const HNCModule7Section5_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Demand Management
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Load shedding, peak shaving, demand response, tariff optimisation, and smart grid
             integration
           </p>
@@ -601,27 +601,27 @@ const HNCModule7Section5_5 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">Electricity Bill Components</p>
               <div className="text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Wholesale energy:</span> Commodity cost of
+                  <span className="text-white">Wholesale energy:</span> Commodity cost of
                   electricity (40-50%)
                 </p>
                 <p>
-                  <span className="text-white/60">DUoS charges:</span> Distribution network costs
+                  <span className="text-white">DUoS charges:</span> Distribution network costs
                   (15-20%)
                 </p>
                 <p>
-                  <span className="text-white/60">TNUoS charges:</span> Transmission network costs
+                  <span className="text-white">TNUoS charges:</span> Transmission network costs
                   (5-10%)
                 </p>
                 <p>
-                  <span className="text-white/60">BSUoS charges:</span> Balancing Services Use of
+                  <span className="text-white">BSUoS charges:</span> Balancing Services Use of
                   System (2-5%)
                 </p>
                 <p>
-                  <span className="text-white/60">Supplier margin:</span> Supplier costs and profit
+                  <span className="text-white">Supplier margin:</span> Supplier costs and profit
                   (5-10%)
                 </p>
                 <p>
-                  <span className="text-white/60">Levies:</span> RO, FiT, CFD, CM, CCL (15-25%)
+                  <span className="text-white">Levies:</span> RO, FiT, CFD, CM, CCL (15-25%)
                 </p>
               </div>
             </div>
@@ -878,7 +878,7 @@ const HNCModule7Section5_5 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Future trend:</strong> The transition to a smart, flexible grid means demand
               management will become increasingly automated, with AI-driven systems optimising
               consumption in real-time against multiple signals.
@@ -904,16 +904,16 @@ const HNCModule7Section5_5 = () => {
                 <strong>Scenario:</strong> Calculate potential savings from Triad avoidance at a
                 manufacturing site.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given data:</p>
                 <p>Current average Triad demand: 450 kW</p>
                 <p>Target Triad demand: 150 kW (using BESS)</p>
                 <p>TNUoS zonal rate: £62/kW/year</p>
-                <p className="mt-2 text-white/60">Calculation:</p>
+                <p className="mt-2 text-white">Calculation:</p>
                 <p>Demand reduction = 450 - 150 = 300 kW</p>
                 <p>Annual saving = 300 kW × £62/kW = £18,600/year</p>
                 <p className="mt-2 text-green-400">Triad avoidance value: £18,600 per year</p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Note: This alone could justify significant BESS investment
                 </p>
               </div>
@@ -927,12 +927,12 @@ const HNCModule7Section5_5 = () => {
                 <strong>Scenario:</strong> Evaluate cost savings from shifting EV charging from red
                 to green band.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Current pattern (red band charging 16:00-19:00):</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Current pattern (red band charging 16:00-19:00):</p>
                 <p>EV charging load: 100 kW for 3 hours = 300 kWh daily</p>
                 <p>Red band DUoS: 15p/kWh</p>
                 <p>Daily DUoS cost: 300 × £0.15 = £45</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Optimised pattern (green band charging 22:00-01:00):
                 </p>
                 <p>Green band DUoS: 1.5p/kWh</p>
@@ -949,22 +949,22 @@ const HNCModule7Section5_5 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Assess the impact of demand management on load factor.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Before demand management:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Before demand management:</p>
                 <p>Average demand: 400 kW</p>
                 <p>Maximum demand: 800 kW</p>
                 <p>Load factor = 400 ÷ 800 = 0.50 (50%)</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   After implementing load shedding and peak shaving:
                 </p>
                 <p>Average demand: 400 kW (unchanged)</p>
                 <p>Maximum demand: 550 kW (reduced)</p>
                 <p>New load factor = 400 ÷ 550 = 0.73 (73%)</p>
                 <p className="mt-2 text-green-400">Improvement: 23 percentage points</p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Higher load factor = better utilisation of contracted capacity
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   Capacity charge reduction: (800-550) × £8/kVA/month = £2,000/month
                 </p>
               </div>
@@ -1052,7 +1052,7 @@ const HNCModule7Section5_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1098,7 +1098,7 @@ const HNCModule7Section5_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section5">

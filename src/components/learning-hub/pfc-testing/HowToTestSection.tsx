@@ -113,7 +113,7 @@ const HowToTestSection = () => (
               </div>
               <div className="flex-1">
                 <p className="font-medium text-foreground mb-1">Risk Assessment and Preparation</p>
-                <div className="text-xs text-white/80 space-y-1">
+                <div className="text-xs text-white space-y-1">
                   <p>• Complete live working risk assessment</p>
                   <p>• Ensure appropriate competency and training</p>
                   <p>• Obtain permission for live working if required</p>
@@ -129,7 +129,7 @@ const HowToTestSection = () => (
               </div>
               <div className="flex-1">
                 <p className="font-medium text-foreground mb-1">Live Working Safety Setup</p>
-                <div className="text-xs text-white/80 space-y-1">
+                <div className="text-xs text-white space-y-1">
                   <p>• Don appropriate PPE for live working</p>
                   <p>• Establish barriers and warning notices</p>
                   <p>• Ensure emergency procedures are understood</p>
@@ -145,7 +145,7 @@ const HowToTestSection = () => (
               </div>
               <div className="flex-1">
                 <p className="font-medium text-foreground mb-1">Circuit Load Disconnection</p>
-                <div className="text-xs text-white/80 space-y-1">
+                <div className="text-xs text-white space-y-1">
                   <p>• Disconnect all loads from the circuit whilst keeping it energised</p>
                   <p>• Remove lamps from lighting circuits</p>
                   <p>• Unplug all equipment from socket circuits</p>
@@ -161,7 +161,7 @@ const HowToTestSection = () => (
               </div>
               <div className="flex-1">
                 <p className="font-medium text-foreground mb-1">Live Circuit Test Connection</p>
-                <div className="text-xs text-white/80 space-y-1">
+                <div className="text-xs text-white space-y-1">
                   <p>• Use insulated tools and maintain safe working distances</p>
                   <p>• Connect test leads at circuit origin (live terminals)</p>
                   <p>• Phase conductor to earth terminal for L-E PFC</p>
@@ -177,7 +177,7 @@ const HowToTestSection = () => (
               </div>
               <div className="flex-1">
                 <p className="font-medium text-foreground mb-1">Live Measurement and Recording</p>
-                <div className="text-xs text-white/80 space-y-1">
+                <div className="text-xs text-white space-y-1">
                   <p>• Perform phase-earth PFC test on live circuit</p>
                   <p>• Record reading immediately and note any warnings</p>
                   <p>• Perform phase-neutral PFC test if required</p>
@@ -195,7 +195,7 @@ const HowToTestSection = () => (
                 <p className="font-medium text-foreground mb-1">
                   Safe Disconnection and Restoration
                 </p>
-                <div className="text-xs text-white/80 space-y-1">
+                <div className="text-xs text-white space-y-1">
                   <p>• Carefully disconnect test equipment using insulated tools</p>
                   <p>• Reconnect all loads and equipment</p>
                   <p>• Test circuit operation after restoration</p>

@@ -127,7 +127,7 @@ const Module4Section4_2 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -145,13 +145,13 @@ const Module4Section4_2 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 4.2</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 4.2</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Spacing Rules and Manufacturer Guidelines
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master correct spacing requirements for containment supports, manufacturer
               specifications, and environmental adjustments for safe installations.
             </p>
@@ -166,7 +166,7 @@ const Module4Section4_2 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">In 30 Seconds</p>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>
                     • Correct spacing prevents sagging, vibration damage, and structural failure
                   </li>
@@ -176,7 +176,7 @@ const Module4Section4_2 = () => {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">Spot it / Use it</p>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>
                     • <strong>Spot:</strong> Cable load, material type, environmental conditions
                   </li>
@@ -199,7 +199,7 @@ const Module4Section4_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <ul className="text-white/80 space-y-2">
+            <ul className="text-white space-y-2">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
                 <span>
@@ -239,7 +239,7 @@ const Module4Section4_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Why Spacing Matters and Basic Guidelines
             </h2>
-            <div className="text-white/80 space-y-6">
+            <div className="text-white space-y-6">
               <p>
                 Proper spacing of containment supports is fundamental to electrical installation
                 safety and compliance.
@@ -259,7 +259,7 @@ const Module4Section4_2 = () => {
                   <strong>Professional appearance:</strong> Maintains straight, aligned runs meeting
                   inspection standards.
                 </p>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>BS 7671 requirement:</strong> All containment must be adequately supported
                   to prevent damage
                 </p>
@@ -283,7 +283,7 @@ const Module4Section4_2 = () => {
                   <li>• Vertical: 1.5m maximum with expansion allowances</li>
                   <li>• Temperature factor: reduce 20% per 10°C above standard conditions</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Key difference:</strong> PVC requires 50% closer spacing than steel due to
                   thermal expansion
                 </p>
@@ -310,7 +310,7 @@ const Module4Section4_2 = () => {
                   <li>• Mini-trunking: 1.0m maximum for desktop/skirting applications</li>
                   <li>• Junction boxes: additional support within 150mm</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Load calculation:</strong> Include 25% safety margin for future cable
                   additions
                 </p>
@@ -332,7 +332,7 @@ const Module4Section4_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Manufacturer Guidelines and Load Considerations
             </h2>
-            <div className="text-white/80 space-y-6">
+            <div className="text-white space-y-6">
               <p>
                 Manufacturer specifications often override general guidelines and must be followed
                 for warranty and safety compliance.
@@ -357,7 +357,7 @@ const Module4Section4_2 = () => {
                   <li>• Stainless steel: standard spacing but check grade suitability</li>
                   <li>• Plastic trunking: significant thermal expansion considerations</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Warranty compliance:</strong> Non-compliance with spacing may void product
                   warranty
                 </p>
@@ -383,7 +383,7 @@ const Module4Section4_2 = () => {
                   <li>• Seismic considerations in appropriate regions</li>
                   <li>• Thermal cycling stress from temperature changes</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Safety margin:</strong> Apply 1.5× safety factor for calculated loads
                   minimum
                 </p>
@@ -404,7 +404,7 @@ const Module4Section4_2 = () => {
                   <li>• Measurement of deflection at span centres</li>
                   <li>• Check fixing integrity under load</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Field check:</strong> 2m span should not deflect more than 10mm under
                   design load
                 </p>
@@ -426,7 +426,7 @@ const Module4Section4_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Environmental Adjustments and Special Conditions
             </h2>
-            <div className="text-white/80 space-y-6">
+            <div className="text-white space-y-6">
               <p>
                 Environmental factors require spacing adjustments to maintain safety and performance
                 standards.
@@ -454,7 +454,7 @@ const Module4Section4_2 = () => {
                   <li>• Aluminium tray: every 10m with appropriate expansion brackets</li>
                   <li>• Steel systems: expansion joints at building movement joints</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Critical calculation:</strong> 30m PVC run at 40°C = 72mm expansion
                   requiring 12 supports
                 </p>
@@ -483,7 +483,7 @@ const Module4Section4_2 = () => {
                   <li>• Moderate vibration: apply 1.5× static load factor</li>
                   <li>• Heavy vibration: apply 2.0× static load factor</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Resonance check:</strong> Avoid support spacing that creates resonant
                   frequencies
                 </p>
@@ -509,7 +509,7 @@ const Module4Section4_2 = () => {
                   <li>• Underground: ground movement and moisture effects</li>
                   <li>• Swimming pools: chlorine atmosphere considerations</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Material selection:</strong> 316L stainless steel minimum for marine
                   environments
                 </p>
@@ -531,7 +531,7 @@ const Module4Section4_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Common Faults and Quality Control
             </h2>
-            <div className="text-white/80 space-y-6">
+            <div className="text-white space-y-6">
               <p>
                 Identifying and preventing common spacing errors ensures professional installations
                 and long-term reliability.
@@ -557,7 +557,7 @@ const Module4Section4_2 = () => {
                   <li>• Create spacing templates for repetitive work</li>
                   <li>• Check manufacturer datasheets for every product</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Best practice:</strong> Mark support centres with chalk line for straight
                   alignment
                 </p>
@@ -583,7 +583,7 @@ const Module4Section4_2 = () => {
                   <li>• Deflection measurement at span centres</li>
                   <li>• Fixing torque verification using calibrated tools</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Failure cost:</strong> Rework typically costs 3-5× original installation
                   time
                 </p>
@@ -598,7 +598,7 @@ const Module4Section4_2 = () => {
               Real-World Example
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
-              <div className="text-white/80 space-y-4 text-sm">
+              <div className="text-white space-y-4 text-sm">
                 <p>
                   A commercial installation used steel cable tray spaced at 2.5m intervals following
                   general BS 7671 guidelines. However, once loaded with heavy SWA cables totalling
@@ -631,7 +631,7 @@ const Module4Section4_2 = () => {
               Summary
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 Following correct spacing rules ensures mechanical integrity, compliance, and
                 professional appearance. Always follow manufacturer specifications in combination
                 with BS 7671, and adjust for load, environment, and material type. Proper planning,

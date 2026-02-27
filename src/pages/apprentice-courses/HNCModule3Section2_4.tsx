@@ -214,7 +214,7 @@ const HNCModule3Section2_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section2">
@@ -236,7 +236,7 @@ const HNCModule3Section2_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Power Factor - Causes and Effects on Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding how reactive loads affect power delivery, efficiency, and costs in
             building services installations
           </p>
@@ -321,7 +321,7 @@ const HNCModule3Section2_4 = () => {
               <div className="space-y-4">
                 <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
                   <p className="font-medium text-green-400 mb-1">True Power (P) - Watts</p>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-white">
                     Also called active or real power. This is the power that actually does useful
                     work - turning motors, producing heat, or generating light. Measured in Watts
                     (W) or kilowatts (kW). This is what you pay for on your electricity bill (kWh
@@ -334,7 +334,7 @@ const HNCModule3Section2_4 = () => {
                   <p className="font-medium text-blue-400 mb-1">
                     Reactive Power (Q) - Volt-Amperes Reactive
                   </p>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-white">
                     Power that oscillates between the source and the load, doing no useful work.
                     Required to establish magnetic fields in motors and transformers. Measured in
                     VAr or kVAr. Though it does no work, it still requires current to flow,
@@ -347,7 +347,7 @@ const HNCModule3Section2_4 = () => {
                   <p className="font-medium text-purple-400 mb-1">
                     Apparent Power (S) - Volt-Amperes
                   </p>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-white">
                     The total power that must be supplied by the source - the vector sum of true and
                     reactive power. Measured in VA or kVA. Transformers, generators and cables must
                     be rated for apparent power, not just true power. This is why poor power factor
@@ -432,7 +432,7 @@ const HNCModule3Section2_4 = () => {
               </p>
               <div className="text-center">
                 <p className="font-mono text-xl mb-2">pf = P / S = cos φ</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Where φ is the phase angle between voltage and current
                 </p>
               </div>
@@ -442,7 +442,7 @@ const HNCModule3Section2_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Power Triangle</p>
               <div className="p-4 rounded-lg bg-black/30">
                 <div className="text-center mb-4">
-                  <pre className="text-sm font-mono text-white/90 inline-block text-left">
+                  <pre className="text-sm font-mono text-white inline-block text-left">
                     {`                    S (kVA)
                    /|
                   / |
@@ -458,15 +458,15 @@ const HNCModule3Section2_4 = () => {
                 <div className="grid sm:grid-cols-3 gap-3 text-sm">
                   <div className="text-center">
                     <p className="text-green-400 font-medium">Horizontal: P (kW)</p>
-                    <p className="text-white/70 text-xs">True power - work done</p>
+                    <p className="text-white text-xs">True power - work done</p>
                   </div>
                   <div className="text-center">
                     <p className="text-blue-400 font-medium">Vertical: Q (kVAr)</p>
-                    <p className="text-white/70 text-xs">Reactive power - oscillating</p>
+                    <p className="text-white text-xs">Reactive power - oscillating</p>
                   </div>
                   <div className="text-center">
                     <p className="text-purple-400 font-medium">Hypotenuse: S (kVA)</p>
-                    <p className="text-white/70 text-xs">Apparent power - total supplied</p>
+                    <p className="text-white text-xs">Apparent power - total supplied</p>
                   </div>
                 </div>
               </div>
@@ -479,19 +479,19 @@ const HNCModule3Section2_4 = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">S² = P² + Q²</p>
-                  <p className="text-white/70 text-xs">Pythagorean</p>
+                  <p className="text-white text-xs">Pythagorean</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">pf = P / S</p>
-                  <p className="text-white/70 text-xs">Power factor</p>
+                  <p className="text-white text-xs">Power factor</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">cos φ = P / S</p>
-                  <p className="text-white/70 text-xs">From triangle</p>
+                  <p className="text-white text-xs">From triangle</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">tan φ = Q / P</p>
-                  <p className="text-white/70 text-xs">Q from P and φ</p>
+                  <p className="text-white text-xs">Q from P and φ</p>
                 </div>
               </div>
             </div>
@@ -501,7 +501,7 @@ const HNCModule3Section2_4 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
                   <p className="font-medium text-orange-400 mb-2">Lagging Power Factor</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Current lags voltage (inductive)</li>
                     <li className="pl-1">Caused by motors, transformers, reactors</li>
                     <li className="pl-1">Most common in building services</li>
@@ -510,7 +510,7 @@ const HNCModule3Section2_4 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border-l-2 border-cyan-500/50">
                   <p className="font-medium text-cyan-400 mb-2">Leading Power Factor</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Current leads voltage (capacitive)</li>
                     <li className="pl-1">Caused by capacitors, over-excited synchronous motors</li>
                     <li className="pl-1">Used for power factor correction</li>
@@ -675,7 +675,7 @@ const HNCModule3Section2_4 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-2">HVAC Systems</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">AHU fan motors (often 50-70% loaded)</li>
                     <li className="pl-1">Chiller compressor motors</li>
                     <li className="pl-1">Pump motors for CHW/condenser water</li>
@@ -685,7 +685,7 @@ const HNCModule3Section2_4 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-2">Other Building Loads</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Lift motors (highly variable loading)</li>
                     <li className="pl-1">Escalator drives</li>
                     <li className="pl-1">Distribution transformers</li>
@@ -724,7 +724,7 @@ const HNCModule3Section2_4 = () => {
               <div className="space-y-4">
                 <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50">
                   <p className="font-medium text-red-400 mb-2">Increased Current</p>
-                  <p className="text-sm text-white/90 mb-2">
+                  <p className="text-sm text-white mb-2">
                     For the same real power (kW), poor pf requires higher current. Current increases
                     by factor 1/pf.
                   </p>
@@ -737,7 +737,7 @@ const HNCModule3Section2_4 = () => {
 
                 <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
                   <p className="font-medium text-orange-400 mb-2">Increased Cable Losses (I²R)</p>
-                  <p className="text-sm text-white/90 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Power loss in conductors is proportional to current squared. Poor pf
                     dramatically increases losses.
                   </p>
@@ -746,14 +746,14 @@ const HNCModule3Section2_4 = () => {
                     <p>At 0.8 pf: Losses = (1/0.8)² = 1.56× higher</p>
                     <p>At 0.9 pf: Losses = (1/0.9)² = 1.23× higher</p>
                   </div>
-                  <p className="text-sm text-white/70 mt-2">
+                  <p className="text-sm text-white mt-2">
                     This wasted energy appears as heat in cables, transformers and switchgear.
                   </p>
                 </div>
 
                 <div className="p-4 rounded-lg bg-white/5 border-l-2 border-yellow-500/50">
                   <p className="font-medium text-yellow-400 mb-2">Increased Voltage Drop</p>
-                  <p className="text-sm text-white/90 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Higher current causes proportionally greater voltage drop along cables (Vd = I ×
                     R × L × 2). May require larger cables to meet the 5% voltage drop limit for
                     power circuits.
@@ -762,7 +762,7 @@ const HNCModule3Section2_4 = () => {
 
                 <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
                   <p className="font-medium text-purple-400 mb-2">Oversized Equipment Required</p>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-white">
                     Transformers, generators, cables and switchgear must be rated for apparent power
                     (kVA). A 100kW load at 0.7 pf requires 143kVA capacity - 43% larger than at
                     unity pf.
@@ -831,10 +831,10 @@ const HNCModule3Section2_4 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
               <p className="text-sm font-medium text-red-400 mb-2">Commercial Impact Example</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 A 500kW commercial building at 0.75 pf draws 667kVA apparent power. This requires:
               </p>
-              <ul className="text-sm text-white/90 mt-2 space-y-1 list-disc list-outside ml-5">
+              <ul className="text-sm text-white mt-2 space-y-1 list-disc list-outside ml-5">
                 <li className="pl-1">
                   33% larger transformer capacity (667kVA vs 500kVA at unity)
                 </li>
@@ -870,7 +870,7 @@ const HNCModule3Section2_4 = () => {
                 <strong>Question:</strong> A three-phase motor draws 45kW at 0.82 power factor
                 lagging. Calculate the reactive power (Q) and apparent power (S).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given: P = 45kW, pf = cos φ = 0.82</p>
                 <p className="mt-2">Step 1: Find apparent power</p>
                 <p>
@@ -883,7 +883,7 @@ const HNCModule3Section2_4 = () => {
                 <p>
                   Q = <strong>31.4kVAr</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Check: S² = P² + Q² → 54.9² = 45² + 31.4² → 3014 ≈ 2025 + 986 ✓
                 </p>
               </div>
@@ -897,7 +897,7 @@ const HNCModule3Section2_4 = () => {
                 <strong>Question:</strong> A 30kW three-phase load operates at 400V. Compare the
                 line current at (a) unity pf, (b) 0.85 pf, and (c) 0.70 pf.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using: I = P / (√3 × V × pf)</p>
                 <p className="mt-2">(a) At unity pf (1.0):</p>
                 <p>
@@ -925,7 +925,7 @@ const HNCModule3Section2_4 = () => {
                 <strong>Question:</strong> A building has 200kW of load at 0.75 pf and 100kW of
                 resistive heating. What transformer kVA rating is required?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Heating load (unity pf)</p>
                 <p>S₁ = P₁ / pf = 100 / 1.0 = 100kVA</p>
                 <p>Q₁ = 0kVAr (resistive)</p>
@@ -941,7 +941,7 @@ const HNCModule3Section2_4 = () => {
                   S_total = √121258 = <strong>348.2kVA</strong>
                 </p>
                 <p className="mt-2">Combined pf = 300/348.2 = 0.86 lagging</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → Select 400kVA transformer (next standard size)
                 </p>
               </div>
@@ -956,7 +956,7 @@ const HNCModule3Section2_4 = () => {
                 2000 hours per year. If the DNO charges 0.45p/kVArh for reactive power above 0.90 pf
                 equivalent, calculate the annual reactive charge.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Actual reactive power at 0.78 pf</p>
                 <p>S = 150/0.78 = 192.3kVA</p>
                 <p>Q_actual = √(192.3² - 150²) = 120.4kVAr</p>
@@ -1130,7 +1130,7 @@ const HNCModule3Section2_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1176,7 +1176,7 @@ const HNCModule3Section2_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section2-3">

@@ -87,7 +87,7 @@ const DataCablingModule4Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/data-cabling-module-4">
@@ -108,7 +108,7 @@ const DataCablingModule4Section5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Rack and Patch Panel Organisation
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Equipment room organisation and professional cable management
           </p>
         </header>
@@ -216,15 +216,15 @@ const DataCablingModule4Section5 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Open Frame</p>
-                <p className="text-white/90 text-xs">Max ventilation, easy access</p>
+                <p className="text-white text-xs">Max ventilation, easy access</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Enclosed</p>
-                <p className="text-white/90 text-xs">Security, controlled airflow</p>
+                <p className="text-white text-xs">Security, controlled airflow</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Wall Mount</p>
-                <p className="text-white/90 text-xs">Small installations</p>
+                <p className="text-white text-xs">Small installations</p>
               </div>
             </div>
           </div>
@@ -250,7 +250,7 @@ const DataCablingModule4Section5 = () => {
                   <span className="text-white font-medium">Top (U42-U37):</span>
                   <span className="text-elec-yellow text-sm">Passive Equipment</span>
                 </div>
-                <p className="text-xs text-white/70 mt-1">
+                <p className="text-xs text-white mt-1">
                   Patch panels, cross-connects, cable management
                 </p>
               </div>
@@ -259,7 +259,7 @@ const DataCablingModule4Section5 = () => {
                   <span className="text-white font-medium">Upper Middle (U36-U25):</span>
                   <span className="text-elec-yellow text-sm">Network Equipment</span>
                 </div>
-                <p className="text-xs text-white/70 mt-1">
+                <p className="text-xs text-white mt-1">
                   Switches, routers, lightweight active equipment
                 </p>
               </div>
@@ -268,14 +268,14 @@ const DataCablingModule4Section5 = () => {
                   <span className="text-white font-medium">Lower Middle (U24-U13):</span>
                   <span className="text-elec-yellow text-sm">Heavy Equipment</span>
                 </div>
-                <p className="text-xs text-white/70 mt-1">Servers, storage systems, UPS units</p>
+                <p className="text-xs text-white mt-1">Servers, storage systems, UPS units</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <div className="flex justify-between items-center">
                   <span className="text-white font-medium">Bottom (U12-U1):</span>
                   <span className="text-elec-yellow text-sm">Infrastructure</span>
                 </div>
-                <p className="text-xs text-white/70 mt-1">
+                <p className="text-xs text-white mt-1">
                   Cable management, power distribution, KVM
                 </p>
               </div>
@@ -489,7 +489,7 @@ const DataCablingModule4Section5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -528,7 +528,7 @@ const DataCablingModule4Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/data-cabling-module-4-section-4">

@@ -273,7 +273,7 @@ const Level3Module6Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section4">
@@ -341,11 +341,11 @@ const Level3Module6Section4_4 = () => {
                     Not Recommended
                   </span>
                 </div>
-                <p className="text-sm text-white/90 mb-2">
+                <p className="text-sm text-white mb-2">
                   Direct connection to standard domestic socket outlet without any additional
                   control or protection.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1 ml-4">
+                <ul className="text-sm text-white space-y-1 ml-4">
                   <li>Maximum ~2.3kW at 10A (for sustained load)</li>
                   <li>No communication with vehicle</li>
                   <li>Relies entirely on circuit protection</li>
@@ -362,11 +362,11 @@ const Level3Module6Section4_4 = () => {
                     Portable/Temporary
                   </span>
                 </div>
-                <p className="text-sm text-white/90 mb-2">
+                <p className="text-sm text-white mb-2">
                   Uses a special cable with integrated control, protection, and communication
                   functions.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1 ml-4">
+                <ul className="text-sm text-white space-y-1 ml-4">
                   <li>Typically 2.3kW from 13A socket, up to 7kW from commando socket</li>
                   <li>ICCB contains RCD, control pilot, and temperature monitoring</li>
                   <li>Portable - useful for travel or where no fixed charger available</li>
@@ -385,11 +385,11 @@ const Level3Module6Section4_4 = () => {
                     Recommended
                   </span>
                 </div>
-                <p className="text-sm text-white/90 mb-2">
+                <p className="text-sm text-white mb-2">
                   Purpose-built charging station with integrated control, protection, and
                   communication.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1 ml-4">
+                <ul className="text-sm text-white space-y-1 ml-4">
                   <li>Typically 7kW single-phase or 11/22kW three-phase</li>
                   <li>Built-in RCD protection, control pilot, and DC fault detection</li>
                   <li>Smart functionality for load management and scheduling</li>
@@ -406,10 +406,10 @@ const Level3Module6Section4_4 = () => {
                     Commercial/Public
                   </span>
                 </div>
-                <p className="text-sm text-white/90 mb-2">
+                <p className="text-sm text-white mb-2">
                   DC charging where the charger unit converts AC to DC externally to the vehicle.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1 ml-4">
+                <ul className="text-sm text-white space-y-1 ml-4">
                   <li>50kW to 350kW+ - typically 20-30 minute charging</li>
                   <li>Uses CCS or CHAdeMO connectors</li>
                   <li>Requires substantial supply infrastructure</li>
@@ -443,7 +443,7 @@ const Level3Module6Section4_4 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
               <p className="text-sm font-medium text-red-400 mb-2">The PME Risk Scenario:</p>
-              <ul className="text-sm text-white/90 space-y-2 ml-4">
+              <ul className="text-sm text-white space-y-2 ml-4">
                 <li>1. The supply neutral conductor breaks (rare but possible)</li>
                 <li>2. Load current returns via the combined earth/neutral system</li>
                 <li>3. Installation earth rises towards line voltage (potentially 115V+)</li>
@@ -462,7 +462,7 @@ const Level3Module6Section4_4 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">PME Mitigation Options:</p>
-              <ul className="text-sm text-white/90 space-y-1 ml-4">
+              <ul className="text-sm text-white space-y-1 ml-4">
                 <li>
                   <strong>Option 1:</strong> Install earth electrode with resistance not exceeding
                   specified value
@@ -509,13 +509,13 @@ const Level3Module6Section4_4 = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 pr-4 text-white/80">Charger Rating</th>
-                      <th className="text-left py-2 pr-4 text-white/80">Current (A)</th>
-                      <th className="text-left py-2 pr-4 text-white/80">Typical Cable</th>
-                      <th className="text-left py-2 text-white/80">Notes</th>
+                      <th className="text-left py-2 pr-4 text-white">Charger Rating</th>
+                      <th className="text-left py-2 pr-4 text-white">Current (A)</th>
+                      <th className="text-left py-2 pr-4 text-white">Typical Cable</th>
+                      <th className="text-left py-2 text-white">Notes</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/90">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2 pr-4">3.6kW</td>
                       <td className="py-2 pr-4">16A</td>
@@ -562,7 +562,7 @@ const Level3Module6Section4_4 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Design Checklist:</p>
-              <ul className="text-sm text-white/90 space-y-1 ml-4">
+              <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Confirm main fuse capacity can accommodate charger plus existing loads</li>
                 <li>Calculate cable size including all derating factors</li>
                 <li>Verify voltage drop at rated current for full route length</li>
@@ -597,14 +597,14 @@ const Level3Module6Section4_4 = () => {
                   <p className="text-elec-yellow/80 font-medium mb-1">
                     Option A: Type A + DC Detection
                   </p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     Standard Type A RCD at 30mA combined with DC fault detection built into the
                     EVSE. Most Mode 3 chargers include this detection as standard.
                   </p>
                 </div>
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Option B: Type B RCD</p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     Type B RCD detects both AC and DC fault components. More expensive but provides
                     complete protection without relying on charger electronics.
                   </p>
@@ -620,7 +620,7 @@ const Level3Module6Section4_4 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Smart Charger Features:</p>
-              <ul className="text-sm text-white/90 space-y-1 ml-4">
+              <ul className="text-sm text-white space-y-1 ml-4">
                 <li>
                   <strong>Scheduled charging:</strong> Set charging times to use cheaper overnight
                   electricity
@@ -642,7 +642,7 @@ const Level3Module6Section4_4 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A homeowner has a 7kW EV charger and uses an electric cooker
               and shower during evening peak hours. The smart charger detects the increased
               household load and automatically reduces charging current from 32A to 16A, preventing
@@ -723,7 +723,7 @@ const Level3Module6Section4_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -766,7 +766,7 @@ const Level3Module6Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section4-4-3">

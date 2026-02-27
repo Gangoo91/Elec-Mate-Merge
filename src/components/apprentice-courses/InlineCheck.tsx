@@ -57,13 +57,13 @@ export const InlineCheck: React.FC<InlineCheckProps> = ({
             )}
           >
             <div className="flex items-center justify-between gap-3">
-              <span className="text-sm sm:text-base text-white/80">
+              <span className="text-sm sm:text-base text-white">
                 {revealed ? 'Hide Answer' : 'Tap to reveal answer'}
               </span>
               {revealed ? (
                 <ChevronUp className="h-5 w-5 text-elec-yellow flex-shrink-0" />
               ) : (
-                <ChevronDown className="h-5 w-5 text-white/40 flex-shrink-0" />
+                <ChevronDown className="h-5 w-5 text-white flex-shrink-0" />
               )}
             </div>
           </button>
@@ -73,7 +73,7 @@ export const InlineCheck: React.FC<InlineCheckProps> = ({
               <p className="font-semibold mb-2 text-base text-green-300">Answer:</p>
               <p className="text-white text-sm sm:text-base leading-relaxed">{correctAnswer}</p>
               {explanation && (
-                <p className="text-white/70 text-sm mt-3 leading-relaxed">{explanation}</p>
+                <p className="text-white text-sm mt-3 leading-relaxed">{explanation}</p>
               )}
             </div>
           )}
@@ -97,7 +97,7 @@ export const InlineCheck: React.FC<InlineCheckProps> = ({
       </div>
       <div className="space-y-4">
         <p className="text-white font-medium text-base sm:text-lg leading-relaxed">{question}</p>
-        <div className="flex items-center gap-2 text-xs text-white/60 mb-3" id={`${id}-hint`}>
+        <div className="flex items-center gap-2 text-xs text-white mb-3" id={`${id}-hint`}>
           <span
             className="inline-block h-2 w-2 rounded-full bg-elec-yellow animate-pulse"
             aria-hidden
@@ -153,7 +153,7 @@ export const InlineCheck: React.FC<InlineCheckProps> = ({
             className={cn(
               'inline-flex items-center justify-center rounded-xl px-6 py-3 min-h-[48px] text-sm sm:text-base font-semibold transition-all touch-manipulation active:scale-[0.98]',
               submitted
-                ? 'opacity-60 cursor-not-allowed bg-white/10 text-white/60'
+                ? 'opacity-60 cursor-not-allowed bg-white/10 text-white'
                 : 'bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90'
             )}
           >

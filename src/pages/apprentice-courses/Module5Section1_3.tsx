@@ -182,7 +182,7 @@ const Module5Section1_3 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -200,13 +200,13 @@ const Module5Section1_3 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.1.3</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.1.3</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Electrical Symbols and Conventions
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master electrical symbols from BS 7671 and common site conventions for accurate
               installation work.
             </p>
@@ -217,7 +217,7 @@ const Module5Section1_3 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-                <ul className="list-disc pl-5 space-y-1 text-white/80 text-sm">
+                <ul className="list-disc pl-5 space-y-1 text-white text-sm">
                   <li>
                     Electrical drawings use standardised symbols from BS 7671 to communicate
                     clearly.
@@ -230,7 +230,7 @@ const Module5Section1_3 = () => {
               </div>
               <div>
                 <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-                <ul className="list-disc pl-5 space-y-1 text-white/80 text-sm">
+                <ul className="list-disc pl-5 space-y-1 text-white text-sm">
                   <li>
                     <strong>Spot:</strong> Circle with cross (lights), double circle (sockets), S in
                     square (switches).
@@ -253,7 +253,7 @@ const Module5Section1_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Learning Outcomes
             </h2>
-            <ul className="list-disc pl-6 space-y-2 text-white/80">
+            <ul className="list-disc pl-6 space-y-2 text-white">
               <li>Recognise standard electrical symbols from BS 7671.</li>
               <li>Interpret common site conventions used in electrical drawings.</li>
               <li>Differentiate between symbol types for wiring, containment, and accessories.</li>
@@ -267,7 +267,7 @@ const Module5Section1_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Purpose of Symbols
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Electrical symbols serve essential communication functions in technical drawings:
               </p>
@@ -297,7 +297,7 @@ const Module5Section1_3 = () => {
                   <li>Makes complex installations easier to understand</li>
                 </ul>
 
-                <p className="text-sm text-white/60 mt-3">
+                <p className="text-sm text-white mt-3">
                   <strong>Key principle:</strong> Symbols are the universal language of electrical
                   engineering
                 </p>
@@ -321,7 +321,7 @@ const Module5Section1_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Categories of Symbols
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Electrical symbols are organised into main categories for different system
                 components:
@@ -376,7 +376,7 @@ const Module5Section1_3 = () => {
                   </div>
                 </div>
 
-                <p className="text-sm text-white/60 mt-3">
+                <p className="text-sm text-white mt-3">
                   <strong>Remember:</strong> Each category has multiple variations - always check
                   the legend
                 </p>
@@ -400,7 +400,7 @@ const Module5Section1_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               BS 7671 Standards
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>All electrical symbols must comply with BS 7671 for consistency and safety:</p>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
@@ -428,7 +428,7 @@ const Module5Section1_3 = () => {
                   <li>Meets professional certification requirements</li>
                 </ul>
 
-                <p className="text-sm text-white/60 mt-3">
+                <p className="text-sm text-white mt-3">
                   <strong>Important:</strong> Stay updated with BS 7671 amendments and symbol
                   changes
                 </p>
@@ -452,7 +452,7 @@ const Module5Section1_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Common Site Conventions
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 While following BS standards, sites may use variations for specific requirements:
               </p>
@@ -482,7 +482,7 @@ const Module5Section1_3 = () => {
                   <li>Must be checked before starting work</li>
                 </ul>
 
-                <p className="text-sm text-white/60 mt-3">
+                <p className="text-sm text-white mt-3">
                   <strong>Golden rule:</strong> Always check the legend first - never assume symbol
                   meanings
                 </p>
@@ -498,7 +498,7 @@ const Module5Section1_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Errors and Misinterpretation
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>Understanding common errors helps prevent costly installation mistakes:</p>
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50">
@@ -526,7 +526,7 @@ const Module5Section1_3 = () => {
                   <li>Cross-reference with specifications</li>
                 </ul>
 
-                <p className="text-sm text-white/60 mt-3">
+                <p className="text-sm text-white mt-3">
                   <strong>Consequences:</strong> Wrong installation, delays, material waste, and
                   costly rework
                 </p>
@@ -543,7 +543,7 @@ const Module5Section1_3 = () => {
             <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
               <div className="flex items-start gap-3">
                 <AlertTriangle className="w-5 h-5 text-amber-500 flex-shrink-0 mt-0.5" />
-                <div className="text-white/80">
+                <div className="text-white">
                   <p className="font-medium text-white mb-2">Office Refurbishment Symbol Mix-up</p>
                   <p className="text-sm mb-3">
                     An apprentice misread a lighting symbol and installed a pendant luminaire
@@ -580,11 +580,11 @@ const Module5Section1_3 = () => {
                   >
                     <span className="font-medium text-white pr-4">{faq.question}</span>
                     <ChevronDown
-                      className={`w-5 h-5 text-white/60 flex-shrink-0 transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
+                      className={`w-5 h-5 text-white flex-shrink-0 transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
                     />
                   </button>
                   {openFaq === index && (
-                    <div className="px-4 pb-4 text-white/70 text-sm border-t border-white/10 pt-3">
+                    <div className="px-4 pb-4 text-white text-sm border-t border-white/10 pt-3">
                       {faq.answer}
                     </div>
                   )}
@@ -600,7 +600,7 @@ const Module5Section1_3 = () => {
               Pocket Guide
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <div className="grid md:grid-cols-2 gap-4 text-sm text-white/80">
+              <div className="grid md:grid-cols-2 gap-4 text-sm text-white">
                 <div className="space-y-2">
                   <p className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-green-500 flex-shrink-0 mt-0.5" />
@@ -639,7 +639,7 @@ const Module5Section1_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">09</span>
               Recap
             </h2>
-            <div className="text-white/80 space-y-4">
+            <div className="text-white space-y-4">
               <p>In this subsection, you learned:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Why symbols and conventions matter for clear communication</li>
@@ -664,7 +664,7 @@ const Module5Section1_3 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../1-2">

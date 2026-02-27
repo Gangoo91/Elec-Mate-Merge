@@ -246,7 +246,7 @@ const Module5Section4_2 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -263,13 +263,13 @@ const Module5Section4_2 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.4.2</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.4.2</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Ordering Materials and Managing Deliveries
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master efficient procurement and delivery coordination to ensure smooth project
               execution without costly delays.
             </p>
@@ -282,7 +282,7 @@ const Module5Section4_2 = () => {
               In 30 Seconds
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <ul className="text-white/90 space-y-2 text-sm leading-relaxed">
+              <ul className="text-white space-y-2 text-sm leading-relaxed">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Schedule phased deliveries to match project phases</span>
@@ -309,7 +309,7 @@ const Module5Section4_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="text-white/85 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Efficient ordering and delivery management is the backbone of successful electrical
                 installations. A well-planned procurement system ensures the right materials arrive
@@ -322,7 +322,7 @@ const Module5Section4_2 = () => {
                   <Truck className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-elec-yellow mb-2">Why This Matters</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Professional procurement systems reduce project delays by 25% and improve cash
                       flow through optimised inventory management and supplier relationships.
                       Well-managed deliveries can reduce project costs by 5-15% through reduced
@@ -332,7 +332,7 @@ const Module5Section4_2 = () => {
                 </div>
               </div>
               <div className="p-3 rounded bg-white/5 border border-white/10">
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">Professional Standard:</strong> Effective material
                   management demonstrates competence and builds long-term supplier relationships
                   that benefit future projects.
@@ -347,13 +347,13 @@ const Module5Section4_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <div className="text-white/85 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p className="mb-4">By the end of this subsection, you will be able to:</p>
 
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-medium text-white mb-3">Procurement Planning Skills</h4>
-                  <ul className="space-y-2 text-sm text-white/80">
+                  <ul className="space-y-2 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
                       Create comprehensive material orders based on accurate estimates
@@ -375,7 +375,7 @@ const Module5Section4_2 = () => {
 
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-medium text-white mb-3">Delivery Coordination</h4>
-                  <ul className="space-y-2 text-sm text-white/80">
+                  <ul className="space-y-2 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
                       Schedule phased deliveries to match project phases
@@ -397,7 +397,7 @@ const Module5Section4_2 = () => {
 
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-medium text-white mb-3">Quality & Inspection</h4>
-                  <ul className="space-y-2 text-sm text-white/80">
+                  <ul className="space-y-2 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
                       Establish delivery inspection and quality control procedures
@@ -419,7 +419,7 @@ const Module5Section4_2 = () => {
 
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-medium text-white mb-3">Storage & Safety</h4>
-                  <ul className="space-y-2 text-sm text-white/80">
+                  <ul className="space-y-2 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
                       Design and implement secure, weatherproof storage systems
@@ -448,7 +448,7 @@ const Module5Section4_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Planning the Order
             </h2>
-            <div className="text-white/85 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Successful procurement starts with meticulous planning based on accurate estimates
                 and detailed specifications:
@@ -456,7 +456,7 @@ const Module5Section4_2 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Foundation Elements:</p>
-                <ul className="text-sm text-white/80 space-y-2 ml-4">
+                <ul className="text-sm text-white space-y-2 ml-4">
                   <li>
                     <strong>Accurate take-offs:</strong> Base orders on verified material estimates
                     and calculations
@@ -482,7 +482,7 @@ const Module5Section4_2 = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-3">Procurement Timeline Planning</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>
                     <strong>Standard items:</strong> 5-10 working days lead time
                   </li>
@@ -504,7 +504,7 @@ const Module5Section4_2 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Cable Specifications</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Type (T&E, SWA, FP200, etc.)</li>
                     <li>• Size and number of cores</li>
                     <li>• Voltage rating and standards</li>
@@ -514,7 +514,7 @@ const Module5Section4_2 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Containment & Accessories</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Trunking sizes and materials</li>
                     <li>• Conduit diameters and types</li>
                     <li>• IP ratings for enclosures</li>
@@ -542,7 +542,7 @@ const Module5Section4_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Scheduling Deliveries
             </h2>
-            <div className="text-white/85 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Strategic delivery scheduling prevents site congestion, reduces storage risks, and
                 maintains project flow:
@@ -550,7 +550,7 @@ const Module5Section4_2 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Phased Delivery Approach:</p>
-                <ul className="text-sm text-white/80 space-y-2 ml-4">
+                <ul className="text-sm text-white space-y-2 ml-4">
                   <li>
                     <strong>Phase 1 - Infrastructure:</strong> Containment, trunking, cable tray,
                     major support systems
@@ -576,7 +576,7 @@ const Module5Section4_2 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                   <p className="font-medium text-green-400 mb-2">JIT Advantages</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Reduced storage space requirements</li>
                     <li>• Lower theft and damage risks</li>
                     <li>• Improved cash flow management</li>
@@ -586,7 +586,7 @@ const Module5Section4_2 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                   <p className="font-medium text-amber-400 mb-2">JIT Considerations</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Requires accurate scheduling</li>
                     <li>• Supplier reliability critical</li>
                     <li>• May have higher delivery costs</li>
@@ -598,7 +598,7 @@ const Module5Section4_2 = () => {
 
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <p className="font-medium text-blue-400 mb-2">Delivery Coordination Factors</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>
                     <strong>Site access:</strong> Coordinate with other trades and site management
                   </li>
@@ -622,7 +622,7 @@ const Module5Section4_2 = () => {
               </div>
 
               <div className="p-3 rounded bg-orange-500/10 border border-orange-500/20">
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-orange-400">Risk Management:</strong> Early bulk
                   deliveries increase theft risk by 60% and weather damage by 40%. Phased deliveries
                   reduce these risks while maintaining project flow.
@@ -647,7 +647,7 @@ const Module5Section4_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Communication with Suppliers
             </h2>
-            <div className="text-white/85 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Effective supplier communication builds relationships that deliver long-term
                 benefits and project success:
@@ -655,7 +655,7 @@ const Module5Section4_2 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Essential Communication Practices:</p>
-                <ul className="text-sm text-white/80 space-y-2 ml-4">
+                <ul className="text-sm text-white space-y-2 ml-4">
                   <li>
                     <strong>Clear specifications:</strong> Provide detailed technical requirements
                     and standards
@@ -682,7 +682,7 @@ const Module5Section4_2 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Purchase Documentation</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Purchase order with specifications</li>
                     <li>• Delivery schedule confirmation</li>
                     <li>• Price and payment terms</li>
@@ -692,7 +692,7 @@ const Module5Section4_2 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Delivery Documentation</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Delivery notes and packing lists</li>
                     <li>• Quality certificates and test results</li>
                     <li>• Warranty and guarantee documents</li>
@@ -704,7 +704,7 @@ const Module5Section4_2 = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2">Building Supplier Partnerships</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>
                     <strong>Preferred supplier agreements:</strong> Negotiate better terms through
                     volume commitments
@@ -746,7 +746,7 @@ const Module5Section4_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Receiving and Checking Deliveries
             </h2>
-            <div className="text-white/85 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Thorough delivery inspection protects against quality issues, quantity
                 discrepancies, and liability problems:
@@ -754,7 +754,7 @@ const Module5Section4_2 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Systematic Inspection Procedure:</p>
-                <ol className="text-sm text-white/80 space-y-2 ml-4 list-decimal">
+                <ol className="text-sm text-white space-y-2 ml-4 list-decimal">
                   <li>
                     <strong>Pre-delivery preparation:</strong> Clear designated inspection area,
                     prepare tools and documentation
@@ -785,7 +785,7 @@ const Module5Section4_2 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                   <p className="font-medium text-red-400 mb-2">Rejection Criteria</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Physical damage to packaging or products</li>
                     <li>• Incorrect specifications or part numbers</li>
                     <li>• Missing quantities or short deliveries</li>
@@ -795,7 +795,7 @@ const Module5Section4_2 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                   <p className="font-medium text-green-400 mb-2">Acceptance Requirements</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Quantities match delivery note exactly</li>
                     <li>• Specifications comply with order</li>
                     <li>• No visible damage or defects</li>
@@ -807,7 +807,7 @@ const Module5Section4_2 = () => {
 
               <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                 <p className="font-medium text-amber-400 mb-2">Non-Conformance Procedures</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>
                     <strong>Immediate action:</strong> Stop acceptance process, do not sign delivery
                     note
@@ -831,7 +831,7 @@ const Module5Section4_2 = () => {
               </div>
 
               <div className="p-3 rounded bg-blue-500/10 border border-blue-500/20">
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-blue-400">Professional Tip:</strong> Never accept
                   deliveries "subject to later inspection"—once signed, proving subsequent damage or
                   discrepancies becomes extremely difficult and may void warranty claims.
@@ -846,7 +846,7 @@ const Module5Section4_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Storage and Handling
             </h2>
-            <div className="text-white/85 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Proper storage systems protect material investments and ensure product integrity
                 throughout the project:
@@ -854,7 +854,7 @@ const Module5Section4_2 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Storage Facility Requirements:</p>
-                <ul className="text-sm text-white/80 space-y-2 ml-4">
+                <ul className="text-sm text-white space-y-2 ml-4">
                   <li>
                     <strong>Weather protection:</strong> Waterproof and weatherproof construction
                   </li>
@@ -879,7 +879,7 @@ const Module5Section4_2 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Cable Storage</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Horizontal drum storage on racks</li>
                     <li>• Protect from UV light and moisture</li>
                     <li>• Avoid excessive temperatures</li>
@@ -889,7 +889,7 @@ const Module5Section4_2 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Equipment & Accessories</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Shelving systems for small items</li>
                     <li>• Climate-controlled areas for electronics</li>
                     <li>• Segregated areas for different voltages</li>
@@ -901,7 +901,7 @@ const Module5Section4_2 = () => {
 
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="font-medium text-green-400 mb-2">Inventory Management Systems</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>
                     <strong>Location systems:</strong> Clear addressing and mapping of storage areas
                   </li>
@@ -923,7 +923,7 @@ const Module5Section4_2 = () => {
               </div>
 
               <div className="p-3 rounded bg-red-500/10 border border-red-500/20">
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-red-400">Storage Cost Impact:</strong> Poor storage can
                   result in 5-15% material losses through theft, damage, and deterioration.
                   Professional storage systems pay for themselves through loss prevention.
@@ -938,7 +938,7 @@ const Module5Section4_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">08</span>
               Common Ordering Mistakes
             </h2>
-            <div className="text-white/85 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Learning from common procurement errors helps prevent costly mistakes and project
                 delays:
@@ -947,7 +947,7 @@ const Module5Section4_2 = () => {
               <div className="space-y-4">
                 <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                   <p className="font-medium text-red-400 mb-2">Specification Errors</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Ordering incorrect cable sizes or core configurations</li>
                     <li>• Wrong protective device ratings or types</li>
                     <li>• Incompatible accessories or mounting systems</li>
@@ -958,7 +958,7 @@ const Module5Section4_2 = () => {
 
                 <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                   <p className="font-medium text-amber-400 mb-2">Planning Failures</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Ignoring supplier stock availability before ordering</li>
                     <li>• Failing to account for delivery lead times</li>
                     <li>• Not considering supplier holiday periods</li>
@@ -969,7 +969,7 @@ const Module5Section4_2 = () => {
 
                 <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                   <p className="font-medium text-blue-400 mb-2">Quality Control Failures</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Inadequate delivery inspection procedures</li>
                     <li>• Accepting deliveries without proper checking</li>
                     <li>• Using damaged or substandard materials</li>
@@ -981,7 +981,7 @@ const Module5Section4_2 = () => {
 
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="font-medium text-green-400 mb-2">Prevention Strategies</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>
                     <strong>Double-check specifications:</strong> Verify all technical details
                     against drawings and standards
@@ -1012,22 +1012,22 @@ const Module5Section4_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">09</span>
               Worked Examples
             </h2>
-            <div className="text-white/85 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <h3 className="font-semibold text-blue-400 mb-3">
                   Example 1: Office Building Electrical Installation
                 </h3>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   <strong>Project:</strong> 3-floor office building, 50 staff, full electrical
                   installation
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   <strong>Duration:</strong> 12 weeks installation period
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   <strong>Delivery Schedule:</strong>
                 </p>
-                <ul className="text-sm text-white/80 space-y-1 ml-4">
+                <ul className="text-sm text-white space-y-1 ml-4">
                   <li>
                     • <strong>Week 1:</strong> Cable tray, trunking, major containment systems
                   </li>
@@ -1048,7 +1048,7 @@ const Module5Section4_2 = () => {
                   </li>
                 </ul>
                 <div className="mt-3 p-3 rounded bg-white/5 border border-white/10">
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     <strong>Result:</strong> Zero material shortages, 5% under budget due to bulk
                     ordering discounts, project completed on schedule.
                   </p>
@@ -1059,16 +1059,16 @@ const Module5Section4_2 = () => {
                 <h3 className="font-semibold text-green-400 mb-3">
                   Example 2: Industrial Unit Emergency Order
                 </h3>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   <strong>Situation:</strong> Fire damage required emergency electrical replacement
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   <strong>Challenge:</strong> 48-hour deadline for production restart
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   <strong>Solution:</strong>
                 </p>
-                <ul className="text-sm text-white/80 space-y-1 ml-4">
+                <ul className="text-sm text-white space-y-1 ml-4">
                   <li>• Contacted 3 trusted suppliers simultaneously</li>
                   <li>• Negotiated emergency delivery for standard items</li>
                   <li>• Used compatible alternatives for non-critical components</li>
@@ -1076,7 +1076,7 @@ const Module5Section4_2 = () => {
                   <li>• Implemented temporary installation pending specialist items</li>
                 </ul>
                 <div className="mt-3 p-3 rounded bg-white/5 border border-white/10">
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     <strong>Result:</strong> Production restarted in 36 hours, full permanent
                     installation completed within 1 week.
                   </p>
@@ -1091,14 +1091,14 @@ const Module5Section4_2 = () => {
                     <p className="font-mono text-sm text-elec-yellow">
                       Required Date - (Lead Time × 1.2)
                     </p>
-                    <p className="text-sm text-white/70">Add 20% buffer to critical deliveries</p>
+                    <p className="text-sm text-white">Add 20% buffer to critical deliveries</p>
                   </div>
                   <div className="border-b border-white/10 pb-2">
                     <p className="font-medium text-white">Storage Cost</p>
                     <p className="font-mono text-sm text-elec-yellow">
                       Material Value × 0.02 × Storage Months
                     </p>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       Approximate monthly storage cost as 2% of material value
                     </p>
                   </div>
@@ -1107,12 +1107,12 @@ const Module5Section4_2 = () => {
                     <p className="font-mono text-sm text-elec-yellow">
                       Total Quantity ÷ Storage Capacity
                     </p>
-                    <p className="text-sm text-white/70">Minimum number of deliveries required</p>
+                    <p className="text-sm text-white">Minimum number of deliveries required</p>
                   </div>
                   <div>
                     <p className="font-medium text-white">Emergency Premium</p>
                     <p className="font-mono text-sm text-elec-yellow">Standard Cost × 1.5-2.0</p>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       Typical cost increase for emergency orders
                     </p>
                   </div>
@@ -1136,7 +1136,7 @@ const Module5Section4_2 = () => {
                   <span className="flex-shrink-0 w-6 h-6 bg-elec-yellow/20 text-elec-yellow rounded-full flex items-center justify-center text-sm font-medium">
                     {index + 1}
                   </span>
-                  <span className="text-white/85 text-sm">{item}</span>
+                  <span className="text-white text-sm">{item}</span>
                 </div>
               ))}
             </div>
@@ -1148,23 +1148,23 @@ const Module5Section4_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">11</span>
               Real World Example
             </h2>
-            <div className="text-white/85 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <h3 className="font-semibold text-red-400 mb-2">
                   Case Study: Housing Project Storage Disaster
                 </h3>
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   A contractor on a 50-house development decided to order all electrical materials
                   at the start of the project to secure bulk discounts. The £85,000 worth of
                   materials was delivered to an unsecured compound with basic weather protection.
                 </p>
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   <strong className="text-white">What went wrong:</strong> Over a 6-month period,
                   £12,000 worth of cables were stolen in three separate incidents. Moisture ingress
                   damaged £8,000 of distribution boards stored in leaking containers. Copper cable
                   drums corroded due to salt air exposure near the coast.
                 </p>
-                <p className="text-white/80">
+                <p className="text-white">
                   <strong className="text-white">Additional costs:</strong> Emergency replacement
                   orders at premium prices, project delays while waiting for replacements, increased
                   insurance premiums, and the cost of hiring security guards for remaining
@@ -1174,7 +1174,7 @@ const Module5Section4_2 = () => {
 
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <h3 className="font-semibold text-green-400 mb-2">Alternative Approach</h3>
-                <ul className="text-white/80 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>
                     • Phase deliveries to match house completion schedule (10 houses per delivery)
                   </li>
@@ -1187,7 +1187,7 @@ const Module5Section4_2 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <p className="text-white/80">
+                <p className="text-white">
                   <strong className="text-elec-yellow">Lesson learned:</strong> The "savings" from
                   bulk ordering were completely eliminated by losses and additional costs. Phased
                   delivery with proper storage would have been cheaper and eliminated project
@@ -1207,7 +1207,7 @@ const Module5Section4_2 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h3 className="font-semibold text-white mb-2">Q: {faq.question}</h3>
-                  <p className="text-white/80 text-sm">A: {faq.answer}</p>
+                  <p className="text-white text-sm">A: {faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -1224,7 +1224,7 @@ const Module5Section4_2 = () => {
                 {pocketGuideItems.map((item, index) => (
                   <div key={index} className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                    <span className="text-white/90 text-sm">{item}</span>
+                    <span className="text-white text-sm">{item}</span>
                   </div>
                 ))}
               </div>
@@ -1237,7 +1237,7 @@ const Module5Section4_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">14</span>
               Recap
             </h2>
-            <div className="text-white/85 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 In this comprehensive subsection, you have mastered the essential skills of material
                 procurement and delivery management for electrical installations. These competencies
@@ -1248,7 +1248,7 @@ const Module5Section4_2 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                   <h4 className="font-semibold text-blue-400 mb-2">Key Competencies Developed</h4>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Strategic procurement planning and order preparation</li>
                     <li>• Delivery scheduling and coordination with project phases</li>
                     <li>• Effective supplier communication and relationship management</li>
@@ -1259,7 +1259,7 @@ const Module5Section4_2 = () => {
 
                 <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                   <h4 className="font-semibold text-green-400 mb-2">Business Benefits</h4>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Reduced project delays and cost overruns</li>
                     <li>• Minimised material losses through theft and damage</li>
                     <li>• Improved cash flow through optimised procurement timing</li>
@@ -1270,7 +1270,7 @@ const Module5Section4_2 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
-                <p className="text-white/80">
+                <p className="text-white">
                   <strong className="text-amber-400">Remember:</strong> Effective procurement
                   management is a competitive advantage that distinguishes professional contractors.
                   The systems and relationships you build today will benefit your entire career.
@@ -1291,7 +1291,7 @@ const Module5Section4_2 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../4-1">

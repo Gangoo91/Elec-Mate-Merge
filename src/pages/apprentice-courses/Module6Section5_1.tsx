@@ -182,7 +182,7 @@ const Module6Section5_1 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -200,13 +200,13 @@ const Module6Section5_1 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.5.1</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.5.1</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Purpose of Insulation Resistance Testing
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Understanding why insulation resistance testing is necessary for safety and compliance
               with BS 7671
             </p>
@@ -214,12 +214,12 @@ const Module6Section5_1 = () => {
 
           {/* Summary Box */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
-            <p className="text-white/90 text-sm leading-relaxed mb-3">
+            <p className="text-white text-sm leading-relaxed mb-3">
               <strong className="text-elec-yellow">In 30 seconds:</strong> IR testing prevents
               dangerous leakage currents. It's a legal requirement under BS 7671 and EAWR 1989. High
               readings = good insulation, low = damage. Must test before energising any circuit.
             </p>
-            <ul className="text-white/80 text-sm space-y-1">
+            <ul className="text-white text-sm space-y-1">
               <li>
                 • <strong>Spot:</strong> Moisture damage, cable wear, poor installation
               </li>
@@ -238,8 +238,8 @@ const Module6Section5_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <div className="text-white/80 space-y-3 leading-relaxed">
-              <p className="text-white/70 mb-4">
+            <div className="text-white space-y-3 leading-relaxed">
+              <p className="text-white mb-4">
                 By the end of this subsection, learners will be able to:
               </p>
               <ul className="space-y-2">
@@ -271,7 +271,7 @@ const Module6Section5_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Introduction
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Insulation resistance (IR) testing is one of the most important checks in electrical
                 installation work. It verifies that the insulation between conductors, and between
@@ -288,7 +288,7 @@ const Module6Section5_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Why Insulation Resistance Testing is Essential
             </h2>
-            <div className="text-white/80 space-y-6 leading-relaxed">
+            <div className="text-white space-y-6 leading-relaxed">
               <p>
                 Insulation resistance testing is carried out to ensure that the insulation on cables
                 and equipment is sound. Over time, insulation can deteriorate due to various factors
@@ -375,7 +375,7 @@ const Module6Section5_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               What the Test Measures
             </h2>
-            <div className="text-white/80 space-y-6 leading-relaxed">
+            <div className="text-white space-y-6 leading-relaxed">
               <p>
                 The insulation resistance test applies a high DC voltage, typically 250V, 500V, or
                 1000V depending on the circuit voltage. The instrument measures the resistance to
@@ -440,7 +440,7 @@ const Module6Section5_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               BS 7671 and Legal Requirements
             </h2>
-            <div className="text-white/80 space-y-6 leading-relaxed">
+            <div className="text-white space-y-6 leading-relaxed">
               <p>
                 The requirement to carry out insulation resistance testing is clearly set out in BS
                 7671 (IET Wiring Regulations). Section 643 specifically covers insulation resistance
@@ -511,7 +511,7 @@ const Module6Section5_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Consequences of Skipping IR Testing
             </h2>
-            <div className="text-white/80 space-y-6 leading-relaxed">
+            <div className="text-white space-y-6 leading-relaxed">
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <h3 className="font-medium text-red-400 mb-3">Immediate Safety Risks</h3>
                 <ul className="text-sm space-y-2">
@@ -581,7 +581,7 @@ const Module6Section5_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Practical Guidance
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Always carry out insulation resistance tests before energising a new or modified
                 circuit. Use the correct test instrument and follow the procedure in BS 7671.
@@ -609,7 +609,7 @@ const Module6Section5_1 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
               <p className="text-white font-medium mb-3">Commercial Refurbishment Project</p>
-              <div className="text-white/80 text-sm space-y-3 leading-relaxed">
+              <div className="text-white text-sm space-y-3 leading-relaxed">
                 <p>
                   During a commercial refurbishment, a contractor assumed that new wiring installed
                   by their team was in perfect condition and skipped the insulation resistance tests
@@ -646,7 +646,7 @@ const Module6Section5_1 = () => {
                   <AccordionTrigger className="text-white hover:text-elec-yellow text-left text-sm py-4">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-white/70 text-sm pb-4">
+                  <AccordionContent className="text-white text-sm pb-4">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -663,26 +663,26 @@ const Module6Section5_1 = () => {
             <div className="grid grid-cols-2 gap-3">
               <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
                 <h3 className="font-medium text-elec-yellow mb-2 text-sm">Safety Purpose</h3>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   IR testing ensures insulation prevents leakage currents that could cause fire,
                   shock, or injury
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <h3 className="font-medium text-green-400 mb-2 text-sm">Legal Requirement</h3>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Required by BS 7671 and EAWR 1989. Results must be recorded on certificates
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <h3 className="font-medium text-blue-400 mb-2 text-sm">Professional Protection</h3>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Proper testing protects from prosecution, invalid insurance, and reputation loss
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <h3 className="font-medium text-red-400 mb-2 text-sm">Hidden Dangers</h3>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Without testing, dangerous faults remain hidden until causing fire, shock, or
                   injury
                 </p>
@@ -703,7 +703,7 @@ const Module6Section5_1 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="..">

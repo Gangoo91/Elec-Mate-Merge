@@ -211,12 +211,12 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
         {open ? (
           <ChevronUp className="h-4 w-4 text-amber-400 flex-shrink-0" />
         ) : (
-          <ChevronDown className="h-4 w-4 text-white/40 flex-shrink-0" />
+          <ChevronDown className="h-4 w-4 text-white flex-shrink-0" />
         )}
       </button>
       {open && (
         <div className="px-4 pb-4 pt-0">
-          <p className="text-white/70 text-sm leading-relaxed">{answer}</p>
+          <p className="text-white text-sm leading-relaxed">{answer}</p>
         </div>
       )}
     </div>
@@ -241,7 +241,7 @@ export default function WorkingAtHeightModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-3">
@@ -267,7 +267,7 @@ export default function WorkingAtHeightModule3Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Harness Inspection & Equipment Checks
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
             Pre-use visual inspections, 6-monthly thorough examinations, when to immediately discard
             equipment, correct storage, and the record-keeping requirements that keep you safe and
             legal.
@@ -280,7 +280,7 @@ export default function WorkingAtHeightModule3Section4() {
             <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
               Every Single Use
             </p>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The user must carry out a visual pre-use inspection every time before donning the
               harness.
             </p>
@@ -289,7 +289,7 @@ export default function WorkingAtHeightModule3Section4() {
             <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
               Every 6 Months
             </p>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               LOLER requires thorough examination by a competent person at intervals not exceeding 6
               months.
             </p>
@@ -298,7 +298,7 @@ export default function WorkingAtHeightModule3Section4() {
             <p className="text-red-400 text-xs font-semibold uppercase tracking-wider mb-1">
               Immediate Discard
             </p>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               After any fall arrest event, visible damage to load-bearing components, or illegible
               label — remove from service at once.
             </p>
@@ -307,7 +307,7 @@ export default function WorkingAtHeightModule3Section4() {
             <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
               Service Life
             </p>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Typically 5–10 years from first use (check manufacturer guidance). Withdraw when past
               recommended life.
             </p>
@@ -331,7 +331,7 @@ export default function WorkingAtHeightModule3Section4() {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                <span className="text-white/70 text-sm leading-relaxed">{outcome}</span>
+                <span className="text-white text-sm leading-relaxed">{outcome}</span>
               </div>
             ))}
           </div>
@@ -347,13 +347,13 @@ export default function WorkingAtHeightModule3Section4() {
             </span>
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-white">Pre-Use Visual Inspection</h2>
-              <p className="text-white/50 text-sm">
+              <p className="text-white text-sm">
                 Every use, by the user — before donning the harness
               </p>
             </div>
           </div>
           <div className="border-l-2 border-amber-500/30 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               Before putting on your harness at the start of every shift (or whenever the harness
               has been out of your sight), you must carry out a systematic visual and tactile
               inspection. This takes only 2–3 minutes and is your first line of defence against
@@ -372,7 +372,7 @@ export default function WorkingAtHeightModule3Section4() {
               ].map((point, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                  <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                  <span className="text-white text-sm leading-relaxed">{point}</span>
                 </div>
               ))}
             </div>
@@ -387,7 +387,7 @@ export default function WorkingAtHeightModule3Section4() {
               ].map((point, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                  <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                  <span className="text-white text-sm leading-relaxed">{point}</span>
                 </div>
               ))}
             </div>
@@ -403,7 +403,7 @@ export default function WorkingAtHeightModule3Section4() {
               ].map((point, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                  <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                  <span className="text-white text-sm leading-relaxed">{point}</span>
                 </div>
               ))}
             </div>
@@ -418,7 +418,7 @@ export default function WorkingAtHeightModule3Section4() {
               ].map((point, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                  <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                  <span className="text-white text-sm leading-relaxed">{point}</span>
                 </div>
               ))}
             </div>
@@ -435,7 +435,7 @@ export default function WorkingAtHeightModule3Section4() {
               ].map((point, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                  <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                  <span className="text-white text-sm leading-relaxed">{point}</span>
                 </div>
               ))}
             </div>
@@ -457,11 +457,11 @@ export default function WorkingAtHeightModule3Section4() {
               <h2 className="text-lg sm:text-xl font-bold text-white">
                 6-Monthly Thorough Examination
               </h2>
-              <p className="text-white/50 text-sm">LOLER requirement — by a competent person</p>
+              <p className="text-white text-sm">LOLER requirement — by a competent person</p>
             </div>
           </div>
           <div className="border-l-2 border-blue-500/30 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               The Lifting Operations and Lifting Equipment Regulations 1998 (LOLER) require that all
               equipment used for arresting falls from height receives a{' '}
               <strong className="text-white">thorough examination</strong> by a{' '}
@@ -485,7 +485,7 @@ export default function WorkingAtHeightModule3Section4() {
                 ].map((point, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
-                    <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                    <span className="text-white text-sm leading-relaxed">{point}</span>
                   </div>
                 ))}
               </div>
@@ -505,7 +505,7 @@ export default function WorkingAtHeightModule3Section4() {
                 ].map((point, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
-                    <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                    <span className="text-white text-sm leading-relaxed">{point}</span>
                   </div>
                 ))}
               </div>
@@ -516,7 +516,7 @@ export default function WorkingAtHeightModule3Section4() {
                 <Calendar className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
                 <span className="text-blue-400 text-sm font-semibold">Timing</span>
               </div>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 &ldquo;Not exceeding 6 months&rdquo; means the examination must be completed before
                 6 months have elapsed since the previous one. Most employers schedule examinations
                 at 5-month intervals to allow for diary conflicts and holidays. If a piece of
@@ -539,13 +539,13 @@ export default function WorkingAtHeightModule3Section4() {
               <h2 className="text-lg sm:text-xl font-bold text-white">
                 When to Immediately Discard
               </h2>
-              <p className="text-white/50 text-sm">
+              <p className="text-white text-sm">
                 Non-negotiable reasons to remove equipment from service
               </p>
             </div>
           </div>
           <div className="border-l-2 border-red-500/30 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               The following conditions require{' '}
               <strong className="text-white">immediate removal from service</strong> — no
               exceptions, no temporary fixes, no &ldquo;just for today&rdquo;. Equipment removed
@@ -601,7 +601,7 @@ export default function WorkingAtHeightModule3Section4() {
                     <XCircle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                     <span className="text-red-400 text-sm font-semibold">{item.reason}</span>
                   </div>
-                  <p className="text-white/70 text-sm leading-relaxed pl-6">{item.detail}</p>
+                  <p className="text-white text-sm leading-relaxed pl-6">{item.detail}</p>
                 </div>
               ))}
             </div>
@@ -621,11 +621,11 @@ export default function WorkingAtHeightModule3Section4() {
             </span>
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-white">Correct Storage</h2>
-              <p className="text-white/50 text-sm">Protecting equipment between uses</p>
+              <p className="text-white text-sm">Protecting equipment between uses</p>
             </div>
           </div>
           <div className="border-l-2 border-green-500/30 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               How you store your fall protection equipment between uses has a direct impact on its
               lifespan and reliability. Improper storage is one of the most common causes of
               premature equipment degradation.
@@ -646,7 +646,7 @@ export default function WorkingAtHeightModule3Section4() {
                 ].map((point, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
-                    <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                    <span className="text-white text-sm leading-relaxed">{point}</span>
                   </div>
                 ))}
               </div>
@@ -657,7 +657,7 @@ export default function WorkingAtHeightModule3Section4() {
                 <Info className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                 <span className="text-green-400 text-sm font-semibold">Van Storage</span>
               </div>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Many electricians keep their harness in their van. This is acceptable for transport,
                 but be aware that vans can get very hot in summer (UV through windows, engine heat)
                 and damp in winter. Use a breathable storage bag or dedicated compartment. Do not
@@ -678,7 +678,7 @@ export default function WorkingAtHeightModule3Section4() {
             </span>
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-white">Lanyard & SRL Inspection</h2>
-              <p className="text-white/50 text-sm">Checking connecting equipment for defects</p>
+              <p className="text-white text-sm">Checking connecting equipment for defects</p>
             </div>
           </div>
           <div className="border-l-2 border-purple-500/30 pl-4 sm:pl-6 space-y-4">
@@ -694,7 +694,7 @@ export default function WorkingAtHeightModule3Section4() {
               ].map((point, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
-                  <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                  <span className="text-white text-sm leading-relaxed">{point}</span>
                 </div>
               ))}
             </div>
@@ -715,7 +715,7 @@ export default function WorkingAtHeightModule3Section4() {
               ].map((point, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
-                  <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                  <span className="text-white text-sm leading-relaxed">{point}</span>
                 </div>
               ))}
             </div>
@@ -732,11 +732,11 @@ export default function WorkingAtHeightModule3Section4() {
             </span>
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-white">Anchor Point Inspection</h2>
-              <p className="text-white/50 text-sm">Structural integrity and certification</p>
+              <p className="text-white text-sm">Structural integrity and certification</p>
             </div>
           </div>
           <div className="border-l-2 border-cyan-500/30 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               The anchor point is only as good as the structure it is attached to. Before connecting
               to any anchor, check:
             </p>
@@ -753,7 +753,7 @@ export default function WorkingAtHeightModule3Section4() {
               ].map((point, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
-                  <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                  <span className="text-white text-sm leading-relaxed">{point}</span>
                 </div>
               ))}
             </div>
@@ -765,7 +765,7 @@ export default function WorkingAtHeightModule3Section4() {
                   Never Use Uncertified Anchor Points
                 </span>
               </div>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Pipe brackets, cable tray supports, handrails, conduit fittings, and structural
                 steelwork that has not been assessed for fall arrest loading are{' '}
                 <strong className="text-white">not</strong> suitable anchor points. They may fail
@@ -789,13 +789,13 @@ export default function WorkingAtHeightModule3Section4() {
             </span>
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-white">Record Keeping</h2>
-              <p className="text-white/50 text-sm">
+              <p className="text-white text-sm">
                 Unique identification, inspection logs, and certificates
               </p>
             </div>
           </div>
           <div className="border-l-2 border-amber-500/30 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               Proper record keeping is both a legal requirement and a practical necessity. Without
               records, you cannot prove your equipment has been inspected, you cannot track its
               service history, and you cannot identify when it is due for examination or
@@ -818,7 +818,7 @@ export default function WorkingAtHeightModule3Section4() {
                 ].map((point, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                    <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                    <span className="text-white text-sm leading-relaxed">{point}</span>
                   </div>
                 ))}
               </div>
@@ -829,7 +829,7 @@ export default function WorkingAtHeightModule3Section4() {
                 <BookOpen className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
                 <span className="text-amber-400 text-sm font-semibold">Practical Tip</span>
               </div>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Many companies now use digital asset management systems or apps to track their fall
                 protection equipment. The harness has a unique barcode or QR code; scanning it
                 brings up the full service history on a mobile device. This makes pre-use checks
@@ -908,12 +908,12 @@ export default function WorkingAtHeightModule3Section4() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <p className="text-white text-sm font-medium leading-relaxed">{row.item}</p>
-                    <p className="text-white/50 text-xs leading-relaxed">{row.checks}</p>
+                    <p className="text-white text-xs leading-relaxed">{row.checks}</p>
                   </div>
                 </div>
               ))}
             </div>
-            <p className="text-center text-white/40 text-xs mt-4">
+            <p className="text-center text-white text-xs mt-4">
               Complete all check points before every use. Any defect found = remove from service
               immediately.
             </p>
@@ -941,7 +941,7 @@ export default function WorkingAtHeightModule3Section4() {
               ].map((point, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span className="text-white/80 text-sm leading-relaxed">{point}</span>
+                  <span className="text-white text-sm leading-relaxed">{point}</span>
                 </div>
               ))}
             </div>

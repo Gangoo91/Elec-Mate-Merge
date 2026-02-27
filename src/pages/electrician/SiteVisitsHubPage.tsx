@@ -136,7 +136,7 @@ const SiteVisitsHubPage = () => {
           </button>
           <div className="flex-1">
             <h1 className="text-xl font-bold text-white">Site Visits</h1>
-            <p className="text-[11px] text-white/60">Manage your site visits</p>
+            <p className="text-[11px] text-white">Manage your site visits</p>
           </div>
           <button
             onClick={() => navigate('/electrician/site-visit/new')}

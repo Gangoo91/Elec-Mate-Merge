@@ -288,15 +288,15 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
             </div>
             <div className="text-left">
               <p className="text-[15px] font-medium text-white">Analytics Dashboard</p>
-              <p className="text-[13px] text-white/70">
+              <p className="text-[13px] text-white">
                 {metrics.winRate}% win rate • {formatCurrency(metrics.totalRevenue)} revenue
               </p>
             </div>
           </div>
           {isOpen ? (
-            <ChevronUp className="h-5 w-5 text-white/70" />
+            <ChevronUp className="h-5 w-5 text-white" />
           ) : (
-            <ChevronDown className="h-5 w-5 text-white/70" />
+            <ChevronDown className="h-5 w-5 text-white" />
           )}
         </button>
       </CollapsibleTrigger>
@@ -322,7 +322,7 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
           </div>
 
           {/* Refresh button + Last updated */}
-          <div className="flex items-center gap-2 text-xs text-white/50 shrink-0">
+          <div className="flex items-center gap-2 text-xs text-white shrink-0">
             <span className="hidden sm:inline">{relativeUpdateTime}</span>
             {onRefresh && (
               <button
@@ -340,7 +340,7 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
         </div>
 
         {/* Mobile: Show last updated below date range */}
-        <p className="text-[11px] text-white/40 sm:hidden -mt-2">Updated {relativeUpdateTime}</p>
+        <p className="text-[11px] text-white sm:hidden -mt-2">Updated {relativeUpdateTime}</p>
 
         {/* Metric Cards Grid - 6 cards in 3x2 on mobile, 2x3 on desktop */}
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 sm:gap-3">
@@ -429,10 +429,10 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
               // No data state
               <div className="h-40 sm:h-48 flex flex-col items-center justify-center text-center px-4">
                 <div className="w-12 h-12 rounded-full bg-white/[0.05] flex items-center justify-center mb-3">
-                  <BarChart3 className="h-6 w-6 text-white/30" />
+                  <BarChart3 className="h-6 w-6 text-white" />
                 </div>
-                <p className="text-sm text-white/50 font-medium">No data yet</p>
-                <p className="text-xs text-white/30 mt-1">
+                <p className="text-sm text-white font-medium">No data yet</p>
+                <p className="text-xs text-white mt-1">
                   Revenue will appear here when invoices are paid
                 </p>
               </div>
@@ -510,7 +510,7 @@ export const QuoteInvoiceAnalytics: React.FC<QuoteInvoiceAnalyticsProps> = ({
             )}
             {/* Legend */}
             {(hasRevenueData || hasQuoteData) && (
-              <div className="flex items-center justify-center gap-4 mt-2 text-[10px] text-white/50">
+              <div className="flex items-center justify-center gap-4 mt-2 text-[10px] text-white">
                 <span className="flex items-center gap-1">
                   <span className="w-2 h-2 rounded-full bg-green-500" />
                   Revenue

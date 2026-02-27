@@ -93,7 +93,7 @@ const BS7671Module4Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bs7671-module-4">
@@ -114,7 +114,7 @@ const BS7671Module4Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Electric Shock Protection Methods
           </h1>
-          <p className="text-white/80">SELV, PELV, ADS, and other protection strategies</p>
+          <p className="text-white">SELV, PELV, ADS, and other protection strategies</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -187,7 +187,7 @@ const BS7671Module4Section1 = () => {
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Basic Protection</p>
-                <p className="text-xs text-white/70 mb-2">
+                <p className="text-xs text-white mb-2">
                   Prevents contact with live parts during normal operation
                 </p>
                 <ul className="text-sm text-white space-y-1">
@@ -207,7 +207,7 @@ const BS7671Module4Section1 = () => {
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Fault Protection</p>
-                <p className="text-xs text-white/70 mb-2">Activates when basic protection fails</p>
+                <p className="text-xs text-white mb-2">Activates when basic protection fails</p>
                 <ul className="text-sm text-white space-y-1">
                   <li>
                     <strong>ADS:</strong> Automatic disconnection during faults
@@ -250,7 +250,7 @@ const BS7671Module4Section1 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-2">Essential Elements:</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>• Protective earthing of exposed parts</li>
                     <li>• Main equipotential bonding</li>
                     <li>• Protective conductors (CPCs)</li>
@@ -260,7 +260,7 @@ const BS7671Module4Section1 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-2">Disconnection Times:</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>
                       <strong>Socket outlets:</strong> 0.4s maximum
                     </li>
@@ -281,15 +281,15 @@ const BS7671Module4Section1 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-1">TN Systems</p>
-                <p className="text-white/90 text-xs">Low Zs allows MCBs to provide ADS</p>
+                <p className="text-white text-xs">Low Zs allows MCBs to provide ADS</p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-1">TT Systems</p>
-                <p className="text-white/90 text-xs">High Ra requires RCD protection</p>
+                <p className="text-white text-xs">High Ra requires RCD protection</p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-1">IT Systems</p>
-                <p className="text-white/90 text-xs">First fault monitored, second disconnects</p>
+                <p className="text-white text-xs">First fault monitored, second disconnects</p>
               </div>
             </div>
           </div>
@@ -443,7 +443,7 @@ const BS7671Module4Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -455,7 +455,7 @@ const BS7671Module4Section1 = () => {
           <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
             <div>
               <p className="font-medium text-elec-yellow mb-1">Protection Methods</p>
-              <ul className="space-y-0.5 text-white/90">
+              <ul className="space-y-0.5 text-white">
                 <li>ADS: Most common, requires low Zs</li>
                 <li>SELV: ≤50V AC, no earth, highest safety</li>
                 <li>PELV: ≤50V AC, earth permitted</li>
@@ -464,7 +464,7 @@ const BS7671Module4Section1 = () => {
             </div>
             <div>
               <p className="font-medium text-elec-yellow mb-1">Key Disconnection Times</p>
-              <ul className="space-y-0.5 text-white/90">
+              <ul className="space-y-0.5 text-white">
                 <li>Socket outlets: 0.4s (TN systems)</li>
                 <li>Fixed equipment: 5s maximum</li>
                 <li>Distribution: 5s maximum</li>
@@ -489,7 +489,7 @@ const BS7671Module4Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bs7671-module-4">

@@ -419,7 +419,7 @@ export function JobVacanciesSection() {
                         <Briefcase className="h-8 w-8 text-elec-yellow" />
                       </div>
                       <h3 className="font-semibold text-white text-lg mb-2">No Vacancies Yet</h3>
-                      <p className="text-sm text-white/60 mb-6 max-w-sm mx-auto">
+                      <p className="text-sm text-white mb-6 max-w-sm mx-auto">
                         Post your first job vacancy to start receiving applications from qualified
                         electricians.
                       </p>
@@ -488,7 +488,7 @@ export function JobVacanciesSection() {
                 <div className="flex gap-2">
                   <div className="relative flex-1">
                     {!searchQuery && (
-                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+                      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
                     )}
                     <Input
                       placeholder="Search candidates..."
@@ -496,7 +496,7 @@ export function JobVacanciesSection() {
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className={cn(
                         'h-11 bg-white/5 border-white/10 rounded-xl',
-                        'text-white placeholder:text-white/40',
+                        'text-white placeholder:text-white',
                         'focus:border-elec-yellow/60',
                         !searchQuery && 'pl-10'
                       )}
@@ -511,7 +511,7 @@ export function JobVacanciesSection() {
                       'h-11 w-11 shrink-0 rounded-xl touch-manipulation',
                       selectionMode
                         ? 'bg-elec-yellow/20 border-elec-yellow/50 text-elec-yellow'
-                        : 'bg-white/5 border-white/10 text-white/60 hover:text-white hover:bg-white/10'
+                        : 'bg-white/5 border-white/10 text-white hover:text-white hover:bg-white/10'
                     )}
                     onClick={toggleSelectionMode}
                   >
@@ -524,7 +524,7 @@ export function JobVacanciesSection() {
 
                   <Select value={vacancyFilter} onValueChange={setVacancyFilter}>
                     <SelectTrigger className="w-[140px] h-11 bg-white/5 border-white/10 rounded-xl text-white">
-                      <Filter className="h-4 w-4 mr-2 text-white/60" />
+                      <Filter className="h-4 w-4 mr-2 text-white" />
                       <SelectValue placeholder="Job" />
                     </SelectTrigger>
                     <SelectContent className="bg-elec-gray border-white/10">
@@ -539,7 +539,7 @@ export function JobVacanciesSection() {
 
                   <Select value={sortBy} onValueChange={(v) => setSortBy(v as SortOption)}>
                     <SelectTrigger className="w-[130px] h-11 bg-white/5 border-white/10 rounded-xl text-white">
-                      <ArrowUpDown className="h-4 w-4 mr-2 text-white/60" />
+                      <ArrowUpDown className="h-4 w-4 mr-2 text-white" />
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent className="bg-elec-gray border-white/10">
@@ -555,10 +555,10 @@ export function JobVacanciesSection() {
                   <Card className="bg-elec-gray/50 border-white/10">
                     <CardContent className="p-8 text-center">
                       <div className="w-16 h-16 mx-auto rounded-2xl bg-white/5 flex items-center justify-center mb-4">
-                        <Users className="h-8 w-8 text-white/40" />
+                        <Users className="h-8 w-8 text-white" />
                       </div>
                       <h3 className="font-semibold text-white text-lg mb-2">No Candidates Found</h3>
-                      <p className="text-sm text-white/60">
+                      <p className="text-sm text-white">
                         {statusFilter !== 'all' ||
                         tierFilter !== 'all' ||
                         vacancyFilter !== 'all' ||
@@ -702,7 +702,7 @@ export function JobVacanciesSection() {
             <>
               <SheetHeader className="pb-4 border-b border-white/10">
                 <SheetTitle className="text-white">{viewingApplication.applicant_name}</SheetTitle>
-                <SheetDescription className="text-white/60">
+                <SheetDescription className="text-white">
                   Applied for:{' '}
                   {vacancies.find((v) => v.id === viewingApplication.vacancy_id)?.title ||
                     'Unknown Position'}
@@ -726,10 +726,10 @@ export function JobVacanciesSection() {
                       {viewingApplication.applicant_name}
                     </h3>
                     {viewingApplication.applicant_email && (
-                      <p className="text-sm text-white/60">{viewingApplication.applicant_email}</p>
+                      <p className="text-sm text-white">{viewingApplication.applicant_email}</p>
                     )}
                     {viewingApplication.applicant_phone && (
-                      <p className="text-sm text-white/60">{viewingApplication.applicant_phone}</p>
+                      <p className="text-sm text-white">{viewingApplication.applicant_phone}</p>
                     )}
                   </div>
                 </div>
@@ -744,19 +744,19 @@ export function JobVacanciesSection() {
                     </h4>
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div>
-                        <p className="text-white/50">ID Number</p>
+                        <p className="text-white">ID Number</p>
                         <p className="text-white font-medium">
                           {viewingApplication.elec_id_profile.elec_id_number}
                         </p>
                       </div>
                       <div>
-                        <p className="text-white/50">ECS Card</p>
+                        <p className="text-white">ECS Card</p>
                         <p className="text-white font-medium">
                           {viewingApplication.elec_id_profile.ecs_card_type}
                         </p>
                       </div>
                       <div>
-                        <p className="text-white/50">Verification</p>
+                        <p className="text-white">Verification</p>
                         <p className="text-white font-medium capitalize">
                           {viewingApplication.elec_id_profile.verification_tier}
                         </p>
@@ -769,7 +769,7 @@ export function JobVacanciesSection() {
                 {viewingApplication.cover_letter && (
                   <div className="space-y-2">
                     <h4 className="font-medium text-white">Cover Letter</h4>
-                    <p className="text-sm text-white/70 whitespace-pre-wrap leading-relaxed">
+                    <p className="text-sm text-white whitespace-pre-wrap leading-relaxed">
                       {viewingApplication.cover_letter}
                     </p>
                   </div>
@@ -777,7 +777,7 @@ export function JobVacanciesSection() {
 
                 {/* Application date */}
                 <div className="flex items-center justify-between text-sm pt-4 border-t border-white/10">
-                  <span className="text-white/50">Applied</span>
+                  <span className="text-white">Applied</span>
                   <span className="text-white">
                     {new Date(viewingApplication.applied_at).toLocaleDateString('en-GB', {
                       day: 'numeric',

@@ -243,7 +243,7 @@ const HNCModule7Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section2">
@@ -265,7 +265,7 @@ const HNCModule7Section2_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Life Safety Power
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Essential supplies, safety services, fire-rated cables, switchover systems, and testing
             requirements
           </p>
@@ -572,37 +572,37 @@ const HNCModule7Section2_3 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">ATS Operating Sequence</p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">1.</span>{' '}
+                  <span className="text-white">1.</span>{' '}
                   <span className="text-white">Monitor mains supply voltage and frequency</span>
                 </p>
                 <p>
-                  <span className="text-white/60">2.</span>{' '}
+                  <span className="text-white">2.</span>{' '}
                   <span className="text-white">
                     Detect mains failure (voltage drops below threshold)
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">3.</span>{' '}
+                  <span className="text-white">3.</span>{' '}
                   <span className="text-white">Send start signal to standby generator</span>
                 </p>
                 <p>
-                  <span className="text-white/60">4.</span>{' '}
+                  <span className="text-white">4.</span>{' '}
                   <span className="text-white">Generator reaches rated speed and voltage</span>
                 </p>
                 <p>
-                  <span className="text-white/60">5.</span>{' '}
+                  <span className="text-white">5.</span>{' '}
                   <span className="text-white">ATS transfers load to generator</span>
                 </p>
                 <p>
-                  <span className="text-white/60">6.</span>{' '}
+                  <span className="text-white">6.</span>{' '}
                   <span className="text-white">Monitor mains for restoration</span>
                 </p>
                 <p>
-                  <span className="text-white/60">7.</span>{' '}
+                  <span className="text-white">7.</span>{' '}
                   <span className="text-white">Retransfer to mains after stabilisation delay</span>
                 </p>
                 <p>
-                  <span className="text-white/60">8.</span>{' '}
+                  <span className="text-white">8.</span>{' '}
                   <span className="text-white">Generator runs on cooldown, then stops</span>
                 </p>
               </div>
@@ -807,7 +807,7 @@ const HNCModule7Section2_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Compliance note:</strong> Fire safety legislation requires safety systems to
               be maintained in proper working order. Test records provide evidence of compliance and
               may be requested by enforcing authorities.
@@ -833,8 +833,8 @@ const HNCModule7Section2_3 = () => {
                 <strong>Scenario:</strong> Specify cable fire rating for a new hospital wing with 4
                 floors above ground.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Analysis:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Analysis:</p>
                 <p className="mt-2">Building type: Healthcare (vulnerable occupants)</p>
                 <p>Evacuation complexity: High (patients, equipment)</p>
                 <p>Vertical escape routes: 4 floors requiring protected stairs</p>
@@ -863,8 +863,8 @@ const HNCModule7Section2_3 = () => {
                 <strong>Scenario:</strong> Select ATS for 500kVA generator serving safety loads in
                 office building.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Load analysis:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Load analysis:</p>
                 <p className="mt-2">Safety loads connected:</p>
                 <p className="ml-4">- Emergency lighting: 15kW</p>
                 <p className="ml-4">- Fire alarm system: 5kW</p>
@@ -894,8 +894,8 @@ const HNCModule7Section2_3 = () => {
                 <strong>Scenario:</strong> Develop monthly functional test procedure for office
                 building safety power system.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Test procedure:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Test procedure:</p>
                 <p className="mt-2">Pre-test checks:</p>
                 <p className="ml-4">1. Notify building management and occupants</p>
                 <p className="ml-4">2. Verify generator fuel level &gt; 50%</p>
@@ -992,7 +992,7 @@ const HNCModule7Section2_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1038,7 +1038,7 @@ const HNCModule7Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section2">

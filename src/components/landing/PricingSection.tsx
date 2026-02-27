@@ -72,7 +72,7 @@ const tiers: PricingTier[] = [
     ],
     cta: 'Coming Soon',
     gradient: 'from-purple-500/10 to-purple-600/5',
-    buttonClass: 'bg-purple-500/50 text-white/70 cursor-not-allowed',
+    buttonClass: 'bg-purple-500/50 text-white cursor-not-allowed',
     disabled: true,
   },
 ];
@@ -94,7 +94,7 @@ export const PricingSection = () => {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Simple, Transparent Pricing
           </h2>
-          <p className="text-white/50 max-w-lg mx-auto text-sm sm:text-base">
+          <p className="text-white max-w-lg mx-auto text-sm sm:text-base">
             All plans include a 7-day free trial. No card required.
           </p>
         </motion.div>
@@ -108,7 +108,7 @@ export const PricingSection = () => {
               </div>
             ))}
           </div>
-          <p className="text-center text-white/30 text-[10px] mt-3 uppercase tracking-wider">
+          <p className="text-center text-white text-[10px] mt-3 uppercase tracking-wider">
             Swipe for more
           </p>
         </div>
@@ -126,7 +126,7 @@ export const PricingSection = () => {
 
         {/* Trust note */}
         <motion.p
-          className="text-center text-white/30 text-xs mt-6 sm:mt-8"
+          className="text-center text-white text-xs mt-6 sm:mt-8"
           initial={{ opacity: 0 }}
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ delay: 0.3 }}
@@ -163,10 +163,10 @@ const PricingCard = ({ tier }: { tier: PricingTier }) => (
 
     <div className="mb-3">
       <span className="text-3xl sm:text-4xl font-bold text-white">{tier.price}</span>
-      <span className="text-white/40 text-sm">{tier.period}</span>
+      <span className="text-white text-sm">{tier.period}</span>
     </div>
 
-    <p className="text-white/50 text-sm mb-4">{tier.description}</p>
+    <p className="text-white text-sm mb-4">{tier.description}</p>
 
     <Link to={tier.disabled ? '#' : '/auth/signup'} className="block mb-4">
       <Button
@@ -186,7 +186,7 @@ const PricingCard = ({ tier }: { tier: PricingTier }) => (
               tier.popular ? 'text-yellow-400/80' : 'text-green-400/80'
             }`}
           />
-          <span className="text-xs sm:text-sm text-white/60">{feature}</span>
+          <span className="text-xs sm:text-sm text-white">{feature}</span>
         </div>
       ))}
     </div>

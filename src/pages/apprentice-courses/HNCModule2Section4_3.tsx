@@ -239,7 +239,7 @@ const HNCModule2Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section4">
@@ -261,7 +261,7 @@ const HNCModule2Section4_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Lamp Types and Efficacy
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             LED, fluorescent, and discharge lamp technologies for building services applications
           </p>
         </header>
@@ -348,7 +348,7 @@ const HNCModule2Section4_3 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 Efficacy (lm/W) = Luminous Flux (lm) / Power (W)
               </p>
-              <div className="text-xs text-white/70 text-center mt-2">
+              <div className="text-xs text-white text-center mt-2">
                 Higher efficacy = more light for less power = lower running costs
               </div>
             </div>
@@ -503,7 +503,7 @@ const HNCModule2Section4_3 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Example: L70B10 at 60,000h means at 60,000 hours, 90% of units maintain at least 70%
                 output
               </p>
@@ -754,7 +754,7 @@ const HNCModule2Section4_3 = () => {
                 <strong>Question:</strong> A LED panel consumes 32W and produces 3840 lumens. What
                 is its efficacy? Compare to a 36W T8 fluorescent producing 3350 lumens.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   LED efficacy = 3840 lm / 32 W = <strong>120 lm/W</strong>
                 </p>
@@ -765,7 +765,7 @@ const HNCModule2Section4_3 = () => {
                   Efficiency improvement = (120 - 93) / 93 × 100 ={' '}
                   <strong>29% more efficient</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   The LED also has longer life and better dimming capability
                 </p>
               </div>
@@ -780,7 +780,7 @@ const HNCModule2Section4_3 = () => {
                 including ballast), operating 3000 hours/year. Calculate annual savings if replaced
                 with 40W LED panels.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Current consumption = 100 × 72W × 3000h = 21,600 kWh/year</p>
                 <p>LED consumption = 100 × 40W × 3000h = 12,000 kWh/year</p>
                 <p>
@@ -789,7 +789,7 @@ const HNCModule2Section4_3 = () => {
                 <p className="mt-2">
                   At £0.15/kWh = <strong>£1,440/year energy saving</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Plus reduced lamp replacement and maintenance costs
                 </p>
               </div>
@@ -803,7 +803,7 @@ const HNCModule2Section4_3 = () => {
                 <strong>Question:</strong> Compare lamp replacement requirements over 50,000
                 operating hours for T5 fluorescent (20,000h life) versus LED (L70 at 50,000h).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   T5 replacements = 50,000 / 20,000 = <strong>2.5 lamp changes</strong> (minimum 2)
                 </p>
@@ -813,7 +813,7 @@ const HNCModule2Section4_3 = () => {
                 <p className="mt-2">For 100 luminaires:</p>
                 <p>T5: 200+ lamps, multiple maintenance visits</p>
                 <p>LED: Zero lamp changes, potential driver replacement only</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Significant labour and disruption savings with LED
                 </p>
               </div>
@@ -896,7 +896,7 @@ const HNCModule2Section4_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -942,7 +942,7 @@ const HNCModule2Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section4-2">

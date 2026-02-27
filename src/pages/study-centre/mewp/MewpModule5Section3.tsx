@@ -209,7 +209,7 @@ export default function MewpModule5Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-5">
@@ -234,7 +234,7 @@ export default function MewpModule5Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Rescue Procedures Step by Step
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Three rescue options in priority order, the role of the nominated ground rescue person,
             scenario-specific guidance, and rescue drill practice
           </p>
@@ -309,7 +309,7 @@ export default function MewpModule5Section3() {
                     PRIMARY Rescue Method &mdash; Try This First
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   This is the first option that should be attempted in any rescue situation. Ground
                   controls override platform controls and work even when the operator is unconscious
                   or incapacitated. The ground rescue person must have practised this procedure
@@ -361,7 +361,7 @@ export default function MewpModule5Section3() {
                       <div className="flex-shrink-0 w-7 h-7 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center">
                         <span className="text-green-400 text-xs font-bold">{item.step}</span>
                       </div>
-                      <p className="text-sm text-white/80 pt-1">{item.text}</p>
+                      <p className="text-sm text-white pt-1">{item.text}</p>
                     </div>
                   ))}
                 </div>
@@ -437,7 +437,7 @@ export default function MewpModule5Section3() {
                       <div className="flex-shrink-0 w-7 h-7 rounded-full bg-purple-500/20 border border-purple-500/40 flex items-center justify-center">
                         <span className="text-purple-400 text-xs font-bold">{item.step}</span>
                       </div>
-                      <p className="text-sm text-white/80 pt-1">{item.text}</p>
+                      <p className="text-sm text-white pt-1">{item.text}</p>
                     </div>
                   ))}
                 </div>
@@ -448,7 +448,7 @@ export default function MewpModule5Section3() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Important Warning</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Emergency lowering procedures vary between manufacturers and machine models.
                   Always check the{' '}
                   <strong className="text-white">manufacturer&rsquo;s specific procedure</strong>{' '}
@@ -466,19 +466,19 @@ export default function MewpModule5Section3() {
                 <div className="grid sm:grid-cols-3 gap-3">
                   <div className="bg-white/5 p-3 rounded-lg text-center">
                     <p className="text-sm font-medium text-purple-400 mb-1">APU</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Backup power unit &mdash; powers ground controls when main engine fails
                     </p>
                   </div>
                   <div className="bg-white/5 p-3 rounded-lg text-center">
                     <p className="text-sm font-medium text-purple-400 mb-1">Manual Valve</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Gravity descent &mdash; opens hydraulic circuit to allow controlled lowering
                     </p>
                   </div>
                   <div className="bg-white/5 p-3 rounded-lg text-center">
                     <p className="text-sm font-medium text-purple-400 mb-1">Hand Pump</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Manual hydraulic pump &mdash; last mechanical resort before calling 999
                     </p>
                   </div>
@@ -559,7 +559,7 @@ export default function MewpModule5Section3() {
                           {item.step}
                         </span>
                       </div>
-                      <p className="text-sm text-white/80 pt-1">{item.text}</p>
+                      <p className="text-sm text-white pt-1">{item.text}</p>
                     </div>
                   ))}
                 </div>
@@ -572,7 +572,7 @@ export default function MewpModule5Section3() {
                     NEVER Attempt Untrained Rescue From Height
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -609,7 +609,7 @@ export default function MewpModule5Section3() {
                   <Phone className="h-5 w-5 text-teal-400" />
                   <p className="text-sm font-medium text-teal-400">Information for the 999 Call</p>
                 </div>
-                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white">
                   {[
                     'Exact location (address, postcode, what3words)',
                     'Type and model of MEWP',
@@ -703,7 +703,7 @@ export default function MewpModule5Section3() {
                   ].map((item, i) => (
                     <div key={i} className={`${item.bg} border ${item.border} p-3 rounded-lg`}>
                       <p className={`text-xs font-semibold ${item.colour} mb-1`}>{item.label}</p>
-                      <p className="text-sm text-white/80">{item.text}</p>
+                      <p className="text-sm text-white">{item.text}</p>
                     </div>
                   ))}
                 </div>
@@ -714,7 +714,7 @@ export default function MewpModule5Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Must NOT:</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -771,7 +771,7 @@ export default function MewpModule5Section3() {
                     Medical Emergency &mdash; Operator Conscious
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                     <span>
@@ -808,7 +808,7 @@ export default function MewpModule5Section3() {
                     Medical Emergency &mdash; Operator Unconscious
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -846,7 +846,7 @@ export default function MewpModule5Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-semibold text-red-400">Entrapment (Crushing)</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -887,7 +887,7 @@ export default function MewpModule5Section3() {
                     Electrocution (Contact with Live Conductors)
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-yellow-400 flex-shrink-0" />
                     <span>
@@ -931,7 +931,7 @@ export default function MewpModule5Section3() {
                     Machine Tilting or Overturning
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -997,7 +997,7 @@ export default function MewpModule5Section3() {
                     What the Drill Should Simulate
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-elec-yellow flex-shrink-0" />
                     <span>
@@ -1040,10 +1040,10 @@ export default function MewpModule5Section3() {
                   <Radio className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">Recording the Drill</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Every drill must be formally recorded. The record should include:
                 </p>
-                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white">
                   {[
                     'Date and time of the drill',
                     'Names of all participants and their roles',
@@ -1069,7 +1069,7 @@ export default function MewpModule5Section3() {
                     Debrief &amp; Continuous Improvement
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-teal-400 flex-shrink-0" />
                     <span>
@@ -1102,7 +1102,7 @@ export default function MewpModule5Section3() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">New Personnel</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   New personnel must participate in a rescue drill{' '}
                   <strong className="text-white">before</strong> being assigned as the ground rescue
                   person. Reading the rescue plan alone is not sufficient &mdash; they must
@@ -1124,7 +1124,7 @@ export default function MewpModule5Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1138,7 +1138,7 @@ export default function MewpModule5Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-5">

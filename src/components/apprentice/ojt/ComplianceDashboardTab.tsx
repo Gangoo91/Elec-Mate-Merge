@@ -143,7 +143,7 @@ const ComplianceDashboardTab = () => {
       case 'low':
         return 'bg-green-100 text-green-800 border-green-200';
       default:
-        return 'bg-white/5 text-white/90 border-white/20';
+        return 'bg-white/5 text-white border-white/20';
     }
   };
 
@@ -156,7 +156,7 @@ const ComplianceDashboardTab = () => {
       case 'overdue':
         return 'bg-red-100 text-red-800 border-red-200';
       default:
-        return 'bg-white/5 text-white/90 border-white/20';
+        return 'bg-white/5 text-white border-white/20';
     }
   };
 

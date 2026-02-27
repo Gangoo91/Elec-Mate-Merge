@@ -126,13 +126,13 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
                   {sectionItem.item}
                 </p>
                 {sectionItem.clause && (
-                  <p className="text-xs text-white/40 font-mono text-left">{sectionItem.clause}</p>
+                  <p className="text-xs text-white font-mono text-left">{sectionItem.clause}</p>
                 )}
               </div>
             </TooltipTrigger>
             {sectionItem.description && (
               <TooltipContent className="max-w-sm bg-card border-white/10">
-                <p className="text-xs text-white/80">{sectionItem.description}</p>
+                <p className="text-xs text-white">{sectionItem.description}</p>
               </TooltipContent>
             )}
           </Tooltip>
@@ -156,7 +156,7 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
           value={localNotes}
           onChange={(e) => handleNotesChange(e.target.value)}
           className="text-sm h-9 bg-white/5 border-white/10 focus:border-elec-yellow/50
-                     placeholder:text-white/30"
+                     placeholder:text-white"
         />
       </TableCell>
 
@@ -166,7 +166,7 @@ const EnhancedInspectionItemRow: React.FC<EnhancedInspectionItemRowProps> = ({
           <Button
             variant="ghost"
             size="icon"
-            className="h-8 w-8 text-white/40 hover:text-white hover:bg-white/10"
+            className="h-8 w-8 text-white hover:text-white hover:bg-white/10"
           >
             <Camera className="h-4 w-4" />
           </Button>

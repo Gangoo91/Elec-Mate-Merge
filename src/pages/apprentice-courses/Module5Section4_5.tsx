@@ -255,7 +255,7 @@ const Module5Section4_5 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -273,13 +273,13 @@ const Module5Section4_5 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 4.5</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 4.5</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Coordinating Equipment with Team Requirements
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master equipment coordination strategies to ensure team efficiency, prevent delays,
               and manage shared resources effectively.
             </p>
@@ -289,14 +289,14 @@ const Module5Section4_5 = () => {
           <section className="mb-10">
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-6">
               <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-              <ul className="text-white/80 space-y-1 text-sm">
+              <ul className="text-white space-y-1 text-sm">
                 <li>• Plan equipment needs and create booking systems for shared resources.</li>
                 <li>• Hold daily briefings to coordinate equipment use and prevent conflicts.</li>
                 <li>• Ensure accountability with proper return and storage procedures.</li>
               </ul>
             </div>
 
-            <p className="text-white/80 leading-relaxed mb-4">
+            <p className="text-white leading-relaxed mb-4">
               Electrical installation projects often involve multiple team members working on
               different tasks at the same time. Without proper coordination of tools, materials, and
               equipment, delays, shortages, and inefficiencies can occur. Effective coordination
@@ -309,7 +309,7 @@ const Module5Section4_5 = () => {
                 <Settings className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="font-medium text-blue-400 mb-2">Why This Matters</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Effective equipment coordination can improve team productivity by 20-30% and
                     significantly reduce project delays and workplace conflicts.
                   </p>
@@ -324,14 +324,14 @@ const Module5Section4_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Learning Outcomes
             </h2>
-            <p className="text-white/80 mb-4">
+            <p className="text-white mb-4">
               By the end of this subsection, you will be able to:
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-6">
               <div className="space-y-3">
                 <h4 className="font-medium text-white">Coordination Planning Skills</h4>
-                <ul className="space-y-2 text-white/80 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start">
                     <span className="text-elec-yellow mr-2">•</span>
                     Understand the importance of coordinating equipment and resources
@@ -353,7 +353,7 @@ const Module5Section4_5 = () => {
 
               <div className="space-y-3">
                 <h4 className="font-medium text-white">Problem Prevention Skills</h4>
-                <ul className="space-y-2 text-white/80 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start">
                     <span className="text-elec-yellow mr-2">•</span>
                     Recognise common issues caused by poor coordination
@@ -375,7 +375,7 @@ const Module5Section4_5 = () => {
             </div>
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 <strong className="text-white">Business Impact:</strong> Effective coordination
                 reduces project costs through improved efficiency and prevents costly delays that
                 can impact entire construction schedules.
@@ -390,7 +390,7 @@ const Module5Section4_5 = () => {
               Why Coordination Matters
             </h2>
 
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Effective equipment coordination is the foundation of successful electrical
               installations:
             </p>
@@ -398,7 +398,7 @@ const Module5Section4_5 = () => {
             <div className="grid sm:grid-cols-2 gap-4 mb-6">
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="font-medium text-green-400 mb-2">Key Benefits</p>
-                <ul className="text-sm text-white/70 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Prevents downtime caused by missing tools or equipment</li>
                   <li>• Reduces disputes over shared resources</li>
                   <li>• Improves workflow and project progress</li>
@@ -408,7 +408,7 @@ const Module5Section4_5 = () => {
 
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <p className="font-medium text-blue-400 mb-2">Professional Impact</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Effective coordination demonstrates competence and builds long-term team
                   relationships. Projects with proper equipment coordination show 40% fewer delays
                   and improved team satisfaction.
@@ -432,14 +432,14 @@ const Module5Section4_5 = () => {
               Common Problems from Poor Coordination
             </h2>
 
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Understanding typical coordination failures helps identify risks early:
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-6">
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="font-medium text-red-400 mb-2">Resource Conflicts</p>
-                <ul className="text-sm text-white/70 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Multiple workers needing the same specialist tool at once</li>
                   <li>• Shortages of PPE or access equipment</li>
                   <li>• Equipment booked for one task but unavailable for another</li>
@@ -448,7 +448,7 @@ const Module5Section4_5 = () => {
 
               <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                 <p className="font-medium text-amber-400 mb-2">Workflow Issues</p>
-                <ul className="text-sm text-white/70 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Teams waiting on deliveries or missing stock</li>
                   <li>• Work delays impacting project timelines</li>
                   <li>• Rescheduling cascading through dependent tasks</li>
@@ -472,14 +472,14 @@ const Module5Section4_5 = () => {
               Coordinating Equipment Effectively
             </h2>
 
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Successful coordination requires systematic planning and clear processes:
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-6">
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <p className="font-medium text-blue-400 mb-2">Planning Steps</p>
-                <ul className="text-sm text-white/70 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Review job breakdown and task sequencing to anticipate requirements</li>
                   <li>• Allocate tools, materials, and PPE in advance</li>
                   <li>• Schedule shared equipment (e.g., MEWPs, scaffold towers)</li>
@@ -489,7 +489,7 @@ const Module5Section4_5 = () => {
 
               <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/20">
                 <p className="font-medium text-purple-400 mb-2">Tracking Systems</p>
-                <ul className="text-sm text-white/70 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Sign-in/out logs for all shared equipment</li>
                   <li>• Digital booking systems for expensive items</li>
                   <li>• Real-time location tracking where appropriate</li>
@@ -514,14 +514,14 @@ const Module5Section4_5 = () => {
               Communication and Teamwork
             </h2>
 
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Effective communication is essential for successful coordination:
             </p>
 
             <div className="grid sm:grid-cols-2 gap-4 mb-6">
               <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
                 <p className="font-medium text-orange-400 mb-2">Key Communication Actions</p>
-                <ul className="text-sm text-white/70 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Hold daily team briefings to plan equipment use</li>
                   <li>• Encourage reporting of missing or faulty tools immediately</li>
                   <li>• Ensure equipment is returned, stored, and ready for the next user</li>
@@ -531,7 +531,7 @@ const Module5Section4_5 = () => {
 
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="font-medium text-green-400 mb-2">Team Accountability</p>
-                <ul className="text-sm text-white/70 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Clear ownership of equipment during use</li>
                   <li>• Responsibility for condition and return</li>
                   <li>• Prompt reporting of issues or damage</li>
@@ -548,7 +548,7 @@ const Module5Section4_5 = () => {
               Risks of Poor Coordination
             </h2>
 
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Understanding risks helps justify investment in proper systems:
             </p>
 
@@ -557,7 +557,7 @@ const Module5Section4_5 = () => {
                 <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="font-medium text-red-400 mb-2">Key Risks</p>
-                  <ul className="text-sm text-white/70 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Lost time and reduced productivity</li>
                     <li>• Unsafe improvisation when correct equipment isn't available</li>
                     <li>• Tension between team members</li>
@@ -581,7 +581,7 @@ const Module5Section4_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4 mb-4">
                 <div className="space-y-3">
                   <h4 className="font-medium text-white">The Problem:</h4>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     On a warehouse lighting project, two teams needed the same scissor lift at the
                     same time. Because no schedule had been created, one team had to wait several
                     hours, causing delays.
@@ -589,7 +589,7 @@ const Module5Section4_5 = () => {
 
                   <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20">
                     <p className="text-sm font-medium text-red-400 mb-1">Consequences:</p>
-                    <ul className="text-sm text-white/70 list-disc pl-4">
+                    <ul className="text-sm text-white list-disc pl-4">
                       <li>4 hours of lost productivity</li>
                       <li>Team frustration and conflicts</li>
                       <li>Rush to complete work by deadline</li>
@@ -600,14 +600,14 @@ const Module5Section4_5 = () => {
 
                 <div className="space-y-3">
                   <h4 className="font-medium text-white">The Solution:</h4>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     A simple booking system for shared access equipment would have kept both teams
                     productive and prevented the conflict entirely.
                   </p>
 
                   <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
                     <p className="text-sm font-medium text-green-400 mb-1">Prevention Measures:</p>
-                    <ul className="text-sm text-white/70 list-disc pl-4">
+                    <ul className="text-sm text-white list-disc pl-4">
                       <li>Equipment booking system implemented</li>
                       <li>Daily coordination meetings established</li>
                       <li>Clear handover procedures created</li>
@@ -618,7 +618,7 @@ const Module5Section4_5 = () => {
               </div>
 
               <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20">
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   <strong className="text-blue-400">Lesson Learned:</strong> The project manager now
                   uses digital booking systems on all projects, reducing equipment conflicts by 90%
                   and improving team satisfaction significantly.
@@ -639,7 +639,7 @@ const Module5Section4_5 = () => {
                   key={index}
                   className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50"
                 >
-                  <p className="text-white/80 text-sm">{guidance}</p>
+                  <p className="text-white text-sm">{guidance}</p>
                 </div>
               ))}
             </div>
@@ -655,7 +655,7 @@ const Module5Section4_5 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                  <p className="text-white/70 text-sm">{faq.answer}</p>
+                  <p className="text-white text-sm">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -673,7 +673,7 @@ const Module5Section4_5 = () => {
               {pocketGuideItems.map((item, index) => (
                 <div key={index} className="flex items-start gap-3 p-3 rounded-lg bg-white/5">
                   <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <p className="text-sm text-white/80">{item}</p>
+                  <p className="text-sm text-white">{item}</p>
                 </div>
               ))}
             </div>
@@ -688,7 +688,7 @@ const Module5Section4_5 = () => {
 
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="space-y-4">
-                <p className="text-white/80 leading-relaxed">
+                <p className="text-white leading-relaxed">
                   In this subsection, you learned how to coordinate equipment with team
                   requirements. You now understand the importance of planning, communication, and
                   shared resource management to avoid downtime and conflicts.
@@ -696,7 +696,7 @@ const Module5Section4_5 = () => {
 
                 <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                   <h4 className="font-semibold text-green-400 mb-2">Professional Benefits</h4>
-                  <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                  <ul className="text-sm text-white list-disc ml-4 space-y-1">
                     <li>Improved team productivity and project efficiency</li>
                     <li>Reduced conflicts and better team collaboration</li>
                     <li>Enhanced safety through proper equipment provision</li>
@@ -707,7 +707,7 @@ const Module5Section4_5 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <p className="text-white/80 leading-relaxed">
+                <p className="text-white leading-relaxed">
                   <strong className="text-white">Remember:</strong> Proper coordination improves
                   productivity, keeps workers safe, and ensures projects run smoothly. Every
                   successful project relies on effective resource planning and team communication.
@@ -732,7 +732,7 @@ const Module5Section4_5 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../4-4">

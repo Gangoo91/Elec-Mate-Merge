@@ -388,7 +388,7 @@ const MewpModule2Section3 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Machine Selection &amp; Safe Systems of Work
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             How to choose the right MEWP for the task and build a robust safe system of work around
             it
           </p>
@@ -434,7 +434,7 @@ const MewpModule2Section3 = () => {
                           <span className={`font-semibold ${card.textClass}`}>{card.label}</span>
                         </div>
                       </div>
-                      <p className="text-white/80 text-sm leading-relaxed">{card.detail}</p>
+                      <p className="text-white text-sm leading-relaxed">{card.detail}</p>
                     </div>
                   );
                 })}
@@ -442,7 +442,7 @@ const MewpModule2Section3 = () => {
 
               <div className="bg-white/5 border border-elec-yellow/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-elec-yellow">Key Point</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Work through <strong>every</strong> letter of ACTORS before confirming a machine
                   choice. If a single factor is unresolved, do not proceed until it has been
                   addressed. ACTORS feeds directly into the risk assessment and method statement.
@@ -499,26 +499,26 @@ const MewpModule2Section3 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">SWL Calculation</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   SWL = combined weight of <strong>operator(s)</strong> + <strong>tools</strong> +{' '}
                   <strong>materials</strong>. Always distribute the load <strong>evenly</strong>{' '}
                   across the platform to prevent unbalanced forces.
                 </p>
                 <div className="space-y-2 text-sm">
                   <div className="grid grid-cols-2 gap-2">
-                    <span className="text-white/80">Operator 1:</span>
+                    <span className="text-white">Operator 1:</span>
                     <span className="text-white font-mono">85 kg</span>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
-                    <span className="text-white/80">Operator 2:</span>
+                    <span className="text-white">Operator 2:</span>
                     <span className="text-white font-mono">92 kg</span>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
-                    <span className="text-white/80">Power tools:</span>
+                    <span className="text-white">Power tools:</span>
                     <span className="text-white font-mono">18 kg</span>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
-                    <span className="text-white/80">Light fittings:</span>
+                    <span className="text-white">Light fittings:</span>
                     <span className="text-white font-mono">40 kg</span>
                   </div>
                   <div className="grid grid-cols-2 gap-2 border-t border-white/10 pt-2 mt-2">
@@ -526,15 +526,15 @@ const MewpModule2Section3 = () => {
                     <span className="text-elec-yellow font-mono font-bold">235 kg</span>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
-                    <span className="text-white/80">Data plate SWL:</span>
+                    <span className="text-white">Data plate SWL:</span>
                     <span className="text-green-400 font-mono">230 kg</span>
                   </div>
                   <div className="grid grid-cols-2 gap-2">
-                    <span className="text-white/80">Status:</span>
+                    <span className="text-white">Status:</span>
                     <span className="text-red-400 font-mono font-bold">OVERLOADED by 5 kg</span>
                   </div>
                 </div>
-                <p className="text-white/60 text-xs mt-3">
+                <p className="text-white text-xs mt-3">
                   Even a 5 kg overload is unacceptable. Cease work, remove excess load, and
                   recalculate before resuming.
                 </p>
@@ -552,7 +552,7 @@ const MewpModule2Section3 = () => {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Consequences of Overloading</h3>
                 </div>
-                <ul className="text-white/80 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -611,7 +611,7 @@ const MewpModule2Section3 = () => {
               {/* Comparison grid — stacked cards on mobile */}
               <div className="space-y-3">
                 {/* Header row — hidden on mobile */}
-                <div className="hidden sm:grid sm:grid-cols-12 gap-2 text-xs font-semibold text-white/60 uppercase tracking-wider px-4">
+                <div className="hidden sm:grid sm:grid-cols-12 gap-2 text-xs font-semibold text-white uppercase tracking-wider px-4">
                   <div className="col-span-5">Task Requirement</div>
                   <div className="col-span-4">MEWP Type</div>
                   <div className="col-span-3">Category</div>
@@ -621,11 +621,11 @@ const MewpModule2Section3 = () => {
                   <div key={idx} className={`rounded-lg border p-4 ${row.highlight}`}>
                     {/* Mobile layout */}
                     <div className="sm:hidden space-y-1.5">
-                      <p className="text-white/60 text-xs uppercase tracking-wider">Requirement</p>
+                      <p className="text-white text-xs uppercase tracking-wider">Requirement</p>
                       <p className="text-white text-sm font-medium">{row.need}</p>
                       <div className="flex items-center justify-between pt-1">
                         <span className="text-white font-semibold text-sm">{row.type}</span>
-                        <span className="bg-white/10 text-white/80 text-xs px-2 py-0.5 rounded-full font-mono">
+                        <span className="bg-white/10 text-white text-xs px-2 py-0.5 rounded-full font-mono">
                           {row.category}
                         </span>
                       </div>
@@ -633,10 +633,10 @@ const MewpModule2Section3 = () => {
 
                     {/* Desktop layout */}
                     <div className="hidden sm:grid sm:grid-cols-12 gap-2 items-center text-sm">
-                      <div className="col-span-5 text-white/80">{row.need}</div>
+                      <div className="col-span-5 text-white">{row.need}</div>
                       <div className="col-span-4 text-white font-semibold">{row.type}</div>
                       <div className="col-span-3">
-                        <span className="bg-white/10 text-white/80 text-xs px-2 py-0.5 rounded-full font-mono">
+                        <span className="bg-white/10 text-white text-xs px-2 py-0.5 rounded-full font-mono">
                           {row.category}
                         </span>
                       </div>
@@ -647,7 +647,7 @@ const MewpModule2Section3 = () => {
 
               <div className="bg-white/5 border border-green-400/30 p-4 rounded-lg">
                 <h3 className={`${headingColours[2]} font-medium mb-2`}>Decision Tips</h3>
-                <ul className="text-white/80 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -796,32 +796,32 @@ const MewpModule2Section3 = () => {
                 </h3>
                 <div className="space-y-3 text-sm">
                   <div className="bg-white/5 border border-white/10 p-3 rounded">
-                    <div className="text-white/60 text-xs uppercase tracking-wider mb-1">
+                    <div className="text-white text-xs uppercase tracking-wider mb-1">
                       Reference &amp; Author
                     </div>
                     <p className="text-white">
                       SSOW-2026-047 | Author: J. Smith, Site Supervisor | Date: 09/02/2026
                     </p>
-                    <p className="text-white/60 text-xs mt-1">Cross-ref: RA-2026-047</p>
+                    <p className="text-white text-xs mt-1">Cross-ref: RA-2026-047</p>
                   </div>
 
                   <div className="bg-white/5 border border-white/10 p-3 rounded">
-                    <div className="text-white/60 text-xs uppercase tracking-wider mb-1">
+                    <div className="text-white text-xs uppercase tracking-wider mb-1">
                       Step 1 &mdash; Pre-start checks
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
                       <div>
-                        <span className="text-white/60">Task:</span>
+                        <span className="text-white">Task:</span>
                         <p className="text-white">
                           Inspect scissor lift, check SWL, confirm ground is level and firm
                         </p>
                       </div>
                       <div>
-                        <span className="text-white/60">Hazard:</span>
+                        <span className="text-white">Hazard:</span>
                         <p className="text-white">Mechanical fault, uneven ground</p>
                       </div>
                       <div>
-                        <span className="text-white/60">Control:</span>
+                        <span className="text-white">Control:</span>
                         <p className="text-white">
                           Daily pre-use inspection checklist, spirit level check
                         </p>
@@ -830,22 +830,22 @@ const MewpModule2Section3 = () => {
                   </div>
 
                   <div className="bg-white/5 border border-white/10 p-3 rounded">
-                    <div className="text-white/60 text-xs uppercase tracking-wider mb-1">
+                    <div className="text-white text-xs uppercase tracking-wider mb-1">
                       Step 2 &mdash; Set up exclusion zone
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
                       <div>
-                        <span className="text-white/60">Task:</span>
+                        <span className="text-white">Task:</span>
                         <p className="text-white">
                           Erect barriers and &ldquo;MEWP in use&rdquo; signage around work area
                         </p>
                       </div>
                       <div>
-                        <span className="text-white/60">Hazard:</span>
+                        <span className="text-white">Hazard:</span>
                         <p className="text-white">Pedestrians entering drop zone</p>
                       </div>
                       <div>
-                        <span className="text-white/60">Control:</span>
+                        <span className="text-white">Control:</span>
                         <p className="text-white">
                           Physical barriers, warning signs, banksman if required
                         </p>
@@ -854,22 +854,22 @@ const MewpModule2Section3 = () => {
                   </div>
 
                   <div className="bg-white/5 border border-white/10 p-3 rounded">
-                    <div className="text-white/60 text-xs uppercase tracking-wider mb-1">
+                    <div className="text-white text-xs uppercase tracking-wider mb-1">
                       Step 3 &mdash; Elevate and install fittings
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs">
                       <div>
-                        <span className="text-white/60">Task:</span>
+                        <span className="text-white">Task:</span>
                         <p className="text-white">
                           Raise platform to working height, install luminaires
                         </p>
                       </div>
                       <div>
-                        <span className="text-white/60">Hazard:</span>
+                        <span className="text-white">Hazard:</span>
                         <p className="text-white">Falling objects, electrocution, overloading</p>
                       </div>
                       <div>
-                        <span className="text-white/60">Control:</span>
+                        <span className="text-white">Control:</span>
                         <p className="text-white">
                           Tool tethers, isolation verified, load calculated before lifting
                         </p>
@@ -878,7 +878,7 @@ const MewpModule2Section3 = () => {
                   </div>
 
                   <div className="bg-white/5 border border-white/10 p-3 rounded">
-                    <div className="text-white/60 text-xs uppercase tracking-wider mb-1">
+                    <div className="text-white text-xs uppercase tracking-wider mb-1">
                       Emergency &amp; Rescue
                     </div>
                     <p className="text-white text-xs">
@@ -888,7 +888,7 @@ const MewpModule2Section3 = () => {
                   </div>
 
                   <div className="bg-white/5 border border-white/10 p-3 rounded">
-                    <div className="text-white/60 text-xs uppercase tracking-wider mb-1">
+                    <div className="text-white text-xs uppercase tracking-wider mb-1">
                       PPE &amp; Competency
                     </div>
                     <p className="text-white text-xs">
@@ -899,7 +899,7 @@ const MewpModule2Section3 = () => {
                   </div>
 
                   <div className="bg-white/5 border border-white/10 p-3 rounded">
-                    <div className="text-white/60 text-xs uppercase tracking-wider mb-1">
+                    <div className="text-white text-xs uppercase tracking-wider mb-1">
                       Review &amp; Signatures
                     </div>
                     <p className="text-white text-xs">
@@ -1022,7 +1022,7 @@ const MewpModule2Section3 = () => {
 
               <div className="bg-white/5 border border-elec-yellow/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-elec-yellow">Key Point</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   If <strong>any</strong> of these pre-arrival items cannot be satisfactorily
                   completed, do not proceed with the MEWP delivery. It is far cheaper and safer to
                   delay than to have an unsuitable machine standing idle on site &mdash; or worse,
@@ -1106,7 +1106,7 @@ const MewpModule2Section3 = () => {
                     The Hierarchy of Control Still Applies
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The Work at Height Regulations 2005 set out a clear hierarchy:
                 </p>
                 <ul className="text-white space-y-1 text-sm">
@@ -1137,7 +1137,7 @@ const MewpModule2Section3 = () => {
                     </span>
                   </li>
                 </ul>
-                <p className="text-white/60 text-xs mt-3">
+                <p className="text-white text-xs mt-3">
                   A MEWP provides collective protection (the platform and guardrails), making it a
                   good option at step 2. But if step 1 is achievable &mdash; for example,
                   pre-assembling components at ground level &mdash; that is always preferable.
@@ -1146,7 +1146,7 @@ const MewpModule2Section3 = () => {
 
               <div className="bg-white/5 border border-elec-yellow/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-elec-yellow">Key Point</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Choosing NOT to use a MEWP is sometimes the safest decision. Document your
                   reasoning in the risk assessment. The goal is to select the{' '}
                   <strong>most proportionate</strong> access equipment for the specific task,
@@ -1174,7 +1174,7 @@ const MewpModule2Section3 = () => {
             <div className="space-y-4">
               <div>
                 <h3 className="font-semibold text-white mb-2">ACTORS</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1221,7 +1221,7 @@ const MewpModule2Section3 = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-white mb-2">SWL Rule</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>SWL = operators + tools + materials</span>
@@ -1240,7 +1240,7 @@ const MewpModule2Section3 = () => {
             <div className="space-y-4">
               <div>
                 <h3 className="font-semibold text-white mb-2">Method Statement Must Include</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>SSOW ref + risk assessment cross-ref</span>
@@ -1261,7 +1261,7 @@ const MewpModule2Section3 = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-white mb-2">When NOT to Use a MEWP</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Short duration, low height &mdash; consider podium steps</span>
@@ -1296,7 +1296,7 @@ const MewpModule2Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1316,7 +1316,7 @@ const MewpModule2Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-2-section-2">

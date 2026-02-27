@@ -123,7 +123,7 @@ const CISDRCHelper = () => {
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 CIS & DRC Helper
               </h1>
-              <p className="text-sm text-white/70">Calculate CIS deductions & DRC VAT rules</p>
+              <p className="text-sm text-white">Calculate CIS deductions & DRC VAT rules</p>
             </div>
           </div>
           <SmartBackButton />
@@ -142,14 +142,14 @@ const CISDRCHelper = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-4 w-4 text-white/80 transition-transform duration-200',
+                    'h-4 w-4 text-white transition-transform duration-200',
                     showCISGuide && 'rotate-180'
                   )}
                 />
               </CollapsibleTrigger>
 
               <CollapsibleContent className="p-4 pt-0">
-                <p className="text-sm text-white/70 mb-2">
+                <p className="text-sm text-white mb-2">
                   HMRC scheme where contractors deduct money from subcontractor payments and pass it
                   to HMRC as advance tax payment.
                 </p>
@@ -182,14 +182,14 @@ const CISDRCHelper = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-4 w-4 text-white/80 transition-transform duration-200',
+                    'h-4 w-4 text-white transition-transform duration-200',
                     showDRCGuide && 'rotate-180'
                   )}
                 />
               </CollapsibleTrigger>
 
               <CollapsibleContent className="p-4 pt-0">
-                <p className="text-sm text-white/70 mb-2">
+                <p className="text-sm text-white mb-2">
                   VAT rule where the customer (contractor) accounts for VAT, not the supplier
                   (subcontractor).
                 </p>
@@ -226,14 +226,14 @@ const CISDRCHelper = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-4 w-4 text-white/80 transition-transform duration-200',
+                    'h-4 w-4 text-white transition-transform duration-200',
                     showCombinedGuide && 'rotate-180'
                   )}
                 />
               </CollapsibleTrigger>
 
               <CollapsibleContent className="p-4 pt-0">
-                <p className="text-sm text-white/70 mb-2">
+                <p className="text-sm text-white mb-2">
                   If you're a CIS subcontractor working for a CIS contractor: Both CIS and DRC
                   apply.
                 </p>
@@ -266,14 +266,14 @@ const CISDRCHelper = () => {
           {/* Role Selection */}
           <div className="flex items-center gap-2 mb-3">
             <Building className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white/80">Your Role</span>
+            <span className="text-sm font-medium text-white">Your Role</span>
           </div>
 
           <div className="w-full flex rounded-xl overflow-hidden border border-white/10 mb-4">
             <button
               className={cn(
                 'h-14 flex-1 px-4 font-medium transition-colors flex items-center justify-center gap-2 touch-manipulation',
-                role === 'contractor' ? 'text-black' : 'text-white/90 hover:bg-white/5'
+                role === 'contractor' ? 'text-black' : 'text-white hover:bg-white/5'
               )}
               style={
                 role === 'contractor'
@@ -290,7 +290,7 @@ const CISDRCHelper = () => {
             <button
               className={cn(
                 'h-14 flex-1 px-4 font-medium transition-colors flex items-center justify-center gap-2 touch-manipulation',
-                role === 'subcontractor' ? 'text-black' : 'text-white/90 hover:bg-white/5'
+                role === 'subcontractor' ? 'text-black' : 'text-white hover:bg-white/5'
               )}
               style={
                 role === 'subcontractor'
@@ -312,7 +312,7 @@ const CISDRCHelper = () => {
           {/* Job Costs */}
           <div className="flex items-center gap-2 mb-3">
             <Hammer className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white/80">Job Costs</span>
+            <span className="text-sm font-medium text-white">Job Costs</span>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -342,7 +342,7 @@ const CISDRCHelper = () => {
           {/* Tax Settings */}
           <div className="flex items-center gap-2 mb-3 mt-4">
             <Percent className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white/80">Tax Settings</span>
+            <span className="text-sm font-medium text-white">Tax Settings</span>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -372,7 +372,7 @@ const CISDRCHelper = () => {
           {/* VAT & DRC Status */}
           <div className="flex items-center gap-2 mb-3 mt-4">
             <Receipt className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white/80">VAT & DRC Status</span>
+            <span className="text-sm font-medium text-white">VAT & DRC Status</span>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -382,7 +382,7 @@ const CISDRCHelper = () => {
                 <button
                   className={cn(
                     'h-12 flex-1 px-3 font-medium transition-colors flex items-center justify-center gap-1 touch-manipulation text-sm',
-                    vatRegistered ? 'text-black' : 'text-white/90 hover:bg-white/5'
+                    vatRegistered ? 'text-black' : 'text-white hover:bg-white/5'
                   )}
                   style={
                     vatRegistered
@@ -399,7 +399,7 @@ const CISDRCHelper = () => {
                 <button
                   className={cn(
                     'h-12 flex-1 px-3 font-medium transition-colors flex items-center justify-center gap-1 touch-manipulation text-sm',
-                    !vatRegistered ? 'text-black' : 'text-white/90 hover:bg-white/5'
+                    !vatRegistered ? 'text-black' : 'text-white hover:bg-white/5'
                   )}
                   style={
                     !vatRegistered
@@ -423,7 +423,7 @@ const CISDRCHelper = () => {
                 <button
                   className={cn(
                     'h-12 flex-1 px-3 font-medium transition-colors flex items-center justify-center gap-1 touch-manipulation text-sm',
-                    drcApplies ? 'text-black' : 'text-white/90 hover:bg-white/5'
+                    drcApplies ? 'text-black' : 'text-white hover:bg-white/5'
                   )}
                   style={
                     drcApplies
@@ -440,7 +440,7 @@ const CISDRCHelper = () => {
                 <button
                   className={cn(
                     'h-12 flex-1 px-3 font-medium transition-colors flex items-center justify-center gap-1 touch-manipulation text-sm',
-                    !drcApplies ? 'text-black' : 'text-white/90 hover:bg-white/5'
+                    !drcApplies ? 'text-black' : 'text-white hover:bg-white/5'
                   )}
                   style={
                     !drcApplies
@@ -479,7 +479,7 @@ const CISDRCHelper = () => {
                     warning.type === 'warning' ? 'text-orange-400' : 'text-blue-400'
                   )}
                 />
-                <p className="text-sm text-white/80">{warning.text}</p>
+                <p className="text-sm text-white">{warning.text}</p>
               </div>
             ))}
           </div>
@@ -489,19 +489,19 @@ const CISDRCHelper = () => {
         <CalculatorResult category="business">
           <div className="flex items-center gap-2 mb-4">
             <FileText className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white/80">Invoice Breakdown</span>
+            <span className="text-sm font-medium text-white">Invoice Breakdown</span>
           </div>
 
           <div className="space-y-3 text-sm">
             <div className="flex items-center justify-between">
-              <span className="flex items-center gap-2 text-white/70">
+              <span className="flex items-center gap-2 text-white">
                 <Hammer className="w-4 h-4 text-blue-400/70" />
                 Labour cost
               </span>
               <strong className="text-white">{currency(labourVal)}</strong>
             </div>
             <div className="flex items-center justify-between">
-              <span className="flex items-center gap-2 text-white/70">
+              <span className="flex items-center gap-2 text-white">
                 <Package className="w-4 h-4 text-blue-400/70" />
                 Materials cost
               </span>
@@ -516,7 +516,7 @@ const CISDRCHelper = () => {
             </div>
 
             <div className="flex items-center justify-between">
-              <span className="flex items-center gap-2 text-white/70">
+              <span className="flex items-center gap-2 text-white">
                 <Receipt className="w-4 h-4 text-blue-400/70" />
                 VAT to charge
                 {vat === 0 && drcApplies && <Info className="w-3 h-3 text-blue-400" />}
@@ -539,7 +539,7 @@ const CISDRCHelper = () => {
             {cisDeduction > 0 && (
               <>
                 <div className="flex items-center justify-between">
-                  <span className="flex items-center gap-2 text-white/70">
+                  <span className="flex items-center gap-2 text-white">
                     <AlertCircle className="w-4 h-4 text-red-400" />
                     Less: CIS deduction ({cisRateVal}%)
                   </span>
@@ -626,7 +626,7 @@ const CISDRCHelper = () => {
               </div>
               <ChevronDown
                 className={cn(
-                  'h-4 w-4 text-white/80 transition-transform duration-200',
+                  'h-4 w-4 text-white transition-transform duration-200',
                   showReference && 'rotate-180'
                 )}
               />

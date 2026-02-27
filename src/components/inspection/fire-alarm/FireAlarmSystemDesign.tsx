@@ -100,7 +100,7 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({ formData,
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.detectors && 'rotate-180'
                   )}
                 />
@@ -299,7 +299,7 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({ formData,
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.sounders && 'rotate-180'
                   )}
                 />
@@ -379,19 +379,19 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({ formData,
                         0
                       )}
                     </p>
-                    <p className="text-white/60 text-sm sm:text-xs">Detectors</p>
+                    <p className="text-white text-sm sm:text-xs">Detectors</p>
                   </div>
                   <div className="flex sm:flex-col sm:text-center items-center sm:items-stretch gap-3 sm:gap-0 p-3 bg-green-500/10 rounded-lg">
                     <p className="text-2xl font-bold text-green-400">
                       {formData.callPointCount || 0}
                     </p>
-                    <p className="text-white/60 text-sm sm:text-xs">Call Points</p>
+                    <p className="text-white text-sm sm:text-xs">Call Points</p>
                   </div>
                   <div className="flex sm:flex-col sm:text-center items-center sm:items-stretch gap-3 sm:gap-0 p-3 bg-orange-500/10 rounded-lg">
                     <p className="text-2xl font-bold text-orange-400">
                       {(formData.sounderCount || 0) + (formData.visualAlarmCount || 0)}
                     </p>
-                    <p className="text-white/60 text-sm sm:text-xs">Alarm Devices</p>
+                    <p className="text-white text-sm sm:text-xs">Alarm Devices</p>
                   </div>
                 </div>
               </div>
@@ -432,7 +432,7 @@ const FireAlarmSystemDesign: React.FC<FireAlarmSystemDesignProps> = ({ formData,
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform',
+                    'h-5 w-5 text-white transition-transform',
                     openSections.zones && 'rotate-180'
                   )}
                 />

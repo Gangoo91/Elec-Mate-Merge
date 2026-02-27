@@ -105,7 +105,7 @@ const BS7671Module2Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bs7671-module-2">
@@ -126,7 +126,7 @@ const BS7671Module2Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Navigating Part 2 – How Definitions Shape Application
           </h1>
-          <p className="text-white/80">Understanding how terminology underpins all regulations</p>
+          <p className="text-white">Understanding how terminology underpins all regulations</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -226,17 +226,17 @@ const BS7671Module2Section1 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Critical Terms</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Protective conductor, Live part, Earthing arrangement
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Safety Terms</p>
-                <p className="text-white/90 text-xs">Basic protection, Fault protection, RCD</p>
+                <p className="text-white text-xs">Basic protection, Fault protection, RCD</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">System Terms</p>
-                <p className="text-white/90 text-xs">TN system, TT system, SELV, PELV</p>
+                <p className="text-white text-xs">TN system, TT system, SELV, PELV</p>
               </div>
             </div>
           </div>
@@ -326,7 +326,7 @@ const BS7671Module2Section1 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-1">Part 2 Definition:</p>
-                  <p className="text-white/90 text-xs italic">
+                  <p className="text-white text-xs italic">
                     "A conductor used for some measures of protection against electric shock and
                     intended to connect together exposed-conductive-parts,
                     extraneous-conductive-parts, the main earthing terminal, earth electrode(s)..."
@@ -349,7 +349,7 @@ const BS7671Module2Section1 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-1">Part 2 Definition:</p>
-                  <p className="text-white/90 text-xs italic">
+                  <p className="text-white text-xs italic">
                     "Function intended to cut off for reasons of safety the supply from all, or a
                     discrete section, of the installation by separating the installation or section
                     from every source of electrical energy."
@@ -489,7 +489,7 @@ const BS7671Module2Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -535,7 +535,7 @@ const BS7671Module2Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bs7671-module-2">

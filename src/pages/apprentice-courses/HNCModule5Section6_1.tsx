@@ -240,7 +240,7 @@ const HNCModule5Section6_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section6">
@@ -262,7 +262,7 @@ const HNCModule5Section6_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Site Organisation
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Site facilities, welfare provisions, security arrangements, access control and temporary
             services coordination
           </p>
@@ -526,7 +526,7 @@ const HNCModule5Section6_1 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Note: Additional facilities may be required for mixed-gender workforces
               </p>
             </div>
@@ -824,7 +824,7 @@ const HNCModule5Section6_1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Handover planning:</strong> As permanent electrical and mechanical services
               are commissioned, plan phased transfer from temporary supplies. Maintain temporary
               backup until permanent systems proven reliable.
@@ -850,7 +850,7 @@ const HNCModule5Section6_1 = () => {
                 <strong>Question:</strong> A construction site has peak workforce of 85 workers.
                 What welfare facilities are required?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using CDM Schedule 2 ratios for 76-100 workers:</p>
                 <p className="mt-2">
                   Toilets: <strong>5 minimum</strong>
@@ -876,7 +876,7 @@ const HNCModule5Section6_1 = () => {
                 <strong>Question:</strong> Estimate temporary power requirement for fit-out phase
                 with 20 electricians and 15 mechanical fitters working across 4 floors.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Typical tool loads per trade worker:</p>
                 <p>- Power tools: 1.5kW average, 3kW peak</p>
                 <p>- Task lighting: 0.5kW per work area</p>
@@ -905,7 +905,7 @@ const HNCModule5Section6_1 = () => {
                 <strong>Question:</strong> A city centre site has high-value M&E equipment arriving
                 for installation. What security measures are appropriate?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Risk factors:</p>
                 <p>- Urban location: higher theft risk</p>
                 <p>- High-value equipment: attractive target</p>
@@ -1006,7 +1006,7 @@ const HNCModule5Section6_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1052,7 +1052,7 @@ const HNCModule5Section6_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section6">

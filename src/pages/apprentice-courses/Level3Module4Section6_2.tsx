@@ -258,7 +258,7 @@ const Level3Module4Section6_2 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section6">
@@ -284,7 +284,7 @@ const Level3Module4Section6_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
             Working Under Pressure and Meeting Deadlines
           </h1>
-          <p className="text-lg sm:text-xl text-white/70">
+          <p className="text-lg sm:text-xl text-white">
             Managing time effectively and working efficiently under pressure situations
           </p>
         </header>
@@ -295,31 +295,31 @@ const Level3Module4Section6_2 = () => {
           <ul className="space-y-2 sm:space-y-3">
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/80 text-sm sm:text-base">
+              <span className="text-white text-sm sm:text-base">
                 Recognise common sources of pressure in fault diagnosis work
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/80 text-sm sm:text-base">
+              <span className="text-white text-sm sm:text-base">
                 Apply effective prioritisation techniques for multiple demands
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/80 text-sm sm:text-base">
+              <span className="text-white text-sm sm:text-base">
                 Manage stress while maintaining safety and quality standards
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/80 text-sm sm:text-base">
+              <span className="text-white text-sm sm:text-base">
                 Negotiate realistic deadlines with customers and employers
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/80 text-sm sm:text-base">
+              <span className="text-white text-sm sm:text-base">
                 Develop sustainable work practices that prevent burnout
               </span>
             </li>
@@ -338,7 +338,7 @@ const Level3Module4Section6_2 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
               Pressure is inherent in fault diagnosis work. Customers are often without power or
               facing safety concerns, creating genuine urgency. Understanding the sources and nature
               of pressure helps you respond effectively while maintaining professional standards.
@@ -350,7 +350,7 @@ const Level3Module4Section6_2 = () => {
 
             <div className="bg-white/5 rounded-lg p-4 mb-4">
               <h4 className="text-white font-semibold mb-2">Customer-Related Pressure</h4>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+              <ul className="list-disc pl-5 text-white text-sm space-y-1">
                 <li>Properties without power affecting daily life and work</li>
                 <li>Safety concerns causing anxiety and fear</li>
                 <li>Business customers losing income due to electrical failures</li>
@@ -362,7 +362,7 @@ const Level3Module4Section6_2 = () => {
 
             <div className="bg-white/5 rounded-lg p-4 mb-4">
               <h4 className="text-white font-semibold mb-2">Work-Related Pressure</h4>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+              <ul className="list-disc pl-5 text-white text-sm space-y-1">
                 <li>Multiple callouts competing for attention</li>
                 <li>Complex faults taking longer than expected</li>
                 <li>Missing parts or equipment delaying completion</li>
@@ -374,7 +374,7 @@ const Level3Module4Section6_2 = () => {
 
             <div className="bg-white/5 rounded-lg p-4 mb-4">
               <h4 className="text-white font-semibold mb-2">Self-Imposed Pressure</h4>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+              <ul className="list-disc pl-5 text-white text-sm space-y-1">
                 <li>Over-optimistic time estimates to win work</li>
                 <li>Taking on too many commitments</li>
                 <li>Perfectionism beyond what the situation requires</li>
@@ -387,11 +387,11 @@ const Level3Module4Section6_2 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               The Pressure-Performance Relationship
             </h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               Some pressure can enhance performance by increasing focus and motivation. However,
               excessive pressure causes:
             </p>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>
                 <strong>Reduced concentration:</strong> Missing important observations during
                 diagnosis
@@ -436,7 +436,7 @@ const Level3Module4Section6_2 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
               Effective prioritisation ensures the most important and urgent work receives attention
               first. Good time management maximises productive use of available time while
               maintaining sustainable workload.
@@ -445,12 +445,12 @@ const Level3Module4Section6_2 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               Priority Assessment Framework
             </h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               When multiple demands compete for attention, assess each based on:
             </p>
 
             <div className="overflow-x-auto mb-6">
-              <table className="w-full text-sm text-white/80 border border-white/20">
+              <table className="w-full text-sm text-white border border-white/20">
                 <thead>
                   <tr className="bg-white/10">
                     <th className="border border-white/20 p-2 text-left">Priority Level</th>
@@ -507,7 +507,7 @@ const Level3Module4Section6_2 = () => {
               Effective Scheduling Practices
             </h3>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>
                   <strong>Buffer time:</strong> Leave gaps between appointments for overruns
                 </li>
@@ -534,7 +534,7 @@ const Level3Module4Section6_2 = () => {
             </h3>
             <div className="bg-gradient-to-r from-yellow-400/10 to-amber-500/10 rounded-lg p-4 border border-yellow-400/20 mb-4">
               <h4 className="text-white font-semibold mb-2">Realistic Estimation Approach:</h4>
-              <ol className="list-decimal pl-5 text-white/80 text-sm space-y-2">
+              <ol className="list-decimal pl-5 text-white text-sm space-y-2">
                 <li>
                   <strong>Base estimate:</strong> How long would this typically take in ideal
                   conditions?
@@ -557,8 +557,8 @@ const Level3Module4Section6_2 = () => {
             </div>
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Managing Multiple Jobs</h3>
-            <p className="text-white/80 text-sm mb-3">When handling several jobs simultaneously:</p>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <p className="text-white text-sm mb-3">When handling several jobs simultaneously:</p>
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>Keep a clear record of all commitments and deadlines</li>
               <li>Communicate proactively with all affected customers</li>
               <li>Complete jobs fully rather than jumping between partial completions</li>
@@ -589,7 +589,7 @@ const Level3Module4Section6_2 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
               Safety must remain the absolute priority regardless of time pressure. Rushing
               electrical work can result in electric shock, fire, or death. Understanding how
               pressure affects safety decisions helps maintain appropriate standards.
@@ -602,7 +602,7 @@ const Level3Module4Section6_2 = () => {
               <h4 className="text-white font-semibold mb-2">
                 Never compromise on these safety requirements:
               </h4>
-              <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>Isolation and proving dead before working on circuits</li>
                 <li>Safe isolation procedures and lock-off</li>
                 <li>Appropriate personal protective equipment</li>
@@ -615,11 +615,11 @@ const Level3Module4Section6_2 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               Recognising Dangerous Mindsets
             </h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               Be alert to thought patterns that indicate pressure is affecting safety judgement:
             </p>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>"Just this once won't hurt" - every shortcut creates risk</li>
                 <li>"I'll be quick" - speed doesn't reduce electrical hazards</li>
                 <li>"I've done this hundreds of times" - familiarity breeds complacency</li>
@@ -632,10 +632,10 @@ const Level3Module4Section6_2 = () => {
             </div>
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">When to Stop Work</h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               Professional practice requires stopping work when:
             </p>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>You cannot maintain safe working practices</li>
               <li>Pressure is causing you to consider shortcuts</li>
               <li>Fatigue is affecting your concentration or judgement</li>
@@ -647,11 +647,11 @@ const Level3Module4Section6_2 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               Having the Safety Conversation
             </h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               When you need to explain why work cannot proceed as quickly as hoped:
             </p>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>Explain the specific safety requirements clearly</li>
                 <li>Describe the consequences of shortcuts (injury, fire, death)</li>
                 <li>Emphasise that you're protecting them, not being difficult</li>
@@ -683,7 +683,7 @@ const Level3Module4Section6_2 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
               Managing stress effectively is essential for maintaining safety, quality, and personal
               wellbeing. Practical techniques help you remain calm and focused even in demanding
               situations.
@@ -694,7 +694,7 @@ const Level3Module4Section6_2 = () => {
             </h3>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
               <h4 className="text-white font-semibold mb-2">When pressure builds during a job:</h4>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>
                   <strong>Pause:</strong> Take a moment to step back and assess the situation
                 </li>
@@ -719,10 +719,10 @@ const Level3Module4Section6_2 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               Preparation Reduces Stress
             </h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               Good preparation minimises stress during jobs:
             </p>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>Gather information before arriving to plan your approach</li>
               <li>Ensure equipment is ready, charged, and calibrated</li>
               <li>Allow adequate travel time to avoid arriving flustered</li>
@@ -736,7 +736,7 @@ const Level3Module4Section6_2 = () => {
             </h3>
             <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-lg p-4 border border-green-500/20 mb-4">
               <h4 className="text-white font-semibold mb-2">Sustainable work practices:</h4>
-              <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>
                   <strong>Rest:</strong> Get adequate sleep - fatigue impairs judgement and safety
                 </li>
@@ -761,10 +761,10 @@ const Level3Module4Section6_2 = () => {
             </div>
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Seeking Support</h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               Recognise when you need support and know where to find it:
             </p>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>Discuss difficult situations with colleagues or mentors</li>
               <li>Talk to your employer if workload is unsustainable</li>
               <li>Use industry support services if struggling</li>
@@ -795,7 +795,7 @@ const Level3Module4Section6_2 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
               Setting and negotiating realistic deadlines prevents pressure from becoming
               unmanageable. Honest communication about what is achievable builds trust and prevents
               disappointment.
@@ -805,7 +805,7 @@ const Level3Module4Section6_2 = () => {
               Setting Initial Expectations
             </h3>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>Explain the investigative nature of fault diagnosis</li>
                 <li>Provide realistic time ranges rather than fixed commitments</li>
                 <li>Identify factors that could affect timescales</li>
@@ -818,12 +818,12 @@ const Level3Module4Section6_2 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               Renegotiating When Necessary
             </h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               When original timescales prove unrealistic:
             </p>
             <div className="bg-gradient-to-r from-yellow-400/10 to-amber-500/10 rounded-lg p-4 border border-yellow-400/20 mb-4">
               <h4 className="text-white font-semibold mb-2">Renegotiation Steps:</h4>
-              <ol className="list-decimal pl-5 text-white/80 text-sm space-y-2">
+              <ol className="list-decimal pl-5 text-white text-sm space-y-2">
                 <li>
                   <strong>Early notification:</strong> Inform the customer as soon as you realise
                 </li>
@@ -848,10 +848,10 @@ const Level3Module4Section6_2 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               Declining Unrealistic Requests
             </h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               Sometimes you must decline work or timescales that aren't achievable:
             </p>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>Explain why the requested timescale isn't possible</li>
               <li>Offer the earliest realistic alternative</li>
               <li>Suggest other electricians if they need faster response</li>
@@ -863,10 +863,10 @@ const Level3Module4Section6_2 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               Managing Employer Expectations
             </h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               When employed, communicate effectively with your employer about workload:
             </p>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>Provide honest assessments of job complexity and duration</li>
               <li>Flag scheduling conflicts early</li>
               <li>Explain when workload is becoming unsustainable</li>
@@ -884,7 +884,7 @@ const Level3Module4Section6_2 = () => {
           <div className="space-y-4">
             <div>
               <h3 className="text-white font-semibold mb-2">The 80/20 Rule</h3>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 In fault diagnosis, 80% of faults often come from 20% of causes. Focus your
                 systematic approach on the most likely causes first. This efficient approach
                 resolves most faults quickly, leaving time and energy for the more complex cases.
@@ -893,7 +893,7 @@ const Level3Module4Section6_2 = () => {
 
             <div>
               <h3 className="text-white font-semibold mb-2">Learn from Pressure</h3>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 After particularly pressured jobs, reflect on what happened and what could be done
                 differently. Were estimates unrealistic? Could preparation have been better? Use
                 these insights to improve future practice rather than just moving on.
@@ -902,7 +902,7 @@ const Level3Module4Section6_2 = () => {
 
             <div>
               <h3 className="text-white font-semibold mb-2">Build Your Toolkit</h3>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Having the right equipment, well-organised and readily available, saves significant
                 time. Invest in quality tools, keep your van organised, maintain equipment properly,
                 and ensure common consumables are always stocked.
@@ -920,7 +920,7 @@ const Level3Module4Section6_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 rounded-lg p-4 sm:p-6">
                 <h3 className="text-white font-semibold mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -932,7 +932,7 @@ const Level3Module4Section6_2 = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <h3 className="text-white font-semibold mb-2">Priority Levels</h3>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>Critical: Immediate safety hazard</li>
                 <li>Urgent: Essential services affected</li>
                 <li>Important: Scheduled commitments</li>
@@ -941,7 +941,7 @@ const Level3Module4Section6_2 = () => {
             </div>
             <div>
               <h3 className="text-white font-semibold mb-2">Never Compromise</h3>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>Safe isolation procedures</li>
                 <li>Proving dead before work</li>
                 <li>PPE requirements</li>
@@ -950,7 +950,7 @@ const Level3Module4Section6_2 = () => {
             </div>
             <div>
               <h3 className="text-white font-semibold mb-2">When Under Pressure</h3>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>Pause and breathe</li>
                 <li>Identify priorities</li>
                 <li>Break into steps</li>
@@ -959,7 +959,7 @@ const Level3Module4Section6_2 = () => {
             </div>
             <div>
               <h3 className="text-white font-semibold mb-2">Warning Signs</h3>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>Considering shortcuts</li>
                 <li>Feeling overwhelmed</li>
                 <li>Missing deadlines regularly</li>

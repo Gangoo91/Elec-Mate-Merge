@@ -106,7 +106,7 @@ const BMSModule7Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bms-module-7">
@@ -299,7 +299,7 @@ const BMSModule7Section3 = () => {
                 </span>
                 <div>
                   <p className="font-medium text-white">Assign addresses</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Each device is configured with a unique ID before installation
                   </p>
                 </div>
@@ -310,7 +310,7 @@ const BMSModule7Section3 = () => {
                 </span>
                 <div>
                   <p className="font-medium text-white">Wire devices correctly</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Ensure polarity and bus terminations are correct
                   </p>
                 </div>
@@ -321,7 +321,7 @@ const BMSModule7Section3 = () => {
                 </span>
                 <div>
                   <p className="font-medium text-white">Map I/O points in software</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Link each signal to the correct controller channel with descriptive names
                   </p>
                 </div>
@@ -332,7 +332,7 @@ const BMSModule7Section3 = () => {
                 </span>
                 <div>
                   <p className="font-medium text-white">Test communication</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Confirm data appears in the BMS and outputs respond correctly
                   </p>
                 </div>
@@ -558,7 +558,7 @@ const BMSModule7Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bms-module-7-section-2">

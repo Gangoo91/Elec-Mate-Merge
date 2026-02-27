@@ -63,7 +63,7 @@ export function LearningVideosSection() {
             <Video className="h-6 w-6 text-elec-yellow" />
           </div>
           <h3 className="text-sm font-semibold text-white mb-1">Videos Coming Soon</h3>
-          <p className="text-xs text-white/50">
+          <p className="text-xs text-white">
             Curated electrical training videos from approved UK creators
           </p>
         </div>

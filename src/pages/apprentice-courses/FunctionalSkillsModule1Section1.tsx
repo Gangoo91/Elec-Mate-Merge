@@ -93,7 +93,7 @@ const FunctionalSkillsModule1Section1 = () => {
             to="/study-centre/apprentice/functional-skills/module1"
             className="p-2 -ml-2 touch-manipulation"
           >
-            <ArrowLeft className="w-5 h-5 text-white/60" />
+            <ArrowLeft className="w-5 h-5 text-white" />
           </Link>
           <div>
             <p className="text-[11px] font-semibold text-green-400 uppercase tracking-wider">
@@ -119,7 +119,7 @@ const FunctionalSkillsModule1Section1 = () => {
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
               Number Systems &amp; Arithmetic
             </h2>
-            <p className="text-sm text-white/50 max-w-lg mx-auto">
+            <p className="text-sm text-white max-w-lg mx-auto">
               Build a solid foundation in the number skills you will use every day on site &mdash;
               from calculating cable lengths to working out diversity percentages.
             </p>
@@ -142,7 +142,7 @@ const FunctionalSkillsModule1Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Whole Numbers in Electrical Work</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Whole numbers (also called integers) are the building blocks of all mathematics. As an
               electrician, you will encounter them constantly: counting cable clips, reading circuit
@@ -191,7 +191,7 @@ const FunctionalSkillsModule1Section1 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Practical Tip</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Always double-check your arithmetic on site. A simple addition error when measuring
                 cable runs can result in expensive waste or, worse, a cable that is too short to
                 reach the intended point. Get into the habit of doing a quick estimate first, then
@@ -235,7 +235,7 @@ const FunctionalSkillsModule1Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Decimals &amp; Precision</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Decimals allow us to express values more precisely than whole numbers alone. In
               electrical work, precision matters: a cable conductor cross-sectional area might be
@@ -287,7 +287,7 @@ const FunctionalSkillsModule1Section1 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 When recording test results on an Electrical Installation Certificate (EIC), values
                 such as insulation resistance (M&Omega;), earth fault loop impedance (Zs) and
                 R1&thinsp;+&thinsp;R2 readings are all expressed as decimals. Getting these right is
@@ -334,7 +334,7 @@ const FunctionalSkillsModule1Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Fractions in Practice</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Fractions express parts of a whole. Although the UK electrical industry primarily uses
               metric measurements, you will still encounter fractions in several contexts: older
@@ -368,7 +368,7 @@ const FunctionalSkillsModule1Section1 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Electrical Example</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 A 100-metre drum of twin-and-earth cable is shared equally among 4 teams. Each team
                 gets &frac14; of the drum = 25m. If one team only uses 3&frasl;5 of their
                 allocation, they use 3&frasl;5 &times; 25 = 15m, leaving 10m spare.
@@ -432,7 +432,7 @@ const FunctionalSkillsModule1Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Percentages &amp; Efficiency</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Percentages are used extensively in electrical work. From calculating voltage drop as
               a percentage of supply voltage, to applying diversity factors, to working out VAT on a
@@ -468,7 +468,7 @@ const FunctionalSkillsModule1Section1 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Diversity in Practice</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Diversity factors from BS 7671 are percentages applied to assumed maximum demand.
                 For example, if a dwelling has 10 socket outlets at 13A each, you do not assume all
                 are in use simultaneously. The diversity table may allow 100% of the largest circuit
@@ -560,7 +560,7 @@ const FunctionalSkillsModule1Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">BIDMAS Order of Operations</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               When a calculation involves more than one operation, the order in which you perform
               them matters. BIDMAS (sometimes called BODMAS) tells you the correct sequence:
@@ -570,22 +570,22 @@ const FunctionalSkillsModule1Section1 = () => {
               <div className="bg-white/5 rounded-lg p-3">
                 <p className="text-green-400 font-bold text-lg">B</p>
                 <p className="text-white font-medium">Brackets</p>
-                <p className="text-white/60 text-xs">Evaluate contents of brackets first</p>
+                <p className="text-white text-xs">Evaluate contents of brackets first</p>
               </div>
               <div className="bg-white/5 rounded-lg p-3">
                 <p className="text-green-400 font-bold text-lg">I</p>
                 <p className="text-white font-medium">Indices (Powers)</p>
-                <p className="text-white/60 text-xs">Squares, cubes, square roots, etc.</p>
+                <p className="text-white text-xs">Squares, cubes, square roots, etc.</p>
               </div>
               <div className="bg-white/5 rounded-lg p-3">
                 <p className="text-green-400 font-bold text-lg">DM</p>
                 <p className="text-white font-medium">Division &amp; Multiplication</p>
-                <p className="text-white/60 text-xs">Left to right, equal priority</p>
+                <p className="text-white text-xs">Left to right, equal priority</p>
               </div>
               <div className="bg-white/5 rounded-lg p-3">
                 <p className="text-green-400 font-bold text-lg">AS</p>
                 <p className="text-white font-medium">Addition &amp; Subtraction</p>
-                <p className="text-white/60 text-xs">Left to right, equal priority</p>
+                <p className="text-white text-xs">Left to right, equal priority</p>
               </div>
             </div>
 
@@ -610,10 +610,10 @@ const FunctionalSkillsModule1Section1 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Worked Example</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Calculate: 2 &times; (15 + 5)&sup2; &divide; 10
               </p>
-              <p className="text-sm text-white/80 mt-2">
+              <p className="text-sm text-white mt-2">
                 Step 1 &mdash; Brackets: (15 + 5) = 20
                 <br />
                 Step 2 &mdash; Indices: 20&sup2; = 400
@@ -658,7 +658,7 @@ const FunctionalSkillsModule1Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Negative Numbers</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Negative numbers appear in several areas of electrical work, most notably in
               temperature readings for cable derating, in accounting (profit and loss on a job), and
@@ -717,7 +717,7 @@ const FunctionalSkillsModule1Section1 = () => {
               <p className="text-xs font-semibold text-green-400 mb-1">
                 Temperature &amp; Cable Rating
               </p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 BS 7671 provides correction factors for ambient temperature. If cables are installed
                 in an environment at &minus;5&deg;C, the correction factor is greater than 1 (e.g.
                 1.06 for thermoplastic cables), meaning the cable can actually carry slightly more
@@ -773,7 +773,7 @@ const FunctionalSkillsModule1Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Rounding &amp; Estimation</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Rounding makes numbers easier to work with. In electrical work, you round for
               different reasons: to select the next standard fuse rating, to estimate material
@@ -805,7 +805,7 @@ const FunctionalSkillsModule1Section1 = () => {
               <p className="text-xs font-semibold text-green-400 mb-1">
                 Standard Fuse Ratings (BS 88)
               </p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Common ratings: 6A, 10A, 16A, 20A, 25A, 32A, 40A, 50A, 63A, 80A, 100A, 125A. If your
                 design current (Ib) is 27.3A, you must select the next standard rating up: 32A.
                 Never round down to 25A &mdash; the fuse would be undersized and could nuisance-trip
@@ -823,7 +823,7 @@ const FunctionalSkillsModule1Section1 = () => {
               <p>Exact: 48.7 &times; 2.15 = ?</p>
               <p className="mt-1">Estimate: 50 &times; 2 = 100</p>
               <p className="mt-1">Exact answer: 104.705</p>
-              <p className="mt-1 text-white/60">
+              <p className="mt-1 text-white">
                 The estimate of 100 confirms the exact answer is reasonable.
               </p>
             </div>
@@ -860,7 +860,7 @@ const FunctionalSkillsModule1Section1 = () => {
                 <AlertTriangle className="w-4 h-4 text-yellow-400" />
                 <p className="text-xs font-semibold text-yellow-400">Important Note</p>
               </div>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Estimation is for checking, not for final answers. Always use precise calculations
                 for protective device selection, cable sizing and voltage drop calculations.
                 Safety-critical work demands accuracy.
@@ -882,7 +882,7 @@ const FunctionalSkillsModule1Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Putting It All Together</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Now let us combine everything from this section in a realistic electrical scenario. A
               qualified electrician might encounter a task like this on any working day:
@@ -892,11 +892,11 @@ const FunctionalSkillsModule1Section1 = () => {
               <p className="text-xs font-semibold text-green-400 mb-1">
                 Scenario: Kitchen Rewire Quotation
               </p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 You are asked to provide a quotation for rewiring a domestic kitchen. The customer
                 needs:
               </p>
-              <ul className="space-y-1 pl-1 mt-2 text-sm text-white/80">
+              <ul className="space-y-1 pl-1 mt-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>6 double sockets on a ring final circuit</span>
@@ -982,7 +982,7 @@ const FunctionalSkillsModule1Section1 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Takeaway</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Every calculation skill in this section &mdash; whole numbers, decimals, fractions,
                 percentages, BIDMAS, negative numbers, rounding and estimation &mdash; is used in
                 real electrical work. Practise these fundamentals until they become second nature,
@@ -999,7 +999,7 @@ const FunctionalSkillsModule1Section1 = () => {
         <div className="flex items-center justify-between pt-6 border-t border-white/10">
           <Link
             to="/study-centre/apprentice/functional-skills/module1"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Module

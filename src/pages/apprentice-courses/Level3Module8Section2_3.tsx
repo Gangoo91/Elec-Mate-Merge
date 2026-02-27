@@ -379,7 +379,7 @@ const Level3Module8Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module8">
@@ -451,7 +451,7 @@ const Level3Module8Section2_3 = () => {
                 <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="text-sm font-medium text-red-400 mb-1">Life or Death Reality</p>
-                  <p className="text-xs text-white/90">
+                  <p className="text-xs text-white">
                     Contact with 230V can kill. The Electricity at Work Regulations 1989 make it a
                     legal requirement to work dead wherever reasonably practicable. Safe isolation
                     is how you ensure 'dead' really means dead. There is no second chance if you get
@@ -540,13 +540,13 @@ const Level3Module8Section2_3 = () => {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-sm font-medium text-white mb-1">{step.title}</h3>
-                      <p className="text-xs text-white/70 mb-2">{step.description}</p>
+                      <p className="text-xs text-white mb-2">{step.description}</p>
                       <p className="text-xs text-elec-yellow/70 mb-2">
                         <strong>Critical:</strong> {step.critical}
                       </p>
                       <div className="grid grid-cols-2 gap-1">
                         {step.actions.map((action, i) => (
-                          <div key={i} className="flex items-center gap-1 text-xs text-white/80">
+                          <div key={i} className="flex items-center gap-1 text-xs text-white">
                             <CheckCircle className="h-3 w-3 text-elec-yellow/50" />
                             <span>{action}</span>
                           </div>
@@ -562,17 +562,17 @@ const Level3Module8Section2_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Memory Aid: The Proven Sequence
               </p>
-              <p className="text-xs text-white/90">
+              <p className="text-xs text-white">
                 <strong>I</strong>dentify - <strong>I</strong>solate - <strong>S</strong>ecure -{' '}
                 <strong>P</strong>rove - <strong>T</strong>est - <strong>P</strong>rove
               </p>
-              <p className="text-xs text-white/70 mt-2">
+              <p className="text-xs text-white mt-2">
                 Remember: "I Is Safe To Proceed" - but only after the second Prove confirms the
                 device worked throughout.
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Practice Note:</strong> Perform this procedure repeatedly until it becomes
               second nature. In an assessment, nerves can cause you to skip steps or rush. Automatic
               competence prevents this - your hands do the right thing even when your brain is
@@ -603,7 +603,7 @@ const Level3Module8Section2_3 = () => {
                   <Eye className="h-4 w-4 text-elec-yellow" />
                   <p className="text-sm font-medium text-white">Voltage Indicator</p>
                 </div>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Two-pole type (not single-pole neon)</li>
                   <li>GS38 compliant for low voltage use</li>
                   <li>Finger guards on probes (10mm exposed tip maximum)</li>
@@ -617,7 +617,7 @@ const Level3Module8Section2_3 = () => {
                   <Power className="h-4 w-4 text-elec-yellow" />
                   <p className="text-sm font-medium text-white">Proving Unit</p>
                 </div>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Produces known voltage for testing indicator</li>
                   <li>Portable and battery powered</li>
                   <li>Compatible with your voltage indicator</li>
@@ -634,7 +634,7 @@ const Level3Module8Section2_3 = () => {
                   <Lock className="h-4 w-4 text-elec-yellow" />
                   <p className="text-sm font-medium text-white">Lock-Off Equipment</p>
                 </div>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Lock-off device suitable for isolation point type</li>
                   <li>Personal padlock with unique key</li>
                   <li>Multiple hasp if others will also work on circuit</li>
@@ -647,7 +647,7 @@ const Level3Module8Section2_3 = () => {
                   <ShieldAlert className="h-4 w-4 text-elec-yellow" />
                   <p className="text-sm font-medium text-white">Warning Notices</p>
                 </div>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Clear 'DANGER - DO NOT SWITCH ON' message</li>
                   <li>Your name and contact details</li>
                   <li>Date and time of isolation</li>
@@ -708,7 +708,7 @@ const Level3Module8Section2_3 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="text-sm font-medium text-red-400 mb-2">Fatal Errors</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Not proving the proving device at all</li>
                   <li>Proving only before OR only after (not both)</li>
                   <li>Skipping lock-off because 'it will be quick'</li>
@@ -721,7 +721,7 @@ const Level3Module8Section2_3 = () => {
               </div>
               <div className="p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
                 <p className="text-sm font-medium text-yellow-400 mb-2">Common Mistakes</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Rushing through the procedure</li>
                   <li>Not attaching warning notice</li>
                   <li>Inadequate circuit identification</li>
@@ -765,7 +765,7 @@ const Level3Module8Section2_3 = () => {
                 <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="text-sm font-medium text-green-400 mb-1">Success Formula</p>
-                  <p className="text-xs text-white/90">
+                  <p className="text-xs text-white">
                     1. Know the procedure completely. 2. Have the correct equipment ready. 3. Take
                     your time. 4. Verbalise each step. 5. Never skip steps under any circumstances.
                     6. Practice until it is automatic.
@@ -774,7 +774,7 @@ const Level3Module8Section2_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Mindset:</strong> Treat every circuit as if it will kill you until you have
               personally proven it dead. This is not paranoia - it is professional practice that
               keeps you alive. The one time you assume a circuit is dead could be the last
@@ -851,7 +851,7 @@ const Level3Module8Section2_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -902,7 +902,7 @@ const Level3Module8Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module8-section2-2">

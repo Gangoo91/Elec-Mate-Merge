@@ -199,7 +199,7 @@ export default function AsbestosModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-5">
@@ -224,7 +224,7 @@ export default function AsbestosModule5Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Accidental Disturbance Procedures
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The 4-S emergency procedure, immediate actions, who to call, incident recording, example
             scenarios, and how to prevent accidental disturbance of asbestos-containing materials
           </p>
@@ -301,7 +301,7 @@ export default function AsbestosModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Common Examples</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -359,7 +359,7 @@ export default function AsbestosModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Invisible Danger</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Even a <strong className="text-white">small disturbance</strong> can release{' '}
                   <strong className="text-white">thousands of microscopic fibres</strong> into the
                   air. Asbestos fibres are invisible to the naked eye and can remain airborne for
@@ -389,7 +389,7 @@ export default function AsbestosModule5Section1() {
                   <p className="text-red-400 text-2xl sm:text-3xl font-black tracking-wide">STOP</p>
                 </div>
               </div>
-              <ul className="text-sm sm:text-base text-white/90 space-y-2">
+              <ul className="text-sm sm:text-base text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
                   <span>
@@ -442,7 +442,7 @@ export default function AsbestosModule5Section1() {
                   </p>
                 </div>
               </div>
-              <ul className="text-sm sm:text-base text-white/90 space-y-2">
+              <ul className="text-sm sm:text-base text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-orange-400 flex-shrink-0" />
                   <span>
@@ -499,7 +499,7 @@ export default function AsbestosModule5Section1() {
                   </p>
                 </div>
               </div>
-              <ul className="text-sm sm:text-base text-white/90 space-y-2">
+              <ul className="text-sm sm:text-base text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-yellow-400 flex-shrink-0" />
                   <span>
@@ -559,7 +559,7 @@ export default function AsbestosModule5Section1() {
                   </p>
                 </div>
               </div>
-              <ul className="text-sm sm:text-base text-white/90 space-y-2">
+              <ul className="text-sm sm:text-base text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />
                   <span>
@@ -617,7 +617,7 @@ export default function AsbestosModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">If You Have RPE On</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -634,7 +634,7 @@ export default function AsbestosModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">If You Do NOT Have RPE</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -657,7 +657,7 @@ export default function AsbestosModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Do NOT Rush</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     Rushing creates air currents that spread fibres
                   </strong>{' '}
@@ -669,7 +669,7 @@ export default function AsbestosModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Once You Have Left the Area</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -721,7 +721,7 @@ export default function AsbestosModule5Section1() {
                       <p className="text-sm font-medium text-white">
                         Your immediate supervisor or site manager
                       </p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         FIRST call &mdash; they will coordinate the response
                       </p>
                     </div>
@@ -732,7 +732,7 @@ export default function AsbestosModule5Section1() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">The building dutyholder</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Owner, managing agent, or facilities manager
                       </p>
                     </div>
@@ -745,7 +745,7 @@ export default function AsbestosModule5Section1() {
                       <p className="text-sm font-medium text-white">
                         Your employer&rsquo;s health and safety department
                       </p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         They may need to carry out an internal investigation
                       </p>
                     </div>
@@ -758,7 +758,7 @@ export default function AsbestosModule5Section1() {
                       <p className="text-sm font-medium text-white">
                         HSE (if the incident is serious)
                       </p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Potential significant exposure may require RIDDOR reporting
                       </p>
                     </div>
@@ -771,7 +771,7 @@ export default function AsbestosModule5Section1() {
                       <p className="text-sm font-medium text-white">
                         An asbestos consultant/analyst
                       </p>
-                      <p className="text-xs text-white/60">For assessment and air monitoring</p>
+                      <p className="text-xs text-white">For assessment and air monitoring</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -782,7 +782,7 @@ export default function AsbestosModule5Section1() {
                       <p className="text-sm font-medium text-white">
                         An asbestos removal contractor
                       </p>
-                      <p className="text-xs text-white/60">If professional clean-up is needed</p>
+                      <p className="text-xs text-white">If professional clean-up is needed</p>
                     </div>
                   </div>
                 </div>
@@ -793,7 +793,7 @@ export default function AsbestosModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Non-Specialist Cleaners</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Do <strong className="text-white">NOT</strong> call non-specialist cleaners.
                   Standard cleaning companies must <strong className="text-white">NOT</strong> clean
                   up asbestos debris. Using a standard vacuum cleaner, broom, or mop will spread
@@ -824,7 +824,7 @@ export default function AsbestosModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">What to Record</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -879,7 +879,7 @@ export default function AsbestosModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Why Recording Matters</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -926,7 +926,7 @@ export default function AsbestosModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">RIDDOR Reporting</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The incident may need to be reported under{' '}
                   <strong className="text-white">RIDDOR</strong> (Reporting of Injuries, Diseases
                   and Dangerous Occurrences Regulations) if it constitutes a dangerous occurrence
@@ -963,13 +963,13 @@ export default function AsbestosModule5Section1() {
                       Electrician Drills Through AIB
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     An electrician drills through an AIB panel while installing a cable clip. Dust
                     is released from the hole.
                   </p>
                   <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
                     <p className="text-xs font-semibold text-green-400 mb-1">Correct Response:</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       STOP drilling immediately. Seal the room &mdash; close doors and windows. Put
                       up warning signs at every entrance. Call your supervisor and report the
                       incident.
@@ -987,7 +987,7 @@ export default function AsbestosModule5Section1() {
                       Plumber Breaks Pipe Lagging
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     A plumber breaks a section of pipe lagging while accessing a valve in a plant
                     room. Friable material crumbles and falls to the floor.
                   </p>
@@ -995,7 +995,7 @@ export default function AsbestosModule5Section1() {
                     <p className="text-xs font-semibold text-red-400 mb-1">
                       Highest Risk &mdash; Correct Response:
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       STOP work immediately. Leave the area carefully &mdash; do not rush. Seal the
                       door behind you. Warn colleagues not to enter. Call your supervisor{' '}
                       <strong className="text-white">immediately</strong> &mdash; pipe lagging is
@@ -1014,13 +1014,13 @@ export default function AsbestosModule5Section1() {
                       Painter Scrapes Textured Coating
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     A painter scrapes textured coating from a ceiling and notices fibrous material
                     in the scrapings.
                   </p>
                   <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
                     <p className="text-xs font-semibold text-green-400 mb-1">Correct Response:</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       STOP scraping immediately. Seal the room. Do{' '}
                       <strong className="text-white">not</strong> clean up the scrapings &mdash;
                       leave them where they are. Report to your supervisor. The scrapings and
@@ -1039,13 +1039,13 @@ export default function AsbestosModule5Section1() {
                       Worker Falls Through AIB Ceiling
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     A maintenance worker steps through an AIB ceiling tile while working in a roof
                     void. The tile breaks and debris falls into the room below.
                   </p>
                   <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
                     <p className="text-xs font-semibold text-green-400 mb-1">Correct Response:</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Get to safety first. Seal the room below &mdash; both the void and the room
                       below may be contaminated. Report the incident. Both areas will need
                       assessment and potential clean-up.
@@ -1072,7 +1072,7 @@ export default function AsbestosModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Assessment and Clean-Up</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1109,7 +1109,7 @@ export default function AsbestosModule5Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   For Workers Who Were Potentially Exposed
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1166,7 +1166,7 @@ export default function AsbestosModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Prevention Checklist</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -1227,7 +1227,7 @@ export default function AsbestosModule5Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1241,7 +1241,7 @@ export default function AsbestosModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-4-section-4">

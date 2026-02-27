@@ -141,7 +141,7 @@ const Module6Section1_4 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -159,13 +159,13 @@ const Module6Section1_4 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.1.4</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.1.4</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Difference Between Inspection and Testing
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Understanding the distinct roles of visual inspection and instrumental testing in
               electrical verification
             </p>
@@ -174,7 +174,7 @@ const Module6Section1_4 = () => {
           {/* Summary Box */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-sm space-y-1 list-disc pl-5">
+            <ul className="text-white text-sm space-y-1 list-disc pl-5">
               <li>
                 Inspection = Visual checks of construction, routing, labelling - what you can SEE.
               </li>
@@ -196,7 +196,7 @@ const Module6Section1_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <div className="text-white/80 space-y-2 leading-relaxed">
+            <div className="text-white space-y-2 leading-relaxed">
               <ul className="list-disc pl-6 space-y-2 text-sm">
                 <li>Define what is meant by inspection and testing.</li>
                 <li>Identify the key tasks involved in each process.</li>
@@ -214,7 +214,7 @@ const Module6Section1_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               What is Inspection?
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Inspection is a systematic visual examination of an electrical installation to
                 verify that it has been constructed according to the design and complies with BS
@@ -311,7 +311,7 @@ const Module6Section1_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               What is Testing?
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Testing involves the measurement of electrical characteristics using calibrated
                 instruments to verify that the installation meets the electrical safety requirements
@@ -423,7 +423,7 @@ const Module6Section1_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Why Both Are Needed
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Neither inspection nor testing alone provides complete verification of an electrical
                 installation. Each process has specific capabilities and limitations, and both are
@@ -513,7 +513,7 @@ const Module6Section1_4 = () => {
               Case Study: When Inspection Reveals What Testing Cannot
             </h2>
             <div className="p-4 rounded-lg bg-purple-500/10 border-l-2 border-purple-500/50">
-              <div className="text-white/80 text-sm space-y-3">
+              <div className="text-white text-sm space-y-3">
                 <p>
                   <strong>Background:</strong> A commercial kitchen installation passed all
                   electrical tests with flying colours - continuity, insulation resistance, and
@@ -538,7 +538,7 @@ const Module6Section1_4 = () => {
             </div>
             <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50 mt-4">
               <p className="font-medium text-white mb-2">Key Learning Points</p>
-              <ul className="text-sm space-y-1 text-white/80">
+              <ul className="text-sm space-y-1 text-white">
                 <li>
                   • Electrical testing confirmed circuit integrity but couldn't assess environmental
                   suitability
@@ -564,7 +564,7 @@ const Module6Section1_4 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
                 <p className="font-medium text-white mb-2">Quick Reference:</p>
-                <ul className="text-sm space-y-1 text-white/80">
+                <ul className="text-sm space-y-1 text-white">
                   <li>
                     <strong>Inspection</strong> = Visual (What you see)
                   </li>
@@ -581,7 +581,7 @@ const Module6Section1_4 = () => {
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
                 <p className="font-medium text-white mb-2">Process Sequence:</p>
-                <ul className="text-sm space-y-1 text-white/80">
+                <ul className="text-sm space-y-1 text-white">
                   <li>1. Inspection first (de-energised)</li>
                   <li>2. Resolve any inspection issues</li>
                   <li>3. Testing second (dead then live)</li>
@@ -597,7 +597,7 @@ const Module6Section1_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Recap
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Inspection confirms correct construction and visible compliance through careful
                 visual examination. Testing verifies the hidden electrical integrity through
@@ -618,7 +618,7 @@ const Module6Section1_4 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../1-3">

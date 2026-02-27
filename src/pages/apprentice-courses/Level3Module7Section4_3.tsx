@@ -273,7 +273,7 @@ const Level3Module7Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section4">
@@ -425,7 +425,7 @@ const Level3Module7Section4_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> An electrician specialising in EV charging and solar PV can
               command premium rates and has a growing customer base as the UK moves towards net
               zero. Additional qualifications like C&G 2919 (EV) and MCS certification (solar)
@@ -516,17 +516,17 @@ const Level3Module7Section4_3 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">EngTech</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Engineering Technician - practical competence
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">IEng</p>
-                <p className="text-white/90 text-xs">Incorporated Engineer - HNC/HND level</p>
+                <p className="text-white text-xs">Incorporated Engineer - HNC/HND level</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">CEng</p>
-                <p className="text-white/90 text-xs">Chartered Engineer - degree level</p>
+                <p className="text-white text-xs">Chartered Engineer - degree level</p>
               </div>
             </div>
 
@@ -546,7 +546,7 @@ const Level3Module7Section4_3 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A qualified electrician could study part-time for an HNC/HND
               in Electrical Engineering, gain design experience, join the IET, and eventually
               achieve IEng status - all while continuing to work in the industry.
@@ -618,7 +618,7 @@ const Level3Module7Section4_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -667,7 +667,7 @@ const Level3Module7Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section4-2">

@@ -240,7 +240,7 @@ const HNCModule7Section1_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section1">
@@ -262,7 +262,7 @@ const HNCModule7Section1_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Power Quality
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Harmonics, voltage variations, flicker, power factor, and mitigation measures for
             electrical installations
           </p>
@@ -481,7 +481,7 @@ const HNCModule7Section1_5 = () => {
               </p>
               <div className="font-mono text-sm space-y-2">
                 <p className="text-white">THD = √(V₂² + V₃² + V₄² + ... + Vₙ²) / V₁ × 100%</p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Where V₁ = fundamental, V₂, V₃... = harmonic magnitudes
                 </p>
                 <p className="mt-3 text-white">
@@ -663,7 +663,7 @@ const HNCModule7Section1_5 = () => {
                 <p>
                   <strong>Region C:</strong> Equipment may be damaged
                 </p>
-                <p className="mt-2 text-white/70">
+                <p className="mt-2 text-white">
                   Example: A 70% dip lasting 100ms falls in Region B - computers may reset but
                   should not be damaged.
                 </p>
@@ -818,7 +818,7 @@ const HNCModule7Section1_5 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Detuned capacitors:</strong> In harmonic-rich environments, always use detuned
               capacitor banks (7% or 14% reactor) to prevent resonance amplification of harmonics at
               the capacitor bank.
@@ -844,8 +844,8 @@ const HNCModule7Section1_5 = () => {
                 <strong>Scenario:</strong> Assess whether a measured harmonic spectrum complies with
                 G5/5 limits.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Measured values at 400V LV board:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Measured values at 400V LV board:</p>
                 <p className="mt-2">Fundamental (50Hz): V₁ = 400V</p>
                 <p>3rd harmonic: V₃ = 14V (3.5%)</p>
                 <p>5th harmonic: V₅ = 18V (4.5%)</p>
@@ -868,8 +868,8 @@ const HNCModule7Section1_5 = () => {
                 <strong>Scenario:</strong> Calculate capacitor bank size to improve power factor
                 from 0.75 to 0.95.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Installation data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Installation data:</p>
                 <p>Real power demand: P = 200 kW</p>
                 <p>Current power factor: PF₁ = 0.75 lagging</p>
                 <p>Target power factor: PF₂ = 0.95 lagging</p>
@@ -882,7 +882,7 @@ const HNCModule7Section1_5 = () => {
                 <p className="mt-2">Step 3: Capacitor required</p>
                 <p>Qc = Q₁ - Q₂ = 176.4 - 65.8 = 110.6 kVAr</p>
                 <p className="mt-2 text-green-400">Select: 125 kVAr detuned capacitor bank</p>
-                <p className="text-white/60">(Use detuned type due to likely VSD loads)</p>
+                <p className="text-white">(Use detuned type due to likely VSD loads)</p>
               </div>
             </div>
 
@@ -894,15 +894,15 @@ const HNCModule7Section1_5 = () => {
                 <strong>Scenario:</strong> Calculate neutral current for balanced single-phase
                 non-linear loads.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Each phase draws 50A with 30% 3rd harmonic:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Each phase draws 50A with 30% 3rd harmonic:</p>
                 <p className="mt-2">Fundamental current: I₁ = 50A per phase</p>
                 <p>3rd harmonic current: I₃ = 50 × 0.30 = 15A per phase</p>
                 <p className="mt-2">Fundamental in neutral (balanced):</p>
                 <p>IN₁ = 0A (cancel in balanced system)</p>
                 <p className="mt-2">3rd harmonic in neutral:</p>
                 <p>IN₃ = 3 × I₃ = 3 × 15A = 45A</p>
-                <p className="text-white/60">(Triplen harmonics add arithmetically)</p>
+                <p className="text-white">(Triplen harmonics add arithmetically)</p>
                 <p className="mt-2">Phase current: Iph = √(50² + 15²) = 52.2A</p>
                 <p className="text-red-400 mt-2">Neutral current (45A) approaches phase current!</p>
                 <p className="text-green-400">Solution: Oversize neutral to 150% of phase size</p>
@@ -991,7 +991,7 @@ const HNCModule7Section1_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1037,7 +1037,7 @@ const HNCModule7Section1_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section1">

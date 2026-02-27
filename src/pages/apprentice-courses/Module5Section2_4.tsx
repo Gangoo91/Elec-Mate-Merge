@@ -191,7 +191,7 @@ const Module5Section2_4 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -208,13 +208,13 @@ const Module5Section2_4 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.2.4</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.2.4</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Zoning, Environmental Considerations, and Cable Choice
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Learn about safe cable routing zones, environmental factors, and selecting appropriate
               cables for different applications in compliance with BS 7671.
             </p>
@@ -223,7 +223,7 @@ const Module5Section2_4 = () => {
           {/* Quick Reference */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-semibold text-elec-yellow mb-3">Quick Reference</p>
-            <div className="grid sm:grid-cols-2 gap-4 text-white/80 text-sm">
+            <div className="grid sm:grid-cols-2 gap-4 text-white text-sm">
               <div>
                 <p className="font-medium text-white mb-1">In 30 Seconds:</p>
                 <ul className="list-disc pl-5 space-y-1">
@@ -255,7 +255,7 @@ const Module5Section2_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Introduction
             </h2>
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               Cables must be chosen and installed with regard to safety zones, environmental
               conditions, and the type of load they will serve. Incorrect cable choice or poor
               zoning practices can cause overheating, fire risk, or damage to property. This
@@ -270,7 +270,7 @@ const Module5Section2_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <ul className="list-disc pl-6 space-y-2 text-white/80">
+            <ul className="list-disc pl-6 space-y-2 text-white">
               <li>Identify the correct safe zones for cable routing</li>
               <li>Recognise how environment affects cable performance</li>
               <li>Select appropriate cables for different applications</li>
@@ -285,7 +285,7 @@ const Module5Section2_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Safe Zones for Cable Installation
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 BS 7671 defines specific safe zones where cables can be installed to minimise risk
                 of accidental damage:
@@ -398,7 +398,7 @@ const Module5Section2_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Environmental Factors
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>Environmental conditions significantly affect cable performance and longevity:</p>
 
               <div className="grid sm:grid-cols-2 gap-4">
@@ -491,7 +491,7 @@ const Module5Section2_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Cable Types and Applications
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Different cable types are designed for specific applications and environmental
                 conditions:
@@ -633,7 +633,7 @@ const Module5Section2_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Derating Factors
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Multiple factors can reduce a cable's current-carrying capacity and must be
                 considered in design:
@@ -689,7 +689,7 @@ const Module5Section2_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Coordination with Protective Devices
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Cable selection must coordinate with protective devices and voltage drop
                 requirements:
@@ -731,7 +731,7 @@ const Module5Section2_4 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
                 <p className="font-semibold text-blue-400 mb-2 text-sm">Safe Zone Compliance</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>✅ Always route cables in safe zones unless mechanically protected</li>
                   <li>✅ Document cable routes for future maintenance</li>
                   <li>✅ Use cable detectors before drilling</li>
@@ -741,7 +741,7 @@ const Module5Section2_4 = () => {
 
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
                 <p className="font-semibold text-green-400 mb-2 text-sm">Environmental Selection</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>✅ Select cable sheath based on environmental exposure</li>
                   <li>✅ Consider all factors: heat, moisture, UV, chemicals</li>
                   <li>✅ Check IP ratings for adequate protection</li>
@@ -753,7 +753,7 @@ const Module5Section2_4 = () => {
                 <p className="font-semibold text-purple-400 mb-2 text-sm">
                   Derating and Calculations
                 </p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>✅ Check derating factors when grouping cables</li>
                   <li>✅ Use BS 7671 Appendix 4 for correction factors</li>
                   <li>✅ Consider ambient temperature (standard 30°C)</li>
@@ -763,7 +763,7 @@ const Module5Section2_4 = () => {
 
               <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
                 <p className="font-semibold text-orange-400 mb-2 text-sm">Special Applications</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>✅ Use LSZH cables where fire safety is critical</li>
                   <li>✅ Verify compliance using BS 7671 tables</li>
                   <li>✅ Consider future load increases</li>
@@ -781,7 +781,7 @@ const Module5Section2_4 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
               <p className="font-semibold text-orange-400 mb-2">The New-Build Site Cable Strike</p>
-              <p className="text-white/80 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 <strong>The Scenario:</strong> On a new-build site, an electrician ran T&E cables
                 across a bathroom wall outside of safe zones. Later, when tiling, a worker drilled
                 into the wall and hit a live cable. The installation should have either followed
@@ -791,7 +791,7 @@ const Module5Section2_4 = () => {
               <div className="space-y-3">
                 <div className="p-3 rounded bg-black/20">
                   <p className="font-medium text-white mb-2 text-sm">The Problem:</p>
-                  <ul className="text-xs list-disc ml-4 space-y-1 text-white/70">
+                  <ul className="text-xs list-disc ml-4 space-y-1 text-white">
                     <li>
                       <strong>Poor route planning:</strong> Cables run diagonally to save cable
                       length
@@ -813,7 +813,7 @@ const Module5Section2_4 = () => {
 
                 <div className="p-3 rounded bg-red-500/10 border border-red-500/30">
                   <p className="font-medium text-red-400 mb-2 text-sm">The Consequences:</p>
-                  <ul className="text-xs list-disc ml-4 space-y-1 text-white/70">
+                  <ul className="text-xs list-disc ml-4 space-y-1 text-white">
                     <li>Cable strike incident - live cable hit by drill</li>
                     <li>RCD tripped, affecting other circuits</li>
                     <li>Risk of electric shock to tile fixer</li>
@@ -824,7 +824,7 @@ const Module5Section2_4 = () => {
 
                 <div className="p-3 rounded bg-green-500/10 border border-green-500/30">
                   <p className="font-medium text-green-400 mb-2 text-sm">The Correct Approach:</p>
-                  <ul className="text-xs list-disc ml-4 space-y-1 text-white/70">
+                  <ul className="text-xs list-disc ml-4 space-y-1 text-white">
                     <li>Route horizontally from switch and vertically to ceiling</li>
                     <li>Use steel conduit if routing outside zones necessary</li>
                     <li>Mark cable routes on drawings for other trades</li>
@@ -834,7 +834,7 @@ const Module5Section2_4 = () => {
               </div>
 
               <div className="p-3 rounded bg-elec-yellow/10 border border-elec-yellow/30 mt-3">
-                <p className="text-xs text-white/80">
+                <p className="text-xs text-white">
                   <strong>Key lesson:</strong> Always follow BS 7671 safe zones or provide adequate
                   mechanical protection. Proper coordination between trades prevents dangerous and
                   costly incidents.
@@ -853,7 +853,7 @@ const Module5Section2_4 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
                 <p className="font-semibold text-blue-400 mb-2 text-sm">Safe Zone Rules</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>✅ Cables in safe zones only (150mm rule)</li>
                   <li>✅ Horizontal/vertical from accessories</li>
                   <li>✅ Mechanical protection outside zones</li>
@@ -864,7 +864,7 @@ const Module5Section2_4 = () => {
 
               <div className="p-4 rounded-lg bg-purple-500/10 border border-purple-500/30">
                 <p className="font-semibold text-purple-400 mb-2 text-sm">Cable Selection</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>🏠 T&E for domestic fixed wiring</li>
                   <li>🌧️ Use SWA outdoors or underground</li>
                   <li>🔥 LSZH cables in public buildings</li>
@@ -875,7 +875,7 @@ const Module5Section2_4 = () => {
 
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
                 <p className="font-semibold text-green-400 mb-2 text-sm">Environmental Factors</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>🌡️ Heat derates cable capacity</li>
                   <li>💧 Moisture requires special cable types</li>
                   <li>☀️ UV exposure needs resistant materials</li>
@@ -886,7 +886,7 @@ const Module5Section2_4 = () => {
 
               <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
                 <p className="font-semibold text-orange-400 mb-2 text-sm">Derating & Protection</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>📊 Apply derating factors for grouping/insulation</li>
                   <li>⚡ Match cable rating ≥ protective device rating</li>
                   <li>📉 Max voltage drop: 3% lighting, 5% other</li>
@@ -897,7 +897,7 @@ const Module5Section2_4 = () => {
             </div>
 
             <div className="p-4 rounded-lg bg-white/5 border border-white/10 mt-4">
-              <p className="text-sm text-white/80 text-center">
+              <p className="text-sm text-white text-center">
                 <strong>Remember:</strong> Safe cable installation requires proper zoning,
                 environmental consideration, and appropriate cable selection. Always follow BS 7671
                 guidance and document routes for future reference.
@@ -911,7 +911,7 @@ const Module5Section2_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Recap
             </h2>
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               In this subsection, you learned about cable zoning requirements, environmental
               influences, and cable selection principles. You explored how heat, moisture, and
               mechanical damage can impact cable choice, how BS 7671 defines safe zones, and how
@@ -928,7 +928,7 @@ const Module5Section2_4 = () => {
             >
               <span className="font-semibold text-white">Frequently Asked Questions</span>
               <ChevronDown
-                className={`w-5 h-5 text-white/60 transition-transform ${showFaqs ? 'rotate-180' : ''}`}
+                className={`w-5 h-5 text-white transition-transform ${showFaqs ? 'rotate-180' : ''}`}
               />
             </button>
 
@@ -940,7 +940,7 @@ const Module5Section2_4 = () => {
                     className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50"
                   >
                     <p className="font-medium text-white mb-2">Q: {faq.question}</p>
-                    <p className="text-sm text-white/70">A: {faq.answer}</p>
+                    <p className="text-sm text-white">A: {faq.answer}</p>
                   </div>
                 ))}
               </div>
@@ -954,7 +954,7 @@ const Module5Section2_4 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../2-3">

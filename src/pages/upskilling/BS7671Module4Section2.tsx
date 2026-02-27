@@ -93,7 +93,7 @@ const BS7671Module4Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bs7671-module-4">
@@ -114,7 +114,7 @@ const BS7671Module4Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Overcurrent Protection & Device Selection
           </h1>
-          <p className="text-white/80">Understanding protective devices and selection criteria</p>
+          <p className="text-white">Understanding protective devices and selection criteria</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -186,7 +186,7 @@ const BS7671Module4Section2 = () => {
             <div className="grid sm:grid-cols-2 gap-6 my-6">
               <div>
                 <p className="text-sm font-medium text-orange-400/80 mb-2">Overload Current</p>
-                <p className="text-xs text-white/70 mb-2">
+                <p className="text-xs text-white mb-2">
                   Gradual increase beyond design capacity
                 </p>
                 <ul className="text-sm text-white space-y-1">
@@ -209,7 +209,7 @@ const BS7671Module4Section2 = () => {
               </div>
               <div>
                 <p className="text-sm font-medium text-red-400/80 mb-2">Short-Circuit Current</p>
-                <p className="text-xs text-white/70 mb-2">
+                <p className="text-xs text-white mb-2">
                   Sudden high current from low impedance path
                 </p>
                 <ul className="text-sm text-white space-y-1">
@@ -266,21 +266,21 @@ const BS7671Module4Section2 = () => {
                   <tr className="border-t border-white/5">
                     <td className="p-3 font-medium">Type B</td>
                     <td className="p-3">3-5× In</td>
-                    <td className="p-3 text-white/70 text-xs">
+                    <td className="p-3 text-white text-xs">
                       Lighting, sockets, resistive loads
                     </td>
                   </tr>
                   <tr className="border-t border-white/5">
                     <td className="p-3 font-medium">Type C</td>
                     <td className="p-3">5-10× In</td>
-                    <td className="p-3 text-white/70 text-xs">
+                    <td className="p-3 text-white text-xs">
                       Motors, discharge lighting, IT equipment
                     </td>
                   </tr>
                   <tr className="border-t border-white/5">
                     <td className="p-3 font-medium">Type D</td>
                     <td className="p-3">10-20× In</td>
-                    <td className="p-3 text-white/70 text-xs">
+                    <td className="p-3 text-white text-xs">
                       Large motors, transformers, welding
                     </td>
                   </tr>
@@ -335,7 +335,7 @@ const BS7671Module4Section2 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-2">Rating Types:</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>
                       <strong>Icn:</strong> Ultimate (maximum) breaking capacity
                     </li>
@@ -349,7 +349,7 @@ const BS7671Module4Section2 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-2">Typical Values:</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>Domestic MCBs: 6kA typical</li>
                     <li>Commercial MCBs: 10-16kA typical</li>
                     <li>Industrial MCCBs: 25-50kA+</li>
@@ -462,7 +462,7 @@ const BS7671Module4Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -474,7 +474,7 @@ const BS7671Module4Section2 = () => {
           <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
             <div>
               <p className="font-medium text-elec-yellow mb-1">MCB Types</p>
-              <ul className="space-y-0.5 text-white/90">
+              <ul className="space-y-0.5 text-white">
                 <li>Type B: 3-5× In (general use)</li>
                 <li>Type C: 5-10× In (motors, IT)</li>
                 <li>Type D: 10-20× In (high inrush)</li>
@@ -482,7 +482,7 @@ const BS7671Module4Section2 = () => {
             </div>
             <div>
               <p className="font-medium text-elec-yellow mb-1">Breaking Capacity</p>
-              <ul className="space-y-0.5 text-white/90">
+              <ul className="space-y-0.5 text-white">
                 <li>Domestic: 6kA minimum</li>
                 <li>Commercial: 10-16kA typical</li>
                 <li>Must exceed PFC at installation</li>
@@ -506,7 +506,7 @@ const BS7671Module4Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bs7671-module-4-section-1">

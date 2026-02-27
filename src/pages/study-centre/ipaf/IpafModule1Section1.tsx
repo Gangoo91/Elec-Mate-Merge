@@ -195,7 +195,7 @@ export default function IpafModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../ipaf-module-1">
@@ -220,7 +220,7 @@ export default function IpafModule1Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Work at Height Regulations 2005
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The primary legislation governing work at height in Great Britain, including the
             hierarchy of control and scaffold inspection duties
           </p>
@@ -315,7 +315,7 @@ export default function IpafModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">The Regulations Cover:</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>All industries and workplaces, not just construction</span>
@@ -376,7 +376,7 @@ export default function IpafModule1Section1() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-green-400">Avoid</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Avoid work at height altogether where it is reasonably practicable to do so.
                         Can the task be done from ground level? Can equipment be lowered for
                         maintenance?
@@ -389,7 +389,7 @@ export default function IpafModule1Section1() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-blue-400">Prevent</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Where work at height cannot be avoided, use work equipment or other measures
                         to prevent falls. This includes guardrails, mobile scaffold towers with full
                         edge protection, and MEWPs.
@@ -402,7 +402,7 @@ export default function IpafModule1Section1() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-amber-400">Mitigate</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Where the risk of a fall cannot be eliminated, minimise the distance and
                         consequences of a fall. This includes safety nets, airbags, and personal
                         fall arrest systems.
@@ -424,7 +424,7 @@ export default function IpafModule1Section1() {
                   <p className="text-sm font-medium text-green-400 mb-2">
                     Examples of Avoiding Height
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Assembling components at ground level then lifting into position</span>
@@ -447,7 +447,7 @@ export default function IpafModule1Section1() {
                   <p className="text-sm font-medium text-blue-400 mb-2">
                     Examples of Preventing Falls
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Mobile scaffold towers with guardrails and toe boards</span>
@@ -494,7 +494,7 @@ export default function IpafModule1Section1() {
                 <div className="space-y-3">
                   <div>
                     <p className="text-sm font-medium text-teal-400">1. Properly Planned</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Every activity involving work at height must be properly planned, including
                       selecting the right equipment, identifying hazards, assessing risks, planning
                       the sequence of work, and establishing emergency and rescue procedures.
@@ -502,7 +502,7 @@ export default function IpafModule1Section1() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-teal-400">2. Appropriately Supervised</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       The degree of supervision must match the level of risk and the competence of
                       those carrying out the work. Trainees and less experienced workers require
                       closer supervision.
@@ -512,7 +512,7 @@ export default function IpafModule1Section1() {
                     <p className="text-sm font-medium text-teal-400">
                       3. Carried Out by Competent Persons
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Anyone involved in work at height must be competent, meaning they have the
                       training, knowledge, experience, and practical ability to carry out the task
                       safely. For mobile towers, this typically means holding a valid PASMA
@@ -534,7 +534,7 @@ export default function IpafModule1Section1() {
                 <p className="text-sm text-white">
                   <strong className="text-elec-yellow">Planning Checklist for Tower Work:</strong>
                 </p>
-                <ul className="text-sm text-white/80 space-y-1 mt-2">
+                <ul className="text-sm text-white space-y-1 mt-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>What is the task and how long will it take?</span>
@@ -592,7 +592,7 @@ export default function IpafModule1Section1() {
                     <Shield className="h-5 w-5 text-blue-400" />
                     <p className="text-sm font-medium text-blue-400">Employer Duties</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Ensure all work at height is properly planned and organised</span>
@@ -632,7 +632,7 @@ export default function IpafModule1Section1() {
                     <Users className="h-5 w-5 text-green-400" />
                     <p className="text-sm font-medium text-green-400">Employee Duties</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Follow the systems of work established by the employer</span>
@@ -674,7 +674,7 @@ export default function IpafModule1Section1() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Self-Employed Persons</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If you are self-employed, you have the same duties as both an employer and an
                   employee. You must plan, supervise, and carry out your own work at height safely.
                   You must also ensure you are competent and that your equipment is suitable and
@@ -706,7 +706,7 @@ export default function IpafModule1Section1() {
                 <p className="text-sm font-medium text-elec-yellow mb-3">
                   When Must a Tower Be Inspected?
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">1. Before first use on site</strong> &mdash;
                     Every time a tower is erected on a new site or in a new location, it must be
@@ -736,7 +736,7 @@ export default function IpafModule1Section1() {
                     What Must the Inspection Record Include?
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -780,7 +780,7 @@ export default function IpafModule1Section1() {
 
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-red-400 mb-2">Common Compliance Failures</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>No written inspection records kept on site</span>
@@ -826,7 +826,7 @@ export default function IpafModule1Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Five-Step Risk Assessment for Tower Work
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-elec-yellow">Step 1:</strong> Identify the hazards
                     &mdash; ground conditions, overhead obstructions, weather, proximity to traffic
@@ -854,7 +854,7 @@ export default function IpafModule1Section1() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Common Tower Hazards</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Unstable or soft ground causing sinking</span>
@@ -883,7 +883,7 @@ export default function IpafModule1Section1() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Typical Control Measures</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Base plates and sole boards on soft ground</span>
@@ -947,7 +947,7 @@ export default function IpafModule1Section1() {
                   <p className="text-sm font-medium text-green-400 mb-2">
                     Reasonably Practicable &mdash; YES
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Using a tower instead of a ladder for a 3-hour task</span>
@@ -970,7 +970,7 @@ export default function IpafModule1Section1() {
                   <p className="text-sm font-medium text-red-400 mb-2">
                     NOT Reasonably Practicable
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Claiming training is too expensive for a busy workforce</span>
@@ -1015,7 +1015,7 @@ export default function IpafModule1Section1() {
                     <BookOpen className="h-5 w-5 text-teal-400" />
                     <p className="text-sm font-medium text-teal-400">Before Starting Tower Work</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Complete a site-specific risk assessment</span>
@@ -1047,7 +1047,7 @@ export default function IpafModule1Section1() {
                     <ClipboardList className="h-5 w-5 text-amber-400" />
                     <p className="text-sm font-medium text-amber-400">Documentation You Need</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Risk assessment for the specific task</span>
@@ -1081,7 +1081,7 @@ export default function IpafModule1Section1() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">HSE Enforcement</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The HSE takes work at height very seriously. Falls from height remain the single
                   largest cause of workplace fatalities in the UK. Inspectors have the power to
                   issue improvement notices, prohibition notices (stopping work immediately), and
@@ -1100,7 +1100,7 @@ export default function IpafModule1Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1114,7 +1114,7 @@ export default function IpafModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../ipaf-module-1">

@@ -237,8 +237,8 @@ const AM2Module7Section1 = () => {
       <AM2ContentCard title="1. Multiple-Choice Question Banks" icon={FileText} accent>
         <div className="space-y-4">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3">Coverage Areas</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <h4 className="text-ios-headline text-white mb-3">Coverage Areas</h4>
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>BS 7671 regulations and requirements</span>
@@ -263,8 +263,8 @@ const AM2Module7Section1 = () => {
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3">Practice Strategy</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <h4 className="text-ios-headline text-white mb-3">Practice Strategy</h4>
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Start with topic-specific question banks</span>
@@ -285,7 +285,7 @@ const AM2Module7Section1 = () => {
           </div>
 
           <div className="bg-white/5 border border-amber-500/30 rounded-xl p-4">
-            <p className="text-ios-callout text-white/80">
+            <p className="text-ios-callout text-white">
               <strong className="text-amber-400">Key Point:</strong> Question banks should mirror
               the AM2 knowledge test format with similar difficulty levels and question styles.
             </p>
@@ -305,8 +305,8 @@ const AM2Module7Section1 = () => {
       <AM2ContentCard title="2. Timed Mock Tests" icon={Timer}>
         <div className="space-y-4">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3">Test Conditions</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <h4 className="text-ios-headline text-white mb-3">Test Conditions</h4>
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>60 minutes for 50-60 questions</span>
@@ -327,8 +327,8 @@ const AM2Module7Section1 = () => {
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3">Benefits</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <h4 className="text-ios-headline text-white mb-3">Benefits</h4>
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Experience time pressure of real test</span>
@@ -362,8 +362,8 @@ const AM2Module7Section1 = () => {
       <AM2ContentCard title="3. Feedback and Explanations" icon={Lightbulb}>
         <div className="space-y-4">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3">Comprehensive Analysis</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <h4 className="text-ios-headline text-white mb-3">Comprehensive Analysis</h4>
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Detailed explanations for correct answers</span>
@@ -384,8 +384,8 @@ const AM2Module7Section1 = () => {
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3">Performance Tracking</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <h4 className="text-ios-headline text-white mb-3">Performance Tracking</h4>
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Topic-by-topic performance analysis</span>
@@ -406,7 +406,7 @@ const AM2Module7Section1 = () => {
           </div>
 
           <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
-            <p className="text-ios-callout text-white/80">
+            <p className="text-ios-callout text-white">
               <strong className="text-green-400">Best Practice:</strong> Review explanations even
               for questions answered correctly to reinforce understanding and identify any gaps.
             </p>
@@ -426,8 +426,8 @@ const AM2Module7Section1 = () => {
       <AM2ContentCard title="4. Identifying Knowledge Gaps" icon={Target}>
         <div className="space-y-4">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3">Self-Assessment Techniques</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <h4 className="text-ios-headline text-white mb-3">Self-Assessment Techniques</h4>
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Topic-specific mini tests</span>
@@ -448,8 +448,8 @@ const AM2Module7Section1 = () => {
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3">Common Weak Areas</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <h4 className="text-ios-headline text-white mb-3">Common Weak Areas</h4>
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Maximum demand calculations</span>
@@ -470,8 +470,8 @@ const AM2Module7Section1 = () => {
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3">Targeted Study Plan</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <h4 className="text-ios-headline text-white mb-3">Targeted Study Plan</h4>
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Focus 70% effort on identified weak areas</span>
@@ -505,8 +505,8 @@ const AM2Module7Section1 = () => {
       <AM2ContentCard title="5. Exam Techniques and Strategies" icon={Brain}>
         <div className="space-y-4">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3">Time Management</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <h4 className="text-ios-headline text-white mb-3">Time Management</h4>
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Allocate roughly 1 minute per question</span>
@@ -527,8 +527,8 @@ const AM2Module7Section1 = () => {
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3">Question Approach</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <h4 className="text-ios-headline text-white mb-3">Question Approach</h4>
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Read questions carefully and completely</span>
@@ -549,8 +549,8 @@ const AM2Module7Section1 = () => {
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3">Common Pitfalls</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <h4 className="text-ios-headline text-white mb-3">Common Pitfalls</h4>
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Misreading question requirements</span>
@@ -571,7 +571,7 @@ const AM2Module7Section1 = () => {
           </div>
 
           <div className="bg-white/5 border border-elec-yellow/30 rounded-xl p-4">
-            <p className="text-ios-callout text-white/80">
+            <p className="text-ios-callout text-white">
               <strong className="text-elec-yellow">Strategy:</strong> Aim for 65-70% to comfortably
               pass. Perfect scores aren't necessary - focus on consistent accuracy.
             </p>
@@ -590,7 +590,7 @@ const AM2Module7Section1 = () => {
       {/* Summary */}
       <AM2ContentCard title="6. Summary" icon={CheckCircle}>
         <div className="space-y-4">
-          <p className="text-ios-callout text-white/80">
+          <p className="text-ios-callout text-white">
             Effective knowledge test preparation requires a systematic approach combining
             theoretical study with practical test-taking experience. Success depends on identifying
             and addressing knowledge gaps while developing confidence through repeated practice
@@ -600,7 +600,7 @@ const AM2Module7Section1 = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
               <h4 className="text-ios-headline text-green-400 mb-3">Key Success Factors</h4>
-              <ul className="text-ios-callout text-white/70 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400">•</span>
                   <span>Regular practice with mock tests</span>
@@ -622,7 +622,7 @@ const AM2Module7Section1 = () => {
 
             <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
               <h4 className="text-ios-headline text-elec-yellow mb-3">Common Failures</h4>
-              <ul className="text-ios-callout text-white/70 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>Inadequate practice under time pressure</span>

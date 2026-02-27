@@ -69,12 +69,12 @@ const InputField = ({
   showSuccess = false,
 }: InputFieldProps) => (
   <div className="space-y-2">
-    <label className="block text-[13px] font-medium text-white/70 ml-1">{label}</label>
+    <label className="block text-[13px] font-medium text-white ml-1">{label}</label>
     <div className="relative">
       <div
         className={cn(
           'absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200',
-          focusedField === field ? 'text-elec-yellow' : 'text-white/40'
+          focusedField === field ? 'text-elec-yellow' : 'text-white'
         )}
       >
         <Icon className="h-5 w-5" />
@@ -101,7 +101,7 @@ const InputField = ({
         <button
           type="button"
           onClick={onToggle}
-          className="absolute right-2 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 active:text-white transition-colors h-11 w-11 flex items-center justify-center touch-manipulation rounded-xl"
+          className="absolute right-2 top-1/2 -translate-y-1/2 text-white hover:text-white active:text-white transition-colors h-11 w-11 flex items-center justify-center touch-manipulation rounded-xl"
         >
           {isVisible ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
         </button>
@@ -353,7 +353,7 @@ const SignUp = () => {
           {step === 'account' ? (
             <Link
               to="/"
-              className="flex items-center gap-1 text-white/70 hover:text-white transition-colors p-2 -ml-2 rounded-xl"
+              className="flex items-center gap-1 text-white hover:text-white transition-colors p-2 -ml-2 rounded-xl"
             >
               <ChevronLeft className="h-5 w-5" />
               <span className="text-[15px] font-medium">Back</span>
@@ -361,7 +361,7 @@ const SignUp = () => {
           ) : (
             <button
               onClick={goBack}
-              className="flex items-center gap-1 text-white/70 hover:text-white transition-colors p-2 -ml-2 rounded-xl"
+              className="flex items-center gap-1 text-white hover:text-white transition-colors p-2 -ml-2 rounded-xl"
             >
               <ChevronLeft className="h-5 w-5" />
               <span className="text-[15px] font-medium">Back</span>
@@ -414,7 +414,7 @@ const SignUp = () => {
                         <p className="text-sm font-semibold text-green-400">
                           Special Offer Applied
                         </p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           Your discount will be applied at checkout
                         </p>
                       </div>
@@ -427,7 +427,7 @@ const SignUp = () => {
                   <motion.h1 className="text-[26px] font-bold text-white tracking-tight mb-1">
                     Create Account
                   </motion.h1>
-                  <p className="text-[14px] text-white/50">Start your 7-day free trial</p>
+                  <p className="text-[14px] text-white">Start your 7-day free trial</p>
                 </div>
 
                 {/* Error */}
@@ -497,7 +497,7 @@ const SignUp = () => {
                                 'flex-1 py-1.5 rounded-lg text-center text-[11px] font-medium transition-all',
                                 req.test(password)
                                   ? 'bg-green-500/20 text-green-400'
-                                  : 'bg-white/5 text-white/40'
+                                  : 'bg-white/5 text-white'
                               )}
                             >
                               {req.label}
@@ -505,7 +505,7 @@ const SignUp = () => {
                           ))}
                         </div>
                         {allPasswordRequirementsMet && (
-                          <p className="text-[11px] text-white/40 text-center">
+                          <p className="text-[11px] text-white text-center">
                             Avoid common passwords like "Password123"
                           </p>
                         )}
@@ -554,13 +554,13 @@ const SignUp = () => {
                 {/* Divider */}
                 <div className="flex items-center gap-4 my-4">
                   <div className="flex-1 h-px bg-white/10" />
-                  <span className="text-[12px] text-white/30 uppercase tracking-wider">or</span>
+                  <span className="text-[12px] text-white uppercase tracking-wider">or</span>
                   <div className="flex-1 h-px bg-white/10" />
                 </div>
 
                 {/* Sign in link */}
                 <div className="text-center">
-                  <p className="text-[14px] text-white/40 mb-2">Already have an account?</p>
+                  <p className="text-[14px] text-white mb-2">Already have an account?</p>
                   <Link to="/auth/signin">
                     <Button
                       variant="outline"
@@ -585,7 +585,7 @@ const SignUp = () => {
                   <h1 className="text-[28px] font-bold text-white tracking-tight mb-2">
                     What's your role?
                   </h1>
-                  <p className="text-[15px] text-white/50">We'll personalise your experience</p>
+                  <p className="text-[15px] text-white">We'll personalise your experience</p>
                 </div>
 
                 <AnimatePresence>
@@ -627,7 +627,7 @@ const SignUp = () => {
                           <option.icon
                             className={cn(
                               'h-6 w-6',
-                              profile.role === option.value ? 'text-elec-yellow' : 'text-white/50'
+                              profile.role === option.value ? 'text-elec-yellow' : 'text-white'
                             )}
                           />
                         </div>
@@ -665,7 +665,7 @@ const SignUp = () => {
                   <h1 className="text-[28px] font-bold text-white tracking-tight mb-2">
                     Almost there!
                   </h1>
-                  <p className="text-[15px] text-white/50">Your data, your control</p>
+                  <p className="text-[15px] text-white">Your data, your control</p>
                 </div>
 
                 <AnimatePresence>
@@ -753,7 +753,7 @@ const SignUp = () => {
         className="relative px-6 pb-4 pt-2 z-10"
       >
         <div className="max-w-md mx-auto">
-          <div className="flex items-center justify-center gap-4 text-[11px] text-white/30">
+          <div className="flex items-center justify-center gap-4 text-[11px] text-white">
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="h-3.5 w-3.5 text-green-500/70" />
               Secure

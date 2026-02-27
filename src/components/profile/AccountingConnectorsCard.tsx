@@ -156,7 +156,7 @@ const AccountingConnectorsCard: React.FC = () => {
             <div className="w-1.5 h-1.5 rounded-full bg-purple-400" />
             <span className="font-semibold text-[15px] text-white">Accounting Software</span>
           </div>
-          <ChevronRight className="h-5 w-5 text-white/30" />
+          <ChevronRight className="h-5 w-5 text-white" />
         </button>
 
         <div className="border-t border-white/[0.06]">
@@ -173,11 +173,11 @@ const AccountingConnectorsCard: React.FC = () => {
               )}
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+              <p className="text-[11px] font-medium text-white uppercase tracking-wide">
                 Invoice Sync
               </p>
               {loading ? (
-                <span className="text-[15px] text-white/50">Checking...</span>
+                <span className="text-[15px] text-white">Checking...</span>
               ) : connectedIntegration ? (
                 <div className="flex items-center gap-2">
                   {getStatusIcon(connectedIntegration)}
@@ -189,7 +189,7 @@ const AccountingConnectorsCard: React.FC = () => {
                 <span className="text-[15px] text-white">Not connected</span>
               )}
               {connectedIntegration?.lastSyncAt && (
-                <p className="text-[12px] text-white/40">
+                <p className="text-[12px] text-white">
                   Last sync:{' '}
                   {formatDistanceToNow(new Date(connectedIntegration.lastSyncAt), {
                     addSuffix: true,
@@ -233,7 +233,7 @@ const AccountingConnectorsCard: React.FC = () => {
           </div>
 
           <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-6 space-y-3">
-            <p className="text-[13px] text-white/50 mb-4 text-center">
+            <p className="text-[13px] text-white mb-4 text-center">
               Connect your accounting software to automatically sync invoices
             </p>
 
@@ -288,7 +288,7 @@ const AccountingConnectorsCard: React.FC = () => {
                           </span>
                         </div>
                       ) : (
-                        <p className="text-[13px] text-white/40 mt-0.5">
+                        <p className="text-[13px] text-white mt-0.5">
                           {provider.description}
                           {providerId === 'quickbooks' && (
                             <span className="block text-amber-400/70 mt-0.5">
@@ -298,7 +298,7 @@ const AccountingConnectorsCard: React.FC = () => {
                         </p>
                       )}
                       {integration?.lastSyncAt && (
-                        <p className="text-[11px] text-white/30 mt-1">
+                        <p className="text-[11px] text-white mt-1">
                           Last synced{' '}
                           {formatDistanceToNow(new Date(integration.lastSyncAt), {
                             addSuffix: true,
@@ -346,7 +346,7 @@ const AccountingConnectorsCard: React.FC = () => {
 
             {/* Coming Soon - Sage */}
             <div className="mt-6">
-              <p className="text-[11px] font-medium text-white/30 uppercase tracking-wider mb-3 px-1">
+              <p className="text-[11px] font-medium text-white uppercase tracking-wider mb-3 px-1">
                 Coming Soon
               </p>
 
@@ -368,12 +368,12 @@ const AccountingConnectorsCard: React.FC = () => {
 
                       {/* Provider Info */}
                       <div className="flex-1 min-w-0">
-                        <p className="text-[16px] font-semibold text-white/70">{provider.name}</p>
-                        <p className="text-[13px] text-white/30 mt-0.5">{provider.description}</p>
+                        <p className="text-[16px] font-semibold text-white">{provider.name}</p>
+                        <p className="text-[13px] text-white mt-0.5">{provider.description}</p>
                       </div>
 
                       {/* Coming Soon Badge */}
-                      <span className="px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.08] text-[11px] font-semibold text-white/40 uppercase tracking-wide">
+                      <span className="px-3 py-1.5 rounded-full bg-white/[0.05] border border-white/[0.08] text-[11px] font-semibold text-white uppercase tracking-wide">
                         Soon
                       </span>
                     </div>
@@ -390,7 +390,7 @@ const AccountingConnectorsCard: React.FC = () => {
                 </div>
                 <div>
                   <h3 className="text-[14px] font-semibold text-white mb-1">How it works</h3>
-                  <p className="text-[12px] text-white/50 leading-relaxed">
+                  <p className="text-[12px] text-white leading-relaxed">
                     When connected, you can sync invoices directly from the invoice page. Contacts
                     and line items are created automatically in your accounting software.
                   </p>
@@ -399,7 +399,7 @@ const AccountingConnectorsCard: React.FC = () => {
             </div>
 
             {/* Security Note */}
-            <p className="text-[11px] text-white/30 text-center mt-4 pb-8">
+            <p className="text-[11px] text-white text-center mt-4 pb-8">
               🔒 Secure OAuth connection • We never see your login details
             </p>
           </div>

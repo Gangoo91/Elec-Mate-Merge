@@ -221,7 +221,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             BREEAM &amp; Green Building Standards
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding green building certification — from BREEAM and CEEQUAL to Passivhaus,
             Building Regulations Part L, and the Future Homes Standard — and why it matters for
             construction workers
@@ -303,7 +303,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                 <Leaf className="h-5 w-5 text-emerald-400 flex-shrink-0 mt-0.5" />
                 <h3 className="font-semibold text-emerald-300">BREEAM Scheme Types</h3>
               </div>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 BREEAM is not a single scheme but a{' '}
                 <strong className="text-white">family of standards</strong>:{' '}
                 <strong className="text-white">BREEAM New Construction</strong> (new-build
@@ -416,7 +416,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                     <div className="w-6" />
                   </div>
                 </div>
-                <p className="text-white/50 text-xs text-center mt-4 italic">
+                <p className="text-white text-xs text-center mt-4 italic">
                   BREEAM rating levels and minimum score thresholds
                 </p>
               </div>
@@ -547,7 +547,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                   ].map((cat) => (
                     <div key={cat.name} className="flex items-center gap-2 sm:gap-3">
                       <div className="w-32 sm:w-40 text-right flex-shrink-0">
-                        <span className="text-white/80 text-xs sm:text-sm">{cat.name}</span>
+                        <span className="text-white text-xs sm:text-sm">{cat.name}</span>
                       </div>
                       <div className="flex-1 bg-white/10 rounded-full h-5 relative overflow-hidden">
                         <div
@@ -562,7 +562,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                     </div>
                   ))}
                 </div>
-                <p className="text-white/50 text-xs text-center mt-4 italic">
+                <p className="text-white text-xs text-center mt-4 italic">
                   Typical BREEAM New Construction weightings (may vary by building type and scheme
                   version)
                 </p>
@@ -571,7 +571,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
               <div className="grid md:grid-cols-2 gap-3 sm:gap-4">
                 <div className="bg-white/5 border border-white/10 rounded-lg p-4">
                   <h3 className="text-emerald-400 font-semibold text-sm mb-2">Management (12%)</h3>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     Covers project management practices, stakeholder consultation, lifecycle cost
                     planning, responsible construction practices (often linked to Considerate
                     Constructors Scheme), and commissioning.
@@ -581,7 +581,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                   <h3 className="text-emerald-400 font-semibold text-sm mb-2">
                     Health &amp; Wellbeing (15%)
                   </h3>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     Assesses visual comfort (daylighting and lighting), indoor air quality, thermal
                     comfort, acoustic performance, water quality, and the overall impact on occupant
                     health and productivity.
@@ -589,7 +589,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-lg p-4">
                   <h3 className="text-emerald-400 font-semibold text-sm mb-2">Energy (19%)</h3>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     The highest-weighted category. Covers energy efficiency of the building fabric
                     and services, sub-metering, energy-efficient lighting, low-carbon and renewable
                     energy, and reduction of CO2 emissions.
@@ -597,7 +597,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-lg p-4">
                   <h3 className="text-emerald-400 font-semibold text-sm mb-2">Transport (8%)</h3>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     Assesses access to public transport, pedestrian and cyclist facilities, travel
                     planning, proximity to local amenities, and provision for electric vehicle
                     charging infrastructure.
@@ -605,7 +605,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-lg p-4">
                   <h3 className="text-emerald-400 font-semibold text-sm mb-2">Water (6%)</h3>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     Covers water consumption reduction, water-efficient fittings and appliances,
                     water metering and monitoring, leak detection systems, and rainwater/greywater
                     harvesting potential.
@@ -613,7 +613,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-lg p-4">
                   <h3 className="text-emerald-400 font-semibold text-sm mb-2">Materials (12.5%)</h3>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     Assesses the environmental impact of construction materials, responsible
                     sourcing (e.g., FSC timber, BES 6001 certification), lifecycle assessment (LCA),
                     and robustness and durability of specification.
@@ -621,7 +621,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-lg p-4">
                   <h3 className="text-emerald-400 font-semibold text-sm mb-2">Waste (7.5%)</h3>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     Covers construction waste management, Site Waste Management Plans (SWMPs),
                     recycled aggregates, designing for disassembly and adaptability, and operational
                     waste storage and recycling facilities.
@@ -631,7 +631,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                   <h3 className="text-emerald-400 font-semibold text-sm mb-2">
                     Land Use &amp; Ecology (10%)
                   </h3>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     Assesses site selection, ecological value of the site, protection of existing
                     ecological features during construction, enhancement of ecological value, and
                     long-term biodiversity management planning.
@@ -639,7 +639,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-lg p-4">
                   <h3 className="text-emerald-400 font-semibold text-sm mb-2">Pollution (10%)</h3>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     Covers refrigerant selection (GWP and ODP), NOx emissions from heating systems,
                     flood risk assessment, surface water run-off management (SuDS), light pollution,
                     and noise pollution.
@@ -647,7 +647,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-lg p-4">
                   <h3 className="text-emerald-400 font-semibold text-sm mb-2">Innovation (+10%)</h3>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     Bonus credits (up to 10% additional) awarded for exemplary performance that goes
                     significantly beyond the standard BREEAM criteria, or for innovative solutions
                     not covered by the standard assessment categories.
@@ -750,7 +750,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                     BREEAM Credits Can Be Lost on Site
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Poor site practices can{' '}
                   <strong className="text-white">directly cost the project BREEAM credits</strong>.
                   For example, failing to segregate waste, allowing pollution incidents, damaging
@@ -860,7 +860,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                       </span>
                     </li>
                   </ul>
-                  <p className="text-white/60 text-xs mt-3">
+                  <p className="text-white text-xs mt-3">
                     Now managed by BRE alongside BREEAM, using a similar credit-based scoring
                     methodology
                   </p>
@@ -922,7 +922,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                       <h3 className="text-emerald-400 font-semibold mb-1">
                         LEED (Leadership in Energy and Environmental Design)
                       </h3>
-                      <p className="text-white/80 text-sm">
+                      <p className="text-white text-sm">
                         Developed by the US Green Building Council, LEED is the most widely used
                         green building standard in North America. Rating levels are Certified,
                         Silver, Gold, and Platinum. While primarily used internationally, some UK
@@ -941,7 +941,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                       <h3 className="text-emerald-400 font-semibold mb-1">
                         Passivhaus (Passive House)
                       </h3>
-                      <p className="text-white/80 text-sm">
+                      <p className="text-white text-sm">
                         A rigorous energy efficiency standard originating from Germany. Unlike
                         BREEAM (which assesses broad sustainability), Passivhaus focuses
                         specifically on <strong>ultra-low energy performance</strong>. Buildings
@@ -962,7 +962,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                       <h3 className="text-emerald-400 font-semibold mb-1">
                         WELL Building Standard
                       </h3>
-                      <p className="text-white/80 text-sm">
+                      <p className="text-white text-sm">
                         Focuses specifically on <strong>occupant health and wellbeing</strong>{' '}
                         rather than broad environmental sustainability. Assesses air quality, water
                         quality, nourishment (food provision), light, fitness, comfort, and mental
@@ -979,7 +979,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                     <div className="w-2 h-2 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></div>
                     <div>
                       <h3 className="text-emerald-400 font-semibold mb-1">Ska Rating</h3>
-                      <p className="text-white/80 text-sm">
+                      <p className="text-white text-sm">
                         Developed by RICS (Royal Institution of Chartered Surveyors) specifically
                         for <strong>commercial fit-out projects</strong>. Particularly useful for
                         office refurbishments and tenant fit-outs where BREEAM may not be practical.
@@ -997,7 +997,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                       <h3 className="text-emerald-400 font-semibold mb-1">
                         Home Quality Mark (HQM)
                       </h3>
-                      <p className="text-white/80 text-sm">
+                      <p className="text-white text-sm">
                         Developed by BRE as a <strong>consumer-facing quality indicator</strong> for
                         new homes. Communicates the quality and sustainability of a home to buyers
                         in a clear, understandable way using a simple star rating (1 to 5 stars).
@@ -1036,11 +1036,11 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                   <h3 className="text-emerald-400 font-semibold text-sm mb-2">
                     Part L &mdash; Conservation of Fuel and Power
                   </h3>
-                  <p className="text-white/80 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     The most important Building Regulation for energy efficiency. Part L sets{' '}
                     <strong>minimum standards</strong> for:
                   </p>
-                  <ul className="text-white/80 text-sm space-y-1.5 ml-4">
+                  <ul className="text-white text-sm space-y-1.5 ml-4">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1070,7 +1070,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                   <h3 className="text-emerald-400 font-semibold text-sm mb-2">
                     Part O &mdash; Overheating
                   </h3>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     Introduced in 2022, Part O is the first Building Regulation to specifically
                     address <strong>overheating in new residential buildings</strong>. As buildings
                     become better insulated and more airtight, the risk of overheating increases,
@@ -1085,7 +1085,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                   <h3 className="text-emerald-400 font-semibold text-sm mb-2">
                     Future Homes Standard 2025
                   </h3>
-                  <p className="text-white/80 text-sm mb-3">
+                  <p className="text-white text-sm mb-3">
                     The{' '}
                     <strong>
                       biggest change to Building Regulations for residential construction in a
@@ -1095,7 +1095,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                     <strong className="text-white">75&ndash;80% less carbon emissions</strong>{' '}
                     compared to those built under the 2013 regulations. Key requirements include:
                   </p>
-                  <ul className="text-white/80 text-sm space-y-1.5 ml-4">
+                  <ul className="text-white text-sm space-y-1.5 ml-4">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-emerald-500 mt-0.5 flex-shrink-0" />
                       <span>
@@ -1129,7 +1129,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                   <h3 className="text-emerald-400 font-semibold text-sm mb-2">
                     SAP &amp; SBEM Calculations
                   </h3>
-                  <p className="text-white/80 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     To demonstrate compliance with Part L, buildings must undergo energy performance
                     calculations:
                   </p>
@@ -1138,8 +1138,8 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                       <p className="text-emerald-300 text-xs font-medium mb-1">
                         SAP (Standard Assessment Procedure)
                       </p>
-                      <p className="text-white/60 text-xs">
-                        Used for <strong className="text-white/80">dwellings</strong>. Calculates
+                      <p className="text-white text-xs">
+                        Used for <strong className="text-white">dwellings</strong>. Calculates
                         the energy performance of a home based on its fabric, heating system,
                         ventilation, and renewable energy. Produces the Energy Performance
                         Certificate (EPC) rating (A to G).
@@ -1149,8 +1149,8 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                       <p className="text-emerald-300 text-xs font-medium mb-1">
                         SBEM (Simplified Building Energy Model)
                       </p>
-                      <p className="text-white/60 text-xs">
-                        Used for <strong className="text-white/80">non-domestic buildings</strong>.
+                      <p className="text-white text-xs">
+                        Used for <strong className="text-white">non-domestic buildings</strong>.
                         Calculates the energy performance of commercial, industrial, and public
                         buildings. Covers heating, cooling, lighting, ventilation, and hot water
                         systems.
@@ -1182,9 +1182,9 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                   <h3 className="text-emerald-400 font-semibold text-sm mb-2">
                     Energy Cost Savings
                   </h3>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     Green-certified buildings typically achieve{' '}
-                    <strong className="text-white/90">20&ndash;30% lower energy bills</strong>{' '}
+                    <strong className="text-white">20&ndash;30% lower energy bills</strong>{' '}
                     compared to conventional buildings. High-performance buildings such as
                     Passivhaus can achieve up to 90% reductions in heating costs. With rising energy
                     prices, these savings are increasingly significant over a building&apos;s
@@ -1195,11 +1195,11 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                   <h3 className="text-emerald-400 font-semibold text-sm mb-2">
                     Improved Occupant Health
                   </h3>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     Better indoor air quality, increased natural daylight, improved thermal comfort,
                     and reduced noise exposure all contribute to healthier, more productive
                     occupants. Studies show{' '}
-                    <strong className="text-white/90">
+                    <strong className="text-white">
                       8&ndash;11% improvements in productivity
                     </strong>{' '}
                     in green-certified offices, along with reduced sickness absence rates.
@@ -1209,9 +1209,9 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                   <h3 className="text-emerald-400 font-semibold text-sm mb-2">
                     Higher Rental &amp; Sale Values
                   </h3>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     Research consistently shows a{' '}
-                    <strong className="text-white/90">6&ndash;20% rental premium</strong> for
+                    <strong className="text-white">6&ndash;20% rental premium</strong> for
                     green-certified commercial buildings and increased sale values for certified
                     homes. Tenants and buyers increasingly demand high sustainability performance,
                     particularly in the commercial sector where corporate ESG targets drive demand.
@@ -1221,9 +1221,9 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                   <h3 className="text-emerald-400 font-semibold text-sm mb-2">
                     Reduced Carbon Emissions
                   </h3>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     The built environment accounts for approximately{' '}
-                    <strong className="text-white/90">
+                    <strong className="text-white">
                       40% of the UK&apos;s total carbon emissions
                     </strong>
                     . Green building standards directly target these emissions through improved
@@ -1234,9 +1234,9 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-lg p-4">
                   <h3 className="text-emerald-400 font-semibold text-sm mb-2">Future-Proofing</h3>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     Buildings certified to high green standards are better positioned to meet{' '}
-                    <strong className="text-white/90">future regulatory requirements</strong> as
+                    <strong className="text-white">future regulatory requirements</strong> as
                     Building Regulations continue to tighten. This avoids costly retrofitting and
                     reduces the risk of buildings becoming obsolete or unmarketable. The Future
                     Homes Standard 2025 and net-zero targets make this increasingly important.
@@ -1246,10 +1246,10 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                   <h3 className="text-emerald-400 font-semibold text-sm mb-2">
                     Water Savings &amp; Resilience
                   </h3>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     Water-efficient fittings, rainwater harvesting, and greywater recycling systems
                     can reduce water consumption by{' '}
-                    <strong className="text-white/90">30&ndash;50%</strong>. Combined with
+                    <strong className="text-white">30&ndash;50%</strong>. Combined with
                     sustainable urban drainage systems (SuDS), green buildings also contribute to
                     flood risk management and climate resilience at a neighbourhood scale.
                   </p>
@@ -1258,10 +1258,10 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                   <h3 className="text-emerald-400 font-semibold text-sm mb-2">
                     Enhanced Reputation
                   </h3>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     For developers, contractors, and building owners, green certification
                     demonstrates a{' '}
-                    <strong className="text-white/90">commitment to sustainability</strong> that
+                    <strong className="text-white">commitment to sustainability</strong> that
                     enhances reputation with investors, tenants, planners, and the public.
                     Increasingly, planning authorities require BREEAM certification as a condition
                     of planning approval for major developments.
@@ -1271,9 +1271,9 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                   <h3 className="text-emerald-400 font-semibold text-sm mb-2">
                     Reduced Waste &amp; Materials Impact
                   </h3>
-                  <p className="text-white/80 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     Green building projects typically achieve{' '}
-                    <strong className="text-white/90">
+                    <strong className="text-white">
                       significantly higher waste diversion rates
                     </strong>{' '}
                     (80%+ diverted from landfill) through Site Waste Management Plans, waste
@@ -1290,7 +1290,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
                     The Business Case for Green Building
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The evidence is clear: green building certification is not just an environmental
                   gesture &mdash; it delivers{' '}
                   <strong className="text-white">measurable financial returns</strong> through lower
@@ -1314,7 +1314,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1330,7 +1330,7 @@ const EnvironmentalSustainabilityModule5Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-5-section-2">

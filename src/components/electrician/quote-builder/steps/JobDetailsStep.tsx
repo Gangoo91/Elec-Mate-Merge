@@ -48,9 +48,9 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
 
   // Clean input styles
   const inputClassName =
-    'w-full h-8 bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white/50 caret-elec-yellow';
+    'w-full h-8 bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white caret-elec-yellow';
   const textareaClassName =
-    'w-full bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white/50 caret-elec-yellow resize-none';
+    'w-full bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white caret-elec-yellow resize-none';
   const darkStyle: React.CSSProperties = {
     colorScheme: 'dark',
   };
@@ -59,7 +59,7 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
     <div className="space-y-4 text-left">
       {/* Job Information Section */}
       <div>
-        <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider mb-3 flex items-center gap-2">
+        <p className="text-[13px] font-medium text-white uppercase tracking-wider mb-3 flex items-center gap-2">
           <Briefcase className="h-3.5 w-3.5" />
           Job Information
         </p>
@@ -70,7 +70,7 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
               <FileText className="h-5 w-5 text-black" />
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <label className="text-[12px] text-white/70 block mb-0.5">Job Title *</label>
+              <label className="text-[12px] text-white block mb-0.5">Job Title *</label>
               <input
                 style={darkStyle}
                 value={jobDetails?.title || ''}
@@ -88,7 +88,7 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
                 <Briefcase className="h-5 w-5 text-black" />
               </div>
               <div className="flex-1 min-w-0 text-left">
-                <label className="text-[12px] text-white/70 block mb-1">Job Description *</label>
+                <label className="text-[12px] text-white block mb-1">Job Description *</label>
                 <textarea
                   style={darkStyle}
                   value={jobDetails?.description || ''}
@@ -105,7 +105,7 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
 
       {/* Schedule Section */}
       <div>
-        <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider mb-3 flex items-center gap-2">
+        <p className="text-[13px] font-medium text-white uppercase tracking-wider mb-3 flex items-center gap-2">
           <Clock className="h-3.5 w-3.5" />
           Schedule
         </p>
@@ -117,7 +117,7 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
                 <Clock className="h-5 w-5 text-black" />
               </div>
               <div className="flex-1 min-w-0 text-left">
-                <label className="text-[12px] text-white/70 block mb-0.5">Custom Duration</label>
+                <label className="text-[12px] text-white block mb-0.5">Custom Duration</label>
                 <div className="flex items-center gap-2">
                   <input
                     style={darkStyle}
@@ -142,12 +142,12 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
                 <Clock className="h-5 w-5 text-black" />
               </div>
               <div className="flex-1 min-w-0 text-left">
-                <label className="text-[12px] text-white/70 block mb-0.5">Estimated Duration</label>
+                <label className="text-[12px] text-white block mb-0.5">Estimated Duration</label>
                 <Select
                   value={jobDetails?.estimatedDuration || ''}
                   onValueChange={(value) => handleChange('estimatedDuration', value)}
                 >
-                  <SelectTrigger className="w-full h-8 bg-transparent border-0 text-[16px] font-medium text-white focus:ring-0 focus:ring-offset-0 px-0 touch-manipulation [&>svg]:text-white/30">
+                  <SelectTrigger className="w-full h-8 bg-transparent border-0 text-[16px] font-medium text-white focus:ring-0 focus:ring-offset-0 px-0 touch-manipulation [&>svg]:text-white">
                     <SelectValue placeholder="Select duration" />
                   </SelectTrigger>
                   <SelectContent className="z-[100] bg-zinc-900 border-zinc-700 text-white">
@@ -172,7 +172,7 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
               <Calendar className="h-5 w-5 text-black" />
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <label className="text-[12px] text-white/70 block mb-0.5">Proposed Start Date</label>
+              <label className="text-[12px] text-white block mb-0.5">Proposed Start Date</label>
               <input
                 type="date"
                 style={darkStyle}
@@ -195,9 +195,9 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
           showOptional && 'bg-white/[0.05] border-white/[0.1]'
         )}
       >
-        <span className="text-[14px] font-medium text-white/60">Additional Details (optional)</span>
+        <span className="text-[14px] font-medium text-white">Additional Details (optional)</span>
         <ChevronDown
-          className={cn('h-4 w-4 text-white/30 transition-transform', showOptional && 'rotate-180')}
+          className={cn('h-4 w-4 text-white transition-transform', showOptional && 'rotate-180')}
         />
       </button>
 
@@ -210,7 +210,7 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
               <MapPin className="h-5 w-5 text-black" />
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <label className="text-[12px] text-white/70 block mb-0.5">Work Location</label>
+              <label className="text-[12px] text-white block mb-0.5">Work Location</label>
               <input
                 style={darkStyle}
                 value={jobDetails?.location || ''}
@@ -228,7 +228,7 @@ export const JobDetailsStep = ({ jobDetails, onUpdate }: JobDetailsStepProps) =>
                 <AlertTriangle className="h-5 w-5 text-black" />
               </div>
               <div className="flex-1 min-w-0 text-left">
-                <label className="text-[12px] text-white/70 block mb-1">Special Requirements</label>
+                <label className="text-[12px] text-white block mb-1">Special Requirements</label>
                 <textarea
                   style={darkStyle}
                   value={jobDetails?.specialRequirements || ''}

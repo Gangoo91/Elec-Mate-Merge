@@ -65,12 +65,12 @@ const InputField = ({
   readOnly = false,
 }: InputFieldProps) => (
   <div className="space-y-2">
-    <label className="block text-[13px] font-medium text-white/70 ml-1">{label}</label>
+    <label className="block text-[13px] font-medium text-white ml-1">{label}</label>
     <div className="relative">
       <div
         className={cn(
           'absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200',
-          focusedField === field ? 'text-yellow-400' : 'text-white/40'
+          focusedField === field ? 'text-yellow-400' : 'text-white'
         )}
       >
         <Icon className="h-5 w-5" />
@@ -87,7 +87,7 @@ const InputField = ({
         autoComplete={type === 'email' ? 'email' : type === 'password' ? 'new-password' : 'off'}
         className={cn(
           'w-full h-14 pl-14 pr-12 rounded-2xl',
-          'bg-white/[0.06] border-2 text-white placeholder:text-white/30',
+          'bg-white/[0.06] border-2 text-white placeholder:text-white',
           'text-[16px] outline-none transition-all duration-200',
           type === 'password' && !isVisible && 'pw-masked',
           disabled || readOnly
@@ -101,7 +101,7 @@ const InputField = ({
         <button
           type="button"
           onClick={onToggle}
-          className="absolute right-2 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 active:text-white transition-colors h-11 w-11 flex items-center justify-center touch-manipulation rounded-xl"
+          className="absolute right-2 top-1/2 -translate-y-1/2 text-white hover:text-white active:text-white transition-colors h-11 w-11 flex items-center justify-center touch-manipulation rounded-xl"
         >
           {isVisible ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
         </button>
@@ -368,7 +368,7 @@ export default function FounderSignup() {
         <div className="flex items-center justify-between max-w-md mx-auto">
           <Link
             to="/"
-            className="flex items-center gap-1 text-white/70 hover:text-white transition-colors p-2 -ml-2 rounded-xl"
+            className="flex items-center gap-1 text-white hover:text-white transition-colors p-2 -ml-2 rounded-xl"
           >
             <ChevronLeft className="h-5 w-5" />
             <span className="text-[15px] font-medium">Back</span>
@@ -412,7 +412,7 @@ export default function FounderSignup() {
             <motion.h1 className="text-[28px] font-bold text-white tracking-tight mb-2">
               Join as Founder
             </motion.h1>
-            <p className="text-[15px] text-white/50">Create your account and subscribe</p>
+            <p className="text-[15px] text-white">Create your account and subscribe</p>
           </div>
 
           {/* Price Card */}
@@ -480,18 +480,18 @@ export default function FounderSignup() {
             <div className="space-y-6">
               {/* Email - Read Only */}
               <div className="space-y-2">
-                <label className="block text-[13px] font-medium text-white/70 ml-1">
+                <label className="block text-[13px] font-medium text-white ml-1">
                   Email address
                 </label>
                 <div className="relative">
-                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
+                  <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white">
                     <CheckCircle2 className="h-5 w-5 text-green-400" />
                   </div>
                   <input
                     type="email"
                     value={email}
                     readOnly
-                    className="w-full h-14 pl-14 pr-4 rounded-2xl bg-white/[0.03] border-2 border-green-500/30 text-white/70 text-[16px] outline-none cursor-not-allowed"
+                    className="w-full h-14 pl-14 pr-4 rounded-2xl bg-white/[0.03] border-2 border-green-500/30 text-white text-[16px] outline-none cursor-not-allowed"
                   />
                 </div>
                 <p className="text-[11px] text-green-400 ml-1">
@@ -511,7 +511,7 @@ export default function FounderSignup() {
                     <p className="text-[14px] text-blue-400 font-medium">
                       You already have an account!
                     </p>
-                    <p className="text-[13px] text-white/50 mt-1">
+                    <p className="text-[13px] text-white mt-1">
                       Click below to proceed directly to checkout and activate your founder pricing.
                     </p>
                   </div>
@@ -560,18 +560,18 @@ export default function FounderSignup() {
               <form onSubmit={handleSubmit} className="space-y-4">
                 {/* Email - Read Only */}
                 <div className="space-y-2">
-                  <label className="block text-[13px] font-medium text-white/70 ml-1">
+                  <label className="block text-[13px] font-medium text-white ml-1">
                     Email address
                   </label>
                   <div className="relative">
-                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white/40">
+                    <div className="absolute left-4 top-1/2 -translate-y-1/2 text-white">
                       <CheckCircle2 className="h-5 w-5 text-green-400" />
                     </div>
                     <input
                       type="email"
                       value={email}
                       readOnly
-                      className="w-full h-14 pl-14 pr-4 rounded-2xl bg-white/[0.03] border-2 border-green-500/30 text-white/70 text-[16px] outline-none cursor-not-allowed"
+                      className="w-full h-14 pl-14 pr-4 rounded-2xl bg-white/[0.03] border-2 border-green-500/30 text-white text-[16px] outline-none cursor-not-allowed"
                     />
                   </div>
                   <p className="text-[11px] text-green-400 ml-1">Email verified from your invite</p>
@@ -614,7 +614,7 @@ export default function FounderSignup() {
                             'flex-1 py-1.5 rounded-lg text-center text-[11px] font-medium transition-all',
                             req.test(password)
                               ? 'bg-green-500/20 text-green-400'
-                              : 'bg-white/5 text-white/40'
+                              : 'bg-white/5 text-white'
                           )}
                         >
                           {req.label}
@@ -682,13 +682,13 @@ export default function FounderSignup() {
               {/* Divider */}
               <div className="flex items-center gap-4 my-6">
                 <div className="flex-1 h-px bg-white/10" />
-                <span className="text-[12px] text-white/30 uppercase tracking-wider">or</span>
+                <span className="text-[12px] text-white uppercase tracking-wider">or</span>
                 <div className="flex-1 h-px bg-white/10" />
               </div>
 
               {/* Sign in link */}
               <div className="text-center pb-8">
-                <p className="text-[14px] text-white/40 mb-3">Already have an account?</p>
+                <p className="text-[14px] text-white mb-3">Already have an account?</p>
                 <Link to="/auth/signin">
                   <Button
                     variant="outline"
@@ -711,7 +711,7 @@ export default function FounderSignup() {
         className="relative px-6 pb-6 z-10"
       >
         <div className="max-w-md mx-auto">
-          <div className="flex items-center justify-center gap-4 text-[11px] text-white/30">
+          <div className="flex items-center justify-center gap-4 text-[11px] text-white">
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="h-3.5 w-3.5 text-green-500/70" />
               Secure

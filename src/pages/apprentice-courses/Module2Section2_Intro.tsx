@@ -33,7 +33,7 @@ const Module2Section2_Intro: React.FC = () => {
             Section 2
           </span>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">Calculations Overview</h1>
-          <p className="text-white/80 max-w-2xl mx-auto">
+          <p className="text-white max-w-2xl mx-auto">
             Use the links above to access each subsection. We've added comprehensive Level 2
             content, InlineChecks and quizzes.
           </p>

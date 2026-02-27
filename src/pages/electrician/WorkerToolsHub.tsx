@@ -100,7 +100,7 @@ const getStatusColour = (status?: string): string => {
     case 'Off Duty':
       return 'text-gray-400';
     default:
-      return 'text-white/60';
+      return 'text-white';
   }
 };
 
@@ -118,7 +118,7 @@ function WorkerToolCard({
   icon: Icon,
   title,
   subtitle,
-  subtitleColour = 'text-white/60',
+  subtitleColour = 'text-white',
   badge,
   onClick,
 }: WorkerToolCardProps) {
@@ -146,7 +146,7 @@ function WorkerToolCard({
             </p>
             <p className={cn('text-xs', subtitleColour)}>{subtitle}</p>
           </div>
-          <ChevronRight className="absolute top-4 right-3 h-4 w-4 text-white/30" />
+          <ChevronRight className="absolute top-4 right-3 h-4 w-4 text-white" />
         </div>
       </motion.div>
     </button>
@@ -208,7 +208,7 @@ export default function WorkerToolsHub() {
           <Link to="/electrician">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/[0.05] -ml-2 h-11 touch-manipulation mb-6"
+              className="text-white hover:text-white hover:bg-white/[0.05] -ml-2 h-11 touch-manipulation mb-6"
             >
               <ArrowLeft className="mr-2 h-5 w-5" />
               Back
@@ -220,7 +220,7 @@ export default function WorkerToolsHub() {
               <Briefcase className="h-10 w-10 text-elec-yellow" />
             </div>
             <h1 className="text-2xl font-bold text-white mb-3">Worker Tools</h1>
-            <p className="text-white/60 max-w-sm mx-auto">
+            <p className="text-white max-w-sm mx-auto">
               You don't have an employee profile linked to your account. Contact your employer to
               get access to Worker Tools.
             </p>
@@ -258,7 +258,7 @@ export default function WorkerToolsHub() {
             <Link to="/electrician">
               <Button
                 variant="ghost"
-                className="text-white/70 hover:text-white hover:bg-white/[0.05] -ml-2 h-11 touch-manipulation"
+                className="text-white hover:text-white hover:bg-white/[0.05] -ml-2 h-11 touch-manipulation"
               >
                 <ArrowLeft className="mr-2 h-5 w-5" />
                 Worker Tools
@@ -294,7 +294,7 @@ export default function WorkerToolsHub() {
                     <h1 className="text-xl md:text-2xl font-bold text-white truncate">
                       {employee?.name || 'Worker'}
                     </h1>
-                    <p className="text-sm md:text-base text-white/60">
+                    <p className="text-sm md:text-base text-white">
                       {employee?.role || 'Electrician'}
                     </p>
                   </div>
@@ -324,7 +324,7 @@ export default function WorkerToolsHub() {
                       ? `${todaysHours.toFixed(1)}h today`
                       : 'Not clocked in'
                 }
-                subtitleColour={isClockedIn ? 'text-green-400' : 'text-white/60'}
+                subtitleColour={isClockedIn ? 'text-green-400' : 'text-white'}
                 onClick={() => setTimesheetSheetOpen(true)}
               />
 
@@ -370,7 +370,7 @@ export default function WorkerToolsHub() {
                 subtitle={
                   pendingSafetyDocs > 0 ? `${pendingSafetyDocs} pending` : 'All acknowledged'
                 }
-                subtitleColour={pendingSafetyDocs > 0 ? 'text-amber-400' : 'text-white/60'}
+                subtitleColour={pendingSafetyDocs > 0 ? 'text-amber-400' : 'text-white'}
                 badge={pendingSafetyDocs}
                 onClick={() => setSafetyDocsSheetOpen(true)}
               />

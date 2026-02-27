@@ -225,7 +225,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-1">
@@ -250,7 +250,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Key Environmental Legislation
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding the principal UK statutes and regulations that govern environmental
             protection, pollution control, waste management, water quality, wildlife protection, and
             how they apply to the construction and electrical industries
@@ -347,7 +347,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Part I — Integrated Pollution Control (IPC)
                 </p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Part I introduced a system of integrated pollution control for the most
                     polluting industrial processes. Under IPC, operators of &ldquo;prescribed
@@ -372,7 +372,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Part II — Waste on Land</p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Part II is the cornerstone of waste management law in England and Wales. It
                     establishes the licensing system for waste management activities and creates key
@@ -425,7 +425,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Part III — Statutory Nuisances
                 </p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Part III gives local authorities the power to deal with statutory nuisances. A
                     statutory nuisance is defined as a matter that is either{' '}
@@ -526,7 +526,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Office for Environmental Protection (OEP)
                 </p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Part 1 of the Act establishes the{' '}
                     <strong className="text-white">
@@ -582,7 +582,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Legally Binding Environmental Targets
                 </p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Part 1 also requires the Secretary of State to set legally binding long-term
                     environmental targets in at least four priority areas:
@@ -629,7 +629,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Biodiversity Net Gain (BNG)</p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Schedule 7A of the Town and Country Planning Act 1990 (inserted by the
                     Environment Act 2021) introduces a mandatory requirement for{' '}
@@ -655,7 +655,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Extended Producer Responsibility &amp; Deposit Return Schemes
                 </p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     The Act gives the government powers to introduce{' '}
                     <strong className="text-white">extended producer responsibility (EPR)</strong>{' '}
@@ -714,7 +714,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key Provisions</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -771,7 +771,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Industrial Emissions &amp; Construction Relevance
                 </p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     While the Clean Air Act 1993 may seem primarily relevant to industrial processes
                     and domestic heating, it has direct implications for construction activities.
@@ -816,7 +816,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Water Resources Act 1991 — Key Provisions
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -867,7 +867,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
                     Common Construction Site Water Pollution Risks
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                     <span>
@@ -907,7 +907,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Water Industry Act 1991 — Trade Effluent
                 </p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     The Water Industry Act 1991 regulates the discharge of trade effluent into the
                     public sewer. <strong className="text-white">Trade effluent</strong> is defined
@@ -955,7 +955,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Protected Species</p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Part I of the Act protects wild birds, wild animals, and wild plants. The key
                     protections include:
@@ -1004,7 +1004,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Sites of Special Scientific Interest (SSSIs)
                 </p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Part II of the Act (as significantly strengthened by the Countryside and Rights
                     of Way Act 2000) establishes the framework for the designation and protection of{' '}
@@ -1037,7 +1037,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
                   <Bug className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Construction Implications</p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     The wildlife protections under the WCA 1981 have significant implications for
                     construction projects:
@@ -1110,7 +1110,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Classification of Hazardous Waste
                 </p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Waste is classified as hazardous if it displays one or more of the{' '}
                     <strong className="text-white">15 hazardous properties (HP1 to HP15)</strong>{' '}
@@ -1176,7 +1176,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Consignment Notes</p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Every movement of hazardous waste from a premises must be accompanied by a{' '}
                     <strong className="text-white">consignment note</strong>. The consignment note
@@ -1228,7 +1228,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Mixing Prohibition &amp; Registration
                 </p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     <strong className="text-white">Regulation 19 — Mixing prohibition:</strong> It
                     is prohibited to mix hazardous waste with non-hazardous waste, or to mix
@@ -1347,7 +1347,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
                     <div>
                       <span className="text-emerald-400 text-xs font-bold">{item.year}</span>
                       <p className="text-sm font-semibold text-white">{item.title}</p>
-                      <p className="text-xs text-white/60 mt-0.5">{item.desc}</p>
+                      <p className="text-xs text-white mt-0.5">{item.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -1381,7 +1381,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Activities Requiring Environmental Permits
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -1431,14 +1431,14 @@ export default function EnvironmentalSustainabilityModule1Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Standard Rules Permits vs Bespoke Permits
                 </p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>The EPR 2016 provides two main routes to obtaining an environmental permit:</p>
                   <div className="grid sm:grid-cols-2 gap-4 mt-3">
                     <div className="bg-emerald-500/5 border border-emerald-500/20 p-3 rounded-lg">
                       <p className="text-xs font-semibold text-emerald-400 mb-2">
                         Standard Rules Permit
                       </p>
-                      <ul className="text-xs text-white/80 space-y-1.5">
+                      <ul className="text-xs text-white space-y-1.5">
                         <li className="flex items-start gap-2">
                           <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                           <span>
@@ -1469,7 +1469,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
                     </div>
                     <div className="bg-emerald-500/5 border border-emerald-500/20 p-3 rounded-lg">
                       <p className="text-xs font-semibold text-emerald-400 mb-2">Bespoke Permit</p>
-                      <ul className="text-xs text-white/80 space-y-1.5">
+                      <ul className="text-xs text-white space-y-1.5">
                         <li className="flex items-start gap-2">
                           <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                           <span>Individually tailored to the specific site and operation</span>
@@ -1502,7 +1502,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Waste Exemptions</p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Certain low-risk waste operations are exempt from the requirement to hold an
                     environmental permit, but must be{' '}
@@ -1571,7 +1571,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
                 {/* Level 1 — Acts of Parliament */}
                 <div className="w-[50%] sm:w-[40%] bg-emerald-500/20 border border-emerald-500/40 rounded-lg p-3 text-center">
                   <p className="text-xs font-bold text-emerald-400">ACTS OF PARLIAMENT</p>
-                  <p className="text-[10px] text-white/60 mt-1">
+                  <p className="text-[10px] text-white mt-1">
                     Primary legislation passed by Parliament (e.g. EPA 1990, Environment Act 2021,
                     WCA 1981)
                   </p>
@@ -1583,7 +1583,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
                   <p className="text-xs font-bold text-emerald-400/90">
                     STATUTORY INSTRUMENTS (REGULATIONS)
                   </p>
-                  <p className="text-[10px] text-white/60 mt-1">
+                  <p className="text-[10px] text-white mt-1">
                     Secondary legislation made under powers in Acts (e.g. EPR 2016, Hazardous Waste
                     Regulations 2005)
                   </p>
@@ -1595,7 +1595,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
                   <p className="text-xs font-bold text-emerald-400/80">
                     APPROVED CODES OF PRACTICE &amp; GUIDANCE
                   </p>
-                  <p className="text-[10px] text-white/60 mt-1">
+                  <p className="text-[10px] text-white mt-1">
                     Statutory guidance from regulators (e.g. EA guidance notes, Defra guidance,
                     Natural England standing advice)
                   </p>
@@ -1607,14 +1607,14 @@ export default function EnvironmentalSustainabilityModule1Section2() {
                   <p className="text-xs font-bold text-emerald-400/70">
                     INDUSTRY STANDARDS &amp; BEST PRACTICE
                   </p>
-                  <p className="text-[10px] text-white/60 mt-1">
+                  <p className="text-[10px] text-white mt-1">
                     Industry codes, British Standards, CIRIA guidance (e.g. C753 SuDS Manual, C741
                     Environmental Good Practice on Site)
                   </p>
                 </div>
               </div>
 
-              <p className="text-xs text-white/40 text-center mt-4">
+              <p className="text-xs text-white text-center mt-4">
                 Higher levels take legal precedence. Breach of an Act or Regulation is a criminal
                 offence. Guidance and standards are not legally binding but may be used as evidence
                 of good or poor practice.
@@ -1646,7 +1646,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Pre-Construction Information (Regulation 12)
                 </p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     The principal designer must prepare pre-construction information that includes
                     all information relevant to the health and safety of the construction work. This
@@ -1718,7 +1718,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Design Considerations (Regulation 9)
                 </p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Regulation 9 requires designers (including the principal designer) to eliminate,
                     so far as is reasonably practicable, foreseeable risks to the health and safety
@@ -1770,7 +1770,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Construction Phase Plan &amp; Environmental Management
                 </p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     The construction phase plan required under CDM 2015 (Regulation 12(2)) should
                     integrate environmental management measures alongside health and safety
@@ -1850,7 +1850,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1864,7 +1864,7 @@ export default function EnvironmentalSustainabilityModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-1-section-1">

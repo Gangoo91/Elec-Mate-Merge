@@ -315,7 +315,7 @@ export default function CoshhAwarenessModule2Section1() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             The COSHH Regulations 2002
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             The complete legal framework for controlling exposure to substances hazardous to health
             in the workplace &mdash; duties, structure, enforcement, and practical application for
             electricians
@@ -497,7 +497,7 @@ export default function CoshhAwarenessModule2Section1() {
                       </div>
                       <div className="flex-1">
                         <p className="font-semibold text-sm text-white">{item.title}</p>
-                        <p className="text-white/70 text-sm leading-relaxed">{item.description}</p>
+                        <p className="text-white text-sm leading-relaxed">{item.description}</p>
                       </div>
                     </div>
                   ))}
@@ -664,7 +664,7 @@ export default function CoshhAwarenessModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-violet-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-violet-300">The Chain of Compliance</h3>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   The employer duties under COSHH form a logical chain. You must{' '}
                   <strong className="text-white">assess</strong> before you can{' '}
                   <strong className="text-white">control</strong>,{' '}
@@ -793,7 +793,7 @@ export default function CoshhAwarenessModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-violet-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-violet-300">HASAWA Reinforcement</h3>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Employee duties under COSHH are reinforced by{' '}
                   <strong className="text-white">Section 7 of HASAWA 1974</strong>, which requires
                   every employee to take reasonable care of their own health and safety and that of
@@ -882,9 +882,9 @@ export default function CoshhAwarenessModule2Section1() {
                     >
                       <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 mb-1">
                         <span className="font-bold text-violet-400 text-sm">{item.name}</span>
-                        <span className="text-white/40 text-xs">{item.sections}</span>
+                        <span className="text-white text-xs">{item.sections}</span>
                       </div>
-                      <p className="text-white/70 text-sm leading-relaxed">{item.relationship}</p>
+                      <p className="text-white text-sm leading-relaxed">{item.relationship}</p>
                     </div>
                   ))}
                 </div>
@@ -955,7 +955,7 @@ export default function CoshhAwarenessModule2Section1() {
                     <Gavel className="h-5 w-5 text-amber-400 flex-shrink-0" />
                     <h3 className="text-amber-400 font-semibold">Improvement Notice</h3>
                   </div>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     An HSE inspector can serve an improvement notice where they believe a provision
                     of health and safety law is being contravened, or has been contravened in
                     circumstances that make it likely to be repeated. The notice{' '}
@@ -973,7 +973,7 @@ export default function CoshhAwarenessModule2Section1() {
                     <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0" />
                     <h3 className="text-red-400 font-semibold">Prohibition Notice</h3>
                   </div>
-                  <p className="text-white/80 text-sm leading-relaxed">
+                  <p className="text-white text-sm leading-relaxed">
                     A prohibition notice{' '}
                     <strong className="text-white">stops work immediately</strong> where the
                     inspector believes there is, or is likely to be, a risk of serious personal
@@ -987,7 +987,7 @@ export default function CoshhAwarenessModule2Section1() {
 
                 <div className="bg-red-500/15 border border-red-500/40 p-4 rounded-lg">
                   <h3 className="text-red-300 font-semibold mb-2">Prosecution &amp; Penalties</h3>
-                  <p className="text-white/80 text-sm leading-relaxed mb-3">
+                  <p className="text-white text-sm leading-relaxed mb-3">
                     For serious breaches of the COSHH Regulations (or HASAWA 1974), the HSE can
                     prosecute in the criminal courts. The penalties are substantial:
                   </p>
@@ -1258,7 +1258,7 @@ export default function CoshhAwarenessModule2Section1() {
                     Schedule 1: Carcinogens &amp; Mutagens
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed mb-3">
+                <p className="text-white text-sm leading-relaxed mb-3">
                   Schedule 1 imposes <strong className="text-white">additional requirements</strong>{' '}
                   where work involves carcinogens or mutagens. For electricians, the most relevant
                   examples include:
@@ -1299,7 +1299,7 @@ export default function CoshhAwarenessModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-violet-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-violet-300">Real-World Scenario</h3>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   You are chasing a cable route into a concrete wall using an SDS drill and chisel.
                   This generates respirable crystalline silica dust &mdash; a COSHH substance and a
                   Schedule 1 carcinogen. Your employer&rsquo;s COSHH assessment should specify: use
@@ -1406,7 +1406,7 @@ export default function CoshhAwarenessModule2Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1422,7 +1422,7 @@ export default function CoshhAwarenessModule2Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-2">

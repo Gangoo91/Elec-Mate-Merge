@@ -242,7 +242,7 @@ const Level3Module6Section1_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section1">
@@ -461,7 +461,7 @@ const Level3Module6Section1_1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> Before designing a kitchen extension circuit, you must
               obtain supply details from the existing installation or DNO. A 100A TN-C-S supply with
               Ze of 0.20 ohms requires different design decisions than a TT supply with Ze of 20
@@ -488,19 +488,19 @@ const Level3Module6Section1_1 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Spare Capacity</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Leave spare ways in consumer units, capacity in cables
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Accessible Routes</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Cable routes that allow additional cables later
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Technology Ready</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Consider EV charging, solar PV, smart systems
                 </p>
               </div>
@@ -589,7 +589,7 @@ const Level3Module6Section1_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -631,7 +631,7 @@ const Level3Module6Section1_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section1">

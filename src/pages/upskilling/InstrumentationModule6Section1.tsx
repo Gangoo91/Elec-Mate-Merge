@@ -48,7 +48,7 @@ const InstrumentationModule6Section1 = () => {
             <Zap className="h-4 w-4 text-elec-yellow" />
             Quick Summary
           </h2>
-          <p className="text-white/80 text-sm">
+          <p className="text-white text-sm">
             Calibration is the backbone of accurate instrumentation. It establishes the relationship
             between instrument readings and actual values, ensuring measurement accuracy, safety,
             and regulatory compliance across all industrial applications.
@@ -69,7 +69,7 @@ const InstrumentationModule6Section1 = () => {
               <Scale className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-medium text-white mb-2">Formal Definition</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Calibration is the comparison of measurement values delivered by a device under
                   test (DUT) with those of a calibration standard of known accuracy under specified
                   conditions. It establishes the relationship between the instrument indication and
@@ -80,7 +80,7 @@ const InstrumentationModule6Section1 = () => {
 
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-medium text-white mb-3">Key Components of Calibration</h4>
-              <ul className="space-y-2 text-white/80 text-sm">
+              <ul className="space-y-2 text-white text-sm">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
@@ -119,14 +119,14 @@ const InstrumentationModule6Section1 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-white font-medium text-sm mb-2">Calibration:</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Determining the relationship between measured and actual values. Documents what
                     the instrument reads versus the true value.
                   </p>
                 </div>
                 <div>
                   <p className="text-white font-medium text-sm mb-2">Adjustment:</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Bringing the instrument's response within acceptable limits. Physically
                     modifying the instrument to improve accuracy.
                   </p>
@@ -160,7 +160,7 @@ const InstrumentationModule6Section1 = () => {
               <Target className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-medium text-white mb-2">Why Calibration Matters</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Without proper calibration, even sophisticated instruments can provide misleading
                   data, leading to costly errors, safety risks, and regulatory non-compliance.
                 </p>
@@ -170,7 +170,7 @@ const InstrumentationModule6Section1 = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-4">
                 <h4 className="font-medium text-green-300 mb-2">Accuracy and Precision</h4>
-                <ul className="space-y-1 text-white/70 text-xs">
+                <ul className="space-y-1 text-white text-xs">
                   <li>Ensures measurement accuracy</li>
                   <li>Maintains instrument precision</li>
                   <li>Reduces measurement uncertainty</li>
@@ -180,7 +180,7 @@ const InstrumentationModule6Section1 = () => {
               </div>
               <div className="bg-blue-500/10 border border-blue-500/20 rounded-lg p-4">
                 <h4 className="font-medium text-blue-300 mb-2">Safety and Reliability</h4>
-                <ul className="space-y-1 text-white/70 text-xs">
+                <ul className="space-y-1 text-white text-xs">
                   <li>Prevents safety incidents</li>
                   <li>Protects personnel and equipment</li>
                   <li>Ensures process stability</li>
@@ -190,7 +190,7 @@ const InstrumentationModule6Section1 = () => {
               </div>
               <div className="bg-purple-500/10 border border-purple-500/20 rounded-lg p-4">
                 <h4 className="font-medium text-purple-300 mb-2">Compliance and Quality</h4>
-                <ul className="space-y-1 text-white/70 text-xs">
+                <ul className="space-y-1 text-white text-xs">
                   <li>Meets regulatory requirements</li>
                   <li>Supports quality assurance</li>
                   <li>Enables certification</li>
@@ -225,7 +225,7 @@ const InstrumentationModule6Section1 = () => {
               <AlertTriangle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-medium text-white mb-2">What Can Go Wrong</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Inadequate calibration practices lead to measurement drift, undetected errors, and
                   potentially catastrophic failures in safety-critical systems.
                 </p>
@@ -235,7 +235,7 @@ const InstrumentationModule6Section1 = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-4">
                 <h4 className="font-medium text-red-300 mb-2">Safety Risks</h4>
-                <ul className="space-y-1 text-white/70 text-xs">
+                <ul className="space-y-1 text-white text-xs">
                   <li>Incorrect pressure readings causing equipment failure</li>
                   <li>Temperature sensors causing overheating or underheating</li>
                   <li>Flow measurement errors affecting safety systems</li>
@@ -245,7 +245,7 @@ const InstrumentationModule6Section1 = () => {
               </div>
               <div className="bg-orange-500/10 border border-orange-500/20 rounded-lg p-4">
                 <h4 className="font-medium text-orange-300 mb-2">Financial Impact</h4>
-                <ul className="space-y-1 text-white/70 text-xs">
+                <ul className="space-y-1 text-white text-xs">
                   <li>Product quality issues and waste</li>
                   <li>Regulatory fines and penalties</li>
                   <li>Insurance claim rejections</li>
@@ -255,7 +255,7 @@ const InstrumentationModule6Section1 = () => {
               </div>
               <div className="bg-yellow-500/10 border border-yellow-500/20 rounded-lg p-4">
                 <h4 className="font-medium text-yellow-300 mb-2">Regulatory Consequences</h4>
-                <ul className="space-y-1 text-white/70 text-xs">
+                <ul className="space-y-1 text-white text-xs">
                   <li>Failed regulatory audits</li>
                   <li>Loss of certifications</li>
                   <li>Legal liability issues</li>
@@ -264,8 +264,8 @@ const InstrumentationModule6Section1 = () => {
                 </ul>
               </div>
               <div className="bg-white/5 border border-white/10 rounded-lg p-4">
-                <h4 className="font-medium text-white/80 mb-2">Operational Issues</h4>
-                <ul className="space-y-1 text-white/70 text-xs">
+                <h4 className="font-medium text-white mb-2">Operational Issues</h4>
+                <ul className="space-y-1 text-white text-xs">
                   <li>Inconsistent product quality</li>
                   <li>Process optimisation difficulties</li>
                   <li>Maintenance scheduling problems</li>
@@ -293,7 +293,7 @@ const InstrumentationModule6Section1 = () => {
               <Shield className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-medium text-white mb-2">Sector-Specific Requirements</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Different industries have varying calibration requirements based on safety
                   criticality, regulatory frameworks, and quality standards.
                 </p>
@@ -303,7 +303,7 @@ const InstrumentationModule6Section1 = () => {
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               <div className="bg-white/5 rounded-lg p-3">
                 <p className="text-white font-medium text-sm mb-1">Manufacturing</p>
-                <ul className="text-white/70 text-xs space-y-0.5">
+                <ul className="text-white text-xs space-y-0.5">
                   <li>Automotive production</li>
                   <li>Electronics manufacturing</li>
                   <li>Precision machining</li>
@@ -311,7 +311,7 @@ const InstrumentationModule6Section1 = () => {
               </div>
               <div className="bg-white/5 rounded-lg p-3">
                 <p className="text-white font-medium text-sm mb-1">Healthcare</p>
-                <ul className="text-white/70 text-xs space-y-0.5">
+                <ul className="text-white text-xs space-y-0.5">
                   <li>Medical devices</li>
                   <li>Laboratory equipment</li>
                   <li>Patient monitoring</li>
@@ -319,7 +319,7 @@ const InstrumentationModule6Section1 = () => {
               </div>
               <div className="bg-white/5 rounded-lg p-3">
                 <p className="text-white font-medium text-sm mb-1">Energy and Utilities</p>
-                <ul className="text-white/70 text-xs space-y-0.5">
+                <ul className="text-white text-xs space-y-0.5">
                   <li>Power generation</li>
                   <li>Gas distribution</li>
                   <li>Nuclear facilities</li>
@@ -327,7 +327,7 @@ const InstrumentationModule6Section1 = () => {
               </div>
               <div className="bg-white/5 rounded-lg p-3">
                 <p className="text-white font-medium text-sm mb-1">Pharmaceutical</p>
-                <ul className="text-white/70 text-xs space-y-0.5">
+                <ul className="text-white text-xs space-y-0.5">
                   <li>Process control</li>
                   <li>Product formulation</li>
                   <li>Environmental monitoring</li>
@@ -335,7 +335,7 @@ const InstrumentationModule6Section1 = () => {
               </div>
               <div className="bg-white/5 rounded-lg p-3">
                 <p className="text-white font-medium text-sm mb-1">Aerospace and Defence</p>
-                <ul className="text-white/70 text-xs space-y-0.5">
+                <ul className="text-white text-xs space-y-0.5">
                   <li>Aircraft systems</li>
                   <li>Navigation equipment</li>
                   <li>Testing laboratories</li>
@@ -343,7 +343,7 @@ const InstrumentationModule6Section1 = () => {
               </div>
               <div className="bg-white/5 rounded-lg p-3">
                 <p className="text-white font-medium text-sm mb-1">Food and Beverage</p>
-                <ul className="text-white/70 text-xs space-y-0.5">
+                <ul className="text-white text-xs space-y-0.5">
                   <li>Temperature monitoring</li>
                   <li>pH measurement</li>
                   <li>Weight verification</li>
@@ -376,7 +376,7 @@ const InstrumentationModule6Section1 = () => {
               <h4 className="font-medium text-purple-300 mb-3">
                 Preventive Maintenance Integration
               </h4>
-              <p className="text-white/80 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 Calibration forms a critical component of preventive maintenance strategies,
                 ensuring instruments maintain accuracy and reliability throughout their operational
                 life.
@@ -384,7 +384,7 @@ const InstrumentationModule6Section1 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-white font-medium text-sm mb-2">Scheduled Calibration:</p>
-                  <ul className="space-y-1 text-white/70 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>Time-based intervals</li>
                     <li>Usage-based triggers</li>
                     <li>Drift monitoring</li>
@@ -395,7 +395,7 @@ const InstrumentationModule6Section1 = () => {
                   <p className="text-white font-medium text-sm mb-2">
                     Condition-Based Calibration:
                   </p>
-                  <ul className="space-y-1 text-white/70 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>Performance monitoring</li>
                     <li>Trend analysis</li>
                     <li>Predictive algorithms</li>
@@ -412,17 +412,17 @@ const InstrumentationModule6Section1 = () => {
           <h4 className="font-medium text-blue-300 mb-2">
             Real-World Scenario: Chemical Plant Pressure Sensor Failure
           </h4>
-          <div className="space-y-3 text-white/80 text-sm">
+          <div className="space-y-3 text-white text-sm">
             <div>
               <p className="text-white font-medium">Situation:</p>
-              <p className="text-white/70 text-xs">
+              <p className="text-white text-xs">
                 A pressure sensor in a chemical plant reactor vessel had not been calibrated for 18
                 months. The sensor gradually drifted, reading 2.5 bar lower than actual pressure.
               </p>
             </div>
             <div>
               <p className="text-white font-medium">Consequences:</p>
-              <ul className="text-white/70 text-xs list-disc list-inside">
+              <ul className="text-white text-xs list-disc list-inside">
                 <li>Incorrect batch formulation resulting in 500kg of unusable product</li>
                 <li>50,000 pounds direct cost for waste disposal and replacement materials</li>
                 <li>12-hour production shutdown for system investigation</li>
@@ -431,7 +431,7 @@ const InstrumentationModule6Section1 = () => {
             </div>
             <div>
               <p className="text-white font-medium">Lesson:</p>
-              <p className="text-white/70 text-xs">
+              <p className="text-white text-xs">
                 This incident could have been prevented with proper calibration scheduling and drift
                 monitoring. Regular calibration is essential for safe operation.
               </p>
@@ -451,7 +451,7 @@ const InstrumentationModule6Section1 = () => {
               <h4 className="font-medium text-white mb-2">
                 Does calibration always require adjustment?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 No. Calibration determines the relationship between measured and actual values. If
                 the instrument is within acceptable limits, no adjustment is needed - the
                 calibration simply documents the current performance and any errors.
@@ -462,7 +462,7 @@ const InstrumentationModule6Section1 = () => {
               <h4 className="font-medium text-white mb-2">
                 How often should instruments be calibrated?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Calibration frequency depends on the instrument type, usage, environmental
                 conditions, and regulatory requirements. Typical intervals range from monthly to
                 annually, with more critical instruments requiring more frequent calibration.
@@ -473,7 +473,7 @@ const InstrumentationModule6Section1 = () => {
               <h4 className="font-medium text-white mb-2">
                 What happens if calibration is neglected?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Neglected calibration leads to measurement drift, unreliable data, safety risks,
                 regulatory non-compliance, and potential financial losses from product quality
                 issues, equipment damage, or production shutdowns.
@@ -484,7 +484,7 @@ const InstrumentationModule6Section1 = () => {
               <h4 className="font-medium text-white mb-2">
                 What is the role of UKAS in calibration?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 UKAS (United Kingdom Accreditation Service) is the national accreditation body that
                 certifies calibration laboratories meet international standards. UKAS-accredited
                 calibrations provide traceable, internationally recognised results.

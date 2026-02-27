@@ -245,7 +245,7 @@ const HNCModule6Section3_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section3">
@@ -267,7 +267,7 @@ const HNCModule6Section3_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             BREEAM Overview
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Schemes, rating levels, category weightings, assessment process, and the role of the
             licensed assessor
           </p>
@@ -547,23 +547,23 @@ const HNCModule6Section3_1 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">Score Calculation Example</p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Energy category:</span>{' '}
+                  <span className="text-white">Energy category:</span>{' '}
                   <span className="text-white">
                     12 credits achieved × 19% weighting = 2.28% contribution
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">Health & Wellbeing:</span>{' '}
+                  <span className="text-white">Health & Wellbeing:</span>{' '}
                   <span className="text-white">
                     9 credits achieved × 14% weighting = 1.26% contribution
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">All categories summed:</span>{' '}
+                  <span className="text-white">All categories summed:</span>{' '}
                   <span className="text-white">= Overall percentage score</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Plus innovation:</span>{' '}
+                  <span className="text-white">Plus innovation:</span>{' '}
                   <span className="text-white">+ Up to 10% additional</span>
                 </p>
               </div>
@@ -694,7 +694,7 @@ const HNCModule6Section3_1 = () => {
                   <p className="font-medium text-white mb-1">
                     Ene 01 - Reduction of energy use and carbon emissions (up to 15 credits)
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Based on Energy Performance Ratio (EPR) comparing actual design to Part L
                     notional building. Requires approved dynamic thermal modelling. Higher credits
                     for better performance beyond regulation.
@@ -704,7 +704,7 @@ const HNCModule6Section3_1 = () => {
                   <p className="font-medium text-white mb-1">
                     Ene 02 - Energy monitoring (up to 2 credits)
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Sub-metering of major energy uses: heating, cooling, lighting, small power,
                     renewables. Enables post-occupancy performance tracking and fault
                     identification.
@@ -714,7 +714,7 @@ const HNCModule6Section3_1 = () => {
                   <p className="font-medium text-white mb-1">
                     Hea 01 - Visual comfort (up to 4 credits)
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Daylighting levels, view out, glare control, high-frequency lighting (≥3,000
                     Hz), colour rendering (Ra ≥80). Directly affects lighting design specifications.
                   </p>
@@ -723,7 +723,7 @@ const HNCModule6Section3_1 = () => {
                   <p className="font-medium text-white mb-1">
                     Pol 01 - Impact of refrigerants (up to 3 credits)
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Credits for low GWP refrigerants, leak detection systems, and eliminating
                     refrigerants entirely. Affects HVAC system selection.
                   </p>
@@ -890,7 +890,7 @@ const HNCModule6Section3_1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Timing consideration:</strong> QA review typically takes 4-6 weeks. Allow
               sufficient time in the programme, especially if certification is needed for practical
               completion or funding drawdown.
@@ -916,8 +916,8 @@ const HNCModule6Section3_1 = () => {
                 <strong>Scenario:</strong> A new office building targeting BREEAM Excellent (70%).
                 Identify key M&E credits.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Target: 70% minimum (aim for 75% to provide margin)</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Target: 70% minimum (aim for 75% to provide margin)</p>
                 <p className="mt-2">High-value M&E credits to target:</p>
                 <p className="ml-4">Ene 01: 9 credits @ 19% = ~3.4% contribution</p>
                 <p className="ml-4">Ene 02: 2 credits (sub-metering) = ~0.4%</p>
@@ -926,7 +926,7 @@ const HNCModule6Section3_1 = () => {
                 <p className="ml-4">Wat 01: 3 credits (water efficiency) = ~0.3%</p>
                 <p className="ml-4">Pol 01: 2 credits (low GWP refrigerants) = ~0.2%</p>
                 <p className="mt-2 text-green-400">M&E contribution: ~5.3% directly influenced</p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Plus mandatory commissioning credits in Man category
                 </p>
               </div>
@@ -940,7 +940,7 @@ const HNCModule6Section3_1 = () => {
                 <strong>Scenario:</strong> Demonstrating compliance with Ene 01 for an Excellent
                 rating.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Ene 01 Evidence Checklist:</p>
                 <p className="mt-2 ml-4">Design Stage:</p>
                 <p className="ml-8">- Energy model (IES-VE or TAS) with BRUKL output</p>
@@ -964,17 +964,17 @@ const HNCModule6Section3_1 = () => {
                 <strong>Scenario:</strong> Client has three projects - advise on appropriate BREEAM
                 scheme.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Project A: New-build warehouse</p>
                 <p className="ml-4 text-green-400">→ BREEAM New Construction (Industrial)</p>
-                <p className="ml-4 text-white/60">Design Stage + Post-Construction assessment</p>
+                <p className="ml-4 text-white">Design Stage + Post-Construction assessment</p>
                 <p className="mt-2">Project B: Office fit-out in existing shell</p>
                 <p className="ml-4 text-green-400">→ BREEAM Refurbishment & Fit-Out</p>
-                <p className="ml-4 text-white/60">Part 3 (local services) + Part 4 (interior)</p>
+                <p className="ml-4 text-white">Part 3 (local services) + Part 4 (interior)</p>
                 <p className="mt-2">Project C: Improving performance of existing HQ</p>
                 <p className="ml-4 text-green-400">→ BREEAM In-Use</p>
-                <p className="ml-4 text-white/60">Asset + Building Management assessments</p>
-                <p className="ml-4 text-white/60">Annual recertification available</p>
+                <p className="ml-4 text-white">Asset + Building Management assessments</p>
+                <p className="ml-4 text-white">Annual recertification available</p>
               </div>
             </div>
           </div>
@@ -1068,7 +1068,7 @@ const HNCModule6Section3_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1114,7 +1114,7 @@ const HNCModule6Section3_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section3">

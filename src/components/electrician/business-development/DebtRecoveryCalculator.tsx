@@ -142,7 +142,7 @@ const DebtRecoveryCalculator = () => {
             variant="ghost"
             size="icon"
             onClick={() => navigate(-1)}
-            className="text-white/70 hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
+            className="text-white hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
           >
             <ChevronLeft className="h-6 w-6" />
           </Button>
@@ -151,7 +151,7 @@ const DebtRecoveryCalculator = () => {
             variant="ghost"
             size="icon"
             onClick={resetCalculator}
-            className="text-white/70 hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
+            className="text-white hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
           >
             <RotateCcw className="h-5 w-5" />
           </Button>
@@ -170,7 +170,7 @@ const DebtRecoveryCalculator = () => {
           <div className="relative space-y-4">
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">
+                <p className="text-ios-caption-1 text-white uppercase tracking-wide">
                   Outstanding Debt
                 </p>
                 <p className="text-3xl sm:text-4xl font-bold text-white mt-1 tabular-nums">
@@ -199,13 +199,13 @@ const DebtRecoveryCalculator = () => {
         {/* Summary Stats */}
         <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
           <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[110px] border border-white/10">
-            <p className="text-ios-caption-1 text-white/50">Debtors</p>
+            <p className="text-ios-caption-1 text-white">Debtors</p>
             <p className="text-ios-title-3 font-semibold text-white mt-1">
               {inputs.numberOfDebtors}
             </p>
           </div>
           <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[110px] border border-white/10">
-            <p className="text-ios-caption-1 text-white/50">Avg Age</p>
+            <p className="text-ios-caption-1 text-white">Avg Age</p>
             <p
               className={`text-ios-title-3 font-semibold mt-1 ${
                 inputs.averageDebtAge > 90
@@ -219,13 +219,13 @@ const DebtRecoveryCalculator = () => {
             </p>
           </div>
           <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[110px] border border-white/10">
-            <p className="text-ios-caption-1 text-white/50">Recovery</p>
+            <p className="text-ios-caption-1 text-white">Recovery</p>
             <p className="text-ios-title-3 font-semibold text-green-400 mt-1">
               {(expectedRecoveryRate * 100).toFixed(0)}%
             </p>
           </div>
           <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[110px] border border-white/10">
-            <p className="text-ios-caption-1 text-white/50">Cash Impact</p>
+            <p className="text-ios-caption-1 text-white">Cash Impact</p>
             <p className="text-ios-title-3 font-semibold text-white mt-1">
               {cashFlowImpact.toFixed(0)}d
             </p>
@@ -253,7 +253,7 @@ const DebtRecoveryCalculator = () => {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`relative z-10 flex-1 py-2.5 text-ios-subhead font-medium transition-colors touch-manipulation ${
-                activeTab === tab.id ? 'text-black' : 'text-white/70'
+                activeTab === tab.id ? 'text-black' : 'text-white'
               }`}
             >
               {tab.label}
@@ -274,7 +274,7 @@ const DebtRecoveryCalculator = () => {
             >
               {/* Debt Position */}
               <section>
-                <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+                <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-3">
                   Current Debt Position
                 </p>
                 <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 divide-y divide-white/10">
@@ -321,7 +321,7 @@ const DebtRecoveryCalculator = () => {
 
               {/* Business Context */}
               <section>
-                <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+                <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-3">
                   Business Context
                 </p>
                 <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 divide-y divide-white/10">
@@ -356,19 +356,19 @@ const DebtRecoveryCalculator = () => {
 
               {/* Debt Analysis */}
               <section>
-                <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+                <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-3">
                   Analysis
                 </p>
                 <div className="bg-white/5 rounded-2xl border border-white/10 p-4 space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-ios-body text-white/70">Average Debt Size</span>
+                    <span className="text-ios-body text-white">Average Debt Size</span>
                     <span className="text-ios-body font-medium text-white tabular-nums">
                       £{averageDebtSize.toFixed(0)}
                     </span>
                   </div>
                   <div className="h-px bg-white/10" />
                   <div className="flex justify-between items-center">
-                    <span className="text-ios-body text-white/70">Debt/Revenue Ratio</span>
+                    <span className="text-ios-body text-white">Debt/Revenue Ratio</span>
                     <span
                       className={`text-ios-body font-medium tabular-nums ${
                         debtToRevenueRatio > 15
@@ -383,7 +383,7 @@ const DebtRecoveryCalculator = () => {
                   </div>
                   <div className="h-px bg-white/10" />
                   <div className="flex justify-between items-center">
-                    <span className="text-ios-body text-white/70">Annual Write-off</span>
+                    <span className="text-ios-body text-white">Annual Write-off</span>
                     <span className="text-ios-body font-medium text-white tabular-nums">
                       £{annualBadDebtWriteOff.toFixed(0)}
                     </span>
@@ -404,7 +404,7 @@ const DebtRecoveryCalculator = () => {
             >
               {/* Recovery Timeline */}
               <section>
-                <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+                <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-3">
                   Recovery Timeline
                 </p>
                 <div className="space-y-3">
@@ -440,7 +440,7 @@ const DebtRecoveryCalculator = () => {
                                 ? 'text-elec-yellow'
                                 : isPast
                                   ? 'text-green-400'
-                                  : 'text-white/50'
+                                  : 'text-white'
                             }`}
                           />
                         </div>
@@ -448,20 +448,20 @@ const DebtRecoveryCalculator = () => {
                           <div className="flex items-center gap-2">
                             <span
                               className={`text-ios-subhead font-medium ${
-                                isActive ? 'text-white' : 'text-white/50'
+                                isActive ? 'text-white' : 'text-white'
                               }`}
                             >
                               {stage.label}
                             </span>
                             <span
                               className={`text-ios-caption-2 ${
-                                isActive && !isPast ? 'text-elec-yellow' : 'text-white/40'
+                                isActive && !isPast ? 'text-elec-yellow' : 'text-white'
                               }`}
                             >
                               Day {stage.days}
                             </span>
                           </div>
-                          <p className="text-ios-caption-1 text-white/50 truncate">
+                          <p className="text-ios-caption-1 text-white truncate">
                             {stage.action}
                           </p>
                         </div>
@@ -479,7 +479,7 @@ const DebtRecoveryCalculator = () => {
 
               {/* Recovery Costs */}
               <section>
-                <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+                <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-3">
                   Recovery Costs
                 </p>
                 <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 divide-y divide-white/10">
@@ -520,7 +520,7 @@ const DebtRecoveryCalculator = () => {
                 </div>
                 <div className="mt-3 bg-white/5 rounded-2xl border border-white/10 p-4">
                   <div className="flex justify-between items-center">
-                    <span className="text-ios-body text-white/70">Total Recovery Costs</span>
+                    <span className="text-ios-body text-white">Total Recovery Costs</span>
                     <span className="text-ios-headline font-semibold text-red-400 tabular-nums">
                       £{totalRecoveryCosts.toFixed(0)}
                     </span>
@@ -530,7 +530,7 @@ const DebtRecoveryCalculator = () => {
 
               {/* Recovery Strategies */}
               <section>
-                <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+                <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-3">
                   Strategy Options
                 </p>
                 <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 divide-y divide-white/10">
@@ -556,12 +556,12 @@ const DebtRecoveryCalculator = () => {
                   />
                   <div className="flex items-center justify-between px-4 py-4">
                     <div className="flex items-center gap-3">
-                      <div className="text-white/50">
+                      <div className="text-white">
                         <CreditCard className="h-5 w-5" />
                       </div>
                       <div>
                         <p className="text-ios-body font-medium text-white">Payment Plans</p>
-                        <p className="text-ios-caption-1 text-white/50">Offer instalments</p>
+                        <p className="text-ios-caption-1 text-white">Offer instalments</p>
                       </div>
                     </div>
                     <Switch
@@ -575,7 +575,7 @@ const DebtRecoveryCalculator = () => {
 
               {/* Scenario Comparison */}
               <section>
-                <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+                <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-3">
                   Recovery Scenarios
                 </p>
                 <div className="grid gap-3">

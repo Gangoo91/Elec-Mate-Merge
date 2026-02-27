@@ -137,7 +137,7 @@ const ScenarioCard = ({
           <p className="font-medium mb-2 text-white">
             {selectedOption === correctAnswer ? 'Correct!' : 'Explanation:'}
           </p>
-          <p className="text-sm text-white/90">{explanation}</p>
+          <p className="text-sm text-white">{explanation}</p>
         </div>
       )}
     </div>
@@ -405,7 +405,7 @@ const Module3Section1_7 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -427,7 +427,7 @@ const Module3Section1_7 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Selecting Cables Based on Application and Environment
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Learn to choose the right cable for every situation through interactive real-world
             scenarios
           </p>
@@ -499,7 +499,7 @@ const Module3Section1_7 = () => {
             <div className="grid sm:grid-cols-3 gap-3 my-6">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white text-sm mb-2">Electrical Requirements</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>
                     <strong>Current capacity:</strong> Design current plus derating factors
                   </li>
@@ -519,7 +519,7 @@ const Module3Section1_7 = () => {
               </div>
               <div className="p-3 rounded bg-green-500/10 border border-green-400/30">
                 <p className="font-medium text-white text-sm mb-2">Environmental Factors</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>
                     <strong>Temperature:</strong> Ambient and operating temperature ranges
                   </li>
@@ -539,7 +539,7 @@ const Module3Section1_7 = () => {
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white text-sm mb-2">Installation Method</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>
                     <strong>Direct burial:</strong> Requires armoured or protected cables
                   </li>
@@ -622,7 +622,7 @@ const Module3Section1_7 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="font-medium text-white text-xs mb-2">Temperature Classifications</p>
-                  <ul className="text-xs text-white/80 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>
                       <strong>AA4:</strong> -5 C to +40 C (normal indoor conditions)
                     </li>
@@ -642,7 +642,7 @@ const Module3Section1_7 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white text-xs mb-2">Moisture Classifications</p>
-                  <ul className="text-xs text-white/80 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>
                       <strong>AD1:</strong> Negligible (dry indoor conditions)
                     </li>
@@ -666,7 +666,7 @@ const Module3Section1_7 = () => {
             <div className="grid sm:grid-cols-2 gap-3 my-6">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white text-sm mb-2">Mechanical Impact (AG)</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>
                     <strong>AG1:</strong> Light (0.225 J) - domestic/office areas
                   </li>
@@ -683,7 +683,7 @@ const Module3Section1_7 = () => {
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white text-sm mb-2">Solar Radiation (AN)</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>
                     <strong>AN1:</strong> Low (indoor installations)
                   </li>
@@ -718,7 +718,7 @@ const Module3Section1_7 = () => {
           <h2 className="text-xl font-semibold text-white mb-4">
             Interactive Cable Selection Scenarios
           </h2>
-          <p className="text-sm text-white/80 mb-6">
+          <p className="text-sm text-white mb-6">
             Test your cable selection knowledge with these real-world scenarios. Choose your answer,
             then reveal the correct solution with detailed explanation.
           </p>
@@ -834,7 +834,7 @@ const Module3Section1_7 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.q}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.a}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.a}</p>
               </div>
             ))}
           </div>
@@ -901,7 +901,7 @@ const Module3Section1_7 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">

@@ -191,7 +191,7 @@ export default function AsbestosModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-1">
@@ -216,7 +216,7 @@ export default function AsbestosModule1Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Where Asbestos Is Found
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Common locations of asbestos-containing materials in UK buildings &mdash; from roofs and
             walls to electrical installations and domestic properties
           </p>
@@ -343,7 +343,7 @@ export default function AsbestosModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-orange-400 mb-1">{item.point}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -354,7 +354,7 @@ export default function AsbestosModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Critical Point</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The pre-2000 assumption is <strong>not optional</strong>. Under the Control of
                   Asbestos Regulations 2012, the duty holder for any non-domestic building must
                   manage asbestos risk. For anyone carrying out work on a building &mdash; whether a
@@ -419,7 +419,7 @@ export default function AsbestosModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-orange-400 mb-1">{item.location}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -432,7 +432,7 @@ export default function AsbestosModule1Section3() {
                     Warning &mdash; Corrugated Cement Sheets
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Corrugated asbestos cement roof sheets are one of the most widespread ACMs in the
                   UK. While intact AC is relatively low-risk (the fibres are bound in cement), the
                   risk increases significantly when sheets are{' '}
@@ -453,7 +453,7 @@ export default function AsbestosModule1Section3() {
             Building Cross-Section &mdash; Where ACMs Are Found
           </h2>
           <div className="bg-white/5 border border-white/10 rounded-xl p-4 sm:p-6 overflow-hidden">
-            <p className="text-xs text-white/50 uppercase tracking-wider mb-4 text-center">
+            <p className="text-xs text-white uppercase tracking-wider mb-4 text-center">
               Typical Pre-2000 Building &mdash; 16 Common ACM Locations
             </p>
 
@@ -471,19 +471,19 @@ export default function AsbestosModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[10px] font-bold text-orange-400">
                         1
                       </span>
-                      <span className="text-xs text-white/80">Cement roof sheets</span>
+                      <span className="text-xs text-white">Cement roof sheets</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[10px] font-bold text-orange-400">
                         2
                       </span>
-                      <span className="text-xs text-white/80">Soffits &amp; fascia</span>
+                      <span className="text-xs text-white">Soffits &amp; fascia</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[10px] font-bold text-orange-400">
                         3
                       </span>
-                      <span className="text-xs text-white/80">Guttering (AC)</span>
+                      <span className="text-xs text-white">Guttering (AC)</span>
                     </div>
                   </div>
                 </div>
@@ -498,25 +498,25 @@ export default function AsbestosModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[10px] font-bold text-orange-400">
                         4
                       </span>
-                      <span className="text-xs text-white/80">AIB partition walls</span>
+                      <span className="text-xs text-white">AIB partition walls</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[10px] font-bold text-orange-400">
                         5
                       </span>
-                      <span className="text-xs text-white/80">Textured coatings (Artex)</span>
+                      <span className="text-xs text-white">Textured coatings (Artex)</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[10px] font-bold text-orange-400">
                         6
                       </span>
-                      <span className="text-xs text-white/80">Window putty</span>
+                      <span className="text-xs text-white">Window putty</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[10px] font-bold text-orange-400">
                         7
                       </span>
-                      <span className="text-xs text-white/80">External cement cladding</span>
+                      <span className="text-xs text-white">External cement cladding</span>
                     </div>
                   </div>
                 </div>
@@ -531,13 +531,13 @@ export default function AsbestosModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[10px] font-bold text-orange-400">
                         8
                       </span>
-                      <span className="text-xs text-white/80">Floor tiles (thermoplastic)</span>
+                      <span className="text-xs text-white">Floor tiles (thermoplastic)</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[10px] font-bold text-orange-400">
                         9
                       </span>
-                      <span className="text-xs text-white/80">Bitumen adhesive beneath tiles</span>
+                      <span className="text-xs text-white">Bitumen adhesive beneath tiles</span>
                     </div>
                   </div>
                 </div>
@@ -552,7 +552,7 @@ export default function AsbestosModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center text-[10px] font-bold text-red-400">
                         10
                       </span>
-                      <span className="text-xs text-white/80">
+                      <span className="text-xs text-white">
                         Pipe lagging{' '}
                         <span className="text-red-400 text-[10px] font-semibold">(HIGH RISK)</span>
                       </span>
@@ -561,13 +561,13 @@ export default function AsbestosModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[10px] font-bold text-orange-400">
                         11
                       </span>
-                      <span className="text-xs text-white/80">Boiler flue</span>
+                      <span className="text-xs text-white">Boiler flue</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[10px] font-bold text-orange-400">
                         12
                       </span>
-                      <span className="text-xs text-white/80">Rope seals on boiler</span>
+                      <span className="text-xs text-white">Rope seals on boiler</span>
                     </div>
                   </div>
                 </div>
@@ -582,13 +582,13 @@ export default function AsbestosModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[10px] font-bold text-orange-400">
                         13
                       </span>
-                      <span className="text-xs text-white/80">Fuse box flash guards</span>
+                      <span className="text-xs text-white">Fuse box flash guards</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[10px] font-bold text-orange-400">
                         14
                       </span>
-                      <span className="text-xs text-white/80">Electrical backing boards</span>
+                      <span className="text-xs text-white">Electrical backing boards</span>
                     </div>
                   </div>
                 </div>
@@ -603,13 +603,13 @@ export default function AsbestosModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[10px] font-bold text-orange-400">
                         15
                       </span>
-                      <span className="text-xs text-white/80">Fire doors (AIB core)</span>
+                      <span className="text-xs text-white">Fire doors (AIB core)</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center text-[10px] font-bold text-orange-400">
                         16
                       </span>
-                      <span className="text-xs text-white/80">Toilet cisterns (AC)</span>
+                      <span className="text-xs text-white">Toilet cisterns (AC)</span>
                     </div>
                   </div>
                 </div>
@@ -619,11 +619,11 @@ export default function AsbestosModule1Section3() {
               <div className="flex flex-wrap items-center gap-4 mt-4 justify-center">
                 <div className="flex items-center gap-1.5">
                   <span className="w-3 h-3 rounded-full bg-orange-500/30 border border-orange-500/50" />
-                  <span className="text-[10px] text-white/50">Standard ACM location</span>
+                  <span className="text-[10px] text-white">Standard ACM location</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className="w-3 h-3 rounded-full bg-red-500/30 border border-red-500/50" />
-                  <span className="text-[10px] text-white/50">High-risk / friable ACM</span>
+                  <span className="text-[10px] text-white">High-risk / friable ACM</span>
                 </div>
               </div>
             </div>
@@ -687,7 +687,7 @@ export default function AsbestosModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-orange-400 mb-1">{item.location}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -700,7 +700,7 @@ export default function AsbestosModule1Section3() {
                     Warning &mdash; Textured Coatings
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Textured decorative coatings are one of the most commonly encountered ACMs in
                   domestic properties. They were applied to millions of ceilings and walls across
                   the UK. The coating is low-risk when intact and undisturbed. However,{' '}
@@ -763,7 +763,7 @@ export default function AsbestosModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-orange-400 mb-1">{item.location}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -776,7 +776,7 @@ export default function AsbestosModule1Section3() {
                     Important &mdash; The Hidden Adhesive
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Many people focus on the floor tiles themselves but forget about the{' '}
                   <strong>bitumen adhesive beneath them</strong>. Even if the tiles are confirmed as
                   non-asbestos, the black adhesive layer may still contain asbestos fibres. Both the
@@ -811,7 +811,7 @@ export default function AsbestosModule1Section3() {
                     Highest Risk &mdash; Pipe Lagging
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong>Pipe lagging and insulation</strong> is consistently identified as one of
                   the highest-risk ACMs. It is often very <strong>friable</strong> (easily crumbled
                   by hand pressure), frequently contains <strong>amosite (brown asbestos)</strong>{' '}
@@ -882,7 +882,7 @@ export default function AsbestosModule1Section3() {
                           {item.risk} RISK
                         </span>
                       </div>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -913,7 +913,7 @@ export default function AsbestosModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical for Electricians</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong>
                     Any work on pre-2000 electrical installations must include asbestos checks.
                   </strong>{' '}
@@ -962,7 +962,7 @@ export default function AsbestosModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-orange-400 mb-1">{item.location}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -975,7 +975,7 @@ export default function AsbestosModule1Section3() {
                     Practical Scenario &mdash; Consumer Unit Change
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   You are replacing a consumer unit in a 1970s property. When you remove the cover,
                   you notice a grey/white board material behind the fuse carriers.{' '}
                   <strong>Stop immediately.</strong> This is likely an AIB flash guard. Do not
@@ -1058,7 +1058,7 @@ export default function AsbestosModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-orange-400 mb-1">{item.location}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1069,7 +1069,7 @@ export default function AsbestosModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">No Register, No Excuse</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Although there is no legal duty for homeowners to maintain an asbestos register,
                   this does
                   <strong> not</strong> reduce the risk to tradespeople. As an electrician, plumber,
@@ -1117,7 +1117,7 @@ export default function AsbestosModule1Section3() {
                       </span>
                     </div>
                     <div>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Schools are one of the most heavily affected building types. The post-war
                         building programme (1950s-1970s) used AIB extensively in ceilings, wall
                         linings, heater cupboards, window panels, and fire doors. The DfE
@@ -1138,7 +1138,7 @@ export default function AsbestosModule1Section3() {
                       </span>
                     </div>
                     <div>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Hospitals contain extensive ACMs including pipe lagging (often amosite),
                         ceiling tiles, fire doors, floor tiles, and sprayed coatings. The
                         combination of large building footprints, complex service installations, and
@@ -1158,7 +1158,7 @@ export default function AsbestosModule1Section3() {
                       </span>
                     </div>
                     <div>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Factories and industrial buildings used asbestos extensively for thermal
                         insulation (pipe lagging, boiler insulation), fire protection (sprayed
                         coatings on steelwork, fire doors), and weatherproofing (AC roof sheets and
@@ -1178,7 +1178,7 @@ export default function AsbestosModule1Section3() {
                       </span>
                     </div>
                     <div>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         System-built council housing from the 1950s-1970s made extensive use of AIB
                         in walls, ceilings, soffits, and service risers. Some system-build types
                         (e.g. BISF houses, Airey houses) are particularly well-known for containing
@@ -1198,7 +1198,7 @@ export default function AsbestosModule1Section3() {
                       </span>
                     </div>
                     <div>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Power stations and heavy industrial facilities contain some of the most
                         extensive and highest-risk asbestos installations anywhere. Sprayed
                         coatings, thermal insulation (lagging), gaskets, and fire protection
@@ -1218,7 +1218,7 @@ export default function AsbestosModule1Section3() {
                       </span>
                     </div>
                     <div>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Ships built before the 1990s used asbestos extensively for insulation,
                         fireproofing, and gaskets. Dockyard workers (laggers, electricians,
                         engineers) are among the most heavily exposed occupational groups.
@@ -1238,7 +1238,7 @@ export default function AsbestosModule1Section3() {
                       </span>
                     </div>
                     <div>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Railway buildings, signal boxes, and older rolling stock contain ACMs.
                         Station buildings from the Victorian and Edwardian eras through to the 1990s
                         may contain AC roofing, AIB partitions, and pipe lagging. Older trains and
@@ -1254,7 +1254,7 @@ export default function AsbestosModule1Section3() {
                   <Building className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Key Takeaway</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The type of building you are working in determines the{' '}
                   <strong>likelihood and extent</strong> of ACMs you may encounter. Schools,
                   hospitals, industrial buildings, and system-built housing are statistically more
@@ -1275,7 +1275,7 @@ export default function AsbestosModule1Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1289,7 +1289,7 @@ export default function AsbestosModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-1-section-2">

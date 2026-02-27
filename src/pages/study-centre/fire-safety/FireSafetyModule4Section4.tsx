@@ -223,7 +223,7 @@ export default function FireSafetyModule4Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-4">
@@ -248,7 +248,7 @@ export default function FireSafetyModule4Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Personal Emergency Evacuation Plans
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Ensuring every person &mdash; regardless of ability &mdash; can evacuate safely through
             tailored planning, trained buddies, refuges, specialist equipment, and effective
             communication
@@ -352,7 +352,7 @@ export default function FireSafetyModule4Section4() {
                 <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg p-4">
                   <ShieldCheck className="h-6 w-6 text-rose-400 mb-2" />
                   <p className="text-sm font-semibold text-rose-400 mb-1">RRFSO 2005</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Articles 14 and 15 require the responsible person to establish emergency
                     procedures and ensure emergency routes and exits are adequate for{' '}
                     <strong>all relevant persons</strong>, which includes persons with disabilities
@@ -362,7 +362,7 @@ export default function FireSafetyModule4Section4() {
                 <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg p-4">
                   <Accessibility className="h-6 w-6 text-rose-400 mb-2" />
                   <p className="text-sm font-semibold text-rose-400 mb-1">Equality Act 2010</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Places a duty on employers and service providers to make{' '}
                     <strong>reasonable adjustments</strong> for disabled persons. Ensuring a
                     disabled person can evacuate safely is considered a reasonable adjustment.
@@ -381,7 +381,7 @@ export default function FireSafetyModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Key Principle</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The responsible person under the RRFSO has a legal duty to identify all persons
                   who may need a PEEP and to ensure a plan is in place <strong>before</strong> an
                   emergency occurs. Discovering during a real fire that someone cannot evacuate is
@@ -428,7 +428,7 @@ export default function FireSafetyModule4Section4() {
                         Wheelchair Users &amp; Mobility Impairments
                       </p>
                     </div>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Wheelchair users, people who use walking frames, crutches, or sticks, people
                       with conditions affecting balance or coordination (e.g., multiple sclerosis,
                       Parkinson&rsquo;s disease), and anyone who cannot navigate stairs at the speed
@@ -441,7 +441,7 @@ export default function FireSafetyModule4Section4() {
                       <Eye className="h-4 w-4 text-rose-400" />
                       <p className="text-sm font-medium text-white">Visual Impairments</p>
                     </div>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       People who are blind or partially sighted may be unable to follow emergency
                       exit signs, navigate unfamiliar escape routes, or identify hazards along the
                       route. They may need a sighted buddy to guide them. Smoke reduces visibility
@@ -454,7 +454,7 @@ export default function FireSafetyModule4Section4() {
                       <Ear className="h-4 w-4 text-rose-400" />
                       <p className="text-sm font-medium text-white">Hearing Impairments</p>
                     </div>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       People who are deaf or hard of hearing may not hear the standard fire alarm.
                       Their PEEP must address how they will be alerted: visual alarm beacons
                       (flashing lights), vibrating pagers or wristband alerts, text message alerts,
@@ -469,7 +469,7 @@ export default function FireSafetyModule4Section4() {
                         Cognitive &amp; Learning Disabilities
                       </p>
                     </div>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       People with learning disabilities, autism, dementia, or other cognitive
                       conditions may have difficulty understanding alarm signals, remembering the
                       evacuation procedure, making decisions under stress, or navigating to exits.
@@ -482,7 +482,7 @@ export default function FireSafetyModule4Section4() {
                       <HeartPulse className="h-4 w-4 text-rose-400" />
                       <p className="text-sm font-medium text-white">Temporary Conditions</p>
                     </div>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       A broken leg, sprained ankle, recovery from surgery, late-stage pregnancy, or
                       use of strong medication that affects alertness or mobility. These are often
                       overlooked because people assume PEEPs are only for permanent conditions. A
@@ -494,7 +494,7 @@ export default function FireSafetyModule4Section4() {
                       <AlertTriangle className="h-4 w-4 text-rose-400" />
                       <p className="text-sm font-medium text-white">Mental Health Conditions</p>
                     </div>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Severe anxiety, panic disorder, PTSD, or other mental health conditions may
                       cause a person to freeze, become disorientated, or experience a panic attack
                       when a fire alarm sounds. Their PEEP should document how buddies will approach
@@ -507,7 +507,7 @@ export default function FireSafetyModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Visitor Considerations</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Visitors who may need assistance should be identified through the visitor sign-in
                   process. Reception staff should ask whether the visitor has any specific needs in
                   the event of an evacuation. If so, a temporary arrangement &mdash; assigning a
@@ -595,7 +595,7 @@ export default function FireSafetyModule4Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 rounded-lg p-3">
                       <p className="text-sm font-medium text-white">{item.label}</p>
-                      <p className="text-xs text-white/70 mt-0.5">{item.desc}</p>
+                      <p className="text-xs text-white mt-0.5">{item.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -609,7 +609,7 @@ export default function FireSafetyModule4Section4() {
                 relevant parties understand and can execute.
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -673,7 +673,7 @@ export default function FireSafetyModule4Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       Minimum 2 Buddies Per Person
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       A minimum of 2 buddies must be assigned to each person with a PEEP. This
                       covers absences due to holiday, sickness, shift patterns, or the buddy working
                       in a different part of the building. In organisations with complex shift
@@ -685,7 +685,7 @@ export default function FireSafetyModule4Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Training Requirements</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       All buddies must be trained on: the individual&rsquo;s specific needs and how
                       their impairment affects evacuation; the agreed evacuation route and any
                       alternative routes; the operation of any equipment (evacuation chairs, ski
@@ -696,7 +696,7 @@ export default function FireSafetyModule4Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Regular Practice</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Buddies must practise the PEEP during fire drills. An untested plan is an
                       unreliable plan. Practice reveals problems that are not apparent on paper: a
                       route that is too narrow for a wheelchair, an evacuation chair that is
@@ -712,7 +712,7 @@ export default function FireSafetyModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Buddy Responsibilities During and After Evacuation
                 </p>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -805,7 +805,7 @@ export default function FireSafetyModule4Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 rounded-lg p-3">
                       <p className="text-sm font-medium text-white">{item.label}</p>
-                      <p className="text-xs text-white/70 mt-0.5">{item.desc}</p>
+                      <p className="text-xs text-white mt-0.5">{item.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -819,7 +819,7 @@ export default function FireSafetyModule4Section4() {
                 must be tested as part of the regular fire alarm testing regime.
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -887,7 +887,7 @@ export default function FireSafetyModule4Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       Evacuation Chairs (Stairway Descent)
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The most common type of evacuation equipment. Designed for descending
                       staircases, these chairs have tracks or specialised wheels that allow
                       controlled, smooth descent. Typically require one trained operator (some
@@ -901,7 +901,7 @@ export default function FireSafetyModule4Section4() {
                     <p className="text-sm font-medium text-white mb-1">
                       Ski Pads / Evacuation Sheets
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Flat, flexible devices designed for sliding a person down staircases. Commonly
                       used in hospitals and care homes where patients may be lying down. The person
                       is placed on the ski pad and slid down the stairs in a controlled manner by
@@ -912,7 +912,7 @@ export default function FireSafetyModule4Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Carry Chairs</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Rigid chairs with handles that allow two or more operators to carry a person
                       down staircases. Simpler than tracked evacuation chairs but require more
                       physical effort from the operators. Used where tracked chairs are impractical
@@ -928,7 +928,7 @@ export default function FireSafetyModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Critical Requirements for All Evacuation Equipment
                 </p>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1003,7 +1003,7 @@ export default function FireSafetyModule4Section4() {
                     Fire Safety (England) Regulations 2022
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The Fire Safety (England) Regulations 2022 formalised the requirement for GEEPs in
                   certain residential buildings. These regulations apply to{' '}
                   <strong>all multi-occupied residential buildings in England</strong> (buildings
@@ -1013,7 +1013,7 @@ export default function FireSafetyModule4Section4() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">What a GEEP Contains</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Unlike a PEEP (which is for a named individual), a GEEP is a building-wide
                       plan that identifies the general arrangements for evacuating persons with
                       disabilities. It includes: floor-by-floor plans showing refuge locations,
@@ -1026,7 +1026,7 @@ export default function FireSafetyModule4Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">The Grenfell Context</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The Grenfell Tower fire on 14 June 2017 tragically exposed the inadequacy of
                       existing arrangements for evacuating disabled residents from high-rise
                       buildings. Several of the 72 people who died were disabled residents who could
@@ -1041,7 +1041,7 @@ export default function FireSafetyModule4Section4() {
                 </div>
               </div>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -1126,7 +1126,7 @@ export default function FireSafetyModule4Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 rounded-lg p-3">
                       <p className="text-sm font-medium text-white">{item.label}</p>
-                      <p className="text-xs text-white/70 mt-0.5">{item.desc}</p>
+                      <p className="text-xs text-white mt-0.5">{item.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -1140,7 +1140,7 @@ export default function FireSafetyModule4Section4() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Minimum Annual Review</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Every PEEP must be formally reviewed at least once per year, even if no
                       changes have occurred. The annual review confirms that the plan remains valid,
                       the individual&rsquo;s needs have not changed, the assigned buddies are still
@@ -1151,7 +1151,7 @@ export default function FireSafetyModule4Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Triggered Reviews</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       In addition to the annual review, a PEEP must be reviewed whenever
                       circumstances change. Triggers include: the individual&rsquo;s condition
                       changes (worsens, improves, or a new condition develops); the individual moves
@@ -1171,13 +1171,13 @@ export default function FireSafetyModule4Section4() {
                     Confidentiality &amp; Data Protection
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   PEEPs contain sensitive personal information about an individual&rsquo;s
                   disability or health condition. This information is classified as{' '}
                   <strong>special category data</strong> under the UK General Data Protection
                   Regulation (UK GDPR) and must be handled with the utmost care.
                 </p>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1225,7 +1225,7 @@ export default function FireSafetyModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Balancing Safety and Privacy</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   There can be tension between the need to share enough information for effective
                   evacuation and the individual&rsquo;s right to privacy. The key principle is{' '}
                   <strong>proportionality</strong>: share the minimum information necessary to
@@ -1253,7 +1253,7 @@ export default function FireSafetyModule4Section4() {
               {/* Step 1 */}
               <div className="bg-rose-500/20 border border-rose-500/40 rounded-lg px-4 py-3 text-center">
                 <p className="text-xs font-bold text-rose-400">1. IDENTIFY</p>
-                <p className="text-[10px] text-white/50 mt-1">
+                <p className="text-[10px] text-white mt-1">
                   Risk assessment, occupational health, self-declaration, line manager awareness
                 </p>
               </div>
@@ -1263,7 +1263,7 @@ export default function FireSafetyModule4Section4() {
               {/* Step 2 */}
               <div className="bg-rose-500/20 border border-rose-500/40 rounded-lg px-4 py-3 text-center">
                 <p className="text-xs font-bold text-rose-400">2. CONSULT</p>
-                <p className="text-[10px] text-white/50 mt-1">
+                <p className="text-[10px] text-white mt-1">
                   Discuss needs with the individual — they are the expert on their own capabilities
                 </p>
               </div>
@@ -1273,7 +1273,7 @@ export default function FireSafetyModule4Section4() {
               {/* Step 3 */}
               <div className="bg-rose-500/20 border border-rose-500/40 rounded-lg px-4 py-3 text-center">
                 <p className="text-xs font-bold text-rose-400">3. ASSESS ROUTE &amp; RESOURCES</p>
-                <p className="text-[10px] text-white/50 mt-1">
+                <p className="text-[10px] text-white mt-1">
                   Walk the escape route, identify refuges, check equipment availability, note
                   obstacles
                 </p>
@@ -1286,7 +1286,7 @@ export default function FireSafetyModule4Section4() {
                 <div className="space-y-2">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                     <p className="text-xs font-bold text-white">Assign Buddies</p>
-                    <p className="text-[10px] text-white/50">Minimum 2 trained buddies</p>
+                    <p className="text-[10px] text-white">Minimum 2 trained buddies</p>
                   </div>
                   <div className="flex justify-center">
                     <div className="w-px h-3 bg-rose-500/30" />
@@ -1294,13 +1294,13 @@ export default function FireSafetyModule4Section4() {
                   <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg px-3 py-2 text-center">
                     <UserCheck className="h-4 w-4 text-rose-400 mx-auto mb-1" />
                     <p className="text-xs font-bold text-rose-400">TRAIN BUDDIES</p>
-                    <p className="text-[10px] text-white/50">Route, equipment, communication</p>
+                    <p className="text-[10px] text-white">Route, equipment, communication</p>
                   </div>
                 </div>
                 <div className="space-y-2">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                     <p className="text-xs font-bold text-white">Document the Plan</p>
-                    <p className="text-[10px] text-white/50">All 10 essential PEEP contents</p>
+                    <p className="text-[10px] text-white">All 10 essential PEEP contents</p>
                   </div>
                   <div className="flex justify-center">
                     <div className="w-px h-3 bg-rose-500/30" />
@@ -1308,7 +1308,7 @@ export default function FireSafetyModule4Section4() {
                   <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg px-3 py-2 text-center">
                     <ClipboardList className="h-4 w-4 text-rose-400 mx-auto mb-1" />
                     <p className="text-xs font-bold text-rose-400">AGREE WITH INDIVIDUAL</p>
-                    <p className="text-[10px] text-white/50">Consent and sign-off</p>
+                    <p className="text-[10px] text-white">Consent and sign-off</p>
                   </div>
                 </div>
               </div>
@@ -1318,7 +1318,7 @@ export default function FireSafetyModule4Section4() {
               {/* Step 5 */}
               <div className="bg-rose-500/20 border border-rose-500/40 rounded-lg px-4 py-3 text-center">
                 <p className="text-xs font-bold text-rose-400">5. TEST DURING FIRE DRILL</p>
-                <p className="text-[10px] text-white/50 mt-1">
+                <p className="text-[10px] text-white mt-1">
                   Validate the plan under realistic conditions — identify and resolve any issues
                 </p>
               </div>
@@ -1328,11 +1328,11 @@ export default function FireSafetyModule4Section4() {
               {/* Step 6 */}
               <div className="bg-rose-500/20 border border-rose-500/40 rounded-lg px-4 py-3 text-center">
                 <p className="text-xs font-bold text-rose-400">6. REVIEW &amp; UPDATE</p>
-                <p className="text-[10px] text-white/50 mt-1">
+                <p className="text-[10px] text-white mt-1">
                   Annually minimum, on change of circumstances, after every drill
                 </p>
               </div>
-              <p className="text-xs text-white/50 text-center mt-4">
+              <p className="text-xs text-white text-center mt-4">
                 The PEEP development process is cyclical &mdash; step 6 feeds back into steps
                 2&ndash;5 as circumstances change and lessons are learned from drills.
               </p>
@@ -1349,7 +1349,7 @@ export default function FireSafetyModule4Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1367,7 +1367,7 @@ export default function FireSafetyModule4Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-4-section-3">

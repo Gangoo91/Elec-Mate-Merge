@@ -106,7 +106,7 @@ export const InvoiceClientDetailsStep = ({
 
   // Clean inline input style for seamless look
   const inputClassName =
-    'w-full h-8 bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white/50 caret-elec-yellow';
+    'w-full h-8 bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white caret-elec-yellow';
   const darkStyle: React.CSSProperties = {
     colorScheme: 'dark',
   };
@@ -117,7 +117,7 @@ export const InvoiceClientDetailsStep = ({
         {/* Recent Clients - Horizontal scroll chips */}
         {recentClients.length > 0 && (
           <div className="space-y-2">
-            <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider flex items-center gap-2">
+            <p className="text-[13px] font-medium text-white uppercase tracking-wider flex items-center gap-2">
               <Clock className="h-3.5 w-3.5" />
               Recent Clients
             </p>
@@ -142,7 +142,7 @@ export const InvoiceClientDetailsStep = ({
 
         {/* Client Information Section */}
         <div>
-          <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider mb-3">
+          <p className="text-[13px] font-medium text-white uppercase tracking-wider mb-3">
             Client Information
           </p>
           <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
@@ -238,7 +238,7 @@ export const InvoiceClientDetailsStep = ({
 
         {/* Address Section */}
         <div>
-          <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider mb-3 flex items-center gap-2">
+          <p className="text-[13px] font-medium text-white uppercase tracking-wider mb-3 flex items-center gap-2">
             <MapPin className="h-3.5 w-3.5" />
             Job Site Address
           </p>
@@ -254,7 +254,7 @@ export const InvoiceClientDetailsStep = ({
 
         {/* Job Details Section */}
         <div>
-          <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider mb-3">
+          <p className="text-[13px] font-medium text-white uppercase tracking-wider mb-3">
             Job Details
           </p>
           <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">

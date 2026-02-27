@@ -215,7 +215,7 @@ export default function RSMModule4Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-4">
@@ -350,7 +350,7 @@ export default function RSMModule4Section4() {
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-red-500/10 border border-red-500/20 p-3 rounded-lg">
                     <p className="text-xs font-medium text-red-400 mb-2">What You Do NOT Get</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                         <span>No employer-funded sick pay (SSP does not apply)</span>
@@ -377,7 +377,7 @@ export default function RSMModule4Section4() {
                     <p className="text-xs font-medium text-green-400 mb-2">
                       What You Must Fund Yourself
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                         <span>Income protection for illness or injury</span>
@@ -435,7 +435,7 @@ export default function RSMModule4Section4() {
                     <p className="text-xs font-medium text-rose-400 mb-1">
                       Target: 3 Months&rsquo; Essential Expenses
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Calculate your monthly essentials: rent/mortgage, utilities, food, transport,
                       insurance, phone. For many tradespeople, this is £1,500&ndash;2,500 per month.
                       Your target is 3 times this amount &mdash; typically £4,500&ndash;7,500. This
@@ -447,7 +447,7 @@ export default function RSMModule4Section4() {
                     <p className="text-xs font-medium text-rose-400 mb-1">
                       Starting Point: Whatever You Can Manage
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       The target may seem daunting, but the most important step is starting. Even
                       £25 per week builds to £1,300 in a year. Even £10 per week builds to £520
                       &mdash; enough to cover a tool replacement or a day off sick. Set up a
@@ -459,7 +459,7 @@ export default function RSMModule4Section4() {
                     <p className="text-xs font-medium text-rose-400 mb-1">
                       Feast Weeks Fund Famine Weeks
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Self-employed income is irregular. In good weeks, increase your savings
                       transfer. In quiet weeks, reduce or pause it. The habit of saving something
                       every week is more important than the amount. Over time, the good weeks more
@@ -479,7 +479,7 @@ export default function RSMModule4Section4() {
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-red-500/10 border border-red-500/20 p-3 rounded-lg">
                     <p className="text-xs font-medium text-red-400 mb-2">Dave: No Emergency Fund</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Dave is a self-employed sparky earning well. He spends everything he earns
                       &mdash; new van, nice holidays, latest tools. When his van breaks down and
                       needs a £1,800 repair, he puts it on a credit card at 22% interest. When he
@@ -492,7 +492,7 @@ export default function RSMModule4Section4() {
                     <p className="text-xs font-medium text-green-400 mb-2">
                       Rob: Emergency Fund in Place
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Rob earns the same as Dave but saves £50 per week into a separate account.
                       After 18 months, he has £3,900. When his van needs the same £1,800 repair, he
                       pays cash from his emergency fund &mdash; no interest, no stress. When January
@@ -533,7 +533,7 @@ export default function RSMModule4Section4() {
                     Why CIS Deductions May Not Cover Your Full Bill
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -643,7 +643,7 @@ export default function RSMModule4Section4() {
                     <p className="text-xs font-medium text-green-400 mb-1">
                       Before Missing Payments
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       If you can see that you will struggle to pay a bill, contact the creditor
                       immediately. Most creditors &mdash; including HMRC, banks, utility companies
                       and credit card providers &mdash; would rather negotiate a reduced payment
@@ -654,7 +654,7 @@ export default function RSMModule4Section4() {
                   </div>
                   <div className="bg-red-500/10 border border-red-500/20 p-3 rounded">
                     <p className="text-xs font-medium text-red-400 mb-1">After Missing Payments</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Once you have missed payments, the consequences escalate: late fees, default
                       notices, negative credit reports, increased interest rates, potential legal
                       action. Your options narrow and the stress intensifies. Even at this stage,
@@ -713,7 +713,7 @@ export default function RSMModule4Section4() {
                     <Shield className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">Income Protection Insurance</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Pays a percentage of your income (typically 50&ndash;70%) if you cannot work due
                     to illness or injury. As a self-employed person with no sick pay, this is
                     arguably the most important insurance you can have. Premiums vary based on age,
@@ -729,7 +729,7 @@ export default function RSMModule4Section4() {
                     <Shield className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">Public Liability Insurance</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Covers you if a third party is injured or their property is damaged as a result
                     of your work. Most clients, contractors and site operators require you to hold a
                     minimum of £2 million public liability cover (many require £5 million or £10
@@ -744,7 +744,7 @@ export default function RSMModule4Section4() {
                     <Shield className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">Tool Insurance</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Covers the cost of replacing tools if they are stolen, damaged or lost. An
                     electrician&rsquo;s toolkit can easily be worth £3,000&ndash;10,000 when test
                     instruments are included. Van theft and tool theft are persistent problems in
@@ -762,7 +762,7 @@ export default function RSMModule4Section4() {
                       Professional Indemnity Insurance
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Covers claims arising from professional advice or design errors. If you provide
                     design services, certification, or professional advice as part of your
                     electrical work, professional indemnity insurance protects you against claims
@@ -811,7 +811,7 @@ export default function RSMModule4Section4() {
                       Lighthouse Club &mdash; 0345 605 1956
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The only charity dedicated to the construction community. Provides emergency
                     financial grants, ongoing financial advice, emotional support and practical
                     guidance. They understand CIS, self-employment and the specific financial
@@ -827,7 +827,7 @@ export default function RSMModule4Section4() {
                       StepChange Debt Charity &mdash; 0800 138 1111
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Free, impartial, expert debt advice. StepChange can help you create a realistic
                     budget, negotiate with creditors, set up debt management plans and explore all
                     available options. Their service is completely free (unlike commercial debt
@@ -843,7 +843,7 @@ export default function RSMModule4Section4() {
                       Citizens Advice &mdash; 0800 144 8848
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Free advice on debt, benefits, employment rights, housing and more. Citizens
                     Advice can help with a wide range of financial issues including benefit
                     entitlement checks, employment disputes, housing problems and consumer
@@ -859,7 +859,7 @@ export default function RSMModule4Section4() {
                       HMRC Time to Pay &mdash; 0300 200 3835
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     If you cannot pay your tax bill in full, call this line to arrange a payment
                     plan. HMRC will usually agree to monthly instalments over 6&ndash;12 months if
                     you contact them before the payment deadline. Being proactive with HMRC is
@@ -874,7 +874,7 @@ export default function RSMModule4Section4() {
                       TaxAid &mdash; 0345 120 3779
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Free tax advice for people on low incomes who cannot afford a professional
                     accountant. TaxAid helps with Self Assessment, CIS, tax credits, HMRC disputes
                     and more. They understand the specific tax challenges of self-employed
@@ -944,7 +944,7 @@ export default function RSMModule4Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-4">

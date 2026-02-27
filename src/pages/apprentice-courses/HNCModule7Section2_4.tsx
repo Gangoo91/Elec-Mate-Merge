@@ -250,7 +250,7 @@ const HNCModule7Section2_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section2">
@@ -272,7 +272,7 @@ const HNCModule7Section2_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Standby Generator Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Generator sizing, fuel systems, starting sequences, AMF panels, and maintenance
             requirements for standby power installations
           </p>
@@ -440,35 +440,35 @@ const HNCModule7Section2_4 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">Sizing Calculation Example</p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Connected load:</span>{' '}
+                  <span className="text-white">Connected load:</span>{' '}
                   <span className="text-white">250 kW</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Diversity factor:</span>{' '}
+                  <span className="text-white">Diversity factor:</span>{' '}
                   <span className="text-white">0.8</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Maximum demand:</span>{' '}
+                  <span className="text-white">Maximum demand:</span>{' '}
                   <span className="text-white">250 × 0.8 = 200 kW</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Power factor:</span>{' '}
+                  <span className="text-white">Power factor:</span>{' '}
                   <span className="text-white">0.8</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Base kVA:</span>{' '}
+                  <span className="text-white">Base kVA:</span>{' '}
                   <span className="text-white">200 ÷ 0.8 = 250 kVA</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Largest motor:</span>{' '}
+                  <span className="text-white">Largest motor:</span>{' '}
                   <span className="text-white">30 kW (DOL start)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Starting kVA:</span>{' '}
+                  <span className="text-white">Starting kVA:</span>{' '}
                   <span className="text-white">30 × 6 = 180 kVA additional</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Total requirement:</span>{' '}
+                  <span className="text-white">Total requirement:</span>{' '}
                   <span className="text-white">250 + 90 = 340 kVA</span>
                 </p>
                 <p>
@@ -680,35 +680,35 @@ const HNCModule7Section2_4 = () => {
               </p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">T+0s:</span>{' '}
+                  <span className="text-white">T+0s:</span>{' '}
                   <span className="text-white">
                     Mains failure detected (voltage &lt;80% or &gt;110%)
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">T+1-3s:</span>{' '}
+                  <span className="text-white">T+1-3s:</span>{' '}
                   <span className="text-white">Failure confirmed (filters transients)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">T+3s:</span>{' '}
+                  <span className="text-white">T+3s:</span>{' '}
                   <span className="text-white">
                     Generator start signal sent, glow plugs energise
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">T+5-10s:</span>{' '}
+                  <span className="text-white">T+5-10s:</span>{' '}
                   <span className="text-white">Engine cranking, starter motor engaged</span>
                 </p>
                 <p>
-                  <span className="text-white/60">T+8-12s:</span>{' '}
+                  <span className="text-white">T+8-12s:</span>{' '}
                   <span className="text-white">Engine running, voltage building</span>
                 </p>
                 <p>
-                  <span className="text-white/60">T+10-12s:</span>{' '}
+                  <span className="text-white">T+10-12s:</span>{' '}
                   <span className="text-white">Generator ready (voltage and frequency stable)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">T+12-15s:</span>{' '}
+                  <span className="text-white">T+12-15s:</span>{' '}
                   <span className="text-white">Load transfer - changeover operates</span>
                 </p>
                 <p>
@@ -972,7 +972,7 @@ const HNCModule7Section2_4 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Documentation requirement:</strong> Maintain comprehensive logs of all tests,
               maintenance activities, and running hours for compliance and reliability analysis.
             </p>
@@ -997,17 +997,17 @@ const HNCModule7Section2_4 = () => {
                 <strong>Scenario:</strong> Size a standby generator for a district hospital with
                 essential load of 800 kW, including a 75 kW chiller motor (DOL start).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Step 1: Base load calculation</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Step 1: Base load calculation</p>
                 <p className="ml-4">Essential load: 800 kW</p>
                 <p className="ml-4">Power factor: 0.8</p>
                 <p className="ml-4">Base kVA: 800 ÷ 0.8 = 1,000 kVA</p>
-                <p className="mt-2 text-white/60">Step 2: Motor starting allowance</p>
+                <p className="mt-2 text-white">Step 2: Motor starting allowance</p>
                 <p className="ml-4">Chiller motor: 75 kW at 0.85 pf = 88 kVA running</p>
                 <p className="ml-4">Starting current: 6× FLC</p>
                 <p className="ml-4">Starting kVA: 88 × 6 = 528 kVA</p>
                 <p className="ml-4">Net additional (starting minus running): 528 - 88 = 440 kVA</p>
-                <p className="mt-2 text-white/60">Step 3: Total requirement</p>
+                <p className="mt-2 text-white">Step 3: Total requirement</p>
                 <p className="ml-4">Peak kVA: 1,000 + 440 = 1,440 kVA</p>
                 <p className="ml-4">With 15% margin: 1,440 × 1.15 = 1,656 kVA</p>
                 <p className="mt-2 text-green-400">
@@ -1024,7 +1024,7 @@ const HNCModule7Section2_4 = () => {
                 <strong>Scenario:</strong> Specify AMF panel requirements for a data centre with
                 10-second maximum transfer time.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>AMF Panel Specification:</p>
                 <p className="mt-2">Mains Monitoring:</p>
                 <p className="ml-4">- Undervoltage: &lt;85% for &gt;0.5 seconds</p>
@@ -1052,7 +1052,7 @@ const HNCModule7Section2_4 = () => {
                 <strong>Scenario:</strong> Design load shedding for 500 kVA generator serving 600 kW
                 connected load.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Generator capacity: 500 kVA × 0.8 pf = 400 kW</p>
                 <p>Connected load: 600 kW (must shed 200 kW minimum)</p>
                 <p className="mt-2">Load Shedding Schedule:</p>
@@ -1162,7 +1162,7 @@ const HNCModule7Section2_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1208,7 +1208,7 @@ const HNCModule7Section2_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section2">

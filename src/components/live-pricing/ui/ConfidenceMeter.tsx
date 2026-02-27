@@ -48,7 +48,7 @@ const ConfidenceMeter = ({
             <Icon className={sizeClasses[size].icon} />
             <span className={cn('font-medium', sizeClasses[size].text)}>{label} Confidence</span>
           </div>
-          <span className={cn('text-white/60', sizeClasses[size].text)}>{score}%</span>
+          <span className={cn('text-white', sizeClasses[size].text)}>{score}%</span>
         </div>
       )}
       <div className={cn('w-full bg-white/10 rounded-full overflow-hidden', sizeClasses[size].bar)}>

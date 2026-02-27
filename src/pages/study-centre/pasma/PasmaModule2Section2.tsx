@@ -210,11 +210,11 @@ const PasmaModule2Section2 = () => {
           </div>
           <div className="inline-block bg-elec-yellow/10 border border-elec-yellow/20 px-3 py-1 rounded-full text-sm font-semibold mb-4 ml-0">
             <span className="text-elec-yellow">MODULE 2</span>
-            <span className="text-white/40 mx-2">&middot;</span>
-            <span className="text-white/60">SECTION 2</span>
+            <span className="text-white mx-2">&middot;</span>
+            <span className="text-white">SECTION 2</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">Structural Components</h1>
-          <p className="text-white/70 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding the key components that make up a mobile access tower — from end frames
             and braces to platforms, castors, and spigots
           </p>
@@ -224,7 +224,7 @@ const PasmaModule2Section2 = () => {
         <div className="grid sm:grid-cols-2 gap-4 mb-10">
           <div className="rounded-lg p-4 bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -257,7 +257,7 @@ const PasmaModule2Section2 = () => {
           </div>
           <div className="rounded-lg p-4 bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <p className="font-semibold text-elec-yellow/90 mb-2">On Site</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -293,7 +293,7 @@ const PasmaModule2Section2 = () => {
         {/* Learning Outcomes */}
         <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4">By the end of this section, you will be able to:</p>
+          <p className="text-white mb-4">By the end of this section, you will be able to:</p>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
               'Identify and name the principal structural components of a mobile access tower',
@@ -305,7 +305,7 @@ const PasmaModule2Section2 = () => {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-elec-yellow/70 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </div>
             ))}
           </div>
@@ -320,7 +320,7 @@ const PasmaModule2Section2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               End Frames (Standards & Transoms)
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 End frames are the vertical ladder frames that form the skeleton of the tower. Each
                 end frame consists of two vertical tubes — called{' '}
@@ -331,7 +331,7 @@ const PasmaModule2Section2 = () => {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-elec-yellow">Key Definition: End Frame</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   An <strong className="text-white">end frame</strong> (also called a ladder frame
                   or H-frame) is a prefabricated vertical component consisting of two parallel
                   standards (vertical tubes) connected by transoms (horizontal rungs) at regular
@@ -342,7 +342,7 @@ const PasmaModule2Section2 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">End Frame Features</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
                     <div>
@@ -392,7 +392,7 @@ const PasmaModule2Section2 = () => {
               <span className="text-purple-400/80 text-sm font-normal">02</span>
               Horizontal & Diagonal Braces
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Braces are the connecting elements that hold the end frames together and give the
                 tower its structural rigidity. Without braces, the end frames would simply fall
@@ -404,7 +404,7 @@ const PasmaModule2Section2 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
                   <h3 className="text-purple-300 font-medium mb-2">Horizontal Braces</h3>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Connect end frames at right angles</span>
@@ -435,7 +435,7 @@ const PasmaModule2Section2 = () => {
                 </div>
                 <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
                   <h3 className="text-purple-300 font-medium mb-2">Diagonal Braces</h3>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Cross-bracing fitted diagonally between frames</span>
@@ -469,7 +469,7 @@ const PasmaModule2Section2 = () => {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-elec-yellow">Key Definition: Racking</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   <strong className="text-white">Racking</strong> is a parallelogram distortion
                   where the tower leans to one side because the rectangular shape has deformed into
                   a parallelogram. This occurs when diagonal braces are missing, incorrectly fitted,
@@ -480,7 +480,7 @@ const PasmaModule2Section2 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">Plan Braces</h3>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   In addition to horizontal and diagonal braces on the tower faces, some
                   configurations require
                   <strong className="text-white"> plan braces</strong> — horizontal diagonal members
@@ -503,7 +503,7 @@ const PasmaModule2Section2 = () => {
               <span className="text-teal-400/80 text-sm font-normal">03</span>
               Platforms & Trapdoors
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The working platform is the deck on which operatives stand to carry out their work.
                 Platforms span the full width and length of the tower, providing a flat, stable
@@ -514,7 +514,7 @@ const PasmaModule2Section2 = () => {
 
               <div className="bg-white/5 border border-teal-400/30 p-4 rounded-lg">
                 <h3 className="text-teal-300 font-medium mb-2">Working Platform Features</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-teal-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -555,11 +555,11 @@ const PasmaModule2Section2 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">Intermediate Platforms</h3>
-                <p className="text-white/70 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   In addition to the main working platform at the top of the tower, intermediate
                   platforms are fitted at intervals during the build. These serve two purposes:
                 </p>
-                <ul className="text-white/60 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -578,7 +578,7 @@ const PasmaModule2Section2 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">Safe Working Load (SWL)</h3>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Every platform has a rated safe working load specified by the manufacturer. This
                   includes the weight of operatives, tools, and materials. The SWL must never be
                   exceeded. Typical platform SWLs range from{' '}
@@ -598,7 +598,7 @@ const PasmaModule2Section2 = () => {
               <span className="text-red-400/80 text-sm font-normal">04</span>
               Tower Anatomy — Labelled Diagram
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The diagram below shows a double-width mobile access tower with the principal
                 structural components labelled. Familiarise yourself with the position and name of
@@ -609,7 +609,7 @@ const PasmaModule2Section2 = () => {
               {/* SVG Tower Diagram */}
               <div className="my-8 flex justify-center">
                 <svg
-                  className="w-full max-w-md text-white/70"
+                  className="w-full max-w-md text-white"
                   viewBox="0 0 400 600"
                   fill="none"
                   stroke="currentColor"
@@ -665,7 +665,7 @@ const PasmaModule2Section2 = () => {
                     x2="120"
                     y2="590"
                     strokeWidth="1"
-                    className="text-white/30"
+                    className="text-white"
                     stroke="currentColor"
                   />
                   <line
@@ -674,7 +674,7 @@ const PasmaModule2Section2 = () => {
                     x2="300"
                     y2="590"
                     strokeWidth="1"
-                    className="text-white/30"
+                    className="text-white"
                     stroke="currentColor"
                   />
 
@@ -685,7 +685,7 @@ const PasmaModule2Section2 = () => {
                     x2="110"
                     y2="100"
                     strokeWidth="2.5"
-                    className="text-white/60"
+                    className="text-white"
                     stroke="currentColor"
                   />
                   <line
@@ -694,7 +694,7 @@ const PasmaModule2Section2 = () => {
                     x2="150"
                     y2="100"
                     strokeWidth="2.5"
-                    className="text-white/60"
+                    className="text-white"
                     stroke="currentColor"
                   />
 
@@ -705,7 +705,7 @@ const PasmaModule2Section2 = () => {
                     x2="250"
                     y2="100"
                     strokeWidth="2.5"
-                    className="text-white/60"
+                    className="text-white"
                     stroke="currentColor"
                   />
                   <line
@@ -714,7 +714,7 @@ const PasmaModule2Section2 = () => {
                     x2="290"
                     y2="100"
                     strokeWidth="2.5"
-                    className="text-white/60"
+                    className="text-white"
                     stroke="currentColor"
                   />
 
@@ -727,7 +727,7 @@ const PasmaModule2Section2 = () => {
                       x2="150"
                       y2={y}
                       strokeWidth="1.5"
-                      className="text-white/40"
+                      className="text-white"
                       stroke="currentColor"
                     />
                   ))}
@@ -741,7 +741,7 @@ const PasmaModule2Section2 = () => {
                       x2="290"
                       y2={y}
                       strokeWidth="1.5"
-                      className="text-white/40"
+                      className="text-white"
                       stroke="currentColor"
                     />
                   ))}
@@ -935,7 +935,7 @@ const PasmaModule2Section2 = () => {
                     x2="290"
                     y2="530"
                     strokeWidth="1"
-                    className="text-white/30"
+                    className="text-white"
                     stroke="currentColor"
                     strokeDasharray="4,3"
                   />
@@ -949,13 +949,13 @@ const PasmaModule2Section2 = () => {
                     x2="345"
                     y2="75"
                     strokeWidth="0.8"
-                    className="text-white/40"
+                    className="text-white"
                     stroke="currentColor"
                   />
                   <text
                     x="348"
                     y="79"
-                    className="text-white/90 fill-current"
+                    className="text-white fill-current"
                     fontSize="10"
                     fontFamily="system-ui"
                   >
@@ -969,13 +969,13 @@ const PasmaModule2Section2 = () => {
                     x2="345"
                     y2="120"
                     strokeWidth="0.8"
-                    className="text-white/40"
+                    className="text-white"
                     stroke="currentColor"
                   />
                   <text
                     x="348"
                     y="124"
-                    className="text-white/90 fill-current"
+                    className="text-white fill-current"
                     fontSize="10"
                     fontFamily="system-ui"
                   >
@@ -989,13 +989,13 @@ const PasmaModule2Section2 = () => {
                     x2="345"
                     y2="175"
                     strokeWidth="0.8"
-                    className="text-white/40"
+                    className="text-white"
                     stroke="currentColor"
                   />
                   <text
                     x="348"
                     y="179"
-                    className="text-white/90 fill-current"
+                    className="text-white fill-current"
                     fontSize="10"
                     fontFamily="system-ui"
                   >
@@ -1009,13 +1009,13 @@ const PasmaModule2Section2 = () => {
                     x2="345"
                     y2="225"
                     strokeWidth="0.8"
-                    className="text-white/40"
+                    className="text-white"
                     stroke="currentColor"
                   />
                   <text
                     x="348"
                     y="229"
-                    className="text-white/90 fill-current"
+                    className="text-white fill-current"
                     fontSize="10"
                     fontFamily="system-ui"
                   >
@@ -1029,13 +1029,13 @@ const PasmaModule2Section2 = () => {
                     x2="55"
                     y2="280"
                     strokeWidth="0.8"
-                    className="text-white/40"
+                    className="text-white"
                     stroke="currentColor"
                   />
                   <text
                     x="10"
                     y="275"
-                    className="text-white/90 fill-current"
+                    className="text-white fill-current"
                     fontSize="10"
                     fontFamily="system-ui"
                   >
@@ -1044,7 +1044,7 @@ const PasmaModule2Section2 = () => {
                   <text
                     x="10"
                     y="287"
-                    className="text-white/60 fill-current"
+                    className="text-white fill-current"
                     fontSize="8"
                     fontFamily="system-ui"
                   >
@@ -1053,7 +1053,7 @@ const PasmaModule2Section2 = () => {
                   <text
                     x="10"
                     y="297"
-                    className="text-white/60 fill-current"
+                    className="text-white fill-current"
                     fontSize="8"
                     fontFamily="system-ui"
                   >
@@ -1067,7 +1067,7 @@ const PasmaModule2Section2 = () => {
                     x2="200"
                     y2="395"
                     strokeWidth="0.8"
-                    className="text-white/40"
+                    className="text-white"
                     stroke="currentColor"
                   />
                   <text
@@ -1087,7 +1087,7 @@ const PasmaModule2Section2 = () => {
                     x2="260"
                     y2="450"
                     strokeWidth="0.8"
-                    className="text-white/40"
+                    className="text-white"
                     stroke="currentColor"
                   />
                   <text
@@ -1116,7 +1116,7 @@ const PasmaModule2Section2 = () => {
                     x2="55"
                     y2="376"
                     strokeWidth="0.8"
-                    className="text-white/40"
+                    className="text-white"
                     stroke="currentColor"
                   />
                   <text
@@ -1136,7 +1136,7 @@ const PasmaModule2Section2 = () => {
                     x2="55"
                     y2="540"
                     strokeWidth="0.8"
-                    className="text-white/40"
+                    className="text-white"
                     stroke="currentColor"
                   />
                   <text
@@ -1165,7 +1165,7 @@ const PasmaModule2Section2 = () => {
                     x2="340"
                     y2="570"
                     strokeWidth="0.8"
-                    className="text-white/40"
+                    className="text-white"
                     stroke="currentColor"
                   />
                   <text
@@ -1182,7 +1182,7 @@ const PasmaModule2Section2 = () => {
                   <text
                     x="145"
                     y="598"
-                    className="text-white/50 fill-current"
+                    className="text-white fill-current"
                     fontSize="8"
                     fontFamily="system-ui"
                     fontStyle="italic"
@@ -1194,7 +1194,7 @@ const PasmaModule2Section2 = () => {
                   <text
                     x="200"
                     y="35"
-                    className="text-white/90 fill-current"
+                    className="text-white fill-current"
                     fontSize="13"
                     fontFamily="system-ui"
                     fontWeight="600"
@@ -1205,7 +1205,7 @@ const PasmaModule2Section2 = () => {
                   <text
                     x="200"
                     y="52"
-                    className="text-white/50 fill-current"
+                    className="text-white fill-current"
                     fontSize="9"
                     fontFamily="system-ui"
                     textAnchor="middle"
@@ -1220,39 +1220,39 @@ const PasmaModule2Section2 = () => {
                 <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm">
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-0.5 bg-white/60"></div>
-                    <span className="text-white/70">End frames</span>
+                    <span className="text-white">End frames</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-0.5 bg-green-400/70"></div>
-                    <span className="text-white/70">Horizontal braces</span>
+                    <span className="text-white">Horizontal braces</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-0.5 bg-orange-400/70"></div>
-                    <span className="text-white/70">Diagonal braces</span>
+                    <span className="text-white">Diagonal braces</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-0.5 bg-cyan-400"></div>
-                    <span className="text-white/70">Platforms</span>
+                    <span className="text-white">Platforms</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-0.5 bg-red-400"></div>
-                    <span className="text-white/70">Guardrails</span>
+                    <span className="text-white">Guardrails</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-0.5 bg-purple-400"></div>
-                    <span className="text-white/70">Spigots</span>
+                    <span className="text-white">Spigots</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-0.5 bg-blue-400"></div>
-                    <span className="text-white/70">Castors</span>
+                    <span className="text-white">Castors</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-0.5 bg-amber-400"></div>
-                    <span className="text-white/70">Adjustable legs</span>
+                    <span className="text-white">Adjustable legs</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-3 h-0.5 bg-yellow-400"></div>
-                    <span className="text-white/70">Toeboards</span>
+                    <span className="text-white">Toeboards</span>
                   </div>
                 </div>
               </div>
@@ -1269,7 +1269,7 @@ const PasmaModule2Section2 = () => {
               <span className="text-cyan-400/80 text-sm font-normal">05</span>
               Castors, Base Plates & Adjustable Legs
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The base components support the entire tower structure and determine how it
                 interfaces with the ground. The choice between castors, base plates, and the use of
@@ -1279,7 +1279,7 @@ const PasmaModule2Section2 = () => {
 
               <div className="bg-white/5 border border-cyan-400/30 p-4 rounded-lg">
                 <h3 className="text-cyan-300 font-medium mb-3">Castors</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-cyan-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1314,7 +1314,7 @@ const PasmaModule2Section2 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <h3 className="text-elec-yellow font-medium mb-2">Base Plates</h3>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Used instead of castors when the tower does not need to be mobile. Base plates
                     sit flat on the ground and spread the tower's load over a larger area. They are
                     typically used on soft ground (with sole boards) or where the tower will remain
@@ -1323,7 +1323,7 @@ const PasmaModule2Section2 = () => {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <h3 className="text-elec-yellow font-medium mb-2">Adjustable Legs</h3>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Screw-jack legs that allow fine height adjustment to level the tower on slightly
                     uneven ground. Each leg can be independently adjusted. The maximum extension is
                     specified by the manufacturer — exceeding this compromises stability. Locking
@@ -1337,7 +1337,7 @@ const PasmaModule2Section2 = () => {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Maximum Extension Warning</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Adjustable legs have a maximum safe extension marked on the leg or specified in
                   the instruction manual. This is typically{' '}
                   <strong className="text-white">300mm to 400mm</strong> depending on the system.
@@ -1358,7 +1358,7 @@ const PasmaModule2Section2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Spigots & Connection Hardware
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Spigots are the male connectors that join frame sections vertically, allowing the
                 tower to be built progressively higher. Each spigot slides into the top of one frame
@@ -1370,7 +1370,7 @@ const PasmaModule2Section2 = () => {
                 <h3 className="font-semibold mb-2 text-elec-yellow">
                   Key Definition: Gravity Lock
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   A <strong className="text-white">gravity lock</strong> (also called a
                   spring-loaded lock or snap lock) is an automatic locking device fitted to spigots
                   and connection hardware. When two components are joined, the gravity lock engages
@@ -1382,7 +1382,7 @@ const PasmaModule2Section2 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">Checking Spigot Engagement</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <Eye className="h-4 w-4 text-elec-yellow mt-1 flex-shrink-0" />
                     <div>
@@ -1404,11 +1404,11 @@ const PasmaModule2Section2 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">Worn Spigot Indicators</h3>
-                <p className="text-white/70 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   During inspection, look for these signs that a spigot or its lock mechanism is
                   worn or damaged:
                 </p>
-                <ul className="text-white/60 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Gravity lock does not spring out automatically when frame is seated</span>
@@ -1455,7 +1455,7 @@ const PasmaModule2Section2 = () => {
               <span className="text-purple-400/80 text-sm font-normal">07</span>
               Component Inspection & Defects
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Every component must be inspected before use. A single defective component can
                 compromise the entire tower's structural integrity. Inspections should be carried
@@ -1469,7 +1469,7 @@ const PasmaModule2Section2 = () => {
                     <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0"></div>
                     <div>
                       <p className="text-white font-medium">Bent or Distorted Tubes</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Any visible bend, kink, or deformation in a standard, transom, or brace
                         indicates the component has been overloaded or impacted. It must not be
                         used.
@@ -1480,7 +1480,7 @@ const PasmaModule2Section2 = () => {
                     <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0"></div>
                     <div>
                       <p className="text-white font-medium">Cracked or Broken Welds</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Welds at joints — particularly where transoms meet standards — must be
                         intact. Cracked welds indicate fatigue failure and the component must be
                         rejected.
@@ -1491,7 +1491,7 @@ const PasmaModule2Section2 = () => {
                     <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0"></div>
                     <div>
                       <p className="text-white font-medium">Missing or Broken Locks</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Gravity locks, spring clips, and platform hooks must all be present and
                         functional. Missing or broken locks mean the component cannot be securely
                         connected.
@@ -1502,7 +1502,7 @@ const PasmaModule2Section2 = () => {
                     <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0"></div>
                     <div>
                       <p className="text-white font-medium">Worn or Damaged Castors</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Flat spots on wheels, broken brakes, or loose swivel bearings. Castors with
                         defective brakes must not be used — the tower cannot be safely immobilised.
                       </p>
@@ -1512,7 +1512,7 @@ const PasmaModule2Section2 = () => {
                     <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0"></div>
                     <div>
                       <p className="text-white font-medium">Platform Damage</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Cracked or split deck boards, broken locking hooks, damaged trapdoor hinges,
                         or warped platform frames. Any damage that could cause the platform to fail
                         under load.
@@ -1527,9 +1527,9 @@ const PasmaModule2Section2 = () => {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Reject and Quarantine Procedure</h3>
                 </div>
-                <div className="text-white/70 text-sm space-y-2">
+                <div className="text-white text-sm space-y-2">
                   <p>If a defective component is found:</p>
-                  <ol className="list-decimal pl-5 space-y-1 text-white/60">
+                  <ol className="list-decimal pl-5 space-y-1 text-white">
                     <li>
                       <strong className="text-white">Stop:</strong> Do not use the defective
                       component
@@ -1551,7 +1551,7 @@ const PasmaModule2Section2 = () => {
                       manufacturer or supplier for assessment
                     </li>
                   </ol>
-                  <p className="text-white/50 italic mt-2">
+                  <p className="text-white italic mt-2">
                     Never attempt field repairs on structural tower components. Welding,
                     straightening, or drilling compromises the material's strength and invalidates
                     the manufacturer's design calculations.
@@ -1564,19 +1564,19 @@ const PasmaModule2Section2 = () => {
                 <div className="grid sm:grid-cols-3 gap-3 text-sm">
                   <div className="bg-white/5 rounded p-3">
                     <p className="text-white font-medium">Pre-Use</p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       Before every assembly — check each component as handled
                     </p>
                   </div>
                   <div className="bg-white/5 rounded p-3">
                     <p className="text-white font-medium">Weekly</p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       At least every 7 days during prolonged use (WAH Regs 2005)
                     </p>
                   </div>
                   <div className="bg-white/5 rounded p-3">
                     <p className="text-white font-medium">After Events</p>
-                    <p className="text-white/60">
+                    <p className="text-white">
                       After impact, high winds, or any event affecting integrity
                     </p>
                   </div>
@@ -1595,7 +1595,7 @@ const PasmaModule2Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1611,7 +1611,7 @@ const PasmaModule2Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-2-section-1">

@@ -263,7 +263,7 @@ const MOETModule1Section3_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module1-section3">
@@ -285,7 +285,7 @@ const MOETModule1Section3_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Hierarchy of Controls
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Selecting and applying control measures in order of effectiveness
           </p>
         </header>
@@ -391,7 +391,7 @@ const MOETModule1Section3_3 = () => {
                   effective control because the hazard no longer exists — there is zero residual
                   risk from that specific hazard.
                 </p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   <strong>Effectiveness:</strong> Highest — removes the hazard at source. No
                   reliance on human behaviour.
                 </p>
@@ -409,7 +409,7 @@ const MOETModule1Section3_3 = () => {
                   hazardous alternative. The hazard is not removed entirely but is reduced at
                   source.
                 </p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   <strong>Effectiveness:</strong> Very high — reduces the hazard at source. Minimal
                   reliance on human behaviour.
                 </p>
@@ -427,7 +427,7 @@ const MOETModule1Section3_3 = () => {
                   enclosures, interlocks, ventilation systems, or redesigned equipment. The hazard
                   still exists, but access to it is physically restricted.
                 </p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   <strong>Effectiveness:</strong> High — creates a physical barrier. Works
                   automatically without human action (if maintained).
                 </p>
@@ -445,7 +445,7 @@ const MOETModule1Section3_3 = () => {
                   permits to work, job rotation, or scheduling. The hazard and the potential for
                   exposure remain — control depends on people following the system.
                 </p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   <strong>Effectiveness:</strong> Moderate — depends entirely on human compliance.
                   Subject to drift, complacency and error.
                 </p>
@@ -465,7 +465,7 @@ const MOETModule1Section3_3 = () => {
                   glasses, helmets, hearing protection, respiratory protection, arc flash suits. The
                   hazard remains at full strength; the PPE is the only barrier.
                 </p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   <strong>Effectiveness:</strong> Lowest — protects only the wearer. Depends on
                   correct selection, fitting, use and maintenance.
                 </p>
@@ -994,7 +994,7 @@ const MOETModule1Section3_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1013,7 +1013,7 @@ const MOETModule1Section3_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module1-section3-2">

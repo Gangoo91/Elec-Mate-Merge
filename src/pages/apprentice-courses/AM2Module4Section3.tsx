@@ -222,11 +222,11 @@ const AM2Module4Section3 = () => {
 
       {/* Critical Warning */}
       <AM2CriticalWarning title="CRITICAL: Poor Documentation = AM2 Failure">
-        <p className="text-ios-callout text-white/80 mb-2">
+        <p className="text-ios-callout text-white mb-2">
           Poor, incomplete, or fake entries are one of the most common reasons candidates fail the
           testing stage. Professional paperwork completion is essential for AM2 success.
         </p>
-        <p className="text-ios-callout text-white/90 font-medium">
+        <p className="text-ios-callout text-white font-medium">
           Many candidates fail this section not from lack of testing skill, but from poor recording
           habits and rushed paperwork completion.
         </p>
@@ -249,7 +249,7 @@ const AM2Module4Section3 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-3">
               Primary Certificates:
             </h4>
-            <ul className="text-ios-callout text-white/80 space-y-1.5">
+            <ul className="text-ios-callout text-white space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Electrical Installation Certificate (EIC)</span>
@@ -269,7 +269,7 @@ const AM2Module4Section3 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-3">
               Test Results Required:
             </h4>
-            <ul className="text-ios-callout text-white/80 space-y-1.5">
+            <ul className="text-ios-callout text-white space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Continuity, insulation, polarity</span>
@@ -308,7 +308,7 @@ const AM2Module4Section3 = () => {
               <CheckCircle className="h-4 w-4 text-emerald-400" />
               Essential Requirements:
             </h4>
-            <ul className="text-ios-callout text-white/80 space-y-1.5">
+            <ul className="text-ios-callout text-white space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>All sections filled in - no blanks</span>
@@ -333,7 +333,7 @@ const AM2Module4Section3 = () => {
               <PenTool className="h-4 w-4 text-elec-yellow" />
               Professional Standards:
             </h4>
-            <ul className="text-ios-callout text-white/80 space-y-1.5">
+            <ul className="text-ios-callout text-white space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>No corrections by scribbling</span>
@@ -362,7 +362,7 @@ const AM2Module4Section3 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-2">
               Documentation Errors:
             </h4>
-            <ul className="text-ios-callout text-white/80 space-y-1.5">
+            <ul className="text-ios-callout text-white space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-red-400">•</span>
                 <span>Leaving results blank</span>
@@ -384,7 +384,7 @@ const AM2Module4Section3 = () => {
 
           <div>
             <h4 className="text-ios-headline text-white font-semibold mb-2">Unrealistic Values:</h4>
-            <ul className="text-ios-callout text-white/80 space-y-1.5">
+            <ul className="text-ios-callout text-white space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-red-400">•</span>
                 <span>Recording unrealistic numbers (e.g. 0.00 Ω for Zs)</span>
@@ -433,7 +433,7 @@ const AM2Module4Section3 = () => {
                 <p className="text-ios-callout text-elec-yellow font-semibold mb-2">
                   Electrical Installation Certificate (EIC):
                 </p>
-                <ul className="text-ios-callout text-white/80 space-y-1">
+                <ul className="text-ios-callout text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
                     <span>Designer, Constructor, Inspector details</span>
@@ -456,7 +456,7 @@ const AM2Module4Section3 = () => {
                 <p className="text-ios-callout text-elec-yellow font-semibold mb-2">
                   Schedule of Test Results:
                 </p>
-                <ul className="text-ios-callout text-white/80 space-y-1">
+                <ul className="text-ios-callout text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
                     <span>Circuit designation and description</span>
@@ -489,7 +489,7 @@ const AM2Module4Section3 = () => {
                 <p className="text-ios-callout text-emerald-400 font-semibold mb-2">
                   Handwriting Quality:
                 </p>
-                <ul className="text-ios-callout text-white/80 space-y-1">
+                <ul className="text-ios-callout text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
                     <span>Use block capitals for important details</span>
@@ -508,7 +508,7 @@ const AM2Module4Section3 = () => {
                 <p className="text-ios-callout text-emerald-400 font-semibold mb-2">
                   Error Correction:
                 </p>
-                <ul className="text-ios-callout text-white/80 space-y-1">
+                <ul className="text-ios-callout text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
                     <span>Single line through error, initial change</span>
@@ -527,7 +527,7 @@ const AM2Module4Section3 = () => {
                 <p className="text-ios-callout text-emerald-400 font-semibold mb-2">
                   Data Integrity:
                 </p>
-                <ul className="text-ios-callout text-white/80 space-y-1">
+                <ul className="text-ios-callout text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
                     <span>Record actual measured values only</span>
@@ -558,7 +558,7 @@ const AM2Module4Section3 = () => {
           <div className="space-y-4">
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="text-ios-headline text-white font-semibold mb-2">Continuity Tests:</h4>
-              <ul className="text-ios-callout text-white/80 space-y-1.5">
+              <ul className="text-ios-callout text-white space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>
@@ -586,7 +586,7 @@ const AM2Module4Section3 = () => {
               <h4 className="text-ios-headline text-white font-semibold mb-2">
                 Insulation Resistance:
               </h4>
-              <ul className="text-ios-callout text-white/80 space-y-1.5">
+              <ul className="text-ios-callout text-white space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>
@@ -617,7 +617,7 @@ const AM2Module4Section3 = () => {
               <h4 className="text-ios-headline text-white font-semibold mb-2">
                 Earth Fault Loop Impedance (Zs):
               </h4>
-              <ul className="text-ios-callout text-white/80 space-y-1.5">
+              <ul className="text-ios-callout text-white space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>
@@ -643,7 +643,7 @@ const AM2Module4Section3 = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="text-ios-headline text-white font-semibold mb-2">RCD Testing:</h4>
-              <ul className="text-ios-callout text-white/80 space-y-1.5">
+              <ul className="text-ios-callout text-white space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>
@@ -674,7 +674,7 @@ const AM2Module4Section3 = () => {
           <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
             PSC/PSCC (Short Circuit Current):
           </h4>
-          <p className="text-ios-callout text-white/80">
+          <p className="text-ios-callout text-white">
             Record measured value in kA or A. Typical domestic installations: 1-6 kA. Commercial
             installations may be higher. Always record the actual measured value, not estimated or
             calculated figures.
@@ -692,7 +692,7 @@ const AM2Module4Section3 = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <h4 className="text-ios-headline text-white font-semibold mb-3">During Testing:</h4>
-            <ul className="text-ios-callout text-white/80 space-y-2">
+            <ul className="text-ios-callout text-white space-y-2">
               <li className="flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                 <span>Record results as you test - don't leave until the end</span>
@@ -710,7 +710,7 @@ const AM2Module4Section3 = () => {
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <h4 className="text-ios-headline text-white font-semibold mb-3">Quality Control:</h4>
-            <ul className="text-ios-callout text-white/80 space-y-2">
+            <ul className="text-ios-callout text-white space-y-2">
               <li className="flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>Double-check results against expected ranges</span>
@@ -734,7 +734,7 @@ const AM2Module4Section3 = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <p className="text-ios-callout text-white font-semibold mb-1">Time Management:</p>
-              <ul className="text-ios-callout text-white/80 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>Allocate 10-15 minutes for paperwork completion</span>
@@ -751,7 +751,7 @@ const AM2Module4Section3 = () => {
             </div>
             <div>
               <p className="text-ios-callout text-white font-semibold mb-1">Error Prevention:</p>
-              <ul className="text-ios-callout text-white/80 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>Use a systematic approach - same order every time</span>
@@ -790,7 +790,7 @@ const AM2Module4Section3 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-2">
               Example 1: Infinity Symbol Error
             </h4>
-            <p className="text-ios-callout text-white/80 mb-2">
+            <p className="text-ios-callout text-white mb-2">
               Candidate recorded all insulation resistance results as "∞." Assessor marked incorrect
               - <strong className="text-red-400">failed paperwork section</strong>
             </p>
@@ -804,7 +804,7 @@ const AM2Module4Section3 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-2">
               Example 2: Incomplete Documentation
             </h4>
-            <p className="text-ios-callout text-white/80 mb-2">
+            <p className="text-ios-callout text-white mb-2">
               Candidate left several boxes blank, assuming assessor wouldn't check.{' '}
               <strong className="text-red-400">Lost easy marks</strong>
             </p>
@@ -817,7 +817,7 @@ const AM2Module4Section3 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-2">
               Example 3: Professional Excellence
             </h4>
-            <p className="text-ios-callout text-white/80 mb-2">
+            <p className="text-ios-callout text-white mb-2">
               Candidate completed paperwork neatly, with realistic results matching the
               installation. <strong className="text-emerald-400">Passed smoothly</strong>
             </p>
@@ -838,7 +838,7 @@ const AM2Module4Section3 = () => {
 
         <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-4">
           <h4 className="text-ios-headline text-white font-semibold mb-3">Key Takeaways:</h4>
-          <ul className="text-ios-callout text-white/80 space-y-2">
+          <ul className="text-ios-callout text-white space-y-2">
             <li className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
               <span>Paperwork is part of the test - not an afterthought</span>
@@ -868,7 +868,7 @@ const AM2Module4Section3 = () => {
 
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
           <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">Next Steps:</h4>
-          <p className="text-ios-callout text-white/80">
+          <p className="text-ios-callout text-white">
             You're now ready to move on to Section 4, where we'll cover functional and operational
             testing procedures.
           </p>

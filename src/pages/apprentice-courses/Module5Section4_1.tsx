@@ -232,7 +232,7 @@ const Module5Section4_1 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -249,13 +249,13 @@ const Module5Section4_1 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.4.1</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.4.1</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Estimating Materials from Drawings or Site Walkthroughs
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Learn to accurately estimate materials for electrical installations using technical
               drawings and site surveys.
             </p>
@@ -268,7 +268,7 @@ const Module5Section4_1 = () => {
               In 30 Seconds
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <ul className="text-white/90 space-y-2 text-sm leading-relaxed">
+              <ul className="text-white space-y-2 text-sm leading-relaxed">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Always combine drawing estimates with site walkthroughs</span>
@@ -295,7 +295,7 @@ const Module5Section4_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="text-white/85 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Accurate estimation of materials is critical in electrical installation projects.
                 Whether using technical drawings or conducting on-site walkthroughs, estimating
@@ -308,7 +308,7 @@ const Module5Section4_1 = () => {
                   <Package className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-elec-yellow mb-2">Why This Matters</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Accurate material estimation in electrical projects reduces waste by up to 30%
                       and prevents costly delays that can impact entire construction schedules.
                       Projects with accurate estimates show 40% fewer emergency orders and improved
@@ -318,7 +318,7 @@ const Module5Section4_1 = () => {
                 </div>
               </div>
               <div className="p-3 rounded bg-white/5 border border-white/10">
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">Industry Standard:</strong> BS 7671 requires proper
                   planning and adequate materials to ensure safe and compliant electrical
                   installations.
@@ -333,13 +333,13 @@ const Module5Section4_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <div className="text-white/85 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p className="mb-4">By the end of this subsection, you will be able to:</p>
 
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-medium text-white mb-3">Drawing Interpretation Skills</h4>
-                  <ul className="space-y-2 text-sm text-white/80">
+                  <ul className="space-y-2 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
                       Read and interpret electrical layout drawings, sections, and elevations
@@ -361,7 +361,7 @@ const Module5Section4_1 = () => {
 
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-medium text-white mb-3">Site Assessment Skills</h4>
-                  <ul className="space-y-2 text-sm text-white/80">
+                  <ul className="space-y-2 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
                       Conduct thorough site walkthroughs to verify drawing accuracy
@@ -383,7 +383,7 @@ const Module5Section4_1 = () => {
 
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-medium text-white mb-3">Calculation & Planning</h4>
-                  <ul className="space-y-2 text-sm text-white/80">
+                  <ul className="space-y-2 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
                       Calculate cable lengths including vertical drops and containment routing
@@ -405,7 +405,7 @@ const Module5Section4_1 = () => {
 
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-medium text-white mb-3">Professional Practice</h4>
-                  <ul className="space-y-2 text-sm text-white/80">
+                  <ul className="space-y-2 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
                       Recognise risks and consequences of under- or over-ordering materials
@@ -434,7 +434,7 @@ const Module5Section4_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Importance of Accurate Estimation
             </h2>
-            <div className="text-white/85 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Accurate material estimation is the foundation of successful electrical
                 installations:
@@ -442,7 +442,7 @@ const Module5Section4_1 = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-3">Project Success Benefits</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>Ensures work completion without delays</span>
@@ -463,7 +463,7 @@ const Module5Section4_1 = () => {
               </div>
 
               <div className="p-3 rounded bg-green-500/10 border border-green-500/20">
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-green-400">Professional Impact:</strong> Accurate
                   estimation demonstrates competence and builds long-term client relationships.
                 </p>
@@ -477,12 +477,12 @@ const Module5Section4_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Estimation from Drawings
             </h2>
-            <div className="text-white/85 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>Technical drawings provide the foundation for material calculations:</p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Key Steps:</p>
-                <ul className="text-sm text-white/80 space-y-2 ml-4">
+                <ul className="text-sm text-white space-y-2 ml-4">
                   <li>
                     <strong>Review drawings</strong> - layouts, schedules, specifications
                   </li>
@@ -504,7 +504,7 @@ const Module5Section4_1 = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-3">Common Drawing Scales</p>
-                <div className="grid grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid grid-cols-2 gap-3 text-sm text-white">
                   <div>
                     <p>
                       <strong>Plans:</strong> 1:50 or 1:100
@@ -527,7 +527,7 @@ const Module5Section4_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Circuit Information</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Circuit reference numbers</li>
                     <li>• Cable types and sizes</li>
                     <li>• Protective device ratings</li>
@@ -536,7 +536,7 @@ const Module5Section4_1 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Physical Layout</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Equipment positions</li>
                     <li>• Containment routes</li>
                     <li>• Floor levels and heights</li>
@@ -547,7 +547,7 @@ const Module5Section4_1 = () => {
 
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <p className="font-medium text-blue-400 mb-2">Measurement Techniques</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>
                     <strong>Horizontal runs:</strong> Use plan views and scale rules
                   </li>
@@ -584,7 +584,7 @@ const Module5Section4_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Site Walkthroughs
             </h2>
-            <div className="text-white/85 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Physical site verification ensures estimates match real conditions and reveals
                 information that drawings cannot show:
@@ -592,7 +592,7 @@ const Module5Section4_1 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Essential Site Inspection Steps:</p>
-                <ul className="text-sm text-white/80 space-y-2 ml-4">
+                <ul className="text-sm text-white space-y-2 ml-4">
                   <li>
                     <strong>Access verification:</strong> Check route accessibility for installation
                   </li>
@@ -622,7 +622,7 @@ const Module5Section4_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                   <p className="font-medium text-red-400 mb-2">Potential Issues</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Congested ceiling voids</li>
                     <li>• Asbestos-containing materials</li>
                     <li>• Narrow access routes</li>
@@ -632,7 +632,7 @@ const Module5Section4_1 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                   <p className="font-medium text-green-400 mb-2">Additional Requirements</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Extra containment supports</li>
                     <li>• Specialist fixings for surfaces</li>
                     <li>• Longer cable runs than planned</li>
@@ -644,7 +644,7 @@ const Module5Section4_1 = () => {
 
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <p className="font-medium text-blue-400 mb-2">Documentation During Site Visit</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>
                     <strong>Photographs:</strong> Take photos of complex routing areas and obstacles
                   </li>
@@ -665,7 +665,7 @@ const Module5Section4_1 = () => {
               </div>
 
               <div className="p-3 rounded bg-orange-500/10 border border-orange-500/20">
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-orange-400">Professional Tip:</strong> Site conditions
                   often differ from drawings by 10-20%—this is why experienced electricians never
                   rely on drawings alone for material estimates.
@@ -690,7 +690,7 @@ const Module5Section4_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Worked Examples
             </h2>
-            <div className="text-white/85 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>Practical estimation calculations for common scenarios:</p>
               <FormulaList
                 items={[
@@ -717,7 +717,7 @@ const Module5Section4_1 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <h4 className="font-semibold text-blue-400 mb-2">Primary Materials</h4>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Cables (all types and sizes)</li>
                   <li>• Containment (conduit, trunking, cable tray)</li>
                   <li>• Distribution boards and enclosures</li>
@@ -726,7 +726,7 @@ const Module5Section4_1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <h4 className="font-semibold text-green-400 mb-2">Consumables</h4>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• Fixings and clips</li>
                   <li>• Grommets and bushes</li>
                   <li>• Cable ties and markers</li>
@@ -761,7 +761,7 @@ const Module5Section4_1 = () => {
                   <span className="flex-shrink-0 w-6 h-6 bg-elec-yellow/20 text-elec-yellow rounded-full flex items-center justify-center text-sm font-medium">
                     {index + 1}
                   </span>
-                  <span className="text-white/85 text-sm">{item}</span>
+                  <span className="text-white text-sm">{item}</span>
                 </div>
               ))}
             </div>
@@ -773,24 +773,24 @@ const Module5Section4_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">09</span>
               Real World Example
             </h2>
-            <div className="text-white/85 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <h3 className="font-semibold text-red-400 mb-2">
                   Case Study: School Refurbishment Gone Wrong
                 </h3>
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   An experienced electrical contractor estimated a school refurbishment project
                   based solely on architectural drawings. The drawings showed clear ceiling spaces
                   and straightforward cable routes. The estimate included standard 5% wastage
                   allowance.
                 </p>
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   <strong className="text-white">Reality on site:</strong> The existing building had
                   extensive asbestos ceiling tiles, congested service voids with large HVAC ducts,
                   and structural steelwork not shown on drawings. Cable routes had to be completely
                   re-planned, requiring 40% more cable length and additional containment.
                 </p>
-                <p className="text-white/80">
+                <p className="text-white">
                   <strong className="text-white">Consequences:</strong> 15% material shortfall,
                   two-week project delay, emergency delivery costs, and strained client
                   relationship. Total additional cost exceeded £8,000 on a £45,000 project.
@@ -801,7 +801,7 @@ const Module5Section4_1 = () => {
                 <h3 className="font-semibold text-green-400 mb-2">
                   How This Could Have Been Prevented
                 </h3>
-                <ul className="text-white/80 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>• Comprehensive site survey before estimating</li>
                   <li>• Asbestos survey review (standard for buildings pre-1980)</li>
                   <li>• Ceiling void inspection using access hatches</li>
@@ -812,7 +812,7 @@ const Module5Section4_1 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-                <p className="text-white/80">
+                <p className="text-white">
                   <strong className="text-elec-yellow">Lesson learned:</strong> This contractor now
                   allocates a full day for site surveys on refurbishment projects and has never had
                   a major material shortage since. The initial time investment saves significant
@@ -832,7 +832,7 @@ const Module5Section4_1 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h3 className="font-semibold text-white mb-2">Q: {faq.question}</h3>
-                  <p className="text-white/80 text-sm">A: {faq.answer}</p>
+                  <p className="text-white text-sm">A: {faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -849,7 +849,7 @@ const Module5Section4_1 = () => {
                 {pocketGuideItems.map((item, index) => (
                   <div key={index} className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                    <span className="text-white/90 text-sm">{item}</span>
+                    <span className="text-white text-sm">{item}</span>
                   </div>
                 ))}
               </div>
@@ -862,7 +862,7 @@ const Module5Section4_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">12</span>
               Recap
             </h2>
-            <div className="text-white/85 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 In this comprehensive subsection, you have mastered the critical skill of accurate
                 material estimation for electrical installations. This fundamental competency
@@ -872,7 +872,7 @@ const Module5Section4_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                   <h4 className="font-semibold text-blue-400 mb-2">Key Skills Acquired</h4>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Reading and interpreting electrical drawings and specifications</li>
                     <li>• Using scale rules and measurement tools accurately</li>
                     <li>• Conducting systematic site surveys and documentation</li>
@@ -883,7 +883,7 @@ const Module5Section4_1 = () => {
 
                 <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                   <h4 className="font-semibold text-green-400 mb-2">Professional Benefits</h4>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Reduced project delays and cost overruns</li>
                     <li>• Improved client satisfaction and repeat business</li>
                     <li>• Enhanced professional reputation and competence</li>
@@ -894,7 +894,7 @@ const Module5Section4_1 = () => {
               </div>
 
               <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
-                <p className="text-white/80">
+                <p className="text-white">
                   <strong className="text-amber-400">Remember:</strong> Accurate estimation is both
                   an art and a science—combining technical measurement skills with practical
                   experience and site awareness. Every project teaches valuable lessons that improve
@@ -916,7 +916,7 @@ const Module5Section4_1 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="..">

@@ -163,7 +163,7 @@ export function WorkerStatusCard() {
                     'flex items-center gap-2 p-3 rounded-xl border transition-all touch-manipulation',
                     isSelected
                       ? 'bg-elec-yellow/10 border-elec-yellow/50 text-elec-yellow'
-                      : 'bg-white/[0.03] border-white/10 text-white/70 hover:bg-white/[0.06] active:bg-white/[0.02]'
+                      : 'bg-white/[0.03] border-white/10 text-white hover:bg-white/[0.06] active:bg-white/[0.02]'
                   )}
                   disabled={isUpdating}
                 >
@@ -178,7 +178,7 @@ export function WorkerStatusCard() {
           {/* Job selector - shown when On Site or En Route */}
           {showJobSelector && (
             <div className="space-y-2">
-              <label className="text-xs text-white/60 font-medium">Select Job</label>
+              <label className="text-xs text-white font-medium">Select Job</label>
               <Select
                 value={selectedJobId}
                 onValueChange={setSelectedJobId}
@@ -196,12 +196,12 @@ export function WorkerStatusCard() {
                     >
                       <div className="flex flex-col items-start">
                         <span className="font-medium">{job.title}</span>
-                        <span className="text-xs text-white/50">{job.client}</span>
+                        <span className="text-xs text-white">{job.client}</span>
                       </div>
                     </SelectItem>
                   ))}
                   {(!jobs || jobs.length === 0) && (
-                    <div className="px-3 py-2 text-sm text-white/50">No active jobs</div>
+                    <div className="px-3 py-2 text-sm text-white">No active jobs</div>
                   )}
                 </SelectContent>
               </Select>
@@ -229,8 +229,8 @@ export function WorkerStatusCard() {
 
           {/* Current employee info */}
           <div className="pt-2 border-t border-white/10">
-            <div className="flex items-center gap-2 text-xs text-white/40">
-              <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-[10px] font-medium text-white/70">
+            <div className="flex items-center gap-2 text-xs text-white">
+              <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-[10px] font-medium text-white">
                 {employee.avatar_initials}
               </div>
               <span>Logged in as {employee.name}</span>

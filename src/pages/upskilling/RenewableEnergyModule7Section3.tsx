@@ -235,7 +235,7 @@ const RenewableEnergyModule7Section3 = () => {
           <span className="text-elec-yellow text-sm font-medium">Module 7 - Section 3</span>
         </div>
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Maintenance Schedules</h1>
-        <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+        <p className="text-white text-sm sm:text-base max-w-xl mx-auto">
           Structured schedules for visual, electrical, and firmware maintenance of renewable energy
           systems
         </p>
@@ -285,7 +285,7 @@ const RenewableEnergyModule7Section3 = () => {
           ].map((outcome, index) => (
             <div key={index} className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
-              <span className="text-white/80 text-sm">{outcome}</span>
+              <span className="text-white text-sm">{outcome}</span>
             </div>
           ))}
         </div>
@@ -298,7 +298,7 @@ const RenewableEnergyModule7Section3 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">01</span>
             <h2 className="text-xl font-semibold text-white">Schedule Structure and Planning</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Effective maintenance schedules balance thoroughness with practicality, ensuring
               critical tasks are completed without excessive cost or disruption.
@@ -333,7 +333,7 @@ const RenewableEnergyModule7Section3 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">02</span>
             <h2 className="text-xl font-semibold text-white">Visual Inspection Schedules</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Visual inspections are the first line of defence against developing issues, enabling
               early identification before problems cause failures.
@@ -367,7 +367,7 @@ const RenewableEnergyModule7Section3 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">03</span>
             <h2 className="text-xl font-semibold text-white">Electrical Maintenance Schedules</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Electrical testing verifies system safety and performance, identifying issues that may
               not be visible during routine inspection.
@@ -401,7 +401,7 @@ const RenewableEnergyModule7Section3 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">04</span>
             <h2 className="text-xl font-semibold text-white">Firmware and Software Maintenance</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Firmware and software maintenance ensures equipment operates with latest features, bug
               fixes, and security patches whilst managing update risks.
@@ -435,7 +435,7 @@ const RenewableEnergyModule7Section3 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">05</span>
             <h2 className="text-xl font-semibold text-white">Schedule Optimisation and Review</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Maintenance schedules should evolve based on experience, performance data, and
               changing conditions to optimise effectiveness and cost.
@@ -467,7 +467,7 @@ const RenewableEnergyModule7Section3 = () => {
             <Zap className="w-4 h-4 text-elec-yellow" />
             Practical Guidance
           </h3>
-          <div className="space-y-2 text-white/80 text-sm">
+          <div className="space-y-2 text-white text-sm">
             <p>
               <span className="text-white font-medium">Balancing thoroughness and cost:</span> Focus
               resources on tasks with highest impact. Use monitoring data to prioritise attention.
@@ -494,7 +494,7 @@ const RenewableEnergyModule7Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <h3 className="text-white font-medium mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>

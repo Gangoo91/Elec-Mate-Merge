@@ -348,7 +348,7 @@ const Level3Module8Section1_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module8">
@@ -439,11 +439,11 @@ const Level3Module8Section1_4 = () => {
 
             <div className="p-4 rounded-lg bg-transparent border border-white/10 my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Example Analysis:</p>
-              <p className="text-sm text-white/90 italic mb-2">
+              <p className="text-sm text-white italic mb-2">
                 "Explain why RCDs rated at 30mA are required for socket-outlets in domestic
                 installations." (3 marks)
               </p>
-              <ul className="text-xs text-white/80 space-y-1 ml-4">
+              <ul className="text-xs text-white space-y-1 ml-4">
                 <li>
                   <strong>Command:</strong> 'Explain' - requires reasoning, not just a fact
                 </li>
@@ -488,7 +488,7 @@ const Level3Module8Section1_4 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Lower-Level Commands</p>
-                <ul className="text-xs text-white/90 space-y-2">
+                <ul className="text-xs text-white space-y-2">
                   <li>
                     <strong>State:</strong> Give a brief, factual answer. No explanation needed.
                     Example: "State the minimum insulation resistance for a 230V circuit." Answer:
@@ -512,7 +512,7 @@ const Level3Module8Section1_4 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                   Higher-Level Commands
                 </p>
-                <ul className="text-xs text-white/90 space-y-2">
+                <ul className="text-xs text-white space-y-2">
                   <li>
                     <strong>Describe:</strong> Give a detailed account of features or process. More
                     than just stating - show the what/how.
@@ -551,7 +551,7 @@ const Level3Module8Section1_4 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Pro Tip:</strong> In your past paper analysis, highlight every command word.
               Track which commands appear most frequently and practice answering each type. Some
               candidates only practice 'explain' style answers and struggle with 'state' or
@@ -588,7 +588,7 @@ const Level3Module8Section1_4 = () => {
                 <tbody>
                   {topicFrequency.map((item, index) => (
                     <tr key={index} className="border-t border-white/5">
-                      <td className="p-3 text-white/90">{item.topic}</td>
+                      <td className="p-3 text-white">{item.topic}</td>
                       <td className="p-3 text-center">
                         <span
                           className={`text-xs px-2 py-0.5 rounded ${
@@ -602,8 +602,8 @@ const Level3Module8Section1_4 = () => {
                           {item.frequency}
                         </span>
                       </td>
-                      <td className="p-3 text-center text-white/70">{item.papers}</td>
-                      <td className="p-3 text-white/60 text-xs">{item.notes}</td>
+                      <td className="p-3 text-center text-white">{item.papers}</td>
+                      <td className="p-3 text-white text-xs">{item.notes}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -614,19 +614,19 @@ const Level3Module8Section1_4 = () => {
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20 text-center">
                 <PieChart className="h-6 w-6 text-red-400 mx-auto mb-2" />
                 <p className="text-sm font-medium text-red-400 mb-1">Very High Priority</p>
-                <p className="text-xs text-white/70">Topics in every paper - essential revision</p>
+                <p className="text-xs text-white">Topics in every paper - essential revision</p>
               </div>
               <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20 text-center">
                 <TrendingUp className="h-6 w-6 text-orange-400 mx-auto mb-2" />
                 <p className="text-sm font-medium text-orange-400 mb-1">High Priority</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Appear in most papers - thorough study needed
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-yellow-500/10 border border-yellow-500/20 text-center">
                 <BookOpen className="h-6 w-6 text-yellow-400 mx-auto mb-2" />
                 <p className="text-sm font-medium text-yellow-400 mb-1">Moderate Priority</p>
-                <p className="text-xs text-white/70">Appear regularly - good coverage required</p>
+                <p className="text-xs text-white">Appear regularly - good coverage required</p>
               </div>
             </div>
 
@@ -702,27 +702,27 @@ const Level3Module8Section1_4 = () => {
                   </thead>
                   <tbody>
                     <tr className="border-t border-white/5">
-                      <td className="p-2 text-white/70">1a</td>
-                      <td className="p-2 text-white/70">EAWR</td>
-                      <td className="p-2 text-white/70">State</td>
-                      <td className="p-2 text-center text-white/70">2</td>
+                      <td className="p-2 text-white">1a</td>
+                      <td className="p-2 text-white">EAWR</td>
+                      <td className="p-2 text-white">State</td>
+                      <td className="p-2 text-center text-white">2</td>
                       <td className="p-2 text-green-400">2/2</td>
-                      <td className="p-2 text-white/50">Knew this well</td>
+                      <td className="p-2 text-white">Knew this well</td>
                     </tr>
                     <tr className="border-t border-white/5">
-                      <td className="p-2 text-white/70">1b</td>
-                      <td className="p-2 text-white/70">Zs Calculation</td>
-                      <td className="p-2 text-white/70">Calculate</td>
-                      <td className="p-2 text-center text-white/70">4</td>
+                      <td className="p-2 text-white">1b</td>
+                      <td className="p-2 text-white">Zs Calculation</td>
+                      <td className="p-2 text-white">Calculate</td>
+                      <td className="p-2 text-center text-white">4</td>
                       <td className="p-2 text-orange-400">2/4</td>
-                      <td className="p-2 text-white/50">Formula error</td>
+                      <td className="p-2 text-white">Formula error</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Time Investment:</strong> Thorough analysis of one paper takes 2-3 hours
               including attempting questions and reviewing answers. This investment pays off in
               focused revision and improved exam technique. Quality analysis of 3-4 papers is more
@@ -807,7 +807,7 @@ const Level3Module8Section1_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -856,7 +856,7 @@ const Level3Module8Section1_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module8-section1-3">

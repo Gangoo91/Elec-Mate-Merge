@@ -442,7 +442,7 @@ export function DiaryEntryDetailSheet({
                     <span
                       key={skill}
                       className={`px-2.5 py-1 rounded-lg text-xs font-medium border ${
-                        skillColours[skill] || 'bg-white/[0.06] text-white/70 border-white/10'
+                        skillColours[skill] || 'bg-white/[0.06] text-white border-white/10'
                       }`}
                     >
                       {skill}
@@ -533,7 +533,7 @@ export function DiaryEntryDetailSheet({
                   <div className="rounded-xl border border-purple-500/20 bg-gradient-to-br from-purple-500/[0.04] to-blue-500/[0.04] p-4">
                     <div className="flex items-center gap-2">
                       <Loader2 className="h-4 w-4 text-purple-400 animate-spin" />
-                      <span className="text-xs text-white/70">Analysing evidence potential...</span>
+                      <span className="text-xs text-white">Analysing evidence potential...</span>
                     </div>
                   </div>
                 ) : entryAnalysis ? (
@@ -562,20 +562,20 @@ export function DiaryEntryDetailSheet({
                             onClick={refreshAnalysis}
                             className="h-11 w-11 flex items-center justify-center rounded-lg active:bg-white/10 touch-manipulation"
                           >
-                            <RefreshCw className="h-4 w-4 text-white/50" />
+                            <RefreshCw className="h-4 w-4 text-white" />
                           </button>
                         </div>
                       </div>
 
                       {/* Why good evidence */}
-                      <p className="text-xs text-white/80 leading-relaxed">
+                      <p className="text-xs text-white leading-relaxed">
                         {entryAnalysis.whyGoodEvidence}
                       </p>
 
                       {/* Matched ACs with confidence bars */}
                       {entryAnalysis.matchedCriteria.length > 0 && (
                         <div className="space-y-2">
-                          <span className="text-[11px] text-white/60 uppercase tracking-wider font-medium">
+                          <span className="text-[11px] text-white uppercase tracking-wider font-medium">
                             Matched Assessment Criteria
                           </span>
                           {entryAnalysis.matchedCriteria.slice(0, 5).map((mc, idx) => (
@@ -588,7 +588,7 @@ export function DiaryEntryDetailSheet({
                                   Unit {mc.unitCode} — AC {mc.acCode}
                                 </span>
                                 <div className="flex items-center gap-1.5 flex-shrink-0">
-                                  <span className="text-[11px] text-white/60">
+                                  <span className="text-[11px] text-white">
                                     {mc.confidence}%
                                   </span>
                                   {evidencedACs &&
@@ -605,7 +605,7 @@ export function DiaryEntryDetailSheet({
                                     ))}
                                 </div>
                               </div>
-                              <p className="text-[11px] text-white/70 leading-snug mb-1.5">
+                              <p className="text-[11px] text-white leading-snug mb-1.5">
                                 {mc.acText}
                               </p>
                               {/* Confidence bar */}
@@ -615,7 +615,7 @@ export function DiaryEntryDetailSheet({
                                   style={{ width: `${mc.confidence}%` }}
                                 />
                               </div>
-                              <p className="text-[11px] text-white/60 mt-1">{mc.reason}</p>
+                              <p className="text-[11px] text-white mt-1">{mc.reason}</p>
                             </div>
                           ))}
                         </div>
@@ -624,13 +624,13 @@ export function DiaryEntryDetailSheet({
                       {/* Quality tips */}
                       {entryAnalysis.qualityTips.length > 0 && (
                         <div className="space-y-1.5">
-                          <span className="text-[11px] text-white/60 uppercase tracking-wider font-medium">
+                          <span className="text-[11px] text-white uppercase tracking-wider font-medium">
                             Tips to Strengthen Evidence
                           </span>
                           {entryAnalysis.qualityTips.map((tip, idx) => (
                             <div key={idx} className="flex items-start gap-1.5">
                               <Lightbulb className="h-3.5 w-3.5 text-elec-yellow mt-0.5 flex-shrink-0" />
-                              <p className="text-[11px] text-white/70 leading-snug">{tip}</p>
+                              <p className="text-[11px] text-white leading-snug">{tip}</p>
                             </div>
                           ))}
                         </div>
@@ -719,7 +719,7 @@ export function DiaryEntryDetailSheet({
                     <Sparkles className="h-4 w-4 text-elec-yellow" />
                     <h4 className="text-sm font-semibold text-white">Link Assessment Criteria</h4>
                   </div>
-                  <p className="text-[11px] text-white/50 mt-0.5">
+                  <p className="text-[11px] text-white mt-0.5">
                     Auto-matched from your diary entry. Tap to select/deselect.
                   </p>
                 </div>
@@ -730,7 +730,7 @@ export function DiaryEntryDetailSheet({
                       <Loader2 className="h-5 w-5 text-elec-yellow animate-spin" />
                     </div>
                   ) : suggestedACs.length === 0 ? (
-                    <p className="text-xs text-white/40 text-center py-4">
+                    <p className="text-xs text-white text-center py-4">
                       No matching criteria found
                     </p>
                   ) : (
@@ -747,7 +747,7 @@ export function DiaryEntryDetailSheet({
                         {ac.selected ? (
                           <CheckCircle2 className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                         ) : (
-                          <Circle className="h-4 w-4 text-white/20 mt-0.5 flex-shrink-0" />
+                          <Circle className="h-4 w-4 text-white mt-0.5 flex-shrink-0" />
                         )}
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-1.5">
@@ -766,7 +766,7 @@ export function DiaryEntryDetailSheet({
                                 </span>
                               ))}
                           </div>
-                          <p className="text-[11px] text-white/70 leading-snug">AC {ac.acText}</p>
+                          <p className="text-[11px] text-white leading-snug">AC {ac.acText}</p>
                         </div>
                       </button>
                     ))
@@ -779,7 +779,7 @@ export function DiaryEntryDetailSheet({
                       setShowPortfolioPicker(false);
                       setSuggestedACs([]);
                     }}
-                    className="flex-1 h-11 rounded-xl bg-white/[0.06] text-white/60 text-sm font-medium touch-manipulation active:bg-white/10 transition-colors"
+                    className="flex-1 h-11 rounded-xl bg-white/[0.06] text-white text-sm font-medium touch-manipulation active:bg-white/10 transition-colors"
                   >
                     Cancel
                   </button>

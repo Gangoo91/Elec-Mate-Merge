@@ -196,7 +196,7 @@ export default function FirstAidModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-1">
@@ -219,7 +219,7 @@ export default function FirstAidModule1Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Scene Safety &amp; the Primary Survey
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How to assess a scene for danger, carry out the primary survey using DR ABC and ABCDE,
             manage the airway, check breathing, call for help, and understand consent
           </p>
@@ -311,7 +311,7 @@ export default function FirstAidModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">The DANGER Acronym</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 w-6 h-6 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center flex-shrink-0 text-xs font-bold text-rose-400">
                       D
@@ -380,7 +380,7 @@ export default function FirstAidModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Electrical Incidents</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   As electricians, you are more likely than most workers to encounter electrical
                   incidents. Never touch a casualty who is still in contact with a live electrical
                   source. For
@@ -426,7 +426,7 @@ export default function FirstAidModule1Section2() {
                     <AlertTriangle className="h-5 w-5 text-amber-400" />
                     <p className="text-sm font-medium text-amber-400">D &mdash; Danger</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Already covered in the DANGER acronym above. Confirm the scene remains safe
                     before you begin your assessment. Hazards can develop after your initial scene
                     safety check &mdash; remain vigilant throughout.
@@ -438,11 +438,11 @@ export default function FirstAidModule1Section2() {
                     <Hand className="h-5 w-5 text-blue-400" />
                     <p className="text-sm font-medium text-blue-400">R &mdash; Response</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Assess the casualty&rsquo;s level of responsiveness. Use the &ldquo;shout and
                     tap&rdquo; method:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Tap the casualty firmly on both shoulders</span>
@@ -479,7 +479,7 @@ export default function FirstAidModule1Section2() {
                     <Eye className="h-5 w-5 text-green-400" />
                     <p className="text-sm font-medium text-green-400">A &mdash; Airway</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     If the casualty is unresponsive, open the airway. In an unconscious person, the
                     tongue falls back and can block the airway. Two techniques are used:
                   </p>
@@ -488,7 +488,7 @@ export default function FirstAidModule1Section2() {
                       <p className="text-sm font-medium text-green-400 mb-1">
                         Head Tilt-Chin Lift (Standard)
                       </p>
-                      <ul className="text-xs text-white/80 space-y-1">
+                      <ul className="text-xs text-white space-y-1">
                         <li className="flex items-start gap-2">
                           <span className="mt-1 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                           <span>Place one hand on the forehead and gently tilt the head back</span>
@@ -511,7 +511,7 @@ export default function FirstAidModule1Section2() {
                       <p className="text-sm font-medium text-amber-400 mb-1">
                         Jaw Thrust (Suspected Spinal Injury)
                       </p>
-                      <ul className="text-xs text-white/80 space-y-1">
+                      <ul className="text-xs text-white space-y-1">
                         <li className="flex items-start gap-2">
                           <span className="mt-1 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                           <span>Place fingers behind the angle of the jaw on both sides</span>
@@ -537,12 +537,12 @@ export default function FirstAidModule1Section2() {
                     <Heart className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">B &mdash; Breathing</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     With the airway open, check for normal breathing using{' '}
                     <strong className="text-white">look, listen, and feel</strong> for up to{' '}
                     <strong className="text-white">10 seconds</strong>:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -565,7 +565,7 @@ export default function FirstAidModule1Section2() {
                     </li>
                   </ul>
                   <div className="mt-3 p-3 bg-rose-500/10 border border-rose-500/30 rounded-lg">
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       <strong className="text-rose-400">If breathing normally:</strong> Place in the
                       recovery position, call 999, and monitor breathing continuously.
                       <br />
@@ -583,7 +583,7 @@ export default function FirstAidModule1Section2() {
                     <Heart className="h-5 w-5 text-purple-400" />
                     <p className="text-sm font-medium text-purple-400">C &mdash; Circulation</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Look for signs of severe bleeding (catastrophic haemorrhage). If present, apply
                     direct pressure and, if available, use a haemostatic dressing or tourniquet.
                     Check skin colour and temperature &mdash; pale, cold, clammy skin may indicate
@@ -636,7 +636,7 @@ export default function FirstAidModule1Section2() {
                   <div className="w-full max-w-sm bg-gradient-to-r from-red-500/20 to-red-400/20 border border-red-500/40 rounded-xl p-4 text-center">
                     <p className="text-lg font-bold text-red-400">A</p>
                     <p className="text-sm font-semibold text-white">Airway</p>
-                    <p className="text-xs text-white/70 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Is the airway open and clear? Head tilt-chin lift or jaw thrust. Look for
                       obstructions.
                     </p>
@@ -650,7 +650,7 @@ export default function FirstAidModule1Section2() {
                   <div className="w-full max-w-sm bg-gradient-to-r from-orange-500/20 to-orange-400/20 border border-orange-500/40 rounded-xl p-4 text-center">
                     <p className="text-lg font-bold text-orange-400">B</p>
                     <p className="text-sm font-semibold text-white">Breathing</p>
-                    <p className="text-xs text-white/70 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Look, listen, and feel for up to 10 seconds. Rate, depth, effort. Agonal gasps
                       = not breathing.
                     </p>
@@ -664,7 +664,7 @@ export default function FirstAidModule1Section2() {
                   <div className="w-full max-w-sm bg-gradient-to-r from-yellow-500/20 to-yellow-400/20 border border-yellow-500/40 rounded-xl p-4 text-center">
                     <p className="text-lg font-bold text-yellow-400">C</p>
                     <p className="text-sm font-semibold text-white">Circulation</p>
-                    <p className="text-xs text-white/70 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Skin colour, temperature, capillary refill. Control severe bleeding. Signs of
                       shock.
                     </p>
@@ -678,7 +678,7 @@ export default function FirstAidModule1Section2() {
                   <div className="w-full max-w-sm bg-gradient-to-r from-green-500/20 to-green-400/20 border border-green-500/40 rounded-xl p-4 text-center">
                     <p className="text-lg font-bold text-green-400">D</p>
                     <p className="text-sm font-semibold text-white">Disability</p>
-                    <p className="text-xs text-white/70 mt-1">
+                    <p className="text-xs text-white mt-1">
                       AVPU scale (Alert, Voice, Pain, Unresponsive). Pupil size and reactivity.
                       Blood glucose.
                     </p>
@@ -692,7 +692,7 @@ export default function FirstAidModule1Section2() {
                   <div className="w-full max-w-sm bg-gradient-to-r from-blue-500/20 to-blue-400/20 border border-blue-500/40 rounded-xl p-4 text-center">
                     <p className="text-lg font-bold text-blue-400">E</p>
                     <p className="text-sm font-semibold text-white">Exposure</p>
-                    <p className="text-xs text-white/70 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Examine the whole body. Remove or cut clothing as needed. Prevent hypothermia.
                       Preserve dignity.
                     </p>
@@ -704,7 +704,7 @@ export default function FirstAidModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   AVPU Scale (Used in &lsquo;D &mdash; Disability&rsquo;)
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -759,7 +759,7 @@ export default function FirstAidModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical: Agonal Breathing</p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Agonal breathing consists of{' '}
                     <strong className="text-white">irregular, infrequent gasps</strong>. It may
@@ -785,10 +785,10 @@ export default function FirstAidModule1Section2() {
                   <Phone className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Calling 999 or 112</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Call 999 (UK) or 112 (European emergency number, also works in the UK) when:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1 mb-3">
+                <ul className="text-sm text-white space-y-1 mb-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>The casualty is unresponsive or not breathing normally</span>
@@ -813,7 +813,7 @@ export default function FirstAidModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Information to give the call handler:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -900,11 +900,11 @@ export default function FirstAidModule1Section2() {
                       Conscious Casualties &mdash; Verbal Consent
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     For a conscious adult with capacity, you must obtain verbal consent before
                     providing treatment:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Introduce yourself and explain that you are a trained first aider</span>
@@ -939,7 +939,7 @@ export default function FirstAidModule1Section2() {
                       Unconscious Casualties &mdash; Implied Consent
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     When a casualty is unconscious or otherwise unable to communicate,{' '}
                     <strong className="text-white">implied consent</strong> applies. The legal
                     reasoning is that a reasonable person in the casualty&rsquo;s position would
@@ -955,12 +955,12 @@ export default function FirstAidModule1Section2() {
                     <Brain className="h-5 w-5 text-blue-400" />
                     <p className="text-sm font-medium text-blue-400">Mental Capacity Act 2005</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     The Mental Capacity Act 2005 (applicable in England and Wales) provides the
                     legal framework for decision-making on behalf of adults who lack capacity. Its
                     five key principles are:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1008,7 +1008,7 @@ export default function FirstAidModule1Section2() {
                       Children &mdash; Gillick Competence
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     For children under 16, the principle of{' '}
                     <strong className="text-white">Gillick competence</strong> applies (from the
                     1985 case <em>Gillick v West Norfolk and Wisbech Area Health Authority</em>). A
@@ -1056,7 +1056,7 @@ export default function FirstAidModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Head-to-Toe Examination</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1118,10 +1118,10 @@ export default function FirstAidModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">History Taking &mdash; SAMPLE</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   During the secondary survey, gather information using the SAMPLE mnemonic:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1174,7 +1174,7 @@ export default function FirstAidModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Important Reminders</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Always get consent before examining a conscious casualty</span>
@@ -1218,7 +1218,7 @@ export default function FirstAidModule1Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1232,7 +1232,7 @@ export default function FirstAidModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-1">

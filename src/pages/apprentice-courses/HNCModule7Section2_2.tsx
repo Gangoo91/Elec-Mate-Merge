@@ -252,7 +252,7 @@ const HNCModule7Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section2">
@@ -274,7 +274,7 @@ const HNCModule7Section2_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Fire Alarm Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             BS 5839 categories, detector types, zoning, cause and effect, voice alarm and system
             integration
           </p>
@@ -946,7 +946,7 @@ const HNCModule7Section2_2 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Critical consideration:</strong> All fire alarm interfaces must be fail-safe.
               Loss of power or signal should result in the safe condition (doors release, dampers
               close, lifts recall).
@@ -973,13 +973,13 @@ const HNCModule7Section2_2 = () => {
                 meeting rooms, a ground floor reception, plant room, and basement car park.
                 Determine the appropriate BS 5839-1 category.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Fire Risk Assessment Considerations:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Fire Risk Assessment Considerations:</p>
                 <p className="mt-2">- Office occupancy: awake, familiar with building</p>
                 <p>- Multiple escape routes available</p>
                 <p>- No sleeping accommodation</p>
                 <p>- No high-risk processes</p>
-                <p className="mt-2 text-white/60">Category Selection:</p>
+                <p className="mt-2 text-white">Category Selection:</p>
                 <p className="ml-4">
                   Office floors: <span className="text-green-400">L3</span> (escape routes) or{' '}
                   <span className="text-green-400">L2</span> if enhanced protection required
@@ -993,7 +993,7 @@ const HNCModule7Section2_2 = () => {
                   5839-6
                 </p>
                 <p className="mt-2 text-green-400">Recommendation: Combined L3/P2 system</p>
-                <p className="text-white/60">(Detection in escape routes, plus specific areas)</p>
+                <p className="text-white">(Detection in escape routes, plus specific areas)</p>
               </div>
             </div>
 
@@ -1005,18 +1005,18 @@ const HNCModule7Section2_2 = () => {
                 <strong>Scenario:</strong> A warehouse measuring 80m x 50m (4,000 m²) single storey.
                 Calculate the minimum number of zones required.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Total floor area = 80m x 50m = 4,000 m²</p>
                 <p>Maximum zone area = 2,000 m² (BS 5839-1)</p>
                 <p className="mt-2">
                   Minimum zones = 4,000 ÷ 2,000 = <span className="text-green-400">2 zones</span>
                 </p>
-                <p className="mt-2 text-white/60">Practical considerations:</p>
+                <p className="mt-2 text-white">Practical considerations:</p>
                 <p className="ml-4">- Consider fire compartment boundaries</p>
                 <p className="ml-4">- Search distance for fire brigade</p>
                 <p className="ml-4">- Racking layout and access routes</p>
                 <p className="mt-2 text-yellow-400">Recommendation: 4 zones (quadrants)</p>
-                <p className="text-white/60">Provides better location indication</p>
+                <p className="text-white">Provides better location indication</p>
               </div>
             </div>
 
@@ -1028,7 +1028,7 @@ const HNCModule7Section2_2 = () => {
                 <strong>Scenario:</strong> Calculate battery capacity for a fire alarm system with
                 2A standby current and 8A alarm current.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Standby capacity = 2A x 24 hours = 48 Ah</p>
                 <p>Alarm capacity = 8A x 0.5 hours = 4 Ah</p>
                 <p className="mt-2">Sub-total = 48 + 4 = 52 Ah</p>
@@ -1036,9 +1036,9 @@ const HNCModule7Section2_2 = () => {
                 <p>
                   52 x 1.25 = <span className="text-green-400">65 Ah minimum</span>
                 </p>
-                <p className="mt-2 text-white/60">Select next standard size up:</p>
+                <p className="mt-2 text-white">Select next standard size up:</p>
                 <p className="text-green-400">Specify 2 x 38 Ah batteries (76 Ah total)</p>
-                <p className="text-white/60">(Twin batteries for redundancy)</p>
+                <p className="text-white">(Twin batteries for redundancy)</p>
               </div>
             </div>
           </div>
@@ -1132,7 +1132,7 @@ const HNCModule7Section2_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1183,7 +1183,7 @@ const HNCModule7Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section2">

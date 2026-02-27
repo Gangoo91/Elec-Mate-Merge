@@ -251,8 +251,8 @@ export function CommsSheet({ open, onOpenChange }: CommsSheetProps) {
                           <div className="w-16 h-16 rounded-2xl bg-elec-yellow/10 flex items-center justify-center mx-auto mb-4">
                             <MessageSquare className="h-8 w-8 text-elec-yellow" />
                           </div>
-                          <p className="text-white/60">No messages yet</p>
-                          <p className="text-sm text-white/40 mt-1">
+                          <p className="text-white">No messages yet</p>
+                          <p className="text-sm text-white mt-1">
                             Team updates will appear here
                           </p>
                         </div>
@@ -294,7 +294,7 @@ export function CommsSheet({ open, onOpenChange }: CommsSheetProps) {
                                   <p
                                     className={cn(
                                       'text-sm font-medium truncate',
-                                      isUnread ? 'text-white' : 'text-white/80'
+                                      isUnread ? 'text-white' : 'text-white'
                                     )}
                                   >
                                     {comm.title}
@@ -302,12 +302,12 @@ export function CommsSheet({ open, onOpenChange }: CommsSheetProps) {
                                   {getPriorityBadge(comm.priority)}
                                 </div>
 
-                                <p className="text-xs text-white/50 line-clamp-2 mb-2">
+                                <p className="text-xs text-white line-clamp-2 mb-2">
                                   {comm.content}
                                 </p>
 
                                 <div className="flex items-center justify-between">
-                                  <p className="text-[10px] text-white/40">
+                                  <p className="text-[10px] text-white">
                                     {formatDistanceToNow(parseISO(comm.created_at), {
                                       addSuffix: true,
                                     })}
@@ -326,7 +326,7 @@ export function CommsSheet({ open, onOpenChange }: CommsSheetProps) {
                                 </div>
                               </div>
 
-                              <ChevronRight className="h-4 w-4 text-white/30 flex-shrink-0" />
+                              <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
                             </div>
                           </button>
                         );
@@ -375,7 +375,7 @@ export function CommsSheet({ open, onOpenChange }: CommsSheetProps) {
                       <h2 className="text-xl font-semibold text-white">{selectedComm.title}</h2>
 
                       {/* Meta */}
-                      <div className="flex items-center gap-2 text-xs text-white/50">
+                      <div className="flex items-center gap-2 text-xs text-white">
                         <p>
                           {formatDistanceToNow(parseISO(selectedComm.created_at), {
                             addSuffix: true,
@@ -403,7 +403,7 @@ export function CommsSheet({ open, onOpenChange }: CommsSheetProps) {
 
                       {/* Content */}
                       <div className="pt-4 border-t border-white/10">
-                        <p className="text-white/80 whitespace-pre-wrap leading-relaxed">
+                        <p className="text-white whitespace-pre-wrap leading-relaxed">
                           {selectedComm.content}
                         </p>
                       </div>

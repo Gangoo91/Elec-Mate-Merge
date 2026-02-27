@@ -214,7 +214,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-3">
@@ -239,7 +239,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Water Conservation
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Water use in construction, regulatory requirements, conservation strategies, dust
             suppression, concrete and wet trades, site welfare, protecting water quality, and
             monitoring and targets
@@ -331,7 +331,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Primary Water Uses on Site</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -385,7 +385,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                 <div className="grid sm:grid-cols-3 gap-3">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white mb-1">Mains Supply</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Treated potable water from the local water company. The most common source but
                       the most expensive and resource-intensive. Suitable for all uses including
                       drinking water and welfare. Metered and billed by volume.
@@ -393,7 +393,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white mb-1">Abstracted Water</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Water taken directly from rivers, streams, lakes, or boreholes. Requires an
                       abstraction licence from the Environment Agency (for more than 20
                       m&sup3;/day). Lower cost but may require treatment. Seasonal availability
@@ -402,7 +402,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white mb-1">Recycled / Harvested</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Collected rainwater, recycled wheel wash water, treated greywater from welfare
                       facilities, or reclaimed process water. The most sustainable option. Requires
                       storage infrastructure and may need treatment depending on the intended use.
@@ -436,7 +436,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                   <ShieldCheck className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">Key Legislation</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-3">
+                <ul className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -507,7 +507,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Penalties for Non-Compliance</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Unlicensed abstraction can result in prosecution and fines of up to{' '}
                   <strong className="text-white">&pound;20,000</strong> in the Magistrates&rsquo;
                   Court or an unlimited fine in the Crown Court. Causing pollution of controlled
@@ -550,14 +550,14 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                 <div className="flex flex-col items-center gap-2 max-w-md mx-auto">
                   <div className="w-full bg-emerald-500/20 border border-emerald-400/40 rounded-lg p-3 text-center">
                     <p className="text-sm font-bold text-emerald-400">AVOID</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Eliminate water use entirely &mdash; dry methods, alternatives to water
                     </p>
                   </div>
                   <div className="w-0.5 h-3 bg-emerald-400/40" />
                   <div className="w-[90%] bg-emerald-500/15 border border-emerald-400/30 rounded-lg p-3 text-center">
                     <p className="text-sm font-bold text-emerald-400">REDUCE</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Minimise volumes &mdash; efficient equipment, trigger nozzles, optimised
                       schedules
                     </p>
@@ -565,21 +565,21 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                   <div className="w-0.5 h-3 bg-emerald-400/40" />
                   <div className="w-[80%] bg-emerald-500/10 border border-emerald-400/25 rounded-lg p-3 text-center">
                     <p className="text-sm font-bold text-emerald-400">REUSE</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Use water more than once &mdash; closed-loop systems, cascading use
                     </p>
                   </div>
                   <div className="w-0.5 h-3 bg-emerald-400/40" />
                   <div className="w-[70%] bg-emerald-500/5 border border-emerald-400/20 rounded-lg p-3 text-center">
                     <p className="text-sm font-bold text-emerald-400">RECYCLE</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Treat and recirculate &mdash; rainwater harvesting, greywater recycling
                     </p>
                   </div>
                   <div className="w-0.5 h-3 bg-emerald-400/40" />
                   <div className="w-[60%] bg-white/5 border border-white/20 rounded-lg p-3 text-center">
-                    <p className="text-sm font-bold text-white/60">DISPOSE</p>
-                    <p className="text-xs text-white/50">
+                    <p className="text-sm font-bold text-white">DISPOSE</p>
+                    <p className="text-xs text-white">
                       Last resort &mdash; consented discharge after treatment
                     </p>
                   </div>
@@ -589,7 +589,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Rainwater Harvesting</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                       <span>
@@ -613,7 +613,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Greywater Recycling</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                       <span>Collect used water from hand basins and showers</span>
@@ -655,7 +655,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex-shrink-0">
                         {i + 1}
                       </span>
-                      <p className="text-sm text-white/80">{step}</p>
+                      <p className="text-sm text-white">{step}</p>
                     </div>
                   ))}
                 </div>
@@ -691,7 +691,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-red-400 mb-2">Inefficient Methods</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                       <span>Open-ended hosepipes running continuously</span>
@@ -713,7 +713,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
 
                 <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-emerald-400 mb-2">Efficient Methods</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                       <span>Misting systems producing fine droplets at low volume</span>
@@ -739,7 +739,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                   <Gauge className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">Misting Systems</p>
                 </div>
-                <div className="text-sm text-white/80 space-y-3">
+                <div className="text-sm text-white space-y-3">
                   <p>
                     Misting systems produce very fine water droplets (typically 10&ndash;100
                     microns) that are optimally sized to capture airborne dust particles. The
@@ -777,11 +777,11 @@ export default function EnvironmentalSustainabilityModule3Section3() {
 
               <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-emerald-400 mb-2">Alternatives to Water</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   In some situations, non-water methods can eliminate water use for dust control
                   entirely:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -845,7 +845,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                     Water-to-Cement Ratio Optimisation
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-3">
+                <div className="text-sm text-white space-y-3">
                   <p>
                     The <strong className="text-white">water-to-cement (w/c) ratio</strong> is the
                     most important factor in concrete mix design. A lower w/c ratio produces
@@ -888,7 +888,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
 
               <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-emerald-400 mb-3">Washout Management</p>
-                <div className="text-sm text-white/80 space-y-3">
+                <div className="text-sm text-white space-y-3">
                   <p>
                     Concrete washout &mdash; cleaning the inside of mixer trucks, pump lines, and
                     placing equipment &mdash; generates large volumes of highly alkaline wastewater
@@ -932,7 +932,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                 <p className="text-sm font-medium text-white mb-2">
                   Recycling Wash Water in Concrete
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">BS 1008</strong> (Mixing water for concrete)
                   permits the use of recycled water from concrete production in new concrete mixes,
                   subject to testing requirements. The water must meet specified limits for
@@ -970,7 +970,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                   <Bath className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">Water-Efficient Fittings</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -1017,7 +1017,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-emerald-400 mb-2">Meter Monitoring</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Installing sub-meters on welfare blocks allows water consumption to be tracked,
                     compared with benchmarks, and investigated when consumption rises unexpectedly.
                     Meter readings should be taken at least weekly and compared with workforce
@@ -1032,7 +1032,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                   <p className="text-sm font-medium text-emerald-400 mb-2">
                     Leak Detection in Temporary Plumbing
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Temporary water supplies and plumbing systems on construction sites are
                     particularly prone to leaks. Push-fit connections, flexible hoses, and portable
                     units are subject to movement, vibration, and accidental damage. A regular
@@ -1074,7 +1074,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                   <ShieldAlert className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">Silt Management</p>
                 </div>
-                <div className="text-sm text-white/80 space-y-3">
+                <div className="text-sm text-white space-y-3">
                   <p>
                     Silt (fine suspended solids) is the most common pollutant from construction
                     sites. Earthworks, excavation, and exposed ground generate silt-laden surface
@@ -1085,7 +1085,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                   <div className="grid sm:grid-cols-2 gap-3">
                     <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                       <p className="text-sm font-medium text-white mb-1">Silt Fences</p>
-                      <p className="text-xs text-white/80">
+                      <p className="text-xs text-white">
                         Permeable geotextile barriers installed along contours or at site boundaries
                         to intercept and filter silt-laden overland flow. Water passes through the
                         fabric whilst silt is retained. Effective for sheet flow but not for
@@ -1096,7 +1096,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                       <p className="text-sm font-medium text-white mb-1">
                         Settlement Tanks &amp; Lagoons
                       </p>
-                      <p className="text-xs text-white/80">
+                      <p className="text-xs text-white">
                         Tanks or excavated lagoons that provide sufficient residence time for
                         suspended solids to settle out of the water before it is discharged or
                         recycled. Detention time, surface area, and flow rate are designed to
@@ -1106,7 +1106,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                     </div>
                     <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                       <p className="text-sm font-medium text-white mb-1">Silt Busters</p>
-                      <p className="text-xs text-white/80">
+                      <p className="text-xs text-white">
                         Proprietary treatment units that use chemical dosing (coagulants and
                         flocculants) to accelerate the settlement of very fine suspended solids.
                         Used where settlement alone cannot achieve the required discharge quality,
@@ -1115,7 +1115,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                     </div>
                     <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                       <p className="text-sm font-medium text-white mb-1">Drain Protection</p>
-                      <p className="text-xs text-white/80">
+                      <p className="text-xs text-white">
                         Drain covers, gully guards, and straw bale barriers prevent silt from
                         entering surface water drainage systems. All drains within and adjacent to
                         the site must be identified, mapped, and protected before earthworks begin.
@@ -1130,7 +1130,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   Oil &amp; Fuel Pollution Prevention
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -1191,7 +1191,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                         <p className="text-[10px] sm:text-xs text-emerald-400 font-medium">
                           {item.label}
                         </p>
-                        <p className="text-[9px] sm:text-[10px] text-white/50">{item.sub}</p>
+                        <p className="text-[9px] sm:text-[10px] text-white">{item.sub}</p>
                       </div>
                     ))}
                   </div>
@@ -1216,7 +1216,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                         'Landscaping',
                       ].map((use, i) => (
                         <div key={i} className="bg-white/5 border border-white/10 rounded p-1.5">
-                          <p className="text-[10px] sm:text-xs text-white/70">{use}</p>
+                          <p className="text-[10px] sm:text-xs text-white">{use}</p>
                         </div>
                       ))}
                     </div>
@@ -1240,14 +1240,14 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                           'Greywater treatment',
                           'Wash water reuse',
                         ].map((item, i) => (
-                          <p key={i} className="text-[10px] sm:text-xs text-white/60">
+                          <p key={i} className="text-[10px] sm:text-xs text-white">
                             {item}
                           </p>
                         ))}
                       </div>
                     </div>
                     <div className="bg-white/5 border border-white/20 rounded-lg p-3 text-center">
-                      <p className="text-xs text-white/60 font-medium mb-1">Consented Discharge</p>
+                      <p className="text-xs text-white font-medium mb-1">Consented Discharge</p>
                       <div className="space-y-1">
                         {[
                           'Surface water (permitted)',
@@ -1255,7 +1255,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                           'Tankered off site',
                           'Soakaway (approved)',
                         ].map((item, i) => (
-                          <p key={i} className="text-[10px] sm:text-xs text-white/50">
+                          <p key={i} className="text-[10px] sm:text-xs text-white">
                             {item}
                           </p>
                         ))}
@@ -1272,7 +1272,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                     Environment Agency Incident Hotline
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If a pollution incident occurs that threatens water quality, it must be reported
                   immediately to the{' '}
                   <strong className="text-white">
@@ -1313,7 +1313,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                     Metering &amp; Benchmarking
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -1359,7 +1359,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
 
               <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-emerald-400 mb-3">BREEAM Water Credits</p>
-                <div className="text-sm text-white/80 space-y-3">
+                <div className="text-sm text-white space-y-3">
                   <p>
                     BREEAM awards credits under the{' '}
                     <strong className="text-white">Water (Wat)</strong> category for measures that
@@ -1370,7 +1370,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                   <div className="grid sm:grid-cols-2 gap-3">
                     <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                       <p className="text-sm font-medium text-white mb-1">Building Water Credits</p>
-                      <ul className="text-xs text-white/80 space-y-1">
+                      <ul className="text-xs text-white space-y-1">
                         <li>&bull; Water-efficient fittings (taps, WCs, showers)</li>
                         <li>&bull; Rainwater harvesting systems</li>
                         <li>&bull; Greywater recycling systems</li>
@@ -1382,7 +1382,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                       <p className="text-sm font-medium text-white mb-1">
                         Construction Water Credits
                       </p>
-                      <ul className="text-xs text-white/80 space-y-1">
+                      <ul className="text-xs text-white space-y-1">
                         <li>&bull; Water consumption monitoring and reporting</li>
                         <li>&bull; Setting and tracking reduction targets</li>
                         <li>&bull; Implementing conservation strategies</li>
@@ -1398,7 +1398,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Reporting &amp; Reduction Targets
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -1466,7 +1466,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1480,7 +1480,7 @@ export default function EnvironmentalSustainabilityModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-3-section-2">

@@ -231,7 +231,7 @@ const HNCModule4Section5_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section5">
@@ -253,7 +253,7 @@ const HNCModule4Section5_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Power Quality
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Ensuring clean, stable power for sensitive building services equipment
           </p>
         </header>
@@ -698,7 +698,7 @@ const HNCModule4Section5_5 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Harmonics:</strong> Third harmonics (150Hz) from electronic loads add in
               three-phase neutrals. Consider oversized neutrals or separate neutrals for non-linear
               load circuits.
@@ -724,7 +724,7 @@ const HNCModule4Section5_5 = () => {
                 <strong>Scenario:</strong> Specify SPDs for an office building with lightning
                 protection system.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Building has external LPS → Type 1 SPD required</p>
                 <p className="mt-2">Main switchboard (Type 1+2 combined):</p>
                 <p>• Uc ≥ 253V (for 230V +10%)</p>
@@ -747,7 +747,7 @@ const HNCModule4Section5_5 = () => {
                 <strong>Scenario:</strong> Calculate neutral current for 3-phase IT load with 60%
                 third harmonic current.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Phase current per phase: 50A (balanced)</p>
                 <p>Third harmonic per phase: 50 × 0.6 = 30A</p>
                 <p className="mt-2">Third harmonics add in neutral:</p>
@@ -771,7 +771,7 @@ const HNCModule4Section5_5 = () => {
                 <strong>Scenario:</strong> Verify voltage at end of 80m sub-main when supply is at
                 lower tolerance.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Supply voltage: 207V (lower limit -10%)</p>
                 <p>Sub-main: 80m, 35mm² copper, 100A load</p>
                 <p>Voltage drop: 80m × 100A × 1.25mV/A/m = 10V</p>
@@ -845,7 +845,7 @@ const HNCModule4Section5_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -891,7 +891,7 @@ const HNCModule4Section5_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section5-4">

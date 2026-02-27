@@ -169,11 +169,11 @@ export function TimeEntryVerificationQRSheet({
             {/* Activity summary */}
             {snapshot && (
               <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4">
-                <p className="text-xs text-white/60 mb-1">Training Session</p>
+                <p className="text-xs text-white mb-1">Training Session</p>
                 <p className="text-sm font-medium text-foreground">
                   {snapshot.activity || activityTitle}
                 </p>
-                <div className="flex items-center gap-3 mt-2 text-xs text-white/60">
+                <div className="flex items-center gap-3 mt-2 text-xs text-white">
                   {snapshot.duration_minutes && (
                     <div className="flex items-center gap-1">
                       <Clock className="h-3 w-3" />
@@ -191,10 +191,10 @@ export function TimeEntryVerificationQRSheet({
                   )}
                 </div>
                 {snapshot.notes && (
-                  <p className="text-xs text-white/50 mt-2 line-clamp-2">{snapshot.notes}</p>
+                  <p className="text-xs text-white mt-2 line-clamp-2">{snapshot.notes}</p>
                 )}
                 {verification && (
-                  <div className="flex items-center gap-3 mt-2 text-xs text-white/40">
+                  <div className="flex items-center gap-3 mt-2 text-xs text-white">
                     <div className="flex items-center gap-1">
                       <Clock className="h-3 w-3" />
                       Expires{' '}
@@ -220,11 +220,11 @@ export function TimeEntryVerificationQRSheet({
                     Verified by {verification?.supervisor_name}
                   </p>
                   {verification?.supervisor_company && (
-                    <p className="text-xs text-white/40 mt-0.5">
+                    <p className="text-xs text-white mt-0.5">
                       {verification.supervisor_company}
                     </p>
                   )}
-                  <p className="text-xs text-white/30 mt-1">
+                  <p className="text-xs text-white mt-1">
                     {verification?.verified_at &&
                       new Date(verification.verified_at).toLocaleDateString('en-GB', {
                         day: 'numeric',
@@ -234,12 +234,12 @@ export function TimeEntryVerificationQRSheet({
                   </p>
                 </div>
                 {verification?.feedback_text && (
-                  <div className="p-3 rounded-lg bg-white/5 text-sm text-white/70 text-left">
+                  <div className="p-3 rounded-lg bg-white/5 text-sm text-white text-left">
                     &ldquo;{verification.feedback_text}&rdquo;
                   </div>
                 )}
                 {verification?.verification_hash && (
-                  <p className="text-[9px] text-white/20 font-mono break-all">
+                  <p className="text-[9px] text-white font-mono break-all">
                     Hash: {verification.verification_hash}
                   </p>
                 )}
@@ -261,13 +261,13 @@ export function TimeEntryVerificationQRSheet({
 
                 {/* Link display */}
                 <div className="rounded-xl bg-white/[0.04] border border-white/10 p-3">
-                  <p className="text-xs text-white/40 mb-1">Verification Link</p>
-                  <p className="text-xs text-white/60 font-mono break-all">{verificationUrl}</p>
+                  <p className="text-xs text-white mb-1">Verification Link</p>
+                  <p className="text-xs text-white font-mono break-all">{verificationUrl}</p>
                 </div>
 
                 {/* Instructions */}
                 <div className="space-y-3">
-                  <p className="text-xs font-semibold text-white/40 uppercase tracking-wider">
+                  <p className="text-xs font-semibold text-white uppercase tracking-wider">
                     How It Works
                   </p>
                   <div className="space-y-2">
@@ -281,7 +281,7 @@ export function TimeEntryVerificationQRSheet({
                         <span className="flex items-center justify-center h-5 w-5 rounded-full bg-emerald-500/10 text-emerald-400 text-[10px] font-bold shrink-0 mt-0.5">
                           {i + 1}
                         </span>
-                        <span className="text-sm text-white/60">{step}</span>
+                        <span className="text-sm text-white">{step}</span>
                       </div>
                     ))}
                   </div>
@@ -348,7 +348,7 @@ export function TimeEntryVerificationQRSheet({
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-11 touch-manipulation text-white/60"
+                  className="h-11 touch-manipulation text-white"
                   onClick={() => window.open(verificationUrl, '_blank')}
                 >
                   <ExternalLink className="h-4 w-4 mr-1.5" />

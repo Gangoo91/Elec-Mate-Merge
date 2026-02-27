@@ -219,7 +219,7 @@ const HNCModule4Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section2">
@@ -241,7 +241,7 @@ const HNCModule4Section2_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Current-Carrying Capacity
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Using BS 7671 Appendix 4 tables and installation reference methods for safe cable
             selection
           </p>
@@ -566,12 +566,12 @@ const HNCModule4Section2_1 = () => {
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">Single-Phase</p>
                   <p className="font-mono">Ib = P / (V × pf)</p>
-                  <p className="text-white/70 text-xs mt-1">Resistive loads: pf = 1</p>
+                  <p className="text-white text-xs mt-1">Resistive loads: pf = 1</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">Three-Phase</p>
                   <p className="font-mono">Ib = P / (√3 × VL × pf)</p>
-                  <p className="text-white/70 text-xs mt-1">VL = 400V line voltage</p>
+                  <p className="text-white text-xs mt-1">VL = 400V line voltage</p>
                 </div>
               </div>
             </div>
@@ -652,7 +652,7 @@ const HNCModule4Section2_1 = () => {
               <div className="text-center p-3 rounded bg-black/30 font-mono text-lg">
                 I<sub>b</sub> ≤ I<sub>n</sub> ≤ I<sub>z</sub>
               </div>
-              <div className="mt-3 text-sm text-white/80">
+              <div className="mt-3 text-sm text-white">
                 <p>
                   <strong>Ib</strong> = Design current (load requirement)
                 </p>
@@ -697,7 +697,7 @@ const HNCModule4Section2_1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Example: Office Fan Coil Unit
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Load: 2.5kW single-phase, 230V</p>
                 <p className="mt-2">
                   Step 1: Ib = 2500 / 230 = <strong>10.9A</strong>
@@ -744,7 +744,7 @@ const HNCModule4Section2_1 = () => {
                 <strong>Question:</strong> Select cable for 20 × 45W LED luminaires on a 230V
                 circuit, cables in trunking (Method B), 30°C ambient, no grouping.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Total load = 20 × 45W = 900W</p>
                 <p>
                   Ib = 900 / 230 = <strong>3.9A</strong>
@@ -769,7 +769,7 @@ const HNCModule4Section2_1 = () => {
                 <strong>Question:</strong> Size cable for 15kW AHU motor (pf 0.85), 400V 3φ,
                 XLPE/SWA on cable tray (Method E), 40°C plant room.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Ib = 15000 / (√3 × 400 × 0.85) = <strong>25.5A</strong>
                 </p>
@@ -793,7 +793,7 @@ const HNCModule4Section2_1 = () => {
                 <strong>Question:</strong> 6 × 20A circuits in conduit on wall (Method B), 30°C
                 ambient. What cable size?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>In = 20A per circuit</p>
                 <p className="mt-2">Grouping factor for 6 circuits: Cg = 0.57</p>
                 <p>
@@ -803,7 +803,7 @@ const HNCModule4Section2_1 = () => {
                 <p>4mm² = 30A (too small)</p>
                 <p>6mm² = 38A (adequate)</p>
                 <p className="mt-2 text-green-400">→ 6mm² singles in conduit required</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Note: Heavy grouping penalty - consider separate routes
                 </p>
               </div>
@@ -883,7 +883,7 @@ const HNCModule4Section2_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -929,7 +929,7 @@ const HNCModule4Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section2">

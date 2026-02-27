@@ -92,7 +92,7 @@ const EVChargingModule2Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/ev-charging-module-2">
@@ -113,7 +113,7 @@ const EVChargingModule2Section5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Compatibility by Manufacturer
           </h1>
-          <p className="text-white/80">Vehicle-specific charging requirements and capabilities</p>
+          <p className="text-white">Vehicle-specific charging requirements and capabilities</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -241,7 +241,7 @@ const EVChargingModule2Section5 = () => {
             <div className="grid sm:grid-cols-3 gap-4 my-6">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">BMW iX / i4</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>AC: 11-22kW three-phase</li>
                   <li>DC: 195-205kW CCS2</li>
                   <li>Battery: 70-105kWh</li>
@@ -250,7 +250,7 @@ const EVChargingModule2Section5 = () => {
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">VW ID.3 / ID.4</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>AC: 11kW three-phase</li>
                   <li>DC: 100-135kW CCS2</li>
                   <li>Battery: 45-77kWh</li>
@@ -259,7 +259,7 @@ const EVChargingModule2Section5 = () => {
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">Porsche Taycan</p>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>AC: 11-22kW three-phase</li>
                   <li>DC: 270kW (800V native)</li>
                   <li>Battery: 79-93kWh</li>
@@ -335,7 +335,7 @@ const EVChargingModule2Section5 = () => {
                       <th className="text-left p-2">Max AC</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/90">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="p-2">Tesla (EU)</td>
                       <td className="p-2">Type 2</td>
@@ -459,7 +459,7 @@ const EVChargingModule2Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/ev-charging-module-2-section-4">

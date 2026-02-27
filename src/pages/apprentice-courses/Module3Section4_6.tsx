@@ -173,13 +173,13 @@ export default function Module3Section4_6() {
           <div className="inline-flex items-center justify-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/30 mb-4">
             <Plug className="w-4 h-4 text-elec-yellow" />
             <span className="text-elec-yellow text-sm font-medium">Module 3</span>
-            <span className="text-white/50">|</span>
-            <span className="text-white/70 text-sm">Section 3.4.6</span>
+            <span className="text-white">|</span>
+            <span className="text-white text-sm">Section 3.4.6</span>
           </div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Installing Accessories (Sockets, Switches, FCUs)
           </h1>
-          <p className="text-white/80 text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Master the installation of electrical accessories with proper wiring techniques,
             mounting heights, and BS 7671 compliance for safe, professional installations.
           </p>
@@ -1373,7 +1373,7 @@ export default function Module3Section4_6() {
             Summary
           </h2>
           <div className="rounded-lg p-3 sm:p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
-            <p className="text-white/90">
+            <p className="text-white">
               Sockets, switches, and FCUs are key components of an installation. Correct
               positioning, secure fixing, accurate wiring, and compliance with regulations ensure
               these accessories are safe, reliable, and fit for purpose.

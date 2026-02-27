@@ -212,13 +212,13 @@ const AsbestosModule4Section2 = () => {
           </div>
           <div className="inline-block bg-orange-500/10 border border-orange-500/20 px-3 py-1 rounded-full text-sm font-semibold mb-4 ml-0">
             <span className="text-orange-400">MODULE 4</span>
-            <span className="text-white/40 mx-2">&middot;</span>
-            <span className="text-white/60">SECTION 2</span>
+            <span className="text-white mx-2">&middot;</span>
+            <span className="text-white">SECTION 2</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Risk Assessment & Method Statements
           </h1>
-          <p className="text-white/70 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding RAMS for asbestos work, the hierarchy of controls, task-specific
             assessment, dynamic risk assessment, and the essential content of a method statement
           </p>
@@ -228,7 +228,7 @@ const AsbestosModule4Section2 = () => {
         <div className="grid sm:grid-cols-2 gap-4 mb-10">
           <div className="rounded-lg p-4 bg-orange-500/5 border-l-2 border-orange-500/50">
             <p className="font-semibold text-orange-400 mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -261,7 +261,7 @@ const AsbestosModule4Section2 = () => {
           </div>
           <div className="rounded-lg p-4 bg-orange-500/5 border-l-2 border-orange-500/50">
             <p className="font-semibold text-orange-400/90 mb-2">On Site</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -297,7 +297,7 @@ const AsbestosModule4Section2 = () => {
         {/* Learning Outcomes */}
         <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4">By the end of this section, you will be able to:</p>
+          <p className="text-white mb-4">By the end of this section, you will be able to:</p>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
               'Explain why a Risk Assessment and Method Statement (RAMS) is required for all asbestos work under Regulation 6 of CAR 2012',
@@ -311,7 +311,7 @@ const AsbestosModule4Section2 = () => {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-orange-400/70 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </div>
             ))}
           </div>
@@ -326,7 +326,7 @@ const AsbestosModule4Section2 = () => {
               <span className="text-orange-400/80 text-sm font-normal">01</span>
               RAMS for Asbestos Work
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 A{' '}
                 <strong className="text-white">Risk Assessment and Method Statement (RAMS)</strong>{' '}
@@ -343,7 +343,7 @@ const AsbestosModule4Section2 = () => {
 
               <div className="bg-orange-500/10 border border-orange-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-orange-400">Key Definition: RAMS</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   A <strong className="text-white">RAMS</strong> is a two-part document. The{' '}
                   <strong className="text-white">risk assessment</strong> identifies hazards and
                   evaluates the level of risk for a specific task. The{' '}
@@ -355,7 +355,7 @@ const AsbestosModule4Section2 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-orange-400 font-medium mb-2">RAMS Requirements</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-orange-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -399,7 +399,7 @@ const AsbestosModule4Section2 = () => {
                     Regulation 6: Assessment Before Work
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Regulation 6 of CAR 2012 is clear: an employer must{' '}
                   <strong className="text-white">NOT</strong> carry out work that is liable to
                   expose employees to asbestos unless a{' '}
@@ -421,7 +421,7 @@ const AsbestosModule4Section2 = () => {
               <span className="text-amber-400/80 text-sm font-normal">02</span>
               The Hierarchy of Controls
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The <strong className="text-white">hierarchy of controls</strong> is the fundamental
                 framework for managing risk. Controls must be applied in order —{' '}
@@ -439,7 +439,7 @@ const AsbestosModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Eliminate</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Remove the need to work with or near ACMs. Redesign the task, use
                         alternative routes, or re-route services to avoid ACM locations entirely.
                         This is the <strong className="text-white">most effective</strong> control.
@@ -452,7 +452,7 @@ const AsbestosModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Substitute</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Replace with a less hazardous alternative. In asbestos work, substitution is
                         not usually applicable — you cannot substitute the asbestos that is already
                         present. However, you can substitute work methods (e.g. hand tools instead
@@ -466,7 +466,7 @@ const AsbestosModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Engineering Controls</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Isolate people from the hazard using physical measures: enclosures, local
                         exhaust ventilation (LEV), wet working methods, shadow vacuuming, negative
                         pressure units, and sealed transit routes.
@@ -479,7 +479,7 @@ const AsbestosModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Administrative Controls</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Change the way people work: permits to work, restricted access zones,
                         supervision, training, job rotation to limit exposure time, signage, and
                         briefings.
@@ -492,7 +492,7 @@ const AsbestosModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">PPE/RPE</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Protect the individual worker: respiratory protective equipment (RPE),
                         disposable coveralls (Type 5/6), gloves, boot covers. This is the{' '}
                         <strong className="text-white">last resort</strong> — the least effective
@@ -531,7 +531,7 @@ const AsbestosModule4Section2 = () => {
                     {/* Level 1: Eliminate (widest) */}
                     <div className="w-full rounded-lg bg-green-500/20 border border-green-400/30 px-3 sm:px-4 py-2.5">
                       <p className="text-green-300 font-bold text-xs sm:text-sm">ELIMINATE</p>
-                      <p className="text-white/60 text-[11px] sm:text-xs">
+                      <p className="text-white text-[11px] sm:text-xs">
                         Remove the hazard entirely
                       </p>
                     </div>
@@ -539,7 +539,7 @@ const AsbestosModule4Section2 = () => {
                     {/* Level 2: Substitute */}
                     <div className="w-[88%] mx-auto rounded-lg bg-blue-500/20 border border-blue-400/30 px-3 sm:px-4 py-2.5">
                       <p className="text-blue-300 font-bold text-xs sm:text-sm">SUBSTITUTE</p>
-                      <p className="text-white/60 text-[11px] sm:text-xs">
+                      <p className="text-white text-[11px] sm:text-xs">
                         Replace with less hazardous alternative
                       </p>
                     </div>
@@ -549,7 +549,7 @@ const AsbestosModule4Section2 = () => {
                       <p className="text-yellow-300 font-bold text-xs sm:text-sm">
                         ENGINEERING CONTROLS
                       </p>
-                      <p className="text-white/60 text-[11px] sm:text-xs">
+                      <p className="text-white text-[11px] sm:text-xs">
                         Isolate people from the hazard
                       </p>
                     </div>
@@ -557,7 +557,7 @@ const AsbestosModule4Section2 = () => {
                     {/* Level 4: Administrative Controls */}
                     <div className="w-[58%] mx-auto rounded-lg bg-orange-500/20 border border-orange-400/30 px-3 sm:px-4 py-2.5">
                       <p className="text-orange-300 font-bold text-xs sm:text-sm">ADMINISTRATIVE</p>
-                      <p className="text-white/60 text-[11px] sm:text-xs">
+                      <p className="text-white text-[11px] sm:text-xs">
                         Change the way people work
                       </p>
                     </div>
@@ -565,7 +565,7 @@ const AsbestosModule4Section2 = () => {
                     {/* Level 5: PPE/RPE (narrowest) */}
                     <div className="w-[42%] mx-auto rounded-lg bg-red-500/20 border border-red-400/30 px-3 sm:px-4 py-2.5">
                       <p className="text-red-300 font-bold text-xs sm:text-sm">PPE / RPE</p>
-                      <p className="text-white/60 text-[11px] sm:text-xs">Protect the worker</p>
+                      <p className="text-white text-[11px] sm:text-xs">Protect the worker</p>
                     </div>
                   </div>
                 </div>
@@ -592,7 +592,7 @@ const AsbestosModule4Section2 = () => {
               <span className="text-teal-400/80 text-sm font-normal">03</span>
               Task-Specific Risk Assessment
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Every asbestos risk assessment must be{' '}
                 <strong className="text-white">task-specific</strong>. A generic assessment covering
@@ -612,7 +612,7 @@ const AsbestosModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">What ACM is involved?</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Identify the type of asbestos (chrysotile, amosite, crocidolite), the form
                         of the ACM (lagging, insulating board, cement, textured coating, floor
                         tiles), and its current condition and friability.
@@ -625,7 +625,7 @@ const AsbestosModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">What work is being done?</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Define the task: removal, encapsulation, repair, maintenance near ACMs,
                         drilling through ACMs, or working in areas where ACMs are present but not
                         being directly disturbed.
@@ -638,7 +638,7 @@ const AsbestosModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">What tools and methods will be used?</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Hand tools, power tools, wet methods, shadow vacuuming. Power tools generate
                         significantly more fibre than hand tools — their use must be carefully
                         justified and controlled.
@@ -651,7 +651,7 @@ const AsbestosModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">What is the expected fibre release?</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Estimate the likely airborne fibre concentration based on the ACM type,
                         condition, and work method. This determines the category of work and the
                         level of controls required.
@@ -664,7 +664,7 @@ const AsbestosModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Who might be exposed?</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Workers carrying out the task, other workers in the vicinity, building
                         occupants, visitors, and passers-by. Each group may require different
                         protective measures.
@@ -677,7 +677,7 @@ const AsbestosModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">What is the duration of exposure?</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         How long will each worker be exposed? Consider whether job rotation is
                         needed to limit individual exposure time.
                       </p>
@@ -689,7 +689,7 @@ const AsbestosModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">What controls are needed?</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Apply the hierarchy of controls. Determine the specific engineering,
                         administrative, and PPE controls required to reduce exposure to as low as
                         reasonably practicable (ALARP).
@@ -702,7 +702,7 @@ const AsbestosModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">What RPE/PPE is required?</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Specify the type of RPE (FFP3, half-mask, full-face, powered air), coveralls
                         (Type 5/6), gloves, and boot covers. All RPE must be face-fit tested to the
                         individual wearer.
@@ -715,7 +715,7 @@ const AsbestosModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">What waste will be generated?</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Identify the type and quantity of asbestos waste. Determine how it will be
                         double-bagged, labelled, transported, and disposed of at a licensed
                         facility.
@@ -730,7 +730,7 @@ const AsbestosModule4Section2 = () => {
                       <p className="text-white font-medium">
                         What emergency procedures are needed?
                       </p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Plan for uncontrolled fibre release, equipment failure, injury, fire, and
                         other emergencies. Ensure all workers know the emergency procedures before
                         work begins.
@@ -750,7 +750,7 @@ const AsbestosModule4Section2 = () => {
               <span className="text-purple-400/80 text-sm font-normal">04</span>
               Site-Specific Considerations
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 In addition to the task itself, the risk assessment must consider the{' '}
                 <strong className="text-white">specific conditions at the site</strong> where the
@@ -760,7 +760,7 @@ const AsbestosModule4Section2 = () => {
 
               <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
                 <h3 className="text-purple-300 font-medium mb-3">Key Site-Specific Factors</h3>
-                <ul className="text-white/70 space-y-3 text-sm">
+                <ul className="text-white space-y-3 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -832,7 +832,7 @@ const AsbestosModule4Section2 = () => {
 
               <div className="bg-orange-500/10 border border-orange-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-orange-400">Practical Tip: Site Visit</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Always carry out a{' '}
                   <strong className="text-white">site visit before writing the RAMS</strong>.
                   Desk-based assessments miss critical details. Walk the route, inspect the work
@@ -854,7 +854,7 @@ const AsbestosModule4Section2 = () => {
               <span className="text-cyan-400/80 text-sm font-normal">05</span>
               Dynamic Risk Assessment
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 A <strong className="text-white">dynamic risk assessment</strong> is an ongoing
                 process of identifying and responding to hazards as they arise during work. No
@@ -869,7 +869,7 @@ const AsbestosModule4Section2 = () => {
                     Discovering Unexpected ACMs During Work
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   If you discover suspected asbestos-containing materials during work that were not
                   identified beforehand, you must follow this sequence:
                 </p>
@@ -878,7 +878,7 @@ const AsbestosModule4Section2 = () => {
                     <div className="w-6 h-6 rounded-full bg-red-500/20 border border-red-400/30 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-red-300 text-xs font-bold">1</span>
                     </div>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       <strong className="text-white">STOP</strong> work immediately — do not
                       continue to disturb the material
                     </p>
@@ -887,7 +887,7 @@ const AsbestosModule4Section2 = () => {
                     <div className="w-6 h-6 rounded-full bg-red-500/20 border border-red-400/30 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-red-300 text-xs font-bold">2</span>
                     </div>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       <strong className="text-white">Assess</strong> the situation — has the
                       material been disturbed? Is there visible dust or debris?
                     </p>
@@ -896,7 +896,7 @@ const AsbestosModule4Section2 = () => {
                     <div className="w-6 h-6 rounded-full bg-red-500/20 border border-red-400/30 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-red-300 text-xs font-bold">3</span>
                     </div>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       <strong className="text-white">If disturbed:</strong> follow the 4-S emergency
                       procedure (covered in Module 5) — Stop, Secure, Sign, Seek help
                     </p>
@@ -905,7 +905,7 @@ const AsbestosModule4Section2 = () => {
                     <div className="w-6 h-6 rounded-full bg-red-500/20 border border-red-400/30 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-red-300 text-xs font-bold">4</span>
                     </div>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       <strong className="text-white">If not yet disturbed:</strong> secure the area,
                       report to your supervisor, and check the asbestos register
                     </p>
@@ -914,7 +914,7 @@ const AsbestosModule4Section2 = () => {
                     <div className="w-6 h-6 rounded-full bg-red-500/20 border border-red-400/30 flex items-center justify-center flex-shrink-0 mt-0.5">
                       <span className="text-red-300 text-xs font-bold">5</span>
                     </div>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       <strong className="text-white">Do NOT resume</strong> work until the material
                       has been identified and appropriate controls are in place
                     </p>
@@ -924,7 +924,7 @@ const AsbestosModule4Section2 = () => {
 
               <div className="bg-white/5 border border-cyan-400/30 p-4 rounded-lg">
                 <h3 className="text-cyan-300 font-medium mb-2">Ongoing Reassessment</h3>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Dynamic risk assessment is <strong className="text-white">not</strong> a one-off
                   activity at the start of the shift. Workers must continuously reassess conditions
                   as work progresses. Conditions that may trigger a reassessment include: ACMs in
@@ -942,7 +942,7 @@ const AsbestosModule4Section2 = () => {
                     Never &ldquo;Work Through&rdquo; a Problem
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   If you are unsure whether a material contains asbestos, or if conditions have
                   changed from what the RAMS described, you must{' '}
                   <strong className="text-white">stop and report</strong>. Never attempt to
@@ -961,7 +961,7 @@ const AsbestosModule4Section2 = () => {
               <span className="text-emerald-400/80 text-sm font-normal">06</span>
               HSE Asbestos Essentials (HSG210)
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">HSE Asbestos Essentials</strong> (HSG210) is a key
                 HSE publication that provides practical, step-by-step guidance for{' '}
@@ -972,7 +972,7 @@ const AsbestosModule4Section2 = () => {
 
               <div className="bg-white/5 border border-emerald-400/30 p-4 rounded-lg">
                 <h3 className="text-emerald-300 font-medium mb-3">What HSG210 Contains</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-emerald-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1009,7 +1009,7 @@ const AsbestosModule4Section2 = () => {
 
               <div className="bg-orange-500/10 border border-orange-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-orange-400">Scope Limitation</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   HSG210 covers <strong className="text-white">non-licensed</strong> and{' '}
                   <strong className="text-white">notifiable non-licensed</strong> asbestos work
                   only. It does <strong className="text-white">NOT</strong> cover licensed work such
@@ -1020,7 +1020,7 @@ const AsbestosModule4Section2 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-orange-400 font-medium mb-2">Using HSG210 in Practice</h3>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   When preparing a RAMS for non-licensed asbestos work, the relevant HSG210 task
                   sheet should be your starting point. It provides a proven, HSE-approved method for
                   carrying out the task safely. However, you must still carry out a site-specific
@@ -1042,7 +1042,7 @@ const AsbestosModule4Section2 = () => {
               <span className="text-rose-400/80 text-sm font-normal">07</span>
               Method Statement Content
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The <strong className="text-white">method statement</strong> is the second part of
                 the RAMS. It translates the findings of the risk assessment into a practical,
@@ -1061,7 +1061,7 @@ const AsbestosModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Description of Work</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         A clear, concise description of the work to be carried out — what is being
                         done and why.
                       </p>
@@ -1073,7 +1073,7 @@ const AsbestosModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Location and Extent of ACMs</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         The precise location, type, and extent of asbestos-containing materials
                         involved in the work — referencing the asbestos register and survey reports.
                       </p>
@@ -1085,7 +1085,7 @@ const AsbestosModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Category of Work</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Whether the work is licensed, notifiable non-licensed (NNLW), or
                         non-licensed — this determines the regulatory requirements.
                       </p>
@@ -1097,7 +1097,7 @@ const AsbestosModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Sequence of Operations</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         A step-by-step procedure covering every stage of the work from setup to
                         completion — what happens first, second, third, and so on.
                       </p>
@@ -1109,7 +1109,7 @@ const AsbestosModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Equipment Required</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         A full list of equipment: RPE (type and protection factor), PPE (coveralls,
                         gloves, boot covers), tools, HEPA vacuum, waste bags, polythene sheeting,
                         warning signs, and tape.
@@ -1122,7 +1122,7 @@ const AsbestosModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Control Measures</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         The specific controls identified in the risk assessment: wet working,
                         enclosure, LEV, access restrictions, ventilation isolation, and any other
                         measures to prevent fibre release and exposure.
@@ -1135,7 +1135,7 @@ const AsbestosModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Decontamination Procedures</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         How workers, tools, and the work area will be decontaminated. The sequence
                         of removing PPE, the use of HEPA vacuums, and the clean-up procedure must
                         all be specified.
@@ -1148,7 +1148,7 @@ const AsbestosModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Waste Handling and Disposal</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         How asbestos waste will be packaged (double-bagged in red-striped or
                         clear-and-red bags), labelled, stored, transported, and disposed of at a
                         licensed waste facility.
@@ -1161,7 +1161,7 @@ const AsbestosModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Emergency Procedures</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         What to do in the event of uncontrolled fibre release, equipment failure,
                         injury, fire, or any other emergency. Include contact numbers and escalation
                         procedures.
@@ -1174,7 +1174,7 @@ const AsbestosModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Names and Competencies of Workers</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         The names of all workers carrying out the task, their asbestos awareness
                         training records, RPE face-fit test certificates, and any relevant
                         qualifications or licences.
@@ -1187,7 +1187,7 @@ const AsbestosModule4Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Supervision Arrangements</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Who will supervise the work, their qualifications, and the level of
                         supervision required (continuous, periodic, or by inspection).
                       </p>
@@ -1203,7 +1203,7 @@ const AsbestosModule4Section2 = () => {
                     The Method Statement Is Not a Filing Exercise
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A method statement is only useful if workers{' '}
                   <strong className="text-white">read, understand, and follow it</strong>. Every
                   worker must be briefed on the method statement before work begins. If a worker
@@ -1215,7 +1215,7 @@ const AsbestosModule4Section2 = () => {
 
               <div className="bg-orange-500/10 border border-orange-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-orange-400">Living Document</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Like the risk assessment, the method statement is a{' '}
                   <strong className="text-white">living document</strong>. If conditions change
                   during the work — for example, the ACM is found to be in worse condition than
@@ -1237,7 +1237,7 @@ const AsbestosModule4Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1253,7 +1253,7 @@ const AsbestosModule4Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-4-section-1">

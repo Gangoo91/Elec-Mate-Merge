@@ -264,7 +264,7 @@ const HNCModule2Section6_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section6">
@@ -286,7 +286,7 @@ const HNCModule2Section6_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Design Tools and Software
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Building energy and environmental simulation software for design and compliance
           </p>
         </header>
@@ -799,7 +799,7 @@ const HNCModule2Section6_4 = () => {
               </ol>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Reality check:</strong> BIM-to-simulation transfer rarely works perfectly
               first time. Budget 20-30% of modelling time for geometry cleanup and verification.
             </p>
@@ -824,7 +824,7 @@ const HNCModule2Section6_4 = () => {
                 <strong>Scenario:</strong> 800m² retail unit with simple split DX cooling, seeking
                 Part L compliance.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Analysis:</p>
                 <p>- Floor area: 800m² (&lt;1,000m² threshold)</p>
                 <p>- HVAC: Simple split system (no complex features)</p>
@@ -847,7 +847,7 @@ const HNCModule2Section6_4 = () => {
                 <strong>Scenario:</strong> 5,000m² office with chilled beams and mixed-mode
                 ventilation.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Analysis:</p>
                 <p>- Floor area: 5,000m² (&gt;1,000m² threshold)</p>
                 <p>- HVAC: Chilled beams (DSM-only system)</p>
@@ -870,7 +870,7 @@ const HNCModule2Section6_4 = () => {
                 <strong>Scenario:</strong> New school targeting BREEAM Excellent, requiring multiple
                 simulation outputs.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Required analyses and tools:</p>
                 <p className="mt-2">1. Part L compliance (Ene 01)</p>
                 <p> → IES VE or TAS with NCM module</p>
@@ -951,7 +951,7 @@ const HNCModule2Section6_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -997,7 +997,7 @@ const HNCModule2Section6_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section6-3">

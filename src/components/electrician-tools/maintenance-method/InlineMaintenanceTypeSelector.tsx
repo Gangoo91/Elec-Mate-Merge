@@ -61,7 +61,7 @@ export const InlineMaintenanceTypeSelector = ({
               className={cn('h-5 w-5', !isSelected && 'opacity-60')}
               style={!isSelected ? { color: config.gradientFrom } : undefined}
             />
-            <span className={cn('text-xs font-semibold', !isSelected && 'text-white/80')}>
+            <span className={cn('text-xs font-semibold', !isSelected && 'text-white')}>
               {typeConfig.label}
             </span>
           </button>

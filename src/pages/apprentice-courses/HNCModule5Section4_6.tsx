@@ -259,7 +259,7 @@ const HNCModule5Section4_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section4">
@@ -281,7 +281,7 @@ const HNCModule5Section4_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Defects and Snagging
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Defect identification, snagging procedures, tracking systems, rectification management
             and close-out documentation
           </p>
@@ -450,7 +450,7 @@ const HNCModule5Section4_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-2">Electrical</p>
-                  <ul className="text-sm text-white/80 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Distribution board labelling complete</li>
                     <li className="pl-1">Circuit identification schedules fitted</li>
                     <li className="pl-1">Test certificates available</li>
@@ -461,7 +461,7 @@ const HNCModule5Section4_6 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-2">Mechanical</p>
-                  <ul className="text-sm text-white/80 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Valves labelled and accessible</li>
                     <li className="pl-1">Insulation complete and tagged</li>
                     <li className="pl-1">Brackets and supports painted</li>
@@ -504,7 +504,7 @@ const HNCModule5Section4_6 = () => {
                   <li className="pl-1">Must rectify before occupation</li>
                   <li className="pl-1">Timeframe: Immediate</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2 italic">
+                <p className="text-xs text-white mt-2 italic">
                   Example: Non-functional emergency lighting, exposed live conductors
                 </p>
               </div>
@@ -516,7 +516,7 @@ const HNCModule5Section4_6 = () => {
                   <li className="pl-1">Should rectify promptly</li>
                   <li className="pl-1">Timeframe: Within 14 days</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2 italic">
+                <p className="text-xs text-white mt-2 italic">
                   Example: BMS point not commissioned, incorrect valve setting
                 </p>
               </div>
@@ -528,7 +528,7 @@ const HNCModule5Section4_6 = () => {
                   <li className="pl-1">Rectify within DLP</li>
                   <li className="pl-1">Timeframe: Within 28 days</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2 italic">
+                <p className="text-xs text-white mt-2 italic">
                   Example: Missing cable label, minor paintwork damage
                 </p>
               </div>
@@ -633,7 +633,7 @@ const HNCModule5Section4_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Snagstream</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Mobile app with offline capability</li>
                     <li>Photo/video attachment</li>
                     <li>Drawing mark-up</li>
@@ -642,7 +642,7 @@ const HNCModule5Section4_6 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Procore / Aconex / Viewpoint</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Integrated project management</li>
                     <li>Workflow automation</li>
                     <li>Dashboard reporting</li>
@@ -784,7 +784,7 @@ const HNCModule5Section4_6 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Project tip:</strong> Weekly defect status meetings with all parties keeps
               momentum. Display live dashboard statistics to drive accountability.
             </p>
@@ -963,7 +963,7 @@ const HNCModule5Section4_6 = () => {
                 <strong>Scenario:</strong> During snagging of a new office building, the following
                 electrical issues are found. Categorise each.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>1. Emergency exit sign not illuminated</p>
                 <p className="text-red-400">
                   {' '}
@@ -994,7 +994,7 @@ const HNCModule5Section4_6 = () => {
                 <strong>Scenario:</strong> Practical Completion achieved 15 March 2024. When does
                 the DLP expire and what are key milestones?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Practical Completion: 15 March 2024</p>
                 <p>DLP Duration: 12 months (standard)</p>
                 <p className="mt-2">Key dates:</p>
@@ -1016,7 +1016,7 @@ const HNCModule5Section4_6 = () => {
                 <strong>Scenario:</strong> Defect #247 - BMS point for AHU-01 supply fan showing
                 incorrect status. Document the close-out.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Defect Reference:</strong> SNL-247
                 </p>
@@ -1133,7 +1133,7 @@ const HNCModule5Section4_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1179,7 +1179,7 @@ const HNCModule5Section4_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section4">

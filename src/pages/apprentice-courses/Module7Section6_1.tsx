@@ -197,7 +197,7 @@ const Module7Section6_1 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Clear and Accurate Recording of Observations and Test Findings
           </h1>
-          <p className="text-white/70 max-w-2xl mx-auto">
+          <p className="text-white max-w-2xl mx-auto">
             Importance of accurate test result documentation and record keeping practices
           </p>
         </header>
@@ -205,7 +205,7 @@ const Module7Section6_1 = () => {
         {/* In 30 Seconds Summary */}
         <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
           <h2 className="font-semibold text-white mb-2">In 30 Seconds</h2>
-          <ul className="text-white/80 space-y-1 text-sm">
+          <ul className="text-white space-y-1 text-sm">
             <li>• Clear, legible handwriting or digital entries</li>
             <li>• All measurements recorded to appropriate precision</li>
             <li>• Test instruments calibrated and identified</li>
@@ -219,7 +219,7 @@ const Module7Section6_1 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">01</span>
             Legal Requirements and Standards
           </h2>
-          <div className="text-white/80 space-y-4 leading-relaxed">
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               BS 7671 requires that every electrical installation be provided with appropriate
               documentation. This includes test results, inspection schedules, and certificates that
@@ -266,7 +266,7 @@ const Module7Section6_1 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">02</span>
             Essential Information to Record
           </h2>
-          <div className="text-white/80 space-y-4 leading-relaxed">
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               All test measurements must be recorded exactly as displayed on instruments, including
               decimal places and units. Never round values or approximate readings, as even small
@@ -313,7 +313,7 @@ const Module7Section6_1 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">03</span>
             Documentation Best Practices
           </h2>
-          <div className="text-white/80 space-y-4 leading-relaxed">
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Use permanent ink for all written records, as pencil can fade or be erased
               accidentally. Handwriting must be clear and legible - if others cannot read your
@@ -359,7 +359,7 @@ const Module7Section6_1 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">04</span>
             Common Mistakes and Quality Control
           </h2>
-          <div className="text-white/80 space-y-4 leading-relaxed">
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Vague or incomplete descriptions are a major problem. Writing "socket not working"
               provides little useful information. Instead, record specific details: "Socket outlet
@@ -410,14 +410,14 @@ const Module7Section6_1 = () => {
           <div className="space-y-6">
             <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
               <h4 className="font-semibold text-red-400 mb-3">Poor Practice Example</h4>
-              <p className="text-white/80 text-sm mb-4">
+              <p className="text-white text-sm mb-4">
                 An electrician completing periodic inspection of office building wrote "All circuits
                 tested - satisfactory" without recording specific test values or circuit details.
                 Three months later, a socket outlet failed causing a small fire. When questioned,
                 the electrician could not prove which circuits had been tested or what results were
                 obtained. The inadequate records provided no defence against negligence claims.
               </p>
-              <p className="text-white/60 text-xs">
+              <p className="text-white text-xs">
                 <strong>Key Issues:</strong> No specific test results recorded, no circuit
                 identification, no traceability, inadequate evidence of compliance
               </p>
@@ -425,7 +425,7 @@ const Module7Section6_1 = () => {
 
             <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
               <h4 className="font-semibold text-green-400 mb-3">Good Practice Example</h4>
-              <p className="text-white/80 text-sm mb-4">
+              <p className="text-white text-sm mb-4">
                 During a domestic EICR, an electrician discovered a shower circuit with insulation
                 resistance of 0.8 MΩ (below the 1 MΩ minimum). She recorded: "Shower circuit (Board
                 A, Way 3): IR test L-E 0.8 MΩ @500V (below 1.0 MΩ min). Investigation revealed
@@ -433,7 +433,7 @@ const Module7Section6_1 = () => {
                 other tests satisfactory." The detailed record provided clear evidence of the
                 problem found, action taken, and satisfactory retest results.
               </p>
-              <p className="text-white/60 text-xs">
+              <p className="text-white text-xs">
                 <strong>Key Strengths:</strong> Specific circuit identification, exact test values,
                 clear description of fault and remedy, retest results recorded
               </p>
@@ -451,7 +451,7 @@ const Module7Section6_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-semibold text-white mb-2">{faq.question}</h4>
-                <p className="text-sm text-white/70">{faq.answer}</p>
+                <p className="text-sm text-white">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -461,7 +461,7 @@ const Module7Section6_1 = () => {
         <section className="mb-10">
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <h2 className="font-semibold text-white mb-3">Key Takeaways</h2>
-            <ul className="text-white/80 space-y-2 text-sm">
+            <ul className="text-white space-y-2 text-sm">
               <li>
                 • Accurate documentation is a legal requirement under BS 7671 and the Electricity at
                 Work Regulations

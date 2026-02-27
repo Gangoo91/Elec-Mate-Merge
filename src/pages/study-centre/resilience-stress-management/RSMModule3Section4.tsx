@@ -208,7 +208,7 @@ export default function RSMModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-3">
@@ -231,7 +231,7 @@ export default function RSMModule3Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Problem-Focused vs Emotion-Focused Coping
           </h1>
-          <p className="text-white/80 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding the two fundamental coping strategies, knowing when to use each one, and
             recognising avoidant coping patterns that make things worse
           </p>
@@ -354,7 +354,7 @@ export default function RSMModule3Section4() {
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-xs font-medium text-rose-400 mb-1">Controllable Situation</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       You can take direct action to change it.
                       <br />
                       <strong>Use:</strong> Problem-focused coping
@@ -367,7 +367,7 @@ export default function RSMModule3Section4() {
                     <p className="text-xs font-medium text-rose-400 mb-1">
                       Uncontrollable Situation
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       You cannot change the situation itself.
                       <br />
                       <strong>Use:</strong> Emotion-focused coping
@@ -412,7 +412,7 @@ export default function RSMModule3Section4() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Planning</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Developing a strategy to address the problem. Breaking a large, overwhelming
                         problem into smaller, manageable steps. Creating timelines, setting
                         priorities, and allocating resources. Planning transforms a vague,
@@ -426,7 +426,7 @@ export default function RSMModule3Section4() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Information Seeking</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Gathering the knowledge, data, or expertise needed to solve the problem.
                         This might mean researching a regulation, consulting a more experienced
                         colleague, reading a guidance note, or attending training. Information
@@ -441,7 +441,7 @@ export default function RSMModule3Section4() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Skill Development</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         If the stressor is caused by a skill gap, the direct solution is to develop
                         the skill. This might mean taking a course, practising a technique,
                         shadowing a more experienced electrician, or working through practice
@@ -456,7 +456,7 @@ export default function RSMModule3Section4() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Assertiveness</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Communicating your needs, boundaries, and concerns clearly and directly.
                         This might mean saying no to unreasonable demands, negotiating better terms,
                         raising safety concerns, or setting boundaries with difficult clients.
@@ -475,14 +475,14 @@ export default function RSMModule3Section4() {
                     Construction Example: Problem-Focused Coping for Workload
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   You are a self-employed electrician and you have taken on too much work. You are
                   working six days a week, starting early and finishing late. Your stress levels are
                   climbing, your sleep is suffering, and your family is complaining that they never
                   see you. This is a <strong>controllable stressor</strong> &mdash; you can take
                   direct action to change it.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -560,7 +560,7 @@ export default function RSMModule3Section4() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Acceptance</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Acknowledging the reality of the situation without fighting against it.
                         Acceptance does not mean approval &mdash; it means recognising that the
                         situation <em>is what it is</em> and that expending energy resisting an
@@ -576,7 +576,7 @@ export default function RSMModule3Section4() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Cognitive Reframing</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Changing the meaning you assign to the situation. This is the cognitive
                         strategy covered in Section 3 &mdash; finding a balanced, accurate
                         interpretation that reduces the emotional impact without denying the
@@ -593,7 +593,7 @@ export default function RSMModule3Section4() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Social Support</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Talking to someone you trust about what you are going through. This is one
                         of the most powerful emotion-focused strategies because it provides multiple
                         benefits simultaneously: emotional expression (getting it off your chest),
@@ -609,7 +609,7 @@ export default function RSMModule3Section4() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Relaxation and Mindfulness</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Using techniques such as breathing exercises, body scans, mindfulness
                         meditation, and progressive muscle relaxation to reduce the physiological
                         stress response. These techniques (covered in Sections 1 and 2 of this
@@ -628,14 +628,14 @@ export default function RSMModule3Section4() {
                     Construction Example: Emotion-Focused Coping for a Cancelled Contract
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   A major domestic rewire contract worth several thousand pounds is cancelled at the
                   last minute because the homeowner has decided not to proceed. You have already
                   turned down other work to accommodate this job. This is an{' '}
                   <strong>uncontrollable stressor</strong> &mdash; you cannot force the homeowner to
                   proceed.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -704,7 +704,7 @@ export default function RSMModule3Section4() {
                     <p className="text-xs font-medium text-white mb-1">
                       Step 1: Assess controllability
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Ask: &ldquo;Can I take direct action to change this situation?&rdquo; If yes,
                       the situation (or that element of it) is controllable. If no, it is
                       uncontrollable.
@@ -714,7 +714,7 @@ export default function RSMModule3Section4() {
                     <p className="text-xs font-medium text-white mb-1">
                       Step 2: Match strategy to controllability
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Controllable elements &rarr; problem-focused (plan, act, learn, communicate).
                       Uncontrollable elements &rarr; emotion-focused (accept, reframe, seek support,
                       relax).
@@ -724,7 +724,7 @@ export default function RSMModule3Section4() {
                     <p className="text-xs font-medium text-white mb-1">
                       Step 3: Combine strategies for complex situations
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Most real-world situations have both controllable and uncontrollable elements.
                       Apply problem-focused coping to the parts you can change and emotion-focused
                       coping to the parts you cannot. This combined approach is the hallmark of
@@ -743,7 +743,7 @@ export default function RSMModule3Section4() {
                     <p className="text-xs font-medium text-red-400 mb-1">
                       Problem-Focused on Uncontrollable Situations
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Trying to &ldquo;fix&rdquo; something you cannot change. Leads to frustration,
                       exhaustion, and a sense of helplessness. Example: endlessly trying to convince
                       a client who has definitively cancelled to change their mind, rather than
@@ -754,7 +754,7 @@ export default function RSMModule3Section4() {
                     <p className="text-xs font-medium text-red-400 mb-1">
                       Emotion-Focused on Controllable Situations
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Accepting and managing feelings about a situation you could actually change.
                       Leads to passivity and missed opportunities. Example: practising mindfulness
                       about your overwhelming workload instead of declining a job or hiring help
@@ -796,7 +796,7 @@ export default function RSMModule3Section4() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Alcohol and Substance Misuse</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Using alcohol, drugs, or other substances to numb or escape from stress.
                         This is one of the most common and most dangerous forms of avoidant coping
                         in the construction industry. Research by the Chartered Institute of
@@ -815,7 +815,7 @@ export default function RSMModule3Section4() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Denial</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Refusing to acknowledge that a problem exists. Denial is not the same as
                         acceptance (which acknowledges the problem but chooses not to fight it);
                         denial pretends the problem is not there at all. An electrician in denial
@@ -831,7 +831,7 @@ export default function RSMModule3Section4() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Withdrawal</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Isolating yourself from the people and activities that could help.
                         Withdrawal is particularly common in men and particularly dangerous in
                         construction, where the combination of long working hours, physical
@@ -848,7 +848,7 @@ export default function RSMModule3Section4() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Overwork</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Using excessive work as a distraction from other stressors. This is an
                         insidious form of avoidant coping because it is often praised in the
                         construction industry (&ldquo;fair play, he is always grafting&rdquo;). But
@@ -920,7 +920,7 @@ export default function RSMModule3Section4() {
                 <p className="text-xs font-medium text-rose-400 mb-2">
                   Uncontrollable Elements (Emotion-Focused)
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -947,7 +947,7 @@ export default function RSMModule3Section4() {
                 <p className="text-xs font-medium text-rose-400 mt-4 mb-2">
                   Controllable Elements (Problem-Focused)
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -1059,7 +1059,7 @@ export default function RSMModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-3">

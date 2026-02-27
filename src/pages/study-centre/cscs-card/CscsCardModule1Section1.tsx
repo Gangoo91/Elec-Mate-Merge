@@ -194,7 +194,7 @@ export default function CscsCardModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-1">
@@ -221,7 +221,7 @@ export default function CscsCardModule1Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             What Is CSCS?
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding the Construction Skills Certification Scheme &mdash; the UK&rsquo;s
             leading card scheme for construction, why it exists, who needs a card, and what it means
             for your career as an electrician
@@ -355,7 +355,7 @@ export default function CscsCardModule1Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Why CSCS Matters for Your Career
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   For anyone starting or progressing a career in the UK construction industry,
                   understanding the CSCS scheme is not optional &mdash; it is fundamental. Your CSCS
                   card (or partner scheme card) is the document that gets you through the site gate.
@@ -390,11 +390,11 @@ export default function CscsCardModule1Section1() {
                   <Building2 className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Major Client Requirements</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The following major clients and organisations mandate CSCS cards for all workers
                   on their projects:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -445,7 +445,7 @@ export default function CscsCardModule1Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Business &amp; Insurance Reasons
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -494,7 +494,7 @@ export default function CscsCardModule1Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-semibold text-red-400">Without a CSCS Card</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Without a valid CSCS card, you may be <strong>turned away from sites</strong>,
                   unable to bid for or win contracts, find it difficult to work for tier 1 and tier
                   2 contractors, and miss out on the most significant and best-paying projects. For
@@ -545,7 +545,7 @@ export default function CscsCardModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Labourers &amp; General Operatives
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Workers carrying out general labouring duties on site. Typically hold the
                       Green Labourer CSCS card, which requires passing the Operatives HS&E test and
                       being registered for, or holding, a relevant Level 1 qualification. This is
@@ -556,7 +556,7 @@ export default function CscsCardModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Apprentices &amp; Trainees
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       People currently undertaking an apprenticeship or formal training programme.
                       Apprentices can obtain a Green CSCS card while they complete their training.
                       The card confirms they are engaged in a recognised training programme and have
@@ -565,7 +565,7 @@ export default function CscsCardModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Skilled Trades</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Qualified tradespeople including electricians, plumbers, bricklayers,
                       carpenters, plasterers, painters, and many more. Skilled workers typically
                       hold the Blue Skilled Worker CSCS card, which requires passing the appropriate
@@ -577,7 +577,7 @@ export default function CscsCardModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Supervisors &amp; Managers
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Site supervisors, foremen, site managers, project managers, and construction
                       managers all need appropriate CSCS cards. Supervisory roles typically require
                       the Gold Supervisory card, while management roles require the Black Manager
@@ -587,7 +587,7 @@ export default function CscsCardModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Professionals</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Architects, engineers, quantity surveyors, building surveyors, health and
                       safety professionals, and other construction professionals. The White
                       Professionally Qualified Person (PQP) card is available for those who are
@@ -597,7 +597,7 @@ export default function CscsCardModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Visitors</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Even people visiting a construction site &mdash; such as clients, inspectors,
                       or delivery drivers who need to enter beyond the site boundary &mdash; need a
                       temporary Visitor card. This ensures that everyone on site has at least a
@@ -620,7 +620,7 @@ export default function CscsCardModule1Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Sub-Contractors, Agency Workers &amp; the Self-Employed
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The requirement for CSCS cards applies equally to directly employed workers,
                   sub-contractors, agency workers, and self-employed individuals. Your employment
                   status does not affect the requirement. If you are on a construction site, you
@@ -659,7 +659,7 @@ export default function CscsCardModule1Section1() {
                 <div className="space-y-4">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-4 text-center">
                     <p className="text-sm font-semibold text-white mb-1">CSCS Ltd</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       The company that operates the CSCS scheme and issues cards
                     </p>
                   </div>
@@ -669,7 +669,7 @@ export default function CscsCardModule1Section1() {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div className="bg-white/5 border border-white/10 rounded-lg p-4 text-center">
                       <p className="text-sm font-semibold text-white mb-1">CITB</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Construction Industry Training Board &mdash; co-owner of CSCS Ltd, operates
                         the HS&E test
                       </p>
@@ -678,7 +678,7 @@ export default function CscsCardModule1Section1() {
                       <p className="text-sm font-semibold text-white mb-1">
                         Construction Leadership Council
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Co-owner of CSCS Ltd &mdash; industry body representing the sector
                       </p>
                     </div>
@@ -688,7 +688,7 @@ export default function CscsCardModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-4 text-center">
                     <p className="text-sm font-semibold text-white mb-1">Endorsed By</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Build UK &middot; Civil Engineering Contractors Association &middot; Home
                       Builders Federation
                     </p>
@@ -698,7 +698,7 @@ export default function CscsCardModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-4 text-center">
                     <p className="text-sm font-semibold text-white mb-1">Partner Card Schemes</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       CPCS &middot; CISRS &middot; TICA &middot; SEATS &middot; ECS/JIB &middot;
                       Others
                     </p>
@@ -727,7 +727,7 @@ export default function CscsCardModule1Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   The Construction Training Register (CTR)
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Cards are issued based on verified qualifications registered on the
                   <strong> Construction Training Register (CTR)</strong>. The CTR is the centralised
                   database that records construction qualifications achieved by individuals. When
@@ -787,7 +787,7 @@ export default function CscsCardModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       CPCS &mdash; Construction Plant Competence Scheme
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The partner scheme for plant operators. CPCS covers operators of excavators,
                       cranes, telehandlers, dumpers, rollers, and all other categories of
                       construction plant. CPCS cards carry the CSCS logo and are the standard
@@ -800,7 +800,7 @@ export default function CscsCardModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       CISRS &mdash; Construction Industry Scaffolders Record Scheme
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The partner scheme for scaffolders. CISRS cards are the recognised proof of
                       competence for scaffolding operatives, from trainees and labourers through to
                       advanced scaffolders and scaffold inspectors. The scheme requires completion
@@ -812,7 +812,7 @@ export default function CscsCardModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       ECS/JIB &mdash; Electrotechnical Certification Scheme
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The partner scheme for the electrotechnical industry, operated by the Joint
                       Industry Board (JIB). This is the most directly relevant partner scheme for
                       electricians. ECS cards carry the CSCS logo and are fully recognised as CSCS
@@ -824,7 +824,7 @@ export default function CscsCardModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       TICA &mdash; Thermal Insulation Contractors Association
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The partner scheme for thermal insulation engineers and operatives. TICA cards
                       cover workers who install, maintain, and remove thermal insulation on
                       industrial, commercial, and domestic projects. Like all partner schemes, TICA
@@ -835,7 +835,7 @@ export default function CscsCardModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       SEATS &mdash; Safety and Environmental Awareness Training Scheme
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       A partner scheme that covers safety and environmental awareness for workers in
                       specific sectors. SEATS cards demonstrate that the holder has completed
                       recognised safety and environmental awareness training relevant to their role
@@ -865,7 +865,7 @@ export default function CscsCardModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Checking Card Validity</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   All CSCS and partner scheme cards can be verified using the{' '}
                   <strong>CSCS Smart Check</strong> app. This free app allows site managers and
                   gatehouse staff to scan or manually check a card to confirm it is genuine, in
@@ -907,7 +907,7 @@ export default function CscsCardModule1Section1() {
                       <p className="text-sm font-medium text-white">
                         Pass the CITB Health, Safety and Environment (HS&E) Test
                       </p>
-                      <p className="text-xs text-white/70 mt-1 leading-relaxed">
+                      <p className="text-xs text-white mt-1 leading-relaxed">
                         The HS&E test is a computer-based, multiple-choice test that assesses your
                         knowledge of health, safety, and environmental matters relevant to
                         construction. There are different versions of the test for different card
@@ -926,7 +926,7 @@ export default function CscsCardModule1Section1() {
                       <p className="text-sm font-medium text-white">
                         Hold a Relevant NVQ/SVQ or Other Qualifying Qualification
                       </p>
-                      <p className="text-xs text-white/70 mt-1 leading-relaxed">
+                      <p className="text-xs text-white mt-1 leading-relaxed">
                         The specific qualification required depends on the card type and occupation.
                         For skilled worker cards, this is typically an NVQ or SVQ at Level 2 or
                         Level 3 in the relevant trade. For management cards, higher-level
@@ -942,7 +942,7 @@ export default function CscsCardModule1Section1() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Apply Online or by Post</p>
-                      <p className="text-xs text-white/70 mt-1 leading-relaxed">
+                      <p className="text-xs text-white mt-1 leading-relaxed">
                         Applications can be submitted online through the CSCS website or by post.
                         You will need to provide proof of your qualifications, proof of identity
                         (typically a passport or driving licence), and a recent passport-style
@@ -962,7 +962,7 @@ export default function CscsCardModule1Section1() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                     <p className="text-sm font-semibold text-white">Step 1: Obtain Qualification</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Complete your NVQ/SVQ or other qualifying qualification and ensure it is
                       registered on the CTR
                     </p>
@@ -974,7 +974,7 @@ export default function CscsCardModule1Section1() {
                     <p className="text-sm font-semibold text-white">
                       Step 2: Book &amp; Pass the HS&E Test
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Book the correct level of HS&E test at an approved test centre and pass it
                     </p>
                   </div>
@@ -983,7 +983,7 @@ export default function CscsCardModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                     <p className="text-sm font-semibold text-white">Step 3: Gather Documents</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Prepare your proof of qualifications, photo ID, and a passport-style
                       photograph
                     </p>
@@ -993,7 +993,7 @@ export default function CscsCardModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                     <p className="text-sm font-semibold text-white">Step 4: Submit Application</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Apply online (recommended) or by post through the CSCS website
                     </p>
                   </div>
@@ -1002,7 +1002,7 @@ export default function CscsCardModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                     <p className="text-sm font-semibold text-white">Step 5: Card Issued</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Card is posted to you, typically within 5&ndash;10 working days for online
                       applications
                     </p>
@@ -1014,10 +1014,10 @@ export default function CscsCardModule1Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Green Labourer Card &mdash; Entry Level
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   For the basic <strong>Green Labourer card</strong>, the requirements are:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1032,7 +1032,7 @@ export default function CscsCardModule1Section1() {
                     </span>
                   </li>
                 </ul>
-                <p className="text-sm text-white/80 mt-2">
+                <p className="text-sm text-white mt-2">
                   This is the most common entry-level card and is typically the first card that
                   apprentices and new entrants to the industry will obtain.
                 </p>
@@ -1040,10 +1040,10 @@ export default function CscsCardModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Blue Skilled Worker Card</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   For the <strong>Blue Skilled Worker card</strong>, you need:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1058,7 +1058,7 @@ export default function CscsCardModule1Section1() {
                     </span>
                   </li>
                 </ul>
-                <p className="text-sm text-white/80 mt-2">
+                <p className="text-sm text-white mt-2">
                   For electricians, this means holding an NVQ Level 3 in Electrical Installation or
                   Electrotechnical Technology (or equivalent).
                 </p>
@@ -1102,26 +1102,26 @@ export default function CscsCardModule1Section1() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-green-400">5 Years</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       The standard validity period for most CSCS cards from the date of issue
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-green-400">2 Years</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       If your HS&E test was taken more than 2 years ago, you must re-sit it for
                       renewal
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-green-400">3 Months</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Start planning your renewal at least 3 months before your card expires
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">Expired = None</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Working with an expired card is treated exactly the same as not having a card
                       at all
                     </p>
@@ -1138,10 +1138,10 @@ export default function CscsCardModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Renewal Requirements</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   To renew your CSCS card, you typically need:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1174,7 +1174,7 @@ export default function CscsCardModule1Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-semibold text-red-400">Expired Cards</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Cards expire on the date shown on the card.{' '}
                   <strong>
                     Working with an expired card is treated exactly the same as not having a card at
@@ -1207,7 +1207,7 @@ export default function CscsCardModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Upgrading Your Card</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If you gain additional qualifications during your card&rsquo;s validity period,
                   you can apply to upgrade to a higher-level card before your current card expires.
                   For example, an apprentice who completes their NVQ Level 3 can upgrade from a
@@ -1251,7 +1251,7 @@ export default function CscsCardModule1Section1() {
                         <p className="text-base font-semibold text-green-400 mb-1">
                           Green Labourer Card &mdash; During Apprenticeship
                         </p>
-                        <p className="text-sm text-white/80 leading-relaxed">
+                        <p className="text-sm text-white leading-relaxed">
                           While you are completing your electrical apprenticeship, you can obtain a
                           Green Labourer CSCS card. This requires passing the Operatives HS&E test
                           and being registered for a Level 1 qualification (or above). This card
@@ -1275,7 +1275,7 @@ export default function CscsCardModule1Section1() {
                         <p className="text-base font-semibold text-blue-400 mb-1">
                           Blue Skilled Worker Card (Electrotechnical)
                         </p>
-                        <p className="text-sm text-white/80 leading-relaxed">
+                        <p className="text-sm text-white leading-relaxed">
                           After completing your apprenticeship and achieving your{' '}
                           <strong>NVQ Level 3 in Electrical Installation</strong> or{' '}
                           <strong>Electrotechnical Technology</strong> (or equivalent), you are
@@ -1301,7 +1301,7 @@ export default function CscsCardModule1Section1() {
                         <p className="text-base font-semibold text-yellow-400 mb-1">
                           Gold Advanced Craft Card
                         </p>
-                        <p className="text-sm text-white/80 leading-relaxed">
+                        <p className="text-sm text-white leading-relaxed">
                           For electricians who have gained additional qualifications beyond the
                           standard NVQ Level 3, the Gold Advanced Craft card recognises a higher
                           level of competence. This may include additional NVQ units, higher-level
@@ -1319,7 +1319,7 @@ export default function CscsCardModule1Section1() {
                   <CreditCard className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">The JIB/ECS Route</p>
                 </div>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   The <strong>Joint Industry Board (JIB)</strong> issues{' '}
                   <strong>ECS (Electrotechnical Certification Scheme)</strong> cards that carry the
                   CSCS logo. This is the route most commonly used by electricians in the UK. Your
@@ -1341,7 +1341,7 @@ export default function CscsCardModule1Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Common ECS Card Categories for Electricians
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1391,7 +1391,7 @@ export default function CscsCardModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Which Route Should You Take?</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If you are an electrician or electrical apprentice, the{' '}
                   <strong>JIB/ECS route</strong> is almost always the best option. The ECS card is
                   specifically designed for the electrotechnical industry and is recognised by all
@@ -1427,7 +1427,7 @@ export default function CscsCardModule1Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1445,7 +1445,7 @@ export default function CscsCardModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-1">

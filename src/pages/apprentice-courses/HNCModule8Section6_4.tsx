@@ -272,7 +272,7 @@ const HNCModule8Section6_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section6">
@@ -294,7 +294,7 @@ const HNCModule8Section6_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Commissioning Procedures
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             CIBSE Code M, witness testing, seasonal commissioning and performance verification
           </p>
         </header>
@@ -1023,7 +1023,7 @@ const HNCModule8Section6_4 = () => {
                 <strong>Scenario:</strong> Commission a 5000 l/s supply AHU with heating and cooling
                 coils, HEPA filtration, and variable speed supply and extract fans.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p className="font-bold text-elec-yellow/80">Static Commissioning:</p>
                 <p>1. Check installation: Verify AHU level, ductwork sealed, dampers accessible</p>
                 <p>2. Pressure test: Ductwork &lt;5% leakage at 400Pa (Class C)</p>
@@ -1050,7 +1050,7 @@ const HNCModule8Section6_4 = () => {
                 <strong>Scenario:</strong> Commission a chilled water system with 500kW chiller,
                 primary/secondary pumping, and 20 fan coil units.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p className="font-bold text-elec-yellow/80">Static Commissioning:</p>
                 <p>1. Pressure test: System at 6 bar, 24hr hold, no pressure drop</p>
                 <p>2. Flush and clean: Water quality to BSRIA standard</p>
@@ -1079,7 +1079,7 @@ const HNCModule8Section6_4 = () => {
                 <strong>Scenario:</strong> Witness testing of 45 fire dampers to BS EN 15650
                 requirements.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p className="font-bold text-elec-yellow/80">Preparation:</p>
                 <p>- Test procedure approved by commissioning manager</p>
                 <p>- Blank test sheets for 45 dampers</p>
@@ -1111,7 +1111,7 @@ const HNCModule8Section6_4 = () => {
                 <strong>Scenario:</strong> Managing snagging items identified during commissioning
                 of a 5-storey office building.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p className="font-bold text-elec-yellow/80">Initial Snagging List (142 items):</p>
                 <p>Priority 1 (Critical): 8 items</p>
                 <p> - Fire damper not closing (Level 3)</p>
@@ -1237,7 +1237,7 @@ const HNCModule8Section6_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1285,7 +1285,7 @@ const HNCModule8Section6_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section6-3">

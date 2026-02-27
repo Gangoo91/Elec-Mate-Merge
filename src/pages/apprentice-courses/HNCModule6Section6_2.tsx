@@ -255,7 +255,7 @@ const HNCModule6Section6_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section6">
@@ -277,7 +277,7 @@ const HNCModule6Section6_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Fabric First Approach
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Building envelope optimisation, insulation strategies, thermal bridging reduction, and
             airtightness for low-energy buildings
           </p>
@@ -798,7 +798,7 @@ const HNCModule6Section6_2 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Design integration:</strong> Building services engineers must collaborate with
               architects from concept stage - fabric performance directly determines system
               requirements and vice versa.
@@ -824,14 +824,14 @@ const HNCModule6Section6_2 = () => {
                 <strong>Scenario:</strong> Calculate wall heat loss for standard vs enhanced fabric
                 first for 50m² wall area at ΔT = 25K.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Standard wall (U = 0.26 W/m²K):</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Standard wall (U = 0.26 W/m²K):</p>
                 <p>Q = U × A × ΔT</p>
                 <p>Q = 0.26 × 50 × 25 = 325 W</p>
-                <p className="mt-2 text-white/60">Enhanced fabric first (U = 0.15 W/m²K):</p>
+                <p className="mt-2 text-white">Enhanced fabric first (U = 0.15 W/m²K):</p>
                 <p>Q = 0.15 × 50 × 25 = 187.5 W</p>
                 <p className="mt-2 text-green-400">Saving: 137.5 W (42% reduction)</p>
-                <p className="text-white/60 mt-2">Over heating season (2000 hours):</p>
+                <p className="text-white mt-2">Over heating season (2000 hours):</p>
                 <p>Annual saving = 137.5 × 2000 / 1000 = 275 kWh</p>
               </div>
             </div>
@@ -844,17 +844,17 @@ const HNCModule6Section6_2 = () => {
                 <strong>Scenario:</strong> Compare infiltration losses for a 250m³ dwelling at
                 different airtightness levels.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Heat loss from infiltration:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Heat loss from infiltration:</p>
                 <p>Q = 0.33 × n × V × ΔT (where n = air changes/hour)</p>
-                <p className="mt-2 text-white/60">At 10 m³/h/m² @ 50Pa (≈0.5 ACH natural):</p>
+                <p className="mt-2 text-white">At 10 m³/h/m² @ 50Pa (≈0.5 ACH natural):</p>
                 <p>Q = 0.33 × 0.5 × 250 × 25 = 1031 W</p>
-                <p className="mt-2 text-white/60">At 3 m³/h/m² @ 50Pa (≈0.15 ACH natural):</p>
+                <p className="mt-2 text-white">At 3 m³/h/m² @ 50Pa (≈0.15 ACH natural):</p>
                 <p>Q = 0.33 × 0.15 × 250 × 25 = 309 W</p>
                 <p className="mt-2 text-green-400">
                   Saving: 722 W (70% reduction in infiltration loss)
                 </p>
-                <p className="text-white/60 mt-2">Note: MVHR required to maintain air quality</p>
+                <p className="text-white mt-2">Note: MVHR required to maintain air quality</p>
               </div>
             </div>
 
@@ -865,8 +865,8 @@ const HNCModule6Section6_2 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Size heating system for 120m² fabric first dwelling.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Fabric performance:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Fabric performance:</p>
                 <p>Walls: 80m² @ U=0.15 = 12 W/K</p>
                 <p>Roof: 60m² @ U=0.12 = 7.2 W/K</p>
                 <p>Floor: 60m² @ U=0.12 = 7.2 W/K</p>
@@ -874,10 +874,10 @@ const HNCModule6Section6_2 = () => {
                 <p>Thermal bridges (y-value 0.02): 280m² × 0.02 = 5.6 W/K</p>
                 <p>Ventilation (MVHR 90%): 300m³ × 0.33 × 0.4 × 0.1 = 4 W/K</p>
                 <p className="mt-2">Total heat loss coefficient: 53 W/K</p>
-                <p className="mt-2 text-white/60">At design condition (ΔT = 25K):</p>
+                <p className="mt-2 text-white">At design condition (ΔT = 25K):</p>
                 <p>Peak load = 53 × 25 = 1325 W</p>
                 <p className="mt-2 text-green-400">Heat pump sizing: 2-3 kW (with margin)</p>
-                <p className="text-white/60">Compare standard build: 8-12 kW required</p>
+                <p className="text-white">Compare standard build: 8-12 kW required</p>
               </div>
             </div>
           </div>
@@ -966,7 +966,7 @@ const HNCModule6Section6_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1012,7 +1012,7 @@ const HNCModule6Section6_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section6">

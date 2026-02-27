@@ -217,7 +217,7 @@ const HNCModule4Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section1">
@@ -239,7 +239,7 @@ const HNCModule4Section1_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Power Factor Considerations
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding reactive power and power factor correction in building services electrical
             design
           </p>
@@ -326,18 +326,18 @@ const HNCModule4Section1_3 = () => {
               <div className="grid grid-cols-3 gap-3 text-center text-sm my-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">kW</p>
-                  <p className="text-white/70 text-xs">Real Power</p>
-                  <p className="text-white/50 text-xs">Does useful work</p>
+                  <p className="text-white text-xs">Real Power</p>
+                  <p className="text-white text-xs">Does useful work</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">kVAr</p>
-                  <p className="text-white/70 text-xs">Reactive Power</p>
-                  <p className="text-white/50 text-xs">Magnetic fields</p>
+                  <p className="text-white text-xs">Reactive Power</p>
+                  <p className="text-white text-xs">Magnetic fields</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">kVA</p>
-                  <p className="text-white/70 text-xs">Apparent Power</p>
-                  <p className="text-white/50 text-xs">Total supplied</p>
+                  <p className="text-white text-xs">Apparent Power</p>
+                  <p className="text-white text-xs">Total supplied</p>
                 </div>
               </div>
               <p className="font-mono text-center text-sm">
@@ -421,7 +421,7 @@ const HNCModule4Section1_3 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 *Displacement pf good, but harmonic distortion affects true pf
               </p>
             </div>
@@ -619,7 +619,7 @@ const HNCModule4Section1_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Note:</strong> Check with your local DNO for specific requirements - these
               vary between operators and may change.
             </p>
@@ -644,7 +644,7 @@ const HNCModule4Section1_3 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 kVAr required = kW × (tan φ₁ - tan φ₂)
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where φ₁ = original angle, φ₂ = target angle
               </p>
             </div>
@@ -703,7 +703,7 @@ const HNCModule4Section1_3 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Example: 200kW at 0.75 pf → 0.95 pf needs 200 × 0.553 = 110.6 kVAr
               </p>
             </div>
@@ -754,7 +754,7 @@ const HNCModule4Section1_3 = () => {
                 <strong>Question:</strong> A building draws 300A at 400V three-phase. Real power
                 measured is 160kW. Calculate power factor.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Apparent power: S = √3 × V × I</p>
                 <p>S = 1.732 × 400 × 300 = 207.8 kVA</p>
                 <p className="mt-2">Power factor: pf = kW / kVA</p>
@@ -773,7 +773,7 @@ const HNCModule4Section1_3 = () => {
                 <strong>Question:</strong> The 160kW load at 0.77 pf needs correction to 0.95.
                 Calculate capacitor bank size.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Original angle: φ₁ = cos⁻¹(0.77) = 39.6°</p>
                 <p>Target angle: φ₂ = cos⁻¹(0.95) = 18.2°</p>
                 <p className="mt-2">kVAr = kW × (tan φ₁ - tan φ₂)</p>
@@ -794,7 +794,7 @@ const HNCModule4Section1_3 = () => {
                 <strong>Question:</strong> After PFC, power factor improves from 0.77 to 0.95. What
                 is the new current?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Original: S₁ = 160 / 0.77 = 207.8 kVA</p>
                 <p>Original current: 207.8 × 1000 / (√3 × 400) = 300A</p>
                 <p className="mt-2">After PFC: S₂ = 160 / 0.95 = 168.4 kVA</p>
@@ -877,7 +877,7 @@ const HNCModule4Section1_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -923,7 +923,7 @@ const HNCModule4Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section1-2">

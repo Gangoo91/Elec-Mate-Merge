@@ -87,7 +87,7 @@ const DataCablingModule5Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/data-cabling-module-5">
@@ -108,7 +108,7 @@ const DataCablingModule5Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Link Testing vs Channel Testing
           </h1>
-          <p className="text-white/80">Different testing methodologies and their applications</p>
+          <p className="text-white">Different testing methodologies and their applications</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -225,15 +225,15 @@ const DataCablingModule5Section2 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Outlet</p>
-                <p className="text-white/90 text-xs">Work area connection</p>
+                <p className="text-white text-xs">Work area connection</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Horizontal</p>
-                <p className="text-white/90 text-xs">90m max cable</p>
+                <p className="text-white text-xs">90m max cable</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Patch Panel</p>
-                <p className="text-white/90 text-xs">TR termination</p>
+                <p className="text-white text-xs">TR termination</p>
               </div>
             </div>
           </div>
@@ -338,7 +338,7 @@ const DataCablingModule5Section2 = () => {
               <div className="grid sm:grid-cols-2 gap-4 mt-3">
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Link Testing Limits</p>
-                  <ul className="text-xs text-white/90 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>Insertion Loss: 21.3 dB max</li>
                     <li>Return Loss: 12.0 dB min</li>
                     <li>NEXT: 33.1 dB min</li>
@@ -346,7 +346,7 @@ const DataCablingModule5Section2 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Channel Testing Limits</p>
-                  <ul className="text-xs text-white/90 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>Insertion Loss: 23.6 dB max</li>
                     <li>Return Loss: 10.0 dB min</li>
                     <li>NEXT: 30.1 dB min</li>
@@ -427,7 +427,7 @@ const DataCablingModule5Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -468,7 +468,7 @@ const DataCablingModule5Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/data-cabling-module-5-section-1">

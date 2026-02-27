@@ -221,7 +221,7 @@ const HNCModule5Section1_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section1">
@@ -243,7 +243,7 @@ const HNCModule5Section1_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Risk Management
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Risk identification, assessment, mitigation strategies and contingency planning for
             building services projects
           </p>
@@ -567,7 +567,7 @@ const HNCModule5Section1_5 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Green (1-4): Accept/Monitor | Yellow (5-9): Mitigate | Orange (10-14): Action
                 required | Red (15-25): Immediate action
               </p>
@@ -578,7 +578,7 @@ const HNCModule5Section1_5 = () => {
                 Expected Monetary Value (EMV) Calculation
               </p>
               <p className="font-mono text-center text-lg mb-2">EMV = Probability × Impact (£)</p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Sum of all risk EMVs provides quantified contingency requirement
               </p>
             </div>
@@ -845,7 +845,7 @@ const HNCModule5Section1_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4 mt-3">
                 <div>
                   <p className="font-medium text-white mb-2">Technical Risks</p>
-                  <ul className="text-sm text-white/80 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Coordination clashes in ceiling voids</li>
                     <li className="pl-1">Insufficient builders' work openings</li>
                     <li className="pl-1">Design changes during construction</li>
@@ -855,7 +855,7 @@ const HNCModule5Section1_5 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-2">Programme Risks</p>
-                  <ul className="text-sm text-white/80 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Long lead equipment delays</li>
                     <li className="pl-1">DNO/utility connection delays</li>
                     <li className="pl-1">Building fabric not ready for fit-out</li>
@@ -865,7 +865,7 @@ const HNCModule5Section1_5 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-2">Commercial Risks</p>
-                  <ul className="text-sm text-white/80 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Subcontractor insolvency</li>
                     <li className="pl-1">Material price escalation</li>
                     <li className="pl-1">Scope creep from client changes</li>
@@ -875,7 +875,7 @@ const HNCModule5Section1_5 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-2">Site Risks</p>
-                  <ul className="text-sm text-white/80 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Asbestos discovery</li>
                     <li className="pl-1">Existing services not as surveyed</li>
                     <li className="pl-1">Access constraints</li>
@@ -886,7 +886,7 @@ const HNCModule5Section1_5 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Contingency management:</strong> Track drawdown against contingency throughout
               the project. Unspent contingency at completion indicates conservative risk assessment;
               frequent overruns indicate inadequate assessment.
@@ -912,7 +912,7 @@ const HNCModule5Section1_5 = () => {
                 <strong>Scenario:</strong> Calculate contingency for three identified risks on a
                 £500,000 MEP package.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Risk 1: Switchgear delay</p>
                 <p>Probability: 25% | Impact: £40,000</p>
                 <p>
@@ -932,7 +932,7 @@ const HNCModule5Section1_5 = () => {
                   Total risk-based contingency = £10,000 + £6,000 + £5,000 ={' '}
                   <strong>£21,000 (4.2%)</strong>
                 </p>
-                <p className="text-white/60 mt-1">
+                <p className="text-white mt-1">
                   Add management reserve for unknown unknowns: +3% = £15,000
                 </p>
                 <p className="text-green-400">Total contingency: £36,000 (7.2%)</p>
@@ -947,7 +947,7 @@ const HNCModule5Section1_5 = () => {
                 <strong>Risk:</strong> Main LV switchboard has 16-week lead time; programme allows
                 only 12 weeks.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Risk score: High probability × High impact = Red zone</p>
                 <p className="mt-2">Response options considered:</p>
                 <p className="text-red-400">
@@ -976,7 +976,7 @@ const HNCModule5Section1_5 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Task:</strong> Complete a risk register entry for coordination clash risk.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90 space-y-1">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white space-y-1">
                 <p>
                   <strong>ID:</strong> R-MEP-007
                 </p>
@@ -1098,7 +1098,7 @@ const HNCModule5Section1_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1144,7 +1144,7 @@ const HNCModule5Section1_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section1">

@@ -257,7 +257,7 @@ const HNCModule7Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section4">
@@ -279,7 +279,7 @@ const HNCModule7Section4_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Occupancy Sensing
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             PIR, microwave and ultrasonic sensors, placement guidelines, sensitivity adjustment, and
             hold-off times
           </p>
@@ -932,7 +932,7 @@ const HNCModule7Section4_2 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Specification tip:</strong> For Part L compliance documentation, specify both
               the detection type (absence/presence) and hold-off times for each space type to
               demonstrate appropriate control strategy.
@@ -958,15 +958,15 @@ const HNCModule7Section4_2 = () => {
                 <strong>Scenario:</strong> Design occupancy sensing for a 150m² open-plan office,
                 2.7m ceiling height, good daylight from south-facing windows.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Step 1: Calculate sensor quantity</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Step 1: Calculate sensor quantity</p>
                 <p>Ceiling PIR coverage at 2.7m = approx. 36m² per sensor</p>
                 <p>150m² ÷ 36m² = 4.2 sensors minimum</p>
                 <p>Add 20% overlap = 5 sensors required</p>
-                <p className="mt-2 text-white/60">Step 2: Select detection strategy</p>
+                <p className="mt-2 text-white">Step 2: Select detection strategy</p>
                 <p>Good daylight available → Absence detection (manual on, auto off)</p>
                 <p>Part L compliant, BREEAM credits available</p>
-                <p className="mt-2 text-white/60">Step 3: Configure settings</p>
+                <p className="mt-2 text-white">Step 3: Configure settings</p>
                 <p>Hold-off time: 15 minutes (seated desk work)</p>
                 <p>Sensitivity: Medium (adjust after walk test)</p>
                 <p>Integration: DALI sensors linked to daylight dimming</p>
@@ -984,18 +984,18 @@ const HNCModule7Section4_2 = () => {
                 <strong>Scenario:</strong> Specify sensors for a 6-cubicle male toilet with common
                 washbasin area.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Cubicles:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Cubicles:</p>
                 <p>Technology: Ultrasonic (detects stationary occupants)</p>
                 <p>Quantity: 1 sensor per cubicle = 6 sensors</p>
                 <p>Hold-off: 10 minutes (extended stationary occupancy)</p>
                 <p>Mode: Presence detection (auto on/off)</p>
-                <p className="mt-2 text-white/60">Washbasin area:</p>
+                <p className="mt-2 text-white">Washbasin area:</p>
                 <p>Technology: PIR (adequate for hand-washing activity)</p>
                 <p>Quantity: 1 ceiling-mounted sensor</p>
                 <p>Hold-off: 5 minutes</p>
                 <p>Mode: Presence detection</p>
-                <p className="mt-2 text-white/60">Control integration:</p>
+                <p className="mt-2 text-white">Control integration:</p>
                 <p>Link washbasin sensor to extract fan start</p>
                 <p>30-minute overrun on extract after last detection</p>
                 <p className="mt-2 text-green-400">
@@ -1012,17 +1012,17 @@ const HNCModule7Section4_2 = () => {
                 <strong>Scenario:</strong> PIR sensor in meeting room triggers lights when room is
                 empty, especially in afternoon.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Investigation:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Investigation:</p>
                 <p>Afternoon timing → suspect sunlight involvement</p>
                 <p>Check: Sensor faces west window (direct afternoon sun)</p>
                 <p>Cause: Rapid temperature change from sun movement</p>
-                <p className="mt-2 text-white/60">Solutions (in order of preference):</p>
+                <p className="mt-2 text-white">Solutions (in order of preference):</p>
                 <p>1. Relocate sensor away from window view</p>
                 <p>2. Install sensor hood/mask to block window direction</p>
                 <p>3. Reduce sensitivity (may reduce detection range)</p>
                 <p>4. Replace with dual-tech sensor (PIR + microwave)</p>
-                <p className="mt-2 text-white/60">Implementation:</p>
+                <p className="mt-2 text-white">Implementation:</p>
                 <p>Relocated sensor to ceiling centre, facing door entry</p>
                 <p>Walk test confirmed full coverage maintained</p>
                 <p className="mt-2 text-green-400">Result: False triggering eliminated</p>
@@ -1122,7 +1122,7 @@ const HNCModule7Section4_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1168,7 +1168,7 @@ const HNCModule7Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section4">

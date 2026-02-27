@@ -756,7 +756,7 @@ export function ExpenseEditSheet({
                       >
                         <div className="flex items-center gap-4">
                           <div className="w-14 h-14 rounded-xl bg-white/[0.08] flex items-center justify-center">
-                            <Upload className="h-7 w-7 text-white/80" />
+                            <Upload className="h-7 w-7 text-white" />
                           </div>
                           <div className="text-left">
                             <p className="font-semibold text-foreground">Upload from Gallery</p>
@@ -837,7 +837,7 @@ export function ExpenseEditSheet({
 
               {/* Footer hint */}
               <div className="p-4 text-center flex-shrink-0">
-                <p className="text-sm text-white/50">Tap anywhere to close</p>
+                <p className="text-sm text-white">Tap anywhere to close</p>
               </div>
             </motion.div>
           )}

@@ -197,7 +197,7 @@ export default function MewpModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-1">
@@ -222,7 +222,7 @@ export default function MewpModule1Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             LOLER 1998, PUWER 1998 & Employer Duties
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Thorough examination, maintenance duties, CDM 2015, design standards, and how all the
             regulations work together for MEWP operations
           </p>
@@ -320,7 +320,7 @@ export default function MewpModule1Section2() {
                     Critical: Thorough Examination Intervals
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     <strong className="text-white">Equipment lifting persons (MEWPs):</strong> At
                     least every <strong className="text-red-300">6 months</strong>
@@ -340,7 +340,7 @@ export default function MewpModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   LOLER 1998 &mdash; Key Requirements for MEWPs
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -416,7 +416,7 @@ export default function MewpModule1Section2() {
                       Key PUWER Duties for MEWP Operations
                     </p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -475,7 +475,7 @@ export default function MewpModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   What &ldquo;Suitable&rdquo; Means for a MEWP
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -545,7 +545,7 @@ export default function MewpModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Key Requirements for MEWP Operations
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -639,7 +639,7 @@ export default function MewpModule1Section2() {
                       <Landmark className="h-5 w-5 text-amber-400" />
                       <p className="text-sm font-medium text-amber-400">Client</p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Make suitable arrangements for managing the project safely</span>
@@ -663,7 +663,7 @@ export default function MewpModule1Section2() {
                       <Users className="h-5 w-5 text-purple-400" />
                       <p className="text-sm font-medium text-purple-400">Principal Designer</p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Plan, manage, and co-ordinate the pre-construction phase</span>
@@ -687,7 +687,7 @@ export default function MewpModule1Section2() {
                 <div className="grid md:grid-cols-3 gap-4 sm:gap-6">
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <p className="text-sm font-medium text-green-400 mb-2">Principal Contractor</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Prepare the construction phase plan</span>
@@ -704,7 +704,7 @@ export default function MewpModule1Section2() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <p className="text-sm font-medium text-blue-400 mb-2">Designer</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Eliminate hazards through design</span>
@@ -721,7 +721,7 @@ export default function MewpModule1Section2() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <p className="text-sm font-medium text-teal-400 mb-2">Contractor</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Plan, manage, and monitor own work</span>
@@ -743,7 +743,7 @@ export default function MewpModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Construction Phase Plan &mdash; MEWP Requirements
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -806,11 +806,11 @@ export default function MewpModule1Section2() {
                       BS EN 280 &mdash; MEWP Design Standard
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     BS EN 280 is the primary European harmonised standard for the design and
                     manufacture of MEWPs. It covers:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -847,10 +847,10 @@ export default function MewpModule1Section2() {
                     <p className="text-sm font-medium text-blue-400 mb-2">
                       ISO 18878:2013 (Updated 2025)
                     </p>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       International standard for MEWP operator training. Covers:
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Theoretical training content and duration</span>
@@ -873,10 +873,10 @@ export default function MewpModule1Section2() {
                     <p className="text-sm font-medium text-green-400 mb-2">
                       ISO 18893 &mdash; Safe Use
                     </p>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       International standard for the safe use of MEWPs. Covers:
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Responsibilities of owners, users, and operators</span>
@@ -905,7 +905,7 @@ export default function MewpModule1Section2() {
                     Important: IPAF Training and Legal Status
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   IPAF (International Powered Access Federation) operator training is{' '}
                   <strong className="text-white">NOT</strong> a direct legal requirement in the UK.
                   No legislation specifically mandates IPAF certification. However, PUWER Regulation
@@ -942,7 +942,7 @@ export default function MewpModule1Section2() {
                     <Landmark className="h-5 w-5 text-amber-400" />
                     <p className="text-sm font-medium text-amber-400">Employer</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -972,7 +972,7 @@ export default function MewpModule1Section2() {
                     <HardHat className="h-5 w-5 text-green-400" />
                     <p className="text-sm font-medium text-green-400">Employee / Operator</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1002,7 +1002,7 @@ export default function MewpModule1Section2() {
                     <Scale className="h-5 w-5 text-purple-400" />
                     <p className="text-sm font-medium text-purple-400">Self-Employed</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1033,7 +1033,7 @@ export default function MewpModule1Section2() {
                       <Shield className="h-5 w-5 text-blue-400" />
                       <p className="text-sm font-medium text-blue-400">Hire Company</p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>
@@ -1059,7 +1059,7 @@ export default function MewpModule1Section2() {
                       <Users className="h-5 w-5 text-teal-400" />
                       <p className="text-sm font-medium text-teal-400">Site Controller / PC</p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>
@@ -1090,7 +1090,7 @@ export default function MewpModule1Section2() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <p className="text-sm font-medium text-white mb-1">Equipment Documentation</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Valid LOLER thorough examination report (within 6 months)</span>
@@ -1111,7 +1111,7 @@ export default function MewpModule1Section2() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white mb-1">Operational Documentation</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Task-specific risk assessment</span>
@@ -1145,7 +1145,7 @@ export default function MewpModule1Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1159,7 +1159,7 @@ export default function MewpModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-1">

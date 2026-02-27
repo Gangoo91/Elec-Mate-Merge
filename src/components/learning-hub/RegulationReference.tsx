@@ -36,7 +36,7 @@ const RegulationReference = () => {
           {regulationTopics.map((topic, index) => (
             <div key={index} className="p-3 bg-muted rounded-lg">
               <h4 className="font-medium text-foreground mb-1">{topic.title}</h4>
-              <p className="text-sm text-white/80">{topic.description}</p>
+              <p className="text-sm text-white">{topic.description}</p>
             </div>
           ))}
         </div>

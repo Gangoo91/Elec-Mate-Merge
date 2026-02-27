@@ -211,7 +211,7 @@ export default function WorkingAtHeightModule2Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-2">
@@ -235,7 +235,7 @@ export default function WorkingAtHeightModule2Section3() {
             </span>
           </div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">MEWPs</h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
             Mobile Elevating Work Platforms — types, selection factors, IPAF training categories,
             pre-use checks, exclusion zones, rescue planning, and LOLER requirements
           </p>
@@ -245,7 +245,7 @@ export default function WorkingAtHeightModule2Section3() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
           <div className="rounded-lg p-4 bg-amber-500/5 border-l-2 border-amber-500/50">
             <p className="font-semibold text-amber-400 mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-base space-y-1.5 leading-relaxed">
+            <ul className="text-white text-base space-y-1.5 leading-relaxed">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                 <span>
@@ -279,7 +279,7 @@ export default function WorkingAtHeightModule2Section3() {
 
           <div className="rounded-lg p-4 bg-amber-500/5 border-l-2 border-amber-500/50">
             <p className="font-semibold text-amber-400 mb-2">On Site</p>
-            <ul className="text-white/80 text-base space-y-1.5 leading-relaxed">
+            <ul className="text-white text-base space-y-1.5 leading-relaxed">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                 <span>
@@ -315,7 +315,7 @@ export default function WorkingAtHeightModule2Section3() {
         {/* ── Learning Outcomes ── */}
         <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4 leading-relaxed">
+          <p className="text-white mb-4 leading-relaxed">
             By the end of this section, you will be able to:
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -329,7 +329,7 @@ export default function WorkingAtHeightModule2Section3() {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-amber-400/70 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm leading-relaxed">{outcome}</span>
+                <span className="text-white text-sm leading-relaxed">{outcome}</span>
               </div>
             ))}
           </div>
@@ -346,7 +346,7 @@ export default function WorkingAtHeightModule2Section3() {
               <span className="text-amber-400/80 text-sm font-normal">01</span>
               Types of MEWPs
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 A <strong className="text-white">MEWP (Mobile Elevating Work Platform)</strong> is a
                 powered machine with a working platform that can be raised and lowered mechanically.
@@ -357,12 +357,12 @@ export default function WorkingAtHeightModule2Section3() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-amber-400/30 p-4 rounded-lg">
                   <h3 className="text-amber-300 font-medium mb-3">Scissor Lift</h3>
-                  <p className="text-white/70 text-sm mb-2 leading-relaxed">
+                  <p className="text-white text-sm mb-2 leading-relaxed">
                     Provides <strong className="text-white">vertical-only</strong> elevation using a
                     crisscross (pantograph) mechanism. The platform goes straight up and straight
                     down with no lateral outreach.
                   </p>
-                  <ul className="text-white/60 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Working heights typically 6m to 18m</span>
@@ -386,12 +386,12 @@ export default function WorkingAtHeightModule2Section3() {
 
                 <div className="bg-white/5 border border-amber-400/30 p-4 rounded-lg">
                   <h3 className="text-amber-300 font-medium mb-3">Articulated Boom Lift</h3>
-                  <p className="text-white/70 text-sm mb-2 leading-relaxed">
+                  <p className="text-white text-sm mb-2 leading-relaxed">
                     Has a hinged (knuckle) boom that allows the platform to{' '}
                     <strong className="text-white">reach up and over</strong> obstacles. The
                     articulation point provides flexibility to position the platform precisely.
                   </p>
-                  <ul className="text-white/60 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Working heights typically 12m to 40m+</span>
@@ -415,12 +415,12 @@ export default function WorkingAtHeightModule2Section3() {
 
                 <div className="bg-white/5 border border-amber-400/30 p-4 rounded-lg">
                   <h3 className="text-amber-300 font-medium mb-3">Telescopic Boom Lift</h3>
-                  <p className="text-white/70 text-sm mb-2 leading-relaxed">
+                  <p className="text-white text-sm mb-2 leading-relaxed">
                     A straight boom that telescopes (extends) to provide{' '}
                     <strong className="text-white">maximum reach</strong> in a straight line. No
                     articulation — but delivers the greatest horizontal outreach and working height.
                   </p>
-                  <ul className="text-white/60 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Working heights up to 50m+</span>
@@ -442,12 +442,12 @@ export default function WorkingAtHeightModule2Section3() {
 
                 <div className="bg-white/5 border border-amber-400/30 p-4 rounded-lg">
                   <h3 className="text-amber-300 font-medium mb-3">Vertical Mast Lift</h3>
-                  <p className="text-white/70 text-sm mb-2 leading-relaxed">
+                  <p className="text-white text-sm mb-2 leading-relaxed">
                     A compact platform on a single telescopic mast, designed for{' '}
                     <strong className="text-white">confined spaces</strong>. Very small footprint —
                     ideal for narrow aisles and indoor environments.
                   </p>
-                  <ul className="text-white/60 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Working heights typically 5m to 12m</span>
@@ -480,7 +480,7 @@ export default function WorkingAtHeightModule2Section3() {
               <span className="text-purple-400/80 text-sm font-normal">02</span>
               Selection Factors
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 Selecting the wrong MEWP is costly and dangerous. The right machine depends on a
                 combination of task requirements, site conditions, and operational constraints.
@@ -531,7 +531,7 @@ export default function WorkingAtHeightModule2Section3() {
                       <Icon className="h-5 w-5 text-purple-400 mt-0.5 flex-shrink-0" />
                       <div>
                         <p className="text-white font-medium text-sm">{factor}</p>
-                        <p className="text-white/60 text-xs leading-relaxed mt-1">{detail}</p>
+                        <p className="text-white text-xs leading-relaxed mt-1">{detail}</p>
                       </div>
                     </div>
                   </div>
@@ -547,25 +547,25 @@ export default function WorkingAtHeightModule2Section3() {
                   <table className="w-full text-sm text-left min-w-[500px]">
                     <thead>
                       <tr className="border-b border-white/10">
-                        <th className="text-white/60 pb-2 pr-3 font-medium">Requirement</th>
-                        <th className="text-white/60 pb-2 pr-3 font-medium text-center">Scissor</th>
-                        <th className="text-white/60 pb-2 pr-3 font-medium text-center">
+                        <th className="text-white pb-2 pr-3 font-medium">Requirement</th>
+                        <th className="text-white pb-2 pr-3 font-medium text-center">Scissor</th>
+                        <th className="text-white pb-2 pr-3 font-medium text-center">
                           Articulated Boom
                         </th>
-                        <th className="text-white/60 pb-2 pr-3 font-medium text-center">
+                        <th className="text-white pb-2 pr-3 font-medium text-center">
                           Telescopic Boom
                         </th>
-                        <th className="text-white/60 pb-2 font-medium text-center">
+                        <th className="text-white pb-2 font-medium text-center">
                           Vertical Mast
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="text-white/70">
+                    <tbody className="text-white">
                       <tr className="border-b border-white/5">
                         <td className="py-2 pr-3">Vertical-only access</td>
                         <td className="py-2 pr-3 text-center text-green-400">Best</td>
-                        <td className="py-2 pr-3 text-center text-white/40">&mdash;</td>
-                        <td className="py-2 pr-3 text-center text-white/40">&mdash;</td>
+                        <td className="py-2 pr-3 text-center text-white">&mdash;</td>
+                        <td className="py-2 pr-3 text-center text-white">&mdash;</td>
                         <td className="py-2 text-center text-green-400">Good</td>
                       </tr>
                       <tr className="border-b border-white/5">
@@ -616,7 +616,7 @@ export default function WorkingAtHeightModule2Section3() {
 
                 <div className="mt-4 bg-amber-500/10 border border-amber-500/20 rounded-lg p-3">
                   <p className="text-amber-400 text-xs font-semibold mb-1">Quick Selection Rule</p>
-                  <p className="text-white/60 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     <strong className="text-white">No outreach needed?</strong> Use a scissor lift
                     (or vertical mast in tight spaces).{' '}
                     <strong className="text-white">Need to reach over something?</strong> Use an
@@ -642,7 +642,7 @@ export default function WorkingAtHeightModule2Section3() {
               <span className="text-teal-400/80 text-sm font-normal">03</span>
               IPAF Training Categories
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 <strong className="text-white">
                   IPAF (International Powered Access Federation)
@@ -657,7 +657,7 @@ export default function WorkingAtHeightModule2Section3() {
                 <h3 className="font-semibold mb-2 text-amber-400">
                   Understanding the Category System
                 </h3>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   The first number indicates whether the machine is{' '}
                   <strong className="text-white">static (1)</strong> or{' '}
                   <strong className="text-white">mobile (3)</strong>. Static machines must be in a
@@ -671,7 +671,7 @@ export default function WorkingAtHeightModule2Section3() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-teal-400/30 p-4 rounded-lg">
                   <h4 className="text-teal-300 font-medium mb-2">Category 1a — Static Vertical</h4>
-                  <ul className="text-white/70 space-y-1 text-sm">
+                  <ul className="text-white space-y-1 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>
@@ -692,7 +692,7 @@ export default function WorkingAtHeightModule2Section3() {
 
                 <div className="bg-white/5 border border-teal-400/30 p-4 rounded-lg">
                   <h4 className="text-teal-300 font-medium mb-2">Category 1b — Static Boom</h4>
-                  <ul className="text-white/70 space-y-1 text-sm">
+                  <ul className="text-white space-y-1 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>
@@ -713,7 +713,7 @@ export default function WorkingAtHeightModule2Section3() {
 
                 <div className="bg-white/5 border border-teal-400/30 p-4 rounded-lg">
                   <h4 className="text-teal-300 font-medium mb-2">Category 3a — Mobile Vertical</h4>
-                  <ul className="text-white/70 space-y-1 text-sm">
+                  <ul className="text-white space-y-1 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>
@@ -734,7 +734,7 @@ export default function WorkingAtHeightModule2Section3() {
 
                 <div className="bg-white/5 border border-teal-400/30 p-4 rounded-lg">
                   <h4 className="text-teal-300 font-medium mb-2">Category 3b — Mobile Boom</h4>
-                  <ul className="text-white/70 space-y-1 text-sm">
+                  <ul className="text-white space-y-1 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>
@@ -756,7 +756,7 @@ export default function WorkingAtHeightModule2Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-amber-400 font-medium mb-2">IPAF PAL Card</h3>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   On successful completion of IPAF training, the operator receives a PAL (Powered
                   Access Licence) card showing the categories they are trained for. The card is
                   valid for <strong className="text-white">5 years</strong> and must be renewed
@@ -777,7 +777,7 @@ export default function WorkingAtHeightModule2Section3() {
               <span className="text-red-400/80 text-sm font-normal">04</span>
               Pre-Use Checks
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 A thorough pre-use check must be carried out{' '}
                 <strong className="text-white">before every shift</strong> by the operator. This is
@@ -844,7 +844,7 @@ export default function WorkingAtHeightModule2Section3() {
                         <Eye className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                         <div>
                           <p className="text-white font-medium text-sm">{point.item}</p>
-                          <p className="text-white/60 text-xs leading-relaxed mt-1">
+                          <p className="text-white text-xs leading-relaxed mt-1">
                             {point.check}
                           </p>
                         </div>
@@ -861,7 +861,7 @@ export default function WorkingAtHeightModule2Section3() {
                     Defect Found = Machine Out of Service
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   If any defect is found during the pre-use check, the machine must not be operated.
                   Isolate it (remove the key), attach a "DO NOT USE" tag, and report the defect to
                   the hire company or fleet manager. Never attempt to repair a MEWP yourself unless
@@ -884,7 +884,7 @@ export default function WorkingAtHeightModule2Section3() {
               <span className="text-cyan-400/80 text-sm font-normal">05</span>
               Exclusion Zones &amp; Ground Conditions
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 Exclusion zones prevent pedestrians, vehicles, and other site traffic from entering
                 the area around a MEWP during operation. They protect against the risk of being
@@ -893,7 +893,7 @@ export default function WorkingAtHeightModule2Section3() {
 
               <div className="bg-white/5 border border-cyan-400/30 p-4 rounded-lg">
                 <h3 className="text-cyan-300 font-medium mb-3">Setting Up an Exclusion Zone</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>Use barriers, cones, and warning tape to mark the zone perimeter</span>
@@ -937,7 +937,7 @@ export default function WorkingAtHeightModule2Section3() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <h4 className="text-amber-400 font-medium mb-2">Ground Must Be:</h4>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Firm — capable of supporting the machine's total weight</span>
@@ -959,7 +959,7 @@ export default function WorkingAtHeightModule2Section3() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <h4 className="text-amber-400 font-medium mb-2">Mitigation Measures:</h4>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Spreader mats / load-spreading plates under outriggers</span>
@@ -992,7 +992,7 @@ export default function WorkingAtHeightModule2Section3() {
               <span className="text-amber-400/80 text-sm font-normal">06</span>
               Rescue Plans &amp; LOLER Requirements
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 Two critical requirements apply to every MEWP operation: a{' '}
                 <strong className="text-white">rescue plan</strong> and compliance with{' '}
@@ -1007,7 +1007,7 @@ export default function WorkingAtHeightModule2Section3() {
                   <LifeBuoy className="h-5 w-5" />
                   Rescue Plan
                 </h3>
-                <p className="text-white/70 text-sm mb-3 leading-relaxed">
+                <p className="text-white text-sm mb-3 leading-relaxed">
                   Every MEWP operation must have a rescue plan in place{' '}
                   <strong className="text-white">before work begins</strong>. The plan addresses a
                   simple but critical question:{' '}
@@ -1027,7 +1027,7 @@ export default function WorkingAtHeightModule2Section3() {
                   ].map((point, i) => (
                     <div key={i} className="flex items-start gap-2 text-sm">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                      <span className="text-white/70 leading-relaxed">{point}</span>
+                      <span className="text-white leading-relaxed">{point}</span>
                     </div>
                   ))}
                 </div>
@@ -1038,7 +1038,7 @@ export default function WorkingAtHeightModule2Section3() {
                   <Shield className="h-5 w-5" />
                   LOLER Requirements
                 </h3>
-                <p className="text-white/80 text-sm mb-3 leading-relaxed">
+                <p className="text-white text-sm mb-3 leading-relaxed">
                   Because MEWPs carry people, they are classified as{' '}
                   <strong className="text-white">lifting equipment</strong> under LOLER 1998. This
                   imposes specific legal requirements:
@@ -1068,7 +1068,7 @@ export default function WorkingAtHeightModule2Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 rounded-lg p-3">
                       <p className="text-white font-medium text-sm">{item.req}</p>
-                      <p className="text-white/60 text-xs leading-relaxed mt-1">{item.detail}</p>
+                      <p className="text-white text-xs leading-relaxed mt-1">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1089,7 +1089,7 @@ export default function WorkingAtHeightModule2Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1105,7 +1105,7 @@ export default function WorkingAtHeightModule2Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-2-section-2">

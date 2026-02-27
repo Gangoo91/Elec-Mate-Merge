@@ -51,7 +51,7 @@ const SupportGroups = ({ groups, defaultExpanded = true }: SupportGroupsProps) =
           </div>
           <div className="text-left">
             <h3 className="font-semibold text-foreground">Support Groups</h3>
-            <p className="text-xs text-white/70">
+            <p className="text-xs text-white">
               {groups.length} group{groups.length !== 1 ? 's' : ''} • {totalMembers} total members
             </p>
           </div>
@@ -67,7 +67,7 @@ const SupportGroups = ({ groups, defaultExpanded = true }: SupportGroupsProps) =
             className="transition-transform duration-300"
             style={{ transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
           >
-            <ChevronDown className="h-5 w-5 text-white/70" />
+            <ChevronDown className="h-5 w-5 text-white" />
           </div>
         </div>
       </button>
@@ -100,7 +100,7 @@ const SupportGroups = ({ groups, defaultExpanded = true }: SupportGroupsProps) =
               </div>
 
               {/* Group Details */}
-              <div className="flex items-center gap-4 mb-3 text-xs text-white/70">
+              <div className="flex items-center gap-4 mb-3 text-xs text-white">
                 <div className="flex items-center gap-1.5">
                   <Clock className="h-3.5 w-3.5 text-emerald-400" />
                   <span>{group.meetings}</span>

@@ -62,7 +62,7 @@ export const HubsGrid = () => {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">
             Four Hubs, One Platform
           </h2>
-          <p className="text-white/50 max-w-lg mx-auto text-sm sm:text-base">
+          <p className="text-white max-w-lg mx-auto text-sm sm:text-base">
             Whether you're training, working on-site, or managing a team — we've got you covered.
           </p>
         </motion.div>

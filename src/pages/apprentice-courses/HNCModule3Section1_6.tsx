@@ -223,7 +223,7 @@ const HNCModule3Section1_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section1">
@@ -245,7 +245,7 @@ const HNCModule3Section1_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Network Theorems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Powerful analysis techniques for multi-source circuits in building electrical systems
           </p>
         </header>
@@ -372,7 +372,7 @@ const HNCModule3Section1_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Building Services Example: Solar PV + Mains
               </p>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 A commercial building has mains supply (230V, 0.5Ω source impedance) and solar PV
                 inverter (230V, 2Ω output impedance) feeding a common busbar with 10Ω lighting load.
               </p>
@@ -489,7 +489,7 @@ const HNCModule3Section1_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Alternative Method for RTh
               </p>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 If the network contains dependent sources, use the test source method:
               </p>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
@@ -504,15 +504,15 @@ const HNCModule3Section1_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Practical Application: Distribution Board Analysis
               </p>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 A distribution board is fed by a 230V supply through 50m of 10mm² cable (R =
                 1.83mΩ/m). Find the Thévenin equivalent at the DB terminals.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Cable resistance = 50m × 2 × 1.83mΩ/m = 0.183Ω</p>
                 <p className="mt-2">VTh = 230V (supply voltage, assuming ideal source)</p>
                 <p>RTh = 0.183Ω (cable resistance + source impedance)</p>
-                <p className="mt-2 text-white/60">For a 46Ω load (5kW heater):</p>
+                <p className="mt-2 text-white">For a 46Ω load (5kW heater):</p>
                 <p>
                   IL = 230 / (0.183 + 46) = 230 / 46.183 = <strong>4.98A</strong>
                 </p>
@@ -570,14 +570,14 @@ const HNCModule3Section1_6 = () => {
               <div className="grid grid-cols-2 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">VTh = IN × RN</p>
-                  <p className="text-white/70 text-xs">Norton to Thévenin</p>
+                  <p className="text-white text-xs">Norton to Thévenin</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">IN = VTh / RTh</p>
-                  <p className="text-white/70 text-xs">Thévenin to Norton</p>
+                  <p className="text-white text-xs">Thévenin to Norton</p>
                 </div>
               </div>
-              <p className="text-sm text-white/70 mt-3 text-center">
+              <p className="text-sm text-white mt-3 text-center">
                 Note: RTh = RN (resistance is always the same value)
               </p>
             </div>
@@ -602,17 +602,17 @@ const HNCModule3Section1_6 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Conversion Example</p>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 A network has Thévenin equivalent: VTh = 120V, RTh = 8Ω. Find the Norton equivalent.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   IN = VTh / RTh = 120V / 8Ω = <strong>15A</strong>
                 </p>
                 <p>
                   RN = RTh = <strong>8Ω</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Norton equivalent: 15A current source in parallel with 8Ω
                 </p>
               </div>
@@ -693,20 +693,20 @@ const HNCModule3Section1_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Dual-Source Emergency System
               </p>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 Hospital critical power: mains (230V, 0.3Ω impedance) and generator (232V, 0.8Ω
                 impedance) can be paralleled briefly during transfer. Analyse the circulating
                 current.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Voltage difference creates circulating current:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Voltage difference creates circulating current:</p>
                 <p className="mt-2">ΔV = 232V - 230V = 2V</p>
                 <p>Rtotal = 0.3Ω + 0.8Ω = 1.1Ω</p>
                 <p className="mt-2">
                   Icirculating = ΔV / Rtotal = 2V / 1.1Ω = <strong>1.82A</strong>
                 </p>
-                <p className="mt-2 text-white/60">This current flows from generator to mains,</p>
-                <p className="text-white/60">not through the load - it's wasted power.</p>
+                <p className="mt-2 text-white">This current flows from generator to mains,</p>
+                <p className="text-white">not through the load - it's wasted power.</p>
               </div>
             </div>
           </div>
@@ -731,10 +731,10 @@ const HNCModule3Section1_6 = () => {
                 Generator 1 has internal resistance 0.6Ω, Generator 2 has 0.9Ω. If Gen 1's voltage
                 rises to 402V, find the current from each generator.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using superposition on the parallel system:</p>
                 <p className="mt-2">Load resistance: RL = V²/P = 400²/50000 = 3.2Ω</p>
-                <p className="mt-2 text-white/60">With both sources active:</p>
+                <p className="mt-2 text-white">With both sources active:</p>
                 <p>Combine using Thévenin: VTh = (402/0.6 + 400/0.9) / (1/0.6 + 1/0.9)</p>
                 <p>
                   VTh = (670 + 444.4) / (1.67 + 1.11) = 1114.4 / 2.78 = <strong>400.9V</strong>
@@ -761,7 +761,7 @@ const HNCModule3Section1_6 = () => {
                 <strong>Question:</strong> A 10kVA UPS has inverter output impedance of 0.5Ω. Find
                 the Thévenin equivalent and calculate voltage regulation when loaded to 80%.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>UPS Thévenin equivalent:</p>
                 <p>VTh = 230V (nominal output)</p>
                 <p>RTh = 0.5Ω (output impedance)</p>
@@ -791,7 +791,7 @@ const HNCModule3Section1_6 = () => {
                 battery inverter (228V, 3Ω). Using Norton equivalents, find total current to a 20Ω
                 load when both sources are active.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Convert each source to Norton equivalent:</p>
                 <p className="mt-2">Mains: IN1 = 230/1 = 230A, RN1 = 1Ω</p>
                 <p>Battery: IN2 = 228/3 = 76A, RN2 = 3Ω</p>
@@ -891,7 +891,7 @@ const HNCModule3Section1_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -937,7 +937,7 @@ const HNCModule3Section1_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section1-5">

@@ -45,8 +45,8 @@ function PricePreview({ price, averagePrice }: { price: string; averagePrice: nu
 
     comparison = (
       <div className="text-right">
-        <p className="text-sm text-white/60">Market average</p>
-        <p className="text-lg font-semibold text-white/80">£{formattedAvg}</p>
+        <p className="text-sm text-white">Market average</p>
+        <p className="text-lg font-semibold text-white">£{formattedAvg}</p>
         <p
           className={cn('text-xs font-medium mt-1', isAbove ? 'text-amber-400' : 'text-green-400')}
         >
@@ -60,7 +60,7 @@ function PricePreview({ price, averagePrice }: { price: string; averagePrice: nu
     <div className="mt-3 p-4 bg-white/5 border border-white/10 rounded-xl">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm text-white/60">Your price</p>
+          <p className="text-sm text-white">Your price</p>
           <p className="text-2xl font-bold text-white">£{formattedPrice}</p>
         </div>
         {comparison}
@@ -278,7 +278,7 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
           <PartyPopper className="h-12 w-12 text-white" />
         </div>
         <h2 className="text-2xl font-bold text-white mb-2">Price Submitted!</h2>
-        <p className="text-white/70 text-center mb-8 max-w-xs">
+        <p className="text-white text-center mb-8 max-w-xs">
           Thank you for helping fellow electricians price jobs fairly. Your contribution makes the
           community stronger.
         </p>
@@ -312,7 +312,7 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
         <div className="flex items-center gap-3">
           {isAnonymous ? (
             <div className="w-10 h-10 rounded-xl bg-white/10 flex items-center justify-center">
-              <UserX className="h-5 w-5 text-white/60" />
+              <UserX className="h-5 w-5 text-white" />
             </div>
           ) : (
             <div className="w-10 h-10 rounded-xl bg-yellow-400/20 flex items-center justify-center">
@@ -323,7 +323,7 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
             <p className="font-semibold text-white">
               {isAnonymous ? 'Anonymous' : userName || 'Your Name'}
             </p>
-            <p className="text-xs text-white/60">
+            <p className="text-xs text-white">
               {isAnonymous ? 'Identity not stored' : 'Track your contributions'}
             </p>
           </div>
@@ -344,7 +344,7 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
             className={cn(
               'w-full h-14 pl-12 pr-4 rounded-xl',
               'bg-neutral-800 border-2 border-white/10',
-              'text-white text-lg font-medium placeholder:text-white/30',
+              'text-white text-lg font-medium placeholder:text-white',
               'focus:outline-none focus:border-yellow-400/50',
               'transition-all duration-200'
             )}
@@ -392,7 +392,7 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
               className={cn(
                 'w-full pl-12 pr-4 py-4 rounded-xl resize-none',
                 'bg-neutral-800 border-2 border-white/10',
-                'text-white text-base placeholder:text-white/30',
+                'text-white text-base placeholder:text-white',
                 'focus:outline-none focus:border-yellow-400/50',
                 'transition-all duration-200'
               )}
@@ -418,7 +418,7 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
             className={cn(
               'w-full h-20 pl-20 pr-4 rounded-xl',
               'bg-neutral-800 border-2 border-white/10',
-              'text-white text-4xl font-black placeholder:text-white/20',
+              'text-white text-4xl font-black placeholder:text-white',
               'focus:outline-none focus:border-yellow-400/50',
               'transition-all duration-200'
             )}
@@ -464,7 +464,7 @@ const QuickSubmitForm = ({ onSuccess, onNavigateToInsights, className }: QuickSu
       </Button>
 
       {/* Helper Text */}
-      <p className="text-xs text-white/50 text-center">
+      <p className="text-xs text-white text-center">
         Your data helps other electricians price jobs fairly
       </p>
     </div>

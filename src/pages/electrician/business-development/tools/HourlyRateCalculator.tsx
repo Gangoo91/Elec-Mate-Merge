@@ -290,7 +290,7 @@ const HourlyRateCalculator = () => {
               {/* Core Inputs */}
               <div className="flex items-center gap-2 mb-3">
                 <PoundSterling className="h-4 w-4 text-blue-400" />
-                <span className="text-sm font-medium text-white/80">Income & Time</span>
+                <span className="text-sm font-medium text-white">Income & Time</span>
               </div>
 
               <CalculatorInput
@@ -371,11 +371,11 @@ const HourlyRateCalculator = () => {
                 <CollapsibleTrigger className="w-full flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
                   <div className="flex items-center gap-2">
                     <Settings className="h-4 w-4 text-blue-400" />
-                    <span className="text-sm font-medium text-white/80">Advanced Costs</span>
+                    <span className="text-sm font-medium text-white">Advanced Costs</span>
                   </div>
                   <ChevronDown
                     className={cn(
-                      'h-4 w-4 text-white/80 transition-transform duration-200',
+                      'h-4 w-4 text-white transition-transform duration-200',
                       showAdvanced && 'rotate-180'
                     )}
                   />
@@ -487,7 +487,7 @@ const HourlyRateCalculator = () => {
               {/* Options */}
               <div className="grid grid-cols-2 gap-3">
                 <div className="space-y-2">
-                  <p className="text-sm font-medium text-white/80">VAT Registered?</p>
+                  <p className="text-sm font-medium text-white">VAT Registered?</p>
                   <div className="flex gap-2">
                     <button
                       onClick={() => setVatRegistered(true)}
@@ -495,7 +495,7 @@ const HourlyRateCalculator = () => {
                         'flex-1 h-11 rounded-xl text-sm font-medium transition-all touch-manipulation',
                         vatRegistered
                           ? 'text-black'
-                          : 'bg-white/5 border border-white/10 text-white/70 hover:bg-white/10'
+                          : 'bg-white/5 border border-white/10 text-white hover:bg-white/10'
                       )}
                       style={
                         vatRegistered
@@ -513,7 +513,7 @@ const HourlyRateCalculator = () => {
                         'flex-1 h-11 rounded-xl text-sm font-medium transition-all touch-manipulation',
                         !vatRegistered
                           ? 'text-black'
-                          : 'bg-white/5 border border-white/10 text-white/70 hover:bg-white/10'
+                          : 'bg-white/5 border border-white/10 text-white hover:bg-white/10'
                       )}
                       style={
                         !vatRegistered
@@ -541,13 +541,13 @@ const HourlyRateCalculator = () => {
                 <CollapsibleTrigger className="w-full flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
                   <div className="flex items-center gap-2">
                     <Clock className="h-4 w-4 text-amber-400" />
-                    <span className="text-sm font-medium text-white/80">
+                    <span className="text-sm font-medium text-white">
                       Premium & Call-out Rates
                     </span>
                   </div>
                   <ChevronDown
                     className={cn(
-                      'h-4 w-4 text-white/80 transition-transform duration-200',
+                      'h-4 w-4 text-white transition-transform duration-200',
                       showPremiums && 'rotate-180'
                     )}
                   />
@@ -593,7 +593,7 @@ const HourlyRateCalculator = () => {
                   disabled={!isValid}
                   className={cn(
                     'flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation',
-                    isValid ? 'text-black' : 'bg-white/10 text-white/30 cursor-not-allowed'
+                    isValid ? 'text-black' : 'bg-white/10 text-white cursor-not-allowed'
                   )}
                   style={
                     isValid
@@ -608,13 +608,13 @@ const HourlyRateCalculator = () => {
                 </button>
                 <button
                   onClick={saveScenario}
-                  className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/90 hover:bg-white/10 transition-colors touch-manipulation"
+                  className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation"
                 >
                   <Save className="h-5 w-5" />
                 </button>
                 <button
                   onClick={reset}
-                  className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/90 hover:bg-white/10 transition-colors touch-manipulation"
+                  className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation"
                 >
                   <RotateCcw className="h-5 w-5" />
                 </button>
@@ -648,17 +648,17 @@ const HourlyRateCalculator = () => {
                   </div>
 
                   <div className="py-4 border-b border-white/10 space-y-2">
-                    <p className="text-sm font-medium text-white/70">Rate Breakdown</p>
+                    <p className="text-sm font-medium text-white">Rate Breakdown</p>
                     <div className="space-y-2 text-sm">
-                      <div className="flex justify-between text-white/80">
+                      <div className="flex justify-between text-white">
                         <span>Base cost per hour:</span>
                         <span>£{baseCostPerHour.toFixed(2)}</span>
                       </div>
-                      <div className="flex justify-between text-white/80">
+                      <div className="flex justify-between text-white">
                         <span>Overhead costs:</span>
                         <span>£{overheadCostPerHour.toFixed(2)}</span>
                       </div>
-                      <div className="flex justify-between text-white/80">
+                      <div className="flex justify-between text-white">
                         <span>Total cost per hour:</span>
                         <span>£{totalCostPerHour.toFixed(2)}</span>
                       </div>
@@ -802,7 +802,7 @@ const HourlyRateCalculator = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      'h-4 w-4 text-white/80 transition-transform duration-200',
+                      'h-4 w-4 text-white transition-transform duration-200',
                       showGuidance && 'rotate-180'
                     )}
                   />
@@ -847,7 +847,7 @@ const HourlyRateCalculator = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      'h-4 w-4 text-white/80 transition-transform duration-200',
+                      'h-4 w-4 text-white transition-transform duration-200',
                       showReference && 'rotate-180'
                     )}
                   />

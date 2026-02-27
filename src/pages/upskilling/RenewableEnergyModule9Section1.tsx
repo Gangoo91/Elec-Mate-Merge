@@ -258,7 +258,7 @@ const RenewableEnergyModule9Section1 = () => {
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
           Feed-in Tariff, SEG & Net Metering
         </h1>
-        <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+        <p className="text-white text-sm sm:text-base max-w-xl mx-auto">
           Understanding UK energy payment schemes and export mechanisms
         </p>
       </div>
@@ -306,7 +306,7 @@ const RenewableEnergyModule9Section1 = () => {
           ].map((outcome, index) => (
             <div key={index} className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
-              <span className="text-white/80 text-sm">{outcome}</span>
+              <span className="text-white text-sm">{outcome}</span>
             </div>
           ))}
         </div>
@@ -319,7 +319,7 @@ const RenewableEnergyModule9Section1 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">01</span>
             <h2 className="text-xl font-semibold text-white">The Feed-in Tariff Legacy</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               The Feed-in Tariff (FIT) scheme launched in April 2010 and was instrumental in driving
               UK solar PV adoption. It provided guaranteed payments for renewable electricity
@@ -358,7 +358,7 @@ const RenewableEnergyModule9Section1 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">02</span>
             <h2 className="text-xl font-semibold text-white">Smart Export Guarantee (SEG)</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               The Smart Export Guarantee replaced FIT as the government-backed mechanism for paying
               small-scale generators for exported electricity. It launched on 1 January 2020 and
@@ -399,7 +399,7 @@ const RenewableEnergyModule9Section1 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">03</span>
             <h2 className="text-xl font-semibold text-white">Comparing FIT and SEG</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               The transition from FIT to SEG represents a fundamental shift in how renewable
               generation is incentivised. Understanding these differences helps installers explain
@@ -438,7 +438,7 @@ const RenewableEnergyModule9Section1 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">04</span>
             <h2 className="text-xl font-semibold text-white">Net Metering Concepts</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Net metering is a billing mechanism where electricity exported to the grid directly
               offsets electricity imported, effectively crediting exports at retail rates. While
@@ -479,7 +479,7 @@ const RenewableEnergyModule9Section1 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">05</span>
             <h2 className="text-xl font-semibold text-white">Maximising Customer Value</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Understanding payment schemes enables installers to help customers maximise the value
               from their renewable energy systems through appropriate system design and operational
@@ -524,7 +524,7 @@ const RenewableEnergyModule9Section1 = () => {
             <Zap className="w-4 h-4 text-elec-yellow" />
             Practical Guidance
           </h3>
-          <div className="space-y-2 text-white/80 text-sm">
+          <div className="space-y-2 text-white text-sm">
             <p>
               <span className="text-white font-medium">Customer education:</span> Many customers
               still expect FIT-style returns. Be clear that the investment case is now primarily
@@ -551,7 +551,7 @@ const RenewableEnergyModule9Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <h3 className="text-white font-medium mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>

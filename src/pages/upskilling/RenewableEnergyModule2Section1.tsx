@@ -107,7 +107,7 @@ const RenewableEnergyModule2Section1 = () => {
           <Button
             variant="ghost"
             size="sm"
-            className="text-white/70 hover:text-white hover:bg-white/10 -ml-2"
+            className="text-white hover:text-white hover:bg-white/10 -ml-2"
             asChild
           >
             <Link to="/electrician/upskilling/renewable-energy-module-2">
@@ -125,7 +125,7 @@ const RenewableEnergyModule2Section1 = () => {
             <Zap className="w-6 h-6 text-elec-yellow" />
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">PV Panel Types</h1>
-          <p className="text-white/60 text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Monocrystalline, Polycrystalline &amp; Thin Film Technologies
           </p>
         </div>
@@ -152,19 +152,19 @@ const RenewableEnergyModule2Section1 = () => {
           <div className="space-y-2">
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-white/80 text-sm">
+              <span className="text-white text-sm">
                 Distinguish between monocrystalline, polycrystalline, and thin-film technologies
               </span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-white/80 text-sm">
+              <span className="text-white text-sm">
                 Evaluate efficiency, cost, and physical characteristics of each type
               </span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-white/80 text-sm">
+              <span className="text-white text-sm">
                 Select appropriate panels for different use cases and applications
               </span>
             </div>
@@ -177,7 +177,7 @@ const RenewableEnergyModule2Section1 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">01</span>
             Monocrystalline Silicon Panels
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Monocrystalline panels are manufactured from single silicon crystals, offering the
               highest efficiency and premium performance characteristics. They have a dark black or
@@ -232,7 +232,7 @@ const RenewableEnergyModule2Section1 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">02</span>
             Polycrystalline Silicon Panels
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Polycrystalline panels are made from multiple silicon crystals melted together,
               offering a balance between cost and performance. They have a distinctive bluish hue
@@ -287,7 +287,7 @@ const RenewableEnergyModule2Section1 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">03</span>
             Thin Film Technologies
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Thin film panels use different semiconductor materials deposited in thin layers,
               offering unique advantages for specific applications including flexibility and better
@@ -359,7 +359,7 @@ const RenewableEnergyModule2Section1 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">04</span>
             Performance Factors
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Understanding key performance factors helps select the right panel technology for
               specific conditions and applications.
@@ -397,7 +397,7 @@ const RenewableEnergyModule2Section1 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">05</span>
             Emerging Technologies
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               The solar industry continues to innovate with new technologies that push efficiency
               boundaries and reduce costs.
@@ -440,7 +440,7 @@ const RenewableEnergyModule2Section1 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">06</span>
             Quality &amp; Warranties
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Panel quality and manufacturer warranties significantly impact long-term system
               performance and project economics.
@@ -487,7 +487,7 @@ const RenewableEnergyModule2Section1 = () => {
         {/* Panel Selection Guide */}
         <div className="mb-8 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
           <h3 className="text-white font-semibold mb-3">Panel Selection Guide</h3>
-          <div className="space-y-2 text-white/80 text-sm">
+          <div className="space-y-2 text-white text-sm">
             <p>
               <strong className="text-white">Limited roof space:</strong> Monocrystalline - highest
               efficiency maximises power in small areas
@@ -519,7 +519,7 @@ const RenewableEnergyModule2Section1 = () => {
               <h4 className="text-white font-medium mb-2">
                 Why do monocrystalline panels cost more?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Monocrystalline panels require more energy and precision in manufacturing as they
                 use single-crystal silicon. The Czochralski process creates a pure silicon ingot
                 that is then sliced into wafers, which is more complex than polycrystalline
@@ -530,7 +530,7 @@ const RenewableEnergyModule2Section1 = () => {
               <h4 className="text-white font-medium mb-2">
                 How do I identify panel types visually?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Monocrystalline panels are dark black/blue with rounded cell corners.
                 Polycrystalline panels are distinctly blue with visible grain patterns and square
                 cell corners. Thin film panels have a uniform dark appearance without visible cells.
@@ -540,7 +540,7 @@ const RenewableEnergyModule2Section1 = () => {
               <h4 className="text-white font-medium mb-2">
                 What makes PERC technology so popular?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 PERC adds a passivation layer to the rear of cells, improving light capture and
                 efficiency by 1-2% with minimal cost increase. This makes it the default choice for
                 most new installations.
@@ -550,7 +550,7 @@ const RenewableEnergyModule2Section1 = () => {
               <h4 className="text-white font-medium mb-2">
                 When should I choose thin film panels?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Choose thin film for hot climates (better temperature coefficient), flexible/curved
                 surfaces, building-integrated applications (BIPV), or when consistent diffuse light
                 performance matters more than peak output.
@@ -558,7 +558,7 @@ const RenewableEnergyModule2Section1 = () => {
             </div>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
               <h4 className="text-white font-medium mb-2">What is a Tier 1 manufacturer?</h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Bloomberg NEF classifies Tier 1 manufacturers based on bankability - whether
                 development banks will finance projects using their panels. This indicates financial
                 stability, quality control, and long-term warranty reliability.
@@ -568,7 +568,7 @@ const RenewableEnergyModule2Section1 = () => {
               <h4 className="text-white font-medium mb-2">
                 How much extra yield do bifacial panels provide?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Bifacial panels can provide 10-30% additional energy yield depending on mounting
                 height, ground reflectivity (albedo), and installation angle. They work best over
                 light-coloured surfaces with elevated mounting.
@@ -590,7 +590,7 @@ const RenewableEnergyModule2Section1 = () => {
         <div className="flex justify-between items-center pt-6 border-t border-white/10">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/10"
+            className="text-white hover:text-white hover:bg-white/10"
             asChild
           >
             <Link to="/electrician/upskilling/renewable-energy-module-2">

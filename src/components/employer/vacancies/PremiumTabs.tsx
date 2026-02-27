@@ -38,7 +38,7 @@ export function PremiumTabs({ tabs, activeTab, onTabChange, className }: Premium
               'text-sm font-medium',
               'transition-colors duration-200',
               'min-h-[48px]',
-              isActive ? 'text-black' : 'text-white/60 hover:text-white/80'
+              isActive ? 'text-black' : 'text-white hover:text-white'
             )}
           >
             {/* Background indicator */}
@@ -59,7 +59,7 @@ export function PremiumTabs({ tabs, activeTab, onTabChange, className }: Premium
                   variant="secondary"
                   className={cn(
                     'text-xs px-1.5 py-0 h-5 min-w-[20px] flex items-center justify-center',
-                    isActive ? 'bg-black/20 text-black' : 'bg-white/10 text-white/70'
+                    isActive ? 'bg-black/20 text-black' : 'bg-white/10 text-white'
                   )}
                 >
                   {tab.count > 99 ? '99+' : tab.count}

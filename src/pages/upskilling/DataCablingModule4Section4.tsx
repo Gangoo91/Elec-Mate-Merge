@@ -87,7 +87,7 @@ const DataCablingModule4Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/data-cabling-module-4">
@@ -108,7 +108,7 @@ const DataCablingModule4Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             ID Labelling Standards and Colour Codes
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Cable identification and marking systems for professional installations
           </p>
         </header>
@@ -226,15 +226,15 @@ const DataCablingModule4Section4 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Demarcation</p>
-                <p className="text-white/90 text-xs">Orange labels</p>
+                <p className="text-white text-xs">Orange labels</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Network</p>
-                <p className="text-white/90 text-xs">Green labels</p>
+                <p className="text-white text-xs">Green labels</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Workstation</p>
-                <p className="text-white/90 text-xs">Blue labels</p>
+                <p className="text-white text-xs">Blue labels</p>
               </div>
             </div>
           </div>
@@ -327,31 +327,31 @@ const DataCablingModule4Section4 = () => {
                 <p className="text-white font-medium mb-1">
                   Campus Level: <span className="text-elec-yellow">C01</span>
                 </p>
-                <p className="text-xs text-white/70">Site or campus identifier</p>
+                <p className="text-xs text-white">Site or campus identifier</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="text-white font-medium mb-1">
                   Building Level: <span className="text-elec-yellow">C01-B03</span>
                 </p>
-                <p className="text-xs text-white/70">Individual building within campus</p>
+                <p className="text-xs text-white">Individual building within campus</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="text-white font-medium mb-1">
                   Floor Level: <span className="text-elec-yellow">C01-B03-F02</span>
                 </p>
-                <p className="text-xs text-white/70">Floor or level within building</p>
+                <p className="text-xs text-white">Floor or level within building</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="text-white font-medium mb-1">
                   Room Level: <span className="text-elec-yellow">C01-B03-F02-R205</span>
                 </p>
-                <p className="text-xs text-white/70">Individual room or zone</p>
+                <p className="text-xs text-white">Individual room or zone</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="text-white font-medium mb-1">
                   Outlet Level: <span className="text-elec-yellow">C01-B03-F02-R205-01</span>
                 </p>
-                <p className="text-xs text-white/70">Individual outlet or connection point</p>
+                <p className="text-xs text-white">Individual outlet or connection point</p>
               </div>
             </div>
           </div>
@@ -463,7 +463,7 @@ const DataCablingModule4Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -502,7 +502,7 @@ const DataCablingModule4Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/data-cabling-module-4-section-3">

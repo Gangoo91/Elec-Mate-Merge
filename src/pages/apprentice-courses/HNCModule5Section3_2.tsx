@@ -240,7 +240,7 @@ const HNCModule5Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section3">
@@ -262,7 +262,7 @@ const HNCModule5Section3_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Budget Development
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Cost plans, contingency allowances, risk provisions, preliminaries and overhead
             calculations for MEP works
           </p>
@@ -660,7 +660,7 @@ const HNCModule5Section3_2 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Typical MEP Preliminaries Build-Up (GBP 3M project, 12 months)
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Site establishment (fixed): GBP 35,000</p>
                 <p>Management staff (12 months): GBP 180,000</p>
                 <p>Temporary services: GBP 25,000</p>
@@ -756,7 +756,7 @@ const HNCModule5Section3_2 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Inflation Calculation Example
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Estimate base date: January 2024</p>
                 <p>Tender date: July 2024 (6 months)</p>
                 <p>Construction period: 18 months</p>
@@ -768,7 +768,7 @@ const HNCModule5Section3_2 = () => {
                 <p>
                   15-month inflation: 4% x (15/12) = <strong>5.0%</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Applied to measured works + preliminaries before OH&P
                 </p>
               </div>
@@ -798,7 +798,7 @@ const HNCModule5Section3_2 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Complete Budget Build-Up Example
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Measured MEP works: GBP 2,500,000</p>
                 <p>Preliminaries (12%): GBP 300,000</p>
                 <p className="border-t border-white/20 mt-2 pt-2">Sub-total: GBP 2,800,000</p>
@@ -817,7 +817,7 @@ const HNCModule5Section3_2 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Market awareness:</strong> OH&P levels vary with market conditions. In
               competitive markets, margins compress; in busy markets, contractors can command higher
               returns.
@@ -843,7 +843,7 @@ const HNCModule5Section3_2 = () => {
                 <strong>Scenario:</strong> New hospital wing, 8,000m2, RIBA Stage 2, tender in 9
                 months, 24-month construction.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Benchmark: 180 VA/m2 (highly serviced)</p>
                 <p>Estimated MEP value: GBP 6,000,000</p>
                 <p className="mt-2">Preliminaries (14% - complex): GBP 840,000</p>
@@ -866,7 +866,7 @@ const HNCModule5Section3_2 = () => {
                 <strong>Question:</strong> A GBP 1.2M office electrical upgrade at Stage 3.
                 Calculate appropriate contingencies.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Base measured works: GBP 1,200,000</p>
                 <p className="mt-2">Design contingency (Stage 3): 6%</p>
                 <p>Additional for refurb unknowns: 4%</p>
@@ -881,7 +881,7 @@ const HNCModule5Section3_2 = () => {
                 <p className="mt-2 border-t border-white/20 pt-2">
                   Total contingency: GBP 216,000 (18%)
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   Higher than new-build due to existing conditions uncertainty
                 </p>
               </div>
@@ -895,7 +895,7 @@ const HNCModule5Section3_2 = () => {
                 <strong>Question:</strong> Build up preliminaries for GBP 4M MEP package, 15-month
                 programme, city centre site.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Fixed costs:</strong>
                 </p>
@@ -1004,7 +1004,7 @@ const HNCModule5Section3_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1052,7 +1052,7 @@ const HNCModule5Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section3">

@@ -282,7 +282,7 @@ const HNCModule8Section3_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section3">
@@ -304,7 +304,7 @@ const HNCModule8Section3_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Refrigeration Fundamentals
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding refrigeration cycles, refrigerants, components and F-Gas regulations for
             building services
           </p>
@@ -414,7 +414,7 @@ const HNCModule8Section3_1 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 Q<sub>condenser</sub> = Q<sub>evaporator</sub> + W<sub>compressor</sub>
               </p>
-              <div className="grid grid-cols-2 gap-2 text-xs text-white/70 mt-3">
+              <div className="grid grid-cols-2 gap-2 text-xs text-white mt-3">
                 <div>
                   <strong>
                     Q<sub>cond</sub>
@@ -443,7 +443,7 @@ const HNCModule8Section3_1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Pressure-Enthalpy (P-h) Diagram
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 The P-h diagram is essential for analysing refrigeration cycles. The x-axis shows
                 specific enthalpy (kJ/kg), the y-axis shows pressure (bar). The saturation dome
                 divides liquid, two-phase and vapour regions.
@@ -617,7 +617,7 @@ const HNCModule8Section3_1 = () => {
               <div className="grid sm:grid-cols-2 gap-3">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Toxicity</p>
-                  <ul className="text-xs text-white/70 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>
                       <strong>A</strong> = Lower toxicity (OEL &gt;400 ppm)
                     </li>
@@ -628,7 +628,7 @@ const HNCModule8Section3_1 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Flammability</p>
-                  <ul className="text-xs text-white/70 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>
                       <strong>1</strong> = No flame propagation
                     </li>
@@ -653,7 +653,7 @@ const HNCModule8Section3_1 = () => {
                   <p className="text-sm font-medium text-orange-300 mb-1">
                     Global Warming Potential (GWP)
                   </p>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-white">
                     GWP measures a gas's ability to trap heat relative to CO2 (GWP=1) over 100
                     years. R410A with GWP of 2088 means 1 kg leaked is equivalent to 2088 kg of CO2
                     emissions. This is why F-Gas regulations are driving the transition to lower-GWP
@@ -785,7 +785,7 @@ const HNCModule8Section3_1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Scroll Compressor Operation
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Scroll compressors use two interleaved spiral scrolls - one stationary, one
                 orbiting. As the orbiting scroll moves eccentrically, crescent-shaped pockets trap
                 and progressively compress refrigerant vapour from the outer edge toward the central
@@ -804,7 +804,7 @@ const HNCModule8Section3_1 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Condensers</p>
                 <div className="p-3 rounded bg-white/5">
-                  <p className="text-xs text-white/70 mb-2">
+                  <p className="text-xs text-white mb-2">
                     Reject heat from high-pressure refrigerant
                   </p>
                   <ul className="text-xs text-white space-y-1">
@@ -826,7 +826,7 @@ const HNCModule8Section3_1 = () => {
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Evaporators</p>
                 <div className="p-3 rounded bg-white/5">
-                  <p className="text-xs text-white/70 mb-2">
+                  <p className="text-xs text-white mb-2">
                     Absorb heat into low-pressure refrigerant
                   </p>
                   <ul className="text-xs text-white space-y-1">
@@ -1021,7 +1021,7 @@ const HNCModule8Section3_1 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 CO2e (tonnes) = Charge (kg) x GWP / 1000
               </p>
-              <div className="grid sm:grid-cols-2 gap-3 text-xs text-white/70 mt-3">
+              <div className="grid sm:grid-cols-2 gap-3 text-xs text-white mt-3">
                 <div className="p-2 bg-black/30 rounded">
                   <p className="font-medium mb-1">Example: R410A System</p>
                   <p>Charge: 8 kg</p>
@@ -1029,7 +1029,7 @@ const HNCModule8Section3_1 = () => {
                   <p>
                     CO2e = 8 x 2088 / 1000 = <strong>16.7 tonnes</strong>
                   </p>
-                  <p className="mt-1 text-white/50">Requires 6-monthly leak checks</p>
+                  <p className="mt-1 text-white">Requires 6-monthly leak checks</p>
                 </div>
                 <div className="p-2 bg-black/30 rounded">
                   <p className="font-medium mb-1">Example: R32 System</p>
@@ -1038,7 +1038,7 @@ const HNCModule8Section3_1 = () => {
                   <p>
                     CO2e = 5.5 x 675 / 1000 = <strong>3.7 tonnes</strong>
                   </p>
-                  <p className="mt-1 text-white/50">Below 5 tonnes - no leak check required</p>
+                  <p className="mt-1 text-white">Below 5 tonnes - no leak check required</p>
                 </div>
               </div>
             </div>
@@ -1133,7 +1133,7 @@ const HNCModule8Section3_1 = () => {
                 <strong>Question:</strong> A split system air conditioner has a cooling capacity of
                 7 kW and consumes 2.2 kW of electrical power. Calculate the COP.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>COP (cooling) = Cooling capacity / Power input</p>
                 <p className="mt-2">
                   COP = Q<sub>evap</sub> / W<sub>comp</sub>
@@ -1144,7 +1144,7 @@ const HNCModule8Section3_1 = () => {
                 <p className="mt-2">
                   For every 1 kW of electrical input, the system moves 3.18 kW of heat.
                 </p>
-                <p className="mt-2 text-white/60">Heat rejected at condenser = 7 + 2.2 = 9.2 kW</p>
+                <p className="mt-2 text-white">Heat rejected at condenser = 7 + 2.2 = 9.2 kW</p>
               </div>
             </div>
 
@@ -1156,7 +1156,7 @@ const HNCModule8Section3_1 = () => {
                 <strong>Question:</strong> A VRF system contains 25 kg of R410A. Calculate the CO2
                 equivalent and determine leak check frequency.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>CO2e = Charge x GWP / 1000</p>
                 <p className="mt-2">
                   CO2e = 25 kg x 2088 / 1000 = <strong>52.2 tonnes CO2e</strong>
@@ -1168,7 +1168,7 @@ const HNCModule8Section3_1 = () => {
                 <p>
                   - With automatic leak detection: <strong>12 months</strong>
                 </p>
-                <p className="mt-2 text-white/60">Records must be maintained for 5 years</p>
+                <p className="mt-2 text-white">Records must be maintained for 5 years</p>
               </div>
             </div>
 
@@ -1181,7 +1181,7 @@ const HNCModule8Section3_1 = () => {
                 temperature at 5 bar is 2 degrees C. The suction line temperature measures 10
                 degrees C. What is the superheat?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Superheat = Suction temperature - Saturation temperature</p>
                 <p className="mt-2">
                   Superheat = 10 degrees C - 2 degrees C = <strong>8K</strong>
@@ -1190,10 +1190,10 @@ const HNCModule8Section3_1 = () => {
                 <p className="text-green-400">
                   System operating correctly - dry vapour entering compressor
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Low superheat (&lt;3K) indicates risk of liquid return
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   High superheat (&gt;15K) indicates insufficient refrigerant or TXV issue
                 </p>
               </div>
@@ -1207,7 +1207,7 @@ const HNCModule8Section3_1 = () => {
                 <strong>Question:</strong> A contractor is specifying a 10 kW split system. Compare
                 R410A and R32 options for F-Gas compliance.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Typical charges for 10 kW system:</p>
                 <p>R410A: approximately 3.5 kg</p>
                 <p>R32: approximately 2.5 kg (30% less)</p>
@@ -1221,10 +1221,10 @@ const HNCModule8Section3_1 = () => {
                 <p>
                   R32: <strong>Below 5 tonnes - no mandatory leak checks</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   From 2025: R410A banned in single splits &lt;3 kg charge (GWP &gt;750)
                 </p>
-                <p className="text-white/60">R32 (GWP 675) complies with new regulations</p>
+                <p className="text-white">R32 (GWP 675) complies with new regulations</p>
               </div>
             </div>
 
@@ -1236,7 +1236,7 @@ const HNCModule8Section3_1 = () => {
                 <strong>Question:</strong> A heat pump has a heating capacity of 12 kW and
                 compressor power of 3.2 kW. Calculate the heating COP.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>For heating mode:</p>
                 <p>COP (heating) = Heating capacity / Power input</p>
                 <p>
@@ -1249,10 +1249,10 @@ const HNCModule8Section3_1 = () => {
                 <p>
                   Q<sub>evap</sub> = Q<sub>cond</sub> - W<sub>comp</sub> = 12 - 3.2 = 8.8 kW
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Note: Heating COP &gt; Cooling COP because useful output includes compressor work
                 </p>
-                <p className="text-white/60">Heating COP = Cooling COP + 1 (ideally)</p>
+                <p className="text-white">Heating COP = Cooling COP + 1 (ideally)</p>
               </div>
             </div>
           </div>
@@ -1373,7 +1373,7 @@ const HNCModule8Section3_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1421,7 +1421,7 @@ const HNCModule8Section3_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section3">

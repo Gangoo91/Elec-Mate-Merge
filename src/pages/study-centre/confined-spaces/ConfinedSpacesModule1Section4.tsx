@@ -203,7 +203,7 @@ export default function ConfinedSpacesModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-1">
@@ -226,7 +226,7 @@ export default function ConfinedSpacesModule1Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Confined Spaces in Electrical Work
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Cable ducts and tunnels, transformer chambers, substations, plant rooms, risers, voids,
             and other confined spaces that electricians encounter &mdash; plus the specific
             electrical hazards that make these environments uniquely dangerous
@@ -310,7 +310,7 @@ export default function ConfinedSpacesModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-cyan-400" />
                   <p className="text-sm font-medium text-cyan-400">Key Hazards</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -361,7 +361,7 @@ export default function ConfinedSpacesModule1Section4() {
                     'Military bases and government facilities',
                     'District heating and combined services tunnels',
                   ].map((location, i) => (
-                    <div key={i} className="flex items-start gap-2 text-sm text-white/80">
+                    <div key={i} className="flex items-start gap-2 text-sm text-white">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400/60 flex-shrink-0" />
                       <span>{location}</span>
                     </div>
@@ -392,7 +392,7 @@ export default function ConfinedSpacesModule1Section4() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-cyan-500/10 border border-cyan-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-cyan-400 mb-3">Oil-Filled Transformers</p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Mineral oil vapour creates fire and explosion risk</span>
@@ -419,7 +419,7 @@ export default function ConfinedSpacesModule1Section4() {
 
                 <div className="bg-cyan-500/10 border border-cyan-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-cyan-400 mb-3">SF&#8326; Switchgear</p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -452,7 +452,7 @@ export default function ConfinedSpacesModule1Section4() {
                   <ShieldAlert className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Warning</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   After an{' '}
                   <strong className="text-white">
                     electrical fault in an SF&#8326; switchgear room
@@ -495,7 +495,7 @@ export default function ConfinedSpacesModule1Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Types Most Likely to Be Confined Spaces
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400/60 flex-shrink-0" />
                     <span>
@@ -536,7 +536,7 @@ export default function ConfinedSpacesModule1Section4() {
 
               <div className="bg-cyan-500/10 border border-cyan-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-2">Common Substation Hazards</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   All substations &mdash; whether classified as confined spaces or not &mdash;
                   present electrical hazards including arc flash, contact with live conductors, and
                   step/touch potential. When a substation{' '}
@@ -577,7 +577,7 @@ export default function ConfinedSpacesModule1Section4() {
                 <div className="space-y-4">
                   <div className="bg-cyan-500/5 border border-cyan-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-cyan-300 mb-2">Boiler Rooms</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Gas-fired boilers produce carbon monoxide (CO) if combustion is incomplete.
                       Flue leaks can fill a room with CO &mdash; a colourless, odourless, lethal
                       gas. Natural gas leaks create explosion risk. High temperatures cause heat
@@ -588,7 +588,7 @@ export default function ConfinedSpacesModule1Section4() {
 
                   <div className="bg-cyan-500/5 border border-cyan-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-cyan-300 mb-2">Switch Rooms</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Main LV switch rooms in large commercial buildings can be enclosed, windowless
                       rooms with a single door. Heat from loaded busbars and switchgear raises
                       ambient temperatures. Arc flash risk is significant. If the door is closed and
@@ -599,7 +599,7 @@ export default function ConfinedSpacesModule1Section4() {
 
                   <div className="bg-red-500/5 border border-red-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-red-300 mb-2">UPS Battery Rooms</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Lead-acid and VRLA batteries release{' '}
                       <strong className="text-white">hydrogen gas</strong> during charging. Hydrogen
                       is <strong className="text-white">explosive between 4% and 75% in air</strong>
@@ -621,40 +621,40 @@ export default function ConfinedSpacesModule1Section4() {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl mx-auto">
                   <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 text-center">
                     <p className="text-xs font-medium text-red-300 mb-1">UPS / Battery</p>
-                    <p className="text-[10px] text-white/50">Hydrogen gas</p>
-                    <p className="text-[10px] text-white/50">Acid mist</p>
-                    <p className="text-[10px] text-white/50">Explosion risk</p>
+                    <p className="text-[10px] text-white">Hydrogen gas</p>
+                    <p className="text-[10px] text-white">Acid mist</p>
+                    <p className="text-[10px] text-white">Explosion risk</p>
                   </div>
                   <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-3 text-center">
                     <p className="text-xs font-medium text-orange-300 mb-1">Boiler / Gas</p>
-                    <p className="text-[10px] text-white/50">CO poisoning</p>
-                    <p className="text-[10px] text-white/50">Gas leak</p>
-                    <p className="text-[10px] text-white/50">Heat stress</p>
+                    <p className="text-[10px] text-white">CO poisoning</p>
+                    <p className="text-[10px] text-white">Gas leak</p>
+                    <p className="text-[10px] text-white">Heat stress</p>
                   </div>
                   <div className="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-3 text-center">
                     <p className="text-xs font-medium text-cyan-300 mb-1">Switchgear</p>
-                    <p className="text-[10px] text-white/50">Arc flash</p>
-                    <p className="text-[10px] text-white/50">Heat build-up</p>
-                    <p className="text-[10px] text-white/50">Busbar contact</p>
+                    <p className="text-[10px] text-white">Arc flash</p>
+                    <p className="text-[10px] text-white">Heat build-up</p>
+                    <p className="text-[10px] text-white">Busbar contact</p>
                   </div>
                   <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3 text-center">
                     <p className="text-xs font-medium text-yellow-300 mb-1">Chiller / AHU</p>
-                    <p className="text-[10px] text-white/50">Refrigerant leak</p>
-                    <p className="text-[10px] text-white/50">O&#8322; displacement</p>
-                    <p className="text-[10px] text-white/50">Rotating parts</p>
+                    <p className="text-[10px] text-white">Refrigerant leak</p>
+                    <p className="text-[10px] text-white">O&#8322; displacement</p>
+                    <p className="text-[10px] text-white">Rotating parts</p>
                   </div>
                 </div>
 
                 <div className="mt-4 bg-white/5 border border-white/10 rounded-lg p-3 text-center">
-                  <p className="text-xs text-white/40">
+                  <p className="text-xs text-white">
                     All four zones share:{' '}
-                    <strong className="text-white/60">limited ventilation</strong>,{' '}
-                    <strong className="text-white/60">restricted egress</strong>,{' '}
-                    <strong className="text-white/60">noise exposure</strong>
+                    <strong className="text-white">limited ventilation</strong>,{' '}
+                    <strong className="text-white">restricted egress</strong>,{' '}
+                    <strong className="text-white">noise exposure</strong>
                   </p>
                 </div>
 
-                <p className="text-xs text-white/40 text-center mt-3">
+                <p className="text-xs text-white text-center mt-3">
                   Any plant room that is substantially enclosed with limited access and a
                   foreseeable risk of serious injury must be treated as a confined space
                 </p>
@@ -681,7 +681,7 @@ export default function ConfinedSpacesModule1Section4() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   Electrical Risers (Vertical Shafts)
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -719,7 +719,7 @@ export default function ConfinedSpacesModule1Section4() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-cyan-500/10 border border-cyan-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-cyan-400 mb-3">Ceiling Voids</p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -748,7 +748,7 @@ export default function ConfinedSpacesModule1Section4() {
                   <p className="text-sm font-medium text-cyan-400 mb-3">
                     Floor Voids (Raised Access Floors)
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Common in server rooms and offices &mdash; 150mm to 600mm+ depth</span>
@@ -777,7 +777,7 @@ export default function ConfinedSpacesModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-cyan-400" />
                   <p className="text-sm font-medium text-cyan-400">Often Overlooked</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Ceiling voids and floor voids are among the most commonly{' '}
                   <strong className="text-white">unrecognised confined spaces</strong> in the
                   electrical trade. Because electricians access them routinely, the tendency is to
@@ -805,12 +805,12 @@ export default function ConfinedSpacesModule1Section4() {
             <div className="text-white space-y-4 leading-relaxed">
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Lift Motor Rooms</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Located at the top of lift shafts, typically accessed via narrow ladders or steep
                   stairways. The room houses the motor, controller, governor, and electrical
                   switchgear for the lift.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -839,13 +839,13 @@ export default function ConfinedSpacesModule1Section4() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   Trench Work for Cable Laying
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Excavations for laying power cables, duct runs, and earthing conductors are a
                   routine part of electrical installation work. Trenches exceeding{' '}
                   <strong className="text-white">1.2m in depth</strong> must be assessed as
                   potential confined spaces.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -880,14 +880,14 @@ export default function ConfinedSpacesModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Manholes and Joint Bays</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Found throughout power distribution and telecommunications networks, manholes and
                   joint bays are underground chambers used for cable jointing, termination, and
                   connection. They are{' '}
                   <strong className="text-white">classic confined spaces</strong> with multiple
                   overlapping hazards.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -944,7 +944,7 @@ export default function ConfinedSpacesModule1Section4() {
                   <p className="text-sm font-medium text-cyan-400 mb-3">
                     Solar Farm Inverter Rooms
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -980,7 +980,7 @@ export default function ConfinedSpacesModule1Section4() {
                   <p className="text-sm font-medium text-cyan-400 mb-3">
                     Wind Turbine Nacelles &amp; Towers
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1015,7 +1015,7 @@ export default function ConfinedSpacesModule1Section4() {
                   <Lightbulb className="h-5 w-5 text-cyan-400" />
                   <p className="text-sm font-medium text-cyan-400">Growing Sector</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   As the UK moves toward net zero, more electricians will work in renewable energy
                   environments.
                   <strong className="text-white"> Battery Energy Storage Systems (BESS)</strong> are
@@ -1053,10 +1053,10 @@ export default function ConfinedSpacesModule1Section4() {
                   <ShieldAlert className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Arc Flash Amplification</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   In a confined space, arc flash is amplified because:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400/60 flex-shrink-0" />
                     <span>
@@ -1103,7 +1103,7 @@ export default function ConfinedSpacesModule1Section4() {
                 <p className="text-sm font-medium text-cyan-400 mb-4 text-center">
                   Reduced Voltage Hierarchy for Confined Spaces (BS 7671)
                 </p>
-                <p className="text-xs text-white/50 text-center mb-6">
+                <p className="text-xs text-white text-center mb-6">
                   Safest option at the top &mdash; voltage increases downward
                 </p>
 
@@ -1111,7 +1111,7 @@ export default function ConfinedSpacesModule1Section4() {
                   {/* Battery Tools */}
                   <div className="w-full bg-green-500/15 border border-green-500/40 rounded-lg p-3 text-center">
                     <p className="text-sm font-medium text-green-300">Battery-Powered Tools</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Preferred option &mdash; no trailing leads, no external voltage source
                     </p>
                     <div className="mt-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-green-500/20 border border-green-500/30">
@@ -1128,7 +1128,7 @@ export default function ConfinedSpacesModule1Section4() {
                   {/* 12V SELV */}
                   <div className="w-full bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-3 text-center">
                     <p className="text-sm font-medium text-cyan-300">12V SELV</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Hand lamps &mdash; Safety Extra-Low Voltage
                     </p>
                     <div className="mt-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-cyan-500/20 border border-cyan-500/30">
@@ -1145,7 +1145,7 @@ export default function ConfinedSpacesModule1Section4() {
                   {/* 25V */}
                   <div className="w-full bg-cyan-500/15 border border-cyan-500/40 rounded-lg p-3 text-center">
                     <p className="text-sm font-medium text-cyan-300">25V</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Portable lighting &mdash; from safety isolating transformer
                     </p>
                     <div className="mt-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-cyan-500/20 border border-cyan-500/30">
@@ -1166,7 +1166,7 @@ export default function ConfinedSpacesModule1Section4() {
                     <p className="text-sm font-medium text-yellow-300">
                       110V Centre-Tapped Earth (CTE)
                     </p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Portable power tools &mdash; max 55V to earth
                     </p>
                     <div className="mt-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-yellow-500/20 border border-yellow-500/30">
@@ -1185,7 +1185,7 @@ export default function ConfinedSpacesModule1Section4() {
                   {/* 230V PROHIBITED */}
                   <div className="w-full bg-red-500/15 border border-red-500/40 rounded-lg p-3 text-center">
                     <p className="text-sm font-medium text-red-300">230V Mains</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       PROHIBITED in confined / restrictive conductive locations
                     </p>
                     <div className="mt-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-500/30 border border-red-500/40">
@@ -1206,7 +1206,7 @@ export default function ConfinedSpacesModule1Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Why Reduced Voltage Is Essential
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1242,13 +1242,13 @@ export default function ConfinedSpacesModule1Section4() {
                 <p className="text-sm font-medium text-cyan-400 mb-2">
                   BS 7671 Requirements for Special Locations
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   BS 7671 (the IET Wiring Regulations) contains specific requirements for electrical
                   installations in{' '}
                   <strong className="text-white">restrictive conductive locations</strong> (Section
                   706). Key requirements include:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1303,7 +1303,7 @@ export default function ConfinedSpacesModule1Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1317,7 +1317,7 @@ export default function ConfinedSpacesModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-1-section-3">

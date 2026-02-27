@@ -238,7 +238,7 @@ const HNCModule2Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section2">
@@ -260,7 +260,7 @@ const HNCModule2Section2_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Bernoulli's Equation
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Energy conservation in fluid systems and practical measurement applications
           </p>
         </header>
@@ -346,7 +346,7 @@ const HNCModule2Section2_3 = () => {
                 Bernoulli's Equation (Energy Form)
               </p>
               <p className="font-mono text-center text-lg mb-2">P + ½ρv² + ρgh = constant</p>
-              <div className="text-xs text-white/70 text-center space-y-1">
+              <div className="text-xs text-white text-center space-y-1">
                 <p>P = static pressure (Pa), ρ = density (kg/m³), v = velocity (m/s)</p>
                 <p>g = gravitational acceleration (9.81 m/s²), h = elevation (m)</p>
               </div>
@@ -373,7 +373,7 @@ const HNCModule2Section2_3 = () => {
               </p>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-mono text-center text-lg mb-2">P/ρg + v²/2g + z = constant</p>
-                <p className="text-xs text-white/70 text-center">
+                <p className="text-xs text-white text-center">
                   All terms in metres - useful for pump calculations
                 </p>
               </div>
@@ -417,7 +417,7 @@ const HNCModule2Section2_3 = () => {
                 For Horizontal Flow (z₁ = z₂)
               </p>
               <p className="font-mono text-center text-lg mb-2">P₁ + ½ρv₁² = P₂ + ½ρv₂²</p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 If velocity increases, static pressure must decrease
               </p>
             </div>
@@ -425,18 +425,18 @@ const HNCModule2Section2_3 = () => {
             <div className="grid sm:grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-bold text-white mb-1">Static Pressure</p>
-                <p className="text-white/70 text-xs">P - measured perpendicular to flow</p>
-                <p className="text-white/70 text-xs">What gauges typically read</p>
+                <p className="text-white text-xs">P - measured perpendicular to flow</p>
+                <p className="text-white text-xs">What gauges typically read</p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-bold text-white mb-1">Dynamic Pressure</p>
-                <p className="text-white/70 text-xs">½ρv² - kinetic energy term</p>
-                <p className="text-white/70 text-xs">Increases with velocity²</p>
+                <p className="text-white text-xs">½ρv² - kinetic energy term</p>
+                <p className="text-white text-xs">Increases with velocity²</p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-bold text-white mb-1">Total Pressure</p>
-                <p className="text-white/70 text-xs">P + ½ρv² = stagnation</p>
-                <p className="text-white/70 text-xs">Measured by pitot tube</p>
+                <p className="text-white text-xs">P + ½ρv² = stagnation</p>
+                <p className="text-white text-xs">Measured by pitot tube</p>
               </div>
             </div>
 
@@ -533,7 +533,7 @@ const HNCModule2Section2_3 = () => {
                 The velocity is calculated from the pressure difference.
               </p>
               <p className="font-mono text-center mb-2">v = √(2ΔP/ρ)</p>
-              <p className="text-xs text-white/70">
+              <p className="text-xs text-white">
                 Where ΔP = P_total - P_static = dynamic pressure = ½ρv²
               </p>
             </div>
@@ -574,7 +574,7 @@ const HNCModule2Section2_3 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/70 mt-2">
+              <p className="text-xs text-white mt-2">
                 β = d/D (diameter ratio), Cd = discharge coefficient
               </p>
             </div>
@@ -607,7 +607,7 @@ const HNCModule2Section2_3 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 P₁/ρg + v₁²/2g + z₁ + H<sub>p</sub> = P₂/ρg + v₂²/2g + z₂ + h<sub>f</sub>
               </p>
-              <div className="text-xs text-white/70 text-center space-y-1">
+              <div className="text-xs text-white text-center space-y-1">
                 <p>
                   H<sub>p</sub> = pump head added (m), h<sub>f</sub> = total friction head loss (m)
                 </p>
@@ -660,7 +660,7 @@ const HNCModule2Section2_3 = () => {
                 <p className="font-mono text-center mb-2">
                   H<sub>p</sub> = (P₂-P₁)/ρg + (v₂²-v₁²)/2g + (z₂-z₁) + h<sub>f</sub>
                 </p>
-                <p className="text-xs text-white/70 text-center">
+                <p className="text-xs text-white text-center">
                   Pump head = Pressure rise + Velocity change + Elevation change + Friction losses
                 </p>
               </div>
@@ -709,7 +709,7 @@ const HNCModule2Section2_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>System design:</strong> The pump must provide enough head to overcome all
               losses and deliver the required flow at the design pressure.
             </p>
@@ -734,13 +734,13 @@ const HNCModule2Section2_3 = () => {
                 <strong>Question:</strong> A pitot-static tube in a duct measures 120 Pa
                 differential pressure. What is the air velocity? (ρ<sub>air</sub> = 1.2 kg/m³)
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using v = √(2ΔP/ρ)</p>
                 <p>v = √(2 × 120 / 1.2)</p>
                 <p>
                   v = √200 = <strong>14.1 m/s</strong>
                 </p>
-                <p className="mt-2 text-white/60">→ Typical velocity for main supply ductwork</p>
+                <p className="mt-2 text-white">→ Typical velocity for main supply ductwork</p>
               </div>
             </div>
 
@@ -752,7 +752,7 @@ const HNCModule2Section2_3 = () => {
                 <strong>Question:</strong> A venturi meter (Cd = 0.98) has 100mm inlet and 50mm
                 throat. ΔP = 25 kPa. Calculate water flow rate.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>β = 50/100 = 0.5, so β⁴ = 0.0625</p>
                 <p>A₂ = π × 0.05²/4 = 0.00196 m²</p>
                 <p className="mt-2">Theoretical v₂ = √(2×25000/(1000×(1-0.0625)))</p>
@@ -772,7 +772,7 @@ const HNCModule2Section2_3 = () => {
                 <strong>Question:</strong> Calculate pump head to deliver water to a tank 25m higher
                 with 15m friction losses and 2 bar delivery pressure.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   H<sub>p</sub> = Elevation + Friction + Pressure head
                 </p>
@@ -780,7 +780,7 @@ const HNCModule2Section2_3 = () => {
                 <p className="mt-2">
                   H<sub>p</sub> = 25 + 15 + 20.4 = <strong>60.4 m</strong>
                 </p>
-                <p className="mt-2 text-white/60">→ Select pump with ≥60 m head at design flow</p>
+                <p className="mt-2 text-white">→ Select pump with ≥60 m head at design flow</p>
               </div>
             </div>
           </div>
@@ -869,7 +869,7 @@ const HNCModule2Section2_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -915,7 +915,7 @@ const HNCModule2Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section2-2">

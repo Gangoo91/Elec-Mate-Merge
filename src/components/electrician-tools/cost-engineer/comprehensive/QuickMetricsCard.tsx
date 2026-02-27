@@ -59,7 +59,7 @@ const QuickMetricsCard = ({ complexity, confidence, riskAssessment }: QuickMetri
             <div className={`text-2xl font-black ${complexityColors?.text} tabular-nums`}>
               {complexity.rating}/10
             </div>
-            <p className="text-xs text-white/50 mt-1">{complexity.label}</p>
+            <p className="text-xs text-white mt-1">{complexity.label}</p>
           </div>
         </motion.div>
       )}
@@ -95,7 +95,7 @@ const QuickMetricsCard = ({ complexity, confidence, riskAssessment }: QuickMetri
             >
               {highRisks > 0 ? 'High' : 'Low'}
             </div>
-            <p className="text-xs text-white/50 mt-1">
+            <p className="text-xs text-white mt-1">
               {highRisks > 0
                 ? `${highRisks} Risk${highRisks > 1 ? 's' : ''} identified`
                 : 'No major risks'}

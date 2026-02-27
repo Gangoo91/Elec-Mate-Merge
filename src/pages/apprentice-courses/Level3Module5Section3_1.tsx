@@ -269,7 +269,7 @@ const Level3Module5Section3_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module5-section3">
@@ -353,15 +353,15 @@ const Level3Module5Section3_1 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Test Voltage</p>
-                <p className="text-white/90 text-xs">4V to 24V DC (BS 7671 requirement)</p>
+                <p className="text-white text-xs">4V to 24V DC (BS 7671 requirement)</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Test Current</p>
-                <p className="text-white/90 text-xs">Minimum 200mA to break through oxidation</p>
+                <p className="text-white text-xs">Minimum 200mA to break through oxidation</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Preparation</p>
-                <p className="text-white/90 text-xs">Isolate supply, null leads, prove dead</p>
+                <p className="text-white text-xs">Isolate supply, null leads, prove dead</p>
               </div>
             </div>
 
@@ -441,7 +441,7 @@ const Level3Module5Section3_1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example calculation:</strong> For 20m of 2.5mm2 line and 1.5mm2 CPC: R1 =
               0.00741 x 20 = 0.148 ohms, R2 = 0.0123 x 20 = 0.246 ohms. Total R1+R2 = 0.394 ohms.
               Measured values within 20% of this are acceptable.
@@ -576,7 +576,7 @@ const Level3Module5Section3_1 = () => {
               probes that can penetrate surface coatings to reach the metal beneath.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Note:</strong> If incoming services are plastic (common with modern water
               supplies), main bonding may not be required to that service. Check if any metal
               remains - partial plastic replacement may still require bonding to remaining metal
@@ -648,7 +648,7 @@ const Level3Module5Section3_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -693,7 +693,7 @@ const Level3Module5Section3_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module5-section3">

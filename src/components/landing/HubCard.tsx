@@ -52,7 +52,7 @@ export const HubCard = ({
         <h3 className="text-lg sm:text-xl font-bold text-white mb-1.5 sm:mb-2">{title}</h3>
 
         {/* Description */}
-        <p className="text-white/50 mb-3 sm:mb-4 text-sm leading-relaxed line-clamp-2">
+        <p className="text-white mb-3 sm:mb-4 text-sm leading-relaxed line-clamp-2">
           {description}
         </p>
 
@@ -61,7 +61,7 @@ export const HubCard = ({
           {features.map((feature) => (
             <span
               key={feature}
-              className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-white/[0.06] text-white/70 text-[10px] sm:text-xs font-medium"
+              className="px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-white/[0.06] text-white text-[10px] sm:text-xs font-medium"
             >
               {feature}
             </span>
@@ -72,7 +72,7 @@ export const HubCard = ({
         {comingSoon ? (
           <div className="h-4" />
         ) : (
-          <div className="flex items-center text-white/40 group-hover:text-white/70 transition-colors duration-200">
+          <div className="flex items-center text-white group-hover:text-white transition-colors duration-200">
             <span className="text-xs sm:text-sm font-medium">Explore</span>
             <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 ml-0.5 group-hover:translate-x-1 transition-transform duration-200" />
           </div>

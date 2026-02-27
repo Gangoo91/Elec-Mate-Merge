@@ -238,7 +238,7 @@ const Level3Module7Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section1">
@@ -393,7 +393,7 @@ const Level3Module7Section1_2 = () => {
               and tax. What remains as actual income may be less than expected.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A self-employed electrician charging £250/day might spend
               £50 on van/fuel, £20 on insurance/scheme fees, £10 on phone/admin, leaving £170 before
               tax. At 20% tax plus NI, they take home around £130 - similar to employed rates after
@@ -484,19 +484,19 @@ const Level3Module7Section1_2 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Public Liability</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   £2-5 million cover typical. Covers third-party injury/damage claims
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Professional Indemnity</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Covers claims from advice, design errors, or specification mistakes
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Employers' Liability</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Legal requirement if employing anyone - min £5 million
                 </p>
               </div>
@@ -509,7 +509,7 @@ const Level3Module7Section1_2 = () => {
               registered contractors.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Real Scenario:</strong> An electrician accidentally drilled through a water
               pipe, causing flooding that damaged furniture and electronics below. Without public
               liability insurance, the £15,000 repair and compensation bill would have come directly
@@ -578,7 +578,7 @@ const Level3Module7Section1_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -625,7 +625,7 @@ const Level3Module7Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section1-1">

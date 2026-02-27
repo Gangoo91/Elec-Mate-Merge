@@ -207,7 +207,7 @@ const IpafModule2Section2 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Components & Terminology
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Know every part of a mobile access tower — what it does, where it goes, and why it
             matters
           </p>
@@ -783,7 +783,7 @@ const IpafModule2Section2 = () => {
 
               <div className="bg-white/5 border border-elec-yellow/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-elec-yellow">Definition: Spigot</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   A <strong className="text-white">spigot</strong> is a short connecting pin or tube
                   that protrudes from the top of a frame section. The next frame section slides down
                   over the spigot, creating a secure vertical joint. Spigots may be integral
@@ -872,7 +872,7 @@ const IpafModule2Section2 = () => {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Critical Safety Point</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   A tower assembled without diagonal braces has{' '}
                   <strong className="text-white">zero</strong> resistance to lateral forces. Even a
                   slight push, leaning against the guardrail, or wind pressure can cause it to rack
@@ -942,7 +942,7 @@ const IpafModule2Section2 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">Trapdoor Function</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The trapdoor (also called an access hatch) allows the operative to climb up
                   through the platform from inside the tower. This is a critical safety feature
                   because:
@@ -987,7 +987,7 @@ const IpafModule2Section2 = () => {
               <div className="space-y-3">
                 <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
                   <h4 className="text-purple-300 font-medium mb-2">Guardrails — Minimum 950mm</h4>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     The top rail, positioned at a minimum of 950mm above the platform surface. This
                     is the primary barrier preventing a person from falling over the edge.
                     Guardrails must be fitted on all four sides of the platform with no gaps.
@@ -997,7 +997,7 @@ const IpafModule2Section2 = () => {
                   <h4 className="text-purple-300 font-medium mb-2">
                     Mid-Rails — Approximately 470mm
                   </h4>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     Positioned approximately halfway between the platform and the guardrail, at
                     around 470mm. The mid-rail prevents a person from falling or sliding through the
                     gap between the guardrail and the platform. Without it, a person could roll
@@ -1006,7 +1006,7 @@ const IpafModule2Section2 = () => {
                 </div>
                 <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
                   <h4 className="text-purple-300 font-medium mb-2">Toeboards — Minimum 150mm</h4>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     Vertical boards at least 150mm high fitted at platform level around all edges.
                     Toeboards prevent tools, materials, and debris from being kicked or falling off
                     the platform. This protects anyone working below or passing near the tower.
@@ -1019,15 +1019,15 @@ const IpafModule2Section2 = () => {
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div>
                     <div className="text-2xl font-bold text-elec-yellow">950</div>
-                    <div className="text-xs text-white/60">mm guardrail height</div>
+                    <div className="text-xs text-white">mm guardrail height</div>
                   </div>
                   <div>
                     <div className="text-2xl font-bold text-elec-yellow">470</div>
-                    <div className="text-xs text-white/60">mm mid-rail height</div>
+                    <div className="text-xs text-white">mm mid-rail height</div>
                   </div>
                   <div>
                     <div className="text-2xl font-bold text-elec-yellow">150</div>
-                    <div className="text-xs text-white/60">mm toeboard height</div>
+                    <div className="text-xs text-white">mm toeboard height</div>
                   </div>
                 </div>
               </div>
@@ -1105,7 +1105,7 @@ const IpafModule2Section2 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h4 className="text-elec-yellow font-medium mb-2">Base Plates</h4>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   Base plates are flat metal plates fitted to the bottom of the frame legs when the
                   tower is positioned on a fixed base (i.e., without castors). They distribute the
                   tower's weight over a larger area and prevent the legs from sinking into soft
@@ -1200,7 +1200,7 @@ const IpafModule2Section2 = () => {
                     Never Move a Tower with Anyone on the Platform
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Towers must never be moved with anyone on the platform or any part of the tower
                   structure. All personnel must descend and clear the tower before it is moved.
                   Moving an occupied tower creates extreme instability and is one of the most
@@ -1224,7 +1224,7 @@ const IpafModule2Section2 = () => {
             <div className="space-y-4">
               <div>
                 <h3 className="font-semibold text-white mb-2">Structural Components</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1260,7 +1260,7 @@ const IpafModule2Section2 = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-white mb-2">Edge Protection</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1285,7 +1285,7 @@ const IpafModule2Section2 = () => {
             <div className="space-y-4">
               <div>
                 <h3 className="font-semibold text-white mb-2">Platform & Access</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1311,7 +1311,7 @@ const IpafModule2Section2 = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-white mb-2">Stability & Mobility</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1354,7 +1354,7 @@ const IpafModule2Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1370,7 +1370,7 @@ const IpafModule2Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../ipaf-module-2-section-1">

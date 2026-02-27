@@ -168,7 +168,7 @@ const Module2Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -190,7 +190,7 @@ const Module2Section4_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             AC Waveforms & RMS
           </h1>
-          <p className="text-white/70 text-base sm:text-lg max-w-2xl mx-auto">
+          <p className="text-white text-base sm:text-lg max-w-2xl mx-auto">
             Sine, square, triangle waves and RMS values - understanding peaks, effective values and
             measurement techniques
           </p>
@@ -199,7 +199,7 @@ const Module2Section4_3 = () => {
         {/* Summary Box */}
         <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
           <h2 className="text-white font-semibold mb-3">In 30 Seconds</h2>
-          <div className="grid md:grid-cols-2 gap-4 text-sm text-white/80">
+          <div className="grid md:grid-cols-2 gap-4 text-sm text-white">
             <ul className="list-disc pl-6 space-y-1">
               <li>
                 <strong>AC waveforms:</strong> Sine (most common), square, triangle from
@@ -236,8 +236,8 @@ const Module2Section4_3 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">01</span>
             Learning Outcomes
           </h2>
-          <p className="text-white/70 mb-4">By the end of this section, you'll be able to:</p>
-          <ul className="space-y-3 text-white/80">
+          <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
+          <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Recognise common AC waveforms: sine, square, and triangle waves</span>
@@ -271,7 +271,7 @@ const Module2Section4_3 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">02</span>
             Waveform Types and Basic Properties
           </h2>
-          <div className="space-y-6 text-white/80">
+          <div className="space-y-6 text-white">
             <p>
               AC waveforms come in various shapes, each with distinct characteristics affecting
               power, measurement, and equipment performance.
@@ -404,7 +404,7 @@ const Module2Section4_3 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">03</span>
             RMS Values and Power Relationships
           </h2>
-          <div className="space-y-6 text-white/80">
+          <div className="space-y-6 text-white">
             <p>
               RMS (Root Mean Square) represents the effective value - the DC equivalent that
               produces the same heating effect in a resistor.
@@ -509,7 +509,7 @@ const Module2Section4_3 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">04</span>
             Measurement Techniques and Instrument Selection
           </h2>
-          <div className="space-y-6 text-white/80">
+          <div className="space-y-6 text-white">
             <p>
               Accurate measurement requires the right instrument for the waveform type. Wrong meter
               choice can give dangerously misleading readings.
@@ -606,7 +606,7 @@ const Module2Section4_3 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">05</span>
             Practical Applications and Safety Considerations
           </h2>
-          <div className="space-y-6 text-white/80">
+          <div className="space-y-6 text-white">
             <p>
               Understanding waveforms and RMS values is essential for safe installation, accurate
               troubleshooting, and proper equipment selection.
@@ -712,7 +712,7 @@ const Module2Section4_3 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">06</span>
             Waveform Examples
           </h2>
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <img
               src="/lovable-uploads/cacf4155-ab2f-4eb1-a676-3048dc3a24aa.png"
               alt="Simple diagram showing Direct Current (flat line) and Alternating Current (sine wave) against time"
@@ -733,7 +733,7 @@ const Module2Section4_3 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">07</span>
             Real-world Examples
           </h2>
-          <div className="space-y-6 text-white/80">
+          <div className="space-y-6 text-white">
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
               <h3 className="text-elec-yellow font-semibold mb-2">LED Driver Troubleshooting</h3>
               <p className="text-sm">
@@ -788,7 +788,7 @@ const Module2Section4_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 last:border-b-0 pb-4 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -800,7 +800,7 @@ const Module2Section4_3 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">09</span>
             RMS & Waveforms - Pocket Guide
           </h2>
-          <div className="grid md:grid-cols-2 gap-4 text-xs sm:text-sm text-white/80">
+          <div className="grid md:grid-cols-2 gap-4 text-xs sm:text-sm text-white">
             <div className="space-y-2">
               <h3 className="font-semibold text-white">Quick Conversions (Sine Wave Only)</h3>
               <ul className="list-disc pl-6 space-y-1">
@@ -832,7 +832,7 @@ const Module2Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level2/module2/section4/4-2">

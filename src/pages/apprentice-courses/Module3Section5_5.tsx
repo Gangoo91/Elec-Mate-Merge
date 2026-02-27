@@ -770,7 +770,7 @@ export default function Module3Section5_5() {
             Summary
           </h2>
           <div className="rounded-lg p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
-            <p className="text-white/90">
+            <p className="text-white">
               Bathrooms and outdoor locations present elevated electrical risks requiring specific
               protective measures. Understanding BS 7671 zoning systems, selecting appropriate
               IP-rated equipment, implementing RCD protection, and ensuring proper equipotential

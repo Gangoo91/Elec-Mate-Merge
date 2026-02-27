@@ -189,7 +189,7 @@ const Module3Section2_1: React.FC = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -211,7 +211,7 @@ const Module3Section2_1: React.FC = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Purpose of Containment in Electrical Installations
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding the role of containment in protection, organisation, compliance and
             maintenance
           </p>
@@ -280,28 +280,28 @@ const Module3Section2_1: React.FC = () => {
             <div className="grid sm:grid-cols-2 gap-3 my-6">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white text-sm mb-1">a) Mechanical protection</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Shields against knocks, crushing and abrasion</li>
                   <li>Essential near vehicles, machinery or public access</li>
                 </ul>
               </div>
               <div className="p-3 rounded bg-green-500/10 border border-green-400/20">
                 <p className="font-medium text-white text-sm mb-1">b) Environmental protection</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Protects from moisture, dust, heat and UV</li>
                   <li>Prevents premature sheath degradation</li>
                 </ul>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white text-sm mb-1">c) Organisation and routing</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Neat runs, easy tracing and safe segregation</li>
                   <li>Separates power, data and control to limit EMI</li>
                 </ul>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white text-sm mb-1">d) Safety compliance</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Meets BS 7671 protection against external influences</li>
                   <li>Supports fire safety via secure fixings to prevent collapse</li>
                 </ul>
@@ -312,7 +312,7 @@ const Module3Section2_1: React.FC = () => {
               <p className="font-medium text-white text-sm mb-1">
                 e) Maintenance and future-proofing
               </p>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>Easier additions, removals and replacements</li>
                 <li>Clear circuit identification during inspection</li>
               </ul>
@@ -340,7 +340,7 @@ const Module3Section2_1: React.FC = () => {
                   <Building className="w-4 h-4 text-elec-yellow" />
                   <span className="font-medium text-elec-yellow text-sm">Public spaces</span>
                 </div>
-                <p className="text-xs text-white/80">Prevents tampering or accidental damage</p>
+                <p className="text-xs text-white">Prevents tampering or accidental damage</p>
               </div>
               <div className="p-3 rounded bg-green-500/10 border border-green-400/20">
                 <div className="flex items-center gap-2 mb-2">
@@ -349,21 +349,21 @@ const Module3Section2_1: React.FC = () => {
                     Industrial environments
                   </span>
                 </div>
-                <p className="text-xs text-white/80">Protection against mechanical hazards</p>
+                <p className="text-xs text-white">Protection against mechanical hazards</p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <div className="flex items-center gap-2 mb-2">
                   <Home className="w-4 h-4 text-elec-yellow" />
                   <span className="font-medium text-elec-yellow text-sm">Outdoor runs</span>
                 </div>
-                <p className="text-xs text-white/80">Protection from weather and UV light</p>
+                <p className="text-xs text-white">Protection from weather and UV light</p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <div className="flex items-center gap-2 mb-2">
                   <Zap className="w-4 h-4 text-elec-yellow" />
                   <span className="font-medium text-elec-yellow text-sm">Power and data</span>
                 </div>
-                <p className="text-xs text-white/80">
+                <p className="text-xs text-white">
                   Segregation to reduce electromagnetic interference
                 </p>
               </div>
@@ -384,7 +384,7 @@ const Module3Section2_1: React.FC = () => {
               <p className="font-medium text-elec-yellow text-sm mb-2">
                 Poor segregation of power and data cables
               </p>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>Running power and data cables in the same containment without barriers</li>
                 <li>Causes electromagnetic interference affecting data transmission</li>
                 <li>
@@ -398,7 +398,7 @@ const Module3Section2_1: React.FC = () => {
               <p className="font-medium text-amber-300 text-sm mb-2">
                 Insufficient support and fixings
               </p>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>Containment sagging due to inadequate support spacing</li>
                 <li>Risk of premature collapse during fire conditions</li>
                 <li>
@@ -412,7 +412,7 @@ const Module3Section2_1: React.FC = () => {
               <p className="font-medium text-elec-yellow text-sm mb-2">
                 Overfilling containment systems
               </p>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>Exceeding 45% fill factor causing overheating and difficult cable pulling</li>
                 <li>Poor heat dissipation leading to cable derating</li>
                 <li>
@@ -426,7 +426,7 @@ const Module3Section2_1: React.FC = () => {
               <p className="font-medium text-elec-yellow text-sm mb-2">
                 Wrong material selection for environment
               </p>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>Using standard PVC outdoors without UV stabilisation</li>
                 <li>Non-weatherproof fittings in wet locations</li>
                 <li>
@@ -507,12 +507,12 @@ const Module3Section2_1: React.FC = () => {
               <Factory className="w-6 h-6 text-elec-yellow mt-1 flex-shrink-0" />
               <div>
                 <p className="font-medium text-white mb-2">The Problem</p>
-                <p className="text-sm text-white/90 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   A food processing warehouse had power and lighting circuits surface-clipped along
                   walls at 2.5m height. Frequent forklift movements caused repeated cable damage,
                   leading to:
                 </p>
-                <ul className="list-disc pl-4 mt-2 text-sm text-white/80 space-y-1">
+                <ul className="list-disc pl-4 mt-2 text-sm text-white space-y-1">
                   <li>Three RCBO trips per month due to insulation damage</li>
                   <li>Production downtime averaging 4 hours per incident</li>
                   <li>15,000 annual loss in productivity and repairs</li>
@@ -524,7 +524,7 @@ const Module3Section2_1: React.FC = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-3 rounded bg-green-500/10 border border-green-400/20">
                 <p className="font-medium text-green-300 text-sm mb-2">Solution Implemented</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Steel trunking installed at 4.5m height</li>
                   <li>Segregated compartments for power and data</li>
                   <li>IP54 rating for washdown resistance</li>
@@ -551,7 +551,7 @@ const Module3Section2_1: React.FC = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -581,7 +581,7 @@ const Module3Section2_1: React.FC = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">

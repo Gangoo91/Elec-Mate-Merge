@@ -16,7 +16,7 @@ const ZsTestCircuitDiagram = () => (
           <div className="border-2 border-yellow-400 p-3 rounded">
             <div className="text-yellow-400 text-xs font-bold">SUPPLY</div>
             <div className="text-yellow-400 text-xs">TRANSFORMER</div>
-            <div className="text-xs text-white/80 mt-1">Ze</div>
+            <div className="text-xs text-white mt-1">Ze</div>
           </div>
         </div>
 
@@ -25,7 +25,7 @@ const ZsTestCircuitDiagram = () => (
           <div className="border border-red-400 p-2 rounded">
             <div className="text-red-400 text-xs">PHASE</div>
             <div className="text-red-400 text-xs">CONDUCTOR</div>
-            <div className="text-xs text-white/80 mt-1">R1</div>
+            <div className="text-xs text-white mt-1">R1</div>
           </div>
         </div>
 
@@ -34,7 +34,7 @@ const ZsTestCircuitDiagram = () => (
           <div className="border-2 border-green-400 p-3 rounded">
             <div className="text-green-400 text-xs font-bold">LOAD</div>
             <div className="text-green-400 text-xs">(FAULT)</div>
-            <div className="text-xs text-white/80 mt-1">Test Point</div>
+            <div className="text-xs text-white mt-1">Test Point</div>
           </div>
         </div>
 
@@ -43,7 +43,7 @@ const ZsTestCircuitDiagram = () => (
           <div className="border border-blue-400 p-2 rounded">
             <div className="text-blue-400 text-xs">CPC</div>
             <div className="text-blue-400 text-xs">CONDUCTOR</div>
-            <div className="text-xs text-white/80 mt-1">R2</div>
+            <div className="text-xs text-white mt-1">R2</div>
           </div>
         </div>
 
@@ -52,14 +52,14 @@ const ZsTestCircuitDiagram = () => (
           <div className="border-2 border-orange-400 p-3 rounded">
             <div className="text-orange-400 text-xs font-bold">EARTH</div>
             <div className="text-orange-400 text-xs">ELECTRODE</div>
-            <div className="text-xs text-white/80 mt-1">Return Path</div>
+            <div className="text-xs text-white mt-1">Return Path</div>
           </div>
         </div>
       </div>
 
       {/* Connection lines */}
       <div className="flex justify-center items-center mb-6">
-        <div className="flex items-center gap-2 text-xs text-white/80">
+        <div className="flex items-center gap-2 text-xs text-white">
           <span>→</span>
           <span className="text-red-400">Phase Current</span>
           <span>→</span>
@@ -77,8 +77,8 @@ const ZsTestCircuitDiagram = () => (
             <Zap className="h-4 w-4" />
             ZS TESTER
           </div>
-          <div className="text-xs text-white/80 mt-1">Phase to Earth</div>
-          <div className="text-xs text-white/80">15-25A Test Current</div>
+          <div className="text-xs text-white mt-1">Phase to Earth</div>
+          <div className="text-xs text-white">15-25A Test Current</div>
         </div>
       </div>
 
@@ -86,7 +86,7 @@ const ZsTestCircuitDiagram = () => (
       <div className="bg-red-500/10 border border-red-500/20 rounded p-3 text-center">
         <div className="text-red-400 font-bold text-sm mb-2">Complete Formula</div>
         <div className="text-foreground text-sm">Zs = Ze + (R1 + R2)</div>
-        <div className="text-xs text-white/80 mt-2">
+        <div className="text-xs text-white mt-2">
           Where: Ze = External impedance, R1 = Phase conductor, R2 = CPC conductor
         </div>
       </div>

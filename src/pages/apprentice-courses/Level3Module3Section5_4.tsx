@@ -259,7 +259,7 @@ const Level3Module3Section5_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section5">
@@ -331,7 +331,7 @@ const Level3Module3Section5_4 = () => {
                   <p className="text-sm font-medium text-green-400">
                     True Power (P) - measured in kW
                   </p>
-                  <p className="text-xs text-white/80 mt-1">
+                  <p className="text-xs text-white mt-1">
                     The actual power doing useful work - powering motors, creating heat, producing
                     light. This is what you pay for in kWh on domestic bills.
                   </p>
@@ -340,7 +340,7 @@ const Level3Module3Section5_4 = () => {
                   <p className="text-sm font-medium text-blue-400">
                     Reactive Power (Q) - measured in kVAr
                   </p>
-                  <p className="text-xs text-white/80 mt-1">
+                  <p className="text-xs text-white mt-1">
                     Power flowing back and forth between source and reactive components (inductors,
                     capacitors). Does no useful work but must be supplied by the source.
                   </p>
@@ -349,7 +349,7 @@ const Level3Module3Section5_4 = () => {
                   <p className="text-sm font-medium text-yellow-400">
                     Apparent Power (S) - measured in kVA
                   </p>
-                  <p className="text-xs text-white/80 mt-1">
+                  <p className="text-xs text-white mt-1">
                     The vector sum of true and reactive power. This is what the supply system must
                     provide - it determines cable sizes, transformer ratings, and infrastructure
                     requirements.
@@ -367,7 +367,7 @@ const Level3Module3Section5_4 = () => {
                 <p className="text-sm text-white font-mono text-center mb-2">
                   kVA squared = kW squared + kVAr squared
                 </p>
-                <p className="text-xs text-white/70 text-center mt-2">
+                <p className="text-xs text-white text-center mt-2">
                   The apparent power is the hypotenuse of a right triangle with true power and
                   reactive power as the other sides.
                 </p>
@@ -431,15 +431,15 @@ const Level3Module3Section5_4 = () => {
               <p className="text-sm font-medium text-red-400 mb-2">
                 Worked Example: Current Increase Due to Poor Power Factor
               </p>
-              <p className="text-xs text-white/90 mb-2">A 4 kW motor on 230V supply:</p>
-              <div className="text-xs text-white/80 space-y-1 font-mono">
+              <p className="text-xs text-white mb-2">A 4 kW motor on 230V supply:</p>
+              <div className="text-xs text-white space-y-1 font-mono">
                 <p>At unity PF (1.0): I = 4000 / (230 x 1.0) = 17.4 A</p>
                 <p>At PF of 0.4: I = 4000 / (230 x 0.4) = 43.5 A</p>
                 <p className="text-red-400 mt-2">Poor power factor increases current by 250%!</p>
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Economic Impact:</strong> Distribution network operators charge industrial
               customers based on kVA demand rather than kW, or apply reactive power charges. Poor
               power factor directly increases electricity costs and may require investment in larger
@@ -470,21 +470,21 @@ const Level3Module3Section5_4 = () => {
               <div className="space-y-3">
                 <div className="p-3 rounded-lg bg-transparent border border-white/10">
                   <p className="text-sm font-medium text-white">Individual Correction</p>
-                  <p className="text-xs text-white/70 mt-1">
+                  <p className="text-xs text-white mt-1">
                     Capacitors installed at each piece of equipment (e.g., motor terminals). Best
                     correction but most expensive. Reduces losses in all downstream cables.
                   </p>
                 </div>
                 <div className="p-3 rounded-lg bg-transparent border border-white/10">
                   <p className="text-sm font-medium text-white">Group Correction</p>
-                  <p className="text-xs text-white/70 mt-1">
+                  <p className="text-xs text-white mt-1">
                     Capacitors at distribution boards serving groups of loads. Moderate cost and
                     effectiveness. Common in commercial installations.
                   </p>
                 </div>
                 <div className="p-3 rounded-lg bg-transparent border border-white/10">
                   <p className="text-sm font-medium text-white">Bulk Correction</p>
-                  <p className="text-xs text-white/70 mt-1">
+                  <p className="text-xs text-white mt-1">
                     Capacitor bank at main intake. Lowest cost but only reduces reactive power from
                     the supply perspective - internal losses unchanged.
                   </p>
@@ -493,7 +493,7 @@ const Level3Module3Section5_4 = () => {
                   <p className="text-sm font-medium text-white">
                     Automatic Power Factor Correction (APFC)
                   </p>
-                  <p className="text-xs text-white/70 mt-1">
+                  <p className="text-xs text-white mt-1">
                     Controller monitors power factor and switches capacitor banks (typically 50 kVAr
                     steps) in and out automatically. Maintains optimal correction as load varies.
                   </p>
@@ -505,7 +505,7 @@ const Level3Module3Section5_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Fluorescent Luminaire Correction
               </p>
-              <p className="text-xs text-white/90">
+              <p className="text-xs text-white">
                 Fluorescent luminaires typically include a capacitor connected between line and
                 neutral for power factor correction. The inductive choke/ballast causes lagging
                 power factor; the parallel capacitor corrects this. Without the capacitor, the
@@ -544,11 +544,11 @@ const Level3Module3Section5_4 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Worked Example: Capacitor Sizing
               </p>
-              <p className="text-xs text-white/90 mb-2">
+              <p className="text-xs text-white mb-2">
                 A 230V, 4kW motor has power factor 0.4. Calculate the capacitor needed to improve PF
                 to 0.85.
               </p>
-              <div className="text-xs text-white/80 space-y-2 font-mono">
+              <div className="text-xs text-white space-y-2 font-mono">
                 <p>
                   <strong>Step 1:</strong> Find original apparent power and reactive power
                 </p>
@@ -586,19 +586,19 @@ const Level3Module3Section5_4 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">50 kVAr</p>
-                <p className="text-white/90 text-xs">Typical bank step</p>
+                <p className="text-white text-xs">Typical bank step</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">0.95</p>
-                <p className="text-white/90 text-xs">Target PF</p>
+                <p className="text-white text-xs">Target PF</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">440V</p>
-                <p className="text-white/90 text-xs">Common 3-phase rating</p>
+                <p className="text-white text-xs">Common 3-phase rating</p>
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Practical Note:</strong> In practice, capacitors are selected from standard
               kVAr ratings. For three-phase correction, the total kVAr is divided across the phases.
               Always verify that correction capacitors are rated for the system voltage and
@@ -673,7 +673,7 @@ const Level3Module3Section5_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -718,7 +718,7 @@ const Level3Module3Section5_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section5-3">

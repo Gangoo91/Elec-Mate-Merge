@@ -65,7 +65,7 @@ export default function StudyCentreIndex() {
         <Link to="/dashboard">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
+            className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
           >
             <ArrowLeft className="mr-2 h-5 w-5" />
             Back to Dashboard
@@ -110,7 +110,7 @@ export default function StudyCentreIndex() {
                 Study Centre
               </span>
             </h1>
-            <p className="text-sm text-white/50 max-w-[280px] mx-auto">
+            <p className="text-sm text-white max-w-[280px] mx-auto">
               Master electrical knowledge with industry-leading courses
             </p>
           </motion.div>
@@ -161,7 +161,7 @@ export default function StudyCentreIndex() {
                     <stat.icon className="h-3.5 w-3.5 text-white" />
                   </div>
                   <span className="text-lg font-bold text-white">{stat.value}</span>
-                  <span className="text-[10px] text-white/70 uppercase tracking-wider font-medium">
+                  <span className="text-[10px] text-white uppercase tracking-wider font-medium">
                     {stat.label}
                   </span>
                 </div>
@@ -201,7 +201,7 @@ export default function StudyCentreIndex() {
                 <GraduationCap className="h-6 w-6 text-blue-400" />
               </div>
               <div className="flex items-center gap-2">
-                <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-white/10 text-white/80 border border-white/10 backdrop-blur-sm">
+                <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-white/10 text-white border border-white/10 backdrop-blur-sm">
                   8 Courses
                 </span>
               </div>
@@ -211,7 +211,7 @@ export default function StudyCentreIndex() {
             <h3 className="text-xl font-bold text-white mb-1.5 group-hover:text-blue-100 transition-colors">
               Apprentice Training
             </h3>
-            <p className="text-sm text-white/50 mb-4 leading-relaxed">
+            <p className="text-sm text-white mb-4 leading-relaxed">
               Level 2 & 3 qualifications, AM2 preparation, and essential fundamentals
             </p>
 
@@ -253,10 +253,10 @@ export default function StudyCentreIndex() {
                 <div className="p-1.5 rounded-lg bg-blue-500/20">
                   <Play className="h-3.5 w-3.5 text-blue-400 fill-blue-400" />
                 </div>
-                <span className="text-sm font-semibold text-white/80">Start Learning</span>
+                <span className="text-sm font-semibold text-white">Start Learning</span>
               </div>
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-white/10 flex items-center justify-center group-hover:from-blue-500 group-hover:to-purple-500 group-hover:border-transparent group-hover:scale-110 transition-all duration-300 shadow-lg shadow-black/20">
-                <ChevronRight className="h-5 w-5 text-white/60 group-hover:text-white transition-colors" />
+                <ChevronRight className="h-5 w-5 text-white group-hover:text-white transition-colors" />
               </div>
             </div>
           </div>
@@ -304,7 +304,7 @@ export default function StudyCentreIndex() {
             <h3 className="text-xl font-bold text-white mb-1.5 group-hover:text-elec-yellow/90 transition-colors">
               Professional Upskilling
             </h3>
-            <p className="text-sm text-white/50 mb-4 leading-relaxed">
+            <p className="text-sm text-white mb-4 leading-relaxed">
               BS7671, EV charging, solar PV, smart home technology, and specialist courses
             </p>
 
@@ -347,7 +347,7 @@ export default function StudyCentreIndex() {
                 <div className="p-1.5 rounded-lg bg-elec-yellow/20">
                   <Play className="h-3.5 w-3.5 text-elec-yellow fill-elec-yellow" />
                 </div>
-                <span className="text-sm font-semibold text-white/80">Start Learning</span>
+                <span className="text-sm font-semibold text-white">Start Learning</span>
               </div>
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-elec-yellow/20 to-amber-500/20 border border-elec-yellow/20 flex items-center justify-center group-hover:from-elec-yellow group-hover:to-amber-500 group-hover:border-transparent group-hover:scale-110 transition-all duration-300 shadow-lg shadow-black/20">
                 <ChevronRight className="h-5 w-5 text-elec-yellow/60 group-hover:text-elec-dark transition-colors" />
@@ -394,7 +394,7 @@ export default function StudyCentreIndex() {
             <h3 className="text-xl font-bold text-white mb-1.5 group-hover:text-emerald-300 transition-colors">
               General Upskilling
             </h3>
-            <p className="text-sm text-white/50 mb-4 leading-relaxed">
+            <p className="text-sm text-white mb-4 leading-relaxed">
               Cross-industry safety training — IPAF, first aid, working at height, and essential
               site skills
             </p>
@@ -438,7 +438,7 @@ export default function StudyCentreIndex() {
                 <div className="p-1.5 rounded-lg bg-emerald-500/20">
                   <Play className="h-3.5 w-3.5 text-emerald-400 fill-emerald-400" />
                 </div>
-                <span className="text-sm font-semibold text-white/80">Start Learning</span>
+                <span className="text-sm font-semibold text-white">Start Learning</span>
               </div>
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500/20 to-green-500/20 border border-emerald-500/20 flex items-center justify-center group-hover:from-emerald-500 group-hover:to-green-500 group-hover:border-transparent group-hover:scale-110 transition-all duration-300 shadow-lg shadow-black/20">
                 <ChevronRight className="h-5 w-5 text-emerald-400/60 group-hover:text-white transition-colors" />
@@ -528,7 +528,7 @@ export default function StudyCentreIndex() {
                 <div className="p-1.5 rounded-lg bg-rose-500/20">
                   <Play className="h-3.5 w-3.5 text-rose-400 fill-rose-400" />
                 </div>
-                <span className="text-sm font-semibold text-white/80">Start Learning</span>
+                <span className="text-sm font-semibold text-white">Start Learning</span>
               </div>
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-rose-500/20 to-pink-500/20 border border-rose-500/20 flex items-center justify-center group-hover:from-rose-500 group-hover:to-pink-500 group-hover:border-transparent group-hover:scale-110 transition-all duration-300 shadow-lg shadow-black/20">
                 <ChevronRight className="h-5 w-5 text-rose-400/60 group-hover:text-white transition-colors" />
@@ -559,7 +559,7 @@ export default function StudyCentreIndex() {
                   <p className="text-base font-bold text-white">{currentStreak} Day Streak!</p>
                   <Sparkles className="h-4 w-4 text-elec-yellow animate-pulse" />
                 </div>
-                <p className="text-xs text-white/50">Keep learning daily to maintain your streak</p>
+                <p className="text-xs text-white">Keep learning daily to maintain your streak</p>
               </div>
             </div>
           </div>
@@ -575,12 +575,12 @@ export default function StudyCentreIndex() {
       >
         <div className="flex items-center gap-2 mb-3">
           <Sparkles className="h-4 w-4 text-elec-yellow" />
-          <span className="text-xs font-semibold text-white/60 uppercase tracking-wider">
+          <span className="text-xs font-semibold text-white uppercase tracking-wider">
             Quick Tip
           </span>
         </div>
         <div className="p-3 rounded-xl bg-white/5 border border-white/10">
-          <p className="text-xs text-white/50 leading-relaxed">
+          <p className="text-xs text-white leading-relaxed">
             Complete at least one quiz daily to build your streak and reinforce your learning.
             Consistency beats intensity!
           </p>

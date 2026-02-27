@@ -185,7 +185,7 @@ const Module2Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -207,7 +207,7 @@ const Module2Section3_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Series Circuits - Current and Voltage
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Master current flow and voltage division in series electrical circuits
           </p>
         </header>
@@ -329,7 +329,7 @@ const Module2Section3_2 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Voltage divider rule:</p>
               <p className="text-elec-yellow font-mono text-sm">Vx = Vsupply × Rx / Rtotal</p>
-              <p className="text-white/70 text-sm mt-1">Where Vx is voltage across component x</p>
+              <p className="text-white text-sm mt-1">Where Vx is voltage across component x</p>
             </div>
 
             <p className="text-sm text-elec-yellow/70">
@@ -378,7 +378,7 @@ const Module2Section3_2 = () => {
                   <p className="font-medium text-white mb-1">
                     Example 1: Three Resistor Series Circuit
                   </p>
-                  <p className="text-white/70 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     Given: 12V supply, R₁ = 100Ω, R₂ = 200Ω, R₃ = 300Ω
                   </p>
                   <ul className="text-sm text-white space-y-0.5">
@@ -393,7 +393,7 @@ const Module2Section3_2 = () => {
 
                 <div className="p-4 rounded-lg bg-white/5">
                   <p className="font-medium text-white mb-1">Example 2: LED String Calculation</p>
-                  <p className="text-white/70 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     Given: 24V supply, 8 identical LEDs each needing 2.5V, 20mA
                   </p>
                   <ul className="text-sm text-white space-y-0.5">
@@ -568,7 +568,7 @@ const Module2Section3_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -618,7 +618,7 @@ const Module2Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level2/module2/section3/3-1">

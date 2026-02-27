@@ -66,7 +66,7 @@ export function AchievementUnlockedToast({
                   </span>
                 </div>
                 <h4 className="text-white font-semibold text-base truncate">{achievement.title}</h4>
-                <p className="text-white/60 text-sm mt-0.5">{achievement.description}</p>
+                <p className="text-white text-sm mt-0.5">{achievement.description}</p>
                 <div className="flex items-center gap-2 mt-2">
                   <span
                     className={`text-xs font-medium px-2 py-0.5 rounded-full ${rarityBg} ${rarityColour} capitalize`}
@@ -87,7 +87,7 @@ export function AchievementUnlockedToast({
                 }}
                 className="p-1 rounded-lg hover:bg-white/10 touch-manipulation"
               >
-                <X className="h-4 w-4 text-white/40" />
+                <X className="h-4 w-4 text-white" />
               </button>
             </div>
           </div>

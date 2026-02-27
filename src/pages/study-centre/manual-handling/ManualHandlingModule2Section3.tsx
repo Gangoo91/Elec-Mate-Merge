@@ -221,7 +221,7 @@ export default function ManualHandlingModule2Section3() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Team Handling &amp; Communication
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto leading-relaxed">
+          <p className="text-white max-w-xl mx-auto leading-relaxed">
             When team lifts are needed, planning and briefing, verbal commands, maximum team sizes,
             height and strength differences, and carrying long loads
           </p>
@@ -371,7 +371,7 @@ export default function ManualHandlingModule2Section3() {
                   <UserCheck className="h-4 w-4 inline-block mr-2 -mt-0.5" />
                   Indicators That You Need a Team Lift
                 </h3>
-                <ul className="text-white/80 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span className="leading-relaxed">
@@ -416,7 +416,7 @@ export default function ManualHandlingModule2Section3() {
                     Team Lifting Is Not a Substitute for Mechanical Aids
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   The hierarchy of control for manual handling is: (1) eliminate the need to handle
                   the load, (2) use mechanical aids, (3) reduce the risk through better technique,
                   lighter loads, or team handling. Team lifting should not be the default solution
@@ -450,7 +450,7 @@ export default function ManualHandlingModule2Section3() {
                   <MessageSquare className="h-4 w-4 inline-block mr-2 -mt-0.5" />
                   The Pre-Lift Briefing
                 </h3>
-                <p className="text-white/80 text-sm mb-3 leading-relaxed">
+                <p className="text-white text-sm mb-3 leading-relaxed">
                   The team leader should cover the following points with the team before every lift:
                 </p>
                 <div className="space-y-3">
@@ -461,7 +461,7 @@ export default function ManualHandlingModule2Section3() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-emerald-300 font-medium mb-1">The Load</h4>
-                        <p className="text-white/80 text-sm leading-relaxed">
+                        <p className="text-white text-sm leading-relaxed">
                           What are we lifting? How heavy is it (estimated or known)? Is it stable or
                           does it have shifting contents? Are there sharp edges, hot surfaces, or
                           other hazards?
@@ -476,7 +476,7 @@ export default function ManualHandlingModule2Section3() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-emerald-300 font-medium mb-1">Grip Positions</h4>
-                        <p className="text-white/80 text-sm leading-relaxed">
+                        <p className="text-white text-sm leading-relaxed">
                           Where will each person grip the load? Grip positions should be evenly
                           spaced and balanced. Avoid having all hands on one side. Agree on handle
                           usage if the load has handles.
@@ -493,7 +493,7 @@ export default function ManualHandlingModule2Section3() {
                         <h4 className="text-emerald-300 font-medium mb-1">
                           Route &amp; Destination
                         </h4>
-                        <p className="text-white/80 text-sm leading-relaxed">
+                        <p className="text-white text-sm leading-relaxed">
                           Where are we taking it? What obstacles are on the route (doorways, stairs,
                           other workers, uneven ground)? Where exactly will we set it down?
                         </p>
@@ -507,7 +507,7 @@ export default function ManualHandlingModule2Section3() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-emerald-300 font-medium mb-1">Commands</h4>
-                        <p className="text-white/80 text-sm leading-relaxed">
+                        <p className="text-white text-sm leading-relaxed">
                           We will use &ldquo;Ready, steady, lift&rdquo; to start. To stop or lower,
                           anyone can call &ldquo;Stop&rdquo; or &ldquo;Down&rdquo;. Everyone must
                           respond to these commands immediately.
@@ -522,7 +522,7 @@ export default function ManualHandlingModule2Section3() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-emerald-300 font-medium mb-1">Practice Run</h4>
-                        <p className="text-white/80 text-sm leading-relaxed">
+                        <p className="text-white text-sm leading-relaxed">
                           For heavy or complex lifts, do a dry run: take grip positions, rehearse
                           the commands, tilt the load slightly to test the weight, and walk the
                           route. Fix any problems before the actual lift.
@@ -565,7 +565,7 @@ export default function ManualHandlingModule2Section3() {
                       <MessageSquare className="h-4 w-4 text-emerald-300" />
                       <span className="text-emerald-300 font-semibold text-sm">Phase 1: Brief</span>
                     </div>
-                    <p className="text-white/70 text-xs leading-relaxed">
+                    <p className="text-white text-xs leading-relaxed">
                       Leader explains load, plan, route, grip positions, and commands
                     </p>
                   </div>
@@ -579,7 +579,7 @@ export default function ManualHandlingModule2Section3() {
                         Phase 2: Position
                       </span>
                     </div>
-                    <p className="text-white/70 text-xs leading-relaxed">
+                    <p className="text-white text-xs leading-relaxed">
                       Team takes grip positions. Leader checks everyone is ready.
                     </p>
                   </div>
@@ -593,7 +593,7 @@ export default function ManualHandlingModule2Section3() {
                         &ldquo;READY&rdquo;
                       </span>
                     </div>
-                    <p className="text-white/70 text-xs leading-relaxed">
+                    <p className="text-white text-xs leading-relaxed">
                       Leader calls &ldquo;Ready&rdquo; &mdash; team confirms grip and stance
                     </p>
                   </div>
@@ -607,7 +607,7 @@ export default function ManualHandlingModule2Section3() {
                         &ldquo;STEADY&rdquo;
                       </span>
                     </div>
-                    <p className="text-white/70 text-xs leading-relaxed">
+                    <p className="text-white text-xs leading-relaxed">
                       Team prepares to apply force &mdash; brace your legs
                     </p>
                   </div>
@@ -619,7 +619,7 @@ export default function ManualHandlingModule2Section3() {
                       <Megaphone className="h-4 w-4 text-emerald-300" />
                       <span className="text-emerald-300 font-bold text-sm">&ldquo;LIFT&rdquo;</span>
                     </div>
-                    <p className="text-white/70 text-xs leading-relaxed">
+                    <p className="text-white text-xs leading-relaxed">
                       Everyone lifts simultaneously using their legs
                     </p>
                   </div>
@@ -633,7 +633,7 @@ export default function ManualHandlingModule2Section3() {
                         Move &amp; Lower
                       </span>
                     </div>
-                    <p className="text-white/70 text-xs leading-relaxed">
+                    <p className="text-white text-xs leading-relaxed">
                       Leader guides route. To lower: &ldquo;Ready, steady, down.&rdquo;
                     </p>
                   </div>
@@ -645,12 +645,12 @@ export default function ManualHandlingModule2Section3() {
                         Emergency: &ldquo;STOP&rdquo; / &ldquo;DOWN&rdquo;
                       </span>
                     </div>
-                    <p className="text-white/70 text-xs leading-relaxed">
+                    <p className="text-white text-xs leading-relaxed">
                       Any team member can call stop. Controlled lowering immediately.
                     </p>
                   </div>
                 </div>
-                <p className="text-white/50 text-xs text-center mt-4 italic">
+                <p className="text-white text-xs text-center mt-4 italic">
                   The three-part command sequence ensures the whole team acts simultaneously. Never
                   release a load without warning.
                 </p>
@@ -660,7 +660,7 @@ export default function ManualHandlingModule2Section3() {
                 <h3 className="text-emerald-400 font-medium mb-2">
                   Why &ldquo;Ready, Steady, Lift&rdquo;?
                 </h3>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   The three-part command sequence is deliberately designed to give the team time to
                   prepare. &ldquo;Ready&rdquo; tells everyone the lift is about to happen and to
                   finalise their grip. &ldquo;Steady&rdquo; signals that the command to lift is
@@ -677,7 +677,7 @@ export default function ManualHandlingModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Never Release Without Warning</h3>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   If you need to stop or let go during a team lift, you{' '}
                   <strong className="text-white">must</strong> warn the rest of the team first by
                   calling &ldquo;Stop&rdquo; or &ldquo;Down&rdquo;. Releasing a shared load without
@@ -716,27 +716,27 @@ export default function ManualHandlingModule2Section3() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="bg-emerald-500/10 border border-emerald-400/30 rounded-lg p-3 text-center">
                     <p className="text-emerald-400 font-bold text-2xl">2 people</p>
-                    <p className="text-white/60 text-sm mt-1">~1.6&times; individual capacity</p>
-                    <p className="text-white/40 text-xs mt-1">(~1/3 coordination loss)</p>
+                    <p className="text-white text-sm mt-1">~1.6&times; individual capacity</p>
+                    <p className="text-white text-xs mt-1">(~1/3 coordination loss)</p>
                   </div>
                   <div className="bg-emerald-500/10 border border-emerald-400/30 rounded-lg p-3 text-center">
                     <p className="text-emerald-400 font-bold text-2xl">3 people</p>
-                    <p className="text-white/60 text-sm mt-1">~2.2&times; individual capacity</p>
-                    <p className="text-white/40 text-xs mt-1">
+                    <p className="text-white text-sm mt-1">~2.2&times; individual capacity</p>
+                    <p className="text-white text-xs mt-1">
                       (increasing coordination difficulty)
                     </p>
                   </div>
                   <div className="bg-yellow-500/10 border border-yellow-400/30 rounded-lg p-3 text-center">
                     <p className="text-yellow-400 font-bold text-2xl">4 people</p>
-                    <p className="text-white/60 text-sm mt-1">~2.6&times; individual capacity</p>
-                    <p className="text-white/40 text-xs mt-1">
+                    <p className="text-white text-sm mt-1">~2.6&times; individual capacity</p>
+                    <p className="text-white text-xs mt-1">
                       (practical maximum for coordination)
                     </p>
                   </div>
                   <div className="bg-red-500/10 border border-red-400/30 rounded-lg p-3 text-center">
                     <p className="text-red-400 font-bold text-2xl">5+ people</p>
-                    <p className="text-white/60 text-sm mt-1">Use a mechanical aid instead</p>
-                    <p className="text-white/40 text-xs mt-1">
+                    <p className="text-white text-sm mt-1">Use a mechanical aid instead</p>
+                    <p className="text-white text-xs mt-1">
                       (coordination loss outweighs benefit)
                     </p>
                   </div>
@@ -845,7 +845,7 @@ export default function ManualHandlingModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Long Loads and Other Workers</h3>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   A long load carried at shoulder height or horizontally can swing and strike other
                   workers, especially when the carrier turns or changes direction. This is a common
                   cause of head and face injuries on construction sites. Always be aware of people
@@ -874,7 +874,7 @@ export default function ManualHandlingModule2Section3() {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
                   <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3">
                     <p className="text-emerald-400 font-bold text-xl sm:text-2xl">4</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Max people
                       <br />
                       for team lift
@@ -882,7 +882,7 @@ export default function ManualHandlingModule2Section3() {
                   </div>
                   <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3">
                     <p className="text-emerald-400 font-bold text-xl sm:text-2xl">&frac13;</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Coordination
                       <br />
                       loss (2 people)
@@ -890,7 +890,7 @@ export default function ManualHandlingModule2Section3() {
                   </div>
                   <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3">
                     <p className="text-emerald-400 font-bold text-xl sm:text-2xl">3</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Part command
                       <br />
                       sequence
@@ -898,7 +898,7 @@ export default function ManualHandlingModule2Section3() {
                   </div>
                   <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3">
                     <p className="text-emerald-400 font-bold text-xl sm:text-2xl">15 cm</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Max height
                       <br />
                       difference
@@ -965,7 +965,7 @@ export default function ManualHandlingModule2Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -981,7 +981,7 @@ export default function ManualHandlingModule2Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-2-section-2">

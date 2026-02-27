@@ -233,7 +233,7 @@ export default function ManualHandlingModule2Section4() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Awkward Loads &amp; Restricted Spaces
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto leading-relaxed">
+          <p className="text-white max-w-xl mx-auto leading-relaxed">
             Long loads, shifting contents, hot and sharp items, handling with PPE, restricted
             headroom, ceiling voids, and working from ladders and platforms
           </p>
@@ -456,7 +456,7 @@ export default function ManualHandlingModule2Section4() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="bg-emerald-500/5 border border-emerald-400/20 p-3 rounded-lg">
                     <h4 className="text-emerald-300 font-medium mb-2">Liquid Containers</h4>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span className="leading-relaxed">
@@ -485,7 +485,7 @@ export default function ManualHandlingModule2Section4() {
                   </div>
                   <div className="bg-emerald-500/5 border border-emerald-400/20 p-3 rounded-lg">
                     <h4 className="text-emerald-300 font-medium mb-2">Loose Items</h4>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span className="leading-relaxed">
@@ -623,7 +623,7 @@ export default function ManualHandlingModule2Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">The Reflex Release Problem</h3>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   When your hand touches something unexpectedly hot or sharp, your body&rsquo;s
                   pain-withdrawal reflex causes an instant, involuntary release of the object. You
                   cannot control this reflex &mdash; it happens before your conscious brain is aware
@@ -667,7 +667,7 @@ export default function ManualHandlingModule2Section4() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-emerald-300 font-medium mb-1">Gloves</h4>
-                        <p className="text-white/80 text-xs leading-relaxed">
+                        <p className="text-white text-xs leading-relaxed">
                           Thick gloves reduce grip sensitivity and dexterity. You need to grip
                           harder, increasing hand fatigue. Use thinner, high-grip gloves for
                           handling tasks where cut protection is not needed.
@@ -683,7 +683,7 @@ export default function ManualHandlingModule2Section4() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-emerald-300 font-medium mb-1">Hard Hat</h4>
-                        <p className="text-white/80 text-xs leading-relaxed">
+                        <p className="text-white text-xs leading-relaxed">
                           The brim limits upward vision. Difficult to see overhead placement points
                           or low beams. Pause and look up before lifting to height. Use a spotter
                           for overhead work.
@@ -699,7 +699,7 @@ export default function ManualHandlingModule2Section4() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-emerald-300 font-medium mb-1">Safety Boots</h4>
-                        <p className="text-white/80 text-xs leading-relaxed">
+                        <p className="text-white text-xs leading-relaxed">
                           Heavier and stiffer than normal footwear. Toe caps protect feet from
                           dropped loads but can restrict ankle flexibility. Choose boots that
                           balance protection with mobility.
@@ -717,7 +717,7 @@ export default function ManualHandlingModule2Section4() {
                         <h4 className="text-emerald-300 font-medium mb-1">
                           Respirators &amp; Goggles
                         </h4>
-                        <p className="text-white/80 text-xs leading-relaxed">
+                        <p className="text-white text-xs leading-relaxed">
                           Restrict breathing and vision. You fatigue faster and see less. Reduce
                           load weights, take more breaks, and use a spotter for restricted
                           visibility.
@@ -735,7 +735,7 @@ export default function ManualHandlingModule2Section4() {
                         <h4 className="text-emerald-300 font-medium mb-1">
                           Hi-Vis &amp; Harnesses
                         </h4>
-                        <p className="text-white/80 text-xs leading-relaxed">
+                        <p className="text-white text-xs leading-relaxed">
                           Bulky clothing and harnesses can catch on loads or restrict movement.
                           Ensure straps and zips are secured before handling. Check that harness
                           webbing does not obstruct your grip.
@@ -751,7 +751,7 @@ export default function ManualHandlingModule2Section4() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-emerald-300 font-medium mb-1">Ear Defenders</h4>
-                        <p className="text-white/80 text-xs leading-relaxed">
+                        <p className="text-white text-xs leading-relaxed">
                           Reduce ability to hear verbal commands during team lifts. Use visual
                           signals as well as verbal commands. Ensure the team leader is visible to
                           all members.
@@ -760,7 +760,7 @@ export default function ManualHandlingModule2Section4() {
                     </div>
                   </div>
                 </div>
-                <p className="text-white/50 text-xs text-center mt-4 italic">
+                <p className="text-white text-xs text-center mt-4 italic">
                   PPE is essential &mdash; but always account for how it affects your handling
                   capability. Adjust technique, loads, and communication accordingly.
                 </p>
@@ -849,7 +849,7 @@ export default function ManualHandlingModule2Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Kneeling and Crouching Risks</h3>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   When you kneel or crouch, your spine is in a flexed position and the large leg
                   muscles cannot contribute to lifting. Any load you handle in this posture places
                   almost all the strain on your back muscles and lumbar discs. The risk of injury is{' '}
@@ -887,7 +887,7 @@ export default function ManualHandlingModule2Section4() {
                     Why Ladders and Manual Handling Do Not Mix
                   </h3>
                 </div>
-                <ul className="text-white/80 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span className="leading-relaxed">
@@ -972,7 +972,7 @@ export default function ManualHandlingModule2Section4() {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
                   <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3">
                     <p className="text-emerald-400 font-bold text-xl sm:text-2xl">80&deg;C+</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Transformer
                       <br />
                       surface temp
@@ -980,7 +980,7 @@ export default function ManualHandlingModule2Section4() {
                   </div>
                   <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3">
                     <p className="text-emerald-400 font-bold text-xl sm:text-2xl">3</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Points of
                       <br />
                       contact (ladder)
@@ -988,7 +988,7 @@ export default function ManualHandlingModule2Section4() {
                   </div>
                   <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3">
                     <p className="text-emerald-400 font-bold text-xl sm:text-2xl">150 mm</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Min raised
                       <br />
                       floor depth
@@ -996,7 +996,7 @@ export default function ManualHandlingModule2Section4() {
                   </div>
                   <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3">
                     <p className="text-emerald-400 font-bold text-xl sm:text-2xl">6 m</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Standard
                       <br />
                       conduit length
@@ -1018,7 +1018,7 @@ export default function ManualHandlingModule2Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1034,7 +1034,7 @@ export default function ManualHandlingModule2Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-2-section-3">

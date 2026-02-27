@@ -253,7 +253,7 @@ const EnhancedInspectionSectionCard = ({
                   e.stopPropagation();
                   handleBulkAction('clear');
                 }}
-                className="h-10 px-3 bg-white/5 border-white/10 text-white/60 hover:bg-white/10 touch-manipulation whitespace-nowrap"
+                className="h-10 px-3 bg-white/5 border-white/10 text-white hover:bg-white/10 touch-manipulation whitespace-nowrap"
               >
                 <RotateCcw className="h-4 w-4 mr-1.5" />
                 Clear
@@ -268,19 +268,19 @@ const EnhancedInspectionSectionCard = ({
               <Table>
                 <TableHeader>
                   <TableRow className="hover:bg-white/5 border-white/10 bg-white/[0.02]">
-                    <TableHead className="w-14 text-center text-white/50 text-xs uppercase tracking-wider">
+                    <TableHead className="w-14 text-center text-white text-xs uppercase tracking-wider">
                       Status
                     </TableHead>
-                    <TableHead className="text-left text-white/50 text-xs uppercase tracking-wider">
+                    <TableHead className="text-left text-white text-xs uppercase tracking-wider">
                       Item & Regulation
                     </TableHead>
-                    <TableHead className="w-72 text-left text-white/50 text-xs uppercase tracking-wider">
+                    <TableHead className="w-72 text-left text-white text-xs uppercase tracking-wider">
                       Outcome
                     </TableHead>
-                    <TableHead className="text-left text-white/50 text-xs uppercase tracking-wider">
+                    <TableHead className="text-left text-white text-xs uppercase tracking-wider">
                       Notes
                     </TableHead>
-                    <TableHead className="w-24 text-center text-white/50 text-xs uppercase tracking-wider">
+                    <TableHead className="w-24 text-center text-white text-xs uppercase tracking-wider">
                       Actions
                     </TableHead>
                   </TableRow>

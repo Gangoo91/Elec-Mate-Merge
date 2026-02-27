@@ -69,7 +69,7 @@ const FunctionalSkillsModule5 = () => {
             <Button
               variant="ghost"
               size="sm"
-              className="mb-4 text-white/60 hover:text-white hover:bg-white/10 gap-2"
+              className="mb-4 text-white hover:text-white hover:bg-white/10 gap-2"
               asChild
             >
               <Link to="/study-centre/apprentice/functional-skills">
@@ -97,7 +97,7 @@ const FunctionalSkillsModule5 = () => {
                 Assessment Preparation
               </span>
             </h1>
-            <p className="text-sm text-white/50 max-w-lg mx-auto">
+            <p className="text-sm text-white max-w-lg mx-auto">
               Prepare for functional skills assessments with practice exams, study techniques and
               portfolio building
             </p>

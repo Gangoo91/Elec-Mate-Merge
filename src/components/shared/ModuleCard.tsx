@@ -122,7 +122,7 @@ export function ModuleCard({
                   colors.iconBg
                 )}
               >
-                {icon || <BookOpen className="h-4 w-4 text-white/70" />}
+                {icon || <BookOpen className="h-4 w-4 text-white" />}
               </div>
               {category && (
                 <Badge
@@ -133,7 +133,7 @@ export function ModuleCard({
                 </Badge>
               )}
             </div>
-            <h3 className="font-semibold text-white text-sm leading-tight line-clamp-2 group-hover:text-white/90 transition-colors">
+            <h3 className="font-semibold text-white text-sm leading-tight line-clamp-2 group-hover:text-white transition-colors">
               {title}
             </h3>
           </div>
@@ -144,7 +144,7 @@ export function ModuleCard({
               </div>
             ) : (
               <div className="p-1.5 rounded-full bg-white/5 group-hover:bg-white/10 transition-colors">
-                <ChevronRight className="h-4 w-4 text-white/40 group-hover:text-white/60 transition-colors" />
+                <ChevronRight className="h-4 w-4 text-white group-hover:text-white transition-colors" />
               </div>
             )}
           </div>
@@ -152,14 +152,14 @@ export function ModuleCard({
 
         {/* Description */}
         {description && (
-          <p className="text-xs text-white/50 line-clamp-2 leading-relaxed">{description}</p>
+          <p className="text-xs text-white line-clamp-2 leading-relaxed">{description}</p>
         )}
 
         {/* Progress Bar (if started) */}
         {isInProgress && (
           <div className="space-y-1.5">
             <div className="flex justify-between items-center text-xs">
-              <span className="text-white/40">Progress</span>
+              <span className="text-white">Progress</span>
               <span className="font-bold text-white">{progress}%</span>
             </div>
             <div className="relative h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
@@ -176,7 +176,7 @@ export function ModuleCard({
 
         {/* Footer - Metadata */}
         <div className="flex items-center justify-between pt-2 border-t border-white/10 text-xs">
-          <div className="flex items-center gap-3 text-white/40">
+          <div className="flex items-center gap-3 text-white">
             {duration && (
               <div className="flex items-center gap-1">
                 <Clock className="h-3.5 w-3.5 shrink-0" />

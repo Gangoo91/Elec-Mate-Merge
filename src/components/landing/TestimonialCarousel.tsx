@@ -71,7 +71,7 @@ export const TestimonialCarousel = () => {
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
             Trusted by UK Electricians
           </h2>
-          <p className="text-white/70 max-w-2xl mx-auto">
+          <p className="text-white max-w-2xl mx-auto">
             Join thousands of electrical professionals who trust Elec-Mate for their daily work.
           </p>
         </motion.div>
@@ -101,7 +101,7 @@ export const TestimonialCarousel = () => {
             <div className="flex items-center justify-center gap-4 mt-6">
               <button
                 onClick={prevSlide}
-                className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center text-white/70 hover:bg-white/20 active:bg-white/30 transition-colors touch-manipulation"
+                className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 active:bg-white/30 transition-colors touch-manipulation"
                 aria-label="Previous testimonial"
               >
                 <ChevronLeft className="w-5 h-5" />
@@ -124,7 +124,7 @@ export const TestimonialCarousel = () => {
               </div>
               <button
                 onClick={nextSlide}
-                className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center text-white/70 hover:bg-white/20 active:bg-white/30 transition-colors touch-manipulation"
+                className="w-11 h-11 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 active:bg-white/30 transition-colors touch-manipulation"
                 aria-label="Next testimonial"
               >
                 <ChevronRight className="w-5 h-5" />
@@ -159,20 +159,20 @@ const TestimonialCard = ({ testimonial }: { testimonial: Testimonial }) => (
         <Star
           key={i}
           className={`w-4 h-4 ${
-            i < testimonial.rating ? 'text-yellow-400 fill-yellow-400' : 'text-white/20'
+            i < testimonial.rating ? 'text-yellow-400 fill-yellow-400' : 'text-white'
           }`}
         />
       ))}
     </div>
 
     {/* Quote */}
-    <p className="text-white/80 text-sm leading-relaxed flex-1 mb-4">"{testimonial.quote}"</p>
+    <p className="text-white text-sm leading-relaxed flex-1 mb-4">"{testimonial.quote}"</p>
 
     {/* Author */}
     <div className="pt-4 border-t border-white/10">
       <div className="font-semibold text-white">{testimonial.name}</div>
-      <div className="text-sm text-white/60">{testimonial.role}</div>
-      <div className="text-sm text-white/40 mt-1">{testimonial.company}</div>
+      <div className="text-sm text-white">{testimonial.role}</div>
+      <div className="text-sm text-white mt-1">{testimonial.company}</div>
     </div>
   </div>
 );

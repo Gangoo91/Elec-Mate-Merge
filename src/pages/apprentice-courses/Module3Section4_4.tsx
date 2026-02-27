@@ -134,13 +134,13 @@ const Module3Section4_4 = () => {
           <div className="inline-flex items-center justify-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/30 mb-4">
             <Wrench className="w-4 h-4 text-elec-yellow" />
             <span className="text-elec-yellow text-sm font-medium">Module 3</span>
-            <span className="text-white/50">|</span>
-            <span className="text-white/70 text-sm">Section 3.4.4</span>
+            <span className="text-white">|</span>
+            <span className="text-white text-sm">Section 3.4.4</span>
           </div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Jointing and Glanding Techniques
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             How to joint and gland cables correctly for safe, durable installations aligned to BS
             7671.
           </p>
@@ -403,7 +403,7 @@ const Module3Section4_4 = () => {
                   <HelpCircle className="w-5 h-5 text-elec-yellow mt-0.5" />
                   <p className="font-medium">{f.q}</p>
                 </div>
-                <p className="ml-8 text-white/90">{f.a}</p>
+                <p className="ml-8 text-white">{f.a}</p>
                 <div className="my-4 border-t border-white/10" />
               </div>
             ))}

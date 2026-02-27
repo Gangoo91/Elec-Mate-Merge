@@ -204,7 +204,7 @@ const InspectionTestingModule3Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/inspection-testing-module-3">
@@ -226,7 +226,7 @@ const InspectionTestingModule3Section5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Low Resistance Measurement Techniques
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Master accurate low-resistance measurements with proper techniques, lead nulling, and
             error minimisation
           </p>
@@ -323,7 +323,7 @@ const InspectionTestingModule3Section5 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/10">
               <p className="text-center text-2xl font-bold text-elec-yellow mb-1">200mA</p>
-              <p className="text-center text-xs text-white/60">BS 7671 Minimum Test Current</p>
+              <p className="text-center text-xs text-white">BS 7671 Minimum Test Current</p>
             </div>
 
             <p>The 200mA current serves critical purposes:</p>
@@ -419,20 +419,20 @@ const InspectionTestingModule3Section5 = () => {
             <div className="my-6 grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-blue-500/10">
                 <p className="text-blue-400 font-semibold mb-2">Current Terminals (C)</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Two leads inject the test current through the resistance being measured.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-green-500/10">
                 <p className="text-green-400 font-semibold mb-2">Potential Terminals (P)</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Two separate leads sense the voltage drop. Since almost no current flows in these
                   leads, their resistance doesn't affect the reading.
                 </p>
               </div>
             </div>
 
-            <p className="text-sm text-white/60">
+            <p className="text-sm text-white">
               Four-terminal measurement is essential when measuring very low resistances (under 1Ω)
               or when high accuracy is required.
             </p>
@@ -451,27 +451,27 @@ const InspectionTestingModule3Section5 = () => {
             <div className="space-y-3">
               <div className="p-3 rounded-lg bg-red-500/10">
                 <p className="text-red-400 font-semibold text-sm">Un-nulled leads</p>
-                <p className="text-white/70 text-xs">Lead resistance added to all readings</p>
+                <p className="text-white text-xs">Lead resistance added to all readings</p>
               </div>
               <div className="p-3 rounded-lg bg-red-500/10">
                 <p className="text-red-400 font-semibold text-sm">Poor probe contact</p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Adds contact resistance, gives fluctuating readings
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-amber-500/10">
                 <p className="text-amber-400 font-semibold text-sm">Temperature variation</p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Copper resistance changes ~0.4% per degree C
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-amber-500/10">
                 <p className="text-amber-400 font-semibold text-sm">Dirty connections</p>
-                <p className="text-white/70 text-xs">Oxide films increase resistance</p>
+                <p className="text-white text-xs">Oxide films increase resistance</p>
               </div>
               <div className="p-3 rounded-lg bg-red-500/10">
                 <p className="text-red-400 font-semibold text-sm">Loose terminations</p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Intermittent contact causes unstable readings
                 </p>
               </div>
@@ -490,11 +490,11 @@ const InspectionTestingModule3Section5 = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/10">
-                    <th className="text-left py-2 text-white/60">Reading</th>
-                    <th className="text-left py-2 text-white/60">Indication</th>
+                    <th className="text-left py-2 text-white">Reading</th>
+                    <th className="text-left py-2 text-white">Indication</th>
                   </tr>
                 </thead>
-                <tbody className="text-white/80">
+                <tbody className="text-white">
                   <tr className="border-b border-white/5">
                     <td className="py-2 font-mono">0.00 - 0.05Ω</td>
                     <td className="py-2 text-green-400">Excellent - sound connections</td>
@@ -521,7 +521,7 @@ const InspectionTestingModule3Section5 = () => {
               </table>
             </div>
 
-            <p className="text-sm text-white/60">
+            <p className="text-sm text-white">
               Always compare readings against expected values calculated from conductor length and
               CSA using tabulated resistance values.
             </p>
@@ -601,7 +601,7 @@ const InspectionTestingModule3Section5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -649,7 +649,7 @@ const InspectionTestingModule3Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../section-4">

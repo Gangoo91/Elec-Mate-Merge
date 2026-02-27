@@ -250,10 +250,10 @@ export const VoiceCaptureMode = ({
               <p className="text-sm text-white leading-relaxed">
                 {speech.transcript}
                 {speech.interimTranscript && (
-                  <span className="text-white/50">{speech.interimTranscript}</span>
+                  <span className="text-white">{speech.interimTranscript}</span>
                 )}
                 {!speech.transcript && !speech.interimTranscript && (
-                  <span className="text-white/50">Start speaking...</span>
+                  <span className="text-white">Start speaking...</span>
                 )}
                 <span ref={transcriptEndRef} />
               </p>

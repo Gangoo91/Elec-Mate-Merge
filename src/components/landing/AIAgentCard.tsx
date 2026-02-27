@@ -26,7 +26,7 @@ export const AIAgentCard = ({
         <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
       </div>
       <h4 className="text-base sm:text-lg font-semibold text-white mb-1">{name}</h4>
-      <p className="text-xs sm:text-sm text-white/50 leading-relaxed line-clamp-2">{description}</p>
+      <p className="text-xs sm:text-sm text-white leading-relaxed line-clamp-2">{description}</p>
     </div>
   );
 };

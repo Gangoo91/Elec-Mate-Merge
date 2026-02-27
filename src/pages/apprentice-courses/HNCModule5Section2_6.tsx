@@ -265,7 +265,7 @@ const HNCModule5Section2_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section2">
@@ -287,7 +287,7 @@ const HNCModule5Section2_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Supply Chain Management
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Approved supplier lists, lead time management, logistics coordination and vendor
             relationships for building services projects
           </p>
@@ -669,7 +669,7 @@ const HNCModule5Section2_6 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 Order Date = Required Date - Lead Time - Buffer
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Buffer allows for delivery delays, typically 1-2 weeks for critical items
               </p>
             </div>
@@ -732,20 +732,20 @@ const HNCModule5Section2_6 = () => {
               <div className="grid sm:grid-cols-3 gap-3">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white text-sm mb-1">Reduced Storage</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Materials arrive only when needed, minimising on-site storage requirements and
                     associated costs
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white text-sm mb-1">Improved Cash Flow</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Payment delayed until delivery, reducing working capital tied up in stock
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white text-sm mb-1">Lower Risk</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Less material on site means reduced exposure to theft, damage and deterioration
                   </p>
                 </div>
@@ -853,7 +853,7 @@ const HNCModule5Section2_6 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Site coordination:</strong> On busy construction sites, delivery slots must be
               booked through the main contractor's logistics coordinator to avoid congestion and
               ensure unloading equipment is available.
@@ -879,7 +879,7 @@ const HNCModule5Section2_6 = () => {
                 <strong>Question:</strong> The main switchboard installation is programmed for Week
                 24. Lead time is 12 weeks. When must the order be placed?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Required delivery: Week 24</p>
                 <p>Lead time: 12 weeks</p>
                 <p>Buffer for delays: 2 weeks</p>
@@ -887,7 +887,7 @@ const HNCModule5Section2_6 = () => {
                   Order date = 24 - 12 - 2 = <strong>Week 10</strong>
                 </p>
                 <p className="mt-2 text-green-400">Order must be placed by Week 10 at the latest</p>
-                <p className="text-white/60">
+                <p className="text-white">
                   Design approval and technical submittals may need to be complete earlier
                 </p>
               </div>
@@ -901,14 +901,14 @@ const HNCModule5Section2_6 = () => {
                 <strong>Question:</strong> A supplier made 50 deliveries last quarter. 45 were on
                 time and complete. 3 were late, 2 had quantity errors. Calculate OTIF performance.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Total deliveries: 50</p>
                 <p>On time and in full: 45</p>
                 <p className="mt-2">
                   OTIF = (45 ÷ 50) × 100 = <strong>90%</strong>
                 </p>
                 <p className="mt-2 text-green-400">Meets 90% target (just)</p>
-                <p className="text-white/60">Late deliveries and errors should be investigated</p>
+                <p className="text-white">Late deliveries and errors should be investigated</p>
               </div>
             </div>
 
@@ -920,7 +920,7 @@ const HNCModule5Section2_6 = () => {
                 <strong>Question:</strong> A project requires 5000m of cable over 10 weeks. Storage
                 is limited. Plan a call-off schedule.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Total requirement: 5000m</p>
                 <p>Installation rate: 500m per week</p>
                 <p>Storage capacity: 1000m maximum</p>
@@ -1012,7 +1012,7 @@ const HNCModule5Section2_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1060,7 +1060,7 @@ const HNCModule5Section2_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section2">

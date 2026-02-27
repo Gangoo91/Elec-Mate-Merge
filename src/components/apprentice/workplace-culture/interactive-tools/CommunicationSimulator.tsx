@@ -135,7 +135,7 @@ const CommunicationSimulator = ({ onBack }: CommunicationSimulatorProps) => {
           </Button>
           <div>
             <h2 className="text-2xl font-bold text-white">Communication Scenario Simulator</h2>
-            <p className="text-white/60">Practice workplace conversations in realistic scenarios</p>
+            <p className="text-white">Practice workplace conversations in realistic scenarios</p>
           </div>
         </div>
 
@@ -156,7 +156,7 @@ const CommunicationSimulator = ({ onBack }: CommunicationSimulatorProps) => {
                 </CardTitle>
               </CardHeader>
               <CardContent className="relative">
-                <p className="text-white/60 text-sm mb-4">{scenario.context}</p>
+                <p className="text-white text-sm mb-4">{scenario.context}</p>
                 <Button className="w-full h-11 bg-elec-yellow hover:bg-elec-yellow/90 text-black touch-manipulation active:scale-95 transition-all">
                   Start Scenario
                 </Button>
@@ -181,7 +181,7 @@ const CommunicationSimulator = ({ onBack }: CommunicationSimulatorProps) => {
         </Button>
         <div>
           <h2 className="text-2xl font-bold text-white">{currentScenario.title}</h2>
-          <p className="text-white/60">Choose your response carefully</p>
+          <p className="text-white">Choose your response carefully</p>
         </div>
       </div>
 
@@ -196,10 +196,10 @@ const CommunicationSimulator = ({ onBack }: CommunicationSimulatorProps) => {
           </CardTitle>
         </CardHeader>
         <CardContent className="relative">
-          <p className="text-white/80 mb-4">{currentScenario.context}</p>
+          <p className="text-white mb-4">{currentScenario.context}</p>
           <div className="p-4 rounded-xl bg-blue-500/10 border border-blue-500/20">
             <h4 className="font-medium text-blue-400 mb-2">The Situation:</h4>
-            <p className="text-white/80 italic">"{currentScenario.situation}"</p>
+            <p className="text-white italic">"{currentScenario.situation}"</p>
           </div>
         </CardContent>
       </Card>
@@ -227,7 +227,7 @@ const CommunicationSimulator = ({ onBack }: CommunicationSimulatorProps) => {
                   }`}
                   onClick={() => handleResponseSelect(index)}
                 >
-                  <span className="block text-white/80">{response.text}</span>
+                  <span className="block text-white">{response.text}</span>
                 </Button>
 
                 {showFeedback && selectedResponse === index && (
@@ -242,7 +242,7 @@ const CommunicationSimulator = ({ onBack }: CommunicationSimulatorProps) => {
                         {response.rating.charAt(0).toUpperCase() + response.rating.slice(1)}
                       </Badge>
                     </div>
-                    <p className="text-sm text-white/80">{response.feedback}</p>
+                    <p className="text-sm text-white">{response.feedback}</p>
                   </div>
                 )}
               </div>

@@ -272,7 +272,7 @@ const EquipmentROICalculator = () => {
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 Equipment ROI Calculator
               </h1>
-              <p className="text-sm text-white/70">Analyse return on investment</p>
+              <p className="text-sm text-white">Analyse return on investment</p>
             </div>
           </div>
           <SmartBackButton />
@@ -287,7 +287,7 @@ const EquipmentROICalculator = () => {
           {/* Investment Costs Section */}
           <div className="flex items-center gap-2 mb-3">
             <PoundSterling className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white/80">Investment Costs</span>
+            <span className="text-sm font-medium text-white">Investment Costs</span>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -339,7 +339,7 @@ const EquipmentROICalculator = () => {
           {/* Revenue Section */}
           <div className="flex items-center gap-2 mb-3 mt-6 pt-4 border-t border-white/10">
             <TrendingUp className="h-4 w-4 text-green-400" />
-            <span className="text-sm font-medium text-white/80">Revenue & Savings</span>
+            <span className="text-sm font-medium text-white">Revenue & Savings</span>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -369,7 +369,7 @@ const EquipmentROICalculator = () => {
           {/* Financial Settings Section */}
           <div className="flex items-center gap-2 mb-3 mt-6 pt-4 border-t border-white/10">
             <Clock className="h-4 w-4 text-blue-400" />
-            <span className="text-sm font-medium text-white/80">Financial Settings</span>
+            <span className="text-sm font-medium text-white">Financial Settings</span>
           </div>
 
           <div className="grid grid-cols-2 gap-3">
@@ -396,7 +396,7 @@ const EquipmentROICalculator = () => {
               disabled={!isValid}
               className={cn(
                 'flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation',
-                isValid ? 'text-black' : 'bg-white/10 text-white/30 cursor-not-allowed'
+                isValid ? 'text-black' : 'bg-white/10 text-white cursor-not-allowed'
               )}
               style={
                 isValid
@@ -412,13 +412,13 @@ const EquipmentROICalculator = () => {
             <button
               onClick={saveScenario}
               disabled={!calculated}
-              className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/90 hover:bg-white/10 transition-colors touch-manipulation disabled:opacity-50"
+              className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation disabled:opacity-50"
             >
               <Save className="h-5 w-5" />
             </button>
             <button
               onClick={reset}
-              className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/90 hover:bg-white/10 transition-colors touch-manipulation"
+              className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation"
             >
               <RotateCcw className="h-5 w-5" />
             </button>
@@ -538,7 +538,7 @@ const EquipmentROICalculator = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      'h-4 w-4 text-white/80 transition-transform duration-200',
+                      'h-4 w-4 text-white transition-transform duration-200',
                       showChart && 'rotate-180'
                     )}
                   />
@@ -627,7 +627,7 @@ const EquipmentROICalculator = () => {
               </div>
               <ChevronDown
                 className={cn(
-                  'h-4 w-4 text-white/80 transition-transform duration-200',
+                  'h-4 w-4 text-white transition-transform duration-200',
                   showReference && 'rotate-180'
                 )}
               />

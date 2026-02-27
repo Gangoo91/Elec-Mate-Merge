@@ -106,7 +106,7 @@ const BS7671Module2Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bs7671-module-2">
@@ -127,7 +127,7 @@ const BS7671Module2Section3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             New Definitions from Amendment 2 & 3
           </h1>
-          <p className="text-white/80">AFDD, PEI, Functional Earthing & Bidirectional Protection</p>
+          <p className="text-white">AFDD, PEI, Functional Earthing & Bidirectional Protection</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -382,19 +382,19 @@ const BS7671Module2Section3 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">IT Equipment</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Signal reference, static discharge, EMI filtering
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Control Systems</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Sensor potentials, analog signals, noise immunity
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Electronic Equipment</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Circuit operation, RF interference, voltage reference
                 </p>
               </div>
@@ -558,19 +558,19 @@ const BS7671Module2Section3 = () => {
                 <div className="space-y-2">
                   <div className="p-2 rounded bg-transparent border border-white/10">
                     <p className="text-xs font-medium">Energy Storage System</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       One or more devices with power conversion and control systems
                     </p>
                   </div>
                   <div className="p-2 rounded bg-transparent border border-white/10">
                     <p className="text-xs font-medium">DC Installation</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Installation using DC circuits for power distribution
                     </p>
                   </div>
                   <div className="p-2 rounded bg-transparent border border-white/10">
                     <p className="text-xs font-medium">Prosumer</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Entity that consumes and produces electrical energy
                     </p>
                   </div>
@@ -583,19 +583,19 @@ const BS7671Module2Section3 = () => {
                 <div className="space-y-2">
                   <div className="p-2 rounded bg-transparent border border-white/10">
                     <p className="text-xs font-medium">Smart Installation</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Incorporates communication for monitoring and control
                     </p>
                   </div>
                   <div className="p-2 rounded bg-transparent border border-white/10">
                     <p className="text-xs font-medium">Load Management System</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Controls loads to optimize energy consumption
                     </p>
                   </div>
                   <div className="p-2 rounded bg-transparent border border-white/10">
                     <p className="text-xs font-medium">Communication Network</p>
-                    <p className="text-xs text-white/80">Enables data exchange between equipment</p>
+                    <p className="text-xs text-white">Enables data exchange between equipment</p>
                   </div>
                 </div>
               </div>
@@ -610,7 +610,7 @@ const BS7671Module2Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -656,7 +656,7 @@ const BS7671Module2Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bs7671-module-2-section-2">

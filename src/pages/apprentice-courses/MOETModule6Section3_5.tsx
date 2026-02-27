@@ -264,7 +264,7 @@ const MOETModule6Section3_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module6-section3">
@@ -285,7 +285,7 @@ const MOETModule6Section3_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Using Maintenance Management Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             CMMS operation, work order management and effective data entry for maintenance
             technicians
           </p>
@@ -410,12 +410,12 @@ const MOETModule6Section3_5 = () => {
                 Asset Hierarchy Example — Electrical
               </h3>
               <div className="text-sm space-y-1">
-                <div className="text-white/80">
+                <div className="text-white">
                   Site: Manufacturing Plant — Building: Production Hall A
                 </div>
-                <div className="text-white/80 ml-4">System: Power Distribution</div>
-                <div className="text-white/80 ml-8">Sub-system: MCC-01 (Motor Control Centre)</div>
-                <div className="text-white/80 ml-12">
+                <div className="text-white ml-4">System: Power Distribution</div>
+                <div className="text-white ml-8">Sub-system: MCC-01 (Motor Control Centre)</div>
+                <div className="text-white ml-12">
                   Component: Conveyor 3 DOL Starter (Asset E-MCC01-003)
                 </div>
               </div>
@@ -476,7 +476,7 @@ const MOETModule6Section3_5 = () => {
                   <span className="text-elec-yellow/80 text-xs font-mono mt-0.5">01</span>
                   <div>
                     <p className="text-sm font-medium">Review assigned work orders</p>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       Check priorities, read descriptions, gather parts and tools
                     </p>
                   </div>
@@ -485,7 +485,7 @@ const MOETModule6Section3_5 = () => {
                   <span className="text-elec-yellow/80 text-xs font-mono mt-0.5">02</span>
                   <div>
                     <p className="text-sm font-medium">Accept and update status</p>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       Mark as &apos;in progress&apos; when you begin work
                     </p>
                   </div>
@@ -494,7 +494,7 @@ const MOETModule6Section3_5 = () => {
                   <span className="text-elec-yellow/80 text-xs font-mono mt-0.5">03</span>
                   <div>
                     <p className="text-sm font-medium">Record findings and actions</p>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       Enter detailed notes, test results, parts used at the point of work
                     </p>
                   </div>
@@ -503,7 +503,7 @@ const MOETModule6Section3_5 = () => {
                   <span className="text-elec-yellow/80 text-xs font-mono mt-0.5">04</span>
                   <div>
                     <p className="text-sm font-medium">Complete and close</p>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       Record verification results, flag any follow-up actions needed
                     </p>
                   </div>
@@ -937,7 +937,7 @@ const MOETModule6Section3_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1004,7 +1004,7 @@ const MOETModule6Section3_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module6-section3-4">

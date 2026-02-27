@@ -127,7 +127,7 @@ export const ResultsSuccessAnimation = ({
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.3 }}
-                      className="text-ios-body text-white/60 mb-4"
+                      className="text-ios-body text-white mb-4"
                     >
                       {projectName}
                     </motion.p>
@@ -140,7 +140,7 @@ export const ResultsSuccessAnimation = ({
                       transition={{ delay: 0.4, type: 'spring', stiffness: 200 }}
                       className="mb-8"
                     >
-                      <p className="text-ios-caption-1 text-white/40 mb-1">Recommended Quote</p>
+                      <p className="text-ios-caption-1 text-white mb-1">Recommended Quote</p>
                       <p className="text-4xl font-bold text-elec-yellow">
                         {formatCurrency(totalAmount)}
                       </p>
@@ -170,7 +170,7 @@ export const ResultsSuccessAnimation = ({
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.7 }}
-                    className="text-ios-caption-1 text-white/30 mt-4"
+                    className="text-ios-caption-1 text-white mt-4"
                   >
                     Tap anywhere to continue
                   </motion.p>

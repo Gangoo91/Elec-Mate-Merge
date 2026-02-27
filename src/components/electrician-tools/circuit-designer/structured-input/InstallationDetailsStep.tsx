@@ -81,7 +81,7 @@ export const InstallationDetailsStep = ({
         </div>
         <div>
           <h2 className="text-lg font-semibold text-white">Installation Details</h2>
-          <p className="text-sm text-white/50">Refine each circuit's installation method</p>
+          <p className="text-sm text-white">Refine each circuit's installation method</p>
         </div>
       </div>
 
@@ -118,14 +118,14 @@ export const InstallationDetailsStep = ({
                   <div className="p-1.5 rounded-lg bg-elec-yellow/10">
                     <Zap className="h-3.5 w-3.5 text-elec-yellow" />
                   </div>
-                  <Badge variant="secondary" className="bg-white/10 border-0 text-white/80 text-xs">
+                  <Badge variant="secondary" className="bg-white/10 border-0 text-white text-xs">
                     Circuit {index + 1}
                   </Badge>
                 </div>
                 <h3 className="text-sm font-medium text-white truncate pl-1">
                   {circuit.name || 'Unnamed Circuit'}
                 </h3>
-                <p className="text-xs text-white/50 pl-1">
+                <p className="text-xs text-white pl-1">
                   {circuit.loadType} • {circuit.loadPower}W • {circuit.cableLength}m
                 </p>
               </div>
@@ -197,14 +197,14 @@ export const InstallationDetailsStep = ({
               {circuit.calculatedIb && (
                 <div className="flex flex-wrap gap-3 pt-3 border-t border-white/10">
                   <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
-                    <span className="text-xs text-white/60">Design:</span>
+                    <span className="text-xs text-white">Design:</span>
                     <span className="text-xs font-semibold text-elec-yellow">
                       {circuit.calculatedIb.toFixed(1)}A
                     </span>
                   </div>
                   {circuit.suggestedMCB && (
                     <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/10">
-                      <span className="text-xs text-white/60">MCB:</span>
+                      <span className="text-xs text-white">MCB:</span>
                       <span className="text-xs font-semibold text-white">
                         {circuit.suggestedMCB}A
                       </span>
@@ -212,7 +212,7 @@ export const InstallationDetailsStep = ({
                   )}
                   {circuit.calculatedDiversity && circuit.calculatedDiversity < 1 && (
                     <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white/5 border border-white/10">
-                      <span className="text-xs text-white/60">Diversity:</span>
+                      <span className="text-xs text-white">Diversity:</span>
                       <span className="text-xs font-semibold text-white">
                         {(circuit.calculatedDiversity * 100).toFixed(0)}%
                       </span>
@@ -234,10 +234,10 @@ export const InstallationDetailsStep = ({
           )}
         >
           <div className="inline-flex p-4 rounded-xl bg-white/5 mb-4">
-            <Wrench className="h-10 w-10 text-white/40" />
+            <Wrench className="h-10 w-10 text-white" />
           </div>
           <h3 className="text-base font-semibold text-white mb-2">No Circuits to Configure</h3>
-          <p className="text-sm text-white/50">
+          <p className="text-sm text-white">
             Add circuits in the previous step to configure installation details
           </p>
         </div>

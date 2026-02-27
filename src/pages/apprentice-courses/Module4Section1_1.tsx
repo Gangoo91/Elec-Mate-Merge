@@ -176,7 +176,7 @@ const Module4Section1_1 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -194,13 +194,13 @@ const Module4Section1_1 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 1.1</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 1.1</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Reading Installation Drawings and Specifications
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Learn to read drawings, symbols and specifications to deliver safe, compliant work to
               BS 7671.
             </p>
@@ -212,7 +212,7 @@ const Module4Section1_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="grid md:grid-cols-2 gap-4 text-sm text-white/90">
+            <div className="grid md:grid-cols-2 gap-4 text-sm text-white">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-5 space-y-1">
@@ -247,7 +247,7 @@ const Module4Section1_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <ul className="list-disc pl-6 space-y-2 text-sm text-white/90">
+            <ul className="list-disc pl-6 space-y-2 text-sm text-white">
               <li>Identify common symbols used in electrical drawings.</li>
               <li>Interpret wiring diagrams, schematic layouts and schedules.</li>
               <li>Understand the relationship between the drawing and written specifications.</li>
@@ -266,19 +266,19 @@ const Module4Section1_1 = () => {
               <div className="rounded-lg p-4 bg-white/5 border border-white/10 text-center">
                 <Eye className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
                 <p className="font-semibold text-white">Visual Representation</p>
-                <p className="text-sm text-white/70">Shows the electrical system layout</p>
+                <p className="text-sm text-white">Shows the electrical system layout</p>
               </div>
               <div className="rounded-lg p-4 bg-white/5 border border-white/10 text-center">
                 <CheckCircle className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
                 <p className="font-semibold text-white">Clear Indication</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Routes, connection points, containment, device locations
                 </p>
               </div>
               <div className="rounded-lg p-4 bg-white/5 border border-white/10 text-center">
                 <AlertTriangle className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
                 <p className="font-semibold text-white">Compliance Assurance</p>
-                <p className="text-sm text-white/70">Helps meet design intent and regulations</p>
+                <p className="text-sm text-white">Helps meet design intent and regulations</p>
               </div>
             </div>
           </section>
@@ -294,8 +294,8 @@ const Module4Section1_1 = () => {
                 <div key={i} className="rounded-lg p-4 border-l-2 border-elec-yellow/50 bg-white/5">
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
                     <p className="font-semibold text-elec-yellow">{d.type}</p>
-                    <p className="text-sm text-white/80 flex-1">{d.description}</p>
-                    <span className="text-xs px-2 py-1 bg-white/10 rounded text-white/70 w-fit">
+                    <p className="text-sm text-white flex-1">{d.description}</p>
+                    <span className="text-xs px-2 py-1 bg-white/10 rounded text-white w-fit">
                       {d.use}
                     </span>
                   </div>
@@ -310,7 +310,7 @@ const Module4Section1_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Common Symbols and Notations
             </h2>
-            <div className="rounded-lg p-4 bg-elec-yellow/5 border-l-2 border-elec-yellow/50 text-sm text-white/90">
+            <div className="rounded-lg p-4 bg-elec-yellow/5 border-l-2 border-elec-yellow/50 text-sm text-white">
               <ul className="list-disc pl-5 space-y-1">
                 <li>Socket outlets, light fittings, switches, distribution boards.</li>
                 <li>Cable types and containment symbols.</li>
@@ -330,7 +330,7 @@ const Module4Section1_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Understanding Specifications
             </h2>
-            <div className="rounded-lg p-4 bg-white/5 border border-white/10 text-sm text-white/90 space-y-2">
+            <div className="rounded-lg p-4 bg-white/5 border border-white/10 text-sm text-white space-y-2">
               <p>Written documents that describe materials, workmanship and standards to follow.</p>
               <ul className="list-disc pl-5 space-y-1">
                 <li>
@@ -347,7 +347,7 @@ const Module4Section1_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               How to Read Drawings Effectively
             </h2>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               Follow this systematic approach to ensure accurate interpretation of electrical
               drawings:
             </p>
@@ -360,10 +360,10 @@ const Module4Section1_1 = () => {
                   </span>
                   <div className="flex-1">
                     <p className="font-semibold text-elec-yellow mb-1">Check the Title Block</p>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       Project name, drawing number, scale and date.
                     </p>
-                    <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                    <div className="text-xs text-white bg-black/20 p-2 rounded">
                       <strong>What to look for:</strong> Drawing number for reference, revision
                       letter/number, scale (e.g., 1:50), issue date, project name and client
                       details. Always verify you have the latest revision.
@@ -379,10 +379,10 @@ const Module4Section1_1 = () => {
                   </span>
                   <div className="flex-1">
                     <p className="font-semibold text-elec-yellow mb-1">Understand the Scale</p>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       Ensure accurate measurement and placement.
                     </p>
-                    <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                    <div className="text-xs text-white bg-black/20 p-2 rounded">
                       <strong>Key considerations:</strong> Scale affects cable lengths, containment
                       routes and positioning. Common scales: 1:50 (general layouts), 1:20 (detailed
                       areas), 1:100 (site plans). Use a scale ruler for accurate measurements.
@@ -398,8 +398,8 @@ const Module4Section1_1 = () => {
                   </span>
                   <div className="flex-1">
                     <p className="font-semibold text-elec-yellow mb-1">Review the Key/Legend</p>
-                    <p className="text-sm text-white/80 mb-2">Interpret symbols correctly.</p>
-                    <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                    <p className="text-sm text-white mb-2">Interpret symbols correctly.</p>
+                    <div className="text-xs text-white bg-black/20 p-2 rounded">
                       <strong>Essential symbols:</strong> Socket outlets (13A, 20A), lighting
                       points, switches (1-way, 2-way), distribution boards, cable types (T&E, SWA),
                       containment (conduit, trunking). Keep the legend visible while working.
@@ -415,10 +415,10 @@ const Module4Section1_1 = () => {
                   </span>
                   <div className="flex-1">
                     <p className="font-semibold text-elec-yellow mb-1">Follow the Circuit</p>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       Trace wiring routes and connections.
                     </p>
-                    <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                    <div className="text-xs text-white bg-black/20 p-2 rounded">
                       <strong>Systematic approach:</strong> Start from the distribution board,
                       follow circuit numbers, trace cable routes through containment, identify
                       connection points. Note cable sizes, protective device ratings and switching
@@ -437,10 +437,10 @@ const Module4Section1_1 = () => {
                     <p className="font-semibold text-elec-yellow mb-1">
                       Cross-Reference with Specifications
                     </p>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       Confirm compliance with written requirements.
                     </p>
-                    <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                    <div className="text-xs text-white bg-black/20 p-2 rounded">
                       <strong>Check against:</strong> Cable specifications, equipment schedules,
                       installation methods, BS 7671 requirements, manufacturer instructions. Resolve
                       any conflicts before starting work.
@@ -458,10 +458,10 @@ const Module4Section1_1 = () => {
                     <p className="font-semibold text-elec-yellow mb-1">
                       Verify Dimensions and Levels
                     </p>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       Check heights, depths and positioning requirements.
                     </p>
-                    <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                    <div className="text-xs text-white bg-black/20 p-2 rounded">
                       <strong>Critical measurements:</strong> Socket heights (450mm above floor),
                       switch heights (1200mm), distribution board positions, cable entry points.
                       Cross-check with building drawings and site conditions.
@@ -473,7 +473,7 @@ const Module4Section1_1 = () => {
 
             <div className="mt-4 p-4 bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg">
               <p className="text-sm font-medium text-white mb-1">Pro Tip</p>
-              <p className="text-xs text-white/80">
+              <p className="text-xs text-white">
                 Always keep a copy of the drawing with you on site. Mark up any discrepancies or
                 clarifications needed and report them before proceeding. Take photos of existing
                 conditions that might affect the installation.
@@ -495,19 +495,19 @@ const Module4Section1_1 = () => {
               <div className="rounded-lg p-4 bg-white/5 border border-white/10 text-center">
                 <AlertTriangle className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
                 <p className="font-semibold text-white">Latest Issue</p>
-                <p className="text-sm text-white/70">Always work from the latest drawing issue</p>
+                <p className="text-sm text-white">Always work from the latest drawing issue</p>
               </div>
               <div className="rounded-lg p-4 bg-white/5 border border-white/10 text-center">
                 <FileText className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
                 <p className="font-semibold text-white">Remove Superseded</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Remove superseded drawings from the work area
                 </p>
               </div>
               <div className="rounded-lg p-4 bg-white/5 border border-white/10 text-center">
                 <FileText className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
                 <p className="font-semibold text-white">Raise Discrepancies</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Raise any discrepancies with your supervisor or designer
                 </p>
               </div>
@@ -522,7 +522,7 @@ const Module4Section1_1 = () => {
           <section className="mb-10">
             <div className="rounded-lg p-4 bg-white/5 border border-white/10">
               <p className="font-semibold text-white mb-2">Real‑World Example</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 An installer used an outdated layout drawing showing a distribution board in the
                 wrong location. Result: 15 metres of cable installed incorrectly, requiring removal
                 and rework — costing time and money.
@@ -541,7 +541,7 @@ const Module4Section1_1 = () => {
                 <p className="font-medium text-white mb-1">
                   What if a symbol on a drawing is unfamiliar?
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Refer to the legend; if unclear, ask the designer or supervisor.
                 </p>
               </div>
@@ -549,13 +549,13 @@ const Module4Section1_1 = () => {
                 <p className="font-medium text-white mb-1">
                   Do I need to understand scale for electrical work?
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Yes — scale affects containment lengths, cable sizes and positioning accuracy.
                 </p>
               </div>
               <div className="rounded-lg border border-white/10 p-4">
                 <p className="font-medium text-white mb-1">Who issues the latest drawings?</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   The project manager or site supervisor; installers must still check they have the
                   latest version.
                 </p>
@@ -569,7 +569,7 @@ const Module4Section1_1 = () => {
               <h2 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
                 <CheckCircle className="w-5 h-5 text-elec-yellow" /> Summary
               </h2>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 Reading installation drawings and specifications ensures accurate, compliant and
                 efficient work. By understanding symbols, diagrams and written requirements,
                 electricians deliver to the correct standard without costly errors.

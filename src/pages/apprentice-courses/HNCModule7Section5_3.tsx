@@ -263,7 +263,7 @@ const HNCModule7Section5_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section5">
@@ -285,7 +285,7 @@ const HNCModule7Section5_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Harmonic Mitigation
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Harmonic sources, effects, measurement, passive and active filters, and design
             considerations for building services
           </p>
@@ -595,9 +595,9 @@ const HNCModule7Section5_3 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">THD Calculation</p>
               <div className="font-mono text-sm space-y-1">
                 <p>THD = √(V₂² + V₃² + V₄² + ... + Vₙ²) / V₁ × 100%</p>
-                <p className="text-white/60 mt-2">Where:</p>
-                <p className="text-white/80">V₁ = Fundamental voltage (50 Hz)</p>
-                <p className="text-white/80">Vₙ = Voltage at harmonic order n</p>
+                <p className="text-white mt-2">Where:</p>
+                <p className="text-white">V₁ = Fundamental voltage (50 Hz)</p>
+                <p className="text-white">Vₙ = Voltage at harmonic order n</p>
               </div>
             </div>
 
@@ -816,7 +816,7 @@ const HNCModule7Section5_3 = () => {
                 <p>
                   <strong>K-20:</strong> Extreme non-linear loads (mainframe computer rooms)
                 </p>
-                <p className="text-white/70 mt-2">
+                <p className="text-white mt-2">
                   K-factor = Σ(Iₕ² × h²) where Iₕ = per-unit harmonic current, h = harmonic order
                 </p>
               </div>
@@ -844,7 +844,7 @@ const HNCModule7Section5_3 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Design strategy:</strong> For new installations, specify low-harmonic
               equipment at source. For existing installations, centralised active filtering often
               provides the best cost-performance ratio.
@@ -870,7 +870,7 @@ const HNCModule7Section5_3 = () => {
                 <strong>Scenario:</strong> Calculate K-factor for an IT load distribution board with
                 measured harmonic currents.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Measured harmonic currents (per unit of fundamental):</p>
                 <p className="mt-2">I₁ = 1.00 (fundamental)</p>
                 <p>I₃ = 0.82 (3rd harmonic)</p>
@@ -894,7 +894,7 @@ const HNCModule7Section5_3 = () => {
                 <strong>Scenario:</strong> Size neutral conductor for LED lighting circuit with high
                 3rd harmonic content.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given:</p>
                 <p className="ml-4">Phase current = 32 A per phase</p>
                 <p className="ml-4">3rd harmonic content = 80% of fundamental</p>
@@ -921,7 +921,7 @@ const HNCModule7Section5_3 = () => {
                 <strong>Scenario:</strong> Size centralised active harmonic filter for commercial
                 building.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Building loads:</p>
                 <p className="ml-4">- VSDs total: 150 kVA (THDi = 35%)</p>
                 <p className="ml-4">- IT loads: 80 kVA (THDi = 100%)</p>
@@ -1016,7 +1016,7 @@ const HNCModule7Section5_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1062,7 +1062,7 @@ const HNCModule7Section5_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section5">

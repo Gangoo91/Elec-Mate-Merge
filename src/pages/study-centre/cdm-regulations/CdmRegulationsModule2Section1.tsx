@@ -345,7 +345,7 @@ export default function CdmRegulationsModule2Section1() {
             MODULE 2 &middot; SECTION 1
           </span>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">The Client</h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             The client&rsquo;s role and duties under the CDM Regulations 2015 &mdash; who qualifies
             as a client, commercial and domestic duties, appointing duty holders, providing
             pre-construction information, and accountability for health and safety
@@ -495,7 +495,7 @@ export default function CdmRegulationsModule2Section1() {
                     What &ldquo;Suitable Arrangements&rdquo; Looks Like
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   The HSE&rsquo;s guidance (L153) makes clear that &ldquo;suitable
                   arrangements&rdquo; includes: appointing the right people at the right time,
                   ensuring adequate communication between duty holders, allowing realistic
@@ -589,7 +589,7 @@ export default function CdmRegulationsModule2Section1() {
                     The &ldquo;Could Reasonably Obtain&rdquo; Test
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   The client&rsquo;s duty is not limited to information they already possess.
                   Regulation 4(4) requires the client to provide information that is &ldquo;relevant
                   to the work&rdquo; and that they know about or{' '}
@@ -746,7 +746,7 @@ export default function CdmRegulationsModule2Section1() {
                     Written Appointments Are Mandatory
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Appointments must be made <strong className="text-white">in writing</strong>. A
                   verbal agreement or an assumption that someone is acting as PD or PC is not
                   sufficient. The written appointment should clearly identify the project, the role
@@ -841,7 +841,7 @@ export default function CdmRegulationsModule2Section1() {
                   <Shield className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-blue-300">Real-World Impact</h3>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Many serious construction accidents can be traced back to the client imposing
                   unrealistic timescales. When workers are under pressure to meet a deadline, they
                   take shortcuts &mdash; skipping scaffolding, working in poor weather, removing
@@ -928,7 +928,7 @@ export default function CdmRegulationsModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Day One Requirement</h3>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   This is a{' '}
                   <strong className="text-white">&ldquo;before construction begins&rdquo;</strong>{' '}
                   requirement &mdash; not &ldquo;as soon as practicable after starting&rdquo;.
@@ -955,7 +955,7 @@ export default function CdmRegulationsModule2Section1() {
               Client Duties Checklist
             </h2>
             <div className="space-y-4 text-white">
-              <p className="leading-relaxed text-sm text-white/80">
+              <p className="leading-relaxed text-sm text-white">
                 A visual summary of the client&rsquo;s key duties under the CDM Regulations 2015.
                 Each duty includes the relevant regulation reference.
               </p>
@@ -979,9 +979,9 @@ export default function CdmRegulationsModule2Section1() {
                       <div className="flex-1 min-w-0">
                         <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 mb-1">
                           <p className="text-blue-300 font-semibold text-sm">{item.duty}</p>
-                          <span className="text-white/40 text-xs">{item.regulation}</span>
+                          <span className="text-white text-xs">{item.regulation}</span>
                         </div>
-                        <p className="text-white/70 text-sm mt-0.5">{item.detail}</p>
+                        <p className="text-white text-sm mt-0.5">{item.detail}</p>
                       </div>
                     </div>
                   ))}
@@ -1086,7 +1086,7 @@ export default function CdmRegulationsModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-blue-300">Landlord vs Homeowner</h3>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   A <strong className="text-white">landlord</strong> who commissions construction
                   work on a rental property is <strong className="text-white">not</strong> a
                   domestic client &mdash; they are a commercial client, because the work is done in
@@ -1108,7 +1108,7 @@ export default function CdmRegulationsModule2Section1() {
               Commercial vs Domestic Client Comparison
             </h2>
             <div className="space-y-4 text-white">
-              <p className="leading-relaxed text-sm text-white/80">
+              <p className="leading-relaxed text-sm text-white">
                 The following comparison highlights the key differences between commercial and
                 domestic client duties under the CDM Regulations 2015.
               </p>
@@ -1133,8 +1133,8 @@ export default function CdmRegulationsModule2Section1() {
                     } ${idx < clientComparison.length - 1 ? 'border-b border-white/5' : ''}`}
                   >
                     <span className="text-blue-300 font-medium text-xs pr-2">{row.aspect}</span>
-                    <span className="text-white/80 text-xs pr-2">{row.commercial}</span>
-                    <span className="text-white/80 text-xs">{row.domestic}</span>
+                    <span className="text-white text-xs pr-2">{row.commercial}</span>
+                    <span className="text-white text-xs">{row.domestic}</span>
                   </div>
                 ))}
               </div>
@@ -1163,7 +1163,7 @@ export default function CdmRegulationsModule2Section1() {
                     <Gavel className="h-5 w-5 text-amber-400 flex-shrink-0" />
                     <h3 className="text-amber-400 font-semibold">HSE Expectations</h3>
                   </div>
-                  <div className="space-y-2 text-sm text-white/80">
+                  <div className="space-y-2 text-sm text-white">
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-amber-400 mt-2 flex-shrink-0" />
                       <span>
@@ -1205,7 +1205,7 @@ export default function CdmRegulationsModule2Section1() {
                     <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0" />
                     <h3 className="text-red-400 font-semibold">Prosecution Examples</h3>
                   </div>
-                  <div className="space-y-3 text-sm text-white/80">
+                  <div className="space-y-3 text-sm text-white">
                     <p className="leading-relaxed">
                       The HSE has successfully prosecuted clients in high-profile cases:
                     </p>
@@ -1251,7 +1251,7 @@ export default function CdmRegulationsModule2Section1() {
                   <h3 className="text-red-300 font-semibold mb-2">
                     Director Responsibilities &amp; Personal Liability
                   </h3>
-                  <p className="text-white/80 text-sm leading-relaxed mb-3">
+                  <p className="text-white text-sm leading-relaxed mb-3">
                     Where the client is a company, the duties are placed on the company as a legal
                     entity. However,{' '}
                     <strong className="text-white">
@@ -1301,7 +1301,7 @@ export default function CdmRegulationsModule2Section1() {
                   <Shield className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-blue-300">The CDM Awareness Message</h3>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   The overarching message of CDM 2015 is that construction health and safety starts
                   with the client. If the client sets the right conditions &mdash; appointing the
                   right people, allowing adequate time, providing full information, ensuring
@@ -1406,7 +1406,7 @@ export default function CdmRegulationsModule2Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1422,7 +1422,7 @@ export default function CdmRegulationsModule2Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-2">

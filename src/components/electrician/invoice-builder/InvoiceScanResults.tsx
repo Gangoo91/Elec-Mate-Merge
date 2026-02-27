@@ -62,7 +62,7 @@ export function InvoiceScanResults({
                     {totalItems} Items Found
                   </SheetTitle>
                   {result.supplierName && (
-                    <div className="flex items-center gap-1.5 text-[12px] text-white/50 mt-0.5">
+                    <div className="flex items-center gap-1.5 text-[12px] text-white mt-0.5">
                       <Store className="h-3 w-3" />
                       <span>{result.supplierName}</span>
                     </div>
@@ -72,7 +72,7 @@ export function InvoiceScanResults({
               <Button
                 variant="ghost"
                 size="icon"
-                className="text-white/60 hover:text-white hover:bg-white/10 -mr-2"
+                className="text-white hover:text-white hover:bg-white/10 -mr-2"
                 onClick={() => onOpenChange(false)}
               >
                 <X className="h-5 w-5" />
@@ -82,7 +82,7 @@ export function InvoiceScanResults({
 
           {/* Selection Controls */}
           <div className="px-4 py-2.5 border-b border-white/[0.06] flex items-center justify-between bg-white/[0.02]">
-            <span className="text-[13px] text-white/60">{selectedCount} selected</span>
+            <span className="text-[13px] text-white">{selectedCount} selected</span>
             <div className="flex gap-1">
               <button
                 className="text-[12px] text-elec-yellow font-medium px-3 py-1.5 rounded-lg hover:bg-elec-yellow/10 touch-manipulation"
@@ -91,7 +91,7 @@ export function InvoiceScanResults({
                 All
               </button>
               <button
-                className="text-[12px] text-white/50 font-medium px-3 py-1.5 rounded-lg hover:bg-white/5 touch-manipulation"
+                className="text-[12px] text-white font-medium px-3 py-1.5 rounded-lg hover:bg-white/5 touch-manipulation"
                 onClick={onDeselectAll}
               >
                 None
@@ -119,7 +119,7 @@ export function InvoiceScanResults({
                       {item.selected ? (
                         <CheckCircle2 className="h-5 w-5 text-elec-yellow" />
                       ) : (
-                        <Circle className="h-5 w-5 text-white/30" />
+                        <Circle className="h-5 w-5 text-white" />
                       )}
                     </div>
                     <p className="flex-1 text-[13px] text-white leading-tight">
@@ -141,9 +141,9 @@ export function InvoiceScanResults({
                         }}
                         className="h-9 w-14 text-[14px] text-center bg-white/[0.05] border-white/[0.08] rounded-lg"
                       />
-                      <span className="text-white/40">×</span>
+                      <span className="text-white">×</span>
                       <div className="relative">
-                        <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[14px] text-white/40">
+                        <span className="absolute left-2.5 top-1/2 -translate-y-1/2 text-[14px] text-white">
                           £
                         </span>
                         <Input
@@ -172,7 +172,7 @@ export function InvoiceScanResults({
           <div className="p-4 border-t border-white/[0.06] bg-background safe-area-bottom">
             {/* Total */}
             <div className="flex items-center justify-between mb-3">
-              <span className="text-[14px] text-white/60">Total</span>
+              <span className="text-[14px] text-white">Total</span>
               <span className="text-[22px] font-bold text-elec-yellow">
                 {formatCurrency(selectedTotal)}
               </span>

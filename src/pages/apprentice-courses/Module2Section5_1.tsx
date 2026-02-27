@@ -216,7 +216,7 @@ const Module2Section5_1 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Conductors and Insulators
           </h1>
-          <p className="text-white/80 max-w-2xl mx-auto">
+          <p className="text-white max-w-2xl mx-auto">
             Learn the fundamental properties of electrical materials and their applications
           </p>
         </div>
@@ -916,7 +916,7 @@ const Module2Section5_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-card/30 border border-border/30 rounded-lg p-4">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -932,7 +932,7 @@ const Module2Section5_1 = () => {
                   Conductors & Insulators Pocket Guide
                 </h2>
               </div>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Essential material properties and selection reference
               </p>
             </div>
@@ -1031,19 +1031,19 @@ const Module2Section5_1 = () => {
               <div className="grid grid-cols-4 gap-4 text-xs">
                 <div className="text-center">
                   <p className="font-semibold text-white">Copper ρ</p>
-                  <p className="text-white/80">17.2 nΩ·m</p>
+                  <p className="text-white">17.2 nΩ·m</p>
                 </div>
                 <div className="text-center">
                   <p className="font-semibold text-white">Aluminium ρ</p>
-                  <p className="text-white/80">28.2 nΩ·m</p>
+                  <p className="text-white">28.2 nΩ·m</p>
                 </div>
                 <div className="text-center">
                   <p className="font-semibold text-white">PVC Rating</p>
-                  <p className="text-white/80">70°C</p>
+                  <p className="text-white">70°C</p>
                 </div>
                 <div className="text-center">
                   <p className="font-semibold text-white">XLPE Rating</p>
-                  <p className="text-white/80">90°C</p>
+                  <p className="text-white">90°C</p>
                 </div>
               </div>
             </div>
@@ -1058,7 +1058,7 @@ const Module2Section5_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5"
+            className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white hover:text-white hover:bg-white/5"
             asChild
           >
             <Link to="..">

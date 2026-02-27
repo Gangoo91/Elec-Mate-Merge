@@ -266,7 +266,7 @@ const HNCModule2Section4_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section4">
@@ -288,7 +288,7 @@ const HNCModule2Section4_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Noise Control Methods
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Source, path, and receiver control strategies for building services acoustic design
           </p>
         </header>
@@ -467,10 +467,10 @@ const HNCModule2Section4_5 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Mass Law</p>
               <p className="font-mono text-center text-lg mb-2">R ≈ 20 log₁₀(f × m) - 48 dB</p>
-              <div className="text-xs text-white/70 text-center mt-2">
+              <div className="text-xs text-white text-center mt-2">
                 R = sound reduction index, f = frequency (Hz), m = surface mass (kg/m²)
               </div>
-              <p className="text-xs text-white/70 text-center mt-2">
+              <p className="text-xs text-white text-center mt-2">
                 Doubling mass or frequency increases R by approximately 6 dB
               </p>
             </div>
@@ -683,7 +683,7 @@ const HNCModule2Section4_5 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Values are indicative - always use manufacturer's data for specific products
               </p>
             </div>
@@ -773,15 +773,15 @@ const HNCModule2Section4_5 = () => {
               </p>
               <div className="grid grid-cols-3 gap-2 text-xs text-center mt-3">
                 <div className="p-2 rounded bg-black/30">
-                  <p className="text-white/70">f/fn = 2</p>
+                  <p className="text-white">f/fn = 2</p>
                   <p className="text-elec-yellow font-bold">65% isolation</p>
                 </div>
                 <div className="p-2 rounded bg-black/30">
-                  <p className="text-white/70">f/fn = 3</p>
+                  <p className="text-white">f/fn = 3</p>
                   <p className="text-elec-yellow font-bold">88% isolation</p>
                 </div>
                 <div className="p-2 rounded bg-black/30">
-                  <p className="text-white/70">f/fn = 5</p>
+                  <p className="text-white">f/fn = 5</p>
                   <p className="text-elec-yellow font-bold">96% isolation</p>
                 </div>
               </div>
@@ -839,7 +839,7 @@ const HNCModule2Section4_5 = () => {
                 the nearest grille is 40 dB(A). Natural duct attenuation is 12 dB. What silencer
                 insertion loss is required?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Required total attenuation = 85 - 40 = <strong>45 dB</strong>
                 </p>
@@ -847,10 +847,10 @@ const HNCModule2Section4_5 = () => {
                 <p>
                   Silencer requirement = 45 - 12 = <strong>33 dB</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This suggests a 1.2-1.5m silencer with splitters, or two silencers in series
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Note: Check at each octave band, not just overall dB(A)
                 </p>
               </div>
@@ -864,7 +864,7 @@ const HNCModule2Section4_5 = () => {
                 <strong>Question:</strong> A 100mm blockwork wall (150 kg/m²) provides Rw 45 dB.
                 Estimate the performance if replaced with 215mm brick (400 kg/m²).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Mass ratio = 400 / 150 = 2.67</p>
                 <p>
                   Increase = 20 log(2.67) = 20 × 0.43 = <strong>8.5 dB</strong>
@@ -872,7 +872,7 @@ const HNCModule2Section4_5 = () => {
                 <p>
                   Estimated Rw = 45 + 8.5 = <strong>53.5 dB</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Actual performance may differ due to coincidence effects and workmanship
                 </p>
               </div>
@@ -886,7 +886,7 @@ const HNCModule2Section4_5 = () => {
                 <strong>Question:</strong> A pump runs at 1450 rpm. What isolator natural frequency
                 is needed for 90% isolation?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Forcing frequency = 1450 / 60 = <strong>24.2 Hz</strong>
                 </p>
@@ -894,7 +894,7 @@ const HNCModule2Section4_5 = () => {
                 <p>
                   Required fn = 24.2 / 3.3 = <strong>7.3 Hz</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This requires steel spring mounts (rubber/neoprene too stiff)
                 </p>
                 <p className="mt-2">
@@ -978,7 +978,7 @@ const HNCModule2Section4_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1024,7 +1024,7 @@ const HNCModule2Section4_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section4-4">

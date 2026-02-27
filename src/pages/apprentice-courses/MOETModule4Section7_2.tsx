@@ -271,7 +271,7 @@ const MOETModule4Section7_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module4-section7">
@@ -291,7 +291,7 @@ const MOETModule4Section7_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Balancing PPM and Corrective Maintenance
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Finding the right mix of planned and reactive maintenance for maximum reliability at
             minimum cost
           </p>
@@ -400,14 +400,14 @@ const MOETModule4Section7_2 = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-3">
-                  <div className="w-24 text-right text-xs text-white/50">High cost</div>
+                  <div className="w-24 text-right text-xs text-white">High cost</div>
                   <div className="flex-1 text-center text-xs text-elec-yellow/80 font-medium">
                     Optimum balance
                   </div>
-                  <div className="w-24 text-left text-xs text-white/50">High cost</div>
+                  <div className="w-24 text-left text-xs text-white">High cost</div>
                 </div>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Total maintenance cost is minimised at the optimum balance point — enough preventive
                 maintenance to avoid costly breakdowns, but not so much that it wastes resources or
                 introduces new failures.
@@ -849,7 +849,7 @@ const MOETModule4Section7_2 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Note:</strong> Improving the maintenance balance is a journey, not a
               destination. Even world-class organisations continue to refine their maintenance
               programmes. The key is to have a structured process for analysing failures, adjusting
@@ -870,7 +870,7 @@ const MOETModule4Section7_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -916,7 +916,7 @@ const MOETModule4Section7_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module4-section7-1">

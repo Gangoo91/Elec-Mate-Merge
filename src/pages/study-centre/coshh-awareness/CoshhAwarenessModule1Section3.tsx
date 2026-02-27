@@ -196,7 +196,7 @@ export default function CoshhAwarenessModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-1">
@@ -221,7 +221,7 @@ export default function CoshhAwarenessModule1Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Routes of Exposure
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How hazardous substances enter the body &mdash; inhalation, skin &amp; eye contact,
             ingestion, and injection &mdash; plus Workplace Exposure Limits and biological
             monitoring
@@ -344,7 +344,7 @@ export default function CoshhAwarenessModule1Section3() {
                           {item.stat}
                         </span>
                       </div>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -380,7 +380,7 @@ export default function CoshhAwarenessModule1Section3() {
                     Why This Matters for Electricians
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Electricians are routinely exposed to hazardous substances: solvent-based
                   cleaners, flux fumes during soldering, cable insulation compounds, resin-based
                   adhesives, PVC dust from cutting trunking, and construction dusts (silica, cement,
@@ -400,7 +400,7 @@ export default function CoshhAwarenessModule1Section3() {
             The 4 Routes of Exposure &mdash; Overview Diagram
           </h2>
           <div className="bg-white/5 border border-white/10 rounded-xl p-4 sm:p-6 overflow-hidden">
-            <p className="text-xs text-white/50 uppercase tracking-wider mb-4 text-center">
+            <p className="text-xs text-white uppercase tracking-wider mb-4 text-center">
               How Hazardous Substances Enter the Body
             </p>
 
@@ -421,22 +421,22 @@ export default function CoshhAwarenessModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center text-[10px] font-bold text-red-400">
                         a
                       </span>
-                      <span className="text-xs text-white/80">Dusts, fumes &amp; fibres</span>
+                      <span className="text-xs text-white">Dusts, fumes &amp; fibres</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center text-[10px] font-bold text-red-400">
                         b
                       </span>
-                      <span className="text-xs text-white/80">Vapours &amp; gases</span>
+                      <span className="text-xs text-white">Vapours &amp; gases</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center text-[10px] font-bold text-red-400">
                         c
                       </span>
-                      <span className="text-xs text-white/80">Mists &amp; aerosols</span>
+                      <span className="text-xs text-white">Mists &amp; aerosols</span>
                     </div>
                   </div>
-                  <p className="text-[10px] text-white/50 mt-2">
+                  <p className="text-[10px] text-white mt-2">
                     Nose/mouth &rarr; trachea &rarr; bronchi &rarr; alveoli &rarr; bloodstream
                   </p>
                 </div>
@@ -456,7 +456,7 @@ export default function CoshhAwarenessModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-[10px] font-bold text-amber-400">
                         a
                       </span>
-                      <span className="text-xs text-white/80">
+                      <span className="text-xs text-white">
                         Dermal absorption (through skin)
                       </span>
                     </div>
@@ -464,18 +464,18 @@ export default function CoshhAwarenessModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-[10px] font-bold text-amber-400">
                         b
                       </span>
-                      <span className="text-xs text-white/80">Chemical burns &amp; irritation</span>
+                      <span className="text-xs text-white">Chemical burns &amp; irritation</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-[10px] font-bold text-amber-400">
                         c
                       </span>
-                      <span className="text-xs text-white/80">
+                      <span className="text-xs text-white">
                         Eye splashes &amp; vapour irritation
                       </span>
                     </div>
                   </div>
-                  <p className="text-[10px] text-white/50 mt-2">
+                  <p className="text-[10px] text-white mt-2">
                     Skin surface &rarr; epidermis &rarr; dermis &rarr; bloodstream | Eye surface
                     &rarr; cornea &rarr; bloodstream
                   </p>
@@ -496,13 +496,13 @@ export default function CoshhAwarenessModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center text-[10px] font-bold text-green-400">
                         a
                       </span>
-                      <span className="text-xs text-white/80">Contaminated hands &rarr; food</span>
+                      <span className="text-xs text-white">Contaminated hands &rarr; food</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center text-[10px] font-bold text-green-400">
                         b
                       </span>
-                      <span className="text-xs text-white/80">
+                      <span className="text-xs text-white">
                         Mucociliary clearance (swallowed)
                       </span>
                     </div>
@@ -510,10 +510,10 @@ export default function CoshhAwarenessModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-green-500/20 border border-green-500/40 flex items-center justify-center text-[10px] font-bold text-green-400">
                         c
                       </span>
-                      <span className="text-xs text-white/80">Splashes into mouth</span>
+                      <span className="text-xs text-white">Splashes into mouth</span>
                     </div>
                   </div>
-                  <p className="text-[10px] text-white/50 mt-2">
+                  <p className="text-[10px] text-white mt-2">
                     Mouth &rarr; oesophagus &rarr; stomach &rarr; intestines &rarr; liver
                     (first-pass) &rarr; bloodstream
                   </p>
@@ -534,22 +534,22 @@ export default function CoshhAwarenessModule1Section3() {
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-violet-500/20 border border-violet-500/40 flex items-center justify-center text-[10px] font-bold text-violet-400">
                         a
                       </span>
-                      <span className="text-xs text-white/80">Contaminated sharps / splinters</span>
+                      <span className="text-xs text-white">Contaminated sharps / splinters</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-violet-500/20 border border-violet-500/40 flex items-center justify-center text-[10px] font-bold text-violet-400">
                         b
                       </span>
-                      <span className="text-xs text-white/80">High-pressure equipment</span>
+                      <span className="text-xs text-white">High-pressure equipment</span>
                     </div>
                     <div className="flex items-start gap-2">
                       <span className="flex-shrink-0 w-5 h-5 rounded-full bg-violet-500/20 border border-violet-500/40 flex items-center justify-center text-[10px] font-bold text-violet-400">
                         c
                       </span>
-                      <span className="text-xs text-white/80">Abrasion + chemical contact</span>
+                      <span className="text-xs text-white">Abrasion + chemical contact</span>
                     </div>
                   </div>
-                  <p className="text-[10px] text-white/50 mt-2">
+                  <p className="text-[10px] text-white mt-2">
                     Puncture &rarr; subcutaneous tissue / muscle &rarr; bloodstream (bypasses skin
                     barrier)
                   </p>
@@ -560,19 +560,19 @@ export default function CoshhAwarenessModule1Section3() {
               <div className="flex flex-wrap items-center gap-4 mt-4 justify-center">
                 <div className="flex items-center gap-1.5">
                   <span className="w-3 h-3 rounded-full bg-red-500/30 border border-red-500/50" />
-                  <span className="text-[10px] text-white/50">Most common route</span>
+                  <span className="text-[10px] text-white">Most common route</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className="w-3 h-3 rounded-full bg-amber-500/30 border border-amber-500/50" />
-                  <span className="text-[10px] text-white/50">2nd most common</span>
+                  <span className="text-[10px] text-white">2nd most common</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className="w-3 h-3 rounded-full bg-green-500/30 border border-green-500/50" />
-                  <span className="text-[10px] text-white/50">Preventable by hygiene</span>
+                  <span className="text-[10px] text-white">Preventable by hygiene</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <span className="w-3 h-3 rounded-full bg-violet-500/30 border border-violet-500/50" />
-                  <span className="text-[10px] text-white/50">Bypasses skin barrier</span>
+                  <span className="text-[10px] text-white">Bypasses skin barrier</span>
                 </div>
               </div>
             </div>
@@ -603,7 +603,7 @@ export default function CoshhAwarenessModule1Section3() {
                     Why the Lungs Are So Vulnerable
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The lungs contain approximately <strong>300 million alveoli</strong> (tiny air
                   sacs) that provide a combined surface area of roughly <strong>70 m&sup2;</strong>{' '}
                   &mdash; about the size of a tennis court. The alveolar membrane is only{' '}
@@ -655,7 +655,7 @@ export default function CoshhAwarenessModule1Section3() {
                       </span>
                       <div>
                         <p className="text-xs font-medium text-violet-400 mb-0.5">{item.step}</p>
-                        <p className="text-xs text-white/70">{item.detail}</p>
+                        <p className="text-xs text-white">{item.detail}</p>
                       </div>
                     </div>
                   ))}
@@ -711,7 +711,7 @@ export default function CoshhAwarenessModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-violet-400 mb-1">{item.factor}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -724,7 +724,7 @@ export default function CoshhAwarenessModule1Section3() {
                     Common Inhalation Hazards for Electricians
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Soldering and brazing fumes (flux fumes containing colophony/rosin cause
                   occupational asthma), PVC dust from cutting cable trunking, construction dusts
                   (silica from drilling masonry, cement dust, wood dust from notching joists),
@@ -799,7 +799,7 @@ export default function CoshhAwarenessModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-violet-400 mb-1">{item.effect}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -857,7 +857,7 @@ export default function CoshhAwarenessModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-violet-400 mb-1">{item.effect}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -868,7 +868,7 @@ export default function CoshhAwarenessModule1Section3() {
                   <Eye className="h-5 w-5 text-violet-400" />
                   <p className="text-sm font-medium text-violet-400">Emergency Eye Wash</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If a chemical splashes into the eyes,{' '}
                   <strong>irrigate immediately with clean water for at least 20 minutes</strong>,
                   holding the eyelids open. Do not delay &mdash; every second counts with chemical
@@ -885,7 +885,7 @@ export default function CoshhAwarenessModule1Section3() {
                     Practical Example &mdash; Epoxy Dermatitis
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Epoxy resins are widely used in electrical and construction work (adhesives,
                   coatings, grouts). The resin components and especially the hardener are potent{' '}
                   <strong>skin sensitisers</strong>. Repeated unprotected contact can trigger
@@ -952,7 +952,7 @@ export default function CoshhAwarenessModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-violet-400 mb-1">{item.cause}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -972,7 +972,7 @@ export default function CoshhAwarenessModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-violet-400" />
                   <p className="text-sm font-medium text-violet-400">Prevention Is Simple</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Ingestion exposure is <strong>almost entirely preventable</strong> through basic
                   hygiene: always wash hands thoroughly before eating, drinking, or smoking; never
                   store food or drink near chemicals; use designated clean break areas; never decant
@@ -1011,7 +1011,7 @@ export default function CoshhAwarenessModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-violet-400 mb-1">{item.substance}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1042,7 +1042,7 @@ export default function CoshhAwarenessModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Why Injection Is Dangerous</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   When a substance enters through broken skin, it is delivered directly into
                   subcutaneous tissue, muscle, or the bloodstream &mdash; none of the body's surface
                   barriers (skin, mucous membranes, stomach acid) have the opportunity to limit or
@@ -1080,7 +1080,7 @@ export default function CoshhAwarenessModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-violet-400 mb-1">{item.mechanism}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1091,7 +1091,7 @@ export default function CoshhAwarenessModule1Section3() {
                   <Syringe className="h-5 w-5 text-violet-400" />
                   <p className="text-sm font-medium text-violet-400">Prevention Measures</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Prevent injection exposure by: wearing appropriate gloves and protective footwear;
                   covering existing cuts and abrasions with waterproof dressings before handling
                   chemicals; following safe systems of work for high-pressure equipment; maintaining
@@ -1161,7 +1161,7 @@ export default function CoshhAwarenessModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-violet-400 mb-1">{item.factor}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1206,7 +1206,7 @@ export default function CoshhAwarenessModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-violet-400 mb-1">{item.factor}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1217,7 +1217,7 @@ export default function CoshhAwarenessModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-violet-400" />
                   <p className="text-sm font-medium text-violet-400">The Practical Implication</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Because individual susceptibility varies,{' '}
                   <strong>Workplace Exposure Limits are not &lsquo;safe&rsquo; levels</strong>. The
                   same airborne concentration of a substance may cause no noticeable effect in one
@@ -1270,7 +1270,7 @@ export default function CoshhAwarenessModule1Section3() {
                     <p className="text-sm font-medium text-violet-400 mb-2">
                       8-Hour TWA (Time-Weighted Average)
                     </p>
-                    <ul className="text-xs text-white/70 space-y-1.5">
+                    <ul className="text-xs text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="text-violet-400 mt-0.5 flex-shrink-0">&bull;</span>
                         <span>
@@ -1302,7 +1302,7 @@ export default function CoshhAwarenessModule1Section3() {
                     <p className="text-sm font-medium text-violet-400 mb-2">
                       15-Minute STEL (Short-Term Exposure Limit)
                     </p>
-                    <ul className="text-xs text-white/70 space-y-1.5">
+                    <ul className="text-xs text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="text-violet-400 mt-0.5 flex-shrink-0">&bull;</span>
                         <span>
@@ -1336,7 +1336,7 @@ export default function CoshhAwarenessModule1Section3() {
 
               {/* WEL Explanation Diagram */}
               <div className="bg-white/5 border border-white/10 rounded-xl p-4 sm:p-6 overflow-hidden">
-                <p className="text-xs text-white/50 uppercase tracking-wider mb-4 text-center">
+                <p className="text-xs text-white uppercase tracking-wider mb-4 text-center">
                   WEL Explanation Diagram &mdash; TWA vs STEL
                 </p>
 
@@ -1352,7 +1352,7 @@ export default function CoshhAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-violet-500/20 border border-violet-500/40 flex items-center justify-center text-[10px] font-bold text-violet-400">
                             1
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Measured over full 8-hour shift
                           </span>
                         </div>
@@ -1360,7 +1360,7 @@ export default function CoshhAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-violet-500/20 border border-violet-500/40 flex items-center justify-center text-[10px] font-bold text-violet-400">
                             2
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Peaks &amp; troughs averaged out
                           </span>
                         </div>
@@ -1368,7 +1368,7 @@ export default function CoshhAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-violet-500/20 border border-violet-500/40 flex items-center justify-center text-[10px] font-bold text-violet-400">
                             3
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Protects against chronic effects
                           </span>
                         </div>
@@ -1376,7 +1376,7 @@ export default function CoshhAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-violet-500/20 border border-violet-500/40 flex items-center justify-center text-[10px] font-bold text-violet-400">
                             4
                           </span>
-                          <span className="text-xs text-white/80">Units: mg/m&sup3; or ppm</span>
+                          <span className="text-xs text-white">Units: mg/m&sup3; or ppm</span>
                         </div>
                       </div>
                     </div>
@@ -1391,7 +1391,7 @@ export default function CoshhAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center text-[10px] font-bold text-red-400">
                             1
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Measured over any 15-min window
                           </span>
                         </div>
@@ -1399,7 +1399,7 @@ export default function CoshhAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center text-[10px] font-bold text-red-400">
                             2
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Must never be exceeded at any point
                           </span>
                         </div>
@@ -1407,7 +1407,7 @@ export default function CoshhAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center text-[10px] font-bold text-red-400">
                             3
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Protects against acute effects
                           </span>
                         </div>
@@ -1415,7 +1415,7 @@ export default function CoshhAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center text-[10px] font-bold text-red-400">
                             4
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Often higher than the TWA value
                           </span>
                         </div>
@@ -1432,7 +1432,7 @@ export default function CoshhAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-[10px] font-bold text-amber-400">
                             a
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Personal air sampling pump worn by worker
                           </span>
                         </div>
@@ -1440,7 +1440,7 @@ export default function CoshhAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-[10px] font-bold text-amber-400">
                             b
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Filter or sorbent tube in the breathing zone
                           </span>
                         </div>
@@ -1448,7 +1448,7 @@ export default function CoshhAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-[10px] font-bold text-amber-400">
                             c
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Sample sent to accredited laboratory
                           </span>
                         </div>
@@ -1456,7 +1456,7 @@ export default function CoshhAwarenessModule1Section3() {
                           <span className="flex-shrink-0 w-5 h-5 rounded-full bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-[10px] font-bold text-amber-400">
                             d
                           </span>
-                          <span className="text-xs text-white/80">
+                          <span className="text-xs text-white">
                             Result compared against EH40 limit
                           </span>
                         </div>
@@ -1472,7 +1472,7 @@ export default function CoshhAwarenessModule1Section3() {
                         <span className="flex-shrink-0 w-5 h-5 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center text-[10px] font-bold text-red-400">
                           !
                         </span>
-                        <span className="text-xs text-white/80">
+                        <span className="text-xs text-white">
                           <strong>WELs are legal maximums, not safe levels.</strong> Employers must
                           reduce exposure to as low as is reasonably practicable (ALARP), even if
                           already below the WEL.
@@ -1485,15 +1485,15 @@ export default function CoshhAwarenessModule1Section3() {
                   <div className="flex flex-wrap items-center gap-4 mt-4 justify-center">
                     <div className="flex items-center gap-1.5">
                       <span className="w-3 h-3 rounded-full bg-violet-500/30 border border-violet-500/50" />
-                      <span className="text-[10px] text-white/50">Long-term limit (TWA)</span>
+                      <span className="text-[10px] text-white">Long-term limit (TWA)</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                       <span className="w-3 h-3 rounded-full bg-red-500/30 border border-red-500/50" />
-                      <span className="text-[10px] text-white/50">Short-term limit (STEL)</span>
+                      <span className="text-[10px] text-white">Short-term limit (STEL)</span>
                     </div>
                     <div className="flex items-center gap-1.5">
                       <span className="w-3 h-3 rounded-full bg-amber-500/30 border border-amber-500/50" />
-                      <span className="text-[10px] text-white/50">Measurement method</span>
+                      <span className="text-[10px] text-white">Measurement method</span>
                     </div>
                   </div>
                 </div>
@@ -1563,8 +1563,8 @@ export default function CoshhAwarenessModule1Section3() {
                             </span>
                           )}
                         </div>
-                        <p className="text-xs text-white/70">8hr TWA: {item.twa}</p>
-                        <p className="text-xs text-white/70">15min STEL: {item.stel}</p>
+                        <p className="text-xs text-white">8hr TWA: {item.twa}</p>
+                        <p className="text-xs text-white">15min STEL: {item.stel}</p>
                       </div>
                     ))}
                   </div>
@@ -1578,7 +1578,7 @@ export default function CoshhAwarenessModule1Section3() {
                     Legal Duty &mdash; COSHH Regulation 7
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Under COSHH Regulation 7, employers must ensure that exposure to hazardous
                   substances is either
                   <strong> prevented</strong> or, where prevention is not reasonably practicable,
@@ -1651,7 +1651,7 @@ export default function CoshhAwarenessModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-violet-400 mb-1">{item.concept}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1664,7 +1664,7 @@ export default function CoshhAwarenessModule1Section3() {
                     Carcinogens &mdash; No Safe Threshold
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   For genotoxic carcinogens (substances that directly damage DNA), the scientific
                   consensus is that there may be <strong>no safe threshold</strong>. Even a single
                   molecule could theoretically initiate a mutation that leads to cancer. This is why
@@ -1690,7 +1690,7 @@ export default function CoshhAwarenessModule1Section3() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="bg-black/30 rounded-lg p-4">
                     <p className="text-sm font-medium text-amber-400 mb-2">Air Monitoring</p>
-                    <ul className="text-xs text-white/70 space-y-1.5">
+                    <ul className="text-xs text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="text-amber-400 mt-0.5 flex-shrink-0">&bull;</span>
                         <span>Measures airborne concentration in the breathing zone</span>
@@ -1715,7 +1715,7 @@ export default function CoshhAwarenessModule1Section3() {
                     <p className="text-sm font-medium text-violet-400 mb-2">
                       Biological Monitoring
                     </p>
-                    <ul className="text-xs text-white/70 space-y-1.5">
+                    <ul className="text-xs text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="text-violet-400 mt-0.5 flex-shrink-0">&bull;</span>
                         <span>Measures what has actually entered the body</span>
@@ -1796,8 +1796,8 @@ export default function CoshhAwarenessModule1Section3() {
                           {item.sample}
                         </span>
                       </div>
-                      <p className="text-xs text-white/60 mb-1">Test: {item.test}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white mb-1">Test: {item.test}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1826,7 +1826,7 @@ export default function CoshhAwarenessModule1Section3() {
                     When Is Biological Monitoring Required?
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Biological monitoring is <strong>legally required</strong> for lead workers (under
                   the Control of Lead at Work Regulations 2002) and for some specific processes. For
                   other substances, it is
@@ -1848,7 +1848,7 @@ export default function CoshhAwarenessModule1Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1862,7 +1862,7 @@ export default function CoshhAwarenessModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-1-section-2">

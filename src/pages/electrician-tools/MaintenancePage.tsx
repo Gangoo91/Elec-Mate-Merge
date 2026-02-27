@@ -34,7 +34,7 @@ const MaintenancePage = () => {
           </div>
           <div>
             <h1 className="text-xl font-bold text-white">Maintenance Specialist</h1>
-            <p className="text-sm text-white/50">Inspections & fault diagnosis</p>
+            <p className="text-sm text-white">Inspections & fault diagnosis</p>
           </div>
         </div>
 

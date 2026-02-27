@@ -93,7 +93,7 @@ const BS7671Module2Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bs7671-module-2">
@@ -114,7 +114,7 @@ const BS7671Module2Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Amendment 3 Highlights & Current Requirements
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Bidirectional protection for renewable energy installations
           </p>
         </header>
@@ -241,11 +241,11 @@ const BS7671Module2Section4 = () => {
                 <div className="grid sm:grid-cols-2 gap-4 text-xs">
                   <div>
                     <p className="font-medium text-white mb-1">Requirement:</p>
-                    <p className="text-white/80">Bidirectional protection mandatory</p>
+                    <p className="text-white">Bidirectional protection mandatory</p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Reason:</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Energy flows in both directions depending on generation and consumption
                     </p>
                   </div>
@@ -263,11 +263,11 @@ const BS7671Module2Section4 = () => {
                 <div className="grid sm:grid-cols-2 gap-4 text-xs">
                   <div>
                     <p className="font-medium text-white mb-1">Requirement:</p>
-                    <p className="text-white/80">Enhanced grid interaction protection</p>
+                    <p className="text-white">Enhanced grid interaction protection</p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Reason:</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Vehicle-to-grid technology creates reverse current flows
                     </p>
                   </div>
@@ -285,11 +285,11 @@ const BS7671Module2Section4 = () => {
                 <div className="grid sm:grid-cols-2 gap-4 text-xs">
                   <div>
                     <p className="font-medium text-white mb-1">Requirement:</p>
-                    <p className="text-white/80">Consumer unit upgrades may be required</p>
+                    <p className="text-white">Consumer unit upgrades may be required</p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Reason:</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Standard MCBs may not provide adequate reverse current protection
                     </p>
                   </div>
@@ -305,11 +305,11 @@ const BS7671Module2Section4 = () => {
                 <div className="grid sm:grid-cols-2 gap-4 text-xs">
                   <div>
                     <p className="font-medium text-white mb-1">Requirement:</p>
-                    <p className="text-white/80">Comprehensive grid interaction study</p>
+                    <p className="text-white">Comprehensive grid interaction study</p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Reason:</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Large-scale generation affects local grid stability
                     </p>
                   </div>
@@ -366,13 +366,13 @@ const BS7671Module2Section4 = () => {
             <div className="grid grid-cols-2 gap-4 my-6">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white text-sm mb-1">Standard MCB</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Designed for unidirectional current flow only
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-green-500/30">
                 <p className="font-medium text-green-400 text-sm mb-1">Bidirectional MCB</p>
-                <p className="text-xs text-white/70">Protects against faults in both directions</p>
+                <p className="text-xs text-white">Protects against faults in both directions</p>
               </div>
             </div>
           </div>
@@ -397,11 +397,11 @@ const BS7671Module2Section4 = () => {
                 </p>
                 <div className="grid sm:grid-cols-2 gap-4 text-xs">
                   <div>
-                    <p className="font-medium text-white/80">Method:</p>
+                    <p className="font-medium text-white">Method:</p>
                     <p>Verify protective device operation in both current directions</p>
                   </div>
                   <div>
-                    <p className="font-medium text-white/80">Acceptance:</p>
+                    <p className="font-medium text-white">Acceptance:</p>
                     <p>Operation within manufacturer's specs for both polarities</p>
                   </div>
                 </div>
@@ -413,11 +413,11 @@ const BS7671Module2Section4 = () => {
                 </p>
                 <div className="grid sm:grid-cols-2 gap-4 text-xs">
                   <div>
-                    <p className="font-medium text-white/80">Method:</p>
+                    <p className="font-medium text-white">Method:</p>
                     <p>Simulate grid disconnection during reverse power flow</p>
                   </div>
                   <div>
-                    <p className="font-medium text-white/80">Acceptance:</p>
+                    <p className="font-medium text-white">Acceptance:</p>
                     <p>System isolation within 5 seconds of grid loss detection</p>
                   </div>
                 </div>
@@ -429,11 +429,11 @@ const BS7671Module2Section4 = () => {
                 </p>
                 <div className="grid sm:grid-cols-2 gap-4 text-xs">
                   <div>
-                    <p className="font-medium text-white/80">Method:</p>
+                    <p className="font-medium text-white">Method:</p>
                     <p>Test RCD tripping with current flowing from installation to grid</p>
                   </div>
                   <div>
-                    <p className="font-medium text-white/80">Acceptance:</p>
+                    <p className="font-medium text-white">Acceptance:</p>
                     <p>
                       Trip time and sensitivity within BS 7671 limits regardless of current
                       direction
@@ -448,11 +448,11 @@ const BS7671Module2Section4 = () => {
                 </p>
                 <div className="grid sm:grid-cols-2 gap-4 text-xs">
                   <div>
-                    <p className="font-medium text-white/80">Method:</p>
+                    <p className="font-medium text-white">Method:</p>
                     <p>Verify compliance with G98/G99 grid codes</p>
                   </div>
                   <div>
-                    <p className="font-medium text-white/80">Acceptance:</p>
+                    <p className="font-medium text-white">Acceptance:</p>
                     <p>All protection settings within grid code limits</p>
                   </div>
                 </div>
@@ -563,7 +563,7 @@ const BS7671Module2Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -609,7 +609,7 @@ const BS7671Module2Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bs7671-module-2-section-3">

@@ -92,7 +92,7 @@ export const AIAgentsCarousel = () => {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             8 Specialist AI Agents
           </h2>
-          <p className="text-white/50 max-w-lg mx-auto text-sm sm:text-base">
+          <p className="text-white max-w-lg mx-auto text-sm sm:text-base">
             Purpose-built AI assistants trained on UK electrical regulations.
           </p>
         </motion.div>
@@ -106,7 +106,7 @@ export const AIAgentsCarousel = () => {
               </div>
             ))}
           </div>
-          <p className="text-center text-white/30 text-[10px] mt-3 uppercase tracking-wider">
+          <p className="text-center text-white text-[10px] mt-3 uppercase tracking-wider">
             Swipe for more
           </p>
         </div>

@@ -107,7 +107,7 @@ const BS7671Module3Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bs7671-module-3">
@@ -128,7 +128,7 @@ const BS7671Module3Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Supply Systems – TN-S, TN-C-S, TT, IT
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding earthing arrangements and their safety implications
           </p>
         </header>
@@ -236,19 +236,19 @@ const BS7671Module3Section1 = () => {
             <div className="grid grid-cols-4 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-green-500/30">
                 <p className="font-medium text-green-400 mb-1">Zs</p>
-                <p className="text-white/90 text-xs">≤0.8Ω typical</p>
+                <p className="text-white text-xs">≤0.8Ω typical</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Supply Cable</p>
-                <p className="text-white/90 text-xs">4 or 5 core</p>
+                <p className="text-white text-xs">4 or 5 core</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">N & PE</p>
-                <p className="text-white/90 text-xs">Separate throughout</p>
+                <p className="text-white text-xs">Separate throughout</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">RCD</p>
-                <p className="text-white/90 text-xs">Additional protection</p>
+                <p className="text-white text-xs">Additional protection</p>
               </div>
             </div>
           </div>
@@ -385,15 +385,15 @@ const BS7671Module3Section1 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Rural</p>
-                <p className="text-white/90 text-xs">Farms, remote cottages, caravans</p>
+                <p className="text-white text-xs">Farms, remote cottages, caravans</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Temporary</p>
-                <p className="text-white/90 text-xs">Construction sites, events</p>
+                <p className="text-white text-xs">Construction sites, events</p>
               </div>
               <div className="p-3 rounded bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-1">Specialist</p>
-                <p className="text-white/90 text-xs">Petrol stations, marinas</p>
+                <p className="text-white text-xs">Petrol stations, marinas</p>
               </div>
             </div>
           </div>
@@ -593,7 +593,7 @@ const BS7671Module3Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -639,7 +639,7 @@ const BS7671Module3Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bs7671-module-3">

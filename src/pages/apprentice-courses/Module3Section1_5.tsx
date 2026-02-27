@@ -225,7 +225,7 @@ const Module3Section1_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -247,7 +247,7 @@ const Module3Section1_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Flexible Cords and Flex Outlets
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Multi-stranded cables designed for movement, portability and flexible connections to
             equipment
           </p>
@@ -327,25 +327,25 @@ const Module3Section1_5 = () => {
               <div className="grid sm:grid-cols-2 gap-3">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white text-sm mb-1">Conductors</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Class 5 or Class 6 multi-stranded copper for maximum flexibility
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white text-sm mb-1">Insulation</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     PVC, rubber, silicone or heat-resistant synthetic materials
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white text-sm mb-1">Outer Sheath</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Protective covering to resist abrasion, moisture and environmental effects
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white text-sm mb-1">Strain Relief</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Built-in or added at terminations to prevent conductor damage
                   </p>
                 </div>
@@ -415,7 +415,7 @@ const Module3Section1_5 = () => {
                 <p className="font-medium text-white text-sm mb-1">
                   PVC Insulated and Sheathed Flex
                 </p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>
                     <strong>Temperature:</strong> Up to 70°C continuous operation
                   </li>
@@ -432,7 +432,7 @@ const Module3Section1_5 = () => {
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white text-sm mb-1">Heat-Resistant Flex</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>
                     <strong>Temperature:</strong> Up to 90°C, 105°C or higher ratings available
                   </li>
@@ -454,7 +454,7 @@ const Module3Section1_5 = () => {
             <div className="grid sm:grid-cols-2 gap-3 my-6">
               <div className="p-3 rounded bg-green-500/10 border border-green-400/30">
                 <p className="font-medium text-white text-sm mb-1">Rubber-Sheathed Flex (HOFR)</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>
                     <strong>HOFR:</strong> Heavy duty Oil and Flame Resistant
                   </li>
@@ -472,7 +472,7 @@ const Module3Section1_5 = () => {
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white text-sm mb-1">Artic Flex</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>
                     <strong>Temperature:</strong> Remains flexible down to -40°C or lower
                   </li>
@@ -559,7 +559,7 @@ const Module3Section1_5 = () => {
             <div className="grid sm:grid-cols-3 gap-3 my-6">
               <div className="p-3 rounded bg-green-500/10 border border-green-400/30">
                 <p className="font-medium text-white text-sm mb-2">Ceiling Rose Types</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Loop-in ceiling rose with cord grip</li>
                   <li>Junction box ceiling rose</li>
                   <li>Low profile roses for modern fittings</li>
@@ -568,7 +568,7 @@ const Module3Section1_5 = () => {
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white text-sm mb-2">Flex Outlet Plates</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Surface-mounted outlet plates</li>
                   <li>Flush-mounted plates for neat installation</li>
                   <li>Industrial outlet plates with enhanced protection</li>
@@ -577,7 +577,7 @@ const Module3Section1_5 = () => {
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white text-sm mb-2">Adaptable Box Solutions</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Metallic boxes with cord grips</li>
                   <li>Non-metallic enclosures</li>
                   <li>IP-rated boxes for harsh environments</li>
@@ -615,7 +615,7 @@ const Module3Section1_5 = () => {
               <div className="grid sm:grid-cols-3 gap-4">
                 <div>
                   <p className="font-medium text-white text-xs mb-2">Preparation Tools</p>
-                  <ul className="text-xs text-white/80 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>Wire strippers for multi-strand conductors</li>
                     <li>Sharp cable knife</li>
                     <li>Small screwdrivers (electrician's set)</li>
@@ -624,7 +624,7 @@ const Module3Section1_5 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white text-xs mb-2">Termination Materials</p>
-                  <ul className="text-xs text-white/80 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>Appropriate flex outlet with cord grip</li>
                     <li>Terminal blocks or connectors</li>
                     <li>Insulation sleeves if required</li>
@@ -633,7 +633,7 @@ const Module3Section1_5 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white text-xs mb-2">Safety Equipment</p>
-                  <ul className="text-xs text-white/80 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>Voltage tester/proving unit</li>
                     <li>Lock-off devices</li>
                     <li>Personal protective equipment</li>
@@ -678,7 +678,7 @@ const Module3Section1_5 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-3 rounded bg-green-500/10 border border-green-400/30">
                 <p className="font-medium text-white text-sm mb-2">Installation Steps</p>
-                <ol className="list-decimal ml-4 space-y-1 text-xs text-white/80">
+                <ol className="list-decimal ml-4 space-y-1 text-xs text-white">
                   <li>Isolate supply and prove dead</li>
                   <li>Position outlet and mark fixing holes</li>
                   <li>Prepare cable entry (knockout or drilling)</li>
@@ -694,7 +694,7 @@ const Module3Section1_5 = () => {
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white text-sm mb-2">Cord Grip Best Practices</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Grip must clamp onto outer sheath, not individual conductors</li>
                   <li>Leave small service loop inside outlet for strain relief</li>
                   <li>Ensure adequate IP rating for environment</li>
@@ -708,7 +708,7 @@ const Module3Section1_5 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white text-sm mb-2">Problems to Avoid</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Cord grip clamping on individual conductors</li>
                   <li>Over-tightening causing sheath damage</li>
                   <li>Insufficient conductor length causing tension</li>
@@ -718,7 +718,7 @@ const Module3Section1_5 = () => {
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white text-sm mb-2">Best Practice Solutions</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Use proper cord grips designed for cable diameter</li>
                   <li>Form service loop to relieve mechanical stress</li>
                   <li>Check connections are secure but not over-tight</li>
@@ -798,7 +798,7 @@ const Module3Section1_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.q}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.a}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.a}</p>
               </div>
             ))}
           </div>
@@ -854,7 +854,7 @@ const Module3Section1_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">

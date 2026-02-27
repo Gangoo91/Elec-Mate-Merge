@@ -175,7 +175,7 @@ export function ChatImageUpload({
                         transition={{ duration: 0.3 }}
                       />
                     </div>
-                    <p className="text-xs text-white/70 mt-2">Uploading...</p>
+                    <p className="text-xs text-white mt-2">Uploading...</p>
                   </div>
                 )}
 

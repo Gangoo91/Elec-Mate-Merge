@@ -185,7 +185,7 @@ const Module5Section3_1 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -202,13 +202,13 @@ const Module5Section3_1 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.3.1</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.3.1</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Job Breakdown and Task Sequencing
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Learn to divide large electrical projects into manageable tasks and sequence them for
               efficient, safe completion.
             </p>
@@ -223,7 +223,7 @@ const Module5Section3_1 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2">Key Points</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                <ul className="text-white text-sm space-y-1 list-disc pl-4">
                   <li>Break large jobs into smaller, manageable tasks</li>
                   <li>Sequence logically: containment → cabling → terminations → testing</li>
                   <li>Coordinate with other trades to avoid clashes and rework</li>
@@ -231,7 +231,7 @@ const Module5Section3_1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2">Spot it / Use it</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                <ul className="text-white text-sm space-y-1 list-disc pl-4">
                   <li>
                     <strong>Spot:</strong> Logical phases - groundwork first, accessories last
                   </li>
@@ -252,7 +252,7 @@ const Module5Section3_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Large electrical installation projects can feel overwhelming if approached all at
                 once. Job breakdown and sequencing is the method of dividing tasks into smaller,
@@ -266,7 +266,7 @@ const Module5Section3_1 = () => {
                   <Clock className="w-5 h-5 text-blue-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-blue-400 mb-1">Why This Matters</p>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       In the electrical industry, poor planning and sequencing account for
                       approximately 30% of project delays and cost overruns. Mastering these skills
                       will make you a valuable team member and help ensure project success.
@@ -282,7 +282,7 @@ const Module5Section3_1 = () => {
               </p>
 
               <div className="p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   <strong className="text-elec-yellow">Industry Standard:</strong> BS 7671
                   emphasises the importance of proper installation planning and sequencing to ensure
                   electrical safety and compliance throughout the construction process.
@@ -297,10 +297,10 @@ const Module5Section3_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <p className="text-white/80 mb-3">
+            <p className="text-white mb-3">
               By the end of this subsection, you will be able to:
             </p>
-            <ul className="text-white/80 space-y-2 list-disc pl-6">
+            <ul className="text-white space-y-2 list-disc pl-6">
               <li>Break down electrical installation work into manageable tasks</li>
               <li>Understand the importance of logical sequencing in planning</li>
               <li>Apply sequencing to real-world electrical jobs</li>
@@ -315,7 +315,7 @@ const Module5Section3_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               What is Job Breakdown?
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>Job breakdown is the process of:</p>
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
@@ -323,7 +323,7 @@ const Module5Section3_1 = () => {
                 <div className="space-y-4">
                   <div>
                     <p className="text-white font-medium mb-2">Splitting Large Jobs:</p>
-                    <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                    <ul className="text-sm text-white list-disc pl-4 space-y-1">
                       <li>
                         Dividing a large job (e.g., wiring a floor of offices) into smaller,
                         specific tasks
@@ -337,7 +337,7 @@ const Module5Section3_1 = () => {
                   </div>
                   <div>
                     <p className="text-white font-medium mb-2">Clear Responsibilities:</p>
-                    <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                    <ul className="text-sm text-white list-disc pl-4 space-y-1">
                       <li>Makes responsibilities clear for each team member</li>
                       <li>Reduces errors and confusion on site</li>
                       <li>Enables better progress tracking and quality control</li>
@@ -348,7 +348,7 @@ const Module5Section3_1 = () => {
 
               <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/30">
                 <p className="font-medium text-green-400 mb-1">Key Benefit</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Breaking down large jobs makes complex projects manageable and reduces the risk of
                   overlooking important tasks.
                 </p>
@@ -372,7 +372,7 @@ const Module5Section3_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Sequencing Work
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Sequencing means completing tasks in a logical order to avoid rework or safety
                 issues:
@@ -383,7 +383,7 @@ const Module5Section3_1 = () => {
                 <div className="space-y-4">
                   <div>
                     <p className="text-white font-medium mb-2">Typical Electrical Sequence:</p>
-                    <ol className="text-sm text-white/70 list-decimal pl-4 space-y-1">
+                    <ol className="text-sm text-white list-decimal pl-4 space-y-1">
                       <li>
                         <strong>Groundwork:</strong> First fix, cable routes, containment
                         positioning
@@ -404,7 +404,7 @@ const Module5Section3_1 = () => {
                   </div>
                   <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/30">
                     <p className="font-medium text-red-400 mb-1">Example of Poor Sequencing</p>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       <strong>Wrong:</strong> Installing socket outlets before containment and
                       cables are in place — you would not install accessories before containment and
                       cables are ready.
@@ -431,13 +431,13 @@ const Module5Section3_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Steps in Task Sequencing
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-purple-500/10 border-l-2 border-purple-400/50">
                 <p className="font-medium text-purple-400 mb-3">Systematic Planning Process</p>
                 <div className="space-y-4">
                   <div>
                     <p className="text-white font-medium mb-2">Essential Planning Steps:</p>
-                    <ol className="text-sm text-white/70 list-decimal pl-4 space-y-2">
+                    <ol className="text-sm text-white list-decimal pl-4 space-y-2">
                       <li>
                         <strong>Review installation drawings and specifications</strong>
                         <p className="mt-1">
@@ -490,7 +490,7 @@ const Module5Section3_1 = () => {
                 <div className="grid sm:grid-cols-2 gap-4 text-sm">
                   <div>
                     <p className="font-medium text-white mb-2">Week 1 — Preparation:</p>
-                    <ul className="list-disc pl-4 space-y-1 text-white/70">
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Set out cable routes</li>
                       <li>Mark containment positions</li>
                       <li>Coordinate with building services</li>
@@ -499,7 +499,7 @@ const Module5Section3_1 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white mb-2">Week 2 — First Fix:</p>
-                    <ul className="list-disc pl-4 space-y-1 text-white/70">
+                    <ul className="list-disc pl-4 space-y-1 text-white">
                       <li>Install cable containment systems</li>
                       <li>Run main distribution cables</li>
                       <li>Install back boxes and mounting systems</li>
@@ -517,10 +517,10 @@ const Module5Section3_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Why Sequencing Matters
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-orange-500/10 border-l-2 border-orange-400/50">
                 <p className="font-medium text-orange-400 mb-3">Benefits of Proper Sequencing</p>
-                <ul className="text-sm text-white/70 list-disc pl-4 space-y-2">
+                <ul className="text-sm text-white list-disc pl-4 space-y-2">
                   <li>
                     <strong>Prevents rework and wasted labour</strong> — work is done right the
                     first time
@@ -550,7 +550,7 @@ const Module5Section3_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/30">
                   <p className="font-medium text-green-400 mb-2">Proper Sequencing:</p>
-                  <ul className="list-disc pl-4 space-y-1 text-white/70">
+                  <ul className="list-disc pl-4 space-y-1 text-white">
                     <li>5-10% faster completion</li>
                     <li>Reduced material waste</li>
                     <li>Lower labour costs</li>
@@ -560,7 +560,7 @@ const Module5Section3_1 = () => {
                 </div>
                 <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/30">
                   <p className="font-medium text-red-400 mb-2">Poor Sequencing:</p>
-                  <ul className="list-disc pl-4 space-y-1 text-white/70">
+                  <ul className="list-disc pl-4 space-y-1 text-white">
                     <li>20-30% increased costs</li>
                     <li>Extended project timelines</li>
                     <li>Higher accident rates</li>
@@ -580,7 +580,7 @@ const Module5Section3_1 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-400/50">
               <p className="font-medium text-red-400 mb-3">Consequences of Poor Planning</p>
-              <ul className="text-sm text-white/70 list-disc pl-4 space-y-2">
+              <ul className="text-sm text-white list-disc pl-4 space-y-2">
                 <li>
                   <strong>Wasted time and materials</strong> — rework costs money and delays
                   completion
@@ -619,7 +619,7 @@ const Module5Section3_1 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
               <p className="font-medium text-elec-yellow mb-3">On-Site Best Practices</p>
-              <ul className="text-sm text-white/70 list-disc pl-4 space-y-2">
+              <ul className="text-sm text-white list-disc pl-4 space-y-2">
                 <li>
                   <strong>Use planning tools:</strong> Task lists or Gantt charts to track work
                   stages and dependencies
@@ -664,16 +664,16 @@ const Module5Section3_1 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-400/50">
               <p className="font-medium text-amber-400 mb-3">School Refurbishment Project</p>
-              <p className="text-white/80 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 On a school refurbishment project, an electrical team installed socket outlets
                 before plastering was finished. The plasterers damaged several sockets while
                 working, forcing the electricians to remove and reinstall them.
               </p>
-              <p className="text-white/80 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 <strong className="text-white">Result:</strong> This led to wasted materials, extra
                 costs, and project delays.
               </p>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 <strong className="text-white">Solution:</strong> If the work had been sequenced
                 correctly, the accessories would have been installed after plastering, saving time
                 and money.
@@ -696,12 +696,12 @@ const Module5Section3_1 = () => {
                   >
                     <span className="font-medium text-white text-sm">{faq.question}</span>
                     <ChevronDown
-                      className={`w-5 h-5 text-white/60 transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
+                      className={`w-5 h-5 text-white transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
                     />
                   </button>
                   {openFaq === index && (
                     <div className="px-4 pb-4">
-                      <p className="text-white/70 text-sm">{faq.answer}</p>
+                      <p className="text-white text-sm">{faq.answer}</p>
                     </div>
                   )}
                 </div>
@@ -718,7 +718,7 @@ const Module5Section3_1 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/30">
                 <p className="font-medium text-elec-yellow mb-3">Quick Task Breakdown</p>
-                <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                <ul className="text-sm text-white list-disc pl-4 space-y-1">
                   <li>Break down big jobs into smaller, manageable tasks</li>
                   <li>Sequence logically: containment → cabling → terminations → testing</li>
                   <li>Always check site conditions before starting</li>
@@ -728,7 +728,7 @@ const Module5Section3_1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-elec-yellow mb-3">Planning Tools</p>
-                <ul className="text-sm text-white/70 list-disc pl-4 space-y-1">
+                <ul className="text-sm text-white list-disc pl-4 space-y-1">
                   <li>Use Gantt charts for complex projects</li>
                   <li>Create task lists with dependencies</li>
                   <li>Hold daily coordination meetings</li>
@@ -742,7 +742,7 @@ const Module5Section3_1 = () => {
           {/* Recap */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <h3 className="font-semibold text-white mb-2">Recap</h3>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               In this subsection, you learned how to break down jobs into smaller tasks, sequence
               them in a logical order, and avoid risks of poor planning. You've seen how sequencing
               prevents delays, reduces rework, and ensures safe, efficient installations. Remember:
@@ -764,7 +764,7 @@ const Module5Section3_1 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="..">

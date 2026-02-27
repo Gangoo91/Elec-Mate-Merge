@@ -83,7 +83,7 @@ const TestingInstructions = ({ stepData }: TestingInstructionsProps) => {
                   <span className="flex-shrink-0 w-7 h-7 bg-gradient-to-br from-green-500 to-green-600 text-white rounded-lg flex items-center justify-center text-xs font-bold">
                     {index + 1}
                   </span>
-                  <span className="text-sm text-white/80 pt-0.5">{instruction}</span>
+                  <span className="text-sm text-white pt-0.5">{instruction}</span>
                 </li>
               ))}
             </ol>
@@ -109,7 +109,7 @@ const TestingInstructions = ({ stepData }: TestingInstructionsProps) => {
                 <span className="text-green-400">~</span>
                 <span className="text-xs font-medium text-green-400">Typical Values</span>
               </div>
-              <p className="text-sm text-white/80 ml-5">{stepData.expectedResults.typical}</p>
+              <p className="text-sm text-white ml-5">{stepData.expectedResults.typical}</p>
             </div>
             {stepData.expectedResults.minimum && (
               <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
@@ -117,7 +117,7 @@ const TestingInstructions = ({ stepData }: TestingInstructionsProps) => {
                   <span className="text-blue-400">↓</span>
                   <span className="text-xs font-medium text-blue-400">Minimum Acceptable</span>
                 </div>
-                <p className="text-sm text-white/80 ml-5">{stepData.expectedResults.minimum}</p>
+                <p className="text-sm text-white ml-5">{stepData.expectedResults.minimum}</p>
               </div>
             )}
             {stepData.expectedResults.maximum && (
@@ -126,7 +126,7 @@ const TestingInstructions = ({ stepData }: TestingInstructionsProps) => {
                   <span className="text-red-400">↑</span>
                   <span className="text-xs font-medium text-red-400">Maximum Acceptable</span>
                 </div>
-                <p className="text-sm text-white/80 ml-5">{stepData.expectedResults.maximum}</p>
+                <p className="text-sm text-white ml-5">{stepData.expectedResults.maximum}</p>
               </div>
             )}
           </CardContent>
@@ -156,7 +156,7 @@ const TestingInstructions = ({ stepData }: TestingInstructionsProps) => {
                 </div>
                 <ul className="space-y-2">
                   {stepData.systemTypes.singlePhase.map((item, index) => (
-                    <li key={index} className="text-sm text-white/70 flex items-start gap-2">
+                    <li key={index} className="text-sm text-white flex items-start gap-2">
                       <span className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-1.5 flex-shrink-0" />
                       {item}
                     </li>
@@ -172,7 +172,7 @@ const TestingInstructions = ({ stepData }: TestingInstructionsProps) => {
                 </div>
                 <ul className="space-y-2">
                   {stepData.systemTypes.threePhase.map((item, index) => (
-                    <li key={index} className="text-sm text-white/70 flex items-start gap-2">
+                    <li key={index} className="text-sm text-white flex items-start gap-2">
                       <span className="w-1.5 h-1.5 bg-purple-400 rounded-full mt-1.5 flex-shrink-0" />
                       {item}
                     </li>

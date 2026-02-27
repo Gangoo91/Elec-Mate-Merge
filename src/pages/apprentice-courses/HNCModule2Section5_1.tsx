@@ -228,7 +228,7 @@ const HNCModule2Section5_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section5">
@@ -250,7 +250,7 @@ const HNCModule2Section5_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Solar Radiation
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding solar geometry, irradiance, and solar heat gains for building thermal
             design
           </p>
@@ -399,10 +399,10 @@ const HNCModule2Section5_1 = () => {
               <p className="font-mono text-center text-sm mb-2">
                 sin(α) = sin(φ)sin(δ) + cos(φ)cos(δ)cos(ω)
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where φ = latitude, δ = declination, ω = hour angle
               </p>
-              <p className="text-xs text-white/70 text-center mt-2">
+              <p className="text-xs text-white text-center mt-2">
                 At solar noon (ω = 0): α = 90° - φ + δ
               </p>
             </div>
@@ -589,7 +589,7 @@ const HNCModule2Section5_1 = () => {
                 I<sub>surface</sub> = I<sub>bn</sub> × cos(θ) + I<sub>d</sub> × F<sub>sky</sub> + I
                 <sub>g</sub> × ρ × F<sub>ground</sub>
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where θ = angle of incidence, F = view factors, ρ = ground reflectance (albedo)
               </p>
             </div>
@@ -655,7 +655,7 @@ const HNCModule2Section5_1 = () => {
               <p className="font-mono text-center text-sm mb-2">
                 Q<sub>solar</sub> = I × A × SHGC × F<sub>frame</sub> × F<sub>shading</sub>
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where I = irradiance, A = glass area, SHGC = solar heat gain coefficient
               </p>
             </div>
@@ -755,7 +755,7 @@ const HNCModule2Section5_1 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Part O consideration:</strong> Building Regulations Part O limits solar gains
               to prevent overheating. Maximum g-value limits apply to residential glazing based on
               orientation and area.
@@ -781,13 +781,13 @@ const HNCModule2Section5_1 = () => {
                 <strong>Question:</strong> Calculate the solar altitude at solar noon on 21st June
                 in Birmingham (latitude 52.5°N).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>At solar noon, altitude = 90° - latitude + declination</p>
                 <p>Declination on 21st June = +23.5°</p>
                 <p className="mt-2">
                   α = 90° - 52.5° + 23.5° = <strong>61°</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   The sun reaches maximum altitude of 61° above the southern horizon
                 </p>
               </div>
@@ -802,13 +802,13 @@ const HNCModule2Section5_1 = () => {
                 (g-value 0.40, frame factor 0.75). Peak irradiance on the facade is 450 W/m².
                 Calculate the solar heat gain.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Solar gain = Irradiance × Area × g-value × Frame factor</p>
                 <p className="mt-2">Q = 450 W/m² × 20m² × 0.40 × 0.75</p>
                 <p>
                   Q = <strong>2700W = 2.7kW</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This is the instantaneous peak solar gain requiring cooling
                 </p>
               </div>
@@ -822,7 +822,7 @@ const HNCModule2Section5_1 = () => {
                 <strong>Question:</strong> The same window (Example 2) has external louvres
                 installed with shading factor 0.15. What is the new solar gain?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Shaded solar gain = Unshaded gain × Shading factor</p>
                 <p className="mt-2">
                   Q = 2700W × 0.15 = <strong>405W</strong>
@@ -830,7 +830,7 @@ const HNCModule2Section5_1 = () => {
                 <p className="mt-2 text-green-400">
                   Reduction = 2700 - 405 = 2295W (85% reduction)
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   External shading is highly effective at blocking direct solar gains
                 </p>
               </div>
@@ -845,14 +845,14 @@ const HNCModule2Section5_1 = () => {
                 tilt. Annual irradiation is 1050 kWh/m². What energy yield can 20m² of panels (18%
                 efficiency) produce?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Annual energy = Irradiation × Area × Efficiency × Performance ratio</p>
                 <p className="mt-2">Assume performance ratio = 0.80 (typical)</p>
                 <p>E = 1050 × 20 × 0.18 × 0.80</p>
                 <p>
                   E = <strong>3024 kWh/year</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Equivalent to ~3600W peak system (20m² × 180W/m²)
                 </p>
               </div>
@@ -938,7 +938,7 @@ const HNCModule2Section5_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -984,7 +984,7 @@ const HNCModule2Section5_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section5">

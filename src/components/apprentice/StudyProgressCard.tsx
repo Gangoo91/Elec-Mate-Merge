@@ -51,7 +51,7 @@ export const StudyProgressCard: React.FC = () => {
           </div>
           <div>
             <h3 className="text-base font-semibold text-white">Study Progress</h3>
-            <p className="text-xs text-white/50">Your learning journey</p>
+            <p className="text-xs text-white">Your learning journey</p>
           </div>
         </div>
 
@@ -61,15 +61,15 @@ export const StudyProgressCard: React.FC = () => {
           <div className="bg-white/5 rounded-xl p-3 text-center border border-white/5">
             <div className="flex items-center justify-center gap-1 mb-1">
               <Flame
-                className={`h-4 w-4 ${streakDisplay.currentStreak > 0 ? 'text-orange-400' : 'text-white/30'}`}
+                className={`h-4 w-4 ${streakDisplay.currentStreak > 0 ? 'text-orange-400' : 'text-white'}`}
               />
               <span
-                className={`text-xl font-bold ${streakDisplay.currentStreak > 0 ? 'text-orange-400' : 'text-white/50'}`}
+                className={`text-xl font-bold ${streakDisplay.currentStreak > 0 ? 'text-orange-400' : 'text-white'}`}
               >
                 {streakDisplay.currentStreak}
               </span>
             </div>
-            <p className="text-[10px] text-white/50 uppercase tracking-wide">Day Streak</p>
+            <p className="text-[10px] text-white uppercase tracking-wide">Day Streak</p>
           </div>
 
           {/* Quizzes */}
@@ -78,22 +78,22 @@ export const StudyProgressCard: React.FC = () => {
               <Target className="h-4 w-4 text-blue-400" />
               <span className="text-xl font-bold text-blue-400">{quizStats.totalQuizzes}</span>
             </div>
-            <p className="text-[10px] text-white/50 uppercase tracking-wide">Quizzes</p>
+            <p className="text-[10px] text-white uppercase tracking-wide">Quizzes</p>
           </div>
 
           {/* Average Score */}
           <div className="bg-white/5 rounded-xl p-3 text-center border border-white/5">
             <div className="flex items-center justify-center gap-1 mb-1">
               <Trophy
-                className={`h-4 w-4 ${quizStats.averageScore >= 70 ? 'text-elec-yellow' : 'text-white/30'}`}
+                className={`h-4 w-4 ${quizStats.averageScore >= 70 ? 'text-elec-yellow' : 'text-white'}`}
               />
               <span
-                className={`text-xl font-bold ${quizStats.averageScore >= 70 ? 'text-elec-yellow' : 'text-white/50'}`}
+                className={`text-xl font-bold ${quizStats.averageScore >= 70 ? 'text-elec-yellow' : 'text-white'}`}
               >
                 {quizStats.averageScore}%
               </span>
             </div>
-            <p className="text-[10px] text-white/50 uppercase tracking-wide">Avg Score</p>
+            <p className="text-[10px] text-white uppercase tracking-wide">Avg Score</p>
           </div>
         </div>
 
@@ -123,16 +123,16 @@ export const StudyProgressCard: React.FC = () => {
                   <BookOpen className="h-4 w-4 text-elec-yellow" />
                 </div>
                 <div className="min-w-0">
-                  <p className="text-[10px] text-white/50 uppercase tracking-wide mb-0.5">
+                  <p className="text-[10px] text-white uppercase tracking-wide mb-0.5">
                     Continue Learning
                   </p>
                   <p className="text-sm font-medium text-white truncate group-hover:text-elec-yellow transition-colors">
                     {lastLocation.title}
                   </p>
-                  <p className="text-[10px] text-white/40">{getLastStudiedDisplay()}</p>
+                  <p className="text-[10px] text-white">{getLastStudiedDisplay()}</p>
                 </div>
               </div>
-              <ChevronRight className="h-5 w-5 text-white/30 group-hover:text-elec-yellow group-hover:translate-x-1 transition-all flex-shrink-0" />
+              <ChevronRight className="h-5 w-5 text-white group-hover:text-elec-yellow group-hover:translate-x-1 transition-all flex-shrink-0" />
             </div>
           </Link>
         ) : (
@@ -147,7 +147,7 @@ export const StudyProgressCard: React.FC = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-elec-yellow">Start Learning</p>
-                  <p className="text-[10px] text-white/50">Browse courses in the Study Centre</p>
+                  <p className="text-[10px] text-white">Browse courses in the Study Centre</p>
                 </div>
               </div>
               <ChevronRight className="h-5 w-5 text-elec-yellow/60 group-hover:text-elec-yellow group-hover:translate-x-1 transition-all" />

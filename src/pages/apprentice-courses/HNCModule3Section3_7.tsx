@@ -200,7 +200,7 @@ const HNCModule3Section3_7 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section3">
@@ -222,7 +222,7 @@ const HNCModule3Section3_7 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Power Triangle and Efficiency
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Graphical representation of power relationships and system efficiency calculations for
             building services
           </p>
@@ -329,7 +329,7 @@ const HNCModule3Section3_7 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">Power Triangle Diagram</p>
               <div className="bg-black/30 p-4 rounded font-mono text-sm text-center">
-                <pre className="text-white/90 inline-block text-left">
+                <pre className="text-white inline-block text-left">
                   {`           S (kVA)
           /|
          / |
@@ -353,19 +353,19 @@ const HNCModule3Section3_7 = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">P = S × cos φ</p>
-                  <p className="text-white/70 text-xs">Real power</p>
+                  <p className="text-white text-xs">Real power</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">Q = S × sin φ</p>
-                  <p className="text-white/70 text-xs">Reactive power</p>
+                  <p className="text-white text-xs">Reactive power</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">cos φ = P / S</p>
-                  <p className="text-white/70 text-xs">Power factor</p>
+                  <p className="text-white text-xs">Power factor</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">tan φ = Q / P</p>
-                  <p className="text-white/70 text-xs">Q/P ratio</p>
+                  <p className="text-white text-xs">Q/P ratio</p>
                 </div>
               </div>
             </div>
@@ -396,7 +396,7 @@ const HNCModule3Section3_7 = () => {
                 The Fundamental Equation
               </p>
               <p className="font-mono text-center text-xl mb-2">S² = P² + Q²</p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Apparent power squared equals real power squared plus reactive power squared
               </p>
             </div>
@@ -479,7 +479,7 @@ const HNCModule3Section3_7 = () => {
                 Power Factor Correction Visualised
               </p>
               <div className="bg-black/30 p-4 rounded font-mono text-sm">
-                <pre className="text-white/90">
+                <pre className="text-white">
                   {`Before PFC (pf = 0.7):        After PFC (pf = 0.95):
 
     S₁=143kVA                    S₂=105kVA
@@ -566,7 +566,7 @@ Result: 27% reduction in apparent power (S)`}
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Practical note:</strong> Most DNOs and large suppliers charge reactive power
               penalties when power factor falls below 0.95 lagging. The power triangle helps
               calculate the capacitor kVAr needed for correction.
@@ -594,7 +594,7 @@ Result: 27% reduction in apparent power (S)`}
               <p className="font-mono text-center text-xl mb-2">
                 η = (P<sub>out</sub> / P<sub>in</sub>) × 100%
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Efficiency equals output power divided by input power, expressed as a percentage
               </p>
             </div>
@@ -635,7 +635,7 @@ Result: 27% reduction in apparent power (S)`}
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Efficiency in Energy Terms
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Energy efficiency over time:</p>
                 <p className="mt-2">
                   η = E<sub>out</sub> / E<sub>in</sub> = (P<sub>out</sub> × t) / (P<sub>in</sub> ×
@@ -644,7 +644,7 @@ Result: 27% reduction in apparent power (S)`}
                 <p className="mt-2">
                   Annual energy loss = P<sub>in</sub> × (1 - η) × operating hours
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Example: 50kW motor at 92% efficiency, 4000 hrs/year
                 </p>
                 <p>Input = 50/0.92 = 54.3kW, Losses = 4.3kW</p>
@@ -796,7 +796,7 @@ Result: 27% reduction in apparent power (S)`}
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Iron (Core) Losses - Constant</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Occur whenever energised</li>
                     <li>Independent of load</li>
                     <li>Hysteresis losses (magnetisation)</li>
@@ -806,7 +806,7 @@ Result: 27% reduction in apparent power (S)`}
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Copper (Winding) Losses - Variable</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Vary with load current</li>
                     <li>Proportional to I² (load squared)</li>
                     <li>I²R losses in windings</li>
@@ -825,7 +825,7 @@ Result: 27% reduction in apparent power (S)`}
                 η = P<sub>out</sub> / (P<sub>out</sub> + P<sub>iron</sub> + P<sub>copper</sub>) ×
                 100%
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Or equivalently: η = P<sub>out</sub> / P<sub>in</sub> × 100%
               </p>
             </div>
@@ -834,7 +834,7 @@ Result: 27% reduction in apparent power (S)`}
               <p className="text-sm font-medium text-white mb-2">
                 Condition for Maximum Efficiency:
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Maximum efficiency occurs when:</p>
                 <p className="text-elec-yellow mt-2">Iron losses = Copper losses</p>
                 <p className="mt-2">
@@ -844,7 +844,7 @@ Result: 27% reduction in apparent power (S)`}
                 <p className="mt-2">
                   Load for max η = √(P<sub>iron</sub> / P<sub>Cu(FL)</sub>) × Full load
                 </p>
-                <p className="mt-2 text-white/60">Typically occurs at 50-75% of rated load</p>
+                <p className="mt-2 text-white">Typically occurs at 50-75% of rated load</p>
               </div>
             </div>
 
@@ -887,7 +887,7 @@ Result: 27% reduction in apparent power (S)`}
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>EU Ecodesign:</strong> Regulation 2019/1783 sets minimum efficiency (Tier 2
               from July 2021) for distribution transformers 50kVA - 40MVA. Specify compliant
               transformers for new installations.
@@ -916,7 +916,7 @@ Result: 27% reduction in apparent power (S)`}
                 η<sub>total</sub> = η<sub>1</sub> × η<sub>2</sub> × η<sub>3</sub> × ... × η
                 <sub>n</sub>
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 For components in series, multiply individual efficiencies
               </p>
             </div>
@@ -925,7 +925,7 @@ Result: 27% reduction in apparent power (S)`}
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Example: Variable Speed Pump System
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Components in series:</p>
                 <p className="mt-2">Transformer: η = 98.5%</p>
                 <p>Variable Speed Drive: η = 97%</p>
@@ -938,7 +938,7 @@ Result: 27% reduction in apparent power (S)`}
                 <p className="text-elec-yellow">
                   η<sub>total</sub> = 0.659 = 65.9%
                 </p>
-                <p className="mt-3 text-white/60">To deliver 10kW hydraulic power:</p>
+                <p className="mt-3 text-white">To deliver 10kW hydraulic power:</p>
                 <p>Electrical input = 10 / 0.659 = 15.2 kW</p>
               </div>
             </div>
@@ -1114,14 +1114,14 @@ Result: 27% reduction in apparent power (S)`}
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Life Cycle Cost Analysis
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Comparing IE3 vs IE4 motor (15kW, 4000 hrs/year, 12p/kWh):</p>
                 <p className="mt-2">IE3: η = 91.5%, Input = 15/0.915 = 16.39 kW</p>
                 <p>IE4: η = 93.0%, Input = 15/0.930 = 16.13 kW</p>
                 <p className="mt-2">Annual saving = (16.39 - 16.13) × 4000 × 0.12</p>
                 <p className="text-elec-yellow">Annual saving = 0.26 × 4000 × 0.12 = £125/year</p>
-                <p className="mt-2 text-white/60">If IE4 premium is £300, payback = 2.4 years</p>
-                <p className="text-white/60">Over 15-year motor life: £1,875 net saving</p>
+                <p className="mt-2 text-white">If IE4 premium is £300, payback = 2.4 years</p>
+                <p className="text-white">Over 15-year motor life: £1,875 net saving</p>
               </div>
             </div>
 
@@ -1148,7 +1148,7 @@ Result: 27% reduction in apparent power (S)`}
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Professional practice:</strong> Always document equipment efficiencies in
               design reports. This supports Part L compliance, future audits, and maintenance
               decisions.
@@ -1172,7 +1172,7 @@ Result: 27% reduction in apparent power (S)`}
                 <strong>Question:</strong> A three-phase motor draws 75kVA at 0.85 power factor
                 lagging. Calculate P, Q and verify using Pythagoras.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given: S = 75 kVA, cos φ = 0.85 (lagging)</p>
                 <p className="mt-2">Real power: P = S × cos φ</p>
                 <p>
@@ -1197,7 +1197,7 @@ Result: 27% reduction in apparent power (S)`}
                 <strong>Question:</strong> A 22kW IE3 motor (93% efficiency) runs 5000 hours/year.
                 Calculate annual energy consumption and cost at 15p/kWh.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Shaft output power: P<sub>out</sub> = 22 kW
                 </p>
@@ -1214,7 +1214,7 @@ Result: 27% reduction in apparent power (S)`}
                 <p>
                   Cost = 118,300 × £0.15 = <strong>£17,745/year</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Power losses = 23.66 - 22 = 1.66 kW (dissipated as heat)
                 </p>
               </div>
@@ -1228,7 +1228,7 @@ Result: 27% reduction in apparent power (S)`}
                 <strong>Question:</strong> A 500kVA transformer has 1.2kW iron losses and 6kW copper
                 losses at full load. Calculate efficiency at full load and 50% load.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>
                     At full load (assuming unity pf, so P<sub>out</sub> = 500kW):
@@ -1264,7 +1264,7 @@ Result: 27% reduction in apparent power (S)`}
                 <strong>Question:</strong> A HVAC pump system requires 8kW hydraulic power.
                 Calculate the electrical input given: VSD 96%, motor 91%, pump 72%.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Required hydraulic output: P<sub>hydraulic</sub> = 8 kW
                 </p>
@@ -1282,11 +1282,11 @@ Result: 27% reduction in apparent power (S)`}
                 <p>
                   P<sub>elec</sub> = 8 / 0.629 = <strong>12.72 kW</strong>
                 </p>
-                <p className="mt-2 text-white/60">Losses breakdown:</p>
-                <p className="text-white/60">VSD: 12.72 × 0.04 = 0.51 kW</p>
-                <p className="text-white/60">Motor: (12.72 - 0.51) × 0.09 = 1.10 kW</p>
-                <p className="text-white/60">Pump: (12.72 - 0.51 - 1.10) × 0.28 = 3.11 kW</p>
-                <p className="text-white/60">Total: 4.72 kW losses (37.1% of input)</p>
+                <p className="mt-2 text-white">Losses breakdown:</p>
+                <p className="text-white">VSD: 12.72 × 0.04 = 0.51 kW</p>
+                <p className="text-white">Motor: (12.72 - 0.51) × 0.09 = 1.10 kW</p>
+                <p className="text-white">Pump: (12.72 - 0.51 - 1.10) × 0.28 = 3.11 kW</p>
+                <p className="text-white">Total: 4.72 kW losses (37.1% of input)</p>
               </div>
             </div>
           </div>
@@ -1381,7 +1381,7 @@ Result: 27% reduction in apparent power (S)`}
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1427,7 +1427,7 @@ Result: 27% reduction in apparent power (S)`}
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section3-6">

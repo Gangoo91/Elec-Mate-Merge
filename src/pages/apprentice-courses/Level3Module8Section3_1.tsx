@@ -363,7 +363,7 @@ const Level3Module8Section3_1 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="../section3">
@@ -389,7 +389,7 @@ const Level3Module8Section3_1 = () => {
               </h1>
             </div>
           </div>
-          <p className="text-lg text-white/70">
+          <p className="text-lg text-white">
             Master effective time management techniques for both exam day and your revision schedule
             to maximise your performance and results.
           </p>
@@ -403,21 +403,21 @@ const Level3Module8Section3_1 = () => {
           </h2>
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 <span className="text-elec-yellow font-medium">Exam timing:</span> 2-3 mins per
                 question, 25% for review
               </p>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 <span className="text-elec-yellow font-medium">Study sessions:</span> 50 mins focus,
                 10 mins break
               </p>
             </div>
             <div className="space-y-2">
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 <span className="text-elec-yellow font-medium">Revision start:</span> 12 weeks
                 before for best results
               </p>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 <span className="text-elec-yellow font-medium">Key technique:</span> Active recall
                 beats passive reading
               </p>
@@ -441,7 +441,7 @@ const Level3Module8Section3_1 = () => {
             ].map((outcome, index) => (
               <li key={index} className="flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                <span className="text-white/80">{outcome}</span>
+                <span className="text-white">{outcome}</span>
               </li>
             ))}
           </ul>
@@ -457,7 +457,7 @@ const Level3Module8Section3_1 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none mb-6">
-            <p className="text-white/80">
+            <p className="text-white">
               Understanding how to allocate your time during an exam is crucial for success.
               Different exams have different structures, and you need a strategy that ensures you
               attempt all questions while leaving time for review. The key principle is: don't let
@@ -487,16 +487,16 @@ const Level3Module8Section3_1 = () => {
               <tbody>
                 {examTimeAllocation.map((exam, index) => (
                   <tr key={index} className={index % 2 === 0 ? 'bg-white/5' : ''}>
-                    <td className="border border-white/20 px-3 py-2 text-white/80 text-sm font-medium">
+                    <td className="border border-white/20 px-3 py-2 text-white text-sm font-medium">
                       {exam.exam}
                     </td>
                     <td className="border border-white/20 px-3 py-2 text-elec-yellow text-sm">
                       {exam.duration}
                     </td>
-                    <td className="border border-white/20 px-3 py-2 text-white/60 text-sm">
+                    <td className="border border-white/20 px-3 py-2 text-white text-sm">
                       {exam.questions}
                     </td>
-                    <td className="border border-white/20 px-3 py-2 text-white/60 text-sm">
+                    <td className="border border-white/20 px-3 py-2 text-white text-sm">
                       {exam.timePerQuestion}
                     </td>
                   </tr>
@@ -510,7 +510,7 @@ const Level3Module8Section3_1 = () => {
               <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="text-amber-400 font-medium mb-1">The 75/25 Rule</h4>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Aim to complete all questions in 75% of the available time, reserving 25% for
                   review. For a 2-hour exam, this means completing questions in 90 minutes and
                   spending 30 minutes reviewing, checking marked questions, and verifying answers.
@@ -527,19 +527,19 @@ const Level3Module8Section3_1 = () => {
             <div className="grid sm:grid-cols-4 gap-3">
               <div className="bg-white/5 rounded-lg p-3 text-center">
                 <p className="text-elec-yellow font-medium">30 mins</p>
-                <p className="text-white/60 text-xs">Should have completed ~25% of questions</p>
+                <p className="text-white text-xs">Should have completed ~25% of questions</p>
               </div>
               <div className="bg-white/5 rounded-lg p-3 text-center">
                 <p className="text-elec-yellow font-medium">60 mins</p>
-                <p className="text-white/60 text-xs">Should have completed ~50% of questions</p>
+                <p className="text-white text-xs">Should have completed ~50% of questions</p>
               </div>
               <div className="bg-white/5 rounded-lg p-3 text-center">
                 <p className="text-elec-yellow font-medium">90 mins</p>
-                <p className="text-white/60 text-xs">All questions attempted, begin review</p>
+                <p className="text-white text-xs">All questions attempted, begin review</p>
               </div>
               <div className="bg-white/5 rounded-lg p-3 text-center">
                 <p className="text-elec-yellow font-medium">120 mins</p>
-                <p className="text-white/60 text-xs">Final check, ensure all answered</p>
+                <p className="text-white text-xs">Final check, ensure all answered</p>
               </div>
             </div>
           </div>
@@ -560,7 +560,7 @@ const Level3Module8Section3_1 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none mb-6">
-            <p className="text-white/80">
+            <p className="text-white">
               Effective revision doesn't happen by chance - it requires planning. A structured
               approach over 12 weeks gives the best results, allowing time for understanding,
               practice, and consolidation. Starting too late leads to cramming, which produces poor
@@ -583,7 +583,7 @@ const Level3Module8Section3_1 = () => {
                 </div>
                 <ul className="space-y-1">
                   {phase.activities.map((activity, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-white/70 text-sm">
+                    <li key={idx} className="flex items-start gap-2 text-white text-sm">
                       <CheckCircle className="w-3 h-3 text-green-400 mt-1 flex-shrink-0" />
                       {activity}
                     </li>
@@ -598,7 +598,7 @@ const Level3Module8Section3_1 = () => {
               <Calendar className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="text-blue-400 font-medium mb-1">Weekly Rhythm</h4>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Plan your week with specific topics assigned to specific days. Include one
                   "catch-up" day for topics that need extra attention. Regular, consistent study
                   beats irregular marathon sessions.
@@ -623,7 +623,7 @@ const Level3Module8Section3_1 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none mb-6">
-            <p className="text-white/80">
+            <p className="text-white">
               Not all study time is equal. Research shows that active learning techniques are far
               more effective than passive reading. Understanding and applying these evidence-based
               methods can dramatically improve your retention and exam performance.
@@ -635,15 +635,15 @@ const Level3Module8Section3_1 = () => {
             {practicalTechniques.map((item, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-xl p-4">
                 <h4 className="text-elec-yellow font-medium mb-2">{item.technique}</h4>
-                <p className="text-white/70 text-sm mb-2">{item.description}</p>
+                <p className="text-white text-sm mb-2">{item.description}</p>
                 <div className="space-y-1 text-xs">
                   <p className="text-green-400/80">
                     <span className="font-medium">Benefit:</span>{' '}
-                    <span className="text-white/60">{item.benefit}</span>
+                    <span className="text-white">{item.benefit}</span>
                   </p>
                   <p className="text-blue-400/80">
                     <span className="font-medium">How to apply:</span>{' '}
-                    <span className="text-white/60">{item.application}</span>
+                    <span className="text-white">{item.application}</span>
                   </p>
                 </div>
               </div>
@@ -655,7 +655,7 @@ const Level3Module8Section3_1 = () => {
               <Lightbulb className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="text-green-400 font-medium mb-1">The Testing Effect</h4>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Research consistently shows that testing yourself (even unsuccessfully) produces
                   better long-term retention than re-reading the same material. Every time you take
                   a quiz on this platform, you're strengthening your memory more than simply reading
@@ -681,13 +681,13 @@ const Level3Module8Section3_1 = () => {
               ].map((item, index) => (
                 <span
                   key={index}
-                  className="px-3 py-1 bg-white/5 rounded-full text-white/70 text-sm border border-white/10"
+                  className="px-3 py-1 bg-white/5 rounded-full text-white text-sm border border-white/10"
                 >
                   {item}
                 </span>
               ))}
             </div>
-            <p className="text-white/60 text-xs mt-3">
+            <p className="text-white text-xs mt-3">
               Following this schedule means each topic is reviewed 6 times over a month, with
               increasing gaps that strengthen long-term memory.
             </p>
@@ -709,7 +709,7 @@ const Level3Module8Section3_1 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none mb-6">
-            <p className="text-white/80">
+            <p className="text-white">
               Even well-prepared candidates can underperform by falling into common time-wasting
               traps during the exam. Recognising these pitfalls and having strategies to avoid them
               can significantly improve your exam performance and reduce stress.
@@ -727,11 +727,11 @@ const Level3Module8Section3_1 = () => {
                     <div className="grid sm:grid-cols-2 gap-3 text-sm">
                       <div>
                         <p className="text-red-400/80 text-xs mb-0.5">Impact:</p>
-                        <p className="text-white/60">{item.impact}</p>
+                        <p className="text-white">{item.impact}</p>
                       </div>
                       <div>
                         <p className="text-green-400/80 text-xs mb-0.5">Solution:</p>
-                        <p className="text-white/70">{item.solution}</p>
+                        <p className="text-white">{item.solution}</p>
                       </div>
                     </div>
                   </div>
@@ -745,7 +745,7 @@ const Level3Module8Section3_1 = () => {
               <CheckCircle className="w-4 h-4 text-elec-yellow" />
               The "Mark and Move" Strategy
             </h4>
-            <ol className="space-y-2 text-white/70 text-sm">
+            <ol className="space-y-2 text-white text-sm">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow font-medium">1.</span>
                 Read the question once, carefully
@@ -784,7 +784,7 @@ const Level3Module8Section3_1 = () => {
           <div className="space-y-4">
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="text-white font-medium mb-2">Before the Exam</h4>
-              <ul className="space-y-1 text-white/70 text-sm">
+              <ul className="space-y-1 text-white text-sm">
                 <li>- Arrive 15-20 minutes early to settle in</li>
                 <li>- Have a watch visible (phones usually not allowed)</li>
                 <li>- Note the start time and calculate finish time</li>
@@ -793,7 +793,7 @@ const Level3Module8Section3_1 = () => {
             </div>
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="text-white font-medium mb-2">First 5 Minutes</h4>
-              <ul className="space-y-1 text-white/70 text-sm">
+              <ul className="space-y-1 text-white text-sm">
                 <li>- Read all instructions carefully</li>
                 <li>- Quickly scan through all questions</li>
                 <li>- Identify any topics you recognise as strengths</li>
@@ -802,7 +802,7 @@ const Level3Module8Section3_1 = () => {
             </div>
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="text-white font-medium mb-2">Final 15 Minutes</h4>
-              <ul className="space-y-1 text-white/70 text-sm">
+              <ul className="space-y-1 text-white text-sm">
                 <li>- Return to any marked questions</li>
                 <li>- Check all questions have an answer</li>
                 <li>- Review questions you were unsure about</li>
@@ -822,7 +822,7 @@ const Level3Module8Section3_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-0 last:pb-0">
                 <h4 className="text-white font-medium mb-2">{faq.question}</h4>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -834,37 +834,37 @@ const Level3Module8Section3_1 = () => {
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">Time per question (typical)</span>
+                <span className="text-white">Time per question (typical)</span>
                 <span className="text-white font-medium">2-3 minutes</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">Review time allocation</span>
+                <span className="text-white">Review time allocation</span>
                 <span className="text-white font-medium">25% of total</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">Study session length</span>
+                <span className="text-white">Study session length</span>
                 <span className="text-white font-medium">50 minutes</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">Break duration</span>
+                <span className="text-white">Break duration</span>
                 <span className="text-white font-medium">10 minutes</span>
               </div>
             </div>
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">Ideal revision start</span>
+                <span className="text-white">Ideal revision start</span>
                 <span className="text-white font-medium">12 weeks before</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">Weekly study hours</span>
+                <span className="text-white">Weekly study hours</span>
                 <span className="text-white font-medium">6-12 hours</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">Evening review</span>
+                <span className="text-white">Evening review</span>
                 <span className="text-white font-medium">15 minutes</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">Arrive before exam</span>
+                <span className="text-white">Arrive before exam</span>
                 <span className="text-white font-medium">15-20 minutes</span>
               </div>
             </div>
@@ -876,7 +876,7 @@ const Level3Module8Section3_1 = () => {
           <h3 className="text-lg font-semibold text-white mb-4">Test Your Knowledge</h3>
           {!showQuiz ? (
             <div className="text-center">
-              <p className="text-white/70 mb-4">
+              <p className="text-white mb-4">
                 Ready to test your understanding of time management strategies?
               </p>
               <Button

@@ -215,7 +215,7 @@ const HNCModule3Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section3">
@@ -237,7 +237,7 @@ const HNCModule3Section3_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Frequency, Period and Amplitude Relationships
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Time-domain characteristics of AC waveforms essential for building services engineering
           </p>
         </header>
@@ -409,7 +409,7 @@ const HNCModule3Section3_2 = () => {
               <p className="font-mono text-center text-xl mb-2">
                 T = 1/f &nbsp;&nbsp;&nbsp; and &nbsp;&nbsp;&nbsp; f = 1/T
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where T is in seconds and f is in Hertz
               </p>
             </div>
@@ -449,7 +449,7 @@ const HNCModule3Section3_2 = () => {
               </p>
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="font-mono text-center text-lg mb-2">ω = 2πf = 2π/T</p>
-                <p className="text-xs text-white/70 text-center">
+                <p className="text-xs text-white text-center">
                   For UK 50Hz: ω = 2 × π × 50 = <strong>314.16 rad/s ≈ 314 rad/s</strong>
                 </p>
               </div>
@@ -502,7 +502,7 @@ const HNCModule3Section3_2 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 v = V<sub>m</sub> sin(ωt)
               </p>
-              <p className="text-xs text-white/70 text-center mb-3">
+              <p className="text-xs text-white text-center mb-3">
                 Where v is instantaneous voltage, Vm is peak voltage, ω is angular frequency, t is
                 time
               </p>
@@ -600,13 +600,13 @@ const HNCModule3Section3_2 = () => {
                   <p className="font-bold text-elec-yellow mb-1">
                     X<sub>L</sub> = 2πfL = ωL
                   </p>
-                  <p className="text-white/70 text-xs">Inductive reactance increases with f</p>
+                  <p className="text-white text-xs">Inductive reactance increases with f</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">
                     X<sub>C</sub> = 1/(2πfC) = 1/(ωC)
                   </p>
-                  <p className="text-white/70 text-xs">Capacitive reactance decreases with f</p>
+                  <p className="text-white text-xs">Capacitive reactance decreases with f</p>
                 </div>
               </div>
             </div>
@@ -685,7 +685,7 @@ const HNCModule3Section3_2 = () => {
                 <p className="font-mono text-center text-lg mb-2">
                   n<sub>s</sub> = (120 × f) / p
                 </p>
-                <p className="text-xs text-white/70 text-center">
+                <p className="text-xs text-white text-center">
                   Where ns is synchronous speed (RPM), f is frequency (Hz), p is number of poles
                 </p>
               </div>
@@ -754,7 +754,7 @@ const HNCModule3Section3_2 = () => {
                 <strong>Question:</strong> Calculate the instantaneous voltage of UK mains supply at
                 t = 3ms after a positive zero crossing.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given: Vrms = 230V, f = 50Hz, t = 3ms = 0.003s</p>
                 <p className="mt-2">Step 1: Calculate peak voltage</p>
                 <p>
@@ -781,7 +781,7 @@ const HNCModule3Section3_2 = () => {
                 <strong>Question:</strong> A 4-pole motor designed for 60Hz is connected to UK 50Hz
                 supply. Calculate the speed change.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Synchronous speed formula: ns = (120 × f) / p</p>
                 <p className="mt-2">At 60Hz (design frequency):</p>
                 <p>
@@ -809,7 +809,7 @@ const HNCModule3Section3_2 = () => {
                 <strong>Question:</strong> A 100µF capacitor is used for power factor correction.
                 Calculate its reactance at 50Hz and 60Hz.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Capacitive reactance: Xc = 1 / (2πfC)</p>
                 <p className="mt-2">At 50Hz:</p>
                 <p>Xc = 1 / (2 × π × 50 × 100×10⁻⁶)</p>
@@ -821,10 +821,10 @@ const HNCModule3Section3_2 = () => {
                 <p>
                   Xc = 1 / 0.0377 = <strong>26.5Ω</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → Lower Xc at higher frequency means more reactive current flows
                 </p>
-                <p className="text-white/60">→ Capacitor provides more VAr at 60Hz than at 50Hz</p>
+                <p className="text-white">→ Capacitor provides more VAr at 60Hz than at 50Hz</p>
               </div>
             </div>
 
@@ -836,14 +836,14 @@ const HNCModule3Section3_2 = () => {
                 <strong>Question:</strong> Starting from zero crossing, how long until UK mains
                 reaches its positive peak?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Peak occurs when sin(ωt) = 1, i.e., ωt = π/2 (90°)</p>
                 <p className="mt-2">Solving for t:</p>
                 <p>t = (π/2) / ω = (π/2) / 314</p>
                 <p>
                   t = 1.571 / 314 = 0.005s = <strong>5ms</strong>
                 </p>
-                <p className="mt-2 text-white/60">Verification: Peak is at T/4 = 20ms/4 = 5ms ✓</p>
+                <p className="mt-2 text-white">Verification: Peak is at T/4 = 20ms/4 = 5ms ✓</p>
                 <p className="mt-2 text-green-400">
                   ✓ One quarter cycle from zero to positive peak
                 </p>
@@ -971,7 +971,7 @@ const HNCModule3Section3_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1017,7 +1017,7 @@ const HNCModule3Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section3-1">

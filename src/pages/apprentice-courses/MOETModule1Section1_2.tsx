@@ -265,7 +265,7 @@ const MOETModule1Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module1-section1">
@@ -287,7 +287,7 @@ const MOETModule1Section1_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Isolation Procedures
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             The critical six-step process for safe electrical isolation — preventing fatal contact
             with live conductors during maintenance work
           </p>
@@ -421,11 +421,11 @@ const MOETModule1Section1_2 = () => {
                 <table className="w-full text-sm text-left">
                   <thead>
                     <tr className="border-b border-white/10">
-                      <th className="py-2 pr-4 text-white/70 font-medium">Current (mA)</th>
-                      <th className="py-2 text-white/70 font-medium">Effect</th>
+                      <th className="py-2 pr-4 text-white font-medium">Current (mA)</th>
+                      <th className="py-2 text-white font-medium">Effect</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/90">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/5">
                       <td className="py-2 pr-4">1 mA</td>
                       <td className="py-2">Threshold of perception — tingling sensation</td>
@@ -455,7 +455,7 @@ const MOETModule1Section1_2 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-3">
+              <p className="text-xs text-white mt-3">
                 Note: These values are approximate and vary with pathway through the body, duration,
                 and individual physiology. A 30mA RCD operates at the threshold of fibrillation —
                 this is why RCDs save lives but are not a substitute for safe isolation.
@@ -552,14 +552,14 @@ const MOETModule1Section1_2 = () => {
                   <p className={`text-sm font-medium ${item.colour} mb-2`}>
                     Step {item.step}: {item.title}
                   </p>
-                  <p className="text-sm text-white/90">{item.content}</p>
+                  <p className="text-sm text-white">{item.content}</p>
                 </div>
               ))}
             </div>
 
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
               <p className="text-sm font-medium text-elec-yellow mb-2">Critical Principle</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 The sequence <strong>"Prove — Test — Prove"</strong> is the cornerstone of safe
                 isolation. Without both proving checks, a dead reading is meaningless — your
                 instrument may be faulty. This three-step verification is what separates a safe
@@ -657,13 +657,13 @@ const MOETModule1Section1_2 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-white mb-3">Proving Units — How They Work</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 A proving unit generates a known voltage (typically 50V, 100V, 230V, or 400V AC/DC
                 selections) from internal batteries. You connect your voltage indicator to the
                 proving unit and confirm it reads the expected voltage. This proves the indicator is
                 functioning correctly.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p className="font-medium mb-2">Proving Sequence:</p>
                 <p>1. Connect voltage indicator to proving unit</p>
                 <p>2. Select appropriate voltage on proving unit (match expected supply voltage)</p>
@@ -680,7 +680,7 @@ const MOETModule1Section1_2 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               <strong>Maintenance technician tip:</strong> Always carry a proving unit in your tool
               bag. It is small, inexpensive, and could save your life. Never rely on finding a
               convenient known live source — a dedicated proving unit is always available and always
@@ -705,13 +705,13 @@ const MOETModule1Section1_2 = () => {
                 The most common isolation scenario for maintenance technicians. Applies to lighting
                 circuits, socket outlets, single-phase motors, and fixed equipment.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90 mb-3">
+              <div className="bg-black/30 p-3 rounded text-sm text-white mb-3">
                 <p className="font-medium mb-2">Tests Required (3 minimum):</p>
                 <p>1. Line to Neutral (L-N)</p>
                 <p>2. Line to Earth (L-E)</p>
                 <p>3. Neutral to Earth (N-E)</p>
               </div>
-              <p className="text-xs text-white/60">
+              <p className="text-xs text-white">
                 The N-E test is essential — a fault condition could make the neutral live even when
                 the line conductor has been correctly isolated.
               </p>
@@ -727,28 +727,28 @@ const MOETModule1Section1_2 = () => {
                 industrial plant. The increased number of conductors means more test combinations
                 are required.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90 mb-3">
+              <div className="bg-black/30 p-3 rounded text-sm text-white mb-3">
                 <p className="font-medium mb-2">Tests Required (10 minimum):</p>
                 <div className="grid grid-cols-2 gap-2 mt-2">
                   <div>
-                    <p className="text-white/60 text-xs mb-1">Phase-to-Phase (3 tests):</p>
+                    <p className="text-white text-xs mb-1">Phase-to-Phase (3 tests):</p>
                     <p>L1-L2, L2-L3, L1-L3</p>
                   </div>
                   <div>
-                    <p className="text-white/60 text-xs mb-1">Phase-to-Neutral (3 tests):</p>
+                    <p className="text-white text-xs mb-1">Phase-to-Neutral (3 tests):</p>
                     <p>L1-N, L2-N, L3-N</p>
                   </div>
                   <div>
-                    <p className="text-white/60 text-xs mb-1">Phase-to-Earth (3 tests):</p>
+                    <p className="text-white text-xs mb-1">Phase-to-Earth (3 tests):</p>
                     <p>L1-E, L2-E, L3-E</p>
                   </div>
                   <div>
-                    <p className="text-white/60 text-xs mb-1">Neutral-to-Earth (1 test):</p>
+                    <p className="text-white text-xs mb-1">Neutral-to-Earth (1 test):</p>
                     <p>N-E</p>
                   </div>
                 </div>
               </div>
-              <p className="text-xs text-white/60">
+              <p className="text-xs text-white">
                 Missing even one test could leave a live conductor undetected. A partial isolation
                 (one phase still live) will deliver 230V — enough to kill.
               </p>
@@ -767,7 +767,7 @@ const MOETModule1Section1_2 = () => {
               <div className="space-y-3 mt-4">
                 <div className="bg-black/30 p-3 rounded">
                   <p className="text-sm font-medium text-amber-400 mb-1">UPS Systems</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     UPS batteries provide power independently of the mains. Isolate the mains input
                     AND the UPS output/battery disconnect. Follow the manufacturer's specific
                     isolation procedure. Allow time for capacitive discharge — large UPS systems can
@@ -776,7 +776,7 @@ const MOETModule1Section1_2 = () => {
                 </div>
                 <div className="bg-black/30 p-3 rounded">
                   <p className="text-sm font-medium text-amber-400 mb-1">Standby Generators</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Automatic transfer switches (ATS) can energise circuits without warning when
                     mains power is lost. Isolate BOTH the mains supply and the generator output.
                     Disable the ATS auto-start function and lock off. Be aware of manual bypass
@@ -787,7 +787,7 @@ const MOETModule1Section1_2 = () => {
                   <p className="text-sm font-medium text-amber-400 mb-1">
                     Photovoltaic (Solar PV) Systems
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     PV panels generate DC voltage whenever exposed to light — they cannot be
                     switched off. Isolate the DC isolator and the AC isolator at the inverter. DC
                     side conductors remain live in daylight. Work must account for this permanent
@@ -796,7 +796,7 @@ const MOETModule1Section1_2 = () => {
                 </div>
                 <div className="bg-black/30 p-3 rounded">
                   <p className="text-sm font-medium text-amber-400 mb-1">Capacitive Discharge</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Large capacitor banks (e.g., power factor correction units, variable speed
                     drives, UPS DC buses) retain charge after isolation. Wait the specified
                     discharge time before testing for dead. Some systems require manual discharge
@@ -834,12 +834,12 @@ const MOETModule1Section1_2 = () => {
                     <p className="text-sm font-medium text-white mb-1">
                       Regulation 12 — Working Dead
                     </p>
-                    <p className="text-xs text-white/80 italic mb-2">
+                    <p className="text-xs text-white italic mb-2">
                       "Where danger may arise from work on or near live conductors, the conductors
                       shall be made dead before work is carried out, unless it is unreasonable in
                       all the circumstances for it to be dead."
                     </p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       This establishes the absolute legal duty to isolate wherever reasonably
                       practicable. Live work is only permitted when it is genuinely unreasonable for
                       the circuit to be dead — not merely inconvenient.
@@ -849,11 +849,11 @@ const MOETModule1Section1_2 = () => {
                     <p className="text-sm font-medium text-white mb-1">
                       Regulation 13 — Precautions for Working on Dead Equipment
                     </p>
-                    <p className="text-xs text-white/80 italic mb-2">
+                    <p className="text-xs text-white italic mb-2">
                       "Adequate precautions shall be taken to prevent conductors from becoming
                       electrically charged during work where danger would thereby arise."
                     </p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Even after a circuit is made dead, precautions (locking off, danger notices,
                       proving dead) must be maintained throughout the work. This regulation makes
                       the full safe isolation procedure a legal requirement, not a recommendation.
@@ -863,12 +863,12 @@ const MOETModule1Section1_2 = () => {
                     <p className="text-sm font-medium text-white mb-1">
                       Regulation 16 — Competence
                     </p>
-                    <p className="text-xs text-white/80 italic mb-2">
+                    <p className="text-xs text-white italic mb-2">
                       "No person shall be engaged in any work activity where technical knowledge or
                       experience is necessary to prevent danger or injury, unless they possess such
                       knowledge or experience, or are under appropriate supervision."
                     </p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Only competent persons may carry out safe isolation. Competence means having
                       the combination of training, knowledge, and experience appropriate for the
                       specific task.
@@ -885,12 +885,12 @@ const MOETModule1Section1_2 = () => {
                   <p className="text-sm font-medium text-white mb-1">
                     Regulation 14 (Chapter 13 — Fundamental Principles)
                   </p>
-                  <p className="text-xs text-white/80 mb-2">
+                  <p className="text-xs text-white mb-2">
                     Requires that every installation shall be provided with suitable means of
                     switching off for mechanical maintenance and for emergency switching, as well as
                     means of isolation to prevent or remove dangers.
                   </p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Section 537 of BS 7671 details the technical requirements for isolating and
                     switching devices, including that isolators must be capable of being secured in
                     the open position to prevent inadvertent re-closure.
@@ -900,7 +900,7 @@ const MOETModule1Section1_2 = () => {
 
               <div className="p-4 rounded-lg bg-white/5">
                 <h3 className="text-sm font-medium text-green-400 mb-3">HSE Guidance Note GS38</h3>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   Sets out requirements for electrical test equipment used by electricians and
                   maintenance technicians on low voltage systems. Covers voltage indicators, test
                   lamps, and test probes. While guidance (not law), failure to follow GS38 would be
@@ -913,7 +913,7 @@ const MOETModule1Section1_2 = () => {
               <p className="text-sm font-medium text-elec-yellow mb-2">
                 ST1426 Occupational Standard
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 The Level 3 Electrical Engineering Maintenance Technician apprenticeship standard
                 (ST1426) lists safe isolation as a core competency. You must be able to demonstrate
                 that you can carry out the full safe isolation procedure independently, safely, and
@@ -971,10 +971,10 @@ const MOETModule1Section1_2 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-red-500/10 border border-red-500/20">
                   <p className="text-sm font-medium text-red-400 mb-2">Danger Notices</p>
-                  <p className="text-xs text-white/80 mb-2">
+                  <p className="text-xs text-white mb-2">
                     Applied at the point of isolation. Must state:
                   </p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Name of the person who isolated</li>
                     <li>Date and time of isolation</li>
                     <li>Description of work being carried out</li>
@@ -983,10 +983,10 @@ const MOETModule1Section1_2 = () => {
                 </div>
                 <div className="p-3 rounded bg-amber-500/10 border border-amber-500/20">
                   <p className="text-sm font-medium text-amber-400 mb-2">Caution Notices</p>
-                  <p className="text-xs text-white/80 mb-2">
+                  <p className="text-xs text-white mb-2">
                     Applied at the point of work. Must state:
                   </p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>"CAUTION — WORK IN PROGRESS"</li>
                     <li>Description of the work</li>
                     <li>Contact details of responsible person</li>
@@ -998,11 +998,11 @@ const MOETModule1Section1_2 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
               <p className="text-sm font-medium text-green-400 mb-3">Re-Energisation Procedure</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Re-energisation is just as important as isolation. A controlled, systematic process
                 prevents accidents during the return to service.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p className="font-medium mb-2">Step-by-Step Re-Energisation:</p>
                 <p>
                   1. <strong>Confirm work complete</strong> — All maintenance tasks finished and
@@ -1143,7 +1143,7 @@ const MOETModule1Section1_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1162,7 +1162,7 @@ const MOETModule1Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module1-section1-1">

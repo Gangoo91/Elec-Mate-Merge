@@ -281,7 +281,7 @@ const HNCModule8Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section4">
@@ -303,7 +303,7 @@ const HNCModule8Section4_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Variable Speed Drives
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             VSD principles, PWM technology, V/f control, energy savings and harmonic considerations
             for HVAC applications
           </p>
@@ -411,7 +411,7 @@ const HNCModule8Section4_3 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 N<sub>s</sub> = 120 &times; f / p
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where Ns = synchronous speed (rpm), f = frequency (Hz), p = number of poles
               </p>
             </div>
@@ -491,7 +491,7 @@ const HNCModule8Section4_3 = () => {
                     At 60Hz: Ns = 120 &times; 60 / 4 = <strong>1800 rpm</strong>
                   </li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   Actual speed slightly less due to slip (typically 2-5%)
                 </p>
               </div>
@@ -543,7 +543,7 @@ const HNCModule8Section4_3 = () => {
                 V/f Ratio Control Principle
               </p>
               <p className="font-mono text-center text-lg mb-2">Flux (Phi) proportional to V / f</p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Constant V/f ratio maintains constant motor flux and torque capability
               </p>
             </div>
@@ -680,7 +680,7 @@ const HNCModule8Section4_3 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Typical HVAC setting: 4-8 kHz balances efficiency and motor heating
               </p>
             </div>
@@ -759,15 +759,15 @@ const HNCModule8Section4_3 = () => {
               <div className="grid grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">Flow proportional to N</p>
-                  <p className="text-white/70 text-xs">Q1/Q2 = N1/N2</p>
+                  <p className="text-white text-xs">Q1/Q2 = N1/N2</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">Head proportional to N squared</p>
-                  <p className="text-white/70 text-xs">H1/H2 = (N1/N2) squared</p>
+                  <p className="text-white text-xs">H1/H2 = (N1/N2) squared</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">Power proportional to N cubed</p>
-                  <p className="text-white/70 text-xs">P1/P2 = (N1/N2) cubed</p>
+                  <p className="text-white text-xs">P1/P2 = (N1/N2) cubed</p>
                 </div>
               </div>
             </div>
@@ -837,7 +837,7 @@ const HNCModule8Section4_3 = () => {
                   <strong>Scenario:</strong> 15kW AHU fan operates 5000 hours/year at average 70%
                   speed vs damper control
                 </p>
-                <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90 mt-3">
+                <div className="bg-black/30 p-3 rounded text-sm font-mono text-white mt-3">
                   <p>Damper control: Power = 15kW constant (throttled)</p>
                   <p>VSD at 70%: Power = 15 &times; 0.7 cubed = 15 &times; 0.343 = 5.15kW</p>
                   <p className="mt-2">Annual saving = (15 - 5.15) &times; 5000 hours</p>
@@ -847,7 +847,7 @@ const HNCModule8Section4_3 = () => {
                   <p className="mt-2">
                     At 15p/kWh = <strong>GBP 7,387/year</strong>
                   </p>
-                  <p className="text-white/60 mt-2">Typical payback: 1-2 years for 15kW drive</p>
+                  <p className="text-white mt-2">Typical payback: 1-2 years for 15kW drive</p>
                 </div>
               </div>
             </div>
@@ -1160,7 +1160,7 @@ const HNCModule8Section4_3 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>G5/5 compliance:</strong> Engineering Recommendation G5/5 sets UK limits for
               harmonic contribution. Large installations (&gt;75kW total drives) may require
               harmonic assessment to demonstrate compliance and avoid connection agreement issues.
@@ -1186,7 +1186,7 @@ const HNCModule8Section4_3 = () => {
                 <strong>Question:</strong> A 4-pole induction motor with 3% slip runs on a VSD at
                 35Hz. Calculate the actual speed.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Synchronous speed: Ns = 120 &times; f / p</p>
                 <p>Ns = 120 &times; 35 / 4 = 1050 rpm</p>
                 <p className="mt-2">Actual speed with slip:</p>
@@ -1205,13 +1205,13 @@ const HNCModule8Section4_3 = () => {
                 <strong>Question:</strong> A 400V, 50Hz motor operates at 30Hz. What voltage should
                 the VSD provide to maintain constant flux?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>V/f ratio at rated: 400V / 50Hz = 8 V/Hz</p>
                 <p className="mt-2">Required voltage at 30Hz:</p>
                 <p>
                   V = 8 V/Hz &times; 30Hz = <strong>240V</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   The VSD reduces output voltage proportionally to maintain flux
                 </p>
               </div>
@@ -1225,7 +1225,7 @@ const HNCModule8Section4_3 = () => {
                 <strong>Question:</strong> A 22kW supply fan operates at 65% speed via VSD.
                 Calculate the power consumption.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using cube law: P2 = P1 &times; (N2/N1) cubed</p>
                 <p className="mt-2">P2 = 22kW &times; (0.65) cubed</p>
                 <p>P2 = 22 &times; 0.274625</p>
@@ -1246,7 +1246,7 @@ const HNCModule8Section4_3 = () => {
                 <strong>Question:</strong> Calculate annual savings for a 30kW chilled water pump
                 running 6000 hours/year at average 75% speed, compared to throttled valve control.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Throttled valve:</strong>
                 </p>
@@ -1265,7 +1265,7 @@ const HNCModule8Section4_3 = () => {
                 <p>
                   At 15p/kWh = <strong>GBP 15,606/year</strong>
                 </p>
-                <p className="mt-2 text-white/60">Payback on 30kW drive: typically 6-12 months</p>
+                <p className="mt-2 text-white">Payback on 30kW drive: typically 6-12 months</p>
               </div>
             </div>
 
@@ -1277,7 +1277,7 @@ const HNCModule8Section4_3 = () => {
                 <strong>Question:</strong> A VSD is supplied from 400V three-phase. Calculate the DC
                 bus voltage.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>DC bus voltage = Peak of line voltage</p>
                 <p>Vdc = Vline &times; root(2)</p>
                 <p>Vdc = 400 &times; 1.414</p>
@@ -1394,7 +1394,7 @@ const HNCModule8Section4_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1440,7 +1440,7 @@ const HNCModule8Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section4-2">

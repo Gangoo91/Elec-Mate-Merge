@@ -25,7 +25,7 @@ const EquipmentSection = () => {
                 <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                   <div>
                     <h6 className="font-medium text-foreground">Visual Inspection Checklist</h6>
-                    <p className="text-xs text-white/80">Standardised inspection forms</p>
+                    <p className="text-xs text-white">Standardised inspection forms</p>
                   </div>
                   <Badge variant="outline" className="text-green-400 border-green-400">
                     Essential
@@ -35,7 +35,7 @@ const EquipmentSection = () => {
                 <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                   <div>
                     <h6 className="font-medium text-foreground">Torch/Inspection Light</h6>
-                    <p className="text-xs text-white/80">LED torch with focusing beam</p>
+                    <p className="text-xs text-white">LED torch with focusing beam</p>
                   </div>
                   <Badge variant="outline" className="text-green-400 border-green-400">
                     Essential
@@ -45,7 +45,7 @@ const EquipmentSection = () => {
                 <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                   <div>
                     <h6 className="font-medium text-foreground">Communication Equipment</h6>
-                    <p className="text-xs text-white/80">Two-way radios or mobile phones</p>
+                    <p className="text-xs text-white">Two-way radios or mobile phones</p>
                   </div>
                   <Badge variant="outline" className="text-blue-400 border-blue-400">
                     Important
@@ -55,9 +55,9 @@ const EquipmentSection = () => {
                 <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                   <div>
                     <h6 className="font-medium text-foreground">Basic Hand Tools</h6>
-                    <p className="text-xs text-white/80">Screwdrivers, spanners, pliers</p>
+                    <p className="text-xs text-white">Screwdrivers, spanners, pliers</p>
                   </div>
-                  <Badge variant="outline" className="text-white/80 border-gray-400">
+                  <Badge variant="outline" className="text-white border-gray-400">
                     Useful
                   </Badge>
                 </div>
@@ -73,7 +73,7 @@ const EquipmentSection = () => {
                 <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                   <div>
                     <h6 className="font-medium text-foreground">Personal Protective Equipment</h6>
-                    <p className="text-xs text-white/80">Hard hat, safety glasses, gloves</p>
+                    <p className="text-xs text-white">Hard hat, safety glasses, gloves</p>
                   </div>
                   <Badge variant="outline" className="text-red-400 border-red-400">
                     Critical
@@ -83,7 +83,7 @@ const EquipmentSection = () => {
                 <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                   <div>
                     <h6 className="font-medium text-foreground">Warning Notices</h6>
-                    <p className="text-xs text-white/80">Test in progress signs</p>
+                    <p className="text-xs text-white">Test in progress signs</p>
                   </div>
                   <Badge variant="outline" className="text-red-400 border-red-400">
                     Critical
@@ -93,7 +93,7 @@ const EquipmentSection = () => {
                 <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                   <div>
                     <h6 className="font-medium text-foreground">Barriers/Tape</h6>
-                    <p className="text-xs text-white/80">Area isolation if required</p>
+                    <p className="text-xs text-white">Area isolation if required</p>
                   </div>
                   <Badge variant="outline" className="text-orange-400 border-orange-400">
                     Conditional
@@ -103,7 +103,7 @@ const EquipmentSection = () => {
                 <div className="flex items-center justify-between p-3 bg-muted/50 rounded-lg">
                   <div>
                     <h6 className="font-medium text-foreground">Emergency Contact List</h6>
-                    <p className="text-xs text-white/80">Key personnel contact details</p>
+                    <p className="text-xs text-white">Key personnel contact details</p>
                   </div>
                   <Badge variant="outline" className="text-blue-400 border-blue-400">
                     Important
@@ -154,7 +154,7 @@ const EquipmentSection = () => {
                     <Badge variant="outline" className="text-xs text-blue-400 border-blue-400">
                       Optional
                     </Badge>
-                    <Badge variant="outline" className="text-xs text-white/80 border-gray-400">
+                    <Badge variant="outline" className="text-xs text-white border-gray-400">
                       Digital Preferred
                     </Badge>
                   </div>

@@ -87,13 +87,13 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({
 
             {/* Description (if provided) */}
             {description && (
-              <p className="text-xs text-white/50 line-clamp-2 mb-auto">{description}</p>
+              <p className="text-xs text-white line-clamp-2 mb-auto">{description}</p>
             )}
 
             {/* Bottom row: Duration + Arrow */}
             <div className="flex items-center justify-between mt-auto pt-3">
               {duration && (
-                <div className="flex items-center gap-1.5 text-white/40">
+                <div className="flex items-center gap-1.5 text-white">
                   <Clock className="w-3.5 h-3.5" />
                   <span className="text-xs">{duration}</span>
                 </div>
@@ -106,10 +106,10 @@ export const ModuleCard: React.FC<ModuleCardProps> = ({
                       style={{ width: `${progress}%` }}
                     />
                   </div>
-                  <span className="text-xs text-white/40">{progress}%</span>
+                  <span className="text-xs text-white">{progress}%</span>
                 </div>
               )}
-              <ChevronRight className="w-4 h-4 text-white/30 group-hover:text-elec-yellow group-hover:translate-x-1 transition-all duration-200 ml-auto" />
+              <ChevronRight className="w-4 h-4 text-white group-hover:text-elec-yellow group-hover:translate-x-1 transition-all duration-200 ml-auto" />
             </div>
           </div>
         </div>

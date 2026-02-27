@@ -296,7 +296,7 @@ const Level3Module1Section3_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section3">
@@ -388,7 +388,7 @@ const Level3Module1Section3_3 = () => {
               <p className="text-sm font-medium text-red-400 mb-2">
                 Common Illegal Justifications:
               </p>
-              <ul className="text-sm text-white/90 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>"The customer can't be without power" - Not a valid reason</li>
                 <li>"It would take too long to isolate" - Not a valid reason</li>
                 <li>"I've done it before without problems" - Not a valid reason</li>
@@ -426,7 +426,7 @@ const Level3Module1Section3_3 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Potentially Justified</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Voltage testing (polarity, presence)</li>
                   <li>Fault-finding requiring live trace</li>
                   <li>Verifying protection device operation</li>
@@ -437,7 +437,7 @@ const Level3Module1Section3_3 = () => {
               </div>
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-red-400 mb-2">NOT Justified</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Customer inconvenience</li>
                   <li>Time pressure or deadline</li>
                   <li>Lack of isolation equipment</li>
@@ -450,7 +450,7 @@ const Level3Module1Section3_3 = () => {
 
             <div className="my-6 p-4 rounded bg-white/5 border-l-2 border-elec-yellow">
               <p className="text-sm font-medium text-elec-yellow mb-2">The Reasonableness Test</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Ask yourself: "Is there any way this work could be done with the circuit dead?" If
                 the answer is yes, you should work dead. The question isn't whether it's more
                 convenient to work live, but whether it's genuinely unreasonable in all the
@@ -458,7 +458,7 @@ const Level3Module1Section3_3 = () => {
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Trade Example:</strong> You need to find why a socket circuit has no power.
               Isolation testing shows continuity is fine. You need to trace where voltage is being
               lost - this requires the circuit to be energised. Live testing is justified here
@@ -489,7 +489,7 @@ const Level3Module1Section3_3 = () => {
             <div className="my-6 space-y-4">
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Insulated Tools</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   VDE-rated tools insulated to 1000V AC are essential. They have distinctive
                   red/yellow insulation and the VDE certification mark. Tools with rubber-coated
                   handles are NOT adequate - the coating can be damaged or incomplete. VDE tools are
@@ -499,7 +499,7 @@ const Level3Module1Section3_3 = () => {
 
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Test Equipment</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   GS38-compliant equipment: fused leads (typically 500mA), shrouded probes with max
                   4mm exposed tip, finger barriers, CAT III/IV rating appropriate to location. Check
                   equipment before use - damaged insulation or probes make it dangerous.
@@ -508,7 +508,7 @@ const Level3Module1Section3_3 = () => {
 
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Physical Protection</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   Insulated matting under feet. Barriers to prevent contact with adjacent live
                   parts. Screens to protect others. Clear and clean work area with adequate
                   lighting. Avoid working above live equipment where you could fall onto it.
@@ -517,7 +517,7 @@ const Level3Module1Section3_3 = () => {
 
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Personal Factors</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   Remove all jewellery, watches, and conductive items. Avoid loose clothing that
                   could contact live parts. Ensure adequate concentration - no distractions,
                   fatigue, or pressure. Right person for the job - competent and fit.
@@ -526,7 +526,7 @@ const Level3Module1Section3_3 = () => {
 
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Accompanied Working</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   A second person who understands the hazards, knows how to isolate the supply, and
                   is trained in emergency response including CPR. They're not a passive observer -
                   they're your safety backup. Required for significant shock risk.
@@ -588,7 +588,7 @@ const Level3Module1Section3_3 = () => {
 
             <div className="my-6 p-4 rounded bg-red-500/10 border border-red-500/20">
               <p className="text-sm font-medium text-red-400 mb-2">Your Right to Refuse</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 You have the right - and the legal duty - to refuse to do work that you consider
                 unsafe or beyond your competence. If you're asked to work live when it could be done
                 dead, or without adequate precautions, you should refuse. Document the situation and
@@ -596,7 +596,7 @@ const Level3Module1Section3_3 = () => {
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Trade Reality:</strong> Pressure to take shortcuts is common. Supervisors may
               not fully understand the legal position. You are personally responsible for your own
               safety and can be prosecuted for unsafe work regardless of instructions. "My
@@ -671,7 +671,7 @@ const Level3Module1Section3_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -722,7 +722,7 @@ const Level3Module1Section3_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section3-2">

@@ -249,7 +249,7 @@ const HNCModule2Section6_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section6">
@@ -271,7 +271,7 @@ const HNCModule2Section6_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             System Integration
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Multi-service coordination, commissioning, handover, and building log books
           </p>
         </header>
@@ -584,7 +584,7 @@ const HNCModule2Section6_5 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">O&M Manual Contents</p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-xs font-medium text-white/60 mb-2">Equipment Information</p>
+                  <p className="text-xs font-medium text-white mb-2">Equipment Information</p>
                   <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li>Equipment schedules with model numbers</li>
                     <li>Data sheets and specifications</li>
@@ -594,7 +594,7 @@ const HNCModule2Section6_5 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-white/60 mb-2">Operating Information</p>
+                  <p className="text-xs font-medium text-white mb-2">Operating Information</p>
                   <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li>Operating procedures</li>
                     <li>Maintenance schedules</li>
@@ -742,7 +742,7 @@ const HNCModule2Section6_5 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Industry direction:</strong> Soft Landings is increasingly required for public
               sector projects and BREEAM assessments, recognising that design intent only matters if
               achieved in operation.
@@ -768,7 +768,7 @@ const HNCModule2Section6_5 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> A new 3-storey office building with VAV air conditioning.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Commissioning sequence:</p>
                 <p className="mt-2">Week 1-2: Pre-commissioning</p>
                 <p>- Ductwork leakage tests</p>
@@ -797,7 +797,7 @@ const HNCModule2Section6_5 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Coordinating fire alarm and HVAC systems.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Interface requirements:</p>
                 <p className="mt-2">Fire alarm → BMS:</p>
                 <p>- Fire signal stops AHUs</p>
@@ -822,7 +822,7 @@ const HNCModule2Section6_5 = () => {
                 <strong>Scenario:</strong> New office building energy higher than predicted after 6
                 months.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Investigation findings:</p>
                 <p>- Heating running 6am-8pm (design: 7am-6pm)</p>
                 <p>- Night setback not activating</p>
@@ -901,7 +901,7 @@ const HNCModule2Section6_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -948,7 +948,7 @@ const HNCModule2Section6_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section6-4">

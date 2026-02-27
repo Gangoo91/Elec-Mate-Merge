@@ -117,7 +117,7 @@ const KeyRegulationsGrid = () => {
                     {reg.priority === 'high' && (
                       <Badge className="bg-elec-yellow text-black font-bold mb-2">PRIORITY</Badge>
                     )}
-                    <div className="flex items-center gap-2 text-sm text-white/80">
+                    <div className="flex items-center gap-2 text-sm text-white">
                       <TrendingUp className="h-4 w-4" />
                       <span>{reg.usage} usage</span>
                     </div>
@@ -130,7 +130,7 @@ const KeyRegulationsGrid = () => {
               <CardContent>
                 <div className="space-y-3 mb-6">
                   {reg.sections.map((section, idx) => (
-                    <div key={idx} className="text-sm text-white/80 flex items-center gap-3">
+                    <div key={idx} className="text-sm text-white flex items-center gap-3">
                       <div className="w-2 h-2 bg-elec-yellow rounded-full flex-shrink-0" />
                       <span>{section}</span>
                     </div>

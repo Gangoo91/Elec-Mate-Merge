@@ -197,7 +197,7 @@ export default function LeadershipModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-4-section-2">
@@ -220,7 +220,7 @@ export default function LeadershipModule4Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Managing Conflict
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Why conflict is normal, five ways to handle it, how to de-escalate heated situations,
             and the UK framework for workplace resolution
           </p>
@@ -306,7 +306,7 @@ export default function LeadershipModule4Section3() {
                 <p className="text-sm font-medium text-rose-400 mb-2">
                   Patrick Lencioni &mdash; The Five Dysfunctions
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   In his influential work on team dynamics, Patrick Lencioni identified{' '}
                   <strong className="text-white">fear of conflict</strong> as the second dysfunction
                   of a team, following directly from the first (absence of trust). Teams that cannot
@@ -332,7 +332,7 @@ export default function LeadershipModule4Section3() {
                     The Artificial Harmony Warning
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If your team never disagrees, that is not a sign of good leadership &mdash; it is
                   a warning sign. Artificial harmony means people have stopped voicing concerns,
                   stopped challenging decisions, and stopped contributing their best thinking. The
@@ -354,7 +354,7 @@ export default function LeadershipModule4Section3() {
                     <p className="text-green-400 font-semibold text-sm mb-2">
                       Healthy (Task) Conflict
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                         <span>Focuses on ideas, methods, and approaches</span>
@@ -377,7 +377,7 @@ export default function LeadershipModule4Section3() {
                     <p className="text-red-400 font-semibold text-sm mb-2">
                       Destructive (Relationship) Conflict
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                         <span>Focuses on personalities and personal attacks</span>
@@ -427,9 +427,9 @@ export default function LeadershipModule4Section3() {
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-white font-medium mb-1">
                       1. Competing{' '}
-                      <span className="text-white/80 font-normal">(High Assert, Low Coop)</span>
+                      <span className="text-white font-normal">(High Assert, Low Coop)</span>
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       &ldquo;I win, you lose.&rdquo; Asserting your position at the other
                       party&rsquo;s expense. <strong className="text-white">Use for:</strong> Safety
                       non-negotiables, urgent decisions where you have authority, protecting the
@@ -439,9 +439,9 @@ export default function LeadershipModule4Section3() {
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-white font-medium mb-1">
                       2. Collaborating{' '}
-                      <span className="text-white/80 font-normal">(High Assert, High Coop)</span>
+                      <span className="text-white font-normal">(High Assert, High Coop)</span>
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       &ldquo;Win-win.&rdquo; Working together to find a solution that fully
                       satisfies both parties. <strong className="text-white">Use for:</strong>{' '}
                       Complex issues where both concerns are important, when you have time, building
@@ -451,11 +451,11 @@ export default function LeadershipModule4Section3() {
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-white font-medium mb-1">
                       3. Compromising{' '}
-                      <span className="text-white/80 font-normal">
+                      <span className="text-white font-normal">
                         (Medium Assert, Medium Coop)
                       </span>
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       &ldquo;Split the difference.&rdquo; Both parties give up something to reach a
                       quick, workable solution. <strong className="text-white">Use for:</strong>{' '}
                       Moderately important issues, time pressure, when collaboration is not
@@ -465,9 +465,9 @@ export default function LeadershipModule4Section3() {
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-white font-medium mb-1">
                       4. Avoiding{' '}
-                      <span className="text-white/80 font-normal">(Low Assert, Low Coop)</span>
+                      <span className="text-white font-normal">(Low Assert, Low Coop)</span>
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       &ldquo;Later.&rdquo; Sidestepping or postponing the conflict.{' '}
                       <strong className="text-white">Use for:</strong> Trivial issues, when emotions
                       are too high for productive discussion, buying time to gather information.
@@ -476,9 +476,9 @@ export default function LeadershipModule4Section3() {
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-white font-medium mb-1">
                       5. Accommodating{' '}
-                      <span className="text-white/80 font-normal">(Low Assert, High Coop)</span>
+                      <span className="text-white font-normal">(Low Assert, High Coop)</span>
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       &ldquo;Your needs first.&rdquo; Giving in to the other party&rsquo;s concerns.{' '}
                       <strong className="text-white">Use for:</strong> When the relationship matters
                       more than the issue, when you are wrong, building goodwill for future
@@ -493,7 +493,7 @@ export default function LeadershipModule4Section3() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">The Defaulting Trap</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Most people have a default conflict mode &mdash; the one they reach for
                   instinctively. A supervisor who always competes alienates the team and creates
                   resentment. One who always avoids lets problems fester until they explode. One who
@@ -509,7 +509,7 @@ export default function LeadershipModule4Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Quick Reference &mdash; Matching Mode to Situation
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -580,7 +580,7 @@ export default function LeadershipModule4Section3() {
                 <div className="space-y-3 text-sm">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">1. Lower Your Voice</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Do not match their energy. When they raise their voice, lower yours. This is
                       counterintuitive but highly effective &mdash; it forces them to lower theirs
                       to hear you, and it signals calm authority rather than reactive aggression.
@@ -588,7 +588,7 @@ export default function LeadershipModule4Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">2. Move to a Private Space</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Never resolve conflict in front of others. An audience adds pressure,
                       embarrassment, and the need to save face. Say &ldquo;Let us step over here for
                       a minute&rdquo; and move away from the team.
@@ -596,7 +596,7 @@ export default function LeadershipModule4Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">3. Acknowledge Their Feelings</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       &ldquo;I can see you are frustrated&rdquo; or &ldquo;I understand this is
                       annoying.&rdquo; This is not agreeing with them &mdash; it is showing you
                       recognise their emotional state. People need to feel heard before they can
@@ -605,14 +605,14 @@ export default function LeadershipModule4Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">4. Use Their Name</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Using someone&rsquo;s first name personalises the conversation and signals
                       respect. It moves the dynamic from confrontation to dialogue.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">5. Ask Open Questions</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       &ldquo;What happened from your perspective?&rdquo; or &ldquo;Help me
                       understand what the issue is.&rdquo; Open questions invite them to explain
                       rather than defend, shifting from confrontation to problem-solving.
@@ -622,7 +622,7 @@ export default function LeadershipModule4Section3() {
                     <p className="text-white font-medium mb-1">
                       6. Focus on the Issue, Not the Person
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       &ldquo;The cable route is clashing with the ductwork&rdquo; not &ldquo;You
                       have installed it wrong.&rdquo; Separating the problem from the person reduces
                       defensiveness and opens the door to solutions.
@@ -630,7 +630,7 @@ export default function LeadershipModule4Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">7. Take a Break if Needed</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       &ldquo;Let us come back to this in 10 minutes.&rdquo; Sometimes the best thing
                       is a short cooling-off period. This is not avoiding the conflict &mdash; it is
                       ensuring you address it when both parties can think clearly.
@@ -678,7 +678,7 @@ export default function LeadershipModule4Section3() {
                 <div className="space-y-2 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-white font-medium mb-1">Early Resolution Is Critical</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Catch conflict before it escalates. Small disagreements, if ignored, grow into
                       entrenched positions that are far harder to resolve. The earlier you
                       intervene, the more options you have.
@@ -686,7 +686,7 @@ export default function LeadershipModule4Section3() {
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-white font-medium mb-1">Informal First</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Start with a voluntary conversation, not a formal process. Most workplace
                       conflicts can be resolved through an honest, facilitated discussion between
                       the parties. Formal grievance and disciplinary procedures should be a last
@@ -695,7 +695,7 @@ export default function LeadershipModule4Section3() {
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-white font-medium mb-1">Mediation When Needed</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       If informal resolution fails, mediation uses a neutral third party to
                       facilitate dialogue. The mediator is impartial, does not take sides, and does
                       not impose solutions &mdash; they help the parties find their own resolution.
@@ -704,7 +704,7 @@ export default function LeadershipModule4Section3() {
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-white font-medium mb-1">Line Manager Capability</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       ACAS emphasises that training line managers and supervisors in conflict
                       resolution skills is essential. Most workplace conflict is resolved (or should
                       be) at the supervisor level. You are the first line of defence &mdash; which
@@ -721,7 +721,7 @@ export default function LeadershipModule4Section3() {
                     The Goal Is Dialogue, Not Punishment
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   ACAS is clear that the purpose of conflict resolution is{' '}
                   <strong className="text-white">
                     restoring a productive working relationship
@@ -743,7 +743,7 @@ export default function LeadershipModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">The ACAS Resolution Pathway</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-3">
                     <span className="text-rose-400 font-bold text-xs mt-0.5 flex-shrink-0">
                       STEP 1
@@ -810,7 +810,7 @@ export default function LeadershipModule4Section3() {
                     Pre-emption Is Better Than Resolution
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Many site conflicts can be prevented by clear communication, agreed sequences, and
                   regular coordination. If you are constantly resolving the same types of conflict,
                   the root cause is probably a{' '}
@@ -827,7 +827,7 @@ export default function LeadershipModule4Section3() {
                     <p className="text-white font-medium mb-1">
                       1. Sequencing Disagreements Between Trades
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       <strong className="text-white">Recommended mode:</strong> Collaborating or
                       Compromising. Focus on the programme, not personalities. Use the coordination
                       meeting to establish a shared sequence.{' '}
@@ -837,7 +837,7 @@ export default function LeadershipModule4Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">2. Disputes About Quality of Work</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       <strong className="text-white">Recommended mode:</strong> Collaborating.
                       Establish facts first, reference specifications, keep it objective.{' '}
                       <strong className="text-white">Mistake to avoid:</strong> Making it personal
@@ -848,7 +848,7 @@ export default function LeadershipModule4Section3() {
                     <p className="text-white font-medium mb-1">
                       3. Personality Clashes Between Team Members
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       <strong className="text-white">Recommended mode:</strong> Collaborating with
                       mediation. Speak to each person individually first, then facilitate a joint
                       conversation. <strong className="text-white">Mistake to avoid:</strong>{' '}
@@ -859,7 +859,7 @@ export default function LeadershipModule4Section3() {
                     <p className="text-white font-medium mb-1">
                       4. Complaints About Favouritism or Unfairness
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       <strong className="text-white">Recommended mode:</strong> Collaborating.
                       Listen carefully, review your allocation decisions honestly, and explain your
                       reasoning transparently.{' '}
@@ -871,7 +871,7 @@ export default function LeadershipModule4Section3() {
                     <p className="text-white font-medium mb-1">
                       5. Disagreements with Main Contractor or Client
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       <strong className="text-white">Recommended mode:</strong> Collaborating or
                       Compromising. Stay professional, reference the contract, propose solutions not
                       just problems. <strong className="text-white">Mistake to avoid:</strong>{' '}
@@ -881,7 +881,7 @@ export default function LeadershipModule4Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">6. Pay Disputes</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       <strong className="text-white">Recommended mode:</strong> Collaborating.
                       Document everything, check the agreement, involve HR or contracts if needed.{' '}
                       <strong className="text-white">Mistake to avoid:</strong> Making promises you
@@ -895,7 +895,7 @@ export default function LeadershipModule4Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   General Principles for All Site Conflicts
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -956,7 +956,7 @@ export default function LeadershipModule4Section3() {
                 points from this section are:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -1023,7 +1023,7 @@ export default function LeadershipModule4Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1037,7 +1037,7 @@ export default function LeadershipModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-4-section-2">

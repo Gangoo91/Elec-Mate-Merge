@@ -189,7 +189,7 @@ const Module2Section1_3 = () => {
             Module 2.1.3
           </span>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">Units of Measurement</h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Master electrical units (V, A, Ω, W, kWh, Hz) and prefixes for safe installation work
           </p>
         </div>
@@ -315,42 +315,42 @@ const Module2Section1_3 = () => {
                 <div className="rounded-md border border-white/10 p-3 flex items-center justify-between">
                   <div>
                     <p className="font-medium">Voltage</p>
-                    <p className="text-xs text-white/70">Volt — electrical pressure</p>
+                    <p className="text-xs text-white">Volt — electrical pressure</p>
                   </div>
                   <span className="font-mono text-elec-yellow text-lg">V</span>
                 </div>
                 <div className="rounded-md border border-white/10 p-3 flex items-center justify-between">
                   <div>
                     <p className="font-medium">Current</p>
-                    <p className="text-xs text-white/70">Ampere — flow of charge</p>
+                    <p className="text-xs text-white">Ampere — flow of charge</p>
                   </div>
                   <span className="font-mono text-elec-yellow text-lg">A</span>
                 </div>
                 <div className="rounded-md border border-white/10 p-3 flex items-center justify-between">
                   <div>
                     <p className="font-medium">Resistance</p>
-                    <p className="text-xs text-white/70">Ohm — opposition to current</p>
+                    <p className="text-xs text-white">Ohm — opposition to current</p>
                   </div>
                   <span className="font-mono text-elec-yellow text-lg">Ω</span>
                 </div>
                 <div className="rounded-md border border-white/10 p-3 flex items-center justify-between">
                   <div>
                     <p className="font-medium">Power</p>
-                    <p className="text-xs text-white/70">Watt — rate of energy</p>
+                    <p className="text-xs text-white">Watt — rate of energy</p>
                   </div>
                   <span className="font-mono text-elec-yellow text-lg">W</span>
                 </div>
                 <div className="rounded-md border border-white/10 p-3 flex items-center justify-between">
                   <div>
                     <p className="font-medium">Energy</p>
-                    <p className="text-xs text-white/70">Kilowatt-hour — consumption</p>
+                    <p className="text-xs text-white">Kilowatt-hour — consumption</p>
                   </div>
                   <span className="font-mono text-elec-yellow text-lg">kWh</span>
                 </div>
                 <div className="rounded-md border border-white/10 p-3 flex items-center justify-between">
                   <div>
                     <p className="font-medium">Frequency</p>
-                    <p className="text-xs text-white/70">Hertz — AC cycles/second</p>
+                    <p className="text-xs text-white">Hertz — AC cycles/second</p>
                   </div>
                   <span className="font-mono text-elec-yellow text-lg">Hz</span>
                 </div>
@@ -390,19 +390,19 @@ const Module2Section1_3 = () => {
                       <p>
                         <strong>kilo (k):</strong> × 1,000
                       </p>
-                      <p className="text-sm text-white/70">Example: 3kW = 3,000W</p>
+                      <p className="text-sm text-white">Example: 3kW = 3,000W</p>
                     </div>
                     <div className="bg-white/5 border border-white/10 p-3 rounded">
                       <p>
                         <strong>Mega (M):</strong> × 1,000,000
                       </p>
-                      <p className="text-sm text-white/70">Example: 2MΩ = 2,000,000Ω</p>
+                      <p className="text-sm text-white">Example: 2MΩ = 2,000,000Ω</p>
                     </div>
                     <div className="bg-white/5 border border-white/10 p-3 rounded">
                       <p>
                         <strong>Giga (G):</strong> × 1,000,000,000
                       </p>
-                      <p className="text-sm text-white/70">Example: 1GΩ = 1,000,000,000Ω</p>
+                      <p className="text-sm text-white">Example: 1GΩ = 1,000,000,000Ω</p>
                     </div>
                   </div>
                 </div>
@@ -414,19 +414,19 @@ const Module2Section1_3 = () => {
                       <p>
                         <strong>milli (m):</strong> ÷ 1,000
                       </p>
-                      <p className="text-sm text-white/70">Example: 500mA = 0.5A</p>
+                      <p className="text-sm text-white">Example: 500mA = 0.5A</p>
                     </div>
                     <div className="bg-white/5 border border-white/10 p-3 rounded">
                       <p>
                         <strong>micro (μ):</strong> ÷ 1,000,000
                       </p>
-                      <p className="text-sm text-white/70">Example: 100μA = 0.0001A</p>
+                      <p className="text-sm text-white">Example: 100μA = 0.0001A</p>
                     </div>
                     <div className="bg-white/5 border border-white/10 p-3 rounded">
                       <p>
                         <strong>nano (n):</strong> ÷ 1,000,000,000
                       </p>
-                      <p className="text-sm text-white/70">Example: 50nF = 0.00000005F</p>
+                      <p className="text-sm text-white">Example: 50nF = 0.00000005F</p>
                     </div>
                   </div>
                 </div>
@@ -535,7 +535,7 @@ const Module2Section1_3 = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
                     <h4 className="font-semibold mb-2">Ohm's Law Calculator</h4>
-                    <p className="text-sm text-white/70 mb-3">
+                    <p className="text-sm text-white mb-3">
                       Enter any two values to calculate the others
                     </p>
                     <OhmsCalculator />
@@ -543,7 +543,7 @@ const Module2Section1_3 = () => {
 
                   <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
                     <h4 className="font-semibold mb-2">Unit Converter</h4>
-                    <p className="text-sm text-white/70 mb-3">
+                    <p className="text-sm text-white mb-3">
                       Convert between different unit prefixes
                     </p>
                     <UnitPrefixConverter />
@@ -617,7 +617,7 @@ const Module2Section1_3 = () => {
                   </span>
                 </summary>
                 <div className="px-4 pb-4">
-                  <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                  <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
                 </div>
               </details>
             ))}
@@ -636,7 +636,7 @@ const Module2Section1_3 = () => {
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6 p-4 bg-white/5 border border-white/10 rounded-lg">
             <div>
               <h3 className="font-semibold text-white mb-3">Common UK Values</h3>
-              <ul className="space-y-1 text-xs sm:text-sm text-white/80">
+              <ul className="space-y-1 text-xs sm:text-sm text-white">
                 <li>
                   • Single-phase supply: <strong className="text-white">230V</strong>
                 </li>
@@ -659,7 +659,7 @@ const Module2Section1_3 = () => {
             </div>
             <div>
               <h3 className="font-semibold text-white mb-3">Test Limits (typical)</h3>
-              <ul className="space-y-1 text-xs sm:text-sm text-white/80">
+              <ul className="space-y-1 text-xs sm:text-sm text-white">
                 <li>
                   • Insulation resistance: <strong className="text-white">&gt;1MΩ</strong>
                 </li>
@@ -688,7 +688,7 @@ const Module2Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level2/module2/section1/1-2">

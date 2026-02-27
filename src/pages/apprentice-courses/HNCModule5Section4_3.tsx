@@ -260,7 +260,7 @@ const HNCModule5Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section4">
@@ -282,7 +282,7 @@ const HNCModule5Section4_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Material and Equipment Approval
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Submittal processes, sample approval, mock-up requirements, and specification compliance
             for building services
           </p>
@@ -610,7 +610,7 @@ const HNCModule5Section4_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Cable Containment</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>3m minimum run of each type</li>
                     <li>Include bends, tees, and crossings</li>
                     <li>Earthing bonding connections</li>
@@ -620,7 +620,7 @@ const HNCModule5Section4_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Feature Lighting</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Full luminaire with trim/bezel</li>
                     <li>Ceiling integration detail</li>
                     <li>Light output demonstration</li>
@@ -654,7 +654,7 @@ const HNCModule5Section4_3 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Commercial consideration:</strong> Where mock-ups form part of the permanent
               works, coordinate location to avoid abortive work and double handling.
             </p>
@@ -740,7 +740,7 @@ const HNCModule5Section4_3 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Example comparison table - CRI below specification would likely result in rejection
               </p>
             </div>
@@ -793,16 +793,16 @@ const HNCModule5Section4_3 = () => {
                 <strong>Scenario:</strong> Cable tray submittal rejected - specified perforated base
                 but submitted solid base.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>1. Review rejection comments carefully</p>
                 <p>2. Identify correct product from same manufacturer (perforated variant)</p>
                 <p>3. Prepare revised submittal (Rev B) with correct data sheet</p>
                 <p className="mt-2">Submittal cover sheet notes:</p>
-                <p className="text-white/60">"Resubmission addressing rejection comments.</p>
-                <p className="text-white/60">
+                <p className="text-white">"Resubmission addressing rejection comments.</p>
+                <p className="text-white">
                   Now submitting perforated cable tray per specification
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   clause 5.2.3. See highlighted compliance on data sheet."
                 </p>
                 <p className="mt-2 text-green-400">
@@ -819,17 +819,17 @@ const HNCModule5Section4_3 = () => {
                 <strong>Scenario:</strong> Specified distribution board has 16-week lead time;
                 alternative available in 4 weeks.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Substitution Request Form:</p>
                 <p className="mt-2">
-                  <span className="text-white/60">Specified:</span> Manufacturer A, Type DB-250
+                  <span className="text-white">Specified:</span> Manufacturer A, Type DB-250
                 </p>
                 <p>
-                  <span className="text-white/60">Proposed:</span> Manufacturer B, Type
+                  <span className="text-white">Proposed:</span> Manufacturer B, Type
                   PowerBoard-250
                 </p>
                 <p>
-                  <span className="text-white/60">Reason:</span> Lead time reduction (16 weeks to 4
+                  <span className="text-white">Reason:</span> Lead time reduction (16 weeks to 4
                   weeks)
                 </p>
                 <p className="mt-2">Technical comparison attached showing:</p>
@@ -838,7 +838,7 @@ const HNCModule5Section4_3 = () => {
                 <p>- Compatible outgoing ways</p>
                 <p>- Both BS EN 61439 compliant</p>
                 <p className="mt-2">
-                  <span className="text-white/60">Cost impact:</span> +£450 per board (6 boards =
+                  <span className="text-white">Cost impact:</span> +£450 per board (6 boards =
                   £2,700)
                 </p>
                 <p className="mt-2 text-green-400">
@@ -855,7 +855,7 @@ const HNCModule5Section4_3 = () => {
                 <strong>Scenario:</strong> Exposed stainless steel containment in reception area
                 requires mock-up approval.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Mock-up scope:</p>
                 <p>- 4m straight run with support brackets at 1.2m centres</p>
                 <p>- One 90° bend with radius piece</p>
@@ -947,7 +947,7 @@ const HNCModule5Section4_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -993,7 +993,7 @@ const HNCModule5Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section4">

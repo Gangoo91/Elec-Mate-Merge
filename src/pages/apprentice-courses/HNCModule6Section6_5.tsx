@@ -268,7 +268,7 @@ const HNCModule6Section6_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section6">
@@ -290,7 +290,7 @@ const HNCModule6Section6_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Circular Economy Principles
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Design for disassembly, material passports, reuse strategies, and waste elimination in
             building services
           </p>
@@ -621,7 +621,7 @@ const HNCModule6Section6_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-1">Product Information</p>
-                  <ul className="text-white/90 space-y-0.5">
+                  <ul className="text-white space-y-0.5">
                     <li>• Manufacturer and model details</li>
                     <li>• Date of manufacture</li>
                     <li>• Serial/batch numbers</li>
@@ -631,7 +631,7 @@ const HNCModule6Section6_5 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-1">Material Composition</p>
-                  <ul className="text-white/90 space-y-0.5">
+                  <ul className="text-white space-y-0.5">
                     <li>• Material types and quantities</li>
                     <li>• Hazardous substance content</li>
                     <li>• Recyclability ratings</li>
@@ -727,39 +727,39 @@ const HNCModule6Section6_5 = () => {
               </p>
               <div className="text-sm space-y-1 font-mono">
                 <p>
-                  <span className="text-white/60">Asset ID:</span>{' '}
+                  <span className="text-white">Asset ID:</span>{' '}
                   <span className="text-white">DB-L2-01</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Manufacturer:</span>{' '}
+                  <span className="text-white">Manufacturer:</span>{' '}
                   <span className="text-white">Schneider Electric</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Model:</span>{' '}
+                  <span className="text-white">Model:</span>{' '}
                   <span className="text-white">Prisma Plus P 400A</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Install date:</span>{' '}
+                  <span className="text-white">Install date:</span>{' '}
                   <span className="text-white">2024-03-15</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Expected life:</span>{' '}
+                  <span className="text-white">Expected life:</span>{' '}
                   <span className="text-white">25 years</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Steel content:</span>{' '}
+                  <span className="text-white">Steel content:</span>{' '}
                   <span className="text-white">45kg (recyclable)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Copper content:</span>{' '}
+                  <span className="text-white">Copper content:</span>{' '}
                   <span className="text-white">12kg (recyclable)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Plastic content:</span>{' '}
+                  <span className="text-white">Plastic content:</span>{' '}
                   <span className="text-white">8kg (PP - recyclable)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Disassembly:</span>{' '}
+                  <span className="text-white">Disassembly:</span>{' '}
                   <span className="text-white">See procedure DIS-DB-001</span>
                 </p>
               </div>
@@ -942,7 +942,7 @@ const HNCModule6Section6_5 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Regulatory note:</strong> Reused components must comply with current
               standards. WEEE regulations apply to electrical equipment disposal, requiring proper
               handling of hazardous materials.
@@ -968,8 +968,8 @@ const HNCModule6Section6_5 = () => {
                 <strong>Scenario:</strong> Design electrical installation for a 10,000m² office
                 refurbishment with circular economy principles.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Circular design strategies applied:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Circular design strategies applied:</p>
                 <p className="mt-2">Containment system:</p>
                 <p className="ml-4">- Surface-mounted perimeter trunking (recoverable)</p>
                 <p className="ml-4">- Raised floor distribution boxes (accessible)</p>
@@ -996,7 +996,7 @@ const HNCModule6Section6_5 = () => {
                 <strong>Scenario:</strong> Create material passport system for new commercial
                 building services.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Implementation steps:</p>
                 <p className="mt-2">1. BIM model setup:</p>
                 <p className="ml-4">- Add material passport properties to object templates</p>
@@ -1023,7 +1023,7 @@ const HNCModule6Section6_5 = () => {
                 <strong>Scenario:</strong> Estimate recovery value for electrical installation in
                 building due for demolition.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Component inventory and values:</p>
                 <p className="mt-2">Cable tray (galvanised steel): 2,500kg</p>
                 <p className="ml-4">- Condition: Good, reusable</p>
@@ -1120,7 +1120,7 @@ const HNCModule6Section6_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1166,7 +1166,7 @@ const HNCModule6Section6_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section6">

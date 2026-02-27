@@ -221,7 +221,7 @@ export const DesignProcessingView = ({
 
           <div>
             <h2 className="text-xl font-bold text-white">Designing Installation</h2>
-            <p className="text-xs text-white/50 mt-1">BS 7671 compliant</p>
+            <p className="text-xs text-white mt-1">BS 7671 compliant</p>
           </div>
         </div>
 
@@ -237,7 +237,7 @@ export const DesignProcessingView = ({
             >
               {Math.round(displayPercent)}
             </motion.span>
-            <span className="text-xl font-bold text-elec-yellow/60">%</span>
+            <span className="text-xl font-bold text-elec-yellow">%</span>
           </div>
 
           {/* Progress Bar */}
@@ -300,8 +300,8 @@ export const DesignProcessingView = ({
         <div className="flex items-center justify-center gap-6">
           <div className="text-center">
             <div className="flex items-center justify-center gap-1 mb-1">
-              <Clock className="h-3 w-3 text-white/40" />
-              <span className="text-[10px] text-white/40">Elapsed</span>
+              <Clock className="h-3 w-3 text-white" />
+              <span className="text-[10px] text-white">Elapsed</span>
             </div>
             <p className="text-lg font-bold text-white tabular-nums">{formatTime(elapsedTime)}</p>
           </div>
@@ -309,20 +309,20 @@ export const DesignProcessingView = ({
           {totalCircuits > 0 && (
             <div className="text-center">
               <div className="flex items-center justify-center gap-1 mb-1">
-                <CircuitBoard className="h-3 w-3 text-white/40" />
-                <span className="text-[10px] text-white/40">Circuits</span>
+                <CircuitBoard className="h-3 w-3 text-white" />
+                <span className="text-[10px] text-white">Circuits</span>
               </div>
               <p className="text-lg font-bold text-white">
                 <span className="text-elec-yellow">{estimatedCompleted}</span>
-                <span className="text-white/40">/{totalCircuits}</span>
+                <span className="text-white">/{totalCircuits}</span>
               </p>
             </div>
           )}
 
           <div className="text-center">
             <div className="flex items-center justify-center gap-1 mb-1">
-              <Loader2 className="h-3 w-3 text-white/40 animate-spin" />
-              <span className="text-[10px] text-white/40">Remaining</span>
+              <Loader2 className="h-3 w-3 text-white animate-spin" />
+              <span className="text-[10px] text-white">Remaining</span>
             </div>
             <p className="text-lg font-bold text-white tabular-nums">
               ~{formatTime(estimatedTimeRemaining)}
@@ -340,7 +340,7 @@ export const DesignProcessingView = ({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="text-[11px] text-white/50 leading-relaxed"
+                className="text-[11px] text-white leading-relaxed"
               >
                 {TIPS[currentTip]}
               </motion.p>
@@ -366,7 +366,7 @@ export const DesignProcessingView = ({
         {onCancel && (
           <button
             onClick={onCancel}
-            className="w-full py-3 text-xs text-white/40 hover:text-red-400 hover:bg-red-500/5 rounded-xl transition-all flex items-center justify-center gap-1.5"
+            className="w-full py-3 text-xs text-white hover:text-red-400 hover:bg-red-500/5 rounded-xl transition-all flex items-center justify-center gap-1.5"
           >
             <XCircle className="h-3 h-3" />
             Cancel Design

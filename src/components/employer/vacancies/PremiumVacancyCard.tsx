@@ -240,23 +240,23 @@ export function PremiumVacancyCard({
                   {title}
                 </h3>
                 <div className="flex items-center gap-2 mt-1.5 flex-wrap">
-                  <span className="flex items-center gap-1.5 text-sm text-white/60">
+                  <span className="flex items-center gap-1.5 text-sm text-white">
                     <MapPin className="h-3.5 w-3.5 text-elec-yellow/70" />
                     {location}
                   </span>
-                  <span className="text-white/30">•</span>
+                  <span className="text-white">•</span>
                   <Badge
                     variant="outline"
-                    className="text-xs bg-white/5 border-white/10 text-white/70"
+                    className="text-xs bg-white/5 border-white/10 text-white"
                   >
                     {type}
                   </Badge>
                   {workArrangement && (
                     <>
-                      <span className="text-white/30 hidden sm:inline">•</span>
+                      <span className="text-white hidden sm:inline">•</span>
                       <Badge
                         variant="outline"
-                        className="text-xs bg-white/5 border-white/10 text-white/70 hidden sm:inline-flex"
+                        className="text-xs bg-white/5 border-white/10 text-white hidden sm:inline-flex"
                       >
                         {workArrangement}
                       </Badge>
@@ -291,7 +291,7 @@ export function PremiumVacancyCard({
                 </Badge>
                 <ChevronRight
                   className={cn(
-                    'h-5 w-5 text-white/40 transition-transform duration-300',
+                    'h-5 w-5 text-white transition-transform duration-300',
                     isExpanded && 'rotate-90'
                   )}
                 />
@@ -314,14 +314,14 @@ export function PremiumVacancyCard({
                     <Users className="h-3.5 w-3.5 text-elec-yellow" />
                   </div>
                   <span className="text-sm font-medium text-white">{applicantCount}</span>
-                  <span className="text-xs text-white/50">applicants</span>
+                  <span className="text-xs text-white">applicants</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="p-1.5 rounded-lg bg-white/5">
-                    <Eye className="h-3.5 w-3.5 text-white/60" />
+                    <Eye className="h-3.5 w-3.5 text-white" />
                   </div>
-                  <span className="text-sm font-medium text-white/80">{views}</span>
-                  <span className="text-xs text-white/50">views</span>
+                  <span className="text-sm font-medium text-white">{views}</span>
+                  <span className="text-xs text-white">views</span>
                 </div>
               </div>
 
@@ -330,7 +330,7 @@ export function PremiumVacancyCard({
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-9 w-9 text-white/60 hover:text-white hover:bg-white/10"
+                  className="h-9 w-9 text-white hover:text-white hover:bg-white/10"
                   onClick={(e) => {
                     e.stopPropagation();
                     onEdit();
@@ -341,7 +341,7 @@ export function PremiumVacancyCard({
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="h-9 w-9 text-white/60 hover:text-elec-yellow hover:bg-elec-yellow/10 relative"
+                  className="h-9 w-9 text-white hover:text-elec-yellow hover:bg-elec-yellow/10 relative"
                   onClick={(e) => {
                     e.stopPropagation();
                     onViewApplicants();
@@ -373,12 +373,12 @@ export function PremiumVacancyCard({
             <div className="px-4 pb-4 pl-5 space-y-4 border-t border-white/5 pt-4">
               {/* Dates */}
               <div className="flex items-center gap-6 text-sm">
-                <div className="flex items-center gap-2 text-white/60">
+                <div className="flex items-center gap-2 text-white">
                   <Calendar className="h-4 w-4 text-elec-yellow/70" />
                   <span>Posted: {new Date(postedAt).toLocaleDateString()}</span>
                 </div>
                 {closingDate && (
-                  <div className="flex items-center gap-2 text-white/60">
+                  <div className="flex items-center gap-2 text-white">
                     <Clock className="h-4 w-4 text-elec-yellow/70" />
                     <span>Closes: {new Date(closingDate).toLocaleDateString()}</span>
                   </div>
@@ -390,7 +390,7 @@ export function PremiumVacancyCard({
                 <Button
                   variant="outline"
                   size="sm"
-                  className="h-11 text-xs bg-white/5 border-white/10 text-white/80 hover:bg-white/10 hover:text-white"
+                  className="h-11 text-xs bg-white/5 border-white/10 text-white hover:bg-white/10 hover:text-white"
                   onClick={(e) => {
                     e.stopPropagation();
                     onEdit();
@@ -402,7 +402,7 @@ export function PremiumVacancyCard({
                 <Button
                   variant="outline"
                   size="sm"
-                  className="h-11 text-xs bg-white/5 border-white/10 text-white/80 hover:bg-white/10 hover:text-white"
+                  className="h-11 text-xs bg-white/5 border-white/10 text-white hover:bg-white/10 hover:text-white"
                   onClick={(e) => {
                     e.stopPropagation();
                     onDuplicate();

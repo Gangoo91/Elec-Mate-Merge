@@ -186,7 +186,7 @@ const FiberOpticsModule2Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/fiber-optics-module-2">
@@ -207,7 +207,7 @@ const FiberOpticsModule2Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Singlemode vs Multimode Fibre
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding the fundamental differences between fibre types and when to use each
           </p>
         </header>
@@ -338,19 +338,19 @@ const FiberOpticsModule2Section1 = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm">
                 <div className="p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20 text-center">
                   <div className="text-elec-yellow font-bold">9um</div>
-                  <div className="text-white/70 text-xs">Core</div>
+                  <div className="text-white text-xs">Core</div>
                 </div>
                 <div className="p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20 text-center">
                   <div className="text-elec-yellow font-bold">125um</div>
-                  <div className="text-white/70 text-xs">Cladding</div>
+                  <div className="text-white text-xs">Cladding</div>
                 </div>
                 <div className="p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20 text-center">
                   <div className="text-elec-yellow font-bold">1310/1550nm</div>
-                  <div className="text-white/70 text-xs">Wavelengths</div>
+                  <div className="text-white text-xs">Wavelengths</div>
                 </div>
                 <div className="p-3 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20 text-center">
                   <div className="text-elec-yellow font-bold">10-80km+</div>
-                  <div className="text-white/70 text-xs">Range</div>
+                  <div className="text-white text-xs">Range</div>
                 </div>
               </div>
             </div>
@@ -366,7 +366,7 @@ const FiberOpticsModule2Section1 = () => {
                     <strong>OS2:</strong> Indoor/outdoor, loose-tube. Attenuation &lt;0.4 dB/km
                   </li>
                 </ul>
-                <p className="text-xs text-white/70 mt-2">
+                <p className="text-xs text-white mt-2">
                   OS2 is now the standard for most applications.
                 </p>
               </div>
@@ -421,7 +421,7 @@ const FiberOpticsModule2Section1 = () => {
                       <th className="text-center py-2 text-elec-yellow">Status</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/90">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2 font-medium">OM1</td>
                       <td className="text-center">62.5um</td>
@@ -629,7 +629,7 @@ const FiberOpticsModule2Section1 = () => {
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
                 <p
-                  className="text-sm text-white/90 leading-relaxed"
+                  className="text-sm text-white leading-relaxed"
                   dangerouslySetInnerHTML={{ __html: faq.answer }}
                 />
               </div>
@@ -676,7 +676,7 @@ const FiberOpticsModule2Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/fiber-optics-module-2">

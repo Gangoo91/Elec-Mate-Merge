@@ -59,8 +59,8 @@ export function EmptyState({
         <div className={cn('p-2.5 rounded-xl bg-gradient-to-br border mb-3', colorClasses)}>
           <Icon className="h-5 w-5" />
         </div>
-        <p className="text-sm font-medium text-white/80">{title}</p>
-        {description && <p className="text-xs text-white/50 mt-1 max-w-[200px]">{description}</p>}
+        <p className="text-sm font-medium text-white">{title}</p>
+        {description && <p className="text-xs text-white mt-1 max-w-[200px]">{description}</p>}
         {action && (
           <Button size="sm" variant="outline" onClick={action.onClick} className="mt-3 h-8 text-xs">
             {action.label}
@@ -84,7 +84,7 @@ export function EmptyState({
 
       <h3 className="text-lg font-semibold text-white mb-1">{title}</h3>
 
-      {description && <p className="text-sm text-white/60 max-w-sm mb-4">{description}</p>}
+      {description && <p className="text-sm text-white max-w-sm mb-4">{description}</p>}
 
       {children}
 

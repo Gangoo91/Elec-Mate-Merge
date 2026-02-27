@@ -73,7 +73,7 @@ const AM2Module6 = () => {
               <span className="text-ios-footnote font-medium text-elec-yellow">Module 6</span>
             </div>
             <h1 className="text-ios-title-1 font-bold text-white mb-3">Online Knowledge Test</h1>
-            <p className="text-ios-body text-white/70 max-w-2xl leading-relaxed">
+            <p className="text-ios-body text-white max-w-2xl leading-relaxed">
               Master the AM2 online knowledge test with comprehensive preparation covering test
               format, core topics, time management, and exam techniques.
             </p>

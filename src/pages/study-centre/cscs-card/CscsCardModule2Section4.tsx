@@ -186,7 +186,7 @@ export default function CscsCardModule2Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-2">
@@ -211,7 +211,7 @@ export default function CscsCardModule2Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Accident Reporting &amp; RIDDOR
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding your legal duties to report accidents, the RIDDOR regulations, what makes
             an incident reportable, and how investigations prevent future harm
           </p>
@@ -305,7 +305,7 @@ export default function CscsCardModule2Section4() {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-green-500 mb-3">Why Reporting Matters</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -362,7 +362,7 @@ export default function CscsCardModule2Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Construction Is High Risk</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Construction consistently has one of the{' '}
                   <strong className="text-white">
                     highest rates of fatal and serious injuries
@@ -413,7 +413,7 @@ export default function CscsCardModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   What to Record in the Accident Book
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -464,7 +464,7 @@ export default function CscsCardModule2Section4() {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-green-500 mb-3">GDPR Considerations</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -502,14 +502,14 @@ export default function CscsCardModule2Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Near-Miss Reporting Systems</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   In addition to the accident book, most construction companies operate an{' '}
                   <strong className="text-white">internal near-miss reporting system</strong>. This
                   may be a paper-based form, a digital app, or a card system. Near-miss reports
                   capture incidents that did not result in injury but had the potential to cause
                   harm. Common methods include:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -578,7 +578,7 @@ export default function CscsCardModule2Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key Facts About RIDDOR</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -618,7 +618,7 @@ export default function CscsCardModule2Section4() {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-green-500 mb-3">Time Limits for Reporting</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-3">
                     <span className="flex items-center justify-center min-w-[80px] h-7 rounded bg-red-500/20 text-red-400 text-xs font-bold flex-shrink-0">
                       IMMEDIATE
@@ -686,7 +686,7 @@ export default function CscsCardModule2Section4() {
                       <p className="text-sm text-white font-medium">
                         Make safe &amp; provide first aid
                       </p>
-                      <p className="text-xs text-white/60">Life-saving actions always come first</p>
+                      <p className="text-xs text-white">Life-saving actions always come first</p>
                     </div>
                   </div>
                   <div className="flex justify-center">
@@ -701,7 +701,7 @@ export default function CscsCardModule2Section4() {
                       <p className="text-sm text-white font-medium">
                         Record in accident book (BI 510)
                       </p>
-                      <p className="text-xs text-white/60">All incidents, no matter how minor</p>
+                      <p className="text-xs text-white">All incidents, no matter how minor</p>
                     </div>
                   </div>
                   <div className="flex justify-center">
@@ -716,7 +716,7 @@ export default function CscsCardModule2Section4() {
                       <p className="text-sm text-white font-medium">
                         Is the incident RIDDOR-reportable?
                       </p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Death, specified injury, over-7-day, dangerous occurrence, or reportable
                         disease?
                       </p>
@@ -730,7 +730,7 @@ export default function CscsCardModule2Section4() {
                     </div>
                     <div className="flex flex-col items-center">
                       <div className="w-0.5 h-4 bg-white/20" />
-                      <span className="text-xs text-white/50 font-semibold">NO</span>
+                      <span className="text-xs text-white font-semibold">NO</span>
                       <div className="w-0.5 h-4 bg-white/20" />
                     </div>
                   </div>
@@ -739,15 +739,15 @@ export default function CscsCardModule2Section4() {
                     <div className="space-y-2">
                       <div className="bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">
                         <p className="text-sm text-white font-medium">Report to HSE</p>
-                        <p className="text-xs text-white/60">Deaths: immediately by phone</p>
-                        <p className="text-xs text-white/60">Others: online at riddor.hse.gov.uk</p>
+                        <p className="text-xs text-white">Deaths: immediately by phone</p>
+                        <p className="text-xs text-white">Others: online at riddor.hse.gov.uk</p>
                       </div>
                       <div className="flex justify-center">
                         <div className="w-0.5 h-3 bg-red-500/30" />
                       </div>
                       <div className="bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2">
                         <p className="text-sm text-white font-medium">Preserve scene</p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           Do not disturb evidence until authorised
                         </p>
                       </div>
@@ -764,14 +764,14 @@ export default function CscsCardModule2Section4() {
                     <div className="space-y-2">
                       <div className="bg-white/5 border border-white/10 rounded-lg px-3 py-2">
                         <p className="text-sm text-white font-medium">Record internally</p>
-                        <p className="text-xs text-white/60">Accident book + near-miss system</p>
+                        <p className="text-xs text-white">Accident book + near-miss system</p>
                       </div>
                       <div className="flex justify-center">
                         <div className="w-0.5 h-3 bg-white/20" />
                       </div>
                       <div className="bg-white/5 border border-white/10 rounded-lg px-3 py-2">
                         <p className="text-sm text-white font-medium">Investigate as appropriate</p>
-                        <p className="text-xs text-white/60">
+                        <p className="text-xs text-white">
                           Proportionate to the severity/potential
                         </p>
                       </div>
@@ -817,7 +817,7 @@ export default function CscsCardModule2Section4() {
 
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-red-400 mb-3">1. Deaths</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Any death of a worker arising from a work-related accident must be reported{' '}
                   <strong className="text-white">immediately</strong> by telephone to the HSE
                   Incident Contact Centre (0345 300 9923), and then followed up with a written
@@ -829,12 +829,12 @@ export default function CscsCardModule2Section4() {
 
               <div className="bg-orange-500/10 border border-orange-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-orange-400 mb-3">2. Specified Injuries</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Specified injuries are serious injuries that must be reported within{' '}
                   <strong className="text-white">10 days</strong>, regardless of how long the worker
                   is incapacitated. They include:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -901,7 +901,7 @@ export default function CscsCardModule2Section4() {
                 <p className="text-sm font-medium text-yellow-400 mb-3">
                   3. Over-7-Day Incapacitation
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If a worker is incapacitated (unable to perform their normal work duties) for
                   <strong className="text-white"> more than 7 consecutive days</strong> (not
                   counting the day of the accident), the incident must be reported within{' '}
@@ -915,7 +915,7 @@ export default function CscsCardModule2Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">4. Injuries to Non-Workers</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If a member of the public, a visitor, or any other person who is{' '}
                   <strong className="text-white">not at work</strong> is injured as a result of a
                   work activity and is taken directly to hospital for treatment, this must be
@@ -963,7 +963,7 @@ export default function CscsCardModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Dangerous Occurrences on Construction Sites
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1033,7 +1033,7 @@ export default function CscsCardModule2Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">No Injury Required</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A dangerous occurrence must be reported{' '}
                   <strong className="text-white">even if nobody was hurt</strong>. The point of
                   reporting dangerous occurrences is that they represent events where serious injury
@@ -1077,7 +1077,7 @@ export default function CscsCardModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Reportable Occupational Diseases
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1233,7 +1233,7 @@ export default function CscsCardModule2Section4() {
                   </div>
 
                   <div className="mt-4 text-center max-w-sm">
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       For every <strong className="text-red-400">1</strong> major or fatal injury,
                       there are typically <strong className="text-orange-400">29</strong> minor
                       injuries and
@@ -1258,7 +1258,7 @@ export default function CscsCardModule2Section4() {
                 <p className="text-sm font-medium text-green-500 mb-3">
                   Creating a No-Blame Reporting Culture
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1306,7 +1306,7 @@ export default function CscsCardModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Common Near-Misses on Construction Sites
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>Tools or materials falling from height but not striking anyone</span>
@@ -1375,7 +1375,7 @@ export default function CscsCardModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Step-by-Step Investigation Process
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-green-500/20 text-green-400 text-xs font-bold flex-shrink-0">
                       1
@@ -1490,7 +1490,7 @@ export default function CscsCardModule2Section4() {
                 <p className="text-sm font-medium text-green-500 mb-3">
                   The 5 Whys &mdash; Worked Example
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-3">
                     <span className="flex items-center justify-center min-w-[24px] h-6 rounded bg-green-500/20 text-green-400 text-xs font-bold flex-shrink-0">
                       1
@@ -1500,7 +1500,7 @@ export default function CscsCardModule2Section4() {
                         <strong className="text-white">Why</strong> did the electrician fall from
                         the ladder?
                       </p>
-                      <p className="text-white/60">Because the ladder slipped on the floor.</p>
+                      <p className="text-white">Because the ladder slipped on the floor.</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
@@ -1511,7 +1511,7 @@ export default function CscsCardModule2Section4() {
                       <p>
                         <strong className="text-white">Why</strong> did the ladder slip?
                       </p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Because the floor was wet and the ladder feet were worn.
                       </p>
                     </div>
@@ -1524,7 +1524,7 @@ export default function CscsCardModule2Section4() {
                       <p>
                         <strong className="text-white">Why</strong> were the ladder feet worn?
                       </p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Because the ladder had not been inspected recently.
                       </p>
                     </div>
@@ -1538,7 +1538,7 @@ export default function CscsCardModule2Section4() {
                         <strong className="text-white">Why</strong> had the ladder not been
                         inspected?
                       </p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Because there was no ladder inspection programme in place.
                       </p>
                     </div>
@@ -1552,7 +1552,7 @@ export default function CscsCardModule2Section4() {
                         <strong className="text-white">Why</strong> was there no inspection
                         programme?
                       </p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Because the company had no system for managing and inspecting access
                         equipment.
                       </p>
@@ -1573,7 +1573,7 @@ export default function CscsCardModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   What a Good Investigation Report Contains
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1636,7 +1636,7 @@ export default function CscsCardModule2Section4() {
                     Investigation Is Not About Blame
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The purpose of an accident investigation is to{' '}
                   <strong className="text-white">find the facts, not assign fault</strong>.
                   Investigations that focus on blaming individuals discourage future reporting and
@@ -1665,7 +1665,7 @@ export default function CscsCardModule2Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1679,7 +1679,7 @@ export default function CscsCardModule2Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-2">

@@ -262,7 +262,7 @@ const HNCModule5Section6_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section6">
@@ -284,7 +284,7 @@ const HNCModule5Section6_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Environmental Management
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Waste management, noise control, dust suppression, permit requirements and environmental
             compliance for building services sites
           </p>
@@ -458,7 +458,7 @@ const HNCModule5Section6_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="font-medium text-white mb-2">Recyclable Materials</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Copper cable offcuts (high value)</li>
                     <li>Steel cable tray and trunking</li>
                     <li>Aluminium conduit and fittings</li>
@@ -469,7 +469,7 @@ const HNCModule5Section6_5 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-2">Hazardous Waste</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Fluorescent tubes (mercury)</li>
                     <li>Batteries (various chemistries)</li>
                     <li>Capacitors (may contain PCBs)</li>
@@ -758,7 +758,7 @@ const HNCModule5Section6_5 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>HSE enforcement:</strong> Silica dust exposure is a priority area for HSE
               inspectors. Expect scrutiny of control measures during site inspections.
             </p>
@@ -946,8 +946,8 @@ const HNCModule5Section6_5 = () => {
                 <strong>Scenario:</strong> Installing new distribution boards in an occupied
                 hospital wing. Works include chasing, core drilling, and temporary generator use.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Environmental considerations:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Environmental considerations:</p>
                 <p className="mt-2">1. Noise: Section 61 consent for restricted hours</p>
                 <p>2. Dust: Full extraction with HEPA filtration (infection control)</p>
                 <p>3. Waste: Segregate fluorescent tubes as hazardous waste</p>
@@ -966,8 +966,8 @@ const HNCModule5Section6_5 = () => {
                 <strong>Scenario:</strong> New build commercial premises adjacent to a watercourse.
                 Electrical installation includes external lighting and buried cables.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Environmental permit requirements:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Environmental permit requirements:</p>
                 <p className="mt-2">1. Discharge consent for surface water drainage</p>
                 <p>2. Pollution prevention plan for construction phase</p>
                 <p>3. Silt fencing to protect watercourse</p>
@@ -986,8 +986,8 @@ const HNCModule5Section6_5 = () => {
                 <strong>Scenario:</strong> Major refit project generating significant cable waste
                 and packaging materials.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">SWMP implementation:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">SWMP implementation:</p>
                 <p className="mt-2">Copper cable recovered: 2.3 tonnes @ 5,200/tonne = 11,960</p>
                 <p>Steel tray recycled: 4.1 tonnes (free collection)</p>
                 <p>Cardboard recycled: 1.8 tonnes (rebate 45/tonne = 81)</p>
@@ -1070,7 +1070,7 @@ const HNCModule5Section6_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1116,7 +1116,7 @@ const HNCModule5Section6_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section6">

@@ -201,7 +201,7 @@ const LivePricingHub = () => {
             variant="ghost"
             size="icon"
             onClick={() => navigate('/electrician/business')}
-            className="text-white/70 hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.95]"
+            className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.95]"
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>
@@ -218,7 +218,7 @@ const LivePricingHub = () => {
             size="icon"
             onClick={handleRefresh}
             disabled={isSearching || !lastSearch}
-            className="text-white/70 hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.95] disabled:opacity-30"
+            className="text-white hover:text-white hover:bg-white/10 rounded-xl h-11 w-11 touch-manipulation active:scale-[0.95] disabled:opacity-30"
           >
             <RefreshCw className={cn('h-5 w-5', isSearching && 'animate-spin')} />
           </Button>
@@ -263,11 +263,11 @@ const LivePricingHub = () => {
                             {lastSearch.jobType}
                           </span>
                         )}
-                        <span className="text-white/60 text-sm">
+                        <span className="text-white text-sm">
                           · <span className="font-semibold text-white">{searchResults.length}</span>{' '}
                           with prices
                           {showAllJobs && emptyJobsCount > 0 && (
-                            <span className="text-white/40"> + {emptyJobsCount} need prices</span>
+                            <span className="text-white"> + {emptyJobsCount} need prices</span>
                           )}
                         </span>
                       </div>
@@ -277,7 +277,7 @@ const LivePricingHub = () => {
                           setSearchResults([]);
                           setShowAllJobs(false);
                         }}
-                        className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white/60 hover:text-white transition-all touch-manipulation active:scale-95 shrink-0"
+                        className="p-2 rounded-lg bg-white/5 hover:bg-white/10 text-white hover:text-white transition-all touch-manipulation active:scale-95 shrink-0"
                       >
                         <X className="h-4 w-4" />
                       </button>
@@ -292,7 +292,7 @@ const LivePricingHub = () => {
                         'w-full p-3 rounded-xl border transition-all touch-manipulation active:scale-[0.99]',
                         showAllJobs
                           ? 'bg-elec-yellow/10 border-elec-yellow/30 text-elec-yellow'
-                          : 'bg-white/5 border-white/10 text-white/70 hover:border-white/20'
+                          : 'bg-white/5 border-white/10 text-white hover:border-white/20'
                       )}
                     >
                       <div className="flex items-center justify-center gap-2">
@@ -336,7 +336,7 @@ const LivePricingHub = () => {
                           <p className="text-sm font-semibold text-white mb-1">
                             Help fellow sparkies!
                           </p>
-                          <p className="text-xs text-white/60 mb-3">
+                          <p className="text-xs text-white mb-3">
                             Submit your real job prices to help electricians across the UK get
                             accurate market rates.
                           </p>
@@ -355,12 +355,12 @@ const LivePricingHub = () => {
               ) : (
                 <div className="text-center py-16">
                   <div className="w-20 h-20 rounded-2xl bg-white/5 flex items-center justify-center mx-auto mb-4">
-                    <Search className="h-10 w-10 text-white/30" />
+                    <Search className="h-10 w-10 text-white" />
                   </div>
                   <h3 className="text-xl font-bold text-white mb-2">
                     No prices found for this area
                   </h3>
-                  <p className="text-white/70 text-sm max-w-xs mx-auto mb-6">
+                  <p className="text-white text-sm max-w-xs mx-auto mb-6">
                     Be the first to submit prices for {lastSearch?.postcode}! Help build pricing
                     data for your area.
                   </p>
@@ -376,7 +376,7 @@ const LivePricingHub = () => {
                       <Button
                         variant="outline"
                         onClick={() => setShowAllJobs(true)}
-                        className="border-white/20 text-white/70 hover:text-white h-11"
+                        className="border-white/20 text-white hover:text-white h-11"
                       >
                         <Users className="h-4 w-4 mr-2" />
                         Browse all job types
@@ -391,7 +391,7 @@ const LivePricingHub = () => {
                   <Search className="h-10 w-10 text-yellow-400" />
                 </div>
                 <h3 className="text-xl font-bold text-white mb-2">Search Job Pricing</h3>
-                <p className="text-white/70 text-sm max-w-xs mx-auto">
+                <p className="text-white text-sm max-w-xs mx-auto">
                   Enter a postcode to see what electricians are charging in that area.
                 </p>
               </div>
@@ -402,7 +402,7 @@ const LivePricingHub = () => {
           <div className="px-4 py-6">
             <div className="mb-6">
               <h2 className="text-2xl font-bold text-white mb-2">Submit Job Price</h2>
-              <p className="text-white/70">
+              <p className="text-white">
                 Help the community by sharing your actual pricing data
               </p>
             </div>

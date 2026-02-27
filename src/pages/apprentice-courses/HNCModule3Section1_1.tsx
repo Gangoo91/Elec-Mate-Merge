@@ -184,7 +184,7 @@ const HNCModule3Section1_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section1">
@@ -206,7 +206,7 @@ const HNCModule3Section1_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Voltage, Current, Resistance and Power
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             The fundamental electrical quantities that underpin all circuit analysis and building
             services design
           </p>
@@ -527,15 +527,15 @@ const HNCModule3Section1_1 = () => {
               <div className="grid grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">P = V × I</p>
-                  <p className="text-white/70 text-xs">Basic power</p>
+                  <p className="text-white text-xs">Basic power</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">P = I² × R</p>
-                  <p className="text-white/70 text-xs">Power from current</p>
+                  <p className="text-white text-xs">Power from current</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">P = V² / R</p>
-                  <p className="text-white/70 text-xs">Power from voltage</p>
+                  <p className="text-white text-xs">Power from voltage</p>
                 </div>
               </div>
             </div>
@@ -545,7 +545,7 @@ const HNCModule3Section1_1 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 P = √3 × V<sub>L</sub> × I<sub>L</sub> × cos φ
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where VL = line voltage (400V), cos φ = power factor
               </p>
             </div>
@@ -589,7 +589,7 @@ const HNCModule3Section1_1 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Energy calculation:</strong> E = P × t (kWh = kW × hours) - this is what
               electricity meters measure for billing.
             </p>
@@ -614,7 +614,7 @@ const HNCModule3Section1_1 = () => {
                 <strong>Question:</strong> An office floor (500m²) requires lighting at 12 W/m².
                 Calculate the total load and circuit current.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Total power = Area × Power density</p>
                 <p>
                   P = 500m² × 12 W/m² = <strong>6000W = 6kW</strong>
@@ -623,7 +623,7 @@ const HNCModule3Section1_1 = () => {
                 <p>
                   I = P / V = 6000 / 230 = <strong>26.1A</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → Requires multiple circuits or single 32A circuit
                 </p>
               </div>
@@ -637,10 +637,10 @@ const HNCModule3Section1_1 = () => {
                 <strong>Question:</strong> A 3kW heater is supplied by 25m of 2.5mm² cable.
                 Calculate the voltage drop.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Current: I = P / V = 3000 / 230 = 13A</p>
                 <p>Cable resistance: R = 25m × 2 × 7.41mΩ/m = 0.37Ω</p>
-                <p className="text-white/60">(×2 for go and return conductors)</p>
+                <p className="text-white">(×2 for go and return conductors)</p>
                 <p className="mt-2">
                   Voltage drop: V = I × R = 13 × 0.37 = <strong>4.8V</strong>
                 </p>
@@ -659,14 +659,14 @@ const HNCModule3Section1_1 = () => {
                 <strong>Question:</strong> A 15kW AHU motor operates at 0.85 power factor on 400V
                 three-phase. Calculate the line current.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using: P = √3 × VL × IL × cos φ</p>
                 <p className="mt-2">Rearranging: IL = P / (√3 × VL × cos φ)</p>
                 <p className="mt-2">IL = 15000 / (1.732 × 400 × 0.85)</p>
                 <p>
                   IL = 15000 / 588.9 = <strong>25.5A per phase</strong>
                 </p>
-                <p className="mt-2 text-white/60">→ 32A MCB and 4mm² cable suitable</p>
+                <p className="mt-2 text-white">→ 32A MCB and 4mm² cable suitable</p>
               </div>
             </div>
           </div>
@@ -753,7 +753,7 @@ const HNCModule3Section1_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -799,7 +799,7 @@ const HNCModule3Section1_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section1">

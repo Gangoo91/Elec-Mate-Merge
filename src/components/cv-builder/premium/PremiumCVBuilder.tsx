@@ -406,7 +406,7 @@ const PremiumCVBuilder = () => {
               <div className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-xs font-medium text-white/60 mb-1.5 block">
+                    <label className="text-xs font-medium text-white mb-1.5 block">
                       Full Name *
                     </label>
                     <Input
@@ -422,7 +422,7 @@ const PremiumCVBuilder = () => {
                     />
                   </div>
                   <div>
-                    <label className="text-xs font-medium text-white/60 mb-1.5 block">
+                    <label className="text-xs font-medium text-white mb-1.5 block">
                       Email *
                     </label>
                     <Input
@@ -441,7 +441,7 @@ const PremiumCVBuilder = () => {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
-                    <label className="text-xs font-medium text-white/60 mb-1.5 block">Phone</label>
+                    <label className="text-xs font-medium text-white mb-1.5 block">Phone</label>
                     <Input
                       type="tel"
                       value={cvData.personalInfo.phone}
@@ -456,7 +456,7 @@ const PremiumCVBuilder = () => {
                     />
                   </div>
                   <div>
-                    <label className="text-xs font-medium text-white/60 mb-1.5 block">
+                    <label className="text-xs font-medium text-white mb-1.5 block">
                       Postcode
                     </label>
                     <Input
@@ -473,7 +473,7 @@ const PremiumCVBuilder = () => {
                   </div>
                 </div>
                 <div>
-                  <label className="text-xs font-medium text-white/60 mb-1.5 block">Address</label>
+                  <label className="text-xs font-medium text-white mb-1.5 block">Address</label>
                   <Input
                     value={cvData.personalInfo.address}
                     onChange={(e) =>
@@ -537,7 +537,7 @@ const PremiumCVBuilder = () => {
                 >
                   {/* Job badge */}
                   <div className="flex items-center justify-between">
-                    <Badge variant="outline" className="text-xs text-white/60 border-white/20">
+                    <Badge variant="outline" className="text-xs text-white border-white/20">
                       Position {index + 1}
                     </Badge>
                     {exp.current && (
@@ -550,7 +550,7 @@ const PremiumCVBuilder = () => {
                   {/* Job title and company */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="text-xs font-medium text-white/60 mb-1.5 block">
+                      <label className="text-xs font-medium text-white mb-1.5 block">
                         Job Title *
                       </label>
                       <Input
@@ -561,7 +561,7 @@ const PremiumCVBuilder = () => {
                       />
                     </div>
                     <div>
-                      <label className="text-xs font-medium text-white/60 mb-1.5 block">
+                      <label className="text-xs font-medium text-white mb-1.5 block">
                         Company *
                       </label>
                       <Input
@@ -575,7 +575,7 @@ const PremiumCVBuilder = () => {
 
                   {/* Location */}
                   <div>
-                    <label className="text-xs font-medium text-white/60 mb-1.5 block">
+                    <label className="text-xs font-medium text-white mb-1.5 block">
                       Location
                     </label>
                     <Input
@@ -590,7 +590,7 @@ const PremiumCVBuilder = () => {
                   <div className="space-y-3">
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label className="text-xs font-medium text-white/60 mb-1.5 block">
+                        <label className="text-xs font-medium text-white mb-1.5 block">
                           Start Date
                         </label>
                         <Input
@@ -601,7 +601,7 @@ const PremiumCVBuilder = () => {
                         />
                       </div>
                       <div>
-                        <label className="text-xs font-medium text-white/60 mb-1.5 block">
+                        <label className="text-xs font-medium text-white mb-1.5 block">
                           End Date
                         </label>
                         <Input
@@ -623,7 +623,7 @@ const PremiumCVBuilder = () => {
                       />
                       <label
                         htmlFor={`current-${exp.id}`}
-                        className="text-sm text-white/70 cursor-pointer touch-manipulation"
+                        className="text-sm text-white cursor-pointer touch-manipulation"
                       >
                         I currently work here
                       </label>
@@ -633,7 +633,7 @@ const PremiumCVBuilder = () => {
                   {/* Description with AI assist */}
                   <div>
                     <div className="flex items-center justify-between mb-1.5">
-                      <label className="text-xs font-medium text-white/60">
+                      <label className="text-xs font-medium text-white">
                         Key Responsibilities & Achievements
                       </label>
                       <Button
@@ -653,7 +653,7 @@ const PremiumCVBuilder = () => {
                       placeholder="• Installed and maintained electrical systems in commercial buildings&#10;• Carried out testing and inspection to BS 7671 standards&#10;• Supervised apprentices and junior electricians"
                       className="min-h-[100px] bg-white/5 border-white/10 text-white resize-none"
                     />
-                    <p className="text-xs text-white/40 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Use bullet points (•) to highlight key achievements
                     </p>
                   </div>
@@ -700,7 +700,7 @@ const PremiumCVBuilder = () => {
                 >
                   {/* Qualification badge */}
                   <div className="flex items-center justify-between">
-                    <Badge variant="outline" className="text-xs text-white/60 border-white/20">
+                    <Badge variant="outline" className="text-xs text-white border-white/20">
                       Qualification {index + 1}
                     </Badge>
                     {edu.current && (
@@ -713,7 +713,7 @@ const PremiumCVBuilder = () => {
                   {/* Qualification and Institution */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="text-xs font-medium text-white/60 mb-1.5 block">
+                      <label className="text-xs font-medium text-white mb-1.5 block">
                         Qualification *
                       </label>
                       <Input
@@ -724,7 +724,7 @@ const PremiumCVBuilder = () => {
                       />
                     </div>
                     <div>
-                      <label className="text-xs font-medium text-white/60 mb-1.5 block">
+                      <label className="text-xs font-medium text-white mb-1.5 block">
                         Institution *
                       </label>
                       <Input
@@ -738,7 +738,7 @@ const PremiumCVBuilder = () => {
 
                   {/* Location */}
                   <div>
-                    <label className="text-xs font-medium text-white/60 mb-1.5 block">
+                    <label className="text-xs font-medium text-white mb-1.5 block">
                       Location
                     </label>
                     <Input
@@ -753,7 +753,7 @@ const PremiumCVBuilder = () => {
                   <div className="space-y-3">
                     <div className="grid grid-cols-2 gap-3">
                       <div>
-                        <label className="text-xs font-medium text-white/60 mb-1.5 block">
+                        <label className="text-xs font-medium text-white mb-1.5 block">
                           Start Date
                         </label>
                         <Input
@@ -764,7 +764,7 @@ const PremiumCVBuilder = () => {
                         />
                       </div>
                       <div>
-                        <label className="text-xs font-medium text-white/60 mb-1.5 block">
+                        <label className="text-xs font-medium text-white mb-1.5 block">
                           End Date
                         </label>
                         <Input
@@ -786,7 +786,7 @@ const PremiumCVBuilder = () => {
                       />
                       <label
                         htmlFor={`current-edu-${edu.id}`}
-                        className="text-sm text-white/70 cursor-pointer touch-manipulation"
+                        className="text-sm text-white cursor-pointer touch-manipulation"
                       >
                         I am currently studying this
                       </label>
@@ -795,7 +795,7 @@ const PremiumCVBuilder = () => {
 
                   {/* Grade/Classification */}
                   <div>
-                    <label className="text-xs font-medium text-white/60 mb-1.5 block">
+                    <label className="text-xs font-medium text-white mb-1.5 block">
                       Grade / Classification
                     </label>
                     <Input
@@ -804,7 +804,7 @@ const PremiumCVBuilder = () => {
                       placeholder="e.g., Distinction, Pass, 2:1"
                       className="bg-white/5 border-white/10 text-white h-11"
                     />
-                    <p className="text-xs text-white/40 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Leave blank if not applicable or still studying
                     </p>
                   </div>
@@ -874,7 +874,7 @@ const PremiumCVBuilder = () => {
 
               {/* Suggested skills */}
               <div>
-                <p className="text-xs text-white/50 mb-2">Suggested for electricians:</p>
+                <p className="text-xs text-white mb-2">Suggested for electricians:</p>
                 <div className="flex flex-wrap gap-1.5">
                   {[
                     '18th Edition',
@@ -898,7 +898,7 @@ const PremiumCVBuilder = () => {
                             skills: [...prev.skills, skill],
                           }));
                         }}
-                        className="text-xs border-white/10 text-white/60 hover:text-white hover:bg-white/10"
+                        className="text-xs border-white/10 text-white hover:text-white hover:bg-white/10"
                       >
                         + {skill}
                       </Button>
@@ -930,13 +930,13 @@ const PremiumCVBuilder = () => {
               variant="ghost"
               size="icon"
               onClick={() => navigate(-1)}
-              className="h-10 w-10 rounded-xl text-white/60 hover:text-white hover:bg-white/10"
+              className="h-10 w-10 rounded-xl text-white hover:text-white hover:bg-white/10"
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <div>
               <h1 className="text-lg font-bold text-white">CV Builder</h1>
-              <p className="text-xs text-white/50">
+              <p className="text-xs text-white">
                 Step {currentStep} of {STEPS.length}
               </p>
             </div>
@@ -948,7 +948,7 @@ const PremiumCVBuilder = () => {
               size="sm"
               onClick={handleImportFromElecId}
               disabled={isImporting}
-              className="text-white/60 hover:text-white"
+              className="text-white hover:text-white"
             >
               {isImporting ? (
                 <Loader2 className="h-4 w-4 mr-2 animate-spin" />
@@ -961,7 +961,7 @@ const PremiumCVBuilder = () => {
               variant="ghost"
               size="sm"
               onClick={() => setIsPreviewOpen(true)}
-              className="text-white/60 hover:text-white"
+              className="text-white hover:text-white"
             >
               <Eye className="h-4 w-4 mr-2" />
               <span className="hidden sm:inline">Preview</span>

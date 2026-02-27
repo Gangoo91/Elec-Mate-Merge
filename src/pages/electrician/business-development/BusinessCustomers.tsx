@@ -329,19 +329,19 @@ const BusinessCustomers = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">80%+</p>
-                  <p className="text-xs text-white/90 mt-1">Search online first</p>
+                  <p className="text-xs text-white mt-1">Search online first</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">4.5+</p>
-                  <p className="text-xs text-white/90 mt-1">Star rating needed</p>
+                  <p className="text-xs text-white mt-1">Star rating needed</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">3-5x</p>
-                  <p className="text-xs text-white/90 mt-1">ROI on SEO</p>
+                  <p className="text-xs text-white mt-1">ROI on SEO</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">£500-2k</p>
-                  <p className="text-xs text-white/90 mt-1">Website cost</p>
+                  <p className="text-xs text-white mt-1">Website cost</p>
                 </div>
               </div>
             </div>
@@ -377,7 +377,7 @@ const BusinessCustomers = () => {
                     <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">
                       £500-2,000 investment
                     </span>
-                    <span className="px-2 py-1 text-xs bg-white/5 text-white/90 rounded-lg border border-white/10">
+                    <span className="px-2 py-1 text-xs bg-white/5 text-white rounded-lg border border-white/10">
                       5+ year lifespan
                     </span>
                   </div>
@@ -395,7 +395,7 @@ const BusinessCustomers = () => {
                     <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">
                       1-3% response rate
                     </span>
-                    <span className="px-2 py-1 text-xs bg-white/5 text-white/90 rounded-lg border border-white/10">
+                    <span className="px-2 py-1 text-xs bg-white/5 text-white rounded-lg border border-white/10">
                       £0.05-0.15 per drop
                     </span>
                   </div>
@@ -497,28 +497,28 @@ const BusinessCustomers = () => {
                       <span className="text-sm font-medium text-white">Customer Referrals</span>
                       <span className="text-xs text-yellow-400">60-80% close rate</span>
                     </div>
-                    <p className="text-sm text-white/90">Highest quality, lowest cost leads</p>
+                    <p className="text-sm text-white">Highest quality, lowest cost leads</p>
                   </div>
                   <div className="p-3 rounded-lg bg-white/[0.03] border border-white/10">
                     <div className="flex justify-between items-center mb-1">
                       <span className="text-sm font-medium text-white">Google Search</span>
                       <span className="text-xs text-yellow-400">30-50% close rate</span>
                     </div>
-                    <p className="text-sm text-white/90">High intent, actively searching</p>
+                    <p className="text-sm text-white">High intent, actively searching</p>
                   </div>
                   <div className="p-3 rounded-lg bg-white/[0.03] border border-white/10">
                     <div className="flex justify-between items-center mb-1">
                       <span className="text-sm font-medium text-white">Trade Platforms</span>
                       <span className="text-xs text-yellow-400">20-40% close rate</span>
                     </div>
-                    <p className="text-sm text-white/90">Checkatrade, MyBuilder, Rated People</p>
+                    <p className="text-sm text-white">Checkatrade, MyBuilder, Rated People</p>
                   </div>
                   <div className="p-3 rounded-lg bg-white/[0.03] border border-white/10">
                     <div className="flex justify-between items-center mb-1">
                       <span className="text-sm font-medium text-white">Social Media</span>
                       <span className="text-xs text-yellow-400">15-30% close rate</span>
                     </div>
-                    <p className="text-sm text-white/90">Relationship-based, longer nurture</p>
+                    <p className="text-sm text-white">Relationship-based, longer nurture</p>
                   </div>
                 </div>
               </div>
@@ -554,19 +554,19 @@ const BusinessCustomers = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">&lt;1hr</p>
-                  <p className="text-xs text-white/90 mt-1">Target response</p>
+                  <p className="text-xs text-white mt-1">Target response</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">48hr</p>
-                  <p className="text-xs text-white/90 mt-1">Quote follow-up</p>
+                  <p className="text-xs text-white mt-1">Quote follow-up</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">3-5</p>
-                  <p className="text-xs text-white/90 mt-1">Lead sources min</p>
+                  <p className="text-xs text-white mt-1">Lead sources min</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">70%</p>
-                  <p className="text-xs text-white/90 mt-1">Quote-to-job target</p>
+                  <p className="text-xs text-white mt-1">Quote-to-job target</p>
                 </div>
               </div>
             </div>
@@ -821,19 +821,19 @@ const BusinessCustomers = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">5-10x</p>
-                  <p className="text-xs text-white/90 mt-1">Cheaper to retain</p>
+                  <p className="text-xs text-white mt-1">Cheaper to retain</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">85%+</p>
-                  <p className="text-xs text-white/90 mt-1">Retention target</p>
+                  <p className="text-xs text-white mt-1">Retention target</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">3-5x</p>
-                  <p className="text-xs text-white/90 mt-1">Repeat job value</p>
+                  <p className="text-xs text-white mt-1">Repeat job value</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">60%</p>
-                  <p className="text-xs text-white/90 mt-1">Revenue from referrals</p>
+                  <p className="text-xs text-white mt-1">Revenue from referrals</p>
                 </div>
               </div>
             </div>

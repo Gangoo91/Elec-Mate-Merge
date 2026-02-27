@@ -106,7 +106,7 @@ const FunctionalSkillsModule4Section1 = () => {
             to="/study-centre/apprentice/functional-skills/module4"
             className="p-2 -ml-2 touch-manipulation"
           >
-            <ArrowLeft className="w-5 h-5 text-white/60" />
+            <ArrowLeft className="w-5 h-5 text-white" />
           </Link>
           <div>
             <p className="text-[11px] font-semibold text-green-400 uppercase tracking-wider">
@@ -132,7 +132,7 @@ const FunctionalSkillsModule4Section1 = () => {
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
               Electrical Calculations
             </h2>
-            <p className="text-sm text-white/50 max-w-lg mx-auto">
+            <p className="text-sm text-white max-w-lg mx-auto">
               Master the core electrical calculations you will use every day &mdash; from
               Ohm&rsquo;s law to maximum demand and earth fault loop impedance.
             </p>
@@ -155,7 +155,7 @@ const FunctionalSkillsModule4Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Ohm&rsquo;s Law in Practice</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Ohm&rsquo;s Law is the single most important formula in electrical work. It describes
               the relationship between voltage, current and resistance in any circuit. Every
@@ -165,7 +165,7 @@ const FunctionalSkillsModule4Section1 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 text-center">
               <p className="text-green-400 font-mono text-lg mb-1">V = I &times; R</p>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 Voltage (V) = Current (A) &times; Resistance (&Omega;)
               </p>
             </div>
@@ -178,11 +178,11 @@ const FunctionalSkillsModule4Section1 = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-2">Series Circuit Example</h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 Three resistors of 10&Omega;, 15&Omega; and 25&Omega; are connected in series across
                 a 230V supply.
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
@@ -204,11 +204,11 @@ const FunctionalSkillsModule4Section1 = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-2">Parallel Circuit Example</h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 Two resistors of 20&Omega; and 30&Omega; are connected in parallel across a 12V
                 supply.
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
@@ -243,11 +243,11 @@ const FunctionalSkillsModule4Section1 = () => {
               <h4 className="font-medium text-green-400 mb-2">
                 Practical Application &mdash; Testing a Ring Final
               </h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 When you measure the end-to-end resistance of a ring final circuit&rsquo;s line
                 conductors and get 0.52&Omega;, what does this tell you?
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>The two parallel paths each have resistance of 0.52&Omega;</span>
@@ -281,7 +281,7 @@ const FunctionalSkillsModule4Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">The Power Triangle</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Electrical power can be calculated using three interchangeable formulae. Choosing the
               right one depends on which values you know. Together they form the &ldquo;power
@@ -291,15 +291,15 @@ const FunctionalSkillsModule4Section1 = () => {
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 text-center">
                 <p className="text-green-400 font-mono text-lg mb-1">P = I &times; V</p>
-                <p className="text-xs text-white/60">When you know current and voltage</p>
+                <p className="text-xs text-white">When you know current and voltage</p>
               </div>
               <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 text-center">
                 <p className="text-green-400 font-mono text-lg mb-1">P = I&sup2; &times; R</p>
-                <p className="text-xs text-white/60">When you know current and resistance</p>
+                <p className="text-xs text-white">When you know current and resistance</p>
               </div>
               <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 text-center">
                 <p className="text-green-400 font-mono text-lg mb-1">P = V&sup2; / R</p>
-                <p className="text-xs text-white/60">When you know voltage and resistance</p>
+                <p className="text-xs text-white">When you know voltage and resistance</p>
               </div>
             </div>
 
@@ -307,11 +307,11 @@ const FunctionalSkillsModule4Section1 = () => {
               <h4 className="font-medium text-green-400 mb-2">
                 Worked Example &mdash; Immersion Heater
               </h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 A 3kW immersion heater is connected to a 230V supply. Find the current drawn and the
                 element resistance.
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>Current: I = P / V = 3000 / 230 = 13.04A</span>
@@ -335,11 +335,11 @@ const FunctionalSkillsModule4Section1 = () => {
               <h4 className="font-medium text-green-400 mb-2">
                 Worked Example &mdash; Electric Shower
               </h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 A 9.5kW electric shower runs on a 230V supply. What current does it draw, and what
                 size MCB is needed?
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>I = P / V = 9500 / 230 = 41.3A</span>
@@ -359,7 +359,7 @@ const FunctionalSkillsModule4Section1 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Always check your answer makes sense. A domestic immersion heater drawing 13A on a
                 230V supply is realistic. If you calculated 130A, you have likely made a decimal
                 error. Get into the habit of sanity-checking every result.
@@ -395,7 +395,7 @@ const FunctionalSkillsModule4Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Voltage Drop Calculations</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Every cable has resistance, so voltage is lost along the cable run. BS 7671 limits the
               allowable voltage drop to ensure equipment operates correctly. If the drop is too
@@ -406,7 +406,7 @@ const FunctionalSkillsModule4Section1 = () => {
               <p className="text-green-400 font-mono text-lg mb-1">
                 Voltage Drop = mV/A/m &times; I<sub>b</sub> &times; L / 1000
               </p>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 Where mV/A/m is from cable tables, I<sub>b</sub> = design current, L = cable length
                 in metres
               </p>
@@ -415,7 +415,7 @@ const FunctionalSkillsModule4Section1 = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div className="bg-white/5 border border-white/10 rounded-xl p-4">
                 <h4 className="font-medium text-green-400 mb-2">BS 7671 Limits</h4>
-                <ul className="space-y-1 text-sm text-white/80">
+                <ul className="space-y-1 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-green-400 mt-0.5">&bull;</span>
                     <span>
@@ -436,7 +436,7 @@ const FunctionalSkillsModule4Section1 = () => {
               </div>
               <div className="bg-white/5 border border-white/10 rounded-xl p-4">
                 <h4 className="font-medium text-green-400 mb-2">Common mV/A/m Values</h4>
-                <ul className="space-y-1 text-sm text-white/80">
+                <ul className="space-y-1 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-green-400 mt-0.5">&bull;</span>
                     <span>1.0mm&sup2; T&amp;E: 44 mV/A/m</span>
@@ -469,11 +469,11 @@ const FunctionalSkillsModule4Section1 = () => {
               <h4 className="font-medium text-green-400 mb-2">
                 Worked Example &mdash; Radial Circuit
               </h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 A 20A radial circuit uses 2.5mm&sup2; twin and earth cable. The cable run is 20m to
                 a workshop heater drawing 17A.
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>mV/A/m for 2.5mm&sup2; T&amp;E = 18</span>
@@ -499,11 +499,11 @@ const FunctionalSkillsModule4Section1 = () => {
               <h4 className="font-medium text-green-400 mb-2">
                 Worked Example &mdash; Ring Final Circuit
               </h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 A 32A ring final circuit uses 2.5mm&sup2; T&amp;E cable. The total ring length is
                 60m.
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>For a ring circuit, effective cable length = total ring length / 4</span>
@@ -527,7 +527,7 @@ const FunctionalSkillsModule4Section1 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 If voltage drop fails, you have two options: increase the cable size (which reduces
                 mV/A/m) or shorten the cable run. In practice, increasing the cable CSA is usually
                 the simplest solution.
@@ -549,7 +549,7 @@ const FunctionalSkillsModule4Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Diversity Factors</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               In practice, not all loads in an installation run at full power simultaneously. A
               house will never have every light, every socket, the shower, the cooker and the
@@ -563,31 +563,31 @@ const FunctionalSkillsModule4Section1 = () => {
               </h4>
               <div className="space-y-2">
                 <div className="flex justify-between items-start border-b border-white/10 pb-2">
-                  <span className="text-sm text-white/80">Lighting</span>
+                  <span className="text-sm text-white">Lighting</span>
                   <span className="text-sm text-white font-medium">66% of total</span>
                 </div>
                 <div className="flex justify-between items-start border-b border-white/10 pb-2">
-                  <span className="text-sm text-white/80">Cooker</span>
+                  <span className="text-sm text-white">Cooker</span>
                   <span className="text-sm text-white font-medium">
                     10A + 30% of remainder + 5A socket
                   </span>
                 </div>
                 <div className="flex justify-between items-start border-b border-white/10 pb-2">
-                  <span className="text-sm text-white/80">Socket outlets (ring/radial)</span>
+                  <span className="text-sm text-white">Socket outlets (ring/radial)</span>
                   <span className="text-sm text-white font-medium">
                     100% of largest + 40% of others
                   </span>
                 </div>
                 <div className="flex justify-between items-start border-b border-white/10 pb-2">
-                  <span className="text-sm text-white/80">Immersion heater</span>
+                  <span className="text-sm text-white">Immersion heater</span>
                   <span className="text-sm text-white font-medium">100% (no diversity)</span>
                 </div>
                 <div className="flex justify-between items-start border-b border-white/10 pb-2">
-                  <span className="text-sm text-white/80">Shower</span>
+                  <span className="text-sm text-white">Shower</span>
                   <span className="text-sm text-white font-medium">100% (no diversity)</span>
                 </div>
                 <div className="flex justify-between items-start">
-                  <span className="text-sm text-white/80">Underfloor heating</span>
+                  <span className="text-sm text-white">Underfloor heating</span>
                   <span className="text-sm text-white font-medium">100% (no diversity)</span>
                 </div>
               </div>
@@ -597,11 +597,11 @@ const FunctionalSkillsModule4Section1 = () => {
               <h4 className="font-medium text-green-400 mb-2">
                 Worked Example &mdash; Cooker Diversity
               </h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 A cooker is rated at 12kW on a 230V supply. It has a socket outlet in the cooker
                 control unit. Calculate the diversified current.
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>Full load current: I = 12000 / 230 = 52.17A</span>
@@ -632,7 +632,7 @@ const FunctionalSkillsModule4Section1 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Diversity applies to the supply calculation (main switch, service cable) &mdash; not
                 to individual circuit protective devices. Each circuit must still be rated for its
                 full load. A 12kW cooker still needs a suitably rated circuit, even though its
@@ -669,7 +669,7 @@ const FunctionalSkillsModule4Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Maximum Demand</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Maximum demand is the total current an installation is expected to draw under normal
               conditions. The after diversity maximum demand (ADMD) accounts for the fact that not
@@ -681,10 +681,10 @@ const FunctionalSkillsModule4Section1 = () => {
               <h4 className="font-medium text-green-400 mb-3">
                 Domestic ADMD &mdash; Full Worked Example
               </h4>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 Calculate the ADMD for a house with the following loads:
               </p>
-              <div className="space-y-2 text-sm text-white/80">
+              <div className="space-y-2 text-sm text-white">
                 <div className="flex justify-between border-b border-white/10 pb-1">
                   <span>Lighting: 2400W</span>
                   <span className="text-green-400">66% &rarr; 1584W &rarr; 6.89A</span>
@@ -714,7 +714,7 @@ const FunctionalSkillsModule4Section1 = () => {
                   <span className="text-green-400 text-base">133.68A</span>
                 </div>
               </div>
-              <p className="text-sm text-white/60 mt-3">
+              <p className="text-sm text-white mt-3">
                 This would require a minimum 100A main switch (but a 100A Type 2 cut-out is the
                 standard domestic supply). If the ADMD exceeds 100A, you may need to apply for a
                 supply upgrade from the DNO.
@@ -723,7 +723,7 @@ const FunctionalSkillsModule4Section1 = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-2">Three-Phase Balanced Loads</h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 For three-phase installations, loads should be distributed as evenly as possible
                 across all three phases. The per-phase current is:
               </p>
@@ -733,7 +733,7 @@ const FunctionalSkillsModule4Section1 = () => {
                   <sub>total</sub> / (1.732 &times; 400)
                 </p>
               </div>
-              <p className="text-sm text-white/80 mt-2">
+              <p className="text-sm text-white mt-2">
                 For example, a 30kW three-phase load: I = 30000 / (1.732 &times; 400) = 30000 /
                 692.8 = 43.3A per phase.
               </p>
@@ -741,7 +741,7 @@ const FunctionalSkillsModule4Section1 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 When calculating ADMD, always list every circuit systematically, apply the correct
                 diversity factor from the tables, and total everything up. Missing a circuit can
                 lead to an undersized supply &mdash; a costly mistake to correct after installation.
@@ -763,7 +763,7 @@ const FunctionalSkillsModule4Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Earth Fault Loop Impedance (Zs)</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               The earth fault loop impedance determines how much fault current will flow when a
               line-to-earth fault occurs. This is critical for ensuring the protective device
@@ -772,14 +772,14 @@ const FunctionalSkillsModule4Section1 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 text-center">
               <p className="text-green-400 font-mono text-lg mb-1">Zs = Ze + (R1 + R2)</p>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 Ze = external loop impedance, R1 = line conductor resistance, R2 = CPC resistance
               </p>
             </div>
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-2">Typical Ze Values</h4>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>TN-C-S (PME): 0.35&Omega;</span>
@@ -802,7 +802,7 @@ const FunctionalSkillsModule4Section1 = () => {
               <h4 className="font-medium text-green-400 mb-2">
                 Maximum Zs Values &mdash; Common Type B MCBs
               </h4>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>6A: 7.67&Omega;</span>
@@ -836,7 +836,7 @@ const FunctionalSkillsModule4Section1 = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-2">Temperature Correction Factor</h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 R1+R2 values from tables are given at 20&deg;C. Under fault conditions, the
                 conductor heats up. To account for this, we apply a correction factor:
               </p>
@@ -845,7 +845,7 @@ const FunctionalSkillsModule4Section1 = () => {
                   Zs at operating temp = Ze + (R1+R2) &times; 1.20
                 </p>
               </div>
-              <p className="text-sm text-white/60">
+              <p className="text-sm text-white">
                 The factor of 1.20 accounts for the increase in conductor resistance as temperature
                 rises from 20&deg;C to approximately 70&deg;C under normal operating conditions.
               </p>
@@ -853,11 +853,11 @@ const FunctionalSkillsModule4Section1 = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-2">Worked Example</h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 A TN-C-S supply (Ze = 0.35&Omega;) feeds a 32A ring final circuit. The measured
                 R1+R2 = 0.82&Omega;. Does the Zs comply?
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>Zs = 0.35 + (0.82 &times; 1.20) = 0.35 + 0.984 = 1.334&Omega;</span>
@@ -874,7 +874,7 @@ const FunctionalSkillsModule4Section1 = () => {
                   </span>
                 </li>
               </ul>
-              <p className="text-sm text-white/60 mt-2">
+              <p className="text-sm text-white mt-2">
                 Note how close this is to the limit. If the cable run were slightly longer, or the
                 Ze slightly higher, it could fail. Always check carefully.
               </p>
@@ -909,7 +909,7 @@ const FunctionalSkillsModule4Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Prospective Fault Current</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Prospective fault current (Ipf) is the maximum current that would flow under a
               short-circuit or earth fault condition. Protective devices must be rated to safely
@@ -921,7 +921,7 @@ const FunctionalSkillsModule4Section1 = () => {
               <p className="text-green-400 font-mono text-lg mb-1">
                 Ipf = U<sub>oc</sub> / Zs
               </p>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 Where U<sub>oc</sub> = open-circuit voltage (typically 230V), Zs = earth fault loop
                 impedance
               </p>
@@ -929,10 +929,10 @@ const FunctionalSkillsModule4Section1 = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-2">Breaking Capacity Requirements</h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 The Ipf must not exceed the breaking capacity (Icn) of the protective device:
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>Domestic MCBs: typically 6kA (6,000A)</span>
@@ -954,11 +954,11 @@ const FunctionalSkillsModule4Section1 = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-2">Worked Example &mdash; Domestic</h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 The measured Ze at the origin is 0.10&Omega;. What is the prospective fault current,
                 and is a 6kA MCB suitable?
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>Ipf = 230 / 0.10 = 2,300A = 2.3kA</span>
@@ -977,11 +977,11 @@ const FunctionalSkillsModule4Section1 = () => {
               <h4 className="font-medium text-green-400 mb-2">
                 Worked Example &mdash; High Fault Level
               </h4>
-              <p className="text-sm text-white/80 mb-2">
+              <p className="text-sm text-white mb-2">
                 A commercial installation close to a substation has Ze = 0.02&Omega;. What is the
                 Ipf?
               </p>
-              <ul className="space-y-1 text-sm text-white/80">
+              <ul className="space-y-1 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>Ipf = 230 / 0.02 = 11,500A = 11.5kA</span>
@@ -1002,7 +1002,7 @@ const FunctionalSkillsModule4Section1 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 BS 7671 Regulation 434.5.1 requires that the prospective fault current be determined
                 at every relevant point of the installation. This is measured at the origin using a
                 loop impedance tester or PFC meter. Always record the Ipf on your electrical
@@ -1025,7 +1025,7 @@ const FunctionalSkillsModule4Section1 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Bringing It All Together</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               In practice, you will need to combine several calculations to verify that a circuit is
               correctly designed. Here is a complete worked example from supply to final circuit.
@@ -1033,7 +1033,7 @@ const FunctionalSkillsModule4Section1 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <h4 className="font-medium text-green-400 mb-3">Complete Circuit Calculation</h4>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 <strong className="text-white">Scenario:</strong> Design check for a 20A radial
                 circuit supplying a 4kW workshop heater. TN-C-S supply, Ze = 0.35&Omega;. Cable is
                 4.0mm&sup2; T&amp;E, 18m run.
@@ -1044,13 +1044,13 @@ const FunctionalSkillsModule4Section1 = () => {
                   <p className="text-sm text-green-400 font-medium mb-1">
                     Step 1 &mdash; Design Current (Ib)
                   </p>
-                  <p className="text-sm text-white/80">Ib = P / V = 4000 / 230 = 17.39A</p>
+                  <p className="text-sm text-white">Ib = P / V = 4000 / 230 = 17.39A</p>
                 </div>
                 <div>
                   <p className="text-sm text-green-400 font-medium mb-1">
                     Step 2 &mdash; Protective Device (In)
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     In = 20A MCB Type B (In &ge; Ib: 20 &ge; 17.39)
                   </p>
                 </div>
@@ -1058,7 +1058,7 @@ const FunctionalSkillsModule4Section1 = () => {
                   <p className="text-sm text-green-400 font-medium mb-1">
                     Step 3 &mdash; Cable Current Rating (Iz)
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     4.0mm&sup2; T&amp;E clipped direct (Method C): Iz = 36A. Since Iz &ge; In (36
                     &ge; 20), the cable is adequate.
                   </p>
@@ -1067,7 +1067,7 @@ const FunctionalSkillsModule4Section1 = () => {
                   <p className="text-sm text-green-400 font-medium mb-1">
                     Step 4 &mdash; Voltage Drop
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     VD = 11 &times; 17.39 &times; 18 / 1000 = 3.44V (limit 11.5V &mdash; pass)
                   </p>
                 </div>
@@ -1075,7 +1075,7 @@ const FunctionalSkillsModule4Section1 = () => {
                   <p className="text-sm text-green-400 font-medium mb-1">
                     Step 5 &mdash; Earth Fault Loop Impedance
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     R1+R2 per metre for 4.0/1.5mm&sup2; = 12.02 m&Omega;/m
                     <br />
                     R1+R2 = 12.02 &times; 18 / 1000 = 0.216&Omega;
@@ -1089,7 +1089,7 @@ const FunctionalSkillsModule4Section1 = () => {
                   <p className="text-sm text-green-400 font-medium mb-1">
                     Step 6 &mdash; Prospective Fault Current
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Ipf = 230 / 0.35 = 657A (at origin). Well within 6kA MCB rating &mdash; pass
                   </p>
                 </div>
@@ -1101,7 +1101,7 @@ const FunctionalSkillsModule4Section1 = () => {
                 <BookOpen className="w-4 h-4 text-green-400" />
                 Key Takeaways
               </h4>
-              <ul className="space-y-2 text-sm text-white/80">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
                   <span>
@@ -1147,7 +1147,7 @@ const FunctionalSkillsModule4Section1 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 In the real world, you will perform these calculations during the design stage and
                 then verify them with measured values during testing and commissioning. If the
                 measured Zs exceeds your calculated value, investigate &mdash; there may be a poor
@@ -1164,7 +1164,7 @@ const FunctionalSkillsModule4Section1 = () => {
         <div className="flex items-center justify-between pt-6 border-t border-white/10">
           <Link
             to="/study-centre/apprentice/functional-skills/module4"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Module

@@ -87,7 +87,7 @@ const PodcastsTab = () => {
           <Card className="bg-white/[0.02] border-white/10">
             <CardContent className="py-12 text-center">
               <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-white/5 flex items-center justify-center">
-                <Headphones className="h-8 w-8 text-white/20" />
+                <Headphones className="h-8 w-8 text-white" />
               </div>
               <p className="text-white text-sm">
                 No podcasts in this category yet. Check back soon!

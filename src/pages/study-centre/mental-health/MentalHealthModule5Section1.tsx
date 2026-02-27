@@ -218,7 +218,7 @@ export default function MentalHealthModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-5">
@@ -243,7 +243,7 @@ export default function MentalHealthModule5Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Implementing MHFA in the Workplace
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How to create, launch, and sustain a Mental Health First Aid programme &mdash; from
             securing management buy-in to measuring long-term impact
           </p>
@@ -322,7 +322,7 @@ export default function MentalHealthModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Steps to Implementation</p>
-                <ul className="text-sm text-white/80 space-y-3">
+                <ul className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>
@@ -382,7 +382,7 @@ export default function MentalHealthModule5Section1() {
                     The Business Case for Mental Health Investment
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-3">
+                <div className="text-sm text-white space-y-3">
                   <p>
                     The evidence for investing in workplace mental health is now overwhelming. The
                     Deloitte 2020 report{' '}
@@ -394,13 +394,13 @@ export default function MentalHealthModule5Section1() {
                   <div className="grid sm:grid-cols-2 gap-3">
                     <div className="bg-white/5 border border-white/10 p-3 rounded-lg text-center">
                       <p className="text-2xl font-bold text-purple-400 mb-1">&pound;5</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         average return for every &pound;1 spent on mental health interventions
                       </p>
                     </div>
                     <div className="bg-white/5 border border-white/10 p-3 rounded-lg text-center">
                       <p className="text-2xl font-bold text-purple-400 mb-1">&pound;45bn</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         annual cost of poor mental health to UK employers (2019 figures)
                       </p>
                     </div>
@@ -453,7 +453,7 @@ export default function MentalHealthModule5Section1() {
                   <Users className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">MHFA England Guidance</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">1 trained MHFA per 10 employees</strong> is the
                   recommended starting point. This mirrors the traditional first aid ratio and
                   ensures reasonable coverage across a workforce. However, this is a{' '}
@@ -466,7 +466,7 @@ export default function MentalHealthModule5Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Factors Affecting the Number of MHFAs Needed
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>
@@ -530,13 +530,13 @@ export default function MentalHealthModule5Section1() {
                     Construction Site Considerations
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Construction sites present particular challenges for MHFA coverage. Workers are
                   spread across large areas, the workforce changes as subcontractors come and go,
                   and many workers are self-employed or employed by subcontractors rather than the
                   main contractor. Best practice includes:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -568,7 +568,7 @@ export default function MentalHealthModule5Section1() {
                     <BadgeCheck className="h-5 w-5 text-purple-400" />
                     <p className="text-sm font-medium text-purple-400">Mental Health First Aider</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>
@@ -601,7 +601,7 @@ export default function MentalHealthModule5Section1() {
                     <HeartHandshake className="h-5 w-5 text-violet-400" />
                     <p className="text-sm font-medium text-violet-400">Mental Health Champion</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                       <span>
@@ -673,7 +673,7 @@ export default function MentalHealthModule5Section1() {
                     How Employees Know Who the MHFAs Are
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>
@@ -727,11 +727,11 @@ export default function MentalHealthModule5Section1() {
                   <Megaphone className="h-5 w-5 text-violet-400" />
                   <p className="text-sm font-medium text-violet-400">Being Approachable</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Visibility alone is not enough &mdash; MHFAs must also be genuinely approachable.
                   This means:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -766,7 +766,7 @@ export default function MentalHealthModule5Section1() {
                   <Users className="h-5 w-5 text-violet-400" />
                   <p className="text-sm font-medium text-violet-400">Diversity of MHFAs</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Consider the diversity of your MHFA team. People are more likely to approach
                   someone they feel understands their experiences. Aim for a mix of{' '}
                   <strong className="text-white">
@@ -805,7 +805,7 @@ export default function MentalHealthModule5Section1() {
                   <ClipboardList className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">Integration Points</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-3">
+                <ul className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>
@@ -861,7 +861,7 @@ export default function MentalHealthModule5Section1() {
                   <ShieldCheck className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">HSE Management Standards</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The HSE Management Standards for work-related stress identify six key areas of
                   work design that, if not properly managed, are associated with poor health, lower
                   productivity, and increased accident rates:
@@ -895,7 +895,7 @@ export default function MentalHealthModule5Section1() {
                       className="bg-purple-500/5 border border-purple-500/20 p-3 rounded-lg"
                     >
                       <p className="text-xs font-medium text-purple-400 mb-0.5">{standard.title}</p>
-                      <p className="text-xs text-white/60">{standard.desc}</p>
+                      <p className="text-xs text-white">{standard.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -906,7 +906,7 @@ export default function MentalHealthModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">Legal Context</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The{' '}
                   <strong className="text-white">Health and Safety at Work etc. Act 1974</strong>{' '}
                   places a duty on employers to ensure, so far as is reasonably practicable, the
@@ -953,7 +953,7 @@ export default function MentalHealthModule5Section1() {
                   <p className="text-sm font-semibold text-purple-400">
                     The 6 Core Standards &mdash; Stevenson/Farmer Review 2017
                   </p>
-                  <p className="text-xs text-white/50 mt-0.5">
+                  <p className="text-xs text-white mt-0.5">
                     Minimum standards for all employers, regardless of size or sector
                   </p>
                 </div>
@@ -965,7 +965,7 @@ export default function MentalHealthModule5Section1() {
                       </div>
                       <p className="text-sm font-medium text-purple-400">Mental Health Plan</p>
                     </div>
-                    <p className="text-xs text-white/60 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Produce, implement, and communicate a mental health at work plan that promotes
                       good mental health of all employees and outlines the support available for
                       those who may need it
@@ -979,7 +979,7 @@ export default function MentalHealthModule5Section1() {
                       </div>
                       <p className="text-sm font-medium text-purple-400">Develop Awareness</p>
                     </div>
-                    <p className="text-xs text-white/60 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Develop mental health awareness among employees by making information, tools,
                       and support accessible to all, helping people understand mental health and how
                       to look after their own wellbeing
@@ -993,7 +993,7 @@ export default function MentalHealthModule5Section1() {
                       </div>
                       <p className="text-sm font-medium text-violet-400">Open Conversations</p>
                     </div>
-                    <p className="text-xs text-white/60 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Encourage open conversations about mental health and the support available
                       when employees are struggling, during the recruitment process, and at regular
                       intervals throughout employment
@@ -1007,7 +1007,7 @@ export default function MentalHealthModule5Section1() {
                       </div>
                       <p className="text-sm font-medium text-violet-400">Good Working Conditions</p>
                     </div>
-                    <p className="text-xs text-white/60 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Provide employees with good working conditions and ensure they have a healthy
                       work-life balance and opportunities for development, with a focus on
                       preventing stress and promoting wellbeing
@@ -1021,7 +1021,7 @@ export default function MentalHealthModule5Section1() {
                       </div>
                       <p className="text-sm font-medium text-purple-400">Promote Wellbeing</p>
                     </div>
-                    <p className="text-xs text-white/60 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Promote effective people management through line managers and supervisors,
                       ensuring they have the knowledge, skills, and confidence to have sensitive
                       conversations and signpost to support
@@ -1035,7 +1035,7 @@ export default function MentalHealthModule5Section1() {
                       </div>
                       <p className="text-sm font-medium text-purple-400">Monitor &amp; Signpost</p>
                     </div>
-                    <p className="text-xs text-white/60 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Routinely monitor employee mental health and wellbeing by understanding
                       available data, talking to employees regularly, and providing appropriate
                       signposting to support services
@@ -1049,12 +1049,12 @@ export default function MentalHealthModule5Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Core Standards vs Enhanced Standards
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The Thriving at Work review also outlined{' '}
                   <strong className="text-white">enhanced standards</strong> for larger employers
                   and the public sector. These build upon the core standards and include:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>
@@ -1132,7 +1132,7 @@ export default function MentalHealthModule5Section1() {
                         <Target className="h-4 w-4 text-purple-400 flex-shrink-0" />
                         <p className="text-xs font-medium text-purple-400">Sickness Absence</p>
                       </div>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Track total sickness absence and mental-health-specific absence separately.
                         Compare rates before and after programme implementation. Monitor trends over
                         time.
@@ -1143,7 +1143,7 @@ export default function MentalHealthModule5Section1() {
                         <Target className="h-4 w-4 text-purple-400 flex-shrink-0" />
                         <p className="text-xs font-medium text-purple-400">EAP Usage</p>
                       </div>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Monitor the rate at which employees access the Employee Assistance
                         Programme. An initial increase may be positive &mdash; it indicates people
                         feel safe to seek help.
@@ -1154,7 +1154,7 @@ export default function MentalHealthModule5Section1() {
                         <Target className="h-4 w-4 text-violet-400 flex-shrink-0" />
                         <p className="text-xs font-medium text-violet-400">Staff Surveys</p>
                       </div>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Include questions on wellbeing, psychological safety, and awareness of
                         mental health support in annual or pulse surveys. Track scores over time for
                         meaningful trends.
@@ -1165,7 +1165,7 @@ export default function MentalHealthModule5Section1() {
                         <Target className="h-4 w-4 text-violet-400 flex-shrink-0" />
                         <p className="text-xs font-medium text-violet-400">Retention Rates</p>
                       </div>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Monitor staff turnover, particularly voluntary resignations. Exit interviews
                         should ask about workplace wellbeing and mental health support as factors in
                         the decision to leave.
@@ -1176,7 +1176,7 @@ export default function MentalHealthModule5Section1() {
                         <Target className="h-4 w-4 text-purple-400 flex-shrink-0" />
                         <p className="text-xs font-medium text-purple-400">Near-Miss Reporting</p>
                       </div>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Track near-miss and incident reporting rates. Improved mental health is
                         associated with better concentration, improved risk awareness, and reduced
                         accidents.
@@ -1187,7 +1187,7 @@ export default function MentalHealthModule5Section1() {
                         <Target className="h-4 w-4 text-purple-400 flex-shrink-0" />
                         <p className="text-xs font-medium text-purple-400">MHFA Interactions</p>
                       </div>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Log the number of MHFA interactions (anonymised). Track common themes and
                         referral destinations to identify recurring issues and gaps in support.
                       </p>
@@ -1201,11 +1201,11 @@ export default function MentalHealthModule5Section1() {
                   <Star className="h-5 w-5 text-violet-400" />
                   <p className="text-sm font-medium text-violet-400">Qualitative Feedback</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Numbers alone do not tell the full story. Qualitative feedback provides context,
                   depth, and insight that quantitative data cannot capture:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1247,11 +1247,11 @@ export default function MentalHealthModule5Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Annual Review &amp; Continuous Improvement
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The MHFA programme should be formally reviewed at least annually. The review
                   should include:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>
@@ -1296,7 +1296,7 @@ export default function MentalHealthModule5Section1() {
                     Important: Interpreting the Data
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Be careful when interpreting early data. An{' '}
                   <strong className="text-white">initial increase in people seeking help</strong> is
                   typically a <strong className="text-white">positive sign</strong>, not a negative
@@ -1323,7 +1323,7 @@ export default function MentalHealthModule5Section1() {
                         <span className="text-purple-400 text-lg font-bold">1</span>
                       </div>
                       <p className="text-xs font-medium text-purple-400 mb-0.5">Plan</p>
-                      <p className="text-[11px] text-white/50 leading-relaxed">
+                      <p className="text-[11px] text-white leading-relaxed">
                         Set objectives, identify KPIs, establish baseline
                       </p>
                     </div>
@@ -1332,7 +1332,7 @@ export default function MentalHealthModule5Section1() {
                         <span className="text-purple-400 text-lg font-bold">2</span>
                       </div>
                       <p className="text-xs font-medium text-purple-400 mb-0.5">Do</p>
-                      <p className="text-[11px] text-white/50 leading-relaxed">
+                      <p className="text-[11px] text-white leading-relaxed">
                         Implement programme, train MHFAs, promote and embed
                       </p>
                     </div>
@@ -1341,7 +1341,7 @@ export default function MentalHealthModule5Section1() {
                         <span className="text-violet-400 text-lg font-bold">3</span>
                       </div>
                       <p className="text-xs font-medium text-violet-400 mb-0.5">Check</p>
-                      <p className="text-[11px] text-white/50 leading-relaxed">
+                      <p className="text-[11px] text-white leading-relaxed">
                         Collect data, review KPIs, gather qualitative feedback
                       </p>
                     </div>
@@ -1350,12 +1350,12 @@ export default function MentalHealthModule5Section1() {
                         <span className="text-violet-400 text-lg font-bold">4</span>
                       </div>
                       <p className="text-xs font-medium text-violet-400 mb-0.5">Act</p>
-                      <p className="text-[11px] text-white/50 leading-relaxed">
+                      <p className="text-[11px] text-white leading-relaxed">
                         Identify improvements, update plan, repeat the cycle
                       </p>
                     </div>
                   </div>
-                  <p className="text-xs text-white/40 text-center mt-3">
+                  <p className="text-xs text-white text-center mt-3">
                     Based on the Plan&ndash;Do&ndash;Check&ndash;Act (PDCA) continuous improvement
                     model
                   </p>
@@ -1372,7 +1372,7 @@ export default function MentalHealthModule5Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1386,7 +1386,7 @@ export default function MentalHealthModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-5">

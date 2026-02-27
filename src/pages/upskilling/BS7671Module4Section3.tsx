@@ -93,7 +93,7 @@ const BS7671Module4Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bs7671-module-4">
@@ -114,7 +114,7 @@ const BS7671Module4Section3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Disconnection Times & Fault Path Integrity
           </h1>
-          <p className="text-white/80">Ensuring rapid disconnection and reliable fault clearance</p>
+          <p className="text-white">Ensuring rapid disconnection and reliable fault clearance</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -200,7 +200,7 @@ const BS7671Module4Section3 = () => {
                     <strong>Fixed equipment &gt;32A:</strong> 5s (with conditions)
                   </li>
                 </ul>
-                <p className="text-xs text-white/70 mt-2">
+                <p className="text-xs text-white mt-2">
                   Low Zs allows MCBs to achieve these times
                 </p>
               </div>
@@ -220,7 +220,7 @@ const BS7671Module4Section3 = () => {
                     <strong>30mA RCD:</strong> Achieves &lt;0.3s typically
                   </li>
                 </ul>
-                <p className="text-xs text-white/70 mt-2">
+                <p className="text-xs text-white mt-2">
                   RCDs detect small imbalance, disconnect rapidly
                 </p>
               </div>
@@ -232,7 +232,7 @@ const BS7671Module4Section3 = () => {
                 Research shows that the human body can tolerate certain current levels for limited
                 durations:
               </p>
-              <ul className="text-sm text-white/90 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>• 30mA for unlimited duration (threshold of sensation)</li>
                 <li>• 100mA for 0.4s (ventricular fibrillation threshold)</li>
                 <li>• Higher currents require faster disconnection</li>
@@ -268,7 +268,7 @@ const BS7671Module4Section3 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-2">Why 80%?</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>• Cables measured cold during testing</li>
                     <li>• Under fault conditions, cables heat rapidly</li>
                     <li>• Copper resistance increases with temperature</li>
@@ -277,7 +277,7 @@ const BS7671Module4Section3 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-2">Example Calculation:</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>32A Type B MCB: Limit = 1.37Ω</li>
                     <li>80% of 1.37Ω = 1.10Ω</li>
                     <li>Measured Zs must be ≤1.10Ω</li>
@@ -449,18 +449,18 @@ const BS7671Module4Section3 = () => {
             <div className="grid grid-cols-3 gap-2 text-sm mb-3">
               <div className="p-2 rounded bg-green-500/10 border border-green-500/20">
                 <p className="text-green-400 font-medium">Circuit 1: 1.65Ω</p>
-                <p className="text-xs text-white/70">✓ Satisfactory (&lt;1.84Ω)</p>
+                <p className="text-xs text-white">✓ Satisfactory (&lt;1.84Ω)</p>
               </div>
               <div className="p-2 rounded bg-orange-500/10 border border-orange-500/20">
                 <p className="text-orange-400 font-medium">Circuit 2: 2.10Ω</p>
-                <p className="text-xs text-white/70">⚠ Marginal (investigate)</p>
+                <p className="text-xs text-white">⚠ Marginal (investigate)</p>
               </div>
               <div className="p-2 rounded bg-red-500/10 border border-red-500/20">
                 <p className="text-red-400 font-medium">Circuit 3: 2.45Ω</p>
-                <p className="text-xs text-white/70">✗ Non-compliant</p>
+                <p className="text-xs text-white">✗ Non-compliant</p>
               </div>
             </div>
-            <p className="text-xs text-white/70">
+            <p className="text-xs text-white">
               80% of 2.30Ω = 1.84Ω. Circuit 3 exceeds even the tabulated limit—requires
               investigation for high resistance connections, damaged CPC, or undersized conductors.
             </p>
@@ -474,7 +474,7 @@ const BS7671Module4Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -486,7 +486,7 @@ const BS7671Module4Section3 = () => {
           <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
             <div>
               <p className="font-medium text-elec-yellow mb-1">Disconnection Times</p>
-              <ul className="space-y-0.5 text-white/90">
+              <ul className="space-y-0.5 text-white">
                 <li>Socket circuits TN: 0.4s</li>
                 <li>Distribution TN: 5s</li>
                 <li>TT systems: RCD required</li>
@@ -494,7 +494,7 @@ const BS7671Module4Section3 = () => {
             </div>
             <div>
               <p className="font-medium text-elec-yellow mb-1">Zs Testing</p>
-              <ul className="space-y-0.5 text-white/90">
+              <ul className="space-y-0.5 text-white">
                 <li>Apply 80% rule to limits</li>
                 <li>Test at furthest point</li>
                 <li>Document all results</li>
@@ -518,7 +518,7 @@ const BS7671Module4Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bs7671-module-4-section-2">

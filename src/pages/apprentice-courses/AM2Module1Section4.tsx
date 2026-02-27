@@ -107,19 +107,19 @@ const AM2Module1Section4 = () => {
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4">
         <AM2ContentCard className="text-center">
           <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">#1</div>
-          <div className="text-ios-footnote text-white/70">Safe isolation errors</div>
+          <div className="text-ios-footnote text-white">Safe isolation errors</div>
         </AM2ContentCard>
         <AM2ContentCard className="text-center">
           <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">7</div>
-          <div className="text-ios-footnote text-white/70">Main failure categories</div>
+          <div className="text-ios-footnote text-white">Main failure categories</div>
         </AM2ContentCard>
         <AM2ContentCard className="text-center">
           <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">100%</div>
-          <div className="text-ios-footnote text-white/70">Avoidable failures</div>
+          <div className="text-ios-footnote text-white">Avoidable failures</div>
         </AM2ContentCard>
         <AM2ContentCard className="text-center">
           <div className="text-ios-title-2 font-bold text-elec-yellow mb-1">NET</div>
-          <div className="text-ios-footnote text-white/70">Publishes error data</div>
+          <div className="text-ios-footnote text-white">Publishes error data</div>
         </AM2ContentCard>
       </div>
 
@@ -129,10 +129,10 @@ const AM2Module1Section4 = () => {
           <Target className="h-5 w-5" />
           Learning Outcomes
         </h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           By the end of this section, you should be able to:
         </p>
-        <ul className="space-y-2 text-ios-body text-white/80">
+        <ul className="space-y-2 text-ios-body text-white">
           <li className="flex items-start gap-2">
             <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
             <span>Identify the main reasons candidates fail the AM2</span>
@@ -156,14 +156,14 @@ const AM2Module1Section4 = () => {
       <AM2ContentCard>
         <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4 mb-4">
           <p className="text-ios-footnote text-amber-400 font-semibold mb-1">Important Reality:</p>
-          <p className="text-ios-callout text-white/80">
+          <p className="text-ios-callout text-white">
             Every year, candidates fail the AM2 for the same reasons. NET publishes "Common Errors"
             in its Pre-Assessment Manual, and training centres confirm the same patterns. These
             aren't just minor mistakes - they are avoidable errors that can cost you marks, time,
             and even result in an automatic fail.
           </p>
         </div>
-        <p className="text-ios-body text-white/90">
+        <p className="text-ios-body text-white">
           This section gives you a clear view of the top reasons candidates fail, why they happen,
           and how to avoid them. Learning from others' mistakes is one of the most effective ways to
           ensure your own success.
@@ -172,7 +172,7 @@ const AM2Module1Section4 = () => {
 
       {/* 1. Safe Isolation Mistakes */}
       <AM2CriticalWarning title="1. Safe Isolation Mistakes (The #1 Fail Point)">
-        <p className="text-ios-body text-white/80 mb-4">
+        <p className="text-ios-body text-white mb-4">
           NET highlights safe isolation errors as the single biggest cause of failure. These are
           critical safety issues that result in automatic fails.
         </p>
@@ -181,7 +181,7 @@ const AM2Module1Section4 = () => {
             <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
               Common Isolation Errors:
             </h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Not proving test equipment before and after use</span>
@@ -204,7 +204,7 @@ const AM2Module1Section4 = () => {
             <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
               Why These Happen:
             </h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Nervousness causing procedural lapses</span>
@@ -245,7 +245,7 @@ const AM2Module1Section4 = () => {
           <FileCheck className="h-5 w-5" />
           2. Not Following the Specification
         </h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           Even small deviations from the specification can cost significant marks. Assessors check
           installations against drawings precisely:
         </p>
@@ -254,7 +254,7 @@ const AM2Module1Section4 = () => {
             <h4 className="text-ios-headline text-amber-400 font-semibold mb-2">
               Common Spec Errors:
             </h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Using wrong cable size or type</span>
@@ -277,7 +277,7 @@ const AM2Module1Section4 = () => {
             <h4 className="text-ios-headline text-green-400 font-semibold mb-2">
               Prevention Strategies:
             </h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Read drawings carefully before starting</span>
@@ -318,7 +318,7 @@ const AM2Module1Section4 = () => {
           <Wrench className="h-5 w-5" />
           3. Inspection, Testing & Certification Errors
         </h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           NET emphasises mistakes in this area as a major failure cause. Testing must follow exact
           procedures:
         </p>
@@ -329,7 +329,7 @@ const AM2Module1Section4 = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <p className="text-ios-callout text-white font-medium mb-2">Procedural Errors:</p>
-              <ul className="text-ios-callout text-white/70 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>Incorrect instrument setup or range selection</span>
@@ -346,7 +346,7 @@ const AM2Module1Section4 = () => {
             </div>
             <div>
               <p className="text-ios-callout text-white font-medium mb-2">Recording Errors:</p>
-              <ul className="text-ios-callout text-white/70 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>Recording results inaccurately</span>
@@ -367,7 +367,7 @@ const AM2Module1Section4 = () => {
           <h4 className="text-ios-headline text-green-400 font-semibold mb-2">
             How to Avoid Testing Failures:
           </h4>
-          <ul className="text-ios-callout text-white/70 space-y-1">
+          <ul className="text-ios-callout text-white space-y-1">
             <li className="flex items-start gap-2">
               <span className="text-elec-yellow">•</span>
               <span>Memorise the GN3 testing sequence completely</span>
@@ -407,7 +407,7 @@ const AM2Module1Section4 = () => {
           <Eye className="h-5 w-5" />
           4. Fault Diagnosis Mistakes
         </h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           Fault finding requires precision in identification and clear explanation of rectification
           methods:
         </p>
@@ -416,7 +416,7 @@ const AM2Module1Section4 = () => {
             <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
               Common Fault-Finding Errors:
             </h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>
@@ -441,7 +441,7 @@ const AM2Module1Section4 = () => {
             <h4 className="text-ios-headline text-green-400 font-semibold mb-2">
               Successful Fault Diagnosis:
             </h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Precise location identification</span>
@@ -482,7 +482,7 @@ const AM2Module1Section4 = () => {
           <Shield className="h-5 w-5" />
           5. Health & Safety Breaches
         </h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           Safety violations can result in automatic failure regardless of technical competence:
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -490,7 +490,7 @@ const AM2Module1Section4 = () => {
             <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
               Critical Safety Errors:
             </h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Poor or incomplete risk assessment</span>
@@ -513,7 +513,7 @@ const AM2Module1Section4 = () => {
             <h4 className="text-ios-headline text-green-400 font-semibold mb-2">
               Safety Best Practices:
             </h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Complete thorough risk assessments</span>
@@ -541,13 +541,13 @@ const AM2Module1Section4 = () => {
           <Timer className="h-5 w-5" />
           6. Time Management Failures
         </h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           Poor time management leads to rushed work, incomplete sections, or unsafe practices:
         </p>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">Time Traps:</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Rushing the composite installation</span>
@@ -564,7 +564,7 @@ const AM2Module1Section4 = () => {
           </div>
           <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-4">
             <h4 className="text-ios-headline text-amber-400 font-semibold mb-2">Warning Signs:</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Skipping safety checks</span>
@@ -581,7 +581,7 @@ const AM2Module1Section4 = () => {
           </div>
           <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
             <h4 className="text-ios-headline text-green-400 font-semibold mb-2">Solutions:</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Plan time allocation carefully</span>
@@ -618,7 +618,7 @@ const AM2Module1Section4 = () => {
           <Award className="h-5 w-5" />
           7. Neatness and Workmanship Issues
         </h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           Professional workmanship is assessed throughout the AM2. Poor standards can significantly
           impact your score:
         </p>
@@ -627,7 +627,7 @@ const AM2Module1Section4 = () => {
             <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
               Poor Workmanship Examples:
             </h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Over-stripped conductors with damaged insulation</span>
@@ -650,7 +650,7 @@ const AM2Module1Section4 = () => {
             <h4 className="text-ios-headline text-green-400 font-semibold mb-2">
               Professional Standards:
             </h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Consistent cable runs and spacing</span>
@@ -682,7 +682,7 @@ const AM2Module1Section4 = () => {
             <h4 className="text-ios-headline text-elec-yellow font-semibold mb-1">
               Candidate A: Safe Isolation Fail
             </h4>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Installed circuits correctly and completed all sections well, but failed to re-prove
               the tester during safe isolation. Result: Automatic fail despite otherwise competent
               performance.
@@ -692,7 +692,7 @@ const AM2Module1Section4 = () => {
             <h4 className="text-ios-headline text-elec-yellow font-semibold mb-1">
               Candidate B: Specification Deviation
             </h4>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Completed installation neatly and safely but used 2.5mm cable where 4mm was specified
               on the drawing. Lost significant marks for not following specifications exactly.
             </p>
@@ -701,7 +701,7 @@ const AM2Module1Section4 = () => {
             <h4 className="text-ios-headline text-elec-yellow font-semibold mb-1">
               Candidate C: Testing Procedure Error
             </h4>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Rushed through testing section and wrote down "perfect" textbook values instead of
               actual measurements. Assessor identified inconsistencies - marked as procedural fail.
             </p>
@@ -712,14 +712,14 @@ const AM2Module1Section4 = () => {
       {/* Summary */}
       <AM2ContentCard>
         <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">Summary</h2>
-        <p className="text-ios-body text-white/90 mb-4">
+        <p className="text-ios-body text-white mb-4">
           Candidates fail AM2 mainly due to seven key areas: unsafe isolation, not following
           specifications, incorrect testing and certification, poor fault diagnosis, health & safety
           breaches, time management issues, and workmanship below professional standards.
         </p>
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
           <p className="text-ios-footnote text-elec-yellow font-semibold mb-1">Key Takeaway:</p>
-          <p className="text-ios-callout text-white/80">
+          <p className="text-ios-callout text-white">
             Avoiding these errors isn't about luck - it's about strict practice, sticking to
             procedures, and working to professional standards every time. Learn from others'
             mistakes to ensure your own success.

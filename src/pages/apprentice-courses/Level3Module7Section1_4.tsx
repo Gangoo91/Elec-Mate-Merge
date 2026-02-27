@@ -229,7 +229,7 @@ const Level3Module7Section1_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section1">
@@ -385,7 +385,7 @@ const Level3Module7Section1_4 = () => {
               completed units.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Portfolio Tip:</strong> Keep your portfolio organised and up to date.
               Photograph work before it is covered up, collect witness testimonies promptly, and
               ensure evidence is clearly linked to the relevant units. A well-organised portfolio
@@ -468,19 +468,19 @@ const Level3Module7Section1_4 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Gold ECS Card</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Apply for Approved Electrician status, proving your competence
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">2391 Qualification</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Inspection and testing - recommended next qualification
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Career Options</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Employment, self-employment, specialisation, or further study
                 </p>
               </div>
@@ -493,7 +493,7 @@ const Level3Module7Section1_4 = () => {
               supervision.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Next Steps:</strong> Consider: gaining the 2391 inspection and testing
               qualification, specialising in a growth area (renewables, EV charging, smart systems),
               or progressing towards supervisory roles. Continuous learning keeps you competitive
@@ -568,7 +568,7 @@ const Level3Module7Section1_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -613,7 +613,7 @@ const Level3Module7Section1_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section1-3">

@@ -175,7 +175,7 @@ export default function ScaffoldingAwarenessModule2Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-2">
@@ -200,7 +200,7 @@ export default function ScaffoldingAwarenessModule2Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             BS EN 12811 &amp; Other Standards
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The British and European standards that define how scaffolding must be designed,
             manufactured, and used &mdash; from load classes and width categories to tube
             specifications and coupler performance
@@ -304,7 +304,7 @@ export default function ScaffoldingAwarenessModule2Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-slate-400 mb-3">Key Standards at a Glance</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -390,7 +390,7 @@ export default function ScaffoldingAwarenessModule2Section3() {
                 <p className="text-sm font-medium text-slate-400 mb-3">
                   The Three Parts of BS EN 12811
                 </p>
-                <ul className="text-sm text-white/80 space-y-3">
+                <ul className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -485,7 +485,7 @@ export default function ScaffoldingAwarenessModule2Section3() {
                   <p className="text-slate-400 font-semibold text-base">
                     Load Class Reference Table
                   </p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-xs">
                     BS EN 12811-1 &mdash; Uniformly distributed service loads
                   </p>
                 </div>
@@ -546,7 +546,7 @@ export default function ScaffoldingAwarenessModule2Section3() {
                               {row.load}
                             </span>
                           </div>
-                          <p className="text-white/60 text-xs sm:text-sm leading-relaxed">
+                          <p className="text-white text-xs sm:text-sm leading-relaxed">
                             {row.detail}
                           </p>
                         </div>
@@ -561,7 +561,7 @@ export default function ScaffoldingAwarenessModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Point</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The load class must be{' '}
                   <strong>specified by the person commissioning the scaffold</strong> and must
                   reflect the actual work to be carried out. If the nature of the work changes after
@@ -615,7 +615,7 @@ export default function ScaffoldingAwarenessModule2Section3() {
                   <p className="text-slate-400 font-semibold text-base">
                     Width Category Specifications
                   </p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-xs">
                     BS EN 12811-1 &mdash; Minimum clear platform widths
                   </p>
                 </div>
@@ -670,13 +670,13 @@ export default function ScaffoldingAwarenessModule2Section3() {
                           <span className="text-slate-400 text-sm font-mono font-bold">
                             {row.cat}
                           </span>
-                          <span className="text-white/40 text-[10px] mt-0.5">{row.width}</span>
+                          <span className="text-white text-[10px] mt-0.5">{row.width}</span>
                         </div>
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1">
-                            <span className="text-white/60 text-xs">~{row.boards}</span>
+                            <span className="text-white text-xs">~{row.boards}</span>
                           </div>
-                          <p className="text-white/70 text-xs sm:text-sm leading-relaxed">
+                          <p className="text-white text-xs sm:text-sm leading-relaxed">
                             {row.use}
                           </p>
                         </div>
@@ -730,7 +730,7 @@ export default function ScaffoldingAwarenessModule2Section3() {
                 <p className="text-sm font-medium text-slate-400 mb-3">
                   BS EN 12810 &mdash; Two Parts
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -807,7 +807,7 @@ export default function ScaffoldingAwarenessModule2Section3() {
                 <p className="text-sm font-medium text-slate-400 mb-3">
                   BS EN 12812 &mdash; Falsework
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -846,7 +846,7 @@ export default function ScaffoldingAwarenessModule2Section3() {
                 <p className="text-sm font-medium text-slate-400 mb-3">
                   BS EN 74 &mdash; Couplers, Spigot Pins &amp; Base Plates
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -894,7 +894,7 @@ export default function ScaffoldingAwarenessModule2Section3() {
                 <p className="text-sm font-medium text-slate-400 mb-3">
                   BS EN 39 &mdash; Steel Scaffold Tubes
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -939,7 +939,7 @@ export default function ScaffoldingAwarenessModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Site Safety</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Damaged, corroded, or bent tubes must be{' '}
                   <strong>removed from service immediately</strong>. A tube with significant wall
                   thinning due to corrosion has reduced load-carrying capacity and may fail under
@@ -974,7 +974,7 @@ export default function ScaffoldingAwarenessModule2Section3() {
                 <p className="text-sm font-medium text-slate-400 mb-3">
                   BS 2482 &mdash; Timber Scaffold Boards
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1027,7 +1027,7 @@ export default function ScaffoldingAwarenessModule2Section3() {
                 <p className="text-sm font-medium text-slate-400 mb-3">
                   Service &amp; Duty Classifications
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1110,7 +1110,7 @@ export default function ScaffoldingAwarenessModule2Section3() {
                 <p className="text-sm font-medium text-slate-400 mb-3">
                   How the Standards Fit Together
                 </p>
-                <ul className="text-sm text-white/80 space-y-3">
+                <ul className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1180,7 +1180,7 @@ export default function ScaffoldingAwarenessModule2Section3() {
                 <p className="text-sm font-medium text-slate-400 mb-3">
                   Standards in the Scaffold Lifecycle
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-slate-500/20 text-slate-400 text-xs font-bold flex-shrink-0">
                       1
@@ -1281,7 +1281,7 @@ export default function ScaffoldingAwarenessModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Common Site Error</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   One of the most common failures on UK construction sites is the{' '}
                   <strong>use of a scaffold beyond its design parameters</strong>. A scaffold
                   designed as Load Class 2 for painting is subsequently used by bricklayers who
@@ -1315,7 +1315,7 @@ export default function ScaffoldingAwarenessModule2Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1329,7 +1329,7 @@ export default function ScaffoldingAwarenessModule2Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-2">

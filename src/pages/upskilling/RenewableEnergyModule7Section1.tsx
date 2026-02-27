@@ -238,7 +238,7 @@ const RenewableEnergyModule7Section1 = () => {
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
           System Monitoring & Performance Analysis
         </h1>
-        <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+        <p className="text-white text-sm sm:text-base max-w-xl mx-auto">
           Understanding monitoring systems, performance metrics, and data analysis for renewable
           energy installations
         </p>
@@ -288,7 +288,7 @@ const RenewableEnergyModule7Section1 = () => {
           ].map((outcome, index) => (
             <div key={index} className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
-              <span className="text-white/80 text-sm">{outcome}</span>
+              <span className="text-white text-sm">{outcome}</span>
             </div>
           ))}
         </div>
@@ -301,7 +301,7 @@ const RenewableEnergyModule7Section1 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">01</span>
             <h2 className="text-xl font-semibold text-white">Key Performance Metrics</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Effective system monitoring relies on understanding and tracking key performance
               indicators that reveal system health and highlight potential issues.
@@ -336,7 +336,7 @@ const RenewableEnergyModule7Section1 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">02</span>
             <h2 className="text-xl font-semibold text-white">Monitoring System Architecture</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Modern monitoring systems collect data from multiple sources to provide comprehensive
               visibility of system performance and health.
@@ -373,7 +373,7 @@ const RenewableEnergyModule7Section1 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">03</span>
             <h2 className="text-xl font-semibold text-white">Data Analysis Techniques</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Raw monitoring data must be processed and analysed to extract meaningful insights
               about system performance and identify developing issues.
@@ -408,7 +408,7 @@ const RenewableEnergyModule7Section1 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">04</span>
             <h2 className="text-xl font-semibold text-white">Alert Configuration and Response</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Effective alert systems provide early warning of issues without overwhelming operators
               with false alarms.
@@ -446,7 +446,7 @@ const RenewableEnergyModule7Section1 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">05</span>
             <h2 className="text-xl font-semibold text-white">Reporting and Documentation</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Regular performance reports provide stakeholders with system status information and
               support maintenance planning and warranty claims.
@@ -479,7 +479,7 @@ const RenewableEnergyModule7Section1 = () => {
             <Zap className="w-4 h-4 text-elec-yellow" />
             Practical Guidance
           </h3>
-          <div className="space-y-2 text-white/80 text-sm">
+          <div className="space-y-2 text-white text-sm">
             <p>
               <span className="text-white font-medium">Setting up effective monitoring:</span>{' '}
               Ensure sensors are correctly calibrated and positioned. Configure appropriate alert
@@ -508,7 +508,7 @@ const RenewableEnergyModule7Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <h3 className="text-white font-medium mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>

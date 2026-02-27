@@ -206,7 +206,7 @@ const FiberOpticsModule1Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/fiber-optics-module-1">
@@ -227,7 +227,7 @@ const FiberOpticsModule1Section3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Commercial & Industrial Applications
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             How fibre optic technology is deployed across different sectors and environments
           </p>
         </header>
@@ -395,7 +395,7 @@ const FiberOpticsModule1Section3 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
                 <div>
                   <p className="font-medium mb-1">MTP/MPO Connectivity</p>
-                  <ul className="space-y-0.5 text-white/90">
+                  <ul className="space-y-0.5 text-white">
                     <li>12 or 24 fibres per connector</li>
                     <li>Pre-terminated trunk cables</li>
                     <li>Supports 40/100/400G parallel optics</li>
@@ -403,7 +403,7 @@ const FiberOpticsModule1Section3 = () => {
                 </div>
                 <div>
                   <p className="font-medium mb-1">Patch Panel Density</p>
-                  <ul className="space-y-0.5 text-white/90">
+                  <ul className="space-y-0.5 text-white">
                     <li>Up to 144 LC ports per 1U</li>
                     <li>Angled panels reduce bend stress</li>
                     <li>Colour coding by function</li>
@@ -600,7 +600,7 @@ const FiberOpticsModule1Section3 = () => {
                   <strong>Data centre links:</strong> 144-288+ fibres (trunk cables)
                 </li>
               </ul>
-              <p className="text-sm mt-2 text-white/70">
+              <p className="text-sm mt-2 text-white">
                 Rule of thumb: Install 2-4x current requirements for future growth.
               </p>
             </div>
@@ -665,7 +665,7 @@ const FiberOpticsModule1Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -710,7 +710,7 @@ const FiberOpticsModule1Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../section-2">

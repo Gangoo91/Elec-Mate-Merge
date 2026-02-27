@@ -171,22 +171,22 @@ const PremiumCourseCard = ({ course, onClick, index = 0 }: PremiumCourseCardProp
         </h3>
 
         {/* Description preview — 1 line */}
-        <p className="text-xs text-white/50 line-clamp-1">{course.description}</p>
+        <p className="text-xs text-white line-clamp-1">{course.description}</p>
 
         {/* Stat Pills Row: Duration, Level, Location */}
         <div className="flex items-center gap-1.5 flex-wrap">
           <div className="flex items-center gap-1 bg-white/10 rounded-full px-2.5 py-1">
-            <Clock className="h-3 w-3 text-white/60" />
-            <span className="text-[11px] text-white/80">{course.duration}</span>
+            <Clock className="h-3 w-3 text-white" />
+            <span className="text-[11px] text-white">{course.duration}</span>
           </div>
           <div className="flex items-center gap-1 bg-white/10 rounded-full px-2.5 py-1">
-            <GraduationCap className="h-3 w-3 text-white/60" />
-            <span className="text-[11px] text-white/80">{course.level}</span>
+            <GraduationCap className="h-3 w-3 text-white" />
+            <span className="text-[11px] text-white">{course.level}</span>
           </div>
           {firstLocation && (
             <div className="flex items-center gap-1 bg-white/10 rounded-full px-2.5 py-1">
-              <MapPin className="h-3 w-3 text-white/60" />
-              <span className="text-[11px] text-white/80 truncate max-w-[80px]">
+              <MapPin className="h-3 w-3 text-white" />
+              <span className="text-[11px] text-white truncate max-w-[80px]">
                 {firstLocation}
               </span>
             </div>
@@ -216,7 +216,7 @@ const PremiumCourseCard = ({ course, onClick, index = 0 }: PremiumCourseCardProp
         {/* Bottom: Price left, View → right */}
         <div className="flex items-center justify-between pt-2 border-t border-white/10">
           <span className="text-base font-bold text-white">{course.price}</span>
-          <span className="flex items-center gap-1 text-xs font-medium text-white/60 group-hover:text-blue-400 transition-colors">
+          <span className="flex items-center gap-1 text-xs font-medium text-white group-hover:text-blue-400 transition-colors">
             View
             <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
           </span>

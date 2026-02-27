@@ -138,7 +138,7 @@ const ToolSelectionTab = () => {
           </div>
           <div>
             <p className="font-medium text-green-400 mb-1">Quality Tool Selection</p>
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               Quality tool selection is crucial for your professional development. This guide helps
               you make informed decisions and avoid costly mistakes.
             </p>
@@ -156,7 +156,7 @@ const ToolSelectionTab = () => {
             </div>
             Quality Assessment Guide
           </CardTitle>
-          <p className="text-sm text-white/60">
+          <p className="text-sm text-white">
             Learn to identify quality tools and avoid poor purchases
           </p>
         </CardHeader>
@@ -173,7 +173,7 @@ const ToolSelectionTab = () => {
                   <h4 className="text-sm font-medium text-green-400">Look For:</h4>
                   <ul className="space-y-1.5">
                     {indicator.factors.map((factor, idx) => (
-                      <li key={idx} className="text-sm text-white/60 flex items-start gap-2">
+                      <li key={idx} className="text-sm text-white flex items-start gap-2">
                         <CheckCircle className="h-3.5 w-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                         {factor}
                       </li>
@@ -185,7 +185,7 @@ const ToolSelectionTab = () => {
                   <h4 className="text-sm font-medium text-red-400">Red Flags:</h4>
                   <ul className="space-y-1.5">
                     {indicator.redFlags.map((flag, idx) => (
-                      <li key={idx} className="text-sm text-white/60 flex items-start gap-2">
+                      <li key={idx} className="text-sm text-white flex items-start gap-2">
                         <AlertTriangle className="h-3.5 w-3.5 text-red-400 mt-0.5 flex-shrink-0" />
                         {flag}
                       </li>
@@ -215,7 +215,7 @@ const ToolSelectionTab = () => {
             </div>
             Smart Purchasing Process
           </CardTitle>
-          <p className="text-sm text-white/60">
+          <p className="text-sm text-white">
             Follow this structured approach to make better tool purchases
           </p>
         </CardHeader>
@@ -237,7 +237,7 @@ const ToolSelectionTab = () => {
                 </div>
                 <ul className="space-y-2">
                   {stage.activities.map((activity, idx) => (
-                    <li key={idx} className="text-sm text-white/60 flex items-start gap-2">
+                    <li key={idx} className="text-sm text-white flex items-start gap-2">
                       <div className="w-2 h-2 bg-blue-400 rounded-full mt-1.5 flex-shrink-0" />
                       {activity}
                     </li>
@@ -257,7 +257,7 @@ const ToolSelectionTab = () => {
           </div>
           <div>
             <p className="font-medium text-orange-400 mb-1">Investment Tip</p>
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               Buy quality tools once rather than cheap tools multiple times. A good tool will last
               your entire career and maintain its resale value.
             </p>

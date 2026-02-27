@@ -219,7 +219,7 @@ export default function FireSafetyModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-4">
@@ -244,7 +244,7 @@ export default function FireSafetyModule4Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Assembly Points &amp; Roll Call
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding how to select and manage assembly points, conduct effective roll calls,
             account for all occupants including visitors and contractors, and communicate critical
             information to the fire and rescue service
@@ -337,7 +337,7 @@ export default function FireSafetyModule4Section3() {
 
               <p>The primary purposes of an assembly point are:</p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -420,7 +420,7 @@ export default function FireSafetyModule4Section3() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Safe Distance</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       A minimum of <strong>15-20 metres</strong> from the building as a general
                       rule. The specific distance depends on the building height, the fire risk
                       assessment, and the potential for radiant heat or falling debris. Taller
@@ -434,7 +434,7 @@ export default function FireSafetyModule4Section3() {
                     <p className="text-sm font-medium text-white mb-1">
                       Away from Fire Service Access
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The assembly point must not obstruct the routes that fire appliances will use
                       to access the building. Fire engines, aerial ladder platforms, and other
                       appliances need clear access to fire hydrants, dry risers, and the building
@@ -444,7 +444,7 @@ export default function FireSafetyModule4Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Hard Standing Surface</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The assembly point should be on a hard-standing surface (tarmac, concrete,
                       paving) rather than grass or bare earth, which can become muddy and impassable
                       in wet weather. This is particularly important for wheelchair users and others
@@ -454,7 +454,7 @@ export default function FireSafetyModule4Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Adequate Capacity</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The assembly point must be large enough to accommodate all occupants of the
                       building without overcrowding. For very large buildings, multiple assembly
                       points may be needed, with occupants from different floors or zones directed
@@ -464,7 +464,7 @@ export default function FireSafetyModule4Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Not in the Smoke Path</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The assembly point should not be located downwind of the building where smoke
                       is likely to accumulate. While wind direction is variable, the prevailing wind
                       direction should be considered. An alternative assembly point should be
@@ -473,7 +473,7 @@ export default function FireSafetyModule4Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Signposted to BS ISO 7010</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The assembly point must be clearly identified with signage conforming to{' '}
                       <strong>BS ISO 7010</strong> (reference E007). The green and white pictogram
                       sign features a group of people with an arrow indicating the designated
@@ -487,7 +487,7 @@ export default function FireSafetyModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Alternative Assembly Point</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Every premises should designate at least one{' '}
                   <strong>alternative assembly point</strong> for use when the primary location is
                   unsuitable &mdash; for example, due to wind direction carrying smoke across the
@@ -525,7 +525,7 @@ export default function FireSafetyModule4Section3() {
                 undermine the entire evacuation procedure. The following elements are essential:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -613,7 +613,7 @@ export default function FireSafetyModule4Section3() {
                 These lists must be:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -647,7 +647,7 @@ export default function FireSafetyModule4Section3() {
                 <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg p-4">
                   <ClipboardList className="h-6 w-6 text-rose-400 mb-2" />
                   <p className="text-sm font-semibold text-rose-400 mb-1">Name-Check Roll Call</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     The fire marshal calls out each name on the list and marks off those who
                     respond. Thorough but time-consuming for large groups. Most reliable for smaller
                     teams.
@@ -656,7 +656,7 @@ export default function FireSafetyModule4Section3() {
                 <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg p-4">
                   <UserCheck className="h-6 w-6 text-rose-400 mb-2" />
                   <p className="text-sm font-semibold text-rose-400 mb-1">Badge Count Roll Call</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Staff present their ID badges which are checked against the list or scanned
                     electronically. Faster than name-check and less prone to error in noisy
                     conditions.
@@ -665,7 +665,7 @@ export default function FireSafetyModule4Section3() {
                 <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg p-4">
                   <Shield className="h-6 w-6 text-rose-400 mb-2" />
                   <p className="text-sm font-semibold text-rose-400 mb-1">Electronic Access Data</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Swipe-card or proximity-card systems generate a real-time list of who entered
                     but has not exited. Cross-referenced with assembly point attendance. Requires
                     power backup.
@@ -674,7 +674,7 @@ export default function FireSafetyModule4Section3() {
                 <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg p-4">
                   <Users className="h-6 w-6 text-rose-400 mb-2" />
                   <p className="text-sm font-semibold text-rose-400 mb-1">Headcount by Zone</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     A quick headcount of each zone to verify numbers match expectations. Fastest
                     method but does not identify specific missing individuals. Often used as an
                     initial check.
@@ -733,7 +733,7 @@ export default function FireSafetyModule4Section3() {
                 include arrangements for accounting for all persons present in the premises.
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -778,7 +778,7 @@ export default function FireSafetyModule4Section3() {
                 <strong>Contractor arrangements</strong> require additional planning:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -841,7 +841,7 @@ export default function FireSafetyModule4Section3() {
                 <div className="space-y-2">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                     <p className="text-sm font-medium text-white">Fire Marshals</p>
-                    <p className="text-xs text-white/50">
+                    <p className="text-xs text-white">
                       Report zone-clear status from each floor/zone
                     </p>
                   </div>
@@ -850,7 +850,7 @@ export default function FireSafetyModule4Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                     <p className="text-sm font-medium text-white">Assembly Point Coordinator</p>
-                    <p className="text-xs text-white/50">Compiles building-wide roll call status</p>
+                    <p className="text-xs text-white">Compiles building-wide roll call status</p>
                   </div>
                   <div className="flex justify-center">
                     <div className="w-px h-4 bg-rose-500/30" />
@@ -859,7 +859,7 @@ export default function FireSafetyModule4Section3() {
                     <p className="text-sm font-medium text-white">
                       Senior Fire Marshal / Incident Controller
                     </p>
-                    <p className="text-xs text-white/50">
+                    <p className="text-xs text-white">
                       Consolidates all information for fire service briefing
                     </p>
                   </div>
@@ -869,7 +869,7 @@ export default function FireSafetyModule4Section3() {
                   <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg p-3 text-center">
                     <Megaphone className="h-4 w-4 text-rose-400 mx-auto mb-1" />
                     <p className="text-sm font-bold text-rose-400">Fire &amp; Rescue Service</p>
-                    <p className="text-xs text-white/50">
+                    <p className="text-xs text-white">
                       Receives briefing and makes operational decisions
                     </p>
                   </div>
@@ -881,7 +881,7 @@ export default function FireSafetyModule4Section3() {
                 should be:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -911,7 +911,7 @@ export default function FireSafetyModule4Section3() {
                 <strong>Information to pass to the fire and rescue service</strong> includes:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -983,7 +983,7 @@ export default function FireSafetyModule4Section3() {
                 all-clear can only be issued by:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -1008,7 +1008,7 @@ export default function FireSafetyModule4Section3() {
                 <strong>Methods of preventing re-entry:</strong>
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -1079,7 +1079,7 @@ export default function FireSafetyModule4Section3() {
                 specific duties on the principal contractor to manage fire safety across the site.
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -1141,7 +1141,7 @@ export default function FireSafetyModule4Section3() {
                     <p className="text-sm font-medium text-white mb-2">
                       Construction Site Fire Drills
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Fire drills on construction sites should be conducted at least monthly during
                       the early phases of construction and whenever significant changes to the site
                       layout affect evacuation routes. All contractors must participate in the
@@ -1167,7 +1167,7 @@ export default function FireSafetyModule4Section3() {
             <h2 className="text-lg font-semibold text-white mb-4 text-center">
               Assembly Point Communication Chain
             </h2>
-            <p className="text-xs text-white/50 text-center mb-6">
+            <p className="text-xs text-white text-center mb-6">
               How information flows from individual fire marshals to the fire and rescue service
               during an evacuation
             </p>
@@ -1178,17 +1178,17 @@ export default function FireSafetyModule4Section3() {
                 <div className="bg-white/5 border border-white/10 rounded-lg px-2 py-3 text-center">
                   <Eye className="h-4 w-4 text-rose-400 mx-auto mb-1" />
                   <p className="text-[10px] font-bold text-white">MARSHAL</p>
-                  <p className="text-[9px] text-white/50">Zone A</p>
+                  <p className="text-[9px] text-white">Zone A</p>
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-lg px-2 py-3 text-center">
                   <Eye className="h-4 w-4 text-rose-400 mx-auto mb-1" />
                   <p className="text-[10px] font-bold text-white">MARSHAL</p>
-                  <p className="text-[9px] text-white/50">Zone B</p>
+                  <p className="text-[9px] text-white">Zone B</p>
                 </div>
                 <div className="bg-white/5 border border-white/10 rounded-lg px-2 py-3 text-center">
                   <Eye className="h-4 w-4 text-rose-400 mx-auto mb-1" />
                   <p className="text-[10px] font-bold text-white">MARSHAL</p>
-                  <p className="text-[9px] text-white/50">Zone C</p>
+                  <p className="text-[9px] text-white">Zone C</p>
                 </div>
               </div>
 
@@ -1206,7 +1206,7 @@ export default function FireSafetyModule4Section3() {
                 <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg px-4 py-3 text-center w-full max-w-[200px]">
                   <ClipboardList className="h-4 w-4 text-rose-400 mx-auto mb-1" />
                   <p className="text-xs font-bold text-rose-400">COORDINATOR</p>
-                  <p className="text-[10px] text-white/50">Compiles building status</p>
+                  <p className="text-[10px] text-white">Compiles building status</p>
                 </div>
               </div>
 
@@ -1224,7 +1224,7 @@ export default function FireSafetyModule4Section3() {
                 <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg px-4 py-3 text-center w-full max-w-[220px]">
                   <Shield className="h-4 w-4 text-rose-400 mx-auto mb-1" />
                   <p className="text-xs font-bold text-rose-400">SENIOR MARSHAL</p>
-                  <p className="text-[10px] text-white/50">Incident controller &amp; liaison</p>
+                  <p className="text-[10px] text-white">Incident controller &amp; liaison</p>
                 </div>
               </div>
 
@@ -1242,14 +1242,14 @@ export default function FireSafetyModule4Section3() {
                 <div className="bg-gradient-to-br from-rose-500/20 to-rose-400/10 border-2 border-rose-500/40 rounded-lg px-4 py-3 text-center w-full max-w-[240px]">
                   <Megaphone className="h-5 w-5 text-rose-400 mx-auto mb-1" />
                   <p className="text-sm font-bold text-rose-400">FIRE &amp; RESCUE SERVICE</p>
-                  <p className="text-[10px] text-white/50">Operational decisions &amp; all-clear</p>
+                  <p className="text-[10px] text-white">Operational decisions &amp; all-clear</p>
                 </div>
               </div>
             </div>
 
             <div className="mt-6 bg-white/5 border border-white/10 rounded-lg p-3">
-              <p className="text-xs text-white/60 text-center">
-                <strong className="text-white/80">Information passed at each stage:</strong> numbers
+              <p className="text-xs text-white text-center">
+                <strong className="text-white">Information passed at each stage:</strong> numbers
                 evacuated, missing persons (names &amp; last known locations), fire location,
                 hazardous substances, disabled persons awaiting rescue
               </p>
@@ -1266,7 +1266,7 @@ export default function FireSafetyModule4Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1284,7 +1284,7 @@ export default function FireSafetyModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-4-section-2">

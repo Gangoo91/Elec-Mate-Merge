@@ -241,7 +241,7 @@ export default function ConfinedSpacesModule4Section1() {
             MODULE 4 &middot; SECTION 1
           </span>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">Pre-Entry Procedures</h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             A systematic walkthrough of every step that must be completed before anyone enters a
             confined space &mdash; from issuing the permit-to-work through isolation, atmospheric
             testing, and rescue readiness
@@ -255,7 +255,7 @@ export default function ConfinedSpacesModule4Section1() {
               <CheckCircle className="h-5 w-5" />
               Learning Outcomes
             </h2>
-            <p className="text-white/70 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               By the end of this section you will be able to:
             </p>
             <ul className="text-white space-y-2 text-sm">
@@ -397,7 +397,7 @@ export default function ConfinedSpacesModule4Section1() {
                 <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                 <h3 className="font-semibold text-red-300">Never Enter Without a Valid Permit</h3>
               </div>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 Entry without a valid, signed permit-to-work is{' '}
                 <strong className="text-white">prohibited</strong>. Even &ldquo;just having a quick
                 look&rdquo; or &ldquo;popping in for a second&rdquo; constitutes an entry. If the
@@ -429,7 +429,7 @@ export default function ConfinedSpacesModule4Section1() {
               {/* Mechanical Isolation */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-cyan-400 font-medium mb-3">Mechanical Isolation</h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Mechanical isolation prevents moving parts (agitators, mixers, conveyors, augers)
                   from operating whilst personnel are inside.
                 </p>
@@ -473,7 +473,7 @@ export default function ConfinedSpacesModule4Section1() {
                   <Zap className="h-4 w-4" />
                   Electrical Isolation (BS 7671 Safe Isolation)
                 </h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Electrical isolation follows the safe isolation procedure defined in BS 7671 and
                   HSE Guidance Note GS38. Every step must be completed in order.
                 </p>
@@ -526,7 +526,7 @@ export default function ConfinedSpacesModule4Section1() {
                   </div>
                 </div>
                 <div className="mt-3 bg-cyan-500/10 border border-cyan-500/20 p-3 rounded">
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     <strong className="text-cyan-400">Key principle:</strong> The person at risk
                     holds the lock and key. No one else may remove another person&rsquo;s lock.
                     Locks are only removed by their owner when they have personally confirmed it is
@@ -538,7 +538,7 @@ export default function ConfinedSpacesModule4Section1() {
               {/* Piping Isolation */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-cyan-400 font-medium mb-3">Piping Isolation</h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Piping isolation prevents the ingress of liquids, gases, steam, or other process
                   substances through connected pipework.
                 </p>
@@ -582,7 +582,7 @@ export default function ConfinedSpacesModule4Section1() {
               {/* Process Isolation Verification */}
               <div className="bg-cyan-500/10 border border-cyan-500/30 p-4 rounded-lg">
                 <h3 className="text-cyan-400 font-semibold mb-2">Process Isolation Verification</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   After all isolation is in place, a{' '}
                   <strong className="text-white">try-to-operate test</strong> must be performed.
                   Attempt to start motors, open valves, and operate controls to confirm that the
@@ -602,7 +602,7 @@ export default function ConfinedSpacesModule4Section1() {
             <Lock className="h-5 w-5 text-cyan-400" />
             Isolation Sequence Overview
           </h2>
-          <p className="text-white/80 mb-6 text-sm">
+          <p className="text-white mb-6 text-sm">
             The diagram below shows the required isolation sequence. All three branches must be
             completed and verified before proceeding to cleaning and purging.
           </p>
@@ -621,25 +621,25 @@ export default function ConfinedSpacesModule4Section1() {
                   <p className="text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Step 1
                   </p>
-                  <p className="text-white/80">Identify all mechanical energy sources</p>
+                  <p className="text-white">Identify all mechanical energy sources</p>
                 </div>
                 <div>
                   <p className="text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Step 2
                   </p>
-                  <p className="text-white/80">Blank, disconnect, or lock valves/drives</p>
+                  <p className="text-white">Blank, disconnect, or lock valves/drives</p>
                 </div>
                 <div>
                   <p className="text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Step 3
                   </p>
-                  <p className="text-white/80">Apply personal padlocks and tags</p>
+                  <p className="text-white">Apply personal padlocks and tags</p>
                 </div>
                 <div>
                   <p className="text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Verify
                   </p>
-                  <p className="text-white/80">Try to operate &mdash; confirm no movement</p>
+                  <p className="text-white">Try to operate &mdash; confirm no movement</p>
                 </div>
               </div>
             </div>
@@ -657,25 +657,25 @@ export default function ConfinedSpacesModule4Section1() {
                   <p className="text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Step 1
                   </p>
-                  <p className="text-white/80">Identify circuits from drawings</p>
+                  <p className="text-white">Identify circuits from drawings</p>
                 </div>
                 <div>
                   <p className="text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Step 2
                   </p>
-                  <p className="text-white/80">Switch off at isolator</p>
+                  <p className="text-white">Switch off at isolator</p>
                 </div>
                 <div>
                   <p className="text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Step 3
                   </p>
-                  <p className="text-white/80">Lock off with personal padlock</p>
+                  <p className="text-white">Lock off with personal padlock</p>
                 </div>
                 <div>
                   <p className="text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Verify
                   </p>
-                  <p className="text-white/80">Prove dead (test &rarr; check &rarr; test)</p>
+                  <p className="text-white">Prove dead (test &rarr; check &rarr; test)</p>
                 </div>
               </div>
             </div>
@@ -693,25 +693,25 @@ export default function ConfinedSpacesModule4Section1() {
                   <p className="text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Step 1
                   </p>
-                  <p className="text-white/80">Identify all connected pipework</p>
+                  <p className="text-white">Identify all connected pipework</p>
                 </div>
                 <div>
                   <p className="text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Step 2
                   </p>
-                  <p className="text-white/80">Double block &amp; bleed or insert slip plates</p>
+                  <p className="text-white">Double block &amp; bleed or insert slip plates</p>
                 </div>
                 <div>
                   <p className="text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Step 3
                   </p>
-                  <p className="text-white/80">Lock valves and tag spectacle blinds</p>
+                  <p className="text-white">Lock valves and tag spectacle blinds</p>
                 </div>
                 <div>
                   <p className="text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Verify
                   </p>
-                  <p className="text-white/80">Check bleed valves &mdash; no flow confirmed</p>
+                  <p className="text-white">Check bleed valves &mdash; no flow confirmed</p>
                 </div>
               </div>
             </div>
@@ -726,7 +726,7 @@ export default function ConfinedSpacesModule4Section1() {
             </div>
           </div>
 
-          <p className="text-white/50 text-xs text-center mt-3 italic">
+          <p className="text-white text-xs text-center mt-3 italic">
             On mobile, scroll down to view all three isolation branches
           </p>
         </section>
@@ -801,7 +801,7 @@ export default function ConfinedSpacesModule4Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Nitrogen Kills Without Warning</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Nitrogen is colourless, odourless, and tasteless. A single breath of a
                   nitrogen-rich atmosphere can cause immediate unconsciousness. Death follows within
                   minutes. There have been multiple fatalities in the UK where workers entered
@@ -934,21 +934,21 @@ export default function ConfinedSpacesModule4Section1() {
                     Oxygen (O&#8322;)
                   </p>
                   <p className="text-white font-bold text-lg">19.5&ndash;23.5%</p>
-                  <p className="text-white/60 text-xs mt-1">Normal = 20.9%</p>
+                  <p className="text-white text-xs mt-1">Normal = 20.9%</p>
                 </div>
                 <div className="rounded-lg border-2 border-amber-500/40 bg-amber-500/5 p-3 text-center">
                   <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Flammables
                   </p>
                   <p className="text-white font-bold text-lg">&lt;10% LEL</p>
-                  <p className="text-white/60 text-xs mt-1">Well below ignition point</p>
+                  <p className="text-white text-xs mt-1">Well below ignition point</p>
                 </div>
                 <div className="rounded-lg border-2 border-red-500/40 bg-red-500/5 p-3 text-center">
                   <p className="text-red-400 text-xs font-semibold uppercase tracking-wider mb-1">
                     Toxics
                   </p>
                   <p className="text-white font-bold text-lg">Below WEL</p>
-                  <p className="text-white/60 text-xs mt-1">Per EH40 for each substance</p>
+                  <p className="text-white text-xs mt-1">Per EH40 for each substance</p>
                 </div>
               </div>
             </div>
@@ -1213,7 +1213,7 @@ export default function ConfinedSpacesModule4Section1() {
                     Rescue Equipment Must Be Set Up BEFORE Entry
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Rescue equipment that is &ldquo;in the van&rdquo; or &ldquo;available if
                   needed&rdquo; is <strong className="text-white">not acceptable</strong>. Equipment
                   must be physically erected, connected, and tested at the entry point before any
@@ -1234,7 +1234,7 @@ export default function ConfinedSpacesModule4Section1() {
             <ClipboardCheck className="h-5 w-5 text-cyan-400" />
             Pre-Entry Checklist at a Glance
           </h2>
-          <p className="text-white/80 mb-6 text-sm">
+          <p className="text-white mb-6 text-sm">
             Every item on this checklist must be confirmed before the permit is signed and entry is
             authorised. A single outstanding item means entry is prohibited.
           </p>
@@ -1246,7 +1246,7 @@ export default function ConfinedSpacesModule4Section1() {
                 <Lock className="h-5 w-5 text-cyan-400 mx-auto mb-1" />
                 <p className="text-cyan-400 font-bold">Isolation</p>
               </div>
-              <div className="p-3 space-y-2 text-xs text-white/80">
+              <div className="p-3 space-y-2 text-xs text-white">
                 <div className="flex items-start gap-2">
                   <CheckCircle className="h-3.5 w-3.5 text-cyan-400 mt-0.5 flex-shrink-0" />
                   <span>Mechanical isolation verified</span>
@@ -1276,7 +1276,7 @@ export default function ConfinedSpacesModule4Section1() {
                 <Wind className="h-5 w-5 text-cyan-400 mx-auto mb-1" />
                 <p className="text-cyan-400 font-bold">Atmosphere</p>
               </div>
-              <div className="p-3 space-y-2 text-xs text-white/80">
+              <div className="p-3 space-y-2 text-xs text-white">
                 <div className="flex items-start gap-2">
                   <CheckCircle className="h-3.5 w-3.5 text-cyan-400 mt-0.5 flex-shrink-0" />
                   <span>Residues removed &amp; washed</span>
@@ -1310,7 +1310,7 @@ export default function ConfinedSpacesModule4Section1() {
                 <Radio className="h-5 w-5 text-cyan-400 mx-auto mb-1" />
                 <p className="text-cyan-400 font-bold">Access &amp; Comms</p>
               </div>
-              <div className="p-3 space-y-2 text-xs text-white/80">
+              <div className="p-3 space-y-2 text-xs text-white">
                 <div className="flex items-start gap-2">
                   <CheckCircle className="h-3.5 w-3.5 text-cyan-400 mt-0.5 flex-shrink-0" />
                   <span>Entry/exit routes clear</span>
@@ -1340,7 +1340,7 @@ export default function ConfinedSpacesModule4Section1() {
                 <Shield className="h-5 w-5 text-cyan-400 mx-auto mb-1" />
                 <p className="text-cyan-400 font-bold">PPE &amp; Rescue</p>
               </div>
-              <div className="p-3 space-y-2 text-xs text-white/80">
+              <div className="p-3 space-y-2 text-xs text-white">
                 <div className="flex items-start gap-2">
                   <CheckCircle className="h-3.5 w-3.5 text-cyan-400 mt-0.5 flex-shrink-0" />
                   <span>Harness fitted &amp; lifeline attached</span>
@@ -1369,7 +1369,7 @@ export default function ConfinedSpacesModule4Section1() {
             </div>
           </div>
 
-          <p className="text-white/50 text-xs text-center mt-4 italic">
+          <p className="text-white text-xs text-center mt-4 italic">
             On mobile, scroll down to view all four checklist columns
           </p>
         </section>
@@ -1449,7 +1449,7 @@ export default function ConfinedSpacesModule4Section1() {
                 <h3 className="text-cyan-400 font-medium mb-3">
                   Top Person (Safety Attendant) &mdash; Role &amp; Responsibilities
                 </h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The top person is positioned at the entry point for the entire duration of the
                   entry. Their role is non-negotiable and they must not be assigned any other task
                   that could distract them.
@@ -1509,7 +1509,7 @@ export default function ConfinedSpacesModule4Section1() {
                     The Top Person Must NEVER Enter the Space
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Under <strong className="text-white">no circumstances</strong> should the top
                   person enter the confined space. If the entrant is in distress, the top person
                   must activate the rescue plan and use the mechanical retrieval system from
@@ -1616,7 +1616,7 @@ export default function ConfinedSpacesModule4Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1632,7 +1632,7 @@ export default function ConfinedSpacesModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-4">

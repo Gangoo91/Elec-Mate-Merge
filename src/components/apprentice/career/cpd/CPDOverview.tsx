@@ -44,7 +44,7 @@ const CPDOverview = () => {
           </CardHeader>
           <CardContent className="relative">
             <div className="text-2xl font-bold text-elec-yellow">{hoursCompleted}</div>
-            <p className="text-xs text-white/70">of {hoursTarget} target</p>
+            <p className="text-xs text-white">of {hoursTarget} target</p>
           </CardContent>
         </Card>
 
@@ -60,7 +60,7 @@ const CPDOverview = () => {
           </CardHeader>
           <CardContent className="relative">
             <div className="text-2xl font-bold text-green-400">{progressPercentage}%</div>
-            <p className="text-xs text-white/70">Target completion</p>
+            <p className="text-xs text-white">Target completion</p>
           </CardContent>
         </Card>
 
@@ -76,7 +76,7 @@ const CPDOverview = () => {
           </CardHeader>
           <CardContent className="relative">
             <div className="text-2xl font-bold text-amber-400">187</div>
-            <p className="text-xs text-white/70">Until year end</p>
+            <p className="text-xs text-white">Until year end</p>
           </CardContent>
         </Card>
 
@@ -92,7 +92,7 @@ const CPDOverview = () => {
           </CardHeader>
           <CardContent className="relative">
             <div className="text-2xl font-bold text-green-400">On Track</div>
-            <p className="text-xs text-white/70">Professional bodies</p>
+            <p className="text-xs text-white">Professional bodies</p>
           </CardContent>
         </Card>
       </div>
@@ -118,7 +118,7 @@ const CPDOverview = () => {
             </div>
             <Progress value={progressPercentage} className="h-3" />
           </div>
-          <div className="text-sm text-white/70">
+          <div className="text-sm text-white">
             You need {hoursTarget - hoursCompleted} more hours to meet your annual target.
           </div>
         </CardContent>
@@ -136,7 +136,7 @@ const CPDOverview = () => {
               <div key={index} className="space-y-2">
                 <div className="flex justify-between items-center">
                   <span className="text-sm font-medium text-white">{category.category}</span>
-                  <span className="text-sm text-white/70">{category.hours} hours</span>
+                  <span className="text-sm text-white">{category.hours} hours</span>
                 </div>
                 <div className="w-full bg-white/10 rounded-full h-2">
                   <div
@@ -165,13 +165,13 @@ const CPDOverview = () => {
               >
                 <div className="space-y-1">
                   <div className="font-medium text-white">{activity.activity}</div>
-                  <div className="text-sm text-white/60">{activity.date}</div>
+                  <div className="text-sm text-white">{activity.date}</div>
                 </div>
                 <div className="text-right space-y-1">
                   <div className="font-medium text-elec-yellow">{activity.hours}h</div>
                   <Badge
                     variant="outline"
-                    className="text-xs bg-white/5 border-white/20 text-white/70"
+                    className="text-xs bg-white/5 border-white/20 text-white"
                   >
                     {activity.type}
                   </Badge>

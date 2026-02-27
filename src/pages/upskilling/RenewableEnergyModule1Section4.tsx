@@ -107,7 +107,7 @@ const RenewableEnergyModule1Section4 = () => {
           <Button
             variant="ghost"
             size="sm"
-            className="text-white/70 hover:text-white hover:bg-white/10 -ml-2"
+            className="text-white hover:text-white hover:bg-white/10 -ml-2"
             asChild
           >
             <Link to="/electrician/upskilling/renewable-energy-module-1">
@@ -127,7 +127,7 @@ const RenewableEnergyModule1Section4 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Global &amp; UK Regulatory Landscape
           </h1>
-          <p className="text-white/60 text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Understanding Net Zero commitments and policy frameworks
           </p>
         </div>
@@ -154,19 +154,19 @@ const RenewableEnergyModule1Section4 = () => {
           <div className="space-y-2">
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-white/80 text-sm">
+              <span className="text-white text-sm">
                 Understand key Net Zero commitments and their impact on renewable deployment
               </span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-white/80 text-sm">
+              <span className="text-white text-sm">
                 Learn how policy shapes renewable energy investment and development
               </span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-white/80 text-sm">
+              <span className="text-white text-sm">
                 Identify financial incentives and compliance schemes supporting renewables
               </span>
             </div>
@@ -179,7 +179,7 @@ const RenewableEnergyModule1Section4 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">01</span>
             UK's Net Zero by 2050 Target
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               The UK became the first major economy to enshrine a Net Zero target in law through the
               Climate Change Act 2008 (2050 Target Amendment) Order 2019. This legally binding
@@ -240,7 +240,7 @@ const RenewableEnergyModule1Section4 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">02</span>
             Smart Energy Initiatives
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               The UK's smart energy strategy focuses on enabling flexible, efficient energy systems
               that can accommodate high levels of renewable generation.
@@ -296,7 +296,7 @@ const RenewableEnergyModule1Section4 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">03</span>
             Financial Support Mechanisms
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               The UK has developed sophisticated financial mechanisms to support renewable energy
               deployment and ensure value for money for consumers.
@@ -358,7 +358,7 @@ const RenewableEnergyModule1Section4 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">04</span>
             Building Regulations &amp; Permitted Development
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Building regulations and planning frameworks play a crucial role in enabling renewable
               energy deployment, particularly for distributed generation.
@@ -423,7 +423,7 @@ const RenewableEnergyModule1Section4 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">05</span>
             Global Climate Frameworks
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               International climate agreements create the global context for national renewable
               energy policies and drive international cooperation.
@@ -469,7 +469,7 @@ const RenewableEnergyModule1Section4 = () => {
         {/* Practical Guidance */}
         <div className="mb-8 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
           <h3 className="text-white font-semibold mb-3">Practical Guidance</h3>
-          <div className="space-y-2 text-white/80 text-sm">
+          <div className="space-y-2 text-white text-sm">
             <p>
               <strong className="text-white">For Installers:</strong> Stay current with changing
               regulations, especially permitted development rights and building regulations updates.
@@ -493,7 +493,7 @@ const RenewableEnergyModule1Section4 = () => {
               <h4 className="text-white font-medium mb-2">
                 What is the difference between Net Zero and carbon neutral?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Net Zero means balancing all greenhouse gas emissions with removals, while carbon
                 neutral only addresses CO2. Net Zero is more comprehensive, covering all GHGs and
                 requires deep decarbonisation rather than just offsetting.
@@ -503,7 +503,7 @@ const RenewableEnergyModule1Section4 = () => {
               <h4 className="text-white font-medium mb-2">
                 How do Contracts for Difference (CfD) protect consumers?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 CfDs provide two-way protection: when market prices are below strike price,
                 generators receive top-up payments. When market prices exceed strike price,
                 generators pay back the difference, reducing consumer bills.
@@ -513,7 +513,7 @@ const RenewableEnergyModule1Section4 = () => {
               <h4 className="text-white font-medium mb-2">
                 Why are renewable energy costs falling in CfD auctions?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Competitive auctions drive cost reductions as developers bid against each other.
                 Technology improvements, economies of scale, supply chain optimisation, and lower
                 financing costs all contribute to falling strike prices.
@@ -523,7 +523,7 @@ const RenewableEnergyModule1Section4 = () => {
               <h4 className="text-white font-medium mb-2">
                 What planning permissions are needed for solar PV?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Most rooftop solar under 1MW requires no planning permission under permitted
                 development rights. Ground-mounted systems up to 9m² for homes are also permitted.
                 Listed buildings and conservation areas may require full applications.
@@ -533,7 +533,7 @@ const RenewableEnergyModule1Section4 = () => {
               <h4 className="text-white font-medium mb-2">
                 How do international policies affect UK renewable development?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 International frameworks set expectations for national climate action. EU policies
                 affect UK-EU energy trading and technology standards. Trade policies and carbon
                 border adjustments can impact supply chains.
@@ -543,7 +543,7 @@ const RenewableEnergyModule1Section4 = () => {
               <h4 className="text-white font-medium mb-2">
                 What support is available for community energy projects?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Community groups can access SEG for small-scale generation, apply for CfDs for
                 larger projects, access local authority sustainability funds, and benefit from
                 community energy loan schemes.
@@ -565,7 +565,7 @@ const RenewableEnergyModule1Section4 = () => {
         <div className="flex justify-between items-center pt-6 border-t border-white/10">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/10"
+            className="text-white hover:text-white hover:bg-white/10"
             asChild
           >
             <Link to="../section-3">

@@ -229,7 +229,7 @@ const Level3Module5Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module5-section1">
@@ -377,7 +377,7 @@ const Level3Module5Section1_3 = () => {
               done using continuity testing or dedicated polarity checks.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> When testing a ring circuit, you first verify end-to-end
               continuity of L, N, and cpc. Then cross-connect L-N at the consumer unit and verify
               readings at each socket. The highest reading should be at the mid-point of the ring.
@@ -449,19 +449,19 @@ const Level3Module5Section1_3 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Failed Continuity</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Check connections, look for breaks or loose terminations
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Failed IR</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Do not energise - investigate insulation fault
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">High Zs</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Check connections, conductor sizes, circuit length
                 </p>
               </div>
@@ -478,7 +478,7 @@ const Level3Module5Section1_3 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> You test insulation resistance on a lighting circuit and get
               0.8 megohms - below the 1 megohm minimum. You must not energise this circuit.
               Investigation reveals a damaged cable where it passes through a metal stud. After
@@ -545,7 +545,7 @@ const Level3Module5Section1_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -587,7 +587,7 @@ const Level3Module5Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module5-section1-2">

@@ -272,7 +272,7 @@ const TestingEquipmentSafety = ({ onBack }: TestingEquipmentSafetyProps) => {
                                   className={`p-2 h-auto ${
                                     inspectionChecks.includes(item.id)
                                       ? 'text-green-400 hover:text-green-300'
-                                      : 'text-white/80 hover:text-white'
+                                      : 'text-white hover:text-white'
                                   }`}
                                 >
                                   <CheckCircle
@@ -312,7 +312,7 @@ const TestingEquipmentSafety = ({ onBack }: TestingEquipmentSafetyProps) => {
                                   className={`p-2 h-auto ${
                                     inspectionChecks.includes(item.id)
                                       ? 'text-green-400 hover:text-green-300'
-                                      : 'text-white/80 hover:text-white'
+                                      : 'text-white hover:text-white'
                                   }`}
                                 >
                                   <CheckCircle

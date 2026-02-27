@@ -180,12 +180,12 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
         {open ? (
           <ChevronUp className="h-4 w-4 text-amber-400 flex-shrink-0" />
         ) : (
-          <ChevronDown className="h-4 w-4 text-white/40 flex-shrink-0" />
+          <ChevronDown className="h-4 w-4 text-white flex-shrink-0" />
         )}
       </button>
       {open && (
         <div className="px-4 pb-4 pt-0">
-          <p className="text-white/70 text-sm leading-relaxed">{answer}</p>
+          <p className="text-white text-sm leading-relaxed">{answer}</p>
         </div>
       )}
     </div>
@@ -210,7 +210,7 @@ export default function WorkingAtHeightModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-3">
@@ -236,7 +236,7 @@ export default function WorkingAtHeightModule3Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Collective Fall Prevention
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
             Guard rails, edge protection, safety netting, safety decking, airbags, catch platforms,
             and scaffolding — the collective measures that protect everyone working at height
             without relying on individual behaviour.
@@ -249,7 +249,7 @@ export default function WorkingAtHeightModule3Section1() {
             <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
               Key Principle
             </p>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Collective protection always takes priority over personal protection in the hierarchy
               of control.
             </p>
@@ -258,7 +258,7 @@ export default function WorkingAtHeightModule3Section1() {
             <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
               Why It Matters
             </p>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Collective measures protect everyone automatically — no training, fitting, or reliance
               on individual compliance needed.
             </p>
@@ -267,7 +267,7 @@ export default function WorkingAtHeightModule3Section1() {
             <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
               Key Standard
             </p>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               BS EN 13374 specifies guard rail requirements; EN 1263 covers safety netting.
             </p>
           </div>
@@ -275,7 +275,7 @@ export default function WorkingAtHeightModule3Section1() {
             <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
               Electrician Context
             </p>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Solar PV, external lighting, and cable runs often require edge protection on roofs and
               elevated platforms.
             </p>
@@ -299,7 +299,7 @@ export default function WorkingAtHeightModule3Section1() {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                <span className="text-white/70 text-sm leading-relaxed">{outcome}</span>
+                <span className="text-white text-sm leading-relaxed">{outcome}</span>
               </div>
             ))}
           </div>
@@ -317,18 +317,18 @@ export default function WorkingAtHeightModule3Section1() {
               <h2 className="text-lg sm:text-xl font-bold text-white">
                 Collective vs Personal Protection
               </h2>
-              <p className="text-white/50 text-sm">Understanding the hierarchy of control</p>
+              <p className="text-white text-sm">Understanding the hierarchy of control</p>
             </div>
           </div>
           <div className="border-l-2 border-amber-500/30 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               The Work at Height Regulations 2005 establish a clear hierarchy when selecting fall
               prevention measures. Before any personal protection system is considered, employers
               must first evaluate whether the risk can be managed through{' '}
               <strong className="text-amber-400">collective protection</strong> — measures that
               safeguard every person in the work area simultaneously.
             </p>
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               Collective protection works passively. Once installed, it does not depend on any
               individual wearing equipment correctly, clipping on to an anchor, or remembering to
               check their harness before each use. This removes the &ldquo;human factor&rdquo; that
@@ -349,7 +349,7 @@ export default function WorkingAtHeightModule3Section1() {
                 ].map((point, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                    <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                    <span className="text-white text-sm leading-relaxed">{point}</span>
                   </div>
                 ))}
               </div>
@@ -360,7 +360,7 @@ export default function WorkingAtHeightModule3Section1() {
                 <AlertTriangle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
                 <span className="text-amber-400 text-sm font-semibold">Important</span>
               </div>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Personal protection — such as harnesses and lanyards — should only be used when
                 collective protection is{' '}
                 <strong className="text-white">not reasonably practicable</strong>. &ldquo;Not
@@ -382,11 +382,11 @@ export default function WorkingAtHeightModule3Section1() {
             </span>
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-white">Guard Rails — BS EN 13374</h2>
-              <p className="text-white/50 text-sm">Requirements, classes, and specification</p>
+              <p className="text-white text-sm">Requirements, classes, and specification</p>
             </div>
           </div>
           <div className="border-l-2 border-blue-500/30 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               Guard rails are the most common form of collective edge protection on construction
               sites. BS EN 13374 sets out the design, testing, and performance requirements for
               temporary edge protection systems. The standard defines three classes based on the
@@ -398,7 +398,7 @@ export default function WorkingAtHeightModule3Section1() {
                 <h4 className="text-blue-400 text-sm font-semibold mb-2">
                   Class A — Flat / Low Slope
                 </h4>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   For surfaces up to 10° slope. Resists static loads only (a person leaning against
                   the rail). Suitable for most floor edges, flat roofs, and level scaffold
                   platforms.
@@ -406,7 +406,7 @@ export default function WorkingAtHeightModule3Section1() {
               </div>
               <div className="rounded-xl border border-blue-500/20 bg-blue-500/5 p-4">
                 <h4 className="text-blue-400 text-sm font-semibold mb-2">Class B — Medium Slope</h4>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   For surfaces between 10° and 30°. Must resist limited dynamic loads — a person
                   sliding towards the edge under gravity. More robust posts and connections
                   required.
@@ -414,7 +414,7 @@ export default function WorkingAtHeightModule3Section1() {
               </div>
               <div className="rounded-xl border border-blue-500/20 bg-blue-500/5 p-4">
                 <h4 className="text-blue-400 text-sm font-semibold mb-2">Class C — Steep Slope</h4>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   For surfaces between 30° and 45°. Must arrest a person falling/sliding down the
                   slope — significant dynamic impact forces. Typically uses wire rope or mesh infill
                   panels rather than simple tube-and-fitting rails.
@@ -422,7 +422,7 @@ export default function WorkingAtHeightModule3Section1() {
               </div>
               <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
                 <h4 className="text-amber-400 text-sm font-semibold mb-2">Beyond 45°</h4>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Surfaces steeper than 45° are considered vertical — guard rails alone are not
                   sufficient. Other measures such as scaffolding, rope access, or MEWPs must be
                   considered.
@@ -433,7 +433,7 @@ export default function WorkingAtHeightModule3Section1() {
             <h3 className="text-white font-semibold text-base mt-6 mb-3">
               Guard Rail Component Requirements
             </h3>
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               A compliant guard rail system under BS EN 13374 comprises three essential elements,
               each with defined minimum dimensions:
             </p>
@@ -441,7 +441,7 @@ export default function WorkingAtHeightModule3Section1() {
             <div className="space-y-3">
               <div className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
-                <span className="text-white/70 text-sm leading-relaxed">
+                <span className="text-white text-sm leading-relaxed">
                   <strong className="text-white">Top rail</strong> — minimum 950 mm above the
                   working surface. This is the primary barrier preventing a person from toppling
                   over the edge.
@@ -449,7 +449,7 @@ export default function WorkingAtHeightModule3Section1() {
               </div>
               <div className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
-                <span className="text-white/70 text-sm leading-relaxed">
+                <span className="text-white text-sm leading-relaxed">
                   <strong className="text-white">Intermediate (mid) rail</strong> — positioned at
                   approximately 470 mm above the working surface (roughly halfway between the toe
                   board and top rail). Prevents a person slipping or rolling under the top rail.
@@ -457,7 +457,7 @@ export default function WorkingAtHeightModule3Section1() {
               </div>
               <div className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
-                <span className="text-white/70 text-sm leading-relaxed">
+                <span className="text-white text-sm leading-relaxed">
                   <strong className="text-white">Toe board</strong> — minimum 150 mm high. Prevents
                   tools, materials, and debris from falling off the edge — protecting people working
                   below as well as preventing trip hazards.
@@ -474,7 +474,7 @@ export default function WorkingAtHeightModule3Section1() {
                 {/* Top rail */}
                 <div className="flex items-center gap-3 mb-1">
                   <div className="h-2 flex-1 bg-amber-500 rounded" />
-                  <span className="text-xs text-white/60 flex-shrink-0 w-24 text-right">
+                  <span className="text-xs text-white flex-shrink-0 w-24 text-right">
                     Top Rail
                   </span>
                 </div>
@@ -490,7 +490,7 @@ export default function WorkingAtHeightModule3Section1() {
                 {/* Mid rail */}
                 <div className="flex items-center gap-3 mb-1">
                   <div className="h-1.5 flex-1 bg-blue-400 rounded" />
-                  <span className="text-xs text-white/60 flex-shrink-0 w-24 text-right">
+                  <span className="text-xs text-white flex-shrink-0 w-24 text-right">
                     Mid Rail
                   </span>
                 </div>
@@ -506,7 +506,7 @@ export default function WorkingAtHeightModule3Section1() {
                 {/* Toe board */}
                 <div className="flex items-center gap-3 mb-1">
                   <div className="h-4 flex-1 bg-green-500/80 rounded" />
-                  <span className="text-xs text-white/60 flex-shrink-0 w-24 text-right">
+                  <span className="text-xs text-white flex-shrink-0 w-24 text-right">
                     Toe Board
                   </span>
                 </div>
@@ -520,17 +520,17 @@ export default function WorkingAtHeightModule3Section1() {
                 {/* Platform */}
                 <div className="flex items-center gap-3 mt-1">
                   <div className="h-3 flex-1 bg-white/20 rounded" />
-                  <span className="text-xs text-white/40 flex-shrink-0 w-24 text-right">
+                  <span className="text-xs text-white flex-shrink-0 w-24 text-right">
                     Working Platform
                   </span>
                 </div>
               </div>
-              <p className="text-center text-white/40 text-xs mt-4">
+              <p className="text-center text-white text-xs mt-4">
                 Cross-section view — not to scale. Posts and fixings omitted for clarity.
               </p>
             </div>
 
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               Guard rail posts must be securely fixed to the structure — either clamped, bolted, or
               counterweighted. The maximum gap between any two elements of the system (e.g., between
               the mid rail and the toe board top) must not allow a 470 mm sphere to pass through,
@@ -552,13 +552,13 @@ export default function WorkingAtHeightModule3Section1() {
             </span>
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-white">Edge Protection Systems</h2>
-              <p className="text-white/50 text-sm">
+              <p className="text-white text-sm">
                 Permanent vs temporary, free-standing vs fixed
               </p>
             </div>
           </div>
           <div className="border-l-2 border-green-500/30 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               Edge protection systems fall into two broad categories based on how they are installed
               and how long they remain in place. Understanding the difference is essential for
               selecting the right system for your work scope.
@@ -579,7 +579,7 @@ export default function WorkingAtHeightModule3Section1() {
                   ].map((point, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
-                      <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                      <span className="text-white text-sm leading-relaxed">{point}</span>
                     </div>
                   ))}
                 </div>
@@ -598,7 +598,7 @@ export default function WorkingAtHeightModule3Section1() {
                   ].map((point, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
-                      <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                      <span className="text-white text-sm leading-relaxed">{point}</span>
                     </div>
                   ))}
                 </div>
@@ -608,7 +608,7 @@ export default function WorkingAtHeightModule3Section1() {
             <h3 className="text-white font-semibold text-base mt-6 mb-3">
               Free-Standing vs Fixed Systems
             </h3>
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               Within temporary edge protection, there are two installation methods. Each has
               advantages depending on the structure and access requirements:
             </p>
@@ -626,7 +626,7 @@ export default function WorkingAtHeightModule3Section1() {
                   ].map((point, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                      <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                      <span className="text-white text-sm leading-relaxed">{point}</span>
                     </div>
                   ))}
                 </div>
@@ -646,7 +646,7 @@ export default function WorkingAtHeightModule3Section1() {
                   ].map((point, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                      <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                      <span className="text-white text-sm leading-relaxed">{point}</span>
                     </div>
                   ))}
                 </div>
@@ -668,13 +668,13 @@ export default function WorkingAtHeightModule3Section1() {
             </span>
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-white">Safety Netting</h2>
-              <p className="text-white/50 text-sm">
+              <p className="text-white text-sm">
                 EN 1263 requirements and installation principles
               </p>
             </div>
           </div>
           <div className="border-l-2 border-purple-500/30 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               Safety nets are a collective fall arrest system. Unlike guard rails, which{' '}
               <em>prevent</em> a fall from occurring, safety nets <em>catch</em> a person who has
               already fallen. They are installed below the working level and absorb the energy of
@@ -696,7 +696,7 @@ export default function WorkingAtHeightModule3Section1() {
                 ].map((point, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
-                    <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                    <span className="text-white text-sm leading-relaxed">{point}</span>
                   </div>
                 ))}
               </div>
@@ -715,7 +715,7 @@ export default function WorkingAtHeightModule3Section1() {
               ].map((point, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                  <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                  <span className="text-white text-sm leading-relaxed">{point}</span>
                 </div>
               ))}
             </div>
@@ -725,7 +725,7 @@ export default function WorkingAtHeightModule3Section1() {
                 <Info className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
                 <span className="text-purple-400 text-sm font-semibold">Electrician Note</span>
               </div>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 You are unlikely to install safety nets yourself, but you may work above them during
                 steel-frame, roof, or atrium projects. Always check that the net is current (within
                 its inspection date), that your tools are tethered, and that you do not store
@@ -745,13 +745,13 @@ export default function WorkingAtHeightModule3Section1() {
             </span>
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-white">Safety Decking</h2>
-              <p className="text-white/50 text-sm">
+              <p className="text-white text-sm">
                 Close-boarded platforms preventing falls through openings
               </p>
             </div>
           </div>
           <div className="border-l-2 border-cyan-500/30 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               Safety decking consists of close-boarded platforms installed below the working level
               to prevent people and objects from falling through gaps, openings, or incomplete floor
               areas. It is widely used in steel-frame and concrete-frame construction where floor
@@ -768,7 +768,7 @@ export default function WorkingAtHeightModule3Section1() {
               ].map((point, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
-                  <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                  <span className="text-white text-sm leading-relaxed">{point}</span>
                 </div>
               ))}
             </div>
@@ -777,7 +777,7 @@ export default function WorkingAtHeightModule3Section1() {
               <h4 className="text-cyan-400 text-sm font-semibold mb-2">
                 When is safety decking used?
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Safety decking is particularly effective in multi-storey construction where work is
                 proceeding on several levels simultaneously. It protects workers on lower levels
                 from falling objects as well as preventing falls through openings. In electrical
@@ -801,14 +801,14 @@ export default function WorkingAtHeightModule3Section1() {
             </span>
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-white">Airbags & Catch Platforms</h2>
-              <p className="text-white/50 text-sm">
+              <p className="text-white text-sm">
                 Inflatable fall arrest and temporary platform systems
               </p>
             </div>
           </div>
           <div className="border-l-2 border-rose-500/30 pl-4 sm:pl-6 space-y-4">
             <h3 className="text-white font-semibold text-base mb-2">Inflatable Airbag Systems</h3>
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               Airbag fall arrest systems use large inflatable cushions positioned below the working
               area to arrest a person&rsquo;s fall. They are kept constantly inflated by an electric
               blower and are designed to decelerate the body gradually, reducing injury. Airbags are
@@ -828,7 +828,7 @@ export default function WorkingAtHeightModule3Section1() {
                   ].map((point, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
-                      <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                      <span className="text-white text-sm leading-relaxed">{point}</span>
                     </div>
                   ))}
                 </div>
@@ -844,7 +844,7 @@ export default function WorkingAtHeightModule3Section1() {
                   ].map((point, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
-                      <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                      <span className="text-white text-sm leading-relaxed">{point}</span>
                     </div>
                   ))}
                 </div>
@@ -852,7 +852,7 @@ export default function WorkingAtHeightModule3Section1() {
             </div>
 
             <h3 className="text-white font-semibold text-base mt-6 mb-2">Catch Platforms</h3>
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               Catch platforms (also known as catch fans or catch scaffolds) are temporary platforms
               positioned below the working area to catch any person or material that falls. They
               extend horizontally from the face of the building and are typically constructed from
@@ -869,7 +869,7 @@ export default function WorkingAtHeightModule3Section1() {
               ].map((point, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                  <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                  <span className="text-white text-sm leading-relaxed">{point}</span>
                 </div>
               ))}
             </div>
@@ -888,13 +888,13 @@ export default function WorkingAtHeightModule3Section1() {
               <h2 className="text-lg sm:text-xl font-bold text-white">
                 Scaffolding as Collective Protection
               </h2>
-              <p className="text-white/50 text-sm">
+              <p className="text-white text-sm">
                 Properly boarded and guard-railed working platforms
               </p>
             </div>
           </div>
           <div className="border-l-2 border-amber-500/30 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               Scaffolding is perhaps the most familiar form of collective fall prevention for
               electricians. A properly erected scaffold provides a complete working platform at
               height, with guard rails, toe boards, and full boarding to prevent falls. It allows
@@ -918,7 +918,7 @@ export default function WorkingAtHeightModule3Section1() {
                 ].map((point, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                    <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                    <span className="text-white text-sm leading-relaxed">{point}</span>
                   </div>
                 ))}
               </div>
@@ -931,7 +931,7 @@ export default function WorkingAtHeightModule3Section1() {
                   Electrician&rsquo;s Responsibilities on Scaffolding
                 </span>
               </div>
-              <p className="text-white/70 text-sm leading-relaxed mb-3">
+              <p className="text-white text-sm leading-relaxed mb-3">
                 As an electrician using a scaffold erected by others, you must:
               </p>
               <div className="space-y-2">
@@ -944,7 +944,7 @@ export default function WorkingAtHeightModule3Section1() {
                 ].map((point, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                    <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                    <span className="text-white text-sm leading-relaxed">{point}</span>
                   </div>
                 ))}
               </div>
@@ -956,7 +956,7 @@ export default function WorkingAtHeightModule3Section1() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
                 <h4 className="text-white font-semibold text-sm mb-2">Independent Tied Scaffold</h4>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Free-standing structure tied to the building for stability. Two rows of standards
                   (uprights) connected by transoms and ledgers. The most common external scaffold on
                   construction sites.
@@ -964,7 +964,7 @@ export default function WorkingAtHeightModule3Section1() {
               </div>
               <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
                 <h4 className="text-white font-semibold text-sm mb-2">Putlog Scaffold</h4>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Single row of standards with putlogs (short transoms) built into the wall during
                   brickwork. Only suitable for new-build brickwork — cannot be used on completed
                   structures.
@@ -972,7 +972,7 @@ export default function WorkingAtHeightModule3Section1() {
               </div>
               <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
                 <h4 className="text-white font-semibold text-sm mb-2">Mobile Tower Scaffold</h4>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Lightweight aluminium tower on castors. When correctly assembled with guard rails
                   and stabilisers, provides collective protection for one or two workers. Must not
                   be moved while occupied.
@@ -980,7 +980,7 @@ export default function WorkingAtHeightModule3Section1() {
               </div>
               <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
                 <h4 className="text-white font-semibold text-sm mb-2">System Scaffold</h4>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Proprietary systems (e.g., Layher, HAKI, Cuplock) with pre-engineered connections.
                   Faster to erect, consistent quality, and built-in guard rail provisions at each
                   lift.
@@ -1053,8 +1053,8 @@ export default function WorkingAtHeightModule3Section1() {
                     } ${i < 5 ? 'border-b border-white/5' : ''}`}
                   >
                     <div className="p-3 text-white text-sm font-medium">{row.measure}</div>
-                    <div className="p-3 text-white/70 text-sm leading-relaxed">{row.how}</div>
-                    <div className="p-3 text-white/70 text-sm leading-relaxed">{row.best}</div>
+                    <div className="p-3 text-white text-sm leading-relaxed">{row.how}</div>
+                    <div className="p-3 text-white text-sm leading-relaxed">{row.best}</div>
                   </div>
                 ))}
               </div>
@@ -1083,7 +1083,7 @@ export default function WorkingAtHeightModule3Section1() {
               ].map((point, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span className="text-white/80 text-sm leading-relaxed">{point}</span>
+                  <span className="text-white text-sm leading-relaxed">{point}</span>
                 </div>
               ))}
             </div>

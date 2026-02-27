@@ -50,7 +50,7 @@ export function ReviewStep({
     <div className="space-y-6">
       {/* Preview Section */}
       <div className="space-y-3">
-        <div className="flex items-center gap-2 text-white/80">
+        <div className="flex items-center gap-2 text-white">
           <Eye className="h-5 w-5" />
           <span className="text-base font-medium">How candidates will see your job</span>
         </div>
@@ -126,7 +126,7 @@ export function ReviewStep({
             variant="outline"
             onClick={onSaveDraft}
             disabled={isSubmitting}
-            className={cn('h-12 text-sm', 'border-white/20 text-white/80 hover:bg-white/10')}
+            className={cn('h-12 text-sm', 'border-white/20 text-white hover:bg-white/10')}
           >
             <Save className="h-4 w-4 mr-2" />
             Save as Draft
@@ -137,7 +137,7 @@ export function ReviewStep({
             variant="outline"
             onClick={onSaveAsTemplate}
             disabled={isSubmitting || !formData.title}
-            className={cn('h-12 text-sm', 'border-white/20 text-white/80 hover:bg-white/10')}
+            className={cn('h-12 text-sm', 'border-white/20 text-white hover:bg-white/10')}
           >
             <FileText className="h-4 w-4 mr-2" />
             Save Template
@@ -147,8 +147,8 @@ export function ReviewStep({
 
       {/* Info tip */}
       <div className="p-4 rounded-xl bg-white/5 border border-white/10">
-        <p className="text-sm text-white/60">
-          <strong className="text-white/80">After publishing:</strong> Your job will appear in the
+        <p className="text-sm text-white">
+          <strong className="text-white">After publishing:</strong> Your job will appear in the
           Jobs section where qualified electricians can view and apply. You'll receive notifications
           when candidates apply.
         </p>

@@ -267,27 +267,27 @@ export function LeaveRequestSheet({ open, onOpenChange }: LeaveRequestSheetProps
                   {leaveAllowance && (
                     <div className="p-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20">
                       <div className="flex items-center justify-between mb-3">
-                        <p className="text-sm font-medium text-white/80">Annual Leave</p>
-                        <p className="text-sm text-white/60">{new Date().getFullYear()}</p>
+                        <p className="text-sm font-medium text-white">Annual Leave</p>
+                        <p className="text-sm text-white">{new Date().getFullYear()}</p>
                       </div>
                       <div className="grid grid-cols-3 gap-3 text-center">
                         <div>
                           <p className="text-2xl font-bold text-elec-yellow">
                             {leaveAllowance.remainingDays}
                           </p>
-                          <p className="text-xs text-white/50">Remaining</p>
+                          <p className="text-xs text-white">Remaining</p>
                         </div>
                         <div>
-                          <p className="text-2xl font-bold text-white/60">
+                          <p className="text-2xl font-bold text-white">
                             {leaveAllowance.usedDays}
                           </p>
-                          <p className="text-xs text-white/50">Used</p>
+                          <p className="text-xs text-white">Used</p>
                         </div>
                         <div>
                           <p className="text-2xl font-bold text-amber-400">
                             {leaveAllowance.pendingDays}
                           </p>
-                          <p className="text-xs text-white/50">Pending</p>
+                          <p className="text-xs text-white">Pending</p>
                         </div>
                       </div>
                     </div>
@@ -305,7 +305,7 @@ export function LeaveRequestSheet({ open, onOpenChange }: LeaveRequestSheetProps
                   {/* Recent requests */}
                   {leaveRequests.length > 0 && (
                     <div className="space-y-3">
-                      <h3 className="text-sm font-medium text-white/60">Recent Requests</h3>
+                      <h3 className="text-sm font-medium text-white">Recent Requests</h3>
                       <div className="space-y-2">
                         {leaveRequests.slice(0, 5).map((request) => (
                           <div
@@ -318,7 +318,7 @@ export function LeaveRequestSheet({ open, onOpenChange }: LeaveRequestSheetProps
                               </p>
                               {getStatusBadge(request.status)}
                             </div>
-                            <p className="text-xs text-white/50">
+                            <p className="text-xs text-white">
                               {format(parseISO(request.startDate), 'd MMM')}
                               {request.startDate !== request.endDate && (
                                 <> - {format(parseISO(request.endDate), 'd MMM yyyy')}</>
@@ -398,7 +398,7 @@ export function LeaveRequestSheet({ open, onOpenChange }: LeaveRequestSheetProps
                   <div className="flex items-center justify-between p-4 rounded-xl bg-white/[0.03] border border-white/10">
                     <div>
                       <p className="text-sm font-medium text-white">Half Day</p>
-                      <p className="text-xs text-white/50">Request half a day only</p>
+                      <p className="text-xs text-white">Request half a day only</p>
                     </div>
                     <Switch
                       checked={formData.halfDay}
@@ -434,7 +434,7 @@ export function LeaveRequestSheet({ open, onOpenChange }: LeaveRequestSheetProps
                             )}
                           >
                             <p className="text-sm font-medium text-white">Morning</p>
-                            <p className="text-xs text-white/50">AM</p>
+                            <p className="text-xs text-white">AM</p>
                           </button>
                           <button
                             onClick={() =>
@@ -448,7 +448,7 @@ export function LeaveRequestSheet({ open, onOpenChange }: LeaveRequestSheetProps
                             )}
                           >
                             <p className="text-sm font-medium text-white">Afternoon</p>
-                            <p className="text-xs text-white/50">PM</p>
+                            <p className="text-xs text-white">PM</p>
                           </button>
                         </div>
                       </motion.div>
@@ -500,7 +500,7 @@ export function LeaveRequestSheet({ open, onOpenChange }: LeaveRequestSheetProps
                   {/* Days calculation */}
                   <div className="p-4 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 text-center">
                     <p className="text-3xl font-bold text-elec-yellow">{calculatedDays}</p>
-                    <p className="text-sm text-white/60">
+                    <p className="text-sm text-white">
                       working day{calculatedDays !== 1 ? 's' : ''} requested
                     </p>
                   </div>

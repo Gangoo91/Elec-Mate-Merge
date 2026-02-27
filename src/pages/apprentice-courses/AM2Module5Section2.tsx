@@ -242,7 +242,7 @@ const AM2Module5Section2 = () => {
       />
 
       {/* Additional Context */}
-      <p className="text-ios-body text-white/80 leading-relaxed -mt-4 mb-6">
+      <p className="text-ios-body text-white leading-relaxed -mt-4 mb-6">
         NET assessors are looking for method, not magic. They want to see that you can work safely,
         approach faults in a structured way, use test instruments properly, and state your diagnosis
         clearly.
@@ -265,12 +265,12 @@ const AM2Module5Section2 = () => {
               <Shield className="w-4 h-4" />
               Step 1: Start with Safety
             </h4>
-            <p className="text-ios-callout text-white/70 mb-3">
+            <p className="text-ios-callout text-white mb-3">
               Every fault-finding exercise begins with safe isolation. Even though the circuits are
               prepared by NET and under controlled conditions, you must still demonstrate correct
               procedure.
             </p>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-red-400">•</span>
                 <span>Identify correct isolation point</span>
@@ -295,14 +295,14 @@ const AM2Module5Section2 = () => {
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3 flex items-center gap-2">
+            <h4 className="text-ios-headline text-white mb-3 flex items-center gap-2">
               <Eye className="w-4 h-4 text-elec-yellow" />
               Step 2: Gather Information (Symptoms)
             </h4>
-            <p className="text-ios-callout text-white/70 mb-3">
+            <p className="text-ios-callout text-white mb-3">
               Look at what the circuit is doing. These symptoms are clues to the type of fault:
             </p>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Is a socket completely dead? (Open circuit likely)</span>
@@ -323,36 +323,36 @@ const AM2Module5Section2 = () => {
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3 flex items-center gap-2">
+            <h4 className="text-ios-headline text-white mb-3 flex items-center gap-2">
               <Settings className="w-4 h-4 text-elec-yellow" />
               Step 3: Plan the Test Sequence
             </h4>
-            <p className="text-ios-callout text-white/70 mb-3">
+            <p className="text-ios-callout text-white mb-3">
               Once you know the symptom, decide which test will prove or disprove the suspected
               fault:
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <div className="bg-white/5 border border-white/10 rounded-lg p-3">
-                <p className="text-ios-callout text-white/80">
-                  <strong className="text-white/90">Suspected open circuit</strong>
+                <p className="text-ios-callout text-white">
+                  <strong className="text-white">Suspected open circuit</strong>
                   <br />- Continuity test
                 </p>
               </div>
               <div className="bg-white/5 border border-white/10 rounded-lg p-3">
-                <p className="text-ios-callout text-white/80">
-                  <strong className="text-white/90">Suspected short circuit</strong>
+                <p className="text-ios-callout text-white">
+                  <strong className="text-white">Suspected short circuit</strong>
                   <br />- Insulation resistance test
                 </p>
               </div>
               <div className="bg-white/5 border border-white/10 rounded-lg p-3">
-                <p className="text-ios-callout text-white/80">
-                  <strong className="text-white/90">Suspected polarity error</strong>
+                <p className="text-ios-callout text-white">
+                  <strong className="text-white">Suspected polarity error</strong>
                   <br />- Polarity test at accessory
                 </p>
               </div>
               <div className="bg-white/5 border border-white/10 rounded-lg p-3">
-                <p className="text-ios-callout text-white/80">
-                  <strong className="text-white/90">Suspected high resistance</strong>
+                <p className="text-ios-callout text-white">
+                  <strong className="text-white">Suspected high resistance</strong>
                   <br />- Measure Zs or check terminations
                 </p>
               </div>
@@ -376,11 +376,11 @@ const AM2Module5Section2 = () => {
             <h4 className="text-ios-headline text-purple-400 mb-3">
               Step 4: Test Logically, Step by Step
             </h4>
-            <p className="text-ios-callout text-white/70 mb-3">
+            <p className="text-ios-callout text-white mb-3">
               Start from the origin (CU) and work outwards. This avoids chasing faults randomly.
             </p>
-            <div className="text-ios-callout text-white/70">
-              <p className="font-medium text-white/90 mb-2">Example: Ring final circuit testing</p>
+            <div className="text-ios-callout text-white">
+              <p className="font-medium text-white mb-2">Example: Ring final circuit testing</p>
               <ol className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-purple-400">1.</span>
@@ -400,35 +400,35 @@ const AM2Module5Section2 = () => {
 
           <div className="bg-white/5 border border-amber-500/30 rounded-xl p-4">
             <h4 className="text-ios-headline text-amber-400 mb-3">Step 5: Interpret the Result</h4>
-            <p className="text-ios-callout text-white/70 mb-3">
+            <p className="text-ios-callout text-white mb-3">
               Don't just write down numbers - explain what they mean:
             </p>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-amber-400">•</span>
                 <span>
-                  <strong className="text-white/90">0 MOhm on insulation resistance</strong> = Short
+                  <strong className="text-white">0 MOhm on insulation resistance</strong> = Short
                   circuit or earth fault
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-amber-400">•</span>
                 <span>
-                  <strong className="text-white/90">Very high Zs reading</strong> = High resistance
+                  <strong className="text-white">Very high Zs reading</strong> = High resistance
                   joint
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-amber-400">•</span>
                 <span>
-                  <strong className="text-white/90">Dead socket with no continuity on line</strong>{' '}
+                  <strong className="text-white">Dead socket with no continuity on line</strong>{' '}
                   = Open circuit
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-amber-400">•</span>
                 <span>
-                  <strong className="text-white/90">RCD trips at 15mA instead of 30mA</strong> =
+                  <strong className="text-white">RCD trips at 15mA instead of 30mA</strong> =
                   Over-sensitive RCD
                 </span>
               </li>
@@ -436,31 +436,31 @@ const AM2Module5Section2 = () => {
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3">
+            <h4 className="text-ios-headline text-white mb-3">
               Step 6: Record the Fault and Rectification
             </h4>
-            <p className="text-ios-callout text-white/70 mb-3">
+            <p className="text-ios-callout text-white mb-3">
               When you find the fault, you must state clearly:
             </p>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
-                <p className="text-ios-callout font-medium text-white/90">What the fault is</p>
+                <p className="text-ios-callout font-medium text-white">What the fault is</p>
                 <p className="text-ios-footnote text-elec-yellow">(Type)</p>
               </div>
               <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
-                <p className="text-ios-callout font-medium text-white/90">Where it is located</p>
+                <p className="text-ios-callout font-medium text-white">Where it is located</p>
                 <p className="text-ios-footnote text-elec-yellow">(Location)</p>
               </div>
               <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
-                <p className="text-ios-callout font-medium text-white/90">
+                <p className="text-ios-callout font-medium text-white">
                   How you would rectify it
                 </p>
                 <p className="text-ios-footnote text-elec-yellow">(Rectification)</p>
               </div>
             </div>
             <div className="mt-3 bg-white/5 border border-white/10 rounded-lg p-3">
-              <p className="text-ios-callout text-white/80">
-                <strong className="text-white/90">Example:</strong> "Open CPC between CU and socket
+              <p className="text-ios-callout text-white">
+                <strong className="text-white">Example:</strong> "Open CPC between CU and socket
                 2. Rectify by reconnecting CPC at CU terminal."
               </p>
             </div>
@@ -468,7 +468,7 @@ const AM2Module5Section2 = () => {
 
           <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
             <h4 className="text-ios-headline text-green-400 mb-3">Step 7: Prove Safe Afterwards</h4>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Finally, confirm that after rectification, the circuit would be re-tested using the
               correct sequence. This shows you understand the importance of leaving an installation
               safe.
@@ -494,32 +494,32 @@ const AM2Module5Section2 = () => {
                 <AlertTriangle className="w-4 h-4" />
                 Critical Success Factors
               </h4>
-              <ul className="text-ios-callout text-white/70 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-red-400">•</span>
                   <span>
-                    <strong className="text-white/90">Always think safety first</strong> - if you
+                    <strong className="text-white">Always think safety first</strong> - if you
                     forget isolation, it's an instant fail
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-red-400">•</span>
                   <span>
-                    <strong className="text-white/90">Talk through your logic</strong> - say what
+                    <strong className="text-white">Talk through your logic</strong> - say what
                     you're testing and why
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-red-400">•</span>
                   <span>
-                    <strong className="text-white/90">Work methodically</strong> - don't jump
+                    <strong className="text-white">Work methodically</strong> - don't jump
                     between circuits or tests
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-red-400">•</span>
                   <span>
-                    <strong className="text-white/90">Be precise</strong> - fault = type + location
+                    <strong className="text-white">Be precise</strong> - fault = type + location
                     + rectification
                   </span>
                 </li>
@@ -531,7 +531,7 @@ const AM2Module5Section2 = () => {
                 <CheckCircle className="w-4 h-4" />
                 Professional Approach
               </h4>
-              <ul className="text-ios-callout text-white/70 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400">•</span>
                   <span>Demonstrate systematic thinking</span>
@@ -554,11 +554,11 @@ const AM2Module5Section2 = () => {
 
           <div className="space-y-4">
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline text-white/90 mb-2 flex items-center gap-2">
+              <h4 className="text-ios-headline text-white mb-2 flex items-center gap-2">
                 <Lightbulb className="w-4 h-4 text-elec-yellow" />
                 Time Management Tips
               </h4>
-              <ul className="text-ios-callout text-white/70 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>Plan your test sequence before starting</span>
@@ -583,7 +583,7 @@ const AM2Module5Section2 = () => {
                 <Target className="w-4 h-4" />
                 Common Mistakes to Avoid
               </h4>
-              <ul className="text-ios-callout text-white/70 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-amber-400">•</span>
                   <span>Rushing the safety isolation</span>
@@ -619,15 +619,15 @@ const AM2Module5Section2 = () => {
         <div className="space-y-4">
           <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
             <h4 className="text-ios-headline text-red-400 mb-3">Example 1: Poor Method</h4>
-            <p className="text-ios-callout text-white/70 mb-2">
-              <strong className="text-white/90">Scenario:</strong> Candidate saw an RCD tripping and
+            <p className="text-ios-callout text-white mb-2">
+              <strong className="text-white">Scenario:</strong> Candidate saw an RCD tripping and
               immediately said "earth fault."
             </p>
-            <p className="text-ios-callout text-white/70 mb-2">
-              <strong className="text-white/90">Problem:</strong> Assessor asked "where exactly?" -
+            <p className="text-ios-callout text-white mb-2">
+              <strong className="text-white">Problem:</strong> Assessor asked "where exactly?" -
               candidate couldn't prove it.
             </p>
-            <p className="text-ios-callout text-white/80 font-medium">
+            <p className="text-ios-callout text-white font-medium">
               <strong className="text-red-400">Result:</strong> Marks lost for guessing instead of
               systematic diagnosis.
             </p>
@@ -635,15 +635,15 @@ const AM2Module5Section2 = () => {
 
           <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
             <h4 className="text-ios-headline text-green-400 mb-3">Example 2: Good Method</h4>
-            <p className="text-ios-callout text-white/70 mb-2">
-              <strong className="text-white/90">Scenario:</strong> Candidate tested continuity
+            <p className="text-ios-callout text-white mb-2">
+              <strong className="text-white">Scenario:</strong> Candidate tested continuity
               systematically.
             </p>
-            <p className="text-ios-callout text-white/70 mb-2">
-              <strong className="text-white/90">Process:</strong> Narrowed down to broken CPC
+            <p className="text-ios-callout text-white mb-2">
+              <strong className="text-white">Process:</strong> Narrowed down to broken CPC
               between CU and first socket, recorded properly.
             </p>
-            <p className="text-ios-callout text-white/80 font-medium">
+            <p className="text-ios-callout text-white font-medium">
               <strong className="text-green-400">Result:</strong> Full marks for logical method and
               complete diagnosis.
             </p>
@@ -653,33 +653,33 @@ const AM2Module5Section2 = () => {
             <h4 className="text-ios-headline text-amber-400 mb-3">
               Example 3: Time Management Failure
             </h4>
-            <p className="text-ios-callout text-white/70 mb-2">
-              <strong className="text-white/90">Scenario:</strong> Candidate misread symptoms,
+            <p className="text-ios-callout text-white mb-2">
+              <strong className="text-white">Scenario:</strong> Candidate misread symptoms,
               tested in wrong order.
             </p>
-            <p className="text-ios-callout text-white/70 mb-2">
-              <strong className="text-white/90">Problem:</strong> Wasted time on incorrect tests,
+            <p className="text-ios-callout text-white mb-2">
+              <strong className="text-white">Problem:</strong> Wasted time on incorrect tests,
               ran out of time.
             </p>
-            <p className="text-ios-callout text-white/80 font-medium">
+            <p className="text-ios-callout text-white font-medium">
               <strong className="text-amber-400">Result:</strong> Only 1 fault identified correctly
               - failed section.
             </p>
           </div>
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
-            <h4 className="text-ios-headline text-white/90 mb-3">
+            <h4 className="text-ios-headline text-white mb-3">
               Example 4: Real-World Application
             </h4>
-            <p className="text-ios-callout text-white/70 mb-2">
-              <strong className="text-white/90">Scenario:</strong> On site, an electrician guessed
+            <p className="text-ios-callout text-white mb-2">
+              <strong className="text-white">Scenario:</strong> On site, an electrician guessed
               at a short circuit.
             </p>
-            <p className="text-ios-callout text-white/70 mb-2">
-              <strong className="text-white/90">Problem:</strong> Replaced multiple accessories and
+            <p className="text-ios-callout text-white mb-2">
+              <strong className="text-white">Problem:</strong> Replaced multiple accessories and
               wasted hours.
             </p>
-            <p className="text-ios-callout text-white/80 font-medium">
+            <p className="text-ios-callout text-white font-medium">
               <strong className="text-elec-yellow">Lesson:</strong> Logical testing would have found
               the actual loose neutral in minutes.
             </p>
@@ -692,10 +692,10 @@ const AM2Module5Section2 = () => {
         <div className="space-y-4">
           {faqs.map((faq, index) => (
             <div key={index} className="bg-white/5 border border-white/10 rounded-xl p-4">
-              <h4 className="text-ios-headline text-white/90 mb-2">
+              <h4 className="text-ios-headline text-white mb-2">
                 Q{index + 1}: {faq.question}
               </h4>
-              <p className="text-ios-callout text-white/70 leading-relaxed">{faq.answer}</p>
+              <p className="text-ios-callout text-white leading-relaxed">{faq.answer}</p>
             </div>
           ))}
         </div>
@@ -704,44 +704,44 @@ const AM2Module5Section2 = () => {
       {/* Summary */}
       <AM2ContentCard title="6. Section Summary" icon={BookOpen} accent>
         <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-4">
-          <h4 className="text-ios-headline text-white/90 mb-3">
+          <h4 className="text-ios-headline text-white mb-3">
             The Logical Fault-Finding Process:
           </h4>
-          <ol className="text-ios-callout text-white/70 space-y-1">
+          <ol className="text-ios-callout text-white space-y-1">
             <li className="flex items-start gap-2">
               <span className="text-elec-yellow font-bold">1.</span>
               <span>
-                <strong className="text-white/90">Apply safe isolation</strong>
+                <strong className="text-white">Apply safe isolation</strong>
               </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-elec-yellow font-bold">2.</span>
               <span>
-                <strong className="text-white/90">Observe the symptoms</strong>
+                <strong className="text-white">Observe the symptoms</strong>
               </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-elec-yellow font-bold">3.</span>
               <span>
-                <strong className="text-white/90">Plan the right test</strong>
+                <strong className="text-white">Plan the right test</strong>
               </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-elec-yellow font-bold">4.</span>
               <span>
-                <strong className="text-white/90">Test step by step from CU outward</strong>
+                <strong className="text-white">Test step by step from CU outward</strong>
               </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-elec-yellow font-bold">5.</span>
               <span>
-                <strong className="text-white/90">Interpret results correctly</strong>
+                <strong className="text-white">Interpret results correctly</strong>
               </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-elec-yellow font-bold">6.</span>
               <span>
-                <strong className="text-white/90">
+                <strong className="text-white">
                   Record fault type, location, and rectification
                 </strong>
               </span>
@@ -749,7 +749,7 @@ const AM2Module5Section2 = () => {
             <li className="flex items-start gap-2">
               <span className="text-elec-yellow font-bold">7.</span>
               <span>
-                <strong className="text-white/90">Prove the circuit safe</strong>
+                <strong className="text-white">Prove the circuit safe</strong>
               </span>
             </li>
           </ol>
@@ -757,7 +757,7 @@ const AM2Module5Section2 = () => {
 
         <div className="bg-white/5 border border-elec-yellow/30 rounded-xl p-4">
           <h4 className="text-ios-headline text-elec-yellow mb-3">Remember:</h4>
-          <p className="text-ios-callout text-white/80">
+          <p className="text-ios-callout text-white">
             Following this method shows the assessor you are competent and professional, even under
             exam pressure. NET assessors mark the process and reasoning - not just the final answer.
           </p>

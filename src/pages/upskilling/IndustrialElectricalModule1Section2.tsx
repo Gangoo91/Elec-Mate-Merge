@@ -201,7 +201,7 @@ const IndustrialElectricalModule1Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/industrial-electrical-module-1">
@@ -223,7 +223,7 @@ const IndustrialElectricalModule1Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             HV/LV Separation and Transformer Overview
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding the critical boundary between high voltage and low voltage systems
           </p>
         </header>
@@ -335,7 +335,7 @@ const IndustrialElectricalModule1Section2 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">UK Voltage Standards</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 The UK nominal supply voltage is 230V +10%/-6% single phase (216V to 253V) and 400V
                 three phase. This was harmonised with European standards in 1995, although in
                 practice the supply voltage often remains close to the previous 240V standard. For
@@ -363,7 +363,7 @@ const IndustrialElectricalModule1Section2 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Operating Principle</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 A transformer consists of two or more windings wound on a common magnetic core.
                 Alternating current in the primary winding creates a changing magnetic flux in the
                 core, which induces a voltage in the secondary winding. The voltage ratio equals the
@@ -567,7 +567,7 @@ const IndustrialElectricalModule1Section2 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Maximum Demand (MD) Metering</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 HV and large LV consumers are billed based on their maximum demand, typically
                 measured in kVA over 30-minute intervals. The highest MD recorded in a month
                 determines the demand charge. Understanding and managing peak demand through load
@@ -626,7 +626,7 @@ const IndustrialElectricalModule1Section2 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                   Exclusion Zone Definition
                 </p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   The exclusion zone is the area around live HV conductors where only Authorised
                   Persons may work, and only under strict safety procedures. This zone must be
                   clearly marked with barriers and warning signs whenever work is being carried out
@@ -635,7 +635,7 @@ const IndustrialElectricalModule1Section2 = () => {
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Working Near HV</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   When working near but not on HV equipment, additional controls include: physical
                   barriers, constant supervision by an Authorised Person, clear identification of
                   safe working areas, and stop-work authority for any person who observes unsafe
@@ -646,7 +646,7 @@ const IndustrialElectricalModule1Section2 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Arc Flash Hazard</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Beyond electrical shock, HV systems present severe arc flash hazards. An arc flash
                 can produce temperatures exceeding 20,000 degrees C, causing severe burns,
                 blindness, and hearing damage. Personal protective equipment (PPE) rated for the
@@ -831,7 +831,7 @@ const IndustrialElectricalModule1Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -850,7 +850,7 @@ const IndustrialElectricalModule1Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/industrial-electrical-module-1">

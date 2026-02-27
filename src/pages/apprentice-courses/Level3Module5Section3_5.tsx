@@ -253,7 +253,7 @@ const Level3Module5Section3_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module5-section3">
@@ -466,7 +466,7 @@ const Level3Module5Section3_5 = () => {
                 </li>
               </ul>
             </div>
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Practical tip:</strong> Before instrument testing, always check the RCD test
               button operates correctly. If it does not trip the RCD, the device is faulty and
               requires replacement.
@@ -616,7 +616,7 @@ const Level3Module5Section3_5 = () => {
                 </li>
               </ul>
             </div>
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Note:</strong> On TN-C-S (PME) systems, parallel earth paths may cause longer
               apparent disconnection times. The RCD may still provide adequate protection during a
               real fault.
@@ -670,12 +670,12 @@ const Level3Module5Section3_5 = () => {
             <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">
               Case Study: Commercial Kitchen EICR
             </h3>
-            <p className="text-sm text-white/90 leading-relaxed mb-3">
+            <p className="text-sm text-white leading-relaxed mb-3">
               During periodic inspection of a commercial kitchen, the main 100mA RCD showed a
               disconnection time of 450ms at rated current - exceeding the 300ms maximum. The RCD
               was 15 years old and had never been tested.
             </p>
-            <p className="text-sm text-white/90 leading-relaxed">
+            <p className="text-sm text-white leading-relaxed">
               <strong>Resolution:</strong> The main RCD was replaced with a new Type A device.
               Post-replacement testing confirmed operation within 180ms. The client was advised to
               implement quarterly test button checks.
@@ -690,7 +690,7 @@ const Level3Module5Section3_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -755,7 +755,7 @@ const Level3Module5Section3_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module5-section3-3-4">

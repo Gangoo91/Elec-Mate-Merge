@@ -159,7 +159,7 @@ export function CircuitTestView({
       <div className="flex items-center justify-between px-3 py-1 border-b border-white/5 shrink-0">
         <button
           onClick={onBack}
-          className="flex items-center gap-1 text-xs text-white/60 touch-manipulation h-9 px-1"
+          className="flex items-center gap-1 text-xs text-white touch-manipulation h-9 px-1"
         >
           <ArrowLeft className="w-4 h-4" />
         </button>
@@ -173,8 +173,8 @@ export function CircuitTestView({
           className="h-9 flex items-center gap-1 px-2 rounded-lg bg-white/[0.04] border border-white/10 touch-manipulation"
           aria-label="Open EIC schedule"
         >
-          <FileText className="w-3.5 h-3.5 text-white/50" />
-          <span className="text-[10px] text-white/40 font-medium">EIC</span>
+          <FileText className="w-3.5 h-3.5 text-white" />
+          <span className="text-[10px] text-white font-medium">EIC</span>
         </button>
       </div>
 
@@ -253,7 +253,7 @@ export function CircuitTestView({
                 >
                   {getDialShort(nextTest.dialPosition)}
                 </span>
-                <span className="text-[11px] font-semibold text-white/40">
+                <span className="text-[11px] font-semibold text-white">
                   {testPointForGuided?.label || nextTest.testPointId}
                 </span>
               </div>
@@ -271,7 +271,7 @@ export function CircuitTestView({
                     'flex items-center gap-1.5 h-8 px-3 rounded-lg text-[11px] font-bold touch-manipulation transition-all',
                     showLearn
                       ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30 shadow-sm shadow-amber-500/10'
-                      : 'bg-white/[0.06] text-white/50 border border-white/10'
+                      : 'bg-white/[0.06] text-white border border-white/10'
                   )}
                 >
                   <BookOpen className="w-3.5 h-3.5" />
@@ -298,7 +298,7 @@ export function CircuitTestView({
                 onClick={() => setShowLearn(false)}
                 className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/[0.06] border border-white/10 touch-manipulation"
               >
-                <X className="w-4 h-4 text-white/50" />
+                <X className="w-4 h-4 text-white" />
               </button>
             </div>
             {/* Scrollable content */}
@@ -308,7 +308,7 @@ export function CircuitTestView({
                 <p className="text-[10px] font-bold text-amber-400/80 uppercase tracking-wider mb-1">
                   What this test measures
                 </p>
-                <p className="text-xs text-white/80 leading-relaxed text-left">
+                <p className="text-xs text-white leading-relaxed text-left">
                   {learnContent.whatItIs}
                 </p>
               </div>
@@ -317,7 +317,7 @@ export function CircuitTestView({
                 <p className="text-[10px] font-bold text-amber-400/80 uppercase tracking-wider mb-1">
                   Why it matters
                 </p>
-                <p className="text-xs text-white/80 leading-relaxed text-left">
+                <p className="text-xs text-white leading-relaxed text-left">
                   {learnContent.whyItMatters}
                 </p>
               </div>
@@ -345,7 +345,7 @@ export function CircuitTestView({
                 <FileText className="w-4 h-4 text-cyan-400 shrink-0 mt-0.5" />
                 <div className="text-left">
                   <p className="text-[10px] font-bold text-cyan-400 mb-0.5">EIC Schedule</p>
-                  <p className="text-xs text-white/70 leading-relaxed">{learnContent.eicInfo}</p>
+                  <p className="text-xs text-white leading-relaxed">{learnContent.eicInfo}</p>
                 </div>
               </div>
               {/* Practical tip */}
@@ -353,13 +353,13 @@ export function CircuitTestView({
                 <p className="text-[10px] font-bold text-green-400/80 uppercase tracking-wider mb-1">
                   Practical tip
                 </p>
-                <p className="text-xs text-white/80 leading-relaxed text-left">
+                <p className="text-xs text-white leading-relaxed text-left">
                   {learnContent.practicalTip}
                 </p>
               </div>
               {/* Regulation */}
               <div className="pt-2 border-t border-white/5">
-                <p className="text-[10px] text-white/30 font-mono text-left">
+                <p className="text-[10px] text-white font-mono text-left">
                   {learnContent.regulation}
                 </p>
               </div>
@@ -391,7 +391,7 @@ export function CircuitTestView({
 
       {/* ── Bottom progress bar ── */}
       <div className="px-3 py-1.5 border-t border-white/5 flex items-center gap-2 bg-white/[0.02] shrink-0">
-        <span className="text-[10px] text-white/30 font-mono">
+        <span className="text-[10px] text-white font-mono">
           {progress.completedTests.length}/{progress.totalTests}
         </span>
         <div className="flex-1 h-1 bg-white/[0.06] rounded-full overflow-hidden">

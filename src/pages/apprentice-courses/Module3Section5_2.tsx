@@ -178,7 +178,7 @@ export default function Module3Section5_2() {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             IP Ratings and Water/Dust Protection
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Master IP rating classification systems, enclosure protection levels, and appropriate
             selection criteria for electrical equipment in various environmental conditions per BS
             EN 60529.
@@ -938,7 +938,7 @@ export default function Module3Section5_2() {
             Summary
           </h2>
           <div className="rounded-lg p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
-            <p className="text-white/90">
+            <p className="text-white">
               IP ratings provide a standardised method for defining protection levels against solid
               objects and liquids in electrical enclosures. Proper selection based on environmental
               assessment ensures equipment operates safely and reliably, avoiding costly failures

@@ -185,7 +185,7 @@ const Module4Section7_2 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -203,13 +203,13 @@ const Module4Section7_2 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 7.2</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 7.2</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Using Hand and Power Tools Safely and Legally
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master safe tool operation, maintenance, and legal compliance to prevent injuries and
               equipment damage.
             </p>
@@ -221,7 +221,7 @@ const Module4Section7_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="grid md:grid-cols-2 gap-4 text-white/80">
+            <div className="grid md:grid-cols-2 gap-4 text-white">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
@@ -266,7 +266,7 @@ const Module4Section7_2 = () => {
               Learning Outcomes
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <ul className="list-disc pl-6 space-y-2 text-white/80">
+              <ul className="list-disc pl-6 space-y-2 text-white">
                 <li>Identify legal and regulatory requirements for tool use.</li>
                 <li>Operate hand and power tools safely and effectively.</li>
                 <li>Recognise common hazards associated with tool use.</li>
@@ -282,7 +282,7 @@ const Module4Section7_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Legal and Regulatory Requirements
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Tool safety in the workplace is governed by comprehensive legislation that
                 establishes clear responsibilities for both employers and employees:
@@ -323,7 +323,7 @@ const Module4Section7_2 = () => {
                   <p className="mb-2">
                     <strong>Electricity at Work Regulations 1989:</strong>
                   </p>
-                  <p className="text-white/70">
+                  <p className="text-white">
                     Portable power tools must be electrically safe and regularly inspected. RCD
                     protection is required for portable equipment used in harsh environments or
                     where increased risk exists. Regular PAT testing ensures ongoing electrical
@@ -348,7 +348,7 @@ const Module4Section7_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Common Hazards
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Understanding and recognising tool-related hazards is essential for preventing
                 accidents and maintaining a safe working environment:
@@ -400,7 +400,7 @@ const Module4Section7_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Hand Tools
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Hand tools form the foundation of electrical work, requiring proper selection,
                 maintenance, and technique for safe and effective operation:
@@ -439,7 +439,7 @@ const Module4Section7_2 = () => {
                   <p className="mb-2">
                     <strong>Insulated hand tools:</strong>
                   </p>
-                  <p className="text-white/70">
+                  <p className="text-white">
                     BS EN 60900 specifies requirements for insulated hand tools rated up to 1000V AC
                     or 1500V DC. These tools provide essential protection when working near live
                     conductors and should be inspected regularly for damage to the insulation.
@@ -463,7 +463,7 @@ const Module4Section7_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Power Tools
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Power tools increase productivity but require additional safety measures due to
                 their electrical and mechanical hazards:
@@ -502,7 +502,7 @@ const Module4Section7_2 = () => {
                   <p className="mb-2">
                     <strong>Battery tool considerations:</strong>
                   </p>
-                  <p className="text-white/70">
+                  <p className="text-white">
                     Cordless tools eliminate trailing lead hazards but require attention to battery
                     condition, charging safety, and power management. Store batteries in dry
                     conditions and never attempt to repair damaged battery packs.
@@ -518,7 +518,7 @@ const Module4Section7_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Maintenance and Storage
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Proper maintenance and storage are essential for tool safety, longevity, and legal
                 compliance:
@@ -567,7 +567,7 @@ const Module4Section7_2 = () => {
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-2">Pre-Work Safety Checks</h3>
-                <ul className="text-sm text-white/70 space-y-1 list-disc ml-5">
+                <ul className="text-sm text-white space-y-1 list-disc ml-5">
                   <li>
                     Always check for buried cables/pipes before drilling into walls using a cable
                     detector
@@ -580,7 +580,7 @@ const Module4Section7_2 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-2">Tool Management Best Practices</h3>
-                <ul className="text-sm text-white/70 space-y-1 list-disc ml-5">
+                <ul className="text-sm text-white space-y-1 list-disc ml-5">
                   <li>Keep battery chargers and cordless tools dry and off the floor</li>
                   <li>Use corded tools with RCD protection at all times</li>
                   <li>Carry only the tools you need when working at height</li>
@@ -602,12 +602,12 @@ const Module4Section7_2 = () => {
                   <AlertTriangle className="w-5 h-5 text-red-400 mt-0.5 flex-shrink-0" />
                   <div>
                     <h3 className="font-medium text-white mb-2">Case Study 1: Improper Tool Use</h3>
-                    <p className="text-sm text-white/70 mb-2">
+                    <p className="text-sm text-white mb-2">
                       On a housing development, an apprentice used a blunt screwdriver on a consumer
                       unit, causing the tool to slip and cut his hand badly. The wrong-sized tool
                       created excessive force requirements and loss of control.
                     </p>
-                    <p className="text-sm text-white/70 bg-black/20 p-2 rounded">
+                    <p className="text-sm text-white bg-black/20 p-2 rounded">
                       <strong>Prevention:</strong> Using the correct size insulated screwdriver
                       would have prevented slipping and provided electrical protection.
                     </p>
@@ -622,12 +622,12 @@ const Module4Section7_2 = () => {
                     <h3 className="font-medium text-white mb-2">
                       Case Study 3: Good Practice Example
                     </h3>
-                    <p className="text-sm text-white/70 mb-2">
+                    <p className="text-sm text-white mb-2">
                       An experienced electrician discovered a faulty angle grinder during pre-use
                       inspection. The tool was immediately tagged and removed from service,
                       preventing potential injury to other workers.
                     </p>
-                    <p className="text-sm text-white/70 bg-black/20 p-2 rounded">
+                    <p className="text-sm text-white bg-black/20 p-2 rounded">
                       <strong>Good Practice:</strong> Regular inspection, immediate action on
                       defects, and clear communication protected the entire team.
                     </p>
@@ -647,7 +647,7 @@ const Module4Section7_2 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                  <p className="text-sm text-white/70">{faq.answer}</p>
+                  <p className="text-sm text-white">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -712,8 +712,8 @@ const Module4Section7_2 = () => {
               Recap
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-white/80 mb-4">In this subsection, you learned:</p>
-              <ul className="list-disc pl-6 space-y-2 text-white/80">
+              <p className="text-white mb-4">In this subsection, you learned:</p>
+              <ul className="list-disc pl-6 space-y-2 text-white">
                 <li>The legal requirements for tool safety under PUWER and EAWR.</li>
                 <li>Hazards linked to tool use and how to avoid them.</li>
                 <li>Best practice for both hand and power tool use.</li>

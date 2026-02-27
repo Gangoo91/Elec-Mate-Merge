@@ -254,7 +254,7 @@ const HNCModule5Section5_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section5">
@@ -276,7 +276,7 @@ const HNCModule5Section5_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Electrical Commissioning
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Testing procedures, verification requirements and certification for building services
             electrical systems
           </p>
@@ -572,12 +572,12 @@ const HNCModule5Section5_2 = () => {
                   socket
                 </li>
               </ol>
-              <p className="text-sm text-white/70 mt-2">
+              <p className="text-sm text-white mt-2">
                 Readings at each socket should be substantially equal and approximately (r1+r2)/4
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Building services note:</strong> Large installations require systematic
               testing by distribution board, with clear marking of tested circuits.
             </p>
@@ -724,7 +724,7 @@ const HNCModule5Section5_2 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Pre-Energisation Checks</p>
-                  <ul className="text-sm text-white/80 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Visual inspection complete</li>
                     <li className="pl-1">Busbar torque settings verified</li>
                     <li className="pl-1">Insulation resistance tested</li>
@@ -736,7 +736,7 @@ const HNCModule5Section5_2 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Functional Testing</p>
-                  <ul className="text-sm text-white/80 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Circuit breaker operation (manual)</li>
                     <li className="pl-1">Protection relay trip testing</li>
                     <li className="pl-1">Indication and metering circuits</li>
@@ -837,7 +837,7 @@ const HNCModule5Section5_2 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Real-world example:</strong> A new commercial office block with 1000A main
               switchboard requires phased energisation - main incomer first, then floor distribution
               boards sequentially, with load proving at each stage.
@@ -863,14 +863,14 @@ const HNCModule5Section5_2 = () => {
                 <strong>Scenario:</strong> A distribution board with 12 circuits requires insulation
                 resistance testing. Three circuits have electronic dimmers.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Isolate supply to distribution board</p>
                 <p>Step 2: Disconnect electronic dimmers from L and N</p>
                 <p>Step 3: Link all L and N conductors together at DB</p>
                 <p>Step 4: Test between linked L-N and Earth</p>
                 <p className="mt-2">Reading: 85 megohms</p>
                 <p className="text-green-400">→ Pass (minimum 1.0 megohm required)</p>
-                <p className="mt-2 text-white/60">Reconnect dimmers after testing complete</p>
+                <p className="mt-2 text-white">Reconnect dimmers after testing complete</p>
               </div>
             </div>
 
@@ -882,7 +882,7 @@ const HNCModule5Section5_2 = () => {
                 <strong>Scenario:</strong> Verify a socket circuit protected by 32A Type B MCB meets
                 disconnection requirements.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>From BS 7671 Table 41.3:</p>
                 <p>Maximum Zs for 32A Type B = 1.44 ohms (at 70°C)</p>
                 <p className="mt-2">Applying 0.8 correction for ambient testing:</p>
@@ -900,7 +900,7 @@ const HNCModule5Section5_2 = () => {
                 <strong>Scenario:</strong> A 30mA RCD protecting socket circuits requires full
                 commissioning tests.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Required tests for 30mA Type A RCD:</p>
                 <p className="mt-2">1. Test at rated residual current (30mA):</p>
                 <p> Maximum trip time: 300ms</p>
@@ -918,7 +918,7 @@ const HNCModule5Section5_2 = () => {
                   3. Test button operation: Trips correctly{' '}
                   <span className="text-green-400">✓</span>
                 </p>
-                <p className="mt-2 text-white/60">Record all values on test results schedule</p>
+                <p className="mt-2 text-white">Record all values on test results schedule</p>
               </div>
             </div>
           </div>
@@ -995,7 +995,7 @@ const HNCModule5Section5_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1046,7 +1046,7 @@ const HNCModule5Section5_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section5">

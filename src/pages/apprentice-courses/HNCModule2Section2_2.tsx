@@ -232,7 +232,7 @@ const HNCModule2Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section2">
@@ -254,7 +254,7 @@ const HNCModule2Section2_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Flow Characteristics
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding laminar and turbulent flow regimes, Reynolds number, and velocity profiles
             in building services systems
           </p>
@@ -429,7 +429,7 @@ const HNCModule2Section2_2 = () => {
                 Reynolds Number Formula
               </p>
               <p className="font-mono text-center text-lg mb-2">Re = ρvD/μ = vD/ν</p>
-              <div className="text-xs text-white/70 text-center space-y-1">
+              <div className="text-xs text-white text-center space-y-1">
                 <p>Where: ρ = density (kg/m³), v = velocity (m/s), D = diameter (m)</p>
                 <p>μ = dynamic viscosity (Pa·s), ν = kinematic viscosity (m²/s)</p>
               </div>
@@ -595,7 +595,7 @@ const HNCModule2Section2_2 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Continuity Equation</p>
               <p className="font-mono text-center text-lg mb-2">Q = A₁v₁ = A₂v₂ = constant</p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 For circular pipes: A = πD²/4, so v₁D₁² = v₂D₂²
               </p>
             </div>
@@ -679,7 +679,7 @@ const HNCModule2Section2_2 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Design tip:</strong> Allow 10-20 pipe diameters of straight pipe upstream of
               flow meters for accurate measurement.
             </p>
@@ -704,13 +704,13 @@ const HNCModule2Section2_2 = () => {
                 <strong>Question:</strong> Water at 20°C flows at 1.5 m/s through a 65mm diameter
                 pipe. Determine the flow regime. (ρ = 998 kg/m³, μ = 0.001 Pa·s)
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Re = ρvD/μ</p>
                 <p>Re = (998 × 1.5 × 0.065) / 0.001</p>
                 <p>
                   Re = 97.3 / 0.001 = <strong>97,305</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Re &gt;&gt; 4000, therefore flow is fully turbulent
                 </p>
                 <p className="mt-2 text-green-400">✓ Typical for HVAC systems</p>
@@ -725,7 +725,7 @@ const HNCModule2Section2_2 = () => {
                 <strong>Question:</strong> A 100mm pipe carrying 8 l/s reduces to 50mm diameter.
                 What is the velocity in each section?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Q = 8 l/s = 0.008 m³/s</p>
                 <p className="mt-2">100mm pipe:</p>
                 <p>A₁ = π × 0.1² / 4 = 0.00785 m²</p>
@@ -737,7 +737,7 @@ const HNCModule2Section2_2 = () => {
                 <p>
                   v₂ = Q/A₂ = 0.008 / 0.00196 = <strong>4.08 m/s</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → Halving diameter quadruples velocity (v ∝ 1/D²)
                 </p>
               </div>
@@ -751,7 +751,7 @@ const HNCModule2Section2_2 = () => {
                 <strong>Question:</strong> Compare Re for the same flow rate (2 m/s, 50mm pipe) at
                 20°C and 80°C.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>At 20°C: ρ = 998 kg/m³, μ = 0.001 Pa·s</p>
                 <p>
                   Re₂₀ = (998 × 2 × 0.05) / 0.001 = <strong>99,800</strong>
@@ -760,10 +760,10 @@ const HNCModule2Section2_2 = () => {
                 <p>
                   Re₈₀ = (972 × 2 × 0.05) / 0.00035 = <strong>277,714</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → Hot water Re is ~2.8× higher due to lower viscosity
                 </p>
-                <p className="mt-2 text-white/60">→ Both are well into turbulent regime</p>
+                <p className="mt-2 text-white">→ Both are well into turbulent regime</p>
               </div>
             </div>
           </div>
@@ -850,7 +850,7 @@ const HNCModule2Section2_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -896,7 +896,7 @@ const HNCModule2Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section2-1">

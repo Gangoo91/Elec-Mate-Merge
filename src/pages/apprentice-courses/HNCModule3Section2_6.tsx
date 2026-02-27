@@ -233,7 +233,7 @@ const HNCModule3Section2_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section2">
@@ -255,7 +255,7 @@ const HNCModule3Section2_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Resonance in RLC Circuits and Practical Issues
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding resonance phenomena and avoiding dangerous conditions in building
             electrical systems
           </p>
@@ -345,7 +345,7 @@ const HNCModule3Section2_6 = () => {
               <p className="font-mono text-center text-xl mb-2">
                 f<sub>0</sub> = 1 / (2pi x sqrt(LC))
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where L is inductance (H) and C is capacitance (F)
               </p>
             </div>
@@ -462,7 +462,7 @@ const HNCModule3Section2_6 = () => {
               <p className="font-mono text-center text-xl mb-2">
                 Z<sub>d</sub> = L / (CR)
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where R is the coil resistance (the capacitor is assumed ideal)
               </p>
             </div>
@@ -548,21 +548,21 @@ const HNCModule3Section2_6 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 Bandwidth B = f<sub>0</sub>/Q = f<sub>2</sub> - f<sub>1</sub>
               </p>
-              <p className="text-xs text-white/70 text-center mb-3">
+              <p className="text-xs text-white text-center mb-3">
                 Where f1 and f2 are the half-power (-3dB) frequencies
               </p>
               <div className="grid grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">Q = 10</p>
-                  <p className="text-white/70 text-xs">B = 5 Hz (at 50 Hz)</p>
+                  <p className="text-white text-xs">B = 5 Hz (at 50 Hz)</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">Q = 25</p>
-                  <p className="text-white/70 text-xs">B = 2 Hz (at 50 Hz)</p>
+                  <p className="text-white text-xs">B = 2 Hz (at 50 Hz)</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">Q = 50</p>
-                  <p className="text-white/70 text-xs">B = 1 Hz (at 50 Hz)</p>
+                  <p className="text-white text-xs">B = 1 Hz (at 50 Hz)</p>
                 </div>
               </div>
             </div>
@@ -599,7 +599,7 @@ const HNCModule3Section2_6 = () => {
                 <p className="font-mono text-center text-lg mb-2">
                   V<sub>L</sub> = V<sub>C</sub> = Q x V<sub>S</sub>
                 </p>
-                <p className="text-xs text-white/70 text-center">
+                <p className="text-xs text-white text-center">
                   Voltage across L or C is Q times supply voltage
                 </p>
               </div>
@@ -610,7 +610,7 @@ const HNCModule3Section2_6 = () => {
                 <p className="font-mono text-center text-lg mb-2">
                   I<sub>L</sub> = I<sub>C</sub> = Q x I<sub>S</sub>
                 </p>
-                <p className="text-xs text-white/70 text-center">
+                <p className="text-xs text-white text-center">
                   Circulating current is Q times supply current
                 </p>
               </div>
@@ -726,7 +726,7 @@ const HNCModule3Section2_6 = () => {
                 <p className="font-mono text-center text-lg mb-2">
                   f<sub>r</sub> = f<sub>1</sub> x sqrt(S<sub>sc</sub> / Q<sub>c</sub>)
                 </p>
-                <p className="text-xs text-white/70 text-center mb-3">
+                <p className="text-xs text-white text-center mb-3">
                   Where f1 = 50 Hz, Ssc = short-circuit power (MVA), Qc = capacitor rating (MVAr)
                 </p>
                 <p className="text-sm text-white">
@@ -908,7 +908,7 @@ const HNCModule3Section2_6 = () => {
                 <strong>Question:</strong> Calculate the resonant frequency of a series circuit with
                 L = 50mH and C = 20uF. Also determine the Q factor if R = 5 ohms.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Calculate resonant frequency</p>
                 <p>f0 = 1/(2pi x sqrt(LC))</p>
                 <p>f0 = 1/(2pi x sqrt(0.05 x 0.00002))</p>
@@ -925,7 +925,7 @@ const HNCModule3Section2_6 = () => {
                 <p>
                   Q = XL/R = 50/5 = <strong>Q = 10</strong>
                 </p>
-                <p className="mt-2 text-white/60">Bandwidth B = f0/Q = 159.2/10 = 15.9 Hz</p>
+                <p className="mt-2 text-white">Bandwidth B = f0/Q = 159.2/10 = 15.9 Hz</p>
               </div>
             </div>
 
@@ -938,7 +938,7 @@ const HNCModule3Section2_6 = () => {
                 230V supply at resonance. Calculate the voltage across the capacitor and assess the
                 risk.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Voltage magnification at resonance:</p>
                 <p>VC = Q x VS</p>
                 <p>VC = 25 x 230V</p>
@@ -961,7 +961,7 @@ const HNCModule3Section2_6 = () => {
                 <strong>Question:</strong> A 1000 kVA transformer has Uk = 6% and supplies 200 kVAr
                 of PFC capacitors. Calculate the system resonant frequency and assess the risk.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Calculate short-circuit power</p>
                 <p>Ssc = S x (100/Uk%) = 1000 x (100/6)</p>
                 <p>
@@ -977,7 +977,7 @@ const HNCModule3Section2_6 = () => {
                 <p className="mt-2">Step 3: Assess harmonic risk</p>
                 <p>456 Hz / 50 Hz = 9.1 (near 9th harmonic)</p>
                 <p className="mt-2 text-yellow-400">MODERATE RISK - 9th harmonic is less common</p>
-                <p className="text-white/60">but if VSD drives present, use detuned capacitors</p>
+                <p className="text-white">but if VSD drives present, use detuned capacitors</p>
               </div>
             </div>
 
@@ -989,7 +989,7 @@ const HNCModule3Section2_6 = () => {
                 <strong>Question:</strong> A 100 kVAr capacitor bank operates at 400V. Size a 7%
                 detuning reactor and verify the tuning frequency.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Calculate capacitor current</p>
                 <p>IC = Qc/(sqrt(3) x V) = 100,000/(1.732 x 400)</p>
                 <p>
@@ -1124,7 +1124,7 @@ const HNCModule3Section2_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1188,7 +1188,7 @@ const HNCModule3Section2_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section2-5">

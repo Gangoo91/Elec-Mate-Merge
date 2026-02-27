@@ -218,7 +218,7 @@ const InspectionTestingModule7Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-7">
@@ -240,7 +240,7 @@ const InspectionTestingModule7Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Polarity Testing Methods
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Verify correct connection of line, neutral and protective conductors
           </p>
         </header>
@@ -764,7 +764,7 @@ const InspectionTestingModule7Section1 = () => {
               Reversed polarity = C1 (danger)
             </text>
           </svg>
-          <p className="text-xs text-white/40 mt-3">
+          <p className="text-xs text-white mt-3">
             Three key polarity test points: socket outlets (L=right, N=left, E=top viewed from
             front), light switches (must break line conductor), and Edison screw lamp holders
             (centre contact must be line, outer screw must be neutral).
@@ -792,29 +792,29 @@ const InspectionTestingModule7Section1 = () => {
               <div className="grid grid-cols-1 gap-3 text-sm">
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Step 1</p>
-                  <p className="text-white/90 text-xs">
+                  <p className="text-white text-xs">
                     Isolate circuit at consumer unit, prove dead
                   </p>
                 </div>
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Step 2</p>
-                  <p className="text-white/90 text-xs">
+                  <p className="text-white text-xs">
                     Connect long test lead between line terminal at CU and socket line (L)
                   </p>
                 </div>
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Step 3</p>
-                  <p className="text-white/90 text-xs">Verify low resistance (continuity) exists</p>
+                  <p className="text-white text-xs">Verify low resistance (continuity) exists</p>
                 </div>
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Step 4</p>
-                  <p className="text-white/90 text-xs">
+                  <p className="text-white text-xs">
                     Repeat for neutral (N) and earth (E) terminals
                   </p>
                 </div>
                 <div className="p-3 rounded bg-transparent">
                   <p className="font-medium text-white mb-1">Step 5</p>
-                  <p className="text-white/90 text-xs">
+                  <p className="text-white text-xs">
                     Confirm no continuity between wrong terminals
                   </p>
                 </div>
@@ -837,21 +837,21 @@ const InspectionTestingModule7Section1 = () => {
                 <div className="w-12 h-12 rounded-lg bg-amber-700 border-2 border-white/20" />
                 <div>
                   <span className="text-white font-semibold">BROWN</span>
-                  <p className="text-white/60 text-sm">Line conductor (L)</p>
+                  <p className="text-white text-sm">Line conductor (L)</p>
                 </div>
               </div>
               <div className="flex items-center gap-4 p-3 bg-white/5 rounded-xl">
                 <div className="w-12 h-12 rounded-lg bg-blue-600 border-2 border-white/20" />
                 <div>
                   <span className="text-white font-semibold">BLUE</span>
-                  <p className="text-white/60 text-sm">Neutral conductor (N)</p>
+                  <p className="text-white text-sm">Neutral conductor (N)</p>
                 </div>
               </div>
               <div className="flex items-center gap-4 p-3 bg-white/5 rounded-xl">
                 <div className="w-12 h-12 rounded-lg bg-gradient-to-r from-green-500 via-yellow-400 to-green-500 border-2 border-white/20" />
                 <div>
                   <span className="text-white font-semibold">GREEN/YELLOW</span>
-                  <p className="text-white/60 text-sm">Protective conductor (CPC)</p>
+                  <p className="text-white text-sm">Protective conductor (CPC)</p>
                 </div>
               </div>
             </div>
@@ -944,7 +944,7 @@ const InspectionTestingModule7Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -990,7 +990,7 @@ const InspectionTestingModule7Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-6/section-5">

@@ -34,26 +34,26 @@ const CourseAnalyticsDashboard = () => {
             <div className="text-2xl font-bold text-elec-yellow">
               {courseAnalytics.totalCourses}
             </div>
-            <div className="text-xs text-white/70 mt-1">Available Courses</div>
+            <div className="text-xs text-white mt-1">Available Courses</div>
           </div>
           <div className="text-center p-4 rounded-xl bg-white/5 border border-white/10">
             <div className="text-2xl font-bold text-elec-yellow">
               {courseAnalytics.totalProviders}
             </div>
-            <div className="text-xs text-white/70 mt-1">Training Providers</div>
+            <div className="text-xs text-white mt-1">Training Providers</div>
           </div>
           <div className="text-center p-4 rounded-xl bg-white/5 border border-white/10">
             <div className="text-2xl font-bold text-elec-yellow flex items-center justify-center gap-1">
               <Star className="h-5 w-5 fill-elec-yellow" />
               <span>{courseAnalytics.averageRating}</span>
             </div>
-            <div className="text-xs text-white/70 mt-1">Average Rating</div>
+            <div className="text-xs text-white mt-1">Average Rating</div>
           </div>
           <div className="text-center p-4 rounded-xl bg-white/5 border border-white/10">
             <div className="text-2xl font-bold text-green-400">
               {courseAnalytics.highDemandCourses}
             </div>
-            <div className="text-xs text-white/70 mt-1">High Demand</div>
+            <div className="text-xs text-white mt-1">High Demand</div>
           </div>
         </div>
 
@@ -71,7 +71,7 @@ const CourseAnalyticsDashboard = () => {
               <div className="text-2xl font-bold text-white mb-1">
                 {courseAnalytics.highDemandCourses}
               </div>
-              <div className="text-xs text-white/70">courses in high demand</div>
+              <div className="text-xs text-white">courses in high demand</div>
               <div className="mt-2 text-xs text-green-400">Essential for career progression</div>
             </CardContent>
           </Card>
@@ -88,7 +88,7 @@ const CourseAnalyticsDashboard = () => {
               <div className="text-2xl font-bold text-white mb-1">
                 {courseAnalytics.emergingTechCourses}
               </div>
-              <div className="text-xs text-white/70">future-ready courses</div>
+              <div className="text-xs text-white">future-ready courses</div>
               <div className="mt-2 text-xs text-blue-400">High salary impact potential</div>
             </CardContent>
           </Card>
@@ -105,7 +105,7 @@ const CourseAnalyticsDashboard = () => {
               <div className="text-lg font-bold text-white mb-1">
                 {courseAnalytics.averageSalaryImpact}
               </div>
-              <div className="text-xs text-white/70">average annual increase</div>
+              <div className="text-xs text-white">average annual increase</div>
               <div className="mt-2 text-xs text-amber-400">Based on industry data</div>
             </CardContent>
           </Card>
@@ -154,7 +154,7 @@ const CourseAnalyticsDashboard = () => {
                   <TrendingUp className="h-4 w-4" />
                   Growing Demand
                 </h5>
-                <ul className="space-y-2 text-xs text-white/80">
+                <ul className="space-y-2 text-xs text-white">
                   <li className="flex items-center gap-2">
                     <span className="h-1.5 w-1.5 rounded-full bg-green-400 flex-shrink-0" />
                     EV charging installation (+45% year-on-year)
@@ -178,7 +178,7 @@ const CourseAnalyticsDashboard = () => {
                   <Users className="h-4 w-4" />
                   Skills Shortage Areas
                 </h5>
-                <ul className="space-y-2 text-xs text-white/80">
+                <ul className="space-y-2 text-xs text-white">
                   <li className="flex items-center gap-2">
                     <span className="h-1.5 w-1.5 rounded-full bg-blue-400 flex-shrink-0" />
                     Testing & inspection qualified electricians

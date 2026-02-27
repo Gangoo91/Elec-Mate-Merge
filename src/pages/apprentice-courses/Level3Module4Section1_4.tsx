@@ -279,7 +279,7 @@ const Level3Module4Section1_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section1">
@@ -446,7 +446,7 @@ const Level3Module4Section1_4 = () => {
               fatalities.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> You isolate a ring circuit by switching off its MCB, apply a
               lock-off with your lock, prove your voltage tester on an adjacent live circuit, test
               at the socket you'll work on (L-N, L-E, N-E all read zero), then prove your tester
@@ -541,19 +541,19 @@ const Level3Module4Section1_4 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Test Equipment</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   CAT rated for environment, GS38 compliant probes, in calibration
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Insulating Gloves</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Correct class for voltage, inspected before use, clean and dry
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Eye Protection</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Safety glasses minimum, face shield for higher risk work
                 </p>
               </div>
@@ -566,7 +566,7 @@ const Level3Module4Section1_4 = () => {
               damaged leads or worn probes create danger.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A test lead with cracked insulation exposes you to shock
               risk during testing. The probe tip touching live parts is normal - the cracked
               insulation allowing your finger to contact the conductor is not. Inspect leads before
@@ -636,7 +636,7 @@ const Level3Module4Section1_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -683,7 +683,7 @@ const Level3Module4Section1_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section1-3">

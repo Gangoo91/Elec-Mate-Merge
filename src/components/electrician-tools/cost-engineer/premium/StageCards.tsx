@@ -93,7 +93,7 @@ export function StageCards({ progress, currentStep }: StageCardsProps) {
                 ) : isCurrent ? (
                   <Loader2 className="h-4 w-4 text-elec-yellow animate-spin" />
                 ) : (
-                  <Icon className="h-4 w-4 text-white/40" />
+                  <Icon className="h-4 w-4 text-white" />
                 )}
               </motion.div>
 
@@ -103,7 +103,7 @@ export function StageCards({ progress, currentStep }: StageCardsProps) {
                   'text-[10px] font-medium text-center transition-colors duration-300',
                   isComplete && 'text-emerald-400',
                   isCurrent && 'text-elec-yellow',
-                  isPending && 'text-white/40'
+                  isPending && 'text-white'
                 )}
               >
                 {stage.label}
@@ -135,7 +135,7 @@ export function StageCards({ progress, currentStep }: StageCardsProps) {
             key={currentStep}
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-sm text-white/60 flex items-center justify-center gap-2"
+            className="text-sm text-white flex items-center justify-center gap-2"
           >
             <Loader2 className="h-3 w-3 animate-spin text-elec-yellow" />
             {currentStep}

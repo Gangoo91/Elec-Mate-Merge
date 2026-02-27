@@ -336,7 +336,7 @@ const PremiumMaterialCard = ({
         <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
           <Shield className="h-3 w-3" />
           <span>BS7671 Compliant</span>
-          <span className="text-white/20">|</span>
+          <span className="text-white">|</span>
           <span>UK Supplier</span>
         </div>
       </div>

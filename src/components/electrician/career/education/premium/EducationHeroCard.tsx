@@ -93,7 +93,7 @@ const StatPill = ({
     <div className="text-sm font-semibold text-white whitespace-nowrap">
       <AnimatedCounter value={value} suffix={suffix} decimals={decimals} />
     </div>
-    <div className="text-xs text-white/50 whitespace-nowrap">{label}</div>
+    <div className="text-xs text-white whitespace-nowrap">{label}</div>
   </motion.div>
 );
 
@@ -138,7 +138,7 @@ const EducationHeroCard = ({
                 <h1 className="text-lg sm:text-2xl font-semibold text-white">
                   Further <span className="text-purple-400">Education</span>
                 </h1>
-                <p className="text-xs sm:text-sm text-white/60 hidden sm:block">
+                <p className="text-xs sm:text-sm text-white hidden sm:block">
                   HNC, HND, degrees & apprenticeships
                 </p>
               </div>
@@ -151,7 +151,7 @@ const EducationHeroCard = ({
                 disabled={isRefreshing}
                 size="icon"
                 variant="ghost"
-                className="h-9 w-9 text-white/60 hover:text-white hover:bg-white/10 rounded-lg"
+                className="h-9 w-9 text-white hover:text-white hover:bg-white/10 rounded-lg"
               >
                 <RefreshCw className={cn('h-4 w-4', isRefreshing && 'animate-spin')} />
               </Button>
@@ -257,7 +257,7 @@ const EducationHeroCard = ({
                   variant="secondary"
                   className="bg-white/10 text-white border-white/10 hover:bg-purple-500/20 hover:text-purple-300 hover:border-purple-500/30 transition-colors cursor-pointer"
                 >
-                  {category.name} <span className="text-white/50 ml-1">({category.count})</span>
+                  {category.name} <span className="text-white ml-1">({category.count})</span>
                 </Badge>
               </motion.div>
             ))}

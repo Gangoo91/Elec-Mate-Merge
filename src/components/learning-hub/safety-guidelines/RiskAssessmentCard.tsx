@@ -120,7 +120,7 @@ const RiskAssessmentCard = () => {
                         {step.examples.map((example, exampleIndex) => (
                           <div
                             key={exampleIndex}
-                            className="flex items-center gap-2 text-xs text-white/80"
+                            className="flex items-center gap-2 text-xs text-white"
                           >
                             <div className="w-1 h-1 bg-gray-500 rounded-full"></div>
                             {example}
@@ -142,10 +142,10 @@ const RiskAssessmentCard = () => {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border">
-                  <th className="text-left text-white/80 p-2">Likelihood</th>
-                  <th className="text-left text-white/80 p-2">Severity</th>
-                  <th className="text-left text-white/80 p-2">Risk Level</th>
-                  <th className="text-left text-white/80 p-2">Required Action</th>
+                  <th className="text-left text-white p-2">Likelihood</th>
+                  <th className="text-left text-white p-2">Severity</th>
+                  <th className="text-left text-white p-2">Risk Level</th>
+                  <th className="text-left text-white p-2">Required Action</th>
                 </tr>
               </thead>
               <tbody>

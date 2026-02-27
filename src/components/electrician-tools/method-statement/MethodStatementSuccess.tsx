@@ -91,7 +91,7 @@ const MethodStatementSuccess = ({
       case 'high':
         return 'text-red-400';
       default:
-        return 'text-white/60';
+        return 'text-white';
     }
   };
 
@@ -132,7 +132,7 @@ const MethodStatementSuccess = ({
               <DialogTitle className="text-2xl font-bold text-white">
                 Method Statement Ready!
               </DialogTitle>
-              <DialogDescription className="text-sm text-white/70 mt-2">
+              <DialogDescription className="text-sm text-white mt-2">
                 <span className="font-medium text-emerald-400">{projectName}</span>
               </DialogDescription>
             </motion.div>
@@ -150,7 +150,7 @@ const MethodStatementSuccess = ({
             {/* Steps */}
             <div className="bg-emerald-500/10 rounded-xl p-3 border border-emerald-500/20 text-center">
               <p className="text-3xl font-bold text-emerald-400">{stepsCount}</p>
-              <p className="text-xs text-white/50 uppercase tracking-wide flex items-center justify-center gap-1">
+              <p className="text-xs text-white uppercase tracking-wide flex items-center justify-center gap-1">
                 <Layers className="h-3 w-3" /> Steps
               </p>
             </div>
@@ -158,7 +158,7 @@ const MethodStatementSuccess = ({
             {/* Duration */}
             <div className="bg-amber-500/10 rounded-xl p-3 border border-amber-500/20 text-center">
               <p className="text-xl font-bold text-amber-400 truncate">{totalDuration}</p>
-              <p className="text-xs text-white/50 uppercase tracking-wide flex items-center justify-center gap-1">
+              <p className="text-xs text-white uppercase tracking-wide flex items-center justify-center gap-1">
                 <Clock className="h-3 w-3" /> Duration
               </p>
             </div>
@@ -166,7 +166,7 @@ const MethodStatementSuccess = ({
             {/* Hazards */}
             <div className="bg-orange-500/10 rounded-xl p-3 border border-orange-500/20 text-center">
               <p className="text-3xl font-bold text-orange-400">{hazardsCount}</p>
-              <p className="text-xs text-white/50 uppercase tracking-wide flex items-center justify-center gap-1">
+              <p className="text-xs text-white uppercase tracking-wide flex items-center justify-center gap-1">
                 <AlertTriangle className="h-3 w-3" /> Hazards
               </p>
             </div>
@@ -184,7 +184,7 @@ const MethodStatementSuccess = ({
               <p className={`text-xl font-bold uppercase ${getRiskColor(riskLevel)}`}>
                 {riskLevel}
               </p>
-              <p className="text-xs text-white/50 uppercase tracking-wide">Risk Level</p>
+              <p className="text-xs text-white uppercase tracking-wide">Risk Level</p>
             </div>
           </motion.div>
 
@@ -200,7 +200,7 @@ const MethodStatementSuccess = ({
             </div>
             <div className="flex-1">
               <p className="text-sm font-medium text-white">~3 hours saved</p>
-              <p className="text-xs text-white/50">vs manual creation</p>
+              <p className="text-xs text-white">vs manual creation</p>
             </div>
             <p className="text-xs text-emerald-400/70">Generated in {generationTime}s</p>
           </motion.div>
@@ -225,7 +225,7 @@ const MethodStatementSuccess = ({
               View Method Statement
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
-            <p className="text-xs text-white/40 text-center mt-3">BS 7671:2018+A3:2024 Compliant</p>
+            <p className="text-xs text-white text-center mt-3">BS 7671:2018+A3:2024 Compliant</p>
           </motion.div>
         </DialogFooter>
       </DialogContent>

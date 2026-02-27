@@ -216,7 +216,7 @@ const InspectionTestingModule1Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-1">
@@ -238,7 +238,7 @@ const InspectionTestingModule1Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             BS 7671 Testing Requirements
           </h1>
-          <p className="text-white/80">A comprehensive overview of Part 6 requirements</p>
+          <p className="text-white">A comprehensive overview of Part 6 requirements</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -322,7 +322,7 @@ const InspectionTestingModule1Section2 = () => {
                   <p className="text-sm font-medium text-white mb-1">
                     Chapter 61 - Initial Verification
                   </p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Requirements for testing new installations
                   </p>
                 </div>
@@ -330,7 +330,7 @@ const InspectionTestingModule1Section2 = () => {
                   <p className="text-sm font-medium text-white mb-1">
                     Chapter 62 - Periodic Inspection
                   </p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Requirements for testing existing installations
                   </p>
                 </div>
@@ -338,11 +338,11 @@ const InspectionTestingModule1Section2 = () => {
                   <p className="text-sm font-medium text-white mb-1">
                     Chapter 63 - Certification & Reporting
                   </p>
-                  <p className="text-sm text-white/70">Documentation requirements</p>
+                  <p className="text-sm text-white">Documentation requirements</p>
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Appendix 6 - Model Forms</p>
-                  <p className="text-sm text-white/70">Standard certification templates</p>
+                  <p className="text-sm text-white">Standard certification templates</p>
                 </div>
               </div>
             </div>
@@ -454,7 +454,7 @@ const InspectionTestingModule1Section2 = () => {
                       <th className="text-right py-2 text-elec-yellow">Max Interval</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/5">
                       <td className="py-2">Domestic (owner occupied)</td>
                       <td className="text-right text-elec-yellow">10 years</td>
@@ -510,7 +510,7 @@ const InspectionTestingModule1Section2 = () => {
               <p className="text-sm font-medium text-white mb-2">
                 Stage 1: Visual Inspection (Supply Off)
               </p>
-              <p className="text-sm text-white/70 ml-4">
+              <p className="text-sm text-white ml-4">
                 Regulation 631.1 requires visual inspection before testing commences.
               </p>
             </div>
@@ -582,7 +582,7 @@ const InspectionTestingModule1Section2 = () => {
                   <p className="text-sm font-medium text-green-400 mb-1">
                     Electrical Installation Certificate (EIC)
                   </p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     For new installations or additions/alterations. Confirms compliance with BS
                     7671. Includes Schedule of Inspections and Schedule of Test Results.
                   </p>
@@ -591,7 +591,7 @@ const InspectionTestingModule1Section2 = () => {
                   <p className="text-sm font-medium text-blue-400 mb-1">
                     Electrical Installation Condition Report (EICR)
                   </p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     For periodic inspection of existing installations. Reports on condition rather
                     than confirming compliance. Uses classification codes for observations.
                   </p>
@@ -600,7 +600,7 @@ const InspectionTestingModule1Section2 = () => {
                   <p className="text-sm font-medium text-orange-400 mb-1">
                     Minor Electrical Installation Works Certificate
                   </p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     For minor work that doesn't include new circuits. Examples: adding a socket to
                     an existing circuit, replacing a consumer unit like-for-like.
                   </p>
@@ -652,7 +652,7 @@ const InspectionTestingModule1Section2 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/70 italic">
+            <p className="text-sm text-white italic">
               GN3 does <strong>not</strong> replace or override BS 7671. Where there appears to be
               conflict, BS 7671 takes precedence. GN3 provides interpretation and practical
               application guidance.
@@ -661,19 +661,19 @@ const InspectionTestingModule1Section2 = () => {
             <div className="my-6 grid sm:grid-cols-2 gap-4">
               <div>
                 <p className="text-elec-yellow font-semibold text-sm">Chapter 2</p>
-                <p className="text-sm text-white/60">Test equipment requirements</p>
+                <p className="text-sm text-white">Test equipment requirements</p>
               </div>
               <div>
                 <p className="text-elec-yellow font-semibold text-sm">Chapter 3</p>
-                <p className="text-sm text-white/60">Visual inspection guidance</p>
+                <p className="text-sm text-white">Visual inspection guidance</p>
               </div>
               <div>
                 <p className="text-elec-yellow font-semibold text-sm">Chapter 4</p>
-                <p className="text-sm text-white/60">Testing methods and procedures</p>
+                <p className="text-sm text-white">Testing methods and procedures</p>
               </div>
               <div>
                 <p className="text-elec-yellow font-semibold text-sm">Chapter 5</p>
-                <p className="text-sm text-white/60">Certification and reporting</p>
+                <p className="text-sm text-white">Certification and reporting</p>
               </div>
             </div>
           </div>
@@ -730,7 +730,7 @@ const InspectionTestingModule1Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -754,7 +754,7 @@ const InspectionTestingModule1Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-1/section-1">

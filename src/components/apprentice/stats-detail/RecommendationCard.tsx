@@ -95,7 +95,7 @@ export function RecommendationCard({
         </div>
         <div className="flex-1 min-w-0">
           <h4 className="text-sm font-semibold text-white mb-0.5">{title}</h4>
-          <p className="text-xs text-white/70 leading-relaxed">{description}</p>
+          <p className="text-xs text-white leading-relaxed">{description}</p>
         </div>
       </div>
       <button

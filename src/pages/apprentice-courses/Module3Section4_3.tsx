@@ -182,13 +182,13 @@ const Module3Section4_3: React.FC = () => {
           <div className="inline-flex items-center justify-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/30 mb-4">
             <Cable className="w-4 h-4 text-elec-yellow" />
             <span className="text-elec-yellow text-sm font-medium">Module 3</span>
-            <span className="text-white/50">|</span>
-            <span className="text-white/70 text-sm">Section 3.4.3</span>
+            <span className="text-white">|</span>
+            <span className="text-white text-sm">Section 3.4.3</span>
           </div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Terminating Cables: Sleeving, Ferrules, and Crimps
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Essential cable termination techniques for safe, reliable electrical connections meeting
             BS 7671 standards.
           </p>

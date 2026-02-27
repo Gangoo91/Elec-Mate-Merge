@@ -219,7 +219,7 @@ export default function CdmRegulationsModule5Section4() {
           <Button
             variant="ghost"
             size="icon"
-            className="min-h-[44px] min-w-[44px] text-white/70 hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] min-w-[44px] text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-5">
@@ -227,7 +227,7 @@ export default function CdmRegulationsModule5Section4() {
             </Link>
           </Button>
           <div className="flex-1 min-w-0">
-            <p className="text-xs text-white/40">Module 5 {'\u2022'} Section 4</p>
+            <p className="text-xs text-white">Module 5 {'\u2022'} Section 4</p>
             <h1 className="text-sm font-semibold text-white truncate">
               Monitoring, Review & Enforcement
             </h1>
@@ -250,7 +250,7 @@ export default function CdmRegulationsModule5Section4() {
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Monitoring, Review & Enforcement
           </h2>
-          <p className="text-white/60 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             How CDM 2015 is enforced by the HSE, the powers of inspectors, the escalation from
             advice to prosecution, and the importance of ongoing monitoring, review, and a genuine
             compliance culture
@@ -263,7 +263,7 @@ export default function CdmRegulationsModule5Section4() {
             <Zap className="h-4 w-4" />
             In 30 Seconds
           </h3>
-          <p className="text-white/80 text-base leading-relaxed">
+          <p className="text-white text-base leading-relaxed">
             The Health and Safety Executive (HSE) is the primary enforcer of CDM 2015. HSE
             inspectors have extensive powers under HASAWA 1974, including the right of entry to any
             workplace. Enforcement escalates from verbal advice through improvement notices (minimum
@@ -281,7 +281,7 @@ export default function CdmRegulationsModule5Section4() {
             <HardHat className="h-4 w-4" />
             On Site
           </h3>
-          <p className="text-white/80 text-base leading-relaxed">
+          <p className="text-white text-base leading-relaxed">
             Enforcement is not something that only happens to other sites. HSE inspectors carry out
             both planned inspections and unannounced visits. If an inspector arrives on your site,
             cooperate fully — obstruction is a criminal offence. Know what triggers a RIDDOR report.
@@ -311,7 +311,7 @@ export default function CdmRegulationsModule5Section4() {
             ].map((outcome, i) => (
               <li key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </li>
             ))}
           </ul>
@@ -330,7 +330,7 @@ export default function CdmRegulationsModule5Section4() {
             </h3>
           </div>
           <div className="border-l-2 border-blue-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The Health and Safety Executive (HSE) is the independent regulator responsible for
               enforcing health and safety law in Great Britain, including CDM 2015. Established
               under the Health and Safety at Work etc. Act 1974, the HSE has a dual role: it
@@ -345,7 +345,7 @@ export default function CdmRegulationsModule5Section4() {
                 <Shield className="h-4 w-4 text-blue-400" />
                 HSE Structure and Organisation
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
                   <span>
@@ -393,7 +393,7 @@ export default function CdmRegulationsModule5Section4() {
                 <AlertTriangle className="h-4 w-4" />
                 Fee for Intervention (FFI)
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Since October 2012, the HSE operates a Fee for Intervention scheme. When an HSE
                 inspector identifies a <strong className="text-white">material breach</strong> of
                 health and safety law — meaning a breach serious enough to warrant the inspector
@@ -411,7 +411,7 @@ export default function CdmRegulationsModule5Section4() {
               <h4 className="font-semibold text-white text-sm mb-2">
                 The HSE&apos;s Enforcement Policy Statement
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 The HSE publishes an Enforcement Policy Statement that sets out the principles
                 guiding its enforcement decisions. These include: enforcement action should be
                 proportionate to the risk and the seriousness of the breach; enforcement should be
@@ -436,7 +436,7 @@ export default function CdmRegulationsModule5Section4() {
             <h3 className="text-xl font-semibold text-white">HSE Inspector Powers</h3>
           </div>
           <div className="border-l-2 border-blue-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               HSE inspectors derive their powers from Section 20 of the Health and Safety at Work
               etc. Act 1974 (HASAWA 1974). These powers are extensive and are designed to enable
               thorough investigation of workplace health and safety conditions. It is a criminal
@@ -449,7 +449,7 @@ export default function CdmRegulationsModule5Section4() {
                 <Scale className="h-4 w-4 text-blue-400" />
                 Powers Under HASAWA 1974 Section 20
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
                   <span>
@@ -517,7 +517,7 @@ export default function CdmRegulationsModule5Section4() {
                 <AlertTriangle className="h-4 w-4" />
                 The Cooperation Duty
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 All persons on a construction site have a duty to cooperate with HSE inspectors.
                 This means answering questions truthfully, providing access to all areas of the
                 site, producing documents when requested, and not interfering with any
@@ -551,7 +551,7 @@ export default function CdmRegulationsModule5Section4() {
             <h3 className="text-xl font-semibold text-white">Improvement Notices</h3>
           </div>
           <div className="border-l-2 border-blue-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               An improvement notice is issued by an HSE inspector when they are of the opinion that
               a person is contravening one or more statutory provisions, or has contravened one or
               more statutory provisions in circumstances that make it likely that the contravention
@@ -563,7 +563,7 @@ export default function CdmRegulationsModule5Section4() {
                 <FileWarning className="h-4 w-4 text-blue-400" />
                 Improvement Notice — Key Features
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
                   <span>
@@ -616,7 +616,7 @@ export default function CdmRegulationsModule5Section4() {
               <h4 className="font-semibold text-white text-sm mb-2">
                 Common Construction Improvement Notice Examples
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Improvement notices on construction sites commonly relate to: inadequate welfare
                 facilities (dirty toilets, no hot water), deficient risk assessments or method
                 statements, failure to maintain the construction phase plan, inadequate edge
@@ -641,7 +641,7 @@ export default function CdmRegulationsModule5Section4() {
             <h3 className="text-xl font-semibold text-white">Prohibition Notices</h3>
           </div>
           <div className="border-l-2 border-red-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               A prohibition notice is the most serious enforcement tool available to an HSE
               inspector short of prosecution. It is issued when the inspector is of the opinion that
               the activities being carried on, or about to be carried on, involve or will involve a
@@ -653,7 +653,7 @@ export default function CdmRegulationsModule5Section4() {
                 <AlertTriangle className="h-4 w-4 text-red-400" />
                 Prohibition Notice — Key Features
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
                   <span>
@@ -709,7 +709,7 @@ export default function CdmRegulationsModule5Section4() {
                 <AlertTriangle className="h-4 w-4" />
                 Common Construction Prohibition Notices
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 The most common triggers for prohibition notices on construction sites include:
                 unsafe work at height (missing edge protection, inadequate scaffolding, unprotected
                 openings), unsafe excavations (no shoring, risk of collapse), unsafe demolition
@@ -729,7 +729,7 @@ export default function CdmRegulationsModule5Section4() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
                   <p className="text-blue-400 font-semibold text-xs mb-2">Improvement Notice</p>
-                  <ul className="space-y-1 text-xs text-white/70">
+                  <ul className="space-y-1 text-xs text-white">
                     <li>&#8226; Based on a contravention of law</li>
                     <li>&#8226; Minimum 21 days to comply</li>
                     <li>&#8226; Work can continue while complying</li>
@@ -739,7 +739,7 @@ export default function CdmRegulationsModule5Section4() {
                 </div>
                 <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3">
                   <p className="text-red-400 font-semibold text-xs mb-2">Prohibition Notice</p>
-                  <ul className="space-y-1 text-xs text-white/70">
+                  <ul className="space-y-1 text-xs text-white">
                     <li>&#8226; Based on risk of serious personal injury</li>
                     <li>&#8226; Immediate effect (or deferred)</li>
                     <li>&#8226; Activity must stop immediately</li>
@@ -771,7 +771,7 @@ export default function CdmRegulationsModule5Section4() {
             <h3 className="text-xl font-semibold text-white">Prosecution and Penalties</h3>
           </div>
           <div className="border-l-2 border-red-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The HSE can prosecute individuals and organisations for criminal offences under CDM
               2015 and the Health and Safety at Work etc. Act 1974. Prosecution is reserved for the
               most serious cases: where there has been a death or serious injury, where there is a
@@ -785,7 +785,7 @@ export default function CdmRegulationsModule5Section4() {
                 <Gavel className="h-4 w-4 text-red-400" />
                 Criminal Penalties — Courts and Sanctions
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
                   <span>
@@ -816,7 +816,7 @@ export default function CdmRegulationsModule5Section4() {
                 <Scale className="h-4 w-4 text-blue-400" />
                 Sentencing Council Guidelines (2016)
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
                   <span>
@@ -863,7 +863,7 @@ export default function CdmRegulationsModule5Section4() {
                 <Gavel className="h-4 w-4" />
                 Corporate Manslaughter
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 The Corporate Manslaughter and Corporate Homicide Act 2007 created a specific
                 offence for organisations whose gross management failures cause death. The offence
                 applies where the way in which an organisation&apos;s activities are managed or
@@ -894,7 +894,7 @@ export default function CdmRegulationsModule5Section4() {
             <h3 className="text-xl font-semibold text-white">RIDDOR Reporting</h3>
           </div>
           <div className="border-l-2 border-blue-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013
               (RIDDOR) require the responsible person to report certain workplace incidents to the
               HSE. On construction sites, RIDDOR reporting is essential for regulatory oversight and
@@ -906,7 +906,7 @@ export default function CdmRegulationsModule5Section4() {
                 <ClipboardCheck className="h-4 w-4 text-blue-400" />
                 What Must Be Reported Under RIDDOR 2013
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
                   <span>
@@ -977,27 +977,27 @@ export default function CdmRegulationsModule5Section4() {
                     <span className="text-blue-400">Written Report</span>
                   </div>
                   <div className="space-y-1">
-                    <div className="grid grid-cols-3 gap-2 text-xs text-white/70">
+                    <div className="grid grid-cols-3 gap-2 text-xs text-white">
                       <span>Fatal injury</span>
                       <span>Immediate (telephone)</span>
                       <span>Within 10 days</span>
                     </div>
-                    <div className="grid grid-cols-3 gap-2 text-xs text-white/70">
+                    <div className="grid grid-cols-3 gap-2 text-xs text-white">
                       <span>Specified injury</span>
                       <span>Immediate (telephone)</span>
                       <span>Within 10 days</span>
                     </div>
-                    <div className="grid grid-cols-3 gap-2 text-xs text-white/70">
+                    <div className="grid grid-cols-3 gap-2 text-xs text-white">
                       <span>Over-7-day injury</span>
                       <span>Not required</span>
                       <span>Within 15 days</span>
                     </div>
-                    <div className="grid grid-cols-3 gap-2 text-xs text-white/70">
+                    <div className="grid grid-cols-3 gap-2 text-xs text-white">
                       <span>Dangerous occurrence</span>
                       <span>Immediate (telephone)</span>
                       <span>Within 10 days</span>
                     </div>
-                    <div className="grid grid-cols-3 gap-2 text-xs text-white/70">
+                    <div className="grid grid-cols-3 gap-2 text-xs text-white">
                       <span>Occupational disease</span>
                       <span>Not required</span>
                       <span>Without delay</span>
@@ -1005,7 +1005,7 @@ export default function CdmRegulationsModule5Section4() {
                   </div>
                 </div>
               </div>
-              <p className="text-white/50 text-xs mt-3 italic">
+              <p className="text-white text-xs mt-3 italic">
                 Written reports are made online via the HSE&apos;s RIDDOR reporting website. The
                 responsible person is typically the employer or, on multi-contractor sites, the
                 principal contractor.
@@ -1017,7 +1017,7 @@ export default function CdmRegulationsModule5Section4() {
                 <AlertTriangle className="h-4 w-4" />
                 Critical Point — Who Is the Responsible Person?
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 On a construction site, the responsible person for RIDDOR reporting is usually the
                 employer of the injured person. On multi-contractor sites, the principal contractor
                 should have arrangements in place to ensure all reportable incidents are captured
@@ -1050,7 +1050,7 @@ export default function CdmRegulationsModule5Section4() {
             <h3 className="text-xl font-semibold text-white">Ongoing Monitoring and Review</h3>
           </div>
           <div className="border-l-2 border-blue-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Compliance with CDM 2015 is not a one-off exercise completed at the start of a project
               and then forgotten. The duty to manage health and safety is ongoing throughout the
               construction phase. The construction phase plan, risk assessments, and method
@@ -1063,7 +1063,7 @@ export default function CdmRegulationsModule5Section4() {
                 <Eye className="h-4 w-4 text-blue-400" />
                 Active Monitoring (Proactive)
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
                   <span>
@@ -1110,7 +1110,7 @@ export default function CdmRegulationsModule5Section4() {
                 <Eye className="h-4 w-4 text-blue-400" />
                 Reactive Monitoring (Responsive)
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
                   <span>
@@ -1154,7 +1154,7 @@ export default function CdmRegulationsModule5Section4() {
                   <p className="text-green-400 font-semibold text-xs mb-2">
                     Leading Indicators (Proactive)
                   </p>
-                  <ul className="space-y-1 text-xs text-white/70">
+                  <ul className="space-y-1 text-xs text-white">
                     <li>&#8226; Safety inspection completion rates</li>
                     <li>&#8226; Training and induction completion</li>
                     <li>&#8226; Near-miss reports submitted</li>
@@ -1168,7 +1168,7 @@ export default function CdmRegulationsModule5Section4() {
                   <p className="text-amber-400 font-semibold text-xs mb-2">
                     Lagging Indicators (Reactive)
                   </p>
-                  <ul className="space-y-1 text-xs text-white/70">
+                  <ul className="space-y-1 text-xs text-white">
                     <li>&#8226; Accident frequency rate (AFR)</li>
                     <li>&#8226; Injury incidence rate</li>
                     <li>&#8226; Days lost to injury/ill health</li>
@@ -1179,7 +1179,7 @@ export default function CdmRegulationsModule5Section4() {
                   </ul>
                 </div>
               </div>
-              <p className="text-white/50 text-xs mt-3 italic">
+              <p className="text-white text-xs mt-3 italic">
                 Best practice: monitor both types. Leading indicators predict future performance;
                 lagging indicators confirm whether current arrangements are effective. Relying
                 solely on lagging indicators means waiting for something to go wrong.
@@ -1199,7 +1199,7 @@ export default function CdmRegulationsModule5Section4() {
             <h3 className="text-xl font-semibold text-white">Building a Compliance Culture</h3>
           </div>
           <div className="border-l-2 border-blue-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               True compliance with CDM 2015 goes beyond ticking boxes and avoiding prosecution. A
               genuine compliance culture means that health and safety is embedded in every decision,
               at every level of the organisation, from the boardroom to the site. It is the
@@ -1213,7 +1213,7 @@ export default function CdmRegulationsModule5Section4() {
                 <Users className="h-4 w-4 text-blue-400" />
                 Elements of a Compliance Culture
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
                   <span>
@@ -1263,7 +1263,7 @@ export default function CdmRegulationsModule5Section4() {
                 <TrendingUp className="h-4 w-4 text-blue-400" />
                 Industry Initiatives
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0" />
                   <span>
@@ -1305,7 +1305,7 @@ export default function CdmRegulationsModule5Section4() {
               <h4 className="font-semibold text-white text-sm mb-2">
                 The Business Case for Compliance
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 The business case for going beyond the legal minimum is compelling. Fewer incidents
                 mean fewer days lost, lower insurance premiums, and reduced costs of recruitment and
                 retraining. Companies with strong safety records win more work — clients
@@ -1329,7 +1329,7 @@ export default function CdmRegulationsModule5Section4() {
             HSE Enforcement Escalation Ladder
           </h3>
           <div className="bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 rounded-xl p-5">
-            <p className="text-white/60 text-xs mb-5 italic">
+            <p className="text-white text-xs mb-5 italic">
               Enforcement escalates from least to most severe. Each level represents a more serious
               intervention by the HSE.
             </p>
@@ -1343,7 +1343,7 @@ export default function CdmRegulationsModule5Section4() {
                     </span>
                     <div>
                       <p className="text-red-300 font-bold text-sm">Corporate Manslaughter</p>
-                      <p className="text-white/60 text-xs mt-1">
+                      <p className="text-white text-xs mt-1">
                         Unlimited fines (tens of millions), publicity orders requiring the
                         organisation to publicise its conviction, and remedial orders. Applies where
                         gross management failures cause death.
@@ -1362,7 +1362,7 @@ export default function CdmRegulationsModule5Section4() {
                     </span>
                     <div>
                       <p className="text-red-400 font-bold text-sm">Prosecution</p>
-                      <p className="text-white/60 text-xs mt-1">
+                      <p className="text-white text-xs mt-1">
                         Criminal offence. Unlimited fines for organisations and individuals. Up to 2
                         years&apos; imprisonment for individuals in the Crown Court. Turnover-based
                         sentencing guidelines.
@@ -1381,7 +1381,7 @@ export default function CdmRegulationsModule5Section4() {
                     </span>
                     <div>
                       <p className="text-amber-400 font-bold text-sm">Prohibition Notice</p>
-                      <p className="text-white/60 text-xs mt-1">
+                      <p className="text-white text-xs mt-1">
                         Immediate stop to the dangerous activity. Appeal does NOT suspend the
                         notice. Issued where there is a risk of serious personal injury. Activity
                         must remain stopped until the risk is eliminated.
@@ -1400,7 +1400,7 @@ export default function CdmRegulationsModule5Section4() {
                     </span>
                     <div>
                       <p className="text-blue-400 font-bold text-sm">Improvement Notice</p>
-                      <p className="text-white/60 text-xs mt-1">
+                      <p className="text-white text-xs mt-1">
                         Minimum 21 days to comply. Work may continue. Specifies the contravention
                         and what must be done. Appeal suspends the notice during the tribunal
                         process. Failure to comply is a criminal offence.
@@ -1419,7 +1419,7 @@ export default function CdmRegulationsModule5Section4() {
                     </span>
                     <div>
                       <p className="text-blue-400 font-bold text-sm">Verbal Advice and Guidance</p>
-                      <p className="text-white/60 text-xs mt-1">
+                      <p className="text-white text-xs mt-1">
                         Informal advice from an inspector during a site visit. No formal enforcement
                         action. The inspector may explain what is required and give the duty holder
                         an opportunity to put things right voluntarily. May still trigger FFI if a
@@ -1452,7 +1452,7 @@ export default function CdmRegulationsModule5Section4() {
                 <p className="text-blue-400 font-semibold text-xs mb-1">
                   Health and Safety at Work etc. Act 1974 (HASAWA)
                 </p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   The enabling Act. Sections 20{'\u2013'}25 set out inspector powers, improvement
                   and prohibition notices, and prosecution provisions. Section 33 creates criminal
                   offences for breaches. Section 37 allows prosecution of individual directors and
@@ -1463,7 +1463,7 @@ export default function CdmRegulationsModule5Section4() {
                 <p className="text-blue-400 font-semibold text-xs mb-1">
                   Construction (Design and Management) Regulations 2015
                 </p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Creates specific duties for clients, principal designers, principal contractors,
                   contractors, designers, and workers. Breach of these duties is a criminal offence
                   enforceable by the HSE.
@@ -1471,7 +1471,7 @@ export default function CdmRegulationsModule5Section4() {
               </div>
               <div className="bg-black/20 rounded-lg p-3">
                 <p className="text-blue-400 font-semibold text-xs mb-1">RIDDOR 2013</p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Requires reporting of fatal injuries, specified injuries, over-7-day injuries,
                   dangerous occurrences, and occupational diseases. Failure to report is a criminal
                   offence.
@@ -1481,7 +1481,7 @@ export default function CdmRegulationsModule5Section4() {
                 <p className="text-blue-400 font-semibold text-xs mb-1">
                   Sentencing Council Guidelines (2016)
                 </p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Provide the framework for courts sentencing health and safety offences. Introduced
                   turnover-based fines, culpability assessment, and harm categories. Significantly
                   increased fine levels across the industry.
@@ -1491,7 +1491,7 @@ export default function CdmRegulationsModule5Section4() {
                 <p className="text-blue-400 font-semibold text-xs mb-1">
                   Corporate Manslaughter and Corporate Homicide Act 2007
                 </p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Creates the offence of corporate manslaughter where gross management failures
                   cause death. Sanctions: unlimited fines, publicity orders, and remedial orders.
                   Applies to organisations only.
@@ -1501,13 +1501,13 @@ export default function CdmRegulationsModule5Section4() {
                 <p className="text-blue-400 font-semibold text-xs mb-1">
                   Health and Safety (Fees) Regulations 2012
                 </p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Establishes the Fee for Intervention (FFI) scheme. Duty holders in material breach
                   must pay the HSE&apos;s costs at &pound;171 per hour.
                 </p>
               </div>
             </div>
-            <p className="text-white/60 text-xs mt-3 italic">
+            <p className="text-white text-xs mt-3 italic">
               Enforcement is the backstop of the regulatory system. The ultimate goal is prevention
               through good management, not punishment after failure.
             </p>
@@ -1523,7 +1523,7 @@ export default function CdmRegulationsModule5Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-xl p-4">
                 <h4 className="font-medium text-white mb-2 text-sm">{faq.question}</h4>
-                <p className="text-sm text-white/60 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

@@ -248,7 +248,7 @@ const HNCModule8Section6_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section6">
@@ -270,7 +270,7 @@ const HNCModule8Section6_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Interface Coordination
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             MEP coordination, BIM clash detection, ceiling void coordination, installation
             sequencing, and design team collaboration
           </p>
@@ -778,7 +778,7 @@ const HNCModule8Section6_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Typical Ceiling Void Zone Allocation
               </p>
-              <div className="font-mono text-xs text-white/90 space-y-1">
+              <div className="font-mono text-xs text-white space-y-1">
                 <p>━━━━━━━━━━━━━━━━━━━━━━━ Structural soffit</p>
                 <p>│ Zone 1: Structure &amp; fire protection (150mm+)</p>
                 <p>├─────────────────────────────────────────</p>
@@ -956,7 +956,7 @@ const HNCModule8Section6_3 = () => {
                       <p className="text-xs font-medium text-white mb-1">
                         Pre-Meeting Preparation:
                       </p>
-                      <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-4">
+                      <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
                         <li>Review latest clash detection report</li>
                         <li>Update your discipline model</li>
                         <li>Prepare list of outstanding issues</li>
@@ -966,7 +966,7 @@ const HNCModule8Section6_3 = () => {
                     </div>
                     <div>
                       <p className="text-xs font-medium text-white mb-1">Meeting Outputs:</p>
-                      <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-4">
+                      <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
                         <li>Documented clash resolutions</li>
                         <li>Action items with owners and dates</li>
                         <li>Agreed design changes</li>
@@ -1157,12 +1157,12 @@ const HNCModule8Section6_3 = () => {
                 require routing through a corridor ceiling void with only 500mm clear height. The
                 duct must maintain level for downstream connections.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Available void height: 500mm</p>
                 <p>Duct height: 300mm + 25mm insulation = 325mm</p>
                 <p>Cable tray: 150mm (including cables and clearance above)</p>
                 <p>Total if stacked: 325mm + 150mm = 475mm</p>
-                <p className="mt-2 text-white/60">Analysis:</p>
+                <p className="mt-2 text-white">Analysis:</p>
                 <p>- Duct cannot move down (requires level routing)</p>
                 <p>- Cable tray can route above duct at crossings</p>
                 <p>- At crossing points, cables run in tray above duct</p>
@@ -1171,7 +1171,7 @@ const HNCModule8Section6_3 = () => {
                   Solution: Cable tray routes above duct at 475mm from ceiling,
                 </p>
                 <p className="text-green-400">drops to normal level either side of duct run.</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Remaining clearance: 500mm - 475mm = 25mm (acceptable)
                 </p>
               </div>
@@ -1186,7 +1186,7 @@ const HNCModule8Section6_3 = () => {
                 luminaires in a plant room, but the lighting schedule shows IP20-rated fittings.
                 Clarification is required before ordering.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p className="text-elec-yellow">RFI Content Structure:</p>
                 <p className="mt-2">
                   <strong>Reference:</strong> Spec Section 21.3.4 vs Drawing E-401 Schedule
@@ -1223,7 +1223,7 @@ const HNCModule8Section6_3 = () => {
                 floor where the ceiling contractor, mechanical contractor, and sprinkler contractor
                 are all working concurrently.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p className="text-elec-yellow">Coordination Requirements:</p>
                 <p className="mt-2">Week 1-2: Zone A - First fix coordination</p>
                 <p>- Day 1-2: Sprinkler mains at high level (Priority 1)</p>
@@ -1341,7 +1341,7 @@ const HNCModule8Section6_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1389,7 +1389,7 @@ const HNCModule8Section6_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section6-2">

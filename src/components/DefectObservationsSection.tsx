@@ -164,7 +164,7 @@ const DefectObservationsSection = React.forwardRef<HTMLDivElement, DefectObserva
                         ? 'text-orange-500'
                         : totalCount > 0
                           ? 'text-elec-yellow'
-                          : 'text-white/50'
+                          : 'text-white'
                   )}
                 />
               </div>
@@ -253,10 +253,10 @@ const DefectObservationsSection = React.forwardRef<HTMLDivElement, DefectObserva
               {totalCount === 0 ? (
                 <div className="text-center py-8">
                   <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center mx-auto mb-4">
-                    <FileText className="h-7 w-7 text-white/30" />
+                    <FileText className="h-7 w-7 text-white" />
                   </div>
-                  <p className="text-sm text-white/50 mb-1">No observations yet</p>
-                  <p className="text-xs text-white/30 mb-5 max-w-[250px] mx-auto">
+                  <p className="text-sm text-white mb-1">No observations yet</p>
+                  <p className="text-xs text-white mb-5 max-w-[250px] mx-auto">
                     Observations are auto-created when you mark inspection items as C1, C2, or C3
                   </p>
                   <Button
@@ -282,7 +282,7 @@ const DefectObservationsSection = React.forwardRef<HTMLDivElement, DefectObserva
                   <Button
                     onClick={handleAddObservation}
                     variant="outline"
-                    className="w-full h-12 mt-4 border-dashed border-white/20 text-white/60
+                    className="w-full h-12 mt-4 border-dashed border-white/20 text-white
                                hover:bg-white/5 hover:text-white touch-manipulation"
                   >
                     <Plus className="h-4 w-4 mr-2" />

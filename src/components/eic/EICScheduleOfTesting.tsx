@@ -47,6 +47,7 @@ import {
   formatBoardsForFormData,
 } from '@/utils/boardMigration';
 import BoardSection, { BoardToolCallbacks } from '../testing/BoardSection';
+import MobileBoardSection from '../testing/MobileBoardSection';
 import BoardManagement from '../testing/BoardManagement';
 import EnhancedTestResultDesktopTable from '../EnhancedTestResultDesktopTable';
 import MobileOptimizedTestTable from '../mobile/MobileOptimizedTestTable';
@@ -58,6 +59,7 @@ import QuickFillRcdPanel from '../QuickFillRcdPanel';
 import QuickFillIrPanel from '../QuickFillIrPanel';
 import TestInstrumentInfo from '../TestInstrumentInfo';
 import TestMethodInfo from '../TestMethodInfo';
+import SectionTitle from '@/components/ui/SectionTitle';
 import TestAnalytics from '../TestAnalytics';
 import SmartAutoFillPromptDialog from '../SmartAutoFillPromptDialog';
 
@@ -161,7 +163,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   const [showTestResultsScan, setShowTestResultsScan] = useState(false);
   const [extractedTestResults, setExtractedTestResults] = useState<any>(null);
   const [showTestResultsReview, setShowTestResultsReview] = useState(false);
-  const [mobileViewType, setMobileViewType] = useState<'table' | 'card'>('card');
+  const [mobileViewType, setMobileViewType] = useState<'table' | 'card'>('table');
   const [showScribbleDialog, setShowScribbleDialog] = useState(false);
   const [showSmartAutoFillDialog, setShowSmartAutoFillDialog] = useState(false);
   const [showRcdPresetsDialog, setShowRcdPresetsDialog] = useState(false);
@@ -173,6 +175,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
   const [activeToolPanel, setActiveToolPanel] = useState<'ai' | 'smart' | null>(null);
   const [selectedCircuitIndex, setSelectedCircuitIndex] = useState(0);
   const [activeBoardId, setActiveBoardId] = useState<string | null>(null);
+  const [infoSectionsOpen, setInfoSectionsOpen] = useState({ instruments: true, method: true });
   const orientation = useOrientation();
 
   // Voice tool call handler - connects ElevenLabs agent to component state
@@ -2066,425 +2069,49 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                 const boardCompletedCount = boardCircuits.filter(
                   (r) => r.zs && r.polarity && (r.insulationLiveEarth || r.insulationResistance)
                 ).length;
-                const boardProgressPercent =
-                  boardCircuits.length > 0
-                    ? Math.round((boardCompletedCount / boardCircuits.length) * 100)
-                    : 0;
-                const isComplete = boardProgressPercent === 100;
 
                 return (
-                  <Collapsible
+                  <MobileBoardSection
                     key={board.id}
-                    open={expandedBoards.has(board.id)}
-                    onOpenChange={() => toggleBoardExpanded(board.id)}
+                    board={board}
+                    isExpanded={expandedBoards.has(board.id)}
+                    onToggleExpanded={() => toggleBoardExpanded(board.id)}
+                    onUpdateBoard={handleUpdateBoard}
+                    onRemoveBoard={handleRemoveBoard}
+                    onAddCircuit={addCircuitToBoard}
+                    circuitCount={boardCircuits.length}
+                    completedCount={boardCompletedCount}
+                    tools={{
+                      onScanBoard: () => {
+                        setActiveBoardId(board.id);
+                        setShowPhotoCapture(true);
+                      },
+                      onVoiceToggle: toggleVoice,
+                      voiceActive,
+                      voiceConnecting,
+                    }}
                   >
-                    {/* Board Header */}
-                    <CollapsibleTrigger className="w-full" asChild>
-                      <button className="w-full flex items-center gap-3 p-4 text-left touch-manipulation transition-colors bg-card/50 border-y border-border/30 active:bg-card/90">
-                        {/* Progress Ring */}
-                        <div className="relative flex-shrink-0">
-                          <svg className="w-12 h-12 -rotate-90">
-                            <circle
-                              cx="24"
-                              cy="24"
-                              r="20"
-                              strokeWidth="3"
-                              stroke="currentColor"
-                              fill="none"
-                              className="text-border/30"
-                            />
-                            <circle
-                              cx="24"
-                              cy="24"
-                              r="20"
-                              strokeWidth="3"
-                              stroke="currentColor"
-                              fill="none"
-                              strokeDasharray={`${boardProgressPercent * 1.26} 126`}
-                              strokeLinecap="round"
-                              className={isComplete ? 'text-green-500' : 'text-elec-yellow'}
-                            />
-                          </svg>
-                          <div
-                            className={`absolute inset-0 flex items-center justify-center text-sm font-bold ${isComplete ? 'text-green-400' : 'text-elec-yellow'}`}
-                          >
-                            {isComplete ? (
-                              <CheckCircle className="h-5 w-5" />
-                            ) : (
-                              <Zap className="h-5 w-5" />
-                            )}
-                          </div>
-                        </div>
-
-                        {/* Board Info */}
-                        <div className="flex-1 min-w-0">
-                          <h3
-                            className={`font-semibold text-base ${isComplete ? 'text-green-400' : 'text-foreground'}`}
-                          >
-                            {board.name}
-                          </h3>
-                          <div className="flex items-center gap-2 text-xs text-muted-foreground mt-0.5">
-                            <span>
-                              {boardCircuits.length} circuit{boardCircuits.length !== 1 ? 's' : ''}
-                            </span>
-                            <span>·</span>
-                            <span
-                              className={
-                                isComplete
-                                  ? 'text-green-400 font-medium'
-                                  : boardProgressPercent > 0
-                                    ? 'text-elec-yellow font-medium'
-                                    : ''
-                              }
-                            >
-                              {boardProgressPercent}% complete
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Chevron */}
-                        <ChevronDown
-                          className={`h-5 w-5 text-muted-foreground transition-transform duration-200 ${expandedBoards.has(board.id) ? 'rotate-180' : ''}`}
+                    {mobileViewType === 'table' ? (
+                      <MobileHorizontalScrollTable
+                        testResults={boardCircuits}
+                        onUpdate={updateTestResult}
+                        onRemove={removeTestResult}
+                        onBulkUpdate={handleBulkUpdate}
+                        onBulkFieldUpdate={handleBulkFieldUpdate}
+                      />
+                    ) : (
+                      <div className="p-4">
+                        <CircuitList
+                          circuits={boardCircuits}
+                          onUpdate={updateTestResult}
+                          onRemove={removeTestResult}
+                          onBulkUpdate={handleBulkUpdate}
+                          viewMode="card"
+                          className="px-0"
                         />
-                      </button>
-                    </CollapsibleTrigger>
-
-                    <CollapsibleContent>
-                      {/* Board Details */}
-                      <div className="p-4 bg-card/30 border-b border-border/20 space-y-3">
-                        {/* Board Reference & Location */}
-                        <div className="grid grid-cols-2 gap-3">
-                          <div>
-                            <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-1">
-                              Reference
-                            </label>
-                            <DebouncedInput
-                              type="text"
-                              value={board.reference || ''}
-                              onChange={(value) => handleUpdateBoard(board.id, 'reference', value)}
-                              placeholder={board.name}
-                              className="w-full h-10 px-3 rounded-lg bg-card border border-border/50 text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
-                              style={{ fontSize: '16px' }}
-                            />
-                          </div>
-                          <div>
-                            <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-1">
-                              Location
-                            </label>
-                            <DebouncedInput
-                              type="text"
-                              value={board.location || ''}
-                              onChange={(value) => handleUpdateBoard(board.id, 'location', value)}
-                              placeholder="e.g., Garage, Kitchen"
-                              className="w-full h-10 px-3 rounded-lg bg-card border border-border/50 text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
-                              style={{ fontSize: '16px' }}
-                            />
-                          </div>
-                        </div>
-
-                        {/* ZDB & IPF Row */}
-                        <div className="grid grid-cols-2 gap-3">
-                          <div>
-                            <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-1">
-                              Z<sub>DB</sub> (Ω)
-                            </label>
-                            <div className="relative">
-                              <DebouncedInput
-                                type="text"
-                                inputMode="decimal"
-                                value={board.zdb || ''}
-                                onChange={(value) => handleUpdateBoard(board.id, 'zdb', value)}
-                                placeholder="0.00"
-                                className="w-full h-10 px-3 pr-8 rounded-lg bg-card border border-border/50 text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
-                                style={{ fontSize: '16px' }}
-                              />
-                              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">
-                                Ω
-                              </span>
-                            </div>
-                          </div>
-                          <div>
-                            <label className="text-xs text-muted-foreground uppercase tracking-wide block mb-1">
-                              I<sub>PF</sub> (kA)
-                            </label>
-                            <div className="relative">
-                              <DebouncedInput
-                                type="text"
-                                inputMode="decimal"
-                                value={board.ipf || ''}
-                                onChange={(value) => handleUpdateBoard(board.id, 'ipf', value)}
-                                placeholder="0.0"
-                                className="w-full h-10 px-3 pr-8 rounded-lg bg-card border border-border/50 text-sm focus:border-elec-yellow focus:outline-none touch-manipulation"
-                                style={{ fontSize: '16px' }}
-                              />
-                              <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-muted-foreground">
-                                kA
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Quick Checks - Row 1: Polarity & Phase Sequence */}
-                        <div className="flex flex-wrap gap-2 relative z-10">
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              handleUpdateBoard(
-                                board.id,
-                                'confirmedCorrectPolarity',
-                                !board.confirmedCorrectPolarity
-                              );
-                            }}
-                            className={`h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
-                              board.confirmedCorrectPolarity
-                                ? 'bg-green-500/20 border border-green-500/30 text-green-400'
-                                : 'bg-card border border-border/50 text-muted-foreground'
-                            }`}
-                          >
-                            <div
-                              className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${board.confirmedCorrectPolarity ? 'bg-green-500 border-green-500' : 'border-muted-foreground'}`}
-                            >
-                              {board.confirmedCorrectPolarity && (
-                                <Check className="h-3 w-3 text-white" />
-                              )}
-                            </div>
-                            <span className="pointer-events-none">Polarity</span>
-                          </button>
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              handleUpdateBoard(
-                                board.id,
-                                'confirmedPhaseSequence',
-                                !board.confirmedPhaseSequence
-                              );
-                            }}
-                            className={`h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
-                              board.confirmedPhaseSequence
-                                ? 'bg-green-500/20 border border-green-500/30 text-green-400'
-                                : 'bg-card border border-border/50 text-muted-foreground'
-                            }`}
-                          >
-                            <div
-                              className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${board.confirmedPhaseSequence ? 'bg-green-500 border-green-500' : 'border-muted-foreground'}`}
-                            >
-                              {board.confirmedPhaseSequence && (
-                                <Check className="h-3 w-3 text-white" />
-                              )}
-                            </div>
-                            <span className="pointer-events-none">Phase Seq</span>
-                          </button>
-                        </div>
-
-                        {/* SPD Section - Row 2 */}
-                        <div className="flex flex-wrap items-center gap-2 mt-2 relative z-10">
-                          <span className="text-xs text-muted-foreground mr-1">SPD:</span>
-                          {/* SPD N/A */}
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              const newValue = !board.spdNA;
-                              handleUpdateBoard(board.id, 'spdNA', newValue);
-                              // Clear SPD operational status and types when marking as N/A
-                              if (newValue) {
-                                handleUpdateBoard(board.id, 'spdOperationalStatus', false);
-                                handleUpdateBoard(board.id, 'spdT1', false);
-                                handleUpdateBoard(board.id, 'spdT2', false);
-                                handleUpdateBoard(board.id, 'spdT3', false);
-                              }
-                            }}
-                            className={`h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
-                              board.spdNA
-                                ? 'bg-elec-yellow/20 border border-elec-yellow/30 text-elec-yellow'
-                                : 'bg-card border border-border/50 text-muted-foreground'
-                            }`}
-                          >
-                            <div
-                              className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${board.spdNA ? 'bg-elec-yellow border-elec-yellow' : 'border-muted-foreground'}`}
-                            >
-                              {board.spdNA && <Check className="h-3 w-3 text-black" />}
-                            </div>
-                            <span className="pointer-events-none">N/A</span>
-                          </button>
-
-                          {/* SPD Type T1, T2, T3 - only show when SPD is applicable */}
-                          {!board.spdNA && (
-                            <>
-                              {(['T1', 'T2', 'T3'] as const).map((type) => {
-                                const fieldName = `spd${type}` as 'spdT1' | 'spdT2' | 'spdT3';
-                                const isChecked = board[fieldName] ?? false;
-                                return (
-                                  <button
-                                    key={type}
-                                    type="button"
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                      e.stopPropagation();
-                                      handleUpdateBoard(board.id, fieldName, !isChecked);
-                                    }}
-                                    className={`h-10 px-3 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 cursor-pointer select-none ${
-                                      isChecked
-                                        ? 'bg-blue-500/20 border border-blue-500/30 text-blue-400'
-                                        : 'bg-card border border-border/50 text-muted-foreground'
-                                    }`}
-                                  >
-                                    <div
-                                      className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${isChecked ? 'bg-blue-500 border-blue-500' : 'border-muted-foreground'}`}
-                                    >
-                                      {isChecked && <Check className="h-3 w-3 text-white" />}
-                                    </div>
-                                    <span className="pointer-events-none">{type}</span>
-                                  </button>
-                                );
-                              })}
-
-                              {/* Divider */}
-                              <div className="h-6 w-px bg-border/50 mx-1" />
-
-                              {/* SPD OK */}
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  e.stopPropagation();
-                                  handleUpdateBoard(
-                                    board.id,
-                                    'spdOperationalStatus',
-                                    !board.spdOperationalStatus
-                                  );
-                                }}
-                                className={`h-10 rounded-lg text-sm font-medium transition-all touch-manipulation active:scale-95 flex items-center gap-2 px-3 cursor-pointer select-none ${
-                                  board.spdOperationalStatus
-                                    ? 'bg-green-500/20 border border-green-500/30 text-green-400'
-                                    : 'bg-card border border-border/50 text-muted-foreground'
-                                }`}
-                              >
-                                <div
-                                  className={`w-4 h-4 rounded border-2 flex items-center justify-center flex-shrink-0 pointer-events-none ${board.spdOperationalStatus ? 'bg-green-500 border-green-500' : 'border-muted-foreground'}`}
-                                >
-                                  {board.spdOperationalStatus && (
-                                    <Check className="h-3 w-3 text-white" />
-                                  )}
-                                </div>
-                                <span className="pointer-events-none">SPD OK</span>
-                              </button>
-                            </>
-                          )}
-                        </div>
                       </div>
-
-                      {/* Tools Bar - Above Circuit Table */}
-                      <div className="-mx-4 grid grid-cols-[1fr_1fr_48px] gap-2 p-4 bg-background border-y border-border/30">
-                        <Button
-                          className="h-12 rounded-xl bg-elec-yellow text-black font-bold hover:bg-elec-yellow/90 touch-manipulation active:scale-95"
-                          onClick={() => {
-                            setActiveBoardId(board.id);
-                            setShowPhotoCapture(true);
-                          }}
-                        >
-                          <Camera className="h-5 w-5 mr-2" />
-                          AI Scan
-                        </Button>
-                        <Button
-                          className="h-12 rounded-xl bg-card border border-border/50 text-foreground font-semibold hover:bg-card/80 touch-manipulation active:scale-95"
-                          onClick={() => addCircuitToBoard(board.id)}
-                        >
-                          <Plus className="h-5 w-5 mr-2" />
-                          Add Circuit
-                        </Button>
-                        <Button
-                          className={`h-12 w-12 rounded-xl touch-manipulation active:scale-95 ${
-                            voiceActive
-                              ? 'bg-green-500 text-white'
-                              : voiceConnecting
-                                ? 'bg-yellow-500 text-black animate-pulse'
-                                : 'bg-purple-600 text-white'
-                          }`}
-                          onClick={toggleVoice}
-                          disabled={voiceConnecting}
-                        >
-                          <Mic className={`h-5 w-5 ${voiceActive ? 'animate-pulse' : ''}`} />
-                        </Button>
-                      </div>
-
-                      {/* Circuit Table */}
-                      <div className="bg-background">
-                        {boardCircuits.length === 0 ? (
-                          <div className="p-8 text-center">
-                            <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mx-auto mb-3">
-                              <Zap className="h-6 w-6 text-white/30" />
-                            </div>
-                            <p className="text-sm text-white/50 mb-3">No circuits yet</p>
-                            <Button
-                              onClick={() => addCircuitToBoard(board.id)}
-                              className="h-11 bg-elec-yellow text-black font-medium hover:bg-elec-yellow/90 touch-manipulation"
-                            >
-                              <Plus className="h-4 w-4 mr-2" />
-                              Add First Circuit
-                            </Button>
-                          </div>
-                        ) : mobileViewType === 'table' ? (
-                          <MobileHorizontalScrollTable
-                            testResults={boardCircuits}
-                            onUpdate={updateTestResult}
-                            onRemove={removeTestResult}
-                            onBulkUpdate={handleBulkUpdate}
-                            onBulkFieldUpdate={handleBulkFieldUpdate}
-                          />
-                        ) : (
-                          <div className="p-4">
-                            <CircuitList
-                              circuits={boardCircuits}
-                              onUpdate={updateTestResult}
-                              onRemove={removeTestResult}
-                              onBulkUpdate={handleBulkUpdate}
-                              viewMode="card"
-                              className="px-0"
-                            />
-                          </div>
-                        )}
-
-                        {/* Add Circuit to This Board */}
-                        {boardCircuits.length > 0 && (
-                          <div className="p-4 border-t border-border/20">
-                            <Button
-                              onClick={() => addCircuitToBoard(board.id)}
-                              variant="outline"
-                              className="w-full h-11 border-dashed border-white/20 text-white/60 hover:bg-white/5 touch-manipulation"
-                            >
-                              <Plus className="h-4 w-4 mr-2" />
-                              Add Circuit to {board.name}
-                            </Button>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Board Actions Footer */}
-                      {board.id !== MAIN_BOARD_ID && (
-                        <div className="p-3 bg-card/30 border-t border-border/20 flex justify-between items-center">
-                          <span className="text-xs text-muted-foreground">
-                            {boardCircuits.length} circuit{boardCircuits.length !== 1 ? 's' : ''} in
-                            this board
-                          </span>
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            onClick={() => handleRemoveBoard(board.id)}
-                            className="h-8 text-xs text-red-400 hover:text-red-300 hover:bg-red-500/10"
-                          >
-                            <Trash2 className="h-3.5 w-3.5 mr-1" />
-                            Remove Board
-                          </Button>
-                        </div>
-                      )}
-                    </CollapsibleContent>
-                  </Collapsible>
+                    )}
+                  </MobileBoardSection>
                 );
               })}
 
@@ -2493,7 +2120,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
               <Button
                 onClick={handleAddBoard}
                 variant="outline"
-                className="w-full h-12 border-dashed border-white/20 text-white/60 hover:bg-white/5 touch-manipulation"
+                className="w-full h-12 border-dashed border-white/20 text-white hover:bg-white/5 touch-manipulation"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Add Distribution Board
@@ -2532,7 +2159,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold text-white">Schedule of Tests</h2>
-                    <p className="text-sm text-white/60">
+                    <p className="text-sm text-white">
                       BS 7671 compliant circuit testing & verification
                     </p>
                   </div>
@@ -2542,19 +2169,19 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                 <div className="flex gap-3">
                   <div className="testing-stat-card min-w-[80px]">
                     <span className="text-2xl font-bold text-white">{testResults.length}</span>
-                    <span className="text-xs text-white/50">Circuits</span>
+                    <span className="text-xs text-white">Circuits</span>
                   </div>
                   <div className="testing-stat-card min-w-[80px]">
                     <span className="text-2xl font-bold text-green-400">{completedCount}</span>
-                    <span className="text-xs text-white/50">Complete</span>
+                    <span className="text-xs text-white">Complete</span>
                   </div>
                   <div className="testing-stat-card min-w-[80px]">
                     <span className="text-2xl font-bold text-amber-400">{pendingCount}</span>
-                    <span className="text-xs text-white/50">Pending</span>
+                    <span className="text-xs text-white">Pending</span>
                   </div>
                   <div className="testing-stat-card min-w-[80px]">
                     <span className="text-2xl font-bold text-elec-yellow">{progressPercent}%</span>
-                    <span className="text-xs text-white/50">Progress</span>
+                    <span className="text-xs text-white">Progress</span>
                   </div>
                 </div>
               </div>
@@ -2607,7 +2234,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                 <Button
                   onClick={() => setShowAnalytics(!showAnalytics)}
                   variant="ghost"
-                  className="h-10 sm:h-11 text-white/60 hover:text-white hover:bg-white/10"
+                  className="h-10 sm:h-11 text-white hover:text-white hover:bg-white/10"
                 >
                   <BarChart3 className="h-4 w-4 mr-2" />
                   Analytics
@@ -2684,49 +2311,53 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
 
       {/* SHARED INFO SECTIONS - Responsive Layout */}
       {useMobileView ? (
-        /* Mobile: Collapsible Accordions */
-        <div className="px-4 pb-24 space-y-2 mt-4">
-          {/* Test Instrument Info */}
-          <div className="testing-info-section">
-            <Collapsible>
-              <CollapsibleTrigger asChild>
-                <button className="testing-info-header">
-                  <span className="flex items-center gap-2">
-                    <Wrench className="h-4 w-4 text-elec-yellow" />
-                    Test Instruments
-                  </span>
-                  <ChevronDown className="h-4 w-4 text-white/50 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-                </button>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="px-4 pb-4">
+        /* Mobile: Full-width SectionTitle sections */
+        <div className="pb-24 space-y-2 mt-4">
+          <Collapsible
+            open={infoSectionsOpen.instruments}
+            onOpenChange={() => setInfoSectionsOpen(prev => ({ ...prev, instruments: !prev.instruments }))}
+          >
+            <CollapsibleTrigger className="w-full">
+              <SectionTitle
+                icon={Wrench}
+                title="Test Instruments"
+                color="amber"
+                isOpen={infoSectionsOpen.instruments}
+                isMobile={true}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <div className="px-4 py-4">
                 <TestInstrumentInfo formData={formData} onUpdate={onUpdate} />
-              </CollapsibleContent>
-            </Collapsible>
-          </div>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
 
-          {/* Test Method & Notes */}
-          <div className="testing-info-section">
-            <Collapsible>
-              <CollapsibleTrigger asChild>
-                <button className="testing-info-header">
-                  <span className="flex items-center gap-2">
-                    <FileText className="h-4 w-4 text-elec-yellow" />
-                    Test Method & Notes
-                  </span>
-                  <ChevronDown className="h-4 w-4 text-white/50 transition-transform duration-200 group-data-[state=open]:rotate-180" />
-                </button>
-              </CollapsibleTrigger>
-              <CollapsibleContent className="px-4 pb-4">
+          <Collapsible
+            open={infoSectionsOpen.method}
+            onOpenChange={() => setInfoSectionsOpen(prev => ({ ...prev, method: !prev.method }))}
+          >
+            <CollapsibleTrigger className="w-full">
+              <SectionTitle
+                icon={FileText}
+                title="Test Method & Notes"
+                color="amber"
+                isOpen={infoSectionsOpen.method}
+                isMobile={true}
+              />
+            </CollapsibleTrigger>
+            <CollapsibleContent>
+              <div className="px-4 py-4">
                 <TestMethodInfo formData={formData} onUpdate={onUpdate} />
-              </CollapsibleContent>
-            </Collapsible>
-          </div>
+              </div>
+            </CollapsibleContent>
+          </Collapsible>
         </div>
       ) : (
         /* Desktop: Horizontal Card Grid */
         <div className="grid grid-cols-2 gap-4 mt-6">
           <div className="testing-info-section p-4">
-            <h3 className="text-sm font-semibold text-white/90 flex items-center gap-2 mb-4">
+            <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-4">
               <Wrench className="h-4 w-4 text-elec-yellow" />
               Test Instruments
             </h3>
@@ -2734,7 +2365,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           </div>
 
           <div className="testing-info-section p-4">
-            <h3 className="text-sm font-semibold text-white/90 flex items-center gap-2 mb-4">
+            <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-4">
               <FileText className="h-4 w-4 text-elec-yellow" />
               Test Method & Notes
             </h3>

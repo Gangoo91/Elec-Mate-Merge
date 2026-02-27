@@ -153,7 +153,7 @@ export const CustomerListRow = ({
             </div>
           )}
           <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-            <Clock className="w-3 h-3 flex-shrink-0 text-white/40" />
+            <Clock className="w-3 h-3 flex-shrink-0 text-white" />
             <span>{formatLastActivity(customer.lastActivityAt)}</span>
           </div>
         </div>

@@ -238,7 +238,7 @@ const HNCModule1Section4_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section4">
@@ -260,7 +260,7 @@ const HNCModule1Section4_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Duty of Care and Accountability
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Legal obligations, liability, and consequences for health and safety failures in
             building services
           </p>
@@ -346,7 +346,7 @@ const HNCModule1Section4_1 = () => {
             <div className="my-6 grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Common Law Duty</p>
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   Established through court cases over centuries:
                 </p>
                 <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
@@ -359,7 +359,7 @@ const HNCModule1Section4_1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Statutory Duty</p>
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   Codified in legislation, primarily HASAWA 1974:
                 </p>
                 <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
@@ -465,25 +465,25 @@ const HNCModule1Section4_1 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Elements of Negligence</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 A claimant must prove all three elements on the balance of probabilities:
               </p>
               <div className="grid sm:grid-cols-3 gap-4">
                 <div className="p-3 rounded bg-white/5 text-center">
                   <p className="font-bold text-elec-yellow mb-1">1. Duty Existed</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     The defendant owed the claimant a duty of care
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5 text-center">
                   <p className="font-bold text-elec-yellow mb-1">2. Breach of Duty</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     The defendant failed to meet the required standard of care
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5 text-center">
                   <p className="font-bold text-elec-yellow mb-1">3. Causation</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     The breach caused the harm (damage, injury, or loss)
                   </p>
                 </div>
@@ -511,7 +511,7 @@ const HNCModule1Section4_1 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
               <p className="text-sm font-medium text-orange-300 mb-2">Building Services Example</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 <strong>Scenario:</strong> An electrician fails to properly terminate a cable joint,
                 which later fails and causes a fire injuring an occupant.
                 <br />
@@ -647,7 +647,7 @@ const HNCModule1Section4_1 = () => {
               <p className="text-sm font-medium text-red-400 mb-2">
                 Section 37 HASAWA - Personal Liability of Directors
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Where an offence by a body corporate is proved to have been committed with the{' '}
                 <strong>consent</strong> or <strong>connivance</strong> of, or to have been
                 attributable to any <strong>neglect</strong> on the part of, any director, manager,
@@ -722,7 +722,7 @@ const HNCModule1Section4_1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Company Directors Disqualification Act 1986
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 In addition to criminal penalties, courts can disqualify directors from holding
                 company directorships:
               </p>
@@ -876,19 +876,19 @@ const HNCModule1Section4_1 = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">Micro</p>
-                  <p className="text-white/70 text-xs">Up to £2m</p>
+                  <p className="text-white text-xs">Up to £2m</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">Small</p>
-                  <p className="text-white/70 text-xs">£2m - £10m</p>
+                  <p className="text-white text-xs">£2m - £10m</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">Medium</p>
-                  <p className="text-white/70 text-xs">£10m - £50m</p>
+                  <p className="text-white text-xs">£10m - £50m</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">Large</p>
-                  <p className="text-white/70 text-xs">£50m+</p>
+                  <p className="text-white text-xs">£50m+</p>
                 </div>
               </div>
             </div>
@@ -931,7 +931,7 @@ const HNCModule1Section4_1 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/70 mt-2">
+              <p className="text-xs text-white mt-2">
                 Note: These are starting points - actual fines can exceed these ranges based on
                 aggravating factors.
               </p>
@@ -1059,7 +1059,7 @@ const HNCModule1Section4_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1107,7 +1107,7 @@ const HNCModule1Section4_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section4">

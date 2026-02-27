@@ -192,7 +192,7 @@ export default function CscsCardModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-1">
@@ -217,7 +217,7 @@ export default function CscsCardModule1Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Card Types &amp; Colour Codes
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How the CSCS colour-coded card system works, what each colour represents, the
             qualifications and tests required for each card, and special card types for provisional,
             experienced, and visiting workers
@@ -316,7 +316,7 @@ export default function CscsCardModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">How the System Works on Site</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -380,26 +380,26 @@ export default function CscsCardModule1Section2() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">Trainee/Apprentice Card</p>
-                    <p className="text-xs text-white/60">Working towards qualification</p>
+                    <p className="text-xs text-white">Working towards qualification</p>
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <div className="flex items-start gap-2 text-sm text-white/80">
-                    <span className="text-white/50 text-xs font-medium min-w-[80px]">
+                  <div className="flex items-start gap-2 text-sm text-white">
+                    <span className="text-white text-xs font-medium min-w-[80px]">
                       Requirements
                     </span>
                     <span>
                       Registered apprenticeship or traineeship + passed the Operatives HS&amp;E test
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
-                    <span className="text-white/50 text-xs font-medium min-w-[80px]">Validity</span>
+                  <div className="flex items-start gap-2 text-sm text-white">
+                    <span className="text-white text-xs font-medium min-w-[80px]">Validity</span>
                     <span>
                       5 years or until the qualification is achieved (whichever comes first)
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
-                    <span className="text-white/50 text-xs font-medium min-w-[80px]">
+                  <div className="flex items-start gap-2 text-sm text-white">
+                    <span className="text-white text-xs font-medium min-w-[80px]">
                       Supervision
                     </span>
                     <span>
@@ -407,8 +407,8 @@ export default function CscsCardModule1Section2() {
                       independently
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
-                    <span className="text-white/50 text-xs font-medium min-w-[80px]">
+                  <div className="flex items-start gap-2 text-sm text-white">
+                    <span className="text-white text-xs font-medium min-w-[80px]">
                       Card Shows
                     </span>
                     <span>
@@ -455,12 +455,12 @@ export default function CscsCardModule1Section2() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">Labourer Card</p>
-                    <p className="text-xs text-white/60">Entry-level site access</p>
+                    <p className="text-xs text-white">Entry-level site access</p>
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <div className="flex items-start gap-2 text-sm text-white/80">
-                    <span className="text-white/50 text-xs font-medium min-w-[80px]">
+                  <div className="flex items-start gap-2 text-sm text-white">
+                    <span className="text-white text-xs font-medium min-w-[80px]">
                       Requirements
                     </span>
                     <span>
@@ -468,19 +468,19 @@ export default function CscsCardModule1Section2() {
                       applied for a Level 1 qualification (or equivalent)
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
-                    <span className="text-white/50 text-xs font-medium min-w-[80px]">Validity</span>
+                  <div className="flex items-start gap-2 text-sm text-white">
+                    <span className="text-white text-xs font-medium min-w-[80px]">Validity</span>
                     <span>5 years from date of issue</span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
-                    <span className="text-white/50 text-xs font-medium min-w-[80px]">Role</span>
+                  <div className="flex items-start gap-2 text-sm text-white">
+                    <span className="text-white text-xs font-medium min-w-[80px]">Role</span>
                     <span>
                       General labouring duties on construction sites &mdash; this is the minimum
                       card for most site access
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
-                    <span className="text-white/50 text-xs font-medium min-w-[80px]">Volume</span>
+                  <div className="flex items-start gap-2 text-sm text-white">
+                    <span className="text-white text-xs font-medium min-w-[80px]">Volume</span>
                     <span>Over 500,000 green cards in circulation across the UK</span>
                   </div>
                 </div>
@@ -530,12 +530,12 @@ export default function CscsCardModule1Section2() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">Skilled Worker Card</p>
-                    <p className="text-xs text-white/60">Qualified tradesperson</p>
+                    <p className="text-xs text-white">Qualified tradesperson</p>
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <div className="flex items-start gap-2 text-sm text-white/80">
-                    <span className="text-white/50 text-xs font-medium min-w-[80px]">
+                  <div className="flex items-start gap-2 text-sm text-white">
+                    <span className="text-white text-xs font-medium min-w-[80px]">
                       Requirements
                     </span>
                     <span>
@@ -543,12 +543,12 @@ export default function CscsCardModule1Section2() {
                       role) + hold NVQ Level 2 or above in the relevant occupation
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
-                    <span className="text-white/50 text-xs font-medium min-w-[80px]">Validity</span>
+                  <div className="flex items-start gap-2 text-sm text-white">
+                    <span className="text-white text-xs font-medium min-w-[80px]">Validity</span>
                     <span>5 years from date of issue</span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
-                    <span className="text-white/50 text-xs font-medium min-w-[80px]">
+                  <div className="flex items-start gap-2 text-sm text-white">
+                    <span className="text-white text-xs font-medium min-w-[80px]">
                       Card Shows
                     </span>
                     <span>
@@ -556,8 +556,8 @@ export default function CscsCardModule1Section2() {
                       &ldquo;Plumber&rdquo;, &ldquo;Carpenter&rdquo;)
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
-                    <span className="text-white/50 text-xs font-medium min-w-[80px]">
+                  <div className="flex items-start gap-2 text-sm text-white">
+                    <span className="text-white text-xs font-medium min-w-[80px]">
                       HS&amp;E Test
                     </span>
                     <span>
@@ -615,12 +615,12 @@ export default function CscsCardModule1Section2() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Advanced Craft</p>
-                      <p className="text-xs text-white/60">NVQ Level 3+ in trade</p>
+                      <p className="text-xs text-white">NVQ Level 3+ in trade</p>
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <div className="text-sm text-white/80">
-                      <p className="text-white/50 text-xs font-medium mb-1">Requirements</p>
+                    <div className="text-sm text-white">
+                      <p className="text-white text-xs font-medium mb-1">Requirements</p>
                       <ul className="space-y-1">
                         <li className="flex items-start gap-2">
                           <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
@@ -632,8 +632,8 @@ export default function CscsCardModule1Section2() {
                         </li>
                       </ul>
                     </div>
-                    <div className="text-sm text-white/80">
-                      <p className="text-white/50 text-xs font-medium mb-1">Validity</p>
+                    <div className="text-sm text-white">
+                      <p className="text-white text-xs font-medium mb-1">Validity</p>
                       <span>5 years from date of issue</span>
                     </div>
                   </div>
@@ -646,12 +646,12 @@ export default function CscsCardModule1Section2() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Supervisory</p>
-                      <p className="text-xs text-white/60">NVQ Level 3 in supervision</p>
+                      <p className="text-xs text-white">NVQ Level 3 in supervision</p>
                     </div>
                   </div>
                   <div className="space-y-2">
-                    <div className="text-sm text-white/80">
-                      <p className="text-white/50 text-xs font-medium mb-1">Requirements</p>
+                    <div className="text-sm text-white">
+                      <p className="text-white text-xs font-medium mb-1">Requirements</p>
                       <ul className="space-y-1">
                         <li className="flex items-start gap-2">
                           <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
@@ -663,8 +663,8 @@ export default function CscsCardModule1Section2() {
                         </li>
                       </ul>
                     </div>
-                    <div className="text-sm text-white/80">
-                      <p className="text-white/50 text-xs font-medium mb-1">Validity</p>
+                    <div className="text-sm text-white">
+                      <p className="text-white text-xs font-medium mb-1">Validity</p>
                       <span>5 years from date of issue</span>
                     </div>
                   </div>
@@ -714,14 +714,14 @@ export default function CscsCardModule1Section2() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">Manager Card</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Senior management &amp; project leadership
                     </p>
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <div className="flex items-start gap-2 text-sm text-white/80">
-                    <span className="text-white/50 text-xs font-medium min-w-[80px]">
+                  <div className="flex items-start gap-2 text-sm text-white">
+                    <span className="text-white text-xs font-medium min-w-[80px]">
                       Requirements
                     </span>
                     <span>
@@ -729,18 +729,18 @@ export default function CscsCardModule1Section2() {
                       degree/qualification) + Managers &amp; Professionals HS&amp;E test
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
-                    <span className="text-white/50 text-xs font-medium min-w-[80px]">Validity</span>
+                  <div className="flex items-start gap-2 text-sm text-white">
+                    <span className="text-white text-xs font-medium min-w-[80px]">Validity</span>
                     <span>5 years from date of issue</span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
-                    <span className="text-white/50 text-xs font-medium min-w-[80px]">Role</span>
+                  <div className="flex items-start gap-2 text-sm text-white">
+                    <span className="text-white text-xs font-medium min-w-[80px]">Role</span>
                     <span>
                       Construction project management, site management, principal contractor duties
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
-                    <span className="text-white/50 text-xs font-medium min-w-[80px]">
+                  <div className="flex items-start gap-2 text-sm text-white">
+                    <span className="text-white text-xs font-medium min-w-[80px]">
                       HS&amp;E Test
                     </span>
                     <span>
@@ -800,12 +800,12 @@ export default function CscsCardModule1Section2() {
                     <p className="text-sm font-medium text-white">
                       Professionally Qualified Person Card
                     </p>
-                    <p className="text-xs text-white/60">Chartered professional</p>
+                    <p className="text-xs text-white">Chartered professional</p>
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <div className="flex items-start gap-2 text-sm text-white/80">
-                    <span className="text-white/50 text-xs font-medium min-w-[80px]">
+                  <div className="flex items-start gap-2 text-sm text-white">
+                    <span className="text-white text-xs font-medium min-w-[80px]">
                       Requirements
                     </span>
                     <span>
@@ -813,12 +813,12 @@ export default function CscsCardModule1Section2() {
                       Managers &amp; Professionals HS&amp;E test
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
-                    <span className="text-white/50 text-xs font-medium min-w-[80px]">Validity</span>
+                  <div className="flex items-start gap-2 text-sm text-white">
+                    <span className="text-white text-xs font-medium min-w-[80px]">Validity</span>
                     <span>5 years from date of issue</span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
-                    <span className="text-white/50 text-xs font-medium min-w-[80px]">Role</span>
+                  <div className="flex items-start gap-2 text-sm text-white">
+                    <span className="text-white text-xs font-medium min-w-[80px]">Role</span>
                     <span>
                       Professional/design roles in the built environment &mdash; not for hands-on
                       construction work
@@ -832,7 +832,7 @@ export default function CscsCardModule1Section2() {
                   Recognised Professional Bodies
                 </p>
                 <div className="grid grid-cols-2 gap-2">
-                  <div className="text-sm text-white/80">
+                  <div className="text-sm text-white">
                     <ul className="space-y-1">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
@@ -857,7 +857,7 @@ export default function CscsCardModule1Section2() {
                       </li>
                     </ul>
                   </div>
-                  <div className="text-sm text-white/80">
+                  <div className="text-sm text-white">
                     <ul className="space-y-1">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
@@ -918,11 +918,11 @@ export default function CscsCardModule1Section2() {
                     <Layers className="h-5 w-5 text-amber-400" />
                     <p className="text-sm font-medium text-amber-400">Provisional Cards</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Issued when qualification evidence is pending &mdash; for example, when a worker
                     has completed their NVQ assessment but is awaiting the official certificate.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -951,12 +951,12 @@ export default function CscsCardModule1Section2() {
                     <Award className="h-5 w-5 text-blue-400" />
                     <p className="text-sm font-medium text-blue-400">Experienced Worker Cards</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     For those with extensive practical experience but no formal qualification. This
                     route recognises that many skilled workers gained their competence through years
                     of hands-on work rather than formal education.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -986,11 +986,11 @@ export default function CscsCardModule1Section2() {
                     <Users className="h-5 w-5 text-purple-400" />
                     <p className="text-sm font-medium text-purple-400">Visitor Cards</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     For non-construction personnel visiting sites &mdash; clients, consultants,
                     inspectors, or other parties who are not carrying out construction work.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>Temporary &mdash; typically valid for one day only</span>
@@ -1018,12 +1018,12 @@ export default function CscsCardModule1Section2() {
                       Plant Operator Cards (CPCS)
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     The Construction Plant Competence Scheme (CPCS) covers plant operators &mdash;
                     those who operate excavators, cranes, telehandlers, dumpers, and other
                     machinery.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -1050,11 +1050,11 @@ export default function CscsCardModule1Section2() {
                     <ShieldCheck className="h-5 w-5 text-green-400" />
                     <p className="text-sm font-medium text-green-400">ECS Cards (JIB)</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     The Electrotechnical Certification Scheme (ECS) card is issued by the Joint
                     Industry Board (JIB) specifically for the electrotechnical sector.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -1100,7 +1100,7 @@ export default function CscsCardModule1Section2() {
                 <div className="w-8 h-6 rounded bg-red-500 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-white">Red &mdash; Trainee/Apprentice</p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Registered apprenticeship + Operatives HS&amp;E &bull; 5 years / until qualified
                   </p>
                 </div>
@@ -1111,7 +1111,7 @@ export default function CscsCardModule1Section2() {
                 <div className="w-8 h-6 rounded bg-green-500 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-white">Green &mdash; Labourer</p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Operatives HS&amp;E + Level 1 qualification (or applied/registered) &bull; 5
                     years
                   </p>
@@ -1123,7 +1123,7 @@ export default function CscsCardModule1Section2() {
                 <div className="w-8 h-6 rounded bg-blue-500 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-white">Blue &mdash; Skilled Worker</p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     NVQ Level 2+ in trade + Operatives/Specialists HS&amp;E &bull; 5 years
                   </p>
                 </div>
@@ -1136,7 +1136,7 @@ export default function CscsCardModule1Section2() {
                   <p className="text-sm font-medium text-white">
                     Gold &mdash; Advanced Craft / Supervisory
                   </p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     NVQ Level 3+ in trade or supervision + HS&amp;E test &bull; 5 years
                   </p>
                 </div>
@@ -1147,7 +1147,7 @@ export default function CscsCardModule1Section2() {
                 <div className="w-8 h-6 rounded bg-gray-800 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-medium text-white">Black &mdash; Manager</p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     NVQ Level 6/7 in construction management + Managers &amp; Professionals HS&amp;E
                     &bull; 5 years
                   </p>
@@ -1161,7 +1161,7 @@ export default function CscsCardModule1Section2() {
                   <p className="text-sm font-medium text-white">
                     White &mdash; Professionally Qualified Person
                   </p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Professional body membership + Managers &amp; Professionals HS&amp;E &bull; 5
                     years
                   </p>
@@ -1177,7 +1177,7 @@ export default function CscsCardModule1Section2() {
             <p className="text-sm font-medium text-white mb-4 text-center">
               Card Hierarchy Pyramid
             </p>
-            <p className="text-xs text-white/50 text-center mb-6">
+            <p className="text-xs text-white text-center mb-6">
               From entry level (base) to professional/management level (top)
             </p>
 
@@ -1185,7 +1185,7 @@ export default function CscsCardModule1Section2() {
               {/* White - Professional */}
               <div className="w-full max-w-[180px] bg-gradient-to-r from-white/15 to-white/10 border border-white/30 rounded-t-xl p-3 text-center">
                 <p className="text-xs font-bold text-white">WHITE</p>
-                <p className="text-[10px] text-white/60">Chartered Professional</p>
+                <p className="text-[10px] text-white">Chartered Professional</p>
               </div>
               <div className="flex flex-col items-center py-0.5">
                 <div className="w-0.5 h-2 bg-white/20" />
@@ -1194,7 +1194,7 @@ export default function CscsCardModule1Section2() {
               {/* Black - Manager */}
               <div className="w-full max-w-[220px] bg-gradient-to-r from-gray-700/30 to-gray-600/20 border border-gray-500/30 p-3 text-center">
                 <p className="text-xs font-bold text-white">BLACK</p>
-                <p className="text-[10px] text-white/60">Manager &bull; NVQ Level 6/7</p>
+                <p className="text-[10px] text-white">Manager &bull; NVQ Level 6/7</p>
               </div>
               <div className="flex flex-col items-center py-0.5">
                 <div className="w-0.5 h-2 bg-white/20" />
@@ -1203,7 +1203,7 @@ export default function CscsCardModule1Section2() {
               {/* Gold - Advanced/Supervisory */}
               <div className="w-full max-w-[280px] bg-gradient-to-r from-yellow-500/20 to-yellow-400/10 border border-yellow-500/30 p-3 text-center">
                 <p className="text-xs font-bold text-yellow-400">GOLD</p>
-                <p className="text-[10px] text-white/60">
+                <p className="text-[10px] text-white">
                   Advanced Craft / Supervisory &bull; NVQ Level 3+
                 </p>
               </div>
@@ -1214,7 +1214,7 @@ export default function CscsCardModule1Section2() {
               {/* Blue - Skilled Worker */}
               <div className="w-full max-w-[360px] bg-gradient-to-r from-blue-500/20 to-blue-400/10 border border-blue-500/30 p-3 text-center">
                 <p className="text-xs font-bold text-blue-400">BLUE</p>
-                <p className="text-[10px] text-white/60">Skilled Worker &bull; NVQ Level 2+</p>
+                <p className="text-[10px] text-white">Skilled Worker &bull; NVQ Level 2+</p>
               </div>
               <div className="flex flex-col items-center py-0.5">
                 <div className="w-0.5 h-2 bg-white/20" />
@@ -1223,13 +1223,13 @@ export default function CscsCardModule1Section2() {
               {/* Green - Labourer */}
               <div className="w-full max-w-[440px] bg-gradient-to-r from-green-500/20 to-green-400/10 border border-green-500/30 rounded-b-xl p-3 text-center">
                 <p className="text-xs font-bold text-green-400">GREEN</p>
-                <p className="text-[10px] text-white/60">
+                <p className="text-[10px] text-white">
                   Labourer &bull; Level 1 qualification + Operatives HS&amp;E
                 </p>
               </div>
             </div>
 
-            <p className="text-xs text-white/40 text-center mt-4 italic">
+            <p className="text-xs text-white text-center mt-4 italic">
               Red (Trainee/Apprentice) cards sit alongside the pyramid &mdash; holders progress into
               the appropriate level once their qualification is achieved.
             </p>
@@ -1243,7 +1243,7 @@ export default function CscsCardModule1Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1257,7 +1257,7 @@ export default function CscsCardModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-1">

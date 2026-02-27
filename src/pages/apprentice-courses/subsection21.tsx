@@ -240,7 +240,7 @@ const Section5_4 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-foreground active:text-foreground p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -266,7 +266,7 @@ const Section5_4 = () => {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
             Lockout/Tagout and Permit-to-Work Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Master formal safety systems for electrical isolation, including LOTO procedures and
             permit-to-work systems.
           </p>
@@ -581,9 +581,9 @@ const Section5_4 = () => {
               <details key={index} className="group border border-border/20 rounded-lg">
                 <summary className="flex items-center justify-between p-4 cursor-pointer hover:bg-muted/50 active:bg-muted/70 transition-all touch-manipulation">
                   <span className="font-medium text-foreground">{faq.question}</span>
-                  <HelpCircle className="w-5 h-5 text-white/80 group-open:rotate-180 transition-transform" />
+                  <HelpCircle className="w-5 h-5 text-white group-open:rotate-180 transition-transform" />
                 </summary>
-                <div className="px-4 pb-4 text-white/80 border-t border-border/20 pt-4">
+                <div className="px-4 pb-4 text-white border-t border-border/20 pt-4">
                   {faq.answer}
                 </div>
               </details>

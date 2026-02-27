@@ -177,7 +177,7 @@ const OnJobSupervisorKnowledge = () => {
               setSearchQuery(e.target.value);
               setExpandedSearchId(null);
             }}
-            className="h-11 pl-10 text-base touch-manipulation bg-white/5 border-white/10 focus:border-blue-500 focus:ring-blue-500 placeholder:text-white/50"
+            className="h-11 pl-10 text-base touch-manipulation bg-white/5 border-white/10 focus:border-blue-500 focus:ring-blue-500 placeholder:text-white"
           />
           {searchQuery.length > 0 && (
             <button

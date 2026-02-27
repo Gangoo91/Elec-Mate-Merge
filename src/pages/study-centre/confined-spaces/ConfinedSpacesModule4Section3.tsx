@@ -205,7 +205,7 @@ export default function ConfinedSpacesModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-4">
@@ -228,7 +228,7 @@ export default function ConfinedSpacesModule4Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Working Inside Confined Spaces
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The top person&rsquo;s critical role, communication protocols, continuous atmospheric
             monitoring, time limits, work rotation, hot work requirements, and conditions for
             immediate evacuation
@@ -325,7 +325,7 @@ export default function ConfinedSpacesModule4Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">The Number-One Rule</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The top person must{' '}
                   <strong className="text-white">NEVER enter the confined space</strong>. This rule
                   exists because a significant proportion of confined-space fatalities are would-be
@@ -340,7 +340,7 @@ export default function ConfinedSpacesModule4Section3() {
                   <Shield className="h-4 w-4 inline-block mr-2 -mt-0.5 text-cyan-400" />
                   Top Person Duties
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -399,7 +399,7 @@ export default function ConfinedSpacesModule4Section3() {
 
               <div className="bg-cyan-500/10 border border-cyan-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Training and Competence</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The top person must be{' '}
                   <strong className="text-white">trained and competent</strong> in confined-space
                   entry procedures, the specific risks of the space being entered, the communication
@@ -437,7 +437,7 @@ export default function ConfinedSpacesModule4Section3() {
                   <Radio className="h-4 w-4 inline-block mr-2 -mt-0.5 text-cyan-400" />
                   Communication Methods
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -480,7 +480,7 @@ export default function ConfinedSpacesModule4Section3() {
                   {/* Step 1 */}
                   <div className="bg-cyan-500/20 border-2 border-cyan-400/60 rounded-lg px-6 py-3 text-center mb-2 w-full max-w-md">
                     <p className="text-cyan-300 font-bold text-sm">TOP PERSON INITIATES CHECK</p>
-                    <p className="text-white/80 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Every 5 minutes (or more frequently as agreed)
                     </p>
                   </div>
@@ -491,7 +491,7 @@ export default function ConfinedSpacesModule4Section3() {
                     <p className="text-white font-medium text-sm">
                       Entrant responds with agreed signal
                     </p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Voice, radio, visual, or tug-line confirmation
                     </p>
                   </div>
@@ -508,7 +508,7 @@ export default function ConfinedSpacesModule4Section3() {
                       </div>
                       <div className="h-3 w-0.5 bg-green-400/40" />
                       <div className="bg-green-500/10 border border-green-500/30 rounded p-2 w-full text-center">
-                        <p className="text-white/80 text-[10px] sm:text-xs">
+                        <p className="text-white text-[10px] sm:text-xs">
                           Log the check. Continue work. Repeat at next interval.
                         </p>
                       </div>
@@ -520,13 +520,13 @@ export default function ConfinedSpacesModule4Section3() {
                       </div>
                       <div className="h-3 w-0.5 bg-red-400/40" />
                       <div className="bg-red-500/10 border border-red-500/30 rounded p-2 w-full text-center mb-2">
-                        <p className="text-white/80 text-[10px] sm:text-xs">
+                        <p className="text-white text-[10px] sm:text-xs">
                           <strong className="text-red-300">TREAT AS EMERGENCY</strong>
                         </p>
                       </div>
                       <div className="h-3 w-0.5 bg-red-400/40" />
                       <div className="bg-red-500/10 border border-red-500/30 rounded p-2 w-full text-center">
-                        <p className="text-white/80 text-[10px] sm:text-xs">
+                        <p className="text-white text-[10px] sm:text-xs">
                           Initiate rescue plan. Call emergency services. Do NOT enter.
                         </p>
                       </div>
@@ -542,7 +542,7 @@ export default function ConfinedSpacesModule4Section3() {
                     Loss of Communication = Emergency
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If communication is lost at any point &mdash; the entrant does not respond to a
                   check-in, the radio goes silent, or the tug-line signals stop &mdash; it must be{' '}
                   <strong className="text-white">treated as an emergency immediately</strong>. There
@@ -587,7 +587,7 @@ export default function ConfinedSpacesModule4Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Personal Gas Monitor Requirements
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -630,7 +630,7 @@ export default function ConfinedSpacesModule4Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Alarm Actions</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If the personal gas monitor triggers{' '}
                   <strong className="text-white">any alarm</strong> &mdash; low oxygen, high
                   flammable gas, high toxic gas, or any combination &mdash; the correct action is{' '}
@@ -680,7 +680,7 @@ export default function ConfinedSpacesModule4Section3() {
                   <Clock className="h-4 w-4 inline-block mr-2 -mt-0.5 text-cyan-400" />
                   Factors That Determine Time Limits
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -734,7 +734,7 @@ export default function ConfinedSpacesModule4Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">No Extensions Inside the Space</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   When the agreed time limit expires, the entrant{' '}
                   <strong className="text-white">must exit the space</strong>, regardless of whether
                   the task is complete. The top person is responsible for enforcing this.
@@ -771,7 +771,7 @@ export default function ConfinedSpacesModule4Section3() {
                   <Users className="h-4 w-4 inline-block mr-2 -mt-0.5 text-cyan-400" />
                   Work Rotation Principles
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -844,7 +844,7 @@ export default function ConfinedSpacesModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Tool and Equipment Rules</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -885,7 +885,7 @@ export default function ConfinedSpacesModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Material Transfer In and Out</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -918,12 +918,12 @@ export default function ConfinedSpacesModule4Section3() {
                 <p className="text-sm font-medium text-cyan-400 mb-3">
                   Working Posture and Ergonomics
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Confined spaces impose severe restrictions on working posture. Entrants may need
                   to work in kneeling, crouching, lying, or overhead positions for extended periods.
                   This creates specific risks:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -986,7 +986,7 @@ export default function ConfinedSpacesModule4Section3() {
                       </span>
                       <div>
                         <p className="text-sm font-medium text-red-300">Specific Hot Work Permit</p>
-                        <p className="text-xs text-white/70 mt-1">
+                        <p className="text-xs text-white mt-1">
                           A separate hot work permit is required in addition to the confined-space
                           entry permit.
                         </p>
@@ -1000,7 +1000,7 @@ export default function ConfinedSpacesModule4Section3() {
                       </span>
                       <div>
                         <p className="text-sm font-medium text-red-300">Gas-Free Certificate</p>
-                        <p className="text-xs text-white/70 mt-1">
+                        <p className="text-xs text-white mt-1">
                           Confirms the atmosphere is free from flammable gases and vapours before
                           ignition sources are introduced.
                         </p>
@@ -1014,7 +1014,7 @@ export default function ConfinedSpacesModule4Section3() {
                       </span>
                       <div>
                         <p className="text-sm font-medium text-red-300">Dedicated Fire Watch</p>
-                        <p className="text-xs text-white/70 mt-1">
+                        <p className="text-xs text-white mt-1">
                           A fire watch must remain in position during hot work and for 30&ndash;60
                           minutes afterwards to detect smouldering or delayed ignition.
                         </p>
@@ -1028,7 +1028,7 @@ export default function ConfinedSpacesModule4Section3() {
                       </span>
                       <div>
                         <p className="text-sm font-medium text-red-300">Additional Ventilation</p>
-                        <p className="text-xs text-white/70 mt-1">
+                        <p className="text-xs text-white mt-1">
                           Increased mechanical ventilation to remove welding fumes, heat, and any
                           combustion products from the space.
                         </p>
@@ -1044,7 +1044,7 @@ export default function ConfinedSpacesModule4Section3() {
                         <p className="text-sm font-medium text-red-300">
                           Fire Extinguisher Available
                         </p>
-                        <p className="text-xs text-white/70 mt-1">
+                        <p className="text-xs text-white mt-1">
                           A suitable fire extinguisher must be immediately available at the entry
                           point, and the entrant must know where it is.
                         </p>
@@ -1060,7 +1060,7 @@ export default function ConfinedSpacesModule4Section3() {
                         <p className="text-sm font-medium text-red-300">
                           Continuous Atmospheric Monitoring
                         </p>
-                        <p className="text-xs text-white/70 mt-1">
+                        <p className="text-xs text-white mt-1">
                           Monitoring must continue throughout the hot work to detect any flammable
                           gases released by heating residual materials.
                         </p>
@@ -1075,7 +1075,7 @@ export default function ConfinedSpacesModule4Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Hidden Flammable Residues</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Even after thorough cleaning and a satisfactory gas-free test, residual flammable
                   materials can be trapped in crevices, behind linings, in rust scale, or absorbed
                   into coatings inside the space. When heat is applied during hot work, these
@@ -1113,7 +1113,7 @@ export default function ConfinedSpacesModule4Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Records Maintained During Entry
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1151,7 +1151,7 @@ export default function ConfinedSpacesModule4Section3() {
 
               <div className="bg-cyan-500/10 border border-cyan-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-cyan-400 mb-3">Shift Handover Procedure</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1196,7 +1196,7 @@ export default function ConfinedSpacesModule4Section3() {
                     Conditions for Immediate Evacuation
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The entrant must evacuate the confined space{' '}
                   <strong className="text-white">immediately</strong> if any of the following occur.
                   There is no discussion, no investigation, and no delay &mdash; leave first, assess
@@ -1207,7 +1207,7 @@ export default function ConfinedSpacesModule4Section3() {
                     <span className="flex items-center justify-center min-w-[24px] h-6 rounded bg-red-500/20 text-red-400 text-xs font-bold flex-shrink-0 mt-0.5">
                       1
                     </span>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-white">Gas monitor alarm:</strong> Any alarm on the
                       personal gas monitor (low O<sub>2</sub>, high LEL, high CO, high H<sub>2</sub>
                       S, or any other configured alert).
@@ -1217,7 +1217,7 @@ export default function ConfinedSpacesModule4Section3() {
                     <span className="flex items-center justify-center min-w-[24px] h-6 rounded bg-red-500/20 text-red-400 text-xs font-bold flex-shrink-0 mt-0.5">
                       2
                     </span>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-white">Loss of communication:</strong> If the entrant
                       cannot contact the top person, or the top person cannot contact the entrant,
                       by any method.
@@ -1227,7 +1227,7 @@ export default function ConfinedSpacesModule4Section3() {
                     <span className="flex items-center justify-center min-w-[24px] h-6 rounded bg-red-500/20 text-red-400 text-xs font-bold flex-shrink-0 mt-0.5">
                       3
                     </span>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-white">Change in conditions:</strong> Unexpected
                       noise, vibration (indicating plant start-up or structural movement), flooding
                       or water ingress, sudden temperature change, visible fumes, or any unusual
@@ -1238,7 +1238,7 @@ export default function ConfinedSpacesModule4Section3() {
                     <span className="flex items-center justify-center min-w-[24px] h-6 rounded bg-red-500/20 text-red-400 text-xs font-bold flex-shrink-0 mt-0.5">
                       4
                     </span>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-white">Illness or injury:</strong> If the entrant
                       feels unwell, dizzy, disorientated, nauseous, or suffers any injury, they must
                       exit immediately. Do not attempt to &ldquo;push through&rdquo;.
@@ -1248,7 +1248,7 @@ export default function ConfinedSpacesModule4Section3() {
                     <span className="flex items-center justify-center min-w-[24px] h-6 rounded bg-red-500/20 text-red-400 text-xs font-bold flex-shrink-0 mt-0.5">
                       5
                     </span>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-white">Top person instruction:</strong> If the top
                       person instructs the entrant to evacuate for any reason (they may have
                       detected a hazard from outside that the entrant is unaware of), the entrant
@@ -1259,7 +1259,7 @@ export default function ConfinedSpacesModule4Section3() {
                     <span className="flex items-center justify-center min-w-[24px] h-6 rounded bg-red-500/20 text-red-400 text-xs font-bold flex-shrink-0 mt-0.5">
                       6
                     </span>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-white">Time limit reached:</strong> When the agreed
                       time limit expires, the entrant must exit. This is not a discretionary
                       decision &mdash; it is a mandatory requirement.
@@ -1288,7 +1288,7 @@ export default function ConfinedSpacesModule4Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1302,7 +1302,7 @@ export default function ConfinedSpacesModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-4-section-2">

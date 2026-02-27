@@ -268,7 +268,7 @@ const HNCModule6Section6_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section6">
@@ -290,7 +290,7 @@ const HNCModule6Section6_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Integrated Design Process
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Multi-disciplinary collaboration, early engagement, design workshops, BIM coordination,
             and value engineering for sustainable outcomes
           </p>
@@ -459,7 +459,7 @@ const HNCModule6Section6_3 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
               <p className="text-sm font-medium text-blue-400 mb-2">The MacLeamy Curve</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 The MacLeamy curve demonstrates that design effort applied early has the greatest
                 impact on project outcomes at the lowest cost. Moving effort forward (left on the
                 curve) increases ability to influence cost and performance while reducing the cost
@@ -574,7 +574,7 @@ const HNCModule6Section6_3 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
               <p className="text-sm font-medium text-green-400 mb-2">Workshop Best Practice</p>
-              <ul className="text-sm text-white/90 space-y-1.5 list-disc list-outside ml-5">
+              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                 <li className="pl-1">
                   <strong>Prepare:</strong> Circulate agenda, background information, and specific
                   questions in advance
@@ -692,14 +692,14 @@ const HNCModule6Section6_3 = () => {
               <p className="text-sm font-medium text-orange-400 mb-2">
                 Value Engineering: Right Approach
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Value engineering should optimise whole-life value, not simply reduce capital cost.
                 Effective VE maintains performance outcomes while finding more efficient solutions.
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-xs font-medium text-green-400 mb-1">Good VE Practice:</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Challenge assumptions, not outcomes</li>
                     <li>Consider whole-life cost</li>
                     <li>Protect defined performance targets</li>
@@ -709,7 +709,7 @@ const HNCModule6Section6_3 = () => {
                 </div>
                 <div>
                   <p className="text-xs font-medium text-red-400 mb-1">Poor VE Practice:</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Focus only on capital reduction</li>
                     <li>Remove renewable systems</li>
                     <li>Reduce insulation below target</li>
@@ -858,11 +858,11 @@ const HNCModule6Section6_3 = () => {
               <p className="text-sm font-medium text-purple-400 mb-2">
                 Addressing the Performance Gap
               </p>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 The performance gap - where buildings use 2-10 times more energy than predicted -
                 has multiple causes that soft landings helps address:
               </p>
-              <ul className="text-sm text-white/90 space-y-1.5 list-disc list-outside ml-5">
+              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                 <li className="pl-1">
                   <strong>Design assumptions:</strong> Unrealistic occupancy, equipment loads,
                   operating hours
@@ -903,7 +903,7 @@ const HNCModule6Section6_3 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Reality check:</strong> Buildings are used by people, maintained by FM teams,
               and operate in real weather - not the idealised conditions of design models. Soft
               landings acknowledges this gap and actively manages it.
@@ -929,8 +929,8 @@ const HNCModule6Section6_3 = () => {
                 <strong>Scenario:</strong> A commercial office project where MEP was engaged at
                 Stage 1 vs a similar project where engagement was delayed to Stage 3.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Project A: Early MEP Engagement (Stage 1)</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Project A: Early MEP Engagement (Stage 1)</p>
                 <p className="mt-2">MEP Input on Building Form:</p>
                 <p className="ml-4">- Optimised orientation for solar gain control</p>
                 <p className="ml-4">- Floor-to-ceiling heights allow natural ventilation</p>
@@ -939,7 +939,7 @@ const HNCModule6Section6_3 = () => {
                 <p className="mt-2 text-green-400">
                   Result: Mixed-mode HVAC, 40% reduction in cooling load
                 </p>
-                <p className="mt-3 text-white/60">Project B: Late MEP Engagement (Stage 3)</p>
+                <p className="mt-3 text-white">Project B: Late MEP Engagement (Stage 3)</p>
                 <p className="mt-2">MEP Response to Fixed Design:</p>
                 <p className="ml-4">- Deep plan requires full mechanical ventilation</p>
                 <p className="ml-4">- Low floor-to-floor constrains ductwork routing</p>
@@ -959,7 +959,7 @@ const HNCModule6Section6_3 = () => {
                 <strong>Scenario:</strong> Evaluate a VE proposal to substitute specified LED
                 luminaires with a cheaper alternative.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>VE Proposal Assessment Framework:</p>
                 <p className="mt-2">
                   Specified luminaire: £180/unit, 95 lm/W, 50,000hr life, 5yr warranty
@@ -971,7 +971,7 @@ const HNCModule6Section6_3 = () => {
                 <p className="ml-4">Additional replacements: 2× more = £60,000</p>
                 <p className="ml-4">Additional labour: £15,000</p>
                 <p className="ml-4">Carbon impact: +12 tonnes CO2</p>
-                <p className="mt-2 text-white/60">Net whole-life cost: +£90,000 vs specified</p>
+                <p className="mt-2 text-white">Net whole-life cost: +£90,000 vs specified</p>
                 <p className="mt-2 text-red-400">
                   Recommendation: REJECT - not value engineering, cost-cutting
                 </p>
@@ -986,7 +986,7 @@ const HNCModule6Section6_3 = () => {
                 <strong>Scenario:</strong> Analyse first-year energy data from a new office building
                 against design predictions.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Annual Energy Comparison:</p>
                 <p className="mt-2">| End Use | Predicted | Actual | Gap |</p>
                 <p>|--------------|-----------|---------|--------|</p>
@@ -1087,7 +1087,7 @@ const HNCModule6Section6_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1133,7 +1133,7 @@ const HNCModule6Section6_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section6">

@@ -260,7 +260,7 @@ const HNCModule8Section6_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section6">
@@ -282,7 +282,7 @@ const HNCModule8Section6_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             HVAC Electrical Requirements
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Electrical loads, power supplies, control wiring, cable containment, and installation
             standards for HVAC systems
           </p>
@@ -496,10 +496,10 @@ const HNCModule8Section6_1 = () => {
                   <li className="pl-1">Actuators and damper motors</li>
                 </ul>
                 <div className="mt-3 p-2 bg-black/30 rounded text-sm font-mono">
-                  <p className="text-white/60">Current calculation:</p>
+                  <p className="text-white">Current calculation:</p>
                   <p className="text-green-400">I = P / (V × pf)</p>
-                  <p className="text-white/80 mt-1">Example: 2.3kW, pf 0.85</p>
-                  <p className="text-white/80">I = 2300 / (230 × 0.85) = 11.8A</p>
+                  <p className="text-white mt-1">Example: 2.3kW, pf 0.85</p>
+                  <p className="text-white">I = 2300 / (230 × 0.85) = 11.8A</p>
                 </div>
               </div>
               <div className="p-4 rounded-lg bg-white/5">
@@ -512,10 +512,10 @@ const HNCModule8Section6_1 = () => {
                   <li className="pl-1">Motors &gt;3kW typically</li>
                 </ul>
                 <div className="mt-3 p-2 bg-black/30 rounded text-sm font-mono">
-                  <p className="text-white/60">Current calculation:</p>
+                  <p className="text-white">Current calculation:</p>
                   <p className="text-green-400">I = P / (√3 × V × pf)</p>
-                  <p className="text-white/80 mt-1">Example: 22kW, pf 0.85</p>
-                  <p className="text-white/80">I = 22000 / (1.732 × 400 × 0.85) = 37.3A</p>
+                  <p className="text-white mt-1">Example: 22kW, pf 0.85</p>
+                  <p className="text-white">I = 22000 / (1.732 × 400 × 0.85) = 37.3A</p>
                 </div>
               </div>
             </div>
@@ -663,7 +663,7 @@ const HNCModule8Section6_1 = () => {
                   <li className="pl-1">Run/trip indication lamps</li>
                   <li className="pl-1">Emergency stop circuits</li>
                 </ul>
-                <p className="text-sm text-white/70 mt-2">
+                <p className="text-sm text-white mt-2">
                   Requires same installation standards as power cables per BS 7671
                 </p>
               </div>
@@ -681,7 +681,7 @@ const HNCModule8Section6_1 = () => {
                   <li className="pl-1">Pressure transducers</li>
                   <li className="pl-1">Damper position feedback</li>
                 </ul>
-                <p className="text-sm text-white/70 mt-2">
+                <p className="text-sm text-white mt-2">
                   Must be segregated from Band II circuits per Regulation 528.1
                 </p>
               </div>
@@ -750,7 +750,7 @@ const HNCModule8Section6_1 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Design tip:</strong> Specify interposing relays between BMS outputs (typically
               24V) and mains-voltage starter coils. This provides galvanic isolation and prevents
               BMS damage from back-EMF or fault currents.
@@ -954,27 +954,27 @@ const HNCModule8Section6_1 = () => {
                 <strong>Scenario:</strong> Design the electrical supply for a 22kW AHU supply fan
                 motor with VSD control.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given Data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given Data:</p>
                 <p className="mt-2">Motor: 22kW, 400V 3-phase, pf 0.85</p>
                 <p>Starting method: VSD (Variable Speed Drive)</p>
                 <p>Cable route: 35m from MCC to motor</p>
-                <p className="mt-2 text-white/60">Step 1: Calculate Full Load Current</p>
+                <p className="mt-2 text-white">Step 1: Calculate Full Load Current</p>
                 <p>FLC = P / (√3 × V × pf)</p>
                 <p>FLC = 22,000 / (1.732 × 400 × 0.85)</p>
                 <p className="text-green-400">FLC = 37.3A</p>
-                <p className="mt-2 text-white/60">Step 2: Apply 125% Factor (Reg 433.3.1)</p>
+                <p className="mt-2 text-white">Step 2: Apply 125% Factor (Reg 433.3.1)</p>
                 <p>Minimum cable rating = 37.3 × 1.25</p>
                 <p className="text-green-400">= 46.6A</p>
-                <p className="mt-2 text-white/60">Step 3: Select Cable (SWA in tray)</p>
+                <p className="mt-2 text-white">Step 3: Select Cable (SWA in tray)</p>
                 <p>6mm² SWA = 41A (insufficient)</p>
                 <p className="text-green-400">10mm² SWA = 57A (adequate)</p>
-                <p className="mt-2 text-white/60">Step 4: Check Voltage Drop</p>
+                <p className="mt-2 text-white">Step 4: Check Voltage Drop</p>
                 <p>VD = (mV/A/m × I × L) / 1000</p>
                 <p>VD = (3.8 × 37.3 × 35) / 1000 = 4.96V</p>
                 <p>Percentage = 4.96 / 400 × 100 = 1.24%</p>
                 <p className="text-green-400">Within 5% limit - acceptable</p>
-                <p className="mt-2 text-white/60">Step 5: Protective Device Selection</p>
+                <p className="mt-2 text-white">Step 5: Protective Device Selection</p>
                 <p>VSD provides electronic overload protection</p>
                 <p>MCCB: 50A Type D (allows starting inrush)</p>
                 <p className="text-green-400">Final specification: 10mm² 4-core SWA, 50A MCCB</p>
@@ -989,8 +989,8 @@ const HNCModule8Section6_1 = () => {
                 <strong>Scenario:</strong> Calculate the maximum demand for an HVAC sub-distribution
                 board serving mixed plant.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Connected Load Schedule:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Connected Load Schedule:</p>
                 <p className="mt-2">Chiller No.1: 75kW (duty)</p>
                 <p>Chiller No.2: 75kW (standby)</p>
                 <p>CHW Pump P1: 7.5kW (duty)</p>
@@ -999,17 +999,17 @@ const HNCModule8Section6_1 = () => {
                 <p>AHU-02: 15kW</p>
                 <p>FCUs (×30): 30 × 0.15kW = 4.5kW</p>
                 <p>BMS Panel: 0.5kW</p>
-                <p className="mt-2 text-white/60">Total Connected: 203.5kW</p>
-                <p className="mt-2 text-white/60">Apply Diversity Factors:</p>
+                <p className="mt-2 text-white">Total Connected: 203.5kW</p>
+                <p className="mt-2 text-white">Apply Diversity Factors:</p>
                 <p>Chillers: 75kW × 1.0 (one operating) = 75kW</p>
                 <p>Pumps: 7.5kW × 1.0 (one operating) = 7.5kW</p>
                 <p>AHUs: 33.5kW × 0.9 = 30.2kW</p>
                 <p>FCUs: 4.5kW × 0.8 = 3.6kW</p>
                 <p>BMS: 0.5kW × 1.0 = 0.5kW</p>
                 <p className="mt-2 text-green-400">Maximum Demand = 116.8kW</p>
-                <p className="text-white/60 mt-2">At 400V 3-phase, pf 0.85:</p>
+                <p className="text-white mt-2">At 400V 3-phase, pf 0.85:</p>
                 <p className="text-green-400">Max current = 198A</p>
-                <p className="text-white/60 mt-1">Specify 250A sub-main with 200A incomer</p>
+                <p className="text-white mt-1">Specify 250A sub-main with 200A incomer</p>
               </div>
             </div>
 
@@ -1021,8 +1021,8 @@ const HNCModule8Section6_1 = () => {
                 <strong>Scenario:</strong> Define the BMS interface points for a typical AHU
                 connection.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">AHU-01 BMS Interface Schedule:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">AHU-01 BMS Interface Schedule:</p>
                 <p className="mt-2 font-bold text-white">Digital Inputs (to BMS):</p>
                 <p>DI-01: Supply fan run status (NO contact)</p>
                 <p>DI-02: Supply fan fault/trip (NC contact)</p>
@@ -1144,7 +1144,7 @@ const HNCModule8Section6_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1190,7 +1190,7 @@ const HNCModule8Section6_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section6">

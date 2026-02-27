@@ -87,7 +87,7 @@ const defectCodeConfig = {
     description: 'Not applicable',
     bgClass: 'bg-white/10',
     borderClass: 'border-white/20',
-    textClass: 'text-white/60',
+    textClass: 'text-white',
     icon: Minus,
   },
   LIM: {
@@ -141,12 +141,12 @@ const DefectObservationCard = ({
             <IconComponent className={cn('h-5 w-5', config.textClass)} />
             <div>
               <h4 className={cn('font-semibold text-sm', config.textClass)}>{config.label}</h4>
-              <p className="text-xs text-white/50">{config.description}</p>
+              <p className="text-xs text-white">{config.description}</p>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
-            <span className="text-xs text-white/40">#{index + 1}</span>
+            <span className="text-xs text-white">#{index + 1}</span>
             <Button
               variant="ghost"
               size="icon"
@@ -163,7 +163,7 @@ const DefectObservationCard = ({
       <div className="p-4 space-y-4">
         {/* Classification Chips */}
         <div>
-          <Label className="text-xs text-white/50 mb-2 block">Classification</Label>
+          <Label className="text-xs text-white mb-2 block">Classification</Label>
           <div className="flex flex-wrap gap-1.5">
             {(Object.keys(defectCodeConfig) as DefectObservation['defectCode'][]).map((code) => {
               const codeConfig = defectCodeConfig[code];
@@ -185,7 +185,7 @@ const DefectObservationCard = ({
                           'ring-2 ring-offset-2 ring-offset-background',
                           codeConfig.borderClass.replace('border-', 'ring-')
                         )
-                      : 'bg-white/5 border-white/10 text-white/50 hover:bg-white/10'
+                      : 'bg-white/5 border-white/10 text-white hover:bg-white/10'
                   )}
                 >
                   {code}
@@ -197,7 +197,7 @@ const DefectObservationCard = ({
 
         {/* Item/Location */}
         <div>
-          <Label className="text-xs text-white/50 mb-1.5 block">Item / Location</Label>
+          <Label className="text-xs text-white mb-1.5 block">Item / Location</Label>
           <Input
             placeholder="e.g., Consumer unit, Kitchen socket"
             value={defect.item}
@@ -207,13 +207,13 @@ const DefectObservationCard = ({
               onUpdate(defect.id, 'item', sanitizeTextInput(value));
             }}
             className="h-10 text-sm bg-white/5 border-white/10 focus:border-elec-yellow/50
-                       placeholder:text-white/30"
+                       placeholder:text-white"
           />
         </div>
 
         {/* Description */}
         <div>
-          <Label className="text-xs text-white/50 mb-1.5 block">
+          <Label className="text-xs text-white mb-1.5 block">
             {defect.defectCode === 'N/A'
               ? 'Reason for Not Applicable'
               : defect.defectCode === 'LIM'
@@ -236,14 +236,14 @@ const DefectObservationCard = ({
             }}
             rows={3}
             className="text-sm bg-white/5 border-white/10 focus:border-elec-yellow/50
-                       placeholder:text-white/30 resize-none"
+                       placeholder:text-white resize-none"
           />
         </div>
 
         {/* Recommendation */}
         {defect.defectCode !== 'N/A' && (
           <div>
-            <Label className="text-xs text-white/50 mb-1.5 block">
+            <Label className="text-xs text-white mb-1.5 block">
               {defect.defectCode === 'LIM' ? 'Further Action Required' : 'Recommendation'}
             </Label>
             <Textarea
@@ -260,7 +260,7 @@ const DefectObservationCard = ({
               }}
               rows={2}
               className="text-sm bg-white/5 border-white/10 focus:border-elec-yellow/50
-                         placeholder:text-white/30 resize-none"
+                         placeholder:text-white resize-none"
             />
           </div>
         )}
@@ -272,7 +272,7 @@ const DefectObservationCard = ({
               <BookOpen className="h-3.5 w-3.5 text-elec-yellow" />
               <span className="text-xs font-semibold text-white">BS 7671 References</span>
             </div>
-            <p className="text-xs text-white/70 font-mono leading-relaxed">{defect.regulation}</p>
+            <p className="text-xs text-white font-mono leading-relaxed">{defect.regulation}</p>
           </div>
         )}
 
@@ -302,11 +302,11 @@ const DefectObservationCard = ({
         {/* Photo Evidence */}
         <div className="pt-3 border-t border-white/5">
           <div className="flex items-center justify-between mb-3">
-            <Label className="text-xs text-white/50 flex items-center gap-1.5">
+            <Label className="text-xs text-white flex items-center gap-1.5">
               <Camera className="h-3.5 w-3.5" />
               Photo Evidence
             </Label>
-            <span className="text-xs text-white/30">
+            <span className="text-xs text-white">
               {photos.length} photo{photos.length !== 1 ? 's' : ''}
             </span>
           </div>
@@ -363,7 +363,7 @@ const DefectObservationCard = ({
               <span
                 className={cn(
                   'text-sm font-medium',
-                  defect.rectified ? 'text-green-400' : 'text-white/70'
+                  defect.rectified ? 'text-green-400' : 'text-white'
                 )}
               >
                 {defect.rectified ? 'Rectified during inspection' : 'Mark as rectified'}

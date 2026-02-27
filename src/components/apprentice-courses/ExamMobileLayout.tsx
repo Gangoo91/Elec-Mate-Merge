@@ -70,7 +70,7 @@ export const ExamMobileLayout = ({
       <div className="h-12 flex items-center px-3 bg-[#0d0d0d] border-b border-white/5 flex-shrink-0">
         {/* Back button */}
         <Link to={exitPath} className="p-2 -ml-2 touch-manipulation">
-          <ArrowLeft className="h-5 w-5 text-white/60" />
+          <ArrowLeft className="h-5 w-5 text-white" />
         </Link>
 
         {/* Question counter - tappable for grid */}
@@ -106,7 +106,7 @@ export const ExamMobileLayout = ({
           onClick={onPrevious}
           disabled={currentQuestion === 0}
           variant="ghost"
-          className="h-10 px-4 text-white/70 disabled:opacity-30 touch-manipulation active:scale-95"
+          className="h-10 px-4 text-white disabled:opacity-30 touch-manipulation active:scale-95"
         >
           <ArrowLeft className="h-4 w-4 mr-1" />
           Prev
@@ -115,7 +115,7 @@ export const ExamMobileLayout = ({
         <Button
           onClick={onToggleFlag}
           variant="ghost"
-          className={`h-10 w-10 p-0 touch-manipulation active:scale-95 ${isFlagged ? 'text-elec-yellow' : 'text-white/40'}`}
+          className={`h-10 w-10 p-0 touch-manipulation active:scale-95 ${isFlagged ? 'text-elec-yellow' : 'text-white'}`}
         >
           <Flag className={`h-5 w-5 ${isFlagged ? 'fill-current' : ''}`} />
         </Button>
@@ -159,7 +159,7 @@ export const ExamMobileLayout = ({
                 )}
               </div>
             </div>
-            <p className="text-sm text-white/60">
+            <p className="text-sm text-white">
               {answeredQuestions} answered • {flaggedQuestions.size} flagged
             </p>
           </SheetHeader>
@@ -182,7 +182,7 @@ export const ExamMobileLayout = ({
                       ? 'bg-elec-yellow text-black border-elec-yellow'
                       : isAnswered
                         ? 'bg-green-500/20 text-green-400 border-green-500/40'
-                        : 'bg-white/5 text-white/60 border-white/10'
+                        : 'bg-white/5 text-white border-white/10'
                   }`}
                 >
                   {index + 1}

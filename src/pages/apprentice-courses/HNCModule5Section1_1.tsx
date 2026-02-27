@@ -255,7 +255,7 @@ const HNCModule5Section1_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section1">
@@ -277,7 +277,7 @@ const HNCModule5Section1_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Work Breakdown Structure
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             WBS development, coding systems, hierarchical decomposition, and scope definition for
             building services projects
           </p>
@@ -579,23 +579,23 @@ const HNCModule5Section1_1 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">WBS Code Structure Example</p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Project:</span>{' '}
+                  <span className="text-white">Project:</span>{' '}
                   <span className="text-white">1</span> = Hospital MEP
                 </p>
                 <p>
-                  <span className="text-white/60">Phase:</span>{' '}
+                  <span className="text-white">Phase:</span>{' '}
                   <span className="text-white">1.3</span> = Installation
                 </p>
                 <p>
-                  <span className="text-white/60">System:</span>{' '}
+                  <span className="text-white">System:</span>{' '}
                   <span className="text-white">1.3.1</span> = Electrical
                 </p>
                 <p>
-                  <span className="text-white/60">Subsystem:</span>{' '}
+                  <span className="text-white">Subsystem:</span>{' '}
                   <span className="text-white">1.3.1.2</span> = LV Distribution
                 </p>
                 <p>
-                  <span className="text-white/60">Work Package:</span>{' '}
+                  <span className="text-white">Work Package:</span>{' '}
                   <span className="text-white">1.3.1.2.05</span> = DB-L2-01 Installation
                 </p>
               </div>
@@ -710,7 +710,7 @@ const HNCModule5Section1_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">1.0 Electrical Installation</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>1.1 HV Installation</li>
                     <li>1.2 LV Distribution</li>
                     <li>1.3 Lighting Systems</li>
@@ -723,7 +723,7 @@ const HNCModule5Section1_1 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">2.0 Mechanical Installation</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>2.1 Heating Systems</li>
                     <li>2.2 Cooling Systems</li>
                     <li>2.3 Ventilation</li>
@@ -815,7 +815,7 @@ const HNCModule5Section1_1 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Interface management:</strong> Create explicit work packages for system
               interfaces (e.g., "BMS to HVAC control wiring") to ensure these critical connections
               are not overlooked.
@@ -841,8 +841,8 @@ const HNCModule5Section1_1 = () => {
                 <strong>Scenario:</strong> Develop Level 2-3 WBS for a 5-storey office electrical
                 installation.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Level 1: Electrical Installation</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Level 1: Electrical Installation</p>
                 <p className="mt-2">Level 2 Decomposition:</p>
                 <p className="ml-4">1.1 Main Intake and HV (if applicable)</p>
                 <p className="ml-4">1.2 LV Distribution</p>
@@ -868,7 +868,7 @@ const HNCModule5Section1_1 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Map WBS codes to company cost codes for an MEP project.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>WBS Code | Cost Code | Description</p>
                 <p>---------|-----------|-------------</p>
                 <p>1.2.1 | E-510-001 | Main switchboard supply & install</p>
@@ -876,7 +876,7 @@ const HNCModule5Section1_1 = () => {
                 <p>1.2.2 | E-520-002 | Submain cables - materials</p>
                 <p>1.2.3 | E-530-001 | Distribution boards - supply</p>
                 <p>1.2.3 | E-530-002 | Distribution boards - install</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Note: Multiple cost codes can roll up to single WBS
                 </p>
                 <p className="text-green-400">
@@ -892,7 +892,7 @@ const HNCModule5Section1_1 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Verify WBS completeness for lighting installation scope.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>1.3 General Lighting (check against specification):</p>
                 <p className="mt-2">Specification requirements:</p>
                 <p className="ml-4">- LED luminaires throughout</p>
@@ -987,7 +987,7 @@ const HNCModule5Section1_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1033,7 +1033,7 @@ const HNCModule5Section1_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section1">

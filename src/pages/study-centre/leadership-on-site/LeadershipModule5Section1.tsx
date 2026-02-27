@@ -196,7 +196,7 @@ export default function LeadershipModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-5">
@@ -219,7 +219,7 @@ export default function LeadershipModule5Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Planning and Organising the Work
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How effective planning separates competent supervisors from the rest &mdash; programmes,
             look-ahead planning, resource management, and adapting when reality changes
           </p>
@@ -324,7 +324,7 @@ export default function LeadershipModule5Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Signs of Good vs Poor Planning
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">Well-Planned Site</p>
                     <ul className="space-y-1.5">
@@ -379,7 +379,7 @@ export default function LeadershipModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">The Cost of Poor Planning</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -439,7 +439,7 @@ export default function LeadershipModule5Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   What a Supervisor Must Understand From the Programme
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -482,7 +482,7 @@ export default function LeadershipModule5Section1() {
                   <BookOpen className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Pro Tip</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Ask your project manager to spend 30 minutes walking you through the master
                   programme. Get a printed copy (or PDF) and highlight your sections. Mark your key
                   dates with a highlighter. Keep it visible &mdash; pinned up in your site cabin or
@@ -504,7 +504,7 @@ export default function LeadershipModule5Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Key Programme Terms Every Supervisor Should Know
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">Float / Slack</p>
                     <p>
@@ -564,11 +564,11 @@ export default function LeadershipModule5Section1() {
                     The Monday Morning Planning Routine
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Every Monday morning, before your team starts work, spend 30 minutes planning the
                   week. Ask yourself these questions:
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">What Needs Doing?</p>
                     <ul className="space-y-1.5">
@@ -653,7 +653,7 @@ export default function LeadershipModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Common Planning Mistakes</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The most common mistakes supervisors make with short-term planning: (1) not
                   planning at all and &ldquo;winging it&rdquo; each day, (2) planning but not
                   communicating the plan to the team, (3) failing to check progress during the week
@@ -684,10 +684,10 @@ export default function LeadershipModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">The Three Resource Types</p>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm text-white/80">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm text-white">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-400 text-xs font-semibold mb-1">People</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Match skill to task. Do not put an apprentice on complex terminations
                       unsupervised. Do not waste a qualified electrician on labouring tasks. Ensure
                       nobody is overloaded or underutilised. Monitor fatigue and rotate demanding
@@ -696,7 +696,7 @@ export default function LeadershipModule5Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-400 text-xs font-semibold mb-1">Materials</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Order in advance &mdash; lead times matter. Check deliveries against orders
                       (quantity, specification, condition). Store properly (dry, secure,
                       accessible). Track usage and reorder before you run out. Damaged or incorrect
@@ -707,7 +707,7 @@ export default function LeadershipModule5Section1() {
                     <p className="text-rose-400 text-xs font-semibold mb-1">
                       Plant &amp; Equipment
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Book in advance (MEWPs, hoists, generators). Check condition before use.
                       Ensure operators hold valid certification (CPCS, IPAF, PASMA). Report defects
                       immediately. Return on time &mdash; hire charges add up quickly.
@@ -723,7 +723,7 @@ export default function LeadershipModule5Section1() {
                     Common Certifications to Check
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Before allowing anyone to operate plant or equipment, verify their certification:
                   <strong className="text-white"> CPCS</strong> (Construction Plant Competence
                   Scheme) for plant such as excavators and cranes;{' '}
@@ -770,7 +770,7 @@ export default function LeadershipModule5Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   The OODA Loop &mdash; Rapid Decision-Making
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Originally developed by military strategist Colonel John Boyd, the OODA loop is a
                   powerful framework for making rapid decisions when conditions change:
                 </p>
@@ -778,26 +778,26 @@ export default function LeadershipModule5Section1() {
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-2xl font-bold text-rose-400">O</p>
                     <p className="text-white font-medium text-xs mt-1">Observe</p>
-                    <p className="text-white/80 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       What has changed? What is the new situation?
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-2xl font-bold text-rose-400">O</p>
                     <p className="text-white font-medium text-xs mt-1">Orient</p>
-                    <p className="text-white/80 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       What does it mean? What are the implications?
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-2xl font-bold text-rose-400">D</p>
                     <p className="text-white font-medium text-xs mt-1">Decide</p>
-                    <p className="text-white/80 text-xs mt-1">What is the best course of action?</p>
+                    <p className="text-white text-xs mt-1">What is the best course of action?</p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-2xl font-bold text-rose-400">A</p>
                     <p className="text-white font-medium text-xs mt-1">Act</p>
-                    <p className="text-white/80 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Implement and then repeat the cycle
                     </p>
                   </div>
@@ -820,7 +820,7 @@ export default function LeadershipModule5Section1() {
                     Protect Yourself &mdash; Keep Records
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Always keep records of delays and their causes. Note the date, what happened, who
                   was informed, and what the impact was. Take photographs. Send confirmation emails.
                   This protects you and your employer in contractual disputes and delay claims. A
@@ -844,7 +844,7 @@ export default function LeadershipModule5Section1() {
                 team&rsquo;s productivity, safety, and morale. The key points from this section are:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -896,7 +896,7 @@ export default function LeadershipModule5Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Planning Checklist &mdash; Use Every Monday
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>Review master programme &mdash; are you on track?</span>
@@ -947,7 +947,7 @@ export default function LeadershipModule5Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -961,7 +961,7 @@ export default function LeadershipModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-5">

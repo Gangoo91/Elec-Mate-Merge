@@ -265,7 +265,7 @@ const Level3Module3Section6_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section6">
@@ -333,11 +333,11 @@ const Level3Module3Section6_5 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Example 1: Kitchen Socket Radial
               </p>
-              <p className="text-xs text-white/90 mb-2">
+              <p className="text-xs text-white mb-2">
                 A 20A radial circuit serves kitchen sockets. Cable: 2.5mm sq flat twin (mV/A/m =
                 18). Length: 22m.
               </p>
-              <div className="text-xs text-white/80 space-y-2 font-mono">
+              <div className="text-xs text-white space-y-2 font-mono">
                 <p>
                   <strong>Formula:</strong> Vd = (mV/A/m x I x L) / 1000
                 </p>
@@ -358,11 +358,11 @@ const Level3Module3Section6_5 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Example 2: Bedroom Lighting Circuit
               </p>
-              <p className="text-xs text-white/90 mb-2">
+              <p className="text-xs text-white mb-2">
                 Lighting circuit supplies 5 bedrooms. Cable: 1.5mm sq (mV/A/m = 29). Total run to
                 furthest point: 35m. Design current: 5A.
               </p>
-              <div className="text-xs text-white/80 space-y-2 font-mono">
+              <div className="text-xs text-white space-y-2 font-mono">
                 <p>
                   <strong>Formula:</strong> Vd = (mV/A/m x I x L) / 1000
                 </p>
@@ -383,11 +383,11 @@ const Level3Module3Section6_5 = () => {
               <p className="text-sm font-medium text-red-400 mb-2">
                 Example 3: Non-Compliant Scenario
               </p>
-              <p className="text-xs text-white/90 mb-2">
+              <p className="text-xs text-white mb-2">
                 Garage lighting circuit. Cable: 1.5mm sq (mV/A/m = 29). Length: 28m. Design current:
                 10A.
               </p>
-              <div className="text-xs text-white/80 space-y-2 font-mono">
+              <div className="text-xs text-white space-y-2 font-mono">
                 <p>
                   <strong>Formula:</strong> Vd = (mV/A/m x I x L) / 1000
                 </p>
@@ -401,10 +401,10 @@ const Level3Module3Section6_5 = () => {
                   <strong>Limit:</strong> Lighting circuit = 6.9V (3%)
                 </p>
                 <p className="text-red-400 mt-2">8.12V EXCEEDS 6.9V - NON-COMPLIANT</p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Solution: Increase to 2.5mm sq cable (mV/A/m = 18)
                 </p>
-                <p className="text-white/60">New Vd = (18 x 10 x 28) / 1000 = 5.04V - COMPLIANT</p>
+                <p className="text-white">New Vd = (18 x 10 x 28) / 1000 = 5.04V - COMPLIANT</p>
               </div>
             </div>
 
@@ -434,10 +434,10 @@ const Level3Module3Section6_5 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Example 4: Detached Garage Supply
               </p>
-              <p className="text-xs text-white/90 mb-2">
+              <p className="text-xs text-white mb-2">
                 Sub-main to garage: 6mm sq SWA (mV/A/m = 7.3). Length: 30m. Maximum demand: 32A.
               </p>
-              <div className="text-xs text-white/80 space-y-2 font-mono">
+              <div className="text-xs text-white space-y-2 font-mono">
                 <p>
                   <strong>Formula:</strong> Vd = (mV/A/m x I x L) / 1000
                 </p>
@@ -451,7 +451,7 @@ const Level3Module3Section6_5 = () => {
                   <strong>Limit:</strong> Power circuit = 11.5V (5%)
                 </p>
                 <p className="text-green-400 mt-2">7.01V is less than 11.5V - COMPLIANT</p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Note: This leaves 11.5 - 7.01 = 4.49V for final circuits in the garage
                 </p>
               </div>
@@ -461,11 +461,11 @@ const Level3Module3Section6_5 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Example 5: Garden Office with EV Charger
               </p>
-              <p className="text-xs text-white/90 mb-2">
+              <p className="text-xs text-white mb-2">
                 Sub-main to garden office: 10mm sq SWA (mV/A/m = 4.4). Length: 40m. Total load: 50A
                 (including 32A EV charger).
               </p>
-              <div className="text-xs text-white/80 space-y-2 font-mono">
+              <div className="text-xs text-white space-y-2 font-mono">
                 <p>
                   <strong>Formula:</strong> Vd = (mV/A/m x I x L) / 1000
                 </p>
@@ -479,7 +479,7 @@ const Level3Module3Section6_5 = () => {
                   <strong>Limit:</strong> Power circuit = 11.5V (5%)
                 </p>
                 <p className="text-green-400 mt-2">8.8V is less than 11.5V - COMPLIANT</p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Remaining for final circuits: 11.5 - 8.8 = 2.7V
                 </p>
                 <p className="text-yellow-400 mt-1">
@@ -503,7 +503,7 @@ const Level3Module3Section6_5 = () => {
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/5">
                       <td className="py-2">4</td>
                       <td className="py-2">11</td>
@@ -529,7 +529,7 @@ const Level3Module3Section6_5 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Design Consideration:</strong> For outbuilding supplies, always calculate the
               sub-main drop and ensure adequate margin remains for final circuits within the
               outbuilding.
@@ -556,11 +556,11 @@ const Level3Module3Section6_5 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Example 6: Warehouse Distribution Circuit
               </p>
-              <p className="text-xs text-white/90 mb-2">
+              <p className="text-xs text-white mb-2">
                 Sub-main from main switchboard to distribution board: 25mm sq SWA (mV/A/m = 1.75).
                 Length: 60m. Load: 80A.
               </p>
-              <div className="text-xs text-white/80 space-y-2 font-mono">
+              <div className="text-xs text-white space-y-2 font-mono">
                 <p>
                   <strong>Formula:</strong> Vd = (mV/A/m x I x L) / 1000
                 </p>
@@ -574,7 +574,7 @@ const Level3Module3Section6_5 = () => {
                   <strong>Limit:</strong> Power circuit = 11.5V (5%)
                 </p>
                 <p className="text-green-400 mt-2">8.4V is less than 11.5V - COMPLIANT</p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Remaining for final circuits: 11.5 - 8.4 = 3.1V
                 </p>
               </div>
@@ -584,11 +584,11 @@ const Level3Module3Section6_5 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Example 7: Three-Phase Motor Circuit
               </p>
-              <p className="text-xs text-white/90 mb-2">
+              <p className="text-xs text-white mb-2">
                 Three-phase 400V supply to motor. Cable: 6mm sq (mV/A/m = 7.3). Length: 25m. Motor
                 FLC: 20A per phase.
               </p>
-              <div className="text-xs text-white/80 space-y-2 font-mono">
+              <div className="text-xs text-white space-y-2 font-mono">
                 <p>
                   <strong>Note:</strong> For three-phase balanced loads, use standard formula with
                   line current
@@ -613,11 +613,11 @@ const Level3Module3Section6_5 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Example 8: Retail Unit Lighting
               </p>
-              <p className="text-xs text-white/90 mb-2">
+              <p className="text-xs text-white mb-2">
                 Shop floor lighting circuit. Cable: 2.5mm sq (mV/A/m = 18). Total run: 45m. Design
                 current: 12A.
               </p>
-              <div className="text-xs text-white/80 space-y-2 font-mono">
+              <div className="text-xs text-white space-y-2 font-mono">
                 <p>
                   <strong>Formula:</strong> Vd = (mV/A/m x I x L) / 1000
                 </p>
@@ -631,8 +631,8 @@ const Level3Module3Section6_5 = () => {
                   <strong>Limit:</strong> Lighting circuit = 6.9V (3%)
                 </p>
                 <p className="text-red-400 mt-2">9.72V EXCEEDS 6.9V - NON-COMPLIANT</p>
-                <p className="text-white/60 mt-2">Solution: Increase to 4mm sq (mV/A/m = 11)</p>
-                <p className="text-white/60">New Vd = (11 x 12 x 45) / 1000 = 5.94V - COMPLIANT</p>
+                <p className="text-white mt-2">Solution: Increase to 4mm sq (mV/A/m = 11)</p>
+                <p className="text-white">New Vd = (11 x 12 x 45) / 1000 = 5.94V - COMPLIANT</p>
               </div>
             </div>
 
@@ -663,11 +663,11 @@ const Level3Module3Section6_5 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Example 9: Ring Final Circuit
               </p>
-              <p className="text-xs text-white/90 mb-2">
+              <p className="text-xs text-white mb-2">
                 Ring circuit total length: 64m. Cable: 2.5mm sq (mV/A/m = 18). Maximum load at any
                 point: 32A.
               </p>
-              <div className="text-xs text-white/80 space-y-2 font-mono">
+              <div className="text-xs text-white space-y-2 font-mono">
                 <p>
                   <strong>Ring Circuit Rule:</strong> Effective length = total length / 4
                 </p>
@@ -694,11 +694,11 @@ const Level3Module3Section6_5 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Example 10: Combined Distribution and Final Circuit
               </p>
-              <p className="text-xs text-white/90 mb-2">
+              <p className="text-xs text-white mb-2">
                 Sub-main to kitchen DB: 10mm sq, 15m, 50A (mV/A/m = 4.4). Final circuit to oven: 6mm
                 sq, 8m, 30A (mV/A/m = 7.3).
               </p>
-              <div className="text-xs text-white/80 space-y-2 font-mono">
+              <div className="text-xs text-white space-y-2 font-mono">
                 <p>
                   <strong>Step 1: Distribution Circuit Drop</strong>
                 </p>
@@ -723,7 +723,7 @@ const Level3Module3Section6_5 = () => {
 
             <div className="p-4 rounded-lg bg-transparent border border-white/10 my-6">
               <p className="text-sm font-medium text-white mb-2">Exam Calculation Checklist:</p>
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow/70">1.</span>
                   <span>State the formula clearly: Vd = (mV/A/m x I x L) / 1000</span>
@@ -751,7 +751,7 @@ const Level3Module3Section6_5 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Remember:</strong> In exams, method marks are awarded for showing correct
               working even if the final answer has a minor arithmetic error. Always show your full
               working.
@@ -811,7 +811,7 @@ const Level3Module3Section6_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -858,7 +858,7 @@ const Level3Module3Section6_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section6-4">

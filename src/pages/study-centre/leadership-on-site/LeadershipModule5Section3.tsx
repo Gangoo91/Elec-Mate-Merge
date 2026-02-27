@@ -202,7 +202,7 @@ export default function LeadershipModule5Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-5-section-2">
@@ -225,7 +225,7 @@ export default function LeadershipModule5Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Health, Safety, and Welfare as a Leader
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Your legal duties as a supervisor, leading by example, building safety culture beyond
             mere compliance, and having the courage to stop unsafe work
           </p>
@@ -314,10 +314,10 @@ export default function LeadershipModule5Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Key Legislation Affecting Supervisors
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm text-white/80">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm text-white">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-400 text-xs font-semibold mb-1">CDM 2015</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Construction (Design and Management) Regulations 2015. Places duties on all
                       who carry out construction work, including ensuring competence, cooperation,
                       and coordination.
@@ -325,7 +325,7 @@ export default function LeadershipModule5Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-400 text-xs font-semibold mb-1">HASAWA 1974</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Health and Safety at Work Act. Section 7: duty to take reasonable care.
                       Section 37: personal liability for managers/officers. The foundation of all UK
                       health and safety law.
@@ -333,7 +333,7 @@ export default function LeadershipModule5Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-rose-400 text-xs font-semibold mb-1">MHSWR 1999</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Management of Health and Safety at Work Regulations. Requires risk
                       assessments, competent persons, emergency procedures, information and training
                       for employees.
@@ -347,8 +347,8 @@ export default function LeadershipModule5Section3() {
                   <Scale className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Your Specific Duties</p>
                 </div>
-                <p className="text-sm text-white/80 mb-2">As a supervisor, you must ensure:</p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <p className="text-sm text-white mb-2">As a supervisor, you must ensure:</p>
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>Safe systems of work are followed by everyone in your work area</span>
@@ -384,7 +384,7 @@ export default function LeadershipModule5Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Your Best Protection: Demonstrable Competence
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -442,7 +442,7 @@ export default function LeadershipModule5Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   The Ripple Effect of Your Behaviour
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -486,7 +486,7 @@ export default function LeadershipModule5Section3() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-500 mb-2">The Reverse Is Also True</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Consistent safety leadership creates a safety culture that runs almost on
                   autopilot. When a supervisor always wears PPE, always addresses hazards, always
                   speaks up, and always follows the rules &mdash; even when it is inconvenient
@@ -500,7 +500,7 @@ export default function LeadershipModule5Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Practical Examples of Leading by Example
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -560,7 +560,7 @@ export default function LeadershipModule5Section3() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <p className="text-rose-400 font-semibold text-sm mb-2">Safety Compliance</p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                         <span>
@@ -588,7 +588,7 @@ export default function LeadershipModule5Section3() {
                   </div>
                   <div>
                     <p className="text-green-400 font-semibold text-sm mb-2">Safety Culture</p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                         <span>
@@ -642,7 +642,7 @@ export default function LeadershipModule5Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Building Safety Culture &mdash; Practical Steps
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -707,7 +707,7 @@ export default function LeadershipModule5Section3() {
                     What Your Induction Must Cover
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -759,7 +759,7 @@ export default function LeadershipModule5Section3() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Make Inductions Meaningful</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Do not just read from a script and get them to sign. Ask questions to check
                   understanding: &ldquo;Where would you go if the fire alarm sounded?&rdquo;
                   &ldquo;What would you do if you spotted a damaged cable?&rdquo; Update inductions
@@ -773,12 +773,12 @@ export default function LeadershipModule5Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Toolbox Talks &mdash; Keeping Safety Fresh
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   In addition to inductions, regular toolbox talks keep safety awareness alive. A
                   good toolbox talk is 10&ndash;15 minutes, focused on a single topic, and
                   interactive.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>Deliver at least one toolbox talk per week to your team</span>
@@ -830,7 +830,7 @@ export default function LeadershipModule5Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">How to Stop Unsafe Work</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -872,7 +872,7 @@ export default function LeadershipModule5Section3() {
                     Never Allow Programme Pressure to Override Safety
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If you are ever pressured to compromise on safety &mdash; by a project manager, a
                   client, or anyone else &mdash; escalate immediately. Document the pressure in
                   writing. Contact your employer&rsquo;s health and safety manager. If necessary,
@@ -917,7 +917,7 @@ export default function LeadershipModule5Section3() {
                 The key points from this section are:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -988,7 +988,7 @@ export default function LeadershipModule5Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1002,7 +1002,7 @@ export default function LeadershipModule5Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-5-section-2">

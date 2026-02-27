@@ -291,7 +291,7 @@ const SupervisorVerificationPage = () => {
       <div className="min-h-screen bg-[#0a0e17] flex items-center justify-center">
         <div className="text-center">
           <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4 text-emerald-400" />
-          <p className="text-white/60 text-sm">Loading verification...</p>
+          <p className="text-white text-sm">Loading verification...</p>
         </div>
       </div>
     );
@@ -306,7 +306,7 @@ const SupervisorVerificationPage = () => {
             <AlertTriangle className="h-8 w-8 text-red-400" />
           </div>
           <h1 className="text-xl font-bold text-white mb-2">Link Not Valid</h1>
-          <p className="text-white/50 text-sm">
+          <p className="text-white text-sm">
             {error || 'This verification link is invalid or has expired.'}
           </p>
         </div>
@@ -356,9 +356,9 @@ const SupervisorVerificationPage = () => {
               </span>
             </div>
             {verification.supervisor_company && (
-              <p className="text-xs text-white/50 ml-7">{verification.supervisor_company}</p>
+              <p className="text-xs text-white ml-7">{verification.supervisor_company}</p>
             )}
-            <p className="text-xs text-white/40 ml-7 mt-1">
+            <p className="text-xs text-white ml-7 mt-1">
               {new Date(verification.verified_at).toLocaleDateString('en-GB', {
                 day: 'numeric',
                 month: 'long',
@@ -368,7 +368,7 @@ const SupervisorVerificationPage = () => {
               })}
             </p>
             {verification.feedback_text && (
-              <div className="mt-3 ml-7 p-3 rounded-lg bg-white/5 text-sm text-white/70">
+              <div className="mt-3 ml-7 p-3 rounded-lg bg-white/5 text-sm text-white">
                 "{verification.feedback_text}"
               </div>
             )}
@@ -378,10 +378,10 @@ const SupervisorVerificationPage = () => {
           {verification.verification_hash && (
             <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10">
               <div className="flex items-center gap-2 mb-1">
-                <Hash className="h-3.5 w-3.5 text-white/40" />
-                <span className="text-xs font-medium text-white/40">Verification Hash</span>
+                <Hash className="h-3.5 w-3.5 text-white" />
+                <span className="text-xs font-medium text-white">Verification Hash</span>
               </div>
-              <p className="text-[10px] text-white/30 font-mono break-all">
+              <p className="text-[10px] text-white font-mono break-all">
                 {verification.verification_hash}
               </p>
             </div>
@@ -400,7 +400,7 @@ const SupervisorVerificationPage = () => {
 
           {/* Footer */}
           <div className="text-center pt-4">
-            <p className="text-[10px] text-white/20">
+            <p className="text-[10px] text-white">
               Powered by Elec-Mate | Tamper-Evident Verification
             </p>
           </div>
@@ -429,7 +429,7 @@ const SupervisorVerificationPage = () => {
           <h1 className="text-2xl font-bold text-white mb-2">
             {isTimeEntry ? 'Training Hours Verified' : 'Evidence Verified'}
           </h1>
-          <p className="text-white/50 text-sm mb-6">
+          <p className="text-white text-sm mb-6">
             Thank you, {supervisorName}. Your verification of {verification.apprentice_name}&apos;s{' '}
             {isTimeEntry ? 'training hours' : 'evidence'} has been recorded and is tamper-evident.
           </p>
@@ -440,11 +440,11 @@ const SupervisorVerificationPage = () => {
                 <Hash className="h-3.5 w-3.5 text-emerald-400" />
                 <span className="text-xs font-medium text-emerald-400">Verification Hash</span>
               </div>
-              <p className="text-[10px] text-white/40 font-mono break-all">{resultHash}</p>
+              <p className="text-[10px] text-white font-mono break-all">{resultHash}</p>
             </div>
           )}
 
-          <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-sm text-white/40">
+          <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-sm text-white">
             You can close this page now.
           </div>
         </motion.div>
@@ -469,7 +469,7 @@ const SupervisorVerificationPage = () => {
           <h1 className="text-xl font-bold text-white leading-tight mb-2">
             {isTimeEntry ? 'Training Hours Verification' : 'Witness Statement Request'}
           </h1>
-          <p className="text-sm text-white/50">
+          <p className="text-sm text-white">
             {verification.apprentice_name} has requested you verify the following{' '}
             {isTimeEntry ? 'training hours' : 'evidence from their apprenticeship portfolio'}.
           </p>
@@ -501,7 +501,7 @@ const SupervisorVerificationPage = () => {
               onChange={(e) => setConfirmed(e.target.checked)}
               className="mt-0.5 h-5 w-5 rounded border-emerald-500/40 text-emerald-500 focus:ring-emerald-500/40 accent-emerald-500"
             />
-            <span className="text-sm text-white/80 leading-relaxed">
+            <span className="text-sm text-white leading-relaxed">
               {isTimeEntry
                 ? 'I confirm this training was carried out under my supervision and the hours recorded are an accurate representation of the time spent.'
                 : 'I confirm this work was carried out under my supervision and the evidence presented is an accurate representation of the work performed.'}
@@ -510,9 +510,9 @@ const SupervisorVerificationPage = () => {
 
           {/* Supervisor name */}
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-white/60">Your Full Name *</label>
+            <label className="text-xs font-medium text-white">Your Full Name *</label>
             <div className="relative">
-              <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
+              <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
               <input
                 type="text"
                 value={supervisorName}
@@ -521,7 +521,7 @@ const SupervisorVerificationPage = () => {
                 className={cn(
                   'w-full h-12 pl-10 pr-4 rounded-xl text-sm',
                   'bg-white/[0.06] border border-white/10 text-white',
-                  'placeholder:text-white/30',
+                  'placeholder:text-white',
                   'focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500/40',
                   'touch-manipulation'
                 )}
@@ -531,9 +531,9 @@ const SupervisorVerificationPage = () => {
 
           {/* Company (optional) */}
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-white/60">Company (optional)</label>
+            <label className="text-xs font-medium text-white">Company (optional)</label>
             <div className="relative">
-              <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
+              <Building2 className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
               <input
                 type="text"
                 value={supervisorCompany}
@@ -542,7 +542,7 @@ const SupervisorVerificationPage = () => {
                 className={cn(
                   'w-full h-12 pl-10 pr-4 rounded-xl text-sm',
                   'bg-white/[0.06] border border-white/10 text-white',
-                  'placeholder:text-white/30',
+                  'placeholder:text-white',
                   'focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500/40',
                   'touch-manipulation'
                 )}
@@ -552,9 +552,9 @@ const SupervisorVerificationPage = () => {
 
           {/* Email (optional) */}
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-white/60">Email (optional)</label>
+            <label className="text-xs font-medium text-white">Email (optional)</label>
             <div className="relative">
-              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
+              <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
               <input
                 type="email"
                 value={supervisorEmail}
@@ -563,7 +563,7 @@ const SupervisorVerificationPage = () => {
                 className={cn(
                   'w-full h-12 pl-10 pr-4 rounded-xl text-sm',
                   'bg-white/[0.06] border border-white/10 text-white',
-                  'placeholder:text-white/30',
+                  'placeholder:text-white',
                   'focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500/40',
                   'touch-manipulation'
                 )}
@@ -573,9 +573,9 @@ const SupervisorVerificationPage = () => {
 
           {/* Feedback (optional) */}
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-white/60">Feedback (optional)</label>
+            <label className="text-xs font-medium text-white">Feedback (optional)</label>
             <div className="relative">
-              <MessageSquare className="absolute left-3 top-3 h-4 w-4 text-white/30" />
+              <MessageSquare className="absolute left-3 top-3 h-4 w-4 text-white" />
               <textarea
                 value={feedback}
                 onChange={(e) => setFeedback(e.target.value)}
@@ -584,7 +584,7 @@ const SupervisorVerificationPage = () => {
                 className={cn(
                   'w-full pl-10 pr-4 py-3 rounded-xl text-sm resize-none',
                   'bg-white/[0.06] border border-white/10 text-white',
-                  'placeholder:text-white/30',
+                  'placeholder:text-white',
                   'focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500/40',
                   'touch-manipulation'
                 )}
@@ -595,12 +595,12 @@ const SupervisorVerificationPage = () => {
           {/* Signature pad */}
           <div className="space-y-1.5">
             <div className="flex items-center justify-between">
-              <label className="text-xs font-medium text-white/60">Your Signature *</label>
+              <label className="text-xs font-medium text-white">Your Signature *</label>
               {hasDrawn && (
                 <button
                   type="button"
                   onClick={clearSignature}
-                  className="flex items-center gap-1 text-xs text-white/40 hover:text-white/60 touch-manipulation"
+                  className="flex items-center gap-1 text-xs text-white hover:text-white touch-manipulation"
                 >
                   <RotateCcw className="h-3 w-3" />
                   Clear
@@ -645,7 +645,7 @@ const SupervisorVerificationPage = () => {
               'w-full h-14 rounded-xl flex items-center justify-center gap-2',
               'text-base font-semibold transition-all touch-manipulation',
               submitting || !supervisorName.trim() || !confirmed || !hasDrawn
-                ? 'bg-white/10 text-white/30 cursor-not-allowed'
+                ? 'bg-white/10 text-white cursor-not-allowed'
                 : 'bg-emerald-500 text-white hover:bg-emerald-600 active:scale-[0.98] shadow-lg shadow-emerald-500/20'
             )}
           >
@@ -665,7 +665,7 @@ const SupervisorVerificationPage = () => {
 
         {/* Footer */}
         <div className="px-5 pb-8 text-center">
-          <p className="text-[10px] text-white/20">
+          <p className="text-[10px] text-white">
             Powered by Elec-Mate | Tamper-Evident Verification
           </p>
         </div>
@@ -690,26 +690,26 @@ function EvidenceSummary({
       <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4 space-y-3">
         <div className="flex items-center gap-3 text-sm">
           <div className="w-7 h-7 rounded-lg bg-white/[0.06] flex items-center justify-center shrink-0">
-            <User className="h-3.5 w-3.5 text-white/50" />
+            <User className="h-3.5 w-3.5 text-white" />
           </div>
-          <span className="text-white/70">{apprenticeName}</span>
+          <span className="text-white">{apprenticeName}</span>
         </div>
 
         {snapshot.site_name && (
           <div className="flex items-center gap-3 text-sm">
             <div className="w-7 h-7 rounded-lg bg-white/[0.06] flex items-center justify-center shrink-0">
-              <MapPin className="h-3.5 w-3.5 text-white/50" />
+              <MapPin className="h-3.5 w-3.5 text-white" />
             </div>
-            <span className="text-white/70">{snapshot.site_name}</span>
+            <span className="text-white">{snapshot.site_name}</span>
           </div>
         )}
 
         {snapshot.date && (
           <div className="flex items-center gap-3 text-sm">
             <div className="w-7 h-7 rounded-lg bg-white/[0.06] flex items-center justify-center shrink-0">
-              <Calendar className="h-3.5 w-3.5 text-white/50" />
+              <Calendar className="h-3.5 w-3.5 text-white" />
             </div>
-            <span className="text-white/70">
+            <span className="text-white">
               {new Date(snapshot.date).toLocaleDateString('en-GB', {
                 day: 'numeric',
                 month: 'long',
@@ -723,7 +723,7 @@ function EvidenceSummary({
           <div className="pt-2 border-t border-white/5">
             <h3 className="text-sm font-semibold text-white">{snapshot.title}</h3>
             {snapshot.description && (
-              <p className="text-xs text-white/50 mt-1 line-clamp-3">{snapshot.description}</p>
+              <p className="text-xs text-white mt-1 line-clamp-3">{snapshot.description}</p>
             )}
           </div>
         )}
@@ -733,8 +733,8 @@ function EvidenceSummary({
       {snapshot.tasks && snapshot.tasks.length > 0 && (
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <Wrench className="h-3.5 w-3.5 text-white/40" />
-            <span className="text-xs font-semibold text-white/40 uppercase tracking-wider">
+            <Wrench className="h-3.5 w-3.5 text-white" />
+            <span className="text-xs font-semibold text-white uppercase tracking-wider">
               Tasks Performed
             </span>
           </div>
@@ -755,8 +755,8 @@ function EvidenceSummary({
       {snapshot.skills && snapshot.skills.length > 0 && (
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <GraduationCap className="h-3.5 w-3.5 text-white/40" />
-            <span className="text-xs font-semibold text-white/40 uppercase tracking-wider">
+            <GraduationCap className="h-3.5 w-3.5 text-white" />
+            <span className="text-xs font-semibold text-white uppercase tracking-wider">
               Skills Demonstrated
             </span>
           </div>
@@ -777,8 +777,8 @@ function EvidenceSummary({
       {snapshot.photos && snapshot.photos.length > 0 && (
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <ImageIcon className="h-3.5 w-3.5 text-white/40" />
-            <span className="text-xs font-semibold text-white/40 uppercase tracking-wider">
+            <ImageIcon className="h-3.5 w-3.5 text-white" />
+            <span className="text-xs font-semibold text-white uppercase tracking-wider">
               Evidence Photos ({snapshot.photos.length})
             </span>
           </div>
@@ -796,12 +796,12 @@ function EvidenceSummary({
       {snapshot.learned && (
         <div className="space-y-2">
           <div className="flex items-center gap-2">
-            <GraduationCap className="h-3.5 w-3.5 text-white/40" />
-            <span className="text-xs font-semibold text-white/40 uppercase tracking-wider">
+            <GraduationCap className="h-3.5 w-3.5 text-white" />
+            <span className="text-xs font-semibold text-white uppercase tracking-wider">
               What Was Learned
             </span>
           </div>
-          <p className="text-sm text-white/60 leading-relaxed">{snapshot.learned}</p>
+          <p className="text-sm text-white leading-relaxed">{snapshot.learned}</p>
         </div>
       )}
     </div>
@@ -825,35 +825,35 @@ function TimeEntrySummary({
       <div className="rounded-xl bg-white/[0.04] border border-white/10 p-4 space-y-3">
         <div className="flex items-center gap-3 text-sm">
           <div className="w-7 h-7 rounded-lg bg-white/[0.06] flex items-center justify-center shrink-0">
-            <User className="h-3.5 w-3.5 text-white/50" />
+            <User className="h-3.5 w-3.5 text-white" />
           </div>
-          <span className="text-white/70">{apprenticeName}</span>
+          <span className="text-white">{apprenticeName}</span>
         </div>
 
         {snapshot.activity && (
           <div className="flex items-center gap-3 text-sm">
             <div className="w-7 h-7 rounded-lg bg-white/[0.06] flex items-center justify-center shrink-0">
-              <Wrench className="h-3.5 w-3.5 text-white/50" />
+              <Wrench className="h-3.5 w-3.5 text-white" />
             </div>
-            <span className="text-white/70">{snapshot.activity}</span>
+            <span className="text-white">{snapshot.activity}</span>
           </div>
         )}
 
         {snapshot.duration_minutes && (
           <div className="flex items-center gap-3 text-sm">
             <div className="w-7 h-7 rounded-lg bg-white/[0.06] flex items-center justify-center shrink-0">
-              <Clock className="h-3.5 w-3.5 text-white/50" />
+              <Clock className="h-3.5 w-3.5 text-white" />
             </div>
-            <span className="text-white/70">{formatDuration(snapshot.duration_minutes)}</span>
+            <span className="text-white">{formatDuration(snapshot.duration_minutes)}</span>
           </div>
         )}
 
         {snapshot.date && (
           <div className="flex items-center gap-3 text-sm">
             <div className="w-7 h-7 rounded-lg bg-white/[0.06] flex items-center justify-center shrink-0">
-              <Calendar className="h-3.5 w-3.5 text-white/50" />
+              <Calendar className="h-3.5 w-3.5 text-white" />
             </div>
-            <span className="text-white/70">
+            <span className="text-white">
               {new Date(snapshot.date + 'T00:00:00').toLocaleDateString('en-GB', {
                 day: 'numeric',
                 month: 'long',
@@ -865,7 +865,7 @@ function TimeEntrySummary({
 
         {snapshot.notes && (
           <div className="pt-2 border-t border-white/5">
-            <p className="text-xs text-white/50 leading-relaxed">{snapshot.notes}</p>
+            <p className="text-xs text-white leading-relaxed">{snapshot.notes}</p>
           </div>
         )}
       </div>

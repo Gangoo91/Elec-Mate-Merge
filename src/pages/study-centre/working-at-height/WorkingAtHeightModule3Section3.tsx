@@ -202,12 +202,12 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
         {open ? (
           <ChevronUp className="h-4 w-4 text-amber-400 flex-shrink-0" />
         ) : (
-          <ChevronDown className="h-4 w-4 text-white/40 flex-shrink-0" />
+          <ChevronDown className="h-4 w-4 text-white flex-shrink-0" />
         )}
       </button>
       {open && (
         <div className="px-4 pb-4 pt-0">
-          <p className="text-white/70 text-sm leading-relaxed">{answer}</p>
+          <p className="text-white text-sm leading-relaxed">{answer}</p>
         </div>
       )}
     </div>
@@ -232,7 +232,7 @@ export default function WorkingAtHeightModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-3">
@@ -258,7 +258,7 @@ export default function WorkingAtHeightModule3Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Fragile Surfaces & Roof Work
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
             How to identify fragile surfaces, the common materials that kill, the controls that
             prevent falls through roofs, and the specific hazards electricians face when working on
             roofs.
@@ -271,7 +271,7 @@ export default function WorkingAtHeightModule3Section3() {
             <p className="text-red-400 text-xs font-semibold uppercase tracking-wider mb-1">
               Critical Warning
             </p>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               You cannot always tell if a surface is fragile by looking at it. Assume unknown roof
               surfaces are fragile until confirmed safe.
             </p>
@@ -280,7 +280,7 @@ export default function WorkingAtHeightModule3Section3() {
             <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
               Key Guidance
             </p>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               HSG33 &ldquo;Safety in Roof Work&rdquo; — the HSE&rsquo;s primary guidance for
               managing roof work risks.
             </p>
@@ -289,7 +289,7 @@ export default function WorkingAtHeightModule3Section3() {
             <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
               The Biggest Killer
             </p>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Falls through roof lights and fragile roof sheeting are among the most common causes
               of fatal falls from height in the UK.
             </p>
@@ -298,7 +298,7 @@ export default function WorkingAtHeightModule3Section3() {
             <p className="text-amber-400 text-xs font-semibold uppercase tracking-wider mb-1">
               Electrician Relevance
             </p>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Solar PV, CCTV, external lighting, and lightning protection all involve working on
               roofs with potentially fragile surfaces.
             </p>
@@ -322,7 +322,7 @@ export default function WorkingAtHeightModule3Section3() {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                <span className="text-white/70 text-sm leading-relaxed">{outcome}</span>
+                <span className="text-white text-sm leading-relaxed">{outcome}</span>
               </div>
             ))}
           </div>
@@ -340,13 +340,13 @@ export default function WorkingAtHeightModule3Section3() {
               <h2 className="text-lg sm:text-xl font-bold text-white">
                 Fragile Surface Definition
               </h2>
-              <p className="text-white/50 text-sm">
+              <p className="text-white text-sm">
                 What makes a surface &ldquo;fragile&rdquo; in law
               </p>
             </div>
           </div>
           <div className="border-l-2 border-amber-500/30 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               The Work at Height Regulations 2005 define a fragile surface as:
             </p>
             <div className="rounded-xl border border-amber-500/20 bg-amber-500/5 p-4">
@@ -354,11 +354,11 @@ export default function WorkingAtHeightModule3Section3() {
                 &ldquo;A surface which would be liable to fail if any reasonably foreseeable loading
                 were to be applied to it.&rdquo;
               </p>
-              <p className="text-white/60 text-xs mt-2">
+              <p className="text-white text-xs mt-2">
                 — Work at Height Regulations 2005, Regulation 2
               </p>
             </div>
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               In practical terms, this means any surface that would not reliably support the weight
               of a person (approximately 100 kg as a design assumption) together with any tools,
               materials, or equipment they are carrying. The surface does not need to fail
@@ -371,7 +371,7 @@ export default function WorkingAtHeightModule3Section3() {
                 <ShieldAlert className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                 <span className="text-red-400 text-sm font-semibold">The Hidden Danger</span>
               </div>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Many fragile surfaces <strong className="text-white">look solid</strong>. A fibre
                 cement sheet may appear identical to a metal profile sheet from above. A roof light
                 covered in dirt or moss may be indistinguishable from the surrounding roof surface.
@@ -395,11 +395,11 @@ export default function WorkingAtHeightModule3Section3() {
             </span>
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-white">Common Fragile Materials</h2>
-              <p className="text-white/50 text-sm">Know the materials that kill</p>
+              <p className="text-white text-sm">Know the materials that kill</p>
             </div>
           </div>
           <div className="border-l-2 border-red-500/30 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               The following materials are classified as fragile and are responsible for the majority
               of falls-through-roof incidents in the UK. Learn to recognise them — your life may
               depend on it.
@@ -408,7 +408,7 @@ export default function WorkingAtHeightModule3Section3() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-4">
                 <h4 className="text-red-400 text-sm font-semibold mb-2">Fibre Cement Sheets</h4>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Corrugated or flat sheets made from cement reinforced with synthetic fibres (or
                   historically, asbestos fibres). Common on industrial units, farm buildings, and
                   older warehouses. Brittle when new; becomes progressively weaker with age,
@@ -419,7 +419,7 @@ export default function WorkingAtHeightModule3Section3() {
                 <h4 className="text-red-400 text-sm font-semibold mb-2">
                   Roof Lights (Polycarbonate / GRP)
                 </h4>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Translucent panels set into the roof to admit daylight. Made from polycarbonate or
                   glass-reinforced plastic (GRP). Even new roof lights will not support a
                   person&rsquo;s weight. UV degradation makes them more brittle with age. The single
@@ -428,7 +428,7 @@ export default function WorkingAtHeightModule3Section3() {
               </div>
               <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-4">
                 <h4 className="text-red-400 text-sm font-semibold mb-2">Glass Panels</h4>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Skylights, atrium glazing, glass canopies, and wired glass panels are all fragile.
                   Even toughened glass can shatter under point loading from a falling person.
                   Laminated glass may hold together but will deflect significantly.
@@ -436,7 +436,7 @@ export default function WorkingAtHeightModule3Section3() {
               </div>
               <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-4">
                 <h4 className="text-red-400 text-sm font-semibold mb-2">Liner Panels</h4>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Thin metal or plastic sheets installed as the inner skin of an insulated roof
                   system. They are not structural — they support the insulation and vapour barrier
                   only. Standing on a liner panel between purlins will cause immediate failure.
@@ -446,7 +446,7 @@ export default function WorkingAtHeightModule3Section3() {
                 <h4 className="text-red-400 text-sm font-semibold mb-2">
                   Rusted / Corroded Metal Sheets
                 </h4>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Metal profile sheets in good condition may support a person, but corrosion
                   drastically reduces their strength. Rust around fixings is particularly dangerous
                   — the sheet may detach from the purlins under load.
@@ -454,7 +454,7 @@ export default function WorkingAtHeightModule3Section3() {
               </div>
               <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-4">
                 <h4 className="text-red-400 text-sm font-semibold mb-2">Asbestos Cement Sheets</h4>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Found on buildings constructed before 2000. Extremely fragile — especially with
                   age. Falling through asbestos cement creates a double hazard: the fall itself and
                   exposure to airborne asbestos fibres. Never walk on asbestos cement sheeting under
@@ -480,7 +480,7 @@ export default function WorkingAtHeightModule3Section3() {
                 ].map((point, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                    <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                    <span className="text-white text-sm leading-relaxed">{point}</span>
                   </div>
                 ))}
               </div>
@@ -503,13 +503,13 @@ export default function WorkingAtHeightModule3Section3() {
               <h2 className="text-lg sm:text-xl font-bold text-white">
                 Controls for Fragile Surfaces
               </h2>
-              <p className="text-white/50 text-sm">
+              <p className="text-white text-sm">
                 Crawling boards, staging, netting, and barriers
               </p>
             </div>
           </div>
           <div className="border-l-2 border-green-500/30 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               When work on or near fragile surfaces cannot be avoided, a combination of controls
               must be implemented. The hierarchy of control applies: prevent the fall first, then
               arrest it if prevention fails.
@@ -530,7 +530,7 @@ export default function WorkingAtHeightModule3Section3() {
                 ].map((point, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
-                    <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                    <span className="text-white text-sm leading-relaxed">{point}</span>
                   </div>
                 ))}
               </div>
@@ -549,7 +549,7 @@ export default function WorkingAtHeightModule3Section3() {
               ].map((point, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                  <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                  <span className="text-white text-sm leading-relaxed">{point}</span>
                 </div>
               ))}
             </div>
@@ -566,7 +566,7 @@ export default function WorkingAtHeightModule3Section3() {
               ].map((point, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                  <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                  <span className="text-white text-sm leading-relaxed">{point}</span>
                 </div>
               ))}
             </div>
@@ -583,7 +583,7 @@ export default function WorkingAtHeightModule3Section3() {
               ].map((point, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                  <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                  <span className="text-white text-sm leading-relaxed">{point}</span>
                 </div>
               ))}
             </div>
@@ -605,13 +605,13 @@ export default function WorkingAtHeightModule3Section3() {
               <h2 className="text-lg sm:text-xl font-bold text-white">
                 HSG33 — Safety in Roof Work
               </h2>
-              <p className="text-white/50 text-sm">
+              <p className="text-white text-sm">
                 The HSE&rsquo;s guidance document for roof work
               </p>
             </div>
           </div>
           <div className="border-l-2 border-purple-500/30 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               HSG33 &ldquo;Safety in Roof Work&rdquo; is the Health and Safety Executive&rsquo;s
               primary guidance for anyone planning, managing, or carrying out work on roofs. It is
               not a legal document in itself, but it provides practical guidance on complying with
@@ -638,7 +638,7 @@ export default function WorkingAtHeightModule3Section3() {
                 ].map((point, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
-                    <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                    <span className="text-white text-sm leading-relaxed">{point}</span>
                   </div>
                 ))}
               </div>
@@ -647,7 +647,7 @@ export default function WorkingAtHeightModule3Section3() {
             <h3 className="text-white font-semibold text-base mt-6 mb-3">
               Preventing Materials from Falling
             </h3>
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               HSG33 emphasises that it is not just people who must be prevented from falling —
               tools, materials, and debris must also be controlled. Objects falling from a roof can
               kill or seriously injure anyone below.
@@ -662,7 +662,7 @@ export default function WorkingAtHeightModule3Section3() {
               ].map((point, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
-                  <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                  <span className="text-white text-sm leading-relaxed">{point}</span>
                 </div>
               ))}
             </div>
@@ -682,13 +682,13 @@ export default function WorkingAtHeightModule3Section3() {
             </span>
             <div>
               <h2 className="text-lg sm:text-xl font-bold text-white">Electricians on Roofs</h2>
-              <p className="text-white/50 text-sm">
+              <p className="text-white text-sm">
                 Solar PV, external lighting, CCTV, and cable runs
               </p>
             </div>
           </div>
           <div className="border-l-2 border-cyan-500/30 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed">
+            <p className="text-white text-sm sm:text-base leading-relaxed">
               As an electrician, you will encounter roof work more frequently than many other
               trades. The growth of solar PV, improved external lighting, and increased CCTV
               coverage means that electricians regularly need to access roofs for installation,
@@ -711,7 +711,7 @@ export default function WorkingAtHeightModule3Section3() {
                   ].map((point, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
-                      <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                      <span className="text-white text-sm leading-relaxed">{point}</span>
                     </div>
                   ))}
                 </div>
@@ -731,7 +731,7 @@ export default function WorkingAtHeightModule3Section3() {
                   ].map((point, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
-                      <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                      <span className="text-white text-sm leading-relaxed">{point}</span>
                     </div>
                   ))}
                 </div>
@@ -754,7 +754,7 @@ export default function WorkingAtHeightModule3Section3() {
                 ].map((point, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
-                    <span className="text-white/70 text-sm leading-relaxed">{point}</span>
+                    <span className="text-white text-sm leading-relaxed">{point}</span>
                   </div>
                 ))}
               </div>
@@ -775,7 +775,7 @@ export default function WorkingAtHeightModule3Section3() {
               <div className="flex items-center gap-3">
                 <div className="w-2 h-2 rounded-full bg-white/30 flex-shrink-0" />
                 <div className="flex-1 h-px bg-white/20 border-t border-dashed border-white/20" />
-                <span className="text-xs text-white/50 flex-shrink-0 w-32 text-right">
+                <span className="text-xs text-white flex-shrink-0 w-32 text-right">
                   Ridge Line
                 </span>
               </div>
@@ -847,12 +847,12 @@ export default function WorkingAtHeightModule3Section3() {
               <div className="flex items-center gap-3 mt-2">
                 <div className="w-2 h-2 rounded-full bg-white/20 flex-shrink-0" />
                 <div className="flex-1 h-1 bg-white/10 rounded" />
-                <span className="text-xs text-white/40 flex-shrink-0 w-32 text-right">
+                <span className="text-xs text-white flex-shrink-0 w-32 text-right">
                   Ground / Floor Level
                 </span>
               </div>
             </div>
-            <p className="text-center text-white/40 text-xs mt-4">
+            <p className="text-center text-white text-xs mt-4">
               Cross-section view showing layered protection system — not to scale.
             </p>
           </div>
@@ -879,7 +879,7 @@ export default function WorkingAtHeightModule3Section3() {
               ].map((point, i) => (
                 <div key={i} className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-amber-400 mt-0.5 flex-shrink-0" />
-                  <span className="text-white/80 text-sm leading-relaxed">{point}</span>
+                  <span className="text-white text-sm leading-relaxed">{point}</span>
                 </div>
               ))}
             </div>

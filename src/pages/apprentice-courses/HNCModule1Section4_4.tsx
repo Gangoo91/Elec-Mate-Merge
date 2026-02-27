@@ -241,7 +241,7 @@ const HNCModule1Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section4">
@@ -263,7 +263,7 @@ const HNCModule1Section4_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Ethical Responsibilities
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Professional ethics, whistleblowing, conflicts of interest and codes of conduct in
             building services
           </p>
@@ -353,19 +353,19 @@ const HNCModule1Section4_4 = () => {
               <div className="grid sm:grid-cols-3 gap-4">
                 <div className="p-3 rounded bg-white/5 text-center">
                   <p className="font-bold text-blue-400 mb-1">Law</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Mandatory rules enforced by the state. Minimum standards.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5 text-center">
                   <p className="font-bold text-elec-yellow mb-1">Ethics</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Professional standards of conduct. Often exceed law.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5 text-center">
                   <p className="font-bold text-purple-400 mb-1">Morality</p>
-                  <p className="text-xs text-white/70">Personal beliefs about right and wrong.</p>
+                  <p className="text-xs text-white">Personal beliefs about right and wrong.</p>
                 </div>
               </div>
             </div>
@@ -448,7 +448,7 @@ const HNCModule1Section4_4 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
               <p className="text-sm font-medium text-orange-300 mb-2">The Ethics of Safety</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 In building services, ethical considerations frequently involve safety. When
                 commercial pressures conflict with safety standards, professionals have an ethical
                 duty to prioritise safety. This may mean refusing to sign off work, raising concerns
@@ -482,7 +482,7 @@ const HNCModule1Section4_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Six Categories of Qualifying Disclosure
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 To be protected, a disclosure must relate to one of these categories:
               </p>
               <div className="grid sm:grid-cols-2 gap-3">
@@ -565,7 +565,7 @@ const HNCModule1Section4_4 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/70 mt-2">
+              <p className="text-xs text-white mt-2">
                 *External disclosure is protected if internal/prescribed disclosure would be futile,
                 risk victimisation, or evidence would be concealed.
               </p>
@@ -573,7 +573,7 @@ const HNCModule1Section4_4 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/30">
               <p className="text-sm font-medium text-green-400 mb-2">PIDA Protections</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Workers who make qualifying disclosures are protected from:
               </p>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
@@ -588,7 +588,7 @@ const HNCModule1Section4_4 = () => {
                   <strong>Selection for redundancy:</strong> If based on protected disclosure
                 </li>
               </ul>
-              <p className="text-xs text-white/70 mt-2">
+              <p className="text-xs text-white mt-2">
                 Compensation for whistleblowing dismissal is uncapped.
               </p>
             </div>
@@ -736,7 +736,7 @@ const HNCModule1Section4_4 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
               <p className="text-sm font-medium text-orange-300 mb-2">The 'Perception' Test</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Even if you believe you can be objective, consider: "Would a reasonable observer
                 think there is a conflict?" If a third party could reasonably perceive a conflict
                 exists, you should treat it as a conflict and manage it appropriately. Perception
@@ -771,7 +771,7 @@ const HNCModule1Section4_4 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">
                 IET Code of Conduct - Key Principles
               </p>
-              <p className="text-sm text-white/90 mb-3">IET members shall at all times:</p>
+              <p className="text-sm text-white mb-3">IET members shall at all times:</p>
               <ol className="text-sm text-white space-y-2 list-decimal list-outside ml-5">
                 <li className="pl-1">
                   <strong>Act with integrity</strong> - be honest and trustworthy, declare
@@ -802,7 +802,7 @@ const HNCModule1Section4_4 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-purple-500/10 border border-purple-500/30">
               <p className="text-sm font-medium text-purple-400 mb-2">ECA Membership Obligations</p>
-              <p className="text-sm text-white/90 mb-3">ECA member companies commit to:</p>
+              <p className="text-sm text-white mb-3">ECA member companies commit to:</p>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                 <li className="pl-1">
                   Maintaining high standards of workmanship and business ethics
@@ -991,7 +991,7 @@ const HNCModule1Section4_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1041,7 +1041,7 @@ const HNCModule1Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section4-3">

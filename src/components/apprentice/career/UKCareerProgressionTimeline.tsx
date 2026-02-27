@@ -17,7 +17,7 @@ const UKCareerProgressionTimeline = () => {
             </div>
             UK Electrical Career Progression Timeline
           </CardTitle>
-          <p className="text-sm sm:text-base text-white/80">
+          <p className="text-sm sm:text-base text-white">
             Comprehensive progression path for UK electricians following the JIB grading scheme with
             regional salary data
           </p>

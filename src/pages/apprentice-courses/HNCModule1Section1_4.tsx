@@ -266,7 +266,7 @@ const HNCModule1Section1_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section1">
@@ -288,7 +288,7 @@ const HNCModule1Section1_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             COSHH and Hazardous Substances
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding the Control of Substances Hazardous to Health and protecting workers in
             building services
           </p>
@@ -486,7 +486,7 @@ const HNCModule1Section1_4 = () => {
               <div className="space-y-3">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-elec-yellow mb-1">Step 1: Identify the Hazards</p>
-                  <ul className="text-sm text-white/90 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white list-disc list-outside ml-5">
                     <li>List all substances used, produced, or encountered</li>
                     <li>Obtain Safety Data Sheets from suppliers</li>
                     <li>Consider by-products (fumes from heating materials)</li>
@@ -495,7 +495,7 @@ const HNCModule1Section1_4 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-elec-yellow mb-1">Step 2: Evaluate the Risks</p>
-                  <ul className="text-sm text-white/90 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white list-disc list-outside ml-5">
                     <li>Who might be exposed and how?</li>
                     <li>What is the level and duration of exposure?</li>
                     <li>Compare to Workplace Exposure Limits (WELs)</li>
@@ -504,7 +504,7 @@ const HNCModule1Section1_4 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-elec-yellow mb-1">Step 3: Control the Risks</p>
-                  <ul className="text-sm text-white/90 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white list-disc list-outside ml-5">
                     <li>Apply hierarchy of control measures</li>
                     <li>Select appropriate controls for each substance</li>
                     <li>Document control measures in writing</li>
@@ -513,7 +513,7 @@ const HNCModule1Section1_4 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-elec-yellow mb-1">Step 4: Record and Implement</p>
-                  <ul className="text-sm text-white/90 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white list-disc list-outside ml-5">
                     <li>Document assessment findings</li>
                     <li>Communicate to all affected workers</li>
                     <li>Provide information, instruction and training</li>
@@ -522,7 +522,7 @@ const HNCModule1Section1_4 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-elec-yellow mb-1">Step 5: Review and Update</p>
-                  <ul className="text-sm text-white/90 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white list-disc list-outside ml-5">
                     <li>Review when no longer valid</li>
                     <li>Update when processes or substances change</li>
                     <li>Review after incidents or ill health reports</li>
@@ -536,20 +536,20 @@ const HNCModule1Section1_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Workplace Exposure Limits (WELs)
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 WELs are published in HSE document EH40 and set the maximum concentration of
                 hazardous substances in workplace air. Two types exist:
               </p>
               <div className="grid sm:grid-cols-2 gap-3">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-1">Long-term (8-hour TWA)</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Time-weighted average over 8-hour reference period
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-1">Short-term (15-minute)</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Maximum for any 15-minute period during the day
                   </p>
                 </div>
@@ -810,7 +810,7 @@ const HNCModule1Section1_4 = () => {
                 <div className="p-2 rounded bg-white/5">15. Regulatory information</div>
                 <div className="p-2 rounded bg-white/5">16. Other information</div>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Section 8 (highlighted) is particularly important for COSHH assessments.
               </p>
             </div>
@@ -822,39 +822,39 @@ const HNCModule1Section1_4 = () => {
               <div className="grid grid-cols-3 sm:grid-cols-3 gap-3 text-center text-xs">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-white mb-1">Flame</p>
-                  <p className="text-white/70">Flammable substances</p>
+                  <p className="text-white">Flammable substances</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-white mb-1">Skull &amp; Crossbones</p>
-                  <p className="text-white/70">Acute toxicity (severe)</p>
+                  <p className="text-white">Acute toxicity (severe)</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-white mb-1">Exclamation Mark</p>
-                  <p className="text-white/70">Irritant, harmful</p>
+                  <p className="text-white">Irritant, harmful</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-white mb-1">Corrosion</p>
-                  <p className="text-white/70">Corrosive to skin/metals</p>
+                  <p className="text-white">Corrosive to skin/metals</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-white mb-1">Health Hazard</p>
-                  <p className="text-white/70">CMR, sensitiser, STOT</p>
+                  <p className="text-white">CMR, sensitiser, STOT</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-white mb-1">Environment</p>
-                  <p className="text-white/70">Aquatic toxicity</p>
+                  <p className="text-white">Aquatic toxicity</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-white mb-1">Gas Cylinder</p>
-                  <p className="text-white/70">Gases under pressure</p>
+                  <p className="text-white">Gases under pressure</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-white mb-1">Oxidiser</p>
-                  <p className="text-white/70">May cause fire</p>
+                  <p className="text-white">May cause fire</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-white mb-1">Explosive</p>
-                  <p className="text-white/70">Explosion hazard</p>
+                  <p className="text-white">Explosion hazard</p>
                 </div>
               </div>
             </div>
@@ -864,11 +864,11 @@ const HNCModule1Section1_4 = () => {
               <div className="grid sm:grid-cols-2 gap-3">
                 <div className="p-3 rounded bg-red-500/10 border border-red-500/30">
                   <p className="font-medium text-red-300 mb-1">DANGER</p>
-                  <p className="text-sm text-white/70">More severe hazard categories</p>
+                  <p className="text-sm text-white">More severe hazard categories</p>
                 </div>
                 <div className="p-3 rounded bg-orange-500/10 border border-orange-500/30">
                   <p className="font-medium text-orange-300 mb-1">WARNING</p>
-                  <p className="text-sm text-white/70">Less severe hazard categories</p>
+                  <p className="text-sm text-white">Less severe hazard categories</p>
                 </div>
               </div>
             </div>
@@ -1054,7 +1054,7 @@ const HNCModule1Section1_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1101,7 +1101,7 @@ const HNCModule1Section1_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section1-3">

@@ -28,7 +28,7 @@ const SafetyModuleCard = ({ module, onModuleClick }: SafetyModuleCardProps) => {
       case 'Required':
         return 'text-blue-400 bg-blue-400/10 border-blue-400/20';
       default:
-        return 'text-white/80 bg-gray-400/10 border-gray-400/20';
+        return 'text-white bg-gray-400/10 border-gray-400/20';
     }
   };
 
@@ -52,7 +52,7 @@ const SafetyModuleCard = ({ module, onModuleClick }: SafetyModuleCardProps) => {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          <div className="flex items-center justify-between text-sm text-white/80">
+          <div className="flex items-center justify-between text-sm text-white">
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1">
                 <Clock className="h-3 w-3" />
@@ -70,7 +70,7 @@ const SafetyModuleCard = ({ module, onModuleClick }: SafetyModuleCardProps) => {
             <h4 className="text-sm font-medium text-foreground">Modules Covered:</h4>
             <div className="grid grid-cols-2 gap-1">
               {module.modules.map((mod, index) => (
-                <div key={index} className="text-xs text-white/80 flex items-center gap-1">
+                <div key={index} className="text-xs text-white flex items-center gap-1">
                   <Star className="h-2 w-2 text-elec-yellow" />
                   {mod}
                 </div>

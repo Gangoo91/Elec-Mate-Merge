@@ -82,19 +82,19 @@ export function InAppBrowserDetector() {
             </div>
             <div>
               <h2 className="text-lg font-semibold text-white">Open in Browser</h2>
-              <p className="text-sm text-white/50">{browserName} browser detected</p>
+              <p className="text-sm text-white">{browserName} browser detected</p>
             </div>
           </div>
           <button
             onClick={handleDismiss}
-            className="p-2 -m-2 text-white/40 hover:text-white/70 transition-colors"
+            className="p-2 -m-2 text-white hover:text-white transition-colors"
           >
             <X className="h-5 w-5" />
           </button>
         </div>
 
         {/* Message */}
-        <p className="text-[15px] text-white/70 leading-relaxed">
+        <p className="text-[15px] text-white leading-relaxed">
           For the best experience, open Elec-Mate in your phone's browser (Safari or Chrome). The{' '}
           {browserName} browser can be slower and may have issues.
         </p>
@@ -110,14 +110,14 @@ export function InAppBrowserDetector() {
           </button>
           <button
             onClick={handleDismiss}
-            className="w-full h-12 rounded-xl bg-white/5 text-white/70 font-medium text-[15px] active:bg-white/10 transition-colors"
+            className="w-full h-12 rounded-xl bg-white/5 text-white font-medium text-[15px] active:bg-white/10 transition-colors"
           >
             Continue Anyway
           </button>
         </div>
 
         {/* Help text */}
-        <p className="text-xs text-white/40 text-center">
+        <p className="text-xs text-white text-center">
           Tap the menu (•••) and select "Open in Browser"
         </p>
       </div>

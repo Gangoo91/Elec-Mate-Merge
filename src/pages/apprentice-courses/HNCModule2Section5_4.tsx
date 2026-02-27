@@ -240,7 +240,7 @@ const HNCModule2Section5_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section5">
@@ -262,7 +262,7 @@ const HNCModule2Section5_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Air Infiltration and Ventilation
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Air movement in buildings: infiltration, natural ventilation, and driving forces
           </p>
         </header>
@@ -366,10 +366,10 @@ const HNCModule2Section5_4 = () => {
                 Ventilation Rate Calculation
               </p>
               <p className="font-mono text-center text-sm mb-2">V̇ = n × Volume</p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where V̇ = flow rate (m³/h), n = air changes per hour, Volume = room volume (m³)
               </p>
-              <p className="text-xs text-white/70 text-center mt-2">To convert: m³/h ÷ 3.6 = l/s</p>
+              <p className="text-xs text-white text-center mt-2">To convert: m³/h ÷ 3.6 = l/s</p>
             </div>
 
             <div className="my-6">
@@ -439,10 +439,10 @@ const HNCModule2Section5_4 = () => {
               <p className="font-mono text-center text-sm mb-2">
                 ΔP = ρ × g × h × (T<sub>i</sub> - T<sub>o</sub>) / T<sub>o</sub>
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Simplified: ΔP ≈ 0.04 × h × ΔT (Pa) for typical conditions
               </p>
-              <p className="text-xs text-white/70 text-center mt-2">
+              <p className="text-xs text-white text-center mt-2">
                 Where h = height between openings (m), ΔT = temperature difference (K)
               </p>
             </div>
@@ -533,10 +533,10 @@ const HNCModule2Section5_4 = () => {
               <p className="font-mono text-center text-sm mb-2">
                 P<sub>wind</sub> = ½ × ρ × C<sub>p</sub> × v²
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where ρ = air density (1.2 kg/m³), Cp = pressure coefficient, v = wind speed (m/s)
               </p>
-              <p className="text-xs text-white/70 text-center mt-2">
+              <p className="text-xs text-white text-center mt-2">
                 Simplified: P ≈ 0.6 × Cp × v² (Pa)
               </p>
             </div>
@@ -633,13 +633,13 @@ const HNCModule2Section5_4 = () => {
               <p className="font-mono text-center text-sm mb-2">
                 Q<sub>v</sub> = 0.33 × n × V × ΔT (Watts)
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where n = ach, V = volume (m³), ΔT = temp diff (K)
               </p>
               <p className="font-mono text-center text-sm mt-3 mb-2">
                 Q<sub>v</sub> = 1.2 × q × ΔT (Watts)
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where q = flow rate (l/s), ΔT = temp diff (K)
               </p>
             </div>
@@ -709,7 +709,7 @@ const HNCModule2Section5_4 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Heat recovery:</strong> MVHR can recover 70-90% of ventilation heat loss while
               maintaining fresh air supply. Essential for very airtight buildings where infiltration
               alone cannot provide adequate ventilation.
@@ -735,13 +735,13 @@ const HNCModule2Section5_4 = () => {
                 <strong>Question:</strong> An office (8m × 10m × 3m) requires 400 l/s ventilation.
                 What is the air change rate?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Volume = 8 × 10 × 3 = 240 m³</p>
                 <p>Flow rate = 400 l/s = 400 × 3.6 = 1440 m³/h</p>
                 <p className="mt-2">
                   ach = 1440 / 240 = <strong>6 air changes per hour</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This is high for standard conditioning; check if cooling load driven
                 </p>
               </div>
@@ -755,14 +755,14 @@ const HNCModule2Section5_4 = () => {
                 <strong>Question:</strong> Calculate the ventilation heat loss for a 500m³ room with
                 1.5 ach, internal temperature 21°C, external -2°C.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>ΔT = 21 - (-2) = 23K</p>
                 <p>Qv = 0.33 × n × V × ΔT</p>
                 <p>Qv = 0.33 × 1.5 × 500 × 23</p>
                 <p>
                   Qv = <strong>5693W ≈ 5.7kW</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This must be added to fabric losses for total heating load
                 </p>
               </div>
@@ -776,13 +776,13 @@ const HNCModule2Section5_4 = () => {
                 <strong>Question:</strong> An atrium has inlet at ground and outlet 20m above.
                 Internal temp 22°C, external 10°C. Calculate the stack pressure.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using simplified formula: ΔP ≈ 0.04 × h × ΔT</p>
                 <p>ΔP = 0.04 × 20 × (22-10)</p>
                 <p>
                   ΔP = 0.04 × 20 × 12 = <strong>9.6 Pa</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Sufficient to drive significant natural ventilation flow
                 </p>
               </div>
@@ -797,14 +797,14 @@ const HNCModule2Section5_4 = () => {
                 (Cp = +0.6) and leeward face (Cp = -0.4). What is the cross-ventilation driving
                 pressure?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>P = 0.6 × Cp × v²</p>
                 <p>Windward: P = 0.6 × (+0.6) × 5² = +9 Pa</p>
                 <p>Leeward: P = 0.6 × (-0.4) × 5² = -6 Pa</p>
                 <p className="mt-2">
                   Driving pressure = 9 - (-6) = <strong>15 Pa</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This drives airflow from windward to leeward openings
                 </p>
               </div>
@@ -888,7 +888,7 @@ const HNCModule2Section5_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -934,7 +934,7 @@ const HNCModule2Section5_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section5-3">

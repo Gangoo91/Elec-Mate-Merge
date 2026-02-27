@@ -236,7 +236,7 @@ const HNCModule6Section5_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section5">
@@ -258,7 +258,7 @@ const HNCModule6Section5_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Metering Strategies
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Main metering, sub-metering, automatic meter reading, data loggers, and metering
             hierarchies for building energy management
           </p>
@@ -582,23 +582,23 @@ const HNCModule6Section5_2 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">AMR System Components</p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Meters:</span>{' '}
+                  <span className="text-white">Meters:</span>{' '}
                   <span className="text-white">Energy meters with communication interfaces</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Communications:</span>{' '}
+                  <span className="text-white">Communications:</span>{' '}
                   <span className="text-white">Modbus, M-Bus, BACnet, pulse outputs</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Data concentrator:</span>{' '}
+                  <span className="text-white">Data concentrator:</span>{' '}
                   <span className="text-white">Collects data from multiple meters</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Software:</span>{' '}
+                  <span className="text-white">Software:</span>{' '}
                   <span className="text-white">Energy monitoring and analysis platform</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Network:</span>{' '}
+                  <span className="text-white">Network:</span>{' '}
                   <span className="text-white">
                     Wired (RS485, Ethernet) or wireless (LoRa, GSM)
                   </span>
@@ -885,7 +885,7 @@ const HNCModule6Section5_2 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Commissioning requirement:</strong> Verify CT ratios are correctly programmed
               in meters - incorrect ratios are a common cause of metering errors.
             </p>
@@ -910,20 +910,20 @@ const HNCModule6Section5_2 = () => {
                 <strong>Scenario:</strong> Design metering hierarchy for a 6-storey office building
                 with ground floor retail and basement car park.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Level 1 - Fiscal Meters:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Level 1 - Fiscal Meters:</p>
                 <p className="ml-4">M1: Main building intake (1000A CT meter)</p>
-                <p className="mt-2 text-white/60">Level 2 - Sub-Main Meters:</p>
+                <p className="mt-2 text-white">Level 2 - Sub-Main Meters:</p>
                 <p className="ml-4">M2.1: Landlord common areas</p>
                 <p className="ml-4">M2.2: Retail tenant supply</p>
                 <p className="ml-4">M2.3: Office floors (Levels 1-6)</p>
                 <p className="ml-4">M2.4: Central plant (basement)</p>
                 <p className="ml-4">M2.5: Car park</p>
-                <p className="mt-2 text-white/60">Level 3 - Floor/Tenant Meters:</p>
+                <p className="mt-2 text-white">Level 3 - Floor/Tenant Meters:</p>
                 <p className="ml-4">M3.1-M3.6: Individual floor tenant meters</p>
                 <p className="ml-4">M3.7: Retail lighting</p>
                 <p className="ml-4">M3.8: Retail power</p>
-                <p className="mt-2 text-white/60">Level 4 - Equipment Meters:</p>
+                <p className="mt-2 text-white">Level 4 - Equipment Meters:</p>
                 <p className="ml-4">M4.1: Chiller 1</p>
                 <p className="ml-4">M4.2: Chiller 2</p>
                 <p className="ml-4">M4.3: Lifts</p>
@@ -942,7 +942,7 @@ const HNCModule6Section5_2 = () => {
                 <strong>Scenario:</strong> Select CTs for a 630A submain feeding a distribution
                 board 25m from the meter location.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given:</p>
                 <p className="ml-4">Circuit design current: 630A</p>
                 <p className="ml-4">Cable run to meter: 25m</p>
@@ -980,7 +980,7 @@ const HNCModule6Section5_2 = () => {
                 <strong>Scenario:</strong> Specify AMR system for 20 sub-meters with BMS
                 integration.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>System Requirements:</p>
                 <p className="ml-4">• 20 × energy meters (various ratings)</p>
                 <p className="ml-4">• 15-minute logging interval</p>
@@ -1100,7 +1100,7 @@ const HNCModule6Section5_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1146,7 +1146,7 @@ const HNCModule6Section5_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section5">

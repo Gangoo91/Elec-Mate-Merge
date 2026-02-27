@@ -233,7 +233,7 @@ const PricingStrategyCalculator = () => {
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 Pricing Strategy Calculator
               </h1>
-              <p className="text-sm text-white/70">Build profitable quotes with margins</p>
+              <p className="text-sm text-white">Build profitable quotes with margins</p>
             </div>
           </div>
           <SmartBackButton />
@@ -401,7 +401,7 @@ const PricingStrategyCalculator = () => {
               disabled={!isValid}
               className={cn(
                 'flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation',
-                isValid ? 'text-black' : 'bg-white/10 text-white/30 cursor-not-allowed'
+                isValid ? 'text-black' : 'bg-white/10 text-white cursor-not-allowed'
               )}
               style={
                 isValid
@@ -536,7 +536,7 @@ const PricingStrategyCalculator = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      'h-4 w-4 text-white/80 transition-transform duration-200',
+                      'h-4 w-4 text-white transition-transform duration-200',
                       showBreakdown && 'rotate-180'
                     )}
                   />
@@ -545,13 +545,13 @@ const PricingStrategyCalculator = () => {
                 <CollapsibleContent className="p-4 pt-0">
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between items-center py-2 border-b border-white/10">
-                      <span className="text-white/80">1. Materials Cost</span>
+                      <span className="text-white">1. Materials Cost</span>
                       <span className="text-white font-mono font-semibold">
                         {formatCurrency(inputs.materialsCost)}
                       </span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-white/10">
-                      <span className="text-white/80">
+                      <span className="text-white">
                         2. Labour ({inputs.labourHours}h × {formatCurrency(inputs.hourlyRate)}/h)
                       </span>
                       <span className="text-white font-mono font-semibold">
@@ -559,7 +559,7 @@ const PricingStrategyCalculator = () => {
                       </span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-white/10">
-                      <span className="text-white/80">
+                      <span className="text-white">
                         3. Overhead ({inputs.overheadPercent}% of base)
                       </span>
                       <span className="text-white font-mono font-semibold">
@@ -573,7 +573,7 @@ const PricingStrategyCalculator = () => {
                       </span>
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-white/10">
-                      <span className="text-white/80">
+                      <span className="text-white">
                         4. Profit Margin ({inputs.profitMarginPercent}%)
                       </span>
                       <span className="text-green-400 font-mono font-semibold">
@@ -582,7 +582,7 @@ const PricingStrategyCalculator = () => {
                     </div>
                     {inputs.discountPercent > 0 && (
                       <div className="flex justify-between items-center py-2 border-b border-white/10">
-                        <span className="text-white/80">
+                        <span className="text-white">
                           5. Discount ({inputs.discountPercent}%)
                         </span>
                         <span className="text-red-400 font-mono font-semibold">
@@ -599,7 +599,7 @@ const PricingStrategyCalculator = () => {
                     {vatRegistered && (
                       <>
                         <div className="flex justify-between items-center py-2 border-b border-white/10">
-                          <span className="text-white/80">6. VAT ({vatRate}%)</span>
+                          <span className="text-white">6. VAT ({vatRate}%)</span>
                           <span className="text-white font-mono font-semibold">
                             + {formatCurrency(result.vatAmount)}
                           </span>
@@ -691,7 +691,7 @@ const PricingStrategyCalculator = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      'h-4 w-4 text-white/80 transition-transform duration-200',
+                      'h-4 w-4 text-white transition-transform duration-200',
                       showGuidance && 'rotate-180'
                     )}
                   />
@@ -763,7 +763,7 @@ const PricingStrategyCalculator = () => {
               </div>
               <ChevronDown
                 className={cn(
-                  'h-4 w-4 text-white/80 transition-transform duration-200',
+                  'h-4 w-4 text-white transition-transform duration-200',
                   showReference && 'rotate-180'
                 )}
               />

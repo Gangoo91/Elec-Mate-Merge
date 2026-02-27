@@ -252,7 +252,7 @@ const HNCModule8Section5_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section5">
@@ -274,7 +274,7 @@ const HNCModule8Section5_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Control Strategies
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Advanced BMS control techniques for optimising HVAC system performance and energy
             efficiency
           </p>
@@ -364,7 +364,7 @@ const HNCModule8Section5_5 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 Output = K<sub>p</sub>e + K<sub>i</sub>&int;e dt + K<sub>d</sub>(de/dt)
               </p>
-              <div className="text-xs text-white/70 text-center space-y-1">
+              <div className="text-xs text-white text-center space-y-1">
                 <p>Where: e = error (setpoint - measured value)</p>
                 <p>
                   K<sub>p</sub> = proportional gain, K<sub>i</sub> = integral gain, K<sub>d</sub> =
@@ -563,7 +563,7 @@ const HNCModule8Section5_5 = () => {
                 Cascade Control Structure
               </p>
               <div className="p-4 rounded bg-black/30">
-                <pre className="text-xs text-white/80 font-mono whitespace-pre overflow-x-auto">
+                <pre className="text-xs text-white font-mono whitespace-pre overflow-x-auto">
                   {`  Primary (Outer) Loop              Secondary (Inner) Loop
   ┌─────────────────┐               ┌─────────────────┐
   │                 │   Setpoint    │                 │
@@ -783,7 +783,7 @@ const HNCModule8Section5_5 = () => {
                 Basic Optimum Start Calculation
               </p>
               <div className="p-4 rounded bg-black/30">
-                <pre className="text-xs text-white/80 font-mono whitespace-pre overflow-x-auto">
+                <pre className="text-xs text-white font-mono whitespace-pre overflow-x-auto">
                   {`Pre-heat time (hours) = (T_setpoint - T_inside) x Building Factor
                         ────────────────────────────────────────
                               (T_inside - T_outside) x k
@@ -855,7 +855,7 @@ Start plant 1 hour before occupancy`}
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">
                 Demand-Controlled Ventilation (DCV)
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 DCV modulates outdoor air quantity based on actual occupancy indicators, typically
                 CO2 concentration. This reduces the energy required to condition outdoor air during
                 partial occupancy periods.
@@ -863,7 +863,7 @@ Start plant 1 hour before occupancy`}
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-xs font-medium text-white mb-1">CO2-Based DCV Control:</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Outdoor CO2: typically 400 ppm</li>
                     <li>Target: 800-1000 ppm above outdoor</li>
                     <li>Minimum ventilation always maintained</li>
@@ -872,7 +872,7 @@ Start plant 1 hour before occupancy`}
                 </div>
                 <div>
                   <p className="text-xs font-medium text-white mb-1">Alternative DCV Methods:</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Occupancy sensors (PIR, counting)</li>
                     <li>Schedule-based (meeting room bookings)</li>
                     <li>VOC sensors (laboratories, kitchens)</li>
@@ -886,7 +886,7 @@ Start plant 1 hour before occupancy`}
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Chilled Water Temperature Reset
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Raising the chilled water supply temperature during part-load conditions improves
                 chiller efficiency (higher COP at elevated evaporator temperature) whilst still
                 meeting cooling demand.
@@ -935,7 +935,7 @@ Start plant 1 hour before occupancy`}
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Supply Air Temperature Reset
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Adjusting supply air temperature based on zone demand reduces simultaneous heating
                 and cooling, improves dehumidification control, and optimises fan energy.
               </p>
@@ -1017,7 +1017,7 @@ Start plant 1 hour before occupancy`}
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-xs font-medium text-white mb-1">Night Setback Settings:</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Heating setpoint: 10-12C (frost protection)</li>
                     <li>Cooling setpoint: 28-30C (equipment protection)</li>
                     <li>Ventilation: minimum or off</li>
@@ -1026,7 +1026,7 @@ Start plant 1 hour before occupancy`}
                 </div>
                 <div>
                   <p className="text-xs font-medium text-white mb-1">Considerations:</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Frost protection for pipes and coils</li>
                     <li>Humidity limits for sensitive equipment</li>
                     <li>Night purge for free cooling</li>
@@ -1084,7 +1084,7 @@ Start plant 1 hour before occupancy`}
                 temperature is 19C. With P-only control (K<sub>p</sub> = 10%/C), what is the
                 controller output?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Error = Setpoint - Measured = 21C - 19C = 2C</p>
                 <p className="mt-2">
                   Proportional output = K<sub>p</sub> x Error
@@ -1092,10 +1092,10 @@ Start plant 1 hour before occupancy`}
                 <p>
                   Output = 10%/C x 2C = <strong>20%</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   The heating valve opens 20% to respond to the 2C error.
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Note: With P-only control, there will be a steady-state offset because the valve
                   cannot reach 100% output for small errors.
                 </p>
@@ -1110,17 +1110,17 @@ Start plant 1 hour before occupancy`}
                 <strong>Scenario:</strong> A building has inside temp 14C, outside -2C, setpoint
                 21C. Building factor is 1.2, plant factor k = 0.5. Calculate pre-heat time.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Temperature rise required = 21C - 14C = 7C</p>
                 <p>Temperature difference (inside-outside) = 14C - (-2C) = 16C</p>
                 <p className="mt-2">Pre-heat time = (7 x 1.2) / (16 x 0.5)</p>
                 <p>
                   Pre-heat time = 8.4 / 8 = <strong>1.05 hours (63 minutes)</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   If occupancy starts at 08:00, plant should start at 06:57.
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   In practice, round to 07:00 or add safety margin (06:45).
                 </p>
               </div>
@@ -1135,14 +1135,14 @@ Start plant 1 hour before occupancy`}
                 At 100% occupancy, the outdoor air damper should be 100% open. Current CO2 is 600
                 ppm. What damper position?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>CO2 above outdoor = 600 - 400 = 200 ppm</p>
                 <p>Target CO2 above outdoor = 800 - 400 = 400 ppm</p>
                 <p className="mt-2">Occupancy proxy = 200 / 400 = 50%</p>
                 <p>
                   OA damper position = <strong>50%</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   As occupancy increases and CO2 rises toward 800 ppm, the damper will progressively
                   open to 100%.
                 </p>
@@ -1157,14 +1157,14 @@ Start plant 1 hour before occupancy`}
                 <strong>Scenario:</strong> A chiller produces 500 kW cooling. At 6C CHW, COP is 4.0.
                 At 10C CHW, COP is 5.0. Calculate power reduction.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>At 6C: Compressor power = 500 / 4.0 = 125 kW</p>
                 <p>At 10C: Compressor power = 500 / 5.0 = 100 kW</p>
                 <p className="mt-2">
                   Power saving = 125 - 100 = <strong>25 kW (20% reduction)</strong>
                 </p>
-                <p className="mt-2 text-white/60">At 3000 operating hours/year and 0.15/kWh:</p>
-                <p className="text-white/60">
+                <p className="mt-2 text-white">At 3000 operating hours/year and 0.15/kWh:</p>
+                <p className="text-white">
                   Annual saving = 25 x 3000 x 0.15 = <strong>GBP 11,250/year</strong>
                 </p>
               </div>
@@ -1297,7 +1297,7 @@ Start plant 1 hour before occupancy`}
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1343,7 +1343,7 @@ Start plant 1 hour before occupancy`}
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section5-4">

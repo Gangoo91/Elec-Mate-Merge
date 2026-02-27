@@ -231,7 +231,7 @@ const HNCModule4Section1_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section1">
@@ -253,7 +253,7 @@ const HNCModule4Section1_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Harmonic Assessment
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding harmonic distortion effects and mitigation in modern building services
             installations
           </p>
@@ -400,7 +400,7 @@ const HNCModule4Section1_4 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 THD = √(I₃² + I₅² + I₇² + ... + Iₙ²) / I₁ × 100%
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where I₁ = fundamental current, Iₙ = nth harmonic current
               </p>
             </div>
@@ -587,21 +587,21 @@ const HNCModule4Section1_4 = () => {
               <div className="space-y-2">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-1">Stage 1 - Simplified Assessment</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     For small loads: if total harmonic-producing load is &lt;25% of supply capacity
                     and individual equipment meets EN standards, no further assessment needed.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-1">Stage 2 - Detailed Assessment</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Calculate harmonic currents from equipment data, apply to network impedance,
                     check against emission limits.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-1">Stage 3 - Network Study</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Full harmonic penetration study using power system analysis software. Required
                     for large or complex installations.
                   </p>
@@ -626,7 +626,7 @@ const HNCModule4Section1_4 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>DNO interface:</strong> For installations &gt;1MVA or with significant
               non-linear loads, early engagement with DNO is essential.
             </p>
@@ -810,7 +810,7 @@ const HNCModule4Section1_4 = () => {
                 <strong>Question:</strong> A VSD draws 100A fundamental with 30A 5th and 20A 7th
                 harmonic. Calculate THDi.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>THDi = √(I₅² + I₇²) / I₁ × 100%</p>
                 <p>THDi = √(30² + 20²) / 100 × 100%</p>
                 <p>THDi = √(900 + 400) / 100 × 100%</p>
@@ -829,7 +829,7 @@ const HNCModule4Section1_4 = () => {
                 <strong>Question:</strong> Three phases each carry 50A with 40% third harmonic.
                 Calculate neutral current.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Third harmonic per phase = 50A × 0.4 = 20A</p>
                 <p>Third harmonics add in neutral (zero sequence):</p>
                 <p>Neutral 3rd harmonic = 3 × 20A = 60A</p>
@@ -850,7 +850,7 @@ const HNCModule4Section1_4 = () => {
                 <strong>Question:</strong> Total VSD load is 200kW at 0.95 pf. THDi is 40%. Size an
                 active filter to achieve &lt;8% THDi.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Fundamental current: I₁ = 200kW / (√3 × 400V × 0.95) = 304A</p>
                 <p>Total harmonic current: Ih = 304A × 0.40 = 122A</p>
                 <p className="mt-2">Target harmonic current for 8% THDi:</p>
@@ -934,7 +934,7 @@ const HNCModule4Section1_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -980,7 +980,7 @@ const HNCModule4Section1_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section1-3">

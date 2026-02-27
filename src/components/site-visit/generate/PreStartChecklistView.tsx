@@ -50,7 +50,7 @@ export const PreStartChecklistView = ({ checklist }: PreStartChecklistViewProps)
                     {item.checked ? (
                       <CheckSquare className="h-4 w-4 text-emerald-400" />
                     ) : (
-                      <Square className="h-4 w-4 text-white/30" />
+                      <Square className="h-4 w-4 text-white" />
                     )}
                   </div>
                   <div className="flex-1 min-w-0">

@@ -92,7 +92,7 @@ const EVChargingModule2Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/ev-charging-module-2">
@@ -113,7 +113,7 @@ const EVChargingModule2Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Mode 1–4 and Charging Speeds
           </h1>
-          <p className="text-white/80">Charging modes and power levels per IEC 61851-1</p>
+          <p className="text-white">Charging modes and power levels per IEC 61851-1</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -243,19 +243,19 @@ const EVChargingModule2Section1 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-elec-yellow mb-1">Single Phase</p>
-                <p className="text-white/90 text-xs">230V AC</p>
+                <p className="text-white text-xs">230V AC</p>
                 <p className="text-white text-xs">16A: 3.7kW</p>
                 <p className="text-white text-xs">32A: 7.4kW</p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-elec-yellow mb-1">Three Phase</p>
-                <p className="text-white/90 text-xs">400V AC</p>
+                <p className="text-white text-xs">400V AC</p>
                 <p className="text-white text-xs">16A: 11kW</p>
                 <p className="text-white text-xs">32A: 22kW</p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-elec-yellow mb-1">High Power</p>
-                <p className="text-white/90 text-xs">400V AC</p>
+                <p className="text-white text-xs">400V AC</p>
                 <p className="text-white text-xs">63A: 43kW</p>
                 <p className="text-white text-xs">(Commercial)</p>
               </div>
@@ -309,19 +309,19 @@ const EVChargingModule2Section1 = () => {
               </p>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-sm">
                 <div className="p-2 bg-white/5 rounded text-center">
-                  <span className="text-white/70">50kW</span>
+                  <span className="text-white">50kW</span>
                   <p className="text-elec-yellow font-medium">~35 min</p>
                 </div>
                 <div className="p-2 bg-white/5 rounded text-center">
-                  <span className="text-white/70">100kW</span>
+                  <span className="text-white">100kW</span>
                   <p className="text-elec-yellow font-medium">~18 min</p>
                 </div>
                 <div className="p-2 bg-white/5 rounded text-center">
-                  <span className="text-white/70">150kW</span>
+                  <span className="text-white">150kW</span>
                   <p className="text-elec-yellow font-medium">~12 min</p>
                 </div>
                 <div className="p-2 bg-white/5 rounded text-center">
-                  <span className="text-white/70">350kW</span>
+                  <span className="text-white">350kW</span>
                   <p className="text-elec-yellow font-medium">~5 min</p>
                 </div>
               </div>
@@ -349,27 +349,27 @@ const EVChargingModule2Section1 = () => {
                 <div className="p-2 bg-white/5 rounded text-center">
                   <p className="text-elec-yellow font-medium">State A</p>
                   <p className="text-white">+12V</p>
-                  <p className="text-white/70">Not connected</p>
+                  <p className="text-white">Not connected</p>
                 </div>
                 <div className="p-2 bg-white/5 rounded text-center">
                   <p className="text-elec-yellow font-medium">State B</p>
                   <p className="text-white">+9V</p>
-                  <p className="text-white/70">Connected, no charge</p>
+                  <p className="text-white">Connected, no charge</p>
                 </div>
                 <div className="p-2 bg-white/5 rounded text-center">
                   <p className="text-elec-yellow font-medium">State C</p>
                   <p className="text-white">+6V</p>
-                  <p className="text-white/70">Ready to charge</p>
+                  <p className="text-white">Ready to charge</p>
                 </div>
                 <div className="p-2 bg-white/5 rounded text-center">
                   <p className="text-elec-yellow font-medium">State D</p>
                   <p className="text-white">+3V</p>
-                  <p className="text-white/70">Ventilation req'd</p>
+                  <p className="text-white">Ventilation req'd</p>
                 </div>
                 <div className="p-2 bg-white/5 rounded text-center">
                   <p className="text-elec-yellow font-medium">State E</p>
                   <p className="text-white">0V</p>
-                  <p className="text-white/70">Error</p>
+                  <p className="text-white">Error</p>
                 </div>
               </div>
             </div>
@@ -488,7 +488,7 @@ const EVChargingModule2Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/ev-charging-module-2">

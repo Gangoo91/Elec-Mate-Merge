@@ -214,7 +214,7 @@ export default function RSMModule5Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-5">
@@ -443,7 +443,7 @@ export default function RSMModule5Section3() {
                     <ThermometerSun className="h-5 w-5 text-amber-400" />
                     <p className="text-sm font-medium text-white">Stress</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                       <span>
@@ -490,7 +490,7 @@ export default function RSMModule5Section3() {
                     <Flame className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">Burnout</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                       <span>
@@ -568,7 +568,7 @@ export default function RSMModule5Section3() {
                     Early Warning Signs of Burnout
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -698,7 +698,7 @@ export default function RSMModule5Section3() {
               <div className="space-y-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">1. Extended Rest</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Not a week &mdash; typically 4 to 12 weeks of significantly reduced activity.
                     This does not necessarily mean complete bed rest, but it does mean stepping away
                     from the conditions that caused the burnout. For some, this means being signed
@@ -712,7 +712,7 @@ export default function RSMModule5Section3() {
                   <p className="text-sm font-medium text-white mb-2">
                     2. Genuine Change in Conditions
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     If the person returns to exactly the same conditions that caused the burnout,
                     they will burn out again. Recovery requires identifying what caused the burnout
                     and making genuine changes: reducing working hours, setting clearer boundaries,
@@ -725,7 +725,7 @@ export default function RSMModule5Section3() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">3. Professional Support</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     For moderate to severe burnout, professional support significantly accelerates
                     recovery and reduces the risk of relapse. Cognitive-behavioural therapy (CBT)
                     helps restructure the negative thought patterns that burnout creates.
@@ -777,7 +777,7 @@ export default function RSMModule5Section3() {
                   <ShieldAlert className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Seek Help When:</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -830,7 +830,7 @@ export default function RSMModule5Section3() {
                   <HeartPulse className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Where to Get Help</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -984,7 +984,7 @@ export default function RSMModule5Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-5">

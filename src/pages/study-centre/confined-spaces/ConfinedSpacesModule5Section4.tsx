@@ -212,7 +212,7 @@ export default function ConfinedSpacesModule5Section4() {
           <Button
             variant="ghost"
             size="icon"
-            className="min-h-[44px] min-w-[44px] text-white/70 hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] min-w-[44px] text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-5">
@@ -220,7 +220,7 @@ export default function ConfinedSpacesModule5Section4() {
             </Link>
           </Button>
           <div className="flex-1 min-w-0">
-            <p className="text-xs text-white/40">MODULE 5 {'\u2022'} SECTION 4</p>
+            <p className="text-xs text-white">MODULE 5 {'\u2022'} SECTION 4</p>
             <h1 className="text-sm font-semibold text-white truncate">
               Incident Reporting & Lessons Learned
             </h1>
@@ -243,7 +243,7 @@ export default function ConfinedSpacesModule5Section4() {
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Incident Reporting & Lessons Learned
           </h2>
-          <p className="text-white/60 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             How to report confined space incidents under RIDDOR 2013, investigate root causes, learn
             from near misses, and implement corrective actions to prevent recurrence
           </p>
@@ -255,7 +255,7 @@ export default function ConfinedSpacesModule5Section4() {
             <Zap className="h-4 w-4" />
             In 30 Seconds
           </h3>
-          <p className="text-white/80 text-base leading-relaxed">
+          <p className="text-white text-base leading-relaxed">
             Confined space incidents involving fatalities, specified injuries, over-7-day injuries,
             and dangerous occurrences (including loss of consciousness due to lack of oxygen) must
             be reported to the HSE under RIDDOR 2013. Investigation must go beyond the immediate
@@ -272,7 +272,7 @@ export default function ConfinedSpacesModule5Section4() {
             <AlertTriangle className="h-4 w-4" />
             On Site -- Critical Reminder
           </h3>
-          <p className="text-white/80 text-base leading-relaxed">
+          <p className="text-white text-base leading-relaxed">
             <strong className="text-red-400">
               If a confined space incident occurs, secure the scene immediately.
             </strong>{' '}
@@ -302,7 +302,7 @@ export default function ConfinedSpacesModule5Section4() {
             ].map((outcome, i) => (
               <li key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </li>
             ))}
           </ul>
@@ -319,7 +319,7 @@ export default function ConfinedSpacesModule5Section4() {
             <h3 className="text-xl font-semibold text-white">RIDDOR 2013 Reporting Requirements</h3>
           </div>
           <div className="border-l-2 border-cyan-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013
               (RIDDOR) requires the responsible person to report certain categories of workplace
               incident to the Health and Safety Executive (HSE). Several categories are directly
@@ -338,7 +338,7 @@ export default function ConfinedSpacesModule5Section4() {
                   </div>
                   <div>
                     <p className="text-red-400 font-semibold text-sm">Fatal Injuries</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Report immediately by telephone to the HSE Incident Contact Centre. Follow up
                       with a written report (Form F2508) within 10 days. The scene must be preserved
                       for HSE investigation.
@@ -351,7 +351,7 @@ export default function ConfinedSpacesModule5Section4() {
                   </div>
                   <div>
                     <p className="text-orange-400 font-semibold text-sm">Specified Injuries</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Fractures (other than fingers, thumbs, and toes), amputations, crush injuries,
                       loss of sight, burns causing hospitalisation, scalping, loss of consciousness
                       from head injury or asphyxia. Report without delay using the online form.
@@ -364,7 +364,7 @@ export default function ConfinedSpacesModule5Section4() {
                   </div>
                   <div>
                     <p className="text-amber-400 font-semibold text-sm">Over-7-Day Injuries</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Injuries that result in the worker being incapacitated for more than 7
                       consecutive days (not counting the day of the incident). Must be reported
                       within 15 days of the incident.
@@ -379,7 +379,7 @@ export default function ConfinedSpacesModule5Section4() {
                     <p className="text-purple-400 font-semibold text-sm">
                       Dangerous Occurrences (Confined Spaces)
                     </p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-white">Loss of consciousness</strong> due to lack of
                       oxygen in a confined space.{' '}
                       <strong className="text-white">Exposure to a hazardous substance</strong>{' '}
@@ -394,7 +394,7 @@ export default function ConfinedSpacesModule5Section4() {
                   </div>
                   <div>
                     <p className="text-blue-400 font-semibold text-sm">Occupational Diseases</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Certain occupational diseases linked to confined space exposures (e.g.
                       occupational asthma from sensitising agents, chemical poisoning) must be
                       reported when a doctor notifies the employer in writing.
@@ -406,13 +406,13 @@ export default function ConfinedSpacesModule5Section4() {
 
             <div className="bg-white/5 border border-white/10 rounded-lg p-4">
               <h4 className="font-semibold text-white text-sm mb-2">Who Reports and to Whom?</h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 The <strong className="text-white">responsible person</strong> must make the RIDDOR
                 report. This is typically the employer of the injured person, or the person in
                 control of the premises where the work was being carried out. On construction sites,
                 this is usually the principal contractor. Reports are made to the HSE via:
               </p>
-              <ul className="space-y-2 mt-3 text-sm text-white/70">
+              <ul className="space-y-2 mt-3 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                   <span>
@@ -439,23 +439,23 @@ export default function ConfinedSpacesModule5Section4() {
               <div className="space-y-2 text-sm">
                 <div className="grid grid-cols-2 gap-2 bg-black/20 rounded-lg p-3">
                   <p className="text-red-400 font-semibold">Fatal injuries</p>
-                  <p className="text-white/70">Immediate phone + written within 10 days</p>
+                  <p className="text-white">Immediate phone + written within 10 days</p>
                 </div>
                 <div className="grid grid-cols-2 gap-2 bg-black/20 rounded-lg p-3">
                   <p className="text-orange-400 font-semibold">Specified injuries</p>
-                  <p className="text-white/70">Without delay (online or phone)</p>
+                  <p className="text-white">Without delay (online or phone)</p>
                 </div>
                 <div className="grid grid-cols-2 gap-2 bg-black/20 rounded-lg p-3">
                   <p className="text-amber-400 font-semibold">Over-7-day injuries</p>
-                  <p className="text-white/70">Within 15 days of the incident</p>
+                  <p className="text-white">Within 15 days of the incident</p>
                 </div>
                 <div className="grid grid-cols-2 gap-2 bg-black/20 rounded-lg p-3">
                   <p className="text-purple-400 font-semibold">Dangerous occurrences</p>
-                  <p className="text-white/70">Without delay (online or phone)</p>
+                  <p className="text-white">Without delay (online or phone)</p>
                 </div>
                 <div className="grid grid-cols-2 gap-2 bg-black/20 rounded-lg p-3">
                   <p className="text-blue-400 font-semibold">Occupational diseases</p>
-                  <p className="text-white/70">Without delay after written diagnosis</p>
+                  <p className="text-white">Without delay after written diagnosis</p>
                 </div>
               </div>
             </div>
@@ -473,7 +473,7 @@ export default function ConfinedSpacesModule5Section4() {
             <h3 className="text-xl font-semibold text-white">Incident Investigation Process</h3>
           </div>
           <div className="border-l-2 border-cyan-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               A thorough investigation is essential after any confined space incident or near miss.
               The purpose is not to assign blame but to understand what happened, why it happened,
               and how to prevent it happening again. The investigation process follows a structured
@@ -492,7 +492,7 @@ export default function ConfinedSpacesModule5Section4() {
                   <div className="bg-red-500/20 border border-red-500/40 rounded-lg px-3 py-2 flex-1 text-center">
                     <p className="text-red-400 font-semibold text-xs">STEP 1</p>
                     <p className="text-white text-sm font-medium">Secure the Scene</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Prevent further entry, preserve evidence, ensure no one else is at risk
                     </p>
                   </div>
@@ -505,7 +505,7 @@ export default function ConfinedSpacesModule5Section4() {
                   <div className="bg-orange-500/20 border border-orange-500/40 rounded-lg px-3 py-2 flex-1 text-center">
                     <p className="text-orange-400 font-semibold text-xs">STEP 2</p>
                     <p className="text-white text-sm font-medium">Gather Evidence</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Atmospheric readings, permits, risk assessments, witness statements, equipment
                       condition, photographs
                     </p>
@@ -519,7 +519,7 @@ export default function ConfinedSpacesModule5Section4() {
                   <div className="bg-amber-500/20 border border-amber-500/40 rounded-lg px-3 py-2 flex-1 text-center">
                     <p className="text-amber-400 font-semibold text-xs">STEP 3</p>
                     <p className="text-white text-sm font-medium">Establish the Facts</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Timeline of events, who was involved, what conditions existed, what controls
                       were in place
                     </p>
@@ -533,7 +533,7 @@ export default function ConfinedSpacesModule5Section4() {
                   <div className="bg-cyan-500/20 border border-cyan-500/40 rounded-lg px-3 py-2 flex-1 text-center">
                     <p className="text-cyan-400 font-semibold text-xs">STEP 4</p>
                     <p className="text-white text-sm font-medium">Identify Immediate Causes</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       The direct actions, conditions, or failures that triggered the incident
                     </p>
                   </div>
@@ -546,7 +546,7 @@ export default function ConfinedSpacesModule5Section4() {
                   <div className="bg-purple-500/20 border border-purple-500/40 rounded-lg px-3 py-2 flex-1 text-center">
                     <p className="text-purple-400 font-semibold text-xs">STEP 5</p>
                     <p className="text-white text-sm font-medium">Root Cause Analysis</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Underlying systemic failures -- why did the immediate causes occur? Use 5
                       Whys, fishbone, fault tree
                     </p>
@@ -560,7 +560,7 @@ export default function ConfinedSpacesModule5Section4() {
                   <div className="bg-green-500/20 border border-green-500/40 rounded-lg px-3 py-2 flex-1 text-center">
                     <p className="text-green-400 font-semibold text-xs">STEP 6</p>
                     <p className="text-white text-sm font-medium">Recommend Corrective Actions</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Immediate, short-term, and long-term actions to prevent recurrence
                     </p>
                   </div>
@@ -573,7 +573,7 @@ export default function ConfinedSpacesModule5Section4() {
                   <div className="bg-blue-500/20 border border-blue-500/40 rounded-lg px-3 py-2 flex-1 text-center">
                     <p className="text-blue-400 font-semibold text-xs">STEP 7</p>
                     <p className="text-white text-sm font-medium">Share Lessons & Follow Up</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Safety alerts, toolbox talks, updated procedures, training review, verify
                       actions completed
                     </p>
@@ -587,7 +587,7 @@ export default function ConfinedSpacesModule5Section4() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-cyan-400 font-semibold text-xs mb-2">Documentation</p>
-                  <ul className="text-white/70 space-y-1 text-xs">
+                  <ul className="text-white space-y-1 text-xs">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Confined space risk assessment</span>
@@ -612,7 +612,7 @@ export default function ConfinedSpacesModule5Section4() {
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-cyan-400 font-semibold text-xs mb-2">Physical Evidence</p>
-                  <ul className="text-white/70 space-y-1 text-xs">
+                  <ul className="text-white space-y-1 text-xs">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Atmospheric monitoring readings (before, during, after)</span>
@@ -638,7 +638,7 @@ export default function ConfinedSpacesModule5Section4() {
               </div>
             </div>
 
-            <p className="text-white/70 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               <strong className="text-white">Immediate vs underlying causes:</strong> The immediate
               cause is the action or condition that directly triggered the incident (e.g. "the
               worker entered without testing the atmosphere"). The underlying cause is the systemic
@@ -668,7 +668,7 @@ export default function ConfinedSpacesModule5Section4() {
             <h3 className="text-xl font-semibold text-white">Root Cause Analysis Techniques</h3>
           </div>
           <div className="border-l-2 border-cyan-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Root cause analysis (RCA) is a systematic approach to identifying the fundamental
               reasons why an incident occurred. Several proven techniques can be applied to confined
               space incidents. The choice of technique depends on the complexity of the incident,
@@ -681,7 +681,7 @@ export default function ConfinedSpacesModule5Section4() {
                 <Search className="h-4 w-4 text-cyan-400" />
                 The 5 Whys Technique
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed mb-3">
+              <p className="text-white text-sm leading-relaxed mb-3">
                 Start with the immediate cause and ask "Why?" repeatedly until you reach the
                 systemic root cause. Typically 5 iterations are needed, but it may take fewer or
                 more. The key is to keep asking until you reach a cause that, if fixed, would
@@ -690,25 +690,25 @@ export default function ConfinedSpacesModule5Section4() {
               <div className="space-y-2 text-sm">
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-cyan-400 font-semibold text-xs">WHY 1</p>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     "Why did the worker lose consciousness?"{' '}
-                    <span className="text-white/50">-- The oxygen level in the tank was 14%.</span>
+                    <span className="text-white">-- The oxygen level in the tank was 14%.</span>
                   </p>
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-cyan-400 font-semibold text-xs">WHY 2</p>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     "Why was the oxygen level low?"{' '}
-                    <span className="text-white/50">
+                    <span className="text-white">
                       -- Rusting steel had consumed the oxygen overnight.
                     </span>
                   </p>
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-cyan-400 font-semibold text-xs">WHY 3</p>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     "Why wasn't the atmosphere tested before entry?"{' '}
-                    <span className="text-white/50">
+                    <span className="text-white">
                       -- The worker assumed it was safe because the tank had been ventilated the
                       previous day.
                     </span>
@@ -716,9 +716,9 @@ export default function ConfinedSpacesModule5Section4() {
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-cyan-400 font-semibold text-xs">WHY 4</p>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     "Why did the worker assume it was safe?"{' '}
-                    <span className="text-white/50">
+                    <span className="text-white">
                       -- There was no procedure requiring atmospheric testing immediately before
                       every entry.
                     </span>
@@ -726,9 +726,9 @@ export default function ConfinedSpacesModule5Section4() {
                 </div>
                 <div className="bg-black/20 rounded-lg p-3 border border-green-500/30">
                   <p className="text-green-400 font-semibold text-xs">WHY 5 -- ROOT CAUSE</p>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     "Why was there no procedure?"{' '}
-                    <span className="text-white/50">
+                    <span className="text-white">
                       -- The risk assessment did not identify atmospheric change after ventilation
                       as a hazard, and the safe system of work was not reviewed after a similar near
                       miss 6 months ago.
@@ -736,7 +736,7 @@ export default function ConfinedSpacesModule5Section4() {
                   </p>
                 </div>
               </div>
-              <p className="text-white/60 text-xs mt-3 italic">
+              <p className="text-white text-xs mt-3 italic">
                 The root cause is a systemic failure (inadequate risk assessment and failure to
                 learn from a previous near miss), not an individual's mistake.
               </p>
@@ -745,44 +745,44 @@ export default function ConfinedSpacesModule5Section4() {
             {/* Fishbone / Ishikawa */}
             <div className="bg-white/5 border border-white/10 rounded-lg p-4">
               <h4 className="font-semibold text-white text-sm mb-3">Fishbone (Ishikawa) Diagram</h4>
-              <p className="text-white/70 text-sm leading-relaxed mb-3">
+              <p className="text-white text-sm leading-relaxed mb-3">
                 The fishbone diagram organises potential causes into categories. For confined space
                 incidents, the typical categories are:
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-cyan-400 font-semibold text-xs mb-1">People</p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-xs">
                     Training, competence, experience, fatigue, complacency, communication
                   </p>
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-purple-400 font-semibold text-xs mb-1">Procedures</p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-xs">
                     Risk assessment adequacy, SSoW, permits, rescue plan, method statements
                   </p>
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-amber-400 font-semibold text-xs mb-1">Equipment</p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-xs">
                     Gas monitors, ventilation, RPE, rescue equipment, calibration status
                   </p>
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-green-400 font-semibold text-xs mb-1">Environment</p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-xs">
                     Atmospheric conditions, temperature, access/egress, space configuration
                   </p>
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-blue-400 font-semibold text-xs mb-1">Management</p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-xs">
                     Supervision, resourcing, time pressure, safety culture, management commitment
                   </p>
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-red-400 font-semibold text-xs mb-1">Communication</p>
-                  <p className="text-white/60 text-xs">
+                  <p className="text-white text-xs">
                     Briefings, handovers, emergency comms, language barriers, shift changes
                   </p>
                 </div>
@@ -792,7 +792,7 @@ export default function ConfinedSpacesModule5Section4() {
             {/* Fault Tree Analysis */}
             <div className="bg-white/5 border border-white/10 rounded-lg p-4">
               <h4 className="font-semibold text-white text-sm mb-2">Fault Tree Analysis (FTA)</h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Fault tree analysis works backwards from the incident (the "top event") to map all
                 possible combinations of failures that could have caused it. Each branch represents
                 a contributing factor connected by AND/OR logic gates. AND gates mean all
@@ -817,7 +817,7 @@ export default function ConfinedSpacesModule5Section4() {
             </h3>
           </div>
           <div className="border-l-2 border-cyan-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               HSE investigations into confined space fatalities and serious injuries reveal
               recurring patterns. The same root causes appear repeatedly across different industries
               and different types of confined space. Understanding these patterns is essential for
@@ -833,7 +833,7 @@ export default function ConfinedSpacesModule5Section4() {
                   </span>
                   <div>
                     <p className="text-white font-medium text-sm">Inadequate risk assessment</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Failing to identify the space as a confined space, underestimating atmospheric
                       hazards, not considering how conditions can change during the work, or using a
                       generic risk assessment instead of a task-specific one.
@@ -846,7 +846,7 @@ export default function ConfinedSpacesModule5Section4() {
                   </span>
                   <div>
                     <p className="text-white font-medium text-sm">No atmospheric testing</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Entering without testing, testing with uncalibrated equipment, testing once
                       but not continuously, or not understanding the readings. This is a factor in
                       the majority of confined space fatalities.
@@ -861,7 +861,7 @@ export default function ConfinedSpacesModule5Section4() {
                     <p className="text-white font-medium text-sm">
                       Failure to follow safe systems of work
                     </p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Shortcuts, deviating from the permit conditions, bypassing controls "to save
                       time," or not following the method statement. Often driven by production
                       pressure or complacency.
@@ -874,7 +874,7 @@ export default function ConfinedSpacesModule5Section4() {
                   </span>
                   <div>
                     <p className="text-white font-medium text-sm">Inadequate rescue planning</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       No rescue plan, rescue equipment not available, rescue team not trained, or
                       rescuers entering without adequate precautions. A significant proportion of
                       confined space fatalities are would-be rescuers.
@@ -887,7 +887,7 @@ export default function ConfinedSpacesModule5Section4() {
                   </span>
                   <div>
                     <p className="text-white font-medium text-sm">Complacency</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       "We've always done it this way," "Nothing has ever happened before," or
                       familiarity breeding contempt for the hazards. Experienced workers can be more
                       at risk than novices because they underestimate the danger.
@@ -900,7 +900,7 @@ export default function ConfinedSpacesModule5Section4() {
                   </span>
                   <div>
                     <p className="text-white font-medium text-sm">Time pressure</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Rushing to meet deadlines, pressure from clients or managers to "just get on
                       with it," or prioritising production over safety. Time pressure is the enemy
                       of safe confined space work.
@@ -913,7 +913,7 @@ export default function ConfinedSpacesModule5Section4() {
                   </span>
                   <div>
                     <p className="text-white font-medium text-sm">Poor communication</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Inadequate briefings, poor handovers between shifts, language barriers,
                       failure to communicate changes in conditions, or breakdown in communication
                       between the entrant, attendant, and supervisor.
@@ -926,7 +926,7 @@ export default function ConfinedSpacesModule5Section4() {
                   </span>
                   <div>
                     <p className="text-white font-medium text-sm">Inadequate training</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Workers not trained in confined space hazards, training not refreshed,
                       training that does not cover the specific type of confined space, or training
                       that is classroom-based only without practical elements.
@@ -959,7 +959,7 @@ export default function ConfinedSpacesModule5Section4() {
             </h3>
           </div>
           <div className="border-l-2 border-cyan-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               A near miss is an event that did not result in injury, illness, or damage but had the
               potential to do so. Near misses are the most valuable source of safety data available
               to any organisation because they vastly outnumber actual incidents and reveal the same
@@ -1030,12 +1030,12 @@ export default function ConfinedSpacesModule5Section4() {
                     className="bg-white/5 border-x border-b border-white/15 rounded-b-lg px-4 py-3 text-center"
                     style={{ width: '100%' }}
                   >
-                    <p className="text-white/60 font-bold text-xs">3,000+</p>
-                    <p className="text-white/50 text-[10px]">Unsafe Acts & Conditions</p>
+                    <p className="text-white font-bold text-xs">3,000+</p>
+                    <p className="text-white text-[10px]">Unsafe Acts & Conditions</p>
                   </div>
                 </div>
               </div>
-              <p className="text-white/50 text-xs text-center mt-3 italic">
+              <p className="text-white text-xs text-center mt-3 italic">
                 Based on Heinrich's safety triangle -- for every serious injury, there are
                 approximately 300 near misses that reveal the same underlying failures
               </p>
@@ -1045,7 +1045,7 @@ export default function ConfinedSpacesModule5Section4() {
               <h4 className="font-semibold text-white text-sm mb-2">
                 Why Near Misses Are Critical Learning Opportunities
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                   <span>
@@ -1090,7 +1090,7 @@ export default function ConfinedSpacesModule5Section4() {
                 <MessageSquare className="h-4 w-4" />
                 Blame-Free Reporting Culture
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Workers will only report near misses if they trust they will not be punished for
                 doing so. A blame-free (or "just") reporting culture means: reports are welcomed and
                 acknowledged, there is no punishment for honest reporting, feedback is given on
@@ -1114,7 +1114,7 @@ export default function ConfinedSpacesModule5Section4() {
             <h3 className="text-xl font-semibold text-white">Corrective Actions & Debriefing</h3>
           </div>
           <div className="border-l-2 border-cyan-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The purpose of incident investigation is to prevent recurrence. Corrective actions are
               the practical changes implemented as a result of the investigation. They fall into
               three categories, each addressing a different timescale and depth of change.
@@ -1127,7 +1127,7 @@ export default function ConfinedSpacesModule5Section4() {
               <div className="space-y-3">
                 <div className="bg-black/20 rounded-lg p-3 border-l-4 border-red-500">
                   <p className="text-red-400 font-semibold text-sm">Immediate Actions</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Stop the job. Secure the confined space. Prevent further entry. Provide first
                     aid and emergency services. Preserve the scene. Notify the responsible person
                     and the HSE (if RIDDOR-reportable). These actions are taken within minutes to
@@ -1136,7 +1136,7 @@ export default function ConfinedSpacesModule5Section4() {
                 </div>
                 <div className="bg-black/20 rounded-lg p-3 border-l-4 border-amber-500">
                   <p className="text-amber-400 font-semibold text-sm">Short-Term Actions</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Modify the specific procedure that failed. Retrain the specific team involved.
                     Repair or replace defective equipment. Review and update the risk assessment for
                     this particular confined space. Issue a safety alert to other teams doing
@@ -1145,7 +1145,7 @@ export default function ConfinedSpacesModule5Section4() {
                 </div>
                 <div className="bg-black/20 rounded-lg p-3 border-l-4 border-green-500">
                   <p className="text-green-400 font-semibold text-sm">Long-Term Systemic Actions</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Revise the overall confined space management system. Implement organisation-wide
                     training programme changes. Review supervision arrangements across all confined
                     space activities. Address cultural issues (e.g. production pressure overriding
@@ -1161,13 +1161,13 @@ export default function ConfinedSpacesModule5Section4() {
               <h4 className="font-semibold text-white text-sm mb-2">
                 Debriefing After Incidents and Near Misses
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 A structured debrief should be conducted after every confined space incident and
                 near miss, as well as after every confined space entry where things did not go
                 entirely as planned. The debrief should involve all personnel who were involved and
                 should cover:
               </p>
-              <ul className="space-y-2 mt-3 text-sm text-white/70">
+              <ul className="space-y-2 mt-3 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                   <span>What was planned vs what actually happened</span>
@@ -1216,7 +1216,7 @@ export default function ConfinedSpacesModule5Section4() {
             <h3 className="text-xl font-semibold text-white">Sharing Lessons Learned</h3>
           </div>
           <div className="border-l-2 border-cyan-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               An investigation that identifies root causes and corrective actions is only effective
               if the lessons are shared with everyone who needs to learn from them. Keeping lessons
               confined to the investigation team wastes the most valuable output of the process.
@@ -1227,7 +1227,7 @@ export default function ConfinedSpacesModule5Section4() {
               <div className="space-y-3">
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-cyan-400 font-semibold text-sm">Safety Alerts</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     A concise document (typically one page) summarising what happened, what went
                     wrong, and what actions must be taken. Distributed to all relevant personnel
                     immediately. Should include photographs where appropriate and specific actions
@@ -1236,7 +1236,7 @@ export default function ConfinedSpacesModule5Section4() {
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-cyan-400 font-semibold text-sm">Toolbox Talks</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Short, focused safety briefings (typically 10-15 minutes) delivered at the start
                     of a shift or before a specific task. Ideal for discussing recent incidents and
                     near misses, allowing workers to ask questions and discuss how the lessons apply
@@ -1245,7 +1245,7 @@ export default function ConfinedSpacesModule5Section4() {
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-cyan-400 font-semibold text-sm">Industry Bulletins</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Industry bodies (such as the HSE, trade associations, and safety organisations)
                     publish bulletins and safety alerts based on significant incidents. These share
                     lessons across the entire industry, not just the organisation where the incident
@@ -1254,7 +1254,7 @@ export default function ConfinedSpacesModule5Section4() {
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-cyan-400 font-semibold text-sm">Updated Documentation</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Risk assessments, safe systems of work, permits to work, rescue plans, and
                     training materials must be updated to reflect the lessons learned. Documentation
                     that does not evolve after incidents becomes dangerously outdated.
@@ -1267,11 +1267,11 @@ export default function ConfinedSpacesModule5Section4() {
               <h4 className="font-semibold text-white text-sm mb-2">
                 Updating Risk Assessments and Procedures
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 After every confined space incident or significant near miss, the following must be
                 reviewed and updated as necessary:
               </p>
-              <ul className="space-y-2 mt-3 text-sm text-white/70">
+              <ul className="space-y-2 mt-3 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                   <span>
@@ -1328,7 +1328,7 @@ export default function ConfinedSpacesModule5Section4() {
             </h3>
           </div>
           <div className="border-l-2 border-cyan-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Confined space incidents can trigger multiple legal processes simultaneously.
               Understanding the potential legal consequences reinforces why prevention, proper
               procedures, and thorough record-keeping are so critically important.
@@ -1344,7 +1344,7 @@ export default function ConfinedSpacesModule5Section4() {
                   <p className="text-red-400 font-semibold text-sm">
                     HSE Investigation & Prosecution
                   </p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     The HSE will investigate all fatal confined space incidents and most serious
                     injuries and dangerous occurrences. If they find breaches of the Confined Spaces
                     Regulations 1997, the Health and Safety at Work etc. Act 1974, or other relevant
@@ -1355,7 +1355,7 @@ export default function ConfinedSpacesModule5Section4() {
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-red-400 font-semibold text-sm">Corporate Manslaughter</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Under the Corporate Manslaughter and Corporate Homicide Act 2007, an
                     organisation can be convicted of corporate manslaughter if a gross breach of a
                     duty of care by senior management causes a death. Penalties include unlimited
@@ -1368,7 +1368,7 @@ export default function ConfinedSpacesModule5Section4() {
                   <p className="text-red-400 font-semibold text-sm">
                     Individual Criminal Liability
                   </p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Directors, managers, and other individuals can be personally prosecuted under
                     Sections 7, 8, 36, and 37 of HSWA 1974. Section 37 applies where an offence by a
                     body corporate was committed with the consent, connivance, or neglect of a
@@ -1378,7 +1378,7 @@ export default function ConfinedSpacesModule5Section4() {
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-amber-400 font-semibold text-sm">Civil Claims</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Injured workers (or the families of deceased workers) can bring civil claims for
                     compensation. These are separate from criminal proceedings and can result in
                     substantial damages awards. Employer's liability insurance covers most claims,
@@ -1388,7 +1388,7 @@ export default function ConfinedSpacesModule5Section4() {
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-amber-400 font-semibold text-sm">Insurance Implications</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Repeated incidents, poor safety records, or HSE enforcement actions can lead to
                     increased insurance premiums, restricted coverage, or difficulty obtaining
                     insurance at all. Some insurers now require evidence of active safety management
@@ -1397,7 +1397,7 @@ export default function ConfinedSpacesModule5Section4() {
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-purple-400 font-semibold text-sm">Coroner's Inquest</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     All workplace fatalities are subject to a coroner's inquest, which is a public
                     hearing to establish the cause of death. Evidence from the inquest can be used
                     in subsequent criminal and civil proceedings. The coroner can also issue a
@@ -1413,12 +1413,12 @@ export default function ConfinedSpacesModule5Section4() {
                 <Shield className="h-4 w-4 text-cyan-400" />
                 The Defence: Demonstrating "So Far As Is Reasonably Practicable"
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 The primary defence available to employers in health and safety prosecutions is to
                 demonstrate that they did everything "so far as is reasonably practicable" (SFAIRP)
                 to prevent the incident. This requires evidence of:
               </p>
-              <ul className="space-y-2 mt-3 text-sm text-white/70">
+              <ul className="space-y-2 mt-3 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                   <span>A suitable and sufficient risk assessment that identified the hazards</span>
@@ -1452,7 +1452,7 @@ export default function ConfinedSpacesModule5Section4() {
                   </span>
                 </li>
               </ul>
-              <p className="text-white/60 text-xs mt-3 italic">
+              <p className="text-white text-xs mt-3 italic">
                 The burden of proof is on the defendant -- the employer must prove they did enough,
                 not the prosecution proving they did not.
               </p>
@@ -1472,7 +1472,7 @@ export default function ConfinedSpacesModule5Section4() {
             <div className="space-y-3 text-sm">
               <div className="flex items-start gap-3 bg-black/20 rounded-lg p-3">
                 <span className="text-red-400 font-bold text-lg flex-shrink-0">1</span>
-                <p className="text-white/80">
+                <p className="text-white">
                   <strong className="text-red-400">Fatal injuries</strong> must be reported to the
                   HSE <strong className="text-white">immediately by telephone</strong>, with a
                   written report within 10 days
@@ -1480,7 +1480,7 @@ export default function ConfinedSpacesModule5Section4() {
               </div>
               <div className="flex items-start gap-3 bg-black/20 rounded-lg p-3">
                 <span className="text-orange-400 font-bold text-lg flex-shrink-0">2</span>
-                <p className="text-white/80">
+                <p className="text-white">
                   <strong className="text-orange-400">Loss of consciousness</strong> due to lack of
                   O&#8322; in a confined space is a{' '}
                   <strong className="text-white">RIDDOR dangerous occurrence</strong> -- report even
@@ -1489,21 +1489,21 @@ export default function ConfinedSpacesModule5Section4() {
               </div>
               <div className="flex items-start gap-3 bg-black/20 rounded-lg p-3">
                 <span className="text-amber-400 font-bold text-lg flex-shrink-0">3</span>
-                <p className="text-white/80">
+                <p className="text-white">
                   <strong className="text-amber-400">Root cause analysis</strong> must go beyond the
                   immediate cause to find <strong className="text-white">systemic failures</strong>
                 </p>
               </div>
               <div className="flex items-start gap-3 bg-black/20 rounded-lg p-3">
                 <span className="text-green-400 font-bold text-lg flex-shrink-0">4</span>
-                <p className="text-white/80">
+                <p className="text-white">
                   <strong className="text-green-400">Near misses</strong> are free lessons -- report
                   every one in a <strong className="text-white">blame-free culture</strong>
                 </p>
               </div>
               <div className="flex items-start gap-3 bg-black/20 rounded-lg p-3">
                 <span className="text-blue-400 font-bold text-lg flex-shrink-0">5</span>
-                <p className="text-white/80">
+                <p className="text-white">
                   <strong className="text-blue-400">Corrective actions</strong> must address{' '}
                   <strong className="text-white">
                     immediate, short-term, and long-term systemic
@@ -1513,14 +1513,14 @@ export default function ConfinedSpacesModule5Section4() {
               </div>
               <div className="flex items-start gap-3 bg-black/20 rounded-lg p-3">
                 <span className="text-purple-400 font-bold text-lg flex-shrink-0">6</span>
-                <p className="text-white/80">
+                <p className="text-white">
                   <strong className="text-purple-400">Share lessons</strong> through safety alerts,
                   toolbox talks, updated procedures, and industry bulletins
                 </p>
               </div>
               <div className="flex items-start gap-3 bg-black/20 rounded-lg p-3">
                 <span className="text-cyan-400 font-bold text-lg flex-shrink-0">7</span>
-                <p className="text-white/80">
+                <p className="text-white">
                   <strong className="text-cyan-400">Legal consequences</strong> include unlimited
                   fines, imprisonment, corporate manslaughter charges, and civil claims
                 </p>
@@ -1538,7 +1538,7 @@ export default function ConfinedSpacesModule5Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-xl p-4">
                 <h4 className="font-medium text-white mb-2 text-sm">{faq.question}</h4>
-                <p className="text-sm text-white/60 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1557,7 +1557,7 @@ export default function ConfinedSpacesModule5Section4() {
           <h3 className="text-lg font-bold text-white mb-2">
             You've completed all modules! Ready for the mock exam?
           </h3>
-          <p className="text-white/70 text-sm mb-4">
+          <p className="text-white text-sm mb-4">
             You have worked through all five modules of the Confined Spaces course. The mock exam
             will test your knowledge across all modules with timed questions in exam conditions.
           </p>

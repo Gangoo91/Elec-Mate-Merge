@@ -169,14 +169,14 @@ Consumer unit 12 way
         </div>
         <div>
           <h3 className="text-ios-title-2 font-bold text-white">Smart Quote</h3>
-          <p className="text-ios-caption-1 text-white/50">AI-powered materials analysis</p>
+          <p className="text-ios-caption-1 text-white">AI-powered materials analysis</p>
         </div>
       </div>
 
       {/* Materials Input */}
       <section>
         <div className="flex items-center justify-between mb-2">
-          <p className="text-ios-footnote text-white/50 uppercase tracking-wide">Materials List</p>
+          <p className="text-ios-footnote text-white uppercase tracking-wide">Materials List</p>
           <button
             onClick={handlePasteExample}
             className="flex items-center gap-1 text-ios-caption-1 text-purple-400 touch-manipulation"
@@ -190,18 +190,18 @@ Consumer unit 12 way
             value={materialsText}
             onChange={(e) => setMaterialsText(e.target.value)}
             placeholder={exampleList}
-            className="w-full min-h-[160px] p-4 bg-transparent text-white placeholder:text-white/30
+            className="w-full min-h-[160px] p-4 bg-transparent text-white placeholder:text-white
                        text-ios-body font-mono resize-none focus:outline-none"
           />
         </div>
-        <p className="text-ios-caption-2 text-white/40 mt-2 px-1">
+        <p className="text-ios-caption-2 text-white mt-2 px-1">
           One item per line. Include quantities, sizes, specifications.
         </p>
       </section>
 
       {/* Preference Selection */}
       <section>
-        <p className="text-ios-footnote text-white/50 uppercase tracking-wide mb-2">Preference</p>
+        <p className="text-ios-footnote text-white uppercase tracking-wide mb-2">Preference</p>
         <div className="grid grid-cols-3 gap-2">
           {preferenceOptions.map((opt) => {
             const Icon = opt.icon;
@@ -217,10 +217,10 @@ Consumer unit 12 way
                 }`}
               >
                 <Icon
-                  className={`h-5 w-5 mx-auto mb-1 ${isSelected ? `text-${opt.color}-400` : 'text-white/50'}`}
+                  className={`h-5 w-5 mx-auto mb-1 ${isSelected ? `text-${opt.color}-400` : 'text-white'}`}
                 />
                 <p
-                  className={`text-ios-caption-1 font-medium ${isSelected ? `text-${opt.color}-300` : 'text-white/70'}`}
+                  className={`text-ios-caption-1 font-medium ${isSelected ? `text-${opt.color}-300` : 'text-white'}`}
                 >
                   {opt.label}
                 </p>
@@ -337,7 +337,7 @@ Consumer unit 12 way
                     onClick={() => setActiveOption(tab.key)}
                     className={`relative z-10 flex-1 py-2.5 flex items-center justify-center gap-1.5
                                text-ios-caption-1 font-medium transition-colors touch-manipulation ${
-                                 activeOption === tab.key ? 'text-black' : 'text-white/70'
+                                 activeOption === tab.key ? 'text-black' : 'text-white'
                                }`}
                   >
                     <Icon className="h-4 w-4" />
@@ -365,7 +365,7 @@ Consumer unit 12 way
                 >
                   <div className="flex justify-between items-start">
                     <div>
-                      <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">
+                      <p className="text-ios-caption-1 text-white uppercase tracking-wide">
                         {currentOption.name}
                       </p>
                       <p className="text-3xl font-bold text-white mt-1 tabular-nums">
@@ -388,8 +388,8 @@ Consumer unit 12 way
                 <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
                   <div className="flex-shrink-0 bg-white/5 border border-white/10 rounded-xl p-3 min-w-[100px]">
                     <div className="flex items-center gap-1 mb-1">
-                      <Package className="h-3 w-3 text-white/50" />
-                      <span className="text-ios-caption-2 text-white/50">Items</span>
+                      <Package className="h-3 w-3 text-white" />
+                      <span className="text-ios-caption-2 text-white">Items</span>
                     </div>
                     <p className="text-ios-title-3 font-semibold text-white">
                       {currentOption.items.length}
@@ -397,8 +397,8 @@ Consumer unit 12 way
                   </div>
                   <div className="flex-shrink-0 bg-white/5 border border-white/10 rounded-xl p-3 min-w-[100px]">
                     <div className="flex items-center gap-1 mb-1">
-                      <Truck className="h-3 w-3 text-white/50" />
-                      <span className="text-ios-caption-2 text-white/50">Delivery</span>
+                      <Truck className="h-3 w-3 text-white" />
+                      <span className="text-ios-caption-2 text-white">Delivery</span>
                     </div>
                     <p className="text-ios-subhead font-semibold text-white">
                       {currentOption.estimatedDelivery}
@@ -406,8 +406,8 @@ Consumer unit 12 way
                   </div>
                   <div className="flex-shrink-0 bg-white/5 border border-white/10 rounded-xl p-3 min-w-[100px]">
                     <div className="flex items-center gap-1 mb-1">
-                      <Clock className="h-3 w-3 text-white/50" />
-                      <span className="text-ios-caption-2 text-white/50">Suppliers</span>
+                      <Clock className="h-3 w-3 text-white" />
+                      <span className="text-ios-caption-2 text-white">Suppliers</span>
                     </div>
                     <p className="text-ios-subhead font-semibold text-white">
                       {currentOption.suppliers.length}
@@ -417,7 +417,7 @@ Consumer unit 12 way
 
                 {/* Items List */}
                 <section>
-                  <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-2">
+                  <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-2">
                     Items ({currentOption.items.length})
                   </p>
                   <div className="space-y-2 max-h-[300px] overflow-y-auto scrollbar-hide">
@@ -434,7 +434,7 @@ Consumer unit 12 way
                             {item.selectedProduct.name}
                           </p>
                           <div className="flex items-center gap-2 mt-0.5">
-                            <span className="text-ios-caption-2 text-white/50">
+                            <span className="text-ios-caption-2 text-white">
                               {item.requestedItem.quantity} • {item.selectedProduct.supplier}
                             </span>
                             {item.selectedProduct.stockStatus !== 'In Stock' && (

@@ -282,7 +282,7 @@ const Level3Module4Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section1">
@@ -445,7 +445,7 @@ const Level3Module4Section1_2 = () => {
               crackling sounds demand immediate investigation.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A customer reports a 'clicking' sound from behind their
               kitchen worktop when the kettle boils. Investigation reveals a connection block in a
               junction box with loose terminals - arcing occurs under the kettle's 13A load. The
@@ -529,19 +529,19 @@ const Level3Module4Section1_2 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Protective Device Behaviour</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Tripping patterns, failure to trip, nuisance tripping
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Load Behaviour</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Flickering, dimming, failing to operate, intermittent
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">System Behaviour</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Voltage variations, timing-related issues, load-dependent
                 </p>
               </div>
@@ -555,7 +555,7 @@ const Level3Module4Section1_2 = () => {
               factors.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> An RCD trips every morning around 7am. Investigation reveals
               this coincides with the immersion heater timer switching on. The heater element has
               degraded insulation that leaks to earth when cold - once warm, the insulation
@@ -629,7 +629,7 @@ const Level3Module4Section1_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -676,7 +676,7 @@ const Level3Module4Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section1-1">

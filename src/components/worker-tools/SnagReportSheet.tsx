@@ -138,7 +138,7 @@ export function SnagReportSheet({ open, onOpenChange }: SnagReportSheetProps) {
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
             {/* Job selector */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-white/80">Select Job</label>
+              <label className="text-sm font-medium text-white">Select Job</label>
               <Select value={selectedJobId} onValueChange={setSelectedJobId} disabled={jobsLoading}>
                 <SelectTrigger className="h-12 bg-input border-white/10 text-white focus:border-elec-yellow focus:ring-elec-yellow">
                   <SelectValue placeholder="Choose a job..." />
@@ -159,7 +159,7 @@ export function SnagReportSheet({ open, onOpenChange }: SnagReportSheetProps) {
 
             {/* Severity */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-white/80">Severity</label>
+              <label className="text-sm font-medium text-white">Severity</label>
               <div className="grid grid-cols-3 gap-2">
                 {SEVERITY_OPTIONS.map((option) => (
                   <button
@@ -169,7 +169,7 @@ export function SnagReportSheet({ open, onOpenChange }: SnagReportSheetProps) {
                       'h-12 rounded-xl border transition-all touch-manipulation flex items-center justify-center gap-2',
                       severity === option.value
                         ? cn(option.bgColour, 'border-white/30', option.colour)
-                        : 'bg-white/[0.03] border-white/10 text-white/60 hover:bg-white/[0.06]'
+                        : 'bg-white/[0.03] border-white/10 text-white hover:bg-white/[0.06]'
                     )}
                   >
                     {option.value === 'critical' && <AlertTriangle className="h-4 w-4" />}
@@ -181,7 +181,7 @@ export function SnagReportSheet({ open, onOpenChange }: SnagReportSheetProps) {
 
             {/* Description */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-white/80">Describe Issue</label>
+              <label className="text-sm font-medium text-white">Describe Issue</label>
               <Textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -192,11 +192,11 @@ export function SnagReportSheet({ open, onOpenChange }: SnagReportSheetProps) {
 
             {/* Location within site */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-white/80">
-                Location on Site <span className="text-white/40">(optional)</span>
+              <label className="text-sm font-medium text-white">
+                Location on Site <span className="text-white">(optional)</span>
               </label>
               <div className="relative">
-                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40" />
+                <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white" />
                 <Input
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
@@ -209,7 +209,7 @@ export function SnagReportSheet({ open, onOpenChange }: SnagReportSheetProps) {
             {/* Photo upload placeholder */}
             <Button
               variant="outline"
-              className="w-full h-12 bg-white/[0.03] border-white/10 text-white/60 hover:bg-white/[0.06] hover:text-white touch-manipulation"
+              className="w-full h-12 bg-white/[0.03] border-white/10 text-white hover:bg-white/[0.06] hover:text-white touch-manipulation"
               disabled
             >
               <Camera className="h-5 w-5 mr-2" />
@@ -221,7 +221,7 @@ export function SnagReportSheet({ open, onOpenChange }: SnagReportSheetProps) {
               <div className="space-y-2 pt-2">
                 <button
                   onClick={() => setShowRecent(!showRecent)}
-                  className="flex items-center gap-2 text-sm font-medium text-white/80 touch-manipulation"
+                  className="flex items-center gap-2 text-sm font-medium text-white touch-manipulation"
                 >
                   <Clock className="h-4 w-4" />
                   Recent Snags
@@ -247,7 +247,7 @@ export function SnagReportSheet({ open, onOpenChange }: SnagReportSheetProps) {
                             <p className="text-sm text-white line-clamp-2">{snag.description}</p>
                             {getSeverityBadge(snag.severity)}
                           </div>
-                          <p className="text-xs text-white/40">
+                          <p className="text-xs text-white">
                             {new Date(snag.created_at).toLocaleDateString('en-GB', {
                               day: 'numeric',
                               month: 'short',

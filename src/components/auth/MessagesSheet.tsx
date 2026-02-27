@@ -779,7 +779,7 @@ export function MessagesSheet({ open, onOpenChange }: MessagesSheetProps) {
                         description: 'All messages marked as read',
                       });
                     }}
-                    className="ml-auto h-8 text-xs text-white/70 hover:text-white"
+                    className="ml-auto h-8 text-xs text-white hover:text-white"
                   >
                     <CheckCheck className="h-4 w-4 mr-1" />
                     Clear all

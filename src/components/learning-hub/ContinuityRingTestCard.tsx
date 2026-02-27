@@ -268,32 +268,32 @@ const ContinuityRingTestCard = () => {
                       </div>
                       <div className="grid grid-cols-2 md:grid-cols-5 gap-2 text-sm">
                         <div>
-                          <span className="text-white/80">R1:</span>
+                          <span className="text-white">R1:</span>
                           <span className="text-foreground ml-1">{test.r1}Ω</span>
                         </div>
                         <div>
-                          <span className="text-white/80">Rn:</span>
+                          <span className="text-white">Rn:</span>
                           <span className="text-foreground ml-1">{test.rn}Ω</span>
                         </div>
                         <div>
-                          <span className="text-white/80">R2:</span>
+                          <span className="text-white">R2:</span>
                           <span className="text-foreground ml-1">{test.r2}Ω</span>
                         </div>
                         <div>
-                          <span className="text-white/80">R1+Rn:</span>
+                          <span className="text-white">R1+Rn:</span>
                           <span className="text-foreground ml-1">
                             {test.crossTestResults.r1rn}Ω
                           </span>
                         </div>
                         <div>
-                          <span className="text-white/80">R1+R2:</span>
+                          <span className="text-white">R1+R2:</span>
                           <span className="text-foreground ml-1">
                             {test.crossTestResults.r1r2}Ω
                           </span>
                         </div>
                       </div>
                       {test.notes && (
-                        <div className="mt-2 text-sm text-white/80">Notes: {test.notes}</div>
+                        <div className="mt-2 text-sm text-white">Notes: {test.notes}</div>
                       )}
                     </CardContent>
                   </Card>

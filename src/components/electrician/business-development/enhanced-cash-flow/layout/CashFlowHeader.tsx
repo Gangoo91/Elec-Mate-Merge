@@ -81,7 +81,7 @@ export const CashFlowHeader = ({
           {/* Export Dropdown */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="h-10 px-3 sm:px-4 flex items-center gap-2 rounded-xl bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 transition-colors">
+              <button className="h-10 px-3 sm:px-4 flex items-center gap-2 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors">
                 <Download className="h-4 w-4" />
                 <span className="hidden sm:inline">Export</span>
               </button>

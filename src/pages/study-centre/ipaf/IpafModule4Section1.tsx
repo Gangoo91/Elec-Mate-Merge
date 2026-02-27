@@ -193,7 +193,7 @@ export default function IpafModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../ipaf-module-4">
@@ -215,7 +215,7 @@ export default function IpafModule4Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Pre-Use Visual Checks
           </h1>
-          <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-xl mx-auto">
             Daily checks that every tower user must carry out before each use — your first line of
             defence against tower-related incidents
           </p>
@@ -313,7 +313,7 @@ export default function IpafModule4Section1() {
                 . A tower that was safe at 5 pm may not be safe at 7 am the following morning.
               </p>
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm text-white/60 mb-2">Key Principle</p>
+                <p className="text-sm text-white mb-2">Key Principle</p>
                 <p className="text-white">
                   The Work at Height Regulations 2005 require that work equipment for work at height
                   is <strong className="text-elec-yellow">inspected at suitable intervals</strong>{' '}
@@ -1034,7 +1034,7 @@ export default function IpafModule4Section1() {
             </div>
             <div>
               <h3 className="text-sm font-medium text-elec-yellow/80 mb-2">Checklist Summary</h3>
-              <p className="text-sm text-white/70 mb-2">
+              <p className="text-sm text-white mb-2">
                 Use this as a mental walkthrough each time you approach a tower:
               </p>
               <ol className="text-sm text-white space-y-1 ml-4 list-decimal list-inside">
@@ -1076,7 +1076,7 @@ export default function IpafModule4Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1094,7 +1094,7 @@ export default function IpafModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             disabled
           >
             <ArrowLeft className="w-4 h-4 mr-2" />

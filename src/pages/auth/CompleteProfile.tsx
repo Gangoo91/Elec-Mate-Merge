@@ -140,7 +140,7 @@ const CompleteProfile = () => {
             <h1 className="text-[28px] font-bold text-white tracking-tight mb-2">
               Complete Your Profile
             </h1>
-            <p className="text-[15px] text-white/50">Just one more step to get started</p>
+            <p className="text-[15px] text-white">Just one more step to get started</p>
           </div>
 
           {/* Error */}
@@ -159,7 +159,7 @@ const CompleteProfile = () => {
 
           {/* Role Selection */}
           <div className="space-y-3 mb-8">
-            <label className="block text-[13px] font-medium text-white/70 ml-1 mb-3">
+            <label className="block text-[13px] font-medium text-white ml-1 mb-3">
               What's your role?
             </label>
             {roleOptions.map((option) => (
@@ -184,7 +184,7 @@ const CompleteProfile = () => {
                     <option.icon
                       className={cn(
                         'h-6 w-6',
-                        selectedRole === option.value ? 'text-elec-yellow' : 'text-white/50'
+                        selectedRole === option.value ? 'text-elec-yellow' : 'text-white'
                       )}
                     />
                   </div>
@@ -192,7 +192,7 @@ const CompleteProfile = () => {
                     <span className="font-semibold text-white text-[16px] block">
                       {option.label}
                     </span>
-                    <span className="text-[13px] text-white/50">{option.description}</span>
+                    <span className="text-[13px] text-white">{option.description}</span>
                   </div>
                   {selectedRole === option.value && <Check className="h-5 w-5 text-elec-yellow" />}
                 </div>
@@ -234,7 +234,7 @@ const CompleteProfile = () => {
         className="relative px-6 pb-6 z-10"
       >
         <div className="max-w-md mx-auto">
-          <p className="text-center text-[12px] text-white/30">
+          <p className="text-center text-[12px] text-white">
             Your profile helps us personalise your experience
           </p>
         </div>

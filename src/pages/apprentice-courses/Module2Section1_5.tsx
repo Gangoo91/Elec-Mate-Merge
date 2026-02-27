@@ -224,7 +224,7 @@ const Module2Section1_5 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Multimeters: Safe Use and Core Functions
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Master digital multimeter operation for safe electrical measurements and fault diagnosis
           </p>
         </div>
@@ -943,7 +943,7 @@ const Module2Section1_5 = () => {
             <div className="space-y-4">
               <div>
                 <h3 className="font-semibold text-white mb-2">Jack Selection Rules</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>
                     • <strong className="text-white">Voltage/Resistance:</strong> COM + VΩ jacks
                   </li>
@@ -961,7 +961,7 @@ const Module2Section1_5 = () => {
 
               <div>
                 <h3 className="font-semibold text-white mb-2">Symbol Quick Reference</h3>
-                <ul className="space-y-1 text-white/80 font-mono">
+                <ul className="space-y-1 text-white font-mono">
                   <li>
                     • <strong className="text-white">V~:</strong> AC voltage measurement
                   </li>
@@ -987,7 +987,7 @@ const Module2Section1_5 = () => {
             <div className="space-y-4">
               <div>
                 <h3 className="font-semibold text-white mb-2">Before You Measure Checklist</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>□ Check meter CAT rating</li>
                   <li>□ Inspect test leads</li>
                   <li>□ Select correct function</li>
@@ -999,7 +999,7 @@ const Module2Section1_5 = () => {
 
               <div>
                 <h3 className="font-semibold text-white mb-2">Typical UK Values</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>
                     • <strong className="text-white">Domestic supply:</strong> 230V AC ±10%
                   </li>
@@ -1034,7 +1034,7 @@ const Module2Section1_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1050,7 +1050,7 @@ const Module2Section1_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level2/module2/section1/1-4">

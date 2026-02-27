@@ -252,7 +252,7 @@ const Level3Module4Section5_5 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section5">
@@ -278,7 +278,7 @@ const Level3Module4Section5_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
             Preventative Maintenance Strategies
           </h1>
-          <p className="text-lg sm:text-xl text-white/70">
+          <p className="text-lg sm:text-xl text-white">
             Implementing maintenance strategies to prevent future faults
           </p>
         </header>
@@ -289,31 +289,31 @@ const Level3Module4Section5_5 = () => {
           <ul className="space-y-2 sm:space-y-3">
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/80 text-sm sm:text-base">
+              <span className="text-white text-sm sm:text-base">
                 Understand the principles and benefits of preventative maintenance programmes
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/80 text-sm sm:text-base">
+              <span className="text-white text-sm sm:text-base">
                 Apply recommended periodic inspection intervals from BS 7671 guidance
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/80 text-sm sm:text-base">
+              <span className="text-white text-sm sm:text-base">
                 Implement condition-based and predictive maintenance techniques
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/80 text-sm sm:text-base">
+              <span className="text-white text-sm sm:text-base">
                 Create effective maintenance schedules and documentation systems
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/80 text-sm sm:text-base">
+              <span className="text-white text-sm sm:text-base">
                 Use thermal imaging and other diagnostic tools for proactive fault prevention
               </span>
             </li>
@@ -332,7 +332,7 @@ const Level3Module4Section5_5 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
               Electrical installations require ongoing maintenance to ensure continued safe
               operation and compliance with the Electricity at Work Regulations 1989. Different
               maintenance strategies offer varying approaches to managing equipment condition and
@@ -347,12 +347,12 @@ const Level3Module4Section5_5 = () => {
               <h4 className="text-white font-semibold mb-2">
                 Reactive Maintenance (Run-to-Failure)
               </h4>
-              <p className="text-white/70 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 Equipment is used until it fails, then repaired or replaced. While this minimises
                 routine costs, it results in unexpected downtime, emergency callout costs, and
                 potential safety hazards.
               </p>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 <strong>Appropriate for:</strong> Non-critical equipment where failure has minimal
                 impact and replacement is straightforward. Examples include standard light fittings
                 in non-essential areas.
@@ -363,12 +363,12 @@ const Level3Module4Section5_5 = () => {
               <h4 className="text-white font-semibold mb-2">
                 Planned Preventative Maintenance (PPM)
               </h4>
-              <p className="text-white/70 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 Scheduled maintenance activities performed at fixed intervals regardless of
                 equipment condition. Based on manufacturer recommendations, regulatory requirements,
                 and historical failure data.
               </p>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 <strong>Appropriate for:</strong> Most electrical installations where regular
                 inspection and maintenance is required. Includes periodic inspection as required by
                 BS 7671.
@@ -377,12 +377,12 @@ const Level3Module4Section5_5 = () => {
 
             <div className="bg-white/5 rounded-lg p-4 mb-4">
               <h4 className="text-white font-semibold mb-2">Condition-Based Maintenance (CBM)</h4>
-              <p className="text-white/70 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 Maintenance performed based on the actual measured condition of equipment. Uses
                 monitoring techniques to identify deterioration and schedule maintenance before
                 failure.
               </p>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 <strong>Appropriate for:</strong> Critical equipment where monitoring is
                 cost-effective. Includes thermal imaging of connections, insulation resistance
                 trending, and load monitoring.
@@ -391,11 +391,11 @@ const Level3Module4Section5_5 = () => {
 
             <div className="bg-white/5 rounded-lg p-4 mb-4">
               <h4 className="text-white font-semibold mb-2">Predictive Maintenance</h4>
-              <p className="text-white/70 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 Advanced form of CBM using data analysis and algorithms to predict when equipment
                 will fail. Requires continuous monitoring and sophisticated analysis tools.
               </p>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 <strong>Appropriate for:</strong> High-value or critical systems where the cost of
                 monitoring is justified by the consequences of failure. Often used in industrial and
                 commercial settings.
@@ -405,7 +405,7 @@ const Level3Module4Section5_5 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               Benefits of Preventative Maintenance
             </h3>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>
                 <strong>Improved Safety:</strong> Regular inspection identifies hazards before they
                 cause injury or fire
@@ -454,7 +454,7 @@ const Level3Module4Section5_5 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
               BS 7671 Guidance Note 3 provides recommended maximum intervals for periodic inspection
               based on installation type and use. These intervals form the foundation of any
               electrical maintenance programme.
@@ -465,7 +465,7 @@ const Level3Module4Section5_5 = () => {
             </h3>
 
             <div className="overflow-x-auto mb-6">
-              <table className="w-full text-sm text-white/80 border border-white/20">
+              <table className="w-full text-sm text-white border border-white/20">
                 <thead>
                   <tr className="bg-white/10">
                     <th className="border border-white/20 p-2 text-left">Installation Type</th>
@@ -521,11 +521,11 @@ const Level3Module4Section5_5 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               Factors Affecting Inspection Frequency
             </h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               The recommended intervals are maximum periods - actual intervals should be determined
               by considering:
             </p>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>
                 <strong>Previous inspection findings:</strong> Installations with C2 or C3
                 observations may need more frequent inspection
@@ -558,7 +558,7 @@ const Level3Module4Section5_5 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               Recording Next Inspection Date
             </h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               The EICR includes a section for the inspector to recommend the interval to the next
               inspection. This should be based on the installation's specific circumstances rather
               than automatically applying the maximum interval. The recommendation should be clearly
@@ -587,7 +587,7 @@ const Level3Module4Section5_5 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
               Predictive maintenance uses various monitoring and analysis techniques to identify
               equipment deterioration before failure occurs. These techniques supplement regular
               periodic inspection with targeted condition assessment.
@@ -595,7 +595,7 @@ const Level3Module4Section5_5 = () => {
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Thermal Imaging</h3>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
-              <p className="text-white/70 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 Thermal imaging cameras detect infrared radiation and display temperature
                 differences visually. This non-contact technique is highly effective for identifying
                 electrical problems without interrupting supply.
@@ -603,7 +603,7 @@ const Level3Module4Section5_5 = () => {
               <h4 className="text-white font-semibold mb-2">
                 Applications in Electrical Maintenance:
               </h4>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+              <ul className="list-disc pl-5 text-white text-sm space-y-1">
                 <li>Detecting loose connections generating heat through resistance</li>
                 <li>Identifying overloaded circuits and conductors</li>
                 <li>Finding unbalanced three-phase loads</li>
@@ -611,7 +611,7 @@ const Level3Module4Section5_5 = () => {
                 <li>Monitoring transformer and motor temperatures</li>
               </ul>
               <h4 className="text-white font-semibold mt-4 mb-2">Interpreting Thermal Images:</h4>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+              <ul className="list-disc pl-5 text-white text-sm space-y-1">
                 <li>Less than 10C above similar connections: Monitor</li>
                 <li>10-20C above similar connections: Schedule repair</li>
                 <li>20-40C above similar connections: High priority repair</li>
@@ -623,12 +623,12 @@ const Level3Module4Section5_5 = () => {
               Insulation Resistance Trending
             </h3>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
-              <p className="text-white/70 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 Regular insulation resistance measurements over time can identify gradual
                 deterioration before values fall below acceptable limits. Trending reveals
                 degradation patterns that single measurements cannot show.
               </p>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+              <ul className="list-disc pl-5 text-white text-sm space-y-1">
                 <li>Record measurements consistently (same test voltage, temperature, humidity)</li>
                 <li>Plot values over time to identify trends</li>
                 <li>Compare similar circuits to identify anomalies</li>
@@ -639,12 +639,12 @@ const Level3Module4Section5_5 = () => {
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Power Quality Monitoring</h3>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
-              <p className="text-white/70 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 Power quality analysers monitor electrical parameters over extended periods to
                 identify issues that may not be apparent during snapshot testing.
               </p>
               <h4 className="text-white font-semibold mb-2">Parameters Monitored:</h4>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+              <ul className="list-disc pl-5 text-white text-sm space-y-1">
                 <li>
                   <strong>Voltage variations:</strong> Sags, swells, transients, and interruptions
                 </li>
@@ -666,11 +666,11 @@ const Level3Module4Section5_5 = () => {
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Ultrasonic Detection</h3>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
-              <p className="text-white/70 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 Ultrasonic detectors identify high-frequency sounds produced by electrical
                 discharge, arcing, and tracking that are inaudible to humans.
               </p>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+              <ul className="list-disc pl-5 text-white text-sm space-y-1">
                 <li>Detects corona discharge on high-voltage equipment</li>
                 <li>Identifies arcing in switchgear and connections</li>
                 <li>Locates tracking across contaminated insulators</li>
@@ -700,7 +700,7 @@ const Level3Module4Section5_5 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
               Effective maintenance schedules ensure all equipment receives appropriate attention at
               suitable intervals. A well-designed schedule balances thorough coverage with practical
               resource constraints.
@@ -709,13 +709,13 @@ const Level3Module4Section5_5 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               Developing an Asset Register
             </h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               The foundation of any maintenance programme is a comprehensive asset register
               documenting all electrical equipment requiring maintenance:
             </p>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
               <h4 className="text-white font-semibold mb-2">Asset Register Contents:</h4>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+              <ul className="list-disc pl-5 text-white text-sm space-y-1">
                 <li>Unique asset identifier and location</li>
                 <li>Equipment description, manufacturer, and model</li>
                 <li>Installation date and expected lifespan</li>
@@ -731,7 +731,7 @@ const Level3Module4Section5_5 = () => {
             </h3>
 
             <div className="overflow-x-auto mb-6">
-              <table className="w-full text-sm text-white/80 border border-white/20">
+              <table className="w-full text-sm text-white border border-white/20">
                 <thead>
                   <tr className="bg-white/10">
                     <th className="border border-white/20 p-2 text-left">Frequency</th>
@@ -785,7 +785,7 @@ const Level3Module4Section5_5 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               Scheduling Considerations
             </h3>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>
                 <strong>Access requirements:</strong> Schedule when areas are accessible and
                 occupancy permits
@@ -813,11 +813,11 @@ const Level3Module4Section5_5 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               Maintenance Management Systems
             </h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               Computerised maintenance management systems (CMMS) help schedule, track, and document
               maintenance activities:
             </p>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>Automatic scheduling and task generation</li>
               <li>Work order management and tracking</li>
               <li>Asset history and trend analysis</li>
@@ -848,7 +848,7 @@ const Level3Module4Section5_5 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
               Effective documentation is essential for demonstrating compliance, tracking equipment
               condition, and continuously improving the maintenance programme. Records provide the
               evidence trail for due diligence.
@@ -860,7 +860,7 @@ const Level3Module4Section5_5 = () => {
               <h4 className="text-white font-semibold mb-2">
                 Certification and Compliance Records:
               </h4>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+              <ul className="list-disc pl-5 text-white text-sm space-y-1">
                 <li>Electrical Installation Certificates (EICs)</li>
                 <li>Minor Works Certificates</li>
                 <li>Electrical Installation Condition Reports (EICRs)</li>
@@ -871,7 +871,7 @@ const Level3Module4Section5_5 = () => {
 
             <div className="bg-white/5 rounded-lg p-4 mb-4">
               <h4 className="text-white font-semibold mb-2">Maintenance Records:</h4>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+              <ul className="list-disc pl-5 text-white text-sm space-y-1">
                 <li>Maintenance logbook or database entries</li>
                 <li>Work orders and completion records</li>
                 <li>Test results and measurements</li>
@@ -883,7 +883,7 @@ const Level3Module4Section5_5 = () => {
 
             <div className="bg-white/5 rounded-lg p-4 mb-4">
               <h4 className="text-white font-semibold mb-2">Reference Documentation:</h4>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+              <ul className="list-disc pl-5 text-white text-sm space-y-1">
                 <li>As-installed drawings and schematics</li>
                 <li>Equipment manuals and specifications</li>
                 <li>Maintenance procedures and checklists</li>
@@ -895,13 +895,13 @@ const Level3Module4Section5_5 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               Continuous Improvement Process
             </h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               Maintenance programmes should evolve based on experience and changing circumstances:
             </p>
 
             <div className="bg-gradient-to-r from-yellow-400/10 to-amber-500/10 rounded-lg p-4 border border-yellow-400/20 mb-4">
               <h4 className="text-white font-semibold mb-2">Improvement Cycle:</h4>
-              <ol className="list-decimal pl-5 text-white/80 text-sm space-y-2">
+              <ol className="list-decimal pl-5 text-white text-sm space-y-2">
                 <li>
                   <strong>Review:</strong> Analyse maintenance records, failure data, and inspection
                   findings
@@ -926,10 +926,10 @@ const Level3Module4Section5_5 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               Key Performance Indicators
             </h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               Track metrics to measure maintenance programme effectiveness:
             </p>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>
                 <strong>Schedule compliance:</strong> Percentage of planned maintenance completed on
                 time
@@ -954,10 +954,10 @@ const Level3Module4Section5_5 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               Building Maintenance Culture
             </h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               Successful preventative maintenance requires organisational commitment:
             </p>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>Management support and adequate resourcing</li>
               <li>Clear responsibilities and accountability</li>
               <li>Training and competency development</li>
@@ -975,7 +975,7 @@ const Level3Module4Section5_5 = () => {
           <div className="space-y-4">
             <div>
               <h3 className="text-white font-semibold mb-2">Starting a Maintenance Programme</h3>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Begin with a thorough survey to establish baseline condition. Create an asset
                 register, prioritise critical equipment, and develop realistic schedules. Start with
                 essential activities and expand as resources permit. Document everything from the
@@ -985,7 +985,7 @@ const Level3Module4Section5_5 = () => {
 
             <div>
               <h3 className="text-white font-semibold mb-2">Justifying Maintenance Investment</h3>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Calculate total cost of ownership including emergency repairs, downtime, and safety
                 incidents. Compare costs of preventative versus reactive approaches. Highlight
                 regulatory compliance requirements and liability reduction. Present business case
@@ -995,7 +995,7 @@ const Level3Module4Section5_5 = () => {
 
             <div>
               <h3 className="text-white font-semibold mb-2">Common Pitfalls to Avoid</h3>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Do not rely solely on periodic inspection without interim monitoring. Avoid
                 neglecting documentation or treating it as administrative burden. Do not ignore user
                 reports of electrical issues. Ensure maintenance is performed by competent persons
@@ -1014,7 +1014,7 @@ const Level3Module4Section5_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 rounded-lg p-4 sm:p-6">
                 <h3 className="text-white font-semibold mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1026,7 +1026,7 @@ const Level3Module4Section5_5 = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <h3 className="text-white font-semibold mb-2">Recommended Intervals (GN3)</h3>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>Domestic: 10 years maximum</li>
                 <li>Commercial: 5 years maximum</li>
                 <li>Industrial: 3 years maximum</li>
@@ -1035,7 +1035,7 @@ const Level3Module4Section5_5 = () => {
             </div>
             <div>
               <h3 className="text-white font-semibold mb-2">Thermal Imaging Action Levels</h3>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>&lt;10C above: Monitor</li>
                 <li>10-20C above: Schedule repair</li>
                 <li>20-40C above: High priority</li>
@@ -1044,7 +1044,7 @@ const Level3Module4Section5_5 = () => {
             </div>
             <div>
               <h3 className="text-white font-semibold mb-2">User Checks</h3>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>RCD test button: Quarterly</li>
                 <li>Emergency lighting: Monthly visual</li>
                 <li>Report defects immediately</li>
@@ -1052,7 +1052,7 @@ const Level3Module4Section5_5 = () => {
             </div>
             <div>
               <h3 className="text-white font-semibold mb-2">Documentation Required</h3>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>Asset register</li>
                 <li>Maintenance schedule</li>
                 <li>Work records</li>

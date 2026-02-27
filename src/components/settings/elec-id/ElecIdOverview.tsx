@@ -657,7 +657,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                   <h2 className="text-base sm:text-lg font-bold text-white tracking-wide">
                     ELEC-iD
                   </h2>
-                  <p className="text-[10px] sm:text-[11px] text-white/40 tracking-wider uppercase">
+                  <p className="text-[10px] sm:text-[11px] text-white tracking-wider uppercase">
                     Verified Professional
                   </p>
                 </div>
@@ -668,7 +668,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                 className="h-10 w-10 sm:h-11 sm:w-11 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 touch-manipulation active:scale-95"
                 onClick={() => (isMobile ? setIsEditSheetOpen(true) : handleOpenEdit())}
               >
-                <Edit2 className="h-4 w-4 text-white/60" />
+                <Edit2 className="h-4 w-4 text-white" />
               </Button>
             </div>
 
@@ -742,7 +742,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                         >
                           ECS
                         </div>
-                        <span className="text-white/80 text-[11px] sm:text-xs font-medium truncate">
+                        <span className="text-white text-[11px] sm:text-xs font-medium truncate">
                           {ecsCard.label}
                         </span>
                         <span
@@ -752,7 +752,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                               ? 'text-red-400'
                               : expiryStatus.status === 'expiring'
                                 ? 'text-orange-400'
-                                : 'text-white/50'
+                                : 'text-white'
                           )}
                         >
                           {expiryStatus.status === 'expired'
@@ -785,7 +785,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                         })}
                         {VERIFICATION_TIERS[verificationTier].label}
                       </Badge>
-                      <span className="text-[9px] sm:text-[10px] text-white/30">Verification</span>
+                      <span className="text-[9px] sm:text-[10px] text-white">Verification</span>
                     </div>
                   </div>
                 </div>
@@ -804,7 +804,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                     <QrCode className="h-5 w-5 sm:h-6 sm:w-6 text-[#1a1a2e]" />
                   </div>
                   <div className="text-left">
-                    <p className="text-[8px] sm:text-[9px] uppercase tracking-[0.15em] sm:tracking-[0.2em] text-white/30 font-medium">
+                    <p className="text-[8px] sm:text-[9px] uppercase tracking-[0.15em] sm:tracking-[0.2em] text-white font-medium">
                       ELEC-iD
                     </p>
                     <p className="font-mono font-bold text-white text-base sm:text-lg tracking-wider">
@@ -812,7 +812,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-1.5 sm:gap-2 text-white/40">
+                <div className="flex items-center gap-1.5 sm:gap-2 text-white">
                   <span className="text-[9px] sm:text-[10px] uppercase tracking-wide hidden xs:inline">
                     Tap to copy
                   </span>
@@ -823,7 +823,7 @@ const ElecIdOverview = ({ onNavigate }: ElecIdOverviewProps) => {
 
             {/* Footer Status */}
             <div className="px-4 py-2 sm:px-5 sm:py-2.5 border-t border-white/[0.06] bg-white/[0.01] flex items-center justify-between">
-              <div className="flex items-center gap-1.5 sm:gap-2 text-[9px] sm:text-[10px] text-white/25">
+              <div className="flex items-center gap-1.5 sm:gap-2 text-[9px] sm:text-[10px] text-white">
                 <Shield className="h-2.5 w-2.5 sm:h-3 sm:w-3" />
                 <span>VERIFIED BY ELEC-MATE</span>
               </div>

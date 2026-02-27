@@ -55,10 +55,10 @@ function ActionItem({ type, title, description, action, onAction }: ActionItemPr
 
       <div className="flex-1 min-w-0">
         <p className="text-sm font-semibold text-white truncate">{title}</p>
-        <p className="text-xs text-white/50 truncate">{description}</p>
+        <p className="text-xs text-white truncate">{description}</p>
       </div>
 
-      <ChevronRight className="h-5 w-5 text-white/30 flex-shrink-0" />
+      <ChevronRight className="h-5 w-5 text-white flex-shrink-0" />
     </button>
   );
 }
@@ -106,7 +106,7 @@ export function ActionRequired() {
         <CheckCircle2 className="h-5 w-5 text-green-400 flex-shrink-0" />
         <div className="min-w-0">
           <p className="text-sm font-medium text-white">All Clear</p>
-          <p className="text-xs text-white/50">No urgent actions required</p>
+          <p className="text-xs text-white">No urgent actions required</p>
         </div>
       </div>
     );

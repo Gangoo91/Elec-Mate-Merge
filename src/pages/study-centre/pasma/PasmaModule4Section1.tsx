@@ -201,7 +201,7 @@ export default function PasmaModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-4">
@@ -226,7 +226,7 @@ export default function PasmaModule4Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Dismantling Procedure
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Safe step-by-step dismantling of mobile scaffold towers using 3T and AGR methods,
             component lowering techniques, and supervision requirements
           </p>
@@ -331,7 +331,7 @@ export default function PasmaModule4Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Why the Reverse Sequence Matters
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Structural integrity is maintained at every stage</span>
@@ -377,7 +377,7 @@ export default function PasmaModule4Section1() {
                 <p className="text-sm font-medium text-elec-yellow mb-3">
                   3T Reverse Sequence (Top Down)
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Step 1:</strong> From the platform level below
                     the top guardrails, reach up through the trapdoor opening and remove the top
@@ -420,7 +420,7 @@ export default function PasmaModule4Section1() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Warning</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   At no point during 3T dismantling should the operative be standing at a level
                   where the guardrails have already been removed. The trapdoor method ensures the
                   operative is always one level below the guardrails being taken out. If you find
@@ -459,7 +459,7 @@ export default function PasmaModule4Section1() {
                 <p className="text-sm font-medium text-elec-yellow mb-3">
                   AGR Reverse Sequence (Top Down)
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Step 1:</strong> Standing on the top platform
                     (with guardrails protecting you), unlock the AGR guardrails at your level using
@@ -494,7 +494,7 @@ export default function PasmaModule4Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Key Difference from 3T Method</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   With AGR, the operative works from <strong>above</strong> to fold guardrails down,
                   whereas with 3T, the operative works from <strong>below</strong> to remove
                   guardrails through the trapdoor. In both methods, the operative is always
@@ -535,7 +535,7 @@ export default function PasmaModule4Section1() {
                   <ShieldAlert className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Zero Tolerance</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Throwing components from a mobile scaffold tower is a{' '}
                   <strong>zero-tolerance offence</strong> on most construction sites. It can result
                   in immediate removal from site, disciplinary action, and potential prosecution
@@ -548,7 +548,7 @@ export default function PasmaModule4Section1() {
                 <p className="text-sm font-medium text-elec-yellow mb-3">
                   Approved Lowering Methods
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Hand to hand:</strong> The operative on the tower
                     passes the component down to a colleague stationed at a lower level or on the
@@ -582,7 +582,7 @@ export default function PasmaModule4Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Injury Risks from Thrown Components
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Head injuries &mdash; the most common and most severe</span>
@@ -629,7 +629,7 @@ export default function PasmaModule4Section1() {
                 <p className="text-sm font-medium text-red-400 mb-3">
                   Critical Errors That Cause Incidents
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Removing guardrails before descending:</strong>{' '}
                     The operative removes the guardrails at their level and then attempts to climb
@@ -659,7 +659,7 @@ export default function PasmaModule4Section1() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Warning</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Dismantling in high winds (above Beaufort Force 4) is extremely dangerous.
                   Lightweight components can act as sails, pulling the operative off balance. Braces
                   and platforms caught by the wind can strike other workers. If wind conditions
@@ -670,7 +670,7 @@ export default function PasmaModule4Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Additional Common Errors</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -722,7 +722,7 @@ export default function PasmaModule4Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   When Partial Dismantling May Be Required
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -761,7 +761,7 @@ export default function PasmaModule4Section1() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-green-400 mb-2">Acceptable</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Tower is stable at reduced height</span>
@@ -786,7 +786,7 @@ export default function PasmaModule4Section1() {
                 </div>
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-red-400 mb-2">Unacceptable</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>No guardrails at the top level</span>
@@ -844,7 +844,7 @@ export default function PasmaModule4Section1() {
                   <Users className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">Who Can Dismantle a Tower?</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -888,11 +888,11 @@ export default function PasmaModule4Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Handover After Completion</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Once dismantling is complete, the team leader must formally hand over to the site
                   supervisor or tower coordinator. The handover should confirm:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>All components have been removed and accounted for</span>
@@ -926,7 +926,7 @@ export default function PasmaModule4Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -940,7 +940,7 @@ export default function PasmaModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-4">

@@ -252,7 +252,7 @@ const Level3Module2Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module2-section2">
@@ -401,7 +401,7 @@ const Level3Module2Section2_2 = () => {
               inductive loads, reducing the overall reactive power demand.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A factory has 200kW of motor load with 0.75 power factor.
               The apparent power is 267kVA (200/0.75). To correct to 0.95 PF requires adding
               approximately 85kVAR of capacitors. This reduces the apparent power to 211kVA - a
@@ -446,15 +446,15 @@ const Level3Module2Section2_2 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Reduced Current</p>
-                <p className="text-white/90 text-xs">Smaller cables and less I2R losses</p>
+                <p className="text-white text-xs">Smaller cables and less I2R losses</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Lower Charges</p>
-                <p className="text-white/90 text-xs">Avoid reactive power penalties</p>
+                <p className="text-white text-xs">Avoid reactive power penalties</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Capacity Release</p>
-                <p className="text-white/90 text-xs">Defer supply upgrades</p>
+                <p className="text-white text-xs">Defer supply upgrades</p>
               </div>
             </div>
 
@@ -522,7 +522,7 @@ const Level3Module2Section2_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -567,7 +567,7 @@ const Level3Module2Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module2-section2-1">

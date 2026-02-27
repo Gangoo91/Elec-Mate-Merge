@@ -175,7 +175,7 @@ export default function CoshhAwarenessModule2Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-2">
@@ -200,7 +200,7 @@ export default function CoshhAwarenessModule2Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Workplace Exposure Limits
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How the law defines the maximum airborne concentration of hazardous substances &mdash;
             and why staying below the limit is only the starting point
           </p>
@@ -304,7 +304,7 @@ export default function CoshhAwarenessModule2Section4() {
 
               <div className="bg-violet-500/10 border border-violet-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-violet-500 mb-3">Key Legal Points</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -353,7 +353,7 @@ export default function CoshhAwarenessModule2Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">How WELs Are Set</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   WELs are recommended by the{' '}
                   <strong className="text-white">
                     Advisory Committee on Toxic Substances (ACTS)
@@ -405,7 +405,7 @@ export default function CoshhAwarenessModule2Section4() {
                         8-Hour Time Weighted Average (TWA)
                       </p>
                     </div>
-                    <div className="text-sm text-white/80 space-y-2">
+                    <div className="text-sm text-white space-y-2">
                       <p>
                         The average concentration of a substance in the air over an{' '}
                         <strong className="text-white">8-hour working day</strong>. It smooths out
@@ -436,7 +436,7 @@ export default function CoshhAwarenessModule2Section4() {
                         15-Minute Short-Term Exposure Limit (STEL)
                       </p>
                     </div>
-                    <div className="text-sm text-white/80 space-y-2">
+                    <div className="text-sm text-white space-y-2">
                       <p>
                         The maximum average concentration over any{' '}
                         <strong className="text-white">15-minute period</strong> during the working
@@ -460,7 +460,7 @@ export default function CoshhAwarenessModule2Section4() {
 
                 {/* Visual timeline */}
                 <div className="border-t border-white/10 p-4 sm:p-5">
-                  <p className="text-xs font-medium text-white/50 mb-3 uppercase tracking-wider">
+                  <p className="text-xs font-medium text-white mb-3 uppercase tracking-wider">
                     Shift Timeline Illustration
                   </p>
                   <div className="relative h-10 bg-white/5 rounded-lg overflow-hidden">
@@ -478,14 +478,14 @@ export default function CoshhAwarenessModule2Section4() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex justify-between text-[10px] text-white/40 mt-1">
+                  <div className="flex justify-between text-[10px] text-white mt-1">
                     <span>0 hrs</span>
                     <span className="text-violet-400">
                       &larr; 8-hour TWA averaged across full shift &rarr;
                     </span>
                     <span>8 hrs</span>
                   </div>
-                  <p className="text-[11px] text-white/50 mt-2">
+                  <p className="text-[11px] text-white mt-2">
                     <span className="inline-block w-3 h-2 bg-red-500/40 rounded mr-1" />
                     Peak exposure period &mdash; must not exceed the STEL for any 15-minute window
                   </p>
@@ -543,13 +543,13 @@ export default function CoshhAwarenessModule2Section4() {
 
                 {/* Table header */}
                 <div className="grid grid-cols-[1fr_auto_auto] gap-1 px-4 py-2.5 border-b border-white/10 bg-white/5">
-                  <p className="text-xs font-semibold text-white/60 uppercase tracking-wider">
+                  <p className="text-xs font-semibold text-white uppercase tracking-wider">
                     Substance
                   </p>
-                  <p className="text-xs font-semibold text-white/60 uppercase tracking-wider text-center min-w-[80px]">
+                  <p className="text-xs font-semibold text-white uppercase tracking-wider text-center min-w-[80px]">
                     8-hr TWA
                   </p>
-                  <p className="text-xs font-semibold text-white/60 uppercase tracking-wider text-center min-w-[60px]">
+                  <p className="text-xs font-semibold text-white uppercase tracking-wider text-center min-w-[60px]">
                     Notes
                   </p>
                 </div>
@@ -618,7 +618,7 @@ export default function CoshhAwarenessModule2Section4() {
                       i % 2 === 0 ? 'bg-white/[0.02]' : ''
                     } ${row.notes.includes('Carcinogen') ? 'border-l-2 border-red-500/50' : ''}`}
                   >
-                    <p className="text-sm text-white/90">{row.substance}</p>
+                    <p className="text-sm text-white">{row.substance}</p>
                     <p className="text-sm font-mono font-bold text-violet-400 text-center min-w-[80px]">
                       {row.twa}
                     </p>
@@ -628,7 +628,7 @@ export default function CoshhAwarenessModule2Section4() {
                           ? 'text-red-400 font-medium'
                           : row.notes.includes('Sk')
                             ? 'text-yellow-400 font-medium'
-                            : 'text-white/50'
+                            : 'text-white'
                       }`}
                     >
                       {row.notes}
@@ -644,7 +644,7 @@ export default function CoshhAwarenessModule2Section4() {
                     Carcinogens Require Extra Rigour
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Substances marked as <strong className="text-white">carcinogens</strong> (RCS,
                   hardwood dust, welding fume, asbestos) require exposure to be reduced as far below
                   the WEL as is <strong className="text-white">reasonably practicable</strong>. The
@@ -705,7 +705,7 @@ export default function CoshhAwarenessModule2Section4() {
                 <p className="text-sm font-medium text-yellow-400 mb-3">
                   Why Skin Notation Matters
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-yellow-400 flex-shrink-0" />
                     <span>
@@ -740,7 +740,7 @@ export default function CoshhAwarenessModule2Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Common &lsquo;Sk&rsquo; Substances in Construction
                 </p>
-                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white/80 mt-3">
+                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white mt-3">
                   <div className="flex items-start gap-2">
                     <FlaskConical className="h-4 w-4 text-violet-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -807,7 +807,7 @@ export default function CoshhAwarenessModule2Section4() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-violet-500/10 border border-violet-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-violet-400 mb-2">Personal Sampling</p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     A small battery-powered <strong className="text-white">sampling pump</strong> is
                     worn on the worker&rsquo;s belt. A{' '}
                     <strong className="text-white">filter cassette or sorbent tube</strong> is
@@ -822,14 +822,14 @@ export default function CoshhAwarenessModule2Section4() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Static (Area) Sampling</p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Sampling equipment is placed at a{' '}
                     <strong className="text-white">fixed location</strong> in the workplace. It
                     measures the general airborne concentration in that area. Static sampling is
                     useful for identifying emission sources, checking the effectiveness of
                     ventilation, and mapping contamination across a site.
                   </p>
-                  <p className="text-xs text-white/50">
+                  <p className="text-xs text-white">
                     Not sufficient for WEL compliance alone &mdash; does not represent individual
                     breathing-zone exposure
                   </p>
@@ -838,7 +838,7 @@ export default function CoshhAwarenessModule2Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Sampling Equipment</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-3">
                     <span className="flex items-center justify-center min-w-[24px] h-6 rounded bg-violet-500/20 text-violet-400 text-xs font-bold flex-shrink-0">
                       1
@@ -941,14 +941,14 @@ export default function CoshhAwarenessModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Biological Guidance Values (BGVs)
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   EH40 and associated HSE guidance publish{' '}
                   <strong className="text-white">Biological Guidance Values</strong> for certain
                   substances. A BGV is a reference concentration of a substance (or its metabolite)
                   in a biological sample that corresponds to the WEL exposure level. Results above
                   the BGV indicate exposure is likely exceeding the WEL.
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1044,7 +1044,7 @@ export default function CoshhAwarenessModule2Section4() {
                     Immediate Steps When a WEL Is Exceeded
                   </p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-3">
                     <span className="flex items-center justify-center min-w-[24px] h-6 rounded bg-red-500/20 text-red-400 text-xs font-bold flex-shrink-0">
                       1
@@ -1156,7 +1156,7 @@ export default function CoshhAwarenessModule2Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key Limitations of WELs</p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-violet-500/20 text-violet-400 text-xs font-bold flex-shrink-0">
                       1
@@ -1242,12 +1242,12 @@ export default function CoshhAwarenessModule2Section4() {
                 <p className="text-sm font-medium text-violet-500 mb-3">
                   The Principle of Good Practice (Schedule 2A, COSHH)
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Because WELs do not guarantee safety, COSHH imposes the{' '}
                   <strong className="text-white">principle of good practice</strong>. This requires
                   employers to:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1311,7 +1311,7 @@ export default function CoshhAwarenessModule2Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   COSHH Essentials &mdash; HSE&rsquo;s Free Online Tool
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The HSE provides a free web-based tool called{' '}
                   <strong className="text-white">COSHH Essentials</strong> (coshh-tool.hse.gov.uk)
                   that helps employers and tradespeople carry out practical COSHH risk assessments.
@@ -1319,7 +1319,7 @@ export default function CoshhAwarenessModule2Section4() {
                   the amount used, and the dustiness or volatility of the material. The tool
                   generates:
                 </p>
-                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-violet-400 mt-0.5 flex-shrink-0" />
                     <span>A recommended control approach (1&ndash;4)</span>
@@ -1362,7 +1362,7 @@ export default function CoshhAwarenessModule2Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1380,7 +1380,7 @@ export default function CoshhAwarenessModule2Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-2-section-3">

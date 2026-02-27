@@ -1236,7 +1236,7 @@ export default function Module3Section5_4() {
             Summary
           </h2>
           <div className="rounded-lg p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
-            <p className="text-white/90">
+            <p className="text-white">
               Correct material selection and installation detail are essential in damp and corrosive
               areas. Assess external influences, choose compatible metals/non‑metals, protect
               against ingress and galvanic action, and maintain seals and coatings. Following BS

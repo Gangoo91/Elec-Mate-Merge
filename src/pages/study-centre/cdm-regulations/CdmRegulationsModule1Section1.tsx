@@ -183,7 +183,7 @@ export default function CdmRegulationsModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-1">
@@ -206,7 +206,7 @@ export default function CdmRegulationsModule1Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             What Are the CDM Regulations?
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             An introduction to the Construction (Design and Management) Regulations 2015 &mdash; the
             legal framework that governs health and safety management on every construction project
             in Great Britain
@@ -328,7 +328,7 @@ export default function CdmRegulationsModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Key Fact</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   CDM 2015 replaced both the Construction (Design and Management) Regulations 2007{' '}
                   <strong>and</strong> the Construction (Health, Safety and Welfare) Regulations
                   1996, consolidating construction health and safety requirements into a single set
@@ -372,7 +372,7 @@ export default function CdmRegulationsModule1Section1() {
                 <p className="text-sm font-medium text-blue-400 mb-3">
                   Core Objectives of CDM 2015
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-blue-400" />
                     <span>
@@ -457,7 +457,7 @@ export default function CdmRegulationsModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Key Fact</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The HSE estimates that approximately{' '}
                   <strong className="text-blue-400">
                     3,700 construction workers die each year from occupational cancers and lung
@@ -498,7 +498,7 @@ export default function CdmRegulationsModule1Section1() {
                     <Building2 className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
                     <div>
                       <p className="text-sm font-medium text-white">Commercial Projects</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Offices, factories, shops, hospitals, schools &mdash; all commercial
                         construction
                       </p>
@@ -508,7 +508,7 @@ export default function CdmRegulationsModule1Section1() {
                     <HardHat className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
                     <div>
                       <p className="text-sm font-medium text-white">Civil Engineering</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Roads, bridges, tunnels, railways, pipelines, utilities
                       </p>
                     </div>
@@ -517,7 +517,7 @@ export default function CdmRegulationsModule1Section1() {
                     <Landmark className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
                     <div>
                       <p className="text-sm font-medium text-white">Domestic Projects</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Extensions, loft conversions, rewires, kitchen fits &mdash; all domestic
                         work
                       </p>
@@ -527,7 +527,7 @@ export default function CdmRegulationsModule1Section1() {
                     <ShieldCheck className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
                     <div>
                       <p className="text-sm font-medium text-white">No Minimum Threshold</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         No minimum size, duration, or value &mdash; applies to all work
                       </p>
                     </div>
@@ -552,7 +552,7 @@ export default function CdmRegulationsModule1Section1() {
                 <strong>automatically transferred</strong>:
               </p>
 
-              <ul className="text-white/80 space-y-2">
+              <ul className="text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-blue-400" />
                   <span>
@@ -583,7 +583,7 @@ export default function CdmRegulationsModule1Section1() {
                   <AlertTriangle className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">HSE Notification</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Whilst CDM applies to all projects, not all projects need to be{' '}
                   <strong>notified</strong> to the HSE. A project must be notified (using Form F10)
                   if it will last{' '}
@@ -618,7 +618,7 @@ export default function CdmRegulationsModule1Section1() {
                 <p className="text-sm font-medium text-blue-400 mb-3">
                   Regulation 2 Definition &mdash; Construction Work Includes:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-blue-400" />
                     <span>
@@ -695,7 +695,7 @@ export default function CdmRegulationsModule1Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   What This Means for Electrical Workers
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-blue-400" />
                     <span>
@@ -777,7 +777,7 @@ export default function CdmRegulationsModule1Section1() {
                         Risk Management at the Design Stage
                       </p>
                     </div>
-                    <p className="text-xs text-white/70 ml-5">
+                    <p className="text-xs text-white ml-5">
                       Designers must eliminate foreseeable risks where possible, reduce risks that
                       cannot be eliminated, and provide information about remaining risks. This
                       &ldquo;prevention through design&rdquo; approach is the most effective way to
@@ -792,7 +792,7 @@ export default function CdmRegulationsModule1Section1() {
                         Duty Holder Cooperation &amp; Coordination
                       </p>
                     </div>
-                    <p className="text-xs text-white/70 ml-5">
+                    <p className="text-xs text-white ml-5">
                       All duty holders must cooperate with each other, coordinate their work, and
                       communicate effectively. This is particularly important where multiple
                       designers and contractors are working on the same project. The principal
@@ -807,7 +807,7 @@ export default function CdmRegulationsModule1Section1() {
                         Competence (Skills, Knowledge, Experience &amp; Training)
                       </p>
                     </div>
-                    <p className="text-xs text-white/70 ml-5">
+                    <p className="text-xs text-white ml-5">
                       Everyone involved in a construction project must have the skills, knowledge,
                       experience, and (where relevant) organisational capability to carry out their
                       role safely. Clients must not appoint anyone who does not have the necessary
@@ -822,7 +822,7 @@ export default function CdmRegulationsModule1Section1() {
                         Worker Engagement &amp; Consultation
                       </p>
                     </div>
-                    <p className="text-xs text-white/70 ml-5">
+                    <p className="text-xs text-white ml-5">
                       Workers must be consulted on matters that affect their health and safety. They
                       must be given appropriate information, instruction, and training. CDM
                       recognises that the people actually doing the work often have the best
@@ -834,7 +834,7 @@ export default function CdmRegulationsModule1Section1() {
                       <span className="text-blue-400 text-xs font-bold">5</span>
                       <p className="text-sm font-medium text-white">Proportionate Approach</p>
                     </div>
-                    <p className="text-xs text-white/70 ml-5">
+                    <p className="text-xs text-white ml-5">
                       The effort and documentation required should be proportionate to the scale and
                       complexity of the project and the risks involved. A small domestic rewire does
                       not need the same volume of paperwork as a major infrastructure project. CDM
@@ -896,7 +896,7 @@ export default function CdmRegulationsModule1Section1() {
                   <div className="bg-blue-500/20 border border-blue-500/40 rounded-lg p-3 w-56 text-center">
                     <Users className="h-5 w-5 text-blue-400 mx-auto mb-1" />
                     <p className="text-sm font-bold text-white">Client</p>
-                    <p className="text-[10px] text-white/60">
+                    <p className="text-[10px] text-white">
                       Commissions the project. Makes key appointments.
                     </p>
                   </div>
@@ -919,14 +919,14 @@ export default function CdmRegulationsModule1Section1() {
                   <div className="bg-blue-400/15 border border-blue-400/30 rounded-lg p-3 text-center">
                     <FileText className="h-5 w-5 text-blue-300 mx-auto mb-1" />
                     <p className="text-sm font-bold text-white">Principal Designer</p>
-                    <p className="text-[10px] text-white/60">
+                    <p className="text-[10px] text-white">
                       Plans, manages, and coordinates the pre-construction phase.
                     </p>
                   </div>
                   <div className="bg-blue-400/15 border border-blue-400/30 rounded-lg p-3 text-center">
                     <HardHat className="h-5 w-5 text-blue-300 mx-auto mb-1" />
                     <p className="text-sm font-bold text-white">Principal Contractor</p>
-                    <p className="text-[10px] text-white/60">
+                    <p className="text-[10px] text-white">
                       Plans, manages, and coordinates the construction phase.
                     </p>
                   </div>
@@ -945,22 +945,22 @@ export default function CdmRegulationsModule1Section1() {
                 {/* Designers and Contractors */}
                 <div className="grid grid-cols-2 gap-3 max-w-lg mx-auto">
                   <div className="bg-white/5 border border-white/20 rounded-lg p-3 text-center">
-                    <Scale className="h-5 w-5 text-white/60 mx-auto mb-1" />
+                    <Scale className="h-5 w-5 text-white mx-auto mb-1" />
                     <p className="text-sm font-bold text-white">Designers</p>
-                    <p className="text-[10px] text-white/60">
+                    <p className="text-[10px] text-white">
                       Eliminate, reduce, and inform about risks through design.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/20 rounded-lg p-3 text-center">
-                    <Building2 className="h-5 w-5 text-white/60 mx-auto mb-1" />
+                    <Building2 className="h-5 w-5 text-white mx-auto mb-1" />
                     <p className="text-sm font-bold text-white">Contractors</p>
-                    <p className="text-[10px] text-white/60">
+                    <p className="text-[10px] text-white">
                       Plan, manage, and carry out construction work safely.
                     </p>
                   </div>
                 </div>
 
-                <p className="text-[10px] text-white/40 text-center mt-4">
+                <p className="text-[10px] text-white text-center mt-4">
                   All five duty holders must cooperate, coordinate, and communicate with each other
                   throughout the project.
                 </p>
@@ -969,7 +969,7 @@ export default function CdmRegulationsModule1Section1() {
               <div className="space-y-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-blue-400 mb-1">1. Client</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The person or organisation for whom the construction project is carried out.
                     This includes both commercial clients (businesses, developers, local
                     authorities) and domestic clients (homeowners). The client has overall
@@ -981,7 +981,7 @@ export default function CdmRegulationsModule1Section1() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-blue-400 mb-1">2. Principal Designer</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     A designer appointed by the client to plan, manage, monitor, and coordinate
                     health and safety during the pre-construction phase. The principal designer must
                     ensure that all designers comply with their duties, facilitate cooperation
@@ -991,7 +991,7 @@ export default function CdmRegulationsModule1Section1() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-blue-400 mb-1">3. Principal Contractor</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     A contractor appointed by the client to plan, manage, monitor, and coordinate
                     the construction phase on projects involving more than one contractor. The
                     principal contractor must prepare the construction phase plan, organise
@@ -1001,7 +1001,7 @@ export default function CdmRegulationsModule1Section1() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-blue-400 mb-1">4. Designers</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Anyone who, as part of a business, prepares or modifies a design for a building,
                     product, or system relating to construction work. This includes architects,
                     engineers, quantity surveyors, interior designers, and tradespeople who make
@@ -1012,7 +1012,7 @@ export default function CdmRegulationsModule1Section1() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-blue-400 mb-1">5. Contractors</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Any person or business that carries out, manages, or controls construction work.
                     This includes sole traders, partnerships, and companies of all sizes.
                     Contractors must plan, manage, and monitor their own work to ensure it is
@@ -1065,7 +1065,7 @@ export default function CdmRegulationsModule1Section1() {
                     <p className="text-sm font-bold text-white">
                       Health and Safety at Work etc. Act 1974
                     </p>
-                    <p className="text-[10px] text-white/60">
+                    <p className="text-[10px] text-white">
                       The &ldquo;parent&rdquo; Act &mdash; all regulations below are made under its
                       powers
                     </p>
@@ -1119,11 +1119,11 @@ export default function CdmRegulationsModule1Section1() {
                       className="bg-white/5 border border-white/15 rounded-lg p-2 text-center"
                     >
                       <p className="text-xs font-medium text-white">{reg.name}</p>
-                      <p className="text-[10px] text-white/50">{reg.detail}</p>
+                      <p className="text-[10px] text-white">{reg.detail}</p>
                     </div>
                   ))}
                 </div>
-                <p className="text-[10px] text-white/40 text-center mt-3">
+                <p className="text-[10px] text-white text-center mt-3">
                   CDM sits alongside these regulations &mdash; they all apply concurrently to
                   construction work
                 </p>
@@ -1134,7 +1134,7 @@ export default function CdmRegulationsModule1Section1() {
                   <p className="text-sm font-medium text-white mb-1">
                     Health and Safety at Work etc. Act 1974 (HASAWA)
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The overarching Act of Parliament that provides the legal framework for all
                     workplace health and safety in Great Britain. It sets out the general duties of
                     employers to their employees and to others, the duties of employees, and the
@@ -1146,7 +1146,7 @@ export default function CdmRegulationsModule1Section1() {
                   <p className="text-sm font-medium text-white mb-1">
                     Management of Health and Safety at Work Regulations 1999
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Often called the &ldquo;Management Regulations&rdquo;, these require employers
                     to carry out risk assessments, make arrangements for health and safety
                     management, appoint competent persons, provide information and training, and
@@ -1158,7 +1158,7 @@ export default function CdmRegulationsModule1Section1() {
                   <p className="text-sm font-medium text-white mb-1">
                     Work at Height Regulations 2005 (WAHR)
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Apply to all work at height where there is a risk of a fall liable to cause
                     personal injury. Falls from height are the single largest cause of fatal injury
                     in construction, accounting for approximately 40&ndash;50% of construction
@@ -1171,7 +1171,7 @@ export default function CdmRegulationsModule1Section1() {
                   <p className="text-sm font-medium text-white mb-1">
                     Lifting Operations and Lifting Equipment Regulations 1998 (LOLER)
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Apply to the use of lifting equipment in the workplace, including cranes,
                     hoists, lifts, and mobile elevating work platforms (MEWPs). LOLER requires that
                     lifting operations are properly planned, supervised, and carried out by
@@ -1183,7 +1183,7 @@ export default function CdmRegulationsModule1Section1() {
                   <p className="text-sm font-medium text-white mb-1">
                     Provision and Use of Work Equipment Regulations 1998 (PUWER)
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Apply to all work equipment used in the workplace. PUWER requires that equipment
                     is suitable for its intended use, properly maintained, inspected where
                     necessary, and used only by people who have received adequate information,
@@ -1232,25 +1232,25 @@ export default function CdmRegulationsModule1Section1() {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">30&ndash;40</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       fatal injuries to workers per year (average)
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">~54,000</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       non-fatal injuries per year (self-reported, Labour Force Survey)
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">~82,000</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       workers suffering work-related ill health per year
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">~25&ndash;30%</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       of all workplace fatalities occur in construction
                     </p>
                   </div>
@@ -1269,7 +1269,7 @@ export default function CdmRegulationsModule1Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Leading Causes of Fatal Injury in Construction
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-blue-400" />
                     <span>
@@ -1316,7 +1316,7 @@ export default function CdmRegulationsModule1Section1() {
                 health at any given time, including:
               </p>
 
-              <ul className="text-white/80 space-y-2">
+              <ul className="text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-blue-400" />
                   <span>
@@ -1372,11 +1372,11 @@ export default function CdmRegulationsModule1Section1() {
                   <AlertTriangle className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">HSE Enforcement</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The HSE has the power to investigate breaches of CDM 2015 and to take enforcement
                   action. This can include:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-blue-400" />
                     <span>
@@ -1417,14 +1417,14 @@ export default function CdmRegulationsModule1Section1() {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-blue-400">&pound;1.3bn</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       estimated annual cost of workplace injuries and ill health in construction
                       (HSE)
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-blue-400">2.2M</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       working days lost per year due to construction workplace injuries and ill
                       health
                     </p>
@@ -1446,7 +1446,7 @@ export default function CdmRegulationsModule1Section1() {
                   <AlertTriangle className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">Remember</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Behind every statistic is a person &mdash; a colleague, a friend, a family member.
                   Construction workers deserve to go home safe and healthy at the end of every
                   working day. CDM 2015 exists to make that possible by ensuring that risks are
@@ -1465,7 +1465,7 @@ export default function CdmRegulationsModule1Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1479,7 +1479,7 @@ export default function CdmRegulationsModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-1">

@@ -22,7 +22,7 @@ const IndustryNewsEnhanced = () => {
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 Industry News
               </h1>
-              <p className="text-sm text-white/60">Latest electrical industry updates</p>
+              <p className="text-sm text-white">Latest electrical industry updates</p>
             </div>
           </div>
           <SmartBackButton />

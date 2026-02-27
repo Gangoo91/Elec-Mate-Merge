@@ -190,7 +190,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-3">
@@ -215,7 +215,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Reducing Your Carbon Footprint
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Embodied and operational carbon, low carbon design and materials, transport emissions,
             carbon offsetting, and how to measure and report your organisation&rsquo;s carbon
             footprint
@@ -310,7 +310,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Personal vs Organisational Carbon Footprints
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -336,7 +336,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">UK Carbon Context</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -414,7 +414,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Embodied Carbon</p>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white">
                         Emissions from making, building, maintaining, and demolishing &mdash; fixed
                         at construction
                       </p>
@@ -426,7 +426,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Operational Carbon</p>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white">
                         Emissions from energy used during occupation &mdash; can be reduced over
                         time
                       </p>
@@ -440,7 +440,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
                       <p className="text-sm font-medium text-white">
                         Whole Life Carbon = Embodied + Operational
                       </p>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white">
                         Total emissions across the entire building lifecycle
                       </p>
                     </div>
@@ -452,12 +452,12 @@ export default function EnvironmentalSustainabilityModule3Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   RICS Whole Life Carbon Methodology
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The Royal Institution of Chartered Surveyors (RICS) Professional Statement on
                   Whole Life Carbon Assessment defines the standard methodology for measuring
                   building carbon across lifecycle stages:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -498,11 +498,11 @@ export default function EnvironmentalSustainabilityModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Carbon Hotspots in Buildings</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The following elements typically account for the largest share of embodied carbon
                   in a building:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -542,7 +542,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Critical Point</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   As buildings become more energy efficient (reducing operational carbon), the
                   <strong className="text-white">
                     {' '}
@@ -569,25 +569,25 @@ export default function EnvironmentalSustainabilityModule3Section2() {
 
             {/* Stage A: Embodied (Upfront) */}
             <div className="space-y-3 mb-6">
-              <p className="text-xs font-semibold text-white/50 uppercase tracking-wider">
+              <p className="text-xs font-semibold text-white uppercase tracking-wider">
                 Upfront Carbon (Embodied)
               </p>
               <div className="flex flex-col sm:flex-row gap-2">
                 <div className="flex-1 bg-emerald-500/15 border border-emerald-500/30 rounded-lg p-3 text-center">
                   <p className="text-xs font-bold text-emerald-300">A1&ndash;A3</p>
-                  <p className="text-[10px] sm:text-xs text-white/70 mt-1">Product Stage</p>
-                  <p className="text-[9px] sm:text-[10px] text-white/50 mt-0.5">
+                  <p className="text-[10px] sm:text-xs text-white mt-1">Product Stage</p>
+                  <p className="text-[9px] sm:text-[10px] text-white mt-0.5">
                     Extraction &bull; Transport &bull; Manufacturing
                   </p>
                 </div>
                 <div className="flex items-center justify-center">
-                  <span className="text-white/30 text-lg hidden sm:block">&rarr;</span>
-                  <span className="text-white/30 text-lg sm:hidden">&darr;</span>
+                  <span className="text-white text-lg hidden sm:block">&rarr;</span>
+                  <span className="text-white text-lg sm:hidden">&darr;</span>
                 </div>
                 <div className="flex-1 bg-emerald-500/15 border border-emerald-500/30 rounded-lg p-3 text-center">
                   <p className="text-xs font-bold text-emerald-300">A4&ndash;A5</p>
-                  <p className="text-[10px] sm:text-xs text-white/70 mt-1">Construction Process</p>
-                  <p className="text-[9px] sm:text-[10px] text-white/50 mt-0.5">
+                  <p className="text-[10px] sm:text-xs text-white mt-1">Construction Process</p>
+                  <p className="text-[9px] sm:text-[10px] text-white mt-0.5">
                     Transport to site &bull; Installation
                   </p>
                 </div>
@@ -596,25 +596,25 @@ export default function EnvironmentalSustainabilityModule3Section2() {
 
             {/* Stage B: Use */}
             <div className="space-y-3 mb-6">
-              <p className="text-xs font-semibold text-white/50 uppercase tracking-wider">
+              <p className="text-xs font-semibold text-white uppercase tracking-wider">
                 Use Stage
               </p>
               <div className="flex flex-col sm:flex-row gap-2">
                 <div className="flex-1 bg-blue-500/15 border border-blue-500/30 rounded-lg p-3 text-center">
                   <p className="text-xs font-bold text-blue-300">B1&ndash;B5</p>
-                  <p className="text-[10px] sm:text-xs text-white/70 mt-1">Embodied (Use)</p>
-                  <p className="text-[9px] sm:text-[10px] text-white/50 mt-0.5">
+                  <p className="text-[10px] sm:text-xs text-white mt-1">Embodied (Use)</p>
+                  <p className="text-[9px] sm:text-[10px] text-white mt-0.5">
                     Maintenance &bull; Repair &bull; Replacement &bull; Refurbishment
                   </p>
                 </div>
                 <div className="flex items-center justify-center">
-                  <span className="text-white/30 text-lg hidden sm:block">+</span>
-                  <span className="text-white/30 text-lg sm:hidden">+</span>
+                  <span className="text-white text-lg hidden sm:block">+</span>
+                  <span className="text-white text-lg sm:hidden">+</span>
                 </div>
                 <div className="flex-1 bg-blue-500/15 border border-blue-500/30 rounded-lg p-3 text-center">
                   <p className="text-xs font-bold text-blue-300">B6&ndash;B7</p>
-                  <p className="text-[10px] sm:text-xs text-white/70 mt-1">Operational</p>
-                  <p className="text-[9px] sm:text-[10px] text-white/50 mt-0.5">
+                  <p className="text-[10px] sm:text-xs text-white mt-1">Operational</p>
+                  <p className="text-[9px] sm:text-[10px] text-white mt-0.5">
                     Energy use &bull; Water use
                   </p>
                 </div>
@@ -623,12 +623,12 @@ export default function EnvironmentalSustainabilityModule3Section2() {
 
             {/* Stage C: End of Life */}
             <div className="space-y-3 mb-6">
-              <p className="text-xs font-semibold text-white/50 uppercase tracking-wider">
+              <p className="text-xs font-semibold text-white uppercase tracking-wider">
                 End of Life
               </p>
               <div className="bg-amber-500/15 border border-amber-500/30 rounded-lg p-3 text-center">
                 <p className="text-xs font-bold text-amber-300">C1&ndash;C4</p>
-                <p className="text-[10px] sm:text-xs text-white/70 mt-1">
+                <p className="text-[10px] sm:text-xs text-white mt-1">
                   Deconstruction &bull; Transport &bull; Waste Processing &bull; Disposal
                 </p>
               </div>
@@ -636,25 +636,25 @@ export default function EnvironmentalSustainabilityModule3Section2() {
 
             {/* Module D: Beyond */}
             <div className="space-y-3">
-              <p className="text-xs font-semibold text-white/50 uppercase tracking-wider">
+              <p className="text-xs font-semibold text-white uppercase tracking-wider">
                 Beyond System Boundary
               </p>
               <div className="bg-purple-500/15 border border-purple-500/30 rounded-lg p-3 text-center border-dashed">
                 <p className="text-xs font-bold text-purple-300">Module D</p>
-                <p className="text-[10px] sm:text-xs text-white/70 mt-1">
+                <p className="text-[10px] sm:text-xs text-white mt-1">
                   Potential benefits from reuse, recycling, or energy recovery
                 </p>
-                <p className="text-[9px] sm:text-[10px] text-white/50 mt-0.5">
+                <p className="text-[9px] sm:text-[10px] text-white mt-0.5">
                   (Reported separately &mdash; not included in WLC total)
                 </p>
               </div>
             </div>
 
             <div className="mt-6 bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3 text-center">
-              <p className="text-xs sm:text-sm text-white/80">
+              <p className="text-xs sm:text-sm text-white">
                 <strong className="text-emerald-400">Whole Life Carbon</strong> = A1&ndash;A5 +
                 B1&ndash;B7 + C1&ndash;C4
-                <span className="text-white/50"> &nbsp;|&nbsp; Module D reported separately</span>
+                <span className="text-white"> &nbsp;|&nbsp; Module D reported separately</span>
               </p>
             </div>
           </div>
@@ -682,11 +682,11 @@ export default function EnvironmentalSustainabilityModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Part L Building Regulations</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Approved Document Part L of the Building Regulations is the primary regulatory
                   mechanism for controlling operational carbon in England and Wales:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -722,7 +722,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Energy Performance Certificates (EPCs)
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Required for all buildings when constructed, sold, or let</span>
@@ -749,7 +749,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Nearly Zero Energy Buildings (NZEB)
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The Energy Performance of Buildings Regulations require that all new buildings
                   have &ldquo;nearly zero&rdquo; energy performance. An NZEB has very high energy
                   performance, with the nearly zero or very low amount of energy required covered to
@@ -795,10 +795,10 @@ export default function EnvironmentalSustainabilityModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Material Selection</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The choice of structural material has a profound impact on embodied carbon:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -829,7 +829,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Structural Optimisation</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -857,7 +857,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Passive Design Strategies</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -935,7 +935,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     Cross-Laminated Timber (CLT)
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -971,7 +971,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Recycled Steel</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1008,7 +1008,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     GGBS and PFA Cement Replacements
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1038,7 +1038,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Bio-Based Insulation</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1075,7 +1075,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Locally Sourced Materials</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Sourcing materials locally reduces transport-related carbon emissions (A4
                     stage). Using local stone, brick, timber, or aggregates not only reduces
                     transport miles but also supports local economies and can create buildings that
@@ -1110,7 +1110,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Delivery Consolidation</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1143,7 +1143,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Route Planning and Fleet Efficiency
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1169,7 +1169,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Electric and Hybrid Vehicles</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1201,7 +1201,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
                 <p className="text-sm font-medium text-white mb-2">Modal Shift</p>
                 <div className="flex items-start gap-2 mb-2">
                   <Truck className="h-5 w-5 text-emerald-400/70 mt-0.5 flex-shrink-0" />
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     <strong className="text-white">Rail freight</strong> produces approximately
                     <strong className="text-white">
                       {' '}
@@ -1213,7 +1213,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
                     supports investment in rail freight capacity.
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1 ml-7">
+                <ul className="text-sm text-white space-y-1 ml-7">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1268,7 +1268,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Limitations of Offsetting</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1302,10 +1302,10 @@ export default function EnvironmentalSustainabilityModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Verified Carbon Standards</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   To ensure offset quality, use only credits verified under recognised standards:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1348,7 +1348,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Nature-Based Solutions</p>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white">
                         Tree planting, peatland restoration, soil carbon. Lower cost but permanence
                         and verification challenges. Trees take decades to reach full sequestration
                         potential
@@ -1361,7 +1361,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Technology-Based Removal</p>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white">
                         Direct air capture (DAC), bioenergy with carbon capture and storage (BECCS).
                         More reliable and permanent, but significantly more expensive (currently
                         &pound;200&ndash;600+ per tonne)
@@ -1402,7 +1402,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
                     </span>
                     <p className="text-sm font-bold text-emerald-300">AVOID</p>
                   </div>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Eliminate the need entirely &mdash; refurbish instead of demolish, challenge the
                     brief, reduce scope
                   </p>
@@ -1426,7 +1426,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
                     </span>
                     <p className="text-sm font-bold text-blue-300">REDUCE</p>
                   </div>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Use less material &mdash; structural optimisation, lean design, efficient
                     building form
                   </p>
@@ -1447,7 +1447,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
                     </span>
                     <p className="text-sm font-bold text-purple-300">SUBSTITUTE</p>
                   </div>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Replace with lower-carbon materials &mdash; CLT, recycled steel, GGBS concrete,
                     bio-based insulation
                   </p>
@@ -1468,7 +1468,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
                     </span>
                     <p className="text-sm font-bold text-amber-300">OFFSET</p>
                   </div>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Compensate for residual emissions only &mdash; verified credits, nature-based or
                     technology-based removal
                   </p>
@@ -1478,7 +1478,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
             </div>
 
             <div className="mt-6 bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3 text-center">
-              <p className="text-xs sm:text-sm text-white/80">
+              <p className="text-xs sm:text-sm text-white">
                 <strong className="text-emerald-400">Always work top-down</strong> &mdash; exhaust
                 each level before moving to the next. Offsetting without first avoiding, reducing,
                 and substituting is not genuine decarbonisation.
@@ -1507,7 +1507,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   PAS 2080 &mdash; Carbon Management in Infrastructure and Buildings
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1549,10 +1549,10 @@ export default function EnvironmentalSustainabilityModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Carbon Calculators</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Several tools are available to calculate embodied carbon in construction projects:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1589,7 +1589,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Science-Based Targets (SBTi)</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1628,7 +1628,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   CDP (formerly Carbon Disclosure Project)
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1664,7 +1664,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   SECR &mdash; Streamlined Energy and Carbon Reporting
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1725,7 +1725,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1739,7 +1739,7 @@ export default function EnvironmentalSustainabilityModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-3-section-1">

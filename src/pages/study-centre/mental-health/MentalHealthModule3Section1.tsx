@@ -206,7 +206,7 @@ export default function MentalHealthModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-3">
@@ -231,7 +231,7 @@ export default function MentalHealthModule3Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Substance Misuse &amp; Addiction
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding the spectrum of substance use, recognising alcohol and drug misuse in the
             workplace, dual diagnosis, and how to approach someone about substance use as a Mental
             Health First Aider
@@ -320,7 +320,7 @@ export default function MentalHealthModule3Section1() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-emerald-400">Substance Use</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         The consumption of a substance (alcohol, drugs, prescription medication) in
                         a way that does not necessarily cause harm. Social drinking within
                         guidelines is an example of use without misuse.
@@ -333,7 +333,7 @@ export default function MentalHealthModule3Section1() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-amber-400">Substance Misuse</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         The use of a substance in a way that causes harm to the individual or others
                         &mdash; physically, mentally, socially, or legally. This includes binge
                         drinking, using prescription drugs for purposes other than prescribed, or
@@ -347,7 +347,7 @@ export default function MentalHealthModule3Section1() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-red-400">Dependency &amp; Addiction</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         A chronic condition where the person has developed a physical or
                         psychological reliance on the substance. They experience withdrawal symptoms
                         without it, have lost control over their use, continue despite serious
@@ -385,14 +385,14 @@ export default function MentalHealthModule3Section1() {
                       <p className="text-[11px] sm:text-xs font-medium text-emerald-400">
                         Abstinence
                       </p>
-                      <p className="text-[10px] text-white/40 hidden sm:block">No use</p>
+                      <p className="text-[10px] text-white hidden sm:block">No use</p>
                     </div>
                     <div>
                       <div className="w-3 h-3 rounded-full bg-emerald-400 mx-auto mb-1" />
                       <p className="text-[11px] sm:text-xs font-medium text-emerald-300">
                         Casual Use
                       </p>
-                      <p className="text-[10px] text-white/40 hidden sm:block">
+                      <p className="text-[10px] text-white hidden sm:block">
                         Social, occasional
                       </p>
                     </div>
@@ -401,26 +401,26 @@ export default function MentalHealthModule3Section1() {
                       <p className="text-[11px] sm:text-xs font-medium text-amber-400">
                         Regular Use
                       </p>
-                      <p className="text-[10px] text-white/40 hidden sm:block">
+                      <p className="text-[10px] text-white hidden sm:block">
                         Frequent, habitual
                       </p>
                     </div>
                     <div>
                       <div className="w-3 h-3 rounded-full bg-orange-500 mx-auto mb-1" />
                       <p className="text-[11px] sm:text-xs font-medium text-orange-400">Misuse</p>
-                      <p className="text-[10px] text-white/40 hidden sm:block">Causing harm</p>
+                      <p className="text-[10px] text-white hidden sm:block">Causing harm</p>
                     </div>
                     <div>
                       <div className="w-3 h-3 rounded-full bg-red-500 mx-auto mb-1" />
                       <p className="text-[11px] sm:text-xs font-medium text-red-400">Dependency</p>
-                      <p className="text-[10px] text-white/40 hidden sm:block">
+                      <p className="text-[10px] text-white hidden sm:block">
                         Physical/psychological reliance
                       </p>
                     </div>
                     <div>
                       <div className="w-3 h-3 rounded-full bg-red-700 mx-auto mb-1" />
                       <p className="text-[11px] sm:text-xs font-medium text-red-300">Addiction</p>
-                      <p className="text-[10px] text-white/40 hidden sm:block">
+                      <p className="text-[10px] text-white hidden sm:block">
                         Compulsive, loss of control
                       </p>
                     </div>
@@ -429,7 +429,7 @@ export default function MentalHealthModule3Section1() {
                   {/* Direction arrow */}
                   <div className="flex items-center justify-center mt-4 gap-2">
                     <div className="h-px flex-1 bg-gradient-to-r from-transparent via-white/20 to-white/20" />
-                    <span className="text-[10px] sm:text-xs text-white/40 whitespace-nowrap">
+                    <span className="text-[10px] sm:text-xs text-white whitespace-nowrap">
                       Increasing risk &amp; loss of control &rarr;
                     </span>
                     <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent" />
@@ -437,7 +437,7 @@ export default function MentalHealthModule3Section1() {
                 </div>
 
                 <div className="bg-purple-500/5 border-t border-purple-500/20 px-4 py-3">
-                  <p className="text-xs sm:text-sm text-white/60">
+                  <p className="text-xs sm:text-sm text-white">
                     <strong className="text-purple-400">Key point:</strong> Movement along this
                     spectrum is not always linear or one-directional. People can move back towards
                     lower-risk use with appropriate support and treatment. Early intervention at the
@@ -460,7 +460,7 @@ export default function MentalHealthModule3Section1() {
                     'Benzodiazepines — diazepam (Valium), often prescribed for anxiety',
                     "Novel psychoactive substances (NPS) — formerly called 'legal highs'",
                   ].map((item, i) => (
-                    <div key={i} className="flex items-start gap-2 text-sm text-white/80">
+                    <div key={i} className="flex items-start gap-2 text-sm text-white">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>{item}</span>
                     </div>
@@ -511,7 +511,7 @@ export default function MentalHealthModule3Section1() {
                     <div className="bg-purple-500/10 border border-purple-500/30 p-4 rounded-lg">
                       <p className="text-2xl font-bold text-purple-400 mb-1">14</p>
                       <p className="text-sm font-medium text-white mb-1">Units per week maximum</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         For both men and women, spread over 3 or more days with several alcohol-free
                         days each week
                       </p>
@@ -521,7 +521,7 @@ export default function MentalHealthModule3Section1() {
                       <p className="text-sm font-medium text-white mb-1">
                         = 10ml or 8g of pure alcohol
                       </p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Half a pint of 4% beer, a single 25ml spirit measure, or a small (125ml)
                         glass of 8% wine
                       </p>
@@ -535,19 +535,19 @@ export default function MentalHealthModule3Section1() {
                     <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                       <div className="text-center p-2 bg-purple-500/5 rounded-lg">
                         <p className="text-lg font-bold text-purple-400">2</p>
-                        <p className="text-[10px] sm:text-xs text-white/60">Pint of 4% beer</p>
+                        <p className="text-[10px] sm:text-xs text-white">Pint of 4% beer</p>
                       </div>
                       <div className="text-center p-2 bg-purple-500/5 rounded-lg">
                         <p className="text-lg font-bold text-purple-400">3</p>
-                        <p className="text-[10px] sm:text-xs text-white/60">Pint of 5.2% lager</p>
+                        <p className="text-[10px] sm:text-xs text-white">Pint of 5.2% lager</p>
                       </div>
                       <div className="text-center p-2 bg-purple-500/5 rounded-lg">
                         <p className="text-lg font-bold text-purple-400">2.1</p>
-                        <p className="text-[10px] sm:text-xs text-white/60">175ml glass 12% wine</p>
+                        <p className="text-[10px] sm:text-xs text-white">175ml glass 12% wine</p>
                       </div>
                       <div className="text-center p-2 bg-purple-500/5 rounded-lg">
                         <p className="text-lg font-bold text-purple-400">1</p>
-                        <p className="text-[10px] sm:text-xs text-white/60">25ml single spirit</p>
+                        <p className="text-[10px] sm:text-xs text-white">25ml single spirit</p>
                       </div>
                     </div>
                   </div>
@@ -559,7 +559,7 @@ export default function MentalHealthModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Binge Drinking</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The NHS defines binge drinking as consuming{' '}
                   <strong className="text-white">
                     6 or more units in a single session for women, or 8 or more units for men
@@ -572,7 +572,7 @@ export default function MentalHealthModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Signs of Alcohol Dependency</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>A strong, compulsive urge or craving to drink alcohol</span>
@@ -621,7 +621,7 @@ export default function MentalHealthModule3Section1() {
                     <AlertTriangle className="h-5 w-5 text-red-400" />
                     <p className="text-sm font-medium text-red-400">Physical Health Effects</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                       <span>
@@ -658,7 +658,7 @@ export default function MentalHealthModule3Section1() {
                     <Heart className="h-5 w-5 text-violet-400" />
                     <p className="text-sm font-medium text-violet-400">Mental Health Effects</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                       <span>
@@ -732,7 +732,7 @@ export default function MentalHealthModule3Section1() {
               <div className="space-y-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-purple-400 mb-1">Cannabis</p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     The most commonly used illegal drug in the UK. Effects include relaxation,
                     altered perception, impaired concentration and coordination, short-term memory
                     problems, and increased appetite. Regular use is linked to{' '}
@@ -750,7 +750,7 @@ export default function MentalHealthModule3Section1() {
                   <p className="text-sm font-medium text-purple-400 mb-1">
                     Cocaine &amp; Crack Cocaine
                   </p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     A powerful stimulant that produces intense euphoria, high energy, and confidence
                     followed by a severe crash. Cocaine use has increased significantly across the
                     UK, including in the construction industry. Effects include raised heart rate
@@ -766,7 +766,7 @@ export default function MentalHealthModule3Section1() {
                   <p className="text-sm font-medium text-purple-400 mb-1">
                     Prescription Opioids (Codeine, Tramadol, Morphine)
                   </p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Prescribed for pain management &mdash; particularly relevant in construction
                     where musculoskeletal injuries are common. Effects include pain relief,
                     drowsiness, euphoria, slowed breathing, and impaired coordination. Prescription
@@ -782,7 +782,7 @@ export default function MentalHealthModule3Section1() {
                   <p className="text-sm font-medium text-purple-400 mb-1">
                     Benzodiazepines (Diazepam / Valium)
                   </p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Prescribed for anxiety, insomnia, and muscle spasms. Effects include sedation,
                     reduced anxiety, muscle relaxation, impaired coordination, and slowed reaction
                     times. Benzodiazepines are highly addictive &mdash; dependency can develop
@@ -809,7 +809,7 @@ export default function MentalHealthModule3Section1() {
                     'Dilated or constricted pupils, bloodshot eyes, runny nose',
                     'Smell of cannabis or alcohol on clothing or breath',
                   ].map((sign, i) => (
-                    <div key={i} className="flex items-start gap-2 text-sm text-white/80">
+                    <div key={i} className="flex items-start gap-2 text-sm text-white">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>{sign}</span>
                     </div>
@@ -824,7 +824,7 @@ export default function MentalHealthModule3Section1() {
                     Safety Implications on Construction Sites
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   On a construction site, drug impairment can be{' '}
                   <strong className="text-white">fatal</strong>. Workers who are impaired may
                   operate cranes, excavators, or power tools with reduced coordination and impaired
@@ -869,7 +869,7 @@ export default function MentalHealthModule3Section1() {
                     <div className="w-full sm:w-48 bg-violet-500/10 border border-violet-500/30 p-4 rounded-lg text-center">
                       <Heart className="h-6 w-6 text-violet-400 mx-auto mb-2" />
                       <p className="text-sm font-medium text-violet-400">Mental Health Condition</p>
-                      <p className="text-[10px] sm:text-xs text-white/50 mt-1">
+                      <p className="text-[10px] sm:text-xs text-white mt-1">
                         Depression, anxiety, PTSD, psychosis
                       </p>
                     </div>
@@ -888,7 +888,7 @@ export default function MentalHealthModule3Section1() {
                           Substance-induced
                         </span>
                       </div>
-                      <p className="text-[10px] text-white/40 sm:hidden">
+                      <p className="text-[10px] text-white sm:hidden">
                         Bidirectional relationship
                       </p>
                     </div>
@@ -897,7 +897,7 @@ export default function MentalHealthModule3Section1() {
                     <div className="w-full sm:w-48 bg-orange-500/10 border border-orange-500/30 p-4 rounded-lg text-center">
                       <Wine className="h-6 w-6 text-orange-400 mx-auto mb-2" />
                       <p className="text-sm font-medium text-orange-400">Substance Misuse</p>
-                      <p className="text-[10px] sm:text-xs text-white/50 mt-1">
+                      <p className="text-[10px] sm:text-xs text-white mt-1">
                         Alcohol, drugs, prescription medication
                       </p>
                     </div>
@@ -907,11 +907,11 @@ export default function MentalHealthModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Which Comes First?</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The relationship between mental health and substance misuse can work in either
                   direction:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -948,11 +948,11 @@ export default function MentalHealthModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Self-Medication</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Self-medication is one of the most common pathways to dual diagnosis. People use
                   substances to manage symptoms that they find overwhelming or unbearable:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>
@@ -991,7 +991,7 @@ export default function MentalHealthModule3Section1() {
                     Why Dual Diagnosis Is Harder to Treat
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -1071,7 +1071,7 @@ export default function MentalHealthModule3Section1() {
                       <p className="text-sm font-semibold text-purple-400 mb-1">
                         Approach, Assess &amp; Assist
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Find a private, calm moment. Express genuine concern: &ldquo;I&rsquo;ve
                         noticed you seem to be going through a tough time. How are you doing?&rdquo;
                         Do not accuse or confront &mdash; focus on what you have observed, not what
@@ -1088,7 +1088,7 @@ export default function MentalHealthModule3Section1() {
                       <p className="text-sm font-semibold text-purple-400 mb-1">
                         Listen Non-Judgementally
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Give them space to talk. Do not interrupt, lecture, or moralise. Avoid
                         language like &ldquo;you should&rdquo; or &ldquo;you need to stop&rdquo;.
                         Use open body language, maintain eye contact, and reflect back what they say
@@ -1105,7 +1105,7 @@ export default function MentalHealthModule3Section1() {
                       <p className="text-sm font-semibold text-purple-400 mb-1">
                         Give Information &amp; Support
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Share practical information about where they can get help. Do not diagnose
                         or tell them they are an &ldquo;alcoholic&rdquo; or &ldquo;addict&rdquo;
                         &mdash; this is not your role and can cause further shame.
@@ -1121,7 +1121,7 @@ export default function MentalHealthModule3Section1() {
                       <p className="text-sm font-semibold text-purple-400 mb-1">
                         Encourage Professional Help
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Gently suggest they speak to their GP, contact a helpline, or access local
                         services. Offer to help them make the first contact if they are willing.
                       </p>
@@ -1136,7 +1136,7 @@ export default function MentalHealthModule3Section1() {
                       <p className="text-sm font-semibold text-purple-400 mb-1">
                         Encourage Self-Help &amp; Other Strategies
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Suggest practical steps they can take themselves &mdash; tracking their
                         consumption, setting goals, attending support groups, or using self-help
                         resources. Respect their autonomy &mdash; they must choose to make changes
@@ -1151,7 +1151,7 @@ export default function MentalHealthModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Non-Confrontational Approach &mdash; Key Principles
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>
@@ -1205,26 +1205,26 @@ export default function MentalHealthModule3Section1() {
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white mb-1">GP (First Port of Call)</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Can assess, prescribe, refer to specialist services, and coordinate treatment
                       for dual diagnosis
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white mb-1">FRANK Helpline</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       0300 123 6600 &mdash; free, confidential drug advice and support, 24/7
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white mb-1">Alcoholics Anonymous (AA)</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       0800 917 7650 &mdash; peer support, 12-step programme, meetings across the UK
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white mb-1">Narcotics Anonymous (NA)</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       0300 999 1212 &mdash; peer support for drug addiction, meetings across the UK
                     </p>
                   </div>
@@ -1232,14 +1232,14 @@ export default function MentalHealthModule3Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Local Drug &amp; Alcohol Services
                     </p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Free NHS-funded services in every area &mdash; search via NHS.uk or the FRANK
                       website
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white mb-1">Drinkaware</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       drinkaware.co.uk &mdash; unit calculator, self-assessment tools, and
                       information about reducing drinking
                     </p>
@@ -1283,7 +1283,7 @@ export default function MentalHealthModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Key Components of a Drug &amp; Alcohol Policy
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>
@@ -1342,7 +1342,7 @@ export default function MentalHealthModule3Section1() {
                     <Users className="h-5 w-5 text-emerald-400" />
                     <p className="text-sm font-medium text-emerald-400">Supporting</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                       <span>Encouraging the person to voluntarily seek help</span>
@@ -1367,7 +1367,7 @@ export default function MentalHealthModule3Section1() {
                     <AlertTriangle className="h-5 w-5 text-red-400" />
                     <p className="text-sm font-medium text-red-400">Disciplining</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                       <span>Immediate removal from safety-critical work if impaired</span>
@@ -1395,7 +1395,7 @@ export default function MentalHealthModule3Section1() {
                     Duty of Care on Construction Sites
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Under the Health and Safety at Work etc. Act 1974, employers have a duty of care
                   to ensure, so far as is reasonably practicable, the health, safety, and welfare of
                   their employees. This includes managing the risks associated with substance
@@ -1411,12 +1411,12 @@ export default function MentalHealthModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Occupational Health Referral</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   An occupational health referral is a key tool for managing substance misuse in the
                   workplace. It involves referring the worker to an occupational health professional
                   who can:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>Assess the worker&rsquo;s fitness to carry out their role safely</span>
@@ -1471,7 +1471,7 @@ export default function MentalHealthModule3Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1485,7 +1485,7 @@ export default function MentalHealthModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-3">

@@ -49,10 +49,10 @@ export function CourseRequirementsPanel({ onChangeCourse }: CourseRequirementsPa
       <Card className="bg-card border-border">
         <CardContent className="py-6">
           <div className="text-center space-y-3">
-            <GraduationCap className="h-10 w-10 text-white/80 mx-auto" />
+            <GraduationCap className="h-10 w-10 text-white mx-auto" />
             <div className="space-y-1">
               <p className="text-sm font-medium text-foreground">No qualification selected</p>
-              <p className="text-xs text-white/80">
+              <p className="text-xs text-white">
                 Select a qualification to see your course requirements
               </p>
             </div>
@@ -99,11 +99,11 @@ export function CourseRequirementsPanel({ onChangeCourse }: CourseRequirementsPa
                     className="p-2 -m-2 rounded-full hover:bg-white/10 transition-colors touch-manipulation active:scale-95"
                     title="Change qualification"
                   >
-                    <Pencil className="h-3.5 w-3.5 text-white/80" />
+                    <Pencil className="h-3.5 w-3.5 text-white" />
                   </div>
                 )}
               </div>
-              <p className="text-xs text-white/80 mt-0.5 truncate pr-4">
+              <p className="text-xs text-white mt-0.5 truncate pr-4">
                 {qualificationName || 'Your qualification'}
               </p>
             </div>
@@ -113,7 +113,7 @@ export function CourseRequirementsPanel({ onChangeCourse }: CourseRequirementsPa
                 expanded && 'rotate-180'
               )}
             >
-              <ChevronDown className="h-5 w-5 text-white/80" />
+              <ChevronDown className="h-5 w-5 text-white" />
             </div>
           </button>
         </CardHeader>

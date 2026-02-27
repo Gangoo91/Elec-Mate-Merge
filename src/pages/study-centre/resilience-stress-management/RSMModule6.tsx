@@ -18,7 +18,7 @@ export default function RSMModule6() {
             <Button
               variant="ghost"
               size="lg"
-              className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+              className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../resilience-stress-management">
@@ -35,13 +35,13 @@ export default function RSMModule6() {
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 mb-3">
               <span className="text-rose-400 text-xs font-semibold">MODULE 6</span>
-              <span className="text-white/40 text-xs">&bull;</span>
-              <span className="text-white/60 text-xs">Mock Exam</span>
-              <span className="text-white/40 text-xs">&bull;</span>
-              <span className="text-white/60 text-xs">30 mins</span>
+              <span className="text-white text-xs">&bull;</span>
+              <span className="text-white text-xs">Mock Exam</span>
+              <span className="text-white text-xs">&bull;</span>
+              <span className="text-white text-xs">30 mins</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Mock Examination</h1>
-            <p className="text-white/60 text-sm sm:text-base">
+            <p className="text-white text-sm sm:text-base">
               Test your knowledge across all 5 modules with a timed, randomised exam
             </p>
           </div>
@@ -62,28 +62,28 @@ export default function RSMModule6() {
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                     <BookOpen className="h-5 w-5 text-rose-400 mx-auto mb-1" />
                     <p className="text-lg font-bold text-white">20</p>
-                    <p className="text-xs text-white/80">Questions</p>
+                    <p className="text-xs text-white">Questions</p>
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                     <Clock className="h-5 w-5 text-rose-400 mx-auto mb-1" />
                     <p className="text-lg font-bold text-white">30</p>
-                    <p className="text-xs text-white/80">Minutes</p>
+                    <p className="text-xs text-white">Minutes</p>
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                     <Target className="h-5 w-5 text-rose-400 mx-auto mb-1" />
                     <p className="text-lg font-bold text-white">80%</p>
-                    <p className="text-xs text-white/80">Pass Mark</p>
+                    <p className="text-xs text-white">Pass Mark</p>
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                     <GraduationCap className="h-5 w-5 text-rose-400 mx-auto mb-1" />
                     <p className="text-lg font-bold text-white">200</p>
-                    <p className="text-xs text-white/80">Question Bank</p>
+                    <p className="text-xs text-white">Question Bank</p>
                   </div>
                 </div>
 
                 <div className="space-y-3 mb-6">
                   <h3 className="text-sm font-semibold text-white">How It Works</h3>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
                       <span>
@@ -147,7 +147,7 @@ export default function RSMModule6() {
                 ].map((cat) => (
                   <div
                     key={cat}
-                    className="flex items-center gap-2 text-sm text-white/80 bg-white/5 rounded-lg p-2.5"
+                    className="flex items-center gap-2 text-sm text-white bg-white/5 rounded-lg p-2.5"
                   >
                     <div className="w-1.5 h-1.5 rounded-full bg-rose-400 flex-shrink-0" />
                     {cat}

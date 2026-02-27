@@ -156,7 +156,7 @@ const EnergyEfficiencyModule2Section4 = () => {
               <ArrowLeft className="h-5 w-5" />
             </Link>
           </Button>
-          <div className="flex items-center gap-2 text-sm text-white/70">
+          <div className="flex items-center gap-2 text-sm text-white">
             <Activity className="h-4 w-4 text-elec-yellow" />
             <span>Module 2 • Section 4</span>
           </div>
@@ -169,7 +169,7 @@ const EnergyEfficiencyModule2Section4 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Equipment for Power Monitoring
           </h1>
-          <p className="text-white/80 text-base sm:text-lg max-w-2xl mx-auto">
+          <p className="text-white text-base sm:text-lg max-w-2xl mx-auto">
             Master the tools of the trade - from handheld clamp meters to sophisticated IoT
             monitoring systems
           </p>
@@ -336,25 +336,25 @@ const EnergyEfficiencyModule2Section4 = () => {
               <div className="grid md:grid-cols-2 gap-3">
                 <div className="bg-white/5 p-3 rounded">
                   <p className="font-medium text-elec-yellow text-sm">Schneider ION Series</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Enterprise-grade, extensive BMS integration
                   </p>
                 </div>
                 <div className="bg-white/5 p-3 rounded">
                   <p className="font-medium text-elec-yellow text-sm">ABB M4M Series</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Modular, scalable for various applications
                   </p>
                 </div>
                 <div className="bg-white/5 p-3 rounded">
                   <p className="font-medium text-elec-yellow text-sm">Janitza UMG Series</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Excellent harmonic analysis, German quality
                   </p>
                 </div>
                 <div className="bg-white/5 p-3 rounded">
                   <p className="font-medium text-elec-yellow text-sm">Crompton Integra Series</p>
-                  <p className="text-white/70 text-xs">Cost-effective, good UK support</p>
+                  <p className="text-white text-xs">Cost-effective, good UK support</p>
                 </div>
               </div>
             </div>
@@ -536,7 +536,7 @@ const EnergyEfficiencyModule2Section4 = () => {
                     Required when recharging energy costs to tenants or other parties. Must display
                     the MID conformity marking and have sealed calibration.
                   </p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Examples: Rayleigh Instruments RI-D series, Eastron SDM series (MID versions),
                     Schneider iEM3000
                   </p>
@@ -549,7 +549,7 @@ const EnergyEfficiencyModule2Section4 = () => {
                     Suitable for internal energy management, identifying waste, and monitoring
                     individual circuits or equipment. Lower cost but not legal for billing.
                   </p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Examples: Eastron SDM series (standard), Finder 7E series, Northern Design Cube
                   </p>
                 </div>
@@ -578,7 +578,7 @@ const EnergyEfficiencyModule2Section4 = () => {
                 <div className="bg-white/5 p-4 rounded-lg">
                   <h4 className="font-medium text-elec-yellow mb-2">Entry Level</h4>
                   <p className="text-white text-sm mb-2">Single circuit, basic monitoring</p>
-                  <ul className="text-white/70 text-xs space-y-1">
+                  <ul className="text-white text-xs space-y-1">
                     <li>- Shelly EM (£30-50)</li>
                     <li>- Emporia Vue (£80-150)</li>
                     <li>- Sense Energy Monitor (£250)</li>
@@ -587,7 +587,7 @@ const EnergyEfficiencyModule2Section4 = () => {
                 <div className="bg-white/5 p-4 rounded-lg">
                   <h4 className="font-medium text-elec-yellow mb-2">Professional</h4>
                   <p className="text-white text-sm mb-2">Multi-circuit, business features</p>
-                  <ul className="text-white/70 text-xs space-y-1">
+                  <ul className="text-white text-xs space-y-1">
                     <li>- Schneider PowerTag (£150-300/pt)</li>
                     <li>- Carlo Gavazzi EM series</li>
                     <li>- Socomec Diris series</li>
@@ -596,7 +596,7 @@ const EnergyEfficiencyModule2Section4 = () => {
                 <div className="bg-white/5 p-4 rounded-lg">
                   <h4 className="font-medium text-elec-yellow mb-2">Enterprise</h4>
                   <p className="text-white text-sm mb-2">Full energy management platform</p>
-                  <ul className="text-white/70 text-xs space-y-1">
+                  <ul className="text-white text-xs space-y-1">
                     <li>- Schneider EcoStruxure</li>
                     <li>- Siemens SENTRON</li>
                     <li>- ABB Ability</li>

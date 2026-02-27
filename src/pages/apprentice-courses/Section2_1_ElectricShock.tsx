@@ -208,7 +208,7 @@ const Section2_1_ElectricShock = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-foreground active:text-foreground p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -234,7 +234,7 @@ const Section2_1_ElectricShock = () => {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
             Electric Shock and Burns
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding electrical injuries, physiological effects, emergency response procedures,
             and prevention strategies for electrical workers.
           </p>

@@ -19,7 +19,7 @@ const AccreditationAnalytics = () => {
         <CardContent className="space-y-2 relative">
           <div className="space-y-2">
             <div className="flex justify-between items-center p-2 rounded-lg bg-white/5">
-              <span className="text-xs text-white/80">IET Professional</span>
+              <span className="text-xs text-white">IET Professional</span>
               <Badge
                 variant="outline"
                 className="bg-green-500/10 text-green-400 border-green-500/30 text-xs"
@@ -28,7 +28,7 @@ const AccreditationAnalytics = () => {
               </Badge>
             </div>
             <div className="flex justify-between items-center p-2 rounded-lg bg-white/5">
-              <span className="text-xs text-white/80">NICEIC Approved</span>
+              <span className="text-xs text-white">NICEIC Approved</span>
               <Badge
                 variant="outline"
                 className="bg-green-500/10 text-green-400 border-green-500/30 text-xs"
@@ -37,7 +37,7 @@ const AccreditationAnalytics = () => {
               </Badge>
             </div>
             <div className="flex justify-between items-center p-2 rounded-lg bg-white/5">
-              <span className="text-xs text-white/80">ECA Membership</span>
+              <span className="text-xs text-white">ECA Membership</span>
               <Badge
                 variant="outline"
                 className="bg-amber-500/10 text-amber-400 border-amber-500/30 text-xs"
@@ -63,11 +63,11 @@ const AccreditationAnalytics = () => {
         <CardContent className="space-y-3 relative">
           <div className="text-center p-3 rounded-lg bg-white/5 border border-white/10">
             <div className="text-lg font-bold text-green-400">£15k-£25k</div>
-            <div className="text-xs text-white/70">Average salary increase</div>
+            <div className="text-xs text-white">Average salary increase</div>
           </div>
           <div className="text-center p-3 rounded-lg bg-white/5 border border-white/10">
             <div className="text-lg font-bold text-green-400">90%</div>
-            <div className="text-xs text-white/70">Career advancement rate</div>
+            <div className="text-xs text-white">Career advancement rate</div>
           </div>
         </CardContent>
       </Card>
@@ -85,7 +85,7 @@ const AccreditationAnalytics = () => {
         </CardHeader>
         <CardContent className="space-y-2 relative">
           <div className="flex justify-between items-center p-2 rounded-lg bg-white/5">
-            <span className="text-xs text-white/80">Entry Level</span>
+            <span className="text-xs text-white">Entry Level</span>
             <Badge
               variant="outline"
               className="bg-green-500/10 text-green-400 border-green-500/30 text-xs"
@@ -94,7 +94,7 @@ const AccreditationAnalytics = () => {
             </Badge>
           </div>
           <div className="flex justify-between items-center p-2 rounded-lg bg-white/5">
-            <span className="text-xs text-white/80">Under £300</span>
+            <span className="text-xs text-white">Under £300</span>
             <Badge
               variant="outline"
               className="bg-blue-500/10 text-blue-400 border-blue-500/30 text-xs"
@@ -103,7 +103,7 @@ const AccreditationAnalytics = () => {
             </Badge>
           </div>
           <div className="flex justify-between items-center p-2 rounded-lg bg-white/5">
-            <span className="text-xs text-white/80">Online/Hybrid</span>
+            <span className="text-xs text-white">Online/Hybrid</span>
             <Badge
               variant="outline"
               className="bg-purple-500/10 text-purple-400 border-purple-500/30 text-xs"
@@ -128,11 +128,11 @@ const AccreditationAnalytics = () => {
         <CardContent className="space-y-3 relative">
           <div className="text-center p-3 rounded-lg bg-white/5 border border-white/10">
             <div className="text-lg font-bold text-amber-400">£200-£1500</div>
-            <div className="text-xs text-white/70">Typical cost range</div>
+            <div className="text-xs text-white">Typical cost range</div>
           </div>
           <div className="text-center p-3 rounded-lg bg-white/5 border border-white/10">
             <div className="text-lg font-bold text-amber-400">4-18 months</div>
-            <div className="text-xs text-white/70">ROI timeframe</div>
+            <div className="text-xs text-white">ROI timeframe</div>
           </div>
         </CardContent>
       </Card>

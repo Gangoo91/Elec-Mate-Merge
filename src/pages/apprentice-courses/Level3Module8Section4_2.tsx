@@ -295,7 +295,7 @@ const Level3Module8Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module8-section4">
@@ -367,7 +367,7 @@ const Level3Module8Section4_2 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-2">Technical Topics:</p>
-                  <ul className="text-white/80 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>Electrical science and principles</li>
                     <li>Circuit design and calculations</li>
                     <li>Cable sizing and selection</li>
@@ -377,7 +377,7 @@ const Level3Module8Section4_2 = () => {
                 </div>
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-2">Regulatory Topics:</p>
-                  <ul className="text-white/80 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>BS 7671 Wiring Regulations</li>
                     <li>Health and safety legislation</li>
                     <li>Building regulations</li>
@@ -401,7 +401,7 @@ const Level3Module8Section4_2 = () => {
                       <th className="text-left py-2 text-elec-yellow/80">Priority</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/5">
                       <td className="py-2">Cable calculations</td>
                       <td className="py-2">8</td>
@@ -461,38 +461,38 @@ const Level3Module8Section4_2 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Knowledge Gaps</p>
-                <p className="text-xs text-white/80 mb-2">
+                <p className="text-xs text-white mb-2">
                   You didn't know the answer because you haven't learned that topic thoroughly.
                 </p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   <strong>Action:</strong> Study the topic in depth from textbooks or course
                   materials.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Misconceptions</p>
-                <p className="text-xs text-white/80 mb-2">
+                <p className="text-xs text-white mb-2">
                   You thought you knew the answer but had incorrect understanding.
                 </p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   <strong>Action:</strong> Identify and correct the specific misunderstanding.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Application Errors</p>
-                <p className="text-xs text-white/80 mb-2">
+                <p className="text-xs text-white mb-2">
                   You know the theory but struggled to apply it to the specific scenario.
                 </p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   <strong>Action:</strong> Practice applying knowledge to varied scenarios.
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Careless Errors</p>
-                <p className="text-xs text-white/80 mb-2">
+                <p className="text-xs text-white mb-2">
                   Misread the question, calculation mistakes, or selected wrong option.
                 </p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   <strong>Action:</strong> Develop checking habits and slow down on key steps.
                 </p>
               </div>
@@ -500,7 +500,7 @@ const Level3Module8Section4_2 = () => {
 
             <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20 my-6">
               <p className="text-sm font-medium text-green-400 mb-2">Error Analysis Template:</p>
-              <div className="text-xs text-white/80 space-y-2">
+              <div className="text-xs text-white space-y-2">
                 <p>
                   <strong>Question:</strong> What is the maximum Zs for a 32A Type B MCB?
                 </p>
@@ -524,7 +524,7 @@ const Level3Module8Section4_2 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Pro Tip:</strong> Keep a "misconceptions log" of concepts you've
               misunderstood. Review this regularly to reinforce correct understanding.
             </p>
@@ -549,7 +549,7 @@ const Level3Module8Section4_2 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
               <p className="text-sm font-medium text-white mb-3">Time Analysis Considerations:</p>
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li>
                   <strong>Average time per question:</strong> Exam time divided by questions gives
                   target (e.g., 2 mins for 60 questions in 2 hours)
@@ -580,7 +580,7 @@ const Level3Module8Section4_2 = () => {
                       <th className="text-left py-2 text-elec-yellow/80">Suggested Action</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80 text-xs">
+                  <tbody className="text-white text-xs">
                     <tr className="border-b border-white/5">
                       <td className="py-2">Strong start, weak finish</td>
                       <td className="py-2">Fatigue or time pressure</td>
@@ -608,7 +608,7 @@ const Level3Module8Section4_2 = () => {
 
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20 my-6">
               <p className="text-sm font-medium text-red-400 mb-2">Warning Signs to Watch For:</p>
-              <ul className="text-xs text-white/90 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>Leaving multiple questions unanswered due to time</li>
                 <li>Changing correct answers to wrong ones during review</li>
                 <li>Spending over 4 minutes on single questions</li>
@@ -643,13 +643,13 @@ const Level3Module8Section4_2 = () => {
               <div className="space-y-3 text-sm">
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">Step 1: Prioritise Topics</p>
-                  <p className="text-white/80 mt-1">
+                  <p className="text-white mt-1">
                     Rank weak topics by both your score AND their importance/frequency in exams
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">Step 2: Identify Root Causes</p>
-                  <p className="text-white/80 mt-1">
+                  <p className="text-white mt-1">
                     For each weak topic, determine if it's knowledge gaps, misconceptions, or
                     application problems
                   </p>
@@ -658,14 +658,14 @@ const Level3Module8Section4_2 = () => {
                   <p className="text-elec-yellow/80 font-medium">
                     Step 3: Plan Specific Activities
                   </p>
-                  <p className="text-white/80 mt-1">
+                  <p className="text-white mt-1">
                     Match revision activities to root causes - reading for gaps, corrections for
                     misconceptions, practice for application
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">Step 4: Schedule and Track</p>
-                  <p className="text-white/80 mt-1">
+                  <p className="text-white mt-1">
                     Allocate time to each activity and track completion and subsequent improvement
                   </p>
                 </div>
@@ -676,7 +676,7 @@ const Level3Module8Section4_2 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Example Revision Plan Entry:
               </p>
-              <div className="text-xs text-white/80 space-y-2 font-mono">
+              <div className="text-xs text-white space-y-2 font-mono">
                 <p>
                   <strong>Weak Area:</strong> Cable sizing for voltage drop (38% score)
                 </p>
@@ -704,7 +704,7 @@ const Level3Module8Section4_2 = () => {
 
             <div className="p-4 rounded-lg bg-transparent border border-white/10 my-6">
               <p className="text-sm font-medium text-white mb-2">Progress Tracking Metrics:</p>
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow/70">1.</span>
                   <span>Topic scores before and after targeted revision</span>
@@ -724,7 +724,7 @@ const Level3Module8Section4_2 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Remember:</strong> Effective analysis leads to focused revision. Spending 1
               hour on a genuine weak area is more valuable than 3 hours of unfocused general
               revision.
@@ -785,7 +785,7 @@ const Level3Module8Section4_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -833,7 +833,7 @@ const Level3Module8Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module8-section4-1">

@@ -68,7 +68,7 @@ export function DiaryDashboardWidget() {
                     </Badge>
                   )}
                 </div>
-                <p className="text-sm text-white/70 leading-relaxed">{todayFormatted}</p>
+                <p className="text-sm text-white leading-relaxed">{todayFormatted}</p>
 
                 {/* Stats row */}
                 <div className="flex flex-wrap gap-2 mt-2.5">
@@ -83,7 +83,7 @@ export function DiaryDashboardWidget() {
                   ) : (
                     <Badge
                       variant="outline"
-                      className="text-[10px] bg-white/[0.04] border-white/10 text-white/60"
+                      className="text-[10px] bg-white/[0.04] border-white/10 text-white"
                     >
                       <Flame className="h-3 w-3 mr-1" />
                       {streakMessage}

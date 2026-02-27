@@ -304,7 +304,7 @@ function IntroPhase({ onStart }: { onStart: () => void }) {
             </motion.div>
 
             <h2 className="text-lg font-bold text-white">Safe Isolation Procedure</h2>
-            <p className="text-sm text-white/60 max-w-xs leading-relaxed">
+            <p className="text-sm text-white max-w-xs leading-relaxed">
               The #1 reason candidates fail the AM2. Put the 8 steps in the correct order — zero
               tolerance for errors.
             </p>
@@ -317,21 +317,21 @@ function IntroPhase({ onStart }: { onStart: () => void }) {
             <GripVertical className="h-4 w-4 text-cyan-400 shrink-0" />
             <div className="min-w-0">
               <p className="text-xs font-semibold text-foreground">Drag & drop</p>
-              <p className="text-[10px] text-white/40">Reorder 8 steps</p>
+              <p className="text-[10px] text-white">Reorder 8 steps</p>
             </div>
           </div>
           <div className="flex-1 flex items-center gap-2 p-2.5 rounded-xl bg-white/[0.03] border border-white/8">
             <Timer className="h-4 w-4 text-cyan-400 shrink-0" />
             <div className="min-w-0">
               <p className="text-xs font-semibold text-foreground">Timed</p>
-              <p className="text-[10px] text-white/40">Build speed</p>
+              <p className="text-[10px] text-white">Build speed</p>
             </div>
           </div>
           <div className="flex-1 flex items-center gap-2 p-2.5 rounded-xl bg-white/[0.03] border border-white/8">
             <ShieldAlert className="h-4 w-4 text-amber-400 shrink-0" />
             <div className="min-w-0">
               <p className="text-xs font-semibold text-foreground">Strict</p>
-              <p className="text-[10px] text-white/40">Zero tolerance</p>
+              <p className="text-[10px] text-white">Zero tolerance</p>
             </div>
           </div>
         </div>
@@ -341,7 +341,7 @@ function IntroPhase({ onStart }: { onStart: () => void }) {
           <AlertTriangle className="h-4 w-4 text-amber-400 shrink-0 mt-0.5" />
           <div>
             <p className="text-xs font-bold text-amber-300 mb-1">Top AM2 fail reasons</p>
-            <ol className="text-xs text-white/60 space-y-0.5 list-decimal list-inside">
+            <ol className="text-xs text-white space-y-0.5 list-decimal list-inside">
               <li>Leaving the key in the padlock</li>
               <li>Forgetting to re-prove the tester</li>
               <li>Not testing all conductor combinations (L-N, L-E, N-E)</li>
@@ -393,13 +393,13 @@ function SequencerPhase({
       <div className="flex items-center justify-between px-4 py-3 border-b border-white/5 shrink-0">
         <div>
           <h3 className="text-sm font-bold text-white">Arrange the sequence</h3>
-          <p className="text-[10px] text-white/40 mt-0.5">
+          <p className="text-[10px] text-white mt-0.5">
             Hold and drag each step into the correct order
           </p>
         </div>
         <div className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-white/[0.04] border border-white/8">
           <GripVertical className="h-3.5 w-3.5 text-cyan-400" />
-          <span className="text-[10px] font-semibold text-white/50">Drag</span>
+          <span className="text-[10px] font-semibold text-white">Drag</span>
         </div>
       </div>
 
@@ -469,7 +469,7 @@ function SequencerPhase({
                                   : 'bg-red-500/15 text-red-400 border border-red-500/20'
                                 : snapshot.isDragging
                                   ? 'bg-cyan-500/15 text-cyan-400 border border-cyan-400/20'
-                                  : 'bg-white/[0.06] text-white/60 border border-white/10'
+                                  : 'bg-white/[0.06] text-white border border-white/10'
                             )}
                           >
                             {submitted ? (
@@ -489,7 +489,7 @@ function SequencerPhase({
                           <p className="text-sm font-semibold text-foreground leading-tight">
                             {step.title}
                           </p>
-                          <p className="text-[11px] text-white/45 leading-snug mt-0.5">
+                          <p className="text-[11px] text-white leading-snug mt-0.5">
                             {step.description}
                           </p>
                           {/* Show correct position hint if wrong */}
@@ -506,7 +506,7 @@ function SequencerPhase({
                             <GripVertical
                               className={cn(
                                 'h-5 w-5 transition-colors',
-                                snapshot.isDragging ? 'text-cyan-400' : 'text-white/20'
+                                snapshot.isDragging ? 'text-cyan-400' : 'text-white'
                               )}
                             />
                           </div>
@@ -601,7 +601,7 @@ function ResultsPhase({
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-sm text-white/60 mt-3 max-w-xs"
+            className="text-sm text-white mt-3 max-w-xs"
           >
             {isPerfect
               ? 'Perfect — every step in the correct order'
@@ -619,14 +619,14 @@ function ResultsPhase({
             transition={{ delay: 0.4 }}
             className="flex items-center gap-1.5 mt-2 px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/8"
           >
-            <Timer className="h-3 w-3 text-white/40" />
-            <span className="text-[11px] font-semibold text-white/50">{timeTaken}s</span>
+            <Timer className="h-3 w-3 text-white" />
+            <span className="text-[11px] font-semibold text-white">{timeTaken}s</span>
           </motion.div>
         </div>
 
         {/* Correct sequence with detail shown on wrong answers */}
         <div className="space-y-2">
-          <h3 className="text-[10px] font-bold text-white/50 uppercase tracking-wider px-1">
+          <h3 className="text-[10px] font-bold text-white uppercase tracking-wider px-1">
             Correct Sequence
           </h3>
           {CORRECT_SEQUENCE.map((step, index) => {
@@ -652,7 +652,7 @@ function ResultsPhase({
                       'flex items-center justify-center h-7 w-7 rounded-lg text-xs font-bold shrink-0',
                       wasCorrect
                         ? 'bg-emerald-500/15 text-emerald-400'
-                        : 'bg-white/[0.06] text-white/50'
+                        : 'bg-white/[0.06] text-white'
                     )}
                   >
                     {step.number}
@@ -664,7 +664,7 @@ function ResultsPhase({
                         <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
                       )}
                     </div>
-                    <p className="text-[11px] text-white/45 mt-0.5">{step.description}</p>
+                    <p className="text-[11px] text-white mt-0.5">{step.description}</p>
                   </div>
                 </div>
                 {/* Expanded detail — shown only for wrong answers to help learning */}
@@ -690,7 +690,7 @@ function ResultsPhase({
                 Remember
               </p>
             </div>
-            <ul className="space-y-1.5 text-xs text-white/60">
+            <ul className="space-y-1.5 text-xs text-white">
               <li className="flex items-start gap-2">
                 <span className="text-amber-400/50 mt-0.5 shrink-0">&bull;</span>
                 Prove → Isolate → Lock → Key in pocket → Notice → Test → Re-prove

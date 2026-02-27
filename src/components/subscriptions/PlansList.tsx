@@ -245,7 +245,7 @@ const PlansList = ({ billing }: PlansListProps) => {
                   </div>
                   <div>
                     <h3 className="text-xl sm:text-2xl font-bold text-foreground">{plan.name}</h3>
-                    <p className="text-xs sm:text-sm text-white/60 mt-0.5">{plan.description}</p>
+                    <p className="text-xs sm:text-sm text-white mt-0.5">{plan.description}</p>
                   </div>
                 </div>
 
@@ -255,7 +255,7 @@ const PlansList = ({ billing }: PlansListProps) => {
                     {plan.price}
                   </span>
                   {plan.period && (
-                    <span className="text-base sm:text-lg text-white/60">{plan.period}</span>
+                    <span className="text-base sm:text-lg text-white">{plan.period}</span>
                   )}
                 </div>
                 {plan.savings && (
@@ -377,7 +377,7 @@ const PlansList = ({ billing }: PlansListProps) => {
             <h3 className="text-base sm:text-lg font-bold text-foreground mb-1">
               Need Enterprise or Team Pricing?
             </h3>
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               For larger teams, custom integrations, or volume discounts, contact us at{' '}
               <a
                 href="mailto:info@elec-mate.com"
@@ -393,7 +393,7 @@ const PlansList = ({ billing }: PlansListProps) => {
       {/* Native IAP disclosure text — required by Apple & Google */}
       {isNative && (
         <div className="text-center space-y-2">
-          <p className="text-[11px] text-white/30 leading-relaxed max-w-md mx-auto">
+          <p className="text-[11px] text-white leading-relaxed max-w-md mx-auto">
             Payment will be charged to your{' '}
             {Capacitor.getPlatform() === 'ios' ? 'Apple ID' : 'Google account'} at confirmation of
             purchase. Subscription automatically renews unless cancelled at least 24 hours before

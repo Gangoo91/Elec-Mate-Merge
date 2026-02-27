@@ -210,7 +210,7 @@ const GratitudeQuickAdd = () => {
                 setGratitudes(newGratitudes);
               }}
               placeholder={`I'm grateful for...`}
-              className="w-full p-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              className="w-full p-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder:text-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           </div>
         ))}
@@ -293,7 +293,7 @@ const EnergyLevelCheck = () => {
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           placeholder="What's affecting your energy?"
-          className="w-full p-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[80px]"
+          className="w-full p-3 rounded-lg bg-white/5 border border-white/10 text-white placeholder:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 min-h-[80px]"
         />
       </div>
       <Button

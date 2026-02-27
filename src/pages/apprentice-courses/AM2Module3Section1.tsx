@@ -302,10 +302,10 @@ const AM2Module3Section1 = () => {
       <AM2ContentCard title="Equipment & Documentation Requirements" icon={Wrench}>
         <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
           <div>
-            <h3 className="font-semibold text-base mb-3 text-white/90">
+            <h3 className="font-semibold text-base mb-3 text-white">
               Essential Tools & Equipment
             </h3>
-            <ul className="space-y-2 text-xs sm:text-sm text-white/70">
+            <ul className="space-y-2 text-xs sm:text-sm text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Cable strippers and termination tools
@@ -329,8 +329,8 @@ const AM2Module3Section1 = () => {
             </ul>
           </div>
           <div>
-            <h3 className="font-semibold text-base mb-3 text-white/90">Essential References</h3>
-            <ul className="space-y-2 text-xs sm:text-sm text-white/70">
+            <h3 className="font-semibold text-base mb-3 text-white">Essential References</h3>
+            <ul className="space-y-2 text-xs sm:text-sm text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 AM2 drawings and written specifications
@@ -358,16 +358,16 @@ const AM2Module3Section1 = () => {
 
       {/* Cable Selection Section */}
       <AM2ContentCard title="1. Cable Selection in AM2" icon={Zap} accent>
-        <div className="space-y-6 text-xs sm:text-sm text-white/80">
+        <div className="space-y-6 text-xs sm:text-sm text-white">
           <div>
-            <h3 className="font-semibold text-base mb-2 flex items-center gap-2 text-white/90">
+            <h3 className="font-semibold text-base mb-2 flex items-center gap-2 text-white">
               Specification Compliance
             </h3>
             <p className="mb-2">
               Match the specification exactly - you'll be told what size and type (e.g. 2.5 mm² T&E
               for ring, 4 mm² radial, flex for motor).
             </p>
-            <ul className="space-y-1 text-white/70 ml-4">
+            <ul className="space-y-1 text-white ml-4">
               <li>
                 Derating factors don't come into play in AM2 (assessors want you to follow the spec,
                 not recalc)
@@ -381,13 +381,13 @@ const AM2Module3Section1 = () => {
           </div>
 
           <div>
-            <h3 className="font-semibold text-base mb-2 flex items-center gap-2 text-white/90">
+            <h3 className="font-semibold text-base mb-2 flex items-center gap-2 text-white">
               Common Cable Types in AM2
             </h3>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <p className="font-medium text-white/90">Power Circuits:</p>
-                <ul className="space-y-1 text-white/70 ml-4 text-xs">
+                <p className="font-medium text-white">Power Circuits:</p>
+                <ul className="space-y-1 text-white ml-4 text-xs">
                   <li>1.5mm² T&E - Lighting circuits (6A MCB)</li>
                   <li>2.5mm² T&E - Socket radials (20A MCB)</li>
                   <li>2.5mm² T&E - Ring finals (32A MCB)</li>
@@ -396,8 +396,8 @@ const AM2Module3Section1 = () => {
                 </ul>
               </div>
               <div className="space-y-2">
-                <p className="font-medium text-white/90">Special Applications:</p>
-                <ul className="space-y-1 text-white/70 ml-4 text-xs">
+                <p className="font-medium text-white">Special Applications:</p>
+                <ul className="space-y-1 text-white ml-4 text-xs">
                   <li>3-core & earth - Two-way switching</li>
                   <li>1.5mm² flex - Pendant lights</li>
                   <li>2.5mm² flex - Portable equipment</li>
@@ -412,7 +412,7 @@ const AM2Module3Section1 = () => {
 
           <div className="bg-white/5 border border-amber-500/30 rounded-xl p-4">
             <h4 className="font-semibold text-amber-400 mb-2">Critical Cable Requirements</h4>
-            <ul className="space-y-1 text-sm text-white/80">
+            <ul className="space-y-1 text-sm text-white">
               <li>Correct size as per specification (no substitutions allowed)</li>
               <li>Appropriate cable type for installation method and environment</li>
               <li>Proper colour identification throughout installation</li>
@@ -428,7 +428,7 @@ const AM2Module3Section1 = () => {
 
       {/* Containment Systems Section */}
       <AM2ContentCard title="2. Containment Systems: What Assessors Expect" icon={Shield}>
-        <div className="space-y-6 text-xs sm:text-sm text-white/80">
+        <div className="space-y-6 text-xs sm:text-sm text-white">
           <p className="text-base">
             Containment systems protect cables and demonstrate professional workmanship. Assessors
             focus on three key areas: compliance with installation standards, quality of
@@ -438,7 +438,7 @@ const AM2Module3Section1 = () => {
           <div className="grid md:grid-cols-3 gap-3 sm:gap-4">
             <div className="bg-white/5 border border-blue-500/30 rounded-xl p-4">
               <h3 className="font-semibold text-base mb-2 text-blue-400">Trunking Systems</h3>
-              <ul className="space-y-1 text-white/70 text-xs">
+              <ul className="space-y-1 text-white text-xs">
                 <li>Straight runs, cut square, burrs removed</li>
                 <li>Lids flush, no gaps, screws aligned</li>
                 <li>Cables not overfilled - comply with space factor</li>
@@ -450,7 +450,7 @@ const AM2Module3Section1 = () => {
             </div>
             <div className="bg-white/5 border border-elec-yellow/30 rounded-xl p-4">
               <h3 className="font-semibold text-base mb-2 text-elec-yellow">Conduit Systems</h3>
-              <ul className="space-y-1 text-white/70 text-xs">
+              <ul className="space-y-1 text-white text-xs">
                 <li>Neat bends - no kinking or flattening</li>
                 <li>Saddles evenly spaced (300-600mm apart)</li>
                 <li>Boxes aligned level and square</li>
@@ -462,7 +462,7 @@ const AM2Module3Section1 = () => {
             </div>
             <div className="bg-white/5 border border-purple-500/30 rounded-xl p-4">
               <h3 className="font-semibold text-base mb-2 text-purple-400">Cable Tray</h3>
-              <ul className="space-y-1 text-white/70 text-xs">
+              <ul className="space-y-1 text-white text-xs">
                 <li>Runs level and properly supported</li>
                 <li>Correct clips or ties (no insulation tape)</li>
                 <li>No sharp edges against cables</li>
@@ -476,9 +476,9 @@ const AM2Module3Section1 = () => {
 
           <div className="bg-white/5 border border-amber-500/30 rounded-xl p-4">
             <h4 className="font-semibold text-amber-400 mb-2">Space Factor Requirements</h4>
-            <div className="grid md:grid-cols-2 gap-4 text-xs text-white/80">
+            <div className="grid md:grid-cols-2 gap-4 text-xs text-white">
               <div>
-                <p className="font-medium mb-1 text-white/90">Trunking & Tray:</p>
+                <p className="font-medium mb-1 text-white">Trunking & Tray:</p>
                 <ul className="space-y-1">
                   <li>Single cable type: 45% fill factor</li>
                   <li>Mixed cable types: 40% fill factor</li>
@@ -486,7 +486,7 @@ const AM2Module3Section1 = () => {
                 </ul>
               </div>
               <div>
-                <p className="font-medium mb-1 text-white/90">Conduit Systems:</p>
+                <p className="font-medium mb-1 text-white">Conduit Systems:</p>
                 <ul className="space-y-1">
                   <li>Single cable: 31% fill factor</li>
                   <li>Two cables: 43% fill factor</li>
@@ -502,47 +502,47 @@ const AM2Module3Section1 = () => {
 
       {/* What Assessor Checks Section */}
       <AM2ContentCard title="3. What the Assessor Checks (NET Guidance)" icon={Eye}>
-        <div className="space-y-4 text-xs sm:text-sm text-white/80">
+        <div className="space-y-4 text-xs sm:text-sm text-white">
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <h3 className="font-semibold text-base mb-3 text-white/90">Assessment Focus Areas</h3>
+              <h3 className="font-semibold text-base mb-3 text-white">Assessment Focus Areas</h3>
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span>
-                    <strong className="text-white/90">Accuracy to drawing/spec:</strong> Heights,
+                    <strong className="text-white">Accuracy to drawing/spec:</strong> Heights,
                     positions, routes, and terminations exactly as shown
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span>
-                    <strong className="text-white/90">Workmanship:</strong> Is it neat, straight,
+                    <strong className="text-white">Workmanship:</strong> Is it neat, straight,
                     aligned? Cables not twisted, sheath maintained into accessories
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span>
-                    <strong className="text-white/90">Compliance:</strong> Correct cable types,
+                    <strong className="text-white">Compliance:</strong> Correct cable types,
                     correct containment fixings, no breaches of BS 7671
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   <span>
-                    <strong className="text-white/90">Safety:</strong> Grommets/bushes used, no
+                    <strong className="text-white">Safety:</strong> Grommets/bushes used, no
                     exposed sharp edges, boxes secure
                   </span>
                 </li>
               </ul>
             </div>
             <div>
-              <h3 className="font-semibold text-base mb-3 text-white/90">Mark Allocation</h3>
+              <h3 className="font-semibold text-base mb-3 text-white">Mark Allocation</h3>
               <div className="space-y-2">
                 <div className="bg-white/5 border border-green-500/30 rounded-xl p-3">
                   <h4 className="font-medium text-green-400 text-sm">Pass Standard</h4>
-                  <ul className="text-xs text-white/70 mt-1">
+                  <ul className="text-xs text-white mt-1">
                     <li>Specification compliance (40%)</li>
                     <li>Workmanship quality (30%)</li>
                     <li>Safety compliance (20%)</li>
@@ -562,7 +562,7 @@ const AM2Module3Section1 = () => {
         title="4. Common Errors in AM2 Containment Tasks (NET 'Common Errors' List)"
         icon={AlertTriangle}
       >
-        <div className="space-y-4 text-xs sm:text-sm text-white/80">
+        <div className="space-y-4 text-xs sm:text-sm text-white">
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <h3 className="font-semibold text-base mb-3 text-elec-yellow">
@@ -617,7 +617,7 @@ const AM2Module3Section1 = () => {
           </div>
           <div className="mt-6 p-4 bg-white/5 border border-red-500/30 rounded-xl">
             <h4 className="font-semibold text-red-400 mb-2">Real AM2 Failure Examples</h4>
-            <ul className="space-y-1 text-sm text-white/80">
+            <ul className="space-y-1 text-sm text-white">
               <li>
                 Candidate completed installation electrically correct but conduit bends were kinked
                 - lost marks for workmanship
@@ -640,13 +640,13 @@ const AM2Module3Section1 = () => {
 
       {/* Practical Guidance Section */}
       <AM2ContentCard title="5. Practical Guidance for Candidates" icon={Wrench}>
-        <div className="space-y-4 text-xs sm:text-sm text-white/80">
+        <div className="space-y-4 text-xs sm:text-sm text-white">
           <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
             <div>
-              <h3 className="font-semibold text-base mb-3 text-white/90">
+              <h3 className="font-semibold text-base mb-3 text-white">
                 Pre-Installation Checklist
               </h3>
-              <ol className="space-y-2 text-white/70">
+              <ol className="space-y-2 text-white">
                 <li className="flex gap-2">
                   <span className="bg-elec-yellow text-black px-2 py-0.5 rounded text-xs font-medium min-w-[20px] text-center">
                     1
@@ -680,10 +680,10 @@ const AM2Module3Section1 = () => {
               </ol>
             </div>
             <div>
-              <h3 className="font-semibold text-base mb-3 text-white/90">
+              <h3 className="font-semibold text-base mb-3 text-white">
                 Installation Best Practices
               </h3>
-              <ul className="space-y-2 text-white/70">
+              <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   Cut trunking/conduit square and deburr every edge
@@ -712,7 +712,7 @@ const AM2Module3Section1 = () => {
               <Eye className="w-4 h-4" />
               Self-Assessment Question
             </h3>
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               Check as you go: "Would an assessor photograph this as good practice or poor
               practice?"
             </p>
@@ -724,12 +724,12 @@ const AM2Module3Section1 = () => {
 
       {/* Assessment Criteria Section */}
       <AM2ContentCard title="6. Assessment Criteria and Mark Allocations" icon={CheckSquare}>
-        <div className="space-y-4 text-xs sm:text-sm text-white/80">
+        <div className="space-y-4 text-xs sm:text-sm text-white">
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <h3 className="font-semibold text-base mb-2 text-green-400">Pass Criteria</h3>
               <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>100% specification compliance</li>
                   <li>Professional workmanship standards</li>
                   <li>Correct cable types and sizes</li>
@@ -742,7 +742,7 @@ const AM2Module3Section1 = () => {
             <div>
               <h3 className="font-semibold text-base mb-2 text-red-400">Failure Points</h3>
               <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>Wrong cable size/type used</li>
                   <li>Poor workmanship (kinked bends, misaligned)</li>
                   <li>Segregation breaches</li>
@@ -760,9 +760,9 @@ const AM2Module3Section1 = () => {
 
       {/* Professional Standards Section */}
       <AM2ContentCard title="7. Professional Standards and Industry Expectations" icon={Ruler}>
-        <div className="space-y-4 text-xs sm:text-sm text-white/80">
+        <div className="space-y-4 text-xs sm:text-sm text-white">
           <div>
-            <h3 className="font-semibold text-base mb-2 text-white/90">Real-World Application</h3>
+            <h3 className="font-semibold text-base mb-2 text-white">Real-World Application</h3>
             <p className="mb-3">
               The standards expected in AM2 mirror real industry requirements where specification
               compliance and workmanship quality are non-negotiable:
@@ -770,7 +770,7 @@ const AM2Module3Section1 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <h4 className="font-medium mb-2 text-elec-yellow">Industry Consequences</h4>
-                <ul className="space-y-1 text-white/70">
+                <ul className="space-y-1 text-white">
                   <li>Contract non-compliance penalties</li>
                   <li>Insurance claims voided</li>
                   <li>Safety certification failures</li>
@@ -780,7 +780,7 @@ const AM2Module3Section1 = () => {
               </div>
               <div>
                 <h4 className="font-medium mb-2 text-elec-yellow">Professional Benefits</h4>
-                <ul className="space-y-1 text-white/70">
+                <ul className="space-y-1 text-white">
                   <li>Specification compliance confidence</li>
                   <li>Quality workmanship reputation</li>
                   <li>Reduced callback and fault rates</li>
@@ -795,11 +795,11 @@ const AM2Module3Section1 = () => {
 
       {/* Real-World Examples */}
       <AM2ContentCard title="Real-World Examples" icon={BookOpen}>
-        <div className="space-y-4 text-xs sm:text-sm text-white/80">
+        <div className="space-y-4 text-xs sm:text-sm text-white">
           <div className="space-y-4">
             <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
               <h4 className="font-semibold text-red-400 mb-2">Failure Examples</h4>
-              <ul className="space-y-1 text-white/80">
+              <ul className="space-y-1 text-white">
                 <li>
                   <strong>Example 1:</strong> Candidate completed installation electrically correct
                   but conduit bends were kinked. Lost marks for workmanship.
@@ -821,7 +821,7 @@ const AM2Module3Section1 = () => {
             </div>
             <div className="bg-white/5 border border-blue-500/30 rounded-xl p-4">
               <h4 className="font-semibold text-blue-400 mb-2">Industry Applications</h4>
-              <ul className="space-y-1 text-white/80">
+              <ul className="space-y-1 text-white">
                 <li>
                   <strong>Hospital Project:</strong> Segregation requirements critical for medical
                   equipment interference prevention
@@ -846,14 +846,14 @@ const AM2Module3Section1 = () => {
 
       {/* Summary */}
       <AM2ContentCard title="Summary" icon={CheckSquare} accent>
-        <div className="space-y-4 text-sm text-white/80">
+        <div className="space-y-4 text-sm text-white">
           <p className="font-medium">
             In AM2, cable selection and containment are about compliance and workmanship. The
             assessor wants to see:
           </p>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <h3 className="font-semibold mb-2 text-white/90">Essential Requirements</h3>
+              <h3 className="font-semibold mb-2 text-white">Essential Requirements</h3>
               <ul className="space-y-1">
                 <li>Correct cable types and sizes exactly as per spec</li>
                 <li>Containment systems installed straight, square, and burr-free</li>

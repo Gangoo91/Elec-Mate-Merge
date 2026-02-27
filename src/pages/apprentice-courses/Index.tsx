@@ -105,7 +105,7 @@ const Index = () => {
       <header className="sticky top-0 z-10 bg-[#0d0d0d]/95 backdrop-blur-sm border-b border-white/5 px-4 sm:px-6 lg:px-8 py-3">
         <Link
           to="/study-centre"
-          className="inline-flex items-center gap-2 text-white/60 hover:text-white transition-colors touch-manipulation active:scale-[0.98]"
+          className="inline-flex items-center gap-2 text-white hover:text-white transition-colors touch-manipulation active:scale-[0.98]"
         >
           <ArrowLeft className="h-4 w-4" />
           <span className="text-sm">Back to Study Centre</span>
@@ -147,7 +147,7 @@ const Index = () => {
                 Apprentice Courses
               </span>
             </h1>
-            <p className="text-sm text-white/50 max-w-lg mx-auto mb-5">
+            <p className="text-sm text-white max-w-lg mx-auto mb-5">
               Structured learning pathways from foundation to advanced level, designed for
               electrical apprentices at every stage
             </p>
@@ -158,15 +158,15 @@ const Index = () => {
                 <span className="text-xs font-semibold text-elec-yellow">
                   {availableCourses.length}
                 </span>
-                <span className="text-xs text-white/50">Courses</span>
+                <span className="text-xs text-white">Courses</span>
               </div>
               <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10">
                 <span className="text-xs font-semibold text-green-400">Level 2-4</span>
-                <span className="text-xs text-white/50">Range</span>
+                <span className="text-xs text-white">Range</span>
               </div>
               <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10">
                 <span className="text-xs font-semibold text-blue-400">Ongoing</span>
-                <span className="text-xs text-white/50">Support</span>
+                <span className="text-xs text-white">Support</span>
               </div>
             </div>
           </motion.div>
@@ -178,7 +178,7 @@ const Index = () => {
         <div className="max-w-6xl mx-auto space-y-6">
           {/* Available Courses */}
           <div>
-            <h2 className="text-sm font-semibold text-white/40 uppercase tracking-wider mb-3">
+            <h2 className="text-sm font-semibold text-white uppercase tracking-wider mb-3">
               Available Now
             </h2>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3 md:gap-4 lg:gap-6">
@@ -200,7 +200,7 @@ const Index = () => {
           {/* Coming Soon Section */}
           {comingSoonCourses.length > 0 && (
             <div>
-              <h2 className="text-sm font-semibold text-white/40 uppercase tracking-wider mb-3">
+              <h2 className="text-sm font-semibold text-white uppercase tracking-wider mb-3">
                 Coming Soon
               </h2>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5 sm:gap-3 md:gap-4 lg:gap-6">

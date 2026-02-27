@@ -243,7 +243,7 @@ const BrandingCard: React.FC<BrandingCardProps> = ({
             <div className="w-1.5 h-1.5 rounded-full bg-pink-400" />
             <span className="font-semibold text-[15px] text-white">Branding</span>
           </div>
-          <ChevronRight className="h-5 w-5 text-white/30" />
+          <ChevronRight className="h-5 w-5 text-white" />
         </button>
 
         <div className="border-t border-white/[0.06]">
@@ -253,7 +253,7 @@ const BrandingCard: React.FC<BrandingCardProps> = ({
               <Image className="h-4 w-4 text-pink-400" />
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+              <p className="text-[11px] font-medium text-white uppercase tracking-wide">
                 Company Logo
               </p>
               {companyProfile?.logo_url ? (
@@ -276,7 +276,7 @@ const BrandingCard: React.FC<BrandingCardProps> = ({
               <Palette className="h-4 w-4 text-violet-400" />
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+              <p className="text-[11px] font-medium text-white uppercase tracking-wide">
                 Brand Colours
               </p>
               <div className="flex items-center gap-3 mt-1.5">
@@ -285,14 +285,14 @@ const BrandingCard: React.FC<BrandingCardProps> = ({
                     className="w-6 h-6 rounded border border-white/20"
                     style={{ backgroundColor: companyProfile?.primary_color || '#1e40af' }}
                   />
-                  <span className="text-[13px] text-white/50">Primary</span>
+                  <span className="text-[13px] text-white">Primary</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div
                     className="w-6 h-6 rounded border border-white/20"
                     style={{ backgroundColor: companyProfile?.secondary_color || '#3b82f6' }}
                   />
-                  <span className="text-[13px] text-white/50">Secondary</span>
+                  <span className="text-[13px] text-white">Secondary</span>
                 </div>
               </div>
             </div>
@@ -304,7 +304,7 @@ const BrandingCard: React.FC<BrandingCardProps> = ({
               <PenTool className="h-4 w-4 text-teal-400" />
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+              <p className="text-[11px] font-medium text-white uppercase tracking-wide">
                 Signature
               </p>
               {inspectorProfile?.signatureData ? (
@@ -365,7 +365,7 @@ const BrandingCard: React.FC<BrandingCardProps> = ({
           <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-6 space-y-6 pb-8">
             {/* Logo Upload */}
             <div className="space-y-3">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Company Logo
               </Label>
               <div className="flex items-start gap-4">
@@ -377,14 +377,14 @@ const BrandingCard: React.FC<BrandingCardProps> = ({
                       className="h-full w-full object-contain"
                     />
                   ) : (
-                    <Building2 className="h-8 w-8 text-white/30" />
+                    <Building2 className="h-8 w-8 text-white" />
                   )}
                 </div>
                 <div className="flex-1">
                   <label className="block">
                     <div className="flex items-center justify-center gap-2 p-4 rounded-xl bg-white/[0.06] border border-dashed border-white/20 cursor-pointer hover:bg-white/[0.08] active:bg-white/[0.1] transition-all touch-manipulation">
-                      <Upload className="h-5 w-5 text-white/50" />
-                      <span className="text-[15px] text-white/50">Upload Logo</span>
+                      <Upload className="h-5 w-5 text-white" />
+                      <span className="text-[15px] text-white">Upload Logo</span>
                     </div>
                     <input
                       type="file"
@@ -393,7 +393,7 @@ const BrandingCard: React.FC<BrandingCardProps> = ({
                       className="hidden"
                     />
                   </label>
-                  <p className="text-[13px] text-white/40 mt-2 px-1">
+                  <p className="text-[13px] text-white mt-2 px-1">
                     PNG or JPG, square format recommended
                   </p>
                 </div>
@@ -402,12 +402,12 @@ const BrandingCard: React.FC<BrandingCardProps> = ({
 
             {/* Colour Pickers */}
             <div className="space-y-4">
-              <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide px-1">
+              <Label className="text-[13px] font-medium text-white uppercase tracking-wide px-1">
                 Brand Colours
               </Label>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-2">
-                  <p className="text-[13px] text-white/50 px-1">Primary</p>
+                  <p className="text-[13px] text-white px-1">Primary</p>
                   <div className="flex gap-2">
                     <input
                       type="color"
@@ -423,7 +423,7 @@ const BrandingCard: React.FC<BrandingCardProps> = ({
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <p className="text-[13px] text-white/50 px-1">Secondary</p>
+                  <p className="text-[13px] text-white px-1">Secondary</p>
                   <div className="flex gap-2">
                     <input
                       type="color"
@@ -448,13 +448,13 @@ const BrandingCard: React.FC<BrandingCardProps> = ({
             {/* Signature Pad */}
             <div className="space-y-3">
               <div className="flex items-center justify-between px-1">
-                <Label className="text-[13px] font-medium text-white/50 uppercase tracking-wide">
+                <Label className="text-[13px] font-medium text-white uppercase tracking-wide">
                   Signature for Certificates
                 </Label>
                 <motion.button
                   whileTap={{ scale: 0.95 }}
                   onClick={clearSignature}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.06] text-[13px] text-white/50 active:bg-white/[0.1] touch-manipulation"
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.06] text-[13px] text-white active:bg-white/[0.1] touch-manipulation"
                 >
                   <RotateCcw className="h-3.5 w-3.5" />
                   Clear
@@ -475,7 +475,7 @@ const BrandingCard: React.FC<BrandingCardProps> = ({
                   onTouchEnd={stopDrawing}
                 />
               </div>
-              <p className="text-[13px] text-white/40 px-1">
+              <p className="text-[13px] text-white px-1">
                 Sign above. This signature will appear on EICR and EIC certificates.
               </p>
             </div>

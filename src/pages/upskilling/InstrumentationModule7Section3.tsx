@@ -228,7 +228,7 @@ const InstrumentationModule7Section3 = () => {
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
           Loop Design and Load Calculations
         </h1>
-        <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+        <p className="text-white text-sm sm:text-base max-w-xl mx-auto">
           Engineering reliable 4-20mA instrumentation loops
         </p>
       </div>
@@ -276,7 +276,7 @@ const InstrumentationModule7Section3 = () => {
           ].map((outcome, index) => (
             <div key={index} className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
-              <span className="text-white/80 text-sm">{outcome}</span>
+              <span className="text-white text-sm">{outcome}</span>
             </div>
           ))}
         </div>
@@ -289,7 +289,7 @@ const InstrumentationModule7Section3 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">01</span>
             <h2 className="text-xl font-semibold text-white">Voltage Drop Calculations</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Understanding voltage drops across loop components is fundamental to successful loop
               design. Every component in the loop consumes voltage, and the sum must not exceed what
@@ -328,7 +328,7 @@ const InstrumentationModule7Section3 = () => {
               Compliance Voltage and Maximum Resistance
             </h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Compliance voltage is the minimum voltage required across a transmitter for proper
               operation. This critical parameter determines the maximum allowable loop resistance.
@@ -365,7 +365,7 @@ const InstrumentationModule7Section3 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">03</span>
             <h2 className="text-xl font-semibold text-white">Power Supply Requirements</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Selecting the correct power supply ensures reliable loop operation across all
               conditions. Key parameters include voltage, current capacity, regulation, and
@@ -407,7 +407,7 @@ const InstrumentationModule7Section3 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">04</span>
             <h2 className="text-xl font-semibold text-white">Practical Design Examples</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Working through practical examples reinforces loop design principles and builds
               confidence for real-world applications.
@@ -444,7 +444,7 @@ const InstrumentationModule7Section3 = () => {
             <Zap className="w-4 h-4 text-elec-yellow" />
             Practical Guidance
           </h3>
-          <div className="space-y-2 text-white/80 text-sm">
+          <div className="space-y-2 text-white text-sm">
             <p>
               <span className="text-white font-medium">Documentation:</span> Record all calculations
               in design documents. Future modifications require knowing existing loop loading before
@@ -470,7 +470,7 @@ const InstrumentationModule7Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <h3 className="text-white font-medium mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>

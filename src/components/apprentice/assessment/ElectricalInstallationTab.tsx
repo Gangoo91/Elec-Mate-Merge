@@ -219,7 +219,7 @@ const ElectricalInstallationTab = () => {
       case 'Low':
         return { bg: 'bg-green-500/10', text: 'text-green-400', border: 'border-green-500/30' };
       default:
-        return { bg: 'bg-white/5', text: 'text-white/70', border: 'border-white/20' };
+        return { bg: 'bg-white/5', text: 'text-white', border: 'border-white/20' };
     }
   };
 
@@ -247,7 +247,7 @@ const ElectricalInstallationTab = () => {
                 <CardTitle className="text-xl sm:text-2xl font-bold text-white">
                   Electrical Installation <span className="text-elec-yellow">Assessment</span>
                 </CardTitle>
-                <p className="text-sm text-white/60 mt-1">BS 7671 Compliance & Safety Evaluation</p>
+                <p className="text-sm text-white mt-1">BS 7671 Compliance & Safety Evaluation</p>
               </div>
             </div>
             <Badge
@@ -261,7 +261,7 @@ const ElectricalInstallationTab = () => {
           </div>
         </CardHeader>
         <CardContent className="relative">
-          <p className="text-white/70 mb-4">
+          <p className="text-white mb-4">
             Evaluate existing electrical installations to ensure compatibility and safety before
             commencing new work. This assessment ensures compliance with current regulations and
             identifies any remedial work required.
@@ -269,7 +269,7 @@ const ElectricalInstallationTab = () => {
 
           {/* Progress Bar */}
           <div className="space-y-2">
-            <div className="flex justify-between text-xs text-white/60">
+            <div className="flex justify-between text-xs text-white">
               <span>Progress</span>
               <span>
                 {checkedItems.length} of {totalItems} items checked
@@ -347,7 +347,7 @@ const ElectricalInstallationTab = () => {
                         {isChecked && <CheckCircle className="h-4 w-4 text-white" />}
                       </div>
                       <span
-                        className={`text-sm text-left ${isChecked ? 'text-green-400' : 'text-white/70'}`}
+                        className={`text-sm text-left ${isChecked ? 'text-green-400' : 'text-white'}`}
                       >
                         {item}
                       </span>
@@ -378,7 +378,7 @@ const ElectricalInstallationTab = () => {
                 <p className="text-sm text-blue-300 mb-3">{req.description}</p>
                 <ul className="space-y-1.5">
                   {req.keyPoints.map((point, idx) => (
-                    <li key={idx} className="text-sm text-white/70 flex items-center gap-2">
+                    <li key={idx} className="text-sm text-white flex items-center gap-2">
                       <span className="w-1.5 h-1.5 bg-blue-400 rounded-full flex-shrink-0" />
                       {point}
                     </li>
@@ -418,7 +418,7 @@ const ElectricalInstallationTab = () => {
                     </div>
                     <div>
                       <h4 className="font-semibold text-white">{test.test}</h4>
-                      <p className="text-sm text-white/60">{test.reason}</p>
+                      <p className="text-sm text-white">{test.reason}</p>
                     </div>
                   </div>
                   <Badge
@@ -469,7 +469,7 @@ const ElectricalInstallationTab = () => {
             </div>
             <div>
               <h3 className="font-semibold text-orange-300 mb-2">Important Reminder</h3>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 If any defects or safety concerns are identified during this assessment, they must
                 be reported immediately and rectified before proceeding with new installation work.
                 All work must comply with the current edition of{' '}

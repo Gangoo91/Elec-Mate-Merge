@@ -258,7 +258,7 @@ const HNCModule6Section5_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section5">
@@ -280,7 +280,7 @@ const HNCModule6Section5_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Building Performance
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Display Energy Certificates, operational ratings, performance gaps, benchmarking, and
             strategies for improving building energy performance
           </p>
@@ -469,23 +469,23 @@ const HNCModule6Section5_5 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">DEC Calculation Components</p>
               <div className="text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Electricity consumption:</span>{' '}
+                  <span className="text-white">Electricity consumption:</span>{' '}
                   <span className="text-white">Metered kWh from utility bills</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Heating fuel:</span>{' '}
+                  <span className="text-white">Heating fuel:</span>{' '}
                   <span className="text-white">Gas, oil, or district heating in kWh</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Total floor area:</span>{' '}
+                  <span className="text-white">Total floor area:</span>{' '}
                   <span className="text-white">Gross internal area (GIA) in m²</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Weather correction:</span>{' '}
+                  <span className="text-white">Weather correction:</span>{' '}
                   <span className="text-white">Degree-day normalisation</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Benchmark:</span>{' '}
+                  <span className="text-white">Benchmark:</span>{' '}
                   <span className="text-white">CIBSE TM46 values for building type</span>
                 </p>
               </div>
@@ -835,7 +835,7 @@ const HNCModule6Section5_5 = () => {
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-xs font-medium text-white/60 mb-1">Low/No Cost Measures</p>
+                  <p className="text-xs font-medium text-white mb-1">Low/No Cost Measures</p>
                   <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                     <li className="pl-1">Optimise BMS schedules and setpoints</li>
                     <li className="pl-1">Implement systematic switch-off procedures</li>
@@ -846,7 +846,7 @@ const HNCModule6Section5_5 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-white/60 mb-1">
+                  <p className="text-xs font-medium text-white mb-1">
                     Capital Investment Measures
                   </p>
                   <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
@@ -918,7 +918,7 @@ const HNCModule6Section5_5 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Continuous improvement:</strong> Annual DEC renewal provides an opportunity to
               track progress and refine improvement strategies based on measured results.
             </p>
@@ -942,15 +942,15 @@ const HNCModule6Section5_5 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Calculate the DEC rating for a 5,000m² office building.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Annual energy consumption:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Annual energy consumption:</p>
                 <p className="ml-4">Electricity: 550,000 kWh</p>
                 <p className="ml-4">Gas: 450,000 kWh</p>
                 <p className="mt-2">Floor area: 5,000 m² GIA</p>
-                <p className="mt-2 text-white/60">Energy use intensity:</p>
+                <p className="mt-2 text-white">Energy use intensity:</p>
                 <p className="ml-4">Electricity: 550,000 ÷ 5,000 = 110 kWh/m²/yr</p>
                 <p className="ml-4">Gas: 450,000 ÷ 5,000 = 90 kWh/m²/yr</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Compare to TM46 Office benchmark (95 + 120 = 215):
                 </p>
                 <p className="ml-4">Actual total: 110 + 90 = 200 kWh/m²/yr</p>
@@ -968,17 +968,17 @@ const HNCModule6Section5_5 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Analyse the performance gap for a new school building.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Design prediction (Part L compliance):</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Design prediction (Part L compliance):</p>
                 <p className="ml-4">Regulated energy: 85 kWh/m²/yr</p>
-                <p className="mt-2 text-white/60">TM54 prediction (operational):</p>
+                <p className="mt-2 text-white">TM54 prediction (operational):</p>
                 <p className="ml-4">Regulated: 85 kWh/m²/yr</p>
                 <p className="ml-4">Unregulated (IT, catering): 45 kWh/m²/yr</p>
                 <p className="ml-4">Extended hours factor: +15%</p>
                 <p className="ml-4">Total: (85 + 45) × 1.15 = 150 kWh/m²/yr</p>
-                <p className="mt-2 text-white/60">Actual consumption (Year 1):</p>
+                <p className="mt-2 text-white">Actual consumption (Year 1):</p>
                 <p className="ml-4">Metered: 175 kWh/m²/yr</p>
-                <p className="mt-2 text-white/60">Performance gap analysis:</p>
+                <p className="mt-2 text-white">Performance gap analysis:</p>
                 <p className="ml-4">vs Part L: 175 ÷ 85 = 2.06× (106% gap)</p>
                 <p className="ml-4">vs TM54: 175 ÷ 150 = 1.17× (17% gap)</p>
                 <p className="mt-2 text-green-400">TM54 produced a more realistic prediction</p>
@@ -996,16 +996,16 @@ const HNCModule6Section5_5 = () => {
                 <strong>Scenario:</strong> Develop an improvement plan for a council building with
                 DEC rating F (142).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Current performance:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Current performance:</p>
                 <p className="ml-4">DEC Rating: F (142) - 42% above typical</p>
                 <p className="ml-4">Consumption: 285 kWh/m²/yr</p>
                 <p className="ml-4">Benchmark: 200 kWh/m²/yr</p>
-                <p className="mt-2 text-white/60">Sub-metering analysis reveals:</p>
+                <p className="mt-2 text-white">Sub-metering analysis reveals:</p>
                 <p className="ml-4">Out-of-hours baseload: 35% of consumption</p>
                 <p className="ml-4">Heating running 24/7 (not required)</p>
                 <p className="ml-4">Lighting on timers, not occupancy</p>
-                <p className="mt-2 text-white/60">Recommended actions:</p>
+                <p className="mt-2 text-white">Recommended actions:</p>
                 <p className="ml-4 text-green-400">1. BMS optimisation (no cost): -15%</p>
                 <p className="ml-4 text-green-400">2. Heating schedule correction: -10%</p>
                 <p className="ml-4 text-green-400">3. Lighting controls upgrade: -8%</p>
@@ -1090,7 +1090,7 @@ const HNCModule6Section5_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1136,7 +1136,7 @@ const HNCModule6Section5_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section5">

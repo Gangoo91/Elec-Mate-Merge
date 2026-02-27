@@ -206,7 +206,7 @@ const Section1_1 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-foreground active:text-foreground p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -232,7 +232,7 @@ const Section1_1 = () => {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
             The Health and Safety at Work etc. Act 1974 (HASAWA)
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Master the legal framework for health, safety and welfare in UK workplaces. Essential
             knowledge for electrical apprentices.
           </p>
@@ -626,7 +626,7 @@ const Section1_1 = () => {
                 emergency procedures, and welfare facilities. Review RAMS for your specific tasks.
                 Ensure you have appropriate PPE and understand isolation procedures.
               </p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 This demonstrates employer duties (providing information and training) and employee
                 duties (cooperating with safety procedures).
               </p>
@@ -643,7 +643,7 @@ const Section1_1 = () => {
                 for proper isolation. Request that correct procedures be followed. Document your
                 concerns if necessary.
               </p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 HASAWA protects employees who raise genuine safety concerns and refuse to perform
                 unsafe work.
               </p>
@@ -662,7 +662,7 @@ const Section1_1 = () => {
                 from service and mark as defective. Report the defect to your supervisor. Complete
                 an incident report if required.
               </p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 This demonstrates taking reasonable care for safety and cooperating with employer
                 safety systems.
               </p>
@@ -734,7 +734,7 @@ const Section1_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-l-4 border-l-muted pl-4">
                 <h3 className="font-medium text-foreground mb-2">Q: {faq.question}</h3>
-                <p className="text-sm text-white/80">A: {faq.answer}</p>
+                <p className="text-sm text-white">A: {faq.answer}</p>
               </div>
             ))}
           </div>

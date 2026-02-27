@@ -392,7 +392,7 @@ export default function PhotoDetailSheet({
                       onChange={(e) => setPinText(e.target.value)}
                       onKeyDown={(e) => e.key === 'Enter' && handleConfirmPin()}
                       placeholder="Describe this point..."
-                      className="w-full h-11 mt-1.5 bg-white/5 border border-white/10 rounded-lg px-3 text-sm text-white focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 touch-manipulation placeholder:text-white/40"
+                      className="w-full h-11 mt-1.5 bg-white/5 border border-white/10 rounded-lg px-3 text-sm text-white focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 touch-manipulation placeholder:text-white"
                     />
                     <div className="flex gap-2 mt-2">
                       <button
@@ -489,7 +489,7 @@ export default function PhotoDetailSheet({
                   onChange={(e) => setNotes(e.target.value)}
                   placeholder="Add notes about this photo..."
                   rows={3}
-                  className="w-full mt-1.5 bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 touch-manipulation resize-none placeholder:text-white/40"
+                  className="w-full mt-1.5 bg-white/5 border border-white/10 rounded-lg px-3 py-2.5 text-sm text-white focus:border-elec-yellow focus:ring-1 focus:ring-elec-yellow/50 touch-manipulation resize-none placeholder:text-white"
                 />
               </div>
 

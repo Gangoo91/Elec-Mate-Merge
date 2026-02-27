@@ -206,7 +206,7 @@ export default function PasmaModule6Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-6">
@@ -231,7 +231,7 @@ export default function PasmaModule6Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Physical Fitness &amp; Safe Working
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Fitness requirements, medical considerations, climbing rules, manual handling, weather
             limits, PPE standards, and the professional habits that keep tower operatives safe
           </p>
@@ -315,7 +315,7 @@ export default function PasmaModule6Section4() {
                     Physical Demands of Tower Work
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -366,7 +366,7 @@ export default function PasmaModule6Section4() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Employer&rsquo;s Duty</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The employer must assess whether each operative is physically capable of the
                     work. This may include pre-employment medical screening, periodic health
                     surveillance, and specific fitness-for-height assessments. The employer should
@@ -379,7 +379,7 @@ export default function PasmaModule6Section4() {
                   <p className="text-sm font-medium text-white mb-2">
                     Individual&rsquo;s Responsibility
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Every operative must honestly assess their own fitness each day before beginning
                     work at height. This means: did you sleep well? Have you eaten and hydrated
                     adequately? Are you taking any medication that could cause drowsiness or
@@ -391,7 +391,7 @@ export default function PasmaModule6Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Age, Experience, and Fitness</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Physical fitness for tower work is not determined by age alone. A fit 55-year-old
                   with decades of experience may be far more capable than an unfit 25-year-old.
                   However, age-related conditions &mdash; reduced balance, joint stiffness, slower
@@ -426,7 +426,7 @@ export default function PasmaModule6Section4() {
                 <p className="text-sm font-medium text-elec-yellow mb-3">
                   Conditions Requiring Assessment
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <p>
                     <strong className="text-white">Vertigo and fear of heights:</strong> Vertigo
                     causes a sensation of spinning or imbalance, which can be severely disorienting
@@ -468,7 +468,7 @@ export default function PasmaModule6Section4() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Alcohol and Drugs</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Working at height under the influence of alcohol or drugs — including legal highs
                   and prescription medication that impairs function — is extremely dangerous and is
                   grounds for immediate removal from site under most construction site rules. Even
@@ -481,7 +481,7 @@ export default function PasmaModule6Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Mental Health and Working at Height
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Mental health conditions can also affect safe working at height. Anxiety,
                   depression, severe stress, sleep disorders, and the side effects of medications
                   prescribed for these conditions can all impair concentration, decision-making, and
@@ -496,7 +496,7 @@ export default function PasmaModule6Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Confidential Disclosure</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If you have a medical condition that may affect your ability to work at height,
                   you have a duty to disclose it to your employer. This does not automatically mean
                   you will be prevented from working &mdash; it means the risk can be properly
@@ -509,7 +509,7 @@ export default function PasmaModule6Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Temporary Conditions</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Some conditions affecting fitness for height work are temporary: a bad
                   night&rsquo;s sleep, a stomach upset, recovery from a minor illness, or short-term
                   medication for an infection. These do not permanently prevent tower work but do
@@ -525,7 +525,7 @@ export default function PasmaModule6Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Occupational Health Assessment
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   For routine height work, employers should arrange periodic occupational health
                   assessments. These typically include checks on vision, hearing, balance,
                   cardiovascular fitness, and a review of current medications. The assessment is
@@ -563,7 +563,7 @@ export default function PasmaModule6Section4() {
                     3-Point Contact &mdash; The Rules
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -617,7 +617,7 @@ export default function PasmaModule6Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Hoisting Line for Tools &amp; Materials
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A hoisting line (or gin wheel if available) must be used to raise and lower all
                   tools and materials. The hoisting line should be attached to a secure point on the
                   tower, and items should be placed in a tool bag or bucket — not tied loosely to
@@ -633,7 +633,7 @@ export default function PasmaModule6Section4() {
                     Common 3-Point Contact Violations
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The most frequently observed violations of the 3-point contact rule are: carrying
                   a drill in one hand while climbing, tucking a spirit level under one arm, putting
                   a phone in a back pocket that falls out during climbing, carrying a drinks bottle,
@@ -667,7 +667,7 @@ export default function PasmaModule6Section4() {
                   <Dumbbell className="h-5 w-5 text-elec-yellow" />
                   <p className="text-sm font-medium text-elec-yellow">TILE Assessment</p>
                 </div>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <p>
                     <strong className="text-white">T — Task:</strong> What does the activity
                     involve? Lifting, carrying, pushing, pulling? Over what distance? How often? Is
@@ -697,7 +697,7 @@ export default function PasmaModule6Section4() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Correct Lifting Technique</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Plan the lift: route clear, destination ready</span>
@@ -730,7 +730,7 @@ export default function PasmaModule6Section4() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">When to Use Team Lifts</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Component weighs more than 20&ndash;25 kg</span>
@@ -763,7 +763,7 @@ export default function PasmaModule6Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Mechanical Aids for Tower Components
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Where the assembly area is at a different level from the vehicle (upper floors,
                   basements, rooftops), mechanical aids should be considered. Stair-climbing
                   trolleys can carry frames up flights of stairs. Platform lifts and goods hoists
@@ -782,7 +782,7 @@ export default function PasmaModule6Section4() {
                     Repetitive Strain During Extended Assembly
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   When assembling large towers or multiple towers in a day, the repetitive nature of
                   the lifting, carrying, and connecting can cause cumulative strain injuries. Grip
                   strength reduces over the course of a day, back muscles fatigue, and technique
@@ -821,7 +821,7 @@ export default function PasmaModule6Section4() {
                     Weather Thresholds for Tower Work
                   </p>
                 </div>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <p>
                     <strong className="text-white">
                       Wind — Beaufort Force 4 (17 mph / 28 km/h):
@@ -872,7 +872,7 @@ export default function PasmaModule6Section4() {
                   <p className="text-sm font-medium text-white mb-2">
                     Monitoring Weather Conditions
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Check the forecast before starting work each day</span>
@@ -904,7 +904,7 @@ export default function PasmaModule6Section4() {
                   <p className="text-sm font-medium text-white mb-2">
                     Recognising Beaufort Force 4
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Dust and loose paper raised from the ground</span>
@@ -934,7 +934,7 @@ export default function PasmaModule6Section4() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Sheeting and Sail Effect</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Never attach tarpaulins, plastic sheeting, or advertising banners to a mobile
                   tower unless specifically authorised by the manufacturer. These create a
                   &ldquo;sail effect&rdquo; that dramatically increases the wind load on the tower.
@@ -967,7 +967,7 @@ export default function PasmaModule6Section4() {
                   <HardHat className="h-5 w-5 text-elec-yellow" />
                   <p className="text-sm font-medium text-elec-yellow">Required PPE and Standards</p>
                 </div>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <p>
                     <strong className="text-white">Safety helmet — EN 397:</strong> Required during
                     assembly and dismantling when there is a risk of head injury from falling
@@ -1008,7 +1008,7 @@ export default function PasmaModule6Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   PPE Inspection &amp; Maintenance
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   All PPE must be inspected before each use. Check helmets for cracks, dents, or UV
                   degradation. Check boots for sole damage, worn treads, and compromised toe caps.
                   Check gloves for tears, worn areas, and loss of grip. Check harnesses for frayed
@@ -1020,7 +1020,7 @@ export default function PasmaModule6Section4() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">PPE Storage &amp; Care</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Store helmets away from direct sunlight (UV degrades the shell)</span>
@@ -1045,7 +1045,7 @@ export default function PasmaModule6Section4() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">When a Harness Is Required</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>During advance guardrail installation on the leading edge</span>
@@ -1077,7 +1077,7 @@ export default function PasmaModule6Section4() {
                     PPE Is the Last Line — Not the First
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A common mistake is to treat PPE as the primary control measure. A hard hat does
                   not prevent objects from falling &mdash; toeboards and tool tethering do that.
                   Safety boots do not prevent components being dropped &mdash; correct manual
@@ -1112,7 +1112,7 @@ export default function PasmaModule6Section4() {
                   <ShieldCheck className="h-5 w-5 text-elec-yellow" />
                   <p className="text-sm font-medium text-elec-yellow">Professional Standards</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1154,7 +1154,7 @@ export default function PasmaModule6Section4() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Supporting Colleagues</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Look out for signs of fatigue in your team</span>
@@ -1179,7 +1179,7 @@ export default function PasmaModule6Section4() {
                 </div>
                 <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-green-400 mb-2">Leading by Example</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Always wear your PPE — even for &ldquo;quick jobs&rdquo;</span>
@@ -1208,7 +1208,7 @@ export default function PasmaModule6Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   The Goal: Unconscious Competence
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Safe working should become second nature — so ingrained that you do it
                   automatically, without having to consciously think about each step. This is the
                   state of &ldquo;unconscious competence,&rdquo; and it is achieved only through
@@ -1222,7 +1222,7 @@ export default function PasmaModule6Section4() {
                 <p className="text-sm font-medium text-elec-yellow mb-2">
                   The Four Stages of Competence
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">1. Unconscious incompetence:</strong> You do not
                     know what you do not know. You may take risks without realising they are risks.
@@ -1251,7 +1251,7 @@ export default function PasmaModule6Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Your PASMA Card &mdash; A Starting Point, Not an End Point
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Completing the PASMA course and receiving your card is not the end of your
                   training &mdash; it is the beginning. The card demonstrates that you have been
                   trained to a recognised standard at a specific point in time. Maintaining
@@ -1268,7 +1268,7 @@ export default function PasmaModule6Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Industry Resources for Ongoing Learning
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Stay current with these resources: PASMA technical bulletins and guidance notes
                   (available on the PASMA website), HSE Alerts for work at height incidents, your
                   employer&rsquo;s in-house training and toolbox talks, manufacturer&rsquo;s updates
@@ -1283,7 +1283,7 @@ export default function PasmaModule6Section4() {
                 <p className="text-sm font-medium text-elec-yellow mb-2">
                   Your Responsibility, Your Career
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Ultimately, safe working at height is about protecting your own life, your
                   colleagues&rsquo; lives, and your career. A serious accident affects not just the
                   person injured but their family, their employer, their colleagues who witnessed
@@ -1304,7 +1304,7 @@ export default function PasmaModule6Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1318,7 +1318,7 @@ export default function PasmaModule6Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-6-section-3">

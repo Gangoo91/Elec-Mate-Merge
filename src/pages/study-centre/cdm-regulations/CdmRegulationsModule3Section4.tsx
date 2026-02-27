@@ -201,7 +201,7 @@ export default function CdmRegulationsModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-3">
@@ -224,7 +224,7 @@ export default function CdmRegulationsModule3Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Notification to HSE (F10)
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             When and how to notify the Health and Safety Executive about construction projects, the
             F10 form, and the consequences of failing to notify
           </p>
@@ -327,7 +327,7 @@ export default function CdmRegulationsModule3Section4() {
                     <p className="text-sm font-semibold text-blue-400 mb-2">
                       Threshold 1: Duration + Workforce
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       The project is expected to last{' '}
                       <strong className="text-white">more than 30 working days</strong> AND will
                       have{' '}
@@ -338,12 +338,12 @@ export default function CdmRegulationsModule3Section4() {
                       alone is not enough; there must also be more than 20 simultaneous workers.
                     </p>
                   </div>
-                  <div className="text-center text-white/40 text-sm font-medium">OR</div>
+                  <div className="text-center text-white text-sm font-medium">OR</div>
                   <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
                     <p className="text-sm font-semibold text-blue-400 mb-2">
                       Threshold 2: Person-Days
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       The project exceeds <strong className="text-white">500 person-days</strong> of
                       construction work. A person-day is one person working for one working day. For
                       example, 10 workers working for 50 days = 500 person-days. This threshold
@@ -379,7 +379,7 @@ export default function CdmRegulationsModule3Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Common Mistake</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A common error is assuming that the 30-day threshold alone triggers notification.
                   It does not. The first threshold requires <strong>both</strong> conditions to be
                   met: more than 30 working days <strong>AND</strong> more than 20 simultaneous
@@ -417,7 +417,7 @@ export default function CdmRegulationsModule3Section4() {
                 <p className="text-sm font-medium text-blue-400 mb-3">
                   Information Required on the F10
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -530,7 +530,7 @@ export default function CdmRegulationsModule3Section4() {
               <div className="grid grid-cols-2 gap-3 sm:gap-6">
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3 text-center">
                   <p className="text-xs font-medium text-green-400 mb-1">NO NOTIFICATION</p>
-                  <p className="text-white/80 text-xs sm:text-sm">
+                  <p className="text-white text-xs sm:text-sm">
                     CDM 2015 does not apply &mdash; notification not required
                   </p>
                 </div>
@@ -605,7 +605,7 @@ export default function CdmRegulationsModule3Section4() {
                   </div>
                   <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3 text-center">
                     <p className="text-xs font-medium text-green-400 mb-1">NOT NOTIFIABLE</p>
-                    <p className="text-white/80 text-xs sm:text-sm">
+                    <p className="text-white text-xs sm:text-sm">
                       No F10 required (CDM still applies for other duties)
                     </p>
                   </div>
@@ -641,7 +641,7 @@ export default function CdmRegulationsModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-blue-400 mb-3">Timing of Submission</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -686,7 +686,7 @@ export default function CdmRegulationsModule3Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Domestic Clients</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   For <strong>domestic clients</strong> (homeowners having work done on their own
                   home), the duty to notify HSE transfers to the{' '}
                   <strong>principal contractor</strong> (or the contractor on single-contractor
@@ -720,7 +720,7 @@ export default function CdmRegulationsModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-blue-400 mb-3">Display Requirements</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -802,7 +802,7 @@ export default function CdmRegulationsModule3Section4() {
                 <p className="text-sm font-medium text-blue-400 mb-3">
                   When Must the F10 Be Updated?
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -894,7 +894,7 @@ export default function CdmRegulationsModule3Section4() {
                 <p className="text-sm font-medium text-blue-400 mb-3">
                   Key Principles for Phased Projects
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -929,7 +929,7 @@ export default function CdmRegulationsModule3Section4() {
                 <p className="text-sm font-medium text-blue-400 mb-3">
                   When Does One Project Become Two?
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   There is no rigid rule, but HSE considers the following factors when determining
                   whether phases constitute a single project or separate projects:
                 </p>
@@ -938,7 +938,7 @@ export default function CdmRegulationsModule3Section4() {
                     <p className="text-xs text-blue-400 font-medium uppercase tracking-wide mb-2">
                       Suggests One Project
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                         <span>Same client throughout</span>
@@ -961,7 +961,7 @@ export default function CdmRegulationsModule3Section4() {
                     <p className="text-xs text-red-400 font-medium uppercase tracking-wide mb-2">
                       Suggests Separate Projects
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                         <span>Different clients for each phase</span>
@@ -988,7 +988,7 @@ export default function CdmRegulationsModule3Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Avoiding Artificial Splitting</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Clients must not artificially split a project into phases to avoid the
                   notification thresholds. If a development is clearly one project but is divided
                   into phases solely to keep each phase below the notification thresholds, HSE will
@@ -1015,7 +1015,7 @@ export default function CdmRegulationsModule3Section4() {
                 <div className="bg-gradient-to-r from-blue-500/30 to-blue-400/20 border-b border-blue-500/30 px-4 py-2.5">
                   <p className="text-blue-400 font-semibold text-sm">Project</p>
                 </div>
-                <div className="p-3 space-y-2 text-xs text-white/80">
+                <div className="p-3 space-y-2 text-xs text-white">
                   <p>&bull; Site address / location</p>
                   <p>&bull; Brief description of work</p>
                   <p>&bull; Planned start date</p>
@@ -1028,7 +1028,7 @@ export default function CdmRegulationsModule3Section4() {
                 <div className="bg-gradient-to-r from-blue-500/30 to-blue-400/20 border-b border-blue-500/30 px-4 py-2.5">
                   <p className="text-blue-400 font-semibold text-sm">People</p>
                 </div>
-                <div className="p-3 space-y-2 text-xs text-white/80">
+                <div className="p-3 space-y-2 text-xs text-white">
                   <p>&bull; Client name &amp; address</p>
                   <p>&bull; Principal designer details</p>
                   <p>&bull; Principal contractor details</p>
@@ -1041,7 +1041,7 @@ export default function CdmRegulationsModule3Section4() {
                 <div className="bg-gradient-to-r from-blue-500/30 to-blue-400/20 border-b border-blue-500/30 px-4 py-2.5">
                   <p className="text-blue-400 font-semibold text-sm">Workforce</p>
                 </div>
-                <div className="p-3 space-y-2 text-xs text-white/80">
+                <div className="p-3 space-y-2 text-xs text-white">
                   <p>&bull; Estimated peak workers</p>
                   <p>&bull; Number of contractors</p>
                   <p>&bull; Total planned person-days</p>
@@ -1051,9 +1051,9 @@ export default function CdmRegulationsModule3Section4() {
               {/* Not Required */}
               <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
                 <div className="bg-gradient-to-r from-white/10 to-white/5 border-b border-white/10 px-4 py-2.5">
-                  <p className="text-white/50 font-semibold text-sm">NOT Required</p>
+                  <p className="text-white font-semibold text-sm">NOT Required</p>
                 </div>
-                <div className="p-3 space-y-2 text-xs text-white/50">
+                <div className="p-3 space-y-2 text-xs text-white">
                   <p>&bull; Budget / cost information</p>
                   <p>&bull; Detailed method statements</p>
                   <p>&bull; Risk assessments</p>
@@ -1086,7 +1086,7 @@ export default function CdmRegulationsModule3Section4() {
                     <p className="text-sm font-medium text-blue-400 mb-1">
                       Targeting Proactive Inspections
                     </p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       HSE uses F10 data to identify construction sites for proactive inspection.
                       Larger projects, higher-risk work types (demolition, refurbishment, work at
                       height), and projects involving known higher-risk activities are more likely
@@ -1095,7 +1095,7 @@ export default function CdmRegulationsModule3Section4() {
                   </div>
                   <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
                     <p className="text-sm font-medium text-blue-400 mb-1">Sector Intelligence</p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       F10 data provides HSE with a picture of construction activity across Great
                       Britain &mdash; the types of projects being undertaken, where they are
                       located, the size of the workforce, and the duration of work. This
@@ -1105,7 +1105,7 @@ export default function CdmRegulationsModule3Section4() {
                   </div>
                   <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3">
                     <p className="text-sm font-medium text-blue-400 mb-1">Resource Planning</p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       HSE deploys its inspectors based on where the risks are greatest. F10 data
                       helps HSE allocate inspectors to regions and sectors where construction
                       activity is highest or where specific risks have been identified. Without
@@ -1116,7 +1116,7 @@ export default function CdmRegulationsModule3Section4() {
                     <p className="text-sm font-medium text-blue-400 mb-1">
                       Construction Statistics
                     </p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       F10 data contributes to national construction statistics &mdash; the number of
                       notifiable projects, total workforce numbers, the geographical spread of
                       construction activity, and trends over time. These statistics inform policy
@@ -1127,7 +1127,7 @@ export default function CdmRegulationsModule3Section4() {
                     <p className="text-sm font-medium text-blue-400 mb-1">
                       Proactive Inspection Programmes
                     </p>
-                    <p className="text-xs sm:text-sm text-white/80">
+                    <p className="text-xs sm:text-sm text-white">
                       HSE runs themed inspection programmes targeting specific risks (for example,
                       work at height, structural collapse, or occupational health). F10 data helps
                       HSE identify which sites are most relevant to each programme and plan
@@ -1168,7 +1168,7 @@ export default function CdmRegulationsModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-blue-400 mb-3">Enforcement and Penalties</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -1219,7 +1219,7 @@ export default function CdmRegulationsModule3Section4() {
                 <p className="text-sm font-medium text-blue-400 mb-3">
                   How HSE Discovers Non-Compliance
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -1265,7 +1265,7 @@ export default function CdmRegulationsModule3Section4() {
                     Non-Notification as an Aggravating Factor
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If an accident occurs on a site that should have been notified but was not, the
                   failure to notify is treated as an <strong>aggravating factor</strong> in any
                   subsequent prosecution. The courts take a dim view of duty holders who have failed
@@ -1297,7 +1297,7 @@ export default function CdmRegulationsModule3Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1311,7 +1311,7 @@ export default function CdmRegulationsModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-3-section-3">

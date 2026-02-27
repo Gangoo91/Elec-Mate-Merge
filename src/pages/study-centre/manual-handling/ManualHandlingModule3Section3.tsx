@@ -207,7 +207,7 @@ export default function ManualHandlingModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-3">
@@ -232,7 +232,7 @@ export default function ManualHandlingModule3Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Mechanical Aids &amp; Equipment
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             A practical guide to mechanical handling aids available for electrical work &mdash; from
             sack trucks and trolleys to hoists, cable drum jacks, and powered pulling equipment
           </p>
@@ -340,7 +340,7 @@ export default function ManualHandlingModule3Section3() {
               <div className="space-y-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-bold text-emerald-400 mb-2">Platform Trolleys</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                       <span>Flat platform on four wheels with a handle for pushing</span>
@@ -364,7 +364,7 @@ export default function ManualHandlingModule3Section3() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-bold text-emerald-400 mb-2">Cage Trolleys</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                       <span>Platform trolley with mesh or solid sides to contain loads</span>
@@ -388,7 +388,7 @@ export default function ManualHandlingModule3Section3() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-bold text-emerald-400 mb-2">Sack Trucks</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                       <span>L-shaped frame with two wheels, a nose plate, and handles</span>
@@ -415,7 +415,7 @@ export default function ManualHandlingModule3Section3() {
                   <p className="text-sm font-bold text-emerald-400 mb-2">
                     Stair-Climbing Sack Trucks
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                       <span>
@@ -461,7 +461,7 @@ export default function ManualHandlingModule3Section3() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-bold text-emerald-400 mb-2">Manual Hydraulic</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                       <span>Hand-pumped hydraulic lifting mechanism</span>
@@ -483,7 +483,7 @@ export default function ManualHandlingModule3Section3() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-bold text-emerald-400 mb-2">Powered</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                       <span>Electric drive and electric lifting</span>
@@ -509,7 +509,7 @@ export default function ManualHandlingModule3Section3() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Pallet Truck Hazards</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Even with a pallet truck, manual handling risks exist. The initial force to start
                   a heavy pallet moving can be substantial. Slopes cause the load to run away. Feet
                   can be trapped under the forks or wheels. Poor floor surfaces make steering
@@ -541,7 +541,7 @@ export default function ManualHandlingModule3Section3() {
               <div className="space-y-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-bold text-emerald-400 mb-2">Overhead Hoists</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                       <span>Fixed to overhead beams, gantries, or purpose-built tracks</span>
@@ -571,7 +571,7 @@ export default function ManualHandlingModule3Section3() {
                   <p className="text-sm font-bold text-emerald-400 mb-2">
                     Mobile Cranes and Chain Blocks
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                       <span>
@@ -605,7 +605,7 @@ export default function ManualHandlingModule3Section3() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-bold text-emerald-400 mb-2">Conveyors</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                       <span>
@@ -675,7 +675,7 @@ export default function ManualHandlingModule3Section3() {
                   <p className="text-sm font-bold text-emerald-400 mb-2">
                     Cable Drum Jacks and Stands
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                       <span>Lift the cable drum off the ground and support it on a spindle</span>
@@ -702,7 +702,7 @@ export default function ManualHandlingModule3Section3() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-bold text-emerald-400 mb-2">Cable Pulling Equipment</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                       <span>
@@ -738,7 +738,7 @@ export default function ManualHandlingModule3Section3() {
                   <p className="text-sm font-bold text-emerald-400 mb-2">
                     Spring-Loaded Cable Reel Dispensers
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                       <span>Hold smaller cable reels at comfortable working height</span>
@@ -849,10 +849,10 @@ export default function ManualHandlingModule3Section3() {
                   <div className="px-3 py-2.5 text-xs text-emerald-300 border-r border-white/5">
                     {row.aid}
                   </div>
-                  <div className="px-3 py-2.5 text-xs text-white/70 border-r border-white/5">
+                  <div className="px-3 py-2.5 text-xs text-white border-r border-white/5">
                     {row.load}
                   </div>
-                  <div className="px-3 py-2.5 text-xs text-white/60">{row.notes}</div>
+                  <div className="px-3 py-2.5 text-xs text-white">{row.notes}</div>
                 </div>
               ))}
             </div>
@@ -876,7 +876,7 @@ export default function ManualHandlingModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Selection Criteria</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -921,7 +921,7 @@ export default function ManualHandlingModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Inspection and Maintenance</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -961,7 +961,7 @@ export default function ManualHandlingModule3Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Never Exceed the SWL</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The Safe Working Load (SWL) or Working Load Limit (WLL) is the maximum load the
                   equipment is designed to handle safely. Never exceed this limit. Overloading can
                   cause structural failure, wheel collapse, or tipping &mdash; all of which can
@@ -982,7 +982,7 @@ export default function ManualHandlingModule3Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -996,7 +996,7 @@ export default function ManualHandlingModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-3-section-2">

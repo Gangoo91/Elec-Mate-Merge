@@ -203,7 +203,7 @@ const HNCModule4Section5_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section5">
@@ -225,7 +225,7 @@ const HNCModule4Section5_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             LV Switchgear Selection
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Specifying main switchboards and distribution equipment for reliable, safe power
             distribution
           </p>
@@ -757,7 +757,7 @@ const HNCModule4Section5_1 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Verification requirements:</strong> BS EN 61439 specifies 13 design
               verifications including temperature rise, dielectric properties, short-circuit
               withstand, and EMC compliance.
@@ -783,7 +783,7 @@ const HNCModule4Section5_1 = () => {
                 <strong>Scenario:</strong> A main switchboard serves a hospital with 24/7
                 operations. Maintenance must be possible with minimum disruption.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Requirements analysis:</p>
                 <p>• Critical loads cannot be interrupted</p>
                 <p>• Maintenance teams need safe access</p>
@@ -791,8 +791,8 @@ const HNCModule4Section5_1 = () => {
                 <p className="mt-2">
                   Recommendation: <strong>Form 3b minimum</strong>
                 </p>
-                <p className="text-white/60">Allows terminal access without busbar exposure</p>
-                <p className="text-white/60">Consider Form 4b for maximum safety</p>
+                <p className="text-white">Allows terminal access without busbar exposure</p>
+                <p className="text-white">Consider Form 4b for maximum safety</p>
               </div>
             </div>
 
@@ -804,7 +804,7 @@ const HNCModule4Section5_1 = () => {
                 <strong>Scenario:</strong> Distribution board in a multi-storey car park riser
                 cupboard.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Environmental assessment:</p>
                 <p>• Vehicle exhaust particles and dust</p>
                 <p>• Possible water ingress from cleaning</p>
@@ -827,7 +827,7 @@ const HNCModule4Section5_1 = () => {
                 <strong>Scenario:</strong> DNO confirms PFC at intake is 32kA. Select main
                 switchboard fault rating.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given: PFC = 32kA RMS</p>
                 <p>Peak factor (k) typically 2.2</p>
                 <p>Peak current = 32 × 2.2 = 70.4kA</p>
@@ -837,7 +837,7 @@ const HNCModule4Section5_1 = () => {
                 <p className="mt-2">
                   Specification: <strong>40kA/1s rated switchboard</strong>
                 </p>
-                <p className="text-white/60">25% margin for future network changes</p>
+                <p className="text-white">25% margin for future network changes</p>
               </div>
             </div>
           </div>
@@ -914,7 +914,7 @@ const HNCModule4Section5_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -960,7 +960,7 @@ const HNCModule4Section5_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section5">

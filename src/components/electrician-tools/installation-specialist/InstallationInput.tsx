@@ -79,7 +79,7 @@ export const InstallationInput = ({
 
   // Character count styling
   const getCharCountClass = () => {
-    if (description.length < 50) return 'text-white/40';
+    if (description.length < 50) return 'text-white';
     if (description.length < 300) return 'text-emerald-400';
     return 'text-amber-400';
   };
@@ -120,7 +120,7 @@ export const InstallationInput = ({
             spellCheck={true}
           />
 
-          <p className="text-xs sm:text-sm text-white/50">
+          <p className="text-xs sm:text-sm text-white">
             Be specific about work scope and location for detailed method statements
           </p>
         </div>
@@ -146,15 +146,15 @@ export const InstallationInput = ({
         >
           <CollapsibleTrigger className="agent-collapsible-trigger w-full">
             <div className="flex items-center gap-3">
-              <Lightbulb className="h-4 w-4 text-white/60" />
+              <Lightbulb className="h-4 w-4 text-white" />
               <span className="text-sm sm:text-base font-medium">Quick Start Templates</span>
-              <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-white/10 text-white/50">
+              <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-white/10 text-white">
                 Templates
               </span>
             </div>
             <ChevronDown
               className={cn(
-                'h-4 w-4 text-white/40 transition-transform duration-200',
+                'h-4 w-4 text-white transition-transform duration-200',
                 showTemplates && 'rotate-180'
               )}
             />
@@ -177,14 +177,14 @@ export const InstallationInput = ({
         >
           <CollapsibleTrigger className="agent-collapsible-trigger w-full">
             <div className="flex items-center gap-3">
-              <FileText className="h-4 w-4 text-white/60" />
+              <FileText className="h-4 w-4 text-white" />
               <span className="text-sm sm:text-base font-medium">Project Information</span>
               <span
                 className={cn(
                   'text-[10px] sm:text-xs px-2 py-0.5 rounded-full',
                   hasProjectDetails
                     ? 'bg-emerald-500/20 text-emerald-400'
-                    : 'bg-white/10 text-white/50'
+                    : 'bg-white/10 text-white'
                 )}
               >
                 {hasProjectDetails ? '✓ Configured' : 'Optional'}
@@ -192,14 +192,14 @@ export const InstallationInput = ({
             </div>
             <ChevronDown
               className={cn(
-                'h-4 w-4 text-white/40 transition-transform duration-200',
+                'h-4 w-4 text-white transition-transform duration-200',
                 showProjectInfo && 'rotate-180'
               )}
             />
           </CollapsibleTrigger>
 
           <CollapsibleContent className="p-4 pt-0">
-            <p className="text-xs text-white/50 pb-2">Add for comprehensive method statements</p>
+            <p className="text-xs text-white pb-2">Add for comprehensive method statements</p>
             <div className="mb-3">
               <ClientSelector
                 onSelectCustomer={(customer: Customer | null) => {

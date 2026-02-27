@@ -95,7 +95,7 @@ const InstrumentationModule4Section4 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Measurement Equipment Overview
           </h1>
-          <p className="text-white/80">Multimeters, clamp meters, and oscilloscopes</p>
+          <p className="text-white">Multimeters, clamp meters, and oscilloscopes</p>
         </div>
 
         {/* Quick Summary */}

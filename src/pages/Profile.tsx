@@ -212,7 +212,7 @@ const ProfilePage = () => {
           <div className="flex-1">
             <h1 className="text-lg sm:text-xl font-bold text-white">Business Profile</h1>
             {!isMobile && completionPercent < 100 && !isLoading && (
-              <p className="text-sm text-white/60">Complete your profile to unlock all features</p>
+              <p className="text-sm text-white">Complete your profile to unlock all features</p>
             )}
           </div>
 
@@ -242,7 +242,7 @@ const ProfilePage = () => {
                 }}
               >
                 <RefreshCw
-                  className={`h-5 w-5 ${isRefreshing ? 'text-elec-yellow' : 'text-white/50'}`}
+                  className={`h-5 w-5 ${isRefreshing ? 'text-elec-yellow' : 'text-white'}`}
                 />
               </motion.div>
             </motion.div>
@@ -262,7 +262,7 @@ const ProfilePage = () => {
           {/* Title section */}
           <div className="mb-6">
             <h2 className="text-2xl sm:text-3xl font-bold text-white">Your Business</h2>
-            <p className="text-sm sm:text-base text-white/60 mt-1">
+            <p className="text-sm sm:text-base text-white mt-1">
               Manage your business identity in one place
             </p>
           </div>

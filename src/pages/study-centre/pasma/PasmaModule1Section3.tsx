@@ -176,7 +176,7 @@ export default function PasmaModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-1">
@@ -201,7 +201,7 @@ export default function PasmaModule1Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             PASMA Code of Practice
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The industry trade body, its Code of Practice, course types, digital certification, and
             what PASMA credentials mean for your work on site
           </p>
@@ -290,7 +290,7 @@ export default function PasmaModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">PASMA&rsquo;s Role Includes:</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Setting industry standards for mobile tower training</span>
@@ -354,7 +354,7 @@ export default function PasmaModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">The Code of Practice Covers:</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Selection of the correct tower for the task and environment</span>
@@ -422,7 +422,7 @@ export default function PasmaModule1Section3() {
                       Towers for Users (Half Day)
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The most common PASMA course. Covers safe assembly, use, and dismantling of
                     standard mobile towers. Includes both theory and hands-on practical assessment.
                     This is the baseline qualification for anyone who will physically assemble or
@@ -437,7 +437,7 @@ export default function PasmaModule1Section3() {
                       Towers for Managers (Awareness)
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Designed for managers, supervisors, and safety professionals who need to
                     understand tower safety without physically assembling towers. Covers legal
                     requirements, planning, risk assessment, and supervision duties.
@@ -451,7 +451,7 @@ export default function PasmaModule1Section3() {
                       Work at Height Essentials (Online)
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     An online awareness course covering general work-at-height principles. Suitable
                     as a pre-course refresher or for those who need a basic understanding of height
                     safety without needing to assemble towers.
@@ -465,7 +465,7 @@ export default function PasmaModule1Section3() {
                       Low Level Access &amp; Combined/Plus
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Low Level Access covers platforms under 2.5 metres. Combined and Plus courses
                     extend the standard Towers for Users course with additional modules such as
                     towers on stairways, cantilever towers, or linked towers for advanced
@@ -497,7 +497,7 @@ export default function PasmaModule1Section3() {
                   <Smartphone className="h-5 w-5 text-elec-yellow" />
                   <p className="text-sm font-medium text-elec-yellow">What Changed</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -535,7 +535,7 @@ export default function PasmaModule1Section3() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-green-400 mb-2">Benefits of Digital</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Cannot be lost, stolen, or damaged</span>
@@ -560,7 +560,7 @@ export default function PasmaModule1Section3() {
                 </div>
                 <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-blue-400 mb-2">How to Access Your Card</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Download the official PASMA app</span>
@@ -590,7 +590,7 @@ export default function PasmaModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Existing Physical Cards</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Physical cards issued before 31 March 2025 remain valid until their printed expiry
                   date. You do not need to replace them early. However, when your card expires and
                   you complete a refresher course, your new certification will be issued digitally
@@ -627,7 +627,7 @@ export default function PasmaModule1Section3() {
                 <div className="space-y-3">
                   <div>
                     <p className="text-sm font-medium text-white">5-Year Validity Period</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Every PASMA card is valid for exactly 5 years from the date of successful
                       course completion. There is no automatic renewal and no grace period after
                       expiry.
@@ -635,7 +635,7 @@ export default function PasmaModule1Section3() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">Renewal Process</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       To renew, you must complete a PASMA refresher course before your card expires.
                       The refresher updates your knowledge on any changes to legislation, standards,
                       or best practice that have occurred since your last training.
@@ -643,7 +643,7 @@ export default function PasmaModule1Section3() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">Expired Card Implications</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Once expired, you can no longer demonstrate current competence. Most sites
                       will refuse entry for tower work. You must complete a full or refresher course
                       to regain your certification.
@@ -664,7 +664,7 @@ export default function PasmaModule1Section3() {
 
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-red-400 mb-2">Common Pitfalls</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Allowing expired card holders to continue assembling towers</span>
@@ -714,7 +714,7 @@ export default function PasmaModule1Section3() {
                     What a PASMA-Trained Operative Must Do
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -766,7 +766,7 @@ export default function PasmaModule1Section3() {
                     <Users className="h-5 w-5 text-blue-400" />
                     <p className="text-sm font-medium text-blue-400">What the Card Covers</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Standard 3T and advance guardrail towers</span>
@@ -790,7 +790,7 @@ export default function PasmaModule1Section3() {
                     <AlertTriangle className="h-5 w-5 text-amber-400" />
                     <p className="text-sm font-medium text-amber-400">Limitations</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Does not cover towers on stairways (needs Plus course)</span>
@@ -841,7 +841,7 @@ export default function PasmaModule1Section3() {
                       <p className="text-sm font-medium text-green-400">
                         Online Verification Portal
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Visit the PASMA website and enter the card holder&rsquo;s details to check
                         their certification status, course type, issue date, and expiry date.
                       </p>
@@ -853,7 +853,7 @@ export default function PasmaModule1Section3() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-blue-400">QR Code Scanning</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Digital cards include a QR code. Scan it with any smartphone camera to be
                         taken directly to the verification result, confirming the holder&rsquo;s
                         name, course, and validity.
@@ -868,7 +868,7 @@ export default function PasmaModule1Section3() {
                       <p className="text-sm font-medium text-amber-400">
                         Physical Card Check (Legacy)
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         For physical cards still within their validity period, check the photo
                         matches the holder, the expiry date has not passed, and the card shows no
                         signs of tampering.
@@ -895,7 +895,7 @@ export default function PasmaModule1Section3() {
                     Dealing with Invalid or Expired Cards
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If verification reveals that a card is expired, invalid, or the holder cannot
                   produce any credentials, they must not be permitted to assemble, alter, dismantle,
                   or work from a mobile tower. This is a non-negotiable safety requirement. Allowing
@@ -914,7 +914,7 @@ export default function PasmaModule1Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -928,7 +928,7 @@ export default function PasmaModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-1-section-2">

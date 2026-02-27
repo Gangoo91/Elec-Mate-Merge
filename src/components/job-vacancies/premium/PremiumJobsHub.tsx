@@ -368,13 +368,13 @@ const PremiumJobsHub = () => {
               variant="ghost"
               size="icon"
               onClick={handleBack}
-              className="h-10 w-10 rounded-xl text-white/60 hover:text-white hover:bg-white/10"
+              className="h-10 w-10 rounded-xl text-white hover:text-white hover:bg-white/10"
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
             <div>
               <h1 className="text-lg font-bold text-white">Job Vacancies</h1>
-              <p className="text-xs text-white/50">Find your next role</p>
+              <p className="text-xs text-white">Find your next role</p>
             </div>
           </div>
 
@@ -397,7 +397,7 @@ const PremiumJobsHub = () => {
               variant="ghost"
               size="icon"
               onClick={() => setIsSearchOpen(true)}
-              className="h-10 w-10 rounded-xl text-white/60 hover:text-white hover:bg-white/10"
+              className="h-10 w-10 rounded-xl text-white hover:text-white hover:bg-white/10"
             >
               <Search className="h-5 w-5" />
             </Button>
@@ -406,7 +406,7 @@ const PremiumJobsHub = () => {
               size="icon"
               onClick={handleRefresh}
               disabled={isRefreshing}
-              className="h-10 w-10 rounded-xl text-white/60 hover:text-white hover:bg-white/10"
+              className="h-10 w-10 rounded-xl text-white hover:text-white hover:bg-white/10"
             >
               {isRefreshing ? (
                 <Loader2 className="h-5 w-5 animate-spin" />
@@ -432,7 +432,7 @@ const PremiumJobsHub = () => {
                   'flex-1 flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-medium transition-all',
                   isActive
                     ? 'bg-blue-500/20 text-blue-300 border border-blue-500/30'
-                    : 'text-white/60 hover:text-white hover:bg-white/5'
+                    : 'text-white hover:text-white hover:bg-white/5'
                 )}
               >
                 <Icon className="h-4 w-4" />
@@ -483,7 +483,7 @@ const PremiumJobsHub = () => {
               {/* Search Status */}
               {searchQuery && (
                 <div className="flex items-center justify-between px-1">
-                  <div className="text-sm text-white/60">
+                  <div className="text-sm text-white">
                     Results for <span className="text-blue-400 font-medium">"{searchQuery}"</span>
                     {searchLocation && (
                       <>
@@ -500,7 +500,7 @@ const PremiumJobsHub = () => {
                       setSearchLocation('');
                       setHasSearched(false);
                     }}
-                    className="h-7 px-2 text-xs text-white/60 hover:text-white"
+                    className="h-7 px-2 text-xs text-white hover:text-white"
                   >
                     Clear
                   </Button>
@@ -518,7 +518,7 @@ const PremiumJobsHub = () => {
                       </div>
                       <div>
                         <h3 className="text-sm font-semibold text-white">Direct from Employers</h3>
-                        <p className="text-xs text-white/50">Apply with your Elec-ID</p>
+                        <p className="text-xs text-white">Apply with your Elec-ID</p>
                       </div>
                     </div>
                     <Badge className="bg-emerald-500/20 border-emerald-500/30 text-emerald-300 text-xs">
@@ -565,7 +565,7 @@ const PremiumJobsHub = () => {
                         </div>
                         <div>
                           <h3 className="text-sm font-semibold text-white">From Job Boards</h3>
-                          <p className="text-xs text-white/50">Reed, Indeed, TotalJobs & more</p>
+                          <p className="text-xs text-white">Reed, Indeed, TotalJobs & more</p>
                         </div>
                       </div>
                       {filteredExternalJobs.length > 0 && (
@@ -582,9 +582,9 @@ const PremiumJobsHub = () => {
                   <JobCardSkeleton count={5} />
                 ) : filteredExternalJobs.length === 0 ? (
                   <div className="text-center py-6 bg-white/[0.02] rounded-xl border border-white/5">
-                    <Briefcase className="h-8 w-8 mx-auto text-white/20 mb-2" />
-                    <p className="text-white/60 text-sm mb-1">No jobs match your filters</p>
-                    <p className="text-xs text-white/40">
+                    <Briefcase className="h-8 w-8 mx-auto text-white mb-2" />
+                    <p className="text-white text-sm mb-1">No jobs match your filters</p>
+                    <p className="text-xs text-white">
                       Try adjusting filters or search for something specific
                     </p>
                   </div>
@@ -613,7 +613,7 @@ const PremiumJobsHub = () => {
               {/* Results count */}
               {!isLoading &&
                 (filteredEmployerJobs.length > 0 || filteredExternalJobs.length > 0) && (
-                  <p className="text-center text-xs text-white/40 py-4">
+                  <p className="text-center text-xs text-white py-4">
                     Showing {filteredEmployerJobs.length + filteredExternalJobs.length} jobs (
                     {filteredEmployerJobs.length} employer, {filteredExternalJobs.length} external)
                   </p>

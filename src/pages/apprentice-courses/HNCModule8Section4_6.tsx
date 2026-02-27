@@ -271,7 +271,7 @@ const HNCModule8Section4_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section4">
@@ -293,7 +293,7 @@ const HNCModule8Section4_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Installation and Commissioning
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Cable requirements, EMC considerations, drive setup and fault finding for VSD
             installations
           </p>
@@ -465,7 +465,7 @@ const HNCModule8Section4_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Cable Length Considerations
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Long motor cables cause voltage reflections that stress motor insulation. The
                 reflected wave can double the peak voltage at motor terminals, particularly with
                 fast-switching IGBTs.
@@ -508,7 +508,7 @@ const HNCModule8Section4_6 = () => {
               <p className="text-sm font-medium text-orange-400 mb-2">
                 Important: Motor Insulation
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Standard motors may not withstand the voltage stresses from VSD operation,
                 particularly on long cable runs. Inverter-duty motors with reinforced insulation
                 (typically rated for 1600V peak or Class F/H insulation systems) are recommended for
@@ -661,7 +661,7 @@ const HNCModule8Section4_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Cable Screening and Earthing
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Proper screen termination is critical for EMC performance. The screen provides a
                 low-impedance path for high-frequency currents, preventing them from radiating as
                 interference.
@@ -808,7 +808,7 @@ const HNCModule8Section4_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Motor Auto-Tune (ID Run)
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Most modern drives include an auto-tune or motor identification function that
                 measures motor electrical parameters for optimal control. This should be performed
                 during commissioning.
@@ -938,7 +938,7 @@ const HNCModule8Section4_6 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Analogue Input/Output Configuration
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 HVAC applications typically use 0-10V or 4-20mA signals from BMS for speed reference
                 and feedback.
               </p>
@@ -1013,7 +1013,7 @@ const HNCModule8Section4_6 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Commissioning Sequence</p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p className="mb-1">
                   <strong>Step 1:</strong> Enter motor nameplate parameters
                 </p>
@@ -1147,7 +1147,7 @@ const HNCModule8Section4_6 = () => {
               <p className="text-sm font-medium text-orange-400 mb-2">
                 Troubleshooting Intermittent Faults
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Intermittent faults are often the most difficult to diagnose. Check drive fault
                 history for patterns (time of day, operating conditions). Common causes include:
                 loose connections that make/break under vibration, EMC interference from nearby
@@ -1249,7 +1249,7 @@ const HNCModule8Section4_6 = () => {
                 the VSD panel. The motor FLC is 22A. Select an appropriate cable and specify any
                 additional measures.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Motor current: 22A</p>
                 <p>Cable selection: 4mm squared 3-core + earth screened VSD cable</p>
                 <p>(Rated approximately 30A depending on installation method)</p>
@@ -1273,7 +1273,7 @@ const HNCModule8Section4_6 = () => {
                 squared and runs at 1450 rpm. The drive current limit is set at 150% of motor FLC.
                 Calculate the minimum acceleration time to avoid overcurrent trips.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Motor power: 15kW at 1450 rpm</p>
                 <p>Motor torque Tn = (P x 9550) / n = (15 x 9550) / 1450 = 98.8 Nm</p>
                 <p className="mt-2">Available accelerating torque at 150% current:</p>
@@ -1286,7 +1286,7 @@ const HNCModule8Section4_6 = () => {
                 <p>
                   t = omega / alpha = 151.8 / 12.35 = <strong>12.3 seconds minimum</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Set acceleration time to 15-20 seconds to allow margin
                 </p>
               </div>
@@ -1300,7 +1300,7 @@ const HNCModule8Section4_6 = () => {
                 <strong>Scenario:</strong> A VSD supplying a chilled water pump trips on earth fault
                 after running for 2-3 hours. The fault does not occur on initial start-up.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Diagnostic steps:</p>
                 <p className="mt-2">
                   1. Check insulation resistance when motor is cold: 15M ohm - PASS
@@ -1329,7 +1329,7 @@ const HNCModule8Section4_6 = () => {
                 (C1 environment). The drive has a basic internal EMC filter. Specify additional EMC
                 requirements.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Environment: Hospital = sensitive electromagnetic environment (C1)</p>
                 <p>C1 requires strictest EMC emission limits</p>
                 <p className="mt-2">Requirements:</p>
@@ -1478,7 +1478,7 @@ const HNCModule8Section4_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1526,7 +1526,7 @@ const HNCModule8Section4_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section4-5">

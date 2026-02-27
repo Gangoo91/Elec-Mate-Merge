@@ -204,7 +204,7 @@ export default function MewpModule5Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-5">
@@ -229,7 +229,7 @@ export default function MewpModule5Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Post-Incident Procedures, RIDDOR &amp; Lessons Learnt
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             What to do after a MEWP incident, how and when to report under RIDDOR, near-miss
             reporting, accident investigation, industry statistics, and how lessons learnt drive
             continuous safety improvement
@@ -364,7 +364,7 @@ export default function MewpModule5Section4() {
                       </span>
                       <div>
                         <p className="text-sm font-medium text-white">{item.step}</p>
-                        <p className="text-sm text-white/70 mt-0.5">{item.detail}</p>
+                        <p className="text-sm text-white mt-0.5">{item.detail}</p>
                       </div>
                     </div>
                   ))}
@@ -376,7 +376,7 @@ export default function MewpModule5Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Rule</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     Never move the machine or disturb the scene
                   </strong>{' '}
@@ -391,21 +391,21 @@ export default function MewpModule5Section4() {
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg text-center">
                   <Shield className="h-6 w-6 text-green-400 mx-auto mb-2" />
                   <p className="text-sm font-medium text-green-400 mb-1">Priority 1</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     People &mdash; first aid and emergency services
                   </p>
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg text-center">
                   <Search className="h-6 w-6 text-amber-400 mx-auto mb-2" />
                   <p className="text-sm font-medium text-amber-400 mb-1">Priority 2</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Scene &mdash; secure and preserve evidence
                   </p>
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg text-center">
                   <Camera className="h-6 w-6 text-blue-400 mx-auto mb-2" />
                   <p className="text-sm font-medium text-blue-400 mb-1">Priority 3</p>
-                  <p className="text-xs text-white/70">Record &mdash; details, photos, witnesses</p>
+                  <p className="text-xs text-white">Record &mdash; details, photos, witnesses</p>
                 </div>
               </div>
             </div>
@@ -464,10 +464,10 @@ export default function MewpModule5Section4() {
                       <p className="text-sm font-medium text-red-300">Deaths</p>
                     </div>
                     <div className="bg-red-500/5 p-3">
-                      <p className="text-sm text-white/80">Report immediately by phone</p>
+                      <p className="text-sm text-white">Report immediately by phone</p>
                     </div>
                     <div className="bg-red-500/5 p-3">
-                      <p className="text-sm text-white/80">Within 10 days</p>
+                      <p className="text-sm text-white">Within 10 days</p>
                     </div>
 
                     {/* Specified Injuries */}
@@ -475,10 +475,10 @@ export default function MewpModule5Section4() {
                       <p className="text-sm font-medium text-orange-300">Specified Injuries</p>
                     </div>
                     <div className="bg-orange-500/5 p-3">
-                      <p className="text-sm text-white/80">&mdash;</p>
+                      <p className="text-sm text-white">&mdash;</p>
                     </div>
                     <div className="bg-orange-500/5 p-3">
-                      <p className="text-sm text-white/80">Within 10 days</p>
+                      <p className="text-sm text-white">Within 10 days</p>
                     </div>
 
                     {/* Over-7-Day Incapacitation */}
@@ -488,10 +488,10 @@ export default function MewpModule5Section4() {
                       </p>
                     </div>
                     <div className="bg-amber-500/5 p-3">
-                      <p className="text-sm text-white/80">&mdash;</p>
+                      <p className="text-sm text-white">&mdash;</p>
                     </div>
                     <div className="bg-amber-500/5 p-3">
-                      <p className="text-sm text-white/80">Within 15 days</p>
+                      <p className="text-sm text-white">Within 15 days</p>
                     </div>
 
                     {/* Non-fatal to Non-Workers */}
@@ -501,10 +501,10 @@ export default function MewpModule5Section4() {
                       </p>
                     </div>
                     <div className="bg-blue-500/5 p-3">
-                      <p className="text-sm text-white/80">&mdash;</p>
+                      <p className="text-sm text-white">&mdash;</p>
                     </div>
                     <div className="bg-blue-500/5 p-3">
-                      <p className="text-sm text-white/80">Within 10 days</p>
+                      <p className="text-sm text-white">Within 10 days</p>
                     </div>
 
                     {/* Dangerous Occurrences */}
@@ -512,14 +512,14 @@ export default function MewpModule5Section4() {
                       <p className="text-sm font-medium text-purple-300">Dangerous Occurrences</p>
                     </div>
                     <div className="bg-purple-500/5 p-3">
-                      <p className="text-sm text-white/80">Report immediately by phone</p>
+                      <p className="text-sm text-white">Report immediately by phone</p>
                     </div>
                     <div className="bg-purple-500/5 p-3">
-                      <p className="text-sm text-white/80">Within 10 days</p>
+                      <p className="text-sm text-white">Within 10 days</p>
                     </div>
                   </div>
                 </div>
-                <p className="text-[11px] text-white/40 mt-3">
+                <p className="text-[11px] text-white mt-3">
                   &ldquo;Non-fatal to non-workers&rdquo; means a member of the public injured in a
                   work-related incident who requires hospital treatment.
                 </p>
@@ -533,7 +533,7 @@ export default function MewpModule5Section4() {
                     Specified Injuries (Report Within 10 Days)
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   {[
                     'Fractures (other than to fingers, thumbs, or toes)',
                     'Amputation of an arm, hand, finger, thumb, leg, foot, or toe',
@@ -557,11 +557,11 @@ export default function MewpModule5Section4() {
                 <p className="text-sm font-medium text-purple-300 mb-2">
                   MEWP-Specific Dangerous Occurrences
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The following are particularly relevant to MEWP operations and must be reported
                   immediately by phone, then online within 10 days:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>
@@ -617,7 +617,7 @@ export default function MewpModule5Section4() {
 
               <div className="bg-white/5 border border-teal-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-teal-300 mb-3">MEWP Near-Miss Examples</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-teal-400 flex-shrink-0" />
                     <span>
@@ -654,25 +654,25 @@ export default function MewpModule5Section4() {
                   {/* Top: 1 Serious Injury */}
                   <div className="w-[30%] bg-red-500/30 border border-red-500/50 rounded-t-lg p-2 text-center">
                     <p className="text-red-300 text-lg font-bold">1</p>
-                    <p className="text-[10px] text-white/70">Serious Injury</p>
+                    <p className="text-[10px] text-white">Serious Injury</p>
                   </div>
                   {/* Middle: 10 Minor Injuries */}
                   <div className="w-[50%] bg-orange-500/20 border border-orange-500/40 p-2 text-center">
                     <p className="text-orange-300 text-lg font-bold">10</p>
-                    <p className="text-[10px] text-white/70">Minor Injuries</p>
+                    <p className="text-[10px] text-white">Minor Injuries</p>
                   </div>
                   {/* Lower: 30 Property Damage */}
                   <div className="w-[70%] bg-amber-500/15 border border-amber-500/30 p-2 text-center">
                     <p className="text-amber-300 text-lg font-bold">30</p>
-                    <p className="text-[10px] text-white/70">Property Damage</p>
+                    <p className="text-[10px] text-white">Property Damage</p>
                   </div>
                   {/* Base: 600 Near Misses */}
                   <div className="w-full bg-elec-yellow/10 border border-elec-yellow/30 rounded-b-lg p-3 text-center">
                     <p className="text-elec-yellow text-2xl font-bold">600</p>
-                    <p className="text-xs text-white/70">Near Misses</p>
+                    <p className="text-xs text-white">Near Misses</p>
                   </div>
                 </div>
-                <p className="text-[11px] text-white/40 text-center mt-3">
+                <p className="text-[11px] text-white text-center mt-3">
                   For every 1 serious injury, there are approximately 600 near misses. Each near
                   miss is an opportunity to prevent a future accident.
                 </p>
@@ -682,7 +682,7 @@ export default function MewpModule5Section4() {
                 <p className="text-sm font-medium text-elec-yellow mb-2">
                   Why Near-Miss Reporting Matters
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-elec-yellow flex-shrink-0" />
                     <span>
@@ -749,7 +749,7 @@ export default function MewpModule5Section4() {
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-2 text-sm">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
-                      <span className="text-white/80">{item}</span>
+                      <span className="text-white">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -760,7 +760,7 @@ export default function MewpModule5Section4() {
                 <p className="text-sm font-medium text-amber-300 mb-3">
                   Root Cause Analysis &mdash; The &ldquo;5 Whys&rdquo; Technique
                 </p>
-                <p className="text-sm text-white/80 mb-4">
+                <p className="text-sm text-white mb-4">
                   Ask &ldquo;Why?&rdquo; repeatedly (typically five times) to move beyond the
                   surface cause and identify the underlying root cause:
                 </p>
@@ -793,8 +793,8 @@ export default function MewpModule5Section4() {
                         {i + 1}
                       </span>
                       <div>
-                        <p className="text-sm text-white/60 italic">Why? {item.why}</p>
-                        <p className="text-sm text-white/80">&rarr; {item.answer}</p>
+                        <p className="text-sm text-white italic">Why? {item.why}</p>
+                        <p className="text-sm text-white">&rarr; {item.answer}</p>
                       </div>
                     </div>
                   ))}
@@ -849,19 +849,19 @@ export default function MewpModule5Section4() {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg text-center">
                     <p className="text-2xl font-bold text-white">100</p>
-                    <p className="text-[11px] text-white/60">Fatalities Globally</p>
+                    <p className="text-[11px] text-white">Fatalities Globally</p>
                   </div>
                   <div className="bg-green-500/10 border border-green-500/30 p-3 rounded-lg text-center">
                     <p className="text-2xl font-bold text-green-400">&darr; 26%</p>
-                    <p className="text-[11px] text-white/60">Decrease from 2023</p>
+                    <p className="text-[11px] text-white">Decrease from 2023</p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg text-center">
                     <p className="text-2xl font-bold text-white">12</p>
-                    <p className="text-[11px] text-white/60">Countries Reporting</p>
+                    <p className="text-[11px] text-white">Countries Reporting</p>
                   </div>
                   <div className="bg-red-500/10 border border-red-500/30 p-3 rounded-lg text-center">
                     <p className="text-2xl font-bold text-red-400">&uarr; 75%</p>
-                    <p className="text-[11px] text-white/60">Entrapment Reports Up</p>
+                    <p className="text-[11px] text-white">Entrapment Reports Up</p>
                   </div>
                 </div>
               </div>
@@ -874,8 +874,8 @@ export default function MewpModule5Section4() {
                 <div className="space-y-3">
                   <div>
                     <div className="flex items-center justify-between mb-1">
-                      <p className="text-sm text-white/80">1. Overturn</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-sm text-white">1. Overturn</p>
+                      <p className="text-xs text-white">
                         Consistently top cause over past decade
                       </p>
                     </div>
@@ -885,7 +885,7 @@ export default function MewpModule5Section4() {
                   </div>
                   <div>
                     <div className="flex items-center justify-between mb-1">
-                      <p className="text-sm text-white/80">2. Entrapment (crushing)</p>
+                      <p className="text-sm text-white">2. Entrapment (crushing)</p>
                       <p className="text-xs text-red-400 font-medium">INCREASING sharply</p>
                     </div>
                     <div className="w-full bg-white/10 rounded-full h-2">
@@ -894,7 +894,7 @@ export default function MewpModule5Section4() {
                   </div>
                   <div>
                     <div className="flex items-center justify-between mb-1">
-                      <p className="text-sm text-white/80">3. Falls from platform</p>
+                      <p className="text-sm text-white">3. Falls from platform</p>
                       <p className="text-xs text-green-400 font-medium">DECREASING</p>
                     </div>
                     <div className="w-full bg-white/10 rounded-full h-2">
@@ -908,7 +908,7 @@ export default function MewpModule5Section4() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-green-400 mb-2">Positive Trends</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                       <span>
@@ -929,7 +929,7 @@ export default function MewpModule5Section4() {
                 </div>
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-red-400 mb-2">Areas of Concern</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                       <span>
@@ -961,8 +961,8 @@ export default function MewpModule5Section4() {
                       { country: 'Other (9 countries)', pct: '45%' },
                     ].map((row, i) => (
                       <div key={i} className="flex items-center justify-between text-sm">
-                        <span className="text-white/80">{row.country}</span>
-                        <span className="text-white/60 text-xs font-mono">{row.pct}</span>
+                        <span className="text-white">{row.country}</span>
+                        <span className="text-white text-xs font-mono">{row.pct}</span>
                       </div>
                     ))}
                   </div>
@@ -977,8 +977,8 @@ export default function MewpModule5Section4() {
                       { sector: 'Other Sectors', pct: '38.4%' },
                     ].map((row, i) => (
                       <div key={i} className="flex items-center justify-between text-sm">
-                        <span className="text-white/80">{row.sector}</span>
-                        <span className="text-white/60 text-xs font-mono">{row.pct}</span>
+                        <span className="text-white">{row.sector}</span>
+                        <span className="text-white text-xs font-mono">{row.pct}</span>
                       </div>
                     ))}
                   </div>
@@ -1011,8 +1011,8 @@ export default function MewpModule5Section4() {
                   ].map((row, i) => (
                     <div key={i}>
                       <div className="flex items-center justify-between mb-1">
-                        <p className="text-sm text-white/80">{row.type}</p>
-                        <p className="text-xs text-white/60 font-mono">{row.pct}%</p>
+                        <p className="text-sm text-white">{row.type}</p>
+                        <p className="text-xs text-white font-mono">{row.pct}%</p>
                       </div>
                       <div className="w-full bg-white/10 rounded-full h-1.5">
                         <div
@@ -1059,7 +1059,7 @@ export default function MewpModule5Section4() {
                     Feeding Lessons Back Into the System
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   {[
                     'Update risk assessments based on investigation findings',
                     'Revise method statements if existing procedures were inadequate',
@@ -1084,33 +1084,33 @@ export default function MewpModule5Section4() {
                 <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
                   <div className="bg-blue-500/15 border border-blue-500/30 p-4 rounded-lg text-center">
                     <p className="text-blue-300 text-lg font-bold mb-1">Plan</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       Identify hazards, assess risks, set controls, write method statements
                     </p>
                   </div>
                   <div className="bg-green-500/15 border border-green-500/30 p-4 rounded-lg text-center">
                     <p className="text-green-300 text-lg font-bold mb-1">Do</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       Implement controls, train personnel, carry out operations safely
                     </p>
                   </div>
                   <div className="bg-amber-500/15 border border-amber-500/30 p-4 rounded-lg text-center">
                     <p className="text-amber-300 text-lg font-bold mb-1">Check</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       Monitor, inspect, report near misses, investigate incidents
                     </p>
                   </div>
                   <div className="bg-red-500/15 border border-red-500/30 p-4 rounded-lg text-center">
                     <p className="text-red-300 text-lg font-bold mb-1">Act</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       Take corrective action, update plans, retrain, share lessons learnt
                     </p>
                   </div>
                 </div>
                 <div className="flex justify-center mt-4">
-                  <RefreshCw className="h-6 w-6 text-white/30" />
+                  <RefreshCw className="h-6 w-6 text-white" />
                 </div>
-                <p className="text-[11px] text-white/40 text-center mt-1">
+                <p className="text-[11px] text-white text-center mt-1">
                   The cycle repeats continuously &mdash; every incident feeds back into improved
                   planning
                 </p>
@@ -1131,7 +1131,7 @@ export default function MewpModule5Section4() {
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-xs font-bold flex-shrink-0">
                         {i + 1}
                       </span>
-                      <p className="text-sm text-white/80">{item}</p>
+                      <p className="text-sm text-white">{item}</p>
                     </div>
                   ))}
                 </div>
@@ -1160,7 +1160,7 @@ export default function MewpModule5Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1174,7 +1174,7 @@ export default function MewpModule5Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-5">

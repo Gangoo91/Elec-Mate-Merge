@@ -120,7 +120,7 @@ export function ProcessingRing({
           transition={{ delay: 0.5 }}
           className="mt-6 text-center"
         >
-          <p className="text-white/40 text-xs uppercase tracking-wider mb-1">Estimated Quote</p>
+          <p className="text-white text-xs uppercase tracking-wider mb-1">Estimated Quote</p>
           <motion.div
             key={estimatedCost}
             initial={{ scale: 1.05, opacity: 0.8 }}
@@ -129,7 +129,7 @@ export function ProcessingRing({
           >
             £{estimatedCost.toLocaleString()}
           </motion.div>
-          <p className="text-white/30 text-xs mt-1">Building...</p>
+          <p className="text-white text-xs mt-1">Building...</p>
         </motion.div>
       )}
     </motion.div>

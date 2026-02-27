@@ -226,7 +226,7 @@ const CscsCardModule2Section3 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Workplace Welfare &amp; Site Safety
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Essential welfare standards, safety procedures, and occupational health awareness for
             every construction worker
           </p>
@@ -257,7 +257,7 @@ const CscsCardModule2Section3 = () => {
                   <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3 text-center">
                     <div className="text-2xl mb-1">🚻</div>
                     <div className="text-sm font-semibold text-green-400 mb-1">Toilets</div>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Adequate number, clean, ventilated, lit, lockable. Separate facilities for men
                       and women unless each is a single-occupancy lockable room.
                     </p>
@@ -267,7 +267,7 @@ const CscsCardModule2Section3 = () => {
                     <div className="text-sm font-semibold text-green-400 mb-1">
                       Washing Facilities
                     </div>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Hot and cold (or warm) running water, soap, towels or hand dryers. Must be in
                       the immediate vicinity of toilets and changing rooms.
                     </p>
@@ -275,7 +275,7 @@ const CscsCardModule2Section3 = () => {
                   <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3 text-center">
                     <div className="text-2xl mb-1">🚰</div>
                     <div className="text-sm font-semibold text-green-400 mb-1">Drinking Water</div>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Wholesome drinking water readily accessible. Must be clearly marked. Cups must
                       be provided unless the supply is a drinking fountain.
                     </p>
@@ -283,7 +283,7 @@ const CscsCardModule2Section3 = () => {
                   <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3 text-center">
                     <div className="text-2xl mb-1">👕</div>
                     <div className="text-sm font-semibold text-green-400 mb-1">Changing Rooms</div>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Secure area to change and store personal clothing not worn at work. Separate
                       facilities for men and women where necessary for decency.
                     </p>
@@ -291,7 +291,7 @@ const CscsCardModule2Section3 = () => {
                   <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3 text-center">
                     <div className="text-2xl mb-1">☕</div>
                     <div className="text-sm font-semibold text-green-400 mb-1">Rest Areas</div>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Heated, sheltered rest area with seating and tables. Means to heat food and
                       boil water. Separate from work areas and contaminants.
                     </p>
@@ -299,7 +299,7 @@ const CscsCardModule2Section3 = () => {
                   <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3 text-center">
                     <div className="text-2xl mb-1">🧥</div>
                     <div className="text-sm font-semibold text-green-400 mb-1">Drying Rooms</div>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Facilities for drying wet clothing and PPE. Essential on UK sites where rain
                       is frequent. Prevents workers wearing damp clothing all day.
                     </p>
@@ -343,7 +343,7 @@ const CscsCardModule2Section3 = () => {
 
               <div className="bg-white/5 border border-green-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-green-400">Key Point for Electricians</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   If you are working on a site where welfare facilities have not been provided — or
                   are not being maintained to an acceptable standard — you should raise this with
                   the principal contractor or site manager immediately. It is a criminal offence to
@@ -469,7 +469,7 @@ const CscsCardModule2Section3 = () => {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">No Induction = No Access</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   You must not start work on any construction site until you have received the
                   site-specific induction. If you arrive on site and nobody is available to deliver
                   the induction, you must wait. Working without an induction puts you and others at
@@ -548,7 +548,7 @@ const CscsCardModule2Section3 = () => {
                 <h3 className="text-green-400 font-medium mb-2">
                   Cable Management for Electricians
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   As an electrician, cable management is both a professional skill and a safety
                   responsibility. Trailing cables are one of the most common trip hazards on
                   construction sites.
@@ -630,10 +630,10 @@ const CscsCardModule2Section3 = () => {
                       </div>
                       <div>
                         <div className="text-red-400 font-semibold text-sm">Prohibition</div>
-                        <div className="text-white/50 text-xs">Red circle, diagonal line</div>
+                        <div className="text-white text-xs">Red circle, diagonal line</div>
                       </div>
                     </div>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-red-400">Meaning:</strong> You must NOT do this.
                       Examples: no smoking, no entry, no mobile phones, do not extinguish with
                       water.
@@ -648,10 +648,10 @@ const CscsCardModule2Section3 = () => {
                       </div>
                       <div>
                         <div className="text-blue-400 font-semibold text-sm">Mandatory</div>
-                        <div className="text-white/50 text-xs">Blue circle, white symbol</div>
+                        <div className="text-white text-xs">Blue circle, white symbol</div>
                       </div>
                     </div>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-blue-400">Meaning:</strong> You MUST do this.
                       Examples: wear hard hat, wear hi-vis, wear eye protection, wear hearing
                       protection.
@@ -668,10 +668,10 @@ const CscsCardModule2Section3 = () => {
                       </div>
                       <div>
                         <div className="text-yellow-400 font-semibold text-sm">Warning</div>
-                        <div className="text-white/50 text-xs">Yellow triangle, black border</div>
+                        <div className="text-white text-xs">Yellow triangle, black border</div>
                       </div>
                     </div>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-yellow-400">Meaning:</strong> Danger — be aware.
                       Examples: electrical hazard, overhead loads, slippery surface, hazardous
                       substances.
@@ -686,10 +686,10 @@ const CscsCardModule2Section3 = () => {
                       </div>
                       <div>
                         <div className="text-green-400 font-semibold text-sm">Safe Condition</div>
-                        <div className="text-white/50 text-xs">Green rectangle, white symbol</div>
+                        <div className="text-white text-xs">Green rectangle, white symbol</div>
                       </div>
                     </div>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-green-400">Meaning:</strong> Safety information.
                       Examples: emergency exit, first aid point, emergency shower, assembly point.
                     </p>
@@ -703,10 +703,10 @@ const CscsCardModule2Section3 = () => {
                       </div>
                       <div>
                         <div className="text-red-400 font-semibold text-sm">Fire Safety</div>
-                        <div className="text-white/50 text-xs">Red rectangle, white symbol</div>
+                        <div className="text-white text-xs">Red rectangle, white symbol</div>
                       </div>
                     </div>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-red-400">Meaning:</strong> Fire equipment location.
                       Examples: fire extinguisher, fire hose reel, fire alarm call point, fire
                       blanket.
@@ -719,7 +719,7 @@ const CscsCardModule2Section3 = () => {
                 <h3 className="text-green-400 font-medium mb-2">
                   Banksman Signals for Plant Operations
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   In addition to fixed signage, construction sites use hand signals to guide plant
                   and vehicle movements. A banksman (also called a signaller or marshal) uses
                   standardised hand signals to direct operations such as crane lifts, reversing
@@ -857,7 +857,7 @@ const CscsCardModule2Section3 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-green-400 font-medium mb-2">Banksmen and Marshals</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Banksmen (vehicle marshals) play a critical role in traffic management,
                   particularly for:
                 </p>
@@ -892,7 +892,7 @@ const CscsCardModule2Section3 = () => {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Pedestrian PPE in Traffic Areas</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   When working in or near vehicle traffic areas, you must wear high-visibility
                   clothing that meets EN ISO 20471 (minimum Class 2 for daytime, Class 3 for
                   low-light or night work). This is in addition to your standard PPE. Many sites
@@ -967,7 +967,7 @@ const CscsCardModule2Section3 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-green-400 font-medium mb-2">Highways Act 1980 Obligations</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Where construction work is adjacent to or affects a public highway, additional
                   obligations apply under the Highways Act 1980:
                 </p>
@@ -1048,12 +1048,12 @@ const CscsCardModule2Section3 = () => {
                     <h4 className="text-white font-semibold text-sm mb-1">
                       Dermatitis (Contact Dermatitis)
                     </h4>
-                    <p className="text-white/70 text-xs mb-2">
+                    <p className="text-white text-xs mb-2">
                       Inflammation of the skin caused by contact with irritants or allergens. Common
                       causes include cement, epoxy resins, solvents, PVC solvent weld, flux, and
                       cutting oils.
                     </p>
-                    <ul className="text-white/80 text-xs space-y-1">
+                    <ul className="text-white text-xs space-y-1">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -1073,12 +1073,12 @@ const CscsCardModule2Section3 = () => {
 
                   <div className="border-b border-white/10 pb-3">
                     <h4 className="text-white font-semibold text-sm mb-1">Occupational Asthma</h4>
-                    <p className="text-white/70 text-xs mb-2">
+                    <p className="text-white text-xs mb-2">
                       A lung condition caused by breathing in certain dusts, fumes, or vapours at
                       work. Construction workers are exposed to silica dust, wood dust, isocyanates
                       (in some paints and foams), and welding fumes.
                     </p>
-                    <ul className="text-white/80 text-xs space-y-1">
+                    <ul className="text-white text-xs space-y-1">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -1100,12 +1100,12 @@ const CscsCardModule2Section3 = () => {
                     <h4 className="text-white font-semibold text-sm mb-1">
                       Hand-Arm Vibration Syndrome (HAVS)
                     </h4>
-                    <p className="text-white/70 text-xs mb-2">
+                    <p className="text-white text-xs mb-2">
                       Damage to blood vessels, nerves, muscles, and joints caused by regular use of
                       vibrating hand-held tools. Particularly relevant to electricians who use
                       rotary hammer drills, chasing machines, and grinders.
                     </p>
-                    <ul className="text-white/80 text-xs space-y-1">
+                    <ul className="text-white text-xs space-y-1">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -1127,12 +1127,12 @@ const CscsCardModule2Section3 = () => {
                     <h4 className="text-white font-semibold text-sm mb-1">
                       Noise-Induced Hearing Loss (NIHL)
                     </h4>
-                    <p className="text-white/70 text-xs mb-2">
+                    <p className="text-white text-xs mb-2">
                       Permanent, irreversible hearing damage caused by prolonged exposure to high
                       noise levels. Construction sites frequently exceed safe noise levels,
                       particularly during demolition, piling, drilling, and cutting operations.
                     </p>
-                    <ul className="text-white/80 text-xs space-y-1">
+                    <ul className="text-white text-xs space-y-1">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -1154,13 +1154,13 @@ const CscsCardModule2Section3 = () => {
                     <h4 className="text-white font-semibold text-sm mb-1">
                       Musculoskeletal Disorders (MSDs)
                     </h4>
-                    <p className="text-white/70 text-xs mb-2">
+                    <p className="text-white text-xs mb-2">
                       Injuries to muscles, tendons, ligaments, joints, and nerves caused by manual
                       handling, repetitive movements, awkward postures, and heavy lifting. Common in
                       electrical work due to overhead work, cable pulling, and carrying heavy
                       materials.
                     </p>
-                    <ul className="text-white/80 text-xs space-y-1">
+                    <ul className="text-white text-xs space-y-1">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -1180,13 +1180,13 @@ const CscsCardModule2Section3 = () => {
 
                   <div>
                     <h4 className="text-white font-semibold text-sm mb-1">Work-Related Stress</h4>
-                    <p className="text-white/70 text-xs mb-2">
+                    <p className="text-white text-xs mb-2">
                       Mental health is an increasingly recognised aspect of occupational health.
                       Construction workers face particular pressures including long hours, job
                       insecurity, time away from family, physical demands, and a culture that can
                       discourage seeking help.
                     </p>
-                    <ul className="text-white/80 text-xs space-y-1">
+                    <ul className="text-white text-xs space-y-1">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -1256,7 +1256,7 @@ const CscsCardModule2Section3 = () => {
 
               <div className="bg-white/5 border border-green-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-green-400">Key Point</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Many occupational diseases are irreversible once established — you cannot undo
                   hearing loss, cure HAVS, or repair scarred lungs. Prevention is the only effective
                   strategy. Report any early symptoms to your employer immediately. Early
@@ -1334,7 +1334,7 @@ const CscsCardModule2Section3 = () => {
                 <h3 className="text-green-400 font-medium mb-2">
                   Fire Evacuation on Construction Sites
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Fire is a significant risk on construction sites due to the presence of
                   combustible materials, hot works, temporary electrical installations, and limited
                   fire detection and suppression systems during the construction phase.
@@ -1383,7 +1383,7 @@ const CscsCardModule2Section3 = () => {
                 <h3 className="text-green-400 font-medium mb-2">
                   First Aiders & Appointed Persons
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The Health and Safety (First-Aid) Regulations 1981 require employers to provide
                   adequate first aid arrangements. On construction sites, this means:
                 </p>
@@ -1424,7 +1424,7 @@ const CscsCardModule2Section3 = () => {
 
               <div className="bg-white/5 border border-green-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-green-400">Know Your Site</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Every site is different. When you arrive at a new site, make it a personal
                   priority to learn: where the assembly point is, the quickest route to it from your
                   work area, where the nearest first aid point is, who the first aiders are, what
@@ -1440,7 +1440,7 @@ const CscsCardModule2Section3 = () => {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Electrical Emergencies</h3>
                 </div>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   As an electrician, you should be particularly aware of the emergency procedures
                   for electrical incidents:
                 </p>
@@ -1484,7 +1484,7 @@ const CscsCardModule2Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1500,7 +1500,7 @@ const CscsCardModule2Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-2">

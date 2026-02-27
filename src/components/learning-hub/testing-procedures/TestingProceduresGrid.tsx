@@ -84,12 +84,12 @@ const ProcedureItem = ({
     </div>
     <div className="flex-1 min-w-0">
       <h3 className="text-[15px] font-medium text-white leading-tight">{title}</h3>
-      <p className="text-[13px] text-white/50 leading-tight mt-0.5">{subtitle}</p>
+      <p className="text-[13px] text-white leading-tight mt-0.5">{subtitle}</p>
     </div>
     <div className="flex items-center gap-2 flex-shrink-0">
       {isLive && <AlertTriangle className="h-3.5 w-3.5 text-orange-400" />}
-      <span className="text-[13px] text-white/30">{duration}</span>
-      <ChevronRight className="h-4 w-4 text-white/20" />
+      <span className="text-[13px] text-white">{duration}</span>
+      <ChevronRight className="h-4 w-4 text-white" />
     </div>
   </motion.div>
 );
@@ -115,7 +115,7 @@ const TestingProceduresGrid = ({
     <motion.div className="space-y-6" variants={containerVariants} initial="hidden" animate="show">
       {/* Safety Procedure - Critical */}
       <div>
-        <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+        <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
           Safety Critical
         </p>
         <div className="rounded-2xl bg-white/[0.03] border border-red-500/20 overflow-hidden">
@@ -132,7 +132,7 @@ const TestingProceduresGrid = ({
 
       {/* Dead Tests */}
       <div>
-        <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+        <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
           Dead Tests
         </p>
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
@@ -165,7 +165,7 @@ const TestingProceduresGrid = ({
 
       {/* Live Tests */}
       <div>
-        <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+        <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
           Live Tests
         </p>
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
@@ -201,7 +201,7 @@ const TestingProceduresGrid = ({
 
       {/* Functional & Additional */}
       <div>
-        <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+        <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
           Functional & Additional
         </p>
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
@@ -226,7 +226,7 @@ const TestingProceduresGrid = ({
 
       {/* Documentation Guides */}
       <div>
-        <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+        <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
           Documentation
         </p>
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
@@ -252,7 +252,7 @@ const TestingProceduresGrid = ({
       {/* Additional Procedures from props */}
       {procedures.length > 0 && (
         <div>
-          <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+          <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
             Additional Procedures
           </p>
           <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">

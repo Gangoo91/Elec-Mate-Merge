@@ -177,7 +177,7 @@ export default function AsbestosModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-3">
@@ -202,7 +202,7 @@ export default function AsbestosModule3Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Common ACMs &mdash; Insulation &amp; Coatings
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Pipe lagging, sprayed coatings (limpet asbestos), textured decorative coatings (Artex),
             rope seals, gaskets, millboard, fire blankets, and how to identify them
           </p>
@@ -288,7 +288,7 @@ export default function AsbestosModule3Section2() {
                     Extreme Hazard &mdash; Do NOT Touch
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Pipe lagging is <strong className="text-white">very friable</strong> &mdash; it
                   crumbles easily and releases large quantities of fibres when disturbed. Even minor
                   contact, vibration, or accidental damage can create a significant fibre release.{' '}
@@ -300,7 +300,7 @@ export default function AsbestosModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Characteristics</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -346,7 +346,7 @@ export default function AsbestosModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Where You Will Find It</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Plant rooms and boiler houses</span>
@@ -485,7 +485,7 @@ export default function AsbestosModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">HIGHEST RISK ACM</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Sprayed coatings can contain{' '}
                   <strong className="text-white">up to 85% asbestos</strong> &mdash; often
                   crocidolite or amosite. They are{' '}
@@ -499,7 +499,7 @@ export default function AsbestosModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Characteristics</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -533,7 +533,7 @@ export default function AsbestosModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Where You Will Find It</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -599,7 +599,7 @@ export default function AsbestosModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Risk Assessment</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -633,7 +633,7 @@ export default function AsbestosModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Key Points for Electricians</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -665,7 +665,7 @@ export default function AsbestosModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Never Sand or Scrape Dry</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Dry sanding or scraping textured coatings is{' '}
                   <strong className="text-white">extremely dangerous</strong> &mdash; it generates a
                   dust cloud that can contain millions of asbestos fibres. Even low-concentration
@@ -704,7 +704,7 @@ export default function AsbestosModule3Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Types of Asbestos Sealing Materials
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -733,7 +733,7 @@ export default function AsbestosModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Fibre Type and Risk</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -796,7 +796,7 @@ export default function AsbestosModule3Section2() {
               <div className="space-y-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Millboard</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -823,7 +823,7 @@ export default function AsbestosModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Asbestos Paper</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -846,7 +846,7 @@ export default function AsbestosModule3Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Bituminous Products</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -879,7 +879,7 @@ export default function AsbestosModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Frequently Overlooked</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   These products are{' '}
                   <strong className="text-white">often missed during surveys</strong>
                   because they are thin, hidden behind other materials, or do not look like
@@ -913,7 +913,7 @@ export default function AsbestosModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Types of Asbestos Textiles</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -963,7 +963,7 @@ export default function AsbestosModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Handle With Care</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Worn asbestos textiles can release fibres when handled, folded, shaken, or
                   disturbed. Even if a fire blanket appears to be in good condition, if it dates
                   from before 2000 it should be{' '}
@@ -996,7 +996,7 @@ export default function AsbestosModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">The Golden Rules</p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <ol className="space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-0.5 w-6 h-6 rounded-full bg-red-500/20 border border-red-500/40 flex items-center justify-center flex-shrink-0 text-xs font-bold text-red-400">
@@ -1070,14 +1070,14 @@ export default function AsbestosModule3Section2() {
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="border-b border-white/10">
-                        <th className="text-left text-white/60 py-2 pr-3 font-medium">Material</th>
-                        <th className="text-left text-white/60 py-2 pr-3 font-medium">
+                        <th className="text-left text-white py-2 pr-3 font-medium">Material</th>
+                        <th className="text-left text-white py-2 pr-3 font-medium">
                           Typical Fibre
                         </th>
-                        <th className="text-left text-white/60 py-2 font-medium">Removal Type</th>
+                        <th className="text-left text-white py-2 font-medium">Removal Type</th>
                       </tr>
                     </thead>
-                    <tbody className="text-white/80">
+                    <tbody className="text-white">
                       <tr className="border-b border-white/5">
                         <td className="py-2 pr-3">Pipe lagging</td>
                         <td className="py-2 pr-3">Amosite / crocidolite</td>
@@ -1155,7 +1155,7 @@ export default function AsbestosModule3Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1169,7 +1169,7 @@ export default function AsbestosModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-3-section-1">

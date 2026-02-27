@@ -247,7 +247,7 @@ const HNCModule6Section5_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section5">
@@ -269,7 +269,7 @@ const HNCModule6Section5_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             ISO 50001 Energy Management Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Plan-Do-Check-Act methodology, certification requirements, and continual improvement for
             energy performance
           </p>
@@ -703,7 +703,7 @@ const HNCModule6Section5_4 = () => {
               <div className="grid sm:grid-cols-3 gap-3">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Design</p>
-                  <ul className="text-sm text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-4">
                     <li>New facilities</li>
                     <li>Renovations</li>
                     <li>Equipment upgrades</li>
@@ -712,7 +712,7 @@ const HNCModule6Section5_4 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Procurement</p>
-                  <ul className="text-sm text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-4">
                     <li>Energy supply</li>
                     <li>Equipment purchase</li>
                     <li>Service contracts</li>
@@ -721,7 +721,7 @@ const HNCModule6Section5_4 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Operation</p>
-                  <ul className="text-sm text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-4">
                     <li>Operating procedures</li>
                     <li>Maintenance schedules</li>
                     <li>BMS setpoints</li>
@@ -928,7 +928,7 @@ const HNCModule6Section5_4 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Continual improvement:</strong> ISO 50001 requires demonstration of energy
               performance improvement - not just maintaining a system but actively improving energy
               efficiency over time.
@@ -954,8 +954,8 @@ const HNCModule6Section5_4 = () => {
                 <strong>Scenario:</strong> Establish an energy baseline for a 10,000m² office
                 building.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">
                   Data Collection Period: January 2023 - December 2023
                 </p>
                 <p className="mt-2">Annual Energy Consumption:</p>
@@ -982,7 +982,7 @@ const HNCModule6Section5_4 = () => {
                 <strong>Scenario:</strong> Identify SEUs for a hospital building using Pareto
                 analysis.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Energy Use Analysis (Annual kWh):</p>
                 <p className="mt-2">System | Consumption | % of Total | Cumulative</p>
                 <p>--------|------------|------------|------------</p>
@@ -1007,7 +1007,7 @@ const HNCModule6Section5_4 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Apply PDCA to lighting efficiency improvement project.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p className="text-elec-yellow">PLAN:</p>
                 <p className="ml-4">Current: 650,000 kWh/year at 12 W/m² installed load</p>
                 <p className="ml-4">Target: 30% reduction through LED upgrade</p>
@@ -1120,7 +1120,7 @@ const HNCModule6Section5_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1166,7 +1166,7 @@ const HNCModule6Section5_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section5">

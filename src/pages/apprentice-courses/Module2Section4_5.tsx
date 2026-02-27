@@ -181,7 +181,7 @@ const Module2Section4_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -203,14 +203,14 @@ const Module2Section4_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Where AC and DC Are Used in Real Installations
           </h1>
-          <p className="text-base sm:text-lg text-white/70 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-white max-w-2xl mx-auto">
             Learn practical AC and DC applications in electrical installations
           </p>
         </header>
 
         {/* Summary Box */}
         <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
-          <p className="text-sm text-white/80 leading-relaxed">
+          <p className="text-sm text-white leading-relaxed">
             <strong className="text-elec-yellow">Key Points:</strong> AC powers 230/400V mains
             distribution for sockets, lighting, HVAC and motors. DC is used for ELV controls,
             electronics, PV strings, BESS and EV charger electronics. Conversion equipment
@@ -224,8 +224,8 @@ const Module2Section4_5 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">01</span>
             Learning Outcomes
           </h2>
-          <p className="text-white/70 mb-4">By the end of this section, you'll be able to:</p>
-          <ul className="space-y-3 text-white/80">
+          <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
+          <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Identify typical AC applications in buildings and industry</span>
@@ -255,7 +255,7 @@ const Module2Section4_5 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">02</span>
             AC Applications in Electrical Installations
           </h2>
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               AC (Alternating Current) is the backbone of electrical distribution in the UK. It's
               used for mains electricity supply and most building installations.
@@ -314,7 +314,7 @@ const Module2Section4_5 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">03</span>
             DC Applications in Electrical Installations
           </h2>
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               DC (Direct Current) is widely used for control systems, electronics, renewable energy,
               and modern technologies like EV charging.
@@ -373,7 +373,7 @@ const Module2Section4_5 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">04</span>
             AC/DC Conversion Equipment
           </h2>
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Many modern installations include equipment that converts between AC and DC.
               Understanding these conversion processes is essential for proper selection and
@@ -383,7 +383,7 @@ const Module2Section4_5 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h4 className="font-semibold text-elec-yellow mb-2">AC to DC Conversion</h4>
-                <ul className="list-disc pl-4 space-y-1 text-sm text-white/70">
+                <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                   <li>
                     <strong>Rectifiers:</strong> Convert AC mains to DC supply
                   </li>
@@ -400,7 +400,7 @@ const Module2Section4_5 = () => {
               </div>
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h4 className="font-semibold text-elec-yellow mb-2">DC to AC Conversion</h4>
-                <ul className="list-disc pl-4 space-y-1 text-sm text-white/70">
+                <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                   <li>
                     <strong>Solar inverters:</strong> PV DC to mains AC
                   </li>
@@ -437,7 +437,7 @@ const Module2Section4_5 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">05</span>
             Selection Criteria and Safety Considerations
           </h2>
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Proper selection of equipment and safety measures is crucial when working with mixed
               AC/DC installations. Key considerations include device ratings, isolation methods, and
@@ -493,7 +493,7 @@ const Module2Section4_5 = () => {
                   <h4 className="font-semibold text-elec-yellow mb-2">
                     When Installing AC Systems
                   </h4>
-                  <ul className="list-disc pl-4 space-y-1 text-sm text-white/70">
+                  <ul className="list-disc pl-4 space-y-1 text-sm text-white">
                     <li>Check supply characteristics (230V/400V, TN/TT system)</li>
                     <li>Consider three-phase balance for motor loads</li>
                     <li>Account for power factor and harmonics</li>
@@ -517,7 +517,7 @@ const Module2Section4_5 = () => {
             <div>
               <h3 className="text-lg font-semibold text-white mb-3">Common Mistakes to Avoid</h3>
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <ul className="list-disc pl-4 space-y-2 text-sm text-white/70">
+                <ul className="list-disc pl-4 space-y-2 text-sm text-white">
                   <li>
                     <strong>Assuming all loads are AC:</strong> Always check equipment nameplates
                   </li>
@@ -579,7 +579,7 @@ const Module2Section4_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="py-4 first:pt-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -591,7 +591,7 @@ const Module2Section4_5 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">08</span>
             AC/DC Applications Pocket Guide
           </h2>
-          <p className="text-sm text-white/70 mb-4">
+          <p className="text-sm text-white mb-4">
             Quick identification and selection guide for apprentice electricians
           </p>
 
@@ -602,7 +602,7 @@ const Module2Section4_5 = () => {
                   <Plug className="w-4 h-4" />
                   Typical AC Uses
                 </h4>
-                <ul className="space-y-1 text-white/70 text-xs">
+                <ul className="space-y-1 text-white text-xs">
                   <li>• 230V sockets, lighting, small appliances</li>
                   <li>• 400V motors, HVAC, industrial equipment</li>
                   <li>• Generator backup systems</li>
@@ -616,7 +616,7 @@ const Module2Section4_5 = () => {
                   <Battery className="w-4 h-4" />
                   Typical DC Uses
                 </h4>
-                <ul className="space-y-1 text-white/70 text-xs">
+                <ul className="space-y-1 text-white text-xs">
                   <li>• 24V PLC/BMS control circuits</li>
                   <li>• Fire/security alarm systems</li>
                   <li>• PV strings (before inverter)</li>
@@ -654,7 +654,7 @@ const Module2Section4_5 = () => {
                   <AlertTriangle className="w-4 h-4" />
                   Safety Reminders
                 </h4>
-                <ul className="space-y-1 text-white/70 text-xs">
+                <ul className="space-y-1 text-white text-xs">
                   <li>• DC can sustain arcs - use DC-rated MCBs</li>
                   <li>• Segregate ELV/SELV from LV circuits</li>
                   <li>• Label all sources (PV/Battery/Mains)</li>
@@ -669,15 +669,15 @@ const Module2Section4_5 = () => {
             <div className="grid grid-cols-3 gap-4 text-xs">
               <div className="text-center">
                 <p className="font-semibold text-white">AC→DC</p>
-                <p className="text-white/70">Rectifier, PSU, Charger</p>
+                <p className="text-white">Rectifier, PSU, Charger</p>
               </div>
               <div className="text-center">
                 <p className="font-semibold text-white">DC→AC</p>
-                <p className="text-white/70">Inverter, UPS, VFD output</p>
+                <p className="text-white">Inverter, UPS, VFD output</p>
               </div>
               <div className="text-center">
                 <p className="font-semibold text-white">AC→DC→AC</p>
-                <p className="text-white/70">VFD, Variable speed drive</p>
+                <p className="text-white">VFD, Variable speed drive</p>
               </div>
             </div>
           </div>
@@ -693,7 +693,7 @@ const Module2Section4_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level2/module2/section4/4-4">

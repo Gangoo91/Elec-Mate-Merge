@@ -16,7 +16,7 @@ const TestMethodInfo = ({ formData, onUpdate }: TestMethodInfoProps) => {
   const isMobile = useIsMobile();
 
   return (
-    <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : '')}>
+    <div className="space-y-4">
       <div
         className={cn(
           'grid gap-4',
@@ -26,7 +26,7 @@ const TestMethodInfo = ({ formData, onUpdate }: TestMethodInfoProps) => {
         )}
       >
         <div className="space-y-2">
-          <Label htmlFor="testMethod" className="text-sm font-medium text-foreground/80">
+          <Label htmlFor="testMethod" className="text-sm text-white">
             Test Method Applied
           </Label>
           <Input
@@ -34,12 +34,12 @@ const TestMethodInfo = ({ formData, onUpdate }: TestMethodInfoProps) => {
             value={formData.testMethod || ''}
             onChange={(e) => onUpdate('testMethod', e.target.value)}
             placeholder="BS 7671 Method 1, 2, or 3"
-            className="h-11 text-base touch-manipulation bg-card/50 border-border/30"
+            className="h-11 text-base touch-manipulation border-white/30"
             style={{ fontSize: '16px' }}
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="testVoltage" className="text-sm font-medium text-foreground/80">
+          <Label htmlFor="testVoltage" className="text-sm text-white">
             Test Voltage Applied
           </Label>
           <MobileSelectPicker
@@ -53,7 +53,7 @@ const TestMethodInfo = ({ formData, onUpdate }: TestMethodInfoProps) => {
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="testNotes" className="text-sm font-medium text-foreground/80">
+        <Label htmlFor="testNotes" className="text-sm text-white">
           Test Notes & Observations
         </Label>
         <Textarea
@@ -61,7 +61,7 @@ const TestMethodInfo = ({ formData, onUpdate }: TestMethodInfoProps) => {
           value={formData.testNotes || ''}
           onChange={(e) => onUpdate('testNotes', e.target.value)}
           placeholder="Record any deviations from standard test procedures, limitations encountered, or additional observations..."
-          className="min-h-[100px] resize-none text-base touch-manipulation bg-card/50 border-border/30"
+          className="min-h-[100px] resize-none text-base touch-manipulation border-white/30"
           style={{ fontSize: '16px' }}
         />
       </div>

@@ -34,7 +34,7 @@ const PROJECT_TYPES = [
 export function ProjectTypeSelector({ value, onChange, disabled }: ProjectTypeSelectorProps) {
   return (
     <div className="space-y-3">
-      <label className="text-sm font-medium text-white/70">Project Type</label>
+      <label className="text-sm font-medium text-white">Project Type</label>
 
       <div className="grid grid-cols-3 gap-2">
         {PROJECT_TYPES.map((type, index) => {
@@ -85,7 +85,7 @@ export function ProjectTypeSelector({ value, onChange, disabled }: ProjectTypeSe
                 <Icon
                   className={cn(
                     'h-5 w-5 transition-colors duration-200',
-                    isSelected ? 'text-elec-yellow' : 'text-white/50'
+                    isSelected ? 'text-elec-yellow' : 'text-white'
                   )}
                 />
               </div>
@@ -94,7 +94,7 @@ export function ProjectTypeSelector({ value, onChange, disabled }: ProjectTypeSe
               <span
                 className={cn(
                   'text-xs font-semibold transition-colors duration-200',
-                  isSelected ? 'text-white' : 'text-white/60'
+                  isSelected ? 'text-white' : 'text-white'
                 )}
               >
                 {type.label}
@@ -104,7 +104,7 @@ export function ProjectTypeSelector({ value, onChange, disabled }: ProjectTypeSe
               <span
                 className={cn(
                   'text-[10px] mt-0.5 transition-colors duration-200',
-                  isSelected ? 'text-white/50' : 'text-white/30'
+                  isSelected ? 'text-white' : 'text-white'
                 )}
               >
                 {type.description}

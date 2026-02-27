@@ -173,7 +173,7 @@ export function ActivityFeed({ maxItems = 10, compact = false, onViewAll }: Acti
                       <span className="font-medium">{activity.actor}</span> {activity.action}{' '}
                       <span className="text-white">{activity.subject}</span>
                     </p>
-                    <span className="text-[10px] text-white/60 shrink-0 mt-0.5">
+                    <span className="text-[10px] text-white shrink-0 mt-0.5">
                       {formatTime(activity.timestamp)}
                     </span>
                   </div>

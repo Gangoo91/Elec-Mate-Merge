@@ -137,7 +137,7 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
                   <Badge variant="outline" className="shrink-0 text-xs">
                     {ksb.ksbCode}
                   </Badge>
-                  <span className="truncate text-white/80">{ksb.ksbTitle}</span>
+                  <span className="truncate text-white">{ksb.ksbTitle}</span>
                 </div>
                 <div className="flex items-center gap-2 ml-2">
                   {ksb.mappingStatus === 'verified' ? (
@@ -151,7 +151,7 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
               </div>
             ))}
             {items.length === 0 && (
-              <p className="text-center text-white/50 py-4 text-sm">
+              <p className="text-center text-white py-4 text-sm">
                 No {title.toLowerCase()} mapped yet
               </p>
             )}
@@ -168,7 +168,7 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
           <div>
             {studentName && <h3 className="text-lg font-semibold">{studentName}</h3>}
-            {qualificationTitle && <p className="text-sm text-white/70">{qualificationTitle}</p>}
+            {qualificationTitle && <p className="text-sm text-white">{qualificationTitle}</p>}
           </div>
         </div>
       )}
@@ -182,7 +182,7 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
                 <FileText className="h-5 w-5 text-blue-400" />
               </div>
               <div>
-                <p className="text-xs text-white/60">Categories</p>
+                <p className="text-xs text-white">Categories</p>
                 <p className="text-xl font-bold">
                   {completedCategories}/{totalCategories}
                 </p>
@@ -198,7 +198,7 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
                 <CheckCircle2 className="h-5 w-5 text-green-400" />
               </div>
               <div>
-                <p className="text-xs text-white/60">KSBs Verified</p>
+                <p className="text-xs text-white">KSBs Verified</p>
                 <p className="text-xl font-bold">
                   {verifiedKSBs}/{totalKSBs}
                 </p>
@@ -214,7 +214,7 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
                 <Clock className="h-5 w-5 text-amber-400" />
               </div>
               <div>
-                <p className="text-xs text-white/60">In Progress</p>
+                <p className="text-xs text-white">In Progress</p>
                 <p className="text-xl font-bold">{inProgressCategories}</p>
               </div>
             </div>
@@ -228,7 +228,7 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
                 <AlertCircle className="h-5 w-5 text-gray-400" />
               </div>
               <div>
-                <p className="text-xs text-white/60">Not Started</p>
+                <p className="text-xs text-white">Not Started</p>
                 <p className="text-xl font-bold">{notStartedCategories}</p>
               </div>
             </div>
@@ -256,12 +256,12 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
                 <Table>
                   <TableHeader>
                     <TableRow className="border-elec-gray/40">
-                      <TableHead className="text-white/70">Category</TableHead>
-                      <TableHead className="text-white/70 text-center">Evidence</TableHead>
-                      <TableHead className="text-white/70 text-center">Verified</TableHead>
-                      <TableHead className="text-white/70">Progress</TableHead>
-                      <TableHead className="text-white/70 text-center">Status</TableHead>
-                      <TableHead className="text-white/70 w-10"></TableHead>
+                      <TableHead className="text-white">Category</TableHead>
+                      <TableHead className="text-white text-center">Evidence</TableHead>
+                      <TableHead className="text-white text-center">Verified</TableHead>
+                      <TableHead className="text-white">Progress</TableHead>
+                      <TableHead className="text-white text-center">Status</TableHead>
+                      <TableHead className="text-white w-10"></TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -281,7 +281,7 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
                         <TableCell>
                           <div className="flex items-center gap-2">
                             <Progress value={entry.completionPercentage} className="h-2 w-20" />
-                            <span className="text-xs text-white/60">
+                            <span className="text-xs text-white">
                               {entry.completionPercentage}%
                             </span>
                           </div>
@@ -290,13 +290,13 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
                           {getStatusBadge(entry.status)}
                         </TableCell>
                         <TableCell>
-                          {onCategoryClick && <ChevronRight className="h-4 w-4 text-white/40" />}
+                          {onCategoryClick && <ChevronRight className="h-4 w-4 text-white" />}
                         </TableCell>
                       </TableRow>
                     ))}
                     {coverageMatrix.length === 0 && (
                       <TableRow>
-                        <TableCell colSpan={6} className="text-center text-white/50 py-8">
+                        <TableCell colSpan={6} className="text-center text-white py-8">
                           No coverage data available
                         </TableCell>
                       </TableRow>
@@ -330,9 +330,9 @@ const CoverageMatrixView: React.FC<CoverageMatrixViewProps> = ({
           {ksbMappings.length === 0 && (
             <Card className="bg-white/5 border-elec-gray/40 mt-4">
               <CardContent className="p-8 text-center">
-                <Target className="h-12 w-12 text-white/30 mx-auto mb-4" />
-                <p className="text-white/50">No KSB mappings available yet</p>
-                <p className="text-sm text-white/30 mt-1">
+                <Target className="h-12 w-12 text-white mx-auto mb-4" />
+                <p className="text-white">No KSB mappings available yet</p>
+                <p className="text-sm text-white mt-1">
                   KSBs will appear here once evidence is mapped to apprenticeship standards
                 </p>
               </CardContent>

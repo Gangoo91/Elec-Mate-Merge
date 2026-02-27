@@ -187,7 +187,7 @@ const HNCModule3Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section4">
@@ -209,7 +209,7 @@ const HNCModule3Section4_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Line and Phase Voltage/Current Relationships
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Mathematical relationships between line and phase quantities in star and delta
             configurations
           </p>
@@ -304,13 +304,13 @@ const HNCModule3Section4_2 = () => {
                   <p className="font-bold text-elec-yellow text-lg mb-1">
                     V<sub>L</sub> = √3 × V<sub>ph</sub>
                   </p>
-                  <p className="text-white/70 text-xs">Line voltage is √3 times phase voltage</p>
+                  <p className="text-white text-xs">Line voltage is √3 times phase voltage</p>
                 </div>
                 <div className="p-3 rounded bg-black/30 text-center">
                   <p className="font-bold text-elec-yellow text-lg mb-1">
                     I<sub>L</sub> = I<sub>ph</sub>
                   </p>
-                  <p className="text-white/70 text-xs">Line current equals phase current</p>
+                  <p className="text-white text-xs">Line current equals phase current</p>
                 </div>
               </div>
             </div>
@@ -335,7 +335,7 @@ const HNCModule3Section4_2 = () => {
                 Star Connection Vector Diagram
               </p>
               <div className="p-4 rounded-lg bg-black/30">
-                <pre className="text-xs sm:text-sm text-white/90 font-mono whitespace-pre overflow-x-auto">
+                <pre className="text-xs sm:text-sm text-white font-mono whitespace-pre overflow-x-auto">
                   {`                    V_L1 (0°)
                        ↑
                        |
@@ -354,7 +354,7 @@ const HNCModule3Section4_2 = () => {
     and 30° displaced from phase voltages`}
                 </pre>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 The three phase voltages are 120° apart. Line voltage is measured between any two
                 phases and leads the corresponding phase voltage by 30°.
               </p>
@@ -391,13 +391,13 @@ const HNCModule3Section4_2 = () => {
                   <p className="font-bold text-elec-yellow text-lg mb-1">
                     V<sub>L</sub> = V<sub>ph</sub>
                   </p>
-                  <p className="text-white/70 text-xs">Line voltage equals phase voltage</p>
+                  <p className="text-white text-xs">Line voltage equals phase voltage</p>
                 </div>
                 <div className="p-3 rounded bg-black/30 text-center">
                   <p className="font-bold text-elec-yellow text-lg mb-1">
                     I<sub>L</sub> = √3 × I<sub>ph</sub>
                   </p>
-                  <p className="text-white/70 text-xs">Line current is √3 times phase current</p>
+                  <p className="text-white text-xs">Line current is √3 times phase current</p>
                 </div>
               </div>
             </div>
@@ -420,7 +420,7 @@ const HNCModule3Section4_2 = () => {
                 Delta Connection Vector Diagram
               </p>
               <div className="p-4 rounded-lg bg-black/30">
-                <pre className="text-xs sm:text-sm text-white/90 font-mono whitespace-pre overflow-x-auto">
+                <pre className="text-xs sm:text-sm text-white font-mono whitespace-pre overflow-x-auto">
                   {`                    L1
                      ●
                     /│\\
@@ -437,7 +437,7 @@ const HNCModule3Section4_2 = () => {
     and 30° displaced from phase currents`}
                 </pre>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 In delta, line current is the vector difference of two phase currents. This gives I
                 <sub>L</sub> = √3 × I<sub>ph</sub>.
               </p>
@@ -508,13 +508,13 @@ const HNCModule3Section4_2 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Voltage Relationship Verification
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   V<sub>L</sub> = √3 × V<sub>ph</sub>
                 </p>
                 <p className="mt-2">400V = 1.732 × 230V</p>
                 <p>400V = 398.4V ✓</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   The small difference (1.6V) is within tolerance
                 </p>
               </div>
@@ -564,7 +564,7 @@ const HNCModule3Section4_2 = () => {
                 Three-Phase Voltage Phasors
               </p>
               <div className="p-4 rounded-lg bg-black/30">
-                <pre className="text-xs sm:text-sm text-white/90 font-mono whitespace-pre overflow-x-auto">
+                <pre className="text-xs sm:text-sm text-white font-mono whitespace-pre overflow-x-auto">
                   {`                     V_L1 (Reference 0°)
                          ↑
                          │
@@ -613,7 +613,7 @@ const HNCModule3Section4_2 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Deriving √3 from Vector Diagrams
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Line voltage V<sub>L1-L2</sub> = V<sub>L1</sub> - V<sub>L2</sub>
                 </p>
@@ -634,7 +634,7 @@ const HNCModule3Section4_2 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Exam tip:</strong> Practice drawing vector diagrams - they help visualise and
               solve three-phase problems.
             </p>
@@ -841,7 +841,7 @@ const HNCModule3Section4_2 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-1">Voltage</p>
-                  <ul className="text-white/80 space-y-0.5">
+                  <ul className="text-white space-y-0.5">
                     <li>• True RMS multimeter (CAT III 600V min)</li>
                     <li>• Three-phase voltage tester</li>
                     <li>• Power quality analyser</li>
@@ -849,7 +849,7 @@ const HNCModule3Section4_2 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-1">Current</p>
-                  <ul className="text-white/80 space-y-0.5">
+                  <ul className="text-white space-y-0.5">
                     <li>• Clamp meter (true RMS)</li>
                     <li>• Three-phase clamp meter</li>
                     <li>• Flexible current probes</li>
@@ -885,11 +885,11 @@ const HNCModule3Section4_2 = () => {
                 <p className="font-bold text-elec-yellow text-lg mb-1">
                   V<sub>d</sub> = √3 × I<sub>L</sub> × L × (r cos φ + x sin φ)
                 </p>
-                <p className="text-white/70 text-xs mt-2">
+                <p className="text-white text-xs mt-2">
                   Or simplified: V<sub>d</sub> = √3 × I<sub>L</sub> × L × z
                 </p>
               </div>
-              <div className="text-xs text-white/70 mt-3 space-y-1">
+              <div className="text-xs text-white mt-3 space-y-1">
                 <p>
                   Where: I<sub>L</sub> = line current, L = length (m), r = resistance (Ω/m), x =
                   reactance (Ω/m)
@@ -902,11 +902,11 @@ const HNCModule3Section4_2 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Using BS 7671 Tables (Method 1)
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Voltage drop = (mV/A/m) × I<sub>b</sub> × L / 1000
                 </p>
-                <p className="mt-2 text-white/60">Tables give values for three-phase directly</p>
+                <p className="mt-2 text-white">Tables give values for three-phase directly</p>
                 <p className="mt-2">Example: 4mm² Cu, 25A, 30m, 29 mV/A/m (3-phase)</p>
                 <p>
                   V<sub>d</sub> = 29 × 25 × 30 / 1000 = <strong>21.75V</strong>
@@ -942,11 +942,11 @@ const HNCModule3Section4_2 = () => {
                       <td className="border border-white/10 px-3 py-2">8%</td>
                     </tr>
                     <tr>
-                      <td className="border border-white/10 px-3 py-2 text-white/70">
+                      <td className="border border-white/10 px-3 py-2 text-white">
                         Three-phase (400V)
                       </td>
-                      <td className="border border-white/10 px-3 py-2 text-white/70">12V max</td>
-                      <td className="border border-white/10 px-3 py-2 text-white/70">20V max</td>
+                      <td className="border border-white/10 px-3 py-2 text-white">12V max</td>
+                      <td className="border border-white/10 px-3 py-2 text-white">20V max</td>
                     </tr>
                   </tbody>
                 </table>
@@ -995,7 +995,7 @@ const HNCModule3Section4_2 = () => {
                 Typical Distribution Board Configuration
               </p>
               <div className="p-4 rounded-lg bg-black/30">
-                <pre className="text-xs sm:text-sm text-white/90 font-mono whitespace-pre overflow-x-auto">
+                <pre className="text-xs sm:text-sm text-white font-mono whitespace-pre overflow-x-auto">
                   {`    DNO Supply (400V 3-phase + N)
               │
               ▼
@@ -1074,7 +1074,7 @@ const HNCModule3Section4_2 = () => {
                 Single-phase loads should be distributed evenly across the three phases to minimise
                 neutral current and voltage unbalance.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Example - Office floor 45kW lighting load:</p>
                 <p className="mt-2">L1: 15kW (65A) - West wing</p>
                 <p>L2: 15kW (65A) - Central area</p>
@@ -1124,7 +1124,7 @@ const HNCModule3Section4_2 = () => {
                 <strong>Question:</strong> A star-connected heater bank has each phase rated at
                 230V, 10A. Calculate the line voltage and total power.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Given: V<sub>ph</sub> = 230V, I<sub>ph</sub> = 10A (star connection)
                 </p>
@@ -1143,7 +1143,7 @@ const HNCModule3Section4_2 = () => {
                   P = √3 × V<sub>L</sub> × I<sub>L</sub> = 1.732 × 400 × 10 ={' '}
                   <strong>6928W ≈ 6.9kW</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Or: P = 3 × V<sub>ph</sub> × I<sub>ph</sub> = 3 × 230 × 10 = 6900W ✓
                 </p>
               </div>
@@ -1157,7 +1157,7 @@ const HNCModule3Section4_2 = () => {
                 <strong>Question:</strong> A delta-connected motor draws 30A line current at 400V.
                 Calculate the phase current and power (pf = 0.85).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Given: I<sub>L</sub> = 30A, V<sub>L</sub> = 400V, pf = 0.85 (delta)
                 </p>
@@ -1190,7 +1190,7 @@ const HNCModule3Section4_2 = () => {
                 6mm² cable. Calculate line current and voltage drop. Table value: 6.4 mV/A/m
                 (three-phase).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Line current:</p>
                 <p>
                   I<sub>L</sub> = P / (√3 × V<sub>L</sub> × pf) = 15000 / (1.732 × 400 × 0.85)
@@ -1220,7 +1220,7 @@ const HNCModule3Section4_2 = () => {
                 <strong>Question:</strong> A three-phase DB shows: L1 = 45A, L2 = 52A, L3 = 48A.
                 Calculate the neutral current and percentage unbalance.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Average current: (45 + 52 + 48) / 3 = <strong>48.3A</strong>
                 </p>
@@ -1325,7 +1325,7 @@ const HNCModule3Section4_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1379,7 +1379,7 @@ const HNCModule3Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section4-1">

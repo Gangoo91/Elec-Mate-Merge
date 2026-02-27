@@ -222,7 +222,7 @@ const HNCModule5Section5_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section5">
@@ -244,7 +244,7 @@ const HNCModule5Section5_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             BMS Commissioning
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Point-to-point verification, functional performance testing, graphics testing, and
             system integration checks
           </p>
@@ -417,7 +417,7 @@ const HNCModule5Section5_4 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Temperature Sensors</p>
-                  <ul className="text-sm text-white/80 space-y-1.5 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                     <li className="pl-1">Compare against calibrated reference thermometer</li>
                     <li className="pl-1">Check at ambient and elevated temperature</li>
                     <li className="pl-1">Verify response time (typically &lt;60 seconds)</li>
@@ -426,7 +426,7 @@ const HNCModule5Section5_4 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Pressure Sensors</p>
-                  <ul className="text-sm text-white/80 space-y-1.5 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                     <li className="pl-1">Check zero offset with isolation valve closed</li>
                     <li className="pl-1">Verify span against calibrated gauge</li>
                     <li className="pl-1">Confirm correct pressure type (gauge/differential)</li>
@@ -809,7 +809,7 @@ const HNCModule5Section5_4 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Fire Alarm Integration</p>
-                  <ul className="text-sm text-white/80 space-y-1.5 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                     <li className="pl-1">Fire mode signal stops AHUs</li>
                     <li className="pl-1">Smoke dampers close on zone alarm</li>
                     <li className="pl-1">Stairwell pressurisation activates</li>
@@ -821,7 +821,7 @@ const HNCModule5Section5_4 = () => {
                   <p className="text-sm font-medium text-white mb-2">
                     Lighting Control Integration
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1.5 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                     <li className="pl-1">Occupancy status from DALI/KNX</li>
                     <li className="pl-1">Scene selection commands</li>
                     <li className="pl-1">Daylight dimming feedback</li>
@@ -890,7 +890,7 @@ const HNCModule5Section5_4 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Integration tip:</strong> Always test failure modes. What happens if
               communication is lost? Verify systems fail to a safe state and generate appropriate
               alarms.
@@ -916,14 +916,14 @@ const HNCModule5Section5_4 = () => {
                 <strong>Scenario:</strong> Verify a duct temperature sensor wired to controller
                 input AI-03, scaled 0-50°C on 4-20mA.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>1. Identify sensor location and verify wiring to AI-03 terminals</p>
                 <p>2. Connect 4-20mA calibrator in series with sensor</p>
                 <p>3. Inject 4mA → Controller should read 0°C (±1°C)</p>
                 <p>4. Inject 12mA → Controller should read 25°C (±1°C)</p>
                 <p>5. Inject 20mA → Controller should read 50°C (±1°C)</p>
                 <p className="mt-2 text-green-400">Result: All readings within tolerance - PASS</p>
-                <p className="text-white/60">
+                <p className="text-white">
                   Document on test sheet with date, tester, and readings
                 </p>
               </div>
@@ -937,7 +937,7 @@ const HNCModule5Section5_4 = () => {
                 <strong>Scenario:</strong> Test a heating valve actuator (spring return, fail
                 closed) with 0-10V position feedback.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>1. Command 0% → Valve closes, feedback reads 0V (0%)</p>
                 <p>2. Command 50% → Valve opens to mid-position, feedback ~5V</p>
                 <p>3. Command 100% → Valve fully open, feedback reads 10V (100%)</p>
@@ -958,7 +958,7 @@ const HNCModule5Section5_4 = () => {
                 <strong>Scenario:</strong> Test high temperature alarm for server room (setpoint
                 25°C, alarm at 28°C).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>1. Current room temperature: 22°C (normal operation)</p>
                 <p>2. Lower alarm setpoint temporarily to 21°C</p>
                 <p>3. Verify alarm generates within 30 seconds:</p>
@@ -968,7 +968,7 @@ const HNCModule5Section5_4 = () => {
                 <p>4. Acknowledge alarm → Flashing stops, remains red</p>
                 <p>5. Reset alarm setpoint to 28°C → Alarm clears</p>
                 <p className="mt-2 text-green-400">Result: Alarm routing correct - PASS</p>
-                <p className="text-white/60">Note: Reset all setpoints to design values</p>
+                <p className="text-white">Note: Reset all setpoints to design values</p>
               </div>
             </div>
           </div>
@@ -1053,7 +1053,7 @@ const HNCModule5Section5_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1103,7 +1103,7 @@ const HNCModule5Section5_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section5">

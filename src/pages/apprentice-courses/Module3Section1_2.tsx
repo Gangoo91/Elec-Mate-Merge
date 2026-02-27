@@ -226,7 +226,7 @@ const Module3Section1_2: React.FC = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -244,13 +244,13 @@ const Module3Section1_2: React.FC = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 3</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 3.1.2</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 3.1.2</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Twin and Earth Cable (T&E)
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Understanding flat PVC sheathed cable construction, applications and installation
               requirements for UK electrical work.
             </p>
@@ -262,7 +262,7 @@ const Module3Section1_2: React.FC = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="grid md:grid-cols-2 gap-4 text-sm text-white/80">
+            <div className="grid md:grid-cols-2 gap-4 text-sm text-white">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-6 space-y-1">
@@ -306,7 +306,7 @@ const Module3Section1_2: React.FC = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <ul className="list-disc pl-6 space-y-2 text-sm text-white/80">
+            <ul className="list-disc pl-6 space-y-2 text-sm text-white">
               <li>Identify the construction and components of Twin and Earth cable.</li>
               <li>Explain the common sizes and their typical applications in UK installations.</li>
               <li>Recognise the benefits and limitations of T&E compared to other wiring types.</li>
@@ -325,7 +325,7 @@ const Module3Section1_2: React.FC = () => {
               <Wrench className="w-5 h-5" />
               Construction of T&E Cable
             </h2>
-            <div className="space-y-4 text-sm text-white/80">
+            <div className="space-y-4 text-sm text-white">
               <p>
                 <strong>Description:</strong> Twin and Earth cable consists of two insulated
                 conductors plus a bare earth wire, all contained within a flat PVC sheath.
@@ -397,7 +397,7 @@ const Module3Section1_2: React.FC = () => {
               <Zap className="w-5 h-5" />
               Common Sizes and Applications
             </h2>
-            <div className="space-y-4 text-sm text-white/80">
+            <div className="space-y-4 text-sm text-white">
               <p>
                 <strong>Description:</strong> T&E cable is available in various conductor sizes to
                 suit different circuit requirements and current ratings.
@@ -413,7 +413,7 @@ const Module3Section1_2: React.FC = () => {
                       <th className="py-3 pr-4">Typical Protection</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-t border-white/10">
                       <td className="py-3 pr-4 font-medium">1.0 mm²</td>
                       <td className="py-3 pr-4">11A (clipped direct)</td>
@@ -484,7 +484,7 @@ const Module3Section1_2: React.FC = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Advantages of T&E Cable
             </h2>
-            <div className="space-y-4 text-sm text-white/80">
+            <div className="space-y-4 text-sm text-white">
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-green-500/10 border border-green-400/30">
                   <p className="font-medium text-white mb-2">Installation Benefits</p>
@@ -527,7 +527,7 @@ const Module3Section1_2: React.FC = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Limitations and Restrictions
             </h2>
-            <div className="space-y-4 text-sm text-white/80">
+            <div className="space-y-4 text-sm text-white">
               <div className="p-4 rounded-lg bg-card/50 border border-white/10">
                 <p className="font-medium text-white mb-2">Environmental Limitations</p>
                 <ul className="list-disc pl-4 space-y-1">
@@ -586,7 +586,7 @@ const Module3Section1_2: React.FC = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Installation Considerations
             </h2>
-            <div className="space-y-4 text-sm text-white/80">
+            <div className="space-y-4 text-sm text-white">
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-card/50 border border-white/10">
                   <p className="font-medium text-white mb-2">Fixing and Support</p>
@@ -655,7 +655,7 @@ const Module3Section1_2: React.FC = () => {
               <Settings className="w-5 h-5" />
               Practical Installation Guide
             </h2>
-            <div className="space-y-6 text-sm text-white/80">
+            <div className="space-y-6 text-sm text-white">
               {/* Cable Clips and Fixings */}
               <div className="space-y-4">
                 <h3 className="font-medium text-white">Cable Clips and Fixings</h3>
@@ -908,7 +908,7 @@ const Module3Section1_2: React.FC = () => {
               <Home className="w-5 h-5" />
               Real-World Scenario: Kitchen Rewire
             </h2>
-            <div className="space-y-4 text-sm text-white/80">
+            <div className="space-y-4 text-sm text-white">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">The Project</p>
                 <p>
@@ -987,7 +987,7 @@ const Module3Section1_2: React.FC = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">10</span>
               Common Mistakes and How to Avoid Them
             </h2>
-            <div className="space-y-4 text-sm text-white/80">
+            <div className="space-y-4 text-sm text-white">
               <div className="p-4 rounded-lg bg-card/50 border border-white/10">
                 <p className="font-medium text-white mb-2 flex items-center gap-2">
                   <AlertTriangle className="w-4 h-4" /> Termination Errors
@@ -1050,7 +1050,7 @@ const Module3Section1_2: React.FC = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">11</span>
               BS 7671 Context and Compliance
             </h2>
-            <div className="space-y-4 text-sm text-white/80">
+            <div className="space-y-4 text-sm text-white">
               <div className="p-4 rounded-lg bg-card/50 border border-white/10">
                 <p className="font-medium text-white mb-2">Cable Selection (Chapter 52)</p>
                 <ul className="list-disc pl-4 space-y-1">
@@ -1087,7 +1087,7 @@ const Module3Section1_2: React.FC = () => {
               >
                 <div className="flex items-start gap-3">
                   <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5" />
-                  <p className="text-white/80">
+                  <p className="text-white">
                     Isolate, lock-off and prove dead before work. Follow manufacturer instructions
                     and BS 7671 requirements for all T&E installations.
                   </p>
@@ -1102,11 +1102,11 @@ const Module3Section1_2: React.FC = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">12</span>
               Frequently Asked Questions
             </h2>
-            <ul className="space-y-3 text-sm text-white/80">
+            <ul className="space-y-3 text-sm text-white">
               {faqs.map((f, i) => (
                 <li key={i} className="p-4 rounded-lg bg-card/50 border border-white/10">
                   <p className="font-medium text-white mb-1">{f.q}</p>
-                  <p className="text-white/70">{f.a}</p>
+                  <p className="text-white">{f.a}</p>
                 </li>
               ))}
             </ul>
@@ -1145,7 +1145,7 @@ const Module3Section1_2: React.FC = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             <Button
               variant="ghost"
-              className="min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+              className="min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../1-1">

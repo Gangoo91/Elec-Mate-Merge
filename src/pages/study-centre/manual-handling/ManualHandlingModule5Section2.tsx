@@ -220,7 +220,7 @@ export default function ManualHandlingModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-5">
@@ -245,7 +245,7 @@ export default function ManualHandlingModule5Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Fitness, Fatigue &amp; Personal Factors
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How physical fitness, age, pregnancy, pre-existing conditions, medication, fatigue, and
             individual experience affect manual handling capacity and injury risk
           </p>
@@ -351,7 +351,7 @@ export default function ManualHandlingModule5Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">The Strength Misconception</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A physically strong worker who lifts with a bent, twisted spine generates the same
                   dangerous shear forces on the lumbar discs as a weaker worker. The intervertebral
                   discs have no muscular protection &mdash; they rely on{' '}
@@ -362,7 +362,7 @@ export default function ManualHandlingModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">What Fitness DOES Help With</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -425,7 +425,7 @@ export default function ManualHandlingModule5Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Age-Related Changes Affecting Manual Handling
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -502,7 +502,7 @@ export default function ManualHandlingModule5Section2() {
                     Physical Changes During Pregnancy
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -542,7 +542,7 @@ export default function ManualHandlingModule5Section2() {
                   <ShieldAlert className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Legal Requirement</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The Management of Health and Safety at Work Regulations 1999 (Regulation 16)
                   requires a{' '}
                   <strong className="text-white">
@@ -580,42 +580,42 @@ export default function ManualHandlingModule5Section2() {
                   Common Pre-Existing Conditions That Affect Manual Handling
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
                       <strong className="text-white">Previous back injury:</strong> weakened disc or
                       muscle tissue is more susceptible to re-injury
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
                       <strong className="text-white">Arthritis:</strong> joint inflammation reduces
                       range of motion and increases pain under load
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
                       <strong className="text-white">Hernias:</strong> increased intra-abdominal
                       pressure from lifting can worsen or trigger recurrence
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
                       <strong className="text-white">Cardiovascular conditions:</strong> heavy
                       lifting increases blood pressure and cardiac demand
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
                       <strong className="text-white">Previous joint surgery:</strong> operated
                       joints may have reduced stability or restricted movement
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
                       <strong className="text-white">Osteoporosis:</strong> reduced bone density
@@ -659,12 +659,12 @@ export default function ManualHandlingModule5Section2() {
                     Painkillers Masking Warning Pain
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   This is the most dangerous medication-related risk in manual handling. Pain is the
                   body&rsquo;s <strong className="text-white">warning system</strong>. When
                   painkillers suppress this warning:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>The worker continues to stress damaged tissue without realising it</span>
@@ -686,7 +686,7 @@ export default function ManualHandlingModule5Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Other Medication Effects on Manual Handling
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -746,7 +746,7 @@ export default function ManualHandlingModule5Section2() {
                     How Fatigue Affects Manual Handling
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -792,7 +792,7 @@ export default function ManualHandlingModule5Section2() {
                     Effective Fatigue Management Strategies
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -856,7 +856,7 @@ export default function ManualHandlingModule5Section2() {
                     Why New &amp; Young Workers Are at Greater Risk
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -944,7 +944,7 @@ export default function ManualHandlingModule5Section2() {
                         AGE &amp; FITNESS
                       </span>
                     </div>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-white/40 flex-shrink-0" />
                         <span>Age-related degeneration?</span>
@@ -970,7 +970,7 @@ export default function ManualHandlingModule5Section2() {
                         PRE-EXISTING CONDITIONS
                       </span>
                     </div>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-white/40 flex-shrink-0" />
                         <span>Previous back/joint injury?</span>
@@ -996,7 +996,7 @@ export default function ManualHandlingModule5Section2() {
                         PREGNANCY &amp; MEDICATION
                       </span>
                     </div>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-white/40 flex-shrink-0" />
                         <span>Pregnant or recently given birth?</span>
@@ -1022,7 +1022,7 @@ export default function ManualHandlingModule5Section2() {
                         EXPERIENCE &amp; TRAINING
                       </span>
                     </div>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-white/40 flex-shrink-0" />
                         <span>New worker or experienced?</span>
@@ -1048,7 +1048,7 @@ export default function ManualHandlingModule5Section2() {
                         FATIGUE &amp; WELLBEING
                       </span>
                     </div>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-white/40 flex-shrink-0" />
                         <span>End of a long shift?</span>
@@ -1074,7 +1074,7 @@ export default function ManualHandlingModule5Section2() {
                         PPE &amp; CLOTHING
                       </span>
                     </div>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-white/40 flex-shrink-0" />
                         <span>PPE restricting movement?</span>
@@ -1091,7 +1091,7 @@ export default function ManualHandlingModule5Section2() {
                   </div>
                 </div>
 
-                <p className="text-white/50 text-xs italic text-center mt-4">
+                <p className="text-white text-xs italic text-center mt-4">
                   All personal risk factors must be assessed for each individual worker as part of
                   the TILE assessment under MHOR 1992.
                 </p>
@@ -1107,7 +1107,7 @@ export default function ManualHandlingModule5Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1121,7 +1121,7 @@ export default function ManualHandlingModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-5-section-1">

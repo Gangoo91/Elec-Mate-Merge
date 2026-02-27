@@ -226,7 +226,7 @@ const Level3Module3Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section4">
@@ -371,7 +371,7 @@ const Level3Module3Section4_2 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Formula derivation:</strong> Erms = sqrt( (1/T) x integral of e squared dt )
               over one period. For a sine wave e = Epeak sin(omega t), this integral evaluates to
               Erms = Epeak / sqrt(2) = 0.707 x Epeak.
@@ -403,18 +403,18 @@ const Level3Module3Section4_2 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Peak Value</p>
-                <p className="text-white/90 text-xs">Vpeak = Vrms x 1.414</p>
-                <p className="text-white/90 text-xs">UK: 325 V peak</p>
+                <p className="text-white text-xs">Vpeak = Vrms x 1.414</p>
+                <p className="text-white text-xs">UK: 325 V peak</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Peak-to-Peak</p>
-                <p className="text-white/90 text-xs">Vpp = 2 x Vpeak</p>
-                <p className="text-white/90 text-xs">UK: 650 V p-p</p>
+                <p className="text-white text-xs">Vpp = 2 x Vpeak</p>
+                <p className="text-white text-xs">UK: 650 V p-p</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Relationship</p>
-                <p className="text-white/90 text-xs">Vpp = Vrms x 2.828</p>
-                <p className="text-white/90 text-xs">sqrt(2) x 2</p>
+                <p className="text-white text-xs">Vpp = Vrms x 2.828</p>
+                <p className="text-white text-xs">sqrt(2) x 2</p>
               </div>
             </div>
 
@@ -551,7 +551,7 @@ const Level3Module3Section4_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -596,7 +596,7 @@ const Level3Module3Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section4-1">

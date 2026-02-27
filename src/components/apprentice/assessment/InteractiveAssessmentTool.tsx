@@ -143,7 +143,7 @@ const InteractiveAssessmentTool = ({
       case 'low':
         return { bg: 'bg-green-500/10', text: 'text-green-400', border: 'border-green-500/30' };
       default:
-        return { bg: 'bg-white/5', text: 'text-white/70', border: 'border-white/20' };
+        return { bg: 'bg-white/5', text: 'text-white', border: 'border-white/20' };
     }
   };
 
@@ -168,18 +168,18 @@ const InteractiveAssessmentTool = ({
               <Sparkles className="h-12 w-12 text-green-400" />
             </div>
             <h3 className="text-2xl font-bold text-white">Well Done!</h3>
-            <p className="text-white/60">You've successfully completed the {tool.title}</p>
+            <p className="text-white">You've successfully completed the {tool.title}</p>
 
             <div className="grid grid-cols-2 gap-4 mt-6">
               <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
                 <div className="text-3xl font-bold text-elec-yellow mb-1">{completedItems}</div>
-                <div className="text-sm text-white/60">Items Assessed</div>
+                <div className="text-sm text-white">Items Assessed</div>
               </div>
               <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
                 <div className="text-3xl font-bold text-green-400 mb-1">
                   {successRate.toFixed(0)}%
                 </div>
-                <div className="text-sm text-white/60">Completion Rate</div>
+                <div className="text-sm text-white">Completion Rate</div>
               </div>
             </div>
           </div>
@@ -187,7 +187,7 @@ const InteractiveAssessmentTool = ({
           {notes && (
             <div className="p-4 rounded-xl bg-purple-500/10 border border-purple-500/30">
               <h4 className="font-semibold text-purple-300 mb-2">Your Notes:</h4>
-              <p className="text-sm text-white/70">{notes}</p>
+              <p className="text-sm text-white">{notes}</p>
             </div>
           )}
 
@@ -203,7 +203,7 @@ const InteractiveAssessmentTool = ({
                   className="flex items-start gap-3 p-3 rounded-xl bg-white/10 border border-white/10"
                 >
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-white/70">{item.text}</span>
+                  <span className="text-sm text-white">{item.text}</span>
                 </div>
               ))}
             </div>
@@ -251,7 +251,7 @@ const InteractiveAssessmentTool = ({
               <Badge className={`${riskConfig.bg} ${riskConfig.text} border ${riskConfig.border}`}>
                 {currentItem.riskLevel.toUpperCase()} RISK
               </Badge>
-              <span className="text-xs text-white/60">{currentItem.category}</span>
+              <span className="text-xs text-white">{currentItem.category}</span>
             </div>
 
             <h3 className="text-lg font-semibold text-white">{currentItem.text}</h3>
@@ -264,7 +264,7 @@ const InteractiveAssessmentTool = ({
                   </div>
                   <div>
                     <h4 className="font-medium text-blue-400 mb-1">Guidance</h4>
-                    <p className="text-sm text-white/70">{currentItem.guidance}</p>
+                    <p className="text-sm text-white">{currentItem.guidance}</p>
                   </div>
                 </div>
               </div>
@@ -284,7 +284,7 @@ const InteractiveAssessmentTool = ({
                   ${
                     responses[currentItem.id] === 'compliant'
                       ? 'bg-green-500/20 border-green-500/50 text-green-400'
-                      : 'bg-white/10 border-white/10 hover:border-green-500/30 text-white/70'
+                      : 'bg-white/10 border-white/10 hover:border-green-500/30 text-white'
                   }
                 `}
               >
@@ -300,7 +300,7 @@ const InteractiveAssessmentTool = ({
                   ${
                     responses[currentItem.id] === 'non-compliant'
                       ? 'bg-red-500/20 border-red-500/50 text-red-400'
-                      : 'bg-white/10 border-white/10 hover:border-red-500/30 text-white/70'
+                      : 'bg-white/10 border-white/10 hover:border-red-500/30 text-white'
                   }
                 `}
               >
@@ -316,7 +316,7 @@ const InteractiveAssessmentTool = ({
                   ${
                     responses[currentItem.id] === 'not-applicable'
                       ? 'bg-white/10 border-white/30 text-white'
-                      : 'bg-white/10 border-white/10 hover:border-white/30 text-white/70'
+                      : 'bg-white/10 border-white/10 hover:border-white/30 text-white'
                   }
                 `}
               >

@@ -223,7 +223,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-4">
@@ -250,7 +250,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             When to Inspect
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding the legal triggers for scaffold inspection under the Work at Height
             Regulations 2005 &mdash; when inspections must take place, who can carry them out, and
             what &ldquo;competent person&rdquo; means in the context of scaffold safety
@@ -363,7 +363,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                 legal requirements, including:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                   <span>
@@ -449,7 +449,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Trigger 1: Before First Use (After Erection)
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       A scaffold must be inspected after it has been erected in any position in
                       which it is intended to be used, and before any person uses it for work. This
                       initial inspection confirms that the scaffold has been built in accordance
@@ -465,7 +465,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Trigger 2: After Any Substantial Alteration
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Whenever a scaffold is substantially altered &mdash; for example, when
                       additional lifts are added, bays are extended or removed, ties are
                       repositioned, loading bays are installed, or the scaffold is partially
@@ -480,7 +480,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Trigger 3: At Intervals Not Exceeding 7 Days
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       While a scaffold remains in use, it must be inspected at intervals not
                       exceeding 7 days. This 7-day maximum is a statutory requirement and cannot be
                       extended under any circumstances. The periodic inspection is designed to
@@ -495,7 +495,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Trigger 4: After Any Event Likely to Have Affected Stability
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       A scaffold must be inspected after any event that is likely to have affected
                       its strength or stability, regardless of when the last periodic inspection
                       took place. This includes strong winds, heavy rain, snow or ice loading,
@@ -523,7 +523,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                     </div>
                     <div className="flex-1 bg-slate-500/10 border border-slate-500/20 rounded-lg p-2.5">
                       <p className="text-xs text-white font-medium">Scaffold erection completed</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Initial inspection required before any trade uses the scaffold (Trigger 1)
                       </p>
                     </div>
@@ -536,7 +536,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                       <p className="text-xs text-white font-medium">
                         Initial inspection completed &mdash; scaffold signed off as safe
                       </p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Report completed within 24 hours. 7-day cycle starts
                       </p>
                     </div>
@@ -549,7 +549,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                       <p className="text-xs text-white font-medium">
                         Strong winds overnight (gusts exceeding 40 mph)
                       </p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Post-event inspection required before scaffold is used (Trigger 4). 7-day
                         cycle continues from original schedule
                       </p>
@@ -563,7 +563,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                       <p className="text-xs text-white font-medium">
                         Post-event inspection completed &mdash; scaffold confirmed safe
                       </p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Report completed within 24 hours. This does NOT reset the 7-day cycle
                       </p>
                     </div>
@@ -576,7 +576,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                       <p className="text-xs text-white font-medium">
                         7-day periodic inspection due (7 days from Day 1)
                       </p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Must be completed before end of day. Report within 24 hours (Trigger 3)
                       </p>
                     </div>
@@ -589,7 +589,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                       <p className="text-xs text-white font-medium">
                         Additional lift added to scaffold (substantial alteration)
                       </p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Inspection required before altered scaffold is used (Trigger 2). 7-day cycle
                         continues
                       </p>
@@ -603,14 +603,14 @@ export default function ScaffoldingAwarenessModule4Section1() {
                       <p className="text-xs text-white font-medium">
                         Next 7-day periodic inspection due (7 days from Day 8)
                       </p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         The cycle continues regardless of any interim inspections triggered by
                         events or alterations
                       </p>
                     </div>
                   </div>
                 </div>
-                <p className="text-xs text-white/40 mt-3 italic">
+                <p className="text-xs text-white mt-3 italic">
                   Note: Event-triggered and alteration-triggered inspections are{' '}
                   <strong>additional</strong> to the 7-day periodic inspections. They do not replace
                   or reset the 7-day cycle.
@@ -622,7 +622,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Warning</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A scaffold that has not been inspected in accordance with Regulation 12 must{' '}
                   <strong>not be used</strong> for work. If an overdue inspection is discovered, the
                   scaffold should be immediately taken out of service (scaffolding tags changed to
@@ -664,7 +664,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                 following elements:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                   <span>
@@ -794,7 +794,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Strong Winds</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Wind is the most common environmental event triggering scaffold inspections.
                       Strong winds can loosen couplers (especially those that were under-torqued),
                       displace or rip scaffold sheeting and debris netting (which dramatically
@@ -809,7 +809,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Heavy Rain and Flooding</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Heavy rainfall can cause soil erosion and softening beneath scaffold
                       foundations, leading to subsidence and uneven settlement. Water accumulation
                       around base plates and sole boards can wash away compacted ground and
@@ -825,7 +825,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Impact from Vehicles, Plant, or Materials
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Scaffolds on construction sites are vulnerable to impact from delivery
                       vehicles, telehandlers, excavators, cranes, and falling materials being loaded
                       or unloaded. Even a seemingly minor impact can bend standards, loosen
@@ -841,7 +841,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Subsidence, Ground Movement, and Excavation
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Any movement of the ground beneath a scaffold &mdash; whether caused by
                       natural subsidence, vibration from nearby piling or compaction equipment,
                       excavation work close to the scaffold foundations, or changes in the water
@@ -855,7 +855,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Snow, Ice, and Frost</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Snow accumulation on scaffold platforms adds significant dead load that the
                       scaffold may not have been designed to carry. Ice formation on couplers and
                       tubes can mask defects and also create slip hazards on working platforms and
@@ -915,7 +915,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                 require a fresh inspection:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                   <span>
@@ -985,7 +985,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Unauthorised Modifications</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   One of the most common causes of scaffold incidents is{' '}
                   <strong>unauthorised modification</strong>
                   by scaffold users. This includes removing boards to create openings for materials
@@ -1004,7 +1004,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   What Is NOT a Substantial Alteration?
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Minor maintenance activities that do not change the structural configuration of
                   the scaffold are generally not considered substantial alterations. Examples
                   include replacing a single damaged board with a like-for-like replacement,
@@ -1062,7 +1062,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                       <FileText className="h-5 w-5 text-slate-400" />
                     </div>
                     <p className="text-sm font-semibold text-white mb-2">Theoretical Knowledge</p>
-                    <ul className="text-xs text-white/70 text-left space-y-1.5">
+                    <ul className="text-xs text-white text-left space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                         <span>Understanding of the Work at Height Regulations 2005</span>
@@ -1086,7 +1086,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                       <Eye className="h-5 w-5 text-slate-400" />
                     </div>
                     <p className="text-sm font-semibold text-white mb-2">Practical Experience</p>
-                    <ul className="text-xs text-white/70 text-left space-y-1.5">
+                    <ul className="text-xs text-white text-left space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                         <span>Hands-on experience with scaffold erection and dismantling</span>
@@ -1110,7 +1110,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                       <Award className="h-5 w-5 text-slate-400" />
                     </div>
                     <p className="text-sm font-semibold text-white mb-2">Relevant Training</p>
-                    <ul className="text-xs text-white/70 text-left space-y-1.5">
+                    <ul className="text-xs text-white text-left space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                         <span>CISRS scaffold inspection training (for scaffolders)</span>
@@ -1130,7 +1130,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                     </ul>
                   </div>
                 </div>
-                <p className="text-xs text-white/40 mt-3 italic">
+                <p className="text-xs text-white mt-3 italic">
                   All three pillars must be present. Training alone is not sufficient without
                   experience, and experience alone is not sufficient without formal training and
                   up-to-date knowledge.
@@ -1143,7 +1143,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                 knowledge, and experience:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                   <span>
@@ -1189,7 +1189,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Who Is NOT Competent</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A person who has not received specific scaffold inspection training, who does not
                   understand scaffold design and loading principles, or who cannot identify defects
                   and assess their significance is <strong>not a competent person</strong> for the
@@ -1239,7 +1239,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       CISRS Scaffold Inspection Training Scheme (SITS)
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The SITS course is specifically designed for <strong>non-scaffolders</strong>{' '}
                       who need to inspect scaffolds as part of their role. This includes site
                       managers, project managers, site supervisors, health and safety officers, and
@@ -1257,7 +1257,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       CISRS Scaffolder Training (Core Programme)
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Qualified CISRS scaffolders (both Part 1 and Part 2 / Advanced) receive
                       scaffold inspection training as an integral part of their core training
                       programme. The CISRS scaffolder training pathway includes: Scaffolder Trainee
@@ -1273,7 +1273,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       CITB Scaffold Inspection Course
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The CITB also offers its own scaffold inspection course, which covers similar
                       content to the CISRS SITS course and is aimed at non-scaffolders. The CITB
                       course is another recognised route to demonstrating competence for scaffold
@@ -1306,7 +1306,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                     Principal Contractor Requirements
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Most major principal contractors in the UK now require evidence of specific
                   scaffold inspection training before allowing anyone to carry out formal 7-day
                   inspections on their sites. This typically means a current CISRS SITS card (for
@@ -1356,7 +1356,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Early Morning Inspections</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Many sites carry out the 7-day inspection first thing in the morning, before
                       the trades arrive and begin work. This is considered best practice for several
                       reasons: the scaffold is unloaded and unoccupied, making it easier to inspect;
@@ -1372,7 +1372,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Post-Event Inspections &mdash; Timing
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       After an event likely to have affected stability (such as overnight high
                       winds), the inspection must be carried out{' '}
                       <strong>before the scaffold is used again</strong>. This means the scaffold
@@ -1387,7 +1387,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       The 24-Hour Report Deadline
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       While the inspection itself must be carried out within the working day, the
                       formal written report must be completed <strong>within 24 hours</strong> of
                       the inspection taking place. This allows the inspector time to compile their
@@ -1421,12 +1421,12 @@ export default function ScaffoldingAwarenessModule4Section1() {
                     Inspection Report Requirements (Schedule 7)
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Every inspection under Regulation 12 must result in a written report containing
                   the following information as specified in Schedule 7 of the Work at Height
                   Regulations 2005:
                 </p>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -1480,7 +1480,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Report Retention</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The completed inspection report must be kept at the site where the inspection was
                   carried out for as long as the construction work continues at that site. After the
                   construction work is completed, the reports must be kept at the office of the
@@ -1518,7 +1518,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1536,7 +1536,7 @@ export default function ScaffoldingAwarenessModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-4">

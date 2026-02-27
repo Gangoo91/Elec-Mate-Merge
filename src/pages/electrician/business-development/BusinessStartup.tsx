@@ -70,7 +70,7 @@ const BusinessStartup = () => {
         <section id="planning" className="scroll-mt-32 space-y-6">
           <div className="mb-8 text-center max-w-3xl mx-auto">
             <h2 className="text-2xl font-bold text-white mb-3">Business Planning</h2>
-            <p className="text-base text-white/80 leading-relaxed">
+            <p className="text-base text-white leading-relaxed">
               A comprehensive business plan is the foundation of every successful electrical
               contracting business. Research shows that businesses with detailed plans are 300% more
               likely to succeed and reach profitability 40% faster than those without.
@@ -104,7 +104,7 @@ const BusinessStartup = () => {
             id="market-research"
             summary={
               <div className="space-y-3">
-                <p className="text-white/90">
+                <p className="text-white">
                   Understanding your local market is the critical first step to business success.
                   Thorough market research helps you identify gaps in the market, understand
                   competitor pricing, and define your ideal customer profile. This knowledge
@@ -136,7 +136,7 @@ const BusinessStartup = () => {
                     Week 1-2
                   </span>
                 </div>
-                <p className="text-sm text-white/80 mb-4">
+                <p className="text-sm text-white mb-4">
                   Conduct a comprehensive assessment of your target service area to understand the
                   competitive landscape and market opportunities.
                 </p>
@@ -148,7 +148,7 @@ const BusinessStartup = () => {
                     'Monitor local planning applications for new developments requiring electrical contractors',
                     'Identify underserved areas or specialisms with less competition (EV charging, solar, smart homes)',
                   ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm text-white/80">
+                    <li key={i} className="flex items-start gap-3 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
                       <span>{item}</span>
                     </li>
@@ -163,7 +163,7 @@ const BusinessStartup = () => {
                     Week 2-3
                   </span>
                 </div>
-                <p className="text-sm text-white/80 mb-4">
+                <p className="text-sm text-white mb-4">
                   Define your target customer groups and understand their specific needs, pain
                   points, and buying behaviour.
                 </p>
@@ -192,7 +192,7 @@ const BusinessStartup = () => {
                   ].map((cust, i) => (
                     <div key={i} className="p-4 rounded-lg bg-white/[0.02] border border-white/5">
                       <h5 className="font-medium text-white mb-1">{cust.segment}</h5>
-                      <p className="text-xs text-white/80 mb-2">{cust.desc}</p>
+                      <p className="text-xs text-white mb-2">{cust.desc}</p>
                       <p className="text-xs font-medium text-yellow-400">Avg. value: {cust.avg}</p>
                     </div>
                   ))}
@@ -206,7 +206,7 @@ const BusinessStartup = () => {
                     Week 3-4
                   </span>
                 </div>
-                <p className="text-sm text-white/80 mb-4">
+                <p className="text-sm text-white mb-4">
                   Create realistic income projections based on market conditions, your capacity, and
                   seasonal variations.
                 </p>
@@ -218,7 +218,7 @@ const BusinessStartup = () => {
                     'Plan for gradual growth - aim for 50% capacity in months 1-3, building to 80%+ by month 12',
                     'Include contingency for slower periods and non-paying clients (5-10% of projected revenue)',
                   ].map((item, i) => (
-                    <li key={i} className="flex items-start gap-3 text-sm text-white/80">
+                    <li key={i} className="flex items-start gap-3 text-sm text-white">
                       <CheckCircle className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
                       <span>{item}</span>
                     </li>
@@ -236,7 +236,7 @@ const BusinessStartup = () => {
             id="financial-planning"
             summary={
               <div className="space-y-3">
-                <p className="text-white/90">
+                <p className="text-white">
                   Proper financial planning is crucial for business survival. Statistics show that
                   82% of small business failures are due to cash flow problems. Understanding your
                   startup costs, ongoing expenses, and working capital requirements will set you up
@@ -245,15 +245,15 @@ const BusinessStartup = () => {
                 <div className="grid grid-cols-3 gap-3 mt-4">
                   <div className="text-center p-4 rounded-xl bg-white/[0.03] border border-white/10">
                     <p className="text-2xl font-bold text-yellow-400">£13-33k</p>
-                    <p className="text-sm text-white/80 mt-1">Essential Equipment</p>
+                    <p className="text-sm text-white mt-1">Essential Equipment</p>
                   </div>
                   <div className="text-center p-4 rounded-xl bg-white/[0.03] border border-white/10">
                     <p className="text-2xl font-bold text-yellow-400">£3.6-8k</p>
-                    <p className="text-sm text-white/80 mt-1">Business Setup</p>
+                    <p className="text-sm text-white mt-1">Business Setup</p>
                   </div>
                   <div className="text-center p-4 rounded-xl bg-white/[0.03] border border-white/10">
                     <p className="text-2xl font-bold text-yellow-400">£13-30k</p>
-                    <p className="text-sm text-white/80 mt-1">Working Capital</p>
+                    <p className="text-sm text-white mt-1">Working Capital</p>
                   </div>
                 </div>
               </div>
@@ -264,7 +264,7 @@ const BusinessStartup = () => {
                 <h4 className="font-semibold text-white mb-4">
                   Essential Startup Equipment (£13,300 - £33,500)
                 </h4>
-                <p className="text-sm text-white/80 mb-4">
+                <p className="text-sm text-white mb-4">
                   Quality tools and equipment are essential investments that directly impact your
                   work quality and efficiency.
                 </p>
@@ -297,7 +297,7 @@ const BusinessStartup = () => {
                     >
                       <div className="flex-1">
                         <span className="text-sm font-medium text-white">{inv.item}</span>
-                        <p className="text-xs text-white/80 mt-0.5">{inv.note}</p>
+                        <p className="text-xs text-white mt-0.5">{inv.note}</p>
                       </div>
                       <span className="text-sm font-semibold text-yellow-400 whitespace-nowrap">
                         {inv.amount}
@@ -311,7 +311,7 @@ const BusinessStartup = () => {
                 <h4 className="font-semibold text-white mb-4">
                   Business Setup Costs (£3,600 - £8,300)
                 </h4>
-                <p className="text-sm text-white/80 mb-4">
+                <p className="text-sm text-white mb-4">
                   One-time costs to establish your business legally and professionally.
                 </p>
                 <div className="space-y-3">
@@ -343,7 +343,7 @@ const BusinessStartup = () => {
                     >
                       <div className="flex-1">
                         <span className="text-sm font-medium text-white">{inv.item}</span>
-                        <p className="text-xs text-white/80 mt-0.5">{inv.note}</p>
+                        <p className="text-xs text-white mt-0.5">{inv.note}</p>
                       </div>
                       <span className="text-sm font-semibold text-yellow-400 whitespace-nowrap">
                         {inv.amount}
@@ -357,7 +357,7 @@ const BusinessStartup = () => {
                 <h4 className="font-semibold text-white mb-4">
                   Working Capital Reserve (£13,000 - £30,000)
                 </h4>
-                <p className="text-sm text-white/80 mb-4">
+                <p className="text-sm text-white mb-4">
                   Cash reserve to cover expenses while building your client base. This is often the
                   most overlooked startup requirement.
                 </p>
@@ -390,7 +390,7 @@ const BusinessStartup = () => {
                     >
                       <div className="flex-1">
                         <span className="text-sm font-medium text-white">{inv.item}</span>
-                        <p className="text-xs text-white/80 mt-0.5">{inv.note}</p>
+                        <p className="text-xs text-white mt-0.5">{inv.note}</p>
                       </div>
                       <span className="text-sm font-semibold text-yellow-400 whitespace-nowrap">
                         {inv.amount}
@@ -405,7 +405,7 @@ const BusinessStartup = () => {
                   <Lightbulb className="h-5 w-5 text-yellow-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <h4 className="font-semibold text-white mb-2">Funding Options</h4>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Consider Start Up Loans (gov.uk) offering up to £25,000 at 6% fixed interest
                       with free mentoring. Many banks also offer business accounts with
                       interest-free overdrafts for the first year.
@@ -424,20 +424,20 @@ const BusinessStartup = () => {
             id="business-structure"
             summary={
               <div className="space-y-3">
-                <p className="text-white/90">
+                <p className="text-white">
                   Choosing the right business structure affects your tax liability, personal risk,
                   and administrative burden. Most electrical contractors start as sole traders for
                   simplicity, then transition to limited company status as turnover grows beyond
                   £40-50k for tax efficiency.
                 </p>
                 <div className="flex flex-wrap gap-2 mt-4">
-                  <span className="px-3 py-1.5 text-xs font-medium rounded-lg bg-white/5 text-white/80 border border-white/10">
+                  <span className="px-3 py-1.5 text-xs font-medium rounded-lg bg-white/5 text-white border border-white/10">
                     Sole Trader - Simplest setup
                   </span>
-                  <span className="px-3 py-1.5 text-xs font-medium rounded-lg bg-white/5 text-white/80 border border-white/10">
+                  <span className="px-3 py-1.5 text-xs font-medium rounded-lg bg-white/5 text-white border border-white/10">
                     Limited Company - Tax efficient
                   </span>
-                  <span className="px-3 py-1.5 text-xs font-medium rounded-lg bg-white/5 text-white/80 border border-white/10">
+                  <span className="px-3 py-1.5 text-xs font-medium rounded-lg bg-white/5 text-white border border-white/10">
                     Partnership - Shared resources
                   </span>
                 </div>
@@ -505,7 +505,7 @@ const BusinessStartup = () => {
                       {structure.timeline}
                     </span>
                   </div>
-                  <p className="text-sm text-white/80 mb-4">{structure.desc}</p>
+                  <p className="text-sm text-white mb-4">{structure.desc}</p>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div className="p-3 rounded-lg bg-white/[0.02]">
                       <p className="text-xs font-semibold text-white mb-2 flex items-center gap-2">
@@ -513,7 +513,7 @@ const BusinessStartup = () => {
                         Advantages
                       </p>
                       {structure.pros.map((p, j) => (
-                        <p key={j} className="text-xs text-white/80 mb-1">
+                        <p key={j} className="text-xs text-white mb-1">
                           • {p}
                         </p>
                       ))}
@@ -524,7 +524,7 @@ const BusinessStartup = () => {
                         Considerations
                       </p>
                       {structure.cons.map((c, j) => (
-                        <p key={j} className="text-xs text-white/80 mb-1">
+                        <p key={j} className="text-xs text-white mb-1">
                           • {c}
                         </p>
                       ))}
@@ -542,7 +542,7 @@ const BusinessStartup = () => {
             accentColor="yellow"
             id="checklist"
             summary={
-              <p className="text-white/90">
+              <p className="text-white">
                 Use this comprehensive checklist to track your progress through the essential
                 planning stages. Each item should be completed before launching your business to
                 maximise your chances of success.
@@ -631,7 +631,7 @@ const BusinessStartup = () => {
         <section id="legal" className="scroll-mt-32 space-y-6 pt-10 border-t border-white/10">
           <div className="mb-8 text-center max-w-3xl mx-auto">
             <h2 className="text-2xl font-bold text-white mb-3">Legal & Compliance</h2>
-            <p className="text-base text-white/80 leading-relaxed">
+            <p className="text-base text-white leading-relaxed">
               Operating legally is non-negotiable for electrical contractors. Understanding
               registration requirements, professional qualifications, and insurance obligations
               protects both you and your clients. Non-compliance can result in fines up to £30,000
@@ -654,7 +654,7 @@ const BusinessStartup = () => {
             icon={FileText}
             accentColor="yellow"
             summary={
-              <p className="text-white/90">
+              <p className="text-white">
                 All electrical businesses must be properly registered with HMRC and, if operating as
                 a limited company, with Companies House. Registration is straightforward but must be
                 completed within specific timeframes to avoid penalties.
@@ -697,7 +697,7 @@ const BusinessStartup = () => {
             icon={Award}
             accentColor="yellow"
             summary={
-              <p className="text-white/90">
+              <p className="text-white">
                 Legitimate electrical contractors must hold recognised qualifications and maintain
                 competence through ongoing training. The 18th Edition Wiring Regulations (BS 7671)
                 is the minimum standard, with additional certifications required for inspection and
@@ -737,7 +737,7 @@ const BusinessStartup = () => {
                     >
                       <div className="flex-1">
                         <span className="text-sm font-medium text-white">{q.qual}</span>
-                        <p className="text-xs text-white/80 mt-0.5">{q.note}</p>
+                        <p className="text-xs text-white mt-0.5">{q.note}</p>
                       </div>
                       <span className="text-sm font-semibold text-yellow-400 whitespace-nowrap">
                         {q.cost}
@@ -751,7 +751,7 @@ const BusinessStartup = () => {
                 <h4 className="font-semibold text-white mb-4">
                   Competent Person Scheme Membership
                 </h4>
-                <p className="text-sm text-white/80 mb-4">
+                <p className="text-sm text-white mb-4">
                   Joining a government-approved scheme allows you to self-certify notifiable
                   electrical work without involving Building Control. This is essential for domestic
                   installation work.
@@ -768,7 +768,7 @@ const BusinessStartup = () => {
                     >
                       <p className="font-semibold text-white">{s.scheme}</p>
                       <p className="text-sm text-yellow-400 mt-1">{s.cost}</p>
-                      <p className="text-xs text-white/80 mt-1">{s.note}</p>
+                      <p className="text-xs text-white mt-1">{s.note}</p>
                     </div>
                   ))}
                 </div>
@@ -781,7 +781,7 @@ const BusinessStartup = () => {
             icon={Shield}
             accentColor="yellow"
             summary={
-              <p className="text-white/90">
+              <p className="text-white">
                 Adequate insurance protects your business, your clients, and yourself from financial
                 disaster. Public liability is essential for all contractors, while employers
                 liability becomes mandatory as soon as you hire anyone - even part-time or temporary
@@ -822,13 +822,13 @@ const BusinessStartup = () => {
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
                       <div>
                         <p className="font-medium text-white">{ins.type}</p>
-                        <p className="text-xs text-white/80">{ins.coverage}</p>
+                        <p className="text-xs text-white">{ins.coverage}</p>
                       </div>
                       <span className="text-sm font-semibold text-yellow-400 whitespace-nowrap">
                         {ins.cost}
                       </span>
                     </div>
-                    <p className="text-xs text-white/80">{ins.note}</p>
+                    <p className="text-xs text-white">{ins.note}</p>
                   </div>
                 ))}
               </div>
@@ -840,7 +840,7 @@ const BusinessStartup = () => {
         <section id="support" className="scroll-mt-32 space-y-6 pt-10 border-t border-white/10">
           <div className="mb-8 text-center max-w-3xl mx-auto">
             <h2 className="text-2xl font-bold text-white mb-3">Support & Resources</h2>
-            <p className="text-base text-white/80 leading-relaxed">
+            <p className="text-base text-white leading-relaxed">
               You don't have to figure everything out alone. The UK has excellent support
               infrastructure for new businesses, from free government advice lines to
               industry-specific bodies offering guidance, training, and networking opportunities.
@@ -862,7 +862,7 @@ const BusinessStartup = () => {
             icon={Users}
             accentColor="yellow"
             summary={
-              <p className="text-white/90">
+              <p className="text-white">
                 Joining industry bodies provides credibility, access to technical support,
                 networking opportunities, and enables you to self-certify notifiable work.
                 Membership demonstrates professionalism to clients and is often required for
@@ -904,7 +904,7 @@ const BusinessStartup = () => {
                 >
                   <div className="flex-1">
                     <p className="font-semibold text-white">{body.name}</p>
-                    <p className="text-sm text-white/70 mt-1">{body.desc}</p>
+                    <p className="text-sm text-white mt-1">{body.desc}</p>
                   </div>
                   <a
                     href={`https://${body.link}`}
@@ -925,7 +925,7 @@ const BusinessStartup = () => {
             icon={Phone}
             accentColor="yellow"
             summary={
-              <p className="text-white/90">
+              <p className="text-white">
                 Free helplines provide expert advice on tax, employment law, health and safety, and
                 general business guidance. These services are funded by the government and
                 completely free to use.
@@ -961,7 +961,7 @@ const BusinessStartup = () => {
                 >
                   <div className="flex-1">
                     <p className="font-semibold text-white">{line.name}</p>
-                    <p className="text-sm text-white/70 mt-1">{line.desc}</p>
+                    <p className="text-sm text-white mt-1">{line.desc}</p>
                   </div>
                   <a
                     href={`tel:${line.phone.replace(/\s/g, '')}`}
@@ -979,7 +979,7 @@ const BusinessStartup = () => {
             icon={Globe}
             accentColor="yellow"
             summary={
-              <p className="text-white/90">
+              <p className="text-white">
                 Government and industry websites offer comprehensive guides, templates, and tools to
                 help you set up and run your electrical business legally and professionally.
               </p>
@@ -1024,7 +1024,7 @@ const BusinessStartup = () => {
                     <p className="font-semibold text-white group-hover:text-yellow-400 transition-colors">
                       {resource.name}
                     </p>
-                    <p className="text-sm text-white/70 mt-1">{resource.desc}</p>
+                    <p className="text-sm text-white mt-1">{resource.desc}</p>
                   </div>
                   <ExternalLink className="h-5 w-5 text-yellow-400 flex-shrink-0 ml-4" />
                 </a>
@@ -1041,7 +1041,7 @@ const BusinessStartup = () => {
             </div>
             <div>
               <h3 className="text-base font-semibold text-white mb-2">Your Journey Starts Here</h3>
-              <p className="text-sm text-white/80 leading-relaxed">
+              <p className="text-sm text-white leading-relaxed">
                 Starting a business requires careful planning and preparation, but thousands of
                 electricians successfully make this transition every year. Take your time with the
                 planning phase, seek advice when needed, and remember that every successful business

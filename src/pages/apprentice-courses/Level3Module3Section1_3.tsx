@@ -225,7 +225,7 @@ const Level3Module3Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section1">
@@ -375,7 +375,7 @@ const Level3Module3Section1_3 = () => {
               insulation beyond normal operating conditions.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> Testing a ring final circuit before energisation. Connect
               the insulation tester between live conductors and earth. Apply 500V DC. A reading of
               150 megohms indicates excellent insulation. A reading of 0.5 megohms fails - there's
@@ -413,17 +413,17 @@ const Level3Module3Section1_3 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">1. Prove</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Test on known live source to confirm indicator works
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">2. Test</p>
-                <p className="text-white/90 text-xs">Test the circuit you've isolated</p>
+                <p className="text-white text-xs">Test the circuit you've isolated</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">3. Re-prove</p>
-                <p className="text-white/90 text-xs">Confirm indicator still works after testing</p>
+                <p className="text-white text-xs">Confirm indicator still works after testing</p>
               </div>
             </div>
 
@@ -493,7 +493,7 @@ const Level3Module3Section1_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -535,7 +535,7 @@ const Level3Module3Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section1-2">

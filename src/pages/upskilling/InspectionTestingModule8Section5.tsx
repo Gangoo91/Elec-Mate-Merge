@@ -229,7 +229,7 @@ const InspectionTestingModule8Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../module-8">
@@ -251,7 +251,7 @@ const InspectionTestingModule8Section5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Minor Works & EICR
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Select the correct certification for each job and apply observation codes correctly
           </p>
         </header>
@@ -388,28 +388,28 @@ const InspectionTestingModule8Section5 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-3 rounded bg-transparent border border-red-500/30">
                 <p className="font-medium text-red-400 mb-1">C1 - Danger Present</p>
-                <p className="text-white/80 text-xs">
+                <p className="text-white text-xs">
                   Risk of injury. Immediate remedial action required. Person responsible must be
                   informed immediately.
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-amber-500/30">
                 <p className="font-medium text-amber-400 mb-1">C2 - Potentially Dangerous</p>
-                <p className="text-white/80 text-xs">
+                <p className="text-white text-xs">
                   Urgent remedial action required. May become dangerous under fault conditions or in
                   future.
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-blue-500/30">
                 <p className="font-medium text-blue-400 mb-1">C3 - Improvement Recommended</p>
-                <p className="text-white/80 text-xs">
+                <p className="text-white text-xs">
                   Not dangerous but improvement would enhance safety. Client should consider the
                   recommendation.
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-purple-500/30">
                 <p className="font-medium text-purple-400 mb-1">FI - Further Investigation</p>
-                <p className="text-white/80 text-xs">
+                <p className="text-white text-xs">
                   Cannot fully assess without further investigation. May require intrusive
                   inspection or specialist assessment.
                 </p>
@@ -434,14 +434,14 @@ const InspectionTestingModule8Section5 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-3 rounded bg-transparent border border-green-500/30">
                 <p className="font-medium text-green-400 mb-1">SATISFACTORY</p>
-                <p className="text-white/80 text-xs">
+                <p className="text-white text-xs">
                   No C1 or C2 observations. Installation meets the required standard. May have C3
                   recommendations but these don't affect the overall assessment.
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent border border-red-500/30">
                 <p className="font-medium text-red-400 mb-1">UNSATISFACTORY</p>
-                <p className="text-white/80 text-xs">
+                <p className="text-white text-xs">
                   Any C1 or C2 observations. Installation does not meet the required standard.
                   Remedial work is required to make it satisfactory.
                 </p>
@@ -472,31 +472,31 @@ const InspectionTestingModule8Section5 = () => {
               </p>
               <div className="grid grid-cols-2 gap-2 text-sm">
                 <div className="p-2 rounded bg-transparent">
-                  <p className="text-white/90">New installation</p>
+                  <p className="text-white">New installation</p>
                   <p className="text-elec-yellow font-semibold">EIC</p>
                 </div>
                 <div className="p-2 rounded bg-transparent">
-                  <p className="text-white/90">New circuit added</p>
+                  <p className="text-white">New circuit added</p>
                   <p className="text-elec-yellow font-semibold">EIC</p>
                 </div>
                 <div className="p-2 rounded bg-transparent">
-                  <p className="text-white/90">Socket added (existing circuit)</p>
+                  <p className="text-white">Socket added (existing circuit)</p>
                   <p className="text-elec-yellow font-semibold">Minor Works</p>
                 </div>
                 <div className="p-2 rounded bg-transparent">
-                  <p className="text-white/90">Consumer unit replacement</p>
+                  <p className="text-white">Consumer unit replacement</p>
                   <p className="text-elec-yellow font-semibold">Minor Works*</p>
                 </div>
                 <div className="p-2 rounded bg-transparent">
-                  <p className="text-white/90">Periodic inspection</p>
+                  <p className="text-white">Periodic inspection</p>
                   <p className="text-elec-yellow font-semibold">EICR</p>
                 </div>
                 <div className="p-2 rounded bg-transparent">
-                  <p className="text-white/90">Pre-purchase check</p>
+                  <p className="text-white">Pre-purchase check</p>
                   <p className="text-elec-yellow font-semibold">EICR</p>
                 </div>
               </div>
-              <p className="text-white/50 text-xs mt-2">
+              <p className="text-white text-xs mt-2">
                 *Some schemes require EIC for consumer unit changes
               </p>
             </div>
@@ -588,7 +588,7 @@ const InspectionTestingModule8Section5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -634,11 +634,11 @@ const InspectionTestingModule8Section5 = () => {
         <section className="mb-10 p-6 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20 text-center">
           <div className="text-4xl mb-4">🎉</div>
           <h3 className="text-xl font-bold text-white mb-2">Course Complete!</h3>
-          <p className="text-white/70 mb-4">
+          <p className="text-white mb-4">
             Congratulations! You've completed all 8 modules of the Inspection & Testing course
             covering BS 7671 requirements.
           </p>
-          <div className="text-left text-sm text-white/70 bg-white/5 rounded-lg p-4 mb-4">
+          <div className="text-left text-sm text-white bg-white/5 rounded-lg p-4 mb-4">
             <ul className="space-y-1">
               <li>Module 1: Introduction to I&T</li>
               <li>Module 2: Safe Isolation</li>
@@ -660,7 +660,7 @@ const InspectionTestingModule8Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-8/section-4">

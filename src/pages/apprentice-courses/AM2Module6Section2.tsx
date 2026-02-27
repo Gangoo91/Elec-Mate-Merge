@@ -171,11 +171,11 @@ const AM2Module6Section2 = () => {
 
       {/* Critical Warning */}
       <AM2CriticalWarning title="CRITICAL: Focus Your Revision">
-        <p className="text-ios-callout text-white/80 mb-2">
+        <p className="text-ios-callout text-white mb-2">
           The AM2 knowledge test covers three specific areas. Trying to revise everything will waste
           time and reduce your chances of success.
         </p>
-        <p className="text-ios-callout text-white/90 font-medium">
+        <p className="text-ios-callout text-white font-medium">
           Focus on these core topics: Regulations (BS 7671), Electrical Science, and Safety. These
           form 100% of the test content.
         </p>
@@ -194,7 +194,7 @@ const AM2Module6Section2 = () => {
         </h2>
 
         <div className="space-y-4 text-sm sm:text-base leading-relaxed">
-          <p className="text-white/80">
+          <p className="text-white">
             The test includes questions from the IET Wiring Regulations. You don't have the book in
             the exam, so you need to recall core principles and specific values from memory.
           </p>
@@ -202,7 +202,7 @@ const AM2Module6Section2 = () => {
           <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">
             Key Regulation Areas:
           </h3>
-          <ul className="space-y-2 ml-4 text-white/80">
+          <ul className="space-y-2 ml-4 text-white">
             <li>
               - <strong className="text-white">Maximum Zs values for protective devices:</strong>{' '}
               Know the specific values for different MCB types and RCBOs
@@ -232,7 +232,7 @@ const AM2Module6Section2 = () => {
           <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">
             Common Regulation Question Types:
           </h3>
-          <ul className="space-y-2 ml-4 text-white/80">
+          <ul className="space-y-2 ml-4 text-white">
             <li>
               - <strong className="text-white">"What is the maximum Zs value for..."</strong> -
               Direct recall of tabulated values
@@ -254,7 +254,7 @@ const AM2Module6Section2 = () => {
           <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">
             Essential Values to Memorise:
           </h3>
-          <ul className="space-y-2 ml-4 text-white/80">
+          <ul className="space-y-2 ml-4 text-white">
             <li>
               - <strong className="text-white">Maximum Zs values:</strong> 7.28O (6A Type B), 2.73O
               (16A Type B), 1.37O (32A Type B)
@@ -295,7 +295,7 @@ const AM2Module6Section2 = () => {
         </h2>
 
         <div className="space-y-4 text-sm sm:text-base leading-relaxed">
-          <p className="text-white/80">
+          <p className="text-white">
             Science questions test whether you understand the fundamental principles behind
             electrical behaviour. These aren't advanced calculations but core concepts that underpin
             all electrical work.
@@ -304,7 +304,7 @@ const AM2Module6Section2 = () => {
           <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">
             Essential Scientific Principles:
           </h3>
-          <ul className="space-y-2 ml-4 text-white/80">
+          <ul className="space-y-2 ml-4 text-white">
             <li>
               - <strong className="text-white">Ohm's Law (V = IR):</strong> The fundamental
               relationship between voltage, current, and resistance
@@ -334,7 +334,7 @@ const AM2Module6Section2 = () => {
           <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">
             Typical Science Questions:
           </h3>
-          <ul className="space-y-2 ml-4 text-white/80">
+          <ul className="space-y-2 ml-4 text-white">
             <li>
               -{' '}
               <strong className="text-white">
@@ -365,7 +365,7 @@ const AM2Module6Section2 = () => {
           <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">
             Key Formulas to Know by Heart:
           </h3>
-          <ul className="space-y-2 ml-4 text-white/80">
+          <ul className="space-y-2 ml-4 text-white">
             <li>
               - <strong className="text-white">Ohm's Law:</strong> V = IR, I = V/R, R = V/I
             </li>
@@ -386,7 +386,7 @@ const AM2Module6Section2 = () => {
           <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">
             Calculation Tips:
           </h3>
-          <ul className="space-y-2 ml-4 text-white/80">
+          <ul className="space-y-2 ml-4 text-white">
             <li>
               - <strong className="text-white">No calculator allowed:</strong> Practice mental
               arithmetic and use round numbers for estimates
@@ -415,7 +415,7 @@ const AM2Module6Section2 = () => {
         </h2>
 
         <div className="space-y-4 text-sm sm:text-base leading-relaxed">
-          <p className="text-white/80">
+          <p className="text-white">
             The knowledge test checks your understanding of legal and safe working practices. Safety
             questions are not just about knowing procedures but understanding why they exist and
             when they apply.
@@ -424,7 +424,7 @@ const AM2Module6Section2 = () => {
           <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">
             Key Safety Legislation:
           </h3>
-          <ul className="space-y-2 ml-4 text-white/80">
+          <ul className="space-y-2 ml-4 text-white">
             <li>
               - <strong className="text-white">Electricity at Work Regulations (EAWR) 1989:</strong>{' '}
               Legal framework for electrical safety
@@ -455,7 +455,7 @@ const AM2Module6Section2 = () => {
           <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">
             EAWR 1989 Key Regulations:
           </h3>
-          <ul className="space-y-2 ml-4 text-white/80">
+          <ul className="space-y-2 ml-4 text-white">
             <li>
               - <strong className="text-white">Regulation 4:</strong> Systems, work activities and
               protective equipment must be constructed, maintained and used to prevent danger
@@ -477,7 +477,7 @@ const AM2Module6Section2 = () => {
           <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">
             Safe Isolation Sequence:
           </h3>
-          <ol className="space-y-2 ml-4 text-white/80 list-decimal list-inside">
+          <ol className="space-y-2 ml-4 text-white list-decimal list-inside">
             <li>Identify circuit to be worked on</li>
             <li>Identify means of isolation</li>
             <li>Isolate the circuit</li>
@@ -493,7 +493,7 @@ const AM2Module6Section2 = () => {
           <h3 className="text-base sm:text-lg font-semibold text-elec-yellow mt-6 mb-3">
             Essential PPE for Electrical Work:
           </h3>
-          <ul className="space-y-2 ml-4 text-white/80">
+          <ul className="space-y-2 ml-4 text-white">
             <li>
               - <strong className="text-white">Safety footwear:</strong> Insulated boots/shoes to
               prevent electric shock
@@ -670,7 +670,7 @@ const AM2Module6Section2 = () => {
             <h4 className="font-medium text-white mb-1">
               Q1: Do I need to memorise all of BS 7671?
             </h4>
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               A: No - focus on key requirements like Zs, RCDs, zones, earthing, and bonding.
             </p>
           </div>
@@ -679,14 +679,14 @@ const AM2Module6Section2 = () => {
             <h4 className="font-medium text-white mb-1">
               Q2: Are science questions advanced maths?
             </h4>
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               A: No - only core formulas and units (Ohm's law, power, resistance).
             </p>
           </div>
 
           <div className="border-l-4 border-elec-yellow/50 pl-4">
             <h4 className="font-medium text-white mb-1">Q3: How many questions are on safety?</h4>
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               A: Roughly a third of the paper includes safety or regulations.
             </p>
           </div>
@@ -695,12 +695,12 @@ const AM2Module6Section2 = () => {
             <h4 className="font-medium text-white mb-1">
               Q4: Do I get to use BS 7671 book in the test?
             </h4>
-            <p className="text-sm text-white/80">A: No - it's closed book.</p>
+            <p className="text-sm text-white">A: No - it's closed book.</p>
           </div>
 
           <div className="border-l-4 border-elec-yellow/50 pl-4">
             <h4 className="font-medium text-white mb-1">Q5: Will there be trick questions?</h4>
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               A: No - but some are worded to test understanding, not memory.
             </p>
           </div>

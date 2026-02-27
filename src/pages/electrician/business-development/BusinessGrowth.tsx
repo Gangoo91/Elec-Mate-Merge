@@ -254,25 +254,25 @@ const BusinessGrowth = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white/90">
+                    <span className="text-sm text-white">
                       Government green energy infrastructure programmes
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white/90">
+                    <span className="text-sm text-white">
                       EV charging network expansion opportunities
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white/90">
+                    <span className="text-sm text-white">
                       Smart home technology adoption surge
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white/90">
+                    <span className="text-sm text-white">
                       Apprenticeship Levy utilisation for training
                     </span>
                   </div>
@@ -308,28 +308,28 @@ const BusinessGrowth = () => {
                       <span className="text-sm font-medium text-white">London Premium</span>
                       <span className="text-xs text-yellow-400">+25-35%</span>
                     </div>
-                    <p className="text-sm text-white/90">£65-85/hour average</p>
+                    <p className="text-sm text-white">£65-85/hour average</p>
                   </div>
                   <div className="p-3 rounded-lg bg-white/[0.03] border border-white/10">
                     <div className="flex justify-between items-center mb-1">
                       <span className="text-sm font-medium text-white">South East</span>
                       <span className="text-xs text-yellow-400">+15-25%</span>
                     </div>
-                    <p className="text-sm text-white/90">£55-70/hour average</p>
+                    <p className="text-sm text-white">£55-70/hour average</p>
                   </div>
                   <div className="p-3 rounded-lg bg-white/[0.03] border border-white/10">
                     <div className="flex justify-between items-center mb-1">
                       <span className="text-sm font-medium text-white">Northern England</span>
                       <span className="text-xs text-yellow-400">Baseline</span>
                     </div>
-                    <p className="text-sm text-white/90">£40-55/hour average</p>
+                    <p className="text-sm text-white">£40-55/hour average</p>
                   </div>
                   <div className="p-3 rounded-lg bg-white/[0.03] border border-white/10">
                     <div className="flex justify-between items-center mb-1">
                       <span className="text-sm font-medium text-white">Emergency Call-out</span>
                       <span className="text-xs text-yellow-400">+50-100%</span>
                     </div>
-                    <p className="text-sm text-white/90">£75-120/hour typical</p>
+                    <p className="text-sm text-white">£75-120/hour typical</p>
                   </div>
                 </div>
               </div>
@@ -349,7 +349,7 @@ const BusinessGrowth = () => {
                     <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">
                       10-25% margin improvement
                     </span>
-                    <span className="px-2 py-1 text-xs bg-white/5 text-white/90 rounded-lg border border-white/10">
+                    <span className="px-2 py-1 text-xs bg-white/5 text-white rounded-lg border border-white/10">
                       Low risk
                     </span>
                   </div>
@@ -367,7 +367,7 @@ const BusinessGrowth = () => {
                     <span className="px-2 py-1 text-xs bg-yellow-400/10 text-yellow-400 rounded-lg border border-yellow-400/20">
                       20-50% price premium
                     </span>
-                    <span className="px-2 py-1 text-xs bg-white/5 text-white/90 rounded-lg border border-white/10">
+                    <span className="px-2 py-1 text-xs bg-white/5 text-white rounded-lg border border-white/10">
                       Medium risk
                     </span>
                   </div>
@@ -483,19 +483,19 @@ const BusinessGrowth = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">60-80%</p>
-                  <p className="text-xs text-white/90 mt-1">Referral close rate</p>
+                  <p className="text-xs text-white mt-1">Referral close rate</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">5-10%</p>
-                  <p className="text-xs text-white/90 mt-1">Marketing budget</p>
+                  <p className="text-xs text-white mt-1">Marketing budget</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">£50-150</p>
-                  <p className="text-xs text-white/90 mt-1">Cost per lead</p>
+                  <p className="text-xs text-white mt-1">Cost per lead</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">150-300%</p>
-                  <p className="text-xs text-white/90 mt-1">Marketing ROI</p>
+                  <p className="text-xs text-white mt-1">Marketing ROI</p>
                 </div>
               </div>
             </div>
@@ -622,25 +622,25 @@ const BusinessGrowth = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white/90">
+                    <span className="text-sm text-white">
                       MCS certification for solar PV installations
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white/90">
+                    <span className="text-sm text-white">
                       OZEV approved installer for EV charging
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white/90">
+                    <span className="text-sm text-white">
                       Part P certification for domestic work
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white/90">
+                    <span className="text-sm text-white">
                       City & Guilds 2919 for EV charging
                     </span>
                   </div>
@@ -668,19 +668,19 @@ const BusinessGrowth = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">85%+</p>
-                  <p className="text-xs text-white/90 mt-1">Target utilisation</p>
+                  <p className="text-xs text-white mt-1">Target utilisation</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">95%+</p>
-                  <p className="text-xs text-white/90 mt-1">First-time fix rate</p>
+                  <p className="text-xs text-white mt-1">First-time fix rate</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">2%</p>
-                  <p className="text-xs text-white/90 mt-1">Target callback rate</p>
+                  <p className="text-xs text-white mt-1">Target callback rate</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">4.8+</p>
-                  <p className="text-xs text-white/90 mt-1">Review rating target</p>
+                  <p className="text-xs text-white mt-1">Review rating target</p>
                 </div>
               </div>
 
@@ -802,28 +802,28 @@ const BusinessGrowth = () => {
                       <span className="text-sm font-medium text-white">Gross Profit Margin</span>
                       <span className="text-xs text-yellow-400">Target: 35-50%</span>
                     </div>
-                    <p className="text-sm text-white/90">UK average: 42%</p>
+                    <p className="text-sm text-white">UK average: 42%</p>
                   </div>
                   <div className="p-3 rounded-lg bg-white/[0.03] border border-white/10">
                     <div className="flex justify-between items-center mb-1">
                       <span className="text-sm font-medium text-white">Net Profit Margin</span>
                       <span className="text-xs text-yellow-400">Target: 8-15%</span>
                     </div>
-                    <p className="text-sm text-white/90">UK average: 11%</p>
+                    <p className="text-sm text-white">UK average: 11%</p>
                   </div>
                   <div className="p-3 rounded-lg bg-white/[0.03] border border-white/10">
                     <div className="flex justify-between items-center mb-1">
                       <span className="text-sm font-medium text-white">Revenue per Employee</span>
                       <span className="text-xs text-yellow-400">Target: £80-120k</span>
                     </div>
-                    <p className="text-sm text-white/90">Industry average: £95k</p>
+                    <p className="text-sm text-white">Industry average: £95k</p>
                   </div>
                   <div className="p-3 rounded-lg bg-white/[0.03] border border-white/10">
                     <div className="flex justify-between items-center mb-1">
                       <span className="text-sm font-medium text-white">Annual Revenue Growth</span>
                       <span className="text-xs text-yellow-400">Target: 15-25%</span>
                     </div>
-                    <p className="text-sm text-white/90">Top performers: 22%</p>
+                    <p className="text-sm text-white">Top performers: 22%</p>
                   </div>
                 </div>
               </div>
@@ -870,25 +870,25 @@ const BusinessGrowth = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white/90">
+                    <span className="text-sm text-white">
                       Access green energy grants and incentive schemes
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white/90">
+                    <span className="text-sm text-white">
                       Claim R&D tax credits for innovation
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white/90">
+                    <span className="text-sm text-white">
                       Establish business credit facilities early
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-yellow-400 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm text-white/90">
+                    <span className="text-sm text-white">
                       Reinvest 10-20% of profits for growth
                     </span>
                   </div>

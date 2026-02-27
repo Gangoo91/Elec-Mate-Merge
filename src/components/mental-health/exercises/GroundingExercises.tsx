@@ -655,7 +655,7 @@ const GroundingExercises = () => {
                 <div
                   key={i}
                   className={`text-xs flex items-start gap-2 ${
-                    i <= currentStep ? 'text-foreground' : 'text-white/50'
+                    i <= currentStep ? 'text-foreground' : 'text-white'
                   }`}
                 >
                   <span className={i < currentStep ? 'text-green-400' : ''}>{i + 1}.</span>

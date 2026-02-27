@@ -260,7 +260,7 @@ const Level3Module6Section6_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section6">
@@ -587,23 +587,23 @@ const Level3Module6Section6_4 = () => {
               <table className="w-full text-xs">
                 <tbody>
                   <tr>
-                    <td className="py-1 text-white/70">Risk assessment duty</td>
+                    <td className="py-1 text-white">Risk assessment duty</td>
                     <td className="py-1 text-white">MHSWR 1999 Reg 3</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">Electrical safety</td>
+                    <td className="py-1 text-white">Electrical safety</td>
                     <td className="py-1 text-white">EAWR 1989</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">Working at height</td>
+                    <td className="py-1 text-white">Working at height</td>
                     <td className="py-1 text-white">WAHR 2005</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">PPE provision</td>
+                    <td className="py-1 text-white">PPE provision</td>
                     <td className="py-1 text-white">PPER 1992</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">CDM</td>
+                    <td className="py-1 text-white">CDM</td>
                     <td className="py-1 text-white">CDM 2015</td>
                   </tr>
                 </tbody>
@@ -614,23 +614,23 @@ const Level3Module6Section6_4 = () => {
               <table className="w-full text-xs">
                 <tbody>
                   <tr>
-                    <td className="py-1 text-white/70">Electrical safety</td>
+                    <td className="py-1 text-white">Electrical safety</td>
                     <td className="py-1 text-white">HSG85</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">Safe isolation</td>
+                    <td className="py-1 text-white">Safe isolation</td>
                     <td className="py-1 text-white">GS38</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">Working at height</td>
+                    <td className="py-1 text-white">Working at height</td>
                     <td className="py-1 text-white">INDG401</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">Risk assessment</td>
+                    <td className="py-1 text-white">Risk assessment</td>
                     <td className="py-1 text-white">INDG163</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">Manual handling</td>
+                    <td className="py-1 text-white">Manual handling</td>
                     <td className="py-1 text-white">INDG143</td>
                   </tr>
                 </tbody>
@@ -647,7 +647,7 @@ const Level3Module6Section6_4 = () => {
             {faqs.map((faq, idx) => (
               <details key={idx} className="group p-3 rounded-lg bg-white/5 text-sm">
                 <summary className="cursor-pointer text-white font-medium">{faq.question}</summary>
-                <p className="mt-2 text-white/70">{faq.answer}</p>
+                <p className="mt-2 text-white">{faq.answer}</p>
               </details>
             ))}
           </div>

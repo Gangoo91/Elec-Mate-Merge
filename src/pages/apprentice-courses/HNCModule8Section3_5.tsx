@@ -251,7 +251,7 @@ const HNCModule8Section3_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section3">
@@ -273,7 +273,7 @@ const HNCModule8Section3_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             System Selection
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Load calculations, system comparison, life cycle costs, sustainability and selection
             criteria
           </p>
@@ -425,7 +425,7 @@ const HNCModule8Section3_5 = () => {
                 TM54 addresses the performance gap by providing a structured approach to predicting
                 operational energy use. Key steps include:
               </p>
-              <ul className="text-sm text-white/90 space-y-1.5 list-disc list-outside ml-5">
+              <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                 <li className="pl-1">Separating regulated (Part L) from unregulated energy use</li>
                 <li className="pl-1">Using realistic operating hours and occupancy patterns</li>
                 <li className="pl-1">Applying appropriate equipment diversity factors</li>
@@ -676,7 +676,7 @@ const HNCModule8Section3_5 = () => {
                   <strong>SEER (Seasonal EER):</strong> Weighted average efficiency across a typical
                   cooling season, accounting for part-load operation
                 </p>
-                <p className="text-white/70 mt-2">
+                <p className="text-white mt-2">
                   SEER is most meaningful for comparing systems as it reflects real-world
                   performance across varying conditions.
                 </p>
@@ -768,13 +768,13 @@ const HNCModule8Section3_5 = () => {
               </p>
               <div className="font-mono text-sm space-y-1">
                 <p className="text-white">NPV = -C₀ + Σ (Cₙ / (1 + r)ⁿ)</p>
-                <p className="mt-2 text-white/80">Where:</p>
-                <p className="ml-4 text-white/80">C₀ = Initial capital cost</p>
-                <p className="ml-4 text-white/80">
+                <p className="mt-2 text-white">Where:</p>
+                <p className="ml-4 text-white">C₀ = Initial capital cost</p>
+                <p className="ml-4 text-white">
                   Cₙ = Net cash flow in year n (energy savings - operating costs)
                 </p>
-                <p className="ml-4 text-white/80">r = Discount rate (typically 3.5-6%)</p>
-                <p className="ml-4 text-white/80">n = Year number (1 to system lifetime)</p>
+                <p className="ml-4 text-white">r = Discount rate (typically 3.5-6%)</p>
+                <p className="ml-4 text-white">n = Year number (1 to system lifetime)</p>
               </div>
             </div>
 
@@ -836,7 +836,7 @@ const HNCModule8Section3_5 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-sm text-white/70 mt-2">
+              <p className="text-sm text-white mt-2">
                 Note: This example shows VRF advantage at this scale. Results vary significantly
                 with building size, operating hours, and energy costs. Always perform
                 project-specific analysis.
@@ -1056,7 +1056,7 @@ const HNCModule8Section3_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-2">Technical Factors</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Peak cooling capacity match</li>
                     <li>Part-load efficiency (SEER)</li>
                     <li>Zone control capability</li>
@@ -1066,7 +1066,7 @@ const HNCModule8Section3_5 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-2">Commercial Factors</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Capital cost budget</li>
                     <li>Life cycle cost target</li>
                     <li>Maintenance capability</li>
@@ -1102,7 +1102,7 @@ const HNCModule8Section3_5 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Key principle:</strong> System selection should balance immediate requirements
               with long-term sustainability goals. The lowest capital cost option is rarely the best
               value when life cycle costs and environmental impact are properly considered.
@@ -1126,22 +1126,22 @@ const HNCModule8Section3_5 = () => {
                 <strong>Scenario:</strong> Calculate peak cooling load for a 200 m² south-facing
                 office.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given data:</p>
                 <p className="ml-4">Floor area: 200 m², ceiling height 2.7 m</p>
                 <p className="ml-4">Glazing: 40 m² south-facing, U-value 1.4 W/m²K, g-value 0.4</p>
                 <p className="ml-4">Occupancy: 15 people</p>
                 <p className="ml-4">Equipment: 25 W/m² (with 0.8 diversity)</p>
                 <p className="ml-4">Lighting: 10 W/m²</p>
                 <p className="ml-4">Ventilation: 12 l/s per person</p>
-                <p className="mt-2 text-white/60">Heat gain calculations:</p>
+                <p className="mt-2 text-white">Heat gain calculations:</p>
                 <p className="ml-4">Solar gain: 40 m² × 350 W/m² × 0.4 = 5,600 W</p>
                 <p className="ml-4">Occupants: 15 × 90 W (sensible) = 1,350 W</p>
                 <p className="ml-4">Equipment: 200 × 25 × 0.8 = 4,000 W</p>
                 <p className="ml-4">Lighting: 200 × 10 = 2,000 W</p>
                 <p className="ml-4">Ventilation: 15 × 12 × 1.2 × 8 = 1,728 W (8K temp diff)</p>
-                <p className="mt-2 text-white/60">Total sensible load: 14,678 W</p>
-                <p className="text-white/60">Add 10% safety margin: 14,678 × 1.1 = 16,146 W</p>
+                <p className="mt-2 text-white">Total sensible load: 14,678 W</p>
+                <p className="text-white">Add 10% safety margin: 14,678 × 1.1 = 16,146 W</p>
                 <p className="mt-2 text-green-400">Design cooling capacity: 16.5 kW (80 W/m²)</p>
               </div>
             </div>
@@ -1153,22 +1153,22 @@ const HNCModule8Section3_5 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Compare two VRF systems with different SEER ratings.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">System requirements:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">System requirements:</p>
                 <p className="ml-4">Cooling capacity: 100 kW</p>
                 <p className="ml-4">Annual equivalent full load hours: 1,200</p>
                 <p className="ml-4">Electricity cost: £0.30/kWh</p>
-                <p className="mt-2 text-white/60">Option A: SEER 5.0, Capital £85,000</p>
+                <p className="mt-2 text-white">Option A: SEER 5.0, Capital £85,000</p>
                 <p className="ml-4">Annual energy: (100 × 1,200) / 5.0 = 24,000 kWh</p>
                 <p className="ml-4">Annual cost: 24,000 × £0.30 = £7,200</p>
-                <p className="mt-2 text-white/60">Option B: SEER 7.0, Capital £105,000</p>
+                <p className="mt-2 text-white">Option B: SEER 7.0, Capital £105,000</p>
                 <p className="ml-4">Annual energy: (100 × 1,200) / 7.0 = 17,143 kWh</p>
                 <p className="ml-4">Annual cost: 17,143 × £0.30 = £5,143</p>
-                <p className="mt-2 text-white/60">Comparison:</p>
+                <p className="mt-2 text-white">Comparison:</p>
                 <p className="ml-4">Capital premium: £105,000 - £85,000 = £20,000</p>
                 <p className="ml-4">Annual saving: £7,200 - £5,143 = £2,057</p>
                 <p className="mt-2 text-green-400">Simple payback: £20,000 / £2,057 = 9.7 years</p>
-                <p className="text-white/60 mt-2">20-year NPV saving (5% discount): £5,600</p>
+                <p className="text-white mt-2">20-year NPV saving (5% discount): £5,600</p>
               </div>
             </div>
 
@@ -1179,20 +1179,20 @@ const HNCModule8Section3_5 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Check F-gas compliance for a proposed VRF installation.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Proposed system:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Proposed system:</p>
                 <p className="ml-4">VRF system with R-410A refrigerant</p>
                 <p className="ml-4">Total charge: 25 kg</p>
                 <p className="ml-4">Installation date: 2026</p>
-                <p className="mt-2 text-white/60">F-gas calculation:</p>
+                <p className="mt-2 text-white">F-gas calculation:</p>
                 <p className="ml-4">R-410A GWP: 2,088</p>
                 <p className="ml-4">CO₂ equivalent: 25 kg × 2,088 = 52,200 kg CO₂e</p>
                 <p className="ml-4">= 52.2 tonnes CO₂ equivalent</p>
-                <p className="mt-2 text-white/60">Requirements:</p>
+                <p className="mt-2 text-white">Requirements:</p>
                 <p className="ml-4">&gt; 50 tonnes CO₂e: Quarterly leak checks required</p>
                 <p className="ml-4">&gt; 500 tonnes CO₂e: Automatic leak detection required</p>
                 <p className="mt-2 text-red-400">Issue: R-410A prohibited for new VRF from 2027</p>
-                <p className="text-white/60 mt-2">Recommendation:</p>
+                <p className="text-white mt-2">Recommendation:</p>
                 <p className="ml-4">Select R-32 system (GWP 675)</p>
                 <p className="ml-4">CO₂ equivalent: 25 × 675 = 16,875 kg = 16.9 tonnes</p>
                 <p className="text-green-400">Annual leak checks only (not quarterly)</p>
@@ -1277,7 +1277,7 @@ const HNCModule8Section3_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1341,7 +1341,7 @@ const HNCModule8Section3_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section3">

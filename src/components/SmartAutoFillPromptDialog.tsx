@@ -591,7 +591,7 @@ const SmartAutoFillPromptDialog: React.FC<SmartAutoFillPromptDialogProps> = ({
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {/* Step 1: Category Selection */}
           <div>
-            <p className="text-xs font-semibold text-white/70 uppercase tracking-wide mb-3">
+            <p className="text-xs font-semibold text-white uppercase tracking-wide mb-3">
               1. Choose Category
             </p>
             <div className="grid grid-cols-3 gap-2">
@@ -611,7 +611,7 @@ const SmartAutoFillPromptDialog: React.FC<SmartAutoFillPromptDialogProps> = ({
                         : 'bg-card border-border/50 hover:bg-muted/50'
                     }`}
                   >
-                    <Icon className={`h-5 w-5 ${isSelected ? cat.color : 'text-white/70'}`} />
+                    <Icon className={`h-5 w-5 ${isSelected ? cat.color : 'text-white'}`} />
                     <span
                       className={`text-xs font-medium ${isSelected ? 'text-foreground' : 'text-white'}`}
                     >
@@ -626,7 +626,7 @@ const SmartAutoFillPromptDialog: React.FC<SmartAutoFillPromptDialogProps> = ({
           {/* Step 2: Circuit Type Selection */}
           {selectedCategory && (
             <div>
-              <p className="text-xs font-semibold text-white/70 uppercase tracking-wide mb-3">
+              <p className="text-xs font-semibold text-white uppercase tracking-wide mb-3">
                 2. Select Circuit Type
               </p>
               <div className="grid grid-cols-2 gap-2">
@@ -644,7 +644,7 @@ const SmartAutoFillPromptDialog: React.FC<SmartAutoFillPromptDialogProps> = ({
                       }`}
                     >
                       <Icon
-                        className={`h-4 w-4 flex-shrink-0 ${isSelected ? selectedCategoryData?.color : 'text-white/70'}`}
+                        className={`h-4 w-4 flex-shrink-0 ${isSelected ? selectedCategoryData?.color : 'text-white'}`}
                       />
                       <span
                         className={`text-sm font-medium ${isSelected ? 'text-foreground' : 'text-white'}`}
@@ -670,13 +670,13 @@ const SmartAutoFillPromptDialog: React.FC<SmartAutoFillPromptDialogProps> = ({
               </div>
               <div className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs">
                 <div className="flex justify-between">
-                  <span className="text-white/60">Cable:</span>
+                  <span className="text-white">Cable:</span>
                   <span className="text-white font-medium">
                     {selectedConfig.suggestions.liveSize}/{selectedConfig.suggestions.cpcSize}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/60">Protection:</span>
+                  <span className="text-white">Protection:</span>
                   <span className="text-white font-medium">
                     {selectedConfig.suggestions.protectiveDeviceType}{' '}
                     {selectedConfig.suggestions.protectiveDeviceCurve}
@@ -684,7 +684,7 @@ const SmartAutoFillPromptDialog: React.FC<SmartAutoFillPromptDialogProps> = ({
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/60">Breaking:</span>
+                  <span className="text-white">Breaking:</span>
                   <span className="text-white font-medium">
                     {selectedConfig.suggestions.protectiveDeviceKaRating}kA
                   </span>

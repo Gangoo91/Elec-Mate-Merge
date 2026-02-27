@@ -137,7 +137,7 @@ export function ExpenseSheet({ open, onOpenChange }: ExpenseSheetProps) {
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
             {/* Category */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-white/80">Category</label>
+              <label className="text-sm font-medium text-white">Category</label>
               <Select value={category} onValueChange={setCategory}>
                 <SelectTrigger className="h-12 bg-input border-white/10 text-white focus:border-elec-yellow focus:ring-elec-yellow">
                   <SelectValue placeholder="Select category..." />
@@ -158,9 +158,9 @@ export function ExpenseSheet({ open, onOpenChange }: ExpenseSheetProps) {
 
             {/* Amount */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-white/80">Amount</label>
+              <label className="text-sm font-medium text-white">Amount</label>
               <div className="relative">
-                <PoundSterling className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40" />
+                <PoundSterling className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white" />
                 <Input
                   type="number"
                   step="0.01"
@@ -175,7 +175,7 @@ export function ExpenseSheet({ open, onOpenChange }: ExpenseSheetProps) {
 
             {/* Description */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-white/80">Description</label>
+              <label className="text-sm font-medium text-white">Description</label>
               <Textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -186,8 +186,8 @@ export function ExpenseSheet({ open, onOpenChange }: ExpenseSheetProps) {
 
             {/* Job (optional) */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-white/80">
-                Charge to Job <span className="text-white/40">(optional)</span>
+              <label className="text-sm font-medium text-white">
+                Charge to Job <span className="text-white">(optional)</span>
               </label>
               <Select value={selectedJobId} onValueChange={setSelectedJobId} disabled={jobsLoading}>
                 <SelectTrigger className="h-12 bg-input border-white/10 text-white focus:border-elec-yellow focus:ring-elec-yellow">
@@ -210,7 +210,7 @@ export function ExpenseSheet({ open, onOpenChange }: ExpenseSheetProps) {
             {/* Receipt photo placeholder */}
             <Button
               variant="outline"
-              className="w-full h-12 bg-white/[0.03] border-white/10 text-white/60 hover:bg-white/[0.06] hover:text-white touch-manipulation"
+              className="w-full h-12 bg-white/[0.03] border-white/10 text-white hover:bg-white/[0.06] hover:text-white touch-manipulation"
               disabled
             >
               <Camera className="h-5 w-5 mr-2" />
@@ -222,7 +222,7 @@ export function ExpenseSheet({ open, onOpenChange }: ExpenseSheetProps) {
               <div className="space-y-2 pt-2">
                 <button
                   onClick={() => setShowRecent(!showRecent)}
-                  className="flex items-center gap-2 text-sm font-medium text-white/80 touch-manipulation"
+                  className="flex items-center gap-2 text-sm font-medium text-white touch-manipulation"
                 >
                   <Clock className="h-4 w-4" />
                   Recent Expenses
@@ -248,7 +248,7 @@ export function ExpenseSheet({ open, onOpenChange }: ExpenseSheetProps) {
                             <p className="text-sm text-white font-medium">
                               £{expense.amount.toFixed(2)} - {expense.category}
                             </p>
-                            <p className="text-xs text-white/40">
+                            <p className="text-xs text-white">
                               {new Date(expense.created_at).toLocaleDateString('en-GB', {
                                 day: 'numeric',
                                 month: 'short',

@@ -119,7 +119,7 @@ const CPDDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: CPDDashboard
           </CardHeader>
           <CardContent className="relative">
             <div className="text-2xl font-bold text-elec-yellow">{stats.hoursThisYear}</div>
-            <p className="text-xs text-white/70">of {stats.targetHours} target</p>
+            <p className="text-xs text-white">of {stats.targetHours} target</p>
           </CardContent>
         </Card>
 
@@ -135,7 +135,7 @@ const CPDDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: CPDDashboard
           </CardHeader>
           <CardContent className="relative">
             <div className="text-2xl font-bold text-green-400">{stats.completionPercentage}%</div>
-            <p className="text-xs text-white/70">Target completion</p>
+            <p className="text-xs text-white">Target completion</p>
           </CardContent>
         </Card>
 
@@ -151,7 +151,7 @@ const CPDDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: CPDDashboard
           </CardHeader>
           <CardContent className="relative">
             <div className="text-2xl font-bold text-amber-400">{stats.daysRemaining}</div>
-            <p className="text-xs text-white/70">Until year end</p>
+            <p className="text-xs text-white">Until year end</p>
           </CardContent>
         </Card>
 
@@ -169,7 +169,7 @@ const CPDDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: CPDDashboard
             <Badge variant="outline" className={compliance.color}>
               {compliance.status}
             </Badge>
-            <p className="text-xs text-white/70 mt-2">Professional bodies</p>
+            <p className="text-xs text-white mt-2">Professional bodies</p>
           </CardContent>
         </Card>
       </div>
@@ -197,11 +197,11 @@ const CPDDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: CPDDashboard
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-              <span className="text-xs text-white/60">Hours This Month</span>
+              <span className="text-xs text-white">Hours This Month</span>
               <div className="text-lg font-bold text-elec-yellow">{stats.hoursThisMonth}</div>
             </div>
             <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-              <span className="text-xs text-white/60">Monthly Average</span>
+              <span className="text-xs text-white">Monthly Average</span>
               <div className="text-lg font-bold text-elec-yellow">
                 {stats.averageHoursPerMonth.toFixed(1)}
               </div>
@@ -245,7 +245,7 @@ const CPDDashboard = ({ onAddEntry, onViewHistory, onManageGoals }: CPDDashboard
                 <div key={index} className="space-y-2">
                   <div className="flex justify-between items-center">
                     <span className="text-sm font-medium text-white">{category.category}</span>
-                    <span className="text-sm text-white/70">
+                    <span className="text-sm text-white">
                       {category.hours} hours{' '}
                       <span className={color.text}>({category.percentage}%)</span>
                     </span>

@@ -43,10 +43,10 @@ export function RichTextEditor({
           'prose prose-invert prose-sm max-w-none',
           'min-h-[200px] p-4 focus:outline-none',
           'prose-headings:text-white prose-headings:font-semibold',
-          'prose-p:text-white/80 prose-p:leading-relaxed',
-          'prose-li:text-white/80',
+          'prose-p:text-white prose-p:leading-relaxed',
+          'prose-li:text-white',
           'prose-strong:text-white prose-strong:font-semibold',
-          'prose-em:text-white/90'
+          'prose-em:text-white'
         ),
       },
     },
@@ -84,7 +84,7 @@ export function RichTextEditor({
         'h-9 w-9 p-0 rounded-lg',
         isActive
           ? 'bg-elec-yellow/20 text-elec-yellow'
-          : 'text-white/60 hover:text-white hover:bg-white/10'
+          : 'text-white hover:text-white hover:bg-white/10'
       )}
     >
       {children}
@@ -165,7 +165,7 @@ export function RichTextEditor({
       {error && <p className="text-xs text-red-400">{error}</p>}
 
       {/* Character count */}
-      <div className="flex justify-between text-xs text-white/40">
+      <div className="flex justify-between text-xs text-white">
         <span>Use headings and bullet points for better readability</span>
         <span>{editor.storage.characterCount?.characters?.() || 0} characters</span>
       </div>

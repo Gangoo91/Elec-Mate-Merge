@@ -132,7 +132,7 @@ export function DiaryCalendarView({ entries, onDayTap, selectedDate }: DiaryCale
                     ? 'ring-1 ring-elec-yellow/30 text-elec-yellow font-semibold'
                     : hasEntries
                       ? 'text-white active:bg-white/15'
-                      : 'text-white/50'
+                      : 'text-white'
               }`}
             >
               <span>{day}</span>

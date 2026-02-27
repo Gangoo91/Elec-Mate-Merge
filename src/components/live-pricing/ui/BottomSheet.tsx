@@ -93,7 +93,7 @@ const BottomSheet = ({ isOpen, onClose, title, children, className }: BottomShee
             <h2 className="text-xl font-bold text-white">{title}</h2>
             <button
               onClick={onClose}
-              className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/10 text-white/70 hover:text-white hover:bg-white/20 transition-all touch-manipulation"
+              className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/10 text-white hover:text-white hover:bg-white/20 transition-all touch-manipulation"
             >
               <X className="w-5 h-5" />
             </button>

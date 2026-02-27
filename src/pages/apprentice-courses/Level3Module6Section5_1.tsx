@@ -259,7 +259,7 @@ const Level3Module6Section5_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section5">
@@ -322,11 +322,11 @@ const Level3Module6Section5_1 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                   Layout / Floor Plan Drawings
                 </p>
-                <p className="text-sm text-white/90 mb-2">
+                <p className="text-sm text-white mb-2">
                   Show the physical position of electrical equipment overlaid on the building plan.
                   These are what electricians use on site to position equipment and route cables.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1 ml-4">
+                <ul className="text-sm text-white space-y-1 ml-4">
                   <li>Socket outlet positions and types</li>
                   <li>Lighting positions and switch relationships</li>
                   <li>Distribution board locations</li>
@@ -339,12 +339,12 @@ const Level3Module6Section5_1 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                   Single-Line Diagrams (SLD)
                 </p>
-                <p className="text-sm text-white/90 mb-2">
+                <p className="text-sm text-white mb-2">
                   Show the power distribution from supply to final circuits using simplified
                   notation. Each circuit is shown as a single line regardless of the number of
                   conductors.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1 ml-4">
+                <ul className="text-sm text-white space-y-1 ml-4">
                   <li>Incoming supply arrangement</li>
                   <li>Main and sub-distribution boards</li>
                   <li>Protective device types and ratings</li>
@@ -355,11 +355,11 @@ const Level3Module6Section5_1 = () => {
 
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Schematic Diagrams</p>
-                <p className="text-sm text-white/90 mb-2">
+                <p className="text-sm text-white mb-2">
                   Show the electrical principle of operation using standard symbols. Used for
                   control circuits, interlocking arrangements, and complex switching.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1 ml-4">
+                <ul className="text-sm text-white space-y-1 ml-4">
                   <li>Control circuit logic</li>
                   <li>Interlocking sequences</li>
                   <li>Emergency stop arrangements</li>
@@ -370,11 +370,11 @@ const Level3Module6Section5_1 = () => {
 
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Wiring Diagrams</p>
-                <p className="text-sm text-white/90 mb-2">
+                <p className="text-sm text-white mb-2">
                   Show the physical connections between terminals. Used for panel building,
                   maintenance, and fault finding.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1 ml-4">
+                <ul className="text-sm text-white space-y-1 ml-4">
                   <li>Terminal identification</li>
                   <li>Conductor colours and numbers</li>
                   <li>Connection order and method</li>
@@ -405,7 +405,7 @@ const Level3Module6Section5_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Accessories</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>Socket outlets (single, double, switched)</li>
                     <li>Switches (1-gang, 2-gang, dimmer)</li>
                     <li>Fused connection units</li>
@@ -414,7 +414,7 @@ const Level3Module6Section5_1 = () => {
                 </div>
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Lighting</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>Luminaires (various types)</li>
                     <li>Emergency luminaires</li>
                     <li>Lighting control devices</li>
@@ -423,7 +423,7 @@ const Level3Module6Section5_1 = () => {
                 </div>
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Distribution</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>Consumer units and distribution boards</li>
                     <li>MCBs, RCBOs, RCDs</li>
                     <li>Isolators and switches</li>
@@ -432,7 +432,7 @@ const Level3Module6Section5_1 = () => {
                 </div>
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Systems</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>Fire alarm devices</li>
                     <li>Security and access control</li>
                     <li>CCTV cameras</li>
@@ -476,7 +476,7 @@ const Level3Module6Section5_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Title Block (Required)</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>Project name and address</li>
                     <li>Drawing title describing content</li>
                     <li>Unique drawing number</li>
@@ -487,7 +487,7 @@ const Level3Module6Section5_1 = () => {
                 </div>
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Technical Information</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>Scale (or NTS if not to scale)</li>
                     <li>North point (for site/floor plans)</li>
                     <li>Legend of symbols used</li>
@@ -501,7 +501,7 @@ const Level3Module6Section5_1 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Circuit Information to Include:</p>
-              <ul className="text-sm text-white/90 space-y-1 ml-4">
+              <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Circuit reference number matching the distribution board schedule</li>
                 <li>Protective device type and rating (e.g., 32A Type B RCBO)</li>
                 <li>Cable type, size, and installation method (e.g., 2.5mm T&E in wall)</li>
@@ -511,7 +511,7 @@ const Level3Module6Section5_1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A lighting circuit might be labelled: "Cct L1/1 - Ground
               Floor Lighting - 6A Type B MCB - 1.5mm T&E - Design Current 4.8A - Route Length 28m"
             </p>
@@ -537,7 +537,7 @@ const Level3Module6Section5_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Drawing Status</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>
                       <strong>Preliminary/Draft:</strong> For comment only, not for construction
                     </li>
@@ -554,7 +554,7 @@ const Level3Module6Section5_1 = () => {
                 </div>
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Revision Process</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>Increment revision (A to B, P1 to P2)</li>
                     <li>Cloud changed areas to highlight</li>
                     <li>Update revision history block</li>
@@ -571,13 +571,13 @@ const Level3Module6Section5_1 = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 pr-4 text-white/80">Rev</th>
-                      <th className="text-left py-2 pr-4 text-white/80">Date</th>
-                      <th className="text-left py-2 pr-4 text-white/80">Description</th>
-                      <th className="text-left py-2 text-white/80">By</th>
+                      <th className="text-left py-2 pr-4 text-white">Rev</th>
+                      <th className="text-left py-2 pr-4 text-white">Date</th>
+                      <th className="text-left py-2 pr-4 text-white">Description</th>
+                      <th className="text-left py-2 text-white">By</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/90">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2 pr-4 font-mono">P1</td>
                       <td className="py-2 pr-4">01/03/25</td>
@@ -680,7 +680,7 @@ const Level3Module6Section5_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -723,7 +723,7 @@ const Level3Module6Section5_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section5">

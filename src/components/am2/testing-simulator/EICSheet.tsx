@@ -51,7 +51,7 @@ export function EICSheet({ eic, onClose, onUpdateResult, onFinish }: EICSheetPro
           </button>
           <div className="text-center">
             <p className="text-sm font-semibold text-white">Electrical Installation Certificate</p>
-            <p className="text-[10px] text-white/70">
+            <p className="text-[10px] text-white">
               BS 7671 — Schedule completeness: {overallCompleteness}%
             </p>
           </div>
@@ -73,7 +73,7 @@ export function EICSheet({ eic, onClose, onUpdateResult, onFinish }: EICSheetPro
                 'flex-1 py-2 text-[11px] font-semibold rounded-lg touch-manipulation transition-all',
                 activeTab === tab.id
                   ? 'bg-cyan-500/15 text-cyan-300 border border-cyan-400/20'
-                  : 'text-white/40 border border-transparent'
+                  : 'text-white border border-transparent'
               )}
             >
               {tab.label}

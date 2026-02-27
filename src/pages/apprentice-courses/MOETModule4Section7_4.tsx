@@ -266,7 +266,7 @@ const MOETModule4Section7_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module4-section7">
@@ -286,7 +286,7 @@ const MOETModule4Section7_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Industry Best Practices in RCM
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Standards, systems and culture that underpin world-class maintenance
           </p>
         </header>
@@ -789,7 +789,7 @@ const MOETModule4Section7_4 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Final thought:</strong> Module 4 has taken you from the fundamentals of
               maintenance techniques, through fault diagnosis and condition monitoring, to root
               cause analysis and reliability-centred maintenance. These are not isolated topics —
@@ -812,7 +812,7 @@ const MOETModule4Section7_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -857,7 +857,7 @@ const MOETModule4Section7_4 = () => {
         {/* Module completion message */}
         <div className="mb-8 p-6 rounded-xl bg-elec-yellow/10 border border-elec-yellow/30 text-center">
           <h3 className="text-lg font-semibold text-white mb-2">Module 4 Complete</h3>
-          <p className="text-sm text-white/80">
+          <p className="text-sm text-white">
             You have completed all sections of Module 4: Maintenance Techniques and Fault Diagnosis.
             This module has covered planned and reactive maintenance strategies, condition
             monitoring and predictive techniques, systematic fault diagnosis, root cause analysis,
@@ -870,7 +870,7 @@ const MOETModule4Section7_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module4-section7-3">

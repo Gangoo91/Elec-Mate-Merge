@@ -87,7 +87,7 @@ const EICStepIndicator: React.FC<EICStepIndicatorProps> = ({
                       'bg-green-500/15 text-green-400 border border-green-500/30',
                     !isActive &&
                       !isComplete &&
-                      'bg-white/5 text-white/60 border border-white/10 hover:bg-white/10 hover:text-white/80'
+                      'bg-white/5 text-white border border-white/10 hover:bg-white/10 hover:text-white'
                   )}
                 >
                   {isComplete && !isActive ? (
@@ -143,13 +143,13 @@ const EICStepIndicator: React.FC<EICStepIndicatorProps> = ({
                       <span
                         className={cn(
                           'text-sm font-bold',
-                          isActive ? 'text-black' : 'text-white/60 group-hover:text-white/80'
+                          isActive ? 'text-black' : 'text-white group-hover:text-white'
                         )}
                       >
                         {React.cloneElement(step.icon as React.ReactElement, {
                           className: cn(
                             'h-5 w-5',
-                            isActive ? 'text-black' : 'text-white/60 group-hover:text-white/80'
+                            isActive ? 'text-black' : 'text-white group-hover:text-white'
                           ),
                         })}
                       </span>
@@ -162,7 +162,7 @@ const EICStepIndicator: React.FC<EICStepIndicatorProps> = ({
                       'text-xs font-medium transition-colors duration-200 text-center max-w-[80px]',
                       isActive && 'text-elec-yellow',
                       isComplete && !isActive && 'text-green-400',
-                      !isActive && !isComplete && 'text-white/50 group-hover:text-white/70'
+                      !isActive && !isComplete && 'text-white group-hover:text-white'
                     )}
                   >
                     {step.shortLabel}

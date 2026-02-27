@@ -234,7 +234,7 @@ const FiberOpticsModule6Section3 = () => {
             <ArrowLeft className="w-5 h-5" />
             <span className="font-medium">Module 6</span>
           </Link>
-          <span className="text-white/50 text-sm">Section 3 of 4</span>
+          <span className="text-white text-sm">Section 3 of 4</span>
         </div>
       </div>
 
@@ -247,7 +247,7 @@ const FiberOpticsModule6Section3 = () => {
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">
             Loss Budgets and Length Limits
           </h1>
-          <p className="text-white/70 text-lg">
+          <p className="text-white text-lg">
             Master the calculations that ensure fibre links perform reliably under all conditions
           </p>
         </div>
@@ -260,14 +260,14 @@ const FiberOpticsModule6Section3 = () => {
             <div className="bg-[#252525] rounded-lg p-4 border border-white/10">
               <Calculator className="w-6 h-6 text-elec-yellow mb-2" />
               <h3 className="text-white font-semibold text-sm mb-1">Loss Budget</h3>
-              <p className="text-white/60 text-xs">
+              <p className="text-white text-xs">
                 Calculate maximum allowable losses for reliable operation
               </p>
             </div>
             <div className="bg-[#252525] rounded-lg p-4 border border-white/10">
               <Ruler className="w-6 h-6 text-elec-yellow mb-2" />
               <h3 className="text-white font-semibold text-sm mb-1">Length Limits</h3>
-              <p className="text-white/60 text-xs">
+              <p className="text-white text-xs">
                 Distance restrictions based on fibre type and data rate
               </p>
             </div>
@@ -289,7 +289,7 @@ const FiberOpticsModule6Section3 = () => {
               ].map((outcome, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-white/80">{outcome}</span>
+                  <span className="text-white">{outcome}</span>
                 </li>
               ))}
             </ul>
@@ -302,7 +302,7 @@ const FiberOpticsModule6Section3 = () => {
               Understanding Loss Budgets
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 A <strong className="text-white">loss budget</strong> is a calculation that
                 determines whether a fibre optic link will work reliably. It compares the total
@@ -322,7 +322,7 @@ const FiberOpticsModule6Section3 = () => {
                 <Zap className="w-4 h-4 text-elec-yellow" />
                 The Golden Rule
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 <strong className="text-white">
                   Total Link Loss must be LESS than Power Budget.
                 </strong>{' '}
@@ -340,7 +340,7 @@ const FiberOpticsModule6Section3 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Fibre Attenuation Loss</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Cable length (km) × Attenuation coefficient (dB/km)
                     </p>
                   </div>
@@ -351,7 +351,7 @@ const FiberOpticsModule6Section3 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Connector Losses</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Number of mated pairs × 0.5 dB per pair (max)
                     </p>
                   </div>
@@ -362,7 +362,7 @@ const FiberOpticsModule6Section3 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Splice Losses</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Number of splices × 0.1 dB per fusion splice
                     </p>
                   </div>
@@ -373,7 +373,7 @@ const FiberOpticsModule6Section3 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Safety Margin</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Typically 3 dB for repairs, ageing, and environmental factors
                     </p>
                   </div>
@@ -389,7 +389,7 @@ const FiberOpticsModule6Section3 = () => {
               Fibre Attenuation Coefficients
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 Different fibre types have different attenuation coefficients. These values are
                 specified as maximum values in dB per kilometre (dB/km). Always use the values for
@@ -406,12 +406,12 @@ const FiberOpticsModule6Section3 = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Fibre Type</th>
-                      <th className="text-center py-2 px-3 text-white/60 font-medium">850nm</th>
-                      <th className="text-center py-2 px-3 text-white/60 font-medium">1300nm</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">Fibre Type</th>
+                      <th className="text-center py-2 px-3 text-white font-medium">850nm</th>
+                      <th className="text-center py-2 px-3 text-white font-medium">1300nm</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">OM1 (62.5/125)</td>
                       <td className="py-2 px-3 text-center">3.5 dB/km</td>
@@ -446,12 +446,12 @@ const FiberOpticsModule6Section3 = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Fibre Type</th>
-                      <th className="text-center py-2 px-3 text-white/60 font-medium">1310nm</th>
-                      <th className="text-center py-2 px-3 text-white/60 font-medium">1550nm</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">Fibre Type</th>
+                      <th className="text-center py-2 px-3 text-white font-medium">1310nm</th>
+                      <th className="text-center py-2 px-3 text-white font-medium">1550nm</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">OS1 (Indoor)</td>
                       <td className="py-2 px-3 text-center">1.0 dB/km</td>
@@ -472,7 +472,7 @@ const FiberOpticsModule6Section3 = () => {
                 <BookOpen className="w-4 h-4" />
                 Key Point: OS1 vs OS2
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 OS1 fibre (typically indoor tight-buffered) has higher attenuation due to cable
                 construction. OS2 (loose-tube outdoor) achieves much lower attenuation. For
                 long-distance links, OS2 fibre is essential for meeting loss budgets.
@@ -494,7 +494,7 @@ const FiberOpticsModule6Section3 = () => {
               Connector and Splice Loss Allowances
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 Every connection in a fibre link introduces loss. Standards specify maximum
                 allowable values that should be used for loss budget calculations. Actual measured
@@ -509,18 +509,18 @@ const FiberOpticsModule6Section3 = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">
+                      <th className="text-left py-2 px-3 text-white font-medium">
                         Connection Type
                       </th>
-                      <th className="text-center py-2 px-3 text-white/60 font-medium">
+                      <th className="text-center py-2 px-3 text-white font-medium">
                         Budget Value
                       </th>
-                      <th className="text-center py-2 px-3 text-white/60 font-medium">
+                      <th className="text-center py-2 px-3 text-white font-medium">
                         Typical Actual
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">Mated connector pair (any type)</td>
                       <td className="py-2 px-3 text-center font-semibold text-elec-yellow">
@@ -560,7 +560,7 @@ const FiberOpticsModule6Section3 = () => {
                 <AlertTriangle className="w-4 h-4" />
                 Counting Connectors Correctly
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Count <strong className="text-white">mated pairs</strong>, not individual
                 connectors. A patch lead plugged into a patch panel counts as one mated pair. A link
                 with two patch leads at each end through two patch panels has 4 mated connector
@@ -570,19 +570,19 @@ const FiberOpticsModule6Section3 = () => {
 
             <div className="bg-[#252525] rounded-lg p-5 border border-white/10 mb-6">
               <h4 className="font-semibold text-white mb-4">Example: Counting Connections</h4>
-              <p className="text-white/70 text-sm mb-4">
+              <p className="text-white text-sm mb-4">
                 A typical horizontal link with one patch lead at each end through a floor
                 distributor (FD) to a consolidation point (CP):
               </p>
-              <div className="bg-[#1a1a1a] p-4 rounded-lg font-mono text-sm text-white/80">
+              <div className="bg-[#1a1a1a] p-4 rounded-lg font-mono text-sm text-white">
                 <p className="mb-2">
                   [Equipment] -- Patch -- [FD Panel] == Cable == [CP] -- Outlet -- [Device]
                 </p>
-                <p className="text-white/60 mt-3">
+                <p className="text-white mt-3">
                   Mated pairs: Equipment patch (1) + FD patch (1) + Outlet (1) ={' '}
                   <span className="text-elec-yellow font-bold">3 pairs</span>
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   Connection loss allowance: 3 × 0.5 dB ={' '}
                   <span className="text-elec-yellow font-bold">1.5 dB</span>
                 </p>
@@ -597,7 +597,7 @@ const FiberOpticsModule6Section3 = () => {
               Power Budget Calculation
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 The <strong className="text-white">power budget</strong> is the difference between
                 the transmitter's output power and the receiver's sensitivity. This determines the
@@ -607,10 +607,10 @@ const FiberOpticsModule6Section3 = () => {
 
             <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 p-4 rounded-r-lg mb-6">
               <h4 className="font-semibold text-white mb-2">Power Budget Formula</h4>
-              <p className="text-white/80 font-mono text-lg">
+              <p className="text-white font-mono text-lg">
                 Power Budget (dB) = P<sub>tx</sub> (dBm) − P<sub>rx</sub> (dBm)
               </p>
-              <p className="text-white/60 text-sm mt-2">
+              <p className="text-white text-sm mt-2">
                 Where P<sub>tx</sub> is transmitter output power and P<sub>rx</sub> is receiver
                 sensitivity (minimum detectable power)
               </p>
@@ -622,19 +622,19 @@ const FiberOpticsModule6Section3 = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">
+                      <th className="text-left py-2 px-3 text-white font-medium">
                         Transceiver Type
                       </th>
-                      <th className="text-center py-2 px-3 text-white/60 font-medium">Tx Power</th>
-                      <th className="text-center py-2 px-3 text-white/60 font-medium">
+                      <th className="text-center py-2 px-3 text-white font-medium">Tx Power</th>
+                      <th className="text-center py-2 px-3 text-white font-medium">
                         Rx Sensitivity
                       </th>
-                      <th className="text-center py-2 px-3 text-white/60 font-medium">
+                      <th className="text-center py-2 px-3 text-white font-medium">
                         Power Budget
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">1000BASE-SX (MM)</td>
                       <td className="py-2 px-3 text-center">-9.5 to -3 dBm</td>
@@ -679,7 +679,7 @@ const FiberOpticsModule6Section3 = () => {
               Complete Loss Budget Calculation
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 Let's work through a complete loss budget calculation for a typical campus backbone
                 link using OM4 multimode fibre.
@@ -688,7 +688,7 @@ const FiberOpticsModule6Section3 = () => {
 
             <div className="bg-[#252525] rounded-lg p-5 border border-white/10 mb-6">
               <h4 className="font-semibold text-white mb-4">Scenario: Campus Backbone Link</h4>
-              <ul className="space-y-2 text-white/70 text-sm mb-4">
+              <ul className="space-y-2 text-white text-sm mb-4">
                 <li>• Fibre type: OM4 multimode</li>
                 <li>• Wavelength: 850nm (10GBASE-SR)</li>
                 <li>• Cable length: 280 metres</li>
@@ -701,19 +701,19 @@ const FiberOpticsModule6Section3 = () => {
             <div className="bg-[#1a1a1a] rounded-lg p-5 border border-elec-yellow/30 mb-6">
               <h4 className="font-semibold text-elec-yellow mb-4">Loss Budget Calculation</h4>
               <div className="space-y-3 font-mono text-sm">
-                <div className="flex justify-between text-white/80 border-b border-white/10 pb-2">
+                <div className="flex justify-between text-white border-b border-white/10 pb-2">
                   <span>Fibre loss: 0.28 km × 3.5 dB/km</span>
                   <span className="text-white">= 0.98 dB</span>
                 </div>
-                <div className="flex justify-between text-white/80 border-b border-white/10 pb-2">
+                <div className="flex justify-between text-white border-b border-white/10 pb-2">
                   <span>Connector loss: 4 pairs × 0.5 dB</span>
                   <span className="text-white">= 2.00 dB</span>
                 </div>
-                <div className="flex justify-between text-white/80 border-b border-white/10 pb-2">
+                <div className="flex justify-between text-white border-b border-white/10 pb-2">
                   <span>Splice loss: 2 × 0.1 dB</span>
                   <span className="text-white">= 0.20 dB</span>
                 </div>
-                <div className="flex justify-between text-white/80 border-b border-white/10 pb-2">
+                <div className="flex justify-between text-white border-b border-white/10 pb-2">
                   <span>Safety margin</span>
                   <span className="text-white">= 3.00 dB</span>
                 </div>
@@ -729,7 +729,7 @@ const FiberOpticsModule6Section3 = () => {
                 <AlertTriangle className="w-4 h-4" />
                 Result: Link FAILS
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Total link loss (6.18 dB) exceeds the power budget (2.6 dB). This link will NOT work
                 reliably with 10GBASE-SR transceivers.
               </p>
@@ -742,7 +742,7 @@ const FiberOpticsModule6Section3 = () => {
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Reduce safety margin to 1 dB</span>
-                    <p className="text-white/60 text-sm">New total: 4.18 dB — still fails</p>
+                    <p className="text-white text-sm">New total: 4.18 dB — still fails</p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
@@ -751,14 +751,14 @@ const FiberOpticsModule6Section3 = () => {
                     <span className="text-white font-medium">
                       Reduce connector pairs (direct patching)
                     </span>
-                    <p className="text-white/60 text-sm">2 pairs instead of 4: saves 1.0 dB</p>
+                    <p className="text-white text-sm">2 pairs instead of 4: saves 1.0 dB</p>
                   </div>
                 </li>
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Use extended reach transceivers</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Higher power budget available with some SFP+ modules
                     </p>
                   </div>
@@ -769,7 +769,7 @@ const FiberOpticsModule6Section3 = () => {
                     <span className="text-white font-medium">
                       Use pre-terminated low-loss MPO system
                     </span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Factory terminations typically achieve &lt;0.3 dB per pair
                     </p>
                   </div>
@@ -785,7 +785,7 @@ const FiberOpticsModule6Section3 = () => {
               Maximum Length Limits
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 Maximum link lengths are determined by two factors:{' '}
                 <strong className="text-white">attenuation</strong> (signal gets weaker over
@@ -804,14 +804,14 @@ const FiberOpticsModule6Section3 = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Application</th>
-                      <th className="text-center py-2 px-3 text-white/60 font-medium">OM1</th>
-                      <th className="text-center py-2 px-3 text-white/60 font-medium">OM2</th>
-                      <th className="text-center py-2 px-3 text-white/60 font-medium">OM3</th>
-                      <th className="text-center py-2 px-3 text-white/60 font-medium">OM4</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">Application</th>
+                      <th className="text-center py-2 px-3 text-white font-medium">OM1</th>
+                      <th className="text-center py-2 px-3 text-white font-medium">OM2</th>
+                      <th className="text-center py-2 px-3 text-white font-medium">OM3</th>
+                      <th className="text-center py-2 px-3 text-white font-medium">OM4</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">1 Gigabit Ethernet</td>
                       <td className="py-2 px-3 text-center">275m</td>
@@ -859,31 +859,31 @@ const FiberOpticsModule6Section3 = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Application</th>
-                      <th className="text-center py-2 px-3 text-white/60 font-medium">OS1/OS2</th>
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Notes</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">Application</th>
+                      <th className="text-center py-2 px-3 text-white font-medium">OS1/OS2</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">Notes</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">1000BASE-LX</td>
                       <td className="py-2 px-3 text-center text-elec-yellow">5 km</td>
-                      <td className="py-2 px-3 text-white/60">Standard reach</td>
+                      <td className="py-2 px-3 text-white">Standard reach</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">10GBASE-LR</td>
                       <td className="py-2 px-3 text-center text-elec-yellow">10 km</td>
-                      <td className="py-2 px-3 text-white/60">Long reach</td>
+                      <td className="py-2 px-3 text-white">Long reach</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">10GBASE-ER</td>
                       <td className="py-2 px-3 text-center text-elec-yellow">40 km</td>
-                      <td className="py-2 px-3 text-white/60">Extended reach</td>
+                      <td className="py-2 px-3 text-white">Extended reach</td>
                     </tr>
                     <tr>
                       <td className="py-2 px-3">100GBASE-LR4</td>
                       <td className="py-2 px-3 text-center text-elec-yellow">10 km</td>
-                      <td className="py-2 px-3 text-white/60">4 wavelengths</td>
+                      <td className="py-2 px-3 text-white">4 wavelengths</td>
                     </tr>
                   </tbody>
                 </table>
@@ -905,7 +905,7 @@ const FiberOpticsModule6Section3 = () => {
               Channel vs Permanent Link Testing
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 Standards define two testing models: <strong className="text-white">channel</strong>{' '}
                 (complete end-to-end link including equipment cords) and{' '}
@@ -920,7 +920,7 @@ const FiberOpticsModule6Section3 = () => {
                   <Link2 className="w-5 h-5 text-elec-yellow" />
                   Channel
                 </h4>
-                <ul className="space-y-2 text-white/70 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li>• Complete end-to-end path</li>
                   <li>• Includes equipment patch cords</li>
                   <li>• Includes work area cords</li>
@@ -933,7 +933,7 @@ const FiberOpticsModule6Section3 = () => {
                   <Settings className="w-5 h-5 text-elec-yellow" />
                   Permanent Link
                 </h4>
-                <ul className="space-y-2 text-white/70 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li>• Installed cabling only</li>
                   <li>• Excludes equipment cords</li>
                   <li>• Tests infrastructure quality</li>
@@ -945,7 +945,7 @@ const FiberOpticsModule6Section3 = () => {
 
             <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 p-4 rounded-r-lg mb-6">
               <h4 className="font-semibold text-white mb-2">Loss Limit Differences</h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Channel tests have higher loss limits than permanent link tests because they include
                 additional connector pairs. For example, an OM3 multimode channel at 850nm allows
                 2.0 dB maximum loss, while the permanent link allows 1.5 dB.
@@ -967,7 +967,7 @@ const FiberOpticsModule6Section3 = () => {
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Calculate before installation</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Always verify loss budgets during design phase, not after cables are installed
                     </p>
                   </div>
@@ -978,7 +978,7 @@ const FiberOpticsModule6Section3 = () => {
                     <span className="text-white font-medium">
                       Use worst-case transceiver values
                     </span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Design for minimum transmitter power and worst receiver sensitivity
                     </p>
                   </div>
@@ -987,7 +987,7 @@ const FiberOpticsModule6Section3 = () => {
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Include adequate safety margin</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       3 dB standard; consider more for critical links or harsh environments
                     </p>
                   </div>
@@ -996,7 +996,7 @@ const FiberOpticsModule6Section3 = () => {
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Minimise connections</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Every connection adds loss—design with the minimum necessary
                     </p>
                   </div>
@@ -1005,7 +1005,7 @@ const FiberOpticsModule6Section3 = () => {
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Verify with testing</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Always test installed links—measured values should beat calculated budgets
                     </p>
                   </div>
@@ -1024,7 +1024,7 @@ const FiberOpticsModule6Section3 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="bg-[#252525] rounded-lg p-5 border border-white/10">
                   <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                  <p className="text-white/70 text-sm">{faq.answer}</p>
+                  <p className="text-white text-sm">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -1040,7 +1040,7 @@ const FiberOpticsModule6Section3 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <h4 className="font-semibold text-white mb-2">Connection Losses</h4>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>• Connector pair: 0.5 dB max</li>
                     <li>• Fusion splice: 0.1 dB max</li>
                     <li>• Mechanical splice: 0.3 dB max</li>
@@ -1049,7 +1049,7 @@ const FiberOpticsModule6Section3 = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-white mb-2">Fibre Attenuation</h4>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>• OM1-OM4 @ 850nm: 3.5 dB/km</li>
                     <li>• OM1-OM4 @ 1300nm: 1.5 dB/km</li>
                     <li>• OS2 @ 1310nm: 0.35 dB/km</li>

@@ -49,7 +49,7 @@ const Module2Section2_1 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-foreground active:text-foreground p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -66,7 +66,7 @@ const Module2Section2_1 = () => {
           <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-6">
             Module 2, Section 1 – Electrical Quantities and Units
           </h1>
-          <p className="text-xl text-white/80 max-w-4xl">
+          <p className="text-xl text-white max-w-4xl">
             Understanding fundamental electrical quantities: voltage, current, resistance, and their
             units
           </p>

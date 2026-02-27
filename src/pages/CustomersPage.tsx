@@ -134,7 +134,7 @@ export default function CustomersPage() {
           <div className="flex items-center h-14 px-4 gap-2">
             <div className="relative flex-1">
               {!searchTerm && (
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
               )}
               <Input
                 placeholder="Search customers..."
@@ -186,7 +186,7 @@ export default function CustomersPage() {
                 aria-label="Search customers"
                 className="h-10 w-10 flex items-center justify-center rounded-xl hover:bg-white/[0.05] active:scale-[0.98] transition-all touch-manipulation"
               >
-                <Search className="h-5 w-5 text-white/80" />
+                <Search className="h-5 w-5 text-white" />
               </button>
               <button
                 onClick={() => {
@@ -232,7 +232,7 @@ export default function CustomersPage() {
                   'shrink-0 h-8 px-3.5 rounded-full text-[13px] font-medium transition-all touch-manipulation active:scale-[0.97]',
                   sortField === tab.value
                     ? 'bg-blue-500 text-white'
-                    : 'bg-white/[0.06] text-white/70'
+                    : 'bg-white/[0.06] text-white'
                 )}
               >
                 {tab.label}
@@ -268,9 +268,9 @@ export default function CustomersPage() {
               {searchTerm ? (
                 /* Search empty state */
                 <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 text-center">
-                  <Search className="h-10 w-10 text-white/30 mx-auto mb-3" />
+                  <Search className="h-10 w-10 text-white mx-auto mb-3" />
                   <p className="text-base font-semibold text-white mb-1">No customers found</p>
-                  <p className="text-sm text-white/50">Try a different name or postcode</p>
+                  <p className="text-sm text-white">Try a different name or postcode</p>
                 </div>
               ) : (
                 /* First-time empty state */
@@ -281,7 +281,7 @@ export default function CustomersPage() {
                     </div>
                     <div>
                       <p className="text-lg font-bold text-white">Build Your Customer Base</p>
-                      <p className="text-sm text-white/50 mt-1">
+                      <p className="text-sm text-white mt-1">
                         Store clients, track jobs, and send quotes all in one place
                       </p>
                     </div>
@@ -305,7 +305,7 @@ export default function CustomersPage() {
                     </Button>
                   </div>
 
-                  <p className="text-center text-xs text-white/30">
+                  <p className="text-center text-xs text-white">
                     All customer data is stored securely and never shared
                   </p>
                 </>

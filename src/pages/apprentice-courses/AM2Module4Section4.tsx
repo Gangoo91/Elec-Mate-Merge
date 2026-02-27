@@ -217,12 +217,12 @@ const AM2Module4Section4 = () => {
 
       {/* Critical Warning */}
       <AM2CriticalWarning title="CRITICAL: Functional Testing is Mandatory">
-        <p className="text-ios-callout text-white/80 mb-2">
+        <p className="text-ios-callout text-white mb-2">
           Assessors want to see you approach this like you would on-site: check, operate, and
           confirm every circuit behaves as designed. Skipping or rushing these checks is a common
           reason candidates lose marks.
         </p>
-        <p className="text-ios-callout text-white/90 font-medium">
+        <p className="text-ios-callout text-white font-medium">
           Functional testing cannot be skipped even if all electrical tests pass. It proves
           real-world operation and safety.
         </p>
@@ -244,7 +244,7 @@ const AM2Module4Section4 = () => {
           <h4 className="text-ios-headline text-white font-semibold mb-2">
             Definition and Purpose:
           </h4>
-          <p className="text-ios-callout text-white/80 mb-3">
+          <p className="text-ios-callout text-white mb-3">
             Functional testing confirms the installation operates as intended. It goes beyond
             electrical tests - checks real-world usability and operational safety.
           </p>
@@ -259,7 +259,7 @@ const AM2Module4Section4 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-3">
               Functional Testing Covers:
             </h4>
-            <ul className="text-ios-callout text-white/80 space-y-1.5">
+            <ul className="text-ios-callout text-white space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Correct operation of switches and accessories</span>
@@ -285,7 +285,7 @@ const AM2Module4Section4 = () => {
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4">
             <h4 className="text-ios-headline text-white font-semibold mb-3">Why It's Essential:</h4>
-            <ul className="text-ios-callout text-white/80 space-y-1.5">
+            <ul className="text-ios-callout text-white space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Confirms installation works as designed</span>
@@ -333,7 +333,7 @@ const AM2Module4Section4 = () => {
                 <Lightbulb className="h-4 w-4 text-elec-yellow" />
                 Lighting Circuits:
               </h4>
-              <ul className="text-ios-callout text-white/80 space-y-1.5">
+              <ul className="text-ios-callout text-white space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>Operate switches (one-way, two-way, intermediate)</span>
@@ -358,7 +358,7 @@ const AM2Module4Section4 = () => {
                 <Zap className="h-4 w-4 text-emerald-400" />
                 Power Circuits:
               </h4>
-              <ul className="text-ios-callout text-white/80 space-y-1.5">
+              <ul className="text-ios-callout text-white space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>Test socket outlets (correct polarity, supply present)</span>
@@ -385,7 +385,7 @@ const AM2Module4Section4 = () => {
                 <Settings className="h-4 w-4 text-orange-400" />
                 Motor Circuits:
               </h4>
-              <ul className="text-ios-callout text-white/80 space-y-1.5">
+              <ul className="text-ios-callout text-white space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>Confirm DOL starter operation</span>
@@ -410,7 +410,7 @@ const AM2Module4Section4 = () => {
                 <Target className="h-4 w-4 text-purple-400" />
                 RCD/RCBO Testing:
               </h4>
-              <ul className="text-ios-callout text-white/80 space-y-1.5">
+              <ul className="text-ios-callout text-white space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>Trip tests at x1 and x5 IΔn</span>
@@ -440,7 +440,7 @@ const AM2Module4Section4 = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <p className="text-ios-callout text-white font-semibold mb-2">Standard RCD (30mA):</p>
-              <ul className="text-ios-callout text-white/80 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>1x test (30mA): Should trip but may take up to 300ms</span>
@@ -459,7 +459,7 @@ const AM2Module4Section4 = () => {
               <p className="text-ios-callout text-white font-semibold mb-2">
                 Recording Requirements:
               </p>
-              <ul className="text-ios-callout text-white/80 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>Record actual trip times in milliseconds</span>
@@ -483,7 +483,7 @@ const AM2Module4Section4 = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-3">
           <div>
             <h4 className="text-ios-headline text-white font-semibold mb-2">Testing Omissions:</h4>
-            <ul className="text-ios-callout text-white/80 space-y-1.5">
+            <ul className="text-ios-callout text-white space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-red-400">•</span>
                 <span>Not testing all lighting switching combinations</span>
@@ -507,7 +507,7 @@ const AM2Module4Section4 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-2">
               Recording and Procedure Errors:
             </h4>
-            <ul className="text-ios-callout text-white/80 space-y-1.5">
+            <ul className="text-ios-callout text-white space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-red-400">•</span>
                 <span>Recording RCD trip times incorrectly or in wrong units</span>
@@ -550,7 +550,7 @@ const AM2Module4Section4 = () => {
               <CheckCircle className="h-4 w-4 text-emerald-400" />
               Professional Approach:
             </h4>
-            <ul className="text-ios-callout text-white/80 space-y-1.5">
+            <ul className="text-ios-callout text-white space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Operate switches and devices methodically, not randomly</span>
@@ -575,7 +575,7 @@ const AM2Module4Section4 = () => {
               <Target className="h-4 w-4 text-elec-yellow" />
               Technical Requirements:
             </h4>
-            <ul className="text-ios-callout text-white/80 space-y-1.5">
+            <ul className="text-ios-callout text-white space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Record results in correct units (ms for RCDs)</span>
@@ -605,7 +605,7 @@ const AM2Module4Section4 = () => {
               <p className="text-ios-callout text-elec-yellow font-semibold mb-2">
                 Systematic Testing:
               </p>
-              <ul className="text-ios-callout text-white/80 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>Logical sequence of testing</span>
@@ -624,7 +624,7 @@ const AM2Module4Section4 = () => {
               <p className="text-ios-callout text-elec-yellow font-semibold mb-2">
                 Professional Communication:
               </p>
-              <ul className="text-ios-callout text-white/80 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>Clear explanation of each test</span>
@@ -656,7 +656,7 @@ const AM2Module4Section4 = () => {
               <h4 className="text-ios-headline text-white font-semibold mb-2">
                 Lighting Circuit Testing:
               </h4>
-              <ul className="text-ios-callout text-white/80 space-y-2">
+              <ul className="text-ios-callout text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Always test every switching combination - don't assume</span>
@@ -674,7 +674,7 @@ const AM2Module4Section4 = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="text-ios-headline text-white font-semibold mb-2">Socket Testing:</h4>
-              <ul className="text-ios-callout text-white/80 space-y-2">
+              <ul className="text-ios-callout text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                   <span>Use polarity tester or plug-in tester</span>
@@ -696,7 +696,7 @@ const AM2Module4Section4 = () => {
               <h4 className="text-ios-headline text-white font-semibold mb-2">
                 RCD Testing Procedure:
               </h4>
-              <ul className="text-ios-callout text-white/80 space-y-2">
+              <ul className="text-ios-callout text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
                   <span>Test at x1 and x5 IΔn with appropriate RCD tester</span>
@@ -716,7 +716,7 @@ const AM2Module4Section4 = () => {
               <h4 className="text-ios-headline text-white font-semibold mb-2">
                 Motor Circuit Testing:
               </h4>
-              <ul className="text-ios-callout text-white/80 space-y-2">
+              <ul className="text-ios-callout text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
                   <span>Check start and stop controls operate correctly</span>
@@ -741,7 +741,7 @@ const AM2Module4Section4 = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <p className="text-ios-callout text-white font-semibold mb-2">Efficient Testing:</p>
-              <ul className="text-ios-callout text-white/80 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>Work steadily - rushing causes missed checks</span>
@@ -760,7 +760,7 @@ const AM2Module4Section4 = () => {
               <p className="text-ios-callout text-white font-semibold mb-2">
                 Professional Approach:
               </p>
-              <ul className="text-ios-callout text-white/80 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>Explain each test to the assessor as you proceed</span>
@@ -799,7 +799,7 @@ const AM2Module4Section4 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-2">
               Example 1: Incomplete Switch Testing
             </h4>
-            <p className="text-ios-callout text-white/80 mb-2">
+            <p className="text-ios-callout text-white mb-2">
               Candidate did full electrical tests but didn't test two-way switching. Assessor
               flagged incomplete - <strong className="text-red-400">lost marks</strong>
             </p>
@@ -813,7 +813,7 @@ const AM2Module4Section4 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-2">
               Example 2: Incomplete RCD Testing
             </h4>
-            <p className="text-ios-callout text-white/80 mb-2">
+            <p className="text-ios-callout text-white mb-2">
               Candidate only did RCD x1 trip test, forgot x5. Incomplete -{' '}
               <strong className="text-red-400">lost marks</strong>
             </p>
@@ -827,7 +827,7 @@ const AM2Module4Section4 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-2">
               Example 3: Professional Excellence
             </h4>
-            <p className="text-ios-callout text-white/80 mb-2">
+            <p className="text-ios-callout text-white mb-2">
               Candidate tested all lighting switching combinations, RCDs, sockets, and motor circuit
               methodically. <strong className="text-emerald-400">Full marks</strong>
             </p>
@@ -851,7 +851,7 @@ const AM2Module4Section4 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-2">
               Troubleshooting Failed Tests:
             </h4>
-            <ul className="text-ios-callout text-white/80 space-y-1.5">
+            <ul className="text-ios-callout text-white space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>RCD fails to trip: Check test equipment, verify connections</span>
@@ -875,7 +875,7 @@ const AM2Module4Section4 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-2">
               Professional Documentation:
             </h4>
-            <ul className="text-ios-callout text-white/80 space-y-1.5">
+            <ul className="text-ios-callout text-white space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Record actual test results, not expected values</span>
@@ -900,7 +900,7 @@ const AM2Module4Section4 = () => {
           <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">
             Industry Best Practices:
           </h4>
-          <p className="text-ios-callout text-white/80">
+          <p className="text-ios-callout text-white">
             Professional electricians use functional testing to verify that installations will
             operate safely and reliably in service. This testing phase often reveals issues that
             purely electrical tests miss, making it essential for both AM2 success and real-world
@@ -918,7 +918,7 @@ const AM2Module4Section4 = () => {
 
         <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-4">
           <h4 className="text-ios-headline text-white font-semibold mb-3">Key Takeaways:</h4>
-          <ul className="text-ios-callout text-white/80 space-y-2">
+          <ul className="text-ios-callout text-white space-y-2">
             <li className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
               <span>
@@ -948,7 +948,7 @@ const AM2Module4Section4 = () => {
 
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
           <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">Next Steps:</h4>
-          <p className="text-ios-callout text-white/80">
+          <p className="text-ios-callout text-white">
             You have now completed essential testing procedures. The next section will cover
             identifying and reporting non-compliances.
           </p>

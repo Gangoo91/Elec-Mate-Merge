@@ -355,7 +355,7 @@ const Level3Module8Section3_3 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="../section3">
@@ -379,7 +379,7 @@ const Level3Module8Section3_3 = () => {
               <h1 className="text-2xl sm:text-3xl font-bold text-white">Memory Techniques</h1>
             </div>
           </div>
-          <p className="text-lg text-white/70">
+          <p className="text-lg text-white">
             Master proven memory techniques and electrical-specific mnemonics to retain key
             information for your exams and practical work.
           </p>
@@ -393,21 +393,21 @@ const Level3Module8Section3_3 = () => {
           </h2>
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 <span className="text-elec-yellow font-medium">Mnemonics:</span> SLIPPT, CRISP-ZPR,
                 BrBl=BroBro
               </p>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 <span className="text-elec-yellow font-medium">Key technique:</span> Visual
                 association for lasting memory
               </p>
             </div>
             <div className="space-y-2">
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 <span className="text-elec-yellow font-medium">Chunking:</span> Group related
                 information together
               </p>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 <span className="text-elec-yellow font-medium">Repetition:</span> Review at
                 increasing intervals
               </p>
@@ -431,7 +431,7 @@ const Level3Module8Section3_3 = () => {
             ].map((outcome, index) => (
               <li key={index} className="flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                <span className="text-white/80">{outcome}</span>
+                <span className="text-white">{outcome}</span>
               </li>
             ))}
           </ul>
@@ -447,7 +447,7 @@ const Level3Module8Section3_3 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none mb-6">
-            <p className="text-white/80">
+            <p className="text-white">
               These mnemonics have been developed specifically for electrical qualifications. They
               provide memorable shortcuts for complex procedures and frequently-tested values. Learn
               these and you'll have reliable recall for key exam topics.
@@ -464,8 +464,8 @@ const Level3Module8Section3_3 = () => {
                     {item.mnemonic}
                   </span>
                 </div>
-                <p className="text-white/70 text-sm mb-1">{item.breakdown}</p>
-                <p className="text-white/50 text-xs">{item.fullMeaning}</p>
+                <p className="text-white text-sm mb-1">{item.breakdown}</p>
+                <p className="text-white text-xs">{item.fullMeaning}</p>
               </div>
             ))}
           </div>
@@ -475,7 +475,7 @@ const Level3Module8Section3_3 = () => {
               <Lightbulb className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="text-green-400 font-medium mb-1">Exam Day Tip: Memory Dump</h4>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   At the start of the exam, quickly write your key mnemonics on scrap paper while
                   they're fresh. This creates a reference for the entire exam and reduces anxiety
                   about forgetting.
@@ -500,7 +500,7 @@ const Level3Module8Section3_3 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none mb-6">
-            <p className="text-white/80">
+            <p className="text-white">
               These techniques are backed by cognitive science research. Different techniques work
               better for different types of information. Understanding when to use each one will
               help you remember more efficiently.
@@ -522,21 +522,21 @@ const Level3Module8Section3_3 = () => {
                   </div>
                   <div>
                     <h4 className="text-elec-yellow font-medium">{item.technique}</h4>
-                    <p className="text-white/70 text-sm">{item.description}</p>
+                    <p className="text-white text-sm">{item.description}</p>
                   </div>
                 </div>
                 <div className="bg-white/5 rounded-lg p-3 mb-2">
-                  <p className="text-white/50 text-xs mb-1">Example:</p>
-                  <p className="text-white/80 text-sm">{item.example}</p>
+                  <p className="text-white text-xs mb-1">Example:</p>
+                  <p className="text-white text-sm">{item.example}</p>
                 </div>
                 <div className="grid sm:grid-cols-2 gap-2 text-xs">
                   <div className="flex items-start gap-1">
                     <span className="text-green-400">Why it works:</span>
-                    <span className="text-white/60">{item.benefit}</span>
+                    <span className="text-white">{item.benefit}</span>
                   </div>
                   <div className="flex items-start gap-1">
                     <span className="text-blue-400">Best for:</span>
-                    <span className="text-white/60">{item.application}</span>
+                    <span className="text-white">{item.application}</span>
                   </div>
                 </div>
               </div>
@@ -548,7 +548,7 @@ const Level3Module8Section3_3 = () => {
               <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="text-amber-400 font-medium mb-1">Quality Over Quantity</h4>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Don't try to use every technique for every piece of information. Choose the right
                   technique for the content type. Over-elaborate systems become a burden rather than
                   a help.
@@ -573,7 +573,7 @@ const Level3Module8Section3_3 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none mb-6">
-            <p className="text-white/80">
+            <p className="text-white">
               Certain values appear repeatedly in exams and practical work. Having these committed
               to memory saves time in the exam and demonstrates competence. Focus on understanding
               the context as well as the number.
@@ -591,7 +591,7 @@ const Level3Module8Section3_3 = () => {
                   <th className="border border-white/20 px-3 py-2 text-left text-elec-yellow text-sm">
                     Value
                   </th>
-                  <th className="border border-white/20 px-3 py-2 text-left text-white/60 text-sm">
+                  <th className="border border-white/20 px-3 py-2 text-left text-white text-sm">
                     Context
                   </th>
                 </tr>
@@ -599,13 +599,13 @@ const Level3Module8Section3_3 = () => {
               <tbody>
                 {keyValues.map((item, index) => (
                   <tr key={index} className={index % 2 === 0 ? 'bg-white/5' : ''}>
-                    <td className="border border-white/20 px-3 py-2 text-white/80 text-sm">
+                    <td className="border border-white/20 px-3 py-2 text-white text-sm">
                       {item.item}
                     </td>
                     <td className="border border-white/20 px-3 py-2 text-elec-yellow font-medium text-sm">
                       {item.value}
                     </td>
-                    <td className="border border-white/20 px-3 py-2 text-white/60 text-sm">
+                    <td className="border border-white/20 px-3 py-2 text-white text-sm">
                       {item.context}
                     </td>
                   </tr>
@@ -616,8 +616,8 @@ const Level3Module8Section3_3 = () => {
 
           <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-6">
             <h4 className="text-white font-medium mb-3">Memory Trick: The "1" Pattern</h4>
-            <p className="text-white/70 text-sm mb-2">Notice how many key values contain "1":</p>
-            <ul className="space-y-1 text-white/60 text-sm">
+            <p className="text-white text-sm mb-2">Notice how many key values contain "1":</p>
+            <ul className="space-y-1 text-white text-sm">
               <li>- 1.0 MΩ (minimum IR)</li>
               <li>- 1x IΔn (RCD test current)</li>
               <li>- 150mm (cable zones)</li>
@@ -641,7 +641,7 @@ const Level3Module8Section3_3 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none mb-6">
-            <p className="text-white/80">
+            <p className="text-white">
               Electrical regulations follow logical patterns. Once you recognise these patterns, you
               can often work out answers even if you haven't memorised the specific value.
               Understanding the 'why' behind rules helps you remember and apply them correctly.
@@ -653,7 +653,7 @@ const Level3Module8Section3_3 = () => {
             {commonPatterns.map((item, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-xl p-4">
                 <h4 className="text-elec-yellow font-medium mb-2">{item.pattern}</h4>
-                <p className="text-white/70 text-sm mb-2">{item.explanation}</p>
+                <p className="text-white text-sm mb-2">{item.explanation}</p>
                 <div className="bg-green-500/10 rounded-lg p-2">
                   <p className="text-green-400/80 text-xs flex items-center gap-1">
                     <Lightbulb className="w-3 h-3" />
@@ -669,7 +669,7 @@ const Level3Module8Section3_3 = () => {
               <Link2 className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="text-blue-400 font-medium mb-1">Connect Related Concepts</h4>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   The 0.4s rule, Zs values, and protective device characteristics are all connected.
                   Lower Zs = higher fault current = faster disconnection. Understanding this
                   relationship helps you remember and apply all three concepts.
@@ -693,7 +693,7 @@ const Level3Module8Section3_3 = () => {
           <div className="space-y-4">
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="text-white font-medium mb-2">Week 1-2: Foundation</h4>
-              <ul className="space-y-1 text-white/70 text-sm">
+              <ul className="space-y-1 text-white text-sm">
                 <li>- Learn the key mnemonics (SLIPPT, CRISP-ZPR)</li>
                 <li>- Create flashcards for key values</li>
                 <li>- Begin spaced repetition schedule</li>
@@ -701,7 +701,7 @@ const Level3Module8Section3_3 = () => {
             </div>
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="text-white font-medium mb-2">Week 3-4: Reinforcement</h4>
-              <ul className="space-y-1 text-white/70 text-sm">
+              <ul className="space-y-1 text-white text-sm">
                 <li>- Create visual associations for difficult items</li>
                 <li>- Build your Memory Palace for test sequence</li>
                 <li>- Test yourself without notes</li>
@@ -709,7 +709,7 @@ const Level3Module8Section3_3 = () => {
             </div>
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="text-white font-medium mb-2">Week 5+: Application</h4>
-              <ul className="space-y-1 text-white/70 text-sm">
+              <ul className="space-y-1 text-white text-sm">
                 <li>- Use mnemonics in practice questions</li>
                 <li>- Identify which techniques work best for you</li>
                 <li>- Create your own mnemonics for weak areas</li>
@@ -728,7 +728,7 @@ const Level3Module8Section3_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-0 last:pb-0">
                 <h4 className="text-white font-medium mb-2">{faq.question}</h4>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -742,29 +742,29 @@ const Level3Module8Section3_3 = () => {
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">Safe Isolation</span>
+                <span className="text-white">Safe Isolation</span>
                 <span className="text-elec-yellow font-medium">SLIPPT</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">Test Sequence</span>
+                <span className="text-white">Test Sequence</span>
                 <span className="text-elec-yellow font-medium">CRISP-ZPR</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">Colour Code</span>
+                <span className="text-white">Colour Code</span>
                 <span className="text-elec-yellow font-medium">BrBl=BroBro</span>
               </div>
             </div>
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">MCB Types</span>
+                <span className="text-white">MCB Types</span>
                 <span className="text-elec-yellow font-medium">B=3-5, C=5-10, D=10-20</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">RCD Testing</span>
+                <span className="text-white">RCD Testing</span>
                 <span className="text-elec-yellow font-medium">Half, Full, Five</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">Disconnection</span>
+                <span className="text-white">Disconnection</span>
                 <span className="text-elec-yellow font-medium">0.4 for 230, 5 for dist</span>
               </div>
             </div>
@@ -776,7 +776,7 @@ const Level3Module8Section3_3 = () => {
           <h3 className="text-lg font-semibold text-white mb-4">Test Your Knowledge</h3>
           {!showQuiz ? (
             <div className="text-center">
-              <p className="text-white/70 mb-4">Ready to test your memory techniques knowledge?</p>
+              <p className="text-white mb-4">Ready to test your memory techniques knowledge?</p>
               <Button
                 onClick={() => setShowQuiz(true)}
                 className="bg-elec-yellow text-[#1a1a1a] hover:bg-elec-yellow/90"

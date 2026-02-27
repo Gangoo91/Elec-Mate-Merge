@@ -72,7 +72,7 @@ const ComprehensiveTestingGuidesTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="relative space-y-6">
-          <p className="text-white/70">
+          <p className="text-white">
             Detailed, step-by-step testing procedures with technical specifications, safety
             warnings, and troubleshooting guidance. Each guide includes regulation references and
             practical tips from industry professionals.
@@ -84,21 +84,21 @@ const ComprehensiveTestingGuidesTab = () => {
                 <Book className="h-4 w-4 text-green-400" />
               </div>
               <div className="text-2xl font-bold text-green-400">{allBS7671Tests.length}</div>
-              <div className="text-xs text-white/60">Available Guides</div>
+              <div className="text-xs text-white">Available Guides</div>
             </div>
             <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
               <div className="p-2 rounded-lg bg-blue-500/20 inline-block mb-2">
                 <Activity className="h-4 w-4 text-blue-400" />
               </div>
               <div className="text-2xl font-bold text-blue-400">100+</div>
-              <div className="text-xs text-white/60">Detailed Steps</div>
+              <div className="text-xs text-white">Detailed Steps</div>
             </div>
             <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
               <div className="p-2 rounded-lg bg-purple-500/20 inline-block mb-2">
                 <Shield className="h-4 w-4 text-purple-400" />
               </div>
               <div className="text-2xl font-bold text-purple-400">BS 7671</div>
-              <div className="text-xs text-white/60">Compliant</div>
+              <div className="text-xs text-white">Compliant</div>
             </div>
           </div>
         </CardContent>
@@ -128,14 +128,14 @@ const ComprehensiveTestingGuidesTab = () => {
                       {guide.steps.length} steps
                     </Badge>
                   </div>
-                  <p className="text-sm text-white/60">{guide.description}</p>
+                  <p className="text-sm text-white">{guide.description}</p>
                 </div>
               </CardHeader>
 
               <CardContent className="space-y-3 relative">
                 <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
                   <h4 className="font-medium text-blue-400 mb-2 text-sm">Purpose</h4>
-                  <p className="text-sm text-white/70">{guide.purpose}</p>
+                  <p className="text-sm text-white">{guide.purpose}</p>
                 </div>
 
                 {guide.testLimits && guide.testLimits.length > 0 && (
@@ -143,7 +143,7 @@ const ComprehensiveTestingGuidesTab = () => {
                     <h4 className="font-medium text-green-400 mb-2 text-sm">Test Limits</h4>
                     <div className="space-y-1">
                       {guide.testLimits.map((limit, index) => (
-                        <div key={index} className="text-sm text-white/70 flex justify-between">
+                        <div key={index} className="text-sm text-white flex justify-between">
                           <span>{limit.parameter}:</span>
                           <span className="font-mono text-green-300">
                             {limit.limit} {limit.unit}
@@ -161,7 +161,7 @@ const ComprehensiveTestingGuidesTab = () => {
                   </h4>
                   <ul className="space-y-1">
                     {guide.commonIssues.slice(0, 2).map((issue, index) => (
-                      <li key={index} className="text-xs text-white/70 flex items-start gap-2">
+                      <li key={index} className="text-xs text-white flex items-start gap-2">
                         <span className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-1.5 flex-shrink-0" />
                         {issue}
                       </li>
@@ -171,7 +171,7 @@ const ComprehensiveTestingGuidesTab = () => {
 
                 <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
                   <h4 className="font-medium text-purple-400 mb-2 text-sm">Key Features</h4>
-                  <div className="grid grid-cols-2 gap-2 text-xs text-white/70">
+                  <div className="grid grid-cols-2 gap-2 text-xs text-white">
                     <div className="flex items-center gap-1.5">
                       <CheckCircle className="h-3 w-3 text-green-400" />
                       {guide.steps.length} detailed steps
@@ -231,7 +231,7 @@ const ComprehensiveTestingGuidesTab = () => {
                   'Have circuit diagrams and schedules available',
                   'Plan your testing sequence to avoid repeated isolation',
                 ].map((item, index) => (
-                  <li key={index} className="flex items-start gap-2 text-sm text-white/70">
+                  <li key={index} className="flex items-start gap-2 text-sm text-white">
                     <span className="w-1.5 h-1.5 bg-green-400 rounded-full mt-1.5 flex-shrink-0" />
                     {item}
                   </li>
@@ -252,7 +252,7 @@ const ComprehensiveTestingGuidesTab = () => {
                   'Double-check readings that seem unusual',
                   'Keep detailed notes for future reference',
                 ].map((item, index) => (
-                  <li key={index} className="flex items-start gap-2 text-sm text-white/70">
+                  <li key={index} className="flex items-start gap-2 text-sm text-white">
                     <span className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-1.5 flex-shrink-0" />
                     {item}
                   </li>

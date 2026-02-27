@@ -63,7 +63,7 @@ const CareerPlanningTab = () => {
       case 'planned':
         return 'bg-orange-500/20 text-orange-700';
       default:
-        return 'bg-white/10 text-white/80';
+        return 'bg-white/10 text-white';
     }
   };
 

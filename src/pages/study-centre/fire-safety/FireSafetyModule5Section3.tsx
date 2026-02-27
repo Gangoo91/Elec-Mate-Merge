@@ -226,7 +226,7 @@ export default function FireSafetyModule5Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-5">
@@ -251,7 +251,7 @@ export default function FireSafetyModule5Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Incident Reporting &amp; Investigation
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding RIDDOR reporting requirements, internal fire incident procedures,
             investigation techniques, root cause analysis, and the importance of comprehensive
             record keeping &mdash; turning every incident into a learning opportunity
@@ -356,7 +356,7 @@ export default function FireSafetyModule5Section3() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Fatalities</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Any death of a person arising out of or in connection with a workplace fire
                       must be reported. This includes the death of any person &mdash; not just
                       employees &mdash; including members of the public, contractors, and visitors.
@@ -366,7 +366,7 @@ export default function FireSafetyModule5Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Specified Injuries</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Specified injuries resulting from a fire must be reported. These include:
                       fractures (other than to fingers, thumbs, and toes), amputations, serious
                       burns requiring hospital treatment, any injury requiring hospitalisation for
@@ -377,7 +377,7 @@ export default function FireSafetyModule5Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Over-7-Day Injuries</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       If a worker (employee or self-employed person working on the premises) suffers
                       an injury from a fire that results in their incapacitation for more than 7
                       consecutive days (not counting the day of the incident), this must be
@@ -387,7 +387,7 @@ export default function FireSafetyModule5Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Dangerous Occurrences</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       A fire is reportable as a <strong>dangerous occurrence</strong> under RIDDOR
                       Schedule 2 if it causes the{' '}
                       <strong>suspension of normal work for more than 24 hours</strong>, or if the
@@ -405,7 +405,7 @@ export default function FireSafetyModule5Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Important Distinction</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   RIDDOR applies to <strong>workplace</strong> fires &mdash; that is, fires
                   occurring at or in connection with work activities. It does not apply to domestic
                   fires in private dwellings (unless work is being carried out there). The
@@ -452,7 +452,7 @@ export default function FireSafetyModule5Section3() {
                       </p>
                       <p className="text-sm font-bold text-rose-400">Immediately</p>
                     </div>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Report by <strong>telephone</strong> to the HSE Incident Contact Centre on
                       0345 300 9923. The report must be made by the quickest practicable means, and
                       a follow-up written report (Form F2508) must be submitted online within{' '}
@@ -465,7 +465,7 @@ export default function FireSafetyModule5Section3() {
                       <p className="text-sm font-medium text-white">Over-7-Day Injuries</p>
                       <p className="text-sm font-bold text-rose-400">Within 15 Days</p>
                     </div>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Report <strong>online</strong> via the HSE RIDDOR website
                       (www.hse.gov.uk/riddor). The report must be submitted within{' '}
                       <strong>15 days</strong> of the incident. The counting of the 7 days of
@@ -478,7 +478,7 @@ export default function FireSafetyModule5Section3() {
                       <p className="text-sm font-medium text-white">Dangerous Occurrences</p>
                       <p className="text-sm font-bold text-rose-400">Within 10 Days</p>
                     </div>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Report <strong>online</strong> via the HSE RIDDOR website within{' '}
                       <strong>10 days</strong> of the incident. This includes fires that cause
                       suspension of work for more than 24 hours or that affect escape routes or
@@ -533,7 +533,7 @@ export default function FireSafetyModule5Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 rounded-lg p-3">
                       <p className="text-sm font-medium text-white">{item.label}</p>
-                      <p className="text-xs text-white/70 mt-0.5">{item.desc}</p>
+                      <p className="text-xs text-white mt-0.5">{item.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -541,7 +541,7 @@ export default function FireSafetyModule5Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Record Retention</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A copy of every RIDDOR report must be retained for a minimum of{' '}
                   <strong>3 years</strong> from the date of the incident. This is a legal
                   requirement under RIDDOR Regulation 12. The HSE online reporting system
@@ -583,7 +583,7 @@ export default function FireSafetyModule5Section3() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Near-Miss Reporting</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Near-misses are events that could have resulted in a fire but did not &mdash;
                       for example, a faulty socket that sparked, an unattended cooking appliance, or
                       combustible materials stored near a heat source. Every near-miss should be
@@ -595,7 +595,7 @@ export default function FireSafetyModule5Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Fire Log Book</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The internal fire log book is the central record of all fire-related events on
                       the premises. It should record: all fire alarm activations (genuine and
                       false), all fire incidents (regardless of size), near-miss reports, fire drill
@@ -607,7 +607,7 @@ export default function FireSafetyModule5Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Escalation Procedures</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Clear escalation procedures define who should be notified and in what order
                       following a fire incident. A typical escalation chain might be: fire marshals
                       &rarr; facility/building manager &rarr; health and safety manager &rarr;
@@ -624,7 +624,7 @@ export default function FireSafetyModule5Section3() {
                 depending on the circumstances:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -666,7 +666,7 @@ export default function FireSafetyModule5Section3() {
                 <p className="text-sm font-medium text-white mb-2">
                   Communicating with Staff After a Fire
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Effective communication with staff following a fire incident is crucial. Staff
                   will be anxious about safety, the cause of the fire, and any impact on their work.
                   The responsible person should provide timely, factual updates; avoid assigning
@@ -706,14 +706,14 @@ export default function FireSafetyModule5Section3() {
                   <Eye className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Scene Preservation</p>
                 </div>
-                <p className="text-xs text-white/70 mb-3">
+                <p className="text-xs text-white mb-3">
                   Scene preservation is the single most important step in any fire investigation.
                   Once evidence is lost or contaminated, it cannot be recovered.
                 </p>
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Cordon Off the Scene</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Immediately establish a physical cordon around the fire-affected area using
                       barrier tape, fencing, or other means. The cordon should extend well beyond
                       the visible fire damage to protect potential evidence on the periphery. Only
@@ -723,7 +723,7 @@ export default function FireSafetyModule5Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Prevent Disturbance</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Do not allow any clean-up, salvage, or repair activities until the scene is
                       formally released by investigators. Do not move debris, discard damaged items,
                       or alter the position of any objects. Even well-intentioned actions &mdash;
@@ -743,7 +743,7 @@ export default function FireSafetyModule5Section3() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Witness Statements</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Collect statements from all witnesses as soon as practicable after the
                       incident, while memories are fresh. Witnesses include: the person who
                       discovered the fire, anyone who attempted to extinguish it, fire marshals,
@@ -754,7 +754,7 @@ export default function FireSafetyModule5Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">CCTV Footage</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Secure all CCTV footage immediately. Many systems overwrite footage on a
                       rolling cycle (often 14&ndash;30 days), so early preservation is essential.
                       Footage from both internal and external cameras should be secured, as it may
@@ -766,7 +766,7 @@ export default function FireSafetyModule5Section3() {
                     <p className="text-sm font-medium text-white mb-1">
                       Fire Alarm &amp; System Logs
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Download and preserve the fire alarm system log, which records the sequence
                       and timing of detector activations, call point activations, and system faults.
                       This data provides an invaluable timeline of how the fire developed and spread
@@ -776,7 +776,7 @@ export default function FireSafetyModule5Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Maintenance Records</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Gather all relevant maintenance records, including: electrical installation
                       condition reports (EICRs), portable appliance testing (PAT) records, fire
                       alarm and detection system maintenance logs, gas safety certificates, fire
@@ -789,7 +789,7 @@ export default function FireSafetyModule5Section3() {
                     <p className="text-sm font-medium text-white mb-1">
                       Photographs &amp; Physical Evidence
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Comprehensive photographic records of the fire scene are essential.
                       Photographs should be taken systematically: overall views from multiple
                       angles, mid-range views showing the relationship between different areas, and
@@ -845,7 +845,7 @@ export default function FireSafetyModule5Section3() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Immediate Cause</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The direct physical mechanism that started the fire. Examples: an overheated
                       electrical cable, a discarded cigarette, an unattended cooking appliance, a
                       spark from hot-work igniting combustible material. This is the &ldquo;what
@@ -854,7 +854,7 @@ export default function FireSafetyModule5Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Root Cause</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The underlying systemic failure that allowed the conditions for the fire to
                       exist. Examples: a failure to maintain electrical installations to schedule,
                       absence of a hot-work permit system, inadequate fire risk assessment that
@@ -864,7 +864,7 @@ export default function FireSafetyModule5Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Contributing Factors</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Additional factors that did not directly cause the fire but contributed to its
                       occurrence, severity, or impact. Examples: poor housekeeping that increased
                       the fuel load, a propped-open fire door that allowed smoke spread, a faulty
@@ -887,7 +887,7 @@ export default function FireSafetyModule5Section3() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Why did the fire start?</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         An electrical cable overheated and ignited nearby combustible materials.
                       </p>
                     </div>
@@ -898,7 +898,7 @@ export default function FireSafetyModule5Section3() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Why did the cable overheat?</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         The cable was overloaded &mdash; it was carrying more current than its rated
                         capacity.
                       </p>
@@ -912,7 +912,7 @@ export default function FireSafetyModule5Section3() {
                       <p className="text-sm font-medium text-white">
                         Why was the cable overloaded?
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Additional equipment was connected to the circuit when the office was
                         expanded six months ago.
                       </p>
@@ -926,7 +926,7 @@ export default function FireSafetyModule5Section3() {
                       <p className="text-sm font-medium text-white">
                         Why were no additional circuits installed?
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         No electrical review was conducted when the office layout was changed.
                       </p>
                     </div>
@@ -939,7 +939,7 @@ export default function FireSafetyModule5Section3() {
                       <p className="text-sm font-medium text-white">
                         Why was there no electrical review?
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         <strong className="text-rose-400">Root Cause:</strong> There is no
                         organisational process requiring an electrical capacity review when office
                         layouts or equipment loads change.
@@ -953,7 +953,7 @@ export default function FireSafetyModule5Section3() {
                 Other root cause analysis techniques commonly used in fire investigation include:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -1019,7 +1019,7 @@ export default function FireSafetyModule5Section3() {
                     <p className="text-sm font-medium text-white mb-1">
                       Recommendations from Investigation
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The investigation report should include specific, measurable, achievable, and
                       time-bound recommendations. Each recommendation should identify who is
                       responsible for implementation and by when. Recommendations should address the
@@ -1033,7 +1033,7 @@ export default function FireSafetyModule5Section3() {
                     <p className="text-sm font-medium text-white mb-1">
                       Updating the Fire Risk Assessment
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Every fire incident &mdash; and every significant near-miss &mdash; should
                       trigger a review of the fire risk assessment. The review must consider whether
                       the existing risk assessment adequately identified the hazard that caused the
@@ -1045,7 +1045,7 @@ export default function FireSafetyModule5Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Revising Procedures</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Fire safety procedures, policies, and training materials should be reviewed
                       and updated to reflect the lessons learned. This may include: updating the
                       fire action plan, revising evacuation procedures, adding new permit-to-work
@@ -1063,7 +1063,7 @@ export default function FireSafetyModule5Section3() {
                 The lessons learned should be shared through:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -1102,7 +1102,7 @@ export default function FireSafetyModule5Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Tracking Corrective Actions</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Recommendations are worthless if they are not implemented. Establish a formal
                   corrective action tracking system (this may be part of a broader health and safety
                   management system) that records each recommendation, assigns responsibility and
@@ -1147,7 +1147,7 @@ export default function FireSafetyModule5Section3() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Entry and Examination</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Fire investigation officers have the power to enter any premises where a fire
                       has occurred or is suspected of having occurred. They may examine and
                       investigate the scene, take measurements, photographs, and recordings, and
@@ -1158,7 +1158,7 @@ export default function FireSafetyModule5Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Evidence Collection</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Fire investigation officers may take samples of any materials or substances
                       found at the scene. They have the power to seize and detain any article or
                       substance for the purpose of examination or use as evidence. They can require
@@ -1169,7 +1169,7 @@ export default function FireSafetyModule5Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Information Gathering</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Fire investigation officers can require any person to provide information and
                       answer questions relevant to the investigation. They may be accompanied by any
                       other person they consider necessary, including scientific advisers, forensic
@@ -1185,7 +1185,7 @@ export default function FireSafetyModule5Section3() {
                   <Users className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Joint Investigations</p>
                 </div>
-                <p className="text-xs text-white/70 mb-3">
+                <p className="text-xs text-white mb-3">
                   Depending on the circumstances, multiple agencies may investigate a fire
                   simultaneously.
                 </p>
@@ -1194,7 +1194,7 @@ export default function FireSafetyModule5Section3() {
                     <p className="text-sm font-medium text-white mb-1">
                       Fire Service &amp; Police (Arson Suspected)
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       If the fire investigation reveals evidence of arson (deliberate fire-setting),
                       the police will become involved in a <strong>criminal investigation</strong>.
                       The fire investigation officer and the police will typically conduct a joint
@@ -1208,7 +1208,7 @@ export default function FireSafetyModule5Section3() {
                     <p className="text-sm font-medium text-white mb-1">
                       Fire Service &amp; HSE (Workplace Incidents)
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       If the fire occurred in a workplace and resulted in injury or death, the{' '}
                       <strong>Health and Safety Executive</strong> (HSE) or the local authority
                       environmental health department may also investigate under the Health and
@@ -1223,7 +1223,7 @@ export default function FireSafetyModule5Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Cooperation Requirements</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The responsible person and all employees have a duty to cooperate fully with fire
                   investigation officers and any other investigating agencies. This includes:
                   providing access to all areas of the premises; producing all requested documents
@@ -1301,7 +1301,7 @@ export default function FireSafetyModule5Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 rounded-lg p-3">
                       <p className="text-sm font-medium text-white">{item.label}</p>
-                      <p className="text-xs text-white/70 mt-0.5">{item.desc}</p>
+                      <p className="text-xs text-white mt-0.5">{item.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -1318,7 +1318,7 @@ export default function FireSafetyModule5Section3() {
                       <p className="text-sm font-medium text-white">RIDDOR Reports</p>
                       <p className="text-sm font-bold text-rose-400">Minimum 3 Years</p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       As required by RIDDOR Regulation 12. Many organisations retain these for
                       longer as a matter of good practice.
                     </p>
@@ -1328,7 +1328,7 @@ export default function FireSafetyModule5Section3() {
                       <p className="text-sm font-medium text-white">Fire Risk Assessment</p>
                       <p className="text-sm font-bold text-rose-400">Permanently</p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       The current assessment must be available at all times. Previous versions
                       should be retained to demonstrate the history of risk management.
                     </p>
@@ -1340,7 +1340,7 @@ export default function FireSafetyModule5Section3() {
                       </p>
                       <p className="text-sm font-bold text-rose-400">Minimum 3 Years</p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Equipment servicing, alarm testing, emergency lighting tests, fire door
                       inspections. Retain for at least the life of the equipment plus 3 years.
                     </p>
@@ -1352,7 +1352,7 @@ export default function FireSafetyModule5Section3() {
                         Duration of Employment + 3 Years
                       </p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Retain for the duration of the person&rsquo;s employment plus at least 3 years
                       after they leave. This provides evidence of training in case of a later claim.
                     </p>
@@ -1362,7 +1362,7 @@ export default function FireSafetyModule5Section3() {
                       <p className="text-sm font-medium text-white">Fire Drill Records</p>
                       <p className="text-sm font-bold text-rose-400">Minimum 3 Years</p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Date, time, evacuation time, observations, and corrective actions. Longer
                       retention is advisable to demonstrate a consistent programme of drills.
                     </p>
@@ -1372,7 +1372,7 @@ export default function FireSafetyModule5Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Availability for Inspection</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   All fire safety records must be readily available for inspection by{' '}
                   <strong>fire authority enforcement officers</strong> during routine inspections,
                   audits, or following an incident. Under Article 27 of the RRFSO, inspectors have
@@ -1402,7 +1402,7 @@ export default function FireSafetyModule5Section3() {
               {/* Stage 1: Discovery */}
               <div className="bg-rose-500/20 border border-rose-500/40 rounded-lg px-4 py-3 text-center">
                 <p className="text-xs font-bold text-rose-400">FIRE DISCOVERED / EXTINGUISHED</p>
-                <p className="text-[10px] text-white/50 mt-1">
+                <p className="text-[10px] text-white mt-1">
                   Immediate response complete, scene made safe by fire service
                 </p>
               </div>
@@ -1413,7 +1413,7 @@ export default function FireSafetyModule5Section3() {
               {/* Stage 2: Scene Preservation */}
               <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                 <p className="text-xs font-bold text-white">SCENE PRESERVATION</p>
-                <p className="text-[10px] text-white/50">
+                <p className="text-[10px] text-white">
                   Cordon area, prevent access, appoint scene custodian, secure CCTV
                 </p>
               </div>
@@ -1426,14 +1426,14 @@ export default function FireSafetyModule5Section3() {
                 <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg px-3 py-2 text-center">
                   <AlertTriangle className="h-4 w-4 text-rose-400 mx-auto mb-1" />
                   <p className="text-xs font-bold text-rose-400">EXTERNAL REPORTING</p>
-                  <p className="text-[10px] text-white/50">
+                  <p className="text-[10px] text-white">
                     RIDDOR (if applicable), fire authority, insurer, landlord
                   </p>
                 </div>
                 <div className="bg-rose-500/10 border border-rose-500/30 rounded-lg px-3 py-2 text-center">
                   <ClipboardList className="h-4 w-4 text-rose-400 mx-auto mb-1" />
                   <p className="text-xs font-bold text-rose-400">INTERNAL REPORTING</p>
-                  <p className="text-[10px] text-white/50">
+                  <p className="text-[10px] text-white">
                     Fire log book, escalation chain, staff communication
                   </p>
                 </div>
@@ -1445,7 +1445,7 @@ export default function FireSafetyModule5Section3() {
               {/* Stage 4: Investigation */}
               <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                 <p className="text-xs font-bold text-white">EVIDENCE GATHERING</p>
-                <p className="text-[10px] text-white/50">
+                <p className="text-[10px] text-white">
                   Witness statements, CCTV, alarm logs, maintenance records, photographs, physical
                   evidence
                 </p>
@@ -1457,7 +1457,7 @@ export default function FireSafetyModule5Section3() {
               {/* Stage 5: Analysis */}
               <div className="bg-white/5 border border-white/10 rounded-lg p-3 text-center">
                 <p className="text-xs font-bold text-white">ROOT CAUSE ANALYSIS</p>
-                <p className="text-[10px] text-white/50">
+                <p className="text-[10px] text-white">
                   5 Whys, fishbone diagram, fault tree &mdash; identify immediate cause, root cause,
                   contributing factors
                 </p>
@@ -1469,12 +1469,12 @@ export default function FireSafetyModule5Section3() {
               {/* Stage 6: Actions */}
               <div className="bg-rose-500/20 border border-rose-500/40 rounded-lg px-4 py-3 text-center">
                 <p className="text-xs font-bold text-rose-400">CORRECTIVE ACTIONS</p>
-                <p className="text-[10px] text-white/50 mt-1">
+                <p className="text-[10px] text-white mt-1">
                   Update fire risk assessment, revise procedures, communicate findings, track
                   implementation
                 </p>
               </div>
-              <p className="text-xs text-white/50 text-center mt-4">
+              <p className="text-xs text-white text-center mt-4">
                 The investigation process is iterative &mdash; new evidence may require revisiting
                 earlier stages. Formal reports should be produced at each stage and retained as part
                 of fire safety records.
@@ -1492,7 +1492,7 @@ export default function FireSafetyModule5Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1510,7 +1510,7 @@ export default function FireSafetyModule5Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-5-section-2">

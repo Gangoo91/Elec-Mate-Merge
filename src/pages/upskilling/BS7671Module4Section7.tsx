@@ -89,7 +89,7 @@ const BS7671Module4Section7 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bs7671-module-4">
@@ -110,7 +110,7 @@ const BS7671Module4Section7 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Bidirectional Protection Systems
           </h1>
-          <p className="text-white/80">Amendment 3 Requirements for Renewable Energy</p>
+          <p className="text-white">Amendment 3 Requirements for Renewable Energy</p>
         </header>
 
         {/* Quick Summary */}
@@ -370,14 +370,14 @@ const BS7671Module4Section7 = () => {
             <div className="space-y-4 my-6">
               <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                 <p className="text-sm font-medium text-white mb-1">Bidirectional Continuity Test</p>
-                <p className="text-xs text-white/80">
+                <p className="text-xs text-white">
                   Verify protective device operation in both current directions - must operate
                   within manufacturer's specifications for both polarities.
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                 <p className="text-sm font-medium text-white mb-1">Anti-Islanding Function Test</p>
-                <p className="text-xs text-white/80">
+                <p className="text-xs text-white">
                   Simulate grid disconnection during reverse power flow - system must isolate within
                   5 seconds of grid loss detection.
                 </p>
@@ -386,14 +386,14 @@ const BS7671Module4Section7 = () => {
                 <p className="text-sm font-medium text-white mb-1">
                   RCD Operation Under Reverse Current
                 </p>
-                <p className="text-xs text-white/80">
+                <p className="text-xs text-white">
                   Test RCD tripping with current flowing from installation to grid - trip time and
                   sensitivity must be within BS 7671 limits.
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                 <p className="text-sm font-medium text-white mb-1">Export Limitation Test</p>
-                <p className="text-xs text-white/80">
+                <p className="text-xs text-white">
                   Verify maximum export power doesn't exceed connection agreement under all
                   operating conditions.
                 </p>
@@ -454,7 +454,7 @@ const BS7671Module4Section7 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -496,7 +496,7 @@ const BS7671Module4Section7 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bs7671-module-4-section-6">

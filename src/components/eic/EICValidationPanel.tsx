@@ -1,11 +1,8 @@
 import React from 'react';
 import { Badge } from '@/components/ui/badge';
-import { Progress } from '@/components/ui/progress';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { AlertTriangle, AlertCircle, Info, CheckCircle, Shield, FileText } from 'lucide-react';
+import { AlertTriangle, AlertCircle, CheckCircle, Shield, FileText, XCircle } from 'lucide-react';
 import { useEICValidation, ValidationRule } from '@/hooks/useEICValidation';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { useHaptics } from '@/hooks/useHaptics';
 import { cn } from '@/lib/utils';
 
 interface EICValidationPanelProps {
@@ -16,63 +13,36 @@ interface EICValidationPanelProps {
 const EICValidationPanel: React.FC<EICValidationPanelProps> = ({ formData, className = '' }) => {
   const validation = useEICValidation(formData);
   const isMobile = useIsMobile();
-  const haptics = useHaptics();
-
-  const getIconForSeverity = (severity: ValidationRule['severity']) => {
-    switch (severity) {
-      case 'error':
-        return <AlertTriangle className="h-4 w-4 text-red-500" />;
-      case 'warning':
-        return <AlertCircle className="h-4 w-4 text-amber-500" />;
-      case 'info':
-        return <Info className="h-4 w-4 text-elec-yellow/80" />;
-      default:
-        return <Info className="h-4 w-4" />;
-    }
-  };
-
-  const getAlertVariant = (severity: ValidationRule['severity']) => {
-    switch (severity) {
-      case 'error':
-        return 'destructive';
-      case 'warning':
-        return 'default';
-      default:
-        return 'default';
-    }
-  };
 
   return (
     <div
       className={cn(
         className,
-        isMobile ? '-mx-4' : 'rounded-xl border border-border/30 bg-card/30'
+        isMobile ? '-mx-4' : 'rounded-xl border border-white/10 bg-white/[0.02]'
       )}
     >
-      {/* Section Header */}
+      {/* Header */}
       <div
         className={cn(
-          'flex items-center justify-between',
+          'flex items-center justify-between gap-3',
           isMobile
-            ? 'px-4 py-4 mx-4 my-1 rounded-xl bg-white/[0.04] border border-white/[0.08]'
-            : 'p-4 border-b border-border/30'
+            ? 'px-4 py-4 bg-card/30 border-y border-border/20'
+            : 'p-4 border-b border-white/10'
         )}
       >
         <div className="flex items-center gap-3">
           <div className="h-10 w-10 rounded-xl bg-elec-yellow/20 flex items-center justify-center shrink-0">
             <Shield className="h-5 w-5 text-elec-yellow" />
           </div>
-          <div className="flex-1 min-w-0">
-            <h3 className="font-semibold text-foreground">EIC Validation & Compliance</h3>
-          </div>
+          <h3 className="font-semibold text-white">Validation & Compliance</h3>
         </div>
         <Badge
-          variant={validation.isValid ? 'default' : 'destructive'}
           className={cn(
-            'gap-1 touch-manipulation',
-            validation.isValid && 'bg-green-500/20 text-green-400 border-green-500/30'
+            'gap-1.5 shrink-0 border',
+            validation.isValid
+              ? 'bg-green-500/15 text-green-400 border-green-500/30'
+              : 'bg-red-500/15 text-red-400 border-red-500/30'
           )}
-          onClick={() => haptics.tap()}
         >
           {validation.isValid ? (
             <>
@@ -89,99 +59,132 @@ const EICValidationPanel: React.FC<EICValidationPanelProps> = ({ formData, class
       </div>
 
       {/* Content */}
-      <div className={cn('space-y-4', isMobile ? 'px-4 py-4' : 'p-4')}>
-        {/* Completion Progress */}
-        <div className="space-y-2">
-          <div className="flex justify-between text-sm">
-            <span className="font-medium">Completion Progress</span>
-            <span className="text-muted-foreground">{validation.completionPercentage}%</span>
+      <div className={cn('space-y-5', isMobile ? 'px-4 py-5' : 'p-5')}>
+        {/* Progress Bar */}
+        <div className="space-y-2.5">
+          <div className="flex justify-between items-baseline">
+            <span className="text-sm font-medium text-white">Completion Progress</span>
+            <span className="text-sm font-semibold text-elec-yellow">
+              {validation.completionPercentage}%
+            </span>
           </div>
-          <Progress value={validation.completionPercentage} className="h-2" />
+          <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+            <div
+              className={cn(
+                'h-full rounded-full transition-all duration-500 ease-out',
+                validation.completionPercentage >= 90
+                  ? 'bg-green-500'
+                  : validation.completionPercentage >= 50
+                    ? 'bg-elec-yellow'
+                    : 'bg-amber-500'
+              )}
+              style={{ width: `${validation.completionPercentage}%` }}
+            />
+          </div>
         </div>
 
-        {/* Summary Statistics */}
-        <div className="grid grid-cols-3 gap-4 text-center">
-          <div className="space-y-1">
-            <div className="text-2xl font-bold text-red-600">{validation.errors.length}</div>
-            <div className="text-xs text-muted-foreground">Errors</div>
+        {/* Stats Row */}
+        <div className="grid grid-cols-3 gap-3">
+          <div className="rounded-xl bg-red-500/10 border border-red-500/20 p-3 text-center">
+            <div className="text-2xl font-bold text-red-400">{validation.errors.length}</div>
+            <div className="text-xs text-white mt-0.5">Errors</div>
           </div>
-          <div className="space-y-1">
-            <div className="text-2xl font-bold text-amber-600">{validation.warnings.length}</div>
-            <div className="text-xs text-muted-foreground">Warnings</div>
+          <div className="rounded-xl bg-amber-500/10 border border-amber-500/20 p-3 text-center">
+            <div className="text-2xl font-bold text-amber-400">{validation.warnings.length}</div>
+            <div className="text-xs text-white mt-0.5">Warnings</div>
           </div>
-          <div className="space-y-1">
-            <div className="text-2xl font-bold text-green-600">
-              {validation.isValid ? '✓' : '✗'}
+          <div
+            className={cn(
+              'rounded-xl border p-3 text-center',
+              validation.isValid
+                ? 'bg-green-500/10 border-green-500/20'
+                : 'bg-white/[0.03] border-white/10'
+            )}
+          >
+            <div className={cn('text-2xl font-bold', validation.isValid ? 'text-green-400' : 'text-white')}>
+              {validation.isValid ? (
+                <CheckCircle className="h-6 w-6 mx-auto" />
+              ) : (
+                <XCircle className="h-6 w-6 mx-auto" />
+              )}
             </div>
-            <div className="text-xs text-muted-foreground">Status</div>
+            <div className="text-xs text-white mt-0.5">Status</div>
           </div>
         </div>
 
-        {/* Validation Issues */}
+        {/* Critical Issues */}
         {validation.errors.length > 0 && (
-          <div className="space-y-3">
-            <h4 className="font-medium text-sm text-red-700 flex items-center gap-2">
+          <div className="space-y-2.5">
+            <h4 className="text-sm font-semibold text-red-400 flex items-center gap-2">
               <AlertTriangle className="h-4 w-4" />
               Critical Issues (Must Fix)
             </h4>
-            {validation.errors.map((error, index) => (
-              <Alert key={index} variant="destructive">
-                <AlertTriangle className="h-4 w-4" />
-                <AlertDescription>
-                  <div className="space-y-1">
-                    <p className="font-medium">{error.message}</p>
+            <div className="space-y-2">
+              {validation.errors.map((error, index) => (
+                <div
+                  key={index}
+                  className="flex items-start gap-3 p-3 rounded-xl bg-red-500/8 border-l-2 border-red-500"
+                >
+                  <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 shrink-0" />
+                  <div className="min-w-0">
+                    <p className="text-sm text-white font-medium">{error.message}</p>
                     {error.regulation && (
-                      <p className="text-xs text-muted-foreground">Reference: {error.regulation}</p>
+                      <p className="text-xs text-amber-400 mt-1">Reference: {error.regulation}</p>
                     )}
                   </div>
-                </AlertDescription>
-              </Alert>
-            ))}
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
+        {/* Recommendations */}
         {validation.warnings.length > 0 && (
-          <div className="space-y-3">
-            <h4 className="font-medium text-sm text-amber-700 flex items-center gap-2">
+          <div className="space-y-2.5">
+            <h4 className="text-sm font-semibold text-amber-400 flex items-center gap-2">
               <AlertCircle className="h-4 w-4" />
               Recommendations
             </h4>
-            {validation.warnings.map((warning, index) => (
-              <Alert key={index}>
-                {getIconForSeverity(warning.severity)}
-                <AlertDescription>
-                  <div className="space-y-1">
-                    <p className="font-medium">{warning.message}</p>
+            <div className="space-y-2">
+              {validation.warnings.map((warning, index) => (
+                <div
+                  key={index}
+                  className="flex items-start gap-3 p-3 rounded-xl bg-amber-500/5 border-l-2 border-amber-500/50"
+                >
+                  <AlertCircle className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
+                  <div className="min-w-0">
+                    <p className="text-sm text-white">{warning.message}</p>
                     {warning.regulation && (
-                      <p className="text-xs text-muted-foreground">
-                        Reference: {warning.regulation}
-                      </p>
+                      <p className="text-xs text-amber-400 mt-1">Reference: {warning.regulation}</p>
                     )}
                   </div>
-                </AlertDescription>
-              </Alert>
-            ))}
+                </div>
+              ))}
+            </div>
           </div>
         )}
 
         {/* Success State */}
         {validation.isValid && validation.completionPercentage >= 90 && (
-          <Alert className="border-green-200 bg-green-50">
-            <CheckCircle className="h-4 w-4 text-green-600" />
-            <AlertDescription className="text-green-800">
-              <strong>EIC Ready for Generation!</strong> All required fields are complete and
-              validation checks have passed. You can now generate the official certificate.
-            </AlertDescription>
-          </Alert>
+          <div className="flex items-start gap-3 p-4 rounded-xl bg-green-500/10 border border-green-500/20">
+            <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 shrink-0" />
+            <div>
+              <p className="text-sm font-semibold text-green-400">EIC Ready for Generation!</p>
+              <p className="text-xs text-white mt-1 leading-relaxed">
+                All required fields are complete and validation checks have passed. You can now
+                generate the official certificate.
+              </p>
+            </div>
+          </div>
         )}
 
-        {/* Legal Compliance Note */}
-        <div className={cn('pt-4 border-t', isMobile ? 'border-border/20' : 'border-border/30')}>
-          <div className="flex items-start gap-2 text-xs text-muted-foreground">
-            <FileText className="h-4 w-4 mt-0.5 flex-shrink-0" />
+        {/* Legal Note */}
+        <div className="pt-4 border-t border-white/10">
+          <div className="flex items-start gap-2.5">
+            <FileText className="h-4 w-4 text-amber-400 mt-0.5 shrink-0" />
             <div>
-              <p className="font-medium mb-1">Legal Requirements:</p>
-              <p>
+              <p className="text-xs font-medium text-white mb-1">Legal Requirements:</p>
+              <p className="text-xs text-white leading-relaxed">
                 This EIC must comply with BS 7671:2018 and Building Regulations. All declarations
                 require competent person signatures. Keep records for minimum 6 years.
               </p>

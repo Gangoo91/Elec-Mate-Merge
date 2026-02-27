@@ -84,7 +84,7 @@ const BusinessElectricians = () => {
           <section id="recruitment" className="scroll-mt-20 space-y-6">
             <div className="text-center max-w-3xl mx-auto mb-8">
               <h2 className="text-2xl font-bold text-white mb-3">Recruitment</h2>
-              <p className="text-base text-white/80 leading-relaxed">
+              <p className="text-base text-white leading-relaxed">
                 Finding qualified electricians is one of the biggest challenges facing electrical
                 contractors. A strategic recruitment approach reduces time-to-hire by 40% and
                 improves candidate quality significantly.
@@ -130,7 +130,7 @@ const BusinessElectricians = () => {
                       >
                         <div className="flex-1">
                           <span className="text-sm font-medium text-white">{platform.name}</span>
-                          <p className="text-sm text-white/80 mt-1">{platform.desc}</p>
+                          <p className="text-sm text-white mt-1">{platform.desc}</p>
                         </div>
                         <span className="text-sm font-semibold text-yellow-400 whitespace-nowrap">
                           {platform.cost}
@@ -166,7 +166,7 @@ const BusinessElectricians = () => {
                       >
                         <div className="flex-1">
                           <span className="text-sm font-medium text-white">{channel.name}</span>
-                          <p className="text-sm text-white/80 mt-1">{channel.desc}</p>
+                          <p className="text-sm text-white mt-1">{channel.desc}</p>
                         </div>
                         <span className="text-sm font-semibold text-yellow-400 whitespace-nowrap">
                           {channel.cost}
@@ -271,7 +271,7 @@ const BusinessElectricians = () => {
                       'Tool allowance or company tools',
                       'Overtime at premium rates',
                     ].map((benefit, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm text-white/80">
+                      <li key={i} className="flex items-start gap-2 text-sm text-white">
                         <CheckCircle className="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
                         <span>{benefit}</span>
                       </li>
@@ -289,7 +289,7 @@ const BusinessElectricians = () => {
           >
             <div className="text-center max-w-3xl mx-auto mb-8">
               <h2 className="text-2xl font-bold text-white mb-3">Onboarding</h2>
-              <p className="text-base text-white/80 leading-relaxed">
+              <p className="text-base text-white leading-relaxed">
                 Effective onboarding reduces time to full productivity from 12 weeks to 6 weeks and
                 increases retention by 25%. A structured approach ensures new hires feel supported
                 and can contribute quickly.
@@ -342,7 +342,7 @@ const BusinessElectricians = () => {
                       </span>
                       <h4 className="font-semibold text-white">{item.title}</h4>
                     </div>
-                    <p className="text-sm text-white/80">{item.tasks}</p>
+                    <p className="text-sm text-white">{item.tasks}</p>
                   </div>
                 ))}
               </div>
@@ -363,7 +363,7 @@ const BusinessElectricians = () => {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <div className="p-5 rounded-xl bg-white/[0.03] border border-white/10">
                   <h4 className="font-semibold text-white mb-3">Month 1: Foundation</h4>
-                  <ul className="space-y-2 text-sm text-white/80">
+                  <ul className="space-y-2 text-sm text-white">
                     <li>• Complete all compliance training</li>
                     <li>• Shadow on 10+ jobs</li>
                     <li>• First supervised solo work</li>
@@ -373,7 +373,7 @@ const BusinessElectricians = () => {
                 </div>
                 <div className="p-5 rounded-xl bg-white/[0.03] border border-white/10">
                   <h4 className="font-semibold text-white mb-3">Month 2: Development</h4>
-                  <ul className="space-y-2 text-sm text-white/80">
+                  <ul className="space-y-2 text-sm text-white">
                     <li>• Independent work on standard jobs</li>
                     <li>• Customer interaction training</li>
                     <li>• Quality audit of completed work</li>
@@ -383,7 +383,7 @@ const BusinessElectricians = () => {
                 </div>
                 <div className="p-5 rounded-xl bg-white/[0.03] border border-white/10">
                   <h4 className="font-semibold text-white mb-3">Month 3: Independence</h4>
-                  <ul className="space-y-2 text-sm text-white/80">
+                  <ul className="space-y-2 text-sm text-white">
                     <li>• Full independent working</li>
                     <li>• Complex job assignments</li>
                     <li>• Performance review</li>
@@ -399,7 +399,7 @@ const BusinessElectricians = () => {
           <section id="retention" className="scroll-mt-20 space-y-6 pt-10 border-t border-white/10">
             <div className="text-center max-w-3xl mx-auto mb-8">
               <h2 className="text-2xl font-bold text-white mb-3">Retention</h2>
-              <p className="text-base text-white/80 leading-relaxed">
+              <p className="text-base text-white leading-relaxed">
                 Replacing an electrician costs £15,000+ in recruitment, training, and lost
                 productivity. Investing in retention through competitive packages, development
                 opportunities, and positive culture delivers significant ROI.
@@ -448,7 +448,7 @@ const BusinessElectricians = () => {
                         {item.impact}
                       </span>
                     </div>
-                    <p className="text-sm text-white/80">{item.desc}</p>
+                    <p className="text-sm text-white">{item.desc}</p>
                   </div>
                 ))}
               </div>
@@ -517,7 +517,7 @@ const BusinessElectricians = () => {
           >
             <div className="text-center max-w-3xl mx-auto mb-8">
               <h2 className="text-2xl font-bold text-white mb-3">Management</h2>
-              <p className="text-base text-white/80 leading-relaxed">
+              <p className="text-base text-white leading-relaxed">
                 Effective management of electricians balances accountability with autonomy. Clear
                 expectations, regular communication, and fair treatment build a productive and loyal
                 team.
@@ -587,7 +587,7 @@ const BusinessElectricians = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="p-5 rounded-xl bg-white/[0.03] border border-white/10">
                   <h4 className="font-semibold text-white mb-3">Key Performance Indicators</h4>
-                  <ul className="space-y-2 text-sm text-white/80">
+                  <ul className="space-y-2 text-sm text-white">
                     <li>• First-time fix rate (target: 90%+)</li>
                     <li>• Customer satisfaction scores</li>
                     <li>• Jobs completed per day/week</li>
@@ -598,7 +598,7 @@ const BusinessElectricians = () => {
                 </div>
                 <div className="p-5 rounded-xl bg-white/[0.03] border border-white/10">
                   <h4 className="font-semibold text-white mb-3">Review Schedule</h4>
-                  <ul className="space-y-2 text-sm text-white/80">
+                  <ul className="space-y-2 text-sm text-white">
                     <li>• Weekly: Brief catch-up (5-10 mins)</li>
                     <li>• Monthly: Performance discussion (30 mins)</li>
                     <li>• Quarterly: Development review (1 hour)</li>
@@ -645,7 +645,7 @@ const BusinessElectricians = () => {
                 ].map((item, i) => (
                   <div key={i} className="p-4 rounded-xl bg-white/[0.03] border border-white/10">
                     <h4 className="font-semibold text-white mb-2">{item.issue}</h4>
-                    <p className="text-sm text-white/80">{item.approach}</p>
+                    <p className="text-sm text-white">{item.approach}</p>
                   </div>
                 ))}
               </div>
@@ -661,7 +661,7 @@ const BusinessElectricians = () => {
             </div>
             <div>
               <h3 className="text-base font-semibold text-white mb-2">Need Additional Support?</h3>
-              <p className="text-sm text-white/80 leading-relaxed">
+              <p className="text-sm text-white leading-relaxed">
                 Managing qualified electricians requires ongoing attention to employment law, market
                 rates, and best practices. Contact ACAS (0300 123 1100) for free employment advice,
                 or consult with an HR specialist for complex situations.

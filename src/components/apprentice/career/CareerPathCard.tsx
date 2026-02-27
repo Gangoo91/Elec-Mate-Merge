@@ -43,7 +43,7 @@ const CareerPathCard = ({
         </div>
       </CardHeader>
       <CardContent className="pt-2 flex-grow flex flex-col gap-4 relative">
-        <p className="text-sm text-white/80">{description}</p>
+        <p className="text-sm text-white">{description}</p>
 
         <div className="space-y-3 mt-auto">
           <div>
@@ -52,7 +52,7 @@ const CareerPathCard = ({
               {skills.map((skill, idx) => (
                 <li key={idx} className="flex items-center gap-1">
                   <span className="h-1.5 w-1.5 rounded-full bg-elec-yellow flex-shrink-0"></span>
-                  <span className="text-white/80">{skill}</span>
+                  <span className="text-white">{skill}</span>
                 </li>
               ))}
             </ul>

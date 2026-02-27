@@ -89,7 +89,7 @@ const NewsFeaturedCarousel = ({ articles, className }: NewsFeaturedCarouselProps
     <div className={cn('space-y-4', className)}>
       {/* Section label */}
       <div className="flex items-center gap-3">
-        <h2 className="text-sm font-medium text-white/50 uppercase tracking-wider">Featured</h2>
+        <h2 className="text-sm font-medium text-white uppercase tracking-wider">Featured</h2>
         <div className="flex-1 h-px bg-gradient-to-r from-white/10 to-transparent" />
       </div>
 
@@ -144,7 +144,7 @@ const NewsFeaturedCarousel = ({ articles, className }: NewsFeaturedCarouselProps
                       </Badge>
                       <SourceBadge source={article.source_name} />
                     </div>
-                    <div className="flex items-center gap-1 text-white/60 text-[10px] bg-black/30 backdrop-blur-sm rounded-full px-2 py-1">
+                    <div className="flex items-center gap-1 text-white text-[10px] bg-black/30 backdrop-blur-sm rounded-full px-2 py-1">
                       <Clock className="h-3 w-3" />
                       <span>{getReadTime(article.content)} min</span>
                     </div>
@@ -161,13 +161,13 @@ const NewsFeaturedCarousel = ({ articles, className }: NewsFeaturedCarouselProps
                     </h3>
 
                     {/* Summary */}
-                    <p className="text-white/60 text-sm leading-relaxed line-clamp-2">
+                    <p className="text-white text-sm leading-relaxed line-clamp-2">
                       {article.summary}
                     </p>
 
                     {/* Meta row */}
                     <div className="flex items-center justify-between pt-2">
-                      <div className="flex items-center gap-3 text-[11px] text-white/40">
+                      <div className="flex items-center gap-3 text-[11px] text-white">
                         <span>{format(new Date(article.date_published), 'MMM d')}</span>
                         <span className="flex items-center gap-1">
                           <Eye className="h-3 w-3" />
@@ -199,7 +199,7 @@ const NewsFeaturedCarousel = ({ articles, className }: NewsFeaturedCarouselProps
       </Carousel>
 
       {/* Mobile hint */}
-      <p className="md:hidden text-center text-[10px] text-white/30 flex items-center justify-center gap-1">
+      <p className="md:hidden text-center text-[10px] text-white flex items-center justify-center gap-1">
         <ChevronLeft className="h-3 w-3" />
         Swipe for more
         <ChevronRight className="h-3 w-3" />

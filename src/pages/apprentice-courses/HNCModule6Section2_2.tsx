@@ -240,7 +240,7 @@ const HNCModule6Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section2">
@@ -262,7 +262,7 @@ const HNCModule6Section2_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Heat Pump Technology
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             ASHP and GSHP systems, COP and SCOP performance metrics, system design principles, and
             MCS certification requirements
           </p>
@@ -457,20 +457,20 @@ const HNCModule6Section2_2 = () => {
                 <p>
                   <span className="text-white">COP = Heat Output (kW) ÷ Electrical Input (kW)</span>
                 </p>
-                <p className="mt-2 text-white/60">Example:</p>
+                <p className="mt-2 text-white">Example:</p>
                 <p>
-                  <span className="text-white/60">Heat output:</span>{' '}
+                  <span className="text-white">Heat output:</span>{' '}
                   <span className="text-white">12 kW</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Electrical input:</span>{' '}
+                  <span className="text-white">Electrical input:</span>{' '}
                   <span className="text-white">3 kW</span>
                 </p>
                 <p>
-                  <span className="text-white/60">COP:</span>{' '}
+                  <span className="text-white">COP:</span>{' '}
                   <span className="text-green-400">12 ÷ 3 = 4.0</span>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Energy delivered: 4 kW heat for every 1 kW electricity
                 </p>
               </div>
@@ -563,26 +563,26 @@ const HNCModule6Section2_2 = () => {
               </p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Annual heat demand:</span>{' '}
+                  <span className="text-white">Annual heat demand:</span>{' '}
                   <span className="text-white">18,000 kWh</span>
                 </p>
                 <p>
-                  <span className="text-white/60">SCOP:</span>{' '}
+                  <span className="text-white">SCOP:</span>{' '}
                   <span className="text-white">3.2</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Electricity required:</span>{' '}
+                  <span className="text-white">Electricity required:</span>{' '}
                   <span className="text-white">18,000 ÷ 3.2 = 5,625 kWh</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Electricity rate:</span>{' '}
+                  <span className="text-white">Electricity rate:</span>{' '}
                   <span className="text-white">24p/kWh</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Annual running cost:</span>{' '}
+                  <span className="text-white">Annual running cost:</span>{' '}
                   <span className="text-green-400">5,625 × £0.24 = £1,350</span>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Compare: Gas boiler (90% efficiency, 7p/kWh) = £1,400/year
                 </p>
               </div>
@@ -643,28 +643,28 @@ const HNCModule6Section2_2 = () => {
                 Heat Loss Calculation Example
               </p>
               <div className="font-mono text-sm space-y-1">
-                <p className="text-white/60">Living room: 5m × 4m × 2.4m ceiling</p>
+                <p className="text-white">Living room: 5m × 4m × 2.4m ceiling</p>
                 <p className="mt-2">
-                  <span className="text-white/60">External wall area:</span>{' '}
+                  <span className="text-white">External wall area:</span>{' '}
                   <span className="text-white">12 m² (after windows)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">U-value:</span>{' '}
+                  <span className="text-white">U-value:</span>{' '}
                   <span className="text-white">0.35 W/m²K</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Temperature difference:</span>{' '}
+                  <span className="text-white">Temperature difference:</span>{' '}
                   <span className="text-white">21 - (-3) = 24K</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Wall loss:</span>{' '}
+                  <span className="text-white">Wall loss:</span>{' '}
                   <span className="text-white">12 × 0.35 × 24 = 100.8 W</span>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   + Window loss + Floor loss + Roof loss + Ventilation loss
                 </p>
                 <p>
-                  <span className="text-white/60">Total room heat loss:</span>{' '}
+                  <span className="text-white">Total room heat loss:</span>{' '}
                   <span className="text-green-400">850 W</span>
                 </p>
               </div>
@@ -906,7 +906,7 @@ const HNCModule6Section2_2 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Compliance note:</strong> Building Regulations Part L notification is required
               for heat pump installations. The installation must also comply with Part P for
               electrical work and Part G for unvented hot water where applicable.
@@ -932,7 +932,7 @@ const HNCModule6Section2_2 = () => {
                 <strong>Scenario:</strong> Compare annual running costs: heat pump (SCOP 3.5) vs gas
                 boiler (90% efficiency).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Annual heat demand: 15,000 kWh</p>
                 <p className="mt-2">Heat Pump:</p>
                 <p className="ml-4">Electricity required = 15,000 ÷ 3.5 = 4,286 kWh</p>
@@ -941,7 +941,7 @@ const HNCModule6Section2_2 = () => {
                 <p className="ml-4">Gas required = 15,000 ÷ 0.90 = 16,667 kWh</p>
                 <p className="ml-4">Cost at 7p/kWh = 16,667 × £0.07 = £1,167</p>
                 <p className="mt-2 text-green-400">Annual saving with heat pump: £138</p>
-                <p className="text-white/60">
+                <p className="text-white">
                   Note: Actual savings depend on electricity/gas prices
                 </p>
               </div>
@@ -955,7 +955,7 @@ const HNCModule6Section2_2 = () => {
                 <strong>Scenario:</strong> Room requires 1.5 kW heat output. Size radiator for
                 45/40°C heat pump operation.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Required output at 45/40°C: 1,500 W</p>
                 <p className="mt-2">At 75/65°C (catalogue rating):</p>
                 <p className="ml-4">Correction factor for 45/40°C = 0.37</p>
@@ -963,7 +963,7 @@ const HNCModule6Section2_2 = () => {
                 <p className="mt-2">Radiator selection:</p>
                 <p className="ml-4 text-green-400">Select radiator rated 4,100 W at 75/65°C</p>
                 <p className="ml-4">e.g., 600mm × 1800mm double panel plus</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   The radiator is 2.7× larger than for a boiler system
                 </p>
               </div>
@@ -976,7 +976,7 @@ const HNCModule6Section2_2 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Size horizontal ground loop for 10 kW GSHP in clay soil.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Heat pump capacity: 10 kW</p>
                 <p>Assumed COP: 4.0</p>
                 <p className="mt-2">Heat extraction from ground:</p>
@@ -987,7 +987,7 @@ const HNCModule6Section2_2 = () => {
                 <p className="ml-4">Ground area = 7,500 ÷ 25 = 300 m²</p>
                 <p className="mt-2">Loop pipe length (at 1m spacing):</p>
                 <p className="ml-4 text-green-400">Approximately 300m of pipe required</p>
-                <p className="text-white/60">Trench area: 300 m² at 1.2m depth</p>
+                <p className="text-white">Trench area: 300 m² at 1.2m depth</p>
               </div>
             </div>
           </div>
@@ -1087,7 +1087,7 @@ const HNCModule6Section2_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1133,7 +1133,7 @@ const HNCModule6Section2_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section2">

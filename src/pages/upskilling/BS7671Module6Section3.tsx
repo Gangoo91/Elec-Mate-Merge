@@ -106,7 +106,7 @@ const BS7671Module6Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bs7671-module-6">
@@ -127,7 +127,7 @@ const BS7671Module6Section3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Sequence of Tests and Testing Procedures
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             The correct order for BS 7671 electrical testing and why sequence matters
           </p>
         </header>
@@ -239,7 +239,7 @@ const BS7671Module6Section3 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                   A. Continuity of Protective Conductors
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Including main and supplementary bonding conductors. Ensures all metalwork is
                   properly earthed.
                 </p>
@@ -255,7 +255,7 @@ const BS7671Module6Section3 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                   B. Continuity of Ring Final Circuit Conductors
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   For 32A ring circuits only. Verifies ring integrity and calculates R1 + R2 values.
                 </p>
                 <ul className="text-sm text-white space-y-1 ml-4">
@@ -270,7 +270,7 @@ const BS7671Module6Section3 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                   C. Insulation Resistance
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Tests insulation between conductors and between conductors and earth.
                 </p>
                 <ul className="text-sm text-white space-y-1 ml-4">
@@ -283,7 +283,7 @@ const BS7671Module6Section3 = () => {
 
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">D. Polarity</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Checking correct connection of line, neutral, and circuit protective conductor.
                 </p>
                 <ul className="text-sm text-white space-y-1 ml-4">
@@ -318,7 +318,7 @@ const BS7671Module6Section3 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                   A. Earth Fault Loop Impedance (Zs)
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Confirms effectiveness of protective devices under earth fault conditions.
                 </p>
                 <ul className="text-sm text-white space-y-1 ml-4">
@@ -331,7 +331,7 @@ const BS7671Module6Section3 = () => {
 
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">B. RCD Testing</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Tests residual current devices for correct operation and trip times.
                 </p>
                 <ul className="text-sm text-white space-y-1 ml-4">
@@ -346,7 +346,7 @@ const BS7671Module6Section3 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                   C. Prospective Fault Current (PFC/PSC)
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Measures maximum fault currents to ensure protective devices can safely interrupt.
                 </p>
                 <ul className="text-sm text-white space-y-1 ml-4">
@@ -361,7 +361,7 @@ const BS7671Module6Section3 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                   D. Functional Testing
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Ensures all switches, controls, and protective devices operate correctly.
                 </p>
                 <ul className="text-sm text-white space-y-1 ml-4">
@@ -524,7 +524,7 @@ const BS7671Module6Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -580,7 +580,7 @@ const BS7671Module6Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bs7671-module-6-section-2">

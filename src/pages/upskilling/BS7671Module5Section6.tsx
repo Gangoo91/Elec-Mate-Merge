@@ -95,7 +95,7 @@ const BS7671Module5Section6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bs7671-module-5">
@@ -116,7 +116,7 @@ const BS7671Module5Section6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Environmental Protection Requirements
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Comprehensive requirements for protecting electrical equipment
           </p>
         </header>
@@ -250,8 +250,8 @@ const BS7671Module5Section6 = () => {
             <div className="grid sm:grid-cols-3 gap-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-elec-yellow mb-2">Bathrooms & Showers</p>
-                <p className="text-sm text-white/90 mb-3">Water and humidity exposure</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <p className="text-sm text-white mb-3">Water and humidity exposure</p>
+                <ul className="text-xs text-white space-y-1">
                   <li>• Zone-based IP requirements</li>
                   <li>• SELV/PELV in zones 0 and 1</li>
                   <li>• Supplementary bonding</li>
@@ -260,8 +260,8 @@ const BS7671Module5Section6 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-orange-400 mb-2">Swimming Pools</p>
-                <p className="text-sm text-white/90 mb-3">Wet environment, conductive</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <p className="text-sm text-white mb-3">Wet environment, conductive</p>
+                <ul className="text-xs text-white space-y-1">
                   <li>• Zone 0, 1, 2 definitions</li>
                   <li>• Restricted equipment types</li>
                   <li>• Enhanced bonding requirements</li>
@@ -270,8 +270,8 @@ const BS7671Module5Section6 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-red-400 mb-2">Agricultural & Horticultural</p>
-                <p className="text-sm text-white/90 mb-3">Dust, moisture, animals</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <p className="text-sm text-white mb-3">Dust, moisture, animals</p>
+                <ul className="text-xs text-white space-y-1">
                   <li>• Higher IP ratings needed</li>
                   <li>• Rodent protection</li>
                   <li>• Corrosion from ammonia</li>
@@ -344,19 +344,19 @@ const BS7671Module5Section6 = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-white mb-1">Fire Detection</p>
-                  <p className="text-white/90 text-xs">Alarm and detection</p>
+                  <p className="text-white text-xs">Alarm and detection</p>
                 </div>
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-white mb-1">Emergency Lighting</p>
-                  <p className="text-white/90 text-xs">Escape illumination</p>
+                  <p className="text-white text-xs">Escape illumination</p>
                 </div>
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-white mb-1">Smoke Control</p>
-                  <p className="text-white/90 text-xs">Extract ventilation</p>
+                  <p className="text-white text-xs">Extract ventilation</p>
                 </div>
                 <div className="p-3 rounded bg-transparent border border-white/10">
                   <p className="font-medium text-white mb-1">Firefighting Lifts</p>
-                  <p className="text-white/90 text-xs">Fire service use</p>
+                  <p className="text-white text-xs">Fire service use</p>
                 </div>
               </div>
             </div>
@@ -418,7 +418,7 @@ const BS7671Module5Section6 = () => {
 
             <div className="p-4 rounded-lg bg-transparent border border-white/10">
               <p className="text-sm font-medium text-white mb-2">Common Installation Mistakes</p>
-              <ul className="text-sm text-white/90 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>
                   <strong>Under-specifying:</strong> Not considering worst-case conditions
                 </li>
@@ -443,7 +443,7 @@ const BS7671Module5Section6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -455,7 +455,7 @@ const BS7671Module5Section6 = () => {
           <div className="grid sm:grid-cols-3 gap-4 text-xs text-white">
             <div>
               <p className="font-medium text-white mb-1">External Influences</p>
-              <ul className="space-y-0.5 text-white/80">
+              <ul className="space-y-0.5 text-white">
                 <li>• Temperature (AA)</li>
                 <li>• Humidity (AB)</li>
                 <li>• Water presence (AD)</li>
@@ -464,7 +464,7 @@ const BS7671Module5Section6 = () => {
             </div>
             <div>
               <p className="font-medium text-white mb-1">Special Locations</p>
-              <ul className="space-y-0.5 text-white/80">
+              <ul className="space-y-0.5 text-white">
                 <li>• Bathrooms (Part 701)</li>
                 <li>• Swimming pools (Part 702)</li>
                 <li>• Agricultural (Part 705)</li>
@@ -473,7 +473,7 @@ const BS7671Module5Section6 = () => {
             </div>
             <div>
               <p className="font-medium text-white mb-1">Fire Circuits</p>
-              <ul className="space-y-0.5 text-white/80">
+              <ul className="space-y-0.5 text-white">
                 <li>• Fire-resistant cables</li>
                 <li>• Fire-rated supports</li>
                 <li>• Segregation required</li>
@@ -498,7 +498,7 @@ const BS7671Module5Section6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bs7671-module-5-section-5">

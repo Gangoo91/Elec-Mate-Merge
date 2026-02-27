@@ -50,7 +50,7 @@ const SidebarFooter = () => {
           </div>
           <div>
             <p className="text-xs font-semibold text-white">Upgrade to Pro</p>
-            <p className="text-[10px] text-white/60">Unlock all features</p>
+            <p className="text-[10px] text-white">Unlock all features</p>
           </div>
         </div>
         <Button

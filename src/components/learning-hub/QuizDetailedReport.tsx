@@ -50,7 +50,7 @@ const QuizDetailedReport = ({ onBack }: QuizDetailedReportProps) => {
 
       <div>
         <h1 className="text-3xl font-bold text-foreground mb-2">Detailed Performance Report</h1>
-        <p className="text-white/80">Comprehensive analysis of your quiz performance</p>
+        <p className="text-white">Comprehensive analysis of your quiz performance</p>
       </div>
 
       {/* Overall Stats Grid */}
@@ -59,7 +59,7 @@ const QuizDetailedReport = ({ onBack }: QuizDetailedReportProps) => {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-white/80 text-sm">Total Quizzes</p>
+                <p className="text-white text-sm">Total Quizzes</p>
                 <p className="text-xl sm:text-2xl font-bold text-foreground">
                   {overallStats.totalQuizzes}
                 </p>
@@ -73,7 +73,7 @@ const QuizDetailedReport = ({ onBack }: QuizDetailedReportProps) => {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-white/80 text-sm">Average Score</p>
+                <p className="text-white text-sm">Average Score</p>
                 <p className="text-xl sm:text-2xl font-bold text-foreground">
                   {overallStats.averageScore}%
                 </p>
@@ -87,7 +87,7 @@ const QuizDetailedReport = ({ onBack }: QuizDetailedReportProps) => {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-white/80 text-sm">Best Score</p>
+                <p className="text-white text-sm">Best Score</p>
                 <p className="text-xl sm:text-2xl font-bold text-foreground">
                   {overallStats.bestScore}%
                 </p>
@@ -101,7 +101,7 @@ const QuizDetailedReport = ({ onBack }: QuizDetailedReportProps) => {
           <CardContent className="p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-white/80 text-sm">Total Time</p>
+                <p className="text-white text-sm">Total Time</p>
                 <p className="text-xl sm:text-2xl font-bold text-foreground">
                   {Math.round(overallStats.totalTimeSpent / 60)}m
                 </p>
@@ -125,7 +125,7 @@ const QuizDetailedReport = ({ onBack }: QuizDetailedReportProps) => {
             <div key={index} className="space-y-2">
               <div className="flex justify-between text-sm">
                 <span className="text-foreground font-medium">{category.subject}</span>
-                <span className="text-white/80">
+                <span className="text-white">
                   {category.score > 0 ? `${category.score}%` : 'Not attempted'}
                 </span>
               </div>
@@ -151,7 +151,7 @@ const QuizDetailedReport = ({ onBack }: QuizDetailedReportProps) => {
         <CardContent>
           {recentResults.length === 0 ? (
             <div className="text-center py-8">
-              <p className="text-white/80">
+              <p className="text-white">
                 No quiz results yet. Complete a quiz to see your history here!
               </p>
             </div>
@@ -166,7 +166,7 @@ const QuizDetailedReport = ({ onBack }: QuizDetailedReportProps) => {
                     <p className="text-foreground font-medium">
                       Assessment #{result.assessment_id}
                     </p>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       {new Date(result.completed_at).toLocaleDateString('en-GB')} •
                       {Math.round(result.time_spent / 60)} minutes
                     </p>
@@ -175,7 +175,7 @@ const QuizDetailedReport = ({ onBack }: QuizDetailedReportProps) => {
                     <p className="text-foreground font-bold text-lg">
                       {Math.round(result.percentage)}%
                     </p>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       {result.correct_answers}/{result.total_questions} correct
                     </p>
                   </div>

@@ -142,7 +142,7 @@ const FunctionalSkillsModule2Section2 = () => {
             to="/study-centre/apprentice/functional-skills/module2"
             className="p-2 -ml-2 touch-manipulation"
           >
-            <ArrowLeft className="w-5 h-5 text-white/60" />
+            <ArrowLeft className="w-5 h-5 text-white" />
           </Link>
           <div>
             <p className="text-[11px] font-semibold text-green-400 uppercase tracking-wider">
@@ -166,7 +166,7 @@ const FunctionalSkillsModule2Section2 = () => {
               </div>
             </div>
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">Technical Writing</h2>
-            <p className="text-sm text-white/50 max-w-lg mx-auto">
+            <p className="text-sm text-white max-w-lg mx-auto">
               Learn to write clear, accurate, and professional technical documents that meet
               industry standards and protect your reputation.
             </p>
@@ -189,7 +189,7 @@ const FunctionalSkillsModule2Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Professional Writing Standards</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               The documents you produce as an electrician carry legal weight. An Electrical
               Installation Certificate (EIC) is a legal declaration that the work complies with BS
@@ -212,7 +212,7 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Clarity:</strong> Write so that your meaning
+                  <strong className="text-white">Clarity:</strong> Write so that your meaning
                   cannot be misunderstood. If a sentence could be interpreted in two ways, rewrite
                   it. Use simple, direct language.
                 </span>
@@ -220,7 +220,7 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Accuracy:</strong> Every fact, figure, and
+                  <strong className="text-white">Accuracy:</strong> Every fact, figure, and
                   description must be correct. Double-check test values, regulation references, and
                   technical details before writing them down.
                 </span>
@@ -228,7 +228,7 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Completeness:</strong> Include all necessary
+                  <strong className="text-white">Completeness:</strong> Include all necessary
                   information. A partially completed form is as problematic as an incorrect one.
                   Fill in every required field.
                 </span>
@@ -236,7 +236,7 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Professionalism:</strong> Your writing reflects
+                  <strong className="text-white">Professionalism:</strong> Your writing reflects
                   your competence. Neat handwriting (or well-formatted digital documents), correct
                   spelling, and proper grammar demonstrate attention to detail — the same attention
                   you apply to your electrical work.
@@ -246,7 +246,7 @@ const FunctionalSkillsModule2Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Your technical writing is a reflection of your professional competence. A
                 well-written EICR or EIC shows that you are thorough, careful, and knowledgeable. A
                 poorly written one suggests the opposite — regardless of how good your electrical
@@ -302,7 +302,7 @@ const FunctionalSkillsModule2Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Completing EICR Forms</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               The Electrical Installation Condition Report (EICR) is one of the most important
               documents you will complete as an electrician. It assesses the condition of an
@@ -315,7 +315,7 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">
+                  <strong className="text-white">
                     Section A — Details of the person ordering the report:
                   </strong>{' '}
                   Client name, address, contact details
@@ -324,7 +324,7 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">
+                  <strong className="text-white">
                     Section B — Details of the installation:
                   </strong>{' '}
                   Address (if different from A), date of last inspection, evidence of alterations
@@ -333,7 +333,7 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Section C — Supply characteristics:</strong>{' '}
+                  <strong className="text-white">Section C — Supply characteristics:</strong>{' '}
                   Earthing system (TN-S, TN-C-S, TT), supply voltage, protective device ratings,
                   prospective fault current
                 </span>
@@ -341,7 +341,7 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">
+                  <strong className="text-white">
                     Section D — Particulars of the installation:
                   </strong>{' '}
                   Number of circuits, type of wiring, age of installation
@@ -350,14 +350,14 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Section E — Summary of the condition:</strong>{' '}
+                  <strong className="text-white">Section E — Summary of the condition:</strong>{' '}
                   Overall assessment — satisfactory or unsatisfactory
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">
+                  <strong className="text-white">
                     Section F — Observations and recommendations:
                   </strong>{' '}
                   This is where your writing skills are most critical
@@ -412,21 +412,21 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">What is the defect?</strong> Be specific about
+                  <strong className="text-white">What is the defect?</strong> Be specific about
                   what is wrong
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Where is it?</strong> Give the precise location
+                  <strong className="text-white">Where is it?</strong> Give the precise location
                   (room, circuit number, distribution board reference)
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Why is it a problem?</strong> Reference the
+                  <strong className="text-white">Why is it a problem?</strong> Reference the
                   relevant regulation if appropriate
                 </span>
               </li>
@@ -437,22 +437,22 @@ const FunctionalSkillsModule2Section2 = () => {
               <div className="space-y-3">
                 <div>
                   <p className="text-red-400 font-semibold text-xs mb-1">Poor:</p>
-                  <p className="text-white/60 italic">"Socket in kitchen not right"</p>
+                  <p className="text-white italic">"Socket in kitchen not right"</p>
                 </div>
                 <div>
                   <p className="text-green-400 font-semibold text-xs mb-1">Good:</p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     "Missing CPC connection at double socket outlet adjacent to sink in kitchen —
                     circuit 5 from DB1. Non-compliance with Regulation 411.3.1.1 (C2)"
                   </p>
                 </div>
                 <div className="border-t border-white/10 pt-3">
                   <p className="text-red-400 font-semibold text-xs mb-1">Poor:</p>
-                  <p className="text-white/60 italic">"Old wiring"</p>
+                  <p className="text-white italic">"Old wiring"</p>
                 </div>
                 <div>
                   <p className="text-green-400 font-semibold text-xs mb-1">Good:</p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     "Rubber-insulated cables to first-floor lighting circuit (circuit 2, DB1) show
                     signs of insulation deterioration. Insulation resistance test result: 0.8 MOhm.
                     Recommend rewire of affected circuit (C2)"
@@ -463,7 +463,7 @@ const FunctionalSkillsModule2Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Every observation on an EICR should be specific enough that another electrician
                 could find the defect and understand the issue without any additional explanation
                 from you. If your description requires verbal clarification, it is not detailed
@@ -500,7 +500,7 @@ const FunctionalSkillsModule2Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Writing EIC &amp; MEIWC Forms</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               The Electrical Installation Certificate (EIC) and Minor Electrical Installation Works
               Certificate (MEIWC) are the documents you issue to declare that new work or
@@ -519,21 +519,21 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Part 1 — Details of the designer:</strong> The
+                  <strong className="text-white">Part 1 — Details of the designer:</strong> The
                   person who designed the installation (may be the same as the installer)
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Part 2 — Details of the installer:</strong> The
+                  <strong className="text-white">Part 2 — Details of the installer:</strong> The
                   person or company that carried out the installation work
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">
+                  <strong className="text-white">
                     Part 3 — Details of the person commissioning the inspection and testing:
                   </strong>{' '}
                   The person who carried out initial verification
@@ -542,14 +542,14 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Schedule of Inspections:</strong> A checklist
+                  <strong className="text-white">Schedule of Inspections:</strong> A checklist
                   confirming that all required visual inspections were carried out
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Schedule of Test Results:</strong> All test
+                  <strong className="text-white">Schedule of Test Results:</strong> All test
                   values recorded during initial verification
                 </span>
               </li>
@@ -583,7 +583,7 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Record test values accurately:</strong> Write
+                  <strong className="text-white">Record test values accurately:</strong> Write
                   the actual measured value, not the expected value. If insulation resistance
                   measured 200 MOhm, write 200, not &gt;200.
                 </span>
@@ -591,7 +591,7 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Complete every field:</strong> If a field is not
+                  <strong className="text-white">Complete every field:</strong> If a field is not
                   applicable, write "N/A" rather than leaving it blank. Blank fields look like
                   omissions.
                 </span>
@@ -599,7 +599,7 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Use consistent units:</strong> Record all
+                  <strong className="text-white">Use consistent units:</strong> Record all
                   resistance values in ohms (with appropriate prefix: MOhm, kohm, ohm) and clearly
                   label the units.
                 </span>
@@ -607,7 +607,7 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Include circuit descriptions:</strong> Use
+                  <strong className="text-white">Include circuit descriptions:</strong> Use
                   clear, descriptive names for circuits (e.g. "Kitchen sockets ring" not just "Ring
                   1").
                 </span>
@@ -615,7 +615,7 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Sign and date:</strong> Your signature is your
+                  <strong className="text-white">Sign and date:</strong> Your signature is your
                   professional declaration. Always sign and date the certificate on the day of
                   completion.
                 </span>
@@ -624,7 +624,7 @@ const FunctionalSkillsModule2Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Your signature on an EIC or MEIWC is a legal declaration that the work complies with
                 BS 7671. If a defect is later found, this certificate is the first document that
                 will be examined. Make sure it accurately reflects the work you carried out and the
@@ -647,7 +647,7 @@ const FunctionalSkillsModule2Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Method Statement Writing</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               While Section 1 covered reading method statements, as you progress in your career you
               will be expected to write them. A well-written method statement demonstrates your
@@ -661,35 +661,35 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Be numbered sequentially:</strong> Use clear
+                  <strong className="text-white">Be numbered sequentially:</strong> Use clear
                   numbering (1, 2, 3...) so that steps can be referenced easily
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Start with an action verb:</strong> "Isolate the
+                  <strong className="text-white">Start with an action verb:</strong> "Isolate the
                   supply...", "Verify dead using...", "Connect the...", "Test the..."
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Be specific:</strong> "Isolate the supply at the
+                  <strong className="text-white">Be specific:</strong> "Isolate the supply at the
                   main switch in the consumer unit" is better than "Turn off the power"
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Include safety measures at each step:</strong>{' '}
+                  <strong className="text-white">Include safety measures at each step:</strong>{' '}
                   If a step involves a specific hazard, state the control measure within that step
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Be logical:</strong> Steps should follow in the
+                  <strong className="text-white">Be logical:</strong> Steps should follow in the
                   order they will actually be carried out on site
                 </span>
               </li>
@@ -699,7 +699,7 @@ const FunctionalSkillsModule2Section2 = () => {
               Example: Well-written sequence (cable installation in ceiling void)
             </h4>
             <div className="bg-white/5 border border-white/10 rounded-xl p-4 mt-2">
-              <ol className="space-y-2 list-decimal list-inside text-white/70">
+              <ol className="space-y-2 list-decimal list-inside text-white">
                 <li>
                   Carry out a toolbox talk with all personnel covering the hazards identified in the
                   associated risk assessment
@@ -761,7 +761,7 @@ const FunctionalSkillsModule2Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 A good method statement should be detailed enough that someone who has never visited
                 the site could understand exactly how the work will be carried out. If you have to
                 explain something verbally that is not in the document, the document needs updating.
@@ -797,7 +797,7 @@ const FunctionalSkillsModule2Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Professional Emails</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Email is the primary method of written communication in the electrical industry.
               Whether you are quoting for work, confirming appointments, reporting on completed
@@ -811,7 +811,7 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Subject line:</strong> Clear and specific.
+                  <strong className="text-white">Subject line:</strong> Clear and specific.
                   "Electrical Installation Complete — 14 Oak Lane" is far better than "Job done" or
                   "Update"
                 </span>
@@ -819,43 +819,43 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Greeting:</strong> "Dear Mr/Mrs [Name]" for
+                  <strong className="text-white">Greeting:</strong> "Dear Mr/Mrs [Name]" for
                   clients, "Hi [First Name]" for colleagues you work with regularly
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Opening line:</strong> State the purpose
+                  <strong className="text-white">Opening line:</strong> State the purpose
                   immediately. "I am writing to confirm..." or "Further to our conversation on..."
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Body:</strong> Provide the details in clear,
+                  <strong className="text-white">Body:</strong> Provide the details in clear,
                   short paragraphs. Use bullet points for lists of items or actions.
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Closing:</strong> State any actions required or
+                  <strong className="text-white">Closing:</strong> State any actions required or
                   next steps. "Please let me know if you have any questions."
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Sign-off:</strong> "Kind regards" or "Best
+                  <strong className="text-white">Sign-off:</strong> "Kind regards" or "Best
                   regards" followed by your name, company, and contact details
                 </span>
               </li>
             </ul>
 
             <h4 className="text-white font-semibold pt-2">Example: Completion email to a client</h4>
-            <div className="bg-white/5 border border-white/10 rounded-xl p-4 mt-2 font-mono text-xs text-white/70">
-              <p className="text-white/90 mb-1">
+            <div className="bg-white/5 border border-white/10 rounded-xl p-4 mt-2 font-mono text-xs text-white">
+              <p className="text-white mb-1">
                 <strong>Subject:</strong> Consumer Unit Replacement Complete — 27 Elm Street
               </p>
               <p className="mb-2">Dear Mrs Johnson,</p>
@@ -889,28 +889,28 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Text speak:</strong> Never use "u", "r",
+                  <strong className="text-white">Text speak:</strong> Never use "u", "r",
                   "2moro", or similar abbreviations in professional emails
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">All capitals:</strong> Writing in all capitals
+                  <strong className="text-white">All capitals:</strong> Writing in all capitals
                   reads as SHOUTING and is unprofessional
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">No subject line:</strong> Emails without subject
+                  <strong className="text-white">No subject line:</strong> Emails without subject
                   lines are harder to find later and look unprofessional
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Replying in anger:</strong> If you receive a
+                  <strong className="text-white">Replying in anger:</strong> If you receive a
                   difficult email, wait before responding. A calm, professional reply always
                   reflects better on you
                 </span>
@@ -919,7 +919,7 @@ const FunctionalSkillsModule2Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Before sending any email, read it back to yourself. Check for spelling errors,
                 ensure the tone is professional, and confirm that all necessary information is
                 included. A two-minute review can prevent an embarrassing mistake.
@@ -941,7 +941,7 @@ const FunctionalSkillsModule2Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Technical Reports</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               At times, you will need to write technical reports — for example, when investigating a
               fault, assessing the feasibility of a proposed alteration, or reporting on the
@@ -955,28 +955,28 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Title and reference:</strong> A clear title,
+                  <strong className="text-white">Title and reference:</strong> A clear title,
                   your company details, the date, and a unique reference number
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Introduction:</strong> Why the report was
+                  <strong className="text-white">Introduction:</strong> Why the report was
                   commissioned and what it covers
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Background:</strong> Relevant history of the
+                  <strong className="text-white">Background:</strong> Relevant history of the
                   installation or the issue being investigated
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Investigation/findings:</strong> What you
+                  <strong className="text-white">Investigation/findings:</strong> What you
                   inspected, tested, and discovered. Include test results, photographs, and
                   observations.
                 </span>
@@ -984,21 +984,21 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Conclusions:</strong> Your professional
+                  <strong className="text-white">Conclusions:</strong> Your professional
                   assessment based on the findings
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Recommendations:</strong> What action should be
+                  <strong className="text-white">Recommendations:</strong> What action should be
                   taken, with estimated costs if requested
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Appendices:</strong> Supporting documents — test
+                  <strong className="text-white">Appendices:</strong> Supporting documents — test
                   results, photographs, relevant datasheets
                 </span>
               </li>
@@ -1008,21 +1008,21 @@ const FunctionalSkillsModule2Section2 = () => {
               Example: Fault investigation report (extract)
             </h4>
             <div className="bg-white/5 border border-white/10 rounded-xl p-4 mt-2">
-              <p className="text-white/90 font-semibold mb-2">Findings:</p>
-              <p className="text-white/70 mb-2">
+              <p className="text-white font-semibold mb-2">Findings:</p>
+              <p className="text-white mb-2">
                 Upon investigation, the intermittent tripping of the RCD protecting the downstairs
                 socket circuits was found to be caused by a deteriorated cable joint in the
                 underfloor void beneath the kitchen. The joint, which appeared to be an unauthorised
                 addition to the original installation, showed signs of moisture ingress and
                 corrosion of the conductors.
               </p>
-              <p className="text-white/70 mb-2">
+              <p className="text-white mb-2">
                 Insulation resistance testing of the affected circuit with the joint disconnected
                 returned a reading of 150 MOhm. With the joint reconnected, the reading dropped to
                 0.3 MOhm, confirming the joint as the source of the fault.
               </p>
-              <p className="text-white/90 font-semibold mb-2">Recommendations:</p>
-              <p className="text-white/70">
+              <p className="text-white font-semibold mb-2">Recommendations:</p>
+              <p className="text-white">
                 1. The defective joint should be removed and the cable replaced with a continuous
                 run of 2.5mm² twin and earth cable from the distribution board to the first socket
                 outlet on the circuit. 2. The circuit should be re-tested following the repair and
@@ -1033,7 +1033,7 @@ const FunctionalSkillsModule2Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Write technical reports in a factual, objective tone. Present your findings before
                 your conclusions, and let the evidence support your recommendations. Avoid
                 speculation or opinion that is not backed by your observations and test results.
@@ -1069,7 +1069,7 @@ const FunctionalSkillsModule2Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Site Notes &amp; Day Sheets</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Day sheets (also called site diaries or daily reports) are your daily record of what
               happened on site. They might seem like mundane paperwork, but they serve critical
@@ -1082,28 +1082,28 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Date and weather conditions:</strong> Weather
+                  <strong className="text-white">Date and weather conditions:</strong> Weather
                   can affect work progress and may be relevant to insurance claims
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Personnel on site:</strong> Names and roles of
+                  <strong className="text-white">Personnel on site:</strong> Names and roles of
                   all electrical operatives present, including subcontractors
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Hours worked:</strong> Start time, finish time,
+                  <strong className="text-white">Hours worked:</strong> Start time, finish time,
                   and any breaks. Important for labour cost tracking
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Work carried out:</strong> A clear description
+                  <strong className="text-white">Work carried out:</strong> A clear description
                   of what was done that day. Be specific: "First fix cabling to ground-floor sockets
                   and lighting — plots 1-4" is better than "First fix"
                 </span>
@@ -1111,14 +1111,14 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Materials used:</strong> What was used and
+                  <strong className="text-white">Materials used:</strong> What was used and
                   quantities where significant. Helps with stock control and cost tracking
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Issues and delays:</strong> Record anything that
+                  <strong className="text-white">Issues and delays:</strong> Record anything that
                   affected progress — other trades blocking access, missing materials, design
                   changes, weather stoppages
                 </span>
@@ -1126,7 +1126,7 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Instructions received:</strong> Any verbal
+                  <strong className="text-white">Instructions received:</strong> Any verbal
                   instructions from the project manager, site agent, or client — and confirm them in
                   writing afterwards
                 </span>
@@ -1134,7 +1134,7 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Visitors:</strong> Record any visitors to your
+                  <strong className="text-white">Visitors:</strong> Record any visitors to your
                   work area, including inspectors, consultants, or client representatives
                 </span>
               </li>
@@ -1145,14 +1145,14 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Payment disputes:</strong> If a client queries
+                  <strong className="text-white">Payment disputes:</strong> If a client queries
                   your invoice, day sheets provide evidence of the work done and hours spent
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Delay claims:</strong> On commercial contracts,
+                  <strong className="text-white">Delay claims:</strong> On commercial contracts,
                   if other trades caused delays to your work, day sheet records support your claim
                   for additional time or costs
                 </span>
@@ -1160,14 +1160,14 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Defect investigations:</strong> If a problem is
+                  <strong className="text-white">Defect investigations:</strong> If a problem is
                   discovered later, day sheets can help establish when and how the work was done
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Project handover:</strong> Day sheets contribute
+                  <strong className="text-white">Project handover:</strong> Day sheets contribute
                   to the project record and can be included in the O&amp;M manual
                 </span>
               </li>
@@ -1175,7 +1175,7 @@ const FunctionalSkillsModule2Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Complete your day sheet at the end of every working day, while the details are
                 fresh. A day sheet written a week later from memory is far less reliable — and far
                 less useful in a dispute — than one written on the day.
@@ -1197,7 +1197,7 @@ const FunctionalSkillsModule2Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Common Writing Mistakes</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Awareness of common mistakes is the first step to avoiding them. Here are the errors
               most frequently seen on technical documents in the electrical trade, along with
@@ -1209,13 +1209,13 @@ const FunctionalSkillsModule2Section2 = () => {
               <div className="space-y-2">
                 <div className="flex items-start gap-2">
                   <span className="text-red-400 mt-0.5">&bull;</span>
-                  <span className="text-white/60">
+                  <span className="text-white">
                     <strong>Avoid:</strong> "Some wiring needs replacing"
                   </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span className="text-white/90">
+                  <span className="text-white">
                     <strong>Write:</strong> "Rubber-insulated cables to first-floor lighting
                     circuits (circuits 1 and 2 from DB1) require replacement due to insulation
                     deterioration"
@@ -1229,13 +1229,13 @@ const FunctionalSkillsModule2Section2 = () => {
               <div className="space-y-2">
                 <div className="flex items-start gap-2">
                   <span className="text-red-400 mt-0.5">&bull;</span>
-                  <span className="text-white/60">
+                  <span className="text-white">
                     <strong>Avoid:</strong> Leaving blank fields on certification forms
                   </span>
                 </div>
                 <div className="flex items-start gap-2">
                   <span className="text-green-400 mt-0.5">&bull;</span>
-                  <span className="text-white/90">
+                  <span className="text-white">
                     <strong>Write:</strong> "N/A" for fields that are not applicable, and complete
                     all other fields with the correct information
                   </span>
@@ -1248,28 +1248,28 @@ const FunctionalSkillsModule2Section2 = () => {
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Consumer unit</strong> — not "consumer box",
+                  <strong className="text-white">Consumer unit</strong> — not "consumer box",
                   "fuse box", or "fuseboard" on official documents
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Circuit protective conductor (CPC)</strong> —
+                  <strong className="text-white">Circuit protective conductor (CPC)</strong> —
                   not just "earth wire" on formal documents
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Residual current device (RCD)</strong> — not
+                  <strong className="text-white">Residual current device (RCD)</strong> — not
                   "trip switch" on certification
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-green-400 mt-0.5">&bull;</span>
                 <span>
-                  <strong className="text-white/90">Miniature circuit breaker (MCB)</strong> — not
+                  <strong className="text-white">Miniature circuit breaker (MCB)</strong> — not
                   "breaker" or "fuse" on official forms
                 </span>
               </li>
@@ -1341,7 +1341,7 @@ const FunctionalSkillsModule2Section2 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 The best way to improve your technical writing is to review what you have written
                 with fresh eyes. Put the document down for a few minutes, then read it again as if
                 you were seeing it for the first time. Errors that were invisible when you were
@@ -1358,7 +1358,7 @@ const FunctionalSkillsModule2Section2 = () => {
         <div className="flex items-center justify-between pt-6 border-t border-white/10">
           <Link
             to="/study-centre/apprentice/functional-skills/module2/section1"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
           >
             <ArrowLeft className="w-4 h-4" />
             Reading Documents

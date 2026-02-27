@@ -98,7 +98,7 @@ export function StudyCentreCard({
           <span
             className={cn(
               'text-[10px] sm:text-xs font-medium',
-              'text-white/70 uppercase tracking-wider',
+              'text-white uppercase tracking-wider',
               'px-2 py-1 rounded-md bg-white/[0.04]'
             )}
           >
@@ -116,7 +116,7 @@ export function StudyCentreCard({
           >
             {title}
           </h3>
-          <p className="text-xs sm:text-sm text-white/70 leading-relaxed line-clamp-2">
+          <p className="text-xs sm:text-sm text-white leading-relaxed line-clamp-2">
             {description}
           </p>
         </div>
@@ -130,7 +130,7 @@ export function StudyCentreCard({
               'bg-white/[0.05] border border-white/[0.08]'
             )}
           >
-            <span className="text-[10px] sm:text-xs text-white/80">
+            <span className="text-[10px] sm:text-xs text-white">
               {courseCount} {courseCount === 1 ? 'Course' : 'Courses'}
             </span>
           </div>
@@ -158,7 +158,7 @@ export function StudyCentreCard({
           >
             <ChevronRight
               className={cn(
-                'w-4 h-4 text-white/60',
+                'w-4 h-4 text-white',
                 'group-hover:text-black group-hover:translate-x-0.5',
                 'transition-all'
               )}

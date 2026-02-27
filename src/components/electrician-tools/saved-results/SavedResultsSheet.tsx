@@ -14,7 +14,6 @@ import {
 } from 'lucide-react';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Button } from '@/components/ui/button';
 import { SavedResultItem } from './SavedResultItem';
 import {
   useSavedAgentResults,
@@ -32,13 +31,12 @@ interface SavedResultsSheetProps {
 const AGENT_GROUPS: Array<{
   type: AgentType;
   icon: React.ComponentType<{ className?: string }>;
-  gradient: string;
 }> = [
-  { type: 'circuit-designer', icon: Zap, gradient: 'from-amber-400 to-yellow-500' },
-  { type: 'cost-engineer', icon: Calculator, gradient: 'from-emerald-400 to-green-500' },
-  { type: 'health-safety', icon: Shield, gradient: 'from-orange-400 to-red-500' },
-  { type: 'installer', icon: Wrench, gradient: 'from-blue-400 to-blue-500' },
-  { type: 'maintenance', icon: Settings, gradient: 'from-cyan-400 to-teal-500' },
+  { type: 'circuit-designer', icon: Zap },
+  { type: 'cost-engineer', icon: Calculator },
+  { type: 'health-safety', icon: Shield },
+  { type: 'installer', icon: Wrench },
+  { type: 'maintenance', icon: Settings },
 ];
 
 export const SavedResultsSheet: React.FC<SavedResultsSheetProps> = ({ open, onClose }) => {
@@ -97,26 +95,24 @@ export const SavedResultsSheet: React.FC<SavedResultsSheetProps> = ({ open, onCl
           <SheetHeader className="px-4 pt-6 pb-3 border-b border-white/[0.08]">
             <div className="flex items-center justify-between">
               <SheetTitle className="text-lg font-semibold text-white flex items-center gap-2">
-                <Archive className="h-5 w-5 text-purple-400" />
+                <Archive className="h-5 w-5 text-elec-yellow" />
                 Saved Results
                 {totalCount > 0 && (
-                  <span className="text-sm font-normal text-white/50">({totalCount})</span>
+                  <span className="text-sm font-normal text-white">({totalCount})</span>
                 )}
               </SheetTitle>
 
-              <Button
-                variant="ghost"
-                size="icon"
+              <button
                 onClick={handleRefresh}
                 disabled={isRefreshing || isLoading}
-                className="h-9 w-9 text-white/50 hover:text-white hover:bg-white/[0.08]"
+                className="h-11 w-11 flex items-center justify-center rounded-lg text-white hover:bg-white/[0.08] disabled:opacity-40 transition-colors touch-manipulation"
               >
                 {isRefreshing || isLoading ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
                 ) : (
                   <RefreshCw className="h-4 w-4" />
                 )}
-              </Button>
+              </button>
             </div>
           </SheetHeader>
 
@@ -126,24 +122,24 @@ export const SavedResultsSheet: React.FC<SavedResultsSheetProps> = ({ open, onCl
               {isLoading && totalCount === 0 ? (
                 // Loading state
                 <div className="flex flex-col items-center py-16">
-                  <Loader2 className="h-8 w-8 text-purple-400 animate-spin mb-4" />
-                  <p className="text-sm text-white/50">Loading saved results...</p>
+                  <Loader2 className="h-8 w-8 text-elec-yellow animate-spin mb-4" />
+                  <p className="text-sm text-white">Loading saved results...</p>
                 </div>
               ) : totalCount === 0 ? (
                 // Empty state
                 <div className="flex flex-col items-center py-16">
-                  <div className="w-20 h-20 rounded-2xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-center mb-5">
-                    <Archive className="h-10 w-10 text-white/20" />
+                  <div className="w-20 h-20 rounded-2xl bg-white/[0.04] border border-white/[0.06] flex items-center justify-center mb-5">
+                    <Archive className="h-10 w-10 text-white" />
                   </div>
                   <h3 className="text-lg font-semibold text-white mb-2">No Saved Results Yet</h3>
-                  <p className="text-sm text-white/50 text-center max-w-xs">
+                  <p className="text-sm text-white text-center max-w-xs">
                     Complete an agent consultation to see your results here
                   </p>
                 </div>
               ) : (
                 // Results grouped by agent
                 <div className="space-y-2">
-                  {AGENT_GROUPS.map(({ type, icon: Icon, gradient }) => {
+                  {AGENT_GROUPS.map(({ type, icon: Icon }) => {
                     const agentResults = groupedResults[type];
                     const count = counts[type];
                     const isExpanded = expandedGroups.has(type);
@@ -153,26 +149,24 @@ export const SavedResultsSheet: React.FC<SavedResultsSheetProps> = ({ open, onCl
                     return (
                       <div
                         key={type}
-                        className="rounded-xl border border-white/[0.08] overflow-hidden"
+                        className="rounded-xl border border-white/[0.06] overflow-hidden"
                       >
                         {/* Group Header */}
                         <button
                           onClick={() => toggleGroup(type)}
-                          className="w-full flex items-center gap-3 p-3 bg-white/[0.02] hover:bg-white/[0.04] transition-colors touch-manipulation"
+                          className="w-full flex items-center gap-3 p-3 bg-white/[0.02] active:bg-white/[0.06] transition-colors touch-manipulation h-12"
                         >
-                          <div
-                            className={`w-8 h-8 rounded-lg flex items-center justify-center bg-gradient-to-br ${gradient}`}
-                          >
-                            <Icon className="h-4 w-4 text-white" />
+                          <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-elec-yellow/10 border border-elec-yellow/20">
+                            <Icon className="h-4 w-4 text-elec-yellow" />
                           </div>
                           <span className="flex-1 text-left text-sm font-medium text-white">
                             {AGENT_LABELS[type]}
                           </span>
-                          <span className="text-xs text-white/50 mr-2">({count})</span>
+                          <span className="text-xs text-white mr-2">({count})</span>
                           {isExpanded ? (
-                            <ChevronDown className="h-4 w-4 text-white/40" />
+                            <ChevronDown className="h-4 w-4 text-white" />
                           ) : (
-                            <ChevronRight className="h-4 w-4 text-white/40" />
+                            <ChevronRight className="h-4 w-4 text-white" />
                           )}
                         </button>
 

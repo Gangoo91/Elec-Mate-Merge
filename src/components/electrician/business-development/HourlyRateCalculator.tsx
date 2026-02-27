@@ -91,7 +91,7 @@ const HourlyRateCalculator = () => {
             variant="ghost"
             size="icon"
             onClick={() => navigate(-1)}
-            className="text-white/70 hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
+            className="text-white hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
           >
             <ChevronLeft className="h-6 w-6" />
           </Button>
@@ -100,7 +100,7 @@ const HourlyRateCalculator = () => {
             variant="ghost"
             size="icon"
             onClick={resetCalculator}
-            className="text-white/70 hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
+            className="text-white hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
           >
             <RotateCcw className="h-5 w-5" />
           </Button>
@@ -119,12 +119,12 @@ const HourlyRateCalculator = () => {
         >
           <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/10 rounded-full blur-3xl" />
           <div className="relative">
-            <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">
+            <p className="text-ios-caption-1 text-white uppercase tracking-wide">
               Recommended Rate
             </p>
             <p className="text-4xl sm:text-5xl font-bold text-elec-yellow mt-1 tabular-nums">
               £{recommendedRate.toFixed(2)}
-              <span className="text-lg text-white/50 font-normal">/hour</span>
+              <span className="text-lg text-white font-normal">/hour</span>
             </p>
             <div className="flex items-center gap-2 mt-3">
               {isCompetitive ? (
@@ -150,7 +150,7 @@ const HourlyRateCalculator = () => {
             transition={{ delay: 0.1 }}
             className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[140px] border border-white/10"
           >
-            <p className="text-ios-caption-1 text-white/50">Annual Costs</p>
+            <p className="text-ios-caption-1 text-white">Annual Costs</p>
             <p className="text-ios-title-3 font-semibold text-white mt-1">
               £{totalAnnualCosts.toLocaleString()}
             </p>
@@ -161,7 +161,7 @@ const HourlyRateCalculator = () => {
             transition={{ delay: 0.15 }}
             className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[140px] border border-white/10"
           >
-            <p className="text-ios-caption-1 text-white/50">Billable Hours</p>
+            <p className="text-ios-caption-1 text-white">Billable Hours</p>
             <p className="text-ios-title-3 font-semibold text-white mt-1">
               {totalBillableHours.toLocaleString()}
             </p>
@@ -172,7 +172,7 @@ const HourlyRateCalculator = () => {
             transition={{ delay: 0.2 }}
             className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[140px] border border-white/10"
           >
-            <p className="text-ios-caption-1 text-white/50">Break-Even</p>
+            <p className="text-ios-caption-1 text-white">Break-Even</p>
             <p className="text-ios-title-3 font-semibold text-white mt-1">
               £{breakEvenRate.toFixed(2)}
             </p>
@@ -181,7 +181,7 @@ const HourlyRateCalculator = () => {
 
         {/* Income Section */}
         <section>
-          <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+          <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-3">
             Income Target
           </p>
           <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10">
@@ -198,7 +198,7 @@ const HourlyRateCalculator = () => {
 
         {/* Business Costs Section */}
         <section>
-          <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+          <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-3">
             Business Costs (Annual)
           </p>
           <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 divide-y divide-white/10">
@@ -247,7 +247,7 @@ const HourlyRateCalculator = () => {
 
         {/* Working Hours Section */}
         <section>
-          <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+          <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-3">
             Working Hours
           </p>
           <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 divide-y divide-white/10">
@@ -272,7 +272,7 @@ const HourlyRateCalculator = () => {
 
         {/* Profit Target Section */}
         <section>
-          <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+          <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-3">
             Profit Target
           </p>
           <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10">
@@ -289,26 +289,26 @@ const HourlyRateCalculator = () => {
 
         {/* Market Comparison */}
         <section>
-          <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+          <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-3">
             UK Market Rates
           </p>
           <div className="bg-white/5 rounded-2xl border border-white/10 p-4 space-y-3">
             <div className="flex justify-between items-center">
-              <span className="text-ios-body text-white/70">Trainee</span>
+              <span className="text-ios-body text-white">Trainee</span>
               <span className="text-ios-body font-medium text-white">£{traineeRate}/hr</span>
             </div>
             <div className="h-px bg-white/10" />
             <div className="flex justify-between items-center">
-              <span className="text-ios-body text-white/70">Qualified</span>
+              <span className="text-ios-body text-white">Qualified</span>
               <span className="text-ios-body font-medium text-white">£{qualifiedRate}/hr</span>
             </div>
             <div className="h-px bg-white/10" />
             <div className="flex justify-between items-center">
-              <span className="text-ios-body text-white/70">Experienced</span>
+              <span className="text-ios-body text-white">Experienced</span>
               <span className="text-ios-body font-medium text-white">£{experiencedRate}/hr</span>
             </div>
           </div>
-          <p className="text-ios-caption-2 text-white/40 mt-2 px-1">
+          <p className="text-ios-caption-2 text-white mt-2 px-1">
             Indicative UK averages. Adjust for your location and specialisation.
           </p>
         </section>

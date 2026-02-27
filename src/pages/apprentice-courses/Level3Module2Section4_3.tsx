@@ -256,7 +256,7 @@ const Level3Module2Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module2-section4">
@@ -443,7 +443,7 @@ const Level3Module2Section4_3 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A 25m cable run for a 32A charger using 6mm² T&E: voltage
               drop = 7.3mV/A/m x 32A x 25m = 5.84V (2.5% of 230V). This is acceptable within the 5%
               limit.
@@ -470,17 +470,17 @@ const Level3Module2Section4_3 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">DNO Notification</p>
-                <p className="text-white/90 text-xs">Required for all EV charger installations</p>
+                <p className="text-white text-xs">Required for all EV charger installations</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">EIC/Minor Works</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Electrical Installation Certificate for new circuit
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Part P</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Notifiable work - competent person scheme or BCB
                 </p>
               </div>
@@ -565,7 +565,7 @@ const Level3Module2Section4_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -610,7 +610,7 @@ const Level3Module2Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module2-section4-2">

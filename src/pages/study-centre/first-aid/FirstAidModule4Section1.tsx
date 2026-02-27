@@ -186,7 +186,7 @@ export default function FirstAidModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-4">
@@ -209,7 +209,7 @@ export default function FirstAidModule4Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Heart Attack, Angina &amp; Stroke
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Recognising and responding to the three most common cardiovascular and cerebrovascular
             emergencies &mdash; heart attack, angina, and stroke &mdash; in a first aid setting
           </p>
@@ -316,7 +316,7 @@ export default function FirstAidModule4Section1() {
                   <HeartPulse className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Heart Attack Recognition</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -386,7 +386,7 @@ export default function FirstAidModule4Section1() {
                     Atypical Presentation in Women
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Heart attack symptoms may present differently in women. Women are more likely to
                   experience <strong>jaw pain</strong>, <strong>nausea</strong>,{' '}
                   <strong>unexplained fatigue</strong>, <strong>back pain</strong>, and{' '}
@@ -422,7 +422,7 @@ export default function FirstAidModule4Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Step 1: Call 999 Immediately</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Call 999 (or 112) immediately and tell the operator: &ldquo;I think this person is
                   having a heart attack.&rdquo; Give the operator your location, the
                   casualty&rsquo;s age and sex if known, and a description of their symptoms. Stay
@@ -441,7 +441,7 @@ export default function FirstAidModule4Section1() {
                 <div className="space-y-3">
                   <div>
                     <p className="text-sm font-medium text-white">1. Call 999 Immediately</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       State clearly that you suspect a heart attack. Give your exact location,
                       including floor level and nearest access point if on a construction site. Ask
                       someone else to make the call if you need to stay with the casualty.
@@ -451,7 +451,7 @@ export default function FirstAidModule4Section1() {
                     <p className="text-sm font-medium text-white">
                       2. Help Into a Comfortable Position
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Help the casualty into the <strong>W position (cardiac position)</strong>{' '}
                       &mdash; seated on the ground with their knees bent, leaning against a wall,
                       chair, or other support. This position reduces the workload on the heart by
@@ -463,7 +463,7 @@ export default function FirstAidModule4Section1() {
                     <p className="text-sm font-medium text-white">
                       3. Give 300mg Aspirin &mdash; Chewed
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Give the casualty a single 300mg aspirin tablet and ask them to{' '}
                       <strong>chew it</strong> (not swallow whole). Chewing breaks the tablet into
                       smaller pieces, vastly increasing the surface area and speeding absorption
@@ -476,7 +476,7 @@ export default function FirstAidModule4Section1() {
                     <p className="text-sm font-medium text-white">
                       4. Help With GTN Spray (If Available)
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       If the casualty has their own GTN (glyceryl trinitrate) spray prescribed by
                       their doctor, help them use it. GTN is sprayed or placed under the tongue
                       (sublingual) where it is rapidly absorbed. GTN works by relaxing and widening
@@ -486,7 +486,7 @@ export default function FirstAidModule4Section1() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">5. Monitor Constantly</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Stay with the casualty at all times. Monitor their level of consciousness,
                       breathing, and skin colour. A heart attack can deteriorate into cardiac arrest
                       at any point, so you must be ready to begin CPR immediately if the casualty
@@ -495,7 +495,7 @@ export default function FirstAidModule4Section1() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">6. Reassure and Keep Warm</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Keep the casualty calm and reassured. Anxiety increases heart rate and oxygen
                       demand, worsening the situation. Cover them with a coat or blanket to prevent
                       heat loss. Do NOT allow them to eat, drink (other than sips of water to take
@@ -563,7 +563,7 @@ export default function FirstAidModule4Section1() {
                     <HeartPulse className="h-5 w-5 text-blue-400" />
                     <p className="text-sm font-medium text-blue-400">Angina</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -613,7 +613,7 @@ export default function FirstAidModule4Section1() {
                     <HeartPulse className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">Heart Attack</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -665,7 +665,7 @@ export default function FirstAidModule4Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">The 5-Minute Rule</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If the casualty uses their GTN spray and the pain is{' '}
                   <strong>not relieved within 5 minutes</strong>, treat it as a heart attack. Call
                   999 immediately, place the casualty in the cardiac (W) position, give 300mg
@@ -709,7 +709,7 @@ export default function FirstAidModule4Section1() {
                       <span className="text-rose-400 text-xl font-bold">F</span>
                     </div>
                     <p className="text-sm font-semibold text-rose-400 mb-1">Face</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Has their face fallen on one side? Can they smile evenly?
                     </p>
                   </div>
@@ -719,7 +719,7 @@ export default function FirstAidModule4Section1() {
                       <span className="text-rose-400 text-xl font-bold">A</span>
                     </div>
                     <p className="text-sm font-semibold text-rose-400 mb-1">Arms</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Can they raise both arms and keep them there?
                     </p>
                   </div>
@@ -729,7 +729,7 @@ export default function FirstAidModule4Section1() {
                       <span className="text-rose-400 text-xl font-bold">S</span>
                     </div>
                     <p className="text-sm font-semibold text-rose-400 mb-1">Speech</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Is their speech slurred or jumbled? Can they speak clearly?
                     </p>
                   </div>
@@ -739,7 +739,7 @@ export default function FirstAidModule4Section1() {
                       <span className="text-rose-400 text-xl font-bold">T</span>
                     </div>
                     <p className="text-sm font-semibold text-rose-400 mb-1">Time</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Time to call 999 if any single sign is present
                     </p>
                   </div>
@@ -786,7 +786,7 @@ export default function FirstAidModule4Section1() {
                       Ischaemic Stroke (85% of strokes)
                     </p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -821,7 +821,7 @@ export default function FirstAidModule4Section1() {
                       Haemorrhagic Stroke (15% of strokes)
                     </p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -862,7 +862,7 @@ export default function FirstAidModule4Section1() {
                     FAST Test &mdash; Detailed Recognition
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -909,7 +909,7 @@ export default function FirstAidModule4Section1() {
                     Additional Stroke Signs (Beyond FAST)
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -964,7 +964,7 @@ export default function FirstAidModule4Section1() {
                 <div className="space-y-3">
                   <div>
                     <p className="text-sm font-medium text-white">1. Call 999 Immediately</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Tell the operator you suspect a stroke. Time is critical &mdash; &ldquo;time
                       is brain&rdquo;. Every minute of delay increases the extent of brain damage.
                     </p>
@@ -973,7 +973,7 @@ export default function FirstAidModule4Section1() {
                     <p className="text-sm font-medium text-white">
                       2. Note the Time of Symptom Onset
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       This is one of the most important things you can do. Record the exact time the
                       symptoms started (or the time the casualty was last seen well). This
                       determines whether the casualty is eligible for thrombolysis (within 4.5
@@ -985,7 +985,7 @@ export default function FirstAidModule4Section1() {
                     <p className="text-sm font-medium text-white">
                       3. Support in a Comfortable Position
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       If conscious, help the casualty into a comfortable position, typically seated
                       or semi-reclined with their head and shoulders slightly raised and supported.
                     </p>
@@ -994,7 +994,7 @@ export default function FirstAidModule4Section1() {
                     <p className="text-sm font-medium text-white">
                       4. Do NOT Give Food, Drink, or Aspirin
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Do not give the casualty anything to eat or drink &mdash; a stroke may impair
                       swallowing (dysphagia), creating a choking and aspiration risk. Do not give
                       aspirin &mdash; the stroke may be haemorrhagic, in which case aspirin would
@@ -1005,7 +1005,7 @@ export default function FirstAidModule4Section1() {
                     <p className="text-sm font-medium text-white">
                       5. Monitor, Reassure, Prepare for Deterioration
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Stay with the casualty. Monitor their consciousness, breathing, and
                       responsiveness. Reassure them calmly. A stroke casualty may deteriorate
                       rapidly, so be prepared to manage an unconscious casualty and start CPR if
@@ -1016,7 +1016,7 @@ export default function FirstAidModule4Section1() {
                     <p className="text-sm font-medium text-white">
                       6. If Unconscious and Breathing &mdash; Recovery Position
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Place the casualty in the recovery position on their{' '}
                       <strong>affected (weak) side</strong>, so the unaffected side is uppermost.
                       This allows the stronger side to maintain posture and keeps the airway clear.
@@ -1034,14 +1034,14 @@ export default function FirstAidModule4Section1() {
                   </p>
                 </div>
                 <div className="space-y-2">
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     <strong className="text-white">Thrombolysis (clot-busting):</strong> Must be
                     administered within <strong>4.5 hours</strong> of symptom onset. This
                     intravenous medication dissolves the blood clot and restores blood flow to the
                     brain. It can only be used for ischaemic strokes, which is why hospital imaging
                     (CT scan) is performed first to confirm the type of stroke.
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     <strong className="text-white">Thrombectomy (mechanical clot removal):</strong>{' '}
                     Can be performed within <strong>24 hours</strong> of symptom onset in some
                     cases. A catheter is threaded through the blood vessels to physically remove the
@@ -1091,7 +1091,7 @@ export default function FirstAidModule4Section1() {
                     TIA Is a Warning &mdash; Not a Relief
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Despite the symptoms resolving, a TIA must <strong>never</strong> be dismissed or
                   ignored. Approximately <strong>1 in 10</strong> people who experience a TIA will
                   go on to have a full stroke within <strong>90 days</strong>. The risk is highest
@@ -1108,7 +1108,7 @@ export default function FirstAidModule4Section1() {
                   <Brain className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">TIA &mdash; What to Know</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1169,7 +1169,7 @@ export default function FirstAidModule4Section1() {
                     First Aid Response to a Suspected TIA
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   When symptoms first appear, treat exactly as you would a stroke &mdash; use the
                   FAST test, call 999, note the time, and do not give food, drink, or aspirin. If
                   the symptoms resolve before the ambulance arrives, do not cancel the ambulance
@@ -1199,7 +1199,7 @@ export default function FirstAidModule4Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1213,7 +1213,7 @@ export default function FirstAidModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-4">

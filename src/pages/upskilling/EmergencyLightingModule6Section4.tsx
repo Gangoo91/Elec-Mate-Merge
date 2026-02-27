@@ -97,7 +97,7 @@ const EmergencyLightingModule6Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/emergency-lighting-module-6">
@@ -118,7 +118,7 @@ const EmergencyLightingModule6Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Documentation for Audits and Fire Authorities
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Maintaining compliance records and audit-ready documentation
           </p>
         </header>
@@ -214,15 +214,15 @@ const EmergencyLightingModule6Section4 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Evidence</p>
-                <p className="text-white/90 text-xs">Legal proof</p>
+                <p className="text-white text-xs">Legal proof</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Accessible</p>
-                <p className="text-white/90 text-xs">On-site always</p>
+                <p className="text-white text-xs">On-site always</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Complete</p>
-                <p className="text-white/90 text-xs">Full history</p>
+                <p className="text-white text-xs">Full history</p>
               </div>
             </div>
           </div>
@@ -359,7 +359,7 @@ const EmergencyLightingModule6Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -400,7 +400,7 @@ const EmergencyLightingModule6Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/emergency-lighting-module-6-section-3">

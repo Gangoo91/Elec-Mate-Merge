@@ -195,7 +195,7 @@ export default function RSMModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-1">
@@ -310,7 +310,7 @@ export default function RSMModule1Section1() {
                     upon it.&rdquo;
                   </strong>
                 </p>
-                <p className="text-sm text-white/80 mt-2">
+                <p className="text-sm text-white mt-2">
                   &mdash; Hans Selye (1956), the &ldquo;father of stress research&rdquo;
                 </p>
               </div>
@@ -338,7 +338,7 @@ export default function RSMModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key Terms</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -394,7 +394,7 @@ export default function RSMModule1Section1() {
                 <div className="space-y-4">
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <p className="text-white font-medium mb-1">Stage 1: Alarm</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       The body detects the stressor and immediately activates the{' '}
                       <strong className="text-white">fight-or-flight response</strong>. The
                       sympathetic nervous system triggers the release of adrenaline and cortisol.
@@ -408,7 +408,7 @@ export default function RSMModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <p className="text-white font-medium mb-1">Stage 2: Resistance</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       If the stressor persists, the body attempts to adapt. The initial alarm
                       response subsides, and the body enters a prolonged state of heightened
                       readiness. Cortisol levels remain elevated to maintain energy, and the body
@@ -422,7 +422,7 @@ export default function RSMModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                     <p className="text-white font-medium mb-1">Stage 3: Exhaustion</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       If the stressor continues beyond the body&rsquo;s capacity to adapt,
                       exhaustion sets in. The body&rsquo;s adaptive resources are depleted.
                       Resistance collapses. The immune system weakens, making the person vulnerable
@@ -443,7 +443,7 @@ export default function RSMModule1Section1() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Construction Application</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The critical insight from Selye&rsquo;s model is that{' '}
                   <strong className="text-white">Stage 2 (Resistance) is deceptive</strong>. The
                   person appears to be coping, so neither they nor their colleagues raise concerns.
@@ -479,7 +479,7 @@ export default function RSMModule1Section1() {
                     <p className="text-green-400 font-semibold text-sm mb-2">
                       Eustress (Positive Stress)
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                         <span>Feels exciting and energising rather than threatening</span>
@@ -506,7 +506,7 @@ export default function RSMModule1Section1() {
                     <p className="text-red-400 font-semibold text-sm mb-2">
                       Distress (Negative Stress)
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                         <span>Feels overwhelming, threatening, and uncontrollable</span>
@@ -534,7 +534,7 @@ export default function RSMModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Construction Examples</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -625,7 +625,7 @@ export default function RSMModule1Section1() {
                     <p className="text-white font-medium mb-1">
                       Primary Appraisal: &ldquo;What does this mean for me?&rdquo;
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       The person evaluates the event and categorises it as one of three things:{' '}
                       <strong className="text-white">irrelevant</strong> (this has nothing to do
                       with me), <strong className="text-white">benign-positive</strong> (this is
@@ -643,7 +643,7 @@ export default function RSMModule1Section1() {
                     <p className="text-white font-medium mb-1">
                       Secondary Appraisal: &ldquo;Can I cope with this?&rdquo;
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       If the event is appraised as stressful, the person then evaluates their{' '}
                       <strong className="text-white">coping resources</strong>: Do I have the
                       skills, knowledge, experience, support, time, and energy to deal with this? If
@@ -658,7 +658,7 @@ export default function RSMModule1Section1() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-400 mb-2">Construction Scenario</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Imagine two electricians receive the same news: their company has been awarded a
                   complex hospital rewire project starting next month.{' '}
                   <strong className="text-white">Electrician A</strong> has 15 years&rsquo;
@@ -715,7 +715,7 @@ export default function RSMModule1Section1() {
                   <Zap className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-white">What Happens in Your Body</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -780,7 +780,7 @@ export default function RSMModule1Section1() {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">Fight</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Confront the threat head-on. Energy surges into aggressive or assertive
                       action. On site: an electrician who snaps at a site manager over unreasonable
                       demands, or who pushes back forcefully when asked to cut corners on safety.
@@ -788,7 +788,7 @@ export default function RSMModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">Flight</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Escape the threat. The urge to remove yourself from the situation. On site: an
                       apprentice who avoids a difficult task by always finding other things to do,
                       or an electrician who calls in sick on the day of a difficult client meeting.
@@ -796,7 +796,7 @@ export default function RSMModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1">Freeze</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Become immobilised. Unable to act or make decisions. On site: a worker who
                       witnesses an accident and stands motionless, unable to respond. Or an
                       electrician who discovers a serious fault and cannot decide what to do next.
@@ -812,7 +812,7 @@ export default function RSMModule1Section1() {
                     The Problem with Chronic Activation
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The fight-flight-freeze response evolved for acute, short-term threats &mdash; a
                   predator attack, a falling tree, a sudden danger. It is designed to activate
                   quickly, deal with the threat, and then switch off so the body can recover. The
@@ -847,7 +847,7 @@ export default function RSMModule1Section1() {
                 key points to carry forward are:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -921,7 +921,7 @@ export default function RSMModule1Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -935,7 +935,7 @@ export default function RSMModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-1">

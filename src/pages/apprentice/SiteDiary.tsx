@@ -294,13 +294,13 @@ export default function SiteDiary() {
         {searchOpen && (
           <div className="px-4 pb-3">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/50" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
               <input
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search entries..."
                 autoFocus
-                className="w-full h-11 pl-10 pr-10 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white/50 focus:outline-none focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 touch-manipulation"
+                className="w-full h-11 pl-10 pr-10 rounded-xl bg-white/[0.06] border border-white/[0.08] text-white text-sm placeholder:text-white focus:outline-none focus:border-elec-yellow/40 focus:ring-1 focus:ring-elec-yellow/20 touch-manipulation"
               />
               {searchQuery && (
                 <button
@@ -440,13 +440,13 @@ export default function SiteDiary() {
                     className="h-8 w-8 flex items-center justify-center rounded-lg active:bg-white/10 touch-manipulation"
                   >
                     <RefreshCw
-                      className={`h-3.5 w-3.5 text-white/50 ${coachLoading ? 'animate-spin' : ''}`}
+                      className={`h-3.5 w-3.5 text-white ${coachLoading ? 'animate-spin' : ''}`}
                     />
                   </button>
                   {coachExpanded ? (
-                    <ChevronUp className="h-4 w-4 text-white/50" />
+                    <ChevronUp className="h-4 w-4 text-white" />
                   ) : (
-                    <ChevronDown className="h-4 w-4 text-white/50" />
+                    <ChevronDown className="h-4 w-4 text-white" />
                   )}
                 </div>
               </button>
@@ -471,7 +471,7 @@ export default function SiteDiary() {
               {coachExpanded && coachLoading && !coachInsight && (
                 <div className="flex items-center justify-center py-6 px-4">
                   <div className="animate-spin h-5 w-5 border-2 border-purple-400 border-t-transparent rounded-full" />
-                  <span className="text-xs text-white/50 ml-2">Analysing your diary...</span>
+                  <span className="text-xs text-white ml-2">Analysing your diary...</span>
                 </div>
               )}
 
@@ -517,7 +517,7 @@ export default function SiteDiary() {
                   {/* Skill gaps */}
                   {coachInsight.skillGaps && coachInsight.skillGaps.length > 0 && (
                     <div>
-                      <span className="text-[10px] text-white/50 uppercase tracking-wider font-medium">
+                      <span className="text-[10px] text-white uppercase tracking-wider font-medium">
                         Skills to practise
                       </span>
                       <div className="flex flex-wrap gap-1 mt-1">

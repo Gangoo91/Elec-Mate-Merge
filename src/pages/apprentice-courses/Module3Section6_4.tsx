@@ -172,7 +172,7 @@ export default function Module3Section6_4() {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Safe Entry to Enclosures (Grommets, Bushes, Glands)
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Prevent insulation damage, maintain environmental sealing and provide mechanical
             stability when cables enter consumer units, junction boxes, panels and switchgear - in
             line with BS 7671.
@@ -784,7 +784,7 @@ export default function Module3Section6_4() {
             Summary
           </h2>
           <div className="p-4 bg-transparent border-l-2 border-elec-yellow rounded-lg border border-white/10">
-            <p className="text-white/90">
+            <p className="text-white">
               Safe cable entry prevents insulation damage, ensures mechanical security and maintains
               enclosure integrity. Choose grommets, bushes or glands to suit cable type and
               environment, and maintain required IP ratings per BS 7671 and BS EN 60529.

@@ -98,7 +98,7 @@ const QuizInterface = ({ assessment, questions, onComplete, onExit }: QuizInterf
       case 'Advanced':
         return 'text-red-400 bg-red-400/10 border-red-400/20';
       default:
-        return 'text-white/80 bg-gray-400/10 border-gray-400/20';
+        return 'text-white bg-gray-400/10 border-gray-400/20';
     }
   };
 
@@ -109,7 +109,7 @@ const QuizInterface = ({ assessment, questions, onComplete, onExit }: QuizInterf
         <div className="flex flex-col items-center mb-6">
           <div className="text-center">
             <h1 className="text-xl sm:text-2xl font-bold text-elec-yellow">{assessment.title}</h1>
-            <p className="text-white/80">{assessment.description}</p>
+            <p className="text-white">{assessment.description}</p>
           </div>
           <div className="flex items-center gap-4 mt-4">
             <div className="flex items-center gap-2 text-white">
@@ -125,10 +125,10 @@ const QuizInterface = ({ assessment, questions, onComplete, onExit }: QuizInterf
         {/* Progress */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm text-white/80">
+            <span className="text-sm text-white">
               Question {progress.current} of {progress.total}
             </span>
-            <span className="text-sm text-white/80">{progress.percentage}% Complete</span>
+            <span className="text-sm text-white">{progress.percentage}% Complete</span>
           </div>
           <Progress value={progress.percentage} className="w-full" />
         </div>
@@ -172,7 +172,7 @@ const QuizInterface = ({ assessment, questions, onComplete, onExit }: QuizInterf
             {/* Navigation */}
             <div className="pt-6 border-t border-border space-y-4">
               <div className="text-center">
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Category: <span className="text-foreground">{currentQuestion.category}</span>
                 </p>
               </div>
@@ -202,7 +202,7 @@ const QuizInterface = ({ assessment, questions, onComplete, onExit }: QuizInterf
         </Card>
 
         {/* Footer Info */}
-        <div className="text-center text-sm text-white/60">
+        <div className="text-center text-sm text-white">
           <p>
             Take your time and read each question carefully. You can navigate back to previous
             questions.

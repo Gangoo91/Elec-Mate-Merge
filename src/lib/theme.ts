@@ -43,13 +43,13 @@ export const text = {
   primary: 'text-white',
 
   /** Secondary text - slightly muted */
-  secondary: 'text-white/80',
+  secondary: 'text-white',
 
   /** Tertiary text - more muted */
-  tertiary: 'text-white/70',
+  tertiary: 'text-white',
 
   /** Subtle text - lowest contrast */
-  subtle: 'text-white/60',
+  subtle: 'text-white',
 
   /** Accent text - brand color */
   accent: 'text-elec-yellow',
@@ -118,7 +118,7 @@ export const button = {
   secondary: 'bg-white/10 hover:bg-white/20 text-white border border-white/20',
 
   /** Ghost/subtle button */
-  ghost: 'hover:bg-white/10 text-white/80 hover:text-white',
+  ghost: 'hover:bg-white/10 text-white hover:text-white',
 
   /** Danger action button */
   danger: 'bg-red-500/20 hover:bg-red-500/30 text-red-400 border border-red-500/30',
@@ -163,10 +163,10 @@ export const animation = {
 
 export const input = {
   /** Standard input field */
-  base: 'bg-white/5 border border-white/20 text-white placeholder:text-white/50 focus:border-elec-yellow/50 focus:ring-1 focus:ring-elec-yellow/30',
+  base: 'bg-white/5 border border-white/20 text-white placeholder:text-white focus:border-elec-yellow/50 focus:ring-1 focus:ring-elec-yellow/30',
 
   /** Search input */
-  search: 'bg-white/5 border border-white/15 text-white placeholder:text-white/50 pl-10',
+  search: 'bg-white/5 border border-white/15 text-white placeholder:text-white pl-10',
 } as const;
 
 // ============================================================================
@@ -175,7 +175,7 @@ export const input = {
 
 export const badge = {
   /** Default badge */
-  default: 'bg-white/10 text-white/80 border border-white/20',
+  default: 'bg-white/10 text-white border border-white/20',
 
   /** Success badge */
   success: 'bg-green-500/20 text-green-400 border border-green-500/30',
@@ -228,7 +228,7 @@ export const verification = {
   unverified: 'bg-amber-500/10 border-amber-500/30 text-amber-400',
 
   /** Pending verification */
-  pending: 'bg-white/5 border-white/20 text-white/60',
+  pending: 'bg-white/5 border-white/20 text-white',
 } as const;
 
 // ============================================================================

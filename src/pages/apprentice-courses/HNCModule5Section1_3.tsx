@@ -249,7 +249,7 @@ const HNCModule5Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section1">
@@ -271,7 +271,7 @@ const HNCModule5Section1_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Critical Path Method
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Network analysis techniques for building services programme planning, float
             calculations, and schedule optimisation
           </p>
@@ -442,7 +442,7 @@ const HNCModule5Section1_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Standard AON Node Layout
               </p>
-              <div className="bg-black/30 p-4 rounded text-xs font-mono text-white/90 text-center">
+              <div className="bg-black/30 p-4 rounded text-xs font-mono text-white text-center">
                 <pre className="inline-block text-left">{`+--------+--------+--------+
 |   ES   |  DUR   |   EF   |
 +--------+--------+--------+
@@ -451,7 +451,7 @@ const HNCModule5Section1_3 = () => {
 |   LS   | FLOAT  |   LF   |
 +--------+--------+--------+`}</pre>
               </div>
-              <p className="text-xs text-white/60 mt-2 text-center">
+              <p className="text-xs text-white mt-2 text-center">
                 Arrows connect nodes to show dependencies (predecessors to successors)
               </p>
             </div>
@@ -574,7 +574,7 @@ const HNCModule5Section1_3 = () => {
                   days before containment finishes
                 </li>
               </ul>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Lag and lead modify the basic dependency relationship, affecting ES/EF calculations
               </p>
             </div>
@@ -683,7 +683,7 @@ const HNCModule5Section1_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Float Calculation Example
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Activity: Install distribution board (DB-L2)</p>
                 <p>Duration: 3 days</p>
                 <p>ES = 15, EF = 18 (from forward pass)</p>
@@ -698,7 +698,7 @@ const HNCModule5Section1_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Management insight:</strong> Float belongs to the project, not individual
               subcontractors. Consuming float reduces flexibility for all subsequent work.
             </p>
@@ -805,7 +805,7 @@ const HNCModule5Section1_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Mechanical Drivers</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Large bore pipework (longest duration)</li>
                     <li>Plant room coordination</li>
                     <li>AHU installations</li>
@@ -815,7 +815,7 @@ const HNCModule5Section1_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Electrical Constraints</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Main switchgear delivery</li>
                     <li>Transformer installation</li>
                     <li>Busbar riser systems</li>
@@ -878,7 +878,7 @@ const HNCModule5Section1_3 = () => {
                 network: Activity A (5 days) leads to B (3 days) and C (4 days). Both B and C lead
                 to D (2 days).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Start at Day 0:</p>
                 <p>
                   Activity A: ES=0, EF=0+5=<strong>5</strong>
@@ -909,7 +909,7 @@ const HNCModule5Section1_3 = () => {
                 <strong>Question:</strong> Using the same network, calculate total float for
                 Activity B if project duration is 11 days.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Backward pass for Activity B:</p>
                 <p>D must finish by Day 11: LF(D)=11, LS(D)=11-2=9</p>
                 <p>B must finish before D starts: LF(B)=LS(D)=9</p>
@@ -918,7 +918,7 @@ const HNCModule5Section1_3 = () => {
                 <p className="mt-2">
                   Total Float = LF - EF = 9 - 8 = <strong>1 day</strong>
                 </p>
-                <p className="text-white/60 mt-2">(Alternatively: LS - ES = 6 - 5 = 1 day)</p>
+                <p className="text-white mt-2">(Alternatively: LS - ES = 6 - 5 = 1 day)</p>
               </div>
             </div>
 
@@ -929,7 +929,7 @@ const HNCModule5Section1_3 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Question:</strong> Which path is critical: A-B-D or A-C-D?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Path A-B-D: 5 + 3 + 2 = 10 days</p>
                 <p>Path A-C-D: 5 + 4 + 2 = 11 days</p>
                 <p className="mt-2">
@@ -952,7 +952,7 @@ const HNCModule5Section1_3 = () => {
                 <strong>Question:</strong> Project must finish in 10 days. Activity C can be crashed
                 by 1 day for GBP500, Activity A by 1 day for GBP800. Which should be crashed?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Current critical path: A-C-D = 11 days</p>
                 <p>Need to reduce by 1 day</p>
                 <p className="mt-2">Both A and C are on critical path - either will work</p>
@@ -962,7 +962,7 @@ const HNCModule5Section1_3 = () => {
                   Decision: Crash Activity C (lowest cost per day saved)
                 </p>
                 <p className="mt-2">New path A-C-D: 5 + 3 + 2 = 10 days</p>
-                <p className="text-white/60">
+                <p className="text-white">
                   Note: Path A-B-D is now also 10 days - both paths now critical
                 </p>
               </div>
@@ -1044,7 +1044,7 @@ const HNCModule5Section1_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1090,7 +1090,7 @@ const HNCModule5Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section1">

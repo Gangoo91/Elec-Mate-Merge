@@ -231,7 +231,7 @@ const OverallAssessmentCard = ({
                 rows={3}
                 style={{ fontSize: '16px' }}
                 className="text-base bg-white/5 border-white/10 focus:border-elec-yellow/50
-                           placeholder:text-white/30 resize-none min-h-[80px] touch-manipulation"
+                           placeholder:text-white resize-none min-h-[80px] touch-manipulation"
               />
             </div>
           </div>

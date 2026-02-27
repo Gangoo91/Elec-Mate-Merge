@@ -164,7 +164,7 @@ export default function Module2Section3_4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -186,7 +186,7 @@ export default function Module2Section3_4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Series and Parallel Calculations
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Combining series and parallel rules for complex circuit analysis and real-world
             applications
           </p>
@@ -312,7 +312,7 @@ export default function Module2Section3_4() {
           <div className="text-white space-y-4 leading-relaxed">
             <div className="p-4 rounded-lg bg-white/5">
               <p className="font-medium text-white mb-2">Example 1: Series-in-Parallel Network</p>
-              <p className="text-white/70 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 Given: 24V supply, (R1=150Ω + R2=450Ω in series) || R3=120Ω
               </p>
               <ul className="text-sm text-white space-y-1">
@@ -342,7 +342,7 @@ export default function Module2Section3_4() {
 
             <div className="p-4 rounded-lg bg-white/5">
               <p className="font-medium text-white mb-2">Example 2: Parallel-in-Series Network</p>
-              <p className="text-white/70 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 Given: 12V supply, (R1=100Ω || R2=300Ω) + R3=50Ω in series
               </p>
               <ul className="text-sm text-white space-y-1">
@@ -515,7 +515,7 @@ export default function Module2Section3_4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -538,19 +538,19 @@ export default function Module2Section3_4() {
                 <p className="text-elec-yellow">
                   R<sub>T</sub> = R₁ + R₂ + R₃...
                 </p>
-                <p className="text-white/70">I same, V divides</p>
+                <p className="text-white">I same, V divides</p>
               </div>
               <div>
                 <p className="font-medium text-white mb-1">Parallel Elements</p>
                 <p className="text-elec-yellow">
                   1/R<sub>T</sub> = 1/R₁ + 1/R₂...
                 </p>
-                <p className="text-white/70">V same, I adds</p>
+                <p className="text-white">V same, I adds</p>
               </div>
               <div>
                 <p className="font-medium text-white mb-1">Mixed Networks</p>
                 <p className="text-elec-yellow">Reduce step by step</p>
-                <p className="text-white/70">Verify with KVL/KCL</p>
+                <p className="text-white">Verify with KVL/KCL</p>
               </div>
             </div>
           </div>
@@ -569,7 +569,7 @@ export default function Module2Section3_4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level2/module2/section3/3-3">

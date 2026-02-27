@@ -31,7 +31,7 @@ const TrendArrow = ({ value, size = 'md', showValue = true, className }: TrendAr
         'flex items-center gap-1 font-semibold',
         isPositive && 'text-emerald-400',
         isNegative && 'text-rose-400',
-        isNeutral && 'text-white/50',
+        isNeutral && 'text-white',
         className
       )}
     >

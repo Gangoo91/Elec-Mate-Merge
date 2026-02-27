@@ -195,7 +195,7 @@ export default function AsbestosModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-5">
@@ -220,7 +220,7 @@ export default function AsbestosModule5Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Decontamination &amp; Waste Disposal
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Personal decontamination, area clearance, waste classification, double-bagging,
             consignment notes, and the legal requirements for safe disposal
           </p>
@@ -308,7 +308,7 @@ export default function AsbestosModule5Section2() {
                 <p className="text-sm font-medium text-orange-400 mb-3">
                   7-Step Personal Decontamination Sequence
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-orange-500/20 text-orange-400 text-xs font-bold flex-shrink-0">
                       1
@@ -402,7 +402,7 @@ export default function AsbestosModule5Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Reminders</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">&times;</span>
                     <span>
@@ -455,7 +455,7 @@ export default function AsbestosModule5Section2() {
                 <p className="text-sm font-medium text-orange-400 mb-3">
                   Area Decontamination Steps
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -492,12 +492,12 @@ export default function AsbestosModule5Section2() {
                 <p className="text-sm font-medium text-orange-400 mb-3">
                   4-Stage Clearance Procedure (Licensed Work)
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   For <strong className="text-white">licensed asbestos removal work</strong>, a
                   formal 4-stage clearance procedure must be completed before the area can be
                   reoccupied:
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-orange-500/20 text-orange-400 text-xs font-bold flex-shrink-0">
                       1
@@ -549,7 +549,7 @@ export default function AsbestosModule5Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Area Not Clear Until Certified</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The work area must{' '}
                   <strong className="text-white">
                     not be reoccupied until clearance is formally given
@@ -577,20 +577,20 @@ export default function AsbestosModule5Section2() {
               {/* Outer Layer: Rigid Container */}
               <div className="border-2 border-white/40 rounded-lg bg-[#2a2a2a] p-3 sm:p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <p className="text-xs sm:text-sm font-medium text-white/80">
+                  <p className="text-xs sm:text-sm font-medium text-white">
                     Layer 3: Rigid Container
                   </p>
-                  <span className="text-[9px] sm:text-[10px] text-white/50 bg-white/5 px-2 py-0.5 rounded">
+                  <span className="text-[9px] sm:text-[10px] text-white bg-white/5 px-2 py-0.5 rounded">
                     Labelled skip or lockable container
                   </span>
                 </div>
 
                 {/* Label for rigid container */}
                 <div className="flex flex-wrap gap-2 mb-3">
-                  <span className="text-[9px] sm:text-[10px] text-white/60 bg-white/5 border border-white/10 px-2 py-0.5 rounded">
+                  <span className="text-[9px] sm:text-[10px] text-white bg-white/5 border border-white/10 px-2 py-0.5 rounded">
                     Waste carrier licence number
                   </span>
-                  <span className="text-[9px] sm:text-[10px] text-white/60 bg-white/5 border border-white/10 px-2 py-0.5 rounded">
+                  <span className="text-[9px] sm:text-[10px] text-white bg-white/5 border border-white/10 px-2 py-0.5 rounded">
                     Destination site
                   </span>
                 </div>
@@ -605,7 +605,7 @@ export default function AsbestosModule5Section2() {
                   }}
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <p className="text-xs sm:text-sm font-medium text-white/80">
+                    <p className="text-xs sm:text-sm font-medium text-white">
                       Layer 2: Outer Bag
                     </p>
                     <span className="text-[9px] sm:text-[10px] text-red-400/80 bg-red-500/10 px-2 py-0.5 rounded">
@@ -615,7 +615,7 @@ export default function AsbestosModule5Section2() {
 
                   {/* Label for outer bag */}
                   <div className="mb-3">
-                    <span className="text-[9px] sm:text-[10px] text-white/60 bg-white/5 border border-white/10 px-2 py-0.5 rounded">
+                    <span className="text-[9px] sm:text-[10px] text-white bg-white/5 border border-white/10 px-2 py-0.5 rounded">
                       Consignment note number
                     </span>
                   </div>
@@ -642,10 +642,10 @@ export default function AsbestosModule5Section2() {
                     {/* Centre: Asbestos Waste */}
                     <div className="border border-white/20 rounded bg-white/5 p-3 text-centre">
                       <div className="flex items-center justify-center gap-2 mb-1">
-                        <Trash2 className="h-4 w-4 text-white/40" />
-                        <p className="text-sm font-medium text-white/60">Asbestos Waste</p>
+                        <Trash2 className="h-4 w-4 text-white" />
+                        <p className="text-sm font-medium text-white">Asbestos Waste</p>
                       </div>
-                      <p className="text-[10px] text-white/40">
+                      <p className="text-[10px] text-white">
                         ACMs, contaminated PPE, cleaning cloths, vacuum bags
                       </p>
                     </div>
@@ -663,7 +663,7 @@ export default function AsbestosModule5Section2() {
 
               {/* Sealing Method Note */}
               <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-3">
-                <p className="text-xs sm:text-sm text-white/80">
+                <p className="text-xs sm:text-sm text-white">
                   <strong className="text-orange-400">Sealing method:</strong> Both inner and outer
                   bags sealed with a{' '}
                   <strong className="text-white">goose-neck twist and tape</strong> &mdash; creating
@@ -703,7 +703,7 @@ export default function AsbestosModule5Section2() {
                         <p className="text-sm font-medium text-white">
                           Insulation Materials Containing Asbestos
                         </p>
-                        <p className="text-xs text-white/60 mt-0.5">
+                        <p className="text-xs text-white mt-0.5">
                           Pipe lagging, sprayed coatings, loose-fill insulation, AIB panels
                         </p>
                       </div>
@@ -718,7 +718,7 @@ export default function AsbestosModule5Section2() {
                         <p className="text-sm font-medium text-white">
                           Construction Materials Containing Asbestos
                         </p>
-                        <p className="text-xs text-white/60 mt-0.5">
+                        <p className="text-xs text-white mt-0.5">
                           Asbestos cement products &mdash; roof sheets, guttering, flue pipes,
                           cladding
                         </p>
@@ -732,7 +732,7 @@ export default function AsbestosModule5Section2() {
                 <p className="text-sm font-medium text-orange-400 mb-3">
                   Hazardous Waste Requirements
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -771,7 +771,7 @@ export default function AsbestosModule5Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Mixing Is a Criminal Offence</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     Mixing asbestos waste with general waste is a criminal offence.
                   </strong>{' '}
@@ -801,7 +801,7 @@ export default function AsbestosModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-orange-400 mb-3">Inner Bag Specification</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -842,7 +842,7 @@ export default function AsbestosModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-orange-400 mb-3">Outer Bag Specification</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -870,7 +870,7 @@ export default function AsbestosModule5Section2() {
 
               <div className="bg-orange-500/10 border border-orange-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-orange-500 mb-2">Rigid Materials</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Rigid materials such as asbestos cement sheets and boards cannot always fit inside
                   standard waste bags. These must be{' '}
                   <strong className="text-white">wrapped in polythene and sealed</strong>, or placed
@@ -883,7 +883,7 @@ export default function AsbestosModule5Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Items That Must Be Bagged as Asbestos Waste
                 </p>
-                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>Asbestos-containing materials removed</span>
@@ -935,7 +935,7 @@ export default function AsbestosModule5Section2() {
                 <p className="text-sm font-medium text-orange-400 mb-3">
                   What the Consignment Note Records
                 </p>
-                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -982,7 +982,7 @@ export default function AsbestosModule5Section2() {
 
               <div className="bg-orange-500/10 border border-orange-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-orange-500 mb-2">Pre-Notification</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The waste producer must{' '}
                   <strong className="text-white">notify the Environment Agency</strong> before the
                   first consignment of hazardous waste is removed from the premises. Sites producing
@@ -994,7 +994,7 @@ export default function AsbestosModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Record Keeping</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Copies of consignment notes must be kept for{' '}
                   <strong className="text-orange-400">at least 3 years</strong>. These records
                   demonstrate legal compliance and provide an audit trail in the event of a
@@ -1024,7 +1024,7 @@ export default function AsbestosModule5Section2() {
                 <p className="text-sm font-medium text-orange-400 mb-3">
                   Duty of Care Requirements
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -1053,7 +1053,7 @@ export default function AsbestosModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Documents to Obtain and Keep</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-orange-500/70 mt-0.5 flex-shrink-0" />
                     <span>
@@ -1085,7 +1085,7 @@ export default function AsbestosModule5Section2() {
                     Fly-Tipping &mdash; Severe Criminal Penalties
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     Fly-tipping asbestos waste is a serious criminal offence.
                   </strong>{' '}
@@ -1122,7 +1122,7 @@ export default function AsbestosModule5Section2() {
                 <p className="text-sm font-medium text-orange-400 mb-3">
                   Tool Decontamination Requirements
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -1177,7 +1177,7 @@ export default function AsbestosModule5Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Summary: The Decontamination Sequence
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-orange-500/20 text-orange-400 text-xs font-bold flex-shrink-0">
                       1
@@ -1227,7 +1227,7 @@ export default function AsbestosModule5Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1241,7 +1241,7 @@ export default function AsbestosModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-5-section-1">

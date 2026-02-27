@@ -123,7 +123,7 @@ const CashFlowProjector = () => {
             variant="ghost"
             size="icon"
             onClick={() => navigate(-1)}
-            className="text-white/70 hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
+            className="text-white hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
           >
             <ChevronLeft className="h-6 w-6" />
           </Button>
@@ -132,7 +132,7 @@ const CashFlowProjector = () => {
             variant="ghost"
             size="icon"
             onClick={resetCalculator}
-            className="text-white/70 hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
+            className="text-white hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
           >
             <RotateCcw className="h-5 w-5" />
           </Button>
@@ -151,7 +151,7 @@ const CashFlowProjector = () => {
           <div className="relative space-y-4">
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">
+                <p className="text-ios-caption-1 text-white uppercase tracking-wide">
                   Year-End Cash
                 </p>
                 <p
@@ -196,7 +196,7 @@ const CashFlowProjector = () => {
             </p>
           </div>
           <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[120px] border border-white/10">
-            <p className="text-ios-caption-1 text-white/50">Lowest</p>
+            <p className="text-ios-caption-1 text-white">Lowest</p>
             <p
               className={`text-ios-title-3 font-semibold mt-1 ${minCashFlow < 0 ? 'text-red-400' : 'text-white'}`}
             >
@@ -207,7 +207,7 @@ const CashFlowProjector = () => {
 
         {/* Monthly Timeline - Horizontal Scroll */}
         <section>
-          <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+          <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-3">
             12-Month Projection
           </p>
           <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
@@ -228,7 +228,7 @@ const CashFlowProjector = () => {
                         : 'bg-white/5 border-white/10'
                   }`}
                 >
-                  <p className="text-ios-caption-1 text-white/60 font-medium">{proj.monthShort}</p>
+                  <p className="text-ios-caption-1 text-white font-medium">{proj.monthShort}</p>
                   <p
                     className={`text-lg font-bold mt-1 tabular-nums ${
                       proj.cumulativeCash < 0
@@ -260,7 +260,7 @@ const CashFlowProjector = () => {
 
         {/* Inputs */}
         <section>
-          <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+          <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-3">
             Cash Flow Settings
           </p>
           <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 divide-y divide-white/10">
@@ -301,7 +301,7 @@ const CashFlowProjector = () => {
 
         {/* Large Expense */}
         <section>
-          <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+          <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-3">
             Planned Large Expense
           </p>
           <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 divide-y divide-white/10">

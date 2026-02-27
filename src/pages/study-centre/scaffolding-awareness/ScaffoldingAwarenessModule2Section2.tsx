@@ -214,13 +214,13 @@ const ScaffoldingAwarenessModule2Section2 = () => {
           </div>
           <div className="inline-block bg-slate-500/10 border border-slate-500/20 px-3 py-1 rounded-full text-sm font-semibold mb-4 ml-0">
             <span className="text-slate-400">MODULE 2</span>
-            <span className="text-white/40 mx-2">&middot;</span>
-            <span className="text-white/60">SECTION 2</span>
+            <span className="text-white mx-2">&middot;</span>
+            <span className="text-white">SECTION 2</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             NASC Guidance &amp; TG20
           </h1>
-          <p className="text-white/70 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding the TG20:13 compliance system for tube and fitting scaffolds, the role of
             the NASC, and when a bespoke scaffold design is needed
           </p>
@@ -230,7 +230,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
         <div className="grid sm:grid-cols-2 gap-4 mb-10">
           <div className="rounded-lg p-4 bg-slate-500/5 border-l-2 border-slate-500/50">
             <p className="font-semibold text-slate-400 mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -263,7 +263,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
           </div>
           <div className="rounded-lg p-4 bg-slate-500/5 border-l-2 border-slate-500/50">
             <p className="font-semibold text-slate-400/90 mb-2">On Site</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -299,7 +299,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
         {/* Learning Outcomes */}
         <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4">By the end of this section, you will be able to:</p>
+          <p className="text-white mb-4">By the end of this section, you will be able to:</p>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
               'Explain what TG20:13 is, who publishes it, and what types of scaffolding it covers',
@@ -311,7 +311,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-slate-400/70 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </div>
             ))}
           </div>
@@ -326,7 +326,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
               <span className="text-slate-400/80 text-sm font-normal">01</span>
               What Is TG20?
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">TG20:13</strong> (Technical Guidance Note 20, 2013
                 edition) is the principal compliance guidance document for{' '}
@@ -342,7 +342,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
 
               <div className="bg-slate-500/10 border border-slate-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-slate-400">Key Definition: TG20:13</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   TG20:13 is a <strong className="text-white">compliance guidance system</strong>{' '}
                   for tube and fitting scaffolds. It defines a range of{' '}
                   <strong className="text-white">standard configurations</strong> — scaffolds that
@@ -365,7 +365,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-slate-400 font-medium mb-2">What TG20:13 Covers</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -405,11 +405,11 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                   <AlertTriangle className="h-5 w-5 text-slate-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-slate-300">What TG20:13 Does NOT Cover</h3>
                 </div>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   TG20 applies only to tube and fitting scaffolds. The following are outside its
                   scope and require separate guidance, design, or manufacturer instructions:
                 </p>
-                <ul className="text-white/70 space-y-1.5 text-sm">
+                <ul className="text-white space-y-1.5 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <span>
@@ -447,7 +447,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
               <span className="text-slate-400/80 text-sm font-normal">02</span>
               The NASC — Role and Membership
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The{' '}
                 <strong className="text-white">
@@ -474,7 +474,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">TG20:13 — Tube and Fitting Scaffolds</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         The primary compliance guidance for standard tube and fitting scaffold
                         configurations, including the eGuide software for generating compliance
                         sheets.
@@ -489,7 +489,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                       <p className="text-white font-medium">
                         SG4:15 — Preventing Falls in Scaffolding
                       </p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Guidance on preventing falls during scaffold erection, alteration, and
                         dismantling — the &ldquo;advance guard rail&rdquo; method and the use of
                         personal fall protection.
@@ -504,7 +504,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                       <p className="text-white font-medium">
                         SG6 — Manual Handling in the Scaffolding Industry
                       </p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Guidance on safe manual handling of scaffold tubes, fittings, and boards —
                         including weight limits, team handling, and reducing musculoskeletal injury
                         risk.
@@ -517,7 +517,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">SG25 — Scaffold Inspection</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Guidance on inspecting scaffolds before first use, at 7-day intervals, and
                         after events likely to have affected stability — including what to inspect,
                         record, and report.
@@ -529,12 +529,12 @@ const ScaffoldingAwarenessModule2Section2 = () => {
 
               <div className="bg-slate-500/10 border border-slate-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-slate-400">Benefits of NASC Membership</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   NASC member companies are subject to regular audits that check compliance across
                   multiple areas. Specifying an NASC member contractor gives clients confidence in
                   quality and safety:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <span>
@@ -580,7 +580,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
               <span className="text-cyan-400/80 text-sm font-normal">03</span>
               Standard vs Non-Standard Configurations
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The fundamental distinction in TG20:13 is between{' '}
                 <strong className="text-white">standard configurations</strong> — scaffolds that
@@ -611,43 +611,43 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                         Standard Configuration
                       </h4>
                     </div>
-                    <p className="text-white/60 text-xs mb-3">
+                    <p className="text-white text-xs mb-3">
                       Falls within TG20 parameters — compliance sheet from eGuide is sufficient
                     </p>
                     <ul className="space-y-2 text-xs">
                       <li className="flex items-start gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0"></div>
-                        <span className="text-white/70">
+                        <span className="text-white">
                           Standard bay lengths (up to 2.4 m typical)
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0"></div>
-                        <span className="text-white/70">
+                        <span className="text-white">
                           Standard lift heights (up to 2.0 m typical)
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0"></div>
-                        <span className="text-white/70">
+                        <span className="text-white">
                           Heights within TG20 limits (up to 50 m for general purpose)
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0"></div>
-                        <span className="text-white/70">
+                        <span className="text-white">
                           Recognised tie patterns at correct intervals
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0"></div>
-                        <span className="text-white/70">
+                        <span className="text-white">
                           Wind loading within validated limits for the site location
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5 flex-shrink-0"></div>
-                        <span className="text-white/70">
+                        <span className="text-white">
                           Standard cladding types (open, debris netting, brick guards)
                         </span>
                       </li>
@@ -667,42 +667,42 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                         Non-Standard Configuration
                       </h4>
                     </div>
-                    <p className="text-white/60 text-xs mb-3">
+                    <p className="text-white text-xs mb-3">
                       Falls outside TG20 parameters — bespoke scaffold design required from a
                       competent engineer
                     </p>
                     <ul className="space-y-2 text-xs">
                       <li className="flex items-start gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-red-400 mt-1.5 flex-shrink-0"></div>
-                        <span className="text-white/70">Bay lengths exceeding TG20 maximums</span>
+                        <span className="text-white">Bay lengths exceeding TG20 maximums</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-red-400 mt-1.5 flex-shrink-0"></div>
-                        <span className="text-white/70">
+                        <span className="text-white">
                           Heights exceeding TG20 limits for the given parameters
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-red-400 mt-1.5 flex-shrink-0"></div>
-                        <span className="text-white/70">
+                        <span className="text-white">
                           Full sheeting in exposed or coastal locations
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-red-400 mt-1.5 flex-shrink-0"></div>
-                        <span className="text-white/70">
+                        <span className="text-white">
                           Non-standard tie patterns or inadequate tie capacity
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-red-400 mt-1.5 flex-shrink-0"></div>
-                        <span className="text-white/70">
+                        <span className="text-white">
                           Complex building shapes (curved facades, large setbacks)
                         </span>
                       </li>
                       <li className="flex items-start gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-red-400 mt-1.5 flex-shrink-0"></div>
-                        <span className="text-white/70">
+                        <span className="text-white">
                           Heavy-duty loading or special loading requirements
                         </span>
                       </li>
@@ -718,7 +718,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
 
               <div className="bg-slate-500/10 border border-slate-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-slate-400">Why This Distinction Matters</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   A scaffold erected without either a valid TG20 compliance sheet or a bespoke
                   scaffold design is{' '}
                   <strong className="text-white">non-compliant with industry standards</strong>. The
@@ -740,7 +740,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
               <span className="text-blue-400/80 text-sm font-normal">04</span>
               The TG20 eGuide Software
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The <strong className="text-white">TG20 eGuide</strong> is a software application
                 published by the NASC that automates the process of checking whether a tube and
@@ -752,7 +752,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
 
               <div className="bg-white/5 border border-blue-400/30 p-4 rounded-lg">
                 <h3 className="text-blue-300 font-medium mb-3">Inputs Required by the eGuide</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The eGuide requires the following information to generate a compliance sheet:
                 </p>
                 <div className="space-y-3 text-sm">
@@ -762,7 +762,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Site Location</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         The site postcode, altitude, and exposure category (town or country). This
                         determines the wind speed and wind loading for the site.
                       </p>
@@ -774,7 +774,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Scaffold Type</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Whether the scaffold is an independent tied scaffold, putlog scaffold,
                         birdcage scaffold, or loading bay.
                       </p>
@@ -786,7 +786,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Scaffold Dimensions</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Height, bay length, scaffold width (ledger length), and lift height. These
                         must fall within the ranges defined in TG20.
                       </p>
@@ -798,7 +798,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Boarded Lifts</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         The number of boarded lifts (working platforms) in the scaffold. More
                         boarded lifts increase wind loading and dead load.
                       </p>
@@ -810,7 +810,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Tie Pattern</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         The spacing and arrangement of ties connecting the scaffold to the building.
                         TG20 defines standard tie patterns and spacings.
                       </p>
@@ -822,7 +822,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Cladding Type</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Whether the scaffold is open (no cladding), fitted with debris netting,
                         brick guards, or fully sheeted. Cladding significantly affects wind loading.
                       </p>
@@ -833,7 +833,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
 
               <div className="bg-slate-500/10 border border-slate-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-slate-400">The Compliance Sheet</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   If the scaffold falls within TG20 standard configurations, the eGuide generates a{' '}
                   <strong className="text-white">compliance sheet</strong> in PDF format. This
                   document records the scaffold type, dimensions, location, tie pattern, cladding,
@@ -852,7 +852,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                     When the eGuide Says &ldquo;Non-Standard&rdquo;
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   If any of the inputs fall outside TG20 parameters — for example, the height
                   exceeds the limit for the given wind zone, or the tie pattern is not one of the
                   recognised standard patterns — the eGuide will{' '}
@@ -876,7 +876,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
               <span className="text-teal-400/80 text-sm font-normal">05</span>
               TG20 Decision Flowchart
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Before erecting any tube and fitting scaffold, the contractor must determine whether
                 the scaffold falls within TG20 standard configurations or requires a bespoke design.
@@ -905,7 +905,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                       <span className="text-red-400 text-xs font-medium mb-1">NO</span>
                       <div className="w-0.5 h-4 bg-red-400/40"></div>
                       <div className="bg-red-500/10 border border-red-500/20 rounded-lg px-3 py-2 text-center mt-1">
-                        <p className="text-white/70 text-xs">
+                        <p className="text-white text-xs">
                           TG20 does not apply — use manufacturer guidance or bespoke design
                         </p>
                       </div>
@@ -951,7 +951,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                         <p className="text-emerald-300 text-xs font-semibold mb-1">
                           Standard Configuration
                         </p>
-                        <p className="text-white/60 text-xs">
+                        <p className="text-white text-xs">
                           Generate compliance sheet from eGuide and keep on site
                         </p>
                       </div>
@@ -963,7 +963,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                         <p className="text-red-300 text-xs font-semibold mb-1">
                           Non-Standard Configuration
                         </p>
-                        <p className="text-white/60 text-xs">
+                        <p className="text-white text-xs">
                           Commission a bespoke scaffold design from a competent engineer
                         </p>
                       </div>
@@ -982,7 +982,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                     <p className="text-teal-400 font-semibold text-sm mb-2 text-center">
                       In Both Cases
                     </p>
-                    <ul className="text-white/70 text-xs space-y-1">
+                    <ul className="text-white text-xs space-y-1">
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-3.5 w-3.5 text-teal-400/60 mt-0.5 flex-shrink-0" />
                         <span>Keep compliance sheet or bespoke design on site at all times</span>
@@ -1030,7 +1030,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
               <span className="text-purple-400/80 text-sm font-normal">06</span>
               Wind Loading &amp; Cladding
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Wind loading is one of the most critical factors in scaffold design and the most
                 common reason for a scaffold to fall outside TG20 standard configurations. TG20:13
@@ -1041,11 +1041,11 @@ const ScaffoldingAwarenessModule2Section2 = () => {
 
               <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
                 <h3 className="text-purple-300 font-medium mb-3">Wind Zone System</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   TG20:13 divides the United Kingdom into{' '}
                   <strong className="text-white">wind zones</strong> based on three key factors:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-purple-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1078,7 +1078,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                 <h3 className="text-purple-400 font-medium mb-3">
                   Effect of Cladding on Wind Loading
                 </h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The type of cladding on a scaffold has a dramatic effect on the wind force it must
                   resist. Cladding increases the effective wind area — turning the scaffold from a
                   relatively open framework into a surface that catches the wind like a sail:
@@ -1122,7 +1122,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
 
               <div className="bg-slate-500/10 border border-slate-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-slate-400">Why Wind Loading Matters</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Wind loading is the dominant horizontal force on most scaffolds. If the wind force
                   exceeds the capacity of the ties, the scaffold can{' '}
                   <strong className="text-white">pull away from the building</strong> or{' '}
@@ -1143,7 +1143,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
               <span className="text-amber-400/80 text-sm font-normal">07</span>
               Tie Patterns &amp; Maximum Heights
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">Ties</strong> are the connections that anchor the
                 scaffold to the building. They are critical structural elements — without adequate
@@ -1154,11 +1154,11 @@ const ScaffoldingAwarenessModule2Section2 = () => {
 
               <div className="bg-white/5 border border-amber-400/30 p-4 rounded-lg">
                 <h3 className="text-amber-300 font-medium mb-3">Standard Tie Patterns in TG20</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   TG20:13 recognises several standard tie patterns. The most common for independent
                   tied scaffolds are:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-amber-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1189,10 +1189,10 @@ const ScaffoldingAwarenessModule2Section2 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-amber-400 font-medium mb-3">Tie Types</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The type of tie used affects the load it can carry. Common tie types include:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1225,11 +1225,11 @@ const ScaffoldingAwarenessModule2Section2 = () => {
 
               <div className="bg-white/5 border border-amber-400/30 p-4 rounded-lg">
                 <h3 className="text-amber-300 font-medium mb-3">Maximum Heights</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The maximum height of a scaffold within TG20 standard configurations depends on
                   several interacting factors:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-amber-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1267,7 +1267,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                   <AlertTriangle className="h-5 w-5 text-slate-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-slate-300">Interacting Factors</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Maximum height is not a single fixed number — it depends on the interaction of
                   height, wind zone, exposure, cladding, tie pattern, bay length, and scaffold
                   width. A scaffold configuration that is standard at 30 metres in a sheltered town
@@ -1289,7 +1289,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
               <span className="text-red-400/80 text-sm font-normal">08</span>
               When a Bespoke Scaffold Design Is Required
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Whenever a tube and fitting scaffold falls outside TG20 standard configurations, a{' '}
                 <strong className="text-white">bespoke scaffold design</strong> must be produced by
@@ -1305,11 +1305,11 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                 <h3 className="text-red-300 font-medium mb-3">
                   Common Triggers for a Bespoke Design
                 </h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The following situations commonly require a bespoke scaffold design rather than a
                   TG20 compliance sheet:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1383,10 +1383,10 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                 <h3 className="text-slate-400 font-medium mb-3">
                   What a Bespoke Design Must Include
                 </h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   A competent bespoke scaffold design typically includes the following elements:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                     <span>
@@ -1436,7 +1436,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                 <h3 className="font-semibold mb-2 text-slate-400">
                   Who Is Competent to Produce a Scaffold Design?
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   A bespoke scaffold design must be produced by a{' '}
                   <strong className="text-white">competent person</strong> — typically a scaffold
                   designer with relevant qualifications (such as the CISRS Scaffold Design
@@ -1453,7 +1453,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">No Design = No Scaffold</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A scaffold that falls outside TG20 standard configurations must{' '}
                   <strong className="text-white">not</strong> be erected until a bespoke design has
                   been produced, reviewed, and accepted. Erecting a non-standard scaffold without a
@@ -1476,7 +1476,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1492,7 +1492,7 @@ const ScaffoldingAwarenessModule2Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-2">

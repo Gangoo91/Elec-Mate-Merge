@@ -264,7 +264,7 @@ const Level3Module4Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section4">
@@ -420,7 +420,7 @@ const Level3Module4Section4_4 = () => {
               Ze + (R1+R2).
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> Testing a ring final circuit protected by a 32A Type B MCB.
               Maximum Zs from BS 7671 Table 41.3 is 1.37 ohms. Applying the 80% rule: maximum
               measured = 0.8 x 1.37 = 1.10 ohms. You measure 0.95 ohms at the furthest socket. This
@@ -502,19 +502,19 @@ const Level3Module4Section4_4 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">High Ze</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Supply-side issue - report to DNO. Cannot be resolved within installation.
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">High R1</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Long cable run or undersized line conductor. May need cable upgrade.
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">High R2</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Undersized CPC, poor terminations, or long CPC run. Check connections.
                 </p>
               </div>
@@ -527,7 +527,7 @@ const Level3Module4Section4_4 = () => {
               certifying.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> You calculate Zs as 0.80 ohms (Ze=0.30, R1+R2=0.50), but
               measure 1.20 ohms at the socket. The 0.40 ohm difference suggests a high-resistance
               connection somewhere in the circuit. Check all terminations, particularly at junction
@@ -594,7 +594,7 @@ const Level3Module4Section4_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -639,7 +639,7 @@ const Level3Module4Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section4-3">

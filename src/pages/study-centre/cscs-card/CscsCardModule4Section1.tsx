@@ -218,7 +218,7 @@ export default function CscsCardModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-4">
@@ -245,7 +245,7 @@ export default function CscsCardModule4Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             COSHH Essentials
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding the Control of Substances Hazardous to Health Regulations 2002 &mdash;
             what substances are covered, how to assess and control exposure, and how to protect
             yourself and others on construction sites
@@ -349,7 +349,7 @@ export default function CscsCardModule4Section1() {
                 formally classified. The types of substances covered include:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                   <span>
@@ -414,11 +414,11 @@ export default function CscsCardModule4Section1() {
                     Substances NOT Covered by COSHH
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Certain hazardous substances are excluded from COSHH because they have their own
                   dedicated legislation with more specific requirements:
                 </p>
-                <ul className="space-y-2 text-sm text-white/70 mt-3">
+                <ul className="space-y-2 text-sm text-white mt-3">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                     <span>
@@ -453,7 +453,7 @@ export default function CscsCardModule4Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Employer Duties Under COSHH
                     </p>
-                    <ul className="space-y-1.5 text-xs text-white/70">
+                    <ul className="space-y-1.5 text-xs text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -506,7 +506,7 @@ export default function CscsCardModule4Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Employee Duties Under COSHH
                     </p>
-                    <ul className="space-y-1.5 text-xs text-white/70">
+                    <ul className="space-y-1.5 text-xs text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -545,7 +545,7 @@ export default function CscsCardModule4Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Historical Context</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The original COSHH Regulations were introduced in 1988 and have been amended
                   several times since, with the current consolidated version being the COSHH
                   Regulations 2002 (as amended). Before COSHH, there was no comprehensive framework
@@ -606,8 +606,8 @@ export default function CscsCardModule4Section1() {
                       <Skull className="h-6 w-6 text-red-400 -rotate-45" />
                     </div>
                     <p className="text-xs font-bold text-green-400 mb-1">SKULL &amp; CROSSBONES</p>
-                    <p className="text-[10px] text-white/60">GHS06 &mdash; Acute Toxicity</p>
-                    <p className="text-[10px] text-white/50 mt-1">
+                    <p className="text-[10px] text-white">GHS06 &mdash; Acute Toxicity</p>
+                    <p className="text-[10px] text-white mt-1">
                       Fatal or toxic if swallowed, inhaled, or in contact with skin
                     </p>
                   </div>
@@ -616,8 +616,8 @@ export default function CscsCardModule4Section1() {
                       <Flame className="h-6 w-6 text-red-400 -rotate-45" />
                     </div>
                     <p className="text-xs font-bold text-green-400 mb-1">FLAME</p>
-                    <p className="text-[10px] text-white/60">GHS02 &mdash; Flammable</p>
-                    <p className="text-[10px] text-white/50 mt-1">
+                    <p className="text-[10px] text-white">GHS02 &mdash; Flammable</p>
+                    <p className="text-[10px] text-white mt-1">
                       Flammable gases, liquids, solids, aerosols, and self-reactive substances
                     </p>
                   </div>
@@ -626,8 +626,8 @@ export default function CscsCardModule4Section1() {
                       <Droplets className="h-6 w-6 text-red-400 -rotate-45" />
                     </div>
                     <p className="text-xs font-bold text-green-400 mb-1">CORROSION</p>
-                    <p className="text-[10px] text-white/60">GHS05 &mdash; Corrosive</p>
-                    <p className="text-[10px] text-white/50 mt-1">
+                    <p className="text-[10px] text-white">GHS05 &mdash; Corrosive</p>
+                    <p className="text-[10px] text-white mt-1">
                       Causes severe skin burns, eye damage, or corrodes metals
                     </p>
                   </div>
@@ -636,8 +636,8 @@ export default function CscsCardModule4Section1() {
                       <ShieldCheck className="h-6 w-6 text-red-400 -rotate-45" />
                     </div>
                     <p className="text-xs font-bold text-green-400 mb-1">HEALTH HAZARD</p>
-                    <p className="text-[10px] text-white/60">GHS08 &mdash; Serious Health Hazard</p>
-                    <p className="text-[10px] text-white/50 mt-1">
+                    <p className="text-[10px] text-white">GHS08 &mdash; Serious Health Hazard</p>
+                    <p className="text-[10px] text-white mt-1">
                       Carcinogen, mutagen, reproductive toxin, respiratory sensitiser, organ
                       toxicity
                     </p>
@@ -647,8 +647,8 @@ export default function CscsCardModule4Section1() {
                       <AlertTriangle className="h-6 w-6 text-red-400 -rotate-45" />
                     </div>
                     <p className="text-xs font-bold text-green-400 mb-1">EXCLAMATION MARK</p>
-                    <p className="text-[10px] text-white/60">GHS07 &mdash; Harmful / Irritant</p>
-                    <p className="text-[10px] text-white/50 mt-1">
+                    <p className="text-[10px] text-white">GHS07 &mdash; Harmful / Irritant</p>
+                    <p className="text-[10px] text-white mt-1">
                       Harmful if swallowed/inhaled, skin/eye irritant, narcotic effects, skin
                       sensitiser
                     </p>
@@ -658,8 +658,8 @@ export default function CscsCardModule4Section1() {
                       <TestTube className="h-6 w-6 text-red-400 -rotate-45" />
                     </div>
                     <p className="text-xs font-bold text-green-400 mb-1">ENVIRONMENT</p>
-                    <p className="text-[10px] text-white/60">GHS09 &mdash; Environmental Hazard</p>
-                    <p className="text-[10px] text-white/50 mt-1">
+                    <p className="text-[10px] text-white">GHS09 &mdash; Environmental Hazard</p>
+                    <p className="text-[10px] text-white mt-1">
                       Toxic to aquatic life with long-lasting effects
                     </p>
                   </div>
@@ -668,8 +668,8 @@ export default function CscsCardModule4Section1() {
                       <FlaskConical className="h-6 w-6 text-red-400 -rotate-45" />
                     </div>
                     <p className="text-xs font-bold text-green-400 mb-1">GAS CYLINDER</p>
-                    <p className="text-[10px] text-white/60">GHS04 &mdash; Gas Under Pressure</p>
-                    <p className="text-[10px] text-white/50 mt-1">
+                    <p className="text-[10px] text-white">GHS04 &mdash; Gas Under Pressure</p>
+                    <p className="text-[10px] text-white mt-1">
                       Compressed, liquefied, refrigerated, or dissolved gas; may explode if heated
                     </p>
                   </div>
@@ -678,8 +678,8 @@ export default function CscsCardModule4Section1() {
                       <Flame className="h-6 w-6 text-amber-400 -rotate-45" />
                     </div>
                     <p className="text-xs font-bold text-green-400 mb-1">FLAME OVER CIRCLE</p>
-                    <p className="text-[10px] text-white/60">GHS03 &mdash; Oxidiser</p>
-                    <p className="text-[10px] text-white/50 mt-1">
+                    <p className="text-[10px] text-white">GHS03 &mdash; Oxidiser</p>
+                    <p className="text-[10px] text-white mt-1">
                       May cause or intensify fire; oxidising gases, liquids, and solids
                     </p>
                   </div>
@@ -688,14 +688,14 @@ export default function CscsCardModule4Section1() {
                       <Flame className="h-6 w-6 text-orange-400 -rotate-45" />
                     </div>
                     <p className="text-xs font-bold text-green-400 mb-1">EXPLODING BOMB</p>
-                    <p className="text-[10px] text-white/60">GHS01 &mdash; Explosive</p>
-                    <p className="text-[10px] text-white/50 mt-1">
+                    <p className="text-[10px] text-white">GHS01 &mdash; Explosive</p>
+                    <p className="text-[10px] text-white mt-1">
                       Unstable explosives, self-reactive substances, organic peroxides; mass
                       explosion hazard
                     </p>
                   </div>
                 </div>
-                <p className="text-xs text-white/50 text-center mt-4">
+                <p className="text-xs text-white text-center mt-4">
                   All nine pictograms use a red diamond border on a white background with a black
                   symbol. Products may display multiple pictograms if they have more than one type
                   of hazard.
@@ -814,12 +814,12 @@ export default function CscsCardModule4Section1() {
                       </div>
                       <div className="pt-1 pb-2">
                         <p className="text-sm font-medium text-white">{item.title}</p>
-                        <p className="text-xs text-white/60 mt-0.5">{item.desc}</p>
+                        <p className="text-xs text-white mt-0.5">{item.desc}</p>
                       </div>
                     </div>
                   ))}
                 </div>
-                <p className="text-xs text-white/50 text-center mt-4">
+                <p className="text-xs text-white text-center mt-4">
                   The assessment is a living document &mdash; it must be reviewed whenever
                   circumstances change and at regular intervals.
                 </p>
@@ -833,28 +833,28 @@ export default function CscsCardModule4Section1() {
               <div className="grid sm:grid-cols-2 gap-3">
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4 text-center">
                   <p className="text-sm font-semibold text-green-400 mb-1">INHALATION</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Breathing in dusts, fumes, vapours, mists, or gases. The most common route on
                     construction sites
                   </p>
                 </div>
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4 text-center">
                   <p className="text-sm font-semibold text-green-400 mb-1">SKIN ABSORPTION</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Substances passing through the skin into the bloodstream. Many solvents and some
                     pesticides can penetrate intact skin
                   </p>
                 </div>
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4 text-center">
                   <p className="text-sm font-semibold text-green-400 mb-1">INGESTION</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Swallowing substances via contaminated hands, food, drink, or cigarettes. Hand
                     washing before eating is critical
                   </p>
                 </div>
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4 text-center">
                   <p className="text-sm font-semibold text-green-400 mb-1">INJECTION</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Substances entering through broken skin via cuts, abrasions, needlestick
                     injuries, or high-pressure equipment
                   </p>
@@ -863,7 +863,7 @@ export default function CscsCardModule4Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Reviewing Safety Data Sheets</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The Safety Data Sheet (SDS) is the primary source of information for the COSHH
                   assessment. Before completing the assessment, the assessor must review the SDS for
                   every hazardous substance included. The SDS provides essential information on the
@@ -1003,7 +1003,7 @@ export default function CscsCardModule4Section1() {
                       </span>
                       <div>
                         <p className="text-white font-medium text-xs">{section.title}</p>
-                        <p className="text-white/60 text-[10px] mt-0.5">{section.desc}</p>
+                        <p className="text-white text-[10px] mt-0.5">{section.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -1014,12 +1014,12 @@ export default function CscsCardModule4Section1() {
                 <p className="text-sm font-medium text-green-400 mb-3">
                   Key Sections for Construction Workers
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   While all 16 sections contain important information, there are four sections that
                   are particularly critical for construction workers to review before using a
                   hazardous substance:
                 </p>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1062,7 +1062,7 @@ export default function CscsCardModule4Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Where to Find Safety Data Sheets
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Employers have a legal duty to maintain copies of Safety Data Sheets for all
                   hazardous substances used on site. These are typically kept in a{' '}
                   <strong>COSHH file or register</strong>, usually located in the site office,
@@ -1113,7 +1113,7 @@ export default function CscsCardModule4Section1() {
                       </span>
                       <p className="text-sm font-semibold text-green-400">Elimination</p>
                     </div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Remove the hazardous substance entirely from the process. This is the most
                       effective control because it eliminates the hazard completely. For example,
                       using mechanical fixings instead of solvent-based adhesives, using pre-cut
@@ -1129,7 +1129,7 @@ export default function CscsCardModule4Section1() {
                       </span>
                       <p className="text-sm font-semibold text-green-400">Substitution</p>
                     </div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Replace the hazardous substance with a less hazardous alternative. For
                       example, using water-based paints instead of solvent-based paints, using
                       low-chromate cement to reduce dermatitis risk, using pre-mixed mortar instead
@@ -1144,11 +1144,11 @@ export default function CscsCardModule4Section1() {
                       </span>
                       <p className="text-sm font-semibold text-green-400">Engineering Controls</p>
                     </div>
-                    <p className="text-sm text-white/80 mb-3">
+                    <p className="text-sm text-white mb-3">
                       Use physical means to control exposure at source, preventing the substance
                       from reaching the worker:
                     </p>
-                    <ul className="space-y-2 text-sm text-white/70">
+                    <ul className="space-y-2 text-sm text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -1195,10 +1195,10 @@ export default function CscsCardModule4Section1() {
                         Administrative Controls
                       </p>
                     </div>
-                    <p className="text-sm text-white/80 mb-3">
+                    <p className="text-sm text-white mb-3">
                       Organisational and procedural measures that reduce exposure:
                     </p>
-                    <ul className="space-y-2 text-sm text-white/70">
+                    <ul className="space-y-2 text-sm text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -1246,13 +1246,13 @@ export default function CscsCardModule4Section1() {
                         Personal Protective Equipment (PPE)
                       </p>
                     </div>
-                    <p className="text-sm text-white/80 mb-3">
+                    <p className="text-sm text-white mb-3">
                       PPE is the <strong>last resort</strong> in the hierarchy of control. It should
                       only be used when higher-level controls are not reasonably practicable or as
                       an additional measure alongside other controls. PPE for hazardous substance
                       exposure includes:
                     </p>
-                    <ul className="space-y-2 text-sm text-white/70">
+                    <ul className="space-y-2 text-sm text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -1299,7 +1299,7 @@ export default function CscsCardModule4Section1() {
                     Workplace Exposure Limits (WELs)
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Workplace Exposure Limits (WELs) are the maximum concentrations of airborne
                   substances to which workers may be exposed by inhalation over specified periods.
                   They are listed in the HSE publication <strong>EH40/2005</strong> (as amended).
@@ -1308,7 +1308,7 @@ export default function CscsCardModule4Section1() {
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-green-400">8-hr TWA</p>
-                    <p className="text-xs text-white/60 mt-1">
+                    <p className="text-xs text-white mt-1">
                       <strong>8-hour Time-Weighted Average</strong> &mdash; the average
                       concentration over a normal 8-hour working day. This limit protects against
                       the effects of prolonged daily exposure. For example, the WEL for respirable
@@ -1317,7 +1317,7 @@ export default function CscsCardModule4Section1() {
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-green-400">15-min STEL</p>
-                    <p className="text-xs text-white/60 mt-1">
+                    <p className="text-xs text-white mt-1">
                       <strong>15-minute Short-Term Exposure Limit</strong> &mdash; the maximum
                       average concentration over any 15-minute period during a working day. This
                       limit protects against the effects of brief peak exposures that could cause
@@ -1327,7 +1327,7 @@ export default function CscsCardModule4Section1() {
                   </div>
                 </div>
                 <div className="bg-white/5 border border-white/10 p-3 rounded-lg mt-3">
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     <strong className="text-white">Important:</strong> WELs are not
                     &ldquo;safe&rdquo; levels. They represent the legal maximum concentrations. The
                     COSHH Regulations require employers to reduce exposure to{' '}
@@ -1365,11 +1365,11 @@ export default function CscsCardModule4Section1() {
               <div className="space-y-3">
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                   <p className="text-sm font-semibold text-green-400 mb-2">Cement</p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Cement is one of the most commonly encountered hazardous substances in
                     construction. It presents two distinct health hazards:
                   </p>
-                  <ul className="space-y-2 text-sm text-white/70">
+                  <ul className="space-y-2 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -1405,13 +1405,13 @@ export default function CscsCardModule4Section1() {
                   <p className="text-sm font-semibold text-green-400 mb-2">
                     Silica Dust (Respirable Crystalline Silica)
                   </p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Silica (silicon dioxide, SiO&#8322;) is a natural mineral found in concrete,
                     brick, stone, morite, sandstone, and many other construction materials. When
                     these materials are cut, drilled, ground, or demolished, fine respirable
                     crystalline silica (RCS) dust is generated:
                   </p>
-                  <ul className="space-y-2 text-sm text-white/70">
+                  <ul className="space-y-2 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -1451,11 +1451,11 @@ export default function CscsCardModule4Section1() {
 
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                   <p className="text-sm font-semibold text-green-400 mb-2">Wood Dust</p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Wood dust is generated by sawing, planing, routing, sanding, and machining
                     timber and wood-based products. It is a significant occupational health hazard:
                   </p>
-                  <ul className="space-y-2 text-sm text-white/70">
+                  <ul className="space-y-2 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -1498,12 +1498,12 @@ export default function CscsCardModule4Section1() {
                   <p className="text-sm font-semibold text-green-400 mb-2">
                     Solvents, Adhesives &amp; Paints
                   </p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     A wide range of solvent-based products are used in construction, including
                     paints, varnishes, thinners, adhesives, sealants, degreasers, and cleaning
                     agents:
                   </p>
-                  <ul className="space-y-2 text-sm text-white/70">
+                  <ul className="space-y-2 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -1541,12 +1541,12 @@ export default function CscsCardModule4Section1() {
 
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                   <p className="text-sm font-semibold text-green-400 mb-2">Lead</p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Although lead has its own dedicated regulations (Control of Lead at Work
                     Regulations 2002), construction workers still encounter it regularly,
                     particularly during refurbishment of older buildings:
                   </p>
-                  <ul className="space-y-2 text-sm text-white/70">
+                  <ul className="space-y-2 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -1571,12 +1571,12 @@ export default function CscsCardModule4Section1() {
 
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                   <p className="text-sm font-semibold text-green-400 mb-2">Isocyanates</p>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     Isocyanates are used in polyurethane paints, varnishes, expanding foams,
                     adhesives, and two-pack coatings. They are one of the most potent causes of
                     occupational asthma in the UK:
                   </p>
-                  <ul className="space-y-2 text-sm text-white/70">
+                  <ul className="space-y-2 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -1647,7 +1647,7 @@ export default function CscsCardModule4Section1() {
                 a supplementary measure. Its primary purposes are:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                   <span>
@@ -1691,7 +1691,7 @@ export default function CscsCardModule4Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Lung Function Tests (Spirometry)
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Used for workers exposed to respiratory sensitisers (isocyanates, wood dust,
                       flour dust, certain metals) and substances that cause lung fibrosis (silica,
                       asbestos). Spirometry measures the volume and speed of air that a person can
@@ -1705,7 +1705,7 @@ export default function CscsCardModule4Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Skin Checks (Dermatological Surveillance)
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Used for workers exposed to skin sensitisers and irritants (cement, epoxy
                       resins, chromates, certain metals, solvents, cutting fluids). Regular skin
                       inspections look for early signs of dermatitis &mdash; redness, dryness,
@@ -1718,7 +1718,7 @@ export default function CscsCardModule4Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Blood Tests (Biological Monitoring)
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Used for workers exposed to substances that can be detected in blood or urine.
                       Blood lead level monitoring is mandatory for workers exposed to lead above
                       specified action levels. Urine tests can detect exposure to certain solvents,
@@ -1731,7 +1731,7 @@ export default function CscsCardModule4Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Audiometry (Hearing Tests)
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       While primarily associated with noise exposure under the Control of Noise at
                       Work Regulations 2005, audiometry may also be required under COSHH for workers
                       exposed to ototoxic substances (substances that damage hearing), such as
@@ -1747,7 +1747,7 @@ export default function CscsCardModule4Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Employee Rights and Confidentiality
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Workers have the{' '}
                   <strong>right to access their own health surveillance records</strong>. Employers
                   must keep individual health surveillance records for at least{' '}
@@ -1767,7 +1767,7 @@ export default function CscsCardModule4Section1() {
                 <p className="text-sm font-medium text-green-400 mb-2">
                   Role of Occupational Health
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Health surveillance under COSHH must be conducted by, or under the supervision of,
                   a<strong> registered medical practitioner</strong> or an{' '}
                   <strong>occupational health nurse</strong> with appropriate training. An{' '}
@@ -1815,7 +1815,7 @@ export default function CscsCardModule4Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Ventilated Cabinets and Stores
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Hazardous substances that release vapours must be stored in{' '}
                       <strong>ventilated cabinets</strong> or{' '}
                       <strong>ventilated chemical stores</strong>. The ventilation prevents the
@@ -1831,7 +1831,7 @@ export default function CscsCardModule4Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Segregation of Incompatible Substances
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Substances that could react dangerously if mixed must be{' '}
                       <strong>segregated</strong>
                       during storage. This means storing them in separate cabinets, separate areas,
@@ -1845,7 +1845,7 @@ export default function CscsCardModule4Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Signage and Labelling</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       All COSHH storage areas must be clearly marked with appropriate{' '}
                       <strong>hazard warning signs</strong> in accordance with the Health and Safety
                       (Safety Signs and Signals) Regulations 1996. Signs must indicate the nature of
@@ -1858,7 +1858,7 @@ export default function CscsCardModule4Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">General Storage Rules</p>
-                    <ul className="space-y-1.5 text-xs text-white/70">
+                    <ul className="space-y-1.5 text-xs text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -1905,14 +1905,14 @@ export default function CscsCardModule4Section1() {
                     Safe Disposal of Hazardous Waste
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Hazardous waste from construction sites must be disposed of in accordance with the
                   <strong> Environmental Permitting (England and Wales) Regulations 2016</strong>,
                   the <strong>Hazardous Waste (England and Wales) Regulations 2005</strong>, and the
                   <strong> Waste (England and Wales) Regulations 2011</strong>. Key requirements
                   include:
                 </p>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1959,7 +1959,7 @@ export default function CscsCardModule4Section1() {
                     Emergency Procedures for Hazardous Substance Incidents
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The COSHH Regulations require employers to prepare{' '}
                   <strong>plans and procedures for emergencies</strong> involving hazardous
                   substances. Workers must know what to do in the event of a spill, accidental
@@ -1968,7 +1968,7 @@ export default function CscsCardModule4Section1() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Spillage Procedures</p>
-                    <ul className="space-y-1.5 text-xs text-white/70">
+                    <ul className="space-y-1.5 text-xs text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>Evacuate the immediate area and prevent others from entering</span>
@@ -2008,7 +2008,7 @@ export default function CscsCardModule4Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Emergency Eye Wash and Showers
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Where workers handle substances that can cause eye or skin damage (corrosives,
                       irritants, strong acids, strong alkalis),{' '}
                       <strong>emergency eye wash stations</strong>
@@ -2023,7 +2023,7 @@ export default function CscsCardModule4Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">First Aid for Exposure</p>
-                    <ul className="space-y-1.5 text-xs text-white/70">
+                    <ul className="space-y-1.5 text-xs text-white">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -2088,7 +2088,7 @@ export default function CscsCardModule4Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -2106,7 +2106,7 @@ export default function CscsCardModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-4">

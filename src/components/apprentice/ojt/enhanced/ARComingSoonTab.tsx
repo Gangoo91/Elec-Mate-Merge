@@ -127,7 +127,7 @@ const ARComingSoonTab = () => {
                         ? 'bg-green-500/20 text-green-300 border-green-500/50'
                         : milestone.status === 'In Progress'
                           ? 'bg-blue-500/20 text-blue-300 border-blue-500/50'
-                          : 'bg-white/10 text-white/80 border-white/50'
+                          : 'bg-white/10 text-white border-white/50'
                     }`}
                   >
                     {milestone.status}

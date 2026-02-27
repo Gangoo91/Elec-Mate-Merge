@@ -374,6 +374,20 @@ const EICClientDetailsSection = ({
                   Specify what parts of the installation are covered by this certificate
                 </p>
               </div>
+
+              {/* Continuation Sheet Reference (BS 7671) */}
+              <div className="space-y-2">
+                <Label htmlFor="continuationSheetNo" className="text-sm">
+                  Continuation Sheet No.
+                </Label>
+                <Input
+                  id="continuationSheetNo"
+                  value={formData.continuationSheetNo || ''}
+                  onChange={(e) => onUpdate('continuationSheetNo', e.target.value)}
+                  placeholder="e.g., 1"
+                  className="h-11 text-base touch-manipulation max-w-[200px]"
+                />
+              </div>
             </div>
 
             {/* Installation Dates */}

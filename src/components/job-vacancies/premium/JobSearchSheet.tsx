@@ -207,12 +207,12 @@ const JobSearchSheet = ({
               </div>
               <div>
                 <h2 className="text-lg font-bold text-white">Search Jobs</h2>
-                <p className="text-xs text-white/50">Find your perfect role</p>
+                <p className="text-xs text-white">Find your perfect role</p>
               </div>
             </div>
             <button
               onClick={onClose}
-              className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/20 transition-colors"
+              className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:text-white hover:bg-white/20 transition-colors"
             >
               <X className="h-5 w-5" />
             </button>
@@ -223,7 +223,7 @@ const JobSearchSheet = ({
             {/* Job Search Input */}
             <div className="relative">
               {!query && (
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40 pointer-events-none" />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white pointer-events-none" />
               )}
               <Input
                 ref={queryInputRef}
@@ -232,7 +232,7 @@ const JobSearchSheet = ({
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                 placeholder="Job title, skill, or company"
                 className={cn(
-                  'h-12 pr-4 bg-white/5 border-white/10 text-white placeholder:text-white/40 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20',
+                  'h-12 pr-4 bg-white/5 border-white/10 text-white placeholder:text-white rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20',
                   !query && 'pl-12'
                 )}
               />
@@ -241,7 +241,7 @@ const JobSearchSheet = ({
             {/* Location Input */}
             <div className="relative">
               {!location && (
-                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white/40 pointer-events-none" />
+                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-white pointer-events-none" />
               )}
               <Input
                 value={location}
@@ -251,7 +251,7 @@ const JobSearchSheet = ({
                 onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
                 placeholder="Location (city, postcode, or remote)"
                 className={cn(
-                  'h-12 pr-4 bg-white/5 border-white/10 text-white placeholder:text-white/40 rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20',
+                  'h-12 pr-4 bg-white/5 border-white/10 text-white placeholder:text-white rounded-xl focus:border-amber-500/50 focus:ring-amber-500/20',
                   !location && 'pl-12'
                 )}
               />
@@ -274,7 +274,7 @@ const JobSearchSheet = ({
                         }}
                         className="w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-white/5 transition-colors"
                       >
-                        <MapPin className="h-4 w-4 text-white/40" />
+                        <MapPin className="h-4 w-4 text-white" />
                         <span className="text-sm text-white">{loc}</span>
                       </button>
                     ))}
@@ -295,7 +295,7 @@ const JobSearchSheet = ({
             >
               <div className="flex items-center gap-3">
                 <Sparkles
-                  className={cn('h-5 w-5', isAISearchEnabled ? 'text-purple-400' : 'text-white/40')}
+                  className={cn('h-5 w-5', isAISearchEnabled ? 'text-purple-400' : 'text-white')}
                 />
                 <div className="text-left">
                   <span
@@ -306,7 +306,7 @@ const JobSearchSheet = ({
                   >
                     AI Job Match
                   </span>
-                  <p className="text-xs text-white/50">Match jobs to your profile</p>
+                  <p className="text-xs text-white">Match jobs to your profile</p>
                 </div>
               </div>
               <div
@@ -344,12 +344,12 @@ const JobSearchSheet = ({
               >
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
-                    <Clock className="h-4 w-4 text-white/40" />
+                    <Clock className="h-4 w-4 text-white" />
                     <span className="text-sm font-medium text-white">Recent Searches</span>
                   </div>
                   <button
                     onClick={clearRecentSearches}
-                    className="text-xs text-white/40 hover:text-red-400 transition-colors"
+                    className="text-xs text-white hover:text-red-400 transition-colors"
                   >
                     Clear all
                   </button>
@@ -364,18 +364,18 @@ const JobSearchSheet = ({
                       onClick={() => handleQuickSearch(search.query, search.location)}
                     >
                       <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center">
-                        <Search className="h-4 w-4 text-white/40" />
+                        <Search className="h-4 w-4 text-white" />
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-sm text-white font-medium truncate">{search.query}</p>
                         {search.location && (
-                          <p className="text-xs text-white/50 truncate flex items-center gap-1">
+                          <p className="text-xs text-white truncate flex items-center gap-1">
                             <MapPin className="h-3 w-3" />
                             {search.location}
                           </p>
                         )}
                       </div>
-                      <span className="text-xs text-white/30">
+                      <span className="text-xs text-white">
                         {formatTimeAgo(search.timestamp)}
                       </span>
                       <button
@@ -385,7 +385,7 @@ const JobSearchSheet = ({
                         }}
                         className="opacity-0 group-hover:opacity-100 p-1 hover:bg-white/10 rounded transition-all"
                       >
-                        <X className="h-4 w-4 text-white/40" />
+                        <X className="h-4 w-4 text-white" />
                       </button>
                     </motion.div>
                   ))}
@@ -415,7 +415,7 @@ const JobSearchSheet = ({
                     whileTap="tap"
                     custom={index}
                     onClick={() => handleQuickSearch(term)}
-                    className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-white/70 hover:bg-amber-500/20 hover:text-amber-300 hover:border-amber-500/30 transition-all"
+                    className="flex items-center gap-1.5 px-3 py-2 rounded-full bg-white/5 border border-white/10 text-sm text-white hover:bg-amber-500/20 hover:text-amber-300 hover:border-amber-500/30 transition-all"
                   >
                     <Briefcase className="h-3.5 w-3.5" />
                     {term}
@@ -436,7 +436,7 @@ const JobSearchSheet = ({
                 <Zap className="h-4 w-4 text-amber-400" />
                 <span className="text-sm font-medium text-amber-300">Search Tips</span>
               </div>
-              <ul className="space-y-1.5 text-xs text-white/60">
+              <ul className="space-y-1.5 text-xs text-white">
                 <li className="flex items-center gap-2">
                   <ChevronRight className="h-3 w-3 text-amber-400" />
                   Use specific job titles for better matches

@@ -124,7 +124,7 @@ const SupportNetwork = () => {
                 <Input
                   type="email"
                   placeholder="Enter your email address"
-                  className="flex-grow bg-white/5 border-white/20 text-white placeholder:text-white/50"
+                  className="flex-grow bg-white/5 border-white/20 text-white placeholder:text-white"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />

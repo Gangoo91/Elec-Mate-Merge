@@ -203,7 +203,7 @@ export default function IpafModule5Section2() {
           <Button
             variant="ghost"
             size="icon"
-            className="min-h-[44px] min-w-[44px] text-white/70 hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] min-w-[44px] text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../ipaf-module-5">
@@ -211,7 +211,7 @@ export default function IpafModule5Section2() {
             </Link>
           </Button>
           <div className="flex-1 min-w-0">
-            <p className="text-xs text-white/40">Module 5 {'\u2022'} Section 2</p>
+            <p className="text-xs text-white">Module 5 {'\u2022'} Section 2</p>
             <h1 className="text-sm font-semibold text-white truncate">
               Risk Assessment for Tower Use
             </h1>
@@ -234,7 +234,7 @@ export default function IpafModule5Section2() {
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Risk Assessment for Tower Use
           </h2>
-          <p className="text-white/60 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Applying the HSE 5-step risk assessment process to mobile access tower work — from
             hazard identification to ongoing review
           </p>
@@ -246,7 +246,7 @@ export default function IpafModule5Section2() {
             <Zap className="h-4 w-4" />
             In 30 Seconds
           </h3>
-          <p className="text-white/80 text-base leading-relaxed">
+          <p className="text-white text-base leading-relaxed">
             Every tower operation requires a risk assessment. The HSE 5-step process takes you from
             identifying hazards through to implementing controls and reviewing them as conditions
             change. Site-specific factors — ground conditions, overhead services, weather, traffic —
@@ -261,7 +261,7 @@ export default function IpafModule5Section2() {
             <HardHat className="h-4 w-4" />
             On Site
           </h3>
-          <p className="text-white/80 text-base leading-relaxed">
+          <p className="text-white text-base leading-relaxed">
             Before erecting a tower, walk the planned location. Look up for power lines and overhead
             obstructions. Look down at the ground — is it firm, level, and capable of supporting the
             point loads? Look around — are there vehicles, public footpaths, other trades? Check the
@@ -287,7 +287,7 @@ export default function IpafModule5Section2() {
             ].map((outcome, i) => (
               <li key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </li>
             ))}
           </ul>
@@ -304,7 +304,7 @@ export default function IpafModule5Section2() {
             <h3 className="text-xl font-semibold text-white">Step 1: Identify the Hazards</h3>
           </div>
           <div className="border-l-2 border-red-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The first step is to systematically identify everything that could cause harm during
               tower assembly, use, and dismantling. Walk the planned work area before any equipment
               arrives on site.
@@ -315,7 +315,7 @@ export default function IpafModule5Section2() {
                 Site-Specific Hazards to Identify
               </h4>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="space-y-2 text-sm text-white/70">
+                <div className="space-y-2 text-sm text-white">
                   <p className="text-white font-medium">Ground Conditions</p>
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
@@ -340,7 +340,7 @@ export default function IpafModule5Section2() {
                     </li>
                   </ul>
                 </div>
-                <div className="space-y-2 text-sm text-white/70">
+                <div className="space-y-2 text-sm text-white">
                   <p className="text-white font-medium">Overhead Hazards</p>
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
@@ -365,7 +365,7 @@ export default function IpafModule5Section2() {
                     </li>
                   </ul>
                 </div>
-                <div className="space-y-2 text-sm text-white/70">
+                <div className="space-y-2 text-sm text-white">
                   <p className="text-white font-medium">Proximity Hazards</p>
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
@@ -390,7 +390,7 @@ export default function IpafModule5Section2() {
                     </li>
                   </ul>
                 </div>
-                <div className="space-y-2 text-sm text-white/70">
+                <div className="space-y-2 text-sm text-white">
                   <p className="text-white font-medium">Environmental Factors</p>
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
@@ -431,7 +431,7 @@ export default function IpafModule5Section2() {
             <h3 className="text-xl font-semibold text-white">Step 2: Who Might Be Harmed</h3>
           </div>
           <div className="border-l-2 border-orange-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Consider all persons who could be affected by tower scaffold work — not just the
               people on the platform. The assessment must account for different groups and how each
               might be exposed to harm.
@@ -441,7 +441,7 @@ export default function IpafModule5Section2() {
                 <Users className="h-4 w-4 text-orange-400" />
                 Groups at Risk
               </h4>
-              <div className="space-y-3 text-sm text-white/70">
+              <div className="space-y-3 text-sm text-white">
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-orange-400 font-medium">Tower Users</p>
                   <p>
@@ -503,7 +503,7 @@ export default function IpafModule5Section2() {
             </h3>
           </div>
           <div className="border-l-2 border-amber-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               For each identified hazard, evaluate how likely it is to cause harm and how severe
               that harm could be. Then apply the hierarchy of control to select proportionate
               measures, starting with the most effective controls.
@@ -520,7 +520,7 @@ export default function IpafModule5Section2() {
                   </span>
                   <div>
                     <p className="text-green-400 font-medium">Eliminate</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Can the work be done from ground level? Can the item be pre-fabricated at low
                       level? Can a different method avoid working at height entirely?
                     </p>
@@ -532,7 +532,7 @@ export default function IpafModule5Section2() {
                   </span>
                   <div>
                     <p className="text-blue-400 font-medium">Substitute</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Can a lower-risk access method be used? Would a podium step or scaffold be
                       more appropriate than a tower for this specific task?
                     </p>
@@ -544,7 +544,7 @@ export default function IpafModule5Section2() {
                   </span>
                   <div>
                     <p className="text-purple-400 font-medium">Engineering Controls</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Guardrails, toeboards, stabilisers, outriggers, exclusion zone barriers —
                       physical measures that isolate people from the hazard
                     </p>
@@ -556,7 +556,7 @@ export default function IpafModule5Section2() {
                   </span>
                   <div>
                     <p className="text-amber-400 font-medium">Administrative Controls</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Permit-to-work systems, training requirements, inspection regimes, safe
                       systems of work, toolbox talks, wind speed monitoring procedures
                     </p>
@@ -568,7 +568,7 @@ export default function IpafModule5Section2() {
                   </span>
                   <div>
                     <p className="text-red-400 font-medium">PPE (Last Resort)</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Hard hats for ground workers, high-visibility clothing near traffic, harnesses
                       only where specified by the manufacturer for that tower configuration
                     </p>
@@ -578,7 +578,7 @@ export default function IpafModule5Section2() {
             </div>
             <div className="bg-white/5 border border-white/10 rounded-lg p-4">
               <h4 className="font-semibold text-white text-sm mb-2">Exclusion Zones</h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 An exclusion zone around the tower base prevents ground-level workers and members of
                 the public from being struck by falling objects. The zone should extend at least as
                 far from the base as the tower is tall, adjusted for the nature of the work being
@@ -600,7 +600,7 @@ export default function IpafModule5Section2() {
             <h3 className="text-xl font-semibold text-white">Step 4: Record Your Findings</h3>
           </div>
           <div className="border-l-2 border-green-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The significant findings of the risk assessment must be recorded in writing. This
               serves three purposes: it demonstrates compliance with legal duties, it provides a
               communication tool for briefing workers, and it creates a baseline for review when
@@ -611,7 +611,7 @@ export default function IpafModule5Section2() {
                 <FileText className="h-4 w-4 text-green-400" />
                 What the Written Assessment Must Include
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                   <span>Description of the work activity and location</span>
@@ -648,7 +648,7 @@ export default function IpafModule5Section2() {
             </div>
             <div className="bg-white/5 border border-white/10 rounded-lg p-4">
               <h4 className="font-semibold text-white text-sm mb-2">Communication Is Essential</h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 The written assessment must be communicated to all workers involved in the task.
                 This is typically done through toolbox talks at the start of each shift, with
                 workers signing to confirm they have been briefed. Simply having a risk assessment
@@ -682,7 +682,7 @@ export default function IpafModule5Section2() {
             <h3 className="text-xl font-semibold text-white">Step 5: Review Regularly</h3>
           </div>
           <div className="border-l-2 border-purple-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               A risk assessment is a living document. It must be reviewed and updated whenever
               conditions change — not just filed away and forgotten. On a dynamic construction site,
               conditions can change daily or even hourly.
@@ -692,7 +692,7 @@ export default function IpafModule5Section2() {
                 <RefreshCw className="h-4 w-4 text-purple-400" />
                 Review Triggers
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                   <span>Weather conditions change (wind increases, rain, ice)</span>
@@ -741,7 +741,7 @@ export default function IpafModule5Section2() {
             <h3 className="text-xl font-semibold text-white">Method Statement Requirements</h3>
           </div>
           <div className="border-l-2 border-cyan-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               A method statement (safe system of work) translates the risk assessment into a
               step-by-step procedure. For tower scaffold work, it should cover the entire lifecycle:
               delivery, assembly, use, modification, moving, and dismantling.
@@ -750,7 +750,7 @@ export default function IpafModule5Section2() {
               <h4 className="font-semibold text-white text-sm mb-2">
                 Typical Method Statement Contents
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                   <span>Scope of work and tower specification (type, height, load class)</span>
@@ -801,44 +801,44 @@ export default function IpafModule5Section2() {
             <h3 className="text-xl font-semibold text-white">Dynamic Risk Assessment</h3>
           </div>
           <div className="border-l-2 border-emerald-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               A dynamic risk assessment is the ongoing, real-time evaluation of changing conditions
               that every competent worker should perform continuously. It complements the formal
               written assessment — it does not replace it.
             </p>
             <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-white text-sm mb-2">The SLAM Technique</h4>
-              <p className="text-white/70 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 A simple mental checklist for ongoing hazard awareness:
               </p>
               <div className="grid grid-cols-2 gap-3">
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-emerald-400 font-bold">S — Stop</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Pause and consider what you are about to do
                   </p>
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-emerald-400 font-bold">L — Look</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Observe the environment for hazards and changes
                   </p>
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-emerald-400 font-bold">A — Assess</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Evaluate whether conditions are safe to proceed
                   </p>
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-emerald-400 font-bold">M — Manage</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Take action — proceed safely or stop and report
                   </p>
                 </div>
               </div>
             </div>
-            <p className="text-white/70 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Dynamic risk assessment is especially important for tower work because conditions
               change throughout the day — wind picks up, rain starts, other trades begin work
               nearby, ground conditions change, or the operative becomes fatigued. The principle is
@@ -875,7 +875,7 @@ export default function IpafModule5Section2() {
             <h3 className="text-xl font-semibold text-white">Site-Specific Risk Factors</h3>
           </div>
           <div className="border-l-2 border-sky-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Every site presents unique challenges that a generic risk assessment cannot address.
               These site-specific factors must be assessed on location before any tower work begins.
             </p>
@@ -886,7 +886,7 @@ export default function IpafModule5Section2() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-sky-400 font-semibold text-xs">Soft Ground</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Grass, recently dug ground, waterlogged areas — castors and base plates can sink
                     under the point load of a tower. Use sole boards or spreader plates to
                     distribute the load. Monitor throughout the day as conditions can change.
@@ -894,7 +894,7 @@ export default function IpafModule5Section2() {
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-sky-400 font-semibold text-xs">Slopes & Cambers</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Car parks have drainage cambers, pavements have cross-falls, and industrial
                     yards may have gradients. Adjustable base legs can compensate for minor slopes,
                     but steep gradients may make the location unsuitable.
@@ -902,7 +902,7 @@ export default function IpafModule5Section2() {
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-sky-400 font-semibold text-xs">Confined Areas</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Narrow corridors, stairwells, and rooms with limited clearance restrict tower
                     size, assembly method, and rescue options. Confined spaces may also have
                     restricted ventilation and emergency exit routes.
@@ -910,7 +910,7 @@ export default function IpafModule5Section2() {
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <p className="text-sky-400 font-semibold text-xs">Shared Workspaces</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Where other trades are working nearby, the risk assessment must address
                     coordination: exclusion zones, communication protocols, timing of noisy or
                     disruptive work, and shared access routes.
@@ -922,7 +922,7 @@ export default function IpafModule5Section2() {
               <h4 className="font-semibold text-white text-sm mb-2">
                 The Importance of the Site Walk
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 A risk assessment written in the office without visiting the site is fundamentally
                 flawed. The assessor must physically walk the intended tower location and movement
                 routes, look up for overhead hazards, look down at the ground surface, and talk to
@@ -944,7 +944,7 @@ export default function IpafModule5Section2() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
               <div>
                 <h4 className="font-medium text-blue-400 mb-2">Risk Assessment</h4>
-                <ul className="space-y-1 text-white/70 text-xs">
+                <ul className="space-y-1 text-white text-xs">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Identifies what could go wrong</span>
@@ -969,7 +969,7 @@ export default function IpafModule5Section2() {
               </div>
               <div>
                 <h4 className="font-medium text-cyan-400 mb-2">Method Statement</h4>
-                <ul className="space-y-1 text-white/70 text-xs">
+                <ul className="space-y-1 text-white text-xs">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Step-by-step work procedure</span>
@@ -994,7 +994,7 @@ export default function IpafModule5Section2() {
               </div>
             </div>
             <div className="mt-3 bg-black/20 rounded-lg p-3">
-              <p className="text-white/70 text-xs text-center">
+              <p className="text-white text-xs text-center">
                 Together they form the <strong className="text-white">RAMS</strong> (Risk Assessment
                 and Method Statement) — the foundation of safe tower scaffold operations.
               </p>
@@ -1014,7 +1014,7 @@ export default function IpafModule5Section2() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-3">
                 <h4 className="font-medium text-white text-sm">Risk Assessment Checklist</h4>
-                <ul className="space-y-1 text-xs text-white/70">
+                <ul className="space-y-1 text-xs text-white">
                   <li>&#10003; Walk the site before writing the assessment</li>
                   <li>&#10003; Check overhead services and clearance distances</li>
                   <li>&#10003; Assess ground conditions and bearing capacity</li>
@@ -1026,7 +1026,7 @@ export default function IpafModule5Section2() {
               </div>
               <div className="space-y-3">
                 <h4 className="font-medium text-white text-sm">Common Mistakes to Avoid</h4>
-                <ul className="space-y-1 text-xs text-white/70">
+                <ul className="space-y-1 text-xs text-white">
                   <li>&#10007; Using a generic assessment without site-specific detail</li>
                   <li>&#10007; Writing the assessment after the work has started</li>
                   <li>&#10007; Failing to brief operatives on the assessment findings</li>
@@ -1054,7 +1054,7 @@ export default function IpafModule5Section2() {
                 <p className="text-elec-yellow font-semibold text-xs mb-1">
                   Management of Health and Safety at Work Regulations 1999
                 </p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Regulation 3 — requires every employer to carry out a suitable and sufficient risk
                   assessment. This is the primary legal duty driving the 5-step process.
                 </p>
@@ -1063,7 +1063,7 @@ export default function IpafModule5Section2() {
                 <p className="text-elec-yellow font-semibold text-xs mb-1">
                   Work at Height Regulations 2005
                 </p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Regulation 4 — work at height must be properly planned, appropriately supervised,
                   and carried out in a manner that is safe. Planning includes emergency and rescue
                   procedures.
@@ -1071,7 +1071,7 @@ export default function IpafModule5Section2() {
               </div>
               <div className="bg-black/20 rounded-lg p-3">
                 <p className="text-elec-yellow font-semibold text-xs mb-1">CDM Regulations 2015</p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   On construction projects, the principal contractor must coordinate risk management
                   between all contractors. Pre-construction information and the construction phase
                   plan must address tower scaffold risks.
@@ -1081,7 +1081,7 @@ export default function IpafModule5Section2() {
                 <p className="text-elec-yellow font-semibold text-xs mb-1">
                   HSWA 1974 — Section 2 & 3
                 </p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   General duties to employees (s2) and non-employees (s3) underpin all specific
                   regulations. Failure to risk-assess tower work can result in prosecution under
                   HSWA as well as the specific regulations.
@@ -1100,7 +1100,7 @@ export default function IpafModule5Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-xl p-4">
                 <h4 className="font-medium text-white mb-2 text-sm">{faq.question}</h4>
-                <p className="text-sm text-white/60 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

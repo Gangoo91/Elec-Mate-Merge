@@ -132,7 +132,7 @@ export const CircuitCard = ({
               'h-9 w-9 p-0 rounded-xl',
               'bg-white/[0.06] hover:bg-elec-yellow/15',
               'border border-white/10 hover:border-elec-yellow/30',
-              'text-white/60 hover:text-elec-yellow',
+              'text-white hover:text-elec-yellow',
               'transition-all duration-ios-fast',
               'active:scale-95',
               'touch-manipulation'
@@ -258,7 +258,7 @@ export const CircuitCard = ({
                 'w-full justify-between h-11 px-4 rounded-xl',
                 'bg-white/[0.04] border border-elec-yellow/15',
                 'hover:bg-elec-yellow/10 hover:border-elec-yellow/30',
-                'text-white/70 text-sm font-medium',
+                'text-white text-sm font-medium',
                 'transition-all duration-ios-fast',
                 'active:scale-[0.99]',
                 'touch-manipulation'

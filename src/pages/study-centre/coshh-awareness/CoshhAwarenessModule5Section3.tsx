@@ -222,7 +222,7 @@ export default function CoshhAwarenessModule5Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-5">
@@ -247,7 +247,7 @@ export default function CoshhAwarenessModule5Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Emergency Procedures
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             COSHH Regulation 13 requirements for dealing with accidents, incidents, and emergencies
             involving hazardous substances &mdash; spill response, first aid, fire procedures,
             RIDDOR reporting, and incident investigation
@@ -382,7 +382,7 @@ export default function CoshhAwarenessModule5Section3() {
                   <AlertTriangle className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-amber-300">The SDS Is Your Starting Point</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Every emergency procedure should be informed by the{' '}
                   <strong className="text-white">Safety Data Sheet (SDS)</strong> for each hazardous
                   substance in the workplace. <strong className="text-white">Section 4</strong> of
@@ -433,7 +433,7 @@ export default function CoshhAwarenessModule5Section3() {
                         <span className="flex items-center justify-center w-5 h-5 rounded-full bg-violet-500/20 text-violet-400 text-xs font-bold flex-shrink-0">
                           {i + 1}
                         </span>
-                        <p className="text-sm text-white/80">{step}</p>
+                        <p className="text-sm text-white">{step}</p>
                       </div>
                     ))}
                   </div>
@@ -458,7 +458,7 @@ export default function CoshhAwarenessModule5Section3() {
                         <span className="flex items-center justify-center w-5 h-5 rounded-full bg-red-500/20 text-red-400 text-xs font-bold flex-shrink-0">
                           {i + 1}
                         </span>
-                        <p className="text-sm text-white/80">{step}</p>
+                        <p className="text-sm text-white">{step}</p>
                       </div>
                     ))}
                   </div>
@@ -468,21 +468,21 @@ export default function CoshhAwarenessModule5Section3() {
               {/* Spill Kit Types */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-violet-400 font-medium mb-3">Spill Kit Types</h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Different chemicals require different spill kit contents. Using the wrong kit can
                   be ineffective or dangerous.
                 </p>
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-violet-500/5 border border-violet-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-violet-300 mb-1">General Purpose</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Polypropylene pads and granules. Absorbs most liquids including oils,
                       solvents, and water-based chemicals. The most common type found in workplaces.
                     </p>
                   </div>
                   <div className="bg-amber-500/5 border border-amber-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-amber-300 mb-1">Acid Spill Kit</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Contains alkaline neutralising granules (e.g. sodium bicarbonate) and
                       acid-resistant PPE. Changes colour when neutralisation is complete. For
                       battery acid, etching solutions, and mineral acids.
@@ -490,14 +490,14 @@ export default function CoshhAwarenessModule5Section3() {
                   </div>
                   <div className="bg-blue-500/5 border border-blue-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-blue-300 mb-1">Alkali Spill Kit</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Contains acidic neutralising granules (e.g. citric acid) and alkali-resistant
                       PPE. For caustic soda, bleach, cement washings, and alkaline cleaning agents.
                     </p>
                   </div>
                   <div className="bg-red-500/5 border border-red-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-red-300 mb-1">Mercury Spill Kit</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Contains mercury-absorbing powder (sulphur or zinc amalgamation powder),
                       aspirator syringe, small brush, and sealable container. For broken
                       thermometers or mercury switches. Standard absorbents do not work on mercury.
@@ -513,7 +513,7 @@ export default function CoshhAwarenessModule5Section3() {
                     Spill Kit Location &amp; Training
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Spill kits must be{' '}
                   <strong className="text-white">
                     located close to where hazardous substances are used and stored
@@ -537,7 +537,7 @@ export default function CoshhAwarenessModule5Section3() {
             <Droplets className="h-5 w-5 text-violet-400" />
             Spill Response Flowchart
           </h2>
-          <p className="text-white/80 mb-6 text-sm">
+          <p className="text-white mb-6 text-sm">
             The diagram below shows the decision-making process when you discover a chemical spill
             in the workplace.
           </p>
@@ -553,7 +553,7 @@ export default function CoshhAwarenessModule5Section3() {
               </div>
               <div className="bg-violet-500/10 border border-violet-500/30 rounded-lg p-3 flex-1 mb-2">
                 <p className="text-violet-400 font-medium text-sm">Discover the spill</p>
-                <p className="text-white/60 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Stop. Do not walk through the spill or touch the substance.
                 </p>
               </div>
@@ -569,7 +569,7 @@ export default function CoshhAwarenessModule5Section3() {
               </div>
               <div className="bg-violet-500/10 border border-violet-500/30 rounded-lg p-3 flex-1 mb-2">
                 <p className="text-violet-400 font-medium text-sm">Identify the substance</p>
-                <p className="text-white/60 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Check the container label and SDS. Determine the hazard classification.
                 </p>
               </div>
@@ -586,21 +586,21 @@ export default function CoshhAwarenessModule5Section3() {
               <div className="flex-1 mb-2">
                 <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 mb-3">
                   <p className="text-amber-400 font-medium text-sm">Assess the size and risk</p>
-                  <p className="text-white/60 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Can you deal with it safely using your spill kit and training?
                   </p>
                 </div>
                 <div className="grid sm:grid-cols-2 gap-2 ml-4 sm:ml-6">
                   <div className="bg-green-500/5 border border-green-500/20 rounded-lg p-2.5">
                     <p className="text-green-300 text-xs font-medium">YES &mdash; Small spill</p>
-                    <p className="text-white/50 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Don PPE &rarr; contain &rarr; absorb &rarr; clean &rarr; dispose as hazardous
                       waste
                     </p>
                   </div>
                   <div className="bg-red-500/5 border border-red-500/20 rounded-lg p-2.5">
                     <p className="text-red-300 text-xs font-medium">NO &mdash; Large spill</p>
-                    <p className="text-white/50 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Evacuate area &rarr; call emergency services &rarr; specialist clean-up
                     </p>
                   </div>
@@ -618,7 +618,7 @@ export default function CoshhAwarenessModule5Section3() {
               </div>
               <div className="bg-violet-500/10 border border-violet-500/30 rounded-lg p-3 flex-1 mb-2">
                 <p className="text-violet-400 font-medium text-sm">Report the incident</p>
-                <p className="text-white/60 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Notify your supervisor. Record the spill in the incident log. Determine if RIDDOR
                   reporting is required.
                 </p>
@@ -634,7 +634,7 @@ export default function CoshhAwarenessModule5Section3() {
               </div>
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3 flex-1">
                 <p className="text-blue-400 font-medium text-sm">Investigate and learn</p>
-                <p className="text-white/60 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Identify root cause &rarr; implement corrective actions &rarr; update COSHH
                   assessment &rarr; share lessons learnt
                 </p>
@@ -642,7 +642,7 @@ export default function CoshhAwarenessModule5Section3() {
             </div>
           </div>
 
-          <p className="text-white/50 text-xs text-center mt-4 italic">
+          <p className="text-white text-xs text-center mt-4 italic">
             Spill response decision flowchart &mdash; from discovery to investigation
           </p>
         </section>
@@ -680,7 +680,7 @@ export default function CoshhAwarenessModule5Section3() {
                       <span className="flex items-center justify-center w-5 h-5 rounded-full bg-red-500/20 text-red-400 text-xs font-bold flex-shrink-0">
                         {i + 1}
                       </span>
-                      <p className="text-sm text-white/80">{step}</p>
+                      <p className="text-sm text-white">{step}</p>
                     </div>
                   ))}
                 </div>
@@ -689,7 +689,7 @@ export default function CoshhAwarenessModule5Section3() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <h3 className="text-violet-400 font-medium mb-2 text-sm">Ventilation</h3>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -719,7 +719,7 @@ export default function CoshhAwarenessModule5Section3() {
                   <h3 className="text-violet-400 font-medium mb-2 text-sm">
                     Safe Re-Entry Criteria
                   </h3>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -761,7 +761,7 @@ export default function CoshhAwarenessModule5Section3() {
                   <Search className="h-5 w-5 text-violet-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-violet-300">Gas Detection Equipment</h3>
                 </div>
-                <div className="text-white/80 text-sm space-y-2">
+                <div className="text-white text-sm space-y-2">
                   <p>
                     <strong className="text-white">Multi-gas detectors</strong> can simultaneously
                     monitor for oxygen levels, flammable gases (LEL), and specific toxic gases (e.g.
@@ -805,7 +805,7 @@ export default function CoshhAwarenessModule5Section3() {
                     <span className="flex items-center justify-center w-5 h-5 rounded-full bg-violet-500/20 text-violet-400 text-xs font-bold flex-shrink-0">
                       1
                     </span>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       <strong className="text-white">Remove contaminated clothing</strong>{' '}
                       immediately &mdash; cut it off if necessary. Protect yourself from
                       contamination (wear gloves).
@@ -815,7 +815,7 @@ export default function CoshhAwarenessModule5Section3() {
                     <span className="flex items-center justify-center w-5 h-5 rounded-full bg-violet-500/20 text-violet-400 text-xs font-bold flex-shrink-0">
                       2
                     </span>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       <strong className="text-white">
                         Flush with running water for 15&ndash;20 minutes
                       </strong>
@@ -827,7 +827,7 @@ export default function CoshhAwarenessModule5Section3() {
                     <span className="flex items-center justify-center w-5 h-5 rounded-full bg-violet-500/20 text-violet-400 text-xs font-bold flex-shrink-0">
                       3
                     </span>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       <strong className="text-white">Specific measures:</strong> for hydrofluoric
                       acid (HF) burns, apply{' '}
                       <strong className="text-white">calcium gluconate gel</strong> after flushing
@@ -840,7 +840,7 @@ export default function CoshhAwarenessModule5Section3() {
                     <span className="flex items-center justify-center w-5 h-5 rounded-full bg-violet-500/20 text-violet-400 text-xs font-bold flex-shrink-0">
                       4
                     </span>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Seek medical attention for all chemical skin burns. Take the SDS with you.
                     </p>
                   </div>
@@ -855,7 +855,7 @@ export default function CoshhAwarenessModule5Section3() {
                     <span className="flex items-center justify-center w-5 h-5 rounded-full bg-violet-500/20 text-violet-400 text-xs font-bold flex-shrink-0">
                       1
                     </span>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       <strong className="text-white">Irrigate immediately</strong> with clean water
                       or saline for{' '}
                       <strong className="text-white">15&ndash;20 minutes continuously</strong>. Use
@@ -866,7 +866,7 @@ export default function CoshhAwarenessModule5Section3() {
                     <span className="flex items-center justify-center w-5 h-5 rounded-full bg-violet-500/20 text-violet-400 text-xs font-bold flex-shrink-0">
                       2
                     </span>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       <strong className="text-white">Hold the eyelids open</strong> throughout
                       irrigation to ensure the water reaches all surfaces of the eye. The casualty
                       will instinctively try to close their eyes &mdash; you may need to assist.
@@ -876,7 +876,7 @@ export default function CoshhAwarenessModule5Section3() {
                     <span className="flex items-center justify-center w-5 h-5 rounded-full bg-violet-500/20 text-violet-400 text-xs font-bold flex-shrink-0">
                       3
                     </span>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       If only one eye is affected,{' '}
                       <strong className="text-white">
                         tilt the head so the contaminated eye is lower
@@ -888,7 +888,7 @@ export default function CoshhAwarenessModule5Section3() {
                     <span className="flex items-center justify-center w-5 h-5 rounded-full bg-violet-500/20 text-violet-400 text-xs font-bold flex-shrink-0">
                       4
                     </span>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       <strong className="text-white">
                         Continue irrigating during transport to hospital
                       </strong>{' '}
@@ -907,7 +907,7 @@ export default function CoshhAwarenessModule5Section3() {
                     <span className="flex items-center justify-center w-5 h-5 rounded-full bg-violet-500/20 text-violet-400 text-xs font-bold flex-shrink-0">
                       1
                     </span>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       <strong className="text-white">
                         Remove the casualty from the contaminated area
                       </strong>{' '}
@@ -919,7 +919,7 @@ export default function CoshhAwarenessModule5Section3() {
                     <span className="flex items-center justify-center w-5 h-5 rounded-full bg-violet-500/20 text-violet-400 text-xs font-bold flex-shrink-0">
                       2
                     </span>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Place the casualty in a{' '}
                       <strong className="text-white">comfortable resting position</strong>. If
                       conscious and breathing normally, sit them upright to aid breathing.
@@ -929,7 +929,7 @@ export default function CoshhAwarenessModule5Section3() {
                     <span className="flex items-center justify-center w-5 h-5 rounded-full bg-violet-500/20 text-violet-400 text-xs font-bold flex-shrink-0">
                       3
                     </span>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       <strong className="text-white">Administer oxygen if available</strong> and you
                       are trained to do so. High-flow oxygen at 15 litres per minute via a
                       non-rebreather mask.
@@ -939,7 +939,7 @@ export default function CoshhAwarenessModule5Section3() {
                     <span className="flex items-center justify-center w-5 h-5 rounded-full bg-violet-500/20 text-violet-400 text-xs font-bold flex-shrink-0">
                       4
                     </span>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       <strong className="text-white">Call 999 for any significant exposure</strong>.
                       Monitor breathing continuously. If the casualty stops breathing, begin CPR
                       immediately.
@@ -959,7 +959,7 @@ export default function CoshhAwarenessModule5Section3() {
                     <span className="flex items-center justify-center w-5 h-5 rounded-full bg-red-500/20 text-red-400 text-xs font-bold flex-shrink-0">
                       1
                     </span>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       <strong className="text-red-300">Do NOT induce vomiting</strong> unless the
                       SDS specifically advises it. Corrosive chemicals will burn the throat and
                       mouth a second time if vomited. Vomited chemicals may also be inhaled into the
@@ -970,7 +970,7 @@ export default function CoshhAwarenessModule5Section3() {
                     <span className="flex items-center justify-center w-5 h-5 rounded-full bg-red-500/20 text-red-400 text-xs font-bold flex-shrink-0">
                       2
                     </span>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       If the casualty is conscious and able to swallow,{' '}
                       <strong className="text-white">give sips of water or milk</strong> to dilute
                       the chemical. Do not give large quantities.
@@ -980,7 +980,7 @@ export default function CoshhAwarenessModule5Section3() {
                     <span className="flex items-center justify-center w-5 h-5 rounded-full bg-red-500/20 text-red-400 text-xs font-bold flex-shrink-0">
                       3
                     </span>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       <strong className="text-white">Call 999 immediately</strong>. Take the
                       container or SDS to hospital so medical staff know exactly what was ingested.
                     </p>
@@ -989,7 +989,7 @@ export default function CoshhAwarenessModule5Section3() {
                     <span className="flex items-center justify-center w-5 h-5 rounded-full bg-red-500/20 text-red-400 text-xs font-bold flex-shrink-0">
                       4
                     </span>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       If the casualty is unconscious, place in the{' '}
                       <strong className="text-white">recovery position</strong> and monitor
                       breathing. Do not give anything by mouth to an unconscious person.
@@ -1001,7 +1001,7 @@ export default function CoshhAwarenessModule5Section3() {
               {/* Chemical Burns */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-violet-400 font-medium mb-3">Chemical Burns</h3>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1045,7 +1045,7 @@ export default function CoshhAwarenessModule5Section3() {
             <ShieldAlert className="h-5 w-5 text-violet-400" />
             First Aid by Exposure Route
           </h2>
-          <p className="text-white/80 mb-6 text-sm">
+          <p className="text-white mb-6 text-sm">
             Quick-reference summary of first aid actions for each route of chemical exposure.
           </p>
 
@@ -1058,7 +1058,7 @@ export default function CoshhAwarenessModule5Section3() {
                 </div>
                 <p className="text-sm font-semibold text-violet-400">Skin Contact</p>
               </div>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>Remove contaminated clothing</li>
                 <li>
                   Flush with water <strong className="text-white">15&ndash;20 min</strong>
@@ -1076,7 +1076,7 @@ export default function CoshhAwarenessModule5Section3() {
                 </div>
                 <p className="text-sm font-semibold text-blue-400">Eye Contact</p>
               </div>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>
                   Irrigate immediately <strong className="text-white">15&ndash;20 min</strong>
                 </li>
@@ -1094,7 +1094,7 @@ export default function CoshhAwarenessModule5Section3() {
                 </div>
                 <p className="text-sm font-semibold text-amber-400">Inhalation</p>
               </div>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>Remove to fresh air (protect yourself first)</li>
                 <li>Sit upright if conscious</li>
                 <li>Oxygen if available and trained</li>
@@ -1112,7 +1112,7 @@ export default function CoshhAwarenessModule5Section3() {
                 </div>
                 <p className="text-sm font-semibold text-red-400">Ingestion</p>
               </div>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>
                   <strong className="text-red-300">Do NOT induce vomiting</strong>
                 </li>
@@ -1125,7 +1125,7 @@ export default function CoshhAwarenessModule5Section3() {
             </div>
           </div>
 
-          <p className="text-white/50 text-xs text-center mt-4 italic">
+          <p className="text-white text-xs text-center mt-4 italic">
             First aid quick-reference by exposure route &mdash; always check the SDS Section 4 for
             substance-specific guidance
           </p>
@@ -1199,7 +1199,7 @@ export default function CoshhAwarenessModule5Section3() {
                   <AlertTriangle className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-amber-300">DSEAR Considerations</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The Dangerous Substances and Explosive Atmospheres Regulations 2002 (DSEAR)
                   require employers to assess the risk of fire and explosion from dangerous
                   substances and take measures to eliminate or reduce those risks. Where hazardous
@@ -1270,7 +1270,7 @@ export default function CoshhAwarenessModule5Section3() {
                   <FileWarning className="h-5 w-5 text-violet-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-violet-300">How to Report</h3>
                 </div>
-                <div className="text-white/80 text-sm space-y-2">
+                <div className="text-white text-sm space-y-2">
                   <p>
                     Reports are made online via the{' '}
                     <strong className="text-white">HSE RIDDOR reporting website</strong>. Fatal and
@@ -1406,7 +1406,7 @@ export default function CoshhAwarenessModule5Section3() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <h3 className="text-violet-400 font-semibold text-sm mb-2">Eye Wash Stations</h3>
-                  <ul className="text-xs text-white/80 space-y-1.5 leading-relaxed">
+                  <ul className="text-xs text-white space-y-1.5 leading-relaxed">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1438,7 +1438,7 @@ export default function CoshhAwarenessModule5Section3() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <h3 className="text-violet-400 font-semibold text-sm mb-2">Safety Showers</h3>
-                  <ul className="text-xs text-white/80 space-y-1.5 leading-relaxed">
+                  <ul className="text-xs text-white space-y-1.5 leading-relaxed">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1472,7 +1472,7 @@ export default function CoshhAwarenessModule5Section3() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <h3 className="text-violet-400 font-semibold text-sm mb-2">Spill Kits</h3>
-                  <ul className="text-xs text-white/80 space-y-1.5 leading-relaxed">
+                  <ul className="text-xs text-white space-y-1.5 leading-relaxed">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1502,7 +1502,7 @@ export default function CoshhAwarenessModule5Section3() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <h3 className="text-violet-400 font-semibold text-sm mb-2">First Aid Supplies</h3>
-                  <ul className="text-xs text-white/80 space-y-1.5 leading-relaxed">
+                  <ul className="text-xs text-white space-y-1.5 leading-relaxed">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1539,7 +1539,7 @@ export default function CoshhAwarenessModule5Section3() {
                   <CheckCircle className="h-5 w-5 text-violet-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-violet-300">Maintenance Is Not Optional</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   All emergency equipment must be{' '}
                   <strong className="text-white">
                     regularly inspected, tested, and maintained
@@ -1630,7 +1630,7 @@ export default function CoshhAwarenessModule5Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1644,7 +1644,7 @@ export default function CoshhAwarenessModule5Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-5-section-2">

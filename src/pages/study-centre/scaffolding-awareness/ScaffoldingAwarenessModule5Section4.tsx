@@ -232,7 +232,7 @@ const ScaffoldingAwarenessModule5Section4 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Loading, Storage &amp; Prohibited Actions
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding scaffold load classes, maximum bay loads, material storage rules, loading
             bays, and the prohibited actions that must never be carried out on or around scaffolding
           </p>
@@ -258,7 +258,7 @@ const ScaffoldingAwarenessModule5Section4 = () => {
                 <Weight className="h-4 w-4" />
                 Load Class Reference Table (BS EN 12811-1)
               </h3>
-              <p className="text-white/60 text-xs mb-4">
+              <p className="text-white text-xs mb-4">
                 UDL = Uniformly Distributed Load across the full bay area
               </p>
 
@@ -294,10 +294,10 @@ const ScaffoldingAwarenessModule5Section4 = () => {
                       <span className="text-white text-xs sm:text-sm">75 kg/m&sup2;</span>
                     </div>
                     <div className="bg-white/5 px-3 py-2.5 text-center border-b border-white/5">
-                      <span className="text-white/60 text-xs sm:text-sm">1.0 kN</span>
+                      <span className="text-white text-xs sm:text-sm">1.0 kN</span>
                     </div>
                     <div className="bg-white/5 px-3 py-2.5 border-b border-white/5">
-                      <span className="text-white/80 text-xs sm:text-sm">Inspection only</span>
+                      <span className="text-white text-xs sm:text-sm">Inspection only</span>
                     </div>
                   </div>
 
@@ -310,10 +310,10 @@ const ScaffoldingAwarenessModule5Section4 = () => {
                       <span className="text-white text-xs sm:text-sm">150 kg/m&sup2;</span>
                     </div>
                     <div className="bg-white/[0.03] px-3 py-2.5 text-center border-b border-white/5">
-                      <span className="text-white/60 text-xs sm:text-sm">1.5 kN</span>
+                      <span className="text-white text-xs sm:text-sm">1.5 kN</span>
                     </div>
                     <div className="bg-white/[0.03] px-3 py-2.5 border-b border-white/5">
-                      <span className="text-white/80 text-xs sm:text-sm">
+                      <span className="text-white text-xs sm:text-sm">
                         Light-duty work, painting
                       </span>
                     </div>
@@ -348,10 +348,10 @@ const ScaffoldingAwarenessModule5Section4 = () => {
                       <span className="text-white text-xs sm:text-sm">300 kg/m&sup2;</span>
                     </div>
                     <div className="bg-white/[0.03] px-3 py-2.5 text-center border-b border-white/5">
-                      <span className="text-white/60 text-xs sm:text-sm">3.0 kN</span>
+                      <span className="text-white text-xs sm:text-sm">3.0 kN</span>
                     </div>
                     <div className="bg-white/[0.03] px-3 py-2.5 border-b border-white/5">
-                      <span className="text-white/80 text-xs sm:text-sm">
+                      <span className="text-white text-xs sm:text-sm">
                         Heavy-duty masonry work
                       </span>
                     </div>
@@ -366,10 +366,10 @@ const ScaffoldingAwarenessModule5Section4 = () => {
                       <span className="text-white text-xs sm:text-sm">450 kg/m&sup2;</span>
                     </div>
                     <div className="bg-white/5 px-3 py-2.5 text-center border-b border-white/5">
-                      <span className="text-white/60 text-xs sm:text-sm">3.0 kN</span>
+                      <span className="text-white text-xs sm:text-sm">3.0 kN</span>
                     </div>
                     <div className="bg-white/5 px-3 py-2.5 border-b border-white/5">
-                      <span className="text-white/80 text-xs sm:text-sm">
+                      <span className="text-white text-xs sm:text-sm">
                         Heavy-duty with storage
                       </span>
                     </div>
@@ -384,17 +384,17 @@ const ScaffoldingAwarenessModule5Section4 = () => {
                       <span className="text-white text-xs sm:text-sm">600 kg/m&sup2;</span>
                     </div>
                     <div className="bg-white/[0.03] px-3 py-2.5 text-center">
-                      <span className="text-white/60 text-xs sm:text-sm">3.0 kN</span>
+                      <span className="text-white text-xs sm:text-sm">3.0 kN</span>
                     </div>
                     <div className="bg-white/[0.03] px-3 py-2.5 rounded-br-lg">
-                      <span className="text-white/80 text-xs sm:text-sm">
+                      <span className="text-white text-xs sm:text-sm">
                         Special heavy-duty (stone cladding)
                       </span>
                     </div>
                   </div>
                 </div>
               </div>
-              <p className="text-white/50 text-xs text-center mt-3 italic">
+              <p className="text-white text-xs text-center mt-3 italic">
                 On mobile, scroll horizontally to view all columns
               </p>
             </div>
@@ -404,7 +404,7 @@ const ScaffoldingAwarenessModule5Section4 = () => {
                 <AlertTriangle className="h-5 w-5 text-slate-400 flex-shrink-0 mt-0.5" />
                 <h3 className="font-semibold text-slate-300">Class 3 Is the UK Default</h3>
               </div>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 On most UK construction sites, scaffolds are erected to{' '}
                 <strong className="text-white">Class 3 (200 kg/m&sup2;)</strong>. This covers
                 general construction tasks such as bricklaying, rendering, painting, and light
@@ -473,7 +473,7 @@ const ScaffoldingAwarenessModule5Section4 = () => {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="rounded-lg p-3 sm:p-4 bg-slate-500/10 border-l-2 border-l-slate-500/50 border border-slate-500/30">
                   <p className="font-semibold text-base text-slate-400 mb-2">Cumulative Loading</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Remember that the bay load includes{' '}
                     <strong className="text-white">everything</strong> on that bay: operatives
                     (assume 80&ndash;100 kg per person), their tools, any materials being used, and
@@ -485,7 +485,7 @@ const ScaffoldingAwarenessModule5Section4 = () => {
                   <p className="font-semibold text-base text-slate-400 mb-2">
                     Signs of Overloading
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Watch for visible deflection (bowing) in scaffold boards, creaking or cracking
                     sounds, standards leaning or bowing outward, and any movement in the scaffold
                     frame that was not present before. If you notice any of these signs,{' '}
@@ -524,26 +524,26 @@ const ScaffoldingAwarenessModule5Section4 = () => {
                   <div className="p-4 space-y-3 text-sm">
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-green-400 mt-2 flex-shrink-0"></div>
-                      <span className="text-white/80">
+                      <span className="text-white">
                         Weight spread <strong className="text-white">evenly</strong> across the full
                         bay area
                       </span>
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-green-400 mt-2 flex-shrink-0"></div>
-                      <span className="text-white/80">
+                      <span className="text-white">
                         All boards and ledgers share the load equally
                       </span>
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-green-400 mt-2 flex-shrink-0"></div>
-                      <span className="text-white/80">
+                      <span className="text-white">
                         Stress is within design limits for each component
                       </span>
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-green-400 mt-2 flex-shrink-0"></div>
-                      <span className="text-white/80">
+                      <span className="text-white">
                         Example: a single layer of bricks stored across the full bay width and
                         length
                       </span>
@@ -559,26 +559,26 @@ const ScaffoldingAwarenessModule5Section4 = () => {
                   <div className="p-4 space-y-3 text-sm">
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
-                      <span className="text-white/80">
+                      <span className="text-white">
                         Weight <strong className="text-white">concentrated</strong> in a small area
                         of the bay
                       </span>
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
-                      <span className="text-white/80">
+                      <span className="text-white">
                         Only a few boards and one or two ledgers carry all the weight
                       </span>
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
-                      <span className="text-white/80">
+                      <span className="text-white">
                         Individual components may fail even if total weight is within the bay limit
                       </span>
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
-                      <span className="text-white/80">
+                      <span className="text-white">
                         Example: a pallet of bricks placed in the centre of a bay, or a heavy
                         generator on a single board
                       </span>
@@ -594,7 +594,7 @@ const ScaffoldingAwarenessModule5Section4 = () => {
                     Point Loads Can Cause Localised Collapse
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   A scaffold board can typically support 1.5&ndash;3.0 kN as a concentrated load
                   (depending on the board type and span), but this is far less than the total bay
                   load might suggest. If you place 400 kg of materials in a pile on two boards in
@@ -697,7 +697,7 @@ const ScaffoldingAwarenessModule5Section4 = () => {
                   <CheckCircle className="h-5 w-5 text-slate-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-slate-300">Housekeeping Is a Safety Measure</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Keeping scaffold platforms clean and tidy is not just about appearance &mdash; it
                   is a <strong className="text-white">critical safety measure</strong>. Debris,
                   offcuts, packaging, and discarded materials create trip hazards, increase the risk
@@ -780,7 +780,7 @@ const ScaffoldingAwarenessModule5Section4 = () => {
                     Never Lift Materials Over Guard Rails
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Lifting or passing materials over the guard rails requires someone to lean over or
                   through the edge protection, creating a serious fall hazard. It also risks
                   dropping materials onto people below. If there is no loading bay and you need to
@@ -823,7 +823,7 @@ const ScaffoldingAwarenessModule5Section4 = () => {
                     <Ban className="h-4 w-4 text-red-400 flex-shrink-0 mt-0.5" />
                     <div>
                       <strong className="text-red-300">Do NOT remove scaffold boards</strong>
-                      <p className="text-white/70 mt-1">
+                      <p className="text-white mt-1">
                         Missing boards create fall-through hazards. Even removing one board
                         compromises the platform&rsquo;s integrity and can lead to a fatal fall.
                       </p>
@@ -836,7 +836,7 @@ const ScaffoldingAwarenessModule5Section4 = () => {
                       <strong className="text-red-300">
                         Do NOT remove guard rails or mid-rails
                       </strong>
-                      <p className="text-white/70 mt-1">
+                      <p className="text-white mt-1">
                         Guard rails are the primary fall protection. Removing them &mdash; even
                         temporarily, even to move materials &mdash; creates an immediate and lethal
                         fall hazard.
@@ -848,7 +848,7 @@ const ScaffoldingAwarenessModule5Section4 = () => {
                     <Ban className="h-4 w-4 text-red-400 flex-shrink-0 mt-0.5" />
                     <div>
                       <strong className="text-red-300">Do NOT remove toe boards</strong>
-                      <p className="text-white/70 mt-1">
+                      <p className="text-white mt-1">
                         Toe boards prevent tools, materials, and debris from falling off the
                         platform edge onto people below. Removing them is a falling objects hazard.
                       </p>
@@ -859,7 +859,7 @@ const ScaffoldingAwarenessModule5Section4 = () => {
                     <Ban className="h-4 w-4 text-red-400 flex-shrink-0 mt-0.5" />
                     <div>
                       <strong className="text-red-300">Do NOT remove or loosen ties</strong>
-                      <p className="text-white/70 mt-1">
+                      <p className="text-white mt-1">
                         Scaffold ties anchor the scaffold to the building and prevent it from
                         collapsing outward. Removing even one tie can destabilise the entire
                         scaffold.
@@ -871,7 +871,7 @@ const ScaffoldingAwarenessModule5Section4 = () => {
                     <Ban className="h-4 w-4 text-red-400 flex-shrink-0 mt-0.5" />
                     <div>
                       <strong className="text-red-300">Do NOT remove braces or ledgers</strong>
-                      <p className="text-white/70 mt-1">
+                      <p className="text-white mt-1">
                         Braces and ledgers provide structural rigidity. Without them, the scaffold
                         frame can rack (twist sideways) and collapse without warning.
                       </p>
@@ -882,7 +882,7 @@ const ScaffoldingAwarenessModule5Section4 = () => {
                     <Ban className="h-4 w-4 text-red-400 flex-shrink-0 mt-0.5" />
                     <div>
                       <strong className="text-red-300">Do NOT climb the scaffold face</strong>
-                      <p className="text-white/70 mt-1">
+                      <p className="text-white mt-1">
                         The scaffold frame is not a ladder. It has no proper hand or foot holds and
                         no fall protection on the outside face. Use internal ladders, stair towers,
                         or hoists.
@@ -896,7 +896,7 @@ const ScaffoldingAwarenessModule5Section4 = () => {
                       <strong className="text-red-300">
                         Do NOT use the scaffold as support for other structures
                       </strong>
-                      <p className="text-white/70 mt-1">
+                      <p className="text-white mt-1">
                         Attaching hoists, loading platforms, signage, lighting rigs, or other
                         structures to a scaffold without specific design approval adds unplanned
                         loads and forces that the scaffold was not designed to resist.
@@ -910,7 +910,7 @@ const ScaffoldingAwarenessModule5Section4 = () => {
                       <strong className="text-red-300">
                         Do NOT sheet or net the scaffold without design approval
                       </strong>
-                      <p className="text-white/70 mt-1">
+                      <p className="text-white mt-1">
                         Sheeting and debris netting dramatically increase wind loading on the
                         scaffold. Adding them without the scaffold being designed for the additional
                         wind load can cause catastrophic collapse in high winds.
@@ -927,7 +927,7 @@ const ScaffoldingAwarenessModule5Section4 = () => {
                     Only Competent Scaffolders May Modify Scaffolds
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   If you need any change to a scaffold &mdash; no matter how small &mdash; you must
                   request it through your supervisor or the scaffold coordinator. The change must be
                   carried out by a competent scaffolder (holding CISRS or equivalent qualification),
@@ -1005,7 +1005,7 @@ const ScaffoldingAwarenessModule5Section4 = () => {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="rounded-lg p-3 sm:p-4 bg-red-500/10 border-l-2 border-l-red-500/50 border border-red-500/30">
                   <p className="font-semibold text-base text-red-400 mb-2">Visual Warning Signs</p>
-                  <div className="space-y-2 text-sm text-white/80">
+                  <div className="space-y-2 text-sm text-white">
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                       <span>Boards bowing or deflecting visibly</span>
@@ -1028,7 +1028,7 @@ const ScaffoldingAwarenessModule5Section4 = () => {
                   <p className="font-semibold text-base text-slate-400 mb-2">
                     Common Causes of Overloading
                   </p>
-                  <div className="space-y-2 text-sm text-white/80">
+                  <div className="space-y-2 text-sm text-white">
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-slate-400 mt-2 flex-shrink-0"></div>
                       <span>Multiple trades storing materials on the same bay</span>
@@ -1182,7 +1182,7 @@ const ScaffoldingAwarenessModule5Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1198,7 +1198,7 @@ const ScaffoldingAwarenessModule5Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-5">

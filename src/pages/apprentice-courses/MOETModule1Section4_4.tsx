@@ -268,7 +268,7 @@ const MOETModule1Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module1-section4">
@@ -290,7 +290,7 @@ const MOETModule1Section4_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             PUWER — Provision and Use of Work Equipment Regulations 1998
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Legal requirements for all work equipment used by maintenance technicians
           </p>
         </header>
@@ -690,7 +690,7 @@ const MOETModule1Section4_4 = () => {
                   </li>
                   <li className="pl-1">Manufacturer's instructions where relevant</li>
                 </ul>
-                <p className="text-sm text-white/70 mt-2">
+                <p className="text-sm text-white mt-2">
                   For test instruments, this means access to the operating manual, understanding of
                   measurement categories (CAT I–IV), and knowledge of the limitations of each
                   instrument.
@@ -862,7 +862,7 @@ const MOETModule1Section4_4 = () => {
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>ST1426 note:</strong> PUWER is one of the "six-pack" regulations that every
               maintenance technician must understand. Your EPA will expect you to demonstrate
               knowledge of equipment suitability, maintenance, inspection, and safe use —
@@ -884,7 +884,7 @@ const MOETModule1Section4_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -937,7 +937,7 @@ const MOETModule1Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module1-section4-3">

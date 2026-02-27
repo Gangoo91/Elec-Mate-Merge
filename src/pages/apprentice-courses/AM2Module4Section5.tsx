@@ -200,12 +200,12 @@ const AM2Module4Section5 = () => {
 
       {/* Critical Warning */}
       <AM2CriticalWarning title="CRITICAL: Missing Defects = Assessment Failure">
-        <p className="text-ios-callout text-white/80 mb-2">
+        <p className="text-ios-callout text-white mb-2">
           Assessors are looking for your ability to spot faults, interpret test results, and apply
           regulation-based judgement. Candidates who ignore obvious defects or record incorrect
           results will fail this section.
         </p>
-        <p className="text-ios-callout text-white/90 font-medium">
+        <p className="text-ios-callout text-white font-medium">
           Professional competence includes identifying problems, not just completing tasks. This
           demonstrates real-world electrical safety awareness.
         </p>
@@ -225,7 +225,7 @@ const AM2Module4Section5 = () => {
 
         <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-4">
           <h4 className="text-ios-headline text-white font-semibold mb-2">Definition:</h4>
-          <p className="text-ios-callout text-white/80 mb-3">
+          <p className="text-ios-callout text-white mb-3">
             Any part of an installation that does not meet the requirements of BS 7671,
             manufacturer's instructions, or the installation specification.
           </p>
@@ -241,7 +241,7 @@ const AM2Module4Section5 = () => {
               <h4 className="text-ios-headline text-white font-semibold mb-2">
                 Safety-Critical Non-Compliances:
               </h4>
-              <ul className="text-ios-callout text-white/80 space-y-1.5">
+              <ul className="text-ios-callout text-white space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-red-400">•</span>
                   <span>Missing or disconnected CPC</span>
@@ -269,7 +269,7 @@ const AM2Module4Section5 = () => {
               <h4 className="text-ios-headline text-white font-semibold mb-2">
                 Design Non-Compliances:
               </h4>
-              <ul className="text-ios-callout text-white/80 space-y-1.5">
+              <ul className="text-ios-callout text-white space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>Incorrect cable size for load</span>
@@ -295,7 +295,7 @@ const AM2Module4Section5 = () => {
               <h4 className="text-ios-headline text-white font-semibold mb-2">
                 Workmanship Non-Compliances:
               </h4>
-              <ul className="text-ios-callout text-white/80 space-y-1.5">
+              <ul className="text-ios-callout text-white space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>Poor workmanship (crooked accessories)</span>
@@ -319,7 +319,7 @@ const AM2Module4Section5 = () => {
               <h4 className="text-ios-headline text-white font-semibold mb-2">
                 Testing Non-Compliances:
               </h4>
-              <ul className="text-ios-callout text-white/80 space-y-1.5">
+              <ul className="text-ios-callout text-white space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>Insulation resistance below 1 MΩ</span>
@@ -363,10 +363,10 @@ const AM2Module4Section5 = () => {
               <Eye className="h-4 w-4 text-elec-yellow" />
               Visual Inspection:
             </h4>
-            <p className="text-ios-footnote text-white/60 mb-2">
+            <p className="text-ios-footnote text-white mb-2">
               Before energising - systematic visual checks
             </p>
-            <ul className="text-ios-callout text-white/80 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Damage to cables or accessories</span>
@@ -387,10 +387,10 @@ const AM2Module4Section5 = () => {
               <Search className="h-4 w-4 text-emerald-400" />
               Test Results:
             </h4>
-            <p className="text-ios-footnote text-white/60 mb-2">
+            <p className="text-ios-footnote text-white mb-2">
               Compare readings with BS 7671 limits
             </p>
-            <ul className="text-ios-callout text-white/80 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Zs values vs maximum permitted</span>
@@ -411,10 +411,10 @@ const AM2Module4Section5 = () => {
               <Target className="h-4 w-4 text-purple-400" />
               Functional Checks:
             </h4>
-            <p className="text-ios-footnote text-white/60 mb-2">
+            <p className="text-ios-footnote text-white mb-2">
               Circuits not operating as intended
             </p>
-            <ul className="text-ios-callout text-white/80 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Switches not controlling correct loads</span>
@@ -440,7 +440,7 @@ const AM2Module4Section5 = () => {
               <p className="text-ios-callout text-white font-semibold mb-2">
                 Step-by-Step Approach:
               </p>
-              <ol className="text-ios-callout text-white/80 space-y-1 list-decimal list-inside">
+              <ol className="text-ios-callout text-white space-y-1 list-decimal list-inside">
                 <li>Pre-energisation visual inspection</li>
                 <li>Dead testing and measurement comparison</li>
                 <li>Live testing against BS 7671 limits</li>
@@ -452,7 +452,7 @@ const AM2Module4Section5 = () => {
               <p className="text-ios-callout text-white font-semibold mb-2">
                 Critical Reference Points:
               </p>
-              <ul className="text-ios-callout text-white/80 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
                   <span>BS 7671 maximum Zs tables</span>
@@ -478,7 +478,7 @@ const AM2Module4Section5 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-2">
               Most Common Faults Found:
             </h4>
-            <ul className="text-ios-callout text-white/80 space-y-1.5">
+            <ul className="text-ios-callout text-white space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-red-400">•</span>
                 <span>CPC unsleeved or disconnected</span>
@@ -502,7 +502,7 @@ const AM2Module4Section5 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-2">
               Test Result Failures:
             </h4>
-            <ul className="text-ios-callout text-white/80 space-y-1.5">
+            <ul className="text-ios-callout text-white space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-red-400">•</span>
                 <span>Zs above permitted value for protective device</span>
@@ -544,7 +544,7 @@ const AM2Module4Section5 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-3">
               Professional Reporting Principles:
             </h4>
-            <ul className="text-ios-callout text-white/80 space-y-2">
+            <ul className="text-ios-callout text-white space-y-2">
               <li className="flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                 <span>Record clearly on certificate or defect report</span>
@@ -568,7 +568,7 @@ const AM2Module4Section5 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-3">
               What to Include in Reports:
             </h4>
-            <ul className="text-ios-callout text-white/80 space-y-2">
+            <ul className="text-ios-callout text-white space-y-2">
               <li className="flex items-start gap-2">
                 <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <span>Specific location of non-compliance</span>
@@ -598,19 +598,19 @@ const AM2Module4Section5 = () => {
             <div className="space-y-2">
               <div className="bg-white/5 rounded-lg p-2">
                 <span className="text-ios-callout text-red-400">"Earth missing"</span>
-                <p className="text-ios-footnote text-white/60 mt-1">
+                <p className="text-ios-footnote text-white mt-1">
                   Too vague, no location specified
                 </p>
               </div>
               <div className="bg-white/5 rounded-lg p-2">
                 <span className="text-ios-callout text-red-400">"Ring fault"</span>
-                <p className="text-ios-footnote text-white/60 mt-1">
+                <p className="text-ios-footnote text-white mt-1">
                   No detail about nature of fault
                 </p>
               </div>
               <div className="bg-white/5 rounded-lg p-2">
                 <span className="text-ios-callout text-red-400">"RCD broken"</span>
-                <p className="text-ios-footnote text-white/60 mt-1">
+                <p className="text-ios-footnote text-white mt-1">
                   No test data or specific failure
                 </p>
               </div>
@@ -626,13 +626,13 @@ const AM2Module4Section5 = () => {
                 <span className="text-ios-callout text-emerald-400">
                   "CPC not connected at socket outlet in kitchen"
                 </span>
-                <p className="text-ios-footnote text-white/60 mt-1">Specific, clear, located</p>
+                <p className="text-ios-footnote text-white mt-1">Specific, clear, located</p>
               </div>
               <div className="bg-white/5 rounded-lg p-2">
                 <span className="text-ios-callout text-emerald-400">
                   "Ring final broken at consumer unit - L conductor"
                 </span>
-                <p className="text-ios-footnote text-white/60 mt-1">
+                <p className="text-ios-footnote text-white mt-1">
                   Specific conductor and location
                 </p>
               </div>
@@ -640,7 +640,7 @@ const AM2Module4Section5 = () => {
                 <span className="text-ios-callout text-emerald-400">
                   "RCD trip time 380ms at x1 IΔn - exceeds 300ms limit"
                 </span>
-                <p className="text-ios-footnote text-white/60 mt-1">
+                <p className="text-ios-footnote text-white mt-1">
                   Measured value and standard referenced
                 </p>
               </div>
@@ -662,7 +662,7 @@ const AM2Module4Section5 = () => {
               <CheckCircle className="h-4 w-4 text-emerald-400" />
               Professional Competence:
             </h4>
-            <ul className="text-ios-callout text-white/80 space-y-1.5">
+            <ul className="text-ios-callout text-white space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Candidate spots and records obvious faults</span>
@@ -687,7 +687,7 @@ const AM2Module4Section5 = () => {
               <Shield className="h-4 w-4 text-elec-yellow" />
               Safety Awareness:
             </h4>
-            <ul className="text-ios-callout text-white/80 space-y-1.5">
+            <ul className="text-ios-callout text-white space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Leaves installation safe, even if faults identified</span>
@@ -720,7 +720,7 @@ const AM2Module4Section5 = () => {
           <div className="space-y-4">
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="text-ios-headline text-white font-semibold mb-2">Know the Limits:</h4>
-              <ul className="text-ios-callout text-white/80 space-y-2">
+              <ul className="text-ios-callout text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>Memorise maximum Zs values for common MCBs (B32=1.44Ω, B20=2.30Ω)</span>
@@ -740,7 +740,7 @@ const AM2Module4Section5 = () => {
               <h4 className="text-ios-headline text-white font-semibold mb-2">
                 Visual Inspection Tips:
               </h4>
-              <ul className="text-ios-callout text-white/80 space-y-2">
+              <ul className="text-ios-callout text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
                   <span>Check CPCs visually - assessors always look for sleeving</span>
@@ -762,7 +762,7 @@ const AM2Module4Section5 = () => {
               <h4 className="text-ios-headline text-white font-semibold mb-2">
                 Test Result Analysis:
               </h4>
-              <ul className="text-ios-callout text-white/80 space-y-2">
+              <ul className="text-ios-callout text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
                   <span>Work logically - if reading looks wrong, re-test</span>
@@ -782,7 +782,7 @@ const AM2Module4Section5 = () => {
               <h4 className="text-ios-headline text-white font-semibold mb-2">
                 Professional Approach:
               </h4>
-              <ul className="text-ios-callout text-white/80 space-y-2">
+              <ul className="text-ios-callout text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
                   <span>Don't cover up - never hide or ignore defects</span>
@@ -821,7 +821,7 @@ const AM2Module4Section5 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-2">
               Example 1: Missed High Zs Reading
             </h4>
-            <p className="text-ios-callout text-white/80 mb-2">
+            <p className="text-ios-callout text-white mb-2">
               Candidate measured Zs of 2.5 Ω on a B32 breaker (limit 1.44Ω exceeded). Failed to
               report - <strong className="text-red-400">lost marks</strong>
             </p>
@@ -835,7 +835,7 @@ const AM2Module4Section5 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-2">
               Example 2: Ignored Polarity Error
             </h4>
-            <p className="text-ios-callout text-white/80 mb-2">
+            <p className="text-ios-callout text-white mb-2">
               Candidate found socket polarity reversed, but didn't note it. Assessor flagged -{' '}
               <strong className="text-red-400">fail</strong>
             </p>
@@ -849,7 +849,7 @@ const AM2Module4Section5 = () => {
             <h4 className="text-ios-headline text-white font-semibold mb-2">
               Example 3: Correct RCD Documentation
             </h4>
-            <p className="text-ios-callout text-white/80 mb-2">
+            <p className="text-ios-callout text-white mb-2">
               Candidate recorded RCD 1x test at 280ms, 5x at 36ms. Correctly recorded as pass -{' '}
               <strong className="text-emerald-400">full marks</strong>
             </p>
@@ -870,7 +870,7 @@ const AM2Module4Section5 = () => {
 
         <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-4">
           <h4 className="text-ios-headline text-white font-semibold mb-3">Key Takeaways:</h4>
-          <ul className="text-ios-callout text-white/80 space-y-2">
+          <ul className="text-ios-callout text-white space-y-2">
             <li className="flex items-start gap-2">
               <CheckCircle className="h-4 w-4 text-emerald-400 mt-0.5 flex-shrink-0" />
               <span>Identifying and reporting non-compliances proves professional competence</span>
@@ -902,7 +902,7 @@ const AM2Module4Section5 = () => {
 
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
           <h4 className="text-ios-headline text-elec-yellow font-semibold mb-2">Next Steps:</h4>
-          <p className="text-ios-callout text-white/80">
+          <p className="text-ios-callout text-white">
             You're now ready to move on to Section 6, where we'll cover time management during
             testing - a critical skill for AM2 success.
           </p>

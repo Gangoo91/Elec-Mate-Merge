@@ -493,7 +493,7 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-white/90 leading-relaxed text-sm sm:text-base">
+              <p className="text-white leading-relaxed text-sm sm:text-base">
                 {searchResult.aiSummary}
               </p>
             </CardContent>
@@ -504,7 +504,7 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
             <Card className="bg-card/50 border-border">
               <CardContent className="py-8 sm:py-12 text-center">
                 <div className="mx-auto w-16 h-16 sm:w-24 sm:h-24 bg-muted/50 rounded-full flex items-center justify-center mb-4">
-                  <Search className="h-8 w-8 sm:h-12 sm:w-12 text-white/60" />
+                  <Search className="h-8 w-8 sm:h-12 sm:w-12 text-white" />
                 </div>
                 <h3 className="text-lg sm:text-xl font-semibold text-foreground mb-2">
                   No Exact Matches Found
@@ -580,7 +580,7 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
                                   <Button
                                     variant="ghost"
                                     size="sm"
-                                    className="flex-1 sm:flex-none h-10 sm:h-8 sm:w-8 p-0 text-white/70 hover:text-green-400"
+                                    className="flex-1 sm:flex-none h-10 sm:h-8 sm:w-8 p-0 text-white hover:text-green-400"
                                     onClick={(e) => e.stopPropagation()}
                                   >
                                     {isExpanded ? (
@@ -599,7 +599,7 @@ const AISearchInterface = ({ onRegulationSelect }: AISearchInterfaceProps) => {
                                 <Button
                                   variant="outline"
                                   size="sm"
-                                  className="flex-1 sm:flex-none h-10 sm:h-8 text-white/70 hover:text-green-400 hover:bg-green-500/20 border-green-500/30"
+                                  className="flex-1 sm:flex-none h-10 sm:h-8 text-white hover:text-green-400 hover:bg-green-500/20 border-green-500/30"
                                   onClick={() => onRegulationSelect(reg.number)}
                                 >
                                   <ArrowRight className="h-4 w-4 sm:mr-0 mr-2" />

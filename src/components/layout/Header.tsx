@@ -52,8 +52,8 @@ const LiveClock = ({ className }: { className?: string }) => {
     <div className={cn('flex items-center gap-2', className)}>
       {/* Date pill */}
       <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white/5 border border-white/10">
-        <span className="text-xs font-medium text-white/60">{day}</span>
-        <span className="text-xs font-semibold text-white/80">{date}</span>
+        <span className="text-xs font-medium text-white">{day}</span>
+        <span className="text-xs font-semibold text-white">{date}</span>
       </div>
 
       {/* Time display */}
@@ -67,8 +67,8 @@ const LiveClock = ({ className }: { className?: string }) => {
             {minutes}
           </span>
           <span className="inline-flex items-baseline">
-            <span className="text-xs font-medium text-white/40 ml-0.5">:</span>
-            <span className="text-xs font-medium tabular-nums text-white/40 w-4">{seconds}</span>
+            <span className="text-xs font-medium text-white ml-0.5">:</span>
+            <span className="text-xs font-medium tabular-nums text-white w-4">{seconds}</span>
           </span>
           <span className="ml-1 px-1.5 py-0.5 text-xs font-bold rounded bg-elec-yellow/20 text-elec-yellow border border-elec-yellow/30">
             {period.toUpperCase()}
@@ -149,7 +149,7 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
                 )}
                 aria-label="Toggle navigation menu"
               >
-                <Menu className="h-5 w-5 text-white/80" />
+                <Menu className="h-5 w-5 text-white" />
               </Button>
             </motion.div>
           )}
@@ -158,7 +158,7 @@ const Header = ({ toggleSidebar }: HeaderProps) => {
           <motion.div className="flex items-center" whileTap={{ scale: 0.97 }}>
             <h1 className="text-xl sm:text-2xl font-bold tracking-tight flex items-center">
               <span className="text-elec-yellow">Elec</span>
-              <span className="text-white/40">-</span>
+              <span className="text-white">-</span>
               <span className="text-white">Mate</span>
             </h1>
             <RecordingIndicator className="ml-1.5" />

@@ -181,7 +181,7 @@ const IndustrialElectricalModule1Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/industrial-electrical-module-1">
@@ -203,7 +203,7 @@ const IndustrialElectricalModule1Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Cabling, Busbar Systems, and Riser Design
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Industrial cable selection, containment systems, and vertical distribution design
           </p>
         </header>
@@ -287,7 +287,7 @@ const IndustrialElectricalModule1Section4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Steel Wire Armoured (SWA) Cable
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 SWA cable is the most common choice for industrial power distribution. The steel
                 wire armouring provides excellent mechanical protection against impact, crushing,
                 and rodent attack.
@@ -305,7 +305,7 @@ const IndustrialElectricalModule1Section4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Mineral Insulated Copper Clad (MICC) Cable
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 MICC cable consists of copper conductors surrounded by compressed magnesium oxide
                 insulation, enclosed in a seamless copper sheath. This provides exceptional fire
                 resistance and durability.
@@ -313,7 +313,7 @@ const IndustrialElectricalModule1Section4 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-xs font-medium text-white mb-1">Advantages:</p>
-                  <ul className="text-sm text-white/90 space-y-0.5">
+                  <ul className="text-sm text-white space-y-0.5">
                     <li>Indefinite fire survival (copper melts at 1083 degrees C)</li>
                     <li>Temperature range: -40 to +250 degrees C continuous</li>
                     <li>Small diameter for given current rating</li>
@@ -322,7 +322,7 @@ const IndustrialElectricalModule1Section4 = () => {
                 </div>
                 <div>
                   <p className="text-xs font-medium text-white mb-1">Limitations:</p>
-                  <ul className="text-sm text-white/90 space-y-0.5">
+                  <ul className="text-sm text-white space-y-0.5">
                     <li>Higher cost than SWA</li>
                     <li>Requires special termination skills</li>
                     <li>Hygroscopic - seals must be perfect</li>
@@ -336,7 +336,7 @@ const IndustrialElectricalModule1Section4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Fire Performance (FP) Cables
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 FP cables (such as FP200 Gold) provide circuit integrity during fire conditions
                 while being easier to install than MICC. Designed to BS 8519 and tested to BS EN
                 50200.
@@ -690,7 +690,7 @@ const IndustrialElectricalModule1Section4 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Voltage Drop Verification</p>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 Maximum voltage drop (BS 7671): <strong>5%</strong> total (3% for lighting)
               </p>
               <p className="text-sm text-elec-yellow/90 font-mono text-center py-2">
@@ -882,7 +882,7 @@ const IndustrialElectricalModule1Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -901,7 +901,7 @@ const IndustrialElectricalModule1Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/industrial-electrical-module-1">

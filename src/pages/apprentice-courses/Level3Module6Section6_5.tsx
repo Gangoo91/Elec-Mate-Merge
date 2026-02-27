@@ -266,7 +266,7 @@ const Level3Module6Section6_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section6">
@@ -632,23 +632,23 @@ const Level3Module6Section6_5 = () => {
               <table className="w-full text-xs">
                 <tbody>
                   <tr>
-                    <td className="py-1 text-white/70">Work description</td>
+                    <td className="py-1 text-white">Work description</td>
                     <td className="py-1 text-white">Scope, location, duration</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">Sequence</td>
+                    <td className="py-1 text-white">Sequence</td>
                     <td className="py-1 text-white">Step-by-step with controls</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">Resources</td>
+                    <td className="py-1 text-white">Resources</td>
                     <td className="py-1 text-white">People, equipment, PPE</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">Emergency</td>
+                    <td className="py-1 text-white">Emergency</td>
                     <td className="py-1 text-white">Procedures and contacts</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">Sign-off</td>
+                    <td className="py-1 text-white">Sign-off</td>
                     <td className="py-1 text-white">Authorisation and briefing</td>
                   </tr>
                 </tbody>
@@ -659,23 +659,23 @@ const Level3Module6Section6_5 = () => {
               <table className="w-full text-xs">
                 <tbody>
                   <tr>
-                    <td className="py-1 text-white/70">1. Identify</td>
+                    <td className="py-1 text-white">1. Identify</td>
                     <td className="py-1 text-white">Correct circuit/equipment</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">2. Isolate</td>
+                    <td className="py-1 text-white">2. Isolate</td>
                     <td className="py-1 text-white">Switch off, remove fuses</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">3. Secure</td>
+                    <td className="py-1 text-white">3. Secure</td>
                     <td className="py-1 text-white">Lock off, apply tags</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">4. Prove dead</td>
+                    <td className="py-1 text-white">4. Prove dead</td>
                     <td className="py-1 text-white">Test with approved indicator</td>
                   </tr>
                   <tr>
-                    <td className="py-1 text-white/70">5. Work safely</td>
+                    <td className="py-1 text-white">5. Work safely</td>
                     <td className="py-1 text-white">Follow method statement</td>
                   </tr>
                 </tbody>
@@ -692,7 +692,7 @@ const Level3Module6Section6_5 = () => {
             {faqs.map((faq, idx) => (
               <details key={idx} className="group p-3 rounded-lg bg-white/5 text-sm">
                 <summary className="cursor-pointer text-white font-medium">{faq.question}</summary>
-                <p className="mt-2 text-white/70">{faq.answer}</p>
+                <p className="mt-2 text-white">{faq.answer}</p>
               </details>
             ))}
           </div>

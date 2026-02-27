@@ -15,7 +15,7 @@ interface VideoSearchBarProps {
 export function VideoSearchBar({ value, onChange }: VideoSearchBarProps) {
   return (
     <div className="relative">
-      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+      <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
       <Input
         value={value}
         onChange={(e) => onChange(e.target.value)}
@@ -27,7 +27,7 @@ export function VideoSearchBar({ value, onChange }: VideoSearchBarProps) {
           onClick={() => onChange('')}
           className="absolute right-1 top-1/2 -translate-y-1/2 h-9 w-9 flex items-center justify-center rounded-full active:bg-white/10 touch-manipulation"
         >
-          <X className="h-4 w-4 text-white/40" />
+          <X className="h-4 w-4 text-white" />
         </button>
       )}
     </div>

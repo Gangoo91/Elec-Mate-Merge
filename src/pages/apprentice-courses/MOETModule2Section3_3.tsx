@@ -248,7 +248,7 @@ const MOETModule2Section3_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module2-section3">
@@ -270,7 +270,7 @@ const MOETModule2Section3_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Synchronous Motors and Generators
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Synchronous speed, DC excitation, power factor control, alternators, and parallel
             operation for electrical maintenance
           </p>
@@ -392,7 +392,7 @@ const MOETModule2Section3_3 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-white mb-3">Starting a Synchronous Motor</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 A synchronous motor cannot start from standstill under its own synchronous torque —
                 the rotating field moves past the stationary rotor too quickly for the DC-excited
                 poles to lock on. Special starting arrangements are required:
@@ -402,7 +402,7 @@ const MOETModule2Section3_3 = () => {
                   <p className="text-sm font-medium text-white mb-1">
                     Damper (Amortisseur) Winding Starting
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     The most common method. Short-circuited bars embedded in the rotor pole faces
                     act as a squirrel cage, providing induction motor starting torque. The motor
                     accelerates to near synchronous speed with the DC field de-energised, then the
@@ -411,7 +411,7 @@ const MOETModule2Section3_3 = () => {
                 </div>
                 <div className="bg-black/30 p-3 rounded">
                   <p className="text-sm font-medium text-white mb-1">Pony Motor Starting</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     A small auxiliary motor (pony motor) mechanically coupled to the synchronous
                     motor shaft accelerates it to near synchronous speed. The DC field is then
                     energised and the motor synchronises. The pony motor is then disconnected or
@@ -422,7 +422,7 @@ const MOETModule2Section3_3 = () => {
                   <p className="text-sm font-medium text-white mb-1">
                     Variable Frequency Drive (VFD) Starting
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     The supply frequency is started at a very low value and gradually increased,
                     bringing the synchronous motor up to speed without the rotor ever falling out of
                     step. This is the modern preferred method for large synchronous motors.
@@ -433,7 +433,7 @@ const MOETModule2Section3_3 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-white mb-3">The Load Angle</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 When a synchronous motor is loaded, the rotor poles do not align exactly with the
                 stator field poles — the rotor lags behind by an angle called the load angle
                 (delta). As mechanical load increases, the load angle increases. At the pull-out
@@ -465,7 +465,7 @@ const MOETModule2Section3_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">
                 V-Curves — Excitation vs Stator Current
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 The relationship between DC excitation and stator current for a synchronous motor at
                 constant load produces a characteristic V-shaped curve:
               </p>
@@ -474,7 +474,7 @@ const MOETModule2Section3_3 = () => {
                   <p className="text-sm font-medium text-amber-400 mb-1">
                     Under-Excited (low DC field current)
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     The motor operates at a lagging power factor — it absorbs reactive power from
                     the supply, similar to an induction motor. Stator current is relatively high.
                   </p>
@@ -483,7 +483,7 @@ const MOETModule2Section3_3 = () => {
                   <p className="text-sm font-medium text-green-400 mb-1">
                     Normal Excitation (unity power factor)
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     At the correct excitation level, the motor operates at unity power factor —
                     stator current is at its minimum for a given load. This is the bottom of the
                     V-curve.
@@ -493,7 +493,7 @@ const MOETModule2Section3_3 = () => {
                   <p className="text-sm font-medium text-blue-400 mb-1">
                     Over-Excited (high DC field current)
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     The motor operates at a leading power factor — it generates reactive power,
                     acting like a capacitor connected to the supply. Stator current increases again.
                     This mode is used for power factor correction.
@@ -504,7 +504,7 @@ const MOETModule2Section3_3 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
               <p className="text-sm font-medium text-green-400 mb-3">Synchronous Condensers</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 A synchronous condenser is a synchronous motor running at no mechanical load,
                 operated in the over-excited condition solely to generate reactive power for power
                 factor correction.
@@ -533,7 +533,7 @@ const MOETModule2Section3_3 = () => {
               <div className="space-y-3">
                 <div className="bg-black/30 p-3 rounded">
                   <p className="text-sm font-medium text-white mb-1">Brushless Excitation</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     An AC exciter (small alternator) mounted on the same shaft has its output
                     rectified by rotating diodes and fed directly to the main field winding. No
                     brushes or slip rings — reduced maintenance. Controlled by the automatic voltage
@@ -544,7 +544,7 @@ const MOETModule2Section3_3 = () => {
                   <p className="text-sm font-medium text-white mb-1">
                     Static Excitation (Brush-Type)
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     DC from a controlled rectifier is fed to the rotor field winding through slip
                     rings and brushes. Faster response than brushless systems but requires brush
                     maintenance. Used on many older and some modern large machines.
@@ -576,9 +576,9 @@ const MOETModule2Section3_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">
                 Frequency and Pole Relationship
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90 mb-3">
+              <div className="bg-black/30 p-3 rounded text-sm text-white mb-3">
                 <p className="font-mono">f = (p x N) / 120</p>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   Where: f = frequency (Hz), p = number of poles, N = speed (rev/min)
                 </p>
               </div>
@@ -586,13 +586,13 @@ const MOETModule2Section3_3 = () => {
                 <table className="w-full text-sm text-left">
                   <thead>
                     <tr className="border-b border-white/10">
-                      <th className="py-2 pr-4 text-white/70 font-medium">Prime Mover</th>
-                      <th className="py-2 pr-4 text-white/70 font-medium">Typical Poles</th>
-                      <th className="py-2 pr-4 text-white/70 font-medium">Speed for 50Hz</th>
-                      <th className="py-2 text-white/70 font-medium">Rotor Type</th>
+                      <th className="py-2 pr-4 text-white font-medium">Prime Mover</th>
+                      <th className="py-2 pr-4 text-white font-medium">Typical Poles</th>
+                      <th className="py-2 pr-4 text-white font-medium">Speed for 50Hz</th>
+                      <th className="py-2 text-white font-medium">Rotor Type</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/90 text-xs">
+                  <tbody className="text-white text-xs">
                     <tr className="border-b border-white/5">
                       <td className="py-2 pr-4">Steam turbine</td>
                       <td className="py-2 pr-4">2</td>
@@ -624,7 +624,7 @@ const MOETModule2Section3_3 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-white mb-3">Voltage Regulation</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 The output voltage of an alternator varies with load due to the armature reaction
                 effect and the impedance voltage drop in the stator windings. The automatic voltage
                 regulator (AVR) continuously adjusts the DC field excitation to maintain constant
@@ -699,7 +699,7 @@ const MOETModule2Section3_3 = () => {
               <div className="space-y-3">
                 <div className="bg-black/30 p-3 rounded">
                   <p className="text-sm font-medium text-white mb-1">1. Voltage Magnitude</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     The incoming generator's terminal voltage must match the busbar voltage.
                     Adjusted by varying the DC field excitation (AVR setpoint). A voltage mismatch
                     causes large circulating currents (reactive power flow) when the breaker closes.
@@ -707,7 +707,7 @@ const MOETModule2Section3_3 = () => {
                 </div>
                 <div className="bg-black/30 p-3 rounded">
                   <p className="text-sm font-medium text-white mb-1">2. Frequency</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     The incoming generator's frequency must closely match the busbar frequency.
                     Adjusted by varying the prime mover speed (governor setpoint). Ideally, the
                     incoming machine should be running very slightly fast (0.1-0.5Hz above busbar
@@ -716,7 +716,7 @@ const MOETModule2Section3_3 = () => {
                 </div>
                 <div className="bg-black/30 p-3 rounded">
                   <p className="text-sm font-medium text-white mb-1">3. Phase Sequence</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     The phase sequence (rotation direction of the three-phase system) of the
                     incoming generator must match the busbar. Verified once during commissioning
                     using a phase rotation meter. Incorrect phase sequence would result in a short
@@ -725,7 +725,7 @@ const MOETModule2Section3_3 = () => {
                 </div>
                 <div className="bg-black/30 p-3 rounded">
                   <p className="text-sm font-medium text-white mb-1">4. Phase Angle (In-Phase)</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     The breaker must close at the instant when the voltages of the incoming
                     generator and the busbar are exactly in phase (zero phase difference). Monitored
                     using a synchroscope or synchronising lamps. Modern automatic synchronisers
@@ -766,7 +766,7 @@ const MOETModule2Section3_3 = () => {
               <p className="text-sm font-medium text-elec-yellow mb-2">
                 ST1426 Maintenance Competency
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 The Level 3 apprenticeship standard requires you to understand the principles of
                 synchronous machines, including starting methods, excitation systems, and the
                 requirements for parallel operation. You should be able to assist with generator
@@ -788,7 +788,7 @@ const MOETModule2Section3_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -807,7 +807,7 @@ const MOETModule2Section3_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module2-section3-2">

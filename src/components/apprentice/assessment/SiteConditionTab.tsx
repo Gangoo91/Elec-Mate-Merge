@@ -183,7 +183,7 @@ const SiteConditionTab = () => {
                 <CardTitle className="text-xl sm:text-2xl font-bold text-white">
                   Site Condition <span className="text-blue-400">Evaluation</span>
                 </CardTitle>
-                <p className="text-sm text-white/60 mt-1">
+                <p className="text-sm text-white mt-1">
                   Environmental & Working Conditions Assessment
                 </p>
               </div>
@@ -199,7 +199,7 @@ const SiteConditionTab = () => {
           </div>
         </CardHeader>
         <CardContent className="relative">
-          <p className="text-white/70 mb-4">
+          <p className="text-white mb-4">
             Assess environmental and working conditions to ensure safe and effective electrical
             installation work. This evaluation helps identify potential hazards and ensures optimal
             working conditions.
@@ -207,7 +207,7 @@ const SiteConditionTab = () => {
 
           {/* Progress Bar */}
           <div className="space-y-2">
-            <div className="flex justify-between text-xs text-white/60">
+            <div className="flex justify-between text-xs text-white">
               <span>Progress</span>
               <span>
                 {checkedItems.length} of {totalItems} items checked
@@ -285,7 +285,7 @@ const SiteConditionTab = () => {
                         {isChecked && <CheckCircle className="h-4 w-4 text-white" />}
                       </div>
                       <span
-                        className={`text-sm text-left ${isChecked ? 'text-green-400' : 'text-white/70'}`}
+                        className={`text-sm text-left ${isChecked ? 'text-green-400' : 'text-white'}`}
                       >
                         {item}
                       </span>
@@ -324,13 +324,13 @@ const SiteConditionTab = () => {
                     </div>
                     <h4 className={`font-semibold ${factorConfig.text}`}>{factor.factor}</h4>
                   </div>
-                  <p className="text-xs text-white/60 mb-3">
-                    <span className="font-medium text-white/80">Optimal: </span>
+                  <p className="text-xs text-white mb-3">
+                    <span className="font-medium text-white">Optimal: </span>
                     {factor.optimalRange}
                   </p>
                   <ul className="space-y-1.5">
                     {factor.considerations.map((consideration, idx) => (
-                      <li key={idx} className="text-xs text-white/70 flex items-start gap-2">
+                      <li key={idx} className="text-xs text-white flex items-start gap-2">
                         <span
                           className={`w-1 h-1 ${factorConfig.bg.replace('/10', '')} rounded-full mt-1.5 flex-shrink-0`}
                         />
@@ -381,10 +381,10 @@ const SiteConditionTab = () => {
             </div>
             <div>
               <h3 className="font-semibold text-orange-300 mb-2">Weather Considerations</h3>
-              <p className="text-sm text-white/70 mb-3">
+              <p className="text-sm text-white mb-3">
                 Always check weather conditions before starting outdoor electrical work:
               </p>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-center gap-2">
                   <AlertTriangle className="h-3.5 w-3.5 text-orange-400 flex-shrink-0" />
                   Do not work in wet conditions or during electrical storms

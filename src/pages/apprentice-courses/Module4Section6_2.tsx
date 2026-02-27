@@ -183,7 +183,7 @@ const Module4Section6_2 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -201,13 +201,13 @@ const Module4Section6_2 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.2</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.2</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Continuity and Polarity Checks (Functional, Non-Certified)
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master functional testing techniques to verify circuit integrity and correct conductor
               connections before formal certification testing
             </p>
@@ -219,7 +219,7 @@ const Module4Section6_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="grid md:grid-cols-2 gap-4 text-white/80">
+            <div className="grid md:grid-cols-2 gap-4 text-white">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
@@ -259,7 +259,7 @@ const Module4Section6_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <ul className="list-disc pl-6 space-y-2 text-white/80">
+            <ul className="list-disc pl-6 space-y-2 text-white">
               <li>
                 Define continuity and polarity in the context of electrical circuits and understand
                 their safety implications
@@ -289,7 +289,7 @@ const Module4Section6_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Understanding Continuity and Its Critical Importance
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Continuity testing verifies the integrity of electrical connections throughout
                 circuits, ensuring safe and reliable operation.
@@ -351,7 +351,7 @@ const Module4Section6_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Understanding Polarity and Connection Verification
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Polarity verification ensures conductors are connected to their designated
                 terminals, preventing safety hazards.
@@ -405,7 +405,7 @@ const Module4Section6_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Systematic Testing Procedures and Best Practices
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Following structured procedures ensures comprehensive verification while maintaining
                 safety throughout testing.
@@ -459,7 +459,7 @@ const Module4Section6_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Common Issues and Fault Identification
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Understanding typical faults helps rapid identification and efficient resolution
                 during functional testing.
@@ -507,7 +507,7 @@ const Module4Section6_2 = () => {
             <div className="space-y-4">
               <div className="p-4 rounded-lg border border-white/10">
                 <p className="font-medium text-white mb-2">Required Testing Equipment</p>
-                <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                <ul className="text-sm text-white space-y-1 list-disc pl-4">
                   <li>
                     Continuity tester or low-resistance ohmmeter for accurate resistance measurement
                   </li>
@@ -520,7 +520,7 @@ const Module4Section6_2 = () => {
 
               <div className="p-4 rounded-lg border border-green-400/30 bg-green-500/5">
                 <p className="font-medium text-white mb-2">Professional Testing Techniques</p>
-                <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                <ul className="text-sm text-white space-y-1 list-disc pl-4">
                   <li>
                     Label conductors before disconnection during installation to speed up testing
                   </li>
@@ -545,7 +545,7 @@ const Module4Section6_2 = () => {
               <p className="font-semibold text-white mb-3">
                 School Refurbishment Project - Critical Continuity Fault Discovery
               </p>
-              <div className="text-white/80 space-y-3 text-sm">
+              <div className="text-white space-y-3 text-sm">
                 <p>
                   <strong>Situation:</strong> During a comprehensive school refurbishment project,
                   functional continuity testing was performed on each circuit as installation
@@ -586,7 +586,7 @@ const Module4Section6_2 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h3 className="font-medium text-white mb-2">Q: {faq.question}</h3>
-                  <p className="text-sm text-white/80">{faq.answer}</p>
+                  <p className="text-sm text-white">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -599,7 +599,7 @@ const Module4Section6_2 = () => {
               Summary
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 Functional continuity and polarity checks are essential preliminary tests that
                 verify circuit integrity and correct conductor connections before formal
                 certification testing. These checks identify installation faults early when they are
@@ -608,7 +608,7 @@ const Module4Section6_2 = () => {
               <div className="grid md:grid-cols-3 gap-3">
                 <div className="p-3 rounded-lg border border-white/10">
                   <h3 className="font-medium text-elec-yellow mb-2">Safety Benefits</h3>
-                  <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                  <ul className="text-sm text-white space-y-1 list-disc pl-4">
                     <li>Early fault identification</li>
                     <li>Prevention of safety hazards</li>
                     <li>Equipment protection</li>
@@ -616,7 +616,7 @@ const Module4Section6_2 = () => {
                 </div>
                 <div className="p-3 rounded-lg border border-green-400/30 bg-green-500/5">
                   <h3 className="font-medium text-green-400 mb-2">Quality Assurance</h3>
-                  <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                  <ul className="text-sm text-white space-y-1 list-disc pl-4">
                     <li>Progressive quality control</li>
                     <li>Systematic fault detection</li>
                     <li>Installation verification</li>
@@ -624,7 +624,7 @@ const Module4Section6_2 = () => {
                 </div>
                 <div className="p-3 rounded-lg border border-white/10">
                   <h3 className="font-medium text-elec-yellow mb-2">Project Efficiency</h3>
-                  <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                  <ul className="text-sm text-white space-y-1 list-disc pl-4">
                     <li>Reduced rework costs</li>
                     <li>Faster fault resolution</li>
                     <li>Enhanced reliability</li>
@@ -643,7 +643,7 @@ const Module4Section6_2 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="space-y-3">
                 <h3 className="font-medium text-green-400">Do</h3>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                     Always isolate circuits completely before attempting any testing
@@ -664,7 +664,7 @@ const Module4Section6_2 = () => {
               </div>
               <div className="space-y-3">
                 <h3 className="font-medium text-red-400">Don't</h3>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <AlertTriangle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
                     Attempt testing on energised circuits - always isolate first

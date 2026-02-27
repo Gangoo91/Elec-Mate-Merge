@@ -53,7 +53,7 @@ const CourseCard = ({
               'bg-elec-dark/80 backdrop-blur-sm',
               'text-[10px] sm:text-xs px-2 py-1 rounded-lg',
               'border border-white/10',
-              'text-white/80'
+              'text-white'
             )}
           >
             {category}
@@ -77,7 +77,7 @@ const CourseCard = ({
             {title}
           </h3>
           <div className="flex justify-between items-center">
-            <div className="text-[10px] sm:text-xs text-white/60">
+            <div className="text-[10px] sm:text-xs text-white">
               {progress !== undefined ? (
                 <span>{progress}% complete</span>
               ) : (

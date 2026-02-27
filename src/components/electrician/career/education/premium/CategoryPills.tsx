@@ -133,7 +133,7 @@ const CategoryPills = ({ categories, selected, onSelect, className }: CategoryPi
               className={cn(
                 'flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium whitespace-nowrap',
                 'border transition-all duration-200 scroll-snap-item touch-manipulation',
-                'bg-white/5 text-white/70 border-white/10',
+                'bg-white/5 text-white border-white/10',
                 getCategoryColor(category.name, isActive),
                 isActive && 'text-white'
               )}
@@ -146,7 +146,7 @@ const CategoryPills = ({ categories, selected, onSelect, className }: CategoryPi
                   'ml-1 px-1.5 py-0.5 text-xs min-w-[1.5rem] justify-center',
                   isActive
                     ? 'bg-white/20 text-white border-transparent'
-                    : 'bg-white/10 text-white/60 border-white/10'
+                    : 'bg-white/10 text-white border-white/10'
                 )}
               >
                 {category.count}

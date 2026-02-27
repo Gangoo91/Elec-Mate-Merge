@@ -228,7 +228,7 @@ const HNCModule4Section1_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section1">
@@ -250,7 +250,7 @@ const HNCModule4Section1_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Maximum Demand Calculations
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Assessment methods and techniques for determining peak electrical load requirements in
             building services
           </p>
@@ -641,7 +641,7 @@ const HNCModule4Section1_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Office Building</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>07:00 - HVAC pre-conditioning starts</li>
                     <li>08:00-09:00 - Rapid load increase</li>
                     <li>10:00-15:00 - Peak demand period</li>
@@ -651,7 +651,7 @@ const HNCModule4Section1_1 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Retail Store</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>06:00 - Cleaning, restocking</li>
                     <li>09:00 - Full lighting, HVAC</li>
                     <li>12:00-14:00 - Lunchtime peak</li>
@@ -691,7 +691,7 @@ const HNCModule4Section1_1 = () => {
                 Maximum Demand Measurement
               </p>
               <p className="font-mono text-center text-lg mb-2">MD = Peak 30-minute kVAh × 2</p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where MD is the maximum demand averaged over 30-minute period
               </p>
             </div>
@@ -739,7 +739,7 @@ const HNCModule4Section1_1 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Monitoring tip:</strong> Modern smart meters and sub-meters record half-hourly
               data automatically. Request historical data when assessing existing buildings.
             </p>
@@ -764,7 +764,7 @@ const HNCModule4Section1_1 = () => {
                 <strong>Question:</strong> Estimate maximum demand for a 5,000m² standard office
                 building.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using CIBSE benchmark: 80 VA/m² (mid-range)</p>
                 <p className="mt-2">Maximum demand = Area × Benchmark</p>
                 <p>
@@ -785,7 +785,7 @@ const HNCModule4Section1_1 = () => {
                 <strong>Question:</strong> Calculate maximum demand from connected loads: Lighting
                 80kW, Small power 120kW, HVAC 200kW, Lifts 60kW (2 × 30kW).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Apply diversity factors:</p>
                 <p>Lighting: 80kW × 0.9 = 72kW</p>
                 <p>Small power: 120kW × 0.4 = 48kW</p>
@@ -808,12 +808,12 @@ const HNCModule4Section1_1 = () => {
                 <strong>Question:</strong> A building has measured maximum demand of 250kW. Power
                 factor is 0.85. What capacity should be requested from DNO?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>kVA = kW ÷ power factor</p>
                 <p>
                   kVA = 250 ÷ 0.85 = <strong>294 kVA</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   DNO would typically offer standard sizes: 315 kVA or 500 kVA supply
                 </p>
                 <p className="mt-2 text-green-400">→ Request 315 kVA allowing some growth margin</p>
@@ -893,7 +893,7 @@ const HNCModule4Section1_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -939,7 +939,7 @@ const HNCModule4Section1_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section1">

@@ -189,7 +189,7 @@ const InspectionTestingModule4Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-4">
@@ -211,7 +211,7 @@ const InspectionTestingModule4Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Test Voltages and Applications
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Learn which test voltages to use for different circuit types and why selection matters
           </p>
         </header>
@@ -287,12 +287,12 @@ const InspectionTestingModule4Section2 = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/20">
-                    <th className="text-left py-2 text-white/60">Circuit Voltage</th>
-                    <th className="text-center py-2 text-white/60">Test Voltage</th>
-                    <th className="text-right py-2 text-white/60">Min IR</th>
+                    <th className="text-left py-2 text-white">Circuit Voltage</th>
+                    <th className="text-center py-2 text-white">Test Voltage</th>
+                    <th className="text-right py-2 text-white">Min IR</th>
                   </tr>
                 </thead>
-                <tbody className="text-white/80">
+                <tbody className="text-white">
                   <tr className="border-b border-white/10">
                     <td className="py-3">SELV & PELV</td>
                     <td className="text-center font-mono text-elec-yellow">250V DC</td>
@@ -323,7 +323,7 @@ const InspectionTestingModule4Section2 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/10">
               <p className="text-elec-yellow font-semibold">250V DC Test Voltage</p>
-              <p className="text-white/60 text-sm">For extra-low voltage circuits</p>
+              <p className="text-white text-sm">For extra-low voltage circuits</p>
             </div>
 
             <p>
@@ -360,7 +360,7 @@ const InspectionTestingModule4Section2 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/10">
               <p className="text-elec-yellow font-semibold">500V DC Test Voltage</p>
-              <p className="text-white/60 text-sm">For circuits up to 500V nominal</p>
+              <p className="text-white text-sm">For circuits up to 500V nominal</p>
             </div>
 
             <p>This covers the vast majority of domestic and commercial installations:</p>
@@ -386,7 +386,7 @@ const InspectionTestingModule4Section2 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <div className="my-6 p-4 rounded-lg bg-red-500/10">
               <p className="text-red-400 font-semibold">1000V DC Test Voltage</p>
-              <p className="text-white/60 text-sm">For circuits 500V to 1000V nominal</p>
+              <p className="text-white text-sm">For circuits 500V to 1000V nominal</p>
             </div>
 
             <p>Used primarily in industrial installations:</p>
@@ -400,7 +400,7 @@ const InspectionTestingModule4Section2 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               Most domestic electricians rarely encounter circuits requiring 1000V testing.
             </p>
           </div>
@@ -420,21 +420,21 @@ const InspectionTestingModule4Section2 = () => {
             <div className="space-y-4 my-6">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-1">Adequate Stress</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Double voltage stresses insulation enough to reveal developing weaknesses that
                   might not show at normal operating voltage.
                 </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-1">Safety Margin</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Good insulation easily withstands 2x voltage. If it fails at 2x, it may fail in
                   service under transient overvoltages.
                 </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-1">Not Too High</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Higher than 2x would risk damaging good insulation and cause unnecessary failures.
                 </p>
               </div>
@@ -452,20 +452,20 @@ const InspectionTestingModule4Section2 = () => {
             <div className="space-y-4 my-6">
               <div>
                 <p className="text-sm font-medium text-red-400/80 mb-1">Using 500V on SELV</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Damages insulation rated for extra-low voltage. Always check circuit type first.
                 </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-red-400/80 mb-1">Using 250V on LV</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Doesn't adequately stress insulation. May pass circuits that would fail at correct
                   voltage.
                 </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-red-400/80 mb-1">Not Checking Instrument</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Always verify selected voltage before testing. Some instruments default to 500V.
                 </p>
               </div>
@@ -518,7 +518,7 @@ const InspectionTestingModule4Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -564,7 +564,7 @@ const InspectionTestingModule4Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-4/section-1">

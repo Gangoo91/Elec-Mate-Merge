@@ -254,7 +254,7 @@ const HNCModule6Section6_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section6">
@@ -276,7 +276,7 @@ const HNCModule6Section6_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Passive Design Principles
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Solar orientation, natural ventilation, daylighting, thermal mass and passive cooling
             strategies for energy-efficient buildings
           </p>
@@ -449,19 +449,19 @@ const HNCModule6Section6_1 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">The Energy Hierarchy</p>
               <div className="text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">1. Reduce demand:</span>{' '}
+                  <span className="text-white">1. Reduce demand:</span>{' '}
                   <span className="text-white">Passive design, fabric performance</span>
                 </p>
                 <p>
-                  <span className="text-white/60">2. Use energy efficiently:</span>{' '}
+                  <span className="text-white">2. Use energy efficiently:</span>{' '}
                   <span className="text-white">High-efficiency systems, heat recovery</span>
                 </p>
                 <p>
-                  <span className="text-white/60">3. Supply from renewables:</span>{' '}
+                  <span className="text-white">3. Supply from renewables:</span>{' '}
                   <span className="text-white">PV, solar thermal, heat pumps</span>
                 </p>
                 <p>
-                  <span className="text-white/60">4. Offset remaining carbon:</span>{' '}
+                  <span className="text-white">4. Offset remaining carbon:</span>{' '}
                   <span className="text-white">Green tariffs, carbon credits</span>
                 </p>
               </div>
@@ -642,7 +642,7 @@ const HNCModule6Section6_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-1">Wind-Driven (Cross Ventilation)</p>
-                  <ul className="text-white/80 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>• Pressure difference across building</li>
                     <li>• Requires openings on opposite facades</li>
                     <li>• Effective to ~5× ceiling height depth</li>
@@ -651,7 +651,7 @@ const HNCModule6Section6_1 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-1">Buoyancy-Driven (Stack Effect)</p>
-                  <ul className="text-white/80 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>• Warm air rises, exits at high level</li>
                     <li>• Cool air drawn in at low level</li>
                     <li>• Requires vertical height difference</li>
@@ -754,9 +754,9 @@ const HNCModule6Section6_1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Ventilation Rate Calculation (Stack Effect)
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Q = Cd × A × √(2 × g × H × ΔT / Tavg)</p>
-                <p className="mt-2 text-white/60">Where:</p>
+                <p className="mt-2 text-white">Where:</p>
                 <p className="ml-4">Q = Volume flow rate (m³/s)</p>
                 <p className="ml-4">Cd = Discharge coefficient (typically 0.6)</p>
                 <p className="ml-4">A = Free opening area (m²)</p>
@@ -954,7 +954,7 @@ const HNCModule6Section6_1 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Phase Change Materials (PCMs)
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 PCMs (typically paraffin waxes or salt hydrates) melt at around 21-25°C, absorbing
                 significant latent heat without temperature rise. When incorporated into ceiling
                 tiles, plasterboard, or dedicated panels, PCMs provide thermal mass equivalent to
@@ -964,7 +964,7 @@ const HNCModule6Section6_1 = () => {
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Services integration:</strong> Passive cooling strategies significantly reduce
               chiller sizing. A well-designed passive office in the UK may need only 40-60 W/m²
               cooling capacity versus 80-120 W/m² for a conventional air-conditioned building.
@@ -990,10 +990,10 @@ const HNCModule6Section6_1 = () => {
                 <strong>Scenario:</strong> Calculate average daylight factor for a 6m × 8m office
                 with a south-facing window 4m wide × 1.8m high, head height 2.7m from floor.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Simplified average daylight factor formula:</p>
                 <p className="mt-2">DF = (Aw × T × θ) / (A × (1 - R²))</p>
-                <p className="mt-2 text-white/60">Where:</p>
+                <p className="mt-2 text-white">Where:</p>
                 <p className="ml-4">Aw = Window area = 4 × 1.8 = 7.2 m²</p>
                 <p className="ml-4">T = Glass transmittance = 0.7 (double glazed)</p>
                 <p className="ml-4">θ = Angle of visible sky = 0.5 (assume 50% unobstructed)</p>
@@ -1003,7 +1003,7 @@ const HNCModule6Section6_1 = () => {
                 <p className="ml-4">R = Average surface reflectance = 0.5</p>
                 <p className="mt-2">DF = (7.2 × 0.7 × 0.5) / (180 × (1 - 0.25))</p>
                 <p className="ml-4">= 2.52 / 135 = 0.019 = 1.9%</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Daylit depth check: 2.5 × 2.7m = 6.75m (adequate for 6m room depth)
                 </p>
                 <p className="mt-2 text-green-400">
@@ -1021,12 +1021,12 @@ const HNCModule6Section6_1 = () => {
                 <strong>Scenario:</strong> Size openings for stack ventilation in a 4m high atrium
                 serving offices with 50 occupants requiring 10 l/s per person.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Required ventilation rate:</p>
                 <p className="ml-4">Q = 50 × 10 l/s = 500 l/s = 0.5 m³/s</p>
                 <p className="mt-2">Stack effect formula rearranged for area:</p>
                 <p className="ml-4">A = Q / (Cd × √(2gHΔT/Tavg))</p>
-                <p className="mt-2 text-white/60">Assumptions:</p>
+                <p className="mt-2 text-white">Assumptions:</p>
                 <p className="ml-4">H = 4m (height difference)</p>
                 <p className="ml-4">ΔT = 3°C (internal-external difference)</p>
                 <p className="ml-4">Tavg = 293K (20°C average)</p>
@@ -1038,7 +1038,7 @@ const HNCModule6Section6_1 = () => {
                 <p className="mt-2 text-green-400">
                   Result: Minimum 0.93 m² free opening area at both inlet and outlet
                 </p>
-                <p className="text-white/60 mt-1">
+                <p className="text-white mt-1">
                   Specify 1.2 m² to allow for reduced ΔT conditions
                 </p>
               </div>
@@ -1052,10 +1052,10 @@ const HNCModule6Section6_1 = () => {
                 <strong>Scenario:</strong> Assess thermal mass capacity of exposed 200mm concrete
                 soffit in a 100m² office to absorb next-day heat gains.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Thermal storage capacity:</p>
                 <p className="ml-4">Q = m × c × ΔT</p>
-                <p className="mt-2 text-white/60">Parameters:</p>
+                <p className="mt-2 text-white">Parameters:</p>
                 <p className="ml-4">Concrete density = 2400 kg/m³</p>
                 <p className="ml-4">Specific heat = 1000 J/kgK</p>
                 <p className="ml-4">
@@ -1073,7 +1073,7 @@ const HNCModule6Section6_1 = () => {
                   Result: Soffit can absorb 25 W/m² of heat gains - significant contribution to
                   cooling
                 </p>
-                <p className="text-white/60 mt-1">
+                <p className="text-white mt-1">
                   Combined with 35 W/m² internal gains = substantial peak reduction
                 </p>
               </div>
@@ -1163,7 +1163,7 @@ const HNCModule6Section6_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1209,7 +1209,7 @@ const HNCModule6Section6_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section6">

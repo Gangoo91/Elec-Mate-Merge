@@ -170,7 +170,7 @@ export default function Module3Section6_3() {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Fire Stopping and Sealing Penetrations
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Critical fire safety requirements for sealing electrical penetrations through fire
             barriers, maintaining compartmentation and escape route integrity per Building
             Regulations and BS 7671.
@@ -871,7 +871,7 @@ export default function Module3Section6_3() {
             Summary
           </h2>
           <div className="p-4 bg-transparent border-l-2 border-elec-yellow rounded-lg border border-white/10">
-            <p className="text-white/90">
+            <p className="text-white">
               Fire stopping and sealing penetrations is a critical safety requirement that maintains
               building fire compartmentation and protects escape routes. Proper material selection,
               professional installation, and ongoing maintenance ensure compliance with Building

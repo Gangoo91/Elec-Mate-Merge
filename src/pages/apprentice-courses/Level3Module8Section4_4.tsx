@@ -289,7 +289,7 @@ const Level3Module8Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module8-section4">
@@ -358,28 +358,28 @@ const Level3Module8Section4_4 = () => {
               <div className="space-y-3 text-sm">
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">7-5 Days Before</p>
-                  <p className="text-white/80 mt-1">
+                  <p className="text-white mt-1">
                     Light revision of weak areas, review summary notes, complete one final mock exam
                     under conditions.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">4-3 Days Before</p>
-                  <p className="text-white/80 mt-1">
+                  <p className="text-white mt-1">
                     Review the mock exam results, address any surprising gaps. Review key formulas
                     and procedures.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">2 Days Before</p>
-                  <p className="text-white/80 mt-1">
+                  <p className="text-white mt-1">
                     Light review of summary notes only. Check exam logistics - venue, time, required
                     items.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">1 Day Before</p>
-                  <p className="text-white/80 mt-1">
+                  <p className="text-white mt-1">
                     Glance at summaries only. Prepare all equipment. Plan journey. Early night - aim
                     for 7-8 hours sleep.
                   </p>
@@ -390,7 +390,7 @@ const Level3Module8Section4_4 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="text-sm font-medium text-green-400 mb-2">Do:</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Review existing notes and summaries</li>
                   <li>Practice a few quick calculations</li>
                   <li>Get good sleep every night</li>
@@ -400,7 +400,7 @@ const Level3Module8Section4_4 = () => {
               </div>
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="text-sm font-medium text-red-400 mb-2">Don't:</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Learn new topics</li>
                   <li>Cram late into the night</li>
                   <li>Take multiple mock exams daily</li>
@@ -434,7 +434,7 @@ const Level3Module8Section4_4 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
               <p className="text-sm font-medium text-white mb-3">Equipment Checklist:</p>
-              <div className="grid sm:grid-cols-2 gap-4 text-sm text-white/80">
+              <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-2">Essential:</p>
                   <ul className="space-y-1">
@@ -460,7 +460,7 @@ const Level3Module8Section4_4 = () => {
 
             <div className="p-4 rounded-lg bg-transparent border border-white/10 my-6">
               <p className="text-sm font-medium text-white mb-2">Exam Morning Timeline:</p>
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow/70 font-mono">T-2hrs:</span>
                   <span>Wake up (avoid rushing). Light exercise or stretching if helpful.</span>
@@ -486,7 +486,7 @@ const Level3Module8Section4_4 = () => {
 
             <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20 my-6">
               <p className="text-sm font-medium text-green-400 mb-2">Mental Preparation:</p>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>Positive self-talk: "I have prepared well", "I know this material"</li>
                 <li>Visualise yourself working calmly through the exam</li>
                 <li>Accept some nervousness as normal and helpful</li>
@@ -495,7 +495,7 @@ const Level3Module8Section4_4 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Pro Tip:</strong> Avoid discussing exam topics with other candidates
               immediately before. Their anxiety is contagious, and last-minute doubts aren't
               helpful.
@@ -523,7 +523,7 @@ const Level3Module8Section4_4 = () => {
               <div className="space-y-3 text-sm">
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">1. Read Instructions (2-3 mins)</p>
-                  <p className="text-white/80 mt-1">
+                  <p className="text-white mt-1">
                     Check total marks, number of questions, any compulsory sections, and allowed
                     materials. Note any surprises.
                   </p>
@@ -532,27 +532,27 @@ const Level3Module8Section4_4 = () => {
                   <p className="text-elec-yellow/80 font-medium">
                     2. Scan All Questions (5-10 mins)
                   </p>
-                  <p className="text-white/80 mt-1">
+                  <p className="text-white mt-1">
                     Read through all questions. Note topics covered, mark allocations, and identify
                     your strongest questions.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">3. Plan Time Allocation</p>
-                  <p className="text-white/80 mt-1">
+                  <p className="text-white mt-1">
                     Roughly allocate time proportional to marks. Note target times for each section.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">4. Answer Strategically</p>
-                  <p className="text-white/80 mt-1">
+                  <p className="text-white mt-1">
                     Start with your strongest topics to build confidence. Flag difficult questions
                     for later review.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">5. Review (Final 10-15 mins)</p>
-                  <p className="text-white/80 mt-1">
+                  <p className="text-white mt-1">
                     Return to flagged questions. Check calculations. Ensure all questions attempted.
                   </p>
                 </div>
@@ -564,7 +564,7 @@ const Level3Module8Section4_4 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                   Multiple Choice Tips:
                 </p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Read the question fully before looking at options</li>
                   <li>Eliminate obviously wrong answers first</li>
                   <li>Watch for absolute words (always, never) - often wrong</li>
@@ -574,7 +574,7 @@ const Level3Module8Section4_4 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Calculation Tips:</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Write the formula before substituting</li>
                   <li>Show all working clearly</li>
                   <li>Check units throughout</li>
@@ -586,7 +586,7 @@ const Level3Module8Section4_4 = () => {
 
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20 my-6">
               <p className="text-sm font-medium text-red-400 mb-2">Common Exam Mistakes:</p>
-              <ul className="text-xs text-white/90 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>
                   <strong>Not reading carefully:</strong> Missing key words like "NOT" or specific
                   conditions
@@ -634,7 +634,7 @@ const Level3Module8Section4_4 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">If You Blank Out:</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Stop, close eyes, breathe slowly (4-4-4)</li>
                   <li>Move to a different question</li>
                   <li>Return later - answer often comes</li>
@@ -646,7 +646,7 @@ const Level3Module8Section4_4 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                   If Running Out of Time:
                 </p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Prioritise highest-mark questions remaining</li>
                   <li>Write key points in bullet form if needed</li>
                   <li>Show method even without full working</li>
@@ -658,7 +658,7 @@ const Level3Module8Section4_4 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
               <p className="text-sm font-medium text-white mb-3">After the Exam:</p>
-              <div className="space-y-3 text-sm text-white/80">
+              <div className="space-y-3 text-sm text-white">
                 <p>
                   <strong>Immediately after:</strong> Allow yourself to decompress. Avoid obsessive
                   answer comparisons with others - it often increases anxiety without benefit.
@@ -682,7 +682,7 @@ const Level3Module8Section4_4 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Post-Exam Reflection Questions:
               </p>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>Did I manage my time effectively?</li>
                 <li>Were there topics I wish I'd reviewed more?</li>
                 <li>Did my exam technique help or hinder me?</li>
@@ -691,7 +691,7 @@ const Level3Module8Section4_4 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Final Thought:</strong> Remember that exams are a means to an end -
               demonstrating competence in your chosen field. Whatever the result, your value as a
               person and professional extends far beyond a single exam score.
@@ -752,7 +752,7 @@ const Level3Module8Section4_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -797,7 +797,7 @@ const Level3Module8Section4_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module8-section4-3">

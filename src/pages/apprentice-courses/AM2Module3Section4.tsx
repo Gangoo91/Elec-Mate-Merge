@@ -238,7 +238,7 @@ const AM2Module3Section4 = () => {
 
       {/* NET Assessment Criteria */}
       <AM2ContentCard title="NET Assessment Criteria - What Assessors Check" icon={Target} accent>
-        <div className="space-y-4 text-xs sm:text-sm text-white/80">
+        <div className="space-y-4 text-xs sm:text-sm text-white">
           <div className="border border-white/10 rounded-lg p-4">
             <h4 className="font-medium text-elec-yellow mb-2">
               Primary Assessment Areas (Pass/Fail)
@@ -247,9 +247,9 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-red-400 min-w-[20px]">X</span>
                 <div>
-                  <strong className="text-white/90">Exposed copper beyond terminals</strong> -
+                  <strong className="text-white">Exposed copper beyond terminals</strong> -
                   Immediate fail
-                  <p className="text-xs mt-1 text-white/70">
+                  <p className="text-xs mt-1 text-white">
                     Any visible copper creates shock/short circuit risk
                   </p>
                 </div>
@@ -257,9 +257,9 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-red-400 min-w-[20px]">X</span>
                 <div>
-                  <strong className="text-white/90">CPC not sleeved or connected</strong> - Safety
+                  <strong className="text-white">CPC not sleeved or connected</strong> - Safety
                   critical failure
-                  <p className="text-xs mt-1 text-white/70">
+                  <p className="text-xs mt-1 text-white">
                     Required everywhere, including plastic accessories
                   </p>
                 </div>
@@ -267,9 +267,9 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-red-400 min-w-[20px]">X</span>
                 <div>
-                  <strong className="text-white/90">Loose or insecure connections</strong> -
+                  <strong className="text-white">Loose or insecure connections</strong> -
                   Fire/safety risk
-                  <p className="text-xs mt-1 text-white/70">
+                  <p className="text-xs mt-1 text-white">
                     Must be mechanically and electrically sound
                   </p>
                 </div>
@@ -277,9 +277,9 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-red-400 min-w-[20px]">X</span>
                 <div>
-                  <strong className="text-white/90">Incorrect polarity in DB</strong> - Fundamental
+                  <strong className="text-white">Incorrect polarity in DB</strong> - Fundamental
                   error
-                  <p className="text-xs mt-1 text-white/70">CPC to neutral bar = automatic fail</p>
+                  <p className="text-xs mt-1 text-white">CPC to neutral bar = automatic fail</p>
                 </div>
               </li>
             </ul>
@@ -293,9 +293,9 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-amber-400 min-w-[20px]">!</span>
                 <div>
-                  <strong className="text-white/90">Poor cable preparation/stripping</strong> -
+                  <strong className="text-white">Poor cable preparation/stripping</strong> -
                   Workmanship marks
-                  <p className="text-xs mt-1 text-white/70">
+                  <p className="text-xs mt-1 text-white">
                     Nicked insulation, incorrect strip lengths
                   </p>
                 </div>
@@ -303,9 +303,9 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-amber-400 min-w-[20px]">!</span>
                 <div>
-                  <strong className="text-white/90">Untidy cable dressing</strong> - Professional
+                  <strong className="text-white">Untidy cable dressing</strong> - Professional
                   standards
-                  <p className="text-xs mt-1 text-white/70">
+                  <p className="text-xs mt-1 text-white">
                     Cables crossing, poor routing, excessive length
                   </p>
                 </div>
@@ -313,9 +313,9 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-amber-400 min-w-[20px]">!</span>
                 <div>
-                  <strong className="text-white/90">Missing or poor labelling</strong> -
+                  <strong className="text-white">Missing or poor labelling</strong> -
                   Identification requirements
-                  <p className="text-xs mt-1 text-white/70">
+                  <p className="text-xs mt-1 text-white">
                     Pencil marks, temporary labels, illegible text
                   </p>
                 </div>
@@ -323,9 +323,9 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-amber-400 min-w-[20px]">!</span>
                 <div>
-                  <strong className="text-white/90">Conductor damage during installation</strong> -
+                  <strong className="text-white">Conductor damage during installation</strong> -
                   Care and skill
-                  <p className="text-xs mt-1 text-white/70">
+                  <p className="text-xs mt-1 text-white">
                     Damaged insulation, kinked conductors
                   </p>
                 </div>
@@ -340,7 +340,7 @@ const AM2Module3Section4 = () => {
         title="1. General Termination Standards (BS 7671, Section 526)"
         icon={Terminal}
       >
-        <div className="space-y-4 text-xs sm:text-sm text-white/80">
+        <div className="space-y-4 text-xs sm:text-sm text-white">
           <div className="border border-white/10 rounded-lg p-4">
             <h4 className="font-medium text-elec-yellow mb-2">
               Core Requirements - Non-Negotiable
@@ -349,10 +349,10 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-green-400 min-w-[20px]">Y</span>
                 <div>
-                  <strong className="text-white/90">
+                  <strong className="text-white">
                     Conductors electrically and mechanically sound
                   </strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <p className="text-xs mt-1 text-white">
                     Secure connections that won't work loose over time
                   </p>
                 </div>
@@ -360,10 +360,10 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-green-400 min-w-[20px]">Y</span>
                 <div>
-                  <strong className="text-white/90">
+                  <strong className="text-white">
                     No bare copper visible outside terminals
                   </strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <p className="text-xs mt-1 text-white">
                     Critical safety requirement - prevents shock and short circuits
                   </p>
                 </div>
@@ -371,8 +371,8 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-green-400 min-w-[20px]">Y</span>
                 <div>
-                  <strong className="text-white/90">Insulation runs up to terminal</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">Insulation runs up to terminal</strong>
+                  <p className="text-xs mt-1 text-white">
                     Proper cable preparation with correct strip lengths
                   </p>
                 </div>
@@ -380,8 +380,8 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-green-400 min-w-[20px]">Y</span>
                 <div>
-                  <strong className="text-white/90">CPC sleeving correctly applied</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">CPC sleeving correctly applied</strong>
+                  <p className="text-xs mt-1 text-white">
                     Green/yellow identification on all CPC conductors
                   </p>
                 </div>
@@ -389,8 +389,8 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-green-400 min-w-[20px]">Y</span>
                 <div>
-                  <strong className="text-white/90">Correct torque values applied</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">Correct torque values applied</strong>
+                  <p className="text-xs mt-1 text-white">
                     Manufacturer specifications met for critical connections
                   </p>
                 </div>
@@ -400,7 +400,7 @@ const AM2Module3Section4 = () => {
 
           <div className="bg-white/5 border border-elec-yellow/30 rounded-xl p-4">
             <h4 className="font-medium text-elec-yellow mb-2">Professional Tips</h4>
-            <ul className="space-y-1 text-sm text-white/80">
+            <ul className="space-y-1 text-sm text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                 Strip cables using proper strippers - avoid damaging conductor insulation
@@ -429,7 +429,7 @@ const AM2Module3Section4 = () => {
         title="2. Accessory Terminations (Sockets, Switches, Cooker Outlets)"
         icon={Zap}
       >
-        <div className="space-y-4 text-xs sm:text-sm text-white/80">
+        <div className="space-y-4 text-xs sm:text-sm text-white">
           <div className="border border-white/10 rounded-lg p-4">
             <h4 className="font-medium text-elec-yellow mb-2">
               Step-by-Step Accessory Termination
@@ -438,8 +438,8 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
                 <div>
-                  <strong className="text-white/90">Cable preparation</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">Cable preparation</strong>
+                  <p className="text-xs mt-1 text-white">
                     Strip outer sheath to allow cable entry into accessory (typically 15-20mm).
                     Sheath must enter the accessory - no excessive stripping.
                   </p>
@@ -448,8 +448,8 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-elec-yellow min-w-[20px]">2.</span>
                 <div>
-                  <strong className="text-white/90">CPC identification</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">CPC identification</strong>
+                  <p className="text-xs mt-1 text-white">
                     Apply green/yellow sleeving to CPC - required in ALL accessories including
                     plastic ones. No exceptions in AM2.
                   </p>
@@ -458,8 +458,8 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-elec-yellow min-w-[20px]">3.</span>
                 <div>
-                  <strong className="text-white/90">Conductor preparation</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">Conductor preparation</strong>
+                  <p className="text-xs mt-1 text-white">
                     Cut conductors to correct length - no twisting or bunching. Allow enough length
                     for secure termination without stress.
                   </p>
@@ -468,8 +468,8 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-elec-yellow min-w-[20px]">4.</span>
                 <div>
-                  <strong className="text-white/90">Terminal connections</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">Terminal connections</strong>
+                  <p className="text-xs mt-1 text-white">
                     Tighten terminals firmly without over-tightening. Multiple conductors must be
                     neat and equally secure.
                   </p>
@@ -480,7 +480,7 @@ const AM2Module3Section4 = () => {
 
           <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
             <h4 className="font-medium text-red-400 mb-2">Common Accessory Errors</h4>
-            <ul className="space-y-1 text-sm text-white/80">
+            <ul className="space-y-1 text-sm text-white">
               <li>
                 <strong className="text-red-400">Over-stripped cable sheath</strong> - Exposes cable
                 outside accessory
@@ -511,15 +511,15 @@ const AM2Module3Section4 = () => {
         title="3. Distribution Board (DB) Terminations - Critical Assessment Area"
         icon={Wrench}
       >
-        <div className="space-y-4 text-xs sm:text-sm text-white/80">
+        <div className="space-y-4 text-xs sm:text-sm text-white">
           <div className="border border-white/10 rounded-lg p-4">
             <h4 className="font-medium text-elec-yellow mb-2">DB Termination Sequence</h4>
             <ol className="space-y-2 text-sm">
               <li className="flex gap-2">
                 <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
                 <div>
-                  <strong className="text-white/90">Verify circuit/MCB matching</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">Verify circuit/MCB matching</strong>
+                  <p className="text-xs mt-1 text-white">
                     Check drawing - correct cable size in correct protective device. Ring circuits
                     in 32A, lighting in 6A/10A, etc.
                   </p>
@@ -528,8 +528,8 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-elec-yellow min-w-[20px]">2.</span>
                 <div>
-                  <strong className="text-white/90">Prepare cable entries</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">Prepare cable entries</strong>
+                  <p className="text-xs mt-1 text-white">
                     Use proper cable entries. Strip cables to correct length. Plan cable routes to
                     avoid crossing.
                   </p>
@@ -538,8 +538,8 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-elec-yellow min-w-[20px]">3.</span>
                 <div>
-                  <strong className="text-white/90">Line conductor termination</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">Line conductor termination</strong>
+                  <p className="text-xs mt-1 text-white">
                     Into MCB/RCBO terminal. Ensure full insertion and correct torque. No copper
                     visible outside terminal.
                   </p>
@@ -548,8 +548,8 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-elec-yellow min-w-[20px]">4.</span>
                 <div>
-                  <strong className="text-white/90">Neutral conductor termination</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">Neutral conductor termination</strong>
+                  <p className="text-xs mt-1 text-white">
                     Into neutral bar only. NEVER into earth bar. Apply blue identification if
                     required.
                   </p>
@@ -558,8 +558,8 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-elec-yellow min-w-[20px]">5.</span>
                 <div>
-                  <strong className="text-white/90">CPC termination</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">CPC termination</strong>
+                  <p className="text-xs mt-1 text-white">
                     Into earth bar only with green/yellow sleeving. Ensure mechanical continuity
                     throughout installation.
                   </p>
@@ -568,8 +568,8 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-elec-yellow min-w-[20px]">6.</span>
                 <div>
-                  <strong className="text-white/90">Cable dressing and labelling</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">Cable dressing and labelling</strong>
+                  <p className="text-xs mt-1 text-white">
                     Dress cables neatly. Apply permanent labels to each circuit. No temporary
                     markings.
                   </p>
@@ -582,7 +582,7 @@ const AM2Module3Section4 = () => {
             <h4 className="font-medium text-red-400 mb-2">
               DB Errors That Cause Immediate Failure
             </h4>
-            <ul className="space-y-1 text-sm text-white/80">
+            <ul className="space-y-1 text-sm text-white">
               <li>
                 <strong className="text-red-400">CPC connected to neutral bar</strong> - Fundamental
                 polarity error
@@ -612,7 +612,7 @@ const AM2Module3Section4 = () => {
 
           <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
             <h4 className="font-medium text-green-400 mb-2">Professional DB Standards</h4>
-            <ul className="space-y-1 text-sm text-white/80">
+            <ul className="space-y-1 text-sm text-white">
               <li>
                 <strong className="text-green-400">Use torque screwdriver</strong> - Demonstrates
                 professional approach
@@ -642,15 +642,15 @@ const AM2Module3Section4 = () => {
 
       {/* SWA Terminations */}
       <AM2ContentCard title="4. SWA Cable Terminations - Advanced Techniques" icon={Cable}>
-        <div className="space-y-4 text-xs sm:text-sm text-white/80">
+        <div className="space-y-4 text-xs sm:text-sm text-white">
           <div className="border border-white/10 rounded-lg p-4">
             <h4 className="font-medium text-elec-yellow mb-2">SWA Termination Process</h4>
             <ol className="space-y-2 text-sm">
               <li className="flex gap-2">
                 <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
                 <div>
-                  <strong className="text-white/90">Cable preparation</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">Cable preparation</strong>
+                  <p className="text-xs mt-1 text-white">
                     Mark and cut outer sheath to correct length. Remove armour carefully without
                     damaging cores. Clean armour ends.
                   </p>
@@ -659,8 +659,8 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-elec-yellow min-w-[20px]">2.</span>
                 <div>
-                  <strong className="text-white/90">Gland assembly</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">Gland assembly</strong>
+                  <p className="text-xs mt-1 text-white">
                     Thread gland components onto cable in correct order. Ensure banjo washer is
                     properly positioned for armour contact.
                   </p>
@@ -669,8 +669,8 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-elec-yellow min-w-[20px]">3.</span>
                 <div>
-                  <strong className="text-white/90">Armour clamping</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">Armour clamping</strong>
+                  <p className="text-xs mt-1 text-white">
                     Clamp armour securely in gland. No loose strands. Armour must make good
                     electrical contact with banjo washer.
                   </p>
@@ -679,8 +679,8 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-elec-yellow min-w-[20px]">4.</span>
                 <div>
-                  <strong className="text-white/90">Earthing connection</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">Earthing connection</strong>
+                  <p className="text-xs mt-1 text-white">
                     Connect CPC to banjo washer or separate earth terminal. This provides the armour
                     earthing path.
                   </p>
@@ -689,8 +689,8 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-elec-yellow min-w-[20px]">5.</span>
                 <div>
-                  <strong className="text-white/90">Seal and secure</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">Seal and secure</strong>
+                  <p className="text-xs mt-1 text-white">
                     Tighten gland assembly to IP rating requirements. Check cable strain relief and
                     weatherproofing.
                   </p>
@@ -701,7 +701,7 @@ const AM2Module3Section4 = () => {
 
           <div className="bg-white/5 border border-amber-500/30 rounded-xl p-4">
             <h4 className="font-medium text-amber-400 mb-2">SWA Common Issues</h4>
-            <ul className="space-y-1 text-sm text-white/80">
+            <ul className="space-y-1 text-sm text-white">
               <li>
                 <strong className="text-amber-400">Loose armour strands</strong> - Can cause short
                 circuits or poor earthing
@@ -731,15 +731,15 @@ const AM2Module3Section4 = () => {
 
       {/* Circuit Labelling */}
       <AM2ContentCard title="5. Circuit Identification and Labelling" icon={BookOpen}>
-        <div className="space-y-4 text-xs sm:text-sm text-white/80">
+        <div className="space-y-4 text-xs sm:text-sm text-white">
           <div className="border border-white/10 rounded-lg p-4">
             <h4 className="font-medium text-elec-yellow mb-2">Systematic Labelling Strategy</h4>
             <ol className="space-y-2 text-sm">
               <li className="flex gap-2">
                 <span className="font-medium text-elec-yellow min-w-[20px]">1.</span>
                 <div>
-                  <strong className="text-white/90">Label as you install</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">Label as you install</strong>
+                  <p className="text-xs mt-1 text-white">
                     Don't leave labelling until the end. Mark cables and circuits during
                     installation to prevent confusion.
                   </p>
@@ -748,8 +748,8 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-elec-yellow min-w-[20px]">2.</span>
                 <div>
-                  <strong className="text-white/90">Distribution board circuits</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">Distribution board circuits</strong>
+                  <p className="text-xs mt-1 text-white">
                     Each protective device must be clearly labelled with the circuit it protects
                     (e.g., "Ring Main Kitchen", "Lights Ground Floor").
                   </p>
@@ -758,8 +758,8 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-elec-yellow min-w-[20px]">3.</span>
                 <div>
-                  <strong className="text-white/90">Conductor identification</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">Conductor identification</strong>
+                  <p className="text-xs mt-1 text-white">
                     Label conductors where multiple circuits are present in same area. Use permanent
                     markers or proper labels.
                   </p>
@@ -768,8 +768,8 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-elec-yellow min-w-[20px]">4.</span>
                 <div>
-                  <strong className="text-white/90">Accessory labelling</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">Accessory labelling</strong>
+                  <p className="text-xs mt-1 text-white">
                     Label isolators, switches, and special outlets as specified in drawings (e.g.,
                     "Cooker Isolator", "Emergency Stop").
                   </p>
@@ -778,8 +778,8 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-elec-yellow min-w-[20px]">5.</span>
                 <div>
-                  <strong className="text-white/90">Verification and durability</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">Verification and durability</strong>
+                  <p className="text-xs mt-1 text-white">
                     Check all labels are legible, permanent, and accurately describe the circuits.
                     No temporary markings allowed.
                   </p>
@@ -790,7 +790,7 @@ const AM2Module3Section4 = () => {
 
           <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
             <h4 className="font-medium text-red-400 mb-2">Labelling Mistakes That Lose Marks</h4>
-            <ul className="space-y-1 text-sm text-white/80">
+            <ul className="space-y-1 text-sm text-white">
               <li>
                 <strong className="text-red-400">Pencil markings</strong> - Not permanent, will fade
               </li>
@@ -819,7 +819,7 @@ const AM2Module3Section4 = () => {
 
           <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
             <h4 className="font-medium text-green-400 mb-2">Professional Labelling Standards</h4>
-            <ul className="space-y-1 text-sm text-white/80">
+            <ul className="space-y-1 text-sm text-white">
               <li>
                 <strong className="text-green-400">Use label maker or permanent markers</strong> -
                 Professional appearance
@@ -850,7 +850,7 @@ const AM2Module3Section4 = () => {
         title="6. Common Assessment Failures - NET Data Analysis"
         icon={AlertTriangle}
       >
-        <div className="space-y-4 text-xs sm:text-sm text-white/80">
+        <div className="space-y-4 text-xs sm:text-sm text-white">
           <div className="border border-white/10 rounded-lg p-4">
             <h4 className="font-medium text-elec-yellow mb-2">
               Top 10 Termination Failures (NET Statistics)
@@ -859,8 +859,8 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-elec-yellow min-w-[30px]">1.</span>
                 <div>
-                  <strong className="text-white/90">Over-stripped cables (42% of failures)</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">Over-stripped cables (42% of failures)</strong>
+                  <p className="text-xs mt-1 text-white">
                     Exposed copper beyond terminals - immediate safety failure
                   </p>
                 </div>
@@ -868,8 +868,8 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-elec-yellow min-w-[30px]">2.</span>
                 <div>
-                  <strong className="text-white/90">CPC not sleeved (38% of failures)</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">CPC not sleeved (38% of failures)</strong>
+                  <p className="text-xs mt-1 text-white">
                     Particularly in plastic accessories where candidates assume it's not needed
                   </p>
                 </div>
@@ -877,8 +877,8 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-elec-yellow min-w-[30px]">3.</span>
                 <div>
-                  <strong className="text-white/90">Polarity errors in DB (31% of failures)</strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <strong className="text-white">Polarity errors in DB (31% of failures)</strong>
+                  <p className="text-xs mt-1 text-white">
                     CPC in neutral bar, line/neutral confusion
                   </p>
                 </div>
@@ -886,10 +886,10 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-elec-yellow min-w-[30px]">4.</span>
                 <div>
-                  <strong className="text-white/90">
+                  <strong className="text-white">
                     Loose terminal connections (29% of failures)
                   </strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <p className="text-xs mt-1 text-white">
                     Insufficient tightening or damaged terminals
                   </p>
                 </div>
@@ -897,10 +897,10 @@ const AM2Module3Section4 = () => {
               <li className="flex gap-2">
                 <span className="font-medium text-elec-yellow min-w-[30px]">5.</span>
                 <div>
-                  <strong className="text-white/90">
+                  <strong className="text-white">
                     Poor SWA gland installation (24% of failures)
                   </strong>
-                  <p className="text-xs mt-1 text-white/70">
+                  <p className="text-xs mt-1 text-white">
                     Armour not properly clamped or earthed
                   </p>
                 </div>
@@ -910,33 +910,33 @@ const AM2Module3Section4 = () => {
 
           <div className="bg-white/5 border border-elec-yellow/30 rounded-xl p-4">
             <h4 className="font-medium text-elec-yellow mb-2">Assessment Recovery Strategy</h4>
-            <p className="text-sm text-white/80 mb-3">
+            <p className="text-sm text-white mb-3">
               If you make a termination error during assessment:
             </p>
-            <ul className="space-y-1 text-sm text-white/80">
+            <ul className="space-y-1 text-sm text-white">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <strong className="text-white/90">Acknowledge immediately</strong> - Don't try to
+                <strong className="text-white">Acknowledge immediately</strong> - Don't try to
                 hide mistakes
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <strong className="text-white/90">Rectify systematically</strong> - Fix the root
+                <strong className="text-white">Rectify systematically</strong> - Fix the root
                 cause, not just symptoms
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <strong className="text-white/90">Check similar connections</strong> - Prevent
+                <strong className="text-white">Check similar connections</strong> - Prevent
                 recurring errors
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <strong className="text-white/90">Document the fix</strong> - Show understanding of
+                <strong className="text-white">Document the fix</strong> - Show understanding of
                 the issue
               </li>
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
-                <strong className="text-white/90">Test thoroughly</strong> - Prove the repair is
+                <strong className="text-white">Test thoroughly</strong> - Prove the repair is
                 effective
               </li>
             </ul>
@@ -946,7 +946,7 @@ const AM2Module3Section4 = () => {
 
       {/* Summary and Key Takeaways */}
       <AM2ContentCard title="Section Summary - Key Takeaways" icon={CheckCircle} accent>
-        <div className="space-y-4 text-sm text-white/80">
+        <div className="space-y-4 text-sm text-white">
           <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
             <h4 className="font-medium text-green-400 mb-2">Critical Success Factors</h4>
             <ul className="space-y-1">

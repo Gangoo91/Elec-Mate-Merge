@@ -381,7 +381,7 @@ const HelpBotTab = () => {
         <p className="text-xs text-elec-yellow/80">Studying: {qualificationName}</p>
       )}
 
-      <p className="text-white/70 text-xs sm:text-sm max-w-xs mb-3 sm:mb-4 hidden sm:block">
+      <p className="text-white text-xs sm:text-sm max-w-xs mb-3 sm:mb-4 hidden sm:block">
         Qualified sparky with decades of UK experience. Ask me about regs, testing, calcs, or your
         apprenticeship.
       </p>
@@ -517,7 +517,7 @@ const HelpBotTab = () => {
                         >
                           <category.icon className={`h-6 w-6 ${category.color} mb-2`} />
                           <span className="font-medium text-sm">{category.name}</span>
-                          <p className="text-xs text-white/50 mt-1">
+                          <p className="text-xs text-white mt-1">
                             {category.questions.length} questions
                           </p>
                         </button>
@@ -540,7 +540,7 @@ const HelpBotTab = () => {
                             disabled={isLoading}
                             className="w-full text-left p-3 rounded-xl bg-white/5 hover:bg-elec-yellow/10 border border-white/10 hover:border-elec-yellow/30 transition-all touch-manipulation"
                           >
-                            <span className="text-sm text-white/90">{question}</span>
+                            <span className="text-sm text-white">{question}</span>
                           </button>
                         ))}
                     </div>

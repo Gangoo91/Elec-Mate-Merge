@@ -260,7 +260,7 @@ const HNCModule1Section1_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section1">
@@ -282,7 +282,7 @@ const HNCModule1Section1_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Environmental and Building Regulations
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Essential UK legislation governing environmental protection, electrical installations,
             and building services compliance
           </p>
@@ -599,7 +599,7 @@ const HNCModule1Section1_6 = () => {
                 <div className="p-2 rounded bg-white/5">ELECSA</div>
                 <div className="p-2 rounded bg-white/5">STROMA</div>
               </div>
-              <p className="text-xs text-white/70 mt-2">
+              <p className="text-xs text-white mt-2">
                 Scheme members must meet competence criteria, maintain technical competence, and are
                 subject to periodic assessment.
               </p>
@@ -752,22 +752,22 @@ const HNCModule1Section1_6 = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-red-500/10">
                   <p className="font-bold mb-1">R404A</p>
-                  <p className="text-xs text-white/70">GWP: 3922</p>
+                  <p className="text-xs text-white">GWP: 3922</p>
                   <p className="text-xs text-red-400">Phase out</p>
                 </div>
                 <div className="p-3 rounded bg-orange-500/10">
                   <p className="font-bold mb-1">R410A</p>
-                  <p className="text-xs text-white/70">GWP: 2088</p>
+                  <p className="text-xs text-white">GWP: 2088</p>
                   <p className="text-xs text-orange-400">Restricted</p>
                 </div>
                 <div className="p-3 rounded bg-green-500/10">
                   <p className="font-bold mb-1">R32</p>
-                  <p className="text-xs text-white/70">GWP: 675</p>
+                  <p className="text-xs text-white">GWP: 675</p>
                   <p className="text-xs text-green-400">Alternative</p>
                 </div>
                 <div className="p-3 rounded bg-green-500/10">
                   <p className="font-bold mb-1">R290</p>
-                  <p className="text-xs text-white/70">GWP: 3</p>
+                  <p className="text-xs text-white">GWP: 3</p>
                   <p className="text-xs text-green-400">Natural</p>
                 </div>
               </div>
@@ -914,7 +914,7 @@ const HNCModule1Section1_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-xs">
                 <div>
                   <p className="font-medium text-white mb-1">Waste Transfer Note (WTN)</p>
-                  <ul className="text-white/70 space-y-0.5">
+                  <ul className="text-white space-y-0.5">
                     <li>- Non-hazardous waste</li>
                     <li>- Retain for 2 years</li>
                     <li>- Both parties sign</li>
@@ -922,7 +922,7 @@ const HNCModule1Section1_6 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-1">Consignment Note (CN)</p>
-                  <ul className="text-white/70 space-y-0.5">
+                  <ul className="text-white space-y-0.5">
                     <li>- Hazardous waste only</li>
                     <li>- Retain for 3 years</li>
                     <li>- Unique reference number</li>
@@ -931,7 +931,7 @@ const HNCModule1Section1_6 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Best practice:</strong> Establish relationships with reputable waste carriers
               and treatment facilities. Keep a waste management plan for each project identifying
               expected waste streams and disposal routes.
@@ -1086,7 +1086,7 @@ const HNCModule1Section1_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1132,7 +1132,7 @@ const HNCModule1Section1_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section1-5">

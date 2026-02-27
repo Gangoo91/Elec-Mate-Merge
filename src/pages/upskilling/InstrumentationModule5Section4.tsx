@@ -48,7 +48,7 @@ const InstrumentationModule5Section4 = () => {
             <Zap className="h-4 w-4 text-elec-yellow" />
             Quick Summary
           </h2>
-          <p className="text-white/80 text-sm">
+          <p className="text-white text-sm">
             Control loops can develop faults that degrade performance: hunting (oscillation),
             overshoot (exceeding setpoint), and lag (slow response). Understanding causes and
             corrections helps maintain optimal system performance through systematic
@@ -70,7 +70,7 @@ const InstrumentationModule5Section4 = () => {
               <Activity className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-medium text-white mb-2">What is Hunting?</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Hunting is continuous oscillatory behaviour where the process variable repeatedly
                   cycles above and below the setpoint without settling to a stable value. The system
                   never reaches steady state.
@@ -83,7 +83,7 @@ const InstrumentationModule5Section4 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-white font-medium text-sm mb-2">Symptoms:</p>
-                  <ul className="space-y-1 text-white/70 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-3 w-3 text-red-400 mt-0.5 flex-shrink-0" />
                       <span>PV oscillates continuously around SP</span>
@@ -100,7 +100,7 @@ const InstrumentationModule5Section4 = () => {
                 </div>
                 <div>
                   <p className="text-white font-medium text-sm mb-2">Frequency Indicators:</p>
-                  <ul className="space-y-1 text-white/70 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>Fast oscillation: High proportional gain</li>
                     <li>Slow oscillation: Integral action too fast</li>
                     <li>Growing oscillation: System instability</li>
@@ -114,7 +114,7 @@ const InstrumentationModule5Section4 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-elec-yellow font-medium text-sm">Tuning-Related</p>
-                  <ul className="text-white/70 text-xs space-y-1 mt-2">
+                  <ul className="text-white text-xs space-y-1 mt-2">
                     <li>Excessive proportional gain</li>
                     <li>Integral action too fast</li>
                     <li>Insufficient derivative</li>
@@ -123,7 +123,7 @@ const InstrumentationModule5Section4 = () => {
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-elec-yellow font-medium text-sm">Hardware-Related</p>
-                  <ul className="text-white/70 text-xs space-y-1 mt-2">
+                  <ul className="text-white text-xs space-y-1 mt-2">
                     <li>Actuator sticking or dead band</li>
                     <li>Sensor noise or drift</li>
                     <li>Process changes</li>
@@ -138,7 +138,7 @@ const InstrumentationModule5Section4 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-white text-sm font-medium mb-2">Tuning Adjustments:</p>
-                  <ul className="text-white/70 text-xs space-y-1">
+                  <ul className="text-white text-xs space-y-1">
                     <li>Reduce proportional gain by 25-50%</li>
                     <li>Increase integral time (slower action)</li>
                     <li>Add or increase derivative action</li>
@@ -147,7 +147,7 @@ const InstrumentationModule5Section4 = () => {
                 </div>
                 <div>
                   <p className="text-white text-sm font-medium mb-2">Hardware Checks:</p>
-                  <ul className="text-white/70 text-xs space-y-1">
+                  <ul className="text-white text-xs space-y-1">
                     <li>Test actuator response and calibration</li>
                     <li>Check sensor signal quality</li>
                     <li>Verify wiring connections</li>
@@ -180,7 +180,7 @@ const InstrumentationModule5Section4 = () => {
               <TrendingDown className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-medium text-white mb-2">Understanding Overshoot</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Overshoot occurs when the process variable exceeds the setpoint before settling,
                   indicating aggressive control action that provides too much correction.
                 </p>
@@ -193,17 +193,17 @@ const InstrumentationModule5Section4 = () => {
                 <div className="bg-green-500/10 border border-green-500/20 rounded p-3">
                   <p className="text-green-300 font-bold text-lg">5-15%</p>
                   <p className="text-white text-xs font-medium">Acceptable</p>
-                  <p className="text-white/50 text-xs">Fast, quick settling</p>
+                  <p className="text-white text-xs">Fast, quick settling</p>
                 </div>
                 <div className="bg-orange-500/10 border border-orange-500/20 rounded p-3">
                   <p className="text-orange-300 font-bold text-lg">15-50%</p>
                   <p className="text-white text-xs font-medium">Excessive</p>
-                  <p className="text-white/50 text-xs">Instability risk</p>
+                  <p className="text-white text-xs">Instability risk</p>
                 </div>
                 <div className="bg-red-500/10 border border-red-500/20 rounded p-3">
                   <p className="text-red-300 font-bold text-lg">&gt;50%</p>
                   <p className="text-white text-xs font-medium">Severe</p>
-                  <p className="text-white/50 text-xs">Immediate action</p>
+                  <p className="text-white text-xs">Immediate action</p>
                 </div>
               </div>
             </div>
@@ -213,7 +213,7 @@ const InstrumentationModule5Section4 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-white font-medium text-sm mb-2">Control Tuning:</p>
-                  <ul className="space-y-1 text-white/70 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>High proportional gain</li>
                     <li>Fast integral action</li>
                     <li>Insufficient derivative</li>
@@ -222,7 +222,7 @@ const InstrumentationModule5Section4 = () => {
                 </div>
                 <div>
                   <p className="text-white font-medium text-sm mb-2">Process Characteristics:</p>
-                  <ul className="space-y-1 text-white/70 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>Process dead time</li>
                     <li>Large time constants</li>
                     <li>Nonlinear behaviour</li>
@@ -237,7 +237,7 @@ const InstrumentationModule5Section4 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <p className="text-white text-sm font-medium mb-2">Tuning Solutions:</p>
-                  <ul className="text-white/70 text-xs space-y-1">
+                  <ul className="text-white text-xs space-y-1">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-3 w-3 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>Reduce proportional gain</span>
@@ -258,7 +258,7 @@ const InstrumentationModule5Section4 = () => {
                 </div>
                 <div>
                   <p className="text-white text-sm font-medium mb-2">Advanced Techniques:</p>
-                  <ul className="text-white/70 text-xs space-y-1">
+                  <ul className="text-white text-xs space-y-1">
                     <li className="flex items-start gap-2">
                       <CheckCircle className="h-3 w-3 text-elec-yellow mt-0.5 flex-shrink-0" />
                       <span>Setpoint ramping</span>
@@ -299,7 +299,7 @@ const InstrumentationModule5Section4 = () => {
               <Gauge className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-medium text-white mb-2">What is Lag?</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Lag represents delays in the control system that slow response and reduce control
                   effectiveness. It's the time between when an input change occurs and when the
                   system begins to react.
@@ -312,10 +312,10 @@ const InstrumentationModule5Section4 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-blue-500/10 border border-blue-500/20 rounded p-3">
                   <p className="text-blue-300 font-medium text-sm">Dead Time (Transport Delay)</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Time delay before any response observed
                   </p>
-                  <ul className="text-white/50 text-xs mt-2 space-y-1">
+                  <ul className="text-white text-xs mt-2 space-y-1">
                     <li>Material transport in pipes</li>
                     <li>Signal processing delays</li>
                     <li>Communication delays</li>
@@ -323,10 +323,10 @@ const InstrumentationModule5Section4 = () => {
                 </div>
                 <div className="bg-green-500/10 border border-green-500/20 rounded p-3">
                   <p className="text-green-300 font-medium text-sm">Time Constant Lag</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Exponential response delay due to dynamics
                   </p>
-                  <ul className="text-white/50 text-xs mt-2 space-y-1">
+                  <ul className="text-white text-xs mt-2 space-y-1">
                     <li>Thermal mass in heating systems</li>
                     <li>Capacitive effects in tanks</li>
                     <li>Sensor response time</li>
@@ -340,7 +340,7 @@ const InstrumentationModule5Section4 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-white font-medium text-sm mb-2">Performance Degradation:</p>
-                  <ul className="space-y-1 text-white/70 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>Slower response to setpoint changes</li>
                     <li>Reduced disturbance rejection</li>
                     <li>Increased tendency to oscillate</li>
@@ -349,7 +349,7 @@ const InstrumentationModule5Section4 = () => {
                 </div>
                 <div>
                   <p className="text-white font-medium text-sm mb-2">Control Limitations:</p>
-                  <ul className="space-y-1 text-white/70 text-xs">
+                  <ul className="space-y-1 text-white text-xs">
                     <li>Conservative tuning required</li>
                     <li>Trade-off: speed vs stability</li>
                     <li>Difficulty with fast disturbances</li>
@@ -364,7 +364,7 @@ const InstrumentationModule5Section4 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-white text-sm font-medium mb-2">Physical Modifications:</p>
-                  <ul className="text-white/70 text-xs space-y-1">
+                  <ul className="text-white text-xs space-y-1">
                     <li>Relocate sensors closer to process</li>
                     <li>Use faster responding sensors</li>
                     <li>Minimise pipe lengths and volumes</li>
@@ -373,7 +373,7 @@ const InstrumentationModule5Section4 = () => {
                 </div>
                 <div>
                   <p className="text-white text-sm font-medium mb-2">Control Strategies:</p>
-                  <ul className="text-white/70 text-xs space-y-1">
+                  <ul className="text-white text-xs space-y-1">
                     <li>Feed-forward compensation</li>
                     <li>Smith predictor control</li>
                     <li>Cascade control systems</li>
@@ -406,7 +406,7 @@ const InstrumentationModule5Section4 = () => {
               <AlertTriangle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <div>
                 <h3 className="font-medium text-white mb-2">Diagnostic Process</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Effective troubleshooting starts with data collection and systematic analysis of
                   PV, SP, and output signals to identify the root cause.
                 </p>
@@ -422,7 +422,7 @@ const InstrumentationModule5Section4 = () => {
                   </span>
                   <div>
                     <p className="text-white text-sm font-medium">Trend Analysis</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Plot PV, SP, and Output vs time to identify patterns
                     </p>
                   </div>
@@ -433,7 +433,7 @@ const InstrumentationModule5Section4 = () => {
                   </span>
                   <div>
                     <p className="text-white text-sm font-medium">Signal Quality Check</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Assess noise levels, dropouts, and calibration
                     </p>
                   </div>
@@ -444,7 +444,7 @@ const InstrumentationModule5Section4 = () => {
                   </span>
                   <div>
                     <p className="text-white text-sm font-medium">Component Testing</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Test sensor and actuator operation individually
                     </p>
                   </div>
@@ -455,7 +455,7 @@ const InstrumentationModule5Section4 = () => {
                   </span>
                   <div>
                     <p className="text-white text-sm font-medium">Controller Review</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Verify PID parameters and control action settings
                     </p>
                   </div>
@@ -470,19 +470,19 @@ const InstrumentationModule5Section4 = () => {
               <div className="space-y-2 text-sm">
                 <div>
                   <p className="text-white font-medium">Problem:</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Fan repeatedly speeds up and slows down, temperature fluctuates ±3°C
                   </p>
                 </div>
                 <div>
                   <p className="text-white font-medium">Diagnosis:</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Trending reveals hunting with 2-minute period. High Kp identified.
                   </p>
                 </div>
                 <div>
                   <p className="text-white font-medium">Solution:</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Reduced Kp by 40%, added derivative. Result: ±0.5°C control.
                   </p>
                 </div>
@@ -501,7 +501,7 @@ const InstrumentationModule5Section4 = () => {
           <div className="space-y-4">
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-medium text-white mb-2">What might cause loop instability?</h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Loop instability can be caused by excessive controller gain, poor sensor signals,
                 noise, process changes, or actuator problems that disrupt the control loop's ability
                 to maintain stable control.
@@ -512,7 +512,7 @@ const InstrumentationModule5Section4 = () => {
               <h4 className="font-medium text-white mb-2">
                 How is tuning involved in fault correction?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Proper PID tuning is essential for preventing and correcting most control loop
                 faults. Balancing responsiveness, stability, and accuracy through correct P, I, and
                 D settings addresses the majority of control problems.
@@ -523,7 +523,7 @@ const InstrumentationModule5Section4 = () => {
               <h4 className="font-medium text-white mb-2">
                 When should you switch to manual control?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Manual control should be considered during emergencies, equipment failures, major
                 process upsets, or when automatic control is causing unsafe conditions that require
                 immediate operator intervention.

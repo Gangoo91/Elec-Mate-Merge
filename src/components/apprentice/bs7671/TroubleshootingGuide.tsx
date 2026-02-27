@@ -41,7 +41,7 @@ const TroubleshootingGuide = ({ stepData }: TroubleshootingGuideProps) => {
                 </span>
                 <ul className="space-y-1.5">
                   {troubleshoot.causes.map((cause, causeIndex) => (
-                    <li key={causeIndex} className="text-sm text-white/70 flex items-start gap-2">
+                    <li key={causeIndex} className="text-sm text-white flex items-start gap-2">
                       <span className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-1.5 flex-shrink-0" />
                       {cause}
                     </li>
@@ -55,7 +55,7 @@ const TroubleshootingGuide = ({ stepData }: TroubleshootingGuideProps) => {
                   {troubleshoot.solutions.map((solution, solutionIndex) => (
                     <li
                       key={solutionIndex}
-                      className="text-sm text-white/70 flex items-start gap-2"
+                      className="text-sm text-white flex items-start gap-2"
                     >
                       <CheckCircle className="h-3.5 w-3.5 text-green-400 mt-0.5 flex-shrink-0" />
                       {solution}
@@ -74,7 +74,7 @@ const TroubleshootingGuide = ({ stepData }: TroubleshootingGuideProps) => {
             </div>
             <div>
               <h4 className="font-semibold text-elec-yellow mb-1">Remember</h4>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 If you're unsure about any readings or issues, always consult with your supervisor
                 or a qualified electrician. Safety is paramount in electrical testing.
               </p>

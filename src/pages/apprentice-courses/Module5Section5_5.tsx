@@ -190,7 +190,7 @@ const Module5Section5_5 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -208,13 +208,13 @@ const Module5Section5_5 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.5</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.5</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Attending Briefings, Toolbox Talks, and Site Meetings
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Essential communication and safety practices for professional electrical work on
               construction sites
             </p>
@@ -225,7 +225,7 @@ const Module5Section5_5 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-                <ul className="text-white/80 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>• Briefings keep everyone informed about site rules and safety</li>
                   <li>• Toolbox talks are mandatory safety sessions</li>
                   <li>• Active participation demonstrates professionalism</li>
@@ -233,7 +233,7 @@ const Module5Section5_5 = () => {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-                <ul className="text-white/80 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>
                     • <strong>Spot:</strong> Meeting schedules, safety notices
                   </li>
@@ -254,7 +254,7 @@ const Module5Section5_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Learning Outcomes
             </h2>
-            <ul className="text-white/80 space-y-2 leading-relaxed">
+            <ul className="text-white space-y-2 leading-relaxed">
               <li>• Explain the purpose of briefings, toolbox talks, and site meetings</li>
               <li>• Recognise the importance of active participation</li>
               <li>• Apply communication and listening skills during meetings</li>
@@ -269,7 +269,7 @@ const Module5Section5_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Purpose of Site Meetings
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Different types of meetings serve specific purposes in maintaining site coordination
                 and safety:
@@ -280,21 +280,21 @@ const Module5Section5_5 = () => {
                 <div className="space-y-3 text-sm">
                   <div>
                     <p className="font-medium text-white mb-1">Briefings</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Provide daily updates on site activities, progress, and immediate concerns
                       including work priorities, site access changes, and material deliveries.
                     </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Toolbox Talks</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Short sessions focused on safety topics such as working at height, manual
                       handling, specific hazards, and PPE requirements.
                     </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Formal Site Meetings</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Cover wider project progress, coordination between trades, quality standards,
                       and future planning.
                     </p>
@@ -318,7 +318,7 @@ const Module5Section5_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Why Attendance Matters
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Regular attendance at briefings and meetings is crucial for safety, efficiency, and
                 professionalism:
@@ -329,27 +329,27 @@ const Module5Section5_5 = () => {
                 <ul className="text-sm space-y-2">
                   <li>
                     <strong className="text-white">Safety awareness:</strong>{' '}
-                    <span className="text-white/70">
+                    <span className="text-white">
                       Keeps you informed about site rules, hazards, exclusion zones, and emergency
                       procedures
                     </span>
                   </li>
                   <li>
                     <strong className="text-white">Task clarity:</strong>{' '}
-                    <span className="text-white/70">
+                    <span className="text-white">
                       Ensures you understand your tasks, responsibilities, and coordination
                       requirements
                     </span>
                   </li>
                   <li>
                     <strong className="text-white">Team coordination:</strong>{' '}
-                    <span className="text-white/70">
+                    <span className="text-white">
                       Promotes awareness of other trades' activities and overall project progress
                     </span>
                   </li>
                   <li>
                     <strong className="text-white">Professionalism:</strong>{' '}
-                    <span className="text-white/70">
+                    <span className="text-white">
                       Demonstrates commitment to safety and quality, building trust with supervisors
                     </span>
                   </li>
@@ -358,7 +358,7 @@ const Module5Section5_5 = () => {
 
               <div className="p-4 rounded-lg bg-red-500/5 border-l-2 border-red-500/50">
                 <p className="font-semibold text-red-400 mb-2">Remember</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Missing meetings can lead to accidents, mistakes, and missed opportunities —
                   attendance is not optional.
                 </p>
@@ -380,7 +380,7 @@ const Module5Section5_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Responsibilities When Attending
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Active and professional participation requires understanding your responsibilities:
               </p>
@@ -390,14 +390,14 @@ const Module5Section5_5 = () => {
                 <div className="space-y-3 text-sm">
                   <div>
                     <p className="font-medium text-white mb-1">Arrive on time and prepared</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Check meeting times, bring notebook and pen, review previous day's actions,
                       have questions ready.
                     </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Listen carefully and take notes</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Focus on safety information, record specific tasks and deadlines, note any
                       changes to procedures.
                     </p>
@@ -406,14 +406,14 @@ const Module5Section5_5 = () => {
                     <p className="font-medium text-white mb-1">
                       Ask questions if instructions are unclear
                     </p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Seek clarification immediately, don't assume or guess, confirm understanding
                       by repeating back.
                     </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Follow up on actions</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Understand deadlines, report progress and problems, coordinate with other
                       trades as required.
                     </p>
@@ -437,7 +437,7 @@ const Module5Section5_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Common Mistakes to Avoid
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Understanding common pitfalls helps ensure professional behaviour and effective
                 communication:
@@ -447,7 +447,7 @@ const Module5Section5_5 = () => {
                 <p className="font-semibold text-red-400 mb-2">
                   Behaviours That Undermine Safety and Professionalism
                 </p>
-                <ul className="text-sm space-y-2 text-white/70">
+                <ul className="text-sm space-y-2 text-white">
                   <li>
                     • <strong className="text-white">Not paying attention:</strong> Using phone,
                     side conversations, assuming you know what will be said
@@ -475,7 +475,7 @@ const Module5Section5_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Legal Requirements and Compliance
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">
                   Health and Safety Legal Framework
@@ -485,7 +485,7 @@ const Module5Section5_5 = () => {
                     <p className="font-medium text-white mb-1">
                       Health and Safety at Work Act 1974
                     </p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Employers must provide information, instruction, training and supervision.
                       Employees have a duty to take care of their own and others' safety. Toolbox
                       talks fulfil legal requirements for ongoing safety training.
@@ -495,7 +495,7 @@ const Module5Section5_5 = () => {
                     <p className="font-medium text-white mb-1">
                       Construction (Design and Management) Regulations 2015
                     </p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Principal contractors must ensure worker competence and training. Workers must
                       report unsafe conditions. Induction and ongoing briefings are legal
                       requirements.
@@ -520,16 +520,16 @@ const Module5Section5_5 = () => {
               <p className="font-semibold text-amber-400 mb-2">
                 Case Study: The Importance of Attending Briefings
               </p>
-              <p className="text-white/80 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 <strong>Situation:</strong> At a refurbishment site, a toolbox talk highlighted a
                 new exclusion zone due to overhead work. An electrician who missed the briefing
                 entered the area and risked serious injury.
               </p>
-              <p className="text-white/80 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 <strong>Consequence:</strong> The near-miss required incident reporting, work
                 stoppage for investigation, and additional safety training for all trades.
               </p>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 <strong>Lesson:</strong> Attendance would have prevented the near-miss. This
                 incident shows how missing briefings can lead to serious safety risks and project
                 delays.
@@ -546,7 +546,7 @@ const Module5Section5_5 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-2">Meeting Essentials</h3>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>
                     • <strong className="text-white">Always attend</strong> — safety depends on it
                   </li>
@@ -567,7 +567,7 @@ const Module5Section5_5 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-2">Professional Behaviour</h3>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>• Respect others by avoiding distractions</li>
                   <li>• Participate actively and constructively</li>
                   <li>• Take toolbox talks seriously</li>
@@ -585,7 +585,7 @@ const Module5Section5_5 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <p className="font-semibold text-elec-yellow mb-2">Key Learning Points</p>
-              <ul className="text-white/80 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>
                   • Briefings, toolbox talks, and site meetings are vital for communication and
                   safety

@@ -202,7 +202,7 @@ export default function PasmaModule5Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-5">
@@ -227,7 +227,7 @@ export default function PasmaModule5Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Records &amp; Documentation
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             What must be recorded, how to record it correctly, where to store it, and the common
             failures that leave organisations exposed to enforcement action
           </p>
@@ -314,7 +314,7 @@ export default function PasmaModule5Section3() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Name &amp; Address</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         The name and address of the person for whom the inspection was carried out.
                         This is typically the employer, principal contractor, or site controller
                         &mdash; not the inspector themselves.
@@ -327,7 +327,7 @@ export default function PasmaModule5Section3() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Location &amp; Description</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         The location of the scaffold and a description sufficient to identify it.
                         Include site name, specific position (e.g. &ldquo;north elevation, bay
                         3&rdquo;), tower type, and height.
@@ -340,7 +340,7 @@ export default function PasmaModule5Section3() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Date &amp; Time</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         The date and time the inspection was carried out. This establishes the 7-day
                         interval start point and proves the inspection occurred before the tower was
                         used.
@@ -353,7 +353,7 @@ export default function PasmaModule5Section3() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Matters Giving Rise to Risk</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Details of any matter identified during the inspection that could give rise
                         to a risk to the health or safety of any person. If nothing was found,
                         record &ldquo;no defects identified.&rdquo;
@@ -366,7 +366,7 @@ export default function PasmaModule5Section3() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Actions Taken</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Details of any action taken as a result of the matters identified. For
                         example: &ldquo;Damaged brace replaced with new component from stock&rdquo;
                         or &ldquo;Tower taken out of service pending repair.&rdquo;
@@ -379,7 +379,7 @@ export default function PasmaModule5Section3() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Further Actions Needed</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Details of any further action considered necessary that has not yet been
                         completed. This creates a follow-up obligation and audit trail.
                       </p>
@@ -393,7 +393,7 @@ export default function PasmaModule5Section3() {
                       <p className="text-sm font-medium text-white">
                         Inspector&rsquo;s Name &amp; Position
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         The name and position of the person who carried out the inspection. This
                         must be the actual inspector, not a supervisor who was not present. A
                         signature is essential.
@@ -436,7 +436,7 @@ export default function PasmaModule5Section3() {
                     What the PASMA Checklist Covers
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -489,7 +489,7 @@ export default function PasmaModule5Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Common Completion Errors</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -566,7 +566,7 @@ export default function PasmaModule5Section3() {
                   <Camera className="h-5 w-5 text-teal-400" />
                   <p className="text-sm font-medium text-teal-400">When Photographs Add Value</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -610,7 +610,7 @@ export default function PasmaModule5Section3() {
                 <p className="text-sm font-medium text-elec-yellow mb-3">
                   Taking Useful Inspection Photographs
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Time-stamp:</strong> Ensure your camera or phone
                     has the correct date and time set. The metadata (EXIF data) in the image file
@@ -644,7 +644,7 @@ export default function PasmaModule5Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">What NOT to Photograph</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Avoid photographs that include identifiable people without their consent,
                   particularly if the images may be shared externally. Focus on the tower, its
                   components, and its surroundings. If a person must be in the image for scale or
@@ -686,7 +686,7 @@ export default function PasmaModule5Section3() {
                   <p className="text-sm font-medium text-green-400 mb-2">
                     Digital Record Advantages
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Searchable &mdash; find any record instantly</span>
@@ -715,7 +715,7 @@ export default function PasmaModule5Section3() {
                 </div>
                 <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-blue-400 mb-2">Paper Record Advantages</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>No technology required &mdash; works anywhere</span>
@@ -749,7 +749,7 @@ export default function PasmaModule5Section3() {
                   <Database className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Legal Standing</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Both paper and digital records have equal legal standing under the Regulations.
                   The HSE accepts digital records provided they can be produced in a readable format
                   when requested. There is no requirement to print digital records unless the HSE
@@ -794,7 +794,7 @@ export default function PasmaModule5Section3() {
                   <Users className="h-5 w-5 text-cyan-400" />
                   <p className="text-sm font-medium text-cyan-400">Who Needs Access?</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -850,7 +850,7 @@ export default function PasmaModule5Section3() {
                 <p className="text-sm font-medium text-white mb-2">
                   Record Accessibility Checklist
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -911,7 +911,7 @@ export default function PasmaModule5Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Integration Points</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -981,7 +981,7 @@ export default function PasmaModule5Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Multi-Contractor Sites</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   On sites where multiple contractors use mobile towers, the principal contractor
                   must establish a clear system for managing inspection records across all parties.
                   This might include a centralised inspection log, shared digital platform, or a
@@ -1021,7 +1021,7 @@ export default function PasmaModule5Section3() {
 
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-red-400 mb-3">The Most Common Failures</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1094,7 +1094,7 @@ export default function PasmaModule5Section3() {
                   <p className="text-sm font-medium text-green-400 mb-2">
                     How to Avoid These Failures
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Use a structured checklist (PASMA or equivalent)</span>
@@ -1119,7 +1119,7 @@ export default function PasmaModule5Section3() {
                   <p className="text-sm font-medium text-red-400 mb-2">
                     Consequences of Poor Records
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>HSE improvement or prohibition notice</span>
@@ -1160,7 +1160,7 @@ export default function PasmaModule5Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1174,7 +1174,7 @@ export default function PasmaModule5Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-5-section-2">

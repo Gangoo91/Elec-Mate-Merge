@@ -285,7 +285,7 @@ const HNCModule8Section1_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section1">
@@ -307,7 +307,7 @@ const HNCModule8Section1_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Heating Controls
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Weather compensation, optimum start, zone control, BMS integration and smart heating
             technologies
           </p>
@@ -417,7 +417,7 @@ const HNCModule8Section1_5 = () => {
                 <p className="text-white">
                   <strong>Curve Gradient:</strong> Determines how flow temp responds to outdoor temp
                 </p>
-                <p className="text-white/70 mt-2">Building Type | Typical Curve Gradient</p>
+                <p className="text-white mt-2">Building Type | Typical Curve Gradient</p>
                 <p className="text-white">Well-insulated modern: 0.5 - 0.8</p>
                 <p className="text-white">Standard insulation: 0.8 - 1.2</p>
                 <p className="text-white">Poor insulation/oversized rads: 1.2 - 1.8</p>
@@ -549,7 +549,7 @@ const HNCModule8Section1_5 = () => {
                 Optimum Start Calculation Example
               </p>
               <div className="font-mono text-sm space-y-2">
-                <p className="text-white/60">Building parameters:</p>
+                <p className="text-white">Building parameters:</p>
                 <p className="text-white">Occupancy starts: 08:00</p>
                 <p className="text-white">Required temp: 21°C</p>
                 <p className="text-white">Current indoor: 16°C</p>
@@ -558,7 +558,7 @@ const HNCModule8Section1_5 = () => {
                 <p className="mt-2 text-white">Temperature rise needed: 21 - 16 = 5°C</p>
                 <p className="text-white">Preheat time: 5 ÷ 1.5 = 3.3 hours</p>
                 <p className="text-green-400 mt-2">Optimum start time: 08:00 - 3h 20min = 04:40</p>
-                <p className="text-white/60">
+                <p className="text-white">
                   Without optimum start, might have started at 06:00 (fixed)
                 </p>
               </div>
@@ -1005,8 +1005,8 @@ const HNCModule8Section1_5 = () => {
                 <strong>Scenario:</strong> Select the heating curve for a 1990s semi-detached house
                 with standard insulation and correctly sized radiators.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Building characteristics:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Building characteristics:</p>
                 <p className="mt-2">Construction: 1990s cavity wall with partial fill</p>
                 <p>Insulation: Reasonable but not modern standards</p>
                 <p>Radiators: Sized for 75/65/20°C (flow/return/room)</p>
@@ -1020,8 +1020,8 @@ const HNCModule8Section1_5 = () => {
                 <p>At -3°C outdoor: Flow temp ~55-60°C</p>
                 <p>At +10°C outdoor: Flow temp ~35-40°C</p>
                 <p className="text-green-400 mt-2">Adjust based on observation:</p>
-                <p className="text-white/60">If rooms too cool in cold weather: Increase to 1.2</p>
-                <p className="text-white/60">If rooms overheat: Decrease to 0.8</p>
+                <p className="text-white">If rooms too cool in cold weather: Increase to 1.2</p>
+                <p className="text-white">If rooms overheat: Decrease to 0.8</p>
               </div>
             </div>
 
@@ -1033,8 +1033,8 @@ const HNCModule8Section1_5 = () => {
                 <strong>Scenario:</strong> Size zone valves for a domestic S-plan system with
                 heating and hot water zones.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">System data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">System data:</p>
                 <p className="mt-2">Heating load: 15kW</p>
                 <p>Hot water cylinder: Indirect 180L</p>
                 <p>Boiler flow rate: 1200 L/hr at delta-T 20K</p>
@@ -1060,8 +1060,8 @@ const HNCModule8Section1_5 = () => {
                 <strong>Scenario:</strong> Specify compliant controls for a combi boiler
                 installation in England.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Installation requirements:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Installation requirements:</p>
                 <p className="mt-2">Boiler: 30kW combi with OpenTherm</p>
                 <p>Property: 3-bed semi, single heating zone</p>
                 <p>Customer request: Smart phone control</p>
@@ -1078,7 +1078,7 @@ const HNCModule8Section1_5 = () => {
                 <p className="text-green-400">
                   Part L compliant: Room stat + TRVs + boiler interlock
                 </p>
-                <p className="mt-2 text-white/60">Document compliance on certificate/handover</p>
+                <p className="mt-2 text-white">Document compliance on certificate/handover</p>
               </div>
             </div>
 
@@ -1090,8 +1090,8 @@ const HNCModule8Section1_5 = () => {
                 <strong>Scenario:</strong> Specify BMS connection for a commercial boiler plant
                 room.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Plant room equipment:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Plant room equipment:</p>
                 <p className="mt-2">2 x 200kW cascade boilers</p>
                 <p>4 x Variable speed pumps</p>
                 <p>Weather compensation controller</p>
@@ -1203,7 +1203,7 @@ const HNCModule8Section1_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1249,7 +1249,7 @@ const HNCModule8Section1_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section1-4">

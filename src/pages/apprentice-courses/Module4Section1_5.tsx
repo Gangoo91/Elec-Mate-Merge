@@ -232,7 +232,7 @@ const Module4Section1_5 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -250,13 +250,13 @@ const Module4Section1_5 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 1.5</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 1.5</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Preparing the Work Area
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master essential work area preparation including access, safety measures, and lighting
               requirements.
             </p>
@@ -268,7 +268,7 @@ const Module4Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="grid md:grid-cols-2 gap-4 text-sm text-white/90">
+            <div className="grid md:grid-cols-2 gap-4 text-sm text-white">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-5 space-y-1">
@@ -300,7 +300,7 @@ const Module4Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <ul className="list-disc pl-6 space-y-2 text-sm text-white/90">
+            <ul className="list-disc pl-6 space-y-2 text-sm text-white">
               <li>Assess site access and working space requirements for the task.</li>
               <li>Implement safety measures to protect workers and others on site.</li>
               <li>Provide adequate lighting for safe and accurate installation.</li>
@@ -317,7 +317,7 @@ const Module4Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               <HardHat className="w-5 h-5" /> Access Considerations
             </h2>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               Proper access planning ensures materials, personnel, and equipment can reach the work
               area safely and efficiently. Poor access planning leads to delays, safety hazards, and
               increased costs.
@@ -332,11 +332,11 @@ const Module4Section1_5 = () => {
                     </span>
                     <div className="flex-1">
                       <p className="font-semibold text-elec-yellow mb-1">{access.category}</p>
-                      <p className="text-sm text-white/80 mb-2">{access.description}</p>
-                      <div className="text-xs text-white/70 bg-black/20 p-2 rounded mb-2">
+                      <p className="text-sm text-white mb-2">{access.description}</p>
+                      <div className="text-xs text-white bg-black/20 p-2 rounded mb-2">
                         <strong>Factors:</strong> {access.factors}
                       </div>
-                      <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                      <div className="text-xs text-white bg-black/20 p-2 rounded">
                         <strong>Standards:</strong> {access.standards}
                       </div>
                     </div>
@@ -356,7 +356,7 @@ const Module4Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               <Shield className="w-5 h-5" /> Safety Preparation
             </h2>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               Safety preparation involves implementing measures to protect workers and others from
               electrical, physical, and environmental hazards present in the work area.
             </p>
@@ -373,11 +373,11 @@ const Module4Section1_5 = () => {
                     </span>
                     <div className="flex-1">
                       <p className="font-semibold text-green-400 mb-1">{safety.measure}</p>
-                      <p className="text-sm text-white/80 mb-2">{safety.purpose}</p>
-                      <div className="text-xs text-white/70 bg-black/20 p-2 rounded mb-2">
+                      <p className="text-sm text-white mb-2">{safety.purpose}</p>
+                      <div className="text-xs text-white bg-black/20 p-2 rounded mb-2">
                         <strong>Procedure:</strong> {safety.procedure}
                       </div>
-                      <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                      <div className="text-xs text-white bg-black/20 p-2 rounded">
                         <strong>Equipment:</strong> {safety.equipment}
                       </div>
                     </div>
@@ -397,7 +397,7 @@ const Module4Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               <Lightbulb className="w-5 h-5" /> Lighting Requirements
             </h2>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               Adequate lighting is essential for safe and accurate electrical work. Insufficient
               lighting leads to mistakes, accidents, and poor quality installations that may fail
               inspection.
@@ -415,11 +415,11 @@ const Module4Section1_5 = () => {
                     </span>
                     <div className="flex-1">
                       <p className="font-semibold text-purple-400 mb-1">{lighting.task}</p>
-                      <p className="text-sm text-white/80 mb-2">Minimum level: {lighting.minLux}</p>
-                      <div className="text-xs text-white/70 bg-black/20 p-2 rounded mb-2">
+                      <p className="text-sm text-white mb-2">Minimum level: {lighting.minLux}</p>
+                      <div className="text-xs text-white bg-black/20 p-2 rounded mb-2">
                         <strong>Requirements:</strong> {lighting.requirements}
                       </div>
-                      <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                      <div className="text-xs text-white bg-black/20 p-2 rounded">
                         <strong>Equipment:</strong> {lighting.equipment}
                       </div>
                     </div>
@@ -439,7 +439,7 @@ const Module4Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               <AlertTriangle className="w-5 h-5" /> Hazard Identification and Control
             </h2>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               Systematic hazard identification and control is essential before starting any
               electrical work. This involves surveying the work area and implementing appropriate
               control measures.
@@ -447,7 +447,7 @@ const Module4Section1_5 = () => {
 
             <div className="rounded-lg p-4 border-l-2 border-orange-500/50 bg-orange-500/5">
               <h4 className="font-semibold text-orange-400 mb-3">Common Hazards and Controls</h4>
-              <div className="grid md:grid-cols-2 gap-4 text-xs text-white/80">
+              <div className="grid md:grid-cols-2 gap-4 text-xs text-white">
                 <div className="space-y-2">
                   <div className="bg-black/20 p-2 rounded">
                     <strong>Overhead Services:</strong> Survey and mark all overhead cables and
@@ -481,14 +481,14 @@ const Module4Section1_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Regulatory Requirements
             </h2>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               Work area preparation must comply with relevant health and safety legislation and
               electrical regulations.
             </p>
 
             <div className="rounded-lg p-4 border-l-2 border-red-500/50 bg-red-500/5">
               <h4 className="font-semibold text-red-400 mb-3">Key Regulations</h4>
-              <div className="grid md:grid-cols-3 gap-4 text-xs text-white/80">
+              <div className="grid md:grid-cols-3 gap-4 text-xs text-white">
                 <div className="bg-black/20 p-3 rounded">
                   <strong className="block mb-2 text-white">
                     Health and Safety at Work Act 1974
@@ -531,13 +531,13 @@ const Module4Section1_5 = () => {
               <Eye className="w-5 h-5" /> Real-World Example
             </h2>
             <div className="p-4 bg-white/5 border border-white/10 rounded-lg border-l-2 border-l-red-500">
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 During a refurbishment project, electricians worked in poorly lit areas without
                 additional lighting. As a result, several wiring errors occurred, leading to failed
                 inspection and costly rework. Proper lighting provision from the start would have
                 avoided the issue.
               </p>
-              <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+              <div className="text-xs text-white bg-black/20 p-2 rounded">
                 <strong>Lesson:</strong> Adequate lighting is essential for quality work and passing
                 inspections. The cost of proper lighting setup is minimal compared to rework
                 expenses.
@@ -554,7 +554,7 @@ const Module4Section1_5 = () => {
             <div className="space-y-4">
               <div className="rounded-lg border border-white/10 p-4">
                 <p className="font-medium text-white mb-1">Is portable lighting always needed?</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Not if existing lighting is adequate, but temporary lighting should be available
                   for poorly lit areas.
                 </p>
@@ -563,7 +563,7 @@ const Module4Section1_5 = () => {
                 <p className="font-medium text-white mb-1">
                   Do I need barriers in domestic settings?
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   If there's any risk to occupants or other trades, barriers or clear marking of the
                   work zone should be used.
                 </p>
@@ -572,7 +572,7 @@ const Module4Section1_5 = () => {
                 <p className="font-medium text-white mb-1">
                   Can I work in damp areas without special precautions?
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   No — use equipment with the correct IP rating and wear appropriate PPE.
                 </p>
               </div>
@@ -585,7 +585,7 @@ const Module4Section1_5 = () => {
               <h2 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
                 <CheckCircle className="w-5 h-5 text-elec-yellow" /> Summary
               </h2>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Preparing the work area ensures safety, efficiency, and quality. Adequate access,
                 safety measures, and lighting must be in place before work starts, in line with
                 health and safety regulations. Proper preparation prevents accidents, improves work

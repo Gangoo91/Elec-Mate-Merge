@@ -130,30 +130,30 @@ const JobTypeSelectorDesktop: React.FC<JobTypeSelectorDesktopProps> = ({
                   value ? 'bg-yellow-400/20' : 'bg-white/10'
                 )}
               >
-                <FileText className={cn('h-5 w-5', value ? 'text-yellow-400' : 'text-white/60')} />
+                <FileText className={cn('h-5 w-5', value ? 'text-yellow-400' : 'text-white')} />
               </div>
               <div className="min-w-0 flex-1">
                 {value ? (
                   <>
                     <p className="font-medium text-white truncate">{value}</p>
                     {selectedConfig && (
-                      <p className="text-xs text-white/60 truncate">
+                      <p className="text-xs text-white truncate">
                         {selectedConfig.job_category}
                       </p>
                     )}
                   </>
                 ) : (
-                  <p className="text-white/30">Select job type...</p>
+                  <p className="text-white">Select job type...</p>
                 )}
               </div>
             </div>
             {value ? (
               <X
-                className="h-5 w-5 text-white/40 hover:text-white flex-shrink-0"
+                className="h-5 w-5 text-white hover:text-white flex-shrink-0"
                 onClick={handleClear}
               />
             ) : (
-              <ChevronDown className="h-5 w-5 text-white/40 flex-shrink-0" />
+              <ChevronDown className="h-5 w-5 text-white flex-shrink-0" />
             )}
           </Button>
         </PopoverTrigger>
@@ -166,14 +166,14 @@ const JobTypeSelectorDesktop: React.FC<JobTypeSelectorDesktopProps> = ({
           <Command className="bg-transparent" shouldFilter={false}>
             <div className="p-3 border-b border-white/10">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/40" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
                 <CommandInput
                   placeholder="Search 77 job types..."
                   value={search}
                   onValueChange={setSearch}
                   className={cn(
                     'h-10 pl-9 bg-neutral-800 border-white/10 rounded-lg text-white text-sm',
-                    'placeholder:text-white/30 focus:border-yellow-400/50'
+                    'placeholder:text-white focus:border-yellow-400/50'
                   )}
                 />
               </div>
@@ -182,8 +182,8 @@ const JobTypeSelectorDesktop: React.FC<JobTypeSelectorDesktopProps> = ({
             <CommandList className="max-h-[350px] overflow-y-auto p-2">
               {!hasResults && search && (
                 <CommandEmpty className="py-6 text-center">
-                  <Search className="h-6 w-6 mx-auto text-white/20 mb-2" />
-                  <p className="text-sm text-white/60">No jobs match "{search}"</p>
+                  <Search className="h-6 w-6 mx-auto text-white mb-2" />
+                  <p className="text-sm text-white">No jobs match "{search}"</p>
                   <Button
                     variant="link"
                     className="text-yellow-400 text-sm mt-1"
@@ -200,10 +200,10 @@ const JobTypeSelectorDesktop: React.FC<JobTypeSelectorDesktopProps> = ({
                   <CommandGroup
                     key={category}
                     heading={
-                      <div className="flex items-center gap-2 py-1.5 text-white/70">
+                      <div className="flex items-center gap-2 py-1.5 text-white">
                         <CategoryIcon className="h-3.5 w-3.5 text-yellow-400" />
                         <span className="font-medium text-xs">{category}</span>
-                        <span className="text-[10px] text-white/40">({jobs.length})</span>
+                        <span className="text-[10px] text-white">({jobs.length})</span>
                       </div>
                     }
                     className="mb-1"
@@ -222,7 +222,7 @@ const JobTypeSelectorDesktop: React.FC<JobTypeSelectorDesktopProps> = ({
                         <div className="flex items-center justify-between w-full">
                           <div className="min-w-0 flex-1">
                             <p className="text-sm text-white truncate">{job.job_type}</p>
-                            <p className="text-[11px] text-white/50">
+                            <p className="text-[11px] text-white">
                               Per {job.unit}
                               {job.attributes && job.attributes.length > 0 && (
                                 <span className="text-yellow-400/70 ml-1">• Has options</span>
@@ -252,10 +252,10 @@ const JobTypeSelectorDesktop: React.FC<JobTypeSelectorDesktopProps> = ({
                 >
                   <div className="flex items-center justify-between w-full">
                     <div className="flex items-center gap-2">
-                      <FileText className="h-4 w-4 text-white/40" />
+                      <FileText className="h-4 w-4 text-white" />
                       <div>
                         <p className="text-sm text-white">Other / Unlisted Job</p>
-                        <p className="text-[11px] text-white/50">Describe your job manually</p>
+                        <p className="text-[11px] text-white">Describe your job manually</p>
                       </div>
                     </div>
                     {value === 'Other' && <Check className="h-4 w-4 text-yellow-400" />}

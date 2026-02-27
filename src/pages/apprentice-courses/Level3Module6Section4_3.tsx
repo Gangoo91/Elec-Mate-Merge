@@ -276,7 +276,7 @@ const Level3Module6Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section4">
@@ -346,7 +346,7 @@ const Level3Module6Section4_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Lower Threshold</p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     Cattle and pigs can perceive currents as low as 1-2mA - about 10 times more
                     sensitive than humans. Voltages of just 2-4V between contact points can cause
                     behavioural changes.
@@ -354,7 +354,7 @@ const Level3Module6Section4_3 = () => {
                 </div>
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Contact Points</p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     Animals contact many surfaces simultaneously - floors, water troughs, feeders,
                     stalls. Any potential difference between these surfaces creates current flow
                     through the animal.
@@ -362,7 +362,7 @@ const Level3Module6Section4_3 = () => {
                 </div>
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Behavioural Signs</p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     Stray voltage causes reduced feed and water intake, reluctance to enter areas,
                     reduced milk production, increased stress, and in severe cases, injury from
                     startled reactions.
@@ -370,7 +370,7 @@ const Level3Module6Section4_3 = () => {
                 </div>
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Economic Impact</p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     Beyond animal welfare, stray voltage causes significant economic losses. A dairy
                     herd affected by stray voltage can show 5-10% reduction in milk yield before
                     symptoms become obvious.
@@ -405,7 +405,7 @@ const Level3Module6Section4_3 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 RCD Protection Requirements (Regulation 705.411.1):
               </p>
-              <ul className="text-sm text-white/90 space-y-2 ml-4">
+              <ul className="text-sm text-white space-y-2 ml-4">
                 <li>
                   <strong>30mA RCDs:</strong> Required for socket outlet circuits and circuits
                   supplying hand-held or mobile equipment
@@ -431,7 +431,7 @@ const Level3Module6Section4_3 = () => {
               <p className="text-sm font-medium text-white mb-2">
                 Parts Requiring Bonding in Animal Areas:
               </p>
-              <ul className="text-sm text-white/90 space-y-1 ml-4">
+              <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Metal stall divisions and feeding barriers</li>
                 <li>Water troughs and drinkers (including pipework)</li>
                 <li>Metallic floors, gratings, and drainage covers</li>
@@ -441,7 +441,7 @@ const Level3Module6Section4_3 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A dairy parlour has metal stalls, stainless steel milking
               clusters connected via aluminium pipework, a metal-grated floor, and steel structure.
               All these elements must be bonded together with conductors sized per Table 54.8,
@@ -478,7 +478,7 @@ const Level3Module6Section4_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Starting Current</p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     DOL (direct-on-line) starting draws 6-8 times full load current. MCBs must be
                     selected to ride through this inrush without tripping. Type C (5-10 In) or Type
                     D (10-20 In) may be required.
@@ -486,7 +486,7 @@ const Level3Module6Section4_3 = () => {
                 </div>
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Overload Protection</p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     Thermal overload relays protect against sustained overcurrent. Set at 105-110%
                     of motor full load current, they allow brief overloads whilst protecting against
                     damaging sustained conditions.
@@ -494,7 +494,7 @@ const Level3Module6Section4_3 = () => {
                 </div>
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Cable Sizing</p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     Cables must carry starting current without excessive temperature rise. For
                     frequent starting or long starting times, cables may need to be larger than the
                     running current would suggest.
@@ -502,7 +502,7 @@ const Level3Module6Section4_3 = () => {
                 </div>
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Voltage Drop</p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     Motor starting causes voltage dip. Excessive dip affects other equipment and may
                     prevent motors starting. BS 7671 limits are 3% lighting, 5% other - measured
                     during normal operation, not starting.
@@ -552,7 +552,7 @@ const Level3Module6Section4_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div className="p-3 rounded bg-red-500/10 border border-red-500/30">
                   <p className="font-medium text-red-400 mb-1">Gas Zones</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>
                       <strong>Zone 0:</strong> Continuously or long periods
                     </li>
@@ -566,7 +566,7 @@ const Level3Module6Section4_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-orange-500/10 border border-orange-500/30">
                   <p className="font-medium text-orange-400 mb-1">Dust Zones</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>
                       <strong>Zone 20:</strong> Continuously or long periods
                     </li>
@@ -592,7 +592,7 @@ const Level3Module6Section4_3 = () => {
               <p className="text-sm font-medium text-white mb-2">
                 Common Hazardous Areas in Agriculture/Industry:
               </p>
-              <ul className="text-sm text-white/90 space-y-1 ml-4">
+              <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Grain silos, hoppers, and conveying systems (dust Zone 21/22)</li>
                 <li>Fuel storage and dispensing areas (gas Zone 1/2)</li>
                 <li>Spray painting booths and drying areas (gas Zone 1/2)</li>
@@ -601,7 +601,7 @@ const Level3Module6Section4_3 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A grain silo interior during filling is Zone 21 (dust cloud
               likely during normal operation). The conveyor entry point may be Zone 21, reducing to
               Zone 22 further from the discharge. Equipment must be rated for the zone - typically
@@ -685,7 +685,7 @@ const Level3Module6Section4_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -729,7 +729,7 @@ const Level3Module6Section4_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section4-4-2">

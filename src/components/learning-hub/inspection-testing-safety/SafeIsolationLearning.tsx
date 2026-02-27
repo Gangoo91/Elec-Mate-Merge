@@ -365,7 +365,7 @@ const SafeIsolationLearning = ({ onBack }: SafeIsolationLearningProps) => {
               <div className="text-2xl font-bold text-elec-yellow">
                 {completedSections.length}/4
               </div>
-              <p className="text-sm text-white/80">Sections Complete</p>
+              <p className="text-sm text-white">Sections Complete</p>
             </div>
           </div>
           <div className="mt-4 flex gap-2">

@@ -193,7 +193,7 @@ const HNCModule3Section6_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section6">
@@ -215,7 +215,7 @@ const HNCModule3Section6_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Electrical Losses
           </h1>
-          <p className="text-white/80 text-lg">I²R, Eddy Current, and Hysteresis Losses</p>
+          <p className="text-white text-lg">I²R, Eddy Current, and Hysteresis Losses</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -302,7 +302,7 @@ const HNCModule3Section6_1 = () => {
               <p className="font-mono text-center text-xl mb-2">
                 P<sub>loss</sub> = I² × R
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where I = current (A), R = resistance (Ω), P = power loss (W)
               </p>
             </div>
@@ -377,7 +377,7 @@ const HNCModule3Section6_1 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Where r = resistance per metre (Ω/m), L = one-way cable length (m)
               </p>
             </div>
@@ -409,7 +409,7 @@ const HNCModule3Section6_1 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Skin Depth Formula</p>
               <p className="font-mono text-center text-lg mb-2">δ = √(ρ / (π × f × μ))</p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where δ = skin depth (m), ρ = resistivity, f = frequency, μ = permeability
               </p>
             </div>
@@ -521,7 +521,7 @@ const HNCModule3Section6_1 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 P<sub>e</sub> = K<sub>e</sub> × B<sub>max</sub>² × f² × t² × V
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where K<sub>e</sub> = constant, B<sub>max</sub> = peak flux, f = frequency, t =
                 lamination thickness, V = volume
               </p>
@@ -652,7 +652,7 @@ const HNCModule3Section6_1 = () => {
                 P<sub>h</sub> = η × B<sub>max</sub>
                 <sup>n</sup> × f × V
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where η = Steinmetz coefficient, n ≈ 1.6-2.0 (Steinmetz exponent), f = frequency, V
                 = volume
               </p>
@@ -692,7 +692,7 @@ const HNCModule3Section6_1 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                   Soft Magnetic Materials
                 </p>
-                <p className="text-xs text-white/70 mb-2">Used in transformer and motor cores</p>
+                <p className="text-xs text-white mb-2">Used in transformer and motor cores</p>
                 <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                   <li className="pl-1">Silicon steel (3-4% Si)</li>
                   <li className="pl-1">Amorphous metals (metallic glass)</li>
@@ -704,7 +704,7 @@ const HNCModule3Section6_1 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                   Hard Magnetic Materials
                 </p>
-                <p className="text-xs text-white/70 mb-2">Used for permanent magnets</p>
+                <p className="text-xs text-white mb-2">Used for permanent magnets</p>
                 <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                   <li className="pl-1">Neodymium (NdFeB)</li>
                   <li className="pl-1">Samarium cobalt (SmCo)</li>
@@ -936,7 +936,7 @@ const HNCModule3Section6_1 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Effective capacity I<sub>z</sub> = I<sub>t</sub> × C<sub>a</sub> × C<sub>g</sub> × C
                 <sub>i</sub> × ...
               </p>
@@ -959,20 +959,20 @@ const HNCModule3Section6_1 = () => {
                 Cable Loss Calculation Example
               </p>
               <div className="p-3 rounded bg-black/30">
-                <p className="text-sm font-mono text-white/90 mb-2">
+                <p className="text-sm font-mono text-white mb-2">
                   <strong>Problem:</strong> Calculate power loss in a 50m single-phase circuit using
                   4mm² cable carrying 25A
                 </p>
-                <p className="text-sm font-mono text-white/90">
+                <p className="text-sm font-mono text-white">
                   Cable resistance at 70°C: r = 4.61 × 1.2 = 5.53 mΩ/m
                 </p>
-                <p className="text-sm font-mono text-white/90">
+                <p className="text-sm font-mono text-white">
                   Total resistance: R = 2 × 50m × 5.53 mΩ/m = 0.553Ω
                 </p>
-                <p className="text-sm font-mono text-white/90">
+                <p className="text-sm font-mono text-white">
                   Power loss: P = I²R = 25² × 0.553 = <strong>346W</strong>
                 </p>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   This heat must be dissipated; if it cannot be, the cable will overheat.
                 </p>
               </div>
@@ -1080,16 +1080,16 @@ const HNCModule3Section6_1 = () => {
                 The total cost of ownership includes both capital and running costs.
               </p>
               <div className="p-3 rounded bg-black/30">
-                <p className="text-sm font-mono text-white/90 mb-2">
+                <p className="text-sm font-mono text-white mb-2">
                   <strong>Example:</strong> Comparing two 100kVA transformers over 20 years
                 </p>
-                <p className="text-sm font-mono text-white/90">
+                <p className="text-sm font-mono text-white">
                   Standard: Purchase £3,000, losses 2.5kW, annual cost £2,628 @ £0.12/kWh
                 </p>
-                <p className="text-sm font-mono text-white/90">
+                <p className="text-sm font-mono text-white">
                   Premium: Purchase £4,500, losses 1.5kW, annual cost £1,577 @ £0.12/kWh
                 </p>
-                <p className="text-sm font-mono text-white/90 mt-2">
+                <p className="text-sm font-mono text-white mt-2">
                   20-year saving: (£2,628 - £1,577) × 20 - £1,500 = <strong>£19,520</strong>
                 </p>
               </div>
@@ -1192,7 +1192,7 @@ const HNCModule3Section6_1 = () => {
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="p-3 rounded bg-white/5">
                     <p className="text-sm font-medium text-white mb-1">No-Load (Iron) Losses</p>
-                    <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-4">
+                    <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
                       <li className="pl-1">Present whenever energised</li>
                       <li className="pl-1">Hysteresis + eddy current in core</li>
                       <li className="pl-1">Constant regardless of load</li>
@@ -1201,7 +1201,7 @@ const HNCModule3Section6_1 = () => {
                   </div>
                   <div className="p-3 rounded bg-white/5">
                     <p className="text-sm font-medium text-white mb-1">Load (Copper) Losses</p>
-                    <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-4">
+                    <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
                       <li className="pl-1">I²R losses in windings</li>
                       <li className="pl-1">Proportional to load squared</li>
                       <li className="pl-1">Zero at no load</li>
@@ -1252,7 +1252,7 @@ const HNCModule3Section6_1 = () => {
                     </tbody>
                   </table>
                 </div>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   Values for oil-immersed three-phase transformers
                 </p>
               </div>
@@ -1336,7 +1336,7 @@ const HNCModule3Section6_1 = () => {
               <div className="grid sm:grid-cols-2 gap-3">
                 <div>
                   <p className="text-xs font-medium text-white mb-1">Design Stage</p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
                     <li className="pl-1">Specify IE3/IE4 motors for all HVAC</li>
                     <li className="pl-1">Use VSDs for variable-load fans/pumps</li>
                     <li className="pl-1">Select Ecodesign-compliant transformers</li>
@@ -1346,7 +1346,7 @@ const HNCModule3Section6_1 = () => {
                 </div>
                 <div>
                   <p className="text-xs font-medium text-white mb-1">Operation Stage</p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-4">
                     <li className="pl-1">Monitor power quality and PF</li>
                     <li className="pl-1">Replace failing motors with higher IE class</li>
                     <li className="pl-1">Maintain PF correction capacitors</li>
@@ -1375,7 +1375,7 @@ const HNCModule3Section6_1 = () => {
                 <strong>Question:</strong> A 75m single-phase circuit uses 6mm² cable and carries
                 28A. Calculate the power loss and its cost over 8760 hours (one year) at £0.15/kWh.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Cable resistance at 70°C: r = 3.08 × 1.2 = 3.70 mΩ/m</p>
                 <p>Total resistance: R = 2 × 75m × 3.70 mΩ/m = 0.555Ω</p>
                 <p className="mt-2">
@@ -1385,7 +1385,7 @@ const HNCModule3Section6_1 = () => {
                 <p>
                   Annual cost: 3,811 × £0.15 = <strong>£571.65</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → Upgrading to 10mm² would reduce losses by ~45%
                 </p>
               </div>
@@ -1399,7 +1399,7 @@ const HNCModule3Section6_1 = () => {
                 <strong>Question:</strong> A 400kVA transformer has iron losses of 600W and copper
                 losses of 4500W at full load. Calculate the efficiency at full load and at 50% load.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>At full load:</strong>
                 </p>
@@ -1431,7 +1431,7 @@ const HNCModule3Section6_1 = () => {
                 <strong>Question:</strong> An 11kW AHU motor runs 6000 hours/year. Compare annual
                 running costs between IE2 (89.4%) and IE4 (92.6%) motors at £0.15/kWh.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>IE2 motor:</strong>
                 </p>
@@ -1451,7 +1451,7 @@ const HNCModule3Section6_1 = () => {
                 <p className="mt-2">
                   Annual saving = £11,074 - £10,691 = <strong>£383/year</strong>
                 </p>
-                <p className="text-white/60">→ Premium for IE4 typically recovered in 2-3 years</p>
+                <p className="text-white">→ Premium for IE4 typically recovered in 2-3 years</p>
               </div>
             </div>
 
@@ -1464,7 +1464,7 @@ const HNCModule3Section6_1 = () => {
                 If hysteresis losses are 60% of total, calculate the losses at 60Hz (same flux
                 density).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>At 50Hz:</p>
                 <p>Hysteresis loss Ph = 0.6 × 800 = 480W (∝ f)</p>
                 <p>Eddy current loss Pe = 0.4 × 800 = 320W (∝ f²)</p>
@@ -1474,7 +1474,7 @@ const HNCModule3Section6_1 = () => {
                 <p className="mt-2">
                   Total at 60Hz = 576 + 461 = <strong>1037W</strong>
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   → 30% increase in losses from 20% frequency increase
                 </p>
               </div>
@@ -1577,7 +1577,7 @@ const HNCModule3Section6_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1623,7 +1623,7 @@ const HNCModule3Section6_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section5-8">

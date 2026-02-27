@@ -95,7 +95,7 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
   if (filteredArticles.length === 0) {
     return (
       <div className="text-center py-12">
-        <p className="text-sm text-white/40">No articles to display</p>
+        <p className="text-sm text-white">No articles to display</p>
       </div>
     );
   }
@@ -146,7 +146,7 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
                   </Badge>
                   <SourceBadge source={article.source_name} />
                 </div>
-                <span className="text-[10px] text-white/50 bg-black/30 backdrop-blur-sm rounded-full px-2 py-0.5">
+                <span className="text-[10px] text-white bg-black/30 backdrop-blur-sm rounded-full px-2 py-0.5">
                   {getReadTime(article.content)} min
                 </span>
               </div>
@@ -161,10 +161,10 @@ const NewsGrid = ({ articles, excludeId }: NewsGridProps) => {
                 </h3>
 
                 {/* Summary */}
-                <p className="text-white/50 text-xs line-clamp-2">{article.summary}</p>
+                <p className="text-white text-xs line-clamp-2">{article.summary}</p>
 
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2 text-[10px] text-white/40">
+                  <div className="flex items-center gap-2 text-[10px] text-white">
                     <span>{format(new Date(article.date_published), 'MMM d')}</span>
                     <span className="flex items-center gap-1">
                       <Eye className="h-2.5 w-2.5" />

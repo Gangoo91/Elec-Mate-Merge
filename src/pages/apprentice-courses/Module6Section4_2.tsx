@@ -131,7 +131,7 @@ const Module6Section4_2 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -149,13 +149,13 @@ const Module6Section4_2 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.4.2</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.4.2</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Continuity of Ring Circuits
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Essential testing procedures for ring final circuits to ensure proper ring integrity
               and safety
             </p>
@@ -164,7 +164,7 @@ const Module6Section4_2 = () => {
           {/* Summary Box */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <h2 className="font-semibold text-white mb-3">Quick Summary</h2>
-            <ul className="space-y-2 text-sm text-white/80">
+            <ul className="space-y-2 text-sm text-white">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Ring circuits must form complete loops</span>
@@ -186,13 +186,13 @@ const Module6Section4_2 = () => {
 
           {/* Introduction */}
           <section className="mb-10">
-            <p className="text-white/80 leading-relaxed mb-4">
+            <p className="text-white leading-relaxed mb-4">
               Ring final circuits are a unique UK wiring method where cables form a complete loop or
               'ring' from the distribution board, around the circuit, and back to the board. This
               configuration allows current to flow through two paths, reducing voltage drop and
               enabling higher load capacity with smaller cable sizes.
             </p>
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               Testing ring continuity is absolutely critical because a broken ring becomes an
               overloaded radial circuit, potentially causing dangerous overheating, cable damage,
               and fire risks.
@@ -205,7 +205,7 @@ const Module6Section4_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Ring Circuit Fundamentals and Safety Importance
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-3">Ring Circuit Design Principles</h3>
                 <ul className="text-sm space-y-2">
@@ -314,7 +314,7 @@ const Module6Section4_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Ring Continuity Testing Methods
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-3">
                   End-to-End Continuity Testing (Primary Method)
@@ -422,7 +422,7 @@ const Module6Section4_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Result Interpretation and Fault Diagnosis
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-3">
                   Expected Values and Acceptance Criteria
@@ -519,7 +519,7 @@ const Module6Section4_2 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <h3 className="font-medium text-white mb-3">Scenario</h3>
-              <p className="text-sm text-white/80 mb-4">
+              <p className="text-sm text-white mb-4">
                 You're testing a kitchen ring circuit during a periodic inspection. The circuit is
                 protected by a 32A MCB and serves 8 double socket outlets. Recent electrical work
                 was carried out to install a new socket behind the fridge. The homeowner reports
@@ -528,7 +528,7 @@ const Module6Section4_2 = () => {
 
               <h4 className="font-medium text-white mb-2">Test Results</h4>
               <div className="bg-[#121212] rounded p-3 mb-4">
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Line conductors: ∞ (Open Circuit)</li>
                   <li>Neutral conductors: ∞ (Open Circuit)</li>
                   <li>CPC conductors: 1.8Ω (Normal)</li>
@@ -536,7 +536,7 @@ const Module6Section4_2 = () => {
               </div>
 
               <div className="p-3 rounded bg-red-500/10 border border-red-500/20 mb-4">
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-red-400">Critical Finding:</strong> Ring circuit is broken
                   - line and neutral showing infinite resistance. Investigation revealed the ring
                   was not properly restored at the new socket installation.
@@ -544,7 +544,7 @@ const Module6Section4_2 = () => {
               </div>
 
               <h4 className="font-medium text-white mb-2">Resolution</h4>
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400">✓</span>
                   <span>Circuit isolated and locked off with clear labelling</span>
@@ -576,12 +576,12 @@ const Module6Section4_2 = () => {
                   >
                     <span className="font-medium text-white text-sm">{faq.question}</span>
                     <ChevronDown
-                      className={`w-4 h-4 text-white/60 transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
+                      className={`w-4 h-4 text-white transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
                     />
                   </button>
                   {openFaq === index && (
                     <div className="px-4 pb-4">
-                      <p className="text-sm text-white/70">{faq.answer}</p>
+                      <p className="text-sm text-white">{faq.answer}</p>
                     </div>
                   )}
                 </div>
@@ -594,7 +594,7 @@ const Module6Section4_2 = () => {
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <h2 className="font-semibold text-white mb-3">Key Takeaways</h2>
               <div className="grid sm:grid-cols-2 gap-4">
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
                     <span>Ring circuits must form complete loops</span>
@@ -608,7 +608,7 @@ const Module6Section4_2 = () => {
                     <span>Both legs should show similar resistance</span>
                   </li>
                 </ul>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
                     <span>Infinite resistance = broken ring</span>
@@ -633,7 +633,7 @@ const Module6Section4_2 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../4-1">

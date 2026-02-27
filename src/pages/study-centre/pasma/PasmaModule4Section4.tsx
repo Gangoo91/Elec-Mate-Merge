@@ -201,7 +201,7 @@ export default function PasmaModule4Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-4">
@@ -226,7 +226,7 @@ export default function PasmaModule4Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Post-Use Inspection
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Inspecting every component after dismantling, reporting defects, applying the tagging
             system, and building a continuous inspection culture
           </p>
@@ -326,7 +326,7 @@ export default function PasmaModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Benefits of Thorough Post-Use Inspection
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Catches defects at the earliest opportunity</span>
@@ -376,7 +376,7 @@ export default function PasmaModule4Section4() {
                 <p className="text-sm font-medium text-elec-yellow mb-3">
                   Component-by-Component Checklist
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Frame straightness:</strong> Sight along each
                     frame tube. Any bowing, kinking, or deviation from straight indicates impact
@@ -415,7 +415,7 @@ export default function PasmaModule4Section4() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Warning</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Do not assume that because the tower was working fine during use, all components
                   are undamaged. Damage can occur during the use period without being immediately
                   obvious &mdash; a platform impact, a component struck by a tool, gradual corrosion
@@ -457,7 +457,7 @@ export default function PasmaModule4Section4() {
                       <p className="text-sm font-medium text-blue-400">
                         Verbal Report to Supervisor
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Immediately tell your supervisor or the tower coordinator about the defect.
                         Do not wait until the end of the day. The verbal report triggers immediate
                         action to quarantine the component.
@@ -470,7 +470,7 @@ export default function PasmaModule4Section4() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-green-400">Written Record</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Complete a written defect report or enter the defect in the equipment
                         register. This must include the date, component description, nature and
                         severity of the defect, and your name.
@@ -483,7 +483,7 @@ export default function PasmaModule4Section4() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-amber-400">Defect Tag on Component</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Attach a red defect tag to the component itself. The tag should include the
                         date, a brief description of the defect, and the reporter&rsquo;s name. This
                         physically marks the item so no one else uses it.
@@ -497,7 +497,7 @@ export default function PasmaModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Information Required on a Defect Report
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -569,7 +569,7 @@ export default function PasmaModule4Section4() {
                     <Tag className="h-5 w-5 text-green-400" />
                     <p className="text-sm font-medium text-green-400">GREEN Tag</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li>
                       <strong>Meaning:</strong> Inspected, passed, fit for use
                     </li>
@@ -591,7 +591,7 @@ export default function PasmaModule4Section4() {
                     <Tag className="h-5 w-5 text-red-400" />
                     <p className="text-sm font-medium text-red-400">RED Tag</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li>
                       <strong>Meaning:</strong> Defective, quarantined, DO NOT USE
                     </li>
@@ -624,7 +624,7 @@ export default function PasmaModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   What Happens to Red-Tagged Items?
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -674,7 +674,7 @@ export default function PasmaModule4Section4() {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-elec-yellow mb-3">What Records to Keep</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Inspection date and time:</strong> When was the
                     inspection carried out? This creates a chronological record.
@@ -704,7 +704,7 @@ export default function PasmaModule4Section4() {
                   <ClipboardList className="h-5 w-5 text-cyan-400" />
                   <p className="text-sm font-medium text-cyan-400">Retention Periods</p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Schedule 5 records:</strong> Must be kept on site
                     until the work is completed, then retained for a minimum of 3 months. HSE can
@@ -751,7 +751,7 @@ export default function PasmaModule4Section4() {
                 <p className="text-sm font-medium text-elec-yellow mb-3">
                   The Continuous Inspection Cycle
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">1. Pre-use inspection:</strong> Before each use,
                     every component is checked during assembly. The tower is inspected before anyone
@@ -785,7 +785,7 @@ export default function PasmaModule4Section4() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Warning</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Even if a component passed the post-use inspection, it must still be inspected
                   before the next use. Storage conditions can cause deterioration: corrosion from
                   damp, seized mechanisms from lack of use, or damage from other activities in the
@@ -826,7 +826,7 @@ export default function PasmaModule4Section4() {
                   <Shield className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">Leadership Commitment</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Inspection culture starts at the top. When supervisors and managers visibly
                   prioritise inspections &mdash; by allocating time for them, providing proper tools
                   and forms, and never pressuring operatives to skip checks &mdash; the message is
@@ -837,7 +837,7 @@ export default function PasmaModule4Section4() {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-elec-yellow mb-3">Building the Culture</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Training reinforcement:</strong> Initial PASMA
                     training establishes knowledge, but it must be reinforced through toolbox talks,
@@ -869,7 +869,7 @@ export default function PasmaModule4Section4() {
                   <BookOpen className="h-5 w-5 text-cyan-400" />
                   <p className="text-sm font-medium text-cyan-400">Making Inspection Routine</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -915,7 +915,7 @@ export default function PasmaModule4Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -929,7 +929,7 @@ export default function PasmaModule4Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-4-section-3">

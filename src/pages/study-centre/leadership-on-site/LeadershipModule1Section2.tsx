@@ -199,7 +199,7 @@ export default function LeadershipModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-1-section-1">
@@ -307,7 +307,7 @@ export default function LeadershipModule1Section2() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-400 mb-2">What Your Style Affects</p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -387,16 +387,16 @@ export default function LeadershipModule1Section2() {
                   <p className="text-white text-xs font-medium mb-2">
                     &ldquo;Do what I tell you&rdquo;
                   </p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Demands immediate compliance. The leader makes all decisions and expects
                     unquestioning obedience.
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     <strong className="text-white">On site:</strong> Use during emergencies &mdash;
                     fire alarm, structural concern, live electrical danger. Gives clear commands
                     that save lives.
                   </p>
-                  <p className="text-xs text-white/80 mt-1">
+                  <p className="text-xs text-white mt-1">
                     <strong className="text-white">Backfires when:</strong> Used as default.
                     Destroys morale, kills initiative, drives good people away. People stop thinking
                     for themselves.
@@ -407,16 +407,16 @@ export default function LeadershipModule1Section2() {
                     2. Authoritative / Visionary
                   </p>
                   <p className="text-white text-xs font-medium mb-2">&ldquo;Come with me&rdquo;</p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Mobilises people towards a shared vision. Provides clear direction while giving
                     freedom in how to achieve it.
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     <strong className="text-white">On site:</strong> Monday morning briefings
                     &mdash; explaining the week&rsquo;s goals, why the project matters, what success
                     looks like.
                   </p>
-                  <p className="text-xs text-white/80 mt-1">
+                  <p className="text-xs text-white mt-1">
                     <strong className="text-white">Backfires when:</strong> Used with a more
                     experienced team who know more than you &mdash; can feel patronising or out of
                     touch.
@@ -427,15 +427,15 @@ export default function LeadershipModule1Section2() {
                   <p className="text-white text-xs font-medium mb-2">
                     &ldquo;People come first&rdquo;
                   </p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Creates emotional bonds and harmony. Prioritises people&rsquo;s feelings,
                     relationships, and well-being over tasks.
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     <strong className="text-white">On site:</strong> After a difficult week, a
                     near-miss, or personal issues in the team. Friday afternoon when morale is low.
                   </p>
-                  <p className="text-xs text-white/80 mt-1">
+                  <p className="text-xs text-white mt-1">
                     <strong className="text-white">Backfires when:</strong> Poor performance goes
                     unchallenged because the leader avoids conflict to preserve harmony.
                   </p>
@@ -445,15 +445,15 @@ export default function LeadershipModule1Section2() {
                   <p className="text-white text-xs font-medium mb-2">
                     &ldquo;What do you think?&rdquo;
                   </p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Builds consensus through participation. Seeks input from the team before making
                     decisions.
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     <strong className="text-white">On site:</strong> Planning complex installations,
                     solving technical problems, deciding the best approach to a challenging task.
                   </p>
-                  <p className="text-xs text-white/80 mt-1">
+                  <p className="text-xs text-white mt-1">
                     <strong className="text-white">Backfires when:</strong> Used in crises where
                     quick decisions are needed, or when the team lacks the expertise to contribute
                     meaningfully.
@@ -464,16 +464,16 @@ export default function LeadershipModule1Section2() {
                   <p className="text-white text-xs font-medium mb-2">
                     &ldquo;Do as I do, now&rdquo;
                   </p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Sets extremely high performance standards. Leads by example and expects others
                     to match the pace immediately.
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     <strong className="text-white">On site:</strong> Short-term push to hit a
                     critical deadline with a highly competent team. Demonstrating quality standards
                     by example.
                   </p>
-                  <p className="text-xs text-white/80 mt-1">
+                  <p className="text-xs text-white mt-1">
                     <strong className="text-white">Backfires when:</strong> Sustained long-term.
                     Team burns out, feels inadequate, stops taking initiative for fear of not
                     meeting the standard.
@@ -482,16 +482,16 @@ export default function LeadershipModule1Section2() {
                 <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                   <p className="text-rose-400 font-semibold text-sm mb-1">6. Coaching</p>
                   <p className="text-white text-xs font-medium mb-2">&ldquo;Try this&rdquo;</p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Develops people for the future. Focuses on personal development, helping people
                     identify strengths and areas for growth.
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     <strong className="text-white">On site:</strong> Apprentice struggling with
                     cable calculations &mdash; spending time working through it with them rather
                     than just giving the answer.
                   </p>
-                  <p className="text-xs text-white/80 mt-1">
+                  <p className="text-xs text-white mt-1">
                     <strong className="text-white">Backfires when:</strong> Used with people who are
                     resistant to learning or in situations where there is no time for development.
                   </p>
@@ -503,7 +503,7 @@ export default function LeadershipModule1Section2() {
                   <Lightbulb className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Goleman&rsquo;s Key Finding</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Goleman found that the{' '}
                   <strong className="text-white">Authoritative/Visionary</strong> style has the most
                   consistently positive impact on team climate. However, the leaders with the best
@@ -546,10 +546,10 @@ export default function LeadershipModule1Section2() {
                     <p className="text-xs text-white font-medium mb-1">
                       High Direction, Low Support
                     </p>
-                    <p className="text-white/80 text-xs mb-2">
+                    <p className="text-white text-xs mb-2">
                       For: Low competence, high commitment
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-white">On site:</strong> A brand-new apprentice on
                       their first day. They are keen and enthusiastic but have no idea what to do.
                       Give clear, step-by-step instructions. &ldquo;First, we&rsquo;ll do this. Then
@@ -561,10 +561,10 @@ export default function LeadershipModule1Section2() {
                     <p className="text-xs text-white font-medium mb-1">
                       High Direction, High Support
                     </p>
-                    <p className="text-white/80 text-xs mb-2">
+                    <p className="text-white text-xs mb-2">
                       For: Some competence, low commitment
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-white">On site:</strong> An apprentice six months in.
                       They have some skills but are losing confidence after making mistakes. Give
                       direction AND explanation &mdash; help them understand WHY, not just what.
@@ -576,10 +576,10 @@ export default function LeadershipModule1Section2() {
                     <p className="text-xs text-white font-medium mb-1">
                       Low Direction, High Support
                     </p>
-                    <p className="text-white/80 text-xs mb-2">
+                    <p className="text-white text-xs mb-2">
                       For: High competence, variable commitment
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-white">On site:</strong> An experienced electrician
                       having a bad week &mdash; personal problems, fatigue, frustration. They know
                       how to do the job but need support and encouragement. Listen, involve them in
@@ -591,10 +591,10 @@ export default function LeadershipModule1Section2() {
                     <p className="text-xs text-white font-medium mb-1">
                       Low Direction, Low Support
                     </p>
-                    <p className="text-white/80 text-xs mb-2">
+                    <p className="text-white text-xs mb-2">
                       For: High competence, high commitment
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       <strong className="text-white">On site:</strong> Your most experienced,
                       trusted electrician. They are skilled, motivated, and reliable. Give them the
                       task, agree the outcome, and get out of their way. Micromanaging this person
@@ -609,7 +609,7 @@ export default function LeadershipModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Critical Insight</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The same person may need{' '}
                   <strong className="text-white">different styles for different tasks</strong>. An
                   experienced electrician (S4 for cable installation) might be an absolute beginner
@@ -646,16 +646,16 @@ export default function LeadershipModule1Section2() {
                       <Shield className="h-5 w-5 text-red-400" />
                       <p className="text-white font-medium">Autocratic (Authoritarian)</p>
                     </div>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       The leader makes all decisions unilaterally. No consultation, no input from
                       the team.
                     </p>
-                    <p className="text-sm text-white/80 mb-1">
+                    <p className="text-sm text-white mb-1">
                       <strong className="text-white">Works on site when:</strong> Safety emergencies
                       requiring immediate action. Non-negotiable regulatory compliance. Situations
                       where speed is critical and there is no time for discussion.
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-white">Danger:</strong> If used as default, creates a
                       culture of dependence, resentment, and suppressed initiative. People stop
                       reporting problems because they have learned their input is not valued.
@@ -666,16 +666,16 @@ export default function LeadershipModule1Section2() {
                       <Users className="h-5 w-5 text-blue-400" />
                       <p className="text-white font-medium">Democratic (Participative)</p>
                     </div>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       The leader seeks input, encourages participation, and makes decisions based on
                       group consensus or majority.
                     </p>
-                    <p className="text-sm text-white/80 mb-1">
+                    <p className="text-sm text-white mb-1">
                       <strong className="text-white">Works on site when:</strong> Planning complex
                       installations. Solving technical problems. Deciding the approach to a
                       challenging task. Team meetings about working methods and improvements.
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-white">Danger:</strong> Decision-making can be slow.
                       In crises, seeking consensus wastes critical time. Not effective when the team
                       lacks expertise to contribute meaningfully to the decision.
@@ -686,16 +686,16 @@ export default function LeadershipModule1Section2() {
                       <Lightbulb className="h-5 w-5 text-amber-400" />
                       <p className="text-white font-medium">Laissez-Faire (Hands-Off)</p>
                     </div>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       The leader provides minimal direction or supervision. The team is left to make
                       their own decisions and manage their own work.
                     </p>
-                    <p className="text-sm text-white/80 mb-1">
+                    <p className="text-sm text-white mb-1">
                       <strong className="text-white">Works on site when:</strong> Highly skilled,
                       experienced, self-motivated teams working on tasks they know well. Trusted
                       individuals who perform best with autonomy.
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-white">Danger:</strong> Standards can slip without
                       oversight. Less experienced team members feel abandoned. If used as a default,
                       it often masks a lack of leadership rather than a deliberate choice to
@@ -729,7 +729,7 @@ export default function LeadershipModule1Section2() {
                   <p className="text-blue-400 font-semibold text-sm mb-1">
                     Monday Morning Toolbox Talk
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     <strong className="text-white">Style: Authoritative/Visionary.</strong> Set the
                     tone for the week. Explain the goals, paint the picture of what success looks
                     like, connect the day&rsquo;s tasks to the bigger project. Give people a sense
@@ -742,7 +742,7 @@ export default function LeadershipModule1Section2() {
                   <p className="text-rose-400 font-semibold text-sm mb-1">
                     Apprentice Struggling with Cable Calculations
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     <strong className="text-white">Style: Coaching.</strong> Do not just give them
                     the answer. Sit down with them, work through the process, help them understand
                     the logic. Ask questions that guide their thinking. &ldquo;What&rsquo;s the
@@ -754,7 +754,7 @@ export default function LeadershipModule1Section2() {
                   <p className="text-red-400 font-semibold text-sm mb-1">
                     Safety Near-Miss Just Happened
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     <strong className="text-white">Style: Commanding.</strong> Immediate control.
                     Stop work, secure the area, check everyone is safe. Clear, direct instructions.
                     No ambiguity. &ldquo;Everyone stop. Tools down. Move away from that area. Nobody
@@ -767,7 +767,7 @@ export default function LeadershipModule1Section2() {
                   <p className="text-amber-400 font-semibold text-sm mb-1">
                     Experienced Team Planning a Complex Installation
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     <strong className="text-white">Style: Democratic.</strong> Your experienced team
                     knows more about the technical details than you might. Harness their expertise.
                     &ldquo;We&rsquo;ve got a complex containment route through three fire barriers
@@ -779,7 +779,7 @@ export default function LeadershipModule1Section2() {
                   <p className="text-green-400 font-semibold text-sm mb-1">
                     Friday Afternoon &mdash; Team Morale Is Low
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     <strong className="text-white">Style: Affiliative.</strong> It has been a tough
                     week. The team is tired. People are frustrated. This is not the time for pushing
                     harder or setting new targets. Acknowledge the effort. Recognise specific
@@ -817,7 +817,7 @@ export default function LeadershipModule1Section2() {
                 apply to real construction situations. The key points to remember are:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                   <span>
@@ -886,7 +886,7 @@ export default function LeadershipModule1Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -900,7 +900,7 @@ export default function LeadershipModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-1-section-1">

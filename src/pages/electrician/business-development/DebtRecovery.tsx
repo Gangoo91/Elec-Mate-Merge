@@ -475,7 +475,7 @@ const DebtRecovery = () => {
                       <span className="text-sm font-medium text-white">Statutory Interest</span>
                       <span className="text-xs text-yellow-400">8% + BoE base rate</span>
                     </div>
-                    <p className="text-sm text-white/90">
+                    <p className="text-sm text-white">
                       Currently 13.25% annually (5.25% base + 8%)
                     </p>
                   </div>
@@ -484,7 +484,7 @@ const DebtRecovery = () => {
                       <span className="text-sm font-medium text-white">Fixed Recovery Costs</span>
                       <span className="text-xs text-yellow-400">£40-100</span>
                     </div>
-                    <p className="text-sm text-white/90">
+                    <p className="text-sm text-white">
                       Based on debt value (£40 under £1k, £70 £1k-10k, £100 over £10k)
                     </p>
                   </div>
@@ -631,19 +631,19 @@ const DebtRecovery = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">3-6 mo</p>
-                  <p className="text-xs text-white/90 mt-1">Cash reserve target</p>
+                  <p className="text-xs text-white mt-1">Cash reserve target</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">20%</p>
-                  <p className="text-xs text-white/90 mt-1">Max single customer</p>
+                  <p className="text-xs text-white mt-1">Max single customer</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">5%</p>
-                  <p className="text-xs text-white/90 mt-1">Bad debt provision</p>
+                  <p className="text-xs text-white mt-1">Bad debt provision</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">Weekly</p>
-                  <p className="text-xs text-white/90 mt-1">Cash flow review</p>
+                  <p className="text-xs text-white mt-1">Cash flow review</p>
                 </div>
               </div>
 

@@ -264,7 +264,7 @@ const Level3Module1Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section3">
@@ -347,7 +347,7 @@ const Level3Module1Section3_2 = () => {
 
             <div className="my-6 p-4 rounded bg-red-500/10 border border-red-500/20">
               <p className="text-sm font-medium text-red-400 mb-2">Fatal Flaw:</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 A tag without a lock is just a request - anyone can ignore it. A lock without a tag
                 leaves people wondering who put it there and why. You need BOTH: the lock provides
                 physical security, the tag provides information and accountability. Never compromise
@@ -383,7 +383,7 @@ const Level3Module1Section3_2 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">MCB Lock-Off Devices</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   Clip-on devices that fit over MCB toggles, preventing them from being switched to
                   ON. Different designs suit different MCB manufacturers (BS EN 60898 type). Always
                   check compatibility - an ill-fitting device provides false security.
@@ -391,7 +391,7 @@ const Level3Module1Section3_2 = () => {
               </div>
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Rotary Isolator Locks</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   Many rotary isolators have built-in padlock holes in the OFF position. These
                   directly accept your padlock. For isolators without this feature, handle-mounted
                   lock-off devices are available.
@@ -401,7 +401,7 @@ const Level3Module1Section3_2 = () => {
                 <p className="text-sm font-medium text-elec-yellow mb-2">
                   Circuit Breaker Lock-Outs
                 </p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   Larger MCCBs and ACBs often have built-in lock-off provisions, or require specific
                   lock-off attachments. Industrial breakers may have multiple lock-off points. Know
                   your equipment before you need to isolate it.
@@ -409,7 +409,7 @@ const Level3Module1Section3_2 = () => {
               </div>
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Plug Lock-Outs</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   For plug-connected equipment, plug lock-out devices enclose the plug and prevent
                   it from being inserted into a socket. Useful for portable equipment or when the
                   isolator is a plug/socket connection.
@@ -419,7 +419,7 @@ const Level3Module1Section3_2 = () => {
 
             <div className="my-6 p-4 rounded bg-white/5">
               <p className="text-sm font-medium text-white mb-2">Fuse Withdrawal</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 When fuses are withdrawn as the means of isolation, the fuse carrier itself becomes
                 critical. Keep withdrawn fuses on your person or in a locked container under your
                 control. The fuse holder should be tagged. Never leave withdrawn fuses where someone
@@ -427,7 +427,7 @@ const Level3Module1Section3_2 = () => {
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Trade Tip:</strong> Build a lock-off kit containing MCB devices for common
               manufacturers (Hager, MK, Schneider, etc.), a universal lock-off device, padlocks with
               unique keys, tags, and a permanent marker. Being caught without the right device is no
@@ -529,13 +529,13 @@ const Level3Module1Section3_2 = () => {
 
             <div className="my-6 p-4 rounded bg-white/5 border-l-2 border-elec-yellow">
               <p className="text-sm font-medium text-elec-yellow mb-2">How Multi-Lock Hasps Work</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 A hasp is a metal device that can accept multiple padlocks. It's fitted over the
                 isolation device. Each worker applies their own padlock to the hasp. The hasp cannot
                 be removed until EVERY padlock is removed. Power cannot be restored until everyone
                 has confirmed they're clear.
               </p>
-              <ul className="text-sm text-white/90 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>1. First worker fits hasp and applies their lock</li>
                 <li>2. Second worker adds their lock to the same hasp</li>
                 <li>3. Additional workers add their locks as needed</li>
@@ -546,7 +546,7 @@ const Level3Module1Section3_2 = () => {
 
             <div className="my-6 p-4 rounded bg-red-500/10 border border-red-500/20">
               <p className="text-sm font-medium text-red-400 mb-2">Critical Rule:</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Never remove another person's lock, even if they ask you to. They must physically
                 come and remove it themselves after confirming they're clear. This rule exists
                 because people have been killed when their lock was "helpfully" removed by
@@ -554,7 +554,7 @@ const Level3Module1Section3_2 = () => {
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Trade Example:</strong> Three electricians working on a factory rewire. All
               three apply locks to the main isolator via a hasp. Sparky A finishes and removes their
               lock. Sparky B takes a lunch break but leaves their lock on. Sparky C is still
@@ -584,7 +584,7 @@ const Level3Module1Section3_2 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">What a PTW System Does</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Formally documents all isolations</li>
                   <li>Specifies required precautions</li>
                   <li>Creates clear handover procedures</li>
@@ -594,7 +594,7 @@ const Level3Module1Section3_2 = () => {
               </div>
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">When PTW is Used</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>High-voltage installations</li>
                   <li>Complex industrial systems</li>
                   <li>Multiple contractors working together</li>
@@ -604,7 +604,7 @@ const Level3Module1Section3_2 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90">
+            <p className="text-sm text-white">
               A permit-to-work is NOT a replacement for personal lock-off - it's an additional
               layer. The permit documents what's been isolated and authorises work to proceed. You
               still apply your personal lock and tag. The permit tracks the overall operation; your
@@ -683,7 +683,7 @@ const Level3Module1Section3_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -736,7 +736,7 @@ const Level3Module1Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section3-1">

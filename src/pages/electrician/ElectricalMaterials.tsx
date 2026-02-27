@@ -204,7 +204,7 @@ const ElectricalMaterials = () => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className={cn(
-            'h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-primary/40 focus:ring-2 focus:ring-primary/20 placeholder:text-white/40',
+            'h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-primary/40 focus:ring-2 focus:ring-primary/20 placeholder:text-white',
             !searchTerm && 'pl-12'
           )}
         />

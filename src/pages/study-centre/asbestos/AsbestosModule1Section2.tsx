@@ -181,7 +181,7 @@ export default function AsbestosModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-1">
@@ -206,7 +206,7 @@ export default function AsbestosModule1Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Types of Asbestos Fibres
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The six regulated types of asbestos, their fibre families, physical properties, where
             they were used, UK ban dates, and why every type is dangerous
           </p>
@@ -297,7 +297,7 @@ export default function AsbestosModule1Section2() {
               <div className="space-y-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Serpentine Group</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -322,7 +322,7 @@ export default function AsbestosModule1Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Amphibole Group</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -363,7 +363,7 @@ export default function AsbestosModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">No Safe Type</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   ALL six types of asbestos are classified as{' '}
                   <strong className="text-white">Group 1 carcinogens</strong> by the International
                   Agency for Research on Cancer (IARC) and the World Health Organisation (WHO). The
@@ -396,7 +396,7 @@ export default function AsbestosModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Physical Properties</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -431,7 +431,7 @@ export default function AsbestosModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Common Products Containing Chrysotile
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -468,7 +468,7 @@ export default function AsbestosModule1Section2() {
                     The &ldquo;Less Dangerous&rdquo; Myth
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Chrysotile has often been claimed to be &ldquo;less dangerous&rdquo; than
                   amphibole types. This is{' '}
                   <strong className="text-white">misleading and rejected by UK law</strong>.
@@ -501,37 +501,37 @@ export default function AsbestosModule1Section2() {
               <div className="bg-orange-500/10 border-b border-orange-500/30 px-4 py-3 text-center">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-gray-100 to-gray-300 border-2 border-white/40 mx-auto mb-2" />
                 <p className="text-sm font-bold text-orange-400">Chrysotile</p>
-                <p className="text-xs text-white/60">White Asbestos</p>
+                <p className="text-xs text-white">White Asbestos</p>
               </div>
-              <div className="px-4 py-3 space-y-2 text-xs text-white/80">
+              <div className="px-4 py-3 space-y-2 text-xs text-white">
                 <div className="flex justify-between">
-                  <span className="text-white/50">Family</span>
+                  <span className="text-white">Family</span>
                   <span className="text-white font-medium">Serpentine</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/50">Fibre shape</span>
+                  <span className="text-white">Fibre shape</span>
                   <span className="text-white font-medium">Curly, layered</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/50">Flexibility</span>
+                  <span className="text-white">Flexibility</span>
                   <span className="text-white font-medium">Flexible</span>
                 </div>
                 <hr className="border-white/10" />
                 <div>
-                  <span className="text-white/50">Common uses</span>
+                  <span className="text-white">Common uses</span>
                   <p className="text-white mt-1">Cement, textured coatings, floor tiles, gaskets</p>
                 </div>
                 <hr className="border-white/10" />
                 <div className="flex justify-between">
-                  <span className="text-white/50">% of UK use</span>
+                  <span className="text-white">% of UK use</span>
                   <span className="text-white font-medium">~90%</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/50">Banned</span>
+                  <span className="text-white">Banned</span>
                   <span className="text-white font-medium">1999</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-white/50">Risk</span>
+                  <span className="text-white">Risk</span>
                   <span className="text-red-400 font-bold text-[11px]">HIGH</span>
                 </div>
                 <p className="text-[11px] text-red-300/80 pt-1">Causes all 4 diseases</p>
@@ -543,39 +543,39 @@ export default function AsbestosModule1Section2() {
               <div className="bg-orange-500/10 border-b border-orange-500/30 px-4 py-3 text-center">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-amber-700 to-amber-900 border-2 border-amber-600/40 mx-auto mb-2" />
                 <p className="text-sm font-bold text-orange-400">Amosite</p>
-                <p className="text-xs text-white/60">Brown Asbestos</p>
+                <p className="text-xs text-white">Brown Asbestos</p>
               </div>
-              <div className="px-4 py-3 space-y-2 text-xs text-white/80">
+              <div className="px-4 py-3 space-y-2 text-xs text-white">
                 <div className="flex justify-between">
-                  <span className="text-white/50">Family</span>
+                  <span className="text-white">Family</span>
                   <span className="text-white font-medium">Amphibole</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/50">Fibre shape</span>
+                  <span className="text-white">Fibre shape</span>
                   <span className="text-white font-medium">Straight, spiky</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/50">Flexibility</span>
+                  <span className="text-white">Flexibility</span>
                   <span className="text-white font-medium">Brittle</span>
                 </div>
                 <hr className="border-white/10" />
                 <div>
-                  <span className="text-white/50">Common uses</span>
+                  <span className="text-white">Common uses</span>
                   <p className="text-white mt-1">
                     Insulating board, ceiling tiles, pipe lagging, thermal insulation
                   </p>
                 </div>
                 <hr className="border-white/10" />
                 <div className="flex justify-between">
-                  <span className="text-white/50">% of UK use</span>
+                  <span className="text-white">% of UK use</span>
                   <span className="text-white font-medium">~5%</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/50">Banned</span>
+                  <span className="text-white">Banned</span>
                   <span className="text-white font-medium">1985</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-white/50">Risk</span>
+                  <span className="text-white">Risk</span>
                   <span className="text-red-400 font-bold text-[11px]">VERY HIGH</span>
                 </div>
                 <p className="text-[11px] text-red-300/80 pt-1">More dangerous than chrysotile</p>
@@ -587,39 +587,39 @@ export default function AsbestosModule1Section2() {
               <div className="bg-orange-500/10 border-b border-orange-500/30 px-4 py-3 text-center">
                 <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500 to-blue-800 border-2 border-blue-400/40 mx-auto mb-2" />
                 <p className="text-sm font-bold text-orange-400">Crocidolite</p>
-                <p className="text-xs text-white/60">Blue Asbestos</p>
+                <p className="text-xs text-white">Blue Asbestos</p>
               </div>
-              <div className="px-4 py-3 space-y-2 text-xs text-white/80">
+              <div className="px-4 py-3 space-y-2 text-xs text-white">
                 <div className="flex justify-between">
-                  <span className="text-white/50">Family</span>
+                  <span className="text-white">Family</span>
                   <span className="text-white font-medium">Amphibole</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/50">Fibre shape</span>
+                  <span className="text-white">Fibre shape</span>
                   <span className="text-white font-medium">Very fine, needle-like</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/50">Flexibility</span>
+                  <span className="text-white">Flexibility</span>
                   <span className="text-white font-medium">Very brittle</span>
                 </div>
                 <hr className="border-white/10" />
                 <div>
-                  <span className="text-white/50">Common uses</span>
+                  <span className="text-white">Common uses</span>
                   <p className="text-white mt-1">
                     Sprayed coatings, pipe insulation, cement products
                   </p>
                 </div>
                 <hr className="border-white/10" />
                 <div className="flex justify-between">
-                  <span className="text-white/50">% of UK use</span>
+                  <span className="text-white">% of UK use</span>
                   <span className="text-white font-medium">~5%</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/50">Banned</span>
+                  <span className="text-white">Banned</span>
                   <span className="text-white font-medium">1985</span>
                 </div>
                 <div className="flex justify-between items-center">
-                  <span className="text-white/50">Risk</span>
+                  <span className="text-white">Risk</span>
                   <span className="text-red-500 font-bold text-[11px]">EXTREMELY HIGH</span>
                 </div>
                 <p className="text-[11px] text-red-300/80 pt-1">Finest fibres, penetrate deepest</p>
@@ -647,7 +647,7 @@ export default function AsbestosModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Physical Properties</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -682,7 +682,7 @@ export default function AsbestosModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Common Products Containing Amosite
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -746,7 +746,7 @@ export default function AsbestosModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Physical Properties</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -783,7 +783,7 @@ export default function AsbestosModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Common Products Containing Crocidolite
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -810,7 +810,7 @@ export default function AsbestosModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Extreme Hazard</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Crocidolite is considered the most hazardous asbestos type because its fibres are
                   the finest and most needle-like. They penetrate deeper into lung tissue, reach the
                   pleura (lining of the lungs) more readily, and are the most resistant to the
@@ -864,7 +864,7 @@ export default function AsbestosModule1Section2() {
               <div className="space-y-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Tremolite</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -891,7 +891,7 @@ export default function AsbestosModule1Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Actinolite</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -913,7 +913,7 @@ export default function AsbestosModule1Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Anthophyllite</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>The rarest of the six regulated types</span>
@@ -939,7 +939,7 @@ export default function AsbestosModule1Section2() {
                     Surveyor &amp; Analyst Awareness
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The contaminant minerals are particularly important for asbestos surveyors and
                   laboratory analysts. Because they were not deliberately added to products, their
                   presence can be unexpected. A material thought to contain only chrysotile may also
@@ -972,7 +972,7 @@ export default function AsbestosModule1Section2() {
                     All Types Are Group 1 Carcinogens
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     The <strong className="text-white">World Health Organisation (WHO)</strong>, the{' '}
                     <strong className="text-white">
@@ -999,7 +999,7 @@ export default function AsbestosModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   The Industry Argument &mdash; And Why It Is Rejected
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1036,28 +1036,28 @@ export default function AsbestosModule1Section2() {
                   All Types Cause All Four Diseases
                 </p>
                 <div className="grid sm:grid-cols-2 gap-2 mt-2">
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <CheckCircle className="h-4 w-4 text-red-400/70 mt-0.5 flex-shrink-0" />
                     <span>
                       <strong className="text-white">Mesothelioma</strong> &mdash; cancer of the
                       lining of the lungs or abdomen
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <CheckCircle className="h-4 w-4 text-red-400/70 mt-0.5 flex-shrink-0" />
                     <span>
                       <strong className="text-white">Lung cancer</strong> &mdash; asbestos-related
                       carcinoma of the lung
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <CheckCircle className="h-4 w-4 text-red-400/70 mt-0.5 flex-shrink-0" />
                     <span>
                       <strong className="text-white">Asbestosis</strong> &mdash; scarring and
                       fibrosis of lung tissue
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <CheckCircle className="h-4 w-4 text-red-400/70 mt-0.5 flex-shrink-0" />
                     <span>
                       <strong className="text-white">Diffuse pleural thickening</strong> &mdash;
@@ -1089,7 +1089,7 @@ export default function AsbestosModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Never Identify by Sight Alone</p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     You{' '}
                     <strong className="text-white">
@@ -1132,7 +1132,7 @@ export default function AsbestosModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Laboratory Analysis</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1179,7 +1179,7 @@ export default function AsbestosModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   What to Do on Site If You Suspect Asbestos
                 </p>
-                <ol className="text-sm text-white/80 space-y-2">
+                <ol className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 w-6 h-6 rounded-full bg-orange-500/20 border border-orange-500/40 flex items-center justify-center flex-shrink-0 text-xs font-bold text-orange-400">
                       1
@@ -1240,7 +1240,7 @@ export default function AsbestosModule1Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1254,7 +1254,7 @@ export default function AsbestosModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-1-section-1">

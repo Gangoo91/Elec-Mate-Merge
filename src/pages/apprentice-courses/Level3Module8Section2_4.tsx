@@ -381,7 +381,7 @@ const Level3Module8Section2_4 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="../section2">
@@ -407,7 +407,7 @@ const Level3Module8Section2_4 = () => {
               </h1>
             </div>
           </div>
-          <p className="text-lg text-white/70">
+          <p className="text-lg text-white">
             Master the BS 7671 test sequence, instrument selection, acceptance criteria, and
             documentation requirements for electrical installation testing.
           </p>
@@ -421,21 +421,21 @@ const Level3Module8Section2_4 = () => {
           </h2>
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 <span className="text-elec-yellow font-medium">Chapter 64:</span> Verification
                 requirements in BS 7671
               </p>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 <span className="text-elec-yellow font-medium">Guidance Note 3:</span> IET
                 inspection and testing guidance
               </p>
             </div>
             <div className="space-y-2">
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 <span className="text-elec-yellow font-medium">Dead tests first:</span> Continuity,
                 IR, polarity before energising
               </p>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 <span className="text-elec-yellow font-medium">Live tests:</span> Zs, Ipf, RCD after
                 preliminary verification
               </p>
@@ -459,7 +459,7 @@ const Level3Module8Section2_4 = () => {
             ].map((outcome, index) => (
               <li key={index} className="flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
-                <span className="text-white/80">{outcome}</span>
+                <span className="text-white">{outcome}</span>
               </li>
             ))}
           </ul>
@@ -475,7 +475,7 @@ const Level3Module8Section2_4 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none mb-6">
-            <p className="text-white/80">
+            <p className="text-white">
               BS 7671 Regulation 643.1 prescribes a specific sequence for initial verification
               tests. This sequence is designed to ensure that dead tests are completed safely before
               the installation is energised, and that each test builds upon the results of previous
@@ -488,7 +488,7 @@ const Level3Module8Section2_4 = () => {
               <AlertTriangle className="w-5 h-5 text-amber-400 flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="text-amber-400 font-medium mb-1">Critical Safety Point</h4>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Tests 1-6 in the sequence are 'dead' tests performed with the installation safely
                   isolated. Tests 7-10 are 'live' tests performed with the installation energised.
                   Never attempt live tests until dead tests confirm the installation is safe to
@@ -523,10 +523,10 @@ const Level3Module8Section2_4 = () => {
                     <td className="border border-white/20 px-3 py-2 text-elec-yellow font-medium text-sm">
                       {test.order}
                     </td>
-                    <td className="border border-white/20 px-3 py-2 text-white/80 text-sm">
+                    <td className="border border-white/20 px-3 py-2 text-white text-sm">
                       {test.test}
                     </td>
-                    <td className="border border-white/20 px-3 py-2 text-white/60 text-sm">
+                    <td className="border border-white/20 px-3 py-2 text-white text-sm">
                       {test.regulation}
                     </td>
                     <td className="border border-white/20 px-3 py-2 text-sm">
@@ -547,7 +547,7 @@ const Level3Module8Section2_4 = () => {
               <Lightbulb className="w-4 h-4 text-elec-yellow" />
               Exam Memory Tip
             </h4>
-            <p className="text-white/70 text-sm">
+            <p className="text-white text-sm">
               Remember "CIRP-ZPRP" for the main sequence: <strong>C</strong>ontinuity,{' '}
               <strong>I</strong>nsulation <strong>R</strong>esistance, <strong>P</strong>olarity
               (dead tests), then <strong>Z</strong>s, <strong>P</strong>FC, <strong>R</strong>CD,{' '}
@@ -571,7 +571,7 @@ const Level3Module8Section2_4 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none mb-6">
-            <p className="text-white/80">
+            <p className="text-white">
               Test instruments must comply with the BS EN 61557 series of standards to ensure
               accurate and safe measurements. Each instrument type has specific requirements for
               test parameters, accuracy, and safety features. Using non-compliant or uncalibrated
@@ -591,8 +591,8 @@ const Level3Module8Section2_4 = () => {
                 </div>
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div>
-                    <p className="text-white/50 text-xs mb-1">Tests Performed:</p>
-                    <ul className="text-white/70 space-y-0.5">
+                    <p className="text-white text-xs mb-1">Tests Performed:</p>
+                    <ul className="text-white space-y-0.5">
                       {item.tests.map((test, idx) => (
                         <li key={idx} className="flex items-start gap-2">
                           <CheckCircle className="w-3 h-3 text-green-400 mt-1 flex-shrink-0" />
@@ -602,8 +602,8 @@ const Level3Module8Section2_4 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-white/50 text-xs mb-1">Key Specifications:</p>
-                    <ul className="text-white/70 space-y-0.5">
+                    <p className="text-white text-xs mb-1">Key Specifications:</p>
+                    <ul className="text-white space-y-0.5">
                       <li>Accuracy: {item.accuracy}</li>
                       {item.testCurrent && <li>Test current: {item.testCurrent}</li>}
                       {item.testVoltage && <li>Test voltage: {item.testVoltage}</li>}
@@ -621,7 +621,7 @@ const Level3Module8Section2_4 = () => {
               <FileText className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="text-blue-400 font-medium mb-1">GS38 Compliance</h4>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Test leads and probes must comply with Health and Safety Guidance Note GS38.
                   Requirements include fused test leads, shrouded probes with limited exposed tips,
                   and robust insulation. Never use damaged or non-compliant test equipment.
@@ -646,7 +646,7 @@ const Level3Module8Section2_4 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none mb-6">
-            <p className="text-white/80">
+            <p className="text-white">
               Understanding acceptance criteria is crucial for determining whether an installation
               passes or fails verification. Each test has specific limits defined in BS 7671, and
               some require correction factors to be applied. Marginal results should always be
@@ -662,19 +662,19 @@ const Level3Module8Section2_4 = () => {
               </h4>
               <div className="grid sm:grid-cols-3 gap-4 text-sm">
                 <div className="bg-white/5 rounded-lg p-3">
-                  <p className="text-white/50 text-xs mb-1">SELV/PELV</p>
+                  <p className="text-white text-xs mb-1">SELV/PELV</p>
                   <p className="text-white font-medium">≥0.5 MΩ</p>
-                  <p className="text-white/60 text-xs">at 250V DC</p>
+                  <p className="text-white text-xs">at 250V DC</p>
                 </div>
                 <div className="bg-white/5 rounded-lg p-3">
-                  <p className="text-white/50 text-xs mb-1">Up to 500V</p>
+                  <p className="text-white text-xs mb-1">Up to 500V</p>
                   <p className="text-white font-medium">≥1.0 MΩ</p>
-                  <p className="text-white/60 text-xs">at 500V DC</p>
+                  <p className="text-white text-xs">at 500V DC</p>
                 </div>
                 <div className="bg-white/5 rounded-lg p-3">
-                  <p className="text-white/50 text-xs mb-1">Above 500V</p>
+                  <p className="text-white text-xs mb-1">Above 500V</p>
                   <p className="text-white font-medium">≥1.0 MΩ</p>
-                  <p className="text-white/60 text-xs">at 1000V DC</p>
+                  <p className="text-white text-xs">at 1000V DC</p>
                 </div>
               </div>
             </div>
@@ -683,14 +683,14 @@ const Level3Module8Section2_4 = () => {
               <h4 className="text-elec-yellow font-medium mb-3">RCD Tripping Times (Table 41.1)</h4>
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div className="bg-white/5 rounded-lg p-3">
-                  <p className="text-white/50 text-xs mb-1">At 1×IΔn (e.g., 30 mA)</p>
+                  <p className="text-white text-xs mb-1">At 1×IΔn (e.g., 30 mA)</p>
                   <p className="text-white font-medium">≤300 ms</p>
-                  <p className="text-white/60 text-xs">General Type AC/A RCDs</p>
+                  <p className="text-white text-xs">General Type AC/A RCDs</p>
                 </div>
                 <div className="bg-white/5 rounded-lg p-3">
-                  <p className="text-white/50 text-xs mb-1">At 5×IΔn (e.g., 150 mA)</p>
+                  <p className="text-white text-xs mb-1">At 5×IΔn (e.g., 150 mA)</p>
                   <p className="text-white font-medium">≤40 ms</p>
-                  <p className="text-white/60 text-xs">General Type AC/A RCDs</p>
+                  <p className="text-white text-xs">General Type AC/A RCDs</p>
                 </div>
               </div>
             </div>
@@ -698,7 +698,7 @@ const Level3Module8Section2_4 = () => {
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="text-elec-yellow font-medium mb-3">Earth Fault Loop Impedance (Zs)</h4>
               <div className="space-y-2 text-sm">
-                <p className="text-white/80">
+                <p className="text-white">
                   Maximum values depend on protective device type and rating - refer to Tables
                   41.2-41.5 in BS 7671.
                 </p>
@@ -706,7 +706,7 @@ const Level3Module8Section2_4 = () => {
                   <p className="text-amber-400 font-medium text-xs mb-1">
                     Temperature Correction Required
                   </p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Measured values at ambient temperature must be compared against tabulated values
                     multiplied by 0.8, OR measured values can be divided by 0.8 then compared to
                     tabulated values.
@@ -723,7 +723,7 @@ const Level3Module8Section2_4 = () => {
                 <h4 className="text-green-400 font-medium mb-1">
                   Practical Example - Zs Verification
                 </h4>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A 32A Type B MCB has a tabulated maximum Zs of 1.37 Ω. With temperature
                   correction: 1.37 × 0.8 = 1.096 Ω. Your measured value of 0.95 Ω is acceptable as
                   it is below 1.096 Ω.
@@ -748,7 +748,7 @@ const Level3Module8Section2_4 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none mb-6">
-            <p className="text-white/80">
+            <p className="text-white">
               Testing errors can lead to safety hazards, incorrect certification, and failed
               assessments. Understanding common mistakes and implementing best practices will help
               ensure accurate, reliable test results and successful completion of practical
@@ -767,11 +767,11 @@ const Level3Module8Section2_4 = () => {
                     <div className="grid sm:grid-cols-2 gap-3 text-sm">
                       <div>
                         <p className="text-red-400/80 text-xs mb-0.5">Consequence:</p>
-                        <p className="text-white/60">{item.consequence}</p>
+                        <p className="text-white">{item.consequence}</p>
                       </div>
                       <div>
                         <p className="text-green-400/80 text-xs mb-0.5">Prevention:</p>
-                        <p className="text-white/70">{item.prevention}</p>
+                        <p className="text-white">{item.prevention}</p>
                       </div>
                     </div>
                   </div>
@@ -801,7 +801,7 @@ const Level3Module8Section2_4 = () => {
                   <div className="w-5 h-5 rounded border border-white/30 flex items-center justify-center">
                     <CheckCircle className="w-3 h-3 text-green-400" />
                   </div>
-                  <span className="text-white/70 text-sm">{item}</span>
+                  <span className="text-white text-sm">{item}</span>
                 </div>
               ))}
             </div>
@@ -822,7 +822,7 @@ const Level3Module8Section2_4 = () => {
           <div className="space-y-4">
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="text-white font-medium mb-2">Before Starting Tests</h4>
-              <ul className="space-y-1 text-white/70 text-sm">
+              <ul className="space-y-1 text-white text-sm">
                 <li>- Thoroughly inspect the installation visually first</li>
                 <li>- Plan your test sequence and gather all instruments</li>
                 <li>- Check instrument batteries and calibration labels</li>
@@ -831,7 +831,7 @@ const Level3Module8Section2_4 = () => {
             </div>
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="text-white font-medium mb-2">During Testing</h4>
-              <ul className="space-y-1 text-white/70 text-sm">
+              <ul className="space-y-1 text-white text-sm">
                 <li>- Follow the prescribed sequence without shortcuts</li>
                 <li>- Record ALL readings, even passing values</li>
                 <li>- Investigate any unexpected or borderline results</li>
@@ -840,7 +840,7 @@ const Level3Module8Section2_4 = () => {
             </div>
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="text-white font-medium mb-2">Documentation</h4>
-              <ul className="space-y-1 text-white/70 text-sm">
+              <ul className="space-y-1 text-white text-sm">
                 <li>- Complete all fields on the Schedule of Test Results</li>
                 <li>- Note instrument serial numbers and calibration dates</li>
                 <li>- Record both measured values and acceptance limits</li>
@@ -860,7 +860,7 @@ const Level3Module8Section2_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-0 last:pb-0">
                 <h4 className="text-white font-medium mb-2">{faq.question}</h4>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -872,37 +872,37 @@ const Level3Module8Section2_4 = () => {
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">Minimum IR (500V circuits)</span>
+                <span className="text-white">Minimum IR (500V circuits)</span>
                 <span className="text-white font-medium">≥1.0 MΩ</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">Continuity test current</span>
+                <span className="text-white">Continuity test current</span>
                 <span className="text-white font-medium">≥200 mA</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">RCD trip time (1×IΔn)</span>
+                <span className="text-white">RCD trip time (1×IΔn)</span>
                 <span className="text-white font-medium">≤300 ms</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">RCD trip time (5×IΔn)</span>
+                <span className="text-white">RCD trip time (5×IΔn)</span>
                 <span className="text-white font-medium">≤40 ms</span>
               </div>
             </div>
             <div className="space-y-2">
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">Zs temperature correction</span>
+                <span className="text-white">Zs temperature correction</span>
                 <span className="text-white font-medium">×0.8</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">IR test voltage (230V circuits)</span>
+                <span className="text-white">IR test voltage (230V circuits)</span>
                 <span className="text-white font-medium">500V DC</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">R1+R2 ring circuit</span>
+                <span className="text-white">R1+R2 ring circuit</span>
                 <span className="text-white font-medium">¼(r1+r2)</span>
               </div>
               <div className="flex justify-between text-sm">
-                <span className="text-white/60">Main bonding max R</span>
+                <span className="text-white">Main bonding max R</span>
                 <span className="text-white font-medium">&lt;0.05 Ω</span>
               </div>
             </div>
@@ -914,7 +914,7 @@ const Level3Module8Section2_4 = () => {
           <h3 className="text-lg font-semibold text-white mb-4">Test Your Knowledge</h3>
           {!showQuiz ? (
             <div className="text-center">
-              <p className="text-white/70 mb-4">
+              <p className="text-white mb-4">
                 Ready to test your understanding of testing procedures?
               </p>
               <Button

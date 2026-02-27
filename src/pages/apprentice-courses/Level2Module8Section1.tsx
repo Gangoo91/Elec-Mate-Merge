@@ -82,7 +82,7 @@ const Level2Module8Section1 = () => {
         <div className="flex items-center gap-4 mb-8">
           <Link
             to=".."
-            className="inline-flex items-center text-white/80 hover:text-foreground transition-colors"
+            className="inline-flex items-center text-white hover:text-foreground transition-colors"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Module 8

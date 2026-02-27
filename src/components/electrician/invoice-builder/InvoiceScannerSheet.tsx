@@ -245,7 +245,7 @@ export function InvoiceScannerSheet({
               <Button
                 variant="ghost"
                 size="icon"
-                className="text-white/60 hover:text-white hover:bg-white/10"
+                className="text-white hover:text-white hover:bg-white/10"
                 onClick={() => onOpenChange(false)}
               >
                 <X className="h-5 w-5" />
@@ -260,7 +260,7 @@ export function InvoiceScannerSheet({
                 <Loader2 className="h-8 w-8 text-elec-yellow animate-spin" />
               </div>
               <p className="text-white font-medium text-lg">{progress || 'Processing...'}</p>
-              <p className="text-white/60 text-sm mt-1">This may take a few seconds</p>
+              <p className="text-white text-sm mt-1">This may take a few seconds</p>
             </div>
           )}
 
@@ -275,7 +275,7 @@ export function InvoiceScannerSheet({
                   </div>
                   <div>
                     <p className="text-[14px] font-medium text-white">AI-Powered Scanning</p>
-                    <p className="text-[12px] text-white/60">
+                    <p className="text-[12px] text-white">
                       Take a photo or upload an invoice image or PDF. AI will extract all line items
                       automatically.
                     </p>
@@ -304,7 +304,7 @@ export function InvoiceScannerSheet({
                   </div>
                   <div className="text-left">
                     <p className="text-[16px] font-medium text-white">Take Photo</p>
-                    <p className="text-[13px] text-white/60">Use camera to capture invoice</p>
+                    <p className="text-[13px] text-white">Use camera to capture invoice</p>
                   </div>
                 </button>
 
@@ -313,11 +313,11 @@ export function InvoiceScannerSheet({
                   className="flex items-center gap-4 p-5 rounded-xl bg-white/[0.03] border border-white/[0.06] touch-manipulation active:scale-[0.98] transition-transform"
                 >
                   <div className="w-14 h-14 rounded-xl bg-white/[0.05] flex items-center justify-center flex-shrink-0">
-                    <Upload className="h-7 w-7 text-white/70" />
+                    <Upload className="h-7 w-7 text-white" />
                   </div>
                   <div className="text-left">
                     <p className="text-[16px] font-medium text-white">Upload File</p>
-                    <p className="text-[13px] text-white/60">Select image or PDF from files</p>
+                    <p className="text-[13px] text-white">Select image or PDF from files</p>
                   </div>
                 </button>
               </div>
@@ -333,10 +333,10 @@ export function InvoiceScannerSheet({
 
               {/* Tips */}
               <div className="mt-auto pt-6">
-                <p className="text-[12px] text-white/40 uppercase tracking-wide mb-3">
+                <p className="text-[12px] text-white uppercase tracking-wide mb-3">
                   Tips for best results
                 </p>
-                <ul className="space-y-2 text-[13px] text-white/60">
+                <ul className="space-y-2 text-[13px] text-white">
                   <li className="flex items-center gap-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow" />
                     Ensure good lighting and avoid shadows
@@ -382,7 +382,7 @@ export function InvoiceScannerSheet({
 
                         {/* Center text */}
                         <div className="absolute inset-0 flex items-center justify-center">
-                          <p className="text-white/50 text-sm text-center px-4">
+                          <p className="text-white text-sm text-center px-4">
                             Position invoice within frame
                           </p>
                         </div>

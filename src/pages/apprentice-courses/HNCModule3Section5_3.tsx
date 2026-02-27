@@ -227,7 +227,7 @@ const HNCModule3Section5_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section5">
@@ -249,7 +249,7 @@ const HNCModule3Section5_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Single-Phase vs Three-Phase Transformers
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Construction types, vector groups, parallel operation, and specialist transformer
             applications for building services
           </p>
@@ -338,7 +338,7 @@ const HNCModule3Section5_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Core Type</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Windings surround the core limbs</li>
                     <li className="pl-1">Simple construction, easy cooling</li>
                     <li className="pl-1">Used for high-voltage transformers</li>
@@ -347,7 +347,7 @@ const HNCModule3Section5_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Shell Type</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Core surrounds the windings</li>
                     <li className="pl-1">Better mechanical protection</li>
                     <li className="pl-1">Preferred for high-current, low-voltage</li>
@@ -429,7 +429,7 @@ const HNCModule3Section5_3 = () => {
                 Three-Phase Core-Type Construction
               </p>
               <div className="p-4 rounded bg-white/5">
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   The most common construction uses a three-limbed core where each phase winding
                   occupies one limb. The magnetic flux from each phase combines in the common yokes
                   connecting the limbs.
@@ -456,7 +456,7 @@ const HNCModule3Section5_3 = () => {
                 Three-Phase Shell-Type Construction
               </p>
               <div className="p-4 rounded bg-white/5">
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   Each phase has its own magnetic circuit surrounding the windings. This provides
                   independent operation of each phase with better mechanical support and fault
                   containment.
@@ -567,14 +567,14 @@ const HNCModule3Section5_3 = () => {
                 Vector Group Notation (IEC 60076-1)
               </p>
               <div className="p-4 rounded bg-white/5">
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   The notation uses capital letters for HV winding, lowercase for LV winding, and a
                   clock number for phase displacement.
                 </p>
                 <div className="grid sm:grid-cols-3 gap-4 text-sm">
                   <div>
                     <p className="font-medium text-white mb-1">Winding Connections</p>
-                    <ul className="text-white/90 space-y-0.5">
+                    <ul className="text-white space-y-0.5">
                       <li>
                         <strong>D or d:</strong> Delta
                       </li>
@@ -591,7 +591,7 @@ const HNCModule3Section5_3 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Clock Number</p>
-                    <ul className="text-white/90 space-y-0.5">
+                    <ul className="text-white space-y-0.5">
                       <li>
                         <strong>0:</strong> 0° displacement
                       </li>
@@ -608,7 +608,7 @@ const HNCModule3Section5_3 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Example: Dyn11</p>
-                    <ul className="text-white/90 space-y-0.5">
+                    <ul className="text-white space-y-0.5">
                       <li>
                         <strong>D:</strong> HV delta
                       </li>
@@ -748,7 +748,7 @@ const HNCModule3Section5_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Mandatory Requirements</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">
                       <strong>Same voltage ratio:</strong> ±0.5% tolerance
                     </li>
@@ -765,7 +765,7 @@ const HNCModule3Section5_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Desirable Requirements</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">
                       <strong>Similar impedance:</strong> Within ±10%
                     </li>
@@ -811,15 +811,15 @@ const HNCModule3Section5_3 = () => {
                 Load Sharing with Different Impedances
               </p>
               <div className="p-4 rounded bg-white/5">
-                <p className="text-sm text-white/90 mb-2">
+                <p className="text-sm text-white mb-2">
                   When transformers with different impedances are paralleled, they share load
                   inversely proportional to their per-unit impedances:
                 </p>
-                <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90 mb-3">
+                <div className="bg-black/30 p-3 rounded text-sm font-mono text-white mb-3">
                   <p>S₁ = S_total × (Z₂ / (Z₁ + Z₂))</p>
                   <p>S₂ = S_total × (Z₁ / (Z₁ + Z₂))</p>
                 </div>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   The lower impedance transformer carries more than its proportionate share of load.
                 </p>
               </div>
@@ -892,7 +892,7 @@ const HNCModule3Section5_3 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Operating Principle</p>
               <div className="p-4 rounded bg-white/5">
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   The winding consists of a series section and a common section. For step-down
                   operation, the full winding receives the input voltage, and the output is taken
                   from a tap point.
@@ -900,7 +900,7 @@ const HNCModule3Section5_3 = () => {
                 <div className="grid sm:grid-cols-2 gap-4 text-sm">
                   <div>
                     <p className="font-medium text-white mb-1">Advantages</p>
-                    <ul className="text-white/90 space-y-0.5 list-disc list-outside ml-5">
+                    <ul className="text-white space-y-0.5 list-disc list-outside ml-5">
                       <li className="pl-1">Smaller and lighter</li>
                       <li className="pl-1">Lower cost</li>
                       <li className="pl-1">Higher efficiency</li>
@@ -909,7 +909,7 @@ const HNCModule3Section5_3 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Disadvantages</p>
-                    <ul className="text-white/90 space-y-0.5 list-disc list-outside ml-5">
+                    <ul className="text-white space-y-0.5 list-disc list-outside ml-5">
                       <li className="pl-1">No electrical isolation</li>
                       <li className="pl-1">Higher fault current transfer</li>
                       <li className="pl-1">Not suitable for large ratios</li>
@@ -923,16 +923,16 @@ const HNCModule3Section5_3 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Size Advantage Formula</p>
               <div className="p-4 rounded bg-white/5">
-                <p className="text-sm text-white/90 mb-2">
+                <p className="text-sm text-white mb-2">
                   The kVA rating of an auto-transformer required for a given load is:
                 </p>
-                <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90 mb-3">
+                <div className="bg-black/30 p-3 rounded text-sm font-mono text-white mb-3">
                   <p>kVA_auto = kVA_load × (1 - V₂/V₁)</p>
-                  <p className="mt-2 text-white/60">
+                  <p className="mt-2 text-white">
                     For 400V to 230V: kVA_auto = kVA_load × (1 - 230/400) = 0.425 × kVA_load
                   </p>
                 </div>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   The auto-transformer need only be rated at 42.5% of the load for a 400V/230V
                   conversion.
                 </p>
@@ -1017,7 +1017,7 @@ const HNCModule3Section5_3 = () => {
                 Construction and Operation
               </p>
               <div className="p-4 rounded bg-white/5">
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   Two single-phase transformers are used:
                 </p>
                 <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
@@ -1043,7 +1043,7 @@ const HNCModule3Section5_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Railway Electrification</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">25 kV AC railway supply from three-phase grid</li>
                     <li className="pl-1">Adjacent sections fed 90° out of phase</li>
                     <li className="pl-1">Neutral sections at transformer outputs</li>
@@ -1052,7 +1052,7 @@ const HNCModule3Section5_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Electric Arc Furnaces</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Historic installations with two-phase furnaces</li>
                     <li className="pl-1">Conversion from three-phase supply</li>
                     <li className="pl-1">Independent control of each phase</li>
@@ -1066,13 +1066,13 @@ const HNCModule3Section5_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Voltage and Turn Ratios
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Main transformer: N₁ turns (full winding)</p>
                 <p>Teaser transformer primary: 0.866 × N₁ turns (86.6%)</p>
                 <p className="mt-2">
                   For equal secondary voltages, both secondaries have the same turns
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   The 86.6% factor is √3/2, derived from three-phase geometry
                 </p>
               </div>
@@ -1100,7 +1100,7 @@ const HNCModule3Section5_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Zigzag (Zn) Type</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Most common for creating neutral</li>
                     <li className="pl-1">Each limb has two windings in opposition</li>
                     <li className="pl-1">Low zero-sequence impedance</li>
@@ -1110,7 +1110,7 @@ const HNCModule3Section5_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Star-Delta (YNd) Type</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Star primary creates neutral</li>
                     <li className="pl-1">Delta secondary may supply auxiliary loads</li>
                     <li className="pl-1">Higher cost than zigzag</li>
@@ -1273,7 +1273,7 @@ const HNCModule3Section5_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Space and Access</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Minimum 1m clearance sides/rear</li>
                     <li className="pl-1">2m clearance at front for access</li>
                     <li className="pl-1">Adequate height for lifting/maintenance</li>
@@ -1283,7 +1283,7 @@ const HNCModule3Section5_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Ventilation</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-5">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Natural ventilation: 0.35 m²/100 kVA losses</li>
                     <li className="pl-1">Inlet low, outlet high (convection)</li>
                     <li className="pl-1">Mechanical ventilation for basements</li>
@@ -1327,7 +1327,7 @@ const HNCModule3Section5_3 = () => {
                 Acoustic Considerations
               </p>
               <div className="p-4 rounded bg-white/5">
-                <p className="text-sm text-white/90 mb-2">
+                <p className="text-sm text-white mb-2">
                   Transformer noise is predominantly at 100 Hz (twice supply frequency) due to
                   magnetostriction.
                 </p>
@@ -1439,7 +1439,7 @@ const HNCModule3Section5_3 = () => {
                 <strong>Question:</strong> Two transformers, 500 kVA (4% impedance) and 300 kVA (5%
                 impedance), are paralleled. How do they share a 600 kVA load?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Convert to per-unit impedances on common base (800 kVA):</p>
                 <p>Z₁(pu) = 4% × (800/500) = 6.4%</p>
                 <p>Z₂(pu) = 5% × (800/300) = 13.3%</p>
@@ -1450,8 +1450,8 @@ const HNCModule3Section5_3 = () => {
                 <p>
                   S₂ = 600 × (6.4/(6.4+13.3)) = 600 × 0.325 = <strong>195 kVA</strong>
                 </p>
-                <p className="mt-2 text-white/60">The 500 kVA unit takes 405 kVA (81% loading)</p>
-                <p className="text-white/60">The 300 kVA unit takes 195 kVA (65% loading)</p>
+                <p className="mt-2 text-white">The 500 kVA unit takes 405 kVA (81% loading)</p>
+                <p className="text-white">The 300 kVA unit takes 195 kVA (65% loading)</p>
                 <p className="mt-2 text-green-400">
                   Low impedance unit takes more than proportionate share
                 </p>
@@ -1466,14 +1466,14 @@ const HNCModule3Section5_3 = () => {
                 <strong>Question:</strong> Calculate the kVA rating of an auto-transformer to supply
                 a 100 kVA load at 380V from a 400V supply.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Auto-transformer kVA = Load kVA × (1 - V₂/V₁)</p>
                 <p className="mt-2">kVA_auto = 100 × (1 - 380/400)</p>
                 <p>kVA_auto = 100 × (1 - 0.95)</p>
                 <p>
                   kVA_auto = 100 × 0.05 = <strong>5 kVA</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Only 5% of load kVA required due to small voltage change
                 </p>
                 <p className="mt-2 text-green-400">
@@ -1490,7 +1490,7 @@ const HNCModule3Section5_3 = () => {
                 <strong>Question:</strong> A 1000 kVA dry-type transformer has 1.5% no-load losses
                 and 5% full-load losses. Calculate ventilation requirements at 75% load.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>No-load losses = 1.5% × 1000 = 15 kW (constant)</p>
                 <p>Full-load copper losses = 5% × 1000 = 50 kW</p>
                 <p>Copper losses at 75% = 50 × 0.75² = 50 × 0.5625 = 28.1 kW</p>
@@ -1503,7 +1503,7 @@ const HNCModule3Section5_3 = () => {
                 <p>
                   Area = 0.35 × (43.1/100) × 2 = <strong>0.30 m²</strong>
                 </p>
-                <p className="text-white/60">(×2 for inlet + outlet)</p>
+                <p className="text-white">(×2 for inlet + outlet)</p>
                 <p className="mt-2 text-green-400">
                   Provide 0.15 m² low-level inlet + 0.15 m² high-level outlet
                 </p>
@@ -1599,7 +1599,7 @@ const HNCModule3Section5_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1663,7 +1663,7 @@ const HNCModule3Section5_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section5-2">

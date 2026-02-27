@@ -243,7 +243,7 @@ const HNCModule7Section2_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section2">
@@ -265,7 +265,7 @@ const HNCModule7Section2_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             UPS Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             UPS topologies, sizing calculations, battery technologies, bypass arrangements, and
             monitoring systems
           </p>
@@ -431,18 +431,18 @@ const HNCModule7Section2_5 = () => {
               </p>
               <div className="text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Stage 1:</span> AC mains → Rectifier → DC bus
+                  <span className="text-white">Stage 1:</span> AC mains → Rectifier → DC bus
                 </p>
                 <p>
-                  <span className="text-white/60">Stage 2:</span> DC bus → Charges batteries
+                  <span className="text-white">Stage 2:</span> DC bus → Charges batteries
                   continuously
                 </p>
                 <p>
-                  <span className="text-white/60">Stage 3:</span> DC bus → Inverter → Clean AC to
+                  <span className="text-white">Stage 3:</span> DC bus → Inverter → Clean AC to
                   load
                 </p>
                 <p>
-                  <span className="text-white/60">On mains fail:</span> Batteries maintain DC bus
+                  <span className="text-white">On mains fail:</span> Batteries maintain DC bus
                   seamlessly
                 </p>
               </div>
@@ -545,30 +545,30 @@ const HNCModule7Section2_5 = () => {
               </p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Given:</span> 12 servers × 800W = 9.6 kW total
+                  <span className="text-white">Given:</span> 12 servers × 800W = 9.6 kW total
                 </p>
                 <p>
-                  <span className="text-white/60">Power factor:</span> 0.9
+                  <span className="text-white">Power factor:</span> 0.9
                 </p>
                 <p>
-                  <span className="text-white/60">Autonomy required:</span> 15 minutes
+                  <span className="text-white">Autonomy required:</span> 15 minutes
                 </p>
                 <p className="mt-2">
-                  <span className="text-white/60">Step 1:</span> kVA = 9.6 ÷ 0.9 = 10.67 kVA
+                  <span className="text-white">Step 1:</span> kVA = 9.6 ÷ 0.9 = 10.67 kVA
                 </p>
                 <p>
-                  <span className="text-white/60">Step 2:</span> With 25% headroom = 10.67 × 1.25 =
+                  <span className="text-white">Step 2:</span> With 25% headroom = 10.67 × 1.25 =
                   13.3 kVA
                 </p>
                 <p>
-                  <span className="text-white/60">Step 3:</span> Select 15 kVA UPS (standard size)
+                  <span className="text-white">Step 3:</span> Select 15 kVA UPS (standard size)
                 </p>
                 <p className="mt-2">
-                  <span className="text-white/60">Battery:</span> Energy = 9.6 kW × 0.25h ÷ 0.9 =
+                  <span className="text-white">Battery:</span> Energy = 9.6 kW × 0.25h ÷ 0.9 =
                   2.67 kWh
                 </p>
                 <p>
-                  <span className="text-white/60">At 80% DOD:</span> Battery capacity = 2.67 ÷ 0.8 =
+                  <span className="text-white">At 80% DOD:</span> Battery capacity = 2.67 ÷ 0.8 =
                   3.33 kWh
                 </p>
               </div>
@@ -877,8 +877,8 @@ const HNCModule7Section2_5 = () => {
                 <strong>Scenario:</strong> Size a UPS for a small data centre with 30 kW IT load,
                 requiring 20 minutes autonomy.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given data:</p>
                 <p>IT Load = 30 kW, PF = 0.9, Autonomy = 20 min</p>
                 <p className="mt-2">Step 1: Calculate kVA requirement</p>
                 <p className="ml-4">kVA = 30 kW ÷ 0.9 = 33.3 kVA</p>
@@ -905,8 +905,8 @@ const HNCModule7Section2_5 = () => {
                 <strong>Scenario:</strong> Plan battery replacement for UPS installed 2019, VRLA
                 batteries rated 10-year design life.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Assessment factors:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Assessment factors:</p>
                 <p>Install date: 2019, Design life: 10 years at 25°C</p>
                 <p>Actual ambient: 28°C average (battery room)</p>
                 <p className="mt-2">Temperature derating calculation:</p>
@@ -915,7 +915,7 @@ const HNCModule7Section2_5 = () => {
                 <p className="mt-2">Conservative replacement (80% of adjusted life):</p>
                 <p className="ml-4">Replace at = 8.1 × 0.8 = 6.5 years</p>
                 <p className="ml-4 text-green-400">Plan replacement: Mid-2025</p>
-                <p className="mt-2 text-white/60">Validation:</p>
+                <p className="mt-2 text-white">Validation:</p>
                 <p>Perform impedance testing annually from 2023</p>
                 <p>Replace when impedance &gt;20% above baseline</p>
               </div>
@@ -928,8 +928,8 @@ const HNCModule7Section2_5 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Design N+1 redundant UPS for 80 kVA critical load.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Requirement:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Requirement:</p>
                 <p>80 kVA load, N+1 redundancy, 15 min autonomy</p>
                 <p className="mt-2">Configuration options:</p>
                 <p className="ml-4">Option A: 2 × 100 kVA (each at 40% load normally)</p>
@@ -938,7 +938,7 @@ const HNCModule7Section2_5 = () => {
                 <p className="ml-4">Option A: Higher headroom, 80% load if one fails</p>
                 <p className="ml-4">Option B: Better efficiency at part load, 100% if one fails</p>
                 <p className="mt-2 text-green-400">Selected: 2 × 100 kVA</p>
-                <p className="text-white/60">
+                <p className="text-white">
                   Justification: Greater growth capacity, simpler system
                 </p>
                 <p className="mt-2">Battery sizing per UPS:</p>
@@ -1030,7 +1030,7 @@ const HNCModule7Section2_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1076,7 +1076,7 @@ const HNCModule7Section2_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section2">

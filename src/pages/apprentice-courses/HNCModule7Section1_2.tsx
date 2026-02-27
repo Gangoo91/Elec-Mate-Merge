@@ -253,7 +253,7 @@ const HNCModule7Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section1">
@@ -275,7 +275,7 @@ const HNCModule7Section1_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Busbar Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Busbar trunking, rising mains, tap-off units, ratings, and installation requirements for
             building services
           </p>
@@ -583,26 +583,26 @@ const HNCModule7Section1_2 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">Tap-Off Unit Types</p>
               <div className="text-sm space-y-2">
                 <p>
-                  <span className="text-white/60">Plug-in (live):</span>{' '}
+                  <span className="text-white">Plug-in (live):</span>{' '}
                   <span className="text-white">
                     Can be connected/disconnected with busbar energised - shuttered contacts for
                     safety
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">Bolt-on:</span>{' '}
+                  <span className="text-white">Bolt-on:</span>{' '}
                   <span className="text-white">
                     Bolted connection requiring busbar isolation - higher fault ratings available
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">Cable tap:</span>{' '}
+                  <span className="text-white">Cable tap:</span>{' '}
                   <span className="text-white">
                     Provides cable termination for connection to remote equipment
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">Motor starter:</span>{' '}
+                  <span className="text-white">Motor starter:</span>{' '}
                   <span className="text-white">
                     Integrated DOL or star-delta starter for motor connection
                   </span>
@@ -717,7 +717,7 @@ const HNCModule7Section1_2 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Physical Installation</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Support brackets at specified intervals (typically 2-3m)</li>
                     <li>Expansion joints for thermal movement</li>
                     <li>Minimum clearances for tap-off access (typically 600mm)</li>
@@ -728,7 +728,7 @@ const HNCModule7Section1_2 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Electrical Requirements</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Joint torques to specification</li>
                     <li>Earth continuity through all sections</li>
                     <li>Correct phase sequence maintained</li>
@@ -831,7 +831,7 @@ const HNCModule7Section1_2 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Compliance note:</strong> Busbar trunking installations must be carried out to
               manufacturer's instructions and documented with appropriate certificates including
               type test reports and fire barrier certificates.
@@ -857,7 +857,7 @@ const HNCModule7Section1_2 = () => {
                 <strong>Scenario:</strong> Size a rising main for a 10-storey office building with
                 50kVA per floor demand.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given data:</p>
                 <p className="ml-4">Floors: 10</p>
                 <p className="ml-4">Demand per floor: 50kVA</p>
@@ -871,7 +871,7 @@ const HNCModule7Section1_2 = () => {
                 <p className="ml-4">Maximum demand current = 400,000 / (400 x 1.732) = 577A</p>
                 <p className="ml-4">Add 25% future growth = 577 x 1.25 = 722A</p>
                 <p className="mt-2 text-green-400">Select 800A busbar trunking system</p>
-                <p className="text-white/60">
+                <p className="text-white">
                   Verify short-circuit rating &gt; prospective fault level at intake
                 </p>
               </div>
@@ -885,7 +885,7 @@ const HNCModule7Section1_2 = () => {
                 <strong>Scenario:</strong> Select tap-off units for floor distribution boards from a
                 1000A rising main.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Floor requirements:</p>
                 <p className="ml-4">Typical floor load: 50kVA diversified</p>
                 <p className="ml-4">Floor current = 50,000 / (400 x 1.732) = 72A</p>
@@ -907,7 +907,7 @@ const HNCModule7Section1_2 = () => {
                 <strong>Scenario:</strong> Specify fire barriers for a 400A busbar penetrating
                 90-minute fire compartment floors.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Requirements:</p>
                 <p className="ml-4">Fire rating required: 90 minutes (EI90)</p>
                 <p className="ml-4">Busbar size: 400A (enclosure approx 200 x 200mm)</p>
@@ -1003,7 +1003,7 @@ const HNCModule7Section1_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1049,7 +1049,7 @@ const HNCModule7Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section1">

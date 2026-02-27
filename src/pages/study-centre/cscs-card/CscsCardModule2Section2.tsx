@@ -225,13 +225,13 @@ const CscsCardModule2Section2 = () => {
           </div>
           <div className="inline-block bg-green-500/10 border border-green-500/20 px-3 py-1 rounded-full text-sm font-semibold mb-4 ml-0">
             <span className="text-green-400">MODULE 2</span>
-            <span className="text-white/40 mx-2">&middot;</span>
-            <span className="text-white/60">SECTION 2</span>
+            <span className="text-white mx-2">&middot;</span>
+            <span className="text-white">SECTION 2</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Personal Protective Equipment
           </h1>
-          <p className="text-white/70 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding PPE types, selection, legal duties, and the importance of correct use —
             the last line of defence when other controls are not enough
           </p>
@@ -241,7 +241,7 @@ const CscsCardModule2Section2 = () => {
         <div className="grid sm:grid-cols-2 gap-4 mb-10">
           <div className="rounded-lg p-4 bg-green-500/5 border-l-2 border-green-500/50">
             <p className="font-semibold text-green-400 mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -274,7 +274,7 @@ const CscsCardModule2Section2 = () => {
           </div>
           <div className="rounded-lg p-4 bg-green-500/5 border-l-2 border-green-500/50">
             <p className="font-semibold text-green-400/90 mb-2">On Site</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -310,7 +310,7 @@ const CscsCardModule2Section2 = () => {
         {/* Learning Outcomes */}
         <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4">By the end of this section, you will be able to:</p>
+          <p className="text-white mb-4">By the end of this section, you will be able to:</p>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
               'Define PPE and explain its position in the hierarchy of controls',
@@ -324,7 +324,7 @@ const CscsCardModule2Section2 = () => {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400/70 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </div>
             ))}
           </div>
@@ -339,7 +339,7 @@ const CscsCardModule2Section2 = () => {
               <span className="text-green-400/80 text-sm font-normal">01</span>
               What Is PPE?
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">Personal Protective Equipment (PPE)</strong> is
                 defined under the{' '}
@@ -353,7 +353,7 @@ const CscsCardModule2Section2 = () => {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-green-400">Key Definition: PPE</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   PPE is any device or appliance designed to be worn or held by an individual for
                   protection against one or more health and safety hazards. On construction sites,
                   this includes hard hats, safety boots, high-visibility clothing, gloves, eye
@@ -373,7 +373,7 @@ const CscsCardModule2Section2 = () => {
                   <AlertTriangle className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-green-300">PPE Is the Last Resort</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   PPE should only be used as a <strong className="text-white">last resort</strong> —
                   when risks cannot be adequately controlled by other means. The hierarchy of
                   controls requires employers to first consider:{' '}
@@ -390,7 +390,7 @@ const CscsCardModule2Section2 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-green-400 font-medium mb-3">Employer Duties</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>Carry out a risk assessment to identify PPE needs</span>
@@ -420,7 +420,7 @@ const CscsCardModule2Section2 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-green-400 font-medium mb-3">Employee Duties</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>Wear PPE as instructed and trained</span>
@@ -454,7 +454,7 @@ const CscsCardModule2Section2 = () => {
               <span className="text-green-400/80 text-sm font-normal">02</span>
               Head Protection
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Head injuries are one of the most common causes of death and serious injury on
                 construction sites. Objects falling from height, striking against fixed objects, and
@@ -467,7 +467,7 @@ const CscsCardModule2Section2 = () => {
                 <h3 className="font-semibold mb-2 text-green-400">
                   EN 397 — Industrial Safety Helmets
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Hard hats used on construction sites must comply with{' '}
                   <strong className="text-white">EN 397</strong>, the European standard for
                   industrial safety helmets. This standard specifies requirements for shock
@@ -480,7 +480,7 @@ const CscsCardModule2Section2 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-green-400 font-medium mb-3">Types of Head Protection</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -528,7 +528,7 @@ const CscsCardModule2Section2 = () => {
                 <h3 className="text-green-400 font-semibold mb-4 text-sm uppercase tracking-wide">
                   Hard Hat Colour Coding — Common Site Conventions
                 </h3>
-                <p className="text-white/60 text-sm mb-4">
+                <p className="text-white text-sm mb-4">
                   While there is no single legal standard for hard hat colours, the following colour
                   codes are widely used on UK construction sites to identify roles at a glance:
                 </p>
@@ -539,7 +539,7 @@ const CscsCardModule2Section2 = () => {
                     </div>
                     <div className="text-center">
                       <p className="text-white font-medium text-xs">White</p>
-                      <p className="text-white/50 text-xs">Site managers, engineers, supervisors</p>
+                      <p className="text-white text-xs">Site managers, engineers, supervisors</p>
                     </div>
                   </div>
                   <div className="flex flex-col items-center gap-2">
@@ -548,7 +548,7 @@ const CscsCardModule2Section2 = () => {
                     </div>
                     <div className="text-center">
                       <p className="text-white font-medium text-xs">Yellow</p>
-                      <p className="text-white/50 text-xs">General labourers, operatives</p>
+                      <p className="text-white text-xs">General labourers, operatives</p>
                     </div>
                   </div>
                   <div className="flex flex-col items-center gap-2">
@@ -557,7 +557,7 @@ const CscsCardModule2Section2 = () => {
                     </div>
                     <div className="text-center">
                       <p className="text-white font-medium text-xs">Blue</p>
-                      <p className="text-white/50 text-xs">
+                      <p className="text-white text-xs">
                         Skilled workers, electricians, plumbers
                       </p>
                     </div>
@@ -568,7 +568,7 @@ const CscsCardModule2Section2 = () => {
                     </div>
                     <div className="text-center">
                       <p className="text-white font-medium text-xs">Orange</p>
-                      <p className="text-white/50 text-xs">
+                      <p className="text-white text-xs">
                         Slingers, signallers, traffic marshals
                       </p>
                     </div>
@@ -579,7 +579,7 @@ const CscsCardModule2Section2 = () => {
                     </div>
                     <div className="text-center">
                       <p className="text-white font-medium text-xs">Green</p>
-                      <p className="text-white/50 text-xs">Safety officers, environment officers</p>
+                      <p className="text-white text-xs">Safety officers, environment officers</p>
                     </div>
                   </div>
                   <div className="flex flex-col items-center gap-2">
@@ -588,7 +588,7 @@ const CscsCardModule2Section2 = () => {
                     </div>
                     <div className="text-center">
                       <p className="text-white font-medium text-xs">Red</p>
-                      <p className="text-white/50 text-xs">Fire marshals, emergency teams</p>
+                      <p className="text-white text-xs">Fire marshals, emergency teams</p>
                     </div>
                   </div>
                   <div className="flex flex-col items-center gap-2">
@@ -597,7 +597,7 @@ const CscsCardModule2Section2 = () => {
                     </div>
                     <div className="text-center">
                       <p className="text-white font-medium text-xs">Black</p>
-                      <p className="text-white/50 text-xs">Senior managers, clients, architects</p>
+                      <p className="text-white text-xs">Senior managers, clients, architects</p>
                     </div>
                   </div>
                   <div className="flex flex-col items-center gap-2">
@@ -606,11 +606,11 @@ const CscsCardModule2Section2 = () => {
                     </div>
                     <div className="text-center">
                       <p className="text-white font-medium text-xs">Pink</p>
-                      <p className="text-white/50 text-xs">Visitors (some sites)</p>
+                      <p className="text-white text-xs">Visitors (some sites)</p>
                     </div>
                   </div>
                 </div>
-                <p className="text-white/40 text-xs mt-3 italic">
+                <p className="text-white text-xs mt-3 italic">
                   Note: colour codes vary between contractors and sites. Always check the
                   site-specific rules during induction.
                 </p>
@@ -628,7 +628,7 @@ const CscsCardModule2Section2 = () => {
               <span className="text-green-400/80 text-sm font-normal">03</span>
               Eye &amp; Face Protection
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Eye injuries on construction sites can result from flying particles, dust, chemical
                 splashes, UV radiation, and intense light from welding arcs. The correct type of eye
@@ -639,7 +639,7 @@ const CscsCardModule2Section2 = () => {
                 <h3 className="font-semibold mb-2 text-green-400">
                   EN 166 — Personal Eye Protection
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Eye and face protectors used at work must comply with{' '}
                   <strong className="text-white">EN 166</strong>, the European standard for personal
                   eye protection. The marking on the lens and frame indicates the level of
@@ -656,7 +656,7 @@ const CscsCardModule2Section2 = () => {
                 <h3 className="text-green-400 font-medium mb-3">
                   Types of Eye &amp; Face Protection
                 </h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -742,7 +742,7 @@ const CscsCardModule2Section2 = () => {
               <span className="text-green-400/80 text-sm font-normal">04</span>
               Hearing Protection
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Noise-induced hearing loss is{' '}
                 <strong className="text-white">permanent and irreversible</strong>. Construction
@@ -764,7 +764,7 @@ const CscsCardModule2Section2 = () => {
                       <p className="text-white font-medium">
                         80 dB(A) — Lower Exposure Action Value
                       </p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Employer must assess risk, provide information and training, and make
                         hearing protection <strong className="text-white">available</strong> to
                         workers who request it
@@ -779,7 +779,7 @@ const CscsCardModule2Section2 = () => {
                       <p className="text-white font-medium">
                         85 dB(A) — Upper Exposure Action Value
                       </p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Employer must reduce exposure as far as reasonably practicable, designate
                         hearing protection zones, and <strong className="text-white">ensure</strong>{' '}
                         hearing protection is worn
@@ -792,7 +792,7 @@ const CscsCardModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">87 dB(A) — Exposure Limit Value</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Must <strong className="text-white">never be exceeded</strong> (taking into
                         account the attenuation provided by hearing protection). If exceeded, the
                         employer must take immediate action to reduce exposure
@@ -804,7 +804,7 @@ const CscsCardModule2Section2 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-green-400 font-medium mb-3">Types of Hearing Protection</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -845,7 +845,7 @@ const CscsCardModule2Section2 = () => {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-green-400">SNR Rating</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The <strong className="text-white">Single Number Rating (SNR)</strong> indicates
                   the overall noise reduction provided by the hearing protector in decibels. To
                   estimate the noise level at the ear, subtract the SNR from the measured noise
@@ -871,7 +871,7 @@ const CscsCardModule2Section2 = () => {
               <span className="text-green-400/80 text-sm font-normal">05</span>
               Hand Protection
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Hands are the most commonly injured part of the body on construction sites. Cuts,
                 abrasions, punctures, chemical burns, and crush injuries account for a significant
@@ -883,7 +883,7 @@ const CscsCardModule2Section2 = () => {
                 <h3 className="font-semibold mb-2 text-green-400">
                   EN 388 — Protective Gloves Against Mechanical Risks
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   <strong className="text-white">EN 388</strong> is the standard for gloves that
                   protect against mechanical hazards. The marking shows four digits (and optionally
                   a fifth letter) representing performance levels for:{' '}
@@ -901,7 +901,7 @@ const CscsCardModule2Section2 = () => {
                 <h3 className="text-green-400 font-medium mb-3">
                   Common Glove Types on Construction Sites
                 </h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -957,7 +957,7 @@ const CscsCardModule2Section2 = () => {
                   <AlertTriangle className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-green-300">When NOT to Wear Gloves</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Gloves must <strong className="text-white">not</strong> be worn when operating
                   rotating machinery such as pillar drills, bench grinders, and lathes.
                   Loose-fitting gloves can be caught by the rotating parts and drag the hand into
@@ -976,7 +976,7 @@ const CscsCardModule2Section2 = () => {
               <span className="text-green-400/80 text-sm font-normal">06</span>
               Foot Protection
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Safety footwear is mandatory on virtually all construction sites. Feet are at risk
                 from falling objects, crushing, puncture from sharp objects on the ground (nails,
@@ -997,7 +997,7 @@ const CscsCardModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">S1 — Basic Safety</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Toe protection (200J impact), closed heel, antistatic properties, energy
                         absorption in the heel region, fuel oil resistance. Suitable for indoor
                         environments where the floor is dry
@@ -1010,7 +1010,7 @@ const CscsCardModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">S2 — Water Resistant</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         All S1 properties plus water penetration and absorption resistance in the
                         upper. Suitable for wet environments without the risk of nail penetration
                       </p>
@@ -1024,7 +1024,7 @@ const CscsCardModule2Section2 = () => {
                       <p className="text-white font-medium">
                         S3 — Full Construction Site Protection
                       </p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         All S2 properties plus a{' '}
                         <strong className="text-white">penetration-resistant midsole</strong> and a
                         cleated outsole for improved grip. The most common rating required on UK
@@ -1037,7 +1037,7 @@ const CscsCardModule2Section2 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-green-400 font-medium mb-3">Toe Cap Materials</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1080,7 +1080,7 @@ const CscsCardModule2Section2 = () => {
               <span className="text-green-400/80 text-sm font-normal">07</span>
               Respiratory Protection (RPE)
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">Respiratory Protective Equipment (RPE)</strong> is a
                 subset of PPE that specifically protects the wearer&rsquo;s lungs from inhaling
@@ -1093,7 +1093,7 @@ const CscsCardModule2Section2 = () => {
                 <h3 className="font-semibold mb-2 text-green-400">
                   RPE vs PPE — What Is the Difference?
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   All RPE is PPE, but not all PPE is RPE.{' '}
                   <strong className="text-white">RPE</strong> specifically refers to equipment that
                   protects the <strong className="text-white">respiratory system</strong> (lungs and
@@ -1120,7 +1120,7 @@ const CscsCardModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">FFP1 — Assigned Protection Factor 4</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Filters at least 80% of airborne particles. Suitable for low-toxicity
                         nuisance dusts such as plaster, cement (brief exposure), and general
                         construction dust
@@ -1133,7 +1133,7 @@ const CscsCardModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">FFP2 — Assigned Protection Factor 10</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Filters at least 94% of airborne particles. Suitable for moderate-toxicity
                         dusts such as wood dust, MDF dust, concrete dust, and moderate welding fumes
                       </p>
@@ -1145,7 +1145,7 @@ const CscsCardModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">FFP3 — Assigned Protection Factor 20</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Filters at least 99% of airborne particles. Required for high-toxicity
                         substances including <strong className="text-white">asbestos fibres</strong>
                         , silica dust (high exposure), lead dust, and hardwood dust
@@ -1157,7 +1157,7 @@ const CscsCardModule2Section2 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-green-400 font-medium mb-3">Reusable Respirators</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1199,7 +1199,7 @@ const CscsCardModule2Section2 = () => {
                     Face-Fit Testing — A Legal Requirement
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Any <strong className="text-white">tight-fitting RPE</strong> (disposable masks,
                   half-face and full-face respirators) must be{' '}
                   <strong className="text-white">face-fit tested to the individual wearer</strong>.
@@ -1207,7 +1207,7 @@ const CscsCardModule2Section2 = () => {
                   wearer&rsquo;s face. Without a proper seal, contaminated air leaks in around the
                   edges and the stated protection factor is not achieved.
                 </p>
-                <ul className="text-white/70 space-y-1.5 text-sm">
+                <ul className="text-white space-y-1.5 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1254,7 +1254,7 @@ const CscsCardModule2Section2 = () => {
               <span className="text-green-400/80 text-sm font-normal">08</span>
               High-Visibility Clothing &amp; Other PPE
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">High-visibility (hi-vis) clothing</strong> is one of
                 the most widely required forms of PPE on construction sites. It makes the wearer
@@ -1272,7 +1272,7 @@ const CscsCardModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Class 1 — Minimum Visibility</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Smallest area of fluorescent and retroreflective material (e.g., armbands,
                         belts). Generally{' '}
                         <strong className="text-white">
@@ -1288,7 +1288,7 @@ const CscsCardModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Class 2 — Standard Visibility</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Moderate area of fluorescent and retroreflective material (e.g., vests,
                         waistcoats). The minimum standard required on most construction sites for
                         pedestrian workers
@@ -1301,7 +1301,7 @@ const CscsCardModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Class 3 — Maximum Visibility</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Greatest area of fluorescent and retroreflective material (e.g., full
                         jackets, coveralls, trousers with hi-vis banding). Required where workers
                         are close to moving vehicles, on highways, or in poor visibility conditions
@@ -1313,7 +1313,7 @@ const CscsCardModule2Section2 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-green-400 font-medium mb-3">Other PPE on Construction Sites</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1358,7 +1358,7 @@ const CscsCardModule2Section2 = () => {
                 <h3 className="text-green-400 font-semibold mb-4 text-sm uppercase tracking-wide">
                   PPE Selection Guide — Hazard to PPE
                 </h3>
-                <p className="text-white/60 text-sm mb-4">
+                <p className="text-white text-sm mb-4">
                   Use this quick-reference guide to identify the correct PPE for common construction
                   hazards:
                 </p>
@@ -1367,7 +1367,7 @@ const CscsCardModule2Section2 = () => {
                     <p className="text-green-400 font-medium text-sm mb-2">Falling Objects</p>
                     <div className="flex items-center gap-2">
                       <div className="w-0.5 h-8 bg-green-400/40"></div>
-                      <div className="text-white/70 text-xs space-y-1">
+                      <div className="text-white text-xs space-y-1">
                         <p>Hard hat (EN 397)</p>
                         <p>Safety boots with toe cap (EN ISO 20345 S3)</p>
                       </div>
@@ -1377,7 +1377,7 @@ const CscsCardModule2Section2 = () => {
                     <p className="text-green-400 font-medium text-sm mb-2">Noise (&gt;80 dB)</p>
                     <div className="flex items-center gap-2">
                       <div className="w-0.5 h-8 bg-green-400/40"></div>
-                      <div className="text-white/70 text-xs space-y-1">
+                      <div className="text-white text-xs space-y-1">
                         <p>Ear plugs (SNR-rated) or ear defenders</p>
                         <p>Dual protection above 100 dB</p>
                       </div>
@@ -1387,7 +1387,7 @@ const CscsCardModule2Section2 = () => {
                     <p className="text-green-400 font-medium text-sm mb-2">Dust / Fumes</p>
                     <div className="flex items-center gap-2">
                       <div className="w-0.5 h-8 bg-green-400/40"></div>
-                      <div className="text-white/70 text-xs space-y-1">
+                      <div className="text-white text-xs space-y-1">
                         <p>FFP2 mask (general dust) or FFP3 (toxic dust/asbestos)</p>
                         <p>Half/full-face respirator for prolonged exposure</p>
                       </div>
@@ -1397,7 +1397,7 @@ const CscsCardModule2Section2 = () => {
                     <p className="text-green-400 font-medium text-sm mb-2">Chemical Splash</p>
                     <div className="flex items-center gap-2">
                       <div className="w-0.5 h-8 bg-green-400/40"></div>
-                      <div className="text-white/70 text-xs space-y-1">
+                      <div className="text-white text-xs space-y-1">
                         <p>Chemical-splash goggles + face shield</p>
                         <p>Chemical-resistant gloves (check SDS)</p>
                       </div>
@@ -1409,7 +1409,7 @@ const CscsCardModule2Section2 = () => {
                     </p>
                     <div className="flex items-center gap-2">
                       <div className="w-0.5 h-8 bg-green-400/40"></div>
-                      <div className="text-white/70 text-xs space-y-1">
+                      <div className="text-white text-xs space-y-1">
                         <p>Cut-resistant gloves (EN 388, level C–F)</p>
                         <p>Arm protection for sheet metal handling</p>
                       </div>
@@ -1419,7 +1419,7 @@ const CscsCardModule2Section2 = () => {
                     <p className="text-green-400 font-medium text-sm mb-2">Working at Height</p>
                     <div className="flex items-center gap-2">
                       <div className="w-0.5 h-8 bg-green-400/40"></div>
-                      <div className="text-white/70 text-xs space-y-1">
+                      <div className="text-white text-xs space-y-1">
                         <p>Full-body harness + energy-absorbing lanyard</p>
                         <p>Hard hat with chin strap</p>
                       </div>
@@ -1431,7 +1431,7 @@ const CscsCardModule2Section2 = () => {
                     </p>
                     <div className="flex items-center gap-2">
                       <div className="w-0.5 h-8 bg-green-400/40"></div>
-                      <div className="text-white/70 text-xs space-y-1">
+                      <div className="text-white text-xs space-y-1">
                         <p>Hi-vis Class 2 (min) or Class 3 clothing</p>
                         <p>Safety boots with ankle support</p>
                       </div>
@@ -1441,7 +1441,7 @@ const CscsCardModule2Section2 = () => {
                     <p className="text-green-400 font-medium text-sm mb-2">Nail / Puncture Risk</p>
                     <div className="flex items-center gap-2">
                       <div className="w-0.5 h-8 bg-green-400/40"></div>
-                      <div className="text-white/70 text-xs space-y-1">
+                      <div className="text-white text-xs space-y-1">
                         <p>S3 boots (penetration-resistant midsole)</p>
                         <p>Puncture-resistant gloves (EN 388)</p>
                       </div>
@@ -1454,7 +1454,7 @@ const CscsCardModule2Section2 = () => {
                 <h3 className="text-green-400 font-medium mb-3">
                   PPE Maintenance, Storage &amp; Training
                 </h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1498,7 +1498,7 @@ const CscsCardModule2Section2 = () => {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-green-400">CE &amp; UKCA Marking</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   All PPE sold and used in the UK must carry a valid conformity mark.{' '}
                   <strong className="text-white">CE marking</strong> (Conformit&eacute;
                   Europ&eacute;enne) confirms compliance with European PPE Regulation (EU) 2016/425.{' '}
@@ -1519,7 +1519,7 @@ const CscsCardModule2Section2 = () => {
                     PPE Categories Under EU/UK Regulations
                   </h3>
                 </div>
-                <div className="space-y-2 text-sm text-white/70">
+                <div className="space-y-2 text-sm text-white">
                   <p>PPE is classified into three categories based on risk:</p>
                   <ul className="space-y-1.5">
                     <li className="flex items-start gap-2">
@@ -1563,7 +1563,7 @@ const CscsCardModule2Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1579,7 +1579,7 @@ const CscsCardModule2Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-2">

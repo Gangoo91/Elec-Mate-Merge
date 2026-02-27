@@ -254,7 +254,7 @@ const HNCModule2Section2_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section2">
@@ -276,7 +276,7 @@ const HNCModule2Section2_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             System Curves and Operating Points
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Matching pumps to systems, parallel/series operation, and variable speed control
           </p>
         </header>
@@ -362,7 +362,7 @@ const HNCModule2Section2_6 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 H<sub>system</sub> = H<sub>static</sub> + KQ²
               </p>
-              <div className="text-xs text-white/70 mt-3">
+              <div className="text-xs text-white mt-3">
                 <p>
                   <strong>
                     H<sub>static</sub>
@@ -683,17 +683,17 @@ const HNCModule2Section2_6 = () => {
               <div className="grid grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">Throttling</p>
-                  <p className="text-white/70 text-xs">Pump at full speed</p>
+                  <p className="text-white text-xs">Pump at full speed</p>
                   <p className="text-red-400 text-xs">Poor efficiency</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">Bypass</p>
-                  <p className="text-white/70 text-xs">Constant flow pump</p>
+                  <p className="text-white text-xs">Constant flow pump</p>
                   <p className="text-red-400 text-xs">Wastes energy</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">VSD</p>
-                  <p className="text-white/70 text-xs">Speed matches load</p>
+                  <p className="text-white text-xs">Speed matches load</p>
                   <p className="text-green-400 text-xs">P ∝ N³ savings</p>
                 </div>
               </div>
@@ -806,7 +806,7 @@ const HNCModule2Section2_6 = () => {
                 <strong>Question:</strong> A closed-loop HVAC system requires 25m head at 20 l/s
                 design flow. Construct the system curve equation and find the head at 15 l/s.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Closed loop: H_static = 0 (no elevation head)</p>
                 <p className="mt-2">Using H = KQ² at design point:</p>
                 <p>25 = K × (20)²</p>
@@ -818,7 +818,7 @@ const HNCModule2Section2_6 = () => {
                 <p>
                   H = 0.0625 × (15)² = 0.0625 × 225 = <strong>14.1m</strong>
                 </p>
-                <p className="mt-2 text-white/60">→ Head reduces with square of flow reduction</p>
+                <p className="mt-2 text-white">→ Head reduces with square of flow reduction</p>
               </div>
             </div>
 
@@ -831,7 +831,7 @@ const HNCModule2Section2_6 = () => {
                 this system. If an identical second pump is started in parallel, estimate the new
                 total flow.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>System: H = 0.0625Q² (from Example 1)</p>
                 <p className="mt-2">Two identical pumps: combined flow = Q₁ + Q₂ at same head</p>
                 <p>At operating point, both pumps operate at same head</p>
@@ -843,7 +843,7 @@ const HNCModule2Section2_6 = () => {
                 <p className="mt-2">
                   New head: H = 0.0625 × (26)² ≈ <strong>42m</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → 44% flow increase, not 100% (due to parabolic system curve)
                 </p>
               </div>
@@ -857,7 +857,7 @@ const HNCModule2Section2_6 = () => {
                 <strong>Question:</strong> A pump runs at full speed consuming 4 kW. The system only
                 requires 60% of design flow. Compare power with throttling vs. VSD control.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Throttling control:</strong>
                 </p>
@@ -955,7 +955,7 @@ const HNCModule2Section2_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1001,7 +1001,7 @@ const HNCModule2Section2_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section2-5">

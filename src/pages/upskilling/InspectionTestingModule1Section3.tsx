@@ -222,7 +222,7 @@ const InspectionTestingModule1Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-1">
@@ -244,7 +244,7 @@ const InspectionTestingModule1Section3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Test Equipment and Calibration
           </h1>
-          <p className="text-white/80">Understanding the instruments used for electrical testing</p>
+          <p className="text-white">Understanding the instruments used for electrical testing</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -323,14 +323,14 @@ const InspectionTestingModule1Section3 = () => {
             <div className="my-6 grid sm:grid-cols-2 gap-4">
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-1">Multifunction Tester</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   The primary instrument - combines continuity, insulation, loop impedance, RCD, and
                   other tests
                 </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-1">Voltage Indicator</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Two-pole tester for safe isolation verification - essential safety equipment
                 </p>
               </div>
@@ -338,13 +338,13 @@ const InspectionTestingModule1Section3 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-1">
                   Insulation Resistance Tester
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Dedicated high-voltage DC tester for insulation testing (often part of MFT)
                 </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-elec-yellow/80 mb-1">Proving Unit</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Provides known voltage source to verify voltage indicators work correctly
                 </p>
               </div>
@@ -399,7 +399,7 @@ const InspectionTestingModule1Section3 = () => {
                       <th className="text-right py-2 text-elec-yellow">Typical Range</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/5">
                       <td className="py-2">Continuity (low ohms)</td>
                       <td className="text-right">0.01Ω - 2000Ω</td>
@@ -434,19 +434,19 @@ const InspectionTestingModule1Section3 = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <div className="text-center">
                   <p className="text-white font-semibold text-sm">Megger</p>
-                  <p className="text-xs text-white/50">MFT series</p>
+                  <p className="text-xs text-white">MFT series</p>
                 </div>
                 <div className="text-center">
                   <p className="text-white font-semibold text-sm">Fluke</p>
-                  <p className="text-xs text-white/50">1660 series</p>
+                  <p className="text-xs text-white">1660 series</p>
                 </div>
                 <div className="text-center">
                   <p className="text-white font-semibold text-sm">Metrel</p>
-                  <p className="text-xs text-white/50">Eurotest series</p>
+                  <p className="text-xs text-white">Eurotest series</p>
                 </div>
                 <div className="text-center">
                   <p className="text-white font-semibold text-sm">Kewtech</p>
-                  <p className="text-xs text-white/50">KT series</p>
+                  <p className="text-xs text-white">KT series</p>
                 </div>
               </div>
             </div>
@@ -481,7 +481,7 @@ const InspectionTestingModule1Section3 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">UKAS Accreditation</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 <strong>UKAS</strong> (United Kingdom Accreditation Service) is the national
                 accreditation body. UKAS accredited calibration provides:
               </p>
@@ -495,7 +495,7 @@ const InspectionTestingModule1Section3 = () => {
 
             <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20 my-6">
               <p className="text-white font-semibold">Recommended: 12 months</p>
-              <p className="text-sm text-white/80 mt-1">
+              <p className="text-sm text-white mt-1">
                 More frequent if heavily used, damaged, or readings suspected to be incorrect
               </p>
             </div>
@@ -544,8 +544,8 @@ const InspectionTestingModule1Section3 = () => {
               <p className="text-white font-semibold mb-2">
                 Prove-Test-Prove for Voltage Indicators
               </p>
-              <p className="text-sm text-white/80 mb-2">Critical Safety Procedure:</p>
-              <ol className="text-sm text-white/80 space-y-1 ml-4">
+              <p className="text-sm text-white mb-2">Critical Safety Procedure:</p>
+              <ol className="text-sm text-white space-y-1 ml-4">
                 <li>
                   1. <strong>PROVE</strong> the indicator works on a known live source (proving
                   unit)
@@ -580,7 +580,7 @@ const InspectionTestingModule1Section3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Measurement Uncertainty
               </p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 When a tester displays 0.45Ω for a loop impedance, the true value might be anywhere
                 within a range (e.g., 0.42Ω to 0.48Ω) depending on the instrument's accuracy
                 specification.
@@ -591,7 +591,7 @@ const InspectionTestingModule1Section3 = () => {
               <p className="text-sm font-medium text-white mb-2">
                 Example: Comparing to Maximum Zs
               </p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 If the maximum Zs for a circuit is 1.44Ω and your reading is 1.40Ω, you need to
                 consider uncertainty. With ±5% accuracy, the true value could be up to 1.47Ω -
                 potentially exceeding the limit.
@@ -600,7 +600,7 @@ const InspectionTestingModule1Section3 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">The 80% Rule</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 GN3 recommends using{' '}
                 <strong className="text-elec-yellow">80% of the maximum permitted value</strong> as
                 the comparison point during testing. This provides a safety margin for:
@@ -633,20 +633,20 @@ const InspectionTestingModule1Section3 = () => {
               <div className="space-y-3">
                 <div>
                   <p className="text-elec-yellow font-semibold text-sm">CAT IV - Utility Origin</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Connection between utility and service entrance. Highest transient overvoltages.
                   </p>
                 </div>
                 <div>
                   <p className="text-elec-yellow font-semibold text-sm">CAT III - Distribution</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Fixed installation distribution boards. Suitable for most electrical testing
                     work.
                   </p>
                 </div>
                 <div>
                   <p className="text-elec-yellow font-semibold text-sm">CAT II - Local Level</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Appliance level, portable equipment. Lower transient energy.
                   </p>
                 </div>
@@ -654,7 +654,7 @@ const InspectionTestingModule1Section3 = () => {
                   <p className="text-elec-yellow font-semibold text-sm">
                     CAT I - Protected Electronic
                   </p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Signal level electronics. Not suitable for mains voltage testing.
                   </p>
                 </div>
@@ -669,7 +669,7 @@ const InspectionTestingModule1Section3 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">GS38 Requirements</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 HSE Guidance Note GS38 specifies requirements for test equipment:
               </p>
               <ul className="text-sm text-white space-y-1 ml-4 mt-2">
@@ -734,7 +734,7 @@ const InspectionTestingModule1Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -758,7 +758,7 @@ const InspectionTestingModule1Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-1/section-2">

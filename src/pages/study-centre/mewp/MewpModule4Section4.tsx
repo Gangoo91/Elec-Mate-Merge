@@ -220,7 +220,7 @@ export default function MewpModule4Section4() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Exclusion Zones, Traffic Management &amp; Banksman Duties
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Controlling the area around MEWP operations to protect operators, ground personnel, and
             the public
           </p>
@@ -417,7 +417,7 @@ export default function MewpModule4Section4() {
                 <div className="space-y-3 text-sm">
                   <div>
                     <h4 className="font-semibold text-white mb-1">Physical Barriers</h4>
-                    <ul className="text-white/80 space-y-1">
+                    <ul className="text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>
@@ -442,7 +442,7 @@ export default function MewpModule4Section4() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-white mb-1">Signage</h4>
-                    <ul className="text-white/80 space-y-1">
+                    <ul className="text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>"Danger — overhead work" signs at all entry points to the zone</span>
@@ -455,7 +455,7 @@ export default function MewpModule4Section4() {
                   </div>
                   <div>
                     <h4 className="font-semibold text-white mb-1">Banksman Enforcement</h4>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       A trained banksman physically present to prevent unauthorised entry and direct
                       pedestrians and vehicles away from the zone.
                     </p>
@@ -498,7 +498,7 @@ export default function MewpModule4Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Zone Must Be Maintained Throughout</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The exclusion zone must be maintained for the{' '}
                   <strong className="text-white">entire duration</strong> of the MEWP operation —
                   from the moment the machine is positioned to the moment it is fully stowed (boom
@@ -528,7 +528,7 @@ export default function MewpModule4Section4() {
 
               <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
                 <h3 className="text-purple-300 font-medium mb-3">Public Highways</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Any MEWP operation on or adjacent to a public highway requires a formal traffic
                   management plan:
                 </p>
@@ -563,12 +563,12 @@ export default function MewpModule4Section4() {
                 <h3 className="font-semibold mb-2 text-purple-300">
                   Chapter 8 — Traffic Signs Manual
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Chapter 8 of the Traffic Signs Manual (published by the Department for Transport)
                   sets out the requirements for signing, lighting, and guarding at road works and
                   temporary situations on all public highways. Key requirements include:
                 </p>
-                <ul className="text-white/80 space-y-1.5 text-sm">
+                <ul className="text-white space-y-1.5 text-sm">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-300/60 flex-shrink-0" />
                     <span>
@@ -608,7 +608,7 @@ export default function MewpModule4Section4() {
 
               <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
                 <h3 className="text-purple-300 font-medium mb-3">Site Roads</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   For MEWP operations on construction sites or private premises with vehicle
                   movements:
                 </p>
@@ -789,7 +789,7 @@ export default function MewpModule4Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">No Distractions</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The banksman must <strong className="text-white">NOT</strong> use a mobile phone,
                   read documents, or engage in any activity that diverts their attention while on
                   duty. A momentary distraction can result in a person entering the exclusion zone
@@ -802,7 +802,7 @@ export default function MewpModule4Section4() {
                 <h3 className="text-teal-300 font-medium mb-3">
                   Standard Hand Signals for MEWP Operations
                 </h3>
-                <p className="text-white/80 text-sm mb-4">
+                <p className="text-white text-sm mb-4">
                   The following signals must be agreed between operator and banksman before the
                   operation begins. Only one person should give signals to the operator at any time.
                 </p>
@@ -810,32 +810,32 @@ export default function MewpModule4Section4() {
                   <div className="bg-teal-500/10 border border-teal-400/30 p-3 rounded-lg text-centre">
                     <div className="text-2xl mb-1">👍</div>
                     <p className="font-semibold text-teal-300 text-sm">RAISE</p>
-                    <p className="text-white/60 text-xs">Thumbs up</p>
+                    <p className="text-white text-xs">Thumbs up</p>
                   </div>
                   <div className="bg-teal-500/10 border border-teal-400/30 p-3 rounded-lg text-centre">
                     <div className="text-2xl mb-1">👎</div>
                     <p className="font-semibold text-teal-300 text-sm">LOWER</p>
-                    <p className="text-white/60 text-xs">Thumbs down</p>
+                    <p className="text-white text-xs">Thumbs down</p>
                   </div>
                   <div className="bg-teal-500/10 border border-teal-400/30 p-3 rounded-lg text-centre">
                     <div className="text-2xl mb-1">👉</div>
                     <p className="font-semibold text-teal-300 text-sm">TRAVEL</p>
-                    <p className="text-white/60 text-xs">Arm extended, pointing direction</p>
+                    <p className="text-white text-xs">Arm extended, pointing direction</p>
                   </div>
                   <div className="bg-yellow-500/10 border border-yellow-400/30 p-3 rounded-lg text-centre">
                     <div className="text-2xl mb-1">✋</div>
                     <p className="font-semibold text-yellow-300 text-sm">STOP</p>
-                    <p className="text-white/60 text-xs">Flat palm facing operator</p>
+                    <p className="text-white text-xs">Flat palm facing operator</p>
                   </div>
                   <div className="bg-teal-500/10 border border-teal-400/30 p-3 rounded-lg text-centre">
                     <div className="text-2xl mb-1">🔄</div>
                     <p className="font-semibold text-teal-300 text-sm">SLEW</p>
-                    <p className="text-white/60 text-xs">Circular arm motion</p>
+                    <p className="text-white text-xs">Circular arm motion</p>
                   </div>
                   <div className="bg-red-500/10 border border-red-400/30 p-3 rounded-lg text-centre">
                     <div className="text-2xl mb-1">🙌</div>
                     <p className="font-semibold text-red-300 text-sm">EMERGENCY STOP</p>
-                    <p className="text-white/60 text-xs">Both arms waving above head</p>
+                    <p className="text-white text-xs">Both arms waving above head</p>
                   </div>
                 </div>
               </div>
@@ -939,27 +939,27 @@ export default function MewpModule4Section4() {
                   <h3 className="font-semibold text-red-300">Emergency Signals</h3>
                 </div>
                 <div className="space-y-3 text-sm">
-                  <p className="text-white/80">
+                  <p className="text-white">
                     The following emergency signals must be known by all personnel involved in the
                     MEWP operation:
                   </p>
                   <div className="grid sm:grid-cols-2 gap-3">
                     <div className="bg-red-500/10 border border-red-400/30 p-3 rounded-lg">
                       <p className="font-semibold text-red-300 mb-1">EMERGENCY STOP</p>
-                      <p className="text-white/80 text-xs">
+                      <p className="text-white text-xs">
                         Both arms waving above head ={' '}
                         <strong className="text-white">STOP ALL OPERATIONS IMMEDIATELY</strong>
                       </p>
                     </div>
                     <div className="bg-yellow-500/10 border border-yellow-400/30 p-3 rounded-lg">
                       <p className="font-semibold text-yellow-300 mb-1">EMERGENCY ATTENTION</p>
-                      <p className="text-white/80 text-xs">
+                      <p className="text-white text-xs">
                         Whistle or horn blast ={' '}
                         <strong className="text-white">ATTENTION — LOOK FOR FURTHER SIGNALS</strong>
                       </p>
                     </div>
                   </div>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     In noisy environments where hand signals cannot be seen, a whistle or air horn
                     should be available to attract attention before giving the emergency stop
                     signal. All personnel must know that any person on site — not just the banksman
@@ -1029,7 +1029,7 @@ export default function MewpModule4Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">One Third of Rental Accidents</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Industry data shows that approximately{' '}
                   <strong className="text-white">one third</strong> of all MEWP accidents reported
                   by rental companies occur during the delivery and collection phase. Common
@@ -1132,7 +1132,7 @@ export default function MewpModule4Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Never Stand Between</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   <strong className="text-white">
                     Never stand between the MEWP and the transport vehicle
                   </strong>{' '}
@@ -1372,7 +1372,7 @@ export default function MewpModule4Section4() {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-elec-yellow">Remember</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   This checklist is a summary — not a replacement for the detailed risk assessment
                   and method statement. Every operation is different, and the specific controls will
                   vary depending on the machine type, site conditions, and nature of the work. Use
@@ -1397,7 +1397,7 @@ export default function MewpModule4Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1416,7 +1416,7 @@ export default function MewpModule4Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-4">

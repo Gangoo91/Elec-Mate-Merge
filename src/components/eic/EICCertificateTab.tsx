@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
 import SectionHeader from '@/components/ui/section-header';
+import SectionTitle from '@/components/ui/SectionTitle';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -39,54 +40,6 @@ interface EICCertificateTabProps {
   onSaveDraft: () => void;
   canGenerateCertificate: boolean;
 }
-
-// Reusable glass card component
-const GlassCard = ({
-  children,
-  className,
-  color = 'white',
-}: {
-  children: React.ReactNode;
-  className?: string;
-  color?: string;
-}) => {
-  const borderColors: Record<string, string> = {
-    white: 'border-white/[0.08]',
-    amber: 'border-amber-500/20',
-    green: 'border-green-500/20',
-    purple: 'border-purple-500/20',
-  };
-
-  return (
-    <div
-      className={cn(
-        'rounded-xl bg-white/[0.02] backdrop-blur-sm border p-5',
-        borderColors[color] || borderColors.white,
-        className
-      )}
-    >
-      {children}
-    </div>
-  );
-};
-
-// Sub-section header component
-const SubSectionHeader = ({
-  icon: Icon,
-  title,
-  color,
-}: {
-  icon: any;
-  title: string;
-  color: string;
-}) => (
-  <div className="flex items-center gap-2.5 mb-4">
-    <div className={cn('p-1.5 rounded-lg', `bg-${color}/10`)}>
-      <Icon className={cn('h-4 w-4', `text-${color}`)} />
-    </div>
-    <h4 className={cn('text-sm font-semibold', `text-${color}`)}>{title}</h4>
-  </div>
-);
 
 const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
   formData,
@@ -292,14 +245,25 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
   };
 
   return (
-    <div className="space-y-5">
+    <div className={cn('space-y-5', isMobile && '-mx-4')}>
       {/* Report Authorised For Issue By */}
-      <div className="eicr-section-card">
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible
           open={openSections.reportAuthorised}
           onOpenChange={() => toggleSection('reportAuthorised')}
         >
-          <CollapsibleTrigger className="w-full">
+          {isMobile ? (
+            <CollapsibleTrigger className="w-full">
+              <SectionTitle
+                icon={Award}
+                title="Report Authorisation"
+                color="amber"
+                isOpen={openSections.reportAuthorised}
+                badge={`${getCompletionPercentage('reportAuthorised')}% complete`}
+                isMobile={isMobile}
+              />
+            </CollapsibleTrigger>
+          ) : (
             <SectionHeader
               title="Report Authorisation"
               icon={Award}
@@ -307,12 +271,12 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
               color="amber-500"
               completionPercentage={getCompletionPercentage('reportAuthorised')}
             />
-          </CollapsibleTrigger>
+          )}
           <CollapsibleContent>
             <div
               className={cn(
                 'p-4 sm:p-5 space-y-5',
-                isMobile && 'px-3' // Slightly tighter padding on mobile for wider content
+                isMobile && 'px-3'
               )}
             >
               {/* Quick Fill Buttons */}
@@ -331,9 +295,12 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
                 </Button>
               </div>
 
-              {/* Signatory Details Card */}
-              <GlassCard color="amber">
-                <SubSectionHeader icon={User} title="Authorising Person" color="amber-400" />
+              {/* Signatory Details */}
+              <div className="space-y-4">
+                <h4 className="text-sm font-semibold text-amber-400 flex items-center gap-2 border-b border-white/10 pb-2">
+                  <User className="h-4 w-4" />
+                  Authorising Person
+                </h4>
                 <div className="space-y-5">
                   {/* Name & Date Row */}
                   <div className="grid grid-cols-1 gap-5">
@@ -347,7 +314,7 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
                         }
                         placeholder="FULL NAME IN CAPITALS"
                         className={cn(
-                          'uppercase h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl',
+                          'uppercase h-11 text-base touch-manipulation',
                           !formData.reportAuthorisedByName && 'border-red-500/30'
                         )}
                       />
@@ -361,7 +328,7 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
                           onUpdate('reportAuthorisedByForOnBehalfOf', e.target.value)
                         }
                         placeholder="Company or organisation"
-                        className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl"
+                        className="h-11 text-base touch-manipulation"
                       />
                     </div>
                   </div>
@@ -374,7 +341,7 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
                       value={formData.reportAuthorisedByPosition || ''}
                       onChange={(e) => onUpdate('reportAuthorisedByPosition', e.target.value)}
                       placeholder="Job title or position"
-                      className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl"
+                      className="h-11 text-base touch-manipulation"
                     />
                   </div>
 
@@ -387,7 +354,7 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
                       value={formData.reportAuthorisedByAddress || ''}
                       onChange={(e) => onUpdate('reportAuthorisedByAddress', e.target.value)}
                       placeholder="Full business address"
-                      className="text-base touch-manipulation min-h-[70px] bg-white/[0.03] border-white/10 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl"
+                      className="text-base touch-manipulation min-h-[70px]"
                     />
                   </div>
 
@@ -400,7 +367,7 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
                         value={formData.reportAuthorisedByPostcode || ''}
                         onChange={(e) => onUpdate('reportAuthorisedByPostcode', e.target.value)}
                         placeholder="AB1 2CD"
-                        className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl"
+                        className="h-11 text-base touch-manipulation"
                       />
                     </div>
                     <div className="space-y-2.5">
@@ -411,7 +378,7 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
                         value={formData.reportAuthorisedByPhone || ''}
                         onChange={(e) => onUpdate('reportAuthorisedByPhone', e.target.value)}
                         placeholder="Phone number"
-                        className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl"
+                        className="h-11 text-base touch-manipulation"
                       />
                     </div>
                     <div className="space-y-2.5">
@@ -422,7 +389,7 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
                         value={formData.reportAuthorisedByDate || ''}
                         onChange={(e) => onUpdate('reportAuthorisedByDate', e.target.value)}
                         className={cn(
-                          'h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl',
+                          'h-11 text-base touch-manipulation',
                           !formData.reportAuthorisedByDate && 'border-red-500/30'
                         )}
                       />
@@ -437,38 +404,48 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
                       value={formData.reportAuthorisedByMembershipNo || ''}
                       onChange={(e) => onUpdate('reportAuthorisedByMembershipNo', e.target.value)}
                       placeholder="Membership or registration number"
-                      className="h-12 text-base touch-manipulation bg-white/[0.03] border-white/10 focus:border-amber-500 focus:ring-amber-500/20 rounded-xl"
+                      className="h-11 text-base touch-manipulation"
                     />
                   </div>
                 </div>
-              </GlassCard>
+              </div>
 
-              {/* Signature Card */}
-              <GlassCard color="amber">
-                <SubSectionHeader
-                  icon={PenTool}
-                  title="Authorising Signature *"
-                  color="amber-400"
-                />
+              {/* Signature */}
+              <div className="space-y-4">
+                <h4 className="text-sm font-semibold text-amber-400 flex items-center gap-2 border-b border-white/10 pb-2">
+                  <PenTool className="h-4 w-4" />
+                  Authorising Signature *
+                </h4>
                 <SignatureInput
                   value={formData.reportAuthorisedBySignature || ''}
                   onChange={(value) => onUpdate('reportAuthorisedBySignature', value || '')}
                   placeholder="Signature of authorising person"
                   required={true}
                 />
-              </GlassCard>
+              </div>
             </div>
           </CollapsibleContent>
         </Collapsible>
       </div>
 
       {/* Compliance Declarations */}
-      <div className="eicr-section-card">
+      <div className={cn(isMobile ? '' : 'eicr-section-card')}>
         <Collapsible
           open={openSections.compliance}
           onOpenChange={() => toggleSection('compliance')}
         >
-          <CollapsibleTrigger className="w-full">
+          {isMobile ? (
+            <CollapsibleTrigger className="w-full">
+              <SectionTitle
+                icon={Shield}
+                title="Compliance Declarations"
+                color="green"
+                isOpen={openSections.compliance}
+                badge={`${getCompletionPercentage('compliance')}% complete`}
+                isMobile={isMobile}
+              />
+            </CollapsibleTrigger>
+          ) : (
             <SectionHeader
               title="Compliance Declarations"
               icon={Shield}
@@ -476,16 +453,15 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
               color="green-500"
               completionPercentage={getCompletionPercentage('compliance')}
             />
-          </CollapsibleTrigger>
+          )}
           <CollapsibleContent>
             <div className="p-4 sm:p-5 space-y-5">
               {/* Compliance Checkboxes */}
-              <GlassCard color="green">
-                <SubSectionHeader
-                  icon={BadgeCheck}
-                  title="Compliance Confirmations"
-                  color="green-400"
-                />
+              <div className="space-y-4">
+                <h4 className="text-sm font-semibold text-green-400 flex items-center gap-2 border-b border-white/10 pb-2">
+                  <BadgeCheck className="h-4 w-4" />
+                  Compliance Confirmations
+                </h4>
                 <div className="space-y-4">
                   {/* BS 7671 Compliance - Required */}
                   <label
@@ -506,7 +482,7 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
                       <span className="text-sm font-medium text-white block">
                         BS 7671 Compliance *
                       </span>
-                      <span className="text-xs text-white/70 block leading-relaxed">
+                      <span className="text-xs text-white block leading-relaxed">
                         Installation complies with BS 7671:2018 (18th Edition) and Amendment 2
                       </span>
                     </div>
@@ -531,7 +507,7 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
                       <span className="text-sm font-medium text-white block">
                         Building Regulations Compliance
                       </span>
-                      <span className="text-xs text-white/70 block leading-relaxed">
+                      <span className="text-xs text-white block leading-relaxed">
                         Installation complies with Building Regulations (Part P where applicable)
                       </span>
                     </div>
@@ -556,17 +532,20 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
                       <span className="text-sm font-medium text-white block">
                         Competent Person Scheme
                       </span>
-                      <span className="text-xs text-white/70 block leading-relaxed">
+                      <span className="text-xs text-white block leading-relaxed">
                         Work carried out under a registered Competent Person Scheme
                       </span>
                     </div>
                   </label>
                 </div>
-              </GlassCard>
+              </div>
 
-              {/* Additional Notes Card */}
-              <GlassCard color="white">
-                <SubSectionHeader icon={FileText} title="Additional Notes" color="white" />
+              {/* Additional Notes */}
+              <div className="space-y-4">
+                <h4 className="text-sm font-semibold text-white flex items-center gap-2 border-b border-white/10 pb-2">
+                  <FileText className="h-4 w-4" />
+                  Additional Notes
+                </h4>
                 <div className="space-y-2.5">
                   <Label className="text-sm text-white">Comments & Observations</Label>
                   <Textarea
@@ -575,10 +554,10 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
                     value={formData.additionalNotes || ''}
                     onChange={(e) => onUpdate('additionalNotes', e.target.value)}
                     rows={3}
-                    className="text-base touch-manipulation min-h-[100px] bg-white/[0.03] border-white/10 focus:border-elec-yellow focus:ring-elec-yellow/20 rounded-xl"
+                    className="text-base touch-manipulation min-h-[100px]"
                   />
                 </div>
-              </GlassCard>
+              </div>
             </div>
           </CollapsibleContent>
         </Collapsible>
@@ -586,21 +565,21 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
 
       {/* Validation Summary */}
       {allComplete ? (
-        <GlassCard className="border-green-500/30 bg-green-500/10">
+        <div className={cn('border-green-500/30 bg-green-500/10 border rounded-xl p-5', isMobile && 'mx-4')}>
           <div className="flex gap-3">
             <div className="p-2 rounded-lg bg-green-500/20 h-fit">
               <CheckCircle className="h-5 w-5 text-green-400" />
             </div>
             <div>
               <p className="text-sm font-medium text-green-300 mb-1">Certificate Ready</p>
-              <p className="text-xs text-white/70">
+              <p className="text-xs text-white">
                 All sections complete. You can now generate the EIC.
               </p>
             </div>
           </div>
-        </GlassCard>
+        </div>
       ) : (
-        <GlassCard className="border-amber-500/30 bg-amber-500/10">
+        <div className={cn('border-amber-500/30 bg-amber-500/10 border rounded-xl p-5', isMobile && 'mx-4')}>
           <div className="flex gap-3">
             <div className="p-2 rounded-lg bg-amber-500/20 h-fit">
               <AlertTriangle className="h-5 w-5 text-amber-400" />
@@ -609,13 +588,13 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
               <p className="text-sm font-medium text-amber-300 mb-2">Incomplete Sections</p>
               <ul className="space-y-1.5">
                 {!isReportAuthorisedComplete && (
-                  <li className="text-xs text-white/70 flex items-center gap-2">
+                  <li className="text-xs text-white flex items-center gap-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
                     Complete authorisation with name, date, and signature
                   </li>
                 )}
                 {!isComplianceComplete && (
-                  <li className="text-xs text-white/70 flex items-center gap-2">
+                  <li className="text-xs text-white flex items-center gap-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
                     Confirm BS 7671 compliance declaration
                   </li>
@@ -623,17 +602,19 @@ const EICCertificateTab: React.FC<EICCertificateTabProps> = ({
               </ul>
             </div>
           </div>
-        </GlassCard>
+        </div>
       )}
 
       {/* Certificate Actions */}
-      <EICCertificateActions
-        formData={formData}
-        reportId={reportId}
-        onGenerateCertificate={onGenerateCertificate}
-        onSaveDraft={onSaveDraft}
-        onUpdate={onUpdate}
-      />
+      <div className={cn(isMobile && 'px-4')}>
+        <EICCertificateActions
+          formData={formData}
+          reportId={reportId}
+          onGenerateCertificate={onGenerateCertificate}
+          onSaveDraft={onSaveDraft}
+          onUpdate={onUpdate}
+        />
+      </div>
     </div>
   );
 };

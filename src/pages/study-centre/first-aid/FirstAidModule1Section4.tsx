@@ -198,7 +198,7 @@ export default function FirstAidModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-1">
@@ -221,7 +221,7 @@ export default function FirstAidModule1Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             First Aid Kits, Equipment &amp; Workplace Planning
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             BS 8599-1:2019 kit contents, high-risk additions, AED provision, first aid rooms,
             signage requirements, needs assessments and restocking procedures
           </p>
@@ -301,7 +301,7 @@ export default function FirstAidModule1Section4() {
                 <p className="text-sm font-medium text-rose-400 mb-2">
                   Key Change in 2019 Revision
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The 2019 revision added burn dressings, foil blankets, and a CPR face shield to
                   all kit sizes. It also replaced latex gloves with{' '}
                   <strong className="text-white">nitrile gloves</strong> to avoid allergic
@@ -328,21 +328,21 @@ export default function FirstAidModule1Section4() {
 
                 {/* Table Header */}
                 <div className="grid grid-cols-4 gap-0 border-b border-white/10 text-xs font-semibold">
-                  <div className="p-2 sm:p-3 text-white/60">Item</div>
+                  <div className="p-2 sm:p-3 text-white">Item</div>
                   <div className="p-2 sm:p-3 text-center text-green-400 border-l border-white/10">
                     Small
                     <br />
-                    <span className="text-white/40 font-normal">(1&ndash;25)</span>
+                    <span className="text-white font-normal">(1&ndash;25)</span>
                   </div>
                   <div className="p-2 sm:p-3 text-center text-amber-400 border-l border-white/10">
                     Medium
                     <br />
-                    <span className="text-white/40 font-normal">(25&ndash;100)</span>
+                    <span className="text-white font-normal">(25&ndash;100)</span>
                   </div>
                   <div className="p-2 sm:p-3 text-center text-red-400 border-l border-white/10">
                     Large
                     <br />
-                    <span className="text-white/40 font-normal">(100+)</span>
+                    <span className="text-white font-normal">(100+)</span>
                   </div>
                 </div>
 
@@ -370,14 +370,14 @@ export default function FirstAidModule1Section4() {
                     key={i}
                     className={`grid grid-cols-4 gap-0 text-xs sm:text-sm ${i % 2 === 0 ? 'bg-white/[0.02]' : ''} ${i < 16 ? 'border-b border-white/5' : ''}`}
                   >
-                    <div className="p-2 sm:p-3 text-white/80">{row.item}</div>
-                    <div className="p-2 sm:p-3 text-center text-white/70 border-l border-white/5">
+                    <div className="p-2 sm:p-3 text-white">{row.item}</div>
+                    <div className="p-2 sm:p-3 text-center text-white border-l border-white/5">
                       {row.small}
                     </div>
-                    <div className="p-2 sm:p-3 text-center text-white/70 border-l border-white/5">
+                    <div className="p-2 sm:p-3 text-center text-white border-l border-white/5">
                       {row.medium}
                     </div>
-                    <div className="p-2 sm:p-3 text-center text-white/70 border-l border-white/5">
+                    <div className="p-2 sm:p-3 text-center text-white border-l border-white/5">
                       {row.large}
                     </div>
                   </div>
@@ -386,7 +386,7 @@ export default function FirstAidModule1Section4() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-400 mb-2">Important Notes</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -443,7 +443,7 @@ export default function FirstAidModule1Section4() {
                     <Shield className="h-5 w-5 text-red-400" />
                     <p className="text-sm font-medium text-red-400">Tourniquets</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -475,7 +475,7 @@ export default function FirstAidModule1Section4() {
                     <Shield className="h-5 w-5 text-purple-400" />
                     <p className="text-sm font-medium text-purple-400">Haemostatic Dressings</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -509,7 +509,7 @@ export default function FirstAidModule1Section4() {
                       <Eye className="h-5 w-5 text-blue-400" />
                       <p className="text-sm font-medium text-blue-400">Additional Eye Wash</p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>500ml sterile eye wash bottles</span>
@@ -535,7 +535,7 @@ export default function FirstAidModule1Section4() {
                         Additional Burn Dressings
                       </p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Larger burn dressings (20&times;20cm or gel-soaked sheets)</span>
@@ -554,7 +554,7 @@ export default function FirstAidModule1Section4() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-3">Other High-Risk Additions</p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -609,7 +609,7 @@ export default function FirstAidModule1Section4() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-400 mb-2">Legal Position</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   There is <strong className="text-white">no legal requirement</strong> for
                   employers to provide an AED. However, the HSE strongly recommends AED provision as
                   part of workplace first aid arrangements. Early defibrillation within the first
@@ -621,14 +621,14 @@ export default function FirstAidModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Public Access AEDs</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Many communities, public buildings, and workplaces now have public access
                   defibrillators (PADs) registered on{' '}
                   <strong className="text-white">The Circuit</strong> &mdash; a national database
                   managed by the British Heart Foundation. When you call 999, the ambulance service
                   can direct you to the nearest registered AED.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -655,10 +655,10 @@ export default function FirstAidModule1Section4() {
                   <ClipboardList className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">AED Maintenance Requirements</p>
                 </div>
-                <p className="text-sm text-white/60 mb-3">
+                <p className="text-sm text-white mb-3">
                   AEDs require regular maintenance to ensure they are ready for use in an emergency:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -708,7 +708,7 @@ export default function FirstAidModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Designated AED Guardian</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Every workplace AED should have a designated &ldquo;AED guardian&rdquo; &mdash; a
                   named person responsible for monthly checks, maintaining the maintenance log,
                   ordering replacement pads and batteries, and ensuring the AED is registered on The
@@ -739,11 +739,11 @@ export default function FirstAidModule1Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   When Is a First Aid Room Required?
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   A first aid room should be provided where the first aid needs assessment
                   identifies the need. This is typically the case in the following situations:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -773,10 +773,10 @@ export default function FirstAidModule1Section4() {
                 <p className="text-sm font-medium text-rose-400 mb-3">
                   Required Contents (HSE L74)
                 </p>
-                <p className="text-sm text-white/60 mb-3">
+                <p className="text-sm text-white mb-3">
                   A first aid room must contain the following as a minimum:
                 </p>
-                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-rose-400/70 mt-0.5 flex-shrink-0" />
                     <span>
@@ -816,7 +816,7 @@ export default function FirstAidModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Additional Considerations</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -884,7 +884,7 @@ export default function FirstAidModule1Section4() {
                     </div>
                   </div>
                 </div>
-                <p className="text-xs text-white/60 text-center">
+                <p className="text-xs text-white text-center">
                   Green background with white cross &mdash; the internationally recognised first aid
                   symbol
                 </p>
@@ -897,28 +897,28 @@ export default function FirstAidModule1Section4() {
                     <p className="text-sm font-medium text-green-400 mb-1">
                       First Aid Kit Location
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Green sign with white cross, positioned above or adjacent to the kit so it is
                       visible from all approaches
                     </p>
                   </div>
                   <div className="bg-green-500/10 border border-green-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-green-400 mb-1">First Aid Room</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Green sign on or above the door, with directional signs at key decision points
                       throughout the building
                     </p>
                   </div>
                   <div className="bg-green-500/10 border border-green-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-green-400 mb-1">First Aid Personnel</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Name and location of trained first aiders displayed in a prominent position
                       (notice boards, welfare areas)
                     </p>
                   </div>
                   <div className="bg-green-500/10 border border-green-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-green-400 mb-1">AED Location</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Green sign with AED/heart symbol, visible from all approaches. Many sites also
                       display the green heart symbol with a lightning bolt
                     </p>
@@ -928,7 +928,7 @@ export default function FirstAidModule1Section4() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-400 mb-2">Signage Rules</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -989,10 +989,10 @@ export default function FirstAidModule1Section4() {
                     First Aid Needs Assessment Checklist
                   </p>
                 </div>
-                <p className="text-sm text-white/60 mb-3">
+                <p className="text-sm text-white mb-3">
                   The employer must consider the following factors:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1070,13 +1070,13 @@ export default function FirstAidModule1Section4() {
                   <Truck className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">Vehicle First Aid Kits</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Mobile workers, including electricians, should carry a travel first aid kit in
                   their vehicle. While there is no specific legal requirement for a vehicle first
                   aid kit, it is strongly recommended by the HSE and is considered best practice for
                   anyone who works away from a fixed base.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1118,11 +1118,11 @@ export default function FirstAidModule1Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Checking &amp; Restocking Kits
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Having a well-stocked kit that is never checked is as dangerous as having no kit
                   at all. A systematic approach to checking and restocking is essential:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1170,10 +1170,10 @@ export default function FirstAidModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Review Trigger Events</p>
                 </div>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   The first aid needs assessment must be reviewed and updated whenever:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>The nature of the work changes (new hazards introduced)</span>
@@ -1213,7 +1213,7 @@ export default function FirstAidModule1Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1227,7 +1227,7 @@ export default function FirstAidModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-1">

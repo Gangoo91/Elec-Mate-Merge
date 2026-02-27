@@ -218,7 +218,7 @@ const InspectionTestingModule3Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/inspection-testing-module-3">
@@ -240,7 +240,7 @@ const InspectionTestingModule3Section3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Main Bonding Conductor Testing
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Verify the critical connections that ensure metal services are at the same potential as
             earth
           </p>
@@ -420,11 +420,11 @@ const InspectionTestingModule3Section3 = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/10">
-                      <th className="text-left text-white/60 py-2 px-1">Earthing Conductor</th>
+                      <th className="text-left text-white py-2 px-1">Earthing Conductor</th>
                       <th className="text-center text-elec-yellow py-2 px-1">Min. Main Bonding</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/5">
                       <td className="py-2 px-1">Up to 10mm²</td>
                       <td className="text-center py-2 px-1 text-elec-yellow">6mm²</td>
@@ -448,7 +448,7 @@ const InspectionTestingModule3Section3 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-white/50 text-xs mt-2">
+              <p className="text-white text-xs mt-2">
                 Based on half the earthing conductor size, min 6mm², max 25mm²
               </p>
             </div>
@@ -459,12 +459,12 @@ const InspectionTestingModule3Section3 = () => {
                 <div className="p-3 rounded bg-green-500/10">
                   <p className="font-medium text-green-400 mb-1">With Protection</p>
                   <p className="text-white text-xl font-bold">2.5mm²</p>
-                  <p className="text-white/50 text-xs">If mechanically protected</p>
+                  <p className="text-white text-xs">If mechanically protected</p>
                 </div>
                 <div className="p-3 rounded bg-elec-yellow/10">
                   <p className="font-medium text-elec-yellow mb-1">Without Protection</p>
                   <p className="text-white text-xl font-bold">4mm²</p>
-                  <p className="text-white/50 text-xs">If not protected</p>
+                  <p className="text-white text-xs">If not protected</p>
                 </div>
               </div>
             </div>
@@ -520,15 +520,15 @@ const InspectionTestingModule3Section3 = () => {
               <p className="text-sm font-medium text-white mb-2">Expected Readings:</p>
               <div className="space-y-2">
                 <div className="flex items-center justify-between p-3 rounded-lg bg-green-500/10">
-                  <span className="text-white/80 text-sm">Short bonding conductor (1-2m)</span>
+                  <span className="text-white text-sm">Short bonding conductor (1-2m)</span>
                   <span className="text-green-400 font-medium">{'<'}0.05Ω</span>
                 </div>
                 <div className="flex items-center justify-between p-3 rounded-lg bg-green-500/10">
-                  <span className="text-white/80 text-sm">Longer runs (up to 10m)</span>
+                  <span className="text-white text-sm">Longer runs (up to 10m)</span>
                   <span className="text-green-400 font-medium">{'<'}0.2Ω</span>
                 </div>
                 <div className="flex items-center justify-between p-3 rounded-lg bg-amber-500/10">
-                  <span className="text-white/80 text-sm">Any reading above 0.5Ω</span>
+                  <span className="text-white text-sm">Any reading above 0.5Ω</span>
                   <span className="text-amber-400 font-medium">Investigate!</span>
                 </div>
               </div>
@@ -564,7 +564,7 @@ const InspectionTestingModule3Section3 = () => {
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/10 text-center">
               <p className="font-bold text-sm text-[#1a1a1a]">SAFETY ELECTRICAL CONNECTION</p>
               <p className="font-bold text-sm text-[#1a1a1a]">DO NOT REMOVE</p>
-              <p className="text-white/60 text-xs mt-2">
+              <p className="text-white text-xs mt-2">
                 This label must be fitted at each main bonding connection point
               </p>
             </div>
@@ -617,12 +617,12 @@ const InspectionTestingModule3Section3 = () => {
                 <table className="w-full text-sm font-mono">
                   <thead>
                     <tr className="border-b border-white/10">
-                      <th className="text-left py-1 text-white/60">Service</th>
-                      <th className="text-center py-1 text-white/60">CSA</th>
-                      <th className="text-center py-1 text-white/60">Continuity</th>
+                      <th className="text-left py-1 text-white">Service</th>
+                      <th className="text-center py-1 text-white">CSA</th>
+                      <th className="text-center py-1 text-white">Continuity</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/5">
                       <td className="py-1">Water</td>
                       <td className="text-center py-1">10mm²</td>
@@ -718,7 +718,7 @@ const InspectionTestingModule3Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -764,7 +764,7 @@ const InspectionTestingModule3Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../section-2">

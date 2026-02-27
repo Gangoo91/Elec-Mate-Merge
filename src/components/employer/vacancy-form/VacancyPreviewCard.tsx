@@ -74,7 +74,7 @@ export function VacancyPreviewCard({
                 <Briefcase className="h-5 w-5 text-elec-yellow" />
               </div>
               <div>
-                <p className="text-sm text-white/60">{companyName}</p>
+                <p className="text-sm text-white">{companyName}</p>
                 <Badge variant="outline" className="text-xs border-green-500/30 text-green-400">
                   Direct from Employer
                 </Badge>
@@ -85,7 +85,7 @@ export function VacancyPreviewCard({
             <h3 className="text-xl font-semibold text-white">{title || 'Job Title'}</h3>
 
             {/* Key details */}
-            <div className="flex flex-wrap items-center gap-3 text-sm text-white/60">
+            <div className="flex flex-wrap items-center gap-3 text-sm text-white">
               {location && (
                 <span className="flex items-center gap-1">
                   <MapPin className="h-4 w-4" />
@@ -121,7 +121,7 @@ export function VacancyPreviewCard({
         {/* Requirements */}
         {requirements.length > 0 && (
           <div className="space-y-2">
-            <p className="text-sm font-medium text-white/80">Requirements</p>
+            <p className="text-sm font-medium text-white">Requirements</p>
             <div className="flex flex-wrap gap-2">
               {requirements.slice(0, 6).map((req) => (
                 <Badge
@@ -145,7 +145,7 @@ export function VacancyPreviewCard({
         {/* Benefits */}
         {benefits.length > 0 && (
           <div className="space-y-2">
-            <p className="text-sm font-medium text-white/80">Benefits</p>
+            <p className="text-sm font-medium text-white">Benefits</p>
             <div className="flex flex-wrap gap-2">
               {benefits.slice(0, 5).map((benefit) => (
                 <Badge
@@ -168,9 +168,9 @@ export function VacancyPreviewCard({
         {/* Description preview */}
         {description && (
           <div className="space-y-2">
-            <p className="text-sm font-medium text-white/80">About the Role</p>
+            <p className="text-sm font-medium text-white">About the Role</p>
             <div
-              className="text-sm text-white/60 line-clamp-4 prose prose-invert prose-sm max-w-none"
+              className="text-sm text-white line-clamp-4 prose prose-invert prose-sm max-w-none"
               dangerouslySetInnerHTML={{
                 __html: description.substring(0, 300) + (description.length > 300 ? '...' : ''),
               }}
@@ -179,7 +179,7 @@ export function VacancyPreviewCard({
         )}
 
         {/* Footer info */}
-        <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-white/10 text-xs text-white/50">
+        <div className="flex flex-wrap items-center gap-4 pt-4 border-t border-white/10 text-xs text-white">
           {schedule && (
             <span className="flex items-center gap-1">
               <Clock className="h-3.5 w-3.5" />

@@ -101,7 +101,7 @@ const RegulationValidationControls: React.FC<RegulationValidationControlsProps> 
           </div>
           <div>
             <h3 className="regulation-title">BS 7671 Regulation Validation</h3>
-            <p className="text-xs text-white/50">Automated compliance checking</p>
+            <p className="text-xs text-white">Automated compliance checking</p>
           </div>
         </div>
 
@@ -185,7 +185,7 @@ const RegulationValidationControls: React.FC<RegulationValidationControlsProps> 
             <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-3">
               <div className="flex items-start gap-3">
                 <span className="text-elec-yellow text-lg">💡</span>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   Regulation status indicators are now visible in the table. Click the shield icon
                   on circuits with issues to review details.
                 </p>

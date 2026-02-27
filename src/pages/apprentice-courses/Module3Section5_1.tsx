@@ -199,7 +199,7 @@ export default function Module3Section5_1() {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Understanding External Influences (BS 7671 Overview)
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Master BS 7671 external influence classification codes, environmental assessment, and
             their critical impact on electrical installation design and equipment selection.
           </p>
@@ -868,7 +868,7 @@ export default function Module3Section5_1() {
             Summary
           </h2>
           <div className="rounded-lg p-4 bg-elec-yellow/10 border-l-2 border-l-elec-yellow border border-elec-yellow/30">
-            <p className="text-white/90">
+            <p className="text-white">
               External influences, as defined by BS 7671, are environmental and operational factors
               that impact electrical installations. Understanding the three-category classification
               system and applying appropriate codes in design and installation ensures safety,

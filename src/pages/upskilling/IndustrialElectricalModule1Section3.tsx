@@ -204,7 +204,7 @@ const IndustrialElectricalModule1Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/industrial-electrical-module-1">
@@ -226,7 +226,7 @@ const IndustrialElectricalModule1Section3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             MCC Panels and Switchgear Intro
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Motor Control Centres, switchgear selection, bus bar systems, and arc flash safety
           </p>
         </header>
@@ -333,7 +333,7 @@ const IndustrialElectricalModule1Section3 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Fixed vs Withdrawable Units</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Withdrawable units allow circuit breakers and starters to be racked into test,
                 isolated, or removed positions without affecting adjacent units. This reduces
                 downtime and improves safety during maintenance. Fixed units are more economical but
@@ -526,7 +526,7 @@ const IndustrialElectricalModule1Section3 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">IEC 61850 Benefits</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 IEC 61850 provides standardised data modelling, high-speed peer-to-peer GOOSE
                 messaging for protection schemes, and sampled values for digital instrument
                 transformers. This enables faster fault clearance, reduced wiring, and improved
@@ -676,7 +676,7 @@ const IndustrialElectricalModule1Section3 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Primary Injection Testing</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Primary injection tests verify that circuit breakers trip at the correct current
                 values by injecting high current through the main contacts. This tests the complete
                 protection system including CTs, wiring, and trip units. Typically performed during
@@ -782,7 +782,7 @@ const IndustrialElectricalModule1Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -801,7 +801,7 @@ const IndustrialElectricalModule1Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/industrial-electrical-module-1">

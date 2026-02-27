@@ -272,7 +272,7 @@ const Level3Module6Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section4">
@@ -344,31 +344,31 @@ const Level3Module6Section4_2 = () => {
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm">
                 <div className="p-2 bg-white/5 rounded">
                   <span className="font-mono text-elec-yellow/80">0</span>
-                  <p className="text-white/80 text-xs">No protection</p>
+                  <p className="text-white text-xs">No protection</p>
                 </div>
                 <div className="p-2 bg-white/5 rounded">
                   <span className="font-mono text-elec-yellow/80">1</span>
-                  <p className="text-white/80 text-xs">Objects greater than 50mm</p>
+                  <p className="text-white text-xs">Objects greater than 50mm</p>
                 </div>
                 <div className="p-2 bg-white/5 rounded">
                   <span className="font-mono text-elec-yellow/80">2</span>
-                  <p className="text-white/80 text-xs">Objects greater than 12.5mm (fingers)</p>
+                  <p className="text-white text-xs">Objects greater than 12.5mm (fingers)</p>
                 </div>
                 <div className="p-2 bg-white/5 rounded">
                   <span className="font-mono text-elec-yellow/80">3</span>
-                  <p className="text-white/80 text-xs">Objects greater than 2.5mm (tools)</p>
+                  <p className="text-white text-xs">Objects greater than 2.5mm (tools)</p>
                 </div>
                 <div className="p-2 bg-white/5 rounded">
                   <span className="font-mono text-elec-yellow/80">4</span>
-                  <p className="text-white/80 text-xs">Objects greater than 1mm (wires)</p>
+                  <p className="text-white text-xs">Objects greater than 1mm (wires)</p>
                 </div>
                 <div className="p-2 bg-white/5 rounded">
                   <span className="font-mono text-elec-yellow/80">5</span>
-                  <p className="text-white/80 text-xs">Dust protected (limited ingress)</p>
+                  <p className="text-white text-xs">Dust protected (limited ingress)</p>
                 </div>
                 <div className="p-2 bg-white/5 rounded">
                   <span className="font-mono text-elec-yellow/80">6</span>
-                  <p className="text-white/80 text-xs">Dust tight (no ingress)</p>
+                  <p className="text-white text-xs">Dust tight (no ingress)</p>
                 </div>
               </div>
             </div>
@@ -380,39 +380,39 @@ const Level3Module6Section4_2 = () => {
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm">
                 <div className="p-2 bg-white/5 rounded">
                   <span className="font-mono text-elec-yellow/80">0</span>
-                  <p className="text-white/80 text-xs">No protection</p>
+                  <p className="text-white text-xs">No protection</p>
                 </div>
                 <div className="p-2 bg-white/5 rounded">
                   <span className="font-mono text-elec-yellow/80">1</span>
-                  <p className="text-white/80 text-xs">Vertical dripping water</p>
+                  <p className="text-white text-xs">Vertical dripping water</p>
                 </div>
                 <div className="p-2 bg-white/5 rounded">
                   <span className="font-mono text-elec-yellow/80">2</span>
-                  <p className="text-white/80 text-xs">Dripping at 15 degree tilt</p>
+                  <p className="text-white text-xs">Dripping at 15 degree tilt</p>
                 </div>
                 <div className="p-2 bg-white/5 rounded">
                   <span className="font-mono text-elec-yellow/80">3</span>
-                  <p className="text-white/80 text-xs">Spraying water (60 degree angle)</p>
+                  <p className="text-white text-xs">Spraying water (60 degree angle)</p>
                 </div>
                 <div className="p-2 bg-white/5 rounded">
                   <span className="font-mono text-elec-yellow/80">4</span>
-                  <p className="text-white/80 text-xs">Splashing from all directions</p>
+                  <p className="text-white text-xs">Splashing from all directions</p>
                 </div>
                 <div className="p-2 bg-white/5 rounded">
                   <span className="font-mono text-elec-yellow/80">5</span>
-                  <p className="text-white/80 text-xs">Low pressure water jets</p>
+                  <p className="text-white text-xs">Low pressure water jets</p>
                 </div>
                 <div className="p-2 bg-white/5 rounded">
                   <span className="font-mono text-elec-yellow/80">6</span>
-                  <p className="text-white/80 text-xs">High pressure water jets</p>
+                  <p className="text-white text-xs">High pressure water jets</p>
                 </div>
                 <div className="p-2 bg-white/5 rounded">
                   <span className="font-mono text-elec-yellow/80">7</span>
-                  <p className="text-white/80 text-xs">Temporary immersion (1m, 30 mins)</p>
+                  <p className="text-white text-xs">Temporary immersion (1m, 30 mins)</p>
                 </div>
                 <div className="p-2 bg-white/5 rounded">
                   <span className="font-mono text-elec-yellow/80">8</span>
-                  <p className="text-white/80 text-xs">Continuous immersion</p>
+                  <p className="text-white text-xs">Continuous immersion</p>
                 </div>
               </div>
             </div>
@@ -450,7 +450,7 @@ const Level3Module6Section4_2 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                   UV-Vulnerable Materials
                 </p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Standard white PVC conduit</li>
                   <li>White or light-coloured cable sheaths</li>
                   <li>Standard cable ties (especially white)</li>
@@ -462,7 +462,7 @@ const Level3Module6Section4_2 = () => {
                 <p className="text-sm font-medium text-green-400/80 mb-2">
                   UV-Resistant Alternatives
                 </p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Black UV-stabilised conduit</li>
                   <li>Black or grey LSF/LSZH cables</li>
                   <li>UV-resistant (black) cable ties</li>
@@ -478,7 +478,7 @@ const Level3Module6Section4_2 = () => {
               conduit and cable ties are specified for outdoor use rather than white alternatives.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A garden lighting installation uses white PVC conduit for
               cable protection. After three summers of sun exposure, the conduit becomes yellow and
               brittle. A section cracks during routine gardening, exposing the cable. The correct
@@ -514,12 +514,12 @@ const Level3Module6Section4_2 = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 pr-4 text-white/80">Location</th>
-                      <th className="text-left py-2 pr-4 text-white/80">Minimum IP (closed)</th>
-                      <th className="text-left py-2 text-white/80">Notes</th>
+                      <th className="text-left py-2 pr-4 text-white">Location</th>
+                      <th className="text-left py-2 pr-4 text-white">Minimum IP (closed)</th>
+                      <th className="text-left py-2 text-white">Notes</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/90">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2 pr-4">Covered/sheltered</td>
                       <td className="py-2 pr-4 font-mono">IP44</td>
@@ -550,7 +550,7 @@ const Level3Module6Section4_2 = () => {
               <p className="text-sm font-medium text-white mb-2">
                 Additional Outdoor Equipment Considerations:
               </p>
-              <ul className="text-sm text-white/90 space-y-1 ml-4">
+              <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Use lockable enclosures in public or accessible areas</li>
                 <li>Specify IK-rated enclosures where impact damage is possible</li>
                 <li>Include adequate drainage for any condensation</li>
@@ -591,7 +591,7 @@ const Level3Module6Section4_2 = () => {
                   <p className="font-medium text-elec-yellow/80 mb-1">
                     Private land (gardens, drives)
                   </p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>Minimum: 450mm</li>
                     <li>Recommended: 600mm</li>
                     <li>Under patios/drives: 500mm+</li>
@@ -599,7 +599,7 @@ const Level3Module6Section4_2 = () => {
                 </div>
                 <div className="p-3 bg-white/5 rounded">
                   <p className="font-medium text-elec-yellow/80 mb-1">Public/agricultural land</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>Footpaths: 600mm+</li>
                     <li>Roads: 750mm+</li>
                     <li>Agricultural: 1000mm</li>
@@ -610,7 +610,7 @@ const Level3Module6Section4_2 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Installation Procedure:</p>
-              <ul className="text-sm text-white/90 space-y-1 ml-4">
+              <ul className="text-sm text-white space-y-1 ml-4">
                 <li>1. Excavate trench to required depth plus 50-100mm for sand bed</li>
                 <li>2. Lay 50mm sand or fine soil bed (free of stones/sharp objects)</li>
                 <li>3. Install cable with appropriate slack for thermal movement</li>
@@ -714,7 +714,7 @@ const Level3Module6Section4_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -757,7 +757,7 @@ const Level3Module6Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section4-4-1">

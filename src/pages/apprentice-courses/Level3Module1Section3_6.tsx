@@ -274,7 +274,7 @@ const Level3Module1Section3_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section3">
@@ -364,7 +364,7 @@ const Level3Module1Section3_6 = () => {
 
             <div className="my-6 p-4 rounded bg-white/5 border-l-2 border-elec-yellow">
               <p className="text-sm font-medium text-elec-yellow mb-2">The Principle</p>
-              <ul className="text-sm text-white/90 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>
                   <strong>Normal:</strong> 10A flows out on line, 10A returns on neutral = 0
                   residual = no trip
@@ -384,13 +384,13 @@ const Level3Module1Section3_6 = () => {
               <p className="text-sm font-medium text-red-400 mb-2">
                 What RCDs Don't Protect Against:
               </p>
-              <ul className="text-sm text-white/90 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>Line-to-neutral faults (overcurrent, but no earth leakage)</li>
                 <li>Touching both line and neutral simultaneously</li>
                 <li>Overloading (too much current - but balanced)</li>
                 <li>Short circuits between line and neutral</li>
               </ul>
-              <p className="text-sm text-white/90 mt-2">
+              <p className="text-sm text-white mt-2">
                 This is why RCDs must work alongside MCBs/fuses for complete protection.
               </p>
             </div>
@@ -423,7 +423,7 @@ const Level3Module1Section3_6 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Type AC</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   Detects sinusoidal AC residual currents only. The most basic type. Not suitable
                   for circuits with electronic equipment that might produce pulsating DC fault
                   currents.
@@ -431,7 +431,7 @@ const Level3Module1Section3_6 = () => {
               </div>
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Type A</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   Detects sinusoidal AC AND pulsating DC residual currents. Required for circuits
                   with electronic equipment (computers, dimmers, EV chargers using certain
                   topologies). Most common in modern installations.
@@ -439,7 +439,7 @@ const Level3Module1Section3_6 = () => {
               </div>
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Type B</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   Detects AC, pulsating DC, AND smooth DC residual currents. Required for
                   three-phase equipment with DC components (certain EV chargers, inverters, variable
                   speed drives).
@@ -449,7 +449,7 @@ const Level3Module1Section3_6 = () => {
                 <p className="text-sm font-medium text-elec-yellow mb-2">
                   Type S (or Time-Delayed)
                 </p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   Has a built-in delay (typically 40ms minimum at 5x rated). Used upstream to
                   provide discrimination - allows downstream instantaneous RCDs to trip first.
                 </p>
@@ -458,7 +458,7 @@ const Level3Module1Section3_6 = () => {
 
             <div className="my-6 p-4 rounded bg-white/5">
               <p className="text-sm font-medium text-white mb-2">Common Ratings</p>
-              <div className="grid grid-cols-3 gap-4 text-sm text-white/90">
+              <div className="grid grid-cols-3 gap-4 text-sm text-white">
                 <div>
                   <p className="font-medium text-elec-yellow">30mA</p>
                   <p>
@@ -477,7 +477,7 @@ const Level3Module1Section3_6 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Trade Tip:</strong> When specifying RCDs for EV charger circuits, check the
               charger manufacturer's requirements. Many Mode 3 chargers require Type A or Type B
               RCDs due to the DC components in their charging electronics.
@@ -506,7 +506,7 @@ const Level3Module1Section3_6 = () => {
             <div className="my-6 space-y-4">
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Test Button (User Test)</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Should be operated quarterly (every 3 months)</li>
                   <li>Simulates an earth fault by passing current through a resistor</li>
                   <li>Confirms the mechanical trip mechanism works</li>
@@ -519,7 +519,7 @@ const Level3Module1Section3_6 = () => {
                 <p className="text-sm font-medium text-elec-yellow mb-2">
                   Instrument Test (Formal Test)
                 </p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Performed at initial verification and periodic inspection</li>
                   <li>Tests at various percentages of rated current (typically 50%, 100%, 500%)</li>
                   <li>Measures actual trip time in milliseconds</li>
@@ -581,7 +581,7 @@ const Level3Module1Section3_6 = () => {
                 <p className="text-sm font-medium text-elec-yellow mb-2">
                   Achieving Discrimination
                 </p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Use RCBOs for individual circuits</li>
                   <li>Time-delayed (Type S) RCD at origin</li>
                   <li>Different ratings (30mA downstream, 100mA upstream)</li>
@@ -592,7 +592,7 @@ const Level3Module1Section3_6 = () => {
                 <p className="text-sm font-medium text-elec-yellow mb-2">
                   Causes of Nuisance Tripping
                 </p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Too many circuits on one RCD (cumulative leakage)</li>
                   <li>Long cable runs (capacitive leakage)</li>
                   <li>Equipment with RFI filters (intentional leakage)</li>
@@ -604,7 +604,7 @@ const Level3Module1Section3_6 = () => {
 
             <div className="my-6 p-4 rounded bg-white/5 border-l-2 border-elec-yellow">
               <p className="text-sm font-medium text-elec-yellow mb-2">Solving Nuisance Tripping</p>
-              <ul className="text-sm text-white/90 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>
                   <strong>Split circuits</strong> - divide load across multiple RCDs
                 </li>
@@ -627,14 +627,14 @@ const Level3Module1Section3_6 = () => {
 
             <div className="my-6 p-4 rounded bg-red-500/10 border border-red-500/20">
               <p className="text-sm font-medium text-red-400 mb-2">Never Do This:</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Never bypass an RCD or replace a 30mA with a higher rating to "solve" nuisance
                 tripping. This removes vital protection. Find and fix the actual cause. If users are
                 bypassing RCDs, there's a design problem that needs addressing properly.
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Trade Example:</strong> A kitchen circuits trips randomly. Investigation shows
               the dishwasher, washing machine, and fridge are all on one RCD. Each has a small
               filter capacitor causing 3-5mA leakage. Combined, they're near the trip threshold.
@@ -662,7 +662,7 @@ const Level3Module1Section3_6 = () => {
 
             <div className="my-6 p-4 rounded bg-white/5">
               <p className="text-sm font-medium text-elec-yellow mb-2">30mA RCD Required For:</p>
-              <ul className="text-sm text-white/90 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>Socket outlets rated up to 32A in domestic premises</li>
                 <li>
                   Socket outlets rated up to 32A in all other premises (with limited exceptions)
@@ -748,7 +748,7 @@ const Level3Module1Section3_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -799,7 +799,7 @@ const Level3Module1Section3_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section3-5">

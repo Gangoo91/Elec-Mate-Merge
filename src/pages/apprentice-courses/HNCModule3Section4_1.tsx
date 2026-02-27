@@ -210,7 +210,7 @@ const HNCModule3Section4_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section4">
@@ -232,7 +232,7 @@ const HNCModule3Section4_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Star and Delta Configurations
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             The two fundamental three-phase winding arrangements that underpin power distribution
             and motor control
           </p>
@@ -318,7 +318,7 @@ const HNCModule3Section4_1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">
                 Star Connection Diagram
               </p>
-              <div className="font-mono text-sm text-white/90 leading-relaxed">
+              <div className="font-mono text-sm text-white leading-relaxed">
                 <pre className="overflow-x-auto">
                   {`        L1 ───────┬────── Phase A winding
                   │
@@ -423,7 +423,7 @@ const HNCModule3Section4_1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">
                 Delta Connection Diagram
               </p>
-              <div className="font-mono text-sm text-white/90 leading-relaxed">
+              <div className="font-mono text-sm text-white leading-relaxed">
                 <pre className="overflow-x-auto">
                   {`                    L1
                     │
@@ -535,7 +535,7 @@ const HNCModule3Section4_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Line Quantities</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-4">
                     <li>Voltage between any two line conductors</li>
                     <li>Current flowing in the line conductor</li>
                     <li>What you measure at the supply terminals</li>
@@ -543,7 +543,7 @@ const HNCModule3Section4_1 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Phase Quantities</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-4">
                     <li>Voltage across one winding</li>
                     <li>Current flowing through one winding</li>
                     <li>What the load or source winding experiences</li>
@@ -595,7 +595,7 @@ const HNCModule3Section4_1 = () => {
               <p className="text-sm font-medium text-amber-300 mb-2">
                 Critical Point for Motor Nameplates
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 A motor rated <strong>230V/400V</strong> (D/Y) means: 230V delta OR 400V star. In
                 both cases, each winding sees 230V (phase voltage). The rating tells you which
                 connection to use depending on your supply voltage.
@@ -740,21 +740,21 @@ const HNCModule3Section4_1 = () => {
               <div className="grid sm:grid-cols-3 gap-4 text-center">
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-2">1. Star (Start)</p>
-                  <p className="text-sm text-white/90">Motor connected in star</p>
-                  <p className="text-xs text-white/60 mt-1">Winding voltage = 230V</p>
-                  <p className="text-xs text-white/60">Current = 1/3 of DOL</p>
+                  <p className="text-sm text-white">Motor connected in star</p>
+                  <p className="text-xs text-white mt-1">Winding voltage = 230V</p>
+                  <p className="text-xs text-white">Current = 1/3 of DOL</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-2">2. Transition</p>
-                  <p className="text-sm text-white/90">Timer (5-10 seconds)</p>
-                  <p className="text-xs text-white/60 mt-1">Motor accelerates to ~80% speed</p>
-                  <p className="text-xs text-white/60">Contactors changeover</p>
+                  <p className="text-sm text-white">Timer (5-10 seconds)</p>
+                  <p className="text-xs text-white mt-1">Motor accelerates to ~80% speed</p>
+                  <p className="text-xs text-white">Contactors changeover</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-2">3. Delta (Run)</p>
-                  <p className="text-sm text-white/90">Motor reconnected in delta</p>
-                  <p className="text-xs text-white/60 mt-1">Winding voltage = 400V</p>
-                  <p className="text-xs text-white/60">Full torque available</p>
+                  <p className="text-sm text-white">Motor reconnected in delta</p>
+                  <p className="text-xs text-white mt-1">Winding voltage = 400V</p>
+                  <p className="text-xs text-white">Full torque available</p>
                 </div>
               </div>
             </div>
@@ -807,7 +807,7 @@ const HNCModule3Section4_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-xs font-medium text-green-400 mb-1">Advantages</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-4">
                     <li>Starting current reduced to 1/3</li>
                     <li>Reduces voltage dip on supply</li>
                     <li>Simple, reliable, low cost</li>
@@ -816,7 +816,7 @@ const HNCModule3Section4_1 = () => {
                 </div>
                 <div>
                   <p className="text-xs font-medium text-red-400 mb-1">Limitations</p>
-                  <ul className="text-sm text-white/90 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-sm text-white space-y-1 list-disc list-outside ml-4">
                     <li>Starting torque also reduced to 1/3</li>
                     <li>Motor must have 6 terminals accessible</li>
                     <li>Transient current surge at changeover</li>
@@ -901,7 +901,7 @@ const HNCModule3Section4_1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">
                 Understanding Vector Groups
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 The designation <strong>Dyn11</strong> tells you everything about the transformer
                 connection:
               </p>
@@ -1044,7 +1044,7 @@ const HNCModule3Section4_1 = () => {
               <p className="text-sm font-medium text-amber-300 mb-2">
                 PME and Neutral-Earth Faults
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 In TN-C-S (PME) systems, loss of the combined neutral-earth (PEN) conductor can
                 cause dangerous voltages on exposed metalwork. BS 7671 requires additional
                 protective measures including main bonding and restrictions on PME connections to
@@ -1072,7 +1072,7 @@ const HNCModule3Section4_1 = () => {
                 Distribution System Design
               </p>
               <div className="p-4 rounded-lg bg-white/5">
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   A typical commercial building electrical distribution uses:
                 </p>
                 <ul className="text-sm text-white space-y-2 list-disc list-outside ml-5">
@@ -1152,7 +1152,7 @@ const HNCModule3Section4_1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Load Balancing in Star Systems
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Single-phase loads should be distributed evenly across the three phases to:
               </p>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
@@ -1161,7 +1161,7 @@ const HNCModule3Section4_1 = () => {
                 <li className="pl-1">Optimise transformer loading</li>
                 <li className="pl-1">Reduce cable heating</li>
               </ul>
-              <p className="text-sm text-white/70 mt-3">
+              <p className="text-sm text-white mt-3">
                 <strong>BS 7671 guidance:</strong> Where practicable, single-phase loads should be
                 distributed to achieve balance within 10-15% across phases.
               </p>
@@ -1171,7 +1171,7 @@ const HNCModule3Section4_1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Neutral Sizing for Non-Linear Loads
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Modern buildings with IT equipment, LED lighting, and VFDs generate significant
                 third harmonic currents. These add arithmetically in the neutral rather than
                 cancelling, potentially causing neutral current to exceed phase current. BS 7671
@@ -1207,7 +1207,7 @@ const HNCModule3Section4_1 = () => {
                 400V star-connected supply. Calculate the line voltage, phase voltage, and total
                 power (assuming unity power factor).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Line voltage VL = 400V (given)</p>
                 <p>
                   Phase voltage VP = VL / root3 = 400 / 1.732 = <strong>230.9V</strong>
@@ -1217,7 +1217,7 @@ const HNCModule3Section4_1 = () => {
                 <p>
                   P = 1.732 x 400 x 45 x 1 = <strong>31.2kW</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Or per phase: P = 3 x VP x IP = 3 x 230.9 x 45 = 31.2kW
                 </p>
               </div>
@@ -1231,7 +1231,7 @@ const HNCModule3Section4_1 = () => {
                 <strong>Question:</strong> A three-phase heater is delta-connected to a 400V supply
                 and draws 30A line current. Calculate the phase current and total power.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>In delta: VL = VP = 400V</p>
                 <p>Line current IL = 30A</p>
                 <p className="mt-2">
@@ -1241,7 +1241,7 @@ const HNCModule3Section4_1 = () => {
                 <p>
                   P = 1.732 x 400 x 30 x 1 = <strong>20.8kW</strong>
                 </p>
-                <p className="mt-2 text-white/60">(For resistive heater, pf = 1)</p>
+                <p className="mt-2 text-white">(For resistive heater, pf = 1)</p>
               </div>
             </div>
 
@@ -1254,7 +1254,7 @@ const HNCModule3Section4_1 = () => {
                 direct-on-line in delta. What starting current will it draw using star-delta
                 starting?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>DOL starting current (delta) = 180A</p>
                 <p className="mt-2">Star-delta reduction factor = 1/3</p>
                 <p>(Because voltage is 1/root3 and current is proportional to voltage)</p>
@@ -1264,7 +1264,7 @@ const HNCModule3Section4_1 = () => {
                 <p className="mt-2 text-green-400">
                   Current reduction = 180 - 60 = 120A (67% reduction)
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Note: Torque also reduces to 1/3, so motor must be lightly loaded during start
                 </p>
               </div>
@@ -1278,7 +1278,7 @@ const HNCModule3Section4_1 = () => {
                 <strong>Question:</strong> A motor nameplate shows 230V/400V (D/Y). Explain what
                 this means and how to connect it to a UK 400V supply.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>The rating 230V/400V (D/Y) means:</p>
                 <p className="mt-2">- Connect in Delta for 230V line supply (winding sees 230V)</p>
                 <p>- Connect in Star for 400V line supply (winding sees 400/root3 = 230V)</p>
@@ -1287,10 +1287,10 @@ const HNCModule3Section4_1 = () => {
                 </p>
                 <p className="mt-2">Each winding will receive: 400V / 1.732 = 230V</p>
                 <p className="text-green-400 mt-2">This matches the winding's rated voltage</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Star-delta starting: Start in Star, run in Delta would give
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   winding 133V during start - too low. Use correct rating motor.
                 </p>
               </div>
@@ -1388,7 +1388,7 @@ const HNCModule3Section4_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1434,7 +1434,7 @@ const HNCModule3Section4_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section3-7">

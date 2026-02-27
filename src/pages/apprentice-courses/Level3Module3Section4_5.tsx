@@ -226,7 +226,7 @@ const Level3Module3Section4_5 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="../section4">
@@ -249,7 +249,7 @@ const Level3Module3Section4_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
             Power in AC Circuits
           </h1>
-          <p className="text-lg text-white/70 max-w-2xl">
+          <p className="text-lg text-white max-w-2xl">
             True power, reactive power, apparent power and power factor - understanding the power
             triangle for electrical design
           </p>
@@ -265,7 +265,7 @@ const Level3Module3Section4_5 = () => {
                 <Zap className="w-4 h-4 text-green-400" />
                 <span className="text-sm font-medium text-green-400">True Power</span>
               </div>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 P = VI cos(phi) measured in Watts - actual work done
               </p>
             </CardContent>
@@ -276,7 +276,7 @@ const Level3Module3Section4_5 = () => {
                 <Calculator className="w-4 h-4 text-amber-400" />
                 <span className="text-sm font-medium text-amber-400">Reactive Power</span>
               </div>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 Q = VI sin(phi) measured in VAr - stored energy
               </p>
             </CardContent>
@@ -287,7 +287,7 @@ const Level3Module3Section4_5 = () => {
                 <Target className="w-4 h-4 text-purple-400" />
                 <span className="text-sm font-medium text-purple-400">Apparent Power</span>
               </div>
-              <p className="text-sm text-white/70">S = VI measured in VA - total supply power</p>
+              <p className="text-sm text-white">S = VI measured in VA - total supply power</p>
             </CardContent>
           </Card>
         </div>
@@ -304,7 +304,7 @@ const Level3Module3Section4_5 = () => {
               </div>
               <div>
                 <h2 className="text-lg font-semibold text-white mb-3">Learning Outcomes</h2>
-                <ul className="space-y-2 text-white/80">
+                <ul className="space-y-2 text-white">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
                     <span>
@@ -348,7 +348,7 @@ const Level3Module3Section4_5 = () => {
               </h2>
             </div>
 
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               In AC circuits containing reactive components, power is not simply voltage multiplied
               by current. The phase difference between voltage and current means energy flows in
               both directions during each cycle. Understanding the three types of power is essential
@@ -363,7 +363,7 @@ const Level3Module3Section4_5 = () => {
                 <div className="space-y-4">
                   <div className="p-4 bg-green-500/10 rounded-lg border border-green-500/20">
                     <h4 className="text-green-400 font-medium mb-2">True Power (P) - Watts</h4>
-                    <p className="text-white/80 text-sm mb-2">
+                    <p className="text-white text-sm mb-2">
                       The actual power consumed and converted to useful work or heat. Only resistive
                       elements consume true power. Also called active power or real power.
                     </p>
@@ -373,7 +373,7 @@ const Level3Module3Section4_5 = () => {
                   </div>
                   <div className="p-4 bg-amber-500/10 rounded-lg border border-amber-500/20">
                     <h4 className="text-amber-400 font-medium mb-2">Reactive Power (Q) - VAr</h4>
-                    <p className="text-white/80 text-sm mb-2">
+                    <p className="text-white text-sm mb-2">
                       Power stored in and released by reactive components each cycle. Inductors
                       store energy in magnetic fields, capacitors in electric fields. No net energy
                       is consumed.
@@ -384,7 +384,7 @@ const Level3Module3Section4_5 = () => {
                   </div>
                   <div className="p-4 bg-purple-500/10 rounded-lg border border-purple-500/20">
                     <h4 className="text-purple-400 font-medium mb-2">Apparent Power (S) - VA</h4>
-                    <p className="text-white/80 text-sm mb-2">
+                    <p className="text-white text-sm mb-2">
                       The total power that must be supplied by the source, combining true and
                       reactive power. Used for sizing cables, transformers and switchgear.
                     </p>
@@ -413,7 +413,7 @@ const Level3Module3Section4_5 = () => {
               <h2 className="text-xl font-semibold text-white m-0">Power Factor and Phase Angle</h2>
             </div>
 
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               Power factor is the ratio of true power to apparent power, indicating how efficiently
               the supply delivers useful power. It equals the cosine of the phase angle between
               voltage and current, ranging from 0 to 1.
@@ -426,14 +426,14 @@ const Level3Module3Section4_5 = () => {
                   <p className="text-white font-mono text-lg mb-2">
                     pf = cos(phi) = P / S = True Power / Apparent Power
                   </p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Where phi is the phase angle between voltage and current
                   </p>
                 </div>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="p-3 bg-white/5 rounded-lg">
                     <p className="text-white font-medium mb-2">Lagging Power Factor</p>
-                    <ul className="text-white/70 text-sm space-y-1">
+                    <ul className="text-white text-sm space-y-1">
                       <li>Current lags voltage</li>
                       <li>Inductive loads (motors, transformers)</li>
                       <li>Most common in industrial settings</li>
@@ -441,7 +441,7 @@ const Level3Module3Section4_5 = () => {
                   </div>
                   <div className="p-3 bg-white/5 rounded-lg">
                     <p className="text-white font-medium mb-2">Leading Power Factor</p>
-                    <ul className="text-white/70 text-sm space-y-1">
+                    <ul className="text-white text-sm space-y-1">
                       <li>Current leads voltage</li>
                       <li>Capacitive loads</li>
                       <li>Rare in practice, used for correction</li>
@@ -460,7 +460,7 @@ const Level3Module3Section4_5 = () => {
                       Power Factor Values in Practice
                     </h4>
                     <div className="grid md:grid-cols-2 gap-4 text-sm">
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <p className="font-medium text-white mb-1">Typical Load Power Factors:</p>
                         <ul className="space-y-1">
                           <li>Resistive heaters: 1.0</li>
@@ -469,7 +469,7 @@ const Level3Module3Section4_5 = () => {
                           <li>Fluorescent (compensated): 0.9</li>
                         </ul>
                       </div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <p className="font-medium text-white mb-1">Motor Power Factors:</p>
                         <ul className="space-y-1">
                           <li>Full load: 0.8 to 0.9</li>
@@ -501,7 +501,7 @@ const Level3Module3Section4_5 = () => {
               <h2 className="text-xl font-semibold text-white m-0">The Power Triangle</h2>
             </div>
 
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               The power triangle is a graphical representation showing the relationship between
               true, reactive and apparent power. It is derived from the impedance triangle and uses
               the same angle phi. This is an essential tool for power calculations.
@@ -532,13 +532,13 @@ const Level3Module3Section4_5 = () => {
                   </div>
                   <div className="p-4 bg-white/5 rounded-lg">
                     <h4 className="text-white font-medium mb-2">Worked Example</h4>
-                    <p className="text-white/70 text-sm mb-3">
+                    <p className="text-white text-sm mb-3">
                       A motor draws 5 kW at 0.8 power factor lagging. Find Q and S.
                     </p>
                     <div className="space-y-2 text-sm font-mono">
-                      <p className="text-white/80">S = P / pf = 5 / 0.8 = 6.25 kVA</p>
-                      <p className="text-white/80">phi = arccos(0.8) = 36.87 degrees</p>
-                      <p className="text-white/80">
+                      <p className="text-white">S = P / pf = 5 / 0.8 = 6.25 kVA</p>
+                      <p className="text-white">phi = arccos(0.8) = 36.87 degrees</p>
+                      <p className="text-white">
                         Q = S x sin(36.87) = 6.25 x 0.6 = 3.75 kVAr lagging
                       </p>
                       <p className="text-green-400 mt-2">
@@ -568,7 +568,7 @@ const Level3Module3Section4_5 = () => {
               <h2 className="text-xl font-semibold text-white m-0">Power Factor Correction</h2>
             </div>
 
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               Power factor correction (PFC) improves efficiency by reducing reactive power demand.
               Capacitors are connected in parallel with inductive loads to supply reactive power
               locally, reducing the current drawn from the supply.
@@ -582,7 +582,7 @@ const Level3Module3Section4_5 = () => {
                 <div className="bg-gradient-to-r from-blue-500/10 to-transparent p-4 rounded-lg border-l-4 border-blue-500 mb-4">
                   <p className="text-white font-medium mb-2">Required kVAr Correction:</p>
                   <p className="text-blue-300 font-mono mb-2">Qc = P x (tan(phi1) - tan(phi2))</p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Where phi1 is original angle, phi2 is target angle
                   </p>
                 </div>
@@ -590,18 +590,18 @@ const Level3Module3Section4_5 = () => {
                   <h4 className="text-white font-medium mb-2">
                     Worked Example: Industrial Installation
                   </h4>
-                  <p className="text-white/70 text-sm mb-3">
+                  <p className="text-white text-sm mb-3">
                     A factory has 150 kW load at 0.7 pf. Calculate capacitor kVAr to correct to 0.95
                     pf.
                   </p>
                   <div className="space-y-2 text-sm font-mono">
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Original: phi1 = arccos(0.7) = 45.57 degrees, tan(phi1) = 1.02
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Target: phi2 = arccos(0.95) = 18.19 degrees, tan(phi2) = 0.329
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Qc = 150 x (1.02 - 0.329) = 150 x 0.691 = 103.7 kVAr
                     </p>
                     <p className="text-green-400 mt-2">
@@ -620,7 +620,7 @@ const Level3Module3Section4_5 = () => {
                     <h4 className="text-amber-400 font-medium mb-2">
                       Power Factor Correction Considerations
                     </h4>
-                    <ul className="text-white/80 text-sm space-y-2">
+                    <ul className="text-white text-sm space-y-2">
                       <li>
                         <strong>Avoid over-correction:</strong> Leading power factor can cause
                         voltage rise and resonance
@@ -668,18 +668,18 @@ const Level3Module3Section4_5 = () => {
                         <h4 className="text-green-400 font-medium mb-2">
                           Three-Phase Power Calculations
                         </h4>
-                        <div className="text-sm text-white/80 space-y-2">
+                        <div className="text-sm text-white space-y-2">
                           <p className="font-mono">P = sqrt(3) x V_L x I_L x pf</p>
                           <p className="font-mono">P = 3 x V_ph x I_ph x pf</p>
                           <p className="font-mono">S = sqrt(3) x V_L x I_L</p>
-                          <p className="text-white/60 mt-2">
+                          <p className="text-white mt-2">
                             V_L = line voltage (400V), V_ph = phase voltage (230V)
                           </p>
                         </div>
                       </div>
                       <div className="p-4 bg-white/5 rounded-lg">
                         <h4 className="text-green-400 font-medium mb-2">BS 7671 Requirements</h4>
-                        <ul className="text-sm text-white/80 space-y-1">
+                        <ul className="text-sm text-white space-y-1">
                           <li>Maximum demand assessment must consider power factor</li>
                           <li>Diversity factors apply to apparent power (kVA)</li>
                           <li>Cable sizing uses design current including pf effect</li>
@@ -710,7 +710,7 @@ const Level3Module3Section4_5 = () => {
                       <span className="text-blue-400 font-bold shrink-0">Q:</span>
                       {faq.question}
                     </h3>
-                    <p className="text-white/70 text-sm ml-6">{faq.answer}</p>
+                    <p className="text-white text-sm ml-6">{faq.answer}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -737,7 +737,7 @@ const Level3Module3Section4_5 = () => {
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
                       <h4 className="text-white font-medium mb-3">Single-Phase Power</h4>
-                      <div className="space-y-2 text-sm font-mono text-white/80">
+                      <div className="space-y-2 text-sm font-mono text-white">
                         <p>P = V x I x cos(phi) [Watts]</p>
                         <p>Q = V x I x sin(phi) [VAr]</p>
                         <p>S = V x I [VA]</p>
@@ -746,7 +746,7 @@ const Level3Module3Section4_5 = () => {
                     </div>
                     <div>
                       <h4 className="text-white font-medium mb-3">Three-Phase Power</h4>
-                      <div className="space-y-2 text-sm font-mono text-white/80">
+                      <div className="space-y-2 text-sm font-mono text-white">
                         <p>P = sqrt(3) x V_L x I_L x pf</p>
                         <p>S = sqrt(3) x V_L x I_L</p>
                         <p>Q = sqrt(3) x V_L x I_L x sin(phi)</p>
@@ -755,7 +755,7 @@ const Level3Module3Section4_5 = () => {
                     </div>
                     <div>
                       <h4 className="text-white font-medium mb-3">Power Triangle</h4>
-                      <div className="space-y-2 text-sm font-mono text-white/80">
+                      <div className="space-y-2 text-sm font-mono text-white">
                         <p>S squared = P squared + Q squared</p>
                         <p>tan(phi) = Q / P</p>
                         <p>Qc = P x (tan(phi1) - tan(phi2))</p>
@@ -763,7 +763,7 @@ const Level3Module3Section4_5 = () => {
                     </div>
                     <div>
                       <h4 className="text-white font-medium mb-3">Common Power Factor Values</h4>
-                      <div className="space-y-2 text-sm text-white/80">
+                      <div className="space-y-2 text-sm text-white">
                         <p>Unity (resistive): 1.0</p>
                         <p>Industrial target: 0.95</p>
                         <p>Penalty threshold: 0.9</p>

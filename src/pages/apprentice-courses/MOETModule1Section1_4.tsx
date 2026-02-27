@@ -267,7 +267,7 @@ const MOETModule1Section1_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module1-section1">
@@ -289,7 +289,7 @@ const MOETModule1Section1_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Safe Access and Work at Height
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Preventing falls and managing access equipment for electrical maintenance at height
           </p>
         </header>
@@ -440,7 +440,7 @@ const MOETModule1Section1_4 = () => {
                   <span className="text-green-400 font-bold text-lg">1</span>
                   <div>
                     <p className="text-sm font-medium text-green-400">AVOID working at height</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Can the work be done from ground level? Use extendable tools, ground-level
                       assembly, prefabrication, or redesign the task to eliminate height work
                       entirely.
@@ -451,7 +451,7 @@ const MOETModule1Section1_4 = () => {
                   <span className="text-amber-400 font-bold text-lg">2</span>
                   <div>
                     <p className="text-sm font-medium text-amber-400">PREVENT falls</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Use collective protection: guardrails, scaffolds, working platforms, MEWPs.
                       These prevent the fall from happening and protect everyone in the area.
                     </p>
@@ -461,7 +461,7 @@ const MOETModule1Section1_4 = () => {
                   <span className="text-red-400 font-bold text-lg">3</span>
                   <div>
                     <p className="text-sm font-medium text-red-400">MITIGATE the consequences</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Use personal fall protection: safety harnesses and lanyards, safety nets,
                       airbags, soft-landing systems. These reduce injury severity after a fall
                       occurs.
@@ -750,7 +750,7 @@ const MOETModule1Section1_4 = () => {
               <div className="grid sm:grid-cols-2 gap-3 mt-3">
                 <div className="p-3 rounded bg-black/30">
                   <p className="text-xs font-medium text-red-400 mb-1">Common Fragile Materials</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Fibre-cement roof sheets (including asbestos cement)</li>
                     <li>Rooflights (GRP, polycarbonate, glass)</li>
                     <li>Liner panels on built-up metal roofs</li>
@@ -763,7 +763,7 @@ const MOETModule1Section1_4 = () => {
                   <p className="text-xs font-medium text-red-400 mb-1">
                     Electrical Maintenance Scenarios
                   </p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Accessing rooftop plant rooms — crossing fragile roofing</li>
                     <li>Working in ceiling voids — stepping off joists onto tiles</li>
                     <li>Rooftop PV installations — walking on fragile rooflights</li>
@@ -822,7 +822,7 @@ const MOETModule1Section1_4 = () => {
               <div className="grid sm:grid-cols-2 gap-3">
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Prevent Objects Falling</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Tool lanyards — attach tools to harness or platform</li>
                     <li>Toe boards on scaffolds (minimum 150mm high)</li>
                     <li>Brick guards or mesh panels on scaffold edges</li>
@@ -832,7 +832,7 @@ const MOETModule1Section1_4 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Protect People Below</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Exclusion zones — barriered areas below the work</li>
                     <li>Covered walkways — tunnel protection for pedestrians</li>
                     <li>Hard hats for all persons in the area</li>
@@ -877,7 +877,7 @@ const MOETModule1Section1_4 = () => {
               <div className="space-y-3">
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-1">Full Body Harness</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Distributes fall arrest forces across the thighs, pelvis, chest, and shoulders.
                     Must be correctly sized and adjusted to the individual wearer. The dorsal (back)
                     D-ring is the primary fall arrest attachment point. Front (sternal) D-rings are
@@ -886,7 +886,7 @@ const MOETModule1Section1_4 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-1">Connecting Lanyards</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     The link between the harness and the anchor point. Types include:
                     shock-absorbing lanyards (energy absorber deploys to limit fall arrest forces to
                     6kN maximum), retractable fall arresters (self-retracting lifelines), and
@@ -896,7 +896,7 @@ const MOETModule1Section1_4 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-1">Anchor Points</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Must be capable of withstanding the forces generated during fall arrest —
                     typically rated at 12kN for a single person. Types include: permanent roof
                     anchors, structural steelwork clamps, anchor slings around beams, and horizontal
@@ -988,7 +988,7 @@ const MOETModule1Section1_4 = () => {
                   <li className="pl-1">Previous fall arrest — remove from service</li>
                 </ul>
               </div>
-              <p className="text-xs text-white/60 mt-3">
+              <p className="text-xs text-white mt-3">
                 Any harness that has arrested a fall must be immediately removed from service and
                 returned to the manufacturer or a competent person for inspection. Internal damage
                 may not be visible.
@@ -1168,7 +1168,7 @@ const MOETModule1Section1_4 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>ST1426 link:</strong> The Maintenance and Operations Engineering Technician
               standard requires you to demonstrate competence in selecting and using access
               equipment, understanding work at height regulations, and conducting risk assessments
@@ -1233,7 +1233,7 @@ const MOETModule1Section1_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1252,7 +1252,7 @@ const MOETModule1Section1_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module1-section1-3">

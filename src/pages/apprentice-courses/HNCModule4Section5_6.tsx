@@ -222,7 +222,7 @@ const HNCModule4Section5_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section5">
@@ -244,7 +244,7 @@ const HNCModule4Section5_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Metering and Monitoring
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Enabling energy management through comprehensive measurement and analysis
           </p>
         </header>
@@ -697,7 +697,7 @@ const HNCModule4Section5_6 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Integration tip:</strong> Define the data points needed before specifying
               meters. Ensure communication capability matches BMS requirements and specify register
               maps early.
@@ -722,7 +722,7 @@ const HNCModule4Section5_6 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Design sub-metering for 3000m² office building.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Part L requirements for &gt;1000m² building:</p>
                 <p className="mt-2">Sub-meters required:</p>
                 <p>1. Lighting DB (general lighting) - 1 meter</p>
@@ -734,7 +734,7 @@ const HNCModule4Section5_6 = () => {
                 <p className="mt-2">
                   Minimum: <strong>6 sub-meters</strong>
                 </p>
-                <p className="text-white/60">Plus main fiscal meter</p>
+                <p className="text-white">Plus main fiscal meter</p>
               </div>
             </div>
 
@@ -745,7 +745,7 @@ const HNCModule4Section5_6 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Specify CTs for 800A main switchboard meter.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Main incomer rating: 800A</p>
                 <p>Maximum expected load: 650A (80% utilisation)</p>
                 <p className="mt-2">CT selection considerations:</p>
@@ -757,7 +757,7 @@ const HNCModule4Section5_6 = () => {
                 <p className="mt-2">
                   Recommendation: <strong>1000/5A Class 0.5</strong>
                 </p>
-                <p className="text-white/60">Allows 25% growth margin</p>
+                <p className="text-white">Allows 25% growth margin</p>
               </div>
             </div>
 
@@ -768,7 +768,7 @@ const HNCModule4Section5_6 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Integrate 10 power meters with BMS via Modbus.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Meters: 10 × multi-function meters</p>
                 <p>Protocol: Modbus RTU (RS-485)</p>
                 <p className="mt-2">Network design:</p>
@@ -845,7 +845,7 @@ const HNCModule4Section5_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -891,7 +891,7 @@ const HNCModule4Section5_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section5-5">

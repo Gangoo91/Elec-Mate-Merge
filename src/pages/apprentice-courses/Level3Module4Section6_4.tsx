@@ -259,7 +259,7 @@ const Level3Module4Section6_4 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section6">
@@ -285,7 +285,7 @@ const Level3Module4Section6_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
             Maintaining Professional Standards and Accountability
           </h1>
-          <p className="text-lg sm:text-xl text-white/70">
+          <p className="text-lg sm:text-xl text-white">
             Professional conduct, accountability and maintaining high standards in fault work
           </p>
         </header>
@@ -296,31 +296,31 @@ const Level3Module4Section6_4 = () => {
           <ul className="space-y-2 sm:space-y-3">
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/80 text-sm sm:text-base">
+              <span className="text-white text-sm sm:text-base">
                 Understand the legal and ethical framework governing electrical work
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/80 text-sm sm:text-base">
+              <span className="text-white text-sm sm:text-base">
                 Apply principles of accountability to your professional practice
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/80 text-sm sm:text-base">
+              <span className="text-white text-sm sm:text-base">
                 Maintain competence through continuing professional development
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/80 text-sm sm:text-base">
+              <span className="text-white text-sm sm:text-base">
                 Handle ethical dilemmas and professional conflicts appropriately
               </span>
             </li>
             <li className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-yellow-400 mt-0.5 flex-shrink-0" />
-              <span className="text-white/80 text-sm sm:text-base">
+              <span className="text-white text-sm sm:text-base">
                 Contribute positively to the electrical industry's reputation
               </span>
             </li>
@@ -337,7 +337,7 @@ const Level3Module4Section6_4 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
               Electrical work is governed by a comprehensive legal framework that establishes
               duties, standards, and accountability. Understanding this framework is essential for
               maintaining professional standards.
@@ -349,11 +349,11 @@ const Level3Module4Section6_4 = () => {
               <h4 className="text-white font-semibold mb-2">
                 Electricity at Work Regulations 1989
               </h4>
-              <p className="text-white/70 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 These regulations impose duties on employers, employees, and the self-employed to
                 prevent danger from electrical systems used in work activities:
               </p>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+              <ul className="list-disc pl-5 text-white text-sm space-y-1">
                 <li>Regulation 3: Duties to prevent danger from electrical equipment</li>
                 <li>Regulation 4: Systems to be constructed and maintained safely</li>
                 <li>Regulation 14: Working on dead equipment where reasonably practicable</li>
@@ -363,10 +363,10 @@ const Level3Module4Section6_4 = () => {
 
             <div className="bg-white/5 rounded-lg p-4 mb-4">
               <h4 className="text-white font-semibold mb-2">Health and Safety at Work Act 1974</h4>
-              <p className="text-white/70 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 The overarching health and safety legislation establishing:
               </p>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+              <ul className="list-disc pl-5 text-white text-sm space-y-1">
                 <li>Employers' duty to ensure health, safety, and welfare of employees</li>
                 <li>Employees' duty to take reasonable care and cooperate with safety measures</li>
                 <li>General duties to persons not in employment (public protection)</li>
@@ -376,10 +376,10 @@ const Level3Module4Section6_4 = () => {
 
             <div className="bg-white/5 rounded-lg p-4 mb-4">
               <h4 className="text-white font-semibold mb-2">Building Regulations</h4>
-              <p className="text-white/70 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 Part P of the Building Regulations (England) requires:
               </p>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+              <ul className="list-disc pl-5 text-white text-sm space-y-1">
                 <li>Electrical work in dwellings to meet safety requirements</li>
                 <li>Notifiable work to be certified by competent persons or building control</li>
                 <li>Design, installation, inspection, and testing to BS 7671</li>
@@ -388,10 +388,10 @@ const Level3Module4Section6_4 = () => {
             </div>
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Personal Liability</h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               Individual electricians can be held personally liable for:
             </p>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>
                 <strong>Criminal prosecution:</strong> For breaches of safety legislation
               </li>
@@ -426,7 +426,7 @@ const Level3Module4Section6_4 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
               Competence is fundamental to professional practice. It must be demonstrated initially
               and maintained throughout your career through continuing professional development and
               staying current with industry changes.
@@ -434,8 +434,8 @@ const Level3Module4Section6_4 = () => {
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">What is Competence?</h3>
             <div className="bg-gradient-to-r from-yellow-400/10 to-amber-500/10 rounded-lg p-4 border border-yellow-400/20 mb-4">
-              <p className="text-white/80 text-sm mb-3">Competence comprises:</p>
-              <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+              <p className="text-white text-sm mb-3">Competence comprises:</p>
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>
                   <strong>Knowledge:</strong> Understanding of principles, regulations, and
                   procedures
@@ -459,12 +459,12 @@ const Level3Module4Section6_4 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               Continuing Professional Development
             </h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               CPD is essential for maintaining competence as the industry evolves:
             </p>
 
             <div className="overflow-x-auto mb-6">
-              <table className="w-full text-sm text-white/80 border border-white/20">
+              <table className="w-full text-sm text-white border border-white/20">
                 <thead>
                   <tr className="bg-white/10">
                     <th className="border border-white/20 p-2 text-left">CPD Activity</th>
@@ -515,10 +515,10 @@ const Level3Module4Section6_4 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               Recognising Competence Boundaries
             </h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               Professional practice requires honest assessment of your capabilities:
             </p>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>Know the limits of your competence and don't exceed them</li>
               <li>Refer work outside your competence to appropriate specialists</li>
               <li>Seek guidance when encountering unfamiliar situations</li>
@@ -549,7 +549,7 @@ const Level3Module4Section6_4 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
               Professional ethics go beyond legal compliance to encompass the moral principles that
               guide professional conduct. Ethical practice builds trust, protects the public, and
               maintains the industry's reputation.
@@ -559,7 +559,7 @@ const Level3Module4Section6_4 = () => {
 
             <div className="bg-white/5 rounded-lg p-4 mb-4">
               <h4 className="text-white font-semibold mb-2">Honesty and Integrity</h4>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+              <ul className="list-disc pl-5 text-white text-sm space-y-1">
                 <li>Be truthful in all professional dealings</li>
                 <li>Accurately represent your qualifications and capabilities</li>
                 <li>Provide honest assessments and recommendations</li>
@@ -570,7 +570,7 @@ const Level3Module4Section6_4 = () => {
 
             <div className="bg-white/5 rounded-lg p-4 mb-4">
               <h4 className="text-white font-semibold mb-2">Public Safety</h4>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+              <ul className="list-disc pl-5 text-white text-sm space-y-1">
                 <li>Prioritise safety above commercial considerations</li>
                 <li>Never compromise safety for speed or profit</li>
                 <li>Report dangerous situations appropriately</li>
@@ -581,7 +581,7 @@ const Level3Module4Section6_4 = () => {
 
             <div className="bg-white/5 rounded-lg p-4 mb-4">
               <h4 className="text-white font-semibold mb-2">Professional Conduct</h4>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-1">
+              <ul className="list-disc pl-5 text-white text-sm space-y-1">
                 <li>Maintain appropriate professional boundaries</li>
                 <li>Treat customers, colleagues, and competitors with respect</li>
                 <li>Avoid conflicts of interest or disclose them appropriately</li>
@@ -591,12 +591,12 @@ const Level3Module4Section6_4 = () => {
             </div>
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Ethical Dilemmas</h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               Real-world situations often present competing considerations:
             </p>
             <div className="bg-gradient-to-r from-red-500/10 to-orange-500/10 rounded-lg p-4 border border-red-500/20 mb-4">
               <h4 className="text-white font-semibold mb-2">Common Ethical Challenges:</h4>
-              <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>
                   <strong>Customer pressure vs safety:</strong> Customer wants work done that would
                   be unsafe
@@ -621,8 +621,8 @@ const Level3Module4Section6_4 = () => {
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">
               Resolving Ethical Dilemmas
             </h3>
-            <p className="text-white/80 text-sm mb-3">When facing difficult decisions:</p>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <p className="text-white text-sm mb-3">When facing difficult decisions:</p>
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>Safety and legal compliance always take priority</li>
               <li>Consider what a reasonable, well-informed peer would do</li>
               <li>Document your reasoning and the decision made</li>
@@ -650,7 +650,7 @@ const Level3Module4Section6_4 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
               Accountability means taking responsibility for your work and its consequences. In
               practice, this involves proper documentation, standing behind your work, and
               addressing problems when they arise.
@@ -660,10 +660,10 @@ const Level3Module4Section6_4 = () => {
               Documentation and Records
             </h3>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
-              <p className="text-white/70 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 Proper records demonstrate accountability and protect your interests:
               </p>
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>Complete certificates accurately and honestly</li>
                 <li>Maintain records of all work undertaken</li>
                 <li>Document customer decisions and instructions</li>
@@ -678,7 +678,7 @@ const Level3Module4Section6_4 = () => {
             </h3>
             <div className="bg-gradient-to-r from-yellow-400/10 to-amber-500/10 rounded-lg p-4 border border-yellow-400/20 mb-4">
               <h4 className="text-white font-semibold mb-2">Professional Approach to Issues:</h4>
-              <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>
                   <strong>Respond promptly:</strong> Acknowledge complaints quickly and investigate
                 </li>
@@ -705,10 +705,10 @@ const Level3Module4Section6_4 = () => {
             </div>
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Insurance and Protection</h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               Professional accountability requires appropriate protection:
             </p>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>
                 <strong>Public liability insurance:</strong> Covers claims from third parties
               </li>
@@ -728,10 +728,10 @@ const Level3Module4Section6_4 = () => {
             </ul>
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Accountability to Others</h3>
-            <p className="text-white/80 text-sm mb-3">
+            <p className="text-white text-sm mb-3">
               You are accountable to multiple stakeholders:
             </p>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>
                 <strong>Customers:</strong> For quality, safety, and value of your work
               </li>
@@ -774,7 +774,7 @@ const Level3Module4Section6_4 = () => {
           </div>
 
           <div className="prose prose-invert max-w-none">
-            <p className="text-white/80 text-sm sm:text-base leading-relaxed mb-4">
+            <p className="text-white text-sm sm:text-base leading-relaxed mb-4">
               Professional electricians have a responsibility to contribute positively to the
               industry beyond individual work. Supporting apprentices, sharing knowledge, and
               maintaining standards benefits everyone.
@@ -782,7 +782,7 @@ const Level3Module4Section6_4 = () => {
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Supporting New Entrants</h3>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>Mentor apprentices and trainees</li>
                 <li>Share knowledge and experience generously</li>
                 <li>Provide constructive feedback that helps people improve</li>
@@ -792,9 +792,9 @@ const Level3Module4Section6_4 = () => {
             </div>
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Industry Engagement</h3>
-            <p className="text-white/80 text-sm mb-3">Ways to contribute to the wider industry:</p>
+            <p className="text-white text-sm mb-3">Ways to contribute to the wider industry:</p>
             <div className="bg-white/5 rounded-lg p-4 mb-4">
-              <ul className="list-disc pl-5 text-white/70 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>Join and participate in trade associations</li>
                 <li>Contribute to industry forums and discussions</li>
                 <li>Provide feedback on proposed regulatory changes</li>
@@ -809,7 +809,7 @@ const Level3Module4Section6_4 = () => {
             </h3>
             <div className="bg-gradient-to-r from-green-500/10 to-emerald-500/10 rounded-lg p-4 border border-green-500/20 mb-4">
               <h4 className="text-white font-semibold mb-2">Every Interaction Matters:</h4>
-              <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+              <ul className="list-disc pl-5 text-white text-sm space-y-2">
                 <li>Your behaviour shapes public perception of electricians</li>
                 <li>Professionalism in every job builds collective trust</li>
                 <li>Poor practice by individuals damages everyone's reputation</li>
@@ -819,8 +819,8 @@ const Level3Module4Section6_4 = () => {
             </div>
 
             <h3 className="text-lg font-semibold text-white mt-6 mb-3">Future of the Profession</h3>
-            <p className="text-white/80 text-sm mb-3">Contributing to a sustainable future:</p>
-            <ul className="list-disc pl-5 text-white/80 text-sm space-y-2">
+            <p className="text-white text-sm mb-3">Contributing to a sustainable future:</p>
+            <ul className="list-disc pl-5 text-white text-sm space-y-2">
               <li>Support initiatives to attract new people to the industry</li>
               <li>Embrace new technologies and sustainable practices</li>
               <li>Advocate for proper regulation and standards</li>
@@ -840,7 +840,7 @@ const Level3Module4Section6_4 = () => {
               <h3 className="text-white font-semibold mb-2">
                 Building Your Professional Reputation
               </h3>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Reputation is built through consistent professional behaviour over time. Every job
                 is an opportunity to demonstrate your standards. Word-of-mouth recommendations from
                 satisfied customers are more valuable than any advertising.
@@ -849,7 +849,7 @@ const Level3Module4Section6_4 = () => {
 
             <div>
               <h3 className="text-white font-semibold mb-2">When Things Go Wrong</h3>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 How you handle problems defines your professionalism more than how you handle easy
                 situations. Prompt acknowledgement, honest communication, and swift corrective
                 action usually resolve issues and can strengthen customer relationships.
@@ -858,7 +858,7 @@ const Level3Module4Section6_4 = () => {
 
             <div>
               <h3 className="text-white font-semibold mb-2">Staying Current</h3>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Allocate regular time for professional development. Schedule update training when
                 regulations change, subscribe to relevant publications, and engage with industry
                 resources. Your competence is an ongoing responsibility, not a one-time achievement.
@@ -876,7 +876,7 @@ const Level3Module4Section6_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 rounded-lg p-4 sm:p-6">
                 <h3 className="text-white font-semibold mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -888,7 +888,7 @@ const Level3Module4Section6_4 = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <h3 className="text-white font-semibold mb-2">Key Legislation</h3>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>Electricity at Work Regulations 1989</li>
                 <li>Health and Safety at Work Act 1974</li>
                 <li>Building Regulations Part P</li>
@@ -897,7 +897,7 @@ const Level3Module4Section6_4 = () => {
             </div>
             <div>
               <h3 className="text-white font-semibold mb-2">Competence Components</h3>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>Knowledge</li>
                 <li>Skills</li>
                 <li>Experience</li>
@@ -906,7 +906,7 @@ const Level3Module4Section6_4 = () => {
             </div>
             <div>
               <h3 className="text-white font-semibold mb-2">Ethical Principles</h3>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>Honesty and integrity</li>
                 <li>Public safety priority</li>
                 <li>Professional conduct</li>
@@ -915,7 +915,7 @@ const Level3Module4Section6_4 = () => {
             </div>
             <div>
               <h3 className="text-white font-semibold mb-2">Accountability To</h3>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>Customers</li>
                 <li>Employers</li>
                 <li>Regulatory bodies</li>

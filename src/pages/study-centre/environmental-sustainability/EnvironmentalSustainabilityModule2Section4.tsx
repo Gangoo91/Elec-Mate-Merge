@@ -205,7 +205,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-2">
@@ -230,7 +230,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Site Waste Management Plans
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Planning, forecasting, implementing, and monitoring construction waste &mdash; from SWMP
             content and WRAP benchmarks to integration with CEMPs and contractor obligations
           </p>
@@ -323,7 +323,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Historical Context</p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[56px] h-7 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex-shrink-0">
                       2008
@@ -380,7 +380,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
                   <Recycle className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">Key Principle</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     A SWMP is not just a compliance document &mdash; it is a practical management
                     tool.
@@ -415,7 +415,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   When a SWMP Is Typically Required or Expected
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -509,7 +509,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Essential SWMP Content</p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex-shrink-0">
                       1
@@ -628,7 +628,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Forecasting Methods</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -679,7 +679,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
                 <p className="text-sm font-medium text-white mb-1 text-center">
                   Waste Forecasting Example Table
                 </p>
-                <p className="text-xs text-white/50 mb-4 text-center">
+                <p className="text-xs text-white mb-4 text-center">
                   Typical waste streams for a new-build commercial project
                 </p>
                 <div className="overflow-x-auto -mx-2">
@@ -700,7 +700,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="text-white/80">
+                    <tbody className="text-white">
                       <tr className="border-b border-white/5">
                         <td className="py-2 px-2 text-white font-medium">Timber</td>
                         <td className="py-2 px-2">17 02 01</td>
@@ -746,7 +746,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
                     </tbody>
                   </table>
                 </div>
-                <p className="text-xs text-white/40 text-center mt-4">
+                <p className="text-xs text-white text-center mt-4">
                   EWC = European Waste Catalogue. MRF = Materials Recovery Facility. Figures are
                   illustrative.
                 </p>
@@ -757,7 +757,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
                   <Lightbulb className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">Designing Out Waste</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The greatest waste reduction opportunities exist at the{' '}
                   <strong className="text-white">design stage</strong>, before construction begins.
                   Strategies include: using standard material sizes to minimise cutting waste;
@@ -789,7 +789,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Roles and Responsibilities</p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex-shrink-0">
                       <Users className="h-3.5 w-3.5" />
@@ -839,7 +839,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Practical Implementation Measures
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -898,7 +898,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
                     Common Implementation Failures
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The most common reasons SWMPs fail to deliver results include: the plan is written
                   but never communicated to site teams; segregation containers are provided but not
                   maintained or labelled; there is no named waste champion with clear
@@ -930,7 +930,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key Monitoring Activities</p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex-shrink-0">
                       <BarChart3 className="h-3.5 w-3.5" />
@@ -996,7 +996,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Waste Audits</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     Regular waste audits (typically quarterly or at key project milestones) provide
                     a deeper assessment of waste management performance. A waste audit typically
@@ -1072,7 +1072,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   WRAP&rsquo;s Key Contributions to Construction Waste Management
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -1118,7 +1118,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Resource Efficiency Action Plans
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     WRAP promoted the concept of{' '}
                     <strong className="text-white">resource efficiency action plans</strong> that go
@@ -1162,7 +1162,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
                   <Leaf className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">Case Study: Good Practice</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Leading UK contractors have achieved{' '}
                   <strong className="text-white">diversion rates of 95% or more</strong> from
                   landfill through a combination of: rigorous source segregation on site;
@@ -1195,7 +1195,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Integration Points</p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex-shrink-0">
                       <LinkIcon className="h-3.5 w-3.5" />
@@ -1283,7 +1283,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
         <section className="mb-10">
           <h2 className="text-xl font-semibold text-white mb-4">SWMP Lifecycle Flowchart</h2>
           <div className="bg-gradient-to-br from-emerald-500/10 via-emerald-400/5 to-transparent border border-emerald-500/30 rounded-xl p-5 sm:p-6">
-            <p className="text-sm text-white/60 mb-5 text-center">
+            <p className="text-sm text-white mb-5 text-center">
               The SWMP lifecycle from design through to project close-out
             </p>
 
@@ -1294,7 +1294,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
                   Stage 1 &mdash; Design
                 </p>
                 <p className="text-white text-sm font-bold">Design Out Waste</p>
-                <p className="text-white/60 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Standard sizes, off-site manufacture, BIM coordination
                 </p>
               </div>
@@ -1312,7 +1312,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
                   Stage 2 &mdash; Pre-Construction
                 </p>
                 <p className="text-white text-sm font-bold">Prepare the SWMP</p>
-                <p className="text-white/60 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Forecast waste, set targets, identify carriers &amp; destinations
                 </p>
               </div>
@@ -1330,7 +1330,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
                   Stage 3 &mdash; Construction
                 </p>
                 <p className="text-white text-sm font-bold">Implement &amp; Monitor</p>
-                <p className="text-white/60 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Segregation, toolbox talks, waste champion, data collection
                 </p>
               </div>
@@ -1348,7 +1348,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
                   Monthly
                 </p>
                 <p className="text-white text-sm font-bold">Report &amp; Correct</p>
-                <p className="text-white/60 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Actual vs forecast, corrective actions, progress meetings
                 </p>
               </div>
@@ -1357,7 +1357,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
                   Quarterly
                 </p>
                 <p className="text-white text-sm font-bold">Waste Audit</p>
-                <p className="text-white/60 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Skip inspections, data review, improvement opportunities
                 </p>
               </div>
@@ -1375,13 +1375,13 @@ export default function EnvironmentalSustainabilityModule2Section4() {
                   Stage 5 &mdash; Close-Out
                 </p>
                 <p className="text-white text-sm font-bold">Final SWMP Review</p>
-                <p className="text-white/60 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Final data, lessons learned, BREEAM evidence, benchmarking
                 </p>
               </div>
             </div>
 
-            <p className="text-xs text-white/40 text-center mt-5">
+            <p className="text-xs text-white text-center mt-5">
               The SWMP is a live document &mdash; updated continuously throughout the project
               lifecycle
             </p>
@@ -1395,7 +1395,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1409,7 +1409,7 @@ export default function EnvironmentalSustainabilityModule2Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-2-section-3">

@@ -94,7 +94,7 @@ const FunctionalSkillsModule1Section3 = () => {
             to="/study-centre/apprentice/functional-skills/module1"
             className="p-2 -ml-2 touch-manipulation"
           >
-            <ArrowLeft className="w-5 h-5 text-white/60" />
+            <ArrowLeft className="w-5 h-5 text-white" />
           </Link>
           <div>
             <p className="text-[11px] font-semibold text-green-400 uppercase tracking-wider">
@@ -120,7 +120,7 @@ const FunctionalSkillsModule1Section3 = () => {
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
               Algebra &amp; Formulae
             </h2>
-            <p className="text-sm text-white/50 max-w-lg mx-auto">
+            <p className="text-sm text-white max-w-lg mx-auto">
               Learn to use, rearrange and apply the key formulae that underpin every electrical
               calculation &mdash; from Ohm&apos;s Law and power equations to cable sizing and fault
               current protection.
@@ -144,7 +144,7 @@ const FunctionalSkillsModule1Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Introduction to Algebra</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               <strong className="text-white">Algebra</strong> is the branch of mathematics that uses
               letters and symbols to represent unknown values and relationships. Far from being
@@ -210,7 +210,7 @@ const FunctionalSkillsModule1Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Why Algebra Matters</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Without algebra, you would need to memorise a separate formula for every possible
                 calculation. With algebra, a single formula like V = IR gives you three
                 calculations: V = IR, I = V/R, and R = V/I. Learning to rearrange formulae is one of
@@ -247,7 +247,7 @@ const FunctionalSkillsModule1Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Ohm&apos;s Law</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               <strong className="text-white">Ohm&apos;s Law</strong> states that the current flowing
               through a conductor is directly proportional to the potential difference across it and
@@ -304,7 +304,7 @@ const FunctionalSkillsModule1Section3 = () => {
               <p className="text-xs font-semibold text-green-400 mb-1">
                 Worked Example &mdash; Earth Fault Loop Impedance
               </p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Using Ohm&apos;s Law to calculate prospective fault current: If the earth fault loop
                 impedance Zs = 1.15&thinsp;&Omega; and the supply voltage is 230&thinsp;V, the
                 prospective earth fault current = V &divide; Zs = 230 &divide; 1.15 = 200&thinsp;A.
@@ -346,7 +346,7 @@ const FunctionalSkillsModule1Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Power Formulae</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               <strong className="text-white">Electrical power</strong> is the rate at which energy
               is transferred or consumed. It is measured in watts (W). There are three key power
@@ -413,7 +413,7 @@ const FunctionalSkillsModule1Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Power Factor Warning</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 The formulae P = VI and P = I²R give <em>apparent power</em> (VA) when dealing with
                 AC circuits containing reactive loads (motors, fluorescent ballasts). For
                 <em> true power</em> (W), multiply by the power factor: P = V &times; I &times;
@@ -444,7 +444,7 @@ const FunctionalSkillsModule1Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Transposing Formulae</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               <strong className="text-white">Transposing</strong> (rearranging) a formula means
               isolating the variable you want to find on one side of the equals sign. This is the
@@ -548,7 +548,7 @@ const FunctionalSkillsModule1Section3 = () => {
                   <p className="text-xs font-semibold text-yellow-400 mb-1">
                     Common Rearrangement Error
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     When rearranging P = I²R to find I, a common mistake is to forget to take the
                     square root. Dividing P by R gives you I², not I. You must then square-root the
                     result to get I. Always check your answer by substituting back into the original
@@ -611,7 +611,7 @@ const FunctionalSkillsModule1Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Substitution</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               <strong className="text-white">Substitution</strong> means replacing the letters in a
               formula with actual numbers. It is what you do every time you plug values into an
@@ -695,7 +695,7 @@ const FunctionalSkillsModule1Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Unit Consistency</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Before substituting values, always check your units are consistent. If the formula
                 uses watts, convert kW to W first (multiply by 1,000). If the formula uses metres,
                 convert mm to m first (divide by 1,000). Mixing units is the most common cause of
@@ -727,7 +727,7 @@ const FunctionalSkillsModule1Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Simultaneous Equations</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               <strong className="text-white">Simultaneous equations</strong> are two or more
               equations that share the same unknowns. Solving them finds the values that satisfy
@@ -798,7 +798,7 @@ const FunctionalSkillsModule1Section3 = () => {
               <p className="text-xs font-semibold text-green-400 mb-1">
                 Kirchhoff&apos;s Laws &mdash; Quick Reference
               </p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 <strong className="text-white">KVL</strong> (Kirchhoff&apos;s Voltage Law): The sum
                 of all voltages around a closed loop equals zero.{' '}
                 <strong className="text-white">KCL</strong> (Kirchhoff&apos;s Current Law): The
@@ -840,7 +840,7 @@ const FunctionalSkillsModule1Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Cable Sizing Equations</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Selecting the correct cable size is one of the most important calculations an
               electrician performs. BS 7671 requires that cables are sized to meet three criteria
@@ -905,7 +905,7 @@ const FunctionalSkillsModule1Section3 = () => {
               <p className="text-xs font-semibold text-green-400 mb-1">
                 Worked Example &mdash; Cable Selection
               </p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Design current Ib = 28&thinsp;A, 32&thinsp;A MCB (In = 32), Ca = 0.94, Cg = 0.80, Ci
                 = 1.0, Cf = 1.0. Minimum It = 32 &divide; (0.94 &times; 0.80 &times; 1.0 &times;
                 1.0) = 32 &divide; 0.752 = 42.55&thinsp;A. From tables, 6&thinsp;mm² T&amp;E clipped
@@ -946,7 +946,7 @@ const FunctionalSkillsModule1Section3 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Practical Formula Applications</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               This final section brings together the algebraic skills from this section with
               realistic installation scenarios. Work through each example carefully, showing all
@@ -1092,7 +1092,7 @@ const FunctionalSkillsModule1Section3 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Takeaway</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Every electrical calculation comes back to algebra &mdash; using a formula,
                 substituting known values, and solving for the unknown. The formulae themselves are
                 straightforward; the skill lies in choosing the right formula, rearranging it
@@ -1110,7 +1110,7 @@ const FunctionalSkillsModule1Section3 = () => {
         <div className="flex items-center justify-between pt-6 border-t border-white/10">
           <Link
             to="/study-centre/apprentice/functional-skills/module1/section2"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
           >
             <ArrowLeft className="w-4 h-4" />
             Units &amp; Measurement

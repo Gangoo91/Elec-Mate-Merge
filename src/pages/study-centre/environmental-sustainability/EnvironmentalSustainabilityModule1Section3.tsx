@@ -205,7 +205,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-1">
@@ -230,7 +230,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Environmental Impact Assessment
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding EIA legislation, the assessment process, Environmental Statements,
             mitigation measures, CEMPs, and Strategic Environmental Assessment in UK construction
           </p>
@@ -354,7 +354,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-emerald-400 mb-1">{item.purpose}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -429,7 +429,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
                       </span>
                       <div>
                         <p className="text-xs font-medium text-white">{item.event}</p>
-                        <p className="text-xs text-white/70">{item.detail}</p>
+                        <p className="text-xs text-white">{item.detail}</p>
                       </div>
                     </div>
                   ))}
@@ -441,7 +441,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">Important Note</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Separate EIA regulations exist for other consent regimes in England, including the
                   <strong>
                     {' '}
@@ -484,7 +484,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
 
               {/* Schedule 1 vs Schedule 2 Comparison Grid */}
               <div className="bg-white/5 border border-white/10 rounded-xl p-4 sm:p-6 overflow-hidden">
-                <p className="text-xs text-white/50 uppercase tracking-wider mb-4 text-center">
+                <p className="text-xs text-white uppercase tracking-wider mb-4 text-center">
                   Schedule 1 vs Schedule 2 &mdash; Comparison
                 </p>
 
@@ -497,7 +497,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
                       </p>
                     </div>
                     <div className="p-4 space-y-3">
-                      <p className="text-xs text-white/80">
+                      <p className="text-xs text-white">
                         These are large-scale, high-impact projects where significant environmental
                         effects are
                         <strong> presumed</strong>. No screening is needed &mdash; EIA is mandatory.
@@ -517,7 +517,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
                         ].map((item, i) => (
                           <div key={i} className="flex items-start gap-2">
                             <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-red-400 mt-1.5" />
-                            <span className="text-xs text-white/70">{item}</span>
+                            <span className="text-xs text-white">{item}</span>
                           </div>
                         ))}
                       </div>
@@ -532,7 +532,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
                       </p>
                     </div>
                     <div className="p-4 space-y-3">
-                      <p className="text-xs text-white/80">
+                      <p className="text-xs text-white">
                         These projects <strong>may</strong> have significant environmental effects
                         depending on their characteristics, location, and potential impact.
                         Screening determines whether EIA is needed.
@@ -552,7 +552,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
                         ].map((item, i) => (
                           <div key={i} className="flex items-start gap-2">
                             <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-amber-400 mt-1.5" />
-                            <span className="text-xs text-white/70">{item}</span>
+                            <span className="text-xs text-white">{item}</span>
                           </div>
                         ))}
                       </div>
@@ -564,11 +564,11 @@ export default function EnvironmentalSustainabilityModule1Section3() {
                 <div className="flex flex-wrap items-center gap-4 mt-4 justify-center">
                   <div className="flex items-center gap-1.5">
                     <span className="w-3 h-3 rounded-full bg-red-500/30 border border-red-500/50" />
-                    <span className="text-[10px] text-white/50">EIA always mandatory</span>
+                    <span className="text-[10px] text-white">EIA always mandatory</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <span className="w-3 h-3 rounded-full bg-amber-500/30 border border-amber-500/50" />
-                    <span className="text-[10px] text-white/50">
+                    <span className="text-[10px] text-white">
                       Screening determines requirement
                     </span>
                   </div>
@@ -611,7 +611,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-emerald-400 mb-1">{item.criterion}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -630,7 +630,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">Practical Point</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   For electrical infrastructure projects, the most relevant Schedule 2 categories
                   include
                   <strong> overhead electrical power lines exceeding 3km</strong>,
@@ -664,7 +664,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
 
               {/* EIA Process Flowchart */}
               <div className="bg-white/5 border border-white/10 rounded-xl p-4 sm:p-6 overflow-hidden">
-                <p className="text-xs text-white/50 uppercase tracking-wider mb-4 text-center">
+                <p className="text-xs text-white uppercase tracking-wider mb-4 text-center">
                   EIA Process Flowchart &mdash; 6 Stages
                 </p>
 
@@ -721,7 +721,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
                           <p className="text-sm font-semibold text-emerald-400 mb-1">
                             {item.title}
                           </p>
-                          <p className="text-xs text-white/70">{item.desc}</p>
+                          <p className="text-xs text-white">{item.desc}</p>
                         </div>
                       </div>
                     </div>
@@ -792,7 +792,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-2">
                       <p className="text-[10px] font-medium text-emerald-400">{item.stage}</p>
-                      <p className="text-xs text-white/80 font-semibold">{item.time}</p>
+                      <p className="text-xs text-white font-semibold">{item.time}</p>
                     </div>
                   ))}
                 </div>
@@ -872,7 +872,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-emerald-400 mb-1">{item.section}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -883,7 +883,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">Quality and Adequacy</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The LPA must not determine the planning application until it is satisfied that the
                   ES contains all the information required by Schedule 4. If the ES is inadequate,
                   the LPA can request <strong>further information</strong> under Regulation 25 of
@@ -985,7 +985,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-emerald-400 mb-1">{item.topic}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -998,7 +998,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
                     Interactions Between Topics
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The 2017 Regulations explicitly require assessment of the{' '}
                   <strong>interaction between the factors</strong> listed above. For example, air
                   quality impacts may affect both human health and biodiversity; water pollution may
@@ -1096,7 +1096,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
                       >
                         {item.level}
                       </p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1147,7 +1147,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-emerald-400 mb-1">{item.point}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1173,7 +1173,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
                   <Shield className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">Enhancement vs Mitigation</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Modern EIA practice increasingly emphasises <strong>enhancement</strong> alongside
                   mitigation. Enhancement means delivering positive environmental outcomes that go
                   beyond simply reducing harm &mdash; for example, creating new public green space,
@@ -1270,7 +1270,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-emerald-400 mb-1">{item.topic}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1304,7 +1304,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
                     Relevance to Electrical Contractors
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   As an electrical contractor working on a construction site, you are required to
                   comply with the CEMP. This means following the specified working hours, dust and
                   noise controls, waste segregation requirements, and ecological exclusion zones. If
@@ -1412,11 +1412,11 @@ export default function EnvironmentalSustainabilityModule1Section3() {
                     },
                   ].map((row, i) => (
                     <div key={i} className="grid grid-cols-3 gap-2 text-xs">
-                      <div className="bg-black/30 rounded p-2 font-medium text-white/90">
+                      <div className="bg-black/30 rounded p-2 font-medium text-white">
                         {row.aspect}
                       </div>
-                      <div className="bg-black/30 rounded p-2 text-white/70">{row.eia}</div>
-                      <div className="bg-black/30 rounded p-2 text-white/70">{row.sea}</div>
+                      <div className="bg-black/30 rounded p-2 text-white">{row.eia}</div>
+                      <div className="bg-black/30 rounded p-2 text-white">{row.sea}</div>
                     </div>
                   ))}
                 </div>
@@ -1437,7 +1437,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <span className="flex-shrink-0 w-1.5 h-1.5 rounded-full bg-emerald-400 mt-1.5" />
-                      <span className="text-sm text-white/80">{item}</span>
+                      <span className="text-sm text-white">{item}</span>
                     </div>
                   ))}
                 </div>
@@ -1471,7 +1471,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
                     Relationship Between SEA and EIA
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   SEA and EIA are complementary processes. SEA assesses the environmental effects of
                   the strategic framework (the plan or programme), while EIA assesses the
                   environmental effects of individual projects that come forward under that
@@ -1486,7 +1486,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Practical Example</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   A local council is preparing its Local Plan, which allocates 5,000 new homes
                   across 10 sites. The Local Plan must undergo SEA to assess the strategic
                   environmental effects of this growth strategy &mdash; including the cumulative
@@ -1508,7 +1508,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1522,7 +1522,7 @@ export default function EnvironmentalSustainabilityModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-1-section-2">

@@ -180,7 +180,7 @@ export default function PasmaModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-1">
@@ -205,7 +205,7 @@ export default function PasmaModule1Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             EN 1004:2020 &amp; BS 1139-6
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The European and British standards governing the design, manufacture, and safe use of
             mobile access towers
           </p>
@@ -300,7 +300,7 @@ export default function PasmaModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">EN 1004:2020 Covers:</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -358,7 +358,7 @@ export default function PasmaModule1Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-green-400">Load Classes Introduced</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Two defined load classes replace the previous single classification: Class 2
                         (150 kg/m&sup2;) and Class 3 (200 kg/m&sup2;). Every tower must now be
                         clearly marked with its load class.
@@ -371,7 +371,7 @@ export default function PasmaModule1Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-blue-400">Maximum Heights Clarified</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Clear limits set: 8 metres maximum platform height outdoors and 12 metres
                         indoors, without additional measures such as ties or ballast beyond standard
                         stabilisers.
@@ -386,7 +386,7 @@ export default function PasmaModule1Section2() {
                       <p className="text-sm font-medium text-amber-400">
                         Enhanced Marking Requirements
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Towers must now carry clear markings showing the standard reference, load
                         class, maximum height, and manufacturer details. This makes on-site
                         verification straightforward.
@@ -398,7 +398,7 @@ export default function PasmaModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Additional Changes:</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Updated platform size categories with clearer dimensions</span>
@@ -451,7 +451,7 @@ export default function PasmaModule1Section2() {
                       <th className="text-left py-2 text-purple-400 font-medium">Class 3</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/5">
                       <td className="py-2 pr-4 font-medium text-white">Platform UDL</td>
                       <td className="py-2 pr-4">150 kg/m&sup2;</td>
@@ -495,7 +495,7 @@ export default function PasmaModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Identification on Site</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Always check the tower&rsquo;s data plate or label to confirm the load class
                   before use. If you are carrying out work that involves storing materials on the
                   platform, you almost certainly need a Class 3 tower. Overloading a Class 2 tower
@@ -529,7 +529,7 @@ export default function PasmaModule1Section2() {
                     <p className="text-sm font-medium text-blue-400">Indoor Use</p>
                   </div>
                   <p className="text-3xl font-bold text-blue-400 mb-1">12 m</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Maximum platform height without additional measures. Indoor locations are
                     sheltered from wind, allowing greater heights.
                   </p>
@@ -540,7 +540,7 @@ export default function PasmaModule1Section2() {
                     <p className="text-sm font-medium text-amber-400">Outdoor Use</p>
                   </div>
                   <p className="text-3xl font-bold text-amber-400 mb-1">8 m</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Maximum platform height without additional measures. Reduced due to wind loading
                     effects on the tower.
                   </p>
@@ -551,7 +551,7 @@ export default function PasmaModule1Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Factors Affecting Maximum Height
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -601,7 +601,7 @@ export default function PasmaModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Rule</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Never exceed the maximum height stated on the manufacturer&rsquo;s data plate or
                   in the instruction manual. Even if the tower physically allows you to add more
                   frames, doing so beyond the rated height creates an immediate risk of collapse.
@@ -645,7 +645,7 @@ export default function PasmaModule1Section2() {
                     BS 1139-6 Additional Requirements
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -707,7 +707,7 @@ export default function PasmaModule1Section2() {
                   <Tag className="h-5 w-5 text-elec-yellow" />
                   <p className="text-sm font-medium text-elec-yellow">Required Tower Markings</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -768,7 +768,7 @@ export default function PasmaModule1Section2() {
                   <p className="text-sm font-medium text-green-400 mb-2">
                     How to Verify Compliance
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Check the data plate on the tower</span>
@@ -789,7 +789,7 @@ export default function PasmaModule1Section2() {
                 </div>
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-red-400 mb-2">Compliance Red Flags</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>No data plate or unreadable markings</span>
@@ -834,7 +834,7 @@ export default function PasmaModule1Section2() {
                   <Info className="h-5 w-5 text-teal-400" />
                   <p className="text-sm font-medium text-teal-400">On-Site Compliance Checks</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -876,7 +876,7 @@ export default function PasmaModule1Section2() {
                     Rejecting Non-Compliant Towers
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If a tower does not carry the correct markings, has missing or damaged components,
                   or shows signs of mixing parts from different manufacturers, it must be taken out
                   of service immediately. Report the issue to your supervisor and do not use the
@@ -888,7 +888,7 @@ export default function PasmaModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Reporting Defects</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Remove the tower from service immediately</span>
@@ -923,7 +923,7 @@ export default function PasmaModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Mixed Component Risks</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Components from different manufacturers may appear similar but can have subtle
                   differences in dimensions, locking mechanisms, or material grades. Even if parts
                   seem to fit together, the structural integrity of the assembled tower cannot be
@@ -942,7 +942,7 @@ export default function PasmaModule1Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -956,7 +956,7 @@ export default function PasmaModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-1-section-1">

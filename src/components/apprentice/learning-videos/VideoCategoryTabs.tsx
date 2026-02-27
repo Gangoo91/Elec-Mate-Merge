@@ -25,7 +25,7 @@ export function VideoCategoryTabs({
         className={`flex-shrink-0 px-4 h-11 text-sm rounded-full border font-medium touch-manipulation transition-colors ${
           activeCategory === 'all'
             ? 'bg-elec-yellow/20 border-elec-yellow/50 text-elec-yellow'
-            : 'bg-white/[0.04] border-white/10 text-white/60 active:bg-white/10'
+            : 'bg-white/[0.04] border-white/10 text-white active:bg-white/10'
         }`}
       >
         All
@@ -37,7 +37,7 @@ export function VideoCategoryTabs({
           className={`flex-shrink-0 px-4 h-11 text-sm rounded-full border font-medium touch-manipulation transition-colors whitespace-nowrap ${
             activeCategory === cat
               ? 'bg-elec-yellow/20 border-elec-yellow/50 text-elec-yellow'
-              : 'bg-white/[0.04] border-white/10 text-white/60 active:bg-white/10'
+              : 'bg-white/[0.04] border-white/10 text-white active:bg-white/10'
           }`}
         >
           {categoryLabels[cat]}

@@ -28,7 +28,7 @@ const Level2Module8Section2Section4 = () => {
         <div className="flex items-center gap-3 mb-4 sm:mb-6">
           <Link
             to=".."
-            className="inline-flex items-center text-white/80 hover:text-elec-yellow transition-colors text-sm sm:text-base touch-target"
+            className="inline-flex items-center text-white hover:text-elec-yellow transition-colors text-sm sm:text-base touch-target"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             <span className="hidden sm:inline">Back to How to Pass Exams</span>
@@ -44,7 +44,7 @@ const Level2Module8Section2Section4 = () => {
           <h1 className="text-xl sm:text-2xl lg:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2 sm:mb-3 leading-tight">
             Common Pitfalls & Solutions
           </h1>
-          <p className="text-white/80 max-w-2xl mx-auto leading-relaxed text-sm sm:text-base px-2">
+          <p className="text-white max-w-2xl mx-auto leading-relaxed text-sm sm:text-base px-2">
             Learn from the most common exam mistakes and master the proven solutions to avoid them.
             Turn potential failures into opportunities for success with expert recovery strategies.
           </p>
@@ -54,15 +54,15 @@ const Level2Module8Section2Section4 = () => {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
           <div className="bg-card border border-elec-yellow/30 rounded-lg p-3 sm:p-4 text-center">
             <div className="text-xl sm:text-2xl font-bold text-elec-yellow mb-1">78%</div>
-            <div className="text-xs sm:text-sm text-white/80">Of failures are avoidable</div>
+            <div className="text-xs sm:text-sm text-white">Of failures are avoidable</div>
           </div>
           <div className="bg-card border border-elec-yellow/30 rounded-lg p-3 sm:p-4 text-center">
             <div className="text-xl sm:text-2xl font-bold text-elec-yellow mb-1">5 mins</div>
-            <div className="text-xs sm:text-sm text-white/80">To recover from mistakes</div>
+            <div className="text-xs sm:text-sm text-white">To recover from mistakes</div>
           </div>
           <div className="bg-card border border-elec-yellow/30 rounded-lg p-3 sm:p-4 text-center">
             <div className="text-xl sm:text-2xl font-bold text-elec-yellow mb-1">92%</div>
-            <div className="text-xs sm:text-sm text-white/80">Success with preparation</div>
+            <div className="text-xs sm:text-sm text-white">Success with preparation</div>
           </div>
         </div>
 
@@ -74,7 +74,7 @@ const Level2Module8Section2Section4 = () => {
                 <AlertTriangle className="h-5 w-5 sm:h-6 sm:w-6 text-elec-yellow flex-shrink-0" />
                 Critical Exam Pitfalls
               </CardTitle>
-              <p className="text-sm text-white/80 mt-2">
+              <p className="text-sm text-white mt-2">
                 The most common mistakes that cost candidates marks, with proven prevention
                 strategies.
               </p>
@@ -94,10 +94,10 @@ const Level2Module8Section2Section4 = () => {
                         <h4 className="font-medium text-elec-yellow text-sm sm:text-base mb-1">
                           Answer transfer errors
                         </h4>
-                        <p className="text-xs sm:text-sm text-white/80 mb-2">
+                        <p className="text-xs sm:text-sm text-white mb-2">
                           Wrong answer selected despite correct calculation
                         </p>
-                        <div className="text-xs text-white/80 bg-card p-2 rounded border-l-2 border-red-400">
+                        <div className="text-xs text-white bg-card p-2 rounded border-l-2 border-red-400">
                           <strong>Prevention:</strong> Always double-check final answer matches your
                           calculation before moving on
                         </div>
@@ -112,10 +112,10 @@ const Level2Module8Section2Section4 = () => {
                         <h4 className="font-medium text-elec-yellow text-sm sm:text-base mb-1">
                           Question numbering mistakes
                         </h4>
-                        <p className="text-xs sm:text-sm text-white/80 mb-2">
+                        <p className="text-xs sm:text-sm text-white mb-2">
                           Answering wrong question number
                         </p>
-                        <div className="text-xs text-white/80 bg-card p-2 rounded border-l-2 border-red-400">
+                        <div className="text-xs text-white bg-card p-2 rounded border-l-2 border-red-400">
                           <strong>Prevention:</strong> Mark question numbers clearly on answer sheet
                           and check alignment regularly
                         </div>
@@ -130,10 +130,10 @@ const Level2Module8Section2Section4 = () => {
                         <h4 className="font-medium text-elec-yellow text-sm sm:text-base mb-1">
                           Changed answer confusion
                         </h4>
-                        <p className="text-xs sm:text-sm text-white/80 mb-2">
+                        <p className="text-xs sm:text-sm text-white mb-2">
                           Multiple erasures causing illegible responses
                         </p>
-                        <div className="text-xs text-white/80 bg-card p-2 rounded border-l-2 border-red-400">
+                        <div className="text-xs text-white bg-card p-2 rounded border-l-2 border-red-400">
                           <strong>Prevention:</strong> Think before writing; if changing, erase
                           completely and rewrite clearly
                         </div>
@@ -157,10 +157,10 @@ const Level2Module8Section2Section4 = () => {
                         <h4 className="font-medium text-elec-yellow text-sm sm:text-base mb-1">
                           Unit specification errors
                         </h4>
-                        <p className="text-xs sm:text-sm text-white/80 mb-2">
+                        <p className="text-xs sm:text-sm text-white mb-2">
                           Correct number but wrong units (A vs mA, V vs kV)
                         </p>
-                        <div className="text-xs text-white/80 bg-card p-2 rounded border-l-2 border-orange-400">
+                        <div className="text-xs text-white bg-card p-2 rounded border-l-2 border-orange-400">
                           <strong>Prevention:</strong> Always write units next to your final answer
                           and double-check question requirements
                         </div>
@@ -175,10 +175,10 @@ const Level2Module8Section2Section4 = () => {
                         <h4 className="font-medium text-elec-yellow text-sm sm:text-base mb-1">
                           Incomplete workings
                         </h4>
-                        <p className="text-xs sm:text-sm text-white/80 mb-2">
+                        <p className="text-xs sm:text-sm text-white mb-2">
                           No partial marks when final answer wrong
                         </p>
-                        <div className="text-xs text-white/80 bg-card p-2 rounded border-l-2 border-orange-400">
+                        <div className="text-xs text-white bg-card p-2 rounded border-l-2 border-orange-400">
                           <strong>Prevention:</strong> Always show your working steps clearly - you
                           can get marks even if final answer is wrong
                         </div>
@@ -202,10 +202,10 @@ const Level2Module8Section2Section4 = () => {
                         <h4 className="font-medium text-elec-yellow text-sm sm:text-base mb-1">
                           Misreading question requirements
                         </h4>
-                        <p className="text-xs sm:text-sm text-white/80 mb-2">
+                        <p className="text-xs sm:text-sm text-white mb-2">
                           Answering what you think vs what's asked
                         </p>
-                        <div className="text-xs text-white/80 bg-card p-2 rounded border-l-2 border-purple-400">
+                        <div className="text-xs text-white bg-card p-2 rounded border-l-2 border-purple-400">
                           <strong>Prevention:</strong> Read question twice, underline key words,
                           ensure your answer matches exactly what's asked
                         </div>
@@ -221,7 +221,7 @@ const Level2Module8Section2Section4 = () => {
                   <CheckCircle className="h-4 w-4" />
                   Emergency Recovery Protocol
                 </h4>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
                       <strong className="text-green-400">When you realise a mistake:</strong>
@@ -268,7 +268,7 @@ const Level2Module8Section2Section4 = () => {
                         <h5 className="font-medium text-elec-yellow text-base sm:text-lg mb-2">
                           Perfectionism Paralysis
                         </h5>
-                        <p className="text-sm text-white/80 mb-3 leading-relaxed">
+                        <p className="text-sm text-white mb-3 leading-relaxed">
                           Spending too long on single questions trying to achieve 100% certainty
                           rather than moving forward.
                         </p>
@@ -277,7 +277,7 @@ const Level2Module8Section2Section4 = () => {
                             <h6 className="text-sm font-medium text-elec-yellow mb-2">
                               WARNING SIGNS:
                             </h6>
-                            <div className="space-y-1.5 text-sm text-white/80">
+                            <div className="space-y-1.5 text-sm text-white">
                               <div>• Spending over 4 minutes on single question</div>
                               <div>• Re-reading same regulation multiple times</div>
                               <div>• Checking calculations more than twice</div>
@@ -289,7 +289,7 @@ const Level2Module8Section2Section4 = () => {
                             <h6 className="text-sm font-medium text-green-400 mb-2">
                               RECOVERY ACTIONS:
                             </h6>
-                            <div className="space-y-1.5 text-sm text-white/80">
+                            <div className="space-y-1.5 text-sm text-white">
                               <div>• Set 3-minute maximum per question alarm</div>
                               <div>• Flag question and move on at time limit</div>
                               <div>• Accept 80% certainty as "good enough"</div>
@@ -314,7 +314,7 @@ const Level2Module8Section2Section4 = () => {
                       <h5 className="font-medium text-elec-yellow text-lg mb-2">
                         The "Panic Rush" Response
                       </h5>
-                      <p className="text-sm text-white/80 mb-3">
+                      <p className="text-sm text-white mb-3">
                         Realising time is short and then rushing through questions, making careless
                         errors.
                       </p>
@@ -323,7 +323,7 @@ const Level2Module8Section2Section4 = () => {
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">
                             PANIC TRIGGERS:
                           </h6>
-                          <div className="space-y-1 text-xs text-white/80">
+                          <div className="space-y-1 text-xs text-white">
                             <div>• Looking at clock and seeing less time than expected</div>
                             <div>• Seeing other candidates finishing early</div>
                             <div>• Reaching halfway point with less than half time left</div>
@@ -335,7 +335,7 @@ const Level2Module8Section2Section4 = () => {
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">
                             PANIC PREVENTION:
                           </h6>
-                          <div className="space-y-1 text-xs text-white/80">
+                          <div className="space-y-1 text-xs text-white">
                             <div>• Check time every 15 questions (not more often)</div>
                             <div>• Never look at other candidates' progress</div>
                             <div>• Have predetermined "emergency time plan"</div>
@@ -365,7 +365,7 @@ const Level2Module8Section2Section4 = () => {
                       <h5 className="font-medium text-elec-yellow text-lg mb-2">
                         Poor Question Sequencing Strategy
                       </h5>
-                      <p className="text-sm text-white/80 mb-3">
+                      <p className="text-sm text-white mb-3">
                         Attempting questions in poor order, getting stuck on difficult questions
                         early, leaving easy marks until last.
                       </p>
@@ -374,7 +374,7 @@ const Level2Module8Section2Section4 = () => {
                           <h6 className="font-medium text-elec-yellow text-sm mb-2">
                             Optimal Sequencing Strategy
                           </h6>
-                          <div className="text-xs text-white/80 space-y-1">
+                          <div className="text-xs text-white space-y-1">
                             <div>
                               <strong>Pass 1 (45 mins):</strong> All questions you can answer
                               immediately
@@ -397,7 +397,7 @@ const Level2Module8Section2Section4 = () => {
                           <h6 className="font-medium text-elec-yellow text-sm mb-2">
                             Common Sequencing Mistakes
                           </h6>
-                          <div className="text-xs text-white/80 space-y-1">
+                          <div className="text-xs text-white space-y-1">
                             <div>• Starting with question 1 regardless of difficulty</div>
                             <div>• Getting stuck on early difficult questions</div>
                             <div>• Leaving easy questions for when tired</div>
@@ -414,10 +414,10 @@ const Level2Module8Section2Section4 = () => {
                 <h5 className="font-semibold text-green-400 mb-2">
                   Time Management Recovery Techniques
                 </h5>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   When time management goes wrong, these techniques can salvage your performance:
                 </p>
-                <div className="grid md:grid-cols-2 gap-3 text-xs text-white/80">
+                <div className="grid md:grid-cols-2 gap-3 text-xs text-white">
                   <div>
                     <h6 className="font-medium text-green-400 mb-1">IMMEDIATE ACTIONS:</h6>
                     <div className="space-y-1">
@@ -461,7 +461,7 @@ const Level2Module8Section2Section4 = () => {
                       <div className="font-medium text-elec-yellow text-sm">
                         PITFALL: Calculator Dependency
                       </div>
-                      <div className="text-xs text-white/80 mt-2 space-y-1">
+                      <div className="text-xs text-white mt-2 space-y-1">
                         <div>• Total reliance on calculator for simple calculations</div>
                         <div>• Panic when calculator fails or battery dies</div>
                         <div>• No backup calculation methods</div>
@@ -469,7 +469,7 @@ const Level2Module8Section2Section4 = () => {
                       </div>
                       <div className="mt-2 p-2 bg-green-500/20 rounded border border-green-500/30">
                         <div className="font-medium text-green-400 text-xs mb-1">SOLUTION:</div>
-                        <div className="text-xs text-white/80 space-y-1">
+                        <div className="text-xs text-white space-y-1">
                           <div>• Always bring backup calculator</div>
                           <div>• Practice mental arithmetic for common calculations</div>
                           <div>• Learn estimation techniques (power of 10)</div>
@@ -482,7 +482,7 @@ const Level2Module8Section2Section4 = () => {
                       <div className="font-medium text-elec-yellow text-sm">
                         PITFALL: BS7671 Navigation Confusion
                       </div>
-                      <div className="text-xs text-white/80 mt-2 space-y-1">
+                      <div className="text-xs text-white mt-2 space-y-1">
                         <div>• Poor indexing/tabbing system</div>
                         <div>• Confusing similar section numbers</div>
                         <div>• Unable to find regulations quickly</div>
@@ -490,7 +490,7 @@ const Level2Module8Section2Section4 = () => {
                       </div>
                       <div className="mt-2 p-2 bg-green-500/20 rounded border border-green-500/30">
                         <div className="font-medium text-green-400 text-xs mb-1">SOLUTION:</div>
-                        <div className="text-xs text-white/80 space-y-1">
+                        <div className="text-xs text-white space-y-1">
                           <div>• Create consistent colour-coded tab system</div>
                           <div>• Practice finding regulations under time pressure</div>
                           <div>• Memorise key regulation number patterns</div>
@@ -503,7 +503,7 @@ const Level2Module8Section2Section4 = () => {
                       <div className="font-medium text-elec-yellow text-sm">
                         PITFALL: Digital System Unfamiliarity
                       </div>
-                      <div className="text-xs text-white/80 mt-2 space-y-1">
+                      <div className="text-xs text-white mt-2 space-y-1">
                         <div>• Unfamiliar with computer-based testing interface</div>
                         <div>• Difficulty navigating between questions</div>
                         <div>• Problems with on-screen calculator</div>
@@ -511,7 +511,7 @@ const Level2Module8Section2Section4 = () => {
                       </div>
                       <div className="mt-2 p-2 bg-green-500/20 rounded border border-green-500/30">
                         <div className="font-medium text-green-400 text-xs mb-1">SOLUTION:</div>
-                        <div className="text-xs text-white/80 space-y-1">
+                        <div className="text-xs text-white space-y-1">
                           <div>• Request practice session if available</div>
                           <div>• Arrive early to familiarise with system</div>
                           <div>• Ask invigilator about interface features</div>
@@ -534,7 +534,7 @@ const Level2Module8Section2Section4 = () => {
                         <span className="font-medium text-elec-yellow">
                           Answer transfer errors:
                         </span>
-                        <span className="text-white/80">
+                        <span className="text-white">
                           {' '}
                           Wrong answer selected despite correct calculation
                         </span>
@@ -546,7 +546,7 @@ const Level2Module8Section2Section4 = () => {
                         <span className="font-medium text-elec-yellow">
                           Misreading question requirements:
                         </span>
-                        <span className="text-white/80">
+                        <span className="text-white">
                           {' '}
                           Answering what you think vs what's asked
                         </span>
@@ -558,7 +558,7 @@ const Level2Module8Section2Section4 = () => {
                         <span className="font-medium text-elec-yellow">
                           Unit specification errors:
                         </span>
-                        <span className="text-white/80">
+                        <span className="text-white">
                           {' '}
                           Correct number but wrong units (A vs mA)
                         </span>
@@ -568,7 +568,7 @@ const Level2Module8Section2Section4 = () => {
                       <div className="w-2 h-2 bg-red-400 rounded-full mt-2"></div>
                       <div className="text-sm">
                         <span className="font-medium text-elec-yellow">Incomplete workings:</span>
-                        <span className="text-white/80">
+                        <span className="text-white">
                           {' '}
                           No partial marks when final answer wrong
                         </span>
@@ -580,7 +580,7 @@ const Level2Module8Section2Section4 = () => {
                         <span className="font-medium text-elec-yellow">
                           Question numbering mistakes:
                         </span>
-                        <span className="text-white/80"> Answering wrong question number</span>
+                        <span className="text-white"> Answering wrong question number</span>
                       </div>
                     </div>
                     <div className="flex items-start gap-3 p-2 rounded">
@@ -589,7 +589,7 @@ const Level2Module8Section2Section4 = () => {
                         <span className="font-medium text-elec-yellow">
                           Changed answer confusion:
                         </span>
-                        <span className="text-white/80">
+                        <span className="text-white">
                           {' '}
                           Multiple erasures causing illegible responses
                         </span>
@@ -601,7 +601,7 @@ const Level2Module8Section2Section4 = () => {
                     <h5 className="font-semibold text-elec-yellow mb-2">
                       Quality Control Checklist
                     </h5>
-                    <div className="text-xs text-white/80 space-y-1">
+                    <div className="text-xs text-white space-y-1">
                       <div>✓ Read question completely before calculating</div>
                       <div>✓ Underline what's being asked for</div>
                       <div>✓ Check answer format requirements</div>
@@ -615,7 +615,7 @@ const Level2Module8Section2Section4 = () => {
                     <h5 className="font-semibold text-elec-yellow mb-2">
                       Answer Confidence Indicators
                     </h5>
-                    <div className="text-xs text-white/80 space-y-1">
+                    <div className="text-xs text-white space-y-1">
                       <div>
                         <strong>HIGH:</strong> Immediate recognition, clear calculation path
                       </div>
@@ -637,11 +637,11 @@ const Level2Module8Section2Section4 = () => {
                 <h5 className="font-semibold text-elec-yellow mb-2">
                   Pro Tip: The "Double-Check Without Doubt" Method
                 </h5>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   For calculations: If you can't immediately see where an error might be, your
                   answer is probably correct. Don't over-check.
                 </p>
-                <div className="text-xs text-white/80 space-y-1">
+                <div className="text-xs text-white space-y-1">
                   <div>
                     <strong>First check:</strong> Order of magnitude (is 250A reasonable for a
                     lighting circuit?)
@@ -682,7 +682,7 @@ const Level2Module8Section2Section4 = () => {
                       <h5 className="font-medium text-green-400 text-lg mb-2">
                         Immediate Damage Assessment
                       </h5>
-                      <p className="text-sm text-white/80 mb-3">
+                      <p className="text-sm text-white mb-3">
                         Quick evaluation to determine the best recovery strategy without panic.
                       </p>
                       <div className="grid md:grid-cols-2 gap-3">
@@ -690,7 +690,7 @@ const Level2Module8Section2Section4 = () => {
                           <h6 className="text-xs font-medium text-green-400 mb-1">
                             ASSESS TIME SITUATION:
                           </h6>
-                          <div className="space-y-1 text-xs text-white/80">
+                          <div className="space-y-1 text-xs text-white">
                             <div>• How much time remains vs questions left?</div>
                             <div>• Which questions can be answered quickly?</div>
                             <div>• What's the minimum needed for pass mark?</div>
@@ -701,7 +701,7 @@ const Level2Module8Section2Section4 = () => {
                           <h6 className="text-xs font-medium text-green-400 mb-1">
                             ASSESS KNOWLEDGE GAPS:
                           </h6>
-                          <div className="space-y-1 text-xs text-white/80">
+                          <div className="space-y-1 text-xs text-white">
                             <div>• Which topics are causing problems?</div>
                             <div>• Can elimination still work for difficult questions?</div>
                             <div>• What practical knowledge can substitute?</div>
@@ -724,7 +724,7 @@ const Level2Module8Section2Section4 = () => {
                       <h5 className="font-medium text-elec-yellow text-lg mb-2">
                         Strategic Question Triage
                       </h5>
-                      <p className="text-sm text-white/80 mb-3">
+                      <p className="text-sm text-white mb-3">
                         Categorise remaining questions to maximise marks in available time.
                       </p>
                       <div className="space-y-3">
@@ -732,7 +732,7 @@ const Level2Module8Section2Section4 = () => {
                           <h6 className="font-medium text-elec-yellow text-sm mb-2">
                             Priority 1: Quick Win Questions (15-30 seconds each)
                           </h6>
-                          <div className="text-xs text-white/80 space-y-1">
+                          <div className="text-xs text-white space-y-1">
                             <div>• Basic safety regulations you know well</div>
                             <div>• Simple multiple choice with obvious wrong answers</div>
                             <div>• Standard values (cable colours, voltage levels)</div>
@@ -743,7 +743,7 @@ const Level2Module8Section2Section4 = () => {
                           <h6 className="font-medium text-elec-yellow text-sm mb-2">
                             Priority 2: Medium Effort Questions (1-2 minutes each)
                           </h6>
-                          <div className="text-xs text-white/80 space-y-1">
+                          <div className="text-xs text-white space-y-1">
                             <div>• Simple calculations with given formulas</div>
                             <div>• BS7671 lookups with known section numbers</div>
                             <div>• Practical experience questions</div>
@@ -754,7 +754,7 @@ const Level2Module8Section2Section4 = () => {
                           <h6 className="font-medium text-elec-yellow text-sm mb-2">
                             Priority 3: Complex Questions (educated guesses)
                           </h6>
-                          <div className="text-xs text-white/80 space-y-1">
+                          <div className="text-xs text-white space-y-1">
                             <div>• Multi-step calculations</div>
                             <div>• Unfamiliar BS7671 regulation searches</div>
                             <div>• Questions requiring multiple table lookups</div>
@@ -773,7 +773,7 @@ const Level2Module8Section2Section4 = () => {
                       <h5 className="font-medium text-elec-yellow text-lg mb-2">
                         Advanced Guessing Strategies
                       </h5>
-                      <p className="text-sm text-white/80 mb-3">
+                      <p className="text-sm text-white mb-3">
                         When you must guess, use logical elimination and electrical principles.
                       </p>
                       <div className="grid md:grid-cols-2 gap-3">
@@ -781,7 +781,7 @@ const Level2Module8Section2Section4 = () => {
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">
                             ELIMINATION HIERARCHY:
                           </h6>
-                          <div className="space-y-1 text-xs text-white/80">
+                          <div className="space-y-1 text-xs text-white">
                             <div>• Remove obviously unsafe options</div>
                             <div>• Eliminate answers violating basic electrical laws</div>
                             <div>• Remove options with incorrect units/magnitudes</div>
@@ -792,7 +792,7 @@ const Level2Module8Section2Section4 = () => {
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">
                             COMMON SENSE CHECKS:
                           </h6>
-                          <div className="space-y-1 text-xs text-white/80">
+                          <div className="space-y-1 text-xs text-white">
                             <div>• Does answer match real-world experience?</div>
                             <div>• Is it consistent with BS7671 safety principles?</div>
                             <div>• Would this work in actual installation?</div>
@@ -821,7 +821,7 @@ const Level2Module8Section2Section4 = () => {
                       <h5 className="font-medium text-elec-yellow text-lg mb-2">
                         Psychological Recovery Techniques
                       </h5>
-                      <p className="text-sm text-white/80 mb-3">
+                      <p className="text-sm text-white mb-3">
                         Maintain confidence and focus when the exam isn't going to plan.
                       </p>
                       <div className="space-y-3">
@@ -829,7 +829,7 @@ const Level2Module8Section2Section4 = () => {
                           <h6 className="font-medium text-elec-yellow text-sm mb-2">
                             Mindset Reset Protocol
                           </h6>
-                          <div className="text-xs text-white/80 space-y-1">
+                          <div className="text-xs text-white space-y-1">
                             <div>
                               <strong>Step 1:</strong> Accept that perfect performance isn't
                               required
@@ -855,7 +855,7 @@ const Level2Module8Section2Section4 = () => {
                           <h6 className="font-medium text-elec-yellow text-sm mb-2">
                             Success Mantras for Crisis Moments
                           </h6>
-                          <div className="text-xs text-white/80 space-y-1">
+                          <div className="text-xs text-white space-y-1">
                             <div>"I know more than I think I know"</div>
                             <div>"Partial credit is better than no credit"</div>
                             <div>"My practical experience guides my answers"</div>
@@ -873,11 +873,11 @@ const Level2Module8Section2Section4 = () => {
                 <h5 className="font-semibold text-green-400 mb-2">
                   Final Recovery Strategy: The 60% Rule
                 </h5>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   You only need 36 correct answers out of 60 to pass. This means you can get 24
                   questions wrong and still succeed.
                 </p>
-                <div className="grid md:grid-cols-2 gap-3 text-xs text-white/80">
+                <div className="grid md:grid-cols-2 gap-3 text-xs text-white">
                   <div>
                     <h6 className="font-medium text-green-400 mb-1">CONFIDENCE BUILDERS:</h6>
                     <div className="space-y-1">
@@ -923,7 +923,7 @@ const Level2Module8Section2Section4 = () => {
                       <h5 className="font-medium text-elec-yellow text-lg mb-2">
                         The CRISP Method for Question Analysis
                       </h5>
-                      <p className="text-sm text-white/80 mb-3">
+                      <p className="text-sm text-white mb-3">
                         A systematic approach to prevent misreading and misunderstanding questions.
                       </p>
                       <div className="grid md:grid-cols-2 gap-3">
@@ -931,7 +931,7 @@ const Level2Module8Section2Section4 = () => {
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">
                             C - CAPTURE the question:
                           </h6>
-                          <div className="space-y-1 text-xs text-white/80">
+                          <div className="space-y-1 text-xs text-white">
                             <div>• Read the entire question twice before starting</div>
                             <div>
                               • Identify the question type (calculation, regulation, practical)
@@ -944,7 +944,7 @@ const Level2Module8Section2Section4 = () => {
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">
                             R - RECOGNISE what's asked:
                           </h6>
-                          <div className="space-y-1 text-xs text-white/80">
+                          <div className="space-y-1 text-xs text-white">
                             <div>• What specific value or information is required?</div>
                             <div>• What units should the answer be in?</div>
                             <div>• Are there multiple parts to the question?</div>
@@ -957,7 +957,7 @@ const Level2Module8Section2Section4 = () => {
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">
                             I - IDENTIFY given information:
                           </h6>
-                          <div className="space-y-1 text-xs text-white/80">
+                          <div className="space-y-1 text-xs text-white">
                             <div>• List all numerical values and units</div>
                             <div>• Note any conditions or constraints</div>
                             <div>• Identify installation method or environment</div>
@@ -968,7 +968,7 @@ const Level2Module8Section2Section4 = () => {
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">
                             S - SELECT appropriate method:
                           </h6>
-                          <div className="space-y-1 text-xs text-white/80">
+                          <div className="space-y-1 text-xs text-white">
                             <div>• Choose correct formula or regulation</div>
                             <div>• Determine calculation sequence</div>
                             <div>• Select appropriate BS7671 section</div>
@@ -980,7 +980,7 @@ const Level2Module8Section2Section4 = () => {
                         <h6 className="text-xs font-medium text-elec-yellow mb-1">
                           P - PERFORM and verify:
                         </h6>
-                        <div className="space-y-1 text-xs text-white/80">
+                        <div className="space-y-1 text-xs text-white">
                           <div>• Execute the planned solution method</div>
                           <div>• Check units throughout calculation</div>
                           <div>• Verify answer magnitude makes sense</div>
@@ -998,7 +998,7 @@ const Level2Module8Section2Section4 = () => {
                       <h5 className="font-medium text-green-400 text-lg mb-2">
                         Pattern Recognition for Common Question Types
                       </h5>
-                      <p className="text-sm text-white/80 mb-3">
+                      <p className="text-sm text-white mb-3">
                         Learn to quickly identify question patterns to avoid time-consuming
                         mistakes.
                       </p>
@@ -1007,7 +1007,7 @@ const Level2Module8Section2Section4 = () => {
                           <h6 className="font-medium text-green-400 text-sm mb-2">
                             Cable Sizing Questions - Red Flags
                           </h6>
-                          <div className="text-xs text-white/80 space-y-1">
+                          <div className="text-xs text-white space-y-1">
                             <div>
                               • Watch for: Grouping factors, installation method, ambient
                               temperature
@@ -1023,7 +1023,7 @@ const Level2Module8Section2Section4 = () => {
                           <h6 className="font-medium text-green-400 text-sm mb-2">
                             Voltage Drop Questions - Red Flags
                           </h6>
-                          <div className="text-xs text-white/80 space-y-1">
+                          <div className="text-xs text-white space-y-1">
                             <div>• Watch for: Circuit length, load diversity, cable type</div>
                             <div>• Common trap: Using wrong mV/A/m value from tables</div>
                             <div>• Solution: Match exact cable size and installation method</div>
@@ -1037,7 +1037,7 @@ const Level2Module8Section2Section4 = () => {
                           <h6 className="font-medium text-green-400 text-sm mb-2">
                             Earth Fault Loop Questions - Red Flags
                           </h6>
-                          <div className="text-xs text-white/80 space-y-1">
+                          <div className="text-xs text-white space-y-1">
                             <div>• Watch for: System type (TN-S, TN-C-S, TT), circuit length</div>
                             <div>
                               • Common trap: Using wrong impedance values or measurement points
@@ -1060,7 +1060,7 @@ const Level2Module8Section2Section4 = () => {
                       <h5 className="font-medium text-elec-yellow text-lg mb-2">
                         Cross-Checking and Validation Techniques
                       </h5>
-                      <p className="text-sm text-white/80 mb-3">
+                      <p className="text-sm text-white mb-3">
                         Multiple methods to verify answers and catch errors before submission.
                       </p>
                       <div className="grid md:grid-cols-2 gap-3">
@@ -1068,7 +1068,7 @@ const Level2Module8Section2Section4 = () => {
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">
                             NUMERICAL VALIDATION:
                           </h6>
-                          <div className="space-y-1 text-xs text-white/80">
+                          <div className="space-y-1 text-xs text-white">
                             <div>• Order of magnitude check (is 2.5kA reasonable?)</div>
                             <div>• Unit analysis (do the units cancel correctly?)</div>
                             <div>• Ratio checking (larger cable = lower resistance)</div>
@@ -1079,7 +1079,7 @@ const Level2Module8Section2Section4 = () => {
                           <h6 className="text-xs font-medium text-elec-yellow mb-1">
                             REGULATION VALIDATION:
                           </h6>
-                          <div className="space-y-1 text-xs text-white/80">
+                          <div className="space-y-1 text-xs text-white">
                             <div>• Does the regulation number exist?</div>
                             <div>• Is it the current edition (18th Edition)?</div>
                             <div>• Does the regulation content match the question?</div>
@@ -1118,7 +1118,7 @@ const Level2Module8Section2Section4 = () => {
                       <div className="font-medium text-elec-yellow text-sm">
                         PITFALL: Confirmation Bias
                       </div>
-                      <div className="text-xs text-white/80 mt-2 space-y-1">
+                      <div className="text-xs text-white mt-2 space-y-1">
                         <div>• Seeing what you expect to see in answers</div>
                         <div>• Forcing calculations to match preconceived results</div>
                         <div>• Dismissing correct answers that seem unexpected</div>
@@ -1126,7 +1126,7 @@ const Level2Module8Section2Section4 = () => {
                       </div>
                       <div className="mt-2 p-2 bg-green-500/20 rounded border border-green-500/30">
                         <div className="font-medium text-green-400 text-xs mb-1">SOLUTION:</div>
-                        <div className="text-xs text-white/80 space-y-1">
+                        <div className="text-xs text-white space-y-1">
                           <div>• Approach each question with fresh perspective</div>
                           <div>• Question your initial assumptions</div>
                           <div>• Consider why unexpected answers might be correct</div>
@@ -1139,7 +1139,7 @@ const Level2Module8Section2Section4 = () => {
                       <div className="font-medium text-elec-yellow text-sm">
                         PITFALL: Anchoring Effect
                       </div>
-                      <div className="text-xs text-white/80 mt-2 space-y-1">
+                      <div className="text-xs text-white mt-2 space-y-1">
                         <div>• Over-relying on first piece of information seen</div>
                         <div>• Basing all subsequent decisions on initial value</div>
                         <div>• Difficulty adjusting from initial estimate</div>
@@ -1147,7 +1147,7 @@ const Level2Module8Section2Section4 = () => {
                       </div>
                       <div className="mt-2 p-2 bg-green-500/20 rounded border border-green-500/30">
                         <div className="font-medium text-green-400 text-xs mb-1">SOLUTION:</div>
-                        <div className="text-xs text-white/80 space-y-1">
+                        <div className="text-xs text-white space-y-1">
                           <div>• Read entire question before forming opinions</div>
                           <div>• Consider multiple solution approaches</div>
                           <div>• Challenge your initial interpretations</div>
@@ -1160,7 +1160,7 @@ const Level2Module8Section2Section4 = () => {
                       <div className="font-medium text-elec-yellow text-sm">
                         PITFALL: Overconfidence Effect
                       </div>
-                      <div className="text-xs text-white/80 mt-2 space-y-1">
+                      <div className="text-xs text-white mt-2 space-y-1">
                         <div>• Rushing through "easy" questions</div>
                         <div>• Skipping verification steps for familiar problems</div>
                         <div>• Underestimating time needed for complex questions</div>
@@ -1168,7 +1168,7 @@ const Level2Module8Section2Section4 = () => {
                       </div>
                       <div className="mt-2 p-2 bg-green-500/20 rounded border border-green-500/30">
                         <div className="font-medium text-green-400 text-xs mb-1">SOLUTION:</div>
-                        <div className="text-xs text-white/80 space-y-1">
+                        <div className="text-xs text-white space-y-1">
                           <div>• Maintain consistent checking procedures</div>
                           <div>• Allocate appropriate time for all questions</div>
                           <div>• Question "obvious" answers</div>
@@ -1189,7 +1189,7 @@ const Level2Module8Section2Section4 = () => {
                       <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2"></div>
                       <div className="text-sm">
                         <span className="font-medium text-elec-yellow">Growth mindset:</span>
-                        <span className="text-white/80">
+                        <span className="text-white">
                           {' '}
                           View challenges as learning opportunities
                         </span>
@@ -1199,7 +1199,7 @@ const Level2Module8Section2Section4 = () => {
                       <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2"></div>
                       <div className="text-sm">
                         <span className="font-medium text-elec-yellow">Error normalisation:</span>
-                        <span className="text-white/80">
+                        <span className="text-white">
                           {' '}
                           Accept that mistakes are part of learning
                         </span>
@@ -1209,7 +1209,7 @@ const Level2Module8Section2Section4 = () => {
                       <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2"></div>
                       <div className="text-sm">
                         <span className="font-medium text-elec-yellow">Adaptive thinking:</span>
-                        <span className="text-white/80">
+                        <span className="text-white">
                           {' '}
                           Adjust strategies based on circumstances
                         </span>
@@ -1219,7 +1219,7 @@ const Level2Module8Section2Section4 = () => {
                       <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2"></div>
                       <div className="text-sm">
                         <span className="font-medium text-elec-yellow">Self-compassion:</span>
-                        <span className="text-white/80">
+                        <span className="text-white">
                           {' '}
                           Treat yourself with kindness during difficulties
                         </span>
@@ -1229,7 +1229,7 @@ const Level2Module8Section2Section4 = () => {
                       <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2"></div>
                       <div className="text-sm">
                         <span className="font-medium text-elec-yellow">Focus control:</span>
-                        <span className="text-white/80">
+                        <span className="text-white">
                           {' '}
                           Direct attention to what you can influence
                         </span>
@@ -1239,7 +1239,7 @@ const Level2Module8Section2Section4 = () => {
                       <div className="w-2 h-2 bg-elec-yellow rounded-full mt-2"></div>
                       <div className="text-sm">
                         <span className="font-medium text-elec-yellow">Stress inoculation:</span>
-                        <span className="text-white/80">
+                        <span className="text-white">
                           {' '}
                           Practice under progressively challenging conditions
                         </span>
@@ -1252,7 +1252,7 @@ const Level2Module8Section2Section4 = () => {
                       <h5 className="font-semibold text-elec-yellow mb-2">
                         The Champion's Mindset
                       </h5>
-                      <div className="text-xs text-white/80 space-y-1">
+                      <div className="text-xs text-white space-y-1">
                         <div>
                           <strong>Before exam:</strong> "I am prepared and capable"
                         </div>
@@ -1275,7 +1275,7 @@ const Level2Module8Section2Section4 = () => {
                       <h5 className="font-semibold text-green-400 mb-2">
                         Pressure Management Protocol
                       </h5>
-                      <div className="text-xs text-white/80 space-y-1">
+                      <div className="text-xs text-white space-y-1">
                         <div>• Recognise pressure as normal and manageable</div>
                         <div>• Use pressure as energy for enhanced performance</div>
                         <div>• Maintain perspective: one exam doesn't define you</div>
@@ -1291,11 +1291,11 @@ const Level2Module8Section2Section4 = () => {
                 <h5 className="font-semibold text-elec-yellow mb-2">
                   Pro Tip: The "Good Enough" Principle
                 </h5>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Perfectionism is the enemy of progress. In exams, "good enough" answers that are
                   submitted are infinitely better than perfect answers that run out of time.
                 </p>
-                <div className="text-xs text-white/80 space-y-1">
+                <div className="text-xs text-white space-y-1">
                   <div>
                     <strong>80% certainty:</strong> Move forward confidently - this is sufficient
                     for most questions

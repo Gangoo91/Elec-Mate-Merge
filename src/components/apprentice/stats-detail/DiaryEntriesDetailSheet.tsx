@@ -124,7 +124,7 @@ export function DiaryEntriesDetailSheet({
               onClick={() => onOpenChange(false)}
               className="absolute right-2 top-1.5 h-11 w-11 flex items-center justify-center rounded-full active:bg-white/10 touch-manipulation z-10"
             >
-              <ChevronDown className="h-5 w-5 text-white/60" />
+              <ChevronDown className="h-5 w-5 text-white" />
             </button>
           </SheetHeader>
 
@@ -161,11 +161,11 @@ export function DiaryEntriesDetailSheet({
                 {hasEntryToday ? (
                   <span className="text-sm text-green-400 font-medium">Logged today</span>
                 ) : (
-                  <span className="text-sm text-white/50">No entry today</span>
+                  <span className="text-sm text-white">No entry today</span>
                 )}
                 {diaryStreak > 1 && (
                   <>
-                    <span className="text-white/20">·</span>
+                    <span className="text-white">·</span>
                     <span className="text-sm text-purple-400 font-medium">
                       {diaryStreak}-day streak
                     </span>
@@ -177,7 +177,7 @@ export function DiaryEntriesDetailSheet({
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.4 }}
-                  className="text-xs text-white/40 mt-1.5"
+                  className="text-xs text-white mt-1.5"
                 >
                   Recording since {firstEntryDate}
                 </motion.p>
@@ -193,24 +193,24 @@ export function DiaryEntriesDetailSheet({
             >
               <div className="flex-1 relative rounded-2xl overflow-hidden bg-white/[0.06] border border-white/[0.08] p-3.5 text-center">
                 <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-purple-500/0 via-purple-400/40 to-purple-500/0" />
-                <p className="text-xs text-white/50 mb-1 font-medium">This week</p>
+                <p className="text-xs text-white mb-1 font-medium">This week</p>
                 <p className="text-xl font-bold text-white">{weekComparison.thisWeek}</p>
               </div>
               <div className="flex-1 relative rounded-2xl overflow-hidden bg-white/[0.06] border border-white/[0.08] p-3.5 text-center">
                 <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-purple-500/0 via-purple-300/30 to-purple-500/0" />
-                <p className="text-xs text-white/50 mb-1 font-medium">Last week</p>
+                <p className="text-xs text-white mb-1 font-medium">Last week</p>
                 <p className="text-xl font-bold text-white">{weekComparison.lastWeek}</p>
               </div>
               <div className="flex-1 relative rounded-2xl overflow-hidden bg-white/[0.06] border border-white/[0.08] p-3.5 text-center">
                 <div className="absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-purple-500/0 via-purple-300/30 to-purple-500/0" />
-                <p className="text-xs text-white/50 mb-1 font-medium">Change</p>
+                <p className="text-xs text-white mb-1 font-medium">Change</p>
                 <div className="flex items-center justify-center gap-1">
                   {weekComparison.delta > 0 ? (
                     <TrendingUp className="h-4 w-4 text-green-400" />
                   ) : weekComparison.delta < 0 ? (
                     <TrendingDown className="h-4 w-4 text-red-400" />
                   ) : (
-                    <Minus className="h-4 w-4 text-white/50" />
+                    <Minus className="h-4 w-4 text-white" />
                   )}
                   <p
                     className={cn(
@@ -219,7 +219,7 @@ export function DiaryEntriesDetailSheet({
                         ? 'text-green-400'
                         : weekComparison.delta < 0
                           ? 'text-red-400'
-                          : 'text-white/50'
+                          : 'text-white'
                     )}
                   >
                     {weekComparison.delta > 0 ? '+' : ''}
@@ -277,17 +277,17 @@ export function DiaryEntriesDetailSheet({
                 </div>
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs text-white/60">Per week</span>
+                    <span className="text-xs text-white">Per week</span>
                     <span className="text-sm font-bold text-white">{avgEntriesPerWeek}</span>
                   </div>
                   {mostProductiveDay && (
                     <div className="flex items-center justify-between">
-                      <span className="text-xs text-white/60">Best day</span>
+                      <span className="text-xs text-white">Best day</span>
                       <span className="text-sm font-bold text-white">{mostProductiveDay}</span>
                     </div>
                   )}
                   <div className="flex items-center justify-between">
-                    <span className="text-xs text-white/60">Sites</span>
+                    <span className="text-xs text-white">Sites</span>
                     <span className="text-sm font-bold text-white">{uniqueSitesCount}</span>
                   </div>
                 </div>
@@ -302,9 +302,9 @@ export function DiaryEntriesDetailSheet({
                 transition={{ delay: 0.3 }}
               >
                 <div className="flex items-center gap-2 mb-3">
-                  <Heart className="h-4 w-4 text-white/50" />
+                  <Heart className="h-4 w-4 text-white" />
                   <span className="text-sm font-semibold text-white">Mood Trend</span>
-                  <span className="text-xs text-white/50 ml-auto">
+                  <span className="text-xs text-white ml-auto">
                     Last {moodTrend.length} entries
                   </span>
                 </div>
@@ -335,9 +335,9 @@ export function DiaryEntriesDetailSheet({
                 transition={{ delay: 0.35 }}
               >
                 <div className="flex items-center gap-2 mb-3">
-                  <MapPin className="h-4 w-4 text-white/50" />
+                  <MapPin className="h-4 w-4 text-white" />
                   <span className="text-sm font-semibold text-white">Top Sites</span>
-                  <span className="text-xs text-white/50 ml-auto">{uniqueSitesCount} total</span>
+                  <span className="text-xs text-white ml-auto">{uniqueSitesCount} total</span>
                 </div>
                 <div className="space-y-2.5">
                   {topSites.map((site, i) => {
@@ -385,9 +385,9 @@ export function DiaryEntriesDetailSheet({
                 transition={{ delay: 0.4 }}
               >
                 <div className="flex items-center gap-2 mb-3">
-                  <GraduationCap className="h-4 w-4 text-white/50" />
+                  <GraduationCap className="h-4 w-4 text-white" />
                   <span className="text-sm font-semibold text-white">Skills Practised</span>
-                  <span className="text-xs text-white/50 ml-auto">
+                  <span className="text-xs text-white ml-auto">
                     {skillDiversityPercent}% diversity
                   </span>
                 </div>
@@ -408,7 +408,7 @@ export function DiaryEntriesDetailSheet({
                       )}
                     />
                   </div>
-                  <p className="text-xs text-white/50 mt-1.5">
+                  <p className="text-xs text-white mt-1.5">
                     {skillFrequency.length} of 8 skill categories logged
                   </p>
                 </div>
@@ -421,7 +421,7 @@ export function DiaryEntriesDetailSheet({
                       className={cn(
                         'px-3 py-1.5 rounded-xl text-xs font-semibold border',
                         'touch-manipulation active:scale-95 transition-all',
-                        skillColours[skill] || 'bg-white/10 text-white/70 border-white/15'
+                        skillColours[skill] || 'bg-white/10 text-white border-white/15'
                       )}
                     >
                       {skill} ({count})
@@ -439,7 +439,7 @@ export function DiaryEntriesDetailSheet({
                 transition={{ delay: 0.45 }}
               >
                 <div className="flex items-center gap-2 mb-3">
-                  <BookOpen className="h-4 w-4 text-white/50" />
+                  <BookOpen className="h-4 w-4 text-white" />
                   <span className="text-sm font-semibold text-white">What You Learned</span>
                 </div>
                 <div className="space-y-2.5">
@@ -449,11 +449,11 @@ export function DiaryEntriesDetailSheet({
                       onClick={goToDiary}
                       className="w-full text-left rounded-xl bg-white/[0.05] border border-white/[0.08] p-4 touch-manipulation active:scale-[0.98] active:bg-white/[0.08] transition-all"
                     >
-                      <p className="text-sm text-white/80 leading-relaxed">{h.text}</p>
+                      <p className="text-sm text-white leading-relaxed">{h.text}</p>
                       <div className="flex items-center gap-2 mt-2">
                         <span className="text-xs text-purple-400 font-medium">{h.site}</span>
-                        <span className="text-white/20">·</span>
-                        <span className="text-xs text-white/40">{h.date}</span>
+                        <span className="text-white">·</span>
+                        <span className="text-xs text-white">{h.date}</span>
                       </div>
                     </button>
                   ))}
@@ -474,7 +474,7 @@ export function DiaryEntriesDetailSheet({
                   <div className="p-2 rounded-xl bg-purple-500/15 flex-shrink-0">
                     <Lightbulb className="h-4 w-4 text-purple-400" />
                   </div>
-                  <p className="text-sm text-white/90 leading-relaxed">{insightText}</p>
+                  <p className="text-sm text-white leading-relaxed">{insightText}</p>
                 </div>
               </motion.div>
             )}
@@ -491,7 +491,7 @@ export function DiaryEntriesDetailSheet({
                   <Calendar className="h-8 w-8 text-purple-400" />
                 </div>
                 <h3 className="text-base font-semibold text-white mb-1">Start your diary</h3>
-                <p className="text-sm text-white/50 max-w-[260px] mb-5">
+                <p className="text-sm text-white max-w-[260px] mb-5">
                   Record what you learn on site each day to track your apprenticeship progress
                 </p>
                 <button
@@ -513,7 +513,7 @@ export function DiaryEntriesDetailSheet({
               >
                 <div className="flex items-center gap-3 pt-1 mb-4">
                   <div className="flex-1 border-t border-white/[0.06]" />
-                  <span className="text-[11px] font-semibold text-white/40 uppercase tracking-wider">
+                  <span className="text-[11px] font-semibold text-white uppercase tracking-wider">
                     What to do next
                   </span>
                   <div className="flex-1 border-t border-white/[0.06]" />

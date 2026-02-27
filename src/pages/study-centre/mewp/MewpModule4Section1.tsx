@@ -202,7 +202,7 @@ export default function MewpModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-4">
@@ -227,7 +227,7 @@ export default function MewpModule4Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Pre-Start Checks &amp; Operating Controls
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The 11-step pre-start procedure, platform and ground controls, auxiliary and emergency
             systems, emergency stops, and function testing before working at height
           </p>
@@ -376,7 +376,7 @@ export default function MewpModule4Section1() {
                       </span>
                       <div>
                         <p className="text-sm font-medium text-white">{item.title}</p>
-                        <p className="text-sm text-white/80">{item.desc}</p>
+                        <p className="text-sm text-white">{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -388,7 +388,7 @@ export default function MewpModule4Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">No Shortcuts</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If <strong>any</strong> step cannot be completed satisfactorily &mdash; for
                   example, no ground rescue person is available, the rescue plan has not been
                   communicated, or the ground conditions are unsuitable &mdash;{' '}
@@ -431,7 +431,7 @@ export default function MewpModule4Section1() {
                     Typical Platform Control Functions
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -488,13 +488,13 @@ export default function MewpModule4Section1() {
                 <p className="text-sm font-medium text-elec-yellow mb-2">
                   Deadman &amp; Proportional Controls
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   All MEWP controls operate on a{' '}
                   <strong className="text-white">deadman (hold-to-run)</strong> principle: the
                   control must be actively held by the operator for the machine to move. When the
                   lever or button is released, it returns to neutral and movement stops immediately.
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Many modern machines also feature{' '}
                   <strong className="text-white">proportional controls</strong>: the further you
                   push the lever, the faster the movement. A gentle input produces slow, precise
@@ -536,7 +536,7 @@ export default function MewpModule4Section1() {
                 <p className="text-sm font-medium text-teal-400 mb-3">
                   When Ground Controls Are Used
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -583,7 +583,7 @@ export default function MewpModule4Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Requirement</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The nominated ground rescue person{' '}
                   <strong className="text-white">
                     MUST be trained on the specific ground controls of the machine in use
@@ -620,7 +620,7 @@ export default function MewpModule4Section1() {
                 <p className="text-sm font-medium text-elec-yellow mb-3">
                   Four Types of Emergency / Auxiliary Lowering System
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Different MEWP types use different emergency lowering methods. You must know which
                   system is fitted to YOUR machine before you begin work.
                 </p>
@@ -635,7 +635,7 @@ export default function MewpModule4Section1() {
                       1. Auxiliary Power Unit (APU)
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     An electric motor powered by the machine&rsquo;s battery, connected to a small
                     hydraulic pump. Provides powered lowering when the main engine or hydraulic
                     system has failed. Activated from the ground control panel.
@@ -646,7 +646,7 @@ export default function MewpModule4Section1() {
                     <Wrench className="h-4 w-4 text-blue-400" />
                     <p className="text-sm font-medium text-blue-400">2. Manual Lowering Valve</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     A valve at the base of the machine that, when activated by pulling a handle,
                     allows gravity-assisted lowering. The hydraulic fluid is released in a
                     controlled manner, allowing the boom or scissor mechanism to descend under its
@@ -658,7 +658,7 @@ export default function MewpModule4Section1() {
                     <Wrench className="h-4 w-4 text-green-400" />
                     <p className="text-sm font-medium text-green-400">3. Hand Pump</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     A manual hydraulic pump, typically located at the base of the machine, that
                     allows a person to manually pump hydraulic fluid to lower the platform. Slow but
                     reliable &mdash; does not depend on any electrical or engine power.
@@ -669,7 +669,7 @@ export default function MewpModule4Section1() {
                     <Wrench className="h-4 w-4 text-purple-400" />
                     <p className="text-sm font-medium text-purple-400">4. Engine Override</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The ability to bypass the normal control circuits and operate the hydraulics
                     directly from the engine. Used when the electronic control system has failed but
                     the engine and hydraulics are still functional.
@@ -682,7 +682,7 @@ export default function MewpModule4Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Know YOUR Machine</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Each machine type has different emergency lowering procedures, and the location of
                   controls varies between manufacturers.{' '}
                   <strong className="text-white">
@@ -696,10 +696,10 @@ export default function MewpModule4Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
-                  <Info className="h-5 w-5 text-white/60" />
+                  <Info className="h-5 w-5 text-white" />
                   <p className="text-sm font-medium text-white">Auxiliary Platform Controls</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Some MEWPs &mdash; particularly larger boom-type machines &mdash; have auxiliary
                   controls in the basket that operate independently of the primary platform
                   controls. These provide a backup if the primary control system fails while the
@@ -743,7 +743,7 @@ export default function MewpModule4Section1() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Press</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Pressing ANY emergency stop button immediately halts ALL machine functions.
                         All hydraulic, electrical, and drive systems are disabled.
                       </p>
@@ -755,7 +755,7 @@ export default function MewpModule4Section1() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Reset</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         To reset, pull or twist the button to release the mechanical latch. The
                         button will pop back out to its normal position.
                       </p>
@@ -767,7 +767,7 @@ export default function MewpModule4Section1() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Re-activate</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Follow the manufacturer&rsquo;s specific re-activation procedure to restore
                         normal operation. This varies between machines.
                       </p>
@@ -781,7 +781,7 @@ export default function MewpModule4Section1() {
                   <ShieldAlert className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Understanding</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Emergency stops <strong className="text-white">do NOT lower the platform</strong>.
                   They simply stop all movement. The platform will remain at whatever height it was
                   at when the button was pressed. This is a deliberate safety feature &mdash;
@@ -793,7 +793,7 @@ export default function MewpModule4Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Key Points to Remember</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -862,7 +862,7 @@ export default function MewpModule4Section1() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Raise to ~1 Metre</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Raise the platform to approximately 1 metre above ground level. This is high
                         enough to test all functions but low enough to minimise risk if a fault is
                         found.
@@ -877,7 +877,7 @@ export default function MewpModule4Section1() {
                       <p className="text-sm font-medium text-white">
                         Test All Directional Controls
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Drive forward, reverse, steer left, steer right. Confirm smooth response and
                         correct direction.
                       </p>
@@ -891,7 +891,7 @@ export default function MewpModule4Section1() {
                       <p className="text-sm font-medium text-white">
                         Test All Boom / Scissor Functions
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Raise, lower, telescope in/out, slew left/right (as applicable). Confirm all
                         movements are smooth and responsive.
                       </p>
@@ -905,7 +905,7 @@ export default function MewpModule4Section1() {
                       <p className="text-sm font-medium text-white">
                         Test Emergency Stop (Platform)
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Press the platform emergency stop while a control is active. Confirm all
                         movement stops instantly. Reset and re-activate.
                       </p>
@@ -917,7 +917,7 @@ export default function MewpModule4Section1() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Test Emergency Stop (Ground)</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Have the ground rescue person press the ground-level emergency stop. Confirm
                         all movement stops instantly. Reset and re-activate.
                       </p>
@@ -931,7 +931,7 @@ export default function MewpModule4Section1() {
                       <p className="text-sm font-medium text-white">
                         Test Emergency / Auxiliary Lowering
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Lower the platform and test the emergency/auxiliary lowering system from the
                         ground. Confirm it functions correctly.
                       </p>
@@ -943,7 +943,7 @@ export default function MewpModule4Section1() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Confirm &amp; Proceed</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Confirm all functions are smooth, responsive, and without unusual noise or
                         vibration. Only then proceed to working height.
                       </p>
@@ -957,7 +957,7 @@ export default function MewpModule4Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">If Any Function Fails</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If <strong>any</strong> control does not respond correctly, if movement is jerky
                   or uneven, or if you hear unusual noises or feel abnormal vibrations,{' '}
                   <strong>do not proceed</strong>. Lower the platform, shut down the machine, tag it
@@ -968,7 +968,7 @@ export default function MewpModule4Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">What You Are Looking For</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Smooth, proportional response from all control inputs</span>
@@ -1012,7 +1012,7 @@ export default function MewpModule4Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1026,7 +1026,7 @@ export default function MewpModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-4">

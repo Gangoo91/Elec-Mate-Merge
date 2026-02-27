@@ -252,7 +252,7 @@ const RenewableEnergyModule7Section6 = () => {
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
           Safety, Isolation & Working Procedures
         </h1>
-        <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+        <p className="text-white text-sm sm:text-base max-w-xl mx-auto">
           Essential safety procedures for working safely on renewable energy systems
         </p>
       </div>
@@ -301,7 +301,7 @@ const RenewableEnergyModule7Section6 = () => {
           ].map((outcome, index) => (
             <div key={index} className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
-              <span className="text-white/80 text-sm">{outcome}</span>
+              <span className="text-white text-sm">{outcome}</span>
             </div>
           ))}
         </div>
@@ -314,7 +314,7 @@ const RenewableEnergyModule7Section6 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">01</span>
             <h2 className="text-xl font-semibold text-white">DC Hazards and Controls</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               PV systems present unique hazards compared to conventional AC installations.
               Understanding these hazards is essential for safe working.
@@ -348,7 +348,7 @@ const RenewableEnergyModule7Section6 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">02</span>
             <h2 className="text-xl font-semibold text-white">Isolation Procedures</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Correct isolation procedures are critical for safe working on PV systems. The sequence
               and method of isolation affects safety.
@@ -383,7 +383,7 @@ const RenewableEnergyModule7Section6 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">03</span>
             <h2 className="text-xl font-semibold text-white">Personal Protective Equipment</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               PPE selection for PV work must address both electrical and other hazards present
               during installation and maintenance activities.
@@ -419,7 +419,7 @@ const RenewableEnergyModule7Section6 = () => {
               Risk Assessment and Method Statements
             </h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Formal risk assessment and method statements document hazards and controls, ensuring
               consistent safe working practices.
@@ -452,7 +452,7 @@ const RenewableEnergyModule7Section6 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">05</span>
             <h2 className="text-xl font-semibold text-white">Emergency Procedures</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Pre-planned emergency procedures enable rapid, effective response to incidents during
               PV system work.
@@ -484,7 +484,7 @@ const RenewableEnergyModule7Section6 = () => {
             <Zap className="w-4 h-4 text-elec-yellow" />
             Practical Guidance
           </h3>
-          <div className="space-y-2 text-white/80 text-sm">
+          <div className="space-y-2 text-white text-sm">
             <p>
               <span className="text-white font-medium">Safety culture:</span> Safety is everyone's
               responsibility. Encourage speaking up about hazards. Never normalise shortcuts or
@@ -510,7 +510,7 @@ const RenewableEnergyModule7Section6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <h3 className="text-white font-medium mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>

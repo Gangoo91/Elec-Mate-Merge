@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Archive, ChevronRight, Loader2 } from 'lucide-react';
-import { Badge } from '@/components/ui/badge';
-import { useSavedAgentResults, AgentType, AGENT_LABELS } from '@/hooks/useSavedAgentResults';
+import { useSavedAgentResults, AgentType } from '@/hooks/useSavedAgentResults';
 import { SavedResultsSheet } from './SavedResultsSheet';
 
 // Short labels for badges
@@ -31,25 +30,25 @@ export const SavedResultsCard: React.FC = () => {
       <motion.button
         whileTap={{ scale: 0.98 }}
         onClick={() => setSheetOpen(true)}
-        className="w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500/50 rounded-2xl touch-manipulation"
+        className="w-full text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-elec-yellow/50 rounded-xl touch-manipulation"
       >
-        <div className="relative overflow-hidden bg-gradient-to-br from-purple-500/20 to-indigo-500/20 border border-purple-500/30 rounded-2xl group active:bg-purple-500/25 transition-colors">
+        <div className="rounded-xl bg-white/[0.04] border border-white/[0.06] active:bg-white/[0.08] transition-colors group">
           <div className="p-4">
             <div className="flex items-center gap-3">
               {/* Icon */}
-              <div className="flex-shrink-0 w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br from-purple-500 to-indigo-600">
+              <div className="flex-shrink-0 w-11 h-11 rounded-xl bg-elec-yellow/10 border border-elec-yellow/20 flex items-center justify-center">
                 {isLoading ? (
-                  <Loader2 className="h-6 w-6 text-white animate-spin" />
+                  <Loader2 className="h-5 w-5 text-elec-yellow animate-spin" />
                 ) : (
-                  <Archive className="h-6 w-6 text-white" />
+                  <Archive className="h-5 w-5 text-elec-yellow" />
                 )}
               </div>
 
               <div className="flex-1 min-w-0">
                 {/* Title */}
-                <h3 className="text-[15px] font-bold text-white">Saved Results</h3>
+                <h3 className="text-[15px] font-semibold text-white">Saved Results</h3>
                 {/* Count */}
-                <p className="text-[13px] text-white/70">
+                <p className="text-[13px] text-white">
                   {isLoading
                     ? 'Loading...'
                     : `${totalCount} completed job${totalCount !== 1 ? 's' : ''}`}
@@ -57,8 +56,8 @@ export const SavedResultsCard: React.FC = () => {
               </div>
 
               {/* Arrow indicator */}
-              <div className="flex-shrink-0 w-9 h-9 rounded-full bg-white/[0.08] flex items-center justify-center group-active:bg-white/[0.12] transition-colors">
-                <ChevronRight className="h-4 w-4 text-white/70" />
+              <div className="flex-shrink-0 w-9 h-9 rounded-full bg-white/[0.04] flex items-center justify-center border border-white/[0.06] group-active:bg-white/[0.08] transition-colors">
+                <ChevronRight className="h-4 w-4 text-white" />
               </div>
             </div>
 
@@ -66,21 +65,17 @@ export const SavedResultsCard: React.FC = () => {
             {!isLoading && activeTypes.length > 0 && (
               <div className="flex gap-1.5 mt-3 flex-wrap">
                 {activeTypes.slice(0, 4).map((type) => (
-                  <Badge
+                  <span
                     key={type}
-                    variant="secondary"
-                    className="bg-white/[0.08] text-white/80 border-white/[0.1] text-[11px] px-2 py-0.5"
+                    className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-white/[0.04] text-white border border-white/5"
                   >
                     {counts[type]} {SHORT_LABELS[type]}
-                  </Badge>
+                  </span>
                 ))}
                 {activeTypes.length > 4 && (
-                  <Badge
-                    variant="secondary"
-                    className="bg-white/[0.08] text-white/80 border-white/[0.1] text-[11px] px-2 py-0.5"
-                  >
+                  <span className="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-medium bg-white/[0.04] text-white border border-white/5">
                     +{activeTypes.length - 4} more
-                  </Badge>
+                  </span>
                 )}
               </div>
             )}

@@ -246,7 +246,7 @@ const RenewableEnergyModule8Section4 = () => {
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
           Fire Safety, AC/DC Isolation & Labelling
         </h1>
-        <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+        <p className="text-white text-sm sm:text-base max-w-xl mx-auto">
           Essential safety requirements for solar PV and battery storage installations
         </p>
       </div>
@@ -294,7 +294,7 @@ const RenewableEnergyModule8Section4 = () => {
           ].map((outcome, index) => (
             <div key={index} className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
-              <span className="text-white/80 text-sm">{outcome}</span>
+              <span className="text-white text-sm">{outcome}</span>
             </div>
           ))}
         </div>
@@ -307,7 +307,7 @@ const RenewableEnergyModule8Section4 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">01</span>
             <h2 className="text-xl font-semibold text-white">Fire Safety Principles</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Solar PV and battery storage systems introduce fire safety considerations that differ
               from conventional electrical installations. Understanding these risks enables proper
@@ -351,7 +351,7 @@ const RenewableEnergyModule8Section4 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">02</span>
             <h2 className="text-xl font-semibold text-white">AC and DC Isolation Requirements</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Effective isolation arrangements enable safe maintenance, emergency disconnection, and
               system testing. Both AC and DC sides of solar PV installations require properly rated
@@ -393,7 +393,7 @@ const RenewableEnergyModule8Section4 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">03</span>
             <h2 className="text-xl font-semibold text-white">Labelling Standards</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Comprehensive labelling is essential for safe operation, maintenance, and emergency
               response. Labels must be durable, clearly legible, and positioned where they will be
@@ -441,7 +441,7 @@ const RenewableEnergyModule8Section4 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">04</span>
             <h2 className="text-xl font-semibold text-white">Battery Storage Fire Safety</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Battery storage systems require specific fire safety considerations due to the energy
               storage density of lithium-ion cells and their potential failure modes.
@@ -488,7 +488,7 @@ const RenewableEnergyModule8Section4 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">05</span>
             <h2 className="text-xl font-semibold text-white">Documentation and Procedures</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Proper documentation supports safe operation throughout the system's life and provides
               essential information for emergency response.
@@ -530,7 +530,7 @@ const RenewableEnergyModule8Section4 = () => {
             <Zap className="w-4 h-4 text-elec-yellow" />
             Practical Guidance
           </h3>
-          <div className="space-y-2 text-white/80 text-sm">
+          <div className="space-y-2 text-white text-sm">
             <p>
               <span className="text-white font-medium">Quality labels:</span> Invest in
               high-quality, durable labels. Cheap labels fade, peel, or become illegible,
@@ -558,7 +558,7 @@ const RenewableEnergyModule8Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <h3 className="text-white font-medium mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>

@@ -217,7 +217,7 @@ export default function MentalHealthModule5Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-5">
@@ -242,7 +242,7 @@ export default function MentalHealthModule5Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Self-Care for the Mental Health First Aider
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Protecting your own wellbeing so you can continue to support others &mdash; compassion
             fatigue, vicarious trauma, boundaries, supervision, resilience and reflective practice
           </p>
@@ -345,7 +345,7 @@ export default function MentalHealthModule5Section4() {
                     Why MHFAs Are Particularly Vulnerable
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -428,7 +428,7 @@ export default function MentalHealthModule5Section4() {
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-purple-500/5 border border-purple-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-purple-400 mb-1">Emotional Symptoms</p>
-                    <ul className="text-xs text-white/80 space-y-1.5">
+                    <ul className="text-xs text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Emotional exhaustion and feeling &ldquo;drained&rdquo;</span>
@@ -456,7 +456,7 @@ export default function MentalHealthModule5Section4() {
                   </div>
                   <div className="bg-purple-500/5 border border-purple-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-purple-400 mb-1">Physical Symptoms</p>
-                    <ul className="text-xs text-white/80 space-y-1.5">
+                    <ul className="text-xs text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Chronic fatigue and low energy</span>
@@ -515,7 +515,7 @@ export default function MentalHealthModule5Section4() {
                       </span>
                       <div>
                         <p className="text-sm font-medium text-white">{item.stage}</p>
-                        <p className="text-sm text-white/70 mt-0.5">{item.detail}</p>
+                        <p className="text-sm text-white mt-0.5">{item.detail}</p>
                       </div>
                     </div>
                   ))}
@@ -529,7 +529,7 @@ export default function MentalHealthModule5Section4() {
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-purple-300 mb-1">Compassion Fatigue</p>
-                    <ul className="text-xs text-white/80 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li>Caused by the helping relationship</li>
                       <li>Secondary traumatic stress</li>
                       <li>Specific to caring roles</li>
@@ -539,7 +539,7 @@ export default function MentalHealthModule5Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-purple-300 mb-1">Burnout</p>
-                    <ul className="text-xs text-white/80 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li>Caused by workplace stress and overload</li>
                       <li>Chronic stress response</li>
                       <li>Can affect anyone in any role</li>
@@ -580,7 +580,7 @@ export default function MentalHealthModule5Section4() {
                     How Vicarious Trauma Affects MHFAs
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -635,7 +635,7 @@ export default function MentalHealthModule5Section4() {
                   <div className="bg-red-500/10 border border-red-500/30 p-3 rounded-lg text-center">
                     <AlertTriangle className="h-5 w-5 text-red-400 mx-auto mb-2" />
                     <p className="text-sm font-medium text-red-300 mb-1">Suicide Disclosures</p>
-                    <p className="text-[11px] text-white/60">
+                    <p className="text-[11px] text-white">
                       Hearing someone describe suicidal thoughts, plans, or previous attempts
                       carries a significant emotional weight
                     </p>
@@ -643,7 +643,7 @@ export default function MentalHealthModule5Section4() {
                   <div className="bg-red-500/10 border border-red-500/30 p-3 rounded-lg text-center">
                     <AlertTriangle className="h-5 w-5 text-red-400 mx-auto mb-2" />
                     <p className="text-sm font-medium text-red-300 mb-1">Abuse Disclosures</p>
-                    <p className="text-[11px] text-white/60">
+                    <p className="text-[11px] text-white">
                       Accounts of physical, emotional, sexual, or domestic abuse can be deeply
                       distressing to hear
                     </p>
@@ -651,7 +651,7 @@ export default function MentalHealthModule5Section4() {
                   <div className="bg-red-500/10 border border-red-500/30 p-3 rounded-lg text-center">
                     <AlertTriangle className="h-5 w-5 text-red-400 mx-auto mb-2" />
                     <p className="text-sm font-medium text-red-300 mb-1">Traumatic Incidents</p>
-                    <p className="text-[11px] text-white/60">
+                    <p className="text-[11px] text-white">
                       Detailed accounts of accidents, injuries, violence, or bereavements that the
                       person is reliving
                     </p>
@@ -735,7 +735,7 @@ export default function MentalHealthModule5Section4() {
                       <CheckCircle className="h-5 w-5 text-purple-400/70 mt-0.5 flex-shrink-0" />
                       <div>
                         <p className="text-sm font-medium text-white">{item.title}</p>
-                        <p className="text-sm text-white/80">{item.description}</p>
+                        <p className="text-sm text-white">{item.description}</p>
                       </div>
                     </div>
                   ))}
@@ -783,7 +783,7 @@ export default function MentalHealthModule5Section4() {
                 <div className="space-y-3">
                   <div className="bg-purple-500/10 border border-purple-500/30 p-3 rounded-lg">
                     <p className="text-sm font-medium text-purple-400 mb-1">Regular Supervision</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Ideally at least once per month, with a trained supervisor or experienced MHFA
                       coordinator. Supervision provides a confidential space to discuss cases
                       (without identifying individuals), process emotional responses, explore
@@ -795,7 +795,7 @@ export default function MentalHealthModule5Section4() {
                     <p className="text-sm font-medium text-purple-400 mb-1">
                       Peer Support Between MHFAs
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Connecting with other MHFAs who understand the unique challenges of the role.
                       Peer support groups allow MHFAs to share experiences, learn from one another,
                       normalise emotional reactions, and reduce feelings of isolation. If your
@@ -806,7 +806,7 @@ export default function MentalHealthModule5Section4() {
                     <p className="text-sm font-medium text-purple-400 mb-1">
                       Structured Debriefing After Difficult Conversations
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       After a particularly difficult or distressing conversation &mdash; such as a
                       suicide disclosure, an abuse disclosure, or a traumatic incident &mdash; the
                       MHFA should have access to a structured debrief. This should happen as soon as
@@ -819,7 +819,7 @@ export default function MentalHealthModule5Section4() {
                     <p className="text-sm font-medium text-purple-400 mb-1">
                       Access to Professional Counselling
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       MHFAs should know when to access their own professional support. This might be
                       through an Employee Assistance Programme (EAP), occupational health, their GP,
                       or private counselling. Accessing counselling is not a sign of failure &mdash;
@@ -835,7 +835,7 @@ export default function MentalHealthModule5Section4() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Employer Responsibility</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Employers who appoint MHFAs have a responsibility to support them in that role.
                   This means providing access to regular supervision, structured debriefing, ongoing
                   training and refresher courses, and professional support services. An MHFA
@@ -887,7 +887,7 @@ export default function MentalHealthModule5Section4() {
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-purple-500/5 border border-purple-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-purple-400 mb-1">Self-Awareness</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Know your own triggers, patterns, and warning signs. Recognise when you are
                       becoming emotionally overloaded before you reach breaking point. Understanding
                       yourself is the foundation of resilience.
@@ -895,7 +895,7 @@ export default function MentalHealthModule5Section4() {
                   </div>
                   <div className="bg-purple-500/5 border border-purple-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-purple-400 mb-1">Realistic Optimism</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Maintain a balanced perspective. Acknowledge that difficult things happen, but
                       also recognise that most people recover with the right support. You are making
                       a difference, even when you cannot see the outcome.
@@ -903,7 +903,7 @@ export default function MentalHealthModule5Section4() {
                   </div>
                   <div className="bg-purple-500/5 border border-purple-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-purple-400 mb-1">Adaptability</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Accept that not every conversation will go as planned. Some people will not
                       want your help. Some situations will not have a neat resolution. Being able to
                       adapt and accept uncertainty is a key resilience skill.
@@ -911,7 +911,7 @@ export default function MentalHealthModule5Section4() {
                   </div>
                   <div className="bg-purple-500/5 border border-purple-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-purple-400 mb-1">Support Networks</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Cultivate relationships with people who support and energise you &mdash;
                       colleagues, friends, family, mentors. Do not try to carry the burden alone.
                       Strong social connections are one of the most powerful protective factors for
@@ -929,28 +929,28 @@ export default function MentalHealthModule5Section4() {
                     Reflective Practice for MHFAs
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-4">
+                <p className="text-sm text-white mb-4">
                   Reflective practice is a structured approach to learning from experience. After
                   each significant MHFA interaction, take time to consider:
                 </p>
                 <div className="grid sm:grid-cols-3 gap-3">
                   <div className="bg-green-500/10 border border-green-500/30 p-3 rounded-lg text-center">
                     <p className="text-green-300 text-lg font-bold mb-1">What went well?</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       What did I do that was helpful? What skills did I use effectively? What
                       worked?
                     </p>
                   </div>
                   <div className="bg-amber-500/10 border border-amber-500/30 p-3 rounded-lg text-center">
                     <p className="text-amber-300 text-lg font-bold mb-1">What could improve?</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       What would I do differently next time? Where did I struggle? What skills do I
                       need to develop?
                     </p>
                   </div>
                   <div className="bg-blue-500/10 border border-blue-500/30 p-3 rounded-lg text-center">
                     <p className="text-blue-300 text-lg font-bold mb-1">What did I learn?</p>
-                    <p className="text-[11px] text-white/70">
+                    <p className="text-[11px] text-white">
                       What new insight do I have? How has this experience developed me? What will I
                       take forward?
                     </p>
@@ -964,7 +964,7 @@ export default function MentalHealthModule5Section4() {
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-purple-500/5 border border-purple-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-purple-400 mb-1">Journaling</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Writing about your experiences helps your brain process them. Keep a
                       reflective journal (without identifiable details of individuals) where you
                       record your thoughts, feelings, and learning after significant interactions.
@@ -972,7 +972,7 @@ export default function MentalHealthModule5Section4() {
                   </div>
                   <div className="bg-purple-500/5 border border-purple-500/20 p-3 rounded-lg">
                     <p className="text-sm font-medium text-purple-400 mb-1">Mindfulness</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Regular mindfulness practice &mdash; even 5 to 10 minutes per day &mdash; can
                       reduce stress, improve emotional regulation, and build resilience. Focus on
                       your breathing, notice your thoughts without judgement, and bring yourself
@@ -983,7 +983,7 @@ export default function MentalHealthModule5Section4() {
                     <p className="text-sm font-medium text-purple-400 mb-1">
                       Physical Health Foundations
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Physical and mental health are deeply connected. Regular exercise, adequate
                       sleep (7 to 9 hours), balanced nutrition, limited alcohol, and staying
                       hydrated all contribute to emotional resilience and the ability to cope with
@@ -994,7 +994,7 @@ export default function MentalHealthModule5Section4() {
                     <p className="text-sm font-medium text-purple-400 mb-1">
                       Ongoing CPD and Refresher Training
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Keep your skills and knowledge current through continuing professional
                       development. Attend refresher courses, workshops, and learning events.
                       Confidence in your competence reduces anxiety and improves your ability to
@@ -1009,7 +1009,7 @@ export default function MentalHealthModule5Section4() {
                   <HandHeart className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Knowing When to Step Back</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   There is no shame in stepping back from the MHFA role &mdash; temporarily or
                   permanently &mdash; if it is affecting your own mental health. Signs that you may
                   need to step back include: persistent symptoms of compassion fatigue or vicarious
@@ -1032,7 +1032,7 @@ export default function MentalHealthModule5Section4() {
             <p className="text-sm font-medium text-white mb-2 text-center">
               The Self-Care Wheel &mdash; Five Dimensions of Wellbeing
             </p>
-            <p className="text-[11px] text-white/50 text-center mb-6">
+            <p className="text-[11px] text-white text-center mb-6">
               Effective self-care addresses all five dimensions. Neglecting any one area can
               undermine the others.
             </p>
@@ -1055,7 +1055,7 @@ export default function MentalHealthModule5Section4() {
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[42%] text-center">
                 <div className="bg-green-500/15 border border-green-500/30 rounded-lg p-2 sm:p-3">
                   <p className="text-green-300 text-xs sm:text-sm font-bold mb-0.5">Physical</p>
-                  <p className="text-[9px] sm:text-[10px] text-white/60 leading-tight">
+                  <p className="text-[9px] sm:text-[10px] text-white leading-tight">
                     Exercise, sleep, nutrition, health checks, rest
                   </p>
                 </div>
@@ -1065,7 +1065,7 @@ export default function MentalHealthModule5Section4() {
               <div className="absolute top-[22%] right-0 w-[42%] text-center">
                 <div className="bg-rose-500/15 border border-rose-500/30 rounded-lg p-2 sm:p-3">
                   <p className="text-rose-300 text-xs sm:text-sm font-bold mb-0.5">Emotional</p>
-                  <p className="text-[9px] sm:text-[10px] text-white/60 leading-tight">
+                  <p className="text-[9px] sm:text-[10px] text-white leading-tight">
                     Processing feelings, journaling, therapy, self-compassion
                   </p>
                 </div>
@@ -1075,7 +1075,7 @@ export default function MentalHealthModule5Section4() {
               <div className="absolute bottom-[12%] right-[2%] w-[42%] text-center">
                 <div className="bg-blue-500/15 border border-blue-500/30 rounded-lg p-2 sm:p-3">
                   <p className="text-blue-300 text-xs sm:text-sm font-bold mb-0.5">Social</p>
-                  <p className="text-[9px] sm:text-[10px] text-white/60 leading-tight">
+                  <p className="text-[9px] sm:text-[10px] text-white leading-tight">
                     Relationships, community, connection, support networks
                   </p>
                 </div>
@@ -1085,7 +1085,7 @@ export default function MentalHealthModule5Section4() {
               <div className="absolute bottom-[12%] left-[2%] w-[42%] text-center">
                 <div className="bg-amber-500/15 border border-amber-500/30 rounded-lg p-2 sm:p-3">
                   <p className="text-amber-300 text-xs sm:text-sm font-bold mb-0.5">Professional</p>
-                  <p className="text-[9px] sm:text-[10px] text-white/60 leading-tight">
+                  <p className="text-[9px] sm:text-[10px] text-white leading-tight">
                     Boundaries, supervision, CPD, workload management
                   </p>
                 </div>
@@ -1095,14 +1095,14 @@ export default function MentalHealthModule5Section4() {
               <div className="absolute top-[22%] left-0 w-[42%] text-center">
                 <div className="bg-violet-500/15 border border-violet-500/30 rounded-lg p-2 sm:p-3">
                   <p className="text-violet-300 text-xs sm:text-sm font-bold mb-0.5">Spiritual</p>
-                  <p className="text-[9px] sm:text-[10px] text-white/60 leading-tight">
+                  <p className="text-[9px] sm:text-[10px] text-white leading-tight">
                     Meaning, purpose, values, mindfulness, reflection
                   </p>
                 </div>
               </div>
             </div>
 
-            <p className="text-[11px] text-white/40 text-center mt-4">
+            <p className="text-[11px] text-white text-center mt-4">
               Each dimension supports the others. Strong physical health supports emotional
               resilience. Social connections strengthen professional wellbeing. Spiritual clarity
               provides meaning in difficult times.
@@ -1121,7 +1121,7 @@ export default function MentalHealthModule5Section4() {
                 Support for MHFAs &mdash; You Deserve Help Too
               </p>
             </div>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               These services are available to everyone &mdash; including Mental Health First Aiders.
               If you are struggling, please reach out.
             </p>
@@ -1129,7 +1129,7 @@ export default function MentalHealthModule5Section4() {
               <div className="bg-purple-500/10 border border-purple-500/30 p-4 rounded-lg text-center">
                 <p className="text-lg font-bold text-purple-400 mb-1">116 123</p>
                 <p className="text-sm font-medium text-white mb-1">Samaritans</p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   Free, 24 hours a day, 7 days a week. For anyone who is struggling &mdash; you do
                   not need to be suicidal to call.
                 </p>
@@ -1137,7 +1137,7 @@ export default function MentalHealthModule5Section4() {
               <div className="bg-purple-500/10 border border-purple-500/30 p-4 rounded-lg text-center">
                 <p className="text-lg font-bold text-purple-400 mb-1">Text SHOUT to 85258</p>
                 <p className="text-sm font-medium text-white mb-1">Shout Crisis Text Line</p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   Free, 24/7 text-based support. Useful if you cannot or prefer not to speak on the
                   phone.
                 </p>
@@ -1145,7 +1145,7 @@ export default function MentalHealthModule5Section4() {
               <div className="bg-purple-500/10 border border-purple-500/30 p-4 rounded-lg text-center">
                 <p className="text-lg font-bold text-purple-400 mb-1">Your EAP</p>
                 <p className="text-sm font-medium text-white mb-1">Employee Assistance Programme</p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   Free, confidential counselling through your employer. Ask HR or your line manager
                   for details.
                 </p>
@@ -1161,7 +1161,7 @@ export default function MentalHealthModule5Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1175,7 +1175,7 @@ export default function MentalHealthModule5Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-5">

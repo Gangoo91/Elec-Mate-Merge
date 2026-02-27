@@ -223,7 +223,7 @@ const HNCModule4Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section1">
@@ -245,7 +245,7 @@ const HNCModule4Section1_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Diversity Factors
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding and applying diversity to achieve accurate maximum demand calculations in
             building services
           </p>
@@ -332,7 +332,7 @@ const HNCModule4Section1_2 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 Maximum Demand = Connected Load × Diversity Factor
               </p>
-              <p className="text-xs text-white/70 text-center">Diversity Factor is always ≤ 1.0</p>
+              <p className="text-xs text-white text-center">Diversity Factor is always ≤ 1.0</p>
             </div>
 
             <div className="my-6">
@@ -723,7 +723,7 @@ const HNCModule4Section1_2 = () => {
               <p className="text-sm text-white mb-3">
                 For multiple dwellings, total ADMD is not simply n × individual ADMD:
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>10 dwellings × 2.5kVA = 25kVA connected</p>
                 <p>Diversified total ≈ 15-18kVA (diversity factor ~0.6-0.7)</p>
                 <p className="mt-2">50 dwellings × 2.5kVA = 125kVA connected</p>
@@ -751,7 +751,7 @@ const HNCModule4Section1_2 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>DNO guidance:</strong> Always check with the local DNO for their specific ADMD
               values and diversity tables - these vary between network operators.
             </p>
@@ -776,7 +776,7 @@ const HNCModule4Section1_2 = () => {
                 <strong>Question:</strong> Calculate diversified demand for: Lighting 3kW, Ring
                 circuits 2 × 7.2kW, Cooker 12kW, Shower 9kW.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Lighting: 3kW × 0.66 = 1.98kW</p>
                 <p>Socket circuits: 7.2 + (7.2 × 0.4) = 10.08kW</p>
                 <p>Cooker: 10A(2.3kW) + (12-2.3) × 0.3 = 5.2kW</p>
@@ -784,7 +784,7 @@ const HNCModule4Section1_2 = () => {
                 <p className="mt-2">
                   Total diversified = 1.98 + 10.08 + 5.2 + 9 = <strong>26.3kW</strong>
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   Compare to connected load: 3 + 14.4 + 12 + 9 = 38.4kW
                 </p>
               </div>
@@ -798,14 +798,14 @@ const HNCModule4Section1_2 = () => {
                 <strong>Question:</strong> A 2000m² office floor has: Lighting 24kW, Small power
                 60kW, Fan coils 30kW. Calculate diversified demand.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Lighting: 24kW × 0.9 = 21.6kW</p>
                 <p>Small power: 60kW × 0.4 = 24kW</p>
                 <p>Fan coils: 30kW × 0.8 = 24kW</p>
                 <p className="mt-2">
                   Total diversified = 21.6 + 24 + 24 = <strong>69.6kW</strong>
                 </p>
-                <p className="text-white/60">Connected load was 114kW - diversity factor = 0.61</p>
+                <p className="text-white">Connected load was 114kW - diversity factor = 0.61</p>
                 <p className="mt-2">
                   At 0.9 pf: 69.6 ÷ 0.9 = <strong>77.3 kVA</strong>
                 </p>
@@ -820,7 +820,7 @@ const HNCModule4Section1_2 = () => {
                 <strong>Question:</strong> Calculate maximum demand for 30 × 2-bed flats (gas
                 heating) with communal lighting 5kW and lift 15kW.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Individual flat ADMD: 2.5kVA</p>
                 <p>30 flats connected: 30 × 2.5 = 75kVA</p>
                 <p>Inter-dwelling diversity (30 units): ~0.55</p>
@@ -914,7 +914,7 @@ const HNCModule4Section1_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -960,7 +960,7 @@ const HNCModule4Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section1-1">

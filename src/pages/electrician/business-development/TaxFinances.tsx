@@ -401,19 +401,19 @@ const TaxFinances = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">3-6 mo</p>
-                  <p className="text-xs text-white/90 mt-1">Reserve target</p>
+                  <p className="text-xs text-white mt-1">Reserve target</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">14-30</p>
-                  <p className="text-xs text-white/90 mt-1">Days payment terms</p>
+                  <p className="text-xs text-white mt-1">Days payment terms</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">25-50%</p>
-                  <p className="text-xs text-white/90 mt-1">Deposit target</p>
+                  <p className="text-xs text-white mt-1">Deposit target</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">30%</p>
-                  <p className="text-xs text-white/90 mt-1">Tax reserve</p>
+                  <p className="text-xs text-white mt-1">Tax reserve</p>
                 </div>
               </div>
 
@@ -591,7 +591,7 @@ const TaxFinances = () => {
                       </span>
                       <span className="text-xs text-yellow-400">5 October</span>
                     </div>
-                    <p className="text-sm text-white/90">
+                    <p className="text-sm text-white">
                       Register by 5 Oct after year you started
                     </p>
                   </div>
@@ -600,14 +600,14 @@ const TaxFinances = () => {
                       <span className="text-sm font-medium text-white">Paper Tax Return</span>
                       <span className="text-xs text-yellow-400">31 October</span>
                     </div>
-                    <p className="text-sm text-white/90">Paper returns due 31 Oct</p>
+                    <p className="text-sm text-white">Paper returns due 31 Oct</p>
                   </div>
                   <div className="p-3 rounded-lg bg-white/[0.03] border border-white/10">
                     <div className="flex justify-between items-center mb-1">
                       <span className="text-sm font-medium text-white">Online Tax Return</span>
                       <span className="text-xs text-yellow-400">31 January</span>
                     </div>
-                    <p className="text-sm text-white/90">Online returns and payment due 31 Jan</p>
+                    <p className="text-sm text-white">Online returns and payment due 31 Jan</p>
                   </div>
                   <div className="p-3 rounded-lg bg-white/[0.03] border border-white/10">
                     <div className="flex justify-between items-center mb-1">
@@ -616,7 +616,7 @@ const TaxFinances = () => {
                       </span>
                       <span className="text-xs text-yellow-400">31 July</span>
                     </div>
-                    <p className="text-sm text-white/90">Second payment on account due 31 Jul</p>
+                    <p className="text-sm text-white">Second payment on account due 31 Jul</p>
                   </div>
                 </div>
               </div>
@@ -706,21 +706,21 @@ const TaxFinances = () => {
                       <span className="text-sm font-medium text-white">Personal Allowance</span>
                       <span className="text-xs text-yellow-400">0%</span>
                     </div>
-                    <p className="text-sm text-white/90">£0 - £12,570</p>
+                    <p className="text-sm text-white">£0 - £12,570</p>
                   </div>
                   <div className="p-3 rounded-lg bg-white/[0.03] border border-white/10">
                     <div className="flex justify-between items-center mb-1">
                       <span className="text-sm font-medium text-white">Basic Rate</span>
                       <span className="text-xs text-yellow-400">20%</span>
                     </div>
-                    <p className="text-sm text-white/90">£12,571 - £50,270</p>
+                    <p className="text-sm text-white">£12,571 - £50,270</p>
                   </div>
                   <div className="p-3 rounded-lg bg-white/[0.03] border border-white/10">
                     <div className="flex justify-between items-center mb-1">
                       <span className="text-sm font-medium text-white">Higher Rate</span>
                       <span className="text-xs text-yellow-400">40%</span>
                     </div>
-                    <p className="text-sm text-white/90">£50,271 - £125,140</p>
+                    <p className="text-sm text-white">£50,271 - £125,140</p>
                   </div>
                 </div>
               </div>
@@ -870,19 +870,19 @@ const TaxFinances = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">£60k</p>
-                  <p className="text-xs text-white/90 mt-1">Annual allowance</p>
+                  <p className="text-xs text-white mt-1">Annual allowance</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">20-45%</p>
-                  <p className="text-xs text-white/90 mt-1">Tax relief rate</p>
+                  <p className="text-xs text-white mt-1">Tax relief rate</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">25%</p>
-                  <p className="text-xs text-white/90 mt-1">Tax-free at 55</p>
+                  <p className="text-xs text-white mt-1">Tax-free at 55</p>
                 </div>
                 <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10 text-center">
                   <p className="text-2xl font-bold text-white">55-57</p>
-                  <p className="text-xs text-white/90 mt-1">Access age</p>
+                  <p className="text-xs text-white mt-1">Access age</p>
                 </div>
               </div>
 

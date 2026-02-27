@@ -174,7 +174,7 @@ const Module6Section3_6 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -192,13 +192,13 @@ const Module6Section3_6 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.3.6</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.3.6</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               When to Use Each Instrument and Why
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Selecting appropriate test equipment for different applications
             </p>
           </header>
@@ -206,7 +206,7 @@ const Module6Section3_6 = () => {
           {/* Quick Reference Summary */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-medium text-white mb-3">Spot it in 30 Seconds</p>
-            <div className="grid sm:grid-cols-2 gap-4 text-sm text-white/80">
+            <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
@@ -232,7 +232,7 @@ const Module6Section3_6 = () => {
 
           {/* Introduction */}
           <section className="mb-10">
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Different electrical tests require different instruments. Using the wrong tool can
                 give inaccurate results or even create dangerous situations. This subsection
@@ -261,10 +261,10 @@ const Module6Section3_6 = () => {
               Learning Outcomes
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <p className="text-white/80 mb-3">
+              <p className="text-white mb-3">
                 By the end of this subsection, you will be able to:
               </p>
-              <ul className="space-y-2 text-white/80">
+              <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
                   <span>
@@ -298,7 +298,7 @@ const Module6Section3_6 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Multimeter
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div>
                 <p className="font-medium text-white mb-2">
                   Use when: Measuring AC/DC voltage, current, or resistance.
@@ -362,7 +362,7 @@ const Module6Section3_6 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Insulation Resistance (IR) Tester
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div>
                 <p className="font-medium text-white mb-2">
                   Use when: Checking the quality of insulation between conductors and between live
@@ -440,7 +440,7 @@ const Module6Section3_6 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Continuity Tester
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div>
                 <p className="font-medium text-white mb-2">
                   Use when: Verifying unbroken paths in conductors (e.g., ring final circuits,
@@ -516,7 +516,7 @@ const Module6Section3_6 = () => {
               Two-Pole Voltage Tester (GS38 Compliant)
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/30">
-              <div className="text-white/80 space-y-4 leading-relaxed">
+              <div className="text-white space-y-4 leading-relaxed">
                 <div>
                   <p className="font-medium text-white mb-2">
                     Use when: Proving circuits live or dead.
@@ -572,7 +572,7 @@ const Module6Section3_6 = () => {
                 <p className="font-medium text-white mb-2">
                   Fault-finding (e.g., "why isn't the socket working?") → Multimeter
                 </p>
-                <ul className="ml-4 space-y-1 text-sm text-white/80">
+                <ul className="ml-4 space-y-1 text-sm text-white">
                   <li>• Check voltage at socket outlets</li>
                   <li>• Measure current draw of appliances</li>
                   <li>• Test resistance of heating elements</li>
@@ -584,7 +584,7 @@ const Module6Section3_6 = () => {
                 <p className="font-medium text-white mb-2">
                   Insulation check before energising → IR Tester
                 </p>
-                <ul className="ml-4 space-y-1 text-sm text-white/80">
+                <ul className="ml-4 space-y-1 text-sm text-white">
                   <li>• New installation commissioning</li>
                   <li>• After cable pulling and termination</li>
                   <li>• Before switching on after maintenance</li>
@@ -596,7 +596,7 @@ const Module6Section3_6 = () => {
                 <p className="font-medium text-white mb-2">
                   Ring final circuit verification → Continuity Tester
                 </p>
-                <ul className="ml-4 space-y-1 text-sm text-white/80">
+                <ul className="ml-4 space-y-1 text-sm text-white">
                   <li>• R1 + R2 testing of socket circuits</li>
                   <li>• CPC continuity verification</li>
                   <li>• Bonding conductor testing</li>
@@ -608,7 +608,7 @@ const Module6Section3_6 = () => {
                 <p className="font-medium text-white mb-2">
                   Safe isolation → Two-Pole Voltage Tester + Proving Unit
                 </p>
-                <ul className="ml-4 space-y-1 text-sm text-white/80">
+                <ul className="ml-4 space-y-1 text-sm text-white">
                   <li>• Proving dead before any electrical work</li>
                   <li>• Confirming isolation effectiveness</li>
                   <li>• Testing for dangerous voltages</li>
@@ -627,7 +627,7 @@ const Module6Section3_6 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
                 <p className="font-medium text-white mb-3">Wrong Instrument Selection:</p>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-red-400">✗</span>
                     <span>Using multimeters for proving dead</span>
@@ -648,7 +648,7 @@ const Module6Section3_6 = () => {
               </div>
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
                 <p className="font-medium text-white mb-3">Poor Testing Practices:</p>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-red-400">✗</span>
                     <span>Skipping proving unit checks</span>
@@ -679,7 +679,7 @@ const Module6Section3_6 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
                 <p className="font-medium text-white mb-3">Before You Start:</p>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-green-400">✓</span>
                     <span>Read the test procedure thoroughly</span>
@@ -700,7 +700,7 @@ const Module6Section3_6 = () => {
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
                 <p className="font-medium text-white mb-3">During Testing:</p>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-green-400">✓</span>
                     <span>Prove tester function before and after</span>
@@ -733,13 +733,13 @@ const Module6Section3_6 = () => {
                 <p className="font-medium text-white mb-3">
                   Case Study 1: The Wrong Tool Nearly Caused a Serious Accident
                 </p>
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   On a commercial project, an electrician used a multimeter to prove a circuit was
                   dead. The meter was accidentally left on the wrong range, giving a zero reading
                   even though the circuit was live. He received an electric shock when handling the
                   conductor.
                 </p>
-                <p className="text-white/80">
+                <p className="text-white">
                   <strong>Prevention:</strong> Using a GS38-compliant two-pole tester with a proving
                   unit would have clearly indicated the live circuit and prevented the accident.
                 </p>
@@ -747,12 +747,12 @@ const Module6Section3_6 = () => {
 
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
                 <p className="font-medium text-white mb-3">Case Study 2: IR Testing Disaster</p>
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   An apprentice was asked to test the insulation resistance of a new circuit.
                   Without proper training, he connected the IR tester to a live circuit containing
                   electronic equipment.
                 </p>
-                <p className="text-white/80">
+                <p className="text-white">
                   <strong>The result:</strong> The 500V test voltage destroyed £2,000 worth of
                   control equipment. <strong>Lesson learned:</strong> IR testing must only be
                   performed on isolated circuits, and all electronic equipment must be disconnected
@@ -772,7 +772,7 @@ const Module6Section3_6 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Q: {faq.question}</p>
-                  <p className="text-sm text-white/70">A: {faq.answer}</p>
+                  <p className="text-sm text-white">A: {faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -785,7 +785,7 @@ const Module6Section3_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="font-medium text-elec-yellow mb-2">Instrument Selection:</p>
-                  <ul className="space-y-1 text-sm text-white/80">
+                  <ul className="space-y-1 text-sm text-white">
                     <li>✅ Multimeter = Diagnostics (voltage/current/resistance)</li>
                     <li>✅ IR Tester = Insulation quality (must be isolated)</li>
                     <li>✅ Continuity Tester = Unbroken conductors and bonding</li>
@@ -794,7 +794,7 @@ const Module6Section3_6 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-elec-yellow mb-2">Never Use:</p>
-                  <ul className="space-y-1 text-sm text-white/80">
+                  <ul className="space-y-1 text-sm text-white">
                     <li>❌ Never use neon screwdrivers for proving dead</li>
                     <li>❌ Never use IR testers on live circuits</li>
                     <li>❌ Never use multimeters for proving dead</li>
@@ -814,7 +814,7 @@ const Module6Section3_6 = () => {
             <div className="grid sm:grid-cols-3 gap-4">
               <div>
                 <p className="font-medium text-white mb-2">Instrument Roles:</p>
-                <ul className="space-y-1 text-sm text-white/80">
+                <ul className="space-y-1 text-sm text-white">
                   <li>
                     • <strong>Multimeters:</strong> Diagnostics - never for proving dead
                   </li>
@@ -831,7 +831,7 @@ const Module6Section3_6 = () => {
               </div>
               <div>
                 <p className="font-medium text-white mb-2">Critical Safety Rules:</p>
-                <ul className="space-y-1 text-sm text-white/80">
+                <ul className="space-y-1 text-sm text-white">
                   <li>• Never use neon screwdrivers for proving dead</li>
                   <li>• Always isolate circuits before IR or continuity testing</li>
                   <li>• Use only GS38-compliant instruments for safety</li>
@@ -840,7 +840,7 @@ const Module6Section3_6 = () => {
               </div>
               <div>
                 <p className="font-medium text-white mb-2">Professional Standards:</p>
-                <ul className="space-y-1 text-sm text-white/80">
+                <ul className="space-y-1 text-sm text-white">
                   <li>• Annual calibration of all test instruments</li>
                   <li>• Record all readings accurately on certificates</li>
                   <li>• Select the correct instrument for each task</li>
@@ -859,7 +859,7 @@ const Module6Section3_6 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../3-5">

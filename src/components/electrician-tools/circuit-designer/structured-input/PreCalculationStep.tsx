@@ -80,7 +80,7 @@ export const PreCalculationStep = ({
         </div>
         <div>
           <h2 className="text-lg font-semibold text-white">Pre-Flight Check</h2>
-          <p className="text-sm text-white/50">Validating before AI processing</p>
+          <p className="text-sm text-white">Validating before AI processing</p>
         </div>
       </div>
 
@@ -94,17 +94,17 @@ export const PreCalculationStep = ({
           </div>
           <div className="flex-1 min-w-0">
             <h3 className="text-base font-semibold text-white">AI Processing Readiness</h3>
-            <p className="text-xs text-white/60">More details = faster AI processing time</p>
+            <p className="text-xs text-white">More details = faster AI processing time</p>
           </div>
         </div>
 
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-white/70">Details Provided</span>
+            <span className="text-sm text-white">Details Provided</span>
             <span className="text-2xl font-bold text-elec-yellow">{readinessScore}%</span>
           </div>
           <Progress value={readinessScore} className="h-2" />
-          <p className="text-xs text-white/60">
+          <p className="text-xs text-white">
             {readinessScore >= 80 && 'Excellent! AI will process this very quickly'}
             {readinessScore >= 50 &&
               readinessScore < 80 &&
@@ -195,7 +195,7 @@ export const PreCalculationStep = ({
                   </Badge>
                 )}
                 {circuit.suggestedMCB && (
-                  <Badge className="bg-white/10 text-white/80 border-white/20 text-xs">
+                  <Badge className="bg-white/10 text-white border-white/20 text-xs">
                     {circuit.suggestedMCB}A MCB
                   </Badge>
                 )}
@@ -223,7 +223,7 @@ export const PreCalculationStep = ({
             {/* Material Estimate */}
             {circuit.calculatedIb && circuit.cableLength && materialEstimates[index] && (
               <div className="pt-3 border-t border-white/10 space-y-2">
-                <div className="flex items-center gap-2 text-xs text-white/70">
+                <div className="flex items-center gap-2 text-xs text-white">
                   <Cable className="h-3.5 w-3.5 text-elec-yellow shrink-0" />
                   <span className="flex-1 truncate">
                     Cable: {materialEstimates[index].cableSize}mm² ×{' '}
@@ -233,7 +233,7 @@ export const PreCalculationStep = ({
                     £{materialEstimates[index].estimatedCableCost}
                   </span>
                 </div>
-                <div className="flex items-center gap-2 text-xs text-white/70">
+                <div className="flex items-center gap-2 text-xs text-white">
                   <Shield className="h-3.5 w-3.5 text-elec-yellow shrink-0" />
                   <span className="flex-1 truncate">
                     Protection: {materialEstimates[index].protectionDevice}
@@ -269,7 +269,7 @@ export const PreCalculationStep = ({
               £{totalMaterialCost.toFixed(2)}
             </span>
           </div>
-          <p className="text-xs text-white/50 mt-3 pl-14">
+          <p className="text-xs text-white mt-3 pl-14">
             Excludes labour, accessories, and VAT. AI will provide detailed materials list.
           </p>
         </div>

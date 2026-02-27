@@ -190,7 +190,7 @@ export default function CoshhAwarenessModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-3">
@@ -215,7 +215,7 @@ export default function CoshhAwarenessModule3Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Dust &amp; Fume Control
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Engineering controls, extraction systems, RPE selection, and housekeeping practices that
             protect you from invisible respirable hazards
           </p>
@@ -300,7 +300,7 @@ export default function CoshhAwarenessModule3Section3() {
                     The Invisible Killer on Construction Sites
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The most dangerous dust and fume particles are the ones you{' '}
                   <strong className="text-white">cannot see</strong>. Respirable particles smaller
                   than 10 microns (&mu;m) pass through the nose and throat and penetrate deep into
@@ -327,7 +327,7 @@ export default function CoshhAwarenessModule3Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Particle Size &amp; Penetration
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -408,7 +408,7 @@ export default function CoshhAwarenessModule3Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   The 5 Components of an LEV System
                 </p>
-                <ol className="text-sm text-white/80 space-y-3">
+                <ol className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 w-7 h-7 rounded-full bg-violet-500/20 border border-violet-500/40 flex items-center justify-center flex-shrink-0 text-xs font-bold text-violet-400">
                       1
@@ -467,21 +467,21 @@ export default function CoshhAwarenessModule3Section3() {
                 <div className="grid sm:grid-cols-3 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-violet-400">Enclosing</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Surrounds the source completely or partially. Most effective type. Examples:
                       fume cupboard, glove box, enclosed spray booth
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-violet-400">Receiving</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Positioned to catch contaminants carried by a natural airflow (e.g. hot fumes
                       rising). Example: canopy hood above a welding bench
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-base font-bold text-violet-400">Capturing</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Generates enough airflow to pull contaminants toward the hood against the
                       natural dispersion. Example: flexible extraction arm positioned near a grinder
                     </p>
@@ -502,7 +502,7 @@ export default function CoshhAwarenessModule3Section3() {
                 <p className="text-sm font-medium text-white mb-2">
                   COSHH Regulation 9 &mdash; LEV Requirements
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -564,7 +564,7 @@ export default function CoshhAwarenessModule3Section3() {
                 {/* Hood */}
                 <div className="border-2 border-violet-500 rounded-lg bg-violet-500/10 p-3 text-center">
                   <p className="text-sm font-bold text-violet-400">1. HOOD</p>
-                  <p className="text-[10px] sm:text-xs text-white/60">
+                  <p className="text-[10px] sm:text-xs text-white">
                     Captures contaminant at source
                   </p>
                   <div className="flex justify-around mt-2 gap-1">
@@ -588,7 +588,7 @@ export default function CoshhAwarenessModule3Section3() {
                 {/* Ductwork */}
                 <div className="border border-white/20 rounded-lg bg-white/5 p-3 text-center">
                   <p className="text-sm font-bold text-white">2. DUCTWORK</p>
-                  <p className="text-[10px] sm:text-xs text-white/60">
+                  <p className="text-[10px] sm:text-xs text-white">
                     Transports contaminated air &mdash; must maintain transport velocity
                   </p>
                 </div>
@@ -601,7 +601,7 @@ export default function CoshhAwarenessModule3Section3() {
                 {/* Air Cleaner */}
                 <div className="border-2 border-violet-500 rounded-lg bg-violet-500/10 p-3 text-center">
                   <p className="text-sm font-bold text-violet-400">3. AIR CLEANER</p>
-                  <p className="text-[10px] sm:text-xs text-white/60">
+                  <p className="text-[10px] sm:text-xs text-white">
                     Removes contaminant from airstream
                   </p>
                   <div className="flex justify-around mt-2 gap-1">
@@ -625,7 +625,7 @@ export default function CoshhAwarenessModule3Section3() {
                 {/* Fan */}
                 <div className="border border-white/20 rounded-lg bg-white/5 p-3 text-center">
                   <p className="text-sm font-bold text-white">4. FAN (AIR MOVER)</p>
-                  <p className="text-[10px] sm:text-xs text-white/60">
+                  <p className="text-[10px] sm:text-xs text-white">
                     Provides suction &mdash; positioned after air cleaner to protect fan
                   </p>
                 </div>
@@ -638,7 +638,7 @@ export default function CoshhAwarenessModule3Section3() {
                 {/* Discharge */}
                 <div className="border border-white/20 rounded-lg bg-white/5 p-3 text-center">
                   <p className="text-sm font-bold text-white">5. DISCHARGE</p>
-                  <p className="text-[10px] sm:text-xs text-white/60">
+                  <p className="text-[10px] sm:text-xs text-white">
                     Clean air to outside or recirculated (never recirculate carcinogenic substances)
                   </p>
                 </div>
@@ -657,11 +657,11 @@ export default function CoshhAwarenessModule3Section3() {
             <div className="flex flex-wrap gap-3 mt-4 justify-center">
               <div className="flex items-center gap-1.5">
                 <div className="w-3 h-3 border-2 border-violet-500 bg-violet-500/10 rounded-sm" />
-                <span className="text-[10px] text-white/60">Key capture/cleaning stages</span>
+                <span className="text-[10px] text-white">Key capture/cleaning stages</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="w-3 h-3 border border-white/20 bg-white/5 rounded-sm" />
-                <span className="text-[10px] text-white/60">Transport/discharge stages</span>
+                <span className="text-[10px] text-white">Transport/discharge stages</span>
               </div>
             </div>
           </div>
@@ -686,7 +686,7 @@ export default function CoshhAwarenessModule3Section3() {
 
               <div className="bg-violet-500/10 border border-violet-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-violet-400 mb-3">On-Tool Extraction</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -724,7 +724,7 @@ export default function CoshhAwarenessModule3Section3() {
 
               <div className="bg-violet-500/10 border border-violet-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-violet-400 mb-3">Wet Suppression Methods</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -766,7 +766,7 @@ export default function CoshhAwarenessModule3Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Electrical Safety Reminder</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   When using wet suppression methods with electrical power tools, ensure the tool is{' '}
                   <strong className="text-white">designed for wet use</strong> and that appropriate{' '}
                   <strong className="text-white">RCD protection (30mA)</strong> is in place. Never
@@ -798,7 +798,7 @@ export default function CoshhAwarenessModule3Section3() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="border border-violet-400/30 rounded-lg p-3 bg-violet-500/5">
                     <p className="text-base font-bold text-violet-400 mb-2">M-Class</p>
-                    <ul className="text-xs text-white/70 space-y-1.5">
+                    <ul className="text-xs text-white space-y-1.5">
                       <li className="flex items-start gap-1.5">
                         <span className="mt-1 w-1 h-1 rounded-full bg-violet-300 flex-shrink-0" />
                         <span>
@@ -826,7 +826,7 @@ export default function CoshhAwarenessModule3Section3() {
                   </div>
                   <div className="border-2 border-violet-500 rounded-lg p-3 bg-violet-500/10">
                     <p className="text-base font-bold text-violet-400 mb-2">H-Class</p>
-                    <ul className="text-xs text-white/70 space-y-1.5">
+                    <ul className="text-xs text-white space-y-1.5">
                       <li className="flex items-start gap-1.5">
                         <span className="mt-1 w-1 h-1 rounded-full bg-violet-300 flex-shrink-0" />
                         <span>
@@ -861,7 +861,7 @@ export default function CoshhAwarenessModule3Section3() {
                 <p className="text-sm font-medium text-violet-400 mb-3">
                   H-Class Extractor Requirements
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -909,7 +909,7 @@ export default function CoshhAwarenessModule3Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Hazardous Waste Disposal</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Used collection bags from H-class extractors contain concentrated hazardous dust.
                   They must be <strong className="text-white">sealed without releasing dust</strong>
                   , placed in a labelled hazardous waste bag, and disposed of through an{' '}
@@ -944,7 +944,7 @@ export default function CoshhAwarenessModule3Section3() {
                     <p className="text-base font-bold text-violet-400 mb-1.5">
                       LEV (Local Exhaust)
                     </p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li>Captures at source</li>
                       <li>Protects the individual worker</li>
                       <li>Effective for high-hazard substances</li>
@@ -953,7 +953,7 @@ export default function CoshhAwarenessModule3Section3() {
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 border border-white/10">
                     <p className="text-base font-bold text-white mb-1.5">General Ventilation</p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li>Dilutes throughout the space</li>
                       <li>Reduces average concentration for all occupants</li>
                       <li>Only appropriate for low-toxicity, low-concentration contaminants</li>
@@ -1011,37 +1011,37 @@ export default function CoshhAwarenessModule3Section3() {
                   RPE Types &amp; Assigned Protection Factors (APFs)
                 </p>
                 <div className="space-y-3">
-                  <div className="grid grid-cols-3 gap-2 text-xs text-white/40 font-medium border-b border-white/10 pb-2">
+                  <div className="grid grid-cols-3 gap-2 text-xs text-white font-medium border-b border-white/10 pb-2">
                     <span>RPE Type</span>
                     <span>APF</span>
                     <span>Typical Use</span>
                   </div>
-                  <div className="grid grid-cols-3 gap-2 text-sm text-white/80">
+                  <div className="grid grid-cols-3 gap-2 text-sm text-white">
                     <span className="text-white font-medium text-xs">FFP1 disposable</span>
                     <span className="text-xs">APF 4</span>
                     <span className="text-xs">Low-hazard nuisance dust only</span>
                   </div>
-                  <div className="grid grid-cols-3 gap-2 text-sm text-white/80">
+                  <div className="grid grid-cols-3 gap-2 text-sm text-white">
                     <span className="text-white font-medium text-xs">FFP2 disposable</span>
                     <span className="text-xs">APF 10</span>
                     <span className="text-xs">Medium-hazard dusts (e.g. softwood, plaster)</span>
                   </div>
-                  <div className="grid grid-cols-3 gap-2 text-sm text-white/80 bg-violet-500/5 -mx-2 px-2 py-1 rounded">
+                  <div className="grid grid-cols-3 gap-2 text-sm text-white bg-violet-500/5 -mx-2 px-2 py-1 rounded">
                     <span className="text-violet-400 font-medium text-xs">FFP3 disposable</span>
                     <span className="text-xs text-violet-300">APF 20</span>
                     <span className="text-xs">High-hazard: silica, hardwood, welding fume</span>
                   </div>
-                  <div className="grid grid-cols-3 gap-2 text-sm text-white/80">
+                  <div className="grid grid-cols-3 gap-2 text-sm text-white">
                     <span className="text-white font-medium text-xs">Half-mask + P3 filter</span>
                     <span className="text-xs">APF 20</span>
                     <span className="text-xs">Longer-duration work, reusable</span>
                   </div>
-                  <div className="grid grid-cols-3 gap-2 text-sm text-white/80">
+                  <div className="grid grid-cols-3 gap-2 text-sm text-white">
                     <span className="text-white font-medium text-xs">Full-face mask + P3</span>
                     <span className="text-xs">APF 40</span>
                     <span className="text-xs">High concentration, eye protection needed</span>
                   </div>
-                  <div className="grid grid-cols-3 gap-2 text-sm text-white/80 bg-violet-500/5 -mx-2 px-2 py-1 rounded">
+                  <div className="grid grid-cols-3 gap-2 text-sm text-white bg-violet-500/5 -mx-2 px-2 py-1 rounded">
                     <span className="text-violet-400 font-medium text-xs">Powered Air (PAPR)</span>
                     <span className="text-xs text-violet-300">APF 40</span>
                     <span className="text-xs">Long-duration, comfort, bearded workers</span>
@@ -1051,7 +1051,7 @@ export default function CoshhAwarenessModule3Section3() {
 
               <div className="bg-violet-500/10 border border-violet-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-violet-400 mb-2">Critical RPE Rules</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1088,7 +1088,7 @@ export default function CoshhAwarenessModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Selecting the Right RPE</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   To select the correct RPE, you need to know the{' '}
                   <strong className="text-white">
                     substance, its WEL, and the likely exposure concentration
@@ -1119,7 +1119,7 @@ export default function CoshhAwarenessModule3Section3() {
                 {/* Step 1: Identify */}
                 <div className="border-2 border-violet-500 rounded-lg bg-violet-500/10 p-3 text-center">
                   <p className="text-sm font-bold text-violet-400">IDENTIFY THE SUBSTANCE</p>
-                  <p className="text-[10px] sm:text-xs text-white/60">
+                  <p className="text-[10px] sm:text-xs text-white">
                     What dust/fume? Check SDS for WEL and hazard classification
                   </p>
                 </div>
@@ -1131,7 +1131,7 @@ export default function CoshhAwarenessModule3Section3() {
                 {/* Step 2: Can you eliminate or substitute? */}
                 <div className="border border-white/20 rounded-lg bg-white/5 p-3 text-center">
                   <p className="text-sm font-bold text-white">CAN YOU ELIMINATE / SUBSTITUTE?</p>
-                  <p className="text-[10px] sm:text-xs text-white/60">
+                  <p className="text-[10px] sm:text-xs text-white">
                     If yes &rarr; no RPE needed. If no &rarr; continue
                   </p>
                 </div>
@@ -1145,7 +1145,7 @@ export default function CoshhAwarenessModule3Section3() {
                   <p className="text-sm font-bold text-white">
                     LEV / EXTRACTION / WET METHODS SUFFICIENT?
                   </p>
-                  <p className="text-[10px] sm:text-xs text-white/60">
+                  <p className="text-[10px] sm:text-xs text-white">
                     If exposure is below WEL with engineering controls alone &rarr; RPE not required
                   </p>
                 </div>
@@ -1159,7 +1159,7 @@ export default function CoshhAwarenessModule3Section3() {
                   <p className="text-sm font-bold text-violet-400">
                     CALCULATE REQUIRED PROTECTION FACTOR
                   </p>
-                  <p className="text-[10px] sm:text-xs text-white/60">
+                  <p className="text-[10px] sm:text-xs text-white">
                     Expected concentration &divide; WEL = minimum APF needed
                   </p>
                 </div>
@@ -1172,8 +1172,8 @@ export default function CoshhAwarenessModule3Section3() {
                 <div className="grid grid-cols-3 gap-2">
                   <div className="border border-white/20 rounded-lg bg-white/5 p-2 text-center">
                     <p className="text-[10px] font-bold text-white">APF &le; 10</p>
-                    <p className="text-[9px] text-white/50 mt-1">FFP2</p>
-                    <p className="text-[9px] text-white/50">Half-mask + P2</p>
+                    <p className="text-[9px] text-white mt-1">FFP2</p>
+                    <p className="text-[9px] text-white">Half-mask + P2</p>
                   </div>
                   <div className="border-2 border-violet-500 rounded-lg bg-violet-500/10 p-2 text-center">
                     <p className="text-[10px] font-bold text-violet-400">APF &le; 20</p>
@@ -1182,8 +1182,8 @@ export default function CoshhAwarenessModule3Section3() {
                   </div>
                   <div className="border border-white/20 rounded-lg bg-white/5 p-2 text-center">
                     <p className="text-[10px] font-bold text-white">APF &le; 40</p>
-                    <p className="text-[9px] text-white/50 mt-1">Full-face + P3</p>
-                    <p className="text-[9px] text-white/50">PAPR</p>
+                    <p className="text-[9px] text-white mt-1">Full-face + P3</p>
+                    <p className="text-[9px] text-white">PAPR</p>
                   </div>
                 </div>
 
@@ -1197,7 +1197,7 @@ export default function CoshhAwarenessModule3Section3() {
                     <Shield className="h-4 w-4 text-red-400" />
                     <p className="text-sm font-bold text-red-400">FACE-FIT TEST</p>
                   </div>
-                  <p className="text-[10px] sm:text-xs text-white/60">
+                  <p className="text-[10px] sm:text-xs text-white">
                     Mandatory for all tight-fitting RPE &mdash; bearded workers must use PAPR
                   </p>
                 </div>
@@ -1208,11 +1208,11 @@ export default function CoshhAwarenessModule3Section3() {
             <div className="flex flex-wrap gap-3 mt-4 justify-center">
               <div className="flex items-center gap-1.5">
                 <div className="w-3 h-3 border-2 border-violet-500 bg-violet-500/10 rounded-sm" />
-                <span className="text-[10px] text-white/60">Key decision points</span>
+                <span className="text-[10px] text-white">Key decision points</span>
               </div>
               <div className="flex items-center gap-1.5">
                 <div className="w-3 h-3 border-2 border-red-500/60 bg-red-500/10 rounded-sm" />
-                <span className="text-[10px] text-white/60">Mandatory requirement</span>
+                <span className="text-[10px] text-white">Mandatory requirement</span>
               </div>
             </div>
           </div>
@@ -1242,7 +1242,7 @@ export default function CoshhAwarenessModule3Section3() {
                     Welding Fume &mdash; Reclassified as Carcinogenic
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   In 2019, the International Agency for Research on Cancer (IARC) reclassified{' '}
                   <strong className="text-white">all welding fume as Group 1 carcinogenic</strong>{' '}
                   (causes cancer in humans), regardless of the welding process or material. HSE
@@ -1257,7 +1257,7 @@ export default function CoshhAwarenessModule3Section3() {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-violet-500/5 rounded-lg p-3 border border-violet-400/20">
                     <p className="text-base font-bold text-violet-400 mb-1.5">Fixed Systems</p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li>Permanently installed in workshops and welding bays</li>
                       <li>Ducted extraction with capture hoods or extraction arms</li>
                       <li>Central filtration unit with HEPA or activated carbon filters</li>
@@ -1266,7 +1266,7 @@ export default function CoshhAwarenessModule3Section3() {
                   </div>
                   <div className="bg-violet-500/5 rounded-lg p-3 border border-violet-400/20">
                     <p className="text-base font-bold text-violet-400 mb-1.5">Mobile Units</p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li>Portable fume extractors with flexible arms</li>
                       <li>Used on construction sites and for maintenance work</li>
                       <li>Self-contained filtration (no ductwork needed)</li>
@@ -1278,7 +1278,7 @@ export default function CoshhAwarenessModule3Section3() {
 
               <div className="bg-violet-500/10 border border-violet-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-violet-400 mb-3">Solder Fume Extraction</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1354,7 +1354,7 @@ export default function CoshhAwarenessModule3Section3() {
                   </p>
                 </div>
                 <div className="space-y-2">
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">1</span>
                     <span>
                       <strong className="text-white">Vacuum, never sweep</strong> &mdash; sweeping
@@ -1363,7 +1363,7 @@ export default function CoshhAwarenessModule3Section3() {
                       dusts)
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">2</span>
                     <span>
                       <strong className="text-white">Damp wipe, never dry dust</strong> &mdash; dry
@@ -1371,7 +1371,7 @@ export default function CoshhAwarenessModule3Section3() {
                       capture dust on surfaces and floors
                     </span>
                   </div>
-                  <div className="flex items-start gap-2 text-sm text-white/80">
+                  <div className="flex items-start gap-2 text-sm text-white">
                     <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">3</span>
                     <span>
                       <strong className="text-white">Never use compressed air for cleaning</strong>{' '}
@@ -1385,7 +1385,7 @@ export default function CoshhAwarenessModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Good Housekeeping Practices</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1434,7 +1434,7 @@ export default function CoshhAwarenessModule3Section3() {
                 <p className="text-sm font-medium text-violet-400 mb-2">
                   COSHH Essentials &mdash; Dust &amp; Fume Control Sheets
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   HSE publishes <strong className="text-white">COSHH Essentials</strong> guidance
                   sheets that provide practical, task-specific control advice for common dust and
                   fume hazards. These sheets are available free from the HSE website and cover
@@ -1448,7 +1448,7 @@ export default function CoshhAwarenessModule3Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Remember</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Dust and fume control is not a single measure &mdash; it is a{' '}
                   <strong className="text-white">
                     combination of engineering controls, work practices, housekeeping, and RPE
@@ -1471,7 +1471,7 @@ export default function CoshhAwarenessModule3Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1485,7 +1485,7 @@ export default function CoshhAwarenessModule3Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-3-section-2">

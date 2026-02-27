@@ -216,7 +216,7 @@ export default function FirstAidModule5Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-5">
@@ -239,7 +239,7 @@ export default function FirstAidModule5Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Poisoning, COSHH &amp; Hazardous Substances
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             COSHH Regulations 2002, Safety Data Sheets, poisoning by ingestion, inhalation, and skin
             contact, carbon monoxide poisoning, site-specific hazards for electricians, and drug and
             alcohol emergencies
@@ -339,7 +339,7 @@ export default function FirstAidModule5Section3() {
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-xs font-bold flex-shrink-0">
                         {i + 1}
                       </span>
-                      <p className="text-sm text-white/80">{duty}</p>
+                      <p className="text-sm text-white">{duty}</p>
                     </div>
                   ))}
                 </div>
@@ -348,7 +348,7 @@ export default function FirstAidModule5Section3() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-green-400 mb-2">COSHH Applies To:</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     {[
                       'Chemicals (cleaning agents, solvents, adhesives, paints)',
                       'Dusts (wood dust, plasterboard dust, silica dust)',
@@ -367,7 +367,7 @@ export default function FirstAidModule5Section3() {
 
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-red-400 mb-2">COSHH Does NOT Cover:</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                       <span>
@@ -390,7 +390,7 @@ export default function FirstAidModule5Section3() {
                       </span>
                     </li>
                   </ul>
-                  <p className="text-xs text-white/60 mt-3">
+                  <p className="text-xs text-white mt-3">
                     These substances have their own specific regulations because they present unique
                     risks that require specialised controls beyond the scope of COSHH.
                   </p>
@@ -470,7 +470,7 @@ export default function FirstAidModule5Section3() {
                   ].map((item, i) => (
                     <div key={i} className={`${item.bg} border ${item.border} p-3 rounded-lg`}>
                       <p className={`text-xs font-semibold ${item.colour} mb-1`}>{item.route}</p>
-                      <p className="text-sm text-white/80">{item.text}</p>
+                      <p className="text-sm text-white">{item.text}</p>
                     </div>
                   ))}
                 </div>
@@ -478,7 +478,7 @@ export default function FirstAidModule5Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Section 4 Also Provides:</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -524,7 +524,7 @@ export default function FirstAidModule5Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">All 16 Sections of an SDS</p>
-                <div className="grid sm:grid-cols-2 gap-x-4 gap-y-1 text-xs text-white/60">
+                <div className="grid sm:grid-cols-2 gap-x-4 gap-y-1 text-xs text-white">
                   {[
                     '1. Identification',
                     '2. Hazard identification',
@@ -577,7 +577,7 @@ export default function FirstAidModule5Section3() {
                     <Skull className="h-5 w-5 text-amber-400" />
                     <p className="text-sm font-medium text-amber-400">Ingestion (Swallowing)</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>
@@ -616,7 +616,7 @@ export default function FirstAidModule5Section3() {
                     <Wind className="h-5 w-5 text-blue-400" />
                     <p className="text-sm font-medium text-blue-400">Inhalation (Breathing In)</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                       <span>
@@ -652,7 +652,7 @@ export default function FirstAidModule5Section3() {
                     <Droplets className="h-5 w-5 text-green-400" />
                     <p className="text-sm font-medium text-green-400">Skin Contact (Absorption)</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                       <span>Remove contaminated clothing (wear gloves to protect yourself)</span>
@@ -693,7 +693,7 @@ export default function FirstAidModule5Section3() {
                     Poisoning by Ingestion &mdash; Detailed Guidance
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-3">
+                <div className="text-sm text-white space-y-3">
                   <p>
                     Ingestion of hazardous substances on construction sites can occur through
                     contaminated food or drink, hand-to-mouth transfer after handling chemicals
@@ -742,7 +742,7 @@ export default function FirstAidModule5Section3() {
                     Poisoning by Inhalation &mdash; Detailed Guidance
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-3">
+                <div className="text-sm text-white space-y-3">
                   <p>
                     Inhalation is the most common route of occupational poisoning. Harmful gases,
                     vapours, fumes, and dusts can be breathed in without the worker being aware of
@@ -752,7 +752,7 @@ export default function FirstAidModule5Section3() {
                     <p className="text-sm font-medium text-red-300 mb-2">
                       Scene Safety is Non-Negotiable
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       More rescuers have died entering toxic atmospheres than casualties they were
                       trying to save. You must <strong className="text-white">NEVER</strong> enter a
                       contaminated atmosphere without appropriate respiratory protective equipment
@@ -803,7 +803,7 @@ export default function FirstAidModule5Section3() {
                     Poisoning by Skin Contact &mdash; Detailed Guidance
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-3">
+                <div className="text-sm text-white space-y-3">
                   <p>
                     Many hazardous substances can be absorbed through intact skin, entering the
                     bloodstream and causing systemic poisoning. Some substances cause local damage
@@ -855,14 +855,14 @@ export default function FirstAidModule5Section3() {
                     The &ldquo;Silent Killer&rdquo;
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   CO binds to haemoglobin in the blood with an affinity approximately{' '}
                   <strong className="text-white">250 times greater than oxygen</strong>. This means
                   that even small concentrations of CO in the air can rapidly saturate the blood,
                   preventing oxygen from being carried to the body&rsquo;s tissues and organs. The
                   brain and heart are particularly vulnerable.
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Because CO is colourless, odourless, and tasteless, the casualty typically has no
                   warning. Early symptoms (headache, nausea) are often mistaken for flu or food
                   poisoning, allowing exposure to continue until the casualty collapses.
@@ -873,7 +873,7 @@ export default function FirstAidModule5Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Sources of CO on Construction Sites
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   {[
                     'Faulty or poorly maintained gas appliances (boilers, heaters, water heaters)',
                     'Petrol or diesel generators used in enclosed or poorly ventilated spaces',
@@ -895,7 +895,7 @@ export default function FirstAidModule5Section3() {
                   <p className="text-sm font-medium text-amber-400 mb-3">
                     Recognition &mdash; Signs &amp; Symptoms
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     {[
                       'Headache (often the first symptom)',
                       'Dizziness and lightheadedness',
@@ -932,7 +932,7 @@ export default function FirstAidModule5Section3() {
                         <span className="flex items-center justify-center w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-xs font-bold flex-shrink-0">
                           {i + 1}
                         </span>
-                        <p className="text-sm text-white/80">{step}</p>
+                        <p className="text-sm text-white">{step}</p>
                       </div>
                     ))}
                   </div>
@@ -946,7 +946,7 @@ export default function FirstAidModule5Section3() {
                     CO Alarms on Construction Sites
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   CO alarms should be installed in any enclosed or semi-enclosed space where
                   combustion equipment is in use or where CO may accumulate. This includes plant
                   rooms, site cabins with gas heaters, and any space where generators or
@@ -988,7 +988,7 @@ export default function FirstAidModule5Section3() {
                 <div className="p-4 space-y-3">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white mb-1">TOXBASE Database</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       The online clinical toxicology database used by healthcare professionals.
                       Contains detailed information on thousands of substances, including symptoms,
                       treatment protocols, and antidotes. First aiders do not have direct access,
@@ -998,7 +998,7 @@ export default function FirstAidModule5Section3() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white mb-1">Telephone Service</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-rose-400">0344 892 0111</strong> &mdash; for
                       healthcare professionals only (doctors, nurses, paramedics). This is NOT a
                       public helpline. First aiders should call 999 for poisoning emergencies, and
@@ -1045,12 +1045,12 @@ export default function FirstAidModule5Section3() {
                       Solvents (Contact Cleaners, Degreasers)
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Used for cleaning electrical contacts, degreasing components, and removing flux
                     residues. Common solvents include isopropyl alcohol, acetone, and proprietary
                     contact cleaners.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>
@@ -1074,11 +1074,11 @@ export default function FirstAidModule5Section3() {
                     <Flame className="h-5 w-5 text-orange-400" />
                     <p className="text-sm font-medium text-orange-400">Flux Fumes (Soldering)</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Soldering produces fumes from the flux (rosin-based or acid-based) and from the
                     solder itself. Lead-free solder still produces flux fumes that are harmful.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                       <span>
@@ -1103,12 +1103,12 @@ export default function FirstAidModule5Section3() {
                       Lead (Older Installations, Solder)
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Found in older solder (leaded solder), lead-sheathed cables in older buildings,
                     and lead paint on surfaces near electrical installations. Lead has its own
                     regulations (Control of Lead at Work Regulations 2002) separate from COSHH.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-slate-400 flex-shrink-0" />
                       <span>
@@ -1134,12 +1134,12 @@ export default function FirstAidModule5Section3() {
                       Isocyanates (Spray Foam Insulation)
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Methylene diphenyl diisocyanate (MDI) is found in spray foam insulation used in
                     cavity walls and loft spaces. Electricians may be exposed when working in
                     buildings where spray foam is being applied or has been recently applied.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-red-400 flex-shrink-0" />
                       <span>
@@ -1165,13 +1165,13 @@ export default function FirstAidModule5Section3() {
                       Asbestos Dust (Older Buildings)
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Electricians working in pre-2000 buildings are at particular risk of
                     encountering asbestos in floor tiles, ceiling tiles, textured coatings (Artex),
                     insulation board, pipe lagging, and fuse boxes. Asbestos has its own regulations
                     (Control of Asbestos Regulations 2012) separate from COSHH.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-teal-400 flex-shrink-0" />
                       <span>
@@ -1205,12 +1205,12 @@ export default function FirstAidModule5Section3() {
                       Battery Acid (Sulphuric Acid)
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Found in lead-acid batteries used in UPS systems, emergency lighting, and
                     battery backup installations. Sulphuric acid is highly corrosive and can cause
                     severe burns on contact.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>
@@ -1233,12 +1233,12 @@ export default function FirstAidModule5Section3() {
                     <Flame className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">PVC Cable Insulation Fumes</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     When PVC cable insulation is heated or burnt (for example, during a cable fire
                     or overheating from an overloaded circuit), it releases hydrogen chloride (HCl)
                     gas. This is a highly irritant and corrosive gas.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                       <span>
@@ -1277,7 +1277,7 @@ export default function FirstAidModule5Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Recognition of Intoxication</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   {[
                     'Slurred speech and difficulty communicating',
                     'Unsteady gait (difficulty walking or standing)',
@@ -1302,7 +1302,7 @@ export default function FirstAidModule5Section3() {
                     Opioid Overdose &mdash; Recognise &amp; Respond
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p className="font-medium text-white">Classic signs of opioid overdose:</p>
                   <ul className="space-y-1.5">
                     <li className="flex items-start gap-2">
@@ -1367,7 +1367,7 @@ export default function FirstAidModule5Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1381,7 +1381,7 @@ export default function FirstAidModule5Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-5">

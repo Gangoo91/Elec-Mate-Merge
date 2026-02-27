@@ -247,7 +247,7 @@ const Level3Module6Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section2">
@@ -399,7 +399,7 @@ const Level3Module6Section2_3 = () => {
               throughout.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A 32A Type B MCB requires fault current of at least 160A (5
               x In) for magnetic trip operation. At 230V, this needs Zs of 230/160 = 1.44 ohms
               maximum. The published table value is exactly 1.44 ohms.
@@ -487,27 +487,27 @@ const Level3Module6Section2_3 = () => {
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Increase Cable Size</p>
-                <p className="text-white/90 text-xs">Lower R1+R2 per metre reduces total Zs</p>
+                <p className="text-white text-xs">Lower R1+R2 per metre reduces total Zs</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Shorten Route</p>
-                <p className="text-white/90 text-xs">Less length means lower R1+R2 total</p>
+                <p className="text-white text-xs">Less length means lower R1+R2 total</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Add RCD Protection</p>
-                <p className="text-white/90 text-xs">RCD provides ADS independent of Zs</p>
+                <p className="text-white text-xs">RCD provides ADS independent of Zs</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Lower Device Rating</p>
-                <p className="text-white/90 text-xs">Lower In = higher permitted Zs</p>
+                <p className="text-white text-xs">Lower In = higher permitted Zs</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Use Type B not C</p>
-                <p className="text-white/90 text-xs">Type B has higher Zs limits</p>
+                <p className="text-white text-xs">Type B has higher Zs limits</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Relocate DB</p>
-                <p className="text-white/90 text-xs">Position board nearer to loads</p>
+                <p className="text-white text-xs">Position board nearer to loads</p>
               </div>
             </div>
 
@@ -518,7 +518,7 @@ const Level3Module6Section2_3 = () => {
               overheating during faults), but the RCD handles the shock protection requirement.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Design Tip:</strong> For long circuits or those with high Ze, design with RCD
               protection from the start. BS 7671 now requires RCD protection for most socket
               circuits anyway, so this often aligns with other requirements.
@@ -598,7 +598,7 @@ const Level3Module6Section2_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -643,7 +643,7 @@ const Level3Module6Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section2-2">

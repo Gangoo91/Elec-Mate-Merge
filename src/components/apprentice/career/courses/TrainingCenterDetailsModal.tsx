@@ -40,7 +40,7 @@ const TrainingCenterDetailsModal = ({ center, onClose }: TrainingCenterDetailsMo
           <div className="flex justify-between items-start">
             <div className="flex-1">
               <h3 className="text-2xl font-semibold text-white mb-2">{center.name}</h3>
-              <div className="flex flex-wrap items-center gap-4 text-sm text-white/70">
+              <div className="flex flex-wrap items-center gap-4 text-sm text-white">
                 <div className="flex items-center gap-1.5">
                   <MapPin className="h-4 w-4 text-elec-yellow" />
                   <span>{center.location}</span>
@@ -49,14 +49,14 @@ const TrainingCenterDetailsModal = ({ center, onClose }: TrainingCenterDetailsMo
                   <Star className="h-4 w-4 fill-amber-400" />
                   <span className="font-medium">{center.rating}</span>
                 </div>
-                <span className="text-xs text-white/60">Est. {center.establishedYear}</span>
+                <span className="text-xs text-white">Est. {center.establishedYear}</span>
               </div>
             </div>
             <Button
               variant="ghost"
               size="sm"
               onClick={onClose}
-              className="text-white/60 hover:text-white hover:bg-white/10"
+              className="text-white hover:text-white hover:bg-white/10"
             >
               <X className="h-5 w-5" />
             </Button>
@@ -67,25 +67,25 @@ const TrainingCenterDetailsModal = ({ center, onClose }: TrainingCenterDetailsMo
             <Card className="bg-gradient-to-br from-green-500/10 to-green-500/5 border-green-500/20">
               <CardContent className="p-4 text-center">
                 <div className="text-2xl font-bold text-green-400">{center.successRate}%</div>
-                <div className="text-xs text-white/70 mt-1">Success Rate</div>
+                <div className="text-xs text-white mt-1">Success Rate</div>
               </CardContent>
             </Card>
             <Card className="bg-gradient-to-br from-blue-500/10 to-blue-500/5 border-blue-500/20">
               <CardContent className="p-4 text-center">
                 <div className="text-2xl font-bold text-blue-400">{center.employmentRate}%</div>
-                <div className="text-xs text-white/70 mt-1">Employment Rate</div>
+                <div className="text-xs text-white mt-1">Employment Rate</div>
               </CardContent>
             </Card>
             <Card className="bg-gradient-to-br from-elec-yellow/10 to-elec-yellow/5 border-elec-yellow/20">
               <CardContent className="p-4 text-center">
                 <div className="text-2xl font-bold text-elec-yellow">{center.studentCapacity}</div>
-                <div className="text-xs text-white/70 mt-1">Capacity</div>
+                <div className="text-xs text-white mt-1">Capacity</div>
               </CardContent>
             </Card>
             <Card className="bg-gradient-to-br from-purple-500/10 to-purple-500/5 border-purple-500/20">
               <CardContent className="p-4 text-center">
                 <div className="text-2xl font-bold text-purple-400">{center.establishedYear}</div>
-                <div className="text-xs text-white/70 mt-1">Established</div>
+                <div className="text-xs text-white mt-1">Established</div>
               </CardContent>
             </Card>
           </div>
@@ -105,28 +105,28 @@ const TrainingCenterDetailsModal = ({ center, onClose }: TrainingCenterDetailsMo
               <CardContent className="space-y-3 relative">
                 <div className="flex items-start gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
                   <MapPin className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-white/80">{center.address}</span>
+                  <span className="text-sm text-white">{center.address}</span>
                 </div>
                 <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
                   <Phone className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-sm text-white/80">{center.contact}</span>
+                  <span className="text-sm text-white">{center.contact}</span>
                 </div>
                 <div className="flex items-center gap-3 p-3 rounded-lg bg-white/5 border border-white/10">
                   <Globe className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-sm text-white/80">{center.website}</span>
+                  <span className="text-sm text-white">{center.website}</span>
                 </div>
                 <div className="mt-4 p-3 rounded-lg bg-white/5 border border-white/10">
                   <h5 className="text-sm font-medium mb-3 text-elec-yellow flex items-center gap-2">
                     <Clock className="h-4 w-4" />
                     Opening Hours
                   </h5>
-                  <div className="grid grid-cols-2 gap-2 text-sm text-white/70">
+                  <div className="grid grid-cols-2 gap-2 text-sm text-white">
                     <div>Monday - Friday</div>
                     <div className="text-white">08:30 - 17:00</div>
                     <div>Saturday</div>
                     <div className="text-white">09:00 - 13:00</div>
                     <div>Sunday</div>
-                    <div className="text-white/50">Closed</div>
+                    <div className="text-white">Closed</div>
                   </div>
                 </div>
               </CardContent>
@@ -145,7 +145,7 @@ const TrainingCenterDetailsModal = ({ center, onClose }: TrainingCenterDetailsMo
               </CardHeader>
               <CardContent className="space-y-4 relative">
                 <div>
-                  <h5 className="text-sm font-medium mb-3 text-white/80">Areas of Expertise:</h5>
+                  <h5 className="text-sm font-medium mb-3 text-white">Areas of Expertise:</h5>
                   <div className="flex flex-wrap gap-2">
                     {center.specialisations.map((spec, idx) => (
                       <Badge
@@ -159,7 +159,7 @@ const TrainingCenterDetailsModal = ({ center, onClose }: TrainingCenterDetailsMo
                   </div>
                 </div>
                 <div>
-                  <h5 className="text-sm font-medium mb-3 text-white/80">Featured Courses:</h5>
+                  <h5 className="text-sm font-medium mb-3 text-white">Featured Courses:</h5>
                   <div className="space-y-2">
                     {center.courses.slice(0, 5).map((course, idx) => (
                       <div
@@ -167,7 +167,7 @@ const TrainingCenterDetailsModal = ({ center, onClose }: TrainingCenterDetailsMo
                         className="flex items-center gap-2 text-sm p-2 rounded-lg bg-white/5"
                       >
                         <CheckCircle className="h-3.5 w-3.5 text-green-400 flex-shrink-0" />
-                        <span className="text-white/80">{course}</span>
+                        <span className="text-white">{course}</span>
                       </div>
                     ))}
                   </div>
@@ -221,7 +221,7 @@ const TrainingCenterDetailsModal = ({ center, onClose }: TrainingCenterDetailsMo
                       className="flex items-center gap-2 text-sm p-2 rounded-lg bg-white/5"
                     >
                       <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />
-                      <span className="text-white/80">{service}</span>
+                      <span className="text-white">{service}</span>
                     </div>
                   ))}
                 </div>
@@ -248,7 +248,7 @@ const TrainingCenterDetailsModal = ({ center, onClose }: TrainingCenterDetailsMo
                     className="flex items-center gap-2 text-sm p-3 bg-white/5 rounded-lg border border-white/10"
                   >
                     <CheckCircle className="h-3.5 w-3.5 text-green-400 flex-shrink-0" />
-                    <span className="text-white/80">{facility}</span>
+                    <span className="text-white">{facility}</span>
                   </div>
                 ))}
               </div>
@@ -270,29 +270,29 @@ const TrainingCenterDetailsModal = ({ center, onClose }: TrainingCenterDetailsMo
               <form className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-white/80">Full Name</label>
+                    <label className="text-sm font-medium text-white">Full Name</label>
                     <Input
                       placeholder="Your full name"
-                      className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40"
+                      className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-white/80">Email Address</label>
+                    <label className="text-sm font-medium text-white">Email Address</label>
                     <Input
                       type="email"
                       placeholder="your.email@example.com"
-                      className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40"
+                      className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-white/80">Phone Number</label>
+                    <label className="text-sm font-medium text-white">Phone Number</label>
                     <Input
                       placeholder="Your contact number"
-                      className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40"
+                      className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white"
                     />
                   </div>
                   <div className="space-y-2">
-                    <label className="text-sm font-medium text-white/80">Course Interest</label>
+                    <label className="text-sm font-medium text-white">Course Interest</label>
                     <Select>
                       <SelectTrigger className="h-11 bg-white/5 border-white/20 text-white">
                         <SelectValue placeholder="Select a course" />
@@ -308,11 +308,11 @@ const TrainingCenterDetailsModal = ({ center, onClose }: TrainingCenterDetailsMo
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-white/80">Message</label>
+                  <label className="text-sm font-medium text-white">Message</label>
                   <Textarea
                     placeholder="Please tell us about your training requirements, preferred dates, or any specific questions..."
                     rows={4}
-                    className="bg-white/5 border-white/20 text-white placeholder:text-white/40"
+                    className="bg-white/5 border-white/20 text-white placeholder:text-white"
                   />
                 </div>
                 <Button className="w-full h-11 bg-elec-yellow text-elec-dark hover:bg-elec-yellow/90 touch-manipulation active:scale-95 transition-all">

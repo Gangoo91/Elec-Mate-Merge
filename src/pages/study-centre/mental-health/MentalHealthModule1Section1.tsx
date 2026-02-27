@@ -189,7 +189,7 @@ export default function MentalHealthModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-1">
@@ -214,7 +214,7 @@ export default function MentalHealthModule1Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Mental Health Awareness &amp; the Spectrum
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding what mental health is, how it exists on a continuum, the scale of the
             challenge in the UK, and how stigma prevents people from getting help
           </p>
@@ -315,7 +315,7 @@ export default function MentalHealthModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Key Principles:</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400/60 flex-shrink-0" />
                     <span>
@@ -425,7 +425,7 @@ export default function MentalHealthModule1Section1() {
                       <div className="w-3 h-3 rounded-full bg-green-500 flex-shrink-0" />
                       <p className="text-sm font-medium text-green-400">Thriving</p>
                     </div>
-                    <ul className="text-xs sm:text-sm text-white/80 space-y-1">
+                    <ul className="text-xs sm:text-sm text-white space-y-1">
                       <li>Feeling good and functioning well</li>
                       <li>Good energy and motivation</li>
                       <li>Healthy relationships and social life</li>
@@ -439,7 +439,7 @@ export default function MentalHealthModule1Section1() {
                       <div className="w-3 h-3 rounded-full bg-yellow-500 flex-shrink-0" />
                       <p className="text-sm font-medium text-yellow-400">Surviving</p>
                     </div>
-                    <ul className="text-xs sm:text-sm text-white/80 space-y-1">
+                    <ul className="text-xs sm:text-sm text-white space-y-1">
                       <li>Getting by, but under strain</li>
                       <li>Increased tiredness or irritability</li>
                       <li>Reduced concentration or motivation</li>
@@ -453,7 +453,7 @@ export default function MentalHealthModule1Section1() {
                       <div className="w-3 h-3 rounded-full bg-orange-500 flex-shrink-0" />
                       <p className="text-sm font-medium text-orange-400">Struggling</p>
                     </div>
-                    <ul className="text-xs sm:text-sm text-white/80 space-y-1">
+                    <ul className="text-xs sm:text-sm text-white space-y-1">
                       <li>Noticeable difficulty coping</li>
                       <li>Persistent low mood or anxiety</li>
                       <li>Significant changes in behaviour</li>
@@ -467,7 +467,7 @@ export default function MentalHealthModule1Section1() {
                       <div className="w-3 h-3 rounded-full bg-red-500 flex-shrink-0" />
                       <p className="text-sm font-medium text-red-400">In Crisis</p>
                     </div>
-                    <ul className="text-xs sm:text-sm text-white/80 space-y-1">
+                    <ul className="text-xs sm:text-sm text-white space-y-1">
                       <li>Unable to cope with daily life</li>
                       <li>May be experiencing suicidal thoughts</li>
                       <li>Significant risk to self or others</li>
@@ -495,7 +495,7 @@ export default function MentalHealthModule1Section1() {
                     <p className="text-sm font-medium text-green-400 mb-1">
                       Protective Factors (move you towards thriving)
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400/60 flex-shrink-0" />
                         <span>Strong social connections and support</span>
@@ -522,7 +522,7 @@ export default function MentalHealthModule1Section1() {
                     <p className="text-sm font-medium text-red-400 mb-1">
                       Risk Factors (move you towards crisis)
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400/60 flex-shrink-0" />
                         <span>Social isolation and loneliness</span>
@@ -583,13 +583,13 @@ export default function MentalHealthModule1Section1() {
                   <div className="space-y-3">
                     <div>
                       <p className="text-2xl sm:text-3xl font-bold text-purple-400">1 in 4</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Adults in England experience a mental health problem each year (Mind)
                       </p>
                     </div>
                     <div>
                       <p className="text-2xl sm:text-3xl font-bold text-purple-400">1 in 6</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Workers experience work-related depression, anxiety, or stress (HSE)
                       </p>
                     </div>
@@ -597,13 +597,13 @@ export default function MentalHealthModule1Section1() {
                   <div className="space-y-3">
                     <div>
                       <p className="text-2xl sm:text-3xl font-bold text-purple-400">70M</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Working days lost per year to mental health conditions in the UK
                       </p>
                     </div>
                     <div>
                       <p className="text-2xl sm:text-3xl font-bold text-purple-400">&pound;56bn</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Annual cost to UK employers from poor mental health (Deloitte, 2022)
                       </p>
                     </div>
@@ -616,11 +616,11 @@ export default function MentalHealthModule1Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Construction Industry</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The construction industry faces a mental health crisis that demands urgent
                   attention:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400/60 flex-shrink-0" />
                     <span>
@@ -670,7 +670,7 @@ export default function MentalHealthModule1Section1() {
                     The Breakdown of Employer Costs
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400/60 flex-shrink-0" />
                     <span>
@@ -724,7 +724,7 @@ export default function MentalHealthModule1Section1() {
                   </div>
                   <div className="flex items-start gap-3">
                     <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-green-400">Reality:</strong> 1 in 4 adults experience
                       a mental health problem each year. Mental health conditions are among the most
                       common health issues in the UK. You almost certainly know someone who has been
@@ -743,7 +743,7 @@ export default function MentalHealthModule1Section1() {
                   </div>
                   <div className="flex items-start gap-3">
                     <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-green-400">Reality:</strong> Mental health conditions
                       can affect anyone, regardless of age, gender, ethnicity, income, education, or
                       occupation. They do not discriminate. A company director is just as
@@ -762,7 +762,7 @@ export default function MentalHealthModule1Section1() {
                   </div>
                   <div className="flex items-start gap-3">
                     <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-green-400">Reality:</strong> The vast majority of
                       people experiencing mental health problems are not violent or dangerous. In
                       fact, people with mental health conditions are far more likely to be{' '}
@@ -785,7 +785,7 @@ export default function MentalHealthModule1Section1() {
                   </div>
                   <div className="flex items-start gap-3">
                     <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-green-400">Reality:</strong> Mental health conditions
                       are real medical conditions, not choices or character flaws. Telling someone
                       to &ldquo;cheer up&rdquo; or &ldquo;pull yourself together&rdquo; is as
@@ -806,7 +806,7 @@ export default function MentalHealthModule1Section1() {
                   </div>
                   <div className="flex items-start gap-3">
                     <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       <strong className="text-green-400">Reality:</strong> Many people recover fully
                       from mental health conditions, and many others learn to manage their condition
                       effectively and live fulfilling, productive lives. Recovery is not always
@@ -859,7 +859,7 @@ export default function MentalHealthModule1Section1() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-purple-400">Public Stigma</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         The negative attitudes, stereotypes, and prejudice that society holds about
                         people with mental health conditions. This includes beliefs that people with
                         mental illness are weak, unreliable, or dangerous. Public stigma leads to
@@ -874,7 +874,7 @@ export default function MentalHealthModule1Section1() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-purple-400">Self-Stigma</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         When a person with a mental health condition internalises the negative
                         beliefs from society and applies them to themselves. This leads to shame,
                         low self-esteem, and reluctance to seek help or disclose their condition. A
@@ -891,7 +891,7 @@ export default function MentalHealthModule1Section1() {
                       <p className="text-sm font-medium text-purple-400">
                         Structural / Institutional Stigma
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Policies, practices, and systems within organisations and institutions that
                         disadvantage people with mental health conditions. Examples include lack of
                         mental health policies, inadequate absence support, managers untrained in
@@ -910,11 +910,11 @@ export default function MentalHealthModule1Section1() {
                     Stigma in Construction &amp; the Trades
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The construction industry and skilled trades face particular challenges with
                   mental health stigma:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400/60 flex-shrink-0" />
                     <span>
@@ -966,7 +966,7 @@ export default function MentalHealthModule1Section1() {
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div>
                     <p className="text-sm font-medium text-white mb-1">For the Individual</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Delays in seeking help</span>
@@ -991,7 +991,7 @@ export default function MentalHealthModule1Section1() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white mb-1">For the Workplace</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Higher sickness absence rates</span>
@@ -1049,14 +1049,14 @@ export default function MentalHealthModule1Section1() {
                   <MessageCircle className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">Language Matters</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The words we use shape how people feel about mental health. Small changes in
                   language can make a significant difference:
                 </p>
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-red-500/10 border border-red-500/20 p-3 rounded-lg">
                     <p className="text-xs font-medium text-red-400 mb-2">Avoid</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li>&ldquo;He&rsquo;s a schizophrenic&rdquo;</li>
                       <li>&ldquo;She&rsquo;s so OCD&rdquo;</li>
                       <li>&ldquo;That&rsquo;s mental&rdquo;</li>
@@ -1066,7 +1066,7 @@ export default function MentalHealthModule1Section1() {
                   </div>
                   <div className="bg-green-500/10 border border-green-500/20 p-3 rounded-lg">
                     <p className="text-xs font-medium text-green-400 mb-2">Use Instead</p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li>&ldquo;He has schizophrenia&rdquo;</li>
                       <li>&ldquo;She&rsquo;s very particular about...&rdquo;</li>
                       <li>&ldquo;That&rsquo;s surprising / unbelievable&rdquo;</li>
@@ -1075,7 +1075,7 @@ export default function MentalHealthModule1Section1() {
                     </ul>
                   </div>
                 </div>
-                <p className="text-sm text-white/70 mt-3">
+                <p className="text-sm text-white mt-3">
                   <strong className="text-purple-400">Person-first language</strong> means putting
                   the person before their condition. A person is not their diagnosis &mdash; they
                   are a person who happens to have a particular condition. This small shift in
@@ -1088,7 +1088,7 @@ export default function MentalHealthModule1Section1() {
                   <Users className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">Normalising Conversations</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400/60 flex-shrink-0" />
                     <span>
@@ -1145,7 +1145,7 @@ export default function MentalHealthModule1Section1() {
                     <p className="text-sm font-medium text-white">
                       Time to Change / Time to Talk Day
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       England&rsquo;s largest programme to challenge mental health stigma and
                       discrimination, led by Mind and Rethink Mental Illness. Although the campaign
                       formally ended in 2021, Time to Talk Day continues annually, encouraging
@@ -1154,7 +1154,7 @@ export default function MentalHealthModule1Section1() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">Mates in Mind</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       A UK charity focused on improving and supporting mental health in the
                       construction and related industries. Provides training, resources, and a
                       framework for organisations to address mental health in the workplace.
@@ -1162,7 +1162,7 @@ export default function MentalHealthModule1Section1() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">Construction Industry Helpline</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       A free, confidential service available 24/7 on{' '}
                       <strong className="text-purple-400">0345 605 1956</strong>. Provides
                       emotional, financial, and practical support for anyone working in the
@@ -1171,7 +1171,7 @@ export default function MentalHealthModule1Section1() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white">Samaritans</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Available 24/7, free to call on{' '}
                       <strong className="text-purple-400">116 123</strong>. You do not have to be
                       suicidal to contact the Samaritans &mdash; they are there for anyone who is
@@ -1188,7 +1188,7 @@ export default function MentalHealthModule1Section1() {
                     What an MHFA Can Do to Reduce Workplace Stigma
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-purple-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -1259,7 +1259,7 @@ export default function MentalHealthModule1Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1273,7 +1273,7 @@ export default function MentalHealthModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-1">

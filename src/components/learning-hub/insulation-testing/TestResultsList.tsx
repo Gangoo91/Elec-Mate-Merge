@@ -26,7 +26,7 @@ const TestResultsList = ({ testResults, onRemoveTest }: TestResultsListProps) =>
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center gap-4">
                   <div className="font-medium text-foreground">{test.circuitRef}</div>
-                  <div className="text-sm text-white/80">({test.testVoltage}V DC)</div>
+                  <div className="text-sm text-white">({test.testVoltage}V DC)</div>
                   <Badge
                     variant={test.result === 'pass' ? 'default' : 'destructive'}
                     className={
@@ -49,21 +49,21 @@ const TestResultsList = ({ testResults, onRemoveTest }: TestResultsListProps) =>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-sm">
                 <div>
-                  <span className="text-white/80">L-N:</span>
+                  <span className="text-white">L-N:</span>
                   <span className="text-foreground ml-1">{test.liveNeutral || 'N/T'} MΩ</span>
                   {test.correctedValues.liveNeutral && (
                     <span className="text-blue-400 ml-1">({test.correctedValues.liveNeutral})</span>
                   )}
                 </div>
                 <div>
-                  <span className="text-white/80">L-E:</span>
+                  <span className="text-white">L-E:</span>
                   <span className="text-foreground ml-1">{test.liveEarth || 'N/T'} MΩ</span>
                   {test.correctedValues.liveEarth && (
                     <span className="text-blue-400 ml-1">({test.correctedValues.liveEarth})</span>
                   )}
                 </div>
                 <div>
-                  <span className="text-white/80">N-E:</span>
+                  <span className="text-white">N-E:</span>
                   <span className="text-foreground ml-1">{test.neutralEarth || 'N/T'} MΩ</span>
                   {test.correctedValues.neutralEarth && (
                     <span className="text-blue-400 ml-1">
@@ -77,7 +77,7 @@ const TestResultsList = ({ testResults, onRemoveTest }: TestResultsListProps) =>
                   Temperature corrected from {test.temperature}°C to 20°C
                 </div>
               )}
-              {test.notes && <div className="mt-2 text-sm text-white/80">Notes: {test.notes}</div>}
+              {test.notes && <div className="mt-2 text-sm text-white">Notes: {test.notes}</div>}
             </CardContent>
           </Card>
         ))}

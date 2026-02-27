@@ -191,7 +191,7 @@ export default function ManualHandlingModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-3">
@@ -216,7 +216,7 @@ export default function ManualHandlingModule3Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             The TILE Framework in Depth
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             A comprehensive look at the four categories of manual handling risk factors &mdash;
             Task, Individual, Load, and Environment &mdash; and how they interact to determine
             overall risk
@@ -373,7 +373,7 @@ export default function ManualHandlingModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key Task Risk Factors</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -480,7 +480,7 @@ export default function ManualHandlingModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key Individual Risk Factors</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -554,7 +554,7 @@ export default function ManualHandlingModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Legal Note</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Under the Equality Act 2010, employers must not discriminate against workers based
                   on age, disability, pregnancy, or other protected characteristics. However, they{' '}
                   <strong className="text-white">must</strong> take these Individual factors into
@@ -585,7 +585,7 @@ export default function ManualHandlingModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key Load Risk Factors</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -668,23 +668,23 @@ export default function ManualHandlingModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   HSE Guideline Weights (Close to Body)
                 </p>
-                <p className="text-xs text-white/60 mb-3">
+                <p className="text-xs text-white mb-3">
                   These figures from HSE L23 are NOT legal limits. They are the weights at which a
                   more detailed assessment is required.
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-lg font-bold text-emerald-400">25 kg</p>
-                    <p className="text-white/70 text-xs">Men &mdash; waist height, close to body</p>
+                    <p className="text-white text-xs">Men &mdash; waist height, close to body</p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3 text-center">
                     <p className="text-lg font-bold text-emerald-400">16 kg</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Women &mdash; waist height, close to body
                     </p>
                   </div>
                 </div>
-                <p className="text-xs text-white/60 mt-3">
+                <p className="text-xs text-white mt-3">
                   Guideline weights reduce significantly when lifting above shoulder height, below
                   knee height, at arm&rsquo;s length, or with increased frequency. For example, at
                   arm&rsquo;s length the guideline drops to 5 kg for men and 3 kg for women.
@@ -713,7 +713,7 @@ export default function ManualHandlingModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key Environment Risk Factors</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -784,7 +784,7 @@ export default function ManualHandlingModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Common Trap</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Many manual handling injuries occur because the initial assessment was done in
                   good conditions (dry, well-lit, spacious warehouse) but the actual handling takes
                   place in poorer conditions (wet site, cramped riser, poorly lit ceiling void).
@@ -809,9 +809,9 @@ export default function ManualHandlingModule3Section1() {
               <div className="bg-emerald-500/10 border-b border-emerald-500/30 px-4 py-3 text-center">
                 <Cog className="h-6 w-6 text-emerald-400 mx-auto mb-1" />
                 <p className="text-sm font-bold text-emerald-400">T &mdash; Task</p>
-                <p className="text-xs text-white/60">How the work is done</p>
+                <p className="text-xs text-white">How the work is done</p>
               </div>
-              <div className="px-4 py-3 space-y-1.5 text-xs text-white/80">
+              <div className="px-4 py-3 space-y-1.5 text-xs text-white">
                 <div className="flex items-start gap-2">
                   <span className="mt-1 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                   <span>Holding load away from body</span>
@@ -844,9 +844,9 @@ export default function ManualHandlingModule3Section1() {
               <div className="bg-emerald-500/10 border-b border-emerald-500/30 px-4 py-3 text-center">
                 <User className="h-6 w-6 text-emerald-400 mx-auto mb-1" />
                 <p className="text-sm font-bold text-emerald-400">I &mdash; Individual</p>
-                <p className="text-xs text-white/60">Who is doing the work</p>
+                <p className="text-xs text-white">Who is doing the work</p>
               </div>
-              <div className="px-4 py-3 space-y-1.5 text-xs text-white/80">
+              <div className="px-4 py-3 space-y-1.5 text-xs text-white">
                 <div className="flex items-start gap-2">
                   <span className="mt-1 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                   <span>Physical capability and fitness</span>
@@ -879,9 +879,9 @@ export default function ManualHandlingModule3Section1() {
               <div className="bg-emerald-500/10 border-b border-emerald-500/30 px-4 py-3 text-center">
                 <Package className="h-6 w-6 text-emerald-400 mx-auto mb-1" />
                 <p className="text-sm font-bold text-emerald-400">L &mdash; Load</p>
-                <p className="text-xs text-white/60">What is being handled</p>
+                <p className="text-xs text-white">What is being handled</p>
               </div>
-              <div className="px-4 py-3 space-y-1.5 text-xs text-white/80">
+              <div className="px-4 py-3 space-y-1.5 text-xs text-white">
                 <div className="flex items-start gap-2">
                   <span className="mt-1 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                   <span>Weight</span>
@@ -914,9 +914,9 @@ export default function ManualHandlingModule3Section1() {
               <div className="bg-emerald-500/10 border-b border-emerald-500/30 px-4 py-3 text-center">
                 <MapPin className="h-6 w-6 text-emerald-400 mx-auto mb-1" />
                 <p className="text-sm font-bold text-emerald-400">E &mdash; Environment</p>
-                <p className="text-xs text-white/60">Where the work happens</p>
+                <p className="text-xs text-white">Where the work happens</p>
               </div>
-              <div className="px-4 py-3 space-y-1.5 text-xs text-white/80">
+              <div className="px-4 py-3 space-y-1.5 text-xs text-white">
                 <div className="flex items-start gap-2">
                   <span className="mt-1 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                   <span>Space constraints</span>
@@ -974,7 +974,7 @@ export default function ManualHandlingModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Step-by-Step TILE Assessment Process
                 </p>
-                <ol className="text-sm text-white/80 space-y-3">
+                <ol className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 w-6 h-6 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center flex-shrink-0 text-xs font-bold text-emerald-400">
                       1
@@ -1062,7 +1062,7 @@ export default function ManualHandlingModule3Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1076,7 +1076,7 @@ export default function ManualHandlingModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-3">

@@ -204,7 +204,7 @@ export default function WorkingAtHeightModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-4">
@@ -229,7 +229,7 @@ export default function WorkingAtHeightModule4Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Planning &amp; Organising
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Legal requirements for planning work at height, appointing competent persons, weather
             limitations, rescue planning, supervision, and equipment selection
           </p>
@@ -347,7 +347,7 @@ export default function WorkingAtHeightModule4Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">What Planning Must Cover</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -425,7 +425,7 @@ export default function WorkingAtHeightModule4Section1() {
                     The Four Attributes of Competence
                   </p>
                 </div>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <p>
                     <strong className="text-white">1. Sufficient Training:</strong> The person has
                     received training relevant to the specific type of work at height being planned.
@@ -470,7 +470,7 @@ export default function WorkingAtHeightModule4Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Competent Person Responsibilities
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>Assess the risks of the proposed work at height</span>
@@ -503,7 +503,7 @@ export default function WorkingAtHeightModule4Section1() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Warning</p>
                 </div>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   &ldquo;We&rsquo;ve always done it this way&rdquo; is not evidence of competence. A
                   competent person must be able to justify their decisions by reference to current
                   regulations, manufacturer guidance, and site-specific conditions. Past practice
@@ -537,7 +537,7 @@ export default function WorkingAtHeightModule4Section1() {
                   <Wind className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Weather Thresholds for WAH</p>
                 </div>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="p-3 bg-white/5 rounded-lg">
                     <p className="font-medium text-white mb-1">
                       Wind &mdash; Beaufort Force 5 (19&ndash;24 mph)
@@ -592,7 +592,7 @@ export default function WorkingAtHeightModule4Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Practical Weather Indicators (No Instruments)
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -652,7 +652,7 @@ export default function WorkingAtHeightModule4Section1() {
                     Duration and Equipment Selection
                   </p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Up to 15 minutes:</strong> Simple stepladder or
                     platform step may be appropriate for light, low-risk tasks within reach. Must
@@ -690,7 +690,7 @@ export default function WorkingAtHeightModule4Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Factors That Extend Task Duration
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -741,7 +741,7 @@ export default function WorkingAtHeightModule4Section1() {
                   <LifeBuoy className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Requirement</p>
                 </div>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   A rescue plan must <strong>never</strong> be improvised after an incident has
                   occurred. If someone falls and is suspended in a harness, suspension trauma can
                   cause unconsciousness within 15&ndash;30 minutes and death can follow rapidly.
@@ -762,7 +762,7 @@ export default function WorkingAtHeightModule4Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   What a Rescue Plan Must Address
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -839,7 +839,7 @@ export default function WorkingAtHeightModule4Section1() {
                   <Users className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">Supervision Levels</p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Direct/continuous supervision:</strong> The
                     supervisor is present at all times, watching the work and able to intervene
@@ -866,7 +866,7 @@ export default function WorkingAtHeightModule4Section1() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Warning</p>
                 </div>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   An unsupervised worker who takes a shortcut or deviates from the plan is a
                   foreseeable risk. If the employer has not provided appropriate supervision, the
                   employer bears legal liability for the consequences. &ldquo;We told them what to
@@ -909,7 +909,7 @@ export default function WorkingAtHeightModule4Section1() {
                   <Wrench className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Equipment Selection Factors</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -999,7 +999,7 @@ export default function WorkingAtHeightModule4Section1() {
                   <Radio className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Pre-Work Briefing Content</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -1098,7 +1098,7 @@ export default function WorkingAtHeightModule4Section1() {
                       <Users className="h-5 w-5 text-blue-400" />
                       <p className="text-sm font-semibold text-blue-400">Personnel</p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-3.5 w-3.5 text-blue-400/70 mt-0.5 flex-shrink-0" />
                         <span>Competent person appointed to plan/supervise</span>
@@ -1128,7 +1128,7 @@ export default function WorkingAtHeightModule4Section1() {
                       <Wrench className="h-5 w-5 text-green-400" />
                       <p className="text-sm font-semibold text-green-400">Equipment</p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-3.5 w-3.5 text-green-400/70 mt-0.5 flex-shrink-0" />
                         <span>Correct equipment selected for the task</span>
@@ -1158,7 +1158,7 @@ export default function WorkingAtHeightModule4Section1() {
                       <Wind className="h-5 w-5 text-teal-400" />
                       <p className="text-sm font-semibold text-teal-400">Environment</p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-3.5 w-3.5 text-teal-400/70 mt-0.5 flex-shrink-0" />
                         <span>Weather forecast checked (wind, rain, ice)</span>
@@ -1188,7 +1188,7 @@ export default function WorkingAtHeightModule4Section1() {
                       <LifeBuoy className="h-5 w-5 text-red-400" />
                       <p className="text-sm font-semibold text-red-400">Emergency</p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-3.5 w-3.5 text-red-400/70 mt-0.5 flex-shrink-0" />
                         <span>Rescue plan written and communicated</span>
@@ -1224,7 +1224,7 @@ export default function WorkingAtHeightModule4Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1238,7 +1238,7 @@ export default function WorkingAtHeightModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-4">

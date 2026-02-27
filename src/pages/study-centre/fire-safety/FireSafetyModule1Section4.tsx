@@ -209,7 +209,7 @@ export default function FireSafetyModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-1">
@@ -232,7 +232,7 @@ export default function FireSafetyModule1Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             How Fires Start in the Workplace
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Electrical faults, hot works, arson, smoking materials, poor housekeeping, chemical
             risks, UK fire statistics, and the critical lessons from major fire incidents
           </p>
@@ -361,7 +361,7 @@ export default function FireSafetyModule1Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-rose-400 mb-1">{item.cause}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -374,7 +374,7 @@ export default function FireSafetyModule1Section4() {
                     Specific Risks for Electricians
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   As an electrician, you are both a potential cause and a critical line of defence
                   against electrical fires. The following risks are directly relevant to your daily
                   work:
@@ -382,7 +382,7 @@ export default function FireSafetyModule1Section4() {
                 <ul className="space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong>Working on live circuits</strong> &mdash; arcing at switchgear,
                       consumer units, and distribution boards during live working can ignite dust,
                       insulation, or nearby combustible materials
@@ -390,7 +390,7 @@ export default function FireSafetyModule1Section4() {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong>Cable damage during installation</strong> &mdash; pulling cables
                       through tight routes, around sharp edges, or past fixings can damage
                       insulation without visible external evidence, creating a latent fire risk
@@ -398,7 +398,7 @@ export default function FireSafetyModule1Section4() {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong>Poor terminations</strong> &mdash; inadequately tightened terminals,
                       insufficient conductor stripped into the terminal, or damaged conductor
                       strands all create high-resistance joints that heat up under load
@@ -406,7 +406,7 @@ export default function FireSafetyModule1Section4() {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong>Failure to derate in thermal insulation</strong> &mdash; cables routed
                       through or surrounded by thermal insulation must have their current-carrying
                       capacity derated per BS 7671. Failure to do so leads to chronic overheating
@@ -436,7 +436,7 @@ export default function FireSafetyModule1Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3 text-center">
                       <p className="text-2xl font-bold text-rose-400 mb-1">{item.stat}</p>
-                      <p className="text-xs text-white/70">{item.label}</p>
+                      <p className="text-xs text-white">{item.label}</p>
                     </div>
                   ))}
                 </div>
@@ -480,7 +480,7 @@ export default function FireSafetyModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Hot Work Permits</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A <strong>hot work permit</strong> is required on construction sites and in any
                   location where hot works are carried out outside a designated permanent hot work
                   area. The permit is a formal document that specifies the location, the work to be
@@ -496,7 +496,7 @@ export default function FireSafetyModule1Section4() {
                 <ul className="space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong>Remove all combustible materials</strong> from a minimum radius of 10
                       metres around the work area, or cover them with fire-resistant blankets or
                       screens where removal is not practicable
@@ -504,7 +504,7 @@ export default function FireSafetyModule1Section4() {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong>Fireproof screens and fire blankets</strong> &mdash; position around
                       the work area to contain sparks and prevent them reaching combustible
                       materials in adjacent areas, particularly above, below, and behind partition
@@ -513,7 +513,7 @@ export default function FireSafetyModule1Section4() {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong>Fire extinguisher on standby</strong> &mdash; a suitable extinguisher
                       (typically water, foam, or dry powder depending on the environment) must be
                       immediately available at the work location throughout the hot work activity
@@ -522,7 +522,7 @@ export default function FireSafetyModule1Section4() {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong>Seal gaps and openings</strong> &mdash; close or cover all gaps in
                       floors, walls, and ceilings through which sparks could travel to adjacent
                       areas or concealed spaces
@@ -530,7 +530,7 @@ export default function FireSafetyModule1Section4() {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong>Damp down the area</strong> &mdash; where appropriate, wet the
                       surrounding area to reduce the risk of ignition from stray sparks (not
                       applicable near electrical installations or equipment sensitive to moisture)
@@ -546,7 +546,7 @@ export default function FireSafetyModule1Section4() {
                     Fire Watch &mdash; The Critical 30&ndash;60 Minutes
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   After completion of hot works, a{' '}
                   <strong>fire watch must be maintained for a minimum of 30 minutes</strong>. Many
                   organisations and site fire safety policies specify <strong>60 minutes</strong>.
@@ -599,7 +599,7 @@ export default function FireSafetyModule1Section4() {
                 <ul className="space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong>Poor site security</strong> &mdash; unsecured perimeters, broken
                       fencing, unlocked gates, and lack of access control allow unauthorised persons
                       to enter the premises
@@ -607,7 +607,7 @@ export default function FireSafetyModule1Section4() {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong>Accessible waste and combustible materials</strong> &mdash; skips,
                       bins, pallets, cardboard, and other combustible waste stored against or near
                       the exterior of a building provide ready-made fuel for an arsonist
@@ -615,14 +615,14 @@ export default function FireSafetyModule1Section4() {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong>Poor external lighting</strong> &mdash; inadequately lit premises
                       provide cover for arsonists to approach undetected
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong>Unoccupied or derelict buildings</strong> &mdash; empty premises,
                       particularly those awaiting demolition or refurbishment, are a frequent target
                       for arson
@@ -630,7 +630,7 @@ export default function FireSafetyModule1Section4() {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong>Lack of surveillance</strong> &mdash; absence of CCTV, security
                       patrols, or visible deterrents
                     </span>
@@ -643,49 +643,49 @@ export default function FireSafetyModule1Section4() {
                   <ShieldAlert className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Arson Prevention Measures</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Effective arson prevention focuses on three principles: denying access, removing
                   fuel, and detecting attempts early.
                 </p>
                 <ul className="space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       Secure the site perimeter with appropriate fencing, locked gates, and
                       controlled access points
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       Remove combustible materials from the exterior of buildings &mdash; move
                       skips, bins, and waste storage away from building walls
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       Install CCTV covering all approaches and external storage areas, with visible
                       signage indicating surveillance is in operation
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       Provide adequate external security lighting, particularly around bins, waste
                       storage, delivery areas, and building entrances
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       Implement regular security patrols, especially during periods when premises
                       are unoccupied
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       Implement a robust waste management programme &mdash; regular removal of
                       combustible waste, lockable waste containers, and storage away from buildings
                     </span>
@@ -732,7 +732,7 @@ export default function FireSafetyModule1Section4() {
                 <ul className="space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong>Designated smoking areas</strong> must be located away from all
                       combustible materials, waste storage, gas cylinders, and fuel storage. On
                       construction sites, these areas must be clearly marked and provided with
@@ -741,7 +741,7 @@ export default function FireSafetyModule1Section4() {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong>No smoking policies</strong> &mdash; many construction sites operate a
                       complete no-smoking policy across the entire site. This must be enforced
                       through induction, signage, and disciplinary procedures
@@ -749,7 +749,7 @@ export default function FireSafetyModule1Section4() {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong>Proper disposal</strong> &mdash; cigarettes must be fully extinguished
                       before disposal in a suitable non-combustible container. Cigarette butts must
                       never be discarded into general waste bins, skips, or onto the ground near
@@ -758,7 +758,7 @@ export default function FireSafetyModule1Section4() {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong>E-cigarettes and vapes</strong> &mdash; while e-cigarettes do not
                       produce an open flame, lithium-ion battery failures (thermal runaway) have
                       caused fires. Charging should only occur using the manufacturer&rsquo;s
@@ -817,7 +817,7 @@ export default function FireSafetyModule1Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-rose-400 mb-1">{item.risk}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -828,7 +828,7 @@ export default function FireSafetyModule1Section4() {
                   <Thermometer className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Golden Rule for Heaters</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong>
                     Never dry clothes, gloves, or any other materials on or near a portable heater.
                   </strong>{' '}
@@ -868,7 +868,7 @@ export default function FireSafetyModule1Section4() {
                 <ul className="space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong>Combustible waste buildup</strong> &mdash; cardboard, timber offcuts,
                       plastic packaging, paper, and general waste allowed to accumulate in work
                       areas, corridors, plant rooms, and storage areas provides readily available
@@ -877,7 +877,7 @@ export default function FireSafetyModule1Section4() {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong>Blocked fire exits</strong> &mdash; fire exit doors and routes that
                       are obstructed by stored materials, locked with non-compliant locks, or have
                       had their push bars disabled. In a fire, occupants may be unable to escape,
@@ -886,7 +886,7 @@ export default function FireSafetyModule1Section4() {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong>Propped-open fire doors</strong> &mdash; fire doors are a critical
                       element of compartmentation, designed to resist fire for 30 or 60 minutes
                       (FD30/FD60). A propped-open fire door provides zero minutes of fire
@@ -897,7 +897,7 @@ export default function FireSafetyModule1Section4() {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong>Storage in corridors and escape routes</strong> &mdash; materials
                       stored in corridors add fuel load to escape routes and physically restrict the
                       width available for evacuation, particularly for disabled persons and those
@@ -906,7 +906,7 @@ export default function FireSafetyModule1Section4() {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong>Oily rags and spontaneous combustion</strong> &mdash; rags
                       contaminated with linseed oil, tung oil, or other drying oils can undergo
                       spontaneous combustion when piled together. The oxidation process generates
@@ -916,7 +916,7 @@ export default function FireSafetyModule1Section4() {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       <strong>Spray can disposal</strong> &mdash; aerosol cans containing flammable
                       propellants (butane, propane, DME) are pressurised vessels. If exposed to heat
                       or punctured during compaction in a waste skip, they can explode and project
@@ -933,7 +933,7 @@ export default function FireSafetyModule1Section4() {
                     5S Principles Applied to Fire Safety
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The Japanese 5S methodology &mdash; originally developed for manufacturing quality
                   &mdash; translates directly to fire safety housekeeping:
                 </p>
@@ -956,7 +956,7 @@ export default function FireSafetyModule1Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-2 text-center">
                       <p className="text-xs font-bold text-rose-400 mb-1">{item.s}</p>
-                      <p className="text-[10px] text-white/70">{item.desc}</p>
+                      <p className="text-[10px] text-white">{item.desc}</p>
                     </div>
                   ))}
                 </div>
@@ -1025,7 +1025,7 @@ export default function FireSafetyModule1Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-rose-400 mb-1">{item.risk}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1038,21 +1038,21 @@ export default function FireSafetyModule1Section4() {
                     DSEAR 2002 &mdash; Key Requirements for Electricians
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   DSEAR is directly relevant to electricians because electrical equipment is a
                   potential ignition source. In DSEAR-classified zones:
                 </p>
                 <ul className="space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       Only <strong>ATEX-rated electrical equipment</strong> (certified for use in
                       explosive atmospheres) may be installed
                     </span>
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       Equipment must be appropriate to the specific{' '}
                       <strong>zone classification</strong> (Zone 0, 1, 2 for gases; Zone 20, 21, 22
                       for dusts) and the <strong>gas group and temperature class</strong>
@@ -1060,7 +1060,7 @@ export default function FireSafetyModule1Section4() {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       Protection concepts include <strong>intrinsically safe (Ex i)</strong>,{' '}
                       <strong>flameproof (Ex d)</strong>, <strong>increased safety (Ex e)</strong>,
                       and <strong>pressurised (Ex p)</strong> &mdash; each with specific
@@ -1069,7 +1069,7 @@ export default function FireSafetyModule1Section4() {
                   </li>
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       Electricians working in petrochemical, pharmaceutical, food processing,
                       brewing, paint spraying, and grain handling environments must understand DSEAR
                       zone classifications
@@ -1129,7 +1129,7 @@ export default function FireSafetyModule1Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-rose-400 mb-1">{item.stat}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1143,7 +1143,7 @@ export default function FireSafetyModule1Section4() {
                   </p>
                 </div>
                 <div className="p-4 space-y-3">
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The Grenfell Tower fire is the deadliest structural fire in the UK since the
                     Second World War. <strong>72 people died</strong> when fire spread
                     catastrophically through the 24-storey residential tower block in North
@@ -1151,7 +1151,7 @@ export default function FireSafetyModule1Section4() {
                     Hotpoint fridge-freezer and initially appeared to be a routine kitchen fire that
                     could be contained within the flat of origin.
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     However, fire reached the exterior cladding system that had been installed
                     during a 2012&ndash;2016 refurbishment. The cladding incorporated{' '}
                     <strong>
@@ -1162,7 +1162,7 @@ export default function FireSafetyModule1Section4() {
                     up the exterior of the building at a devastating speed. Within minutes, fire had
                     spread from the fourth floor to the roof of the 24-storey building.
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     <strong>Compartmentation failed</strong> because fire re-entered flats from the
                     outside through windows and the cladding system, bypassing the fire-resistant
                     walls and floors designed to contain fire within the flat of origin. The{' '}
@@ -1177,7 +1177,7 @@ export default function FireSafetyModule1Section4() {
                     <p className="text-xs font-medium text-red-400 mb-1">
                       Key Lessons from Grenfell
                     </p>
-                    <ul className="text-xs text-white/70 space-y-1.5">
+                    <ul className="text-xs text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                         <span>
@@ -1228,7 +1228,7 @@ export default function FireSafetyModule1Section4() {
                   </p>
                 </div>
                 <div className="p-4 space-y-3">
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Six people, including three children, died in a fire at Lakanal House, a
                     14-storey residential tower block in Camberwell, south London. The fire started
                     on the ninth floor due to a faulty television. Fire spread externally via
@@ -1236,7 +1236,7 @@ export default function FireSafetyModule1Section4() {
                     panels during previous refurbishment works. Compartmentation had been
                     compromised during these works.
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The inquest found that the London Borough of Southwark had failed to carry out
                     fire risk assessments as required by the Regulatory Reform (Fire Safety) Order
                     2005. The coroner recommended that the government review the guidance in
@@ -1255,7 +1255,7 @@ export default function FireSafetyModule1Section4() {
                   </p>
                 </div>
                 <div className="p-4 space-y-3">
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     While an offshore oil platform disaster rather than a building fire, Piper Alpha
                     remains one of the most significant fire safety case studies in UK history.{' '}
                     <strong>167 men died</strong> when a gas leak ignited on the North Sea
@@ -1264,7 +1264,7 @@ export default function FireSafetyModule1Section4() {
                     &mdash; a permit-to-work failure. The resulting gas explosion ruptured oil
                     pipelines, feeding a catastrophic fire that destroyed the platform.
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The Cullen Inquiry that followed led to a fundamental reform of offshore safety
                     regulation, replacing prescriptive rules with a goal-setting safety case regime.
                     The key lesson for all industries:{' '}
@@ -1280,7 +1280,7 @@ export default function FireSafetyModule1Section4() {
                   <BarChart3 className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">The Common Thread</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Every major fire incident shares common themes: small oversights that escalate
                   into major disasters, failures in maintenance and inspection, compromised fire
                   protection measures, inadequate emergency procedures, and the human tendency to
@@ -1299,7 +1299,7 @@ export default function FireSafetyModule1Section4() {
             ═════════════════════════════════════════ */}
         <section className="mb-10">
           <div className="bg-white/5 border border-white/10 rounded-xl p-4 sm:p-6 overflow-hidden">
-            <p className="text-xs text-white/50 uppercase tracking-wider mb-4 text-center">
+            <p className="text-xs text-white uppercase tracking-wider mb-4 text-center">
               Common Workplace Ignition Sources
             </p>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
@@ -1353,7 +1353,7 @@ export default function FireSafetyModule1Section4() {
                     {item.icon}
                   </div>
                   <p className="text-xs font-medium text-white">{item.label}</p>
-                  <p className="text-[10px] text-white/50 leading-snug">{item.desc}</p>
+                  <p className="text-[10px] text-white leading-snug">{item.desc}</p>
                 </div>
               ))}
             </div>
@@ -1369,7 +1369,7 @@ export default function FireSafetyModule1Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1387,7 +1387,7 @@ export default function FireSafetyModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-1-section-3">

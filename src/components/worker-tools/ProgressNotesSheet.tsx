@@ -100,7 +100,7 @@ export function ProgressNotesSheet({ open, onOpenChange }: ProgressNotesSheetPro
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
             {/* Job selector */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-white/80">Select Job</label>
+              <label className="text-sm font-medium text-white">Select Job</label>
               <Select value={selectedJobId} onValueChange={setSelectedJobId} disabled={jobsLoading}>
                 <SelectTrigger className="h-12 bg-input border-white/10 text-white focus:border-elec-yellow focus:ring-elec-yellow">
                   <SelectValue placeholder="Choose a job..." />
@@ -121,14 +121,14 @@ export function ProgressNotesSheet({ open, onOpenChange }: ProgressNotesSheetPro
 
             {/* Note input */}
             <div className="space-y-2">
-              <label className="text-sm font-medium text-white/80">Progress Note</label>
+              <label className="text-sm font-medium text-white">Progress Note</label>
               <Textarea
                 value={note}
                 onChange={(e) => setNote(e.target.value)}
                 placeholder="Describe work completed today, any issues encountered, materials used..."
                 className="min-h-[120px] bg-input border-white/10 text-white placeholder:text-muted-foreground focus:border-elec-yellow focus:ring-elec-yellow resize-none touch-manipulation"
               />
-              <p className="text-xs text-white/40 flex items-center gap-1">
+              <p className="text-xs text-white flex items-center gap-1">
                 <Clock className="h-3 w-3" />
                 Will be timestamped automatically
               </p>
@@ -137,7 +137,7 @@ export function ProgressNotesSheet({ open, onOpenChange }: ProgressNotesSheetPro
             {/* Photo upload placeholder */}
             <Button
               variant="outline"
-              className="w-full h-12 bg-white/[0.03] border-white/10 text-white/60 hover:bg-white/[0.06] hover:text-white touch-manipulation"
+              className="w-full h-12 bg-white/[0.03] border-white/10 text-white hover:bg-white/[0.06] hover:text-white touch-manipulation"
               disabled
             >
               <Camera className="h-5 w-5 mr-2" />
@@ -149,7 +149,7 @@ export function ProgressNotesSheet({ open, onOpenChange }: ProgressNotesSheetPro
               <div className="space-y-2">
                 <button
                   onClick={() => setShowRecent(!showRecent)}
-                  className="flex items-center gap-2 text-sm font-medium text-white/80 touch-manipulation"
+                  className="flex items-center gap-2 text-sm font-medium text-white touch-manipulation"
                 >
                   <FileText className="h-4 w-4" />
                   Recent Notes
@@ -171,8 +171,8 @@ export function ProgressNotesSheet({ open, onOpenChange }: ProgressNotesSheetPro
                           key={n.id}
                           className="p-3 rounded-lg bg-white/[0.03] border border-white/10"
                         >
-                          <p className="text-sm text-white/80">{n.content}</p>
-                          <p className="text-xs text-white/40 mt-2">
+                          <p className="text-sm text-white">{n.content}</p>
+                          <p className="text-xs text-white mt-2">
                             {new Date(n.created_at).toLocaleString('en-GB', {
                               day: 'numeric',
                               month: 'short',

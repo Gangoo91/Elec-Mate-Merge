@@ -264,7 +264,7 @@ const MOETModule6Section3_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module6-section3">
@@ -286,7 +286,7 @@ const MOETModule6Section3_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Recording Work Completed
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Logbooks, CMMS entries and asset history documentation for electrical maintenance
           </p>
         </header>
@@ -555,7 +555,7 @@ const MOETModule6Section3_1 = () => {
                     <span className="text-elec-yellow/80 text-xs font-mono mt-0.5">01</span>
                     <div>
                       <p className="text-sm font-medium">Planned</p>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white">
                         Work identified and approved — resources, parts and procedures defined
                       </p>
                     </div>
@@ -564,7 +564,7 @@ const MOETModule6Section3_1 = () => {
                     <span className="text-elec-yellow/80 text-xs font-mono mt-0.5">02</span>
                     <div>
                       <p className="text-sm font-medium">Scheduled</p>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white">
                         Assigned to a specific date, shift, and technician
                       </p>
                     </div>
@@ -573,7 +573,7 @@ const MOETModule6Section3_1 = () => {
                     <span className="text-elec-yellow/80 text-xs font-mono mt-0.5">03</span>
                     <div>
                       <p className="text-sm font-medium">In Progress</p>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white">
                         Technician has started the work — status updated in real time
                       </p>
                     </div>
@@ -582,7 +582,7 @@ const MOETModule6Section3_1 = () => {
                     <span className="text-elec-yellow/80 text-xs font-mono mt-0.5">04</span>
                     <div>
                       <p className="text-sm font-medium">Completed</p>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white">
                         Work finished, findings recorded, awaiting supervisor review
                       </p>
                     </div>
@@ -591,7 +591,7 @@ const MOETModule6Section3_1 = () => {
                     <span className="text-elec-yellow/80 text-xs font-mono mt-0.5">05</span>
                     <div>
                       <p className="text-sm font-medium">Closed</p>
-                      <p className="text-sm text-white/70">
+                      <p className="text-sm text-white">
                         Reviewed, approved and archived — becomes part of the asset history
                       </p>
                     </div>
@@ -893,7 +893,7 @@ const MOETModule6Section3_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -941,7 +941,7 @@ const MOETModule6Section3_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module6-section3">

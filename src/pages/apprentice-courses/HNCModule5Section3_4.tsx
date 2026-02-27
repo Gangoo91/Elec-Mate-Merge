@@ -269,7 +269,7 @@ const HNCModule5Section3_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section3">
@@ -291,7 +291,7 @@ const HNCModule5Section3_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Variations and Claims
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Valuation methods, entitlement assessment, notice requirements and claims substantiation
             in building services contracts
           </p>
@@ -462,7 +462,7 @@ const HNCModule5Section3_4 = () => {
                 <li className="pl-1">Description of the instructed work</li>
                 <li className="pl-1">Request for written confirmation or deemed acceptance</li>
               </ul>
-              <p className="text-sm text-white/70 mt-2">
+              <p className="text-sm text-white mt-2">
                 Under JCT, if the CA does not dissent within 7 days, the CVI is deemed a valid
                 instruction.
               </p>
@@ -706,7 +706,7 @@ const HNCModule5Section3_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Sample Early Warning Notice (NEC4 Style)
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>To:</strong> Project Manager
                 </p>
@@ -759,7 +759,7 @@ const HNCModule5Section3_4 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Employer Events</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>- Variations and instructions</li>
                     <li>- Late information/drawings</li>
                     <li>- Discrepancies in documents</li>
@@ -769,7 +769,7 @@ const HNCModule5Section3_4 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Opening Up/Testing</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>- Inspection revealing compliant work</li>
                     <li>- Testing beyond contract requirements</li>
                     <li>- Suspension for non-payment</li>
@@ -818,7 +818,7 @@ const HNCModule5Section3_4 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-1">Daily Records</p>
-                  <ul className="text-white/80 space-y-0.5">
+                  <ul className="text-white space-y-0.5">
                     <li>- Labour allocation sheets (names, trades, areas)</li>
                     <li>- Plant on site register</li>
                     <li>- Weather records</li>
@@ -828,7 +828,7 @@ const HNCModule5Section3_4 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-1">Weekly/Monthly Records</p>
-                  <ul className="text-white/80 space-y-0.5">
+                  <ul className="text-white space-y-0.5">
                     <li>- Progress reports with productivity data</li>
                     <li>- Meeting minutes</li>
                     <li>- Programme updates</li>
@@ -930,7 +930,7 @@ const HNCModule5Section3_4 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Tribunal reality:</strong> Claims with poor records are heavily discounted or
               rejected entirely. The burden of proof is on the claimant to demonstrate both
               liability and quantum on the balance of probabilities.
@@ -957,7 +957,7 @@ const HNCModule5Section3_4 = () => {
                 for emergency-rated versions in a corridor. Original contract rate: £85/luminaire.
                 Emergency version requires different wiring and testing.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Contract rate applies to standard LED panel: £85</p>
                 <p className="mt-2">Pro-rata adjustment required:</p>
                 <p>- Emergency luminaire cost difference: +£45</p>
@@ -980,7 +980,7 @@ const HNCModule5Section3_4 = () => {
                 <strong>Scenario:</strong> M&E subcontractor is granted 4 weeks extension of time
                 due to late access. Calculate prolongation costs.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Weekly site overheads breakdown:</p>
                 <p>Site manager: £1,200/week</p>
                 <p>Site supervisor: £950/week</p>
@@ -1009,7 +1009,7 @@ const HNCModule5Section3_4 = () => {
                 <strong>Scenario:</strong> Emergency modification to distribution board following
                 discovery of existing asbestos. 2 electricians for 6 hours plus materials.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Labour (RICS Definition of Prime Cost):</p>
                 <p>2 electricians × 6 hours × £22/hour = £264</p>
                 <p>Labour addition (+145%): £264 × 1.45 = £383</p>
@@ -1019,7 +1019,7 @@ const HNCModule5Section3_4 = () => {
                 <p className="mt-2">
                   Total daywork value: £383 + £208 = <strong>£591</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Note: Must be supported by signed daywork sheets
                 </p>
               </div>
@@ -1091,7 +1091,7 @@ const HNCModule5Section3_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1137,7 +1137,7 @@ const HNCModule5Section3_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section3">

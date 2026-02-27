@@ -380,7 +380,7 @@ const Level3Module8Section3_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module8">
@@ -448,7 +448,7 @@ const Level3Module8Section3_4 = () => {
 
             <div className="p-4 rounded-lg bg-transparent border border-elec-yellow/20 my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Yerkes-Dodson Law</p>
-              <p className="text-xs text-white/90 mb-2">
+              <p className="text-xs text-white mb-2">
                 Performance follows an inverted-U curve with arousal. Too little stress (boredom,
                 complacency) leads to poor performance. Too much stress (anxiety, panic) also
                 impairs performance. Moderate stress optimises performance.
@@ -457,11 +457,11 @@ const Level3Module8Section3_4 = () => {
                 <span className="px-2 py-1 rounded bg-red-500/20 text-red-400">
                   Low arousal (bored)
                 </span>
-                <span className="text-white/50">→</span>
+                <span className="text-white">→</span>
                 <span className="px-2 py-1 rounded bg-green-500/20 text-green-400">
                   Optimal (alert)
                 </span>
-                <span className="text-white/50">→</span>
+                <span className="text-white">→</span>
                 <span className="px-2 py-1 rounded bg-red-500/20 text-red-400">
                   High arousal (anxious)
                 </span>
@@ -471,7 +471,7 @@ const Level3Module8Section3_4 = () => {
             <div className="grid sm:grid-cols-3 gap-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-white mb-2">Physical Signs</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   {stressSigns.physical.map((sign, i) => (
                     <li key={i}>{sign}</li>
                   ))}
@@ -479,7 +479,7 @@ const Level3Module8Section3_4 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-white mb-2">Mental Signs</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   {stressSigns.mental.map((sign, i) => (
                     <li key={i}>{sign}</li>
                   ))}
@@ -487,7 +487,7 @@ const Level3Module8Section3_4 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-white mb-2">Behavioural Signs</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   {stressSigns.behavioural.map((sign, i) => (
                     <li key={i}>{sign}</li>
                   ))}
@@ -528,13 +528,13 @@ const Level3Module8Section3_4 = () => {
                     </div>
                     <div className="flex-1">
                       <p className="text-sm font-medium text-white mb-1">{tech.technique}</p>
-                      <p className="text-xs text-white/80 mb-2">{tech.description}</p>
+                      <p className="text-xs text-white mb-2">{tech.description}</p>
                       <div className="grid sm:grid-cols-2 gap-2 text-xs">
                         <span className="text-blue-400">
-                          When: <span className="text-white/60">{tech.when}</span>
+                          When: <span className="text-white">{tech.when}</span>
                         </span>
                         <span className="text-green-400">
-                          Benefit: <span className="text-white/60">{tech.benefit}</span>
+                          Benefit: <span className="text-white">{tech.benefit}</span>
                         </span>
                       </div>
                     </div>
@@ -550,7 +550,7 @@ const Level3Module8Section3_4 = () => {
                   <p className="text-sm font-medium text-green-400 mb-1">
                     The 4-7-8 Breath - Step by Step
                   </p>
-                  <ol className="text-xs text-white/90 space-y-1">
+                  <ol className="text-xs text-white space-y-1">
                     <li>1. Empty lungs completely through mouth</li>
                     <li>2. Breathe in quietly through nose for 4 seconds</li>
                     <li>3. Hold breath for 7 seconds</li>
@@ -561,7 +561,7 @@ const Level3Module8Section3_4 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Practice Required:</strong> These techniques work best when practised
               regularly, not just in emergencies. Spend 5 minutes daily during revision practising
               breathing exercises. Then they'll be automatic when you need them in the exam.
@@ -592,23 +592,23 @@ const Level3Module8Section3_4 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20">
                   <p className="text-xs font-medium text-red-400 mb-2">Catastrophising</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     "If I fail this exam, my career is over and I'll never amount to anything"
                   </p>
                 </div>
                 <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20">
                   <p className="text-xs font-medium text-red-400 mb-2">All-or-Nothing</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     "If I don't get 100%, I've completely failed"
                   </p>
                 </div>
                 <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20">
                   <p className="text-xs font-medium text-red-400 mb-2">Fortune Telling</p>
-                  <p className="text-xs text-white/70">"I just know I'm going to fail"</p>
+                  <p className="text-xs text-white">"I just know I'm going to fail"</p>
                 </div>
                 <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20">
                   <p className="text-xs font-medium text-red-400 mb-2">Mind Reading</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     "Everyone will think I'm stupid if I don't pass"
                   </p>
                 </div>
@@ -619,7 +619,7 @@ const Level3Module8Section3_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Cognitive Reframing Process
               </p>
-              <ol className="text-xs text-white/90 space-y-1">
+              <ol className="text-xs text-white space-y-1">
                 <li>
                   1. <strong>Notice</strong> the anxious thought ("I'm going to fail")
                 </li>
@@ -639,13 +639,13 @@ const Level3Module8Section3_4 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="text-xs font-medium text-red-400 mb-1">Unhelpful:</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   "I'm going to fail and everyone will judge me"
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="text-xs font-medium text-green-400 mb-1">Realistic:</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   "I've prepared as well as I can. I'll do my best and handle whatever comes."
                 </p>
               </div>
@@ -681,7 +681,7 @@ const Level3Module8Section3_4 = () => {
                   <Moon className="h-4 w-4 text-elec-yellow" />
                   <p className="text-sm font-medium text-white">Night Before</p>
                 </div>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Light revision only - key facts/mnemonics</li>
                   <li>Prepare everything: ID, equipment, route</li>
                   <li>Easy-to-digest dinner</li>
@@ -694,7 +694,7 @@ const Level3Module8Section3_4 = () => {
                   <Coffee className="h-4 w-4 text-elec-yellow" />
                   <p className="text-sm font-medium text-white">Morning Of</p>
                 </div>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Normal breakfast (not too heavy)</li>
                   <li>Normal caffeine amount (not extra)</li>
                   <li>Brief review of key mnemonics only</li>
@@ -706,7 +706,7 @@ const Level3Module8Section3_4 = () => {
 
             <div className="p-4 rounded-lg bg-transparent border border-white/10 my-6">
               <p className="text-sm font-medium text-white mb-2">During the Exam: If Panic Rises</p>
-              <ol className="text-xs text-white/90 space-y-2">
+              <ol className="text-xs text-white space-y-2">
                 <li>
                   <strong>1. STOP</strong> - Put your pen down. Don't try to power through panic.
                 </li>
@@ -735,7 +735,7 @@ const Level3Module8Section3_4 = () => {
                   <p className="text-sm font-medium text-red-400 mb-1">
                     Avoid These Exam Day Mistakes
                   </p>
-                  <ul className="text-xs text-white/90 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>Cramming new material - creates anxiety, won't consolidate</li>
                     <li>Excessive caffeine - increases jitteriness</li>
                     <li>Discussing difficult topics with anxious peers</li>
@@ -746,7 +746,7 @@ const Level3Module8Section3_4 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Arrive Early:</strong> Being at the venue 20-30 minutes early allows time to
               settle, use bathroom, and enter the exam calm. This small investment pays huge
               dividends in reduced stress.
@@ -808,7 +808,7 @@ const Level3Module8Section3_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -855,7 +855,7 @@ const Level3Module8Section3_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module8-section3-3">

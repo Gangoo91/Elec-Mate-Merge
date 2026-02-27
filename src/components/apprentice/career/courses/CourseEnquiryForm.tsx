@@ -90,7 +90,7 @@ export default function CourseEnquiryForm({ course, onSuccess }: CourseEnquiryFo
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="name" className="text-white/80 flex items-center gap-2">
+          <Label htmlFor="name" className="text-white flex items-center gap-2">
             <User className="h-3.5 w-3.5 text-elec-yellow" />
             Full Name *
           </Label>
@@ -98,13 +98,13 @@ export default function CourseEnquiryForm({ course, onSuccess }: CourseEnquiryFo
             id="name"
             {...register('name')}
             placeholder="Enter your full name"
-            className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40"
+            className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white"
           />
           {errors.name && <p className="text-sm text-red-400">{errors.name.message}</p>}
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="email" className="text-white/80 flex items-center gap-2">
+          <Label htmlFor="email" className="text-white flex items-center gap-2">
             <Mail className="h-3.5 w-3.5 text-elec-yellow" />
             Email Address *
           </Label>
@@ -113,7 +113,7 @@ export default function CourseEnquiryForm({ course, onSuccess }: CourseEnquiryFo
             type="email"
             {...register('email')}
             placeholder="Enter your email address"
-            className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40"
+            className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white"
           />
           {errors.email && <p className="text-sm text-red-400">{errors.email.message}</p>}
         </div>
@@ -121,7 +121,7 @@ export default function CourseEnquiryForm({ course, onSuccess }: CourseEnquiryFo
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="phone" className="text-white/80 flex items-center gap-2">
+          <Label htmlFor="phone" className="text-white flex items-center gap-2">
             <Phone className="h-3.5 w-3.5 text-elec-yellow" />
             Phone Number (Optional)
           </Label>
@@ -130,12 +130,12 @@ export default function CourseEnquiryForm({ course, onSuccess }: CourseEnquiryFo
             type="tel"
             {...register('phone')}
             placeholder="Enter your phone number"
-            className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white/40"
+            className="h-11 bg-white/5 border-white/20 text-white placeholder:text-white"
           />
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="preferredStartDate" className="text-white/80 flex items-center gap-2">
+          <Label htmlFor="preferredStartDate" className="text-white flex items-center gap-2">
             <Calendar className="h-3.5 w-3.5 text-elec-yellow" />
             Preferred Start Date
           </Label>
@@ -149,7 +149,7 @@ export default function CourseEnquiryForm({ course, onSuccess }: CourseEnquiryFo
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="message" className="text-white/80 flex items-center gap-2">
+        <Label htmlFor="message" className="text-white flex items-center gap-2">
           <MessageSquare className="h-3.5 w-3.5 text-elec-yellow" />
           Message (Optional)
         </Label>
@@ -158,7 +158,7 @@ export default function CourseEnquiryForm({ course, onSuccess }: CourseEnquiryFo
           {...register('message')}
           rows={4}
           placeholder="Any specific questions or requirements..."
-          className="w-full px-3 py-3 border border-white/20 bg-white/5 rounded-lg text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-elec-yellow/50 focus:border-elec-yellow/50 transition-all"
+          className="w-full px-3 py-3 border border-white/20 bg-white/5 rounded-lg text-sm text-white placeholder:text-white focus:outline-none focus:ring-2 focus:ring-elec-yellow/50 focus:border-elec-yellow/50 transition-all"
         />
       </div>
 

@@ -215,7 +215,7 @@ const IpafModule3Section3 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             AGR Method (Advance Guard Rail)
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             How AGR frames work, automatic guardrails, and the advantages of integrated guard rail
             assembly systems
           </p>
@@ -965,7 +965,7 @@ const IpafModule3Section3 = () => {
             <div className="space-y-4">
               <div>
                 <h3 className="font-semibold text-white mb-2">AGR Assembly Sequence</h3>
-                <ol className="space-y-1 text-white/80 list-decimal ml-4">
+                <ol className="space-y-1 text-white list-decimal ml-4">
                   <li>Base assembly (same as 3T)</li>
                   <li>Check AGR frame mechanism</li>
                   <li>Pass frame up from below</li>
@@ -980,7 +980,7 @@ const IpafModule3Section3 = () => {
 
               <div>
                 <h3 className="font-semibold text-white mb-2">AGR Key Features</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1012,7 +1012,7 @@ const IpafModule3Section3 = () => {
             <div className="space-y-4">
               <div>
                 <h3 className="font-semibold text-white mb-2">Pre-Use Frame Checks</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Guardrail mechanism moves freely</span>
@@ -1042,7 +1042,7 @@ const IpafModule3Section3 = () => {
 
               <div>
                 <h3 className="font-semibold text-white mb-2">AGR vs 3T Quick Summary</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1080,7 +1080,7 @@ const IpafModule3Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1096,7 +1096,7 @@ const IpafModule3Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../ipaf-module-3-section-2">

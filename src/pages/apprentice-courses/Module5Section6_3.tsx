@@ -186,7 +186,7 @@ const Module5Section6_3 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -204,13 +204,13 @@ const Module5Section6_3 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.3</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.3</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Communicating Faults, Risks, and Task Progress
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Essential reporting skills for electrical work safety and efficiency
             </p>
           </header>
@@ -220,7 +220,7 @@ const Module5Section6_3 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-                <ul className="text-white/80 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>• Report hazards and faults immediately</li>
                   <li>• Use clear details: Who, What, Where</li>
                   <li>• Give specific progress updates, not vague comments</li>
@@ -229,7 +229,7 @@ const Module5Section6_3 = () => {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-                <ul className="text-white/80 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>
                     • <strong>Spot:</strong> Damaged equipment or unsafe conditions
                   </li>
@@ -250,7 +250,7 @@ const Module5Section6_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Learning Outcomes
             </h2>
-            <ul className="text-white/80 space-y-2 leading-relaxed">
+            <ul className="text-white space-y-2 leading-relaxed">
               <li>• Identify when and how to report faults and risks</li>
               <li>• Use clear, professional methods to communicate task progress</li>
               <li>• Recognise the consequences of poor reporting</li>
@@ -264,7 +264,7 @@ const Module5Section6_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Importance of Fault and Risk Communication
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 On-site electrical work often involves identifying faults, highlighting risks, and
                 reporting progress. Clear communication in these areas is critical for safety and
@@ -273,7 +273,7 @@ const Module5Section6_3 = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Safety Implications</p>
-                <ul className="text-sm space-y-1 text-white/70">
+                <ul className="text-sm space-y-1 text-white">
                   <li>• Prevents unsafe conditions from escalating into serious accidents</li>
                   <li>• Ensures hazards are addressed before work continues</li>
                   <li>• Protects all team members from potential dangers</li>
@@ -283,7 +283,7 @@ const Module5Section6_3 = () => {
 
               <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
                 <p className="font-semibold text-green-400 mb-2">Project Management Benefits</p>
-                <ul className="text-sm space-y-1 text-white/70">
+                <ul className="text-sm space-y-1 text-white">
                   <li>• Allows supervisors to make informed decisions about work priorities</li>
                   <li>• Prevents delays caused by unreported issues</li>
                   <li>• Ensures resources are allocated effectively</li>
@@ -299,7 +299,7 @@ const Module5Section6_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Typical Faults and Risks to Communicate
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Recognising what needs to be reported is the first step in effective communication:
               </p>
@@ -307,7 +307,7 @@ const Module5Section6_3 = () => {
               <div className="space-y-3">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Equipment and Installation Faults</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Damaged cables, connectors, or electrical accessories. Faulty tools or testing
                     equipment. Incorrect installations (e.g., reversed polarity, wrong ratings).
                     Missing or inadequate earthing connections.
@@ -315,7 +315,7 @@ const Module5Section6_3 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Safety Hazards</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Exposed live conductors or damaged insulation. Water ingress or moisture in
                     electrical equipment. Inadequate isolation or lockout procedures. Missing or
                     insufficient PPE for the task.
@@ -323,7 +323,7 @@ const Module5Section6_3 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">Environmental and Access Issues</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Unsafe working platforms or access routes. Inadequate lighting in work areas.
                     Presence of other hazards (asbestos, chemical spillages). Changes in site
                     conditions affecting safety.
@@ -341,7 +341,7 @@ const Module5Section6_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Methods of Communicating Faults and Risks
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Different situations require different communication methods. Choose the most
                 appropriate for the urgency and nature of the issue:
@@ -352,7 +352,7 @@ const Module5Section6_3 = () => {
                   <p className="font-semibold text-red-400 mb-2">
                     Verbal Reports – For urgent issues
                   </p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Direct face-to-face communication with supervisor or foreman. Use for safety
                     hazards that need immediate action. Follow up with written confirmation if
                     required.
@@ -362,7 +362,7 @@ const Module5Section6_3 = () => {
                   <p className="font-semibold text-elec-yellow mb-2">
                     Written Reports – For logging hazards
                   </p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Use site logbooks, incident report forms, or digital systems. Include date,
                     time, location, and detailed description. Provide permanent record for future
                     reference.
@@ -372,7 +372,7 @@ const Module5Section6_3 = () => {
                   <p className="font-semibold text-purple-400 mb-2">
                     Tagging Equipment/Areas – Visual warnings
                   </p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     "Do Not Use" tags on faulty tools or unsafe circuits. Barrier tape for hazardous
                     areas. Clear, durable labels that won't be easily removed.
                   </p>
@@ -381,7 +381,7 @@ const Module5Section6_3 = () => {
                   <p className="font-semibold text-blue-400 mb-2">
                     Digital Platforms – Modern reporting
                   </p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Site apps or digital reporting systems. QR code-based incident reporting. Photo
                     and GPS location capture capabilities.
                   </p>
@@ -398,7 +398,7 @@ const Module5Section6_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Communicating Task Progress
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Clear progress communication keeps projects on track and prevents misunderstandings:
               </p>
@@ -408,21 +408,21 @@ const Module5Section6_3 = () => {
                 <div className="space-y-3 text-sm">
                   <div>
                     <p className="font-medium text-white mb-1">Break work into clear stages</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Started, in progress, completed, awaiting test. Use specific milestones.
                       Include percentage completion where appropriate.
                     </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Record details accurately</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Use handover sheets, site logs, or progress boards. Include specific
                       quantities and measurements. Note any deviations from original plans.
                     </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Use specific language</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Say "2 out of 3 lighting circuits tested" instead of "nearly done". Use "will
                       be complete by 3 PM" instead of "soon". Be precise about quantities, times,
                       and completion status.
@@ -441,7 +441,7 @@ const Module5Section6_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Consequences of Poor Communication
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Understanding the potential consequences emphasises why effective communication is
                 essential:
@@ -452,7 +452,7 @@ const Module5Section6_3 = () => {
                 <div className="space-y-3 text-sm">
                   <div>
                     <p className="font-medium text-white mb-1">Safety consequences</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Unreported faults leading to accidents. Escalation of minor issues into major
                       hazards. Use of unsafe equipment. Inadequate isolation leading to electrical
                       incidents.
@@ -460,14 +460,14 @@ const Module5Section6_3 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Project impact</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Repeated work due to misunderstood progress. Project delays and cost overruns.
                       Inefficient resource allocation. Quality issues from incomplete information.
                     </p>
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Professional relationships</p>
-                    <p className="text-white/70">
+                    <p className="text-white">
                       Reduced trust between team members. Breakdown in working relationships. Loss
                       of confidence from supervisors and clients.
                     </p>
@@ -487,7 +487,7 @@ const Module5Section6_3 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-amber-500/5 border-l-2 border-amber-500/50">
               <p className="font-semibold text-amber-400 mb-2">The Hidden Fault</p>
-              <p className="text-white/80 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 On a commercial project, an apprentice notices a cracked socket faceplate but
                 assumes it will be replaced later. No report is made, and another worker installs it
                 thinking it's acceptable. Weeks later, the socket sparks during use, damaging
@@ -495,7 +495,7 @@ const Module5Section6_3 = () => {
               </p>
               <div className="p-3 bg-red-500/10 rounded border border-red-500/20 mb-3">
                 <p className="text-sm text-red-300 font-medium mb-1">Consequences:</p>
-                <ul className="text-sm text-white/70 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>• £5,000 worth of computer equipment damaged</li>
                   <li>• HSE investigation due to electrical incident</li>
                   <li>• Company reputation damaged with the client</li>
@@ -503,7 +503,7 @@ const Module5Section6_3 = () => {
               </div>
               <div className="p-3 bg-green-500/10 rounded border border-green-500/20">
                 <p className="text-sm text-green-300 font-medium mb-1">Prevention:</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A simple fault report stating "Cracked socket faceplate found in Room 203 -
                   potential safety hazard - requires replacement before installation" would have
                   prevented this expensive and dangerous incident.
@@ -519,7 +519,7 @@ const Module5Section6_3 = () => {
               Pocket Guide
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <ul className="text-white/80 text-sm space-y-2">
+              <ul className="text-white text-sm space-y-2">
                 <li className="flex items-center gap-2">
                   <CheckCircle className="w-4 h-4 text-green-400 flex-shrink-0" />
                   <span>Report hazards and faults immediately to prevent escalation</span>
@@ -553,8 +553,8 @@ const Module5Section6_3 = () => {
               Recap
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-white/80 text-sm mb-3">In this subsection, you've learned:</p>
-              <ul className="text-white/80 text-sm space-y-1">
+              <p className="text-white text-sm mb-3">In this subsection, you've learned:</p>
+              <ul className="text-white text-sm space-y-1">
                 <li>
                   • Why fault, risk, and progress communication is essential for safety and
                   efficiency

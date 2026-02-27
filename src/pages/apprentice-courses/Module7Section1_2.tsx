@@ -224,7 +224,7 @@ const Module7Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -246,7 +246,7 @@ const Module7Section1_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Why Faults Occur
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding the common causes of electrical faults and how to prevent them
           </p>
         </header>
@@ -324,25 +324,25 @@ const Module7Section1_2 = () => {
               <div className="grid sm:grid-cols-2 gap-3">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white text-sm mb-1">Loose Connections</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Terminal screws not tightened to manufacturer's torque settings
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white text-sm mb-1">Poor Terminations</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Inadequate conductor preparation or wrong terminal type
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white text-sm mb-1">Polarity Errors</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Line and neutral conductors incorrectly connected
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white text-sm mb-1">Installation Damage</p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Cable insulation damaged during installation
                   </p>
                 </div>
@@ -437,7 +437,7 @@ const Module7Section1_2 = () => {
               <p className="text-sm font-medium text-white mb-2">
                 PVC Cable Insulation Lifespan (25-30 years)
               </p>
-              <ul className="text-sm text-white/80 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>Years 1-10: Minimal degradation under normal conditions</li>
                 <li>Years 10-20: Gradual hardening and loss of flexibility</li>
                 <li>Years 20+: Cracking, especially at terminations and bends</li>
@@ -463,21 +463,21 @@ const Module7Section1_2 = () => {
             <div className="grid sm:grid-cols-2 gap-3 my-6">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white text-sm mb-1">Moisture Problems</p>
-                <p className="text-xs text-white/80">Water ingress, condensation, high humidity</p>
+                <p className="text-xs text-white">Water ingress, condensation, high humidity</p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white text-sm mb-1">Heat Problems</p>
-                <p className="text-xs text-white/80">
+                <p className="text-xs text-white">
                   Excessive ambient temperatures, poor ventilation
                 </p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white text-sm mb-1">Physical Damage</p>
-                <p className="text-xs text-white/80">Rodents, drilling, construction impact</p>
+                <p className="text-xs text-white">Rodents, drilling, construction impact</p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white text-sm mb-1">Chemical Attack</p>
-                <p className="text-xs text-white/80">Corrosive atmospheres, salt spray</p>
+                <p className="text-xs text-white">Corrosive atmospheres, salt spray</p>
               </div>
             </div>
 
@@ -602,7 +602,7 @@ const Module7Section1_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -660,7 +660,7 @@ const Module7Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../1-1">

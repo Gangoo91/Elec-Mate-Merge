@@ -182,7 +182,7 @@ export default function CscsCardModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-3">
@@ -207,7 +207,7 @@ export default function CscsCardModule3Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Access Equipment
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Selecting, using, and inspecting the right access equipment for working at height — from
             ladders and towers to scaffolding and MEWPs
           </p>
@@ -311,7 +311,7 @@ export default function CscsCardModule3Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-green-400">Height</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         What is the working height required? Low-level access (under 2m) may suit
                         podium steps, whereas heights above 6m typically require scaffolding or
                         MEWPs.
@@ -324,7 +324,7 @@ export default function CscsCardModule3Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-green-400">Duration</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         How long will the work take? Ladders suit tasks under 30 minutes. Longer
                         tasks demand more stable platforms with guardrails and toe boards.
                       </p>
@@ -336,7 +336,7 @@ export default function CscsCardModule3Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-green-400">Task</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         What work is being carried out? Light inspection may suit a ladder, but
                         drilling, lifting, or two-handed work requires a platform with edge
                         protection.
@@ -349,7 +349,7 @@ export default function CscsCardModule3Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-green-400">Load</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         What tools and materials need to be carried? Heavy loads require equipment
                         rated for the combined weight of people, tools, and materials.
                       </p>
@@ -361,7 +361,7 @@ export default function CscsCardModule3Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-green-400">Ground Conditions</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Is the ground firm, level, and stable? Soft, uneven, or sloping ground
                         affects the suitability and safety of all access equipment.
                       </p>
@@ -373,7 +373,7 @@ export default function CscsCardModule3Section2() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-green-400">Environment</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Are there overhead hazards, confined spaces, wind exposure, or proximity to
                         public areas? Environmental factors can rule out certain equipment types
                         entirely.
@@ -453,7 +453,7 @@ export default function CscsCardModule3Section2() {
                 </div>
               </div>
 
-              <ul className="text-sm text-white/80 space-y-1.5">
+              <ul className="text-sm text-white space-y-1.5">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                   <span>
@@ -503,7 +503,7 @@ export default function CscsCardModule3Section2() {
                 <p className="text-sm font-medium text-green-400 mb-3">
                   When Is Ladder Use Acceptable?
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -547,7 +547,7 @@ export default function CscsCardModule3Section2() {
                       className="w-4 bg-white/20 border border-white/30 rounded-t"
                       style={{ height: '160px' }}
                     />
-                    <p className="text-[10px] text-white/50 mt-1">Wall</p>
+                    <p className="text-[10px] text-white mt-1">Wall</p>
                   </div>
                   {/* Ladder angled */}
                   <div className="relative" style={{ width: '60px', height: '170px' }}>
@@ -569,7 +569,7 @@ export default function CscsCardModule3Section2() {
                       landing point
                     </div>
                     {/* Angle label */}
-                    <div className="absolute bottom-1 left-8 text-[9px] text-white/60">75&deg;</div>
+                    <div className="absolute bottom-1 left-8 text-[9px] text-white">75&deg;</div>
                   </div>
                   {/* Ground distance */}
                   <div
@@ -577,10 +577,10 @@ export default function CscsCardModule3Section2() {
                     style={{ height: '170px' }}
                   >
                     <div className="border-t border-dashed border-white/30 w-8 mb-1" />
-                    <p className="text-[10px] text-white/50">1 unit</p>
+                    <p className="text-[10px] text-white">1 unit</p>
                   </div>
                 </div>
-                <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs text-white/70">
+                <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs text-white">
                   <div className="bg-white/5 rounded px-3 py-2 text-centre">
                     <p className="text-green-400 font-medium">1:4 Ratio</p>
                     <p>1 unit out for every 4 up</p>
@@ -599,7 +599,7 @@ export default function CscsCardModule3Section2() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Leaning Ladder Safety Rules</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -634,7 +634,7 @@ export default function CscsCardModule3Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     Ladder Classification (EN 131)
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -675,7 +675,7 @@ export default function CscsCardModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Pre-Use Inspection</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Before every use, visually inspect the ladder for damage. Check for bent or
                   cracked stiles, missing or loose rungs, damaged feet, and worn or missing
                   anti-slip devices. Check that locking mechanisms on stepladders and extension
@@ -720,7 +720,7 @@ export default function CscsCardModule3Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Assembly &amp; Disassembly Procedures
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -763,7 +763,7 @@ export default function CscsCardModule3Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     Maximum Height-to-Base Ratios
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -792,7 +792,7 @@ export default function CscsCardModule3Section2() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Safe Use Guidelines</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -824,7 +824,7 @@ export default function CscsCardModule3Section2() {
                   <ClipboardCheck className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Tower Inspection Checklist</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>All frames and braces are correctly fitted and locked in position</span>
@@ -885,7 +885,7 @@ export default function CscsCardModule3Section2() {
                 <div className="space-y-3">
                   <div>
                     <p className="text-sm font-medium text-green-400">Independent Scaffold</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Has two rows of standards (vertical tubes) and does not rely on the building
                       for support. Used where the building cannot support loads or where access is
                       needed on both sides. Both rows of standards support the full scaffold load.
@@ -893,7 +893,7 @@ export default function CscsCardModule3Section2() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-green-400">Putlog Scaffold</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Has a single row of standards set away from the building, with putlogs
                       (horizontal members) built into the brickwork for support. Commonly used
                       during bricklaying. Only suitable for buildings under construction where
@@ -902,7 +902,7 @@ export default function CscsCardModule3Section2() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-green-400">System Scaffold</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Uses prefabricated components with built-in connection points (rosettes, cups,
                       or wedges). Faster to erect and dismantle than tube-and-fitting scaffolds.
                       Common systems include Cuplock, Kwikstage, and Ringlock.
@@ -916,7 +916,7 @@ export default function CscsCardModule3Section2() {
                   <Building2 className="h-5 w-5 text-green-400" />
                   <p className="text-sm font-medium text-green-400">Key Scaffold Components</p>
                 </div>
-                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white">
                   <div>
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
@@ -988,7 +988,7 @@ export default function CscsCardModule3Section2() {
                       <CheckCircle className="h-5 w-5 text-white" />
                     </div>
                     <p className="text-green-400 font-semibold text-xs">GREEN</p>
-                    <p className="text-white/80 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Safe to use — inspected and compliant
                     </p>
                   </div>
@@ -997,7 +997,7 @@ export default function CscsCardModule3Section2() {
                       <AlertTriangle className="h-5 w-5 text-white" />
                     </div>
                     <p className="text-yellow-400 font-semibold text-xs">YELLOW</p>
-                    <p className="text-white/80 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Alterations in progress — restricted use
                     </p>
                   </div>
@@ -1006,7 +1006,7 @@ export default function CscsCardModule3Section2() {
                       <Shield className="h-5 w-5 text-white" />
                     </div>
                     <p className="text-red-400 font-semibold text-xs">RED</p>
-                    <p className="text-white/80 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       DO NOT USE — incomplete, failed, or unsafe
                     </p>
                   </div>
@@ -1017,7 +1017,7 @@ export default function CscsCardModule3Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   NASC TG20 Compliance &amp; 7-Day Inspections
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1084,7 +1084,7 @@ export default function CscsCardModule3Section2() {
                     <p className="text-sm font-medium text-green-400">
                       Scissor Lifts (IPAF Category 3a/3b)
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Vertical-only movement. The platform rises directly upwards from the base.
                       Ideal for work requiring a large platform area at a fixed position. 3a =
                       mobile (can be driven at height), 3b = static (must be repositioned at ground
@@ -1095,7 +1095,7 @@ export default function CscsCardModule3Section2() {
                     <p className="text-sm font-medium text-green-400">
                       Boom Lifts (IPAF Category 1a/1b)
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Articulated or telescopic arms allow the platform to reach up, over, and
                       around obstacles. Greater reach and flexibility than scissor lifts but smaller
                       platform area. 1a = mobile, 1b = static.
@@ -1103,7 +1103,7 @@ export default function CscsCardModule3Section2() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-green-400">Vertical Mast Lifts</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Compact, lightweight platforms suitable for low-level indoor work. The
                       platform extends vertically from a small base. Commonly used in warehouses,
                       retail premises, and for facilities maintenance.
@@ -1114,7 +1114,7 @@ export default function CscsCardModule3Section2() {
 
               <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-green-400 mb-3">IPAF Training Categories</p>
-                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-2 text-sm text-white">
                   <div className="bg-white/5 rounded p-2">
                     <p className="font-medium text-white">1a — Mobile boom (self-propelled)</p>
                   </div>
@@ -1128,7 +1128,7 @@ export default function CscsCardModule3Section2() {
                     <p className="font-medium text-white">3b — Static scissor lift</p>
                   </div>
                 </div>
-                <p className="text-sm text-white/80 mt-2">
+                <p className="text-sm text-white mt-2">
                   Operators must hold the correct IPAF PAL Card (Powered Access Licence) for the
                   category of machine they are operating. The PAL Card is valid for 5 years.
                 </p>
@@ -1137,7 +1137,7 @@ export default function CscsCardModule3Section2() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Pre-Use Checks</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>All controls function correctly (ground and platform level)</span>
@@ -1166,7 +1166,7 @@ export default function CscsCardModule3Section2() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Safe Operation Rules</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>Check ground conditions can support the machine's weight</span>
@@ -1204,7 +1204,7 @@ export default function CscsCardModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Rescue Plans</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A rescue plan must be in place before any MEWP operation begins. The plan should
                   cover scenarios such as machine failure at height, medical emergency on the
                   platform, and entrapment. It must identify who will carry out the rescue, what
@@ -1237,7 +1237,7 @@ export default function CscsCardModule3Section2() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-green-400 mb-2">Podium Steps</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>Feature a large, flat platform (typically 600mm x 600mm or more)</span>
@@ -1268,7 +1268,7 @@ export default function CscsCardModule3Section2() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-green-400 mb-2">Hop-ups</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>Very low platform height (typically around 500mm / 0.5m)</span>
@@ -1313,7 +1313,7 @@ export default function CscsCardModule3Section2() {
                 </p>
               </div>
 
-              <ul className="text-sm text-white/80 space-y-1.5">
+              <ul className="text-sm text-white space-y-1.5">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                   <span>Always lock castors before stepping onto the platform</span>
@@ -1355,7 +1355,7 @@ export default function CscsCardModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">When to Use Roof Ladders</p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1384,7 +1384,7 @@ export default function CscsCardModule3Section2() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Roof Ladder Requirements</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>Must be secured at the ridge with a properly designed ridge hook</span>
@@ -1409,7 +1409,7 @@ export default function CscsCardModule3Section2() {
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Crawling Boards</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>Wider than roof ladders to distribute load over fragile surfaces</span>
@@ -1441,7 +1441,7 @@ export default function CscsCardModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Fragile Roof Warning</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Falls through fragile roofs are one of the most common causes of fatal falls at
                   work. Cement fibre sheets, liner panels, rooflights, and glass panels may not be
                   immediately obvious as fragile. Always assume a roof surface is fragile unless
@@ -1452,7 +1452,7 @@ export default function CscsCardModule3Section2() {
                 </p>
               </div>
 
-              <ul className="text-sm text-white/80 space-y-1.5">
+              <ul className="text-sm text-white space-y-1.5">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                   <span>
@@ -1509,7 +1509,7 @@ export default function CscsCardModule3Section2() {
                       Pre-Use Visual Checks (by user)
                     </p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>Look for visible damage: bends, cracks, dents, weld breaks</span>
@@ -1547,7 +1547,7 @@ export default function CscsCardModule3Section2() {
                     <ClipboardCheck className="h-5 w-5 text-green-400" />
                     <p className="text-sm font-medium text-green-400">Formal Inspection Schedule</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -1594,7 +1594,7 @@ export default function CscsCardModule3Section2() {
                 <p className="text-sm font-medium text-green-400 mb-3">
                   What to Look For During Inspection
                 </p>
-                <div className="grid sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-3 text-sm text-white">
                   <div>
                     <p className="font-medium text-white mb-1">Structural Issues</p>
                     <ul className="space-y-1">
@@ -1644,7 +1644,7 @@ export default function CscsCardModule3Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Reporting Defects &amp; Removing Equipment
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1696,7 +1696,7 @@ export default function CscsCardModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Record Keeping</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   All formal inspection records must be kept in a systematic manner. Records should
                   include the date of inspection, the identity of the equipment, the name and
                   signature of the competent person, the findings, and any actions taken. Scaffold
@@ -1717,7 +1717,7 @@ export default function CscsCardModule3Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1731,7 +1731,7 @@ export default function CscsCardModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-3">

@@ -172,7 +172,7 @@ export default function Module3Section6_1() {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Cable Support Distances (Horizontal/Vertical)
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Essential requirements for proper cable support spacing to ensure mechanical stability,
             BS 7671 compliance, and fire safety in electrical installations.
           </p>
@@ -866,7 +866,7 @@ export default function Module3Section6_1() {
             Summary
           </h2>
           <div className="p-4 bg-transparent border-l-2 border-elec-yellow rounded-lg border border-white/10">
-            <p className="text-white/90">
+            <p className="text-white">
               Proper cable support distances are fundamental to electrical installation safety and
               compliance. Understanding cable properties, environmental factors, and regulatory
               requirements enables correct selection of support spacing and methods. Fire safety

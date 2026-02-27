@@ -224,7 +224,7 @@ const Module5Section7_1 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -242,13 +242,13 @@ const Module5Section7_1 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 7.1</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 7.1</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Importance of Accurate Records for Compliance and Safety
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Understanding why accurate documentation is vital for legal compliance, safety, and
               effective maintenance in electrical work
             </p>
@@ -260,7 +260,7 @@ const Module5Section7_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Introduction
             </h2>
-            <div className="grid sm:grid-cols-2 gap-4 text-white/90">
+            <div className="grid sm:grid-cols-2 gap-4 text-white">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-5 space-y-1 text-sm">
@@ -300,7 +300,7 @@ const Module5Section7_1 = () => {
               <FileText className="w-5 h-5 text-elec-yellow/80" />
               Learning Outcomes
             </h2>
-            <ul className="list-disc pl-6 space-y-2 text-white/80">
+            <ul className="list-disc pl-6 space-y-2 text-white">
               <li>Explain why accurate records are essential for compliance and safety</li>
               <li>Identify key documents used in electrical projects</li>
               <li>Recognise the consequences of poor record keeping</li>
@@ -317,18 +317,18 @@ const Module5Section7_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Why Records Are Essential
             </h2>
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Accurate records form the foundation of professional electrical installation work and
               serve multiple critical purposes:
             </p>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">Legal and Regulatory Compliance</p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Compliance with BS 7671:</strong> Every installation must be documented to
                   prove it meets current wiring regulations.
                 </p>
-                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                <ul className="text-white ml-4 list-disc space-y-1 text-sm">
                   <li>
                     Installation certificates demonstrate compliance with electrical safety
                     standards
@@ -348,11 +348,11 @@ const Module5Section7_1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
                 <p className="font-medium text-white mb-2">Health and Safety</p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   Keeping track of risks, inspections, and incidents ensures safe working
                   conditions.
                 </p>
-                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                <ul className="text-white ml-4 list-disc space-y-1 text-sm">
                   <li>RAMS documents identify hazards and control measures for safe working</li>
                   <li>
                     Incident records help prevent similar accidents and demonstrate due diligence
@@ -366,10 +366,10 @@ const Module5Section7_1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
                 <p className="font-medium text-white mb-2">Traceability</p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   Provides a clear history of who completed which tasks, when, and to what standard.
                 </p>
-                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                <ul className="text-white ml-4 list-disc space-y-1 text-sm">
                   <li>
                     Individual accountability for specific work activities and quality standards
                   </li>
@@ -382,7 +382,7 @@ const Module5Section7_1 = () => {
               </div>
             </div>
             <div className="mt-4 p-3 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 <strong className="text-red-400">Legal requirement:</strong> Failure to maintain
                 proper records can result in prosecution and unlimited fines under health and safety
                 legislation
@@ -404,15 +404,15 @@ const Module5Section7_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Key Types of Records
             </h2>
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Different types of records serve specific purposes in electrical installation
               projects:
             </p>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
                 <p className="font-medium text-white mb-2">Installation Certificates</p>
-                <p className="text-white/80 text-sm mb-2">Confirm compliance for new works.</p>
-                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                <p className="text-white text-sm mb-2">Confirm compliance for new works.</p>
+                <ul className="text-white ml-4 list-disc space-y-1 text-sm">
                   <li>Required for all new electrical installations under BS 7671</li>
                   <li>Certify that design, construction, and testing meet regulatory standards</li>
                   <li>
@@ -423,8 +423,8 @@ const Module5Section7_1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
                 <p className="font-medium text-white mb-2">Minor Works Certificates</p>
-                <p className="text-white/80 text-sm mb-2">For small additions and alterations.</p>
-                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                <p className="text-white text-sm mb-2">For small additions and alterations.</p>
+                <ul className="text-white ml-4 list-disc space-y-1 text-sm">
                   <li>Cover additions, alterations, or replacements to existing installations</li>
                   <li>Simpler format than full installation certificates but equally important</li>
                   <li>
@@ -435,8 +435,8 @@ const Module5Section7_1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
                 <p className="font-medium text-white mb-2">Inspection & Test Results</p>
-                <p className="text-white/80 text-sm mb-2">Essential for proving safety.</p>
-                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                <p className="text-white text-sm mb-2">Essential for proving safety.</p>
+                <ul className="text-white ml-4 list-disc space-y-1 text-sm">
                   <li>
                     Document all electrical safety tests including continuity, insulation, and earth
                     fault loop impedance
@@ -450,8 +450,8 @@ const Module5Section7_1 = () => {
                 <p className="font-medium text-white mb-2">
                   Risk Assessments & Method Statements (RAMS)
                 </p>
-                <p className="text-white/80 text-sm mb-2">For health and safety compliance.</p>
-                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                <p className="text-white text-sm mb-2">For health and safety compliance.</p>
+                <ul className="text-white ml-4 list-disc space-y-1 text-sm">
                   <li>Identify specific hazards associated with electrical installation work</li>
                   <li>Define control measures and safe working procedures</li>
                   <li>Specify required personal protective equipment (PPE) and safety equipment</li>
@@ -460,10 +460,10 @@ const Module5Section7_1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-teal-500/50">
                 <p className="font-medium text-white mb-2">Site Diaries / Work Logs</p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   Progress, delays, accidents, and variations.
                 </p>
-                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                <ul className="text-white ml-4 list-disc space-y-1 text-sm">
                   <li>Daily record of work progress and activities completed</li>
                   <li>Weather conditions affecting outdoor or temporary installations</li>
                   <li>Material deliveries, shortages, and quality issues</li>
@@ -472,7 +472,7 @@ const Module5Section7_1 = () => {
               </div>
             </div>
             <div className="mt-4 p-3 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 <strong className="text-blue-400">Retention period:</strong> Electrical certificates
                 and test results should be kept for the entire life of the installation. Other
                 project records should typically be retained for at least 6 years
@@ -494,14 +494,14 @@ const Module5Section7_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Consequences of Poor Record Keeping
             </h2>
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Inadequate documentation can have serious consequences for projects, organisations,
               and individual professionals:
             </p>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
                 <p className="font-medium text-white mb-2">Legal Penalties</p>
-                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                <ul className="text-white ml-4 list-disc space-y-1 text-sm">
                   <li>Prosecution under health and safety legislation with unlimited fines</li>
                   <li>
                     Contractual disputes leading to financial penalties and damaged reputation
@@ -512,7 +512,7 @@ const Module5Section7_1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-orange-500/10 border-l-2 border-orange-500/50">
                 <p className="font-medium text-white mb-2">Safety Risks</p>
-                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                <ul className="text-white ml-4 list-disc space-y-1 text-sm">
                   <li>Inability to identify potential hazards without proper risk assessments</li>
                   <li>Lack of traceability making fault-finding and maintenance dangerous</li>
                   <li>Incomplete testing records masking safety-critical defects</li>
@@ -521,7 +521,7 @@ const Module5Section7_1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-500/50">
                 <p className="font-medium text-white mb-2">Commercial Impact</p>
-                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                <ul className="text-white ml-4 list-disc space-y-1 text-sm">
                   <li>Duplicated work due to uncertainty about completed tasks</li>
                   <li>
                     Extended project timelines causing cost overruns and client dissatisfaction
@@ -532,7 +532,7 @@ const Module5Section7_1 = () => {
               </div>
             </div>
             <div className="mt-4 p-3 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 <strong className="text-green-400">Prevention:</strong> Implement robust
                 documentation procedures from project start to avoid these costly consequences
               </p>
@@ -545,13 +545,13 @@ const Module5Section7_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Benefits of Accurate Records
             </h2>
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Proper documentation provides significant advantages beyond basic compliance:
             </p>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
                 <p className="font-medium text-white mb-2">Efficiency Gains</p>
-                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                <ul className="text-white ml-4 list-disc space-y-1 text-sm">
                   <li>Clear installation records prevent unnecessary re-testing</li>
                   <li>Documented procedures reduce training time for new personnel</li>
                   <li>Material tracking reduces waste and over-ordering</li>
@@ -560,7 +560,7 @@ const Module5Section7_1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
                 <p className="font-medium text-white mb-2">Maintenance Support</p>
-                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                <ul className="text-white ml-4 list-disc space-y-1 text-sm">
                   <li>
                     Future electricians can quickly understand the installation without guesswork
                   </li>
@@ -571,7 +571,7 @@ const Module5Section7_1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
                 <p className="font-medium text-white mb-2">Business Development</p>
-                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                <ul className="text-white ml-4 list-disc space-y-1 text-sm">
                   <li>Demonstrate professionalism to potential clients</li>
                   <li>Support tender submissions with proven track record</li>
                   <li>Enable ISO 9001 quality management certification</li>
@@ -580,7 +580,7 @@ const Module5Section7_1 = () => {
               </div>
             </div>
             <div className="mt-4 p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 <strong className="text-elec-yellow">Investment return:</strong> Time spent on
                 proper documentation saves significantly more time in the long term
               </p>
@@ -608,7 +608,7 @@ const Module5Section7_1 = () => {
                   <h3 className="font-medium text-white mb-2">
                     Missing Records Lead to Project Delays
                   </h3>
-                  <p className="text-white/80 text-sm mb-3">
+                  <p className="text-white text-sm mb-3">
                     You are working on a new office installation. Halfway through the project, a
                     different team takes over the lighting circuits. Without proper records, they
                     don't know which circuits have been tested or which cables serve which areas.
@@ -618,7 +618,7 @@ const Module5Section7_1 = () => {
                   </p>
                   <div className="bg-amber-500/10 p-3 rounded-lg mb-3">
                     <p className="font-medium text-amber-400 text-sm mb-1">What went wrong:</p>
-                    <ul className="text-white/70 list-disc ml-4 space-y-1 text-xs">
+                    <ul className="text-white list-disc ml-4 space-y-1 text-xs">
                       <li>No handover documentation between teams</li>
                       <li>Test results not recorded or shared</li>
                       <li>Circuit identification incomplete</li>
@@ -627,7 +627,7 @@ const Module5Section7_1 = () => {
                   </div>
                   <div className="bg-green-500/10 p-3 rounded-lg">
                     <p className="font-medium text-green-400 text-sm mb-1">Prevention measures:</p>
-                    <ul className="text-white/70 list-disc ml-4 space-y-1 text-xs">
+                    <ul className="text-white list-disc ml-4 space-y-1 text-xs">
                       <li>Daily progress logs with circuit completion status</li>
                       <li>Test certificate completion before handover</li>
                       <li>Clear circuit labelling and documentation</li>
@@ -641,7 +641,7 @@ const Module5Section7_1 = () => {
             <div className="mt-4 grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
                 <h4 className="font-medium text-white mb-2 text-sm">Incomplete Test Records</h4>
-                <p className="text-white/70 text-xs mb-2">
+                <p className="text-white text-xs mb-2">
                   An apprentice fails to record RCD test results. Six months later, an electrical
                   incident occurs and the insurance company refuses the claim because compliance
                   cannot be proven.
@@ -650,7 +650,7 @@ const Module5Section7_1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
                 <h4 className="font-medium text-white mb-2 text-sm">Missing Risk Assessments</h4>
-                <p className="text-white/70 text-xs mb-2">
+                <p className="text-white text-xs mb-2">
                   A contractor starts work without completing RAMS documentation. An accident occurs
                   and HSE investigation reveals poor planning. Result: prosecution and £75,000 fine.
                 </p>
@@ -673,7 +673,7 @@ const Module5Section7_1 = () => {
                   <CheckCircle className="w-4 h-4 text-green-500" />
                   Best Practices
                 </h3>
-                <ul className="text-white/70 space-y-1 text-sm">
+                <ul className="text-white space-y-1 text-sm">
                   <li>• Always complete documentation immediately after tasks</li>
                   <li>• Use standard templates or digital software for consistency</li>
                   <li>• Keep certificates and logs securely stored but accessible</li>
@@ -686,7 +686,7 @@ const Module5Section7_1 = () => {
                   <Target className="w-4 h-4 text-elec-yellow" />
                   Key Actions
                 </h3>
-                <ul className="text-white/70 space-y-1 text-sm">
+                <ul className="text-white space-y-1 text-sm">
                   <li>• Document all installations, tests, and modifications</li>
                   <li>• Use the correct certificates (Installation, Minor Works)</li>
                   <li>• Keep daily site logs for traceability</li>
@@ -703,14 +703,14 @@ const Module5Section7_1 = () => {
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-medium text-white mb-2 text-sm">Digital Systems</h4>
                   <p className="text-green-400 text-xs font-medium mb-1">Advantages:</p>
-                  <ul className="text-white/70 list-disc ml-4 space-y-1 text-xs">
+                  <ul className="text-white list-disc ml-4 space-y-1 text-xs">
                     <li>Automatic backup and version control</li>
                     <li>Easy searching and filtering</li>
                     <li>Integration with test equipment</li>
                     <li>Reduced storage space requirements</li>
                   </ul>
                   <p className="text-amber-400 text-xs font-medium mt-2 mb-1">Considerations:</p>
-                  <ul className="text-white/70 list-disc ml-4 space-y-1 text-xs">
+                  <ul className="text-white list-disc ml-4 space-y-1 text-xs">
                     <li>Requires reliable power and connectivity</li>
                     <li>Staff training on software systems</li>
                     <li>Data security and backup procedures</li>
@@ -719,14 +719,14 @@ const Module5Section7_1 = () => {
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-medium text-white mb-2 text-sm">Paper Systems</h4>
                   <p className="text-green-400 text-xs font-medium mb-1">Advantages:</p>
-                  <ul className="text-white/70 list-disc ml-4 space-y-1 text-xs">
+                  <ul className="text-white list-disc ml-4 space-y-1 text-xs">
                     <li>No power or technology dependencies</li>
                     <li>Familiar to all site personnel</li>
                     <li>Original signatures widely accepted</li>
                     <li>Can be completed in any conditions</li>
                   </ul>
                   <p className="text-amber-400 text-xs font-medium mt-2 mb-1">Considerations:</p>
-                  <ul className="text-white/70 list-disc ml-4 space-y-1 text-xs">
+                  <ul className="text-white list-disc ml-4 space-y-1 text-xs">
                     <li>Risk of loss or damage</li>
                     <li>Difficult to search and analyse</li>
                     <li>Storage space requirements</li>
@@ -740,8 +740,8 @@ const Module5Section7_1 = () => {
               <h3 className="font-medium text-white mb-3">Daily Record-Keeping Checklist</h3>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-white/90 font-medium text-sm mb-2">Before Work Starts:</p>
-                  <ul className="text-white/70 space-y-1 text-xs">
+                  <p className="text-white font-medium text-sm mb-2">Before Work Starts:</p>
+                  <ul className="text-white space-y-1 text-xs">
                     <li>☐ RAMS reviewed and understood</li>
                     <li>☐ Test equipment calibration checked</li>
                     <li>☐ Previous day's work verified</li>
@@ -749,8 +749,8 @@ const Module5Section7_1 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-white/90 font-medium text-sm mb-2">End of Day:</p>
-                  <ul className="text-white/70 space-y-1 text-xs">
+                  <p className="text-white font-medium text-sm mb-2">End of Day:</p>
+                  <ul className="text-white space-y-1 text-xs">
                     <li>☐ Work progress recorded</li>
                     <li>☐ Test results documented</li>
                     <li>☐ Any variations noted</li>
@@ -808,7 +808,7 @@ const Module5Section7_1 = () => {
                   className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50"
                 >
                   <h3 className="font-medium text-white mb-2">Q: {faq.question}</h3>
-                  <p className="text-white/80 text-sm">A: {faq.answer}</p>
+                  <p className="text-white text-sm">A: {faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -820,13 +820,13 @@ const Module5Section7_1 = () => {
               <CheckCircle className="w-5 h-5 text-green-500" />
               <h2 className="text-xl font-semibold text-white">Recap</h2>
             </div>
-            <p className="text-white/80 mb-4">
+            <p className="text-white mb-4">
               In this subsection, you learned the importance of accurate records for compliance and
               safety. You explored the types of records used in electrical work, the risks of poor
               documentation, and how proper record keeping ensures compliance, safety, and
               efficiency.
             </p>
-            <ul className="list-disc pl-6 space-y-2 text-white/80">
+            <ul className="list-disc pl-6 space-y-2 text-white">
               <li>
                 Accurate records prove compliance with BS 7671 and support safe working practices
               </li>

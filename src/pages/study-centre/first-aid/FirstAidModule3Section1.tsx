@@ -190,7 +190,7 @@ export default function FirstAidModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-3">
@@ -213,7 +213,7 @@ export default function FirstAidModule3Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Severe Bleeding &amp; Haemorrhage Control
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How to recognise, assess, and control all types of bleeding &mdash; from minor capillary
             oozing to life-threatening catastrophic haemorrhage
           </p>
@@ -305,7 +305,7 @@ export default function FirstAidModule3Section1() {
                     <div className="w-3 h-3 rounded-full bg-red-500" />
                     <p className="text-sm font-semibold text-red-400">Arterial</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                       <span>Bright red (oxygenated) blood</span>
@@ -338,7 +338,7 @@ export default function FirstAidModule3Section1() {
                     <div className="w-3 h-3 rounded-full bg-purple-500" />
                     <p className="text-sm font-semibold text-purple-400">Venous</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                       <span>Dark red (deoxygenated) blood</span>
@@ -371,7 +371,7 @@ export default function FirstAidModule3Section1() {
                     <div className="w-3 h-3 rounded-full bg-amber-500" />
                     <p className="text-sm font-semibold text-amber-400">Capillary</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Oozes slowly from grazes and minor wounds</span>
@@ -404,7 +404,7 @@ export default function FirstAidModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Key Point</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   In practice, many wounds involve a{' '}
                   <strong className="text-white">mixture of bleeding types</strong>. A deep
                   laceration may damage arteries, veins, and capillaries simultaneously. Always
@@ -445,7 +445,7 @@ export default function FirstAidModule3Section1() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Wear Gloves If Available</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Put on disposable gloves to protect yourself from blood-borne infections. If
                         no gloves are available, use a plastic bag, cling film, or ask the casualty
                         to apply pressure themselves if they are able.
@@ -460,7 +460,7 @@ export default function FirstAidModule3Section1() {
                       <p className="text-sm font-medium text-white">
                         Apply a Sterile Dressing or Clean Cloth
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Place a sterile dressing pad directly over the wound. If no sterile dressing
                         is available, use the cleanest material at hand &mdash; a clean cloth,
                         clothing, or towel. The priority is stopping the bleeding, not achieving
@@ -474,7 +474,7 @@ export default function FirstAidModule3Section1() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Apply Firm, Direct Pressure</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Press firmly over the wound using the flat of your hand or fingers
                         (depending on the wound size). Use your body weight if necessary. The
                         pressure must be firm enough to compress the blood vessels beneath the
@@ -490,7 +490,7 @@ export default function FirstAidModule3Section1() {
                       <p className="text-sm font-medium text-white">
                         Maintain Pressure for at Least 10 Minutes
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Do <strong>not</strong> lift the dressing to check the wound. Continuous,
                         uninterrupted pressure is essential for clot formation. Lifting the dressing
                         disrupts the clotting process and can restart bleeding.
@@ -505,7 +505,7 @@ export default function FirstAidModule3Section1() {
                       <p className="text-sm font-medium text-white">
                         If Blood Soaks Through &mdash; Add, Do Not Remove
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         If blood soaks through the first dressing, place a second dressing on top of
                         the first and continue pressing. Never remove the original dressing &mdash;
                         doing so pulls away the forming clot.
@@ -520,13 +520,13 @@ export default function FirstAidModule3Section1() {
                   <Activity className="h-5 w-5 text-blue-400" />
                   <p className="text-sm font-medium text-blue-400">Elevation</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Where possible, raise the injured limb{' '}
                   <strong className="text-white">above the level of the heart</strong> while
                   maintaining direct pressure. This uses gravity to reduce blood flow to the wound,
                   helping to slow the bleeding.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -578,7 +578,7 @@ export default function FirstAidModule3Section1() {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <p className="text-sm font-medium text-white mb-1">Kaolin-Based</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Kaolin (a natural mineral clay) activates clotting Factor XII in the blood,
                       triggering the body&rsquo;s intrinsic clotting cascade. When the dressing
                       contacts blood, it rapidly accelerates clot formation at the wound site.
@@ -586,7 +586,7 @@ export default function FirstAidModule3Section1() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white mb-1">Chitosan-Based</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Chitosan (derived from crustacean shells) carries a positive electrical charge
                       that attracts negatively charged red blood cells, causing them to bind
                       together and form a seal. Effective even in casualties taking blood-thinning
@@ -600,7 +600,7 @@ export default function FirstAidModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   How to Use a Haemostatic Dressing:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -669,7 +669,7 @@ export default function FirstAidModule3Section1() {
                   <div className="relative">
                     {/* Upper limb (toward heart) */}
                     <div className="flex items-center justify-center mb-2">
-                      <span className="text-xs text-white/50 mr-3">&uarr; Toward heart</span>
+                      <span className="text-xs text-white mr-3">&uarr; Toward heart</span>
                     </div>
 
                     {/* Limb body */}
@@ -701,7 +701,7 @@ export default function FirstAidModule3Section1() {
                             <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-2 h-px bg-white/30" />
                             <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-px bg-white/30" />
                           </div>
-                          <span className="text-[10px] text-white/50 absolute -left-4 top-1/2 -translate-y-1/2 -rotate-90 whitespace-nowrap">
+                          <span className="text-[10px] text-white absolute -left-4 top-1/2 -translate-y-1/2 -rotate-90 whitespace-nowrap">
                             5&ndash;7 cm
                           </span>
                         </div>
@@ -729,7 +729,7 @@ export default function FirstAidModule3Section1() {
 
                     {/* Lower limb (away from heart) */}
                     <div className="flex items-center justify-center mt-2">
-                      <span className="text-xs text-white/50 mr-3">&darr; Away from heart</span>
+                      <span className="text-xs text-white mr-3">&darr; Away from heart</span>
                     </div>
                   </div>
 
@@ -747,7 +747,7 @@ export default function FirstAidModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Tourniquet Application &mdash; Key Rules:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -786,7 +786,7 @@ export default function FirstAidModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Warnings</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -858,7 +858,7 @@ export default function FirstAidModule3Section1() {
                     <p className="text-sm font-semibold text-red-400 mb-1">
                       Catastrophic Haemorrhage
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Control life-threatening external bleeding{' '}
                       <strong className="text-white">first</strong>, before anything else. Use
                       direct pressure, tourniquets, and haemostatic dressings as needed. This takes
@@ -873,7 +873,7 @@ export default function FirstAidModule3Section1() {
                   </span>
                   <div className="flex-1 bg-orange-500/10 border border-orange-500/30 p-4 rounded-lg">
                     <p className="text-sm font-semibold text-orange-400 mb-1">Airway</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Once catastrophic bleeding is controlled, open and maintain the
                       casualty&rsquo;s airway. Use head-tilt chin-lift (or jaw thrust if spinal
                       injury is suspected). Check for and remove any visible obstructions.
@@ -887,7 +887,7 @@ export default function FirstAidModule3Section1() {
                   </span>
                   <div className="flex-1 bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
                     <p className="text-sm font-semibold text-blue-400 mb-1">Breathing</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Assess breathing &mdash; look for chest rise and fall, listen for breath
                       sounds, feel for air on your cheek. If the casualty is not breathing, commence
                       CPR. If they are breathing, monitor rate and depth.
@@ -901,7 +901,7 @@ export default function FirstAidModule3Section1() {
                   </span>
                   <div className="flex-1 bg-purple-500/10 border border-purple-500/30 p-4 rounded-lg">
                     <p className="text-sm font-semibold text-purple-400 mb-1">Circulation</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Assess circulation &mdash; check for signs of shock (pale, cold, clammy skin,
                       rapid weak pulse, confusion). Control any remaining non-catastrophic bleeding.
                       Keep the casualty warm.
@@ -915,7 +915,7 @@ export default function FirstAidModule3Section1() {
                   <Shield className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Why C-ABC Replaced ABC</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Traditional ABC (Airway, Breathing, Circulation) was developed for medical
                   emergencies. In <strong className="text-white">major trauma</strong>, military and
                   civilian evidence showed that casualties were dying from massive haemorrhage
@@ -943,7 +943,7 @@ export default function FirstAidModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Amputations</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Traumatic amputations can occur on electrical and construction sites from power
                   tools, machinery, or crush injuries. The immediate priorities are controlling
                   bleeding from the stump and preserving the amputated part for potential
@@ -953,7 +953,7 @@ export default function FirstAidModule3Section1() {
                 <div className="space-y-3">
                   <div>
                     <p className="text-sm font-medium text-white mb-2">Treating the Stump:</p>
-                    <ul className="text-sm text-white/80 space-y-2">
+                    <ul className="text-sm text-white space-y-2">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>
@@ -988,7 +988,7 @@ export default function FirstAidModule3Section1() {
                     <p className="text-sm font-medium text-white mb-2">
                       Preserving the Amputated Part:
                     </p>
-                    <ul className="text-sm text-white/80 space-y-2">
+                    <ul className="text-sm text-white space-y-2">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Recover the amputated part if it is safe to do so</span>
@@ -1038,7 +1038,7 @@ export default function FirstAidModule3Section1() {
                   <Activity className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">Internal Bleeding</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Internal bleeding occurs when blood vessels are damaged inside the body without an
                   external wound. It is not visible but can be just as life-threatening as external
                   bleeding. Common causes on site include blunt trauma, falls from height, and crush
@@ -1048,7 +1048,7 @@ export default function FirstAidModule3Section1() {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <p className="text-sm font-medium text-white mb-2">Signs &amp; Symptoms:</p>
-                    <ul className="text-sm text-white/80 space-y-2">
+                    <ul className="text-sm text-white space-y-2">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                         <span>Pain, tenderness, or guarding (tensing) over the affected area</span>
@@ -1077,7 +1077,7 @@ export default function FirstAidModule3Section1() {
 
                   <div>
                     <p className="text-sm font-medium text-white mb-2">Treatment:</p>
-                    <ul className="text-sm text-white/80 space-y-2">
+                    <ul className="text-sm text-white space-y-2">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                         <span>
@@ -1121,12 +1121,12 @@ export default function FirstAidModule3Section1() {
                   <Droplets className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Nosebleeds (Epistaxis)</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Nosebleeds are common and usually minor, but they require correct treatment to
                   stop effectively. On site, they can result from a blow to the face, dry air, or
                   occur spontaneously.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1189,7 +1189,7 @@ export default function FirstAidModule3Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1203,7 +1203,7 @@ export default function FirstAidModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-3">

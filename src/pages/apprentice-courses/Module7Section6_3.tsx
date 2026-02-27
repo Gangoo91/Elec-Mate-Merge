@@ -196,7 +196,7 @@ export default function Module7Section6_3() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Temporary Isolation or Making Safe
           </h1>
-          <p className="text-white/70 max-w-2xl mx-auto">
+          <p className="text-white max-w-2xl mx-auto">
             Safe temporary isolation procedures and emergency measures when faults cannot be
             immediately repaired
           </p>
@@ -205,7 +205,7 @@ export default function Module7Section6_3() {
         {/* In 30 Seconds Summary */}
         <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
           <h2 className="font-semibold text-white mb-2">In 30 Seconds</h2>
-          <ul className="text-white/80 space-y-1 text-sm">
+          <ul className="text-white space-y-1 text-sm">
             <li>• Isolate the faulty circuit at the distribution board immediately</li>
             <li>• Apply clear warning labels: "Do Not Use – Faulty Circuit"</li>
             <li>• Remove or cover damaged accessories to prevent use</li>
@@ -219,7 +219,7 @@ export default function Module7Section6_3() {
             <span className="text-elec-yellow/80 text-sm font-normal">01</span>
             The Principle of Making Safe
           </h2>
-          <div className="text-white/80 space-y-4 leading-relaxed">
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               The priority when a dangerous fault is found is to prevent it from endangering people
               or property. If a circuit shows signs of overheating, arcing, or damaged insulation,
@@ -290,7 +290,7 @@ export default function Module7Section6_3() {
             <span className="text-elec-yellow/80 text-sm font-normal">02</span>
             Methods of Isolation and Labelling
           </h2>
-          <div className="text-white/80 space-y-4 leading-relaxed">
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Isolation may involve switching off a protective device, removing a fuse, or locking
               off a breaker using a lockout kit. Whichever method is used, it must be obvious that
@@ -372,7 +372,7 @@ export default function Module7Section6_3() {
             <span className="text-elec-yellow/80 text-sm font-normal">03</span>
             Emergency Measures Beyond Isolation
           </h2>
-          <div className="text-white/80 space-y-4 leading-relaxed">
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Sometimes, faults require additional temporary precautions. For example, if a damaged
               socket is overheating, the accessory should be physically removed or covered to
@@ -412,7 +412,7 @@ export default function Module7Section6_3() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
                 <h5 className="font-medium text-green-400 text-sm mb-2">DO:</h5>
-                <ul className="list-disc list-inside space-y-1 text-xs text-white/70">
+                <ul className="list-disc list-inside space-y-1 text-xs text-white">
                   <li>Remove or physically cover damaged items</li>
                   <li>Restrict access to affected areas</li>
                   <li>Escalate quickly to competent persons</li>
@@ -421,7 +421,7 @@ export default function Module7Section6_3() {
               </div>
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
                 <h5 className="font-medium text-red-400 text-sm mb-2">DON'T:</h5>
-                <ul className="list-disc list-inside space-y-1 text-xs text-white/70">
+                <ul className="list-disc list-inside space-y-1 text-xs text-white">
                   <li>Up-rate protective devices as a quick fix</li>
                   <li>Bypass safety devices or interlocks</li>
                   <li>Use tape over live parts without isolation</li>
@@ -451,7 +451,7 @@ export default function Module7Section6_3() {
             <span className="text-elec-yellow/80 text-sm font-normal">04</span>
             Limits of Apprentice Responsibility
           </h2>
-          <div className="text-white/80 space-y-4 leading-relaxed">
+          <div className="text-white space-y-4 leading-relaxed">
             <p>
               Apprentices at Level 2 must understand their limits. You may be required to isolate a
               circuit under supervision and attach warning labels, but you cannot certify that a
@@ -464,7 +464,7 @@ export default function Module7Section6_3() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
                 <h4 className="font-medium text-green-400 mb-2">You CAN:</h4>
-                <ul className="list-disc list-inside space-y-1 text-xs text-white/70">
+                <ul className="list-disc list-inside space-y-1 text-xs text-white">
                   <li>Isolate circuits under supervision</li>
                   <li>Apply tags and warning labels correctly</li>
                   <li>Secure and cordon off unsafe areas</li>
@@ -474,7 +474,7 @@ export default function Module7Section6_3() {
               </div>
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
                 <h4 className="font-medium text-red-400 mb-2">You MUST NOT:</h4>
-                <ul className="list-disc list-inside space-y-1 text-xs text-white/70">
+                <ul className="list-disc list-inside space-y-1 text-xs text-white">
                   <li>Certify circuits as safe for re-energisation</li>
                   <li>Alter protective device ratings</li>
                   <li>Carry out unsupervised permanent repairs</li>
@@ -528,7 +528,7 @@ export default function Module7Section6_3() {
             6-Step Isolation Checklist
           </h2>
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white/80">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white">
               <div className="space-y-2">
                 <p>
                   <strong>1. Identify:</strong> Accurately identify the circuit (labels, testing)
@@ -565,7 +565,7 @@ export default function Module7Section6_3() {
           <div className="space-y-6">
             <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
               <h4 className="font-semibold text-green-400 mb-3">Housing Estate Success</h4>
-              <p className="text-white/80 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 On a housing estate, a loose connection in a kitchen socket was identified during
                 testing. The socket showed signs of overheating, but the repair team could not
                 attend immediately. The electrician isolated the circuit at the consumer unit,
@@ -573,7 +573,7 @@ export default function Module7Section6_3() {
                 When the repair team returned the next day, they carried out the repair safely
                 without risk to occupants.
               </p>
-              <p className="text-white/60 text-xs">
+              <p className="text-white text-xs">
                 <strong>What went well:</strong> Immediate isolation prevented escalation, physical
                 removal prevented accidental use, clear labelling informed all users, proper
                 handover to repair team
@@ -582,13 +582,13 @@ export default function Module7Section6_3() {
 
             <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
               <h4 className="font-semibold text-red-400 mb-3">Commercial Building Failure</h4>
-              <p className="text-white/80 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 In a commercial building, a faulty lighting circuit was left energised despite
                 repeated tripping. No isolation or warning was applied, and a fire later broke out
                 due to overheating at a junction box. The incident report concluded that temporary
                 isolation would have prevented the damage and associated costs.
               </p>
-              <p className="text-white/60 text-xs">
+              <p className="text-white text-xs">
                 <strong>What went wrong:</strong> Circuit left live despite obvious fault, no
                 warning labels or barriers applied, fault allowed to escalate unchecked, fire damage
                 and business interruption costs
@@ -607,7 +607,7 @@ export default function Module7Section6_3() {
             {faqs.map((faq, index) => (
               <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-semibold text-white mb-2">{faq.question}</h4>
-                <p className="text-sm text-white/70">{faq.answer}</p>
+                <p className="text-sm text-white">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -617,7 +617,7 @@ export default function Module7Section6_3() {
         <section className="mb-10">
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
             <h2 className="font-semibold text-white mb-3">If You Only Remember 3 Things</h2>
-            <ul className="text-white/80 space-y-2 text-sm">
+            <ul className="text-white space-y-2 text-sm">
               <li>
                 • <strong>Make it safe</strong> - Isolate and secure immediately
               </li>

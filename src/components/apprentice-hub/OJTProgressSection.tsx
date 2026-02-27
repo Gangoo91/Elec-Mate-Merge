@@ -996,7 +996,7 @@ export function OJTProgressSection() {
         <CardContent className="pt-0">
           {groupedSessions.length === 0 ? (
             <div className="text-center py-8">
-              <Clock className="h-10 w-10 text-white/20 mx-auto mb-2" />
+              <Clock className="h-10 w-10 text-white mx-auto mb-2" />
               <p className="text-sm font-medium text-foreground">No sessions logged</p>
               <p className="text-xs text-white mt-1">
                 Start tracking your off-the-job training

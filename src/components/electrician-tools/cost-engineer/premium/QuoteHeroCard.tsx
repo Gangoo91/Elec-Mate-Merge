@@ -104,7 +104,7 @@ export function QuoteHeroCard({
           className="flex items-center justify-center gap-2 mb-4"
         >
           <Sparkles className="h-4 w-4 text-elec-yellow" />
-          <span className="text-white/60 text-sm font-medium uppercase tracking-wider">
+          <span className="text-white text-sm font-medium uppercase tracking-wider">
             Recommended Quote
           </span>
           <Sparkles className="h-4 w-4 text-elec-yellow" />
@@ -141,7 +141,7 @@ export function QuoteHeroCard({
               <TrendingUp className="h-4 w-4 text-emerald-400" />
             </div>
             <p className="text-emerald-400 font-bold text-lg">£{profit.toLocaleString()}</p>
-            <p className="text-white/40 text-xs">Profit</p>
+            <p className="text-white text-xs">Profit</p>
           </div>
 
           {/* Margin */}
@@ -150,7 +150,7 @@ export function QuoteHeroCard({
               <Percent className="h-4 w-4 text-cyan-400" />
             </div>
             <p className="text-cyan-400 font-bold text-lg">{margin.toFixed(1)}%</p>
-            <p className="text-white/40 text-xs">Margin</p>
+            <p className="text-white text-xs">Margin</p>
           </div>
 
           {/* Confidence */}
@@ -159,7 +159,7 @@ export function QuoteHeroCard({
               <Shield className="h-4 w-4 text-amber-400" />
             </div>
             <p className="text-amber-400 font-bold text-lg">{confidence}%</p>
-            <p className="text-white/40 text-xs">Confidence</p>
+            <p className="text-white text-xs">Confidence</p>
           </div>
         </motion.div>
       </div>

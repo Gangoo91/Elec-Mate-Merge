@@ -241,7 +241,7 @@ const InspectionTestingModule1Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-1">
@@ -263,7 +263,7 @@ const InspectionTestingModule1Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Purpose and Legal Requirements
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding why we inspect and test electrical installations, and the legal framework
             that governs these requirements in the UK
           </p>
@@ -366,7 +366,7 @@ const InspectionTestingModule1Section1 = () => {
             </div>
 
             <div className="my-6 p-4 rounded-lg bg-white/5 border border-white/10">
-              <p className="text-sm text-white/60 mb-2">Key Statistic</p>
+              <p className="text-sm text-white mb-2">Key Statistic</p>
               <p className="text-white">
                 Around <strong className="text-elec-yellow">20,000 dwelling fires</strong> per year
                 in the UK are caused by electrical faults. Proper inspection and testing can
@@ -393,7 +393,7 @@ const InspectionTestingModule1Section1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Employer Duties (Section 2)
               </p>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 Employers must ensure, so far as is reasonably practicable:
               </p>
               <ul className="text-sm text-white space-y-1 ml-4">
@@ -409,7 +409,7 @@ const InspectionTestingModule1Section1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Employee Duties (Section 7)
               </p>
-              <p className="text-sm text-white/90 mb-2">Employees must:</p>
+              <p className="text-sm text-white mb-2">Employees must:</p>
               <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Take reasonable care for their own health and safety</li>
                 <li>
@@ -422,7 +422,7 @@ const InspectionTestingModule1Section1 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">The Role of HSE</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 The <strong>Health and Safety Executive (HSE)</strong> is responsible for enforcing
                 health and safety legislation. HSE inspectors have powers to enter premises,
                 investigate, issue improvement and prohibition notices, and prosecute offenders.
@@ -460,7 +460,7 @@ const InspectionTestingModule1Section1 = () => {
                   practicable, such danger."
                 </p>
               </div>
-              <p className="text-sm text-white/90 mt-3">
+              <p className="text-sm text-white mt-3">
                 This regulation is critical for inspection and testing - it establishes the legal
                 requirement for maintenance, which includes periodic inspection and testing.
               </p>
@@ -486,7 +486,7 @@ const InspectionTestingModule1Section1 = () => {
               <div className="grid sm:grid-cols-2 gap-4 mt-3">
                 <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                   <p className="text-red-400 font-semibold text-sm mb-2">Absolute Duty</p>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     Must be complied with regardless of cost or difficulty. No defence available.
                     Example: Regulation 14 - work on live conductors.
                   </p>
@@ -495,7 +495,7 @@ const InspectionTestingModule1Section1 = () => {
                   <p className="text-orange-400 font-semibold text-sm mb-2">
                     Reasonably Practicable
                   </p>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     Allows a balance between risk and cost/effort to avert it. If risk outweighs
                     sacrifice, action must be taken.
                   </p>
@@ -523,7 +523,7 @@ const InspectionTestingModule1Section1 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Legal Status</p>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 BS 7671 is a <strong>non-statutory standard</strong> - it is not law in itself.
                 However:
               </p>
@@ -542,7 +542,7 @@ const InspectionTestingModule1Section1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Part 6 - Inspection and Testing
               </p>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 Part 6 of BS 7671 covers initial verification (Chapter 61) and periodic inspection
                 and testing (Chapter 62). Key regulations include:
               </p>
@@ -564,7 +564,7 @@ const InspectionTestingModule1Section1 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Guidance Note 3 (GN3)</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 <strong>IET Guidance Note 3</strong> provides practical guidance on inspection and
                 testing, including recommended test intervals, procedures, and documentation. It
                 should be used alongside BS 7671.
@@ -594,28 +594,28 @@ const InspectionTestingModule1Section1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Qualifications for Inspection & Testing
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 While qualifications don't automatically make someone competent, the following
                 demonstrate appropriate training:
               </p>
               <div className="grid sm:grid-cols-2 gap-3">
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <p className="text-white font-semibold text-sm">City & Guilds 2391</p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Initial verification & periodic inspection
                   </p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <p className="text-white font-semibold text-sm">City & Guilds 2394</p>
-                  <p className="text-xs text-white/60">Initial verification only</p>
+                  <p className="text-xs text-white">Initial verification only</p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <p className="text-white font-semibold text-sm">City & Guilds 2395</p>
-                  <p className="text-xs text-white/60">Periodic inspection only</p>
+                  <p className="text-xs text-white">Periodic inspection only</p>
                 </div>
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <p className="text-white font-semibold text-sm">EAL / NICEIC Equivalents</p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Various awarding bodies offer equivalent qualifications
                   </p>
                 </div>
@@ -626,7 +626,7 @@ const InspectionTestingModule1Section1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Self-Assessment of Competence
               </p>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 You should honestly assess whether you have the competence for each specific task.
                 Competence in one area doesn't automatically extend to all areas. Consider:
               </p>
@@ -659,7 +659,7 @@ const InspectionTestingModule1Section1 = () => {
               <p className="text-sm font-medium text-red-400/80 mb-2">Criminal Liability</p>
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="text-white font-semibold text-sm">Breach of EAW Regulations</p>
-                <p className="text-sm text-white/80 mt-1">
+                <p className="text-sm text-white mt-1">
                   Unlimited fines in Crown Court. Where death results, corporate manslaughter
                   charges may apply (up to unlimited fines). Individual managers may face
                   imprisonment.
@@ -671,7 +671,7 @@ const InspectionTestingModule1Section1 = () => {
               <p className="text-sm font-medium text-orange-400/80 mb-2">Civil Liability</p>
               <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
                 <p className="text-white font-semibold text-sm">Negligence Claims</p>
-                <p className="text-sm text-white/80 mt-1">
+                <p className="text-sm text-white mt-1">
                   Those injured due to poor electrical work can sue for compensation. Claims can run
                   into millions of pounds for serious injuries or death. Professional indemnity
                   insurance may not cover work outside competence.
@@ -753,7 +753,7 @@ const InspectionTestingModule1Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -799,7 +799,7 @@ const InspectionTestingModule1Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             disabled
           >
             <ArrowLeft className="w-4 h-4 mr-2" />

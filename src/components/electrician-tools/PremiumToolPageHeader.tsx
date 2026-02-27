@@ -91,7 +91,7 @@ const PremiumToolPageHeader = ({
               className="w-full h-12 sm:h-14 pl-12 pr-12 text-base sm:text-lg
                          bg-white/5 border-white/10 rounded-xl
                          focus:border-primary/40 focus:ring-2 focus:ring-primary/20
-                         placeholder:text-white/40"
+                         placeholder:text-white"
             />
             {searchTerm && (
               <button
@@ -99,7 +99,7 @@ const PremiumToolPageHeader = ({
                 className="absolute right-4 top-1/2 -translate-y-1/2 p-1.5 rounded-lg
                            bg-white/10 hover:bg-white/20 transition-colors"
               >
-                <X className="h-4 w-4 text-white/60" />
+                <X className="h-4 w-4 text-white" />
               </button>
             )}
           </div>

@@ -262,7 +262,7 @@ const MOETModule4Section7_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module4-section7">
@@ -282,7 +282,7 @@ const MOETModule4Section7_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Principles of Reliability-Centred Maintenance (RCM)
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             A structured process for determining the right maintenance strategy for every asset
           </p>
         </header>
@@ -431,7 +431,7 @@ const MOETModule4Section7_1 = () => {
                   </span>
                 </div>
               </div>
-              <p className="text-xs text-white/60 mt-3">
+              <p className="text-xs text-white mt-3">
                 Pattern F (infant mortality then random) accounted for 68% of all failure modes
                 studied. This means that for the majority of failures, overhauling equipment at a
                 fixed interval actually increases the failure rate by reintroducing infant
@@ -679,7 +679,7 @@ const MOETModule4Section7_1 = () => {
                 </p>
                 <p>&nbsp;&nbsp;&nbsp;+------------------------------------------&gt; Time</p>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 The monitoring interval must be shorter than the P-F interval (typically half or
                 less) to ensure deterioration is always detected before functional failure.
               </p>
@@ -872,7 +872,7 @@ const MOETModule4Section7_1 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Note:</strong> RCM does not mandate the most technically advanced maintenance
               approach — it mandates the most appropriate one. For some failure modes, the most
               appropriate strategy is run-to-failure. This is not neglect; it is a conscious,
@@ -893,7 +893,7 @@ const MOETModule4Section7_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -940,7 +940,7 @@ const MOETModule4Section7_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module4-section7">

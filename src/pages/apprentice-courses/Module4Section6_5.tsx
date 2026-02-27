@@ -200,7 +200,7 @@ const Module4Section6_5 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -218,13 +218,13 @@ const Module4Section6_5 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.5</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.5</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Identifying and Rectifying Defects
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master systematic approaches to identify and correct electrical installation defects
               before energisation.
             </p>
@@ -235,7 +235,7 @@ const Module4Section6_5 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow text-sm mb-2">In 30 Seconds</p>
-                <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                <ul className="text-sm text-white space-y-1 list-disc pl-4">
                   <li>No electrical installation is perfect on the first attempt.</li>
                   <li>
                     Defects can appear during installation or be revealed during inspection and
@@ -249,7 +249,7 @@ const Module4Section6_5 = () => {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow text-sm mb-2">Spot it / Use it</p>
-                <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                <ul className="text-sm text-white space-y-1 list-disc pl-4">
                   <li>
                     <strong>Spot:</strong> Loose connections, damaged cables, incorrect
                     terminations.
@@ -273,7 +273,7 @@ const Module4Section6_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <ul className="text-white/80 space-y-2 list-disc pl-6">
+            <ul className="text-white space-y-2 list-disc pl-6">
               <li>Recognise common electrical installation defects.</li>
               <li>Apply systematic inspection and testing methods to identify faults.</li>
               <li>Safely rectify defects without causing further issues.</li>
@@ -288,7 +288,7 @@ const Module4Section6_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Types of Defects
             </h2>
-            <p className="text-white/80 mb-4">
+            <p className="text-white mb-4">
               Understanding common defect categories helps with systematic identification and
               correction:
             </p>
@@ -296,7 +296,7 @@ const Module4Section6_5 = () => {
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-red-500/5 border-l-2 border-red-500/50">
                 <p className="font-medium text-red-400 text-sm mb-2">Mechanical Defects</p>
-                <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                <ul className="text-sm text-white space-y-1 list-disc pl-4">
                   <li>Loose fixings on accessories or containment systems</li>
                   <li>Damaged accessories with cracks or missing parts</li>
                   <li>Poor containment support with inadequate bracket spacing</li>
@@ -306,7 +306,7 @@ const Module4Section6_5 = () => {
 
               <div className="p-4 rounded-lg bg-orange-500/5 border-l-2 border-orange-500/50">
                 <p className="font-medium text-orange-400 text-sm mb-2">Wiring Defects</p>
-                <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                <ul className="text-sm text-white space-y-1 list-disc pl-4">
                   <li>Incorrect terminations with wrong polarity or loose connections</li>
                   <li>Polarity errors affecting safety and equipment operation</li>
                   <li>Broken CPC connections compromising earth continuity</li>
@@ -316,7 +316,7 @@ const Module4Section6_5 = () => {
 
               <div className="p-4 rounded-lg bg-purple-500/5 border-l-2 border-purple-500/50">
                 <p className="font-medium text-purple-400 text-sm mb-2">Insulation Defects</p>
-                <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                <ul className="text-sm text-white space-y-1 list-disc pl-4">
                   <li>Damaged sheathing exposing inner conductors</li>
                   <li>Nicks in insulation from poor handling or sharp edges</li>
                   <li>Moisture ingress in damp or wet locations</li>
@@ -326,7 +326,7 @@ const Module4Section6_5 = () => {
 
               <div className="p-4 rounded-lg bg-blue-500/5 border-l-2 border-blue-500/50">
                 <p className="font-medium text-blue-400 text-sm mb-2">Design/Installation Errors</p>
-                <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                <ul className="text-sm text-white space-y-1 list-disc pl-4">
                   <li>Wrong cable size for the intended load or circuit length</li>
                   <li>Overloading of circuits beyond their designed capacity</li>
                   <li>Incorrect accessory type for the environment or application</li>
@@ -350,14 +350,14 @@ const Module4Section6_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               How to Identify Defects
             </h2>
-            <p className="text-white/80 mb-4">
+            <p className="text-white mb-4">
               Systematic defect identification combines visual inspection with functional testing:
             </p>
 
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow text-sm mb-2">Visual Inspection</p>
-                <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                <ul className="text-sm text-white space-y-1 list-disc pl-4">
                   <li>Check for visible issues such as exposed copper conductors</li>
                   <li>Look for missing grommets or protective sleeves</li>
                   <li>Inspect for physical damage to cables or accessories</li>
@@ -367,7 +367,7 @@ const Module4Section6_5 = () => {
 
               <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
                 <p className="font-medium text-green-400 text-sm mb-2">Basic Functional Tests</p>
-                <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                <ul className="text-sm text-white space-y-1 list-disc pl-4">
                   <li>Polarity testing to confirm correct connections</li>
                   <li>Continuity testing for earth and circuit paths</li>
                   <li>Insulation resistance testing to identify insulation breakdown</li>
@@ -377,7 +377,7 @@ const Module4Section6_5 = () => {
 
               <div className="p-4 rounded-lg bg-blue-500/5 border-l-2 border-blue-500/50">
                 <p className="font-medium text-blue-400 text-sm mb-2">Operational Checks</p>
-                <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                <ul className="text-sm text-white space-y-1 list-disc pl-4">
                   <li>Test switching operations and control functions</li>
                   <li>Verify accessories and circuits function correctly</li>
                   <li>Check for abnormal heating or noise</li>
@@ -387,7 +387,7 @@ const Module4Section6_5 = () => {
             </div>
 
             <div className="mt-4 p-3 rounded bg-white/5 border border-white/10">
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 <strong className="text-white">Customer feedback:</strong> Clients may notice
                 practical defects such as misaligned fittings or operational issues
               </p>
@@ -408,17 +408,17 @@ const Module4Section6_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Systematic Fault-Finding
             </h2>
-            <p className="text-white/80 mb-4">
+            <p className="text-white mb-4">
               Methodical approach ensures all defects are identified and addressed efficiently:
             </p>
 
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
                 <p className="font-medium text-green-400 text-sm mb-2">Work Methodically</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Start at the origin of supply and progress circuit by circuit:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                <ul className="text-sm text-white space-y-1 list-disc pl-4">
                   <li>Begin at the consumer unit or distribution board</li>
                   <li>Follow each circuit from origin to final outlets</li>
                   <li>Check junction boxes and connection points systematically</li>
@@ -428,7 +428,7 @@ const Module4Section6_5 = () => {
 
               <div className="p-4 rounded-lg bg-blue-500/5 border-l-2 border-blue-500/50">
                 <p className="font-medium text-blue-400 text-sm mb-2">Use Drawings and Schedules</p>
-                <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                <ul className="text-sm text-white space-y-1 list-disc pl-4">
                   <li>Refer to circuit diagrams to trace connections</li>
                   <li>Use cable schedules to verify cable types and routes</li>
                   <li>Check installation drawings for compliance with design</li>
@@ -438,7 +438,7 @@ const Module4Section6_5 = () => {
 
               <div className="p-4 rounded-lg bg-purple-500/5 border-l-2 border-purple-500/50">
                 <p className="font-medium text-purple-400 text-sm mb-2">Record All Observations</p>
-                <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                <ul className="text-sm text-white space-y-1 list-disc pl-4">
                   <li>Note location and nature of each defect found</li>
                   <li>Record test results and measurements</li>
                   <li>Photograph defects for clear documentation</li>
@@ -462,17 +462,17 @@ const Module4Section6_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Rectification of Defects
             </h2>
-            <p className="text-white/80 mb-4">
+            <p className="text-white mb-4">
               Safe and effective correction of identified defects:
             </p>
 
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-red-500/5 border-l-2 border-red-500/50">
                 <p className="font-medium text-red-400 text-sm mb-2">Safety First</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Always isolate the affected circuit before beginning work:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                <ul className="text-sm text-white space-y-1 list-disc pl-4">
                   <li>Switch off and lock off the circuit at the consumer unit</li>
                   <li>Test the circuit is dead using approved voltage indicator</li>
                   <li>Apply warning notices to prevent inadvertent re-energisation</li>
@@ -482,7 +482,7 @@ const Module4Section6_5 = () => {
 
               <div className="p-4 rounded-lg bg-orange-500/5 border-l-2 border-orange-500/50">
                 <p className="font-medium text-orange-400 text-sm mb-2">Correction Techniques</p>
-                <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                <ul className="text-sm text-white space-y-1 list-disc pl-4">
                   <li>Correct loose terminations by re-stripping and re-securing conductors</li>
                   <li>
                     Replace damaged cables or accessories rather than attempting unsafe repairs
@@ -494,10 +494,10 @@ const Module4Section6_5 = () => {
 
               <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50">
                 <p className="font-medium text-green-400 text-sm mb-2">Verification</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Re-test all corrected work to confirm compliance:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                <ul className="text-sm text-white space-y-1 list-disc pl-4">
                   <li>Repeat relevant tests after each correction</li>
                   <li>Verify continuity and insulation resistance meet requirements</li>
                   <li>Check polarity and earth fault loop impedance</li>
@@ -517,7 +517,7 @@ const Module4Section6_5 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white text-sm mb-2">Safety Procedures</p>
-                <ul className="text-sm text-white/70 space-y-1 list-disc pl-4">
+                <ul className="text-sm text-white space-y-1 list-disc pl-4">
                   <li>Always isolate and lock off circuits before rectifying defects</li>
                   <li>
                     Photograph defects before and after rectification to maintain a clear record
@@ -534,7 +534,7 @@ const Module4Section6_5 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white text-sm mb-2">Documentation</p>
-                <ul className="text-sm text-white/70 space-y-1 list-disc pl-4">
+                <ul className="text-sm text-white space-y-1 list-disc pl-4">
                   <li>
                     Document rectification on the Electrical Installation Certificate to demonstrate
                     compliance
@@ -555,7 +555,7 @@ const Module4Section6_5 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
               <p className="font-medium text-white mb-2">Commercial Fit-Out Defect</p>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 During a commercial fit-out, an insulation resistance test showed a low reading on a
                 power circuit. Investigation revealed that a cable had been damaged by a sharp edge
                 when pulled through trunking without a grommet. The damaged section was replaced,
@@ -563,7 +563,7 @@ const Module4Section6_5 = () => {
                 protection during installation.
               </p>
               <div className="p-3 rounded bg-elec-yellow/10 border-l-2 border-elec-yellow/50">
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-elec-yellow">Key Learning:</strong> This example
                   demonstrates how a single oversight (missing grommet) can cause significant
                   defects that require complete cable replacement. Prevention through proper
@@ -583,7 +583,7 @@ const Module4Section6_5 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-1">{faq.question}</p>
-                  <p className="text-sm text-white/70">{faq.answer}</p>
+                  <p className="text-sm text-white">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -600,25 +600,25 @@ const Module4Section6_5 = () => {
                 <div className="space-y-2">
                   <div className="flex items-start gap-2">
                     <span className="text-green-400">✓</span>
-                    <span className="text-white/80">
+                    <span className="text-white">
                       Isolate and prove dead before fault-finding.
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-green-400">✓</span>
-                    <span className="text-white/80">
+                    <span className="text-white">
                       Inspect for mechanical damage: cracked accessories, missing fixings.
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-green-400">✓</span>
-                    <span className="text-white/80">
+                    <span className="text-white">
                       Check wiring: correct terminations, no exposed copper, polarity correct.
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-green-400">✓</span>
-                    <span className="text-white/80">
+                    <span className="text-white">
                       Test continuity, insulation resistance, and polarity after corrections.
                     </span>
                   </div>
@@ -626,23 +626,23 @@ const Module4Section6_5 = () => {
                 <div className="space-y-2">
                   <div className="flex items-start gap-2">
                     <span className="text-green-400">✓</span>
-                    <span className="text-white/80">
+                    <span className="text-white">
                       Replace damaged cables/accessories — never "make do".
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-green-400">✓</span>
-                    <span className="text-white/80">
+                    <span className="text-white">
                       Record defect and corrective action for certification.
                     </span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-green-400">✓</span>
-                    <span className="text-white/80">Re-test after every repair.</span>
+                    <span className="text-white">Re-test after every repair.</span>
                   </div>
                   <div className="flex items-start gap-2">
                     <span className="text-green-400">✓</span>
-                    <span className="text-white/80">
+                    <span className="text-white">
                       Prevent recurrence: double-check, use proper tools, and follow BS 7671.
                     </span>
                   </div>
@@ -666,7 +666,7 @@ const Module4Section6_5 = () => {
                     </span>
                     <div>
                       <p className="font-medium text-white text-sm">Defect Recognition</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         You can now identify common mechanical, wiring, insulation, and design
                         defects.
                       </p>
@@ -678,7 +678,7 @@ const Module4Section6_5 = () => {
                     </span>
                     <div>
                       <p className="font-medium text-white text-sm">Identification Methods</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         You understand how to apply visual checks and tests to spot faults.
                       </p>
                     </div>
@@ -689,7 +689,7 @@ const Module4Section6_5 = () => {
                     </span>
                     <div>
                       <p className="font-medium text-white text-sm">Fault-Finding Skills</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         You know how to systematically fault-find and rectify issues.
                       </p>
                     </div>
@@ -702,7 +702,7 @@ const Module4Section6_5 = () => {
                     </span>
                     <div>
                       <p className="font-medium text-white text-sm">Safe Rectification</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         You can ensure corrective work is documented, retested, and compliant.
                       </p>
                     </div>
@@ -713,7 +713,7 @@ const Module4Section6_5 = () => {
                     </span>
                     <div>
                       <p className="font-medium text-white text-sm">Prevention Strategies</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         You've learned preventative strategies to avoid repeat defects.
                       </p>
                     </div>
@@ -724,7 +724,7 @@ const Module4Section6_5 = () => {
                     </span>
                     <div>
                       <p className="font-medium text-white text-sm">Professional Standards</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         You ensure installations are safe, professional, and inspection-ready.
                       </p>
                     </div>
@@ -733,7 +733,7 @@ const Module4Section6_5 = () => {
               </div>
 
               <div className="mt-4 p-3 rounded bg-elec-yellow/10 border-l-2 border-elec-yellow/50">
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-elec-yellow">Key Compliance Point:</strong> All defects
                   must be identified and rectified before energisation. This ensures compliance with
                   BS 7671, prevents safety hazards, and maintains professional installation

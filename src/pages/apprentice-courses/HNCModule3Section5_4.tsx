@@ -209,7 +209,7 @@ const HNCModule3Section5_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section5">
@@ -231,7 +231,7 @@ const HNCModule3Section5_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Induction Motors
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Construction, operation, performance characteristics and building services applications
           </p>
         </header>
@@ -435,7 +435,7 @@ const HNCModule3Section5_4 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 n<sub>s</sub> = (120 x f) / p
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where: ns = synchronous speed (rev/min), f = frequency (Hz), p = number of poles
               </p>
             </div>
@@ -544,7 +544,7 @@ const HNCModule3Section5_4 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 s = (n<sub>s</sub> - n<sub>r</sub>) / n<sub>s</sub>
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where: s = slip (per-unit or %), ns = synchronous speed, nr = rotor speed
               </p>
             </div>
@@ -552,18 +552,18 @@ const HNCModule3Section5_4 = () => {
             <div className="grid sm:grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-bold text-elec-yellow mb-1">No Load</p>
-                <p className="text-white/90">s = 1-2%</p>
-                <p className="text-white/60 text-xs">Just enough slip to overcome friction</p>
+                <p className="text-white">s = 1-2%</p>
+                <p className="text-white text-xs">Just enough slip to overcome friction</p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-bold text-elec-yellow mb-1">Full Load</p>
-                <p className="text-white/90">s = 3-5%</p>
-                <p className="text-white/60 text-xs">Normal operating range</p>
+                <p className="text-white">s = 3-5%</p>
+                <p className="text-white text-xs">Normal operating range</p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-bold text-elec-yellow mb-1">Starting</p>
-                <p className="text-white/90">s = 100%</p>
-                <p className="text-white/60 text-xs">Rotor stationary</p>
+                <p className="text-white">s = 100%</p>
+                <p className="text-white text-xs">Rotor stationary</p>
               </div>
             </div>
 
@@ -592,12 +592,12 @@ const HNCModule3Section5_4 = () => {
                 <strong>Question:</strong> A 6-pole motor on 50Hz supply runs at 960 rev/min.
                 Calculate the slip.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Synchronous speed: ns = (120 x 50) / 6 = 1000 rev/min</p>
                 <p className="mt-2">
                   Slip: s = (1000 - 960) / 1000 = 0.04 = <strong>4%</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This indicates the motor is operating near full load
                 </p>
               </div>
@@ -852,14 +852,14 @@ const HNCModule3Section5_4 = () => {
                 <strong>Question:</strong> A 22kW motor has FLC of 42A. Calculate starting currents
                 for DOL and star-delta.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   DOL starting current = 7 x 42A = <strong>294A</strong>
                 </p>
                 <p className="mt-2">
                   Star-delta starting current = 294 / 3 = <strong>98A</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Star-delta reduces current to 1/3 but also reduces torque to 1/3
                 </p>
               </div>
@@ -984,14 +984,14 @@ const HNCModule3Section5_4 = () => {
                 <strong>Question:</strong> A 15kW load at 0.7 pf vs 0.9 pf on 400V three-phase.
                 Compare currents.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   At 0.7 pf: I = 15000 / (1.732 x 400 x 0.7) = <strong>30.9A</strong>
                 </p>
                 <p className="mt-2">
                   At 0.9 pf: I = 15000 / (1.732 x 400 x 0.9) = <strong>24.0A</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Improving pf from 0.7 to 0.9 reduces current by 22%
                 </p>
               </div>
@@ -1117,20 +1117,20 @@ const HNCModule3Section5_4 = () => {
               </p>
               <div className="grid grid-cols-4 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-white/70 mb-1">IE1</p>
-                  <p className="text-white/60 text-xs">Standard</p>
+                  <p className="font-bold text-white mb-1">IE1</p>
+                  <p className="text-white text-xs">Standard</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-white/70 mb-1">IE2</p>
-                  <p className="text-white/60 text-xs">High</p>
+                  <p className="font-bold text-white mb-1">IE2</p>
+                  <p className="text-white text-xs">High</p>
                 </div>
                 <div className="p-3 rounded bg-elec-yellow/20">
                   <p className="font-bold text-elec-yellow mb-1">IE3</p>
-                  <p className="text-white/60 text-xs">Premium (minimum)</p>
+                  <p className="text-white text-xs">Premium (minimum)</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
-                  <p className="font-bold text-white/70 mb-1">IE4</p>
-                  <p className="text-white/60 text-xs">Super Premium</p>
+                  <p className="font-bold text-white mb-1">IE4</p>
+                  <p className="text-white text-xs">Super Premium</p>
                 </div>
               </div>
             </div>
@@ -1256,18 +1256,18 @@ const HNCModule3Section5_4 = () => {
                 <div className="grid grid-cols-3 gap-3 text-center text-sm mt-3">
                   <div className="p-2 rounded bg-black/30">
                     <p className="font-mono text-elec-yellow">Q ~ n</p>
-                    <p className="text-white/60 text-xs">Flow proportional to speed</p>
+                    <p className="text-white text-xs">Flow proportional to speed</p>
                   </div>
                   <div className="p-2 rounded bg-black/30">
                     <p className="font-mono text-elec-yellow">H ~ n squared</p>
-                    <p className="text-white/60 text-xs">Head proportional to speed squared</p>
+                    <p className="text-white text-xs">Head proportional to speed squared</p>
                   </div>
                   <div className="p-2 rounded bg-black/30">
                     <p className="font-mono text-elec-yellow">P ~ n cubed</p>
-                    <p className="text-white/60 text-xs">Power proportional to speed cubed</p>
+                    <p className="text-white text-xs">Power proportional to speed cubed</p>
                   </div>
                 </div>
-                <p className="text-sm text-white/70 mt-3 text-center">
+                <p className="text-sm text-white mt-3 text-center">
                   Reducing speed by 20% reduces power consumption by approximately 50%
                 </p>
               </div>
@@ -1306,7 +1306,7 @@ const HNCModule3Section5_4 = () => {
                 <strong>Question:</strong> An AHU requires 12m cubed per second at 800Pa total
                 pressure. Fan efficiency is 75%. Select motor size.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Air power = Q x deltaP = 12 x 800 = 9600 W</p>
                 <p className="mt-2">Shaft power = Air power / Fan efficiency</p>
                 <p>Shaft power = 9600 / 0.75 = 12,800 W = 12.8 kW</p>
@@ -1408,7 +1408,7 @@ const HNCModule3Section5_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1454,7 +1454,7 @@ const HNCModule3Section5_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section5-3">

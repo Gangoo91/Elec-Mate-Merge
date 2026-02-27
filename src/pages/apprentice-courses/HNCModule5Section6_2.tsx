@@ -265,7 +265,7 @@ const HNCModule5Section6_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section6">
@@ -287,7 +287,7 @@ const HNCModule5Section6_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Progress Monitoring
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Site diaries, progress reports, programme updates, progress meetings, and performance
             measurement
           </p>
@@ -857,7 +857,7 @@ const HNCModule5Section6_2 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Impacted As-Planned</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Start with baseline programme</li>
                     <li>Insert delay events</li>
                     <li>Recalculate end date</li>
@@ -867,7 +867,7 @@ const HNCModule5Section6_2 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Time Impact Analysis</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Use updated programme at delay date</li>
                     <li>Insert delay event</li>
                     <li>Compare completion dates</li>
@@ -898,7 +898,7 @@ const HNCModule5Section6_2 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Claims tip:</strong> Maintain a delay register recording all delay events as
               they occur, with dates, causes, effects, and supporting evidence. Do not wait until
               project end to analyse delays.
@@ -924,7 +924,7 @@ const HNCModule5Section6_2 = () => {
                 <strong>Scenario:</strong> Record today's events for an M&E subcontractor on a
                 commercial office fit-out.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Date:</strong> 15 January 2026
                 </p>
@@ -965,7 +965,7 @@ const HNCModule5Section6_2 = () => {
                 <strong>Question:</strong> Calculate SPI and CPI for a project with: Planned Value
                 £80,000, Earned Value £72,000, Actual Cost £78,000.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Schedule Performance Index (SPI):</p>
                 <p>
                   SPI = EV / PV = £72,000 / £80,000 = <strong>0.90</strong>
@@ -974,7 +974,7 @@ const HNCModule5Section6_2 = () => {
                 <p>
                   CPI = EV / AC = £72,000 / £78,000 = <strong>0.92</strong>
                 </p>
-                <p className="mt-2 text-white/60">Interpretation:</p>
+                <p className="mt-2 text-white">Interpretation:</p>
                 <p className="text-orange-400">SPI 0.90 = 10% behind schedule</p>
                 <p className="text-orange-400">CPI 0.92 = 8% over budget for work completed</p>
                 <p className="mt-2 text-green-400">
@@ -991,7 +991,7 @@ const HNCModule5Section6_2 = () => {
                 <strong>Scenario:</strong> Late design information delayed containment installation
                 by 2 weeks. Original programme showed 4 weeks float on this activity. Assess impact.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Baseline position:</strong>
                 </p>
@@ -1089,7 +1089,7 @@ const HNCModule5Section6_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1135,7 +1135,7 @@ const HNCModule5Section6_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section6">

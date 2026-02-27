@@ -235,7 +235,7 @@ const HNCModule3Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section2">
@@ -257,7 +257,7 @@ const HNCModule3Section2_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Principles of Inductance and Capacitance
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding electromagnetic induction and electrostatic energy storage for building
             services applications
           </p>
@@ -369,7 +369,7 @@ const HNCModule3Section2_1 = () => {
                 Faraday's Law of Electromagnetic Induction
               </p>
               <p className="font-mono text-center text-lg mb-2">e = -N x (dPhi/dt)</p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where e = induced EMF (V), N = number of turns, dPhi/dt = rate of change of flux
                 (Wb/s)
               </p>
@@ -458,14 +458,14 @@ const HNCModule3Section2_1 = () => {
                   Self-Inductance Formula
                 </p>
                 <p className="font-mono text-center text-lg mb-2">L = N Phi / I</p>
-                <p className="text-xs text-white/70 text-center">
+                <p className="text-xs text-white text-center">
                   L = inductance (H), N = turns, Phi = flux (Wb), I = current (A)
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Induced EMF</p>
                 <p className="font-mono text-center text-lg mb-2">e = -L x (dI/dt)</p>
-                <p className="text-xs text-white/70 text-center">
+                <p className="text-xs text-white text-center">
                   Voltage opposes rate of current change
                 </p>
               </div>
@@ -479,11 +479,11 @@ const HNCModule3Section2_1 = () => {
               </p>
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="font-mono text-center text-lg mb-2">M = k root(L1 x L2)</p>
-                <p className="text-xs text-white/70 text-center mb-2">
+                <p className="text-xs text-white text-center mb-2">
                   k = coupling coefficient (0 to 1), typically 0.95-0.99 for power transformers
                 </p>
                 <p className="font-mono text-center text-lg mb-2">e2 = -M x (dI1/dt)</p>
-                <p className="text-xs text-white/70 text-center">
+                <p className="text-xs text-white text-center">
                   EMF in secondary due to primary current change
                 </p>
               </div>
@@ -495,11 +495,11 @@ const HNCModule3Section2_1 = () => {
               </p>
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="font-mono text-center text-lg mb-2">E = 1/2 L I squared</p>
-                <p className="text-xs text-white/70 text-center">
+                <p className="text-xs text-white text-center">
                   Energy (Joules) = 1/2 x Inductance (H) x Current squared (A squared)
                 </p>
               </div>
-              <p className="text-sm text-white/70 mt-2">
+              <p className="text-sm text-white mt-2">
                 Energy is stored in the magnetic field. This stored energy must dissipate when the
                 circuit opens, causing voltage spikes that can damage contacts.
               </p>
@@ -599,7 +599,7 @@ const HNCModule3Section2_1 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 C = epsilon0 epsilonr A / d = epsilon A / d
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 C = capacitance (F), epsilon = permittivity, A = plate area (m squared), d =
                 separation (m)
               </p>
@@ -711,18 +711,18 @@ const HNCModule3Section2_1 = () => {
                 <div className="grid grid-cols-3 gap-3 text-center text-sm">
                   <div>
                     <p className="font-mono font-bold text-elec-yellow mb-1">E = 1/2 CV squared</p>
-                    <p className="text-white/70 text-xs">From voltage</p>
+                    <p className="text-white text-xs">From voltage</p>
                   </div>
                   <div>
                     <p className="font-mono font-bold text-elec-yellow mb-1">E = 1/2 QV</p>
-                    <p className="text-white/70 text-xs">From charge</p>
+                    <p className="text-white text-xs">From charge</p>
                   </div>
                   <div>
                     <p className="font-mono font-bold text-elec-yellow mb-1">E = Q squared /2C</p>
-                    <p className="text-white/70 text-xs">From charge only</p>
+                    <p className="text-white text-xs">From charge only</p>
                   </div>
                 </div>
-                <p className="text-xs text-white/70 text-center mt-3">
+                <p className="text-xs text-white text-center mt-3">
                   Where Q = CV (charge in Coulombs)
                 </p>
               </div>
@@ -774,7 +774,7 @@ const HNCModule3Section2_1 = () => {
                   from motors:
                 </p>
                 <p className="font-mono text-center text-lg mb-2">Qc = P x (tan phi1 - tan phi2)</p>
-                <p className="text-xs text-white/70 text-center">
+                <p className="text-xs text-white text-center">
                   Qc = required kVAr, P = real power (kW), phi1 = original angle, phi2 = target
                   angle
                 </p>
@@ -861,7 +861,7 @@ const HNCModule3Section2_1 = () => {
               <div className="p-4 rounded-lg bg-white/5 mt-3">
                 <p className="text-sm font-medium text-white mb-2">Transformer Voltage Ratio</p>
                 <p className="font-mono text-center text-lg mb-2">V1/V2 = N1/N2</p>
-                <p className="text-xs text-white/70 text-center">
+                <p className="text-xs text-white text-center">
                   Primary/secondary voltage ratio equals turns ratio
                 </p>
               </div>
@@ -921,7 +921,7 @@ const HNCModule3Section2_1 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Economic impact:</strong> Poor power factor increases maximum demand charges.
               Improving from 0.7 to 0.95 reduces apparent power (kVA) by 26%, potentially saving
               thousands annually on large sites.
@@ -947,7 +947,7 @@ const HNCModule3Section2_1 = () => {
                 <strong>Question:</strong> A motor winding with 200 turns experiences a flux change
                 from 50mWb to 30mWb in 10ms. Calculate the induced EMF.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using Faraday's Law: e = -N x (dPhi/dt)</p>
                 <p className="mt-2">Flux change: dPhi = 30 - 50 = -20mWb = -0.020 Wb</p>
                 <p>Time: dt = 10ms = 0.010 s</p>
@@ -955,7 +955,7 @@ const HNCModule3Section2_1 = () => {
                 <p>
                   e = -200 x (-2) = <strong>+400V</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   The positive sign indicates EMF opposes the flux reduction
                 </p>
               </div>
@@ -969,14 +969,14 @@ const HNCModule3Section2_1 = () => {
                 <strong>Question:</strong> An AHU motor winding has inductance of 150mH and carries
                 25A at full load. Calculate the stored energy.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using E = 1/2 L I squared</p>
                 <p className="mt-2">E = 1/2 x 0.150H x (25A) squared</p>
                 <p>E = 1/2 x 0.150 x 625</p>
                 <p>
                   E = <strong>46.9 Joules</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This energy must dissipate safely when motor is switched off
                 </p>
               </div>
@@ -990,7 +990,7 @@ const HNCModule3Section2_1 = () => {
                 <strong>Question:</strong> A 30kW motor load operates at 0.75 power factor.
                 Calculate the kVAr required to improve to 0.95 pf.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using Qc = P x (tan phi1 - tan phi2)</p>
                 <p className="mt-2">At pf = 0.75: phi1 = cos inverse (0.75) = 41.4 degrees</p>
                 <p>At pf = 0.95: phi2 = cos inverse (0.95) = 18.2 degrees</p>
@@ -1015,7 +1015,7 @@ const HNCModule3Section2_1 = () => {
                 2.2) with plates of 0.5m squared separated by 25 micrometres. Calculate the
                 capacitance.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using C = epsilon0 epsilonr A / d</p>
                 <p className="mt-2">epsilon0 = 8.854 x 10 to the minus 12 F/m</p>
                 <p>epsilonr = 2.2</p>
@@ -1028,7 +1028,7 @@ const HNCModule3Section2_1 = () => {
                 <p>
                   C = <strong>0.39 microfarads</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Multiple plates in parallel are used to achieve higher values
                 </p>
               </div>
@@ -1042,7 +1042,7 @@ const HNCModule3Section2_1 = () => {
                 <strong>Question:</strong> A 470 microfarad electrolytic capacitor in a VSD DC link
                 is charged to 650V. Calculate the stored energy.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using E = 1/2 C V squared</p>
                 <p className="mt-2">E = 1/2 x 470 x 10 to the minus 6 x (650) squared</p>
                 <p>E = 1/2 x 470 x 10 to the minus 6 x 422500</p>
@@ -1052,7 +1052,7 @@ const HNCModule3Section2_1 = () => {
                 <p className="mt-2 text-red-400">
                   Warning: This is potentially lethal stored energy
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   Always verify discharge before working on VSD DC bus
                 </p>
               </div>
@@ -1174,7 +1174,7 @@ const HNCModule3Section2_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1220,7 +1220,7 @@ const HNCModule3Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section1-7">

@@ -71,7 +71,7 @@ const Level3Module7Section5_3 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="../section5">
@@ -87,7 +87,7 @@ const Level3Module7Section5_3 = () => {
         <h1 className="text-2xl md:text-xl sm:text-2xl md:text-3xl font-bold text-white mb-6">
           5.3 Setting up as a Self-employed Electrician (insurance, UTR, HMRC)
         </h1>
-        <p className="text-xl text-white/70 mb-8">
+        <p className="text-xl text-white mb-8">
           Requirements and procedures for establishing a self-employed electrical business
         </p>
 

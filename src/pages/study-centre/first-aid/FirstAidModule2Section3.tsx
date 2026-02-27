@@ -349,7 +349,7 @@ const FirstAidModule2Section3 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Unconsciousness &amp; the Recovery Position
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             How to assess levels of consciousness using the AVPU scale and safely place an
             unresponsive, breathing casualty into the recovery position
           </p>
@@ -360,7 +360,7 @@ const FirstAidModule2Section3 = () => {
           <div className="bg-rose-500/10 border border-rose-500/20 rounded-lg p-4 text-center">
             <Eye className="h-6 w-6 text-rose-400 mx-auto mb-2" />
             <h3 className="text-white font-semibold text-sm mb-1">Assess Response</h3>
-            <p className="text-white/70 text-xs">
+            <p className="text-white text-xs">
               Use the AVPU scale to determine the casualty&rsquo;s level of consciousness quickly
               and accurately
             </p>
@@ -368,7 +368,7 @@ const FirstAidModule2Section3 = () => {
           <div className="bg-rose-500/10 border border-rose-500/20 rounded-lg p-4 text-center">
             <RotateCcw className="h-6 w-6 text-rose-400 mx-auto mb-2" />
             <h3 className="text-white font-semibold text-sm mb-1">Recovery Position</h3>
-            <p className="text-white/70 text-xs">
+            <p className="text-white text-xs">
               Protect the airway of an unresponsive but breathing casualty by placing them on their
               side
             </p>
@@ -376,7 +376,7 @@ const FirstAidModule2Section3 = () => {
           <div className="bg-rose-500/10 border border-rose-500/20 rounded-lg p-4 text-center">
             <Activity className="h-6 w-6 text-rose-400 mx-auto mb-2" />
             <h3 className="text-white font-semibold text-sm mb-1">Monitor Continuously</h3>
-            <p className="text-white/70 text-xs">
+            <p className="text-white text-xs">
               Check breathing every minute and be prepared to start CPR immediately if breathing
               stops
             </p>
@@ -389,7 +389,7 @@ const FirstAidModule2Section3 = () => {
             <CheckCircle className="h-5 w-5" />
             Learning Outcomes
           </h2>
-          <p className="text-white/60 text-sm mb-3">
+          <p className="text-white text-sm mb-3">
             By the end of this section you will be able to:
           </p>
           <ul className="space-y-2 text-sm text-white">
@@ -504,7 +504,7 @@ const FirstAidModule2Section3 = () => {
                   ].map((item, idx) => (
                     <div key={idx} className="bg-white/5 border border-white/10 rounded-lg p-3">
                       <h4 className="text-white font-semibold text-sm mb-1">{item.cause}</h4>
-                      <p className="text-white/70 text-xs leading-relaxed">{item.detail}</p>
+                      <p className="text-white text-xs leading-relaxed">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -512,7 +512,7 @@ const FirstAidModule2Section3 = () => {
 
               <div className="bg-white/5 border border-rose-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-rose-400">Key Point</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Regardless of the cause, your priorities as a first aider remain the same:{' '}
                   <strong>
                     ensure safety, assess response, open the airway, check breathing, and act
@@ -563,7 +563,7 @@ const FirstAidModule2Section3 = () => {
                         {level.label}
                       </span>
                     </div>
-                    <p className="text-white/80 text-sm leading-relaxed">{level.detail}</p>
+                    <p className="text-white text-sm leading-relaxed">{level.detail}</p>
                   </div>
                 ))}
               </div>
@@ -616,7 +616,7 @@ const FirstAidModule2Section3 = () => {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Critical Action</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   If the casualty scores <strong>P or U</strong>, they are at risk of airway
                   obstruction because their muscle tone is reduced and the tongue may fall back and
                   block the throat.{' '}
@@ -760,24 +760,24 @@ const FirstAidModule2Section3 = () => {
                         <div className="grid grid-cols-2 gap-1 mt-2 text-xs">
                           <div className="flex items-center gap-1">
                             <div className="w-3 h-1 bg-rose-400 rounded-full" />
-                            <span className="text-white/60">Near arm</span>
+                            <span className="text-white">Near arm</span>
                           </div>
                           <div className="flex items-center gap-1">
                             <div className="w-3 h-1 bg-blue-400 rounded-full" />
-                            <span className="text-white/60">Far arm</span>
+                            <span className="text-white">Far arm</span>
                           </div>
                           <div className="flex items-center gap-1">
                             <div className="w-3 h-1 bg-white/30 rounded-full" />
-                            <span className="text-white/60">Near leg</span>
+                            <span className="text-white">Near leg</span>
                           </div>
                           <div className="flex items-center gap-1">
                             <div className="w-3 h-1 bg-amber-400 rounded-full" />
-                            <span className="text-white/60">Far leg</span>
+                            <span className="text-white">Far leg</span>
                           </div>
                         </div>
                       </div>
 
-                      <p className="text-white/80 text-xs leading-relaxed">{s.instruction}</p>
+                      <p className="text-white text-xs leading-relaxed">{s.instruction}</p>
                     </div>
                   ))}
                 </div>
@@ -955,7 +955,7 @@ const FirstAidModule2Section3 = () => {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Warning Signs of Deterioration</h3>
                 </div>
-                <ul className="text-white/80 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1061,7 +1061,7 @@ const FirstAidModule2Section3 = () => {
                 <div className="space-y-4">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <h4 className="text-cyan-300 font-semibold text-sm mb-1">Pregnant Casualty</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Place on the <strong>left side</strong> (left lateral position). In later
                       pregnancy, the weight of the uterus can compress the inferior vena cava if the
                       casualty lies on their back or right side, reducing blood return to the heart.
@@ -1073,7 +1073,7 @@ const FirstAidModule2Section3 = () => {
                     <h4 className="text-cyan-300 font-semibold text-sm mb-1">
                       Large or Heavy Casualty
                     </h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       You may need <strong>assistance from a second person</strong> to safely roll a
                       large or heavy casualty. One person controls the head and shoulders while the
                       other controls the hips and legs. Do not attempt to roll a very heavy casualty
@@ -1084,7 +1084,7 @@ const FirstAidModule2Section3 = () => {
                     <h4 className="text-cyan-300 font-semibold text-sm mb-1">
                       Casualty on a Slope
                     </h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Ideally, position the casualty so their <strong>head is uphill</strong> to
                       prevent blood pooling in the head. If this is not possible, place them in the
                       recovery position on whichever side allows the best airway management and
@@ -1129,7 +1129,7 @@ const FirstAidModule2Section3 = () => {
                   ].map((cause, idx) => (
                     <div key={idx} className="flex items-start gap-2 text-sm">
                       <div className="w-2 h-2 rounded-full bg-amber-400 mt-2 flex-shrink-0" />
-                      <span className="text-white/80">{cause}</span>
+                      <span className="text-white">{cause}</span>
                     </div>
                   ))}
                 </div>
@@ -1264,7 +1264,7 @@ const FirstAidModule2Section3 = () => {
               {/* Recovery from unconsciousness */}
               <div className="bg-white/5 border border-rose-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-rose-400">Recovery from Unconsciousness</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   When a casualty begins to regain consciousness, follow these steps:
                 </p>
                 <ul className="text-white space-y-2 text-sm">
@@ -1327,7 +1327,7 @@ const FirstAidModule2Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1347,7 +1347,7 @@ const FirstAidModule2Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-2">

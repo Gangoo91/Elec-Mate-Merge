@@ -408,7 +408,7 @@ export default function SharedEvidenceTab({
                             }))
                           }
                           rows={3}
-                          className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-white/40 focus:outline-none focus:border-yellow-400/50 resize-none touch-manipulation"
+                          className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-white focus:outline-none focus:border-yellow-400/50 resize-none touch-manipulation"
                         />
 
                         <button
@@ -574,7 +574,7 @@ export default function SharedEvidenceTab({
                                 value={form.feedback}
                                 onChange={(e) => updateReviewForm(sub.id, 'feedback', e.target.value)}
                                 rows={4}
-                                className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-white/40 focus:outline-none focus:border-yellow-400/50 resize-none touch-manipulation"
+                                className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-white focus:outline-none focus:border-yellow-400/50 resize-none touch-manipulation"
                               />
                             </div>
 
@@ -609,7 +609,7 @@ export default function SharedEvidenceTab({
                                 value={form.strengths}
                                 onChange={(e) => updateReviewForm(sub.id, 'strengths', e.target.value)}
                                 rows={2}
-                                className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-white/40 focus:outline-none focus:border-yellow-400/50 resize-none touch-manipulation"
+                                className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-white focus:outline-none focus:border-yellow-400/50 resize-none touch-manipulation"
                               />
                             </div>
 
@@ -624,7 +624,7 @@ export default function SharedEvidenceTab({
                                 value={form.areasForImprovement}
                                 onChange={(e) => updateReviewForm(sub.id, 'areasForImprovement', e.target.value)}
                                 rows={2}
-                                className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-white/40 focus:outline-none focus:border-yellow-400/50 resize-none touch-manipulation"
+                                className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-white focus:outline-none focus:border-yellow-400/50 resize-none touch-manipulation"
                               />
                             </div>
 
@@ -639,7 +639,7 @@ export default function SharedEvidenceTab({
                                 value={form.actionRequired}
                                 onChange={(e) => updateReviewForm(sub.id, 'actionRequired', e.target.value)}
                                 rows={2}
-                                className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-white/40 focus:outline-none focus:border-yellow-400/50 resize-none touch-manipulation"
+                                className="w-full px-3 py-2 rounded-lg bg-white/5 border border-white/10 text-white text-sm placeholder:text-white focus:outline-none focus:border-yellow-400/50 resize-none touch-manipulation"
                               />
                             </div>
 

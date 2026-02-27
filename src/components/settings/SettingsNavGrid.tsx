@@ -130,7 +130,7 @@ const SettingsNavGrid = ({ onSelect, incompleteItems = {} }: SettingsNavGridProp
       {SETTINGS_SECTIONS.map((section) => (
         <motion.div key={section.title} variants={sectionVariants}>
           {/* Section header */}
-          <h3 className="text-xs font-semibold text-white/40 uppercase tracking-wider px-4 mb-2">
+          <h3 className="text-xs font-semibold text-white uppercase tracking-wider px-4 mb-2">
             {section.title}
           </h3>
 
@@ -183,11 +183,11 @@ const SettingsNavGrid = ({ onSelect, incompleteItems = {} }: SettingsNavGridProp
                         <span className="h-2 w-2 bg-red-500 rounded-full animate-pulse" />
                       )}
                     </div>
-                    <p className="text-[12px] text-white/40 truncate">{item.description}</p>
+                    <p className="text-[12px] text-white truncate">{item.description}</p>
                   </div>
 
                   {/* Chevron */}
-                  <ChevronRight className="h-5 w-5 text-white/20 flex-shrink-0 group-hover:text-white/40 group-hover:translate-x-0.5 transition-all" />
+                  <ChevronRight className="h-5 w-5 text-white flex-shrink-0 group-hover:text-white group-hover:translate-x-0.5 transition-all" />
                 </button>
               );
             })}

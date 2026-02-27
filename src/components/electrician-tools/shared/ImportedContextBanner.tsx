@@ -30,7 +30,7 @@ export const ImportedContextBanner = ({
           <p className="font-medium text-white truncate">
             {circuitCount} circuit{circuitCount !== 1 ? 's' : ''} imported from {source}
           </p>
-          <p className="text-sm text-white/60">Click "Use Context" to populate the prompt</p>
+          <p className="text-sm text-white">Click "Use Context" to populate the prompt</p>
         </div>
       </div>
       <div className="flex gap-2 flex-shrink-0">
@@ -38,7 +38,7 @@ export const ImportedContextBanner = ({
           size="sm"
           variant="ghost"
           onClick={onDismiss}
-          className="text-white/60 hover:text-white hover:bg-white/10"
+          className="text-white hover:text-white hover:bg-white/10"
         >
           <X className="h-4 w-4" />
         </Button>

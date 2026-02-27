@@ -65,7 +65,7 @@ const EPAGatewayChecklist: React.FC<EPAGatewayChecklistProps> = ({
     return (
       <Card className="bg-white/5 border-elec-gray/40">
         <CardContent className="py-12 text-center">
-          <AlertCircle className="h-12 w-12 text-white/30 mx-auto mb-4" />
+          <AlertCircle className="h-12 w-12 text-white mx-auto mb-4" />
           <p className="text-white">No gateway data available</p>
         </CardContent>
       </Card>

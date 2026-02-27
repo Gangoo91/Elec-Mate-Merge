@@ -228,7 +228,7 @@ const FiberOpticsModule6Section4 = () => {
             <ArrowLeft className="w-5 h-5" />
             <span className="font-medium">Module 6</span>
           </Link>
-          <span className="text-white/50 text-sm">Section 4 of 4</span>
+          <span className="text-white text-sm">Section 4 of 4</span>
         </div>
       </div>
 
@@ -239,7 +239,7 @@ const FiberOpticsModule6Section4 = () => {
             MODULE 6 · SECTION 4
           </div>
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-3">Design Scenarios</h1>
-          <p className="text-white/70 text-lg">
+          <p className="text-white text-lg">
             Apply fibre design principles to real-world campus, data centre, and industrial
             environments
           </p>
@@ -253,17 +253,17 @@ const FiberOpticsModule6Section4 = () => {
             <div className="bg-[#252525] rounded-lg p-4 border border-white/10">
               <Building2 className="w-6 h-6 text-elec-yellow mb-2" />
               <h3 className="text-white font-semibold text-sm mb-1">Campus</h3>
-              <p className="text-white/60 text-xs">Multi-building backbone design</p>
+              <p className="text-white text-xs">Multi-building backbone design</p>
             </div>
             <div className="bg-[#252525] rounded-lg p-4 border border-white/10">
               <Server className="w-6 h-6 text-elec-yellow mb-2" />
               <h3 className="text-white font-semibold text-sm mb-1">Data Centre</h3>
-              <p className="text-white/60 text-xs">High-density structured cabling</p>
+              <p className="text-white text-xs">High-density structured cabling</p>
             </div>
             <div className="bg-[#252525] rounded-lg p-4 border border-white/10">
               <Factory className="w-6 h-6 text-elec-yellow mb-2" />
               <h3 className="text-white font-semibold text-sm mb-1">Industrial</h3>
-              <p className="text-white/60 text-xs">Harsh environment solutions</p>
+              <p className="text-white text-xs">Harsh environment solutions</p>
             </div>
           </div>
 
@@ -283,7 +283,7 @@ const FiberOpticsModule6Section4 = () => {
               ].map((outcome, i) => (
                 <li key={i} className="flex items-start gap-3">
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span className="text-white/80">{outcome}</span>
+                  <span className="text-white">{outcome}</span>
                 </li>
               ))}
             </ul>
@@ -296,7 +296,7 @@ const FiberOpticsModule6Section4 = () => {
               Campus Backbone Design
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 A campus network connects multiple buildings to a central core, typically from a
                 main equipment room (MER) or data centre. The fibre backbone must handle high
@@ -307,14 +307,14 @@ const FiberOpticsModule6Section4 = () => {
             {/* Campus Topology Diagram */}
             <div className="bg-[#252525] rounded-lg p-5 border border-white/10 mb-6">
               <h4 className="font-semibold text-white mb-4">Typical Campus Topology</h4>
-              <div className="bg-[#1a1a1a] p-4 rounded-lg font-mono text-sm text-white/80 text-center">
+              <div className="bg-[#1a1a1a] p-4 rounded-lg font-mono text-sm text-white text-center">
                 <p className="mb-3 text-elec-yellow">Main Equipment Room (MER)</p>
                 <p className="mb-1">│</p>
                 <p className="mb-1">├─── Building A (IDF)</p>
                 <p className="mb-1">├─── Building B (IDF)</p>
                 <p className="mb-1">├─── Building C (IDF)</p>
                 <p className="mb-1">└─── Building D (IDF)</p>
-                <p className="mt-3 text-white/60 text-xs">
+                <p className="mt-3 text-white text-xs">
                   Star topology with dedicated fibres to each building
                 </p>
               </div>
@@ -329,7 +329,7 @@ const FiberOpticsModule6Section4 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Fibre Type Selection</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Singlemode (OS2) recommended for backbone runs over 300m. Multimode (OM4)
                       acceptable for shorter distances if 10G is sufficient.
                     </p>
@@ -341,7 +341,7 @@ const FiberOpticsModule6Section4 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Fibre Count Planning</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Minimum 24 fibres per building, more for larger buildings. Include spare
                       fibres (50-100% extra) for growth and redundancy.
                     </p>
@@ -353,7 +353,7 @@ const FiberOpticsModule6Section4 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Pathway Planning</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Underground ducts between buildings with adequate spare capacity. Minimum
                       100mm diameter ducts recommended.
                     </p>
@@ -365,7 +365,7 @@ const FiberOpticsModule6Section4 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Redundancy</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Consider diverse routing for critical buildings. Ring or dual-star topology
                       for high availability requirements.
                     </p>
@@ -381,33 +381,33 @@ const FiberOpticsModule6Section4 = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Route Type</th>
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">
+                      <th className="text-left py-2 px-3 text-white font-medium">Route Type</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">
                         Recommended Cable
                       </th>
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Notes</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">Notes</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">Underground duct</td>
                       <td className="py-2 px-3">Loose-tube, gel-filled or dry</td>
-                      <td className="py-2 px-3 text-white/60">Water blocking essential</td>
+                      <td className="py-2 px-3 text-white">Water blocking essential</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">Direct burial</td>
                       <td className="py-2 px-3">Armoured loose-tube</td>
-                      <td className="py-2 px-3 text-white/60">Rodent and crush protection</td>
+                      <td className="py-2 px-3 text-white">Rodent and crush protection</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">Aerial</td>
                       <td className="py-2 px-3">ADSS or Figure-8</td>
-                      <td className="py-2 px-3 text-white/60">Self-supporting or messenger wire</td>
+                      <td className="py-2 px-3 text-white">Self-supporting or messenger wire</td>
                     </tr>
                     <tr>
                       <td className="py-2 px-3">Building entry</td>
                       <td className="py-2 px-3">Transition to LSZH indoor</td>
-                      <td className="py-2 px-3 text-white/60">Splice at building entry</td>
+                      <td className="py-2 px-3 text-white">Splice at building entry</td>
                     </tr>
                   </tbody>
                 </table>
@@ -429,7 +429,7 @@ const FiberOpticsModule6Section4 = () => {
               Data Centre Fibre Infrastructure
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 Data centres require high-density, high-performance fibre infrastructure to support
                 modern cloud, virtualisation, and high-performance computing workloads. The TIA-942
@@ -447,28 +447,28 @@ const FiberOpticsModule6Section4 = () => {
               <div className="space-y-3">
                 <div className="bg-elec-yellow/10 p-3 rounded-lg border border-elec-yellow/30">
                   <h5 className="text-elec-yellow font-medium">Entrance Room (ER)</h5>
-                  <p className="text-white/60 text-sm">
+                  <p className="text-white text-sm">
                     Service provider demarcation, external connections
                   </p>
                 </div>
-                <div className="text-center text-white/40">↓</div>
+                <div className="text-center text-white">↓</div>
                 <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/30">
                   <h5 className="text-blue-400 font-medium">Main Distribution Area (MDA)</h5>
-                  <p className="text-white/60 text-sm">
+                  <p className="text-white text-sm">
                     Core switches, primary cross-connects, backbone cabling hub
                   </p>
                 </div>
-                <div className="text-center text-white/40">↓</div>
+                <div className="text-center text-white">↓</div>
                 <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/30">
                   <h5 className="text-green-400 font-medium">Horizontal Distribution Area (HDA)</h5>
-                  <p className="text-white/60 text-sm">
+                  <p className="text-white text-sm">
                     Aggregation layer, zone distribution points
                   </p>
                 </div>
-                <div className="text-center text-white/40">↓</div>
+                <div className="text-center text-white">↓</div>
                 <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/30">
                   <h5 className="text-purple-400 font-medium">Equipment Distribution Area (EDA)</h5>
-                  <p className="text-white/60 text-sm">
+                  <p className="text-white text-sm">
                     Server cabinets, storage arrays, end equipment
                   </p>
                 </div>
@@ -481,11 +481,11 @@ const FiberOpticsModule6Section4 = () => {
                 <Layers className="w-4 h-4 text-elec-yellow" />
                 Leaf-Spine Architecture
               </h4>
-              <p className="text-white/70 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 Modern cloud data centres often use leaf-spine (also called Clos) architecture
                 instead of traditional three-tier designs. This provides:
               </p>
-              <ul className="text-white/70 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>• Consistent low latency between any two servers</li>
                 <li>• Easy horizontal scaling by adding spine or leaf switches</li>
                 <li>• High bandwidth for east-west traffic (server to server)</li>
@@ -500,33 +500,33 @@ const FiberOpticsModule6Section4 = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Technology</th>
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Fibre Count</th>
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">
+                      <th className="text-left py-2 px-3 text-white font-medium">Technology</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">Fibre Count</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">
                         Applications
                       </th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3 font-medium text-elec-yellow">MPO-12</td>
                       <td className="py-2 px-3">12 fibres</td>
-                      <td className="py-2 px-3 text-white/60">40G-SR4, 100G-SR10</td>
+                      <td className="py-2 px-3 text-white">40G-SR4, 100G-SR10</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3 font-medium text-elec-yellow">MPO-24</td>
                       <td className="py-2 px-3">24 fibres</td>
-                      <td className="py-2 px-3 text-white/60">100G-SR4, 200G-SR4</td>
+                      <td className="py-2 px-3 text-white">100G-SR4, 200G-SR4</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3 font-medium text-elec-yellow">MPO-32</td>
                       <td className="py-2 px-3">32 fibres</td>
-                      <td className="py-2 px-3 text-white/60">400G-SR16</td>
+                      <td className="py-2 px-3 text-white">400G-SR16</td>
                     </tr>
                     <tr>
                       <td className="py-2 px-3 font-medium text-elec-yellow">LC Duplex</td>
                       <td className="py-2 px-3">2 fibres</td>
-                      <td className="py-2 px-3 text-white/60">10G, 25G, 100G-LR4</td>
+                      <td className="py-2 px-3 text-white">10G, 25G, 100G-LR4</td>
                     </tr>
                   </tbody>
                 </table>
@@ -537,7 +537,7 @@ const FiberOpticsModule6Section4 = () => {
             <div className="bg-[#252525] rounded-lg p-5 border border-white/10 mb-6">
               <h4 className="font-semibold text-white mb-4">Pre-Terminated Trunk Cable Benefits</h4>
               <div className="grid md:grid-cols-2 gap-4">
-                <ul className="space-y-2 text-white/70 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-green-500" />
                     Factory-quality terminations
@@ -551,7 +551,7 @@ const FiberOpticsModule6Section4 = () => {
                     Reduced on-site labour
                   </li>
                 </ul>
-                <ul className="space-y-2 text-white/70 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-center gap-2">
                     <CheckCircle className="w-4 h-4 text-green-500" />
                     Consistent low insertion loss
@@ -583,7 +583,7 @@ const FiberOpticsModule6Section4 = () => {
               Industrial and Harsh Environments
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 Industrial environments present unique challenges including extreme temperatures,
                 vibration, chemical exposure, EMI from machinery, and physical hazards. Fibre's
@@ -602,29 +602,29 @@ const FiberOpticsModule6Section4 = () => {
                 <div className="space-y-3">
                   <div className="bg-red-500/10 p-3 rounded-lg border border-red-500/30">
                     <h5 className="text-red-400 font-medium">Temperature Extremes</h5>
-                    <p className="text-white/60 text-sm">-40°C to +70°C in some applications</p>
+                    <p className="text-white text-sm">-40°C to +70°C in some applications</p>
                   </div>
                   <div className="bg-amber-500/10 p-3 rounded-lg border border-amber-500/30">
                     <h5 className="text-amber-400 font-medium">Chemical Exposure</h5>
-                    <p className="text-white/60 text-sm">Oils, solvents, acids, cleaning agents</p>
+                    <p className="text-white text-sm">Oils, solvents, acids, cleaning agents</p>
                   </div>
                   <div className="bg-blue-500/10 p-3 rounded-lg border border-blue-500/30">
                     <h5 className="text-blue-400 font-medium">Moisture/Water</h5>
-                    <p className="text-white/60 text-sm">High humidity, wash-down areas, outdoor</p>
+                    <p className="text-white text-sm">High humidity, wash-down areas, outdoor</p>
                   </div>
                 </div>
                 <div className="space-y-3">
                   <div className="bg-purple-500/10 p-3 rounded-lg border border-purple-500/30">
                     <h5 className="text-purple-400 font-medium">Vibration</h5>
-                    <p className="text-white/60 text-sm">Machinery, vehicles, process equipment</p>
+                    <p className="text-white text-sm">Machinery, vehicles, process equipment</p>
                   </div>
                   <div className="bg-green-500/10 p-3 rounded-lg border border-green-500/30">
                     <h5 className="text-green-400 font-medium">EMI/RFI</h5>
-                    <p className="text-white/60 text-sm">Motors, welders, VFDs, RF equipment</p>
+                    <p className="text-white text-sm">Motors, welders, VFDs, RF equipment</p>
                   </div>
                   <div className="bg-pink-500/10 p-3 rounded-lg border border-pink-500/30">
                     <h5 className="text-pink-400 font-medium">Physical Hazards</h5>
-                    <p className="text-white/60 text-sm">Impact, crushing, rodents, UV exposure</p>
+                    <p className="text-white text-sm">Impact, crushing, rodents, UV exposure</p>
                   </div>
                 </div>
               </div>
@@ -637,38 +637,38 @@ const FiberOpticsModule6Section4 = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Challenge</th>
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">
+                      <th className="text-left py-2 px-3 text-white font-medium">Challenge</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">
                         Cable Solution
                       </th>
-                      <th className="text-left py-2 px-3 text-white/60 font-medium">Features</th>
+                      <th className="text-left py-2 px-3 text-white font-medium">Features</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">Mechanical damage</td>
                       <td className="py-2 px-3">Steel wire armoured (SWA)</td>
-                      <td className="py-2 px-3 text-white/60">Crush/impact resistant</td>
+                      <td className="py-2 px-3 text-white">Crush/impact resistant</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">Chemical exposure</td>
                       <td className="py-2 px-3">HDPE outer jacket</td>
-                      <td className="py-2 px-3 text-white/60">Chemical resistant</td>
+                      <td className="py-2 px-3 text-white">Chemical resistant</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">Extreme temperature</td>
                       <td className="py-2 px-3">Silicone or PTFE jacket</td>
-                      <td className="py-2 px-3 text-white/60">-60°C to +200°C range</td>
+                      <td className="py-2 px-3 text-white">-60°C to +200°C range</td>
                     </tr>
                     <tr className="border-b border-white/10">
                       <td className="py-2 px-3">Rodents</td>
                       <td className="py-2 px-3">Steel tape armour</td>
-                      <td className="py-2 px-3 text-white/60">Gnaw resistant</td>
+                      <td className="py-2 px-3 text-white">Gnaw resistant</td>
                     </tr>
                     <tr>
                       <td className="py-2 px-3">Continuous flexing</td>
                       <td className="py-2 px-3">Flexible tactical cable</td>
-                      <td className="py-2 px-3 text-white/60">Drag chain rated</td>
+                      <td className="py-2 px-3 text-white">Drag chain rated</td>
                     </tr>
                   </tbody>
                 </table>
@@ -688,7 +688,7 @@ const FiberOpticsModule6Section4 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">IP-Rated Connector Housings</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Sealed housings protect standard LC or SC connectors from dust and water
                       ingress
                     </p>
@@ -700,7 +700,7 @@ const FiberOpticsModule6Section4 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Outdoor Connectors (ODC)</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Ruggedised multi-fibre connectors designed for field deployment
                     </p>
                   </div>
@@ -711,7 +711,7 @@ const FiberOpticsModule6Section4 = () => {
                   </div>
                   <div>
                     <h5 className="text-white font-medium">Military-Spec Connectors</h5>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Extreme durability for harshest environments (MIL-DTL-38999 style)
                     </p>
                   </div>
@@ -725,7 +725,7 @@ const FiberOpticsModule6Section4 = () => {
                 <AlertTriangle className="w-4 h-4" />
                 Hazardous Area Considerations
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 In explosive atmospheres (ATEX/IECEx zones), fibre optic equipment must be certified
                 for the zone classification. While fibre itself doesn't generate sparks, high-power
                 optical sources can potentially cause ignition. Use certified equipment and follow
@@ -748,7 +748,7 @@ const FiberOpticsModule6Section4 = () => {
               Future-Proofing Strategies
             </h2>
 
-            <div className="space-y-4 text-white/80 mb-6">
+            <div className="space-y-4 text-white mb-6">
               <p>
                 A well-designed fibre infrastructure should serve the organisation for 15-25 years.
                 Future-proofing requires balancing current needs against anticipated growth and
@@ -763,7 +763,7 @@ const FiberOpticsModule6Section4 = () => {
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Install More Fibres Than Needed</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       The incremental cost of additional fibres is minimal compared to pulling new
                       cable later. Install 2-3× current needs.
                     </p>
@@ -773,7 +773,7 @@ const FiberOpticsModule6Section4 = () => {
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Choose High-Grade Fibre</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       OS2 singlemode for backbones, OM4 or OM5 where multimode is required. Higher
                       grades cost marginally more but last longer.
                     </p>
@@ -783,7 +783,7 @@ const FiberOpticsModule6Section4 = () => {
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Provide Pathway Capacity</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Install larger ducts and trays than currently needed. Include spare ducts for
                       future cables.
                     </p>
@@ -793,7 +793,7 @@ const FiberOpticsModule6Section4 = () => {
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Design for Higher Speeds</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Minimise connections and ensure low insertion loss. Today's 10G backbone may
                       need to support 100G in future.
                     </p>
@@ -803,7 +803,7 @@ const FiberOpticsModule6Section4 = () => {
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <div>
                     <span className="text-white font-medium">Document Thoroughly</span>
-                    <p className="text-white/60 text-sm">
+                    <p className="text-white text-sm">
                       Accurate records are essential for future modifications. Test results,
                       as-built drawings, and labelling must be maintained.
                     </p>
@@ -818,7 +818,7 @@ const FiberOpticsModule6Section4 = () => {
                 <BookOpen className="w-4 h-4" />
                 OM5 Wideband Multimode Fibre
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 OM5 fibre is optimised for shortwave wavelength division multiplexing (SWDM),
                 supporting multiple wavelengths (850-953nm) over a single fibre pair. This enables
                 40G and 100G over duplex connections instead of parallel optics, making it a good
@@ -836,7 +836,7 @@ const FiberOpticsModule6Section4 = () => {
 
             <div className="bg-[#252525] rounded-lg p-5 border border-white/10 mb-6">
               <h4 className="font-semibold text-white mb-4">Pre-Design Questions</h4>
-              <ul className="space-y-2 text-white/70 text-sm">
+              <ul className="space-y-2 text-white text-sm">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">□</span>
                   What are the current bandwidth requirements per link?
@@ -883,7 +883,7 @@ const FiberOpticsModule6Section4 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="bg-[#252525] rounded-lg p-5 border border-white/10">
                   <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                  <p className="text-white/70 text-sm">{faq.answer}</p>
+                  <p className="text-white text-sm">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -899,7 +899,7 @@ const FiberOpticsModule6Section4 = () => {
               <div className="grid md:grid-cols-3 gap-4">
                 <div>
                   <h4 className="font-semibold text-white mb-2">Campus</h4>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>• OS2 singlemode backbone</li>
                     <li>• 24-48+ fibres per building</li>
                     <li>• Loose-tube outdoor cable</li>
@@ -908,7 +908,7 @@ const FiberOpticsModule6Section4 = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-white mb-2">Data Centre</h4>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>• OM4/OM5 for short reach</li>
                     <li>• MPO for high density</li>
                     <li>• Pre-terminated trunks</li>
@@ -917,7 +917,7 @@ const FiberOpticsModule6Section4 = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-white mb-2">Industrial</h4>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>• Armoured cables</li>
                     <li>• IP67+ connectors</li>
                     <li>• Chemical-resistant jackets</li>

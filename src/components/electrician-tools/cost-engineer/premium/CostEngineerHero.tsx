@@ -68,7 +68,7 @@ export function CostEngineerHero({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.3 }}
-              className="text-white/50 text-sm"
+              className="text-white text-sm"
             >
               UK trade pricing database
             </motion.p>
@@ -84,7 +84,7 @@ export function CostEngineerHero({
               variant="ghost"
               size="sm"
               onClick={onOpenSettings}
-              className="h-9 px-3 border border-white/10 bg-white/5 hover:bg-white/10 text-white/70 hover:text-white"
+              className="h-9 px-3 border border-white/10 bg-white/5 hover:bg-white/10 text-white hover:text-white"
             >
               <Settings className="h-4 w-4 mr-1.5" />
               <span className="text-sm">Settings</span>
@@ -103,13 +103,13 @@ export function CostEngineerHero({
           <div className="flex items-center gap-4 text-xs">
             <div className="flex items-center gap-1.5">
               <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow/60" />
-              <span className="text-white/40">Labour:</span>
-              <span className="text-white/70 font-medium">£{labourRate}/hr</span>
+              <span className="text-white">Labour:</span>
+              <span className="text-white font-medium">£{labourRate}/hr</span>
             </div>
             <div className="flex items-center gap-1.5">
               <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow/60" />
-              <span className="text-white/40">Target:</span>
-              <span className="text-white/70 font-medium">{targetMargin}%</span>
+              <span className="text-white">Target:</span>
+              <span className="text-white font-medium">{targetMargin}%</span>
             </div>
           </div>
         </motion.div>

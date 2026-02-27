@@ -143,7 +143,7 @@ const Module4Section4_5 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -161,13 +161,13 @@ const Module4Section4_5 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 4.5</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 4.5</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Preventing Damage to Cables During Installation
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master professional cable damage prevention techniques that protect expensive cables,
               maintain insulation integrity, and ensure BS 7671 compliance for safe installations.
             </p>
@@ -182,7 +182,7 @@ const Module4Section4_5 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2 text-sm">In 30 Seconds</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                <ul className="text-white text-sm space-y-1 list-disc pl-4">
                   <li>
                     Cables are expensive components that require protection during installation
                   </li>
@@ -194,7 +194,7 @@ const Module4Section4_5 = () => {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2 text-sm">Spot it / Use it</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc pl-4">
+                <ul className="text-white text-sm space-y-1 list-disc pl-4">
                   <li>
                     <strong>Spot:</strong> Sharp edges, excessive tension, tight bends, crushing
                     points
@@ -218,7 +218,7 @@ const Module4Section4_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <div className="text-white/80 space-y-2 leading-relaxed">
+            <div className="text-white space-y-2 leading-relaxed">
               <ul className="list-disc pl-6 space-y-2">
                 <li>
                   Identify the most common causes of cable damage during electrical installation
@@ -250,7 +250,7 @@ const Module4Section4_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Common Causes of Cable Damage During Installation
             </h2>
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Understanding damage mechanisms allows preventive measures to be implemented
               effectively:
             </p>
@@ -258,10 +258,10 @@ const Module4Section4_5 = () => {
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">Mechanical Damage Sources</p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Abrasion damage mechanisms:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     Sharp containment edges: File to 0.5mm radius minimum, deburr all cut edges
                   </li>
@@ -273,10 +273,10 @@ const Module4Section4_5 = () => {
                     Entry point damage: Install protective bushes with 3mm minimum wall thickness
                   </li>
                 </ul>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Crushing and impact prevention:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     Cleat over-tightening: Maximum 40N/cm² contact pressure, use torque
                     specifications
@@ -296,10 +296,10 @@ const Module4Section4_5 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
                 <p className="font-medium text-white mb-2">Bend Radius and Tension Control</p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Minimum bend radius requirements:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     PVC insulated cables: 6× overall diameter during installation, 4× when fixed
                   </li>
@@ -309,10 +309,10 @@ const Module4Section4_5 = () => {
                     Special applications: Consult manufacturer datasheet for specific requirements
                   </li>
                 </ul>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Pulling tension control methods:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>Tension limits: 7N/mm² for copper conductors, 5N/mm² for aluminium</li>
                   <li>Monitoring equipment: Calibrated tension gauges for pulls {'>'}500N force</li>
                   <li>Progressive pulling: Break long runs into 30m maximum sections</li>
@@ -326,10 +326,10 @@ const Module4Section4_5 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
                 <p className="font-medium text-white mb-2">Environmental and Chemical Damage</p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Temperature damage prevention:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>Installation temperature: PVC minimum 0°C, XLPE minimum -20°C</li>
                   <li>Heat source separation: 300mm minimum from equipment {'>'}70°C</li>
                   <li>Direct sunlight protection: Cover cables, avoid peak temperature periods</li>
@@ -337,10 +337,10 @@ const Module4Section4_5 = () => {
                     Thermal cycling damage: Account for expansion coefficients in support design
                   </li>
                 </ul>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Chemical and UV protection:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>UV exposure limits: Non-UV cables maximum 6 months outdoor exposure</li>
                   <li>
                     Chemical compatibility: Check sheath material against environment chemicals
@@ -372,7 +372,7 @@ const Module4Section4_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Protection During Handling and Storage
             </h2>
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Proper handling and storage prevents pre-installation damage and maintains cable
               integrity:
             </p>
@@ -382,10 +382,10 @@ const Module4Section4_5 = () => {
                 <p className="font-medium text-white mb-2">
                   Storage Requirements and Environment Control
                 </p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Drum storage specifications:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     Ground clearance: 150mm minimum to prevent moisture ingress and contamination
                   </li>
@@ -395,10 +395,10 @@ const Module4Section4_5 = () => {
                     Rotation policy: First-in-first-out system, maximum 2-year storage for PVC
                   </li>
                 </ul>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Physical protection measures:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>Drum condition: Inspect for damage, ensure intact flanges and bearings</li>
                   <li>Weather protection: Waterproof covers, UV shields for outdoor storage</li>
                   <li>Access control: Designated storage areas, trained personnel only</li>
@@ -412,10 +412,10 @@ const Module4Section4_5 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
                 <p className="font-medium text-white mb-2">Mechanical Handling Procedures</p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Drum handling specifications:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     Lifting capacity: 2-person team for drums {'>'}25kg, mechanical aids {'>'}100kg
                   </li>
@@ -423,10 +423,10 @@ const Module4Section4_5 = () => {
                   <li>Feed angle control: Maximum 45° deviation from straight line</li>
                   <li>Payout speed control: Prevent overrun, maintain back-tension</li>
                 </ul>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Pre-installation inspection criteria:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>Sheath integrity: No cuts {'>'}5% thickness, no compression marks</li>
                   <li>Visual assessment: Check for discolouration, surface contamination</li>
                   <li>Dimensional check: Verify against specification, check for crushing</li>
@@ -456,7 +456,7 @@ const Module4Section4_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Protection During Cable Pulling Operations
             </h2>
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Pulling operations require specific protective measures to prevent damage during
               installation:
             </p>
@@ -464,10 +464,10 @@ const Module4Section4_5 = () => {
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
                 <p className="font-medium text-white mb-2">Mechanical Protection Systems</p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Cable roller installation:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>Horizontal runs: Position every 3-5m, align with cable direction</li>
                   <li>
                     Bend locations: 1.5m spacing through curves, roller diameter {'>'}6× cable
@@ -478,10 +478,10 @@ const Module4Section4_5 = () => {
                     Roller specifications: Smooth surface, free rotation, adequate load rating
                   </li>
                 </ul>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Entry and exit point protection:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     Protective bushes: 3mm minimum wall thickness, appropriate material
                     compatibility
@@ -500,10 +500,10 @@ const Module4Section4_5 = () => {
                 <p className="font-medium text-white mb-2">
                   Pulling Lubricant Application and Techniques
                 </p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Lubricant selection and application:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     Application conditions: Runs {'>'}30m, multiple bends {'>'}45°, cable bundles
                   </li>
@@ -513,10 +513,10 @@ const Module4Section4_5 = () => {
                   <li>Compatible materials: Non-reactive with cable sheath, temperature stable</li>
                   <li>Application method: Even coating, avoid over-application causing slippage</li>
                 </ul>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Tension monitoring and control:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>Gauge requirements: Calibrated instruments for mechanical pulls {'>'}500N</li>
                   <li>Monitoring frequency: Continuous during pull, record maximum values</li>
                   <li>
@@ -532,10 +532,10 @@ const Module4Section4_5 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
                 <p className="font-medium text-white mb-2">Environmental Control and Timing</p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Temperature and timing considerations:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>Pull speed control: Maximum 1m/minute for SWA cables to prevent heating</li>
                   <li>
                     Ambient temperature limits: Avoid pulls {'>'}35°C for thermoplastic cables
@@ -546,10 +546,10 @@ const Module4Section4_5 = () => {
                   </li>
                   <li>Weather conditions: Wind loading on vertical pulls, rain affecting grip</li>
                 </ul>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Support during vertical installations:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>Intermediate supports: Every 2m for vertical drops {'>'}5m total height</li>
                   <li>Weight distribution: Support cable weight, not pulling system</li>
                   <li>Progressive installation: Install supports as cable advances</li>
@@ -579,17 +579,17 @@ const Module4Section4_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Protection During Installation in Containment
             </h2>
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Containment installation requires careful support design and installation practices:
             </p>
 
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
                 <p className="font-medium text-white mb-2">Support System Design and Spacing</p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>BS 7671 Table 4A2 support spacing:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     Horizontal runs: 300mm for cables ≤9mm diameter, 600mm for cables {'>'}20mm
                   </li>
@@ -599,10 +599,10 @@ const Module4Section4_5 = () => {
                   <li>Heavy cables: Reduce spacing by 50% for SWA cables {'>'}35mm² conductor</li>
                   <li>Multiple cable installations: Consider cumulative loading effects</li>
                 </ul>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Cleat selection and installation:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>
                     Material compatibility: Polymer-lined for PVC, stainless steel for corrosive
                     environments
@@ -621,19 +621,19 @@ const Module4Section4_5 = () => {
                 <p className="font-medium text-white mb-2">
                   Installation Quality Control and Documentation
                 </p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Installation quality standards:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>Load distribution: Stagger heavy cables, avoid point loading</li>
                   <li>Segregation requirements: 50mm minimum between power and data cables</li>
                   <li>Accessibility: 150mm minimum clearance for future maintenance</li>
                   <li>Visual inspection: Check before concealment, photograph defects</li>
                 </ul>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong>Documentation and compliance:</strong>
                 </p>
-                <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+                <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                   <li>Installation records: Support types, spacings, loading calculations</li>
                   <li>Inspection certificates: Pre-energisation testing requirements</li>
                   <li>Warranty compliance: Follow manufacturer installation guidelines</li>
@@ -653,16 +653,16 @@ const Module4Section4_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Compliance with BS 7671 and Industry Standards
             </h2>
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Legal and technical compliance ensures safety and maintains equipment warranties:
             </p>
 
             <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50">
               <p className="font-medium text-white mb-2">BS 7671 Regulatory Requirements</p>
-              <p className="text-white/80 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 <strong>Specific regulation compliance:</strong>
               </p>
-              <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+              <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                 <li>
                   Regulation 522.6: Cables protected from damage under normal service conditions
                 </li>
@@ -674,10 +674,10 @@ const Module4Section4_5 = () => {
                 </li>
                 <li>Section 526: Electrical connections not stressed by installation procedures</li>
               </ul>
-              <p className="text-white/80 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 <strong>Manufacturer datasheet compliance:</strong>
               </p>
-              <ul className="text-white/70 text-sm ml-4 mb-2 list-disc space-y-1">
+              <ul className="text-white text-sm ml-4 mb-2 list-disc space-y-1">
                 <li>Bend radius specifications: Typically 6-15× cable overall diameter</li>
                 <li>Pulling tension limits: Usually 7-10N/mm² for copper conductors</li>
                 <li>Environmental operating ranges: Temperature, humidity, chemical exposure</li>
@@ -700,12 +700,12 @@ const Module4Section4_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4 mb-4">
                 <div>
                   <p className="font-medium text-white mb-2">The Incident</p>
-                  <p className="text-white/70 text-sm mb-3">
+                  <p className="text-white text-sm mb-3">
                     During a major industrial installation, a team was installing 50mm² 4-core SWA
                     cables in a 100-metre cable tray run. To save time, they decided to pull all
                     cables in one operation without using cable rollers or protective measures.
                   </p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     The combined weight (8kg/metre per cable) and friction against the sharp
                     aluminium tray edges caused severe abrasion damage. The pulling force exceeded
                     3000N, well above the 1500N manufacturer limit.
@@ -713,10 +713,10 @@ const Module4Section4_5 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-2">Discovery and Cost Impact</p>
-                  <p className="text-white/70 text-sm mb-3">
+                  <p className="text-white text-sm mb-3">
                     During final inspection before commissioning, severe damage was discovered:
                   </p>
-                  <ul className="text-white/70 text-sm space-y-1 list-disc pl-4">
+                  <ul className="text-white text-sm space-y-1 list-disc pl-4">
                     <li>15 cables with sheath damage {'>'}25% thickness</li>
                     <li>3 cables with exposed steel wire armour</li>
                     <li>Direct costs: £12,000 cable replacement + £8,000 labour</li>
@@ -729,8 +729,8 @@ const Module4Section4_5 = () => {
                 <p className="font-medium text-white mb-2">Prevention Analysis</p>
                 <div className="grid sm:grid-cols-3 gap-3">
                   <div>
-                    <p className="font-medium text-white/80 mb-1 text-sm">Required Prevention</p>
-                    <ul className="text-white/60 text-xs space-y-1 list-disc pl-4">
+                    <p className="font-medium text-white mb-1 text-sm">Required Prevention</p>
+                    <ul className="text-white text-xs space-y-1 list-disc pl-4">
                       <li>Cable rollers every 5m: £300</li>
                       <li>Pulling lubricant: £50</li>
                       <li>Protective bushes: £150</li>
@@ -740,8 +740,8 @@ const Module4Section4_5 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-white/80 mb-1 text-sm">Actual Remedial Cost</p>
-                    <ul className="text-white/60 text-xs space-y-1 list-disc pl-4">
+                    <p className="font-medium text-white mb-1 text-sm">Actual Remedial Cost</p>
+                    <ul className="text-white text-xs space-y-1 list-disc pl-4">
                       <li>Cable replacement: £12,000</li>
                       <li>Additional labour: £8,000</li>
                       <li>Project delays: £15,000</li>
@@ -751,8 +751,8 @@ const Module4Section4_5 = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-white/80 mb-1 text-sm">Return on Investment</p>
-                    <ul className="text-white/60 text-xs space-y-1 list-disc pl-4">
+                    <p className="font-medium text-white mb-1 text-sm">Return on Investment</p>
+                    <ul className="text-white text-xs space-y-1 list-disc pl-4">
                       <li>Prevention investment: £500</li>
                       <li>Damage avoided: £35,000</li>
                       <li>
@@ -772,7 +772,7 @@ const Module4Section4_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">09</span>
               Frequently Asked Questions
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="font-medium text-white mb-1">
                   Q: Are cable cleats always necessary for electrical installations?
@@ -831,7 +831,7 @@ const Module4Section4_5 = () => {
               Summary
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-white/80 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Preventing cable damage during installation requires comprehensive planning, correct
                 protective equipment, and strict adherence to manufacturer specifications and BS
                 7671 requirements. The key elements include proper storage and handling procedures,

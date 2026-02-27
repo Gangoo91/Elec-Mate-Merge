@@ -170,7 +170,7 @@ const Module5Section2_3 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -187,13 +187,13 @@ const Module5Section2_3 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.2.3</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.2.3</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Selecting Suitable Protective Devices (MCBs, RCDs – Intro Only)
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Learn the basics of selecting Miniature Circuit Breakers (MCBs) and Residual Current
               Devices (RCDs) for safe electrical installations.
             </p>
@@ -202,7 +202,7 @@ const Module5Section2_3 = () => {
           {/* Quick Reference */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-semibold text-elec-yellow mb-3">Quick Reference</p>
-            <div className="grid sm:grid-cols-2 gap-4 text-white/80 text-sm">
+            <div className="grid sm:grid-cols-2 gap-4 text-white text-sm">
               <div>
                 <p className="font-medium text-white mb-1">In 30 Seconds:</p>
                 <ul className="list-disc pl-5 space-y-1">
@@ -234,7 +234,7 @@ const Module5Section2_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Introduction
             </h2>
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               Protective devices are essential for safeguarding people, equipment, and cables from
               overloads, short circuits, and earth faults. Choosing the correct protective device
               ensures that circuits operate safely and comply with BS 7671 Wiring Regulations. This
@@ -249,7 +249,7 @@ const Module5Section2_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <ul className="list-disc pl-6 space-y-2 text-white/80">
+            <ul className="list-disc pl-6 space-y-2 text-white">
               <li>Explain the purpose of protective devices</li>
               <li>Identify when to use MCBs vs RCDs</li>
               <li>Recognise the different MCB ratings and applications</li>
@@ -264,7 +264,7 @@ const Module5Section2_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Purpose of Protective Devices
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Protective devices serve multiple critical functions in electrical installations:
               </p>
@@ -323,7 +323,7 @@ const Module5Section2_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Miniature Circuit Breakers (MCBs)
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 MCBs are the most common protective device for protecting against overload and
                 short-circuit faults:
@@ -513,7 +513,7 @@ const Module5Section2_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Residual Current Devices (RCDs)
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>RCDs provide essential protection against earth leakage and electric shock:</p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
@@ -676,7 +676,7 @@ const Module5Section2_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Coordinating MCBs and RCDs
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 MCBs and RCDs are often used together in consumer units to provide comprehensive
                 protection:
@@ -718,7 +718,7 @@ const Module5Section2_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               BS 7671 Guidance
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <div className="grid sm:grid-cols-2 gap-4 text-sm">
                   <div>
@@ -791,7 +791,7 @@ const Module5Section2_3 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
               <p className="font-semibold text-orange-400 mb-2">The Wrong MCB Type Mistake</p>
-              <p className="text-white/80 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 <strong>The Scenario:</strong> In a small office installation, an electrician used a
                 Type C MCB on a domestic lighting circuit. This caused nuisance tripping because
                 Type C devices require higher fault currents to operate. The correct choice should
@@ -801,7 +801,7 @@ const Module5Section2_3 = () => {
               <div className="space-y-3">
                 <div className="p-3 rounded bg-black/20">
                   <p className="font-medium text-white mb-2 text-sm">The Problem:</p>
-                  <ul className="text-xs list-disc ml-4 space-y-1 text-white/70">
+                  <ul className="text-xs list-disc ml-4 space-y-1 text-white">
                     <li>
                       <strong>Wrong selection:</strong> 6A Type C MCB used for lighting circuit
                     </li>
@@ -818,7 +818,7 @@ const Module5Section2_3 = () => {
 
                 <div className="p-3 rounded bg-red-500/10 border border-red-500/30">
                   <p className="font-medium text-red-400 mb-2 text-sm">The Consequences:</p>
-                  <ul className="text-xs list-disc ml-4 space-y-1 text-white/70">
+                  <ul className="text-xs list-disc ml-4 space-y-1 text-white">
                     <li>Nuisance tripping during normal switching operations</li>
                     <li>Slow fault clearance for small faults</li>
                     <li>Client complaints - lights going off during meetings</li>
@@ -828,7 +828,7 @@ const Module5Section2_3 = () => {
 
                 <div className="p-3 rounded bg-green-500/10 border border-green-500/30">
                   <p className="font-medium text-green-400 mb-2 text-sm">The Solution:</p>
-                  <ul className="text-xs list-disc ml-4 space-y-1 text-white/70">
+                  <ul className="text-xs list-disc ml-4 space-y-1 text-white">
                     <li>Replace with 6A Type B MCBs</li>
                     <li>Type B characteristics: Trips at 3-5x rated current (18-30A)</li>
                     <li>Reliable operation under all conditions</li>
@@ -837,7 +837,7 @@ const Module5Section2_3 = () => {
               </div>
 
               <div className="p-3 rounded bg-elec-yellow/10 border border-elec-yellow/30 mt-3">
-                <p className="text-xs text-white/80">
+                <p className="text-xs text-white">
                   <strong>Key lesson:</strong> MCB type selection must match the installation type
                   and expected fault levels. Type B for domestic, Type C for light commercial, Type
                   D for heavy industrial.
@@ -856,7 +856,7 @@ const Module5Section2_3 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
                 <p className="font-semibold text-blue-400 mb-2 text-sm">MCB Quick Reference</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>✅ MCBs = protect against overload/short circuit</li>
                   <li>✅ Type B (domestic), Type C (commercial), Type D (industrial)</li>
                   <li>✅ Rating must not exceed cable capacity</li>
@@ -867,7 +867,7 @@ const Module5Section2_3 = () => {
 
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
                 <p className="font-semibold text-green-400 mb-2 text-sm">RCD Quick Reference</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>✅ RCDs = protect against earth leakage/shock</li>
                   <li>✅ 30mA sensitivity for domestic installations</li>
                   <li>✅ Required for sockets ≤32A (BS 7671)</li>
@@ -880,7 +880,7 @@ const Module5Section2_3 = () => {
                 <p className="font-semibold text-purple-400 mb-2 text-sm">
                   BS 7671 Key Regulations
                 </p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>📋 Reg 411.3.3 - RCD protection for sockets ≤32A</li>
                   <li>⚡ Reg 433.1 - Overload protection</li>
                   <li>🔒 Reg 434.1 - Fault current protection</li>
@@ -890,7 +890,7 @@ const Module5Section2_3 = () => {
 
               <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
                 <p className="font-semibold text-orange-400 mb-2 text-sm">Selection Checklist</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>🔍 Match device rating to cable capacity</li>
                   <li>⚡ Consider load type and characteristics</li>
                   <li>🏠 Choose correct MCB type for environment</li>
@@ -901,7 +901,7 @@ const Module5Section2_3 = () => {
             </div>
 
             <div className="p-4 rounded-lg bg-white/5 border border-white/10 mt-4">
-              <p className="text-sm text-white/80 text-center">
+              <p className="text-sm text-white text-center">
                 <strong>Remember:</strong> MCBs protect cables and equipment, RCDs protect people.
                 Use both together for comprehensive protection in domestic installations.
               </p>
@@ -914,7 +914,7 @@ const Module5Section2_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Recap
             </h2>
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               In this subsection, you learned about the role of protective devices in electrical
               installations. You explored the different types of MCBs and their trip
               characteristics, the importance of RCDs for shock protection, and the relevant BS 7671
@@ -931,7 +931,7 @@ const Module5Section2_3 = () => {
             >
               <span className="font-semibold text-white">Frequently Asked Questions</span>
               <ChevronDown
-                className={`w-5 h-5 text-white/60 transition-transform ${showFaqs ? 'rotate-180' : ''}`}
+                className={`w-5 h-5 text-white transition-transform ${showFaqs ? 'rotate-180' : ''}`}
               />
             </button>
 
@@ -943,7 +943,7 @@ const Module5Section2_3 = () => {
                     className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50"
                   >
                     <p className="font-medium text-white mb-2">Q: {faq.question}</p>
-                    <p className="text-sm text-white/70">A: {faq.answer}</p>
+                    <p className="text-sm text-white">A: {faq.answer}</p>
                   </div>
                 ))}
               </div>
@@ -957,7 +957,7 @@ const Module5Section2_3 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../2-2">

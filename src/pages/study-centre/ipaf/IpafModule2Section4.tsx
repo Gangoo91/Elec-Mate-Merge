@@ -219,7 +219,7 @@ const IpafModule2Section4 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Selecting the Right Tower
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Matching the tower type to the task, environment, and conditions — getting it right
             first time
           </p>
@@ -1081,7 +1081,7 @@ const IpafModule2Section4 = () => {
 
               <div className="bg-white/5 border border-elec-yellow/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-elec-yellow">Semi-Outdoor Locations</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Some locations fall between indoor and outdoor — car parks, covered loading bays,
                   open-sided buildings, and buildings under construction. These are generally
                   treated as outdoor locations for tower selection purposes because wind can still
@@ -1112,15 +1112,15 @@ const IpafModule2Section4 = () => {
               <div className="bg-white/5 border border-blue-400/30 p-4 rounded-lg">
                 <h3 className="text-blue-300 font-medium mb-2">Calculating Platform Height</h3>
                 <div className="space-y-2 text-sm">
-                  <p className="text-white/80">
+                  <p className="text-white">
                     <strong className="text-white">Working height</strong> = Platform height +
                     person's reach (approximately 2m)
                   </p>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     <strong className="text-white">Example:</strong> To work at 6m height, you need
                     a platform at approximately 4m.
                   </p>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     <strong className="text-white">Note:</strong> Do not stand on the guardrail,
                     toolbox, or any improvised platform to gain extra height. If you cannot reach,
                     you need a higher tower.
@@ -1132,32 +1132,32 @@ const IpafModule2Section4 = () => {
                 <h3 className="text-elec-yellow font-medium mb-2">
                   Height Limits — A General Guide
                 </h3>
-                <p className="text-white/60 text-xs mb-3">
+                <p className="text-white text-xs mb-3">
                   These are approximate. Always check the manufacturer's specific data for your
                   tower system.
                 </p>
                 <div className="space-y-2 text-sm">
-                  <div className="grid grid-cols-3 gap-2 text-white/80">
+                  <div className="grid grid-cols-3 gap-2 text-white">
                     <span className="font-semibold text-white">Configuration</span>
                     <span className="font-semibold text-white text-center">Indoor</span>
                     <span className="font-semibold text-white text-center">Outdoor</span>
                   </div>
-                  <div className="border-t border-white/10 pt-2 grid grid-cols-3 gap-2 text-white/80">
+                  <div className="border-t border-white/10 pt-2 grid grid-cols-3 gap-2 text-white">
                     <span>Single-width, no stabilisers</span>
                     <span className="text-center">~4m</span>
                     <span className="text-center">~2.5m</span>
                   </div>
-                  <div className="grid grid-cols-3 gap-2 text-white/80">
+                  <div className="grid grid-cols-3 gap-2 text-white">
                     <span>Single-width, with stabilisers</span>
                     <span className="text-center">~6m</span>
                     <span className="text-center">~4m</span>
                   </div>
-                  <div className="grid grid-cols-3 gap-2 text-white/80">
+                  <div className="grid grid-cols-3 gap-2 text-white">
                     <span>Double-width, no stabilisers</span>
                     <span className="text-center">~6m</span>
                     <span className="text-center">~4m</span>
                   </div>
-                  <div className="grid grid-cols-3 gap-2 text-white/80">
+                  <div className="grid grid-cols-3 gap-2 text-white">
                     <span>Double-width, with stabilisers</span>
                     <span className="text-center">~12m</span>
                     <span className="text-center">~8m</span>
@@ -1425,12 +1425,12 @@ const IpafModule2Section4 = () => {
                   <h4 className="text-elec-yellow font-medium mb-1">
                     Warehouse Lighting Installation
                   </h4>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     <strong className="text-white">Recommended:</strong> Double-width aluminium
                     tower with stabilisers. Height will depend on the warehouse — typically 6-10m
                     platforms.
                   </p>
-                  <p className="text-white/60 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Two operatives often needed. Heavy luminaires and cable drums on platform.
                   </p>
                 </div>
@@ -1438,11 +1438,11 @@ const IpafModule2Section4 = () => {
                   <h4 className="text-elec-yellow font-medium mb-1">
                     Switchroom Cable Tray Installation
                   </h4>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     <strong className="text-white">Recommended:</strong> GRP single-width tower.
                     Live switchgear present — non-conductive material essential.
                   </p>
-                  <p className="text-white/60 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Narrow aisles between switchgear panels. Single-width fits the space.
                   </p>
                 </div>
@@ -1450,11 +1450,11 @@ const IpafModule2Section4 = () => {
                   <h4 className="text-elec-yellow font-medium mb-1">
                     Stairwell Emergency Lighting
                   </h4>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     <strong className="text-white">Recommended:</strong> Stairwell tower with
                     adjustable legs. Must sit level on the stairs.
                   </p>
-                  <p className="text-white/60 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Single operative with light tools. Multiple positions needed on each floor.
                   </p>
                 </div>
@@ -1462,21 +1462,21 @@ const IpafModule2Section4 = () => {
                   <h4 className="text-elec-yellow font-medium mb-1">
                     Office Ceiling Sensor Installation
                   </h4>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     <strong className="text-white">Recommended:</strong> Folding or low-level tower.
                     Standard office ceiling at 2.7m — platform height under 1m needed.
                   </p>
-                  <p className="text-white/60 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Quick repositioning between sensors. Compact storage between uses.
                   </p>
                 </div>
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <h4 className="text-elec-yellow font-medium mb-1">External CCTV Installation</h4>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     <strong className="text-white">Recommended:</strong> Double-width aluminium
                     tower with stabilisers. Outdoor use — check wind and ground conditions.
                   </p>
-                  <p className="text-white/60 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Monitor weather throughout. May need to secure tower overnight between
                     installation days.
                   </p>
@@ -1485,11 +1485,11 @@ const IpafModule2Section4 = () => {
                   <h4 className="text-elec-yellow font-medium mb-1">
                     Data Centre Containment Work
                   </h4>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     <strong className="text-white">Recommended:</strong> GRP single-width tower.
                     Live power distribution present. Narrow aisles between server racks.
                   </p>
-                  <p className="text-white/60 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Check raised floor loading. Controlled environment — indoor conditions apply.
                   </p>
                 </div>
@@ -1511,7 +1511,7 @@ const IpafModule2Section4 = () => {
             <div className="space-y-4">
               <div>
                 <h3 className="font-semibold text-white mb-2">Pre-Selection Checklist</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>&#9744; Measure available workspace (width, length, height)</li>
                   <li>&#9744; Identify access routes (doorways, lifts, corridors)</li>
                   <li>&#9744; Check floor/ground conditions and loading</li>
@@ -1524,7 +1524,7 @@ const IpafModule2Section4 = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-white mb-2">Quick Decision Rules</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1561,7 +1561,7 @@ const IpafModule2Section4 = () => {
             <div className="space-y-4">
               <div>
                 <h3 className="font-semibold text-white mb-2">Common Mistakes to Avoid</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Ordering without measuring the workspace first</span>
@@ -1590,7 +1590,7 @@ const IpafModule2Section4 = () => {
               </div>
               <div>
                 <h3 className="font-semibold text-white mb-2">When a Tower Is Not Enough</h3>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Height exceeds manufacturer's maximum</span>
@@ -1627,7 +1627,7 @@ const IpafModule2Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1643,7 +1643,7 @@ const IpafModule2Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../ipaf-module-2-section-3">

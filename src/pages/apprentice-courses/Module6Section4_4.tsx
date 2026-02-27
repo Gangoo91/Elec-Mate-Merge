@@ -171,7 +171,7 @@ const Module6Section4_4 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -189,13 +189,13 @@ const Module6Section4_4 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.4.4</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.4.4</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Common Faults Found During Continuity/Polarity Tests
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Recognise common faults found during continuity and polarity tests
             </p>
           </header>
@@ -203,7 +203,7 @@ const Module6Section4_4 = () => {
           {/* Summary Box */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <h2 className="font-semibold text-white mb-3">Quick Summary</h2>
-            <ul className="space-y-2 text-sm text-white/80">
+            <ul className="space-y-2 text-sm text-white">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Open circuits break conductor continuity</span>
@@ -225,7 +225,7 @@ const Module6Section4_4 = () => {
 
           {/* Introduction */}
           <section className="mb-10">
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               Continuity and polarity testing are designed not only to confirm correct wiring but
               also to identify common faults that compromise safety and functionality. These tests
               reveal issues such as open circuits, incorrect polarity, high resistance joints, and
@@ -240,7 +240,7 @@ const Module6Section4_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Common Continuity Faults
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-3">Open Circuit Conductors</h3>
                 <ul className="text-sm space-y-2">
@@ -319,7 +319,7 @@ const Module6Section4_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Common Polarity Faults
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-3">Line and Neutral Reversed</h3>
                 <ul className="text-sm space-y-2">
@@ -384,7 +384,7 @@ const Module6Section4_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Interpretation of Results
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-3">Acceptable Values and Limits</h3>
                 <ul className="text-sm space-y-2">
@@ -441,14 +441,14 @@ const Module6Section4_4 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <h3 className="font-medium text-white mb-3">Scenario</h3>
-              <p className="text-sm text-white/80 mb-4">
+              <p className="text-sm text-white mb-4">
                 A domestic kitchen was being rewired with a new 32A ring final circuit. The circuit
                 included 8 socket outlets and was wired with 2.5mm² T&E cable.
               </p>
 
               <h4 className="font-medium text-white mb-2">Test Results</h4>
               <div className="bg-[#121212] rounded p-3 mb-4">
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>End-to-end line resistance: 0.82Ω (expected ~0.8Ω)</li>
                   <li>End-to-end neutral resistance: 0.84Ω (expected ~0.8Ω)</li>
                   <li>End-to-end CPC resistance: Infinite (∞) - FAULT DETECTED</li>
@@ -456,14 +456,14 @@ const Module6Section4_4 = () => {
               </div>
 
               <h4 className="font-medium text-white mb-2">Investigation</h4>
-              <p className="text-sm text-white/80 mb-4">
+              <p className="text-sm text-white mb-4">
                 Testing each socket in sequence revealed the fault between sockets 4 and 5. Visual
                 inspection at socket 4 showed the CPC terminal screw was finger-tight only - the
                 cable had pulled out during final fitting.
               </p>
 
               <h4 className="font-medium text-white mb-2">Corrective Action</h4>
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400">✓</span>
                   <span>Terminal properly tightened and retested</span>
@@ -495,12 +495,12 @@ const Module6Section4_4 = () => {
                   >
                     <span className="font-medium text-white text-sm">{faq.question}</span>
                     <ChevronDown
-                      className={`w-4 h-4 text-white/60 transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
+                      className={`w-4 h-4 text-white transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
                     />
                   </button>
                   {openFaq === index && (
                     <div className="px-4 pb-4">
-                      <p className="text-sm text-white/70">{faq.answer}</p>
+                      <p className="text-sm text-white">{faq.answer}</p>
                     </div>
                   )}
                 </div>
@@ -515,27 +515,27 @@ const Module6Section4_4 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <h3 className="text-sm font-medium text-white mb-2">Know It</h3>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Common faults: open circuits, high resistance joints, disconnected CPCs, and
                     reversed polarity
                   </p>
                 </div>
                 <div>
                   <h3 className="text-sm font-medium text-white mb-2">Spot It</h3>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Visual cues: scorching, loose terminals, incorrect connections, and damaged
                     cables
                   </p>
                 </div>
                 <div>
                   <h3 className="text-sm font-medium text-white mb-2">Test It</h3>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Measurements: infinite resistance = open circuit, high R1+R2 = poor joints
                   </p>
                 </div>
                 <div>
                   <h3 className="text-sm font-medium text-white mb-2">Fix It</h3>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Actions: rectify all faults, document clearly, retest, then safely energise
                   </p>
                 </div>
@@ -550,7 +550,7 @@ const Module6Section4_4 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../4-3">

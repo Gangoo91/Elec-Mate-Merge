@@ -163,7 +163,7 @@ export default function IpafModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../ipaf-module-1">
@@ -188,7 +188,7 @@ export default function IpafModule1Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             BS EN 1004-1:2020 & Related Standards
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The European standard for prefabricated mobile access towers &mdash; load classes,
             height limits, design requirements, and marking
           </p>
@@ -280,7 +280,7 @@ export default function IpafModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">EN 1004 Applies To:</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Prefabricated aluminium or steel mobile towers</span>
@@ -311,7 +311,7 @@ export default function IpafModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">EN 1004 Does NOT Apply To:</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Fixed scaffolding (covered by BS EN 12811)</span>
@@ -365,8 +365,8 @@ export default function IpafModule1Section3() {
                       Class 2 &mdash; 150 kg/m&sup2;
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">Light-duty applications</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <p className="text-sm text-white mb-2">Light-duty applications</p>
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Inspection and survey work</span>
@@ -396,8 +396,8 @@ export default function IpafModule1Section3() {
                       Class 3 &mdash; 200 kg/m&sup2;
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">Heavy-duty applications</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <p className="text-sm text-white mb-2">Heavy-duty applications</p>
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Bricklaying and blockwork</span>
@@ -426,13 +426,13 @@ export default function IpafModule1Section3() {
                 <p className="text-sm font-medium text-elec-yellow mb-3">
                   Calculating Maximum Platform Load
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     Maximum load = Platform area (m&sup2;) &times; Load class rating (kg/m&sup2;)
                   </p>
                   <div className="grid sm:grid-cols-2 gap-4 mt-3">
                     <div className="bg-black/30 rounded-lg p-3">
-                      <p className="text-xs text-white/60 mb-1">
+                      <p className="text-xs text-white mb-1">
                         Example: Class 2, 1.3m &times; 2.5m platform
                       </p>
                       <p className="text-white font-mono">
@@ -441,7 +441,7 @@ export default function IpafModule1Section3() {
                       </p>
                     </div>
                     <div className="bg-black/30 rounded-lg p-3">
-                      <p className="text-xs text-white/60 mb-1">
+                      <p className="text-xs text-white mb-1">
                         Example: Class 3, 1.3m &times; 2.5m platform
                       </p>
                       <p className="text-white font-mono">
@@ -450,7 +450,7 @@ export default function IpafModule1Section3() {
                       </p>
                     </div>
                   </div>
-                  <p className="mt-2 text-white/60 text-xs">
+                  <p className="mt-2 text-white text-xs">
                     Remember: the total load includes the weight of all persons, tools, materials,
                     and equipment on the platform.
                   </p>
@@ -462,7 +462,7 @@ export default function IpafModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Critical Point</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Never exceed the rated load class of the tower. Overloading can cause structural
                   failure, instability, or collapse. If your task requires more than the tower's
                   rated capacity, you must use a higher-rated tower or find an alternative method of
@@ -497,8 +497,8 @@ export default function IpafModule1Section3() {
                     <p className="text-sm font-medium text-teal-400">Indoor Use</p>
                   </div>
                   <p className="text-3xl font-bold text-teal-400 mb-2">12m</p>
-                  <p className="text-sm text-white/80">Maximum platform height</p>
-                  <ul className="text-sm text-white/60 space-y-1 mt-3">
+                  <p className="text-sm text-white">Maximum platform height</p>
+                  <ul className="text-sm text-white space-y-1 mt-3">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>No wind loading consideration required</span>
@@ -523,8 +523,8 @@ export default function IpafModule1Section3() {
                     <p className="text-sm font-medium text-amber-400">Outdoor Use</p>
                   </div>
                   <p className="text-3xl font-bold text-amber-400 mb-2">8m</p>
-                  <p className="text-sm text-white/80">Maximum platform height</p>
-                  <ul className="text-sm text-white/60 space-y-1 mt-3">
+                  <p className="text-sm text-white">Maximum platform height</p>
+                  <ul className="text-sm text-white space-y-1 mt-3">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Wind loading must be considered</span>
@@ -557,27 +557,27 @@ export default function IpafModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Height-to-Base Ratios</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   EN 1004 uses height-to-base ratio as a key stability parameter. The taller the
                   tower relative to its base, the less stable it becomes:
                 </p>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="bg-black/30 rounded-lg p-3">
-                    <p className="text-xs text-white/60 mb-1">Without outriggers (typical)</p>
+                    <p className="text-xs text-white mb-1">Without outriggers (typical)</p>
                     <p className="text-white font-mono text-sm">
                       Max ratio: <span className="text-teal-400">3.5:1</span>
                     </p>
-                    <p className="text-xs text-white/60 mt-1">
+                    <p className="text-xs text-white mt-1">
                       e.g. 1.3m base = max 4.55m platform height
                     </p>
                   </div>
                   <div className="bg-black/30 rounded-lg p-3">
-                    <p className="text-xs text-white/60 mb-1">With outriggers fitted</p>
+                    <p className="text-xs text-white mb-1">With outriggers fitted</p>
                     <p className="text-white font-mono text-sm">
                       Ratio increases to approx.{' '}
                       <span className="text-teal-400">up to the max rated height</span>
                     </p>
-                    <p className="text-xs text-white/60 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Outriggers effectively widen the base dimension
                     </p>
                   </div>
@@ -604,7 +604,7 @@ export default function IpafModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">When BS 1139-6 Applies:</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Mobile towers exceeding 12 metres indoor or 8 metres outdoor</span>
@@ -635,7 +635,7 @@ export default function IpafModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Important</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Any tower outside the scope of EN 1004 must have a specific structural design
                   calculation prepared by a competent person (typically a chartered structural
                   engineer). The design must account for all loadings including wind, the intended
@@ -675,7 +675,7 @@ export default function IpafModule1Section3() {
                   <BookOpen className="h-5 w-5 text-cyan-400" />
                   <p className="text-sm font-medium text-cyan-400">What the Manual Must Contain:</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Manufacturer's name and contact details</span>
@@ -767,7 +767,7 @@ export default function IpafModule1Section3() {
                     Mandatory Marking Information:
                   </p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">1. Manufacturer's name or trademark</strong>{' '}
                     &mdash; identifies who made the tower
@@ -800,7 +800,7 @@ export default function IpafModule1Section3() {
                   <p className="text-sm font-medium text-green-400 mb-2">
                     Where to Find the Marking
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Typically on a durable label on the base frame</span>
@@ -821,7 +821,7 @@ export default function IpafModule1Section3() {
                 </div>
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-red-400 mb-2">Warning Signs</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Missing or illegible labels &mdash; do not use</span>
@@ -864,7 +864,7 @@ export default function IpafModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Design Load Categories</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Dead load:</strong> The self-weight of the tower
                     structure, platforms, and all permanent components.
@@ -886,7 +886,7 @@ export default function IpafModule1Section3() {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-elec-yellow mb-3">Safety Factors</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Structural strength:</strong> Components must
                     withstand at least <strong className="text-elec-yellow">1.5 times</strong> the
@@ -910,7 +910,7 @@ export default function IpafModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Why This Matters on Site</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The safety factor of 1.5 means a tower rated at 200 kg/m&sup2; should survive a
                   load of 300 kg/m&sup2; without collapsing. However, this margin exists to account
                   for dynamic loads, impact forces, material degradation, and manufacturing
@@ -935,7 +935,7 @@ export default function IpafModule1Section3() {
                   <p className="text-sm font-medium text-teal-400 mb-2">
                     Before Using a Tower &mdash; Check:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Is the EN 1004 label present and legible?</span>
@@ -966,7 +966,7 @@ export default function IpafModule1Section3() {
                   <p className="text-sm font-medium text-amber-400 mb-2">
                     Related Standards to Know
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1008,13 +1008,13 @@ export default function IpafModule1Section3() {
                 <div className="overflow-x-auto">
                   <table className="w-full text-sm">
                     <thead>
-                      <tr className="text-left text-white/60 border-b border-white/10">
+                      <tr className="text-left text-white border-b border-white/10">
                         <th className="pb-2 pr-4">Standard</th>
                         <th className="pb-2 pr-4">Covers</th>
                         <th className="pb-2">Key Limit</th>
                       </tr>
                     </thead>
-                    <tbody className="text-white/80">
+                    <tbody className="text-white">
                       <tr className="border-b border-white/5">
                         <td className="py-2 pr-4 font-mono text-xs">EN 1004-1:2020</td>
                         <td className="pr-4">Standard mobile towers</td>
@@ -1050,7 +1050,7 @@ export default function IpafModule1Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1064,7 +1064,7 @@ export default function IpafModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../ipaf-module-1-section-2">

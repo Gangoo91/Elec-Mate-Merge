@@ -34,12 +34,12 @@ const QuickAccessCard = ({ title, description, linkText, linkTo, icon }: QuickAc
               {icon && <div className="p-1.5 sm:p-2 rounded-lg bg-elec-yellow/10">{icon}</div>}
               <h3 className="text-sm sm:text-base font-semibold text-white">{title}</h3>
             </div>
-            <ChevronRight className="h-4 w-4 text-white/40 flex-shrink-0" />
+            <ChevronRight className="h-4 w-4 text-white flex-shrink-0" />
           </div>
 
           {/* Description */}
           {description && (
-            <p className="text-xs sm:text-sm text-white/60 leading-relaxed flex-grow">
+            <p className="text-xs sm:text-sm text-white leading-relaxed flex-grow">
               {description}
             </p>
           )}

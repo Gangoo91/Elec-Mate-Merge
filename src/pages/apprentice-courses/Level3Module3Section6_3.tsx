@@ -266,7 +266,7 @@ const Level3Module3Section6_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section6">
@@ -338,7 +338,7 @@ const Level3Module3Section6_3 = () => {
               <div className="space-y-3 text-sm">
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">Step 1: Gather Information</p>
-                  <ul className="text-white/80 mt-1 space-y-1">
+                  <ul className="text-white mt-1 space-y-1">
                     <li>Design current (Ib) in amperes</li>
                     <li>Circuit length (L) in metres</li>
                     <li>Cable type and size</li>
@@ -347,7 +347,7 @@ const Level3Module3Section6_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">Step 2: Find mV/A/m Value</p>
-                  <p className="text-white/80 mt-1">
+                  <p className="text-white mt-1">
                     Look up mV/A/m from BS 7671 Appendix 4 for your cable type, size, and
                     installation method.
                   </p>
@@ -358,7 +358,7 @@ const Level3Module3Section6_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow/80 font-medium">Step 4: Compare with Limit</p>
-                  <p className="text-white/80 mt-1">
+                  <p className="text-white mt-1">
                     Lighting: max 6.9V (3% of 230V)
                     <br />
                     Power: max 11.5V (5% of 230V)
@@ -371,11 +371,11 @@ const Level3Module3Section6_3 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Worked Example: Socket Outlet Circuit
               </p>
-              <p className="text-xs text-white/90 mb-2">
+              <p className="text-xs text-white mb-2">
                 Calculate voltage drop for a 20A radial circuit, 18m long, using 2.5mm sq flat
                 cable.
               </p>
-              <div className="text-xs text-white/80 space-y-2 font-mono">
+              <div className="text-xs text-white space-y-2 font-mono">
                 <p>
                   <strong>Step 1:</strong> Ib = 20A, L = 18m, 2.5mm sq flat cable
                 </p>
@@ -423,7 +423,7 @@ const Level3Module3Section6_3 = () => {
               <p className="text-xl text-white font-mono text-center mb-4">
                 L max = (Vd max x 1000) / (mV/A/m x Ib)
               </p>
-              <div className="text-sm text-white/80">
+              <div className="text-sm text-white">
                 <p>Where:</p>
                 <ul className="ml-4 mt-1 space-y-1">
                   <li>L max = Maximum cable length (metres)</li>
@@ -438,11 +438,11 @@ const Level3Module3Section6_3 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Worked Example: Maximum Length for Lighting Circuit
               </p>
-              <p className="text-xs text-white/90 mb-2">
+              <p className="text-xs text-white mb-2">
                 What is the maximum length for a 6A lighting circuit using 1.5mm sq cable (mV/A/m =
                 29)?
               </p>
-              <div className="text-xs text-white/80 space-y-2 font-mono">
+              <div className="text-xs text-white space-y-2 font-mono">
                 <p>
                   <strong>Given:</strong> Ib = 6A, mV/A/m = 29, Vd max = 6.9V (lighting)
                 </p>
@@ -471,7 +471,7 @@ const Level3Module3Section6_3 = () => {
                       <th className="text-left py-2 text-elec-yellow/80">32A Max L</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/5">
                       <td className="py-2">1.5</td>
                       <td className="py-2">29</td>
@@ -503,12 +503,12 @@ const Level3Module3Section6_3 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Based on flat cable, method C. Halve values approximately for 3% lighting limit.
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Practical Tip:</strong> When planning installations, check maximum lengths
               early to ensure your proposed cable routes are feasible with standard cable sizes.
             </p>
@@ -535,7 +535,7 @@ const Level3Module3Section6_3 = () => {
               <p className="text-xl text-white font-mono text-center mb-4">
                 mV/A/m max = (Vd max x 1000) / (Ib x L)
               </p>
-              <div className="text-sm text-white/80">
+              <div className="text-sm text-white">
                 <p>Then select the smallest cable with mV/A/m less than or equal to this value.</p>
               </div>
             </div>
@@ -544,10 +544,10 @@ const Level3Module3Section6_3 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Worked Example: Selecting Cable Size for Voltage Drop
               </p>
-              <p className="text-xs text-white/90 mb-2">
+              <p className="text-xs text-white mb-2">
                 Select minimum cable size for a 25m, 30A power circuit using flat cable.
               </p>
-              <div className="text-xs text-white/80 space-y-2 font-mono">
+              <div className="text-xs text-white space-y-2 font-mono">
                 <p>
                   <strong>Step 1:</strong> Calculate max mV/A/m
                 </p>
@@ -562,7 +562,7 @@ const Level3Module3Section6_3 = () => {
                 <p className="text-green-400 mt-2">
                   Minimum cable size for voltage drop = 4.0mm sq
                 </p>
-                <p className="text-white/60 mt-1">
+                <p className="text-white mt-1">
                   (Also check current-carrying capacity - may require larger)
                 </p>
               </div>
@@ -572,7 +572,7 @@ const Level3Module3Section6_3 = () => {
               <p className="text-sm font-medium text-red-400 mb-2">
                 Important: Both Requirements Must Be Met
               </p>
-              <p className="text-xs text-white/90">
+              <p className="text-xs text-white">
                 A cable must satisfy BOTH current-carrying capacity AND voltage drop requirements.
                 Calculate each independently and use the larger cable. For short circuits with high
                 current, current-carrying capacity usually determines size. For long circuits with
@@ -608,7 +608,7 @@ const Level3Module3Section6_3 = () => {
               <p className="text-sm font-medium text-white mb-2">Total Voltage Drop:</p>
               <div className="p-3 bg-white/5 rounded font-mono text-sm">
                 <p>Vd total = Vd distribution + Vd final</p>
-                <p className="mt-2 text-white/70">
+                <p className="mt-2 text-white">
                   Where both drops are calculated using their respective cable sizes and lengths
                 </p>
               </div>
@@ -618,11 +618,11 @@ const Level3Module3Section6_3 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Worked Example: Combined Voltage Drop
               </p>
-              <p className="text-xs text-white/90 mb-2">
+              <p className="text-xs text-white mb-2">
                 A distribution circuit (10mm sq, 30m, 60A) feeds a DB. A final circuit (2.5mm sq,
                 15m, 20A) runs from that DB. Calculate total drop.
               </p>
-              <div className="text-xs text-white/80 space-y-2 font-mono">
+              <div className="text-xs text-white space-y-2 font-mono">
                 <p>
                   <strong>Distribution Circuit:</strong>
                 </p>
@@ -638,7 +638,7 @@ const Level3Module3Section6_3 = () => {
                 </p>
                 <p className="ml-4">Vd total = 7.92 + 5.4 = 13.32V</p>
                 <p className="text-red-400 mt-2">13.32V exceeds 11.5V limit - NOT ACCEPTABLE</p>
-                <p className="text-white/60 mt-1">
+                <p className="text-white mt-1">
                   Solution: Increase distribution cable to reduce its voltage drop
                 </p>
               </div>
@@ -647,7 +647,7 @@ const Level3Module3Section6_3 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">Good Practice</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Keep distribution circuit drop to 1-2%</li>
                   <li>Leave headroom for final circuits</li>
                   <li>Document both calculations</li>
@@ -656,7 +656,7 @@ const Level3Module3Section6_3 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">When Limits Exceeded</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Increase distribution cable size</li>
                   <li>Relocate DB closer to main supply</li>
                   <li>Increase final circuit cable size</li>
@@ -665,7 +665,7 @@ const Level3Module3Section6_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Remember:</strong> The BS 7671 limits apply to the total voltage drop from
               origin to point of use, not to each circuit independently.
             </p>
@@ -730,7 +730,7 @@ const Level3Module3Section6_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -773,7 +773,7 @@ const Level3Module3Section6_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section6-2">

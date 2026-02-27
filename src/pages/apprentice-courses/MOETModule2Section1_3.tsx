@@ -238,7 +238,7 @@ const MOETModule2Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module2-section1">
@@ -260,7 +260,7 @@ const MOETModule2Section1_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Energy and Efficiency
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Energy calculations, efficiency analysis and loss reduction for electrical maintenance
           </p>
         </header>
@@ -350,8 +350,8 @@ const MOETModule2Section1_3 = () => {
               <div className="space-y-3">
                 <div>
                   <p className="text-lg font-mono text-elec-yellow">Energy = Power x Time</p>
-                  <p className="text-sm text-white/70">E (joules) = P (watts) x t (seconds)</p>
-                  <p className="text-sm text-white/70">E (kWh) = P (kW) x t (hours)</p>
+                  <p className="text-sm text-white">E (joules) = P (watts) x t (seconds)</p>
+                  <p className="text-sm text-white">E (kWh) = P (kW) x t (hours)</p>
                 </div>
               </div>
             </div>
@@ -417,7 +417,7 @@ const MOETModule2Section1_3 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Annual costs based on 365 days/year. Industrial use would typically be 250-300
                 working days.
               </p>
@@ -463,12 +463,12 @@ const MOETModule2Section1_3 = () => {
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm font-mono text-white/70">
+                  <p className="text-sm font-mono text-white">
                     Losses = Input Power - Output Power
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm font-mono text-white/70">
+                  <p className="text-sm font-mono text-white">
                     Input Power = Output Power / Efficiency
                   </p>
                 </div>
@@ -558,7 +558,7 @@ const MOETModule2Section1_3 = () => {
                   Example: Transformer (97%) x VSD (96%) x Motor (92%) = 0.97 x 0.96 x 0.92 ={' '}
                   <strong>85.7%</strong>
                 </p>
-                <p className="text-white/70 mt-1">
+                <p className="text-white mt-1">
                   This means 14.3% of the electrical input is lost as heat before reaching the
                   driven load
                 </p>
@@ -799,7 +799,7 @@ const MOETModule2Section1_3 = () => {
                 <p>
                   Annual saving: 2,088 kWh x 0.20 GBP = <strong>418 GBP per year per motor</strong>
                 </p>
-                <p className="text-white/70 mt-1">
+                <p className="text-white mt-1">
                   In a factory with 20 such motors, this represents 8,360 GBP per year
                 </p>
               </div>
@@ -976,7 +976,7 @@ const MOETModule2Section1_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1024,7 +1024,7 @@ const MOETModule2Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module2-section1-2">

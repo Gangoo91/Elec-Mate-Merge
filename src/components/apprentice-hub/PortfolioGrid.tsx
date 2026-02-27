@@ -169,7 +169,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
         {/* Search Bar */}
         <div className="relative">
           {!searchQuery && (
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/80 pointer-events-none" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
           )}
           <Input
             placeholder="Search evidence..."
@@ -182,7 +182,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
               onClick={() => setSearchQuery('')}
               className="absolute right-3 top-1/2 -translate-y-1/2 p-1.5 touch-manipulation"
             >
-              <X className="h-4 w-4 text-white/80" />
+              <X className="h-4 w-4 text-white" />
             </button>
           )}
         </div>
@@ -195,7 +195,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
               onClick={() => setViewMode('grid')}
               className={cn(
                 'h-11 w-11 flex items-center justify-center rounded touch-manipulation active:scale-95',
-                viewMode === 'grid' ? 'bg-elec-yellow/10 text-elec-yellow' : 'text-white/80'
+                viewMode === 'grid' ? 'bg-elec-yellow/10 text-elec-yellow' : 'text-white'
               )}
             >
               <Grid3X3 className="h-4 w-4" />
@@ -204,7 +204,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
               onClick={() => setViewMode('list')}
               className={cn(
                 'h-11 w-11 flex items-center justify-center rounded touch-manipulation active:scale-95',
-                viewMode === 'list' ? 'bg-elec-yellow/10 text-elec-yellow' : 'text-white/80'
+                viewMode === 'list' ? 'bg-elec-yellow/10 text-elec-yellow' : 'text-white'
               )}
             >
               <List className="h-4 w-4" />
@@ -244,7 +244,7 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
                 'px-4 h-10 rounded-full text-xs font-medium whitespace-nowrap transition-colors shrink-0 touch-manipulation active:scale-95',
                 categoryFilter === cat
                   ? 'bg-elec-yellow text-black'
-                  : 'bg-muted text-white/80 hover:bg-muted/80'
+                  : 'bg-muted text-white hover:bg-muted/80'
               )}
             >
               {cat}
@@ -255,14 +255,14 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
         {/* Active Filters Bar */}
         {hasActiveFilters && (
           <div className="flex items-center gap-2">
-            <span className="text-xs text-white/80">
+            <span className="text-xs text-white">
               {filteredEntries.length} result{filteredEntries.length !== 1 ? 's' : ''}
             </span>
             <Button
               variant="ghost"
               size="sm"
               onClick={clearFilters}
-              className="h-10 text-xs text-white/80 hover:text-foreground touch-manipulation"
+              className="h-10 text-xs text-white hover:text-foreground touch-manipulation"
             >
               Clear filters
             </Button>
@@ -274,13 +274,13 @@ export function PortfolioGrid({ onCapture }: PortfolioGridProps) {
       {filteredEntries.length === 0 ? (
         <div className="text-center py-12 space-y-4">
           <div className="p-4 rounded-full bg-muted inline-block">
-            <FileCheck className="h-8 w-8 text-white/80" />
+            <FileCheck className="h-8 w-8 text-white" />
           </div>
           <div className="space-y-2">
             <p className="text-lg font-medium text-foreground">
               {hasActiveFilters ? 'No matching evidence' : 'No evidence yet'}
             </p>
-            <p className="text-sm text-white/80">
+            <p className="text-sm text-white">
               {hasActiveFilters
                 ? 'Try adjusting your filters'
                 : 'Start building your portfolio by adding evidence'}
@@ -371,7 +371,7 @@ function GridCard({
   const FileIcon = getFileIcon();
 
   const statusColors: Record<string, string> = {
-    draft: 'bg-muted text-white/80',
+    draft: 'bg-muted text-white',
     'in-progress': 'bg-blue-500/10 text-blue-500',
     completed: 'bg-green-500/10 text-green-500',
     reviewed: 'bg-elec-yellow/10 text-elec-yellow',
@@ -391,7 +391,7 @@ function GridCard({
             className="w-full h-full object-cover"
           />
         ) : (
-          <FileIcon className="h-10 w-10 text-white/80/50" />
+          <FileIcon className="h-10 w-10 text-white" />
         )}
       </div>
 
@@ -406,7 +406,7 @@ function GridCard({
             {entry.status || 'draft'}
           </Badge>
           {entry.skills?.slice(0, 2).map((skill: string, i: number) => (
-            <Badge key={i} variant="outline" className="text-[10px] border-white/30 text-white/80">
+            <Badge key={i} variant="outline" className="text-[10px] border-white/30 text-white">
               {skill.substring(0, 3)}
             </Badge>
           ))}
@@ -452,7 +452,7 @@ function ListItem({
   commentCount: number;
 }) {
   const statusColors: Record<string, string> = {
-    draft: 'bg-muted text-white/80',
+    draft: 'bg-muted text-white',
     'in-progress': 'bg-blue-500/10 text-blue-500',
     completed: 'bg-green-500/10 text-green-500',
     reviewed: 'bg-elec-yellow/10 text-elec-yellow',
@@ -468,14 +468,14 @@ function ListItem({
         {entry.evidenceFiles?.[0]?.url ? (
           <img src={entry.evidenceFiles[0].url} alt="" className="w-full h-full object-cover" />
         ) : (
-          <FileText className="h-6 w-6 text-white/80/50" />
+          <FileText className="h-6 w-6 text-white" />
         )}
       </div>
 
       {/* Content */}
       <div className="flex-1 min-w-0">
         <h3 className="text-sm font-medium text-foreground truncate">{entry.title}</h3>
-        <p className="text-xs text-white/80 truncate">
+        <p className="text-xs text-white truncate">
           {typeof entry.category === 'object' ? entry.category?.name : entry.category || 'N/A'}
         </p>
         <div className="flex items-center gap-1.5 mt-1">
@@ -492,14 +492,14 @@ function ListItem({
 
       {/* Meta */}
       <div className="flex flex-col items-end gap-1 shrink-0">
-        <span className="text-[10px] text-white/80">
+        <span className="text-[10px] text-white">
           {new Date(entry.dateCreated).toLocaleDateString('en-GB', {
             day: 'numeric',
             month: 'short',
           })}
         </span>
         {commentCount > 0 && (
-          <div className="flex items-center gap-1 text-white/80">
+          <div className="flex items-center gap-1 text-white">
             <MessageSquare className="h-3 w-3" />
             <span className="text-[10px]">{commentCount}</span>
           </div>

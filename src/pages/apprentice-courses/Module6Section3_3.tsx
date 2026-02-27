@@ -195,7 +195,7 @@ const Module6Section3_3 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -213,13 +213,13 @@ const Module6Section3_3 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.3.3</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.3.3</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Setting Up and Zeroing Instruments
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Proper preparation and calibration of test equipment
             </p>
           </header>
@@ -227,7 +227,7 @@ const Module6Section3_3 = () => {
           {/* Quick Reference Summary */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-medium text-white mb-3">Spot it in 30 Seconds</p>
-            <div className="grid sm:grid-cols-2 gap-4 text-sm text-white/80">
+            <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
@@ -253,7 +253,7 @@ const Module6Section3_3 = () => {
 
           {/* Introduction */}
           <section className="mb-10">
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Before any electrical testing can be carried out, instruments must be properly
                 prepared and checked. Zeroing ensures that the instrument reads accurately and that
@@ -274,10 +274,10 @@ const Module6Section3_3 = () => {
               Learning Outcomes
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <p className="text-white/80 mb-3">
+              <p className="text-white mb-3">
                 By the end of this subsection, you will be able to:
               </p>
-              <ul className="space-y-2 text-white/80">
+              <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
                   <span>Explain why setting up and zeroing instruments is essential</span>
@@ -308,7 +308,7 @@ const Module6Section3_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Why Zero Instruments?
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div>
                 <p className="font-medium text-white mb-2">Internal Resistance Factors:</p>
                 <ul className="ml-4 space-y-1 text-sm">
@@ -393,7 +393,7 @@ const Module6Section3_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Pre-Use Checks
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div>
                 <p className="font-medium text-white mb-2">Physical Inspection Checklist:</p>
                 <ul className="ml-4 space-y-1 text-sm">
@@ -461,7 +461,7 @@ const Module6Section3_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Zeroing a Continuity Tester or Multimeter
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div>
                 <p className="font-medium text-white mb-2">Step-by-Step Zeroing Procedure:</p>
                 <ul className="ml-4 space-y-1 text-sm">
@@ -528,7 +528,7 @@ const Module6Section3_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Zeroing an Insulation Resistance Tester
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div>
                 <p className="font-medium text-white mb-2">IR Tester Setup:</p>
                 <ul className="ml-4 space-y-1 text-sm">
@@ -589,7 +589,7 @@ const Module6Section3_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Common Problems from Not Zeroing
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div>
                 <p className="font-medium text-white mb-2">Common Zeroing Problems:</p>
                 <ul className="ml-4 space-y-1 text-sm">
@@ -639,7 +639,7 @@ const Module6Section3_3 = () => {
             <div className="space-y-6">
               <div>
                 <p className="font-medium text-white mb-3">Essential Pre-Testing Steps:</p>
-                <ul className="space-y-3 text-white/80">
+                <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                     <span>
@@ -672,7 +672,7 @@ const Module6Section3_3 = () => {
 
               <div>
                 <p className="font-medium text-white mb-3">Zeroing Best Practices:</p>
-                <ul className="space-y-3 text-white/80">
+                <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                     <span>
@@ -705,7 +705,7 @@ const Module6Section3_3 = () => {
 
               <div>
                 <p className="font-medium text-white mb-3">Storage and Maintenance:</p>
-                <ul className="space-y-3 text-white/80">
+                <ul className="space-y-3 text-white">
                   <li className="flex items-start gap-3">
                     <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                     <span>
@@ -745,20 +745,20 @@ const Module6Section3_3 = () => {
               Real-World Example
             </h2>
             <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30 mb-4">
-              <p className="text-white/90 mb-4">
+              <p className="text-white mb-4">
                 <strong>Scenario:</strong> During fault-finding, an electrician skipped zeroing a
                 continuity tester. The meter showed a resistance reading of 1.5 Ω on a new circuit,
                 suggesting a potential loose connection. The circuit was unnecessarily stripped and
                 re-terminated, wasting time.
               </p>
-              <p className="text-white/90">
+              <p className="text-white">
                 The issue was later found to be the tester itself, which had not been zeroed
                 properly. The 1.5 Ω was simply the resistance of the test leads.
               </p>
             </div>
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-white/90">
+              <p className="text-white">
                 <strong>Professional Insight:</strong> Always zero before use to avoid misdiagnosis
                 and wasted work. A simple 30-second zeroing procedure can save hours of unnecessary
                 troubleshooting.
@@ -776,7 +776,7 @@ const Module6Section3_3 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Q: {faq.question}</p>
-                  <p className="text-sm text-white/70">A: {faq.answer}</p>
+                  <p className="text-sm text-white">A: {faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -788,7 +788,7 @@ const Module6Section3_3 = () => {
               <h2 className="text-lg font-semibold text-white mb-4">
                 Pocket Guide: Zeroing Essentials
               </h2>
-              <div className="space-y-2 text-white/80">
+              <div className="space-y-2 text-white">
                 <div className="flex items-start gap-2">
                   <CheckCircle className="w-5 h-5 text-green-500 mt-0.5 flex-shrink-0" />
                   <span>Zero before every test.</span>
@@ -822,25 +822,25 @@ const Module6Section3_3 = () => {
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
               <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-center">
                 <p className="text-sm font-medium text-white mb-1">Accuracy</p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   Zeroing ensures accurate, reliable measurements
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-center">
                 <p className="text-sm font-medium text-white mb-1">Continuity 0 Ω</p>
-                <p className="text-xs text-white/60">Testers should read 0 Ω when shorted</p>
+                <p className="text-xs text-white">Testers should read 0 Ω when shorted</p>
               </div>
               <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-center">
                 <p className="text-sm font-medium text-white mb-1">IR ∞ Open</p>
-                <p className="text-xs text-white/60">IR testers should show ∞ with open leads</p>
+                <p className="text-xs text-white">IR testers should show ∞ with open leads</p>
               </div>
               <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-center">
                 <p className="text-sm font-medium text-white mb-1">Re-check</p>
-                <p className="text-xs text-white/60">Poor zeroing = wasted time, false faults</p>
+                <p className="text-xs text-white">Poor zeroing = wasted time, false faults</p>
               </div>
               <div className="p-3 rounded-lg bg-white/5 border border-white/10 text-center">
                 <p className="text-sm font-medium text-white mb-1">Prove-Zero-Check</p>
-                <p className="text-xs text-white/60">Always prove, zero, and re-check</p>
+                <p className="text-xs text-white">Always prove, zero, and re-check</p>
               </div>
             </div>
           </section>
@@ -855,7 +855,7 @@ const Module6Section3_3 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../3-2">

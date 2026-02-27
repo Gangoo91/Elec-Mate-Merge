@@ -87,7 +87,7 @@ const CostBreakdownCard = ({
           </motion.div>
           <div>
             <h3 className="text-base sm:text-lg text-white font-semibold">Cost Breakdown</h3>
-            <p className="text-xs sm:text-sm text-white/50">
+            <p className="text-xs sm:text-sm text-white">
               Tap sections for detailed justification
             </p>
           </div>
@@ -104,7 +104,7 @@ const CostBreakdownCard = ({
               </div>
               <div>
                 <div className="text-sm sm:text-base font-medium text-white">Materials</div>
-                <div className="text-xs sm:text-sm text-white/50">
+                <div className="text-xs sm:text-sm text-white">
                   Net: £{materialsNet.toFixed(2)} + {markupPercentage}%
                 </div>
               </div>
@@ -139,7 +139,7 @@ const CostBreakdownCard = ({
                     <CheckCircle className="h-4 w-4 text-blue-400" />
                     Why This Markup is Necessary
                   </div>
-                  <ul className="space-y-2 text-xs sm:text-sm text-white/70 text-left">
+                  <ul className="space-y-2 text-xs sm:text-sm text-white text-left">
                     <li className="flex items-start gap-2">
                       <span className="text-blue-400">✓</span>
                       <span>Covers waste and offcuts (5-10%)</span>
@@ -161,7 +161,7 @@ const CostBreakdownCard = ({
 
                 <div className="p-3 rounded-xl bg-white/5">
                   <div className="text-xs font-medium mb-2 text-white">Industry Standards</div>
-                  <div className="space-y-2 text-xs sm:text-sm text-white/60 text-left">
+                  <div className="space-y-2 text-xs sm:text-sm text-white text-left">
                     <div>
                       Budget: <span className="text-white">10-15%</span>
                     </div>
@@ -193,7 +193,7 @@ const CostBreakdownCard = ({
               </div>
               <div>
                 <div className="text-sm sm:text-base font-medium text-white">Labour</div>
-                <div className="text-xs sm:text-sm text-white/50">
+                <div className="text-xs sm:text-sm text-white">
                   {labourHours.toFixed(1)}h @ £{calculatedLabourRate.toFixed(2)}/hr
                 </div>
               </div>
@@ -227,7 +227,7 @@ const CostBreakdownCard = ({
                   <div className="text-xs font-medium mb-2 text-white">
                     Your Rate: £{calculatedLabourRate.toFixed(2)}/hr
                   </div>
-                  <div className="space-y-2 text-xs sm:text-sm text-white/60 text-left">
+                  <div className="space-y-2 text-xs sm:text-sm text-white text-left">
                     <div>
                       UK Market ({experienceLevel}):{' '}
                       <span className="text-white">
@@ -248,7 +248,7 @@ const CostBreakdownCard = ({
                     <CheckCircle className="h-4 w-4 text-orange-400" />
                     What You Bring
                   </div>
-                  <ul className="space-y-1.5 text-xs sm:text-sm text-white/70 text-left">
+                  <ul className="space-y-1.5 text-xs sm:text-sm text-white text-left">
                     <li className="flex items-start gap-2">
                       <span className="text-orange-400">✓</span>
                       <span>18th Edition qualified</span>
@@ -268,7 +268,7 @@ const CostBreakdownCard = ({
                   </ul>
                 </div>
 
-                <p className="text-xs sm:text-sm text-white/50 italic">
+                <p className="text-xs sm:text-sm text-white italic">
                   £{calculatedLabourRate.toFixed(2)}/hr is competitive for {experienceLevel} in{' '}
                   {region}.
                 </p>
@@ -289,7 +289,7 @@ const CostBreakdownCard = ({
                   <div className="text-sm sm:text-base font-medium text-white">
                     Business Overheads
                   </div>
-                  <div className="text-xs sm:text-sm text-white/50">
+                  <div className="text-xs sm:text-sm text-white">
                     {calculatedJobDuration.toFixed(1)} days @ £
                     {(overheadTotal / calculatedJobDuration).toFixed(2)}/day
                   </div>
@@ -324,7 +324,7 @@ const CostBreakdownCard = ({
                     <div className="text-xs font-medium mb-2 text-white">
                       Monthly Business Costs
                     </div>
-                    <div className="space-y-2 text-xs sm:text-sm text-white/60 text-left">
+                    <div className="space-y-2 text-xs sm:text-sm text-white text-left">
                       <div>
                         Van & fuel:{' '}
                         <span className="text-white">
@@ -359,7 +359,7 @@ const CostBreakdownCard = ({
 
                   <div className="p-3 rounded-xl bg-white/5">
                     <div className="text-xs font-medium mb-2 text-white">This Job's Share</div>
-                    <div className="space-y-1 text-xs sm:text-sm text-white/60 text-left">
+                    <div className="space-y-1 text-xs sm:text-sm text-white text-left">
                       <div>
                         Duration:{' '}
                         <span className="text-white">{calculatedJobDuration.toFixed(1)} days</span>
@@ -391,7 +391,7 @@ const CostBreakdownCard = ({
               </div>
               <div>
                 <div className="text-sm sm:text-base font-medium text-white">Contingency</div>
-                <div className="text-xs sm:text-sm text-white/50">{contingencyPercent}% buffer</div>
+                <div className="text-xs sm:text-sm text-white">{contingencyPercent}% buffer</div>
               </div>
             </div>
             <div className="text-right">
@@ -424,7 +424,7 @@ const CostBreakdownCard = ({
                     <CheckCircle className="h-4 w-4 text-amber-400" />
                     What Contingency Covers
                   </div>
-                  <ul className="space-y-1.5 text-xs sm:text-sm text-white/70 text-left">
+                  <ul className="space-y-1.5 text-xs sm:text-sm text-white text-left">
                     <li className="flex items-start gap-2">
                       <span className="text-amber-400">✓</span>
                       <span>Hidden problems on-site</span>
@@ -446,7 +446,7 @@ const CostBreakdownCard = ({
 
                 <div className="p-3 rounded-xl bg-white/5">
                   <div className="text-xs font-medium mb-2 text-white">Industry Standards</div>
-                  <div className="space-y-1 text-xs sm:text-sm text-white/60 text-left">
+                  <div className="space-y-1 text-xs sm:text-sm text-white text-left">
                     <div>
                       Simple jobs: <span className="text-white">3-5%</span>
                     </div>
@@ -486,21 +486,21 @@ const CostBreakdownCard = ({
 
             <div className="space-y-2 text-xs">
               <div className="flex justify-between">
-                <span className="text-white/60">Materials + markup:</span>
+                <span className="text-white">Materials + markup:</span>
                 <span className="font-medium text-white">£{materialsWithMarkup.toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-white/60">Labour (incl. overheads):</span>
+                <span className="text-white">Labour (incl. overheads):</span>
                 <span className="font-medium text-white">£{labourTotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-white/60">Contingency ({contingencyPercent}%):</span>
+                <span className="text-white">Contingency ({contingencyPercent}%):</span>
                 <span className="font-medium text-white">£{contingencyAmount.toFixed(2)}</span>
               </div>
             </div>
 
             <div className="mt-4 pt-4 border-t border-elec-yellow/20">
-              <p className="text-xs sm:text-sm text-white/70">
+              <p className="text-xs sm:text-sm text-white">
                 <span className="text-white font-medium">Floor price.</span> Quote above for profit.
                 Below = losing money.
               </p>

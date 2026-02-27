@@ -486,23 +486,23 @@ const InspectionTestingModule2Section3 = () => {
               </div>
               <div className="space-y-1 text-white text-sm">
                 <div className="flex justify-between">
-                  <span className="text-white/70">Isolated by:</span>
+                  <span className="text-white">Isolated by:</span>
                   <span className="font-medium">J. Smith</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/70">Date:</span>
+                  <span className="text-white">Date:</span>
                   <span className="font-medium">15/01/2025</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/70">Time:</span>
+                  <span className="text-white">Time:</span>
                   <span className="font-medium">09:30</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/70">Reason:</span>
+                  <span className="text-white">Reason:</span>
                   <span className="font-medium">Cable repair</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-white/70">Contact:</span>
+                  <span className="text-white">Contact:</span>
                   <span className="font-medium">07xxx xxxxxx</span>
                 </div>
               </div>
@@ -889,7 +889,7 @@ const InspectionTestingModule2Section3 = () => {
             {defined_faqs.map((faq, index) => (
               <div key={index} className="border border-border rounded-lg p-4">
                 <h4 className="font-medium text-foreground mb-2">{faq.question}</h4>
-                <p className="text-sm text-white/90">{faq.answer}</p>
+                <p className="text-sm text-white">{faq.answer}</p>
               </div>
             ))}
           </div>

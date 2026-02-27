@@ -222,7 +222,7 @@ export default function CoshhAwarenessModule4Section1() {
             MODULE 4 &middot; SECTION 1
           </span>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">Hierarchy of Control</h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             How to prevent or adequately control exposure to hazardous substances using the five
             levels of the hierarchy of control &mdash; from elimination to PPE
           </p>
@@ -345,7 +345,7 @@ export default function CoshhAwarenessModule4Section1() {
                   Carcinogens, Mutagens &amp; Asthmagens
                 </h3>
               </div>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 For substances that cause cancer, heritable genetic damage, or occupational asthma,
                 the duty is stricter. Employers must{' '}
                 <strong className="text-white">
@@ -380,7 +380,7 @@ export default function CoshhAwarenessModule4Section1() {
                 <h3 className="text-violet-400 font-medium mb-4 text-center">
                   Hierarchy of Control Pyramid
                 </h3>
-                <p className="text-white/60 text-xs text-center mb-5">
+                <p className="text-white text-xs text-center mb-5">
                   Most effective at the top &mdash; least effective at the bottom
                 </p>
 
@@ -390,49 +390,49 @@ export default function CoshhAwarenessModule4Section1() {
                     <p className="text-green-400 font-bold text-xs sm:text-sm uppercase tracking-wider">
                       1. Elimination
                     </p>
-                    <p className="text-white/70 text-xs mt-0.5">Remove the hazard</p>
+                    <p className="text-white text-xs mt-0.5">Remove the hazard</p>
                   </div>
-                  <ArrowDown className="h-4 w-4 text-white/30" />
+                  <ArrowDown className="h-4 w-4 text-white" />
 
                   {/* Level 2 — Substitution */}
                   <div className="w-[55%] sm:w-[50%] bg-emerald-500/15 border-2 border-emerald-500/40 rounded-lg px-3 py-2.5 text-center">
                     <p className="text-emerald-400 font-bold text-xs sm:text-sm uppercase tracking-wider">
                       2. Substitution
                     </p>
-                    <p className="text-white/70 text-xs mt-0.5">Replace with less hazardous</p>
+                    <p className="text-white text-xs mt-0.5">Replace with less hazardous</p>
                   </div>
-                  <ArrowDown className="h-4 w-4 text-white/30" />
+                  <ArrowDown className="h-4 w-4 text-white" />
 
                   {/* Level 3 — Engineering Controls */}
                   <div className="w-[65%] sm:w-[60%] bg-blue-500/15 border-2 border-blue-500/40 rounded-lg px-3 py-2.5 text-center">
                     <p className="text-blue-400 font-bold text-xs sm:text-sm uppercase tracking-wider">
                       3. Engineering Controls
                     </p>
-                    <p className="text-white/70 text-xs mt-0.5">LEV, enclosure, automation</p>
+                    <p className="text-white text-xs mt-0.5">LEV, enclosure, automation</p>
                   </div>
-                  <ArrowDown className="h-4 w-4 text-white/30" />
+                  <ArrowDown className="h-4 w-4 text-white" />
 
                   {/* Level 4 — Administrative Controls */}
                   <div className="w-[80%] sm:w-[75%] bg-amber-500/15 border-2 border-amber-500/40 rounded-lg px-3 py-2.5 text-center">
                     <p className="text-amber-400 font-bold text-xs sm:text-sm uppercase tracking-wider">
                       4. Administrative Controls
                     </p>
-                    <p className="text-white/70 text-xs mt-0.5">Procedures, training, signage</p>
+                    <p className="text-white text-xs mt-0.5">Procedures, training, signage</p>
                   </div>
-                  <ArrowDown className="h-4 w-4 text-white/30" />
+                  <ArrowDown className="h-4 w-4 text-white" />
 
                   {/* Level 5 — PPE/RPE */}
                   <div className="w-[95%] sm:w-[90%] bg-red-500/15 border-2 border-red-500/40 rounded-lg px-3 py-2.5 text-center">
                     <p className="text-red-400 font-bold text-xs sm:text-sm uppercase tracking-wider">
                       5. PPE / RPE
                     </p>
-                    <p className="text-white/70 text-xs mt-0.5">
+                    <p className="text-white text-xs mt-0.5">
                       Last resort &mdash; personal protection
                     </p>
                   </div>
                 </div>
 
-                <div className="flex justify-between mt-4 text-xs text-white/40 max-w-md mx-auto px-2">
+                <div className="flex justify-between mt-4 text-xs text-white max-w-md mx-auto px-2">
                   <span className="flex items-center gap-1">
                     <span className="w-2 h-2 rounded-full bg-green-500/50" />
                     Most effective
@@ -449,7 +449,7 @@ export default function CoshhAwarenessModule4Section1() {
                 <h3 className="text-green-400 font-medium mb-3">
                   Level 1: Elimination &mdash; Remove the Substance Entirely
                 </h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The most effective control. If the hazardous substance is not present, no one can
                   be exposed. This means redesigning the process, changing the method of work, or
                   using a substance-free technique.
@@ -492,7 +492,7 @@ export default function CoshhAwarenessModule4Section1() {
                 <h3 className="text-emerald-400 font-medium mb-3">
                   Level 2: Substitution &mdash; Replace with a Less Hazardous Substance
                 </h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   If the substance cannot be eliminated, consider whether a less hazardous
                   alternative can achieve the same result. The substitute must be genuinely less
                   hazardous &mdash; not just different.
@@ -541,7 +541,7 @@ export default function CoshhAwarenessModule4Section1() {
                 <h3 className="text-blue-400 font-medium mb-3">
                   Level 3: Engineering Controls &mdash; Contain, Extract, or Isolate
                 </h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Engineering controls physically reduce exposure by containing the substance,
                   extracting it at source, or isolating the worker from it. These are covered in
                   detail in the next section, but the key types are outlined here.
@@ -599,7 +599,7 @@ export default function CoshhAwarenessModule4Section1() {
                 <h3 className="text-amber-400 font-medium mb-3">
                   Level 4: Administrative Controls &mdash; Change How Work Is Done
                 </h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Administrative controls change the way work is organised to reduce exposure. They
                   do not remove or reduce the hazard itself &mdash; they reduce the time or number
                   of people exposed.
@@ -663,7 +663,7 @@ export default function CoshhAwarenessModule4Section1() {
                 <h3 className="text-red-400 font-medium mb-3">
                   Level 5: PPE / RPE &mdash; Last Resort, Personal Protection
                 </h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Personal protective equipment (PPE) and respiratory protective equipment (RPE) are
                   the <strong>last line of defence</strong>. They should only be used when all
                   higher-level controls are in place and residual risk remains, or as a temporary
@@ -712,7 +712,7 @@ export default function CoshhAwarenessModule4Section1() {
                   </div>
                 </div>
                 <div className="bg-red-500/10 border border-red-500/30 p-3 rounded-lg mt-3">
-                  <p className="text-white/80 text-xs">
+                  <p className="text-white text-xs">
                     <strong className="text-red-300">Remember:</strong> PPE only protects the person
                     wearing it. If it is removed, incorrectly fitted, or the wrong type, the worker
                     has <strong className="text-white">zero protection</strong>. This is why PPE is
@@ -796,7 +796,7 @@ export default function CoshhAwarenessModule4Section1() {
                 <h3 className="text-violet-400 font-semibold mb-2">
                   Collective vs Personal Protection
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   COSHH requires employers to prioritise{' '}
                   <strong className="text-white">collective protection</strong> over personal
                   protection. Collective measures protect all workers automatically; personal
@@ -807,7 +807,7 @@ export default function CoshhAwarenessModule4Section1() {
                     <p className="text-green-400 text-xs font-semibold uppercase tracking-wider mb-1">
                       Collective (Preferred)
                     </p>
-                    <ul className="text-white/80 text-xs space-y-1">
+                    <ul className="text-white text-xs space-y-1">
                       <li>&bull; LEV systems</li>
                       <li>&bull; Enclosed processes</li>
                       <li>&bull; General ventilation</li>
@@ -819,7 +819,7 @@ export default function CoshhAwarenessModule4Section1() {
                     <p className="text-red-400 text-xs font-semibold uppercase tracking-wider mb-1">
                       Personal (Last Resort)
                     </p>
-                    <ul className="text-white/80 text-xs space-y-1">
+                    <ul className="text-white text-xs space-y-1">
                       <li>&bull; Respirators (RPE)</li>
                       <li>&bull; Chemical-resistant gloves</li>
                       <li>&bull; Safety goggles</li>
@@ -888,7 +888,7 @@ export default function CoshhAwarenessModule4Section1() {
 
               <div className="bg-violet-500/10 border border-violet-500/30 p-4 rounded-lg">
                 <h3 className="text-violet-400 font-semibold mb-2">Practical Example</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   An electrical contractor uses solvent-based contact cleaner daily. A water-based
                   alternative costs 20% more per litre but eliminates the inhalation hazard from
                   volatile solvents. The employer cannot argue that the 20% cost increase is
@@ -904,7 +904,7 @@ export default function CoshhAwarenessModule4Section1() {
                   <AlertTriangle className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-amber-300">Common Misconception</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   SFAIRP does <strong className="text-white">not</strong> mean &ldquo;do whatever is
                   cheapest&rdquo; or &ldquo;do whatever is easiest&rdquo;. It requires a genuine
                   assessment of risk versus sacrifice. In practice, for most routine workplace
@@ -936,7 +936,7 @@ export default function CoshhAwarenessModule4Section1() {
                 <h3 className="text-violet-400 font-medium mb-4 text-center">
                   Control Selection Decision Tree
                 </h3>
-                <p className="text-white/60 text-xs text-center mb-5">
+                <p className="text-white text-xs text-center mb-5">
                   Follow the flowchart to determine which level of control to apply
                 </p>
 
@@ -947,7 +947,7 @@ export default function CoshhAwarenessModule4Section1() {
                       Can the substance be ELIMINATED?
                     </p>
                   </div>
-                  <div className="flex items-center gap-4 text-xs text-white/50 w-full justify-center">
+                  <div className="flex items-center gap-4 text-xs text-white w-full justify-center">
                     <span className="text-green-400 font-semibold">YES &rarr; Do it</span>
                     <span>|</span>
                     <span className="text-red-400 font-semibold">NO &darr;</span>
@@ -959,7 +959,7 @@ export default function CoshhAwarenessModule4Section1() {
                       Can it be SUBSTITUTED with less hazardous?
                     </p>
                   </div>
-                  <div className="flex items-center gap-4 text-xs text-white/50 w-full justify-center">
+                  <div className="flex items-center gap-4 text-xs text-white w-full justify-center">
                     <span className="text-green-400 font-semibold">YES &rarr; Do it</span>
                     <span>|</span>
                     <span className="text-red-400 font-semibold">NO &darr;</span>
@@ -971,7 +971,7 @@ export default function CoshhAwarenessModule4Section1() {
                       Can ENGINEERING CONTROLS reduce exposure?
                     </p>
                   </div>
-                  <div className="flex items-center gap-4 text-xs text-white/50 w-full justify-center">
+                  <div className="flex items-center gap-4 text-xs text-white w-full justify-center">
                     <span className="text-green-400 font-semibold">YES &rarr; Implement</span>
                     <span>|</span>
                     <span className="text-red-400 font-semibold">NO &darr;</span>
@@ -983,7 +983,7 @@ export default function CoshhAwarenessModule4Section1() {
                       Can ADMINISTRATIVE CONTROLS reduce exposure further?
                     </p>
                   </div>
-                  <div className="flex items-center gap-4 text-xs text-white/50 w-full justify-center">
+                  <div className="flex items-center gap-4 text-xs text-white w-full justify-center">
                     <span className="text-green-400 font-semibold">YES &rarr; Implement</span>
                     <span>|</span>
                     <span className="text-amber-400 font-semibold">ALWAYS &darr;</span>
@@ -994,13 +994,13 @@ export default function CoshhAwarenessModule4Section1() {
                     <p className="text-red-400 font-semibold text-xs">
                       Provide PPE/RPE for residual risk
                     </p>
-                    <p className="text-white/50 text-xs mt-0.5">
+                    <p className="text-white text-xs mt-0.5">
                       Correct selection + face-fit + training + maintenance
                     </p>
                   </div>
                 </div>
 
-                <p className="text-white/40 text-xs text-center mt-4 italic">
+                <p className="text-white text-xs text-center mt-4 italic">
                   At each step, document why you cannot apply a higher-level control
                 </p>
               </div>
@@ -1015,7 +1015,7 @@ export default function CoshhAwarenessModule4Section1() {
                   <div className="p-4 space-y-2 text-sm">
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-green-500 mt-2 flex-shrink-0"></div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <strong className="text-white">Pre-fabricate off site</strong> &mdash;
                         assemble cable tray, containment, and switchgear in a workshop to avoid
                         cutting, drilling, and chemical use on site
@@ -1023,7 +1023,7 @@ export default function CoshhAwarenessModule4Section1() {
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-green-500 mt-2 flex-shrink-0"></div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <strong className="text-white">Push-fit connectors</strong> &mdash;
                         eliminate the need for soldering entirely, removing exposure to flux fume
                         and lead/tin solder
@@ -1031,7 +1031,7 @@ export default function CoshhAwarenessModule4Section1() {
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-green-500 mt-2 flex-shrink-0"></div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <strong className="text-white">
                           Mechanical fixings instead of chemical anchors
                         </strong>{' '}
@@ -1050,7 +1050,7 @@ export default function CoshhAwarenessModule4Section1() {
                   <div className="p-4 space-y-2 text-sm">
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <strong className="text-white">Low-VOC adhesives</strong> &mdash; reduced
                         volatile organic compound emissions compared to standard solvent-based
                         adhesives
@@ -1058,7 +1058,7 @@ export default function CoshhAwarenessModule4Section1() {
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <strong className="text-white">
                           Water-based cleaners instead of solvent-based
                         </strong>{' '}
@@ -1067,7 +1067,7 @@ export default function CoshhAwarenessModule4Section1() {
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <strong className="text-white">Lead-free solder</strong> &mdash; eliminates
                         lead exposure while maintaining a soldering capability; flux fume exposure
                         may still require additional controls
@@ -1075,7 +1075,7 @@ export default function CoshhAwarenessModule4Section1() {
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <strong className="text-white">Low-chrome cement</strong> &mdash; reduces
                         the risk of allergic contact dermatitis caused by hexavalent chromium in
                         standard Portland cement
@@ -1092,7 +1092,7 @@ export default function CoshhAwarenessModule4Section1() {
                   <div className="p-4 space-y-2 text-sm">
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <strong className="text-white">LEV on soldering stations</strong> &mdash;
                         bench-mounted or portable fume extraction that captures solder fume at the
                         point of generation
@@ -1100,7 +1100,7 @@ export default function CoshhAwarenessModule4Section1() {
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <strong className="text-white">
                           On-tool extraction when cutting concrete
                         </strong>{' '}
@@ -1110,7 +1110,7 @@ export default function CoshhAwarenessModule4Section1() {
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <strong className="text-white">H-class vacuum for dust</strong> &mdash;
                         HEPA-filtered industrial vacuum for collecting hazardous dust (silica, wood
                         dust, plaster)
@@ -1118,7 +1118,7 @@ export default function CoshhAwarenessModule4Section1() {
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-blue-500 mt-2 flex-shrink-0"></div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <strong className="text-white">Segregated spray-painting booth</strong>{' '}
                         &mdash; enclosed area with dedicated ventilation to contain paint vapour and
                         overspray
@@ -1137,7 +1137,7 @@ export default function CoshhAwarenessModule4Section1() {
                   <div className="p-4 space-y-2 text-sm">
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-amber-500 mt-2 flex-shrink-0"></div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <strong className="text-white">Limit exposure duration</strong> &mdash;
                         schedule soldering or painting tasks for set periods with mandatory breaks
                         to reduce cumulative exposure
@@ -1145,7 +1145,7 @@ export default function CoshhAwarenessModule4Section1() {
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-amber-500 mt-2 flex-shrink-0"></div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <strong className="text-white">Welfare facilities</strong> &mdash;
                         designated washing areas, clean eating areas separated from work zones,
                         facilities for changing contaminated clothing
@@ -1153,7 +1153,7 @@ export default function CoshhAwarenessModule4Section1() {
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-amber-500 mt-2 flex-shrink-0"></div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <strong className="text-white">Toolbox talks</strong> &mdash; regular
                         briefings on the hazardous substances present, the controls in place, and
                         what to do if controls fail
@@ -1161,7 +1161,7 @@ export default function CoshhAwarenessModule4Section1() {
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-amber-500 mt-2 flex-shrink-0"></div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <strong className="text-white">
                           Permits to work for high-risk chemical tasks
                         </strong>{' '}
@@ -1180,7 +1180,7 @@ export default function CoshhAwarenessModule4Section1() {
                   <div className="p-4 space-y-2 text-sm">
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-red-500 mt-2 flex-shrink-0"></div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <strong className="text-white">
                           Correct glove selection for chemical handling
                         </strong>{' '}
@@ -1190,7 +1190,7 @@ export default function CoshhAwarenessModule4Section1() {
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-red-500 mt-2 flex-shrink-0"></div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <strong className="text-white">FFP3 respirator for dust exposure</strong>{' '}
                         &mdash; when cutting, drilling, or chasing generates dust that cannot be
                         fully controlled by on-tool extraction alone
@@ -1198,7 +1198,7 @@ export default function CoshhAwarenessModule4Section1() {
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-red-500 mt-2 flex-shrink-0"></div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <strong className="text-white">RPE with A1P3 filters for soldering</strong>{' '}
                         &mdash; combination organic vapour and particulate filter when LEV is
                         insufficient or unavailable as a temporary measure
@@ -1206,7 +1206,7 @@ export default function CoshhAwarenessModule4Section1() {
                     </div>
                     <div className="flex items-start gap-3">
                       <div className="w-2 h-2 rounded-full bg-red-500 mt-2 flex-shrink-0"></div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <strong className="text-white">Safety goggles for splash protection</strong>{' '}
                         &mdash; when handling liquid chemicals such as cleaning agents, battery
                         acid, or resin components
@@ -1277,7 +1277,7 @@ export default function CoshhAwarenessModule4Section1() {
                     </div>
                     <div>
                       <strong className="text-green-400">Elimination:</strong>{' '}
-                      <span className="text-white/80">
+                      <span className="text-white">
                         Use push-fit connectors where possible to eliminate soldering entirely
                       </span>
                     </div>
@@ -1288,7 +1288,7 @@ export default function CoshhAwarenessModule4Section1() {
                     </div>
                     <div>
                       <strong className="text-emerald-400">Substitution:</strong>{' '}
-                      <span className="text-white/80">
+                      <span className="text-white">
                         Where soldering is necessary, use lead-free solder and rosin-free flux to
                         reduce toxicity of fume
                       </span>
@@ -1300,7 +1300,7 @@ export default function CoshhAwarenessModule4Section1() {
                     </div>
                     <div>
                       <strong className="text-blue-400">Engineering:</strong>{' '}
-                      <span className="text-white/80">
+                      <span className="text-white">
                         Install bench-mounted LEV to capture fume at source; ensure adequate general
                         ventilation in the workshop
                       </span>
@@ -1312,7 +1312,7 @@ export default function CoshhAwarenessModule4Section1() {
                     </div>
                     <div>
                       <strong className="text-amber-400">Administrative:</strong>{' '}
-                      <span className="text-white/80">
+                      <span className="text-white">
                         Limit continuous soldering to 30-minute sessions; train all operatives on
                         correct LEV use; display safety data sheets
                       </span>
@@ -1324,14 +1324,14 @@ export default function CoshhAwarenessModule4Section1() {
                     </div>
                     <div>
                       <strong className="text-red-400">PPE:</strong>{' '}
-                      <span className="text-white/80">
+                      <span className="text-white">
                         Provide RPE for peak-exposure tasks (e.g. when LEV cannot be positioned
                         effectively); nitrile gloves when handling flux
                       </span>
                     </div>
                   </div>
                 </div>
-                <p className="text-white/50 text-xs mt-3 italic">
+                <p className="text-white text-xs mt-3 italic">
                   All five levels work together. If the LEV fails, the substituted (less toxic)
                   solder reduces risk, the time limits reduce exposure duration, and RPE provides a
                   final barrier.
@@ -1417,7 +1417,7 @@ export default function CoshhAwarenessModule4Section1() {
                 <h3 className="text-violet-400 font-semibold mb-2">
                   When Controls Are Found to Be Inadequate
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   If monitoring reveals that controls are not adequate, the employer must take
                   immediate action:
                 </p>
@@ -1538,7 +1538,7 @@ export default function CoshhAwarenessModule4Section1() {
               {/* Regulation Reference Box */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-violet-400 font-medium mb-2">Key Regulations Covered</h3>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="text-violet-400 font-semibold flex-shrink-0">Reg 7:</span>
                     <span>
@@ -1573,7 +1573,7 @@ export default function CoshhAwarenessModule4Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1589,7 +1589,7 @@ export default function CoshhAwarenessModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-3-section-4">

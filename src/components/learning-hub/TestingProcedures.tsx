@@ -36,7 +36,7 @@ const TestingProcedures = () => {
       case 'Required':
         return 'text-blue-400';
       default:
-        return 'text-white/80';
+        return 'text-white';
     }
   };
 
@@ -62,7 +62,7 @@ const TestingProcedures = () => {
                     {topic.status}
                   </span>
                 </div>
-                <p className="text-sm text-white/80">{topic.description}</p>
+                <p className="text-sm text-white">{topic.description}</p>
               </div>
               <Button
                 size="sm"

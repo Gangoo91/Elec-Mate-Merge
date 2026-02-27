@@ -271,7 +271,7 @@ const MOETModule2Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module2-section4">
@@ -293,7 +293,7 @@ const MOETModule2Section4_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             RCDs and RCBOs
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Residual current devices and combined protection units for earth fault protection
           </p>
         </header>
@@ -462,7 +462,7 @@ const MOETModule2Section4_2 = () => {
                   fault current can saturate the magnetic core, preventing the device from operating
                   even on a pure AC fault.
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   <strong>Application:</strong> Very limited in modern installations. BS 7671
                   generally requires Type A as a minimum. Type AC is only suitable where no
                   electronic equipment is present.
@@ -477,7 +477,7 @@ const MOETModule2Section4_2 = () => {
                   type is identified by a sinusoidal wave plus a pulsating DC symbol. Type A is the
                   minimum requirement for most circuits under current BS 7671 guidance.
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   <strong>Application:</strong> General-purpose protection for circuits supplying
                   equipment with single-phase rectifiers — washing machines, dishwashers, IT
                   equipment, LED drivers.
@@ -492,7 +492,7 @@ const MOETModule2Section4_2 = () => {
                   variable-frequency drives and inverter-based equipment. Type F provides enhanced
                   sensitivity to these waveforms compared to Type A.
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   <strong>Application:</strong> Circuits supplying single-phase inverter drives
                   (e.g., washing machines with variable-speed motors, heat pumps, some air
                   conditioning units).
@@ -508,7 +508,7 @@ const MOETModule2Section4_2 = () => {
                   Type B RCDs use a more complex sensing arrangement, often incorporating electronic
                   detection alongside the magnetic core.
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   <strong>Application:</strong> Three-phase variable speed drives, some EV charging
                   equipment, certain medical devices, three-phase UPS systems.
                 </p>
@@ -836,7 +836,7 @@ const MOETModule2Section4_2 = () => {
               <div className="space-y-3">
                 <div>
                   <p className="text-sm font-medium text-white mb-1">EV Charging</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Electric vehicle charging circuits require careful RCD selection due to the
                     potential for DC fault currents from the charging electronics. BS 7671 and IET
                     guidance require Type A as minimum, with Type B or Type A plus Type B RDC-DD
@@ -847,7 +847,7 @@ const MOETModule2Section4_2 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-1">Fire Protection (300 mA)</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     A 300 mA RCD does not provide shock protection but can detect earth leakage
                     currents that could cause heating and ignition of combustible materials. BS 7671
                     Regulation 422.3.9 requires 300 mA RCD protection for cable routes in locations
@@ -857,7 +857,7 @@ const MOETModule2Section4_2 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-1">TT Earthing Systems</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     In TT systems, the earth fault loop impedance is typically too high for
                     overcurrent devices to achieve the required disconnection times. RCDs become the
                     primary means of fault protection (not just additional protection). The maximum
@@ -869,7 +869,7 @@ const MOETModule2Section4_2 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Note:</strong> RCDs are life-saving devices. As a maintenance technician,
               ensuring that RCDs are present where required, correctly specified, and regularly
               tested is one of your most important responsibilities. Never bypass, remove or defeat
@@ -889,7 +889,7 @@ const MOETModule2Section4_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -937,7 +937,7 @@ const MOETModule2Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module2-section4-1">

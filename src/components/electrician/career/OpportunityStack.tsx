@@ -91,7 +91,7 @@ const OpportunityCard: React.FC<{ opportunity: Opportunity; index: number }> = (
           </div>
           <div className="min-w-0">
             <h4 className="font-semibold text-white text-[15px] leading-tight">{title}</h4>
-            <p className="text-[13px] text-white/50 line-clamp-1 mt-0.5">{description}</p>
+            <p className="text-[13px] text-white line-clamp-1 mt-0.5">{description}</p>
           </div>
         </div>
       </div>
@@ -106,12 +106,12 @@ const OpportunityCard: React.FC<{ opportunity: Opportunity; index: number }> = (
         {/* Growth */}
         <div className="flex items-center gap-1.5">
           <TrendingUp className={cn('h-3.5 w-3.5', styles.growth)} />
-          <span className="text-xs text-white/50">{growth.replace('Growth: ', '')}</span>
+          <span className="text-xs text-white">{growth.replace('Growth: ', '')}</span>
         </div>
       </div>
 
       {/* Requirement */}
-      <div className="mt-2.5 text-xs text-white/40">{requirement.replace('Required: ', '')}</div>
+      <div className="mt-2.5 text-xs text-white">{requirement.replace('Required: ', '')}</div>
     </motion.div>
   );
 };
@@ -136,7 +136,7 @@ export const OpportunityStack: React.FC<OpportunityStackProps> = ({
         <Button
           variant="ghost"
           onClick={() => setShowAll(!showAll)}
-          className="w-full h-12 text-white/60 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+          className="w-full h-12 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
         >
           {showAll ? (
             <>

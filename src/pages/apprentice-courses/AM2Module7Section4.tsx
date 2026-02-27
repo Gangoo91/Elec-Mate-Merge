@@ -242,7 +242,7 @@ const AM2Module7Section4 = () => {
 
       {/* Safe Isolation Mistakes */}
       <AM2ContentCard title="1. Safe Isolation Mistakes" icon={Shield} accent>
-        <p className="text-ios-callout text-white/80 mb-4">
+        <p className="text-ios-callout text-white mb-4">
           This is the number one cause of failure. Candidates either forget a step or rush through
           the process.
         </p>
@@ -250,59 +250,59 @@ const AM2Module7Section4 = () => {
         <div className="space-y-4">
           <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
             <h4 className="text-ios-headline text-red-400 mb-3">Most Common Isolation Errors:</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white/90">Skipping the re-prove step</strong> after
+                  <strong className="text-white">Skipping the re-prove step</strong> after
                   testing dead
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white/90">Using wrong tester</strong> (multimeter instead
+                  <strong className="text-white">Using wrong tester</strong> (multimeter instead
                   of two-pole voltage indicator)
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white/90">Not locking off correctly</strong> or forgetting
+                  <strong className="text-white">Not locking off correctly</strong> or forgetting
                   to secure isolation
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white/90">Testing at wrong points</strong> or missing test
+                  <strong className="text-white">Testing at wrong points</strong> or missing test
                   points
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white/90">Rushing the process</strong> under time pressure
+                  <strong className="text-white">Rushing the process</strong> under time pressure
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white/90">Failing to identify all sources</strong> of
+                  <strong className="text-white">Failing to identify all sources</strong> of
                   supply to the circuit
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white/90">Not proving tester initially</strong> on known
+                  <strong className="text-white">Not proving tester initially</strong> on known
                   live source
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white/90">Using damaged test leads</strong> or non-GS38
+                  <strong className="text-white">Using damaged test leads</strong> or non-GS38
                   equipment
                 </span>
               </li>
@@ -311,39 +311,39 @@ const AM2Module7Section4 = () => {
 
           <div className="bg-white/5 border border-yellow-500/30 rounded-xl p-4">
             <h4 className="text-ios-headline text-yellow-400 mb-3">Why These Errors Happen:</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-yellow-400">-</span>
                 <span>
-                  <strong className="text-white/90">Time pressure</strong> - candidates rush basic
+                  <strong className="text-white">Time pressure</strong> - candidates rush basic
                   safety steps
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-yellow-400">-</span>
                 <span>
-                  <strong className="text-white/90">Overconfidence</strong> - assuming circuit is
+                  <strong className="text-white">Overconfidence</strong> - assuming circuit is
                   dead without proper verification
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-yellow-400">-</span>
                 <span>
-                  <strong className="text-white/90">Poor preparation</strong> - not practicing the
+                  <strong className="text-white">Poor preparation</strong> - not practicing the
                   full 10-step sequence
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-yellow-400">-</span>
                 <span>
-                  <strong className="text-white/90">Equipment unfamiliarity</strong> - using
+                  <strong className="text-white">Equipment unfamiliarity</strong> - using
                   unfamiliar test instruments
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-yellow-400">-</span>
                 <span>
-                  <strong className="text-white/90">Stress response</strong> - forgetting steps
+                  <strong className="text-white">Stress response</strong> - forgetting steps
                   under exam pressure
                 </span>
               </li>
@@ -355,7 +355,7 @@ const AM2Module7Section4 = () => {
             <div className="space-y-3">
               <div>
                 <h5 className="text-ios-callout text-blue-400 font-medium">Before You Start:</h5>
-                <ul className="text-ios-callout text-white/70 space-y-1 ml-4">
+                <ul className="text-ios-callout text-white space-y-1 ml-4">
                   <li>- Check test equipment is GS38-compliant and in good condition</li>
                   <li>- Verify you have correct PPE for the task</li>
                   <li>- Identify all possible sources of supply to the circuit</li>
@@ -364,7 +364,7 @@ const AM2Module7Section4 = () => {
               </div>
               <div>
                 <h5 className="text-ios-callout text-blue-400 font-medium">During Isolation:</h5>
-                <ul className="text-ios-callout text-white/70 space-y-1 ml-4">
+                <ul className="text-ios-callout text-white space-y-1 ml-4">
                   <li>- Follow the 10-step process religiously - no shortcuts</li>
                   <li>- Verbalise each step to the assessor clearly</li>
                   <li>- Take your time - safety over speed always</li>
@@ -374,7 +374,7 @@ const AM2Module7Section4 = () => {
               </div>
               <div>
                 <h5 className="text-ios-callout text-blue-400 font-medium">After Testing Dead:</h5>
-                <ul className="text-ios-callout text-white/70 space-y-1 ml-4">
+                <ul className="text-ios-callout text-white space-y-1 ml-4">
                   <li>- Always re-prove tester on known live source</li>
                   <li>- Confirm tester is working correctly</li>
                   <li>- Only then proceed with work on dead circuit</li>
@@ -396,53 +396,53 @@ const AM2Module7Section4 = () => {
 
       {/* Installation Mistakes */}
       <AM2ContentCard title="2. Installation Mistakes" icon={Wrench}>
-        <p className="text-ios-callout text-white/80 mb-4">
+        <p className="text-ios-callout text-white mb-4">
           Most marks are lost here because of poor workmanship and time management issues.
         </p>
 
         <div className="space-y-4">
           <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
             <h4 className="text-ios-headline text-red-400 mb-3">Common Installation Errors:</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white/90">Untidy containment:</strong> conduit kinks,
+                  <strong className="text-white">Untidy containment:</strong> conduit kinks,
                   trunking lids not flush, poor bending radius
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white/90">Bare copper exposed</strong> at terminations -
+                  <strong className="text-white">Bare copper exposed</strong> at terminations -
                   major safety issue
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white/90">CPCs unsleeved</strong> or left disconnected -
+                  <strong className="text-white">CPCs unsleeved</strong> or left disconnected -
                   BS 7671 non-compliance
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white/90">Accessories crooked</strong> or at wrong height
+                  <strong className="text-white">Accessories crooked</strong> or at wrong height
                   - poor workmanship
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white/90">Not labelling circuits</strong> in distribution
+                  <strong className="text-white">Not labelling circuits</strong> in distribution
                   board - identification failure
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white/90">Poor cable management</strong> and untidy work
+                  <strong className="text-white">Poor cable management</strong> and untidy work
                   area
                 </span>
               </li>
@@ -456,7 +456,7 @@ const AM2Module7Section4 = () => {
             <div className="space-y-3">
               <div>
                 <h5 className="text-ios-callout text-green-400 font-medium">Planning Phase:</h5>
-                <ul className="text-ios-callout text-white/70 space-y-1 ml-4">
+                <ul className="text-ios-callout text-white space-y-1 ml-4">
                   <li>- Measure and mark out carefully before starting</li>
                   <li>- Plan cable routes for neatness and compliance</li>
                   <li>- Check all materials and tools are available</li>
@@ -467,7 +467,7 @@ const AM2Module7Section4 = () => {
                 <h5 className="text-ios-callout text-green-400 font-medium">
                   During Installation:
                 </h5>
-                <ul className="text-ios-callout text-white/70 space-y-1 ml-4">
+                <ul className="text-ios-callout text-white space-y-1 ml-4">
                   <li>- Work steadily rather than rushing - quality over speed</li>
                   <li>- Connect and sleeve CPCs first, disconnect last</li>
                   <li>- Use proper torque settings for all connections</li>
@@ -477,7 +477,7 @@ const AM2Module7Section4 = () => {
               </div>
               <div>
                 <h5 className="text-ios-callout text-green-400 font-medium">Quality Control:</h5>
-                <ul className="text-ios-callout text-white/70 space-y-1 ml-4">
+                <ul className="text-ios-callout text-white space-y-1 ml-4">
                   <li>- Label circuits as you install them - don't leave to end</li>
                   <li>- Self-check work before calling assessor</li>
                   <li>- Ensure no bare copper is visible anywhere</li>
@@ -492,53 +492,53 @@ const AM2Module7Section4 = () => {
 
       {/* Inspection & Testing Mistakes */}
       <AM2ContentCard title="3. Inspection & Testing Mistakes" icon={TestTube}>
-        <p className="text-ios-callout text-white/80 mb-4">
+        <p className="text-ios-callout text-white mb-4">
           This section often sinks candidates who know the tests but don't follow proper procedure.
         </p>
 
         <div className="space-y-4">
           <div className="bg-white/5 border border-orange-500/30 rounded-xl p-4">
             <h4 className="text-ios-headline text-orange-400 mb-3">Common Testing Errors:</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-orange-400">-</span>
                 <span>
-                  <strong className="text-white/90">Wrong order of tests</strong> (not following GN3
+                  <strong className="text-white">Wrong order of tests</strong> (not following GN3
                   sequence exactly)
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-orange-400">-</span>
                 <span>
-                  <strong className="text-white/90">Forgetting insulation resistance</strong> on
+                  <strong className="text-white">Forgetting insulation resistance</strong> on
                   individual circuits
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-orange-400">-</span>
                 <span>
-                  <strong className="text-white/90">Not recording results</strong> as they go -
+                  <strong className="text-white">Not recording results</strong> as they go -
                   leaving it to memory
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-orange-400">-</span>
                 <span>
-                  <strong className="text-white/90">Writing unrealistic values</strong> ("0 ohms"
+                  <strong className="text-white">Writing unrealistic values</strong> ("0 ohms"
                   Zs, "infinity" IR, "999 MOhms")
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-orange-400">-</span>
                 <span>
-                  <strong className="text-white/90">Incorrect test methods</strong> or wrong
+                  <strong className="text-white">Incorrect test methods</strong> or wrong
                   instrument ranges
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-orange-400">-</span>
                 <span>
-                  <strong className="text-white/90">Missing polarity checks</strong> on relevant
+                  <strong className="text-white">Missing polarity checks</strong> on relevant
                   circuits
                 </span>
               </li>
@@ -552,7 +552,7 @@ const AM2Module7Section4 = () => {
             <div className="space-y-3">
               <div>
                 <h5 className="text-ios-callout text-blue-400 font-medium">Before Testing:</h5>
-                <ul className="text-ios-callout text-white/70 space-y-1 ml-4">
+                <ul className="text-ios-callout text-white space-y-1 ml-4">
                   <li>- Have GN3 sequence clearly available for reference</li>
                   <li>- Prepare all test instruments and check calibration</li>
                   <li>- Set up documentation sheets ready for recording</li>
@@ -561,7 +561,7 @@ const AM2Module7Section4 = () => {
               </div>
               <div>
                 <h5 className="text-ios-callout text-blue-400 font-medium">During Testing:</h5>
-                <ul className="text-ios-callout text-white/70 space-y-1 ml-4">
+                <ul className="text-ios-callout text-white space-y-1 ml-4">
                   <li>- Stick to GN3 order exactly - no shortcuts or variations</li>
                   <li>- Record results immediately after each test</li>
                   <li>- Use correct test methods and instrument settings</li>
@@ -574,7 +574,7 @@ const AM2Module7Section4 = () => {
 
           <div className="bg-white/5 border border-green-500/30 rounded-xl p-4">
             <h4 className="text-ios-headline text-green-400 mb-3">GN3 Test Sequence Reminder:</h4>
-            <ol className="text-ios-callout text-white/70 space-y-1 list-decimal list-inside">
+            <ol className="text-ios-callout text-white space-y-1 list-decimal list-inside">
               <li>Continuity of protective conductors</li>
               <li>Continuity of ring final circuit conductors</li>
               <li>Insulation resistance</li>
@@ -598,46 +598,46 @@ const AM2Module7Section4 = () => {
 
       {/* Fault-finding Mistakes */}
       <AM2ContentCard title="4. Fault-finding Mistakes" icon={Eye}>
-        <p className="text-ios-callout text-white/80 mb-4">
+        <p className="text-ios-callout text-white mb-4">
           Most apprentices fail this section by guessing or not stating rectification properly.
         </p>
 
         <div className="space-y-4">
           <div className="bg-white/5 border border-red-500/30 rounded-xl p-4">
             <h4 className="text-ios-headline text-red-400 mb-3">Common Fault-finding Errors:</h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white/90">Guessing instead of testing logically</strong> -
+                  <strong className="text-white">Guessing instead of testing logically</strong> -
                   jumping to conclusions
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white/90">Not writing rectification clearly</strong>{' '}
+                  <strong className="text-white">Not writing rectification clearly</strong>{' '}
                   (e.g., "fix fault" instead of "reconnect CPC at socket and re-test continuity")
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white/90">Forgetting to state re-test</strong> after
+                  <strong className="text-white">Forgetting to state re-test</strong> after
                   rectification
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white/90">Poor documentation</strong> of fault-finding
+                  <strong className="text-white">Poor documentation</strong> of fault-finding
                   process
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-red-400">-</span>
                 <span>
-                  <strong className="text-white/90">Not following systematic approach</strong> to
+                  <strong className="text-white">Not following systematic approach</strong> to
                   fault diagnosis
                 </span>
               </li>
@@ -653,25 +653,25 @@ const AM2Module7Section4 = () => {
                 <h5 className="text-ios-callout text-green-400 font-medium">
                   1. Systematic Diagnosis Process:
                 </h5>
-                <ul className="text-ios-callout text-white/70 space-y-1 ml-4">
+                <ul className="text-ios-callout text-white space-y-1 ml-4">
                   <li>
-                    - <strong className="text-white/90">Gather information:</strong> What symptoms
+                    - <strong className="text-white">Gather information:</strong> What symptoms
                     are reported?
                   </li>
                   <li>
-                    - <strong className="text-white/90">Form hypothesis:</strong> What could cause
+                    - <strong className="text-white">Form hypothesis:</strong> What could cause
                     these symptoms?
                   </li>
                   <li>
-                    - <strong className="text-white/90">Test hypothesis:</strong> Use appropriate
+                    - <strong className="text-white">Test hypothesis:</strong> Use appropriate
                     tests to confirm or eliminate
                   </li>
                   <li>
-                    - <strong className="text-white/90">Locate precisely:</strong> Find exact
+                    - <strong className="text-white">Locate precisely:</strong> Find exact
                     location and nature of fault
                   </li>
                   <li>
-                    - <strong className="text-white/90">Document findings:</strong> Record test
+                    - <strong className="text-white">Document findings:</strong> Record test
                     results and conclusions
                   </li>
                 </ul>
@@ -681,11 +681,11 @@ const AM2Module7Section4 = () => {
                   2. Clear Rectification Statements:
                 </h5>
                 <div className="bg-green-500/10 rounded p-2 mt-2">
-                  <p className="text-ios-callout text-white/70 mb-2">
-                    <strong className="text-white/90">Instead of:</strong> "Fix broken wire"
+                  <p className="text-ios-callout text-white mb-2">
+                    <strong className="text-white">Instead of:</strong> "Fix broken wire"
                   </p>
-                  <p className="text-ios-callout text-white/70">
-                    <strong className="text-white/90">Write:</strong> "Replace damaged section of
+                  <p className="text-ios-callout text-white">
+                    <strong className="text-white">Write:</strong> "Replace damaged section of
                     2.5mm T&E cable between positions A and B, making connections using 30A junction
                     box with maintenance-free connectors"
                   </p>
@@ -695,7 +695,7 @@ const AM2Module7Section4 = () => {
                 <h5 className="text-ios-callout text-green-400 font-medium">
                   3. Essential Re-test Statements:
                 </h5>
-                <ul className="text-ios-callout text-white/70 space-y-1 ml-4">
+                <ul className="text-ios-callout text-white space-y-1 ml-4">
                   <li>- Always specify which test confirms the repair</li>
                   <li>- State expected result of the re-test</li>
                   <li>
@@ -719,7 +719,7 @@ const AM2Module7Section4 = () => {
 
       {/* Knowledge Test Mistakes */}
       <AM2ContentCard title="5. Knowledge Test Mistakes" icon={Brain}>
-        <p className="text-ios-callout text-white/80 mb-4">
+        <p className="text-ios-callout text-white mb-4">
           Many lose marks here due to exam discipline, not lack of knowledge.
         </p>
 
@@ -728,39 +728,39 @@ const AM2Module7Section4 = () => {
             <h4 className="text-ios-headline text-yellow-400 mb-3">
               Common Knowledge Test Errors:
             </h4>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li className="flex items-start gap-2">
                 <span className="text-yellow-400">-</span>
                 <span>
-                  <strong className="text-white/90">Misreading key words</strong> ("maximum" vs
+                  <strong className="text-white">Misreading key words</strong> ("maximum" vs
                   "minimum", "must" vs "should")
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-yellow-400">-</span>
                 <span>
-                  <strong className="text-white/90">Confusing units</strong> (seconds vs
+                  <strong className="text-white">Confusing units</strong> (seconds vs
                   milliseconds, kW vs W, mA vs A)
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-yellow-400">-</span>
                 <span>
-                  <strong className="text-white/90">Spending too long</strong> on difficult
+                  <strong className="text-white">Spending too long</strong> on difficult
                   questions, running out of time
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-yellow-400">-</span>
                 <span>
-                  <strong className="text-white/90">Leaving blanks</strong> instead of educated
+                  <strong className="text-white">Leaving blanks</strong> instead of educated
                   guessing
                 </span>
               </li>
               <li className="flex items-start gap-2">
                 <span className="text-yellow-400">-</span>
                 <span>
-                  <strong className="text-white/90">Not checking answers</strong> before submitting
+                  <strong className="text-white">Not checking answers</strong> before submitting
                 </span>
               </li>
             </ul>
@@ -773,7 +773,7 @@ const AM2Module7Section4 = () => {
             <div className="space-y-3">
               <div>
                 <h5 className="text-ios-callout text-blue-400 font-medium">For Each Question:</h5>
-                <ul className="text-ios-callout text-white/70 space-y-1 ml-4">
+                <ul className="text-ios-callout text-white space-y-1 ml-4">
                   <li>- Read question twice, underlining key words</li>
                   <li>- Check units required in answer</li>
                   <li>- Read all options before deciding</li>
@@ -784,7 +784,7 @@ const AM2Module7Section4 = () => {
               </div>
               <div>
                 <h5 className="text-ios-callout text-blue-400 font-medium">Time Management:</h5>
-                <ul className="text-ios-callout text-white/70 space-y-1 ml-4">
+                <ul className="text-ios-callout text-white space-y-1 ml-4">
                   <li>- Don't spend more than allocated time per question</li>
                   <li>- Mark difficult questions and return to them</li>
                   <li>- Always attempt every question - never leave blanks</li>
@@ -798,7 +798,7 @@ const AM2Module7Section4 = () => {
 
       {/* Practical Guidance */}
       <AM2ContentCard title="6. Practical Guidance" icon={Lightbulb}>
-        <p className="text-ios-callout text-white/80 mb-4">
+        <p className="text-ios-callout text-white mb-4">
           Professional habits that prevent common mistakes:
         </p>
 
@@ -808,7 +808,7 @@ const AM2Module7Section4 = () => {
               <Brain className="w-4 h-4 text-blue-400" />
               <h4 className="text-ios-headline text-blue-400">Professional Mindset</h4>
             </div>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li>- Always think "What would the assessor mark as unsafe?" and avoid it</li>
               <li>- Build habits of checking work: no bare copper, CPC sleeved, labels applied</li>
               <li>
@@ -823,7 +823,7 @@ const AM2Module7Section4 = () => {
               <Users className="w-4 h-4 text-green-400" />
               <h4 className="text-ios-headline text-green-400">Communication Strategy</h4>
             </div>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li>
                 - If unsure, explain your process out loud - it earns credit even if result isn't
                 perfect
@@ -839,7 +839,7 @@ const AM2Module7Section4 = () => {
               <CheckCircle className="w-4 h-4 text-purple-400" />
               <h4 className="text-ios-headline text-purple-400">Quality Control Habits</h4>
             </div>
-            <ul className="text-ios-callout text-white/70 space-y-1">
+            <ul className="text-ios-callout text-white space-y-1">
               <li>- Self-check your work before calling the assessor</li>
               <li>- Use a systematic checklist approach</li>
               <li>- Document everything as you go, not at the end</li>
@@ -853,14 +853,14 @@ const AM2Module7Section4 = () => {
       <AM2ContentCard title="7. Real-world Examples" icon={BookOpen}>
         <div className="space-y-4">
           <div className="border-l-4 border-red-500 bg-white/5 pl-4 py-3 rounded-r">
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               <strong className="text-red-400">Example 1:</strong> Candidate skipped re-prove in
               safe isolation procedure - assessor stopped exam immediately - automatic fail.
             </p>
           </div>
 
           <div className="border-l-4 border-orange-500 bg-white/5 pl-4 py-3 rounded-r">
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               <strong className="text-orange-400">Example 2:</strong> Candidate installed everything
               neatly but didn't label circuits in DB - lost significant marks unnecessarily for
               incomplete work.
@@ -868,7 +868,7 @@ const AM2Module7Section4 = () => {
           </div>
 
           <div className="border-l-4 border-yellow-500 bg-white/5 pl-4 py-3 rounded-r">
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               <strong className="text-yellow-400">Example 3:</strong> Candidate wrote "fault fixed"
               instead of explaining specific rectification action - lost fault-finding marks for
               poor documentation.
@@ -876,7 +876,7 @@ const AM2Module7Section4 = () => {
           </div>
 
           <div className="border-l-4 border-blue-500 bg-white/5 pl-4 py-3 rounded-r">
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               <strong className="text-blue-400">Example 4:</strong> Candidate misread "minimum IR"
               and answered with recommended value instead of required minimum - lost marks in
               knowledge test.
@@ -884,7 +884,7 @@ const AM2Module7Section4 = () => {
           </div>
 
           <div className="border-l-4 border-green-500 bg-white/5 pl-4 py-3 rounded-r">
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               <strong className="text-green-400">Example 5:</strong> Candidate followed systematic
               approach, documented clearly, and self-checked work - passed comfortably despite minor
               technical error.
@@ -897,60 +897,60 @@ const AM2Module7Section4 = () => {
       <AM2ContentCard title="8. Frequently Asked Questions" icon={Brain}>
         <div className="space-y-6">
           <div>
-            <h3 className="text-ios-headline text-white/90 mb-2">
+            <h3 className="text-ios-headline text-white mb-2">
               Q1: Are common mistakes published by NET?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Yes - NET highlights common fail areas in pre-assessment manuals and training
               materials. They want you to succeed.
             </p>
           </div>
 
           <div>
-            <h3 className="text-ios-headline text-white/90 mb-2">
+            <h3 className="text-ios-headline text-white mb-2">
               Q2: Do assessors allow small errors?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Some workmanship issues lose marks but don't cause failure. However, safety errors
               cause instant fail regardless of size.
             </p>
           </div>
 
           <div>
-            <h3 className="text-ios-headline text-white/90 mb-2">
+            <h3 className="text-ios-headline text-white mb-2">
               Q3: Can I pass if I make one or two minor mistakes?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Yes - but repeated small errors will drag your score down. The key is avoiding
               patterns of careless mistakes.
             </p>
           </div>
 
           <div>
-            <h3 className="text-ios-headline text-white/90 mb-2">
+            <h3 className="text-ios-headline text-white mb-2">
               Q4: Is paperwork as important as installation work?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Yes - incomplete or inaccurate paperwork loses many marks. Documentation is part of
               professional electrical work.
             </p>
           </div>
 
           <div>
-            <h3 className="text-ios-headline text-white/90 mb-2">
+            <h3 className="text-ios-headline text-white mb-2">
               Q5: What's the biggest single avoidable mistake?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Not following the safe isolation procedure fully and correctly. This alone causes more
               failures than any other single error.
             </p>
           </div>
 
           <div>
-            <h3 className="text-ios-headline text-white/90 mb-2">
+            <h3 className="text-ios-headline text-white mb-2">
               Q6: Should I tell the assessor if I make a mistake?
             </h3>
-            <p className="text-ios-callout text-white/70">
+            <p className="text-ios-callout text-white">
               Yes - honesty and immediate correction show professionalism and safety awareness. It's
               better than trying to hide errors.
             </p>
@@ -961,11 +961,11 @@ const AM2Module7Section4 = () => {
       {/* Summary */}
       <AM2ContentCard title="9. Summary" icon={CheckCircle}>
         <div className="bg-white/5 border border-blue-500/30 rounded-xl p-4">
-          <p className="text-ios-callout text-white/80 mb-4 font-medium">
+          <p className="text-ios-callout text-white mb-4 font-medium">
             Most AM2 failures are caused by avoidable mistakes, not lack of skill. Common errors
             include:
           </p>
-          <ul className="text-ios-callout text-white/70 space-y-1">
+          <ul className="text-ios-callout text-white space-y-1">
             <li className="flex items-start gap-2">
               <span className="text-blue-400">-</span>
               <span>Skipping safe isolation steps</span>
@@ -989,7 +989,7 @@ const AM2Module7Section4 = () => {
               <span>Misreading questions or leaving blanks in the knowledge test</span>
             </li>
           </ul>
-          <p className="text-ios-callout text-white/80 mt-4 font-bold">
+          <p className="text-ios-callout text-white mt-4 font-bold">
             The solution is preparation, calm discipline, and self-checking. Avoid these traps and
             you put yourself in a strong position to pass.
           </p>

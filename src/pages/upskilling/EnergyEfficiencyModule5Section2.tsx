@@ -234,7 +234,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
           </Button>
           <div className="flex-1 min-w-0">
             <h1 className="text-white font-medium truncate">Energy Dashboards and Cloud Portals</h1>
-            <p className="text-white/60 text-sm">Module 5 - Section 2</p>
+            <p className="text-white text-sm">Module 5 - Section 2</p>
           </div>
         </div>
       </div>
@@ -242,7 +242,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
       <div className="max-w-4xl mx-auto px-4 py-6 space-y-8">
         {/* Quick Summary */}
         <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
-          <p className="text-white/90 leading-relaxed">
+          <p className="text-white leading-relaxed">
             Energy dashboards and cloud portals transform raw consumption data into actionable
             insights. This section covers dashboard design principles, key performance indicators
             (KPIs), cloud vs on-premise considerations, and an overview of popular UK energy
@@ -259,7 +259,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
             Dashboard Design Principles for Energy Management
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Effective energy dashboards transform raw consumption data into actionable insights.
               The design must balance comprehensive information with clarity and usability.
@@ -298,7 +298,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="bg-white/5 rounded-lg p-4 border border-white/10">
                 <h4 className="text-green-400 font-medium mb-2">Good Practice</h4>
-                <ul className="space-y-1 text-sm text-white/70">
+                <ul className="space-y-1 text-sm text-white">
                   <li>- 5-7 key metrics per screen maximum</li>
                   <li>- Consistent colour coding across all views</li>
                   <li>- Clear labels with units displayed</li>
@@ -308,7 +308,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
               </div>
               <div className="bg-white/5 rounded-lg p-4 border border-white/10">
                 <h4 className="text-red-400 font-medium mb-2">Common Mistakes</h4>
-                <ul className="space-y-1 text-sm text-white/70">
+                <ul className="space-y-1 text-sm text-white">
                   <li>- Overcrowded screens with 20+ metrics</li>
                   <li>- Inconsistent scales on comparison charts</li>
                   <li>- Missing context (no targets/baselines)</li>
@@ -323,7 +323,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                 <Smartphone className="w-5 h-5" />
                 Mobile-First Considerations
               </h4>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 With increasing mobile access, design dashboards responsively. Touch targets should
                 be minimum 44x44 pixels. Consider creating separate mobile-optimised views showing
                 only essential KPIs rather than scaling down desktop layouts. UK platforms like
@@ -341,7 +341,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
             Key Performance Indicators (KPIs) to Display
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Selecting the right KPIs ensures stakeholders receive relevant information for their
               decision-making needs. Different user groups require different metrics.
@@ -360,45 +360,45 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                 <tbody className="divide-y divide-white/10">
                   <tr>
                     <td className="py-3 px-4 text-white">Total Consumption</td>
-                    <td className="py-3 px-4 text-white/70">kWh</td>
-                    <td className="py-3 px-4 text-white/70">All users</td>
-                    <td className="py-3 px-4 text-white/70">15-30 seconds</td>
+                    <td className="py-3 px-4 text-white">kWh</td>
+                    <td className="py-3 px-4 text-white">All users</td>
+                    <td className="py-3 px-4 text-white">15-30 seconds</td>
                   </tr>
                   <tr>
                     <td className="py-3 px-4 text-white">Peak Demand</td>
-                    <td className="py-3 px-4 text-white/70">kW</td>
-                    <td className="py-3 px-4 text-white/70">Energy Manager</td>
-                    <td className="py-3 px-4 text-white/70">Real-time</td>
+                    <td className="py-3 px-4 text-white">kW</td>
+                    <td className="py-3 px-4 text-white">Energy Manager</td>
+                    <td className="py-3 px-4 text-white">Real-time</td>
                   </tr>
                   <tr>
                     <td className="py-3 px-4 text-white">Energy Use Intensity (EUI)</td>
-                    <td className="py-3 px-4 text-white/70">kWh/m2</td>
-                    <td className="py-3 px-4 text-white/70">Executives, FM</td>
-                    <td className="py-3 px-4 text-white/70">Daily</td>
+                    <td className="py-3 px-4 text-white">kWh/m2</td>
+                    <td className="py-3 px-4 text-white">Executives, FM</td>
+                    <td className="py-3 px-4 text-white">Daily</td>
                   </tr>
                   <tr>
                     <td className="py-3 px-4 text-white">Cost to Date</td>
-                    <td className="py-3 px-4 text-white/70">GBP</td>
-                    <td className="py-3 px-4 text-white/70">Finance, Executives</td>
-                    <td className="py-3 px-4 text-white/70">Daily</td>
+                    <td className="py-3 px-4 text-white">GBP</td>
+                    <td className="py-3 px-4 text-white">Finance, Executives</td>
+                    <td className="py-3 px-4 text-white">Daily</td>
                   </tr>
                   <tr>
                     <td className="py-3 px-4 text-white">Carbon Emissions</td>
-                    <td className="py-3 px-4 text-white/70">kgCO2e</td>
-                    <td className="py-3 px-4 text-white/70">Sustainability Team</td>
-                    <td className="py-3 px-4 text-white/70">Daily</td>
+                    <td className="py-3 px-4 text-white">kgCO2e</td>
+                    <td className="py-3 px-4 text-white">Sustainability Team</td>
+                    <td className="py-3 px-4 text-white">Daily</td>
                   </tr>
                   <tr>
                     <td className="py-3 px-4 text-white">Power Factor</td>
-                    <td className="py-3 px-4 text-white/70">ratio (0-1)</td>
-                    <td className="py-3 px-4 text-white/70">Technical Staff</td>
-                    <td className="py-3 px-4 text-white/70">15 minutes</td>
+                    <td className="py-3 px-4 text-white">ratio (0-1)</td>
+                    <td className="py-3 px-4 text-white">Technical Staff</td>
+                    <td className="py-3 px-4 text-white">15 minutes</td>
                   </tr>
                   <tr>
                     <td className="py-3 px-4 text-white">Baseload</td>
-                    <td className="py-3 px-4 text-white/70">kW</td>
-                    <td className="py-3 px-4 text-white/70">Energy Manager</td>
-                    <td className="py-3 px-4 text-white/70">Daily (overnight min)</td>
+                    <td className="py-3 px-4 text-white">kW</td>
+                    <td className="py-3 px-4 text-white">Energy Manager</td>
+                    <td className="py-3 px-4 text-white">Daily (overnight min)</td>
                   </tr>
                 </tbody>
               </table>
@@ -409,31 +409,31 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                 <TrendingUp className="w-5 h-5" />
                 Contextual KPIs
               </h3>
-              <p className="mb-3 text-white/80">
+              <p className="mb-3 text-white">
                 Raw numbers mean little without context. Always display KPIs with:
               </p>
               <div className="grid md:grid-cols-2 gap-3">
                 <div className="bg-white/5 rounded p-3 border border-white/10">
                   <span className="text-elec-yellow font-medium">Comparison to Target</span>
-                  <p className="text-sm mt-1 text-white/70">
+                  <p className="text-sm mt-1 text-white">
                     Show percentage variance from budget or reduction target
                   </p>
                 </div>
                 <div className="bg-white/5 rounded p-3 border border-white/10">
                   <span className="text-elec-yellow font-medium">Same Period Last Year</span>
-                  <p className="text-sm mt-1 text-white/70">
+                  <p className="text-sm mt-1 text-white">
                     Year-on-year comparison accounting for seasonality
                   </p>
                 </div>
                 <div className="bg-white/5 rounded p-3 border border-white/10">
                   <span className="text-elec-yellow font-medium">Degree Day Normalisation</span>
-                  <p className="text-sm mt-1 text-white/70">
+                  <p className="text-sm mt-1 text-white">
                     Weather-adjusted consumption for fair comparison
                   </p>
                 </div>
                 <div className="bg-white/5 rounded p-3 border border-white/10">
                   <span className="text-elec-yellow font-medium">Benchmark Comparison</span>
-                  <p className="text-sm mt-1 text-white/70">
+                  <p className="text-sm mt-1 text-white">
                     Industry or portfolio averages for context
                   </p>
                 </div>
@@ -459,7 +459,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
             Cloud vs On-Premise Platform Considerations
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               The choice between cloud-hosted and on-premise energy management systems significantly
               impacts deployment, costs, and ongoing management requirements.
@@ -471,7 +471,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                   <Cloud className="w-5 h-5 text-blue-400" />
                   <h3 className="text-blue-400 font-medium">Cloud Platform (SaaS)</h3>
                 </div>
-                <div className="space-y-2 text-sm text-white/70">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <span className="text-green-400">+</span> Lower upfront investment (OpEx model)
                   </p>
@@ -507,7 +507,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                   <Server className="w-5 h-5 text-orange-400" />
                   <h3 className="text-orange-400 font-medium">On-Premise Platform</h3>
                 </div>
-                <div className="space-y-2 text-sm text-white/70">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <span className="text-green-400">+</span> Complete data sovereignty
                   </p>
@@ -545,7 +545,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                 <Database className="w-5 h-5" />
                 Hybrid Architecture
               </h4>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Many modern deployments use hybrid approaches: local data loggers or edge devices
                 collect and store data on-site, while cloud platforms provide analytics, reporting,
                 and remote access. This provides resilience (local data storage if internet fails),
@@ -559,7 +559,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
               <h3 className="text-elec-yellow font-medium mb-3">
                 Decision Factors for UK Organisations
               </h3>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">-</span>
                   <span>
@@ -601,7 +601,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
             Data Visualisation Best Practices
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Choosing appropriate visualisation types ensures data is communicated effectively and
               users can quickly extract meaningful insights.
@@ -613,8 +613,8 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                   <LineChart className="w-5 h-5 text-elec-yellow" />
                   <h4 className="font-medium text-white">Line/Area Charts</h4>
                 </div>
-                <p className="text-sm mb-2 text-white/70">Best for showing trends over time</p>
-                <ul className="text-xs text-white/60 space-y-1">
+                <p className="text-sm mb-2 text-white">Best for showing trends over time</p>
+                <ul className="text-xs text-white space-y-1">
                   <li>- Consumption profiles (daily, weekly, monthly)</li>
                   <li>- Load curves and demand patterns</li>
                   <li>- Year-on-year comparisons</li>
@@ -627,8 +627,8 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                   <BarChart3 className="w-5 h-5 text-elec-yellow" />
                   <h4 className="font-medium text-white">Bar Charts</h4>
                 </div>
-                <p className="text-sm mb-2 text-white/70">Best for comparing categories</p>
-                <ul className="text-xs text-white/60 space-y-1">
+                <p className="text-sm mb-2 text-white">Best for comparing categories</p>
+                <ul className="text-xs text-white space-y-1">
                   <li>- Site-by-site consumption comparison</li>
                   <li>- Monthly totals comparison</li>
                   <li>- Fuel type breakdown</li>
@@ -641,8 +641,8 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                   <Gauge className="w-5 h-5 text-elec-yellow" />
                   <h4 className="font-medium text-white">Gauges/Dials</h4>
                 </div>
-                <p className="text-sm mb-2 text-white/70">Best for current status vs limits</p>
-                <ul className="text-xs text-white/60 space-y-1">
+                <p className="text-sm mb-2 text-white">Best for current status vs limits</p>
+                <ul className="text-xs text-white space-y-1">
                   <li>- Current demand vs maximum</li>
                   <li>- Power factor indication</li>
                   <li>- Progress towards targets</li>
@@ -655,8 +655,8 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                   <PieChart className="w-5 h-5 text-elec-yellow" />
                   <h4 className="font-medium text-white">Pie/Donut Charts</h4>
                 </div>
-                <p className="text-sm mb-2 text-white/70">Limited use - part-to-whole only</p>
-                <ul className="text-xs text-white/60 space-y-1">
+                <p className="text-sm mb-2 text-white">Limited use - part-to-whole only</p>
+                <ul className="text-xs text-white space-y-1">
                   <li>- End-use breakdown (lighting, HVAC, etc.)</li>
                   <li>- Fuel mix proportions</li>
                   <li>- Limit to 5-6 segments maximum</li>
@@ -673,24 +673,24 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
               <div className="grid md:grid-cols-3 gap-3 text-sm">
                 <div>
                   <span className="text-green-400 font-medium">Green</span>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     On target, normal operation, good performance
                   </p>
                 </div>
                 <div>
                   <span className="text-amber-400 font-medium">Amber/Yellow</span>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Warning, approaching limits, attention needed
                   </p>
                 </div>
                 <div>
                   <span className="text-red-400 font-medium">Red</span>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     Alert, exceeded threshold, immediate action
                   </p>
                 </div>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Ensure sufficient contrast and consider colour-blind users (approximately 8% of
                 males). Use patterns or icons alongside colours where possible.
               </p>
@@ -703,23 +703,23 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
               </h3>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between items-center py-2 border-b border-white/10">
-                  <span className="text-white/80">Real-time monitoring displays</span>
+                  <span className="text-white">Real-time monitoring displays</span>
                   <span className="text-elec-yellow">15-30 seconds</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-white/10">
-                  <span className="text-white/80">Process/production monitoring</span>
+                  <span className="text-white">Process/production monitoring</span>
                   <span className="text-elec-yellow">5-15 seconds</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-white/10">
-                  <span className="text-white/80">Trend analysis dashboards</span>
+                  <span className="text-white">Trend analysis dashboards</span>
                   <span className="text-elec-yellow">5-15 minutes</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-white/10">
-                  <span className="text-white/80">Management summary dashboards</span>
+                  <span className="text-white">Management summary dashboards</span>
                   <span className="text-elec-yellow">Daily</span>
                 </div>
                 <div className="flex justify-between items-center py-2">
-                  <span className="text-white/80">Monthly reports</span>
+                  <span className="text-white">Monthly reports</span>
                   <span className="text-elec-yellow">On demand / scheduled</span>
                 </div>
               </div>
@@ -744,7 +744,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
             User Roles and Access Management
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               Implementing role-based access control (RBAC) ensures users see relevant information
               and prevents unauthorised configuration changes. This is essential for data security
@@ -754,13 +754,13 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
             <div className="space-y-3">
               <div className="bg-white/5 rounded-lg p-4 border-l-4 border-gray-500">
                 <div className="flex items-center gap-2 mb-2">
-                  <Eye className="w-5 h-5 text-white/60" />
+                  <Eye className="w-5 h-5 text-white" />
                   <h4 className="font-medium text-white">Viewer</h4>
                 </div>
-                <p className="text-sm text-white/60 mb-2">
+                <p className="text-sm text-white mb-2">
                   Read-only access to assigned dashboards and reports
                 </p>
-                <ul className="text-xs text-white/50 grid grid-cols-2 gap-1">
+                <ul className="text-xs text-white grid grid-cols-2 gap-1">
                   <li>- View dashboards</li>
                   <li>- Download reports</li>
                   <li>- Export data (limited)</li>
@@ -773,10 +773,10 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                   <Settings className="w-5 h-5 text-blue-400" />
                   <h4 className="font-medium text-white">Operator</h4>
                 </div>
-                <p className="text-sm text-white/60 mb-2">
+                <p className="text-sm text-white mb-2">
                   Day-to-day monitoring and alarm response
                 </p>
-                <ul className="text-xs text-white/50 grid grid-cols-2 gap-1">
+                <ul className="text-xs text-white grid grid-cols-2 gap-1">
                   <li>- All Viewer permissions</li>
                   <li>- Acknowledge alarms</li>
                   <li>- Add notes/comments</li>
@@ -789,8 +789,8 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                   <Zap className="w-5 h-5 text-elec-yellow" />
                   <h4 className="font-medium text-white">Energy Manager</h4>
                 </div>
-                <p className="text-sm text-white/60 mb-2">System configuration and analysis</p>
-                <ul className="text-xs text-white/50 grid grid-cols-2 gap-1">
+                <p className="text-sm text-white mb-2">System configuration and analysis</p>
+                <ul className="text-xs text-white grid grid-cols-2 gap-1">
                   <li>- All Operator permissions</li>
                   <li>- Configure alarm thresholds</li>
                   <li>- Set targets and baselines</li>
@@ -805,8 +805,8 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                   <Shield className="w-5 h-5 text-red-400" />
                   <h4 className="font-medium text-white">Administrator</h4>
                 </div>
-                <p className="text-sm text-white/60 mb-2">Full system access and user management</p>
-                <ul className="text-xs text-white/50 grid grid-cols-2 gap-1">
+                <p className="text-sm text-white mb-2">Full system access and user management</p>
+                <ul className="text-xs text-white grid grid-cols-2 gap-1">
                   <li>- All Energy Manager permissions</li>
                   <li>- Create/manage user accounts</li>
                   <li>- Assign roles and permissions</li>
@@ -822,7 +822,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                 <Lock className="w-5 h-5" />
                 Security Best Practices
               </h4>
-              <ul className="text-sm space-y-1 text-white/70">
+              <ul className="text-sm space-y-1 text-white">
                 <li>- Implement multi-factor authentication (MFA) for all users</li>
                 <li>- Apply principle of least privilege - minimum access required for role</li>
                 <li>- Regular access reviews - remove leavers, audit permissions quarterly</li>
@@ -842,7 +842,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
             Popular UK Energy Management Platforms
           </h2>
 
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               The UK has a mature market for energy management platforms, with several established
               providers offering different strengths and specialisations.
@@ -857,13 +857,13 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="font-medium text-green-400">Energy Elephant</h3>
-                    <p className="text-xs text-white/60">Cloud-based portfolio management</p>
+                    <p className="text-xs text-white">Cloud-based portfolio management</p>
                   </div>
                 </div>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <div>
                     <h4 className="text-elec-yellow text-xs font-medium mb-1">KEY STRENGTHS</h4>
-                    <ul className="space-y-1 text-white/60">
+                    <ul className="space-y-1 text-white">
                       <li>- Multi-site portfolio management</li>
                       <li>- SECR and ESOS compliance reporting</li>
                       <li>- Automatic data collection from suppliers</li>
@@ -873,7 +873,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                   </div>
                   <div>
                     <h4 className="text-elec-yellow text-xs font-medium mb-1">BEST SUITED FOR</h4>
-                    <ul className="space-y-1 text-white/60">
+                    <ul className="space-y-1 text-white">
                       <li>- Organisations with multiple sites</li>
                       <li>- Sustainability reporting requirements</li>
                       <li>- Non-technical users</li>
@@ -891,13 +891,13 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="font-medium text-blue-400">ECON Energy</h3>
-                    <p className="text-xs text-white/60">AMR and sub-metering specialists</p>
+                    <p className="text-xs text-white">AMR and sub-metering specialists</p>
                   </div>
                 </div>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <div>
                     <h4 className="text-elec-yellow text-xs font-medium mb-1">KEY STRENGTHS</h4>
-                    <ul className="space-y-1 text-white/60">
+                    <ul className="space-y-1 text-white">
                       <li>- Automatic Meter Reading hardware</li>
                       <li>- Sub-metering and tenant billing</li>
                       <li>- Real-time monitoring capabilities</li>
@@ -907,7 +907,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                   </div>
                   <div>
                     <h4 className="text-elec-yellow text-xs font-medium mb-1">BEST SUITED FOR</h4>
-                    <ul className="space-y-1 text-white/60">
+                    <ul className="space-y-1 text-white">
                       <li>- Sites requiring sub-metering</li>
                       <li>- Industrial/manufacturing facilities</li>
                       <li>- Landlords with tenant recharging</li>
@@ -925,13 +925,13 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                   </div>
                   <div>
                     <h3 className="font-medium text-orange-400">Stark Group</h3>
-                    <p className="text-xs text-white/60">Bureau services and managed energy</p>
+                    <p className="text-xs text-white">Bureau services and managed energy</p>
                   </div>
                 </div>
                 <div className="grid md:grid-cols-2 gap-4 text-sm">
                   <div>
                     <h4 className="text-elec-yellow text-xs font-medium mb-1">KEY STRENGTHS</h4>
-                    <ul className="space-y-1 text-white/60">
+                    <ul className="space-y-1 text-white">
                       <li>- Bill validation and processing</li>
                       <li>- Energy procurement support</li>
                       <li>- Bureau services (managed approach)</li>
@@ -941,7 +941,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                   </div>
                   <div>
                     <h4 className="text-elec-yellow text-xs font-medium mb-1">BEST SUITED FOR</h4>
-                    <ul className="space-y-1 text-white/60">
+                    <ul className="space-y-1 text-white">
                       <li>- Organisations wanting managed service</li>
                       <li>- Complex multi-supplier billing</li>
                       <li>- Procurement and contract management</li>
@@ -957,19 +957,19 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
               <div className="grid md:grid-cols-2 gap-3 text-sm">
                 <div>
                   <span className="font-medium text-white">Systemslink</span>
-                  <p className="text-xs text-white/60">Bureau services and utility management</p>
+                  <p className="text-xs text-white">Bureau services and utility management</p>
                 </div>
                 <div>
                   <span className="font-medium text-white">Inspired Energy</span>
-                  <p className="text-xs text-white/60">Procurement and optimisation services</p>
+                  <p className="text-xs text-white">Procurement and optimisation services</p>
                 </div>
                 <div>
                   <span className="font-medium text-white">GridDuck</span>
-                  <p className="text-xs text-white/60">IoT-focused monitoring for SMEs</p>
+                  <p className="text-xs text-white">IoT-focused monitoring for SMEs</p>
                 </div>
                 <div>
                   <span className="font-medium text-white">Schneider EcoStruxure</span>
-                  <p className="text-xs text-white/60">Enterprise BMS integration</p>
+                  <p className="text-xs text-white">Enterprise BMS integration</p>
                 </div>
               </div>
             </div>
@@ -979,7 +979,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
                 <Lightbulb className="w-5 h-5" />
                 Platform Selection Guidance
               </h4>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 When selecting a platform, consider: number of sites, sub-metering requirements,
                 internal technical capability, reporting obligations (SECR, ESOS), budget model
                 (subscription vs capital), and integration requirements with existing BMS or ERP
@@ -1009,7 +1009,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h3 className="text-white font-medium mb-2">Essential Dashboard KPIs</h3>
-              <ul className="text-sm text-white/80 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>- Total consumption (kWh) with period comparison</li>
                 <li>- Peak demand (kW) and timing</li>
                 <li>- Energy Use Intensity (kWh/m2)</li>
@@ -1021,7 +1021,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
 
             <div>
               <h3 className="text-white font-medium mb-2">Recommended Refresh Rates</h3>
-              <ul className="text-sm text-white/80 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>- Real-time monitoring: 15-30 seconds</li>
                 <li>- Process monitoring: 5-15 seconds</li>
                 <li>- Trend analysis: 5-15 minutes</li>
@@ -1031,7 +1031,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
 
             <div>
               <h3 className="text-white font-medium mb-2">Platform Quick Comparison</h3>
-              <ul className="text-sm text-white/80 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>
                   - <span className="text-green-400">Energy Elephant:</span> Portfolio and
                   sustainability
@@ -1047,7 +1047,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
 
             <div>
               <h3 className="text-white font-medium mb-2">Security Checklist</h3>
-              <ul className="text-sm text-white/80 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>- Enable MFA for all users</li>
                 <li>- Apply role-based access control</li>
                 <li>- Check ISO 27001 certification</li>
@@ -1067,7 +1067,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-0 last:pb-0">
                 <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1076,7 +1076,7 @@ const EnergyEfficiencyModule5Section2: React.FC = () => {
         {/* Quiz Section */}
         <section className="bg-white/5 rounded-lg p-6 border border-white/10">
           <h2 className="text-xl font-semibold text-elec-yellow mb-4">Section Quiz</h2>
-          <p className="text-white/60 mb-6">
+          <p className="text-white mb-6">
             Test your knowledge of energy dashboards and cloud portals with this 10-question quiz.
           </p>
           <Quiz questions={quizQuestions} moduleId="energy-efficiency-m5s2" />

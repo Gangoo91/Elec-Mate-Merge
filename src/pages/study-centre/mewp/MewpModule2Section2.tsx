@@ -207,7 +207,7 @@ const MewpModule2Section2 = () => {
             MODULE 2 &middot; SECTION 2
           </span>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">The Six Key Hazards</h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Every MEWP operator must understand these six hazards — they are the primary causes of
             serious injury and death in powered access work
           </p>
@@ -233,21 +233,21 @@ const MewpModule2Section2 = () => {
                 <div className="grid grid-cols-3 gap-4 text-center mb-3">
                   <div>
                     <div className="text-2xl font-bold text-red-300">38%</div>
-                    <div className="text-xs text-white/60">Group 3B</div>
-                    <div className="text-xs text-white/40">Mobile boom</div>
+                    <div className="text-xs text-white">Group 3B</div>
+                    <div className="text-xs text-white">Mobile boom</div>
                   </div>
                   <div>
                     <div className="text-2xl font-bold text-orange-300">27%</div>
-                    <div className="text-xs text-white/60">Group 1B</div>
-                    <div className="text-xs text-white/40">Mobile vertical</div>
+                    <div className="text-xs text-white">Group 1B</div>
+                    <div className="text-xs text-white">Mobile vertical</div>
                   </div>
                   <div>
                     <div className="text-2xl font-bold text-amber-300">19%</div>
-                    <div className="text-xs text-white/60">Group 3A</div>
-                    <div className="text-xs text-white/40">Static boom</div>
+                    <div className="text-xs text-white">Group 3A</div>
+                    <div className="text-xs text-white">Static boom</div>
                   </div>
                 </div>
-                <p className="text-white/60 text-xs text-center">
+                <p className="text-white text-xs text-center">
                   Group 3B (mobile boom) accounts for the highest proportion of fall fatalities —
                   primarily due to the catapult effect
                 </p>
@@ -299,12 +299,12 @@ const MewpModule2Section2 = () => {
                   the platform. The longer the boom, the greater the amplification. Even a small
                   movement at the base can produce violent forces at the platform.
                 </p>
-                <p className="text-white/80 text-sm leading-relaxed mb-4">
+                <p className="text-white text-sm leading-relaxed mb-4">
                   <strong className="text-white">Causes:</strong> Driving into a pothole or kerb,
                   collision from another vehicle, ground collapse beneath an outrigger or wheel,
                   sudden tyre deflation, or contact with an overhead obstruction.
                 </p>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   <strong className="text-white">
                     This is why harnesses are mandatory on all boom-type MEWPs
                   </strong>{' '}
@@ -367,7 +367,7 @@ const MewpModule2Section2 = () => {
                     </div>
                   </div>
                   <div className="text-center mt-4">
-                    <p className="text-white/50 text-xs">Ground Level</p>
+                    <p className="text-white text-xs">Ground Level</p>
                   </div>
 
                   {/* Amplification label */}
@@ -476,7 +476,7 @@ const MewpModule2Section2 = () => {
                       <Zap className="h-6 w-6 text-amber-400 mb-1" />
                       <div className="w-4 h-16 bg-white/20 border border-white/30 rounded-sm" />
                       <div className="w-1 h-4 bg-white/40" />
-                      <span className="text-[10px] text-white/60 mt-1">Power Source</span>
+                      <span className="text-[10px] text-white mt-1">Power Source</span>
                     </div>
                   </div>
 
@@ -490,7 +490,7 @@ const MewpModule2Section2 = () => {
                             DANGER ZONE — Pylons (High Voltage)
                           </h5>
                         </div>
-                        <p className="text-white/80 text-xs sm:text-sm leading-relaxed">
+                        <p className="text-white text-xs sm:text-sm leading-relaxed">
                           Minimum{' '}
                           <strong className="text-white">
                             15 metres + fully extended boom length
@@ -501,7 +501,7 @@ const MewpModule2Section2 = () => {
                       </div>
                       <div className="text-right flex-shrink-0">
                         <div className="text-lg font-bold text-red-300">15m+</div>
-                        <div className="text-[10px] text-white/50">+ boom</div>
+                        <div className="text-[10px] text-white">+ boom</div>
                       </div>
                     </div>
                   </div>
@@ -516,7 +516,7 @@ const MewpModule2Section2 = () => {
                             CAUTION ZONE — Cables on Wooden Poles
                           </h5>
                         </div>
-                        <p className="text-white/80 text-xs sm:text-sm leading-relaxed">
+                        <p className="text-white text-xs sm:text-sm leading-relaxed">
                           Minimum{' '}
                           <strong className="text-white">
                             9 metres + fully extended boom length
@@ -527,7 +527,7 @@ const MewpModule2Section2 = () => {
                       </div>
                       <div className="text-right flex-shrink-0">
                         <div className="text-lg font-bold text-amber-300">9m+</div>
-                        <div className="text-[10px] text-white/50">+ boom</div>
+                        <div className="text-[10px] text-white">+ boom</div>
                       </div>
                     </div>
                   </div>
@@ -542,7 +542,7 @@ const MewpModule2Section2 = () => {
                             ABSOLUTE MINIMUM — Any Overhead Line
                           </h5>
                         </div>
-                        <p className="text-white/80 text-xs sm:text-sm leading-relaxed">
+                        <p className="text-white text-xs sm:text-sm leading-relaxed">
                           <strong className="text-white">3 metres minimum</strong> from any overhead
                           line at all times. This is the closest any part of the MEWP or its load
                           should ever come to any power line.
@@ -550,7 +550,7 @@ const MewpModule2Section2 = () => {
                       </div>
                       <div className="text-right flex-shrink-0">
                         <div className="text-lg font-bold text-green-300">3m</div>
-                        <div className="text-[10px] text-white/50">absolute min</div>
+                        <div className="text-[10px] text-white">absolute min</div>
                       </div>
                     </div>
                   </div>
@@ -560,7 +560,7 @@ const MewpModule2Section2 = () => {
                     <p className="text-elec-yellow text-xs sm:text-sm font-semibold mb-2">
                       Before Working Near Power Lines:
                     </p>
-                    <ul className="text-white/80 text-xs sm:text-sm space-y-1">
+                    <ul className="text-white text-xs sm:text-sm space-y-1">
                       <li className="flex items-start gap-2">
                         <CheckCircle className="h-3.5 w-3.5 text-elec-yellow mt-0.5 flex-shrink-0" />
                         <span>Contact the electricity supplier BEFORE starting work</span>
@@ -732,16 +732,16 @@ const MewpModule2Section2 = () => {
                 <div className="grid grid-cols-2 gap-4 mb-3">
                   <div className="text-center bg-red-500/10 rounded-lg p-3">
                     <div className="text-2xl font-bold text-red-300">75%</div>
-                    <div className="text-xs text-white/60">increase in reports</div>
-                    <div className="text-[10px] text-white/40">2023 to 2024</div>
+                    <div className="text-xs text-white">increase in reports</div>
+                    <div className="text-[10px] text-white">2023 to 2024</div>
                   </div>
                   <div className="text-center bg-red-500/10 rounded-lg p-3">
                     <div className="text-2xl font-bold text-red-300">62%</div>
-                    <div className="text-xs text-white/60">increase in fatalities</div>
-                    <div className="text-[10px] text-white/40">2023 to 2024</div>
+                    <div className="text-xs text-white">increase in fatalities</div>
+                    <div className="text-[10px] text-white">2023 to 2024</div>
                   </div>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   In 2023, there were 16 entrapment reports resulting in{' '}
                   <strong className="text-red-300">13 fatalities</strong> — an 81% fatality rate.
                   This makes entrapment one of the most lethal hazard types. Unlike other hazards
@@ -752,7 +752,7 @@ const MewpModule2Section2 = () => {
 
               <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
                 <h3 className="text-purple-300 font-medium mb-3">How Entrapment Occurs</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Entrapment happens when an operator is trapped and crushed between the platform
                   guardrails and an overhead structure. The machine continues to move because the
                   operator — now pinned — is unable to release the controls.
@@ -949,7 +949,7 @@ const MewpModule2Section2 = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <h4 className="text-white font-medium text-sm">Hydraulic Failure</h4>
-                    <ul className="text-white/80 space-y-1.5 text-sm">
+                    <ul className="text-white space-y-1.5 text-sm">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                         <span>Hose burst or leak — loss of lifting/lowering capability</span>
@@ -966,7 +966,7 @@ const MewpModule2Section2 = () => {
                   </div>
                   <div className="space-y-2">
                     <h4 className="text-white font-medium text-sm">Electrical / Control Failure</h4>
-                    <ul className="text-white/80 space-y-1.5 text-sm">
+                    <ul className="text-white space-y-1.5 text-sm">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                         <span>Battery depletion — machine becomes inoperable at height</span>
@@ -1032,7 +1032,7 @@ const MewpModule2Section2 = () => {
                     If You Become Stranded at Height
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Stay calm and remain on the platform. Attempt the emergency lowering procedure
                   (usually a manual descent valve or hand pump). If this fails, contact the ground
                   crew to activate the ground-level override controls. Never attempt to climb down
@@ -1066,19 +1066,19 @@ const MewpModule2Section2 = () => {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-4">
                   <div className="text-center bg-white/5 rounded-lg p-3">
                     <div className="text-2xl sm:text-3xl font-bold text-elec-yellow">100</div>
-                    <div className="text-xs text-white/60">fatalities globally</div>
+                    <div className="text-xs text-white">fatalities globally</div>
                   </div>
                   <div className="text-center bg-green-500/10 rounded-lg p-3">
                     <div className="text-2xl sm:text-3xl font-bold text-green-300">26%</div>
-                    <div className="text-xs text-white/60">decrease from 2023</div>
+                    <div className="text-xs text-white">decrease from 2023</div>
                   </div>
                   <div className="text-center bg-white/5 rounded-lg p-3">
                     <div className="text-2xl sm:text-3xl font-bold text-elec-yellow">12</div>
-                    <div className="text-xs text-white/60">countries reporting</div>
+                    <div className="text-xs text-white">countries reporting</div>
                   </div>
                   <div className="text-center bg-red-500/10 rounded-lg p-3">
                     <div className="text-2xl sm:text-3xl font-bold text-red-300">#1</div>
-                    <div className="text-xs text-white/60">cause: overturn</div>
+                    <div className="text-xs text-white">cause: overturn</div>
                   </div>
                 </div>
               </div>
@@ -1089,7 +1089,7 @@ const MewpModule2Section2 = () => {
                   <div>
                     <div className="flex justify-between text-sm mb-1">
                       <span className="text-white">USA</span>
-                      <span className="text-white/60">31%</span>
+                      <span className="text-white">31%</span>
                     </div>
                     <div className="w-full bg-white/10 rounded-full h-2">
                       <div
@@ -1101,7 +1101,7 @@ const MewpModule2Section2 = () => {
                   <div>
                     <div className="flex justify-between text-sm mb-1">
                       <span className="text-white">United Kingdom</span>
-                      <span className="text-white/60">12%</span>
+                      <span className="text-white">12%</span>
                     </div>
                     <div className="w-full bg-white/10 rounded-full h-2">
                       <div
@@ -1113,7 +1113,7 @@ const MewpModule2Section2 = () => {
                   <div>
                     <div className="flex justify-between text-sm mb-1">
                       <span className="text-white">South Korea</span>
-                      <span className="text-white/60">12%</span>
+                      <span className="text-white">12%</span>
                     </div>
                     <div className="w-full bg-white/10 rounded-full h-2">
                       <div
@@ -1122,7 +1122,7 @@ const MewpModule2Section2 = () => {
                       />
                     </div>
                   </div>
-                  <p className="text-white/40 text-xs mt-2">
+                  <p className="text-white text-xs mt-2">
                     + 9 additional countries reporting incidents
                   </p>
                 </div>
@@ -1134,7 +1134,7 @@ const MewpModule2Section2 = () => {
                   <div>
                     <div className="flex justify-between text-sm mb-1">
                       <span className="text-white">Facilities Management</span>
-                      <span className="text-white/60">27.0%</span>
+                      <span className="text-white">27.0%</span>
                     </div>
                     <div className="w-full bg-white/10 rounded-full h-2">
                       <div className="bg-blue-400/70 h-2 rounded-full" style={{ width: '27%' }} />
@@ -1143,7 +1143,7 @@ const MewpModule2Section2 = () => {
                   <div>
                     <div className="flex justify-between text-sm mb-1">
                       <span className="text-white">Construction</span>
-                      <span className="text-white/60">19.2%</span>
+                      <span className="text-white">19.2%</span>
                     </div>
                     <div className="w-full bg-white/10 rounded-full h-2">
                       <div className="bg-blue-400/70 h-2 rounded-full" style={{ width: '19.2%' }} />
@@ -1152,7 +1152,7 @@ const MewpModule2Section2 = () => {
                   <div>
                     <div className="flex justify-between text-sm mb-1">
                       <span className="text-white">Electrical Work</span>
-                      <span className="text-white/60">15.4%</span>
+                      <span className="text-white">15.4%</span>
                     </div>
                     <div className="w-full bg-white/10 rounded-full h-2">
                       <div className="bg-blue-400/70 h-2 rounded-full" style={{ width: '15.4%' }} />
@@ -1203,7 +1203,7 @@ const MewpModule2Section2 = () => {
                   <BookOpen className="h-5 w-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-elec-yellow">What the Data Tells Us</h3>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   The overall decrease in fatalities is encouraging and shows that training,
                   improved equipment, and better safety practices are making a difference. However,
                   the sharp rise in entrapment incidents is a clear warning — the industry must
@@ -1228,7 +1228,7 @@ const MewpModule2Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1244,7 +1244,7 @@ const MewpModule2Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-2-section-1">

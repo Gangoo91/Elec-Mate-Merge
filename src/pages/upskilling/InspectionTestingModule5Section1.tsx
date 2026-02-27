@@ -218,7 +218,7 @@ const InspectionTestingModule5Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-5">
@@ -240,7 +240,7 @@ const InspectionTestingModule5Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Earth Fault Path Principles
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding the earth fault loop and why low impedance is essential for safety
           </p>
         </header>
@@ -336,7 +336,7 @@ const InspectionTestingModule5Section1 = () => {
               </ol>
             </div>
 
-            <p className="text-sm text-white/90">
+            <p className="text-sm text-white">
               The total impedance of this path determines how much fault current will flow and how
               quickly the protective device will operate.
             </p>
@@ -352,25 +352,25 @@ const InspectionTestingModule5Section1 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <div className="my-6 text-center">
               <p className="text-2xl font-mono text-elec-yellow mb-2">I = V / Z</p>
-              <p className="text-sm text-white/60">Fault Current = Voltage / Impedance</p>
+              <p className="text-sm text-white">Fault Current = Voltage / Impedance</p>
             </div>
 
             <div className="grid sm:grid-cols-3 gap-4 my-6">
               <div className="p-3 rounded bg-transparent text-center">
                 <p className="font-medium text-emerald-400 mb-1">Low Z = High I</p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Low impedance allows high fault current to flow
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent text-center">
                 <p className="font-medium text-blue-400 mb-1">High I = Fast Trip</p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   High current causes quick protective device operation
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent text-center">
                 <p className="font-medium text-purple-400 mb-1">Fast Trip = Safety</p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Quick disconnection limits shock duration and energy
                 </p>
               </div>
@@ -603,7 +603,7 @@ const InspectionTestingModule5Section1 = () => {
               Fault current flow →
             </text>
           </svg>
-          <p className="text-xs text-white/40 mt-3">
+          <p className="text-xs text-white mt-3">
             The earth fault loop: current flows from the transformer through the line conductor (R1)
             to the fault, returns via the CPC (R2) and earthing conductor, then through the DNO
             earth return (Ze) back to the transformer.
@@ -626,19 +626,19 @@ const InspectionTestingModule5Section1 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-bold text-elec-yellow text-xl mb-1">Zs</p>
-                <p className="text-white/60 text-xs">Total loop impedance</p>
+                <p className="text-white text-xs">Total loop impedance</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-bold text-orange-400 text-xl mb-1">Ze</p>
-                <p className="text-white/60 text-xs">External impedance</p>
+                <p className="text-white text-xs">External impedance</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-bold text-emerald-400 text-xl mb-1">R1+R2</p>
-                <p className="text-white/60 text-xs">Circuit impedance</p>
+                <p className="text-white text-xs">Circuit impedance</p>
               </div>
             </div>
 
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               R1 = phase conductor resistance | R2 = CPC resistance
             </p>
           </div>
@@ -655,7 +655,7 @@ const InspectionTestingModule5Section1 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <div className="my-6">
               <p className="text-sm font-medium text-orange-400 mb-2">Ze - External Impedance</p>
-              <p className="text-sm text-white/80 mb-4">
+              <p className="text-sm text-white mb-4">
                 Everything outside your installation: supply transformer, DNO cables, service head,
                 earthing arrangement. You cannot change this - it's provided by the supply.
               </p>
@@ -663,7 +663,7 @@ const InspectionTestingModule5Section1 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-emerald-400 mb-2">R1+R2 - Circuit Impedance</p>
-              <p className="text-sm text-white/80 mb-4">
+              <p className="text-sm text-white mb-4">
                 Your circuit wiring: phase conductor (R1) and CPC (R2). Determined by cable size and
                 length. You control this through design choices.
               </p>
@@ -671,7 +671,7 @@ const InspectionTestingModule5Section1 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Typical Ze values:</p>
-              <ul className="text-sm text-white/80 space-y-1 ml-4">
+              <ul className="text-sm text-white space-y-1 ml-4">
                 <li>TN-C-S (PME): approximately 0.35 ohm</li>
                 <li>TN-S: approximately 0.8 ohm</li>
                 <li>TT: varies with electrode resistance</li>
@@ -697,11 +697,11 @@ const InspectionTestingModule5Section1 = () => {
             <div className="grid grid-cols-2 gap-4 my-6 text-center">
               <div className="p-4 rounded bg-transparent">
                 <p className="text-3xl font-bold text-elec-yellow">0.4s</p>
-                <p className="text-white/60 text-sm mt-1">Socket outlets & portable equipment</p>
+                <p className="text-white text-sm mt-1">Socket outlets & portable equipment</p>
               </div>
               <div className="p-4 rounded bg-transparent">
                 <p className="text-3xl font-bold text-blue-400">5s</p>
-                <p className="text-white/60 text-sm mt-1">
+                <p className="text-white text-sm mt-1">
                   Distribution circuits & fixed equipment
                 </p>
               </div>
@@ -725,12 +725,12 @@ const InspectionTestingModule5Section1 = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/20">
-                    <th className="text-left py-2 text-white/60">System</th>
-                    <th className="text-center py-2 text-white/60">Typical Ze</th>
-                    <th className="text-right py-2 text-white/60">Notes</th>
+                    <th className="text-left py-2 text-white">System</th>
+                    <th className="text-center py-2 text-white">Typical Ze</th>
+                    <th className="text-right py-2 text-white">Notes</th>
                   </tr>
                 </thead>
-                <tbody className="text-white/80">
+                <tbody className="text-white">
                   <tr className="border-b border-white/10">
                     <td className="py-2 font-semibold text-elec-yellow">TN-C-S</td>
                     <td className="text-center">0.35 ohm or less</td>
@@ -798,7 +798,7 @@ const InspectionTestingModule5Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -854,7 +854,7 @@ const InspectionTestingModule5Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-4/section-6">

@@ -171,7 +171,7 @@ export default function AsbestosModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-1">
@@ -196,7 +196,7 @@ export default function AsbestosModule1Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Health Effects of Asbestos Exposure
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How asbestos fibres damage the body, the diseases they cause, latency periods, the
             single-fibre theory, and why there is no safe level of exposure
           </p>
@@ -288,7 +288,7 @@ export default function AsbestosModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Secondary Exposure Risk</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Asbestos fibres can also enter the body through{' '}
                   <strong className="text-white">ingestion</strong> (swallowing), which is linked to
                   some gastrointestinal cancers, though this is less common than inhalation.
@@ -309,7 +309,7 @@ export default function AsbestosModule1Section4() {
                   {/* Nose/Mouth */}
                   <div className="w-full bg-orange-500/10 border border-orange-500/30 rounded-lg p-3 text-center">
                     <p className="text-sm font-medium text-orange-300">Nose / Mouth</p>
-                    <p className="text-xs text-white/60">Entry point &mdash; fibres are inhaled</p>
+                    <p className="text-xs text-white">Entry point &mdash; fibres are inhaled</p>
                   </div>
 
                   {/* Arrow */}
@@ -321,7 +321,7 @@ export default function AsbestosModule1Section4() {
                   {/* Trachea */}
                   <div className="w-full bg-orange-500/10 border border-orange-500/30 rounded-lg p-3 text-center">
                     <p className="text-sm font-medium text-orange-300">Trachea (Windpipe)</p>
-                    <p className="text-xs text-white/60">Fibres pass through the main airway</p>
+                    <p className="text-xs text-white">Fibres pass through the main airway</p>
                   </div>
 
                   {/* Arrow */}
@@ -333,7 +333,7 @@ export default function AsbestosModule1Section4() {
                   {/* Bronchi */}
                   <div className="w-full bg-orange-500/15 border border-orange-500/40 rounded-lg p-3 text-center relative">
                     <p className="text-sm font-medium text-orange-300">Bronchi (Main Airways)</p>
-                    <p className="text-xs text-white/60">Fibres enter the branching airways</p>
+                    <p className="text-xs text-white">Fibres enter the branching airways</p>
                     <div className="mt-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-500/20 border border-red-500/30">
                       <span className="text-[10px] text-red-300 font-medium">
                         LUNG CANCER develops here
@@ -352,7 +352,7 @@ export default function AsbestosModule1Section4() {
                     <p className="text-sm font-medium text-orange-300">
                       Bronchioles (Smaller Airways)
                     </p>
-                    <p className="text-xs text-white/60">Fibres penetrate deeper into the lungs</p>
+                    <p className="text-xs text-white">Fibres penetrate deeper into the lungs</p>
                     <div className="mt-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-red-500/20 border border-red-500/30">
                       <span className="text-[10px] text-red-300 font-medium">
                         LUNG CANCER also develops here
@@ -369,7 +369,7 @@ export default function AsbestosModule1Section4() {
                   {/* Alveoli */}
                   <div className="w-full bg-orange-500/20 border border-orange-500/50 rounded-lg p-3 text-center">
                     <p className="text-sm font-medium text-orange-300">Alveoli (Air Sacs)</p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Where gas exchange occurs &mdash; fibres embed in tissue
                     </p>
                     <div className="mt-2 inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-orange-500/20 border border-orange-500/30">
@@ -390,7 +390,7 @@ export default function AsbestosModule1Section4() {
                     <p className="text-sm font-medium text-red-300">
                       Pleura (Membrane Around Lungs)
                     </p>
-                    <p className="text-xs text-white/60">
+                    <p className="text-xs text-white">
                       Fibres can penetrate through to the pleural lining
                     </p>
                     <div className="mt-2 flex flex-col sm:flex-row items-center justify-center gap-2">
@@ -406,7 +406,7 @@ export default function AsbestosModule1Section4() {
                   </div>
                 </div>
 
-                <p className="text-xs text-white/40 text-center mt-4">
+                <p className="text-xs text-white text-center mt-4">
                   Fibres are permanent &mdash; the body cannot break down or expel them once
                   embedded
                 </p>
@@ -437,7 +437,7 @@ export default function AsbestosModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Always Fatal</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Mesothelioma is <strong className="text-white">always fatal</strong>. There is no
                   cure. The median survival from diagnosis is just{' '}
                   <strong className="text-white">12&ndash;18 months</strong>. It is often diagnosed
@@ -448,7 +448,7 @@ export default function AsbestosModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key Facts</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -514,7 +514,7 @@ export default function AsbestosModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">The Smoking Synergy</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The interaction between asbestos exposure and smoking is{' '}
                   <strong className="text-white">synergistic (multiplicative)</strong>, not merely
                   additive. This means the combined risk is far greater than the sum of the
@@ -523,25 +523,25 @@ export default function AsbestosModule1Section4() {
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg text-center">
                     <p className="text-2xl font-bold text-orange-400">5&times;</p>
-                    <p className="text-xs text-white/60 mt-1">Asbestos alone</p>
+                    <p className="text-xs text-white mt-1">Asbestos alone</p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg text-center">
                     <p className="text-2xl font-bold text-orange-400">10&times;</p>
-                    <p className="text-xs text-white/60 mt-1">Smoking alone</p>
+                    <p className="text-xs text-white mt-1">Smoking alone</p>
                   </div>
                   <div className="bg-red-500/10 border border-red-500/30 p-3 rounded-lg text-center">
                     <p className="text-2xl font-bold text-red-400">50&times;</p>
-                    <p className="text-xs text-white/60 mt-1">Asbestos + smoking</p>
+                    <p className="text-xs text-white mt-1">Asbestos + smoking</p>
                   </div>
                 </div>
-                <p className="text-xs text-white/50 mt-3 text-center">
+                <p className="text-xs text-white mt-3 text-center">
                   Risk compared to a non-exposed non-smoker
                 </p>
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key Facts</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -604,7 +604,7 @@ export default function AsbestosModule1Section4() {
                     'Fatigue and reduced exercise tolerance',
                     'Crackling sound when breathing (heard with stethoscope)',
                   ].map((symptom, i) => (
-                    <div key={i} className="flex items-start gap-2 text-sm text-white/80">
+                    <div key={i} className="flex items-start gap-2 text-sm text-white">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400/60 flex-shrink-0" />
                       <span>{symptom}</span>
                     </div>
@@ -614,7 +614,7 @@ export default function AsbestosModule1Section4() {
 
               <div className="bg-orange-500/10 border border-orange-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-orange-400 mb-2">No Cure</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   There is <strong className="text-white">no cure for asbestosis</strong> &mdash;
                   the damage is irreversible and progressive. Treatment focuses on managing symptoms
                   and slowing progression. The condition can lead to respiratory failure. It is
@@ -625,7 +625,7 @@ export default function AsbestosModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key Facts</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -676,7 +676,7 @@ export default function AsbestosModule1Section4() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-orange-500/10 border border-orange-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-orange-400 mb-3">Pleural Plaques</p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Areas of calcified thickening on the pleura</span>
@@ -706,7 +706,7 @@ export default function AsbestosModule1Section4() {
                   <p className="text-sm font-medium text-orange-400 mb-3">
                     Diffuse Pleural Thickening
                   </p>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>More extensive thickening of the pleural membrane</span>
@@ -734,7 +734,7 @@ export default function AsbestosModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Important</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Both pleural plaques and diffuse pleural thickening confirm past asbestos
                   exposure. If either condition is found, the individual should be placed on an{' '}
                   <strong className="text-white">
@@ -751,13 +751,13 @@ export default function AsbestosModule1Section4() {
                 <p className="text-sm font-medium text-orange-400 mb-4 text-center">
                   Disease Latency Timeline
                 </p>
-                <p className="text-xs text-white/50 text-center mb-6">
+                <p className="text-xs text-white text-center mb-6">
                   Time from first exposure to typical diagnosis
                 </p>
 
                 <div className="space-y-4 max-w-lg mx-auto">
                   {/* Timeline axis labels */}
-                  <div className="flex justify-between text-[10px] text-white/40 px-1 mb-2">
+                  <div className="flex justify-between text-[10px] text-white px-1 mb-2">
                     <span>Exposure</span>
                     <span>10 yrs</span>
                     <span>20 yrs</span>
@@ -769,13 +769,13 @@ export default function AsbestosModule1Section4() {
 
                   {/* Pleural Plaques */}
                   <div>
-                    <p className="text-xs text-white/70 mb-1.5 font-medium">Pleural Plaques</p>
+                    <p className="text-xs text-white mb-1.5 font-medium">Pleural Plaques</p>
                     <div className="relative h-6 bg-white/5 rounded-full overflow-hidden">
                       <div
                         className="absolute h-full rounded-full bg-orange-400/30 border border-orange-400/40"
                         style={{ left: '16.7%', width: '33.3%' }}
                       />
-                      <span className="absolute inset-0 flex items-center justify-center text-[10px] text-white/60">
+                      <span className="absolute inset-0 flex items-center justify-center text-[10px] text-white">
                         10&ndash;30 years
                       </span>
                     </div>
@@ -783,13 +783,13 @@ export default function AsbestosModule1Section4() {
 
                   {/* Asbestosis */}
                   <div>
-                    <p className="text-xs text-white/70 mb-1.5 font-medium">Asbestosis</p>
+                    <p className="text-xs text-white mb-1.5 font-medium">Asbestosis</p>
                     <div className="relative h-6 bg-white/5 rounded-full overflow-hidden">
                       <div
                         className="absolute h-full rounded-full bg-orange-500/40 border border-orange-500/50"
                         style={{ left: '25%', width: '25%' }}
                       />
-                      <span className="absolute inset-0 flex items-center justify-center text-[10px] text-white/60">
+                      <span className="absolute inset-0 flex items-center justify-center text-[10px] text-white">
                         15&ndash;30 years
                       </span>
                     </div>
@@ -797,13 +797,13 @@ export default function AsbestosModule1Section4() {
 
                   {/* Lung Cancer */}
                   <div>
-                    <p className="text-xs text-white/70 mb-1.5 font-medium">Lung Cancer</p>
+                    <p className="text-xs text-white mb-1.5 font-medium">Lung Cancer</p>
                     <div className="relative h-6 bg-white/5 rounded-full overflow-hidden">
                       <div
                         className="absolute h-full rounded-full bg-orange-600/50 border border-orange-600/60"
                         style={{ left: '33.3%', width: '33.3%' }}
                       />
-                      <span className="absolute inset-0 flex items-center justify-center text-[10px] text-white/60">
+                      <span className="absolute inset-0 flex items-center justify-center text-[10px] text-white">
                         20&ndash;40 years
                       </span>
                     </div>
@@ -811,13 +811,13 @@ export default function AsbestosModule1Section4() {
 
                   {/* Mesothelioma */}
                   <div>
-                    <p className="text-xs text-white/70 mb-1.5 font-medium">Mesothelioma</p>
+                    <p className="text-xs text-white mb-1.5 font-medium">Mesothelioma</p>
                     <div className="relative h-6 bg-white/5 rounded-full overflow-hidden">
                       <div
                         className="absolute h-full rounded-full bg-red-500/50 border border-red-500/60"
                         style={{ left: '25%', width: '75%' }}
                       />
-                      <span className="absolute inset-0 flex items-center justify-center text-[10px] text-white/60">
+                      <span className="absolute inset-0 flex items-center justify-center text-[10px] text-white">
                         15&ndash;60 years
                       </span>
                     </div>
@@ -854,7 +854,7 @@ export default function AsbestosModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">The Single-Fibre Theory</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   In theory, a <strong className="text-white">single asbestos fibre</strong> could
                   initiate a disease process such as mesothelioma. While the risk increases with the
                   dose and duration of exposure, there is no threshold below which risk is zero.
@@ -865,7 +865,7 @@ export default function AsbestosModule1Section4() {
 
               <div className="bg-orange-500/10 border border-orange-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-orange-400 mb-2">The HSE Control Limit</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The HSE control limit is{' '}
                   <strong className="text-white">0.1 fibres per cm&sup3; over 4 hours</strong>. This
                   is a <strong className="text-white">legal maximum, NOT a safe level</strong>. It
@@ -879,7 +879,7 @@ export default function AsbestosModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">What This Means in Practice</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -936,7 +936,7 @@ export default function AsbestosModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">20 Tradespeople Die Every Week</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Approximately{' '}
                   <strong className="text-white">20 tradespeople die every week</strong> in the UK
                   from past asbestos exposure. This makes asbestos the single biggest cause of
@@ -957,7 +957,7 @@ export default function AsbestosModule1Section4() {
                     'Construction workers (refurbishment)',
                     'Demolition workers',
                   ].map((trade, i) => (
-                    <div key={i} className="flex items-start gap-2 text-sm text-white/80">
+                    <div key={i} className="flex items-start gap-2 text-sm text-white">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400/60 flex-shrink-0" />
                       <span>{trade}</span>
                     </div>
@@ -976,7 +976,7 @@ export default function AsbestosModule1Section4() {
                     'Railway workshop workers',
                     'Boilermakers',
                   ].map((trade, i) => (
-                    <div key={i} className="flex items-start gap-2 text-sm text-white/80">
+                    <div key={i} className="flex items-start gap-2 text-sm text-white">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/40 flex-shrink-0" />
                       <span>{trade}</span>
                     </div>
@@ -986,7 +986,7 @@ export default function AsbestosModule1Section4() {
 
               <div className="bg-orange-500/10 border border-orange-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-orange-400 mb-2">Secondary Exposure</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Family members of exposed workers are also at risk through{' '}
                   <strong className="text-white">secondary exposure</strong>. Historically, asbestos
                   fibres were carried home on work clothing, and family members &mdash; particularly
@@ -1010,7 +1010,7 @@ export default function AsbestosModule1Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1024,7 +1024,7 @@ export default function AsbestosModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../asbestos-awareness-module-1-section-3">

@@ -276,13 +276,13 @@ const AM2Module2Section3 = () => {
 
       {/* Critical Warning */}
       <AM2CriticalWarning title="Drawings and Specifications Are Non-Negotiable">
-        <p className="text-ios-callout text-white/90 mb-3">
+        <p className="text-ios-callout text-white mb-3">
           In the AM2 you'll be given drawings, wiring diagrams, and written specifications. These
           aren't suggestions - they are the blueprint you must follow exactly. Many candidates fail
           because they think "as long as it works, it's fine." Wrong. The assessor marks against
           compliance with the specification, not just function.
         </p>
-        <p className="text-ios-callout text-white/90 font-medium">
+        <p className="text-ios-callout text-white font-medium">
           In the real world, not following drawings and specs can mean breaching contract terms,
           voiding compliance certificates, or creating unsafe installations. This section ensures
           you understand the critical importance of specification compliance.
@@ -297,7 +297,7 @@ const AM2Module2Section3 = () => {
         <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">
           1. Types of Drawings You'll See in AM2
         </h2>
-        <div className="space-y-6 text-ios-callout text-white/90">
+        <div className="space-y-6 text-ios-callout text-white">
           <div>
             <h3 className="text-ios-headline font-semibold text-white mb-2 flex items-center gap-2">
               <Zap className="w-4 h-4 text-elec-yellow" />
@@ -306,7 +306,7 @@ const AM2Module2Section3 = () => {
             <p className="mb-2">
               Show electrical connections, conductor types, and protective devices.
             </p>
-            <ul className="space-y-1 text-white/80 ml-4">
+            <ul className="space-y-1 text-white ml-4">
               <li>• Display circuit protection (MCBs, RCDs, fuses)</li>
               <li>• Show conductor routes and connections</li>
               <li>• Indicate cable types and sizes</li>
@@ -322,7 +322,7 @@ const AM2Module2Section3 = () => {
             <p className="mb-2">
               Show physical positions including socket heights and trunking routes.
             </p>
-            <ul className="space-y-1 text-white/80 ml-4">
+            <ul className="space-y-1 text-white ml-4">
               <li>• Exact measurements for accessory positioning</li>
               <li>• Trunking and conduit routing paths</li>
               <li>• Clearance distances from other services</li>
@@ -338,7 +338,7 @@ const AM2Module2Section3 = () => {
             <p className="mb-2">
               Detailed written instructions covering all installation requirements.
             </p>
-            <ul className="space-y-1 text-white/80 ml-4">
+            <ul className="space-y-1 text-white ml-4">
               <li>• Cable sizes, types, and colour requirements</li>
               <li>• Installation methods and techniques</li>
               <li>• Material specifications and standards</li>
@@ -356,13 +356,13 @@ const AM2Module2Section3 = () => {
         <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">
           2. Following Specifications - Non-Negotiable
         </h2>
-        <div className="space-y-4 text-ios-callout text-white/90">
+        <div className="space-y-4 text-ios-callout text-white">
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <h3 className="text-ios-headline font-semibold text-white mb-2">
                 Cable Requirements
               </h3>
-              <ul className="space-y-1 text-white/80">
+              <ul className="space-y-1 text-white">
                 <li>• Sizes must match exactly (e.g., 2.5mm for sockets, 4mm for cooker)</li>
                 <li>• Cable types as specified (T&E, SWA, FP200, etc.)</li>
                 <li>• Core colours must comply with requirements</li>
@@ -373,7 +373,7 @@ const AM2Module2Section3 = () => {
               <h3 className="text-ios-headline font-semibold text-white mb-2">
                 Installation Requirements
               </h3>
-              <ul className="space-y-1 text-white/80">
+              <ul className="space-y-1 text-white">
                 <li>• Accessories positioned exactly as per dimensions</li>
                 <li>• Conduit/trunking routes following specified runs</li>
                 <li>• Installation methods as detailed in specs</li>
@@ -385,7 +385,7 @@ const AM2Module2Section3 = () => {
             <h4 className="text-ios-headline font-semibold text-elec-yellow mb-2">
               NET Assessment Time Management
             </h4>
-            <p className="text-ios-callout text-white/80">
+            <p className="text-ios-callout text-white">
               Allocate 15-20 minutes to thoroughly review all drawings and specifications before
               starting practical work. This review time prevents costly mistakes and mark deductions
               later in the assessment process.
@@ -401,7 +401,7 @@ const AM2Module2Section3 = () => {
         <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">
           3. Common Drawing Interpretation Errors (NET Guidance)
         </h2>
-        <div className="space-y-4 text-ios-callout text-white/90">
+        <div className="space-y-4 text-ios-callout text-white">
           <div className="grid md:grid-cols-2 gap-4">
             <div>
               <h3 className="text-ios-headline font-semibold text-elec-yellow mb-3">
@@ -454,7 +454,7 @@ const AM2Module2Section3 = () => {
             <h4 className="text-ios-headline font-semibold text-red-400 mb-2">
               Real AM2 Failure Examples
             </h4>
-            <ul className="space-y-1 text-ios-callout text-white/80">
+            <ul className="space-y-1 text-ios-callout text-white">
               <li>
                 • Candidate installed all accessories neatly but put sockets 100mm too high -
                 borderline fail
@@ -482,12 +482,12 @@ const AM2Module2Section3 = () => {
         <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">
           4. BS 7671 Symbol Recognition Requirements
         </h2>
-        <div className="space-y-4 text-ios-callout text-white/90">
+        <div className="space-y-4 text-ios-callout text-white">
           <div className="p-4 bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl">
             <h4 className="text-ios-headline font-semibold text-elec-yellow mb-2">
               Essential Symbol Categories
             </h4>
-            <div className="grid md:grid-cols-2 gap-4 text-ios-callout text-white/80">
+            <div className="grid md:grid-cols-2 gap-4 text-ios-callout text-white">
               <div>
                 <h5 className="font-medium mb-2 text-white">Circuit Protection</h5>
                 <ul className="space-y-1">
@@ -518,7 +518,7 @@ const AM2Module2Section3 = () => {
               You must be able to instantly recognise and interpret standard BS 7671 symbols without
               reference materials.
             </p>
-            <ul className="space-y-1 text-white/80 ml-4">
+            <ul className="space-y-1 text-white ml-4">
               <li>• Immediate recognition of all common electrical symbols</li>
               <li>• Understanding symbol variations and combinations</li>
               <li>• Ability to trace circuit paths through schematic diagrams</li>
@@ -535,13 +535,13 @@ const AM2Module2Section3 = () => {
         <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">
           5. Strategies to Avoid Mistakes
         </h2>
-        <div className="space-y-4 text-ios-callout text-white/90">
+        <div className="space-y-4 text-ios-callout text-white">
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h3 className="text-ios-headline font-semibold text-white mb-3">
                 Pre-Work Review Process
               </h3>
-              <ol className="space-y-2 text-white/80">
+              <ol className="space-y-2 text-white">
                 <li className="flex gap-2">
                   <span className="bg-elec-yellow text-black px-2 py-0.5 rounded text-xs font-medium min-w-[20px] text-center">
                     1
@@ -578,7 +578,7 @@ const AM2Module2Section3 = () => {
               <h3 className="text-ios-headline font-semibold text-white mb-3">
                 During Installation
               </h3>
-              <ul className="space-y-2 text-white/80">
+              <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
                   <div className="w-1.5 h-1.5 bg-elec-yellow rounded-full mt-2 flex-shrink-0"></div>
                   Keep specifications on hand - don't trust memory
@@ -610,7 +610,7 @@ const AM2Module2Section3 = () => {
         <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">
           6. Measurement and Marking Techniques
         </h2>
-        <div className="space-y-4 text-ios-callout text-white/90">
+        <div className="space-y-4 text-ios-callout text-white">
           <div>
             <h3 className="text-ios-headline font-semibold text-white mb-2">
               Professional Measuring Practices
@@ -618,7 +618,7 @@ const AM2Module2Section3 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div>
                 <h4 className="font-medium mb-2 text-elec-yellow">Accurate Measurement</h4>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>• Use appropriate measuring tools for task</li>
                   <li>• Measure from fixed reference points</li>
                   <li>• Account for wall/surface variations</li>
@@ -628,7 +628,7 @@ const AM2Module2Section3 = () => {
               </div>
               <div>
                 <h4 className="font-medium mb-2 text-elec-yellow">Marking Procedures</h4>
-                <ul className="space-y-1 text-white/80">
+                <ul className="space-y-1 text-white">
                   <li>• Use appropriate marking tools (pencil, chalk)</li>
                   <li>• Mark centre points and corners clearly</li>
                   <li>• Use spirit level for accurate horizontal/vertical</li>
@@ -643,7 +643,7 @@ const AM2Module2Section3 = () => {
             <h4 className="text-ios-headline font-semibold text-green-400 mb-2">
               Professional Tip
             </h4>
-            <p className="text-ios-callout text-white/80">
+            <p className="text-ios-callout text-white">
               "Measure twice, cut once" applies especially to AM2. Incorrect positioning due to poor
               measuring loses marks that cannot be recovered, even if the final installation is
               electrically sound and well-crafted.
@@ -673,7 +673,7 @@ const AM2Module2Section3 = () => {
                 <p className="font-medium text-green-400 mb-2">
                   Specification Compliance (40% weighting)
                 </p>
-                <ul className="space-y-1 text-white/80 text-ios-footnote">
+                <ul className="space-y-1 text-white text-ios-footnote">
                   <li>• Exact cable sizes as specified</li>
                   <li>• Correct accessory positions (+/- 5mm tolerance)</li>
                   <li>• Proper segregation implementation</li>
@@ -685,7 +685,7 @@ const AM2Module2Section3 = () => {
                 <p className="font-medium text-green-400 mb-2">
                   Professional Competency (35% weighting)
                 </p>
-                <ul className="space-y-1 text-white/80 text-ios-footnote">
+                <ul className="space-y-1 text-white text-ios-footnote">
                   <li>• Systematic verification processes</li>
                   <li>• Accurate measurement techniques</li>
                   <li>• Professional marking and positioning</li>
@@ -705,7 +705,7 @@ const AM2Module2Section3 = () => {
             <div className="grid md:grid-cols-2 gap-4 text-ios-callout">
               <div>
                 <p className="font-medium text-red-400 mb-2">Minor Deductions (2-5 marks each)</p>
-                <ul className="space-y-1 text-white/80 text-ios-footnote">
+                <ul className="space-y-1 text-white text-ios-footnote">
                   <li>• Accessory positions 10-20mm out</li>
                   <li>• Incorrect cable colour (but correct size)</li>
                   <li>• Poor measurement technique demonstration</li>
@@ -715,7 +715,7 @@ const AM2Module2Section3 = () => {
               </div>
               <div>
                 <p className="font-medium text-red-400 mb-2">Major Deductions (5-10 marks each)</p>
-                <ul className="space-y-1 text-white/80 text-ios-footnote">
+                <ul className="space-y-1 text-white text-ios-footnote">
                   <li>• Wrong cable sizes installed</li>
                   <li>• Accessories 20mm+ from specified position</li>
                   <li>• Incorrect installation method used</li>
@@ -733,11 +733,11 @@ const AM2Module2Section3 = () => {
               Instant Failure Scenarios
             </h3>
             <div className="space-y-2 text-ios-callout">
-              <p className="text-white/90 font-medium mb-2">
+              <p className="text-white font-medium mb-2">
                 These scenarios result in immediate assessment failure regardless of other work
                 quality:
               </p>
-              <ul className="space-y-1 text-white/80 text-ios-footnote">
+              <ul className="space-y-1 text-white text-ios-footnote">
                 <li>
                   • <strong>Safety segregation violations:</strong> LV and ELV cables in same
                   containment when specification prohibits
@@ -771,7 +771,7 @@ const AM2Module2Section3 = () => {
             <div className="space-y-3 text-ios-callout">
               <div>
                 <p className="font-medium text-elec-yellow mb-1">If You Spot an Error:</p>
-                <ul className="space-y-1 text-white/80 text-ios-footnote">
+                <ul className="space-y-1 text-white text-ios-footnote">
                   <li>• Stop immediately and assess impact</li>
                   <li>• Document the error and proposed correction</li>
                   <li>• Ask assessor for clarification if needed</li>
@@ -781,7 +781,7 @@ const AM2Module2Section3 = () => {
               </div>
               <div>
                 <p className="font-medium text-elec-yellow mb-1">Communication with Assessor:</p>
-                <ul className="space-y-1 text-white/80 text-ios-footnote">
+                <ul className="space-y-1 text-white text-ios-footnote">
                   <li>• "I need to verify this dimension against the drawing"</li>
                   <li>• "Could you confirm the segregation requirement here?"</li>
                   <li>• "I want to double-check this cable specification"</li>
@@ -798,7 +798,7 @@ const AM2Module2Section3 = () => {
         <h2 className="text-ios-title-2 font-bold text-elec-yellow mb-3">
           8. Real-World Industry Examples
         </h2>
-        <div className="space-y-6 text-ios-callout text-white/90">
+        <div className="space-y-6 text-ios-callout text-white">
           <div>
             <h3 className="text-ios-headline font-semibold text-elec-yellow mb-3">
               AM2 Assessment Failures
@@ -806,21 +806,21 @@ const AM2Module2Section3 = () => {
             <div className="space-y-3">
               <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-xl">
                 <h4 className="font-medium text-red-400 mb-1">Example 1: Socket Positioning</h4>
-                <p className="text-white/80">
+                <p className="text-white">
                   Candidate installed all accessories neatly but put sockets 100mm too high. Lost
                   marks, borderline fail.
                 </p>
               </div>
               <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-xl">
                 <h4 className="font-medium text-red-400 mb-1">Example 2: Cable Size Error</h4>
-                <p className="text-white/80">
+                <p className="text-white">
                   Candidate used 2.5mm for a cooker radial instead of 4mm. Failed installation
                   section.
                 </p>
               </div>
               <div className="p-3 bg-red-500/10 border border-red-500/30 rounded-xl">
                 <h4 className="font-medium text-red-400 mb-1">Example 3: Segregation Violation</h4>
-                <p className="text-white/80">
+                <p className="text-white">
                   Mixed ELV and mains in same trunking despite clear specification requiring
                   segregation. Failed on safety compliance.
                 </p>
@@ -834,14 +834,14 @@ const AM2Module2Section3 = () => {
             <div className="space-y-3">
               <div className="p-3 bg-orange-500/10 border border-orange-500/30 rounded-xl">
                 <h4 className="font-medium text-orange-400 mb-1">Contract Breach</h4>
-                <p className="text-white/80">
+                <p className="text-white">
                   Electrician ignored drawings and ran trunking across a doorway. Site inspector
                   rejected the work, leading to costly remedial work and contract penalties.
                 </p>
               </div>
               <div className="p-3 bg-orange-500/10 border border-orange-500/30 rounded-xl">
                 <h4 className="font-medium text-orange-400 mb-1">Compliance Failure</h4>
-                <p className="text-white/80">
+                <p className="text-white">
                   Installation completed to electrician's interpretation rather than specification.
                   Failed electrical inspection and voided building regulations compliance.
                 </p>
@@ -857,7 +857,7 @@ const AM2Module2Section3 = () => {
           <Eye className="w-5 h-5" />
           Summary
         </h2>
-        <div className="space-y-4 text-ios-callout text-white/90">
+        <div className="space-y-4 text-ios-callout text-white">
           <p className="text-ios-body font-medium">
             Working with drawings and specifications is about precision and compliance, not
             interpretation or improvement.
@@ -865,7 +865,7 @@ const AM2Module2Section3 = () => {
           <div className="grid md:grid-cols-2 gap-6">
             <div>
               <h3 className="text-ios-headline font-semibold text-white mb-2">Key Points</h3>
-              <ul className="space-y-1 text-white/80">
+              <ul className="space-y-1 text-white">
                 <li>• Drawings and specs must be followed exactly</li>
                 <li>• BS 7671 symbol fluency is essential</li>
                 <li>• Measurement accuracy prevents mark loss</li>
@@ -877,7 +877,7 @@ const AM2Module2Section3 = () => {
               <h3 className="text-ios-headline font-semibold text-white mb-2">
                 Mark-Losing Actions
               </h3>
-              <ul className="space-y-1 text-white/80">
+              <ul className="space-y-1 text-white">
                 <li>• Wrong cable sizes or types</li>
                 <li>• Incorrect accessory positioning</li>
                 <li>• Mixed voltage systems in same containment</li>
@@ -888,7 +888,7 @@ const AM2Module2Section3 = () => {
           </div>
           <div className="mt-6 p-4 bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl">
             <h4 className="text-ios-headline font-semibold text-elec-yellow mb-2">Golden Rule</h4>
-            <p className="text-white/90">
+            <p className="text-white">
               Follow drawings and specifications exactly. AM2 assesses compliance and competency,
               not personal interpretation or design improvement.
             </p>

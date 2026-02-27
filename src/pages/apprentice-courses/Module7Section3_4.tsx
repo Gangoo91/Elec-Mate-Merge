@@ -217,7 +217,7 @@ const Module7Section3_4 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -235,13 +235,13 @@ const Module7Section3_4 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 7</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 3.4</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 3.4</span>
             </div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
               Buzzing, Arcing and Sparking
             </h1>
-            <p className="text-white/70 text-base sm:text-lg max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg max-w-2xl mx-auto">
               Identifying and responding to audible and visual signs of electrical faults including
               buzzing, arcing and sparking.
             </p>
@@ -250,7 +250,7 @@ const Module7Section3_4 = () => {
           {/* In 30 Seconds Summary */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 space-y-1 text-sm list-disc pl-4">
+            <ul className="text-white space-y-1 text-sm list-disc pl-4">
               <li>
                 Buzzing, arcing and sparking indicate serious electrical faults requiring immediate
                 action.
@@ -269,7 +269,7 @@ const Module7Section3_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <ul className="text-white/80 space-y-2 text-sm list-disc pl-4">
+            <ul className="text-white space-y-2 text-sm list-disc pl-4">
               <li>
                 Recognise audible warning signs including buzzing, crackling, and arcing sounds in
                 electrical equipment.
@@ -299,7 +299,7 @@ const Module7Section3_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Identifying Audible and Visual Warning Signs
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Buzzing, arcing and sparking are critical warning signs of developing electrical
                 faults that can rapidly escalate to dangerous conditions. These phenomena indicate
@@ -351,7 +351,7 @@ const Module7Section3_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Understanding Arcing and Sparking Mechanisms
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Electrical arcing represents one of the most dangerous fault conditions in
                 electrical systems, capable of generating extreme temperatures and causing immediate
@@ -412,7 +412,7 @@ const Module7Section3_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Investigation and Emergency Response Procedures
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Buzzing, arcing and sparking require immediate and systematic response due to their
                 potential for rapid escalation to dangerous conditions.
@@ -470,7 +470,7 @@ const Module7Section3_4 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">Detection Techniques</p>
-                <ul className="text-sm list-disc pl-4 space-y-1 text-white/80">
+                <ul className="text-sm list-disc pl-4 space-y-1 text-white">
                   <li>
                     Use ultrasonic detectors to identify high-frequency arcing sounds not audible to
                     human ears
@@ -492,7 +492,7 @@ const Module7Section3_4 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-amber-500/50">
                 <p className="font-medium text-amber-400 mb-2">Safety Precautions</p>
-                <ul className="text-sm list-disc pl-4 space-y-1 text-white/80">
+                <ul className="text-sm list-disc pl-4 space-y-1 text-white">
                   <li>Never attempt to investigate energised equipment showing signs of arcing</li>
                   <li>Maintain safe distances - electrical arcs can extend several metres</li>
                   <li>Use appropriate PPE including arc-rated clothing for high-energy systems</li>
@@ -511,21 +511,21 @@ const Module7Section3_4 = () => {
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">Factory Motor Control Panel</p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong className="text-elec-yellow">Situation:</strong> Maintenance staff
                   reported increasing buzzing from a 3-phase motor contactor during startup.
                 </p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong className="text-orange-400">Investigation:</strong> Initial visual
                   inspection showed no obvious damage, but thermal imaging revealed one contact
                   running 15°C hotter than others.
                 </p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong className="text-green-400">Findings:</strong> Contact inspection revealed
                   pitting and metal transfer indicating arcing. The buzzing intensified as contact
                   deterioration progressed.
                 </p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   <strong className="text-purple-400">Resolution:</strong> Contactor replacement
                   prevented potential fire risk and costly production downtime from complete
                   failure.
@@ -534,21 +534,21 @@ const Module7Section3_4 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
                 <p className="font-medium text-white mb-2">Office Building Distribution Board</p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong className="text-elec-yellow">Situation:</strong> Facilities manager
                   reported intermittent crackling sounds from main distribution board during peak
                   load periods.
                 </p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong className="text-orange-400">Investigation:</strong> Ultrasonic detection
                   identified specific MCB positions generating high-frequency noise indicating
                   micro-arcing.
                 </p>
-                <p className="text-white/80 text-sm mb-2">
+                <p className="text-white text-sm mb-2">
                   <strong className="text-green-400">Findings:</strong> Main busbar connections had
                   loosened due to thermal cycling, creating high resistance and intermittent arcing.
                 </p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   <strong className="text-purple-400">Resolution:</strong> Emergency re-termination
                   of all busbar connections with proper torque settings eliminated the arcing risk.
                 </p>
@@ -566,7 +566,7 @@ const Module7Section3_4 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
                   <p className="font-medium text-white mb-2">{faq.question}</p>
-                  <p className="text-white/70 text-sm">{faq.answer}</p>
+                  <p className="text-white text-sm">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -581,21 +581,21 @@ const Module7Section3_4 = () => {
             <div className="grid sm:grid-cols-3 gap-3">
               <div className="p-3 rounded-lg bg-white/5">
                 <p className="font-medium text-green-400 text-sm mb-1">Key Warning Signs</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Buzzing, crackling, visible sparking, and carbon tracking indicate dangerous
                   electrical faults requiring immediate isolation.
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-white/5">
                 <p className="font-medium text-amber-400 text-sm mb-1">Extreme Dangers</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Electrical arcing generates temperatures over 3000°C, creating immediate fire and
                   explosion risks requiring emergency response.
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-white/5">
                 <p className="font-medium text-elec-yellow text-sm mb-1">Prevention Focus</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Proper installation, regular thermal monitoring, and immediate response to early
                   warning signs prevent escalation to dangerous conditions.
                 </p>
@@ -612,7 +612,7 @@ const Module7Section3_4 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mt-10 pt-6 border-t border-white/10">
             <Button
               variant="ghost"
-              className="w-full sm:w-auto text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="w-full sm:w-auto text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../3-3">

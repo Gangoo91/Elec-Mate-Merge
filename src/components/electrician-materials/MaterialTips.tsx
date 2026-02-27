@@ -180,7 +180,7 @@ const MaterialTips = () => {
                         <Star
                           key={i}
                           className={`h-3 w-3 ${
-                            i < tip.rating ? 'fill-amber-400 text-amber-400' : 'text-white/20'
+                            i < tip.rating ? 'fill-amber-400 text-amber-400' : 'text-white'
                           }`}
                         />
                       ))}

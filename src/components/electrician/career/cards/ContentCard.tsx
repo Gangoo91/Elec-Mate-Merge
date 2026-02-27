@@ -126,7 +126,7 @@ const ContentCard = ({
             )}
           </div>
         </div>
-        <ChevronRight className="h-4 w-4 text-white/50 group-hover:text-white group-hover:translate-x-0.5 transition-all flex-shrink-0 mt-1" />
+        <ChevronRight className="h-4 w-4 text-white group-hover:text-white group-hover:translate-x-0.5 transition-all flex-shrink-0 mt-1" />
       </div>
 
       {/* Description */}
@@ -145,7 +145,7 @@ const ContentCard = ({
       )}
 
       {/* Tap indicator for mobile */}
-      <div className="sm:hidden absolute bottom-2 right-2 text-[10px] text-white/70 group-active:text-white">
+      <div className="sm:hidden absolute bottom-2 right-2 text-[10px] text-white group-active:text-white">
         Tap to view
       </div>
     </motion.div>

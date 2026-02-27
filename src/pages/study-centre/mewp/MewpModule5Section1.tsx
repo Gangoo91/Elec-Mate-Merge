@@ -203,7 +203,7 @@ export default function MewpModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-5">
@@ -228,7 +228,7 @@ export default function MewpModule5Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Emergency Scenarios &amp; Rescue Plan Requirements
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding the legal requirements for rescue plans, the emergency scenarios you must
             plan for, and how to maintain a rescue plan as a living document
           </p>
@@ -311,7 +311,7 @@ export default function MewpModule5Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Legislation Requiring Rescue Plans:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -368,7 +368,7 @@ export default function MewpModule5Section1() {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <p className="text-sm font-medium text-white mb-1">Rescue Plan</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       A documented set of procedures that details how personnel will be rescued from
                       a MEWP in every foreseeable emergency scenario. It must be written,
                       site-specific, communicated to all relevant personnel, and practised
@@ -378,7 +378,7 @@ export default function MewpModule5Section1() {
                   </div>
                   <div>
                     <p className="text-sm font-medium text-white mb-1">Competent Rescue Person</p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       A named individual on site who has been trained and assessed as competent to
                       carry out the rescue procedures detailed in the plan. They must be present on
                       site whenever the MEWP is in use at height and must have access to all
@@ -393,7 +393,7 @@ export default function MewpModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Requirement</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A rescue plan is <strong className="text-white">not just a document</strong>. It
                   must be practised and understood by every person who has a role in it. A plan that
                   exists only on paper and has never been rehearsed is unlikely to succeed in a real
@@ -429,7 +429,7 @@ export default function MewpModule5Section1() {
                       Fuel Depletion / Low Battery
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Power loss stranding the platform at height. Pre-use checks should minimise this
                     risk, but the plan must address it.
                   </p>
@@ -441,7 +441,7 @@ export default function MewpModule5Section1() {
                     <AlertTriangle className="h-4 w-4 text-orange-400 flex-shrink-0" />
                     <p className="text-sm font-medium text-orange-400">Equipment Malfunction</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Hydraulic failure, electrical failure, or control failure preventing normal
                     descent. Emergency lowering procedures must be specified.
                   </p>
@@ -453,7 +453,7 @@ export default function MewpModule5Section1() {
                     <Ban className="h-4 w-4 text-red-400 flex-shrink-0" />
                     <p className="text-sm font-medium text-red-400">Platform Entrapment</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Platform trapped against a structure, preventing normal retraction or descent.
                     May require ground-level override or alternative rescue method.
                   </p>
@@ -465,7 +465,7 @@ export default function MewpModule5Section1() {
                     <AlertTriangle className="h-4 w-4 text-yellow-400 flex-shrink-0" />
                     <p className="text-sm font-medium text-yellow-400">Platform Overload</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Load-sensing system activated, stranding occupants at height with all functions
                     locked out. Requires controlled load reduction or ground-level override.
                   </p>
@@ -477,7 +477,7 @@ export default function MewpModule5Section1() {
                     <HeartPulse className="h-4 w-4 text-pink-400 flex-shrink-0" />
                     <p className="text-sm font-medium text-pink-400">Operator Medical Emergency</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Heart attack, seizure, loss of consciousness, or other medical event rendering
                     the operator incapable of self-rescue. Ground-level rescue essential.
                   </p>
@@ -491,7 +491,7 @@ export default function MewpModule5Section1() {
                       Operator Entrapment / Crushing
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Operator trapped or crushed between the platform and a fixed structure. Requires
                     immediate emergency stop and controlled release.
                   </p>
@@ -505,7 +505,7 @@ export default function MewpModule5Section1() {
                       Electrocution / Electric Shock
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Contact with overhead power lines or live electrical equipment. Requires
                     isolation of the electrical source before any rescue attempt.
                   </p>
@@ -519,7 +519,7 @@ export default function MewpModule5Section1() {
                       Machine Overturned / Tipping
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Machine overturned or in danger of overturning. Occupants must remain in the
                     platform. Specialist recovery equipment likely required.
                   </p>
@@ -531,7 +531,7 @@ export default function MewpModule5Section1() {
                     <Wind className="h-4 w-4 text-blue-400 flex-shrink-0" />
                     <p className="text-sm font-medium text-blue-400">Extreme Weather Onset</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Sudden high winds, lightning, or severe weather conditions making continued
                     elevation dangerous. Requires immediate controlled descent.
                   </p>
@@ -543,7 +543,7 @@ export default function MewpModule5Section1() {
                     <Flame className="h-4 w-4 text-red-400 flex-shrink-0" />
                     <p className="text-sm font-medium text-red-400">Fire On or Near the Machine</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Fire risk to the MEWP, its occupants, or surrounding area. Requires immediate
                     descent and evacuation. Fire extinguisher must be accessible.
                   </p>
@@ -557,7 +557,7 @@ export default function MewpModule5Section1() {
                       Collision with Vehicle or Other Plant
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Impact from a vehicle or other plant equipment on site. May destabilise the MEWP
                     or cause structural damage. Requires immediate assessment and potentially
                     specialist recovery.
@@ -572,7 +572,7 @@ export default function MewpModule5Section1() {
                     Every Scenario Needs a Specific Response
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A generic rescue plan is not acceptable. Each of the above scenarios presents
                   different hazards, requires different equipment, and demands different response
                   procedures. The rescue plan must detail the{' '}
@@ -605,7 +605,7 @@ export default function MewpModule5Section1() {
                   <ListChecks className="h-5 w-5 text-teal-400" />
                   <p className="text-sm font-medium text-teal-400">Rescue Plan Checklist</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -736,7 +736,7 @@ export default function MewpModule5Section1() {
                   <Radio className="h-5 w-5 text-cyan-400" />
                   <p className="text-sm font-medium text-cyan-400">Communication Methods</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-3">
+                <ul className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -779,7 +779,7 @@ export default function MewpModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Universal Emergency Signal</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     Both arms waving above the head = EMERGENCY STOP.
                   </strong>{' '}
@@ -791,7 +791,7 @@ export default function MewpModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Communication Requirements:</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -857,7 +857,7 @@ export default function MewpModule5Section1() {
                     Suspension Trauma &mdash; The 15&ndash;30 Minute Window
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">Suspension trauma (harness hang syndrome)</strong>{' '}
                   can become life-threatening within{' '}
                   <strong className="text-white">15 to 30 minutes</strong> if an operator is
@@ -871,7 +871,7 @@ export default function MewpModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Time-Critical Factors:</p>
-                <ul className="text-sm text-white/80 space-y-3">
+                <ul className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -920,7 +920,7 @@ export default function MewpModule5Section1() {
                   <Phone className="h-5 w-5 text-elec-yellow" />
                   <p className="text-sm font-medium text-elec-yellow">Call 999 EARLY</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Emergency services (999) should be called{' '}
                   <strong className="text-white">EARLY</strong> in any MEWP emergency &mdash;{' '}
                   <strong className="text-white">
@@ -957,7 +957,7 @@ export default function MewpModule5Section1() {
                     Review &amp; Update Requirements
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1010,7 +1010,7 @@ export default function MewpModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Practice Drills:</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1049,7 +1049,7 @@ export default function MewpModule5Section1() {
                   <ShieldAlert className="h-5 w-5 text-elec-yellow" />
                   <p className="text-sm font-medium text-elec-yellow">Practical Summary</p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     A rescue plan is only as good as the people who know it and the drills that have
                     tested it. The key principles are:
@@ -1106,7 +1106,7 @@ export default function MewpModule5Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1120,7 +1120,7 @@ export default function MewpModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-5">

@@ -202,7 +202,7 @@ export default function CscsCardModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-5">
@@ -227,7 +227,7 @@ export default function CscsCardModule5Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Confined Spaces &amp; Fire Safety
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How to identify confined spaces, safe entry procedures and permit-to-work systems, fire
             prevention on construction sites, fire extinguisher types and selection, and emergency
             evacuation procedures
@@ -327,7 +327,7 @@ export default function CscsCardModule5Section2() {
                   Common Confined Spaces on Construction Sites
                 </p>
                 <div className="grid sm:grid-cols-2 gap-2">
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -350,7 +350,7 @@ export default function CscsCardModule5Section2() {
                       </span>
                     </li>
                   </ul>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -412,7 +412,7 @@ export default function CscsCardModule5Section2() {
                     <Wind className="h-5 w-5 text-red-400" />
                     <p className="text-sm font-medium text-red-400">Toxic Gas or Vapour</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Gases such as hydrogen sulphide (H2S), carbon monoxide (CO), methane, and
                     solvent vapours can accumulate in enclosed spaces. Many toxic gases are
                     odourless and colourless, making them undetectable without monitoring equipment.
@@ -428,7 +428,7 @@ export default function CscsCardModule5Section2() {
                       Oxygen Depletion or Enrichment
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Normal air contains approximately 20.9% oxygen. Oxygen levels below 19.5% can
                     cause impaired judgement, confusion, and loss of consciousness. Below 16%, death
                     can occur rapidly. Oxygen may be displaced by other gases, consumed by rusting
@@ -443,7 +443,7 @@ export default function CscsCardModule5Section2() {
                     <Flame className="h-5 w-5 text-orange-400" />
                     <p className="text-sm font-medium text-orange-400">Flammable Atmosphere</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Flammable gases, vapours, or dusts can accumulate in confined spaces, creating
                     an explosive atmosphere. Any ignition source &mdash; a spark from a tool, a
                     static discharge, or even a mobile phone &mdash; can trigger an explosion. The
@@ -457,7 +457,7 @@ export default function CscsCardModule5Section2() {
                     <Droplets className="h-5 w-5 text-blue-400" />
                     <p className="text-sm font-medium text-blue-400">Flooding and Engulfment</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Confined spaces near watercourses, drainage systems, or storage containers can
                     flood suddenly. Silos and hoppers present an engulfment risk from bulk materials
                     such as grain, sand, or cement, which can collapse and bury a worker in seconds.
@@ -470,7 +470,7 @@ export default function CscsCardModule5Section2() {
                     <Thermometer className="h-5 w-5 text-purple-400" />
                     <p className="text-sm font-medium text-purple-400">Temperature Extremes</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Enclosed spaces can trap heat, particularly when hot work (welding, cutting) is
                     being carried out. Extreme heat leads to heat exhaustion and heat stroke, which
                     impairs judgement and reduces the ability to self-rescue. Cold environments,
@@ -528,7 +528,7 @@ export default function CscsCardModule5Section2() {
                 safe system of work:
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                   <span>
@@ -593,7 +593,7 @@ export default function CscsCardModule5Section2() {
                 <p className="text-sm font-medium text-white mb-4 text-center">
                   Confined Space Entry Procedure
                 </p>
-                <p className="text-xs text-white/50 text-center mb-6">
+                <p className="text-xs text-white text-center mb-6">
                   Step-by-step flowchart from identification to completion
                 </p>
 
@@ -614,7 +614,7 @@ export default function CscsCardModule5Section2() {
                   <div className="w-full max-w-[380px] bg-gradient-to-r from-amber-500/20 to-amber-400/10 border border-amber-500/30 p-3 text-center">
                     <p className="text-xs font-bold text-amber-400">STEP 2</p>
                     <p className="text-[11px] text-white">Can the work be done WITHOUT entering?</p>
-                    <p className="text-[10px] text-white/50 mt-1">
+                    <p className="text-[10px] text-white mt-1">
                       If YES &rarr; do not enter. Use remote methods.
                     </p>
                   </div>
@@ -629,7 +629,7 @@ export default function CscsCardModule5Section2() {
                     <p className="text-[11px] text-white">
                       Prepare safe system of work &amp; permit to work
                     </p>
-                    <p className="text-[10px] text-white/50 mt-1">
+                    <p className="text-[10px] text-white mt-1">
                       Isolate services, set up ventilation, brief team
                     </p>
                   </div>
@@ -644,7 +644,7 @@ export default function CscsCardModule5Section2() {
                     <p className="text-[11px] text-white">
                       Test atmosphere &amp; confirm rescue plan ready
                     </p>
-                    <p className="text-[10px] text-white/50 mt-1">
+                    <p className="text-[10px] text-white mt-1">
                       O2, LEL, toxic gases &mdash; all within safe limits
                     </p>
                   </div>
@@ -659,7 +659,7 @@ export default function CscsCardModule5Section2() {
                     <p className="text-[11px] text-white">
                       Enter with continuous monitoring &amp; communication
                     </p>
-                    <p className="text-[10px] text-white/50 mt-1">
+                    <p className="text-[10px] text-white mt-1">
                       Top person (attendant) remains at entry point at all times
                     </p>
                   </div>
@@ -674,13 +674,13 @@ export default function CscsCardModule5Section2() {
                     <p className="text-[11px] text-white">
                       Exit, close permit, debrief, and record
                     </p>
-                    <p className="text-[10px] text-white/50 mt-1">
+                    <p className="text-[10px] text-white mt-1">
                       Confirm all persons out, cancel permit, reinstate barriers
                     </p>
                   </div>
                 </div>
 
-                <p className="text-xs text-white/40 text-center mt-4 italic">
+                <p className="text-xs text-white text-center mt-4 italic">
                   If atmosphere deteriorates at any stage &rarr; evacuate immediately and do not
                   re-enter
                 </p>
@@ -727,7 +727,7 @@ export default function CscsCardModule5Section2() {
                       Non-Entry Rescue (Preferred)
                     </p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -762,7 +762,7 @@ export default function CscsCardModule5Section2() {
                     <AlertTriangle className="h-5 w-5 text-amber-400" />
                     <p className="text-sm font-medium text-amber-400">Entry Rescue (Last Resort)</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -844,7 +844,7 @@ export default function CscsCardModule5Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Common Fire Causes on Construction Sites
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -907,7 +907,7 @@ export default function CscsCardModule5Section2() {
                   <div className="bg-gradient-to-r from-red-500/20 to-orange-500/20 border border-red-500/30 rounded-xl px-6 py-3 text-center mb-2">
                     <Flame className="h-5 w-5 text-red-400 mx-auto mb-1" />
                     <p className="text-xs font-bold text-red-400">HEAT</p>
-                    <p className="text-[10px] text-white/60">Ignition source</p>
+                    <p className="text-[10px] text-white">Ignition source</p>
                   </div>
 
                   {/* Connecting lines */}
@@ -921,16 +921,16 @@ export default function CscsCardModule5Section2() {
                     <div className="bg-gradient-to-r from-amber-500/20 to-yellow-500/20 border border-amber-500/30 rounded-xl px-5 py-3 text-center flex-1 max-w-[140px]">
                       <Wind className="h-5 w-5 text-amber-400 mx-auto mb-1" />
                       <p className="text-xs font-bold text-amber-400">FUEL</p>
-                      <p className="text-[10px] text-white/60">Combustible material</p>
+                      <p className="text-[10px] text-white">Combustible material</p>
                     </div>
                     <div className="bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border border-blue-500/30 rounded-xl px-5 py-3 text-center flex-1 max-w-[140px]">
                       <Droplets className="h-5 w-5 text-blue-400 mx-auto mb-1" />
                       <p className="text-xs font-bold text-blue-400">OXYGEN</p>
-                      <p className="text-[10px] text-white/60">~21% in air</p>
+                      <p className="text-[10px] text-white">~21% in air</p>
                     </div>
                   </div>
                 </div>
-                <p className="text-xs text-white/40 text-center mt-4 italic">
+                <p className="text-xs text-white text-center mt-4 italic">
                   Remove any one element and the fire is extinguished
                 </p>
               </div>
@@ -964,7 +964,7 @@ export default function CscsCardModule5Section2() {
                 enable safe evacuation.
               </p>
 
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                   <span>
@@ -1066,7 +1066,7 @@ export default function CscsCardModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Fire Classes</p>
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm text-white/80">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm text-white">
                   <div className="p-2 rounded bg-white/5 border border-white/10">
                     <p className="text-xs font-bold text-white">Class A</p>
                     <p className="text-[11px]">Solid combustibles (wood, paper, textiles)</p>
@@ -1104,12 +1104,12 @@ export default function CscsCardModule5Section2() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Water Extinguisher</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Red band (or all red body) &bull; Class A
                       </p>
                     </div>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -1141,10 +1141,10 @@ export default function CscsCardModule5Section2() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Foam Extinguisher</p>
-                      <p className="text-xs text-white/60">Cream band &bull; Class A and B</p>
+                      <p className="text-xs text-white">Cream band &bull; Class A and B</p>
                     </div>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -1177,12 +1177,12 @@ export default function CscsCardModule5Section2() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">CO2 Extinguisher</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Black band &bull; Electrical and Class B
                       </p>
                     </div>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>Safe on live electrical equipment (CO2 is non-conductive)</span>
@@ -1217,12 +1217,12 @@ export default function CscsCardModule5Section2() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Dry Powder Extinguisher</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Blue band &bull; Class A, B, C and Electrical
                       </p>
                     </div>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>
@@ -1258,12 +1258,12 @@ export default function CscsCardModule5Section2() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Wet Chemical Extinguisher</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Yellow band &bull; Class F (and some Class A)
                       </p>
                     </div>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>Specifically designed for Class F fires (cooking oils and fats)</span>
@@ -1296,7 +1296,7 @@ export default function CscsCardModule5Section2() {
                 <p className="text-sm font-medium text-white mb-4 text-center">
                   Fire Extinguisher Selection Guide
                 </p>
-                <p className="text-xs text-white/50 text-center mb-4">
+                <p className="text-xs text-white text-center mb-4">
                   Match the fire class to the correct extinguisher type
                 </p>
 
@@ -1305,27 +1305,27 @@ export default function CscsCardModule5Section2() {
                     {/* Header Row */}
                     <div className="grid grid-cols-6 gap-1 mb-1">
                       <div className="p-2 rounded bg-white/5 border border-white/10 text-center">
-                        <p className="text-[10px] font-bold text-white/60">EXTINGUISHER</p>
+                        <p className="text-[10px] font-bold text-white">EXTINGUISHER</p>
                       </div>
                       <div className="p-2 rounded bg-white/5 border border-white/10 text-center">
                         <p className="text-[10px] font-bold text-white">A</p>
-                        <p className="text-[8px] text-white/50">Solids</p>
+                        <p className="text-[8px] text-white">Solids</p>
                       </div>
                       <div className="p-2 rounded bg-white/5 border border-white/10 text-center">
                         <p className="text-[10px] font-bold text-white">B</p>
-                        <p className="text-[8px] text-white/50">Liquids</p>
+                        <p className="text-[8px] text-white">Liquids</p>
                       </div>
                       <div className="p-2 rounded bg-white/5 border border-white/10 text-center">
                         <p className="text-[10px] font-bold text-white">C</p>
-                        <p className="text-[8px] text-white/50">Gases</p>
+                        <p className="text-[8px] text-white">Gases</p>
                       </div>
                       <div className="p-2 rounded bg-white/5 border border-white/10 text-center">
                         <p className="text-[10px] font-bold text-white">Elec</p>
-                        <p className="text-[8px] text-white/50">Electrical</p>
+                        <p className="text-[8px] text-white">Electrical</p>
                       </div>
                       <div className="p-2 rounded bg-white/5 border border-white/10 text-center">
                         <p className="text-[10px] font-bold text-white">F</p>
-                        <p className="text-[8px] text-white/50">Oils/Fats</p>
+                        <p className="text-[8px] text-white">Oils/Fats</p>
                       </div>
                     </div>
 
@@ -1441,7 +1441,7 @@ export default function CscsCardModule5Section2() {
                   </div>
                 </div>
 
-                <p className="text-xs text-white/40 text-center mt-4 italic">
+                <p className="text-xs text-white text-center mt-4 italic">
                   GREEN = Safe to use &bull; RED = Do NOT use on this fire class
                 </p>
               </div>
@@ -1482,7 +1482,7 @@ export default function CscsCardModule5Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Emergency Evacuation Procedure
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1581,27 +1581,27 @@ export default function CscsCardModule5Section2() {
                 <div className="space-y-2">
                   <div className="flex items-start gap-3 p-2 rounded bg-white/5">
                     <span className="text-green-400 font-bold text-sm min-w-[24px]">1.</span>
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       Raise the alarm immediately &mdash; activate the nearest fire alarm call point
                     </span>
                   </div>
                   <div className="flex items-start gap-3 p-2 rounded bg-white/5">
                     <span className="text-green-400 font-bold text-sm min-w-[24px]">2.</span>
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       Call 999 and provide the site address, fire location, and details of what is
                       burning
                     </span>
                   </div>
                   <div className="flex items-start gap-3 p-2 rounded bg-white/5">
                     <span className="text-green-400 font-bold text-sm min-w-[24px]">3.</span>
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       Only attempt to fight the fire if it is small, you have the correct
                       extinguisher, and you have a clear escape route behind you
                     </span>
                   </div>
                   <div className="flex items-start gap-3 p-2 rounded bg-white/5">
                     <span className="text-green-400 font-bold text-sm min-w-[24px]">4.</span>
-                    <span className="text-sm text-white/80">
+                    <span className="text-sm text-white">
                       If in doubt, leave the area and evacuate to the assembly point &mdash; do not
                       risk your safety
                     </span>
@@ -1619,7 +1619,7 @@ export default function CscsCardModule5Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1633,7 +1633,7 @@ export default function CscsCardModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-5">

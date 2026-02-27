@@ -199,7 +199,7 @@ export default function CoshhAwarenessModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-1">
@@ -226,7 +226,7 @@ export default function CoshhAwarenessModule1Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             What Is COSHH?
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding the Control of Substances Hazardous to Health Regulations &mdash; what
             they require, what they cover, and why every electrician needs to know them
           </p>
@@ -394,7 +394,7 @@ export default function CoshhAwarenessModule1Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Why &ldquo;As Amended&rdquo; Matters
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   You will often see the COSHH Regulations referred to as &ldquo;the Control of
                   Substances Hazardous to Health Regulations 2002 (as amended)&rdquo;. This is
                   because the original 2002 regulations have been amended multiple times &mdash;
@@ -483,14 +483,14 @@ export default function CoshhAwarenessModule1Section1() {
                   <Scale className="h-5 w-5 text-violet-400" />
                   <p className="text-sm font-medium text-violet-400">Routes of Exposure</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   COSHH is concerned with all routes by which a hazardous substance can enter the
                   body and cause harm. There are four main routes of exposure:
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Inhalation</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Breathing in dusts, fumes, vapours, gases, and mists. The most common route of
                       entry in the workplace and the one most associated with serious occupational
                       lung disease.
@@ -498,21 +498,21 @@ export default function CoshhAwarenessModule1Section1() {
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Skin Absorption</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Direct contact with the skin, causing localised damage (e.g., dermatitis,
                       chemical burns) or systemic poisoning through absorption into the bloodstream.
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Ingestion</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Swallowing hazardous substances &mdash; often through contaminated hands,
                       food, or drink. Poor hygiene practices are a common cause.
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Injection</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Entry through puncture wounds, cuts, or needlestick injuries. Less common but
                       relevant in some environments, particularly healthcare and waste handling.
                     </p>
@@ -535,7 +535,7 @@ export default function CoshhAwarenessModule1Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Key Term: &ldquo;Substance&rdquo;
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Under COSHH, &ldquo;substance&rdquo; is defined very broadly. It includes any
                   natural or artificial substance in any physical form &mdash; solid, liquid, gas,
                   vapour, dust, fume, fibre, or mist. It includes raw materials, products,
@@ -578,7 +578,7 @@ export default function CoshhAwarenessModule1Section1() {
                       <CheckCircle className="h-5 w-5 text-green-400" />
                       <p className="text-sm font-semibold text-green-400">Covered by COSHH</p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-2">
+                    <ul className="text-sm text-white space-y-2">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                         <span>
@@ -633,7 +633,7 @@ export default function CoshhAwarenessModule1Section1() {
                       <AlertTriangle className="h-5 w-5 text-red-400" />
                       <p className="text-sm font-semibold text-red-400">NOT Covered by COSHH</p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-2">
+                    <ul className="text-sm text-white space-y-2">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                         <span>
@@ -664,7 +664,7 @@ export default function CoshhAwarenessModule1Section1() {
                       </li>
                     </ul>
                     <div className="mt-3 p-2 bg-white/5 rounded-lg">
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         These substances are excluded because they have their own, more specific
                         regulatory frameworks. The exclusion does not mean they are less dangerous
                         &mdash; in most cases, the opposite is true.
@@ -685,7 +685,7 @@ export default function CoshhAwarenessModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Practical Tip</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   On many construction sites, you will encounter substances covered by COSHH
                   <em> alongside</em> substances that are excluded (e.g., working near asbestos
                   removal while using chemical cleaning agents). In these situations, multiple sets
@@ -733,28 +733,28 @@ export default function CoshhAwarenessModule1Section1() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">~13,000</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       deaths per year from occupational lung disease (COPD, occupational asthma,
                       silicosis, lung cancer)
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">~12,000</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       new cases of work-related skin disease per year (contact dermatitis, chemical
                       burns, occupational eczema)
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">~19,000</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       new cases of self-reported breathing or lung problems caused or made worse by
                       work each year
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">~8,000</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       estimated cancer registrations linked to past occupational exposures each year
                     </p>
                   </div>
@@ -787,7 +787,7 @@ export default function CoshhAwarenessModule1Section1() {
                     Construction &amp; Electrical Trades: Heightened Risk
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The construction industry, which includes electrical installation and maintenance
                   work, is one of the sectors most heavily affected by occupational ill health from
                   hazardous substances. Construction workers are exposed to silica dust, cement
@@ -811,7 +811,7 @@ export default function CoshhAwarenessModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">The Hidden Cost</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Beyond the human tragedy, occupational ill health from hazardous substances costs
                   the UK economy an estimated <strong>&pound;1.6 billion per year</strong> in lost
                   working days, medical treatment, and compensation. For individual businesses, a
@@ -857,7 +857,7 @@ export default function CoshhAwarenessModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       PVC Solvent Cement &amp; Adhesives
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Used to join PVC conduit and trunking. Contains volatile organic compounds
                       (VOCs) such as tetrahydrofuran (THF) and methyl ethyl ketone (MEK). Inhalation
                       of vapours can cause dizziness, headaches, nausea, and irritation to the
@@ -867,7 +867,7 @@ export default function CoshhAwarenessModule1Section1() {
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Solder &amp; Flux Fumes</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Soldering produces a complex mixture of fumes, including colophony (rosin)
                       fume from flux-cored solder. Colophony fume is a well-known respiratory
                       sensitiser and one of the most common causes of occupational asthma in the UK.
@@ -879,7 +879,7 @@ export default function CoshhAwarenessModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Respirable Silica Dust (RCS)
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Generated when chasing walls, drilling into concrete, brick, or block, or
                       cutting paving slabs. Respirable crystalline silica (RCS) is classified as a
                       carcinogen and causes silicosis, a serious and irreversible lung disease. The
@@ -891,7 +891,7 @@ export default function CoshhAwarenessModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       PVC Fumes (from Cutting &amp; Burning)
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       When PVC cable insulation, trunking, or conduit is cut with hot-wire cutters
                       or exposed to fire, it releases hydrogen chloride (HCl) gas, dioxins, and
                       furans. Hydrogen chloride is a severe respiratory irritant. Even low
@@ -903,7 +903,7 @@ export default function CoshhAwarenessModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Cement &amp; Concrete Dust
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Cement dust is alkaline and irritant. Wet cement can cause serious chemical
                       burns to the skin (cement burns) due to its high pH. Inhaling cement dust
                       causes irritation to the nose, throat, and lungs. Chromium VI compounds in
@@ -914,7 +914,7 @@ export default function CoshhAwarenessModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Cleaning Agents &amp; Degreasers
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Contact cleaner sprays, switch cleaners, degreasers, and general cleaning
                       chemicals often contain solvents, surfactants, and other hazardous substances.
                       Prolonged or repeated skin contact can cause dermatitis. Inhalation of aerosol
@@ -925,7 +925,7 @@ export default function CoshhAwarenessModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Expanding Foam (Isocyanates)
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Polyurethane expanding foam, commonly used to seal cable entries, contains
                       isocyanates &mdash; powerful respiratory sensitisers. Even brief inhalation
                       can trigger occupational asthma in susceptible individuals. Isocyanates are
@@ -936,7 +936,7 @@ export default function CoshhAwarenessModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Mineral Insulation Material (Loft Work)
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Glass fibre and mineral wool used for loft insulation cause skin irritation,
                       eye irritation, and upper respiratory tract irritation. While not as dangerous
                       as asbestos, repeated exposure to fibrous insulation materials without
@@ -1008,7 +1008,7 @@ export default function CoshhAwarenessModule1Section1() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Assess the Risks</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Identify hazardous substances, who is at risk, and how exposure could occur.
                       </p>
                     </div>
@@ -1021,7 +1021,7 @@ export default function CoshhAwarenessModule1Section1() {
                       <p className="text-sm font-medium text-white">
                         Decide What Precautions Are Needed
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Determine the appropriate control measures based on the assessment.
                       </p>
                     </div>
@@ -1034,7 +1034,7 @@ export default function CoshhAwarenessModule1Section1() {
                       <p className="text-sm font-medium text-white">
                         Prevent or Adequately Control Exposure
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Implement controls following the hierarchy: elimination, substitution,
                         engineering, admin, PPE.
                       </p>
@@ -1048,7 +1048,7 @@ export default function CoshhAwarenessModule1Section1() {
                       <p className="text-sm font-medium text-white">
                         Ensure Controls Are Used &amp; Maintained
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Check controls are working properly and are being used correctly by all
                         workers.
                       </p>
@@ -1060,7 +1060,7 @@ export default function CoshhAwarenessModule1Section1() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Monitor Exposure</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Where required, carry out workplace monitoring to check exposure levels are
                         within WELs.
                       </p>
@@ -1074,7 +1074,7 @@ export default function CoshhAwarenessModule1Section1() {
                       <p className="text-sm font-medium text-white">
                         Carry Out Health Surveillance
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Where risk assessment identifies a need, provide appropriate health
                         monitoring for workers.
                       </p>
@@ -1088,7 +1088,7 @@ export default function CoshhAwarenessModule1Section1() {
                       <p className="text-sm font-medium text-white">
                         Prepare for Accidents &amp; Emergencies
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Have plans and procedures in place for spills, leaks, accidental releases,
                         and overexposures.
                       </p>
@@ -1102,7 +1102,7 @@ export default function CoshhAwarenessModule1Section1() {
                       <p className="text-sm font-medium text-white">
                         Ensure Employees Are Informed &amp; Trained
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Provide suitable information, instruction, and training about substances and
                         controls.
                       </p>
@@ -1124,12 +1124,12 @@ export default function CoshhAwarenessModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">The Hierarchy of Control</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Central to COSHH compliance is the <strong>hierarchy of control measures</strong>,
                   which applies at step 3. The hierarchy requires employers to consider controls in
                   the following order of preference:
                 </p>
-                <ol className="text-sm text-white/80 space-y-2">
+                <ol className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="inline-flex items-center justify-center min-w-[24px] h-6 rounded-full bg-violet-500/20 text-violet-400 text-xs font-bold flex-shrink-0">
                       1
@@ -1219,7 +1219,7 @@ export default function CoshhAwarenessModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Health and Safety at Work etc. Act 1974 (HASAWA)
                     </p>
-                    <p className="text-sm text-white/80 leading-relaxed">
+                    <p className="text-sm text-white leading-relaxed">
                       The <strong>&ldquo;parent Act&rdquo;</strong> of UK health and safety law.
                       HASAWA provides the overarching framework under which COSHH and most other
                       health and safety regulations are made. Section 2 places a general duty on
@@ -1235,7 +1235,7 @@ export default function CoshhAwarenessModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Management of Health and Safety at Work Regulations 1999
                     </p>
-                    <p className="text-sm text-white/80 leading-relaxed">
+                    <p className="text-sm text-white leading-relaxed">
                       These regulations require employers to carry out{' '}
                       <strong>suitable and sufficient risk assessments</strong> covering all
                       workplace hazards (not just substances). They also require employers to
@@ -1249,7 +1249,7 @@ export default function CoshhAwarenessModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Dangerous Substances and Explosive Atmospheres Regulations 2002 (DSEAR)
                     </p>
-                    <p className="text-sm text-white/80 leading-relaxed">
+                    <p className="text-sm text-white leading-relaxed">
                       DSEAR deals with the <strong>fire and explosion risks</strong> posed by
                       dangerous substances, rather than the health risks. Many substances are
                       covered by both COSHH (for health risks) and DSEAR (for fire/explosion risks).
@@ -1262,7 +1262,7 @@ export default function CoshhAwarenessModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       CLP Regulation (Classification, Labelling and Packaging)
                     </p>
-                    <p className="text-sm text-white/80 leading-relaxed">
+                    <p className="text-sm text-white leading-relaxed">
                       Originally EU Regulation (EC) No 1272/2008, now retained in UK law. The CLP
                       Regulation governs how hazardous substances and mixtures are{' '}
                       <strong>classified and labelled</strong>. It introduced the Globally
@@ -1277,7 +1277,7 @@ export default function CoshhAwarenessModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Control of Asbestos Regulations 2012 (CAR 2012)
                     </p>
-                    <p className="text-sm text-white/80 leading-relaxed">
+                    <p className="text-sm text-white leading-relaxed">
                       CAR 2012 provides the specific regulatory framework for managing asbestos in
                       workplaces. Although asbestos is a substance hazardous to health, it is
                       <strong> excluded from COSHH</strong> because its extreme danger warrants
@@ -1291,7 +1291,7 @@ export default function CoshhAwarenessModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Control of Lead at Work Regulations 2002 (CLAW 2002)
                     </p>
-                    <p className="text-sm text-white/80 leading-relaxed">
+                    <p className="text-sm text-white leading-relaxed">
                       CLAW 2002 provides specific requirements for protecting workers from exposure
                       to lead. Like asbestos, lead is <strong>excluded from COSHH</strong> because
                       it has its own dedicated regulations. Electricians may encounter lead in older
@@ -1347,7 +1347,7 @@ export default function CoshhAwarenessModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Regulation 6 &mdash; Assessment
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Carry out a suitable and sufficient assessment of the risks to health from
                       hazardous substances. The assessment must identify what substances are
                       present, how workers may be exposed, the nature of that exposure (route,
@@ -1360,7 +1360,7 @@ export default function CoshhAwarenessModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Regulation 7 &mdash; Prevention or Control of Exposure
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The primary duty. Employers must <strong>prevent exposure</strong> to
                       substances hazardous to health or, where prevention is not reasonably
                       practicable,
@@ -1374,7 +1374,7 @@ export default function CoshhAwarenessModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Regulation 8 &mdash; Use of Control Measures
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Employers must take all reasonable steps to ensure that control measures,
                       including PPE, are properly used. They must also provide suitable information,
                       instruction, and training so that workers understand how to use controls
@@ -1385,7 +1385,7 @@ export default function CoshhAwarenessModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Regulation 9 &mdash; Maintenance of Controls
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       All control measures must be maintained in efficient working order, in good
                       repair, and in a clean condition. Local exhaust ventilation (LEV) must be
                       thoroughly examined and tested at least every 14 months (or more frequently
@@ -1397,7 +1397,7 @@ export default function CoshhAwarenessModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Regulation 10 &mdash; Monitoring Exposure
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Where the risk assessment identifies a need, employers must monitor exposure
                       at the workplace to ensure that WELs are not exceeded and that controls are
                       effective. Monitoring records must be kept for at least 5 years (or 40 years
@@ -1408,7 +1408,7 @@ export default function CoshhAwarenessModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Regulation 11 &mdash; Health Surveillance
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Where workers are exposed to substances that have identifiable diseases or
                       adverse health effects linked to exposure, and there is a valid technique for
                       detecting those effects, employers must provide health surveillance. Examples
@@ -1420,7 +1420,7 @@ export default function CoshhAwarenessModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Regulation 12 &mdash; Information, Instruction &amp; Training
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Employers must provide employees with suitable and sufficient information,
                       instruction, and training about the hazardous substances they may be exposed
                       to, the risks to health, the control measures in place, and the results of
@@ -1433,12 +1433,12 @@ export default function CoshhAwarenessModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 sm:p-6 rounded-lg mt-4">
                 <p className="text-sm font-medium text-white mb-4">Employee Duties Under COSHH</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   COSHH Regulation 8(2) places specific duties on employees. These complement the
                   general employee duties under HASAWA Section 7 and the Management Regulations. As
                   an employee, you must:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1498,7 +1498,7 @@ export default function CoshhAwarenessModule1Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Consequences of Non-Compliance</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   COSHH is criminal law. Breaches are prosecuted by the HSE or local authorities.
                   Under the Sentencing Council guidelines (in force since February 2016), fines for
                   health and safety offences are linked to the offender&rsquo;s turnover and the
@@ -1542,7 +1542,7 @@ export default function CoshhAwarenessModule1Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1560,7 +1560,7 @@ export default function CoshhAwarenessModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-1">

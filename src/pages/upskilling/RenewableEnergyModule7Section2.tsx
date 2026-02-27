@@ -236,7 +236,7 @@ const RenewableEnergyModule7Section2 = () => {
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
           Preventive Maintenance Programmes
         </h1>
-        <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+        <p className="text-white text-sm sm:text-base max-w-xl mx-auto">
           Comprehensive maintenance planning for renewable energy system reliability and longevity
         </p>
       </div>
@@ -285,7 +285,7 @@ const RenewableEnergyModule7Section2 = () => {
           ].map((outcome, index) => (
             <div key={index} className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
-              <span className="text-white/80 text-sm">{outcome}</span>
+              <span className="text-white text-sm">{outcome}</span>
             </div>
           ))}
         </div>
@@ -298,7 +298,7 @@ const RenewableEnergyModule7Section2 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">01</span>
             <h2 className="text-xl font-semibold text-white">Maintenance Programme Fundamentals</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               A well-designed preventive maintenance programme is essential for maximising system
               reliability, performance, and lifespan whilst minimising unexpected failures and
@@ -338,7 +338,7 @@ const RenewableEnergyModule7Section2 = () => {
               Inspection Schedules and Procedures
             </h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Regular inspections form the backbone of preventive maintenance, enabling early
               detection of developing issues before they cause system failures or safety hazards.
@@ -375,7 +375,7 @@ const RenewableEnergyModule7Section2 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">03</span>
             <h2 className="text-xl font-semibold text-white">Cleaning Strategies</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Module cleaning should be based on actual soiling impact rather than fixed schedules,
               as optimal cleaning frequency varies significantly with local environmental
@@ -412,7 +412,7 @@ const RenewableEnergyModule7Section2 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">04</span>
             <h2 className="text-xl font-semibold text-white">Component Lifecycle Management</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Understanding component lifespans enables proactive replacement planning, avoiding
               unexpected failures and minimising system downtime.
@@ -449,7 +449,7 @@ const RenewableEnergyModule7Section2 = () => {
               Documentation and Continuous Improvement
             </h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Comprehensive documentation supports warranty claims, enables trend analysis, and
               provides the foundation for continuous programme improvement.
@@ -482,7 +482,7 @@ const RenewableEnergyModule7Section2 = () => {
             <Zap className="w-4 h-4 text-elec-yellow" />
             Practical Guidance
           </h3>
-          <div className="space-y-2 text-white/80 text-sm">
+          <div className="space-y-2 text-white text-sm">
             <p>
               <span className="text-white font-medium">Starting a maintenance programme:</span>{' '}
               Begin with manufacturer recommendations and adjust based on site experience. More
@@ -510,7 +510,7 @@ const RenewableEnergyModule7Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <h3 className="text-white font-medium mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>

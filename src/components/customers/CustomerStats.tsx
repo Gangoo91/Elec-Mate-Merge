@@ -42,18 +42,18 @@ export const CustomerStats = ({ customers, onNavigateToCustomers }: CustomerStat
           <div className="min-w-0 flex-1">
             <h3 className="text-sm font-semibold text-white mb-0.5">Customers</h3>
             {totalCustomers === 0 ? (
-              <p className="text-xs text-white/40">Track your clients and their certificates</p>
+              <p className="text-xs text-white">Track your clients and their certificates</p>
             ) : (
               <div className="flex items-center gap-6 mt-1.5">
                 <div>
-                  <p className="text-[10px] text-white/40 font-medium uppercase tracking-wide">
+                  <p className="text-[10px] text-white font-medium uppercase tracking-wide">
                     Total
                   </p>
                   <p className="text-2xl font-bold text-white tabular-nums">{totalCustomers}</p>
                 </div>
                 <div className="w-px h-10 bg-white/10" />
                 <div>
-                  <p className="text-[10px] text-white/40 font-medium uppercase tracking-wide">
+                  <p className="text-[10px] text-white font-medium uppercase tracking-wide">
                     This Month
                   </p>
                   <div className="flex items-center gap-1.5">
@@ -67,7 +67,7 @@ export const CustomerStats = ({ customers, onNavigateToCustomers }: CustomerStat
 
           {/* Chevron */}
           {onNavigateToCustomers && (
-            <ChevronRight className="h-5 w-5 text-white/20 flex-shrink-0" />
+            <ChevronRight className="h-5 w-5 text-white flex-shrink-0" />
           )}
         </div>
       </div>

@@ -123,7 +123,7 @@ const QuoteVarianceTracker = () => {
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 Quote vs Actual Tracker
               </h1>
-              <p className="text-sm text-white/70">Capture variances to refine your pricing</p>
+              <p className="text-sm text-white">Capture variances to refine your pricing</p>
             </div>
           </div>
           <SmartBackButton />
@@ -214,7 +214,7 @@ const QuoteVarianceTracker = () => {
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
             placeholder="E.g., Client changed sockets from 6 to 10 mid-job, extra materials needed..."
-            className="w-full min-h-[100px] bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-[16px] placeholder:text-white/30 focus:outline-none focus:ring-2 focus:ring-blue-500/50 resize-none"
+            className="w-full min-h-[100px] bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-white text-[16px] placeholder:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/50 resize-none"
           />
           <p className="text-xs text-white mt-1">
             Document why the variance occurred to improve future estimates
@@ -342,7 +342,7 @@ const QuoteVarianceTracker = () => {
               </div>
               <ChevronDown
                 className={cn(
-                  'h-4 w-4 text-white/80 transition-transform duration-200',
+                  'h-4 w-4 text-white transition-transform duration-200',
                   showGuidance && 'rotate-180'
                 )}
               />
@@ -387,7 +387,7 @@ const QuoteVarianceTracker = () => {
               </div>
               <ChevronDown
                 className={cn(
-                  'h-4 w-4 text-white/80 transition-transform duration-200',
+                  'h-4 w-4 text-white transition-transform duration-200',
                   showReference && 'rotate-180'
                 )}
               />

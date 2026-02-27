@@ -197,7 +197,7 @@ const Module5Section3_2 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -214,13 +214,13 @@ const Module5Section3_2 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.3.2</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.3.2</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Setting Realistic Timescales and Milestones
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Learn to set achievable timescales and milestones for electrical installations to
               ensure quality work without compromising safety.
             </p>
@@ -233,7 +233,7 @@ const Module5Section3_2 = () => {
               In 30 Seconds
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <ul className="text-white/80 space-y-2 list-disc pl-4">
+              <ul className="text-white space-y-2 list-disc pl-4">
                 <li>Always allow extra time for unexpected delays.</li>
                 <li>Set clear milestones to track project progress.</li>
                 <li>Communicate timescale changes immediately.</li>
@@ -247,7 +247,7 @@ const Module5Section3_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Timescales and milestones are essential in electrical installation projects. They
                 provide structure, help manage resources, and ensure that work is completed on time
@@ -260,7 +260,7 @@ const Module5Section3_2 = () => {
                   <Clock className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-elec-yellow mb-2">Why This Matters</p>
-                    <p className="text-white/70 text-sm">
+                    <p className="text-white text-sm">
                       Proper timescale planning in electrical projects reduces installation errors
                       by up to 40% and prevents costly delays that can impact entire construction
                       schedules.
@@ -287,7 +287,7 @@ const Module5Section3_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <div className="text-white/80 space-y-2 leading-relaxed">
+            <div className="text-white space-y-2 leading-relaxed">
               <p className="mb-3">By the end of this subsection, you will be able to:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Explain the importance of timescales in electrical installations.</li>
@@ -305,7 +305,7 @@ const Module5Section3_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               What Are Timescales?
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>The planned duration for completing specific tasks or the whole project:</p>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-elec-yellow mb-3">Purpose of Timescales</p>
@@ -319,7 +319,7 @@ const Module5Section3_2 = () => {
                 </ul>
                 <div className="mt-4 p-3 rounded bg-green-500/10 border border-green-500/20">
                   <p className="font-medium text-green-400 mb-1">Key Benefit</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Clear timescales provide structure and ensure all team members understand
                     project expectations and deadlines.
                   </p>
@@ -334,7 +334,7 @@ const Module5Section3_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               What Are Milestones?
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>Key checkpoints in a project that show progress:</p>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-green-400 mb-3">Milestone Examples</p>
@@ -377,7 +377,7 @@ const Module5Section3_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Setting Realistic Timescales
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Review installation drawings and specifications. Break tasks into smaller steps and
                 estimate time needed. Allow extra time for potential delays:
@@ -395,7 +395,7 @@ const Module5Section3_2 = () => {
                 </ul>
                 <div className="mt-4 p-3 rounded bg-orange-500/10 border border-orange-500/20">
                   <p className="font-medium text-elec-yellow mb-1">Buffer Time Rule</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Always add 10-20% extra time to account for unexpected delays like weather,
                     material shortages, or site access issues.
                   </p>
@@ -423,7 +423,7 @@ const Module5Section3_2 = () => {
                 <h3 className="font-medium text-green-400 mb-3">
                   Benefits of Realistic Timescales
                 </h3>
-                <ul className="list-disc pl-6 space-y-1 text-sm text-white/80">
+                <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                   <li>Ensures steady progress without rushing</li>
                   <li>Improves quality and reduces errors</li>
                   <li>Makes workload manageable</li>
@@ -432,7 +432,7 @@ const Module5Section3_2 = () => {
               </div>
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <h3 className="font-medium text-red-400 mb-3">Risks of Unrealistic Timescales</h3>
-                <ul className="list-disc pl-6 space-y-1 text-sm text-white/80">
+                <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                   <li>Increased mistakes and rework</li>
                   <li>Unsafe working practices from rushing</li>
                   <li>Low morale and stress for workers</li>
@@ -456,7 +456,7 @@ const Module5Section3_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Adjusting Timescales
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>When issues arise, timescales may need adjustment:</p>
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
@@ -487,7 +487,7 @@ const Module5Section3_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">08</span>
               Practical Guidance
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <ul className="list-disc pl-6 space-y-2">
                 <li>
                   Use project programmes (like Gantt charts or site schedules) to track progress.
@@ -532,7 +532,7 @@ const Module5Section3_2 = () => {
                   className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50"
                 >
                   <p className="font-medium text-white mb-2">Q: {faq.question}</p>
-                  <p className="text-white/70 text-sm">A: {faq.answer}</p>
+                  <p className="text-white text-sm">A: {faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -565,7 +565,7 @@ const Module5Section3_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">12</span>
               Summary
             </h2>
-            <div className="text-white/80 leading-relaxed">
+            <div className="text-white leading-relaxed">
               <p>
                 In this subsection, you learned about setting realistic timescales and milestones.
                 You now understand how they keep projects on track, improve quality, and prevent
@@ -588,7 +588,7 @@ const Module5Section3_2 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../3-1">

@@ -93,7 +93,7 @@ const BS7671Module3Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bs7671-module-3">
@@ -114,7 +114,7 @@ const BS7671Module3Section5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Earthing Arrangements & Protective Measures
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Matching earthing systems with appropriate protection strategies
           </p>
         </header>
@@ -193,7 +193,7 @@ const BS7671Module3Section5 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-2">Final Circuits ≤63A</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>
                       <strong>TN systems:</strong> 0.4 seconds maximum
                     </li>
@@ -204,7 +204,7 @@ const BS7671Module3Section5 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-2">Distribution Circuits &gt;63A</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>
                       <strong>TN systems:</strong> 5 seconds maximum
                     </li>
@@ -287,29 +287,29 @@ const BS7671Module3Section5 = () => {
                   <tr className="border-t border-white/5">
                     <td className="p-3 font-medium">MCB (Type B)</td>
                     <td className="p-3">General circuits, resistive loads</td>
-                    <td className="p-3 text-white/70 text-xs">Trips 3-5× In; needs low Zs</td>
+                    <td className="p-3 text-white text-xs">Trips 3-5× In; needs low Zs</td>
                   </tr>
                   <tr className="border-t border-white/5">
                     <td className="p-3 font-medium">MCB (Type C)</td>
                     <td className="p-3">Motor starting, discharge lighting</td>
-                    <td className="p-3 text-white/70 text-xs">Trips 5-10× In; higher Zs limit</td>
+                    <td className="p-3 text-white text-xs">Trips 5-10× In; higher Zs limit</td>
                   </tr>
                   <tr className="border-t border-white/5">
                     <td className="p-3 font-medium">RCD (30mA)</td>
                     <td className="p-3">Additional protection, TT systems</td>
-                    <td className="p-3 text-white/70 text-xs">
+                    <td className="p-3 text-white text-xs">
                       Sensitive to earth leakage; nuisance trips
                     </td>
                   </tr>
                   <tr className="border-t border-white/5">
                     <td className="p-3 font-medium">RCBO</td>
                     <td className="p-3">Individual circuit protection</td>
-                    <td className="p-3 text-white/70 text-xs">Higher cost; selective protection</td>
+                    <td className="p-3 text-white text-xs">Higher cost; selective protection</td>
                   </tr>
                   <tr className="border-t border-white/5">
                     <td className="p-3 font-medium">Fuse (BS 88)</td>
                     <td className="p-3">High fault current applications</td>
-                    <td className="p-3 text-white/70 text-xs">Slow operation; needs replacement</td>
+                    <td className="p-3 text-white text-xs">Slow operation; needs replacement</td>
                   </tr>
                 </tbody>
               </table>
@@ -422,7 +422,7 @@ const BS7671Module3Section5 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-2">Where:</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>
                       <strong>Zs:</strong> Total earth fault loop impedance
                     </li>
@@ -439,7 +439,7 @@ const BS7671Module3Section5 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-2">Typical Ze Values:</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>
                       <strong>TN-S:</strong> 0.35Ω typical, 0.8Ω max
                     </li>
@@ -508,7 +508,7 @@ const BS7671Module3Section5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -520,7 +520,7 @@ const BS7671Module3Section5 = () => {
           <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
             <div>
               <p className="font-medium text-elec-yellow mb-1">Disconnection Times (230V)</p>
-              <ul className="space-y-0.5 text-white/90">
+              <ul className="space-y-0.5 text-white">
                 <li>Socket circuits TN: 0.4s max</li>
                 <li>Socket circuits TT: 0.2s (or RCD)</li>
                 <li>Distribution TN: 5s max</li>
@@ -529,7 +529,7 @@ const BS7671Module3Section5 = () => {
             </div>
             <div>
               <p className="font-medium text-elec-yellow mb-1">Key Protective Measures</p>
-              <ul className="space-y-0.5 text-white/90">
+              <ul className="space-y-0.5 text-white">
                 <li>ADS: Main measure, Zs critical</li>
                 <li>RCD: Essential for TT, 30mA sockets</li>
                 <li>SELV: No earth, voltage limitation</li>
@@ -554,7 +554,7 @@ const BS7671Module3Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bs7671-module-3-section-4">

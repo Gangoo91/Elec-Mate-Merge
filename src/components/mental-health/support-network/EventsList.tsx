@@ -47,7 +47,7 @@ const EventsList = ({ events, defaultExpanded = true }: EventsListProps) => {
           </div>
           <div className="text-left">
             <h3 className="font-semibold text-foreground">Upcoming Events</h3>
-            <p className="text-xs text-white/70">
+            <p className="text-xs text-white">
               {events.length} event{events.length !== 1 ? 's' : ''} scheduled
             </p>
           </div>
@@ -60,7 +60,7 @@ const EventsList = ({ events, defaultExpanded = true }: EventsListProps) => {
             className="transition-transform duration-300"
             style={{ transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
           >
-            <ChevronDown className="h-5 w-5 text-white/70" />
+            <ChevronDown className="h-5 w-5 text-white" />
           </div>
         </div>
       </button>
@@ -78,15 +78,15 @@ const EventsList = ({ events, defaultExpanded = true }: EventsListProps) => {
                 <div className="flex-1 min-w-0">
                   <h4 className="font-medium text-foreground text-sm mb-2">{event.name}</h4>
                   <div className="space-y-1.5">
-                    <div className="flex items-center gap-2 text-xs text-white/70">
+                    <div className="flex items-center gap-2 text-xs text-white">
                       <Calendar className="h-3.5 w-3.5 text-amber-400 flex-shrink-0" />
                       <span>{event.date}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-white/70">
+                    <div className="flex items-center gap-2 text-xs text-white">
                       <Clock className="h-3.5 w-3.5 text-amber-400 flex-shrink-0" />
                       <span>{event.time}</span>
                     </div>
-                    <div className="flex items-center gap-2 text-xs text-white/70">
+                    <div className="flex items-center gap-2 text-xs text-white">
                       <MapPin className="h-3.5 w-3.5 text-amber-400 flex-shrink-0" />
                       <span className="line-clamp-1">{event.location}</span>
                     </div>

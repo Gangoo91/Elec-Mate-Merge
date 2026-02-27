@@ -257,7 +257,7 @@ const Level3Module1Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section1">
@@ -432,7 +432,7 @@ const Level3Module1Section1_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Note:</strong> Occupational diseases must also be reported when a doctor
               confirms diagnosis - including occupational dermatitis, asthma, and carpal tunnel
               syndrome.
@@ -475,19 +475,19 @@ const Level3Module1Section1_3 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-red-500/10 border border-red-500/30">
                 <p className="font-medium text-white mb-1">Immediately</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Deaths, specified injuries, dangerous occurrences
                 </p>
               </div>
               <div className="p-3 rounded bg-orange-500/10 border border-orange-500/30">
                 <p className="font-medium text-white mb-1">Within 10 Days</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Over-7-day incapacitation, written follow-up
                 </p>
               </div>
               <div className="p-3 rounded bg-elec-yellow/10 border border-elec-yellow/30">
                 <p className="font-medium text-white mb-1">3 Years</p>
-                <p className="text-white/90 text-xs">Minimum record retention period</p>
+                <p className="text-white text-xs">Minimum record retention period</p>
               </div>
             </div>
 
@@ -541,7 +541,7 @@ const Level3Module1Section1_3 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> An electrician working on a distribution board experiences
               an arc flash. Burns cover 5% of body (below 10% threshold), but they are admitted to
               hospital for over 24 hours observation. This IS a specified injury (hospital admission
@@ -627,7 +627,7 @@ const Level3Module1Section1_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -679,7 +679,7 @@ const Level3Module1Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section1">

@@ -95,7 +95,7 @@ const FunctionalSkillsModule1Section4 = () => {
             to="/study-centre/apprentice/functional-skills/module1"
             className="p-2 -ml-2 touch-manipulation"
           >
-            <ArrowLeft className="w-5 h-5 text-white/60" />
+            <ArrowLeft className="w-5 h-5 text-white" />
           </Link>
           <div>
             <p className="text-[11px] font-semibold text-green-400 uppercase tracking-wider">
@@ -119,7 +119,7 @@ const FunctionalSkillsModule1Section4 = () => {
               </div>
             </div>
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">Data &amp; Statistics</h2>
-            <p className="text-sm text-white/50 max-w-lg mx-auto">
+            <p className="text-sm text-white max-w-lg mx-auto">
               Learn to collect, organise, interpret and present data &mdash; essential skills for
               electrical testing, energy monitoring, project reporting and quality assurance.
             </p>
@@ -142,7 +142,7 @@ const FunctionalSkillsModule1Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Bar Charts &amp; Pictograms</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               <strong className="text-white">Bar charts</strong> are one of the most common ways to
               display data visually. In electrical work, you will encounter them in energy audit
@@ -200,7 +200,7 @@ const FunctionalSkillsModule1Section4 = () => {
               <p className="text-xs font-semibold text-green-400 mb-1">
                 Reading Bar Charts on Site
               </p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 When reading a bar chart, always check the y-axis scale first. A chart showing
                 energy use from 100 kWh to 110 kWh might look dramatically different from one
                 showing 0 to 200 kWh, even though the actual variation is small. Misleading scales
@@ -237,7 +237,7 @@ const FunctionalSkillsModule1Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Pie Charts</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               A <strong className="text-white">pie chart</strong> is a circle divided into segments
               (slices) that represent the proportion of each category to the whole. The entire
@@ -286,7 +286,7 @@ const FunctionalSkillsModule1Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">When to Use Pie Charts</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Pie charts work best with 2&ndash;6 categories. With more than 6 slices, the chart
                 becomes hard to read and a bar chart or table would be more appropriate. Also, pie
                 charts can only show one data set at a time &mdash; you cannot compare two years on
@@ -334,7 +334,7 @@ const FunctionalSkillsModule1Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Line Graphs</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               <strong className="text-white">Line graphs</strong> show how a quantity changes over
               time. Data points are plotted and connected with straight lines, revealing trends,
@@ -414,7 +414,7 @@ const FunctionalSkillsModule1Section4 = () => {
                   <p className="text-xs font-semibold text-yellow-400 mb-1">
                     Reading Between Data Points
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Line graphs connect data points with straight lines, but the actual value
                     between two points may not follow a straight path. This is called{' '}
                     <em>interpolation</em> and should be used with caution. Only make predictions
@@ -455,7 +455,7 @@ const FunctionalSkillsModule1Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Tables &amp; Tally Charts</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Before data can be plotted on a chart, it must be organised.{' '}
               <strong className="text-white">Data tables</strong> and{' '}
@@ -506,7 +506,7 @@ const FunctionalSkillsModule1Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">BS 7671 Reference Tables</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 The Wiring Regulations contain hundreds of data tables. Learning to read them
                 correctly is essential. Always check the table heading, column headers and any
                 footnotes. For example, Table 4D5A gives current ratings for flat twin &amp; earth
@@ -548,7 +548,7 @@ const FunctionalSkillsModule1Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Mean, Median &amp; Mode</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               The three <strong className="text-white">measures of central tendency</strong>{' '}
               describe the &ldquo;typical&rdquo; or &ldquo;average&rdquo; value in a data set. Each
@@ -617,7 +617,7 @@ const FunctionalSkillsModule1Section4 = () => {
                 <AlertTriangle className="w-4 h-4 text-yellow-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="text-xs font-semibold text-yellow-400 mb-1">Spotting Outliers</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The reading of 0.98&thinsp;&Omega; is significantly higher than the others. This
                     is an <em>outlier</em> and suggests a possible fault &mdash; perhaps a loose
                     connection, high-resistance joint or incorrect conductor cross-section on that
@@ -652,7 +652,7 @@ const FunctionalSkillsModule1Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Range &amp; Spread</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               While averages tell you about the centre of your data, the{' '}
               <strong className="text-white">range</strong> tells you about how spread out it is.
@@ -704,7 +704,7 @@ const FunctionalSkillsModule1Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Interquartile Range (IQR)</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 A more robust measure of spread is the{' '}
                 <strong className="text-white">interquartile range</strong> (IQR), which ignores the
                 top and bottom 25% of values. Arrange all values in order. Q1 is the median of the
@@ -753,7 +753,7 @@ const FunctionalSkillsModule1Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Interpreting Test Results</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Electrical testing generates large amounts of numerical data. Being able to interpret
               this data &mdash; spotting trends, identifying failures and comparing against
@@ -801,7 +801,7 @@ const FunctionalSkillsModule1Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Trend Analysis Over Time</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 By comparing test results from different inspection years, you can spot degradation
                 trends. If a circuit&apos;s Zs was 0.85&thinsp;&Omega; five years ago,
                 0.95&thinsp;&Omega; three years ago, and 1.10&thinsp;&Omega; now, the increasing
@@ -833,7 +833,7 @@ const FunctionalSkillsModule1Section4 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Presenting Data Effectively</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Collecting and analysing data is only useful if you can communicate your findings
               clearly. Whether you are writing a condition report, preparing an energy audit
@@ -963,7 +963,7 @@ const FunctionalSkillsModule1Section4 = () => {
 
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Takeaway</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Data skills are not just for the exam &mdash; they are everyday professional
                 competencies. Whether you are filling in a Schedule of Test Results, preparing an
                 energy saving proposal, or explaining test findings to a client, understanding how
@@ -982,7 +982,7 @@ const FunctionalSkillsModule1Section4 = () => {
         <div className="flex items-center justify-between pt-6 border-t border-white/10">
           <Link
             to="/study-centre/apprentice/functional-skills/module1/section3"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
           >
             <ArrowLeft className="w-4 h-4" />
             Algebra &amp; Formulae

@@ -213,7 +213,7 @@ const InstrumentationModule3Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/instrumentation-module-3">
@@ -235,7 +235,7 @@ const InstrumentationModule3Section3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Signal Conditioning
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Filtering, isolation, and amplification for reliable measurements
           </p>
         </header>
@@ -649,7 +649,7 @@ const InstrumentationModule3Section3 = () => {
                   <span className="text-elec-yellow font-bold">1</span>
                   <div>
                     <p className="text-white font-medium">Signal Isolation</p>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Isolated RTD transmitters break ground loops between sensor circuits and
                       control system, eliminating 50Hz noise pickup from motor drives.
                     </p>
@@ -659,7 +659,7 @@ const InstrumentationModule3Section3 = () => {
                   <span className="text-elec-yellow font-bold">2</span>
                   <div>
                     <p className="text-white font-medium">Low-Pass Filtering</p>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       0.5Hz cutoff filters remove high-frequency EMI while preserving temperature
                       response. Analogue filters provide immediate noise reduction before ADC
                       conversion.
@@ -670,7 +670,7 @@ const InstrumentationModule3Section3 = () => {
                   <span className="text-elec-yellow font-bold">3</span>
                   <div>
                     <p className="text-white font-medium">Signal Amplification</p>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Instrumentation amplifiers boost millivolt RTD signals to 4-20mA for
                       long-distance transmission to control room 200m away.
                     </p>
@@ -680,7 +680,7 @@ const InstrumentationModule3Section3 = () => {
                   <span className="text-elec-yellow font-bold">4</span>
                   <div>
                     <p className="text-white font-medium">Digital Processing</p>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       PLC applies additional digital filtering and linearisation to achieve ±0.1°C
                       accuracy for critical process control.
                     </p>
@@ -759,7 +759,7 @@ const InstrumentationModule3Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -775,7 +775,7 @@ const InstrumentationModule3Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../instrumentation-module-3-section-2">

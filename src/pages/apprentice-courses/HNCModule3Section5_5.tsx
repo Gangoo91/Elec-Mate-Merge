@@ -222,7 +222,7 @@ const HNCModule3Section5_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section5">
@@ -244,7 +244,7 @@ const HNCModule3Section5_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Synchronous Machines - Principles and Uses
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding synchronous motors, generators, and their critical role in building
             services power systems
           </p>
@@ -335,7 +335,7 @@ const HNCModule3Section5_5 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 n<sub>s</sub> = 120f / p
               </p>
-              <div className="text-xs text-white/70 text-center space-y-1">
+              <div className="text-xs text-white text-center space-y-1">
                 <p>
                   Where: n<sub>s</sub> = synchronous speed (rev/min)
                 </p>
@@ -497,7 +497,7 @@ const HNCModule3Section5_5 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Starting Methods</p>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 Synchronous motors cannot self-start because the rotating field reverses too quickly
                 for the rotor inertia. Common starting methods include:
               </p>
@@ -590,13 +590,13 @@ const HNCModule3Section5_5 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 V-Curves (Armature Current vs Field Current)
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 The relationship between armature current and field current at constant load forms
                 characteristic V-shaped curves. The minimum armature current occurs at unity power
                 factor.
               </p>
               <div className="p-4 rounded bg-black/30">
-                <pre className="text-xs text-white/80 font-mono whitespace-pre overflow-x-auto">
+                <pre className="text-xs text-white font-mono whitespace-pre overflow-x-auto">
                   {`    Armature
     Current
        |     Lagging pf        Leading pf
@@ -614,7 +614,7 @@ const HNCModule3Section5_5 = () => {
          Under-excited  |  Over-excited`}
                 </pre>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Each curve represents a different mechanical load. Higher loads shift the entire
                 curve upward.
               </p>
@@ -955,14 +955,14 @@ const HNCModule3Section5_5 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Damper (Amortisseur) Windings
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Damper windings are short-circuited copper or aluminium bars embedded in the rotor
                 pole faces, similar to a squirrel cage.
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-xs font-medium text-white mb-1">How They Work:</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>At synchronous speed: no relative motion, no induced current</li>
                     <li>During hunting: relative motion induces currents</li>
                     <li>Induced currents create opposing torque</li>
@@ -971,7 +971,7 @@ const HNCModule3Section5_5 = () => {
                 </div>
                 <div>
                   <p className="text-xs font-medium text-white mb-1">Additional Functions:</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Provide starting torque (induction motor action)</li>
                     <li>Protect field winding during asymmetrical faults</li>
                     <li>Reduce rotor surface losses</li>
@@ -1042,7 +1042,7 @@ const HNCModule3Section5_5 = () => {
                   cos phi Watts
                 </p>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Where: p = poles, n = speed (rev/min), N = turns, phi = flux, k<sub>w</sub> =
                 winding factor
               </p>
@@ -1052,7 +1052,7 @@ const HNCModule3Section5_5 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Generator Voltage Regulation
               </p>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 Terminal voltage varies with load due to armature reaction and internal impedance.
                 The Automatic Voltage Regulator (AVR) adjusts field current to maintain constant
                 voltage.
@@ -1156,7 +1156,7 @@ const HNCModule3Section5_5 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Standby Generator Systems
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Diesel generators provide emergency power for life safety systems, data centres,
                 hospitals, and other critical facilities.
               </p>
@@ -1204,7 +1204,7 @@ const HNCModule3Section5_5 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Generator Paralleling Requirements
               </p>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 When paralleling generators with each other or the grid, the following must match:
               </p>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
@@ -1228,7 +1228,7 @@ const HNCModule3Section5_5 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Large-Scale Power Factor Correction
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 For sites with large motor loads (industrial processes, multiple chillers),
                 centralised PF correction is more economical than individual motor correction.
               </p>
@@ -1237,7 +1237,7 @@ const HNCModule3Section5_5 = () => {
                   <p className="text-xs font-medium text-white mb-1">
                     Capacitor Bank Installation:
                   </p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Automatic power factor controller</li>
                     <li>Stepped switching (contactor or thyristor)</li>
                     <li>Detuning reactors for harmonic-rich sites</li>
@@ -1246,7 +1246,7 @@ const HNCModule3Section5_5 = () => {
                 </div>
                 <div>
                   <p className="text-xs font-medium text-white mb-1">Benefits:</p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>Reduced reactive power charges</li>
                     <li>Lower distribution losses</li>
                     <li>Released transformer capacity</li>
@@ -1260,7 +1260,7 @@ const HNCModule3Section5_5 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Combined Heat and Power (CHP)
               </p>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 Synchronous generators in CHP systems can export power to the grid, requiring:
               </p>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
@@ -1306,13 +1306,13 @@ const HNCModule3Section5_5 = () => {
                 <strong>Question:</strong> A standby generator has 4 poles and must produce 50Hz.
                 What speed must the diesel engine maintain?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using: f = (p x n) / 120</p>
                 <p className="mt-2">Rearranging for n: n = (120 x f) / p</p>
                 <p className="mt-2">
                   n = (120 x 50) / 4 = 6000 / 4 = <strong>1500 rev/min</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   The engine governor must maintain 1500 +/-0.5% for frequency stability
                 </p>
               </div>
@@ -1326,7 +1326,7 @@ const HNCModule3Section5_5 = () => {
                 <strong>Question:</strong> A hospital has 800kW essential load at 0.85 pf lagging.
                 Size the standby generator.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Apparent power: S = P / cos phi</p>
                 <p>
                   S = 800 / 0.85 = <strong>941 kVA</strong>
@@ -1336,7 +1336,7 @@ const HNCModule3Section5_5 = () => {
                 <p className="mt-2">
                   Select: <strong>1250 kVA generator</strong> (standard size)
                 </p>
-                <p className="mt-2 text-white/60">Prime rated for continuous operation</p>
+                <p className="mt-2 text-white">Prime rated for continuous operation</p>
               </div>
             </div>
 
@@ -1348,7 +1348,7 @@ const HNCModule3Section5_5 = () => {
                 <strong>Question:</strong> A factory has 500kW load at 0.75 pf. Calculate kVAr
                 required to improve to 0.95 pf.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Original reactive power:</p>
                 <p>Q1 = P x tan(cos^-1 0.75) = 500 x tan(41.4 deg) = 500 x 0.882 = 441 kVAr</p>
                 <p className="mt-2">Target reactive power:</p>
@@ -1357,7 +1357,7 @@ const HNCModule3Section5_5 = () => {
                 <p>
                   Qc = Q1 - Q2 = 441 - 164 = <strong>277 kVAr</strong>
                 </p>
-                <p className="mt-2 text-white/60">Install 300 kVAr automatic capacitor bank</p>
+                <p className="mt-2 text-white">Install 300 kVAr automatic capacitor bank</p>
               </div>
             </div>
 
@@ -1369,7 +1369,7 @@ const HNCModule3Section5_5 = () => {
                 <strong>Question:</strong> A 30kW AHU fan motor runs 6000 hours/year. Compare IE3
                 induction (91%) vs PMSM (95%) efficiency.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>IE3 induction motor input power:</p>
                 <p>Pin = 30 / 0.91 = 33.0 kW</p>
                 <p className="mt-2">PMSM input power:</p>
@@ -1381,7 +1381,7 @@ const HNCModule3Section5_5 = () => {
                 <p className="mt-2">
                   At GBP 0.15/kWh: <strong>GBP 1,260/year saving</strong>
                 </p>
-                <p className="mt-2 text-white/60">Payback typically 3-5 years on motor premium</p>
+                <p className="mt-2 text-white">Payback typically 3-5 years on motor premium</p>
               </div>
             </div>
           </div>
@@ -1468,7 +1468,7 @@ const HNCModule3Section5_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1514,7 +1514,7 @@ const HNCModule3Section5_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section5-4">

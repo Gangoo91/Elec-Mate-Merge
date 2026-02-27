@@ -200,7 +200,7 @@ export default function RSMModule2Section4() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="min-h-[44px] text-white/70 hover:text-white active:text-white p-0 -ml-1 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] text-white hover:text-white active:text-white p-0 -ml-1 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-2">
@@ -222,7 +222,7 @@ export default function RSMModule2Section4() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Self-Assessment &amp; Knowing Your Triggers
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Identifying personal stress triggers, using stress diaries, body awareness, energy
             audits, and establishing your resilience baseline
           </p>
@@ -277,7 +277,7 @@ export default function RSMModule2Section4() {
             </div>
             <div className="rounded-lg p-3 sm:p-4 bg-rose-500/10 border-l-2 border-l-rose-500/50 border border-rose-500/30">
               <p className="font-semibold text-base text-rose-400 mb-2">Why It Matters</p>
-              <ul className="text-base text-white/80 space-y-1.5">
+              <ul className="text-base text-white space-y-1.5">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                   <span>
@@ -378,7 +378,7 @@ export default function RSMModule2Section4() {
                   <ClipboardList className="h-4 w-4 inline-block mr-2 -mt-0.5" />
                   Common Stress Triggers for Electricians
                 </h3>
-                <ul className="text-white/80 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -473,7 +473,7 @@ export default function RSMModule2Section4() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-1">1. The Event</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       What happened? Describe the specific situation, task, or interaction that
                       triggered your stress response. Be concrete: &ldquo;Client called at 7pm
                       complaining about socket placement&rdquo; rather than &ldquo;bad day.&rdquo;
@@ -481,7 +481,7 @@ export default function RSMModule2Section4() {
                   </div>
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-1">2. Your Reaction</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       How did you feel emotionally (anxious, angry, frustrated, overwhelmed,
                       helpless)? How did your body respond (tense shoulders, racing heart, headache,
                       stomach churning, jaw clenching)? Rate the intensity on a 1&ndash;10 scale.
@@ -489,7 +489,7 @@ export default function RSMModule2Section4() {
                   </div>
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-1">3. Your Coping Response</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       What did you do in response? Did you talk to someone, take a break, exercise,
                       have a drink, argue back, withdraw, distract yourself? Be honest &mdash; the
                       diary is for your eyes only.
@@ -497,7 +497,7 @@ export default function RSMModule2Section4() {
                   </div>
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-1">4. Effectiveness</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Did your coping strategy actually help? Rate it 1&ndash;10. Some strategies
                       that feel good in the moment (such as having several pints) may score low on
                       actual effectiveness the next morning.
@@ -541,7 +541,7 @@ export default function RSMModule2Section4() {
                   <Activity className="h-4 w-4 inline-block mr-2 -mt-0.5" />
                   Common Tension Zones
                 </h3>
-                <ul className="text-white/80 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -623,7 +623,7 @@ export default function RSMModule2Section4() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-1">Step 1: List Your Activities</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Write down everything you do in a typical week &mdash; work tasks, commuting,
                       socialising, exercising, cooking, watching television, admin, hobbies, chores,
                       shopping, and anything else that takes up your time.
@@ -631,7 +631,7 @@ export default function RSMModule2Section4() {
                   </div>
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-1">Step 2: Rate Each Activity</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       For each activity, rate it from &minus;5 (severely draining) to +5 (highly
                       energising). Be honest. Some activities that you feel you &ldquo;should&rdquo;
                       enjoy may actually drain you, and some tasks you dread may turn out to be less
@@ -640,7 +640,7 @@ export default function RSMModule2Section4() {
                   </div>
                   <div className="bg-white/5 border border-rose-400/20 p-3 rounded-lg">
                     <h4 className="text-rose-300 font-medium mb-1">Step 3: Analyse the Balance</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Look at the overall balance. If your week is dominated by draining activities
                       with few energising ones, your resilience bucket is being emptied faster than
                       it is being filled. Use this information to make strategic adjustments:
@@ -658,7 +658,7 @@ export default function RSMModule2Section4() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3">
                     <p className="text-red-400 font-semibold text-sm mb-2">Energy Drains</p>
-                    <ul className="text-white/80 text-sm space-y-1">
+                    <ul className="text-white text-sm space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                         <span>EICR paperwork (&minus;4)</span>
@@ -683,7 +683,7 @@ export default function RSMModule2Section4() {
                   </div>
                   <div className="bg-green-500/10 border border-green-500/20 rounded-lg p-3">
                     <p className="text-green-400 font-semibold text-sm mb-2">Energy Sources</p>
-                    <ul className="text-white/80 text-sm space-y-1">
+                    <ul className="text-white text-sm space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                         <span>Hands-on installation work (+4)</span>
@@ -732,11 +732,11 @@ export default function RSMModule2Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-rose-400 font-medium mb-3">Baseline Assessment Questions</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Answer each honestly, rating yourself 1 (strongly disagree) to 10 (strongly
                   agree):
                 </p>
-                <ul className="text-white/80 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -814,7 +814,7 @@ export default function RSMModule2Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">If You Are Struggling Now</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   If completing this baseline assessment makes you realise you are currently
                   struggling significantly, please take action. You do not need to wait until you
                   have completed this course. Speak to someone you trust, contact your GP, or call
@@ -896,7 +896,7 @@ export default function RSMModule2Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -912,7 +912,7 @@ export default function RSMModule2Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-2">

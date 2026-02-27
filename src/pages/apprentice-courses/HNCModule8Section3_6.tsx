@@ -288,7 +288,7 @@ const HNCModule8Section3_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section3">
@@ -310,7 +310,7 @@ const HNCModule8Section3_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Commissioning and Testing
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Refrigerant charging, leak testing, performance verification, F-Gas compliance, and
             handover requirements
           </p>
@@ -509,19 +509,19 @@ const HNCModule8Section3_6 = () => {
               </p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">System:</span>{' '}
+                  <span className="text-white">System:</span>{' '}
                   <span className="text-white">R410A VRF with 85m liquid line (9.52mm dia)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Factory charge:</span>{' '}
+                  <span className="text-white">Factory charge:</span>{' '}
                   <span className="text-white">8.5 kg (outdoor unit)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Additional charge factor:</span>{' '}
+                  <span className="text-white">Additional charge factor:</span>{' '}
                   <span className="text-white">25 g/m for 9.52mm liquid line</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Calculation:</span>{' '}
+                  <span className="text-white">Calculation:</span>{' '}
                   <span className="text-white">85m x 25g/m = 2,125g = 2.125 kg</span>
                 </p>
                 <p className="mt-2 text-green-400">Total system charge: 8.5 + 2.125 = 10.625 kg</p>
@@ -731,19 +731,19 @@ const HNCModule8Section3_6 = () => {
               </p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">System:</span>{' '}
+                  <span className="text-white">System:</span>{' '}
                   <span className="text-white">R410A DX split system</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Suction pressure:</span>{' '}
+                  <span className="text-white">Suction pressure:</span>{' '}
                   <span className="text-white">8.5 bar (gauge) = 9.5 bar (abs)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Saturation temp at 9.5 bar abs:</span>{' '}
+                  <span className="text-white">Saturation temp at 9.5 bar abs:</span>{' '}
                   <span className="text-white">6°C (from P-T chart)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Measured suction temp:</span>{' '}
+                  <span className="text-white">Measured suction temp:</span>{' '}
                   <span className="text-white">12°C</span>
                 </p>
                 <p className="mt-2 text-green-400">
@@ -836,7 +836,7 @@ const HNCModule8Section3_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-sm font-medium text-white mb-2">Air Side Method</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Q = m x Cp x ΔT</li>
                     <li>Where: m = mass flow rate (kg/s)</li>
                     <li>Cp = specific heat (1.0 kJ/kgK for air)</li>
@@ -847,7 +847,7 @@ const HNCModule8Section3_6 = () => {
                   <p className="text-sm font-medium text-white mb-2">
                     Water Side Method (Chillers)
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Q = m x Cp x ΔT</li>
                     <li>Where: m = flow rate (l/s)</li>
                     <li>Cp = 4.18 kJ/kgK for water</li>
@@ -1017,7 +1017,7 @@ const HNCModule8Section3_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-white font-medium mb-1">System Identification</p>
-                  <ul className="text-white/70 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>Equipment tag/reference</li>
                     <li>Manufacturer and model</li>
                     <li>Serial number</li>
@@ -1027,7 +1027,7 @@ const HNCModule8Section3_6 = () => {
                 </div>
                 <div>
                   <p className="text-white font-medium mb-1">Measured Parameters</p>
-                  <ul className="text-white/70 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>Suction/discharge pressures</li>
                     <li>Superheat/subcooling</li>
                     <li>Airflow rates</li>
@@ -1115,7 +1115,7 @@ const HNCModule8Section3_6 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>CO2e calculation:</strong> Multiply refrigerant charge (kg) by the GWP value.
               For example, 10kg of R410A (GWP 2088) = 10 x 2088 / 1000 = 20.88 tonnes CO2e.
             </p>
@@ -1139,21 +1139,21 @@ const HNCModule8Section3_6 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Commission a new 7kW R32 split system with 15m pipe run.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Step 1: Pressure test</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Step 1: Pressure test</p>
                 <p className="ml-4">Charge system with OFN to 33 bar (1.1 x 30 bar design)</p>
                 <p className="ml-4">Hold for 30 minutes - no pressure drop confirmed</p>
-                <p className="mt-2 text-white/60">Step 2: Leak test</p>
+                <p className="mt-2 text-white">Step 2: Leak test</p>
                 <p className="ml-4">Electronic detector at 5g/yr sensitivity</p>
                 <p className="ml-4">Check all flare connections, service valves - no leaks found</p>
-                <p className="mt-2 text-white/60">Step 3: Evacuation</p>
+                <p className="mt-2 text-white">Step 3: Evacuation</p>
                 <p className="ml-4">Triple evacuation to 450 microns</p>
                 <p className="ml-4">Standing test 45 mins - vacuum held stable</p>
-                <p className="mt-2 text-white/60">Step 4: Charging</p>
+                <p className="mt-2 text-white">Step 4: Charging</p>
                 <p className="ml-4">Factory charge: 1.2 kg</p>
                 <p className="ml-4">Additional: 15m x 20g/m = 300g = 0.3 kg</p>
                 <p className="ml-4">Total charge: 1.5 kg R32</p>
-                <p className="mt-2 text-white/60">Step 5: Performance verification</p>
+                <p className="mt-2 text-white">Step 5: Performance verification</p>
                 <p className="ml-4">Superheat: 7K (target 5-8K) - correct</p>
                 <p className="ml-4">Subcooling: 8K (target 5-10K) - correct</p>
                 <p className="ml-4">Supply air temp: 14°C (design 12-15°C) - acceptable</p>
@@ -1168,21 +1168,21 @@ const HNCModule8Section3_6 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> R410A system not achieving design cooling capacity.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Measured parameters:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Measured parameters:</p>
                 <p className="ml-4">Suction pressure: 7.0 bar (low)</p>
                 <p className="ml-4">Discharge pressure: 24 bar (normal)</p>
                 <p className="ml-4">Suction temp: 18°C</p>
                 <p className="ml-4">Saturation temp at 7.0 bar: 2°C</p>
                 <p className="ml-4">Superheat: 18 - 2 = 16K (high!)</p>
-                <p className="mt-2 text-white/60">Liquid line temp: 38°C</p>
+                <p className="mt-2 text-white">Liquid line temp: 38°C</p>
                 <p className="ml-4">Saturation temp at 24 bar: 45°C</p>
                 <p className="ml-4">Subcooling: 45 - 38 = 7K (normal)</p>
-                <p className="mt-2 text-white/60">Analysis:</p>
+                <p className="mt-2 text-white">Analysis:</p>
                 <p className="ml-4">High superheat with normal subcooling suggests:</p>
                 <p className="ml-4">- Restriction in liquid line (filter drier/TXV)</p>
                 <p className="ml-4">- Or insufficient refrigerant reaching evaporator</p>
-                <p className="mt-2 text-white/60">Action:</p>
+                <p className="mt-2 text-white">Action:</p>
                 <p className="ml-4">Checked filter drier temp drop: 8K across filter</p>
                 <p className="ml-4">Replaced blocked filter drier</p>
                 <p className="mt-2 text-green-400">
@@ -1198,19 +1198,19 @@ const HNCModule8Section3_6 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Complete F-Gas records for a VRF installation.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Equipment details:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Equipment details:</p>
                 <p className="ml-4">System: VRF heat pump system</p>
                 <p className="ml-4">Refrigerant: R410A (GWP: 2088)</p>
                 <p className="ml-4">Factory charge: 12.5 kg</p>
                 <p className="ml-4">Additional charge: 3.2 kg</p>
                 <p className="ml-4">Total charge: 15.7 kg</p>
-                <p className="mt-2 text-white/60">CO2 equivalent calculation:</p>
+                <p className="mt-2 text-white">CO2 equivalent calculation:</p>
                 <p className="ml-4">15.7 kg x 2088 = 32,782 kg CO2e</p>
                 <p className="ml-4">= 32.78 tonnes CO2e</p>
-                <p className="mt-2 text-white/60">Leak check requirement:</p>
+                <p className="mt-2 text-white">Leak check requirement:</p>
                 <p className="ml-4">5-50 tCO2e band = Annual leak check required</p>
-                <p className="mt-2 text-white/60">Equipment label must show:</p>
+                <p className="mt-2 text-white">Equipment label must show:</p>
                 <p className="ml-4">Refrigerant: R410A</p>
                 <p className="ml-4">Charge: 15.7 kg</p>
                 <p className="ml-4">GWP: 2088</p>
@@ -1310,7 +1310,7 @@ const HNCModule8Section3_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1375,7 +1375,7 @@ const HNCModule8Section3_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section3">

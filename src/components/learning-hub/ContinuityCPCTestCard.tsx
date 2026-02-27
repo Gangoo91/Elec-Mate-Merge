@@ -177,7 +177,7 @@ const ContinuityCPCTestCard = () => {
                         </Button>
                       </div>
                       {test.notes && (
-                        <div className="mt-2 text-sm text-white/80">Notes: {test.notes}</div>
+                        <div className="mt-2 text-sm text-white">Notes: {test.notes}</div>
                       )}
                     </CardContent>
                   </Card>

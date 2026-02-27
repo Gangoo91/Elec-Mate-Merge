@@ -237,7 +237,7 @@ const Level3Module3Section5_2 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="../section5">
@@ -260,7 +260,7 @@ const Level3Module3Section5_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
             Efficiency and Losses
           </h1>
-          <p className="text-lg text-white/70 max-w-2xl">
+          <p className="text-lg text-white max-w-2xl">
             Calculating efficiency and understanding electrical losses in motors, transformers and
             cables
           </p>
@@ -276,7 +276,7 @@ const Level3Module3Section5_2 = () => {
                 <Zap className="w-4 h-4 text-green-400" />
                 <span className="text-sm font-medium text-green-400">Efficiency Formula</span>
               </div>
-              <p className="text-sm text-white/70">Eff = Output / Input x 100%</p>
+              <p className="text-sm text-white">Eff = Output / Input x 100%</p>
             </CardContent>
           </Card>
           <Card className="bg-amber-500/10 border-amber-500/20">
@@ -285,7 +285,7 @@ const Level3Module3Section5_2 = () => {
                 <Calculator className="w-4 h-4 text-amber-400" />
                 <span className="text-sm font-medium text-amber-400">Power Loss</span>
               </div>
-              <p className="text-sm text-white/70">Losses = Input - Output (watts)</p>
+              <p className="text-sm text-white">Losses = Input - Output (watts)</p>
             </CardContent>
           </Card>
           <Card className="bg-red-500/10 border-red-500/20">
@@ -294,7 +294,7 @@ const Level3Module3Section5_2 = () => {
                 <TrendingDown className="w-4 h-4 text-red-400" />
                 <span className="text-sm font-medium text-red-400">Total Losses</span>
               </div>
-              <p className="text-sm text-white/70">Iron losses + Copper losses (I squared R)</p>
+              <p className="text-sm text-white">Iron losses + Copper losses (I squared R)</p>
             </CardContent>
           </Card>
         </div>
@@ -311,7 +311,7 @@ const Level3Module3Section5_2 = () => {
               </div>
               <div>
                 <h2 className="text-lg font-semibold text-white mb-3">Learning Outcomes</h2>
-                <ul className="space-y-2 text-white/80">
+                <ul className="space-y-2 text-white">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
                     <span>
@@ -348,7 +348,7 @@ const Level3Module3Section5_2 = () => {
               </h2>
             </div>
 
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               Electrical efficiency measures how effectively a device converts input power to useful
               output. No real device is 100% efficient - some energy is always lost, primarily as
               heat. Understanding efficiency is essential for equipment selection, running cost
@@ -363,7 +363,7 @@ const Level3Module3Section5_2 = () => {
                   <p className="text-green-300 font-mono text-2xl mb-2">
                     Efficiency = (Output Power / Input Power) x 100%
                   </p>
-                  <div className="text-white/70 text-sm space-y-1 mt-3">
+                  <div className="text-white text-sm space-y-1 mt-3">
                     <p>Alternative forms:</p>
                     <p className="font-mono">Efficiency = (Input - Losses) / Input x 100%</p>
                     <p className="font-mono">Losses = Input x (1 - Efficiency)</p>
@@ -372,15 +372,15 @@ const Level3Module3Section5_2 = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="p-4 bg-white/5 rounded-lg">
                     <h4 className="text-white font-medium mb-2">Finding Input Power</h4>
-                    <p className="text-white/70 text-sm font-mono">Input = Output / Efficiency</p>
-                    <p className="text-white/60 text-xs mt-2">
+                    <p className="text-white text-sm font-mono">Input = Output / Efficiency</p>
+                    <p className="text-white text-xs mt-2">
                       Use when you know output and efficiency
                     </p>
                   </div>
                   <div className="p-4 bg-white/5 rounded-lg">
                     <h4 className="text-white font-medium mb-2">Finding Losses</h4>
-                    <p className="text-white/70 text-sm font-mono">Losses = Input - Output</p>
-                    <p className="text-white/60 text-xs mt-2">Power converted to heat</p>
+                    <p className="text-white text-sm font-mono">Losses = Input - Output</p>
+                    <p className="text-white text-xs mt-2">Power converted to heat</p>
                   </div>
                 </div>
               </CardContent>
@@ -391,14 +391,14 @@ const Level3Module3Section5_2 = () => {
                 <h4 className="text-green-400 font-medium mb-3">
                   Worked Example: Motor Efficiency
                 </h4>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   A motor delivers 15 kW mechanical output while drawing 18 kW electrical input.
                   Calculate efficiency and losses.
                 </p>
                 <div className="space-y-2 text-sm font-mono">
-                  <p className="text-white/80">Efficiency = Output / Input x 100%</p>
-                  <p className="text-white/80">Efficiency = 15 / 18 x 100 = 83.3%</p>
-                  <p className="text-white/80">Losses = Input - Output = 18 - 15 = 3 kW</p>
+                  <p className="text-white">Efficiency = Output / Input x 100%</p>
+                  <p className="text-white">Efficiency = 15 / 18 x 100 = 83.3%</p>
+                  <p className="text-white">Losses = Input - Output = 18 - 15 = 3 kW</p>
                   <p className="text-green-400 mt-2">
                     The motor is 83.3% efficient with 3 kW lost as heat
                   </p>
@@ -423,7 +423,7 @@ const Level3Module3Section5_2 = () => {
               <h2 className="text-xl font-semibold text-white m-0">Types of Electrical Losses</h2>
             </div>
 
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               Electrical losses can be categorised into different types depending on their cause and
               characteristics. Understanding these helps in designing efficient systems and
               selecting appropriate equipment.
@@ -437,7 +437,7 @@ const Level3Module3Section5_2 = () => {
                     <h4 className="text-amber-400 font-medium mb-2">
                       Copper Losses (I squared R Losses)
                     </h4>
-                    <p className="text-white/80 text-sm mb-2">
+                    <p className="text-white text-sm mb-2">
                       Power dissipated as heat in conductors due to their resistance. Also called
                       winding losses in motors and transformers.
                     </p>
@@ -447,11 +447,11 @@ const Level3Module3Section5_2 = () => {
                   </div>
                   <div className="p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
                     <h4 className="text-blue-400 font-medium mb-2">Iron Losses (Core Losses)</h4>
-                    <p className="text-white/80 text-sm mb-2">
+                    <p className="text-white text-sm mb-2">
                       Losses in magnetic cores due to changing magnetic field. Constant when
                       energised.
                     </p>
-                    <ul className="text-white/70 text-sm space-y-1">
+                    <ul className="text-white text-sm space-y-1">
                       <li>
                         <strong>Hysteresis:</strong> Energy to repeatedly magnetise the core
                       </li>
@@ -462,14 +462,14 @@ const Level3Module3Section5_2 = () => {
                   </div>
                   <div className="p-4 bg-purple-500/10 rounded-lg border border-purple-500/20">
                     <h4 className="text-purple-400 font-medium mb-2">Mechanical Losses (Motors)</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Friction in bearings, windage (air resistance), and brush friction in DC
                       motors. These are approximately constant at a given speed.
                     </p>
                   </div>
                   <div className="p-4 bg-green-500/10 rounded-lg border border-green-500/20">
                     <h4 className="text-green-400 font-medium mb-2">Stray Losses</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Additional losses from leakage flux, non-uniform current distribution, and
                       harmonic effects. Typically 1-2% of input in motors.
                     </p>
@@ -497,7 +497,7 @@ const Level3Module3Section5_2 = () => {
               </h2>
             </div>
 
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               Transformer efficiency varies with load because copper losses are load-dependent while
               iron losses are constant. Maximum efficiency occurs at a specific load point where
               copper losses equal iron losses.
@@ -513,7 +513,7 @@ const Level3Module3Section5_2 = () => {
                   <p className="text-blue-300 font-mono text-lg mb-2">
                     Copper Losses = Iron Losses
                   </p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     This typically occurs at 50-75% of full load
                   </p>
                 </div>
@@ -527,7 +527,7 @@ const Level3Module3Section5_2 = () => {
                         <th className="text-left p-2 text-white">Efficiency</th>
                       </tr>
                     </thead>
-                    <tbody className="text-white/70">
+                    <tbody className="text-white">
                       <tr className="border-b border-white/10">
                         <td className="p-2">No load</td>
                         <td className="p-2">Full (constant)</td>
@@ -572,13 +572,13 @@ const Level3Module3Section5_2 = () => {
                     <h4 className="text-blue-400 font-medium mb-2">
                       Copper Loss Variation with Load
                     </h4>
-                    <p className="text-white/80 text-sm mb-2">
+                    <p className="text-white text-sm mb-2">
                       Copper losses vary with the square of the load fraction:
                     </p>
                     <p className="text-blue-300 font-mono text-sm">
                       Copper losses at x load = x squared x Full load copper losses
                     </p>
-                    <p className="text-white/60 text-sm mt-2">
+                    <p className="text-white text-sm mt-2">
                       At 50% load: Copper losses = 0.5 squared x FL = 0.25 x Full load copper losses
                     </p>
                   </div>
@@ -605,7 +605,7 @@ const Level3Module3Section5_2 = () => {
               </h2>
             </div>
 
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               Motor efficiency is classified under IEC 60034-30 into four levels. EU Ecodesign
               regulations mandate minimum efficiency levels for motors to reduce energy consumption
               and carbon emissions.
@@ -626,7 +626,7 @@ const Level3Module3Section5_2 = () => {
                         <th className="text-left p-2 text-white">EU Requirement</th>
                       </tr>
                     </thead>
-                    <tbody className="text-white/70">
+                    <tbody className="text-white">
                       <tr className="border-b border-white/10">
                         <td className="p-2 text-purple-400">IE1</td>
                         <td className="p-2">Standard Efficiency</td>
@@ -654,7 +654,7 @@ const Level3Module3Section5_2 = () => {
                     </tbody>
                   </table>
                 </div>
-                <p className="text-white/60 text-xs mt-4">
+                <p className="text-white text-xs mt-4">
                   *Typical values for 11 kW 4-pole motor. Actual efficiency varies with size and
                   speed.
                 </p>
@@ -669,7 +669,7 @@ const Level3Module3Section5_2 = () => {
                     <h4 className="text-amber-400 font-medium mb-2">
                       Economic Impact of Efficiency
                     </h4>
-                    <p className="text-white/70 text-sm mb-3">
+                    <p className="text-white text-sm mb-3">
                       Higher efficiency motors cost more initially but save significantly over their
                       lifetime.
                     </p>
@@ -677,7 +677,7 @@ const Level3Module3Section5_2 = () => {
                       <p className="text-white font-medium mb-2">
                         Example: 11 kW motor, 8000 hours/year
                       </p>
-                      <div className="text-sm text-white/70 space-y-1">
+                      <div className="text-sm text-white space-y-1">
                         <p>IE2 (89% eff): Draws 12.36 kW, costs 14,833 pounds/year at 15p/kWh</p>
                         <p>IE3 (91.4% eff): Draws 12.03 kW, costs 14,436 pounds/year</p>
                         <p className="text-green-400 font-medium mt-2">
@@ -713,7 +713,7 @@ const Level3Module3Section5_2 = () => {
                     <div className="grid md:grid-cols-2 gap-4">
                       <div className="p-4 bg-white/5 rounded-lg">
                         <h4 className="text-green-400 font-medium mb-2">Reducing System Losses</h4>
-                        <ul className="text-sm text-white/80 space-y-1">
+                        <ul className="text-sm text-white space-y-1">
                           <li>Use correctly sized cables (reduce I squared R)</li>
                           <li>Specify IE3/IE4 motors for new installations</li>
                           <li>Match transformer loading to expected demand</li>
@@ -723,7 +723,7 @@ const Level3Module3Section5_2 = () => {
                       </div>
                       <div className="p-4 bg-white/5 rounded-lg">
                         <h4 className="text-green-400 font-medium mb-2">Measuring Efficiency</h4>
-                        <ul className="text-sm text-white/80 space-y-1">
+                        <ul className="text-sm text-white space-y-1">
                           <li>Use power analysers for accurate measurement</li>
                           <li>Measure both input and output power</li>
                           <li>Account for power factor in AC circuits</li>
@@ -755,7 +755,7 @@ const Level3Module3Section5_2 = () => {
                       <span className="text-blue-400 font-bold shrink-0">Q:</span>
                       {faq.question}
                     </h3>
-                    <p className="text-white/70 text-sm ml-6">{faq.answer}</p>
+                    <p className="text-white text-sm ml-6">{faq.answer}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -782,7 +782,7 @@ const Level3Module3Section5_2 = () => {
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
                       <h4 className="text-white font-medium mb-3">Basic Efficiency</h4>
-                      <div className="space-y-2 text-sm font-mono text-white/80">
+                      <div className="space-y-2 text-sm font-mono text-white">
                         <p>Eff = (Output / Input) x 100%</p>
                         <p>Input = Output / Efficiency</p>
                         <p>Losses = Input - Output</p>
@@ -791,7 +791,7 @@ const Level3Module3Section5_2 = () => {
                     </div>
                     <div>
                       <h4 className="text-white font-medium mb-3">Series Efficiency</h4>
-                      <div className="space-y-2 text-sm font-mono text-white/80">
+                      <div className="space-y-2 text-sm font-mono text-white">
                         <p>Eff_total = Eff1 x Eff2 x Eff3...</p>
                         <p>Example: 0.9 x 0.95 x 0.85 = 0.73</p>
                         <p>Always less than lowest individual</p>
@@ -799,7 +799,7 @@ const Level3Module3Section5_2 = () => {
                     </div>
                     <div>
                       <h4 className="text-white font-medium mb-3">Transformer Losses</h4>
-                      <div className="space-y-2 text-sm text-white/80">
+                      <div className="space-y-2 text-sm text-white">
                         <p>Iron losses: Constant (core)</p>
                         <p>Copper losses: Vary with I squared</p>
                         <p>Max eff when: Cu = Fe losses</p>
@@ -807,7 +807,7 @@ const Level3Module3Section5_2 = () => {
                     </div>
                     <div>
                       <h4 className="text-white font-medium mb-3">Motor Classes (IE)</h4>
-                      <div className="space-y-2 text-sm text-white/80">
+                      <div className="space-y-2 text-sm text-white">
                         <p>IE1: Standard (not permitted)</p>
                         <p>IE2: High (with VSD)</p>
                         <p>IE3: Premium (minimum)</p>

@@ -91,7 +91,7 @@ function ApprenticeHero() {
           </div>
 
           {/* Greeting and Name */}
-          <p className="text-sm text-white/50 mb-0.5">{getGreeting()}</p>
+          <p className="text-sm text-white mb-0.5">{getGreeting()}</p>
           <h1 className="text-2xl sm:text-3xl font-bold text-white">{user.firstName}</h1>
 
           {/* Status badges - horizontal row */}
@@ -213,10 +213,10 @@ function ApprenticeStatsBar() {
                       className={cn('text-xl font-bold', colors.text)}
                     />
                     {stat.suffix && (
-                      <span className="text-xs text-white/50 ml-0.5">{stat.suffix}</span>
+                      <span className="text-xs text-white ml-0.5">{stat.suffix}</span>
                     )}
                   </div>
-                  <p className="text-[11px] text-white/60 mt-0.5">{stat.label}</p>
+                  <p className="text-[11px] text-white mt-0.5">{stat.label}</p>
                 </div>
               </div>
             </motion.button>
@@ -285,14 +285,14 @@ function ToolCard({
                 : 'bg-elec-yellow/10 group-hover:bg-elec-yellow/20 group-active:bg-elec-yellow/25'
           )}
         >
-          <Icon className={cn('h-6 w-6', comingSoon ? 'text-white/50' : 'text-elec-yellow')} />
+          <Icon className={cn('h-6 w-6', comingSoon ? 'text-white' : 'text-elec-yellow')} />
         </div>
 
         <h3
           className={cn(
             'text-sm sm:text-base font-semibold mb-1 transition-colors',
             comingSoon
-              ? 'text-white/70'
+              ? 'text-white'
               : 'text-white group-hover:text-elec-yellow group-active:text-elec-yellow'
           )}
         >
@@ -302,7 +302,7 @@ function ToolCard({
         <p
           className={cn(
             'text-xs line-clamp-2 hidden sm:block',
-            comingSoon ? 'text-white/50' : 'text-white/60'
+            comingSoon ? 'text-white' : 'text-white'
           )}
         >
           {description}
@@ -450,7 +450,7 @@ const ApprenticeHub = () => {
             <Link to="/dashboard">
               <Button
                 variant="ghost"
-                className="text-white/70 hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
+                className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
               >
                 <ArrowLeft className="mr-2 h-5 w-5" />
                 Back to Dashboard
@@ -516,7 +516,7 @@ const ApprenticeHub = () => {
                   <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
                     EPA Simulator
                   </h3>
-                  <p className="text-sm text-white/70 max-w-md mx-auto mb-4">
+                  <p className="text-sm text-white max-w-md mx-auto mb-4">
                     Practise mock Professional Discussions and Knowledge Tests with AI-powered
                     scoring and real EPA grade descriptors
                   </p>
@@ -550,7 +550,7 @@ const ApprenticeHub = () => {
                   <h3 className="text-lg sm:text-xl font-semibold text-white mb-2">
                     AM2 Simulator
                   </h3>
-                  <p className="text-sm text-white/70 max-w-md mx-auto mb-4">
+                  <p className="text-sm text-white max-w-md mx-auto mb-4">
                     Interactive safe isolation, fault finding, and testing simulations — identify
                     practical gaps before you book
                   </p>

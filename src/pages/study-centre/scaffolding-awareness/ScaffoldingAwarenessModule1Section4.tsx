@@ -214,7 +214,7 @@ export default function ScaffoldingAwarenessModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-1">
@@ -239,7 +239,7 @@ export default function ScaffoldingAwarenessModule1Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Who Does What?
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Roles and responsibilities in scaffolding &mdash; from the scaffolder who builds it, to
             the inspector who checks it, the designer who specifies it, and every tradesperson who
             works on it
@@ -334,11 +334,11 @@ export default function ScaffoldingAwarenessModule1Section4() {
                   <HardHat className="h-5 w-5 text-slate-400" />
                   <p className="text-sm font-medium text-slate-400">CISRS Card Levels</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The CISRS scheme operates a tiered card system reflecting increasing levels of
                   competence and responsibility:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -392,7 +392,7 @@ export default function ScaffoldingAwarenessModule1Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Key Scaffolder Responsibilities
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -474,10 +474,10 @@ export default function ScaffoldingAwarenessModule1Section4() {
                       </div>
                       <div>
                         <p className="text-sm font-medium text-white">Scaffold Labourer</p>
-                        <p className="text-xs text-white/50">Yellow card</p>
+                        <p className="text-xs text-white">Yellow card</p>
                       </div>
                     </div>
-                    <ul className="text-xs text-white/80 space-y-1 ml-[52px]">
+                    <ul className="text-xs text-white space-y-1 ml-[52px]">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                         <span>Assists scaffolders with material handling and site preparation</span>
@@ -506,10 +506,10 @@ export default function ScaffoldingAwarenessModule1Section4() {
                       </div>
                       <div>
                         <p className="text-sm font-medium text-white">Trainee Scaffolder</p>
-                        <p className="text-xs text-white/50">Red card &mdash; Part 1 complete</p>
+                        <p className="text-xs text-white">Red card &mdash; Part 1 complete</p>
                       </div>
                     </div>
-                    <ul className="text-xs text-white/80 space-y-1 ml-[52px]">
+                    <ul className="text-xs text-white space-y-1 ml-[52px]">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                         <span>Works under direct supervision of a qualified scaffolder</span>
@@ -538,12 +538,12 @@ export default function ScaffoldingAwarenessModule1Section4() {
                       </div>
                       <div>
                         <p className="text-sm font-medium text-white">Scaffolder</p>
-                        <p className="text-xs text-white/50">
+                        <p className="text-xs text-white">
                           Blue card &mdash; Part 1 + Part 2 + NVQ L2
                         </p>
                       </div>
                     </div>
-                    <ul className="text-xs text-white/80 space-y-1 ml-[52px]">
+                    <ul className="text-xs text-white space-y-1 ml-[52px]">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                         <span>Qualified to erect, alter, and dismantle standard scaffolds</span>
@@ -572,12 +572,12 @@ export default function ScaffoldingAwarenessModule1Section4() {
                       </div>
                       <div>
                         <p className="text-sm font-medium text-white">Advanced Scaffolder</p>
-                        <p className="text-xs text-white/50">
+                        <p className="text-xs text-white">
                           Gold card &mdash; Advanced training + NVQ L3
                         </p>
                       </div>
                     </div>
-                    <ul className="text-xs text-white/80 space-y-1 ml-[52px]">
+                    <ul className="text-xs text-white space-y-1 ml-[52px]">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                         <span>Qualified for complex and non-standard scaffolds</span>
@@ -594,7 +594,7 @@ export default function ScaffoldingAwarenessModule1Section4() {
                   </div>
                 </div>
 
-                <p className="text-xs text-white/40 text-center mt-4">
+                <p className="text-xs text-white text-center mt-4">
                   All CISRS cards require a valid CITB HS&amp;E test pass and must be renewed before
                   expiry
                 </p>
@@ -633,11 +633,11 @@ export default function ScaffoldingAwarenessModule1Section4() {
                   <ClipboardCheck className="h-5 w-5 text-slate-400" />
                   <p className="text-sm font-medium text-slate-400">Inspection Triggers</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Under Schedule 7 of the Work at Height Regulations 2005, scaffold inspections must
                   take place:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -677,12 +677,12 @@ export default function ScaffoldingAwarenessModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Scaffold Tags</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Following inspection, the inspector applies a{' '}
                   <strong className="text-white">scaffold tag</strong> to communicate the
                   scaffold&rsquo;s status to all site personnel:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -715,10 +715,10 @@ export default function ScaffoldingAwarenessModule1Section4() {
                   <Shield className="h-5 w-5 text-slate-400" />
                   <p className="text-sm font-medium text-slate-400">Inspector Qualifications</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Recognised scaffold inspection training includes:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -749,7 +749,7 @@ export default function ScaffoldingAwarenessModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Inspector&rsquo;s Key Duties</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -832,11 +832,11 @@ export default function ScaffoldingAwarenessModule1Section4() {
                   <Ruler className="h-5 w-5 text-slate-400" />
                   <p className="text-sm font-medium text-slate-400">When Is a Designer Required?</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   A scaffold designer is needed whenever the scaffold cannot be covered by TG20.
                   Common triggers include:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -890,7 +890,7 @@ export default function ScaffoldingAwarenessModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">What the Designer Produces</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -947,7 +947,7 @@ export default function ScaffoldingAwarenessModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-slate-400" />
                   <p className="text-sm font-medium text-slate-400">Design Check Requirement</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Under good practice and NASC guidance, scaffold designs should be subject to an{' '}
                   <strong className="text-white">independent design check</strong> by a suitably
                   qualified person other than the original designer. This is particularly important
@@ -994,10 +994,10 @@ export default function ScaffoldingAwarenessModule1Section4() {
                     Pre-Use Checks &mdash; Every Time
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Before stepping onto any scaffold, every user must carry out a quick visual check:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -1054,11 +1054,11 @@ export default function ScaffoldingAwarenessModule1Section4() {
                     Critical &mdash; Never Modify the Scaffold
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The following actions by scaffold users are{' '}
                   <strong className="text-white">strictly prohibited</strong>:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-amber-400" />
                     <span>Removing guard rails, toe boards, or brick guards for any reason</span>
@@ -1093,10 +1093,10 @@ export default function ScaffoldingAwarenessModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Reporting Defects</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   If a scaffold user identifies any defect, they must:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -1171,7 +1171,7 @@ export default function ScaffoldingAwarenessModule1Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   TWC Responsibilities for Scaffolding
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -1236,7 +1236,7 @@ export default function ScaffoldingAwarenessModule1Section4() {
                   <FileText className="h-5 w-5 text-slate-400" />
                   <p className="text-sm font-medium text-slate-400">The Temporary Works Register</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The temporary works register is a{' '}
                   <strong className="text-white">live document</strong> maintained by the TWC that
                   tracks every temporary works item on the project. For scaffolds, it typically
@@ -1283,7 +1283,7 @@ export default function ScaffoldingAwarenessModule1Section4() {
                     Principal Contractor&rsquo;s Scaffold Duties
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -1354,7 +1354,7 @@ export default function ScaffoldingAwarenessModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-slate-400" />
                   <p className="text-sm font-medium text-slate-400">Liability</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If a scaffold incident occurs on site, the principal contractor may face
                   enforcement action from the HSE if it can be shown that their management systems
                   were inadequate. Under CDM 2015, the principal contractor has a{' '}
@@ -1399,7 +1399,7 @@ export default function ScaffoldingAwarenessModule1Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Client&rsquo;s Key Duties Regarding Scaffolding
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -1454,7 +1454,7 @@ export default function ScaffoldingAwarenessModule1Section4() {
                   <CreditCard className="h-5 w-5 text-slate-400" />
                   <p className="text-sm font-medium text-slate-400">Cost vs. Safety</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Clients who award scaffold contracts based solely on the lowest price often end up
                   with inadequate scaffolding that requires costly remedial work, delays the
                   project, and creates safety risks. Under CDM 2015, the client must ensure that
@@ -1472,11 +1472,11 @@ export default function ScaffoldingAwarenessModule1Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Pre-Construction Information &mdash; Scaffold-Relevant Items
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The client should ensure the following information is available to scaffold
                   designers and contractors:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -1547,12 +1547,12 @@ export default function ScaffoldingAwarenessModule1Section4() {
                     The Scaffold Handover Process
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Scaffold handover is the formal process by which the completed scaffold is
                   transferred from the scaffolder to the user. It is a critical safety step that
                   should never be skipped or treated as a formality:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -1596,12 +1596,12 @@ export default function ScaffoldingAwarenessModule1Section4() {
                   <MessageSquare className="h-5 w-5 text-slate-400" />
                   <p className="text-sm font-medium text-slate-400">Permit-to-Load Systems</p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   On many sites, a <strong className="text-white">permit-to-load</strong> system
                   operates alongside the scaffold tag system. This is particularly important for
                   scaffolds designed for specific loading conditions:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -1639,12 +1639,12 @@ export default function ScaffoldingAwarenessModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Communication of Alterations</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   When a scaffold is altered after initial handover &mdash; for example, to add an
                   additional lift, modify access, or accommodate a change in the building works
                   &mdash; a clear communication process must be followed:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -1688,12 +1688,12 @@ export default function ScaffoldingAwarenessModule1Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Multi-Trade Coordination</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   On busy construction sites, multiple trades may need to use the same scaffold at
                   different times, or scaffolding work may need to be coordinated with other
                   activities. Effective multi-trade coordination includes:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -1742,7 +1742,7 @@ export default function ScaffoldingAwarenessModule1Section4() {
                 <p className="text-sm font-medium text-slate-400 mb-4 text-center">
                   Scaffold Roles &amp; Responsibilities Matrix (RACI)
                 </p>
-                <p className="text-xs text-white/50 text-center mb-4">
+                <p className="text-xs text-white text-center mb-4">
                   R = Responsible (does the work) &nbsp;&middot;&nbsp; A = Accountable (ultimately
                   answerable) &nbsp;&middot;&nbsp; C = Consulted &nbsp;&middot;&nbsp; I = Informed
                 </p>
@@ -1798,7 +1798,7 @@ export default function ScaffoldingAwarenessModule1Section4() {
                         className={`grid grid-cols-7 gap-1 mb-1 ${i % 2 === 0 ? '' : ''}`}
                       >
                         <div className="bg-white/5 border border-white/5 rounded p-2">
-                          <p className="text-[10px] text-white/80 font-medium">{row.activity}</p>
+                          <p className="text-[10px] text-white font-medium">{row.activity}</p>
                         </div>
                         {row.vals.map((val, j) => (
                           <div
@@ -1824,8 +1824,8 @@ export default function ScaffoldingAwarenessModule1Section4() {
                                     : val === 'C'
                                       ? 'text-amber-400'
                                       : val === 'I'
-                                        ? 'text-white/40'
-                                        : 'text-white/20'
+                                        ? 'text-white'
+                                        : 'text-white'
                               }`}
                             >
                               {val}
@@ -1837,7 +1837,7 @@ export default function ScaffoldingAwarenessModule1Section4() {
                   </div>
                 </div>
 
-                <p className="text-xs text-white/40 text-center mt-4">
+                <p className="text-xs text-white text-center mt-4">
                   Multiple parties may share accountability depending on contractual arrangements
                   &mdash; this matrix shows the typical allocation
                 </p>
@@ -1851,7 +1851,7 @@ export default function ScaffoldingAwarenessModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-1">
@@ -1878,7 +1878,7 @@ export default function ScaffoldingAwarenessModule1Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1892,7 +1892,7 @@ export default function ScaffoldingAwarenessModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-1">

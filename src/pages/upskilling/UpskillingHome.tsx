@@ -172,7 +172,7 @@ export default function UpskillingHome() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician">
@@ -195,7 +195,7 @@ export default function UpskillingHome() {
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
               Electrical Upskilling
             </h1>
-            <p className="text-white/80 max-w-4xl mx-auto">
+            <p className="text-white max-w-4xl mx-auto">
               Advanced courses for qualified electricians to expand your expertise
             </p>
           </header>
@@ -204,7 +204,7 @@ export default function UpskillingHome() {
           <div className="mb-8">
             <div className="relative">
               {!searchQuery && (
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/40 pointer-events-none" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
               )}
               <Input
                 type="text"
@@ -212,7 +212,7 @@ export default function UpskillingHome() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className={cn(
-                  'h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-elec-yellow/50',
+                  'h-11 bg-white/5 border-white/10 text-white placeholder:text-white focus:border-elec-yellow/50',
                   !searchQuery && 'pl-10'
                 )}
               />
@@ -253,9 +253,9 @@ export default function UpskillingHome() {
           {/* Empty State */}
           {filteredCourses.length === 0 && (
             <div className="text-center py-12">
-              <BookOpen className="h-12 w-12 text-white/20 mx-auto mb-4" />
+              <BookOpen className="h-12 w-12 text-white mx-auto mb-4" />
               <h3 className="text-lg font-semibold text-white mb-2">No courses found</h3>
-              <p className="text-sm text-white/60">Try adjusting your search</p>
+              <p className="text-sm text-white">Try adjusting your search</p>
             </div>
           )}
         </div>

@@ -222,7 +222,7 @@ const Module5Section5_4 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -240,13 +240,13 @@ const Module5Section5_4 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.4</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.4</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Avoiding Installation Conflicts (e.g., trunking vs pipework)
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Learning how to prevent and resolve conflicts between trades to save time, money, and
               frustration on site.
             </p>
@@ -257,7 +257,7 @@ const Module5Section5_4 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc ml-4">
+                <ul className="text-white text-sm space-y-1 list-disc ml-4">
                   <li>Installation conflicts occur when trades compete for the same space.</li>
                   <li>Common areas include ceiling voids, service risers, and plant rooms.</li>
                   <li>Prevention through coordination drawings saves costly rework.</li>
@@ -265,7 +265,7 @@ const Module5Section5_4 = () => {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc ml-4">
+                <ul className="text-white text-sm space-y-1 list-disc ml-4">
                   <li>
                     <strong>Spot:</strong> Space constraints, multiple services, tight areas.
                   </li>
@@ -287,7 +287,7 @@ const Module5Section5_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Learning Outcomes
             </h2>
-            <ul className="space-y-2 text-white/80">
+            <ul className="space-y-2 text-white">
               <li className="flex items-start">
                 <span className="text-elec-yellow mr-2">•</span>Recognise common installation
                 conflicts between trades.
@@ -317,7 +317,7 @@ const Module5Section5_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               What Are Installation Conflicts?
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Installation conflicts occur when multiple trades attempt to use the same space,
                 leading to costly delays and safety hazards:
@@ -370,7 +370,7 @@ const Module5Section5_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Common Conflict Areas
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>Understanding where conflicts typically occur helps in planning and prevention:</p>
 
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
@@ -378,7 +378,7 @@ const Module5Section5_4 = () => {
                 <div className="space-y-3">
                   <div>
                     <p className="font-medium text-white mb-1">Ceiling voids</p>
-                    <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                    <ul className="text-sm text-white list-disc ml-4 space-y-1">
                       <li>Ducts, trunking, lighting, and sprinkler pipes all require routing</li>
                       <li>Restricted access makes coordination critical</li>
                       <li>Fire compartment integrity must be maintained</li>
@@ -386,7 +386,7 @@ const Module5Section5_4 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Service risers</p>
-                    <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                    <ul className="text-sm text-white list-disc ml-4 space-y-1">
                       <li>Multiple services fighting for limited vertical space</li>
                       <li>Access requirements for maintenance and future modifications</li>
                       <li>Fire stopping and compartmentation requirements</li>
@@ -394,7 +394,7 @@ const Module5Section5_4 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Plant rooms</p>
-                    <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                    <ul className="text-sm text-white list-disc ml-4 space-y-1">
                       <li>Electrical, plumbing, and HVAC equipment in close proximity</li>
                       <li>Maintenance access essential for all equipment</li>
                       <li>Safety clearances required around electrical equipment</li>
@@ -426,7 +426,7 @@ const Module5Section5_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Preventing Conflicts
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>Proactive measures to prevent conflicts before they occur:</p>
 
               <div className="p-4 rounded-lg bg-purple-500/10 border-l-2 border-purple-500/50">
@@ -434,7 +434,7 @@ const Module5Section5_4 = () => {
                 <div className="space-y-3">
                   <div>
                     <p className="font-medium text-white mb-1">Check coordinated drawings</p>
-                    <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                    <ul className="text-sm text-white list-disc ml-4 space-y-1">
                       <li>Review all trade drawings for potential clashes</li>
                       <li>Understand the installation sequence and priorities</li>
                       <li>Identify critical dimensions and clearances</li>
@@ -442,7 +442,7 @@ const Module5Section5_4 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Clear marking and labelling</p>
-                    <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                    <ul className="text-sm text-white list-disc ml-4 space-y-1">
                       <li>Mark proposed routes before drilling or fixing</li>
                       <li>Use temporary markers to show intended installation paths</li>
                       <li>Coordinate marking systems with other trades</li>
@@ -450,7 +450,7 @@ const Module5Section5_4 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Space management</p>
-                    <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                    <ul className="text-sm text-white list-disc ml-4 space-y-1">
                       <li>Allow adequate clearances around all equipment</li>
                       <li>Consider future modifications and additions</li>
                       <li>Maintain access for routine maintenance</li>
@@ -474,7 +474,7 @@ const Module5Section5_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Resolving Issues
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>When conflicts arise, prompt and proper resolution is essential:</p>
 
               <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-500/50">
@@ -482,7 +482,7 @@ const Module5Section5_4 = () => {
                 <div className="space-y-3">
                   <div>
                     <p className="font-medium text-white mb-1">Immediate reporting</p>
-                    <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                    <ul className="text-sm text-white list-disc ml-4 space-y-1">
                       <li>Stop work in the affected area immediately</li>
                       <li>Document the conflict with photos and measurements</li>
                       <li>Notify all affected trades through proper channels</li>
@@ -491,7 +491,7 @@ const Module5Section5_4 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Respect other trades</p>
-                    <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                    <ul className="text-sm text-white list-disc ml-4 space-y-1">
                       <li>Never modify or remove another trade's work</li>
                       <li>Avoid temporary relocation without permission</li>
                       <li>Maintain professional working relationships</li>
@@ -523,7 +523,7 @@ const Module5Section5_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Practical Guidance
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Practical steps for avoiding conflicts and maintaining professional installations:
               </p>
@@ -533,7 +533,7 @@ const Module5Section5_4 = () => {
                 <div className="space-y-3">
                   <div>
                     <p className="font-medium text-white mb-1">Route marking</p>
-                    <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                    <ul className="text-sm text-white list-disc ml-4 space-y-1">
                       <li>Use chalk lines or temporary markers for long runs</li>
                       <li>Check for hidden services with detection equipment</li>
                       <li>Verify positions against coordinated drawings</li>
@@ -541,7 +541,7 @@ const Module5Section5_4 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Smart routing</p>
-                    <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                    <ul className="text-sm text-white list-disc ml-4 space-y-1">
                       <li>Don't force straight lines through obstacles</li>
                       <li>Use proper fittings and supports for direction changes</li>
                       <li>Maintain minimum bend radii for cables</li>
@@ -549,7 +549,7 @@ const Module5Section5_4 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white mb-1">Accessibility</p>
-                    <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                    <ul className="text-sm text-white list-disc ml-4 space-y-1">
                       <li>Never block access to safety equipment</li>
                       <li>Maintain clearances around control panels</li>
                       <li>Consider maintenance requirements in route planning</li>
@@ -578,23 +578,23 @@ const Module5Section5_4 = () => {
                 <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <h3 className="font-semibold text-amber-400 mb-2">The Costly Riser Conflict</h3>
-                  <p className="text-white/80 mb-3">
+                  <p className="text-white mb-3">
                     On a commercial project, electricians ran trunking across a service riser before
                     the sprinkler fitters had installed their pipework. When the sprinkler team
                     arrived, they found their route completely blocked.
                   </p>
-                  <p className="text-white/80 mb-3">
+                  <p className="text-white mb-3">
                     <strong>Impact:</strong> The trunking had to be completely ripped out and
                     reinstalled at a higher level. This cost the project:
                   </p>
-                  <ul className="text-sm text-white/70 list-disc ml-4 mb-3 space-y-1">
+                  <ul className="text-sm text-white list-disc ml-4 mb-3 space-y-1">
                     <li>Three days of additional labour costs</li>
                     <li>Wasted materials and disposal costs</li>
                     <li>Delay to the sprinkler installation</li>
                     <li>Knock-on delays to other trades</li>
                     <li>Damaged relationships between trades</li>
                   </ul>
-                  <p className="text-white/80">
+                  <p className="text-white">
                     <strong>Prevention:</strong> A simple check of the coordination drawings would
                     have shown the sprinkler route and prevented this costly conflict entirely.
                   </p>
@@ -613,7 +613,7 @@ const Module5Section5_4 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                  <p className="text-sm text-white/70">{faq.answer}</p>
+                  <p className="text-sm text-white">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -631,7 +631,7 @@ const Module5Section5_4 = () => {
                 <div className="grid md:grid-cols-2 gap-4 w-full">
                   <div>
                     <p className="font-medium text-white mb-2">Prevention Checklist</p>
-                    <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                    <ul className="text-sm text-white list-disc ml-4 space-y-1">
                       <li>Check and follow coordinated site drawings</li>
                       <li>Mark out proposed routes before fixing</li>
                       <li>Never block access panels or safety equipment</li>
@@ -642,7 +642,7 @@ const Module5Section5_4 = () => {
                   </div>
                   <div>
                     <p className="font-medium text-white mb-2">Installation Standards</p>
-                    <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                    <ul className="text-sm text-white list-disc ml-4 space-y-1">
                       <li>Use bends and risers to avoid obstacles</li>
                       <li>Respect agreed trade sequencing</li>
                       <li>Install neatly in line with grid systems</li>
@@ -656,7 +656,7 @@ const Module5Section5_4 = () => {
             </div>
             <div className="mt-4 p-3 rounded-lg border border-elec-yellow/30">
               <p className="text-sm font-medium text-elec-yellow">Quick Reference:</p>
-              <p className="text-xs text-white/70">
+              <p className="text-xs text-white">
                 Always check → Mark out → Coordinate → Install → Document
               </p>
             </div>
@@ -672,7 +672,7 @@ const Module5Section5_4 = () => {
               <div className="flex items-start gap-3">
                 <CheckCircle className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                 <div>
-                  <p className="text-white/80 mb-3">
+                  <p className="text-white mb-3">
                     You've learned what installation conflicts are, where they occur, and how to
                     avoid them. By checking drawings, following site rules, and working with other
                     trades, you can prevent costly rework and ensure a professional installation
@@ -681,7 +681,7 @@ const Module5Section5_4 = () => {
                   <div className="grid md:grid-cols-2 gap-4 text-sm">
                     <div>
                       <p className="font-semibold text-white mb-2">Key Skills Developed:</p>
-                      <ul className="text-white/70 list-disc ml-4 space-y-1">
+                      <ul className="text-white list-disc ml-4 space-y-1">
                         <li>Identifying potential conflict zones</li>
                         <li>Reading and interpreting coordination drawings</li>
                         <li>Implementing proper marking systems</li>
@@ -690,7 +690,7 @@ const Module5Section5_4 = () => {
                     </div>
                     <div>
                       <p className="font-semibold text-white mb-2">Professional Benefits:</p>
-                      <ul className="text-white/70 list-disc ml-4 space-y-1">
+                      <ul className="text-white list-disc ml-4 space-y-1">
                         <li>Reduced project delays and rework</li>
                         <li>Improved trade relationships</li>
                         <li>Enhanced professional reputation</li>

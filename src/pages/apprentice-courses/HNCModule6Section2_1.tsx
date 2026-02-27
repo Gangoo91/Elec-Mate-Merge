@@ -236,7 +236,7 @@ const HNCModule6Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section2">
@@ -258,7 +258,7 @@ const HNCModule6Section2_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Solar Photovoltaic Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             PV technology, system sizing, installation requirements, G98/G99 connection, and
             performance monitoring
           </p>
@@ -435,7 +435,7 @@ const HNCModule6Section2_1 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">
                 Standard Test Conditions (STC)
               </p>
-              <ul className="text-sm text-white/90 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>
                   Irradiance: <strong>1,000 W/m²</strong>
                 </li>
@@ -446,7 +446,7 @@ const HNCModule6Section2_1 = () => {
                   Air mass: <strong>AM 1.5</strong> (spectrum at 48.2° solar elevation)
                 </li>
               </ul>
-              <p className="text-sm text-white/70 mt-2">
+              <p className="text-sm text-white mt-2">
                 Real-world performance differs due to varying irradiance, higher cell temperatures,
                 and system losses.
               </p>
@@ -508,16 +508,16 @@ const HNCModule6Section2_1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Annual Yield Calculation
               </p>
-              <div className="bg-black/30 p-4 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60 mb-2">Formula:</p>
+              <div className="bg-black/30 p-4 rounded text-sm font-mono text-white">
+                <p className="text-white mb-2">Formula:</p>
                 <p className="text-green-400">
                   Annual Yield (kWh) = kWp × PSH × PR × Orientation Factor
                 </p>
-                <p className="text-white/60 mt-4 mb-2">Where:</p>
+                <p className="text-white mt-4 mb-2">Where:</p>
                 <p>kWp = System peak power rating</p>
                 <p>PSH = Peak Sun Hours (kWh/m²/year ÷ 1 kW/m²)</p>
                 <p>PR = Performance Ratio (typically 0.75-0.85)</p>
-                <p className="mt-4 text-white/60">Simplified UK calculation:</p>
+                <p className="mt-4 text-white">Simplified UK calculation:</p>
                 <p className="text-green-400">Annual Yield ≈ kWp × 800 to 1,000 kWh</p>
               </div>
             </div>
@@ -558,7 +558,7 @@ const HNCModule6Section2_1 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-sm text-white/70 mt-2">
+              <p className="text-sm text-white mt-2">
                 Tc = Temperature coefficient of voltage (typically -0.3% per °C for crystalline
                 silicon)
               </p>
@@ -656,7 +656,7 @@ const HNCModule6Section2_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-1">G98 (Notification Only)</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>• Single-phase: ≤ 3.68 kW (16 A × 230 V)</li>
                     <li>• Three-phase: ≤ 11.04 kW (3 × 3.68 kW)</li>
                     <li>• Notify DNO within 28 days of commissioning</li>
@@ -665,7 +665,7 @@ const HNCModule6Section2_1 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-1">G99 (Application Required)</p>
-                  <ul className="text-white/90 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>• Exceeds G98 limits</li>
                     <li>• Apply before installation</li>
                     <li>• DNO assesses network impact</li>
@@ -811,12 +811,12 @@ const HNCModule6Section2_1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Performance Ratio Monitoring
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Performance Ratio (PR) calculation:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Performance Ratio (PR) calculation:</p>
                 <p className="mt-2 text-green-400">
                   PR = Actual Energy Output ÷ (Installed kWp × Plane of Array Irradiation ÷ 1,000)
                 </p>
-                <p className="mt-4 text-white/60">Expected values:</p>
+                <p className="mt-4 text-white">Expected values:</p>
                 <p>
                   New system: <span className="text-green-400">0.80-0.85</span>
                 </p>
@@ -829,7 +829,7 @@ const HNCModule6Section2_1 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Maintenance consideration:</strong> Panels typically degrade 0.5-0.7% per
               year. Inverters have 10-15 year typical lifespan. Factor replacement costs into
               lifecycle analysis.
@@ -855,17 +855,17 @@ const HNCModule6Section2_1 = () => {
                 <strong>Scenario:</strong> Calculate annual yield for a 4 kWp system in Birmingham,
                 south-facing at 35° pitch.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given data:</p>
                 <p>System size: 4 kWp</p>
                 <p>Location: Birmingham (950 kWh/m² annual irradiation)</p>
                 <p>Orientation: South-facing, 35° pitch (factor 0.97)</p>
                 <p>Performance ratio: 0.80</p>
-                <p className="mt-4 text-white/60">Calculation:</p>
+                <p className="mt-4 text-white">Calculation:</p>
                 <p>Peak Sun Hours (PSH) = 950 kWh/m² ÷ 1 kW/m² = 950 hours</p>
                 <p>Annual Yield = 4 kWp × 950 × 0.80 × 0.97</p>
                 <p className="text-green-400 mt-2">Annual Yield = 2,941 kWh</p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Simplified: 4 × 900 = 3,600 kWh (using 900 kWh/kWp rule of thumb)
                 </p>
               </div>
@@ -879,21 +879,21 @@ const HNCModule6Section2_1 = () => {
                 <strong>Scenario:</strong> Determine maximum panels per string for 400 W panels (Voc
                 = 49.5 V, Vmp = 41.5 V) with a 600 V inverter.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Panel specifications:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Panel specifications:</p>
                 <p>Voc at STC (25°C): 49.5 V</p>
                 <p>Vmp at STC (25°C): 41.5 V</p>
                 <p>Temperature coefficient: -0.29%/°C</p>
-                <p className="mt-4 text-white/60">Maximum Voc at -10°C:</p>
+                <p className="mt-4 text-white">Maximum Voc at -10°C:</p>
                 <p>Temperature difference = 25°C - (-10°C) = 35°C</p>
                 <p>Voltage increase = 35 × 0.29% = 10.15%</p>
                 <p>
                   Voc at -10°C = 49.5 × 1.1015 = <span className="text-yellow-400">54.5 V</span>
                 </p>
-                <p className="mt-4 text-white/60">Maximum panels in string:</p>
+                <p className="mt-4 text-white">Maximum panels in string:</p>
                 <p>600 V ÷ 54.5 V = 11.0 panels</p>
                 <p className="text-green-400 mt-2">Maximum: 11 panels per string</p>
-                <p className="text-white/60 mt-4">
+                <p className="text-white mt-4">
                   Also check minimum Vmp remains above MPPT minimum (typically 150-200 V)
                 </p>
               </div>
@@ -907,17 +907,17 @@ const HNCModule6Section2_1 = () => {
                 <strong>Scenario:</strong> Determine connection requirements for a 6 kWp
                 single-phase domestic installation.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Installation details:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Installation details:</p>
                 <p>Inverter AC output: 6 kW single-phase</p>
                 <p>Supply: Single-phase 230 V</p>
-                <p className="mt-4 text-white/60">G98 limit check:</p>
+                <p className="mt-4 text-white">G98 limit check:</p>
                 <p>G98 single-phase limit: 16 A × 230 V = 3.68 kW</p>
                 <p>Proposed installation: 6 kW</p>
                 <p className="text-red-400 mt-2">6 kW &gt; 3.68 kW - G98 limit exceeded</p>
-                <p className="mt-4 text-white/60">Requirement:</p>
+                <p className="mt-4 text-white">Requirement:</p>
                 <p className="text-yellow-400">G99 application required before installation</p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Alternative: Install 3.68 kW inverter to qualify for G98 notification only
                 </p>
               </div>
@@ -1012,7 +1012,7 @@ const HNCModule6Section2_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1058,7 +1058,7 @@ const HNCModule6Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section2">

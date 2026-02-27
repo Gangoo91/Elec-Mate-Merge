@@ -190,7 +190,7 @@ const Section1_4 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-foreground active:text-foreground p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -216,7 +216,7 @@ const Section1_4 = () => {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
             Basic Measuring Instruments
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Master essential electrical measuring instruments for safe testing and fault finding.
             Learn proper use and safety procedures.
           </p>

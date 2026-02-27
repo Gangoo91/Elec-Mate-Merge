@@ -201,7 +201,7 @@ const Module4Section1_2 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -219,13 +219,13 @@ const Module4Section1_2 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 1.2</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 1.2</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Identifying Cable Routes and Fixing Points
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Plan safe, compliant cable routes and fixing points to protect cables and ensure BS
               7671 compliance.
             </p>
@@ -237,7 +237,7 @@ const Module4Section1_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="grid md:grid-cols-2 gap-4 text-sm text-white/90">
+            <div className="grid md:grid-cols-2 gap-4 text-sm text-white">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-5 space-y-1">
@@ -271,7 +271,7 @@ const Module4Section1_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <ul className="list-disc pl-6 space-y-2 text-sm text-white/90">
+            <ul className="list-disc pl-6 space-y-2 text-sm text-white">
               <li>
                 Identify safe and compliant cable routes in various installation environments.
               </li>
@@ -290,7 +290,7 @@ const Module4Section1_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Factors Affecting Cable Routing
             </h2>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               Multiple factors must be considered when planning cable routes to ensure safety,
               compliance, and efficiency:
             </p>
@@ -304,8 +304,8 @@ const Module4Section1_2 = () => {
                     </span>
                     <div className="flex-1">
                       <p className="font-semibold text-elec-yellow mb-1">{factor.factor}</p>
-                      <p className="text-sm text-white/80 mb-2">{factor.description}</p>
-                      <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                      <p className="text-sm text-white mb-2">{factor.description}</p>
+                      <div className="text-xs text-white bg-black/20 p-2 rounded">
                         <strong>Why it matters:</strong> {factor.importance} - Essential for
                         professional installation standards.
                       </div>
@@ -317,7 +317,7 @@ const Module4Section1_2 = () => {
 
             <div className="mt-4 p-4 bg-white/5 border border-white/10 rounded-lg">
               <p className="text-sm font-medium text-white mb-1">Planning Checklist</p>
-              <p className="text-xs text-white/70">
+              <p className="text-xs text-white">
                 Before starting any cable installation, review all factors: check drawings for safe
                 zones, identify potential hazards, confirm fixing requirements, and ensure route
                 accessibility for future maintenance.
@@ -342,10 +342,10 @@ const Module4Section1_2 = () => {
                     <p className="font-semibold text-green-400 mb-1">
                       Vertical and Horizontal Safe Zones
                     </p>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       Cables can run vertically or horizontally from electrical accessories.
                     </p>
-                    <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                    <div className="text-xs text-white bg-black/20 p-2 rounded">
                       <strong>Application:</strong> From any socket, switch, or outlet, cables can
                       run directly up/down or left/right. This creates predictable routes that avoid
                       accidental damage during future work.
@@ -361,10 +361,10 @@ const Module4Section1_2 = () => {
                   </span>
                   <div className="flex-1">
                     <p className="font-semibold text-green-400 mb-1">150mm from Wall Top</p>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       Cables within 150mm of the ceiling or wall top are in a safe zone.
                     </p>
-                    <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                    <div className="text-xs text-white bg-black/20 p-2 rounded">
                       <strong>Practical use:</strong> Ceiling roses, downlights, and horizontal
                       distribution runs. Commonly used for lighting circuits and main cable runs
                       between rooms.
@@ -380,10 +380,10 @@ const Module4Section1_2 = () => {
                   </span>
                   <div className="flex-1">
                     <p className="font-semibold text-green-400 mb-1">150mm from Wall Corners</p>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       Within 150mm of any wall corner (internal or external).
                     </p>
-                    <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                    <div className="text-xs text-white bg-black/20 p-2 rounded">
                       <strong>Installation tip:</strong> Useful for vertical drops in corners or
                       routing between adjacent walls. Provides flexibility in room layouts and
                       multiple route options.
@@ -399,11 +399,11 @@ const Module4Section1_2 = () => {
                   </span>
                   <div className="flex-1">
                     <p className="font-semibold text-red-400 mb-1">Outside Safe Zones</p>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       Cables outside safe zones need mechanical protection or earthed metallic
                       covering.
                     </p>
-                    <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                    <div className="text-xs text-white bg-black/20 p-2 rounded">
                       <strong>Protection methods:</strong> Steel conduit, armoured cable, or
                       mechanical protection at 50mm depth minimum. Non-compliance creates serious
                       safety risks and regulation breaches.
@@ -424,7 +424,7 @@ const Module4Section1_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               <MapPin className="w-5 h-5" /> Fixing Points and Spacing Requirements
             </h2>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               Proper cable support prevents sagging, damage, and ensures long-term reliability:
             </p>
 
@@ -442,15 +442,15 @@ const Module4Section1_2 = () => {
                       <p className="font-semibold text-purple-400 mb-1">{cable.cableType}</p>
                       <div className="grid grid-cols-2 gap-4 mb-2">
                         <div>
-                          <p className="text-xs text-white/60">Vertical Spacing</p>
+                          <p className="text-xs text-white">Vertical Spacing</p>
                           <p className="text-sm font-medium text-white">{cable.vertical}</p>
                         </div>
                         <div>
-                          <p className="text-xs text-white/60">Horizontal Spacing</p>
+                          <p className="text-xs text-white">Horizontal Spacing</p>
                           <p className="text-sm font-medium text-white">{cable.horizontal}</p>
                         </div>
                       </div>
-                      <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                      <div className="text-xs text-white bg-black/20 p-2 rounded">
                         <strong>Installation notes:</strong> {cable.notes}. Consider cable weight,
                         environmental conditions, and future access requirements.
                       </div>
@@ -463,7 +463,7 @@ const Module4Section1_2 = () => {
             <div className="mt-4 space-y-3">
               <div className="p-4 bg-white/5 rounded border border-white/10">
                 <p className="text-sm font-medium text-white mb-2">Wall Type Considerations</p>
-                <div className="grid md:grid-cols-3 gap-4 text-xs text-white/80">
+                <div className="grid md:grid-cols-3 gap-4 text-xs text-white">
                   <div>
                     <p className="font-medium text-white">Masonry Walls</p>
                     <p>Use wall plugs, masonry anchors, or expanding bolts for secure fixing.</p>
@@ -483,7 +483,7 @@ const Module4Section1_2 = () => {
 
               <div className="p-4 bg-elec-yellow/10 border border-elec-yellow/30 rounded-lg">
                 <p className="text-sm font-medium text-white mb-1">Critical Requirement</p>
-                <p className="text-xs text-white/80">
+                <p className="text-xs text-white">
                   All fixings must be suitable for the cable weight and wall construction.
                   Inadequate support leads to cable damage, safety hazards, and potential regulatory
                   non-compliance.
@@ -502,7 +502,7 @@ const Module4Section1_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               <AlertTriangle className="w-5 h-5" /> Hazard Identification and Avoidance
             </h2>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               Identifying and avoiding hazards protects cables and ensures safe, long-lasting
               installations:
             </p>
@@ -511,7 +511,7 @@ const Module4Section1_2 = () => {
               <div className="rounded-lg p-4 bg-white/5 border border-white/10">
                 <AlertTriangle className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
                 <p className="font-semibold text-white text-center mb-2">Heat Sources</p>
-                <div className="text-xs text-white/70 space-y-1">
+                <div className="text-xs text-white space-y-1">
                   <p>
                     <strong>Avoid:</strong> Hot water pipes, radiators, boilers, heating ducts
                   </p>
@@ -526,7 +526,7 @@ const Module4Section1_2 = () => {
               <div className="rounded-lg p-4 bg-white/5 border border-white/10">
                 <Shield className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
                 <p className="font-semibold text-white text-center mb-2">Corrosive Environment</p>
-                <div className="text-xs text-white/70 space-y-1">
+                <div className="text-xs text-white space-y-1">
                   <p>
                     <strong>Areas:</strong> Bathrooms, kitchens, outdoor locations
                   </p>
@@ -541,7 +541,7 @@ const Module4Section1_2 = () => {
               <div className="rounded-lg p-4 bg-elec-yellow/10 border border-elec-yellow/30">
                 <Eye className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
                 <p className="font-semibold text-white text-center mb-2">Service Separation</p>
-                <div className="text-xs text-white/70 space-y-1">
+                <div className="text-xs text-white space-y-1">
                   <p>
                     <strong>Maintain distance from:</strong> Gas pipes, water services
                   </p>
@@ -558,7 +558,7 @@ const Module4Section1_2 = () => {
             <div className="space-y-3">
               <div className="rounded-lg p-4 border-l-2 border-red-500/50 bg-red-500/5">
                 <p className="font-semibold text-red-400 mb-2">Mechanical Hazards</p>
-                <div className="text-sm text-white/80 space-y-1">
+                <div className="text-sm text-white space-y-1">
                   <p>
                     • <strong>Sharp edges:</strong> Building steelwork, metal corners, rough
                     surfaces
@@ -580,7 +580,7 @@ const Module4Section1_2 = () => {
 
               <div className="rounded-lg p-4 border-l-2 border-elec-yellow/50 bg-elec-yellow/5">
                 <p className="font-semibold text-elec-yellow mb-2">Environmental Factors</p>
-                <div className="text-sm text-white/80 space-y-1">
+                <div className="text-sm text-white space-y-1">
                   <p>
                     • <strong>Temperature extremes:</strong> Attics, plant rooms, external locations
                   </p>
@@ -605,7 +605,7 @@ const Module4Section1_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Marking and Preparing Routes
             </h2>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               Accurate marking and thorough preparation prevent errors and ensure professional
               results:
             </p>
@@ -620,10 +620,10 @@ const Module4Section1_2 = () => {
                     <p className="font-semibold text-elec-yellow mb-1">
                       Route Planning and Marking
                     </p>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       Use professional tools for accurate, straight cable routes.
                     </p>
-                    <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                    <div className="text-xs text-white bg-black/20 p-2 rounded">
                       <strong>Tools available:</strong> Chalk lines for long runs, laser levels for
                       precise horizontal/vertical alignment, string lines for temporary marking.
                       Always mark before installing any fixings.
@@ -641,10 +641,10 @@ const Module4Section1_2 = () => {
                     <p className="font-semibold text-elec-yellow mb-1">
                       Fixing Position Identification
                     </p>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       Mark all fixing points before drilling to ensure correct spacing.
                     </p>
-                    <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                    <div className="text-xs text-white bg-black/20 p-2 rounded">
                       <strong>Method:</strong> Measure and mark fixing centres along the route using
                       the correct spacing for cable type. Use a measuring tape and pencil for
                       temporary marks, check against specifications.
@@ -660,10 +660,10 @@ const Module4Section1_2 = () => {
                   </span>
                   <div className="flex-1">
                     <p className="font-semibold text-elec-yellow mb-1">Measurement Verification</p>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       Double-check all measurements against drawings and specifications.
                     </p>
-                    <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                    <div className="text-xs text-white bg-black/20 p-2 rounded">
                       <strong>Process:</strong> Compare marked route with installation drawings,
                       verify dimensions, check safe zone compliance, confirm no conflicts with other
                       services or structural elements.
@@ -681,10 +681,10 @@ const Module4Section1_2 = () => {
                     <p className="font-semibold text-elec-yellow mb-1">
                       Pre-Installation Safety Checks
                     </p>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       Essential safety checks before any drilling or fixing work begins.
                     </p>
-                    <div className="text-xs text-white/70 bg-black/20 p-2 rounded">
+                    <div className="text-xs text-white bg-black/20 p-2 rounded">
                       <strong>Critical steps:</strong> Use cable/pipe detector to locate hidden
                       services, check wall construction type, confirm suitable fixing method, verify
                       no conflicts with other trades' planned work.
@@ -696,7 +696,7 @@ const Module4Section1_2 = () => {
 
             <div className="mt-4 p-4 bg-green-500/10 border border-green-500/30 rounded-lg">
               <p className="text-sm font-medium text-white mb-1">Professional Practice</p>
-              <p className="text-xs text-white/80">
+              <p className="text-xs text-white">
                 Thorough route planning and preparation is the mark of professional installation
                 work. Time spent on accurate marking prevents errors, reduces material waste, and
                 ensures compliance with regulations.
@@ -712,7 +712,7 @@ const Module4Section1_2 = () => {
           <section className="mb-10">
             <div className="rounded-lg p-4 bg-white/5 border border-white/10">
               <p className="font-semibold text-white mb-2">Real‑World Example</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 A contractor routed cables across a ceiling space without considering fixing points.
                 Over time, the unsupported cables sagged and were damaged by foot traffic during
                 maintenance, leading to costly repairs and downtime for the client.
@@ -731,7 +731,7 @@ const Module4Section1_2 = () => {
                 <p className="font-medium text-white mb-1">
                   Do all cables need to be installed in safe zones?
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Only those concealed in walls at less than 50mm depth — otherwise, protection is
                   required.
                 </p>
@@ -740,7 +740,7 @@ const Module4Section1_2 = () => {
                 <p className="font-medium text-white mb-1">
                   Can cable ties alone be used for supporting heavy SWA cables?
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   No — heavy cables require mechanical fixings that can bear their weight over time.
                 </p>
               </div>
@@ -748,7 +748,7 @@ const Module4Section1_2 = () => {
                 <p className="font-medium text-white mb-1">
                   Is it acceptable to run cables diagonally?
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Only if fully visible or within appropriate containment — never concealed
                   diagonally in walls.
                 </p>
@@ -762,7 +762,7 @@ const Module4Section1_2 = () => {
               <h2 className="text-lg font-semibold text-white mb-2 flex items-center gap-2">
                 <CheckCircle className="w-5 h-5 text-elec-yellow" /> Summary
               </h2>
-              <p className="text-white/80 text-sm">
+              <p className="text-white text-sm">
                 Correctly identifying cable routes and fixing points ensures cables are protected,
                 accessible, and compliant. Good planning reduces risks, improves longevity, and
                 avoids costly remedial work.

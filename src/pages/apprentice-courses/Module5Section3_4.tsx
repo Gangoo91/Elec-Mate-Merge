@@ -189,7 +189,7 @@ const Module5Section3_4 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -206,13 +206,13 @@ const Module5Section3_4 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.3.4</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.3.4</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Minimising Disruption to Other Site Activities
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Learn to coordinate electrical work with other trades, prevent clashes, and maintain
               smooth site operations through effective planning.
             </p>
@@ -225,7 +225,7 @@ const Module5Section3_4 = () => {
               In 30 Seconds
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <ul className="text-white/80 space-y-2 list-disc pl-4">
+              <ul className="text-white space-y-2 list-disc pl-4">
                 <li>Review site programme to understand other trades' schedules.</li>
                 <li>Sequence work to avoid clashes (first fix, second fix phases).</li>
                 <li>Protect installations from damage during wet trades.</li>
@@ -239,7 +239,7 @@ const Module5Section3_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Construction projects involve multiple trades working alongside each other.
                 Electrical installation must be carefully planned to avoid disrupting others, such
@@ -252,7 +252,7 @@ const Module5Section3_4 = () => {
                   <UserCheck className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-elec-yellow mb-2">Why This Matters</p>
-                    <p className="text-white/70 text-sm">
+                    <p className="text-white text-sm">
                       Poor trade coordination is responsible for up to 30% of construction delays
                       and 20% of cost overruns, making effective collaboration essential for project
                       success.
@@ -279,7 +279,7 @@ const Module5Section3_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <div className="text-white/80 space-y-2 leading-relaxed">
+            <div className="text-white space-y-2 leading-relaxed">
               <p className="mb-3">By the end of this subsection, you will be able to:</p>
               <ul className="list-disc pl-6 space-y-2">
                 <li>Explain why minimising disruption to other trades is essential.</li>
@@ -297,7 +297,7 @@ const Module5Section3_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Why Minimising Disruption Matters
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Effective coordination between trades is fundamental to successful construction
                 projects:
@@ -332,7 +332,7 @@ const Module5Section3_4 = () => {
                 </div>
                 <div className="mt-4 p-3 rounded bg-green-500/10 border border-green-500/20">
                   <p className="font-medium text-green-400 mb-1">Economic Impact</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Effective trade coordination can reduce project costs by 15-20% through reduced
                     rework, faster completion, and improved efficiency.
                   </p>
@@ -347,7 +347,7 @@ const Module5Section3_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Common Trade Clashes
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>Understanding typical conflict points helps prevent problems before they occur:</p>
 
               <div className="space-y-4">
@@ -378,7 +378,7 @@ const Module5Section3_4 = () => {
                   </div>
                   <div className="mt-3 p-3 rounded bg-green-500/10 border border-green-500/20">
                     <p className="font-medium text-green-400 mb-1">Best Practice Timing</p>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       Complete all electrical first fix work 24-48 hours before plasterers begin.
                       This allows time for any adjustments.
                     </p>
@@ -456,7 +456,7 @@ const Module5Section3_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Planning to Avoid Disruption
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>Proactive planning prevents conflicts before they occur:</p>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-amber-400 mb-3">Comprehensive Planning Framework</p>
@@ -511,7 +511,7 @@ const Module5Section3_4 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <h3 className="font-medium text-red-400 mb-3">Direct Consequences</h3>
-                <ul className="list-disc pl-6 space-y-1 text-sm text-white/80">
+                <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                   <li>
                     <strong className="text-white">Time Delays:</strong> Project schedule disruption
                     and overruns
@@ -532,7 +532,7 @@ const Module5Section3_4 = () => {
               </div>
               <div className="p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
                 <h3 className="font-medium text-orange-400 mb-3">Indirect Consequences</h3>
-                <ul className="list-disc pl-6 space-y-1 text-sm text-white/80">
+                <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                   <li>
                     <strong className="text-white">Relationship Damage:</strong> Frustration and
                     conflict between trades
@@ -571,7 +571,7 @@ const Module5Section3_4 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-3">Protection Systems and Methods</h3>
-                <ul className="list-disc pl-6 space-y-1 text-sm text-white/80">
+                <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                   <li>Mark out containment and accessory positions clearly</li>
                   <li>Install temporary covers to protect accessories during wet trades</li>
                   <li>Use clear signage ("Do Not Cover" tags on back boxes)</li>
@@ -581,7 +581,7 @@ const Module5Section3_4 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-3">Conflict Resolution Strategies</h3>
-                <ul className="list-disc pl-6 space-y-1 text-sm text-white/80">
+                <ul className="list-disc pl-6 space-y-1 text-sm text-white">
                   <li>Avoid working in confined spaces with multiple trades unless coordinated</li>
                   <li>Be flexible — adjust jobs to allow others to complete work first</li>
                   <li>Establish clear escalation procedures for disputes</li>
@@ -630,7 +630,7 @@ const Module5Section3_4 = () => {
                   className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50"
                 >
                   <p className="font-medium text-white mb-2">Q: {faq.question}</p>
-                  <p className="text-white/70 text-sm">A: {faq.answer}</p>
+                  <p className="text-white text-sm">A: {faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -659,7 +659,7 @@ const Module5Section3_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">11</span>
               Summary
             </h2>
-            <div className="text-white/80 leading-relaxed">
+            <div className="text-white leading-relaxed">
               <p>
                 In this subsection, you learned how to minimise disruption to other site activities
                 by understanding common trade clashes, sequencing tasks properly, and communicating
@@ -682,7 +682,7 @@ const Module5Section3_4 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../3-3">

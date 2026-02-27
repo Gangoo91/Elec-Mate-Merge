@@ -151,7 +151,7 @@ const PullToRefresh = ({
           className={cn(
             'absolute top-2 left-0 right-0 flex justify-center',
             'text-xs font-medium transition-all duration-200',
-            shouldTrigger ? 'text-yellow-400' : 'text-white/50'
+            shouldTrigger ? 'text-yellow-400' : 'text-white'
           )}
         >
           {shouldTrigger ? 'Release to refresh' : 'Pull to refresh'}

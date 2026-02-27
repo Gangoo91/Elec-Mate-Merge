@@ -239,7 +239,7 @@ const Module3Section1_4: React.FC = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -257,13 +257,13 @@ const Module3Section1_4: React.FC = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 3</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 3.1.4</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 3.1.4</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Steel Wire Armoured (SWA) Cables
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Robust multicore cables with steel armour protection for demanding underground and
               exposed installations.
             </p>
@@ -275,7 +275,7 @@ const Module3Section1_4: React.FC = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="grid md:grid-cols-2 gap-4 text-sm text-white/80">
+            <div className="grid md:grid-cols-2 gap-4 text-sm text-white">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-6 space-y-1">
@@ -319,7 +319,7 @@ const Module3Section1_4: React.FC = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <ul className="list-disc pl-6 space-y-2 text-sm text-white/80">
+            <ul className="list-disc pl-6 space-y-2 text-sm text-white">
               <li>Describe the construction and components of SWA cable systems.</li>
               <li>Identify typical applications where SWA cable is the optimal choice.</li>
               <li>Explain the advantages and limitations of SWA compared to other cable types.</li>
@@ -336,7 +336,7 @@ const Module3Section1_4: React.FC = () => {
               <Wrench className="w-5 h-5" />
               Construction of SWA Cable
             </h2>
-            <div className="space-y-4 text-sm text-white/80">
+            <div className="space-y-4 text-sm text-white">
               <p>
                 <strong>Description:</strong> Steel Wire Armoured cable combines power transmission
                 with exceptional mechanical protection through its layered construction.
@@ -430,7 +430,7 @@ const Module3Section1_4: React.FC = () => {
               <CheckCircle2 className="w-5 h-5" />
               Advantages and Applications
             </h2>
-            <div className="space-y-4 text-sm text-white/80">
+            <div className="space-y-4 text-sm text-white">
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-green-500/10 border border-green-400/30">
                   <p className="font-medium text-white mb-2">Key Advantages</p>
@@ -521,7 +521,7 @@ const Module3Section1_4: React.FC = () => {
               <Settings className="w-5 h-5" />
               Installation Best Practices
             </h2>
-            <div className="space-y-4 text-sm text-white/80">
+            <div className="space-y-4 text-sm text-white">
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-card/50 border border-white/10">
                   <p className="font-medium text-white mb-2">Underground Installation</p>
@@ -598,7 +598,7 @@ const Module3Section1_4: React.FC = () => {
               <Scissors className="w-5 h-5" />
               Practical Installation Guide
             </h2>
-            <div className="space-y-4 text-sm text-white/80">
+            <div className="space-y-4 text-sm text-white">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-3">Essential Tools and Materials</p>
                 <div className="grid md:grid-cols-3 gap-4">
@@ -759,7 +759,7 @@ const Module3Section1_4: React.FC = () => {
               <Factory className="w-5 h-5" />
               Real-World Example
             </h2>
-            <div className="text-sm text-white/80 space-y-3">
+            <div className="text-sm text-white space-y-3">
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-400/30">
                 <p className="font-medium text-white mb-2">Commercial Car Park Installation</p>
                 <p className="mb-3">
@@ -790,11 +790,11 @@ const Module3Section1_4: React.FC = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">09</span>
               Frequently Asked Questions
             </h2>
-            <ul className="space-y-3 text-sm text-white/80">
+            <ul className="space-y-3 text-sm text-white">
               {faqs.map((f, i) => (
                 <li key={i} className="p-4 rounded-lg bg-card/50 border border-white/10">
                   <p className="font-medium text-white mb-1">{f.q}</p>
-                  <p className="text-white/70">{f.a}</p>
+                  <p className="text-white">{f.a}</p>
                 </li>
               ))}
             </ul>
@@ -815,7 +815,7 @@ const Module3Section1_4: React.FC = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">11</span>
               Summary
             </h2>
-            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 text-sm text-white/80 space-y-3">
+            <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 text-sm text-white space-y-3">
               <p>
                 SWA cable is the go-to choice for installations needing high durability and
                 mechanical protection. While it is heavier and more costly than non-armoured
@@ -842,7 +842,7 @@ const Module3Section1_4: React.FC = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             <Button
               variant="ghost"
-              className="min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+              className="min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../1-3">

@@ -44,7 +44,7 @@ const EmergencyContacts = () => {
       case 'medium':
         return 'text-blue-400 bg-blue-400/10';
       default:
-        return 'text-white/80 bg-gray-400/10';
+        return 'text-white bg-gray-400/10';
     }
   };
 
@@ -79,7 +79,7 @@ const EmergencyContacts = () => {
                     </Button>
                   </div>
                   <p className="text-sm text-white mb-2">{contact.description}</p>
-                  <div className="flex items-center gap-2 text-xs text-white/80">
+                  <div className="flex items-center gap-2 text-xs text-white">
                     <Clock className="h-3 w-3" />
                     <span>{contact.availability}</span>
                   </div>

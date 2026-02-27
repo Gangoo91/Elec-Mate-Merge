@@ -82,7 +82,7 @@ const TestEquipmentTab = () => {
     <div className="p-6 space-y-6">
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-semibold text-elec-yellow">Test Equipment</h2>
-        <p className="text-white/80 max-w-3xl mx-auto leading-relaxed">
+        <p className="text-white max-w-3xl mx-auto leading-relaxed">
           As you progress through your apprenticeship, you'll need appropriate test equipment that
           meets UK regulations. Quality test equipment is essential for safety and compliance.
         </p>
@@ -113,7 +113,7 @@ const TestEquipmentTab = () => {
           <Shield className="h-5 w-5" />
           18th Edition Testing Requirements & Progression Guide
         </h3>
-        <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+        <div className="space-y-3 text-sm text-white leading-relaxed">
           <p>
             <strong className="text-blue-300">Year 1-2:</strong> Focus on basic safety equipment.
             Learn to use voltage indicators, proving units, and simple continuity testers.
@@ -142,7 +142,7 @@ const TestEquipmentTab = () => {
           <AlertTriangle className="h-5 w-5" />
           Critical Safety Reminders
         </h3>
-        <ul className="space-y-1 text-sm text-white/80">
+        <ul className="space-y-1 text-sm text-white">
           <li>• Always prove your voltage indicator is working before and after use</li>
           <li>• Never use a digital multimeter to prove an installation is dead</li>
           <li>• Test equipment must be regularly PAT tested and calibrated</li>

@@ -149,7 +149,7 @@ const AssessmentToolsTab = () => {
       case 'Advanced':
         return { bg: 'bg-red-500/10', text: 'text-red-400', border: 'border-red-500/30' };
       default:
-        return { bg: 'bg-white/10', text: 'text-white/70', border: 'border-white/20' };
+        return { bg: 'bg-white/10', text: 'text-white', border: 'border-white/20' };
     }
   };
 
@@ -223,7 +223,7 @@ const AssessmentToolsTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6 relative">
-          <p className="text-white/70">
+          <p className="text-white">
             Test and validate your electrical safety knowledge through comprehensive assessments,
             interactive simulations, and practical workshops. Track your progress and earn
             certificates.
@@ -236,28 +236,28 @@ const AssessmentToolsTab = () => {
                 <Zap className="h-5 w-5 text-elec-yellow" />
               </div>
               <div className="text-2xl font-bold text-elec-yellow">{assessmentTools.length}</div>
-              <div className="text-xs text-white/60">Assessment Tools</div>
+              <div className="text-xs text-white">Assessment Tools</div>
             </div>
             <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
               <div className="p-2 rounded-lg bg-green-500/20 inline-block mb-2">
                 <CheckCircle className="h-5 w-5 text-green-400" />
               </div>
               <div className="text-2xl font-bold text-green-400">{completedCount}</div>
-              <div className="text-xs text-white/60">Completed</div>
+              <div className="text-xs text-white">Completed</div>
             </div>
             <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
               <div className="p-2 rounded-lg bg-blue-500/20 inline-block mb-2">
                 <BarChart3 className="h-5 w-5 text-blue-400" />
               </div>
               <div className="text-2xl font-bold text-blue-400">{Math.round(averageScore)}%</div>
-              <div className="text-xs text-white/60">Average Score</div>
+              <div className="text-xs text-white">Average Score</div>
             </div>
             <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
               <div className="p-2 rounded-lg bg-purple-500/20 inline-block mb-2">
                 <Award className="h-5 w-5 text-purple-400" />
               </div>
               <div className="text-2xl font-bold text-purple-400">{certificatesEarned}</div>
-              <div className="text-xs text-white/60">Certificates</div>
+              <div className="text-xs text-white">Certificates</div>
             </div>
           </div>
         </CardContent>
@@ -298,7 +298,7 @@ const AssessmentToolsTab = () => {
                       >
                         {tool.type}
                       </Badge>
-                      <Badge className="bg-white/5 text-white/70 border border-white/10">
+                      <Badge className="bg-white/5 text-white border border-white/10">
                         <Clock className="h-3 w-3 mr-1" />
                         {tool.duration}
                       </Badge>
@@ -313,27 +313,27 @@ const AssessmentToolsTab = () => {
                   {tool.bestScore > 0 && (
                     <div className="text-right p-3 rounded-lg bg-white/10 border border-white/10">
                       <div className="text-xl font-bold text-elec-yellow">{tool.bestScore}%</div>
-                      <div className="text-xs text-white/80">Best Score</div>
+                      <div className="text-xs text-white">Best Score</div>
                     </div>
                   )}
                 </div>
               </CardHeader>
               <CardContent className="relative space-y-4">
-                <p className="text-white/70 text-sm">{tool.description}</p>
+                <p className="text-white text-sm">{tool.description}</p>
 
                 {/* Stats Row */}
                 <div className="grid grid-cols-3 gap-2">
                   <div className="p-3 rounded-lg bg-white/10 border border-white/10 text-center">
                     <div className="text-lg font-bold text-blue-400">{tool.questions}</div>
-                    <div className="text-xs text-white/80">Questions</div>
+                    <div className="text-xs text-white">Questions</div>
                   </div>
                   <div className="p-3 rounded-lg bg-white/10 border border-white/10 text-center">
                     <div className="text-lg font-bold text-green-400">{tool.passingScore}%</div>
-                    <div className="text-xs text-white/80">Pass Score</div>
+                    <div className="text-xs text-white">Pass Score</div>
                   </div>
                   <div className="p-3 rounded-lg bg-white/10 border border-white/10 text-center">
                     <div className="text-lg font-bold text-orange-400">{tool.attempts}</div>
-                    <div className="text-xs text-white/80">Attempts</div>
+                    <div className="text-xs text-white">Attempts</div>
                   </div>
                 </div>
 
@@ -365,7 +365,7 @@ const AssessmentToolsTab = () => {
                     {tool.topics.map((topic, topicIndex) => (
                       <div
                         key={topicIndex}
-                        className="flex items-center gap-2 text-xs text-white/60"
+                        className="flex items-center gap-2 text-xs text-white"
                       >
                         <CheckSquare className="h-3 w-3 text-green-400 flex-shrink-0" />
                         {topic}
@@ -389,7 +389,7 @@ const AssessmentToolsTab = () => {
                       size="icon"
                       className="h-11 w-11 border-white/20 hover:bg-white/10 touch-manipulation"
                     >
-                      <BarChart3 className="h-4 w-4 text-white/70" />
+                      <BarChart3 className="h-4 w-4 text-white" />
                     </Button>
                   )}
                 </div>
@@ -411,7 +411,7 @@ const AssessmentToolsTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="relative space-y-4">
-          <p className="text-white/70">
+          <p className="text-white">
             Track your assessment performance over time and identify areas for improvement. Regular
             assessment helps reinforce learning and ensures knowledge retention.
           </p>
@@ -420,7 +420,7 @@ const AssessmentToolsTab = () => {
               <div className="text-3xl font-bold text-green-400 mb-2">
                 {Math.round((completedCount / assessmentTools.length) * 100)}%
               </div>
-              <div className="text-sm text-white/60 mb-3">Completion Rate</div>
+              <div className="text-sm text-white mb-3">Completion Rate</div>
               <div className="h-2 bg-white/10 rounded-full overflow-hidden">
                 <div
                   className="h-full rounded-full bg-gradient-to-r from-green-500 to-green-400 transition-all duration-500"
@@ -432,7 +432,7 @@ const AssessmentToolsTab = () => {
               <div className="text-3xl font-bold text-blue-400 mb-2">
                 {Math.round(averageScore)}%
               </div>
-              <div className="text-sm text-white/60 mb-3">Average Score</div>
+              <div className="text-sm text-white mb-3">Average Score</div>
               <div className="h-2 bg-white/10 rounded-full overflow-hidden">
                 <div
                   className="h-full rounded-full bg-gradient-to-r from-blue-500 to-blue-400 transition-all duration-500"
@@ -444,7 +444,7 @@ const AssessmentToolsTab = () => {
               <div className="text-3xl font-bold text-purple-400 mb-2">
                 {certificatesEarned}/{assessmentTools.filter((t) => t.certificate).length}
               </div>
-              <div className="text-sm text-white/60 mb-3">Certificates Earned</div>
+              <div className="text-sm text-white mb-3">Certificates Earned</div>
               <div className="h-2 bg-white/10 rounded-full overflow-hidden">
                 <div
                   className="h-full rounded-full bg-gradient-to-r from-purple-500 to-purple-400 transition-all duration-500"

@@ -269,7 +269,7 @@ const HNCModule6Section3_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section3">
@@ -291,7 +291,7 @@ const HNCModule6Section3_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             BREEAM Evidence and Certification
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Documentation requirements, design stage vs post-construction evidence, assessor
             verification, and achieving certification
           </p>
@@ -604,19 +604,19 @@ const HNCModule6Section3_6 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">PCS Evidence Hierarchy</p>
               <div className="text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Level 1:</span>{' '}
+                  <span className="text-white">Level 1:</span>{' '}
                   <span className="text-white">As-built drawings (shows what was installed)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Level 2:</span>{' '}
+                  <span className="text-white">Level 2:</span>{' '}
                   <span className="text-white">Commissioning certificates (proves it works)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Level 3:</span>{' '}
+                  <span className="text-white">Level 3:</span>{' '}
                   <span className="text-white">Site photographs (visual verification)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Level 4:</span>{' '}
+                  <span className="text-white">Level 4:</span>{' '}
                   <span className="text-white">O&M manuals (handover documentation)</span>
                 </p>
               </div>
@@ -712,7 +712,7 @@ const HNCModule6Section3_6 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Critical note:</strong> PCS evidence must correlate with Design Stage
               specifications. Any deviations must be documented with explanation of how credit
               compliance is maintained.
@@ -743,7 +743,7 @@ const HNCModule6Section3_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Design Stage Certificate</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>1. Evidence submission to assessor</li>
                     <li>2. Assessor review and queries (2-4 weeks)</li>
                     <li>3. Evidence completion and sign-off</li>
@@ -757,7 +757,7 @@ const HNCModule6Section3_6 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Post-Construction Certificate</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>1. Practical completion achieved</li>
                     <li>2. PCS evidence collection (2-8 weeks)</li>
                     <li>3. Assessor review and site visit</li>
@@ -856,7 +856,7 @@ const HNCModule6Section3_6 = () => {
                 <p>
                   <strong>Outstanding:</strong> 85% of available credits
                 </p>
-                <p className="text-white/70 mt-2 italic">
+                <p className="text-white mt-2 italic">
                   Note: Minimum standards must be achieved in certain credits regardless of overall
                   percentage.
                 </p>
@@ -888,8 +888,8 @@ const HNCModule6Section3_6 = () => {
                 <strong>Scenario:</strong> Compile evidence for Ene 02 Sub-metering credits (3
                 credits targeted).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Design Stage Evidence:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Design Stage Evidence:</p>
                 <p className="mt-2">1. Metering Strategy Document (dated, signed)</p>
                 <p className="ml-4">- Lists all energy uses over 10% of total</p>
                 <p className="ml-4">- Identifies meter locations and types</p>
@@ -899,7 +899,7 @@ const HNCModule6Section3_6 = () => {
                 <p className="ml-4"> cooling, lighting, small power, lifts, etc.)"</p>
                 <p className="mt-2">3. Schematic Drawing ME-SK-101</p>
                 <p className="ml-4">- Shows meter positions on distribution schematic</p>
-                <p className="mt-2 text-white/60">Post-Construction Stage Evidence:</p>
+                <p className="mt-2 text-white">Post-Construction Stage Evidence:</p>
                 <p className="mt-2">4. As-built Meter Schedule (Rev Final)</p>
                 <p className="ml-4">- Lists 24 meters installed with references</p>
                 <p className="mt-2">5. Commissioning Certificates</p>
@@ -920,8 +920,8 @@ const HNCModule6Section3_6 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Prepare Visual Comfort evidence for office building.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Design Stage Package:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Design Stage Package:</p>
                 <p className="mt-2">1. Lighting Design Report (by qualified designer)</p>
                 <p className="ml-4">Target lux levels per space type:</p>
                 <p className="ml-4">- Offices: 500 lux maintained, UGR &lt;19</p>
@@ -933,7 +933,7 @@ const HNCModule6Section3_6 = () => {
                 <p className="mt-2">3. Luminaire Schedule with Product Data</p>
                 <p className="ml-4">- TM66 circularity data (if targeting exemplary)</p>
                 <p className="ml-4">- Photometric files referenced</p>
-                <p className="mt-2 text-white/60">Post-Construction Stage Package:</p>
+                <p className="mt-2 text-white">Post-Construction Stage Package:</p>
                 <p className="mt-2">4. Commissioning Lux Level Survey</p>
                 <p className="ml-4">- Measured values per space (signed by engineer)</p>
                 <p className="ml-4">- Results exceed design targets</p>
@@ -954,14 +954,14 @@ const HNCModule6Section3_6 = () => {
                 <strong>Scenario:</strong> Design Stage specified DALI lighting controls, but
                 contractor installed standard switching.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Issue Identified:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Issue Identified:</p>
                 <p className="ml-4">- DS specification: DALI dimming throughout</p>
                 <p className="ml-4">- PCS reality: Manual switching only in some areas</p>
-                <p className="mt-2 text-white/60">Impact Assessment:</p>
+                <p className="mt-2 text-white">Impact Assessment:</p>
                 <p className="ml-4">- Hea 01 Credit 2 (zoned control) at risk</p>
                 <p className="ml-4">- ENE 01 assumptions may be affected</p>
-                <p className="mt-2 text-white/60">Resolution Options:</p>
+                <p className="mt-2 text-white">Resolution Options:</p>
                 <p className="mt-2">Option A: Remediation</p>
                 <p className="ml-4 text-green-400">- Retrofit DALI drivers and controls</p>
                 <p className="ml-4 text-green-400">- Commission and evidence as specified</p>
@@ -1065,7 +1065,7 @@ const HNCModule6Section3_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1111,7 +1111,7 @@ const HNCModule6Section3_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section3">

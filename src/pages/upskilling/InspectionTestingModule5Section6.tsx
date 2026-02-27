@@ -213,7 +213,7 @@ const InspectionTestingModule5Section6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-5">
@@ -235,7 +235,7 @@ const InspectionTestingModule5Section6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             RCD-Protected Circuit Testing
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Special considerations for EFLI testing on RCD-protected circuits
           </p>
         </header>
@@ -315,7 +315,7 @@ const InspectionTestingModule5Section6 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-amber-400 mb-2">What Happens:</p>
-              <ul className="text-sm text-white/70 space-y-1 ml-4">
+              <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Tester connects load between Line and Earth</li>
                 <li>Current flows through earth, not returning via neutral</li>
                 <li>RCD detects imbalance (exactly its purpose)</li>
@@ -323,7 +323,7 @@ const InspectionTestingModule5Section6 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/60">
+            <p className="text-sm text-white">
               The RCD is doing its job - it's not a fault, just an inconvenience for testing.
             </p>
           </div>
@@ -342,7 +342,7 @@ const InspectionTestingModule5Section6 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-emerald-400 mb-2">How It Works</p>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 The tester uses balanced test currents that cancel out, creating no net earth
                 leakage. The RCD sees no imbalance and doesn't trip, allowing the Zs measurement to
                 complete.
@@ -403,9 +403,9 @@ const InspectionTestingModule5Section6 = () => {
                       {item.step}
                     </span>
                     <div>
-                      <span className="text-white/80">{item.text}</span>
+                      <span className="text-white">{item.text}</span>
                       {item.note && (
-                        <span className="text-white/40 text-sm ml-2">({item.note})</span>
+                        <span className="text-white text-sm ml-2">({item.note})</span>
                       )}
                     </div>
                   </li>
@@ -427,21 +427,21 @@ const InspectionTestingModule5Section6 = () => {
             <div className="my-6 space-y-3">
               <div>
                 <p className="text-sm font-medium text-blue-400 mb-1">Low-Level Faults</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Faults below 30mA won't trip the RCD. The overcurrent device must still protect
                   against these.
                 </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-purple-400 mb-1">RCD Failure</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   If the RCD fails, backup protection relies on EFLI. Zs should meet at least 5s
                   requirements.
                 </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-amber-400 mb-1">High-Current Faults</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Sustained high-current faults need the MCB to operate. EFLI ensures adequate fault
                   current.
                 </p>
@@ -463,7 +463,7 @@ const InspectionTestingModule5Section6 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">How It Works</p>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 The test measures loop impedance via the neutral return path instead of earth. No
                 earth leakage occurs, so the RCD is not affected.
               </p>
@@ -510,7 +510,7 @@ const InspectionTestingModule5Section6 = () => {
 
             <div className="my-6">
               <p className="text-sm font-semibold text-emerald-400">Example Entry:</p>
-              <p className="text-sm text-white/70 mt-1">
+              <p className="text-sm text-white mt-1">
                 "Zs: 0.85Ω (calculated from Ze 0.32Ω + R1+R2 0.44Ω × 1.2)"
               </p>
             </div>
@@ -567,7 +567,7 @@ const InspectionTestingModule5Section6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -623,7 +623,7 @@ const InspectionTestingModule5Section6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-5/section-5">

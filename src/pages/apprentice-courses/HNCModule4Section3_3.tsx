@@ -210,7 +210,7 @@ const HNCModule4Section3_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section3">
@@ -232,7 +232,7 @@ const HNCModule4Section3_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Fault Current Calculations
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Calculating prospective fault current, impedances, and verifying protection adequacy
           </p>
         </header>
@@ -318,7 +318,7 @@ const HNCModule4Section3_3 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 Ipf = V / Z<sub>total</sub>
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where V is system voltage and Z is total impedance to fault point
               </p>
             </div>
@@ -417,7 +417,7 @@ const HNCModule4Section3_3 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 I<sub>fault</sub> = I<sub>FL</sub> / (%Z / 100)
               </p>
-              <p className="text-xs text-white/70 text-center mt-2">
+              <p className="text-xs text-white text-center mt-2">
                 Where I<sub>FL</sub> = kVA / (√3 × V<sub>L</sub>) for three-phase transformers
               </p>
             </div>
@@ -474,11 +474,11 @@ const HNCModule4Section3_3 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Converting %Z to Ohms:</p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Z<sub>T</sub> (Ω) = (%Z / 100) × (V²<sub>L</sub> / S)
                 </p>
-                <p className="mt-2 text-white/70">
+                <p className="mt-2 text-white">
                   Where S is transformer rating in VA and V<sub>L</sub> is line voltage
                 </p>
               </div>
@@ -552,7 +552,7 @@ const HNCModule4Section3_3 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/70 mt-2">
+              <p className="text-xs text-white mt-2">
                 *R1+R2 values assume CPC is same size as line conductor
               </p>
             </div>
@@ -581,7 +581,7 @@ const HNCModule4Section3_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Fault Current Along a Cable
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>At origin: Ipf = 15kA (from transformer)</p>
                 <p className="mt-2">After 50m of 25mm² cable:</p>
                 <p>Cable Z = 50m × 0.727mΩ/m × 2 = 72.7mΩ = 0.073Ω</p>
@@ -730,7 +730,7 @@ const HNCModule4Section3_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Important:</strong> If calculated Zs exceeds the maximum value, use RCD
               protection (≤30mA for additional protection) or increase conductor sizes.
             </p>
@@ -755,7 +755,7 @@ const HNCModule4Section3_3 = () => {
                 <strong>Question:</strong> Calculate the prospective fault current at the secondary
                 terminals of a 800kVA, 11kV/400V transformer with 5.5% impedance.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Calculate full load current</p>
                 <p>
                   I<sub>FL</sub> = S / (√3 × V<sub>L</sub>)
@@ -782,7 +782,7 @@ const HNCModule4Section3_3 = () => {
                 <strong>Question:</strong> A 20A Type B MCB protects 25m of 2.5mm² T&E cable. Ze =
                 0.35Ω. Verify protection is adequate.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Calculate circuit impedance</p>
                 <p>
                   R1+R2 = 25m × 14.82 mΩ/m = 370.5 mΩ = <strong>0.371Ω</strong>
@@ -811,7 +811,7 @@ const HNCModule4Section3_3 = () => {
                 <strong>Question:</strong> A sub-board is fed by 30m of 35mm² SWA from a main board
                 where Ipf = 18kA. Calculate Ipf at the sub-board.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Source impedance at main board</p>
                 <p>
                   Z<sub>source</sub> = V / Ipf = 230 / 18000 = <strong>0.0128Ω</strong>
@@ -828,7 +828,7 @@ const HNCModule4Section3_3 = () => {
                 <p>
                   Ipf = 230 / 0.0442 = <strong>5.2kA</strong>
                 </p>
-                <p className="mt-2 text-white/60">→ 6kA MCBs adequate at sub-board</p>
+                <p className="mt-2 text-white">→ 6kA MCBs adequate at sub-board</p>
               </div>
             </div>
           </div>
@@ -916,7 +916,7 @@ const HNCModule4Section3_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -962,7 +962,7 @@ const HNCModule4Section3_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section3-2">

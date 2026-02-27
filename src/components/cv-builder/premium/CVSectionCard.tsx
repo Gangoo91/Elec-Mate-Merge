@@ -78,7 +78,7 @@ const CVSectionCard = ({
             className="cursor-grab active:cursor-grabbing p-1 -ml-2 touch-none"
             onClick={(e) => e.stopPropagation()}
           >
-            <GripVertical className="h-4 w-4 text-white/30" />
+            <GripVertical className="h-4 w-4 text-white" />
           </div>
         )}
 
@@ -92,7 +92,7 @@ const CVSectionCard = ({
           >
             <div
               className={cn(
-                showComplete ? 'text-emerald-400' : isExpanded ? 'text-blue-400' : 'text-white/60'
+                showComplete ? 'text-emerald-400' : isExpanded ? 'text-blue-400' : 'text-white'
               )}
             >
               {icon}
@@ -119,14 +119,14 @@ const CVSectionCard = ({
               </Badge>
             )}
           </div>
-          {description && <p className="text-xs text-white/50 truncate">{description}</p>}
+          {description && <p className="text-xs text-white truncate">{description}</p>}
         </div>
 
         {/* Progress/Count */}
         <div className="flex items-center gap-3">
           {hasCount && (
             <div className="flex items-center gap-2">
-              <span className="text-sm text-white/60">
+              <span className="text-sm text-white">
                 {completionCount}/{totalCount}
               </span>
               <MiniProgressRing progress={displayProgress} size={24} />
@@ -159,7 +159,7 @@ const CVSectionCard = ({
 
           {/* Expand Arrow */}
           <motion.div animate={{ rotate: isExpanded ? 180 : 0 }} transition={{ duration: 0.2 }}>
-            <ChevronDown className="h-5 w-5 text-white/40" />
+            <ChevronDown className="h-5 w-5 text-white" />
           </motion.div>
         </div>
       </button>
@@ -216,10 +216,10 @@ export const CVEntryCard = ({
     <div className="flex items-start justify-between gap-3">
       <div className="flex-1 min-w-0">
         <h4 className="font-medium text-white truncate">{title}</h4>
-        <p className="text-sm text-white/60 truncate">{subtitle}</p>
+        <p className="text-sm text-white truncate">{subtitle}</p>
         {date && (
           <div className="flex items-center gap-2 mt-1">
-            <span className="text-xs text-white/40">{date}</span>
+            <span className="text-xs text-white">{date}</span>
             {isCurrent && (
               <Badge className="bg-blue-500/20 border-blue-500/30 text-blue-300 text-[8px] px-1.5">
                 Current
@@ -241,7 +241,7 @@ export const CVEntryCard = ({
             variant="ghost"
             size="sm"
             onClick={onEdit}
-            className="h-7 px-2 text-xs text-white/60 hover:text-white"
+            className="h-7 px-2 text-xs text-white hover:text-white"
           >
             Edit
           </Button>
@@ -274,7 +274,7 @@ export const CVAddButton = ({ label, onClick, className }: CVAddButtonProps) => 
     className={cn(
       'w-full py-3 px-4 rounded-xl border-2 border-dashed',
       'border-white/10 hover:border-blue-500/30 hover:bg-blue-500/5',
-      'text-white/50 hover:text-blue-400',
+      'text-white hover:text-blue-400',
       'transition-all duration-200',
       'flex items-center justify-center gap-2',
       className

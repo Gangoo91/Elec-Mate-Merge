@@ -39,7 +39,7 @@ export default function MultiTradeIndex() {
               <Wrench className="h-10 w-10 text-amber-400" />
             </div>
             <h2 className="text-lg font-semibold text-white mb-2">Courses Coming Soon</h2>
-            <p className="text-sm text-white/50 max-w-[280px]">
+            <p className="text-sm text-white max-w-[280px]">
               We're building exciting new courses for this category. Check back soon!
             </p>
           </div>

@@ -203,7 +203,7 @@ const CareerDetailModal = ({
         <ul className="space-y-2">
           {content.map((item, idx) => (
             <li key={idx} className="flex items-start gap-2 text-sm text-white">
-              <ChevronRight className="h-4 w-4 text-white/60 flex-shrink-0 mt-0.5" />
+              <ChevronRight className="h-4 w-4 text-white flex-shrink-0 mt-0.5" />
               <span>{item}</span>
             </li>
           ))}
@@ -340,14 +340,14 @@ const CareerDetailModal = ({
                           className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors group"
                         >
                           <div>
-                            <div className="text-sm font-medium text-white group-hover:text-white/90">
+                            <div className="text-sm font-medium text-white group-hover:text-white">
                               {resource.title}
                             </div>
                             {resource.description && (
                               <div className="text-xs text-white">{resource.description}</div>
                             )}
                           </div>
-                          <ExternalLink className="h-4 w-4 text-white/60 group-hover:text-white" />
+                          <ExternalLink className="h-4 w-4 text-white group-hover:text-white" />
                         </a>
                       ))}
                     </div>
@@ -488,14 +488,14 @@ const CareerDetailModal = ({
                             className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors group"
                           >
                             <div>
-                              <div className="text-sm font-medium text-white group-hover:text-white/90">
+                              <div className="text-sm font-medium text-white group-hover:text-white">
                                 {resource.title}
                               </div>
                               {resource.description && (
                                 <div className="text-xs text-white">{resource.description}</div>
                               )}
                             </div>
-                            <ExternalLink className="h-4 w-4 text-white/60 group-hover:text-white" />
+                            <ExternalLink className="h-4 w-4 text-white group-hover:text-white" />
                           </a>
                         ))}
                       </div>

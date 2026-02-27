@@ -88,7 +88,7 @@ const EVChargingModule4Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/ev-charging-module-4">
@@ -109,7 +109,7 @@ const EVChargingModule4Section5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Surge and Lightning Protection (SPD)
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Protecting EV charging systems from transient overvoltages
           </p>
         </header>
@@ -181,17 +181,17 @@ const EVChargingModule4Section5 = () => {
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Type 1</p>
                 <p className="text-white text-xs">Direct lightning</p>
-                <p className="text-white/70 text-xs">10/350μs test</p>
+                <p className="text-white text-xs">10/350μs test</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Type 2</p>
                 <p className="text-white text-xs">Indirect surges</p>
-                <p className="text-white/70 text-xs">8/20μs test</p>
+                <p className="text-white text-xs">8/20μs test</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Type 3</p>
                 <p className="text-white text-xs">Local equipment</p>
-                <p className="text-white/70 text-xs">Combination wave</p>
+                <p className="text-white text-xs">Combination wave</p>
               </div>
             </div>
 
@@ -464,7 +464,7 @@ const EVChargingModule4Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/ev-charging-module-4-section-4">

@@ -252,12 +252,12 @@ export function TimesheetSheet({ open, onOpenChange }: TimesheetSheetProps) {
                         </div>
                         <div>
                           <p className="text-sm font-medium text-green-400">Currently Clocked In</p>
-                          <p className="text-xs text-white/60">{clockState.jobTitle}</p>
+                          <p className="text-xs text-white">{clockState.jobTitle}</p>
                         </div>
                       </div>
                       <div className="text-center py-3">
                         <p className="text-4xl font-bold text-green-400 font-mono">{duration}</p>
-                        <p className="text-xs text-white/50 mt-1">
+                        <p className="text-xs text-white mt-1">
                           Since {format(new Date(clockState.clockInTime), 'HH:mm')}
                         </p>
                       </div>
@@ -310,7 +310,7 @@ export function TimesheetSheet({ open, onOpenChange }: TimesheetSheetProps) {
                     >
                       <div className="flex items-center gap-4">
                         <div className="w-14 h-14 rounded-xl bg-white/[0.08] flex items-center justify-center group-hover:bg-white/[0.12] transition-colors">
-                          <PenLine className="h-7 w-7 text-white/80" />
+                          <PenLine className="h-7 w-7 text-white" />
                         </div>
                         <div className="flex-1 text-left">
                           <p className="font-semibold text-foreground">Manual Entry</p>
@@ -366,7 +366,7 @@ export function TimesheetSheet({ open, onOpenChange }: TimesheetSheetProps) {
                   </div>
 
                   <div className="p-4 rounded-xl bg-white/[0.03] border border-white/10">
-                    <div className="flex items-center gap-3 text-white/60">
+                    <div className="flex items-center gap-3 text-white">
                       <Clock className="h-4 w-4" />
                       <p className="text-sm">Start time: {format(new Date(), 'HH:mm')} today</p>
                     </div>
@@ -405,7 +405,7 @@ export function TimesheetSheet({ open, onOpenChange }: TimesheetSheetProps) {
                             'h-12 rounded-xl border transition-all touch-manipulation',
                             breakMinutes === mins
                               ? 'bg-elec-yellow/10 border-elec-yellow/50 text-elec-yellow'
-                              : 'bg-white/[0.03] border-white/10 text-white/70 hover:bg-white/[0.06]'
+                              : 'bg-white/[0.03] border-white/10 text-white hover:bg-white/[0.06]'
                           )}
                         >
                           {mins}

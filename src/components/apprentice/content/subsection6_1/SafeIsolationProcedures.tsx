@@ -33,7 +33,7 @@ const SafeIsolationProcedures = () => {
                 </div>
                 <div className="space-y-1">
                   <h6 className="font-semibold text-white">{step.title}</h6>
-                  <p className="text-sm text-white/80">{step.description}</p>
+                  <p className="text-sm text-white">{step.description}</p>
                 </div>
               </div>
             ))}
@@ -75,7 +75,7 @@ const SafeIsolationProcedures = () => {
               <AlertTriangle className="h-5 w-5 text-red-400 shrink-0 mt-0.5" />
               <div>
                 <h6 className="font-medium text-red-400">Critical Safety Warning</h6>
-                <p className="text-sm text-white/80 mt-1">
+                <p className="text-sm text-white mt-1">
                   Never rely on isolation switches alone. Always follow the complete safe isolation
                   procedure and verify the absence of voltage before beginning work.
                 </p>
@@ -91,7 +91,7 @@ const SafeIsolationProcedures = () => {
                 Electricity at Work Regulations 1989
               </span>
             </div>
-            <p className="text-xs text-white/80 mt-1">
+            <p className="text-xs text-white mt-1">
               Regulation 13 specifically requires that adequate precautions are taken to prevent
               electrical equipment that has been made dead from becoming live while work is carried
               out.

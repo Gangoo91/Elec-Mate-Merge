@@ -241,7 +241,7 @@ const HNCModule2Section3_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section3">
@@ -263,7 +263,7 @@ const HNCModule2Section3_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Psychrometric Charts
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             The essential graphical tool for analysing and designing air conditioning processes
           </p>
         </header>
@@ -346,14 +346,14 @@ const HNCModule2Section3_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium mb-2">Primary Axes:</p>
-                  <ul className="space-y-1 text-white/90">
+                  <ul className="space-y-1 text-white">
                     <li>• Horizontal: Dry bulb temperature (°C)</li>
                     <li>• Vertical: Moisture content (g/kg dry air)</li>
                   </ul>
                 </div>
                 <div>
                   <p className="font-medium mb-2">Chart Boundaries:</p>
-                  <ul className="space-y-1 text-white/90">
+                  <ul className="space-y-1 text-white">
                     <li>• Upper curve: Saturation line (100% RH)</li>
                     <li>• Lower bound: 0 g/kg (dry air)</li>
                     <li>• Left/Right: Temperature range</li>
@@ -530,7 +530,7 @@ const HNCModule2Section3_3 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-cyan-400/80 mb-2">Step-by-Step Plotting</p>
-              <ol className="text-sm text-white/90 space-y-2 list-decimal list-inside">
+              <ol className="text-sm text-white space-y-2 list-decimal list-inside">
                 <li>Identify the two known properties</li>
                 <li>Locate the line for the first property</li>
                 <li>Locate the line for the second property</li>
@@ -734,7 +734,7 @@ const HNCModule2Section3_3 = () => {
                 <strong>Question:</strong> A sling psychrometer reads 24°C dry bulb and 17°C wet
                 bulb. Find RH, moisture content, dew point and enthalpy.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Plot the state point</p>
                 <p>• Find vertical line at 24°C dry bulb</p>
                 <p>• Find diagonal wet bulb line at 17°C</p>
@@ -766,7 +766,7 @@ const HNCModule2Section3_3 = () => {
                 <strong>Question:</strong> Air at 12°C, 70% RH is heated to 22°C. Find the new RH
                 and verify moisture content is unchanged.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Plot initial state (12°C, 70% RH)</p>
                 <p>• Read initial moisture content: 6.2 g/kg</p>
                 <p className="mt-2">Step 2: Move horizontally to 22°C</p>
@@ -790,7 +790,7 @@ const HNCModule2Section3_3 = () => {
                 <strong>Question:</strong> 3 kg/s of outside air (30°C, 60% RH) mixes with 7 kg/s of
                 return air (24°C, 50% RH). Find the mixed condition.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Plot both states</p>
                 <p>• Outside (O): 30°C, 60% RH → g = 16.0 g/kg</p>
                 <p>• Return (R): 24°C, 50% RH → g = 9.4 g/kg</p>
@@ -819,7 +819,7 @@ const HNCModule2Section3_3 = () => {
                 <strong>Question:</strong> Room air is 21°C, 55% RH. What is the minimum surface
                 temperature to avoid condensation?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Plot room condition (21°C, 55% RH)</p>
                 <p>• Moisture content from chart: 8.6 g/kg</p>
                 <p className="mt-2">Step 2: Find dew point</p>
@@ -828,10 +828,10 @@ const HNCModule2Section3_3 = () => {
                 <p className="mt-2">
                   Dew point = <strong>11.5°C</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Any surface at or below 11.5°C will have condensation
                 </p>
-                <p className="text-white/60">Keep surfaces above 12°C for safety margin</p>
+                <p className="text-white">Keep surfaces above 12°C for safety margin</p>
               </div>
             </div>
           </div>
@@ -903,7 +903,7 @@ const HNCModule2Section3_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -949,7 +949,7 @@ const HNCModule2Section3_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section3-2">

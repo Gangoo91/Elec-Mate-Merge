@@ -114,21 +114,21 @@ const AM2Module5Section6 = () => {
             <div className="text-center">
               <Search className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
               <h3 className="text-ios-headline font-semibold text-white">8 Common Faults</h3>
-              <p className="text-ios-footnote text-white/70 mt-1">Complete reference table</p>
+              <p className="text-ios-footnote text-white mt-1">Complete reference table</p>
             </div>
           </AM2ContentCard>
           <AM2ContentCard>
             <div className="text-center">
               <Target className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
               <h3 className="text-ios-headline font-semibold text-white">Golden Rules</h3>
-              <p className="text-ios-footnote text-white/70 mt-1">Never lose marks again</p>
+              <p className="text-ios-footnote text-white mt-1">Never lose marks again</p>
             </div>
           </AM2ContentCard>
           <AM2ContentCard>
             <div className="text-center">
               <Zap className="w-8 h-8 text-elec-yellow mx-auto mb-2" />
               <h3 className="text-ios-headline font-semibold text-white">Quick Testing</h3>
-              <p className="text-ios-footnote text-white/70 mt-1">Right test for each fault</p>
+              <p className="text-ios-footnote text-white mt-1">Right test for each fault</p>
             </div>
           </AM2ContentCard>
         </div>
@@ -151,13 +151,13 @@ const AM2Module5Section6 = () => {
                     <h4 className="text-ios-callout font-semibold text-white mb-1">
                       Typical Symptom
                     </h4>
-                    <p className="text-ios-footnote text-white/70">{fault.symptom}</p>
+                    <p className="text-ios-footnote text-white">{fault.symptom}</p>
                   </div>
                   <div>
                     <h4 className="text-ios-callout font-semibold text-white mb-1">
                       Rectification
                     </h4>
-                    <p className="text-ios-footnote text-white/70">{fault.rectification}</p>
+                    <p className="text-ios-footnote text-white">{fault.rectification}</p>
                   </div>
                   <div>
                     <h4 className="text-ios-callout font-semibold text-white mb-1">
@@ -182,7 +182,7 @@ const AM2Module5Section6 = () => {
                 <div className="w-6 h-6 bg-elec-yellow/20 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
                   <span className="text-ios-footnote font-bold text-elec-yellow">{index + 1}</span>
                 </div>
-                <p className="text-ios-callout text-white/80 leading-relaxed">{rule}</p>
+                <p className="text-ios-callout text-white leading-relaxed">{rule}</p>
               </div>
             ))}
           </div>
@@ -193,21 +193,21 @@ const AM2Module5Section6 = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="text-ios-callout font-semibold text-white mb-2">Continuity Tester</h4>
-              <p className="text-ios-footnote text-white/70">
+              <p className="text-ios-footnote text-white">
                 200mA test current for conductor continuity
               </p>
             </div>
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="text-ios-callout font-semibold text-white mb-2">Insulation Tester</h4>
-              <p className="text-ios-footnote text-white/70">500V DC for IR between conductors</p>
+              <p className="text-ios-footnote text-white">500V DC for IR between conductors</p>
             </div>
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="text-ios-callout font-semibold text-white mb-2">Loop Tester</h4>
-              <p className="text-ios-footnote text-white/70">Zs measurements for earth faults</p>
+              <p className="text-ios-footnote text-white">Zs measurements for earth faults</p>
             </div>
             <div className="bg-white/5 border border-white/10 rounded-xl p-4">
               <h4 className="text-ios-callout font-semibold text-white mb-2">RCD Tester</h4>
-              <p className="text-ios-footnote text-white/70">
+              <p className="text-ios-footnote text-white">
                 Verify RCD operation after earth faults
               </p>
             </div>
@@ -224,25 +224,25 @@ const AM2Module5Section6 = () => {
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     Initial circuit inspection: 5-10 minutes
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     Fault diagnosis per circuit: 15-20 minutes
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     Rectification: 10-15 minutes
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     Re-testing and documentation: 5-10 minutes
                   </span>
                 </li>
@@ -253,25 +253,25 @@ const AM2Module5Section6 = () => {
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     Start with obvious visual checks
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     Use logical sequence: dead tests first
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     Document as you work, not at the end
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     Don't spend too long on one fault
                   </span>
                 </li>
@@ -289,7 +289,7 @@ const AM2Module5Section6 = () => {
                   <div className="w-2 h-2 bg-elec-yellow rounded-full"></div>
                   <h4 className="text-ios-callout font-semibold text-white">{item.fault}</h4>
                 </div>
-                <p className="text-ios-footnote text-white/70">→ {item.test}</p>
+                <p className="text-ios-footnote text-white">→ {item.test}</p>
               </div>
             ))}
           </div>
@@ -303,19 +303,19 @@ const AM2Module5Section6 = () => {
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">Prove circuit is dead</span>
+                  <span className="text-ios-footnote text-white">Prove circuit is dead</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">Lock off and tag supply</span>
+                  <span className="text-ios-footnote text-white">Lock off and tag supply</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">Use appropriate PPE</span>
+                  <span className="text-ios-footnote text-white">Use appropriate PPE</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
+                  <span className="text-ios-footnote text-white">
                     Check test equipment works
                   </span>
                 </li>
@@ -326,23 +326,23 @@ const AM2Module5Section6 = () => {
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">Use GS38 compliant leads</span>
+                  <span className="text-ios-footnote text-white">Use GS38 compliant leads</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
+                  <span className="text-ios-footnote text-white">
                     Keep one hand in pocket when possible
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
+                  <span className="text-ios-footnote text-white">
                     Never assume - always verify
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
+                  <span className="text-ios-footnote text-white">
                     Report any unsafe conditions
                   </span>
                 </li>
@@ -354,7 +354,7 @@ const AM2Module5Section6 = () => {
         {/* Success Formula */}
         <AM2ContentCard title="Success Formula" icon={CheckCircle} accent>
           <div className="space-y-6">
-            <p className="text-ios-body text-white/80 text-center font-medium leading-relaxed">
+            <p className="text-ios-body text-white text-center font-medium leading-relaxed">
               If apprentices memorise this sheet, they'll walk into fault-finding with a clear plan:
             </p>
 
@@ -388,7 +388,7 @@ const AM2Module5Section6 = () => {
 
         {/* Module Summary */}
         <AM2ContentCard title="Module 5 Complete" icon={BookOpen}>
-          <p className="text-ios-body text-white/80 leading-relaxed">
+          <p className="text-ios-body text-white leading-relaxed">
             You've completed Module 5: Fault Diagnosis and Rectification. This quick reference sheet
             summarises all the key concepts from the module. Use it as a study aid and refer back to
             it before your assessment.

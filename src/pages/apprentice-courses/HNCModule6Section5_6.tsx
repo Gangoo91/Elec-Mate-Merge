@@ -254,7 +254,7 @@ const HNCModule6Section5_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section5">
@@ -276,7 +276,7 @@ const HNCModule6Section5_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Energy Efficiency Measures
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             ECM identification, payback analysis, implementation priorities, and verification of
             savings
           </p>
@@ -500,14 +500,14 @@ const HNCModule6Section5_6 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">Payback Calculation Examples</p>
               <div className="font-mono text-sm space-y-3">
                 <div>
-                  <p className="text-white/60">Simple Payback:</p>
+                  <p className="text-white">Simple Payback:</p>
                   <p className="text-white">
                     LED lighting upgrade: £24,000 cost, £8,000/year savings
                   </p>
                   <p className="text-green-400">Payback = £24,000 ÷ £8,000 = 3 years</p>
                 </div>
                 <div className="border-t border-white/10 pt-3">
-                  <p className="text-white/60">NPV Calculation (10-year life, 6% discount rate):</p>
+                  <p className="text-white">NPV Calculation (10-year life, 6% discount rate):</p>
                   <p className="text-white">NPV factor for 6%, 10 years = 7.360</p>
                   <p className="text-white">PV of savings = £8,000 × 7.360 = £58,880</p>
                   <p className="text-green-400">
@@ -786,8 +786,8 @@ const HNCModule6Section5_6 = () => {
                 <p className="text-white">
                   Energy Savings = Baseline Energy - Post-Installation Energy ± Adjustments
                 </p>
-                <p className="text-white/60 mt-3">Adjustments account for:</p>
-                <ul className="text-white/80 space-y-1 ml-4 list-disc">
+                <p className="text-white mt-3">Adjustments account for:</p>
+                <ul className="text-white space-y-1 ml-4 list-disc">
                   <li>Weather differences (heating/cooling degree days)</li>
                   <li>Occupancy changes</li>
                   <li>Operating hours variations</li>
@@ -806,10 +806,10 @@ const HNCModule6Section5_6 = () => {
                   consumption that partially offsets expected savings. Research suggests 10-30% of
                   theoretical savings may be lost to rebound in commercial buildings.
                 </p>
-                <p className="text-white/80 mt-3">
+                <p className="text-white mt-3">
                   <strong>Common causes:</strong>
                 </p>
-                <ul className="space-y-1 ml-4 list-disc text-white/80">
+                <ul className="space-y-1 ml-4 list-disc text-white">
                   <li>
                     Occupants adjusting setpoints ('it's more efficient now, so I can be warmer')
                   </li>
@@ -846,7 +846,7 @@ const HNCModule6Section5_6 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>M&V best practice:</strong> Plan M&V approach before ECM implementation -
               baseline data must be collected under representative operating conditions.
             </p>
@@ -871,14 +871,14 @@ const HNCModule6Section5_6 = () => {
                 <strong>Scenario:</strong> A VSD retrofit on a 37 kW chiller pump operating 4,000
                 hours annually.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given data:</p>
                 <p>Motor power: 37 kW</p>
                 <p>Operating hours: 4,000 h/year</p>
                 <p>Expected savings: 35% (typical for VSD on pump)</p>
                 <p>Electricity cost: £0.28/kWh</p>
                 <p>VSD installation cost: £6,500</p>
-                <p className="mt-2 text-white/60">Calculation:</p>
+                <p className="mt-2 text-white">Calculation:</p>
                 <p>Annual consumption = 37 kW × 4,000 h = 148,000 kWh</p>
                 <p>Energy savings = 148,000 × 35% = 51,800 kWh/year</p>
                 <p>Cost savings = 51,800 × £0.28 = £14,504/year</p>
@@ -896,14 +896,14 @@ const HNCModule6Section5_6 = () => {
                 <strong>Scenario:</strong> Compare two lighting options for a warehouse over 15
                 years at 5% discount rate.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Option A: Standard LED (8-year life)</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Option A: Standard LED (8-year life)</p>
                 <p>Capital: £40,000 | Annual energy: £6,000 | Annual maint: £500</p>
-                <p className="mt-2 text-white/60">Option B: Premium LED (15-year life)</p>
+                <p className="mt-2 text-white">Option B: Premium LED (15-year life)</p>
                 <p>Capital: £55,000 | Annual energy: £4,800 | Annual maint: £300</p>
-                <p className="mt-2 text-white/60">NPV factors (5%):</p>
+                <p className="mt-2 text-white">NPV factors (5%):</p>
                 <p>15 years = 10.380 | 8 years = 6.463</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Option A NPV (including replacement at year 8):
                 </p>
                 <p>Initial: -£40,000</p>
@@ -911,7 +911,7 @@ const HNCModule6Section5_6 = () => {
                 <p>Replacement at Y8: -£40,000 × 0.677 = -£27,080</p>
                 <p>Running (years 9-15): -(£6,500 × 3.917) = -£25,460</p>
                 <p className="text-red-400">Option A total NPV = -£134,550</p>
-                <p className="mt-2 text-white/60">Option B NPV:</p>
+                <p className="mt-2 text-white">Option B NPV:</p>
                 <p>Initial: -£55,000</p>
                 <p>Running (15 years): -(£5,100 × 10.380) = -£52,938</p>
                 <p className="text-green-400">Option B total NPV = -£107,938</p>
@@ -927,21 +927,21 @@ const HNCModule6Section5_6 = () => {
                 <strong>Scenario:</strong> Verify heating savings after boiler upgrade using degree
                 day adjustment.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Baseline period (pre-upgrade):</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Baseline period (pre-upgrade):</p>
                 <p>Gas consumption: 180,000 kWh</p>
                 <p>Heating degree days (HDD): 2,100</p>
                 <p>Baseline ratio: 180,000 ÷ 2,100 = 85.7 kWh/HDD</p>
-                <p className="mt-2 text-white/60">Post-installation period:</p>
+                <p className="mt-2 text-white">Post-installation period:</p>
                 <p>Actual gas consumption: 145,000 kWh</p>
                 <p>Heating degree days: 2,350 (colder year)</p>
-                <p className="mt-2 text-white/60">Adjusted calculation:</p>
+                <p className="mt-2 text-white">Adjusted calculation:</p>
                 <p>Expected baseline at 2,350 HDD: 85.7 × 2,350 = 201,395 kWh</p>
                 <p>Actual consumption: 145,000 kWh</p>
                 <p className="text-green-400">
                   Weather-adjusted savings: 201,395 - 145,000 = 56,395 kWh (28%)
                 </p>
-                <p className="mt-2 text-white/60">Without adjustment (misleading):</p>
+                <p className="mt-2 text-white">Without adjustment (misleading):</p>
                 <p className="text-red-400">
                   Apparent savings: 180,000 - 145,000 = 35,000 kWh (19%)
                 </p>
@@ -1031,7 +1031,7 @@ const HNCModule6Section5_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1077,7 +1077,7 @@ const HNCModule6Section5_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section5">

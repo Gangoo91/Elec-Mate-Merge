@@ -202,7 +202,7 @@ export default function MewpModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-1">
@@ -227,7 +227,7 @@ export default function MewpModule1Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             MEWP Types, Groups & IPAF Categories
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding the classification of Mobile Elevating Work Platforms &mdash; Group A vs
             Group B, IPAF machine categories, and selecting the right machine for the task
           </p>
@@ -311,7 +311,7 @@ export default function MewpModule1Section3() {
                 <div className="grid sm:grid-cols-3 gap-3 mt-3">
                   <div className="bg-black/30 rounded-lg p-3 text-center">
                     <p className="text-elec-yellow font-semibold text-sm mb-1">Work Platform</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       The enclosed platform where operatives stand, with controls for positioning
                     </p>
                   </div>
@@ -319,13 +319,13 @@ export default function MewpModule1Section3() {
                     <p className="text-elec-yellow font-semibold text-sm mb-1">
                       Extending Structure
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       The mechanism that raises and positions the platform (boom, mast, scissors)
                     </p>
                   </div>
                   <div className="bg-black/30 rounded-lg p-3 text-center">
                     <p className="text-elec-yellow font-semibold text-sm mb-1">Chassis / Base</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       The mobile base unit — wheeled, tracked, or vehicle-mounted
                     </p>
                   </div>
@@ -335,7 +335,7 @@ export default function MewpModule1Section3() {
               <p>MEWPs are used across a wide range of industries and applications:</p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm text-white/80">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 text-sm text-white">
                   {[
                     'Construction',
                     'Facilities management',
@@ -360,7 +360,7 @@ export default function MewpModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Not a MEWP</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Ladders, stepladders, podium steps, scaffolding, cradles, and rope access systems
                   are <strong>not</strong> MEWPs. They do not have an integrated extending structure
                   with platform-level controls. Goods-only lifts (not designed to carry persons) are
@@ -414,7 +414,7 @@ export default function MewpModule1Section3() {
                   <p className="text-xs text-center text-blue-300/80 mb-3">
                     Platform stays directly above the base
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Scissor lifts (pantograph mechanism)</span>
@@ -460,7 +460,7 @@ export default function MewpModule1Section3() {
                   <p className="text-xs text-center text-green-300/80 mb-3">
                     Platform extends outside the base footprint
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Telescopic boom lifts</span>
@@ -487,7 +487,7 @@ export default function MewpModule1Section3() {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Why Does This Matter?</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Group B machines introduce <strong>additional hazards</strong> that Group A
                   machines do not have: the platform can be positioned over voids, over live
                   traffic, adjacent to structures, and the centre of gravity shifts as the boom
@@ -534,10 +534,10 @@ export default function MewpModule1Section3() {
                         </span>
                         <span className="text-sm font-medium text-white">Static Vertical</span>
                       </div>
-                      <p className="text-xs text-white/60 mb-2">
+                      <p className="text-xs text-white mb-2">
                         Group A + Static = Cannot drive elevated, vertical lift only
                       </p>
-                      <ul className="text-xs text-white/70 space-y-1">
+                      <ul className="text-xs text-white space-y-1">
                         <li className="flex items-start gap-1.5">
                           <span className="mt-1 w-1 h-1 rounded-full bg-white/50 flex-shrink-0" />
                           <span>Static scissor lifts on outriggers</span>
@@ -559,10 +559,10 @@ export default function MewpModule1Section3() {
                         </span>
                         <span className="text-sm font-medium text-white">Static Boom</span>
                       </div>
-                      <p className="text-xs text-white/60 mb-2">
+                      <p className="text-xs text-white mb-2">
                         Group B + Static = Cannot drive elevated, boom extends beyond base
                       </p>
-                      <ul className="text-xs text-white/70 space-y-1">
+                      <ul className="text-xs text-white space-y-1">
                         <li className="flex items-start gap-1.5">
                           <span className="mt-1 w-1 h-1 rounded-full bg-white/50 flex-shrink-0" />
                           <span>Van-mounted, truck-mounted, lorry-mounted</span>
@@ -595,10 +595,10 @@ export default function MewpModule1Section3() {
                         </span>
                         <span className="text-sm font-medium text-white">Mobile Vertical</span>
                       </div>
-                      <p className="text-xs text-white/60 mb-2">
+                      <p className="text-xs text-white mb-2">
                         Group A + Mobile = Can drive elevated, vertical lift only
                       </p>
-                      <ul className="text-xs text-white/70 space-y-1">
+                      <ul className="text-xs text-white space-y-1">
                         <li className="flex items-start gap-1.5">
                           <span className="mt-1 w-1 h-1 rounded-full bg-white/50 flex-shrink-0" />
                           <span>Self-propelled scissor lifts (most common type)</span>
@@ -620,10 +620,10 @@ export default function MewpModule1Section3() {
                         </span>
                         <span className="text-sm font-medium text-white">Mobile Boom</span>
                       </div>
-                      <p className="text-xs text-white/60 mb-2">
+                      <p className="text-xs text-white mb-2">
                         Group B + Mobile = Can drive elevated, boom extends beyond base
                       </p>
-                      <ul className="text-xs text-white/70 space-y-1">
+                      <ul className="text-xs text-white space-y-1">
                         <li className="flex items-start gap-1.5">
                           <span className="mt-1 w-1 h-1 rounded-full bg-white/50 flex-shrink-0" />
                           <span>Self-propelled articulating booms</span>
@@ -654,7 +654,7 @@ export default function MewpModule1Section3() {
                         </span>
                       </div>
                       <p className="text-xs font-medium text-white mb-1">Push Around Vertical</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Manually pushed, lightweight, low working heights (4&ndash;6m). No
                         self-propelled drive. Ideal for light indoor work.
                       </p>
@@ -666,7 +666,7 @@ export default function MewpModule1Section3() {
                         </span>
                       </div>
                       <p className="text-xs font-medium text-white mb-1">Insulated Aerial Device</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Specialist insulated boom for work near or on live electrical conductors.
                         Used by power distribution companies.
                       </p>
@@ -678,7 +678,7 @@ export default function MewpModule1Section3() {
                         </span>
                       </div>
                       <p className="text-xs font-medium text-white mb-1">Specialist Equipment</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Airport de-icers, rail-mounted platforms, and other industry-specific MEWPs
                         not covered by standard categories.
                       </p>
@@ -689,7 +689,7 @@ export default function MewpModule1Section3() {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-elec-yellow mb-2">PAL Card Endorsements</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Your IPAF PAL Card will show which categories you are trained and authorised to
                   operate. Each category requires its own training. Holding a 3B endorsement does{' '}
                   <strong>not</strong> automatically cover 1B, 3A, or any other category. Always
@@ -783,10 +783,10 @@ export default function MewpModule1Section3() {
                 <p className="text-sm font-medium text-white mb-3">Key Characteristics</p>
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div>
-                    <p className="text-xs text-white/50 uppercase tracking-wider mb-1">
+                    <p className="text-xs text-white uppercase tracking-wider mb-1">
                       Advantages
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                         <span>Large platform area &mdash; multiple operatives</span>
@@ -806,10 +806,10 @@ export default function MewpModule1Section3() {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-xs text-white/50 uppercase tracking-wider mb-1">
+                    <p className="text-xs text-white uppercase tracking-wider mb-1">
                       Limitations
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                         <span>No horizontal outreach beyond the base</span>
@@ -833,7 +833,7 @@ export default function MewpModule1Section3() {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Best For</p>
-                <div className="grid grid-cols-2 gap-2 text-sm text-white/80">
+                <div className="grid grid-cols-2 gap-2 text-sm text-white">
                   {[
                     'Indoor maintenance & fit-out',
                     'Ceiling and overhead work',
@@ -892,7 +892,7 @@ export default function MewpModule1Section3() {
                   <p className="text-xs text-cyan-300/70 text-center mb-3">
                     Straight extending arm
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Single straight extendable boom</span>
@@ -939,7 +939,7 @@ export default function MewpModule1Section3() {
                   <p className="text-xs text-purple-300/70 text-center mb-3">
                     Jointed sections &mdash; up and over
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Multiple jointed (knuckle) sections</span>
@@ -971,12 +971,12 @@ export default function MewpModule1Section3() {
                 </p>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-sm text-white/80 mb-2">
+                    <p className="text-sm text-white mb-2">
                       Spider lifts are compact, track-mounted or wheeled boom lifts with broad
                       outrigger legs that spread outward like a spider. They are designed
                       specifically for <strong>restricted access sites</strong>.
                     </p>
-                    <ul className="text-xs text-white/70 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-1.5">
                         <span className="mt-1 w-1 h-1 rounded-full bg-teal-400 flex-shrink-0" />
                         <span>Narrow enough to fit through standard doorways</span>
@@ -1045,7 +1045,7 @@ export default function MewpModule1Section3() {
                     <Truck className="h-5 w-5 text-amber-400" />
                     <p className="text-sm font-medium text-amber-400">Vehicle-Mounted (1B)</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Mounted on vans, trucks, or lorries</span>
@@ -1063,7 +1063,7 @@ export default function MewpModule1Section3() {
                       <span>Working heights typically 12&ndash;45m</span>
                     </li>
                   </ul>
-                  <p className="text-xs text-white/50 mt-3">
+                  <p className="text-xs text-white mt-3">
                     Best for: utility work, street lighting, telecoms, highway maintenance, tree
                     surgery
                   </p>
@@ -1073,7 +1073,7 @@ export default function MewpModule1Section3() {
                     <ArrowUpDown className="h-5 w-5 text-orange-400" />
                     <p className="text-sm font-medium text-orange-400">Trailer-Mounted (1B)</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Towed to site behind a vehicle</span>
@@ -1091,7 +1091,7 @@ export default function MewpModule1Section3() {
                       <span>Working heights typically 9&ndash;20m</span>
                     </li>
                   </ul>
-                  <p className="text-xs text-white/50 mt-3">
+                  <p className="text-xs text-white mt-3">
                     Best for: occasional use, smaller contractors, property maintenance, gutter work
                   </p>
                 </div>
@@ -1143,7 +1143,7 @@ export default function MewpModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Safety Points</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1239,7 +1239,7 @@ export default function MewpModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-elec-yellow mb-1">{item.factor}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1266,13 +1266,13 @@ export default function MewpModule1Section3() {
                   <div className="grid grid-cols-2 gap-3 ml-11">
                     <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-2.5 text-center">
                       <p className="text-xs font-semibold text-blue-400 mb-1">NO &rarr; Group A</p>
-                      <p className="text-[10px] text-white/60">Scissor lift or vertical mast</p>
+                      <p className="text-[10px] text-white">Scissor lift or vertical mast</p>
                     </div>
                     <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-2.5 text-center">
                       <p className="text-xs font-semibold text-green-400 mb-1">
                         YES &rarr; Group B
                       </p>
-                      <p className="text-[10px] text-white/60">
+                      <p className="text-[10px] text-white">
                         Boom lift (telescopic or articulating)
                       </p>
                     </div>
@@ -1294,7 +1294,7 @@ export default function MewpModule1Section3() {
                       <p className="text-xs font-semibold text-blue-400 mb-1">
                         NO &rarr; Type 1 (Static)
                       </p>
-                      <p className="text-[10px] text-white/60">
+                      <p className="text-[10px] text-white">
                         1A or 1B &mdash; position then elevate
                       </p>
                     </div>
@@ -1302,7 +1302,7 @@ export default function MewpModule1Section3() {
                       <p className="text-xs font-semibold text-green-400 mb-1">
                         YES &rarr; Type 3 (Mobile)
                       </p>
-                      <p className="text-[10px] text-white/60">
+                      <p className="text-[10px] text-white">
                         3A or 3B &mdash; drive whilst elevated
                       </p>
                     </div>
@@ -1324,13 +1324,13 @@ export default function MewpModule1Section3() {
                       <p className="text-xs font-semibold text-cyan-400 mb-1">
                         NO &rarr; Telescopic boom
                       </p>
-                      <p className="text-[10px] text-white/60">Straight reach, max height</p>
+                      <p className="text-[10px] text-white">Straight reach, max height</p>
                     </div>
                     <div className="bg-purple-500/10 border border-purple-500/30 rounded-lg p-2.5 text-center">
                       <p className="text-xs font-semibold text-purple-400 mb-1">
                         YES &rarr; Articulating boom
                       </p>
-                      <p className="text-[10px] text-white/60">Up-and-over capability</p>
+                      <p className="text-[10px] text-white">Up-and-over capability</p>
                     </div>
                   </div>
 
@@ -1347,16 +1347,16 @@ export default function MewpModule1Section3() {
                   </div>
                   <div className="grid grid-cols-2 gap-3 ml-11">
                     <div className="bg-white/5 border border-white/20 rounded-lg p-2.5 text-center">
-                      <p className="text-xs font-semibold text-white/80 mb-1">
+                      <p className="text-xs font-semibold text-white mb-1">
                         NO &rarr; Standard machine
                       </p>
-                      <p className="text-[10px] text-white/60">Full-size scissor or boom</p>
+                      <p className="text-[10px] text-white">Full-size scissor or boom</p>
                     </div>
                     <div className="bg-teal-500/10 border border-teal-500/30 rounded-lg p-2.5 text-center">
                       <p className="text-xs font-semibold text-teal-400 mb-1">
                         YES &rarr; Spider lift or PAV
                       </p>
-                      <p className="text-[10px] text-white/60">Compact, fits through doors</p>
+                      <p className="text-[10px] text-white">Compact, fits through doors</p>
                     </div>
                   </div>
                 </div>
@@ -1367,7 +1367,7 @@ export default function MewpModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Common Mistakes</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1409,7 +1409,7 @@ export default function MewpModule1Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1423,7 +1423,7 @@ export default function MewpModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-1-section-2">

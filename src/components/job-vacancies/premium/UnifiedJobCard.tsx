@@ -167,11 +167,11 @@ const UnifiedJobCard = ({
               {job.title}
             </h3>
             <div className="flex items-center gap-1.5 mt-1">
-              <Building2 className="h-3.5 w-3.5 text-white/50 flex-shrink-0" />
+              <Building2 className="h-3.5 w-3.5 text-white flex-shrink-0" />
               <span
                 className={cn(
                   'text-sm font-medium truncate',
-                  isEmployer ? 'text-emerald-400' : 'text-white/70'
+                  isEmployer ? 'text-emerald-400' : 'text-white'
                 )}
               >
                 {company}
@@ -200,7 +200,7 @@ const UnifiedJobCard = ({
         </div>
 
         {/* Middle row: Location + Type + Posted */}
-        <div className="flex items-center flex-wrap gap-x-4 gap-y-1 mt-3 text-xs text-white/50">
+        <div className="flex items-center flex-wrap gap-x-4 gap-y-1 mt-3 text-xs text-white">
           <span className="flex items-center gap-1">
             <MapPin className="h-3.5 w-3.5" />
             {location}
@@ -233,7 +233,7 @@ const UnifiedJobCard = ({
                 {salary.replace('£', '')}
               </div>
             ) : (
-              <span className="text-sm text-white/40">Salary negotiable</span>
+              <span className="text-sm text-white">Salary negotiable</span>
             )}
 
             {/* Saved indicator */}

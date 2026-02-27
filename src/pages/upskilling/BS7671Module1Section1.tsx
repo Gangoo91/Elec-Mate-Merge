@@ -101,7 +101,7 @@ const BS7671Module1Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bs7671-module-1">
@@ -122,7 +122,7 @@ const BS7671Module1Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Purpose and Legal Status of BS 7671
           </h1>
-          <p className="text-white/80">Understanding the regulatory framework and legal standing</p>
+          <p className="text-white">Understanding the regulatory framework and legal standing</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -193,7 +193,7 @@ const BS7671Module1Section1 = () => {
                 <strong className="text-elec-yellow">Full Title:</strong> "Requirements for
                 Electrical Installations - IET Wiring Regulations - Eighteenth Edition"
               </p>
-              <p className="text-sm text-white/80 mt-2">
+              <p className="text-sm text-white mt-2">
                 The 18th Edition came into effect on 1st January 2019, with Amendment 2 published in
                 March 2022.
               </p>
@@ -300,11 +300,11 @@ const BS7671Module1Section1 = () => {
                   <p className="font-medium text-white mb-2">
                     Electricity at Work Regulations 1989
                   </p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     The primary legislation governing electrical safety at work. Regulation 4
                     requires systems to be constructed and maintained to prevent danger.
                   </p>
-                  <ul className="text-xs text-white/70 space-y-1 ml-3">
+                  <ul className="text-xs text-white space-y-1 ml-3">
                     <li>Absolute duty - no "so far as reasonably practicable" defence</li>
                     <li>Applies to all electrical work in workplaces</li>
                     <li>BS 7671 compliance demonstrates due diligence</li>
@@ -313,11 +313,11 @@ const BS7671Module1Section1 = () => {
 
                 <div className="p-4 rounded-lg bg-transparent border border-white/10">
                   <p className="font-medium text-white mb-2">Building Regulations Part P</p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Specifically covers electrical safety in dwellings. Makes BS 7671 compliance
                     mandatory for domestic electrical work.
                   </p>
-                  <ul className="text-xs text-white/70 space-y-1 ml-3">
+                  <ul className="text-xs text-white space-y-1 ml-3">
                     <li>Statutory requirement for domestic installations</li>
                     <li>Notifiable work must comply with BS 7671</li>
                     <li>Building Control approval required</li>
@@ -326,11 +326,11 @@ const BS7671Module1Section1 = () => {
 
                 <div className="p-4 rounded-lg bg-transparent border border-white/10">
                   <p className="font-medium text-white mb-2">Health & Safety at Work Act 1974</p>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     General duty of care for health and safety. Section 2 requires employers to
                     ensure safe systems of work.
                   </p>
-                  <ul className="text-xs text-white/70 space-y-1 ml-3">
+                  <ul className="text-xs text-white space-y-1 ml-3">
                     <li>Duty to employees and others affected by work</li>
                     <li>"So far as reasonably practicable" defence available</li>
                     <li>BS 7671 compliance shows reasonable precautions taken</li>
@@ -353,7 +353,7 @@ const BS7671Module1Section1 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="text-sm font-medium text-red-400 mb-2">If You Don't Follow BS 7671</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Burden of proof shifts to you</li>
                   <li>Must justify why departure was acceptable</li>
                   <li>Higher standard of care expected</li>
@@ -362,7 +362,7 @@ const BS7671Module1Section1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="text-sm font-medium text-green-400 mb-2">If You Follow BS 7671</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Strong defence against prosecution</li>
                   <li>Demonstrates professional competence</li>
                   <li>Insurance coverage more likely</li>
@@ -386,20 +386,20 @@ const BS7671Module1Section1 = () => {
               </p>
 
               <div className="space-y-3">
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   <strong>Situation:</strong> An electrical contractor completes a consumer unit
                   upgrade in a domestic property but doesn't install RCDs as required by BS 7671 for
                   socket outlets. Six months later, a faulty appliance causes a shock incident when
                   a resident touches a metal washing machine case.
                 </p>
 
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   <strong>Investigation:</strong> HSE finds no RCD protection despite BS 7671
                   requirements, incorrectly issued EIC, and non-compliance with Building Regulations
                   Part P.
                 </p>
 
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   <strong>Outcome:</strong> Contractor prosecuted under EAWR. Non-compliance with BS
                   7671 used as evidence of failing to meet required standards. Result: Criminal
                   conviction, £15,000 fine, and £8,000 costs.
@@ -480,7 +480,7 @@ const BS7671Module1Section1 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">Domestic Installations</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Building Regulations Part P</li>
                   <li>Notifiable work in dwellings</li>
                   <li>New builds and extensions</li>
@@ -489,7 +489,7 @@ const BS7671Module1Section1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">Commercial/Industrial</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Contract specifications</li>
                   <li>Local authority requirements</li>
                   <li>Planning conditions</li>
@@ -498,7 +498,7 @@ const BS7671Module1Section1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">Special Locations</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Swimming pools</li>
                   <li>Medical locations</li>
                   <li>Marinas and boats</li>
@@ -507,7 +507,7 @@ const BS7671Module1Section1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">Professional Practice</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Competent Person Schemes</li>
                   <li>Professional certification</li>
                   <li>Insurance requirements</li>
@@ -525,7 +525,7 @@ const BS7671Module1Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -537,7 +537,7 @@ const BS7671Module1Section1 = () => {
           <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
             <div>
               <p className="font-medium text-white mb-1">Key Legislation</p>
-              <ul className="space-y-0.5 text-white/80">
+              <ul className="space-y-0.5 text-white">
                 <li>Electricity at Work Regulations 1989</li>
                 <li>Building Regulations Part P</li>
                 <li>Health & Safety at Work Act 1974</li>
@@ -545,7 +545,7 @@ const BS7671Module1Section1 = () => {
             </div>
             <div>
               <p className="font-medium text-white mb-1">Key Takeaways</p>
-              <ul className="space-y-0.5 text-white/80">
+              <ul className="space-y-0.5 text-white">
                 <li>BS 7671 = industry standard (not law)</li>
                 <li>EAWR = statutory requirement</li>
                 <li>Compliance = legal defence</li>
@@ -564,7 +564,7 @@ const BS7671Module1Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bs7671-module-1">

@@ -247,7 +247,7 @@ const HNCModule6Section4_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section4">
@@ -269,7 +269,7 @@ const HNCModule6Section4_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Carbon Fundamentals
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Carbon accounting, GHG Protocol, Scope 1/2/3 emissions, emission factors, and reporting
             frameworks for building services
           </p>
@@ -622,7 +622,7 @@ const HNCModule6Section4_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-1">Electricity</p>
-                  <ul className="text-white/80 space-y-0.5">
+                  <ul className="text-white space-y-0.5">
                     <li>
                       Grid electricity: <strong>0.207 kgCO2e/kWh</strong>
                     </li>
@@ -632,7 +632,7 @@ const HNCModule6Section4_1 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-1">Fuels</p>
-                  <ul className="text-white/80 space-y-0.5">
+                  <ul className="text-white space-y-0.5">
                     <li>
                       Natural gas: <strong>0.183 kgCO2e/kWh</strong>
                     </li>
@@ -649,12 +649,12 @@ const HNCModule6Section4_1 = () => {
               </p>
               <div className="bg-black/30 p-4 rounded font-mono text-sm">
                 <p className="text-green-400">Carbon Emissions = Activity Data × Emission Factor</p>
-                <p className="mt-2 text-white/80">Where:</p>
-                <p className="text-white/80">
+                <p className="mt-2 text-white">Where:</p>
+                <p className="text-white">
                   - Activity data = energy consumption (kWh), fuel use (litres), etc.
                 </p>
-                <p className="text-white/80">- Emission factor = kgCO2e per unit of activity</p>
-                <p className="mt-2 text-white/80">Example:</p>
+                <p className="text-white">- Emission factor = kgCO2e per unit of activity</p>
+                <p className="mt-2 text-white">Example:</p>
                 <p className="text-white">
                   1,000,000 kWh electricity × 0.207 kgCO2e/kWh = 207,000 kgCO2e ={' '}
                   <strong>207 tCO2e</strong>
@@ -737,10 +737,10 @@ const HNCModule6Section4_1 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
               <p className="text-sm font-medium text-blue-400 mb-2">Real-Time Carbon Intensity</p>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 Grid carbon intensity varies throughout the day, typically:
               </p>
-              <ul className="text-sm text-white/80 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>
                   <strong>Lowest:</strong> Sunny/windy afternoons (solar + wind peak) - can drop
                   below 0.100 kgCO2e/kWh
@@ -828,7 +828,7 @@ const HNCModule6Section4_1 = () => {
                 <p>
                   <strong>Must disclose:</strong>
                 </p>
-                <ul className="list-disc list-outside ml-5 space-y-1 text-white/80">
+                <ul className="list-disc list-outside ml-5 space-y-1 text-white">
                   <li>UK energy use (electricity, gas, transport fuel) in kWh</li>
                   <li>Associated GHG emissions (Scope 1 and 2 minimum) in tCO2e</li>
                   <li>At least one intensity ratio (e.g., kgCO2e/m², tCO2e/£m turnover)</li>
@@ -838,7 +838,7 @@ const HNCModule6Section4_1 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Design implication:</strong> As the grid decarbonises, electrification of
               heating (heat pumps) becomes increasingly favourable compared to gas. A heat pump with
               COP of 3.0 using grid electricity already has lower carbon than a 90% efficient gas
@@ -865,14 +865,14 @@ const HNCModule6Section4_1 = () => {
                 <strong>Scenario:</strong> Calculate Scope 1 and 2 emissions for a 5,000 m² office
                 building.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given data:</p>
                 <p>Annual electricity consumption: 450,000 kWh</p>
                 <p>Annual gas consumption: 200,000 kWh</p>
-                <p className="mt-2 text-white/60">Emission factors (2023):</p>
+                <p className="mt-2 text-white">Emission factors (2023):</p>
                 <p>Electricity: 0.207 kgCO2e/kWh</p>
                 <p>Natural gas: 0.183 kgCO2e/kWh</p>
-                <p className="mt-2 text-white/60">Calculations:</p>
+                <p className="mt-2 text-white">Calculations:</p>
                 <p>
                   <strong>Scope 1 (gas):</strong>
                 </p>
@@ -905,9 +905,9 @@ const HNCModule6Section4_1 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Compare location-based vs market-based Scope 2 reporting.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Building electricity: 450,000 kWh/year</p>
-                <p className="text-white/60">Tariff: 100% REGO-backed renewable electricity</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Building electricity: 450,000 kWh/year</p>
+                <p className="text-white">Tariff: 100% REGO-backed renewable electricity</p>
                 <p className="mt-2">
                   <strong>Location-based Scope 2:</strong>
                 </p>
@@ -915,7 +915,7 @@ const HNCModule6Section4_1 = () => {
                   450,000 × 0.207 = 93,150 kgCO2e ={' '}
                   <span className="text-blue-400">93.2 tCO2e</span>
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   (Uses grid average - reflects actual grid emissions)
                 </p>
                 <p className="mt-2">
@@ -924,7 +924,7 @@ const HNCModule6Section4_1 = () => {
                 <p>
                   450,000 × 0.000 = 0 kgCO2e = <span className="text-green-400">0 tCO2e</span>
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   (REGO-backed renewable tariff - zero emission factor)
                 </p>
                 <p className="mt-2 text-yellow-400">
@@ -940,8 +940,8 @@ const HNCModule6Section4_1 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Compare carbon emissions for 100,000 kWh heating demand.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Heating demand: 100,000 kWh/year</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Heating demand: 100,000 kWh/year</p>
                 <p className="mt-2">
                   <strong>Option A: Gas boiler (92% efficient)</strong>
                 </p>
@@ -959,7 +959,7 @@ const HNCModule6Section4_1 = () => {
                   <span className="text-green-400">6.9 tCO2e</span>
                 </p>
                 <p className="mt-2 text-green-400">Heat pump saves: 65% carbon reduction</p>
-                <p className="text-white/60 mt-1">
+                <p className="text-white mt-1">
                   As grid decarbonises, this advantage increases further
                 </p>
               </div>
@@ -972,11 +972,11 @@ const HNCModule6Section4_1 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Calculate Scope 1 emissions from HVAC refrigerant loss.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Chiller system refrigerant: R-410A</p>
-                <p className="text-white/60">System charge: 50 kg</p>
-                <p className="text-white/60">Annual leakage rate: 5% (typical)</p>
-                <p className="text-white/60">R-410A GWP: 2,088</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Chiller system refrigerant: R-410A</p>
+                <p className="text-white">System charge: 50 kg</p>
+                <p className="text-white">Annual leakage rate: 5% (typical)</p>
+                <p className="text-white">R-410A GWP: 2,088</p>
                 <p className="mt-2">
                   <strong>Calculation:</strong>
                 </p>
@@ -985,10 +985,10 @@ const HNCModule6Section4_1 = () => {
                   CO2e emissions: 2.5 kg × 2,088 = 5,220 kgCO2e ={' '}
                   <span className="text-orange-400">5.2 tCO2e</span>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This is often overlooked but can be significant!
                 </p>
-                <p className="text-white/60">
+                <p className="text-white">
                   Low-GWP alternatives (R-32, R-290) reduce this substantially
                 </p>
               </div>
@@ -1078,7 +1078,7 @@ const HNCModule6Section4_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1124,7 +1124,7 @@ const HNCModule6Section4_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section4">

@@ -388,7 +388,7 @@ const Level3Module8Section4_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module8">
@@ -486,10 +486,10 @@ const Level3Module8Section4_1 = () => {
                     />
                     <span className="font-medium text-white">{band.band}</span>
                   </div>
-                  <p className="text-xs text-white/80 mb-2">{band.interpretation}</p>
+                  <p className="text-xs text-white mb-2">{band.interpretation}</p>
                   <div className="grid sm:grid-cols-2 gap-2 text-xs">
                     <span className="text-elec-yellow">
-                      Action: <span className="text-white/70">{band.action}</span>
+                      Action: <span className="text-white">{band.action}</span>
                     </span>
                     <span
                       className={`${
@@ -504,7 +504,7 @@ const Level3Module8Section4_1 = () => {
                                 : 'text-blue-400'
                       }`}
                     >
-                      Risk: <span className="text-white/70">{band.risk}</span>
+                      Risk: <span className="text-white">{band.risk}</span>
                     </span>
                   </div>
                 </div>
@@ -513,7 +513,7 @@ const Level3Module8Section4_1 = () => {
 
             <div className="p-4 rounded-lg bg-transparent border border-elec-yellow/20 my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">The 75% Rule</p>
-              <p className="text-xs text-white/90">
+              <p className="text-xs text-white">
                 If the pass mark is 65%, aim for 75% on mock exams. This provides a 10% safety
                 margin to account for: exam day nerves, unfamiliar question formats, topics covered
                 differently than in mocks, and natural performance variation. A borderline mock
@@ -603,7 +603,7 @@ const Level3Module8Section4_1 = () => {
                   </div>
                 </div>
               </div>
-              <p className="text-xs text-white/60 mt-3">
+              <p className="text-xs text-white mt-3">
                 Overall: 71% - but Earthing & Bonding needs urgent attention
               </p>
             </div>
@@ -611,7 +611,7 @@ const Level3Module8Section4_1 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="text-sm font-medium text-green-400 mb-2">Strong Areas (75%+)</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Maintain through periodic review</li>
                   <li>Don't completely neglect (skill decay)</li>
                   <li>Consider using these as confidence builders</li>
@@ -619,7 +619,7 @@ const Level3Module8Section4_1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="text-sm font-medium text-red-400 mb-2">Weak Areas (Below 65%)</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Allocate significantly more revision time</li>
                   <li>Use varied resources (videos, books, practice)</li>
                   <li>Consider foundational re-learning</li>
@@ -627,7 +627,7 @@ const Level3Module8Section4_1 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Create a Topic Tracker:</strong> After each mock exam, record your score for
               each topic. Over multiple mocks, patterns emerge. Consistently weak topics need
               fundamental re-learning; occasional weakness may just need review.
@@ -665,8 +665,8 @@ const Level3Module8Section4_1 = () => {
                   {analysisMetrics.map((item, index) => (
                     <tr key={index} className="border-b border-white/5">
                       <td className="py-2 text-white">{item.metric}</td>
-                      <td className="py-2 text-white/80 text-xs">{item.description}</td>
-                      <td className="py-2 text-white/70 text-xs">{item.useFor}</td>
+                      <td className="py-2 text-white text-xs">{item.description}</td>
+                      <td className="py-2 text-white text-xs">{item.useFor}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -679,7 +679,7 @@ const Level3Module8Section4_1 = () => {
                   <TrendingUp className="h-4 w-4 text-green-400" />
                   <p className="text-sm font-medium text-white">Improving</p>
                 </div>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Scores increasing over time (e.g., 58% to 67% to 74%). Your revision is working -
                   continue and refine.
                 </p>
@@ -689,7 +689,7 @@ const Level3Module8Section4_1 = () => {
                   <BarChart3 className="h-4 w-4 text-yellow-400" />
                   <p className="text-sm font-medium text-white">Plateaued</p>
                 </div>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Scores stable (e.g., 69%, 70%, 68%). Current methods have reached their limit -
                   try new approaches.
                 </p>
@@ -699,7 +699,7 @@ const Level3Module8Section4_1 = () => {
                   <TrendingUp className="h-4 w-4 text-red-400 rotate-180" />
                   <p className="text-sm font-medium text-white">Declining</p>
                 </div>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Scores decreasing (e.g., 72% to 65% to 60%). Investigate cause - burnout,
                   forgotten topics, or harder content.
                 </p>
@@ -713,7 +713,7 @@ const Level3Module8Section4_1 = () => {
                   <p className="text-sm font-medium text-yellow-400 mb-1">
                     Breaking Through Plateaus
                   </p>
-                  <p className="text-xs text-white/90">
+                  <p className="text-xs text-white">
                     If scores plateau despite continued revision, your learning approach needs to
                     change: try different resources, switch from passive reading to active recall,
                     get help from an instructor, or approach topics from new angles. More of the
@@ -752,7 +752,7 @@ const Level3Module8Section4_1 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Analysis-to-Action Framework:
               </p>
-              <ol className="text-xs text-white/90 space-y-2">
+              <ol className="text-xs text-white space-y-2">
                 <li>
                   <strong>1. Identify:</strong> Which topics consistently score below target? Which
                   error types recur?
@@ -782,7 +782,7 @@ const Level3Module8Section4_1 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20">
                 <p className="text-sm font-medium text-red-400 mb-2">Vague (Ineffective)</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>"Study harder"</li>
                   <li>"Revise more"</li>
                   <li>"Focus on weak areas"</li>
@@ -791,7 +791,7 @@ const Level3Module8Section4_1 = () => {
               </div>
               <div className="p-3 rounded-lg bg-green-500/10 border border-green-500/20">
                 <p className="text-sm font-medium text-green-400 mb-2">Specific (Effective)</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>"30 mins daily on earthing systems"</li>
                   <li>"Complete 20 calculation questions this week"</li>
                   <li>"Watch earthing tutorial videos"</li>
@@ -803,10 +803,10 @@ const Level3Module8Section4_1 = () => {
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Sample Improvement Plan:</p>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
-                <p className="text-xs text-white/80 mb-2">
+                <p className="text-xs text-white mb-2">
                   <strong>Finding:</strong> Earthing & Bonding scores at 52% across 3 mocks
                 </p>
-                <ul className="text-xs text-white/70 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>
                     <strong>Root Cause:</strong> Confusion between TN-S and TN-C-S systems
                   </li>
@@ -831,7 +831,7 @@ const Level3Module8Section4_1 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Review and Adjust:</strong> Your improvement plan should evolve. After each
               mock, review what worked and what didn't. Double down on effective strategies; change
               ineffective ones. Continuous adjustment based on data produces results.
@@ -907,7 +907,7 @@ const Level3Module8Section4_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -954,7 +954,7 @@ const Level3Module8Section4_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module8-section3-4">

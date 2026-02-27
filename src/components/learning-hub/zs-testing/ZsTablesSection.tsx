@@ -40,7 +40,7 @@ const ZsTablesSection = () => (
           </strong>
         </p>
       </div>
-      <div className="mt-3 flex items-start gap-2 text-xs text-white/80 bg-card/50 rounded p-2">
+      <div className="mt-3 flex items-start gap-2 text-xs text-white bg-card/50 rounded p-2">
         <span>💡</span>
         <p>
           <strong>Colour Key:</strong> Blue columns = Reference values (BS 7671) | Green columns =
@@ -455,7 +455,7 @@ const ZsTablesSection = () => (
           <p className="text-green-400 font-medium mt-2">
             Result: PASS - Safety margin: 0.06Ω (4.2%)
           </p>
-          <p className="text-xs text-white/80 mt-2">
+          <p className="text-xs text-white mt-2">
             Under fault conditions: 1.38Ω × 1.25 = 1.73Ω, which is still below 1.80Ω
           </p>
         </div>

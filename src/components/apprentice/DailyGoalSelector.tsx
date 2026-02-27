@@ -69,13 +69,13 @@ export function DailyGoalSelector({
                       <span
                         className={cn(
                           'text-sm font-medium',
-                          isActive ? 'text-elec-yellow/80' : 'text-white/50'
+                          isActive ? 'text-elec-yellow/80' : 'text-white'
                         )}
                       >
                         {option.value} XP/day
                       </span>
                     </div>
-                    <p className="text-sm text-white/50 mt-0.5">{option.description}</p>
+                    <p className="text-sm text-white mt-0.5">{option.description}</p>
                   </div>
 
                   {isActive && (

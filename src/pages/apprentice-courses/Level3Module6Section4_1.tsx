@@ -264,7 +264,7 @@ const Level3Module6Section4_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section4">
@@ -336,14 +336,14 @@ const Level3Module6Section4_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Reduced Body Resistance</p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     Wet skin can have resistance as low as 1,000 ohms compared to 100,000+ ohms when
                     dry. This dramatically increases current flow for any given voltage.
                   </p>
                 </div>
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Increased Contact Area</p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     Standing in water or on wet conductive floors provides excellent earth contact,
                     making it easier for current to flow through the body.
                   </p>
@@ -352,14 +352,14 @@ const Level3Module6Section4_1 = () => {
                   <p className="text-elec-yellow/80 font-medium mb-1">
                     Multiple Conductive Surfaces
                   </p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     Metal baths, taps, pipes, radiators and towel rails provide numerous paths for
                     fault currents and potential differences.
                   </p>
                 </div>
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Steam and Condensation</p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     Even above the direct water zone, steam deposits moisture on surfaces,
                     potentially bridging insulation and corroding equipment.
                   </p>
@@ -398,7 +398,7 @@ const Level3Module6Section4_1 = () => {
                   The interior of the bath tub or shower basin itself - where water is intended to
                   collect during normal use.
                 </p>
-                <ul className="text-sm text-white/90 space-y-1 ml-4">
+                <ul className="text-sm text-white space-y-1 ml-4">
                   <li>Only SELV equipment at maximum 12V AC or 30V DC ripple-free</li>
                   <li>Safety source must be located outside Zones 0, 1 and 2</li>
                   <li>Equipment must be rated IPX7 (protected against immersion)</li>
@@ -414,7 +414,7 @@ const Level3Module6Section4_1 = () => {
                   From finished floor level to 2.25m height, bounded by the vertical plane at the
                   bath/shower edge (or 1.2m from fixed showerhead if no tray).
                 </p>
-                <ul className="text-sm text-white/90 space-y-1 ml-4">
+                <ul className="text-sm text-white space-y-1 ml-4">
                   <li>Minimum IPX4 rating (IPX5 where cleaning jets used)</li>
                   <li>Only fixed, permanently connected equipment</li>
                   <li>
@@ -431,7 +431,7 @@ const Level3Module6Section4_1 = () => {
                 <p className="text-sm text-white mb-2">
                   Extends 0.6m horizontally from the outer edge of Zone 1, also to 2.25m height.
                 </p>
-                <ul className="text-sm text-white/90 space-y-1 ml-4">
+                <ul className="text-sm text-white space-y-1 ml-4">
                   <li>Minimum IPX4 rating (same as Zone 1)</li>
                   <li>Shaver supply units to BS EN 61558-2-5 permitted</li>
                   <li>Luminaires, fans and heating appliances permitted with correct ratings</li>
@@ -446,7 +446,7 @@ const Level3Module6Section4_1 = () => {
               and socket outlets should be sited sensibly away from splash zones.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> In a typical bathroom with a 1700mm x 700mm bath against one
               wall, Zone 1 extends from the bath edge to the ceiling and along the bath length. Zone
               2 extends a further 600mm from each exposed edge of Zone 1. A wall-mounted cabinet
@@ -479,12 +479,12 @@ const Level3Module6Section4_1 = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 pr-4 text-white/80">Rating</th>
-                      <th className="text-left py-2 pr-4 text-white/80">Protection Level</th>
-                      <th className="text-left py-2 text-white/80">Application</th>
+                      <th className="text-left py-2 pr-4 text-white">Rating</th>
+                      <th className="text-left py-2 pr-4 text-white">Protection Level</th>
+                      <th className="text-left py-2 text-white">Application</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/90">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2 pr-4 font-mono">IPX4</td>
                       <td className="py-2 pr-4">Splash-proof from all directions</td>
@@ -522,7 +522,7 @@ const Level3Module6Section4_1 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                   Suitable Equipment Examples
                 </p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Enclosed IPX4+ rated luminaires</li>
                   <li>Sealed fan units with integral motors</li>
                   <li>Shower units designed to BS EN specifications</li>
@@ -534,7 +534,7 @@ const Level3Module6Section4_1 = () => {
                 <p className="text-sm font-medium text-red-400/80 mb-2">
                   Unsuitable Equipment Examples
                 </p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Standard domestic light fittings</li>
                   <li>Open ventilation grilles with exposed wiring</li>
                   <li>Socket outlets (except specific exceptions)</li>
@@ -580,7 +580,7 @@ const Level3Module6Section4_1 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Conditions for Omitting Supplementary Bonding:
               </p>
-              <ul className="text-sm text-white/90 space-y-2 ml-4">
+              <ul className="text-sm text-white space-y-2 ml-4">
                 <li>
                   <strong>Condition 1:</strong> All circuits supplying the bathroom have 30mA RCD
                   protection
@@ -607,7 +607,7 @@ const Level3Module6Section4_1 = () => {
               <p className="text-sm font-medium text-white mb-2">
                 Supplementary Bonding Conductor Sizing:
               </p>
-              <ul className="text-sm text-white/90 space-y-1 ml-4">
+              <ul className="text-sm text-white space-y-1 ml-4">
                 <li>
                   Between extraneous-conductive-parts: minimum 4mm<sup>2</sup>
                 </li>
@@ -619,7 +619,7 @@ const Level3Module6Section4_1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> In a bathroom with copper pipes, metal bath, and towel
               radiator, supplementary bonding (if required) would connect: incoming water pipe, bath
               waste connection, radiator pipework, and these to the circuit protective conductor of
@@ -710,7 +710,7 @@ const Level3Module6Section4_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -752,7 +752,7 @@ const Level3Module6Section4_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section4">

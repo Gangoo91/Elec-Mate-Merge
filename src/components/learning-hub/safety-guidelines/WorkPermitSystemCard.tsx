@@ -92,7 +92,7 @@ const WorkPermitSystemCard = () => {
                     <p className="text-sm text-white mb-3">{permit.description}</p>
 
                     <div className="space-y-2">
-                      <div className="flex items-center gap-2 text-xs text-white/80">
+                      <div className="flex items-center gap-2 text-xs text-white">
                         <Clock className="h-3 w-3" />
                         <span>Duration: {permit.duration}</span>
                       </div>

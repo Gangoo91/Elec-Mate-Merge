@@ -25,7 +25,7 @@ const EquipmentInfoCard = () => {
 
               <div className="space-y-2">
                 <div>
-                  <p className="text-xs text-white/80 mb-1">Tests:</p>
+                  <p className="text-xs text-white mb-1">Tests:</p>
                   <div className="flex flex-wrap gap-1">
                     {equipment.tests.map((test, idx) => (
                       <Badge key={idx} variant="secondary" className="text-xs">
@@ -35,7 +35,7 @@ const EquipmentInfoCard = () => {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-2 text-xs text-white/80">
+                <div className="flex items-center gap-2 text-xs text-white">
                   <Clock className="h-3 w-3" />
                   <span>{equipment.calibrationRequirement}</span>
                 </div>

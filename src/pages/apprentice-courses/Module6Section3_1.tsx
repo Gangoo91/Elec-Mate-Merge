@@ -126,7 +126,7 @@ const Module6Section3_1 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -143,13 +143,13 @@ const Module6Section3_1 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.3.1</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.3.1</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Introduction to Test Instruments
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Multimeter, IR tester, and continuity tester fundamentals for electrical testing
             </p>
           </header>
@@ -160,7 +160,7 @@ const Module6Section3_1 = () => {
               <Target className="w-5 h-5 text-elec-yellow" />
               <h2 className="text-lg font-semibold text-white">Spot it in 30 Seconds</h2>
             </div>
-            <div className="grid sm:grid-cols-2 gap-4 text-white/80 text-sm">
+            <div className="grid sm:grid-cols-2 gap-4 text-white text-sm">
               <div>
                 <p className="font-medium text-white mb-2">Key Points</p>
                 <ul className="space-y-1.5">
@@ -193,7 +193,7 @@ const Module6Section3_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Electrical installation work relies on precise measurement and verification to
                 ensure systems are safe, compliant, and functional. Test instruments are the
@@ -214,10 +214,10 @@ const Module6Section3_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <p className="text-white/80 mb-4">
+            <p className="text-white mb-4">
               By the end of this subsection, you will be able to:
             </p>
-            <ul className="list-disc pl-6 space-y-2 text-white/80">
+            <ul className="list-disc pl-6 space-y-2 text-white">
               <li>Describe the purpose of a multimeter, IR tester, and continuity tester.</li>
               <li>Identify the main parts and functions of each instrument.</li>
               <li>Understand when to use each tool during installation and testing.</li>
@@ -232,7 +232,7 @@ const Module6Section3_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Multimeter
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 The multimeter is the most versatile electrical test instrument, capable of
                 measuring multiple electrical parameters essential for installation and maintenance
@@ -285,7 +285,7 @@ const Module6Section3_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Insulation Resistance (IR) Tester
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 The IR tester is a specialised instrument designed to assess the quality and
                 integrity of electrical insulation by applying high DC voltage and measuring the
@@ -342,7 +342,7 @@ const Module6Section3_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Continuity Tester
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 The continuity tester verifies that electrical conductors form complete, unbroken
                 paths with minimal resistance, essential for proper circuit operation and safety
@@ -403,7 +403,7 @@ const Module6Section3_1 = () => {
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                 <h3 className="font-semibold text-white mb-3">Core Testing Procedures</h3>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li>• Always confirm instruments are GS38 compliant</li>
                   <li>• Check calibration certificates before use</li>
                   <li>• For multimeters: start on highest range, then step down</li>
@@ -415,7 +415,7 @@ const Module6Section3_1 = () => {
 
               <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
                 <h3 className="font-semibold text-amber-400 mb-2">Safety Critical Reminders</h3>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li>• Never exceed instrument CAT ratings</li>
                   <li>• Always verify instrument functionality with known sources</li>
                   <li>• IR testing can charge cables - discharge safely after testing</li>
@@ -432,7 +432,7 @@ const Module6Section3_1 = () => {
               Real-World Example
             </h2>
             <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 An apprentice electrician is asked to test a ring final circuit in a new domestic
                 property. First, they use a continuity tester to verify the ring is complete by
                 measuring R1+R2 from the consumer unit to each socket. They then use the IR tester
@@ -443,17 +443,17 @@ const Module6Section3_1 = () => {
               <div className="grid sm:grid-cols-3 gap-3 mt-4">
                 <div className="p-3 bg-white/5 rounded border-l-2 border-amber-500/50">
                   <p className="font-medium text-white mb-1">Continuity Testing</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     Verified ring integrity using R1+R2 method
                   </p>
                 </div>
                 <div className="p-3 bg-white/5 rounded border-l-2 border-amber-500/50">
                   <p className="font-medium text-white mb-1">Insulation Testing</p>
-                  <p className="text-xs text-white/70">Confirmed &gt;1 MΩ using 500V DC</p>
+                  <p className="text-xs text-white">Confirmed &gt;1 MΩ using 500V DC</p>
                 </div>
                 <div className="p-3 bg-white/5 rounded border-l-2 border-amber-500/50">
                   <p className="font-medium text-white mb-1">Final Verification</p>
-                  <p className="text-xs text-white/70">Voltage and polarity confirmed</p>
+                  <p className="text-xs text-white">Voltage and polarity confirmed</p>
                 </div>
               </div>
             </div>
@@ -470,7 +470,7 @@ const Module6Section3_1 = () => {
                 <p className="font-medium text-white mb-2">
                   Q: Can a multimeter test insulation resistance?
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A: No. A dedicated insulation resistance tester must be used as multimeters cannot
                   apply the high voltages required.
                 </p>
@@ -479,7 +479,7 @@ const Module6Section3_1 = () => {
                 <p className="font-medium text-white mb-2">
                   Q: Why do we zero a continuity tester?
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A: To eliminate lead resistance and ensure accurate results by compensating for
                   the resistance of the test leads themselves.
                 </p>
@@ -488,7 +488,7 @@ const Module6Section3_1 = () => {
                 <p className="font-medium text-white mb-2">
                   Q: What's the difference between a continuity tester and a multimeter?
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A: A continuity tester is specialised for checking unbroken circuits, while a
                   multimeter has broader applications including voltage, resistance, and current
                   measurements.
@@ -506,21 +506,21 @@ const Module6Section3_1 = () => {
               <div className="grid gap-2">
                 <div className="flex items-center gap-2">
                   <span className="text-green-500 font-bold">✅</span>
-                  <span className="text-white/90">Multimeter = Voltage, current, resistance.</span>
+                  <span className="text-white">Multimeter = Voltage, current, resistance.</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-green-500 font-bold">✅</span>
-                  <span className="text-white/90">IR Tester = Insulation resistance (MΩ).</span>
+                  <span className="text-white">IR Tester = Insulation resistance (MΩ).</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-green-500 font-bold">✅</span>
-                  <span className="text-white/90">
+                  <span className="text-white">
                     Continuity Tester = Unbroken circuits, bonding, earthing.
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className="text-green-500 font-bold">✅</span>
-                  <span className="text-white/90">
+                  <span className="text-white">
                     Always check calibration and compliance before use.
                   </span>
                 </div>
@@ -538,30 +538,30 @@ const Module6Section3_1 = () => {
               <div className="text-center p-3 rounded-lg bg-white/5 border border-white/10">
                 <Zap className="w-6 h-6 text-elec-yellow mx-auto mb-2" />
                 <p className="font-medium text-white text-sm">Multimeter</p>
-                <p className="text-xs text-white/60">Voltage, current, resistance</p>
+                <p className="text-xs text-white">Voltage, current, resistance</p>
               </div>
               <div className="text-center p-3 rounded-lg bg-white/5 border border-white/10">
                 <Shield className="w-6 h-6 text-purple-400 mx-auto mb-2" />
                 <p className="font-medium text-white text-sm">IR Testing</p>
-                <p className="text-xs text-white/60">Insulation quality</p>
+                <p className="text-xs text-white">Insulation quality</p>
               </div>
               <div className="text-center p-3 rounded-lg bg-white/5 border border-white/10">
                 <FileText className="w-6 h-6 text-green-400 mx-auto mb-2" />
                 <p className="font-medium text-white text-sm">Continuity</p>
-                <p className="text-xs text-white/60">Circuit paths</p>
+                <p className="text-xs text-white">Circuit paths</p>
               </div>
               <div className="text-center p-3 rounded-lg bg-white/5 border border-white/10">
                 <AlertTriangle className="w-6 h-6 text-orange-400 mx-auto mb-2" />
                 <p className="font-medium text-white text-sm">GS38</p>
-                <p className="text-xs text-white/60">Safety compliance</p>
+                <p className="text-xs text-white">Safety compliance</p>
               </div>
               <div className="text-center p-3 rounded-lg bg-white/5 border border-white/10">
                 <Target className="w-6 h-6 text-blue-400 mx-auto mb-2" />
                 <p className="font-medium text-white text-sm">Selection</p>
-                <p className="text-xs text-white/60">Right tool for job</p>
+                <p className="text-xs text-white">Right tool for job</p>
               </div>
             </div>
-            <p className="text-white/80">
+            <p className="text-white">
               Multimeters measure voltage, current, and resistance. Insulation Resistance Testers
               measure insulation quality using high DC voltage. Continuity Testers confirm unbroken
               paths in circuits. Correct tool selection ensures accuracy, safety, and compliance.
@@ -577,7 +577,7 @@ const Module6Section3_1 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="..">

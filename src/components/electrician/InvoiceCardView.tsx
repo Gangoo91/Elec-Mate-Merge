@@ -133,7 +133,7 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
     return {
       bg: 'bg-white/10',
       border: 'border-white/20',
-      text: 'text-white/90',
+      text: 'text-white',
       label: 'Draft',
       icon: Edit,
       dot: 'bg-white/50',
@@ -212,7 +212,7 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                         {statusConfig.label}
                       </div>
                       {/* Invoice Number */}
-                      <p className="text-[13px] text-white/80 font-medium">
+                      <p className="text-[13px] text-white font-medium">
                         {invoice.invoice_number}
                       </p>
                     </div>
@@ -239,14 +239,14 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                         {clientData?.name || 'Unknown Client'}
                       </p>
                       {clientData?.email && (
-                        <p className="text-[13px] text-white/80 truncate">{clientData.email}</p>
+                        <p className="text-[13px] text-white truncate">{clientData.email}</p>
                       )}
                     </div>
                   </div>
 
                   {/* Meta Row */}
                   <div className="flex items-center gap-3 flex-wrap">
-                    <div className="flex items-center gap-1.5 text-[12px] text-white/90 bg-white/[0.05] px-2.5 py-1.5 rounded-lg">
+                    <div className="flex items-center gap-1.5 text-[12px] text-white bg-white/[0.05] px-2.5 py-1.5 rounded-lg">
                       <Calendar className="h-3.5 w-3.5" />
                       <span>
                         {invoice.invoice_date
@@ -261,7 +261,7 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                           'flex items-center gap-1.5 text-[12px] px-2.5 py-1.5 rounded-lg',
                           isOverdue
                             ? 'bg-red-500/10 text-red-400 font-medium'
-                            : 'bg-white/[0.05] text-white/90'
+                            : 'bg-white/[0.05] text-white'
                         )}
                       >
                         <Clock className="h-3.5 w-3.5" />
@@ -273,7 +273,7 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                       </div>
                     )}
 
-                    <div className="flex items-center gap-1.5 text-[12px] text-white/90 bg-white/[0.05] px-2.5 py-1.5 rounded-lg">
+                    <div className="flex items-center gap-1.5 text-[12px] text-white bg-white/[0.05] px-2.5 py-1.5 rounded-lg">
                       <FileText className="h-3.5 w-3.5" />
                       <span>{invoice.items.length} items</span>
                     </div>
@@ -439,7 +439,7 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
               <div className="px-5 pb-4 border-b border-white/[0.06]">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-[13px] text-white/80 font-medium">
+                    <p className="text-[13px] text-white font-medium">
                       {actionsSheetInvoice.invoice_number}
                     </p>
                     <p className="text-[15px] font-semibold text-white mt-0.5">
@@ -466,7 +466,7 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                   </div>
                   <div className="flex-1 text-left">
                     <p className="text-[15px] font-semibold text-white">View Invoice</p>
-                    <p className="text-[12px] text-white/80">View invoice details</p>
+                    <p className="text-[12px] text-white">View invoice details</p>
                   </div>
                 </button>
 
@@ -483,7 +483,7 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                   </div>
                   <div className="flex-1 text-left">
                     <p className="text-[15px] font-semibold text-white">Edit Invoice</p>
-                    <p className="text-[12px] text-white/80">Modify invoice in wizard</p>
+                    <p className="text-[12px] text-white">Modify invoice in wizard</p>
                   </div>
                 </button>
 
@@ -500,7 +500,7 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                   </div>
                   <div className="flex-1 text-left">
                     <p className="text-[15px] font-semibold text-white">Download PDF</p>
-                    <p className="text-[12px] text-white/80">Save to device</p>
+                    <p className="text-[12px] text-white">Save to device</p>
                   </div>
                 </button>
 
@@ -548,7 +548,7 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                         <p className="text-[15px] font-semibold text-white">
                           Sync to {ACCOUNTING_PROVIDERS[connectedProvider.provider].name}
                         </p>
-                        <p className="text-[12px] text-white/80">
+                        <p className="text-[12px] text-white">
                           {connectedProvider.tenantName || 'Send to accounting software'}
                         </p>
                       </div>
@@ -570,7 +570,7 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                     </div>
                     <div className="flex-1 text-left">
                       <p className="text-[15px] font-semibold text-white">Record Payment</p>
-                      <p className="text-[12px] text-white/80">Log partial or full payment</p>
+                      <p className="text-[12px] text-white">Log partial or full payment</p>
                     </div>
                   </button>
                 )}
@@ -608,7 +608,7 @@ const InvoiceCardView: React.FC<InvoiceCardViewProps> = ({
                   </div>
                   <div className="flex-1 text-left">
                     <p className="text-[15px] font-semibold text-red-400">Delete Invoice</p>
-                    <p className="text-[12px] text-white/90">This cannot be undone</p>
+                    <p className="text-[12px] text-white">This cannot be undone</p>
                   </div>
                 </button>
               </div>

@@ -35,7 +35,7 @@ const EnhancedTrainingCenterCard = ({ center, onViewDetails }: EnhancedTrainingC
               </div>
               {center.name}
             </CardTitle>
-            <div className="flex items-center gap-2 mt-2 text-white/70">
+            <div className="flex items-center gap-2 mt-2 text-white">
               <MapPin className="h-4 w-4 text-elec-yellow" />
               <span className="text-sm">{center.location}</span>
             </div>
@@ -52,19 +52,19 @@ const EnhancedTrainingCenterCard = ({ center, onViewDetails }: EnhancedTrainingC
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
             <div className="text-lg font-bold text-elec-yellow">{center.establishedYear}</div>
-            <div className="text-xs text-white/70">Established</div>
+            <div className="text-xs text-white">Established</div>
           </div>
           <div className="text-center p-3 rounded-xl bg-green-500/10 border border-green-500/20">
             <div className="text-lg font-bold text-green-400">{center.successRate}%</div>
-            <div className="text-xs text-white/70">Success Rate</div>
+            <div className="text-xs text-white">Success Rate</div>
           </div>
           <div className="text-center p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
             <div className="text-lg font-bold text-blue-400">{center.employmentRate}%</div>
-            <div className="text-xs text-white/70">Employment</div>
+            <div className="text-xs text-white">Employment</div>
           </div>
           <div className="text-center p-3 rounded-xl bg-white/5 border border-white/10">
             <div className="text-lg font-bold text-white">{center.studentCapacity}</div>
-            <div className="text-xs text-white/70">Capacity</div>
+            <div className="text-xs text-white">Capacity</div>
           </div>
         </div>
 
@@ -82,11 +82,11 @@ const EnhancedTrainingCenterCard = ({ center, onViewDetails }: EnhancedTrainingC
                 {center.courses.slice(0, 4).map((course, idx) => (
                   <div key={idx} className="flex items-center gap-2 text-sm">
                     <CheckCircle className="h-3.5 w-3.5 text-green-400 flex-shrink-0" />
-                    <span className="text-white/80">{course}</span>
+                    <span className="text-white">{course}</span>
                   </div>
                 ))}
                 {center.courses.length > 4 && (
-                  <div className="text-sm text-white/60">
+                  <div className="text-sm text-white">
                     +{center.courses.length - 4} additional courses
                   </div>
                 )}
@@ -147,11 +147,11 @@ const EnhancedTrainingCenterCard = ({ center, onViewDetails }: EnhancedTrainingC
                 {center.supportServices.slice(0, 3).map((service, idx) => (
                   <div key={idx} className="flex items-center gap-2 text-xs">
                     <div className="w-1.5 h-1.5 rounded-full bg-green-400 flex-shrink-0" />
-                    <span className="text-white/80">{service}</span>
+                    <span className="text-white">{service}</span>
                   </div>
                 ))}
                 {center.supportServices.length > 3 && (
-                  <div className="text-xs text-white/60">
+                  <div className="text-xs text-white">
                     +{center.supportServices.length - 3} more services
                   </div>
                 )}
@@ -167,17 +167,17 @@ const EnhancedTrainingCenterCard = ({ center, onViewDetails }: EnhancedTrainingC
               <div className="space-y-3">
                 <div className="flex items-start gap-3 p-2 rounded-lg bg-white/5">
                   <MapPin className="h-4 w-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-white/80">{center.address}</span>
+                  <span className="text-white">{center.address}</span>
                 </div>
                 <div className="flex items-center gap-3 p-2 rounded-lg bg-white/5">
                   <Phone className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-white/80">{center.contact}</span>
+                  <span className="text-white">{center.contact}</span>
                 </div>
               </div>
               <div className="space-y-3">
                 <div className="flex items-center gap-3 p-2 rounded-lg bg-white/5">
                   <Globe className="h-4 w-4 text-elec-yellow" />
-                  <span className="text-white/80">{center.website}</span>
+                  <span className="text-white">{center.website}</span>
                 </div>
                 <div className="flex justify-end">
                   <Button

@@ -234,13 +234,13 @@ export default function ConfinedSpacesModule2Section2() {
           </div>
           <div className="inline-block bg-cyan-500/10 border border-cyan-500/20 px-3 py-1 rounded-full text-sm font-semibold mb-4 ml-0">
             <span className="text-cyan-400">MODULE 2</span>
-            <span className="text-white/40 mx-2">&middot;</span>
-            <span className="text-white/60">SECTION 2</span>
+            <span className="text-white mx-2">&middot;</span>
+            <span className="text-white">SECTION 2</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Risk Assessment for Confined Spaces
           </h1>
-          <p className="text-white/70 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding why every confined space needs its own specific risk assessment, how to
             apply the three-tier hierarchy, and how to keep the assessment live throughout the entry
           </p>
@@ -250,7 +250,7 @@ export default function ConfinedSpacesModule2Section2() {
         <div className="grid sm:grid-cols-2 gap-4 mb-10">
           <div className="rounded-lg p-4 bg-cyan-500/5 border-l-2 border-cyan-500/50">
             <p className="font-semibold text-cyan-400 mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -283,7 +283,7 @@ export default function ConfinedSpacesModule2Section2() {
           </div>
           <div className="rounded-lg p-4 bg-cyan-500/5 border-l-2 border-cyan-500/50">
             <p className="font-semibold text-cyan-400/90 mb-2">On Site</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -321,7 +321,7 @@ export default function ConfinedSpacesModule2Section2() {
         {/* ─── Learning Outcomes ─── */}
         <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4">By the end of this section, you will be able to:</p>
+          <p className="text-white mb-4">By the end of this section, you will be able to:</p>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
               'Explain why a specific risk assessment is required for every confined space entry and why generic assessments are insufficient',
@@ -335,7 +335,7 @@ export default function ConfinedSpacesModule2Section2() {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-cyan-400/70 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </div>
             ))}
           </div>
@@ -352,7 +352,7 @@ export default function ConfinedSpacesModule2Section2() {
               <span className="text-cyan-400/80 text-sm font-normal">01</span>
               Why a Specific Risk Assessment Is Required
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Regulation 3 of the{' '}
                 <strong className="text-white">Confined Spaces Regulations 1997</strong> requires
@@ -367,7 +367,7 @@ export default function ConfinedSpacesModule2Section2() {
                 <h3 className="font-semibold mb-2 text-cyan-400">
                   Key Principle: No Two Confined Spaces Are the Same
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   A manhole on a busy road has different hazards to a storage tank in a chemical
                   plant or a ceiling void in an office building. Even two seemingly identical
                   manholes on the same street may have different atmospheric conditions, water
@@ -384,7 +384,7 @@ export default function ConfinedSpacesModule2Section2() {
                 <h3 className="text-cyan-400 font-medium mb-2">
                   What Makes a Confined Space Assessment &ldquo;Specific&rdquo;
                 </h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-cyan-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -426,7 +426,7 @@ export default function ConfinedSpacesModule2Section2() {
                     Common Mistake: Reusing Last Year&rsquo;s Assessment
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A risk assessment that was valid six months ago may no longer be adequate.
                   Conditions change &mdash; pipes corrode, processes are altered, water tables rise,
                   and adjacent works introduce new hazards. Every entry requires the assessment to
@@ -447,7 +447,7 @@ export default function ConfinedSpacesModule2Section2() {
               <span className="text-teal-400/80 text-sm font-normal">02</span>
               Identifying Confined Spaces on Site
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Before any confined space work can be planned, you must first{' '}
                 <strong className="text-white">identify</strong> every confined space on site. This
@@ -464,7 +464,7 @@ export default function ConfinedSpacesModule2Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Walk the Entire Site</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         A competent person physically inspects all areas of the site, including
                         basements, roofs, plant rooms, service risers, external compounds, and
                         underground chambers.
@@ -477,7 +477,7 @@ export default function ConfinedSpacesModule2Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Review Drawings and Records</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Check building plans, drainage layouts, service drawings, and previous
                         survey records. Some confined spaces (such as buried tanks or disused ducts)
                         may not be visible during a walkover.
@@ -490,7 +490,7 @@ export default function ConfinedSpacesModule2Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Consult Site Personnel</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Talk to maintenance staff, facility managers, and long-serving workers who
                         may know about spaces that are not shown on drawings &mdash; such as old
                         inspection pits, sealed chambers, or modified ducts.
@@ -503,7 +503,7 @@ export default function ConfinedSpacesModule2Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Apply the Legal Definition</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         For each space identified, determine whether it meets the legal definition
                         of a confined space: substantially (but not always entirely) enclosed, not
                         designed or intended for continuous occupancy, and with a foreseeable risk
@@ -516,13 +516,13 @@ export default function ConfinedSpacesModule2Section2() {
 
               <div className="bg-cyan-500/10 border border-cyan-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-cyan-400">The Confined Space Register</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Every identified confined space should be recorded in a{' '}
                   <strong className="text-white">confined space register</strong> &mdash; a
                   documented inventory maintained by the site controller or employer. For each
                   space, the register typically records:
                 </p>
-                <ul className="text-white/70 text-sm space-y-1.5">
+                <ul className="text-white text-sm space-y-1.5">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-3.5 w-3.5 text-cyan-400/60 mt-0.5 flex-shrink-0" />
                     <span>Location (with plan reference or GPS coordinates)</span>
@@ -568,7 +568,7 @@ export default function ConfinedSpacesModule2Section2() {
               <span className="text-cyan-400/80 text-sm font-normal">03</span>
               The Three-Tier Hierarchy
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The Confined Spaces Regulations 1997 establish a clear{' '}
                 <strong className="text-white">hierarchy of control</strong> that must be followed
@@ -591,7 +591,7 @@ export default function ConfinedSpacesModule2Section2() {
                       </div>
                       <p className="text-green-300 font-bold text-sm">AVOID ENTRY ENTIRELY</p>
                     </div>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Can the work be done without anyone entering? Use CCTV, remote monitoring,
                       long-reach tools, or redesign the task.
                     </p>
@@ -601,7 +601,7 @@ export default function ConfinedSpacesModule2Section2() {
                 {/* Arrow */}
                 <div className="flex flex-col items-center mb-3">
                   <div className="w-0.5 h-4 bg-white/20"></div>
-                  <p className="text-white/40 text-[10px] my-1">
+                  <p className="text-white text-[10px] my-1">
                     Only if avoidance is not reasonably practicable
                   </p>
                   <div className="w-0.5 h-4 bg-white/20"></div>
@@ -616,7 +616,7 @@ export default function ConfinedSpacesModule2Section2() {
                       </div>
                       <p className="text-amber-300 font-bold text-sm">SAFE SYSTEM OF WORK</p>
                     </div>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       If entry is unavoidable, implement a written safe system of work &mdash;
                       including permits, supervision, atmospheric monitoring, ventilation, PPE, and
                       communication.
@@ -627,7 +627,7 @@ export default function ConfinedSpacesModule2Section2() {
                 {/* Arrow */}
                 <div className="flex flex-col items-center mb-3">
                   <div className="w-0.5 h-4 bg-white/20"></div>
-                  <p className="text-white/40 text-[10px] my-1">
+                  <p className="text-white text-[10px] my-1">
                     MUST be in place before entry — not an afterthought
                   </p>
                   <div className="w-0.5 h-4 bg-white/20"></div>
@@ -642,7 +642,7 @@ export default function ConfinedSpacesModule2Section2() {
                       </div>
                       <p className="text-red-300 font-bold text-sm">EMERGENCY ARRANGEMENTS</p>
                     </div>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Emergency rescue procedures, trained rescue team, rescue equipment,
                       communication with emergency services &mdash; all in place and tested BEFORE
                       entry begins.
@@ -653,11 +653,11 @@ export default function ConfinedSpacesModule2Section2() {
 
               <div className="bg-white/5 border border-cyan-400/30 p-4 rounded-lg">
                 <h3 className="text-cyan-300 font-medium mb-3">Tier 1: Alternatives to Entry</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Before accepting that entry is necessary, the employer must genuinely explore
                   alternatives. Common alternatives include:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-green-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -702,7 +702,7 @@ export default function ConfinedSpacesModule2Section2() {
                 <h3 className="font-semibold mb-2 text-cyan-400">
                   Key Point: Tiers 2 and 3 Work Together
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   If entry cannot be avoided, tier 2 (safe system of work) and tier 3 (emergency
                   arrangements) are not alternatives &mdash; they{' '}
                   <strong className="text-white">both</strong> must be in place. You cannot have a
@@ -724,7 +724,7 @@ export default function ConfinedSpacesModule2Section2() {
               <span className="text-purple-400/80 text-sm font-normal">04</span>
               The Risk Assessment Process
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The confined space risk assessment follows a structured, seven-step process. Each
                 step must be completed thoroughly before moving to the next.
@@ -748,7 +748,7 @@ export default function ConfinedSpacesModule2Section2() {
                           <p className="text-purple-300 font-semibold text-sm">
                             Identify the Confined Space
                           </p>
-                          <p className="text-white/60 text-xs">
+                          <p className="text-white text-xs">
                             Confirm it meets the legal definition. Record it in the register if not
                             already listed.
                           </p>
@@ -771,7 +771,7 @@ export default function ConfinedSpacesModule2Section2() {
                           <p className="text-purple-300 font-semibold text-sm">
                             Identify the Hazards
                           </p>
-                          <p className="text-white/60 text-xs">
+                          <p className="text-white text-xs">
                             Atmospheric, physical, environmental, biological, mechanical, electrical
                             &mdash; consider all six categories.
                           </p>
@@ -794,7 +794,7 @@ export default function ConfinedSpacesModule2Section2() {
                           <p className="text-purple-300 font-semibold text-sm">
                             Assess Who Might Be Harmed
                           </p>
-                          <p className="text-white/60 text-xs">
+                          <p className="text-white text-xs">
                             Entrants, top person, rescue team, nearby workers, members of the
                             public, emergency services.
                           </p>
@@ -817,7 +817,7 @@ export default function ConfinedSpacesModule2Section2() {
                           <p className="text-purple-300 font-semibold text-sm">
                             Evaluate the Risks
                           </p>
-                          <p className="text-white/60 text-xs">
+                          <p className="text-white text-xs">
                             Consider likelihood and severity. Can the risk be eliminated? If not,
                             how can it be reduced to as low as reasonably practicable (ALARP)?
                           </p>
@@ -840,7 +840,7 @@ export default function ConfinedSpacesModule2Section2() {
                           <p className="text-purple-300 font-semibold text-sm">
                             Decide on Precautions
                           </p>
-                          <p className="text-white/60 text-xs">
+                          <p className="text-white text-xs">
                             Specify the control measures: ventilation, gas monitoring, PPE, permits,
                             isolation, rescue equipment, communication systems.
                           </p>
@@ -863,7 +863,7 @@ export default function ConfinedSpacesModule2Section2() {
                           <p className="text-purple-300 font-semibold text-sm">
                             Record the Findings
                           </p>
-                          <p className="text-white/60 text-xs">
+                          <p className="text-white text-xs">
                             Write it down. If you employ five or more people, a written record is a
                             legal requirement &mdash; but best practice is to record every
                             assessment regardless of organisation size.
@@ -885,7 +885,7 @@ export default function ConfinedSpacesModule2Section2() {
                         </div>
                         <div>
                           <p className="text-purple-300 font-semibold text-sm">Review and Update</p>
-                          <p className="text-white/60 text-xs">
+                          <p className="text-white text-xs">
                             Review before each entry, after any incident or near miss, when
                             conditions change, and at regular intervals. Update the assessment and
                             communicate changes to all involved.
@@ -917,7 +917,7 @@ export default function ConfinedSpacesModule2Section2() {
               <span className="text-amber-400/80 text-sm font-normal">05</span>
               Hazard Categories
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Confined space hazards are grouped into{' '}
                 <strong className="text-white">six categories</strong>. The risk assessment must
@@ -930,10 +930,10 @@ export default function ConfinedSpacesModule2Section2() {
                   <Activity className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">1. Atmospheric Hazards</h3>
                 </div>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The most common cause of confined space fatalities. Atmospheric hazards include:
                 </p>
-                <ul className="text-white/70 text-sm space-y-1.5">
+                <ul className="text-white text-sm space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -973,7 +973,7 @@ export default function ConfinedSpacesModule2Section2() {
               {/* Physical */}
               <div className="bg-white/5 border border-amber-400/30 p-4 rounded-lg">
                 <h3 className="text-amber-300 font-medium mb-2">2. Physical Hazards</h3>
-                <ul className="text-white/70 text-sm space-y-1.5">
+                <ul className="text-white text-sm space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="w-2 h-2 rounded-full bg-amber-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1008,7 +1008,7 @@ export default function ConfinedSpacesModule2Section2() {
               {/* Environmental */}
               <div className="bg-white/5 border border-teal-400/30 p-4 rounded-lg">
                 <h3 className="text-teal-300 font-medium mb-2">3. Environmental Hazards</h3>
-                <ul className="text-white/70 text-sm space-y-1.5">
+                <ul className="text-white text-sm space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="w-2 h-2 rounded-full bg-teal-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1039,7 +1039,7 @@ export default function ConfinedSpacesModule2Section2() {
               <div className="grid sm:grid-cols-3 gap-3">
                 <div className="bg-white/5 border border-green-400/30 p-4 rounded-lg">
                   <h3 className="text-green-300 font-medium mb-2 text-sm">4. Biological</h3>
-                  <ul className="text-white/70 text-xs space-y-1">
+                  <ul className="text-white text-xs space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="w-1.5 h-1.5 rounded-full bg-green-400 mt-1.5 flex-shrink-0"></div>
                       <span>Leptospirosis (Weil&rsquo;s disease) from rat urine in sewers</span>
@@ -1056,7 +1056,7 @@ export default function ConfinedSpacesModule2Section2() {
                 </div>
                 <div className="bg-white/5 border border-orange-400/30 p-4 rounded-lg">
                   <h3 className="text-orange-300 font-medium mb-2 text-sm">5. Mechanical</h3>
-                  <ul className="text-white/70 text-xs space-y-1">
+                  <ul className="text-white text-xs space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-1.5 flex-shrink-0"></div>
                       <span>Unguarded machinery that could start unexpectedly</span>
@@ -1073,7 +1073,7 @@ export default function ConfinedSpacesModule2Section2() {
                 </div>
                 <div className="bg-white/5 border border-yellow-400/30 p-4 rounded-lg">
                   <h3 className="text-yellow-300 font-medium mb-2 text-sm">6. Electrical</h3>
-                  <ul className="text-white/70 text-xs space-y-1">
+                  <ul className="text-white text-xs space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="w-1.5 h-1.5 rounded-full bg-yellow-400 mt-1.5 flex-shrink-0"></div>
                       <span>Live conductors, cables, or equipment within the space</span>
@@ -1094,7 +1094,7 @@ export default function ConfinedSpacesModule2Section2() {
                 <h3 className="font-semibold mb-2 text-cyan-400">
                   Remember: Multiple Hazards Are the Norm
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Most confined spaces present hazards from{' '}
                   <strong className="text-white">more than one category at the same time</strong>.
                   For example, a cable tunnel may have atmospheric hazards (oxygen depletion),
@@ -1120,7 +1120,7 @@ export default function ConfinedSpacesModule2Section2() {
               <span className="text-red-400/80 text-sm font-normal">06</span>
               Dynamic Risk Assessment
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The pre-entry (static) risk assessment is essential, but it represents conditions at
                 a <strong className="text-white">single point in time</strong>. Inside a confined
@@ -1128,7 +1128,7 @@ export default function ConfinedSpacesModule2Section2() {
                 <strong className="text-white">rapidly and without warning</strong>:
               </p>
 
-              <ul className="text-white/70 space-y-2 text-sm">
+              <ul className="text-white space-y-2 text-sm">
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 rounded-full bg-red-400 mt-2 flex-shrink-0"></div>
                   <span>
@@ -1166,7 +1166,7 @@ export default function ConfinedSpacesModule2Section2() {
                     What Dynamic Risk Assessment Means in Practice
                   </h3>
                 </div>
-                <div className="space-y-2 text-white/70 text-sm">
+                <div className="space-y-2 text-white text-sm">
                   <p>
                     <strong className="text-white">Continuous gas monitoring:</strong> personal
                     multi-gas detectors worn by every entrant, with audible and vibrating alarms set
@@ -1196,7 +1196,7 @@ export default function ConfinedSpacesModule2Section2() {
                 <h3 className="font-semibold mb-2 text-cyan-400">
                   Static + Dynamic = Complete Protection
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The static assessment <strong className="text-white">plans</strong> the work. The
                   dynamic assessment <strong className="text-white">protects</strong> the workers
                   during the work. Both are essential. If the dynamic assessment reveals a new
@@ -1217,7 +1217,7 @@ export default function ConfinedSpacesModule2Section2() {
               <span className="text-teal-400/80 text-sm font-normal">07</span>
               Task-Specific and Individual Factors
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 Beyond the hazards of the space itself, the risk assessment must also consider the{' '}
                 <strong className="text-white">specific task</strong> to be carried out and the{' '}
@@ -1326,7 +1326,7 @@ export default function ConfinedSpacesModule2Section2() {
                   <AlertTriangle className="h-5 w-5 text-cyan-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-cyan-300">Never Force Entry</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   No worker should ever be forced, pressured, or shamed into entering a confined
                   space if they are unwilling, unwell, or believe conditions are unsafe. A worker
                   who refuses entry on safety grounds is exercising their legal right under{' '}
@@ -1352,7 +1352,7 @@ export default function ConfinedSpacesModule2Section2() {
               <span className="text-cyan-400/80 text-sm font-normal">08</span>
               Review Triggers
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 A confined space risk assessment is{' '}
                 <strong className="text-white">never &ldquo;done&rdquo;</strong>. It must be
@@ -1371,7 +1371,7 @@ export default function ConfinedSpacesModule2Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Before Each New Entry</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Even if the same space was entered yesterday, conditions may have changed
                         overnight. The assessment must be reviewed and confirmed as still valid
                         before each entry.
@@ -1384,7 +1384,7 @@ export default function ConfinedSpacesModule2Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Change in Conditions</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Weather changes (heavy rain, temperature swings), process changes (upstream
                         work, valve operations), or physical changes (structural movement, water
                         ingress, new equipment installed).
@@ -1397,7 +1397,7 @@ export default function ConfinedSpacesModule2Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">After a Near Miss or Incident</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Any near miss, dangerous occurrence, or actual incident must trigger an
                         immediate review. The investigation findings must be fed back into the risk
                         assessment to prevent recurrence.
@@ -1410,7 +1410,7 @@ export default function ConfinedSpacesModule2Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">New Information</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Discovery of previously unknown hazards (e.g. a contaminated soil report),
                         updated survey data, or new guidance from the HSE or industry bodies.
                       </p>
@@ -1422,7 +1422,7 @@ export default function ConfinedSpacesModule2Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Change of Task or Personnel</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         If the planned work changes (e.g. additional hot work is needed) or
                         different workers are assigned (with different competence levels or
                         individual factors), the assessment must be revisited.
@@ -1435,7 +1435,7 @@ export default function ConfinedSpacesModule2Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Scheduled Review Period</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Even without specific triggers, risk assessments should be reviewed at
                         agreed intervals (e.g. annually) to ensure they reflect current knowledge,
                         regulations, and best practice.
@@ -1447,7 +1447,7 @@ export default function ConfinedSpacesModule2Section2() {
 
               <div className="bg-cyan-500/10 border border-cyan-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-cyan-400">The Golden Rule</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   <strong className="text-white">
                     If in doubt, treat the assessment as out of date.
                   </strong>{' '}
@@ -1463,7 +1463,7 @@ export default function ConfinedSpacesModule2Section2() {
                   <AlertTriangle className="h-5 w-5 text-cyan-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-cyan-300">Documentation Is Non-Negotiable</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Every review must be <strong className="text-white">documented</strong> &mdash;
                   even if the review concludes that the existing assessment is still valid. Record
                   the date of review, who carried it out, what was checked, and the conclusion. This
@@ -1485,7 +1485,7 @@ export default function ConfinedSpacesModule2Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1501,7 +1501,7 @@ export default function ConfinedSpacesModule2Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-2-section-1">

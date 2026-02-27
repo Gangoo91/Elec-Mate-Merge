@@ -121,7 +121,7 @@ export const EmptyStateGuide: React.FC<EmptyStateGuideProps> = ({ type, onCreate
               ? 'Create Your First Invoice'
               : 'Import Your Certificates'}
           </h2>
-          <p className="text-sm sm:text-base text-white/60 max-w-md mx-auto">
+          <p className="text-sm sm:text-base text-white max-w-md mx-auto">
             {type === 'quote'
               ? 'Professional quotes in 4 easy steps'
               : type === 'invoice'
@@ -133,7 +133,7 @@ export const EmptyStateGuide: React.FC<EmptyStateGuideProps> = ({ type, onCreate
         {/* Total time badge */}
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10">
           <Clock className="h-4 w-4 text-elec-yellow" />
-          <span className="text-sm font-medium text-white/80">~4 minutes total</span>
+          <span className="text-sm font-medium text-white">~4 minutes total</span>
         </div>
       </div>
 
@@ -165,7 +165,7 @@ export const EmptyStateGuide: React.FC<EmptyStateGuideProps> = ({ type, onCreate
                 <h3 className="font-semibold text-white text-sm sm:text-base leading-tight">
                   {step.title}
                 </h3>
-                <p className="text-xs sm:text-sm text-white/50 leading-relaxed line-clamp-2">
+                <p className="text-xs sm:text-sm text-white leading-relaxed line-clamp-2">
                   {step.description}
                 </p>
               </div>
@@ -183,7 +183,7 @@ export const EmptyStateGuide: React.FC<EmptyStateGuideProps> = ({ type, onCreate
             </div>
             <div className="flex-1 min-w-0">
               <p className="font-semibold text-white text-sm sm:text-base">Quick Tip</p>
-              <p className="text-xs sm:text-sm text-white/60 mt-0.5">
+              <p className="text-xs sm:text-sm text-white mt-0.5">
                 {type === 'quote'
                   ? 'All fields are auto-saved as you type. Return anytime to complete your quote.'
                   : type === 'invoice'

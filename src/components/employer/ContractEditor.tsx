@@ -78,10 +78,10 @@ export function ContractEditor({ open, onOpenChange, contract, onSaved }: Contra
           'prose prose-invert prose-sm max-w-none',
           'min-h-[300px] p-4 focus:outline-none',
           'prose-headings:text-white prose-headings:font-semibold',
-          'prose-p:text-white/80 prose-p:leading-relaxed',
-          'prose-li:text-white/80',
+          'prose-p:text-white prose-p:leading-relaxed',
+          'prose-li:text-white',
           'prose-strong:text-white prose-strong:font-semibold',
-          'prose-em:text-white/90',
+          'prose-em:text-white',
           'prose-table:border-collapse',
           '[&_table]:w-full [&_td]:py-1 [&_td]:pr-4 [&_th]:py-1 [&_th]:pr-4'
         ),
@@ -176,7 +176,7 @@ export function ContractEditor({ open, onOpenChange, contract, onSaved }: Contra
         'h-9 w-9 p-0 rounded-lg touch-manipulation',
         isActive
           ? 'bg-elec-yellow/20 text-elec-yellow'
-          : 'text-white/60 hover:text-white hover:bg-white/10'
+          : 'text-white hover:text-white hover:bg-white/10'
       )}
     >
       {children}

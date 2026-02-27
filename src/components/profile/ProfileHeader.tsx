@@ -64,7 +64,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
     return (
       <div className="bg-white/[0.03] border border-white/[0.06] rounded-2xl p-6">
         <div className="flex items-center justify-center py-8">
-          <Loader2 className="h-6 w-6 animate-spin text-white/50" />
+          <Loader2 className="h-6 w-6 animate-spin text-white" />
         </div>
       </div>
     );
@@ -94,7 +94,7 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
           <h2 className="text-xl sm:text-2xl font-bold text-white truncate">
             {profile?.full_name || 'Your Name'}
           </h2>
-          <p className="text-sm sm:text-base text-white/70 truncate mt-0.5">
+          <p className="text-sm sm:text-base text-white truncate mt-0.5">
             {companyProfile?.company_name || 'Add your company name'}
           </p>
 
@@ -123,9 +123,9 @@ const ProfileHeader: React.FC<ProfileHeaderProps> = ({
               whileTap={{ scale: 0.95 }}
               className="mt-3 inline-flex items-center gap-2 px-3 py-2 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 active:bg-white/15 transition-colors touch-manipulation"
             >
-              <Shield className="h-4 w-4 text-white/60" />
-              <span className="text-sm font-medium text-white/80">Get Elec-ID Verified</span>
-              <ChevronRight className="h-4 w-4 text-white/40" />
+              <Shield className="h-4 w-4 text-white" />
+              <span className="text-sm font-medium text-white">Get Elec-ID Verified</span>
+              <ChevronRight className="h-4 w-4 text-white" />
             </motion.button>
           )}
         </div>

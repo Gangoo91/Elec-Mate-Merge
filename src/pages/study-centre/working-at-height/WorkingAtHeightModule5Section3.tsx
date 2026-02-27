@@ -221,7 +221,7 @@ export default function WorkingAtHeightModule5Section3() {
           <Button
             variant="ghost"
             size="icon"
-            className="min-h-[44px] min-w-[44px] text-white/70 hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] min-w-[44px] text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-5">
@@ -229,7 +229,7 @@ export default function WorkingAtHeightModule5Section3() {
             </Link>
           </Button>
           <div className="flex-1 min-w-0">
-            <p className="text-xs text-white/40">Module 5 {'\u2022'} Section 3</p>
+            <p className="text-xs text-white">Module 5 {'\u2022'} Section 3</p>
             <h1 className="text-sm font-semibold text-white truncate">
               Roles, Responsibilities & Competence
             </h1>
@@ -254,7 +254,7 @@ export default function WorkingAtHeightModule5Section3() {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Roles, Responsibilities & Competence
           </h2>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding who is responsible for what — employer, employee, contractor, and client
             duties, the competent person definition, and training requirements for safe work at
             height
@@ -267,7 +267,7 @@ export default function WorkingAtHeightModule5Section3() {
             <Zap className="h-4 w-4" />
             In 30 Seconds
           </h3>
-          <p className="text-white/80 text-base leading-relaxed">
+          <p className="text-white text-base leading-relaxed">
             Everyone on site has responsibilities for safety. Employers must provide safe systems,
             equipment, and training. Employees must cooperate, use equipment properly, and report
             defects. Contractors must manage their own work safely. Clients under CDM 2015 must
@@ -284,7 +284,7 @@ export default function WorkingAtHeightModule5Section3() {
             <Shield className="h-4 w-4" />
             Legal Framework
           </h3>
-          <p className="text-white/80 text-base leading-relaxed">
+          <p className="text-white text-base leading-relaxed">
             Responsibilities for work at height flow from several key pieces of legislation: the
             Health and Safety at Work etc. Act 1974 (general duties), the Management of Health and
             Safety at Work Regulations 1999 (risk assessment and management), the Work at Height
@@ -312,7 +312,7 @@ export default function WorkingAtHeightModule5Section3() {
             ].map((outcome, i) => (
               <li key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm leading-relaxed">{outcome}</span>
+                <span className="text-white text-sm leading-relaxed">{outcome}</span>
               </li>
             ))}
           </ul>
@@ -329,7 +329,7 @@ export default function WorkingAtHeightModule5Section3() {
             <h3 className="text-xl font-semibold text-white">Employer Duties</h3>
           </div>
           <div className="border-l-2 border-amber-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Employers carry the primary responsibility for ensuring the health and safety of their
               employees. Under the Health and Safety at Work etc. Act 1974, Section 2, they must
               ensure, so far as is reasonably practicable, the health, safety, and welfare of all
@@ -340,7 +340,7 @@ export default function WorkingAtHeightModule5Section3() {
                 <Briefcase className="h-4 w-4 text-amber-400" />
                 Specific Employer Duties for Work at Height
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
@@ -397,7 +397,7 @@ export default function WorkingAtHeightModule5Section3() {
                 <AlertTriangle className="h-4 w-4" />
                 Enforcement Consequences
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Employers who fail in their duties can face HSE enforcement action including
                 improvement notices, prohibition notices (which can stop work immediately),
                 prosecution, and unlimited fines. In cases of gross negligence leading to death,
@@ -419,12 +419,12 @@ export default function WorkingAtHeightModule5Section3() {
             <h3 className="text-xl font-semibold text-white">Employee Duties</h3>
           </div>
           <div className="border-l-2 border-blue-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Employees are not passive recipients of safety — they have active legal duties. Under
               Sections 7 and 8 of the HASAWA 1974, every employee at work must:
             </p>
             <div className="bg-blue-500/10 border border-blue-500/30 rounded-xl p-5">
-              <ul className="space-y-3 text-sm text-white/70">
+              <ul className="space-y-3 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
@@ -468,7 +468,7 @@ export default function WorkingAtHeightModule5Section3() {
             </div>
             <div className="bg-white/5 border border-white/10 rounded-lg p-4">
               <h4 className="font-semibold text-white text-sm mb-2">Employee Liability</h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Employees can be personally prosecuted for breaches of Sections 7 and 8. Fines are
                 typically lower than those for employers, but the principle is clear: safety is
                 everyone's responsibility. Deliberately removing a guardrail, refusing to wear a
@@ -497,7 +497,7 @@ export default function WorkingAtHeightModule5Section3() {
             <h3 className="text-xl font-semibold text-white">Contractor Duties</h3>
           </div>
           <div className="border-l-2 border-orange-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Under CDM 2015, contractors are responsible for planning and managing their own work
               safely. On multi-contractor sites, they must also cooperate with the principal
               contractor and other contractors to ensure safety across the whole project.
@@ -506,7 +506,7 @@ export default function WorkingAtHeightModule5Section3() {
               <h4 className="font-semibold text-white text-sm mb-3">
                 Key Contractor Duties Under CDM 2015
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
@@ -553,7 +553,7 @@ export default function WorkingAtHeightModule5Section3() {
             <h3 className="text-xl font-semibold text-white">Client Duties Under CDM 2015</h3>
           </div>
           <div className="border-l-2 border-purple-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The <strong className="text-amber-400">client</strong> is the person or organisation
               for whom the construction work is being carried out. Under CDM 2015, clients have
               significant duties — they cannot simply hire a contractor and walk away.
@@ -563,7 +563,7 @@ export default function WorkingAtHeightModule5Section3() {
                 <Building2 className="h-4 w-4 text-purple-400" />
                 Client Duties
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
@@ -605,7 +605,7 @@ export default function WorkingAtHeightModule5Section3() {
             </div>
             <div className="bg-white/5 border border-white/10 rounded-lg p-4">
               <h4 className="font-semibold text-white text-sm mb-2">Domestic Clients</h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 A domestic client is someone who has construction work done on their own home (or a
                 family member's home) that is not related to a business. CDM 2015 duties for
                 domestic clients are normally transferred to the contractor (single contractor) or
@@ -627,7 +627,7 @@ export default function WorkingAtHeightModule5Section3() {
             <h3 className="text-xl font-semibold text-white">Self-Employed Duties</h3>
           </div>
           <div className="border-l-2 border-teal-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Self-employed persons have essentially the same responsibilities as employers — for
               their own safety and the safety of anyone affected by their work. This is a common
               misconception: many self-employed tradespeople believe health and safety regulations
@@ -635,7 +635,7 @@ export default function WorkingAtHeightModule5Section3() {
             </p>
             <div className="bg-teal-500/10 border border-teal-500/30 rounded-lg p-4">
               <h4 className="font-semibold text-white text-sm mb-2">Key Self-Employed Duties</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>Conduct work so as not to put themselves or others at risk</span>
@@ -680,7 +680,7 @@ export default function WorkingAtHeightModule5Section3() {
             <h3 className="text-xl font-semibold text-white">The Competent Person</h3>
           </div>
           <div className="border-l-2 border-green-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The term "competent person" appears throughout health and safety legislation. It is
               not defined by a single qualification or card — instead, it is a combination of
               attributes specific to the task being performed.
@@ -690,34 +690,34 @@ export default function WorkingAtHeightModule5Section3() {
                 <UserCheck className="h-4 w-4 text-green-400" />
                 Definition of Competence
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed mb-3">
+              <p className="text-white text-sm leading-relaxed mb-3">
                 A competent person has a combination of:
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-black/20 rounded-lg p-3">
                   <h5 className="text-green-400 font-semibold text-xs mb-1">Training</h5>
-                  <p className="text-white/60 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     Formal training appropriate to the task — certified courses from recognised
                     bodies (PASMA, IPAF, CISRS)
                   </p>
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <h5 className="text-green-400 font-semibold text-xs mb-1">Experience</h5>
-                  <p className="text-white/60 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     Practical, hands-on experience of performing the task under supervision before
                     working independently
                   </p>
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <h5 className="text-green-400 font-semibold text-xs mb-1">Knowledge</h5>
-                  <p className="text-white/60 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     Understanding of the relevant regulations, standards, manufacturer instructions,
                     and hazards
                   </p>
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <h5 className="text-green-400 font-semibold text-xs mb-1">Personal Qualities</h5>
-                  <p className="text-white/60 text-xs leading-relaxed">
+                  <p className="text-white text-xs leading-relaxed">
                     The ability to recognise their own limitations, stop work when unsure, and seek
                     guidance when needed
                   </p>
@@ -728,7 +728,7 @@ export default function WorkingAtHeightModule5Section3() {
               <h4 className="font-semibold text-amber-400 text-sm mb-2">
                 Competence Is Task-Specific
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 A person may be competent to use a ladder but not competent to erect scaffolding. A
                 person trained in PASMA towers may not be competent to operate a MEWP. Competence
                 must be assessed for each specific task, and the level of competence required
@@ -749,7 +749,7 @@ export default function WorkingAtHeightModule5Section3() {
             <h3 className="text-xl font-semibold text-white">Training Requirements</h3>
           </div>
           <div className="border-l-2 border-indigo-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The following are the key industry-recognised training qualifications for work at
               height. While holding a card does not automatically make someone competent, these
               qualifications are widely accepted as evidence of appropriate training.
@@ -761,7 +761,7 @@ export default function WorkingAtHeightModule5Section3() {
                   <GraduationCap className="h-4 w-4 text-indigo-400" />
                   PASMA — Tower Scaffolds
                 </h4>
-                <ul className="space-y-1.5 text-sm text-white/70">
+                <ul className="space-y-1.5 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>Prefabricated Access Suppliers' and Manufacturers' Association</span>
@@ -787,7 +787,7 @@ export default function WorkingAtHeightModule5Section3() {
                   <GraduationCap className="h-4 w-4 text-indigo-400" />
                   IPAF — MEWPs
                 </h4>
-                <ul className="space-y-1.5 text-sm text-white/70">
+                <ul className="space-y-1.5 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>International Powered Access Federation</span>
@@ -808,7 +808,7 @@ export default function WorkingAtHeightModule5Section3() {
                   <GraduationCap className="h-4 w-4 text-indigo-400" />
                   Harness Training
                 </h4>
-                <ul className="space-y-1.5 text-sm text-white/70">
+                <ul className="space-y-1.5 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>Provided by harness manufacturers or approved training providers</span>
@@ -829,7 +829,7 @@ export default function WorkingAtHeightModule5Section3() {
                   <GraduationCap className="h-4 w-4 text-indigo-400" />
                   CISRS — Scaffold Inspection
                 </h4>
-                <ul className="space-y-1.5 text-sm text-white/70">
+                <ul className="space-y-1.5 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>Construction Industry Scaffolders Record Scheme</span>
@@ -850,7 +850,7 @@ export default function WorkingAtHeightModule5Section3() {
                   <GraduationCap className="h-4 w-4 text-indigo-400" />
                   First Aid
                 </h4>
-                <ul className="space-y-1.5 text-sm text-white/70">
+                <ul className="space-y-1.5 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>First Aid at Work (FAW) — 3-day course, valid for 3 years</span>
@@ -877,7 +877,7 @@ export default function WorkingAtHeightModule5Section3() {
                   <span className="text-amber-400 font-bold min-w-[100px] text-xs flex-shrink-0">
                     PASMA
                   </span>
-                  <span className="text-white/70 text-xs">
+                  <span className="text-white text-xs">
                     Every 5 years (some clients require 3 years)
                   </span>
                 </div>
@@ -885,13 +885,13 @@ export default function WorkingAtHeightModule5Section3() {
                   <span className="text-amber-400 font-bold min-w-[100px] text-xs flex-shrink-0">
                     IPAF
                   </span>
-                  <span className="text-white/70 text-xs">Every 5 years (PAL Card expiry)</span>
+                  <span className="text-white text-xs">Every 5 years (PAL Card expiry)</span>
                 </div>
                 <div className="flex items-center gap-3 bg-black/20 rounded-lg p-3">
                   <span className="text-amber-400 font-bold min-w-[100px] text-xs flex-shrink-0">
                     Harness
                   </span>
-                  <span className="text-white/70 text-xs">
+                  <span className="text-white text-xs">
                     Every 3 years, or when equipment changes
                   </span>
                 </div>
@@ -899,13 +899,13 @@ export default function WorkingAtHeightModule5Section3() {
                   <span className="text-amber-400 font-bold min-w-[100px] text-xs flex-shrink-0">
                     First Aid
                   </span>
-                  <span className="text-white/70 text-xs">Every 3 years (FAW and EFAW)</span>
+                  <span className="text-white text-xs">Every 3 years (FAW and EFAW)</span>
                 </div>
                 <div className="flex items-center gap-3 bg-black/20 rounded-lg p-3">
                   <span className="text-amber-400 font-bold min-w-[100px] text-xs flex-shrink-0">
                     CISRS
                   </span>
-                  <span className="text-white/70 text-xs">
+                  <span className="text-white text-xs">
                     Card renewal varies by grade; typically 3-5 years
                   </span>
                 </div>
@@ -933,7 +933,7 @@ export default function WorkingAtHeightModule5Section3() {
             <h3 className="text-xl font-semibold text-white">Toolbox Talks</h3>
           </div>
           <div className="border-l-2 border-cyan-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Toolbox talks are short, focused safety briefings — typically 10-15 minutes —
               delivered to workers on a specific topic relevant to the work being carried out. They
               are one of the most effective and practical ways to communicate safety information on
@@ -944,7 +944,7 @@ export default function WorkingAtHeightModule5Section3() {
                 <MessageSquare className="h-4 w-4 text-cyan-400" />
                 Effective Toolbox Talks
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
@@ -994,7 +994,7 @@ export default function WorkingAtHeightModule5Section3() {
             RACI Responsibility Matrix
           </h3>
           <div className="bg-gradient-to-br from-amber-500/5 to-purple-500/5 border border-amber-500/20 rounded-xl p-5">
-            <p className="text-white/60 text-xs mb-4">
+            <p className="text-white text-xs mb-4">
               <strong className="text-amber-400">R</strong> = Responsible (does the work) &middot;{' '}
               <strong className="text-blue-400">A</strong> = Accountable (ultimately answerable)
               &middot; <strong className="text-green-400">C</strong> = Consulted (provides input)
@@ -1007,7 +1007,7 @@ export default function WorkingAtHeightModule5Section3() {
                 {/* Header Row */}
                 <div className="grid grid-cols-5 gap-1 mb-1">
                   <div className="bg-white/10 rounded-lg p-2 text-center">
-                    <span className="text-white/40 text-[10px] font-semibold">TASK</span>
+                    <span className="text-white text-[10px] font-semibold">TASK</span>
                   </div>
                   <div className="bg-amber-500/10 rounded-lg p-2 text-center">
                     <span className="text-amber-400 text-[10px] font-semibold">EMPLOYER</span>
@@ -1052,7 +1052,7 @@ export default function WorkingAtHeightModule5Section3() {
                 ))}
               </div>
             </div>
-            <p className="text-white/50 text-xs italic mt-3">
+            <p className="text-white text-xs italic mt-3">
               This matrix provides a general guide. Specific responsibilities may vary depending on
               the project structure, contractual arrangements, and whether CDM 2015 applies.
             </p>
@@ -1070,7 +1070,7 @@ export default function WorkingAtHeightModule5Section3() {
                 <span className="text-amber-400 font-bold min-w-[140px] flex-shrink-0">
                   CDM 2015
                 </span>
-                <span className="text-white/70">
+                <span className="text-white">
                   Construction (Design and Management) Regulations 2015 — the primary regulations
                   for managing health and safety on construction projects
                 </span>
@@ -1079,7 +1079,7 @@ export default function WorkingAtHeightModule5Section3() {
                 <span className="text-amber-400 font-bold min-w-[140px] flex-shrink-0">
                   Competent Person
                 </span>
-                <span className="text-white/70">
+                <span className="text-white">
                   Someone with sufficient training, experience, knowledge, and personal qualities to
                   perform a specific task safely
                 </span>
@@ -1088,7 +1088,7 @@ export default function WorkingAtHeightModule5Section3() {
                 <span className="text-amber-400 font-bold min-w-[140px] flex-shrink-0">
                   Principal Contractor
                 </span>
-                <span className="text-white/70">
+                <span className="text-white">
                   Appointed by the client on multi-contractor projects to plan, manage, and
                   coordinate health and safety during the construction phase
                 </span>
@@ -1097,21 +1097,21 @@ export default function WorkingAtHeightModule5Section3() {
                 <span className="text-amber-400 font-bold min-w-[140px] flex-shrink-0">
                   HASAWA 1974
                 </span>
-                <span className="text-white/70">
+                <span className="text-white">
                   Health and Safety at Work etc. Act 1974 — the primary piece of UK health and
                   safety legislation, establishing general duties for employers and employees
                 </span>
               </div>
               <div className="flex items-start gap-3 bg-black/20 rounded-lg p-3">
                 <span className="text-amber-400 font-bold min-w-[140px] flex-shrink-0">PASMA</span>
-                <span className="text-white/70">
+                <span className="text-white">
                   Prefabricated Access Suppliers' and Manufacturers' Association — industry body
                   providing training for mobile access tower users
                 </span>
               </div>
               <div className="flex items-start gap-3 bg-black/20 rounded-lg p-3">
                 <span className="text-amber-400 font-bold min-w-[140px] flex-shrink-0">CISRS</span>
-                <span className="text-white/70">
+                <span className="text-white">
                   Construction Industry Scaffolders Record Scheme — the scaffolding industry's card
                   scheme for trained and competent scaffolders and inspectors
                 </span>
@@ -1129,7 +1129,7 @@ export default function WorkingAtHeightModule5Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-xl p-4">
                 <h4 className="font-medium text-white mb-2 text-sm">{faq.question}</h4>
-                <p className="text-sm text-white/60 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

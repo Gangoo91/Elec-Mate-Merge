@@ -153,7 +153,7 @@ const Level2Module6Section6_2 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/80 hover:text-foreground p-0 text-sm sm:text-base"
+            className="text-white hover:text-foreground p-0 text-sm sm:text-base"
             asChild
           >
             <Link to="..">
@@ -182,7 +182,7 @@ const Level2Module6Section6_2 = () => {
           <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
             Interpreting Test Readings
           </h1>
-          <p className="text-white/80 text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Basic interpretation of electrical test results and pass/fail criteria
           </p>
         </header>
@@ -672,7 +672,7 @@ const Level2Module6Section6_2 = () => {
               <summary className="cursor-pointer font-medium text-sm sm:text-base text-foreground group-hover:text-primary">
                 What should I do if I get an unexpected reading?
               </summary>
-              <p className="mt-2 text-xs sm:text-sm text-white/80">
+              <p className="mt-2 text-xs sm:text-sm text-white">
                 Always investigate unexpected readings. Check your test equipment, connections, and
                 method. Retest to confirm. If the reading persists, investigate for faults before
                 proceeding.
@@ -683,7 +683,7 @@ const Level2Module6Section6_2 = () => {
               <summary className="cursor-pointer font-medium text-sm sm:text-base text-foreground group-hover:text-primary">
                 Can I round up a reading that's close to the limit?
               </summary>
-              <p className="mt-2 text-xs sm:text-sm text-white/80">
+              <p className="mt-2 text-xs sm:text-sm text-white">
                 No. Always record the actual reading. If it doesn't meet the requirement, it's a
                 failure regardless of how close it is to the limit.
               </p>
@@ -693,7 +693,7 @@ const Level2Module6Section6_2 = () => {
               <summary className="cursor-pointer font-medium text-sm sm:text-base text-foreground group-hover:text-primary">
                 Where can I find the exact pass/fail criteria?
               </summary>
-              <p className="mt-2 text-xs sm:text-sm text-white/80">
+              <p className="mt-2 text-xs sm:text-sm text-white">
                 BS 7671 contains all the specific requirements. Guidance Note 3 (Inspection &
                 Testing) also provides helpful interpretation guidance.
               </p>
@@ -743,7 +743,7 @@ const Level2Module6Section6_2 = () => {
                   <p className="font-medium text-foreground text-sm sm:text-base">
                     Test Interpretation
                   </p>
-                  <p className="text-xs sm:text-sm text-white/80 mt-1">
+                  <p className="text-xs sm:text-sm text-white mt-1">
                     Each test type has specific pass/fail criteria based on BS 7671
                   </p>
                 </div>
@@ -753,7 +753,7 @@ const Level2Module6Section6_2 = () => {
                 <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground text-sm sm:text-base">Safety First</p>
-                  <p className="text-xs sm:text-sm text-white/80 mt-1">
+                  <p className="text-xs sm:text-sm text-white mt-1">
                     Never energise circuits that have failed testing requirements
                   </p>
                 </div>
@@ -767,7 +767,7 @@ const Level2Module6Section6_2 = () => {
                   <p className="font-medium text-foreground text-sm sm:text-base">
                     Investigation Required
                   </p>
-                  <p className="text-xs sm:text-sm text-white/80 mt-1">
+                  <p className="text-xs sm:text-sm text-white mt-1">
                     Failed readings need systematic investigation and remedial action
                   </p>
                 </div>
@@ -779,7 +779,7 @@ const Level2Module6Section6_2 = () => {
                   <p className="font-medium text-foreground text-sm sm:text-base">
                     Professional Judgement
                   </p>
-                  <p className="text-xs sm:text-sm text-white/80 mt-1">
+                  <p className="text-xs sm:text-sm text-white mt-1">
                     Borderline results require careful consideration and investigation
                   </p>
                 </div>

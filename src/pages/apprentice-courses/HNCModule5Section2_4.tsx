@@ -274,7 +274,7 @@ const HNCModule5Section2_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section2">
@@ -296,7 +296,7 @@ const HNCModule5Section2_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Subcontract Management
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             DOM/1, DOM/2 subcontracts, back-to-back provisions, flow-down clauses and subcontractor
             coordination in building services
           </p>
@@ -902,7 +902,7 @@ const HNCModule5Section2_4 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Coordination tip:</strong> Invest time in pre-construction
               coordination—resolving clashes on drawings costs a fraction of fixing them on site.
               Modern BIM tools can identify clashes automatically if models are properly maintained.
@@ -928,13 +928,13 @@ const HNCModule5Section2_4 = () => {
                 <strong>Scenario:</strong> Main contract has 28-day payment terms from due date. How
                 should the subcontract be structured?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Main Contract: Due date = valuation date + 7 days</p>
                 <p>Main Contract: Final date = due date + 28 days</p>
                 <p className="mt-2">Subcontract (back-to-back):</p>
                 <p>Subcontract due date = main contract valuation date + 7 days</p>
                 <p>Subcontract final date = due date + 28 days</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This ensures payment obligations flow through without the main contractor being
                   "out of pocket"
                 </p>
@@ -953,7 +953,7 @@ const HNCModule5Section2_4 = () => {
                 glanding, main contractor instructs another subcontractor to complete at a cost of
                 £2,400.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Issue formal notice requiring completion by date</p>
                 <p>Step 2: If not completed, issue notice of intent to contra-charge</p>
                 <p>Step 3: Arrange completion by others, documenting costs</p>
@@ -976,7 +976,7 @@ const HNCModule5Section2_4 = () => {
                 <strong>Scenario:</strong> M&E subcontractor delayed 6 weeks due to late steelwork.
                 How do costs flow through the contractual chain?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Subcontractor's costs:</p>
                 <p>- Prelims extension: 6 weeks × £3,500/week = £21,000</p>
                 <p>- Labour disruption: £8,500</p>
@@ -990,7 +990,7 @@ const HNCModule5Section2_4 = () => {
                   Back-to-back principle: Main contractor recovers from client and passes to
                   subcontractor
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Note: Subcontractor must comply with notice requirements in subcontract
                 </p>
               </div>
@@ -1074,7 +1074,7 @@ const HNCModule5Section2_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1120,7 +1120,7 @@ const HNCModule5Section2_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section2">

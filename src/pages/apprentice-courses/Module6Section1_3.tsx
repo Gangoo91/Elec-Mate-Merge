@@ -137,7 +137,7 @@ const Module6Section1_3 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -155,13 +155,13 @@ const Module6Section1_3 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.1.3</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.1.3</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               When Testing Is Required (New Work, Alterations, Faults)
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Understanding when electrical testing is legally required for new work, alterations,
               and fault diagnosis
             </p>
@@ -170,7 +170,7 @@ const Module6Section1_3 = () => {
           {/* Summary Box */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-sm space-y-1 list-disc pl-5">
+            <ul className="text-white text-sm space-y-1 list-disc pl-5">
               <li>
                 Testing mandatory for ALL new work before energising - never switch on untested
                 circuits.
@@ -194,7 +194,7 @@ const Module6Section1_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <div className="text-white/80 space-y-2 leading-relaxed">
+            <div className="text-white space-y-2 leading-relaxed">
               <ul className="list-disc pl-6 space-y-2 text-sm">
                 <li>Identify when testing is legally required under BS 7671 and EAWR.</li>
                 <li>Distinguish between testing for new work, alterations, and faults.</li>
@@ -212,7 +212,7 @@ const Module6Section1_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               New Work
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 All new electrical installations must undergo initial verification before being
                 energised. This is a fundamental safety requirement that protects both users and
@@ -293,7 +293,7 @@ const Module6Section1_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Alterations and Additions
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Any modification to an existing electrical installation requires testing to ensure
                 the alteration has not compromised the safety of the original installation and that
@@ -367,7 +367,7 @@ const Module6Section1_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Fault Diagnosis
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 When electrical systems show signs of faults or abnormal operation, systematic
                 testing is essential to identify the cause and confirm safe remedial action has been
@@ -441,7 +441,7 @@ const Module6Section1_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Periodic Inspection and Testing
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Existing installations deteriorate over time and must be periodically inspected and
                 tested to ensure they remain safe for continued use.
@@ -511,7 +511,7 @@ const Module6Section1_3 = () => {
               Case Study: The Cost of Cutting Corners
             </h2>
             <div className="p-4 rounded-lg bg-purple-500/10 border-l-2 border-purple-500/50">
-              <div className="text-white/80 text-sm space-y-3">
+              <div className="text-white text-sm space-y-3">
                 <p>
                   <strong>Background:</strong> A retail shop owner hired an unqualified person to
                   add several socket outlets to accommodate new equipment. No testing was performed
@@ -546,7 +546,7 @@ const Module6Section1_3 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
                 <p className="font-medium text-white mb-2">When Testing Required:</p>
-                <ul className="text-sm space-y-1 text-white/80">
+                <ul className="text-sm space-y-1 text-white">
                   <li>
                     <strong>New work</strong> = Full inspection + testing → EIC required
                   </li>
@@ -563,7 +563,7 @@ const Module6Section1_3 = () => {
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border-l-2 border-green-500/50">
                 <p className="font-medium text-white mb-2">Key Remember Points:</p>
-                <ul className="text-sm space-y-1 text-white/80">
+                <ul className="text-sm space-y-1 text-white">
                   <li>• Safe isolation before all testing</li>
                   <li>• Never energise untested circuits</li>
                   <li>• Issue correct certificate type</li>
@@ -579,7 +579,7 @@ const Module6Section1_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">08</span>
               Recap
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Testing is essential whenever new work is installed, when existing circuits are
                 altered, or when faults occur. It confirms the system is safe, compliant, and fit
@@ -600,7 +600,7 @@ const Module6Section1_3 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../1-2">

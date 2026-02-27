@@ -212,7 +212,7 @@ const HNCModule3Section1_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section1">
@@ -234,7 +234,7 @@ const HNCModule3Section1_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Kirchhoff's Laws
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Fundamental circuit analysis laws for current and voltage in complex electrical networks
           </p>
         </header>
@@ -304,13 +304,13 @@ const HNCModule3Section1_5 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Mathematical Statement</p>
               <p className="font-mono text-center text-lg mb-2">ΣI = 0</p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 The algebraic sum of currents at any node equals zero
               </p>
               <p className="font-mono text-center text-lg mt-3 mb-2">
                 ΣI<sub>in</sub> = ΣI<sub>out</sub>
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Currents entering a node equal currents leaving
               </p>
             </div>
@@ -338,7 +338,7 @@ const HNCModule3Section1_5 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Node Analysis Diagram (Text Description)
               </p>
-              <div className="p-3 rounded bg-white/5 text-sm text-white/90 font-mono">
+              <div className="p-3 rounded bg-white/5 text-sm text-white font-mono">
                 <p className="mb-2">Consider a node with four branches:</p>
                 <pre className="text-xs">
                   {`           I1 = 10A
@@ -381,13 +381,13 @@ At the node:  I1 + I2 = I3 + I4
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Mathematical Statement</p>
               <p className="font-mono text-center text-lg mb-2">ΣV = 0</p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 The algebraic sum of voltages around any closed loop equals zero
               </p>
               <p className="font-mono text-center text-lg mt-3 mb-2">
                 ΣV<sub>rises</sub> = ΣV<sub>drops</sub>
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 EMF sources equal the sum of IR drops around the loop
               </p>
             </div>
@@ -413,7 +413,7 @@ At the node:  I1 + I2 = I3 + I4
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Mesh Analysis Diagram (Text Description)
               </p>
-              <div className="p-3 rounded bg-white/5 text-sm text-white/90 font-mono">
+              <div className="p-3 rounded bg-white/5 text-sm text-white font-mono">
                 <p className="mb-2">Series circuit with 230V supply and three resistors:</p>
                 <pre className="text-xs">
                   {`    +230V-    -V1-     -V2-     -V3-
@@ -456,7 +456,7 @@ Supply EMF = Sum of voltage drops`}
               <div className="space-y-3">
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-1">Step 1: Identify and Label</p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-5">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-5">
                     <li className="pl-1">Label all nodes (junctions) with letters (A, B, C...)</li>
                     <li className="pl-1">Assign current directions to all branches (arrows)</li>
                     <li className="pl-1">Mark voltage polarities across components</li>
@@ -464,7 +464,7 @@ Supply EMF = Sum of voltage drops`}
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-1">Step 2: Apply KCL at Nodes</p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-5">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-5">
                     <li className="pl-1">
                       Write KCL equation for each node (except reference node)
                     </li>
@@ -476,7 +476,7 @@ Supply EMF = Sum of voltage drops`}
                   <p className="text-sm font-medium text-white mb-1">
                     Step 3: Apply KVL around Loops
                   </p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-5">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-5">
                     <li className="pl-1">Identify independent loops (meshes)</li>
                     <li className="pl-1">Write KVL equation for each loop</li>
                     <li className="pl-1">Use Ohm's Law: V = IR for resistor drops</li>
@@ -484,7 +484,7 @@ Supply EMF = Sum of voltage drops`}
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-1">Step 4: Solve the System</p>
-                  <ul className="text-xs text-white/80 space-y-0.5 list-disc list-outside ml-5">
+                  <ul className="text-xs text-white space-y-0.5 list-disc list-outside ml-5">
                     <li className="pl-1">Combine KCL and KVL equations</li>
                     <li className="pl-1">Solve simultaneous equations for unknowns</li>
                     <li className="pl-1">
@@ -575,7 +575,7 @@ Supply EMF = Sum of voltage drops`}
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 DB Load Calculation Example
               </p>
-              <div className="p-3 rounded bg-white/5 text-sm text-white/90 font-mono">
+              <div className="p-3 rounded bg-white/5 text-sm text-white font-mono">
                 <pre className="text-xs">
                   {`Distribution Board Loads:
 --------------------------
@@ -612,7 +612,7 @@ Main switch rating:             100A`}
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Earth Loop Calculation</p>
-              <div className="p-3 rounded bg-white/5 text-sm text-white/90 font-mono">
+              <div className="p-3 rounded bg-white/5 text-sm text-white font-mono">
                 <pre className="text-xs">
                   {`Earth Fault Loop (applying KVL):
 --------------------------------
@@ -636,7 +636,7 @@ For 32A Type B MCB:  Requires >160A (OK)`}
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Parallel Branch Currents
               </p>
-              <div className="p-3 rounded bg-white/5 text-sm text-white/90 font-mono">
+              <div className="p-3 rounded bg-white/5 text-sm text-white font-mono">
                 <pre className="text-xs">
                   {`Two parallel heating elements (230V supply):
 --------------------------------------------
@@ -657,7 +657,7 @@ Check: I = 230/15.33 = 15A (OK)`}
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Voltage Drop Calculations (KVL)
               </p>
-              <div className="p-3 rounded bg-white/5 text-sm text-white/90 font-mono">
+              <div className="p-3 rounded bg-white/5 text-sm text-white font-mono">
                 <pre className="text-xs">
                   {`Circuit: 230V supply, 25m cable run, 3kW load
 ----------------------------------------------
@@ -703,14 +703,14 @@ Voltage drop: 4.8V (2.1%) - Within 5% limit`}
                 4A), 2 socket circuits (18A, 22A), and a 3kW immersion heater. Calculate the main
                 switch rating required.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Immersion current: I = P/V = 3000/230 = 13A</p>
                 <p className="mt-2">Apply KCL at main busbar:</p>
                 <p>I_main = I1 + I2 + I3 + I4 + I5 + I6</p>
                 <p>
                   I_main = 6 + 8 + 4 + 18 + 22 + 13 = <strong>71A</strong>
                 </p>
-                <p className="mt-2 text-white/60">Result: 80A main switch minimum (100A typical)</p>
+                <p className="mt-2 text-white">Result: 80A main switch minimum (100A typical)</p>
               </div>
             </div>
 
@@ -723,7 +723,7 @@ Voltage drop: 4.8V (2.1%) - Within 5% limit`}
                 parallel across a 20V supply. Calculate each branch current and the total supply
                 current.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>By KVL: Same voltage across each parallel branch</p>
                 <p className="mt-2">Branch currents (Ohm's Law):</p>
                 <p>I1 = V/R1 = 20/10 = 2A</p>
@@ -744,7 +744,7 @@ Voltage drop: 4.8V (2.1%) - Within 5% limit`}
                 <strong>Question:</strong> A 230V supply feeds three series resistors (15 Ohm, 25
                 Ohm, 6 Ohm). Calculate the current and voltage drop across each resistor.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Total resistance: R_T = 15 + 25 + 6 = 46 Ohm</p>
                 <p>
                   Circuit current: I = V/R_T = 230/46 = <strong>5A</strong>
@@ -767,7 +767,7 @@ Voltage drop: 4.8V (2.1%) - Within 5% limit`}
                 of 2.5mm2 cable (r1 = 7.41 mOhm/m, r2 = 12.1 mOhm/m for 1.5mm2 CPC). Calculate Zs
                 and fault current.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Line resistance: R1 = 30 x 7.41/1000 = 0.222 Ohm</p>
                 <p>CPC resistance: R2 = 30 x 12.1/1000 = 0.363 Ohm</p>
                 <p className="mt-2">By KVL around fault loop:</p>
@@ -865,7 +865,7 @@ Voltage drop: 4.8V (2.1%) - Within 5% limit`}
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -911,7 +911,7 @@ Voltage drop: 4.8V (2.1%) - Within 5% limit`}
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section1-4">

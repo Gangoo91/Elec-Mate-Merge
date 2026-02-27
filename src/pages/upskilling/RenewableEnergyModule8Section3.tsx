@@ -242,7 +242,7 @@ const RenewableEnergyModule8Section3 = () => {
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
           DNO Application Processes
         </h1>
-        <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+        <p className="text-white text-sm sm:text-base max-w-xl mx-auto">
           G98 notifications and G99 applications for grid-connected renewable energy systems
         </p>
       </div>
@@ -290,7 +290,7 @@ const RenewableEnergyModule8Section3 = () => {
           ].map((outcome, index) => (
             <div key={index} className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
-              <span className="text-white/80 text-sm">{outcome}</span>
+              <span className="text-white text-sm">{outcome}</span>
             </div>
           ))}
         </div>
@@ -303,7 +303,7 @@ const RenewableEnergyModule8Section3 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">01</span>
             <h2 className="text-xl font-semibold text-white">Understanding DNO Requirements</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Distribution Network Operators (DNOs) are responsible for operating and maintaining
               the local electricity distribution networks that connect premises to the national
@@ -343,7 +343,7 @@ const RenewableEnergyModule8Section3 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">02</span>
             <h2 className="text-xl font-semibold text-white">G98 Notification Process</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               G98 covers installations with export capacity up to 3.68kW per phase. For single-phase
               connections, this means up to 3.68kW total. For three-phase connections, up to 11.04kW
@@ -384,7 +384,7 @@ const RenewableEnergyModule8Section3 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">03</span>
             <h2 className="text-xl font-semibold text-white">G99 Application Process</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               G99 applies to installations exceeding G98 limits or meeting other criteria such as
               connection to 11kV networks. The application process involves DNO assessment of
@@ -431,7 +431,7 @@ const RenewableEnergyModule8Section3 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">04</span>
             <h2 className="text-xl font-semibold text-white">Export Limitation Strategies</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Export limitation restricts the amount of power a system can export to the grid,
               regardless of total generation capacity. This strategy enables larger systems to
@@ -474,7 +474,7 @@ const RenewableEnergyModule8Section3 = () => {
               Protection and Compliance Requirements
             </h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Grid-connected generation must incorporate protection systems that maintain network
               safety and stability. The primary requirement is Loss of Mains (LoM) protection, which
@@ -519,7 +519,7 @@ const RenewableEnergyModule8Section3 = () => {
             <Zap className="w-4 h-4 text-elec-yellow" />
             Practical Guidance
           </h3>
-          <div className="space-y-2 text-white/80 text-sm">
+          <div className="space-y-2 text-white text-sm">
             <p>
               <span className="text-white font-medium">Identify the DNO early:</span> Different DNOs
               have different application processes, portal systems, and fee structures. Identify the
@@ -547,7 +547,7 @@ const RenewableEnergyModule8Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <h3 className="text-white font-medium mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>

@@ -174,7 +174,7 @@ const PriceCard = ({
                   {complexity.label}
                 </span>
               </div>
-              <div className="flex items-center gap-2 text-sm text-white/70">
+              <div className="flex items-center gap-2 text-sm text-white">
                 <MapPin className="h-4 w-4 text-elec-yellow flex-shrink-0" />
                 <span>{postcodeDistrict || region}</span>
               </div>
@@ -187,7 +187,7 @@ const PriceCard = ({
               <PlusCircle className="h-6 w-6 text-elec-yellow" />
             </div>
             <p className="text-base font-semibold text-white mb-1">No prices yet</p>
-            <p className="text-sm text-white/60">
+            <p className="text-sm text-white">
               Be the first to submit a price for this job in {postcodeDistrict || region}!
             </p>
           </div>
@@ -235,7 +235,7 @@ const PriceCard = ({
             {dataSourceBadge.label}
           </div>
           {sampleSize > 0 && (
-            <div className="flex items-center gap-1 text-xs text-white/50">
+            <div className="flex items-center gap-1 text-xs text-white">
               <Users className="h-3 w-3" />
               {sampleSize} quotes
             </div>
@@ -263,7 +263,7 @@ const PriceCard = ({
             </div>
 
             {/* Location */}
-            <div className="flex items-center gap-2 text-sm text-white/70">
+            <div className="flex items-center gap-2 text-sm text-white">
               <MapPin className="h-4 w-4 text-elec-yellow flex-shrink-0" />
               <span>{postcodeDistrict || region}</span>
             </div>
@@ -274,7 +274,7 @@ const PriceCard = ({
             <div className="text-3xl font-black text-elec-yellow tracking-tight">
               {formatPrice(avgPrice)}
             </div>
-            <div className="text-xs text-white/60 font-medium mt-1">avg price</div>
+            <div className="text-xs text-white font-medium mt-1">avg price</div>
           </div>
         </div>
 
@@ -287,7 +287,7 @@ const PriceCard = ({
             {/* Min price label - left */}
             <div className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
               <div className="text-lg font-bold text-white">{formatPrice(minPrice)}</div>
-              <div className="text-[10px] text-white/60 font-medium uppercase tracking-wide">
+              <div className="text-[10px] text-white font-medium uppercase tracking-wide">
                 Low
               </div>
             </div>
@@ -295,7 +295,7 @@ const PriceCard = ({
             {/* Max price label - right */}
             <div className="absolute right-3 top-1/2 -translate-y-1/2 z-10 text-right">
               <div className="text-lg font-bold text-white">{formatPrice(maxPrice)}</div>
-              <div className="text-[10px] text-white/60 font-medium uppercase tracking-wide">
+              <div className="text-[10px] text-white font-medium uppercase tracking-wide">
                 High
               </div>
             </div>
@@ -321,7 +321,7 @@ const PriceCard = ({
         {/* Stats Row */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-1.5 text-sm text-white/80">
+            <div className="flex items-center gap-1.5 text-sm text-white">
               <Clock className="h-4 w-4 text-elec-yellow/80" />
               <span className="font-medium">{formatDate(lastUpdated)}</span>
             </div>
@@ -338,7 +338,7 @@ const PriceCard = ({
               <ChevronDown
                 className={cn(
                   'h-5 w-5 transition-colors',
-                  isExpanded ? 'text-elec-yellow' : 'text-white/60'
+                  isExpanded ? 'text-elec-yellow' : 'text-white'
                 )}
               />
             </div>
@@ -356,27 +356,27 @@ const PriceCard = ({
           <div className="grid grid-cols-2 gap-3">
             {jobCategory && (
               <div className="p-3 rounded-xl bg-white/5">
-                <div className="text-xs text-white/60 font-medium mb-1">Category</div>
+                <div className="text-xs text-white font-medium mb-1">Category</div>
                 <div className="text-sm font-semibold text-white">{jobCategory}</div>
               </div>
             )}
 
             {trend !== 0 && (
               <div className="p-3 rounded-xl bg-white/5">
-                <div className="text-xs text-white/60 font-medium mb-1">30-Day Trend</div>
+                <div className="text-xs text-white font-medium mb-1">30-Day Trend</div>
                 <TrendArrow value={trend} size="md" />
               </div>
             )}
 
             <div className="p-3 rounded-xl bg-white/5">
-              <div className="text-xs text-white/60 font-medium mb-1">Price Spread</div>
+              <div className="text-xs text-white font-medium mb-1">Price Spread</div>
               <div className="text-sm font-semibold text-white">
                 {formatPrice(maxPrice - minPrice)}
               </div>
             </div>
 
             <div className="p-3 rounded-xl bg-white/5">
-              <div className="text-xs text-white/60 font-medium mb-1">Data Quality</div>
+              <div className="text-xs text-white font-medium mb-1">Data Quality</div>
               <div className="text-sm font-semibold text-white">
                 {confidenceScore >= 80 ? 'High' : confidenceScore >= 60 ? 'Good' : 'Growing'}
               </div>
@@ -398,7 +398,7 @@ const PriceCard = ({
                 </div>
                 <div className="flex-1 text-left">
                   <p className="text-sm font-bold text-elec-yellow">Help Improve Pricing Data</p>
-                  <p className="text-xs text-white/70 mt-1 leading-relaxed">
+                  <p className="text-xs text-white mt-1 leading-relaxed">
                     Submit your actual job prices to help fellow sparkies get accurate market rates
                   </p>
                 </div>

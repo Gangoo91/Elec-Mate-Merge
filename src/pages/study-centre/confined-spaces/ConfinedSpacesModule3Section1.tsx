@@ -166,7 +166,7 @@ export default function ConfinedSpacesModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-3">
@@ -189,7 +189,7 @@ export default function ConfinedSpacesModule3Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Atmospheric Hazards
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding the invisible dangers that make confined spaces lethal &mdash; oxygen
             depletion, oxygen enrichment, toxic gases, flammable atmospheres, and the regulations
             that control them
@@ -274,7 +274,7 @@ export default function ConfinedSpacesModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Composition of Normal Air</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <div className="flex items-center justify-between">
                     <span>Nitrogen (N&sub2;)</span>
                     <span className="font-bold text-white">78.1%</span>
@@ -315,7 +315,7 @@ export default function ConfinedSpacesModule3Section1() {
                       style={{ width: '1%' }}
                     />
                   </div>
-                  <p className="text-xs text-white/50 mt-2">
+                  <p className="text-xs text-white mt-2">
                     Plus trace amounts of neon, helium, methane, krypton, and other gases
                   </p>
                 </div>
@@ -364,7 +364,7 @@ export default function ConfinedSpacesModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Common Causes of Oxygen Depletion
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -419,7 +419,7 @@ export default function ConfinedSpacesModule3Section1() {
                     </div>
                     <div className="flex-1 bg-cyan-500/20 border border-cyan-500/40 rounded-lg p-2.5">
                       <p className="text-xs font-medium text-cyan-400">NORMAL</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Standard atmospheric oxygen. Safe breathing conditions.
                       </p>
                     </div>
@@ -430,7 +430,7 @@ export default function ConfinedSpacesModule3Section1() {
                     </div>
                     <div className="flex-1 bg-green-500/20 border border-green-500/40 rounded-lg p-2.5">
                       <p className="text-xs font-medium text-green-400">FIRST ALARM</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Minimum safe level. First alarm set point on gas monitors. Investigate cause
                         immediately.
                       </p>
@@ -442,7 +442,7 @@ export default function ConfinedSpacesModule3Section1() {
                     </div>
                     <div className="flex-1 bg-amber-500/20 border border-amber-500/40 rounded-lg p-2.5">
                       <p className="text-xs font-medium text-amber-400">IMPAIRED</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Judgement, coordination, and breathing impaired. Difficulty performing
                         tasks. Evacuate immediately.
                       </p>
@@ -454,7 +454,7 @@ export default function ConfinedSpacesModule3Section1() {
                     </div>
                     <div className="flex-1 bg-orange-500/20 border border-orange-500/40 rounded-lg p-2.5">
                       <p className="text-xs font-medium text-orange-400">POOR COORDINATION</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Rapid breathing, increased heart rate, poor muscular coordination, emotional
                         upset, abnormal fatigue.
                       </p>
@@ -466,7 +466,7 @@ export default function ConfinedSpacesModule3Section1() {
                     </div>
                     <div className="flex-1 bg-red-500/20 border border-red-500/40 rounded-lg p-2.5">
                       <p className="text-xs font-medium text-red-400">UNCONSCIOUS IN SECONDS</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Immediate loss of consciousness without warning. Cannot self-rescue. Brain
                         damage begins within minutes.
                       </p>
@@ -478,7 +478,7 @@ export default function ConfinedSpacesModule3Section1() {
                     </div>
                     <div className="flex-1 bg-red-900/40 border border-red-600/50 rounded-lg p-2.5">
                       <p className="text-xs font-bold text-red-400">FATAL</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Death within minutes. Convulsions, cardiac arrest, respiratory failure.
                         Irreversible brain damage.
                       </p>
@@ -492,7 +492,7 @@ export default function ConfinedSpacesModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">No Warning Before Collapse</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   One of the most dangerous aspects of oxygen depletion is that there are{' '}
                   <strong className="text-white">no reliable warning symptoms</strong> at low
                   concentrations. A person walking into a space with &lt;10% oxygen will lose
@@ -522,7 +522,7 @@ export default function ConfinedSpacesModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Effects of Oxygen Enrichment</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -564,7 +564,7 @@ export default function ConfinedSpacesModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Common Causes</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -599,7 +599,7 @@ export default function ConfinedSpacesModule3Section1() {
                     Never Use Oxygen for Ventilation
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   It is a <strong className="text-white">common and dangerous misconception</strong>{' '}
                   that pumping oxygen into a confined space will make it safer. Pure or enriched
                   oxygen makes a space <strong className="text-white">far more dangerous</strong> by
@@ -638,19 +638,19 @@ export default function ConfinedSpacesModule3Section1() {
                   </span>
                   <p className="text-sm font-medium text-white">Hydrogen Sulphide</p>
                 </div>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="grid grid-cols-2 gap-2">
                     <div className="bg-white/5 rounded-lg p-2">
-                      <p className="text-xs text-white/50">WEL (8-hr TWA)</p>
+                      <p className="text-xs text-white">WEL (8-hr TWA)</p>
                       <p className="text-white font-bold">5 ppm</p>
                     </div>
                     <div className="bg-white/5 rounded-lg p-2">
-                      <p className="text-xs text-white/50">STEL (15 min)</p>
+                      <p className="text-xs text-white">STEL (15 min)</p>
                       <p className="text-white font-bold">10 ppm</p>
                     </div>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-white/60 mb-1">Properties</p>
+                    <p className="text-xs font-medium text-white mb-1">Properties</p>
                     <p>
                       Rotten-egg smell at low concentrations, but{' '}
                       <strong className="text-red-400">olfactory fatigue above ~100 ppm</strong>{' '}
@@ -659,7 +659,7 @@ export default function ConfinedSpacesModule3Section1() {
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-white/60 mb-1">Sources</p>
+                    <p className="text-xs font-medium text-white mb-1">Sources</p>
                     <p>
                       Decomposing organic matter, sewers, drains, manholes, septic tanks, slurry
                       pits, landfill sites, oil and gas operations, geothermal activity, and
@@ -667,7 +667,7 @@ export default function ConfinedSpacesModule3Section1() {
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-white/60 mb-1">Effects</p>
+                    <p className="text-xs font-medium text-white mb-1">Effects</p>
                     <ul className="space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-yellow-400 flex-shrink-0" />
@@ -703,19 +703,19 @@ export default function ConfinedSpacesModule3Section1() {
                   </span>
                   <p className="text-sm font-medium text-white">Carbon Monoxide</p>
                 </div>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="grid grid-cols-2 gap-2">
                     <div className="bg-white/5 rounded-lg p-2">
-                      <p className="text-xs text-white/50">WEL (8-hr TWA)</p>
+                      <p className="text-xs text-white">WEL (8-hr TWA)</p>
                       <p className="text-white font-bold">20 ppm</p>
                     </div>
                     <div className="bg-white/5 rounded-lg p-2">
-                      <p className="text-xs text-white/50">STEL (15 min)</p>
+                      <p className="text-xs text-white">STEL (15 min)</p>
                       <p className="text-white font-bold">100 ppm</p>
                     </div>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-white/60 mb-1">Properties</p>
+                    <p className="text-xs font-medium text-white mb-1">Properties</p>
                     <p>
                       <strong className="text-red-400">
                         Completely odourless, colourless, and tasteless
@@ -727,7 +727,7 @@ export default function ConfinedSpacesModule3Section1() {
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-white/60 mb-1">Sources</p>
+                    <p className="text-xs font-medium text-white mb-1">Sources</p>
                     <p>
                       Incomplete combustion (petrol/diesel engines, generators, compressors),
                       welding and cutting operations, fires, furnaces, boilers, and any burning of
@@ -735,7 +735,7 @@ export default function ConfinedSpacesModule3Section1() {
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-white/60 mb-1">Effects</p>
+                    <p className="text-xs font-medium text-white mb-1">Effects</p>
                     <ul className="space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-yellow-400 flex-shrink-0" />
@@ -774,19 +774,19 @@ export default function ConfinedSpacesModule3Section1() {
                   </span>
                   <p className="text-sm font-medium text-white">Carbon Dioxide</p>
                 </div>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="grid grid-cols-2 gap-2">
                     <div className="bg-white/5 rounded-lg p-2">
-                      <p className="text-xs text-white/50">WEL (8-hr TWA)</p>
+                      <p className="text-xs text-white">WEL (8-hr TWA)</p>
                       <p className="text-white font-bold">5,000 ppm</p>
                     </div>
                     <div className="bg-white/5 rounded-lg p-2">
-                      <p className="text-xs text-white/50">STEL (15 min)</p>
+                      <p className="text-xs text-white">STEL (15 min)</p>
                       <p className="text-white font-bold">15,000 ppm</p>
                     </div>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-white/60 mb-1">Properties</p>
+                    <p className="text-xs font-medium text-white mb-1">Properties</p>
                     <p>
                       Colourless, odourless at low concentrations (sharp/acidic taste at high
                       levels). <strong className="text-amber-400">Heavier than air</strong>{' '}
@@ -796,7 +796,7 @@ export default function ConfinedSpacesModule3Section1() {
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-white/60 mb-1">Sources</p>
+                    <p className="text-xs font-medium text-white mb-1">Sources</p>
                     <p>
                       Fermentation (breweries, wine vats, grain stores), decomposition of organic
                       matter, combustion, dry ice (solid CO&sub2;) sublimation, carbonated beverage
@@ -805,7 +805,7 @@ export default function ConfinedSpacesModule3Section1() {
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-white/60 mb-1">Effects</p>
+                    <p className="text-xs font-medium text-white mb-1">Effects</p>
                     <ul className="space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-yellow-400 flex-shrink-0" />
@@ -841,7 +841,7 @@ export default function ConfinedSpacesModule3Section1() {
                   </span>
                   <p className="text-sm font-medium text-white">Nitrogen (Simple Asphyxiant)</p>
                 </div>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-2">
                     <p className="text-xs text-red-300 font-medium">
                       No WEL &mdash; nitrogen is not toxic. It kills by displacing oxygen. No
@@ -849,7 +849,7 @@ export default function ConfinedSpacesModule3Section1() {
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-white/60 mb-1">Properties</p>
+                    <p className="text-xs font-medium text-white mb-1">Properties</p>
                     <p>
                       Completely{' '}
                       <strong className="text-white">odourless, colourless, and tasteless</strong>.
@@ -860,7 +860,7 @@ export default function ConfinedSpacesModule3Section1() {
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-white/60 mb-1">Sources</p>
+                    <p className="text-xs font-medium text-white mb-1">Sources</p>
                     <p>
                       Purging of tanks and vessels with nitrogen to create an inert atmosphere,
                       blanketing of flammable liquids, cryogenic nitrogen spills, and leaking
@@ -879,19 +879,19 @@ export default function ConfinedSpacesModule3Section1() {
                   </span>
                   <p className="text-sm font-medium text-white">Sulphur Dioxide</p>
                 </div>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="grid grid-cols-2 gap-2">
                     <div className="bg-white/5 rounded-lg p-2">
-                      <p className="text-xs text-white/50">WEL (8-hr TWA)</p>
+                      <p className="text-xs text-white">WEL (8-hr TWA)</p>
                       <p className="text-white font-bold">2 ppm</p>
                     </div>
                     <div className="bg-white/5 rounded-lg p-2">
-                      <p className="text-xs text-white/50">STEL (15 min)</p>
+                      <p className="text-xs text-white">STEL (15 min)</p>
                       <p className="text-white font-bold">5 ppm</p>
                     </div>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-white/60 mb-1">Properties</p>
+                    <p className="text-xs font-medium text-white mb-1">Properties</p>
                     <p>
                       Pungent, suffocating odour. Colourless. Heavier than air (relative density
                       2.26). Highly irritating to the eyes, nose, throat, and lungs. Reacts with
@@ -899,7 +899,7 @@ export default function ConfinedSpacesModule3Section1() {
                     </p>
                   </div>
                   <div>
-                    <p className="text-xs font-medium text-white/60 mb-1">Sources</p>
+                    <p className="text-xs font-medium text-white mb-1">Sources</p>
                     <p>
                       Combustion of sulphur-containing fuels, smelting operations, chemical
                       processes, volcanic/geothermal activity, and the breakdown of
@@ -946,7 +946,7 @@ export default function ConfinedSpacesModule3Section1() {
                 <p className="text-sm font-medium text-white mb-4">LEL/UEL Flammability Range</p>
                 <div className="space-y-4">
                   {/* Scale legend */}
-                  <div className="flex items-center gap-2 text-xs text-white/60 mb-2">
+                  <div className="flex items-center gap-2 text-xs text-white mb-2">
                     <span className="inline-block w-3 h-3 rounded bg-green-500/30 border border-green-500/50" />
                     <span>Too lean (safe from ignition)</span>
                     <span className="inline-block w-3 h-3 rounded bg-red-500/30 border border-red-500/50 ml-2" />
@@ -958,7 +958,7 @@ export default function ConfinedSpacesModule3Section1() {
                   <div>
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-xs font-medium text-white">Methane (CH&sub4;)</span>
-                      <span className="text-xs text-white/50">LEL 5% &mdash; UEL 15%</span>
+                      <span className="text-xs text-white">LEL 5% &mdash; UEL 15%</span>
                     </div>
                     <div className="w-full h-6 bg-white/5 rounded-lg overflow-hidden flex">
                       <div
@@ -985,7 +985,7 @@ export default function ConfinedSpacesModule3Section1() {
                   <div>
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-xs font-medium text-white">LPG (Propane)</span>
-                      <span className="text-xs text-white/50">LEL 2.1% &mdash; UEL 9.5%</span>
+                      <span className="text-xs text-white">LEL 2.1% &mdash; UEL 9.5%</span>
                     </div>
                     <div className="w-full h-6 bg-white/5 rounded-lg overflow-hidden flex">
                       <div
@@ -1012,7 +1012,7 @@ export default function ConfinedSpacesModule3Section1() {
                   <div>
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-xs font-medium text-white">Hydrogen (H&sub2;)</span>
-                      <span className="text-xs text-white/50">LEL 4% &mdash; UEL 75%</span>
+                      <span className="text-xs text-white">LEL 4% &mdash; UEL 75%</span>
                     </div>
                     <div className="w-full h-6 bg-white/5 rounded-lg overflow-hidden flex">
                       <div
@@ -1041,7 +1041,7 @@ export default function ConfinedSpacesModule3Section1() {
                   <div>
                     <div className="flex items-center justify-between mb-1">
                       <span className="text-xs font-medium text-white">Petrol Vapour</span>
-                      <span className="text-xs text-white/50">LEL 1.4% &mdash; UEL 7.6%</span>
+                      <span className="text-xs text-white">LEL 1.4% &mdash; UEL 7.6%</span>
                     </div>
                     <div className="w-full h-6 bg-white/5 rounded-lg overflow-hidden flex">
                       <div
@@ -1065,7 +1065,7 @@ export default function ConfinedSpacesModule3Section1() {
                     </div>
                   </div>
                 </div>
-                <p className="text-xs text-white/50 mt-3">
+                <p className="text-xs text-white mt-3">
                   Note: Gas monitors typically alarm at 10% LEL and 20% LEL, NOT at the actual LEL
                   percentage. For methane, 10% LEL = 0.5% methane in air.
                 </p>
@@ -1075,7 +1075,7 @@ export default function ConfinedSpacesModule3Section1() {
                 <p className="text-sm font-medium text-white mb-3">
                   Common Flammable Gas Sources in Confined Spaces
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1130,7 +1130,7 @@ export default function ConfinedSpacesModule3Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Dust Explosions</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Combustible dust is an often-overlooked explosive hazard. When fine particles of
                   organic or metallic material are suspended in air within a confined space, the
                   resulting dust cloud can explode violently if an ignition source is present. The
@@ -1161,7 +1161,7 @@ export default function ConfinedSpacesModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Common Ignition Sources</p>
-                <div className="grid sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-3 text-sm text-white">
                   <div className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                     <span>
@@ -1247,7 +1247,7 @@ export default function ConfinedSpacesModule3Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Key DSEAR/ATEX Requirements</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -1313,21 +1313,21 @@ export default function ConfinedSpacesModule3Section1() {
                 <div className="space-y-2">
                   <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3">
                     <p className="text-xs font-bold text-red-400">Zone 0</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Explosive atmosphere is present continuously or for long periods. Most
                       restrictive equipment requirements.
                     </p>
                   </div>
                   <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
                     <p className="text-xs font-bold text-amber-400">Zone 1</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Explosive atmosphere is likely to occur during normal operations. Intermediate
                       equipment requirements.
                     </p>
                   </div>
                   <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-lg p-3">
                     <p className="text-xs font-bold text-yellow-400">Zone 2</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Explosive atmosphere is not likely during normal operations, but may occur
                       briefly. Least restrictive (but still regulated) equipment requirements.
                     </p>
@@ -1371,7 +1371,7 @@ export default function ConfinedSpacesModule3Section1() {
               <div className="grid sm:grid-cols-2 gap-3">
                 <div className="bg-cyan-500/5 border border-cyan-500/20 rounded-lg p-3">
                   <p className="text-sm font-medium text-cyan-400 mb-2">Oxygen Depletion</p>
-                  <ul className="text-xs text-white/70 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>Normal: 20.9% O&sub2;</li>
                     <li>First alarm: 19.5% O&sub2;</li>
                     <li>&lt;12%: unconscious in seconds</li>
@@ -1380,7 +1380,7 @@ export default function ConfinedSpacesModule3Section1() {
                 </div>
                 <div className="bg-orange-500/5 border border-orange-500/20 rounded-lg p-3">
                   <p className="text-sm font-medium text-orange-400 mb-2">Oxygen Enrichment</p>
-                  <ul className="text-xs text-white/70 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>&gt;23.5% O&sub2; is enriched</li>
                     <li>Fire risk multiplied dramatically</li>
                     <li>Never use O&sub2; to ventilate</li>
@@ -1389,7 +1389,7 @@ export default function ConfinedSpacesModule3Section1() {
                 </div>
                 <div className="bg-red-500/5 border border-red-500/20 rounded-lg p-3">
                   <p className="text-sm font-medium text-red-400 mb-2">Toxic Gases</p>
-                  <ul className="text-xs text-white/70 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>H&sub2;S: WEL 5 ppm, olfactory fatigue &gt;100 ppm</li>
                     <li>CO: WEL 20 ppm, odourless &amp; colourless</li>
                     <li>CO&sub2;: WEL 5,000 ppm, heavier than air</li>
@@ -1399,7 +1399,7 @@ export default function ConfinedSpacesModule3Section1() {
                 </div>
                 <div className="bg-amber-500/5 border border-amber-500/20 rounded-lg p-3">
                   <p className="text-sm font-medium text-amber-400 mb-2">Flammable Atmospheres</p>
-                  <ul className="text-xs text-white/70 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>LEL/UEL defines the flammable range</li>
                     <li>Methane: LEL 5%, UEL 15%</li>
                     <li>Alarm at 10% LEL and 20% LEL</li>
@@ -1430,7 +1430,7 @@ export default function ConfinedSpacesModule3Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1444,7 +1444,7 @@ export default function ConfinedSpacesModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-2-section-4">

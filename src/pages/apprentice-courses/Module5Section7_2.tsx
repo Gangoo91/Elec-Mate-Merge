@@ -220,7 +220,7 @@ const Module5Section7_2 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -238,13 +238,13 @@ const Module5Section7_2 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 7.2</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 7.2</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Cable and Circuit Labelling Conventions
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Understanding proper labelling techniques for electrical circuits and cables to ensure
               safety, compliance, and efficient maintenance
             </p>
@@ -256,7 +256,7 @@ const Module5Section7_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Introduction
             </h2>
-            <div className="grid sm:grid-cols-2 gap-4 text-white/90">
+            <div className="grid sm:grid-cols-2 gap-4 text-white">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-5 space-y-1 text-sm">
@@ -295,7 +295,7 @@ const Module5Section7_2 = () => {
               <Tag className="w-5 h-5 text-elec-yellow/80" />
               Learning Outcomes
             </h2>
-            <ul className="list-disc pl-6 space-y-2 text-white/80">
+            <ul className="list-disc pl-6 space-y-2 text-white">
               <li>Explain the purpose of labelling cables and circuits</li>
               <li>Identify common labelling conventions used on-site</li>
               <li>Recognise the risks of poor or missing labelling</li>
@@ -310,14 +310,14 @@ const Module5Section7_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Why Labelling Matters
             </h2>
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Proper labelling is fundamental to electrical safety and forms a critical part of
               professional installation practice:
             </p>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">Safety and Emergency Response</p>
-                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                <ul className="text-white ml-4 list-disc space-y-1 text-sm">
                   <li>Rapid identification of circuits during electrical emergencies</li>
                   <li>Prevents accidental energisation during maintenance work</li>
                   <li>Enables safe isolation for fault finding and repair</li>
@@ -327,7 +327,7 @@ const Module5Section7_2 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
                 <p className="font-medium text-white mb-2">Compliance Requirements</p>
-                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                <ul className="text-white ml-4 list-disc space-y-1 text-sm">
                   <li>BS 7671 regulation 514 requires identification of protective devices</li>
                   <li>Each circuit must be clearly identified at the distribution board</li>
                   <li>Cable identification must be maintained throughout the installation</li>
@@ -337,7 +337,7 @@ const Module5Section7_2 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
                 <p className="font-medium text-white mb-2">Operational Efficiency</p>
-                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                <ul className="text-white ml-4 list-disc space-y-1 text-sm">
                   <li>Faster troubleshooting and repair times</li>
                   <li>Reduced downtime during maintenance activities</li>
                   <li>Easier system modifications and additions</li>
@@ -347,7 +347,7 @@ const Module5Section7_2 = () => {
               </div>
             </div>
             <div className="mt-4 p-3 rounded-lg bg-red-500/10 border border-red-500/30">
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 <strong className="text-red-400">Legal requirement:</strong> Proper labelling is not
                 optional - it is a legal requirement under BS 7671 and essential for safety
               </p>
@@ -368,14 +368,14 @@ const Module5Section7_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Common Labelling Conventions
             </h2>
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Standardised labelling conventions ensure consistency and understanding across all
               electrical installations:
             </p>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">Distribution Boards</p>
-                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                <ul className="text-white ml-4 list-disc space-y-1 text-sm">
                   <li>Circuit number and description (e.g., "L1 - Ground Floor Lighting")</li>
                   <li>Protective device type and rating (e.g., "16A MCB Type B")</li>
                   <li>Cable size and type (e.g., "2.5mm² T&E")</li>
@@ -386,7 +386,7 @@ const Module5Section7_2 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-blue-500/50">
                 <p className="font-medium text-white mb-2">Cable Markers</p>
-                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                <ul className="text-white ml-4 list-disc space-y-1 text-sm">
                   <li>Heat-shrink sleeves for permanent, durable identification</li>
                   <li>Clip-on tags for easy application and modification</li>
                   <li>Self-adhesive printed labels for distribution boards</li>
@@ -397,7 +397,7 @@ const Module5Section7_2 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
                 <p className="font-medium text-white mb-2">Colour Coding</p>
-                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                <ul className="text-white ml-4 list-disc space-y-1 text-sm">
                   <li>Single phase: Brown (line), Blue (neutral), Green/Yellow (earth)</li>
                   <li>Three phase: Brown (L1), Black (L2), Grey (L3), Blue (neutral)</li>
                   <li>DC circuits: Red (positive), Black (negative), Green/Yellow (earth)</li>
@@ -407,7 +407,7 @@ const Module5Section7_2 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
                 <p className="font-medium text-white mb-2">Circuit Schedules</p>
-                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                <ul className="text-white ml-4 list-disc space-y-1 text-sm">
                   <li>Circuit number, description, and protective device details</li>
                   <li>Cable type, size, and installation method</li>
                   <li>Design current and maximum demand</li>
@@ -417,7 +417,7 @@ const Module5Section7_2 = () => {
               </div>
             </div>
             <div className="mt-4 p-3 rounded-lg bg-blue-500/10 border border-blue-500/30">
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 <strong className="text-blue-400">Consistency is key:</strong> Use the same
                 labelling system throughout the installation for clarity and professional appearance
               </p>
@@ -438,14 +438,14 @@ const Module5Section7_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Consequences of Poor Labelling
             </h2>
-            <p className="text-white/80 mb-4 leading-relaxed">
+            <p className="text-white mb-4 leading-relaxed">
               Inadequate or incorrect labelling can have serious safety, operational, and financial
               consequences:
             </p>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
                 <p className="font-medium text-white mb-2">Safety Hazards</p>
-                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                <ul className="text-white ml-4 list-disc space-y-1 text-sm">
                   <li>Electric shock from working on live circuits due to incorrect isolation</li>
                   <li>Arc flash incidents from switching wrong protective devices</li>
                   <li>Injury from unexpected equipment operation during maintenance</li>
@@ -455,7 +455,7 @@ const Module5Section7_2 = () => {
               </div>
               <div className="p-4 rounded-lg bg-orange-500/10 border-l-2 border-orange-500/50">
                 <p className="font-medium text-white mb-2">Operational Impact</p>
-                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                <ul className="text-white ml-4 list-disc space-y-1 text-sm">
                   <li>Extended fault-finding times increasing labour costs</li>
                   <li>Production downtime from incorrect circuit isolation</li>
                   <li>Multiple trips to distribution boards to identify circuits</li>
@@ -465,7 +465,7 @@ const Module5Section7_2 = () => {
               </div>
               <div className="p-4 rounded-lg bg-amber-500/10 border-l-2 border-amber-500/50">
                 <p className="font-medium text-white mb-2">Compliance Failures</p>
-                <ul className="text-white/70 ml-4 list-disc space-y-1 text-sm">
+                <ul className="text-white ml-4 list-disc space-y-1 text-sm">
                   <li>BS 7671 non-compliance leading to failed electrical inspections</li>
                   <li>Building Control rejection of electrical installation certificates</li>
                   <li>Insurance policy invalidation due to non-compliant installations</li>
@@ -475,7 +475,7 @@ const Module5Section7_2 = () => {
               </div>
             </div>
             <div className="mt-4 p-3 rounded-lg bg-green-500/10 border border-green-500/30">
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 <strong className="text-green-400">Prevention:</strong> Proper labelling from the
                 start prevents all these issues and saves time and money in the long term
               </p>
@@ -503,7 +503,7 @@ const Module5Section7_2 = () => {
                   <h3 className="font-medium text-white mb-2">
                     Poor Labelling Causes Costly Downtime
                   </h3>
-                  <p className="text-white/80 text-sm mb-3">
+                  <p className="text-white text-sm mb-3">
                     On a large industrial project, multiple electricians are working on separate
                     circuits from the same distribution board. Some circuits are not labelled, and
                     another team accidentally isolates the wrong breaker during testing. This causes
@@ -511,7 +511,7 @@ const Module5Section7_2 = () => {
                   </p>
                   <div className="bg-amber-500/10 p-3 rounded-lg mb-3">
                     <p className="font-medium text-amber-400 text-sm mb-1">What went wrong:</p>
-                    <ul className="text-white/70 list-disc ml-4 space-y-1 text-xs">
+                    <ul className="text-white list-disc ml-4 space-y-1 text-xs">
                       <li>Incomplete circuit labelling at distribution board</li>
                       <li>No circuit schedule available for reference</li>
                       <li>Poor communication between work teams</li>
@@ -520,7 +520,7 @@ const Module5Section7_2 = () => {
                   </div>
                   <div className="bg-green-500/10 p-3 rounded-lg">
                     <p className="font-medium text-green-400 text-sm mb-1">Prevention measures:</p>
-                    <ul className="text-white/70 list-disc ml-4 space-y-1 text-xs">
+                    <ul className="text-white list-disc ml-4 space-y-1 text-xs">
                       <li>Complete circuit labelling before energisation</li>
                       <li>Provide detailed circuit schedules at each distribution board</li>
                       <li>Implement permit-to-work systems for circuit isolation</li>
@@ -534,7 +534,7 @@ const Module5Section7_2 = () => {
             <div className="mt-4 grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
                 <h4 className="font-medium text-white mb-2 text-sm">Faded Labels</h4>
-                <p className="text-white/70 text-xs mb-2">
+                <p className="text-white text-xs mb-2">
                   Paper labels in a plant room fade due to heat and humidity. During an emergency,
                   maintenance staff cannot identify the correct circuit, leading to extended
                   downtime.
@@ -545,7 +545,7 @@ const Module5Section7_2 = () => {
               </div>
               <div className="p-4 rounded-lg bg-red-500/10 border-l-2 border-red-500/50">
                 <h4 className="font-medium text-white mb-2 text-sm">Inconsistent Numbering</h4>
-                <p className="text-white/70 text-xs mb-2">
+                <p className="text-white text-xs mb-2">
                   Different electricians use different numbering systems. Circuits cannot be matched
                   between distribution boards and drawings, causing confusion.
                 </p>
@@ -568,7 +568,7 @@ const Module5Section7_2 = () => {
                   <CheckCircle className="w-4 h-4 text-green-500" />
                   Best Practices
                 </h3>
-                <ul className="text-white/70 space-y-1 text-sm">
+                <ul className="text-white space-y-1 text-sm">
                   <li>• Label cables and circuits immediately after installation</li>
                   <li>• Use durable, legible labels resistant to heat and wear</li>
                   <li>• Cross-check labels with circuit charts before handover</li>
@@ -582,7 +582,7 @@ const Module5Section7_2 = () => {
                   <Target className="w-4 h-4 text-elec-yellow" />
                   Key Actions
                 </h3>
-                <ul className="text-white/70 space-y-1 text-sm">
+                <ul className="text-white space-y-1 text-sm">
                   <li>• Label all circuits and cables clearly</li>
                   <li>• Use BS 7671 colour codes and conventions</li>
                   <li>• Provide a circuit chart in each distribution board</li>
@@ -602,7 +602,7 @@ const Module5Section7_2 = () => {
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-medium text-white mb-2 text-sm">Heat-Shrink Sleeves</h4>
                   <p className="text-green-400 text-xs font-medium mb-1">Best for:</p>
-                  <ul className="text-white/70 list-disc ml-4 space-y-1 text-xs">
+                  <ul className="text-white list-disc ml-4 space-y-1 text-xs">
                     <li>Permanent cable identification</li>
                     <li>High-temperature environments</li>
                     <li>Industrial applications</li>
@@ -611,7 +611,7 @@ const Module5Section7_2 = () => {
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-medium text-white mb-2 text-sm">Self-Adhesive Labels</h4>
                   <p className="text-green-400 text-xs font-medium mb-1">Best for:</p>
-                  <ul className="text-white/70 list-disc ml-4 space-y-1 text-xs">
+                  <ul className="text-white list-disc ml-4 space-y-1 text-xs">
                     <li>Distribution board schedules</li>
                     <li>Panel identification</li>
                     <li>Professional appearance</li>
@@ -620,7 +620,7 @@ const Module5Section7_2 = () => {
                 <div className="p-3 rounded-lg bg-white/5 border border-white/10">
                   <h4 className="font-medium text-white mb-2 text-sm">Clip-On Tags</h4>
                   <p className="text-green-400 text-xs font-medium mb-1">Best for:</p>
-                  <ul className="text-white/70 list-disc ml-4 space-y-1 text-xs">
+                  <ul className="text-white list-disc ml-4 space-y-1 text-xs">
                     <li>Temporary identification</li>
                     <li>Easy modification</li>
                     <li>Testing and commissioning</li>
@@ -634,8 +634,8 @@ const Module5Section7_2 = () => {
               <h3 className="font-medium text-white mb-3">Labelling Quality Control Checklist</h3>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-white/90 font-medium text-sm mb-2">Before Energisation:</p>
-                  <ul className="text-white/70 space-y-1 text-xs">
+                  <p className="text-white font-medium text-sm mb-2">Before Energisation:</p>
+                  <ul className="text-white space-y-1 text-xs">
                     <li>☐ All circuits labelled at distribution board</li>
                     <li>☐ Cable identification at key points</li>
                     <li>☐ Circuit schedule completed and installed</li>
@@ -643,8 +643,8 @@ const Module5Section7_2 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-white/90 font-medium text-sm mb-2">Final Handover:</p>
-                  <ul className="text-white/70 space-y-1 text-xs">
+                  <p className="text-white font-medium text-sm mb-2">Final Handover:</p>
+                  <ul className="text-white space-y-1 text-xs">
                     <li>☐ Labels legible and secure</li>
                     <li>☐ Circuit details match test results</li>
                     <li>☐ Emergency isolation clearly marked</li>
@@ -702,7 +702,7 @@ const Module5Section7_2 = () => {
                   className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50"
                 >
                   <h3 className="font-medium text-white mb-2">Q: {faq.question}</h3>
-                  <p className="text-white/80 text-sm">A: {faq.answer}</p>
+                  <p className="text-white text-sm">A: {faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -714,12 +714,12 @@ const Module5Section7_2 = () => {
               <CheckCircle className="w-5 h-5 text-green-500" />
               <h2 className="text-xl font-semibold text-white">Recap</h2>
             </div>
-            <p className="text-white/80 mb-4">
+            <p className="text-white mb-4">
               In this subsection, you learned the importance of cable and circuit labelling
               conventions. You explored why clear labelling ensures safety, compliance, and
               efficiency, and how poor labelling can cause costly downtime and safety risks.
             </p>
-            <ul className="list-disc pl-6 space-y-2 text-white/80">
+            <ul className="list-disc pl-6 space-y-2 text-white">
               <li>Proper labelling is a legal requirement under BS 7671</li>
               <li>
                 Use standard conventions for distribution boards, cable markers, and colour coding

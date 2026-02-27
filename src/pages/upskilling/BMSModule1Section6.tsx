@@ -100,7 +100,7 @@ const BMSModule1Section6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bms-module-1">
@@ -121,7 +121,7 @@ const BMSModule1Section6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             The Electrician's Role in BMS Installations
           </h1>
-          <p className="text-white/80">Professional responsibilities and best practices</p>
+          <p className="text-white">Professional responsibilities and best practices</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -859,7 +859,7 @@ const BMSModule1Section6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bms-module-1-section-5">

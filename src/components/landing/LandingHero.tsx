@@ -91,7 +91,7 @@ export const LandingHero = () => {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: 0.2 }}
-            className="text-base sm:text-lg md:text-xl text-white/60 max-w-xl mx-auto mb-8 sm:mb-10 leading-relaxed px-2"
+            className="text-base sm:text-lg md:text-xl text-white max-w-xl mx-auto mb-8 sm:mb-10 leading-relaxed px-2"
           >
             AI-powered tools, certifications, training & job management. Everything you need in one
             place.
@@ -128,7 +128,7 @@ export const LandingHero = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.4, delay: 0.3 }}
-            className="flex items-center justify-center gap-6 sm:gap-8 text-white/50 overflow-x-auto scrollbar-hide px-4 -mx-4"
+            className="flex items-center justify-center gap-6 sm:gap-8 text-white overflow-x-auto scrollbar-hide px-4 -mx-4"
           >
             <div className="flex items-center gap-2 shrink-0">
               <Shield className="w-4 h-4 sm:w-5 sm:h-5 text-green-400/80" />
@@ -154,7 +154,7 @@ export const LandingHero = () => {
       {/* Scroll indicator */}
       <motion.button
         onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
-        className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white/30 hover:text-white/60 transition-colors touch-manipulation p-2"
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 text-white hover:text-white transition-colors touch-manipulation p-2"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1, y: prefersReducedMotion ? 0 : [0, 8, 0] }}
         transition={{

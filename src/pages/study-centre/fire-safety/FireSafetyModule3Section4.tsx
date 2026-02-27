@@ -176,7 +176,7 @@ export default function FireSafetyModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-3">
@@ -199,7 +199,7 @@ export default function FireSafetyModule3Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Emergency Lighting
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Emergency lighting systems, BS 5266 Part 1, maintained and non-maintained luminaires,
             self-contained and central battery systems, exit signs, testing, and design
             considerations
@@ -291,7 +291,7 @@ export default function FireSafetyModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Legal Framework</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -327,7 +327,7 @@ export default function FireSafetyModule3Section4() {
                   <p className="text-sm font-medium text-rose-400 mb-2">
                     Emergency Escape Lighting
                   </p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Lighting that provides illumination for the safe evacuation of people from a
                     building when the normal supply fails. This is the type most commonly referred
                     to as &ldquo;emergency lighting&rdquo; and includes escape route lighting, open
@@ -338,7 +338,7 @@ export default function FireSafetyModule3Section4() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Standby Lighting</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Lighting that enables normal activities to continue substantially unchanged
                     during a mains failure. Standby lighting provides a higher illumination level
                     than emergency escape lighting and is used where it is not acceptable for
@@ -354,7 +354,7 @@ export default function FireSafetyModule3Section4() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Key Distinction</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Emergency escape lighting and standby lighting serve different purposes. Emergency
                   escape lighting is solely for safe evacuation and must meet the minimum lux levels
                   specified in BS 5266 Part 1. Standby lighting maintains normal working conditions
@@ -394,7 +394,7 @@ export default function FireSafetyModule3Section4() {
                       <DoorOpen className="h-5 w-5 text-rose-400" />
                       <p className="text-sm font-medium text-rose-400">Escape Route Lighting</p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                         <span>
@@ -430,7 +430,7 @@ export default function FireSafetyModule3Section4() {
                         Open Area / Anti-Panic Lighting
                       </p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                         <span>
@@ -463,7 +463,7 @@ export default function FireSafetyModule3Section4() {
                         High-Risk Task Area Lighting
                       </p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                         <span>
@@ -499,7 +499,7 @@ export default function FireSafetyModule3Section4() {
                   <Clock className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Duration Requirements</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -551,7 +551,7 @@ export default function FireSafetyModule3Section4() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-3">Non-Maintained</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>Only operates when the normal mains supply fails</span>
@@ -584,7 +584,7 @@ export default function FireSafetyModule3Section4() {
 
                 <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-rose-400 mb-3">Maintained</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
@@ -628,7 +628,7 @@ export default function FireSafetyModule3Section4() {
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white mb-1">Sustained</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       A luminaire containing two or more lamps, at least one of which is fed from
                       the emergency supply and the other(s) from the normal supply. In normal
                       conditions, both lamps may operate. On mains failure, only the emergency lamp
@@ -638,7 +638,7 @@ export default function FireSafetyModule3Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-sm font-medium text-white mb-1">Combined</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       A luminaire containing two or more lamps where at least one lamp operates from
                       the normal supply and at least one lamp is capable of operating from the
                       emergency supply. The emergency lamp only illuminates when the normal supply
@@ -688,7 +688,7 @@ export default function FireSafetyModule3Section4() {
                     <Battery className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">Self-Contained</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
@@ -728,7 +728,7 @@ export default function FireSafetyModule3Section4() {
                     <Shield className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">Central Battery</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
@@ -770,7 +770,7 @@ export default function FireSafetyModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Generator-Fed Systems</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   In some installations &mdash; particularly hospitals, data centres, and large
                   commercial buildings &mdash; a standby generator provides an extended power supply
                   that can feed emergency lighting (and other essential services) for many hours or
@@ -881,7 +881,7 @@ export default function FireSafetyModule3Section4() {
                   ].map((item, i) => (
                     <div key={i} className="bg-white/5 border border-white/10 p-3 rounded-lg">
                       <p className="text-sm font-medium text-rose-300 mb-1">{item.location}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -894,7 +894,7 @@ export default function FireSafetyModule3Section4() {
                     The Fire Risk Assessment Decides
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The list above represents the minimum locations specified in BS 5266 Part 1. The
                   fire risk assessment for the specific building may identify additional locations
                   where emergency lighting is required based on the particular risks, layout, and
@@ -932,7 +932,7 @@ export default function FireSafetyModule3Section4() {
                   <SignpostBig className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Exit Sign Requirements</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -973,7 +973,7 @@ export default function FireSafetyModule3Section4() {
               <div className="grid sm:grid-cols-3 gap-4">
                 <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-rose-400 mb-2">Internally Illuminated</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>Light source inside the sign itself</span>
@@ -991,7 +991,7 @@ export default function FireSafetyModule3Section4() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Externally Illuminated</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>Lit by a separate emergency luminaire</span>
@@ -1009,7 +1009,7 @@ export default function FireSafetyModule3Section4() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Photoluminescent</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>Absorbs and re-emits light energy</span>
@@ -1090,7 +1090,7 @@ export default function FireSafetyModule3Section4() {
                       </span>
                       <div>
                         <p className="text-sm font-medium text-white">{item.period}</p>
-                        <p className="text-sm text-white/80">{item.detail}</p>
+                        <p className="text-sm text-white">{item.detail}</p>
                       </div>
                     </div>
                   ))}
@@ -1100,7 +1100,7 @@ export default function FireSafetyModule3Section4() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Battery Replacement</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Batteries in self-contained luminaires have a finite lifespan (typically
                     4&ndash;6 years for NiCd cells). When a luminaire fails the annual full-duration
                     test, the battery should be replaced. Some modern self-contained luminaires
@@ -1112,7 +1112,7 @@ export default function FireSafetyModule3Section4() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Log Book Requirements</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Every test, inspection, fault, and repair must be recorded in the emergency
                     lighting log book. The log should include: date and time of each test, type of
                     test performed (monthly, 6-monthly, or annual), results for each luminaire, any
@@ -1125,7 +1125,7 @@ export default function FireSafetyModule3Section4() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-400 mb-2">Certificates</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1178,7 +1178,7 @@ export default function FireSafetyModule3Section4() {
                   <Cable className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Circuit Design Principles</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1241,7 +1241,7 @@ export default function FireSafetyModule3Section4() {
                       <Lightbulb className="h-5 w-5 text-rose-400" />
                       <p className="text-sm font-bold text-rose-400">Emergency Lighting</p>
                     </div>
-                    <p className="text-[10px] sm:text-xs text-white/60">
+                    <p className="text-[10px] sm:text-xs text-white">
                       BS 5266 Part 1 &bull; Activates on mains failure
                     </p>
                   </div>
@@ -1259,7 +1259,7 @@ export default function FireSafetyModule3Section4() {
                       <p className="text-[10px] sm:text-xs text-rose-400 font-medium">
                         Self-Contained
                       </p>
-                      <p className="text-[9px] sm:text-[10px] text-white/50">
+                      <p className="text-[9px] sm:text-[10px] text-white">
                         Own battery per luminaire
                       </p>
                     </div>
@@ -1267,7 +1267,7 @@ export default function FireSafetyModule3Section4() {
                       <p className="text-[10px] sm:text-xs text-rose-400 font-medium">
                         Central Battery
                       </p>
-                      <p className="text-[9px] sm:text-[10px] text-white/50">
+                      <p className="text-[9px] sm:text-[10px] text-white">
                         Single battery set + fire-rated cables
                       </p>
                     </div>
@@ -1292,10 +1292,10 @@ export default function FireSafetyModule3Section4() {
                         key={i}
                         className="bg-white/5 border border-white/20 rounded-lg p-2 text-center"
                       >
-                        <p className="text-[10px] sm:text-xs text-white/80 font-medium">
+                        <p className="text-[10px] sm:text-xs text-white font-medium">
                           {item.label}
                         </p>
-                        <p className="text-[9px] sm:text-[10px] text-white/50">{item.sub}</p>
+                        <p className="text-[9px] sm:text-[10px] text-white">{item.sub}</p>
                       </div>
                     ))}
                   </div>
@@ -1321,7 +1321,7 @@ export default function FireSafetyModule3Section4() {
                         <p className="text-[10px] sm:text-xs text-rose-400 font-medium">
                           {item.label}
                         </p>
-                        <p className="text-[9px] sm:text-[10px] text-white/50">{item.sub}</p>
+                        <p className="text-[9px] sm:text-[10px] text-white">{item.sub}</p>
                       </div>
                     ))}
                   </div>
@@ -1333,7 +1333,7 @@ export default function FireSafetyModule3Section4() {
                   <Wrench className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Practical Installation Tips</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                     <span>
@@ -1381,7 +1381,7 @@ export default function FireSafetyModule3Section4() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Common Installation Errors</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The most common errors found in emergency lighting installations include:
                   connecting self-contained luminaires to the switched side of the lighting circuit
                   (so the battery does not charge when the room light is switched off); failing to
@@ -1405,7 +1405,7 @@ export default function FireSafetyModule3Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1419,7 +1419,7 @@ export default function FireSafetyModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-3-section-3">

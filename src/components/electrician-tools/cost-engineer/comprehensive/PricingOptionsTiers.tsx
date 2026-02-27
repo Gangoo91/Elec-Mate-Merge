@@ -175,13 +175,13 @@ const PricingOptionsTiers = ({
         </div>
         <div className="space-y-3">
           <div>
-            <span className="text-xs sm:text-sm text-white/50">
+            <span className="text-xs sm:text-sm text-white">
               {benchmark.name} typical range:
             </span>
             <div className="text-sm sm:text-base font-medium text-white">{benchmark.range}</div>
           </div>
           <div>
-            <span className="text-xs sm:text-sm text-white/50">This quote (Standard tier):</span>
+            <span className="text-xs sm:text-sm text-white">This quote (Standard tier):</span>
             <div
               className={`text-sm sm:text-base font-bold ${
                 standardPrice < benchmark.min
@@ -216,20 +216,20 @@ const PricingOptionsTiers = ({
               Standard 20%
             </Badge>
             <div className="text-3xl font-bold text-elec-yellow">£{standardPrice.toFixed(0)}</div>
-            <div className="text-xs sm:text-sm text-white/50 mt-1">Business margin</div>
+            <div className="text-xs sm:text-sm text-white mt-1">Business margin</div>
           </div>
 
           <div className="space-y-2">
             <div className="flex justify-between text-xs">
-              <span className="text-white/60">Margin:</span>
+              <span className="text-white">Margin:</span>
               <span className="font-medium text-white">{standard.margin.toFixed(0)}%</span>
             </div>
             <div className="flex justify-between text-xs">
-              <span className="text-white/60">Profit:</span>
+              <span className="text-white">Profit:</span>
               <span className="font-medium text-emerald-400">£{standard.profit.toFixed(0)}</span>
             </div>
             <div className="flex justify-between text-xs">
-              <span className="text-white/60">Per hour:</span>
+              <span className="text-white">Per hour:</span>
               <span className="font-medium text-white">£{standard.profitPerHour.toFixed(0)}</span>
             </div>
           </div>
@@ -249,20 +249,20 @@ const PricingOptionsTiers = ({
               Premium 35%
             </Badge>
             <div className="text-3xl font-bold text-white">£{busyPrice.toFixed(0)}</div>
-            <div className="text-xs sm:text-sm text-white/50 mt-1">High demand</div>
+            <div className="text-xs sm:text-sm text-white mt-1">High demand</div>
           </div>
 
           <div className="space-y-2">
             <div className="flex justify-between text-xs">
-              <span className="text-white/60">Margin:</span>
+              <span className="text-white">Margin:</span>
               <span className="font-medium text-white">{busy.margin.toFixed(0)}%</span>
             </div>
             <div className="flex justify-between text-xs">
-              <span className="text-white/60">Profit:</span>
+              <span className="text-white">Profit:</span>
               <span className="font-medium text-emerald-400">£{busy.profit.toFixed(0)}</span>
             </div>
             <div className="flex justify-between text-xs">
-              <span className="text-white/60">Per hour:</span>
+              <span className="text-white">Per hour:</span>
               <span className="font-medium text-white">£{busy.profitPerHour.toFixed(0)}</span>
             </div>
           </div>

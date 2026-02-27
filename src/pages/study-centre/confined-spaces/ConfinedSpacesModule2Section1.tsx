@@ -220,7 +220,7 @@ export default function ConfinedSpacesModule2Section1() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Confined Spaces Regulations 1997
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             The primary UK legislation governing work in confined spaces &mdash; understanding all
             five regulations, the Approved Code of Practice, supporting legislation, and enforcement
           </p>
@@ -419,7 +419,7 @@ export default function ConfinedSpacesModule2Section1() {
                   Regulation 2 &mdash; Interpretation (Key Definitions)
                 </h3>
                 <div className="space-y-3 text-sm">
-                  <p className="text-white/80">
+                  <p className="text-white">
                     Regulation 2 provides the legal definitions that determine the scope of the
                     regulations. The most critical definition is that of a &ldquo;confined
                     space&rdquo; itself:
@@ -436,7 +436,7 @@ export default function ConfinedSpacesModule2Section1() {
                     </p>
                   </div>
 
-                  <p className="text-white/80">
+                  <p className="text-white">
                     The definition has <strong>two limbs</strong> that must both be satisfied:
                   </p>
 
@@ -445,7 +445,7 @@ export default function ConfinedSpacesModule2Section1() {
                       <p className="text-cyan-400 font-semibold text-sm mb-1">
                         Limb 1: Enclosed Nature
                       </p>
-                      <p className="text-white/80 text-xs">
+                      <p className="text-white text-xs">
                         The space must be substantially (though not necessarily entirely) enclosed.
                         A space can have openings and still be &ldquo;enclosed&rdquo; within the
                         meaning of the regulations.
@@ -455,7 +455,7 @@ export default function ConfinedSpacesModule2Section1() {
                       <p className="text-cyan-400 font-semibold text-sm mb-1">
                         Limb 2: Specified Risk
                       </p>
-                      <p className="text-white/80 text-xs">
+                      <p className="text-white text-xs">
                         A reasonably foreseeable &ldquo;specified risk&rdquo; must arise by virtue
                         of the enclosed nature. The risk must be one of those listed in Regulation
                         1(2).
@@ -463,7 +463,7 @@ export default function ConfinedSpacesModule2Section1() {
                     </div>
                   </div>
 
-                  <p className="text-white/80 mt-2">
+                  <p className="text-white mt-2">
                     The &ldquo;specified risks&rdquo; defined in the regulations are:
                   </p>
                   <ul className="text-white space-y-2">
@@ -507,7 +507,7 @@ export default function ConfinedSpacesModule2Section1() {
                       <AlertTriangle className="h-4 w-4 text-cyan-400 flex-shrink-0 mt-0.5" />
                       <p className="text-cyan-300 font-semibold text-sm">Key Point</p>
                     </div>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Both limbs must be present. A small room is not a confined space simply
                       because it is enclosed &mdash; there must also be a foreseeable specified risk
                       arising from that enclosed nature. Conversely, a hazardous open area is not a
@@ -515,7 +515,7 @@ export default function ConfinedSpacesModule2Section1() {
                     </p>
                   </div>
 
-                  <p className="text-white/80 mt-3">
+                  <p className="text-white mt-3">
                     Regulation 2 also defines &ldquo;<strong>competent person</strong>&rdquo; as a
                     person with sufficient training, experience, knowledge, and other qualities to
                     enable them to properly implement the requirements of the regulations. ACoP L101
@@ -579,7 +579,7 @@ export default function ConfinedSpacesModule2Section1() {
                       <p className="text-green-400 font-semibold text-sm">
                         AVOID ENTRY (Regulation 3)
                       </p>
-                      <p className="text-white/80 text-xs mt-1">
+                      <p className="text-white text-xs mt-1">
                         Can the task be completed without entering? Consider remote inspection
                         (cameras, drones), mechanical cleaning (high-pressure jets), modification
                         from outside, extending tools, or redesigning the process.
@@ -599,7 +599,7 @@ export default function ConfinedSpacesModule2Section1() {
                       <p className="text-amber-400 font-semibold text-sm">
                         SAFE SYSTEM OF WORK (Regulation 4)
                       </p>
-                      <p className="text-white/80 text-xs mt-1">
+                      <p className="text-white text-xs mt-1">
                         If entry is unavoidable, implement a full safe system: risk assessment,
                         competent persons, atmospheric testing, permits, isolation, ventilation,
                         PPE, communication, and supervision.
@@ -618,7 +618,7 @@ export default function ConfinedSpacesModule2Section1() {
                       <p className="text-red-400 font-semibold text-sm">
                         EMERGENCY ARRANGEMENTS (Regulation 5)
                       </p>
-                      <p className="text-white/80 text-xs mt-1">
+                      <p className="text-white text-xs mt-1">
                         Before any entry, adequate emergency arrangements must be in place: rescue
                         equipment, trained rescue team, rehearsed procedures, communication with
                         emergency services.
@@ -676,7 +676,7 @@ export default function ConfinedSpacesModule2Section1() {
                   <ShieldCheck className="h-5 w-5 text-cyan-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-cyan-300">Electricians &amp; Avoidance</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   For electrical work, Regulation 3 means asking: can the cable be routed
                   differently to avoid the confined space? Can the equipment be relocated? Can
                   testing be done from outside using extended leads? Can a camera inspect the cable
@@ -855,7 +855,7 @@ export default function ConfinedSpacesModule2Section1() {
                       </div>
                       <div className="flex-1 bg-white/5 border border-white/10 p-2.5 rounded-lg">
                         <p className="text-cyan-400 font-semibold text-sm">{item.title}</p>
-                        <p className="text-white/70 text-xs">{item.desc}</p>
+                        <p className="text-white text-xs">{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -869,7 +869,7 @@ export default function ConfinedSpacesModule2Section1() {
                     The &ldquo;Top Person&rdquo; (Attendant)
                   </h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   ACoP L101 requires that a competent person (the &ldquo;top person&rdquo; or
                   attendant) remains at the entrance to the confined space at all times while anyone
                   is inside. The top person must: maintain communication with the entrant, monitor
@@ -971,7 +971,7 @@ export default function ConfinedSpacesModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Never Attempt an Unplanned Rescue</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The single most important message from L101 on emergency arrangements is this:
                   <strong className="text-white">
                     {' '}
@@ -991,7 +991,7 @@ export default function ConfinedSpacesModule2Section1() {
                   LOLER 1998 &mdash; Rescue Lifting Operations
                 </h3>
                 <div className="space-y-3 text-sm">
-                  <p className="text-white/80">
+                  <p className="text-white">
                     Where the emergency arrangements include lifting a casualty from a confined
                     space (e.g. using a rescue tripod and winch to extract someone from a vertical
                     shaft), the Lifting Operations and Lifting Equipment Regulations 1998 (LOLER)
@@ -1047,7 +1047,7 @@ export default function ConfinedSpacesModule2Section1() {
                   <FileText className="inline h-4 w-4 mr-1.5 -mt-0.5" />
                   ACoP L101 &mdash; &ldquo;Safe Work in Confined Spaces&rdquo; (4th Edition)
                 </h3>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     ACoP L101 is the HSE&rsquo;s Approved Code of Practice that accompanies the CSR
                     1997. It has <strong className="text-white">special legal status</strong>:
@@ -1091,7 +1091,7 @@ export default function ConfinedSpacesModule2Section1() {
                   HASAWA 1974 &mdash; The Overarching Framework
                 </h3>
                 <div className="space-y-3 text-sm">
-                  <p className="text-white/80">
+                  <p className="text-white">
                     The Health and Safety at Work etc. Act 1974 is the &ldquo;parent&rdquo;
                     legislation under which the CSR 1997 was made. Three sections are particularly
                     relevant:
@@ -1138,14 +1138,14 @@ export default function ConfinedSpacesModule2Section1() {
                     <p className="text-cyan-400 font-semibold text-sm mb-1">
                       Management of H&amp;S at Work Regs 1999
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Reg 3: Risk assessment. Reg 7: Competent assistance. Reg 13: Training and
                       capabilities. Underpins the CSR 1997 safe system of work requirement.
                     </p>
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-cyan-400 font-semibold text-sm mb-1">CDM 2015</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Construction-specific requirements. Principal contractor must manage confined
                       space risks. Pre-construction information must address confined spaces. Health
                       and safety file must record permanent confined spaces.
@@ -1153,7 +1153,7 @@ export default function ConfinedSpacesModule2Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-cyan-400 font-semibold text-sm mb-1">PUWER 1998</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Governs selection, suitability, and maintenance of all work equipment used in
                       confined spaces: gas detectors, ventilation fans, lighting, power tools, and
                       communication devices.
@@ -1161,7 +1161,7 @@ export default function ConfinedSpacesModule2Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-cyan-400 font-semibold text-sm mb-1">LOLER 1998</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Applies to any lifting operation for rescue (tripods, winches, harnesses).
                       Equipment must be thoroughly examined every 6 months when used to lift
                       persons.
@@ -1169,7 +1169,7 @@ export default function ConfinedSpacesModule2Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-cyan-400 font-semibold text-sm mb-1">COSHH 2002</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Controls exposure to hazardous substances including toxic gases, fumes, and
                       vapours encountered in confined spaces. Requires assessment, prevention or
                       control, monitoring, and health surveillance.
@@ -1177,7 +1177,7 @@ export default function ConfinedSpacesModule2Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-cyan-400 font-semibold text-sm mb-1">DSEAR 2002</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Addresses explosive atmosphere risks. Requires hazardous area classification
                       (zoning), ATEX-rated equipment selection, and elimination or control of
                       ignition sources in confined spaces.
@@ -1255,7 +1255,7 @@ export default function ConfinedSpacesModule2Section1() {
               <div className="space-y-3">
                 <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg">
                   <h3 className="text-amber-400 font-semibold mb-2">Improvement Notice</h3>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     An improvement notice requires the duty holder to{' '}
                     <strong className="text-white">
                       remedy a breach within a specified timeframe
@@ -1269,7 +1269,7 @@ export default function ConfinedSpacesModule2Section1() {
 
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <h3 className="text-red-400 font-semibold mb-2">Prohibition Notice</h3>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     A prohibition notice{' '}
                     <strong className="text-white">stops work immediately</strong> where an
                     inspector believes there is, or is likely to be, a risk of serious personal
@@ -1281,7 +1281,7 @@ export default function ConfinedSpacesModule2Section1() {
 
                 <div className="bg-red-500/15 border border-red-500/40 p-4 rounded-lg">
                   <h3 className="text-red-300 font-semibold mb-2">Prosecution</h3>
-                  <p className="text-white/80 text-sm">
+                  <p className="text-white text-sm">
                     For serious breaches, particularly those resulting in death or serious injury,
                     the HSE will prosecute. Penalties include:
                   </p>
@@ -1324,7 +1324,7 @@ export default function ConfinedSpacesModule2Section1() {
                     <p className="text-cyan-300 font-semibold mb-1">
                       HSE v. Squibb Group Ltd (2019)
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       A worker died from hydrogen sulphide poisoning after entering a pump chamber
                       on a sewage treatment works. The company had failed to carry out a risk
                       assessment, had no safe system of work, no atmospheric monitoring, and no
@@ -1338,7 +1338,7 @@ export default function ConfinedSpacesModule2Section1() {
                     <p className="text-cyan-300 font-semibold mb-1">
                       R v. Meridian Water Treatment Ltd (2017)
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Two workers died after entering a water treatment tank to carry out
                       maintenance. The first worker collapsed from oxygen depletion; the second
                       entered to rescue him and also died. The company had no confined space
@@ -1353,7 +1353,7 @@ export default function ConfinedSpacesModule2Section1() {
                     <p className="text-cyan-300 font-semibold mb-1">
                       HSE v. Perrys Recycling Ltd (2020)
                     </p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       An employee entered a recycling baler to clear a blockage without the machine
                       being properly isolated. The space was a confined space due to the risk of
                       entrapment. The company was prosecuted for breaches of both the CSR 1997 and
@@ -1364,7 +1364,7 @@ export default function ConfinedSpacesModule2Section1() {
                   </div>
                   <div>
                     <p className="text-cyan-300 font-semibold mb-1">HSE v. Scottish Water (2018)</p>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       A worker was overcome by a toxic atmosphere while carrying out maintenance in
                       a water supply chamber. Although Scottish Water had a confined space entry
                       procedure, the investigation revealed it was not being followed on site. The
@@ -1436,7 +1436,7 @@ export default function ConfinedSpacesModule2Section1() {
                   {/* Top Level */}
                   <div className="bg-cyan-500/20 border border-cyan-500/40 px-4 py-2 rounded-lg text-centre w-full max-w-md">
                     <p className="text-cyan-400 font-bold text-sm">HASAWA 1974</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Overarching framework &mdash; Sections 2, 3 &amp; 7
                     </p>
                   </div>
@@ -1447,7 +1447,7 @@ export default function ConfinedSpacesModule2Section1() {
                     <p className="text-cyan-400 font-bold text-sm">
                       Confined Spaces Regulations 1997
                     </p>
-                    <p className="text-white/60 text-xs">Regs 1&ndash;5 + ACoP L101</p>
+                    <p className="text-white text-xs">Regs 1&ndash;5 + ACoP L101</p>
                   </div>
                   <div className="w-0.5 h-4 bg-cyan-500/30" />
 
@@ -1466,7 +1466,7 @@ export default function ConfinedSpacesModule2Section1() {
                         className="bg-white/5 border border-white/15 px-2 py-2 rounded-lg text-centre"
                       >
                         <p className="text-cyan-400 font-semibold text-xs">{reg.name}</p>
-                        <p className="text-white/50 text-[10px]">{reg.desc}</p>
+                        <p className="text-white text-[10px]">{reg.desc}</p>
                       </div>
                     ))}
                   </div>
@@ -1558,7 +1558,7 @@ export default function ConfinedSpacesModule2Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1574,7 +1574,7 @@ export default function ConfinedSpacesModule2Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-1-section-4">

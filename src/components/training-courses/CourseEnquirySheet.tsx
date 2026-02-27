@@ -117,7 +117,7 @@ const CourseEnquirySheet = ({ course, open, onOpenChange }: CourseEnquirySheetPr
             {/* Course Summary Card */}
             <div className="bg-elec-gray/50 border border-blue-500/20 rounded-xl p-4">
               <h3 className="font-semibold text-white text-base leading-tight">{course.title}</h3>
-              <div className="flex items-center gap-2 mt-2 text-sm text-white/70">
+              <div className="flex items-center gap-2 mt-2 text-sm text-white">
                 <Building2 className="h-3.5 w-3.5" />
                 <span>{course.provider}</span>
               </div>
@@ -129,7 +129,7 @@ const CourseEnquirySheet = ({ course, open, onOpenChange }: CourseEnquirySheetPr
                 </div>
                 <div className="flex items-center gap-1.5 text-sm">
                   <Clock className="h-3.5 w-3.5 text-blue-400" />
-                  <span className="text-white/70">{course.duration}</span>
+                  <span className="text-white">{course.duration}</span>
                 </div>
                 {course.rating && (
                   <div className="flex items-center gap-1.5 text-sm">
@@ -141,7 +141,7 @@ const CourseEnquirySheet = ({ course, open, onOpenChange }: CourseEnquirySheetPr
 
               {/* Location info */}
               {(course.location || venuePostcode) && (
-                <div className="flex items-center gap-1.5 mt-3 text-sm text-white/70">
+                <div className="flex items-center gap-1.5 mt-3 text-sm text-white">
                   <MapPin className="h-3.5 w-3.5 text-purple-400" />
                   <span>
                     {course.location}
@@ -153,7 +153,7 @@ const CourseEnquirySheet = ({ course, open, onOpenChange }: CourseEnquirySheetPr
 
               {/* Next dates */}
               {nextDates && nextDates.length > 0 && (
-                <div className="flex items-center gap-1.5 mt-2 text-sm text-white/70">
+                <div className="flex items-center gap-1.5 mt-2 text-sm text-white">
                   <Calendar className="h-3.5 w-3.5 text-cyan-400" />
                   <span>Next: {nextDates.slice(0, 2).join(', ')}</span>
                 </div>
@@ -167,7 +167,7 @@ const CourseEnquirySheet = ({ course, open, onOpenChange }: CourseEnquirySheetPr
                   <CheckCircle2 className="h-8 w-8 text-green-400" />
                 </div>
                 <h3 className="text-lg font-semibold text-white">Enquiry Sent!</h3>
-                <p className="text-sm text-white/60 mt-1">
+                <p className="text-sm text-white mt-1">
                   The training provider will contact you shortly.
                 </p>
               </div>
@@ -176,7 +176,7 @@ const CourseEnquirySheet = ({ course, open, onOpenChange }: CourseEnquirySheetPr
                 {/* Enquiry Form */}
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="name" className="text-sm text-white/80">
+                    <Label htmlFor="name" className="text-sm text-white">
                       Your Name *
                     </Label>
                     <Input
@@ -186,12 +186,12 @@ const CourseEnquirySheet = ({ course, open, onOpenChange }: CourseEnquirySheetPr
                       value={formData.name}
                       onChange={(e) => handleInputChange('name', e.target.value)}
                       required
-                      className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-blue-500/50 touch-manipulation"
+                      className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white focus:border-blue-500/50 touch-manipulation"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="email" className="text-sm text-white/80">
+                    <Label htmlFor="email" className="text-sm text-white">
                       Email Address *
                     </Label>
                     <Input
@@ -201,12 +201,12 @@ const CourseEnquirySheet = ({ course, open, onOpenChange }: CourseEnquirySheetPr
                       value={formData.email}
                       onChange={(e) => handleInputChange('email', e.target.value)}
                       required
-                      className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-blue-500/50 touch-manipulation"
+                      className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white focus:border-blue-500/50 touch-manipulation"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="phone" className="text-sm text-white/80">
+                    <Label htmlFor="phone" className="text-sm text-white">
                       Phone Number (optional)
                     </Label>
                     <Input
@@ -215,12 +215,12 @@ const CourseEnquirySheet = ({ course, open, onOpenChange }: CourseEnquirySheetPr
                       placeholder="07XXX XXXXXX"
                       value={formData.phone}
                       onChange={(e) => handleInputChange('phone', e.target.value)}
-                      className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-blue-500/50 touch-manipulation"
+                      className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white focus:border-blue-500/50 touch-manipulation"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <Label htmlFor="message" className="text-sm text-white/80">
+                    <Label htmlFor="message" className="text-sm text-white">
                       Message (optional)
                     </Label>
                     <Textarea
@@ -229,7 +229,7 @@ const CourseEnquirySheet = ({ course, open, onOpenChange }: CourseEnquirySheetPr
                       value={formData.message}
                       onChange={(e) => handleInputChange('message', e.target.value)}
                       rows={4}
-                      className="bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-blue-500/50 touch-manipulation text-base resize-none"
+                      className="bg-white/5 border-white/10 text-white placeholder:text-white focus:border-blue-500/50 touch-manipulation text-base resize-none"
                     />
                   </div>
 
@@ -251,7 +251,7 @@ const CourseEnquirySheet = ({ course, open, onOpenChange }: CourseEnquirySheetPr
 
                 {/* Direct Contact Options */}
                 <div className="pt-4 border-t border-white/10">
-                  <p className="text-xs text-white/50 text-center mb-3">
+                  <p className="text-xs text-white text-center mb-3">
                     Or contact the provider directly
                   </p>
 

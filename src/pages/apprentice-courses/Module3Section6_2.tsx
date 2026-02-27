@@ -152,7 +152,7 @@ export default function Module3Section6_2() {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Routing Cables in Walls and Floors (Zones and Depths)
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding BS 7671 safe zones and depth requirements for concealed cable routing to
             prevent accidental damage and ensure electrical safety compliance.
           </p>
@@ -923,7 +923,7 @@ export default function Module3Section6_2() {
             Summary
           </h2>
           <div className="p-4 bg-transparent border-l-2 border-elec-yellow rounded-lg border border-white/10">
-            <p className="text-white/90">
+            <p className="text-white">
               Safe zones and correct burial depths are fundamental to preventing accidental cable
               damage during building work. BS 7671 defines clear rules for concealed cable routing
               that balance installation practicality with long-term safety. Understanding and

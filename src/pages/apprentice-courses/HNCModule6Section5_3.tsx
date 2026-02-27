@@ -256,7 +256,7 @@ const HNCModule6Section5_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section5">
@@ -278,7 +278,7 @@ const HNCModule6Section5_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Monitoring and Targeting
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             M&T principles, degree day analysis, cusum charts, exception reporting, and performance
             tracking systems
           </p>
@@ -492,23 +492,23 @@ const HNCModule6Section5_3 = () => {
               </p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Base temperature:</span>{' '}
+                  <span className="text-white">Base temperature:</span>{' '}
                   <span className="text-white">15.5°C (UK standard)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Day 1 mean temp:</span>{' '}
+                  <span className="text-white">Day 1 mean temp:</span>{' '}
                   <span className="text-white">8°C → HDD = 15.5 - 8 = 7.5</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Day 2 mean temp:</span>{' '}
+                  <span className="text-white">Day 2 mean temp:</span>{' '}
                   <span className="text-white">12°C → HDD = 15.5 - 12 = 3.5</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Day 3 mean temp:</span>{' '}
+                  <span className="text-white">Day 3 mean temp:</span>{' '}
                   <span className="text-white">16°C → HDD = 0 (no heating needed)</span>
                 </p>
                 <p className="mt-2">
-                  <span className="text-white/60">3-day total:</span>{' '}
+                  <span className="text-white">3-day total:</span>{' '}
                   <span className="text-green-400">7.5 + 3.5 + 0 = 11 degree days</span>
                 </p>
               </div>
@@ -596,21 +596,21 @@ const HNCModule6Section5_3 = () => {
               <div className="font-mono text-lg text-white text-center py-2">E = (m × DD) + c</div>
               <div className="text-sm space-y-1 mt-3">
                 <p>
-                  <span className="text-white/60">E =</span>{' '}
+                  <span className="text-white">E =</span>{' '}
                   <span className="text-white">Energy consumption (kWh, kWh/m², or therms)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">m =</span>{' '}
+                  <span className="text-white">m =</span>{' '}
                   <span className="text-white">
                     Slope (weather sensitivity, kWh per degree day)
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">DD =</span>{' '}
+                  <span className="text-white">DD =</span>{' '}
                   <span className="text-white">Degree days for the period</span>
                 </p>
                 <p>
-                  <span className="text-white/60">c =</span>{' '}
+                  <span className="text-white">c =</span>{' '}
                   <span className="text-white">
                     Y-intercept (base load, weather-independent consumption)
                   </span>
@@ -768,10 +768,10 @@ const HNCModule6Section5_3 = () => {
               </p>
               <div className="font-mono text-sm">
                 <div className="grid grid-cols-4 gap-2 mb-1">
-                  <span className="text-white/60">Week</span>
-                  <span className="text-white/60">Variance (kWh)</span>
-                  <span className="text-white/60">Cumulative</span>
-                  <span className="text-white/60">Trend</span>
+                  <span className="text-white">Week</span>
+                  <span className="text-white">Variance (kWh)</span>
+                  <span className="text-white">Cumulative</span>
+                  <span className="text-white">Trend</span>
                 </div>
                 <div className="grid grid-cols-4 gap-2">
                   <span>1</span>
@@ -803,7 +803,7 @@ const HNCModule6Section5_3 = () => {
                   <span>-5</span>
                   <span className="text-green-400">↘</span>
                 </div>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Pattern shows over-consumption corrected by Week 5
                 </p>
               </div>
@@ -887,7 +887,7 @@ const HNCModule6Section5_3 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Best practice:</strong> Set initial thresholds conservatively (10%) then
               tighten as the system matures and noise sources are eliminated.
             </p>
@@ -912,8 +912,8 @@ const HNCModule6Section5_3 = () => {
                 <strong>Scenario:</strong> Establish heating performance line for an office building
                 from 12 months of data.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">
                   Monthly data collected (gas consumption vs degree days):
                 </p>
                 <p className="mt-2">Regression analysis results:</p>
@@ -921,7 +921,7 @@ const HNCModule6Section5_3 = () => {
                 <p className="ml-4">Intercept (c) = 2,450 kWh (monthly base load)</p>
                 <p className="ml-4">R² = 0.94 (good correlation)</p>
                 <p className="mt-2">Performance line: E = 45.2DD + 2,450 kWh/month</p>
-                <p className="mt-2 text-white/60">Interpretation:</p>
+                <p className="mt-2 text-white">Interpretation:</p>
                 <p className="ml-4">- Base load 2,450 kWh/month (DHW, kitchens, losses)</p>
                 <p className="ml-4">- Each degree day requires 45.2 kWh heating</p>
                 <p className="ml-4 text-green-400">
@@ -938,10 +938,10 @@ const HNCModule6Section5_3 = () => {
                 <strong>Scenario:</strong> Compare January consumption between two years with
                 different weather.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Year 1 January: 15,200 kWh at 380 degree days</p>
                 <p>Year 2 January: 12,800 kWh at 310 degree days</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Raw comparison suggests 16% reduction - but is it real?
                 </p>
                 <p className="mt-2">Using performance line E = 35DD + 1,800:</p>
@@ -964,14 +964,14 @@ const HNCModule6Section5_3 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Analyse 10-week cusum data for a retail store.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Weekly variances (kWh): -5, +8, +12, +45, +52, +48, +55, +42, +38, +40</p>
                 <p>Cumulative sum: -5, +3, +15, +60, +112, +160, +215, +257, +295, +335</p>
-                <p className="mt-2 text-white/60">Pattern analysis:</p>
+                <p className="mt-2 text-white">Pattern analysis:</p>
                 <p className="ml-4">Weeks 1-3: Near horizontal (on target)</p>
                 <p className="ml-4 text-red-400">Week 4: Sharp upward step (+45 kWh variance)</p>
                 <p className="ml-4">Weeks 4-10: Sustained upward slope (~45 kWh/week average)</p>
-                <p className="mt-2 text-white/60">Investigation findings:</p>
+                <p className="mt-2 text-white">Investigation findings:</p>
                 <p className="ml-4">- Week 4: New refrigeration unit commissioned</p>
                 <p className="ml-4">- Unit running 24/7 instead of scheduled hours</p>
                 <p className="mt-2 text-green-400">
@@ -988,9 +988,9 @@ const HNCModule6Section5_3 = () => {
                 <strong>Scenario:</strong> Set targets after implementing energy conservation
                 measures.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Current performance line: E = 52DD + 3,200 kWh/month</p>
-                <p className="mt-2 text-white/60">Planned improvements:</p>
+                <p className="mt-2 text-white">Planned improvements:</p>
                 <p className="ml-4">
                   - BMS optimisation: Expected 8% reduction in weather-dependent load
                 </p>
@@ -999,7 +999,7 @@ const HNCModule6Section5_3 = () => {
                 <p className="ml-4">New slope: 52 × 0.92 = 47.8 kWh/DD</p>
                 <p className="ml-4">New intercept: 3,200 × 0.85 = 2,720 kWh</p>
                 <p className="mt-2 text-green-400">Target line: E = 47.8DD + 2,720 kWh/month</p>
-                <p className="mt-2 text-white/60">For month with 200 DD:</p>
+                <p className="mt-2 text-white">For month with 200 DD:</p>
                 <p className="ml-4">Old expected: (52 × 200) + 3,200 = 13,600 kWh</p>
                 <p className="ml-4">New target: (47.8 × 200) + 2,720 = 12,280 kWh</p>
                 <p className="ml-4">Expected saving: 1,320 kWh (9.7%)</p>
@@ -1081,7 +1081,7 @@ const HNCModule6Section5_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1127,7 +1127,7 @@ const HNCModule6Section5_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section5">

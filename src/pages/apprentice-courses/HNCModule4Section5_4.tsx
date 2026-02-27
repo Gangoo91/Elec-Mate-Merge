@@ -222,7 +222,7 @@ const HNCModule4Section5_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section5">
@@ -244,7 +244,7 @@ const HNCModule4Section5_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             UPS and Standby Power
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Ensuring continuous power supply for critical building systems
           </p>
         </header>
@@ -662,7 +662,7 @@ const HNCModule4Section5_4 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Closed transition:</strong> Requires synchronisation between sources. Used
               where any break is unacceptable, but more complex and costly.
             </p>
@@ -687,7 +687,7 @@ const HNCModule4Section5_4 = () => {
                 <strong>Scenario:</strong> Size UPS for server room with 30kW IT load requiring 15
                 minutes autonomy.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>IT load: 30kW</p>
                 <p>Assume power factor 0.9</p>
                 <p>UPS VA = 30kW ÷ 0.9 = 33.3kVA</p>
@@ -707,7 +707,7 @@ const HNCModule4Section5_4 = () => {
                 <strong>Scenario:</strong> Calculate battery Ah for 40kVA UPS, 15 minutes, 384V DC
                 bus.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Load = 40000VA × 0.9pf = 36kW</p>
                 <p>Energy for 15 min = 36kW × 0.25h = 9kWh</p>
                 <p>At 85% efficiency: 9 ÷ 0.85 = 10.6kWh</p>
@@ -727,7 +727,7 @@ const HNCModule4Section5_4 = () => {
                 <strong>Scenario:</strong> Size generator for 100kVA UPS with battery recharge
                 requirement.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>UPS input power = 100kVA at 0.9 input pf</p>
                 <p>UPS input = 100 × 0.9 = 90kW</p>
                 <p>Add UPS losses (10%): 90 × 1.1 = 99kW</p>
@@ -736,7 +736,7 @@ const HNCModule4Section5_4 = () => {
                 <p className="mt-2">
                   Specification: <strong>150kVA diesel generator</strong>
                 </p>
-                <p className="text-white/60">Next standard size with margin</p>
+                <p className="text-white">Next standard size with margin</p>
               </div>
             </div>
           </div>
@@ -807,7 +807,7 @@ const HNCModule4Section5_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -853,7 +853,7 @@ const HNCModule4Section5_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section5-3">

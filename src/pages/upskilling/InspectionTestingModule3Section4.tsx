@@ -190,7 +190,7 @@ const InspectionTestingModule3Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/inspection-testing-module-3">
@@ -212,7 +212,7 @@ const InspectionTestingModule3Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Supplementary Bonding Verification
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding when supplementary bonding is required and how to test for compliance
           </p>
         </header>
@@ -346,14 +346,14 @@ const InspectionTestingModule3Section4 = () => {
             <div className="my-6 grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-green-500/10">
                 <p className="text-green-400 font-semibold mb-2">Exposed-Conductive-Parts</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Parts of equipment that can be touched and may become live under fault conditions
                   (Class I equipment enclosures).
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-blue-500/10">
                 <p className="text-blue-400 font-semibold mb-2">Extraneous-Conductive-Parts</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Parts not part of the electrical installation that may introduce a potential
                   (metal pipes, structural steelwork, radiators).
                 </p>
@@ -385,15 +385,15 @@ const InspectionTestingModule3Section4 = () => {
             <div className="my-6 p-4 rounded-lg bg-transparent border border-white/10">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Compliance Formula</p>
               <p className="text-center font-mono text-elec-yellow text-2xl">R ≤ 50V ÷ Ia</p>
-              <p className="text-xs text-white/60 text-center mt-2">
+              <p className="text-xs text-white text-center mt-2">
                 Where Ia = operating current of protective device
               </p>
             </div>
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">For a 30mA RCD:</p>
-              <p className="text-white/70 font-mono text-center">R ≤ 50 ÷ 0.03 = 1667Ω</p>
-              <p className="text-white/60 text-sm mt-2">
+              <p className="text-white font-mono text-center">R ≤ 50 ÷ 0.03 = 1667Ω</p>
+              <p className="text-white text-sm mt-2">
                 While 1667Ω is the theoretical maximum, practical connections should measure well
                 under 1Ω, indicating sound metallic continuity throughout the bonding network.
               </p>
@@ -440,15 +440,15 @@ const InspectionTestingModule3Section4 = () => {
               <p className="text-sm font-medium text-white mb-2">Expected Results:</p>
               <div className="space-y-2">
                 <div className="flex items-center justify-between p-3 rounded-lg bg-green-500/10">
-                  <span className="text-white/80 text-sm">Good bonding connection</span>
+                  <span className="text-white text-sm">Good bonding connection</span>
                   <span className="text-green-400 font-medium">{'<'}1Ω</span>
                 </div>
                 <div className="flex items-center justify-between p-3 rounded-lg bg-green-500/10">
-                  <span className="text-white/80 text-sm">Maximum for 30mA RCD</span>
+                  <span className="text-white text-sm">Maximum for 30mA RCD</span>
                   <span className="text-green-400 font-medium">1667Ω</span>
                 </div>
                 <div className="flex items-center justify-between p-3 rounded-lg bg-amber-500/10">
-                  <span className="text-white/80 text-sm">High readings</span>
+                  <span className="text-white text-sm">High readings</span>
                   <span className="text-amber-400 font-medium">Investigate connections</span>
                 </div>
               </div>
@@ -575,7 +575,7 @@ const InspectionTestingModule3Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -623,7 +623,7 @@ const InspectionTestingModule3Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../section-3">

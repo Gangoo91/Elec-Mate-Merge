@@ -242,7 +242,7 @@ const Module2Section6_5: React.FC = () => {
             <SlidersHorizontal className="h-8 w-8 text-elec-yellow" />
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">Reducing Energy Waste</h1>
-          <p className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-white max-w-2xl mx-auto">
             Practical steps to cut wasted energy: design choices, correct sizing and simple controls
             that reduce run-time and heat while staying within BS 7671
           </p>
@@ -594,7 +594,7 @@ const Module2Section6_5: React.FC = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5"
+            className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white hover:text-white hover:bg-white/5"
             asChild
           >
             <Link to="/study-centre/apprentice/level2/module2/section6/6-4">

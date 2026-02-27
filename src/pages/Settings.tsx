@@ -165,7 +165,7 @@ const SettingsPage = () => {
         <div className="px-4 pt-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
+            className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
             onClick={() => navigate('/dashboard')}
           >
             <ArrowLeft className="mr-2 h-5 w-5" />
@@ -196,7 +196,7 @@ const SettingsPage = () => {
                       <div>
                         <h1 className="text-lg font-bold text-white">Settings</h1>
                         <div className="flex items-center gap-2">
-                          <span className="text-xs text-white/50 truncate max-w-[140px]">
+                          <span className="text-xs text-white truncate max-w-[140px]">
                             {user?.email || 'user@example.com'}
                           </span>
                           {isSubscribed ? (
@@ -205,7 +205,7 @@ const SettingsPage = () => {
                               {subscriptionTier || 'Pro'}
                             </span>
                           ) : (
-                            <span className="inline-flex items-center px-1.5 py-0.5 rounded-md bg-white/10 text-white/50 text-[10px]">
+                            <span className="inline-flex items-center px-1.5 py-0.5 rounded-md bg-white/10 text-white text-[10px]">
                               Free
                             </span>
                           )}
@@ -217,7 +217,7 @@ const SettingsPage = () => {
                     <Button
                       variant="ghost"
                       size="icon"
-                      className="h-11 w-11 rounded-xl text-white/50 hover:text-white hover:bg-white/10 touch-manipulation active:scale-95"
+                      className="h-11 w-11 rounded-xl text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-95"
                       onClick={handleSignOut}
                     >
                       <LogOut className="h-5 w-5" />
@@ -243,7 +243,7 @@ const SettingsPage = () => {
                         </div>
                         <div>
                           <p className="text-sm font-semibold text-white">Go Premium</p>
-                          <p className="text-xs text-white/50">Unlock all features</p>
+                          <p className="text-xs text-white">Unlock all features</p>
                         </div>
                       </div>
                       <Button
@@ -279,7 +279,7 @@ const SettingsPage = () => {
                       variant="ghost"
                       size="icon"
                       onClick={handleMobileBack}
-                      className="h-11 w-11 rounded-xl text-white/70 hover:text-white hover:bg-white/10 touch-manipulation active:scale-95"
+                      className="h-11 w-11 rounded-xl text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-95"
                     >
                       <ArrowLeft className="h-5 w-5" />
                     </Button>
@@ -311,7 +311,7 @@ const SettingsPage = () => {
       <div className="px-4 md:px-6 lg:px-8 pt-4 max-w-[1600px] mx-auto">
         <Button
           variant="ghost"
-          className="text-white/70 hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
+          className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
           onClick={() => navigate('/dashboard')}
         >
           <ArrowLeft className="mr-2 h-5 w-5" />
@@ -331,7 +331,7 @@ const SettingsPage = () => {
               <div className="min-w-0 hidden sm:block">
                 <h1 className="text-lg md:text-xl font-bold text-white truncate">Settings</h1>
                 <div className="flex items-center gap-2">
-                  <span className="text-sm text-white/50 truncate">
+                  <span className="text-sm text-white truncate">
                     {user?.email || 'user@example.com'}
                   </span>
                   {isSubscribed ? (
@@ -340,7 +340,7 @@ const SettingsPage = () => {
                       {subscriptionTier || 'Pro'}
                     </span>
                   ) : (
-                    <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-white/10 text-white/50 text-xs flex-shrink-0">
+                    <span className="inline-flex items-center px-2 py-0.5 rounded-md bg-white/10 text-white text-xs flex-shrink-0">
                       Free
                     </span>
                   )}
@@ -405,7 +405,7 @@ const SettingsPage = () => {
                     'touch-manipulation active:scale-[0.98] min-h-[48px]',
                     isActive
                       ? 'text-elec-yellow border-elec-yellow'
-                      : 'text-white/50 border-transparent hover:text-white hover:border-white/20'
+                      : 'text-white border-transparent hover:text-white hover:border-white/20'
                   )}
                 >
                   <Icon className={cn('h-4 w-4', isActive ? 'text-elec-yellow' : '')} />

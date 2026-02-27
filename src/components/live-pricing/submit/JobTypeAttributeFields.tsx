@@ -83,13 +83,13 @@ const JobTypeAttributeFields: React.FC<JobTypeAttributeFieldsProps> = ({
               max={attr.max}
               className={cn(
                 'h-12 bg-neutral-800 border-2 border-white/10 rounded-xl',
-                'text-white text-base placeholder:text-white/30',
+                'text-white text-base placeholder:text-white',
                 'focus:border-yellow-400/50 focus:ring-0',
                 attr.unit && 'pr-16'
               )}
             />
             {attr.unit && (
-              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-white/50">
+              <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-white">
                 {attr.unit}
               </span>
             )}
@@ -106,7 +106,7 @@ const JobTypeAttributeFields: React.FC<JobTypeAttributeFieldsProps> = ({
             placeholder={`Enter ${attr.label.toLowerCase()}`}
             className={cn(
               'h-12 bg-neutral-800 border-2 border-white/10 rounded-xl',
-              'text-white text-base placeholder:text-white/30',
+              'text-white text-base placeholder:text-white',
               'focus:border-yellow-400/50 focus:ring-0'
             )}
           />
@@ -117,10 +117,10 @@ const JobTypeAttributeFields: React.FC<JobTypeAttributeFieldsProps> = ({
   return (
     <div className={cn('space-y-4', className)}>
       {/* Header */}
-      <div className="flex items-center gap-2 text-sm text-white/70">
+      <div className="flex items-center gap-2 text-sm text-white">
         <Settings2 className="h-4 w-4 text-yellow-400" />
         <span className="font-medium">Job Details</span>
-        <span className="text-white/40">(Optional but helps pricing accuracy)</span>
+        <span className="text-white">(Optional but helps pricing accuracy)</span>
       </div>
 
       {/* Fields */}
@@ -133,7 +133,7 @@ const JobTypeAttributeFields: React.FC<JobTypeAttributeFieldsProps> = ({
             </label>
             {renderField(attr)}
             {attr.type === 'number' && (attr.min !== undefined || attr.max !== undefined) && (
-              <p className="text-xs text-white/40 mt-1">
+              <p className="text-xs text-white mt-1">
                 {attr.min !== undefined && attr.max !== undefined
                   ? `Between ${attr.min} and ${attr.max}`
                   : attr.min !== undefined

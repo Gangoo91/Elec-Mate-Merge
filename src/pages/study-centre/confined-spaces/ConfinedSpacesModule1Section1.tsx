@@ -207,7 +207,7 @@ export default function ConfinedSpacesModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-1">
@@ -232,7 +232,7 @@ export default function ConfinedSpacesModule1Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             What Is a Confined Space?
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding the legal definition under the Confined Spaces Regulations 1997 &mdash;
             what makes a space &ldquo;confined&rdquo;, the specified risks, common misconceptions,
             and the hierarchy of control
@@ -371,7 +371,7 @@ export default function ConfinedSpacesModule1Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Why &ldquo;Awareness&rdquo; Training Matters
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   You do not need to be a confined space &ldquo;entrant&rdquo; to need this
                   knowledge. HSE investigations repeatedly find that incidents occur because people
                   in the wider workforce &mdash; supervisors, nearby workers, those who plan or
@@ -433,7 +433,7 @@ export default function ConfinedSpacesModule1Section1() {
                       </span>
                       <p className="text-sm font-semibold text-white">Substantially Enclosed</p>
                     </div>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The space must be substantially enclosed &mdash; though not necessarily
                       entirely enclosed. A space with a single opening, a space with removable
                       covers, or even an open-topped vessel can be substantially enclosed. The key
@@ -450,7 +450,7 @@ export default function ConfinedSpacesModule1Section1() {
                         Foreseeable Risk of Serious Injury
                       </p>
                     </div>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       There must be a reasonably foreseeable risk of serious injury from hazardous
                       substances or conditions within the space. &ldquo;Reasonably
                       foreseeable&rdquo; means a risk that a competent person, applying their
@@ -467,7 +467,7 @@ export default function ConfinedSpacesModule1Section1() {
                     </span>
                     <p className="text-sm font-semibold text-white">From Specified Hazards</p>
                   </div>
-                  <p className="text-xs text-white/70 leading-relaxed">
+                  <p className="text-xs text-white leading-relaxed">
                     The risk of serious injury must arise from one or more of the specified hazards
                     listed in the Regulations and ACoP L101 (detailed below). General workplace
                     hazards such as slips, trips, falls, or manual handling do not, on their own,
@@ -491,7 +491,7 @@ export default function ConfinedSpacesModule1Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Key Term: &ldquo;Substantially Enclosed&rdquo;
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The word &ldquo;substantially&rdquo; is deliberate. A space does not need to be
                   hermetically sealed or enclosed on all sides to be substantially enclosed. ACoP
                   L101 gives examples including open-topped tanks, partially open trenches, rooms
@@ -534,7 +534,7 @@ export default function ConfinedSpacesModule1Section1() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Fire or Explosion</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Flammable gases, vapours, or dusts can accumulate in enclosed spaces to form
                       explosive atmospheres. In a substantially enclosed space, a fire or explosion
                       can be catastrophic because the pressure wave has nowhere to dissipate and
@@ -546,7 +546,7 @@ export default function ConfinedSpacesModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Loss of Consciousness from Raised Body Temperature
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       In enclosed spaces with limited air movement, body heat can accumulate
                       rapidly, especially during physical work. Heat stress can progress to heat
                       exhaustion and heat stroke, leading to loss of consciousness and, if not
@@ -560,7 +560,7 @@ export default function ConfinedSpacesModule1Section1() {
                       Loss of Consciousness or Asphyxiation from Gas, Fume, Vapour, or Lack of
                       Oxygen
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       This is the most common cause of death in confined spaces. Normal air contains
                       approximately 20.9% oxygen. When oxygen levels fall below 16%, physical and
                       mental impairment occurs. Below 10%, unconsciousness can be immediate and
@@ -575,7 +575,7 @@ export default function ConfinedSpacesModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Drowning from Rising Liquid Levels
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       In spaces connected to liquid sources &mdash; drains, sewers, tanks, sumps,
                       interceptors &mdash; liquid levels can rise suddenly and without warning due
                       to rainfall, process discharges, or valve failures. In an enclosed space with
@@ -588,7 +588,7 @@ export default function ConfinedSpacesModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Engulfment by a Free-Flowing Solid
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Silos, hoppers, and storage vessels containing granular or powdered materials
                       (grain, sand, cement, plastic pellets) present a risk of engulfment.
                       Free-flowing solids behave like liquids &mdash; a worker who breaks through a
@@ -612,7 +612,7 @@ export default function ConfinedSpacesModule1Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Electrical Trade Examples</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   An electrician working in a poorly ventilated plant room where gas-fired equipment
                   is present may face oxygen depletion and toxic gas risks. A cable tunnel below a
                   substation may have limited ventilation and accumulations of SF&#8326; (sulphur
@@ -651,7 +651,7 @@ export default function ConfinedSpacesModule1Section1() {
                       Misconception 1: &ldquo;Underground = Confined Space&rdquo;
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     <strong className="text-white">Wrong.</strong> While many confined spaces are
                     below ground (sewers, manholes, basements), the Regulations do not reference
                     depth or location. An above-ground storage tank, a ceiling void, a roof-level
@@ -669,7 +669,7 @@ export default function ConfinedSpacesModule1Section1() {
                       Misconception 2: &ldquo;Small = Confined&rdquo;
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     <strong className="text-white">Wrong.</strong> Size is irrelevant to the legal
                     definition. A large factory building or warehouse can be a confined space if it
                     is substantially enclosed and there is a foreseeable risk of serious injury from
@@ -687,7 +687,7 @@ export default function ConfinedSpacesModule1Section1() {
                       Misconception 3: &ldquo;It Must Be Permanently Enclosed&rdquo;
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     <strong className="text-white">Wrong.</strong> Temporary enclosure counts. A
                     room that is normally well-ventilated can become a confined space if doors and
                     windows are sealed during a work process (e.g., spray painting, fumigation, gas
@@ -706,7 +706,7 @@ export default function ConfinedSpacesModule1Section1() {
                       Misconception 4: &ldquo;If I Can See Daylight, It&rsquo;s Not Confined&rdquo;
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     <strong className="text-white">Wrong.</strong> Many confined spaces have
                     openings. Tanks with manholes, open-topped vats, trenches with partial covering,
                     and chambers with access hatches are all potentially confined spaces despite
@@ -723,7 +723,7 @@ export default function ConfinedSpacesModule1Section1() {
                       Misconception 5: &ldquo;It Smells Fine, So It Must Be Safe&rdquo;
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     <strong className="text-white">Wrong &mdash; and fatally so.</strong> Many of
                     the most dangerous confined space hazards are invisible and odourless. Oxygen
                     depletion cannot be detected by human senses. Carbon monoxide is odourless.
@@ -774,28 +774,28 @@ export default function ConfinedSpacesModule1Section1() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">~15</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       deaths per year in the UK from confined space incidents (HSE long-term
                       average)
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">~60%</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       of those deaths are would-be rescuers who entered without adequate precautions
                       or equipment
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">Seconds</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       the typical time from entry to incapacitation in an oxygen-depleted or toxic
                       atmosphere &mdash; many victims collapse within the first few breaths
                     </p>
                   </div>
                   <div className="bg-white/5 rounded-lg p-3">
                     <p className="text-2xl font-bold text-red-400">Multiple</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       many confined space incidents result in multiple fatalities from a single
                       event, typically when rescuers become casualties alongside the original victim
                     </p>
@@ -821,7 +821,7 @@ export default function ConfinedSpacesModule1Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">The Rescuer Trap</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The typical pattern is tragically simple: a worker enters a confined space, is
                   overcome by a hazardous atmosphere (often within seconds), and collapses. A
                   colleague sees them fall and, driven by the instinct to help, enters the space
@@ -846,7 +846,7 @@ export default function ConfinedSpacesModule1Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Common Causes of Fatal Incidents
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                     <span>
@@ -923,7 +923,7 @@ export default function ConfinedSpacesModule1Section1() {
                   <ShieldCheck className="h-5 w-5 text-cyan-400" />
                   <p className="text-sm font-medium text-cyan-400">Legal Status of ACoP L101</p>
                 </div>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   An Approved Code of Practice has a special legal standing. It is not law in
                   itself, but if you are prosecuted for a breach of the Confined Spaces Regulations
                   and it is proved that you did not follow the relevant provisions of the ACoP, a
@@ -955,7 +955,7 @@ export default function ConfinedSpacesModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Health and Safety at Work etc. Act 1974 (HASAWA)
                     </p>
-                    <p className="text-sm text-white/80 leading-relaxed">
+                    <p className="text-sm text-white leading-relaxed">
                       The <strong>&ldquo;parent Act&rdquo;</strong> under which the Confined Spaces
                       Regulations were made. HASAWA places overarching duties on employers (Section
                       2), the self-employed (Section 3), and employees (Section 7). It is criminal
@@ -966,7 +966,7 @@ export default function ConfinedSpacesModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Management of Health and Safety at Work Regulations 1999
                     </p>
-                    <p className="text-sm text-white/80 leading-relaxed">
+                    <p className="text-sm text-white leading-relaxed">
                       Require employers to carry out suitable and sufficient risk assessments for
                       all work activities. Confined space risk assessments must comply with these
                       general requirements as well as the specific requirements of the Confined
@@ -978,7 +978,7 @@ export default function ConfinedSpacesModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Provision and Use of Work Equipment Regulations 1998 (PUWER)
                     </p>
-                    <p className="text-sm text-white/80 leading-relaxed">
+                    <p className="text-sm text-white leading-relaxed">
                       Applies to all equipment used in confined space work, including atmospheric
                       monitoring instruments, ventilation equipment, communication devices, and
                       rescue equipment. PUWER requires that equipment is suitable for purpose,
@@ -989,7 +989,7 @@ export default function ConfinedSpacesModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Lifting Operations and Lifting Equipment Regulations 1998 (LOLER)
                     </p>
-                    <p className="text-sm text-white/80 leading-relaxed">
+                    <p className="text-sm text-white leading-relaxed">
                       Directly relevant to confined space rescue operations, which frequently
                       involve raising an incapacitated casualty vertically through a manhole or
                       hatch using a tripod and winch system. LOLER requires that lifting operations
@@ -1001,7 +1001,7 @@ export default function ConfinedSpacesModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Control of Substances Hazardous to Health Regulations 2002 (COSHH)
                     </p>
-                    <p className="text-sm text-white/80 leading-relaxed">
+                    <p className="text-sm text-white leading-relaxed">
                       Where hazardous substances are present in or generated within a confined
                       space, COSHH duties apply alongside the Confined Spaces Regulations. This
                       includes duties to assess exposure risks, prevent or control exposure, and
@@ -1012,7 +1012,7 @@ export default function ConfinedSpacesModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Dangerous Substances and Explosive Atmospheres Regulations 2002 (DSEAR)
                     </p>
-                    <p className="text-sm text-white/80 leading-relaxed">
+                    <p className="text-sm text-white leading-relaxed">
                       Where flammable or explosive substances may be present in a confined space (a
                       very common scenario), DSEAR applies. DSEAR requires the classification of
                       hazardous areas into zones and the selection of appropriate (e.g., ATEX-rated)
@@ -1071,7 +1071,7 @@ export default function ConfinedSpacesModule1Section1() {
                         <p className="text-base font-semibold text-green-400 mb-1">
                           AVOID Entry (Regulation 4(1))
                         </p>
-                        <p className="text-sm text-white/80 leading-relaxed">
+                        <p className="text-sm text-white leading-relaxed">
                           No person shall enter a confined space to carry out work for any purpose
                           unless it is not reasonably practicable to achieve that purpose without
                           such entry. This is the <strong>first and preferred option</strong>.
@@ -1079,10 +1079,10 @@ export default function ConfinedSpacesModule1Section1() {
                           from outside the space?&rdquo;
                         </p>
                         <div className="mt-3 bg-white/5 rounded-lg p-3">
-                          <p className="text-xs text-white/60 font-medium mb-1">
+                          <p className="text-xs text-white font-medium mb-1">
                             Examples of Avoidance
                           </p>
-                          <ul className="text-xs text-white/60 space-y-1">
+                          <ul className="text-xs text-white space-y-1">
                             <li className="flex items-start gap-2">
                               <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                               <span>
@@ -1126,7 +1126,7 @@ export default function ConfinedSpacesModule1Section1() {
                         <p className="text-base font-semibold text-cyan-400 mb-1">
                           SAFE SYSTEM of Work (Regulation 4(2))
                         </p>
-                        <p className="text-sm text-white/80 leading-relaxed">
+                        <p className="text-sm text-white leading-relaxed">
                           Where entry cannot be avoided, no person shall enter or carry out work in
                           a confined space except in accordance with a safe system of work that
                           renders the work safe and without risks to health, so far as is reasonably
@@ -1134,10 +1134,10 @@ export default function ConfinedSpacesModule1Section1() {
                           assessment.
                         </p>
                         <div className="mt-3 bg-white/5 rounded-lg p-3">
-                          <p className="text-xs text-white/60 font-medium mb-1">
+                          <p className="text-xs text-white font-medium mb-1">
                             Typical Safe System Elements
                           </p>
-                          <ul className="text-xs text-white/60 space-y-1">
+                          <ul className="text-xs text-white space-y-1">
                             <li className="flex items-start gap-2">
                               <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400 flex-shrink-0" />
                               <span>
@@ -1190,7 +1190,7 @@ export default function ConfinedSpacesModule1Section1() {
                         <p className="text-base font-semibold text-red-400 mb-1">
                           EMERGENCY Arrangements (Regulation 5)
                         </p>
-                        <p className="text-sm text-white/80 leading-relaxed">
+                        <p className="text-sm text-white leading-relaxed">
                           No person shall enter a confined space unless suitable and sufficient
                           emergency arrangements have been made <strong>before</strong> entry. This
                           is not optional &mdash; it is a mandatory requirement that applies
@@ -1198,10 +1198,10 @@ export default function ConfinedSpacesModule1Section1() {
                           rescue of any person in the event of an emergency.
                         </p>
                         <div className="mt-3 bg-white/5 rounded-lg p-3">
-                          <p className="text-xs text-white/60 font-medium mb-1">
+                          <p className="text-xs text-white font-medium mb-1">
                             Emergency Arrangement Requirements
                           </p>
-                          <ul className="text-xs text-white/60 space-y-1">
+                          <ul className="text-xs text-white space-y-1">
                             <li className="flex items-start gap-2">
                               <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                               <span>
@@ -1247,7 +1247,7 @@ export default function ConfinedSpacesModule1Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Why the Hierarchy Matters in Practice
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   HSE investigations into fatal confined space incidents almost invariably find that
                   one or more tiers of the hierarchy were not followed. In some cases, avoidance was
                   possible but not considered. In others, a safe system of work was not developed or
@@ -1291,7 +1291,7 @@ export default function ConfinedSpacesModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Those Who May Enter Confined Spaces
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Workers who may need to physically enter a confined space to carry out work
                       require the highest level of training. This includes knowledge of the
                       Regulations, risk assessment, safe systems of work, atmospheric monitoring,
@@ -1303,7 +1303,7 @@ export default function ConfinedSpacesModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Those Who Work Near Confined Spaces
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Workers who carry out tasks near confined spaces &mdash; even if they do not
                       enter them &mdash; need awareness training. They need to be able to recognise
                       confined spaces, understand the risks, know not to enter or lean into a
@@ -1313,7 +1313,7 @@ export default function ConfinedSpacesModule1Section1() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Supervisors and Managers</p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Those who plan, organise, or supervise work that may involve confined spaces
                       need sufficient knowledge to ensure compliance with the Regulations. This
                       includes understanding the hierarchy (avoid, safe system, emergency
@@ -1325,7 +1325,7 @@ export default function ConfinedSpacesModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Emergency Rescue Personnel
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       Anyone designated as part of the emergency rescue team for confined space work
                       requires specialist rescue training. This includes the use of breathing
                       apparatus (BA), rescue equipment (tripods, winches, harnesses, stretchers),
@@ -1337,7 +1337,7 @@ export default function ConfinedSpacesModule1Section1() {
                     <p className="text-sm font-medium text-white mb-1">
                       Top-Persons (Standby/Attendants)
                     </p>
-                    <p className="text-xs text-white/70 leading-relaxed">
+                    <p className="text-xs text-white leading-relaxed">
                       The &ldquo;top-person&rdquo; stationed at the entry point during confined
                       space work has a critical role: maintaining communication with the entrant(s),
                       monitoring conditions, controlling access, and raising the alarm in an
@@ -1362,7 +1362,7 @@ export default function ConfinedSpacesModule1Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Competence Under the Regulations
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   ACoP L101 defines competence as a combination of training, experience, and
                   knowledge sufficient for the person to carry out their role safely. It is not
                   enough to simply attend a course &mdash; competence must be assessed and verified.
@@ -1397,7 +1397,7 @@ export default function ConfinedSpacesModule1Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1415,7 +1415,7 @@ export default function ConfinedSpacesModule1Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-1">

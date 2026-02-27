@@ -324,19 +324,19 @@ export const StandardMockExam = ({
                 <div className="space-y-2.5 pl-1">
                   <div className="flex items-start gap-3">
                     <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-[7px] flex-shrink-0" />
-                    <p className="text-sm text-white/90">
+                    <p className="text-sm text-white">
                       {config.totalQuestions} questions from {questionBank.length} question bank
                     </p>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-[7px] flex-shrink-0" />
-                    <p className="text-sm text-white/90">
+                    <p className="text-sm text-white">
                       {Math.floor(config.timeLimit / 60)} minutes
                     </p>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-[7px] flex-shrink-0" />
-                    <p className="text-sm text-white/90">
+                    <p className="text-sm text-white">
                       Pass mark: {config.passThreshold}% (
                       {Math.ceil((config.totalQuestions * config.passThreshold) / 100)}/
                       {config.totalQuestions})
@@ -344,7 +344,7 @@ export const StandardMockExam = ({
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-[7px] flex-shrink-0" />
-                    <p className="text-sm text-white/90">Covers: {config.categories.join(', ')}</p>
+                    <p className="text-sm text-white">Covers: {config.categories.join(', ')}</p>
                   </div>
                   <div className="flex items-start gap-3 pt-1 mt-1 border-t border-white/10">
                     <div className="h-1.5 w-1.5 rounded-full bg-blue-400 mt-[7px] flex-shrink-0" />
@@ -783,7 +783,7 @@ export const StandardMockExam = ({
                       className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${
                         selectedAnswers[currentQuestion] === index
                           ? 'bg-elec-yellow text-black'
-                          : 'bg-white/10 text-white/60'
+                          : 'bg-white/10 text-white'
                       }`}
                     >
                       <span className="text-xs font-bold">{String.fromCharCode(65 + index)}</span>
@@ -854,7 +854,7 @@ export const StandardMockExam = ({
                             className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
                               selectedAnswers[currentQuestion] === index
                                 ? 'bg-elec-yellow text-black font-bold'
-                                : 'bg-white/10 text-white/70'
+                                : 'bg-white/10 text-white'
                             }`}
                           >
                             <span className="text-sm font-bold">

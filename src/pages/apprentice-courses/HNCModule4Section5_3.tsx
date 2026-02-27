@@ -223,7 +223,7 @@ const HNCModule4Section5_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section5">
@@ -245,7 +245,7 @@ const HNCModule4Section5_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Busbar Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             High-current distribution solutions for commercial and industrial building services
           </p>
         </header>
@@ -694,7 +694,7 @@ const HNCModule4Section5_3 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Coordination:</strong> Ensure busbar Icw rating exceeds the let-through energy
               (I²t) of upstream protective devices to survive downstream faults.
             </p>
@@ -719,7 +719,7 @@ const HNCModule4Section5_3 = () => {
                 <strong>Scenario:</strong> 8-storey office building with 80kVA per floor. Size the
                 rising main.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Total load: 8 floors × 80kVA = 640kVA</p>
                 <p>Apply diversity (0.8): 640 × 0.8 = 512kVA</p>
                 <p>Current at 400V: 512000 ÷ (√3 × 400) = 739A</p>
@@ -727,7 +727,7 @@ const HNCModule4Section5_3 = () => {
                 <p className="mt-2">
                   Specification: <strong>1000A rising main busbar</strong>
                 </p>
-                <p className="text-white/60">Verify voltage drop at top floor</p>
+                <p className="text-white">Verify voltage drop at top floor</p>
               </div>
             </div>
 
@@ -739,7 +739,7 @@ const HNCModule4Section5_3 = () => {
                 <strong>Scenario:</strong> 1000A busbar, 35m height, 800A load at top floor. Busbar:
                 0.017 mV/A/m.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Voltage drop = Current × Length × Drop factor</p>
                 <p>Vd = 800A × 35m × 0.017 mV/A/m</p>
                 <p>Vd = 476mV = 0.476V per phase</p>
@@ -758,7 +758,7 @@ const HNCModule4Section5_3 = () => {
                 <strong>Scenario:</strong> Floor DB with 63A maximum demand. Select tap-off
                 protection.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Load current: 63A</p>
                 <p>Tap-off rating: Next standard size = 80A</p>
                 <p className="mt-2">Protection options:</p>
@@ -767,7 +767,7 @@ const HNCModule4Section5_3 = () => {
                 <p className="mt-2">
                   Recommendation: <strong>80A MCCB tap-off unit</strong>
                 </p>
-                <p className="text-white/60">MCCB allows easy resetting and adjustment</p>
+                <p className="text-white">MCCB allows easy resetting and adjustment</p>
               </div>
             </div>
           </div>
@@ -841,7 +841,7 @@ const HNCModule4Section5_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -887,7 +887,7 @@ const HNCModule4Section5_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section5-2">

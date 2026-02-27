@@ -196,7 +196,7 @@ export default function PasmaModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-5">
@@ -221,7 +221,7 @@ export default function PasmaModule5Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Pre-Use Visual Checks
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The essential daily inspection every tower must receive before anyone steps onto the
             platform &mdash; covering structure, safety components, platform, base, and environment
           </p>
@@ -317,7 +317,7 @@ export default function PasmaModule5Section1() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-green-400 mb-2">Pre-Use Check</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Before every shift or working day</span>
@@ -340,7 +340,7 @@ export default function PasmaModule5Section1() {
                   <p className="text-sm font-medium text-blue-400 mb-2">
                     Formal Inspection (Schedule 5)
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Every 7 days, before first use, after alteration</span>
@@ -391,7 +391,7 @@ export default function PasmaModule5Section1() {
                   <Search className="h-5 w-5 text-purple-400" />
                   <p className="text-sm font-medium text-purple-400">Structural Check Checklist</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -443,7 +443,7 @@ export default function PasmaModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Common Structural Defects</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The most commonly missed structural defects are bent braces that appear
                   &ldquo;close enough&rdquo; and surface corrosion that has been painted over. A
                   brace that is even slightly bent will not transfer loads correctly and can
@@ -461,7 +461,7 @@ export default function PasmaModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Structural Check Sequence</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Work systematically from bottom to top. Start with the base frames and castors,
                   then check each lift of bracing in turn, moving upwards through the tower. Check
                   both the narrow and wide faces at each level. This methodical approach ensures you
@@ -504,7 +504,7 @@ export default function PasmaModule5Section1() {
                 <p className="text-sm font-medium text-elec-yellow mb-3">
                   Edge Protection Requirements
                 </p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Guardrails:</strong> Fitted at a minimum height
                     of 950mm on all open sides of the working platform. Must be secure with no
@@ -528,7 +528,7 @@ export default function PasmaModule5Section1() {
                   <Shield className="h-5 w-5 text-teal-400" />
                   <p className="text-sm font-medium text-teal-400">Access &amp; Trapdoor Checks</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -565,7 +565,7 @@ export default function PasmaModule5Section1() {
 
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-red-400 mb-2">Immediate Fail Conditions</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>Any guardrail missing or not at the correct 950mm height</span>
@@ -612,7 +612,7 @@ export default function PasmaModule5Section1() {
                   <Wrench className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Platform Inspection Points</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -685,7 +685,7 @@ export default function PasmaModule5Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Platform Overloading</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Check that the platform is not being used to store excessive materials. Every
                   tower has a maximum platform load specified by the manufacturer. Overloading the
                   platform not only risks structural failure of the deck itself but also affects the
@@ -723,7 +723,7 @@ export default function PasmaModule5Section1() {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-elec-yellow mb-3">Castor &amp; Leg Checks</p>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Castors locked:</strong> Every castor brake must
                     be fully engaged. Test each castor by attempting to push the tower &mdash; it
@@ -747,7 +747,7 @@ export default function PasmaModule5Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Ground &amp; Stabiliser Checks
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -791,7 +791,7 @@ export default function PasmaModule5Section1() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Warning: Uneven Ground</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Never use bricks, blocks, timber off-cuts, or other makeshift items to level a
                   tower. Only use the manufacturer&rsquo;s adjustable legs or approved levelling
                   devices. Makeshift packing is one of the leading causes of tower collapse and is a
@@ -821,7 +821,7 @@ export default function PasmaModule5Section1() {
                   <Wind className="h-5 w-5 text-cyan-400" />
                   <p className="text-sm font-medium text-cyan-400">Environmental Check Points</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -896,7 +896,7 @@ export default function PasmaModule5Section1() {
               <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-green-400 mb-2">Acceptable Conditions</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Wind below Force 4 (light to gentle breeze)</span>
@@ -921,7 +921,7 @@ export default function PasmaModule5Section1() {
                 </div>
                 <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-red-400 mb-2">Stop Work Conditions</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>Wind at Force 4 or above &mdash; descend immediately</span>
@@ -976,7 +976,7 @@ export default function PasmaModule5Section1() {
 
               <div className="bg-red-500/10 border border-red-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-red-400 mb-3">What Constitutes a Fail?</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1031,7 +1031,7 @@ export default function PasmaModule5Section1() {
                     </span>
                     <div>
                       <p className="text-sm font-medium text-white">Stop &mdash; Do Not Use</p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         No one is to climb or work from the tower. If someone is already on the
                         platform, they must descend safely and immediately.
                       </p>
@@ -1045,7 +1045,7 @@ export default function PasmaModule5Section1() {
                       <p className="text-sm font-medium text-white">
                         Tag &mdash; Mark as Defective
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Attach a clearly visible &ldquo;DO NOT USE &mdash; DEFECTIVE&rdquo; tag or
                         sign to the tower. This prevents other operatives from using it unknowingly.
                       </p>
@@ -1059,7 +1059,7 @@ export default function PasmaModule5Section1() {
                       <p className="text-sm font-medium text-white">
                         Report &mdash; Notify the Responsible Person
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Report the defect to your supervisor, site manager, or the person
                         responsible for the tower. Provide details of what was found and where.
                       </p>
@@ -1073,7 +1073,7 @@ export default function PasmaModule5Section1() {
                       <p className="text-sm font-medium text-white">
                         Record &mdash; Document the Defect
                       </p>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Even though the pre-use check does not legally require written records, best
                         practice is to record the defect, the date, and the action taken.
                         Photographic evidence is valuable.
@@ -1104,7 +1104,7 @@ export default function PasmaModule5Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1118,7 +1118,7 @@ export default function PasmaModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../pasma-module-5">

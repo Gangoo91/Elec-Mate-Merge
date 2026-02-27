@@ -60,7 +60,7 @@ export const MaintenanceInput = ({
 
   // Character count styling
   const getCharCountClass = () => {
-    if (charCount < 50) return 'text-white/40';
+    if (charCount < 50) return 'text-white';
     if (charCount < 300) return 'text-emerald-400';
     return 'text-amber-400';
   };
@@ -103,7 +103,7 @@ export const MaintenanceInput = ({
             disabled={isProcessing}
           />
 
-          <p className="text-xs sm:text-sm text-white/50">
+          <p className="text-xs sm:text-sm text-white">
             50+ characters required for detailed maintenance instructions
           </p>
         </div>
@@ -131,15 +131,15 @@ export const MaintenanceInput = ({
         >
           <CollapsibleTrigger className="agent-collapsible-trigger w-full">
             <div className="flex items-center gap-3">
-              <Lightbulb className="h-4 w-4 text-white/60" />
+              <Lightbulb className="h-4 w-4 text-white" />
               <span className="text-sm sm:text-base font-medium">Quick Start Templates</span>
-              <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-white/10 text-white/50">
+              <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-white/10 text-white">
                 Templates
               </span>
             </div>
             <ChevronDown
               className={cn(
-                'h-4 w-4 text-white/40 transition-transform duration-200',
+                'h-4 w-4 text-white transition-transform duration-200',
                 showTemplates && 'rotate-180'
               )}
             />
@@ -162,14 +162,14 @@ export const MaintenanceInput = ({
         >
           <CollapsibleTrigger className="agent-collapsible-trigger w-full">
             <div className="flex items-center gap-3">
-              <Info className="h-4 w-4 text-white/60" />
+              <Info className="h-4 w-4 text-white" />
               <span className="text-sm sm:text-base font-medium">Equipment Details</span>
               <span
                 className={cn(
                   'text-[10px] sm:text-xs px-2 py-0.5 rounded-full',
                   hasEquipmentDetails
                     ? 'bg-emerald-500/20 text-emerald-400'
-                    : 'bg-white/10 text-white/50'
+                    : 'bg-white/10 text-white'
                 )}
               >
                 {hasEquipmentDetails ? '✓ Configured' : 'Optional'}
@@ -177,14 +177,14 @@ export const MaintenanceInput = ({
             </div>
             <ChevronDown
               className={cn(
-                'h-4 w-4 text-white/40 transition-transform duration-200',
+                'h-4 w-4 text-white transition-transform duration-200',
                 showEquipmentDetails && 'rotate-180'
               )}
             />
           </CollapsibleTrigger>
 
           <CollapsibleContent className="p-4 pt-0">
-            <p className="text-xs text-white/50 pb-2">
+            <p className="text-xs text-white pb-2">
               Additional equipment information for detailed instructions
             </p>
             <div className="mb-3">

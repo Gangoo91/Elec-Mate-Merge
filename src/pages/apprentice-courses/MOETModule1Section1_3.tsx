@@ -267,7 +267,7 @@ const MOETModule1Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module1-section1">
@@ -289,7 +289,7 @@ const MOETModule1Section1_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Lock-Out / Tag-Out (LOTO)
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Controlling hazardous energy through systematic isolation, locking and tagging
             procedures
           </p>
@@ -500,7 +500,7 @@ const MOETModule1Section1_3 = () => {
                 <div className="space-y-3">
                   <div className="p-3 rounded bg-blue-500/10 border border-blue-500/20">
                     <p className="text-sm font-medium text-blue-400 mb-1">1. Electrical Energy</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Mains supplies (single-phase, three-phase), control voltages, battery-backed
                       systems (UPS), solar PV arrays, standby generators, stored charge in
                       capacitors, electromagnetic energy in inductors and transformers. Electrical
@@ -509,7 +509,7 @@ const MOETModule1Section1_3 = () => {
                   </div>
                   <div className="p-3 rounded bg-purple-500/10 border border-purple-500/20">
                     <p className="text-sm font-medium text-purple-400 mb-1">2. Mechanical Energy</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Rotating machinery (motors, fans, pumps), moving parts (conveyors, lifts),
                       compressed springs (circuit breaker mechanisms), flywheels, and gears.
                       Mechanical energy can cause crushing, entanglement, amputation, and impact
@@ -518,7 +518,7 @@ const MOETModule1Section1_3 = () => {
                   </div>
                   <div className="p-3 rounded bg-green-500/10 border border-green-500/20">
                     <p className="text-sm font-medium text-green-400 mb-1">3. Hydraulic Energy</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Pressurised hydraulic fluid in actuators, cylinders, accumulators, and
                       pipework. Hydraulic systems can operate at pressures exceeding 200 bar (2,900
                       psi). A hydraulic fluid injection injury — where pressurised fluid penetrates
@@ -527,7 +527,7 @@ const MOETModule1Section1_3 = () => {
                   </div>
                   <div className="p-3 rounded bg-cyan-500/10 border border-cyan-500/20">
                     <p className="text-sm font-medium text-cyan-400 mb-1">4. Pneumatic Energy</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Compressed air in cylinders, receivers, pipework, and actuators. Pneumatic
                       energy can cause unexpected movement of actuators, ejection of components, and
                       blast injuries. Air receivers may retain pressure long after the compressor is
@@ -536,7 +536,7 @@ const MOETModule1Section1_3 = () => {
                   </div>
                   <div className="p-3 rounded bg-red-500/10 border border-red-500/20">
                     <p className="text-sm font-medium text-red-400 mb-1">5. Thermal Energy</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Heat from electrical equipment (transformers, motors, resistors), steam
                       systems, hot surfaces, and process fluids. Cold can also be hazardous —
                       cryogenic systems and refrigeration plant. Thermal energy causes burns,
@@ -545,7 +545,7 @@ const MOETModule1Section1_3 = () => {
                   </div>
                   <div className="p-3 rounded bg-amber-500/10 border border-amber-500/20">
                     <p className="text-sm font-medium text-amber-400 mb-1">6. Chemical Energy</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Hazardous substances in pipework, vessels, and processes — acids, solvents,
                       gases, and reactive chemicals. Battery electrolyte (sulphuric acid in
                       lead-acid, lithium compounds in Li-ion) is a common chemical hazard in
@@ -557,7 +557,7 @@ const MOETModule1Section1_3 = () => {
                     <p className="text-sm font-medium text-orange-400 mb-1">
                       7. Gravitational Energy
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Elevated loads, raised platforms, suspended components, and counterweights.
                       Any object that is raised above its rest position stores gravitational
                       potential energy. Cable drums, transformer lifting gear, and elevated
@@ -668,7 +668,7 @@ const MOETModule1Section1_3 = () => {
                 <div className="space-y-3">
                   <div className="p-3 rounded bg-white/5">
                     <p className="text-sm font-medium text-white mb-1">Personal Safety Padlocks</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Purpose-designed LOTO padlocks — lightweight, brightly coloured, with unique
                       keys. Each worker has their own individually keyed lock. Must be durable,
                       corrosion-resistant, and clearly identifiable. Never use standard commercial
@@ -677,7 +677,7 @@ const MOETModule1Section1_3 = () => {
                   </div>
                   <div className="p-3 rounded bg-white/5">
                     <p className="text-sm font-medium text-white mb-1">Multi-Lock Hasps</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Scissor hasps or jaw hasps that accept multiple padlocks. Allow several
                       workers to secure the same isolation point simultaneously. Available in
                       4-lock, 6-lock, 8-lock, and 12-lock configurations.
@@ -685,7 +685,7 @@ const MOETModule1Section1_3 = () => {
                   </div>
                   <div className="p-3 rounded bg-white/5">
                     <p className="text-sm font-medium text-white mb-1">Lockout Devices</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Purpose-designed devices that fit specific types of energy isolating
                       equipment: MCB lockouts, fuse carrier lockouts, valve lockouts, plug lockouts,
                       gate valve lockouts, and universal lockout devices. Must be matched to the
@@ -696,7 +696,7 @@ const MOETModule1Section1_3 = () => {
                 <div className="space-y-3">
                   <div className="p-3 rounded bg-white/5">
                     <p className="text-sm font-medium text-white mb-1">Danger Tags</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Durable, weather-resistant tags with spaces for: name of person, date, time,
                       reason for lockout, and contact information. Attached to the lock or hasp with
                       a non-reusable cable tie or self-locking nylon tie.
@@ -704,7 +704,7 @@ const MOETModule1Section1_3 = () => {
                   </div>
                   <div className="p-3 rounded bg-white/5">
                     <p className="text-sm font-medium text-white mb-1">Lockout Kits and Stations</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Portable kits containing a selection of lockout devices, padlocks, hasps, and
                       tags for field use. Lockout stations provide wall-mounted storage near
                       equipment with a visual display showing which locks are in use.
@@ -712,7 +712,7 @@ const MOETModule1Section1_3 = () => {
                   </div>
                   <div className="p-3 rounded bg-white/5">
                     <p className="text-sm font-medium text-white mb-1">Group Lockout Boxes</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Secure boxes that hold the keys for all isolation point locks. The box itself
                       is then locked with each worker's personal padlock. Used for complex
                       isolations involving many isolation points.
@@ -789,7 +789,7 @@ const MOETModule1Section1_3 = () => {
                   <p className={`text-sm font-medium ${item.colour} mb-2`}>
                     Step {item.step}: {item.title}
                   </p>
-                  <p className="text-sm text-white/90">{item.content}</p>
+                  <p className="text-sm text-white">{item.content}</p>
                 </div>
               ))}
             </div>
@@ -798,7 +798,7 @@ const MOETModule1Section1_3 = () => {
               <p className="text-sm font-medium text-elec-yellow mb-2">
                 Verification Is Non-Negotiable
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Step 5 — Verify Isolation — is the step that saves lives. Without verification, you
                 are trusting that you operated the correct isolation devices, that they functioned
                 properly, and that no other energy source exists. Verification removes this trust
@@ -836,10 +836,10 @@ const MOETModule1Section1_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Method 1: Multi-Lock Hasp</p>
-                  <p className="text-xs text-white/80 mb-2">
+                  <p className="text-xs text-white mb-2">
                     For simple isolations with few isolation points:
                   </p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>A multi-lock hasp is fitted to each isolation point</li>
                     <li>Each worker applies their personal lock to the hasp</li>
                     <li>The isolation cannot be removed until all locks are removed</li>
@@ -848,10 +848,10 @@ const MOETModule1Section1_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Method 2: Group Lockout Box</p>
-                  <p className="text-xs text-white/80 mb-2">
+                  <p className="text-xs text-white mb-2">
                     For complex isolations with many isolation points:
                   </p>
-                  <ul className="text-xs text-white/80 space-y-1 list-disc list-outside ml-4">
+                  <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                     <li>An authorised person isolates and locks all isolation points</li>
                     <li>The keys to these locks are placed in a lockout box</li>
                     <li>The box is locked — each worker applies their personal lock to the box</li>
@@ -872,7 +872,7 @@ const MOETModule1Section1_3 = () => {
                 worker removes their lock before the incoming worker applies theirs, there is a
                 window during which the equipment is not locked out — and could be re-energised.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p className="font-medium mb-2">Safe Shift Changeover Procedure:</p>
                 <p>1. Outgoing worker briefs incoming worker on the status of the work and LOTO</p>
                 <p>2. Incoming worker inspects the isolation and verifies it is still effective</p>
@@ -891,7 +891,7 @@ const MOETModule1Section1_3 = () => {
                 <p>5. Incoming worker verifies that they have sole control of the isolation</p>
                 <p>6. Outgoing worker signs off the LOTO log; incoming worker signs on</p>
               </div>
-              <p className="text-xs text-white/60 mt-3">
+              <p className="text-xs text-white mt-3">
                 Note: The incoming lock is always applied BEFORE the outgoing lock is removed. This
                 ensures continuous lockout protection with no unprotected gap.
               </p>
@@ -1147,7 +1147,7 @@ const MOETModule1Section1_3 = () => {
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Note:</strong> Under the Electricity at Work Regulations 1989, Regulation 13
               requires adequate precautions to prevent conductors becoming electrically charged
               during work. A properly implemented LOTO procedure is the primary means of
@@ -1219,7 +1219,7 @@ const MOETModule1Section1_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1238,7 +1238,7 @@ const MOETModule1Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module1-section1-2">

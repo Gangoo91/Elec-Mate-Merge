@@ -79,20 +79,20 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
       </CardHeader>
 
       <CardContent className="flex-1 flex flex-col space-y-4 min-h-0 relative">
-        <p className="text-sm text-white/80 leading-relaxed">{accreditation.description}</p>
+        <p className="text-sm text-white leading-relaxed">{accreditation.description}</p>
 
         <div className="grid grid-cols-2 gap-3 text-xs">
           <div className="flex items-center gap-2 p-2 rounded-lg bg-white/5 border border-white/10">
             <Clock className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-            <span className="text-white/80 truncate">{accreditation.duration}</span>
+            <span className="text-white truncate">{accreditation.duration}</span>
           </div>
           <div className="flex items-center gap-2 p-2 rounded-lg bg-white/5 border border-white/10">
             <PoundSterling className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-            <span className="text-white/80 truncate">{accreditation.cost}</span>
+            <span className="text-white truncate">{accreditation.cost}</span>
           </div>
           <div className="flex items-center gap-2 p-2 rounded-lg bg-white/5 border border-white/10">
             <MapPin className="h-4 w-4 text-elec-yellow flex-shrink-0" />
-            <span className="text-white/80 truncate">
+            <span className="text-white truncate">
               {accreditation.locations.slice(0, 2).join(', ')}
               {accreditation.locations.length > 2 && '...'}
             </span>
@@ -101,7 +101,7 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
             <TrendingUp
               className={`h-4 w-4 flex-shrink-0 ${getPopularityColor(accreditation.popularity)}`}
             />
-            <span className="text-white/80">{accreditation.popularity}% popularity</span>
+            <span className="text-white">{accreditation.popularity}% popularity</span>
           </div>
         </div>
 
@@ -116,7 +116,7 @@ const AccreditationCard = ({ accreditation, onViewDetails }: AccreditationCardPr
             {accreditation.benefits.slice(0, 3).map((benefit, idx) => (
               <div key={idx} className="flex items-start gap-2">
                 <CheckCircle className="h-3.5 w-3.5 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-xs text-white/80 leading-relaxed">{benefit}</span>
+                <span className="text-xs text-white leading-relaxed">{benefit}</span>
               </div>
             ))}
             {accreditation.benefits.length > 3 && (

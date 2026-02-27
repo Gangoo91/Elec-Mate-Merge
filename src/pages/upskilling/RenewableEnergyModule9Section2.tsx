@@ -236,7 +236,7 @@ const RenewableEnergyModule9Section2 = () => {
         <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
           ROI, Payback Periods & System Lifespan
         </h1>
-        <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+        <p className="text-white text-sm sm:text-base max-w-xl mx-auto">
           Financial metrics that drive renewable energy investment decisions
         </p>
       </div>
@@ -284,7 +284,7 @@ const RenewableEnergyModule9Section2 = () => {
           ].map((outcome, index) => (
             <div key={index} className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 shrink-0" />
-              <span className="text-white/80 text-sm">{outcome}</span>
+              <span className="text-white text-sm">{outcome}</span>
             </div>
           ))}
         </div>
@@ -297,7 +297,7 @@ const RenewableEnergyModule9Section2 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">01</span>
             <h2 className="text-xl font-semibold text-white">Understanding Payback Period</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Payback period is the most commonly requested financial metric for renewable energy
               investments. It answers the fundamental question: how long until this system pays for
@@ -337,7 +337,7 @@ const RenewableEnergyModule9Section2 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">02</span>
             <h2 className="text-xl font-semibold text-white">Return on Investment (ROI)</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               ROI expresses returns as a percentage of the initial investment, enabling comparison
               with other investment opportunities such as savings accounts, bonds, or stock market
@@ -377,7 +377,7 @@ const RenewableEnergyModule9Section2 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">03</span>
             <h2 className="text-xl font-semibold text-white">Component Lifespans</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Different components have different expected lifespans, affecting both financial
               planning and maintenance requirements. Understanding these lifespans ensures realistic
@@ -425,7 +425,7 @@ const RenewableEnergyModule9Section2 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">04</span>
             <h2 className="text-xl font-semibold text-white">Degradation and Yield Over Time</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Solar panels gradually lose efficiency over time. Accurate financial projections must
               account for this degradation to avoid overstating long-term returns.
@@ -465,7 +465,7 @@ const RenewableEnergyModule9Section2 = () => {
             <span className="text-3xl font-bold text-elec-yellow/30">05</span>
             <h2 className="text-xl font-semibold text-white">Comprehensive Financial Modelling</h2>
           </div>
-          <div className="space-y-3 text-white/80 text-sm leading-relaxed">
+          <div className="space-y-3 text-white text-sm leading-relaxed">
             <p>
               Realistic financial projections combine all factors: initial cost, annual savings,
               degradation, maintenance, component replacement, and assumptions about future prices.
@@ -509,7 +509,7 @@ const RenewableEnergyModule9Section2 = () => {
             <Zap className="w-4 h-4 text-elec-yellow" />
             Practical Guidance
           </h3>
-          <div className="space-y-2 text-white/80 text-sm">
+          <div className="space-y-2 text-white text-sm">
             <p>
               <span className="text-white font-medium">Use conservative assumptions:</span>{' '}
               Under-promise and over-deliver. Conservative assumptions that prove pessimistic leave
@@ -535,7 +535,7 @@ const RenewableEnergyModule9Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-lg p-4">
                 <h3 className="text-white font-medium mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm">{faq.answer}</p>
+                <p className="text-white text-sm">{faq.answer}</p>
               </div>
             ))}
           </div>

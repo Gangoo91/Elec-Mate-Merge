@@ -112,7 +112,7 @@ const RunThroughStepsTab = () => {
           </CardTitle>
         </CardHeader>
         <CardContent className="relative space-y-6">
-          <p className="text-white/70">
+          <p className="text-white">
             Comprehensive step-by-step testing procedures covering all required BS 7671 (18th
             Edition) inspection and testing requirements. Each test includes detailed instructions,
             safety warnings, regulation references, and troubleshooting guidance.
@@ -124,7 +124,7 @@ const RunThroughStepsTab = () => {
                 <CheckCircle className="h-4 w-4 text-green-400" />
               </div>
               <div className="text-2xl font-bold text-green-400">{allBS7671Tests.length}</div>
-              <div className="text-xs text-white/60">Complete Tests</div>
+              <div className="text-xs text-white">Complete Tests</div>
             </div>
             <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
               <div className="p-2 rounded-lg bg-blue-500/20 inline-block mb-2">
@@ -133,21 +133,21 @@ const RunThroughStepsTab = () => {
               <div className="text-2xl font-bold text-blue-400">
                 {allBS7671Tests.reduce((total, test) => total + test.steps.length, 0)}+
               </div>
-              <div className="text-xs text-white/60">Detailed Steps</div>
+              <div className="text-xs text-white">Detailed Steps</div>
             </div>
             <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
               <div className="p-2 rounded-lg bg-purple-500/20 inline-block mb-2">
                 <Shield className="h-4 w-4 text-purple-400" />
               </div>
               <div className="text-2xl font-bold text-purple-400">BS 7671</div>
-              <div className="text-xs text-white/60">18th Edition</div>
+              <div className="text-xs text-white">18th Edition</div>
             </div>
             <div className="p-4 rounded-xl bg-white/10 border border-white/10 text-center">
               <div className="p-2 rounded-lg bg-elec-yellow/20 inline-block mb-2">
                 <Zap className="h-4 w-4 text-elec-yellow" />
               </div>
               <div className="text-2xl font-bold text-elec-yellow">100%</div>
-              <div className="text-xs text-white/60">Compliant</div>
+              <div className="text-xs text-white">Compliant</div>
             </div>
           </div>
 
@@ -155,21 +155,21 @@ const RunThroughStepsTab = () => {
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="relative flex-1">
               {!searchTerm && (
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white/70 pointer-events-none" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-white pointer-events-none" />
               )}
               <Input
                 placeholder="Search tests..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className={cn(
-                  'h-11 bg-white/10 border-white/10 text-white placeholder:text-white/70 focus:border-cyan-500/50',
+                  'h-11 bg-white/10 border-white/10 text-white placeholder:text-white focus:border-cyan-500/50',
                   !searchTerm && 'pl-10'
                 )}
               />
             </div>
             <div className="flex items-center gap-2">
               <div className="p-2 rounded-lg bg-white/5">
-                <Filter className="h-4 w-4 text-white/60" />
+                <Filter className="h-4 w-4 text-white" />
               </div>
               <select
                 value={difficultyFilter}
@@ -205,7 +205,7 @@ const RunThroughStepsTab = () => {
                       <CardTitle className="text-white text-lg leading-tight">
                         {test.title}
                       </CardTitle>
-                      <p className="text-sm text-white/60 mt-1">{test.description}</p>
+                      <p className="text-sm text-white mt-1">{test.description}</p>
                     </div>
                   </div>
                   <div className="flex flex-wrap items-center gap-2">
@@ -225,7 +225,7 @@ const RunThroughStepsTab = () => {
             <CardContent className="space-y-3 relative">
               <div className="p-3 rounded-xl bg-blue-500/10 border border-blue-500/20">
                 <h4 className="font-medium text-blue-400 mb-2 text-sm">Purpose</h4>
-                <p className="text-sm text-white/70">{test.purpose}</p>
+                <p className="text-sm text-white">{test.purpose}</p>
               </div>
 
               {test.testLimits.length > 0 && (
@@ -233,7 +233,7 @@ const RunThroughStepsTab = () => {
                   <h4 className="font-medium text-green-400 mb-2 text-sm">Test Limits</h4>
                   <div className="space-y-1">
                     {test.testLimits.slice(0, 2).map((limit, index) => (
-                      <div key={index} className="text-sm text-white/70 flex justify-between">
+                      <div key={index} className="text-sm text-white flex justify-between">
                         <span>{limit.parameter}:</span>
                         <span className="font-mono text-green-300">
                           {limit.limit} {limit.unit}
@@ -241,7 +241,7 @@ const RunThroughStepsTab = () => {
                       </div>
                     ))}
                     {test.testLimits.length > 2 && (
-                      <div className="text-xs text-white/80 italic">
+                      <div className="text-xs text-white italic">
                         +{test.testLimits.length - 2} more limits...
                       </div>
                     )}
@@ -256,7 +256,7 @@ const RunThroughStepsTab = () => {
                 </h4>
                 <ul className="space-y-1">
                   {test.commonIssues.slice(0, 2).map((issue, index) => (
-                    <li key={index} className="text-xs text-white/70 flex items-start gap-2">
+                    <li key={index} className="text-xs text-white flex items-start gap-2">
                       <span className="w-1.5 h-1.5 bg-orange-400 rounded-full mt-1.5 flex-shrink-0" />
                       {issue}
                     </li>
@@ -266,7 +266,7 @@ const RunThroughStepsTab = () => {
 
               <div className="p-3 rounded-xl bg-purple-500/10 border border-purple-500/20">
                 <h4 className="font-medium text-purple-400 mb-2 text-sm">Test Features</h4>
-                <div className="grid grid-cols-2 gap-2 text-xs text-white/70">
+                <div className="grid grid-cols-2 gap-2 text-xs text-white">
                   <div className="flex items-center gap-1.5">
                     <CheckCircle className="h-3 w-3 text-green-400" />
                     {test.steps.length} detailed steps
@@ -306,7 +306,7 @@ const RunThroughStepsTab = () => {
               <Search className="h-10 w-10 text-orange-400" />
             </div>
             <h3 className="text-xl font-semibold text-white mb-2">No Tests Found</h3>
-            <p className="text-white/60 max-w-md mx-auto">
+            <p className="text-white max-w-md mx-auto">
               No tests match your current search criteria. Try adjusting your search terms or
               filters.
             </p>
@@ -342,7 +342,7 @@ const RunThroughStepsTab = () => {
                   'Plan testing sequence to minimise re-isolation',
                   'Ensure adequate lighting and access',
                 ].map((item, index) => (
-                  <li key={index} className="flex items-start gap-2 text-sm text-white/70">
+                  <li key={index} className="flex items-start gap-2 text-sm text-white">
                     <span className="w-1.5 h-1.5 bg-green-400 rounded-full mt-1.5 flex-shrink-0" />
                     {item}
                   </li>
@@ -364,7 +364,7 @@ const RunThroughStepsTab = () => {
                   'Follow the prescribed testing sequence',
                   'Document any deviations or observations',
                 ].map((item, index) => (
-                  <li key={index} className="flex items-start gap-2 text-sm text-white/70">
+                  <li key={index} className="flex items-start gap-2 text-sm text-white">
                     <span className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-1.5 flex-shrink-0" />
                     {item}
                   </li>

@@ -220,7 +220,7 @@ const InspectionTestingModule2Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-2">
@@ -242,7 +242,7 @@ const InspectionTestingModule2Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Isolation Equipment and PPE
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Master the selection, inspection, and use of approved test equipment and personal
             protective equipment
           </p>
@@ -347,7 +347,7 @@ const InspectionTestingModule2Section2 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/20">
               <p className="text-white font-semibold text-sm">GS38 Requirement</p>
-              <p className="text-white/80 mt-1 text-sm">
+              <p className="text-white mt-1 text-sm">
                 Always use a <strong>proving unit</strong> to verify your voltage indicator works
                 correctly BEFORE and AFTER testing. A voltage indicator that shows "dead" could have
                 a flat battery, damaged leads, or internal fault.
@@ -403,7 +403,7 @@ const InspectionTestingModule2Section2 = () => {
                   </span>
                   <div>
                     <p className="text-white font-semibold text-sm">PROVE</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Test voltage indicator on proving unit (confirms it works)
                     </p>
                   </div>
@@ -414,7 +414,7 @@ const InspectionTestingModule2Section2 = () => {
                   </span>
                   <div>
                     <p className="text-white font-semibold text-sm">TEST</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Test the isolated circuit (should show dead)
                     </p>
                   </div>
@@ -425,7 +425,7 @@ const InspectionTestingModule2Section2 = () => {
                   </span>
                   <div>
                     <p className="text-white font-semibold text-sm">PROVE</p>
-                    <p className="text-white/70 text-xs">
+                    <p className="text-white text-xs">
                       Test voltage indicator on proving unit again (confirms it still works)
                     </p>
                   </div>
@@ -442,19 +442,19 @@ const InspectionTestingModule2Section2 = () => {
             <div className="grid sm:grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-1">Battery Powered</p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Self-contained, disposable when depleted. Compact for site use.
                 </p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-1">Rechargeable</p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   USB/mains charging. More economical long-term.
                 </p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-1">Built-In Self Test</p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Some indicators have integrated proving. Useful backup.
                 </p>
               </div>
@@ -512,8 +512,8 @@ const InspectionTestingModule2Section2 = () => {
                     IV
                   </span>
                   <div>
-                    <p className="text-white/90 text-sm font-medium">Origin of Installation</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-sm font-medium">Origin of Installation</p>
+                    <p className="text-white text-xs">
                       Utility connection, main incoming, service heads
                     </p>
                   </div>
@@ -523,8 +523,8 @@ const InspectionTestingModule2Section2 = () => {
                     III
                   </span>
                   <div>
-                    <p className="text-white/90 text-sm font-medium">Distribution Level</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-sm font-medium">Distribution Level</p>
+                    <p className="text-white text-xs">
                       Main panels, submains, distribution boards, fixed wiring
                     </p>
                   </div>
@@ -534,8 +534,8 @@ const InspectionTestingModule2Section2 = () => {
                     II
                   </span>
                   <div>
-                    <p className="text-white/90 text-sm font-medium">Local Level</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-sm font-medium">Local Level</p>
+                    <p className="text-white text-xs">
                       Socket outlets, portable equipment, appliances
                     </p>
                   </div>
@@ -545,8 +545,8 @@ const InspectionTestingModule2Section2 = () => {
                     I
                   </span>
                   <div>
-                    <p className="text-white/90 text-sm font-medium">Protected Level</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-sm font-medium">Protected Level</p>
+                    <p className="text-white text-xs">
                       Signal level electronics, protected circuits only
                     </p>
                   </div>
@@ -556,7 +556,7 @@ const InspectionTestingModule2Section2 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/20">
               <p className="text-white font-semibold text-sm">CAT Rating Safety</p>
-              <p className="text-white/80 mt-1 text-sm">
+              <p className="text-white mt-1 text-sm">
                 Using equipment rated below the required CAT level can result in equipment failure
                 during transient overvoltages, potentially causing arc flash injury.{' '}
                 <strong>Always use CAT III or CAT IV for distribution board work.</strong>
@@ -582,25 +582,25 @@ const InspectionTestingModule2Section2 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Insulating Gloves</p>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 Rubber insulating gloves are classified by maximum working voltage. For LV work (up
                 to 1000V AC), Class 0 or Class 00 gloves are typically used.
               </p>
               <div className="grid grid-cols-2 gap-3">
                 <div className="p-3 rounded bg-[#e8d4b8]/20 text-center">
                   <div className="w-8 h-8 rounded-full bg-[#e8d4b8] mx-auto mb-1"></div>
-                  <p className="text-white/90 text-xs font-medium">Class 00 - Beige</p>
-                  <p className="text-white/60 text-xs">500V AC max</p>
+                  <p className="text-white text-xs font-medium">Class 00 - Beige</p>
+                  <p className="text-white text-xs">500V AC max</p>
                 </div>
                 <div className="p-3 rounded bg-red-500/20 text-center">
                   <div className="w-8 h-8 rounded-full bg-red-500 mx-auto mb-1"></div>
-                  <p className="text-white/90 text-xs font-medium">Class 0 - Red</p>
-                  <p className="text-white/60 text-xs">1000V AC max</p>
+                  <p className="text-white text-xs font-medium">Class 0 - Red</p>
+                  <p className="text-white text-xs">1000V AC max</p>
                 </div>
               </div>
               <div className="mt-3 p-3 rounded bg-white/5">
-                <p className="text-white/90 font-medium text-sm mb-2">Before Each Use:</p>
-                <ul className="space-y-1 text-white/70 text-xs">
+                <p className="text-white font-medium text-sm mb-2">Before Each Use:</p>
+                <ul className="space-y-1 text-white text-xs">
                   <li>Air test - roll from cuff to trap air, check for leaks</li>
                   <li>Visual inspection - cuts, cracks, UV damage, contamination</li>
                   <li>Check test date - must be within test validity period</li>
@@ -674,35 +674,35 @@ const InspectionTestingModule2Section2 = () => {
               <div className="space-y-3">
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow font-medium mb-1">MCB Lockouts</p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Clip onto miniature circuit breakers to prevent toggle operation. Must match MCB
                     type (DIN rail, BS 3871, etc.).
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow font-medium mb-1">MCCB/ACB Lockouts</p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Larger devices for moulded case and air circuit breakers. Often fit around the
                     operating handle.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow font-medium mb-1">Isolator Lockouts</p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     For rotary isolators and switch-disconnectors. Trap the handle in the OFF
                     position.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow font-medium mb-1">Fuse Carrier Blanks</p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Replace removed fuse carriers in fuse boards. Prevent incorrect fuse
                     reinsertion.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-elec-yellow font-medium mb-1">Plug Lockouts</p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Enclose plug ends preventing reinsertion into sockets. Useful for portable
                     equipment isolation.
                   </p>
@@ -772,8 +772,8 @@ const InspectionTestingModule2Section2 = () => {
                     6M
                   </span>
                   <div>
-                    <p className="text-white/90 text-sm font-medium">Insulating Gloves</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-sm font-medium">Insulating Gloves</p>
+                    <p className="text-white text-xs">
                       Dielectric test every 6 months at approved facility
                     </p>
                   </div>
@@ -783,8 +783,8 @@ const InspectionTestingModule2Section2 = () => {
                     12M
                   </span>
                   <div>
-                    <p className="text-white/90 text-sm font-medium">Voltage Indicators</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-sm font-medium">Voltage Indicators</p>
+                    <p className="text-white text-xs">
                       Manufacturer verification/calibration annually (where recommended)
                     </p>
                   </div>
@@ -794,8 +794,8 @@ const InspectionTestingModule2Section2 = () => {
                     RPL
                   </span>
                   <div>
-                    <p className="text-white/90 text-sm font-medium">Test Leads</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-sm font-medium">Test Leads</p>
+                    <p className="text-white text-xs">
                       Replace when damaged or showing wear - no repair
                     </p>
                   </div>
@@ -805,7 +805,7 @@ const InspectionTestingModule2Section2 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/20">
               <p className="text-white font-semibold text-sm">Remove from Service</p>
-              <p className="text-white/80 mt-1 text-sm">
+              <p className="text-white mt-1 text-sm">
                 Any equipment showing damage, failing tests, or of uncertain history must be removed
                 from service immediately. Do not attempt repairs on safety-critical equipment -
                 replace leads, return instruments to manufacturer.
@@ -890,7 +890,7 @@ const InspectionTestingModule2Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -931,7 +931,7 @@ const InspectionTestingModule2Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-2/section-1">

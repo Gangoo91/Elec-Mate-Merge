@@ -248,7 +248,7 @@ const HNCModule2Section3_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section3">
@@ -270,7 +270,7 @@ const HNCModule2Section3_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Air Conditioning Processes
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding heating, cooling, humidification and dehumidification for HVAC system
             design
           </p>
@@ -354,7 +354,7 @@ const HNCModule2Section3_4 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 Q<sub>s</sub> = ṁ × c<sub>p</sub> × ΔT
               </p>
-              <div className="text-xs text-white/70 text-center space-y-1">
+              <div className="text-xs text-white text-center space-y-1">
                 <p>Qs = sensible heat rate (kW)</p>
                 <p>ṁ = mass flow rate (kg/s)</p>
                 <p>cp = 1.005 kJ/kg·K (dry air)</p>
@@ -485,7 +485,7 @@ const HNCModule2Section3_4 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 η = (T<sub>1</sub> - T<sub>2</sub>) / (T<sub>1</sub> - T<sub>wb</sub>)
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Efficiency typically 70-90% for spray/media systems
               </p>
             </div>
@@ -546,7 +546,7 @@ const HNCModule2Section3_4 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 Q<sub>L</sub> = ṁ × Δg × h<sub>fg</sub>
               </p>
-              <div className="text-xs text-white/70 text-center space-y-1">
+              <div className="text-xs text-white text-center space-y-1">
                 <p>QL = latent heat rate (kW)</p>
                 <p>Δg = moisture content change (kg/kg)</p>
                 <p>hfg ≈ 2450 kJ/kg (at typical conditions)</p>
@@ -609,7 +609,7 @@ const HNCModule2Section3_4 = () => {
                   <sub>1</sub> + ṁ<sub>2</sub>)
                 </p>
               </div>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 All properties mix by mass-weighted average
               </p>
             </div>
@@ -682,7 +682,7 @@ const HNCModule2Section3_4 = () => {
                 <strong>Question:</strong> An AHU supplies 4.5 kg/s of air. Calculate the heating
                 coil capacity to raise temperature from 10°C to 24°C.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given: ṁ = 4.5 kg/s, T₁ = 10°C, T₂ = 24°C</p>
                 <p>cp = 1.005 kJ/kg·K</p>
                 <p className="mt-2">Qs = ṁ × cp × ΔT</p>
@@ -702,7 +702,7 @@ const HNCModule2Section3_4 = () => {
                 <strong>Question:</strong> Air at 28°C, 12 g/kg enters a cooling coil and leaves at
                 14°C, 9 g/kg. Calculate sensible, latent and total load for 3 kg/s.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Sensible: Qs = ṁ × cp × ΔT</p>
                 <p>
                   Qs = 3 × 1.005 × (28 - 14) = <strong>42.2 kW</strong>
@@ -728,7 +728,7 @@ const HNCModule2Section3_4 = () => {
                 <strong>Question:</strong> 1.5 kg/s outside air (32°C, 18 g/kg) mixes with 4.5 kg/s
                 return air (24°C, 10 g/kg). Find mixed conditions.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Total flow: ṁt = 1.5 + 4.5 = 6.0 kg/s</p>
                 <p className="mt-2">Mixed temperature:</p>
                 <p>Tm = (1.5×32 + 4.5×24) / 6.0</p>
@@ -751,7 +751,7 @@ const HNCModule2Section3_4 = () => {
                 <strong>Question:</strong> How much steam (kg/h) is needed to raise 2 kg/s of air
                 from 5 g/kg to 8 g/kg moisture content?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Moisture addition rate:</p>
                 <p>Δg = 8 - 5 = 3 g/kg = 0.003 kg/kg</p>
                 <p className="mt-2">Steam flow rate:</p>
@@ -837,7 +837,7 @@ const HNCModule2Section3_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -883,7 +883,7 @@ const HNCModule2Section3_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section3-3">

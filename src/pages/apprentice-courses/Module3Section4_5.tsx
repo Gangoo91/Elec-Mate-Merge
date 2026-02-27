@@ -167,13 +167,13 @@ export default function Module3Section4_5() {
           <div className="inline-flex items-center justify-center gap-2 px-3 py-1 rounded-full bg-elec-yellow/10 border border-elec-yellow/30 mb-4">
             <Cable className="w-4 h-4 text-elec-yellow" />
             <span className="text-elec-yellow text-sm font-medium">Module 3</span>
-            <span className="text-white/50">|</span>
-            <span className="text-white/70 text-sm">Section 3.4.5</span>
+            <span className="text-white">|</span>
+            <span className="text-white text-sm">Section 3.4.5</span>
           </div>
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Supporting and Securing Cables
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Master the essential techniques for cable support, fire-resistant fixings, and BS 7671
             compliance for professional electrical installations.
           </p>
@@ -408,7 +408,7 @@ export default function Module3Section4_5() {
             <span className="text-elec-yellow/80 text-sm font-normal">05</span>
             Real-World Example
           </h2>
-          <p className="text-white/90">
+          <p className="text-white">
             In a warehouse fire, plastic cable fixings melted, causing cables to collapse into
             escape routes. Firefighters reported the hazard and regulations were updated in the 18th
             Edition to require non-combustible supports in such locations.
@@ -424,14 +424,14 @@ export default function Module3Section4_5() {
           <div className="space-y-4 text-sm">
             <div className="space-y-1">
               <p className="font-medium">Q: Can I still use plastic cable clips?</p>
-              <p className="text-white/90">
+              <p className="text-white">
                 A: Yes, but not as the sole means of support in escape routes — combine them with
                 metal fixings.
               </p>
             </div>
             <div className="space-y-1">
               <p className="font-medium">Q: Do all cables need to be clipped?</p>
-              <p className="text-white/90">
+              <p className="text-white">
                 A: Yes, all fixed wiring must be adequately supported, although method and spacing
                 will vary.
               </p>
@@ -440,7 +440,7 @@ export default function Module3Section4_5() {
               <p className="font-medium">
                 Q: Is stainless steel overkill for normal domestic installations?
               </p>
-              <p className="text-white/90">
+              <p className="text-white">
                 A: It's only required in specific high-risk areas like escape routes, but it can
                 still improve durability.
               </p>

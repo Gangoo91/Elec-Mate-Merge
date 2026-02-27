@@ -213,7 +213,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
           <Button
             variant="ghost"
             size="icon"
-            className="min-h-[44px] min-w-[44px] text-white/70 hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] min-w-[44px] text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-5">
@@ -221,7 +221,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
             </Link>
           </Button>
           <div className="flex-1 min-w-0">
-            <p className="text-xs text-white/40">Module 5 {'\u2022'} Section 3</p>
+            <p className="text-xs text-white">Module 5 {'\u2022'} Section 3</p>
             <h1 className="text-sm font-semibold text-white truncate">
               Weather & Environmental Conditions
             </h1>
@@ -244,7 +244,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Weather & Environmental Conditions
           </h2>
-          <p className="text-white/60 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding when weather makes scaffold work unsafe — wind limits, ice, rain,
             lightning, temperature extremes, and the inspections required after weather events
           </p>
@@ -256,7 +256,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
             <Zap className="h-4 w-4" />
             In 30 Seconds
           </h3>
-          <p className="text-white/80 text-base leading-relaxed">
+          <p className="text-white text-base leading-relaxed">
             Weather is one of the biggest variables in scaffold safety. Wind is the primary concern
             — scaffold erection and dismantling should generally stop at Beaufort force 6
             (approximately 23 mph), with sheeted or netted scaffolds potentially requiring earlier
@@ -272,7 +272,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
             <HardHat className="h-4 w-4" />
             On Site
           </h3>
-          <p className="text-white/80 text-base leading-relaxed">
+          <p className="text-white text-base leading-relaxed">
             Before starting work on a scaffold each day, check the weather forecast and current
             conditions. Look at the scaffold: is there ice on the platforms? Is water pooling? Are
             sheeting or netting panels intact or torn? Is the ground soft or waterlogged at the
@@ -299,7 +299,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
             ].map((outcome, i) => (
               <li key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </li>
             ))}
           </ul>
@@ -316,7 +316,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
             <h3 className="text-xl font-semibold text-white">Wind Effects on Scaffolds</h3>
           </div>
           <div className="border-l-2 border-slate-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Wind is the single most significant weather hazard for scaffold structures. It creates
               lateral forces that push against the scaffold, its components, and any sheeting or
               netting attached to it. Wind forces increase with the square of the wind speed — so
@@ -327,7 +327,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
                 <Wind className="h-4 w-4 text-slate-400" />
                 How Wind Affects Scaffold Structures
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                   <span>
@@ -378,7 +378,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
                 <AlertTriangle className="h-4 w-4" />
                 Critical Point — Wind Force Increases Exponentially
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Wind force is proportional to the square of the wind speed. This means a wind speed
                 of 40 mph produces <strong className="text-white">four times</strong> the force of a
                 20 mph wind, not twice. This is why conditions can deteriorate from manageable to
@@ -401,7 +401,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
             </h3>
           </div>
           <div className="border-l-2 border-blue-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The Beaufort scale provides a standardised way to describe wind conditions. For
               scaffold work, the key thresholds are force 6 (stop erection and dismantling) and
               force 8 (stop all scaffold work and evacuate). However, these are general guidelines —
@@ -425,9 +425,9 @@ export default function ScaffoldingAwarenessModule5Section3() {
                         Calm to Gentle Breeze
                       </span>
                     </div>
-                    <span className="text-white/50 text-xs">0-12 mph</span>
+                    <span className="text-white text-xs">0-12 mph</span>
                   </div>
-                  <p className="text-white/70 text-xs mt-2">
+                  <p className="text-white text-xs mt-2">
                     Generally safe for all scaffold work. Leaves rustle, light flags extend. Normal
                     working conditions — standard precautions apply.
                   </p>
@@ -441,9 +441,9 @@ export default function ScaffoldingAwarenessModule5Section3() {
                       </span>
                       <span className="text-green-400 font-semibold text-sm">Moderate Breeze</span>
                     </div>
-                    <span className="text-white/50 text-xs">13-18 mph</span>
+                    <span className="text-white text-xs">13-18 mph</span>
                   </div>
-                  <p className="text-white/70 text-xs mt-2">
+                  <p className="text-white text-xs mt-2">
                     Small branches move, dust and loose paper raised. Scaffold work can generally
                     continue but be alert to gusts. Secure loose materials. Begin monitoring
                     conditions.
@@ -458,9 +458,9 @@ export default function ScaffoldingAwarenessModule5Section3() {
                       </span>
                       <span className="text-amber-400 font-semibold text-sm">Fresh Breeze</span>
                     </div>
-                    <span className="text-white/50 text-xs">19-24 mph</span>
+                    <span className="text-white text-xs">19-24 mph</span>
                   </div>
-                  <p className="text-white/70 text-xs mt-2">
+                  <p className="text-white text-xs mt-2">
                     Small trees sway, whitecaps on inland waters. Increased risk for scaffold
                     erection and dismantling. Dynamic risk assessment essential. Consider stopping
                     erection/dismantling if gust speeds are high.
@@ -475,9 +475,9 @@ export default function ScaffoldingAwarenessModule5Section3() {
                       </span>
                       <span className="text-red-400 font-semibold text-sm">Strong Breeze</span>
                     </div>
-                    <span className="text-white/50 text-xs">25-31 mph</span>
+                    <span className="text-white text-xs">25-31 mph</span>
                   </div>
-                  <p className="text-white/70 text-xs mt-2">
+                  <p className="text-white text-xs mt-2">
                     Large branches move, umbrellas difficult to use.{' '}
                     <strong className="text-red-400">
                       STOP scaffold erection and dismantling.
@@ -495,9 +495,9 @@ export default function ScaffoldingAwarenessModule5Section3() {
                       </span>
                       <span className="text-red-400 font-semibold text-sm">Near Gale</span>
                     </div>
-                    <span className="text-white/50 text-xs">32-38 mph</span>
+                    <span className="text-white text-xs">32-38 mph</span>
                   </div>
-                  <p className="text-white/70 text-xs mt-2">
+                  <p className="text-white text-xs mt-2">
                     Whole trees in motion, difficulty walking against wind.{' '}
                     <strong className="text-red-400">
                       STOP all scaffold erection, dismantling, and alteration.
@@ -516,9 +516,9 @@ export default function ScaffoldingAwarenessModule5Section3() {
                         Fresh Gale and Above
                       </span>
                     </div>
-                    <span className="text-white/50 text-xs">39+ mph</span>
+                    <span className="text-white text-xs">39+ mph</span>
                   </div>
-                  <p className="text-white/70 text-xs mt-2">
+                  <p className="text-white text-xs mt-2">
                     Twigs break from trees, progress on foot impeded.{' '}
                     <strong className="text-red-300">EVACUATE ALL SCAFFOLDS IMMEDIATELY.</strong> No
                     scaffold work of any kind. Inspect scaffold after wind subsides before re-use.
@@ -532,7 +532,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
               <h4 className="font-semibold text-white text-sm mb-2">
                 How to Estimate Wind Speed on Site
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Where an anemometer (wind speed measuring device) is not available, the Beaufort
                 scale provides observable indicators. At force 6, large branches are moving and
                 umbrellas are difficult to use. At force 8, twigs are breaking from trees and
@@ -566,7 +566,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
             </h3>
           </div>
           <div className="border-l-2 border-purple-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Scaffolds fitted with sheeting (monoflex, tarpaulin, or building wraps) or debris
               netting experience dramatically higher wind loads. The sheeting or netting acts as a
               sail, catching wind and transmitting large forces into the scaffold structure and its
@@ -577,7 +577,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
                 <ShieldCheck className="h-4 w-4 text-purple-400" />
                 Key Facts About Sheeted and Netted Scaffolds
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                   <span>
@@ -626,7 +626,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
                 <AlertTriangle className="h-4 w-4" />
                 Scaffold Collapses Caused by Wind on Sheeted Scaffolds
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Multiple fatal scaffold collapses in the UK have been directly caused by wind acting
                 on sheeted or netted scaffolds where the design did not adequately account for the
                 increased wind loads, or where the specified number of ties was not installed. In
@@ -649,7 +649,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
             <h3 className="text-xl font-semibold text-white">Ice and Frost Hazards</h3>
           </div>
           <div className="border-l-2 border-cyan-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Ice and frost on scaffold platforms, ladder rungs, and access ways are extremely
               dangerous slip hazards. Black ice — a thin, transparent layer of ice — is particularly
               treacherous because it is almost invisible. Falls from scaffolds due to ice have
@@ -660,7 +660,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
                 <Snowflake className="h-4 w-4 text-cyan-400" />
                 Ice and Frost — Required Actions
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                   <span>
@@ -710,7 +710,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
                 <AlertTriangle className="h-4 w-4" />
                 Frost Heave at Ground Level
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Prolonged freezing can cause frost heave — the ground expands as water in the soil
                 freezes, pushing sole plates and base plates upward or sideways. When the ground
                 thaws, settlement can occur. This can misalign standards, loosen ties, and
@@ -734,7 +734,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
             </h3>
           </div>
           <div className="border-l-2 border-blue-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Rain creates multiple hazards on scaffolds. While light rain may not require work to
               stop, heavy or prolonged rain significantly increases risk and may make scaffold use
               unsafe.
@@ -744,7 +744,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
                 <CloudRain className="h-4 w-4 text-blue-400" />
                 Rain Hazards on Scaffolds
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                   <span>
@@ -819,7 +819,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
             <h3 className="text-xl font-semibold text-white">Lightning — Immediate Stop Work</h3>
           </div>
           <div className="border-l-2 border-amber-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Scaffolding is a large metal structure elevated above the surrounding environment. It
               is an extremely effective lightning conductor. A lightning strike on or near a
               scaffold delivers a massive electrical discharge that is almost certainly fatal to
@@ -830,7 +830,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
                 <CloudLightning className="h-4 w-4" />
                 Lightning — Mandatory Actions
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                   <span>
@@ -879,7 +879,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
               <h4 className="font-semibold text-white text-sm mb-2">
                 Why Scaffolding Attracts Lightning
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Lightning seeks the shortest path to the ground through the most conductive material
                 available. A scaffold is typically the tallest metal structure in its immediate
                 area, making it the preferred strike point. The steel tubes provide an excellent
@@ -905,7 +905,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
             </h3>
           </div>
           <div className="border-l-2 border-orange-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Both extreme cold and extreme heat affect scaffold structures and the people working
               on them. Snow adds significant weight to platforms and can mask hazards.
             </p>
@@ -915,7 +915,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
                   <Snowflake className="h-4 w-4" />
                   Extreme Cold
                 </h4>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -958,7 +958,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
                   <Thermometer className="h-4 w-4" />
                   Extreme Heat
                 </h4>
-                <ul className="space-y-2 text-sm text-white/70">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                     <span>
@@ -1003,7 +1003,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
                 <Snowflake className="h-4 w-4 text-cyan-400" />
                 Snow Loading on Scaffolds
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                   <span>
@@ -1069,7 +1069,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
             <h3 className="text-xl font-semibold text-white">Inspection After Weather Events</h3>
           </div>
           <div className="border-l-2 border-slate-500/40 pl-5 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The Work at Height Regulations 2005, Schedule 7, require that scaffolds are inspected
               after any event likely to have affected their stability. This explicitly includes
               adverse weather conditions. The scaffold must not be used until a competent person has
@@ -1087,7 +1087,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
                   <p className="text-slate-400 font-semibold text-sm mb-2">
                     After High Winds (Force 6+)
                   </p>
-                  <ul className="space-y-1 text-xs text-white/70">
+                  <ul className="space-y-1 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                       <span>
@@ -1124,7 +1124,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
                   <p className="text-slate-400 font-semibold text-sm mb-2">
                     After Heavy Rain or Flooding
                   </p>
-                  <ul className="space-y-1 text-xs text-white/70">
+                  <ul className="space-y-1 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                       <span>
@@ -1157,7 +1157,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
                   <p className="text-slate-400 font-semibold text-sm mb-2">
                     After Snow, Ice, or Prolonged Freezing
                   </p>
-                  <ul className="space-y-1 text-xs text-white/70">
+                  <ul className="space-y-1 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                       <span>
@@ -1195,7 +1195,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
                   <p className="text-slate-400 font-semibold text-sm mb-2">
                     After Lightning Strike (on or near the scaffold)
                   </p>
-                  <ul className="space-y-1 text-xs text-white/70">
+                  <ul className="space-y-1 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-slate-400 flex-shrink-0" />
                       <span>
@@ -1228,7 +1228,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
               <h4 className="font-semibold text-white text-sm mb-2">
                 Recording Weather Inspections
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Every post-weather inspection must be recorded in the scaffold inspection register.
                 Record the date, time, weather conditions that triggered the inspection, what was
                 checked, any defects found, any remedial actions taken, and the name of the
@@ -1243,7 +1243,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
                 <AlertTriangle className="h-4 w-4" />
                 Legal Requirement
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Failure to inspect a scaffold after adverse weather before allowing it to be used is
                 a breach of the Work at Height Regulations 2005. If an accident occurs on a scaffold
                 that was not inspected after a weather event, the duty holder faces serious criminal
@@ -1266,7 +1266,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-3">
                 <h4 className="font-medium text-white text-sm">Before Starting Work Each Day</h4>
-                <ul className="space-y-1 text-xs text-white/70">
+                <ul className="space-y-1 text-xs text-white">
                   <li>
                     &#10003; Check Met Office forecast — wind, rain, temperature, lightning risk
                   </li>
@@ -1280,7 +1280,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
               </div>
               <div className="space-y-3">
                 <h4 className="font-medium text-white text-sm">During the Working Day</h4>
-                <ul className="space-y-1 text-xs text-white/70">
+                <ul className="space-y-1 text-xs text-white">
                   <li>
                     &#10003; Monitor wind conditions continuously — watch for increasing gusts
                   </li>
@@ -1310,7 +1310,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
                 <p className="text-slate-400 font-semibold text-xs mb-1">
                   Work at Height Regulations 2005 — Schedule 7
                 </p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Scaffolds must be inspected after any event likely to have affected their
                   stability, including adverse weather. The scaffold must not be used until the
                   inspection is complete and recorded.
@@ -1318,7 +1318,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
               </div>
               <div className="bg-black/20 rounded-lg p-3">
                 <p className="text-slate-400 font-semibold text-xs mb-1">NASC TG20:21 Guidance</p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Provides detailed wind loading calculations and guidance for scaffold designers.
                   Specifies how wind loads should be calculated for open, netted, and sheeted
                   scaffolds and the corresponding tie and bracing requirements.
@@ -1328,7 +1328,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
                 <p className="text-slate-400 font-semibold text-xs mb-1">
                   NASC SG4:22 — Preventing Falls in Scaffolding Operations
                 </p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Recommends that scaffold erection and dismantling should stop when wind conditions
                   reach approximately Beaufort force 6 (mean wind speed of approximately 23 mph / 37
                   km/h) and that all scaffold work should cease at force 8.
@@ -1338,14 +1338,14 @@ export default function ScaffoldingAwarenessModule5Section3() {
                 <p className="text-slate-400 font-semibold text-xs mb-1">
                   Health and Safety at Work Act 1974 — Section 2
                 </p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   General duty of employers to ensure the health, safety, and welfare of employees.
                   This includes providing a safe system of work that accounts for foreseeable
                   weather hazards.
                 </p>
               </div>
             </div>
-            <p className="text-white/60 text-xs mt-3 italic">
+            <p className="text-white text-xs mt-3 italic">
               Weather conditions are foreseeable — they are never a valid excuse for failing to take
               precautions. The duty holder is expected to check weather forecasts, establish wind
               speed limits for the specific scaffold, and plan for adverse conditions before they
@@ -1363,7 +1363,7 @@ export default function ScaffoldingAwarenessModule5Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-xl p-4">
                 <h4 className="font-medium text-white mb-2 text-sm">{faq.question}</h4>
-                <p className="text-sm text-white/60 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

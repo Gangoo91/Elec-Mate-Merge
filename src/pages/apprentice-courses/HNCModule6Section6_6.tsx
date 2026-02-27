@@ -258,7 +258,7 @@ const HNCModule6Section6_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section6">
@@ -280,7 +280,7 @@ const HNCModule6Section6_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Post-Occupancy Evaluation
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Performance monitoring, user satisfaction, lessons learned, and continuous improvement
             for building services
           </p>
@@ -582,7 +582,7 @@ const HNCModule6Section6_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-1">Environmental Factors</p>
-                  <ul className="text-white/80 space-y-0.5">
+                  <ul className="text-white space-y-0.5">
                     <li>- Temperature in winter and summer</li>
                     <li>- Air quality (fresh/stuffy, dry/humid)</li>
                     <li>- Lighting (natural and artificial)</li>
@@ -591,7 +591,7 @@ const HNCModule6Section6_6 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-1">Building Factors</p>
-                  <ul className="text-white/80 space-y-0.5">
+                  <ul className="text-white space-y-0.5">
                     <li>- Overall comfort</li>
                     <li>- Design and image</li>
                     <li>- Needs (does building meet needs?)</li>
@@ -679,7 +679,7 @@ const HNCModule6Section6_6 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>User engagement:</strong> Involve occupants in POE from the start - they
               provide invaluable operational insight and their buy-in improves survey response
               rates.
@@ -845,8 +845,8 @@ const HNCModule6Section6_6 = () => {
                 <strong>Scenario:</strong> An office building was designed to achieve 85 kWh/m²/year
                 but is consuming 195 kWh/m²/year after 12 months. Analyse the gap.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Performance gap analysis:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Performance gap analysis:</p>
                 <p className="mt-2">Design prediction: 85 kWh/m²/year</p>
                 <p>Actual consumption: 195 kWh/m²/year</p>
                 <p>Gap: 110 kWh/m²/year (129% over prediction)</p>
@@ -871,8 +871,8 @@ const HNCModule6Section6_6 = () => {
                 <strong>Scenario:</strong> A newly occupied building scores 4.2/7 for summer
                 temperature comfort (benchmark mean 4.8). Interpret and recommend actions.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">BUS survey analysis:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">BUS survey analysis:</p>
                 <p className="mt-2">Parameter: Temperature in summer</p>
                 <p>Building score: 4.2/7</p>
                 <p>Benchmark mean: 4.8/7</p>
@@ -897,8 +897,8 @@ const HNCModule6Section6_6 = () => {
                 <strong>Scenario:</strong> Document a lesson learned regarding lighting control
                 commissioning issues discovered during POE.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Lesson learned template:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Lesson learned template:</p>
                 <p className="mt-2">
                   <strong>Issue:</strong> Lighting controls operating inefficiently
                 </p>
@@ -1008,7 +1008,7 @@ const HNCModule6Section6_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1054,7 +1054,7 @@ const HNCModule6Section6_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section6">

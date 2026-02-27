@@ -127,7 +127,7 @@ export function MultimeterDisplay({
               <motion.p
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="text-[10px] text-white/40 font-medium mb-1 truncate"
+                className="text-[10px] text-white font-medium mb-1 truncate"
               >
                 {testLabel}
               </motion.p>
@@ -145,7 +145,7 @@ export function MultimeterDisplay({
                   className={cn(
                     'text-3xl font-mono font-bold tracking-wider tabular-nums',
                     reading === null
-                      ? 'text-white/20'
+                      ? 'text-white'
                       : isOverload
                         ? 'text-amber-400'
                         : isAbnormal
@@ -160,7 +160,7 @@ export function MultimeterDisplay({
               <span
                 className={cn(
                   'text-sm font-medium mb-1 ml-2',
-                  reading === null ? 'text-white/20' : 'text-white/60'
+                  reading === null ? 'text-white' : 'text-white'
                 )}
               >
                 {isOverload ? '' : unit}
@@ -181,7 +181,7 @@ export function MultimeterDisplay({
                     isAbnormal ? 'bg-red-500 animate-pulse' : 'bg-emerald-500'
                   )}
                 />
-                <span className="text-[10px] text-white/40">
+                <span className="text-[10px] text-white">
                   {isOverload
                     ? 'No continuity — open circuit'
                     : isAbnormal
@@ -202,7 +202,7 @@ export function MultimeterDisplay({
                 'flex-1 h-10 rounded-lg text-xs font-semibold touch-manipulation transition-all',
                 mode === 'continuity'
                   ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/40'
-                  : 'bg-white/5 text-white/40 border border-white/10'
+                  : 'bg-white/5 text-white border border-white/10'
               )}
             >
               Ω Continuity
@@ -213,7 +213,7 @@ export function MultimeterDisplay({
                 'flex-1 h-10 rounded-lg text-xs font-semibold touch-manipulation transition-all',
                 mode === 'insulation'
                   ? 'bg-cyan-500/20 text-cyan-400 border border-cyan-500/40'
-                  : 'bg-white/5 text-white/40 border border-white/10'
+                  : 'bg-white/5 text-white border border-white/10'
               )}
             >
               MΩ Insulation

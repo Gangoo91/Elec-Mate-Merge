@@ -123,7 +123,7 @@ const RenewableEnergyModule2Section4 = () => {
           <Button
             variant="ghost"
             size="sm"
-            className="text-white/70 hover:text-white hover:bg-white/10 -ml-2"
+            className="text-white hover:text-white hover:bg-white/10 -ml-2"
             asChild
           >
             <Link to="/electrician/upskilling/renewable-energy-module-2">
@@ -143,7 +143,7 @@ const RenewableEnergyModule2Section4 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Mounting Systems &amp; Structural Considerations
           </h1>
-          <p className="text-white/60 text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Roof &amp; Ground Mounting Engineering
           </p>
         </div>
@@ -170,19 +170,19 @@ const RenewableEnergyModule2Section4 = () => {
           <div className="space-y-2">
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-white/80 text-sm">
+              <span className="text-white text-sm">
                 Understand roof vs ground mount advantages and disadvantages
               </span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-white/80 text-sm">
+              <span className="text-white text-sm">
                 Consider wind, snow, and uplift forces in structural design
               </span>
             </div>
             <div className="flex items-start gap-3">
               <CheckCircle className="w-5 h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
-              <span className="text-white/80 text-sm">
+              <span className="text-white text-sm">
                 Select proper anchoring methods and materials for different applications
               </span>
             </div>
@@ -195,7 +195,7 @@ const RenewableEnergyModule2Section4 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">01</span>
             Roof Mounting Systems
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Roof-mounted systems are the most common solar installation type. Bad mounting equals
               system failure - structural soundness is non-negotiable in solar design.
@@ -273,7 +273,7 @@ const RenewableEnergyModule2Section4 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">02</span>
             Wind Load Calculations (BS EN 1991)
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Wind loading is often the governing design factor for solar mounting systems. BS EN
               1991-1-4 provides the framework for wind load calculations in the UK.
@@ -347,7 +347,7 @@ const RenewableEnergyModule2Section4 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">03</span>
             Structural Material Selection
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Material selection affects system longevity, maintenance requirements, and structural
               performance.
@@ -407,7 +407,7 @@ const RenewableEnergyModule2Section4 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">04</span>
             Ground Mount Systems
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               Ground-mounted systems offer flexibility in orientation and tilt but require
               foundation design and site preparation.
@@ -469,7 +469,7 @@ const RenewableEnergyModule2Section4 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">05</span>
             Structural Assessment Requirements
           </h2>
-          <div className="space-y-4 text-white/80 leading-relaxed">
+          <div className="space-y-4 text-white leading-relaxed">
             <p>
               The level of structural assessment required depends on system size, complexity, and
               building type.
@@ -498,7 +498,7 @@ const RenewableEnergyModule2Section4 = () => {
         {/* Practical Guidance */}
         <div className="mb-8 p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/30">
           <h3 className="text-white font-semibold mb-3">Practical Guidance</h3>
-          <div className="space-y-2 text-white/80 text-sm">
+          <div className="space-y-2 text-white text-sm">
             <p>
               <strong className="text-white">Always locate rafters:</strong> Use a stud finder or
               measure from roof void before drilling any penetrations.
@@ -520,7 +520,7 @@ const RenewableEnergyModule2Section4 = () => {
           <div className="space-y-3">
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
               <h4 className="text-white font-medium mb-2">Can any roof support solar panels?</h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Most roofs can support solar, but older or weaker structures may need reinforcement.
                 Always assess roof age, condition, and loading capacity before installation.
               </p>
@@ -529,7 +529,7 @@ const RenewableEnergyModule2Section4 = () => {
               <h4 className="text-white font-medium mb-2">
                 What causes roof leaks after solar installation?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Improper waterproofing of penetrations, damaged tiles during installation, or failed
                 sealants over time. Using proper flashing systems and quality sealants prevents most
                 issues.
@@ -539,7 +539,7 @@ const RenewableEnergyModule2Section4 = () => {
               <h4 className="text-white font-medium mb-2">
                 Why is edge mounting more challenging?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Wind loads increase significantly near building edges due to wind flow patterns.
                 Edge and corner zones can experience 2-3 times higher loads than central areas.
               </p>
@@ -548,7 +548,7 @@ const RenewableEnergyModule2Section4 = () => {
               <h4 className="text-white font-medium mb-2">
                 When should I choose ground mount over roof mount?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Consider ground mount when roof orientation is poor, structural capacity is limited,
                 shading is unavoidable, or you need tracking systems. Also preferred for large
                 commercial installations.
@@ -556,7 +556,7 @@ const RenewableEnergyModule2Section4 = () => {
             </div>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
               <h4 className="text-white font-medium mb-2">How do I prevent galvanic corrosion?</h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Use isolation materials between dissimilar metals, specify compatible fasteners
                 (stainless with aluminium is acceptable), and use appropriate coatings for steel
                 components.
@@ -566,7 +566,7 @@ const RenewableEnergyModule2Section4 = () => {
               <h4 className="text-white font-medium mb-2">
                 What is the warranty period for mounting systems?
               </h4>
-              <p className="text-white/70 text-sm">
+              <p className="text-white text-sm">
                 Quality mounting systems offer 10-25 year warranties. Match mounting system warranty
                 to panel warranty - the structure should outlast the panels it supports.
               </p>
@@ -587,7 +587,7 @@ const RenewableEnergyModule2Section4 = () => {
         <div className="flex justify-between items-center pt-6 border-t border-white/10">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/10"
+            className="text-white hover:text-white hover:bg-white/10"
             asChild
           >
             <Link to="../section-3">

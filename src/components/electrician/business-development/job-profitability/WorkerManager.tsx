@@ -197,7 +197,7 @@ export const WorkerManager = ({
           </div>
           <div>
             <h3 className="text-ios-headline font-semibold text-white">Team</h3>
-            <p className="text-ios-caption-1 text-white/50">
+            <p className="text-ios-caption-1 text-white">
               {workers.length} worker{workers.length !== 1 ? 's' : ''}
             </p>
           </div>
@@ -272,7 +272,7 @@ export const WorkerManager = ({
                       <p className="text-ios-subhead font-medium text-white">
                         {roleOption?.shortLabel || worker.role}
                       </p>
-                      <p className="text-ios-caption-2 text-white/50">
+                      <p className="text-ios-caption-2 text-white">
                         {worker.hours}h × £{worker.hourlyRate} = £{workerCost.toFixed(0)}
                       </p>
                     </div>
@@ -282,7 +282,7 @@ export const WorkerManager = ({
                       £{workerCost.toFixed(0)}
                     </span>
                     <motion.div animate={{ rotate: isExpanded ? 180 : 0 }}>
-                      <ChevronDown className="h-5 w-5 text-white/40" />
+                      <ChevronDown className="h-5 w-5 text-white" />
                     </motion.div>
                   </div>
                 </button>
@@ -299,7 +299,7 @@ export const WorkerManager = ({
                       <div className="p-4 space-y-4">
                         {/* Role Selection */}
                         <div>
-                          <p className="text-ios-caption-1 text-white/50 mb-2">Role & Rate</p>
+                          <p className="text-ios-caption-1 text-white mb-2">Role & Rate</p>
                           <div className="grid grid-cols-2 gap-2">
                             {workerRoleOptions.map((option) => {
                               const isSelected = worker.skillLevel === option.value;
@@ -321,7 +321,7 @@ export const WorkerManager = ({
                                       <CheckCircle className="h-3 w-3 text-elec-yellow" />
                                     )}
                                     <Icon
-                                      className={`h-3 w-3 ${isSelected ? 'text-elec-yellow' : 'text-white/50'}`}
+                                      className={`h-3 w-3 ${isSelected ? 'text-elec-yellow' : 'text-white'}`}
                                     />
                                     <span
                                       className={`text-ios-caption-1 font-medium ${isSelected ? 'text-elec-yellow' : 'text-white'}`}
@@ -329,7 +329,7 @@ export const WorkerManager = ({
                                       {option.shortLabel}
                                     </span>
                                   </div>
-                                  <p className="text-ios-caption-2 text-white/40 mt-0.5">
+                                  <p className="text-ios-caption-2 text-white mt-0.5">
                                     £{option.rate}/hr
                                   </p>
                                 </button>
@@ -411,7 +411,7 @@ export const WorkerManager = ({
               onWorkersChange([...workers, newWorker]);
               setExpandedWorker(newWorker.id);
             }}
-            className="flex-shrink-0 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-ios-caption-1 text-white/70 hover:bg-white/10 active:scale-[0.98] touch-manipulation"
+            className="flex-shrink-0 px-4 py-2 bg-white/5 border border-white/10 rounded-full text-ios-caption-1 text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
           >
             {quick.label}
           </button>

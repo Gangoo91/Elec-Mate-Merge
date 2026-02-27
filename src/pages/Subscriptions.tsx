@@ -39,7 +39,7 @@ const Subscriptions = () => {
         <Link to="/dashboard">
           <Button
             variant="ghost"
-            className="text-white/60 hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
+            className="text-white hover:text-white hover:bg-white/[0.05] active:bg-white/[0.08] active:scale-[0.98] -ml-2 h-11 touch-manipulation transition-all"
           >
             <ArrowLeft className="mr-2 h-4 w-4" />
             Dashboard
@@ -72,7 +72,7 @@ const Subscriptions = () => {
               { icon: RotateCcw, text: 'Cancel anytime' },
               { icon: Zap, text: 'Instant access' },
             ].map((item, i) => (
-              <div key={i} className="flex items-center gap-1.5 text-white/40">
+              <div key={i} className="flex items-center gap-1.5 text-white">
                 <item.icon className="h-3.5 w-3.5" />
                 <span className="text-xs">{item.text}</span>
               </div>
@@ -87,7 +87,7 @@ const Subscriptions = () => {
               variant="ghost"
               onClick={handleRestore}
               disabled={isPurchasing}
-              className="text-sm text-white/50 hover:text-white hover:bg-white/5 h-11 touch-manipulation"
+              className="text-sm text-white hover:text-white hover:bg-white/5 h-11 touch-manipulation"
             >
               {isPurchasing ? (
                 <>

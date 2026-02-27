@@ -569,7 +569,7 @@ const JobProfitabilityCalculator = () => {
               <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
                 Job Profitability Calculator
               </h1>
-              <p className="text-sm text-white/70">Analyse quote profitability & pricing</p>
+              <p className="text-sm text-white">Analyse quote profitability & pricing</p>
             </div>
           </div>
           <SmartBackButton />
@@ -585,7 +585,7 @@ const JobProfitabilityCalculator = () => {
           <Collapsible open={selectedPreset !== ''} onOpenChange={() => {}}>
             <div className="flex items-center gap-2 mb-3">
               <Lightbulb className="h-4 w-4 text-blue-400" />
-              <span className="text-sm font-medium text-white/80">Job Type Presets</span>
+              <span className="text-sm font-medium text-white">Job Type Presets</span>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
@@ -644,7 +644,7 @@ const JobProfitabilityCalculator = () => {
           <div className="pt-4 border-t border-white/10">
             <div className="flex items-center gap-2 mb-3">
               <Receipt className="h-4 w-4 text-blue-400" />
-              <span className="text-sm font-medium text-white/80">Basic Job Information</span>
+              <span className="text-sm font-medium text-white">Basic Job Information</span>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
@@ -677,7 +677,7 @@ const JobProfitabilityCalculator = () => {
             <div className="flex items-center justify-between mb-3">
               <div className="flex items-center gap-2">
                 <Users className="h-4 w-4 text-blue-400" />
-                <span className="text-sm font-medium text-white/80">Labour Configuration</span>
+                <span className="text-sm font-medium text-white">Labour Configuration</span>
               </div>
               <label className="flex items-center gap-2 cursor-pointer">
                 <span className="text-xs text-white">Multi-worker</span>
@@ -847,7 +847,7 @@ const JobProfitabilityCalculator = () => {
           <div className="pt-4 border-t border-white/10">
             <div className="flex items-center gap-2 mb-3">
               <Percent className="h-4 w-4 text-blue-400" />
-              <span className="text-sm font-medium text-white/80">Business Parameters</span>
+              <span className="text-sm font-medium text-white">Business Parameters</span>
             </div>
 
             <div className="grid grid-cols-2 gap-3">
@@ -897,7 +897,7 @@ const JobProfitabilityCalculator = () => {
           <div className="pt-4 border-t border-white/10">
             <div className="flex items-center gap-2 mb-3">
               <PoundSterling className="h-4 w-4 text-blue-400" />
-              <span className="text-sm font-medium text-white/80">VAT Configuration</span>
+              <span className="text-sm font-medium text-white">VAT Configuration</span>
             </div>
 
             <div className="flex items-center gap-4 mb-3">
@@ -908,7 +908,7 @@ const JobProfitabilityCalculator = () => {
                   onChange={() => setVATRegistered(true)}
                   className="h-4 w-4 text-blue-500 focus:ring-blue-500"
                 />
-                <span className="text-sm text-white/80">VAT Registered</span>
+                <span className="text-sm text-white">VAT Registered</span>
               </label>
               <label className="flex items-center gap-2 cursor-pointer">
                 <input
@@ -917,7 +917,7 @@ const JobProfitabilityCalculator = () => {
                   onChange={() => setVATRegistered(false)}
                   className="h-4 w-4 text-blue-500 focus:ring-blue-500"
                 />
-                <span className="text-sm text-white/80">Not Registered</span>
+                <span className="text-sm text-white">Not Registered</span>
               </label>
             </div>
 
@@ -940,11 +940,11 @@ const JobProfitabilityCalculator = () => {
             <CollapsibleTrigger className="w-full flex items-center justify-between p-3 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 transition-colors">
               <div className="flex items-center gap-2">
                 <Car className="h-4 w-4 text-amber-400" />
-                <span className="text-sm font-medium text-white/80">Additional Costs</span>
+                <span className="text-sm font-medium text-white">Additional Costs</span>
               </div>
               <ChevronDown
                 className={cn(
-                  'h-4 w-4 text-white/80 transition-transform duration-200',
+                  'h-4 w-4 text-white transition-transform duration-200',
                   showAdvanced && 'rotate-180'
                 )}
               />
@@ -1041,7 +1041,7 @@ const JobProfitabilityCalculator = () => {
               disabled={!isValid}
               className={cn(
                 'flex-1 h-14 rounded-xl font-semibold text-base flex items-center justify-center gap-2 transition-all touch-manipulation',
-                isValid ? 'text-black' : 'bg-white/10 text-white/30 cursor-not-allowed'
+                isValid ? 'text-black' : 'bg-white/10 text-white cursor-not-allowed'
               )}
               style={
                 isValid
@@ -1056,13 +1056,13 @@ const JobProfitabilityCalculator = () => {
             </button>
             <button
               onClick={loadExample}
-              className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/90 hover:bg-white/10 transition-colors touch-manipulation"
+              className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation"
             >
               <Lightbulb className="h-5 w-5" />
             </button>
             <button
               onClick={resetCalculator}
-              className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white/90 hover:bg-white/10 transition-colors touch-manipulation"
+              className="h-14 px-4 flex items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors touch-manipulation"
             >
               <RotateCcw className="h-5 w-5" />
             </button>
@@ -1175,14 +1175,14 @@ const JobProfitabilityCalculator = () => {
             <div className="flex gap-2">
               <button
                 onClick={shareCalculation}
-                className="flex-1 h-12 rounded-xl bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 transition-colors flex items-center justify-center gap-2"
+                className="flex-1 h-12 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors flex items-center justify-center gap-2"
               >
                 <Share2 className="h-4 w-4" />
                 Share Results
               </button>
               <button
                 onClick={() => setShowHistory(!showHistory)}
-                className="h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white/70 hover:bg-white/10 transition-colors flex items-center justify-center gap-2"
+                className="h-12 px-4 rounded-xl bg-white/5 border border-white/10 text-white hover:bg-white/10 transition-colors flex items-center justify-center gap-2"
               >
                 <History className="h-4 w-4" />
                 {history.length}
@@ -1201,7 +1201,7 @@ const JobProfitabilityCalculator = () => {
                   </div>
                   <ChevronDown
                     className={cn(
-                      'h-4 w-4 text-white/80 transition-transform duration-200',
+                      'h-4 w-4 text-white transition-transform duration-200',
                       showGuidance && 'rotate-180'
                     )}
                   />
@@ -1257,7 +1257,7 @@ const JobProfitabilityCalculator = () => {
                 </div>
                 <ChevronDown
                   className={cn(
-                    'h-4 w-4 text-white/80 transition-transform duration-200',
+                    'h-4 w-4 text-white transition-transform duration-200',
                     showHistory && 'rotate-180'
                   )}
                 />
@@ -1318,7 +1318,7 @@ const JobProfitabilityCalculator = () => {
               </div>
               <ChevronDown
                 className={cn(
-                  'h-4 w-4 text-white/80 transition-transform duration-200',
+                  'h-4 w-4 text-white transition-transform duration-200',
                   showReference && 'rotate-180'
                 )}
               />

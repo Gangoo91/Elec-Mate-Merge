@@ -213,7 +213,7 @@ export default function FireSafetyModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-5">
@@ -238,7 +238,7 @@ export default function FireSafetyModule5Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Fire Extinguisher Types
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding the five main types of portable fire extinguisher, their colour codes,
             suitable fire classes, limitations, and the universal PASS operating technique &mdash;
             essential knowledge for every fire marshal
@@ -343,7 +343,7 @@ export default function FireSafetyModule5Section1() {
 
               <p>Fire extinguishers come in two main forms:</p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -369,7 +369,7 @@ export default function FireSafetyModule5Section1() {
                 placement requirements include:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -440,7 +440,7 @@ export default function FireSafetyModule5Section1() {
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                   <Droplets className="h-6 w-6 text-green-400 mb-2" />
                   <p className="text-sm font-semibold text-green-400 mb-1">Suitable For</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     <strong>Class A only</strong> &mdash; fires involving ordinary solid
                     combustibles such as wood, paper, textiles, cardboard, and plastics
                   </p>
@@ -448,7 +448,7 @@ export default function FireSafetyModule5Section1() {
                 <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
                   <Ban className="h-6 w-6 text-red-400 mb-2" />
                   <p className="text-sm font-semibold text-red-400 mb-1">NEVER Use On</p>
-                  <p className="text-xs text-white/70">
+                  <p className="text-xs text-white">
                     <strong>Electrical, Class B</strong> (flammable liquids),{' '}
                     <strong>Class F</strong> (cooking oils), <strong>Class D</strong> (metals)
                     &mdash; extremely dangerous
@@ -466,7 +466,7 @@ export default function FireSafetyModule5Section1() {
 
               <p>There are two main discharge types:</p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -546,7 +546,7 @@ export default function FireSafetyModule5Section1() {
                 <strong>smothering and cooling</strong>:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -580,7 +580,7 @@ export default function FireSafetyModule5Section1() {
                 limitations to remember:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -656,7 +656,7 @@ export default function FireSafetyModule5Section1() {
                 <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-4">
                   <CheckCircle className="h-6 w-6 text-green-400 mb-2" />
                   <p className="text-sm font-semibold text-green-400 mb-1">Advantages</p>
-                  <ul className="text-xs text-white/70 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>&bull; Safe on live electrical equipment</li>
                     <li>&bull; No residue &mdash; no damage to equipment</li>
                     <li>&bull; Non-conductive discharge</li>
@@ -666,7 +666,7 @@ export default function FireSafetyModule5Section1() {
                 <div className="bg-orange-500/10 border border-orange-500/30 rounded-lg p-4">
                   <AlertTriangle className="h-6 w-6 text-orange-400 mb-2" />
                   <p className="text-sm font-semibold text-orange-400 mb-1">Limitations</p>
-                  <ul className="text-xs text-white/70 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>&bull; No cooling effect &mdash; re-ignition risk</li>
                     <li>&bull; Rapidly dissipates outdoors or in draughts</li>
                     <li>&bull; Cold discharge: &minus;78&deg;C frostbite risk</li>
@@ -754,7 +754,7 @@ export default function FireSafetyModule5Section1() {
                 <strong>unsuitable for most indoor environments</strong>:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -816,7 +816,7 @@ export default function FireSafetyModule5Section1() {
                 particular metals:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -876,7 +876,7 @@ export default function FireSafetyModule5Section1() {
                 simultaneously:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -965,7 +965,7 @@ export default function FireSafetyModule5Section1() {
                   <Target className="h-6 w-6 text-rose-400 mx-auto mb-2" />
                   <p className="text-lg font-bold text-rose-400 mb-1">P</p>
                   <p className="text-xs font-semibold text-white mb-1">PULL</p>
-                  <p className="text-[10px] text-white/60">
+                  <p className="text-[10px] text-white">
                     Pull the safety pin to break the tamper seal and unlock the operating mechanism
                   </p>
                 </div>
@@ -973,7 +973,7 @@ export default function FireSafetyModule5Section1() {
                   <Target className="h-6 w-6 text-rose-400 mx-auto mb-2" />
                   <p className="text-lg font-bold text-rose-400 mb-1">A</p>
                   <p className="text-xs font-semibold text-white mb-1">AIM</p>
-                  <p className="text-[10px] text-white/60">
+                  <p className="text-[10px] text-white">
                     Aim the nozzle, horn, or hose at the BASE of the fire, not at the flames
                   </p>
                 </div>
@@ -981,7 +981,7 @@ export default function FireSafetyModule5Section1() {
                   <Target className="h-6 w-6 text-rose-400 mx-auto mb-2" />
                   <p className="text-lg font-bold text-rose-400 mb-1">S</p>
                   <p className="text-xs font-semibold text-white mb-1">SQUEEZE</p>
-                  <p className="text-[10px] text-white/60">
+                  <p className="text-[10px] text-white">
                     Squeeze the operating handle firmly to begin discharge of the extinguishing
                     agent
                   </p>
@@ -990,7 +990,7 @@ export default function FireSafetyModule5Section1() {
                   <Target className="h-6 w-6 text-rose-400 mx-auto mb-2" />
                   <p className="text-lg font-bold text-rose-400 mb-1">S</p>
                   <p className="text-xs font-semibold text-white mb-1">SWEEP</p>
-                  <p className="text-[10px] text-white/60">
+                  <p className="text-[10px] text-white">
                     Sweep the discharge from side to side across the base of the fire until
                     extinguished
                   </p>
@@ -1001,7 +1001,7 @@ export default function FireSafetyModule5Section1() {
                 <strong>Practical considerations</strong> when using a fire extinguisher:
               </p>
 
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                   <span>
@@ -1097,11 +1097,11 @@ export default function FireSafetyModule5Section1() {
                   <p className="text-sm font-semibold text-rose-400 mb-2">
                     Tier 1: Monthly Visual Inspection (by User)
                   </p>
-                  <p className="text-xs text-white/70 mb-2">
+                  <p className="text-xs text-white mb-2">
                     A responsible person on the premises (not necessarily a specialist) should carry
                     out a brief visual check each month. This includes:
                   </p>
-                  <ul className="space-y-1.5 text-xs text-white/70">
+                  <ul className="space-y-1.5 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
@@ -1140,12 +1140,12 @@ export default function FireSafetyModule5Section1() {
                   <p className="text-sm font-semibold text-rose-400 mb-2">
                     Tier 2: Annual Service (by Competent Engineer)
                   </p>
-                  <p className="text-xs text-white/70 mb-2">
+                  <p className="text-xs text-white mb-2">
                     A thorough technical inspection must be carried out every 12 months by a
                     competent service engineer (typically a BAFE-registered technician). This
                     includes:
                   </p>
-                  <ul className="space-y-1.5 text-xs text-white/70">
+                  <ul className="space-y-1.5 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>Weighing the extinguisher to confirm correct agent quantity</span>
@@ -1182,11 +1182,11 @@ export default function FireSafetyModule5Section1() {
                   <p className="text-sm font-semibold text-rose-400 mb-2">
                     Tier 3: Extended Service (at Specified Intervals)
                   </p>
-                  <p className="text-xs text-white/70 mb-2">
+                  <p className="text-xs text-white mb-2">
                     More intensive servicing is required at specific intervals depending on the
                     extinguisher type:
                   </p>
-                  <ul className="space-y-1.5 text-xs text-white/70">
+                  <ul className="space-y-1.5 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-rose-400" />
                       <span>
@@ -1254,7 +1254,7 @@ export default function FireSafetyModule5Section1() {
             <h2 className="text-lg font-bold text-white text-center mb-2">
               Fire Extinguisher Colour Codes &amp; Suitability
             </h2>
-            <p className="text-xs text-white/50 text-center mb-6">
+            <p className="text-xs text-white text-center mb-6">
               All extinguishers have a red body with a colour band identifying the type
             </p>
 
@@ -1267,17 +1267,17 @@ export default function FireSafetyModule5Section1() {
                   </div>
                   <div>
                     <p className="text-sm font-bold text-white">Water</p>
-                    <p className="text-[10px] text-white/50">6L / 9L &mdash; Cooling action</p>
+                    <p className="text-[10px] text-white">6L / 9L &mdash; Cooling action</p>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-2 text-[10px]">
                   <div>
                     <p className="text-green-400 font-semibold mb-0.5">SUITABLE</p>
-                    <p className="text-white/60">Class A (solids)</p>
+                    <p className="text-white">Class A (solids)</p>
                   </div>
                   <div>
                     <p className="text-red-400 font-semibold mb-0.5">NOT SUITABLE</p>
-                    <p className="text-white/60">Electrical, Class B, Class F, Class D</p>
+                    <p className="text-white">Electrical, Class B, Class F, Class D</p>
                   </div>
                 </div>
               </div>
@@ -1290,7 +1290,7 @@ export default function FireSafetyModule5Section1() {
                   </div>
                   <div>
                     <p className="text-sm font-bold text-white">Foam (AFFF)</p>
-                    <p className="text-[10px] text-white/50">
+                    <p className="text-[10px] text-white">
                       6L / 9L &mdash; Smothering &amp; cooling
                     </p>
                   </div>
@@ -1298,11 +1298,11 @@ export default function FireSafetyModule5Section1() {
                 <div className="grid grid-cols-2 gap-2 text-[10px]">
                   <div>
                     <p className="text-green-400 font-semibold mb-0.5">SUITABLE</p>
-                    <p className="text-white/60">Class A (solids), Class B (liquids)</p>
+                    <p className="text-white">Class A (solids), Class B (liquids)</p>
                   </div>
                   <div>
                     <p className="text-red-400 font-semibold mb-0.5">NOT SUITABLE</p>
-                    <p className="text-white/60">Electrical (unless tested), Class F, Class D</p>
+                    <p className="text-white">Electrical (unless tested), Class F, Class D</p>
                   </div>
                 </div>
               </div>
@@ -1315,7 +1315,7 @@ export default function FireSafetyModule5Section1() {
                   </div>
                   <div>
                     <p className="text-sm font-bold text-white">CO&#8322;</p>
-                    <p className="text-[10px] text-white/50">
+                    <p className="text-[10px] text-white">
                       2kg / 5kg &mdash; Oxygen displacement
                     </p>
                   </div>
@@ -1323,11 +1323,11 @@ export default function FireSafetyModule5Section1() {
                 <div className="grid grid-cols-2 gap-2 text-[10px]">
                   <div>
                     <p className="text-green-400 font-semibold mb-0.5">SUITABLE</p>
-                    <p className="text-white/60">Class B (liquids), Electrical equipment</p>
+                    <p className="text-white">Class B (liquids), Electrical equipment</p>
                   </div>
                   <div>
                     <p className="text-red-400 font-semibold mb-0.5">NOT SUITABLE</p>
-                    <p className="text-white/60">Class A (no cooling), Class F, Class D</p>
+                    <p className="text-white">Class A (no cooling), Class F, Class D</p>
                   </div>
                 </div>
               </div>
@@ -1340,7 +1340,7 @@ export default function FireSafetyModule5Section1() {
                   </div>
                   <div>
                     <p className="text-sm font-bold text-white">Dry Powder (ABC)</p>
-                    <p className="text-[10px] text-white/50">
+                    <p className="text-[10px] text-white">
                       1&ndash;9kg &mdash; Chemical interruption
                     </p>
                   </div>
@@ -1348,11 +1348,11 @@ export default function FireSafetyModule5Section1() {
                 <div className="grid grid-cols-2 gap-2 text-[10px]">
                   <div>
                     <p className="text-green-400 font-semibold mb-0.5">SUITABLE</p>
-                    <p className="text-white/60">Class A, B, C, Electrical. Specialist: Class D</p>
+                    <p className="text-white">Class A, B, C, Electrical. Specialist: Class D</p>
                   </div>
                   <div>
                     <p className="text-red-400 font-semibold mb-0.5">NOT RECOMMENDED</p>
-                    <p className="text-white/60">Indoors (visibility/inhalation), Class F</p>
+                    <p className="text-white">Indoors (visibility/inhalation), Class F</p>
                   </div>
                 </div>
               </div>
@@ -1365,17 +1365,17 @@ export default function FireSafetyModule5Section1() {
                   </div>
                   <div>
                     <p className="text-sm font-bold text-white">Wet Chemical</p>
-                    <p className="text-[10px] text-white/50">2&ndash;6L &mdash; Saponification</p>
+                    <p className="text-[10px] text-white">2&ndash;6L &mdash; Saponification</p>
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-2 text-[10px]">
                   <div>
                     <p className="text-green-400 font-semibold mb-0.5">SUITABLE</p>
-                    <p className="text-white/60">Class F (cooking oils), Class A. Some: Class B</p>
+                    <p className="text-white">Class F (cooking oils), Class A. Some: Class B</p>
                   </div>
                   <div>
                     <p className="text-red-400 font-semibold mb-0.5">NOT SUITABLE</p>
-                    <p className="text-white/60">Electrical, Class D</p>
+                    <p className="text-white">Electrical, Class D</p>
                   </div>
                 </div>
               </div>
@@ -1392,7 +1392,7 @@ export default function FireSafetyModule5Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1410,7 +1410,7 @@ export default function FireSafetyModule5Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-module-5">

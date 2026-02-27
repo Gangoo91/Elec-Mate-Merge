@@ -263,7 +263,7 @@ const Level3Module2Section6_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module2-section6">
@@ -374,27 +374,27 @@ const Level3Module2Section6_1 = () => {
             <div className="grid grid-cols-5 gap-2 my-6 text-center text-xs">
               <div className="p-2 rounded bg-green-500/10 border border-green-500/30">
                 <p className="font-medium text-green-400 mb-1">1. Prevent</p>
-                <p className="text-white/70">Avoid creating waste</p>
+                <p className="text-white">Avoid creating waste</p>
               </div>
               <div className="p-2 rounded bg-green-500/5 border border-green-500/20">
                 <p className="font-medium text-green-400/80 mb-1">2. Reuse</p>
-                <p className="text-white/70">Use again as-is</p>
+                <p className="text-white">Use again as-is</p>
               </div>
               <div className="p-2 rounded bg-elec-yellow/10 border border-elec-yellow/30">
                 <p className="font-medium text-elec-yellow mb-1">3. Recycle</p>
-                <p className="text-white/70">Reprocess material</p>
+                <p className="text-white">Reprocess material</p>
               </div>
               <div className="p-2 rounded bg-orange-500/10 border border-orange-500/30">
                 <p className="font-medium text-orange-400 mb-1">4. Recover</p>
-                <p className="text-white/70">Energy from waste</p>
+                <p className="text-white">Energy from waste</p>
               </div>
               <div className="p-2 rounded bg-red-500/10 border border-red-500/30">
                 <p className="font-medium text-red-400 mb-1">5. Dispose</p>
-                <p className="text-white/70">Last resort</p>
+                <p className="text-white">Last resort</p>
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> You're ordering cable for a job. Prevention: order accurate
               quantities to minimise offcuts. Reuse: keep usable offcuts for future small jobs.
               Recycle: take copper and aluminium offcuts to scrap recycling. Recovery and disposal
@@ -559,7 +559,7 @@ const Level3Module2Section6_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -602,7 +602,7 @@ const Level3Module2Section6_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module2-section6">

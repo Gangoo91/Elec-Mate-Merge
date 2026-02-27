@@ -128,7 +128,7 @@ const InspectionPhotoGallery: React.FC<InspectionPhotoGalleryProps> = ({
                 {/* Expand */}
                 <button
                   type="button"
-                  className="h-11 w-11 rounded-xl bg-white/[0.08] border border-white/10 flex items-center justify-center text-white/60 active:scale-95 active:bg-white/15 touch-manipulation transition-all"
+                  className="h-11 w-11 rounded-xl bg-white/[0.08] border border-white/10 flex items-center justify-center text-white active:scale-95 active:bg-white/15 touch-manipulation transition-all"
                   onClick={() => setSelectedPhoto(photo)}
                 >
                   <Expand className="h-5 w-5" />

@@ -111,7 +111,7 @@ const NotificationsPanel = () => {
       case 'low':
         return 'text-green-600';
       default:
-        return 'text-white/70';
+        return 'text-white';
     }
   };
 

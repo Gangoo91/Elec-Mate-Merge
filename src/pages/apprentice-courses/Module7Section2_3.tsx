@@ -136,7 +136,7 @@ const Module7Section2_3 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -154,13 +154,13 @@ const Module7Section2_3 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 7</span>
-              <span className="text-white/40">•</span>
+              <span className="text-white">•</span>
               <span>Section 2.3</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
               Earth Faults and Leakage Currents
             </h1>
-            <p className="text-white/60 max-w-xl mx-auto">
+            <p className="text-white max-w-xl mx-auto">
               Understanding earth faults, leakage currents, and protective measures in electrical
               installations
             </p>
@@ -168,7 +168,7 @@ const Module7Section2_3 = () => {
 
           {/* Summary Box */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               An <strong className="text-white">earth fault</strong> occurs when a live conductor
               makes contact with earth or exposed conductive parts, creating serious risk of
               electric shock and equipment damage.{' '}
@@ -183,7 +183,7 @@ const Module7Section2_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Earth Faults and Leakage Current Fundamentals
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <h4 className="font-medium text-elec-yellow">Definitions and Key Differences</h4>
 
               <div className="grid gap-4 sm:grid-cols-2">
@@ -341,7 +341,7 @@ const Module7Section2_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Protection Systems and BS 7671 Requirements
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <h4 className="font-medium text-green-400">
                 Residual Current Device (RCD) Protection
               </h4>
@@ -459,7 +459,7 @@ const Module7Section2_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Testing, Diagnosis and Troubleshooting
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <h4 className="font-medium text-purple-400">Systematic Testing Process</h4>
 
               <div className="bg-white/5 rounded-lg p-4 border border-white/10">
@@ -732,7 +732,7 @@ const Module7Section2_3 = () => {
                 <h4 className="font-medium text-white mb-2">
                   Q: Why do RCDs trip when there's no fault?
                 </h4>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A: This is usually due to cumulative leakage currents from multiple sources
                   exceeding the RCD sensitivity. Electronic equipment, damp conditions, and ageing
                   insulation all contribute small leakage currents that can sum to trip 30mA RCDs.
@@ -743,7 +743,7 @@ const Module7Section2_3 = () => {
                 <h4 className="font-medium text-white mb-2">
                   Q: Is it safe to increase RCD sensitivity to prevent tripping?
                 </h4>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A: No. RCD sensitivity should not be increased as this reduces protection levels.
                   Instead, identify and address the source of leakage or use RCBO design to limit
                   the impact of tripping.
@@ -752,7 +752,7 @@ const Module7Section2_3 = () => {
 
               <div className="p-4 rounded-lg bg-orange-500/5 border-l-2 border-orange-500/50">
                 <h4 className="font-medium text-white mb-2">Q: How often should RCDs be tested?</h4>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A: RCDs should be tested using the integral test button monthly by the user, and
                   comprehensively tested by a qualified electrician during periodic inspection and
                   testing as required by BS 7671.
@@ -771,7 +771,7 @@ const Module7Section2_3 = () => {
               <div className="grid gap-4 sm:grid-cols-2 text-sm">
                 <div>
                   <h4 className="font-medium text-white mb-2">Key Points:</h4>
-                  <ul className="space-y-1 text-white/70">
+                  <ul className="space-y-1 text-white">
                     <li>• Earth faults create immediate shock risks by making metalwork live</li>
                     <li>
                       • Leakage currents cause operational problems through nuisance RCD tripping
@@ -784,7 +784,7 @@ const Module7Section2_3 = () => {
                 </div>
                 <div>
                   <h4 className="font-medium text-white mb-2">Best Practice:</h4>
-                  <ul className="space-y-1 text-white/70">
+                  <ul className="space-y-1 text-white">
                     <li>• Regular inspection and testing prevents problems developing</li>
                     <li>• Proper cable routing and IP ratings reduce fault likelihood</li>
                     <li>• RCBO-per-circuit design minimises disruption from faults</li>

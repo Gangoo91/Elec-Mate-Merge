@@ -197,7 +197,7 @@ export default function ConfinedSpacesModule4Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-4">
@@ -220,7 +220,7 @@ export default function ConfinedSpacesModule4Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Personal Protective Equipment
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Selecting the right RPE and breathing apparatus based on risk assessment, fall
             protection for vertical entry, communication systems, ATEX-rated lighting, and the
             critical importance of equipment inspection before every entry
@@ -275,7 +275,7 @@ export default function ConfinedSpacesModule4Section2() {
         {/* Learning Outcomes */}
         <section className="mb-12">
           <h2 className="text-lg font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4">By the end of this section, you will be able to:</p>
+          <p className="text-white mb-4">By the end of this section, you will be able to:</p>
           <div className="grid sm:grid-cols-2 gap-2">
             {[
               'Explain why PPE selection in confined spaces must be based on the specific risk assessment, not a generic approach',
@@ -329,7 +329,7 @@ export default function ConfinedSpacesModule4Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   The Risk Assessment Must Determine:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400/60 flex-shrink-0" />
                     <span>
@@ -376,7 +376,7 @@ export default function ConfinedSpacesModule4Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <p className="text-sm font-medium text-red-400">One-Size-Fits-All Kills</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Issuing the same PPE kit for every confined space entry is a dangerous shortcut. A
                   worker entering a clean water tank with verified normal atmosphere needs very
                   different PPE from a worker entering a sewer where hydrogen sulphide and methane
@@ -440,7 +440,7 @@ export default function ConfinedSpacesModule4Section2() {
                       <div className="flex-1 flex flex-col items-center gap-0">
                         <div className="w-full bg-gradient-to-r from-amber-500/20 to-amber-400/20 border border-amber-500/40 rounded-xl p-3 text-center">
                           <p className="text-xs font-bold text-amber-400">QUESTION 2</p>
-                          <p className="text-[11px] sm:text-xs text-white/80 mt-1">
+                          <p className="text-[11px] sm:text-xs text-white mt-1">
                             Is the atmosphere IDLH or could it become IDLH?
                           </p>
                         </div>
@@ -463,11 +463,11 @@ export default function ConfinedSpacesModule4Section2() {
                         <div className="flex w-full gap-2">
                           <div className="flex-1 bg-red-500/20 border border-red-400/30 rounded-lg p-2 text-center">
                             <p className="text-[10px] sm:text-xs font-bold text-red-400">BA</p>
-                            <p className="text-[9px] sm:text-[10px] text-white/60">Required</p>
+                            <p className="text-[9px] sm:text-[10px] text-white">Required</p>
                           </div>
                           <div className="flex-1 bg-green-500/20 border border-green-400/30 rounded-lg p-2 text-center">
                             <p className="text-[10px] sm:text-xs font-bold text-green-400">RPE</p>
-                            <p className="text-[9px] sm:text-[10px] text-white/60">
+                            <p className="text-[9px] sm:text-[10px] text-white">
                               May be suitable
                             </p>
                           </div>
@@ -478,7 +478,7 @@ export default function ConfinedSpacesModule4Section2() {
                       <div className="flex-1 flex flex-col items-center">
                         <div className="w-full bg-red-500/20 border border-red-400/30 rounded-xl p-3 text-center h-full flex flex-col justify-center">
                           <p className="text-xs font-bold text-red-400">BA REQUIRED</p>
-                          <p className="text-[11px] sm:text-xs text-white/70 mt-1">
+                          <p className="text-[11px] sm:text-xs text-white mt-1">
                             Filtering RPE cannot supply oxygen. SCBA or airline BA mandatory.
                           </p>
                         </div>
@@ -502,7 +502,7 @@ export default function ConfinedSpacesModule4Section2() {
                 <h3 className="text-cyan-300 font-medium mb-3">
                   RPE (Filtering Devices) &mdash; When Atmosphere Is Breathable but Contaminated
                 </h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Filtering RPE draws in ambient air and removes contaminants through a filter.{' '}
                   <strong className="text-white">It does NOT supply oxygen.</strong> It is only
                   suitable when the atmosphere contains at least 19.5% oxygen AND the contaminant is
@@ -516,7 +516,7 @@ export default function ConfinedSpacesModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">FFP3 Filtering Facepiece</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Disposable half-mask with integrated filter. Assigned Protection Factor
                         (APF) of 20. Suitable for particles only (dust, mist, fume). Not suitable
                         for gases or vapours. Single use. Must be face-fit tested.
@@ -529,7 +529,7 @@ export default function ConfinedSpacesModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Half-Mask with Replaceable Filters</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Reusable facepiece covering nose and mouth. APF of 10 (with P3 filter, APF
                         20). Can accept particle filters, gas/vapour filters, or combination filters
                         depending on the hazard. Must be face-fit tested to the individual wearer.
@@ -542,7 +542,7 @@ export default function ConfinedSpacesModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Full-Face Mask with Filters</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Covers the entire face including eyes. APF of 40. Provides both respiratory
                         and eye protection. Uses the same replaceable filter cartridges as
                         half-masks. Better seal than half-masks. Must be face-fit tested.
@@ -557,7 +557,7 @@ export default function ConfinedSpacesModule4Section2() {
                       <p className="text-white font-medium">
                         Powered Air-Purifying Respirator (PAPR)
                       </p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Battery-powered fan draws air through filters and delivers it to the
                         facepiece or hood under positive pressure. APF varies (typically 20&ndash;40
                         for tight-fitting, up to 40 for loose-fitting hoods). Reduces breathing
@@ -576,7 +576,7 @@ export default function ConfinedSpacesModule4Section2() {
                     When Filtering RPE Must NOT Be Used
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">&times;</span>
                     <span>
@@ -634,13 +634,13 @@ export default function ConfinedSpacesModule4Section2() {
                 <h3 className="text-cyan-300 font-medium mb-3">
                   Self-Contained Breathing Apparatus (SCBA)
                 </h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   SCBA consists of a compressed air cylinder carried on the wearer&rsquo;s back,
                   connected to a full facepiece via a demand valve and regulator. The most common
                   type is <strong className="text-white">open-circuit SCBA</strong>, where exhaled
                   air is vented to atmosphere (not recycled).
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400/60 flex-shrink-0" />
                     <span>
@@ -684,12 +684,12 @@ export default function ConfinedSpacesModule4Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-cyan-300 font-medium mb-3">Airline Breathing Apparatus</h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Airline BA supplies compressed air to the wearer via a flexible hose from a clean
                   source outside the confined space &mdash; either a compressor with appropriate
                   filtration or a cylinder bank.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400/60 flex-shrink-0" />
                     <span>
@@ -733,14 +733,14 @@ export default function ConfinedSpacesModule4Section2() {
                     Escape Sets &mdash; Mandatory with Airline BA
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Every person using airline breathing apparatus{' '}
                   <strong className="text-white">must carry an escape set</strong>. An escape set is
                   a small self-contained compressed air cylinder, typically providing{' '}
                   <strong className="text-white">10 to 15 minutes</strong> of emergency breathing
                   air.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -806,7 +806,7 @@ export default function ConfinedSpacesModule4Section2() {
                     {/* Tripod / Top Structure */}
                     <div className="w-full max-w-sm bg-gradient-to-r from-cyan-500/20 to-cyan-400/20 border border-cyan-500/40 rounded-xl p-3 text-center">
                       <p className="text-sm font-bold text-cyan-400">TRIPOD / DAVIT ARM</p>
-                      <p className="text-[11px] sm:text-xs text-white/70">
+                      <p className="text-[11px] sm:text-xs text-white">
                         Positioned over entry point. Supports winch. Rated for entrant weight +
                         equipment. Must be stable and level on firm ground.
                       </p>
@@ -820,7 +820,7 @@ export default function ConfinedSpacesModule4Section2() {
                     {/* Winch */}
                     <div className="w-full max-w-xs bg-gradient-to-r from-amber-500/20 to-amber-400/20 border border-amber-500/40 rounded-xl p-3 text-center">
                       <p className="text-sm font-bold text-amber-400">RESCUE WINCH</p>
-                      <p className="text-[11px] sm:text-xs text-white/70">
+                      <p className="text-[11px] sm:text-xs text-white">
                         Mounted on tripod head. Operated by top person. Cable connects to
                         entrant&rsquo;s harness. Can lower, hold, and raise the entrant.
                       </p>
@@ -833,8 +833,8 @@ export default function ConfinedSpacesModule4Section2() {
 
                     {/* Lifeline / Cable */}
                     <div className="w-full max-w-xs bg-white/5 border border-white/20 rounded-xl p-3 text-center">
-                      <p className="text-sm font-bold text-white/90">LIFELINE / CABLE</p>
-                      <p className="text-[11px] sm:text-xs text-white/60">
+                      <p className="text-sm font-bold text-white">LIFELINE / CABLE</p>
+                      <p className="text-[11px] sm:text-xs text-white">
                         Wire rope or webbing connects winch to harness. Passes through entry point
                         opening. Must not snag on obstructions inside the space.
                       </p>
@@ -848,7 +848,7 @@ export default function ConfinedSpacesModule4Section2() {
                     {/* Harness */}
                     <div className="w-full max-w-xs bg-gradient-to-r from-green-500/20 to-green-400/20 border border-green-500/40 rounded-xl p-3 text-center">
                       <p className="text-sm font-bold text-green-400">EN 361 FULL BODY HARNESS</p>
-                      <p className="text-[11px] sm:text-xs text-white/70">
+                      <p className="text-[11px] sm:text-xs text-white">
                         Worn by entrant. Dorsal D-ring for fall arrest. Sternal/shoulder attachment
                         for rescue retrieval. Leg loops and chest strap distribute load.
                       </p>
@@ -862,7 +862,7 @@ export default function ConfinedSpacesModule4Section2() {
                     {/* Entrant */}
                     <div className="w-full max-w-xs bg-gradient-to-r from-purple-500/20 to-purple-400/20 border border-purple-500/40 rounded-xl p-3 text-center">
                       <p className="text-sm font-bold text-purple-400">ENTRANT</p>
-                      <p className="text-[11px] sm:text-xs text-white/70">
+                      <p className="text-[11px] sm:text-xs text-white">
                         Inside confined space. Wearing full body harness, BA or RPE, hard hat,
                         overalls, and all other required PPE. In constant communication with top
                         person.
@@ -884,7 +884,7 @@ export default function ConfinedSpacesModule4Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-cyan-300 font-medium mb-3">Full Body Harness (EN 361)</h3>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400/60 flex-shrink-0" />
                     <span>
@@ -924,7 +924,7 @@ export default function ConfinedSpacesModule4Section2() {
                 <h3 className="text-cyan-300 font-medium mb-3">
                   Tripods, Davit Arms &amp; Permanent Anchor Points
                 </h3>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400/60 flex-shrink-0" />
                     <span>
@@ -986,7 +986,7 @@ export default function ConfinedSpacesModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Two-Way Radios</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Portable radio sets that allow voice communication without physical
                         connection. Must be <strong className="text-white">ATEX-rated</strong> if
                         used in flammable or explosive atmospheres. Signal may be weak or lost
@@ -1001,7 +1001,7 @@ export default function ConfinedSpacesModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Hardwired (Cabled) Systems</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Headsets connected by a physical cable between the entrant and the top
                         person. The most reliable method because the signal is not affected by the
                         structure. Ideal for metal tanks, underground chambers, and deep vessels
@@ -1015,7 +1015,7 @@ export default function ConfinedSpacesModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Visual Signals</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Pre-agreed hand signals or torch signals used as a secondary or backup
                         method. Only effective when the top person has a clear line of sight to the
                         entrant. Not suitable as the primary communication method for deep or
@@ -1029,7 +1029,7 @@ export default function ConfinedSpacesModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Tug-Line Communication</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         A simple rope system using pre-agreed tug signals between the entrant and
                         the top person. For example: 1 tug = &ldquo;are you OK?&rdquo; / 1 tug
                         response = &ldquo;yes, I am OK&rdquo;; 2 tugs = &ldquo;I am coming
@@ -1074,7 +1074,7 @@ export default function ConfinedSpacesModule4Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-cyan-300 font-medium mb-3">Lighting Requirements</h3>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400/60 flex-shrink-0" />
                     <span>
@@ -1122,7 +1122,7 @@ export default function ConfinedSpacesModule4Section2() {
                     ATEX Compliance Is Not Optional
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Using a non-ATEX torch in an explosive atmosphere is equivalent to taking an open
                   flame into the space. ATEX-rated torches are sealed to prevent internal sparking
                   and have limited surface temperatures to prevent ignition of flammable gases or
@@ -1155,7 +1155,7 @@ export default function ConfinedSpacesModule4Section2() {
                 <div className="grid sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1.5">Coveralls</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Standard or disposable coveralls protect against dirt, dust, and minor
                       contamination. Chemical-resistant suits (e.g. Type 3/4/5/6) are required when
                       the risk assessment identifies contact with hazardous substances.
@@ -1163,7 +1163,7 @@ export default function ConfinedSpacesModule4Section2() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1.5">Chemical-Resistant Suits</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Required when there is a risk of contact with corrosive liquids, solvents, or
                       hazardous chemicals. The suit type must match the specific chemical hazard
                       identified. Fully encapsulated gas-tight suits (Type 1) may be needed for the
@@ -1172,7 +1172,7 @@ export default function ConfinedSpacesModule4Section2() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1.5">Anti-Static Clothing</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Required in ATEX zones where a static discharge could ignite flammable gases,
                       vapours, or dusts. Anti-static clothing prevents the build-up of static
                       electricity on the wearer. Standard synthetic fabrics can generate dangerous
@@ -1181,7 +1181,7 @@ export default function ConfinedSpacesModule4Section2() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded-lg">
                     <p className="text-white font-medium mb-1.5">Gloves &amp; Footwear</p>
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       Gloves matched to the hazard: chemical-resistant, cut-resistant,
                       heat-resistant, or general purpose. Safety boots with steel or composite toe
                       caps. Anti-static or ESD-rated footwear in ATEX zones.
@@ -1194,7 +1194,7 @@ export default function ConfinedSpacesModule4Section2() {
                 <h3 className="text-cyan-300 font-medium mb-3">
                   Head, Eye, Hearing &amp; Knee Protection
                 </h3>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-cyan-400/60 flex-shrink-0" />
                     <span>
@@ -1265,7 +1265,7 @@ export default function ConfinedSpacesModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Breathing Apparatus (SCBA / Airline)</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Check cylinder pressure is at the required level. Test the demand valve and
                         regulator for correct operation. Inspect the facepiece for cracks, tears,
                         and damage to the visor. Check all hose connections are secure and
@@ -1280,7 +1280,7 @@ export default function ConfinedSpacesModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">RPE (Masks and Filters)</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Check facepiece for cracks, deformation, and damage. Inspect head straps for
                         elasticity and condition. Verify filters are the correct type for the
                         identified hazard and are within their service life. Perform a positive and
@@ -1295,7 +1295,7 @@ export default function ConfinedSpacesModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Full Body Harness</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Inspect all webbing for cuts, fraying, abrasion, chemical damage, and UV
                         degradation. Check stitching for pulled or broken threads. Examine buckles
                         and D-rings for distortion, corrosion, or cracks. Verify the harness is
@@ -1310,7 +1310,7 @@ export default function ConfinedSpacesModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Tripod, Winch &amp; Lifeline</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Check tripod legs for damage, correct locking, and stability. Inspect the
                         winch mechanism for smooth operation in both raise and lower directions.
                         Check the wire rope or webbing for fraying, kinks, and damage. Verify the
@@ -1325,7 +1325,7 @@ export default function ConfinedSpacesModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Communication Equipment</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Test all communication equipment before entry. For radios: check battery
                         charge, confirm signal clarity at the planned working distance, verify ATEX
                         certification if required. For hardwired systems: check cable for damage,
@@ -1340,7 +1340,7 @@ export default function ConfinedSpacesModule4Section2() {
                     </div>
                     <div>
                       <p className="text-white font-medium">Lighting &amp; Other Equipment</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Check torch operation and battery charge. Verify ATEX rating if required.
                         Inspect all other PPE items: helmet for cracks, goggles for scratches or
                         damage, gloves for holes or degradation. Any defective item must be
@@ -1363,36 +1363,36 @@ export default function ConfinedSpacesModule4Section2() {
                       <p className="text-xs font-semibold text-cyan-400">Maximum Interval</p>
                     </div>
                     <div className="bg-[#1a1a1a] p-3">
-                      <p className="text-xs text-white/80">
+                      <p className="text-xs text-white">
                         Fall protection (harnesses, lanyards, lifelines)
                       </p>
                     </div>
                     <div className="bg-[#1a1a1a] p-3">
-                      <p className="text-xs text-white/80">
+                      <p className="text-xs text-white">
                         6 months (regular use) / 12 months (storage)
                       </p>
                     </div>
                     <div className="bg-[#1e1e1e] p-3">
-                      <p className="text-xs text-white/80">Tripods and winches</p>
+                      <p className="text-xs text-white">Tripods and winches</p>
                     </div>
                     <div className="bg-[#1e1e1e] p-3">
-                      <p className="text-xs text-white/80">
+                      <p className="text-xs text-white">
                         6 months (regular use) / 12 months (storage)
                       </p>
                     </div>
                     <div className="bg-[#1a1a1a] p-3">
-                      <p className="text-xs text-white/80">Breathing apparatus sets</p>
+                      <p className="text-xs text-white">Breathing apparatus sets</p>
                     </div>
                     <div className="bg-[#1a1a1a] p-3">
-                      <p className="text-xs text-white/80">
+                      <p className="text-xs text-white">
                         Per manufacturer&rsquo;s schedule (typically annually)
                       </p>
                     </div>
                     <div className="bg-[#1e1e1e] p-3">
-                      <p className="text-xs text-white/80">Gas detection equipment</p>
+                      <p className="text-xs text-white">Gas detection equipment</p>
                     </div>
                     <div className="bg-[#1e1e1e] p-3">
-                      <p className="text-xs text-white/80">
+                      <p className="text-xs text-white">
                         Calibrated per manufacturer (typically 6 months)
                       </p>
                     </div>
@@ -1405,7 +1405,7 @@ export default function ConfinedSpacesModule4Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <p className="text-sm font-medium text-red-400">Defective Equipment = No Entry</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If any item of PPE fails the pre-use inspection, it must be{' '}
                   <strong className="text-white">immediately withdrawn from service</strong> and
                   either returned to the manufacturer for repair or destroyed. The entry must NOT
@@ -1437,7 +1437,7 @@ export default function ConfinedSpacesModule4Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1451,7 +1451,7 @@ export default function ConfinedSpacesModule4Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../confined-spaces-module-4">

@@ -212,7 +212,7 @@ export default function ManualHandlingModule4Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-4">
@@ -237,7 +237,7 @@ export default function ManualHandlingModule4Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Repetitive Handling &amp; Cumulative Risk
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding repetitive strain, cumulative spinal loading, fatigue management, job
             rotation, micro-breaks, warm-up protocols, ergonomic tools, and early intervention
           </p>
@@ -349,7 +349,7 @@ export default function ManualHandlingModule4Section4() {
                     Common WRULDs in Electricians
                   </p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Carpal tunnel syndrome:</strong> Compression of
                     the median nerve in the wrist. Causes tingling, numbness, and weakness in the
@@ -382,7 +382,7 @@ export default function ManualHandlingModule4Section4() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Warning</p>
                 </div>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   WRULDs develop gradually and can become <strong>permanent and disabling</strong>{' '}
                   if not addressed early. Many electricians dismiss early symptoms (&ldquo;just a
                   bit of aching&rdquo;) and continue working. By the time they seek medical help,
@@ -437,7 +437,7 @@ export default function ManualHandlingModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Factors That Accelerate Cumulative Spinal Loading
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -501,7 +501,7 @@ export default function ManualHandlingModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   How Fatigue Changes Lifting Behaviour
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -576,7 +576,7 @@ export default function ManualHandlingModule4Section4() {
                     Effective Rotation Examples for Electricians
                   </p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Morning (2 hours):</strong> Cable tray
                     installation &mdash; overhead work using shoulders and arms, standing on
@@ -636,7 +636,7 @@ export default function ManualHandlingModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   What to Do During a Micro-Break
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -716,7 +716,7 @@ export default function ManualHandlingModule4Section4() {
                   <Activity className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Pre-Shift Warm-Up Protocol</p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">
                       Phase 1 &mdash; Dynamic movement (3&ndash;5 minutes):
@@ -772,7 +772,7 @@ export default function ManualHandlingModule4Section4() {
                   <Wrench className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Ergonomic Tool Alternatives</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -853,7 +853,7 @@ export default function ManualHandlingModule4Section4() {
                     Early Warning Signs to Report
                   </p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Stage 1 (early):</strong> Aching, tiredness, or
                     discomfort in the hands, wrists, arms, shoulders, or back that appears during
@@ -880,7 +880,7 @@ export default function ManualHandlingModule4Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Act at Stage 1</p>
                 </div>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   The window for effective intervention is at <strong>Stage 1</strong>. At this
                   point, simple changes &mdash; modified duties, additional breaks, ergonomic tool
                   changes, physiotherapy &mdash; can often achieve full recovery. By Stage 3, the
@@ -930,7 +930,7 @@ export default function ManualHandlingModule4Section4() {
                     </div>
                     <div className="space-y-2">
                       <div className="flex items-center gap-3">
-                        <span className="text-xs text-white/50 w-16 flex-shrink-0">
+                        <span className="text-xs text-white w-16 flex-shrink-0">
                           0&ndash;30 min
                         </span>
                         <div className="flex-1 h-4 bg-emerald-500/30 rounded-full overflow-hidden">
@@ -939,12 +939,12 @@ export default function ManualHandlingModule4Section4() {
                             style={{ width: '95%' }}
                           />
                         </div>
-                        <span className="text-xs text-white/60 w-12 text-right flex-shrink-0">
+                        <span className="text-xs text-white w-12 text-right flex-shrink-0">
                           95%
                         </span>
                       </div>
                       <div className="flex items-center gap-3">
-                        <span className="text-xs text-white/50 w-16 flex-shrink-0">
+                        <span className="text-xs text-white w-16 flex-shrink-0">
                           30&ndash;60 min
                         </span>
                         <div className="flex-1 h-4 bg-emerald-500/30 rounded-full overflow-hidden">
@@ -953,12 +953,12 @@ export default function ManualHandlingModule4Section4() {
                             style={{ width: '80%' }}
                           />
                         </div>
-                        <span className="text-xs text-white/60 w-12 text-right flex-shrink-0">
+                        <span className="text-xs text-white w-12 text-right flex-shrink-0">
                           80%
                         </span>
                       </div>
                       <div className="flex items-center gap-3">
-                        <span className="text-xs text-white/50 w-16 flex-shrink-0">
+                        <span className="text-xs text-white w-16 flex-shrink-0">
                           1&ndash;2 hrs
                         </span>
                         <div className="flex-1 h-4 bg-emerald-500/30 rounded-full overflow-hidden">
@@ -967,12 +967,12 @@ export default function ManualHandlingModule4Section4() {
                             style={{ width: '60%' }}
                           />
                         </div>
-                        <span className="text-xs text-white/60 w-12 text-right flex-shrink-0">
+                        <span className="text-xs text-white w-12 text-right flex-shrink-0">
                           60%
                         </span>
                       </div>
                       <div className="flex items-center gap-3">
-                        <span className="text-xs text-white/50 w-16 flex-shrink-0">
+                        <span className="text-xs text-white w-16 flex-shrink-0">
                           2&ndash;4 hrs
                         </span>
                         <div className="flex-1 h-4 bg-emerald-500/30 rounded-full overflow-hidden">
@@ -981,7 +981,7 @@ export default function ManualHandlingModule4Section4() {
                             style={{ width: '35%' }}
                           />
                         </div>
-                        <span className="text-xs text-white/60 w-12 text-right flex-shrink-0">
+                        <span className="text-xs text-white w-12 text-right flex-shrink-0">
                           35%
                         </span>
                       </div>
@@ -1002,7 +1002,7 @@ export default function ManualHandlingModule4Section4() {
                     </div>
                     <div className="space-y-2">
                       <div className="flex items-center gap-3">
-                        <span className="text-xs text-white/50 w-16 flex-shrink-0">
+                        <span className="text-xs text-white w-16 flex-shrink-0">
                           0&ndash;30 min
                         </span>
                         <div className="flex-1 h-4 bg-emerald-500/30 rounded-full overflow-hidden">
@@ -1011,7 +1011,7 @@ export default function ManualHandlingModule4Section4() {
                             style={{ width: '95%' }}
                           />
                         </div>
-                        <span className="text-xs text-white/60 w-12 text-right flex-shrink-0">
+                        <span className="text-xs text-white w-12 text-right flex-shrink-0">
                           95%
                         </span>
                       </div>
@@ -1025,7 +1025,7 @@ export default function ManualHandlingModule4Section4() {
                         </span>
                       </div>
                       <div className="flex items-center gap-3">
-                        <span className="text-xs text-white/50 w-16 flex-shrink-0">
+                        <span className="text-xs text-white w-16 flex-shrink-0">
                           35&ndash;65 min
                         </span>
                         <div className="flex-1 h-4 bg-emerald-500/30 rounded-full overflow-hidden">
@@ -1034,7 +1034,7 @@ export default function ManualHandlingModule4Section4() {
                             style={{ width: '90%' }}
                           />
                         </div>
-                        <span className="text-xs text-white/60 w-12 text-right flex-shrink-0">
+                        <span className="text-xs text-white w-12 text-right flex-shrink-0">
                           90%
                         </span>
                       </div>
@@ -1048,7 +1048,7 @@ export default function ManualHandlingModule4Section4() {
                         </span>
                       </div>
                       <div className="flex items-center gap-3">
-                        <span className="text-xs text-white/50 w-16 flex-shrink-0">
+                        <span className="text-xs text-white w-16 flex-shrink-0">
                           70&ndash;100 min
                         </span>
                         <div className="flex-1 h-4 bg-emerald-500/30 rounded-full overflow-hidden">
@@ -1057,7 +1057,7 @@ export default function ManualHandlingModule4Section4() {
                             style={{ width: '85%' }}
                           />
                         </div>
-                        <span className="text-xs text-white/60 w-12 text-right flex-shrink-0">
+                        <span className="text-xs text-white w-12 text-right flex-shrink-0">
                           85%
                         </span>
                       </div>
@@ -1071,7 +1071,7 @@ export default function ManualHandlingModule4Section4() {
                         </span>
                       </div>
                       <div className="flex items-center gap-3">
-                        <span className="text-xs text-white/50 w-16 flex-shrink-0">
+                        <span className="text-xs text-white w-16 flex-shrink-0">
                           2&ndash;4 hrs
                         </span>
                         <div className="flex-1 h-4 bg-emerald-500/30 rounded-full overflow-hidden">
@@ -1080,7 +1080,7 @@ export default function ManualHandlingModule4Section4() {
                             style={{ width: '80%' }}
                           />
                         </div>
-                        <span className="text-xs text-white/60 w-12 text-right flex-shrink-0">
+                        <span className="text-xs text-white w-12 text-right flex-shrink-0">
                           80%
                         </span>
                       </div>
@@ -1093,7 +1093,7 @@ export default function ManualHandlingModule4Section4() {
                 </div>
 
                 <div className="mt-4 p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
-                  <p className="text-xs text-white/60 leading-relaxed">
+                  <p className="text-xs text-white leading-relaxed">
                     <strong className="text-emerald-400">Key Insight:</strong> After 4 hours of
                     continuous work, performance drops to approximately 35% &mdash; meaning the
                     worker is operating at barely one-third capacity with significantly increased
@@ -1115,7 +1115,7 @@ export default function ManualHandlingModule4Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1129,7 +1129,7 @@ export default function ManualHandlingModule4Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-4">

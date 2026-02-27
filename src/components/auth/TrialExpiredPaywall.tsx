@@ -86,7 +86,7 @@ const TrialExpiredPaywall = () => {
             <CardContent className="pt-6">
               <div className="flex items-center gap-2 mb-4">
                 <Sparkles className="h-4 w-4 text-yellow-400" />
-                <span className="text-sm font-medium text-white/80">You had access to:</span>
+                <span className="text-sm font-medium text-white">You had access to:</span>
               </div>
               <div className="space-y-3">
                 {features.map((feature, index) => (
@@ -97,8 +97,8 @@ const TrialExpiredPaywall = () => {
                     <div className="p-1.5 rounded-lg bg-yellow-400/10 border border-yellow-400/20">
                       <feature.icon className="h-4 w-4 text-yellow-400" />
                     </div>
-                    <span className="text-sm text-white/70">{feature.label}</span>
-                    <Lock className="h-3.5 w-3.5 text-white/30 ml-auto" />
+                    <span className="text-sm text-white">{feature.label}</span>
+                    <Lock className="h-3.5 w-3.5 text-white ml-auto" />
                   </div>
                 ))}
               </div>
@@ -118,7 +118,7 @@ const TrialExpiredPaywall = () => {
 
             <Button
               variant="outline"
-              className="w-full h-11 border-white/10 hover:bg-white/5 text-white/70 hover:text-white transition-all"
+              className="w-full h-11 border-white/10 hover:bg-white/5 text-white hover:text-white transition-all"
               onClick={() => signOut()}
             >
               Sign Out

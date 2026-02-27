@@ -114,7 +114,7 @@ export const AM2TestSequence = memo(function AM2TestSequence({
                   {hasDescription && (
                     <ChevronDown
                       className={cn(
-                        'w-4 h-4 text-white/40 flex-shrink-0',
+                        'w-4 h-4 text-white flex-shrink-0',
                         'transition-transform duration-ios-normal ease-ios-ease',
                         isExpanded && 'rotate-180'
                       )}
@@ -131,7 +131,7 @@ export const AM2TestSequence = memo(function AM2TestSequence({
                     )}
                   >
                     <div
-                      className={cn('pt-2 pb-1', 'text-ios-subhead text-white/60 leading-relaxed')}
+                      className={cn('pt-2 pb-1', 'text-ios-subhead text-white leading-relaxed')}
                     >
                       {step.description}
                     </div>

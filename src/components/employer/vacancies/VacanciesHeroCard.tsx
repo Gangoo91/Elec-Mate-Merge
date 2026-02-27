@@ -76,7 +76,7 @@ function StatCard({ stat, index }: { stat: StatItem; index: number }) {
           <p className="text-2xl font-bold text-white leading-none">
             <AnimatedCounter value={stat.value} suffix={stat.suffix} />
           </p>
-          <p className="text-xs text-white/60 mt-1 truncate">{stat.label}</p>
+          <p className="text-xs text-white mt-1 truncate">{stat.label}</p>
         </div>
       </div>
     </motion.div>
@@ -162,7 +162,7 @@ export function VacanciesHeroCard({
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 }}
-                className="text-white/60 text-sm md:text-base"
+                className="text-white text-sm md:text-base"
               >
                 Manage job postings & candidate applications
               </motion.p>

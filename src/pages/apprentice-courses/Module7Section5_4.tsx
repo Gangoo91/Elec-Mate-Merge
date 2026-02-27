@@ -147,7 +147,7 @@ const Module7Section5_4 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -166,13 +166,13 @@ const Module7Section5_4 = () => {
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <Search className="w-4 h-4" />
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 7</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.4</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.4</span>
             </div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
               PPE and Environmental Precautions During Fault Investigation
             </h1>
-            <p className="text-white/70 text-base sm:text-lg max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg max-w-2xl mx-auto">
               Combining PPE and environmental controls for safer electrical fault investigation
             </p>
           </header>
@@ -180,7 +180,7 @@ const Module7Section5_4 = () => {
           {/* In 30 Seconds Summary */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 space-y-1 text-sm">
+            <ul className="text-white space-y-1 text-sm">
               <li>• Verify PPE condition: gloves, glasses, footwear, FR clothing</li>
               <li>• Confirm area is dry and well lit</li>
               <li>• Remove trip hazards, tidy cables, ensure clear escape route</li>
@@ -190,7 +190,7 @@ const Module7Section5_4 = () => {
 
           {/* Introduction */}
           <section className="mb-10">
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               Even with the correct test equipment, electrical fault investigation remains hazardous
               work. The risks are not only from electricity itself but also from the environment in
               which testing takes place. Wet areas, confined spaces, poor lighting, and cluttered
@@ -208,10 +208,10 @@ const Module7Section5_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <p className="text-white/80 mb-4">
+            <p className="text-white mb-4">
               By the end of this subsection, you should be able to:
             </p>
-            <ul className="space-y-2 text-white/80">
+            <ul className="space-y-2 text-white">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">✓</span>
                 <span>
@@ -238,7 +238,7 @@ const Module7Section5_4 = () => {
               PPE Essentials and Their Purpose
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-4">
-              <div className="space-y-4 text-sm text-white/80">
+              <div className="space-y-4 text-sm text-white">
                 <p>
                   <strong className="text-white">Insulated gloves:</strong> Reduce the chance of
                   electric shock by providing a barrier between hands and live conductors. Must be
@@ -290,7 +290,7 @@ const Module7Section5_4 = () => {
               Environmental Precautions and Risk Assessment
             </h2>
             <div className="p-4 rounded-lg bg-green-500/5 border-l-2 border-green-500/50 mb-4">
-              <div className="space-y-4 text-sm text-white/80">
+              <div className="space-y-4 text-sm text-white">
                 <p>
                   <strong className="text-white">Dry working conditions:</strong> Water and
                   electricity are a deadly combination. Check for leaks, condensation, or standing
@@ -344,7 +344,7 @@ const Module7Section5_4 = () => {
               Understanding the PPE-Environment Connection
             </h2>
             <div className="p-4 rounded-lg bg-amber-500/5 border-l-2 border-amber-500/50 mb-4">
-              <div className="space-y-4 text-sm text-white/80">
+              <div className="space-y-4 text-sm text-white">
                 <p>
                   <strong className="text-white">PPE is not a substitute:</strong> Personal
                   protective equipment provides essential protection when things go wrong, but it
@@ -392,7 +392,7 @@ const Module7Section5_4 = () => {
               Quick Risk Assessment Routine
             </h2>
             <div className="p-4 rounded-lg bg-purple-500/5 border-l-2 border-purple-500/50 mb-4">
-              <div className="space-y-4 text-sm text-white/80">
+              <div className="space-y-4 text-sm text-white">
                 <p>
                   <strong className="text-white">Pre-work checks:</strong> Before any testing
                   begins, ask: Is the area dry? Is there adequate lighting? Are escape routes clear?
@@ -447,12 +447,12 @@ const Module7Section5_4 = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-red-500/5 border-l-2 border-red-500/50">
                 <h3 className="font-semibold text-red-400 mb-3">Case Study: Arc Flash Injury</h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   An experienced electrician was testing a 400V distribution board when a short
                   circuit caused an arc fault. Without safety glasses, molten copper particles
                   struck his face and eyes, causing serious burns and temporary blindness.
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-red-400">Lesson:</strong> Even routine testing can
                   escalate rapidly. PPE is essential regardless of experience level.
                 </p>
@@ -462,13 +462,13 @@ const Module7Section5_4 = () => {
                 <h3 className="font-semibold text-elec-yellow mb-3">
                   Case Study: Environmental Awareness
                 </h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   An apprentice was asked to test circuits in a basement with a wet floor and poor
                   lighting. Rather than proceeding, they stopped work and reported the unsafe
                   conditions. Testing resumed only after temporary lighting was installed and rubber
                   matting laid.
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-elec-yellow">Lesson:</strong> Recognising and reporting
                   unsafe conditions is professional responsibility, not hesitation.
                 </p>
@@ -483,7 +483,7 @@ const Module7Section5_4 = () => {
               Key Takeaways
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <ul className="space-y-2 text-sm text-white/80">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">✓</span>
                   <span>
@@ -519,7 +519,7 @@ const Module7Section5_4 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 mt-10 pt-6 border-t border-white/10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../5-3">

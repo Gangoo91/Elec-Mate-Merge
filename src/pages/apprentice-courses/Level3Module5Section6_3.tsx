@@ -275,7 +275,7 @@ const Level3Module5Section6_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module5-section6">
@@ -363,11 +363,11 @@ const Level3Module5Section6_3 = () => {
             <div className="grid grid-cols-2 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Right First Time</p>
-                <p className="text-white/90 text-xs">Good planning prevents repeat visits</p>
+                <p className="text-white text-xs">Good planning prevents repeat visits</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Root Cause</p>
-                <p className="text-white/90 text-xs">Fix why it failed, not just what failed</p>
+                <p className="text-white text-xs">Fix why it failed, not just what failed</p>
               </div>
             </div>
 
@@ -425,7 +425,7 @@ const Level3Module5Section6_3 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Tip:</strong> If you're unsure of original specification, calculate from first
               principles using load, cable length, and installation method. When in doubt, upgrade
               rather than match.
@@ -537,19 +537,19 @@ const Level3Module5Section6_3 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Confirm Clear</p>
-                <p className="text-white/90 text-xs">Original fault resolved</p>
+                <p className="text-white text-xs">Original fault resolved</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Check New</p>
-                <p className="text-white/90 text-xs">No new faults created</p>
+                <p className="text-white text-xs">No new faults created</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Document</p>
-                <p className="text-white/90 text-xs">Record retest results</p>
+                <p className="text-white text-xs">Record retest results</p>
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Note:</strong> Record retest results alongside original fault details. This
               creates a complete audit trail showing what was wrong, what was done, and verification
               that the repair was successful.
@@ -617,7 +617,7 @@ const Level3Module5Section6_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -663,7 +663,7 @@ const Level3Module5Section6_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module5-section6">

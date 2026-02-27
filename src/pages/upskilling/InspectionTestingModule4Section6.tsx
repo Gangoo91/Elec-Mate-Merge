@@ -219,7 +219,7 @@ const InspectionTestingModule4Section6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-4">
@@ -241,7 +241,7 @@ const InspectionTestingModule4Section6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Troubleshooting Low Insulation
           </h1>
-          <p className="text-white/80">Systematic fault-finding techniques for low IR readings</p>
+          <p className="text-white">Systematic fault-finding techniques for low IR readings</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -315,37 +315,37 @@ const InspectionTestingModule4Section6 = () => {
             <div className="space-y-3 my-6">
               <div className="p-3 rounded-lg bg-blue-500/10">
                 <p className="text-blue-400 font-medium text-sm">Moisture Ingress</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Water entering through damaged enclosures, rising damp, or condensation
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-red-500/10">
                 <p className="text-red-400 font-medium text-sm">Mechanical Damage</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Nails, screws, crushing, abrasion, or rodent damage to cables
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-orange-500/10">
                 <p className="text-orange-400 font-medium text-sm">Heat Damage</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Overloading, poor connections, or fire damage degrading insulation
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-amber-500/10">
                 <p className="text-amber-400 font-medium text-sm">Age Degradation</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Natural breakdown of insulating materials over time
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-purple-500/10">
                 <p className="text-purple-400 font-medium text-sm">Chemical Contamination</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Solvents, oils, cleaning fluids attacking insulation
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-elec-yellow/10">
                 <p className="text-elec-yellow font-medium text-sm">Poor Installation</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Damaged during install, incorrect cable for environment
                 </p>
               </div>
@@ -362,7 +362,7 @@ const InspectionTestingModule4Section6 = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <div className="my-6 p-4 rounded-lg bg-elec-yellow/10">
               <p className="text-elec-yellow font-semibold">Efficient Fault Location</p>
-              <p className="text-white/60 text-sm">Each test halves the search area</p>
+              <p className="text-white text-sm">Each test halves the search area</p>
             </div>
 
             <div className="my-6">
@@ -417,7 +417,7 @@ const InspectionTestingModule4Section6 = () => {
                 'Condensation in enclosures',
                 'Cable entry seal failures',
               ].map((item, i) => (
-                <div key={i} className="text-sm text-white/80">
+                <div key={i} className="text-sm text-white">
                   {item}
                 </div>
               ))}
@@ -437,19 +437,19 @@ const InspectionTestingModule4Section6 = () => {
             <div className="space-y-3 my-6">
               <div className="p-3 rounded-lg bg-amber-500/10">
                 <p className="text-amber-400 font-medium text-sm">Socket Outlets</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Liquid spills, steam (kitchens/bathrooms), damaged terminals from plug insertion.
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-blue-500/10">
                 <p className="text-blue-400 font-medium text-sm">Junction Boxes</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Often in damp locations (lofts, under floors). Check seals and terminal condition.
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-purple-500/10">
                 <p className="text-purple-400 font-medium text-sm">External Fittings</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Weathering, failed seals, condensation ingress. Particularly vulnerable.
                 </p>
               </div>
@@ -501,33 +501,33 @@ const InspectionTestingModule4Section6 = () => {
             <div className="space-y-4 my-6">
               <div className="border-l-2 border-emerald-500 pl-4">
                 <p className="text-emerald-400 font-medium text-sm">Moisture</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Dry thoroughly, repair water ingress point, improve ventilation, consider IP-rated
                   enclosures.
                 </p>
               </div>
               <div className="border-l-2 border-blue-400 pl-4">
                 <p className="text-blue-400 font-medium text-sm">Localised Damage</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Cut out damaged section and joint if sufficient slack. Otherwise replace affected
                   cable length.
                 </p>
               </div>
               <div className="border-l-2 border-amber-400 pl-4">
                 <p className="text-amber-400 font-medium text-sm">Poor Terminations</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Strip back to clean insulation, re-terminate properly, ensure correct torque.
                 </p>
               </div>
               <div className="border-l-2 border-purple-400 pl-4">
                 <p className="text-purple-400 font-medium text-sm">Accessory Faults</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Replace faulty accessory. Check it hasn't damaged the cable at entry point.
                 </p>
               </div>
               <div className="border-l-2 border-red-400 pl-4">
                 <p className="text-red-400 font-medium text-sm">General Degradation</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   If multiple circuits affected, may need full rewire. Age-related failure is
                   typically widespread.
                 </p>
@@ -579,7 +579,7 @@ const InspectionTestingModule4Section6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -625,7 +625,7 @@ const InspectionTestingModule4Section6 = () => {
           <div className="p-6 rounded-lg bg-elec-yellow/10 text-center">
             <CheckCircle className="w-12 h-12 text-elec-yellow mx-auto mb-4" />
             <h3 className="text-xl font-bold text-white mb-2">Module 4 Complete!</h3>
-            <p className="text-white/70 mb-4">
+            <p className="text-white mb-4">
               You've mastered Insulation Resistance Testing. Ready for Earth Fault Loop Impedance?
             </p>
           </div>
@@ -636,7 +636,7 @@ const InspectionTestingModule4Section6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-4/section-5">

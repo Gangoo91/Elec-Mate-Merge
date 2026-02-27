@@ -36,7 +36,7 @@ const Module8 = () => {
         <div className="flex items-center gap-4 mb-8">
           <Link
             to=".."
-            className="inline-flex items-center text-white/70 hover:text-white transition-colors"
+            className="inline-flex items-center text-white hover:text-white transition-colors"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Level 2 Overview

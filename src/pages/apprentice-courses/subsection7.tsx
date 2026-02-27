@@ -225,7 +225,7 @@ const Section2_3 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/80 hover:text-foreground active:text-foreground p-0 -ml-1"
+            className="text-white hover:text-foreground active:text-foreground p-0 -ml-1"
             asChild
           >
             <Link to="..">
@@ -251,7 +251,7 @@ const Section2_3 = () => {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
             Fire Hazards and Explosive Environments
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding electrical fire hazards, ATEX zones, and explosion prevention. BS 7671
             fire safety requirements and DSEAR regulations.
           </p>
@@ -559,7 +559,7 @@ const Section2_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-border/30 pb-4 last:border-b-0">
                 <h4 className="text-foreground font-semibold mb-2">{faq.question}</h4>
-                <p className="text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -644,7 +644,7 @@ const Section2_3 = () => {
             <div className="grid md:grid-cols-2 gap-4 text-sm">
               <div>
                 <h5 className="text-foreground font-semibold mb-2">If You Discover a Fire:</h5>
-                <ol className="text-white/80 space-y-1">
+                <ol className="text-white space-y-1">
                   <li>1. Sound the alarm</li>
                   <li>2. Switch off power if safe to do so</li>
                   <li>3. Evacuate the area</li>
@@ -654,7 +654,7 @@ const Section2_3 = () => {
               </div>
               <div>
                 <h5 className="text-foreground font-semibold mb-2">Fire Extinguisher Types:</h5>
-                <ul className="text-white/80 space-y-1">
+                <ul className="text-white space-y-1">
                   <li>• CO₂ - Electrical fires (black label)</li>
                   <li>• Dry powder - Multi-purpose (blue label)</li>
                   <li>• Never use water on live electrical equipment</li>

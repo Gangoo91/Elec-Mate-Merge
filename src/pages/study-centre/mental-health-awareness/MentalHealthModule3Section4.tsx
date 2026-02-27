@@ -1010,7 +1010,7 @@ export default function MentalHealthModule3Section4() {
                   <div className="flex items-center gap-3 mb-2">
                     <Phone className="h-4 w-4 text-green-400 flex-shrink-0" />
                     <span className="text-lg font-bold text-white">116 123</span>
-                    <span className="text-xs text-white/50">(free to call)</span>
+                    <span className="text-xs text-white">(free to call)</span>
                   </div>
                   <p className="text-sm text-white">
                     Available 24 hours a day, 7 days a week, 365 days a year. Confidential emotional
@@ -1031,7 +1031,7 @@ export default function MentalHealthModule3Section4() {
                   <div className="flex items-center gap-3 mb-2">
                     <MessageCircle className="h-4 w-4 text-blue-400 flex-shrink-0" />
                     <span className="text-lg font-bold text-white">Text SHOUT to 85258</span>
-                    <span className="text-xs text-white/50">(free)</span>
+                    <span className="text-xs text-white">(free)</span>
                   </div>
                   <p className="text-sm text-white">
                     Free, confidential, 24/7 text-based support. Particularly useful for people who
@@ -1053,7 +1053,7 @@ export default function MentalHealthModule3Section4() {
                   <div className="flex items-center gap-3 mb-2">
                     <Phone className="h-4 w-4 text-purple-400 flex-shrink-0" />
                     <span className="text-lg font-bold text-white">0800 58 58 58</span>
-                    <span className="text-xs text-white/50">(free)</span>
+                    <span className="text-xs text-white">(free)</span>
                   </div>
                   <p className="text-sm text-white">
                     Open 5pm to midnight, 365 days a year. CALM provides support for anyone who is
@@ -1073,7 +1073,7 @@ export default function MentalHealthModule3Section4() {
                   <div className="flex items-center gap-3 mb-2">
                     <Phone className="h-4 w-4 text-amber-400 flex-shrink-0" />
                     <span className="text-lg font-bold text-white">0800 068 4141</span>
-                    <span className="text-xs text-white/50">(9am&ndash;midnight)</span>
+                    <span className="text-xs text-white">(9am&ndash;midnight)</span>
                   </div>
                   <p className="text-sm text-white">
                     Specifically for people under 35 who are experiencing suicidal thoughts, and for
@@ -1096,7 +1096,7 @@ export default function MentalHealthModule3Section4() {
                   <div className="flex items-center gap-3 mb-2">
                     <Phone className="h-4 w-4 text-white flex-shrink-0" />
                     <span className="text-lg font-bold text-white">111 &mdash; Option 2</span>
-                    <span className="text-xs text-white/50">(free)</span>
+                    <span className="text-xs text-white">(free)</span>
                   </div>
                   <p className="text-sm text-white">
                     Dialling 111 and selecting option 2 connects you to the local mental health
@@ -1118,7 +1118,7 @@ export default function MentalHealthModule3Section4() {
                       <p className="text-xs font-medium text-purple-300">Lighthouse Club</p>
                     </div>
                     <div className="flex items-center gap-2 mb-1">
-                      <Phone className="h-3 w-3 text-white/50" />
+                      <Phone className="h-3 w-3 text-white" />
                       <span className="text-sm font-bold text-white">0345 605 1956</span>
                     </div>
                     <p className="text-xs text-white">

@@ -206,7 +206,7 @@ export default function MentalHealthModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-1">
@@ -231,7 +231,7 @@ export default function MentalHealthModule1Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Workplace Mental Health Framework
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             UK legislation, HSE Management Standards, the Equality Act 2010, the Thriving at Work
             review, and how these frameworks apply to the construction and electrical industry
           </p>
@@ -372,7 +372,7 @@ export default function MentalHealthModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-purple-400 mb-1">{item.provision}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -382,7 +382,7 @@ export default function MentalHealthModule1Section3() {
                 <p className="text-sm font-medium text-purple-400 mb-2">
                   Management of Health &amp; Safety at Work Regulations 1999
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Made under HASAWA, these regulations give more specific duties.{' '}
                   <strong>Regulation 3</strong> requires employers to carry out a{' '}
                   <strong>suitable and sufficient risk assessment</strong> of all risks to
@@ -399,7 +399,7 @@ export default function MentalHealthModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Enforcement</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Breach of HASAWA is a <strong>criminal offence</strong>. The HSE can issue
                   Improvement Notices or Prohibition Notices and can prosecute employers who fail to
                   manage risks to employees&apos; mental health. In serious cases, individual
@@ -455,7 +455,7 @@ export default function MentalHealthModule1Section3() {
                         <ClipboardList className="h-5 w-5 text-red-400" />
                       </div>
                       <p className="text-sm font-semibold text-red-400 mb-1">1. Demands</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Workload, work patterns, work environment
                       </p>
                     </div>
@@ -465,7 +465,7 @@ export default function MentalHealthModule1Section3() {
                         <Scale className="h-5 w-5 text-amber-400" />
                       </div>
                       <p className="text-sm font-semibold text-amber-400 mb-1">2. Control</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         How much say a person has in the way they work
                       </p>
                     </div>
@@ -475,7 +475,7 @@ export default function MentalHealthModule1Section3() {
                         <Heart className="h-5 w-5 text-green-400" />
                       </div>
                       <p className="text-sm font-semibold text-green-400 mb-1">3. Support</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Encouragement, resources and sponsorship from the organisation
                       </p>
                     </div>
@@ -485,7 +485,7 @@ export default function MentalHealthModule1Section3() {
                         <Users className="h-5 w-5 text-blue-400" />
                       </div>
                       <p className="text-sm font-semibold text-blue-400 mb-1">4. Relationships</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Positive working to avoid conflict and bullying
                       </p>
                     </div>
@@ -495,7 +495,7 @@ export default function MentalHealthModule1Section3() {
                         <Briefcase className="h-5 w-5 text-violet-400" />
                       </div>
                       <p className="text-sm font-semibold text-violet-400 mb-1">5. Role</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Understanding of role and no conflicting responsibilities
                       </p>
                     </div>
@@ -505,7 +505,7 @@ export default function MentalHealthModule1Section3() {
                         <Building2 className="h-5 w-5 text-purple-400" />
                       </div>
                       <p className="text-sm font-semibold text-purple-400 mb-1">6. Change</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         How organisational change is managed and communicated
                       </p>
                     </div>
@@ -527,14 +527,14 @@ export default function MentalHealthModule1Section3() {
                   <div className="grid md:grid-cols-2 gap-3">
                     <div className="bg-green-500/5 border border-green-500/15 rounded-lg p-3">
                       <p className="text-xs font-medium text-green-400 mb-1">Good Practice</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Realistic deadlines, workload matched to capability, adequate staffing
                         levels, achievable targets
                       </p>
                     </div>
                     <div className="bg-red-500/5 border border-red-500/15 rounded-lg p-3">
                       <p className="text-xs font-medium text-red-400 mb-1">Poor Practice</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Excessive hours, unrealistic deadlines, constant time pressure, inability to
                         take breaks, understaffing
                       </p>
@@ -548,14 +548,14 @@ export default function MentalHealthModule1Section3() {
                   <div className="grid md:grid-cols-2 gap-3">
                     <div className="bg-green-500/5 border border-green-500/15 rounded-lg p-3">
                       <p className="text-xs font-medium text-green-400 mb-1">Good Practice</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Workers have input on how they do their work, can take breaks when needed,
                         have some say over shift patterns
                       </p>
                     </div>
                     <div className="bg-red-500/5 border border-red-500/15 rounded-lg p-3">
                       <p className="text-xs font-medium text-red-400 mb-1">Poor Practice</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Micromanagement, no flexibility, rigid schedules with no input, no autonomy
                         over work methods
                       </p>
@@ -569,14 +569,14 @@ export default function MentalHealthModule1Section3() {
                   <div className="grid md:grid-cols-2 gap-3">
                     <div className="bg-green-500/5 border border-green-500/15 rounded-lg p-3">
                       <p className="text-xs font-medium text-green-400 mb-1">Good Practice</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Line managers trained to have supportive conversations, EAP available, peer
                         support, regular check-ins
                       </p>
                     </div>
                     <div className="bg-red-500/5 border border-red-500/15 rounded-lg p-3">
                       <p className="text-xs font-medium text-red-400 mb-1">Poor Practice</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         No support systems, &ldquo;just get on with it&rdquo; culture, no access to
                         occupational health, workers feel they cannot ask for help
                       </p>
@@ -590,14 +590,14 @@ export default function MentalHealthModule1Section3() {
                   <div className="grid md:grid-cols-2 gap-3">
                     <div className="bg-green-500/5 border border-green-500/15 rounded-lg p-3">
                       <p className="text-xs font-medium text-green-400 mb-1">Good Practice</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Clear anti-bullying policies, positive workplace culture, effective conflict
                         resolution, mutual respect
                       </p>
                     </div>
                     <div className="bg-red-500/5 border border-red-500/15 rounded-lg p-3">
                       <p className="text-xs font-medium text-red-400 mb-1">Poor Practice</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Tolerated bullying, &ldquo;banter&rdquo; that is actually harassment,
                         unresolved conflicts, intimidation, isolation of workers
                       </p>
@@ -611,14 +611,14 @@ export default function MentalHealthModule1Section3() {
                   <div className="grid md:grid-cols-2 gap-3">
                     <div className="bg-green-500/5 border border-green-500/15 rounded-lg p-3">
                       <p className="text-xs font-medium text-green-400 mb-1">Good Practice</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Clear job descriptions, workers understand their responsibilities, no
                         conflicting instructions from different managers
                       </p>
                     </div>
                     <div className="bg-red-500/5 border border-red-500/15 rounded-lg p-3">
                       <p className="text-xs font-medium text-red-400 mb-1">Poor Practice</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Vague responsibilities, conflicting demands from multiple supervisors, asked
                         to do tasks outside competence without training
                       </p>
@@ -632,14 +632,14 @@ export default function MentalHealthModule1Section3() {
                   <div className="grid md:grid-cols-2 gap-3">
                     <div className="bg-green-500/5 border border-green-500/15 rounded-lg p-3">
                       <p className="text-xs font-medium text-green-400 mb-1">Good Practice</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Changes communicated clearly and in advance, workers consulted, adequate
                         time to adjust, support during transitions
                       </p>
                     </div>
                     <div className="bg-red-500/5 border border-red-500/15 rounded-lg p-3">
                       <p className="text-xs font-medium text-red-400 mb-1">Poor Practice</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Sudden changes with no warning, no consultation, constant restructuring, job
                         insecurity with no communication
                       </p>
@@ -655,7 +655,7 @@ export default function MentalHealthModule1Section3() {
                     HSE Stress Risk Assessment Process
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The HSE recommends a 5-step approach to managing stress using the Management
                   Standards:
                 </p>
@@ -671,7 +671,7 @@ export default function MentalHealthModule1Section3() {
                       <div className="flex-shrink-0 w-6 h-6 rounded-full bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-xs font-bold text-purple-400">
                         {i + 1}
                       </div>
-                      <p className="text-xs text-white/80">{step}</p>
+                      <p className="text-xs text-white">{step}</p>
                     </div>
                   ))}
                 </div>
@@ -730,7 +730,7 @@ export default function MentalHealthModule1Section3() {
                     <p className="text-xs font-medium text-purple-400 mb-1">
                       Duty Not to Discriminate
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Employers must not treat an employee less favourably because of their mental
                       health condition. This includes direct discrimination (treating someone worse
                       because of their condition), indirect discrimination (applying a policy that
@@ -743,7 +743,7 @@ export default function MentalHealthModule1Section3() {
                     <p className="text-xs font-medium text-purple-400 mb-1">
                       Duty to Make Reasonable Adjustments
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Where a provision, criterion, or practice puts a disabled person at a
                       substantial disadvantage, the employer must take reasonable steps to avoid
                       that disadvantage. For mental health, this might mean adjusting working hours,
@@ -756,7 +756,7 @@ export default function MentalHealthModule1Section3() {
                     <p className="text-xs font-medium text-purple-400 mb-1">
                       Protected Characteristics
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Disability is one of 9 protected characteristics under the Equality Act. The
                       others are age, gender reassignment, marriage and civil partnership, pregnancy
                       and maternity, race, religion or belief, sex, and sexual orientation. A mental
@@ -819,7 +819,7 @@ export default function MentalHealthModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-purple-400 mb-1">{item.adjustment}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -832,7 +832,7 @@ export default function MentalHealthModule1Section3() {
                     Important &mdash; Knowledge vs Constructive Knowledge
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The duty to make reasonable adjustments applies not only when the employer{' '}
                   <strong>knows</strong> about the disability, but also when they{' '}
                   <strong>ought reasonably to have known</strong>. If a worker shows visible signs
@@ -870,7 +870,7 @@ export default function MentalHealthModule1Section3() {
                 <p className="text-sm font-medium text-purple-400 mb-3">
                   The 6 Core Standards (for ALL employers)
                 </p>
-                <p className="text-xs text-white/60 mb-3">
+                <p className="text-xs text-white mb-3">
                   These standards are recommended for every employer, regardless of size or sector:
                 </p>
                 <div className="space-y-2">
@@ -909,7 +909,7 @@ export default function MentalHealthModule1Section3() {
                       <div className="flex-shrink-0 w-6 h-6 rounded-full bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-xs font-bold text-purple-400">
                         {item.num}
                       </div>
-                      <p className="text-sm text-white/80">{item.standard}</p>
+                      <p className="text-sm text-white">{item.standard}</p>
                     </div>
                   ))}
                 </div>
@@ -919,7 +919,7 @@ export default function MentalHealthModule1Section3() {
                 <p className="text-sm font-medium text-violet-400 mb-3">
                   The 4 Enhanced Standards (for larger employers and public sector)
                 </p>
-                <p className="text-xs text-white/60 mb-3">
+                <p className="text-xs text-white mb-3">
                   In addition to the 6 core standards, larger organisations should also:
                 </p>
                 <div className="space-y-2">
@@ -949,7 +949,7 @@ export default function MentalHealthModule1Section3() {
                       <div className="flex-shrink-0 w-6 h-6 rounded-full bg-violet-500/20 border border-violet-500/40 flex items-center justify-center text-xs font-bold text-violet-400">
                         {item.num}
                       </div>
-                      <p className="text-sm text-white/80">{item.standard}</p>
+                      <p className="text-sm text-white">{item.standard}</p>
                     </div>
                   ))}
                 </div>
@@ -962,7 +962,7 @@ export default function MentalHealthModule1Section3() {
                     What This Means for Construction &amp; Electrical Work
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                     <span>
@@ -1030,7 +1030,7 @@ export default function MentalHealthModule1Section3() {
                 <p className="text-sm font-medium text-purple-400 mb-3">
                   Integrating MHFA into Existing H&amp;S Systems
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   MHFA should be embedded alongside physical first aid &mdash; not bolted on as an
                   afterthought. Consider updating your company health and safety policy to reference
                   mental health explicitly, include mental health in site inductions, and display
@@ -1043,7 +1043,7 @@ export default function MentalHealthModule1Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   How Many MHFAiders Do You Need?
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   There is no prescriptive legal ratio. MHFA England recommends aiming for{' '}
                   <strong>1 MHFAider per 10 employees</strong> as a starting point, but the actual
                   number should be determined by your risk assessment. Factors to consider include:
@@ -1083,7 +1083,7 @@ export default function MentalHealthModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-purple-400 mb-1">{item.factor}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1111,7 +1111,7 @@ export default function MentalHealthModule1Section3() {
                       <div className="flex-shrink-0 w-6 h-6 rounded-full bg-purple-500/20 border border-purple-500/40 flex items-center justify-center text-xs font-bold text-purple-400">
                         {i + 1}
                       </div>
-                      <p className="text-xs text-white/80">{step}</p>
+                      <p className="text-xs text-white">{step}</p>
                     </div>
                   ))}
                 </div>
@@ -1121,7 +1121,7 @@ export default function MentalHealthModule1Section3() {
                 <p className="text-sm font-medium text-purple-400 mb-2">
                   HSE Guidance on Stress Risk Assessment
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The HSE&apos;s <strong>stress risk assessment</strong> process should be used
                   alongside your MHFA provision. Use the HSE&apos;s free Stress Indicator Tool (a
                   staff survey) to identify which of the 6 Management Standards areas need
@@ -1215,7 +1215,7 @@ export default function MentalHealthModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-purple-400 mb-1">{item.challenge}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1232,7 +1232,7 @@ export default function MentalHealthModule1Section3() {
                 <div className="space-y-3">
                   <div className="bg-black/30 rounded-lg p-3">
                     <p className="text-sm font-medium text-violet-400 mb-1">Mates in Mind</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Established in 2017 by the Health in Construction Leadership Group (HCLG),
                       Mates in Mind is a registered charity that provides workplace mental health
                       training, resources, and support specifically for the construction, related
@@ -1246,7 +1246,7 @@ export default function MentalHealthModule1Section3() {
                     <p className="text-sm font-medium text-violet-400 mb-1">
                       Building Mental Health Framework
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       The Building Mental Health framework provides guidance and charter commitments
                       for construction employers. Organisations sign a charter pledging to promote
                       awareness of mental health, provide information about support, and create an
@@ -1259,7 +1259,7 @@ export default function MentalHealthModule1Section3() {
                     <p className="text-sm font-medium text-violet-400 mb-1">
                       Lighthouse Construction Industry Charity
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       The Lighthouse Club provides emotional, physical, and financial wellbeing
                       support to construction workers and their families. Their 24/7 helpline, text
                       service, and online resources are free to all construction workers. The
@@ -1271,7 +1271,7 @@ export default function MentalHealthModule1Section3() {
                     <p className="text-sm font-medium text-violet-400 mb-1">
                       CITB &amp; Health in Construction Leadership Group
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       The CITB (Construction Industry Training Board) funds mental health training
                       and research across the sector. The Health in Construction Leadership Group
                       brings together clients, contractors, and professional bodies to drive
@@ -1290,7 +1290,7 @@ export default function MentalHealthModule1Section3() {
                     As an MHFA in Construction &mdash; Remember
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                     <span>
@@ -1334,7 +1334,7 @@ export default function MentalHealthModule1Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1348,7 +1348,7 @@ export default function MentalHealthModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mental-health-module-1">

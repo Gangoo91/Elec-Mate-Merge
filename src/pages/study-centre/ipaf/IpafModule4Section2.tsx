@@ -197,7 +197,7 @@ export default function IpafModule4Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../ipaf-module-4">
@@ -219,7 +219,7 @@ export default function IpafModule4Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Formal Inspections
           </h1>
-          <p className="text-white/70 text-sm sm:text-base max-w-xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-xl mx-auto">
             Statutory inspection requirements under the Work at Height Regulations — when to
             inspect, who can inspect, and what must be recorded
           </p>
@@ -316,7 +316,7 @@ export default function IpafModule4Section2() {
               </p>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
-                <p className="text-sm text-white/60 mb-2">Key Legal Points</p>
+                <p className="text-sm text-white mb-2">Key Legal Points</p>
                 <ul className="text-sm text-white space-y-2 ml-4">
                   <li>
                     <strong>Applies to:</strong> Any mobile access tower from which a person could
@@ -509,7 +509,7 @@ export default function IpafModule4Section2() {
                     training and experience in tower systems.
                   </li>
                 </ul>
-                <p className="text-sm text-white/70 mt-3">
+                <p className="text-sm text-white mt-3">
                   The key point is that a person's competence must be appropriate to the specific
                   task. A competent scaffolder is not automatically competent to inspect a
                   proprietary aluminium tower system, and vice versa.
@@ -1066,7 +1066,7 @@ export default function IpafModule4Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1084,7 +1084,7 @@ export default function IpafModule4Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../ipaf-module-4-section-1">

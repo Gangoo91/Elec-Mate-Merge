@@ -288,7 +288,7 @@ const Level3Module4Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section3">
@@ -450,7 +450,7 @@ const Level3Module4Section3_2 = () => {
               isolate which component has failed.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A staircase light works from downstairs but not from
               upstairs. Both switch positions downstairs work correctly. This indicates the fault is
               specific to the upstairs switch - either the switch mechanism itself or the
@@ -576,7 +576,7 @@ const Level3Module4Section3_2 = () => {
               fittings, rodent damage to cables, and nail/screw damage through concealed cables.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A kitchen/utility lighting circuit trips the RCD only in wet
               weather. Visual inspection reveals the external security light has a cracked lens
               allowing water ingress. The fitting tests 0.4 megohms between live and earth when damp
@@ -647,7 +647,7 @@ const Level3Module4Section3_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -692,7 +692,7 @@ const Level3Module4Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section3-1">

@@ -70,7 +70,7 @@ const Section = ({
         </div>
         <ChevronDown
           className={cn(
-            'h-5 w-5 text-white/40 transition-transform duration-200',
+            'h-5 w-5 text-white transition-transform duration-200',
             isOpen && 'rotate-180'
           )}
         />
@@ -103,7 +103,7 @@ const StatItem = ({
   <div className="bg-white/5 rounded-xl p-3 text-center border border-white/5">
     <Icon className={cn('h-5 w-5 mx-auto mb-1', iconColor)} />
     <div className="text-sm font-semibold text-white">{value}</div>
-    <div className="text-[10px] text-white/50 uppercase">{label}</div>
+    <div className="text-[10px] text-white uppercase">{label}</div>
   </div>
 );
 
@@ -304,7 +304,7 @@ const ProgrammeDetailSheet = ({
             <div className="space-y-3">
               {/* Overview */}
               <Section title="Programme Overview" icon={BookOpen} defaultOpen>
-                <p className="text-white/70 leading-relaxed">{programme.description}</p>
+                <p className="text-white leading-relaxed">{programme.description}</p>
               </Section>
 
               {/* Key Topics */}
@@ -329,7 +329,7 @@ const ProgrammeDetailSheet = ({
                 <Section title="Entry Requirements" icon={GraduationCap}>
                   <ul className="space-y-2">
                     {programme.entryRequirements.map((req, index) => (
-                      <li key={index} className="flex items-start gap-2 text-white/70">
+                      <li key={index} className="flex items-start gap-2 text-white">
                         <ChevronRight className="h-4 w-4 mt-0.5 text-purple-400 flex-shrink-0" />
                         <span>{req}</span>
                       </li>
@@ -342,12 +342,12 @@ const ProgrammeDetailSheet = ({
               <Section title="Funding & Fees" icon={PoundSterling}>
                 <div className="space-y-3">
                   <div className="flex items-center justify-between py-2 border-b border-white/10">
-                    <span className="text-white/60">Tuition Fees</span>
+                    <span className="text-white">Tuition Fees</span>
                     <span className="font-semibold text-white">{programme.tuitionFees}</span>
                   </div>
                   {programme.averageStartingSalary && (
                     <div className="flex items-center justify-between py-2 border-b border-white/10">
-                      <span className="text-white/60">Avg Starting Salary</span>
+                      <span className="text-white">Avg Starting Salary</span>
                       <span className="font-semibold text-green-400">
                         {programme.averageStartingSalary}
                       </span>
@@ -355,7 +355,7 @@ const ProgrammeDetailSheet = ({
                   )}
                   {programme.fundingOptions && programme.fundingOptions.length > 0 && (
                     <div className="pt-2">
-                      <p className="text-sm text-white/60 mb-2">Funding Options:</p>
+                      <p className="text-sm text-white mb-2">Funding Options:</p>
                       <div className="flex flex-wrap gap-2">
                         {programme.fundingOptions.map((option, index) => (
                           <Badge
@@ -377,7 +377,7 @@ const ProgrammeDetailSheet = ({
                 <Section title="Career Outcomes" icon={Users}>
                   <ul className="space-y-2">
                     {programme.careerOutcomes.map((outcome, index) => (
-                      <li key={index} className="flex items-start gap-2 text-white/70">
+                      <li key={index} className="flex items-start gap-2 text-white">
                         <TrendingUp className="h-4 w-4 mt-0.5 text-green-400 flex-shrink-0" />
                         <span>{outcome}</span>
                       </li>
@@ -410,7 +410,7 @@ const ProgrammeDetailSheet = ({
                           {similar.title}
                         </h4>
                         <p className="text-xs text-purple-400 mt-0.5">{similar.institution}</p>
-                        <div className="flex items-center gap-2 mt-2 text-xs text-white/50">
+                        <div className="flex items-center gap-2 mt-2 text-xs text-white">
                           <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
                           {similar.rating?.toFixed(1)}
                         </div>

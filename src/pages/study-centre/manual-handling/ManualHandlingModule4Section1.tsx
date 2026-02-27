@@ -200,7 +200,7 @@ export default function ManualHandlingModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-4">
@@ -225,7 +225,7 @@ export default function ManualHandlingModule4Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Electrical Materials &amp; Cable Drums
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Safe handling of cable drums, cable trays, distribution boards, transformers,
             switchgear, tool bags, and cable pulling operations
           </p>
@@ -366,7 +366,7 @@ export default function ManualHandlingModule4Section1() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Warning</p>
                 </div>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   <strong>Never lift a cable drum by gripping the cable.</strong> The cable can
                   unravel, slip through your hands, or snap under load. Gripping cable under tension
                   creates a severe cutting and crush hazard to the hands and fingers. If the cable
@@ -415,7 +415,7 @@ export default function ManualHandlingModule4Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Cable Tray Handling Best Practice
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -527,7 +527,7 @@ export default function ManualHandlingModule4Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Rule</p>
                 </div>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   <strong>Always use mechanical aids for transformers.</strong> No transformer
                   should be manually lifted by a person or team. Even small site transformers should
                   be moved using a sack truck, trolley, or pallet truck. Larger transformers require
@@ -578,7 +578,7 @@ export default function ManualHandlingModule4Section1() {
                 <p className="text-sm font-medium text-white mb-2">
                   Switchgear Positioning Checklist
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>Confirm weight from manufacturer&rsquo;s data sheet before delivery</span>
@@ -643,7 +643,7 @@ export default function ManualHandlingModule4Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Reducing Tool Bag Weight</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>Audit your tool bag regularly &mdash; remove tools you rarely use</span>
@@ -714,7 +714,7 @@ export default function ManualHandlingModule4Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Cable Pulling Safety Points</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -788,7 +788,7 @@ export default function ManualHandlingModule4Section1() {
                       <Cable className="h-5 w-5 text-emerald-400" />
                       <p className="text-sm font-semibold text-emerald-400">Cable Drums</p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                         <span>
@@ -836,7 +836,7 @@ export default function ManualHandlingModule4Section1() {
                         Containment (per 3 m length)
                       </p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                         <span>
@@ -878,7 +878,7 @@ export default function ManualHandlingModule4Section1() {
                         Boards &amp; Switchgear
                       </p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-purple-400 flex-shrink-0" />
                         <span>
@@ -914,7 +914,7 @@ export default function ManualHandlingModule4Section1() {
                         Transformers &amp; Tools
                       </p>
                     </div>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                         <span>
@@ -950,7 +950,7 @@ export default function ManualHandlingModule4Section1() {
                 </div>
 
                 <div className="mt-4 p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-lg">
-                  <p className="text-xs text-white/60 leading-relaxed">
+                  <p className="text-xs text-white leading-relaxed">
                     <strong className="text-emerald-400">Note:</strong> Weights shown are
                     approximate and vary by manufacturer. Always check the actual weight on the
                     packaging or manufacturer&rsquo;s data sheet before planning a handling
@@ -970,7 +970,7 @@ export default function ManualHandlingModule4Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -984,7 +984,7 @@ export default function ManualHandlingModule4Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-4">

@@ -231,7 +231,7 @@ const InspectionTestingModule3Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/inspection-testing-module-3">
@@ -253,7 +253,7 @@ const InspectionTestingModule3Section2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Ring Final Circuit Continuity
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Master the three-step ring test for verifying ring integrity
           </p>
         </header>
@@ -410,12 +410,12 @@ const InspectionTestingModule3Section2 = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/10">
-                      <th className="text-left text-white/60 py-2 px-1">Conductor</th>
-                      <th className="text-center text-white/60 py-2 px-1">Typical Reading</th>
-                      <th className="text-left text-white/60 py-2 px-1">Notes</th>
+                      <th className="text-left text-white py-2 px-1">Conductor</th>
+                      <th className="text-center text-white py-2 px-1">Typical Reading</th>
+                      <th className="text-left text-white py-2 px-1">Notes</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/5">
                       <td className="py-2 px-1 text-red-400">L-L'</td>
                       <td className="text-center py-2 px-1">0.52\u03A9</td>
@@ -684,7 +684,7 @@ const InspectionTestingModule3Section2 = () => {
               = R1+R2 at each socket
             </text>
           </svg>
-          <p className="text-xs text-white/40 mt-3">
+          <p className="text-xs text-white mt-3">
             Ring circuit conductors leave and return to the consumer unit. Step 1 tests each
             conductor end-to-end. Steps 2–3 cross-connect and test at every socket — readings should
             be equal throughout.
@@ -707,7 +707,7 @@ const InspectionTestingModule3Section2 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-transparent border border-white/10">
               <p className="text-sm font-medium text-white mb-2">Step 2: Cross-Connect L with N</p>
-              <ul className="text-sm text-white/80 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>
                   <strong>Connect:</strong> L of one leg to N of other leg (and vice versa)
                 </li>
@@ -728,7 +728,7 @@ const InspectionTestingModule3Section2 = () => {
               <p className="text-sm font-medium text-elec-yellow mb-2">
                 Step 3: Cross-Connect L with CPC (The Key Test)
               </p>
-              <ul className="text-sm text-white/80 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>
                   <strong>Connect:</strong> L of one leg to CPC of other leg (and vice versa)
                 </li>
@@ -746,7 +746,7 @@ const InspectionTestingModule3Section2 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Why "Figure of 8" Works:</p>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 When cross-connected, current flows around both legs to reach any socket. Every
                 socket has equal resistance because it's always halfway around both loops. This
                 makes fault detection simple - if one socket reads differently, the fault is at that
@@ -782,13 +782,13 @@ const InspectionTestingModule3Section2 = () => {
                 <p className="text-green-400 font-medium text-sm">
                   All Sockets Equal (\u00B15%) - Healthy Ring
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   All readings within 5% = ring is complete and correctly wired
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-amber-500/10">
                 <p className="text-amber-400 font-medium text-sm">One Socket High - Local Fault</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Loose connection or damaged conductor at or near that socket
                 </p>
               </div>
@@ -796,7 +796,7 @@ const InspectionTestingModule3Section2 = () => {
                 <p className="text-amber-400 font-medium text-sm">
                   One Socket Low - Interconnection
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Possible connection to another ring at that socket
                 </p>
               </div>
@@ -804,7 +804,7 @@ const InspectionTestingModule3Section2 = () => {
                 <p className="text-red-400 font-medium text-sm">
                   Progressive Increase - Broken Ring
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Values rising from one end = one leg broken, actually a radial
                 </p>
               </div>
@@ -812,7 +812,7 @@ const InspectionTestingModule3Section2 = () => {
                 <p className="text-red-400 font-medium text-sm">
                   Open Circuit at One Socket - Break Location
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Break is between that socket and the previous one tested
                 </p>
               </div>
@@ -820,7 +820,7 @@ const InspectionTestingModule3Section2 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-transparent border border-white/10">
               <p className="text-sm font-medium text-white mb-2">Example: Broken Ring Pattern</p>
-              <p className="text-xs text-white/60 mb-2">
+              <p className="text-xs text-white mb-2">
                 Socket readings around "ring" with break:
               </p>
               <div className="text-sm font-mono space-y-1">
@@ -941,7 +941,7 @@ const InspectionTestingModule3Section2 = () => {
                       <th className="text-center py-1 text-elec-yellow">R1+R2</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr>
                       <td className="py-1">Ring Sockets</td>
                       <td className="text-center py-1">0.52\u03A9</td>
@@ -952,7 +952,7 @@ const InspectionTestingModule3Section2 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-white/50 text-xs mt-2">
+              <p className="text-white text-xs mt-2">
                 R1+R2 recorded is the highest value from Step 3 testing
               </p>
             </div>
@@ -1034,7 +1034,7 @@ const InspectionTestingModule3Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1080,7 +1080,7 @@ const InspectionTestingModule3Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../section-1">

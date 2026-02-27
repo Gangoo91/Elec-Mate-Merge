@@ -220,7 +220,7 @@ export default function ManualHandlingModule2Section1() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             The Kinetic Lifting Technique
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto leading-relaxed">
+          <p className="text-white max-w-xl mx-auto leading-relaxed">
             The eight-step safe lift, base of support, centre of gravity, the power zone, and common
             lifting errors &mdash; the foundation of every safe manual handling operation
           </p>
@@ -376,7 +376,7 @@ export default function ManualHandlingModule2Section1() {
 
               <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-emerald-400">Definition: Kinetic Lifting</h3>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   <strong className="text-white">Kinetic lifting</strong> (sometimes called the
                   &ldquo;kinetic method&rdquo; or &ldquo;correct manual handling technique&rdquo;)
                   is a systematic approach to lifting that uses the body&rsquo;s natural mechanics
@@ -400,7 +400,7 @@ export default function ManualHandlingModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">The Cost of Poor Technique</h3>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   According to the HSE, musculoskeletal disorders (MSDs) account for approximately
                   6.6 million working days lost per year in the UK. Back injuries alone cost the
                   construction industry hundreds of millions of pounds annually in lost
@@ -445,7 +445,7 @@ export default function ManualHandlingModule2Section1() {
                           <Target className="h-4 w-4 inline-block mr-1.5 -mt-0.5" />
                           Plan the Lift
                         </h4>
-                        <p className="text-white/80 text-sm leading-relaxed">
+                        <p className="text-white text-sm leading-relaxed">
                           Before touching the load, assess its{' '}
                           <strong className="text-white">weight, shape, and stability</strong>.
                           Check for sharp edges, hot surfaces, or shifting contents. Plan your route
@@ -467,7 +467,7 @@ export default function ManualHandlingModule2Section1() {
                           <Footprints className="h-4 w-4 inline-block mr-1.5 -mt-0.5" />
                           Position Your Feet
                         </h4>
-                        <p className="text-white/80 text-sm leading-relaxed">
+                        <p className="text-white text-sm leading-relaxed">
                           Stand with your feet{' '}
                           <strong className="text-white">shoulder-width apart</strong>, with one
                           foot slightly forward of the other (a split stance). This creates a wide,
@@ -486,7 +486,7 @@ export default function ManualHandlingModule2Section1() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-emerald-300 font-medium mb-1">Bend Your Knees</h4>
-                        <p className="text-white/80 text-sm leading-relaxed">
+                        <p className="text-white text-sm leading-relaxed">
                           Bend at the <strong className="text-white">knees and hips</strong>, not at
                           the waist. Lower yourself by squatting down, keeping your back straight
                           and your head up. Your back should remain in a{' '}
@@ -509,7 +509,7 @@ export default function ManualHandlingModule2Section1() {
                           <Hand className="h-4 w-4 inline-block mr-1.5 -mt-0.5" />
                           Get a Firm Grip
                         </h4>
-                        <p className="text-white/80 text-sm leading-relaxed">
+                        <p className="text-white text-sm leading-relaxed">
                           Grip the load using the{' '}
                           <strong className="text-white">full palm of both hands</strong>, not just
                           your fingertips. Use handles where available. If there are no handles,
@@ -530,7 +530,7 @@ export default function ManualHandlingModule2Section1() {
                       </div>
                       <div className="flex-1">
                         <h4 className="text-emerald-300 font-medium mb-1">Keep the Load Close</h4>
-                        <p className="text-white/80 text-sm leading-relaxed">
+                        <p className="text-white text-sm leading-relaxed">
                           Before you lift, pull the load{' '}
                           <strong className="text-white">as close to your body as possible</strong>.
                           The load should be in contact with your body or as near to it as the shape
@@ -553,7 +553,7 @@ export default function ManualHandlingModule2Section1() {
                         <h4 className="text-emerald-300 font-medium mb-1">
                           Lift Smoothly Using Your Legs
                         </h4>
-                        <p className="text-white/80 text-sm leading-relaxed">
+                        <p className="text-white text-sm leading-relaxed">
                           Straighten your legs to lift the load, driving upwards through your{' '}
                           <strong className="text-white">thighs and buttocks</strong>. The lifting
                           force should come entirely from your legs, not your back. Keep the
@@ -574,7 +574,7 @@ export default function ManualHandlingModule2Section1() {
                         <h4 className="text-emerald-300 font-medium mb-1">
                           Avoid Twisting &mdash; Move Your Feet
                         </h4>
-                        <p className="text-white/80 text-sm leading-relaxed">
+                        <p className="text-white text-sm leading-relaxed">
                           If you need to change direction,{' '}
                           <strong className="text-white">move your feet</strong> to turn your whole
                           body. Never twist at the waist while holding a load. Twisting under load
@@ -596,7 +596,7 @@ export default function ManualHandlingModule2Section1() {
                           <ShieldCheck className="h-4 w-4 inline-block mr-1.5 -mt-0.5" />
                           Set Down Carefully
                         </h4>
-                        <p className="text-white/80 text-sm leading-relaxed">
+                        <p className="text-white text-sm leading-relaxed">
                           Reverse the lifting process to set the load down. Bend your knees, keep
                           your back straight, and lower the load in a{' '}
                           <strong className="text-white">controlled manner</strong>. Position the
@@ -608,7 +608,7 @@ export default function ManualHandlingModule2Section1() {
                     </div>
                   </div>
                 </div>
-                <p className="text-white/50 text-xs text-center mt-4 italic">
+                <p className="text-white text-xs text-center mt-4 italic">
                   Every safe lift follows these eight steps in sequence. Practice until they become
                   second nature.
                 </p>
@@ -636,7 +636,7 @@ export default function ManualHandlingModule2Section1() {
 
               <div className="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-emerald-400">Definition: Base of Support</h3>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Your <strong className="text-white">base of support</strong> is the area on the
                   ground enclosed by your feet and the space between them. Think of it as the
                   footprint of a rectangle drawn around both feet. A wider stance creates a larger
@@ -649,7 +649,7 @@ export default function ManualHandlingModule2Section1() {
                 <h3 className="font-semibold mb-2 text-emerald-400">
                   Definition: Centre of Gravity
                 </h3>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Your <strong className="text-white">centre of gravity</strong> is the single point
                   at which your entire body weight (plus any load you are carrying) is concentrated.
                   When standing upright without a load, your centre of gravity is roughly at navel
@@ -769,7 +769,7 @@ export default function ManualHandlingModule2Section1() {
                       </span>
                     </div>
                   </div>
-                  <p className="text-white/50 text-xs text-center mt-3 italic max-w-xs leading-relaxed">
+                  <p className="text-white text-xs text-center mt-3 italic max-w-xs leading-relaxed">
                     Handling loads within the power zone (between knees and shoulders) places the
                     least strain on your body. Above shoulders or below knees = high risk.
                   </p>
@@ -842,7 +842,7 @@ export default function ManualHandlingModule2Section1() {
                     <h4 className="text-red-300 font-medium mb-1">
                       1. Bending at the waist with straight legs
                     </h4>
-                    <p className="text-white/80 text-sm leading-relaxed">
+                    <p className="text-white text-sm leading-relaxed">
                       This forces the small muscles of the lower back to do the work of the large
                       leg muscles. Compressive forces on the L4/L5 and L5/S1 discs increase
                       dramatically. This is the single most common cause of acute back injury during
@@ -853,7 +853,7 @@ export default function ManualHandlingModule2Section1() {
                     <h4 className="text-red-300 font-medium mb-1">
                       2. Twisting while lifting or carrying
                     </h4>
-                    <p className="text-white/80 text-sm leading-relaxed">
+                    <p className="text-white text-sm leading-relaxed">
                       The intervertebral discs are weakest when subjected to combined compression
                       and rotation. Twisting under load can cause disc herniation (a &ldquo;slipped
                       disc&rdquo;), which may require surgery and months of recovery. Always move
@@ -864,7 +864,7 @@ export default function ManualHandlingModule2Section1() {
                     <h4 className="text-red-300 font-medium mb-1">
                       3. Holding the load away from the body
                     </h4>
-                    <p className="text-white/80 text-sm leading-relaxed">
+                    <p className="text-white text-sm leading-relaxed">
                       Due to the lever-arm effect, holding a 10&nbsp;kg load at arm&rsquo;s length
                       can create the equivalent of 100&nbsp;kg of compressive force on the lumbar
                       spine. Always pull the load tight against your body before lifting.
@@ -874,7 +874,7 @@ export default function ManualHandlingModule2Section1() {
                     <h4 className="text-red-300 font-medium mb-1">
                       4. Jerking or snatching the load
                     </h4>
-                    <p className="text-white/80 text-sm leading-relaxed">
+                    <p className="text-white text-sm leading-relaxed">
                       A sudden, jerky lift generates peak forces far higher than a smooth,
                       controlled lift of the same load. The acceleration multiplies the effective
                       weight. Always lift smoothly and steadily.
@@ -884,7 +884,7 @@ export default function ManualHandlingModule2Section1() {
                     <h4 className="text-red-300 font-medium mb-1">
                       5. Failing to test the load first
                     </h4>
-                    <p className="text-white/80 text-sm leading-relaxed">
+                    <p className="text-white text-sm leading-relaxed">
                       Attempting a full lift without first testing the weight can result in sudden
                       overloading. Always tilt or &ldquo;corner lift&rdquo; the load first to gauge
                       its weight before committing to a full lift.
@@ -894,7 +894,7 @@ export default function ManualHandlingModule2Section1() {
                     <h4 className="text-red-300 font-medium mb-1">
                       6. Lifting with an obstructed view
                     </h4>
-                    <p className="text-white/80 text-sm leading-relaxed">
+                    <p className="text-white text-sm leading-relaxed">
                       Carrying a load so large that you cannot see where you are going leads to
                       trips, collisions, and falls. If you cannot see over or around the load, get
                       help, use a trolley, or have a colleague guide you.
@@ -908,7 +908,7 @@ export default function ManualHandlingModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Fatigue Degrades Technique</h3>
                 </div>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Research shows that lifting technique deteriorates significantly as fatigue
                   increases. After repeated lifts, people unconsciously begin bending at the waist,
                   holding loads further from the body, and moving faster. This is why the HSE
@@ -944,7 +944,7 @@ export default function ManualHandlingModule2Section1() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="bg-emerald-500/5 border border-emerald-400/20 p-3 rounded-lg">
                     <h4 className="text-emerald-300 font-medium mb-2">Distribution Boards</h4>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span className="leading-relaxed">
@@ -968,7 +968,7 @@ export default function ManualHandlingModule2Section1() {
                   </div>
                   <div className="bg-emerald-500/5 border border-emerald-400/20 p-3 rounded-lg">
                     <h4 className="text-emerald-300 font-medium mb-2">Cable Drums</h4>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span className="leading-relaxed">
@@ -991,7 +991,7 @@ export default function ManualHandlingModule2Section1() {
                   </div>
                   <div className="bg-emerald-500/5 border border-emerald-400/20 p-3 rounded-lg">
                     <h4 className="text-emerald-300 font-medium mb-2">Tool Bags &amp; Boxes</h4>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span className="leading-relaxed">
@@ -1014,7 +1014,7 @@ export default function ManualHandlingModule2Section1() {
                   </div>
                   <div className="bg-emerald-500/5 border border-emerald-400/20 p-3 rounded-lg">
                     <h4 className="text-emerald-300 font-medium mb-2">Conduit &amp; Trunking</h4>
-                    <ul className="text-white/80 text-sm space-y-1.5">
+                    <ul className="text-white text-sm space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span className="leading-relaxed">
@@ -1044,7 +1044,7 @@ export default function ManualHandlingModule2Section1() {
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
                   <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3">
                     <p className="text-emerald-400 font-bold text-xl sm:text-2xl">8</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Steps in
                       <br />
                       the safe lift
@@ -1052,7 +1052,7 @@ export default function ManualHandlingModule2Section1() {
                   </div>
                   <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3">
                     <p className="text-emerald-400 font-bold text-xl sm:text-2xl">10&times;</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       Spinal stress
                       <br />
                       at arm&rsquo;s length
@@ -1060,7 +1060,7 @@ export default function ManualHandlingModule2Section1() {
                   </div>
                   <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3">
                     <p className="text-emerald-400 font-bold text-xl sm:text-2xl">25 kg</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       HSE guideline
                       <br />
                       (men, waist)
@@ -1068,7 +1068,7 @@ export default function ManualHandlingModule2Section1() {
                   </div>
                   <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3">
                     <p className="text-emerald-400 font-bold text-xl sm:text-2xl">16 kg</p>
-                    <p className="text-white/60 text-xs mt-1">
+                    <p className="text-white text-xs mt-1">
                       HSE guideline
                       <br />
                       (women, waist)
@@ -1090,7 +1090,7 @@ export default function ManualHandlingModule2Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1106,7 +1106,7 @@ export default function ManualHandlingModule2Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-2">

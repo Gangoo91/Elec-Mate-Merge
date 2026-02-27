@@ -257,7 +257,7 @@ const Level3Module2Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module2-section1">
@@ -408,7 +408,7 @@ const Level3Module2Section1_3 = () => {
               conditions.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> When isolating a solar PV system for maintenance, you must
               isolate both the DC array (at the string isolators) and the AC side (at the consumer
               unit). Remember that DC circuits remain live whenever daylight falls on the panels -
@@ -453,15 +453,15 @@ const Level3Module2Section1_3 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Voltage Drop</p>
-                <p className="text-white/90 text-xs">Minimise losses with correct cable sizing</p>
+                <p className="text-white text-xs">Minimise losses with correct cable sizing</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Harmonics</p>
-                <p className="text-white/90 text-xs">Consider neutral sizing for LED loads</p>
+                <p className="text-white text-xs">Consider neutral sizing for LED loads</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">EMC</p>
-                <p className="text-white/90 text-xs">Prevent interference from inverters</p>
+                <p className="text-white text-xs">Prevent interference from inverters</p>
               </div>
             </div>
 
@@ -533,7 +533,7 @@ const Level3Module2Section1_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -578,7 +578,7 @@ const Level3Module2Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module2-section1-2">

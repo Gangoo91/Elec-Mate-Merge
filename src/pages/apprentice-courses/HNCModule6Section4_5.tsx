@@ -268,7 +268,7 @@ const HNCModule6Section4_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section4">
@@ -290,7 +290,7 @@ const HNCModule6Section4_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Carbon Offsetting
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Offset types, quality standards, additionality, permanence and the role of offsetting in
             net-zero strategies
           </p>
@@ -611,20 +611,20 @@ const HNCModule6Section4_5 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">The Mitigation Hierarchy</p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Priority 1:</span>{' '}
+                  <span className="text-white">Priority 1:</span>{' '}
                   <span className="text-white">AVOID</span> - Eliminate emission sources entirely
                 </p>
                 <p>
-                  <span className="text-white/60">Priority 2:</span>{' '}
+                  <span className="text-white">Priority 2:</span>{' '}
                   <span className="text-white">REDUCE</span> - Minimise emissions through efficiency
                 </p>
                 <p>
-                  <span className="text-white/60">Priority 3:</span>{' '}
+                  <span className="text-white">Priority 3:</span>{' '}
                   <span className="text-white">SUBSTITUTE</span> - Switch to lower-carbon
                   alternatives
                 </p>
                 <p>
-                  <span className="text-white/60">Priority 4:</span>{' '}
+                  <span className="text-white">Priority 4:</span>{' '}
                   <span className="text-white">OFFSET</span> - Neutralise genuinely residual
                   emissions
                 </p>
@@ -713,7 +713,7 @@ const HNCModule6Section4_5 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Building services application:</strong> For MEP contractors pursuing net-zero,
               prioritise operational energy efficiency, low-carbon materials, and supplier
               engagement before considering offsets for genuinely unavoidable embodied or
@@ -744,7 +744,7 @@ const HNCModule6Section4_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Additionality Challenges</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Counterfactual baseline inherently uncertain</li>
                     <li>Some projects would occur anyway</li>
                     <li>Gaming of additionality tests</li>
@@ -753,7 +753,7 @@ const HNCModule6Section4_5 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Permanence Risks</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Forest fires increasing with climate change</li>
                     <li>Reversal undermines climate benefit</li>
                     <li>Buffer pools may be insufficient</li>
@@ -762,7 +762,7 @@ const HNCModule6Section4_5 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Moral Hazard</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>'Licence to pollute' criticism</li>
                     <li>May delay genuine decarbonisation</li>
                     <li>Perception of buying way out</li>
@@ -771,7 +771,7 @@ const HNCModule6Section4_5 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Market Integrity Issues</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Quality varies significantly</li>
                     <li>Opaque pricing</li>
                     <li>Double counting risks</li>
@@ -876,8 +876,8 @@ const HNCModule6Section4_5 = () => {
                 <strong>Scenario:</strong> An MEP contractor is offered forest protection offsets at
                 GBP 8/tCO2e. Assess quality.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Quality assessment checklist:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Quality assessment checklist:</p>
                 <p className="mt-2">1. Certification: Check for VCS/Gold Standard certification</p>
                 <p>2. Additionality: Review project documentation</p>
                 <p className="ml-4">- Was forest genuinely at risk of deforestation?</p>
@@ -906,7 +906,7 @@ const HNCModule6Section4_5 = () => {
                 <strong>Scenario:</strong> Develop an offset strategy for a building services
                 company targeting net-zero by 2040.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Phase 1 (2024-2027): Foundation</p>
                 <p className="ml-4">- Complete Scope 1, 2, 3 inventory</p>
                 <p className="ml-4">- Set science-based reduction targets</p>
@@ -934,7 +934,7 @@ const HNCModule6Section4_5 = () => {
                 <strong>Scenario:</strong> Calculate offset requirements for a net-zero building
                 project.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Project: Commercial office building MEP installation</p>
                 <p className="mt-2">Embodied carbon assessment:</p>
                 <p className="ml-4">Total embodied carbon: 450 tCO2e</p>
@@ -1038,7 +1038,7 @@ const HNCModule6Section4_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1084,7 +1084,7 @@ const HNCModule6Section4_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section4">

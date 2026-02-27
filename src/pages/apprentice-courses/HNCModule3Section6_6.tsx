@@ -213,7 +213,7 @@ const HNCModule3Section6_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section6">
@@ -235,7 +235,7 @@ const HNCModule3Section6_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             BS 7671, CIBSE and Part L Requirements for Energy Efficiency
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             UK regulatory frameworks governing energy efficiency in electrical installations for
             building services
           </p>
@@ -444,19 +444,19 @@ const HNCModule3Section6_6 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-elec-yellow mb-1">TER (Target Emission Rate)</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The maximum CO₂ emission rate for a 'notional' reference building of the same
                     size, shape and use. Calculated using SBEM or approved software.
                   </p>
-                  <p className="text-xs text-white/60 mt-2">Unit: kgCO₂/m²/year</p>
+                  <p className="text-xs text-white mt-2">Unit: kgCO₂/m²/year</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-elec-yellow mb-1">BER (Building Emission Rate)</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The actual calculated CO₂ emission rate for the proposed building design, based
                     on specified fabric, systems and controls.
                   </p>
-                  <p className="text-xs text-white/60 mt-2">Unit: kgCO₂/m²/year</p>
+                  <p className="text-xs text-white mt-2">Unit: kgCO₂/m²/year</p>
                 </div>
               </div>
             </div>
@@ -464,7 +464,7 @@ const HNCModule3Section6_6 = () => {
             <div className="my-6 p-4 rounded-lg bg-green-500/10 border border-green-500/20">
               <p className="text-sm font-medium text-green-400 mb-2">Compliance Criterion</p>
               <p className="text-center text-lg font-mono text-white mb-2">BER ≤ TER</p>
-              <p className="text-sm text-white/80 text-center">
+              <p className="text-sm text-white text-center">
                 The building emission rate must not exceed the target emission rate
               </p>
             </div>
@@ -782,14 +782,14 @@ const HNCModule3Section6_6 = () => {
                 Appendix 12 - Voltage Drop Calculations
               </p>
               <p className="text-sm text-white mb-2">Voltage drop = (mV/A/m) × Ib × L / 1000</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Where mV/A/m is from the cable tables, Ib is design current, and L is circuit
                 length. Lower voltage drop means more efficient power delivery and reduced cable
                 heating.
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Integration:</strong> BS 7671 supports energy efficiency through proper design
               practices - correct cable sizing, appropriate diversity factors, and coordination with
               building services controls.
@@ -815,7 +815,7 @@ const HNCModule3Section6_6 = () => {
               <p className="text-lg text-white text-center font-medium">
                 Buildings &gt; 1000m² useful floor area
               </p>
-              <p className="text-sm text-white/80 text-center mt-2">
+              <p className="text-sm text-white text-center mt-2">
                 Must provide sub-metering enabling at least 90% of estimated annual energy
                 consumption to be assigned to end-use categories
               </p>
@@ -964,7 +964,7 @@ const HNCModule3Section6_6 = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    <tr className="text-white/60">
+                    <tr className="text-white">
                       <td className="border border-white/10 px-3 py-2">Unclassified</td>
                       <td className="border border-white/10 px-3 py-2">&lt;30%</td>
                       <td className="border border-white/10 px-3 py-2">Below minimum standard</td>
@@ -1395,7 +1395,7 @@ const HNCModule3Section6_6 = () => {
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Practical tip:</strong> Keep detailed records of all equipment specifications,
               control settings, and commissioning results. These are essential evidence if
               compliance is questioned.
@@ -1419,17 +1419,17 @@ const HNCModule3Section6_6 = () => {
                 <strong>Question:</strong> A new 2500m² office building requires sub-metering.
                 Annual energy consumption is estimated at 150,000 kWh. Design the metering strategy.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Step 1: Identify end-use categories</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Step 1: Identify end-use categories</p>
                 <p>- Lighting: 35,000 kWh (23%)</p>
                 <p>- Small power: 45,000 kWh (30%)</p>
                 <p>- HVAC: 55,000 kWh (37%)</p>
                 <p>- Lifts/other: 15,000 kWh (10%)</p>
-                <p className="mt-2 text-white/60">Step 2: Check 90% coverage requirement</p>
+                <p className="mt-2 text-white">Step 2: Check 90% coverage requirement</p>
                 <p>
                   90% of 150,000 kWh = <strong>135,000 kWh minimum</strong>
                 </p>
-                <p className="mt-2 text-white/60">Step 3: Design metering schedule</p>
+                <p className="mt-2 text-white">Step 3: Design metering schedule</p>
                 <p>- Main incomer: Fiscal meter (100%)</p>
                 <p>- Lighting DB: kWh meter (23%)</p>
                 <p>- Floor small power DBs: kWh meters (30%)</p>
@@ -1448,15 +1448,15 @@ const HNCModule3Section6_6 = () => {
                 <strong>Question:</strong> Verify lighting compliance for an open-plan office. LED
                 luminaires provide 500 lux at 10W/m². Lamp-circuit efficacy is 110 lm/W.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Part L requirement for office general lighting:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Part L requirement for office general lighting:</p>
                 <p>Minimum efficacy: 95 lamp-circuit lumens per circuit watt</p>
-                <p className="mt-2 text-white/60">Proposed installation:</p>
+                <p className="mt-2 text-white">Proposed installation:</p>
                 <p>
                   Efficacy = 110 lm/W &gt; 95 lm/W{' '}
                   <span className="text-green-400">✓ COMPLIANT</span>
                 </p>
-                <p className="mt-2 text-white/60">Controls requirement check:</p>
+                <p className="mt-2 text-white">Controls requirement check:</p>
                 <p>
                   - Occupancy sensing: <span className="text-green-400">✓ Provided</span>
                 </p>
@@ -1480,19 +1480,19 @@ const HNCModule3Section6_6 = () => {
                 <strong>Question:</strong> A building achieves BER of 18 kgCO₂/m²/year against a TER
                 of 25 kgCO₂/m²/year. Calculate the improvement and estimated Ene 01 credits.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Calculate percentage improvement:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Calculate percentage improvement:</p>
                 <p>Improvement = (TER - BER) / TER × 100</p>
                 <p>
                   Improvement = (25 - 18) / 25 × 100 = <strong>28%</strong>
                 </p>
-                <p className="mt-2 text-white/60">BREEAM Ene 01 credit estimation:</p>
+                <p className="mt-2 text-white">BREEAM Ene 01 credit estimation:</p>
                 <p>- Each credit requires approximately 6% improvement</p>
                 <p>- 28% improvement ÷ 6% = 4.7 credits</p>
                 <p>
                   - Estimated credits: <strong>4-5 out of available credits</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   (Exact credits depend on BREEAM version and EPR calculation)
                 </p>
               </div>
@@ -1587,7 +1587,7 @@ const HNCModule3Section6_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1633,7 +1633,7 @@ const HNCModule3Section6_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section6-5">

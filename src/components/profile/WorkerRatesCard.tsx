@@ -83,7 +83,7 @@ const WorkerRatesCard: React.FC<WorkerRatesCardProps> = ({ companyProfile, onSav
             <div className="w-1.5 h-1.5 rounded-full bg-green-400" />
             <span className="font-semibold text-[15px] text-white">Worker Rates</span>
           </div>
-          <ChevronRight className="h-5 w-5 text-white/30" />
+          <ChevronRight className="h-5 w-5 text-white" />
         </button>
 
         <div className="border-t border-white/[0.06]">
@@ -92,7 +92,7 @@ const WorkerRatesCard: React.FC<WorkerRatesCardProps> = ({ companyProfile, onSav
               <PoundSterling className="h-4 w-4 text-green-400" />
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+              <p className="text-[11px] font-medium text-white uppercase tracking-wide">
                 Electrician Rate
               </p>
               <p className="text-[15px] text-white">£{electricianRate.toFixed(2)}/hr</p>
@@ -104,13 +104,13 @@ const WorkerRatesCard: React.FC<WorkerRatesCardProps> = ({ companyProfile, onSav
               <Users className="h-4 w-4 text-blue-400" />
             </div>
             <div className="flex-1 min-w-0 text-left">
-              <p className="text-[11px] font-medium text-white/50 uppercase tracking-wide">
+              <p className="text-[11px] font-medium text-white uppercase tracking-wide">
                 All Worker Types
               </p>
               <p className="text-[15px] text-white">
                 {hasCustomRates ? 'Custom rates set' : 'Using defaults'}
               </p>
-              <p className="text-[12px] text-white/50 mt-0.5">Used in quotes & invoices</p>
+              <p className="text-[12px] text-white mt-0.5">Used in quotes & invoices</p>
             </div>
           </div>
         </div>
@@ -155,7 +155,7 @@ const WorkerRatesCard: React.FC<WorkerRatesCardProps> = ({ companyProfile, onSav
           </div>
 
           <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-6 space-y-2 pb-8">
-            <p className="text-[13px] text-white/50 px-1 mb-4">
+            <p className="text-[13px] text-white px-1 mb-4">
               Set hourly rates for different worker types. These rates are used as defaults when
               creating quotes and invoices.
             </p>
@@ -167,10 +167,10 @@ const WorkerRatesCard: React.FC<WorkerRatesCardProps> = ({ companyProfile, onSav
               >
                 <div className="flex-1 min-w-0">
                   <p className="text-[15px] font-medium text-white">{worker.name}</p>
-                  <p className="text-[13px] text-white/50">{worker.description}</p>
+                  <p className="text-[13px] text-white">{worker.description}</p>
                 </div>
                 <div className="flex items-center gap-1">
-                  <span className="text-[15px] text-white/50">£</span>
+                  <span className="text-[15px] text-white">£</span>
                   <Input
                     type="number"
                     step="0.50"
@@ -179,7 +179,7 @@ const WorkerRatesCard: React.FC<WorkerRatesCardProps> = ({ companyProfile, onSav
                     onChange={(e) => updateRate(worker.key, e.target.value)}
                     className="w-20 h-[44px] text-[17px] text-right bg-input border-white/[0.08] rounded-xl px-3 placeholder:text-muted-foreground focus:border-elec-yellow/50 focus:ring-0 touch-manipulation text-white"
                   />
-                  <span className="text-[13px] text-white/50">/hr</span>
+                  <span className="text-[13px] text-white">/hr</span>
                 </div>
               </div>
             ))}

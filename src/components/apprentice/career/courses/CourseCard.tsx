@@ -35,25 +35,25 @@ const CourseCard = ({ course, onViewDetails }: CourseCardProps) => {
         <p className="text-sm text-elec-yellow">{course.provider}</p>
       </CardHeader>
       <CardContent className="pt-2 flex-grow flex flex-col relative">
-        <p className="text-sm text-white/70 mb-4 line-clamp-2">{course.description}</p>
+        <p className="text-sm text-white mb-4 line-clamp-2">{course.description}</p>
 
         <div className="mt-auto space-y-4">
           <div className="grid grid-cols-2 gap-2">
             <div className="flex items-center gap-2 p-2 rounded-lg bg-white/5">
               <Clock className="h-3.5 w-3.5 text-elec-yellow" />
-              <span className="text-xs text-white/70">{course.duration}</span>
+              <span className="text-xs text-white">{course.duration}</span>
             </div>
             <div className="flex items-center gap-2 p-2 rounded-lg bg-white/5">
               <Users className="h-3.5 w-3.5 text-elec-yellow" />
-              <span className="text-xs text-white/70">{course.level}</span>
+              <span className="text-xs text-white">{course.level}</span>
             </div>
             <div className="flex items-center gap-2 p-2 rounded-lg bg-white/5 col-span-2">
               <BookOpen className="h-3.5 w-3.5 text-elec-yellow" />
-              <span className="text-xs text-white/70">{course.format}</span>
+              <span className="text-xs text-white">{course.format}</span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2 text-xs text-white/60">
+          <div className="flex items-center gap-2 text-xs text-white">
             <MapPin className="h-3.5 w-3.5 text-elec-yellow flex-shrink-0" />
             <span className="line-clamp-1">
               {course.locations.slice(0, 3).join(', ')}
@@ -71,7 +71,7 @@ const CourseCard = ({ course, onViewDetails }: CourseCardProps) => {
                 <Badge
                   key={idx}
                   variant="outline"
-                  className="text-[10px] bg-white/5 text-white/70 border-white/20"
+                  className="text-[10px] bg-white/5 text-white border-white/20"
                 >
                   {date}
                 </Badge>

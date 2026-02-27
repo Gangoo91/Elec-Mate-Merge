@@ -243,7 +243,7 @@ const HNCModule3Section2_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section2">
@@ -265,7 +265,7 @@ const HNCModule3Section2_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Power Factor Correction Methods
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Techniques for improving power factor in commercial and industrial installations using
             capacitors, automatic systems, and active correction
           </p>
@@ -355,7 +355,7 @@ const HNCModule3Section2_5 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 Q<sub>c</sub> = P (tan phi<sub>1</sub> - tan phi<sub>2</sub>)
               </p>
-              <div className="text-xs text-white/70 text-center space-y-1">
+              <div className="text-xs text-white text-center space-y-1">
                 <p>
                   Q<sub>c</sub> = required capacitor reactive power (kVAr)
                 </p>
@@ -483,7 +483,7 @@ const HNCModule3Section2_5 = () => {
                   <li className="pl-1">Suitable for constant loads (base load)</li>
                   <li className="pl-1">Risk of leading pf at light loads</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-3 italic">
+                <p className="text-xs text-white mt-3 italic">
                   Typical use: Individual motor correction, continuous process loads
                 </p>
               </div>
@@ -498,7 +498,7 @@ const HNCModule3Section2_5 = () => {
                   <li className="pl-1">Prevents leading power factor</li>
                   <li className="pl-1">Higher capital cost, lower running cost</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-3 italic">
+                <p className="text-xs text-white mt-3 italic">
                   Typical use: Main switchboard, variable industrial loads
                 </p>
               </div>
@@ -626,7 +626,7 @@ const HNCModule3Section2_5 = () => {
                   </ul>
                 </div>
               </div>
-              <p className="text-xs text-white/60 mt-3">
+              <p className="text-xs text-white mt-3">
                 Q = V squared / Xc. Since (400/230) squared is approximately 3, delta provides
                 approximately 3x the kVAr for the same capacitor.
               </p>
@@ -785,7 +785,7 @@ const HNCModule3Section2_5 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Resonant frequency: fr = fn / root(p) where fn = 50Hz and p = detuning factor
               </p>
             </div>
@@ -913,7 +913,7 @@ const HNCModule3Section2_5 = () => {
                 <strong>Question:</strong> A commercial building has measured demand of 350kW at
                 0.78 power factor. Calculate the capacitor bank required to achieve 0.95 pf.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Find phase angles</p>
                 <p>phi1 = cos inverse(0.78) = 38.7 degrees</p>
                 <p>phi2 = cos inverse(0.95) = 18.2 degrees</p>
@@ -926,7 +926,7 @@ const HNCModule3Section2_5 = () => {
                 <p>
                   Qc = 350 x 0.473 = <strong>165.6 kVAr</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Specify 175 kVAr automatic PFC bank (next standard size)
                 </p>
               </div>
@@ -941,7 +941,7 @@ const HNCModule3Section2_5 = () => {
                 capacitor size for individual correction to 0.95 pf. Verify the capacitor does not
                 exceed the motor's magnetising current.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Calculate required kVAr</p>
                 <p>tan phi1 = tan(cos inverse 0.82) = tan(34.9 degrees) = 0.698</p>
                 <p>tan phi2 = tan(cos inverse 0.95) = tan(18.2 degrees) = 0.329</p>
@@ -955,7 +955,7 @@ const HNCModule3Section2_5 = () => {
                 <p className="mt-2 text-green-400">
                   11.1 kVAr is less than 12.8 kVAr - safe for individual correction
                 </p>
-                <p className="mt-2 text-white/60">Specify 12.5 kVAr capacitor (nearest standard)</p>
+                <p className="mt-2 text-white">Specify 12.5 kVAr capacitor (nearest standard)</p>
               </div>
             </div>
 
@@ -967,7 +967,7 @@ const HNCModule3Section2_5 = () => {
                 <strong>Question:</strong> Design an automatic PFC system for a site with demand
                 varying between 100kW and 400kW. Existing pf is 0.75, target is 0.95.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Calculate kVAr range</p>
                 <p>tan phi1 = 0.882, tan phi2 = 0.329</p>
                 <p>At minimum (100kW): Qc = 100 x 0.553 = 55.3 kVAr</p>
@@ -979,8 +979,8 @@ const HNCModule3Section2_5 = () => {
                 <p>9 x 25 kVAr = 225 kVAr</p>
                 <p className="mt-2">Option B - Mixed steps (recommended):</p>
                 <p>1 x 12.5 kVAr + 2 x 25 kVAr + 4 x 37.5 kVAr = 212.5 kVAr</p>
-                <p className="mt-2 text-white/60">Option B provides finer control at low loads</p>
-                <p className="text-white/60">Use 7% detuned if VFDs present</p>
+                <p className="mt-2 text-white">Option B provides finer control at low loads</p>
+                <p className="text-white">Use 7% detuned if VFDs present</p>
               </div>
             </div>
 
@@ -992,7 +992,7 @@ const HNCModule3Section2_5 = () => {
                 <strong>Question:</strong> A 50 microF capacitor is available. Calculate its kVAr
                 rating when connected in star and delta on a 400V three-phase system.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Capacitor reactance: Xc = 1/(2 x pi x f x C)</p>
                 <p>Xc = 1/(2 x pi x 50 x 50 x 10 to power -6) = 63.7 ohms</p>
                 <p className="mt-2">
@@ -1011,8 +1011,8 @@ const HNCModule3Section2_5 = () => {
                 <p>
                   Total Q (3 capacitors) = 3 x 2,512 = <strong>7.54 kVAr</strong>
                 </p>
-                <p className="mt-2 text-white/60">Delta provides 7.54 / 2.49 = 3.03x the kVAr</p>
-                <p className="text-white/60">
+                <p className="mt-2 text-white">Delta provides 7.54 / 2.49 = 3.03x the kVAr</p>
+                <p className="text-white">
                   This confirms the (400/230) squared is approximately 3 relationship
                 </p>
               </div>
@@ -1119,7 +1119,7 @@ const HNCModule3Section2_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1165,7 +1165,7 @@ const HNCModule3Section2_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section2-4">

@@ -103,7 +103,7 @@ const getSourceColor = (source: string) => {
     'CV Library': 'bg-orange-500/20 border-orange-500/30 text-orange-300',
     'Jobs.co.uk': 'bg-cyan-500/20 border-cyan-500/30 text-cyan-300',
   };
-  return colors[source] || 'bg-white/10 border-white/20 text-white/70';
+  return colors[source] || 'bg-white/10 border-white/20 text-white';
 };
 
 const PremiumJobCard = ({
@@ -196,7 +196,7 @@ const PremiumJobCard = ({
         </div>
 
         {/* Stats Row */}
-        <div className="flex items-center flex-wrap gap-3 text-xs text-white/50">
+        <div className="flex items-center flex-wrap gap-3 text-xs text-white">
           {/* Location */}
           <span className="flex items-center gap-1.5">
             <MapPin className="h-3.5 w-3.5" />
@@ -221,11 +221,11 @@ const PremiumJobCard = ({
           <div>
             {salary ? (
               <>
-                <span className="text-xs text-white/40 block">Salary</span>
+                <span className="text-xs text-white block">Salary</span>
                 <span className="text-base font-bold text-white">{salary}</span>
               </>
             ) : (
-              <span className="text-sm text-white/40">Salary not specified</span>
+              <span className="text-sm text-white">Salary not specified</span>
             )}
           </div>
           <Button

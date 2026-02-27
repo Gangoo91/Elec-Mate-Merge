@@ -1055,7 +1055,7 @@ export default function Module3Section6_5() {
             Summary
           </h2>
           <div className="p-4 bg-transparent border-l-2 border-elec-yellow rounded-lg border border-white/10">
-            <p className="text-white/90">
+            <p className="text-white">
               Proper labelling, identification and colour coding are fundamental to electrical
               safety and regulatory compliance. BS 7671 requirements for circuit schedules, warning
               notices and conductor identification must be implemented with durable materials

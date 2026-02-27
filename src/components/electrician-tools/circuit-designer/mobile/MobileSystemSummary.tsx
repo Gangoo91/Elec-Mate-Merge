@@ -48,7 +48,7 @@ const MobileMetricCard = ({
 
   return (
     <div className="p-3 bg-white/[0.04] border border-white/10 rounded-xl">
-      <div className="flex items-center gap-2 text-white/50 text-xs mb-1">
+      <div className="flex items-center gap-2 text-white text-xs mb-1">
         <Icon className={`h-3.5 w-3.5 ${accent ? accentClasses[accent] : ''}`} />
         {label}
       </div>
@@ -244,7 +244,7 @@ export const MobileSystemSummary = ({ design, complianceStats }: MobileSystemSum
                     <p className="text-lg font-bold text-elec-yellow">
                       {diversityFactor.toFixed(2)}
                     </p>
-                    <p className="text-[10px] text-foreground/40 mt-1">
+                    <p className="text-[10px] text-foreground mt-1">
                       Reduces design current by {diversityPercent}%
                     </p>
                   </div>

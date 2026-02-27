@@ -264,7 +264,7 @@ const HNCModule2Section6_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section6">
@@ -286,7 +286,7 @@ const HNCModule2Section6_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Energy Analysis
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding energy balances, benchmarking methodologies, and bridging the performance
             gap
           </p>
@@ -404,7 +404,7 @@ const HNCModule2Section6_2 = () => {
                 Q<sub>heating</sub> + Q<sub>solar</sub> + Q<sub>internal</sub> = Q<sub>fabric</sub>{' '}
                 + Q<sub>ventilation</sub>
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 When cooling: Q<sub>solar</sub> + Q<sub>internal</sub> = Q<sub>cooling</sub> + Q
                 <sub>losses</sub>
               </p>
@@ -509,7 +509,7 @@ const HNCModule2Section6_2 = () => {
                 <p className="font-mono text-sm text-center mb-2">
                   DEC Rating = (Actual Energy / TM46 Typical) × 100
                 </p>
-                <p className="text-xs text-white/70 text-center">
+                <p className="text-xs text-white text-center">
                   Rating &lt;100 = better than typical, Rating &gt;100 = worse than typical
                 </p>
               </div>
@@ -680,7 +680,7 @@ const HNCModule2Section6_2 = () => {
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-xs font-medium text-white/60 mb-2">Design Stage</p>
+                  <p className="text-xs font-medium text-white mb-2">Design Stage</p>
                   <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li>Unrealistic occupancy assumptions</li>
                     <li>Optimistic control effectiveness</li>
@@ -689,7 +689,7 @@ const HNCModule2Section6_2 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-white/60 mb-2">Construction</p>
+                  <p className="text-xs font-medium text-white mb-2">Construction</p>
                   <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li>Build quality variations</li>
                     <li>Thermal bridging worse than modelled</li>
@@ -698,7 +698,7 @@ const HNCModule2Section6_2 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-white/60 mb-2">Commissioning</p>
+                  <p className="text-xs font-medium text-white mb-2">Commissioning</p>
                   <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li>Insufficient time allocation</li>
                     <li>Systems not optimised</li>
@@ -707,7 +707,7 @@ const HNCModule2Section6_2 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs font-medium text-white/60 mb-2">Operation</p>
+                  <p className="text-xs font-medium text-white mb-2">Operation</p>
                   <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li>Extended operating hours</li>
                     <li>Poor control strategies</li>
@@ -756,7 +756,7 @@ const HNCModule2Section6_2 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Industry trend:</strong> Increasingly, contracts include energy performance
               guarantees based on TM54 predictions, with financial penalties for non-compliance.
             </p>
@@ -781,7 +781,7 @@ const HNCModule2Section6_2 = () => {
                 <strong>Question:</strong> A 5,000m² air-conditioned office consumes 750,000 kWh
                 electricity and 600,000 kWh gas annually. Calculate the DEC rating.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Actual consumption per m²:</p>
                 <p>Electricity: 750,000 / 5,000 = 150 kWh/m²</p>
                 <p>Gas: 600,000 / 5,000 = 120 kWh/m²</p>
@@ -807,7 +807,7 @@ const HNCModule2Section6_2 = () => {
                 <strong>Question:</strong> A Part L calculation shows 80 kWh/m² regulated energy for
                 an office. Estimate TM54 operational energy.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Part L regulated energy: 80 kWh/m²</p>
                 <p className="mt-2">TM54 adjustments:</p>
                 <p>Operating hours uplift (+30%): 80 × 1.3 = 104 kWh/m²</p>
@@ -818,7 +818,7 @@ const HNCModule2Section6_2 = () => {
                 <p className="mt-2">
                   TM54 prediction: <strong>180 kWh/m²</strong>
                 </p>
-                <p className="mt-2 text-white/60">→ 2.25× the Part L calculation</p>
+                <p className="mt-2 text-white">→ 2.25× the Part L calculation</p>
               </div>
             </div>
 
@@ -831,7 +831,7 @@ const HNCModule2Section6_2 = () => {
                 2,100 degree days. Long-term average is 2,400 degree days. What is the
                 weather-normalised consumption?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Actual heating energy: 450 MWh</p>
                 <p>Actual degree days: 2,100</p>
                 <p>Average degree days: 2,400</p>
@@ -841,7 +841,7 @@ const HNCModule2Section6_2 = () => {
                 <p>
                   450 MWh / 0.875 = <strong>514 MWh</strong>
                 </p>
-                <p className="mt-2 text-white/60">→ In an average year, would have used 514 MWh</p>
+                <p className="mt-2 text-white">→ In an average year, would have used 514 MWh</p>
               </div>
             </div>
           </div>
@@ -920,7 +920,7 @@ const HNCModule2Section6_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -966,7 +966,7 @@ const HNCModule2Section6_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section6-1">

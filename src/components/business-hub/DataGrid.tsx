@@ -43,7 +43,7 @@ const DataGrid = ({ items, columns = 4, className }: DataGridProps) => {
               </div>
             )}
             <p className="text-2xl font-bold text-white">{item.value}</p>
-            <p className="text-sm text-white/80 mt-1 font-medium">{item.label}</p>
+            <p className="text-sm text-white mt-1 font-medium">{item.label}</p>
             {item.sublabel && <p className="text-xs text-white mt-1">{item.sublabel}</p>}
           </div>
         );

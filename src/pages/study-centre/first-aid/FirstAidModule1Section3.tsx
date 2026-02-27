@@ -199,7 +199,7 @@ export default function FirstAidModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-1">
@@ -222,7 +222,7 @@ export default function FirstAidModule1Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Record Keeping, RIDDOR &amp; the Accident Book
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Legal requirements for documenting workplace injuries, reporting under RIDDOR 2013, GDPR
             considerations, and the first aider&apos;s role in accurate record keeping
           </p>
@@ -357,7 +357,7 @@ export default function FirstAidModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-rose-400 mb-1">{item.field}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -365,7 +365,7 @@ export default function FirstAidModule1Section3() {
 
               <div className="bg-rose-500/10 border border-rose-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-rose-400 mb-2">Retention Requirement</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Completed accident book entries must be retained for a minimum of{' '}
                   <strong>3 years</strong> from the date of the last entry. This period aligns with
                   the Limitation Act 1980 timeframe for personal injury claims. After the retention
@@ -376,10 +376,10 @@ export default function FirstAidModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <div className="flex items-center gap-2 mb-2">
-                  <FileText className="h-5 w-5 text-white/60" />
+                  <FileText className="h-5 w-5 text-white" />
                   <p className="text-sm font-medium text-white">Practical Tips for First Aiders</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -473,7 +473,7 @@ export default function FirstAidModule1Section3() {
                       </span>
                     </div>
                     <div>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         All deaths of workers arising from a work-related accident, including deaths
                         that occur some time after the original incident. Deaths of non-workers
                         (e.g. members of the public) arising from a work-related accident must also
@@ -492,7 +492,7 @@ export default function FirstAidModule1Section3() {
                       </span>
                     </div>
                     <div>
-                      <p className="text-sm text-white/80 mb-3">
+                      <p className="text-sm text-white mb-3">
                         Certain serious injuries suffered by workers must be reported regardless of
                         the time off work. These include:
                       </p>
@@ -507,7 +507,7 @@ export default function FirstAidModule1Section3() {
                           'Loss of consciousness from head injury or asphyxia',
                           'Hypothermia or heat illness requiring resuscitation or hospital admission',
                         ].map((injury, i) => (
-                          <div key={i} className="flex items-start gap-2 text-xs text-white/70">
+                          <div key={i} className="flex items-start gap-2 text-xs text-white">
                             <span className="mt-1 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                             <span>{injury}</span>
                           </div>
@@ -526,7 +526,7 @@ export default function FirstAidModule1Section3() {
                       </span>
                     </div>
                     <div>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Where a worker is incapacitated for{' '}
                         <strong>more than 7 consecutive days</strong> (not counting the day of the
                         accident) and cannot carry out their normal work duties. This includes
@@ -545,7 +545,7 @@ export default function FirstAidModule1Section3() {
                       </span>
                     </div>
                     <div>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Specified near-miss events that had the potential to cause serious injury or
                         death, even if no one was actually injured. Examples include the collapse of
                         scaffolding, electrical short circuits causing fire, accidental release of
@@ -564,7 +564,7 @@ export default function FirstAidModule1Section3() {
                       </span>
                     </div>
                     <div>
-                      <p className="text-sm text-white/80">
+                      <p className="text-sm text-white">
                         Certain work-related diseases confirmed by a doctor, including occupational
                         dermatitis, occupational asthma, hand-arm vibration syndrome (HAVS), carpal
                         tunnel syndrome linked to vibrating tools, and occupational cancer. The
@@ -580,7 +580,7 @@ export default function FirstAidModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Important Distinction</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Note that fractures to <strong>fingers, thumbs and toes</strong> are specifically
                   excluded from the &ldquo;specified injuries&rdquo; fracture category. A broken
                   finger is not a specified injury &mdash; but it may still be reportable under the
@@ -619,7 +619,7 @@ export default function FirstAidModule1Section3() {
                       <p className="text-xs font-medium text-red-300 mb-1">
                         Step 1 &mdash; Immediate Notification
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Notify the HSE by the <strong>quickest practical means</strong> without
                         delay. For fatalities and specified injuries, this usually means telephoning
                         the HSE Incident Contact Centre.
@@ -629,7 +629,7 @@ export default function FirstAidModule1Section3() {
                       <p className="text-xs font-medium text-red-300 mb-1">
                         Step 2 &mdash; Written Report
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Submit a written report <strong>within 10 days</strong> of the incident.
                         This is done online via the HSE&apos;s RIDDOR website or by completing Form
                         F2508.
@@ -647,7 +647,7 @@ export default function FirstAidModule1Section3() {
                       <p className="text-xs font-medium text-amber-300 mb-1">
                         Report Within 15 Days
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         The responsible person must submit a report <strong>within 15 days</strong>{' '}
                         of the incident. There is no requirement for immediate telephone
                         notification. The 15-day window starts from the date of the accident, not
@@ -656,7 +656,7 @@ export default function FirstAidModule1Section3() {
                     </div>
                     <div className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-amber-300 mb-1">Counting the Days</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         The day of the accident is <strong>not counted</strong>. Count 7 consecutive
                         days from the day after the accident. Weekends and rest days are included in
                         the count.
@@ -675,7 +675,7 @@ export default function FirstAidModule1Section3() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Online (Primary Method)</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Go to the HSE RIDDOR website (www.hse.gov.uk/riddor) and complete the
                         appropriate online report form. This is the HSE&apos;s preferred method for
                         all RIDDOR reports.
@@ -690,7 +690,7 @@ export default function FirstAidModule1Section3() {
                       <p className="text-sm font-medium text-white">
                         Telephone (Fatalities &amp; Specified Injuries Only)
                       </p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         For deaths and specified injuries requiring immediate notification,
                         telephone the HSE Incident Contact Centre. They will record the details and
                         issue a reference number. A written report must still follow within 10 days.
@@ -703,7 +703,7 @@ export default function FirstAidModule1Section3() {
                     </div>
                     <div>
                       <p className="text-sm font-medium text-white">Keep a Copy</p>
-                      <p className="text-xs text-white/70">
+                      <p className="text-xs text-white">
                         Always save or print a copy of the submitted RIDDOR report. The online
                         system generates a confirmation with a unique reference number. Keep this
                         with your accident records.
@@ -717,7 +717,7 @@ export default function FirstAidModule1Section3() {
                 <p className="text-sm font-medium text-rose-400 mb-2">
                   Who Is the &ldquo;Responsible Person&rdquo;?
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   RIDDOR places the reporting duty on the responsible person, not the first aider.
                   However, the first aider must ensure the right people are informed so that the
                   report can be made.
@@ -725,19 +725,19 @@ export default function FirstAidModule1Section3() {
                 <div className="grid sm:grid-cols-3 gap-2">
                   <div className="bg-black/30 rounded-lg p-3 text-center">
                     <p className="text-rose-400 font-semibold text-sm mb-1">Employer</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       For incidents involving their employees at work
                     </p>
                   </div>
                   <div className="bg-black/30 rounded-lg p-3 text-center">
                     <p className="text-rose-400 font-semibold text-sm mb-1">Self-Employed</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       For incidents arising from their own work activity
                     </p>
                   </div>
                   <div className="bg-black/30 rounded-lg p-3 text-center">
                     <p className="text-rose-400 font-semibold text-sm mb-1">Premises Controller</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       For incidents involving visitors or the public on their premises
                     </p>
                   </div>
@@ -773,7 +773,7 @@ export default function FirstAidModule1Section3() {
                       First Aid / Accident Book Records
                     </p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                       <span>
@@ -804,7 +804,7 @@ export default function FirstAidModule1Section3() {
                     <Shield className="h-5 w-5 text-red-400" />
                     <p className="text-sm font-medium text-red-400">RIDDOR Reports</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                       <span>
@@ -838,7 +838,7 @@ export default function FirstAidModule1Section3() {
                     <p className="text-xs font-medium text-green-400 mb-1">
                       Minor Cut &mdash; Accident Book Only
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       An electrician cuts their finger on a cable tie. You clean the wound, apply a
                       plaster, and record it in the accident book. This is <strong>not</strong>{' '}
                       RIDDOR-reportable &mdash; it is a minor injury with no specified category.
@@ -848,7 +848,7 @@ export default function FirstAidModule1Section3() {
                     <p className="text-xs font-medium text-orange-400 mb-1">
                       Fractured Arm &mdash; Accident Book + RIDDOR
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       A worker falls from a stepladder and fractures their forearm. You provide
                       first aid, call 999, and record it in the accident book. This is also a{' '}
                       <strong>specified injury under RIDDOR</strong> &mdash; the employer must
@@ -859,7 +859,7 @@ export default function FirstAidModule1Section3() {
                     <p className="text-xs font-medium text-amber-400 mb-1">
                       Sprained Ankle, 10 Days Off &mdash; Accident Book + RIDDOR (Over-7-Day)
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       A worker sprains their ankle badly and is off work for 10 consecutive days
                       (not counting the day of the accident). This triggers the{' '}
                       <strong>over-7-day incapacitation</strong> RIDDOR category. The employer must
@@ -947,7 +947,7 @@ export default function FirstAidModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-rose-400 mb-1">{item.principle}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -957,7 +957,7 @@ export default function FirstAidModule1Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Who Can Access Accident Records?
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1003,7 +1003,7 @@ export default function FirstAidModule1Section3() {
                     Common GDPR Mistakes with Accident Records
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1064,10 +1064,10 @@ export default function FirstAidModule1Section3() {
                 </p>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
-                    <p className="text-xs text-white/50 uppercase tracking-wider mb-2">
+                    <p className="text-xs text-white uppercase tracking-wider mb-2">
                       Advantages of Digital Systems
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400 flex-shrink-0" />
                         <span>
@@ -1113,10 +1113,10 @@ export default function FirstAidModule1Section3() {
                     </ul>
                   </div>
                   <div>
-                    <p className="text-xs text-white/50 uppercase tracking-wider mb-2">
+                    <p className="text-xs text-white uppercase tracking-wider mb-2">
                       Considerations &amp; Requirements
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1.5">
+                    <ul className="text-sm text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                         <span>
@@ -1178,7 +1178,7 @@ export default function FirstAidModule1Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Why Record Near-Misses?</p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1220,7 +1220,7 @@ export default function FirstAidModule1Section3() {
                     The First Aider&apos;s Role in Record Keeping
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   As a first aider, you are often the first person to document a workplace incident.
                   Your records may be used by the employer for RIDDOR reporting, by insurers for
                   claims, and by courts in legal proceedings. Accuracy, timeliness and
@@ -1261,7 +1261,7 @@ export default function FirstAidModule1Section3() {
                   ].map((item, i) => (
                     <div key={i} className="bg-black/30 rounded-lg p-3">
                       <p className="text-xs font-medium text-rose-400 mb-1">{item.duty}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -1272,7 +1272,7 @@ export default function FirstAidModule1Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Remember</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The first aider&apos;s primary duty is always to{' '}
                   <strong>treat the casualty first</strong>. Record keeping comes after the
                   immediate emergency has been managed and the casualty is safe or has been handed
@@ -1291,7 +1291,7 @@ export default function FirstAidModule1Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1305,7 +1305,7 @@ export default function FirstAidModule1Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-1">

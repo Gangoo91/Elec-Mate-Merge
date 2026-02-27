@@ -222,11 +222,11 @@ const AM2Module4Section2 = () => {
 
       {/* Critical Warning */}
       <AM2CriticalWarning title="CRITICAL: GS38 Compliance is Non-Negotiable">
-        <p className="text-ios-callout text-white/80 mb-2">
+        <p className="text-ios-callout text-white mb-2">
           Using non-compliant leads, damaged equipment, or skipping proving steps will result in
           automatic AM2 failure. HSE GS38 requirements protect lives and must be followed exactly.
         </p>
-        <p className="text-ios-callout text-white/90 font-medium">
+        <p className="text-ios-callout text-white font-medium">
           Unsafe practices with test equipment have caused serious injuries and deaths in the
           electrical industry. Assessors will stop the test immediately if unsafe practices are
           observed.
@@ -312,7 +312,7 @@ const AM2Module4Section2 = () => {
               <h5 className="font-medium text-white mb-2">
                 IDENTIFY the Circuit/Supply to be Isolated
               </h5>
-              <p className="text-ios-callout text-white/80 mb-3">
+              <p className="text-ios-callout text-white mb-3">
                 Clearly identify which circuit or supply needs to be made safe for work. Use circuit
                 charts, labels, and visual inspection.
               </p>
@@ -335,7 +335,7 @@ const AM2Module4Section2 = () => {
             </div>
             <div className="flex-1">
               <h5 className="font-medium text-white mb-2">ISOLATE the Circuit/Supply</h5>
-              <p className="text-ios-callout text-white/80 mb-3">
+              <p className="text-ios-callout text-white mb-3">
                 Switch off the circuit using appropriate isolation devices. Turn off MCBs, remove
                 fuses, or operate isolator switches.
               </p>
@@ -358,7 +358,7 @@ const AM2Module4Section2 = () => {
             </div>
             <div className="flex-1">
               <h5 className="font-medium text-white mb-2">SECURE the Isolation</h5>
-              <p className="text-ios-callout text-white/80 mb-3">
+              <p className="text-ios-callout text-white mb-3">
                 Prevent accidental re-energisation by locking off the isolation device and/or
                 removing fuses completely.
               </p>
@@ -383,7 +383,7 @@ const AM2Module4Section2 = () => {
               <h5 className="font-medium text-white mb-2">
                 PROVE the Voltage Tester on Known Live Source
               </h5>
-              <p className="text-ios-callout text-white/80 mb-3">
+              <p className="text-ios-callout text-white mb-3">
                 Test your voltage indicator on a proving unit or known live source to confirm it's
                 working correctly.
               </p>
@@ -406,7 +406,7 @@ const AM2Module4Section2 = () => {
             </div>
             <div className="flex-1">
               <h5 className="font-medium text-white mb-2">TEST for Dead at the Point of Work</h5>
-              <p className="text-ios-callout text-white/80 mb-3">
+              <p className="text-ios-callout text-white mb-3">
                 Test between all conductors at the exact point where work will be carried out to
                 confirm no voltage is present.
               </p>
@@ -431,7 +431,7 @@ const AM2Module4Section2 = () => {
               <h5 className="font-medium text-white mb-2">
                 RE-PROVE the Voltage Tester on Known Live Source
               </h5>
-              <p className="text-ios-callout text-white/80 mb-3">
+              <p className="text-ios-callout text-white mb-3">
                 Return to the known live source and re-test to confirm your voltage indicator is
                 still working correctly.
               </p>
@@ -456,7 +456,7 @@ const AM2Module4Section2 = () => {
             <CheckCircle className="w-5 h-5 text-green-600" />
             Safe Isolation Complete - Now Safe to Work
           </h4>
-          <p className="text-ios-callout text-white/80 mb-2">
+          <p className="text-ios-callout text-white mb-2">
             Only after completing ALL 6 steps in sequence is it safe to begin work on the isolated
             circuit.
           </p>
@@ -487,7 +487,7 @@ const AM2Module4Section2 = () => {
           <div className="grid md:grid-cols-2 gap-4">
             <div className="space-y-3">
               <h4 className="font-medium text-white">Pre-Test Procedures:</h4>
-              <ul className="text-ios-callout text-white/80 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li>
                   Select the correct test range (e.g., insulation resistance 500V DC, continuity low
                   resistance)
@@ -500,7 +500,7 @@ const AM2Module4Section2 = () => {
 
             <div className="space-y-3">
               <h4 className="font-medium text-white">During Testing:</h4>
-              <ul className="text-ios-callout text-white/80 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li>Use appropriate test probes or clips for stable readings</li>
                 <li>Maintain safe hand positions behind finger barriers</li>
                 <li>Allow readings to stabilise before recording</li>
@@ -591,7 +591,7 @@ const AM2Module4Section2 = () => {
               <div className="grid md:grid-cols-3 gap-4">
                 <div className="bg-white/5 rounded p-3">
                   <h5 className="font-medium text-white mb-2">Step 1: Initial Prove</h5>
-                  <ul className="text-ios-footnote text-white/80 space-y-1">
+                  <ul className="text-ios-footnote text-white space-y-1">
                     <li>Check proving unit is functional</li>
                     <li>Insert voltage indicator probes</li>
                     <li>Verify clear positive indication</li>
@@ -601,7 +601,7 @@ const AM2Module4Section2 = () => {
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <h5 className="font-medium text-white mb-2">Step 2: Circuit Testing</h5>
-                  <ul className="text-ios-footnote text-white/80 space-y-1">
+                  <ul className="text-ios-footnote text-white space-y-1">
                     <li>Test L-N at point of work</li>
                     <li>Test L-E at point of work</li>
                     <li>Test N-E at point of work</li>
@@ -611,7 +611,7 @@ const AM2Module4Section2 = () => {
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <h5 className="font-medium text-white mb-2">Step 3: Re-prove</h5>
-                  <ul className="text-ios-footnote text-white/80 space-y-1">
+                  <ul className="text-ios-footnote text-white space-y-1">
                     <li>Return to proving unit</li>
                     <li>Re-test voltage indicator</li>
                     <li>Verify positive indication again</li>
@@ -714,7 +714,7 @@ const AM2Module4Section2 = () => {
                 <CheckCircle className="w-4 h-4" />
                 Equipment Compliance
               </h4>
-              <ul className="text-ios-callout text-white/80 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li>GS38-compliant leads/probes in use</li>
                 <li>Proper inspection of equipment before use</li>
                 <li>Appropriate CAT-rated instruments</li>
@@ -727,7 +727,7 @@ const AM2Module4Section2 = () => {
                 <Shield className="w-4 h-4" />
                 Safe Working Practices
               </h4>
-              <ul className="text-ios-callout text-white/80 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li>Correct proving sequence demonstrated</li>
                 <li>Safe hand positions maintained</li>
                 <li>Methodical approach to testing</li>
@@ -742,7 +742,7 @@ const AM2Module4Section2 = () => {
                 <BookOpen className="w-4 h-4" />
                 Professional Competence
               </h4>
-              <ul className="text-ios-callout text-white/80 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li>Confident handling of instruments</li>
                 <li>Clear explanation of procedures</li>
                 <li>Realistic and logical results</li>
@@ -755,7 +755,7 @@ const AM2Module4Section2 = () => {
                 <Lightbulb className="w-4 h-4" />
                 Assessment Excellence
               </h4>
-              <ul className="text-ios-callout text-white/80 space-y-1">
+              <ul className="text-ios-callout text-white space-y-1">
                 <li>Following GN3 procedures exactly</li>
                 <li>Demonstrating rather than describing</li>
                 <li>Managing time effectively</li>
@@ -828,7 +828,7 @@ const AM2Module4Section2 = () => {
         <div className="space-y-3">
           <div className="border-l-4 border-l-red-500 bg-red-500/10 rounded-r-xl p-4">
             <h4 className="font-medium text-white mb-2">Example 1: Non-GS38 Leads</h4>
-            <p className="text-ios-callout text-white/80 mb-2">
+            <p className="text-ios-callout text-white mb-2">
               Candidate used non-GS38 leads with 20 mm exposed metal. Assessor stopped the test
               immediately. <strong className="text-red-400">Automatic Fail</strong>
             </p>
@@ -839,7 +839,7 @@ const AM2Module4Section2 = () => {
 
           <div className="border-l-4 border-l-red-500 bg-red-500/10 rounded-r-xl p-4">
             <h4 className="font-medium text-white mb-2">Example 2: Forgot Re-proving</h4>
-            <p className="text-ios-callout text-white/80 mb-2">
+            <p className="text-ios-callout text-white mb-2">
               Candidate forgot to re-prove tester after safe isolation sequence.{' '}
               <strong className="text-red-400">Automatic Fail</strong>
             </p>
@@ -851,7 +851,7 @@ const AM2Module4Section2 = () => {
 
           <div className="border-l-4 border-green-500 bg-green-500/10 rounded-r-xl p-4">
             <h4 className="font-medium text-white mb-2">Example 3: Proper Procedure</h4>
-            <p className="text-ios-callout text-white/80 mb-2">
+            <p className="text-ios-callout text-white mb-2">
               Candidate zeroed continuity leads before testing and explained procedure to assessor.{' '}
               <strong className="text-emerald-400">Full Marks</strong>
             </p>
@@ -863,7 +863,7 @@ const AM2Module4Section2 = () => {
 
           <div className="border-l-4 border-elec-yellow bg-amber-500/10 rounded-r-xl p-4">
             <h4 className="font-medium text-white mb-2">Example 4: Real-Life Consequence</h4>
-            <p className="text-ios-callout text-white/80 mb-2">
+            <p className="text-ios-callout text-white mb-2">
               In real life, an electrician used a damaged probe, which arced and caused serious
               burns. Same unsafe practice in AM2 = fail.
             </p>
@@ -884,7 +884,7 @@ const AM2Module4Section2 = () => {
 
         <div className="bg-white/5 border border-white/10 rounded-xl p-4 mb-4">
           <h4 className="font-medium text-white mb-3">Key Takeaways:</h4>
-          <ul className="text-ios-callout text-white/80 space-y-2">
+          <ul className="text-ios-callout text-white space-y-2">
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
               <span>
@@ -919,7 +919,7 @@ const AM2Module4Section2 = () => {
 
         <div className="bg-elec-yellow/10 border border-elec-yellow/30 rounded-xl p-4">
           <h4 className="font-medium text-elec-yellow mb-2">Next Steps:</h4>
-          <p className="text-ios-callout text-white/80">
+          <p className="text-ios-callout text-white">
             You're now ready to move on to Module 4 Section 3, where we'll cover the specific
             testing procedures and measurement techniques required for AM2 assessment success.
           </p>

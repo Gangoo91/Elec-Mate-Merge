@@ -111,8 +111,8 @@ const getColorClasses = (color: string) => {
       return {
         bg: 'bg-white/5',
         border: 'border-white/10',
-        text: 'text-white/60',
-        icon: 'text-white/40',
+        text: 'text-white',
+        icon: 'text-white',
       };
     case 'purple':
       return {
@@ -125,8 +125,8 @@ const getColorClasses = (color: string) => {
       return {
         bg: 'bg-white/5',
         border: 'border-white/10',
-        text: 'text-white/60',
-        icon: 'text-white/40',
+        text: 'text-white',
+        icon: 'text-white',
       };
   }
 };

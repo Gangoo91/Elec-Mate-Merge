@@ -79,7 +79,7 @@ const SystemTypeSelector = ({ onSelectionChange }: SystemTypeSelectorProps) => {
       </CardHeader>
       <CardContent className="space-y-6 relative">
         <div>
-          <h4 className="font-medium mb-3 text-white/80">Select System Type:</h4>
+          <h4 className="font-medium mb-3 text-white">Select System Type:</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {systemTypes.map((system) => {
               const Icon = system.icon;
@@ -104,7 +104,7 @@ const SystemTypeSelector = ({ onSelectionChange }: SystemTypeSelectorProps) => {
                       className={`p-2 rounded-lg ${isSelected ? 'bg-elec-yellow/20' : 'bg-white/5'}`}
                     >
                       <Icon
-                        className={`h-4 w-4 ${isSelected ? 'text-elec-yellow' : 'text-white/60'}`}
+                        className={`h-4 w-4 ${isSelected ? 'text-elec-yellow' : 'text-white'}`}
                       />
                     </div>
                     <span
@@ -113,7 +113,7 @@ const SystemTypeSelector = ({ onSelectionChange }: SystemTypeSelectorProps) => {
                       {system.name}
                     </span>
                   </div>
-                  <span className="text-xs text-white/60">{system.description}</span>
+                  <span className="text-xs text-white">{system.description}</span>
                 </button>
               );
             })}
@@ -121,7 +121,7 @@ const SystemTypeSelector = ({ onSelectionChange }: SystemTypeSelectorProps) => {
         </div>
 
         <div>
-          <h4 className="font-medium mb-3 text-white/80">Select Installation Type:</h4>
+          <h4 className="font-medium mb-3 text-white">Select Installation Type:</h4>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             {installationTypes.map((installation) => {
               const Icon = installation.icon;
@@ -146,7 +146,7 @@ const SystemTypeSelector = ({ onSelectionChange }: SystemTypeSelectorProps) => {
                       className={`p-2 rounded-lg ${isSelected ? 'bg-elec-yellow/20' : 'bg-white/5'}`}
                     >
                       <Icon
-                        className={`h-4 w-4 ${isSelected ? 'text-elec-yellow' : 'text-white/60'}`}
+                        className={`h-4 w-4 ${isSelected ? 'text-elec-yellow' : 'text-white'}`}
                       />
                     </div>
                     <span
@@ -155,7 +155,7 @@ const SystemTypeSelector = ({ onSelectionChange }: SystemTypeSelectorProps) => {
                       {installation.name}
                     </span>
                   </div>
-                  <span className="text-xs text-white/60">{installation.description}</span>
+                  <span className="text-xs text-white">{installation.description}</span>
                 </button>
               );
             })}
@@ -164,7 +164,7 @@ const SystemTypeSelector = ({ onSelectionChange }: SystemTypeSelectorProps) => {
 
         {selectedSystem && selectedInstallation && (
           <div className="flex flex-wrap items-center gap-3 pt-4 border-t border-white/10">
-            <span className="text-sm text-white/60">Selected:</span>
+            <span className="text-sm text-white">Selected:</span>
             <Badge className="bg-elec-yellow/10 text-elec-yellow border border-elec-yellow/30">
               {systemTypes.find((s) => s.id === selectedSystem)?.name}
             </Badge>

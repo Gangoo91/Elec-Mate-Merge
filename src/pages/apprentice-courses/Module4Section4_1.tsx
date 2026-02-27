@@ -136,7 +136,7 @@ const Module4Section4_1 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -154,13 +154,13 @@ const Module4Section4_1 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 4.1</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 4.1</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Fixing and Supporting Containment Systems
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master the principles of secure fixing and supporting for conduit, trunking, and cable
               trays to ensure safe, compliant, and durable installations.
             </p>
@@ -175,7 +175,7 @@ const Module4Section4_1 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">In 30 Seconds</p>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>• Proper fixing prevents sagging, vibration damage, and cable stress</li>
                   <li>• Correct spacing maintains structural integrity over time</li>
                   <li>• Right fixing selection ensures BS 7671 compliance and safety</li>
@@ -183,7 +183,7 @@ const Module4Section4_1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">Spot it / Use it</p>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li>
                     • <strong>Spot:</strong> Substrate type, load requirements, environmental
                     conditions
@@ -205,7 +205,7 @@ const Module4Section4_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <ul className="text-white/80 space-y-2">
+            <ul className="text-white space-y-2">
               <li className="flex items-start gap-2">
                 <div className="w-1.5 h-1.5 rounded-full bg-elec-yellow mt-2 flex-shrink-0"></div>
                 <span>
@@ -244,7 +244,7 @@ const Module4Section4_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Fixing Selection and Substrate Assessment
             </h2>
-            <div className="text-white/80 space-y-6">
+            <div className="text-white space-y-6">
               <p>
                 Correct fixing selection is critical for safe, secure, and long-lasting containment
                 installations.
@@ -269,7 +269,7 @@ const Module4Section4_1 = () => {
                   <li>Insert plug fully flush with surface</li>
                   <li>Drive screw leaving 5-8mm for bracket engagement</li>
                 </ol>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Critical tip:</strong> Always use hammer drill setting for consistent hole
                   quality in masonry
                 </p>
@@ -291,7 +291,7 @@ const Module4Section4_1 = () => {
                   <li>• Spacing: minimum 10 × anchor diameter between fixings</li>
                   <li>• Embedment depth: 8-12 × anchor diameter depending on load</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Safety factor:</strong> Always apply 4:1 safety factor to manufacturer's
                   ultimate load rating
                 </p>
@@ -330,7 +330,7 @@ const Module4Section4_1 = () => {
                   <li>• Damp internal: A2 stainless steel or 42μm galvanising</li>
                   <li>• External/aggressive: A4 stainless steel or marine coating systems</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Cost vs benefit:</strong> Premium fixings cost 20% more but prevent 90% of
                   corrosion failures
                 </p>
@@ -352,7 +352,7 @@ const Module4Section4_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Support Systems and Spacing Requirements
             </h2>
-            <div className="text-white/80 space-y-6">
+            <div className="text-white space-y-6">
               <p>
                 Proper support design and spacing is crucial for maintaining containment integrity
                 and preventing failures.
@@ -380,7 +380,7 @@ const Module4Section4_1 = () => {
                     • Temperature compensation: reduce spacing by 20% for each 10°C above 20°C
                   </li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Thermal expansion:</strong> PVC expands 0.6mm per metre per 10°C
                   temperature rise
                 </p>
@@ -397,7 +397,7 @@ const Module4Section4_1 = () => {
                   <li>• Heavy duty (&gt;50kg/m): 1.0m spacing or engineered supports</li>
                   <li>• Perforated tray: 10% closer spacing than solid tray</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Deflection limit:</strong> Maximum sag = span length ÷ 200 for
                   professional installations
                 </p>
@@ -439,7 +439,7 @@ const Module4Section4_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Installation Techniques and Quality Control
             </h2>
-            <div className="text-white/80 space-y-6">
+            <div className="text-white space-y-6">
               <p>
                 Professional installation techniques ensure accuracy, safety, and long-term
                 reliability.
@@ -466,7 +466,7 @@ const Module4Section4_1 = () => {
                   <li>• Centre punch all drilling points to prevent bit wander</li>
                   <li>• Use paper template for repetitive bracket patterns</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Professional standard:</strong> ±3mm tolerance over 10m run length for
                   visual acceptability
                 </p>
@@ -495,7 +495,7 @@ const Module4Section4_1 = () => {
                   <li>• No damage to containment during installation</li>
                   <li>• Bracket level and plumb checked with spirit level</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Torque guide:</strong> M8 fixings = 15Nm, M10 = 25Nm, M12 = 40Nm (adjust
                   for substrate)
                 </p>
@@ -517,7 +517,7 @@ const Module4Section4_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Common Faults and Prevention Strategies
             </h2>
-            <div className="text-white/80 space-y-6">
+            <div className="text-white space-y-6">
               <p>
                 Understanding and preventing common fixing faults saves time, materials, and ensures
                 installation integrity.
@@ -533,7 +533,7 @@ const Module4Section4_1 = () => {
                   <li>• Stress cracking around mounting holes</li>
                   <li>• Reduced internal space affecting cable capacity</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   <strong>Rule of thumb:</strong> "Snug plus 1/4 turn" for plastic substrates, "firm
                   resistance" for metal
                 </p>
@@ -568,7 +568,7 @@ const Module4Section4_1 = () => {
               Real-World Example
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
-              <div className="text-white/80 space-y-4 text-sm">
+              <div className="text-white space-y-4 text-sm">
                 <p>
                   During an industrial installation, a contractor installed cable tray supports
                   every 3 metres instead of the specified 1.5 metres to save on materials and
@@ -612,7 +612,7 @@ const Module4Section4_1 = () => {
               Summary
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <div className="text-white/80 space-y-3 text-sm">
+              <div className="text-white space-y-3 text-sm">
                 <p>
                   Proper fixing and supporting of containment systems is fundamental to electrical
                   installation safety, compliance, and longevity. The correct selection of fixings

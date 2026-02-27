@@ -283,7 +283,7 @@ const Level3Module5Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module5-section2">
@@ -467,7 +467,7 @@ const Level3Module5Section2_3 = () => {
               environmental change) - that's C2.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> An exposed live terminal is C1 - danger of shock exists now.
               A missing earth connection is C2 - danger would only occur if a fault developed. Both
               are serious, but the immediacy differs.
@@ -562,19 +562,19 @@ const Level3Module5Section2_3 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Location</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Where is the defect? Circuit reference, room, specific item
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Observation</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   What did you find? Technical description of the issue
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Classification</p>
-                <p className="text-white/90 text-xs">C1, C2, C3 or FI with clear justification</p>
+                <p className="text-white text-xs">C1, C2, C3 or FI with clear justification</p>
               </div>
             </div>
 
@@ -605,7 +605,7 @@ const Level3Module5Section2_3 = () => {
               the client sign to acknowledge receipt.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Legal note:</strong> Your observations become legal documents. If an incident
               occurs after your inspection, your report may be examined in court. Accurate, complete
               documentation protects you professionally and legally.
@@ -677,7 +677,7 @@ const Level3Module5Section2_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -722,7 +722,7 @@ const Level3Module5Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module5-section2">

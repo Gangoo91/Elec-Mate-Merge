@@ -43,7 +43,7 @@ export const InvoiceSettingsStep = ({
 }: InvoiceSettingsStepProps) => {
   // Clean inline input style for seamless look
   const inputClassName =
-    'w-full h-8 bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white/50 caret-elec-yellow';
+    'w-full h-8 bg-transparent border-0 outline-none text-[16px] font-medium text-white placeholder:text-white caret-elec-yellow';
 
   const darkStyle: React.CSSProperties = {
     colorScheme: 'dark',
@@ -53,7 +53,7 @@ export const InvoiceSettingsStep = ({
     <div className="space-y-5 text-left">
       {/* Display Mode Section */}
       <div>
-        <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider mb-3">
+        <p className="text-[13px] font-medium text-white uppercase tracking-wider mb-3">
           Invoice Display
         </p>
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
@@ -68,7 +68,7 @@ export const InvoiceSettingsStep = ({
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[14px] font-medium text-white">Summary View</p>
-              <p className="text-[12px] text-white/50">
+              <p className="text-[12px] text-white">
                 {settings?.showSummaryView
                   ? 'Shows Labour & Materials totals only'
                   : 'Shows itemised breakdown'}
@@ -81,7 +81,7 @@ export const InvoiceSettingsStep = ({
             />
           </div>
         </div>
-        <p className="text-[11px] text-white/40 mt-2 px-1">
+        <p className="text-[11px] text-white mt-2 px-1">
           Summary view is cleaner for customers - full breakdown is still synced to your accounting
           software
         </p>
@@ -89,7 +89,7 @@ export const InvoiceSettingsStep = ({
 
       {/* VAT Settings Section */}
       <div>
-        <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider mb-3">
+        <p className="text-[13px] font-medium text-white uppercase tracking-wider mb-3">
           VAT Settings
         </p>
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
@@ -100,7 +100,7 @@ export const InvoiceSettingsStep = ({
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[14px] font-medium text-white">VAT Registered</p>
-              <p className="text-[12px] text-white/50">Add VAT to this invoice</p>
+              <p className="text-[12px] text-white">Add VAT to this invoice</p>
             </div>
             <Switch
               checked={settings?.vatRegistered || false}
@@ -113,7 +113,7 @@ export const InvoiceSettingsStep = ({
           {settings?.vatRegistered && (
             <div className="flex items-center gap-3 p-4">
               <div className="w-11 h-11 rounded-xl bg-white/[0.05] flex items-center justify-center flex-shrink-0">
-                <Hash className="h-5 w-5 text-white/70" />
+                <Hash className="h-5 w-5 text-white" />
               </div>
               <div className="flex-1 min-w-0 text-left">
                 <label className="text-[12px] text-white block mb-0.5">VAT Rate (%)</label>
@@ -139,7 +139,7 @@ export const InvoiceSettingsStep = ({
 
       {/* Deductions & Discounts Section */}
       <div>
-        <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider px-1 mb-2 flex items-center gap-2">
+        <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2 flex items-center gap-2">
           <BadgePercent className="h-3.5 w-3.5" />
           Deductions & Discounts
         </p>
@@ -156,7 +156,7 @@ export const InvoiceSettingsStep = ({
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-[15px] font-medium text-white">Apply Deduction/Discount</p>
-              <p className="text-[13px] text-white/70">CIS, OAP discount, etc.</p>
+              <p className="text-[13px] text-white">CIS, OAP discount, etc.</p>
             </div>
             <Switch
               checked={settings?.discountEnabled || false}
@@ -175,7 +175,7 @@ export const InvoiceSettingsStep = ({
             <>
               {/* Quick CIS Presets */}
               <div className="p-3.5">
-                <label className="text-[12px] text-white/40 block mb-2">Quick Presets</label>
+                <label className="text-[12px] text-white block mb-2">Quick Presets</label>
                 <div className="flex gap-2">
                   <button
                     type="button"
@@ -210,7 +210,7 @@ export const InvoiceSettingsStep = ({
 
               {/* Type Picker */}
               <div className="p-3.5">
-                <label className="text-[12px] text-white/40 block mb-2">Type</label>
+                <label className="text-[12px] text-white block mb-2">Type</label>
                 <div className="flex gap-2">
                   <button
                     type="button"
@@ -251,7 +251,7 @@ export const InvoiceSettingsStep = ({
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <label className="text-[12px] text-white/40 block">
+                  <label className="text-[12px] text-white block">
                     {(settings?.discountType || 'percentage') === 'percentage'
                       ? 'Percentage (%)'
                       : 'Amount (£)'}
@@ -263,7 +263,7 @@ export const InvoiceSettingsStep = ({
                     placeholder={
                       (settings?.discountType || 'percentage') === 'percentage' ? '20' : '150.00'
                     }
-                    className="h-9 px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:ring-offset-0 outline-none max-w-[120px]"
+                    className="h-9 px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white focus-visible:ring-0 focus-visible:ring-offset-0 outline-none max-w-[120px]"
                     value={settings?.discountValue || ''}
                     onChange={(e) => {
                       const value = e.target.value;
@@ -283,12 +283,12 @@ export const InvoiceSettingsStep = ({
                   <Settings className="h-5 w-5 text-black" />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <label className="text-[12px] text-white/40 block">Label (shown on PDF)</label>
+                  <label className="text-[12px] text-white block">Label (shown on PDF)</label>
                   <input
                     type="text"
                     style={darkStyle}
                     placeholder="e.g. CIS Deduction (20%)"
-                    className="h-9 w-full px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white/30 focus-visible:ring-0 focus-visible:ring-offset-0 outline-none"
+                    className="h-9 w-full px-0 border-0 bg-transparent text-[15px] font-medium text-white placeholder:text-white focus-visible:ring-0 focus-visible:ring-offset-0 outline-none"
                     value={settings?.discountLabel || ''}
                     onChange={(e) => onUpdateSettings({ discountLabel: e.target.value })}
                   />
@@ -301,7 +301,7 @@ export const InvoiceSettingsStep = ({
 
       {/* Payment Terms Section */}
       <div>
-        <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider mb-3">
+        <p className="text-[13px] font-medium text-white uppercase tracking-wider mb-3">
           Payment Terms
         </p>
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
@@ -345,7 +345,7 @@ export const InvoiceSettingsStep = ({
                   onUpdateSettings({ paymentTerms: value, dueDate: newDueDate });
                 }}
               >
-                <SelectTrigger className="h-8 border-0 bg-transparent p-0 text-[16px] font-medium text-white focus:ring-0 [&>svg]:text-white/50">
+                <SelectTrigger className="h-8 border-0 bg-transparent p-0 text-[16px] font-medium text-white focus:ring-0 [&>svg]:text-white">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent className="bg-elec-gray border-white/[0.1]">
@@ -363,7 +363,7 @@ export const InvoiceSettingsStep = ({
           {/* Due Date Picker */}
           <div className="flex items-center gap-3 p-4">
             <div className="w-11 h-11 rounded-xl bg-white/[0.05] flex items-center justify-center flex-shrink-0">
-              <CalendarIcon className="h-5 w-5 text-white/70" />
+              <CalendarIcon className="h-5 w-5 text-white" />
             </div>
             <div className="flex-1 min-w-0 text-left">
               <label className="text-[12px] text-white block mb-0.5">Due Date</label>
@@ -373,7 +373,7 @@ export const InvoiceSettingsStep = ({
                     variant="ghost"
                     className={cn(
                       'h-8 p-0 justify-start text-[16px] font-medium hover:bg-transparent',
-                      settings?.dueDate ? 'text-white' : 'text-white/50'
+                      settings?.dueDate ? 'text-white' : 'text-white'
                     )}
                   >
                     {settings?.dueDate
@@ -401,7 +401,7 @@ export const InvoiceSettingsStep = ({
 
       {/* Bank Details Section */}
       <div>
-        <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider mb-3">
+        <p className="text-[13px] font-medium text-white uppercase tracking-wider mb-3">
           Bank Details
         </p>
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
@@ -434,7 +434,7 @@ export const InvoiceSettingsStep = ({
           {/* Account Name */}
           <div className="flex items-center gap-3 p-4">
             <div className="w-11 h-11 rounded-xl bg-white/[0.05] flex items-center justify-center flex-shrink-0">
-              <CreditCard className="h-5 w-5 text-white/70" />
+              <CreditCard className="h-5 w-5 text-white" />
             </div>
             <div className="flex-1 min-w-0 text-left">
               <label className="text-[12px] text-white block mb-0.5">Account Name</label>
@@ -460,7 +460,7 @@ export const InvoiceSettingsStep = ({
           {/* Account Number */}
           <div className="flex items-center gap-3 p-4">
             <div className="w-11 h-11 rounded-xl bg-white/[0.05] flex items-center justify-center flex-shrink-0">
-              <Hash className="h-5 w-5 text-white/70" />
+              <Hash className="h-5 w-5 text-white" />
             </div>
             <div className="flex-1 min-w-0 text-left">
               <label className="text-[12px] text-white block mb-0.5">Account Number</label>
@@ -488,7 +488,7 @@ export const InvoiceSettingsStep = ({
           {/* Sort Code */}
           <div className="flex items-center gap-3 p-4">
             <div className="w-11 h-11 rounded-xl bg-white/[0.05] flex items-center justify-center flex-shrink-0">
-              <SortAsc className="h-5 w-5 text-white/70" />
+              <SortAsc className="h-5 w-5 text-white" />
             </div>
             <div className="flex-1 min-w-0 text-left">
               <label className="text-[12px] text-white block mb-0.5">Sort Code</label>
@@ -523,7 +523,7 @@ export const InvoiceSettingsStep = ({
 
       {/* Invoice Notes Section */}
       <div>
-        <p className="text-[13px] font-medium text-white/60 uppercase tracking-wider mb-3">
+        <p className="text-[13px] font-medium text-white uppercase tracking-wider mb-3">
           Invoice Notes
         </p>
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden">
@@ -544,7 +544,7 @@ export const InvoiceSettingsStep = ({
             </div>
           </div>
         </div>
-        <p className="text-[11px] text-white/40 mt-2 px-1">
+        <p className="text-[11px] text-white mt-2 px-1">
           These notes will appear at the bottom of your invoice
         </p>
       </div>

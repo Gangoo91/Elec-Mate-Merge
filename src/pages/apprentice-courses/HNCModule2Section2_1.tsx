@@ -215,7 +215,7 @@ const HNCModule2Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section2">
@@ -237,7 +237,7 @@ const HNCModule2Section2_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Fluid Properties and Pressure
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding the fundamental properties of fluids and pressure principles essential for
             hydraulic system design
           </p>
@@ -461,7 +461,7 @@ const HNCModule2Section2_1 = () => {
                 Kinematic Viscosity Relationship
               </p>
               <p className="font-mono text-center text-lg mb-2">ν = μ / ρ</p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where ν is in m²/s, μ in Pa·s, and ρ in kg/m³
               </p>
             </div>
@@ -493,7 +493,7 @@ const HNCModule2Section2_1 = () => {
                   <p className="font-bold text-elec-yellow mb-1">
                     Absolute Pressure = Gauge Pressure + Atmospheric Pressure
                   </p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     P<sub>abs</sub> = P<sub>gauge</sub> + P<sub>atm</sub>
                   </p>
                 </div>
@@ -547,18 +547,18 @@ const HNCModule2Section2_1 = () => {
             <div className="grid sm:grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-bold text-white mb-1">Atmospheric</p>
-                <p className="text-white/70 text-xs">101.3 kPa at sea level</p>
-                <p className="text-white/70 text-xs">Reference for gauges</p>
+                <p className="text-white text-xs">101.3 kPa at sea level</p>
+                <p className="text-white text-xs">Reference for gauges</p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-bold text-white mb-1">Gauge</p>
-                <p className="text-white/70 text-xs">Relative to atmosphere</p>
-                <p className="text-white/70 text-xs">Most common readings</p>
+                <p className="text-white text-xs">Relative to atmosphere</p>
+                <p className="text-white text-xs">Most common readings</p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-bold text-white mb-1">Absolute</p>
-                <p className="text-white/70 text-xs">From true zero (vacuum)</p>
-                <p className="text-white/70 text-xs">Thermodynamic calcs</p>
+                <p className="text-white text-xs">From true zero (vacuum)</p>
+                <p className="text-white text-xs">Thermodynamic calcs</p>
               </div>
             </div>
 
@@ -590,7 +590,7 @@ const HNCModule2Section2_1 = () => {
                 Pressure applied to a confined fluid is transmitted undiminished and equally in all
                 directions throughout the fluid.
               </p>
-              <p className="text-xs text-white/70">
+              <p className="text-xs text-white">
                 This enables hydraulic force multiplication: F₂/F₁ = A₂/A₁
               </p>
             </div>
@@ -600,7 +600,7 @@ const HNCModule2Section2_1 = () => {
                 Hydrostatic Pressure Equation
               </p>
               <p className="font-mono text-center text-lg mb-2">P = ρgh</p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where P = pressure (Pa), ρ = density (kg/m³), g = 9.81 m/s², h = height (m)
               </p>
             </div>
@@ -674,7 +674,7 @@ const HNCModule2Section2_1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Rule of thumb:</strong> Each 10 metres of water column adds approximately 1
               bar (100 kPa) of static pressure.
             </p>
@@ -699,7 +699,7 @@ const HNCModule2Section2_1 = () => {
                 <strong>Question:</strong> A 45m tall building has a header tank at roof level.
                 Calculate the static pressure at ground floor level.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using P = ρgh</p>
                 <p>P = 1000 kg/m³ × 9.81 m/s² × 45 m</p>
                 <p>
@@ -708,7 +708,7 @@ const HNCModule2Section2_1 = () => {
                 <p className="mt-2">
                   Converting to bar: 441.45 / 100 = <strong>4.41 bar</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → Components must be rated for at least 6 bar working pressure
                 </p>
               </div>
@@ -722,7 +722,7 @@ const HNCModule2Section2_1 = () => {
                 <strong>Question:</strong> A sealed heating system shows 2.5 bar on the pressure
                 gauge. What is the absolute pressure?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Absolute = Gauge + Atmospheric</p>
                 <p>
                   P<sub>abs</sub> = 2.5 bar + 1.013 bar
@@ -730,7 +730,7 @@ const HNCModule2Section2_1 = () => {
                 <p>
                   P<sub>abs</sub> = <strong>3.513 bar</strong> (absolute)
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → This absolute pressure must exceed the vapour pressure at system temperature
                 </p>
               </div>
@@ -744,14 +744,14 @@ const HNCModule2Section2_1 = () => {
                 <strong>Question:</strong> Calculate the kinematic viscosity of water at 60°C (μ =
                 0.47 mPa·s, ρ = 983 kg/m³).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>ν = μ / ρ</p>
                 <p>ν = 0.47 × 10⁻³ Pa·s / 983 kg/m³</p>
                 <p>ν = 4.78 × 10⁻⁷ m²/s</p>
                 <p>
                   ν = <strong>0.478 mm²/s</strong> (or 0.478 cSt)
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → This value is used in Reynolds number calculations
                 </p>
               </div>
@@ -845,7 +845,7 @@ const HNCModule2Section2_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -893,7 +893,7 @@ const HNCModule2Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section2">

@@ -169,7 +169,7 @@ export default function CscsCardModule5Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-5">
@@ -194,7 +194,7 @@ export default function CscsCardModule5Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Electrical Safety on Site
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             How electricity kills, the regulations that protect workers, reduced voltage systems,
             PAT testing, overhead and underground hazards, temporary installations, and emergency
             response to electrical incidents on construction sites
@@ -291,7 +291,7 @@ export default function CscsCardModule5Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Types of Electrical Hazard</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -347,10 +347,10 @@ export default function CscsCardModule5Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   How Electricity Kills &mdash; Severity Factors
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Whether an electric shock is fatal depends on three key factors:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -424,7 +424,7 @@ export default function CscsCardModule5Section3() {
                         Regulation 3 &mdash; Duty Holder
                       </p>
                     </div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Establishes who has a duty to comply with the regulations. Duties are placed
                       on employers (to protect employees and others), the self-employed (to protect
                       themselves and others), and employees (to cooperate with safety measures and
@@ -440,7 +440,7 @@ export default function CscsCardModule5Section3() {
                         Regulation 4 &mdash; Systems to Prevent Danger
                       </p>
                     </div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       All electrical systems must be constructed and maintained so as to prevent
                       danger, so far as is reasonably practicable. This covers the design,
                       installation, maintenance, and use of all electrical systems. Work activities
@@ -457,7 +457,7 @@ export default function CscsCardModule5Section3() {
                         Regulation 12 &mdash; Live Working Prohibited
                       </p>
                     </div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       No person shall work on or near any live conductor (other than one suitably
                       covered with insulation) unless it is{' '}
                       <strong className="text-white">unreasonable in all the circumstances</strong>{' '}
@@ -476,7 +476,7 @@ export default function CscsCardModule5Section3() {
                         Regulation 14 &mdash; Working Space, Access &amp; Lighting
                       </p>
                     </div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Adequate working space, adequate means of access, and adequate lighting must
                       be provided at all electrical equipment on which or near which work is being
                       done, so that the work can be carried out safely. Cramped, poorly lit, or
@@ -534,7 +534,7 @@ export default function CscsCardModule5Section3() {
                 <p className="text-sm font-medium text-white mb-4 text-center">
                   110V Centre Tapped Earth (CTE) System
                 </p>
-                <p className="text-xs text-white/50 text-center mb-6">
+                <p className="text-xs text-white text-center mb-6">
                   How the centre tap limits voltage to earth
                 </p>
 
@@ -542,19 +542,19 @@ export default function CscsCardModule5Section3() {
                   {/* 230V Mains Supply */}
                   <div className="w-full max-w-[300px] bg-gradient-to-r from-red-500/15 to-red-400/10 border border-red-500/30 rounded-t-xl p-3 text-center">
                     <p className="text-xs font-bold text-red-400">230V MAINS SUPPLY</p>
-                    <p className="text-[10px] text-white/60">
+                    <p className="text-[10px] text-white">
                       Incoming site supply (line to earth = 230V)
                     </p>
                   </div>
                   <div className="flex flex-col items-center py-1">
                     <div className="w-0.5 h-4 bg-white/20" />
-                    <div className="text-[10px] text-white/40">&#9660;</div>
+                    <div className="text-[10px] text-white">&#9660;</div>
                   </div>
 
                   {/* Transformer */}
                   <div className="w-full max-w-[360px] bg-gradient-to-r from-yellow-500/20 to-yellow-400/10 border-2 border-yellow-500/40 p-4 text-center">
                     <p className="text-xs font-bold text-yellow-400">STEP-DOWN TRANSFORMER</p>
-                    <p className="text-[10px] text-white/60 mt-1">
+                    <p className="text-[10px] text-white mt-1">
                       230V primary &rarr; 110V secondary
                     </p>
                     <div className="flex items-center justify-center gap-2 mt-2">
@@ -570,7 +570,7 @@ export default function CscsCardModule5Section3() {
                         <p className="text-[10px] text-green-400 mt-0.5">55V</p>
                       </div>
                     </div>
-                    <p className="text-[10px] text-white/50 mt-1">Centre Tap &rarr; Earth</p>
+                    <p className="text-[10px] text-white mt-1">Centre Tap &rarr; Earth</p>
                   </div>
                   <div className="flex flex-col items-center py-1">
                     <div className="w-0.5 h-4 bg-white/20" />
@@ -579,7 +579,7 @@ export default function CscsCardModule5Section3() {
                   {/* Earth Connection */}
                   <div className="w-full max-w-[200px] bg-gradient-to-r from-green-500/15 to-green-400/10 border border-green-500/30 p-3 text-center">
                     <p className="text-xs font-bold text-green-400">CENTRE TAP TO EARTH</p>
-                    <p className="text-[10px] text-white/60">0V reference point</p>
+                    <p className="text-[10px] text-white">0V reference point</p>
                   </div>
                   <div className="flex flex-col items-center py-1">
                     <div className="w-0.5 h-4 bg-white/20" />
@@ -588,13 +588,13 @@ export default function CscsCardModule5Section3() {
                   {/* Output */}
                   <div className="w-full max-w-[420px] bg-gradient-to-r from-green-500/10 to-green-400/5 border border-green-500/20 rounded-b-xl p-3 text-center">
                     <p className="text-xs font-bold text-green-400">110V OUTPUT (55V TO EARTH)</p>
-                    <p className="text-[10px] text-white/60">
+                    <p className="text-[10px] text-white">
                       Maximum 55V between any conductor and earth &bull; Yellow connectors
                     </p>
                   </div>
                 </div>
 
-                <p className="text-xs text-white/40 text-center mt-4 italic">
+                <p className="text-xs text-white text-center mt-4 italic">
                   The centre tap earthing arrangement halves the voltage to earth, reducing shock
                   risk significantly.
                 </p>
@@ -604,7 +604,7 @@ export default function CscsCardModule5Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Key Features of the 110V CTE System
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -681,11 +681,11 @@ export default function CscsCardModule5Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   User Visual Inspection &mdash; Before Every Use
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Every worker should carry out a quick visual check of any portable electrical
                   equipment before using it. Look for:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -728,10 +728,10 @@ export default function CscsCardModule5Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Formal PAT Testing Schedule</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   On construction sites, the recommended schedule for formal PAT testing is:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -765,10 +765,10 @@ export default function CscsCardModule5Section3() {
                     <Gauge className="h-4 w-4 text-blue-400" />
                     <p className="text-sm font-medium text-blue-400">Class I Equipment</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Has basic insulation plus an earth connection for safety.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>Metal casing connected to earth via the earth pin in the plug</span>
@@ -801,10 +801,10 @@ export default function CscsCardModule5Section3() {
                       Class II Equipment (Double Insulated)
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Has reinforced or double insulation &mdash; no earth connection needed.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                       <span>Marked with the double square symbol (&#9633; inside &#9633;)</span>
@@ -866,7 +866,7 @@ export default function CscsCardModule5Section3() {
                 <p className="text-sm font-medium text-white mb-4 text-center">
                   Safe Distances from Overhead Power Lines
                 </p>
-                <p className="text-xs text-white/50 text-center mb-6">
+                <p className="text-xs text-white text-center mb-6">
                   Minimum clearance zones that must be maintained at all times
                 </p>
 
@@ -875,11 +875,11 @@ export default function CscsCardModule5Section3() {
                   <div className="flex items-center gap-3 p-3 rounded-lg bg-yellow-500/10 border border-yellow-500/20">
                     <div className="flex-shrink-0 w-16 text-center">
                       <p className="text-lg font-bold text-yellow-400">1m</p>
-                      <p className="text-[10px] text-white/50">minimum</p>
+                      <p className="text-[10px] text-white">minimum</p>
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-white">Low Voltage (up to 1kV)</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Local distribution lines &bull; minimum 1m clearance &bull; additional
                         precautions still required
                       </p>
@@ -890,11 +890,11 @@ export default function CscsCardModule5Section3() {
                   <div className="flex items-center gap-3 p-3 rounded-lg bg-orange-500/10 border border-orange-500/20">
                     <div className="flex-shrink-0 w-16 text-center">
                       <p className="text-lg font-bold text-orange-400">3m</p>
-                      <p className="text-[10px] text-white/50">minimum</p>
+                      <p className="text-[10px] text-white">minimum</p>
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-white">High Voltage (up to 132kV)</p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         Typical pylon lines &bull; at least 3m clearance from conductors &bull;
                         barriers and goal posts required
                       </p>
@@ -905,13 +905,13 @@ export default function CscsCardModule5Section3() {
                   <div className="flex items-center gap-3 p-3 rounded-lg bg-red-500/10 border border-red-500/20">
                     <div className="flex-shrink-0 w-16 text-center">
                       <p className="text-lg font-bold text-red-400">6m</p>
-                      <p className="text-[10px] text-white/50">minimum</p>
+                      <p className="text-[10px] text-white">minimum</p>
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium text-white">
                         Extra High Voltage (275kV / 400kV)
                       </p>
-                      <p className="text-xs text-white/60">
+                      <p className="text-xs text-white">
                         National Grid transmission lines &bull; at least 6m clearance &bull; no work
                         without specific authorisation
                       </p>
@@ -919,7 +919,7 @@ export default function CscsCardModule5Section3() {
                   </div>
                 </div>
 
-                <p className="text-xs text-white/40 text-center mt-4 italic">
+                <p className="text-xs text-white text-center mt-4 italic">
                   These are minimum distances. Always follow the specific distances agreed with the
                   Distribution Network Operator (DNO) or National Grid for the site.
                 </p>
@@ -929,7 +929,7 @@ export default function CscsCardModule5Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Precautions for Working Near Overhead Lines
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1035,7 +1035,7 @@ export default function CscsCardModule5Section3() {
                         CAT (Cable Avoidance Tool)
                       </p>
                     </div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       A hand-held receiver that detects electromagnetic signals from buried
                       services. Operates in three modes:{' '}
                       <strong className="text-white">Power mode</strong>
@@ -1053,7 +1053,7 @@ export default function CscsCardModule5Section3() {
                       <Cable className="h-4 w-4 text-amber-400" />
                       <p className="text-sm font-medium text-amber-400">Genny (Signal Generator)</p>
                     </div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       A separate transmitter that is connected to a known service at an access point
                       (e.g., a valve, junction box, or exposed section). It applies a distinct
                       signal that the CAT can detect and trace in Genny mode. Using a CAT and Genny
@@ -1074,32 +1074,32 @@ export default function CscsCardModule5Section3() {
                     <div className="w-6 h-4 rounded bg-black border border-white/30 flex-shrink-0" />
                     <div>
                       <p className="text-xs font-medium text-white">Black</p>
-                      <p className="text-[10px] text-white/60">Electricity</p>
+                      <p className="text-[10px] text-white">Electricity</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2 p-2 rounded bg-gray-900/50 border border-white/10">
                     <div className="w-6 h-4 rounded bg-blue-500 flex-shrink-0" />
                     <div>
                       <p className="text-xs font-medium text-white">Blue</p>
-                      <p className="text-[10px] text-white/60">Water</p>
+                      <p className="text-[10px] text-white">Water</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2 p-2 rounded bg-gray-900/50 border border-white/10">
                     <div className="w-6 h-4 rounded bg-yellow-500 flex-shrink-0" />
                     <div>
                       <p className="text-xs font-medium text-white">Yellow</p>
-                      <p className="text-[10px] text-white/60">Gas</p>
+                      <p className="text-[10px] text-white">Gas</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2 p-2 rounded bg-gray-900/50 border border-white/10">
                     <div className="w-6 h-4 rounded bg-green-500 flex-shrink-0" />
                     <div>
                       <p className="text-xs font-medium text-white">Green</p>
-                      <p className="text-[10px] text-white/60">Telecommunications</p>
+                      <p className="text-[10px] text-white">Telecommunications</p>
                     </div>
                   </div>
                 </div>
-                <p className="text-xs text-white/50 mt-3 italic">
+                <p className="text-xs text-white mt-3 italic">
                   Not all underground services are colour-coded &mdash; older installations may have
                   different colours or no colour coding at all. Always use locating equipment.
                 </p>
@@ -1107,7 +1107,7 @@ export default function CscsCardModule5Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Safe Digging Practices</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1178,12 +1178,12 @@ export default function CscsCardModule5Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Site Distribution Boards</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Electricity on a construction site is distributed through a hierarchy of
                   distribution boards, from the main incoming supply down to individual socket
                   outlets:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1214,7 +1214,7 @@ export default function CscsCardModule5Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">RCD Protection Requirements</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1242,11 +1242,11 @@ export default function CscsCardModule5Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   IP Ratings for Outdoor Equipment
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Electrical equipment used outdoors on construction sites must have an appropriate
                   Ingress Protection (IP) rating to withstand the conditions:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1270,7 +1270,7 @@ export default function CscsCardModule5Section3() {
                 <p className="text-sm font-medium text-white mb-3">
                   Cable Routing, Protection &amp; Generator Safety
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1359,7 +1359,7 @@ export default function CscsCardModule5Section3() {
                     <p className="text-xs font-bold text-red-400 mb-1">
                       STEP 1 &mdash; Do NOT Touch
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Do not touch the person. Do not use your bare hands or any conductive material
                       to attempt to move them. Assess the situation from a safe distance and
                       identify the electrical source.
@@ -1370,7 +1370,7 @@ export default function CscsCardModule5Section3() {
                     <p className="text-xs font-bold text-orange-400 mb-1">
                       STEP 2 &mdash; Isolate the Supply
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       If it is safe to do so, isolate the electrical supply. Switch off at the
                       socket, unplug the equipment, or trip the circuit breaker/RCD at the
                       distribution board. For high-voltage incidents (overhead lines, substations),
@@ -1383,7 +1383,7 @@ export default function CscsCardModule5Section3() {
                     <p className="text-xs font-bold text-yellow-400 mb-1">
                       STEP 3 &mdash; Separate if Cannot Isolate
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       If you cannot isolate the supply, use a dry non-conductive object to push the
                       person clear of the live source. A wooden broom handle, a dry length of
                       timber, dry clothing, or a rubber mat can be used. Stand on a dry,
@@ -1398,7 +1398,7 @@ export default function CscsCardModule5Section3() {
                         STEP 4 &mdash; Call Emergency Services
                       </p>
                     </div>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Call 999 immediately (or the site emergency number). State that it is an
                       electrical incident, give the location, the number of casualties, and their
                       condition. Do not delay calling &mdash; even if the person appears to recover,
@@ -1411,7 +1411,7 @@ export default function CscsCardModule5Section3() {
                     <p className="text-xs font-bold text-blue-400 mb-1">
                       STEP 5 &mdash; Administer First Aid
                     </p>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Once the person is free from the electrical source and it is safe to touch
                       them, assess their condition. If they are not breathing and have no pulse,
                       begin CPR immediately. If available, use an AED (Automated External
@@ -1425,7 +1425,7 @@ export default function CscsCardModule5Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Reporting &amp; Investigation</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1490,7 +1490,7 @@ export default function CscsCardModule5Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1504,7 +1504,7 @@ export default function CscsCardModule5Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-5">

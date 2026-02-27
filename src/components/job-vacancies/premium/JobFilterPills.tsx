@@ -78,7 +78,7 @@ const FilterCategory = ({
     {/* Category Label */}
     <div className="flex items-center gap-1.5 px-2 py-1 rounded-lg bg-white/5">
       <Icon className={cn('h-3.5 w-3.5', iconColor)} />
-      <span className="text-xs font-medium text-white/60">{label}</span>
+      <span className="text-xs font-medium text-white">{label}</span>
     </div>
 
     {/* Options */}
@@ -98,7 +98,7 @@ const FilterCategory = ({
             'border transition-all duration-200',
             isSelected
               ? 'bg-amber-500/30 border-amber-500/50 text-amber-300'
-              : 'bg-white/5 border-white/10 text-white/60 hover:bg-white/10 hover:text-white/80'
+              : 'bg-white/5 border-white/10 text-white hover:bg-white/10 hover:text-white'
           )}
         >
           {isSelected && <Check className="h-3 w-3 mr-1 inline" />}
@@ -218,7 +218,7 @@ const JobFilterPills = ({
                 variant="ghost"
                 size="sm"
                 onClick={clearAllFilters}
-                className="h-7 px-2 text-xs text-white/60 hover:text-white hover:bg-white/10"
+                className="h-7 px-2 text-xs text-white hover:text-white hover:bg-white/10"
               >
                 <X className="h-3 w-3 mr-1" />
                 Clear all
@@ -244,7 +244,7 @@ const JobFilterPills = ({
                 variant="ghost"
                 size="icon"
                 onClick={scrollLeft}
-                className="h-8 w-8 bg-background/80 backdrop-blur-sm border border-white/10 text-white/60 hover:text-white rounded-full shadow-lg"
+                className="h-8 w-8 bg-background/80 backdrop-blur-sm border border-white/10 text-white hover:text-white rounded-full shadow-lg"
               >
                 <ChevronLeft className="h-4 w-4" />
               </Button>
@@ -266,7 +266,7 @@ const JobFilterPills = ({
                 variant="ghost"
                 size="icon"
                 onClick={scrollRight}
-                className="h-8 w-8 bg-background/80 backdrop-blur-sm border border-white/10 text-white/60 hover:text-white rounded-full shadow-lg"
+                className="h-8 w-8 bg-background/80 backdrop-blur-sm border border-white/10 text-white hover:text-white rounded-full shadow-lg"
               >
                 <ChevronRight className="h-4 w-4" />
               </Button>

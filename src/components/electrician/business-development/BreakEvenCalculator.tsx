@@ -117,7 +117,7 @@ const BreakEvenCalculator = () => {
             variant="ghost"
             size="icon"
             onClick={() => navigate(-1)}
-            className="text-white/70 hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
+            className="text-white hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
           >
             <ChevronLeft className="h-6 w-6" />
           </Button>
@@ -126,7 +126,7 @@ const BreakEvenCalculator = () => {
             variant="ghost"
             size="icon"
             onClick={resetCalculator}
-            className="text-white/70 hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
+            className="text-white hover:text-white hover:bg-white/10 active:scale-[0.98] touch-manipulation"
           >
             <RotateCcw className="h-5 w-5" />
           </Button>
@@ -147,7 +147,7 @@ const BreakEvenCalculator = () => {
             <button
               onClick={() => setActiveTab('business')}
               className={`flex-1 py-2.5 px-4 rounded-lg text-ios-subhead font-medium relative z-10 transition-colors touch-manipulation active:scale-[0.98] ${
-                activeTab === 'business' ? 'text-black' : 'text-white/70'
+                activeTab === 'business' ? 'text-black' : 'text-white'
               }`}
             >
               <span className="flex items-center justify-center gap-2">
@@ -158,7 +158,7 @@ const BreakEvenCalculator = () => {
             <button
               onClick={() => setActiveTab('job')}
               className={`flex-1 py-2.5 px-4 rounded-lg text-ios-subhead font-medium relative z-10 transition-colors touch-manipulation active:scale-[0.98] ${
-                activeTab === 'job' ? 'text-black' : 'text-white/70'
+                activeTab === 'job' ? 'text-black' : 'text-white'
               }`}
             >
               <span className="flex items-center justify-center gap-2">
@@ -189,12 +189,12 @@ const BreakEvenCalculator = () => {
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/10 rounded-full blur-3xl" />
                 <div className="relative">
-                  <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">
+                  <p className="text-ios-caption-1 text-white uppercase tracking-wide">
                     Break-Even Target
                   </p>
                   <p className="text-4xl sm:text-5xl font-bold text-elec-yellow mt-1 tabular-nums">
                     {Math.ceil(breakEvenJobs)}
-                    <span className="text-lg text-white/50 font-normal"> jobs/month</span>
+                    <span className="text-lg text-white font-normal"> jobs/month</span>
                   </p>
                   <div className="flex items-center gap-2 mt-3">
                     <businessStatus.icon className={`h-4 w-4 text-${businessStatus.color}-400`} />
@@ -208,19 +208,19 @@ const BreakEvenCalculator = () => {
               {/* Business Stats Scroll */}
               <div className="flex gap-3 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
                 <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[140px] border border-white/10">
-                  <p className="text-ios-caption-1 text-white/50">Jobs/Week</p>
+                  <p className="text-ios-caption-1 text-white">Jobs/Week</p>
                   <p className="text-ios-title-3 font-semibold text-white mt-1">
                     {jobsPerWeek.toFixed(1)}
                   </p>
                 </div>
                 <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[140px] border border-white/10">
-                  <p className="text-ios-caption-1 text-white/50">Revenue Target</p>
+                  <p className="text-ios-caption-1 text-white">Revenue Target</p>
                   <p className="text-ios-title-3 font-semibold text-white mt-1">
                     £{breakEvenRevenue.toFixed(0)}
                   </p>
                 </div>
                 <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[140px] border border-white/10">
-                  <p className="text-ios-caption-1 text-white/50">Margin</p>
+                  <p className="text-ios-caption-1 text-white">Margin</p>
                   <p className="text-ios-title-3 font-semibold text-white mt-1">
                     {(contributionMargin * 100).toFixed(0)}%
                   </p>
@@ -229,7 +229,7 @@ const BreakEvenCalculator = () => {
 
               {/* Business Inputs */}
               <section>
-                <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+                <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-3">
                   Monthly Costs
                 </p>
                 <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 divide-y divide-white/10">
@@ -268,19 +268,19 @@ const BreakEvenCalculator = () => {
 
               {/* Business Analysis */}
               <section>
-                <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+                <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-3">
                   Analysis
                 </p>
                 <div className="bg-white/5 rounded-2xl border border-white/10 p-4 space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-ios-body text-white/70">Contribution/Job</span>
+                    <span className="text-ios-body text-white">Contribution/Job</span>
                     <span className="text-ios-body font-medium text-white">
                       £{contributionPerJob.toFixed(2)}
                     </span>
                   </div>
                   <div className="h-px bg-white/10" />
                   <div className="flex justify-between items-center">
-                    <span className="text-ios-body text-white/70">Monthly Revenue</span>
+                    <span className="text-ios-body text-white">Monthly Revenue</span>
                     <span className="text-ios-body font-medium text-white">
                       £{breakEvenRevenue.toFixed(0)}
                     </span>
@@ -304,7 +304,7 @@ const BreakEvenCalculator = () => {
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-elec-yellow/10 rounded-full blur-3xl" />
                 <div className="relative">
-                  <p className="text-ios-caption-1 text-white/60 uppercase tracking-wide">
+                  <p className="text-ios-caption-1 text-white uppercase tracking-wide">
                     Target Quote
                   </p>
                   <p className="text-4xl sm:text-5xl font-bold text-elec-yellow mt-1 tabular-nums">
@@ -328,7 +328,7 @@ const BreakEvenCalculator = () => {
                   </p>
                 </div>
                 <div className="flex-shrink-0 bg-white/5 rounded-2xl p-4 min-w-[140px] border border-white/10">
-                  <p className="text-ios-caption-1 text-white/50">Total Costs</p>
+                  <p className="text-ios-caption-1 text-white">Total Costs</p>
                   <p className="text-ios-title-3 font-semibold text-white mt-1">
                     £{totalCosts.toFixed(0)}
                   </p>
@@ -343,7 +343,7 @@ const BreakEvenCalculator = () => {
 
               {/* Job Costs */}
               <section>
-                <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+                <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-3">
                   Job Costs
                 </p>
                 <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10 divide-y divide-white/10">
@@ -387,7 +387,7 @@ const BreakEvenCalculator = () => {
 
               {/* Profit Target */}
               <section>
-                <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+                <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-3">
                   Profit Target
                 </p>
                 <div className="bg-white/5 rounded-2xl overflow-hidden border border-white/10">
@@ -406,19 +406,19 @@ const BreakEvenCalculator = () => {
 
               {/* Job Cost Breakdown */}
               <section>
-                <p className="text-ios-footnote text-white/50 uppercase tracking-wide px-1 mb-3">
+                <p className="text-ios-footnote text-white uppercase tracking-wide px-1 mb-3">
                   Cost Breakdown
                 </p>
                 <div className="bg-white/5 rounded-2xl border border-white/10 p-4 space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-ios-body text-white/70">Materials</span>
+                    <span className="text-ios-body text-white">Materials</span>
                     <span className="text-ios-body font-medium text-white">
                       £{jobInputs.materialCosts.toFixed(2)}
                     </span>
                   </div>
                   <div className="h-px bg-white/10" />
                   <div className="flex justify-between items-center">
-                    <span className="text-ios-body text-white/70">
+                    <span className="text-ios-body text-white">
                       Labour ({jobInputs.labourHours}h × £{jobInputs.hourlyRate})
                     </span>
                     <span className="text-ios-body font-medium text-white">
@@ -427,7 +427,7 @@ const BreakEvenCalculator = () => {
                   </div>
                   <div className="h-px bg-white/10" />
                   <div className="flex justify-between items-center">
-                    <span className="text-ios-body text-white/70">Overheads</span>
+                    <span className="text-ios-body text-white">Overheads</span>
                     <span className="text-ios-body font-medium text-white">
                       £{jobInputs.overheads.toFixed(2)}
                     </span>

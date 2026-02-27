@@ -282,7 +282,7 @@ const Level3Module1Section3_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section3">
@@ -371,7 +371,7 @@ const Level3Module1Section3_1 = () => {
 
             <div className="my-6 p-4 rounded bg-red-500/10 border border-red-500/20">
               <p className="text-sm font-medium text-red-400 mb-2">Real Consequence:</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 An electrician tested a circuit "dead" using a multimeter that was set to resistance
                 mode. The display showed "0" - which he mistook for 0 volts. When he cut the cable,
                 the arc flash burned 40% of his body. He survived, but lost his career and spent two
@@ -409,7 +409,7 @@ const Level3Module1Section3_1 = () => {
                 <p className="text-sm font-medium text-elec-yellow mb-1">
                   Step 1: Prove Your Tester
                 </p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   Before testing anything, confirm your voltage indicator works. Use a proving unit
                   or known live source. If it doesn't show voltage here, it won't show voltage on a
                   live circuit either - and you'd never know the circuit was live.
@@ -420,7 +420,7 @@ const Level3Module1Section3_1 = () => {
                 <p className="text-sm font-medium text-elec-yellow mb-1">
                   Step 2: Identify and Isolate
                 </p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   Identify the correct circuit. Check for ALL sources of supply - not just the
                   obvious ones. Solar PV, battery storage, UPS systems, generators, and alternative
                   feeds can all back-feed a circuit. Switch off or disconnect ALL supplies.
@@ -431,7 +431,7 @@ const Level3Module1Section3_1 = () => {
                 <p className="text-sm font-medium text-elec-yellow mb-1">
                   Step 3: Secure the Isolation
                 </p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   Lock off isolators with personal padlocks, withdraw fuses, or post a guard. Attach
                   warning labels with your name, date, and contact details. This prevents anyone
                   restoring power while you're working. Your lock, your life.
@@ -440,7 +440,7 @@ const Level3Module1Section3_1 = () => {
 
               <div className="p-4 rounded bg-white/5 border-l-2 border-elec-yellow">
                 <p className="text-sm font-medium text-elec-yellow mb-1">Step 4: Prove Dead</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   At the point of work, test between ALL conductors: L-N, L-E, N-E (single phase) or
                   L1-L2, L2-L3, L3-L1, and each line to neutral and earth (three phase). A voltage
                   on ANY combination means the circuit is NOT dead.
@@ -451,7 +451,7 @@ const Level3Module1Section3_1 = () => {
                 <p className="text-sm font-medium text-elec-yellow mb-1">
                   Step 5: Re-Prove Your Tester
                 </p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   Immediately after proving dead, re-test your voltage indicator on a known live
                   source or proving unit. This confirms your tester was working throughout. If it
                   fails now, you cannot trust your "dead" reading - go back to Step 1.
@@ -517,7 +517,7 @@ const Level3Module1Section3_1 = () => {
               <p className="text-sm font-medium text-white mb-2">
                 Two-Pole Voltage Indicators (The Right Tool)
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Purpose-designed voltage indicators use two probes and require actual contact with
                 conductors. They typically have LED or LCD displays, audible indication, and are
                 designed to fail safe - if they're not working properly, they show it. They can't be
@@ -525,7 +525,7 @@ const Level3Module1Section3_1 = () => {
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Trade Example:</strong> A domestic rewire. You isolate at the consumer unit,
               but the old installation has multiple supplies - an immersion heater on a separate
               circuit from an older board. Your voltage indicator, properly used at each point of
@@ -558,29 +558,29 @@ const Level3Module1Section3_1 = () => {
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-1">Solar PV</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   DC present in daylight even with AC isolated
                 </p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-1">Battery Storage</p>
-                <p className="text-white/90 text-xs">Can back-feed AC supply</p>
+                <p className="text-white text-xs">Can back-feed AC supply</p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-1">Generators</p>
-                <p className="text-white/90 text-xs">May auto-start on mains failure</p>
+                <p className="text-white text-xs">May auto-start on mains failure</p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-1">UPS Systems</p>
-                <p className="text-white/90 text-xs">Output remains live after mains isolation</p>
+                <p className="text-white text-xs">Output remains live after mains isolation</p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-1">Dual Supplies</p>
-                <p className="text-white/90 text-xs">Automatic changeover switches</p>
+                <p className="text-white text-xs">Automatic changeover switches</p>
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white mb-1">Capacitors</p>
-                <p className="text-white/90 text-xs">Store charge after isolation</p>
+                <p className="text-white text-xs">Store charge after isolation</p>
               </div>
             </div>
 
@@ -588,7 +588,7 @@ const Level3Module1Section3_1 = () => {
               <p className="text-sm font-medium text-red-400 mb-2">
                 Hidden Danger - Borrowed Neutrals:
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 In older or incorrectly wired installations, circuits may share neutrals (borrowed
                 neutrals). Isolating one circuit doesn't isolate the neutral if another circuit is
                 feeding it. The neutral conductor can carry full load current and become a shock
@@ -678,7 +678,7 @@ const Level3Module1Section3_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -733,7 +733,7 @@ const Level3Module1Section3_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section3">

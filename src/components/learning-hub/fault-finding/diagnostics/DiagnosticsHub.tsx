@@ -116,7 +116,7 @@ const DiagnosticsHub = ({ onSelectDiagnostic }: DiagnosticsHubProps) => {
     <motion.div className="space-y-4" variants={containerVariants} initial="hidden" animate="show">
       {/* Search */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white/30" />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-white" />
         <Input
           placeholder="Search symptoms, readings..."
           value={searchQuery}
@@ -141,7 +141,7 @@ const DiagnosticsHub = ({ onSelectDiagnostic }: DiagnosticsHubProps) => {
           onClick={() => setSelectedCategory(null)}
           className={cn(
             'px-3 py-1.5 rounded-full text-[13px] font-medium touch-manipulation transition-colors',
-            selectedCategory === null ? 'bg-white/10 text-white' : 'bg-white/[0.03] text-white/50'
+            selectedCategory === null ? 'bg-white/10 text-white' : 'bg-white/[0.03] text-white'
           )}
         >
           All
@@ -154,7 +154,7 @@ const DiagnosticsHub = ({ onSelectDiagnostic }: DiagnosticsHubProps) => {
               'px-3 py-1.5 rounded-full text-[13px] font-medium touch-manipulation transition-colors',
               selectedCategory === cat.id
                 ? 'bg-white/10 text-white'
-                : 'bg-white/[0.03] text-white/50'
+                : 'bg-white/[0.03] text-white'
             )}
           >
             {cat.title.replace(' Analysis', '').replace(' & Current Measurement', '')}
@@ -164,7 +164,7 @@ const DiagnosticsHub = ({ onSelectDiagnostic }: DiagnosticsHubProps) => {
 
       {/* Results */}
       <div>
-        <p className="text-[13px] font-medium text-white/40 uppercase tracking-wider px-1 mb-2">
+        <p className="text-[13px] font-medium text-white uppercase tracking-wider px-1 mb-2">
           {filteredDiagnostics.length} Diagnostics
         </p>
         <div className="rounded-2xl bg-white/[0.03] border border-white/[0.06] overflow-hidden divide-y divide-white/[0.06]">
@@ -194,13 +194,13 @@ const DiagnosticsHub = ({ onSelectDiagnostic }: DiagnosticsHubProps) => {
                   <h3 className="text-[15px] font-medium text-white leading-tight">
                     {diagnostic.symptom}
                   </h3>
-                  <p className="text-[13px] text-white/50 leading-tight mt-0.5 line-clamp-1">
+                  <p className="text-[13px] text-white leading-tight mt-0.5 line-clamp-1">
                     {diagnostic.measurement}
                   </p>
                 </div>
                 <div className="flex items-center gap-2 flex-shrink-0">
                   <div className={cn('w-2 h-2 rounded-full', getSeverityBg(diagnostic.severity))} />
-                  <ChevronRight className="h-4 w-4 text-white/20" />
+                  <ChevronRight className="h-4 w-4 text-white" />
                 </div>
               </motion.div>
             );
@@ -211,8 +211,8 @@ const DiagnosticsHub = ({ onSelectDiagnostic }: DiagnosticsHubProps) => {
       {filteredDiagnostics.length === 0 && (
         <motion.div variants={itemVariants}>
           <div className="flex flex-col items-center gap-2 py-8 text-center">
-            <Search className="h-8 w-8 text-white/20" />
-            <p className="text-[13px] text-white/40">No diagnostics found</p>
+            <Search className="h-8 w-8 text-white" />
+            <p className="text-[13px] text-white">No diagnostics found</p>
           </div>
         </motion.div>
       )}
@@ -220,8 +220,8 @@ const DiagnosticsHub = ({ onSelectDiagnostic }: DiagnosticsHubProps) => {
       {/* Info notice */}
       <motion.div variants={itemVariants}>
         <div className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-white/[0.02]">
-          <AlertTriangle className="h-4 w-4 text-white/30 flex-shrink-0" />
-          <p className="text-[12px] text-white/40">
+          <AlertTriangle className="h-4 w-4 text-white flex-shrink-0" />
+          <p className="text-[12px] text-white">
             Severity indicated by dot colour (red = critical)
           </p>
         </div>

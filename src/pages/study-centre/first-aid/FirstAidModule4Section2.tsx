@@ -192,7 +192,7 @@ export default function FirstAidModule4Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-4">
@@ -215,7 +215,7 @@ export default function FirstAidModule4Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Seizures, Diabetes &amp; Anaphylaxis
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Managing tonic-clonic seizures, recognising diabetic emergencies, treating hypoglycaemia
             and hyperglycaemia, and understanding status epilepticus
           </p>
@@ -314,7 +314,7 @@ export default function FirstAidModule4Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Other Types of Seizure</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -377,7 +377,7 @@ export default function FirstAidModule4Section2() {
                   <div className="w-full max-w-md bg-gradient-to-r from-red-500/20 to-red-400/20 border border-red-500/40 rounded-xl p-4 text-center">
                     <p className="text-lg font-bold text-red-400">Phase 1</p>
                     <p className="text-sm font-semibold text-white">Tonic Phase</p>
-                    <p className="text-xs text-white/70 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Sudden loss of consciousness. The body goes rigid as all muscles contract. The
                       casualty may fall to the ground and cry out as air is forced through the vocal
                       cords. The jaw clenches. Lasts{' '}
@@ -393,7 +393,7 @@ export default function FirstAidModule4Section2() {
                   <div className="w-full max-w-md bg-gradient-to-r from-amber-500/20 to-amber-400/20 border border-amber-500/40 rounded-xl p-4 text-center">
                     <p className="text-lg font-bold text-amber-400">Phase 2</p>
                     <p className="text-sm font-semibold text-white">Clonic Phase</p>
-                    <p className="text-xs text-white/70 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Rhythmic jerking movements of the limbs and body. The casualty may bite their
                       tongue, froth at the mouth, or lose bladder or bowel control. Breathing may be
                       irregular or temporarily absent. Typically lasts{' '}
@@ -409,7 +409,7 @@ export default function FirstAidModule4Section2() {
                   <div className="w-full max-w-md bg-gradient-to-r from-blue-500/20 to-blue-400/20 border border-blue-500/40 rounded-xl p-4 text-center">
                     <p className="text-lg font-bold text-blue-400">Phase 3</p>
                     <p className="text-sm font-semibold text-white">Post-Ictal Phase</p>
-                    <p className="text-xs text-white/70 mt-1">
+                    <p className="text-xs text-white mt-1">
                       Jerking stops. The casualty may be confused, drowsy, disorientated, or have a
                       headache. They may have no memory of the seizure. May last{' '}
                       <strong className="text-white">minutes to hours</strong>. Check airway, place
@@ -450,7 +450,7 @@ export default function FirstAidModule4Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">During the Seizure</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -493,7 +493,7 @@ export default function FirstAidModule4Section2() {
                     What NOT to Do During a Seizure
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">&times;</span>
                     <span>
@@ -533,7 +533,7 @@ export default function FirstAidModule4Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">After the Seizure Stops</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -575,7 +575,7 @@ export default function FirstAidModule4Section2() {
                   <Clock className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">When to Call 999 for a Seizure</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -634,7 +634,7 @@ export default function FirstAidModule4Section2() {
                   <Activity className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Status Epilepticus</p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     Status epilepticus is defined as a seizure lasting{' '}
                     <strong className="text-white">longer than 5 minutes</strong>, or{' '}
@@ -689,7 +689,7 @@ export default function FirstAidModule4Section2() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-blue-400 mb-2">Type 1 Diabetes</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400/60 flex-shrink-0" />
                       <span>
@@ -737,7 +737,7 @@ export default function FirstAidModule4Section2() {
                 </div>
                 <div className="bg-green-500/10 border border-green-500/30 p-4 rounded-lg">
                   <p className="text-sm font-medium text-green-400 mb-2">Type 2 Diabetes</p>
-                  <ul className="text-sm text-white/80 space-y-1.5">
+                  <ul className="text-sm text-white space-y-1.5">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-green-400/60 flex-shrink-0" />
                       <span>
@@ -836,11 +836,11 @@ export default function FirstAidModule4Section2() {
                         Hypoglycaemia (Low Sugar)
                       </p>
                     </div>
-                    <p className="text-xs text-white/60 mb-2">
+                    <p className="text-xs text-white mb-2">
                       Blood glucose &lt;4 mmol/L &mdash; rapid onset (minutes)
                     </p>
                     <p className="text-xs font-medium text-white mb-1.5">Causes:</p>
-                    <ul className="text-xs text-white/80 space-y-1 mb-3">
+                    <ul className="text-xs text-white space-y-1 mb-3">
                       <li className="flex items-start gap-1.5">
                         <span className="mt-1 w-1 h-1 rounded-full bg-amber-400/60 flex-shrink-0" />
                         <span>Too much insulin</span>
@@ -859,7 +859,7 @@ export default function FirstAidModule4Section2() {
                       </li>
                     </ul>
                     <p className="text-xs font-medium text-white mb-1.5">Signs &amp; Symptoms:</p>
-                    <ul className="text-xs text-white/80 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-1.5">
                         <span className="mt-1 w-1 h-1 rounded-full bg-amber-400/60 flex-shrink-0" />
                         <span>Shaking, trembling</span>
@@ -895,11 +895,11 @@ export default function FirstAidModule4Section2() {
                         Hyperglycaemia (High Sugar)
                       </p>
                     </div>
-                    <p className="text-xs text-white/60 mb-2">
+                    <p className="text-xs text-white mb-2">
                       Blood glucose significantly elevated &mdash; slow onset (hours/days)
                     </p>
                     <p className="text-xs font-medium text-white mb-1.5">Causes:</p>
-                    <ul className="text-xs text-white/80 space-y-1 mb-3">
+                    <ul className="text-xs text-white space-y-1 mb-3">
                       <li className="flex items-start gap-1.5">
                         <span className="mt-1 w-1 h-1 rounded-full bg-purple-400/60 flex-shrink-0" />
                         <span>Missed insulin dose</span>
@@ -918,7 +918,7 @@ export default function FirstAidModule4Section2() {
                       </li>
                     </ul>
                     <p className="text-xs font-medium text-white mb-1.5">Signs &amp; Symptoms:</p>
-                    <ul className="text-xs text-white/80 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-1.5">
                         <span className="mt-1 w-1 h-1 rounded-full bg-purple-400/60 flex-shrink-0" />
                         <span>Excessive thirst</span>
@@ -956,7 +956,7 @@ export default function FirstAidModule4Section2() {
                       Treating Hypoglycaemia &mdash; Conscious Casualty
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-3">
+                  <p className="text-sm text-white mb-3">
                     If the casualty is conscious, alert, and able to swallow safely, give
                     fast-acting sugar immediately, followed by slow-release carbohydrate:
                   </p>
@@ -965,7 +965,7 @@ export default function FirstAidModule4Section2() {
                       <p className="text-sm font-medium text-amber-400 mb-1">
                         Step 1: Fast-Acting Sugar
                       </p>
-                      <ul className="text-xs text-white/80 space-y-1">
+                      <ul className="text-xs text-white space-y-1">
                         <li className="flex items-start gap-2">
                           <span className="mt-1 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                           <span>Glucose tablets (3&ndash;5 tablets)</span>
@@ -991,7 +991,7 @@ export default function FirstAidModule4Section2() {
                       <p className="text-sm font-medium text-green-400 mb-1">
                         Step 2: Slow-Release Carbohydrate
                       </p>
-                      <ul className="text-xs text-white/80 space-y-1">
+                      <ul className="text-xs text-white space-y-1">
                         <li className="flex items-start gap-2">
                           <span className="mt-1 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                           <span>Sandwich (bread, toast)</span>
@@ -1020,7 +1020,7 @@ export default function FirstAidModule4Section2() {
                       Treating Hypoglycaemia &mdash; Unconscious Casualty
                     </p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="text-red-400 font-bold mt-0.5 flex-shrink-0">&times;</span>
                       <span>
@@ -1066,13 +1066,13 @@ export default function FirstAidModule4Section2() {
                     <Activity className="h-5 w-5 text-purple-400" />
                     <p className="text-sm font-medium text-purple-400">Treating Hyperglycaemia</p>
                   </div>
-                  <div className="text-sm text-white/80 space-y-2">
+                  <div className="text-sm text-white space-y-2">
                     <p>
                       Hyperglycaemia develops over hours or days and is less likely to present as an
                       acute emergency. However, if left untreated, it can progress to
                       life-threatening complications:
                     </p>
-                    <ul className="text-sm text-white/80 space-y-1">
+                    <ul className="text-sm text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>
@@ -1113,7 +1113,7 @@ export default function FirstAidModule4Section2() {
                     The Golden Rule: Unsure? Give Sugar
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If you are unsure whether a diabetic casualty is experiencing hypoglycaemia or
                   hyperglycaemia,{' '}
                   <strong className="text-white">
@@ -1152,7 +1152,7 @@ export default function FirstAidModule4Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Anaphylaxis &mdash; Key Reminders
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-rose-400 mt-0.5 flex-shrink-0" />
                     <span>
@@ -1207,11 +1207,11 @@ export default function FirstAidModule4Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Differentiating Medical Emergencies
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Several medical emergencies can present with similar symptoms. Use these
                   distinguishing features to help guide your assessment:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1253,12 +1253,12 @@ export default function FirstAidModule4Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Workplace Considerations</p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     As an electrician, you should be aware that some of these medical emergencies
                     have specific workplace implications:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1306,7 +1306,7 @@ export default function FirstAidModule4Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1320,7 +1320,7 @@ export default function FirstAidModule4Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-4">

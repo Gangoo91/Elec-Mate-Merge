@@ -251,7 +251,7 @@ const HNCModule7Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section1">
@@ -273,7 +273,7 @@ const HNCModule7Section1_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Cable Sizing Calculations
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Current-carrying capacity, voltage drop, correction factors, thermal constraints and BS
             7671 methodology
           </p>
@@ -436,7 +436,7 @@ const HNCModule7Section1_3 = () => {
                 For safe operation, the following relationship must be satisfied:
               </p>
               <p className="text-center font-mono text-lg mt-2 text-white">Ib ≤ In ≤ Iz</p>
-              <p className="text-sm text-white/80 mt-2">
+              <p className="text-sm text-white mt-2">
                 The design current must not exceed the protective device rating, which must not
                 exceed the cable's effective current-carrying capacity.
               </p>
@@ -520,7 +520,7 @@ const HNCModule7Section1_3 = () => {
               <p className="text-center font-mono text-lg text-white">
                 It ≥ In / (Ca × Cg × Ci × Cc)
               </p>
-              <p className="text-sm text-white/80 mt-2">
+              <p className="text-sm text-white mt-2">
                 The minimum tabulated current rating (It) must be greater than or equal to the
                 protective device rating divided by the product of all applicable correction
                 factors.
@@ -640,7 +640,7 @@ const HNCModule7Section1_3 = () => {
               <p className="text-center font-mono text-lg text-white">
                 VD = (mV/A/m × Ib × L) / 1000
               </p>
-              <p className="text-sm text-white/80 mt-2">
+              <p className="text-sm text-white mt-2">
                 Where mV/A/m is the tabulated voltage drop per ampere per metre from BS 7671
                 Appendix 4, Ib is the design current, and L is the cable length in metres.
               </p>
@@ -752,7 +752,7 @@ const HNCModule7Section1_3 = () => {
             <div className="my-6 p-4 rounded-lg bg-red-500/10 border border-red-500/30">
               <p className="text-sm font-medium text-red-400 mb-2">The Adiabatic Equation</p>
               <p className="text-center font-mono text-lg text-white">S = √(I²t) / k</p>
-              <div className="text-sm text-white/80 mt-3 space-y-1">
+              <div className="text-sm text-white mt-3 space-y-1">
                 <p>
                   <strong>S</strong> = Minimum conductor cross-sectional area (mm²)
                 </p>
@@ -846,7 +846,7 @@ const HNCModule7Section1_3 = () => {
                 <strong>Given:</strong> Prospective fault current = 2000A, disconnection time =
                 0.4s, PVC-insulated copper cable, selected cable = 4mm²
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>k = 115 (copper/PVC from Table 43.1)</p>
                 <p className="mt-2">S = √(I²t) / k</p>
                 <p>S = √(2000² × 0.4) / 115</p>
@@ -906,26 +906,26 @@ const HNCModule7Section1_3 = () => {
                 distribution board. Installation: Clipped direct, 35°C ambient, grouped with 3 other
                 circuits.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Step 1: Calculate design current (Ib)</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Step 1: Calculate design current (Ib)</p>
                 <p>Ib = P / V = 9000 / 230 = 39.1A</p>
-                <p className="mt-2 text-white/60">Step 2: Select protective device</p>
+                <p className="mt-2 text-white">Step 2: Select protective device</p>
                 <p>In = 40A (MCB Type B)</p>
-                <p className="mt-2 text-white/60">Step 3: Determine correction factors</p>
+                <p className="mt-2 text-white">Step 3: Determine correction factors</p>
                 <p>Ca = 0.94 (35°C ambient, Table 4B1)</p>
                 <p>Cg = 0.65 (4 circuits grouped, Table 4C1)</p>
                 <p>Ci = 1.0 (no thermal insulation)</p>
                 <p>Cc = 1.0 (MCB protection)</p>
-                <p className="mt-2 text-white/60">Step 4: Calculate minimum It</p>
+                <p className="mt-2 text-white">Step 4: Calculate minimum It</p>
                 <p>It ≥ In / (Ca × Cg × Ci × Cc)</p>
                 <p>It ≥ 40 / (0.94 × 0.65 × 1.0 × 1.0)</p>
                 <p>It ≥ 40 / 0.611 = 65.5A</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Step 5: Select cable from Table 4D2A (Method C)
                 </p>
                 <p>10mm² = 63A (insufficient)</p>
                 <p className="text-green-400">16mm² = 85A (satisfactory)</p>
-                <p className="mt-2 text-white/60">Step 6: Check voltage drop</p>
+                <p className="mt-2 text-white">Step 6: Check voltage drop</p>
                 <p>16mm² mV/A/m = 2.8</p>
                 <p>VD = (2.8 × 39.1 × 40) / 1000 = 4.4V</p>
                 <p className="text-green-400">4.4V &lt; 11.5V limit - PASS</p>
@@ -940,19 +940,19 @@ const HNCModule7Section1_3 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> 20A circuit, 80m cable run, no derating factors apply.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Current capacity check:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Current capacity check:</p>
                 <p>It ≥ 20A → 2.5mm² (27A rating) sufficient</p>
-                <p className="mt-2 text-white/60">Voltage drop check for 2.5mm²:</p>
+                <p className="mt-2 text-white">Voltage drop check for 2.5mm²:</p>
                 <p>VD = (18 × 20 × 80) / 1000 = 28.8V</p>
                 <p className="text-red-400">28.8V &gt; 11.5V - FAILS</p>
-                <p className="mt-2 text-white/60">Try 4mm²:</p>
+                <p className="mt-2 text-white">Try 4mm²:</p>
                 <p>VD = (11 × 20 × 80) / 1000 = 17.6V</p>
                 <p className="text-red-400">17.6V &gt; 11.5V - FAILS</p>
-                <p className="mt-2 text-white/60">Try 6mm²:</p>
+                <p className="mt-2 text-white">Try 6mm²:</p>
                 <p>VD = (7.3 × 20 × 80) / 1000 = 11.7V</p>
                 <p className="text-red-400">11.7V &gt; 11.5V - FAILS (marginally)</p>
-                <p className="mt-2 text-white/60">Try 10mm²:</p>
+                <p className="mt-2 text-white">Try 10mm²:</p>
                 <p>VD = (4.4 × 20 × 80) / 1000 = 7.0V</p>
                 <p className="text-green-400">7.0V &lt; 11.5V - PASS</p>
                 <p className="mt-2 text-green-400">
@@ -968,23 +968,23 @@ const HNCModule7Section1_3 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> 15kW three-phase motor, FLC = 28A, 25m run, 45°C ambient.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Design current:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Design current:</p>
                 <p>Ib = 28A (motor FLC from nameplate)</p>
                 <p>In = 32A (MCB selected)</p>
-                <p className="mt-2 text-white/60">Correction factors:</p>
+                <p className="mt-2 text-white">Correction factors:</p>
                 <p>Ca = 0.79 (45°C, Table 4B1)</p>
                 <p>Cg = 1.0 (single circuit)</p>
-                <p className="mt-2 text-white/60">Minimum tabulated current:</p>
+                <p className="mt-2 text-white">Minimum tabulated current:</p>
                 <p>It ≥ 32 / 0.79 = 40.5A</p>
-                <p className="mt-2 text-white/60">From Table 4D2A (4-core SWA):</p>
+                <p className="mt-2 text-white">From Table 4D2A (4-core SWA):</p>
                 <p className="text-green-400">6mm² = 41A - satisfactory</p>
-                <p className="mt-2 text-white/60">Voltage drop (using 3-phase mV/A/m):</p>
+                <p className="mt-2 text-white">Voltage drop (using 3-phase mV/A/m):</p>
                 <p>VD = (6.4 × 28 × 25) / 1000 = 4.5V</p>
                 <p className="text-green-400">4.5V &lt; 11.5V - PASS</p>
-                <p className="mt-2 text-white/60">Starting voltage drop (6× FLC):</p>
+                <p className="mt-2 text-white">Starting voltage drop (6× FLC):</p>
                 <p>VD start = (6.4 × 168 × 25) / 1000 = 26.9V</p>
-                <p className="text-white/60">11.7% drop at starting - acceptable for DOL start</p>
+                <p className="text-white">11.7% drop at starting - acceptable for DOL start</p>
               </div>
             </div>
           </div>
@@ -1075,7 +1075,7 @@ const HNCModule7Section1_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1122,7 +1122,7 @@ const HNCModule7Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section1">

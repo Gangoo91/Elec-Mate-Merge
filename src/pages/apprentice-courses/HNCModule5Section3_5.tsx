@@ -254,7 +254,7 @@ const HNCModule5Section3_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section3">
@@ -276,7 +276,7 @@ const HNCModule5Section3_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Final Account
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Final measurement, account agreement, retention release, defects liability period and
             financial close-out
           </p>
@@ -671,7 +671,7 @@ const HNCModule5Section3_5 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Retention Calculation Example
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Contract sum: £1,800,000</p>
                 <p>Retention percentage: 5%</p>
                 <p>
@@ -679,7 +679,7 @@ const HNCModule5Section3_5 = () => {
                 </p>
                 <p className="mt-2">Released at Practical Completion: £45,000</p>
                 <p>Released at end of DLP: £45,000</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Cash flow impact: £90,000 held for 12+ months post-PC
                 </p>
               </div>
@@ -756,27 +756,27 @@ const HNCModule5Section3_5 = () => {
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between border-b border-white/10 pb-2">
                   <span>Practical Completion</span>
-                  <span className="text-white/70">Day 0</span>
+                  <span className="text-white">Day 0</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-2">
                   <span>Contractor submits final account docs</span>
-                  <span className="text-white/70">Within 6 months of PC</span>
+                  <span className="text-white">Within 6 months of PC</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-2">
                   <span>End of Defects Liability Period</span>
-                  <span className="text-white/70">12 months from PC</span>
+                  <span className="text-white">12 months from PC</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-2">
                   <span>Making Good Certificate issued</span>
-                  <span className="text-white/70">When all defects rectified</span>
+                  <span className="text-white">When all defects rectified</span>
                 </div>
                 <div className="flex justify-between border-b border-white/10 pb-2">
                   <span>Final Certificate issued</span>
-                  <span className="text-white/70">Within 2 months of final account agreement</span>
+                  <span className="text-white">Within 2 months of final account agreement</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Final payment due</span>
-                  <span className="text-white/70">14 days from Final Certificate</span>
+                  <span className="text-white">14 days from Final Certificate</span>
                 </div>
               </div>
             </div>
@@ -862,7 +862,7 @@ const HNCModule5Section3_5 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Commercial reality:</strong> Final accounts often take 12-24 months to agree
               on complex projects. Maintaining good records and professional relationships speeds
               this process considerably.
@@ -888,7 +888,7 @@ const HNCModule5Section3_5 = () => {
                 <strong>Scenario:</strong> An electrical subcontract has a final account value of
                 £850,000 with 5% retention. Calculate the retention release amounts.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Final account value: £850,000</p>
                 <p>
                   Total retention: £850,000 x 5% = <strong>£42,500</strong>
@@ -915,7 +915,7 @@ const HNCModule5Section3_5 = () => {
                 <strong>Scenario:</strong> A contract allowed £75,000 provisional sum for BMS.
                 Actual expenditure was £82,500. Calculate the adjustment.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Provisional sum allowed: £75,000</p>
                 <p>Actual BMS expenditure: £82,500</p>
                 <p className="mt-2">Adjustment calculation:</p>
@@ -924,7 +924,7 @@ const HNCModule5Section3_5 = () => {
                 <p className="mt-2">
                   Net adjustment: £82,500 - £75,000 = <strong>+£7,500</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This £7,500 addition is included in the final account
                 </p>
               </div>
@@ -938,7 +938,7 @@ const HNCModule5Section3_5 = () => {
                 <strong>Scenario:</strong> Prepare a final account summary for an electrical
                 installation contract.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Original contract sum: £1,250,000</p>
                 <p className="mt-2">Additions:</p>
                 <p> Variation instructions (16 no.) +£127,450</p>
@@ -1034,7 +1034,7 @@ const HNCModule5Section3_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1081,7 +1081,7 @@ const HNCModule5Section3_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module5-section3">

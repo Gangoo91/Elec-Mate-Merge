@@ -165,7 +165,7 @@ const Level2Module6Section6_5 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/80 hover:text-foreground p-0 text-sm sm:text-base"
+            className="text-white hover:text-foreground p-0 text-sm sm:text-base"
             asChild
           >
             <Link to="..">
@@ -194,7 +194,7 @@ const Level2Module6Section6_5 = () => {
           <h1 className="text-2xl sm:text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">
             Test Sheets and Site Documentation
           </h1>
-          <p className="text-white/80 text-sm sm:text-base">
+          <p className="text-white text-sm sm:text-base">
             Proper completion and management of electrical test documentation
           </p>
         </header>
@@ -650,7 +650,7 @@ const Level2Module6Section6_5 = () => {
                 <p className="font-medium text-foreground text-sm sm:text-base">
                   Pre-Testing Preparation
                 </p>
-                <p className="text-xs sm:text-sm text-white/80 mt-1">
+                <p className="text-xs sm:text-sm text-white mt-1">
                   Complete all header information including client details, installation
                   description, and test parameters before beginning any testing work
                 </p>
@@ -663,7 +663,7 @@ const Level2Module6Section6_5 = () => {
                 <p className="font-medium text-foreground text-sm sm:text-base">
                   Error Correction Procedure
                 </p>
-                <p className="text-xs sm:text-sm text-white/80 mt-1">
+                <p className="text-xs sm:text-sm text-white mt-1">
                   Cross out errors with single neat line, write correct information, and initial
                   with date. Never use correction fluid or erasers
                 </p>
@@ -676,7 +676,7 @@ const Level2Module6Section6_5 = () => {
                 <p className="font-medium text-foreground text-sm sm:text-base">
                   Recording Standards
                 </p>
-                <p className="text-xs sm:text-sm text-white/80 mt-1">
+                <p className="text-xs sm:text-sm text-white mt-1">
                   Use permanent ink for all test results and maintain neat, legible handwriting.
                   Never use pencil for final documentation
                 </p>
@@ -689,7 +689,7 @@ const Level2Module6Section6_5 = () => {
                 <p className="font-medium text-foreground text-sm sm:text-base">
                   Environmental Conditions
                 </p>
-                <p className="text-xs sm:text-sm text-white/80 mt-1">
+                <p className="text-xs sm:text-sm text-white mt-1">
                   Record relevant environmental conditions (temperature, humidity) that might affect
                   test results or interpretation
                 </p>
@@ -702,7 +702,7 @@ const Level2Module6Section6_5 = () => {
                 <p className="font-medium text-foreground text-sm sm:text-base">
                   Actual Value Recording
                 </p>
-                <p className="text-xs sm:text-sm text-white/80 mt-1">
+                <p className="text-xs sm:text-sm text-white mt-1">
                   Record actual test readings with appropriate units, not just pass/fail indicators.
                   This provides valuable trend data for future reference
                 </p>
@@ -715,7 +715,7 @@ const Level2Module6Section6_5 = () => {
                 <p className="font-medium text-foreground text-sm sm:text-base">
                   Authentication Requirements
                 </p>
-                <p className="text-xs sm:text-sm text-white/80 mt-1">
+                <p className="text-xs sm:text-sm text-white mt-1">
                   Sign, date, and retain all documentation according to professional requirements.
                   Include tester qualifications and certification details
                 </p>
@@ -728,7 +728,7 @@ const Level2Module6Section6_5 = () => {
                 <p className="font-medium text-foreground text-sm sm:text-base">
                   Instrument Documentation
                 </p>
-                <p className="text-xs sm:text-sm text-white/80 mt-1">
+                <p className="text-xs sm:text-sm text-white mt-1">
                   Include all relevant instrument details: make, model, serial numbers, and current
                   calibration information for traceability
                 </p>
@@ -741,7 +741,7 @@ const Level2Module6Section6_5 = () => {
                 <p className="font-medium text-foreground text-sm sm:text-base">
                   Backup and Storage
                 </p>
-                <p className="text-xs sm:text-sm text-white/80 mt-1">
+                <p className="text-xs sm:text-sm text-white mt-1">
                   Implement secure storage systems with appropriate backup procedures for indefinite
                   retention and easy retrieval when required
                 </p>
@@ -756,7 +756,7 @@ const Level2Module6Section6_5 = () => {
                 <p className="font-medium text-foreground text-sm sm:text-base mb-2">
                   Professional Tip
                 </p>
-                <p className="text-xs sm:text-sm text-white/80">
+                <p className="text-xs sm:text-sm text-white">
                   Develop a systematic documentation routine that becomes second nature. Consistent,
                   high-quality documentation practices protect your professional reputation, provide
                   legal protection, and demonstrate competence to clients and authorities. Poor
@@ -775,7 +775,7 @@ const Level2Module6Section6_5 = () => {
           <div className="space-y-4 sm:space-y-6">
             <div>
               <h4 className="font-semibold text-foreground mb-2">Situation</h4>
-              <p className="text-white/80">
+              <p className="text-white">
                 A commercial property suffered an electrical fire six months after a rewiring
                 project. The insurance investigation required proof that proper testing had been
                 conducted and documented according to industry standards.
@@ -783,7 +783,7 @@ const Level2Module6Section6_5 = () => {
             </div>
             <div>
               <h4 className="font-semibold text-foreground mb-2">Documentation Issues Found</h4>
-              <p className="text-white/80">
+              <p className="text-white">
                 The electrical contractor provided test sheets, but they were severely deficient:
                 missing instrument calibration dates, illegible readings recorded in pencil,
                 unsigned pages, missing client details, and no clear indication of which circuits
@@ -792,7 +792,7 @@ const Level2Module6Section6_5 = () => {
             </div>
             <div>
               <h4 className="font-semibold text-foreground mb-2">Investigation Challenges</h4>
-              <p className="text-white/80">
+              <p className="text-white">
                 Insurance investigators could not determine whether proper testing had actually been
                 conducted. The illegible pencil entries appeared to have been altered, test
                 instrument details were missing so calibration could not be verified, and the lack
@@ -801,7 +801,7 @@ const Level2Module6Section6_5 = () => {
             </div>
             <div>
               <h4 className="font-semibold text-foreground mb-2">Consequences</h4>
-              <p className="text-white/80">
+              <p className="text-white">
                 The insurance company delayed settlement pending additional investigation. The
                 electrical contractor faced professional disciplinary action for poor documentation
                 standards. Independent expert testing was required at considerable expense to
@@ -810,7 +810,7 @@ const Level2Module6Section6_5 = () => {
             </div>
             <div>
               <h4 className="font-semibold text-foreground mb-2">Final Outcome</h4>
-              <p className="text-white/80">
+              <p className="text-white">
                 The contractor lost professional certification and faced civil liability claims. The
                 property owner's insurance coverage was affected, and the contractor's professional
                 indemnity insurance refused to cover the claim due to inadequate documentation
@@ -837,7 +837,7 @@ const Level2Module6Section6_5 = () => {
               <h4 className="font-semibold mb-2">
                 Q: Can I use digital devices to complete test sheets on site?
               </h4>
-              <p className="text-white/80">
+              <p className="text-white">
                 A: Yes, provided the system maintains data integrity and includes appropriate
                 security features to prevent unauthorised alterations.
               </p>
@@ -846,7 +846,7 @@ const Level2Module6Section6_5 = () => {
               <h4 className="font-semibold mb-2">
                 Q: What if I discover an error in documentation after leaving the site?
               </h4>
-              <p className="text-white/80">
+              <p className="text-white">
                 A: Contact the client, return to site if necessary, and make corrections following
                 proper procedures with clear notation of when and why changes were made.
               </p>
@@ -855,7 +855,7 @@ const Level2Module6Section6_5 = () => {
               <h4 className="font-semibold mb-2">
                 Q: How should I handle test sheets that become damaged during site work?
               </h4>
-              <p className="text-white/80">
+              <p className="text-white">
                 A: Start fresh documentation and carefully transfer any legible information, noting
                 the reason for replacement to maintain audit trail integrity.
               </p>
@@ -864,7 +864,7 @@ const Level2Module6Section6_5 = () => {
               <h4 className="font-semibold mb-2">
                 Q: Can test results be recorded in pencil for ease of correction?
               </h4>
-              <p className="text-white/80">
+              <p className="text-white">
                 A: No, permanent ink is required for all final documentation to prevent unauthorised
                 alterations and maintain document integrity.
               </p>
@@ -891,7 +891,7 @@ const Level2Module6Section6_5 = () => {
                   <p className="font-medium text-foreground text-sm sm:text-base">
                     Complete Documentation
                   </p>
-                  <p className="text-xs sm:text-sm text-white/80 mt-1">
+                  <p className="text-xs sm:text-sm text-white mt-1">
                     All header information and test parameters must be recorded
                   </p>
                 </div>
@@ -901,7 +901,7 @@ const Level2Module6Section6_5 = () => {
                 <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground text-sm sm:text-base">Permanent Ink</p>
-                  <p className="text-xs sm:text-sm text-white/80 mt-1">
+                  <p className="text-xs sm:text-sm text-white mt-1">
                     All test results must be recorded in permanent ink
                   </p>
                 </div>
@@ -913,7 +913,7 @@ const Level2Module6Section6_5 = () => {
                 <CheckCircle className="w-4 h-4 sm:w-5 sm:h-5 text-elec-yellow flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-medium text-foreground text-sm sm:text-base">Legal Evidence</p>
-                  <p className="text-xs sm:text-sm text-white/80 mt-1">
+                  <p className="text-xs sm:text-sm text-white mt-1">
                     Documentation provides proof of compliance and professional competence
                   </p>
                 </div>
@@ -925,7 +925,7 @@ const Level2Module6Section6_5 = () => {
                   <p className="font-medium text-foreground text-sm sm:text-base">
                     Retention Requirements
                   </p>
-                  <p className="text-xs sm:text-sm text-white/80 mt-1">
+                  <p className="text-xs sm:text-sm text-white mt-1">
                     Records must be retained indefinitely for legal protection
                   </p>
                 </div>

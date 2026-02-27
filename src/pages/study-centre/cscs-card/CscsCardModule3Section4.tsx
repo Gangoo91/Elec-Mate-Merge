@@ -188,7 +188,7 @@ export default function CscsCardModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-3">
@@ -213,7 +213,7 @@ export default function CscsCardModule3Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Fall Protection &amp; Safe Lifting
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Guard rails, personal fall protection, harness selection and inspection, rescue
             planning, mechanical lifting operations, and lifting accessories
           </p>
@@ -310,12 +310,12 @@ export default function CscsCardModule3Section4() {
                 <p className="text-sm font-medium text-green-400 mb-3">
                   Guard Rail Systems (BS EN 13374)
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Guard rails are the most common form of collective fall prevention on construction
                   sites. Under <strong className="text-white">BS EN 13374</strong>, a compliant
                   guard rail system must include:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -380,10 +380,10 @@ export default function CscsCardModule3Section4() {
                   </div>
                   {/* Mid Rail */}
                   <div className="flex items-center gap-3">
-                    <div className="w-20 text-right text-xs text-white/50 font-mono">~475mm</div>
+                    <div className="w-20 text-right text-xs text-white font-mono">~475mm</div>
                     <div className="flex-1 relative">
                       <div className="h-3 bg-green-500/25 border border-green-500/40 rounded-sm" />
-                      <span className="absolute left-2 top-0 text-[10px] text-white/80 font-medium leading-3">
+                      <span className="absolute left-2 top-0 text-[10px] text-white font-medium leading-3">
                         MID RAIL
                       </span>
                     </div>
@@ -414,20 +414,20 @@ export default function CscsCardModule3Section4() {
                     <div className="w-20" />
                     <div className="flex-1 relative">
                       <div className="h-2 bg-white/20 border border-white/30 rounded-sm" />
-                      <span className="absolute -bottom-4 left-2 text-[10px] text-white/50 font-medium">
+                      <span className="absolute -bottom-4 left-2 text-[10px] text-white font-medium">
                         WORKING PLATFORM
                       </span>
                     </div>
                   </div>
                 </div>
-                <p className="text-xs text-white/40 text-center mt-8">
+                <p className="text-xs text-white text-center mt-8">
                   Dimensions per BS EN 13374 &mdash; all measurements are minimums
                 </p>
               </div>
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-green-400 mb-3">Other Collective Measures</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -496,7 +496,7 @@ export default function CscsCardModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-green-400 mb-3">Equipment Standards</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -560,7 +560,7 @@ export default function CscsCardModule3Section4() {
                       </div>
                       <p className="text-red-400 font-semibold text-sm">FALL ARREST</p>
                     </div>
-                    <ul className="text-xs text-white/80 space-y-1.5">
+                    <ul className="text-xs text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                         <span>
@@ -599,7 +599,7 @@ export default function CscsCardModule3Section4() {
                       </div>
                       <p className="text-yellow-400 font-semibold text-sm">FALL RESTRAINT</p>
                     </div>
-                    <ul className="text-xs text-white/80 space-y-1.5">
+                    <ul className="text-xs text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-yellow-400" />
                         <span>
@@ -634,7 +634,7 @@ export default function CscsCardModule3Section4() {
                       </div>
                       <p className="text-blue-400 font-semibold text-sm">WORK POSITIONING</p>
                     </div>
-                    <ul className="text-xs text-white/80 space-y-1.5">
+                    <ul className="text-xs text-white space-y-1.5">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-blue-400" />
                         <span>
@@ -671,7 +671,7 @@ export default function CscsCardModule3Section4() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Distinction</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong>Never use a sit harness or chest harness for fall arrest.</strong> Only a
                   <strong> full body harness to EN 361</strong> is approved for fall arrest. A sit
                   harness or chest-only harness can cause the wearer to be inverted during a fall
@@ -704,7 +704,7 @@ export default function CscsCardModule3Section4() {
                 <p className="text-sm font-medium text-green-400 mb-3">
                   Choosing the Right Harness
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -745,7 +745,7 @@ export default function CscsCardModule3Section4() {
                 <p className="text-sm font-medium text-green-400 mb-3">
                   Clearance Distance Calculation
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The <strong className="text-white">clearance distance</strong> is the minimum free
                   space required below the anchor point to ensure the worker does not strike the
                   ground or any lower obstruction during a fall. Getting this calculation wrong is
@@ -753,25 +753,25 @@ export default function CscsCardModule3Section4() {
                 </p>
                 <div className="bg-[#1a1a1a] border border-white/20 rounded-lg p-4 font-mono text-sm">
                   <p className="text-green-400 mb-2">Clearance Distance =</p>
-                  <div className="pl-4 space-y-1 text-white/80">
+                  <div className="pl-4 space-y-1 text-white">
                     <p>
-                      Lanyard length <span className="text-white/40">(e.g., 2.0m)</span>
+                      Lanyard length <span className="text-white">(e.g., 2.0m)</span>
                     </p>
                     <p>
                       + Shock absorber extension{' '}
-                      <span className="text-white/40">(up to 1.75m)</span>
+                      <span className="text-white">(up to 1.75m)</span>
                     </p>
                     <p>
-                      + Height below D-ring <span className="text-white/40">(approx 1.0m)</span>
+                      + Height below D-ring <span className="text-white">(approx 1.0m)</span>
                     </p>
                     <p>
-                      + Safety margin <span className="text-white/40">(min 1.0m)</span>
+                      + Safety margin <span className="text-white">(min 1.0m)</span>
                     </p>
                     <hr className="border-white/20 my-1" />
                     <p className="text-green-400 font-bold">= Total: 5.75m minimum</p>
                   </div>
                 </div>
-                <p className="text-xs text-white/50 mt-3">
+                <p className="text-xs text-white mt-3">
                   If the available clearance is less than the calculated distance, a shorter lanyard
                   or a self-retracting lifeline (SRL) must be used instead. An SRL limits the fall
                   distance to centimetres, dramatically reducing the clearance distance required.
@@ -780,7 +780,7 @@ export default function CscsCardModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-green-400 mb-3">Anchor Point Requirements</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -844,11 +844,11 @@ export default function CscsCardModule3Section4() {
                 <p className="text-sm font-medium text-green-400 mb-3">
                   Pre-Use Visual Checks (Every Use)
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Before every use, the wearer must carry out a visual and tactile inspection of all
                   components. Look for and feel for the following:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -902,7 +902,7 @@ export default function CscsCardModule3Section4() {
                 <p className="text-sm font-medium text-green-400 mb-3">
                   6-Monthly Thorough Examination
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -940,7 +940,7 @@ export default function CscsCardModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-green-400 mb-3">When to Retire Equipment</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -975,7 +975,7 @@ export default function CscsCardModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-green-400 mb-3">Storage Requirements</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1029,7 +1029,7 @@ export default function CscsCardModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-green-400 mb-3">Types of Safety Nets</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1056,7 +1056,7 @@ export default function CscsCardModule3Section4() {
                 <p className="text-sm font-medium text-green-400 mb-3">
                   Installation &amp; Inspection
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1096,7 +1096,7 @@ export default function CscsCardModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-green-400 mb-3">Soft Landing Systems</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1155,14 +1155,14 @@ export default function CscsCardModule3Section4() {
                     Suspension Trauma &mdash; The 15-30 Minute Window
                   </p>
                 </div>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   <strong>Suspension trauma</strong> (also known as orthostatic intolerance or
                   harness-induced pathology) is a <strong>life-threatening condition</strong> that
                   occurs when a person is suspended motionless in a harness after a fall. The
                   harness leg straps compress the femoral veins, blood pools in the legs, and the
                   heart is progressively deprived of adequate blood return.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-red-400" />
                     <span>
@@ -1189,7 +1189,7 @@ export default function CscsCardModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-green-400 mb-3">Types of Rescue</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1222,7 +1222,7 @@ export default function CscsCardModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-green-400 mb-3">Rescue Plan Requirements</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1308,7 +1308,7 @@ export default function CscsCardModule3Section4() {
                 <p className="text-sm font-medium text-green-400 mb-3">
                   LOLER 1998 &mdash; Key Requirements
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1353,7 +1353,7 @@ export default function CscsCardModule3Section4() {
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3">
                     <p className="text-sm font-medium text-green-400 mb-1">Every 6 Months</p>
-                    <ul className="text-xs text-white/80 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -1371,7 +1371,7 @@ export default function CscsCardModule3Section4() {
                   </div>
                   <div className="bg-white/5 border border-white/10 rounded-lg p-3">
                     <p className="text-sm font-medium text-white mb-1">Every 12 Months</p>
-                    <ul className="text-xs text-white/80 space-y-1">
+                    <ul className="text-xs text-white space-y-1">
                       <li className="flex items-start gap-2">
                         <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                         <span>
@@ -1382,7 +1382,7 @@ export default function CscsCardModule3Section4() {
                     </ul>
                   </div>
                 </div>
-                <p className="text-xs text-white/50 mt-3">
+                <p className="text-xs text-white mt-3">
                   These are maximum intervals. The risk assessment, scheme of examination, or
                   manufacturer&rsquo;s recommendations may require more frequent examinations.
                   Equipment must also be examined after exceptional circumstances (damage,
@@ -1392,13 +1392,13 @@ export default function CscsCardModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-green-400 mb-3">Crane Signals (Banksman)</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   A <strong className="text-white">banksman</strong> (slinger/signaller) is the
                   person who directs the crane operator using standard hand signals. The banksman
                   must be trained, competent, and clearly visible to the crane operator. Signals
                   follow <strong className="text-white">BS 7121</strong>.
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1442,7 +1442,7 @@ export default function CscsCardModule3Section4() {
                 <p className="text-sm font-medium text-green-400 mb-3">
                   Pre-Use Checks for Lifting Equipment
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1477,7 +1477,7 @@ export default function CscsCardModule3Section4() {
                     Never Stand Under a Suspended Load
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   One of the most fundamental rules on any construction site:{' '}
                   <strong>never stand, walk, or work under a suspended load</strong>. If a sling
                   fails, a connection slips, or the crane malfunctions, the load will fall directly
@@ -1507,7 +1507,7 @@ export default function CscsCardModule3Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-green-400 mb-3">Types of Slings</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1552,7 +1552,7 @@ export default function CscsCardModule3Section4() {
                 <p className="text-sm font-medium text-green-400 mb-3">
                   Webbing Sling Colour Coding (BS EN 1492-1)
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Webbing and round slings are colour coded to allow quick identification of their
                   Safe Working Load on site. This is based on the straight pull (choke/basket
                   configurations reduce the SWL):
@@ -1599,7 +1599,7 @@ export default function CscsCardModule3Section4() {
                     <p className="text-sm text-white font-bold">10 tonnes</p>
                   </div>
                 </div>
-                <p className="text-xs text-white/40 mt-3 text-center">
+                <p className="text-xs text-white mt-3 text-center">
                   Colour codes per BS EN 1492-1 (webbing) and BS EN 1492-2 (round slings) &mdash;
                   straight pull SWL shown
                 </p>
@@ -1609,7 +1609,7 @@ export default function CscsCardModule3Section4() {
                 <p className="text-sm font-medium text-green-400 mb-3">
                   Sling Selection &amp; Safe Working Load
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1651,7 +1651,7 @@ export default function CscsCardModule3Section4() {
                 <p className="text-sm font-medium text-green-400 mb-3">
                   Sling Inspection &amp; Damage Indicators
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1691,7 +1691,7 @@ export default function CscsCardModule3Section4() {
                 <p className="text-sm font-medium text-green-400 mb-3">
                   Proper Storage of Lifting Accessories
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-green-400" />
                     <span>
@@ -1752,7 +1752,7 @@ export default function CscsCardModule3Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1766,7 +1766,7 @@ export default function CscsCardModule3Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cscs-card-module-3">

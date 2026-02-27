@@ -104,7 +104,7 @@ const InstrumentationModule4Section3 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Instrument Accuracy, Resolution, and Error
           </h1>
-          <p className="text-white/80">Understand measurement quality and limitations</p>
+          <p className="text-white">Understand measurement quality and limitations</p>
         </div>
 
         {/* Quick Summary */}

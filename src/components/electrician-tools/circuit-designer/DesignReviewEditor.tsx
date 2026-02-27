@@ -282,11 +282,11 @@ const MetricCard = ({
     <div className={`p-4 rounded-xl border bg-white/[0.02] ${colorClasses[color].split(' ')[0]}`}>
       <div className="flex items-center gap-2 mb-2">
         <Icon className={`h-4 w-4 ${iconColorClasses[color]}`} />
-        <span className="text-xs text-white/50 uppercase tracking-wide">{label}</span>
+        <span className="text-xs text-white uppercase tracking-wide">{label}</span>
       </div>
       <div className="flex items-baseline gap-2">
         <span className="text-xl font-bold text-white">{value}</span>
-        {subValue && <span className="text-sm text-white/40">{subValue}</span>}
+        {subValue && <span className="text-sm text-white">{subValue}</span>}
       </div>
     </div>
   );
@@ -294,7 +294,7 @@ const MetricCard = ({
 
 // Helper component for info pills
 const InfoPill = ({ label }: { label: string }) => (
-  <span className="px-3 py-1.5 text-xs font-medium bg-white/[0.05] border border-white/10 rounded-full text-white/70">
+  <span className="px-3 py-1.5 text-xs font-medium bg-white/[0.05] border border-white/10 rounded-full text-white">
     {label}
   </span>
 );
@@ -2232,7 +2232,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
               </div>
               <div>
                 <h1 className="text-2xl md:text-3xl font-bold text-white">{design.projectName}</h1>
-                <div className="flex items-center gap-2 text-white/60 mt-1">
+                <div className="flex items-center gap-2 text-white mt-1">
                   <MapPin className="h-4 w-4" />
                   <span>{design.location}</span>
                 </div>
@@ -2420,7 +2420,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                 <Zap className="h-4 w-4 text-elec-yellow" />
                 <h3 className="text-sm font-semibold text-white">Select Circuit</h3>
               </div>
-              <span className="text-xs text-white/50">
+              <span className="text-xs text-white">
                 {selectedCircuit + 1} of {design.circuits.length}
               </span>
             </div>
@@ -2441,7 +2441,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                     className={`flex-shrink-0 px-3 py-2 rounded-lg border transition-all touch-manipulation min-h-[44px] snap-center ${
                       isActive
                         ? 'bg-elec-yellow/15 border-elec-yellow text-white'
-                        : 'bg-white/[0.02] border-white/10 text-white/60 hover:border-white/20'
+                        : 'bg-white/[0.02] border-white/10 text-white hover:border-white/20'
                     }`}
                   >
                     <div className="flex items-center gap-2">
@@ -3648,7 +3648,7 @@ export const DesignReviewEditor = ({ design, onReset }: DesignReviewEditorProps)
                 </div>
                 <div>
                   <h2 className="text-lg font-bold text-white">Installation Specialist</h2>
-                  <p className="text-xs text-white/50">Step-by-step installation guidance</p>
+                  <p className="text-xs text-white">Step-by-step installation guidance</p>
                 </div>
               </div>
             </div>

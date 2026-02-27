@@ -87,7 +87,7 @@ const DataCablingModule5Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/data-cabling-module-5">
@@ -108,7 +108,7 @@ const DataCablingModule5Section5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Future-Proofing Network Infrastructure
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Category 8 and strategic planning for next-generation requirements
           </p>
         </header>
@@ -232,15 +232,15 @@ const DataCablingModule5Section5 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Cat 6A</p>
-                <p className="text-white/90 text-xs">500MHz, 100m</p>
+                <p className="text-white text-xs">500MHz, 100m</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Cat 8.1</p>
-                <p className="text-white/90 text-xs">2000MHz, 30m</p>
+                <p className="text-white text-xs">2000MHz, 30m</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Cat 8.2</p>
-                <p className="text-white/90 text-xs">2000MHz, 30m</p>
+                <p className="text-white text-xs">2000MHz, 30m</p>
               </div>
             </div>
           </div>
@@ -267,7 +267,7 @@ const DataCablingModule5Section5 = () => {
               <div className="grid sm:grid-cols-2 gap-4 mt-3">
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">25GBASE-T</p>
-                  <ul className="text-xs text-white/90 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>25 Gbps speed</li>
                     <li>Cat 8 cable required</li>
                     <li>30m max distance</li>
@@ -276,7 +276,7 @@ const DataCablingModule5Section5 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">40GBASE-T</p>
-                  <ul className="text-xs text-white/90 space-y-1">
+                  <ul className="text-xs text-white space-y-1">
                     <li>40 Gbps speed</li>
                     <li>Cat 8 cable required</li>
                     <li>30m max distance</li>
@@ -424,7 +424,7 @@ const DataCablingModule5Section5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -463,7 +463,7 @@ const DataCablingModule5Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/data-cabling-module-5-section-4">

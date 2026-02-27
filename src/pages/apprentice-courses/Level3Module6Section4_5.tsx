@@ -273,7 +273,7 @@ const Level3Module6Section4_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section4">
@@ -345,7 +345,7 @@ const Level3Module6Section4_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">How It Works</p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     A transformer produces 110V between lines, with the centre point of the
                     secondary winding connected to earth. This limits the maximum voltage to earth
                     to 55V (half of 110V).
@@ -353,7 +353,7 @@ const Level3Module6Section4_5 = () => {
                 </div>
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Why 55V Is Safer</p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     At 55V, the current through a person (even with wet hands) is significantly
                     lower than at 230V. Combined with time limits, the risk of ventricular
                     fibrillation is dramatically reduced.
@@ -361,7 +361,7 @@ const Level3Module6Section4_5 = () => {
                 </div>
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Equipment Identification</p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     110V equipment and plugs are coloured yellow to distinguish from other voltages.
                     230V is blue, 400V three-phase is red. This colour coding prevents dangerous
                     mix-ups.
@@ -369,7 +369,7 @@ const Level3Module6Section4_5 = () => {
                 </div>
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Typical Applications</p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     Portable tools (drills, grinders, saws), task lighting, small plant items. Fixed
                     equipment (tower cranes, hoists, welfare) may use 400V with appropriate
                     protection.
@@ -404,7 +404,7 @@ const Level3Module6Section4_5 = () => {
               <p className="text-sm font-medium text-white mb-2">
                 Typical Site Distribution Hierarchy:
               </p>
-              <ul className="text-sm text-white/90 space-y-1 ml-4">
+              <ul className="text-sm text-white space-y-1 ml-4">
                 <li>
                   <strong>1. Temporary builders' supply:</strong> DNO provides metered supply,
                   typically 3-phase
@@ -432,25 +432,25 @@ const Level3Module6Section4_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Socket Outlets up to 32A</p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     RCD protection not exceeding 30mA (Regulation 704.411.3.2)
                   </p>
                 </div>
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Socket Outlets 32-63A</p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     RCD protection not exceeding 30mA or 110V CTE supply
                   </p>
                 </div>
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Socket Outlets over 63A</p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     RCD protection at appropriate rating with suitable disconnection time
                   </p>
                 </div>
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Fixed Equipment (400V)</p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     Protection coordinated with equipment characteristics; RCDs where touch contact
                     possible
                   </p>
@@ -485,7 +485,7 @@ const Level3Module6Section4_5 = () => {
               <p className="text-sm font-medium text-white mb-3">
                 Key Exhibition Requirements (Section 711):
               </p>
-              <ul className="text-sm text-white/90 space-y-2 ml-4">
+              <ul className="text-sm text-white space-y-2 ml-4">
                 <li>
                   <strong>RCD Protection:</strong> 30mA RCDs required for all circuits
                 </li>
@@ -518,7 +518,7 @@ const Level3Module6Section4_5 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Event Cable Management:</p>
-              <ul className="text-sm text-white/90 space-y-1 ml-4">
+              <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Use cable protectors (ramps) at all pedestrian and vehicle crossings</li>
                 <li>Route cables along fence lines or structure edges where possible</li>
                 <li>
@@ -529,7 +529,7 @@ const Level3Module6Section4_5 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A county show has multiple exhibitor tents, a main arena,
               and food vendors. The electrical installation includes a main distribution compound
               (fenced, locked), sub-distributions at each area, and individual supplies to each
@@ -559,7 +559,7 @@ const Level3Module6Section4_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">Isolated (IT) System</p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     Generator neutral not connected to earth. First fault doesn't cause
                     disconnection but must be detected. Requires insulation monitoring. Not common
                     in UK temporary installations.
@@ -567,7 +567,7 @@ const Level3Module6Section4_5 = () => {
                 </div>
                 <div>
                   <p className="text-elec-yellow/80 font-medium mb-1">TN-S System</p>
-                  <p className="text-white/90">
+                  <p className="text-white">
                     Generator neutral connected to generator frame earth. Fault loop impedance
                     through generator and cabling. Most common arrangement - functions similarly to
                     mains TN-S.
@@ -586,7 +586,7 @@ const Level3Module6Section4_5 = () => {
               <p className="text-sm font-medium text-white mb-2">
                 Generator Installation Considerations:
               </p>
-              <ul className="text-sm text-white/90 space-y-1 ml-4">
+              <ul className="text-sm text-white space-y-1 ml-4">
                 <li>Position generators on firm, level ground with adequate ventilation</li>
                 <li>Ensure exhaust gases cannot enter occupied areas</li>
                 <li>Provide adequate fuel storage with appropriate fire precautions</li>
@@ -680,7 +680,7 @@ const Level3Module6Section4_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -723,7 +723,7 @@ const Level3Module6Section4_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module6-section4-4-4">

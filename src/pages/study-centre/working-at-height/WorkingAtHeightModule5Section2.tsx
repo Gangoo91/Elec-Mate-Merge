@@ -219,7 +219,7 @@ export default function WorkingAtHeightModule5Section2() {
           <Button
             variant="ghost"
             size="icon"
-            className="min-h-[44px] min-w-[44px] text-white/70 hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] min-w-[44px] text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-5">
@@ -227,7 +227,7 @@ export default function WorkingAtHeightModule5Section2() {
             </Link>
           </Button>
           <div className="flex-1 min-w-0">
-            <p className="text-xs text-white/40">Module 5 {'\u2022'} Section 2</p>
+            <p className="text-xs text-white">Module 5 {'\u2022'} Section 2</p>
             <h1 className="text-sm font-semibold text-white truncate">
               Incident Reporting & Investigation
             </h1>
@@ -252,7 +252,7 @@ export default function WorkingAtHeightModule5Section2() {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Incident Reporting & Investigation
           </h2>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding RIDDOR requirements, the investigation process, root cause analysis, and
             building a near-miss reporting culture that prevents future accidents
           </p>
@@ -264,7 +264,7 @@ export default function WorkingAtHeightModule5Section2() {
             <Zap className="h-4 w-4" />
             In 30 Seconds
           </h3>
-          <p className="text-white/80 text-base leading-relaxed">
+          <p className="text-white text-base leading-relaxed">
             RIDDOR 2013 requires employers to report fatal injuries, specified injuries, over-7-day
             incapacitation, and dangerous occurrences to the HSE. After any incident, the scene must
             be preserved and a thorough investigation conducted to identify root causes — not just
@@ -279,7 +279,7 @@ export default function WorkingAtHeightModule5Section2() {
             <Scale className="h-4 w-4" />
             Legal Requirement
           </h3>
-          <p className="text-white/80 text-base leading-relaxed">
+          <p className="text-white text-base leading-relaxed">
             Failure to report a RIDDOR-reportable incident is a criminal offence. Employers can face
             unlimited fines and imprisonment. Beyond the legal obligation, proper reporting and
             investigation is the mechanism by which the industry learns from mistakes and prevents
@@ -305,7 +305,7 @@ export default function WorkingAtHeightModule5Section2() {
             ].map((outcome, i) => (
               <li key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm leading-relaxed">{outcome}</span>
+                <span className="text-white text-sm leading-relaxed">{outcome}</span>
               </li>
             ))}
           </ul>
@@ -322,7 +322,7 @@ export default function WorkingAtHeightModule5Section2() {
             <h3 className="text-xl font-semibold text-white">RIDDOR 2013 — Overview</h3>
           </div>
           <div className="border-l-2 border-amber-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The{' '}
               <strong className="text-amber-400">
                 Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013
@@ -332,7 +332,7 @@ export default function WorkingAtHeightModule5Section2() {
               (HSE). These reports enable the HSE to identify patterns, target inspections, and
               develop safety guidance.
             </p>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               RIDDOR applies to all workplaces in Great Britain, including construction sites,
               factories, offices, shops, and any location where work activities take place. For work
               at height, RIDDOR is particularly significant because falls from height remain the
@@ -340,7 +340,7 @@ export default function WorkingAtHeightModule5Section2() {
             </p>
             <div className="bg-white/5 border border-white/10 rounded-lg p-4">
               <h4 className="font-semibold text-white text-sm mb-2">Key Points About RIDDOR</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
@@ -380,7 +380,7 @@ export default function WorkingAtHeightModule5Section2() {
             <h3 className="text-xl font-semibold text-white">What Must Be Reported</h3>
           </div>
           <div className="border-l-2 border-red-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               RIDDOR 2013 requires reporting of four main categories of incident. Understanding
               which category an incident falls into is essential for determining the correct
               reporting method and timescale.
@@ -392,14 +392,14 @@ export default function WorkingAtHeightModule5Section2() {
                 <ShieldAlert className="h-4 w-4" />
                 1. Fatal Injuries
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed mb-2">
+              <p className="text-white text-sm leading-relaxed mb-2">
                 Any death of a worker arising from a work-related accident, or a non-worker dying as
                 a result of a work activity (e.g., a member of the public struck by falling debris
                 from a scaffold).
               </p>
               <div className="bg-black/20 rounded-lg p-3 text-sm">
                 <span className="text-red-300 font-semibold">Reporting:</span>{' '}
-                <span className="text-white/70">
+                <span className="text-white">
                   Immediately by telephone, followed by online report within 10 days
                 </span>
               </div>
@@ -411,10 +411,10 @@ export default function WorkingAtHeightModule5Section2() {
                 <AlertTriangle className="h-4 w-4" />
                 2. Specified Injuries
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed mb-3">
+              <p className="text-white text-sm leading-relaxed mb-3">
                 Serious injuries to workers as listed in Regulation 4. These include:
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-white/70 mb-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-white mb-3">
                 <div className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>Fractures (other than to fingers, thumbs, or toes)</span>
@@ -453,7 +453,7 @@ export default function WorkingAtHeightModule5Section2() {
               </div>
               <div className="bg-black/20 rounded-lg p-3 text-sm">
                 <span className="text-orange-300 font-semibold">Reporting:</span>{' '}
-                <span className="text-white/70">
+                <span className="text-white">
                   Immediately — online or by telephone for the most serious
                 </span>
               </div>
@@ -465,7 +465,7 @@ export default function WorkingAtHeightModule5Section2() {
                 <FileText className="h-4 w-4" />
                 3. Over-7-Day Incapacitation
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed mb-2">
+              <p className="text-white text-sm leading-relaxed mb-2">
                 Where a worker is incapacitated for more than 7 consecutive days (not counting the
                 day of the accident) — meaning they are unable to perform their normal work duties.
                 This does not require them to be off work entirely; being unable to carry out their
@@ -473,7 +473,7 @@ export default function WorkingAtHeightModule5Section2() {
               </p>
               <div className="bg-black/20 rounded-lg p-3 text-sm">
                 <span className="text-amber-300 font-semibold">Reporting:</span>{' '}
-                <span className="text-white/70">
+                <span className="text-white">
                   Within 15 days of the incident, online via the HSE website
                 </span>
               </div>
@@ -485,11 +485,11 @@ export default function WorkingAtHeightModule5Section2() {
                 <AlertTriangle className="h-4 w-4" />
                 4. Dangerous Occurrences
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed mb-3">
+              <p className="text-white text-sm leading-relaxed mb-3">
                 Events that did not necessarily result in injury but had the potential to cause
                 serious harm. Those relevant to work at height include:
               </p>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
@@ -521,7 +521,7 @@ export default function WorkingAtHeightModule5Section2() {
               </ul>
               <div className="bg-black/20 rounded-lg p-3 text-sm mt-3">
                 <span className="text-purple-300 font-semibold">Reporting:</span>{' '}
-                <span className="text-white/70">Without delay — online via the HSE website</span>
+                <span className="text-white">Without delay — online via the HSE website</span>
               </div>
             </div>
           </div>
@@ -538,7 +538,7 @@ export default function WorkingAtHeightModule5Section2() {
             <h3 className="text-xl font-semibold text-white">Who Reports and How</h3>
           </div>
           <div className="border-l-2 border-blue-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The <strong className="text-white">responsible person</strong> — typically the
               employer — must make the RIDDOR report. On construction sites with multiple employers,
               the principal contractor often coordinates reporting, but each employer retains
@@ -548,7 +548,7 @@ export default function WorkingAtHeightModule5Section2() {
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
                 <Phone className="h-5 w-5 text-blue-400 mb-2" />
                 <h4 className="font-semibold text-white text-sm mb-1">By Telephone</h4>
-                <p className="text-white/70 text-xs leading-relaxed">
+                <p className="text-white text-xs leading-relaxed">
                   HSE Incident Contact Centre:{' '}
                   <strong className="text-blue-300">0345 300 9923</strong>. Required for fatalities
                   and the most serious incidents. Available Monday to Friday, 8:30am to 5pm. Out of
@@ -558,7 +558,7 @@ export default function WorkingAtHeightModule5Section2() {
               <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-4">
                 <FileText className="h-5 w-5 text-blue-400 mb-2" />
                 <h4 className="font-semibold text-white text-sm mb-1">Online</h4>
-                <p className="text-white/70 text-xs leading-relaxed">
+                <p className="text-white text-xs leading-relaxed">
                   Via the HSE RIDDOR website using form F2508. This is the preferred method for all
                   reportable incidents except fatalities (which must be notified by phone first).
                   The online form generates a reference number as confirmation.
@@ -576,7 +576,7 @@ export default function WorkingAtHeightModule5Section2() {
                   <span className="text-red-400 font-bold min-w-[120px] text-xs flex-shrink-0">
                     Fatal / Specified
                   </span>
-                  <span className="text-white/70 text-xs">
+                  <span className="text-white text-xs">
                     Immediately (phone for fatalities) + online report within 10 days
                   </span>
                 </div>
@@ -584,7 +584,7 @@ export default function WorkingAtHeightModule5Section2() {
                   <span className="text-amber-400 font-bold min-w-[120px] text-xs flex-shrink-0">
                     Over-7-Day
                   </span>
-                  <span className="text-white/70 text-xs">
+                  <span className="text-white text-xs">
                     Within 15 days of the incident (online form)
                   </span>
                 </div>
@@ -592,7 +592,7 @@ export default function WorkingAtHeightModule5Section2() {
                   <span className="text-purple-400 font-bold min-w-[120px] text-xs flex-shrink-0">
                     Dangerous Occurrence
                   </span>
-                  <span className="text-white/70 text-xs">
+                  <span className="text-white text-xs">
                     Without delay (online form; phone if very serious)
                   </span>
                 </div>
@@ -620,7 +620,7 @@ export default function WorkingAtHeightModule5Section2() {
             <h3 className="text-xl font-semibold text-white">The Investigation Process</h3>
           </div>
           <div className="border-l-2 border-green-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               A thorough investigation is essential after any incident, regardless of severity. The
               purpose is not to allocate blame but to understand what happened, why it happened, and
               how to prevent it from happening again.
@@ -640,55 +640,55 @@ export default function WorkingAtHeightModule5Section2() {
                   </div>
                 </div>
                 <div className="flex justify-center">
-                  <ArrowRight className="h-4 w-4 text-white/30 rotate-90" />
+                  <ArrowRight className="h-4 w-4 text-white rotate-90" />
                 </div>
                 {/* Step 2 */}
                 <div className="flex items-center gap-2">
                   <div className="flex-1 bg-orange-500/20 border border-orange-500/30 rounded-lg p-3 text-center">
                     <span className="text-orange-300 font-semibold text-xs">MAKE SAFE</span>
-                    <p className="text-white/50 text-[10px] mt-1">
+                    <p className="text-white text-[10px] mt-1">
                       Remove ongoing hazards, prevent further harm
                     </p>
                   </div>
                 </div>
                 <div className="flex justify-center">
-                  <ArrowRight className="h-4 w-4 text-white/30 rotate-90" />
+                  <ArrowRight className="h-4 w-4 text-white rotate-90" />
                 </div>
                 {/* Step 3 */}
                 <div className="flex items-center gap-2">
                   <div className="flex-1 bg-green-500/20 border border-green-500/30 rounded-lg p-3 text-center">
                     <span className="text-green-300 font-semibold text-xs">FIRST AID</span>
-                    <p className="text-white/50 text-[10px] mt-1">
+                    <p className="text-white text-[10px] mt-1">
                       Treat casualties, call 999 if needed
                     </p>
                   </div>
                 </div>
                 <div className="flex justify-center">
-                  <ArrowRight className="h-4 w-4 text-white/30 rotate-90" />
+                  <ArrowRight className="h-4 w-4 text-white rotate-90" />
                 </div>
                 {/* Step 4 */}
                 <div className="flex items-center gap-2">
                   <div className="flex-1 bg-blue-500/20 border border-blue-500/30 rounded-lg p-3 text-center">
                     <span className="text-blue-300 font-semibold text-xs">REPORT (RIDDOR?)</span>
-                    <p className="text-white/50 text-[10px] mt-1">
+                    <p className="text-white text-[10px] mt-1">
                       Determine if RIDDOR-reportable; submit if required
                     </p>
                   </div>
                 </div>
                 <div className="flex justify-center">
-                  <ArrowRight className="h-4 w-4 text-white/30 rotate-90" />
+                  <ArrowRight className="h-4 w-4 text-white rotate-90" />
                 </div>
                 {/* Step 5 */}
                 <div className="flex items-center gap-2">
                   <div className="flex-1 bg-purple-500/20 border border-purple-500/30 rounded-lg p-3 text-center">
                     <span className="text-purple-300 font-semibold text-xs">INVESTIGATE</span>
-                    <p className="text-white/50 text-[10px] mt-1">
+                    <p className="text-white text-[10px] mt-1">
                       Secure scene, photos, witnesses, equipment check
                     </p>
                   </div>
                 </div>
                 <div className="flex justify-center">
-                  <ArrowRight className="h-4 w-4 text-white/30 rotate-90" />
+                  <ArrowRight className="h-4 w-4 text-white rotate-90" />
                 </div>
                 {/* Step 6 */}
                 <div className="flex items-center gap-2">
@@ -696,31 +696,31 @@ export default function WorkingAtHeightModule5Section2() {
                     <span className="text-amber-300 font-semibold text-xs">
                       ROOT CAUSE ANALYSIS
                     </span>
-                    <p className="text-white/50 text-[10px] mt-1">
+                    <p className="text-white text-[10px] mt-1">
                       Ask "why?" repeatedly to find underlying failures
                     </p>
                   </div>
                 </div>
                 <div className="flex justify-center">
-                  <ArrowRight className="h-4 w-4 text-white/30 rotate-90" />
+                  <ArrowRight className="h-4 w-4 text-white rotate-90" />
                 </div>
                 {/* Step 7 */}
                 <div className="flex items-center gap-2">
                   <div className="flex-1 bg-teal-500/20 border border-teal-500/30 rounded-lg p-3 text-center">
                     <span className="text-teal-300 font-semibold text-xs">CORRECTIVE ACTIONS</span>
-                    <p className="text-white/50 text-[10px] mt-1">
+                    <p className="text-white text-[10px] mt-1">
                       Implement changes to prevent recurrence
                     </p>
                   </div>
                 </div>
                 <div className="flex justify-center">
-                  <ArrowRight className="h-4 w-4 text-white/30 rotate-90" />
+                  <ArrowRight className="h-4 w-4 text-white rotate-90" />
                 </div>
                 {/* Step 8 */}
                 <div className="flex items-center gap-2">
                   <div className="flex-1 bg-cyan-500/20 border border-cyan-500/30 rounded-lg p-3 text-center">
                     <span className="text-cyan-300 font-semibold text-xs">REVIEW</span>
-                    <p className="text-white/50 text-[10px] mt-1">
+                    <p className="text-white text-[10px] mt-1">
                       Monitor effectiveness, update procedures, share learning
                     </p>
                   </div>
@@ -734,7 +734,7 @@ export default function WorkingAtHeightModule5Section2() {
                 <Eye className="h-4 w-4 text-amber-400" />
                 Gathering Evidence
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed mb-3">
+              <p className="text-white text-sm leading-relaxed mb-3">
                 Evidence must be gathered as soon as practicable after the incident. The scene will
                 change — weather, clean-up, continued work, and equipment removal can all destroy
                 critical evidence.
@@ -742,7 +742,7 @@ export default function WorkingAtHeightModule5Section2() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div className="bg-black/20 rounded-lg p-3">
                   <h5 className="text-white text-xs font-semibold mb-1">Photographs & Video</h5>
-                  <ul className="space-y-1.5 text-xs text-white/60">
+                  <ul className="space-y-1.5 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Wide-angle shots showing the overall scene</span>
@@ -763,7 +763,7 @@ export default function WorkingAtHeightModule5Section2() {
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <h5 className="text-white text-xs font-semibold mb-1">Witness Statements</h5>
-                  <ul className="space-y-1.5 text-xs text-white/60">
+                  <ul className="space-y-1.5 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Taken individually — not in groups</span>
@@ -784,7 +784,7 @@ export default function WorkingAtHeightModule5Section2() {
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <h5 className="text-white text-xs font-semibold mb-1">Equipment Inspection</h5>
-                  <ul className="space-y-1.5 text-xs text-white/60">
+                  <ul className="space-y-1.5 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Preserve the equipment in its post-incident state</span>
@@ -805,7 +805,7 @@ export default function WorkingAtHeightModule5Section2() {
                 </div>
                 <div className="bg-black/20 rounded-lg p-3">
                   <h5 className="text-white text-xs font-semibold mb-1">Documentation Review</h5>
-                  <ul className="space-y-1.5 text-xs text-white/60">
+                  <ul className="space-y-1.5 text-xs text-white">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Risk assessments and method statements</span>
@@ -840,7 +840,7 @@ export default function WorkingAtHeightModule5Section2() {
             <h3 className="text-xl font-semibold text-white">Root Cause Analysis</h3>
           </div>
           <div className="border-l-2 border-purple-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Root cause analysis (RCA) is a systematic method for identifying the underlying
               reasons an incident occurred. It goes beyond the immediate cause — "the worker fell" —
               to ask <strong className="text-amber-400">why</strong> they fell, and why the
@@ -855,7 +855,7 @@ export default function WorkingAtHeightModule5Section2() {
                   <p className="text-purple-300 text-xs font-semibold">
                     Why #1: Why did the worker fall?
                   </p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Because the guardrail on the scaffold was missing.
                   </p>
                 </div>
@@ -863,7 +863,7 @@ export default function WorkingAtHeightModule5Section2() {
                   <p className="text-purple-300 text-xs font-semibold">
                     Why #2: Why was the guardrail missing?
                   </p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Because it was removed to allow materials to be loaded and not replaced.
                   </p>
                 </div>
@@ -871,7 +871,7 @@ export default function WorkingAtHeightModule5Section2() {
                   <p className="text-purple-300 text-xs font-semibold">
                     Why #3: Why was it not replaced?
                   </p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Because there was no procedure for temporarily removing and reinstating
                     guardrails.
                   </p>
@@ -880,7 +880,7 @@ export default function WorkingAtHeightModule5Section2() {
                   <p className="text-purple-300 text-xs font-semibold">
                     Why #4: Why was there no procedure?
                   </p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Because the risk assessment did not consider the loading operation.
                   </p>
                 </div>
@@ -888,7 +888,7 @@ export default function WorkingAtHeightModule5Section2() {
                   <p className="text-purple-300 text-xs font-semibold">
                     Why #5: Why did the risk assessment not cover this?
                   </p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     Because the risk assessment was generic and not task-specific, and had not been
                     reviewed since the project started.
                   </p>
@@ -896,7 +896,7 @@ export default function WorkingAtHeightModule5Section2() {
               </div>
               <div className="mt-3 bg-amber-500/10 border border-amber-500/30 rounded-lg p-3">
                 <p className="text-amber-400 text-xs font-semibold">Root Cause Identified:</p>
-                <p className="text-white/70 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Inadequate risk assessment process — generic rather than task-specific, and not
                   reviewed or updated. The immediate cause (missing guardrail) was a symptom of this
                   systemic failure.
@@ -908,7 +908,7 @@ export default function WorkingAtHeightModule5Section2() {
               <h4 className="font-semibold text-white text-sm mb-2">
                 Common Root Cause Categories
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
@@ -975,7 +975,7 @@ export default function WorkingAtHeightModule5Section2() {
             <h3 className="text-xl font-semibold text-white">Near-Miss Reporting Culture</h3>
           </div>
           <div className="border-l-2 border-teal-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               A near miss is an unplanned event that could have caused injury or damage but did not
               — this time. Research consistently shows that for every serious accident, there are
               hundreds of near misses that went unreported and unaddressed.
@@ -998,7 +998,7 @@ export default function WorkingAtHeightModule5Section2() {
                   </span>
                 </div>
               </div>
-              <p className="text-white/60 text-xs mt-3 italic">
+              <p className="text-white text-xs mt-3 italic">
                 Heinrich's ratio (1:29:300) illustrates that near misses vastly outnumber actual
                 injuries. Reporting and addressing near misses removes hazards before they cause
                 harm at the top of the pyramid.
@@ -1009,7 +1009,7 @@ export default function WorkingAtHeightModule5Section2() {
               <h4 className="font-semibold text-white text-sm mb-2">
                 Principles of No-Blame Reporting
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
@@ -1053,7 +1053,7 @@ export default function WorkingAtHeightModule5Section2() {
                 <HardHat className="h-4 w-4" />
                 On Site — Making It Work
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 Toolbox talks at the start of each shift are an excellent opportunity to review
                 recent near-miss reports and discuss what was done about them. When workers see that
                 their reports lead to real changes — a scaffold fixed, a guardrail replaced, a
@@ -1082,7 +1082,7 @@ export default function WorkingAtHeightModule5Section2() {
             <div className="grid grid-cols-1 gap-3 text-sm">
               <div className="flex items-start gap-3 bg-black/20 rounded-lg p-3">
                 <span className="text-amber-400 font-bold min-w-[140px] flex-shrink-0">RIDDOR</span>
-                <span className="text-white/70">
+                <span className="text-white">
                   Reporting of Injuries, Diseases and Dangerous Occurrences Regulations 2013 — the
                   legal framework for reporting workplace incidents to the HSE
                 </span>
@@ -1091,7 +1091,7 @@ export default function WorkingAtHeightModule5Section2() {
                 <span className="text-amber-400 font-bold min-w-[140px] flex-shrink-0">
                   Specified Injury
                 </span>
-                <span className="text-white/70">
+                <span className="text-white">
                   A defined category of serious injury under RIDDOR including fractures (not
                   fingers/toes), amputations, loss of sight, crush injuries, scalping, and serious
                   burns
@@ -1101,7 +1101,7 @@ export default function WorkingAtHeightModule5Section2() {
                 <span className="text-amber-400 font-bold min-w-[140px] flex-shrink-0">
                   Dangerous Occurrence
                 </span>
-                <span className="text-white/70">
+                <span className="text-white">
                   An event with the potential to cause serious harm — reportable under RIDDOR
                   regardless of whether anyone was actually injured
                 </span>
@@ -1110,7 +1110,7 @@ export default function WorkingAtHeightModule5Section2() {
                 <span className="text-amber-400 font-bold min-w-[140px] flex-shrink-0">
                   Root Cause
                 </span>
-                <span className="text-white/70">
+                <span className="text-white">
                   The underlying systemic failure that allowed an incident to occur — identified
                   through techniques such as the "5 Whys"
                 </span>
@@ -1119,14 +1119,14 @@ export default function WorkingAtHeightModule5Section2() {
                 <span className="text-amber-400 font-bold min-w-[140px] flex-shrink-0">
                   Near Miss
                 </span>
-                <span className="text-white/70">
+                <span className="text-white">
                   An unplanned event that had the potential to cause harm but did not result in
                   injury or damage on this occasion
                 </span>
               </div>
               <div className="flex items-start gap-3 bg-black/20 rounded-lg p-3">
                 <span className="text-amber-400 font-bold min-w-[140px] flex-shrink-0">F2508</span>
-                <span className="text-white/70">
+                <span className="text-white">
                   The HSE online form used for making RIDDOR reports — generates a reference number
                   as confirmation of submission
                 </span>
@@ -1144,7 +1144,7 @@ export default function WorkingAtHeightModule5Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-xl p-4">
                 <h4 className="font-medium text-white mb-2 text-sm">{faq.question}</h4>
-                <p className="text-sm text-white/60 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

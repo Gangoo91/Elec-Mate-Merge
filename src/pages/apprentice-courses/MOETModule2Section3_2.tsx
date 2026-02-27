@@ -240,7 +240,7 @@ const MOETModule2Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module2-section3">
@@ -262,7 +262,7 @@ const MOETModule2Section3_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Induction Motors
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             The workhorse of industry — rotating magnetic fields, slip, torque characteristics,
             motor types, fault diagnosis, and maintenance
           </p>
@@ -363,9 +363,9 @@ const MOETModule2Section3_2 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">
                 Synchronous Speed Formula
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90 mb-3">
+              <div className="bg-black/30 p-3 rounded text-sm text-white mb-3">
                 <p className="font-mono">Ns = (120 x f) / p</p>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   Where: Ns = synchronous speed (rev/min), f = supply frequency (Hz), p = number of
                   poles
                 </p>
@@ -374,14 +374,14 @@ const MOETModule2Section3_2 = () => {
                 <table className="w-full text-sm text-left">
                   <thead>
                     <tr className="border-b border-white/10">
-                      <th className="py-2 pr-4 text-white/70 font-medium">Poles</th>
-                      <th className="py-2 pr-4 text-white/70 font-medium">
+                      <th className="py-2 pr-4 text-white font-medium">Poles</th>
+                      <th className="py-2 pr-4 text-white font-medium">
                         Synchronous Speed (50Hz)
                       </th>
-                      <th className="py-2 text-white/70 font-medium">Typical Full-Load Speed</th>
+                      <th className="py-2 text-white font-medium">Typical Full-Load Speed</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/90">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/5">
                       <td className="py-2 pr-4">2</td>
                       <td className="py-2 pr-4">3,000 rev/min</td>
@@ -409,16 +409,16 @@ const MOETModule2Section3_2 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-white mb-3">Slip</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 The rotor of an induction motor can never reach synchronous speed. If it did, there
                 would be no relative motion between the rotor conductors and the rotating stator
                 field, no change of flux linkage, no induced EMF, no rotor current, and no torque.
                 The rotor must always "slip" behind the field.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90 mb-3">
+              <div className="bg-black/30 p-3 rounded text-sm text-white mb-3">
                 <p className="font-medium mb-2">Slip Formula:</p>
                 <p className="font-mono">s = (Ns - Nr) / Ns x 100%</p>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   Where: s = slip (%), Ns = synchronous speed, Nr = rotor speed
                 </p>
               </div>
@@ -442,7 +442,7 @@ const MOETModule2Section3_2 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-white mb-3">Torque-Speed Characteristic</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 The torque-speed curve of an induction motor shows how torque varies with speed from
                 standstill to synchronous speed. Key points on the curve include:
               </p>
@@ -492,7 +492,7 @@ const MOETModule2Section3_2 = () => {
                 <h3 className="text-sm font-medium text-blue-400 mb-3">
                   Squirrel Cage Induction Motor
                 </h3>
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   The most common industrial motor — accounts for over 90% of all motors in service.
                   Named for its rotor construction, which resembles a squirrel cage.
                 </p>
@@ -524,7 +524,7 @@ const MOETModule2Section3_2 = () => {
                 <h3 className="text-sm font-medium text-purple-400 mb-3">
                   Wound Rotor Induction Motor
                 </h3>
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   Used for applications requiring high starting torque or controlled acceleration —
                   such as cranes, hoists, large fans, and crushers.
                 </p>
@@ -557,7 +557,7 @@ const MOETModule2Section3_2 = () => {
                 <h3 className="text-sm font-medium text-green-400 mb-3">
                   Single-Phase Induction Motors
                 </h3>
-                <p className="text-sm text-white/90 mb-3">
+                <p className="text-sm text-white mb-3">
                   A single-phase supply cannot create a rotating magnetic field on its own — it
                   produces a pulsating field. Special arrangements are needed to produce starting
                   torque.
@@ -565,7 +565,7 @@ const MOETModule2Section3_2 = () => {
                 <div className="space-y-3 mt-3">
                   <div className="bg-black/30 p-3 rounded">
                     <p className="text-sm font-medium text-white mb-1">Capacitor-Start Motor</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Has a start winding with a capacitor in series, creating a phase displacement
                       that simulates a two-phase supply. A centrifugal switch disconnects the start
                       winding at approximately 75% speed. Good starting torque — used for
@@ -576,7 +576,7 @@ const MOETModule2Section3_2 = () => {
                     <p className="text-sm font-medium text-white mb-1">
                       Capacitor-Start, Capacitor-Run Motor
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Two capacitors: a large electrolytic capacitor for starting (switched out by
                       centrifugal switch) and a smaller oil-filled capacitor that remains in circuit
                       during running. Better running performance and power factor than
@@ -585,7 +585,7 @@ const MOETModule2Section3_2 = () => {
                   </div>
                   <div className="bg-black/30 p-3 rounded">
                     <p className="text-sm font-medium text-white mb-1">Split-Phase Motor</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Uses a start winding with higher resistance (thinner wire) to create a small
                       phase displacement from the run winding. Lower starting torque than
                       capacitor-start. Used for light-duty applications such as fans and small
@@ -594,7 +594,7 @@ const MOETModule2Section3_2 = () => {
                   </div>
                   <div className="bg-black/30 p-3 rounded">
                     <p className="text-sm font-medium text-white mb-1">Shaded-Pole Motor</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       Simplest single-phase motor — a copper ring (shading coil) on part of each
                       pole face delays the flux in that area, creating a weak rotating component.
                       Very low starting torque, low efficiency, small ratings only. Used for fans,
@@ -631,11 +631,11 @@ const MOETModule2Section3_2 = () => {
                 <table className="w-full text-sm text-left">
                   <thead>
                     <tr className="border-b border-white/10">
-                      <th className="py-2 pr-4 text-white/70 font-medium">Parameter</th>
-                      <th className="py-2 text-white/70 font-medium">Meaning</th>
+                      <th className="py-2 pr-4 text-white font-medium">Parameter</th>
+                      <th className="py-2 text-white font-medium">Meaning</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/90 text-xs">
+                  <tbody className="text-white text-xs">
                     <tr className="border-b border-white/5">
                       <td className="py-2 pr-4 font-medium">Rated Power (kW)</td>
                       <td className="py-2">Mechanical output power at the shaft at full load</td>
@@ -840,7 +840,7 @@ const MOETModule2Section3_2 = () => {
               <p className="text-sm font-medium text-elec-yellow mb-2">
                 ST1426 Maintenance Competency
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 The Level 3 apprenticeship standard (ST1426) requires you to diagnose motor faults
                 using a systematic approach, carry out routine maintenance including lubrication,
                 alignment checks, and electrical testing, interpret motor nameplate data, and select
@@ -862,7 +862,7 @@ const MOETModule2Section3_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -881,7 +881,7 @@ const MOETModule2Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module2-section3-1">

@@ -228,11 +228,11 @@ const CdmRegulationsModule2Section2 = () => {
           </div>
           <div className="inline-block bg-blue-500/10 border border-blue-500/20 px-3 py-1 rounded-full text-sm font-semibold mb-4 ml-0">
             <span className="text-blue-400">MODULE 2</span>
-            <span className="text-white/40 mx-2">&middot;</span>
-            <span className="text-white/60">SECTION 2</span>
+            <span className="text-white mx-2">&middot;</span>
+            <span className="text-white">SECTION 2</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">Principal Designer</h1>
-          <p className="text-white/70 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             The Principal Designer is the key duty holder responsible for planning, managing, and
             coordinating health and safety during the pre-construction phase of a CDM 2015 project
           </p>
@@ -242,7 +242,7 @@ const CdmRegulationsModule2Section2 = () => {
         <div className="grid sm:grid-cols-2 gap-4 mb-10">
           <div className="rounded-lg p-4 bg-blue-500/5 border-l-2 border-blue-500/50">
             <p className="font-semibold text-blue-400 mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -275,7 +275,7 @@ const CdmRegulationsModule2Section2 = () => {
           </div>
           <div className="rounded-lg p-4 bg-blue-500/5 border-l-2 border-blue-500/50">
             <p className="font-semibold text-blue-400/90 mb-2">On Site</p>
-            <ul className="text-white/80 text-base space-y-1.5">
+            <ul className="text-white text-base space-y-1.5">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                 <span>
@@ -311,7 +311,7 @@ const CdmRegulationsModule2Section2 = () => {
         {/* Learning Outcomes */}
         <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4">By the end of this section, you will be able to:</p>
+          <p className="text-white mb-4">By the end of this section, you will be able to:</p>
           <div className="grid sm:grid-cols-2 gap-3">
             {[
               'Explain who the Principal Designer is and when they must be appointed under CDM 2015',
@@ -325,7 +325,7 @@ const CdmRegulationsModule2Section2 = () => {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-blue-400/70 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm">{outcome}</span>
+                <span className="text-white text-sm">{outcome}</span>
               </div>
             ))}
           </div>
@@ -342,7 +342,7 @@ const CdmRegulationsModule2Section2 = () => {
               <span className="text-blue-400/80 text-sm font-normal">01</span>
               Who Is the Principal Designer?
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The <strong className="text-white">Principal Designer (PD)</strong> is the designer
                 appointed by the client to take control of the{' '}
@@ -355,7 +355,7 @@ const CdmRegulationsModule2Section2 = () => {
                 <h3 className="font-semibold mb-2 text-blue-400">
                   Key Definition: Principal Designer
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The Principal Designer is a <strong className="text-white">designer</strong> (an
                   individual or organisation that carries out design work) appointed by the client
                   under Regulation 5 of CDM 2015 to plan, manage, monitor, and coordinate health and
@@ -374,7 +374,7 @@ const CdmRegulationsModule2Section2 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-blue-400 font-medium mb-2">Typical Principal Designers</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -412,7 +412,7 @@ const CdmRegulationsModule2Section2 = () => {
                   <AlertTriangle className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-blue-300">Timing of Appointment</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   The client must appoint the PD{' '}
                   <strong className="text-white">as early as practicable</strong> — and in any event
                   before the construction phase begins. The earlier the appointment, the greater the
@@ -441,7 +441,7 @@ const CdmRegulationsModule2Section2 = () => {
               <span className="text-sky-400/80 text-sm font-normal">02</span>
               PD Duties Overview (Regulation 11)
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 <strong className="text-white">Regulation 11</strong> of CDM 2015 sets out the
                 Principal Designer&rsquo;s duties in detail. The PD must take active control of
@@ -459,7 +459,7 @@ const CdmRegulationsModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Plan, Manage & Monitor</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Plan, manage, and monitor the pre-construction phase, ensuring it is carried
                         out without risks to health and safety so far as is reasonably practicable.
                       </p>
@@ -471,7 +471,7 @@ const CdmRegulationsModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Coordinate Design Work</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Coordinate matters relating to health and safety during the pre-construction
                         phase to ensure that all designers comply with their duties under Regulation
                         9.
@@ -484,7 +484,7 @@ const CdmRegulationsModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Ensure Designer Compliance</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Ensure that designers comply with their duties — in particular, the duty to
                         eliminate foreseeable risks and reduce risks through design decisions.
                       </p>
@@ -496,7 +496,7 @@ const CdmRegulationsModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Pre-Construction Information</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Assist the client in providing pre-construction information to every
                         designer and contractor appointed (or being considered for appointment) to
                         the project.
@@ -509,7 +509,7 @@ const CdmRegulationsModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Prepare the Health & Safety File</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Prepare, review, update, and revise the Health & Safety File, ensuring it
                         contains information likely to be needed during any subsequent construction
                         work on the structure.
@@ -522,7 +522,7 @@ const CdmRegulationsModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Liaise with the Principal Contractor</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Liaise with the principal contractor for the duration of their appointment,
                         sharing relevant design information and ensuring design risk information is
                         communicated effectively.
@@ -534,7 +534,7 @@ const CdmRegulationsModule2Section2 = () => {
 
               <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-blue-400">Key Principle: Active Control</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The PD role under CDM 2015 is fundamentally about{' '}
                   <strong className="text-white">active control</strong>, not passive advice. The PD
                   must <strong className="text-white">do</strong> — not merely recommend. They must
@@ -558,7 +558,7 @@ const CdmRegulationsModule2Section2 = () => {
               <span className="text-teal-400/80 text-sm font-normal">03</span>
               Pre-Construction Phase
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The <strong className="text-white">pre-construction phase</strong> is the period
                 from when the design work begins until the construction phase starts. This is the
@@ -570,7 +570,7 @@ const CdmRegulationsModule2Section2 = () => {
                 <h3 className="text-teal-300 font-medium mb-3">
                   PD Responsibilities During Pre-Construction
                 </h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-teal-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -624,7 +624,7 @@ const CdmRegulationsModule2Section2 = () => {
 
               <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-blue-400">Practical Example</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   A PD working on a school refurbishment project reviews the existing asbestos
                   survey and discovers ACMs in the ceiling voids where new electrical and mechanical
                   services are to be routed. The PD coordinates with the M&E designer to re-route
@@ -647,7 +647,7 @@ const CdmRegulationsModule2Section2 = () => {
               <span className="text-indigo-400/80 text-sm font-normal">04</span>
               Design Risk Management
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 At the heart of the PD&rsquo;s role is{' '}
                 <strong className="text-white">design risk management</strong> — the process of
@@ -668,7 +668,7 @@ const CdmRegulationsModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Avoid risks</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Eliminate the hazard entirely through a design change — for example,
                         designing ground-level maintenance access instead of roof-level access
                       </p>
@@ -680,7 +680,7 @@ const CdmRegulationsModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Evaluate unavoidable risks</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Assess the risks that cannot be eliminated — determine their severity and
                         likelihood
                       </p>
@@ -692,7 +692,7 @@ const CdmRegulationsModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Combat risks at source</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Address the root cause of the risk through design rather than relying on
                         protective measures — for example, specifying lighter materials to reduce
                         manual handling risks
@@ -705,7 +705,7 @@ const CdmRegulationsModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Adapt work to the individual</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Design workplaces, workstations, and work processes to suit the people who
                         will use them
                       </p>
@@ -717,7 +717,7 @@ const CdmRegulationsModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Adapt to technical progress</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Use modern construction methods, materials, and techniques that are
                         inherently safer
                       </p>
@@ -729,7 +729,7 @@ const CdmRegulationsModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Replace dangerous with non-dangerous</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Substitute hazardous materials, substances, or processes with safer
                         alternatives where practicable
                       </p>
@@ -741,7 +741,7 @@ const CdmRegulationsModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Develop a coherent prevention policy</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Ensure a systematic, project-wide approach to risk prevention — not
                         piecemeal measures
                       </p>
@@ -755,7 +755,7 @@ const CdmRegulationsModule2Section2 = () => {
                       <p className="text-white font-medium">
                         Prioritise collective over individual measures
                       </p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Design features that protect everyone (e.g. permanent edge protection)
                         before relying on individual PPE
                       </p>
@@ -769,7 +769,7 @@ const CdmRegulationsModule2Section2 = () => {
                       <p className="text-white font-medium">
                         Give appropriate instructions and information
                       </p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Communicate remaining risks clearly to those who need to know — through
                         design risk information, drawings, and the H&S File
                       </p>
@@ -782,7 +782,7 @@ const CdmRegulationsModule2Section2 = () => {
                 <h3 className="font-semibold mb-2 text-blue-400">
                   The Design Risk Hierarchy in Practice
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The PD must apply a clear three-step hierarchy to every design decision that
                   affects health and safety:
                 </p>
@@ -795,7 +795,7 @@ const CdmRegulationsModule2Section2 = () => {
                       <p className="text-green-300 font-medium">
                         ELIMINATE — Design out the hazard
                       </p>
-                      <p className="text-white/60 text-xs">
+                      <p className="text-white text-xs">
                         Change the design so the hazard does not exist
                       </p>
                     </div>
@@ -806,7 +806,7 @@ const CdmRegulationsModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-amber-300 font-medium">REDUCE — Minimise the risk</p>
-                      <p className="text-white/60 text-xs">
+                      <p className="text-white text-xs">
                         Where elimination is not possible, redesign to reduce the severity or
                         likelihood
                       </p>
@@ -820,7 +820,7 @@ const CdmRegulationsModule2Section2 = () => {
                       <p className="text-red-300 font-medium">
                         INFORM — Communicate remaining risks
                       </p>
-                      <p className="text-white/60 text-xs">
+                      <p className="text-white text-xs">
                         Provide clear information about risks that cannot be designed out
                       </p>
                     </div>
@@ -849,7 +849,7 @@ const CdmRegulationsModule2Section2 = () => {
               <span className="text-violet-400/80 text-sm font-normal">05</span>
               Coordinating Design Work
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 On any project with multiple designers, there will be{' '}
                 <strong className="text-white">design interfaces</strong> — points where the work of
@@ -859,7 +859,7 @@ const CdmRegulationsModule2Section2 = () => {
 
               <div className="bg-white/5 border border-violet-400/30 p-4 rounded-lg">
                 <h3 className="text-violet-300 font-medium mb-3">Coordination Methods</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-violet-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -911,11 +911,11 @@ const CdmRegulationsModule2Section2 = () => {
                   <AlertTriangle className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-blue-300">Common Design Interface Issues</h3>
                 </div>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The following are common examples of design interface problems that the PD must
                   identify and resolve:
                 </p>
-                <ul className="text-white/70 space-y-1.5 text-sm">
+                <ul className="text-white space-y-1.5 text-sm">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -966,7 +966,7 @@ const CdmRegulationsModule2Section2 = () => {
               <span className="text-emerald-400/80 text-sm font-normal">06</span>
               Health & Safety File
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 The <strong className="text-white">Health & Safety File</strong> is one of the most
                 important outputs of the PD&rsquo;s work. It is a document (or collection of
@@ -979,7 +979,7 @@ const CdmRegulationsModule2Section2 = () => {
                 <h3 className="font-semibold mb-2 text-emerald-400">
                   Key Definition: Health & Safety File
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The H&S File is a living document prepared by the Principal Designer during the
                   project and passed to the client at completion. It contains information needed for
                   anyone who may carry out future construction work on the structure — including
@@ -997,7 +997,7 @@ const CdmRegulationsModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">As-Built Drawings</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Accurate drawings showing the building as actually constructed — including
                         structural elements, service routes, drainage, foundations, and any hidden
                         or concealed elements
@@ -1010,7 +1010,7 @@ const CdmRegulationsModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Material Specifications</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Details of materials used — particularly hazardous substances (e.g. lead
                         paint, asbestos-free but specialist coatings), structural adhesives,
                         composite materials, and fire-resistant products
@@ -1023,7 +1023,7 @@ const CdmRegulationsModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Maintenance Procedures</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Safe methods of access for cleaning, maintenance, and repair — including
                         information about fall arrest anchor points, safe access routes to plant
                         rooms, and maintenance schedules for safety-critical systems
@@ -1036,7 +1036,7 @@ const CdmRegulationsModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Structural Arrangements</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Details of structural systems, load-bearing elements, pre-stressed or
                         post-tensioned members, and any temporary works that were left in place
                       </p>
@@ -1048,7 +1048,7 @@ const CdmRegulationsModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Residual Design Risks</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Information about risks that could not be eliminated through design — for
                         example, buried services, fragile roof materials, or concealed structural
                         connections that must not be disturbed
@@ -1063,7 +1063,7 @@ const CdmRegulationsModule2Section2 = () => {
                   <AlertTriangle className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-blue-300">Handover Requirements</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   The PD must ensure the H&S File is{' '}
                   <strong className="text-white">passed to the client at project completion</strong>
                   . If the PD&rsquo;s appointment ends before the construction phase is complete,
@@ -1095,7 +1095,7 @@ const CdmRegulationsModule2Section2 = () => {
               <span className="text-amber-400/80 text-sm font-normal">07</span>
               PD vs CDM Coordinator
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 CDM 2015 replaced the <strong className="text-white">CDM Coordinator</strong>{' '}
                 (CDM-C) role from CDM 2007 with the{' '}
@@ -1178,10 +1178,10 @@ const CdmRegulationsModule2Section2 = () => {
                           <p className="text-white font-medium text-xs">{row.aspect}</p>
                         </div>
                         <div className="p-3 border-r border-white/5">
-                          <p className="text-white/60 text-xs">{row.cdm2007}</p>
+                          <p className="text-white text-xs">{row.cdm2007}</p>
                         </div>
                         <div className="p-3">
-                          <p className="text-white/80 text-xs">{row.cdm2015}</p>
+                          <p className="text-white text-xs">{row.cdm2015}</p>
                         </div>
                       </div>
                     ))}
@@ -1191,7 +1191,7 @@ const CdmRegulationsModule2Section2 = () => {
 
               <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-blue-400">Why the Change?</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The Löfstedt review (2011) and the subsequent government response identified that
                   the CDM Coordinator role was often seen as a{' '}
                   <strong className="text-white">bureaucratic intermediary</strong> rather than
@@ -1208,7 +1208,7 @@ const CdmRegulationsModule2Section2 = () => {
                   <AlertTriangle className="h-5 w-5 text-amber-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-amber-300">Transitional Note</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Some professionals who previously worked as CDM Coordinators transitioned into PD
                   roles under CDM 2015. However, only those who are designers (or work within design
                   organisations) can legitimately take on the PD role. Former CDM-Cs who are not
@@ -1229,7 +1229,7 @@ const CdmRegulationsModule2Section2 = () => {
               <span className="text-cyan-400/80 text-sm font-normal">08</span>
               PD Competence
             </h2>
-            <div className="space-y-4 text-white/80">
+            <div className="space-y-4 text-white">
               <p>
                 CDM 2015 does not prescribe a specific qualification for the Principal Designer.
                 Instead, it requires the PD to have sufficient{' '}
@@ -1249,7 +1249,7 @@ const CdmRegulationsModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Skills</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Practical ability to carry out the PD role — including design risk
                         assessment, coordination of design teams, production of pre-construction
                         information, and compilation of H&S Files
@@ -1262,7 +1262,7 @@ const CdmRegulationsModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Knowledge</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Understanding of CDM 2015 and related legislation, construction health and
                         safety hazards, the General Principles of Prevention, and the design process
                       </p>
@@ -1274,7 +1274,7 @@ const CdmRegulationsModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Experience</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         Relevant track record of managing pre-construction health and safety on
                         projects of a similar nature, size, and complexity
                       </p>
@@ -1286,7 +1286,7 @@ const CdmRegulationsModule2Section2 = () => {
                     </div>
                     <div>
                       <p className="text-white font-medium">Organisational Capability</p>
-                      <p className="text-white/60">
+                      <p className="text-white">
                         The organisation must have the resources, systems, processes, and management
                         structure to support the PD function — including trained staff, quality
                         management systems, and adequate time allocation
@@ -1298,11 +1298,11 @@ const CdmRegulationsModule2Section2 = () => {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-blue-400 font-medium mb-2">Professional Body Alignment</h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   While no formal PD qualification is required, membership of recognised
                   professional bodies provides evidence of competence:
                 </p>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-blue-400 mt-2 flex-shrink-0"></div>
                     <div>
@@ -1344,7 +1344,7 @@ const CdmRegulationsModule2Section2 = () => {
 
               <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-blue-400">Proportionality</h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   The level of competence required is{' '}
                   <strong className="text-white">proportionate</strong> to the nature, size, and
                   complexity of the project. A small domestic extension with two contractors
@@ -1360,7 +1360,7 @@ const CdmRegulationsModule2Section2 = () => {
                   <AlertTriangle className="h-5 w-5 text-blue-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-blue-300">Client Responsibility</h3>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   It is the <strong className="text-white">client&rsquo;s duty</strong> to make
                   reasonable enquiries to satisfy themselves that the PD has the necessary
                   competence. This does not mean the client needs to be an expert — but they must
@@ -1394,7 +1394,7 @@ const CdmRegulationsModule2Section2 = () => {
               </div>
               <div className="bg-white/5 border border-blue-400/20 rounded-lg p-4 flex-1">
                 <p className="text-blue-300 font-semibold text-sm mb-1">Inception & Appointment</p>
-                <ul className="text-white/60 text-xs space-y-1">
+                <ul className="text-white text-xs space-y-1">
                   <li>Client identifies the project involves more than one contractor</li>
                   <li>PD appointed as early as practicable</li>
                   <li>PD reviews project brief and client requirements</li>
@@ -1409,7 +1409,7 @@ const CdmRegulationsModule2Section2 = () => {
               </div>
               <div className="bg-white/5 border border-blue-400/20 rounded-lg p-4 flex-1">
                 <p className="text-blue-300 font-semibold text-sm mb-1">Concept & Feasibility</p>
-                <ul className="text-white/60 text-xs space-y-1">
+                <ul className="text-white text-xs space-y-1">
                   <li>Identify key hazards at concept stage</li>
                   <li>Begin gathering pre-construction information</li>
                   <li>Establish design coordination protocols</li>
@@ -1424,7 +1424,7 @@ const CdmRegulationsModule2Section2 = () => {
               </div>
               <div className="bg-white/5 border border-blue-400/20 rounded-lg p-4 flex-1">
                 <p className="text-blue-300 font-semibold text-sm mb-1">Detailed Design</p>
-                <ul className="text-white/60 text-xs space-y-1">
+                <ul className="text-white text-xs space-y-1">
                   <li>Apply eliminate/reduce/inform hierarchy to all design risks</li>
                   <li>Coordinate between design disciplines</li>
                   <li>Conduct design review meetings and maintain risk register</li>
@@ -1442,7 +1442,7 @@ const CdmRegulationsModule2Section2 = () => {
                 <p className="text-blue-300 font-semibold text-sm mb-1">
                   Pre-Construction Handover
                 </p>
-                <ul className="text-white/60 text-xs space-y-1">
+                <ul className="text-white text-xs space-y-1">
                   <li>
                     Ensure pre-construction information is provided to the principal contractor
                   </li>
@@ -1459,7 +1459,7 @@ const CdmRegulationsModule2Section2 = () => {
               </div>
               <div className="bg-white/5 border border-blue-400/20 rounded-lg p-4 flex-1">
                 <p className="text-blue-300 font-semibold text-sm mb-1">Construction Phase</p>
-                <ul className="text-white/60 text-xs space-y-1">
+                <ul className="text-white text-xs space-y-1">
                   <li>Liaise with the principal contractor throughout</li>
                   <li>Continue coordinating any ongoing design work</li>
                   <li>Update the Health & Safety File as construction progresses</li>
@@ -1474,7 +1474,7 @@ const CdmRegulationsModule2Section2 = () => {
               </div>
               <div className="bg-white/5 border border-blue-400/20 rounded-lg p-4 flex-1">
                 <p className="text-blue-300 font-semibold text-sm mb-1">Completion & Handover</p>
-                <ul className="text-white/60 text-xs space-y-1">
+                <ul className="text-white text-xs space-y-1">
                   <li>Finalise and review the Health & Safety File</li>
                   <li>Pass the H&S File to the client</li>
                   <li>Ensure all as-built information is incorporated</li>
@@ -1495,7 +1495,7 @@ const CdmRegulationsModule2Section2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1511,7 +1511,7 @@ const CdmRegulationsModule2Section2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-2-section-1">

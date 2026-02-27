@@ -213,7 +213,7 @@ export default function WorkingAtHeightModule5Section1() {
           <Button
             variant="ghost"
             size="icon"
-            className="min-h-[44px] min-w-[44px] text-white/70 hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] min-w-[44px] text-white hover:text-white hover:bg-white/10 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-5">
@@ -221,7 +221,7 @@ export default function WorkingAtHeightModule5Section1() {
             </Link>
           </Button>
           <div className="flex-1 min-w-0">
-            <p className="text-xs text-white/40">Module 5 {'\u2022'} Section 1</p>
+            <p className="text-xs text-white">Module 5 {'\u2022'} Section 1</p>
             <h1 className="text-sm font-semibold text-white truncate">
               Emergency Procedures & Rescue
             </h1>
@@ -246,7 +246,7 @@ export default function WorkingAtHeightModule5Section1() {
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Emergency Procedures & Rescue
           </h2>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding suspension trauma, immediate rescue priorities, first-aid protocols, and
             the emergency action plan that must be in place before any work at height begins
           </p>
@@ -258,7 +258,7 @@ export default function WorkingAtHeightModule5Section1() {
             <Zap className="h-4 w-4" />
             In 30 Seconds
           </h3>
-          <p className="text-white/80 text-base leading-relaxed">
+          <p className="text-white text-base leading-relaxed">
             When a worker falls and is left suspended in a harness, suspension trauma can cause
             death within 30 minutes. Rescue must begin immediately using on-site personnel and
             equipment — you cannot wait for the ambulance. After rescue, NEVER lay the casualty
@@ -274,7 +274,7 @@ export default function WorkingAtHeightModule5Section1() {
             <AlertTriangle className="h-4 w-4" />
             Critical Warning
           </h3>
-          <p className="text-white/80 text-base leading-relaxed">
+          <p className="text-white text-base leading-relaxed">
             More workers have died AFTER being rescued from harness suspension than during the
             suspension itself. This phenomenon — called "rescue death" — occurs when a well-meaning
             rescuer lays the casualty flat, causing pooled blood to flood back to the weakened
@@ -300,7 +300,7 @@ export default function WorkingAtHeightModule5Section1() {
             ].map((outcome, i) => (
               <li key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm leading-relaxed">{outcome}</span>
+                <span className="text-white text-sm leading-relaxed">{outcome}</span>
               </li>
             ))}
           </ul>
@@ -317,14 +317,14 @@ export default function WorkingAtHeightModule5Section1() {
             <h3 className="text-xl font-semibold text-white">What Is Suspension Trauma?</h3>
           </div>
           <div className="border-l-2 border-amber-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Suspension trauma — also known as{' '}
               <strong className="text-amber-400">orthostatic intolerance</strong> or harness-induced
               pathology — is a potentially fatal condition that occurs when a person is suspended
               upright in a harness with limited or no ability to move their legs. It is one of the
               most misunderstood and underestimated hazards in working at height.
             </p>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               When we stand or walk normally, the muscles in our legs act as a "second heart,"
               contracting rhythmically to squeeze blood in the veins back up towards the heart. This
               is called the <strong className="text-white">skeletal muscle pump</strong>. When a
@@ -337,7 +337,7 @@ export default function WorkingAtHeightModule5Section1() {
                 <HeartPulse className="h-4 w-4 text-amber-400" />
                 The Physiological Cascade
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
@@ -386,7 +386,7 @@ export default function WorkingAtHeightModule5Section1() {
               <h4 className="font-semibold text-white text-sm mb-2">
                 Contributing Factors That Accelerate Suspension Trauma
               </h4>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white/70">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm text-white">
                 <div className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>Unconsciousness from the initial fall (unable to move legs at all)</span>
@@ -427,7 +427,7 @@ export default function WorkingAtHeightModule5Section1() {
             <h3 className="text-xl font-semibold text-white">Suspension Trauma Timeline</h3>
           </div>
           <div className="border-l-2 border-red-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The following timeline shows the typical progression of suspension trauma in an
               unconscious or immobile casualty. Times are approximate and can be significantly
               shorter if contributing factors are present.
@@ -450,7 +450,7 @@ export default function WorkingAtHeightModule5Section1() {
                       DISCOMFORT
                     </span>
                   </div>
-                  <ul className="space-y-1.5 text-sm text-white/70">
+                  <ul className="space-y-1.5 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>
@@ -486,7 +486,7 @@ export default function WorkingAtHeightModule5Section1() {
                       PAIN & NUMBNESS
                     </span>
                   </div>
-                  <ul className="space-y-1.5 text-sm text-white/70">
+                  <ul className="space-y-1.5 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-orange-400 flex-shrink-0" />
                       <span>Increasing pain in the legs, groin, and lower abdomen</span>
@@ -521,7 +521,7 @@ export default function WorkingAtHeightModule5Section1() {
                       SEMI-CONSCIOUSNESS
                     </span>
                   </div>
-                  <ul className="space-y-1.5 text-sm text-white/70">
+                  <ul className="space-y-1.5 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                       <span>Confusion and disorientation — reduced brain perfusion</span>
@@ -556,7 +556,7 @@ export default function WorkingAtHeightModule5Section1() {
                       UNCONSCIOUSNESS / DEATH RISK
                     </span>
                   </div>
-                  <ul className="space-y-1.5 text-sm text-white/70">
+                  <ul className="space-y-1.5 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-red-400 flex-shrink-0" />
                       <span>Full loss of consciousness</span>
@@ -583,7 +583,7 @@ export default function WorkingAtHeightModule5Section1() {
                 </div>
               </div>
 
-              <p className="text-white/50 text-xs italic pt-4">
+              <p className="text-white text-xs italic pt-4">
                 Note: These times are approximate for an immobile, unconscious casualty. A conscious
                 casualty who can pump their legs may extend these times significantly, but rescue
                 must still begin immediately.
@@ -611,7 +611,7 @@ export default function WorkingAtHeightModule5Section1() {
             <h3 className="text-xl font-semibold text-white">Immediate Rescue Priority</h3>
           </div>
           <div className="border-l-2 border-orange-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The critical message of this section is simple:{' '}
               <strong className="text-orange-400">
                 rescue must begin within minutes, not after waiting for emergency services
@@ -623,7 +623,7 @@ export default function WorkingAtHeightModule5Section1() {
               <h4 className="font-semibold text-white text-sm mb-2">
                 Why On-Site Rescue Is Essential
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
@@ -658,7 +658,7 @@ export default function WorkingAtHeightModule5Section1() {
               <h4 className="font-semibold text-white text-sm mb-2">
                 What Must Be in Place Before Work Begins
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
@@ -691,7 +691,7 @@ export default function WorkingAtHeightModule5Section1() {
                 </li>
               </ul>
             </div>
-            <p className="text-white/70 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The Work at Height Regulations 2005, Regulation 4(1)(c), explicitly require that
               planning for work at height includes{' '}
               <strong className="text-white">planning for emergencies and rescue</strong>. A risk
@@ -712,7 +712,7 @@ export default function WorkingAtHeightModule5Section1() {
             <h3 className="text-xl font-semibold text-white">First Aid for Falls from Height</h3>
           </div>
           <div className="border-l-2 border-green-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Falls from height can result in a wide range of injuries, from minor bruising to fatal
               trauma. The first-aid response must be systematic, prioritising life-threatening
               conditions first.
@@ -730,7 +730,7 @@ export default function WorkingAtHeightModule5Section1() {
                     <span className="text-green-400 font-bold text-lg">A</span>
                     <span className="text-white font-semibold text-sm">Airway</span>
                   </div>
-                  <ul className="space-y-1.5 text-sm text-white/70">
+                  <ul className="space-y-1.5 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>
@@ -759,7 +759,7 @@ export default function WorkingAtHeightModule5Section1() {
                     <span className="text-green-400 font-bold text-lg">B</span>
                     <span className="text-white font-semibold text-sm">Breathing</span>
                   </div>
-                  <ul className="space-y-1.5 text-sm text-white/70">
+                  <ul className="space-y-1.5 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>
@@ -785,7 +785,7 @@ export default function WorkingAtHeightModule5Section1() {
                     <span className="text-green-400 font-bold text-lg">C</span>
                     <span className="text-white font-semibold text-sm">Circulation</span>
                   </div>
-                  <ul className="space-y-1.5 text-sm text-white/70">
+                  <ul className="space-y-1.5 text-sm text-white">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>
@@ -816,12 +816,12 @@ export default function WorkingAtHeightModule5Section1() {
                 <ShieldAlert className="h-4 w-4" />
                 Spinal Injury Protocol
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed mb-3">
+              <p className="text-white text-sm leading-relaxed mb-3">
                 Any fall from height should be treated as a potential spinal injury until proven
                 otherwise. The spinal cord, once damaged, cannot be repaired. Incorrect handling can
                 convert a survivable injury into permanent paralysis or death.
               </p>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
@@ -865,12 +865,12 @@ export default function WorkingAtHeightModule5Section1() {
                 <Activity className="h-4 w-4 text-amber-400" />
                 Treating for Shock
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed mb-3">
+              <p className="text-white text-sm leading-relaxed mb-3">
                 Shock (hypovolaemic or neurogenic) is common after falls from height due to blood
                 loss, pain, or spinal damage. Signs include pale/grey skin, rapid weak pulse, rapid
                 shallow breathing, cold clammy skin, nausea, and thirst.
               </p>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>Treat the cause if possible (control bleeding)</span>
@@ -919,7 +919,7 @@ export default function WorkingAtHeightModule5Section1() {
             </h3>
           </div>
           <div className="border-l-2 border-red-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               This is arguably the most important single piece of knowledge in this entire section.{' '}
               <strong className="text-red-400">
                 After rescuing a suspension trauma casualty, do NOT lay them flat.
@@ -931,14 +931,14 @@ export default function WorkingAtHeightModule5Section1() {
               <h4 className="font-semibold text-white text-sm mb-3">
                 Why Laying Flat Is Dangerous
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed mb-3">
+              <p className="text-white text-sm leading-relaxed mb-3">
                 During suspension, a significant volume of blood pools in the legs. This blood
                 becomes deoxygenated and accumulates metabolic waste products (lactic acid,
                 potassium). If the casualty is laid flat, this toxic, deoxygenated blood rushes back
                 to the heart in a sudden surge. The heart, already weakened from reduced blood flow
                 during suspension, cannot cope with:
               </p>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>The sudden increase in blood volume returning to the right atrium</span>
@@ -988,7 +988,7 @@ export default function WorkingAtHeightModule5Section1() {
                   </div>
                 </div>
               </div>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
@@ -1029,7 +1029,7 @@ export default function WorkingAtHeightModule5Section1() {
               <h4 className="font-semibold text-amber-400 text-sm mb-2">
                 Exception: When CPR Is Needed
               </h4>
-              <p className="text-white/70 text-sm leading-relaxed">
+              <p className="text-white text-sm leading-relaxed">
                 If the casualty is not breathing and has no pulse, CPR must take priority. CPR
                 requires the casualty to be on a firm, flat surface. In this situation, the risk of
                 rescue death is outweighed by the immediate need for cardiac resuscitation. An AED
@@ -1052,7 +1052,7 @@ export default function WorkingAtHeightModule5Section1() {
             </h3>
           </div>
           <div className="border-l-2 border-blue-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Every site where work at height takes place must have a clear, communicated emergency
               action plan. The following six steps provide the framework:
             </p>
@@ -1066,7 +1066,7 @@ export default function WorkingAtHeightModule5Section1() {
                   </span>
                   <h5 className="text-white font-semibold text-sm">Raise the Alarm</h5>
                 </div>
-                <p className="text-white/70 text-sm leading-relaxed pl-10">
+                <p className="text-white text-sm leading-relaxed pl-10">
                   Shout for help, use a radio, or activate the site alarm system. Ensure at least
                   one other person is aware of the emergency. Designate someone to call 999 while
                   you assess the scene.
@@ -1080,7 +1080,7 @@ export default function WorkingAtHeightModule5Section1() {
                   </span>
                   <h5 className="text-white font-semibold text-sm">Assess Scene Safety</h5>
                 </div>
-                <p className="text-white/70 text-sm leading-relaxed pl-10">
+                <p className="text-white text-sm leading-relaxed pl-10">
                   Before approaching the casualty, check for ongoing hazards: unstable structures,
                   electrical dangers, falling objects, or environmental hazards. Do not become a
                   second casualty.
@@ -1094,7 +1094,7 @@ export default function WorkingAtHeightModule5Section1() {
                   </span>
                   <h5 className="text-white font-semibold text-sm">Rescue or Assist</h5>
                 </div>
-                <p className="text-white/70 text-sm leading-relaxed pl-10">
+                <p className="text-white text-sm leading-relaxed pl-10">
                   If the casualty is suspended, begin the rescue immediately using the on-site
                   rescue plan and equipment. If they have fallen to the ground, approach safely and
                   begin first-aid assessment. If the casualty is conscious and suspended, talk to
@@ -1109,7 +1109,7 @@ export default function WorkingAtHeightModule5Section1() {
                   </span>
                   <h5 className="text-white font-semibold text-sm">Administer First Aid</h5>
                 </div>
-                <p className="text-white/70 text-sm leading-relaxed pl-10">
+                <p className="text-white text-sm leading-relaxed pl-10">
                   Follow the ABC protocol. For suspension trauma casualties, use the W-position. For
                   suspected spinal injuries, immobilise and do not move. Treat for shock. Control
                   any bleeding.
@@ -1126,7 +1126,7 @@ export default function WorkingAtHeightModule5Section1() {
                     <Phone className="h-3.5 w-3.5 text-blue-400" />
                   </h5>
                 </div>
-                <p className="text-white/70 text-sm leading-relaxed pl-10">
+                <p className="text-white text-sm leading-relaxed pl-10">
                   If not already done, call 999 for an ambulance. Provide: the exact location
                   (including postcode and any access instructions), the nature of the incident, the
                   number of casualties, the injuries sustained, and any first aid already given.
@@ -1141,7 +1141,7 @@ export default function WorkingAtHeightModule5Section1() {
                   </span>
                   <h5 className="text-white font-semibold text-sm">Preserve the Scene</h5>
                 </div>
-                <p className="text-white/70 text-sm leading-relaxed pl-10">
+                <p className="text-white text-sm leading-relaxed pl-10">
                   Once the casualty is being treated and emergency services are on the way, preserve
                   the scene for investigation. Do not move equipment, do not tidy up, and do not
                   allow others into the area. This evidence is critical for the RIDDOR report and
@@ -1173,7 +1173,7 @@ export default function WorkingAtHeightModule5Section1() {
             </h3>
           </div>
           <div className="border-l-2 border-purple-500/40 pl-4 sm:pl-6 space-y-4">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               The Work at Height Regulations 2005 require that all persons involved in work at
               height are given appropriate training, including training in emergency procedures.
               This is not optional and must be completed before work begins.
@@ -1182,7 +1182,7 @@ export default function WorkingAtHeightModule5Section1() {
               <h4 className="font-semibold text-white text-sm mb-2">
                 Who Needs Emergency Training?
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
@@ -1219,7 +1219,7 @@ export default function WorkingAtHeightModule5Section1() {
               <h4 className="font-semibold text-white text-sm mb-2">
                 Key Points for Effective Emergency Training
               </h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>Training must be specific to the site and the equipment being used</span>
@@ -1259,7 +1259,7 @@ export default function WorkingAtHeightModule5Section1() {
             Real-World Scenario
           </h3>
           <div className="bg-amber-500/10 border border-amber-500/30 rounded-xl p-5 space-y-3">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               <strong className="text-amber-400">Scenario:</strong> An electrician is working from a
               cherry picker (MEWP) at 8 metres, wearing a full-body harness attached to the basket
               anchor point. The MEWP develops a hydraulic fault and the boom drops suddenly by about
@@ -1269,7 +1269,7 @@ export default function WorkingAtHeightModule5Section1() {
             </p>
             <div className="bg-black/20 rounded-lg p-4">
               <h4 className="font-semibold text-white text-sm mb-2">What should happen next?</h4>
-              <ul className="space-y-2 text-sm text-white/70">
+              <ul className="space-y-2 text-sm text-white">
                 <li className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                   <span>
@@ -1310,7 +1310,7 @@ export default function WorkingAtHeightModule5Section1() {
                 </li>
               </ul>
             </div>
-            <p className="text-white/60 text-xs italic">
+            <p className="text-white text-xs italic">
               This scenario demonstrates why a rescue plan, trained rescuers, and rescue equipment
               must all be in place before the MEWP is used — not arranged after an incident occurs.
             </p>
@@ -1328,7 +1328,7 @@ export default function WorkingAtHeightModule5Section1() {
                 <span className="text-amber-400 font-bold min-w-[140px] flex-shrink-0">
                   Suspension Trauma
                 </span>
-                <span className="text-white/70">
+                <span className="text-white">
                   Life-threatening condition caused by motionless upright suspension in a harness;
                   blood pools in the legs, reducing cardiac output
                 </span>
@@ -1337,7 +1337,7 @@ export default function WorkingAtHeightModule5Section1() {
                 <span className="text-amber-400 font-bold min-w-[140px] flex-shrink-0">
                   Rescue Death
                 </span>
-                <span className="text-white/70">
+                <span className="text-white">
                   Fatal cardiac arrest occurring after rescue, caused by laying the casualty flat
                   and allowing pooled blood to surge back to the heart
                 </span>
@@ -1346,7 +1346,7 @@ export default function WorkingAtHeightModule5Section1() {
                 <span className="text-amber-400 font-bold min-w-[140px] flex-shrink-0">
                   W-Position
                 </span>
-                <span className="text-white/70">
+                <span className="text-white">
                   Post-rescue position with knees raised towards the chest, used to slow venous
                   return and prevent rescue death; maintained for 30+ minutes
                 </span>
@@ -1355,7 +1355,7 @@ export default function WorkingAtHeightModule5Section1() {
                 <span className="text-amber-400 font-bold min-w-[140px] flex-shrink-0">
                   Orthostatic Intolerance
                 </span>
-                <span className="text-white/70">
+                <span className="text-white">
                   Medical term for suspension trauma — the body's inability to maintain adequate
                   blood pressure when upright and immobile
                 </span>
@@ -1364,14 +1364,14 @@ export default function WorkingAtHeightModule5Section1() {
                 <span className="text-amber-400 font-bold min-w-[140px] flex-shrink-0">
                   Skeletal Muscle Pump
                 </span>
-                <span className="text-white/70">
+                <span className="text-white">
                   The mechanism by which leg muscle contractions squeeze venous blood back towards
                   the heart — inactive when a person is suspended motionless
                 </span>
               </div>
               <div className="flex items-start gap-3 bg-black/20 rounded-lg p-3">
                 <span className="text-amber-400 font-bold min-w-[140px] flex-shrink-0">ABC</span>
-                <span className="text-white/70">
+                <span className="text-white">
                   Airway, Breathing, Circulation — the primary survey sequence for first-aid
                   assessment of a casualty
                 </span>
@@ -1389,7 +1389,7 @@ export default function WorkingAtHeightModule5Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="bg-white/5 border border-white/10 rounded-xl p-4">
                 <h4 className="font-medium text-white mb-2 text-sm">{faq.question}</h4>
-                <p className="text-sm text-white/60 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>

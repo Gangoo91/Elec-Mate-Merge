@@ -67,7 +67,7 @@ const MaterialsTable = ({ items, onItemsChange }: MaterialsTableProps) => {
             </motion.div>
             <div>
               <h3 className="text-base sm:text-lg text-white font-bold">Materials Breakdown</h3>
-              <p className="text-xs sm:text-sm text-white/60">{currentItems.length} items</p>
+              <p className="text-xs sm:text-sm text-white">{currentItems.length} items</p>
             </div>
           </div>
           {onItemsChange && (
@@ -122,16 +122,16 @@ const MaterialsTable = ({ items, onItemsChange }: MaterialsTableProps) => {
               <div className="text-sm font-medium text-white mb-1 leading-snug">
                 {item.item || item.description}
               </div>
-              {item.supplier && <div className="text-xs text-white/60 mb-3">{item.supplier}</div>}
+              {item.supplier && <div className="text-xs text-white mb-3">{item.supplier}</div>}
               <div className="grid grid-cols-3 gap-2 text-center mt-3">
                 <div className="p-2.5 rounded-lg bg-white/5">
-                  <div className="text-xs text-white/60 mb-1">Qty</div>
+                  <div className="text-xs text-white mb-1">Qty</div>
                   <div className="font-mono text-xs text-white">
                     {item.quantity} {item.unit}
                   </div>
                 </div>
                 <div className="p-2.5 rounded-lg bg-white/5">
-                  <div className="text-xs text-white/60 mb-1">Unit</div>
+                  <div className="text-xs text-white mb-1">Unit</div>
                   {isEditMode ? (
                     <Input
                       type="number"
@@ -148,7 +148,7 @@ const MaterialsTable = ({ items, onItemsChange }: MaterialsTableProps) => {
                   )}
                 </div>
                 <div className="p-2.5 rounded-lg bg-white/5">
-                  <div className="text-xs text-white/60 mb-1">Total</div>
+                  <div className="text-xs text-white mb-1">Total</div>
                   <div className="font-mono text-xs font-bold text-blue-400">
                     £{item.total?.toFixed(0)}
                   </div>
@@ -170,16 +170,16 @@ const MaterialsTable = ({ items, onItemsChange }: MaterialsTableProps) => {
           <Table>
             <TableHeader>
               <TableRow className="border-white/10">
-                <TableHead className="text-left text-white/70 font-semibold text-xs">
+                <TableHead className="text-left text-white font-semibold text-xs">
                   Description
                 </TableHead>
-                <TableHead className="text-right text-white/70 font-semibold text-xs">
+                <TableHead className="text-right text-white font-semibold text-xs">
                   Qty
                 </TableHead>
-                <TableHead className="text-right text-white/70 font-semibold text-xs">
+                <TableHead className="text-right text-white font-semibold text-xs">
                   Unit Price
                 </TableHead>
-                <TableHead className="text-right text-white/70 font-semibold text-xs">
+                <TableHead className="text-right text-white font-semibold text-xs">
                   Total
                 </TableHead>
               </TableRow>
@@ -190,7 +190,7 @@ const MaterialsTable = ({ items, onItemsChange }: MaterialsTableProps) => {
                   <TableCell className="font-medium text-sm text-white text-left py-4">
                     {item.item || item.description}
                     {item.supplier && (
-                      <div className="text-xs text-white/60 text-left">{item.supplier}</div>
+                      <div className="text-xs text-white text-left">{item.supplier}</div>
                     )}
                   </TableCell>
                   <TableCell className="text-right text-sm text-white">
@@ -199,7 +199,7 @@ const MaterialsTable = ({ items, onItemsChange }: MaterialsTableProps) => {
                   <TableCell className="text-right font-mono text-sm text-white">
                     {isEditMode ? (
                       <div className="flex items-center justify-end gap-1">
-                        <span className="text-white/60">£</span>
+                        <span className="text-white">£</span>
                         <Input
                           type="number"
                           step="0.01"

@@ -200,7 +200,7 @@ export default function WorkingAtHeightModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-4">
@@ -225,7 +225,7 @@ export default function WorkingAtHeightModule4Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Method Statements &amp; Rescue Plans
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Safe systems of work documentation, rescue plan requirements, suspension trauma, rescue
             types and equipment, and the integration of rescue planning into the work at height
             process
@@ -343,7 +343,7 @@ export default function WorkingAtHeightModule4Section3() {
                   <BookOpen className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Method Statement Content</p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     <strong className="text-white">Scope:</strong> A clear description of the work
                     to be done, the location, and the boundaries of the task. What is included and,
@@ -403,7 +403,7 @@ export default function WorkingAtHeightModule4Section3() {
                 <p className="text-sm font-medium text-white mb-2">
                   Tasks Requiring a Method Statement
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>Any work at height involving scaffolding, MEWPs, or rope access</span>
@@ -447,7 +447,7 @@ export default function WorkingAtHeightModule4Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Warning</p>
                 </div>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   A generic, &ldquo;one-size-fits-all&rdquo; method statement that is not specific
                   to the actual task, location, and conditions is of limited value. The HSE has
                   criticised organisations that produce thick packs of generic RAMS that nobody
@@ -482,7 +482,7 @@ export default function WorkingAtHeightModule4Section3() {
                   <ShieldAlert className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Legal Requirement</p>
                 </div>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   WAH Regs 2005 Regulation 4(1):{' '}
                   <em>
                     &ldquo;Every employer shall ensure that work at height is &mdash; (a) properly
@@ -506,7 +506,7 @@ export default function WorkingAtHeightModule4Section3() {
                 <p className="text-sm font-medium text-white mb-2">
                   What the Rescue Plan Must Address
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>What type of rescue is appropriate (self, assisted, or technical)?</span>
@@ -561,13 +561,13 @@ export default function WorkingAtHeightModule4Section3() {
                     <Users className="h-5 w-5 text-green-400" />
                     <p className="text-sm font-semibold text-green-400">Type 1: Self-Rescue</p>
                   </div>
-                  <p className="text-sm text-white/80 leading-relaxed mb-2">
+                  <p className="text-sm text-white leading-relaxed mb-2">
                     The person rescues themselves using their own equipment and training. This is
                     the fastest form of rescue and is appropriate where the person is conscious,
                     uninjured, and has the equipment and training to get themselves to a safe
                     position.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Climbing back onto a scaffold platform after a slip</span>
@@ -590,13 +590,13 @@ export default function WorkingAtHeightModule4Section3() {
                     <LifeBuoy className="h-5 w-5 text-blue-400" />
                     <p className="text-sm font-semibold text-blue-400">Type 2: Assisted Rescue</p>
                   </div>
-                  <p className="text-sm text-white/80 leading-relaxed mb-2">
+                  <p className="text-sm text-white leading-relaxed mb-2">
                     A trained colleague or rescue team on site carries out the rescue using
                     dedicated rescue equipment. This is appropriate where the person is unable to
                     self-rescue (injured, unconscious, or disoriented) but a trained rescuer is
                     available on site.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>
@@ -621,12 +621,12 @@ export default function WorkingAtHeightModule4Section3() {
                       Type 3: Technical Rescue
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 leading-relaxed mb-2">
+                  <p className="text-sm text-white leading-relaxed mb-2">
                     The emergency services or a specialist rescue team carry out the rescue. This is
                     the last resort and is appropriate where on-site resources are insufficient, the
                     situation is complex, or the casualty requires immediate medical intervention.
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Fire and rescue service technical rescue teams</span>
@@ -648,7 +648,7 @@ export default function WorkingAtHeightModule4Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Warning</p>
                 </div>
-                <p className="text-sm text-white/80 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   Relying solely on Type 3 (emergency services) for work where a person could be
                   suspended in a harness is generally not adequate. Average emergency service
                   response time in urban areas is 7&ndash;15 minutes, and in rural areas it can be
@@ -684,7 +684,7 @@ export default function WorkingAtHeightModule4Section3() {
                   <HeartPulse className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Time Window</p>
                 </div>
-                <div className="space-y-2 text-sm text-white/80">
+                <div className="space-y-2 text-sm text-white">
                   <p>
                     When a person is suspended in a harness, the leg straps compress the veins in
                     the legs, restricting blood flow back to the heart. Blood pools in the lower
@@ -726,7 +726,7 @@ export default function WorkingAtHeightModule4Section3() {
                 <p className="text-sm font-medium text-white mb-2">
                   Factors That Accelerate Suspension Trauma
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>Unconsciousness from the fall (unable to move legs)</span>
@@ -773,7 +773,7 @@ export default function WorkingAtHeightModule4Section3() {
                   <Wrench className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Rescue Equipment Types</p>
                 </div>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <p>
                     <strong className="text-white">Rescue descent devices:</strong> Mechanical
                     devices that provide controlled lowering of a casualty to the ground. They
@@ -852,7 +852,7 @@ export default function WorkingAtHeightModule4Section3() {
                 <p className="text-sm font-medium text-white mb-2">
                   What Rescue Drills Should Test
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>Can the alarm be raised quickly and clearly?</span>
@@ -926,7 +926,7 @@ export default function WorkingAtHeightModule4Section3() {
                     <p className="text-sm font-semibold text-amber-400 mb-1">
                       Person has fallen / is in distress
                     </p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Is the person conscious and able to move?
                     </p>
                   </div>
@@ -941,20 +941,20 @@ export default function WorkingAtHeightModule4Section3() {
                         <p className="text-sm font-semibold text-green-400 mb-1">
                           Can they self-rescue?
                         </p>
-                        <p className="text-xs text-white/70">
+                        <p className="text-xs text-white">
                           Do they have the equipment and training to reach safety unassisted?
                         </p>
                       </div>
                       <div className="grid grid-cols-2 gap-2">
                         <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-2 text-center">
                           <p className="text-xs text-green-400 font-semibold mb-1">YES</p>
-                          <p className="text-xs text-white/70">
+                          <p className="text-xs text-white">
                             Guide self-rescue. Monitor until safe.
                           </p>
                         </div>
                         <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-2 text-center">
                           <p className="text-xs text-blue-400 font-semibold mb-1">NO</p>
-                          <p className="text-xs text-white/70">
+                          <p className="text-xs text-white">
                             Deploy assisted rescue team &amp; equipment.
                           </p>
                         </div>
@@ -970,20 +970,20 @@ export default function WorkingAtHeightModule4Section3() {
                         <p className="text-sm font-semibold text-red-400 mb-1">
                           Is assisted rescue available on site?
                         </p>
-                        <p className="text-xs text-white/70">
+                        <p className="text-xs text-white">
                           Trained rescuer + rescue equipment within reach?
                         </p>
                       </div>
                       <div className="grid grid-cols-2 gap-2">
                         <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-2 text-center">
                           <p className="text-xs text-blue-400 font-semibold mb-1">YES</p>
-                          <p className="text-xs text-white/70">
+                          <p className="text-xs text-white">
                             Deploy assisted rescue immediately.
                           </p>
                         </div>
                         <div className="bg-purple-500/10 border border-purple-500/30 rounded-lg p-2 text-center">
                           <p className="text-xs text-purple-400 font-semibold mb-1">NO</p>
-                          <p className="text-xs text-white/70">
+                          <p className="text-xs text-white">
                             Call emergency services (999). Monitor casualty.
                           </p>
                         </div>
@@ -994,7 +994,7 @@ export default function WorkingAtHeightModule4Section3() {
                   {/* Always box */}
                   <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-3 sm:p-4 text-center mt-4">
                     <p className="text-sm font-semibold text-red-400 mb-1">In ALL cases:</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Call 999 if any doubt. After rescue: W-position (knees raised), do NOT lay
                       flat. Monitor breathing. Await paramedics.
                     </p>
@@ -1026,7 +1026,7 @@ export default function WorkingAtHeightModule4Section3() {
                 <p className="text-sm font-medium text-white mb-2">
                   How to Integrate the Rescue Plan
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -1079,7 +1079,7 @@ export default function WorkingAtHeightModule4Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1093,7 +1093,7 @@ export default function WorkingAtHeightModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-4-section-2">

@@ -227,7 +227,7 @@ const HNCModule7Section4_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section4">
@@ -249,7 +249,7 @@ const HNCModule7Section4_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             DALI Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Digital Addressable Lighting Interface: protocol fundamentals, addressing, grouping,
             gateways, and system architecture
           </p>
@@ -551,7 +551,7 @@ const HNCModule7Section4_1 = () => {
                     <strong>Group 5:</strong> Meeting pod area (local switch)
                   </li>
                 </ul>
-                <p className="text-white/70 mt-2">
+                <p className="text-white mt-2">
                   Note: Perimeter luminaires belong to Groups 0, 1, and 2 simultaneously
                 </p>
               </div>
@@ -585,22 +585,22 @@ const HNCModule7Section4_1 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">DALI System Hierarchy</p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Level 4:</span>{' '}
+                  <span className="text-white">Level 4:</span>{' '}
                   <span className="text-white">BMS / Supervisory System</span>
                 </p>
-                <p className="ml-8 text-white/60">↓ BACnet/IP, Modbus TCP, KNX</p>
+                <p className="ml-8 text-white">↓ BACnet/IP, Modbus TCP, KNX</p>
                 <p>
-                  <span className="text-white/60">Level 3:</span>{' '}
+                  <span className="text-white">Level 3:</span>{' '}
                   <span className="text-white">DALI Gateway / Router</span>
                 </p>
-                <p className="ml-8 text-white/60">↓ Protocol translation</p>
+                <p className="ml-8 text-white">↓ Protocol translation</p>
                 <p>
-                  <span className="text-white/60">Level 2:</span>{' '}
+                  <span className="text-white">Level 2:</span>{' '}
                   <span className="text-white">Application Controller</span>
                 </p>
-                <p className="ml-8 text-white/60">↓ DALI bus (multiple)</p>
+                <p className="ml-8 text-white">↓ DALI bus (multiple)</p>
                 <p>
-                  <span className="text-white/60">Level 1:</span>{' '}
+                  <span className="text-white">Level 1:</span>{' '}
                   <span className="text-white">
                     Control Gear (Drivers) + Input Devices (Sensors/Switches)
                   </span>
@@ -744,7 +744,7 @@ const HNCModule7Section4_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Cable Specifications</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Minimum 1.5mm² for runs up to 300m</li>
                     <li>Voltage drop: max 2V at 250mA</li>
                     <li>5-core cable: L, N, E, DA+, DA-</li>
@@ -755,7 +755,7 @@ const HNCModule7Section4_1 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Topology Rules</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Bus, star, tree, or mixed topology</li>
                     <li>No loops (not a ring network)</li>
                     <li>One PSU per bus segment</li>
@@ -872,7 +872,7 @@ const HNCModule7Section4_1 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Commissioning tools:</strong> Use manufacturer commissioning software or
               universal DALI tools (handheld programmers, USB interfaces) for addressing and
               programming.
@@ -898,7 +898,7 @@ const HNCModule7Section4_1 = () => {
                 <strong>Scenario:</strong> Calculate if 48 LED luminaires can share a single DALI
                 bus.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given:</p>
                 <p className="ml-4">- 48 DALI LED drivers</p>
                 <p className="ml-4">- Each driver: 2mA standby current (typical)</p>
@@ -909,7 +909,7 @@ const HNCModule7Section4_1 = () => {
                 <p className="text-green-400">
                   Result: 48 drivers can operate on single bus with 154mA headroom
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Note: Also within 64 address limit (48 &lt; 64)
                 </p>
               </div>
@@ -923,7 +923,7 @@ const HNCModule7Section4_1 = () => {
                 <strong>Scenario:</strong> Design DALI architecture for 180 luminaires across 3
                 floors.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Requirements:</p>
                 <p className="ml-4">- Floor 1: 62 luminaires</p>
                 <p className="ml-4">- Floor 2: 58 luminaires</p>
@@ -950,7 +950,7 @@ const HNCModule7Section4_1 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Programme 4 scenes for a meeting room with 8 luminaires.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Luminaire arrangement:</p>
                 <p className="ml-4">- 4 downlights over table (Addr 0-3)</p>
                 <p className="ml-4">- 2 wall washers at screen end (Addr 4-5)</p>
@@ -1055,7 +1055,7 @@ const HNCModule7Section4_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1101,7 +1101,7 @@ const HNCModule7Section4_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section4">

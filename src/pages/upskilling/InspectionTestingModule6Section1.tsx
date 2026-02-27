@@ -219,7 +219,7 @@ const InspectionTestingModule6Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-6">
@@ -241,7 +241,7 @@ const InspectionTestingModule6Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             RCD Types and Applications
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding different RCD types, ratings, and their appropriate applications
           </p>
         </header>
@@ -329,7 +329,7 @@ const InspectionTestingModule6Section1 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Example:</p>
-              <p className="text-sm text-white/90 italic">
+              <p className="text-sm text-white italic">
                 If 10A flows out on line but only 9.97A returns via neutral, the 30mA difference is
                 detected and triggers disconnection.
               </p>
@@ -400,11 +400,11 @@ const InspectionTestingModule6Section1 = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/20">
-                    <th className="text-left py-2 text-white/60">Rating</th>
-                    <th className="text-left py-2 text-white/60">Purpose</th>
+                    <th className="text-left py-2 text-white">Rating</th>
+                    <th className="text-left py-2 text-white">Purpose</th>
                   </tr>
                 </thead>
-                <tbody className="text-white/80">
+                <tbody className="text-white">
                   <tr className="border-b border-white/10">
                     <td className="py-2 font-semibold text-cyan-400">10mA</td>
                     <td className="py-2">High-risk areas (medical, special)</td>
@@ -465,19 +465,19 @@ const InspectionTestingModule6Section1 = () => {
             <div className="my-6 space-y-4">
               <div className="border-l-4 border-red-500 pl-4">
                 <p className="text-red-400 font-semibold">Line-Neutral Shocks</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Touching L and N simultaneously - you're in series with load, no earth leakage.
                 </p>
               </div>
               <div className="border-l-4 border-amber-500 pl-4">
                 <p className="text-amber-400 font-semibold">Overcurrent</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   RCDs don't provide overload or short circuit protection (unless RCBO).
                 </p>
               </div>
               <div className="border-l-4 border-purple-500 pl-4">
                 <p className="text-purple-400 font-semibold">Overvoltage</p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Voltage surges or transients are not detected by RCDs.
                 </p>
               </div>
@@ -537,7 +537,7 @@ const InspectionTestingModule6Section1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -584,7 +584,7 @@ const InspectionTestingModule6Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-5/section-6">

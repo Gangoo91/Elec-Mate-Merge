@@ -219,7 +219,7 @@ const HNCModule2Section2_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section2">
@@ -241,7 +241,7 @@ const HNCModule2Section2_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Pipe Sizing and Pressure Drop
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Calculating friction losses in pipes and fittings for building services system design
           </p>
         </header>
@@ -328,7 +328,7 @@ const HNCModule2Section2_4 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 h<sub>f</sub> = f × (L/D) × (v²/2g)
               </p>
-              <div className="text-xs text-white/70 text-center space-y-1">
+              <div className="text-xs text-white text-center space-y-1">
                 <p>
                   h<sub>f</sub> = friction head loss (m), f = Darcy friction factor (dimensionless)
                 </p>
@@ -497,7 +497,7 @@ const HNCModule2Section2_4 = () => {
                 </p>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-mono text-xs mb-2">1/√f = -2log₁₀(ε/3.7D + 2.51/Re√f)</p>
-                  <p className="text-xs text-white/70">Implicit equation - requires iteration</p>
+                  <p className="text-xs text-white">Implicit equation - requires iteration</p>
                 </div>
               </div>
             </div>
@@ -527,7 +527,7 @@ const HNCModule2Section2_4 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">K Factor Method</p>
               <p className="font-mono text-center text-lg mb-2">h = K × v²/2g</p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Where K is the loss coefficient (dimensionless) and v is the velocity at the fitting
               </p>
             </div>
@@ -720,7 +720,7 @@ const HNCModule2Section2_4 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Design process:</strong> Size pipes for index circuit first, then check other
               circuits are at lower pressure drop (or add balancing allowance).
             </p>
@@ -745,7 +745,7 @@ const HNCModule2Section2_4 = () => {
                 <strong>Question:</strong> Calculate pressure drop for 30m of 50mm steel pipe
                 carrying water at 2 m/s. (f = 0.025, ρ = 1000 kg/m³)
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   h<sub>f</sub> = f × (L/D) × (v²/2g)
                 </p>
@@ -758,7 +758,7 @@ const HNCModule2Section2_4 = () => {
                 <p className="mt-2">
                   ΔP = ρgh = 1000 × 9.81 × 3.06 = <strong>30 kPa</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   → Pressure drop rate = 30000/30 = 1000 Pa/m (high!)
                 </p>
               </div>
@@ -772,7 +772,7 @@ const HNCModule2Section2_4 = () => {
                 <strong>Question:</strong> Calculate total fitting loss for: 4 × 90° elbows
                 (K=0.75), 2 × tee branches (K=1.5), 1 × globe valve (K=8). Velocity = 1.5 m/s.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Total K = (4 × 0.75) + (2 × 1.5) + 8 = 3 + 3 + 8 = 14</p>
                 <p className="mt-2">h = K × v²/2g = 14 × 1.5²/(2×9.81)</p>
                 <p>
@@ -792,7 +792,7 @@ const HNCModule2Section2_4 = () => {
                 <strong>Question:</strong> Size pump for index circuit: 80m pipe at 300 Pa/m,
                 fittings = 25m equiv, coil = 20 kPa, balancing = 10 kPa.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Pipe + fittings = (80 + 25) × 300 = 31,500 Pa = 31.5 kPa</p>
                 <p className="mt-2">Total = Pipe + Coil + Balancing</p>
                 <p>
@@ -801,7 +801,7 @@ const HNCModule2Section2_4 = () => {
                 <p className="mt-2">
                   Head = 61,500 / (1000 × 9.81) = <strong>6.3 m</strong>
                 </p>
-                <p className="mt-2 text-white/60">→ Select pump with ≥6.5 m head at design flow</p>
+                <p className="mt-2 text-white">→ Select pump with ≥6.5 m head at design flow</p>
               </div>
             </div>
           </div>
@@ -889,7 +889,7 @@ const HNCModule2Section2_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -935,7 +935,7 @@ const HNCModule2Section2_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section2-3">

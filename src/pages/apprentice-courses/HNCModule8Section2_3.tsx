@@ -283,7 +283,7 @@ const HNCModule8Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section2">
@@ -305,7 +305,7 @@ const HNCModule8Section2_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Fan Selection
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Fan types, characteristics, system curves, duty point selection and efficiency
             considerations
           </p>
@@ -388,7 +388,7 @@ const HNCModule8Section2_3 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Centrifugal Fans</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Centrifugal fans accelerate air radially outward from the impeller, converting
                 velocity energy into pressure. They are characterised by their blade configuration:
               </p>
@@ -410,7 +410,7 @@ const HNCModule8Section2_3 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Axial Fans</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Axial fans move air parallel to the shaft axis, providing high airflow at relatively
                 low pressures. Types include:
               </p>
@@ -432,7 +432,7 @@ const HNCModule8Section2_3 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Mixed-Flow Fans</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Mixed-flow fans combine axial and centrifugal principles. Air enters axially and
                 exits at an angle between axial and radial. They offer moderate pressure capability
                 in a compact form factor, making them popular for in-line duct applications where
@@ -537,15 +537,15 @@ const HNCModule8Section2_3 = () => {
                 <p>
                   <strong>Law 1 - Flow:</strong> Q₂ = Q₁ × (n₂/n₁)
                 </p>
-                <p className="text-white/70 ml-4">Volume flow rate varies directly with speed</p>
+                <p className="text-white ml-4">Volume flow rate varies directly with speed</p>
                 <p className="mt-2">
                   <strong>Law 2 - Pressure:</strong> P₂ = P₁ × (n₂/n₁)²
                 </p>
-                <p className="text-white/70 ml-4">Pressure varies with the square of speed</p>
+                <p className="text-white ml-4">Pressure varies with the square of speed</p>
                 <p className="mt-2">
                   <strong>Law 3 - Power:</strong> W₂ = W₁ × (n₂/n₁)³
                 </p>
-                <p className="text-white/70 ml-4">Power varies with the cube of speed</p>
+                <p className="text-white ml-4">Power varies with the cube of speed</p>
               </div>
             </div>
 
@@ -625,7 +625,7 @@ const HNCModule8Section2_3 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Density Corrections</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Fan laws assume constant air density. When operating at different temperatures or
                 altitudes, corrections are needed. At higher temperatures, air density decreases,
                 reducing mass flow rate for a given volumetric flow. Standard conditions are
@@ -659,7 +659,7 @@ const HNCModule8Section2_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Understanding System Resistance
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 System resistance follows the square law: ΔP = kQ², where k is the system constant
                 determined by ductwork configuration, fittings, filters, coils, and terminal
                 devices. On a pressure-flow graph, this creates a parabolic curve starting from the
@@ -786,7 +786,7 @@ const HNCModule8Section2_3 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Selection guidance:</strong> Select fans to operate between 60-80% of maximum
               flow for best efficiency, with the duty point clearly within the stable operating
               region and well clear of stall.
@@ -814,14 +814,14 @@ const HNCModule8Section2_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Specific Fan Power (SFP)
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 SFP measures the energy efficiency of the complete ventilation system, expressed as
                 watts per litre per second (W/(l/s)). It accounts for all fans, drives, and controls
                 serving a ventilation system.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>SFP = Total fan power (W) ÷ Design airflow (l/s)</p>
-                <p className="text-white/60 mt-2">Example:</p>
+                <p className="text-white mt-2">Example:</p>
                 <p>Supply fan: 2.2 kW, Extract fan: 1.8 kW</p>
                 <p>Design airflow: 2500 l/s</p>
                 <p>SFP = (2200 + 1800) ÷ 2500 = 1.6 W/(l/s)</p>
@@ -880,7 +880,7 @@ const HNCModule8Section2_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 ErP Directive and Fan Efficiency Grades (FEG)
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 The Energy-related Products (ErP) Directive Lot 6 mandates minimum efficiency for
                 fans. Compliance is measured using Fan Efficiency Grades comparing actual efficiency
                 to an ideal reference fan.
@@ -905,14 +905,14 @@ const HNCModule8Section2_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 EC Motors and Variable Speed Drives
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 EC (electronically commutated) motors are increasingly specified for fan
                 applications due to their efficiency advantages:
               </p>
               <div className="grid sm:grid-cols-2 gap-4 mt-3">
                 <div className="p-3 rounded bg-black/20">
                   <p className="font-medium text-white mb-2">EC Motor Advantages</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>- 80-90% efficiency across speed range</li>
                     <li>- Integral speed control</li>
                     <li>- No separate VSD required</li>
@@ -922,7 +922,7 @@ const HNCModule8Section2_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-black/20">
                   <p className="font-medium text-white mb-2">AC + VSD Comparison</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>- Efficiency drops at low speeds</li>
                     <li>- Separate VSD adds losses</li>
                     <li>- More installation space needed</li>
@@ -971,11 +971,11 @@ const HNCModule8Section2_3 = () => {
                 <strong>Scenario:</strong> A fan operating at 1450 rpm delivers 2.5 m³/s at 400 Pa,
                 consuming 1.8 kW. Calculate performance at 1200 rpm.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given data:</p>
                 <p>n₁ = 1450 rpm, Q₁ = 2.5 m³/s, P₁ = 400 Pa, W₁ = 1.8 kW</p>
                 <p>n₂ = 1200 rpm</p>
-                <p className="mt-2 text-white/60">Calculations:</p>
+                <p className="mt-2 text-white">Calculations:</p>
                 <p>Speed ratio = n₂/n₁ = 1200/1450 = 0.828</p>
                 <p className="mt-2">Q₂ = Q₁ × (n₂/n₁) = 2.5 × 0.828 = 2.07 m³/s</p>
                 <p>P₂ = P₁ × (n₂/n₁)² = 400 × 0.828² = 274 Pa</p>
@@ -994,17 +994,17 @@ const HNCModule8Section2_3 = () => {
                 <strong>Scenario:</strong> Verify SFP compliance for a supply and extract system
                 serving an office building.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">System data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">System data:</p>
                 <p>Design airflow: 3,000 l/s (3.0 m³/s)</p>
                 <p>Supply fan motor: 3.0 kW</p>
                 <p>Extract fan motor: 2.2 kW</p>
-                <p className="mt-2 text-white/60">SFP calculation:</p>
+                <p className="mt-2 text-white">SFP calculation:</p>
                 <p>Total fan power = 3,000 + 2,200 = 5,200 W</p>
                 <p>SFP = 5,200 ÷ 3,000 = 1.73 W/(l/s)</p>
                 <p className="mt-2">Part L limit for central mechanical ventilation: 1.6 W/(l/s)</p>
                 <p className="mt-2 text-red-400">Result: NON-COMPLIANT (1.73 &gt; 1.6)</p>
-                <p className="mt-2 text-white/60">Options to achieve compliance:</p>
+                <p className="mt-2 text-white">Options to achieve compliance:</p>
                 <p className="ml-4">- Reduce duct resistance (larger ducts, fewer fittings)</p>
                 <p className="ml-4">- Select higher efficiency fans</p>
                 <p className="ml-4">- Use EC motors instead of AC + VSD</p>
@@ -1020,16 +1020,16 @@ const HNCModule8Section2_3 = () => {
                 <strong>Scenario:</strong> Select a fan for a VAV system requiring 1.5 m³/s at 500
                 Pa design duty, operating between 40-100% flow.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Design requirements:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Design requirements:</p>
                 <p>Design flow: 1.5 m³/s (1500 l/s)</p>
                 <p>Design pressure: 500 Pa</p>
                 <p>Operating range: 40-100% (0.6-1.5 m³/s)</p>
-                <p className="mt-2 text-white/60">Fan type selection:</p>
+                <p className="mt-2 text-white">Fan type selection:</p>
                 <p>- Centrifugal backward-curved (high efficiency)</p>
                 <p>- Steep characteristic (stable across pressure range)</p>
                 <p>- EC motor (maintains efficiency at part load)</p>
-                <p className="mt-2 text-white/60">Selection criteria:</p>
+                <p className="mt-2 text-white">Selection criteria:</p>
                 <p>- Duty point in stable region (avoid stall)</p>
                 <p>- Peak efficiency near 70-80% of max flow</p>
                 <p>- Select fan where 1.5 m³/s @ 500 Pa is 70-75% max flow</p>
@@ -1128,7 +1128,7 @@ const HNCModule8Section2_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1174,7 +1174,7 @@ const HNCModule8Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section2">

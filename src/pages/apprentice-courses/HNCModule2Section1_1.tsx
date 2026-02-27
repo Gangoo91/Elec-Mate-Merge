@@ -235,7 +235,7 @@ const HNCModule2Section1_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section1">
@@ -255,7 +255,7 @@ const HNCModule2Section1_1 = () => {
             <span>Module 2.1.1</span>
           </div>
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">Conduction</h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Heat transfer through solid materials - the foundation of building thermal analysis and
             insulation design
           </p>
@@ -342,7 +342,7 @@ const HNCModule2Section1_1 = () => {
                 Fourier's Law - The Fundamental Equation
               </p>
               <p className="font-mono text-center text-lg mb-2">Q = -kA(dT/dx)</p>
-              <div className="text-xs text-white/70 space-y-1 mt-3">
+              <div className="text-xs text-white space-y-1 mt-3">
                 <p>
                   <strong>Q</strong> = Heat transfer rate (W)
                 </p>
@@ -383,14 +383,14 @@ const HNCModule2Section1_1 = () => {
                 A 215mm solid brick wall (k = 0.77 W/m·K) separates a room at 20°C from outside at
                 0°C. Calculate the heat flux through the wall.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>q = k x dT / L</p>
                 <p>q = 0.77 x (20 - 0) / 0.215</p>
                 <p>q = 0.77 x 20 / 0.215</p>
                 <p>
                   q = <strong>71.6 W/m²</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   For a 10m² wall: Q = 71.6 x 10 = 716W heat loss
                 </p>
               </div>
@@ -584,7 +584,7 @@ const HNCModule2Section1_1 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Thermal Diffusivity</p>
               <p className="font-mono text-center text-lg mb-2">a = k / (p x c)</p>
-              <div className="text-xs text-white/70 space-y-1 mt-3">
+              <div className="text-xs text-white space-y-1 mt-3">
                 <p>
                   <strong>a</strong> = Thermal diffusivity (m²/s)
                 </p>
@@ -598,7 +598,7 @@ const HNCModule2Section1_1 = () => {
                   <strong>c</strong> = Specific heat capacity (J/kg·K)
                 </p>
               </div>
-              <p className="text-sm text-white/90 mt-3">
+              <p className="text-sm text-white mt-3">
                 High a means rapid temperature response; low a means slow response (high thermal
                 mass).
               </p>
@@ -655,14 +655,14 @@ const HNCModule2Section1_1 = () => {
               <div className="grid grid-cols-2 gap-3 text-center text-sm mb-4">
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">R = L / k</p>
-                  <p className="text-white/70 text-xs">For a solid layer</p>
+                  <p className="text-white text-xs">For a solid layer</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">Unit: m²·K/W</p>
-                  <p className="text-white/70 text-xs">Higher = better insulation</p>
+                  <p className="text-white text-xs">Higher = better insulation</p>
                 </div>
               </div>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Thermal resistance is the 'opposition' to heat flow. It's the thermal equivalent of
                 electrical resistance.
               </p>
@@ -675,12 +675,12 @@ const HNCModule2Section1_1 = () => {
               <p className="text-sm text-white mb-2">
                 For layers stacked together (heat flows through each in turn):
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90 mb-3">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white mb-3">
                 <p>R_total = R_si + R1 + R2 + R3 + ... + R_se</p>
-                <p className="mt-1 text-white/60">
+                <p className="mt-1 text-white">
                   Where R_si = internal surface resistance (0.13 m²·K/W)
                 </p>
-                <p className="text-white/60">R_se = external surface resistance (0.04 m²·K/W)</p>
+                <p className="text-white">R_se = external surface resistance (0.04 m²·K/W)</p>
               </div>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
                 <li className="pl-1">Same heat flows through all layers</li>
@@ -699,7 +699,7 @@ const HNCModule2Section1_1 = () => {
                 Calculate the U-value of a cavity wall: 102mm brick (k=0.77), 50mm insulated cavity
                 (k=0.035), 100mm lightweight block (k=0.19), 13mm plaster (k=0.57).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>R_si = 0.13 m²·K/W (internal surface)</p>
                 <p>R_brick = 0.102/0.77 = 0.132 m²·K/W</p>
                 <p>R_cavity = 0.050/0.035 = 1.429 m²·K/W</p>
@@ -726,9 +726,9 @@ const HNCModule2Section1_1 = () => {
               <p className="text-sm text-white mb-2">
                 When heat can take alternative routes (e.g., through mortar joints or steel beams):
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90 mb-3">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white mb-3">
                 <p>1/R_total = (A1/R1 + A2/R2) / A_total</p>
-                <p className="mt-1 text-white/60">
+                <p className="mt-1 text-white">
                   Or for conductances: U_avg = (A1 x U1 + A2 x U2) / A_total
                 </p>
               </div>
@@ -865,7 +865,7 @@ const HNCModule2Section1_1 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 VCL = Vapour Control Layer (essential for chilled water to prevent condensation)
               </p>
             </div>
@@ -878,15 +878,15 @@ const HNCModule2Section1_1 = () => {
                 Calculate the heat loss per metre from a 42mm OD LPHW pipe at 80°C in a 20°C
                 plantroom, with and without 25mm insulation (k = 0.035 W/m·K).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">
                   Uninsulated (using simplified formula for bare pipe):
                 </p>
                 <p>q approx pi x D x h x dT approx 3.14 x 0.042 x 10 x 60</p>
                 <p>
                   q approx <strong>79 W/m</strong>
                 </p>
-                <p className="mt-3 text-white/60">Insulated (cylindrical coordinates):</p>
+                <p className="mt-3 text-white">Insulated (cylindrical coordinates):</p>
                 <p>R_ins = ln(r2/r1) / (2 x pi x k) = ln(46/21) / (2 x 3.14 x 0.035)</p>
                 <p>R_ins = 0.784 / 0.22 = 3.56 m·K/W</p>
                 <p>
@@ -920,7 +920,7 @@ const HNCModule2Section1_1 = () => {
                   <strong>Timber frame:</strong> 140mm studs fully filled + service void
                 </li>
               </ul>
-              <p className="text-sm text-white/90 mt-3">
+              <p className="text-sm text-white mt-3">
                 Remember to include thermal bridging allowances - typically add 10-15% to U-value
                 calculations.
               </p>
@@ -1016,7 +1016,7 @@ const HNCModule2Section1_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1062,7 +1062,7 @@ const HNCModule2Section1_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section1">

@@ -124,32 +124,32 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
           </div>
 
           <div className="text-right">
-            <p className="text-sm text-white/50 mb-1">Total Amount</p>
+            <p className="text-sm text-white mb-1">Total Amount</p>
             <p className="text-4xl font-bold text-elec-yellow">£{(quote.total || 0).toFixed(2)}</p>
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
-          <div className="flex items-center gap-2 text-white/70">
+          <div className="flex items-center gap-2 text-white">
             <Calendar className="h-4 w-4 text-elec-yellow" />
             <div>
-              <p className="text-white/50">Created</p>
+              <p className="text-white">Created</p>
               <p className="font-medium">{format(new Date(quote.createdAt), 'dd MMM yyyy')}</p>
             </div>
           </div>
-          <div className="flex items-center gap-2 text-white/70">
+          <div className="flex items-center gap-2 text-white">
             <Clock className="h-4 w-4 text-elec-yellow" />
             <div>
-              <p className="text-white/50">Valid Until</p>
+              <p className="text-white">Valid Until</p>
               <p className={cn('font-medium', isExpired && 'text-red-400')}>
                 {format(new Date(quote.expiryDate), 'dd MMM yyyy')}
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-2 text-white/70">
+          <div className="flex items-center gap-2 text-white">
             <FileText className="h-4 w-4 text-elec-yellow" />
             <div>
-              <p className="text-white/50">Last Updated</p>
+              <p className="text-white">Last Updated</p>
               <p className="font-medium">{format(new Date(quote.updatedAt), 'dd MMM yyyy')}</p>
             </div>
           </div>
@@ -179,7 +179,7 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             {/* Sent Date */}
             <div className="bg-white/[0.02] rounded-lg p-3 border border-white/[0.06]">
-              <div className="flex items-center gap-2 text-white/50 text-xs mb-1">
+              <div className="flex items-center gap-2 text-white text-xs mb-1">
                 <Send className="h-3 w-3" />
                 <span>Sent</span>
               </div>
@@ -187,7 +187,7 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
                 {format(new Date(firstSentAt), 'dd MMM yyyy')}
               </p>
               {daysSinceSent !== null && daysSinceSent > 0 && (
-                <p className="text-white/40 text-xs">
+                <p className="text-white text-xs">
                   {daysSinceSent} day{daysSinceSent !== 1 ? 's' : ''} ago
                 </p>
               )}
@@ -195,20 +195,20 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
 
             {/* Email Views */}
             <div className="bg-white/[0.02] rounded-lg p-3 border border-white/[0.06]">
-              <div className="flex items-center gap-2 text-white/50 text-xs mb-1">
+              <div className="flex items-center gap-2 text-white text-xs mb-1">
                 <Eye className="h-3 w-3" />
                 <span>Email Opens</span>
               </div>
               <p
                 className={cn(
                   'font-medium text-sm',
-                  hasBeenViewed ? 'text-blue-400' : 'text-white/40'
+                  hasBeenViewed ? 'text-blue-400' : 'text-white'
                 )}
               >
                 {hasBeenViewed ? viewCount : 'Not opened yet'}
               </p>
               {quote.email_opened_at && (
-                <p className="text-white/40 text-xs">
+                <p className="text-white text-xs">
                   First: {format(new Date(quote.email_opened_at), 'dd MMM, HH:mm')}
                 </p>
               )}
@@ -216,7 +216,7 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
 
             {/* Reminders Sent */}
             <div className="bg-white/[0.02] rounded-lg p-3 border border-white/[0.06]">
-              <div className="flex items-center gap-2 text-white/50 text-xs mb-1">
+              <div className="flex items-center gap-2 text-white text-xs mb-1">
                 <Bell className="h-3 w-3" />
                 <span>Reminders</span>
               </div>
@@ -229,7 +229,7 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
                 {reminderCount} of 3 sent
               </p>
               {lastReminderAt && (
-                <p className="text-white/40 text-xs">
+                <p className="text-white text-xs">
                   Last: {format(new Date(lastReminderAt), 'dd MMM')}
                 </p>
               )}
@@ -237,7 +237,7 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
 
             {/* Expiry Countdown */}
             <div className="bg-white/[0.02] rounded-lg p-3 border border-white/[0.06]">
-              <div className="flex items-center gap-2 text-white/50 text-xs mb-1">
+              <div className="flex items-center gap-2 text-white text-xs mb-1">
                 <Clock className="h-3 w-3" />
                 <span>Expires In</span>
               </div>
@@ -255,7 +255,7 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
                       ? 'Tomorrow'
                       : `${daysUntilExpiry} days`}
               </p>
-              <p className="text-white/40 text-xs">
+              <p className="text-white text-xs">
                 {format(new Date(quote.expiryDate), 'dd MMM yyyy')}
               </p>
             </div>
@@ -286,7 +286,7 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
                 </span>
               </div>
             ) : (
-              <div className="flex items-center gap-2 text-white/50">
+              <div className="flex items-center gap-2 text-white">
                 <Clock className="h-4 w-4" />
                 <span className="text-sm">Waiting for client to open the email</span>
               </div>
@@ -305,17 +305,17 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="space-y-3">
             <div className="flex items-start gap-3">
-              <Building className="h-4 w-4 text-white/50 mt-1 shrink-0" />
+              <Building className="h-4 w-4 text-white mt-1 shrink-0" />
               <div>
-                <p className="text-white/50 text-sm">Client Name</p>
+                <p className="text-white text-sm">Client Name</p>
                 <p className="text-white font-medium">{quote.client.name}</p>
               </div>
             </div>
 
             <div className="flex items-start gap-3">
-              <Mail className="h-4 w-4 text-white/50 mt-1 shrink-0" />
+              <Mail className="h-4 w-4 text-white mt-1 shrink-0" />
               <div>
-                <p className="text-white/50 text-sm">Email</p>
+                <p className="text-white text-sm">Email</p>
                 <p className="text-white font-medium">{quote.client.email}</p>
               </div>
             </div>
@@ -324,9 +324,9 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
           <div className="space-y-3">
             {quote.client.phone && (
               <div className="flex items-start gap-3">
-                <Phone className="h-4 w-4 text-white/50 mt-1 shrink-0" />
+                <Phone className="h-4 w-4 text-white mt-1 shrink-0" />
                 <div>
-                  <p className="text-white/50 text-sm">Phone</p>
+                  <p className="text-white text-sm">Phone</p>
                   <p className="text-white font-medium">{quote.client.phone}</p>
                 </div>
               </div>
@@ -334,9 +334,9 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
 
             {quote.client.address && (
               <div className="flex items-start gap-3">
-                <MapPin className="h-4 w-4 text-white/50 mt-1 shrink-0" />
+                <MapPin className="h-4 w-4 text-white mt-1 shrink-0" />
                 <div>
-                  <p className="text-white/50 text-sm">Address</p>
+                  <p className="text-white text-sm">Address</p>
                   <p className="text-white font-medium">
                     {quote.client.address}
                     {quote.client.postcode && `, ${quote.client.postcode}`}
@@ -357,12 +357,12 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
           </div>
 
           <h3 className="text-lg font-semibold text-white mb-2">{quote.jobDetails.title}</h3>
-          <p className="text-white/70 mb-4 whitespace-pre-wrap">{quote.jobDetails.description}</p>
+          <p className="text-white mb-4 whitespace-pre-wrap">{quote.jobDetails.description}</p>
 
           {quote.jobDetails.estimatedDuration && (
             <div className="flex items-center gap-2 text-sm">
               <Clock className="h-4 w-4 text-elec-yellow" />
-              <span className="text-white/50">Estimated Duration:</span>
+              <span className="text-white">Estimated Duration:</span>
               <span className="text-white font-medium">{quote.jobDetails.estimatedDuration}</span>
             </div>
           )}
@@ -390,7 +390,7 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
                   <div className="flex items-center gap-2">
                     {getCategoryIcon(category)}
                     <h3 className="font-semibold text-white capitalize">{category}</h3>
-                    <Badge variant="outline" className="border-white/20 text-white/70">
+                    <Badge variant="outline" className="border-white/20 text-white">
                       {categoryItems.length} {categoryItems.length === 1 ? 'item' : 'items'}
                     </Badge>
                   </div>
@@ -400,7 +400,7 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
                 {/* Items Table */}
                 <div className="bg-white/[0.02] rounded-lg border border-white/[0.06] overflow-hidden">
                   {/* Table Header - Hidden on mobile */}
-                  <div className="hidden sm:grid sm:grid-cols-12 gap-4 px-4 py-2 bg-white/[0.04] text-sm font-medium text-white/50">
+                  <div className="hidden sm:grid sm:grid-cols-12 gap-4 px-4 py-2 bg-white/[0.04] text-sm font-medium text-white">
                     <div className="col-span-5">Description</div>
                     <div className="col-span-2 text-center">Quantity</div>
                     <div className="col-span-2 text-right">Unit Price</div>
@@ -420,7 +420,7 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
                       <div className="col-span-1 sm:col-span-5">
                         <p className="text-white font-medium mb-1 sm:mb-0">{item.description}</p>
                         {/* Mobile: Show qty and prices below description */}
-                        <div className="flex items-center justify-between sm:hidden text-white/70 text-xs">
+                        <div className="flex items-center justify-between sm:hidden text-white text-xs">
                           <span>
                             Qty: {item.quantity} × £{item.unitPrice.toFixed(2)}
                           </span>
@@ -431,10 +431,10 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
                       </div>
 
                       {/* Desktop Layout */}
-                      <div className="hidden sm:block sm:col-span-2 text-center text-white/70">
+                      <div className="hidden sm:block sm:col-span-2 text-center text-white">
                         {item.quantity}
                       </div>
-                      <div className="hidden sm:block sm:col-span-2 text-right text-white/70">
+                      <div className="hidden sm:block sm:col-span-2 text-right text-white">
                         £{item.unitPrice.toFixed(2)}
                       </div>
                       <div className="hidden sm:block sm:col-span-3 text-right font-semibold text-white">
@@ -452,27 +452,27 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
       {/* Pricing Summary Card */}
       <Card className="glass-premium p-6">
         <div className="space-y-3">
-          <div className="flex justify-between text-white/70">
+          <div className="flex justify-between text-white">
             <span>Subtotal</span>
             <span className="font-medium">£{(quote.subtotal || 0).toFixed(2)}</span>
           </div>
 
           {quote.overhead !== undefined && quote.overhead > 0 && (
-            <div className="flex justify-between text-white/70">
+            <div className="flex justify-between text-white">
               <span>Overhead</span>
               <span className="font-medium">£{quote.overhead.toFixed(2)}</span>
             </div>
           )}
 
           {quote.profit !== undefined && quote.profit > 0 && (
-            <div className="flex justify-between text-white/70">
+            <div className="flex justify-between text-white">
               <span>Profit Margin</span>
               <span className="font-medium">£{quote.profit.toFixed(2)}</span>
             </div>
           )}
 
           {quote.settings?.vatRegistered && (
-            <div className="flex justify-between text-white/70">
+            <div className="flex justify-between text-white">
               <span>VAT ({quote.settings.vatRate}%)</span>
               <span className="font-medium">£{(quote.vatAmount || 0).toFixed(2)}</span>
             </div>
@@ -494,7 +494,7 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
             <FileText className="h-5 w-5 text-elec-yellow" />
             <h2 className="text-xl font-semibold text-white">Additional Notes</h2>
           </div>
-          <p className="text-white/70 whitespace-pre-wrap">{quote.notes}</p>
+          <p className="text-white whitespace-pre-wrap">{quote.notes}</p>
         </Card>
       )}
 
@@ -505,26 +505,26 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
             <CheckCircle className="h-6 w-6 text-green-500 shrink-0 mt-1" />
             <div className="flex-1">
               <h3 className="font-semibold text-white mb-2">Quote Accepted</h3>
-              <div className="space-y-1 text-sm text-white/70">
+              <div className="space-y-1 text-sm text-white">
                 <p>
-                  <span className="text-white/50">Accepted by:</span>{' '}
+                  <span className="text-white">Accepted by:</span>{' '}
                   <span className="font-medium">{quote.accepted_by_name || 'Client'}</span>
                 </p>
                 {quote.accepted_by_email && (
                   <p>
-                    <span className="text-white/50">Email:</span>{' '}
+                    <span className="text-white">Email:</span>{' '}
                     <span className="font-medium">{quote.accepted_by_email}</span>
                   </p>
                 )}
                 <p>
-                  <span className="text-white/50">Date:</span>{' '}
+                  <span className="text-white">Date:</span>{' '}
                   <span className="font-medium">
                     {format(new Date(quote.accepted_at), 'dd MMM yyyy, HH:mm')}
                   </span>
                 </p>
                 {quote.acceptance_method && (
                   <p>
-                    <span className="text-white/50">Method:</span>{' '}
+                    <span className="text-white">Method:</span>{' '}
                     <span className="font-medium capitalize">
                       {quote.acceptance_method.replace(/_/g, ' ')}
                     </span>
@@ -532,7 +532,7 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
                 )}
                 {quote.accepted_ip && (
                   <p>
-                    <span className="text-white/50">IP Address:</span>{' '}
+                    <span className="text-white">IP Address:</span>{' '}
                     <span className="font-medium font-mono text-xs">{quote.accepted_ip}</span>
                   </p>
                 )}
@@ -541,7 +541,7 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
               {/* Digital Signature */}
               {quote.signature_url && (
                 <div className="mt-4 pt-4 border-t border-white/10">
-                  <p className="text-white/50 text-xs uppercase tracking-wider mb-2">
+                  <p className="text-white text-xs uppercase tracking-wider mb-2">
                     Digital Signature
                   </p>
                   <div className="bg-white rounded-lg p-3 inline-block">
@@ -551,7 +551,7 @@ export const QuoteDetailView = ({ quote }: QuoteDetailViewProps) => {
                       className="max-h-20 w-auto"
                     />
                   </div>
-                  <p className="text-white/40 text-xs mt-2">
+                  <p className="text-white text-xs mt-2">
                     Legally binding digital signature captured at time of acceptance
                   </p>
                 </div>

@@ -245,7 +245,7 @@ const HNCModule2Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section3">
@@ -267,7 +267,7 @@ const HNCModule2Section3_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Humidity and Moisture Content
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding humidity measurement and its role in HVAC system design and comfort
           </p>
         </header>
@@ -352,7 +352,7 @@ const HNCModule2Section3_2 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 RH = (p<sub>v</sub> / p<sub>s</sub>) × 100%
               </p>
-              <div className="text-xs text-white/70 text-center space-y-1">
+              <div className="text-xs text-white text-center space-y-1">
                 <p>
                   p<sub>v</sub> = actual partial pressure of water vapour (Pa)
                 </p>
@@ -439,7 +439,7 @@ const HNCModule2Section3_2 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 g = 0.622 × p<sub>v</sub> / (P - p<sub>v</sub>)
               </p>
-              <div className="text-xs text-white/70 text-center space-y-1">
+              <div className="text-xs text-white text-center space-y-1">
                 <p>g = moisture content (kg/kg dry air, multiply by 1000 for g/kg)</p>
                 <p>
                   p<sub>v</sub> = partial pressure of water vapour (kPa)
@@ -499,7 +499,7 @@ const HNCModule2Section3_2 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-cyan-400/80 mb-2">Dew Point Relationship</p>
-              <div className="text-sm text-white/90 space-y-2">
+              <div className="text-sm text-white space-y-2">
                 <p>
                   At dew point: p<sub>v</sub> = p<sub>s</sub> (at dew point temperature)
                 </p>
@@ -593,7 +593,7 @@ const HNCModule2Section3_2 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 Depression = t<sub>db</sub> - t<sub>wb</sub>
               </p>
-              <div className="text-xs text-white/70 text-center space-y-1">
+              <div className="text-xs text-white text-center space-y-1">
                 <p>Larger depression = lower RH (more evaporation)</p>
                 <p>Zero depression = 100% RH (saturated, no evaporation)</p>
               </div>
@@ -692,7 +692,7 @@ const HNCModule2Section3_2 = () => {
                 <strong>Question:</strong> Air at 25°C has RH of 60%. The saturation vapour pressure
                 at 25°C is 3.169 kPa. Find the moisture content.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Find actual vapour pressure</p>
                 <p>pv = RH × ps = 0.60 × 3.169 = 1.901 kPa</p>
                 <p className="mt-2">Step 2: Calculate moisture content</p>
@@ -713,14 +713,14 @@ const HNCModule2Section3_2 = () => {
                 <strong>Question:</strong> Air at 20°C, 50% RH. At what temperature will
                 condensation occur on a cold surface?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>At 20°C: ps = 2.339 kPa</p>
                 <p>Actual vapour pressure: pv = 0.50 × 2.339 = 1.170 kPa</p>
                 <p className="mt-2">Dew point is where ps equals 1.170 kPa</p>
                 <p>
                   From tables or chart: this occurs at approximately <strong>9.3°C</strong>
                 </p>
-                <p className="mt-2 text-white/60">Any surface below 9.3°C will have condensation</p>
+                <p className="mt-2 text-white">Any surface below 9.3°C will have condensation</p>
               </div>
             </div>
 
@@ -732,7 +732,7 @@ const HNCModule2Section3_2 = () => {
                 <strong>Question:</strong> Winter air at 5°C, 80% RH is heated to 21°C. Find the new
                 RH.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>At 5°C: ps = 0.872 kPa</p>
                 <p>pv = 0.80 × 0.872 = 0.698 kPa</p>
                 <p>Moisture content = 0.622 × 0.698/100.627 = 4.3 g/kg</p>
@@ -741,7 +741,7 @@ const HNCModule2Section3_2 = () => {
                 <p>
                   New RH = pv/ps = 0.698/2.487 = <strong>28%</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This is why heated buildings feel dry in winter
                 </p>
               </div>
@@ -755,7 +755,7 @@ const HNCModule2Section3_2 = () => {
                 <strong>Question:</strong> Room at 22°C, 55% RH. Single glazing has inner surface at
                 8°C. Will condensation occur?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Find dew point of room air:</p>
                 <p>At 22°C: ps = 2.645 kPa</p>
                 <p>pv = 0.55 × 2.645 = 1.455 kPa</p>
@@ -764,7 +764,7 @@ const HNCModule2Section3_2 = () => {
                 </p>
                 <p className="mt-2">Glass surface: 8°C &lt; Dew point: 12.5°C</p>
                 <p className="mt-2 text-red-400">Yes - condensation WILL occur on the glass</p>
-                <p className="text-white/60">Solution: improve glazing or reduce humidity</p>
+                <p className="text-white">Solution: improve glazing or reduce humidity</p>
               </div>
             </div>
           </div>
@@ -835,7 +835,7 @@ const HNCModule2Section3_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -881,7 +881,7 @@ const HNCModule2Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section3-1">

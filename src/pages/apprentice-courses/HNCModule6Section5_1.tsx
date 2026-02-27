@@ -247,7 +247,7 @@ const HNCModule6Section5_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section5">
@@ -269,7 +269,7 @@ const HNCModule6Section5_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Energy Auditing
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Audit types, data collection, site surveys, measurement protocols and EN 16247 reporting
             standards
           </p>
@@ -585,7 +585,7 @@ const HNCModule6Section5_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="font-medium text-white mb-1">Utility Data</p>
-                  <ul className="text-white/80 space-y-0.5">
+                  <ul className="text-white space-y-0.5">
                     <li>• 12-36 months electricity bills</li>
                     <li>• Gas/oil consumption records</li>
                     <li>• Half-hourly metering data</li>
@@ -595,7 +595,7 @@ const HNCModule6Section5_1 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-white mb-1">Building Information</p>
-                  <ul className="text-white/80 space-y-0.5">
+                  <ul className="text-white space-y-0.5">
                     <li>• Floor areas (GIA/NIA)</li>
                     <li>• Occupancy schedules</li>
                     <li>• Operating hours</li>
@@ -727,7 +727,7 @@ const HNCModule6Section5_1 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Building Fabric</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Glazing type and condition</li>
                     <li>• Insulation levels (if accessible)</li>
                     <li>• Air tightness observations</li>
@@ -737,7 +737,7 @@ const HNCModule6Section5_1 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">HVAC Systems</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>• Plant nameplates and ratings</li>
                     <li>• Operating schedules</li>
                     <li>• Set points and controls</li>
@@ -839,7 +839,7 @@ const HNCModule6Section5_1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Survey tip:</strong> Interview facilities staff and building users -
               operational practices often explain unexpected consumption patterns that measurements
               alone cannot reveal.
@@ -865,7 +865,7 @@ const HNCModule6Section5_1 = () => {
                 <strong>Scenario:</strong> Calculate EUI for a 5,000m² office building consuming
                 850,000 kWh electricity and 450,000 kWh gas annually.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given:</p>
                 <p className="ml-4">Floor area = 5,000 m² (GIA)</p>
                 <p className="ml-4">Electricity = 850,000 kWh/year</p>
@@ -892,7 +892,7 @@ const HNCModule6Section5_1 = () => {
                 <strong>Scenario:</strong> LED lighting retrofit for an office floor - assess
                 financial viability.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Current situation:</p>
                 <p className="ml-4">100 x 58W T8 fluorescent fittings</p>
                 <p className="ml-4">Operating hours: 2,500 hours/year</p>
@@ -917,7 +917,7 @@ const HNCModule6Section5_1 = () => {
                 <strong>Scenario:</strong> Compare heating consumption between a mild year and a
                 cold year.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Year 1 (mild): Gas = 400,000 kWh, Degree days = 1,800</p>
                 <p>Year 2 (cold): Gas = 520,000 kWh, Degree days = 2,400</p>
                 <p className="mt-2">Normalised comparison (to 20-year average of 2,100 DD):</p>
@@ -926,8 +926,8 @@ const HNCModule6Section5_1 = () => {
                 <p className="mt-2 text-green-400">
                   Conclusion: Year 2 actually more efficient when weather-adjusted
                 </p>
-                <p className="text-white/60">Without normalisation, Year 2 appears 30% worse</p>
-                <p className="text-white/60">After normalisation, Year 2 is 2.5% better</p>
+                <p className="text-white">Without normalisation, Year 2 appears 30% worse</p>
+                <p className="text-white">After normalisation, Year 2 is 2.5% better</p>
               </div>
             </div>
           </div>
@@ -1107,7 +1107,7 @@ const HNCModule6Section5_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1153,7 +1153,7 @@ const HNCModule6Section5_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section5">

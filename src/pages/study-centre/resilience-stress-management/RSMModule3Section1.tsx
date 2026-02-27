@@ -204,7 +204,7 @@ export default function RSMModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-3">
@@ -227,7 +227,7 @@ export default function RSMModule3Section1() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Mindfulness-Based Stress Reduction
           </h1>
-          <p className="text-white/80 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The science behind mindfulness, its evidence base, core practices, and how electricians
             can apply MBSR techniques on site and in daily life
           </p>
@@ -347,7 +347,7 @@ export default function RSMModule3Section1() {
                     Why This Matters for Electricians
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   You do not need to become a meditation expert. The reason we cover the origins of
                   MBSR is so you understand that mindfulness is not a fad, a trend, or a vague
                   wellness concept. It is a clinically developed, rigorously tested programme with
@@ -389,7 +389,7 @@ export default function RSMModule3Section1() {
                       Paying Attention On Purpose (Intentionality)
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Most of the time, our attention wanders without our deliberate control. We think
                     about yesterday, worry about tomorrow, replay conversations, and mentally
                     rehearse scenarios &mdash; all while supposedly doing something else.
@@ -411,7 +411,7 @@ export default function RSMModule3Section1() {
                       In the Present Moment (Temporal Focus)
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Research by psychologists Matthew Killingsworth and Daniel Gilbert at Harvard
                     (2010) found that people spend approximately 47% of their waking hours thinking
                     about something other than what they are currently doing &mdash; and that this
@@ -432,7 +432,7 @@ export default function RSMModule3Section1() {
                       Without Judgement (Non-Reactivity)
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The non-judgemental component is perhaps the most challenging and the most
                     transformative. Normally, we automatically judge our experiences: this is good,
                     that is bad, I should not be feeling this, why am I thinking about that.
@@ -496,7 +496,7 @@ export default function RSMModule3Section1() {
                       Misconception 1: Clearing Your Mind
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     This is the single most common misconception about mindfulness. People try it,
                     find that their mind is full of thoughts, conclude that they &ldquo;cannot do
                     it,&rdquo; and give up. But mindfulness has never been about achieving a blank
@@ -516,7 +516,7 @@ export default function RSMModule3Section1() {
                       Misconception 2: Religious Practice
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     While mindfulness has roots in Buddhist contemplative traditions, MBSR is a
                     secular, clinical programme. It requires no spiritual beliefs, no religious
                     affiliation, and no philosophical commitments. It is recommended by the NHS and
@@ -535,7 +535,7 @@ export default function RSMModule3Section1() {
                       Misconception 3: Ignoring Problems
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Mindfulness does not mean accepting everything passively or pretending problems
                     do not exist. In fact, the opposite is true: mindfulness helps you see problems
                     more clearly because you are no longer clouded by automatic emotional reactions.
@@ -554,7 +554,7 @@ export default function RSMModule3Section1() {
                       Misconception 4: Being Passive
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Some people worry that mindfulness will make them &ldquo;soft&rdquo; or less
                     driven. Research shows the opposite: mindful individuals are typically more
                     productive, make better decisions, and respond more effectively under pressure.
@@ -674,7 +674,7 @@ export default function RSMModule3Section1() {
                     What This Means in Practical Terms
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If you practise mindfulness regularly &mdash; even ten minutes a day &mdash; the
                   research suggests you will experience lower stress hormone levels, better immune
                   function, reduced blood pressure, improved concentration, better emotional
@@ -712,7 +712,7 @@ export default function RSMModule3Section1() {
                     </span>
                     <p className="text-sm font-medium text-rose-400">Body Scan Meditation</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     A systematic practice of directing attention through each part of the body, from
                     the feet to the top of the head. You notice sensations &mdash; warmth, tingling,
                     tension, numbness, pain &mdash; without trying to change them. The body scan
@@ -722,7 +722,7 @@ export default function RSMModule3Section1() {
                     versions (10-15 minutes) are also effective.
                   </p>
                   <div className="bg-white/5 border border-white/10 p-2 rounded">
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       <strong className="text-rose-400">On site:</strong> A ten-minute body scan
                       during your lunch break helps you notice where you are holding physical
                       tension (shoulders, jaw, lower back) and release it before the afternoon
@@ -740,7 +740,7 @@ export default function RSMModule3Section1() {
                     </span>
                     <p className="text-sm font-medium text-rose-400">Sitting Meditation</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     The practice of sitting in a stable, comfortable position and focusing attention
                     on a chosen anchor &mdash; usually the breath. When your mind wanders (which it
                     will, repeatedly), you gently notice that it has wandered and bring attention
@@ -751,7 +751,7 @@ export default function RSMModule3Section1() {
                     always with the same quality of non-judgemental observation.
                   </p>
                   <div className="bg-white/5 border border-white/10 p-2 rounded">
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       <strong className="text-rose-400">On site:</strong> Even five minutes of
                       sitting meditation in the van before starting work can improve your focus and
                       reduce the residual stress from a difficult commute or a bad morning at home.
@@ -768,7 +768,7 @@ export default function RSMModule3Section1() {
                     </span>
                     <p className="text-sm font-medium text-rose-400">Mindful Movement</p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     Gentle, yoga-based stretching and movement practised with full awareness of the
                     body. Unlike conventional exercise where the goal is physical performance,
                     mindful movement focuses on the quality of attention you bring to each movement.
@@ -779,7 +779,7 @@ export default function RSMModule3Section1() {
                     helping to prevent injury and recognise early signs of strain.
                   </p>
                   <div className="bg-white/5 border border-white/10 p-2 rounded">
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       <strong className="text-rose-400">On site:</strong> Bringing mindful awareness
                       to physical tasks &mdash; noticing how your body feels while lifting,
                       climbing, reaching, or kneeling &mdash; helps you work within your physical
@@ -798,7 +798,7 @@ export default function RSMModule3Section1() {
                       Three-Minute Breathing Space
                     </p>
                   </div>
-                  <p className="text-sm text-white/80 mb-2">
+                  <p className="text-sm text-white mb-2">
                     A brief, structured practice designed to be used throughout the day as a
                     &ldquo;mini meditation.&rdquo; It has three distinct phases, each lasting
                     approximately one minute:
@@ -811,7 +811,7 @@ export default function RSMModule3Section1() {
                     doing it.
                   </p>
                   <div className="bg-white/5 border border-white/10 p-2 rounded">
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       <strong className="text-rose-400">On site:</strong> Before starting a complex
                       consumer unit change, use a three-minute breathing space to transition from
                       whatever you were previously doing (driving, talking, stressing about
@@ -993,7 +993,7 @@ export default function RSMModule3Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-3">

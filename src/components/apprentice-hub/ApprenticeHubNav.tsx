@@ -40,7 +40,7 @@ export function ApprenticeHubNav({ activeTab, onTabChange, onCapture }: Apprenti
         {/* Back button */}
         <button
           onClick={() => navigate('/dashboard')}
-          className="flex items-center justify-center h-11 w-11 rounded-xl text-white/80 hover:text-white active:scale-95 transition-all touch-manipulation flex-shrink-0"
+          className="flex items-center justify-center h-11 w-11 rounded-xl text-white hover:text-white active:scale-95 transition-all touch-manipulation flex-shrink-0"
           aria-label="Back to dashboard"
         >
           <ArrowLeft className="h-5 w-5" />
@@ -61,7 +61,7 @@ export function ApprenticeHubNav({ activeTab, onTabChange, onCapture }: Apprenti
                   'touch-manipulation active:scale-95 transition-all',
                   isActive
                     ? 'bg-elec-yellow text-black'
-                    : 'text-white/70 hover:text-white hover:bg-white/[0.06]'
+                    : 'text-white hover:text-white hover:bg-white/[0.06]'
                 )}
               >
                 <Icon className="h-4 w-4" />

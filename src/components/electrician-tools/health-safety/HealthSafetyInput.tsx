@@ -165,7 +165,7 @@ export const HealthSafetyInput = ({
 
   // Character count styling
   const getCharCountClass = () => {
-    if (prompt.length < 50) return 'text-white/40';
+    if (prompt.length < 50) return 'text-white';
     if (prompt.length < 300) return 'text-emerald-400';
     return 'text-amber-400';
   };
@@ -208,7 +208,7 @@ export const HealthSafetyInput = ({
             maxLength={500}
           />
 
-          <p className="text-xs sm:text-sm text-white/50">
+          <p className="text-xs sm:text-sm text-white">
             Include specific hazards and site conditions for accurate assessment
           </p>
         </div>
@@ -255,7 +255,7 @@ export const HealthSafetyInput = ({
                     className={cn('h-5 w-5', !isSelected && 'opacity-60')}
                     style={!isSelected ? { color: config.gradientFrom } : undefined}
                   />
-                  <span className={cn('text-xs font-semibold', !isSelected && 'text-white/80')}>
+                  <span className={cn('text-xs font-semibold', !isSelected && 'text-white')}>
                     {typeConfig.label}
                   </span>
                 </button>
@@ -273,22 +273,22 @@ export const HealthSafetyInput = ({
         >
           <CollapsibleTrigger className="agent-collapsible-trigger w-full">
             <div className="flex items-center gap-3">
-              <FileText className="h-4 w-4 text-white/60" />
+              <FileText className="h-4 w-4 text-white" />
               <span className="text-sm sm:text-base font-medium">Project Details</span>
-              <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-white/10 text-white/50">
+              <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-white/10 text-white">
                 Optional
               </span>
             </div>
             <ChevronDown
               className={cn(
-                'h-4 w-4 text-white/40 transition-transform duration-200',
+                'h-4 w-4 text-white transition-transform duration-200',
                 showProjectDetails && 'rotate-180'
               )}
             />
           </CollapsibleTrigger>
 
           <CollapsibleContent className="p-4 pt-0 space-y-4">
-            <p className="text-xs text-white/50 pb-2">Add for comprehensive documentation</p>
+            <p className="text-xs text-white pb-2">Add for comprehensive documentation</p>
 
             {/* Customer Selector */}
             <div className="space-y-2">
@@ -353,15 +353,15 @@ export const HealthSafetyInput = ({
         >
           <CollapsibleTrigger className="agent-collapsible-trigger w-full">
             <div className="flex items-center gap-3">
-              <Lightbulb className="h-4 w-4 text-white/60" />
+              <Lightbulb className="h-4 w-4 text-white" />
               <span className="text-sm sm:text-base font-medium">Example Scenarios</span>
-              <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-white/10 text-white/50">
+              <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-white/10 text-white">
                 Templates
               </span>
             </div>
             <ChevronDown
               className={cn(
-                'h-4 w-4 text-white/40 transition-transform duration-200',
+                'h-4 w-4 text-white transition-transform duration-200',
                 showExamples && 'rotate-180'
               )}
             />
@@ -383,7 +383,7 @@ export const HealthSafetyInput = ({
                         className="h-4 w-4 mt-0.5 shrink-0"
                         style={{ color: config.gradientFrom }}
                       />
-                      <span className="text-sm text-white/80">{scenario.title}</span>
+                      <span className="text-sm text-white">{scenario.title}</span>
                     </div>
                   </button>
                 );

@@ -209,7 +209,7 @@ export default function MewpModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-4">
@@ -234,7 +234,7 @@ export default function MewpModule4Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Working Near Structures, Power Lines &amp; Public Areas
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Critical safety considerations when operating MEWPs near overhead structures, electrical
             hazards, public spaces, and in challenging environments
           </p>
@@ -320,7 +320,7 @@ export default function MewpModule4Section3() {
                     <h3 className="font-bold text-red-300 text-base mb-1">
                       ENTRAPMENT IS FREQUENTLY FATAL
                     </h3>
-                    <p className="text-white/90 text-sm">
+                    <p className="text-white text-sm">
                       Entrapment is a <strong>rising cause of death</strong> in MEWP operations.
                       Between 2023 and 2024, entrapment reports increased by <strong>75%</strong>{' '}
                       and entrapment-related fatalities increased by <strong>62%</strong>. Every
@@ -341,7 +341,7 @@ export default function MewpModule4Section3() {
 
               <div className="bg-white/5 border border-red-400/30 p-4 rounded-lg">
                 <h3 className="text-red-300 font-medium mb-3">Common Entrapment Scenarios</h3>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   {[
                     'Operator trapped between guardrails and overhead beams or steelwork',
                     'Crushing against bridge undersides, soffits, or ceilings',
@@ -433,7 +433,7 @@ export default function MewpModule4Section3() {
                     <h3 className="font-bold text-red-300 text-base mb-1">
                       CRITICAL SAFETY: ELECTROCUTION RISK
                     </h3>
-                    <p className="text-white/90 text-sm">
+                    <p className="text-white text-sm">
                       Electric shock from overhead power lines can occur{' '}
                       <strong>WITHOUT direct contact</strong>. Electricity can{' '}
                       <strong>arc (flashover)</strong> across the air gap between a power line and a
@@ -464,7 +464,7 @@ export default function MewpModule4Section3() {
                       </span>
                       <span className="text-lg font-bold text-red-400">15m (50ft)</span>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Plus the fully extended boom length. These carry the highest voltages
                       (132kV&ndash;400kV+) and present extreme arcing risk.
                     </p>
@@ -476,7 +476,7 @@ export default function MewpModule4Section3() {
                       </span>
                       <span className="text-lg font-bold text-orange-400">9m (30ft)</span>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Plus the fully extended boom length. Distribution lines on wooden poles
                       typically carry 11kV&ndash;33kV.
                     </p>
@@ -488,7 +488,7 @@ export default function MewpModule4Section3() {
                       </span>
                       <span className="text-lg font-bold text-elec-yellow">3m (10ft)</span>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       General minimum safe approach distance from any overhead line. If voltage is
                       unknown, assume the worst case and use 15m.
                     </p>
@@ -501,7 +501,7 @@ export default function MewpModule4Section3() {
                 <h3 className="text-white font-semibold text-center mb-1 text-sm">
                   Overhead Power Line Safe Distance Zones
                 </h3>
-                <p className="text-white/50 text-xs text-center mb-5">
+                <p className="text-white text-xs text-center mb-5">
                   Concentric distance zones from a power line (not to scale)
                 </p>
 
@@ -608,15 +608,15 @@ export default function MewpModule4Section3() {
                 <div className="flex flex-wrap justify-center gap-3 sm:gap-5 mt-5">
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 rounded-full bg-red-500/30 border-2 border-red-500"></div>
-                    <span className="text-xs text-white/70">Danger &mdash; Fatal risk</span>
+                    <span className="text-xs text-white">Danger &mdash; Fatal risk</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 rounded-full bg-amber-500/20 border-2 border-amber-500/50"></div>
-                    <span className="text-xs text-white/70">Caution &mdash; Approach limit</span>
+                    <span className="text-xs text-white">Caution &mdash; Approach limit</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 rounded-full bg-green-500/20 border-2 border-green-500/50"></div>
-                    <span className="text-xs text-white/70">Safe &mdash; Beyond exclusion</span>
+                    <span className="text-xs text-white">Safe &mdash; Beyond exclusion</span>
                   </div>
                 </div>
               </div>
@@ -630,7 +630,7 @@ export default function MewpModule4Section3() {
                     <div className="w-6 h-6 rounded-full bg-red-500/30 border border-red-500/60 flex items-center justify-center flex-shrink-0">
                       <span className="text-red-300 font-bold text-xs">1</span>
                     </div>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       <strong className="text-white">DO NOT leave the platform</strong> &mdash; the
                       machine is energised. Climbing down or jumping creates a path to earth through
                       your body.
@@ -640,7 +640,7 @@ export default function MewpModule4Section3() {
                     <div className="w-6 h-6 rounded-full bg-red-500/30 border border-red-500/60 flex items-center justify-center flex-shrink-0">
                       <span className="text-red-300 font-bold text-xs">2</span>
                     </div>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       <strong className="text-white">Stay on the platform</strong> and call for help
                       using radio or phone.
                     </p>
@@ -649,7 +649,7 @@ export default function MewpModule4Section3() {
                     <div className="w-6 h-6 rounded-full bg-red-500/30 border border-red-500/60 flex items-center justify-center flex-shrink-0">
                       <span className="text-red-300 font-bold text-xs">3</span>
                     </div>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       <strong className="text-white">
                         Ground persons must NOT touch the machine
                       </strong>{' '}
@@ -660,7 +660,7 @@ export default function MewpModule4Section3() {
                     <div className="w-6 h-6 rounded-full bg-red-500/30 border border-red-500/60 flex items-center justify-center flex-shrink-0">
                       <span className="text-red-300 font-bold text-xs">4</span>
                     </div>
-                    <p className="text-white/80">
+                    <p className="text-white">
                       <strong className="text-white">
                         Contact the electricity supplier immediately
                       </strong>{' '}
@@ -672,7 +672,7 @@ export default function MewpModule4Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">Pre-Work Controls</h3>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -791,13 +791,13 @@ export default function MewpModule4Section3() {
                 <h3 className="text-purple-300 font-medium mb-3">
                   Street Lighting and Telecoms Work
                 </h3>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Street lighting and telecoms work presents specific challenges because the MEWP is
                   often parked in <strong>live traffic lanes</strong>. The operator is elevated
                   directly above moving vehicles whilst the machine occupies part of the
                   carriageway.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -835,7 +835,7 @@ export default function MewpModule4Section3() {
                   <AlertTriangle className="h-5 w-5 text-orange-400" />
                   <p className="text-sm font-medium text-orange-400">Key Risk</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Members of the public are <strong>unpredictable</strong>. Unlike trained site
                   personnel, pedestrians may walk under the MEWP, children may run into the
                   exclusion zone, and vehicles may not slow down or change lanes. Your risk
@@ -911,28 +911,28 @@ export default function MewpModule4Section3() {
                 <div className="grid sm:grid-cols-2 gap-3">
                   <div className="bg-black/30 rounded-lg p-3">
                     <p className="text-xs font-medium text-red-300 mb-1">Falls from Height</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Operator may misjudge platform edge, trip over tools, or fail to see gaps.
                       Ensure platform is clear and well-lit.
                     </p>
                   </div>
                   <div className="bg-black/30 rounded-lg p-3">
                     <p className="text-xs font-medium text-red-300 mb-1">Collision</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Vehicles may not see the MEWP in time. Use beacons, Chapter 8 signage with
                       reflective faces, and IPVs on high-speed roads.
                     </p>
                   </div>
                   <div className="bg-black/30 rounded-lg p-3">
                     <p className="text-xs font-medium text-red-300 mb-1">Entrapment</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Overhead structures are harder to see at night. Extra caution and slower
                       movements are essential near buildings.
                     </p>
                   </div>
                   <div className="bg-black/30 rounded-lg p-3">
                     <p className="text-xs font-medium text-red-300 mb-1">Fatigue</p>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Operators working at height when tired present increased risk. Manage shift
                       patterns, breaks, and monitor alertness.
                     </p>
@@ -944,7 +944,7 @@ export default function MewpModule4Section3() {
                 <p className="text-sm font-medium text-elec-yellow mb-2">
                   Consider: Night Traffic Patterns
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Whilst traffic volumes are typically lower at night, vehicle speeds may be{' '}
                   <strong>significantly higher</strong>. Drivers travelling at speed in low-light
                   conditions may not see the MEWP or the work area signage until very late. This
@@ -1011,20 +1011,20 @@ export default function MewpModule4Section3() {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-elec-yellow">Safe Distance Rule</h3>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   The general rule for positioning a MEWP near an excavation edge:
                 </p>
                 <div className="bg-black/30 rounded-lg p-4 text-center">
                   <p className="text-lg font-bold text-elec-yellow mb-1">
                     Distance from edge &ge; Depth of excavation
                   </p>
-                  <p className="text-xs text-white/60">
+                  <p className="text-xs text-white">
                     As a minimum, the distance from the excavation edge to the nearest MEWP support
                     point (wheel or outrigger pad) should equal or exceed the depth of the
                     excavation.
                   </p>
                 </div>
-                <p className="text-xs text-white/60 mt-2">
+                <p className="text-xs text-white mt-2">
                   On soft, wet, or granular soils, or where the excavation is unsupported, greater
                   distances may be required. A geotechnical assessment may be necessary for deep
                   excavations.
@@ -1033,7 +1033,7 @@ export default function MewpModule4Section3() {
 
               <div className="bg-white/5 border border-teal-400/30 p-4 rounded-lg">
                 <h3 className="text-teal-300 font-medium mb-3">Additional Controls</h3>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1077,7 +1077,7 @@ export default function MewpModule4Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Water Hazards</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   If a MEWP overturns into water or an excavation containing water, the operator
                   faces a dual risk of crushing injury and drowning. Rescue from a water-filled
                   excavation is extremely difficult. When working near any body of water (rivers,
@@ -1113,14 +1113,14 @@ export default function MewpModule4Section3() {
                         NEVER position a MEWP directly on a fragile surface
                       </p>
                     </div>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Fragile surfaces include asbestos cement sheets, fibre cement sheets, liner
                       panels on metal-clad buildings, glass (rooflights, skylights), plastic
                       rooflights, chipboard or plywood decking that has deteriorated, and any
                       surface marked with &ldquo;FRAGILE ROOF&rdquo; warning signs.
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The correct approach is to position the MEWP on{' '}
                     <strong>firm, stable ground adjacent to the fragile area</strong> and use the
                     boom to reach over it. This keeps the machine&rsquo;s weight on a surface that
@@ -1141,7 +1141,7 @@ export default function MewpModule4Section3() {
                     <h4 className="text-sm font-semibold text-orange-300 mb-1">
                       Chemical Plants &amp; Refineries
                     </h4>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       May require <strong>ATEX-rated (explosion-proof) MEWPs</strong> in zones where
                       flammable gases, vapours, or dusts are present. Standard MEWPs contain
                       electrical systems that can generate sparks &mdash; a potential ignition
@@ -1151,7 +1151,7 @@ export default function MewpModule4Section3() {
                   </div>
                   <div className="bg-black/30 rounded-lg p-3">
                     <h4 className="text-sm font-semibold text-blue-300 mb-1">Confined Spaces</h4>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Confined spaces are <strong>not normally suitable for MEWP use</strong>. The
                       space may not be large enough to operate the machine safely, ventilation may
                       be poor (affecting diesel-powered MEWPs), and rescue in the event of an
@@ -1163,7 +1163,7 @@ export default function MewpModule4Section3() {
                     <h4 className="text-sm font-semibold text-cyan-300 mb-1">
                       Cold Stores &amp; Freezers
                     </h4>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Extreme cold affects <strong>battery performance</strong> (reduced capacity
                       and slower charging) and <strong>hydraulic fluid viscosity</strong> (thicker
                       fluid means sluggish or erratic controls). The MEWP may need to be
@@ -1176,7 +1176,7 @@ export default function MewpModule4Section3() {
                     <h4 className="text-sm font-semibold text-green-300 mb-1">
                       Heritage &amp; Conservation Sites
                     </h4>
-                    <p className="text-xs text-white/70">
+                    <p className="text-xs text-white">
                       Historic buildings and conservation areas may have{' '}
                       <strong>vibration restrictions</strong>
                       (diesel MEWPs generate vibration that can damage sensitive structures) and{' '}
@@ -1190,7 +1190,7 @@ export default function MewpModule4Section3() {
 
               <div className="bg-elec-yellow/10 border border-elec-yellow/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-elec-yellow mb-2">General Principle</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Any environment that falls outside normal construction or maintenance conditions
                   requires a <strong>site-specific risk assessment</strong> that considers the
                   unique hazards of that environment. Generic risk assessments are not sufficient
@@ -1212,7 +1212,7 @@ export default function MewpModule4Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1226,7 +1226,7 @@ export default function MewpModule4Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-4">

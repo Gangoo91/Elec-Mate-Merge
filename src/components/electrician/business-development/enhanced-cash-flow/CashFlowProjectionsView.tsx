@@ -35,15 +35,15 @@ export const CashFlowProjectionsView = ({
             </div>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-white/60">Income</span>
+                <span className="text-white">Income</span>
                 <span className="text-green-400 font-medium">{formatCurrency(month.income)}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-white/60">Expenses</span>
+                <span className="text-white">Expenses</span>
                 <span className="text-red-400 font-medium">{formatCurrency(month.expenses)}</span>
               </div>
               <div className="flex justify-between border-t border-white/10 pt-2">
-                <span className="text-white/60">Net</span>
+                <span className="text-white">Net</span>
                 <span
                   className={cn(
                     'font-medium',
@@ -75,7 +75,7 @@ export const CashFlowProjectionsView = ({
             <p className="text-xl font-bold text-white">
               {formatCurrency(financialMetrics.totalIncome)}
             </p>
-            <p className="text-xs text-white/60 mt-1">
+            <p className="text-xs text-white mt-1">
               Avg: {formatCurrency(financialMetrics.avgMonthlyIncome)}/mo
             </p>
           </div>
@@ -85,7 +85,7 @@ export const CashFlowProjectionsView = ({
             <p className="text-xl font-bold text-white">
               {formatCurrency(financialMetrics.totalExpenses)}
             </p>
-            <p className="text-xs text-white/60 mt-1">
+            <p className="text-xs text-white mt-1">
               Avg: {formatCurrency(financialMetrics.avgMonthlyExpenses)}/mo
             </p>
           </div>
@@ -109,7 +109,7 @@ export const CashFlowProjectionsView = ({
             <p className="text-xl font-bold text-white">
               {formatCurrency(financialMetrics.netProfit)}
             </p>
-            <p className="text-xs text-white/60 mt-1">
+            <p className="text-xs text-white mt-1">
               Margin: {financialMetrics.profitMargin.toFixed(1)}%
             </p>
           </div>
@@ -133,7 +133,7 @@ export const CashFlowProjectionsView = ({
             <p className="text-xl font-bold text-white">
               {formatCurrency(financialMetrics.minBalance)}
             </p>
-            <p className="text-xs text-white/60 mt-1">
+            <p className="text-xs text-white mt-1">
               Runway: {financialMetrics.cashRunway} months
             </p>
           </div>

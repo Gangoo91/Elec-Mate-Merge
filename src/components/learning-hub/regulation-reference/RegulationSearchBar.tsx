@@ -17,7 +17,7 @@ const RegulationSearchBar = ({ searchTerm, onSearchChange }: RegulationSearchBar
         <div className="flex gap-4">
           <div className="flex-1 relative">
             {!searchTerm && (
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white/80 pointer-events-none" />
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-white pointer-events-none" />
             )}
             <Input
               type="text"

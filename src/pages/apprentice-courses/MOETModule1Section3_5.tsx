@@ -270,7 +270,7 @@ const MOETModule1Section3_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module1-section3">
@@ -292,7 +292,7 @@ const MOETModule1Section3_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Dynamic Risk Assessments
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Real-time hazard assessment and response when conditions change
           </p>
         </header>
@@ -939,7 +939,7 @@ const MOETModule1Section3_5 = () => {
                   <p className="text-sm font-medium text-white mb-1">
                     Scenario 1: Unexpected Live Conductor
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     While tracing a fault in a ceiling void, you discover a junction box that is not
                     on any drawing. You suspect it may be live but connected to a different circuit
                     from the one you have isolated.
@@ -954,7 +954,7 @@ const MOETModule1Section3_5 = () => {
                   <p className="text-sm font-medium text-white mb-1">
                     Scenario 2: Water Ingress During Work
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     Midway through replacing components in a ground-floor distribution board, you
                     notice water seeping under the switchroom door from a burst pipe in the
                     corridor.
@@ -969,7 +969,7 @@ const MOETModule1Section3_5 = () => {
                   <p className="text-sm font-medium text-white mb-1">
                     Scenario 3: Asbestos Discovery
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     While removing an old trunking run, you disturb what appears to be textured
                     coating (Artex) on the wall behind. You know this building was constructed in
                     the 1970s and may contain asbestos-containing materials.
@@ -984,7 +984,7 @@ const MOETModule1Section3_5 = () => {
                   <p className="text-sm font-medium text-white mb-1">
                     Scenario 4: Changed Site Conditions
                   </p>
-                  <p className="text-xs text-white/80">
+                  <p className="text-xs text-white">
                     You arrive for the second day of a cable installation to find that scaffolding
                     has been erected overnight directly over your cable route. Scaffolders are
                     working above, and there is a risk of dropped objects into your work area.
@@ -1022,7 +1022,7 @@ const MOETModule1Section3_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1041,7 +1041,7 @@ const MOETModule1Section3_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module1-section3-4">

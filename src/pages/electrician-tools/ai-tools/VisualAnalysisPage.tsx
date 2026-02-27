@@ -76,7 +76,7 @@ const VisualAnalysisPage = () => {
           </div>
           <div>
             <h1 className="text-xl font-bold text-white">{config.title}</h1>
-            <p className="text-sm text-white/50">{config.subtitle}</p>
+            <p className="text-sm text-white">{config.subtitle}</p>
           </div>
         </div>
 

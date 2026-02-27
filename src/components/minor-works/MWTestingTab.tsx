@@ -225,7 +225,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                         placeholder="e.g., 0.45"
                         className="h-11 text-base touch-manipulation border-white/30 focus:border-orange-500 focus:ring-orange-500 pr-10"
                       />
-                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-sm">
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm">
                         Ω
                       </span>
                     </div>
@@ -242,7 +242,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                         placeholder="e.g., 0.25"
                         className="h-11 text-base touch-manipulation border-white/30 focus:border-orange-500 focus:ring-orange-500 pr-10"
                       />
-                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-sm">
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm">
                         Ω
                       </span>
                     </div>
@@ -268,7 +268,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                         <SelectItem value="correct">
                           <div className="flex flex-col">
                             <span>Correct</span>
-                            <span className="text-xs text-white/50">
+                            <span className="text-xs text-white">
                               All conductors correctly identified
                             </span>
                           </div>
@@ -276,7 +276,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                         <SelectItem value="incorrect">
                           <div className="flex flex-col">
                             <span>Incorrect</span>
-                            <span className="text-xs text-white/50">Polarity fault detected</span>
+                            <span className="text-xs text-white">Polarity fault detected</span>
                           </div>
                         </SelectItem>
                       </SelectContent>
@@ -308,7 +308,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                   <div className="p-4 space-y-4">
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       <div className="space-y-1.5">
-                        <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                        <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                           (r1) Line-Line
                         </label>
                         <div className="relative">
@@ -318,13 +318,13 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                             placeholder="e.g., 0.52"
                             className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-orange-500/50 focus:ring-orange-500/20 pr-10"
                           />
-                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 text-sm">
+                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm">
                             Ω
                           </span>
                         </div>
                       </div>
                       <div className="space-y-1.5">
-                        <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                        <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                           (rn) Neutral-Neutral
                         </label>
                         <div className="relative">
@@ -334,13 +334,13 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                             placeholder="e.g., 0.52"
                             className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-orange-500/50 focus:ring-orange-500/20 pr-10"
                           />
-                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 text-sm">
+                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm">
                             Ω
                           </span>
                         </div>
                       </div>
                       <div className="space-y-1.5">
-                        <label className="text-xs uppercase tracking-wide text-white/50 pl-0.5">
+                        <label className="text-xs uppercase tracking-wide text-white pl-0.5">
                           (r2) CPC-CPC
                         </label>
                         <div className="relative">
@@ -350,7 +350,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                             placeholder="e.g., 0.87"
                             className="h-12 text-base bg-white/5 border-white/10 rounded-xl focus:border-orange-500/50 focus:ring-orange-500/20 pr-10"
                           />
-                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 text-sm">
+                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm">
                             Ω
                           </span>
                         </div>
@@ -465,7 +465,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                           'border-white/30 focus:border-elec-yellow focus:ring-elec-yellow'
                       )}
                     />
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-sm">
+                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm">
                       Ω
                     </span>
                   </div>
@@ -526,7 +526,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                       <SelectItem value="pass">
                         <div className="flex flex-col">
                           <span>Pass</span>
-                          <span className="text-xs text-white/50">
+                          <span className="text-xs text-white">
                             All functions working correctly
                           </span>
                         </div>
@@ -534,13 +534,13 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                       <SelectItem value="fail">
                         <div className="flex flex-col">
                           <span>Fail</span>
-                          <span className="text-xs text-white/50">Functional issues found</span>
+                          <span className="text-xs text-white">Functional issues found</span>
                         </div>
                       </SelectItem>
                       <SelectItem value="na">
                         <div className="flex flex-col">
                           <span>N/A</span>
-                          <span className="text-xs text-white/50">Not applicable</span>
+                          <span className="text-xs text-white">Not applicable</span>
                         </div>
                       </SelectItem>
                     </SelectContent>
@@ -615,7 +615,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                                 'border-red-500/50'
                             )}
                           />
-                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-sm">
+                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm">
                             ms
                           </span>
                         </div>
@@ -645,7 +645,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                             <SelectItem value="pass">
                               <div className="flex flex-col">
                                 <span>Pass</span>
-                                <span className="text-xs text-white/50">
+                                <span className="text-xs text-white">
                                   RCD trips when test button pressed
                                 </span>
                               </div>
@@ -653,7 +653,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                             <SelectItem value="fail">
                               <div className="flex flex-col">
                                 <span>Fail</span>
-                                <span className="text-xs text-white/50">RCD did not trip</span>
+                                <span className="text-xs text-white">RCD did not trip</span>
                               </div>
                             </SelectItem>
                           </SelectContent>
@@ -679,7 +679,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                                 'border-red-500/50'
                             )}
                           />
-                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/50 text-sm">
+                          <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-sm">
                             ms
                           </span>
                         </div>
@@ -703,7 +703,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                             <SelectItem value="pass">
                               <div className="flex flex-col">
                                 <span>Pass</span>
-                                <span className="text-xs text-white/50">
+                                <span className="text-xs text-white">
                                   RCD did not trip at ½× IΔn
                                 </span>
                               </div>
@@ -711,7 +711,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                             <SelectItem value="fail">
                               <div className="flex flex-col">
                                 <span>Fail</span>
-                                <span className="text-xs text-white/50">
+                                <span className="text-xs text-white">
                                   RCD tripped (too sensitive)
                                 </span>
                               </div>
@@ -744,7 +744,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                             <SelectItem value="pass">
                               <div className="flex flex-col">
                                 <span>Pass</span>
-                                <span className="text-xs text-white/50">
+                                <span className="text-xs text-white">
                                   AFDD trips when test button pressed
                                 </span>
                               </div>
@@ -752,7 +752,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                             <SelectItem value="fail">
                               <div className="flex flex-col">
                                 <span>Fail</span>
-                                <span className="text-xs text-white/50">AFDD did not trip</span>
+                                <span className="text-xs text-white">AFDD did not trip</span>
                               </div>
                             </SelectItem>
                           </SelectContent>
@@ -783,19 +783,19 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                             <SelectItem value="green">
                               <div className="flex flex-col">
                                 <span>Green (OK)</span>
-                                <span className="text-xs text-white/50">SPD is functional</span>
+                                <span className="text-xs text-white">SPD is functional</span>
                               </div>
                             </SelectItem>
                             <SelectItem value="red">
                               <div className="flex flex-col">
                                 <span>Red (Replace)</span>
-                                <span className="text-xs text-white/50">SPD needs replacement</span>
+                                <span className="text-xs text-white">SPD needs replacement</span>
                               </div>
                             </SelectItem>
                             <SelectItem value="na">
                               <div className="flex flex-col">
                                 <span>N/A</span>
-                                <span className="text-xs text-white/50">No indicator present</span>
+                                <span className="text-xs text-white">No indicator present</span>
                               </div>
                             </SelectItem>
                           </SelectContent>
@@ -814,7 +814,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                             <SelectItem value="satisfactory">
                               <div className="flex flex-col">
                                 <span>Satisfactory</span>
-                                <span className="text-xs text-white/50">
+                                <span className="text-xs text-white">
                                   No visible damage or issues
                                 </span>
                               </div>
@@ -822,7 +822,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                             <SelectItem value="unsatisfactory">
                               <div className="flex flex-col">
                                 <span>Unsatisfactory</span>
-                                <span className="text-xs text-white/50">
+                                <span className="text-xs text-white">
                                   Damage or issues found
                                 </span>
                               </div>
@@ -889,7 +889,7 @@ const MWTestingTab: React.FC<MWTestingTabProps> = ({ formData, onUpdate, isMobil
                             <div className="flex flex-col">
                               <span>{opt.label}</span>
                               {opt.description && (
-                                <span className="text-xs text-white/50">{opt.description}</span>
+                                <span className="text-xs text-white">{opt.description}</span>
                               )}
                             </div>
                           </div>

@@ -370,7 +370,7 @@ const Section = ({
   iconColor,
   iconBg,
   badge,
-  badgeColor = 'text-white/50',
+  badgeColor = 'text-white',
   defaultOpen = false,
   children,
 }: SectionProps) => {
@@ -395,7 +395,7 @@ const Section = ({
               </div>
             </div>
             <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
-              <ChevronDown className="h-5 w-5 text-white/30" />
+              <ChevronDown className="h-5 w-5 text-white" />
             </motion.div>
           </div>
         </CollapsibleTrigger>
@@ -987,7 +987,7 @@ const BusinessTab = () => {
           </div>
           <div className="flex-1">
             <h2 className="text-xl font-bold text-white">Business Settings</h2>
-            <p className="text-[13px] text-white/60 mt-0.5">
+            <p className="text-[13px] text-white mt-0.5">
               Single source of truth for all your documents
             </p>
           </div>
@@ -1002,13 +1002,13 @@ const BusinessTab = () => {
         iconColor="text-blue-400"
         iconBg="bg-blue-500/15"
         badge={watch('company_name') || 'Not set'}
-        badgeColor={watch('company_name') ? 'text-blue-400' : 'text-white/40'}
+        badgeColor={watch('company_name') ? 'text-blue-400' : 'text-white'}
         defaultOpen={true}
       >
         <div className="space-y-5">
           {/* Logo Upload - Simple version */}
           <div className="space-y-4">
-            <Label className="text-[13px] text-white/50 font-medium">Company Logo</Label>
+            <Label className="text-[13px] text-white font-medium">Company Logo</Label>
 
             <div className="flex items-start gap-4">
               {/* Logo Preview */}
@@ -1028,7 +1028,7 @@ const BusinessTab = () => {
                     className="w-full h-full object-contain"
                   />
                 ) : (
-                  <Building2 className="h-8 w-8 text-white/20" />
+                  <Building2 className="h-8 w-8 text-white" />
                 )}
               </div>
 
@@ -1072,13 +1072,13 @@ const BusinessTab = () => {
                   </p>
                 )}
 
-                <p className="text-[11px] text-white/40 px-1">PNG, JPG or HEIC, max 20MB</p>
+                <p className="text-[11px] text-white px-1">PNG, JPG or HEIC, max 20MB</p>
               </div>
             </div>
 
             {/* Logo Size Options */}
             <div className="space-y-2">
-              <Label className="text-[11px] text-white/40 font-medium">
+              <Label className="text-[11px] text-white font-medium">
                 Logo Size on Documents
               </Label>
               <div className="flex gap-2">
@@ -1091,7 +1091,7 @@ const BusinessTab = () => {
                       'flex-1 py-2 px-3 rounded-xl text-[13px] font-medium transition-all touch-manipulation capitalize',
                       logoSize === size
                         ? 'bg-blue-500 text-white'
-                        : 'bg-white/[0.04] text-white/60 border border-white/[0.08] hover:bg-white/[0.08]'
+                        : 'bg-white/[0.04] text-white border border-white/[0.08] hover:bg-white/[0.08]'
                     )}
                   >
                     {size}
@@ -1103,7 +1103,7 @@ const BusinessTab = () => {
 
           {/* Company Name */}
           <div className="space-y-2">
-            <Label className="text-[13px] text-white/50 font-medium">Company Name *</Label>
+            <Label className="text-[13px] text-white font-medium">Company Name *</Label>
             <Input
               {...register('company_name', { required: 'Required' })}
               placeholder="ABC Electrical Ltd"
@@ -1114,7 +1114,7 @@ const BusinessTab = () => {
           {/* Contact Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label className="text-[13px] text-white/50 font-medium">Email</Label>
+              <Label className="text-[13px] text-white font-medium">Email</Label>
               <Input
                 {...register('company_email')}
                 type="email"
@@ -1123,7 +1123,7 @@ const BusinessTab = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-[13px] text-white/50 font-medium">Phone</Label>
+              <Label className="text-[13px] text-white font-medium">Phone</Label>
               <Input
                 {...register('company_phone')}
                 placeholder="0123 456 7890"
@@ -1131,7 +1131,7 @@ const BusinessTab = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-[13px] text-white/50 font-medium">Website</Label>
+              <Label className="text-[13px] text-white font-medium">Website</Label>
               <Input
                 {...register('company_website')}
                 placeholder="www.company.com"
@@ -1139,7 +1139,7 @@ const BusinessTab = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-[13px] text-white/50 font-medium">VAT Number</Label>
+              <Label className="text-[13px] text-white font-medium">VAT Number</Label>
               <Input
                 {...register('vat_number')}
                 placeholder="GB123456789"
@@ -1150,7 +1150,7 @@ const BusinessTab = () => {
 
           {/* Address with Google Places Autocomplete */}
           <div className="space-y-2">
-            <Label className="text-[13px] text-white/50 font-medium">Business Address</Label>
+            <Label className="text-[13px] text-white font-medium">Business Address</Label>
             <PlacesAutocomplete
               value={watch('company_address') || ''}
               onChange={(value) => setValue('company_address', value)}
@@ -1171,7 +1171,7 @@ const BusinessTab = () => {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label className="text-[13px] text-white/50 font-medium">Postcode</Label>
+              <Label className="text-[13px] text-white font-medium">Postcode</Label>
               <Input
                 {...register('company_postcode')}
                 placeholder="AB1 2CD"
@@ -1179,7 +1179,7 @@ const BusinessTab = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-[13px] text-white/50 font-medium">Company Reg</Label>
+              <Label className="text-[13px] text-white font-medium">Company Reg</Label>
               <Input
                 {...register('company_registration')}
                 placeholder="12345678"
@@ -1208,7 +1208,7 @@ const BusinessTab = () => {
             ? 'text-green-400'
             : bankDetails.accountNumber
               ? 'text-green-400'
-              : 'text-white/40'
+              : 'text-white'
         }
       >
         <div className="space-y-5">
@@ -1227,7 +1227,7 @@ const BusinessTab = () => {
                 <div>
                   <p className="text-[14px] font-medium text-white">Stripe Payments</p>
                   {stripeLoading ? (
-                    <p className="text-[13px] text-white/50">Checking status...</p>
+                    <p className="text-[13px] text-white">Checking status...</p>
                   ) : stripeStatus?.status === 'active' ? (
                     <p className="text-[13px] text-green-400 flex items-center gap-1">
                       <CheckCircle className="h-3.5 w-3.5" />
@@ -1239,7 +1239,7 @@ const BusinessTab = () => {
                       Setup incomplete
                     </p>
                   ) : (
-                    <p className="text-[13px] text-white/50">Accept card payments</p>
+                    <p className="text-[13px] text-white">Accept card payments</p>
                   )}
                 </div>
               </div>
@@ -1272,15 +1272,15 @@ const BusinessTab = () => {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <Landmark className="h-4 w-4 text-cyan-400" />
-              <Label className="text-[13px] text-white/70 font-medium">Bank Transfer Details</Label>
+              <Label className="text-[13px] text-white font-medium">Bank Transfer Details</Label>
             </div>
-            <p className="text-[12px] text-white/40 -mt-2">
+            <p className="text-[12px] text-white -mt-2">
               Appears on invoices for clients paying by BACS
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label className="text-[13px] text-white/50 font-medium">Account Name</Label>
+                <Label className="text-[13px] text-white font-medium">Account Name</Label>
                 <Input
                   value={bankDetails.accountName}
                   onChange={(e) => setBankDetails({ ...bankDetails, accountName: e.target.value })}
@@ -1289,7 +1289,7 @@ const BusinessTab = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label className="text-[13px] text-white/50 font-medium">Bank Name</Label>
+                <Label className="text-[13px] text-white font-medium">Bank Name</Label>
                 <Input
                   value={bankDetails.bankName}
                   onChange={(e) => setBankDetails({ ...bankDetails, bankName: e.target.value })}
@@ -1298,7 +1298,7 @@ const BusinessTab = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label className="text-[13px] text-white/50 font-medium">Sort Code</Label>
+                <Label className="text-[13px] text-white font-medium">Sort Code</Label>
                 <Input
                   value={bankDetails.sortCode}
                   onChange={(e) =>
@@ -1310,7 +1310,7 @@ const BusinessTab = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label className="text-[13px] text-white/50 font-medium">Account Number</Label>
+                <Label className="text-[13px] text-white font-medium">Account Number</Label>
                 <Input
                   value={bankDetails.accountNumber}
                   onChange={(e) =>
@@ -1336,10 +1336,10 @@ const BusinessTab = () => {
         iconColor="text-purple-400"
         iconBg="bg-purple-500/15"
         badge={hasConnectedProvider ? 'Connected' : 'Not connected'}
-        badgeColor={hasConnectedProvider ? 'text-green-400' : 'text-white/40'}
+        badgeColor={hasConnectedProvider ? 'text-green-400' : 'text-white'}
       >
         <div className="space-y-4">
-          <p className="text-[13px] text-white/50">
+          <p className="text-[13px] text-white">
             Connect your accounting software to automatically sync invoices
           </p>
 
@@ -1379,7 +1379,7 @@ const BusinessTab = () => {
 
                     {/* Provider name and description */}
                     <h4 className="text-[15px] font-semibold text-white">{provider.name}</h4>
-                    <p className="text-[12px] text-white/50 mt-0.5 mb-3">
+                    <p className="text-[12px] text-white mt-0.5 mb-3">
                       {isConnected
                         ? integration?.tenantName || 'Organisation connected'
                         : provider.description}
@@ -1464,7 +1464,7 @@ const BusinessTab = () => {
 
                     {/* Provider name and description */}
                     <h4 className="text-[15px] font-semibold text-white">{provider.name}</h4>
-                    <p className="text-[12px] text-white/50 mt-0.5 mb-3">
+                    <p className="text-[12px] text-white mt-0.5 mb-3">
                       {isConnected ? (
                         integration?.tenantName || 'Company connected'
                       ) : (
@@ -1529,20 +1529,20 @@ const BusinessTab = () => {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <span className="px-2 py-1 rounded-full bg-white/[0.06] text-[10px] font-medium text-white/40">
+                  <span className="px-2 py-1 rounded-full bg-white/[0.06] text-[10px] font-medium text-white">
                     Coming Soon
                   </span>
                 </div>
 
                 {/* Provider name and description */}
-                <h4 className="text-[15px] font-semibold text-white/70">Sage</h4>
-                <p className="text-[12px] text-white/40 mt-0.5 mb-3">Enterprise accounting</p>
+                <h4 className="text-[15px] font-semibold text-white">Sage</h4>
+                <p className="text-[12px] text-white mt-0.5 mb-3">Enterprise accounting</p>
 
                 {/* Disabled button */}
                 <Button
                   type="button"
                   disabled
-                  className="w-full h-9 text-[12px] font-medium bg-white/[0.05] text-white/30 rounded-lg cursor-not-allowed"
+                  className="w-full h-9 text-[12px] font-medium bg-white/[0.05] text-white rounded-lg cursor-not-allowed"
                 >
                   Coming Soon
                 </Button>
@@ -1553,7 +1553,7 @@ const BusinessTab = () => {
           {/* How It Works - Compact */}
           <div className="flex items-center gap-3 p-3 rounded-lg bg-purple-500/5 border border-purple-500/10">
             <Calculator className="h-4 w-4 text-purple-400 flex-shrink-0" />
-            <p className="text-[11px] text-white/50 leading-relaxed">
+            <p className="text-[11px] text-white leading-relaxed">
               Once connected, sync invoices directly to your accounting software. Contacts and line
               items are created automatically.
             </p>
@@ -1573,7 +1573,7 @@ const BusinessTab = () => {
         <div className="space-y-5">
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label className="text-[13px] text-white/50 font-medium">Hourly Rate (£)</Label>
+              <Label className="text-[13px] text-white font-medium">Hourly Rate (£)</Label>
               <Input
                 type="number"
                 step="0.50"
@@ -1583,7 +1583,7 @@ const BusinessTab = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-[13px] text-white/50 font-medium">Payment Terms</Label>
+              <Label className="text-[13px] text-white font-medium">Payment Terms</Label>
               <Select
                 value={watch('payment_terms') || '30 days'}
                 onValueChange={(value) => setValue('payment_terms', value)}
@@ -1605,7 +1605,7 @@ const BusinessTab = () => {
           {/* Overhead & Profit Margins */}
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <Label className="text-[13px] text-white/50 font-medium">Overhead (%)</Label>
+              <Label className="text-[13px] text-white font-medium">Overhead (%)</Label>
               <div className="relative">
                 <Input
                   type="number"
@@ -1616,14 +1616,14 @@ const BusinessTab = () => {
                   placeholder="15"
                   className="h-12 text-[16px] bg-input border-white/[0.08] rounded-xl pr-8 focus:border-emerald-500/50 focus:ring-0"
                 />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 text-[14px]">
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-[14px]">
                   %
                 </span>
               </div>
-              <p className="text-[11px] text-white/40">Applied to cover business running costs</p>
+              <p className="text-[11px] text-white">Applied to cover business running costs</p>
             </div>
             <div className="space-y-2">
-              <Label className="text-[13px] text-white/50 font-medium">Profit Margin (%)</Label>
+              <Label className="text-[13px] text-white font-medium">Profit Margin (%)</Label>
               <div className="relative">
                 <Input
                   type="number"
@@ -1634,11 +1634,11 @@ const BusinessTab = () => {
                   placeholder="20"
                   className="h-12 text-[16px] bg-input border-white/[0.08] rounded-xl pr-8 focus:border-emerald-500/50 focus:ring-0"
                 />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 text-[14px]">
+                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-white text-[14px]">
                   %
                 </span>
               </div>
-              <p className="text-[11px] text-white/40">Your profit on each job</p>
+              <p className="text-[11px] text-white">Your profit on each job</p>
             </div>
           </div>
 
@@ -1646,7 +1646,7 @@ const BusinessTab = () => {
           <div className="space-y-3">
             <div className="flex items-center gap-2">
               <Users className="h-4 w-4 text-emerald-400" />
-              <Label className="text-[13px] text-white/70 font-medium">Worker Rates</Label>
+              <Label className="text-[13px] text-white font-medium">Worker Rates</Label>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
               {(Object.keys(WORKER_TYPE_LABELS) as Array<keyof WorkerRates>).map((workerKey) => {
@@ -1654,9 +1654,9 @@ const BusinessTab = () => {
                 const rates = watch('worker_rates') || DEFAULT_WORKER_RATES;
                 return (
                   <div key={workerKey} className="space-y-1.5">
-                    <Label className="text-[11px] text-white/40 font-medium">{worker.name}</Label>
+                    <Label className="text-[11px] text-white font-medium">{worker.name}</Label>
                     <div className="relative">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40 text-[14px]">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white text-[14px]">
                         £
                       </span>
                       <Input
@@ -1693,7 +1693,7 @@ const BusinessTab = () => {
         <div className="space-y-5">
           <div className="grid grid-cols-3 gap-3">
             <div className="space-y-2">
-              <Label className="text-[11px] text-white/40 font-medium">Validity (days)</Label>
+              <Label className="text-[11px] text-white font-medium">Validity (days)</Label>
               <Input
                 type="number"
                 {...register('quote_validity_days', { valueAsNumber: true })}
@@ -1702,7 +1702,7 @@ const BusinessTab = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-[11px] text-white/40 font-medium">Deposit %</Label>
+              <Label className="text-[11px] text-white font-medium">Deposit %</Label>
               <Select
                 value={String(watch('deposit_percentage') ?? 30)}
                 onValueChange={(value) => setValue('deposit_percentage', parseInt(value, 10))}
@@ -1723,7 +1723,7 @@ const BusinessTab = () => {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label className="text-[11px] text-white/40 font-medium">Warranty</Label>
+              <Label className="text-[11px] text-white font-medium">Warranty</Label>
               <Input
                 {...register('warranty_period')}
                 placeholder="12 months"
@@ -1734,7 +1734,7 @@ const BusinessTab = () => {
 
           {/* T&Cs Checklist */}
           <div className="space-y-3">
-            <Label className="text-[13px] text-white/70 font-medium">Terms & Conditions</Label>
+            <Label className="text-[13px] text-white font-medium">Terms & Conditions</Label>
             {Object.entries(DEFAULT_TERMS_GROUPED).map(([groupKey, group]) => {
               const groupTermIds = group.terms.map((t) => t.id);
               const selectedInGroup = groupTermIds.filter((id) =>
@@ -1757,13 +1757,13 @@ const BusinessTab = () => {
                       <div className="flex items-center gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-amber-400" />
                         <span className="text-[13px] font-medium text-white">{group.label}</span>
-                        <span className="text-[11px] text-white/40">
+                        <span className="text-[11px] text-white">
                           ({selectedInGroup}/{groupTermIds.length})
                         </span>
                       </div>
                       <ChevronDown
                         className={cn(
-                          'h-4 w-4 text-white/30 transition-transform',
+                          'h-4 w-4 text-white transition-transform',
                           isExpanded && 'rotate-180'
                         )}
                       />
@@ -1787,7 +1787,7 @@ const BusinessTab = () => {
                               }}
                               className="mt-0.5 border-white/30 data-[state=checked]:bg-amber-500 data-[state=checked]:border-amber-500"
                             />
-                            <span className="text-[13px] text-white/70 leading-relaxed">
+                            <span className="text-[13px] text-white leading-relaxed">
                               {term.label}
                             </span>
                           </label>
@@ -1816,14 +1816,14 @@ const BusinessTab = () => {
                       }}
                       className="mt-0.5 border-white/30 data-[state=checked]:bg-amber-500"
                     />
-                    <span className="flex-1 text-[13px] text-white/70">{term.label}</span>
+                    <span className="flex-1 text-[13px] text-white">{term.label}</span>
                     <button
                       type="button"
                       onClick={() => {
                         setCustomTerms((prev) => prev.filter((t) => t.id !== term.id));
                         setSelectedTerms((prev) => prev.filter((id) => id !== term.id));
                       }}
-                      className="p-1 text-white/30 hover:text-red-400"
+                      className="p-1 text-white hover:text-red-400"
                     >
                       <X className="h-3.5 w-3.5" />
                     </button>
@@ -1883,7 +1883,7 @@ const BusinessTab = () => {
           {/* Invoice-specific settings */}
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">
-              <Label className="text-[11px] text-white/40 font-medium">Late Payment Interest</Label>
+              <Label className="text-[11px] text-white font-medium">Late Payment Interest</Label>
               <Input
                 value={latePaymentInterestRate}
                 onChange={(e) => setLatePaymentInterestRate(e.target.value)}
@@ -1892,7 +1892,7 @@ const BusinessTab = () => {
               />
             </div>
             <div className="space-y-2">
-              <Label className="text-[11px] text-white/40 font-medium">Preferred Payment</Label>
+              <Label className="text-[11px] text-white font-medium">Preferred Payment</Label>
               <Input
                 value={preferredPaymentMethod}
                 onChange={(e) => setPreferredPaymentMethod(e.target.value)}
@@ -1904,7 +1904,7 @@ const BusinessTab = () => {
 
           {/* Invoice T&Cs Checklist */}
           <div className="space-y-3">
-            <Label className="text-[13px] text-white/70 font-medium">
+            <Label className="text-[13px] text-white font-medium">
               Invoice Terms & Conditions
             </Label>
             {Object.entries(DEFAULT_INVOICE_TERMS_GROUPED).map(([groupKey, group]) => {
@@ -1929,13 +1929,13 @@ const BusinessTab = () => {
                       <div className="flex items-center gap-2">
                         <div className="w-1.5 h-1.5 rounded-full bg-cyan-400" />
                         <span className="text-[13px] font-medium text-white">{group.label}</span>
-                        <span className="text-[11px] text-white/40">
+                        <span className="text-[11px] text-white">
                           ({selectedInGroup}/{groupTermIds.length})
                         </span>
                       </div>
                       <ChevronDown
                         className={cn(
-                          'h-4 w-4 text-white/30 transition-transform',
+                          'h-4 w-4 text-white transition-transform',
                           isExpanded && 'rotate-180'
                         )}
                       />
@@ -1959,7 +1959,7 @@ const BusinessTab = () => {
                               }}
                               className="mt-0.5 border-white/30 data-[state=checked]:bg-cyan-500 data-[state=checked]:border-cyan-500"
                             />
-                            <span className="text-[13px] text-white/70 leading-relaxed">
+                            <span className="text-[13px] text-white leading-relaxed">
                               {term.label}
                             </span>
                           </label>
@@ -1988,14 +1988,14 @@ const BusinessTab = () => {
                       }}
                       className="mt-0.5 border-white/30 data-[state=checked]:bg-cyan-500"
                     />
-                    <span className="flex-1 text-[13px] text-white/70">{term.label}</span>
+                    <span className="flex-1 text-[13px] text-white">{term.label}</span>
                     <button
                       type="button"
                       onClick={() => {
                         setCustomInvoiceTerms((prev) => prev.filter((t) => t.id !== term.id));
                         setSelectedInvoiceTerms((prev) => prev.filter((id) => id !== term.id));
                       }}
-                      className="p-1 text-white/30 hover:text-red-400"
+                      className="p-1 text-white hover:text-red-400"
                     >
                       <X className="h-3.5 w-3.5" />
                     </button>
@@ -2055,7 +2055,7 @@ const BusinessTab = () => {
         iconColor="text-pink-400"
         iconBg="bg-pink-500/15"
         badge="For documents"
-        badgeColor="text-white/40"
+        badgeColor="text-white"
       >
         <div className="grid grid-cols-3 gap-4">
           {[
@@ -2066,7 +2066,7 @@ const BusinessTab = () => {
             const currentValue = watch(field) || '#FFCC00';
             return (
               <div key={field} className="space-y-2">
-                <Label className="text-[11px] text-white/40 font-medium">{label}</Label>
+                <Label className="text-[11px] text-white font-medium">{label}</Label>
                 <div className="flex items-center gap-2">
                   <input
                     type="color"
@@ -2094,12 +2094,12 @@ const BusinessTab = () => {
         iconColor="text-blue-400"
         iconBg="bg-blue-500/15"
         badge="For certificates"
-        badgeColor="text-white/40"
+        badgeColor="text-white"
       >
         <div className="space-y-5">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2 sm:col-span-2">
-              <Label className="text-[13px] text-white/50 font-medium">Inspector Name</Label>
+              <Label className="text-[13px] text-white font-medium">Inspector Name</Label>
               <Input
                 {...register('inspector_name')}
                 placeholder="Full name"
@@ -2121,7 +2121,7 @@ const BusinessTab = () => {
 
           {/* Qualifications */}
           <div className="space-y-3">
-            <Label className="text-[13px] text-white/50 font-medium">Qualifications</Label>
+            <Label className="text-[13px] text-white font-medium">Qualifications</Label>
             <div className="flex flex-wrap gap-2">
               {AVAILABLE_QUALIFICATIONS.map((qual) => {
                 const currentQuals = watch('inspector_qualifications') || [];
@@ -2140,7 +2140,7 @@ const BusinessTab = () => {
                       'px-3 py-2 rounded-xl text-[13px] font-medium transition-all touch-manipulation',
                       isSelected
                         ? 'bg-blue-500 text-white'
-                        : 'bg-white/[0.04] text-white/60 border border-white/[0.08] hover:bg-white/[0.08]'
+                        : 'bg-white/[0.04] text-white border border-white/[0.08] hover:bg-white/[0.08]'
                     )}
                   >
                     {isSelected && <Check className="h-3.5 w-3.5 inline mr-1.5" />}
@@ -2153,7 +2153,7 @@ const BusinessTab = () => {
 
           {/* Insurance */}
           <div className="space-y-3">
-            <Label className="text-[13px] text-white/70 font-medium flex items-center gap-2">
+            <Label className="text-[13px] text-white font-medium flex items-center gap-2">
               <FileText className="h-4 w-4 text-blue-400" />
               Insurance Details
             </Label>
@@ -2203,7 +2203,7 @@ const BusinessTab = () => {
 
           {/* Signature */}
           <div className="space-y-3">
-            <Label className="text-[13px] text-white/70 font-medium flex items-center gap-2">
+            <Label className="text-[13px] text-white font-medium flex items-center gap-2">
               <Pen className="h-4 w-4 text-blue-400" />
               Signature
             </Label>
@@ -2222,13 +2222,13 @@ const BusinessTab = () => {
         iconColor="text-purple-400"
         iconBg="bg-purple-500/15"
         badge={`${instruments.length} instrument${instruments.length !== 1 ? 's' : ''}`}
-        badgeColor={instruments.length > 0 ? 'text-purple-400' : 'text-white/40'}
+        badgeColor={instruments.length > 0 ? 'text-purple-400' : 'text-white'}
       >
         <div className="space-y-4">
           {instruments.length === 0 ? (
             <div className="flex items-center gap-3 p-4 rounded-xl bg-white/[0.02] border border-white/[0.04]">
               <AlertCircle className="h-5 w-5 text-amber-400" />
-              <p className="text-[13px] text-white/50">No instruments added yet</p>
+              <p className="text-[13px] text-white">No instruments added yet</p>
             </div>
           ) : (
             instruments.map((instrument, index) => (
@@ -2312,7 +2312,7 @@ const BusinessTab = () => {
             type="button"
             variant="outline"
             onClick={handleAddInstrument}
-            className="w-full h-11 border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.06] text-white/70"
+            className="w-full h-11 border-white/[0.08] bg-white/[0.02] hover:bg-white/[0.06] text-white"
           >
             <Plus className="h-4 w-4 mr-2" />
             Add Instrument
@@ -2331,7 +2331,7 @@ const BusinessTab = () => {
       >
         <div className="grid grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label className="text-[13px] text-white/50 font-medium">Currency</Label>
+            <Label className="text-[13px] text-white font-medium">Currency</Label>
             <Select
               value={watch('currency')}
               onValueChange={(value) => setValue('currency', value)}
@@ -2347,7 +2347,7 @@ const BusinessTab = () => {
             </Select>
           </div>
           <div className="space-y-2">
-            <Label className="text-[13px] text-white/50 font-medium">Locale</Label>
+            <Label className="text-[13px] text-white font-medium">Locale</Label>
             <Select value={watch('locale')} onValueChange={(value) => setValue('locale', value)}>
               <SelectTrigger>
                 <SelectValue />

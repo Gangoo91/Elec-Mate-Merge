@@ -155,7 +155,7 @@ const Module6Section4_3 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -173,13 +173,13 @@ const Module6Section4_3 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.4.3</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.4.3</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Confirming Polarity of Switches and Accessories
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Essential polarity testing procedures to ensure correct wiring and electrical safety
             </p>
           </header>
@@ -187,7 +187,7 @@ const Module6Section4_3 = () => {
           {/* Summary Box */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <h2 className="font-semibold text-white mb-3">Quick Summary</h2>
-            <ul className="space-y-2 text-sm text-white/80">
+            <ul className="space-y-2 text-sm text-white">
               <li className="flex items-start gap-2">
                 <span className="text-elec-yellow">•</span>
                 <span>Switches must break line conductors only</span>
@@ -209,14 +209,14 @@ const Module6Section4_3 = () => {
 
           {/* Introduction */}
           <section className="mb-10">
-            <p className="text-white/80 leading-relaxed mb-4">
+            <p className="text-white leading-relaxed mb-4">
               Polarity testing ensures that electrical accessories such as sockets, switches, and
               lighting points are wired correctly, with line, neutral, and CPC conductors connected
               to their intended terminals. Incorrect polarity can make switches ineffective,
               energise exposed parts, or leave appliances permanently live, posing serious shock
               risks.
             </p>
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               Confirming polarity is therefore essential for compliance with BS 7671 and overall
               electrical safety.
             </p>
@@ -228,7 +228,7 @@ const Module6Section4_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Importance of Polarity in Electrical Safety
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-3">Switch Operation and Safety</h3>
                 <ul className="text-sm space-y-2">
@@ -333,7 +333,7 @@ const Module6Section4_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Testing Methods and Procedures
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h3 className="font-medium text-white mb-3">Testing at Socket Outlets</h3>
                 <ul className="text-sm space-y-2">
@@ -453,7 +453,7 @@ const Module6Section4_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Common Faults and Consequences
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
                 <h3 className="font-medium text-white mb-3">Typical Polarity Faults</h3>
                 <ul className="text-sm space-y-2">
@@ -512,7 +512,7 @@ const Module6Section4_3 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <h3 className="font-medium text-white mb-3">Scenario</h3>
-              <p className="text-sm text-white/80 mb-4">
+              <p className="text-sm text-white mb-4">
                 On a commercial project, polarity testing revealed that several socket outlets had
                 line and neutral reversed. While appliances appeared to work, the internal fuses
                 would not have disconnected the fault correctly, leaving equipment live and
@@ -520,7 +520,7 @@ const Module6Section4_3 = () => {
               </p>
 
               <div className="p-3 rounded bg-red-500/10 border border-red-500/20 mb-4">
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-red-400">Critical Finding:</strong> 8 out of 24 sockets
                   had reversed line and neutral connections. Computer equipment internal protection
                   would not operate correctly during faults.
@@ -528,7 +528,7 @@ const Module6Section4_3 = () => {
               </div>
 
               <h4 className="font-medium text-white mb-2">Resolution</h4>
-              <ul className="text-sm text-white/80 space-y-2">
+              <ul className="text-sm text-white space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-green-400">✓</span>
                   <span>Installation halted immediately until polarity faults rectified</span>
@@ -564,12 +564,12 @@ const Module6Section4_3 = () => {
                   >
                     <span className="font-medium text-white text-sm">{faq.question}</span>
                     <ChevronDown
-                      className={`w-4 h-4 text-white/60 transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
+                      className={`w-4 h-4 text-white transition-transform ${openFaq === index ? 'rotate-180' : ''}`}
                     />
                   </button>
                   {openFaq === index && (
                     <div className="px-4 pb-4">
-                      <p className="text-sm text-white/70">{faq.answer}</p>
+                      <p className="text-sm text-white">{faq.answer}</p>
                     </div>
                   )}
                 </div>
@@ -582,7 +582,7 @@ const Module6Section4_3 = () => {
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
               <h2 className="font-semibold text-white mb-3">Key Takeaways</h2>
               <div className="grid sm:grid-cols-2 gap-4">
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
                     <span>Polarity ensures correct connection of line, neutral, and CPC</span>
@@ -596,7 +596,7 @@ const Module6Section4_3 = () => {
                     <span>Test at sockets, switches, and lighting points</span>
                   </li>
                 </ul>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <span className="text-elec-yellow">•</span>
                     <span>Wrong polarity = safety hazard</span>
@@ -621,7 +621,7 @@ const Module6Section4_3 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10 mt-10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../4-2">

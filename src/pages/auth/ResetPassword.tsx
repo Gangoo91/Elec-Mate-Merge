@@ -130,7 +130,7 @@ const ResetPassword = () => {
         <div className="flex items-center justify-between max-w-md mx-auto">
           <Link
             to="/auth/signin"
-            className="flex items-center gap-1 text-white/70 hover:text-white transition-colors p-2 -ml-2 rounded-xl touch-manipulation"
+            className="flex items-center gap-1 text-white hover:text-white transition-colors p-2 -ml-2 rounded-xl touch-manipulation"
           >
             <ChevronLeft className="h-5 w-5" />
             <span className="text-[15px] font-medium">Back</span>
@@ -172,7 +172,7 @@ const ResetPassword = () => {
                   <Loader2 className="h-12 w-12 animate-spin text-elec-yellow" />
                 </div>
                 <h1 className="text-2xl font-bold text-white mb-2">Verifying link...</h1>
-                <p className="text-white/50">Please wait while we verify your reset link</p>
+                <p className="text-white">Please wait while we verify your reset link</p>
               </motion.div>
             )}
 
@@ -189,7 +189,7 @@ const ResetPassword = () => {
                   <AlertTriangle className="h-12 w-12 text-red-400" />
                 </div>
                 <h1 className="text-2xl font-bold text-white mb-3">Link expired</h1>
-                <p className="text-white/60 mb-8 px-4">{tokenError}</p>
+                <p className="text-white mb-8 px-4">{tokenError}</p>
 
                 <Link to="/auth/forgot-password">
                   <Button className="w-full h-14 rounded-2xl text-[16px] font-semibold bg-elec-yellow hover:bg-elec-yellow/90 text-black shadow-lg shadow-elec-yellow/25">
@@ -199,7 +199,7 @@ const ResetPassword = () => {
 
                 <Link
                   to="/auth/signin"
-                  className="block mt-5 text-[15px] text-white/50 hover:text-white transition-colors"
+                  className="block mt-5 text-[15px] text-white hover:text-white transition-colors"
                 >
                   Back to sign in
                 </Link>
@@ -224,8 +224,8 @@ const ResetPassword = () => {
                   <CheckCircle2 className="h-12 w-12 text-green-500" />
                 </motion.div>
                 <h1 className="text-2xl font-bold text-white mb-2">Password updated!</h1>
-                <p className="text-white/60 mb-6">Your password has been changed successfully</p>
-                <div className="flex items-center justify-center gap-2 text-white/40">
+                <p className="text-white mb-6">Your password has been changed successfully</p>
+                <div className="flex items-center justify-center gap-2 text-white">
                   <Loader2 className="h-4 w-4 animate-spin" />
                   <span className="text-sm">Redirecting to sign in...</span>
                 </div>
@@ -248,7 +248,7 @@ const ResetPassword = () => {
                   <h1 className="text-[28px] font-bold text-white tracking-tight mb-2">
                     Set new password
                   </h1>
-                  <p className="text-[15px] text-white/50">
+                  <p className="text-[15px] text-white">
                     Create a strong password to secure your account
                   </p>
                 </div>
@@ -273,14 +273,14 @@ const ResetPassword = () => {
                 <form onSubmit={handleSubmit} className="space-y-5">
                   {/* New Password */}
                   <div className="space-y-2">
-                    <label className="block text-[13px] font-medium text-white/70 ml-1">
+                    <label className="block text-[13px] font-medium text-white ml-1">
                       New password
                     </label>
                     <div className="relative">
                       <div
                         className={cn(
                           'absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200',
-                          focusedField === 'password' ? 'text-elec-yellow' : 'text-white/40'
+                          focusedField === 'password' ? 'text-elec-yellow' : 'text-white'
                         )}
                       >
                         <Lock className="h-5 w-5" />
@@ -306,7 +306,7 @@ const ResetPassword = () => {
                       <button
                         type="button"
                         onClick={() => setShowPassword(!showPassword)}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 active:text-white transition-colors h-11 w-11 flex items-center justify-center touch-manipulation rounded-xl"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 text-white hover:text-white active:text-white transition-colors h-11 w-11 flex items-center justify-center touch-manipulation rounded-xl"
                       >
                         {showPassword ? (
                           <EyeOff className="h-5 w-5" />
@@ -330,7 +330,7 @@ const ResetPassword = () => {
                               'flex-1 py-2 rounded-xl text-center text-[12px] font-semibold transition-all',
                               req.test(password)
                                 ? 'bg-green-500/20 text-green-400'
-                                : 'bg-white/5 text-white/40'
+                                : 'bg-white/5 text-white'
                             )}
                           >
                             {req.label}
@@ -342,14 +342,14 @@ const ResetPassword = () => {
 
                   {/* Confirm Password */}
                   <div className="space-y-2">
-                    <label className="block text-[13px] font-medium text-white/70 ml-1">
+                    <label className="block text-[13px] font-medium text-white ml-1">
                       Confirm password
                     </label>
                     <div className="relative">
                       <div
                         className={cn(
                           'absolute left-4 top-1/2 -translate-y-1/2 transition-colors duration-200',
-                          focusedField === 'confirm' ? 'text-elec-yellow' : 'text-white/40'
+                          focusedField === 'confirm' ? 'text-elec-yellow' : 'text-white'
                         )}
                       >
                         <Lock className="h-5 w-5" />
@@ -377,7 +377,7 @@ const ResetPassword = () => {
                       <button
                         type="button"
                         onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                        className="absolute right-2 top-1/2 -translate-y-1/2 text-white/40 hover:text-white/70 active:text-white transition-colors h-11 w-11 flex items-center justify-center touch-manipulation rounded-xl"
+                        className="absolute right-2 top-1/2 -translate-y-1/2 text-white hover:text-white active:text-white transition-colors h-11 w-11 flex items-center justify-center touch-manipulation rounded-xl"
                       >
                         {showConfirmPassword ? (
                           <EyeOff className="h-5 w-5" />
@@ -445,7 +445,7 @@ const ResetPassword = () => {
         className="relative px-6 pb-6 z-10"
       >
         <div className="max-w-md mx-auto">
-          <div className="flex items-center justify-center gap-4 text-[11px] text-white/30">
+          <div className="flex items-center justify-center gap-4 text-[11px] text-white">
             <span className="flex items-center gap-1.5">
               <CheckCircle2 className="h-3.5 w-3.5 text-green-500/70" />
               Secure

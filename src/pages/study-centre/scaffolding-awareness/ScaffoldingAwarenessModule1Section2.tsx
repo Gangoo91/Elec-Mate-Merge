@@ -218,7 +218,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-1">
@@ -243,7 +243,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Types of Scaffolding
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The eight principal scaffold types used in UK construction &mdash; their structure,
             purpose, training requirements, and when each is the right choice for the job
           </p>
@@ -338,7 +338,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Structural Characteristics</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -383,7 +383,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   When Independent Scaffolding Is Used
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>New-build construction where walls cannot yet support putlogs</span>
@@ -452,7 +452,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Structural Characteristics</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -488,7 +488,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Safety Requirements for Putlog Scaffolding
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -524,7 +524,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Common Hazard</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If putlogs are not properly inserted or the brickwork is too green (not yet
                   cured), the putlog can slip out of the wall under load, causing a localised
                   collapse of the working platform. This is one of the most common causes of
@@ -569,7 +569,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Advantages of System Scaffolding
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -615,7 +615,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Training Still Required</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Despite being easier to assemble than tube-and-fitting, system scaffolding{' '}
                   <strong className="text-white">
                     still requires trained and competent erectors
@@ -669,7 +669,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Key Safety Rules for Mobile Towers
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -722,7 +722,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Common Uses for Mobile Towers</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -775,7 +775,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   When Cantilever Scaffolding Is Used
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -807,7 +807,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Design and Safety Considerations
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -847,7 +847,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Non-Standard Scaffold</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Cantilever scaffolding is classified as a{' '}
                   <strong className="text-white">non-standard scaffold</strong> under NASC guidance.
                   This means it falls outside the scope of standard solutions (such as TG20
@@ -882,7 +882,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Types of Suspended Scaffolding
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -931,7 +931,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Safety Requirements for Suspended Scaffolding
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -1005,7 +1005,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Structural Characteristics</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -1049,7 +1049,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Common Uses for Birdcage Scaffolding
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>
@@ -1085,7 +1085,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Bracing Is Critical</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Because birdcage scaffolding is freestanding and covers a large area, it is{' '}
                   <strong className="text-white">particularly vulnerable to racking</strong>{' '}
                   (sideways distortion). Adequate diagonal bracing in both directions is essential.
@@ -1124,7 +1124,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
               <div className="space-y-3">
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Truss-Out Scaffolds</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                       <span>
@@ -1151,7 +1151,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Loading Bays</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                       <span>
@@ -1184,7 +1184,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Protection Fans</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                       <span>
@@ -1211,7 +1211,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
 
                 <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                   <p className="text-sm font-medium text-white mb-2">Temporary Roofs</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                       <span>
@@ -1247,7 +1247,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
                   <p className="text-sm font-medium text-white mb-2">
                     Industry-Specific Scaffolding
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li className="flex items-start gap-2">
                       <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                       <span>
@@ -1306,17 +1306,17 @@ export default function ScaffoldingAwarenessModule1Section2() {
                   </div>
                   <p className="text-xs font-bold text-slate-400">Independent</p>
                 </div>
-                <div className="px-3 py-2.5 space-y-1.5 text-[11px] text-white/80">
+                <div className="px-3 py-2.5 space-y-1.5 text-[11px] text-white">
                   <div className="flex justify-between">
-                    <span className="text-white/50">Standards</span>
+                    <span className="text-white">Standards</span>
                     <span className="text-white font-medium">2 rows</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-white/50">Building support</span>
+                    <span className="text-white">Building support</span>
                     <span className="text-white font-medium">None</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-white/50">Training</span>
+                    <span className="text-white">Training</span>
                     <span className="text-white font-medium">CISRS</span>
                   </div>
                   <hr className="border-white/10" />
@@ -1332,17 +1332,17 @@ export default function ScaffoldingAwarenessModule1Section2() {
                   </div>
                   <p className="text-xs font-bold text-slate-400">Putlog</p>
                 </div>
-                <div className="px-3 py-2.5 space-y-1.5 text-[11px] text-white/80">
+                <div className="px-3 py-2.5 space-y-1.5 text-[11px] text-white">
                   <div className="flex justify-between">
-                    <span className="text-white/50">Standards</span>
+                    <span className="text-white">Standards</span>
                     <span className="text-white font-medium">1 row</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-white/50">Building support</span>
+                    <span className="text-white">Building support</span>
                     <span className="text-white font-medium">Wall (putlogs)</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-white/50">Training</span>
+                    <span className="text-white">Training</span>
                     <span className="text-white font-medium">CISRS</span>
                   </div>
                   <hr className="border-white/10" />
@@ -1358,17 +1358,17 @@ export default function ScaffoldingAwarenessModule1Section2() {
                   </div>
                   <p className="text-xs font-bold text-slate-400">System</p>
                 </div>
-                <div className="px-3 py-2.5 space-y-1.5 text-[11px] text-white/80">
+                <div className="px-3 py-2.5 space-y-1.5 text-[11px] text-white">
                   <div className="flex justify-between">
-                    <span className="text-white/50">Standards</span>
+                    <span className="text-white">Standards</span>
                     <span className="text-white font-medium">Modular</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-white/50">Building support</span>
+                    <span className="text-white">Building support</span>
                     <span className="text-white font-medium">None</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-white/50">Training</span>
+                    <span className="text-white">Training</span>
                     <span className="text-white font-medium">CISRS</span>
                   </div>
                   <hr className="border-white/10" />
@@ -1384,17 +1384,17 @@ export default function ScaffoldingAwarenessModule1Section2() {
                   </div>
                   <p className="text-xs font-bold text-slate-400">Mobile Tower</p>
                 </div>
-                <div className="px-3 py-2.5 space-y-1.5 text-[11px] text-white/80">
+                <div className="px-3 py-2.5 space-y-1.5 text-[11px] text-white">
                   <div className="flex justify-between">
-                    <span className="text-white/50">Standards</span>
+                    <span className="text-white">Standards</span>
                     <span className="text-white font-medium">Aluminium</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-white/50">Building support</span>
+                    <span className="text-white">Building support</span>
                     <span className="text-white font-medium">None</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-white/50">Training</span>
+                    <span className="text-white">Training</span>
                     <span className="text-white font-medium">PASMA</span>
                   </div>
                   <hr className="border-white/10" />
@@ -1410,17 +1410,17 @@ export default function ScaffoldingAwarenessModule1Section2() {
                   </div>
                   <p className="text-xs font-bold text-slate-400">Cantilever</p>
                 </div>
-                <div className="px-3 py-2.5 space-y-1.5 text-[11px] text-white/80">
+                <div className="px-3 py-2.5 space-y-1.5 text-[11px] text-white">
                   <div className="flex justify-between">
-                    <span className="text-white/50">Support</span>
+                    <span className="text-white">Support</span>
                     <span className="text-white font-medium">Needles</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-white/50">Design</span>
+                    <span className="text-white">Design</span>
                     <span className="text-white font-medium">Specific</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-white/50">Training</span>
+                    <span className="text-white">Training</span>
                     <span className="text-white font-medium">CISRS</span>
                   </div>
                   <hr className="border-white/10" />
@@ -1436,17 +1436,17 @@ export default function ScaffoldingAwarenessModule1Section2() {
                   </div>
                   <p className="text-xs font-bold text-slate-400">Suspended</p>
                 </div>
-                <div className="px-3 py-2.5 space-y-1.5 text-[11px] text-white/80">
+                <div className="px-3 py-2.5 space-y-1.5 text-[11px] text-white">
                   <div className="flex justify-between">
-                    <span className="text-white/50">Support</span>
+                    <span className="text-white">Support</span>
                     <span className="text-white font-medium">Wire ropes</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-white/50">Regulation</span>
+                    <span className="text-white">Regulation</span>
                     <span className="text-white font-medium">LOLER</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-white/50">Training</span>
+                    <span className="text-white">Training</span>
                     <span className="text-white font-medium">Specific</span>
                   </div>
                   <hr className="border-white/10" />
@@ -1462,17 +1462,17 @@ export default function ScaffoldingAwarenessModule1Section2() {
                   </div>
                   <p className="text-xs font-bold text-slate-400">Birdcage</p>
                 </div>
-                <div className="px-3 py-2.5 space-y-1.5 text-[11px] text-white/80">
+                <div className="px-3 py-2.5 space-y-1.5 text-[11px] text-white">
                   <div className="flex justify-between">
-                    <span className="text-white/50">Standards</span>
+                    <span className="text-white">Standards</span>
                     <span className="text-white font-medium">Grid pattern</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-white/50">Platform</span>
+                    <span className="text-white">Platform</span>
                     <span className="text-white font-medium">Top only</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-white/50">Training</span>
+                    <span className="text-white">Training</span>
                     <span className="text-white font-medium">CISRS</span>
                   </div>
                   <hr className="border-white/10" />
@@ -1488,17 +1488,17 @@ export default function ScaffoldingAwarenessModule1Section2() {
                   </div>
                   <p className="text-xs font-bold text-slate-400">Specialist</p>
                 </div>
-                <div className="px-3 py-2.5 space-y-1.5 text-[11px] text-white/80">
+                <div className="px-3 py-2.5 space-y-1.5 text-[11px] text-white">
                   <div className="flex justify-between">
-                    <span className="text-white/50">Types</span>
+                    <span className="text-white">Types</span>
                     <span className="text-white font-medium">Multiple</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-white/50">Design</span>
+                    <span className="text-white">Design</span>
                     <span className="text-white font-medium">Specific</span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-white/50">Training</span>
+                    <span className="text-white">Training</span>
                     <span className="text-white font-medium">CISRS+</span>
                   </div>
                   <hr className="border-white/10" />
@@ -1520,31 +1520,31 @@ export default function ScaffoldingAwarenessModule1Section2() {
             <div className="bg-white/5 border border-slate-500/30 rounded-xl overflow-hidden">
               <div className="bg-slate-500/10 border-b border-slate-500/30 px-4 py-3 text-center">
                 <p className="text-sm font-bold text-slate-400">Independent Scaffold</p>
-                <p className="text-xs text-white/50 mt-0.5">Cross-section (end view)</p>
+                <p className="text-xs text-white mt-0.5">Cross-section (end view)</p>
               </div>
               <div className="px-4 py-4 space-y-3">
                 {/* Visual representation */}
-                <div className="bg-[#111] rounded-lg p-4 font-mono text-[11px] text-white/80 leading-relaxed">
-                  <div className="text-center text-white/40 mb-2">BUILDING FACE</div>
+                <div className="bg-[#111] rounded-lg p-4 font-mono text-[11px] text-white leading-relaxed">
+                  <div className="text-center text-white mb-2">BUILDING FACE</div>
                   <div className="border-l-2 border-white/20 pl-3 space-y-1">
                     <div className="flex items-center gap-4">
                       <span className="text-slate-400">|</span>
-                      <span className="text-white/30">&larr; gap &rarr;</span>
+                      <span className="text-white">&larr; gap &rarr;</span>
                       <span className="text-slate-400">|</span>
-                      <span className="text-white/30">&larr; boards &rarr;</span>
+                      <span className="text-white">&larr; boards &rarr;</span>
                       <span className="text-slate-400">|</span>
                     </div>
                     <div className="flex items-center gap-3">
                       <span className="text-slate-300 font-bold">Inner std</span>
-                      <span className="text-white/20">====transom====</span>
+                      <span className="text-white">====transom====</span>
                       <span className="text-slate-300 font-bold">Outer std</span>
                     </div>
-                    <div className="text-white/40 text-[10px] mt-1">
+                    <div className="text-white text-[10px] mt-1">
                       Two rows of standards + transoms
                     </div>
                   </div>
                 </div>
-                <ul className="text-[11px] text-white/70 space-y-1">
+                <ul className="text-[11px] text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>Two rows of vertical standards</span>
@@ -1565,32 +1565,32 @@ export default function ScaffoldingAwarenessModule1Section2() {
             <div className="bg-white/5 border border-slate-500/30 rounded-xl overflow-hidden">
               <div className="bg-slate-500/10 border-b border-slate-500/30 px-4 py-3 text-center">
                 <p className="text-sm font-bold text-slate-400">Putlog Scaffold</p>
-                <p className="text-xs text-white/50 mt-0.5">Cross-section (end view)</p>
+                <p className="text-xs text-white mt-0.5">Cross-section (end view)</p>
               </div>
               <div className="px-4 py-4 space-y-3">
                 {/* Visual representation */}
-                <div className="bg-[#111] rounded-lg p-4 font-mono text-[11px] text-white/80 leading-relaxed">
-                  <div className="text-center text-white/40 mb-2">BUILDING FACE (brickwork)</div>
+                <div className="bg-[#111] rounded-lg p-4 font-mono text-[11px] text-white leading-relaxed">
+                  <div className="text-center text-white mb-2">BUILDING FACE (brickwork)</div>
                   <div className="border-l-2 border-white/20 pl-3 space-y-1">
                     <div className="flex items-center gap-4">
                       <span className="text-amber-400/70">[blade]</span>
-                      <span className="text-white/20">==putlog==</span>
-                      <span className="text-white/30">&larr; boards &rarr;</span>
+                      <span className="text-white">==putlog==</span>
+                      <span className="text-white">&larr; boards &rarr;</span>
                       <span className="text-slate-400">|</span>
                     </div>
                     <div className="flex items-center gap-3">
                       <span className="text-amber-400/60 text-[10px]">in wall</span>
-                      <span className="text-white/20">
+                      <span className="text-white">
                         &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;
                       </span>
                       <span className="text-slate-300 font-bold">Outer std</span>
                     </div>
-                    <div className="text-white/40 text-[10px] mt-1">
+                    <div className="text-white text-[10px] mt-1">
                       One row of standards + putlogs into wall
                     </div>
                   </div>
                 </div>
-                <ul className="text-[11px] text-white/70 space-y-1">
+                <ul className="text-[11px] text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-slate-400" />
                     <span>Single row of outer standards only</span>
@@ -1628,7 +1628,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1642,7 +1642,7 @@ export default function ScaffoldingAwarenessModule1Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../scaffolding-awareness-module-1">

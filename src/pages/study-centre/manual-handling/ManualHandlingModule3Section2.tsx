@@ -208,7 +208,7 @@ export default function ManualHandlingModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-3">
@@ -233,7 +233,7 @@ export default function ManualHandlingModule3Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Identifying Manual Handling Hazards
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Practical methods for finding manual handling hazards in the workplace &mdash;
             observation, task analysis, injury data, worker consultation, and HSE assessment tools
           </p>
@@ -346,7 +346,7 @@ export default function ManualHandlingModule3Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   What to Look For During Observation
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -419,7 +419,7 @@ export default function ManualHandlingModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Task Analysis Steps</p>
-                <ol className="text-sm text-white/80 space-y-2">
+                <ol className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-emerald-400">
                       1
@@ -475,7 +475,7 @@ export default function ManualHandlingModule3Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-3">Data Sources to Review</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -527,7 +527,7 @@ export default function ManualHandlingModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Pattern Recognition</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The most valuable finding from injury data review is{' '}
                   <strong className="text-white">patterns</strong>. A single injury from an unusual
                   event may be a one-off. But repeated injuries from the same task, the same area,
@@ -565,7 +565,7 @@ export default function ManualHandlingModule3Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Effective Consultation Methods
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -648,11 +648,11 @@ export default function ManualHandlingModule3Section2() {
                 <p className="text-sm font-bold text-emerald-400 mb-2">
                   MAC &mdash; Manual Handling Assessment Charts
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The MAC tool is the most widely used HSE manual handling assessment tool. It is
                   designed for three types of operation:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5 mb-3">
+                <ul className="text-sm text-white space-y-1.5 mb-3">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -675,7 +675,7 @@ export default function ManualHandlingModule3Section2() {
                     </span>
                   </li>
                 </ul>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The MAC tool assesses specific risk factors (load weight, hand distance from lower
                   back, trunk posture, frequency, carry distance, and other factors) and assigns
                   each a colour-coded risk rating. The individual ratings are then combined to give
@@ -688,11 +688,11 @@ export default function ManualHandlingModule3Section2() {
                 <p className="text-sm font-bold text-emerald-400 mb-2">
                   RAPP &mdash; Risk Assessment of Pushing and Pulling
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   RAPP is specifically designed for tasks involving pushing or pulling loads, such
                   as:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>Moving trolleys, roll cages, and wheeled equipment</span>
@@ -717,11 +717,11 @@ export default function ManualHandlingModule3Section2() {
                 <p className="text-sm font-bold text-emerald-400 mb-2">
                   ART &mdash; Assessment of Repetitive Tasks
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   ART is designed for tasks involving repetitive movements of the upper limbs (arms,
                   wrists, hands, fingers). For electricians, relevant tasks include:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>Repetitive cable stripping and preparation</span>
@@ -762,7 +762,7 @@ export default function ManualHandlingModule3Section2() {
                 </div>
                 <div className="px-4 py-3 flex-1">
                   <p className="text-sm font-bold text-green-400 mb-1">Low Risk</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The manual handling operation is within acceptable limits. No immediate action
                     is required, but continue to monitor and maintain good practice. Review if
                     conditions change.
@@ -782,7 +782,7 @@ export default function ManualHandlingModule3Section2() {
                 </div>
                 <div className="px-4 py-3 flex-1">
                   <p className="text-sm font-bold text-amber-400 mb-1">Medium Risk</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Further assessment is needed. Examine the task more closely, consider control
                     measures, and implement improvements. This level indicates the task should be
                     improved in the medium term.
@@ -802,7 +802,7 @@ export default function ManualHandlingModule3Section2() {
                 </div>
                 <div className="px-4 py-3 flex-1">
                   <p className="text-sm font-bold text-red-400 mb-1">High Risk</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     <strong className="text-white">Prompt action is required.</strong> The task
                     poses a significant risk of injury and must be improved as soon as possible.
                     Implement control measures immediately and plan task redesign.
@@ -822,7 +822,7 @@ export default function ManualHandlingModule3Section2() {
                 </div>
                 <div className="px-4 py-3 flex-1">
                   <p className="text-sm font-bold text-purple-400 mb-1">Very High Risk</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     <strong className="text-white">Activities should be stopped</strong> until
                     improvements are made. This is the most serious category and indicates an
                     unacceptable level of risk. The task must be redesigned, mechanised, or
@@ -863,7 +863,7 @@ export default function ManualHandlingModule3Section2() {
                 <p className="text-sm font-medium text-white mb-3">
                   Recommended Assessment Workflow
                 </p>
-                <ol className="text-sm text-white/80 space-y-2">
+                <ol className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-0.5 w-5 h-5 rounded-full bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center flex-shrink-0 text-[10px] font-bold text-emerald-400">
                       1
@@ -926,7 +926,7 @@ export default function ManualHandlingModule3Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Common Mistake</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Do not rely on a single assessment method. Observation alone may miss tasks
                   performed at other times. Data review alone only reveals hazards that have already
                   caused injury. Worker consultation alone may underestimate risks that workers have
@@ -947,7 +947,7 @@ export default function ManualHandlingModule3Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -961,7 +961,7 @@ export default function ManualHandlingModule3Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../manual-handling-module-3-section-1">

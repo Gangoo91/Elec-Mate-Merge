@@ -357,7 +357,7 @@ const Level3Module8Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module8">
@@ -463,7 +463,7 @@ const Level3Module8Section2_1 = () => {
                 <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="text-sm font-medium text-red-400 mb-1">Critical Understanding</p>
-                  <p className="text-xs text-white/90">
+                  <p className="text-xs text-white">
                     Safe isolation failure typically results in automatic assessment failure,
                     regardless of how well you perform everything else. This reflects real-world
                     consequences - an electrician who does not isolate safely puts lives at risk.
@@ -503,7 +503,7 @@ const Level3Module8Section2_1 = () => {
                   <ClipboardCheck className="h-4 w-4 text-elec-yellow" />
                   <p className="text-sm font-medium text-white">Documentation Review</p>
                 </div>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Read the complete task brief - every word matters</li>
                   <li>Study circuit diagrams until you understand every connection</li>
                   <li>Review assessment criteria - know what earns marks</li>
@@ -516,7 +516,7 @@ const Level3Module8Section2_1 = () => {
                   <Wrench className="h-4 w-4 text-elec-yellow" />
                   <p className="text-sm font-medium text-white">Physical Preparation</p>
                 </div>
-                <ul className="text-xs text-white/90 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Check your tools are complete and in good condition</li>
                   <li>Ensure test instruments are within calibration</li>
                   <li>Prepare appropriate PPE</li>
@@ -528,7 +528,7 @@ const Level3Module8Section2_1 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">The First Five Minutes:</p>
-              <p className="text-sm text-white/90 mb-2">
+              <p className="text-sm text-white mb-2">
                 How you begin sets the tone for your entire assessment. Use the first few minutes
                 wisely:
               </p>
@@ -555,7 +555,7 @@ const Level3Module8Section2_1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Time Investment:</strong> Spending 5-10 minutes on thorough preparation
               typically saves more time than it costs. Errors from misunderstanding requirements
               take far longer to correct than prevention takes.
@@ -669,7 +669,7 @@ const Level3Module8Section2_1 = () => {
                 </li>
                 <li>
                   <strong>Dead Tests (Installation Isolated):</strong>
-                  <ul className="text-xs text-white/80 ml-4 mt-1 space-y-0.5">
+                  <ul className="text-xs text-white ml-4 mt-1 space-y-0.5">
                     <li>- Continuity of protective conductors</li>
                     <li>- Continuity of ring final circuit conductors</li>
                     <li>- Insulation resistance</li>
@@ -678,7 +678,7 @@ const Level3Module8Section2_1 = () => {
                 </li>
                 <li>
                   <strong>Live Tests (After Safe Energisation):</strong>
-                  <ul className="text-xs text-white/80 ml-4 mt-1 space-y-0.5">
+                  <ul className="text-xs text-white ml-4 mt-1 space-y-0.5">
                     <li>- Earth fault loop impedance (Zs)</li>
                     <li>- Prospective fault current (where required)</li>
                     <li>- RCD operation</li>
@@ -715,7 +715,7 @@ const Level3Module8Section2_1 = () => {
                 <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="text-sm font-medium text-green-400 mb-1">Final Checks</p>
-                  <p className="text-xs text-white/90">
+                  <p className="text-xs text-white">
                     Before declaring your work complete: verify all connections are tight, all
                     covers are fitted, all labels are in place, your test results are recorded, and
                     your work area is tidy. These final checks often catch issues that could cost
@@ -725,7 +725,7 @@ const Level3Module8Section2_1 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Professional Standard:</strong> Your completed work should be ready for
               handover to a client. Ask yourself: "Would I be proud to show this to an experienced
               electrician? Would I be confident connecting a family's home to this installation?"
@@ -741,7 +741,7 @@ const Level3Module8Section2_1 = () => {
         {/* ASSESSMENT CRITERIA TABLE */}
         <section className="mb-12">
           <h2 className="text-xl font-semibold text-white mb-6">Assessment Criteria Overview</h2>
-          <p className="text-sm text-white/70 mb-4">
+          <p className="text-sm text-white mb-4">
             Understanding how different elements are weighted helps you prioritise during the
             assessment.
           </p>
@@ -765,13 +765,13 @@ const Level3Module8Section2_1 = () => {
                 </div>
                 <div className="grid sm:grid-cols-2 gap-2 mb-2">
                   {criteria.elements.map((element, i) => (
-                    <div key={i} className="flex items-center gap-2 text-xs text-white/80">
+                    <div key={i} className="flex items-center gap-2 text-xs text-white">
                       <CheckCircle className="h-3 w-3 text-elec-yellow/50" />
                       <span>{element}</span>
                     </div>
                   ))}
                 </div>
-                <p className="text-xs text-white/60 italic">{criteria.consequence}</p>
+                <p className="text-xs text-white italic">{criteria.consequence}</p>
               </div>
             ))}
           </div>
@@ -850,7 +850,7 @@ const Level3Module8Section2_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -899,7 +899,7 @@ const Level3Module8Section2_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module8-section1-4">

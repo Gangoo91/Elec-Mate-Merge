@@ -272,7 +272,7 @@ const Level3Module7Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section3">
@@ -423,7 +423,7 @@ const Level3Module7Section3_2 = () => {
               and clarity about the severity and nature of findings.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> Instead of "cables not to standard", write "Cables
               identified as non-compliant with BS 7671 Regulation 522.8 - no additional protection
               provided for cables buried less than 50mm in wall."
@@ -494,19 +494,19 @@ const Level3Module7Section3_2 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Before</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Existing conditions, defects found, areas before work
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">During</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Hidden work, containment routes, cable installations
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">After</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Completed work, final installation, testing setup
                 </p>
               </div>
@@ -519,7 +519,7 @@ const Level3Module7Section3_2 = () => {
               lose evidential value.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Career tip:</strong> Photograph work before it's hidden - cable routes in
               walls, containment before covers, connections before panels are closed. This evidence
               is impossible to recreate later and invaluable if work is questioned.
@@ -586,7 +586,7 @@ const Level3Module7Section3_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -635,7 +635,7 @@ const Level3Module7Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module7-section3-1">

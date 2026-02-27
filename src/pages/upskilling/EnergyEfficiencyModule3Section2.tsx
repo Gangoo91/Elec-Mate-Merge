@@ -233,7 +233,7 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
               <ArrowLeft className="h-5 w-5" />
             </Link>
           </Button>
-          <div className="flex items-center gap-2 text-sm text-white/70">
+          <div className="flex items-center gap-2 text-sm text-white">
             <BookOpen className="h-4 w-4 text-elec-yellow" />
             <span>Module 3 • Section 2</span>
           </div>
@@ -245,7 +245,7 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
         {/* Page Title */}
         <div className="text-center space-y-4">
           <h1 className="text-2xl md:text-3xl font-bold text-white">Data Collection Methods</h1>
-          <p className="text-white/80">Manual, Smart Meters, and Building Management System Logs</p>
+          <p className="text-white">Manual, Smart Meters, and Building Management System Logs</p>
         </div>
 
         {/* Quick Summary */}
@@ -276,7 +276,7 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
               <h2 className="text-xl font-semibold text-white mb-3">
                 Introduction to Energy Data Collection
               </h2>
-              <p className="text-white/80 leading-relaxed">
+              <p className="text-white leading-relaxed">
                 Effective energy management begins with reliable data collection. This section
                 covers the practical methods for gathering energy consumption data in UK buildings,
                 from traditional manual readings to modern smart meter systems and building
@@ -324,19 +324,19 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
                 </h4>
                 <ul className="text-sm text-white space-y-1">
                   <li>
-                    <span className="text-white/80">High consumption sites:</span> Weekly
+                    <span className="text-white">High consumption sites:</span> Weekly
                   </li>
                   <li>
-                    <span className="text-white/80">Medium sites:</span> Fortnightly
+                    <span className="text-white">Medium sites:</span> Fortnightly
                   </li>
                   <li>
-                    <span className="text-white/80">Low consumption:</span> Monthly
+                    <span className="text-white">Low consumption:</span> Monthly
                   </li>
                   <li>
-                    <span className="text-white/80">Sub-meters:</span> Match main meter frequency
+                    <span className="text-white">Sub-meters:</span> Match main meter frequency
                   </li>
                   <li>
-                    <span className="text-white/80">Consistency:</span> Same day/time each period
+                    <span className="text-white">Consistency:</span> Same day/time each period
                   </li>
                 </ul>
               </div>
@@ -640,7 +640,7 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
                   <FileSpreadsheet className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <strong className="text-white">Manual Export:</strong>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       CSV/Excel export from BMS front-end. Suitable for periodic analysis but
                       labour-intensive for continuous monitoring.
                     </p>
@@ -650,7 +650,7 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
                   <Database className="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <strong className="text-white">Database Connection:</strong>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Direct SQL connection to BMS historian. Enables automated data extraction for
                       analytics platforms.
                     </p>
@@ -660,7 +660,7 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
                   <Settings className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <strong className="text-white">API Integration:</strong>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Modern BMS platforms (e.g., Trend IQ4, Honeywell Niagara) offer REST APIs for
                       real-time data access and integration.
                     </p>
@@ -670,7 +670,7 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
                   <Zap className="w-5 h-5 text-yellow-400 flex-shrink-0 mt-0.5" />
                   <div>
                     <strong className="text-white">BACnet/Modbus:</strong>
-                    <p className="text-sm text-white/80">
+                    <p className="text-sm text-white">
                       Protocol-level integration for adding energy meters directly to BMS or
                       extracting data to third-party systems.
                     </p>
@@ -845,28 +845,28 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
               <div className="space-y-3">
                 <div>
                   <h4 className="text-white font-medium mb-1">Range Checks</h4>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Verify readings fall within expected bounds. Flag values exceeding maximum
                     demand or below zero (unless export meter).
                   </p>
                 </div>
                 <div>
                   <h4 className="text-white font-medium mb-1">Consistency Checks</h4>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Compare cumulative readings - each must be greater than or equal to the
                     previous. Check sub-meter sum approximates main meter reading.
                   </p>
                 </div>
                 <div>
                   <h4 className="text-white font-medium mb-1">Statistical Outlier Detection</h4>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Use standard deviation (flag values &gt;3σ from mean) or interquartile range
                     (values below Q1-1.5×IQR or above Q3+1.5×IQR) to identify anomalies.
                   </p>
                 </div>
                 <div>
                   <h4 className="text-white font-medium mb-1">Pattern Validation</h4>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Compare current period to historical patterns. Unexpected baseload changes or
                     absent weekday/weekend differentiation may indicate issues.
                   </p>
@@ -1001,7 +1001,7 @@ const EnergyEfficiencyModule3Section2: React.FC = () => {
               <div key={index} className="border border-white/10 rounded-lg overflow-hidden">
                 <div className="p-4">
                   <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                  <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                  <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
                 </div>
               </div>
             ))}

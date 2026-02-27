@@ -78,7 +78,7 @@ const FunctionalSkillsModule2 = () => {
         className="bg-gradient-to-br from-green-500 via-green-600 to-emerald-600 py-10 px-6"
       >
         <div className="max-w-7xl mx-auto flex items-center gap-4">
-          <FileText className="w-10 h-10 text-white/90" />
+          <FileText className="w-10 h-10 text-white" />
           <div>
             <p className="text-green-100 text-sm font-medium">Module 2</p>
             <h1 className="text-2xl sm:text-3xl font-bold text-white">English for Electricians</h1>

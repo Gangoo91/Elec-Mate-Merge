@@ -232,7 +232,7 @@ const HNCModule8Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section1">
@@ -254,7 +254,7 @@ const HNCModule8Section1_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Underfloor Heating
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Wet UFH system design, manifold configuration, pipe layouts and commissioning for
             building services
           </p>
@@ -916,7 +916,7 @@ const HNCModule8Section1_3 = () => {
                 <strong>Question:</strong> A living room measures 5m × 4m with a heat loss of 50
                 W/m². Calculate the required UFH circuits.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Floor area = 5m × 4m = 20m²</p>
                 <p>
                   Heat requirement = 20m² × 50 W/m² = <strong>1000W</strong>
@@ -924,7 +924,7 @@ const HNCModule8Section1_3 = () => {
                 <p className="mt-2">Pipe length at 200mm spacing:</p>
                 <p>Length = (Area / Spacing) + Manifold run</p>
                 <p>Length = (20 / 0.2) + 10m = 110m</p>
-                <p className="mt-2 text-white/60">&gt; 100m maximum for 16mm pipe</p>
+                <p className="mt-2 text-white">&gt; 100m maximum for 16mm pipe</p>
                 <p className="mt-2 text-green-400">Solution: Split into 2 circuits of ~55m each</p>
               </div>
             </div>
@@ -937,14 +937,14 @@ const HNCModule8Section1_3 = () => {
                 <strong>Question:</strong> Calculate the required flow rate for a UFH circuit
                 delivering 1500W with 10K temperature differential.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Using Q = P ÷ (ΔT × c × ρ)</p>
                 <p>Where c × ρ ≈ 70 for water</p>
                 <p className="mt-2">Q = 1500 ÷ (10 × 70)</p>
                 <p>
                   Q = 1500 ÷ 700 = <strong>2.14 l/min</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Set flow meter to 2.1-2.2 l/min during commissioning
                 </p>
               </div>
@@ -958,13 +958,13 @@ const HNCModule8Section1_3 = () => {
                 <strong>Question:</strong> A room requires 60 W/m² output. What flow temperature is
                 needed and is it suitable for a heat pump?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>From heat output tables at 200mm spacing:</p>
                 <p>45°C flow gives ~60-70 W/m²</p>
                 <p className="mt-2">Heat pump COP at 45°C: typically 2.8-3.2</p>
                 <p className="mt-2 text-green-400">✓ Suitable for heat pump operation</p>
-                <p className="text-white/60 mt-2">At 55°C: COP drops to 2.2-2.6</p>
-                <p className="text-white/60">
+                <p className="text-white mt-2">At 55°C: COP drops to 2.2-2.6</p>
+                <p className="text-white">
                   At 35°C: COP improves to 3.5-4.0 but output only 40-50 W/m²
                 </p>
               </div>
@@ -1002,7 +1002,7 @@ const HNCModule8Section1_3 = () => {
                 {openFAQ === index && (
                   <div className="px-4 pb-4">
                     <div className="bg-black/30 p-4 rounded border border-white/10">
-                      <p className="text-white/90 text-sm leading-relaxed">{faq.answer}</p>
+                      <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
                     </div>
                   </div>
                 )}
@@ -1051,7 +1051,7 @@ const HNCModule8Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section1">

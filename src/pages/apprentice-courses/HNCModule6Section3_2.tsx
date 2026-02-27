@@ -237,7 +237,7 @@ const HNCModule6Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section3">
@@ -259,7 +259,7 @@ const HNCModule6Section3_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             BREEAM Water Category
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Water consumption targets, efficient fittings, metering, leak detection, and water
             recycling systems
           </p>
@@ -550,14 +550,14 @@ const HNCModule6Section3_2 = () => {
               </p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Dual flush WC:</span> 4.5 litre full / 3.0 litre
+                  <span className="text-white">Dual flush WC:</span> 4.5 litre full / 3.0 litre
                   reduced
                 </p>
                 <p>
-                  <span className="text-white/60">Formula:</span> (Full + Reduced) / 3
+                  <span className="text-white">Formula:</span> (Full + Reduced) / 3
                 </p>
                 <p>
-                  <span className="text-white/60">Calculation:</span> (4.5 + 3.0) / 3 = 2.5 litres
+                  <span className="text-white">Calculation:</span> (4.5 + 3.0) / 3 = 2.5 litres
                   effective
                 </p>
                 <p className="text-green-400 mt-2">This exceeds best practice (4.0L) requirement</p>
@@ -679,7 +679,7 @@ const HNCModule6Section3_2 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Metering Strategy Example - Office Building
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Location | Meter Type | Purpose</p>
                 <p>---------|------------|--------</p>
                 <p>
@@ -829,20 +829,20 @@ const HNCModule6Section3_2 = () => {
               </p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Roof area:</span> 2,000 m2
+                  <span className="text-white">Roof area:</span> 2,000 m2
                 </p>
                 <p>
-                  <span className="text-white/60">Annual rainfall:</span> 800 mm (0.8 m)
+                  <span className="text-white">Annual rainfall:</span> 800 mm (0.8 m)
                 </p>
                 <p>
-                  <span className="text-white/60">Collection efficiency:</span> 80%
+                  <span className="text-white">Collection efficiency:</span> 80%
                 </p>
                 <p>
-                  <span className="text-white/60">Calculation:</span> 2,000 x 0.8 x 0.8 = 1,280
+                  <span className="text-white">Calculation:</span> 2,000 x 0.8 x 0.8 = 1,280
                   m3/year
                 </p>
                 <p className="mt-2">
-                  <span className="text-white/60">WC demand (200 people):</span> 200 x 6 flushes x
+                  <span className="text-white">WC demand (200 people):</span> 200 x 6 flushes x
                   4L x 250 days = 1,200 m3/year
                 </p>
                 <p className="text-green-400 mt-2">
@@ -877,7 +877,7 @@ const HNCModule6Section3_2 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Regulatory note:</strong> Recycled water systems must comply with Water Supply
               (Water Fittings) Regulations and WRAS requirements. Building Control notification is
               required for all non-potable water systems.
@@ -903,7 +903,7 @@ const HNCModule6Section3_2 = () => {
                 <strong>Scenario:</strong> Office building, 500 occupants, calculate water
                 consumption improvement.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Fitting Schedule:</p>
                 <p className="mt-2">
                   WCs (50 nr) | Baseline 6.0L | Proposed 4.5/3.0L dual (effective 2.5L)
@@ -927,7 +927,7 @@ const HNCModule6Section3_2 = () => {
                 <strong>Scenario:</strong> Develop metering strategy for mixed-use building (retail
                 + office).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Metering hierarchy:</p>
                 <p className="mt-2">Level 1 - Building main</p>
                 <p className="ml-4">M1: Pulsed meter + leak detection on incoming main</p>
@@ -952,7 +952,7 @@ const HNCModule6Section3_2 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Size rainwater harvesting system for school building.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Building data:</p>
                 <p className="ml-4">Roof catchment: 1,500 m2</p>
                 <p className="ml-4">Annual rainfall: 700 mm</p>
@@ -1064,7 +1064,7 @@ const HNCModule6Section3_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1112,7 +1112,7 @@ const HNCModule6Section3_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section3">

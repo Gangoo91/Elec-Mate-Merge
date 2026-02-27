@@ -204,7 +204,7 @@ export default function CoshhAwarenessModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-5">
@@ -229,7 +229,7 @@ export default function CoshhAwarenessModule5Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Health Surveillance
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             When health surveillance is required, the types of surveillance available, how it works
             in practice, record-keeping duties, and what it means for electricians exposed to
             hazardous substances
@@ -332,7 +332,7 @@ export default function CoshhAwarenessModule5Section2() {
                 <p className="text-sm font-medium text-violet-400 mb-3">
                   Key Purposes of Health Surveillance
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -376,7 +376,7 @@ export default function CoshhAwarenessModule5Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   COSHH Regulation 11 &mdash; The Legal Basis
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Regulation 11 states that an employer shall ensure that employees who are, or are
                   liable to be, exposed to a substance hazardous to health are placed under{' '}
                   <strong className="text-violet-400">appropriate health surveillance</strong> where
@@ -420,7 +420,7 @@ export default function CoshhAwarenessModule5Section2() {
                 <p className="text-sm font-medium text-violet-400 mb-3">
                   The Four Conditions (All Must Be Met)
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-violet-500/20 text-violet-400 text-xs font-bold flex-shrink-0">
                       1
@@ -495,7 +495,7 @@ export default function CoshhAwarenessModule5Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Common Mistake</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     Do not confuse &ldquo;reasonable likelihood&rdquo; with certainty.
                   </strong>{' '}
@@ -543,11 +543,11 @@ export default function CoshhAwarenessModule5Section2() {
                       </span>
                       <div>
                         <p className="text-sm font-medium text-white">Isocyanates</p>
-                        <p className="text-xs text-white/60 mt-0.5">
+                        <p className="text-xs text-white mt-0.5">
                           Spray-applied polyurethane foam insulation, two-part adhesives, some
                           paints. Can cause severe occupational asthma. Medical surveillance
                           required before first exposure and at{' '}
-                          <strong className="text-white/80">
+                          <strong className="text-white">
                             intervals not exceeding 12 months
                           </strong>
                           .
@@ -562,7 +562,7 @@ export default function CoshhAwarenessModule5Section2() {
                       </span>
                       <div>
                         <p className="text-sm font-medium text-white">Vinyl Chloride Monomer</p>
-                        <p className="text-xs text-white/60 mt-0.5">
+                        <p className="text-xs text-white mt-0.5">
                           Used in PVC manufacturing. Potential exposure during work in plastics
                           factories or when cutting PVC at elevated temperatures. Known carcinogen
                           affecting the liver.
@@ -579,7 +579,7 @@ export default function CoshhAwarenessModule5Section2() {
                         <p className="text-sm font-medium text-white">
                           Hexavalent Chromium Compounds
                         </p>
-                        <p className="text-xs text-white/60 mt-0.5">
+                        <p className="text-xs text-white mt-0.5">
                           Found in some electroplating processes, welding fumes, and anti-corrosion
                           coatings. Known respiratory sensitiser and carcinogen.
                         </p>
@@ -626,7 +626,7 @@ export default function CoshhAwarenessModule5Section2() {
                 <p className="text-sm font-medium text-violet-400 mb-3">
                   The Six Levels of Health Surveillance (COSHH Reg 11 / HSG61)
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-violet-500/20 text-violet-400 text-xs font-bold flex-shrink-0">
                       1
@@ -765,7 +765,7 @@ export default function CoshhAwarenessModule5Section2() {
                 <p className="text-sm font-medium text-violet-400 mb-3">
                   The Health Surveillance Cycle
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-violet-500/20 text-violet-400 text-xs font-bold flex-shrink-0">
                       1
@@ -843,7 +843,7 @@ export default function CoshhAwarenessModule5Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical: Do Not Wait</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     Employees should not wait for a scheduled surveillance appointment if they
                     develop symptoms between checks.
@@ -875,7 +875,7 @@ export default function CoshhAwarenessModule5Section2() {
                   <ClipboardList className="h-4 w-4 text-violet-400" />
                   <p className="text-sm font-medium text-violet-400">COSHH Risk Assessment</p>
                 </div>
-                <p className="text-[10px] sm:text-xs text-white/60">
+                <p className="text-[10px] sm:text-xs text-white">
                   Identifies substances &amp; exposures requiring surveillance
                 </p>
               </div>
@@ -888,13 +888,13 @@ export default function CoshhAwarenessModule5Section2() {
               <div className="border-2 border-violet-500/30 rounded-lg bg-[#2a2a2a] p-3 sm:p-4 text-center">
                 <p className="text-sm font-medium text-white mb-1">Pre-Exposure Baseline</p>
                 <div className="flex flex-wrap gap-2 justify-center">
-                  <span className="text-[9px] sm:text-[10px] text-white/60 bg-white/5 border border-white/10 px-2 py-0.5 rounded">
+                  <span className="text-[9px] sm:text-[10px] text-white bg-white/5 border border-white/10 px-2 py-0.5 rounded">
                     Health questionnaire
                   </span>
-                  <span className="text-[9px] sm:text-[10px] text-white/60 bg-white/5 border border-white/10 px-2 py-0.5 rounded">
+                  <span className="text-[9px] sm:text-[10px] text-white bg-white/5 border border-white/10 px-2 py-0.5 rounded">
                     Baseline spirometry
                   </span>
-                  <span className="text-[9px] sm:text-[10px] text-white/60 bg-white/5 border border-white/10 px-2 py-0.5 rounded">
+                  <span className="text-[9px] sm:text-[10px] text-white bg-white/5 border border-white/10 px-2 py-0.5 rounded">
                     Skin baseline
                   </span>
                 </div>
@@ -914,23 +914,23 @@ export default function CoshhAwarenessModule5Section2() {
                     <p className="text-[10px] sm:text-xs text-violet-400 font-medium">
                       Skin Checks
                     </p>
-                    <p className="text-[9px] text-white/50">Weekly &ndash; monthly</p>
+                    <p className="text-[9px] text-white">Weekly &ndash; monthly</p>
                   </div>
                   <div className="bg-violet-500/10 border border-violet-500/20 rounded p-2 text-center">
                     <p className="text-[10px] sm:text-xs text-violet-400 font-medium">
                       Questionnaire
                     </p>
-                    <p className="text-[9px] text-white/50">6 &ndash; 12 monthly</p>
+                    <p className="text-[9px] text-white">6 &ndash; 12 monthly</p>
                   </div>
                   <div className="bg-violet-500/10 border border-violet-500/20 rounded p-2 text-center">
                     <p className="text-[10px] sm:text-xs text-violet-400 font-medium">Spirometry</p>
-                    <p className="text-[9px] text-white/50">6 &ndash; 12 monthly</p>
+                    <p className="text-[9px] text-white">6 &ndash; 12 monthly</p>
                   </div>
                   <div className="bg-violet-500/10 border border-violet-500/20 rounded p-2 text-center">
                     <p className="text-[10px] sm:text-xs text-violet-400 font-medium">
                       Schedule 6 Medical
                     </p>
-                    <p className="text-[9px] text-white/50">At least 12 monthly</p>
+                    <p className="text-[9px] text-white">At least 12 monthly</p>
                   </div>
                 </div>
               </div>
@@ -943,13 +943,13 @@ export default function CoshhAwarenessModule5Section2() {
               <div className="flex gap-3">
                 <div className="flex-1 border-2 border-green-500/30 rounded-lg bg-green-500/10 p-3 text-center">
                   <p className="text-xs font-medium text-green-400 mb-1">Normal Results</p>
-                  <p className="text-[9px] sm:text-[10px] text-white/50">
+                  <p className="text-[9px] sm:text-[10px] text-white">
                     Continue periodic surveillance at scheduled intervals
                   </p>
                 </div>
                 <div className="flex-1 border-2 border-red-500/30 rounded-lg bg-red-500/10 p-3 text-center">
                   <p className="text-xs font-medium text-red-400 mb-1">Abnormal Results</p>
-                  <p className="text-[9px] sm:text-[10px] text-white/50">
+                  <p className="text-[9px] sm:text-[10px] text-white">
                     Referral &rarr; investigation &rarr; action
                   </p>
                 </div>
@@ -965,16 +965,16 @@ export default function CoshhAwarenessModule5Section2() {
                   Employer Must Act on Results
                 </p>
                 <div className="flex flex-wrap gap-2 justify-center">
-                  <span className="text-[9px] sm:text-[10px] text-white/60 bg-white/5 border border-white/10 px-2 py-0.5 rounded">
+                  <span className="text-[9px] sm:text-[10px] text-white bg-white/5 border border-white/10 px-2 py-0.5 rounded">
                     Remove from exposure
                   </span>
-                  <span className="text-[9px] sm:text-[10px] text-white/60 bg-white/5 border border-white/10 px-2 py-0.5 rounded">
+                  <span className="text-[9px] sm:text-[10px] text-white bg-white/5 border border-white/10 px-2 py-0.5 rounded">
                     Improve controls
                   </span>
-                  <span className="text-[9px] sm:text-[10px] text-white/60 bg-white/5 border border-white/10 px-2 py-0.5 rounded">
+                  <span className="text-[9px] sm:text-[10px] text-white bg-white/5 border border-white/10 px-2 py-0.5 rounded">
                     Review risk assessment
                   </span>
-                  <span className="text-[9px] sm:text-[10px] text-white/60 bg-white/5 border border-white/10 px-2 py-0.5 rounded">
+                  <span className="text-[9px] sm:text-[10px] text-white bg-white/5 border border-white/10 px-2 py-0.5 rounded">
                     RIDDOR report
                   </span>
                 </div>
@@ -1000,7 +1000,7 @@ export default function CoshhAwarenessModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-violet-400 mb-3">What Must Be Recorded</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1058,7 +1058,7 @@ export default function CoshhAwarenessModule5Section2() {
                   <ClipboardList className="h-5 w-5 text-violet-400" />
                   <p className="text-sm font-medium text-violet-400">40-Year Retention Period</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Individual health surveillance records must be kept for{' '}
                   <strong className="text-violet-400">at least 40 years</strong> from the date of
                   the last entry. If the employer ceases to trade, the records must be offered to
@@ -1073,7 +1073,7 @@ export default function CoshhAwarenessModule5Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Access Rights &amp; Data Protection
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1130,7 +1130,7 @@ export default function CoshhAwarenessModule5Section2() {
             <div className="min-w-[300px] max-w-xl mx-auto">
               {/* Explanation Header */}
               <div className="mb-4 text-center">
-                <p className="text-sm text-white/80 mb-1">
+                <p className="text-sm text-white mb-1">
                   Spirometry measures how much air you can blow out and how fast. The two key values
                   are:
                 </p>
@@ -1157,19 +1157,19 @@ export default function CoshhAwarenessModule5Section2() {
                   </div>
                   <div className="grid grid-cols-3 gap-2 text-center">
                     <div className="bg-green-500/10 rounded p-2">
-                      <p className="text-[10px] text-white/50">FEV1</p>
+                      <p className="text-[10px] text-white">FEV1</p>
                       <p className="text-sm font-bold text-green-400">Normal</p>
                     </div>
                     <div className="bg-green-500/10 rounded p-2">
-                      <p className="text-[10px] text-white/50">FVC</p>
+                      <p className="text-[10px] text-white">FVC</p>
                       <p className="text-sm font-bold text-green-400">Normal</p>
                     </div>
                     <div className="bg-green-500/10 rounded p-2">
-                      <p className="text-[10px] text-white/50">Ratio</p>
+                      <p className="text-[10px] text-white">Ratio</p>
                       <p className="text-sm font-bold text-green-400">&gt; 0.70</p>
                     </div>
                   </div>
-                  <p className="text-[10px] sm:text-xs text-white/50 mt-2">
+                  <p className="text-[10px] sm:text-xs text-white mt-2">
                     Both values within predicted range for age, sex, and height. Ratio above 0.70
                     &mdash; no obstruction.
                   </p>
@@ -1185,19 +1185,19 @@ export default function CoshhAwarenessModule5Section2() {
                   </div>
                   <div className="grid grid-cols-3 gap-2 text-center">
                     <div className="bg-red-500/10 rounded p-2">
-                      <p className="text-[10px] text-white/50">FEV1</p>
+                      <p className="text-[10px] text-white">FEV1</p>
                       <p className="text-sm font-bold text-red-400">Reduced</p>
                     </div>
                     <div className="bg-white/5 rounded p-2">
-                      <p className="text-[10px] text-white/50">FVC</p>
-                      <p className="text-sm font-bold text-white/60">Normal/Near</p>
+                      <p className="text-[10px] text-white">FVC</p>
+                      <p className="text-sm font-bold text-white">Normal/Near</p>
                     </div>
                     <div className="bg-red-500/10 rounded p-2">
-                      <p className="text-[10px] text-white/50">Ratio</p>
+                      <p className="text-[10px] text-white">Ratio</p>
                       <p className="text-sm font-bold text-red-400">&lt; 0.70</p>
                     </div>
                   </div>
-                  <p className="text-[10px] sm:text-xs text-white/50 mt-2">
+                  <p className="text-[10px] sm:text-xs text-white mt-2">
                     Airways are narrowed &mdash; air cannot be expelled quickly. FEV1 drops
                     disproportionately. Key indicator for occupational asthma from isocyanates,
                     colophony, etc.
@@ -1214,19 +1214,19 @@ export default function CoshhAwarenessModule5Section2() {
                   </div>
                   <div className="grid grid-cols-3 gap-2 text-center">
                     <div className="bg-amber-500/10 rounded p-2">
-                      <p className="text-[10px] text-white/50">FEV1</p>
+                      <p className="text-[10px] text-white">FEV1</p>
                       <p className="text-sm font-bold text-amber-400">Reduced</p>
                     </div>
                     <div className="bg-amber-500/10 rounded p-2">
-                      <p className="text-[10px] text-white/50">FVC</p>
+                      <p className="text-[10px] text-white">FVC</p>
                       <p className="text-sm font-bold text-amber-400">Reduced</p>
                     </div>
                     <div className="bg-white/5 rounded p-2">
-                      <p className="text-[10px] text-white/50">Ratio</p>
-                      <p className="text-sm font-bold text-white/60">Normal/High</p>
+                      <p className="text-[10px] text-white">Ratio</p>
+                      <p className="text-sm font-bold text-white">Normal/High</p>
                     </div>
                   </div>
-                  <p className="text-[10px] sm:text-xs text-white/50 mt-2">
+                  <p className="text-[10px] sm:text-xs text-white mt-2">
                     Lungs cannot fully expand &mdash; total volume is reduced. Both FEV1 and FVC
                     decrease proportionally, keeping the ratio preserved or elevated.
                   </p>
@@ -1235,7 +1235,7 @@ export default function CoshhAwarenessModule5Section2() {
 
               {/* Key Takeaway */}
               <div className="bg-violet-500/10 border border-violet-500/30 rounded-lg p-3 mt-3">
-                <p className="text-xs sm:text-sm text-white/80">
+                <p className="text-xs sm:text-sm text-white">
                   <strong className="text-violet-400">Key point:</strong> A{' '}
                   <strong className="text-white">declining trend</strong> in FEV1 over successive
                   spirometry tests is as important as any single abnormal reading. Even if all
@@ -1268,7 +1268,7 @@ export default function CoshhAwarenessModule5Section2() {
                     Occupational Asthma Surveillance
                   </p>
                 </div>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <p>
                     Occupational asthma is caused by{' '}
                     <strong className="text-white">sensitisation</strong> to a workplace substance.
@@ -1281,7 +1281,7 @@ export default function CoshhAwarenessModule5Section2() {
                     <p className="text-xs font-medium text-violet-400 mb-2">
                       Surveillance Methods for Occupational Asthma
                     </p>
-                    <ul className="space-y-1.5 text-xs text-white/70">
+                    <ul className="space-y-1.5 text-xs text-white">
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                         <span>
@@ -1329,7 +1329,7 @@ export default function CoshhAwarenessModule5Section2() {
                   </div>
 
                   <div className="bg-red-500/10 border border-red-500/20 rounded p-3">
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       <strong className="text-red-400">Electrician risk:</strong> Electricians
                       working with or near{' '}
                       <strong className="text-white">
@@ -1349,7 +1349,7 @@ export default function CoshhAwarenessModule5Section2() {
                   <HeartPulse className="h-5 w-5 text-violet-400" />
                   <p className="text-sm font-medium text-violet-400">Dermatitis Surveillance</p>
                 </div>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <p>
                     Occupational contact dermatitis is inflammation of the skin caused by direct
                     contact with a hazardous substance. It is the{' '}
@@ -1360,7 +1360,7 @@ export default function CoshhAwarenessModule5Section2() {
 
                   <div className="bg-violet-500/10 border border-violet-500/20 rounded p-3">
                     <p className="text-xs font-medium text-violet-400 mb-2">The DERM Checklist</p>
-                    <p className="text-xs text-white/70 mb-2">
+                    <p className="text-xs text-white mb-2">
                       A structured skin inspection framework used by trained responsible persons:
                     </p>
                     <div className="space-y-1.5">
@@ -1368,7 +1368,7 @@ export default function CoshhAwarenessModule5Section2() {
                         <span className="text-violet-400 font-bold text-xs mt-0 flex-shrink-0 w-5">
                           D
                         </span>
-                        <span className="text-xs text-white/70">
+                        <span className="text-xs text-white">
                           <strong className="text-white">Dryness</strong> &mdash; skin feels dry,
                           tight, or rough to the touch
                         </span>
@@ -1377,7 +1377,7 @@ export default function CoshhAwarenessModule5Section2() {
                         <span className="text-violet-400 font-bold text-xs mt-0 flex-shrink-0 w-5">
                           E
                         </span>
-                        <span className="text-xs text-white/70">
+                        <span className="text-xs text-white">
                           <strong className="text-white">Erythema</strong> &mdash; redness of the
                           skin, indicating inflammation
                         </span>
@@ -1386,7 +1386,7 @@ export default function CoshhAwarenessModule5Section2() {
                         <span className="text-violet-400 font-bold text-xs mt-0 flex-shrink-0 w-5">
                           R
                         </span>
-                        <span className="text-xs text-white/70">
+                        <span className="text-xs text-white">
                           <strong className="text-white">Roughness</strong> &mdash; skin texture has
                           changed, feels coarse or scaly
                         </span>
@@ -1395,7 +1395,7 @@ export default function CoshhAwarenessModule5Section2() {
                         <span className="text-violet-400 font-bold text-xs mt-0 flex-shrink-0 w-5">
                           M
                         </span>
-                        <span className="text-xs text-white/70">
+                        <span className="text-xs text-white">
                           <strong className="text-white">Marks</strong> &mdash; cracks, fissures,
                           blisters, or weeping areas
                         </span>
@@ -1405,7 +1405,7 @@ export default function CoshhAwarenessModule5Section2() {
 
                   <div className="bg-white/5 border border-white/10 rounded p-3">
                     <p className="text-xs font-medium text-white mb-2">Skin Inspection Programme</p>
-                    <ul className="space-y-1.5 text-xs text-white/70">
+                    <ul className="space-y-1.5 text-xs text-white">
                       <li className="flex items-start gap-2">
                         <span className="mt-1 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                         <span>
@@ -1467,7 +1467,7 @@ export default function CoshhAwarenessModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-violet-400 mb-3">Employer&rsquo;s Duties</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1524,7 +1524,7 @@ export default function CoshhAwarenessModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-violet-400 mb-3">Employee&rsquo;s Duties</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-violet-400 flex-shrink-0" />
                     <span>
@@ -1576,7 +1576,7 @@ export default function CoshhAwarenessModule5Section2() {
                         <p className="text-sm font-medium text-white">
                           Isocyanate Exposure (Spray Foam Insulation)
                         </p>
-                        <p className="text-xs text-white/60 mt-0.5">
+                        <p className="text-xs text-white mt-0.5">
                           COSHH Schedule 6 substance. Requires medical surveillance by an appointed
                           doctor before first exposure and at least annually. Causes severe
                           occupational asthma. Electricians installing wiring in buildings where
@@ -1595,7 +1595,7 @@ export default function CoshhAwarenessModule5Section2() {
                         <p className="text-sm font-medium text-white">
                           Colophony / Rosin Fumes (Soldering)
                         </p>
-                        <p className="text-xs text-white/60 mt-0.5">
+                        <p className="text-xs text-white mt-0.5">
                           Rosin-cored solder releases colophony fumes when heated. Colophony is a
                           potent respiratory sensitiser that can cause occupational asthma.
                           Surveillance includes respiratory questionnaire, spirometry, and peak flow
@@ -1614,7 +1614,7 @@ export default function CoshhAwarenessModule5Section2() {
                         <p className="text-sm font-medium text-white">
                           Solvent Exposure (Cable Jointing &amp; Cleaning)
                         </p>
-                        <p className="text-xs text-white/60 mt-0.5">
+                        <p className="text-xs text-white mt-0.5">
                           Solvents used in cable jointing compounds, adhesives, degreasers, and
                           cleaning agents can cause dermatitis through skin contact and neurological
                           effects through inhalation. Skin surveillance (DERM checklist) and
@@ -1633,7 +1633,7 @@ export default function CoshhAwarenessModule5Section2() {
                         <p className="text-sm font-medium text-white">
                           Epoxy Resins (Cable Joints &amp; Encapsulation)
                         </p>
-                        <p className="text-xs text-white/60 mt-0.5">
+                        <p className="text-xs text-white mt-0.5">
                           Two-part epoxy resins used in cable joints and electrical encapsulation
                           are potent skin sensitisers. Once sensitised, even trace contact can
                           trigger severe dermatitis. Skin surveillance with the DERM checklist is
@@ -1653,7 +1653,7 @@ export default function CoshhAwarenessModule5Section2() {
                     Employer&rsquo;s Duty to Investigate
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     If health surveillance reveals that an employee has developed a condition linked
                     to workplace exposure, the employer must not simply note the result and carry
@@ -1677,7 +1677,7 @@ export default function CoshhAwarenessModule5Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1691,7 +1691,7 @@ export default function CoshhAwarenessModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../coshh-awareness-module-5-section-1">

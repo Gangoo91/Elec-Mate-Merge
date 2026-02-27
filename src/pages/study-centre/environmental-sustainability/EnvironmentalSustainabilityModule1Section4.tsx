@@ -230,7 +230,7 @@ export default function EnvironmentalSustainabilityModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-1">
@@ -257,7 +257,7 @@ export default function EnvironmentalSustainabilityModule1Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Sustainability Principles
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             From the Brundtland definition to the circular economy, net zero targets to life cycle
             assessment &mdash; the foundational principles that drive sustainable construction in
             the UK
@@ -369,7 +369,7 @@ export default function EnvironmentalSustainabilityModule1Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   The Three Pillars of Sustainability
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -426,8 +426,8 @@ export default function EnvironmentalSustainabilityModule1Section4() {
                       <Leaf className="h-5 w-5 text-emerald-400" />
                     </div>
                     <p className="text-xs font-bold text-emerald-400 mb-1">Environmental</p>
-                    <p className="text-[10px] text-white/60">Planet</p>
-                    <ul className="text-[10px] text-white/50 mt-2 space-y-0.5 text-left">
+                    <p className="text-[10px] text-white">Planet</p>
+                    <ul className="text-[10px] text-white mt-2 space-y-0.5 text-left">
                       <li>&bull; Carbon reduction</li>
                       <li>&bull; Resource conservation</li>
                       <li>&bull; Biodiversity protection</li>
@@ -439,8 +439,8 @@ export default function EnvironmentalSustainabilityModule1Section4() {
                       <Users className="h-5 w-5 text-blue-400" />
                     </div>
                     <p className="text-xs font-bold text-blue-400 mb-1">Social</p>
-                    <p className="text-[10px] text-white/60">People</p>
-                    <ul className="text-[10px] text-white/50 mt-2 space-y-0.5 text-left">
+                    <p className="text-[10px] text-white">People</p>
+                    <ul className="text-[10px] text-white mt-2 space-y-0.5 text-left">
                       <li>&bull; Health &amp; safety</li>
                       <li>&bull; Community wellbeing</li>
                       <li>&bull; Fair employment</li>
@@ -452,8 +452,8 @@ export default function EnvironmentalSustainabilityModule1Section4() {
                       <TrendingUp className="h-5 w-5 text-amber-400" />
                     </div>
                     <p className="text-xs font-bold text-amber-400 mb-1">Economic</p>
-                    <p className="text-[10px] text-white/60">Profit</p>
-                    <ul className="text-[10px] text-white/50 mt-2 space-y-0.5 text-left">
+                    <p className="text-[10px] text-white">Profit</p>
+                    <ul className="text-[10px] text-white mt-2 space-y-0.5 text-left">
                       <li>&bull; Lifecycle cost savings</li>
                       <li>&bull; Long-term value</li>
                       <li>&bull; Local economic benefit</li>
@@ -463,7 +463,7 @@ export default function EnvironmentalSustainabilityModule1Section4() {
                 </div>
                 <div className="text-center">
                   <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10">
-                    <span className="text-[10px] text-white/60 font-medium">
+                    <span className="text-[10px] text-white font-medium">
                       TRIPLE BOTTOM LINE: People + Planet + Profit = Sustainable Development
                     </span>
                   </div>
@@ -515,7 +515,7 @@ export default function EnvironmentalSustainabilityModule1Section4() {
                   <Target className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">Construction-Relevant SDGs</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-3">
+                <ul className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -617,7 +617,7 @@ export default function EnvironmentalSustainabilityModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Why This Matters to You</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   As an electrician or construction professional, you may not interact directly with
                   the UN SDG framework in your daily work. However, the policies, regulations, and
                   client requirements that shape your projects are increasingly driven by these
@@ -658,7 +658,7 @@ export default function EnvironmentalSustainabilityModule1Section4() {
                   <FileText className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">Key Legislative Milestones</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -714,7 +714,7 @@ export default function EnvironmentalSustainabilityModule1Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Construction&rsquo;s Role in Meeting Carbon Budgets
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -804,7 +804,7 @@ export default function EnvironmentalSustainabilityModule1Section4() {
                     Ellen MacArthur Foundation &mdash; Three Principles
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-3">
+                <ul className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -867,7 +867,7 @@ export default function EnvironmentalSustainabilityModule1Section4() {
                             </div>
                             <div>
                               <p className="text-xs font-medium text-white">{step.label}</p>
-                              <p className="text-[10px] text-white/50">{step.desc}</p>
+                              <p className="text-[10px] text-white">{step.desc}</p>
                             </div>
                           </div>
                           {i < 3 && (
@@ -904,7 +904,7 @@ export default function EnvironmentalSustainabilityModule1Section4() {
                             <div>
                               <p className="text-xs font-medium text-white">{step.label}</p>
                               <p
-                                className="text-[10px] text-white/50"
+                                className="text-[10px] text-white"
                                 dangerouslySetInnerHTML={{ __html: step.desc }}
                               />
                             </div>
@@ -945,7 +945,7 @@ export default function EnvironmentalSustainabilityModule1Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Circular Economy in Practice &mdash; Construction Examples
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -1023,7 +1023,7 @@ export default function EnvironmentalSustainabilityModule1Section4() {
                     Whole Life Carbon: Two Components
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-3">
+                <ul className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -1064,7 +1064,7 @@ export default function EnvironmentalSustainabilityModule1Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Modern Methods of Construction (MMC)
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -1131,7 +1131,7 @@ export default function EnvironmentalSustainabilityModule1Section4() {
                     Sustainability Benefits of MMC
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-1.5">
+                <ul className="text-sm text-white space-y-1.5">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -1204,7 +1204,7 @@ export default function EnvironmentalSustainabilityModule1Section4() {
                     LCA Lifecycle Stages (Cradle-to-Grave)
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -1266,10 +1266,10 @@ export default function EnvironmentalSustainabilityModule1Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Environmental Impact Categories in EPDs
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   EPDs typically report impact across several environmental categories, including:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -1327,10 +1327,10 @@ export default function EnvironmentalSustainabilityModule1Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   LCA in Practice &mdash; Comparing Building Materials
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   LCA enables meaningful comparison of construction materials. For example:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -1403,7 +1403,7 @@ export default function EnvironmentalSustainabilityModule1Section4() {
                     CSR in Construction &mdash; Key Areas
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-3">
+                <ul className="text-sm text-white space-y-3">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -1471,7 +1471,7 @@ export default function EnvironmentalSustainabilityModule1Section4() {
                   <FileText className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">The Social Value Act 2012</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The Public Services (Social Value) Act 2012 requires all public sector bodies in
                   England and Wales to consider how the services they commission and procure might
                   improve the economic, social, and environmental wellbeing of the area. For
@@ -1524,7 +1524,7 @@ export default function EnvironmentalSustainabilityModule1Section4() {
                   <TrendingUp className="h-5 w-5 text-emerald-400" />
                   <p className="text-sm font-medium text-emerald-400">Cost Savings</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -1574,7 +1574,7 @@ export default function EnvironmentalSustainabilityModule1Section4() {
                 <p className="text-sm font-medium text-white mb-3">
                   Competitive and Planning Advantages
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <div className="flex-shrink-0 mt-1.5 w-1 h-1 rounded-full bg-emerald-400" />
                     <span>
@@ -1635,7 +1635,7 @@ export default function EnvironmentalSustainabilityModule1Section4() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Risk of Inaction</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Companies that fail to engage with sustainability face increasing risks: exclusion
                   from public sector frameworks (which often require minimum sustainability
                   standards), loss of private sector clients who demand ESG credentials, rising
@@ -1669,7 +1669,7 @@ export default function EnvironmentalSustainabilityModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-1-section-3">
@@ -1698,7 +1698,7 @@ export default function EnvironmentalSustainabilityModule1Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1716,7 +1716,7 @@ export default function EnvironmentalSustainabilityModule1Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-1-section-3">

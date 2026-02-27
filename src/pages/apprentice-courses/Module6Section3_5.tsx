@@ -174,7 +174,7 @@ const Module6Section3_5 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -192,13 +192,13 @@ const Module6Section3_5 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.3.5</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.3.5</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Using a Proving Unit and Two-Pole Voltage Tester
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               The most reliable way to confirm circuits are dead using proper testing equipment
             </p>
           </header>
@@ -206,7 +206,7 @@ const Module6Section3_5 = () => {
           {/* Quick Reference Summary */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <p className="font-medium text-white mb-3">Spot it in 30 Seconds</p>
-            <div className="grid sm:grid-cols-2 gap-4 text-sm text-white/80">
+            <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
@@ -232,7 +232,7 @@ const Module6Section3_5 = () => {
 
           {/* Introduction */}
           <section className="mb-10">
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 The most reliable way to confirm that a circuit is dead and safe to work on is by
                 using a two-pole voltage tester in combination with a proving unit. This method
@@ -253,10 +253,10 @@ const Module6Section3_5 = () => {
               Learning Outcomes
             </h2>
             <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-              <p className="text-white/80 mb-3">
+              <p className="text-white mb-3">
                 By the end of this subsection, you will be able to:
               </p>
-              <ul className="space-y-2 text-white/80">
+              <ul className="space-y-2 text-white">
                 <li className="flex items-start gap-2">
                   <CheckCircle className="w-4 h-4 text-green-500 mt-1 flex-shrink-0" />
                   <span>Identify the purpose of a proving unit and two-pole tester</span>
@@ -287,7 +287,7 @@ const Module6Section3_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Why Use a Proving Unit?
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div>
                 <p className="font-medium text-white mb-2">Confirms Tester Operation:</p>
                 <ul className="ml-4 space-y-1 text-sm">
@@ -344,7 +344,7 @@ const Module6Section3_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Why a Two-Pole Voltage Tester?
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div>
                 <p className="font-medium text-white mb-2">Direct Voltage Indication:</p>
                 <ul className="ml-4 space-y-1 text-sm">
@@ -401,7 +401,7 @@ const Module6Section3_5 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               The Correct Sequence (Live-Dead-Live)
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/30">
                 <p className="font-medium text-white mb-2">Step 1: Prove Tester (LIVE)</p>
                 <ul className="ml-4 space-y-1 text-sm">
@@ -454,7 +454,7 @@ const Module6Section3_5 = () => {
               Unsafe Practices to Avoid
             </h2>
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30">
-              <div className="text-white/80 space-y-4 leading-relaxed">
+              <div className="text-white space-y-4 leading-relaxed">
                 <div>
                   <p className="font-medium text-white mb-2">Never Use Neon Screwdrivers:</p>
                   <ul className="ml-4 space-y-1 text-sm">
@@ -515,7 +515,7 @@ const Module6Section3_5 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
                 <p className="font-medium text-white mb-3">Equipment Requirements:</p>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                     <span>Always carry a GS38-compliant two-pole tester and proving unit</span>
@@ -536,7 +536,7 @@ const Module6Section3_5 = () => {
               </div>
               <div>
                 <p className="font-medium text-white mb-3">Safe Working Practices:</p>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <Shield className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                     <span>Treat all circuits as live until proven otherwise</span>
@@ -566,7 +566,7 @@ const Module6Section3_5 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/30">
               <p className="font-medium text-white mb-3">Case Study: The Hidden Tester Failure</p>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 An electrician isolated a distribution board but skipped the re-prove stage after
                 testing. Unknown to him, the tester's internal fuse had blown during the proving
                 process. He assumed the circuit was dead, but it was still live. He suffered a minor
@@ -574,7 +574,7 @@ const Module6Section3_5 = () => {
               </p>
               <div className="p-3 rounded-lg bg-white/5 border-l-2 border-amber-500">
                 <p className="font-medium text-white mb-2">Lesson learned:</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Always perform the complete live-dead-live testing sequence with a proving unit.
                   The re-prove step is not optional—it's a safety-critical verification that your
                   tester is still functioning correctly.
@@ -590,13 +590,13 @@ const Module6Section3_5 = () => {
               Micro-Challenge
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/30">
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 You arrive at a job and your colleague says "Don't worry, I've already tested it
                 with my voltage pen - it's definitely dead." What do you do?
               </p>
               <div className="p-3 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-white mb-2">Answer:</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Never trust another person's testing, especially with non-GS38 equipment. Always
                   perform your own complete live-dead-live procedure using proper two-pole voltage
                   tester and proving unit. Voltage pens are not acceptable for proving dead.
@@ -615,7 +615,7 @@ const Module6Section3_5 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Q: {faq.question}</p>
-                  <p className="text-sm text-white/70">A: {faq.answer}</p>
+                  <p className="text-sm text-white">A: {faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -631,27 +631,27 @@ const Module6Section3_5 = () => {
               <div className="p-3 rounded-lg bg-elec-yellow/10 text-center">
                 <Shield className="w-6 h-6 text-elec-yellow mx-auto mb-2" />
                 <p className="text-xs font-medium text-white">Proving Units</p>
-                <p className="text-xs text-white/60">Confirm testers are functional</p>
+                <p className="text-xs text-white">Confirm testers are functional</p>
               </div>
               <div className="p-3 rounded-lg bg-green-500/10 text-center">
                 <Zap className="w-6 h-6 text-green-500 mx-auto mb-2" />
                 <p className="text-xs font-medium text-white">Two-Pole Testers</p>
-                <p className="text-xs text-white/60">Only safe method for proving dead</p>
+                <p className="text-xs text-white">Only safe method for proving dead</p>
               </div>
               <div className="p-3 rounded-lg bg-purple-500/10 text-center">
                 <CheckCircle className="w-6 h-6 text-purple-500 mx-auto mb-2" />
                 <p className="text-xs font-medium text-white">Live-Dead-Live</p>
-                <p className="text-xs text-white/60">Sequence is mandatory</p>
+                <p className="text-xs text-white">Sequence is mandatory</p>
               </div>
               <div className="p-3 rounded-lg bg-red-500/10 text-center">
                 <AlertTriangle className="w-6 h-6 text-red-500 mx-auto mb-2" />
                 <p className="text-xs font-medium text-white">Unsafe Practices</p>
-                <p className="text-xs text-white/60">Neon screwdrivers prohibited</p>
+                <p className="text-xs text-white">Neon screwdrivers prohibited</p>
               </div>
               <div className="p-3 rounded-lg bg-amber-500/10 text-center">
                 <Shield className="w-6 h-6 text-amber-500 mx-auto mb-2" />
                 <p className="text-xs font-medium text-white">Re-proving</p>
-                <p className="text-xs text-white/60">Prevents reliance on faulty instruments</p>
+                <p className="text-xs text-white">Prevents reliance on faulty instruments</p>
               </div>
             </div>
           </section>
@@ -663,7 +663,7 @@ const Module6Section3_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="font-medium text-elec-yellow mb-2">Equipment Checklist:</p>
-                  <ul className="space-y-1 text-sm text-white/80">
+                  <ul className="space-y-1 text-sm text-white">
                     <li>• Use two-pole testers only</li>
                     <li>• GS38-compliant with fused, shrouded leads</li>
                     <li>• Proving unit for tester verification</li>
@@ -672,7 +672,7 @@ const Module6Section3_5 = () => {
                 </div>
                 <div>
                   <p className="font-medium text-elec-yellow mb-2">Testing Sequence:</p>
-                  <ul className="space-y-1 text-sm text-white/80">
+                  <ul className="space-y-1 text-sm text-white">
                     <li>• Always follow live-dead-live sequence</li>
                     <li>• Prove tester → Test circuit → Re-prove tester</li>
                     <li>• Test L–N, L–E, N–E combinations</li>
@@ -692,7 +692,7 @@ const Module6Section3_5 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../3-4">

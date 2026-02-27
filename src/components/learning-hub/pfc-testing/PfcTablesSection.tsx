@@ -224,7 +224,7 @@ const PfcTablesSection = () => (
           <div className="bg-card rounded p-4">
             <p className="font-medium text-green-400 mb-3">RCBO Minimum PFC Requirements:</p>
             <div className="space-y-2">
-              <p className="text-xs text-white/80 mb-2">
+              <p className="text-xs text-white mb-2">
                 RCBOs combine MCB and RCD functions - must meet both requirements:
               </p>
               <div className="grid grid-cols-4 gap-2 font-mono text-xs">

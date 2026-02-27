@@ -210,7 +210,7 @@ export default function CdmRegulationsModule2Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-2">
@@ -233,7 +233,7 @@ export default function CdmRegulationsModule2Section3() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Principal Contractor
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             The organisation that controls the construction phase &mdash; planning, managing, and
             monitoring site safety from first dig to handover
           </p>
@@ -325,7 +325,7 @@ export default function CdmRegulationsModule2Section3() {
                 <p className="text-sm font-medium text-blue-400 mb-3">
                   Key Points About the PC Appointment
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -382,7 +382,7 @@ export default function CdmRegulationsModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Point</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The appointment of a Principal Contractor does <strong>not</strong> relieve
                   individual contractors of their own duties under CDM 2015. Each contractor retains
                   responsibility for their own workers, their own risk assessments, and their own
@@ -416,7 +416,7 @@ export default function CdmRegulationsModule2Section3() {
                 <p className="text-sm font-medium text-blue-400 mb-3">
                   Regulation 13 — Core Duties
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -522,7 +522,7 @@ export default function CdmRegulationsModule2Section3() {
                 <p className="text-sm font-medium text-blue-400 mb-3">
                   Construction Phase Plan &mdash; Required Content
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -564,7 +564,7 @@ export default function CdmRegulationsModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Critical Requirement</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Construction work <strong>must not begin</strong> until the construction phase
                   plan has been prepared. The plan does not need to be a lengthy document — for
                   smaller, less complex projects a short, focused plan may be entirely adequate.
@@ -607,7 +607,7 @@ export default function CdmRegulationsModule2Section3() {
                 <p className="text-sm font-medium text-blue-400 mb-3">
                   Typical Site Rules &amp; Access Controls
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -702,7 +702,7 @@ export default function CdmRegulationsModule2Section3() {
                 <p className="text-sm font-medium text-blue-400 mb-3">
                   Site Induction &mdash; Required Content
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -749,7 +749,7 @@ export default function CdmRegulationsModule2Section3() {
                 <p className="text-sm font-medium text-blue-400 mb-3">
                   Who Needs a Site Induction?
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -819,7 +819,7 @@ export default function CdmRegulationsModule2Section3() {
                 <p className="text-sm font-medium text-blue-400 mb-3">
                   How the PC Coordinates Contractors
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -874,7 +874,7 @@ export default function CdmRegulationsModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Common Failure</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   A frequent cause of serious accidents on multi-contractor sites is the failure to
                   manage <strong>interfaces</strong> between trades. When two or more contractors
                   work in the same area without proper coordination — for example, one team removing
@@ -919,7 +919,7 @@ export default function CdmRegulationsModule2Section3() {
                 <p className="text-sm font-medium text-blue-400 mb-3">
                   What Worker Consultation Means in Practice
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -959,7 +959,7 @@ export default function CdmRegulationsModule2Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-blue-400 mb-3">Worker Safety Forums</p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     On larger projects, the PC may establish a <strong>worker safety forum</strong>{' '}
                     — a regular meeting where worker representatives from each contractor can raise
@@ -1010,7 +1010,7 @@ export default function CdmRegulationsModule2Section3() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-blue-400 mb-3">Monitoring Activities</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                     <span>
@@ -1071,7 +1071,7 @@ export default function CdmRegulationsModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Enforcement Reality</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If an HSE inspector visits a site and finds serious non-compliance, the{' '}
                   <strong>Principal Contractor</strong> is typically the first dutyholder to face
                   enforcement action — whether that is an improvement notice, a prohibition notice,
@@ -1106,9 +1106,9 @@ export default function CdmRegulationsModule2Section3() {
             <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
               <div className="bg-gradient-to-r from-blue-500/30 to-blue-400/20 border-b border-blue-500/30 px-4 py-3">
                 <p className="text-blue-400 font-semibold text-base">Pre-Construction Phase</p>
-                <p className="text-white/60 text-xs">From appointment to start on site</p>
+                <p className="text-white text-xs">From appointment to start on site</p>
               </div>
-              <div className="p-4 space-y-2 text-sm text-white/80">
+              <div className="p-4 space-y-2 text-sm text-white">
                 <div className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                   <span>Review pre-construction information from the client and PD</span>
@@ -1136,9 +1136,9 @@ export default function CdmRegulationsModule2Section3() {
             <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
               <div className="bg-gradient-to-r from-blue-500/30 to-blue-400/20 border-b border-blue-500/30 px-4 py-3">
                 <p className="text-blue-400 font-semibold text-base">Construction Phase</p>
-                <p className="text-white/60 text-xs">Active work on site</p>
+                <p className="text-white text-xs">Active work on site</p>
               </div>
-              <div className="p-4 space-y-2 text-sm text-white/80">
+              <div className="p-4 space-y-2 text-sm text-white">
                 <div className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                   <span>Deliver site inductions to all workers</span>
@@ -1174,9 +1174,9 @@ export default function CdmRegulationsModule2Section3() {
             <div className="bg-white/5 border border-white/10 rounded-xl overflow-hidden">
               <div className="bg-gradient-to-r from-blue-500/30 to-blue-400/20 border-b border-blue-500/30 px-4 py-3">
                 <p className="text-blue-400 font-semibold text-base">Handover &amp; Close-Out</p>
-                <p className="text-white/60 text-xs">Completion and demobilisation</p>
+                <p className="text-white text-xs">Completion and demobilisation</p>
               </div>
-              <div className="p-4 space-y-2 text-sm text-white/80">
+              <div className="p-4 space-y-2 text-sm text-white">
                 <div className="flex items-start gap-2">
                   <span className="mt-1.5 w-1 h-1 rounded-full bg-blue-400 flex-shrink-0" />
                   <span>Provide as-built information to the PD for the H&amp;S file</span>
@@ -1224,7 +1224,7 @@ export default function CdmRegulationsModule2Section3() {
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-blue-400/60 mt-0.5 flex-shrink-0" />
-                    <span className="text-white/80">{item}</span>
+                    <span className="text-white">{item}</span>
                   </div>
                 ))}
               </div>
@@ -1247,7 +1247,7 @@ export default function CdmRegulationsModule2Section3() {
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-blue-400/60 mt-0.5 flex-shrink-0" />
-                    <span className="text-white/80">{item}</span>
+                    <span className="text-white">{item}</span>
                   </div>
                 ))}
               </div>
@@ -1272,7 +1272,7 @@ export default function CdmRegulationsModule2Section3() {
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-blue-400/60 mt-0.5 flex-shrink-0" />
-                    <span className="text-white/80">{item}</span>
+                    <span className="text-white">{item}</span>
                   </div>
                 ))}
               </div>
@@ -1295,7 +1295,7 @@ export default function CdmRegulationsModule2Section3() {
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-blue-400/60 mt-0.5 flex-shrink-0" />
-                    <span className="text-white/80">{item}</span>
+                    <span className="text-white">{item}</span>
                   </div>
                 ))}
               </div>
@@ -1310,7 +1310,7 @@ export default function CdmRegulationsModule2Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1324,7 +1324,7 @@ export default function CdmRegulationsModule2Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../cdm-regulations-module-2-section-2">

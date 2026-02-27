@@ -89,7 +89,7 @@ export default function FireSafetyModule6() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../fire-safety-course">
@@ -105,11 +105,11 @@ export default function FireSafetyModule6() {
           <div className="mb-8">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/20 mb-3">
               <span className="text-rose-400 text-xs font-semibold">MODULE 6</span>
-              <span className="text-white/40 text-xs">&bull;</span>
-              <span className="text-white/60 text-xs">Mock Examination</span>
+              <span className="text-white text-xs">&bull;</span>
+              <span className="text-white text-xs">Mock Examination</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Mock Exam</h1>
-            <p className="text-white/60 text-sm sm:text-base">
+            <p className="text-white text-sm sm:text-base">
               Put your fire safety and fire marshal knowledge to the test under timed exam
               conditions. Questions are drawn from a 200-question bank covering all five content
               modules.
@@ -124,7 +124,7 @@ export default function FireSafetyModule6() {
                 </div>
                 <div>
                   <h2 className="text-lg font-semibold text-white">Exam Format</h2>
-                  <p className="text-white/50 text-xs">
+                  <p className="text-white text-xs">
                     Simulates real fire safety awareness assessment conditions
                   </p>
                 </div>
@@ -141,7 +141,7 @@ export default function FireSafetyModule6() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-white">{feature.label}</p>
-                      <p className="text-xs text-white/50 leading-relaxed">{feature.description}</p>
+                      <p className="text-xs text-white leading-relaxed">{feature.description}</p>
                     </div>
                   </div>
                 ))}
@@ -175,11 +175,11 @@ export default function FireSafetyModule6() {
                       <div className="w-1.5 h-1.5 rounded-full bg-rose-400" />
                       <span className="text-sm text-white">{cat.name}</span>
                     </div>
-                    <span className="text-xs text-white/40">{cat.count} questions</span>
+                    <span className="text-xs text-white">{cat.count} questions</span>
                   </div>
                 ))}
               </div>
-              <p className="text-xs text-white/40 mt-3 text-centre">
+              <p className="text-xs text-white mt-3 text-centre">
                 4 questions drawn from each category per exam (20 total)
               </p>
             </CardContent>
@@ -197,7 +197,7 @@ export default function FireSafetyModule6() {
                 <Clock className="h-4 w-4 ml-2 opacity-70" />
               </Link>
             </Button>
-            <p className="text-centre text-xs text-white/40 mt-2">
+            <p className="text-centre text-xs text-white mt-2">
               You can retake the exam as many times as you like with different questions each time
             </p>
           </div>
@@ -217,7 +217,7 @@ export default function FireSafetyModule6() {
                     </div>
                     <div className="min-w-0">
                       <p className="text-sm font-medium text-white mb-0.5">{tip.title}</p>
-                      <p className="text-xs text-white/50 leading-relaxed">{tip.description}</p>
+                      <p className="text-xs text-white leading-relaxed">{tip.description}</p>
                     </div>
                   </div>
                 ))}

@@ -168,7 +168,7 @@ const Module4Section6_3 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -186,13 +186,13 @@ const Module4Section6_3 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.3</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.3</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Basic Insulation Resistance Testing (Introduction Only)
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master the fundamentals of insulation resistance testing to verify installation safety
               and ensure compliance with BS 7671 requirements
             </p>
@@ -204,7 +204,7 @@ const Module4Section6_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="grid md:grid-cols-2 gap-4 text-white/80">
+            <div className="grid md:grid-cols-2 gap-4 text-white">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-6 space-y-1 text-sm">
@@ -243,7 +243,7 @@ const Module4Section6_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <ul className="list-disc pl-6 space-y-2 text-white/80">
+            <ul className="list-disc pl-6 space-y-2 text-white">
               <li>
                 Explain what insulation resistance is and why it's critical for electrical safety
                 and system integrity
@@ -273,7 +273,7 @@ const Module4Section6_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Understanding Insulation Resistance Fundamentals
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Insulation resistance testing verifies the integrity of electrical insulation
                 systems, ensuring safe operation and regulatory compliance.
@@ -327,7 +327,7 @@ const Module4Section6_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Testing Purpose and Regulatory Requirements
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Insulation resistance testing ensures installations meet safety standards and
                 regulatory compliance before energisation.
@@ -381,7 +381,7 @@ const Module4Section6_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Systematic Testing Procedures and Safety Protocols
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Following structured procedures ensures accurate results while maintaining safety
                 throughout the testing process.
@@ -437,7 +437,7 @@ const Module4Section6_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Result Interpretation and Common Insulation Faults
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Understanding test results and common fault causes enables effective problem
                 identification and resolution.
@@ -484,7 +484,7 @@ const Module4Section6_3 = () => {
             <div className="space-y-4">
               <div className="p-4 rounded-lg border border-white/10">
                 <p className="font-medium text-white mb-2">Required Testing Equipment</p>
-                <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                <ul className="text-sm text-white space-y-1 list-disc pl-4">
                   <li>
                     Insulation resistance tester with appropriate voltage ranges (250V, 500V, 1000V)
                   </li>
@@ -497,7 +497,7 @@ const Module4Section6_3 = () => {
 
               <div className="p-4 rounded-lg border border-green-400/30 bg-green-500/5">
                 <p className="font-medium text-white mb-2">Professional Testing Best Practices</p>
-                <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                <ul className="text-sm text-white space-y-1 list-disc pl-4">
                   <li>Always disconnect sensitive equipment before testing to prevent damage</li>
                   <li>Perform testing before accessories are connected for highest accuracy</li>
                   <li>Allow readings to stabilise before recording final values</li>
@@ -508,12 +508,12 @@ const Module4Section6_3 = () => {
 
               <div className="p-4 rounded-lg border border-amber-400/30 bg-amber-500/5">
                 <p className="font-medium text-white mb-2">Field Testing Example Scenario</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   <strong>Industrial Lighting Circuit Discovery:</strong> During testing of an
                   industrial lighting circuit, a low insulation resistance reading was obtained.
                   Investigation revealed a cracked conduit fitting allowing water ingress.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                <ul className="text-sm text-white space-y-1 list-disc pl-4">
                   <li>Initial reading: 0.3 MΩ (below 1 MΩ minimum)</li>
                   <li>Action: Systematic investigation of circuit components</li>
                   <li>Discovery: Water ingress through damaged conduit fitting</li>
@@ -534,7 +534,7 @@ const Module4Section6_3 = () => {
               <p className="font-semibold text-white mb-3">
                 Domestic Rewire Project - Critical Insulation Fault Detection
               </p>
-              <div className="text-white/80 space-y-3 text-sm">
+              <div className="text-white space-y-3 text-sm">
                 <p>
                   <strong>Situation:</strong> During the final testing phase of a complete domestic
                   rewire, an electrician was performing insulation resistance testing on all newly
@@ -576,7 +576,7 @@ const Module4Section6_3 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h3 className="font-medium text-white mb-2">Q: {faq.question}</h3>
-                  <p className="text-sm text-white/80">{faq.answer}</p>
+                  <p className="text-sm text-white">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -589,7 +589,7 @@ const Module4Section6_3 = () => {
               Summary
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 Insulation resistance testing is a critical safety verification procedure that
                 measures the effectiveness of electrical insulation systems. High resistance values
                 indicate good insulation integrity, while low values suggest potential hazards
@@ -598,7 +598,7 @@ const Module4Section6_3 = () => {
               <div className="grid md:grid-cols-3 gap-3">
                 <div className="p-3 rounded-lg border border-white/10">
                   <h3 className="font-medium text-elec-yellow mb-2">Safety Assurance</h3>
-                  <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                  <ul className="text-sm text-white space-y-1 list-disc pl-4">
                     <li>Prevents electric shock hazards</li>
                     <li>Reduces fire risk from leakage</li>
                     <li>Ensures regulatory compliance</li>
@@ -606,7 +606,7 @@ const Module4Section6_3 = () => {
                 </div>
                 <div className="p-3 rounded-lg border border-green-400/30 bg-green-500/5">
                   <h3 className="font-medium text-green-400 mb-2">Technical Excellence</h3>
-                  <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                  <ul className="text-sm text-white space-y-1 list-disc pl-4">
                     <li>Systematic testing procedures</li>
                     <li>Accurate result interpretation</li>
                     <li>Equipment protection protocols</li>
@@ -614,7 +614,7 @@ const Module4Section6_3 = () => {
                 </div>
                 <div className="p-3 rounded-lg border border-white/10">
                   <h3 className="font-medium text-elec-yellow mb-2">Quality Outcomes</h3>
-                  <ul className="text-sm text-white/80 space-y-1 list-disc pl-4">
+                  <ul className="text-sm text-white space-y-1 list-disc pl-4">
                     <li>Early fault detection</li>
                     <li>Reduced rework costs</li>
                     <li>Enhanced reliability</li>
@@ -633,7 +633,7 @@ const Module4Section6_3 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="space-y-3">
                 <h3 className="font-medium text-green-400">Do</h3>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                     Always isolate circuits completely and verify isolation before testing
@@ -654,7 +654,7 @@ const Module4Section6_3 = () => {
               </div>
               <div className="space-y-3">
                 <h3 className="font-medium text-red-400">Don't</h3>
-                <ul className="space-y-2 text-sm text-white/80">
+                <ul className="space-y-2 text-sm text-white">
                   <li className="flex items-start gap-2">
                     <AlertTriangle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
                     Attempt testing on live circuits - always isolate first

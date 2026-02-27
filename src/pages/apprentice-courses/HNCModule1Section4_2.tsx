@@ -240,7 +240,7 @@ const HNCModule1Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section4">
@@ -262,7 +262,7 @@ const HNCModule1Section4_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Competence and Training
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Establishing, verifying, and maintaining workforce competence in building services
             engineering
           </p>
@@ -349,11 +349,11 @@ const HNCModule1Section4_2 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Legal Definition of Competence
               </p>
-              <p className="text-sm text-white/90 italic mb-3">
+              <p className="text-sm text-white italic mb-3">
                 "A competent person is someone who has sufficient training and experience or
                 knowledge and other qualities that allow them to assist you properly."
               </p>
-              <p className="text-xs text-white/70">
+              <p className="text-xs text-white">
                 — Management of Health and Safety at Work Regulations 1999
               </p>
             </div>
@@ -404,7 +404,7 @@ const HNCModule1Section4_2 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
               <p className="text-sm font-medium text-orange-300 mb-2">Task-Specific Competence</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Competence is task-specific, not a general attribute. An electrician competent to
                 install domestic wiring may not be competent for industrial three-phase systems,
                 high voltage work, or hazardous area installations. Each new type of work requires
@@ -545,7 +545,7 @@ const HNCModule1Section4_2 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Legal Training Requirements (Regulation 13)
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 The Management of Health and Safety at Work Regulations 1999 require training to be
                 provided:
               </p>
@@ -677,7 +677,7 @@ const HNCModule1Section4_2 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">AM2 Assessment</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 The AM2 (Achievement Measurement 2) is a practical end-point assessment for
                 electrical apprentices that tests:
               </p>
@@ -701,7 +701,7 @@ const HNCModule1Section4_2 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Health and Safety Assessment
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 All ECS card holders must pass the CSCS Health, Safety and Environment test
                 appropriate to their occupation:
               </p>
@@ -720,7 +720,7 @@ const HNCModule1Section4_2 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
               <p className="text-sm font-medium text-orange-300 mb-2">Card Validity and Renewal</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Most ECS cards are valid for <strong>5 years</strong>. To renew, cardholders must
                 demonstrate continuing competence through relevant work experience and CPD activity.
                 Evidence of ongoing training, additional qualifications, and up-to-date health and
@@ -836,35 +836,35 @@ const HNCModule1Section4_2 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">Level 1: Reaction</p>
-                  <p className="text-xs text-white/90">
+                  <p className="text-xs text-white">
                     Did trainees find the training engaging and relevant?
                   </p>
-                  <p className="text-xs text-white/60 mt-1">
+                  <p className="text-xs text-white mt-1">
                     Method: Feedback forms, verbal feedback
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">Level 2: Learning</p>
-                  <p className="text-xs text-white/90">
+                  <p className="text-xs text-white">
                     Did trainees gain the intended knowledge and skills?
                   </p>
-                  <p className="text-xs text-white/60 mt-1">
+                  <p className="text-xs text-white mt-1">
                     Method: Tests, demonstrations, assessments
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">Level 3: Behaviour</p>
-                  <p className="text-xs text-white/90">
+                  <p className="text-xs text-white">
                     Are trainees applying learning in their work?
                   </p>
-                  <p className="text-xs text-white/60 mt-1">
+                  <p className="text-xs text-white mt-1">
                     Method: Observation, supervisor feedback
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">Level 4: Results</p>
-                  <p className="text-xs text-white/90">Has training improved safety outcomes?</p>
-                  <p className="text-xs text-white/60 mt-1">
+                  <p className="text-xs text-white">Has training improved safety outcomes?</p>
+                  <p className="text-xs text-white mt-1">
                     Method: Incident rates, audit findings
                   </p>
                 </div>
@@ -875,7 +875,7 @@ const HNCModule1Section4_2 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Training Record Requirements
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Effective training records should capture:
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
@@ -896,7 +896,7 @@ const HNCModule1Section4_2 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
               <p className="text-sm font-medium text-orange-300 mb-2">Record Retention</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Training records should be retained for the duration of employment plus a reasonable
                 period after (typically 3-6 years, longer for exposure to hazardous substances).
                 Records may be needed for: incident investigations, civil claims, regulatory
@@ -1005,7 +1005,7 @@ const HNCModule1Section4_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1051,7 +1051,7 @@ const HNCModule1Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section4-1">

@@ -201,7 +201,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-5">
@@ -226,7 +226,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Ecological Surveys &amp; Assessments
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Understanding when ecological surveys are needed, which survey types apply, seasonal
             constraints, impact assessment methods, the mitigation hierarchy, species licensing, and
             the role of the Ecological Clerk of Works
@@ -317,7 +317,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   Key Reasons for Ecological Surveys
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex items-start gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex-shrink-0">
                       1
@@ -424,11 +424,11 @@ export default function EnvironmentalSustainabilityModule5Section2() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   Component 1: Desktop Study
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The desktop study gathers existing ecological data about the site and its
                   surroundings from available sources:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -474,12 +474,12 @@ export default function EnvironmentalSustainabilityModule5Section2() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   Component 2: Phase 1 Habitat Survey (JNCC Methodology)
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   The Phase 1 habitat survey is a{' '}
                   <strong className="text-white">field survey</strong> conducted by a qualified
                   ecologist who walks the entire site and classifies all habitats present:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -519,7 +519,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-emerald-400 mb-3">PEA Reporting</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   The PEA report includes a <strong className="text-white">habitat map</strong>, a
                   description of each habitat type, target notes for features of ecological
                   interest, an assessment of the{' '}
@@ -552,12 +552,12 @@ export default function EnvironmentalSustainabilityModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-emerald-400 mb-3">Bat Surveys</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   All UK bat species are{' '}
                   <strong className="text-white">European Protected Species</strong>. Bat surveys
                   follow a staged approach:
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex-shrink-0">
                       1
@@ -609,12 +609,12 @@ export default function EnvironmentalSustainabilityModule5Section2() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   Great Crested Newt (GCN) Surveys
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Great crested newts are{' '}
                   <strong className="text-white">European Protected Species</strong>. Three main
                   survey methods are used:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -645,7 +645,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-emerald-400 mb-3">Bird Surveys</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -670,7 +670,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-emerald-400 mb-3">Reptile Surveys</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Reptile surveys use <strong className="text-white">artificial refugia</strong>{' '}
                   (corrugated metal sheets, roofing felt, or similar cover objects) placed on the
                   ground in suitable habitat. Reptiles shelter beneath these for thermoregulation.
@@ -725,7 +725,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
             <div className="min-w-[640px]">
               {/* Month Headers */}
               <div className="grid grid-cols-[140px_repeat(12,1fr)] gap-0 mb-2">
-                <div className="text-xs text-white/40 font-medium pr-2">Species / Survey</div>
+                <div className="text-xs text-white font-medium pr-2">Species / Survey</div>
                 {[
                   'Jan',
                   'Feb',
@@ -742,7 +742,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
                 ].map((month) => (
                   <div
                     key={month}
-                    className="text-[10px] sm:text-xs text-white/50 text-center font-medium"
+                    className="text-[10px] sm:text-xs text-white text-center font-medium"
                   >
                     {month}
                   </div>
@@ -751,7 +751,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
 
               {/* PEA / Phase 1 */}
               <div className="grid grid-cols-[140px_repeat(12,1fr)] gap-0 mb-1.5">
-                <div className="text-xs text-white/80 pr-2 flex items-center">
+                <div className="text-xs text-white pr-2 flex items-center">
                   <Calendar className="h-3 w-3 text-emerald-400 mr-1.5 flex-shrink-0" />
                   PEA / Phase 1
                 </div>
@@ -770,7 +770,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
 
               {/* Bat PRA */}
               <div className="grid grid-cols-[140px_repeat(12,1fr)] gap-0 mb-1.5">
-                <div className="text-xs text-white/80 pr-2 flex items-center">
+                <div className="text-xs text-white pr-2 flex items-center">
                   <TreePine className="h-3 w-3 text-emerald-400 mr-1.5 flex-shrink-0" />
                   Bat PRA
                 </div>
@@ -789,7 +789,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
 
               {/* Bat Emergence */}
               <div className="grid grid-cols-[140px_repeat(12,1fr)] gap-0 mb-1.5">
-                <div className="text-xs text-white/80 pr-2 flex items-center">
+                <div className="text-xs text-white pr-2 flex items-center">
                   <TreePine className="h-3 w-3 text-emerald-400 mr-1.5 flex-shrink-0" />
                   Bat Emergence
                 </div>
@@ -810,7 +810,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
 
               {/* Bat Activity */}
               <div className="grid grid-cols-[140px_repeat(12,1fr)] gap-0 mb-1.5">
-                <div className="text-xs text-white/80 pr-2 flex items-center">
+                <div className="text-xs text-white pr-2 flex items-center">
                   <TreePine className="h-3 w-3 text-emerald-400 mr-1.5 flex-shrink-0" />
                   Bat Activity
                 </div>
@@ -831,7 +831,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
 
               {/* GCN eDNA */}
               <div className="grid grid-cols-[140px_repeat(12,1fr)] gap-0 mb-1.5">
-                <div className="text-xs text-white/80 pr-2 flex items-center">
+                <div className="text-xs text-white pr-2 flex items-center">
                   <TreePine className="h-3 w-3 text-emerald-400 mr-1.5 flex-shrink-0" />
                   GCN eDNA
                 </div>
@@ -850,7 +850,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
 
               {/* GCN Trapping/Torch */}
               <div className="grid grid-cols-[140px_repeat(12,1fr)] gap-0 mb-1.5">
-                <div className="text-xs text-white/80 pr-2 flex items-center">
+                <div className="text-xs text-white pr-2 flex items-center">
                   <TreePine className="h-3 w-3 text-emerald-400 mr-1.5 flex-shrink-0" />
                   GCN Trapping
                 </div>
@@ -869,7 +869,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
 
               {/* Breeding Birds */}
               <div className="grid grid-cols-[140px_repeat(12,1fr)] gap-0 mb-1.5">
-                <div className="text-xs text-white/80 pr-2 flex items-center">
+                <div className="text-xs text-white pr-2 flex items-center">
                   <TreePine className="h-3 w-3 text-emerald-400 mr-1.5 flex-shrink-0" />
                   Breeding Birds
                 </div>
@@ -890,7 +890,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
 
               {/* Wintering Birds */}
               <div className="grid grid-cols-[140px_repeat(12,1fr)] gap-0 mb-1.5">
-                <div className="text-xs text-white/80 pr-2 flex items-center">
+                <div className="text-xs text-white pr-2 flex items-center">
                   <TreePine className="h-3 w-3 text-emerald-400 mr-1.5 flex-shrink-0" />
                   Wintering Birds
                 </div>
@@ -909,7 +909,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
 
               {/* Reptiles */}
               <div className="grid grid-cols-[140px_repeat(12,1fr)] gap-0 mb-1.5">
-                <div className="text-xs text-white/80 pr-2 flex items-center">
+                <div className="text-xs text-white pr-2 flex items-center">
                   <TreePine className="h-3 w-3 text-emerald-400 mr-1.5 flex-shrink-0" />
                   Reptiles
                 </div>
@@ -932,15 +932,15 @@ export default function EnvironmentalSustainabilityModule5Section2() {
               <div className="flex items-center gap-4 mt-4 pt-3 border-t border-white/10">
                 <div className="flex items-center gap-1.5">
                   <div className="w-4 h-3 rounded-sm bg-emerald-500/60 border border-emerald-400/40" />
-                  <span className="text-[10px] text-white/60">Optimal window</span>
+                  <span className="text-[10px] text-white">Optimal window</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-4 h-3 rounded-sm bg-emerald-500/30 border border-emerald-400/20" />
-                  <span className="text-[10px] text-white/60">Sub-optimal / extended</span>
+                  <span className="text-[10px] text-white">Sub-optimal / extended</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-4 h-3 rounded-sm bg-white/5 border border-white/10" />
-                  <span className="text-[10px] text-white/60">Not suitable</span>
+                  <span className="text-[10px] text-white">Not suitable</span>
                 </div>
               </div>
             </div>
@@ -968,10 +968,10 @@ export default function EnvironmentalSustainabilityModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-emerald-400 mb-3">Characterising Impacts</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Impacts on ecological receptors are characterised according to several parameters:
                 </p>
-                <div className="grid sm:grid-cols-2 gap-3 text-sm text-white/80">
+                <div className="grid sm:grid-cols-2 gap-3 text-sm text-white">
                   <div className="bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3">
                     <p className="text-white font-medium mb-1">Direct Impacts</p>
                     <p>
@@ -1008,11 +1008,11 @@ export default function EnvironmentalSustainabilityModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-emerald-400 mb-3">Significance Assessment</p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Under the CIEEM framework, the significance of an ecological impact is determined
                   by combining:
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -1029,7 +1029,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
                     </span>
                   </li>
                 </ul>
-                <p className="text-sm text-white/80 mt-3">
+                <p className="text-sm text-white mt-3">
                   An impact is considered <strong className="text-white">significant</strong> if it
                   affects the integrity or conservation status of the ecological receptor. Only
                   significant impacts require mitigation. The assessment must consider impacts both
@@ -1057,7 +1057,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-emerald-400 mb-3">The Four Steps</p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-emerald-500/30 text-emerald-300 text-xs font-bold flex-shrink-0">
                       1
@@ -1122,7 +1122,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
                   <AlertTriangle className="h-5 w-5 text-red-400" />
                   <p className="text-sm font-medium text-red-400">Hierarchy Is Not Optional</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     A developer cannot jump straight to offsetting without first demonstrating that
                     avoidance, minimisation, and restoration have been genuinely considered and
@@ -1147,55 +1147,55 @@ export default function EnvironmentalSustainabilityModule5Section2() {
             <div className="min-w-[300px] max-w-lg mx-auto">
               {/* Most preferred (top, narrowest) */}
               <div className="flex flex-col items-center space-y-1.5">
-                <div className="text-[10px] text-white/40 mb-1">MOST PREFERRED</div>
+                <div className="text-[10px] text-white mb-1">MOST PREFERRED</div>
 
                 {/* Level 1: Avoidance */}
                 <div className="w-[45%] bg-emerald-500/40 border border-emerald-400/50 rounded-lg p-3 text-center">
                   <p className="text-sm font-bold text-emerald-300">AVOIDANCE</p>
-                  <p className="text-[10px] text-white/60 mt-0.5">
+                  <p className="text-[10px] text-white mt-0.5">
                     Prevent impacts entirely through design
                   </p>
                 </div>
 
                 {/* Arrow */}
-                <div className="text-white/20 text-xs">&darr;</div>
+                <div className="text-white text-xs">&darr;</div>
 
                 {/* Level 2: Minimisation */}
                 <div className="w-[60%] bg-emerald-500/30 border border-emerald-400/40 rounded-lg p-3 text-center">
                   <p className="text-sm font-bold text-emerald-300">MINIMISATION</p>
-                  <p className="text-[10px] text-white/60 mt-0.5">
+                  <p className="text-[10px] text-white mt-0.5">
                     Reduce severity and extent of impacts
                   </p>
                 </div>
 
                 {/* Arrow */}
-                <div className="text-white/20 text-xs">&darr;</div>
+                <div className="text-white text-xs">&darr;</div>
 
                 {/* Level 3: Rehabilitation / Restoration */}
                 <div className="w-[75%] bg-emerald-500/20 border border-emerald-400/30 rounded-lg p-3 text-center">
                   <p className="text-sm font-bold text-emerald-300">REHABILITATION / RESTORATION</p>
-                  <p className="text-[10px] text-white/60 mt-0.5">
+                  <p className="text-[10px] text-white mt-0.5">
                     Repair and restore damaged features
                   </p>
                 </div>
 
                 {/* Arrow */}
-                <div className="text-white/20 text-xs">&darr;</div>
+                <div className="text-white text-xs">&darr;</div>
 
                 {/* Level 4: Offsetting */}
                 <div className="w-[90%] bg-emerald-500/10 border border-emerald-400/20 rounded-lg p-3 text-center">
                   <p className="text-sm font-bold text-emerald-300">OFFSETTING</p>
-                  <p className="text-[10px] text-white/60 mt-0.5">
+                  <p className="text-[10px] text-white mt-0.5">
                     Compensate for residual impacts &mdash; last resort
                   </p>
                 </div>
 
-                <div className="text-[10px] text-white/40 mt-1">LEAST PREFERRED</div>
+                <div className="text-[10px] text-white mt-1">LEAST PREFERRED</div>
               </div>
 
               {/* Note */}
               <div className="bg-emerald-500/10 border border-emerald-500/30 rounded-lg p-3 mt-4 text-center">
-                <p className="text-xs sm:text-sm text-white/80">
+                <p className="text-xs sm:text-sm text-white">
                   Each step must be{' '}
                   <strong className="text-emerald-400">exhausted before moving to the next</strong>.
                   Evidence of genuine consideration of each level is required.
@@ -1227,7 +1227,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   When Is a Licence Needed?
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -1257,7 +1257,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   The Three Derogation Tests
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   Natural England can only grant a licence if all three tests are satisfied:
                 </p>
                 <div className="space-y-3">
@@ -1268,7 +1268,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
                       </span>
                       <div>
                         <p className="text-sm font-medium text-white">Overriding Public Interest</p>
-                        <p className="text-xs text-white/60 mt-0.5">
+                        <p className="text-xs text-white mt-0.5">
                           The proposed activity must be for a purpose of overriding public interest,
                           including those of a social or economic nature, or for imperative reasons
                           of public health and safety, or for beneficial consequences of primary
@@ -1286,7 +1286,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
                         <p className="text-sm font-medium text-white">
                           No Satisfactory Alternative
                         </p>
-                        <p className="text-xs text-white/60 mt-0.5">
+                        <p className="text-xs text-white mt-0.5">
                           There must be no satisfactory alternative to the proposed action that
                           would avoid or reduce the impact on the protected species. The applicant
                           must demonstrate that alternatives have been properly considered.
@@ -1303,7 +1303,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
                         <p className="text-sm font-medium text-white">
                           Favourable Conservation Status
                         </p>
-                        <p className="text-xs text-white/60 mt-0.5">
+                        <p className="text-xs text-white mt-0.5">
                           The action must not be detrimental to the maintenance of the population of
                           the species at a favourable conservation status in their natural range.
                           This is demonstrated through the proposed mitigation measures.
@@ -1318,7 +1318,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   Licence Application Components
                 </p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-emerald-400 flex-shrink-0" />
                     <span>
@@ -1367,7 +1367,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
                     Working Without a Licence Is a Criminal Offence
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   <strong className="text-white">
                     Proceeding with works that affect European Protected Species without a valid
                     licence is a criminal offence.
@@ -1401,7 +1401,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
                 <p className="text-sm font-medium text-emerald-400 mb-3">
                   Role and Responsibilities
                 </p>
-                <div className="space-y-3 text-sm text-white/80">
+                <div className="space-y-3 text-sm text-white">
                   <div className="flex gap-3">
                     <span className="flex items-center justify-center min-w-[28px] h-7 rounded-full bg-emerald-500/20 text-emerald-400 text-xs font-bold flex-shrink-0">
                       1
@@ -1467,7 +1467,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-emerald-400 mb-3">Reporting and Records</p>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle className="h-4 w-4 text-emerald-500/70 mt-0.5 flex-shrink-0" />
                     <span>
@@ -1521,7 +1521,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1535,7 +1535,7 @@ export default function EnvironmentalSustainabilityModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-5-section-1">

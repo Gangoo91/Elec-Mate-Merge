@@ -1244,7 +1244,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                   </div>
                   <div>
                     <h2 className="text-lg font-bold text-white">Circuit Testing</h2>
-                    <p className="text-xs text-white/50">
+                    <p className="text-xs text-white">
                       {testResults.length} circuits • {completedCount} complete
                     </p>
                   </div>
@@ -1255,7 +1255,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="h-11 w-11 p-0 text-white/60 hover:text-white hover:bg-white/10 touch-manipulation"
+                      className="h-11 w-11 p-0 text-white hover:text-white hover:bg-white/10 touch-manipulation"
                       aria-label="More options"
                     >
                       <MoreVertical className="h-5 w-5" />
@@ -1279,7 +1279,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                 <div className="testing-progress-fill" style={{ width: `${progressPercent}%` }} />
               </div>
               <div className="flex justify-between mt-1.5 text-xs">
-                <span className="text-white/40">Progress</span>
+                <span className="text-white">Progress</span>
                 <span className="font-semibold text-elec-yellow">{progressPercent}%</span>
               </div>
             </div>
@@ -1465,7 +1465,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                   </div>
                   <div>
                     <h2 className="text-2xl font-bold text-white">Schedule of Tests</h2>
-                    <p className="text-sm text-white/60">
+                    <p className="text-sm text-white">
                       BS 7671 compliant circuit testing & verification
                     </p>
                   </div>
@@ -1475,19 +1475,19 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                 <div className="flex gap-3">
                   <div className="testing-stat-card min-w-[80px]">
                     <span className="text-2xl font-bold text-white">{testResults.length}</span>
-                    <span className="text-xs text-white/50">Circuits</span>
+                    <span className="text-xs text-white">Circuits</span>
                   </div>
                   <div className="testing-stat-card min-w-[80px]">
                     <span className="text-2xl font-bold text-green-400">{completedCount}</span>
-                    <span className="text-xs text-white/50">Complete</span>
+                    <span className="text-xs text-white">Complete</span>
                   </div>
                   <div className="testing-stat-card min-w-[80px]">
                     <span className="text-2xl font-bold text-amber-400">{pendingCount}</span>
-                    <span className="text-xs text-white/50">Pending</span>
+                    <span className="text-xs text-white">Pending</span>
                   </div>
                   <div className="testing-stat-card min-w-[80px]">
                     <span className="text-2xl font-bold text-elec-yellow">{progressPercent}%</span>
-                    <span className="text-xs text-white/50">Progress</span>
+                    <span className="text-xs text-white">Progress</span>
                   </div>
                 </div>
               </div>
@@ -1534,7 +1534,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-9 text-white/60 hover:text-white hover:bg-white/10"
+                    className="h-9 text-white hover:text-white hover:bg-white/10"
                     onClick={() => setShowBulkInfillDialog(true)}
                   >
                     <ClipboardCheck className="h-4 w-4 mr-2" />
@@ -1543,7 +1543,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-9 text-white/60 hover:text-white hover:bg-white/10"
+                    className="h-9 text-white hover:text-white hover:bg-white/10"
                     onClick={() => setShowRcdPresetsDialog(true)}
                   >
                     <Shield className="h-4 w-4 mr-2" />
@@ -1552,7 +1552,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="h-9 text-white/60 hover:text-white hover:bg-white/10"
+                    className="h-9 text-white hover:text-white hover:bg-white/10"
                     onClick={() => setShowAnalytics(!showAnalytics)}
                   >
                     <BarChart3 className="h-4 w-4 mr-2" />
@@ -1561,7 +1561,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                   <Button
                     variant="ghost"
                     size="sm"
-                    className={`h-9 ${voiceActive ? 'text-green-400 bg-green-500/10' : voiceConnecting ? 'text-yellow-400 animate-pulse' : 'text-white/60 hover:text-white hover:bg-white/10'}`}
+                    className={`h-9 ${voiceActive ? 'text-green-400 bg-green-500/10' : voiceConnecting ? 'text-yellow-400 animate-pulse' : 'text-white hover:text-white hover:bg-white/10'}`}
                     onClick={toggleVoice}
                     disabled={voiceConnecting}
                     title={voiceActive ? 'Voice Active - Click to Stop' : 'Start Voice Assistant'}
@@ -1620,7 +1620,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                     <Wrench className="h-4 w-4 text-elec-yellow" />
                     Test Instruments
                   </span>
-                  <ChevronDown className="h-4 w-4 text-white/50 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                  <ChevronDown className="h-4 w-4 text-white transition-transform duration-200 group-data-[state=open]:rotate-180" />
                 </button>
               </CollapsibleTrigger>
               <CollapsibleContent className="px-4 pb-4">
@@ -1638,7 +1638,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                     <Zap className="h-4 w-4 text-elec-yellow" />
                     Distribution Board
                   </span>
-                  <ChevronDown className="h-4 w-4 text-white/50 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                  <ChevronDown className="h-4 w-4 text-white transition-transform duration-200 group-data-[state=open]:rotate-180" />
                 </button>
               </CollapsibleTrigger>
               <CollapsibleContent className="px-4 pb-4">
@@ -1667,7 +1667,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
                     <FileText className="h-4 w-4 text-elec-yellow" />
                     Test Method & Notes
                   </span>
-                  <ChevronDown className="h-4 w-4 text-white/50 transition-transform duration-200 group-data-[state=open]:rotate-180" />
+                  <ChevronDown className="h-4 w-4 text-white transition-transform duration-200 group-data-[state=open]:rotate-180" />
                 </button>
               </CollapsibleTrigger>
               <CollapsibleContent className="px-4 pb-4">
@@ -1680,7 +1680,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
         /* Desktop: Horizontal Card Grid */
         <div className="grid grid-cols-3 gap-4 mt-6">
           <div className="testing-info-section p-4">
-            <h3 className="text-sm font-semibold text-white/90 flex items-center gap-2 mb-4">
+            <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-4">
               <Wrench className="h-4 w-4 text-elec-yellow" />
               Test Instruments
             </h3>
@@ -1688,7 +1688,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           </div>
 
           <div className="testing-info-section p-4">
-            <h3 className="text-sm font-semibold text-white/90 flex items-center gap-2 mb-4">
+            <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-4">
               <Zap className="h-4 w-4 text-elec-yellow" />
               Distribution Board
             </h3>
@@ -1707,7 +1707,7 @@ const EICScheduleOfTesting: React.FC<EICScheduleOfTestingProps> = ({ formData, o
           </div>
 
           <div className="testing-info-section p-4">
-            <h3 className="text-sm font-semibold text-white/90 flex items-center gap-2 mb-4">
+            <h3 className="text-sm font-semibold text-white flex items-center gap-2 mb-4">
               <FileText className="h-4 w-4 text-elec-yellow" />
               Test Method & Notes
             </h3>

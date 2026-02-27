@@ -218,7 +218,7 @@ const HNCModule7Section3_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section3">
@@ -240,7 +240,7 @@ const HNCModule7Section3_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Uniformity and Quality
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Uniformity ratios, diversity, cylindrical illuminance, modelling, and visual comfort per
             CIBSE LG7
           </p>
@@ -328,7 +328,7 @@ const HNCModule7Section3_5 = () => {
               <div className="font-mono text-lg text-white">
                 <p>Uo = Emin / Eav</p>
               </div>
-              <p className="text-sm text-white/70 mt-2">
+              <p className="text-sm text-white mt-2">
                 Where Emin is minimum illuminance and Eav is average illuminance across the
                 reference plane
               </p>
@@ -524,7 +524,7 @@ const HNCModule7Section3_5 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-blue-500/10 border border-blue-500/30">
               <p className="text-sm font-medium text-blue-400 mb-2">UGR Formula Factors</p>
-              <p className="text-sm text-white/80 mb-2">UGR depends on:</p>
+              <p className="text-sm text-white mb-2">UGR depends on:</p>
               <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                 <li className="pl-1">Luminaire luminance (L) - higher = more glare</li>
                 <li className="pl-1">Background luminance (Lb) - higher = less perceived glare</li>
@@ -725,7 +725,7 @@ const HNCModule7Section3_5 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Software verification:</strong> Always use lighting calculation software
               (DIALux, Relux) to verify uniformity, UGR, and illuminance levels at design stage.
               Check critical observer positions for UGR compliance.
@@ -751,7 +751,7 @@ const HNCModule7Section3_5 = () => {
                 <strong>Scenario:</strong> An open-plan office has measured illuminances of: Emax =
                 650 lux, Emin = 380 lux, Eav = 520 lux
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Uniformity ratio calculation:</p>
                 <p className="mt-2">Uo = Emin / Eav</p>
                 <p>Uo = 380 / 520</p>
@@ -775,7 +775,7 @@ const HNCModule7Section3_5 = () => {
                 <strong>Scenario:</strong> A meeting room has Eh = 400 lux and Ez = 100 lux. Assess
                 the modelling quality.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Modelling ratio calculation:</p>
                 <p className="mt-2">Modelling ratio = Ez / Eh</p>
                 <p>Modelling ratio = 100 / 400</p>
@@ -787,9 +787,9 @@ const HNCModule7Section3_5 = () => {
                   Assessment: Lighting appears flat with poor 3D perception
                 </p>
                 <p className="mt-2">Remedial action:</p>
-                <p className="text-white/70">- Add wall-washing luminaires</p>
-                <p className="text-white/70">- Include indirect lighting component</p>
-                <p className="text-white/70">- Increase wall reflectance (light colours)</p>
+                <p className="text-white">- Add wall-washing luminaires</p>
+                <p className="text-white">- Include indirect lighting component</p>
+                <p className="text-white">- Increase wall reflectance (light colours)</p>
               </div>
             </div>
 
@@ -801,7 +801,7 @@ const HNCModule7Section3_5 = () => {
                 <strong>Scenario:</strong> Recessed luminaires in a 3.0m ceiling height office,
                 working plane at 0.75m. Luminaire SHRmax = 1.4. Proposed spacing = 3.0m.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Mounting height calculation:</p>
                 <p className="mt-2">Hm = Ceiling height - Working plane height</p>
                 <p>Hm = 3.0 - 0.75 = 2.25m</p>
@@ -810,7 +810,7 @@ const HNCModule7Section3_5 = () => {
                 <p>SHR = 3.0 / 2.25 = 1.33</p>
                 <p className="mt-2 text-green-400">Result: SHR 1.33 is within SHRmax 1.4</p>
                 <p className="text-green-400">Layout will achieve acceptable uniformity</p>
-                <p className="mt-2 text-white/70">
+                <p className="mt-2 text-white">
                   Note: Consider edge spacing to walls (typically 0.5 × spacing)
                 </p>
               </div>
@@ -903,7 +903,7 @@ const HNCModule7Section3_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -949,7 +949,7 @@ const HNCModule7Section3_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section3">

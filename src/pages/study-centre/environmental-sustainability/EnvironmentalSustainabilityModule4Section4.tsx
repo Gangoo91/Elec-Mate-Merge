@@ -192,7 +192,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-4">
@@ -217,7 +217,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Land Contamination &amp; Remediation
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Contaminated land law, common contaminants, site investigation, CLEA&nbsp;risk
             assessment, remediation strategies, materials management, groundwater protection, and
             regulatory requirements
@@ -302,12 +302,12 @@ export default function EnvironmentalSustainabilityModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Pollutant Linkage (Source &ndash; Pathway &ndash; Receptor)
                 </p>
-                <p className="text-sm text-white/80 mb-3">
+                <p className="text-sm text-white mb-3">
                   For land to be formally determined as contaminated under Part&nbsp;IIA, a{' '}
                   <strong className="text-white">significant pollutant linkage</strong> must exist.
                   This requires three elements connected together:
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -337,7 +337,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Brownfield vs Greenfield</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -363,7 +363,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Historical Land Uses of Concern
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -437,7 +437,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Heavy Metals</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -476,7 +476,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Hydrocarbons</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -502,7 +502,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Asbestos in Soil</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Asbestos fibres and fragments of asbestos-containing materials (ACMs) are
                   frequently found in made ground and demolition fill, particularly on sites where
                   pre-2000 buildings have been demolished. Asbestos in soil presents a risk through{' '}
@@ -515,7 +515,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Ground Gases</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -547,7 +547,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Made Ground</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Made ground is material placed by human activity &mdash; fill, rubble, waste, and
                   other materials used to raise levels, fill excavations, or form embankments. It is{' '}
                   <strong className="text-white">extremely variable</strong> in composition and may
@@ -579,11 +579,11 @@ export default function EnvironmentalSustainabilityModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Phase 1 &mdash; Desk Study</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   A non-intrusive review of the site&rsquo;s history, environmental setting, and
                   potential contamination sources. Carried out by an environmental consultant.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -631,11 +631,11 @@ export default function EnvironmentalSustainabilityModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Phase 2 &mdash; Intrusive Investigation
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Physical investigation of the ground involving sampling and laboratory analysis.
                   Only carried out where Phase 1 identifies potential contamination risks.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -712,11 +712,11 @@ export default function EnvironmentalSustainabilityModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   CLEA &mdash; Contaminated Land Exposure Assessment
                 </p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   The CLEA framework, published by the Environment Agency and Defra, provides the
                   scientific basis for assessing risks to human health from soil contamination.
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -747,7 +747,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Site-Specific Assessment</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -780,7 +780,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
                     GAC Exceedance &ne; Contaminated Land
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Exceeding a generic assessment criterion does{' '}
                   <strong className="text-white">NOT</strong> automatically mean the land is
                   contaminated or that remediation is required. GACs are conservative screening
@@ -816,7 +816,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
                     <span className="text-[10px] sm:text-xs font-bold text-red-400 block">
                       SOURCE
                     </span>
-                    <span className="text-[9px] text-white/60 block mt-1">
+                    <span className="text-[9px] text-white block mt-1">
                       Contaminant present in soil
                     </span>
                     <div className="mt-2 flex flex-wrap justify-center gap-1">
@@ -846,7 +846,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
                     <span className="text-[10px] sm:text-xs font-bold text-amber-400 block">
                       PATHWAY
                     </span>
-                    <span className="text-[9px] text-white/60 block mt-1">
+                    <span className="text-[9px] text-white block mt-1">
                       Route contaminant travels to receptor
                     </span>
                     <div className="mt-2 flex flex-wrap justify-center gap-1">
@@ -882,7 +882,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
                     <span className="text-[10px] sm:text-xs font-bold text-blue-400 block">
                       RECEPTOR
                     </span>
-                    <span className="text-[9px] text-white/60 block mt-1">
+                    <span className="text-[9px] text-white block mt-1">
                       Target that could suffer significant harm
                     </span>
                     <div className="mt-2 flex flex-wrap justify-center gap-1">
@@ -910,7 +910,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
                     All three elements must be present and connected for a pollutant linkage to
                     exist
                   </p>
-                  <p className="text-[9px] text-white/50 mt-1">
+                  <p className="text-[9px] text-white mt-1">
                     Remove any one element (e.g. break the pathway) and the linkage is broken
                     &mdash; this is the basis of remediation
                   </p>
@@ -921,15 +921,15 @@ export default function EnvironmentalSustainabilityModule4Section4() {
               <div className="mt-4 flex flex-wrap items-center justify-center gap-3 sm:gap-4">
                 <div className="flex items-center gap-1.5">
                   <div className="w-3 h-3 rounded border-2 border-red-400/50 bg-red-500/10" />
-                  <span className="text-[9px] text-white/50">Source</span>
+                  <span className="text-[9px] text-white">Source</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-3 h-3 rounded border-2 border-amber-400/50 bg-amber-500/10" />
-                  <span className="text-[9px] text-white/50">Pathway</span>
+                  <span className="text-[9px] text-white">Pathway</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-3 h-3 rounded border-2 border-blue-400/50 bg-blue-500/10" />
-                  <span className="text-[9px] text-white/50">Receptor</span>
+                  <span className="text-[9px] text-white">Receptor</span>
                 </div>
               </div>
             </div>
@@ -956,7 +956,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Dig and Dump (Least Sustainable)
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -990,7 +990,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   In-Situ Treatment (Treating Soil in Place)
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1023,7 +1023,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Ex-Situ Treatment (Excavate, Treat, and Return)
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1057,7 +1057,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Containment (Capping and Barriers)
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1104,15 +1104,15 @@ export default function EnvironmentalSustainabilityModule4Section4() {
               <div className="min-w-[320px] space-y-3">
                 {/* Header */}
                 <div className="grid grid-cols-5 gap-2 text-center">
-                  <div className="text-[9px] sm:text-[10px] text-white/50 font-semibold">
+                  <div className="text-[9px] sm:text-[10px] text-white font-semibold">
                     Method
                   </div>
-                  <div className="text-[9px] sm:text-[10px] text-white/50 font-semibold">
+                  <div className="text-[9px] sm:text-[10px] text-white font-semibold">
                     Sustainability
                   </div>
-                  <div className="text-[9px] sm:text-[10px] text-white/50 font-semibold">Cost</div>
-                  <div className="text-[9px] sm:text-[10px] text-white/50 font-semibold">Speed</div>
-                  <div className="text-[9px] sm:text-[10px] text-white/50 font-semibold">
+                  <div className="text-[9px] sm:text-[10px] text-white font-semibold">Cost</div>
+                  <div className="text-[9px] sm:text-[10px] text-white font-semibold">Speed</div>
+                  <div className="text-[9px] sm:text-[10px] text-white font-semibold">
                     Treats Contaminant?
                   </div>
                 </div>
@@ -1286,7 +1286,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   The CL:AIRE DoW Code of Practice
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1317,7 +1317,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Materials Management Plan (MMP)
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1351,7 +1351,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Financial Benefits</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1412,7 +1412,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Groundwater Vulnerability</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1446,7 +1446,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Source Protection Zones (SPZs)
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1476,7 +1476,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Monitoring Wells and Plume Management
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1522,7 +1522,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
                     Groundwater Contamination Is Extremely Difficult to Reverse
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Once contaminants enter an aquifer, remediation is{' '}
                   <strong className="text-white">extremely expensive and can take decades</strong>.
                   Prevention is always far better than cure. This is why the Environment Agency
@@ -1555,7 +1555,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Part IIA &mdash; Contaminated Land Register and Enforcement
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1597,7 +1597,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Planning Conditions</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1636,7 +1636,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Building Regulations</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1671,7 +1671,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
                 <p className="text-sm font-medium text-white mb-2">
                   Environmental Permitting Regulations
                 </p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1724,7 +1724,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1738,7 +1738,7 @@ export default function EnvironmentalSustainabilityModule4Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../environmental-sustainability-module-4-section-3">

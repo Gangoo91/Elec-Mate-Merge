@@ -275,7 +275,7 @@ const Level3Module4Section5_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section5">
@@ -440,7 +440,7 @@ const Level3Module4Section5_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> For a socket outlet replacement: "Replaced faulty single
               socket outlet in lounge. Checked and re-terminated existing wiring. Circuit: Ring 1,
               32A RCBO. Tests confirmed acceptable continuity, IR greater than 200M ohm, correct
@@ -492,19 +492,19 @@ const Level3Module4Section5_3 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Continuity (R1+R2)</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Record in ohms - compare to tabulated values for cable type/length
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Insulation Resistance</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Record in megohms - minimum 1 M ohm at 500V DC for LV circuits
                 </p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Loop Impedance (Zs)</p>
-                <p className="text-white/90 text-xs">
+                <p className="text-white text-xs">
                   Record in ohms - must not exceed max for protective device
                 </p>
               </div>
@@ -573,7 +573,7 @@ const Level3Module4Section5_3 = () => {
               which is accusatory.
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example observation:</strong> "During socket replacement, noted that ring
               circuit appears to have been broken - only one cable present at position. Recommend
               full circuit testing to verify ring integrity. Customer advised of finding and
@@ -699,7 +699,7 @@ const Level3Module4Section5_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -746,7 +746,7 @@ const Level3Module4Section5_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module4-section5-2">

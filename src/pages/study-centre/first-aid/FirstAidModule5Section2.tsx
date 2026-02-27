@@ -201,7 +201,7 @@ export default function FirstAidModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-5">
@@ -224,7 +224,7 @@ export default function FirstAidModule5Section2() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Head Injuries, Spinal Injuries &amp; Eye Injuries
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto">
             Head injury red flags, concussion recognition and management, spinal immobilisation,
             manual inline stabilisation, and eye injury first aid including foreign objects,
             chemical splashes, and embedded objects
@@ -397,7 +397,7 @@ export default function FirstAidModule5Section2() {
                   ].map((item, i) => (
                     <div key={i} className="bg-red-500/5 border border-red-500/20 p-3 rounded-lg">
                       <p className="text-sm font-medium text-red-300 mb-1">{item.sign}</p>
-                      <p className="text-xs text-white/70">{item.detail}</p>
+                      <p className="text-xs text-white">{item.detail}</p>
                     </div>
                   ))}
                 </div>
@@ -452,7 +452,7 @@ export default function FirstAidModule5Section2() {
                   ].map((symptom, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400/60 flex-shrink-0" />
-                      <p className="text-sm text-white/80">{symptom}</p>
+                      <p className="text-sm text-white">{symptom}</p>
                     </div>
                   ))}
                 </div>
@@ -477,7 +477,7 @@ export default function FirstAidModule5Section2() {
                     Post-Concussion Syndrome &amp; Return to Work
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     <strong className="text-white">Post-concussion syndrome</strong> occurs when
                     concussion symptoms persist for weeks or even months after the initial injury.
@@ -531,7 +531,7 @@ export default function FirstAidModule5Section2() {
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-xs font-bold flex-shrink-0">
                         {i + 1}
                       </span>
-                      <p className="text-sm text-white/80">{step}</p>
+                      <p className="text-sm text-white">{step}</p>
                     </div>
                   ))}
                 </div>
@@ -542,7 +542,7 @@ export default function FirstAidModule5Section2() {
                   <AlertTriangle className="h-5 w-5 text-amber-400" />
                   <p className="text-sm font-medium text-amber-400">Skull Fracture Suspicion</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If the mechanism of injury was significant (fall from height, struck by heavy
                   object), always suspect a possible skull fracture even if the wound appears
                   superficial. A depressed skull fracture may be felt as a &ldquo;boggy&rdquo; or
@@ -597,7 +597,7 @@ export default function FirstAidModule5Section2() {
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400/60 flex-shrink-0" />
-                      <p className="text-sm text-white/80">{item}</p>
+                      <p className="text-sm text-white">{item}</p>
                     </div>
                   ))}
                 </div>
@@ -621,7 +621,7 @@ export default function FirstAidModule5Section2() {
                           <div className="w-16 sm:w-20 h-20 sm:h-24 bg-rose-500/15 border-2 border-rose-400/40 rounded-l-2xl flex items-center justify-center relative">
                             <div className="text-center">
                               <p className="text-[10px] font-medium text-rose-400">Left</p>
-                              <p className="text-[9px] text-white/50">hand</p>
+                              <p className="text-[9px] text-white">hand</p>
                             </div>
                             {/* Fingers spread indicator */}
                             <div className="absolute -top-1 left-1 right-1 flex justify-between">
@@ -636,8 +636,8 @@ export default function FirstAidModule5Section2() {
                           <div className="w-20 sm:w-24 h-20 sm:h-24 rounded-full bg-blue-500/10 border-2 border-blue-400/30 flex items-center justify-center z-10">
                             <div className="text-center">
                               <p className="text-[10px] font-bold text-blue-400">Head</p>
-                              <p className="text-[8px] text-white/40">neutral</p>
-                              <p className="text-[8px] text-white/40">position</p>
+                              <p className="text-[8px] text-white">neutral</p>
+                              <p className="text-[8px] text-white">position</p>
                             </div>
                           </div>
 
@@ -645,7 +645,7 @@ export default function FirstAidModule5Section2() {
                           <div className="w-16 sm:w-20 h-20 sm:h-24 bg-rose-500/15 border-2 border-rose-400/40 rounded-r-2xl flex items-center justify-center relative">
                             <div className="text-center">
                               <p className="text-[10px] font-medium text-rose-400">Right</p>
-                              <p className="text-[9px] text-white/50">hand</p>
+                              <p className="text-[9px] text-white">hand</p>
                             </div>
                             {/* Fingers spread indicator */}
                             <div className="absolute -top-1 left-1 right-1 flex justify-between">
@@ -670,7 +670,7 @@ export default function FirstAidModule5Section2() {
                       {/* Body indicator */}
                       <div className="w-24 sm:w-28 h-12 bg-blue-500/5 border-2 border-blue-400/20 rounded-lg flex items-center justify-center">
                         <div className="text-center">
-                          <p className="text-[9px] text-white/40">Nose in line with navel</p>
+                          <p className="text-[9px] text-white">Nose in line with navel</p>
                         </div>
                       </div>
 
@@ -690,14 +690,14 @@ export default function FirstAidModule5Section2() {
                 <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 mt-4 text-[11px]">
                   <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 bg-rose-500/15 border border-rose-400/40 rounded" />
-                    <span className="text-white/60">Rescuer&rsquo;s hands (covering ears)</span>
+                    <span className="text-white">Rescuer&rsquo;s hands (covering ears)</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <div className="w-3 h-3 bg-blue-500/10 border border-blue-400/30 rounded-full" />
-                    <span className="text-white/60">Casualty&rsquo;s head (neutral)</span>
+                    <span className="text-white">Casualty&rsquo;s head (neutral)</span>
                   </div>
                 </div>
-                <p className="text-[11px] text-white/40 text-center mt-2">
+                <p className="text-[11px] text-white text-center mt-2">
                   Hold until ambulance arrives &mdash; do NOT let go
                 </p>
               </div>
@@ -719,7 +719,7 @@ export default function FirstAidModule5Section2() {
                       <span className="flex items-center justify-center w-6 h-6 rounded-full bg-rose-500/20 text-rose-400 text-xs font-bold flex-shrink-0">
                         {i + 1}
                       </span>
-                      <p className="text-sm text-white/80">{step}</p>
+                      <p className="text-sm text-white">{step}</p>
                     </div>
                   ))}
                 </div>
@@ -733,7 +733,7 @@ export default function FirstAidModule5Section2() {
                     Do NOT Move the Casualty Unless:
                   </p>
                 </div>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     The default position is clear:{' '}
                     <strong className="text-red-300">
@@ -776,7 +776,7 @@ export default function FirstAidModule5Section2() {
               {/* Helmets */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Casualties Wearing Helmets</p>
-                <div className="text-sm text-white/80 space-y-2">
+                <div className="text-sm text-white space-y-2">
                   <p>
                     If a casualty with a suspected spinal injury is wearing a helmet (motorcycle,
                     bicycle, or hard hat):{' '}
@@ -798,7 +798,7 @@ export default function FirstAidModule5Section2() {
               {/* Cervical Collar */}
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">Cervical Collar</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Cervical collars are only applied by trained personnel &mdash; paramedics,
                   advanced first aiders, or other healthcare professionals. An incorrectly sized or
                   incorrectly applied cervical collar can worsen a spinal injury by causing
@@ -816,7 +816,7 @@ export default function FirstAidModule5Section2() {
                     Recovery Position with Suspected Spinal Injury
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   If a casualty is unconscious with a suspected spinal injury and needs to be placed
                   in the recovery position (for example, if they are at risk of vomiting and choking
                   and you must leave to call for help), use a modified recovery position with inline
@@ -859,7 +859,7 @@ export default function FirstAidModule5Section2() {
                       Foreign Object (Dust, Grit, Metal Filings)
                     </p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -903,7 +903,7 @@ export default function FirstAidModule5Section2() {
                     <AlertTriangle className="h-5 w-5 text-red-400" />
                     <p className="text-sm font-medium text-red-400">Chemical Splash</p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -948,7 +948,7 @@ export default function FirstAidModule5Section2() {
                       Embedded Object (Glass, Metal)
                     </p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -994,7 +994,7 @@ export default function FirstAidModule5Section2() {
                       Blunt Trauma &amp; Arc Eye
                     </p>
                   </div>
-                  <ul className="text-sm text-white/80 space-y-2">
+                  <ul className="text-sm text-white space-y-2">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                       <span>
@@ -1069,7 +1069,7 @@ export default function FirstAidModule5Section2() {
                     Common Eye Hazards for Electricians
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                     <span>
@@ -1129,7 +1129,7 @@ export default function FirstAidModule5Section2() {
                     If In Doubt &mdash; Seek Medical Attention
                   </p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Any eye injury that does not resolve quickly with simple first aid (irrigation for
                   foreign bodies, cold compress for blunt trauma) should be assessed at A&amp;E or
                   by an optician. Persistent pain, blurred vision, sensitivity to light, sensation
@@ -1149,7 +1149,7 @@ export default function FirstAidModule5Section2() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1163,7 +1163,7 @@ export default function FirstAidModule5Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../first-aid-module-5">

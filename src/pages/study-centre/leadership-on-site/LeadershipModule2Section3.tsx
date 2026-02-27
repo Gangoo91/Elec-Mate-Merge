@@ -207,7 +207,7 @@ export default function LeadershipModule2Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-2-section-2">
@@ -421,7 +421,7 @@ export default function LeadershipModule2Section3() {
                     <p className="text-purple-400 font-semibold mb-1">
                       Level 5: Self-Actualisation
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Reaching full potential, becoming the best version of yourself.
                     </p>
                     <p className="text-white text-xs mt-1">
@@ -432,7 +432,7 @@ export default function LeadershipModule2Section3() {
                   </div>
                   <div className="bg-blue-500/10 border border-blue-500/20 p-3 rounded-lg">
                     <p className="text-blue-400 font-semibold mb-1">Level 4: Esteem</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Recognition, respect, achievement, confidence.
                     </p>
                     <p className="text-white text-xs mt-1">
@@ -443,7 +443,7 @@ export default function LeadershipModule2Section3() {
                   </div>
                   <div className="bg-green-500/10 border border-green-500/20 p-3 rounded-lg">
                     <p className="text-green-400 font-semibold mb-1">Level 3: Love / Belonging</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Social connection, friendship, being part of a group.
                     </p>
                     <p className="text-white text-xs mt-1">
@@ -454,7 +454,7 @@ export default function LeadershipModule2Section3() {
                   </div>
                   <div className="bg-amber-500/10 border border-amber-500/20 p-3 rounded-lg">
                     <p className="text-amber-400 font-semibold mb-1">Level 2: Safety</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Physical safety, job security, financial security.
                     </p>
                     <p className="text-white text-xs mt-1">
@@ -464,7 +464,7 @@ export default function LeadershipModule2Section3() {
                   </div>
                   <div className="bg-red-500/10 border border-red-500/20 p-3 rounded-lg">
                     <p className="text-red-400 font-semibold mb-1">Level 1: Physiological</p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       Basic survival needs — food, water, shelter, warmth.
                     </p>
                     <p className="text-white text-xs mt-1">
@@ -481,7 +481,7 @@ export default function LeadershipModule2Section3() {
                   <AlertTriangle className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">Key Insight</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Do not try to motivate with recognition (Level 4) if someone is worried about
                   paying their mortgage (Level 1-2). Do not try to create team spirit (Level 3) if
                   people feel unsafe on site (Level 2).{' '}
@@ -526,7 +526,7 @@ export default function LeadershipModule2Section3() {
                     </span>
                   </li>
                 </ul>
-                <p className="text-xs text-white/80 mt-3">
+                <p className="text-xs text-white mt-3">
                   If any of these are poor, fix them before attempting higher-level motivation
                   strategies. You are building on sand otherwise.
                 </p>
@@ -635,7 +635,7 @@ export default function LeadershipModule2Section3() {
 
               <div className="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg">
                 <p className="text-sm font-medium text-blue-400 mb-2">The Critical Distinction</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Fixing hygiene factors brings people from &ldquo;unhappy&rdquo; to &ldquo;not
                   unhappy&rdquo; &mdash; but does <strong className="text-white">not</strong> make
                   them actively motivated. Fair pay and decent welfare stops people leaving, but it
@@ -654,7 +654,7 @@ export default function LeadershipModule2Section3() {
                     <p className="text-amber-400 font-semibold text-xs mb-1">
                       Hygiene (Fix These First)
                     </p>
-                    <ul className="text-white/80 text-xs space-y-1">
+                    <ul className="text-white text-xs space-y-1">
                       <li>Fair day rate that reflects qualifications</li>
                       <li>Clean welfare, hot water, proper drying room</li>
                       <li>Correct PPE provided, not bought by the worker</li>
@@ -666,7 +666,7 @@ export default function LeadershipModule2Section3() {
                     <p className="text-green-400 font-semibold text-xs mb-1">
                       Motivators (Drive Engagement)
                     </p>
-                    <ul className="text-white/80 text-xs space-y-1">
+                    <ul className="text-white text-xs space-y-1">
                       <li>Ownership of a section or floor</li>
                       <li>Public recognition for quality work</li>
                       <li>Support for 18th Edition and C&amp;G updates</li>
@@ -700,7 +700,7 @@ export default function LeadershipModule2Section3() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="bg-red-500/10 border border-red-500/30 p-3 rounded-lg">
                     <p className="text-red-400 font-semibold text-sm mb-2">Theory X</p>
-                    <p className="text-white/80 text-xs mb-2">
+                    <p className="text-white text-xs mb-2">
                       &ldquo;Workers are inherently lazy and must be controlled.&rdquo;
                     </p>
                     <ul className="text-sm text-white space-y-1.5">
@@ -728,7 +728,7 @@ export default function LeadershipModule2Section3() {
                   </div>
                   <div className="bg-green-500/10 border border-green-500/30 p-3 rounded-lg">
                     <p className="text-green-400 font-semibold text-sm mb-2">Theory Y</p>
-                    <p className="text-white/80 text-xs mb-2">
+                    <p className="text-white text-xs mb-2">
                       &ldquo;Workers are self-motivated and seek responsibility.&rdquo;
                     </p>
                     <ul className="text-sm text-white space-y-1.5">
@@ -773,7 +773,7 @@ export default function LeadershipModule2Section3() {
                   <Star className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">The Self-Fulfilling Prophecy</p>
                 </div>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Theory Y leaders who trust and develop their teams consistently get more from
                   them. When people are treated as capable professionals who want to do good work,
                   they tend to
@@ -791,7 +791,7 @@ export default function LeadershipModule2Section3() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                   <div className="bg-red-500/10 border border-red-500/20 p-3 rounded-lg">
                     <p className="text-red-400 font-semibold text-xs mb-1">Theory X Site</p>
-                    <ul className="text-white/80 text-xs space-y-1">
+                    <ul className="text-white text-xs space-y-1">
                       <li>Everyone signs in and out with exact times recorded</li>
                       <li>Supervisor checks work every hour and criticises publicly</li>
                       <li>No input sought from workers on methods or programme</li>
@@ -801,7 +801,7 @@ export default function LeadershipModule2Section3() {
                   </div>
                   <div className="bg-green-500/10 border border-green-500/20 p-3 rounded-lg">
                     <p className="text-green-400 font-semibold text-xs mb-1">Theory Y Site</p>
-                    <ul className="text-white/80 text-xs space-y-1">
+                    <ul className="text-white text-xs space-y-1">
                       <li>People are trusted to manage their own time and output</li>
                       <li>
                         Quality is checked collaboratively; problems are coaching opportunities
@@ -845,7 +845,7 @@ export default function LeadershipModule2Section3() {
                     <p className="text-blue-400 font-semibold mb-1">
                       Autonomy &mdash; Control Over Your Work
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       The desire to direct your own life and work. People are most engaged when they
                       have control over their task (what they do), their time (when they do it),
                       their technique (how they do it), and their team (who they do it with).
@@ -861,7 +861,7 @@ export default function LeadershipModule2Section3() {
                     <p className="text-purple-400 font-semibold mb-1">
                       Mastery &mdash; Getting Better at Something That Matters
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       The urge to improve at something that is important to you. Mastery is a
                       mindset (believing you can improve), it requires effort (deliberate practice),
                       and it is an asymptote (you can approach it but never fully reach it).
@@ -877,7 +877,7 @@ export default function LeadershipModule2Section3() {
                     <p className="text-green-400 font-semibold mb-1">
                       Purpose &mdash; Connection to Something Larger
                     </p>
-                    <p className="text-white/80 text-xs">
+                    <p className="text-white text-xs">
                       The yearning to do what we do in the service of something larger than
                       ourselves. When people understand WHY their work matters, they bring more
                       energy and commitment to it.
@@ -896,7 +896,7 @@ export default function LeadershipModule2Section3() {
                 <p className="text-sm font-medium text-rose-400 mb-2">
                   Why This Theory Fits Electricians Perfectly
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Electrical work is complex, non-routine, and skilled &mdash; exactly the type of
                   work where Pink&rsquo;s research shows intrinsic motivation outperforms carrots
                   and sticks. Electricians who are given{' '}
@@ -1018,7 +1018,7 @@ export default function LeadershipModule2Section3() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1032,7 +1032,7 @@ export default function LeadershipModule2Section3() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../leadership-module-2-section-2">

@@ -181,7 +181,7 @@ const CulturalAwarenessQuiz = ({ onBack }: CulturalAwarenessQuizProps) => {
           </Button>
           <div>
             <h2 className="text-2xl font-bold text-white">Quiz Complete!</h2>
-            <p className="text-white/60">Review your performance</p>
+            <p className="text-white">Review your performance</p>
           </div>
         </div>
 
@@ -208,7 +208,7 @@ const CulturalAwarenessQuiz = ({ onBack }: CulturalAwarenessQuizProps) => {
               >
                 {score}/{questions.length}
               </div>
-              <div className="text-xl text-white/70 mb-4">{percentage}% Score</div>
+              <div className="text-xl text-white mb-4">{percentage}% Score</div>
               <div
                 className={`inline-block px-6 py-3 rounded-xl ${isExcellent ? 'bg-green-500/10 border border-green-500/20' : isGood ? 'bg-cyan-500/10 border border-cyan-500/20' : 'bg-orange-500/10 border border-orange-500/20'}`}
               >
@@ -252,8 +252,8 @@ const CulturalAwarenessQuiz = ({ onBack }: CulturalAwarenessQuizProps) => {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="font-medium text-white text-sm mb-2">{question.question}</p>
-                      <p className="text-xs text-white/60 mb-2">
-                        <strong className="text-white/80">Correct answer:</strong>{' '}
+                      <p className="text-xs text-white mb-2">
+                        <strong className="text-white">Correct answer:</strong>{' '}
                         {question.options[question.correctAnswer]}
                       </p>
                       <p className="text-xs text-green-300/80">{question.explanation}</p>
@@ -307,7 +307,7 @@ const CulturalAwarenessQuiz = ({ onBack }: CulturalAwarenessQuizProps) => {
         </Button>
         <div>
           <h2 className="text-2xl font-bold text-white">Cultural Awareness Quiz</h2>
-          <p className="text-white/60">Test your workplace culture knowledge</p>
+          <p className="text-white">Test your workplace culture knowledge</p>
         </div>
       </div>
 
@@ -351,7 +351,7 @@ const CulturalAwarenessQuiz = ({ onBack }: CulturalAwarenessQuizProps) => {
                     className={`w-full text-left justify-start h-auto p-4 whitespace-normal transition-all ${
                       selectedAnswer === index
                         ? 'border-cyan-500 bg-cyan-500/10 text-white'
-                        : 'border-white/10 hover:border-white/20 text-white/80 hover:text-white'
+                        : 'border-white/10 hover:border-white/20 text-white hover:text-white'
                     }`}
                     onClick={() => handleAnswerSelect(index)}
                   >
@@ -404,7 +404,7 @@ const CulturalAwarenessQuiz = ({ onBack }: CulturalAwarenessQuizProps) => {
                 </div>
 
                 {selectedAnswer !== currentQ.correctAnswer && (
-                  <p className="text-white/70 mb-4">
+                  <p className="text-white mb-4">
                     <strong className="text-white">Correct answer:</strong>{' '}
                     {currentQ.options[currentQ.correctAnswer]}
                   </p>
@@ -418,7 +418,7 @@ const CulturalAwarenessQuiz = ({ onBack }: CulturalAwarenessQuizProps) => {
                   </div>
                   <div>
                     <h4 className="font-medium text-blue-400 mb-1">Explanation</h4>
-                    <p className="text-white/80 text-sm">{currentQ.explanation}</p>
+                    <p className="text-white text-sm">{currentQ.explanation}</p>
                   </div>
                 </div>
               </div>

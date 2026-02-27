@@ -267,7 +267,7 @@ const HNCModule8Section1_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section1">
@@ -289,7 +289,7 @@ const HNCModule8Section1_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Radiator Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Radiator sizing, pipe sizing, system balancing, TRVs and hydraulic design for two-pipe
             heating systems
           </p>
@@ -376,15 +376,15 @@ const HNCModule8Section1_4 = () => {
                 <div className="p-3 rounded bg-black/30 border border-red-500/30">
                   <Thermometer className="h-5 w-5 text-red-400 mx-auto mb-2" />
                   <p className="text-lg font-bold text-red-400 mb-1">Mean Water Temp</p>
-                  <p className="text-white/70 text-xs">(Flow + Return) / 2</p>
+                  <p className="text-white text-xs">(Flow + Return) / 2</p>
                 </div>
                 <div className="p-3 rounded bg-black/30 border border-blue-500/30">
                   <p className="text-3xl font-bold text-blue-400 mb-1">-</p>
-                  <p className="text-white/70 text-xs">Subtract</p>
+                  <p className="text-white text-xs">Subtract</p>
                 </div>
                 <div className="p-3 rounded bg-black/30 border border-green-500/30">
                   <p className="text-lg font-bold text-green-400 mb-1">Room Temp</p>
-                  <p className="text-white/70 text-xs">Typically 20-21 degrees C</p>
+                  <p className="text-white text-xs">Typically 20-21 degrees C</p>
                 </div>
               </div>
               <div className="mt-4 bg-black/30 p-3 rounded text-center">
@@ -413,7 +413,7 @@ const HNCModule8Section1_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">
                 Delta T Correction Factors
               </p>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 When operating at different conditions, apply a correction factor to the rated
                 output:
               </p>
@@ -466,7 +466,7 @@ const HNCModule8Section1_4 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Formula: Correction factor = (Delta T / 50)^1.3 approximately
               </p>
             </div>
@@ -475,7 +475,7 @@ const HNCModule8Section1_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">
                 Worked Example: Radiator Selection
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Given:</strong> Room heat loss = 1800W
                 </p>
@@ -584,16 +584,16 @@ const HNCModule8Section1_4 = () => {
                 <div className="p-3 rounded bg-black/30 border border-blue-500/30">
                   <Droplets className="h-5 w-5 text-blue-400 mb-2" />
                   <p className="font-medium text-blue-400 mb-1">Velocity Limit</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Maximum 1.5 m/s to avoid noise and erosion
                   </p>
-                  <p className="text-xs text-white/60 mt-1">Lower in bedrooms: 1.0 m/s</p>
+                  <p className="text-xs text-white mt-1">Lower in bedrooms: 1.0 m/s</p>
                 </div>
                 <div className="p-3 rounded bg-black/30 border border-green-500/30">
                   <Calculator className="h-5 w-5 text-green-400 mb-2" />
                   <p className="font-medium text-green-400 mb-1">Pressure Drop</p>
-                  <p className="text-sm text-white/80">Target 100-200 Pa/m for initial sizing</p>
-                  <p className="text-xs text-white/60 mt-1">Total must be within pump capacity</p>
+                  <p className="text-sm text-white">Target 100-200 Pa/m for initial sizing</p>
+                  <p className="text-xs text-white mt-1">Total must be within pump capacity</p>
                 </div>
               </div>
             </div>
@@ -604,11 +604,11 @@ const HNCModule8Section1_4 = () => {
                 <p className="font-mono text-lg">
                   <strong>Q = P / (c x Delta T)</strong>
                 </p>
-                <p className="text-xs text-white/60 mt-1">
+                <p className="text-xs text-white mt-1">
                   Q = flow rate (kg/s), P = heat (W), c = 4186 J/kg.K, Delta T = temp drop (K)
                 </p>
               </div>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Example:</strong> 2kW radiator with 20K temperature drop
                 </p>
@@ -666,7 +666,7 @@ const HNCModule8Section1_4 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Heat load assumes 20K temperature drop. Reduce for lower Delta T systems.
               </p>
             </div>
@@ -696,7 +696,7 @@ const HNCModule8Section1_4 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">
                 Pressure Drop Worked Example
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Index circuit:</strong> Boiler to furthest radiator
                 </p>
@@ -710,7 +710,7 @@ const HNCModule8Section1_4 = () => {
                 <p className="mt-2 text-green-400">
                   <strong>Total index circuit: 28,800 Pa = 28.8 kPa</strong>
                 </p>
-                <p className="mt-1 text-white/60">
+                <p className="mt-1 text-white">
                   Pump head required: 28.8 x 1.2 = 34.6 kPa minimum
                 </p>
               </div>
@@ -744,19 +744,19 @@ const HNCModule8Section1_4 = () => {
               <div className="grid sm:grid-cols-3 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-black/30 border border-blue-500/30">
                   <p className="font-medium text-blue-400 mb-1">1. Temperature Sensing</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Wax or liquid element senses room air temperature
                   </p>
                 </div>
                 <div className="p-3 rounded bg-black/30 border border-green-500/30">
                   <p className="font-medium text-green-400 mb-1">2. Expansion/Contraction</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Element expands when warm, contracts when cool
                   </p>
                 </div>
                 <div className="p-3 rounded bg-black/30 border border-elec-yellow/30">
                   <p className="font-medium text-elec-yellow mb-1">3. Flow Modulation</p>
-                  <p className="text-white/70 text-xs">
+                  <p className="text-white text-xs">
                     Pin movement adjusts valve opening and water flow
                   </p>
                 </div>
@@ -859,7 +859,7 @@ const HNCModule8Section1_4 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-3">Bypass Valve Function</p>
-              <p className="text-sm text-white/80 mb-3">
+              <p className="text-sm text-white mb-3">
                 When TRVs close on satisfied rooms, the pump still runs. Without a path for water,
                 pressure builds and flow stops. A bypass valve:
               </p>
@@ -871,7 +871,7 @@ const HNCModule8Section1_4 = () => {
                 <li className="pl-1">Prevents pump damage from dead-heading</li>
                 <li className="pl-1">Usually fitted between flow and return near boiler</li>
               </ul>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Modern boilers may have internal bypass. Check manufacturer guidance.
               </p>
             </div>
@@ -900,7 +900,7 @@ const HNCModule8Section1_4 = () => {
                 total resistance. This determines the pump head requirement.
               </p>
 
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Finding the Index Circuit:</strong>
                 </p>
@@ -931,14 +931,14 @@ const HNCModule8Section1_4 = () => {
                 <div className="bg-black/30 p-3 rounded">
                   <p className="text-sm font-medium text-white mb-2">Flow Rate Required:</p>
                   <p className="font-mono text-sm">Q = Total heat / (4186 x Delta T)</p>
-                  <p className="text-xs text-white/60 mt-1">
+                  <p className="text-xs text-white mt-1">
                     Example: 15kW / (4186 x 20) = 0.18 L/s
                   </p>
                 </div>
                 <div className="bg-black/30 p-3 rounded">
                   <p className="text-sm font-medium text-white mb-2">Head Required:</p>
                   <p className="font-mono text-sm">H = Index circuit drop x 1.15 to 1.25</p>
-                  <p className="text-xs text-white/60 mt-1">Example: 30 kPa x 1.2 = 36 kPa head</p>
+                  <p className="text-xs text-white mt-1">Example: 30 kPa x 1.2 = 36 kPa head</p>
                 </div>
               </div>
 
@@ -965,7 +965,7 @@ const HNCModule8Section1_4 = () => {
                 lockshield valve positions.
               </p>
 
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p className="font-medium mb-2">Step-by-Step Balancing Method:</p>
                 <ol className="list-decimal list-outside ml-5 space-y-2">
                   <li>Open all lockshield and TRV valves fully</li>
@@ -1070,7 +1070,7 @@ const HNCModule8Section1_4 = () => {
                 <strong>Brief:</strong> Design heating for a 3-bedroom house with total heat loss
                 8.5kW. Combi boiler, flow 70 degrees C, return 50 degrees C, room temp 21 degrees C.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Step 1: System Parameters</strong>
                 </p>
@@ -1117,7 +1117,7 @@ const HNCModule8Section1_4 = () => {
                 used with a heat pump at flow 45 degrees C, return 40 degrees C, room 20 degrees C.
                 Will it be adequate for a room heat loss of 1.2kW?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Calculate actual Delta T:</strong>
                 </p>
@@ -1159,7 +1159,7 @@ const HNCModule8Section1_4 = () => {
                 C and return 48 degrees C. A nearby radiator shows flow 70 degrees C and return 42
                 degrees C. What adjustment is needed?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Index radiator (target):</strong>
                 </p>
@@ -1182,10 +1182,10 @@ const HNCModule8Section1_4 = () => {
                 <p>OPEN the lockshield valve slightly to increase flow</p>
                 <p>Recheck until Delta T matches index radiator (20K)</p>
 
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   <strong>Note:</strong> If Delta T were lower than index,
                 </p>
-                <p className="text-white/60">you would CLOSE the lockshield to reduce flow</p>
+                <p className="text-white">you would CLOSE the lockshield to reduce flow</p>
               </div>
             </div>
           </div>
@@ -1264,7 +1264,7 @@ const HNCModule8Section1_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1310,7 +1310,7 @@ const HNCModule8Section1_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module8-section1-3">

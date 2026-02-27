@@ -216,7 +216,7 @@ const Level3Module3Section5_1 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="../section5">
@@ -239,7 +239,7 @@ const Level3Module3Section5_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
             Power Equations
           </h1>
-          <p className="text-lg text-white/70 max-w-2xl">
+          <p className="text-lg text-white max-w-2xl">
             Understanding P = VI, P = I squared R, and P = V squared / R - the fundamental equations
             for electrical power calculations
           </p>
@@ -255,7 +255,7 @@ const Level3Module3Section5_1 = () => {
                 <Zap className="w-4 h-4 text-blue-400" />
                 <span className="text-sm font-medium text-blue-400">Basic Power</span>
               </div>
-              <p className="text-sm text-white/70">P = V x I (Watts = Volts x Amps)</p>
+              <p className="text-sm text-white">P = V x I (Watts = Volts x Amps)</p>
             </CardContent>
           </Card>
           <Card className="bg-amber-500/10 border-amber-500/20">
@@ -264,7 +264,7 @@ const Level3Module3Section5_1 = () => {
                 <Calculator className="w-4 h-4 text-amber-400" />
                 <span className="text-sm font-medium text-amber-400">Cable Losses</span>
               </div>
-              <p className="text-sm text-white/70">P = I squared x R (power lost as heat)</p>
+              <p className="text-sm text-white">P = I squared x R (power lost as heat)</p>
             </CardContent>
           </Card>
           <Card className="bg-red-500/10 border-red-500/20">
@@ -273,7 +273,7 @@ const Level3Module3Section5_1 = () => {
                 <Flame className="w-4 h-4 text-red-400" />
                 <span className="text-sm font-medium text-red-400">Heating Elements</span>
               </div>
-              <p className="text-sm text-white/70">P = V squared / R (resistive loads)</p>
+              <p className="text-sm text-white">P = V squared / R (resistive loads)</p>
             </CardContent>
           </Card>
         </div>
@@ -290,7 +290,7 @@ const Level3Module3Section5_1 = () => {
               </div>
               <div>
                 <h2 className="text-lg font-semibold text-white mb-3">Learning Outcomes</h2>
-                <ul className="space-y-2 text-white/80">
+                <ul className="space-y-2 text-white">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
                     <span>
@@ -331,7 +331,7 @@ const Level3Module3Section5_1 = () => {
               </h2>
             </div>
 
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               Electrical power is the rate at which electrical energy is transferred or converted.
               The basic power equation states that power in watts equals voltage in volts multiplied
               by current in amperes. This fundamental relationship is derived from the definitions
@@ -344,7 +344,7 @@ const Level3Module3Section5_1 = () => {
                 <div className="bg-gradient-to-r from-blue-500/10 to-transparent p-4 rounded-lg border-l-4 border-blue-500 mb-4">
                   <p className="text-white font-medium mb-2">Fundamental Power Equation:</p>
                   <p className="text-blue-300 font-mono text-2xl mb-2">P = V x I</p>
-                  <div className="text-white/70 text-sm space-y-1">
+                  <div className="text-white text-sm space-y-1">
                     <p>P = Power in watts (W)</p>
                     <p>V = Voltage in volts (V)</p>
                     <p>I = Current in amperes (A)</p>
@@ -353,14 +353,14 @@ const Level3Module3Section5_1 = () => {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="p-3 bg-white/5 rounded-lg">
                     <p className="text-white font-medium mb-2">Rearrangements</p>
-                    <div className="text-white/70 text-sm font-mono space-y-1">
+                    <div className="text-white text-sm font-mono space-y-1">
                       <p>I = P / V (current from power and voltage)</p>
                       <p>V = P / I (voltage from power and current)</p>
                     </div>
                   </div>
                   <div className="p-3 bg-white/5 rounded-lg">
                     <p className="text-white font-medium mb-2">Common Multiples</p>
-                    <div className="text-white/70 text-sm space-y-1">
+                    <div className="text-white text-sm space-y-1">
                       <p>1 kW = 1000 W</p>
                       <p>1 MW = 1,000,000 W</p>
                       <p>1 mW = 0.001 W</p>
@@ -375,13 +375,13 @@ const Level3Module3Section5_1 = () => {
                 <h4 className="text-green-400 font-medium mb-3">
                   Worked Example: Current from Power Rating
                 </h4>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   A 2.5 kW electric hob element operates at 230 V. Calculate the current it draws.
                 </p>
                 <div className="space-y-2 text-sm font-mono">
-                  <p className="text-white/80">Given: P = 2500 W, V = 230 V</p>
-                  <p className="text-white/80">Find: I</p>
-                  <p className="text-white/80">I = P / V = 2500 / 230 = 10.87 A</p>
+                  <p className="text-white">Given: P = 2500 W, V = 230 V</p>
+                  <p className="text-white">Find: I</p>
+                  <p className="text-white">I = P / V = 2500 / 230 = 10.87 A</p>
                   <p className="text-green-400 mt-2">
                     The hob draws approximately 11 A - suitable for a 15 A or 20 A circuit
                   </p>
@@ -408,7 +408,7 @@ const Level3Module3Section5_1 = () => {
               </h2>
             </div>
 
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               By substituting V = IR (Ohm's law) into P = VI, we get P = I squared x R. This form is
               particularly useful for calculating power dissipated in conductors, as we typically
               know the current flowing and the cable resistance. These losses appear as heat and
@@ -423,13 +423,13 @@ const Level3Module3Section5_1 = () => {
                 <div className="bg-gradient-to-r from-amber-500/10 to-transparent p-4 rounded-lg border-l-4 border-amber-500 mb-4">
                   <p className="text-white font-medium mb-2">Power Dissipation Formula:</p>
                   <p className="text-amber-300 font-mono text-2xl mb-2">P = I squared x R</p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Power is proportional to current SQUARED - doubling current quadruples losses
                   </p>
                 </div>
                 <div className="p-4 bg-white/5 rounded-lg">
                   <h4 className="text-white font-medium mb-2">Why This Matters</h4>
-                  <ul className="text-white/70 text-sm space-y-2">
+                  <ul className="text-white text-sm space-y-2">
                     <li>
                       <strong>Heat generation:</strong> Cables warm up due to I squared R losses,
                       affecting insulation life
@@ -457,7 +457,7 @@ const Level3Module3Section5_1 = () => {
                     <h4 className="text-amber-400 font-medium mb-2">
                       Critical Point: Current Squared Effect
                     </h4>
-                    <div className="text-white/80 text-sm space-y-2">
+                    <div className="text-white text-sm space-y-2">
                       <p>Because power is proportional to I squared:</p>
                       <div className="grid md:grid-cols-2 gap-4 mt-2">
                         <div className="p-3 bg-white/5 rounded-lg">
@@ -465,14 +465,14 @@ const Level3Module3Section5_1 = () => {
                           <p className="font-mono text-amber-300">
                             P = (2I) squared x R = 4 x I squared x R
                           </p>
-                          <p className="text-white/60 text-xs mt-1">Losses increase by 4 times</p>
+                          <p className="text-white text-xs mt-1">Losses increase by 4 times</p>
                         </div>
                         <div className="p-3 bg-white/5 rounded-lg">
                           <p className="font-medium text-white mb-1">If current triples:</p>
                           <p className="font-mono text-amber-300">
                             P = (3I) squared x R = 9 x I squared x R
                           </p>
-                          <p className="text-white/60 text-xs mt-1">Losses increase by 9 times</p>
+                          <p className="text-white text-xs mt-1">Losses increase by 9 times</p>
                         </div>
                       </div>
                     </div>
@@ -500,7 +500,7 @@ const Level3Module3Section5_1 = () => {
               </h2>
             </div>
 
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               By substituting I = V/R into P = VI, we get P = V squared / R. This form is useful
               when calculating power for fixed resistive loads connected to a known voltage, such as
               heating elements in kettles, ovens, and electric heaters.
@@ -512,7 +512,7 @@ const Level3Module3Section5_1 = () => {
                 <div className="bg-gradient-to-r from-red-500/10 to-transparent p-4 rounded-lg border-l-4 border-red-500 mb-4">
                   <p className="text-white font-medium mb-2">Voltage-Based Power Formula:</p>
                   <p className="text-red-300 font-mono text-2xl mb-2">P = V squared / R</p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Useful for calculating heating element power from voltage and resistance
                   </p>
                 </div>
@@ -520,13 +520,13 @@ const Level3Module3Section5_1 = () => {
                   <div className="p-4 bg-white/5 rounded-lg">
                     <h4 className="text-white font-medium mb-2">Rearrangements</h4>
                     <div className="space-y-2 text-sm font-mono">
-                      <p className="text-white/80">R = V squared / P (find element resistance)</p>
-                      <p className="text-white/80">V = sqrt(P x R) (find voltage)</p>
+                      <p className="text-white">R = V squared / P (find element resistance)</p>
+                      <p className="text-white">V = sqrt(P x R) (find voltage)</p>
                     </div>
                   </div>
                   <div className="p-4 bg-white/5 rounded-lg">
                     <h4 className="text-white font-medium mb-2">Applications</h4>
-                    <ul className="text-white/70 text-sm space-y-1">
+                    <ul className="text-white text-sm space-y-1">
                       <li>Immersion heater elements</li>
                       <li>Electric fire elements</li>
                       <li>Kettle and iron elements</li>
@@ -542,14 +542,14 @@ const Level3Module3Section5_1 = () => {
                 <h4 className="text-green-400 font-medium mb-3">
                   Worked Example: Element Resistance
                 </h4>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Calculate the resistance of a 3 kW immersion heater element operating at 230 V.
                 </p>
                 <div className="space-y-2 text-sm font-mono">
-                  <p className="text-white/80">Given: P = 3000 W, V = 230 V</p>
-                  <p className="text-white/80">Find: R</p>
-                  <p className="text-white/80">R = V squared / P = 230 squared / 3000</p>
-                  <p className="text-white/80">R = 52900 / 3000 = 17.6 ohms</p>
+                  <p className="text-white">Given: P = 3000 W, V = 230 V</p>
+                  <p className="text-white">Find: R</p>
+                  <p className="text-white">R = V squared / P = 230 squared / 3000</p>
+                  <p className="text-white">R = 52900 / 3000 = 17.6 ohms</p>
                   <p className="text-green-400 mt-2">
                     The element has resistance of approximately 17.6 ohms when hot
                   </p>
@@ -576,7 +576,7 @@ const Level3Module3Section5_1 = () => {
               </h2>
             </div>
 
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               Three-phase systems are more efficient for transmitting power and running large
               motors. The power calculation includes a factor of sqrt(3) (approximately 1.732) to
               account for the relationship between line and phase values in balanced three-phase
@@ -593,13 +593,13 @@ const Level3Module3Section5_1 = () => {
                   <div className="space-y-3 font-mono">
                     <div>
                       <p className="text-purple-300 text-lg">P = sqrt(3) x V_L x I_L x cos(phi)</p>
-                      <p className="text-white/60 text-sm mt-1">
+                      <p className="text-white text-sm mt-1">
                         Using line voltage (400 V) and line current
                       </p>
                     </div>
                     <div>
                       <p className="text-purple-300 text-lg">P = 3 x V_ph x I_ph x cos(phi)</p>
-                      <p className="text-white/60 text-sm mt-1">
+                      <p className="text-white text-sm mt-1">
                         Using phase voltage (230 V) and phase current
                       </p>
                     </div>
@@ -607,14 +607,14 @@ const Level3Module3Section5_1 = () => {
                 </div>
                 <div className="p-4 bg-white/5 rounded-lg">
                   <h4 className="text-white font-medium mb-2">Worked Example: Three-Phase Motor</h4>
-                  <p className="text-white/70 text-sm mb-3">
+                  <p className="text-white text-sm mb-3">
                     A 400 V three-phase motor draws 20 A per line with power factor 0.85. Calculate
                     power.
                   </p>
                   <div className="space-y-2 text-sm font-mono">
-                    <p className="text-white/80">P = sqrt(3) x V_L x I_L x pf</p>
-                    <p className="text-white/80">P = 1.732 x 400 x 20 x 0.85</p>
-                    <p className="text-white/80">P = 11782 W = 11.78 kW</p>
+                    <p className="text-white">P = sqrt(3) x V_L x I_L x pf</p>
+                    <p className="text-white">P = 1.732 x 400 x 20 x 0.85</p>
+                    <p className="text-white">P = 11782 W = 11.78 kW</p>
                     <p className="text-green-400 mt-2">
                       The motor consumes approximately 11.8 kW of true power
                     </p>
@@ -630,7 +630,7 @@ const Level3Module3Section5_1 = () => {
                   <div>
                     <h4 className="text-blue-400 font-medium mb-2">Line vs Phase Values</h4>
                     <div className="grid md:grid-cols-2 gap-4 text-sm">
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <p className="font-medium text-white mb-1">Star (Y) Connection:</p>
                         <ul className="space-y-1">
                           <li>V_L = sqrt(3) x V_ph</li>
@@ -638,7 +638,7 @@ const Level3Module3Section5_1 = () => {
                           <li>V_L = 400 V, V_ph = 230 V</li>
                         </ul>
                       </div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <p className="font-medium text-white mb-1">Delta Connection:</p>
                         <ul className="space-y-1">
                           <li>V_L = V_ph</li>
@@ -677,7 +677,7 @@ const Level3Module3Section5_1 = () => {
                         <h4 className="text-green-400 font-medium mb-2">
                           When to Use Each Formula
                         </h4>
-                        <ul className="text-sm text-white/80 space-y-1">
+                        <ul className="text-sm text-white space-y-1">
                           <li>
                             <strong>P = VI:</strong> General calculations, meter readings
                           </li>
@@ -694,7 +694,7 @@ const Level3Module3Section5_1 = () => {
                       </div>
                       <div className="p-4 bg-white/5 rounded-lg">
                         <h4 className="text-green-400 font-medium mb-2">Common Calculations</h4>
-                        <ul className="text-sm text-white/80 space-y-1">
+                        <ul className="text-sm text-white space-y-1">
                           <li>Circuit MCB rating: I = P / V</li>
                           <li>Cable voltage drop: V = IR, P = I squared R</li>
                           <li>Element replacement: R = V squared / P</li>
@@ -725,7 +725,7 @@ const Level3Module3Section5_1 = () => {
                       <span className="text-blue-400 font-bold shrink-0">Q:</span>
                       {faq.question}
                     </h3>
-                    <p className="text-white/70 text-sm ml-6">{faq.answer}</p>
+                    <p className="text-white text-sm ml-6">{faq.answer}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -752,7 +752,7 @@ const Level3Module3Section5_1 = () => {
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
                       <h4 className="text-white font-medium mb-3">Single-Phase Formulae</h4>
-                      <div className="space-y-2 text-sm font-mono text-white/80">
+                      <div className="space-y-2 text-sm font-mono text-white">
                         <p>P = V x I (basic power)</p>
                         <p>P = I squared x R (cable losses)</p>
                         <p>P = V squared / R (heating elements)</p>
@@ -761,7 +761,7 @@ const Level3Module3Section5_1 = () => {
                     </div>
                     <div>
                       <h4 className="text-white font-medium mb-3">Three-Phase Formulae</h4>
-                      <div className="space-y-2 text-sm font-mono text-white/80">
+                      <div className="space-y-2 text-sm font-mono text-white">
                         <p>P = sqrt(3) x V_L x I_L x pf</p>
                         <p>P = 3 x V_ph x I_ph x pf</p>
                         <p>sqrt(3) = 1.732</p>
@@ -770,7 +770,7 @@ const Level3Module3Section5_1 = () => {
                     </div>
                     <div>
                       <h4 className="text-white font-medium mb-3">Rearrangements</h4>
-                      <div className="space-y-2 text-sm font-mono text-white/80">
+                      <div className="space-y-2 text-sm font-mono text-white">
                         <p>I = P / V</p>
                         <p>V = P / I</p>
                         <p>R = V squared / P</p>
@@ -779,7 +779,7 @@ const Level3Module3Section5_1 = () => {
                     </div>
                     <div>
                       <h4 className="text-white font-medium mb-3">Power Units</h4>
-                      <div className="space-y-2 text-sm text-white/80">
+                      <div className="space-y-2 text-sm text-white">
                         <p>1 W = 1 J/s = 1 VA (resistive)</p>
                         <p>1 kW = 1000 W</p>
                         <p>1 hp = 746 W (approx 0.75 kW)</p>

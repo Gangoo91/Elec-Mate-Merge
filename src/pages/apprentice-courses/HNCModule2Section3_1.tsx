@@ -204,7 +204,7 @@ const HNCModule2Section3_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section3">
@@ -226,7 +226,7 @@ const HNCModule2Section3_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Air Composition and Properties
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding the fundamental properties of air for HVAC system design and psychrometric
             analysis
           </p>
@@ -383,7 +383,7 @@ const HNCModule2Section3_1 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-cyan-400/80 mb-2">The Ideal Gas Equation</p>
               <p className="font-mono text-center text-lg mb-2">PV = mRT</p>
-              <div className="text-xs text-white/70 text-center space-y-1">
+              <div className="text-xs text-white text-center space-y-1">
                 <p>P = absolute pressure (Pa)</p>
                 <p>V = volume (m³)</p>
                 <p>m = mass (kg)</p>
@@ -441,7 +441,7 @@ const HNCModule2Section3_1 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-cyan-400/80 mb-2">Density Equation</p>
               <p className="font-mono text-center text-lg mb-2">ρ = P / (R × T)</p>
-              <p className="text-xs text-white/70 text-center">where ρ is density in kg/m³</p>
+              <p className="text-xs text-white text-center">where ρ is density in kg/m³</p>
             </div>
 
             <div className="my-6">
@@ -576,7 +576,7 @@ const HNCModule2Section3_1 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-cyan-400/80 mb-2">Sensible Heat Equation</p>
               <p className="font-mono text-center text-lg mb-2">Q̇ = ṁ × cp × ΔT</p>
-              <div className="text-xs text-white/70 text-center space-y-1">
+              <div className="text-xs text-white text-center space-y-1">
                 <p>Q̇ = heat transfer rate (W or kW)</p>
                 <p>ṁ = mass flow rate (kg/s)</p>
                 <p>cp = specific heat (J/kg·K or kJ/kg·K)</p>
@@ -584,7 +584,7 @@ const HNCModule2Section3_1 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Note:</strong> For moist air, the effective specific heat is slightly higher
               due to the water vapour content. A typical value of 1.02 kJ/kg·K is often used for
               humid air in HVAC calculations.
@@ -609,7 +609,7 @@ const HNCModule2Section3_1 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Question:</strong> Calculate the density of dry air at 35°C and 101.325 kPa.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given: T = 35°C = 308K, P = 101325 Pa, R = 287 J/kg·K</p>
                 <p className="mt-2">Using: ρ = P / (R × T)</p>
                 <p className="mt-2">ρ = 101325 / (287 × 308)</p>
@@ -617,7 +617,7 @@ const HNCModule2Section3_1 = () => {
                 <p>
                   ρ = <strong>1.146 kg/m³</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Note: Lower than 1.2 kg/m³ due to higher temperature
                 </p>
               </div>
@@ -631,7 +631,7 @@ const HNCModule2Section3_1 = () => {
                 <strong>Question:</strong> An AHU delivers 8500 l/s at 15°C. Calculate the mass flow
                 rate.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Calculate air density at 15°C</p>
                 <p>T = 15 + 273 = 288K</p>
                 <p>ρ = 101325 / (287 × 288) = 1.226 kg/m³</p>
@@ -652,7 +652,7 @@ const HNCModule2Section3_1 = () => {
                 <strong>Question:</strong> Calculate the heating capacity required to raise 5 kg/s
                 of air from 10°C to 22°C.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given: ṁ = 5 kg/s, T₁ = 10°C, T₂ = 22°C</p>
                 <p>cp = 1.005 kJ/kg·K</p>
                 <p className="mt-2">Using: Q̇ = ṁ × cp × ΔT</p>
@@ -672,7 +672,7 @@ const HNCModule2Section3_1 = () => {
                 <strong>Question:</strong> A building is at 600m elevation where pressure is 94.3
                 kPa. Calculate air density at 20°C.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Given: P = 94300 Pa, T = 293K, R = 287 J/kg·K</p>
                 <p className="mt-2">ρ = P / (R × T)</p>
                 <p>ρ = 94300 / (287 × 293)</p>
@@ -680,8 +680,8 @@ const HNCModule2Section3_1 = () => {
                 <p>
                   ρ = <strong>1.121 kg/m³</strong>
                 </p>
-                <p className="mt-2 text-white/60">This is 7% less than sea level (1.205 kg/m³)</p>
-                <p className="text-white/60">Fan capacity must be increased accordingly</p>
+                <p className="mt-2 text-white">This is 7% less than sea level (1.205 kg/m³)</p>
+                <p className="text-white">Fan capacity must be increased accordingly</p>
               </div>
             </div>
           </div>
@@ -764,7 +764,7 @@ const HNCModule2Section3_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -810,7 +810,7 @@ const HNCModule2Section3_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section3">

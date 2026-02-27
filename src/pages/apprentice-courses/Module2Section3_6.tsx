@@ -184,7 +184,7 @@ const Module2Section3_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -206,7 +206,7 @@ const Module2Section3_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Recognising Circuit Types on Site
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Identify series, parallel and mixed circuits for effective fault finding
           </p>
         </header>
@@ -435,7 +435,7 @@ const Module2Section3_6 = () => {
               <p className="font-medium text-white mb-2">Domestic Installations</p>
               <div className="grid sm:grid-cols-2 gap-4 text-sm">
                 <div>
-                  <p className="font-medium text-white/70 mb-1">Common Parallel Circuits:</p>
+                  <p className="font-medium text-white mb-1">Common Parallel Circuits:</p>
                   <ul className="text-white space-y-0.5">
                     <li>
                       <strong>Socket rings:</strong> 32A ring finals, 2 conductors at MCB
@@ -452,7 +452,7 @@ const Module2Section3_6 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="font-medium text-white/70 mb-1">Occasional Series Elements:</p>
+                  <p className="font-medium text-white mb-1">Occasional Series Elements:</p>
                   <ul className="text-white space-y-0.5">
                     <li>
                       <strong>LED strips:</strong> Series LEDs in parallel chains
@@ -559,7 +559,7 @@ const Module2Section3_6 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -577,21 +577,21 @@ const Module2Section3_6 = () => {
             <div className="grid grid-cols-3 gap-4 text-xs text-white">
               <div>
                 <p className="font-medium text-white mb-1">Series Indicators</p>
-                <p className="text-white/70">
+                <p className="text-white">
                   Single cable in/out at each point, no junction boxes, all fail together,
                   daisy-chain wiring pattern
                 </p>
               </div>
               <div>
                 <p className="font-medium text-white mb-1">Parallel Indicators</p>
-                <p className="text-white/70">
+                <p className="text-white">
                   Multiple junction boxes, independent operation, branching cable routes, individual
                   switches/controls
                 </p>
               </div>
               <div>
                 <p className="font-medium text-white mb-1">Ring Finals</p>
-                <p className="text-white/70">
+                <p className="text-white">
                   Two conductors at MCB, loop back to CU, low end-to-end resistance, usually 32A
                   socket circuits
                 </p>
@@ -600,14 +600,14 @@ const Module2Section3_6 = () => {
             <div className="grid sm:grid-cols-2 gap-4 text-xs mt-4">
               <div>
                 <p className="font-medium text-white mb-1">Safety First:</p>
-                <p className="text-white/70">
+                <p className="text-white">
                   Always isolate and prove dead before investigating circuits. Use approved voltage
                   indicators and follow safe isolation procedures.
                 </p>
               </div>
               <div>
                 <p className="font-medium text-white mb-1">Quick Test:</p>
-                <p className="text-white/70">
+                <p className="text-white">
                   Ring finals: continuity between opposite ends. Radials: dead-end at furthest
                   point. Series: continuity through all components.
                 </p>
@@ -626,7 +626,7 @@ const Module2Section3_6 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level2/module2/section3/3-5">

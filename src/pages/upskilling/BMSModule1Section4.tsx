@@ -94,7 +94,7 @@ const BMSModule1Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bms-module-1">
@@ -116,7 +116,7 @@ const BMSModule1Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Real-World Environments Using BMS
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Commercial, Healthcare, Retail, and Industrial Applications
           </p>
         </header>
@@ -501,7 +501,7 @@ const BMSModule1Section4 = () => {
         {/* Quiz */}
         <section className="mb-10">
           <h2 className="text-xl font-semibold text-white mb-4">Test Your Knowledge</h2>
-          <p className="text-sm text-white/80 mb-6">
+          <p className="text-sm text-white mb-6">
             Test your understanding of real-world BMS applications across different sectors.
           </p>
           <SingleQuestionQuiz
@@ -515,7 +515,7 @@ const BMSModule1Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bms-module-1-section-3">

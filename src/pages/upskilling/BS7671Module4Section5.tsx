@@ -98,7 +98,7 @@ const BS7671Module4Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bs7671-module-4">
@@ -119,7 +119,7 @@ const BS7671Module4Section5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Surge Protection Devices (SPDs)
           </h1>
-          <p className="text-white/80">When and Why They're Required</p>
+          <p className="text-white">When and Why They're Required</p>
         </header>
 
         {/* Quick Summary */}
@@ -187,15 +187,15 @@ const BS7671Module4Section5 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Lightning</p>
-                <p className="text-white/90 text-xs">Most severe, less common</p>
+                <p className="text-white text-xs">Most severe, less common</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Switching</p>
-                <p className="text-white/90 text-xs">Most common cause</p>
+                <p className="text-white text-xs">Most common cause</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Utility Faults</p>
-                <p className="text-white/90 text-xs">Transformer failures</p>
+                <p className="text-white text-xs">Transformer failures</p>
               </div>
             </div>
 
@@ -441,7 +441,7 @@ const BS7671Module4Section5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -485,7 +485,7 @@ const BS7671Module4Section5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bs7671-module-4-section-4">

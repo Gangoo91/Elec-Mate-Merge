@@ -194,7 +194,7 @@ const InspectionTestingModule5Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-5">
@@ -216,7 +216,7 @@ const InspectionTestingModule5Section4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Maximum Zs Values
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding BS 7671 maximum impedance tables for protective devices
           </p>
         </header>
@@ -297,17 +297,17 @@ const InspectionTestingModule5Section4 = () => {
             <div className="grid grid-cols-2 gap-4 my-6 text-center">
               <div className="p-4 rounded bg-transparent">
                 <p className="text-3xl font-bold text-elec-yellow">0.4s</p>
-                <p className="text-white/60 text-sm mt-1">Socket Outlets</p>
-                <p className="text-white/40 text-xs">Portable equipment</p>
+                <p className="text-white text-sm mt-1">Socket Outlets</p>
+                <p className="text-white text-xs">Portable equipment</p>
               </div>
               <div className="p-4 rounded bg-transparent">
                 <p className="text-3xl font-bold text-blue-400">5s</p>
-                <p className="text-white/60 text-sm mt-1">Distribution</p>
-                <p className="text-white/40 text-xs">Fixed equipment</p>
+                <p className="text-white text-sm mt-1">Distribution</p>
+                <p className="text-white text-xs">Fixed equipment</p>
               </div>
             </div>
 
-            <p className="text-sm text-white/70">
+            <p className="text-sm text-white">
               The shorter time for sockets protects users who may be holding equipment during a
               fault. Distribution circuits allow 5s because users are less likely to directly
               contact faulted parts.
@@ -328,13 +328,13 @@ const InspectionTestingModule5Section4 = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/20">
-                    <th className="text-left py-2 text-white/60">Rating</th>
+                    <th className="text-left py-2 text-white">Rating</th>
                     <th className="text-center py-2 text-elec-yellow">Type B</th>
                     <th className="text-center py-2 text-blue-400">Type C</th>
                     <th className="text-center py-2 text-purple-400">Type D</th>
                   </tr>
                 </thead>
-                <tbody className="text-white/80 font-mono">
+                <tbody className="text-white font-mono">
                   <tr className="border-b border-white/10">
                     <td className="py-2">6A</td>
                     <td className="text-center">7.28</td>
@@ -383,25 +383,25 @@ const InspectionTestingModule5Section4 = () => {
             <div className="my-6 space-y-3">
               <div>
                 <p className="text-sm font-medium text-elec-yellow mb-1">Type B: 3-5× In</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Trips magnetically at 3-5 times rated current. Highest max Zs - most lenient.
                 </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-blue-400 mb-1">Type C: 5-10× In</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Trips at 5-10 times rated. Lower max Zs - needs higher fault current.
                 </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-purple-400 mb-1">Type D: 10-20× In</p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   Trips at 10-20 times rated. Lowest max Zs - very high fault current needed.
                 </p>
               </div>
             </div>
 
-            <p className="text-sm text-white/60">
+            <p className="text-sm text-white">
               Higher trip multiples require higher fault current, which requires lower impedance.
             </p>
           </div>
@@ -427,7 +427,7 @@ const InspectionTestingModule5Section4 = () => {
                     <span className="w-6 h-6 rounded-full bg-elec-yellow/20 text-elec-yellow text-sm font-bold flex items-center justify-center flex-shrink-0">
                       {i + 1}
                     </span>
-                    <span className="text-white/80">{item}</span>
+                    <span className="text-white">{item}</span>
                   </li>
                 ))}
               </ol>
@@ -448,7 +448,7 @@ const InspectionTestingModule5Section4 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-emerald-400 mb-2">RCD Trip Time</p>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 A 30mA RCD must trip within 300ms at rated current, and typically within 40ms at
                 5×In. This is well under the 0.4s requirement.
               </p>
@@ -474,23 +474,23 @@ const InspectionTestingModule5Section4 = () => {
             <div className="my-6 space-y-3">
               <div className="border-l-2 border-emerald-500 pl-4">
                 <p className="text-emerald-400 font-semibold text-sm">Increase Cable Size</p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Larger cables have lower R1+R2, reducing Zs.
                 </p>
               </div>
               <div className="border-l-2 border-blue-500 pl-4">
                 <p className="text-blue-400 font-semibold text-sm">Shorten Run</p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Shorter cable length means lower resistance.
                 </p>
               </div>
               <div className="border-l-2 border-purple-500 pl-4">
                 <p className="text-purple-400 font-semibold text-sm">Change Device Type</p>
-                <p className="text-white/70 text-xs">Type B has higher max Zs than Type C or D.</p>
+                <p className="text-white text-xs">Type B has higher max Zs than Type C or D.</p>
               </div>
               <div className="border-l-2 border-elec-yellow pl-4">
                 <p className="text-elec-yellow font-semibold text-sm">Add RCD Protection</p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   RCD provides 0.4s protection regardless of Zs (if meeting 5s limits).
                 </p>
               </div>
@@ -544,7 +544,7 @@ const InspectionTestingModule5Section4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -600,7 +600,7 @@ const InspectionTestingModule5Section4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/inspection-testing/module-5/section-3">

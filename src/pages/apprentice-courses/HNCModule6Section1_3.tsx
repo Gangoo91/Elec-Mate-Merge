@@ -239,7 +239,7 @@ const HNCModule6Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section1">
@@ -261,7 +261,7 @@ const HNCModule6Section1_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Fabric Performance
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             U-value calculations, thermal bridging, limiting fabric parameters, and construction
             specifications for energy-efficient buildings
           </p>
@@ -353,7 +353,7 @@ const HNCModule6Section1_3 = () => {
                   </span>
                 </p>
                 <p>
-                  <span className="text-white/60">Where:</span>
+                  <span className="text-white">Where:</span>
                 </p>
                 <p className="ml-4">
                   <span className="text-white">
@@ -362,9 +362,9 @@ const HNCModule6Section1_3 = () => {
                   </span>
                 </p>
                 <p className="mt-2">
-                  <span className="text-white/60">R = d / λ</span> (for each layer)
+                  <span className="text-white">R = d / λ</span> (for each layer)
                 </p>
-                <p className="ml-4 text-white/60">
+                <p className="ml-4 text-white">
                   d = thickness (m), λ = thermal conductivity (W/mK)
                 </p>
               </div>
@@ -618,10 +618,10 @@ const HNCModule6Section1_3 = () => {
                 <p>
                   <span className="text-white">Heat loss at junction = ψ × L × ΔT</span>
                 </p>
-                <p className="text-white/60">Where:</p>
-                <p className="ml-4 text-white/80">ψ = psi value (W/mK)</p>
-                <p className="ml-4 text-white/80">L = length of junction (m)</p>
-                <p className="ml-4 text-white/80">ΔT = temperature difference (K)</p>
+                <p className="text-white">Where:</p>
+                <p className="ml-4 text-white">ψ = psi value (W/mK)</p>
+                <p className="ml-4 text-white">L = length of junction (m)</p>
+                <p className="ml-4 text-white">ΔT = temperature difference (K)</p>
               </div>
             </div>
 
@@ -675,11 +675,11 @@ const HNCModule6Section1_3 = () => {
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">
                 Total Heat Loss from Thermal Bridges
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   H<sub>TB</sub> = Σ(ψ × L) + Σ(χ × n)
                 </p>
-                <p className="mt-2 text-white/60">Or using y-value method:</p>
+                <p className="mt-2 text-white">Or using y-value method:</p>
                 <p>
                   H<sub>TB</sub> = y × A<sub>exp</sub>
                 </p>
@@ -693,7 +693,7 @@ const HNCModule6Section1_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Default y-value:</strong> If detailed psi calculations are not available,
               SAP/SBEM uses y = 0.15 W/m²K - a significant penalty that can add 15-20% to fabric
               heat loss.
@@ -856,7 +856,7 @@ const HNCModule6Section1_3 = () => {
               <p className="text-sm text-white mb-2">
                 <strong>Scenario:</strong> Calculate the U-value for a cavity wall construction.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Construction (inside to outside):</p>
                 <p className="ml-4">- 13mm plasterboard (λ = 0.21 W/mK)</p>
                 <p className="ml-4">- 100mm blockwork (λ = 0.15 W/mK)</p>
@@ -902,7 +902,7 @@ const HNCModule6Section1_3 = () => {
                 <strong>Scenario:</strong> Calculate total heat loss including thermal bridges for a
                 small dwelling.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Building data:</p>
                 <p className="ml-4">- Total exposed envelope area: 250 m²</p>
                 <p className="ml-4">- Wall area: 120 m² (U = 0.20 W/m²K)</p>
@@ -937,7 +937,7 @@ const HNCModule6Section1_3 = () => {
                 <strong>Scenario:</strong> Determine insulation thickness required to achieve U =
                 0.14 W/m²K for a flat roof.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Target U-value: 0.14 W/m²K</p>
                 <p>
                   Required R<sub>total</sub> = 1 / 0.14 = 7.14 m²K/W
@@ -962,7 +962,7 @@ const HNCModule6Section1_3 = () => {
                 <p className="mt-2">Using PIR insulation (λ = 0.022 W/mK):</p>
                 <p className="ml-4">Thickness = R × λ = 6.86 × 0.022 = 0.151m</p>
                 <p className="mt-2 text-green-400">Required: 160mm PIR insulation (rounded up)</p>
-                <p className="text-white/60">
+                <p className="text-white">
                   Alternatively, 200mm mineral wool (λ=0.035) would give similar R-value
                 </p>
               </div>
@@ -1045,7 +1045,7 @@ const HNCModule6Section1_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1091,7 +1091,7 @@ const HNCModule6Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module6-section1">

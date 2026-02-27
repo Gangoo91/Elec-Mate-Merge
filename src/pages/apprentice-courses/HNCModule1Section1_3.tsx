@@ -269,7 +269,7 @@ const HNCModule1Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section1">
@@ -291,7 +291,7 @@ const HNCModule1Section1_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             CDM Regulations 2015
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             The Construction (Design and Management) Regulations - the framework for managing health
             and safety throughout construction projects
           </p>
@@ -513,13 +513,13 @@ const HNCModule1Section1_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">Duration + Workers</p>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-white">
                     More than 30 working days AND more than 20 workers at any one time
                   </p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">OR Person-Days</p>
-                  <p className="text-sm text-white/90">
+                  <p className="text-sm text-white">
                     More than 500 person-days of construction work
                   </p>
                 </div>
@@ -710,7 +710,7 @@ const HNCModule1Section1_3 = () => {
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <p className="text-xs text-white/70 mb-2">Required Elements:</p>
+                  <p className="text-xs text-white mb-2">Required Elements:</p>
                   <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Description of the project</li>
                     <li className="pl-1">Management arrangements</li>
@@ -721,7 +721,7 @@ const HNCModule1Section1_3 = () => {
                   </ul>
                 </div>
                 <div>
-                  <p className="text-xs text-white/70 mb-2">Building Services Specifics:</p>
+                  <p className="text-xs text-white mb-2">Building Services Specifics:</p>
                   <ul className="text-sm text-white space-y-1 list-disc list-outside ml-5">
                     <li className="pl-1">Isolation procedures for live systems</li>
                     <li className="pl-1">Permit to work systems</li>
@@ -810,7 +810,7 @@ const HNCModule1Section1_3 = () => {
                 will ramp up from 5 workers in weeks 1-2, to 15 workers in weeks 3-8, then 8 workers
                 in weeks 9-12. Is F10 notification required?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Check threshold 1: More than 30 days with more than 20 workers?</p>
                 <p>
                   Maximum workers = 15 (does not exceed 20) -{' '}
@@ -836,7 +836,7 @@ const HNCModule1Section1_3 = () => {
                 installation for a warehouse with 10m high ceilings. What CDM considerations apply
                 to luminaire specification?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p className="font-medium mb-2">Design Risks to Consider:</p>
                 <ul className="list-disc ml-5 space-y-1">
                   <li>Installation: Work at height, MEWP access, lifting heavy luminaires</li>
@@ -869,36 +869,36 @@ const HNCModule1Section1_3 = () => {
                 commercial unit. They appoint an electrical contractor who designs and installs the
                 new system. Identify the duty holders.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm text-white">
                 <p>
                   <strong>Client:</strong> Property management company
                 </p>
-                <p className="text-white/60 text-xs ml-4">
+                <p className="text-white text-xs ml-4">
                   - Has duties even though they appoint only one contractor
                 </p>
                 <p className="mt-2">
                   <strong>Designer:</strong> Electrical contractor (they design the installation)
                 </p>
-                <p className="text-white/60 text-xs ml-4">
+                <p className="text-white text-xs ml-4">
                   - Must consider risks in design decisions
                 </p>
                 <p className="mt-2">
                   <strong>Principal Designer:</strong> Electrical contractor (single contractor
                   project)
                 </p>
-                <p className="text-white/60 text-xs ml-4">
+                <p className="text-white text-xs ml-4">
                   - Duties apply automatically, no separate appointment needed
                 </p>
                 <p className="mt-2">
                   <strong>Principal Contractor:</strong> Electrical contractor (single contractor)
                 </p>
-                <p className="text-white/60 text-xs ml-4">
+                <p className="text-white text-xs ml-4">
                   - Must prepare CPP if project is notifiable
                 </p>
                 <p className="mt-2">
                   <strong>Contractor:</strong> Electrical contractor
                 </p>
-                <p className="text-white/60 text-xs ml-4">- General contractor duties also apply</p>
+                <p className="text-white text-xs ml-4">- General contractor duties also apply</p>
               </div>
             </div>
           </div>
@@ -994,7 +994,7 @@ const HNCModule1Section1_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1041,7 +1041,7 @@ const HNCModule1Section1_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section1-2">

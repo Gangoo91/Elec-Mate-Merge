@@ -60,7 +60,7 @@ const ComparisonTable = ({ columns, rows, className, footer }: ComparisonTablePr
                       val ? (
                         <CheckCircle className="h-5 w-5 text-yellow-400 mx-auto" />
                       ) : (
-                        <X className="h-5 w-5 text-white/30 mx-auto" />
+                        <X className="h-5 w-5 text-white mx-auto" />
                       )
                     ) : (
                       <span className="text-white">{val}</span>

@@ -236,7 +236,7 @@ const AM2Module5Section3 = () => {
       <div className="space-y-6">
         {/* Introduction */}
         <AM2ContentCard>
-          <p className="text-ios-body text-white/80 leading-relaxed">
+          <p className="text-ios-body text-white leading-relaxed">
             Efficient use of test equipment means choosing the right tool for the fault, setting it
             up correctly, applying it safely, and recording results without wasting time or
             guessing.
@@ -245,11 +245,11 @@ const AM2Module5Section3 = () => {
 
         {/* Critical Warning */}
         <AM2CriticalWarning title="CRITICAL: GS38 Safety Compliance">
-          <p className="text-ios-callout text-white/80 mb-3 leading-relaxed">
+          <p className="text-ios-callout text-white mb-3 leading-relaxed">
             The assessor is watching closely to see if you can handle test equipment in line with
             GS38 safety requirements. Unsafe equipment use equals instant fail.
           </p>
-          <p className="text-ios-callout text-white/80 font-medium leading-relaxed">
+          <p className="text-ios-callout text-white font-medium leading-relaxed">
             Never tape up damaged leads - replace them. Use only shrouded probes with 2-4mm exposed
             tips.
           </p>
@@ -268,21 +268,21 @@ const AM2Module5Section3 = () => {
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Multifunction Tester (MFT):</strong> Combines
                     continuity, insulation resistance, Zs, PSC/PSCC, and RCD functions
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Continuity tester:</strong> Proves open circuits
                     and checks rings/CPCs
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Insulation resistance tester:</strong> Detects
                     short circuits or earth faults
                   </span>
@@ -295,21 +295,21 @@ const AM2Module5Section3 = () => {
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Voltage indicator (two-pole):</strong> Used for
                     safe isolation and proving circuits live/dead
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Proving unit:</strong> Confirms voltage indicator
                     is working before/after use
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">GS38 test leads:</strong> Fused and shrouded for
                     safety
                   </span>
@@ -337,35 +337,35 @@ const AM2Module5Section3 = () => {
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Shrouded probes:</strong> Only 2-4 mm exposed
                     metal tip
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Fused leads:</strong> Test leads must be fused
                     and undamaged
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Finger barriers:</strong> Keep fingers behind
                     probe barriers at all times
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Lead condition:</strong> Never tape up damaged
                     leads - replace them immediately
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Proving sequence:</strong> Always prove tester on
                     a live source before and after use
                   </span>
@@ -385,25 +385,25 @@ const AM2Module5Section3 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Visually inspect all test equipment
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Check probe shrouds and lead condition
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Verify tester calibration dates
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Test proving unit operation
                       </span>
                     </li>
@@ -416,25 +416,25 @@ const AM2Module5Section3 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Maintain Test-Prove-Test sequence
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Keep leads tidy and untangled
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Never bypass safety features
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Report any equipment faults immediately
                       </span>
                     </li>
@@ -455,26 +455,26 @@ const AM2Module5Section3 = () => {
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Best for:</strong> Open circuits, broken rings,
                     CPC faults
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Setup:</strong> Always zero leads first
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Current:</strong> Use 200mA test current
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Record:</strong> Actual resistance values in Ohms
                   </span>
                 </li>
@@ -488,26 +488,26 @@ const AM2Module5Section3 = () => {
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Best for:</strong> Shorts or earth faults
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Setup:</strong> Disconnect sensitive equipment
                     first
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Voltage:</strong> 500V DC for most circuits
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Minimum:</strong> 1MOhms required (investigate if
                     below 2MOhms)
                   </span>
@@ -522,27 +522,27 @@ const AM2Module5Section3 = () => {
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Polarity:</strong> Confirm correct connections at
                     sockets, switches, lighting
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Zs testing:</strong> Identify high resistance
                     faults
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Compare:</strong> Against BS 7671 maximum values
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Safety:</strong> Ensure RCD not bypassed during
                     Zs tests
                   </span>
@@ -555,28 +555,28 @@ const AM2Module5Section3 = () => {
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">x1 test:</strong> Must trip within 300ms at rated
                     current
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">x5 test:</strong> Must trip within 40ms (30mA
                     RCDs)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">x0.5 test:</strong> Should NOT trip (checks
                     over-sensitivity)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Functional:</strong> Test button operation
                   </span>
                 </li>
@@ -603,35 +603,35 @@ const AM2Module5Section3 = () => {
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Wrong instrument:</strong> Using wrong instrument
                     for fault type (e.g. trying to find open circuit with insulation tester)
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Forgot zeroing:</strong> Not zeroing continuity
                     leads = false readings
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Equipment connected:</strong> Carrying out
                     insulation resistance with lamps/equipment connected = damage or wrong results
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">False numbers:</strong> Recording "perfect"
                     numbers instead of measured values
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Unsafe probes:</strong> Using non-GS38 probes
                     (long tips, unsafe)
                   </span>
@@ -651,25 +651,25 @@ const AM2Module5Section3 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Choose correct instrument for the fault
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Set the range correctly (e.g. 500V for IR, not 250V)
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Record values realistically, not "book answers"
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Work efficiently without repeated setting changes
                       </span>
                     </li>
@@ -682,25 +682,25 @@ const AM2Module5Section3 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Use safe probe techniques with barriers
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Follow Test-Prove-Test sequence
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Handle equipment professionally
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Report any safety concerns immediately
                       </span>
                     </li>
@@ -734,31 +734,31 @@ const AM2Module5Section3 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Check calibration certificates are current (typically annual)
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Verify battery condition and charge level
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Test all functions on known good circuit
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Inspect leads for damage, kinks, or wear
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Ensure probe shrouds are secure and undamaged
                       </span>
                     </li>
@@ -771,31 +771,31 @@ const AM2Module5Section3 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         CAT III or CAT IV rated test equipment preferred
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Fused test leads with HRC fuses (typically 500mA)
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Digital display with clear readings in all lighting
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Auto-ranging capability for efficient operation
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Data logging capability for record keeping
                       </span>
                     </li>
@@ -816,25 +816,25 @@ const AM2Module5Section3 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Account for conductor temperature effects
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Use correction factors for accurate readings
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Consider ambient temperature variations
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Allow cables to stabilise before testing
                       </span>
                     </li>
@@ -847,25 +847,25 @@ const AM2Module5Section3 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Understand instrument accuracy specifications
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Account for +/-5% typical measurement error
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Use multiple readings for critical measurements
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Document measurement conditions
                       </span>
                     </li>
@@ -886,36 +886,36 @@ const AM2Module5Section3 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
-                        <strong className="text-white/90">Erratic readings:</strong> Usually poor
+                      <span className="text-ios-footnote text-white">
+                        <strong className="text-white">Erratic readings:</strong> Usually poor
                         connections or battery issues
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
-                        <strong className="text-white/90">Display problems:</strong> Check LCD
+                      <span className="text-ios-footnote text-white">
+                        <strong className="text-white">Display problems:</strong> Check LCD
                         contrast settings and lighting
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
-                        <strong className="text-white/90">Probe contact issues:</strong> Clean probe
+                      <span className="text-ios-footnote text-white">
+                        <strong className="text-white">Probe contact issues:</strong> Clean probe
                         tips and check spring pressure
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
-                        <strong className="text-white/90">Auto-ranging delays:</strong> Switch to
+                      <span className="text-ios-footnote text-white">
+                        <strong className="text-white">Auto-ranging delays:</strong> Switch to
                         manual range for faster operation
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
-                        <strong className="text-white/90">Memory errors:</strong> Clear stored data
+                      <span className="text-ios-footnote text-white">
+                        <strong className="text-white">Memory errors:</strong> Clear stored data
                         and restart instrument
                       </span>
                     </li>
@@ -928,25 +928,25 @@ const AM2Module5Section3 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Report equipment faults to assessor immediately
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Have backup equipment ready if permitted
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Know how to switch between different test methods
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Understand manual calculation methods as backup
                       </span>
                     </li>
@@ -964,34 +964,34 @@ const AM2Module5Section3 = () => {
               <h4 className="text-ios-headline font-semibold text-white mb-3">
                 Legal and Insurance Requirements:
               </h4>
-              <p className="text-ios-callout text-white/80 mb-3">
+              <p className="text-ios-callout text-white mb-3">
                 <strong className="text-white">Why proper testing matters beyond AM2:</strong>
               </p>
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Legal liability:</strong> Duty of care under
                     Health & Safety at Work Act
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Insurance validity:</strong> Claims may be
                     rejected for non-compliant testing
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Professional standards:</strong> IET Code of
                     Practice requirements
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Competency evidence:</strong> Proper records
                     prove professional competence
                   </span>
@@ -1011,25 +1011,25 @@ const AM2Module5Section3 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Equipment must be CAT rated for application
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Overvoltage protection essential
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Double insulation or earthing required
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Clear marking and warnings mandatory
                       </span>
                     </li>
@@ -1042,25 +1042,25 @@ const AM2Module5Section3 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Probe tips: 2-4mm exposed maximum
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Lead protection: HRC fused at source
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Finger barriers: Prevent accidental contact
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Voltage rating: Adequate for system voltage
                       </span>
                     </li>
@@ -1073,7 +1073,7 @@ const AM2Module5Section3 = () => {
               <h4 className="text-ios-headline font-semibold text-white mb-3">
                 Professional Development Through Testing:
               </h4>
-              <p className="text-ios-callout text-white/80 mb-3">
+              <p className="text-ios-callout text-white mb-3">
                 Mastering test equipment use in AM2 builds skills essential for career progression:
               </p>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1084,25 +1084,25 @@ const AM2Module5Section3 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Systematic diagnostic thinking
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Precision in measurement techniques
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Understanding of electrical principles
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Quality assurance mindset
                       </span>
                     </li>
@@ -1115,25 +1115,25 @@ const AM2Module5Section3 = () => {
                   <ul className="space-y-1">
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Clear communication with clients
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Accurate record keeping
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Safety-first mentality
                       </span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-elec-yellow">•</span>
-                      <span className="text-ios-footnote text-white/70">
+                      <span className="text-ios-footnote text-white">
                         Continuous improvement approach
                       </span>
                     </li>
@@ -1155,25 +1155,25 @@ const AM2Module5Section3 = () => {
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
+                  <span className="text-ios-footnote text-white">
                     Familiarise with MFT controls before assessment
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
+                  <span className="text-ios-footnote text-white">
                     Practice until settings are second nature
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
+                  <span className="text-ios-footnote text-white">
                     Think before you test - which fault type suspected?
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
+                  <span className="text-ios-footnote text-white">
                     Handle equipment neatly - keep leads tidy
                   </span>
                 </li>
@@ -1188,25 +1188,25 @@ const AM2Module5Section3 = () => {
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
+                  <span className="text-ios-footnote text-white">
                     Work circuit by circuit - don't jump around
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
+                  <span className="text-ios-footnote text-white">
                     Explain what you're doing clearly to assessor
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
+                  <span className="text-ios-footnote text-white">
                     Record results immediately - don't repeat tests
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
+                  <span className="text-ios-footnote text-white">
                     Stay calm and methodical under pressure
                   </span>
                 </li>
@@ -1223,25 +1223,25 @@ const AM2Module5Section3 = () => {
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
+                  <span className="text-ios-footnote text-white">
                     "I'm carrying out an insulation resistance test between line and neutral"
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
+                  <span className="text-ios-footnote text-white">
                     "Reading shows 0.02MOhms indicating a short circuit"
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
+                  <span className="text-ios-footnote text-white">
                     "Zeroing test leads to remove lead resistance"
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
+                  <span className="text-ios-footnote text-white">
                     "Proving voltage indicator before isolation"
                   </span>
                 </li>
@@ -1256,25 +1256,25 @@ const AM2Module5Section3 = () => {
               <ul className="space-y-1">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
+                  <span className="text-ios-footnote text-white">
                     Swapping settings repeatedly
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
+                  <span className="text-ios-footnote text-white">
                     Using wrong test for suspected fault
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
+                  <span className="text-ios-footnote text-white">
                     Forgetting to disconnect equipment
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-footnote text-white/70">
+                  <span className="text-ios-footnote text-white">
                     Not recording results immediately
                   </span>
                 </li>
@@ -1290,15 +1290,15 @@ const AM2Module5Section3 = () => {
               <h4 className="text-ios-headline font-semibold text-red-200 mb-3">
                 Example 1: Lead Zeroing Error
               </h4>
-              <p className="text-ios-callout text-white/80 mb-2">
+              <p className="text-ios-callout text-white mb-2">
                 <strong className="text-white">Scenario:</strong> Candidate forgot to zero
                 continuity leads before testing.
               </p>
-              <p className="text-ios-callout text-white/80 mb-2">
+              <p className="text-ios-callout text-white mb-2">
                 <strong className="text-white">Result:</strong> Reading showed 0.7Ohms on CPC loop
                 instead of actual 0.05Ohms.
               </p>
-              <p className="text-ios-callout text-white/80 font-medium">
+              <p className="text-ios-callout text-white font-medium">
                 <strong className="text-white">Outcome:</strong> Assessor flagged as incorrect -
                 marks lost for basic error.
               </p>
@@ -1308,15 +1308,15 @@ const AM2Module5Section3 = () => {
               <h4 className="text-ios-headline font-semibold text-red-200 mb-3">
                 Example 2: Equipment Not Disconnected
               </h4>
-              <p className="text-ios-callout text-white/80 mb-2">
+              <p className="text-ios-callout text-white mb-2">
                 <strong className="text-white">Scenario:</strong> Candidate performed insulation
                 resistance without disconnecting lamps.
               </p>
-              <p className="text-ios-callout text-white/80 mb-2">
+              <p className="text-ios-callout text-white mb-2">
                 <strong className="text-white">Result:</strong> Low reading due to lamp circuits,
                 potential equipment damage.
               </p>
-              <p className="text-ios-callout text-white/80 font-medium">
+              <p className="text-ios-callout text-white font-medium">
                 <strong className="text-white">Outcome:</strong> Assessor marked down for procedure
                 error and false reading.
               </p>
@@ -1326,15 +1326,15 @@ const AM2Module5Section3 = () => {
               <h4 className="text-ios-headline font-semibold text-green-200 mb-3">
                 Example 3: Professional Practice
               </h4>
-              <p className="text-ios-callout text-white/80 mb-2">
+              <p className="text-ios-callout text-white mb-2">
                 <strong className="text-white">Scenario:</strong> Candidate used correct GS38 leads,
                 proved tester before/after use.
               </p>
-              <p className="text-ios-callout text-white/80 mb-2">
+              <p className="text-ios-callout text-white mb-2">
                 <strong className="text-white">Process:</strong> Explained results clearly and
                 demonstrated systematic approach.
               </p>
-              <p className="text-ios-callout text-white/80 font-medium">
+              <p className="text-ios-callout text-white font-medium">
                 <strong className="text-white">Outcome:</strong> Full marks for safety compliance
                 and professional method.
               </p>
@@ -1344,15 +1344,15 @@ const AM2Module5Section3 = () => {
               <h4 className="text-ios-headline font-semibold text-amber-200 mb-3">
                 Example 4: Industry Safety Lesson
               </h4>
-              <p className="text-ios-callout text-white/80 mb-2">
+              <p className="text-ios-callout text-white mb-2">
                 <strong className="text-white">Scenario:</strong> In industry, an electrician used
                 damaged probes with exposed tips.
               </p>
-              <p className="text-ios-callout text-white/80 mb-2">
+              <p className="text-ios-callout text-white mb-2">
                 <strong className="text-white">Result:</strong> Arc flash occurred causing serious
                 burns and equipment damage.
               </p>
-              <p className="text-ios-callout text-white/80 font-medium">
+              <p className="text-ios-callout text-white font-medium">
                 <strong className="text-white">Lesson:</strong> Same unsafe practice in AM2 equals
                 instant fail - safety is non-negotiable.
               </p>
@@ -1368,7 +1368,7 @@ const AM2Module5Section3 = () => {
                 <h4 className="text-ios-headline font-semibold text-white mb-2">
                   Q{index + 1}: {faq.question}
                 </h4>
-                <p className="text-ios-callout text-white/80 leading-relaxed">{faq.answer}</p>
+                <p className="text-ios-callout text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1384,34 +1384,34 @@ const AM2Module5Section3 = () => {
               <ul className="space-y-2">
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Selecting</strong> the right instrument for the
                     fault
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Using</strong> GS38-compliant probes and safe
                     handling
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Setting up</strong> instruments correctly before
                     testing
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Recording</strong> real results, not guesses
                   </span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-elec-yellow">•</span>
-                  <span className="text-ios-callout text-white/80">
+                  <span className="text-ios-callout text-white">
                     <strong className="text-white">Working</strong> confidently and neatly under
                     time pressure
                   </span>
@@ -1421,7 +1421,7 @@ const AM2Module5Section3 = () => {
 
             <div className="bg-amber-950/20 border border-amber-800/30 rounded-xl p-4">
               <h4 className="text-ios-headline font-semibold text-amber-200 mb-3">Remember:</h4>
-              <p className="text-ios-callout text-white/80">
+              <p className="text-ios-callout text-white">
                 Unsafe or sloppy tester use can lose you marks - or fail you outright. The assessor
                 is evaluating not just your technical knowledge, but your professional competence
                 and safety awareness.

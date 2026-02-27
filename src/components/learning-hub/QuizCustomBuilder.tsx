@@ -35,7 +35,7 @@ const QuizCustomBuilder = () => {
             <h4 className="font-medium text-foreground">Quiz Settings:</h4>
             <div className="space-y-3">
               <div>
-                <label className="block text-sm text-white/80 mb-1">Number of Questions</label>
+                <label className="block text-sm text-white mb-1">Number of Questions</label>
                 <select className="w-full p-2 bg-muted border border-border rounded text-foreground">
                   <option>10</option>
                   <option>20</option>
@@ -43,7 +43,7 @@ const QuizCustomBuilder = () => {
                 </select>
               </div>
               <div>
-                <label className="block text-sm text-white/80 mb-1">Difficulty Level</label>
+                <label className="block text-sm text-white mb-1">Difficulty Level</label>
                 <select className="w-full p-2 bg-muted border border-border rounded text-foreground">
                   <option>Mixed</option>
                   <option>Beginner</option>

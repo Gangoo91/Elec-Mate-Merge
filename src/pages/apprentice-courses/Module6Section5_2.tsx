@@ -167,7 +167,7 @@ const Module6Section5_2 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -185,13 +185,13 @@ const Module6Section5_2 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 6</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 6.5.2</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 6.5.2</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Test Equipment and Safety Considerations
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Understanding the correct equipment and safety precautions for insulation resistance
               testing
             </p>
@@ -199,12 +199,12 @@ const Module6Section5_2 = () => {
 
           {/* Summary Box */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
-            <p className="text-white/90 text-sm leading-relaxed mb-3">
+            <p className="text-white text-sm leading-relaxed mb-3">
               <strong className="text-elec-yellow">In 30 seconds:</strong> Use insulation resistance
               tester (megger). Always isolate and prove dead first. Disconnect sensitive equipment
               before testing. Discharge circuit after testing.
             </p>
-            <ul className="text-white/80 text-sm space-y-1">
+            <ul className="text-white text-sm space-y-1">
               <li>
                 • <strong>Spot:</strong> Calibrated tester, good test leads, warning lights
               </li>
@@ -223,8 +223,8 @@ const Module6Section5_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <div className="text-white/80 space-y-3 leading-relaxed">
-              <p className="text-white/70 mb-4">
+            <div className="text-white space-y-3 leading-relaxed">
+              <p className="text-white mb-4">
                 By the end of this subsection, learners will be able to:
               </p>
               <ul className="space-y-2">
@@ -258,7 +258,7 @@ const Module6Section5_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Introduction
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Before carrying out insulation resistance (IR) testing, electricians must be
                 familiar with the correct equipment and understand the safety precautions involved.
@@ -274,7 +274,7 @@ const Module6Section5_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Test Instruments for IR Testing
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 The main instrument used is the insulation resistance tester, often referred to as a
                 "megger." This device applies a high DC voltage (commonly 250V, 500V, or 1000V
@@ -308,7 +308,7 @@ const Module6Section5_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Preparing for Safe Testing
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Before connecting the tester, the circuit must be isolated and proved dead. This
                 involves switching off the supply, locking it off where possible, and verifying with
@@ -345,7 +345,7 @@ const Module6Section5_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Safe Use of Test Equipment
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 When using an insulation resistance tester, always connect the leads securely to the
                 conductors under test. The tester will generate a high DC voltage, so it should only
@@ -378,7 +378,7 @@ const Module6Section5_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Risks and Safety Considerations
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <h3 className="font-medium text-red-400 mb-3">Main Risks During IR Testing</h3>
                 <ul className="text-sm space-y-2">
@@ -428,7 +428,7 @@ const Module6Section5_2 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Practical Guidance
             </h2>
-            <div className="text-white/80 space-y-3 leading-relaxed">
+            <div className="text-white space-y-3 leading-relaxed">
               <div className="flex items-start gap-2">
                 <CheckCircle className="w-4 h-4 text-elec-yellow flex-shrink-0 mt-1" />
                 <span>Always verify that the circuit is isolated before connecting the tester</span>
@@ -460,7 +460,7 @@ const Module6Section5_2 = () => {
             </h2>
             <div className="p-4 rounded-lg bg-amber-500/10 border border-amber-500/20">
               <p className="text-white font-medium mb-3">Commercial Site - Equipment Damage</p>
-              <div className="text-white/80 text-sm space-y-3 leading-relaxed">
+              <div className="text-white text-sm space-y-3 leading-relaxed">
                 <p>
                   On a commercial site, an apprentice connected an insulation resistance tester to a
                   circuit without disconnecting several computers still plugged into sockets. The
@@ -495,7 +495,7 @@ const Module6Section5_2 = () => {
                   <AccordionTrigger className="text-white hover:text-elec-yellow text-left text-sm py-4">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="text-white/70 text-sm pb-4">
+                  <AccordionContent className="text-white text-sm pb-4">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -512,25 +512,25 @@ const Module6Section5_2 = () => {
             <div className="grid grid-cols-2 gap-3">
               <div className="p-4 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
                 <h3 className="font-medium text-elec-yellow mb-2 text-sm">Equipment</h3>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Use calibrated insulation resistance tester with correct voltage ratings
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                 <h3 className="font-medium text-green-400 mb-2 text-sm">Preparation</h3>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Always isolate, prove dead, and disconnect sensitive equipment
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                 <h3 className="font-medium text-blue-400 mb-2 text-sm">Safety</h3>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Follow manufacturer instructions, use PPE, clear all personnel
                 </p>
               </div>
               <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                 <h3 className="font-medium text-red-400 mb-2 text-sm">After Testing</h3>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   Discharge circuit to earth to remove stored energy
                 </p>
               </div>
@@ -550,7 +550,7 @@ const Module6Section5_2 = () => {
           <nav className="flex flex-col-reverse sm:flex-row sm:justify-between gap-3 pt-8 border-t border-white/10">
             <Button
               variant="ghost"
-              className="text-white/70 hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
+              className="text-white hover:text-white hover:bg-white/5 min-h-[48px] touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="../5-1">

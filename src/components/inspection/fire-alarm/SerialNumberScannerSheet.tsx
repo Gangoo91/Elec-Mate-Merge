@@ -256,7 +256,7 @@ export function SerialNumberScannerSheet({
               <Button
                 variant="ghost"
                 size="icon"
-                className="text-white/60 hover:text-white hover:bg-white/10"
+                className="text-white hover:text-white hover:bg-white/10"
                 onClick={() => onOpenChange(false)}
               >
                 <X className="h-5 w-5" />
@@ -271,7 +271,7 @@ export function SerialNumberScannerSheet({
                 <Loader2 className="h-10 w-10 text-elec-yellow animate-spin" />
               </div>
               <p className="text-white font-semibold text-lg">Reading Serial Number...</p>
-              <p className="text-white/60 text-sm mt-2">AI is extracting the text</p>
+              <p className="text-white text-sm mt-2">AI is extracting the text</p>
             </div>
           )}
 
@@ -294,7 +294,7 @@ export function SerialNumberScannerSheet({
                     {/* Target box */}
                     <div className="w-[85%] h-24 border-2 border-elec-yellow rounded-xl relative">
                       <div className="absolute -top-8 left-0 right-0 text-center">
-                        <span className="text-white/90 text-sm bg-black/60 px-3 py-1 rounded-full">
+                        <span className="text-white text-sm bg-black/60 px-3 py-1 rounded-full">
                           Position serial number here
                         </span>
                       </div>
@@ -312,7 +312,7 @@ export function SerialNumberScannerSheet({
                   <div className="absolute inset-0 flex items-center justify-center bg-black">
                     <div className="flex flex-col items-center gap-3">
                       <Loader2 className="h-8 w-8 text-elec-yellow animate-spin" />
-                      <p className="text-white/70">Starting camera...</p>
+                      <p className="text-white">Starting camera...</p>
                     </div>
                   </div>
                 )}
@@ -325,7 +325,7 @@ export function SerialNumberScannerSheet({
                         <AlertCircle className="h-8 w-8 text-red-400" />
                       </div>
                       <p className="text-white font-medium mb-2">Camera Error</p>
-                      <p className="text-white/60 text-sm mb-6">{error}</p>
+                      <p className="text-white text-sm mb-6">{error}</p>
                       <Button
                         onClick={startCamera}
                         className="bg-elec-yellow text-black hover:bg-elec-yellow/90"

@@ -228,7 +228,7 @@ const HNCModule2Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section4">
@@ -250,7 +250,7 @@ const HNCModule2Section4_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Illumination Calculations
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             The lumen method, point-by-point calculations, and CIBSE recommendations for building
             services lighting design
           </p>
@@ -338,7 +338,7 @@ const HNCModule2Section4_2 = () => {
                 The Lumen Method Formula
               </p>
               <p className="font-mono text-center text-lg mb-2">N = (E × A) / (Φ × UF × MF)</p>
-              <div className="text-xs text-white/70 grid grid-cols-2 gap-2 mt-3">
+              <div className="text-xs text-white grid grid-cols-2 gap-2 mt-3">
                 <div>N = number of luminaires</div>
                 <div>E = maintained illuminance (lux)</div>
                 <div>A = area of working plane (m²)</div>
@@ -432,7 +432,7 @@ const HNCModule2Section4_2 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Room Index Formula</p>
               <p className="font-mono text-center text-lg mb-2">RI = (L × W) / [Hm × (L + W)]</p>
-              <div className="text-xs text-white/70 text-center mt-2">
+              <div className="text-xs text-white text-center mt-2">
                 L = length, W = width, Hm = mounting height above working plane (typically 0.85m
                 above floor)
               </div>
@@ -507,7 +507,7 @@ const HNCModule2Section4_2 = () => {
                   </tbody>
                 </table>
               </div>
-              <p className="text-xs text-white/60 mt-2">
+              <p className="text-xs text-white mt-2">
                 Note: Actual UF values vary by luminaire type - always use manufacturer's
                 photometric data
               </p>
@@ -540,7 +540,7 @@ const HNCModule2Section4_2 = () => {
                 Maintenance Factor Components
               </p>
               <p className="font-mono text-center text-lg mb-2">MF = LLMF × LSF × LMF × RSMF</p>
-              <div className="text-xs text-white/70 grid sm:grid-cols-2 gap-2 mt-3">
+              <div className="text-xs text-white grid sm:grid-cols-2 gap-2 mt-3">
                 <div>
                   <strong>LLMF:</strong> Lamp Lumen Maintenance Factor
                 </div>
@@ -677,7 +677,7 @@ const HNCModule2Section4_2 = () => {
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Point-by-Point Formula</p>
               <p className="font-mono text-center text-lg mb-2">E = (I × cos θ) / d²</p>
-              <div className="text-xs text-white/70 text-center mt-2">
+              <div className="text-xs text-white text-center mt-2">
                 E = illuminance (lux), I = intensity towards point (cd), θ = angle to normal, d =
                 distance (m)
               </div>
@@ -709,11 +709,11 @@ const HNCModule2Section4_2 = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">E = I cos³θ / H²</p>
-                  <p className="text-white/70 text-xs">Using mounting height H</p>
+                  <p className="text-white text-xs">Using mounting height H</p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-bold text-elec-yellow mb-1">E = I H / d³</p>
-                  <p className="text-white/70 text-xs">For horizontal surface below source</p>
+                  <p className="text-white text-xs">For horizontal surface below source</p>
                 </div>
               </div>
             </div>
@@ -758,7 +758,7 @@ const HNCModule2Section4_2 = () => {
                 requiring 400 lux maintained. Luminaires output 4000lm each. Ceiling height 3m,
                 working plane 0.85m. Reflectances C70 W50 F20.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Calculate room index</p>
                 <p>Hm = 3.0 - 0.85 = 2.15m</p>
                 <p>RI = (15 × 10) / [2.15 × (15 + 10)]</p>
@@ -774,7 +774,7 @@ const HNCModule2Section4_2 = () => {
                 <p>
                   N = 60000 / 1856 = <strong>32.3 → 33 luminaires</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Arrange in 11 × 3 grid or similar regular array
                 </p>
               </div>
@@ -789,7 +789,7 @@ const HNCModule2Section4_2 = () => {
                 direction is mounted 2.5m above a display. The display is 1.5m horizontally from
                 directly below the downlight. Calculate the illuminance on the display.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Step 1: Calculate geometry</p>
                 <p>H = 2.5m, horizontal distance = 1.5m</p>
                 <p>
@@ -816,13 +816,13 @@ const HNCModule2Section4_2 = () => {
                 <strong>Question:</strong> Calculate the maintenance factor for an LED installation
                 in a clean office. LLMF = 0.9, LSF = 1.0, LMF = 0.9, RSMF = 0.95.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>MF = LLMF × LSF × LMF × RSMF</p>
                 <p>MF = 0.9 × 1.0 × 0.9 × 0.95</p>
                 <p>
                   MF = <strong>0.77 (use 0.8)</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This means the installation will deliver 77% of initial lumens at end of
                   maintenance cycle
                 </p>
@@ -916,7 +916,7 @@ const HNCModule2Section4_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -962,7 +962,7 @@ const HNCModule2Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section4-1">

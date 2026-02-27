@@ -219,8 +219,8 @@ const EnergyEfficiencyModule3Section5: React.FC = () => {
             </ul>
           </div>
           <div className="p-4 rounded-lg bg-white/5 border-l-2 border-white/30">
-            <p className="text-white/80 text-sm font-medium mb-2">You Will Learn</p>
-            <ul className="text-sm text-white/70 space-y-1">
+            <p className="text-white text-sm font-medium mb-2">You Will Learn</p>
+            <ul className="text-sm text-white space-y-1">
               <li>• BS EN 16247 report requirements</li>
               <li>• Create energy balance diagrams</li>
               <li>• Calculate carbon footprints</li>
@@ -257,32 +257,32 @@ const EnergyEfficiencyModule3Section5: React.FC = () => {
               <div className="space-y-3">
                 <div className="border-l-2 border-elec-yellow pl-4">
                   <p className="font-medium text-white">Executive Summary</p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Ranked recommendations with savings estimates, investment costs, and key
                     findings
                   </p>
                 </div>
                 <div className="border-l-2 border-blue-400 pl-4">
                   <p className="font-medium text-white">Background and Scope</p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Audit objectives, boundaries, methodology, data sources, and limitations
                   </p>
                 </div>
                 <div className="border-l-2 border-green-400 pl-4">
                   <p className="font-medium text-white">Description of Audited Object</p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Building/process characteristics, operating patterns, energy systems overview
                   </p>
                 </div>
                 <div className="border-l-2 border-purple-400 pl-4">
                   <p className="font-medium text-white">Energy Analysis</p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Consumption breakdown, energy balance, benchmarking, significant energy uses
                   </p>
                 </div>
                 <div className="border-l-2 border-orange-400 pl-4">
                   <p className="font-medium text-white">Improvement Opportunities</p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Detailed recommendations with technical specifications, costs, and savings
                   </p>
                 </div>
@@ -361,7 +361,7 @@ const EnergyEfficiencyModule3Section5: React.FC = () => {
               <div className="space-y-4">
                 <div className="bg-white/5 rounded p-3">
                   <p className="font-medium text-white mb-2">1. Key Findings (2-3 sentences)</p>
-                  <p className="text-white/70 text-sm italic">
+                  <p className="text-white text-sm italic">
                     "The audit identified annual energy costs of £245,000 with potential savings of
                     £52,000 (21%). Implementation of all recommendations would reduce carbon
                     emissions by 89 tonnes CO₂e annually."
@@ -472,7 +472,7 @@ const EnergyEfficiencyModule3Section5: React.FC = () => {
 
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-medium text-elec-yellow mb-3">Understanding Sankey Diagrams</h4>
-              <p className="text-white/70 text-sm mb-4">
+              <p className="text-white text-sm mb-4">
                 Sankey diagrams visualise energy flows where the width of each arrow is proportional
                 to the energy quantity. They immediately show where the biggest losses occur.
               </p>
@@ -492,18 +492,18 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
               <h4 className="font-medium text-white mb-3">Energy Balance Calculation Example</h4>
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between text-white">
-                  <span className="text-white/70">Electricity from meter:</span>
+                  <span className="text-white">Electricity from meter:</span>
                   <span>200,000 kWh</span>
                 </div>
                 <div className="flex justify-between text-white">
-                  <span className="text-white/70">Sub-metered loads total:</span>
+                  <span className="text-white">Sub-metered loads total:</span>
                   <span>185,000 kWh</span>
                 </div>
                 <div className="border-t border-white/20 pt-2 flex justify-between">
-                  <span className="text-white/70">Unaccounted load:</span>
+                  <span className="text-white">Unaccounted load:</span>
                   <span className="text-orange-400">15,000 kWh (7.5%)</span>
                 </div>
-                <p className="text-white/60 text-xs italic mt-2">
+                <p className="text-white text-xs italic mt-2">
                   Unaccounted loads above 10% require investigation - possible unmeasured equipment,
                   meter errors, or energy theft
                 </p>
@@ -590,16 +590,16 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
                 </tbody>
               </table>
             </div>
-            <p className="text-white/60 text-xs">
+            <p className="text-white text-xs">
               * Always check for latest factors at gov.uk - these decrease annually as the grid
               decarbonises
             </p>
 
             <div className="bg-white/5 rounded-lg p-4">
               <h4 className="font-medium text-elec-yellow mb-3">Carbon Calculation Example</h4>
-              <p className="text-white/70 text-sm mb-3">Building annual consumption:</p>
+              <p className="text-white text-sm mb-3">Building annual consumption:</p>
               <div className="space-y-2 text-sm">
-                <div className="grid grid-cols-4 gap-2 text-white/70 border-b border-white/10 pb-2">
+                <div className="grid grid-cols-4 gap-2 text-white border-b border-white/10 pb-2">
                   <span>Fuel</span>
                   <span className="text-right">Consumption</span>
                   <span className="text-right">Factor</span>
@@ -649,7 +649,7 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
                     <p>
                       <strong>Scope 3:</strong> All other indirect emissions in the value chain
                     </p>
-                    <p className="text-white/60 italic mt-2">
+                    <p className="text-white italic mt-2">
                       Energy audits typically focus on Scope 1 and 2 emissions as these are directly
                       controllable.
                     </p>
@@ -698,7 +698,7 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
                     Payback (years) = Capital Cost (£) ÷ Annual Savings (£/year)
                   </code>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Quick to calculate but ignores time value of money and savings beyond payback
                   period
                 </p>
@@ -711,7 +711,7 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
                     ROI (%) = (Annual Savings ÷ Capital Cost) × 100
                   </code>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Expressed as percentage - easy to compare with other investments
                 </p>
               </div>
@@ -723,7 +723,7 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
                     NPV = Σ [Cash Flow / (1 + r)^n] - Initial Investment
                   </code>
                 </div>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   Accounts for time value of money using discount rate (r). Positive NPV = good
                   investment. HM Treasury Green Book recommends 3.5% for public sector projects
                   under 30 years.
@@ -732,7 +732,7 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
 
               <div className="bg-white/5 rounded-lg p-4">
                 <h4 className="font-medium text-white mb-2">Internal Rate of Return (IRR)</h4>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   The discount rate at which NPV equals zero. Higher IRR = better investment.
                   Compare against organisation's hurdle rate (minimum acceptable return).
                 </p>
@@ -747,7 +747,7 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <p className="font-medium text-white mb-2">Project Details</p>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>Capital cost: £25,000</li>
                     <li>Energy saving: 45,000 kWh/year</li>
                     <li>Electricity price: £0.25/kWh</li>
@@ -818,7 +818,7 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
             <div className="space-y-4">
               <div className="border-l-2 border-elec-yellow pl-4">
                 <h4 className="font-medium text-white">Tailor to Your Audience</h4>
-                <ul className="text-white/70 text-sm mt-2 space-y-1">
+                <ul className="text-white text-sm mt-2 space-y-1">
                   <li>
                     • <strong className="text-white">Board/Finance:</strong> Focus on ROI, payback,
                     risk mitigation
@@ -840,7 +840,7 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
 
               <div className="border-l-2 border-blue-400 pl-4">
                 <h4 className="font-medium text-white">Visual Communication</h4>
-                <ul className="text-white/70 text-sm mt-2 space-y-1">
+                <ul className="text-white text-sm mt-2 space-y-1">
                   <li>• Use graphs and charts rather than tables of numbers</li>
                   <li>• Include photographs of issues found</li>
                   <li>• Show before/after comparisons where possible</li>
@@ -854,7 +854,7 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
                   <p className="font-medium text-elec-yellow">
                     Recommendation 1: LED Lighting Upgrade
                   </p>
-                  <div className="mt-2 space-y-1 text-white/70">
+                  <div className="mt-2 space-y-1 text-white">
                     <p>
                       <strong className="text-white">What:</strong> Replace T8 fluorescents with LED
                       panels
@@ -976,7 +976,7 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
 
             <div className="mt-4 pt-4 border-t border-white/20">
               <h4 className="font-semibold text-white mb-2">Key Sources</h4>
-              <ul className="text-sm text-white/80 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>• DESNZ GHG Conversion Factors: gov.uk</li>
                 <li>• BS EN 16247 Parts 1-5: Energy audits standard</li>
                 <li>• CIBSE TM54: Evaluating operational energy use</li>
@@ -1006,7 +1006,7 @@ Elec (200,000 kWh) ────┬───► Lighting (60,000 kWh)
               <div key={index} className="bg-white/5 rounded-lg overflow-hidden">
                 <div className="p-4">
                   <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                  <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                  <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
                 </div>
               </div>
             ))}

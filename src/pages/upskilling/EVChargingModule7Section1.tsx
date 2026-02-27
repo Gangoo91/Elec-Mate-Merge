@@ -92,7 +92,7 @@ const EVChargingModule7Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/ev-charging-module-7">
@@ -113,7 +113,7 @@ const EVChargingModule7Section1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             OZEV and Workplace Charging Scheme
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding government incentives for EV charging infrastructure
           </p>
         </header>
@@ -246,7 +246,7 @@ const EVChargingModule7Section1 = () => {
 
             <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
               <p className="text-sm font-medium text-red-400 mb-2">Scheme Status</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 WCS availability varies — always check the current status on the OZEV website before
                 advising clients. Schemes can close or change without warning.
               </p>
@@ -311,7 +311,7 @@ const EVChargingModule7Section1 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-1">
                   1. Pre-Application Checks
                 </p>
-                <p className="text-xs text-white/80">
+                <p className="text-xs text-white">
                   Verify eligibility, site survey, electrical assessment, DNO capacity check
                 </p>
               </div>
@@ -319,7 +319,7 @@ const EVChargingModule7Section1 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-1">
                   2. Online Application
                 </p>
-                <p className="text-xs text-white/80">
+                <p className="text-xs text-white">
                   Complete form, upload site plans, provide installer certifications
                 </p>
               </div>
@@ -327,13 +327,13 @@ const EVChargingModule7Section1 = () => {
                 <p className="text-sm font-medium text-elec-yellow/80 mb-1">
                   3. Installation Phase
                 </p>
-                <p className="text-xs text-white/80">
+                <p className="text-xs text-white">
                   Use OZEV approved equipment, complete testing, issue certificates
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                 <p className="text-sm font-medium text-elec-yellow/80 mb-1">4. Grant Claim</p>
-                <p className="text-xs text-white/80">
+                <p className="text-xs text-white">
                   Submit evidence, final invoices, installation photos for reimbursement
                 </p>
               </div>
@@ -341,7 +341,7 @@ const EVChargingModule7Section1 = () => {
 
             <div className="my-6">
               <p className="text-sm font-medium text-white mb-2">Key Timelines:</p>
-              <ul className="text-sm text-white/80 space-y-1 ml-4">
+              <ul className="text-sm text-white space-y-1 ml-4">
                 <li>• Installation: Within 6 months of approval</li>
                 <li>• Evidence: Within 30 days of completion</li>
                 <li>• Processing: 4-8 weeks typical</li>
@@ -432,7 +432,7 @@ const EVChargingModule7Section1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/ev-charging-module-7">

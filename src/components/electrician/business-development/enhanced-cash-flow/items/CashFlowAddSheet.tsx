@@ -145,7 +145,7 @@ export const CashFlowAddSheet = ({ open, onOpenChange, type, onAdd }: CashFlowAd
               />
               <div>
                 <span className="text-sm font-medium text-white">Variable cost</span>
-                <p className="text-xs text-white/50">Fluctuates with business activity</p>
+                <p className="text-xs text-white">Fluctuates with business activity</p>
               </div>
             </label>
           )}
@@ -154,7 +154,7 @@ export const CashFlowAddSheet = ({ open, onOpenChange, type, onAdd }: CashFlowAd
         <div className="flex gap-3 pt-4 border-t border-white/10">
           <button
             onClick={() => onOpenChange(false)}
-            className="flex-1 h-12 rounded-xl bg-white/5 border border-white/10 text-white/70 font-medium transition-colors hover:bg-white/10"
+            className="flex-1 h-12 rounded-xl bg-white/5 border border-white/10 text-white font-medium transition-colors hover:bg-white/10"
           >
             Cancel
           </button>
@@ -167,7 +167,7 @@ export const CashFlowAddSheet = ({ open, onOpenChange, type, onAdd }: CashFlowAd
                 ? isIncome
                   ? 'bg-green-500 text-white hover:bg-green-600'
                   : 'bg-red-500 text-white hover:bg-red-600'
-                : 'bg-white/10 text-white/30 cursor-not-allowed'
+                : 'bg-white/10 text-white cursor-not-allowed'
             )}
           >
             <Plus className="h-4 w-4" />

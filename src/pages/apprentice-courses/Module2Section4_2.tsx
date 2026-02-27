@@ -153,7 +153,7 @@ const Module2Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -175,7 +175,7 @@ const Module2Section4_2 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Sources of AC and DC
           </h1>
-          <p className="text-white/70 text-base sm:text-lg max-w-2xl mx-auto">
+          <p className="text-white text-base sm:text-lg max-w-2xl mx-auto">
             Mains, generators, rectifiers, batteries, PV, inverters and UPS - how to identify,
             select and work safely
           </p>
@@ -184,7 +184,7 @@ const Module2Section4_2 = () => {
         {/* Summary Box */}
         <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
           <h2 className="text-white font-semibold mb-3">In 30 Seconds</h2>
-          <div className="grid md:grid-cols-2 gap-4 text-sm text-white/80">
+          <div className="grid md:grid-cols-2 gap-4 text-sm text-white">
             <ul className="list-disc pl-6 space-y-1">
               <li>
                 <strong>AC sources:</strong> DNO mains, alternators/generators, transformers (AC↔AC
@@ -222,8 +222,8 @@ const Module2Section4_2 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">01</span>
             Learning Outcomes
           </h2>
-          <p className="text-white/70 mb-4">By the end of this section, you'll be able to:</p>
-          <ul className="space-y-3 text-white/80">
+          <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
+          <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>
@@ -259,7 +259,7 @@ const Module2Section4_2 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">02</span>
             AC Sources - Mains, Generators and Transformers
           </h2>
-          <div className="space-y-6 text-white/80">
+          <div className="space-y-6 text-white">
             <p>
               AC sources form the foundation of UK electrical infrastructure. Understanding their
               characteristics, limitations, and applications is essential for safe design and
@@ -482,7 +482,7 @@ const Module2Section4_2 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">03</span>
             DC Sources - Batteries, Rectifiers and PV
           </h2>
-          <div className="space-y-4 text-white/80">
+          <div className="space-y-4 text-white">
             <p>
               DC sources provide steady voltage with possible ripple. Understanding their
               characteristics is essential for proper selection and safety.
@@ -536,7 +536,7 @@ const Module2Section4_2 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">04</span>
             Conversion Pathways and UPS Systems
           </h2>
-          <div className="space-y-6 text-white/80">
+          <div className="space-y-6 text-white">
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-teal-400">AC↔DC Conversion</h3>
               <div className="bg-teal-500/10 border border-teal-400/30 p-4 rounded-lg">
@@ -602,7 +602,7 @@ const Module2Section4_2 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">05</span>
             Selection Criteria and On-site Safety
           </h2>
-          <div className="space-y-6 text-white/80">
+          <div className="space-y-6 text-white">
             <div className="space-y-4">
               <h3 className="text-lg font-semibold text-amber-400">Selection Guidelines</h3>
               <div className="bg-white/5 border border-amber-400/30 p-4 rounded-lg">
@@ -673,10 +673,10 @@ const Module2Section4_2 = () => {
           <div className="space-y-6">
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
               <h3 className="font-bold text-white mb-2">Example 1: LED PSU Sizing</h3>
-              <p className="text-white/60 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 Requirement: 12V LED strip drawing 2.4A continuous
               </p>
-              <div className="space-y-1 text-sm text-white/80">
+              <div className="space-y-1 text-sm text-white">
                 <p>
                   <strong>Calculation:</strong> 2.4A + 25% headroom = 3.0A minimum PSU rating
                 </p>
@@ -696,10 +696,10 @@ const Module2Section4_2 = () => {
               <h3 className="font-bold text-white mb-2">
                 Example 2: Small PV-Hybrid System Isolation
               </h3>
-              <p className="text-white/60 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 Task: Safe isolation of PV array with battery storage for maintenance
               </p>
-              <div className="space-y-1 text-sm text-white/80">
+              <div className="space-y-1 text-sm text-white">
                 <p>
                   <strong>Step 1:</strong> Isolate DC from PV array (Section 712 procedures)
                 </p>
@@ -731,7 +731,7 @@ const Module2Section4_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
                 <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                <p className="text-sm text-white/70 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -747,42 +747,42 @@ const Module2Section4_2 = () => {
             <div className="space-y-3">
               <div className="bg-white/5 border border-white/10 p-3 rounded">
                 <p className="font-medium text-white mb-1">AC Sources</p>
-                <p className="text-white/70">
+                <p className="text-white">
                   Mains (DNO) | Generator | Transformer | Inverter (DC→AC)
                 </p>
               </div>
               <div className="bg-white/5 border border-white/10 p-3 rounded">
                 <p className="font-medium text-white mb-1">DC Sources</p>
-                <p className="text-white/70">Battery | Rectifier/SMPS | PV array | UPS DC bus</p>
+                <p className="text-white">Battery | Rectifier/SMPS | PV array | UPS DC bus</p>
               </div>
               <div className="bg-white/5 border border-white/10 p-3 rounded">
                 <p className="font-medium text-white mb-1">Conversion Paths</p>
-                <p className="text-white/70">AC →(rectifier)→ DC | DC →(inverter)→ AC</p>
+                <p className="text-white">AC →(rectifier)→ DC | DC →(inverter)→ AC</p>
               </div>
             </div>
             <div className="space-y-3">
               <div className="bg-white/5 border border-white/10 p-3 rounded">
                 <p className="font-medium text-white mb-1">UPS Types</p>
-                <p className="text-white/70">
+                <p className="text-white">
                   Offline | Line-interactive | Online (double-conversion)
                 </p>
               </div>
               <div className="bg-white/5 border border-white/10 p-3 rounded">
                 <p className="font-medium text-white mb-1">Selection Rules</p>
-                <p className="text-white/70">
+                <p className="text-white">
                   20-30% headroom | Derate for temperature | Check RCD compatibility
                 </p>
               </div>
               <div className="bg-white/5 border border-white/10 p-3 rounded">
                 <p className="font-medium text-white mb-1">Safety Notes</p>
-                <p className="text-white/70">
+                <p className="text-white">
                   Discharge stored energy | Check polarity | Follow Section 712/551/722
                 </p>
               </div>
             </div>
           </div>
           <div className="mt-4 p-3 bg-elec-yellow/10 rounded border border-elec-yellow/30">
-            <p className="text-xs sm:text-sm text-white/80">
+            <p className="text-xs sm:text-sm text-white">
               <strong>Quick Selection:</strong> PSU headroom ~25% | UPS: offline (basic), online
               (critical loads) | RCD: Check manufacturer notes for Type A/B requirements.
             </p>
@@ -799,7 +799,7 @@ const Module2Section4_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level2/module2/section4/4-1">

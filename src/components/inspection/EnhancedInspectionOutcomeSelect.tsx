@@ -74,7 +74,7 @@ const secondaryOutcomes = [
     label: 'N/A',
     icon: Circle,
     activeClass: 'bg-gray-500 text-white border-gray-500',
-    inactiveClass: 'bg-white/5 border-white/20 text-white/50 hover:bg-white/10',
+    inactiveClass: 'bg-white/5 border-white/20 text-white hover:bg-white/10',
   },
   {
     value: 'not-verified' as const,

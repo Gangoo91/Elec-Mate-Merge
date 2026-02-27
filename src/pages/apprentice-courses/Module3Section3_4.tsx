@@ -221,7 +221,7 @@ const Module3Section3_4: React.FC = () => {
           <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
             Tool Inspection and Maintenance
           </h1>
-          <p className="text-white/70">
+          <p className="text-white">
             Essential practices for safe, reliable tools and compliance with workplace safety
             regulations.
           </p>

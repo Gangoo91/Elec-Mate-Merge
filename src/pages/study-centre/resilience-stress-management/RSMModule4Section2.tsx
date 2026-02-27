@@ -213,7 +213,7 @@ export default function RSMModule4Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-4">
@@ -411,7 +411,7 @@ export default function RSMModule4Section2() {
                   <Shield className="h-5 w-5 text-rose-400" />
                   <p className="text-sm font-medium text-rose-400">What Mates in Mind Provides</p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -515,7 +515,7 @@ export default function RSMModule4Section2() {
                 <div className="space-y-3">
                   <div className="bg-white/5 border border-white/10 p-3 rounded">
                     <p className="text-xs font-medium text-rose-400 mb-1">Ask Twice</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       When someone says &ldquo;I am fine&rdquo;, ask again. &ldquo;Are you sure? You
                       seem a bit different lately.&rdquo; The first &ldquo;I am fine&rdquo; is often
                       automatic. The second question gives them permission to be honest. Research
@@ -525,7 +525,7 @@ export default function RSMModule4Section2() {
                   </div>
                   <div className="bg-white/5 border border-white/10 p-3 rounded">
                     <p className="text-xs font-medium text-rose-400 mb-1">Use Shared Experiences</p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       &ldquo;I have been feeling stressed out lately with all this overtime. How are
                       you finding it?&rdquo; Opening up about your own experience first makes it
                       safer for the other person to share. It normalises the topic and removes the
@@ -536,7 +536,7 @@ export default function RSMModule4Section2() {
                     <p className="text-xs font-medium text-rose-400 mb-1">
                       Choose the Right Moment
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       The middle of a busy site with other people around is not ideal. A quiet
                       moment in the van, during a drive to site, at a break with just the two of
                       you, or after work over a coffee are better opportunities. Privacy and
@@ -547,7 +547,7 @@ export default function RSMModule4Section2() {
                     <p className="text-xs font-medium text-rose-400 mb-1">
                       Listen More Than You Talk
                     </p>
-                    <p className="text-xs text-white/80">
+                    <p className="text-xs text-white">
                       When someone opens up, resist the urge to fix, advise, or share your own
                       similar experience. Just listen. Nod. Say &ldquo;that sounds really
                       tough&rdquo; or &ldquo;I can see why you are struggling with that.&rdquo;
@@ -605,7 +605,7 @@ export default function RSMModule4Section2() {
                     <UserCheck className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">1. Informal Check-Ins</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The simplest and most widespread form of peer support. Asking &ldquo;How are you
                     doing?&rdquo; and genuinely listening to the answer. Having a proper
                     conversation at break time rather than everyone sitting on their phones.
@@ -620,7 +620,7 @@ export default function RSMModule4Section2() {
                     <Users className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">2. Buddy Systems</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Pairing workers together with explicit responsibility for each other&rsquo;s
                     wellbeing. This is particularly effective for new starters, apprentices, and
                     people returning to work after absence. The buddy provides a named, approachable
@@ -635,7 +635,7 @@ export default function RSMModule4Section2() {
                     <HandHeart className="h-5 w-5 text-rose-400" />
                     <p className="text-sm font-medium text-rose-400">3. Mental Health Champions</p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Workers who receive specific training (through programmes like Mates in Mind,
                     Mental Health First Aid, or similar) to recognise the signs of mental health
                     difficulties and provide initial support. Mental health champions are not
@@ -688,7 +688,7 @@ export default function RSMModule4Section2() {
                     When to Signpost to Professional Help
                   </p>
                 </div>
-                <ul className="text-sm text-white/80 space-y-2">
+                <ul className="text-sm text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-rose-400 flex-shrink-0" />
                     <span>
@@ -730,7 +730,7 @@ export default function RSMModule4Section2() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <p className="text-sm font-medium text-white mb-2">How to Signpost Sensitively</p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Suggesting professional help can feel awkward, but framing it correctly makes a
                   significant difference. Try: &ldquo;It sounds like you are dealing with a lot. I
                   am always here to listen, but I think it might also help to talk to someone who
@@ -768,7 +768,7 @@ export default function RSMModule4Section2() {
                       Lighthouse Club &mdash; 0345 605 1956
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     The only charity dedicated exclusively to the construction community. Provides
                     financial emergency assistance, emotional and wellbeing support, occupational
                     health advice, and legal guidance. Available for all construction workers and
@@ -783,7 +783,7 @@ export default function RSMModule4Section2() {
                       Samaritans &mdash; 116 123 (free, 24/7)
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Available 24 hours a day, 365 days a year. You do not have to be suicidal to
                     call the Samaritans &mdash; they are there for anyone who is struggling,
                     overwhelmed or just needs someone to talk to. Calls are free and completely
@@ -798,7 +798,7 @@ export default function RSMModule4Section2() {
                       CALM (Campaign Against Living Miserably) &mdash; 0800 58 58 58
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     A helpline specifically for men (though not exclusively), available
                     5pm&ndash;midnight every day. CALM understands that men often find it harder to
                     talk about mental health and has trained advisors who can help. They also have a
@@ -813,7 +813,7 @@ export default function RSMModule4Section2() {
                       Andy&rsquo;s Man Club &mdash; Free Weekly Groups
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     A network of free peer support groups for men, meeting weekly in communities
                     across the UK. No referral needed, no cost, no commitment &mdash; just turn up.
                     The groups follow a simple format: men sit in a circle and talk about what is on
@@ -829,7 +829,7 @@ export default function RSMModule4Section2() {
                       Construction Industry Helpline &mdash; 0345 605 1956
                     </p>
                   </div>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Operated by the Lighthouse Club, providing 24/7 free and confidential support
                     including crisis intervention, legal and financial advice, tax support, family
                     mediation, and occupational health guidance. Available to anyone working in, or
@@ -842,7 +842,7 @@ export default function RSMModule4Section2() {
                 <p className="text-sm font-medium text-white mb-2">
                   Your GP: The Gateway to NHS Support
                 </p>
-                <p className="text-sm text-white/80">
+                <p className="text-sm text-white">
                   Your GP is the primary route to NHS mental health services. They can assess your
                   situation, prescribe medication if appropriate, refer you for talking therapies
                   (such as CBT through the NHS Talking Therapies programme), or refer to specialist
@@ -892,7 +892,7 @@ export default function RSMModule4Section2() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../rsm-module-4">

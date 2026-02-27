@@ -199,7 +199,7 @@ const Level3Module3Section3_1 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section3">
@@ -218,7 +218,7 @@ const Level3Module3Section3_1 = () => {
         <h1 className="text-2xl md:text-3xl font-bold text-white mb-6">
           3.1 Magnetic Fields and Flux
         </h1>
-        <p className="text-xl text-white/70 mb-8">
+        <p className="text-xl text-white mb-8">
           Understanding magnetic field strength, flux density and the fundamental principles of
           magnetic circuits
         </p>
@@ -229,7 +229,7 @@ const Level3Module3Section3_1 = () => {
             <Zap className="w-5 h-5" />
             Quick Summary
           </h3>
-          <ul className="text-white/80 space-y-2">
+          <ul className="text-white space-y-2">
             <li>Magnetic flux (Phi) measured in Webers (Wb) - total field through a surface</li>
             <li>Flux density B = Phi / A, measured in Tesla (T) - field concentration</li>
             <li>MMF (F) = N x I ampere-turns - the magnetic driving force</li>
@@ -241,7 +241,7 @@ const Level3Module3Section3_1 = () => {
         {/* Learning Outcomes */}
         <div className="bg-blue-900/30 border border-blue-500/50 rounded-lg p-6 mb-8">
           <h3 className="text-lg font-semibold text-blue-400 mb-3">Learning Outcomes</h3>
-          <ul className="text-white/80 space-y-2">
+          <ul className="text-white space-y-2">
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 mt-1 text-green-400 flex-shrink-0" />
               Define magnetic flux, flux density and their units of measurement
@@ -280,7 +280,7 @@ const Level3Module3Section3_1 = () => {
               Magnetic Flux and Flux Density
             </h2>
             <div className="bg-[#242424] rounded-lg p-6 border border-white/10">
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 <strong>Magnetic flux (Phi)</strong> represents the total magnetic field passing
                 through a given surface. It can be visualised as the total number of magnetic field
                 lines passing through an area.
@@ -288,41 +288,41 @@ const Level3Module3Section3_1 = () => {
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Magnetic Flux</h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Symbol:</strong> Phi (Greek letter phi)
                 </p>
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Unit:</strong> Weber (Wb)
                 </p>
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Definition:</strong> 1 Weber = 1 Volt-second
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   A Weber is the flux that, when reduced to zero in one second, induces 1 volt in a
                   single-turn coil.
                 </p>
               </div>
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Flux Density</h4>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 <strong>Flux density (B)</strong> is the flux per unit area - how concentrated the
                 magnetic field is at a point.
               </p>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4 text-center">
                 <p className="text-green-400 font-mono text-lg mb-2">B = Phi / A</p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Where B = flux density (T), Phi = flux (Wb), A = area (m squared)
                 </p>
               </div>
 
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Unit:</strong> Tesla (T) = Wb/m squared
                 </p>
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Typical values:</strong>
                 </p>
-                <ul className="text-white/70 text-sm space-y-1 ml-4">
+                <ul className="text-white text-sm space-y-1 ml-4">
                   <li>Earth's magnetic field: approximately 50 microTesla</li>
                   <li>Permanent magnet: 0.1 - 1 T</li>
                   <li>Transformer core: 1.2 - 1.7 T</li>
@@ -351,48 +351,48 @@ const Level3Module3Section3_1 = () => {
               <h4 className="text-lg font-semibold text-green-400 mb-3">
                 Magnetomotive Force (MMF)
               </h4>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 <strong>Magnetomotive force (F or MMF)</strong> is the magnetic equivalent of
                 electromotive force (voltage) in electrical circuits. It is the force that drives
                 magnetic flux through a magnetic circuit.
               </p>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4 text-center">
                 <p className="text-green-400 font-mono text-lg mb-2">F = N x I</p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Where F = MMF (At), N = number of turns, I = current (A)
                 </p>
               </div>
 
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Unit:</strong> Ampere-turns (At)
                 </p>
-                <p className="text-white/80">
+                <p className="text-white">
                   MMF increases with more turns or more current - both have equal effect.
                 </p>
               </div>
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Magnetic Field Strength</h4>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 <strong>Magnetic field strength (H)</strong> is the MMF per unit length of the
                 magnetic path - how hard the field is "pushing" the flux through each metre of the
                 circuit.
               </p>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4 text-center">
                 <p className="text-green-400 font-mono text-lg mb-2">H = F / l = (N x I) / l</p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Where H = field strength (At/m), F = MMF (At), l = length (m)
                 </p>
               </div>
 
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 The relationship between B and H is fundamental to understanding magnetic materials:
               </p>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4 text-center">
                 <p className="text-green-400 font-mono text-lg mb-2">
                   B = mu x H = mu_0 x mu_r x H
                 </p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Where mu = absolute permeability, mu_0 = permeability of free space, mu_r =
                   relative permeability
                 </p>
@@ -417,20 +417,20 @@ const Level3Module3Section3_1 = () => {
             </h2>
             <div className="bg-[#242424] rounded-lg p-6 border border-white/10">
               <h4 className="text-lg font-semibold text-green-400 mb-3">Permeability</h4>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 <strong>Permeability (mu)</strong> is a measure of how easily a material allows
                 magnetic flux to pass through it - its magnetic "conductivity".
               </p>
 
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Permeability of free space:</strong> mu_0 = 4pi x 10^-7 H/m = 1.257 x
                   10^-6 H/m
                 </p>
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Relative permeability:</strong> mu_r = mu / mu_0 (dimensionless ratio)
                 </p>
-                <p className="text-white/80">
+                <p className="text-white">
                   <strong>Absolute permeability:</strong> mu = mu_0 x mu_r
                 </p>
               </div>
@@ -438,7 +438,7 @@ const Level3Module3Section3_1 = () => {
               <div className="grid md:grid-cols-2 gap-4 mb-4">
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Typical Relative Permeabilities</h5>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>Air, vacuum: 1</li>
                     <li>Aluminium, copper: approximately 1</li>
                     <li>Cast iron: 100 - 300</li>
@@ -448,7 +448,7 @@ const Level3Module3Section3_1 = () => {
                 </div>
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Why Permeability Matters</h5>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>High mu = more flux for same MMF</li>
                     <li>Determines transformer core efficiency</li>
                     <li>Affects motor torque production</li>
@@ -458,7 +458,7 @@ const Level3Module3Section3_1 = () => {
               </div>
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Reluctance</h4>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 <strong>Reluctance (S or R_m)</strong> is the opposition to magnetic flux in a
                 magnetic circuit - the magnetic equivalent of electrical resistance.
               </p>
@@ -466,7 +466,7 @@ const Level3Module3Section3_1 = () => {
                 <p className="text-green-400 font-mono text-lg mb-2">
                   S = l / (mu x A) = l / (mu_0 x mu_r x A)
                 </p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Where S = reluctance (At/Wb), l = length (m), mu = permeability, A = area (m
                   squared)
                 </p>
@@ -479,7 +479,7 @@ const Level3Module3Section3_1 = () => {
                 <p className="text-green-400 font-mono text-lg mb-2 text-center">
                   Phi = F / S (Flux = MMF / Reluctance)
                 </p>
-                <table className="w-full text-white/80 mt-4">
+                <table className="w-full text-white mt-4">
                   <thead>
                     <tr>
                       <th className="text-left pb-2">Electrical</th>
@@ -525,7 +525,7 @@ const Level3Module3Section3_1 = () => {
               The BH Curve and Magnetic Materials
             </h2>
             <div className="bg-[#242424] rounded-lg p-6 border border-white/10">
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 The <strong>BH curve</strong> (magnetisation curve) shows the relationship between
                 flux density (B) and magnetic field strength (H) for a material. It reveals the
                 material's magnetic characteristics.
@@ -535,38 +535,38 @@ const Level3Module3Section3_1 = () => {
                 Key Features of the BH Curve
               </h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   <strong>Initial region:</strong> B increases steeply with H as magnetic domains
                   align
                 </p>
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   <strong>Knee region:</strong> Rate of increase starts to slow
                 </p>
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   <strong>Saturation region:</strong> Curve flattens - little increase in B despite
                   increasing H
                 </p>
-                <p className="text-white/70 text-sm">
+                <p className="text-white text-sm">
                   The slope of the curve at any point represents the permeability at that operating
                   point.
                 </p>
               </div>
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Hysteresis</h4>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 When the magnetic field is cycled (as in AC), the BH curve forms a loop. The
                 material "remembers" its previous state, requiring energy to reverse the
                 magnetisation.
               </p>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Retentivity (Br):</strong> Flux density remaining when H = 0 (residual
                   magnetism)
                 </p>
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Coercivity (Hc):</strong> Field strength needed to reduce B to zero
                 </p>
-                <p className="text-white/80">
+                <p className="text-white">
                   <strong>Hysteresis loss:</strong> Energy lost per cycle = area inside the BH loop
                 </p>
               </div>
@@ -577,10 +577,10 @@ const Level3Module3Section3_1 = () => {
               <div className="grid md:grid-cols-2 gap-4 mb-4">
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Soft Magnetic Materials</h5>
-                  <p className="text-white/70 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     Low retentivity, low coercivity, narrow hysteresis loop
                   </p>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>Silicon steel (transformers)</li>
                     <li>Soft iron (electromagnets)</li>
                     <li>Ferrites (high frequency)</li>
@@ -589,10 +589,10 @@ const Level3Module3Section3_1 = () => {
                 </div>
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Hard Magnetic Materials</h5>
-                  <p className="text-white/70 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     High retentivity, high coercivity, wide hysteresis loop
                   </p>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>Alnico (Al-Ni-Co alloy)</li>
                     <li>Ferrite (ceramic magnets)</li>
                     <li>Rare earth (NdFeB, SmCo)</li>
@@ -603,15 +603,15 @@ const Level3Module3Section3_1 = () => {
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Core Losses</h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Hysteresis loss:</strong> Proportional to frequency and loop area. Reduced
                   by using soft magnetic materials.
                 </p>
-                <p className="text-white/80 mb-2">
+                <p className="text-white mb-2">
                   <strong>Eddy current loss:</strong> Proportional to frequency squared and
                   thickness squared. Reduced by laminating cores.
                 </p>
-                <p className="text-white/70 text-sm mt-3">
+                <p className="text-white text-sm mt-3">
                   Total core loss = Hysteresis loss + Eddy current loss
                 </p>
               </div>
@@ -637,7 +637,7 @@ const Level3Module3Section3_1 = () => {
               <h4 className="text-lg font-semibold text-yellow-400 mb-3">
                 Applications in Electrical Installations
               </h4>
-              <ul className="text-white/80 space-y-2">
+              <ul className="text-white space-y-2">
                 <li>
                   <strong>Transformer design:</strong> Core material chosen for high permeability
                   and low hysteresis loss. Laminations (typically 0.35mm thick) reduce eddy
@@ -667,7 +667,7 @@ const Level3Module3Section3_1 = () => {
               {faqItems.map((faq, index) => (
                 <div key={index} className="bg-[#242424] rounded-lg p-4 border border-white/10">
                   <h4 className="font-semibold text-white mb-2">{faq.question}</h4>
-                  <p className="text-white/70 text-sm">{faq.answer}</p>
+                  <p className="text-white text-sm">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -680,7 +680,7 @@ const Level3Module3Section3_1 = () => {
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <h4 className="font-semibold text-green-400 mb-3">Essential Formulas</h4>
-                  <ul className="text-white/70 text-sm space-y-2 font-mono">
+                  <ul className="text-white text-sm space-y-2 font-mono">
                     <li>B = Phi / A (Tesla)</li>
                     <li>F = N x I (Ampere-turns)</li>
                     <li>H = F / l (At/m)</li>
@@ -691,7 +691,7 @@ const Level3Module3Section3_1 = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-green-400 mb-3">Key Constants</h4>
-                  <ul className="text-white/70 text-sm space-y-2">
+                  <ul className="text-white text-sm space-y-2">
                     <li>mu_0 = 4pi x 10^-7 H/m</li>
                     <li>mu_0 = 1.257 x 10^-6 H/m</li>
                     <li>1 Tesla = 1 Wb/m squared</li>
@@ -708,7 +708,7 @@ const Level3Module3Section3_1 = () => {
         {/* Quiz Section */}
         <div className="mb-12">
           <h2 className="text-xl font-semibold text-white mb-4">Test Your Knowledge</h2>
-          <p className="text-white/70 mb-4">
+          <p className="text-white mb-4">
             Complete this quiz to check your understanding of magnetic fields and flux:
           </p>
           <Quiz questions={quizQuestions} moduleId="L3M3S3.1" />

@@ -247,7 +247,7 @@ const HNCModule2Section5_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section5">
@@ -269,7 +269,7 @@ const HNCModule2Section5_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Thermal Mass and Time Lag
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             How building fabric stores heat and affects temperature response over time
           </p>
         </header>
@@ -432,7 +432,7 @@ const HNCModule2Section5_3 = () => {
               <p className="font-mono text-center text-sm mb-2">
                 ΣAY = Σ(A<sub>i</sub> × Y<sub>i</sub>)
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Sum of all surface areas × their admittances = total room storage capacity
               </p>
             </div>
@@ -664,7 +664,7 @@ const HNCModule2Section5_3 = () => {
               </div>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Climate suitability:</strong> Night cooling works well in the UK climate with
               diurnal swings and relatively cool nights. Less effective in humid climates or during
               heatwaves with warm nights.
@@ -776,13 +776,13 @@ const HNCModule2Section5_3 = () => {
                 50m² (Y=5.5), plastered brick walls 80m² (Y=4.0), carpeted floor 50m² (Y=1.0),
                 glazing 15m² (Y=5.7).
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>ΣAY = (50 × 5.5) + (80 × 4.0) + (50 × 1.0) + (15 × 5.7)</p>
                 <p>ΣAY = 275 + 320 + 50 + 85.5</p>
                 <p>
                   ΣAY = <strong>730.5 W/K</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This is a medium-heavyweight room due to exposed concrete ceiling
                 </p>
               </div>
@@ -796,13 +796,13 @@ const HNCModule2Section5_3 = () => {
                 <strong>Question:</strong> The same room has a suspended ceiling installed (Y=0.8).
                 How does this affect ΣAY?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>New ceiling admittance: 50 × 0.8 = 40 (replacing 275)</p>
                 <p>
                   New ΣAY = 40 + 320 + 50 + 85.5 = <strong>495.5 W/K</strong>
                 </p>
                 <p className="mt-2 text-red-400">Reduction = 730.5 - 495.5 = 235 W/K (32% loss)</p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Suspended ceiling significantly reduces thermal storage capacity
                 </p>
               </div>
@@ -817,12 +817,12 @@ const HNCModule2Section5_3 = () => {
                 (±10K from mean of 35°C). A wall with f=0.25 separates the room. What is the
                 internal surface temperature swing?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>External swing = ±10K (total 20K range)</p>
                 <p>
                   Internal swing = External × Decrement = ±10K × 0.25 = <strong>±2.5K</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Internal surface only varies 5K total vs 20K external
                 </p>
                 <p className="text-green-400">
@@ -839,14 +839,14 @@ const HNCModule2Section5_3 = () => {
                 <strong>Question:</strong> A room has ΣAY = 650 W/K and total heat loss coefficient
                 ΣAU = 95 W/K. What is its response factor and classification?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   fr = ΣAY / ΣAU = 650 / 95 = <strong>6.8</strong>
                 </p>
                 <p className="mt-2">
                   Classification: fr &gt; 6 = <strong>Slow response (heavyweight)</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Expect 6-8 hour preheat, good for night cooling strategy
                 </p>
               </div>
@@ -930,7 +930,7 @@ const HNCModule2Section5_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -976,7 +976,7 @@ const HNCModule2Section5_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section5-2">

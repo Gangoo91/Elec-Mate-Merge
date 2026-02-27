@@ -244,7 +244,7 @@ const HNCModule1Section4_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section4">
@@ -266,7 +266,7 @@ const HNCModule1Section4_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Continuous Professional Development
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Maintaining and developing health and safety competence throughout your career
           </p>
         </header>
@@ -389,26 +389,26 @@ const HNCModule1Section4_5 = () => {
               <div className="grid grid-cols-4 gap-2 text-center text-sm">
                 <div className="p-3 rounded bg-blue-500/10 border border-blue-500/30">
                   <p className="font-bold text-blue-400 mb-1">1. Assess</p>
-                  <p className="text-xs text-white/70">Identify development needs</p>
+                  <p className="text-xs text-white">Identify development needs</p>
                 </div>
                 <div className="p-3 rounded bg-green-500/10 border border-green-500/30">
                   <p className="font-bold text-green-400 mb-1">2. Plan</p>
-                  <p className="text-xs text-white/70">Set learning objectives</p>
+                  <p className="text-xs text-white">Set learning objectives</p>
                 </div>
                 <div className="p-3 rounded bg-purple-500/10 border border-purple-500/30">
                   <p className="font-bold text-purple-400 mb-1">3. Do</p>
-                  <p className="text-xs text-white/70">Undertake activities</p>
+                  <p className="text-xs text-white">Undertake activities</p>
                 </div>
                 <div className="p-3 rounded bg-orange-500/10 border border-orange-500/30">
                   <p className="font-bold text-orange-400 mb-1">4. Reflect</p>
-                  <p className="text-xs text-white/70">Evaluate and record</p>
+                  <p className="text-xs text-white">Evaluate and record</p>
                 </div>
               </div>
             </div>
 
             <div className="my-6 p-4 rounded-lg bg-orange-500/10 border border-orange-500/30">
               <p className="text-sm font-medium text-orange-300 mb-2">BS 7671 Example</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 BS 7671 (the IET Wiring Regulations) is updated approximately every 3-4 years with
                 significant amendments. The 18th Edition came into force in 2018, with Amendment 2
                 in 2022 introducing important changes to prosumer installations, EV charging, and
@@ -508,7 +508,7 @@ const HNCModule1Section4_5 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">
                 NEBOSH National General Certificate - Content
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 The widely-recognised intermediate qualification covering:
               </p>
               <div className="grid sm:grid-cols-2 gap-3">
@@ -573,7 +573,7 @@ const HNCModule1Section4_5 = () => {
               <p className="text-sm font-medium text-purple-400 mb-2">
                 IOSH Managing Safely - Content
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Practical course for managers and supervisors covering:
               </p>
               <div className="grid sm:grid-cols-2 gap-3">
@@ -728,7 +728,7 @@ const HNCModule1Section4_5 = () => {
 
             <div className="my-6 p-4 rounded-lg bg-white/5">
               <p className="text-sm font-medium text-elec-yellow/80 mb-2">Reflective Practice</p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 Effective CPD requires reflection - thinking critically about your experiences:
               </p>
               <ul className="text-sm text-white space-y-1.5 list-disc list-outside ml-5">
@@ -840,25 +840,25 @@ const HNCModule1Section4_5 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">
                 Engineering Council Registration
               </p>
-              <p className="text-sm text-white/90 mb-3">
+              <p className="text-sm text-white mb-3">
                 The Engineering Council regulates the engineering profession through licensed bodies
                 like the IET:
               </p>
               <div className="grid sm:grid-cols-3 gap-3">
                 <div className="p-3 rounded bg-white/5 text-center">
                   <p className="font-bold text-green-400 mb-1">EngTech</p>
-                  <p className="text-xs text-white/70">Engineering Technician</p>
-                  <p className="text-xs text-white/70 mt-1">Technician-level competence</p>
+                  <p className="text-xs text-white">Engineering Technician</p>
+                  <p className="text-xs text-white mt-1">Technician-level competence</p>
                 </div>
                 <div className="p-3 rounded bg-white/5 text-center">
                   <p className="font-bold text-yellow-400 mb-1">IEng</p>
-                  <p className="text-xs text-white/70">Incorporated Engineer</p>
-                  <p className="text-xs text-white/70 mt-1">Degree-level competence</p>
+                  <p className="text-xs text-white">Incorporated Engineer</p>
+                  <p className="text-xs text-white mt-1">Degree-level competence</p>
                 </div>
                 <div className="p-3 rounded bg-white/5 text-center">
                   <p className="font-bold text-elec-yellow mb-1">CEng</p>
-                  <p className="text-xs text-white/70">Chartered Engineer</p>
-                  <p className="text-xs text-white/70 mt-1">Master's-level competence</p>
+                  <p className="text-xs text-white">Chartered Engineer</p>
+                  <p className="text-xs text-white mt-1">Master's-level competence</p>
                 </div>
               </div>
             </div>
@@ -1012,7 +1012,7 @@ const HNCModule1Section4_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1058,7 +1058,7 @@ const HNCModule1Section4_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module1-section4-4">

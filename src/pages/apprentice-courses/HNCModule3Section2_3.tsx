@@ -217,7 +217,7 @@ const HNCModule3Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section2">
@@ -239,7 +239,7 @@ const HNCModule3Section2_3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Phase Angle and Phasor Diagrams
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding AC phase relationships and graphical analysis techniques for building
             services circuits
           </p>
@@ -328,7 +328,7 @@ const HNCModule3Section2_3 = () => {
               <p className="font-mono text-center text-lg mb-2">
                 v = V<sub>m</sub> sin(omega t + phi)
               </p>
-              <div className="text-xs text-white/70 space-y-1 mt-3">
+              <div className="text-xs text-white space-y-1 mt-3">
                 <p>
                   <strong>v</strong> = instantaneous voltage at time t
                 </p>
@@ -473,12 +473,12 @@ const HNCModule3Section2_3 = () => {
                 <div>
                   <p className="font-medium mb-1">Polar form:</p>
                   <p className="font-mono">V = |V| angle phi</p>
-                  <p className="text-white/70 text-xs mt-1">e.g., 230V angle 30 degrees</p>
+                  <p className="text-white text-xs mt-1">e.g., 230V angle 30 degrees</p>
                 </div>
                 <div>
                   <p className="font-medium mb-1">Rectangular form:</p>
                   <p className="font-mono">V = a + jb</p>
-                  <p className="text-white/70 text-xs mt-1">
+                  <p className="text-white text-xs mt-1">
                     where a = |V| cos phi, b = |V| sin phi
                   </p>
                 </div>
@@ -613,7 +613,7 @@ const HNCModule3Section2_3 = () => {
                 leads <strong>V</strong>. In an <strong>I</strong>nductor (<strong>L</strong>),{' '}
                 <strong>V</strong> leads <strong>I</strong>.
               </p>
-              <p className="text-xs text-white/70 mt-2">
+              <p className="text-xs text-white mt-2">
                 The middle letters show which quantity leads: "IV" (I leads V) for capacitor, "VI"
                 (V leads I) for inductor.
               </p>
@@ -670,7 +670,7 @@ const HNCModule3Section2_3 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-sm mb-2">Graphical (Parallelogram)</p>
-                  <ol className="text-xs text-white/90 space-y-1 list-decimal list-outside ml-4">
+                  <ol className="text-xs text-white space-y-1 list-decimal list-outside ml-4">
                     <li>Draw first phasor from origin</li>
                     <li>Draw second phasor from origin</li>
                     <li>Complete parallelogram</li>
@@ -679,7 +679,7 @@ const HNCModule3Section2_3 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-sm mb-2">Mathematical (Rectangular)</p>
-                  <ol className="text-xs text-white/90 space-y-1 list-decimal list-outside ml-4">
+                  <ol className="text-xs text-white space-y-1 list-decimal list-outside ml-4">
                     <li>Convert each phasor to a + jb form</li>
                     <li>
                       Add real parts: a<sub>total</sub> = a<sub>1</sub> + a<sub>2</sub>
@@ -702,7 +702,7 @@ const HNCModule3Section2_3 = () => {
                 <sup>2</sup> + V<sub>2</sub>
                 <sup>2</sup> + 2V<sub>1</sub>V<sub>2</sub>cos theta)
               </p>
-              <p className="text-xs text-white/70 text-center">
+              <p className="text-xs text-white text-center">
                 Special cases: theta = 0 degrees gives V<sub>1</sub> + V<sub>2</sub>; theta = 90
                 degrees gives root(V<sub>1</sub>
                 <sup>2</sup> + V<sub>2</sub>
@@ -789,7 +789,7 @@ const HNCModule3Section2_3 = () => {
                 <strong>Question:</strong> UK mains voltage has RMS value 230V at 50Hz, referenced
                 as 0 degrees. Write the expression for instantaneous voltage.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   Peak voltage: V<sub>m</sub> = V<sub>RMS</sub> x root 2
                 </p>
@@ -802,7 +802,7 @@ const HNCModule3Section2_3 = () => {
                 </p>
                 <p className="mt-2">Phase angle: phi = 0 degrees (reference)</p>
                 <p className="mt-2 text-green-400">v = 325 sin(314t) volts</p>
-                <p className="text-white/60 mt-1">or equivalently: v = 325 sin(100 pi t) volts</p>
+                <p className="text-white mt-1">or equivalently: v = 325 sin(100 pi t) volts</p>
               </div>
             </div>
 
@@ -814,7 +814,7 @@ const HNCModule3Section2_3 = () => {
                 <strong>Question:</strong> An AHU motor operates at 0.85 power factor lagging.
                 Calculate the phase angle and describe the current phasor position.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Power factor = cos(phi)</p>
                 <p>0.85 = cos(phi)</p>
                 <p>
@@ -822,8 +822,8 @@ const HNCModule3Section2_3 = () => {
                 </p>
                 <p className="mt-2">Since power factor is lagging (inductive load):</p>
                 <p>Current lags voltage by 31.8 degrees</p>
-                <p className="mt-2 text-white/60">On phasor diagram: draw voltage at 0 degrees,</p>
-                <p className="text-white/60">current at -31.8 degrees (clockwise from voltage)</p>
+                <p className="mt-2 text-white">On phasor diagram: draw voltage at 0 degrees,</p>
+                <p className="text-white">current at -31.8 degrees (clockwise from voltage)</p>
               </div>
             </div>
 
@@ -835,7 +835,7 @@ const HNCModule3Section2_3 = () => {
                 <strong>Question:</strong> A series RL circuit has V<sub>R</sub> = 120V and V
                 <sub>L</sub> = 90V. Calculate the supply voltage.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   In series RL: V<sub>R</sub> is in phase with current
                 </p>
@@ -859,11 +859,11 @@ const HNCModule3Section2_3 = () => {
                 <p className="mt-2 text-green-400">
                   V<sub>S</sub> = 150V
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   Phase angle: phi = arctan(V<sub>L</sub>/V<sub>R</sub>) = arctan(90/120) = 36.87
                   degrees
                 </p>
-                <p className="text-white/60">Supply leads current by 36.87 degrees</p>
+                <p className="text-white">Supply leads current by 36.87 degrees</p>
               </div>
             </div>
 
@@ -875,7 +875,7 @@ const HNCModule3Section2_3 = () => {
                 <strong>Question:</strong> A 7.5kW motor has full-load current of 15A at 0.85 pf.
                 Starting current is 6 times FLC at 0.25 pf. Analyse the starting condition.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Full-load condition:</strong>
                 </p>
@@ -892,10 +892,10 @@ const HNCModule3Section2_3 = () => {
                 <p>
                   Phase angle = arccos(0.25) = <strong>75.5 degrees lagging</strong>
                 </p>
-                <p className="mt-3 text-white/60">
+                <p className="mt-3 text-white">
                   At start, current is nearly in quadrature with voltage
                 </p>
-                <p className="text-white/60">(75.5 degrees vs 90 degrees for pure inductor)</p>
+                <p className="text-white">(75.5 degrees vs 90 degrees for pure inductor)</p>
                 <p className="mt-2 text-orange-400">
                   Warning: This 90A starting current causes significant
                 </p>
@@ -914,7 +914,7 @@ const HNCModule3Section2_3 = () => {
                 <strong>Question:</strong> A 20kW load operates at 0.7 pf lagging. Calculate the
                 capacitor kVAr needed to improve pf to 0.95 lagging.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>
                   <strong>Original condition (pf = 0.7):</strong>
                 </p>
@@ -943,8 +943,8 @@ const HNCModule3Section2_3 = () => {
                   kVAr<sub>C</sub> = kVAr<sub>1</sub> - kVAr<sub>2</sub> = 20.4 - 6.6
                 </p>
                 <p className="mt-2 text-green-400">Capacitor bank required: 13.8 kVAr (leading)</p>
-                <p className="mt-2 text-white/60">Current reduction: from 28.6 / 0.23 = 124A</p>
-                <p className="text-white/60">to 21.1 / 0.23 = 92A (26% reduction)</p>
+                <p className="mt-2 text-white">Current reduction: from 28.6 / 0.23 = 124A</p>
+                <p className="text-white">to 21.1 / 0.23 = 92A (26% reduction)</p>
               </div>
             </div>
           </div>
@@ -1063,7 +1063,7 @@ const HNCModule3Section2_3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1113,7 +1113,7 @@ const HNCModule3Section2_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module3-section2-2">

@@ -172,7 +172,7 @@ const Module2Section4_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -194,7 +194,7 @@ const Module2Section4_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             AC vs DC Differences
           </h1>
-          <p className="text-white/70 text-base sm:text-lg max-w-2xl mx-auto">
+          <p className="text-white text-base sm:text-lg max-w-2xl mx-auto">
             Practical differences for UK electricians: waveforms, polarity, measurement, protection
             and testing
           </p>
@@ -203,7 +203,7 @@ const Module2Section4_1 = () => {
         {/* Summary Box */}
         <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
           <h2 className="text-white font-semibold mb-3">In 30 Seconds</h2>
-          <div className="grid md:grid-cols-2 gap-4 text-sm text-white/80">
+          <div className="grid md:grid-cols-2 gap-4 text-sm text-white">
             <ul className="list-disc pl-6 space-y-1">
               <li>
                 <strong>AC alternates</strong> at 50 Hz in the UK; DC is one-directional (0 Hz).
@@ -238,8 +238,8 @@ const Module2Section4_1 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">01</span>
             Learning Outcomes
           </h2>
-          <p className="text-white/70 mb-4">By the end of this section, you'll be able to:</p>
-          <ul className="space-y-3 text-white/80">
+          <p className="text-white mb-4">By the end of this section, you'll be able to:</p>
+          <ul className="space-y-3 text-white">
             <li className="flex items-start gap-3">
               <CheckCircle className="h-5 w-5 text-elec-yellow mt-0.5 flex-shrink-0" />
               <span>Explain AC vs DC in plain terms and identify each on-site</span>
@@ -273,7 +273,7 @@ const Module2Section4_1 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">02</span>
             Fundamentals - Direction, Waveform and Frequency
           </h2>
-          <div className="space-y-6 text-white/80">
+          <div className="space-y-6 text-white">
             <p>
               Understanding the fundamental differences between AC and DC is essential for safe
               electrical work. The key distinction lies in current direction and how this affects
@@ -423,7 +423,7 @@ const Module2Section4_1 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">03</span>
             Practical Identification and Measurement
           </h2>
-          <div className="space-y-6 text-white/80">
+          <div className="space-y-6 text-white">
             <p>
               Rapid, accurate identification of AC vs DC is essential for safety and selecting
               appropriate test methods. Multiple indicators and measurement techniques ensure
@@ -619,7 +619,7 @@ const Module2Section4_1 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">04</span>
             Protection and Testing Differences
           </h2>
-          <div className="space-y-6 text-white/80">
+          <div className="space-y-6 text-white">
             <p>
               AC and DC systems require different protective devices and testing approaches.
               Understanding these differences prevents protection failures and ensures compliance
@@ -803,7 +803,7 @@ const Module2Section4_1 = () => {
             <span className="text-elec-yellow/80 text-sm font-normal">05</span>
             Common Mistakes and On-site Safety
           </h2>
-          <div className="space-y-6 text-white/80">
+          <div className="space-y-6 text-white">
             <p>
               Avoiding common mistakes when working with AC and DC systems prevents equipment
               damage, personal injury, and installation failures. Understanding these pitfalls
@@ -1001,10 +1001,10 @@ const Module2Section4_1 = () => {
           <div className="space-y-6">
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
               <h3 className="font-bold text-white mb-2">Example 1: EV Charger Protection</h3>
-              <p className="text-white/60 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 Issue: EV charger with power electronics trips Type A RCD unpredictably
               </p>
-              <div className="space-y-1 text-sm text-white/80">
+              <div className="space-y-1 text-sm text-white">
                 <p>
                   <strong>Investigation:</strong> Smooth DC residual currents from
                   rectifier/inverter stages
@@ -1021,10 +1021,10 @@ const Module2Section4_1 = () => {
 
             <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
               <h3 className="font-bold text-white mb-2">Example 2: LED Strip Installation</h3>
-              <p className="text-white/60 text-sm mb-2">
+              <p className="text-white text-sm mb-2">
                 Problem: LED strip not working after installation
               </p>
-              <div className="space-y-1 text-sm text-white/80">
+              <div className="space-y-1 text-sm text-white">
                 <p>
                   <strong>Check:</strong> Verify DC supply polarity matches LED strip markings
                 </p>
@@ -1050,7 +1050,7 @@ const Module2Section4_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0">
                 <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                <p className="text-sm text-white/70 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1066,19 +1066,19 @@ const Module2Section4_1 = () => {
             <div className="space-y-3">
               <div className="bg-white/5 border border-white/10 p-3 rounded">
                 <p className="font-medium text-white mb-1">Direction & Symbols</p>
-                <p className="text-white/70">
+                <p className="text-white">
                   AC (~): Alternates at 50Hz | DC (=): One direction, 0Hz
                 </p>
               </div>
               <div className="bg-white/5 border border-white/10 p-3 rounded">
                 <p className="font-medium text-white mb-1">Typical Uses</p>
-                <p className="text-white/70">
+                <p className="text-white">
                   AC: Mains, motors, distribution | DC: LEDs, controls, PV, EV electronics
                 </p>
               </div>
               <div className="bg-white/5 border border-white/10 p-3 rounded">
                 <p className="font-medium text-white mb-1">Measurement</p>
-                <p className="text-white/70">
+                <p className="text-white">
                   AC: Vrms (UK 230V, peak ≈325V) | DC: Steady voltage, check polarity
                 </p>
               </div>
@@ -1086,24 +1086,24 @@ const Module2Section4_1 = () => {
             <div className="space-y-3">
               <div className="bg-white/5 border border-white/10 p-3 rounded">
                 <p className="font-medium text-white mb-1">Protection (RCD Types)</p>
-                <p className="text-white/70">AC/A for standard | Type B for smooth DC components</p>
+                <p className="text-white">AC/A for standard | Type B for smooth DC components</p>
               </div>
               <div className="bg-white/5 border border-white/10 p-3 rounded">
                 <p className="font-medium text-white mb-1">Polarity</p>
-                <p className="text-white/70">
+                <p className="text-white">
                   AC: L/N conventions | DC: +/- critical for LEDs/electronics
                 </p>
               </div>
               <div className="bg-white/5 border border-white/10 p-3 rounded">
                 <p className="font-medium text-white mb-1">Meter Tips</p>
-                <p className="text-white/70">
+                <p className="text-white">
                   True-RMS for distorted waveforms | Verify polarity on DC
                 </p>
               </div>
             </div>
           </div>
           <div className="mt-4 p-3 bg-elec-yellow/10 rounded border border-elec-yellow/30">
-            <p className="text-xs sm:text-sm text-white/80">
+            <p className="text-xs sm:text-sm text-white">
               <strong>Do:</strong> Check RCD type compatibility, verify polarity, use correct
               meters.
               <strong> Don't:</strong> Ignore DC components, reverse polarity on sensitive loads.
@@ -1121,7 +1121,7 @@ const Module2Section4_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">

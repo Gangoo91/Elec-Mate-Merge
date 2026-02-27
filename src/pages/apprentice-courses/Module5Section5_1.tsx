@@ -215,7 +215,7 @@ const Module5Section5_1 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -233,13 +233,13 @@ const Module5Section5_1 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 5</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.1</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.1</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Understanding Site Roles and Responsibilities
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Learn about key site personnel, their responsibilities, and the chain of command for
               effective teamwork.
             </p>
@@ -250,7 +250,7 @@ const Module5Section5_1 = () => {
             <div className="grid md:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">In 30 Seconds</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc ml-4">
+                <ul className="text-white text-sm space-y-1 list-disc ml-4">
                   <li>Every person on site has a defined role and responsibilities.</li>
                   <li>Always follow the chain of command for reporting.</li>
                   <li>Know who to approach for different types of issues.</li>
@@ -258,7 +258,7 @@ const Module5Section5_1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-semibold text-elec-yellow mb-2">Spot it / Use it</p>
-                <ul className="text-white/80 text-sm space-y-1 list-disc ml-4">
+                <ul className="text-white text-sm space-y-1 list-disc ml-4">
                   <li>
                     <strong>Spot:</strong> Confusion about who gives instructions or handles issues.
                   </li>
@@ -279,7 +279,7 @@ const Module5Section5_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">00</span>
               Introduction
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 On any construction site, knowing who is responsible for what is essential to
                 keeping the project organised, safe, and on schedule. Clear understanding of roles
@@ -292,7 +292,7 @@ const Module5Section5_1 = () => {
                   <Users className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="font-medium text-elec-yellow mb-1">Why This Matters</p>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       Clear understanding of site roles reduces miscommunication by up to 60% and
                       significantly improves project coordination and safety outcomes.
                     </p>
@@ -304,7 +304,7 @@ const Module5Section5_1 = () => {
                 show 35% fewer delays and improved safety performance compared to poorly organised
                 projects.
               </p>
-              <p className="text-sm text-white/60 p-3 bg-white/5 rounded border border-white/10">
+              <p className="text-sm text-white p-3 bg-white/5 rounded border border-white/10">
                 <strong>Industry Standard:</strong> CDM 2015 regulations require clear definition of
                 roles and responsibilities to ensure effective health and safety management on
                 construction sites.
@@ -318,13 +318,13 @@ const Module5Section5_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Learning Outcomes
             </h2>
-            <p className="text-white/80 mb-4">
+            <p className="text-white mb-4">
               By the end of this subsection, you will be able to:
             </p>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-medium text-white mb-2">Site Personnel Knowledge</h4>
-                <ul className="space-y-2 text-white/70 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start">
                     <span className="text-elec-yellow mr-2">•</span>Identify the main roles of
                     personnel on a construction site
@@ -345,7 +345,7 @@ const Module5Section5_1 = () => {
               </div>
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-medium text-white mb-2">Communication Skills</h4>
-                <ul className="space-y-2 text-white/70 text-sm">
+                <ul className="space-y-2 text-white text-sm">
                   <li className="flex items-start">
                     <span className="text-elec-yellow mr-2">•</span>Work more effectively as part of
                     a multi-trade team
@@ -373,7 +373,7 @@ const Module5Section5_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Key Site Roles
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Understanding the main roles and responsibilities on construction sites ensures
                 effective communication and workflow:
@@ -399,7 +399,7 @@ const Module5Section5_1 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-semibold text-white mb-3">Operational Personnel</p>
-                <ul className="text-sm space-y-2 text-white/70">
+                <ul className="text-sm space-y-2 text-white">
                   <li>
                     <strong>Electricians / Apprentices</strong> – Carry out installation, testing,
                     and maintenance tasks according to BS 7671.
@@ -417,7 +417,7 @@ const Module5Section5_1 = () => {
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-semibold text-white mb-3">Specialist Roles</p>
-                <ul className="text-sm space-y-1 text-white/70">
+                <ul className="text-sm space-y-1 text-white">
                   <li>
                     <strong>Quantity Surveyor:</strong> Manages project costs, variations, and
                     material orders
@@ -445,7 +445,7 @@ const Module5Section5_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Responsibilities of Each Role
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Each role has specific responsibilities that contribute to project success and site
                 safety:
@@ -454,7 +454,7 @@ const Module5Section5_1 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Electricians</p>
-                  <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                  <ul className="text-sm text-white list-disc ml-4 space-y-1">
                     <li>Install electrical systems to BS 7671</li>
                     <li>Complete testing and certification</li>
                     <li>Maintain accurate records</li>
@@ -464,7 +464,7 @@ const Module5Section5_1 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Apprentices</p>
-                  <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                  <ul className="text-sm text-white list-disc ml-4 space-y-1">
                     <li>Follow instructions from qualified personnel</li>
                     <li>Work safely and ask questions when unsure</li>
                     <li>Develop skills through practical experience</li>
@@ -490,7 +490,7 @@ const Module5Section5_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Chain of Command
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Following the correct chain of command ensures clear communication and prevents
                 confusion:
@@ -513,7 +513,7 @@ const Module5Section5_1 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <p className="font-medium text-white mb-2">Standard Issues</p>
-                  <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                  <ul className="text-sm text-white list-disc ml-4 space-y-1">
                     <li>Report to immediate supervisor</li>
                     <li>Supervisor escalates if needed</li>
                     <li>Site Manager makes final decisions</li>
@@ -521,7 +521,7 @@ const Module5Section5_1 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/20">
                   <p className="font-medium text-red-400 mb-2">Emergency Situations</p>
-                  <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                  <ul className="text-sm text-white list-disc ml-4 space-y-1">
                     <li>Stop work immediately</li>
                     <li>Alert everyone nearby</li>
                     <li>Follow emergency procedures</li>
@@ -545,14 +545,14 @@ const Module5Section5_1 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Why Understanding Roles Matters
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Clear understanding of roles creates a more efficient and safer working environment:
               </p>
 
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <p className="font-medium text-white mb-3">Immediate Benefits</p>
-                <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                <ul className="text-sm text-white list-disc ml-4 space-y-1">
                   <li>
                     <strong>Helps avoid conflict and confusion</strong> – Clear roles prevent
                     overlapping responsibilities
@@ -575,7 +575,7 @@ const Module5Section5_1 = () => {
               <div className="grid md:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-green-500/10 border border-green-500/20">
                   <p className="font-medium text-green-400 mb-2">Professional Development</p>
-                  <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                  <ul className="text-sm text-white list-disc ml-4 space-y-1">
                     <li>Understanding hierarchy aids career progression</li>
                     <li>Builds professional credibility and respect</li>
                     <li>Develops leadership and communication skills</li>
@@ -584,7 +584,7 @@ const Module5Section5_1 = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
                   <p className="font-medium text-blue-400 mb-2">Operational Benefits</p>
-                  <ul className="text-sm text-white/70 list-disc ml-4 space-y-1">
+                  <ul className="text-sm text-white list-disc ml-4 space-y-1">
                     <li>Faster problem resolution</li>
                     <li>Improved safety through clear escalation paths</li>
                     <li>Better coordination and reduced trade conflicts</li>
@@ -618,7 +618,7 @@ const Module5Section5_1 = () => {
                   <div className="w-6 h-6 rounded-full bg-elec-yellow/20 flex items-center justify-center flex-shrink-0 mt-0.5">
                     <span className="text-xs font-medium text-elec-yellow">{index + 1}</span>
                   </div>
-                  <p className="text-sm text-white/80">{step}</p>
+                  <p className="text-sm text-white">{step}</p>
                 </div>
               ))}
             </div>
@@ -628,7 +628,7 @@ const Module5Section5_1 = () => {
                 <AlertTriangle className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
                 <div>
                   <p className="font-medium text-amber-400 mb-1">Remember</p>
-                  <p className="text-sm text-white/70">
+                  <p className="text-sm text-white">
                     Never bypass the chain of command unless it's an emergency requiring immediate
                     action to prevent harm.
                   </p>
@@ -647,7 +647,7 @@ const Module5Section5_1 = () => {
               <h3 className="font-medium text-white mb-3">
                 Commercial Project Communication Breakdown
               </h3>
-              <div className="space-y-3 text-sm text-white/70">
+              <div className="space-y-3 text-sm text-white">
                 <p>
                   <strong>Situation:</strong> On a large commercial project, an apprentice reported
                   a damaged cable directly to the client's representative instead of the site
@@ -679,7 +679,7 @@ const Module5Section5_1 = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="p-4 rounded-lg bg-white/5 border border-white/10">
                   <h3 className="font-medium text-white mb-2">Q: {faq.question}</h3>
-                  <p className="text-sm text-white/70">A: {faq.answer}</p>
+                  <p className="text-sm text-white">A: {faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -698,7 +698,7 @@ const Module5Section5_1 = () => {
                   className="flex items-start gap-3 p-3 rounded-lg bg-white/5 border border-white/10"
                 >
                   <CheckCircle className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
-                  <span className="text-sm text-white/80">{item}</span>
+                  <span className="text-sm text-white">{item}</span>
                 </div>
               ))}
             </div>
@@ -711,7 +711,7 @@ const Module5Section5_1 = () => {
               Recap
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-white/80">
+              <p className="text-white">
                 You've learned that every person on site has a defined role and responsibility.
                 Knowing who to report to and understanding the chain of command avoids confusion,
                 reduces conflict, and ensures the project runs smoothly and safely.

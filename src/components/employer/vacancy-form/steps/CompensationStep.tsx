@@ -41,7 +41,7 @@ export function CompensationStep() {
     <div className="space-y-6">
       {/* Salary Range */}
       <div className="space-y-4">
-        <Label className="text-white/80 text-base">Salary Range</Label>
+        <Label className="text-white text-base">Salary Range</Label>
 
         {/* Salary Period Selector */}
         <Controller
@@ -59,7 +59,7 @@ export function CompensationStep() {
                     'touch-manipulation min-h-[44px]',
                     selectedPeriod === period
                       ? 'bg-elec-yellow text-black'
-                      : 'bg-white/10 text-white/70 hover:bg-white/15'
+                      : 'bg-white/10 text-white hover:bg-white/15'
                   )}
                 >
                   {periodLabels[period]}
@@ -98,7 +98,7 @@ export function CompensationStep() {
           />
         </div>
 
-        <p className="text-xs text-white/50">
+        <p className="text-xs text-white">
           Leave blank to show "Competitive salary" on the listing
         </p>
       </div>
@@ -106,8 +106,8 @@ export function CompensationStep() {
       {/* Benefits */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <Label className="text-white/80 text-base">Benefits & Perks</Label>
-          <span className="text-xs text-white/50">{selectedBenefits.length} selected</span>
+          <Label className="text-white text-base">Benefits & Perks</Label>
+          <span className="text-xs text-white">{selectedBenefits.length} selected</span>
         </div>
 
         {/* Benefits Grid - Scrollable on mobile */}
@@ -125,7 +125,7 @@ export function CompensationStep() {
                   'touch-manipulation min-h-[44px]',
                   isSelected
                     ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                    : 'bg-white/5 text-white/60 border border-white/10 hover:bg-white/10'
+                    : 'bg-white/5 text-white border border-white/10 hover:bg-white/10'
                 )}
               >
                 {isSelected && <Check className="h-3.5 w-3.5" />}
@@ -136,7 +136,7 @@ export function CompensationStep() {
         </div>
 
         {/* Custom benefit input hint */}
-        <p className="text-xs text-white/50">
+        <p className="text-xs text-white">
           Select the benefits you offer. You can add custom benefits in the description.
         </p>
       </div>

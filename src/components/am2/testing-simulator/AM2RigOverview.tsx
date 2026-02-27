@@ -95,7 +95,7 @@ export function AM2RigOverview({
         <ProgressRing progress={overallProgress} />
         <div>
           <h2 className="text-lg font-bold text-white">AM2 Rig Circuits</h2>
-          <p className="text-xs text-white/50">Tap a circuit to begin testing</p>
+          <p className="text-xs text-white">Tap a circuit to begin testing</p>
         </div>
       </div>
 
@@ -106,7 +106,7 @@ export function AM2RigOverview({
           const Icon = CIRCUIT_ICONS[circuit.id] || Zap;
           const styles = CIRCUIT_STYLES[circuit.id] || {
             iconBg: 'bg-white/10',
-            iconText: 'text-white/60',
+            iconText: 'text-white',
           };
           const completedCount = progress?.completedTests.length || 0;
           const totalCount = progress?.totalTests || circuit.requiredTests.length;
@@ -146,7 +146,7 @@ export function AM2RigOverview({
                     <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
                   )}
                 </div>
-                <p className="text-[11px] text-white/40 truncate">
+                <p className="text-[11px] text-white truncate">
                   {circuit.mcbRating}A Type {circuit.mcbType} — {circuit.cableType}
                   {circuit.hasRcd ? ` — ${circuit.rcdRating}mA RCD` : ''}
                 </p>
@@ -161,12 +161,12 @@ export function AM2RigOverview({
                       ? 'text-green-400'
                       : status === 'partial'
                         ? 'text-amber-400'
-                        : 'text-white/20'
+                        : 'text-white'
                   )}
                 >
                   {completedCount}/{totalCount}
                 </span>
-                <ChevronRight className="w-4 h-4 text-white/20" />
+                <ChevronRight className="w-4 h-4 text-white" />
               </div>
             </button>
           );

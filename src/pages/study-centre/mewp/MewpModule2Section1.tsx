@@ -225,7 +225,7 @@ export default function MewpModule2Section1() {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Risk Assessment Process &amp; Documentation
           </h1>
-          <p className="text-white/80 max-w-xl mx-auto">
+          <p className="text-white max-w-xl mx-auto">
             Understanding the legal framework, practical steps, and documentation required before
             any MEWP operation can begin
           </p>
@@ -384,7 +384,7 @@ export default function MewpModule2Section1() {
                 <h3 className="font-semibold mb-2 text-elec-yellow">
                   Definition: Suitable and Sufficient
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   A <strong className="text-white">suitable and sufficient</strong> risk assessment
                   is one that identifies all significant hazards, evaluates the level of risk, and
                   determines appropriate control measures — but is proportionate to the complexity
@@ -479,7 +479,7 @@ export default function MewpModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Failure to Comply</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Failure to carry out a suitable and sufficient risk assessment before MEWP work is
                   a criminal offence. Penalties can include unlimited fines and, in cases of gross
                   negligence resulting in death, imprisonment. Company directors and managers can be
@@ -513,7 +513,7 @@ export default function MewpModule2Section1() {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-purple-300 font-medium mb-2">Identify the Hazards</h3>
-                      <p className="text-white/80 text-sm mb-2">
+                      <p className="text-white text-sm mb-2">
                         Visit the work site in person. Walk the full route the MEWP will travel and
                         the area where it will operate. Look for hazards at three levels:
                       </p>
@@ -554,7 +554,7 @@ export default function MewpModule2Section1() {
                       <h3 className="text-purple-300 font-medium mb-2">
                         Decide Who Might Be Harmed and How
                       </h3>
-                      <p className="text-white/80 text-sm mb-2">
+                      <p className="text-white text-sm mb-2">
                         Consider all persons who could be affected by the MEWP operation — not just
                         the operator:
                       </p>
@@ -602,7 +602,7 @@ export default function MewpModule2Section1() {
                       <h3 className="text-purple-300 font-medium mb-2">
                         Evaluate the Risks and Decide on Precautions
                       </h3>
-                      <p className="text-white/80 text-sm mb-2">
+                      <p className="text-white text-sm mb-2">
                         For each hazard, assess the level of risk by considering:
                       </p>
                       <ul className="text-white space-y-1 text-sm">
@@ -647,7 +647,7 @@ export default function MewpModule2Section1() {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-purple-300 font-medium mb-2">Record Your Findings</h3>
-                      <p className="text-white/80 text-sm mb-2">
+                      <p className="text-white text-sm mb-2">
                         Document the assessment in a clear, structured format:
                       </p>
                       <ul className="text-white space-y-1 text-sm">
@@ -682,7 +682,7 @@ export default function MewpModule2Section1() {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-purple-300 font-medium mb-2">Review and Update</h3>
-                      <p className="text-white/80 text-sm mb-2">
+                      <p className="text-white text-sm mb-2">
                         A risk assessment is a living document — it must be reviewed and updated:
                       </p>
                       <ul className="text-white space-y-1 text-sm">
@@ -848,7 +848,7 @@ export default function MewpModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Overhead Power Lines</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Overhead power lines are one of the most dangerous hazards for MEWP operations.
                   Contact or close proximity can cause fatal electrocution. You must identify all
                   overhead lines during your survey and maintain the safe clearance distances
@@ -886,7 +886,7 @@ export default function MewpModule2Section1() {
                 <h3 className="font-semibold mb-2 text-elec-yellow">
                   Definition: Method Statement
                 </h3>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   A <strong className="text-white">method statement</strong> (also called a safe
                   system of work or SSOW) is a document that describes in a logical sequence exactly
                   how a job is to be carried out safely and without risks to health. It includes
@@ -980,7 +980,7 @@ export default function MewpModule2Section1() {
                 </h3>
                 <div className="text-sm space-y-3">
                   <div className="border-b border-white/10 pb-2">
-                    <p className="text-white/60 text-xs uppercase tracking-wider mb-1">Header</p>
+                    <p className="text-white text-xs uppercase tracking-wider mb-1">Header</p>
                     <p className="text-white">
                       Ref: MS-2024-047 | RA Ref: RA-2024-047 | Author: J. Smith | Date: 15/01/2024 |
                       Review: 15/07/2024
@@ -988,103 +988,103 @@ export default function MewpModule2Section1() {
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-start gap-3">
-                      <span className="text-white/40 font-mono text-xs mt-0.5 w-5 text-right flex-shrink-0">
+                      <span className="text-white font-mono text-xs mt-0.5 w-5 text-right flex-shrink-0">
                         1.
                       </span>
                       <div>
                         <p className="text-white">
                           <strong>Mobilisation and set-up area</strong>
                         </p>
-                        <p className="text-white/60 text-xs">
+                        <p className="text-white text-xs">
                           Hazard: Traffic on access route | Control: Banksman, hi-vis, barriers
                         </p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <span className="text-white/40 font-mono text-xs mt-0.5 w-5 text-right flex-shrink-0">
+                      <span className="text-white font-mono text-xs mt-0.5 w-5 text-right flex-shrink-0">
                         2.
                       </span>
                       <div>
                         <p className="text-white">
                           <strong>Pre-use checks on MEWP</strong>
                         </p>
-                        <p className="text-white/60 text-xs">
+                        <p className="text-white text-xs">
                           Hazard: Defective equipment | Control: Operator checklist, report defects
                         </p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <span className="text-white/40 font-mono text-xs mt-0.5 w-5 text-right flex-shrink-0">
+                      <span className="text-white font-mono text-xs mt-0.5 w-5 text-right flex-shrink-0">
                         3.
                       </span>
                       <div>
                         <p className="text-white">
                           <strong>Position MEWP and deploy outriggers</strong>
                         </p>
-                        <p className="text-white/60 text-xs">
+                        <p className="text-white text-xs">
                           Hazard: Soft ground, slopes | Control: Spreader pads, check level
                           indicator
                         </p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <span className="text-white/40 font-mono text-xs mt-0.5 w-5 text-right flex-shrink-0">
+                      <span className="text-white font-mono text-xs mt-0.5 w-5 text-right flex-shrink-0">
                         4.
                       </span>
                       <div>
                         <p className="text-white">
                           <strong>Elevate platform to working height</strong>
                         </p>
-                        <p className="text-white/60 text-xs">
+                        <p className="text-white text-xs">
                           Hazard: Overhead obstructions, entrapment | Control: Spotter, exclusion
                           zone
                         </p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <span className="text-white/40 font-mono text-xs mt-0.5 w-5 text-right flex-shrink-0">
+                      <span className="text-white font-mono text-xs mt-0.5 w-5 text-right flex-shrink-0">
                         5.
                       </span>
                       <div>
                         <p className="text-white">
                           <strong>Carry out work task</strong>
                         </p>
-                        <p className="text-white/60 text-xs">
+                        <p className="text-white text-xs">
                           Hazard: Falling objects, overreach | Control: Tool lanyards, no leaning
                           over guardrails
                         </p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <span className="text-white/40 font-mono text-xs mt-0.5 w-5 text-right flex-shrink-0">
+                      <span className="text-white font-mono text-xs mt-0.5 w-5 text-right flex-shrink-0">
                         6.
                       </span>
                       <div>
                         <p className="text-white">
                           <strong>Lower platform and stow MEWP</strong>
                         </p>
-                        <p className="text-white/60 text-xs">
+                        <p className="text-white text-xs">
                           Hazard: Ground personnel struck | Control: Warning horn, visual check
                           below
                         </p>
                       </div>
                     </div>
                     <div className="flex items-start gap-3">
-                      <span className="text-white/40 font-mono text-xs mt-0.5 w-5 text-right flex-shrink-0">
+                      <span className="text-white font-mono text-xs mt-0.5 w-5 text-right flex-shrink-0">
                         7.
                       </span>
                       <div>
                         <p className="text-white">
                           <strong>Demobilisation</strong>
                         </p>
-                        <p className="text-white/60 text-xs">
+                        <p className="text-white text-xs">
                           Hazard: Traffic | Control: Banksman, barriers until MEWP loaded
                         </p>
                       </div>
                     </div>
                   </div>
                   <div className="border-t border-white/10 pt-2">
-                    <p className="text-white/60 text-xs">
+                    <p className="text-white text-xs">
                       PPE: Hard hat, hi-vis, harness (if required), safety boots | Emergency: Rescue
                       plan attached | Signed: ________
                     </p>
@@ -1160,7 +1160,7 @@ export default function MewpModule2Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">Method Statement Briefing</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The method statement briefing must take place{' '}
                   <strong className="text-white">before</strong> the MEWP operation starts. This is
                   a separate, more detailed briefing than a general site induction:
@@ -1228,7 +1228,7 @@ export default function MewpModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Common Failing</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   One of the most common failings identified by HSE inspectors is risk assessments
                   that exist on paper but have not been communicated to the workforce. A risk
                   assessment is only effective if the people doing the work know what it says and
@@ -1259,7 +1259,7 @@ export default function MewpModule2Section1() {
                   <RefreshCw className="h-4 w-4 inline-block mr-2 -mt-0.5" />
                   Triggers for Review
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   The risk assessment must be reviewed and, if necessary, updated when any of the
                   following occurs:
                 </p>
@@ -1311,7 +1311,7 @@ export default function MewpModule2Section1() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h3 className="text-elec-yellow font-medium mb-2">Lessons Learned</h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Every review should generate lessons learned that feed into future risk
                   assessments:
                 </p>
@@ -1354,7 +1354,7 @@ export default function MewpModule2Section1() {
                 <h3 className="font-semibold mb-2 text-elec-yellow">
                   The Importance of Near-Miss Reporting
                 </h3>
-                <p className="text-white/80 text-sm mb-3">
+                <p className="text-white text-sm mb-3">
                   Near misses are incidents where no one was injured but the potential for harm
                   existed. They are often referred to as "free lessons" because they reveal
                   weaknesses in controls without anyone actually being hurt.
@@ -1362,7 +1362,7 @@ export default function MewpModule2Section1() {
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <h4 className="font-medium text-white mb-2 text-sm">Why near misses matter:</h4>
-                    <ul className="text-white/80 space-y-1 text-sm">
+                    <ul className="text-white space-y-1 text-sm">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Far more frequent than actual accidents</span>
@@ -1383,7 +1383,7 @@ export default function MewpModule2Section1() {
                   </div>
                   <div>
                     <h4 className="font-medium text-white mb-2 text-sm">Encourage reporting by:</h4>
-                    <ul className="text-white/80 space-y-1 text-sm">
+                    <ul className="text-white space-y-1 text-sm">
                       <li className="flex items-start gap-2">
                         <span className="mt-1.5 w-1 h-1 rounded-full bg-white/60 flex-shrink-0" />
                         <span>Making reporting quick and easy (simple forms)</span>
@@ -1410,7 +1410,7 @@ export default function MewpModule2Section1() {
                   <AlertTriangle className="h-5 w-5 text-red-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-red-300">Heinrich's Triangle</h3>
                 </div>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Research suggests that for every major injury, there are approximately 29 minor
                   injuries and 300 near misses. This means that behind every serious MEWP accident,
                   there were hundreds of warning signs that went unreported or unacted upon.
@@ -1434,7 +1434,7 @@ export default function MewpModule2Section1() {
             {faqs.map((faq, index) => (
               <div key={index} className="border-b border-white/10 pb-4 last:border-b-0 last:pb-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/80 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1450,7 +1450,7 @@ export default function MewpModule2Section1() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../mewp-module-2">

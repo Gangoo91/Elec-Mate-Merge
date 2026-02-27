@@ -192,7 +192,7 @@ export default function WorkingAtHeightModule2Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-2">
@@ -218,7 +218,7 @@ export default function WorkingAtHeightModule2Section4() {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Other Access Equipment
           </h1>
-          <p className="text-white/60 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+          <p className="text-white text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
             Podium steps, hop-ups, trestle platforms, roof ladders, crawling boards, safety nets,
             temporary edge protection, and how to select the right equipment for the task
           </p>
@@ -228,7 +228,7 @@ export default function WorkingAtHeightModule2Section4() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10">
           <div className="rounded-lg p-4 bg-amber-500/5 border-l-2 border-amber-500/50">
             <p className="font-semibold text-amber-400 mb-2">In 30 Seconds</p>
-            <ul className="text-white/80 text-base space-y-1.5 leading-relaxed">
+            <ul className="text-white text-base space-y-1.5 leading-relaxed">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                 <span>
@@ -262,7 +262,7 @@ export default function WorkingAtHeightModule2Section4() {
 
           <div className="rounded-lg p-4 bg-amber-500/5 border-l-2 border-amber-500/50">
             <p className="font-semibold text-amber-400 mb-2">On Site</p>
-            <ul className="text-white/80 text-base space-y-1.5 leading-relaxed">
+            <ul className="text-white text-base space-y-1.5 leading-relaxed">
               <li className="flex items-start gap-2">
                 <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                 <span>
@@ -298,7 +298,7 @@ export default function WorkingAtHeightModule2Section4() {
         {/* ── Learning Outcomes ── */}
         <section className="mb-10">
           <h2 className="text-lg sm:text-xl font-semibold text-white mb-4">Learning Outcomes</h2>
-          <p className="text-white/70 mb-4 leading-relaxed">
+          <p className="text-white mb-4 leading-relaxed">
             By the end of this section, you will be able to:
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -312,7 +312,7 @@ export default function WorkingAtHeightModule2Section4() {
             ].map((outcome, i) => (
               <div key={i} className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-amber-400/70 mt-0.5 flex-shrink-0" />
-                <span className="text-white/80 text-sm leading-relaxed">{outcome}</span>
+                <span className="text-white text-sm leading-relaxed">{outcome}</span>
               </div>
             ))}
           </div>
@@ -329,7 +329,7 @@ export default function WorkingAtHeightModule2Section4() {
               <span className="text-amber-400/80 text-sm font-normal">01</span>
               Podium Steps
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 Podium steps (also called podium platforms) are rapidly replacing stepladders as the
                 standard low-level access equipment across UK construction sites, commercial
@@ -340,7 +340,7 @@ export default function WorkingAtHeightModule2Section4() {
 
               <div className="bg-amber-500/10 border border-amber-500/30 p-4 rounded-lg">
                 <h3 className="font-semibold mb-2 text-amber-400">Key Definition: Podium Step</h3>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   A <strong className="text-white">podium step</strong> is a low-level access
                   platform with integrated steps, a large flat working platform (typically 500mm
                   &times; 500mm or larger), and enclosed guardrails on all sides. The guardrail
@@ -353,7 +353,7 @@ export default function WorkingAtHeightModule2Section4() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-amber-400/30 p-4 rounded-lg">
                   <h4 className="text-amber-300 font-medium mb-2">Advantages Over Stepladders</h4>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Enclosed guardrails on all four sides prevent falls</span>
@@ -383,7 +383,7 @@ export default function WorkingAtHeightModule2Section4() {
 
                 <div className="bg-white/5 border border-amber-400/30 p-4 rounded-lg">
                   <h4 className="text-amber-300 font-medium mb-2">Typical Specifications</h4>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Platform heights: 475mm, 720mm, 975mm (common sizes)</span>
@@ -424,7 +424,7 @@ export default function WorkingAtHeightModule2Section4() {
               <span className="text-purple-400/80 text-sm font-normal">02</span>
               Hop-Ups
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 A hop-up is a small, lightweight platform designed to give the user a modest boost
                 in standing height. They are the simplest form of access equipment — essentially a
@@ -434,7 +434,7 @@ export default function WorkingAtHeightModule2Section4() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
                   <h4 className="text-purple-300 font-medium mb-2">When Hop-Ups Are Acceptable</h4>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Very short-duration tasks (under 5 minutes)</span>
@@ -456,7 +456,7 @@ export default function WorkingAtHeightModule2Section4() {
 
                 <div className="bg-white/5 border border-purple-400/30 p-4 rounded-lg">
                   <h4 className="text-purple-300 font-medium mb-2">Limitations</h4>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>No guardrails — the user is unprotected from falls</span>
@@ -484,7 +484,7 @@ export default function WorkingAtHeightModule2Section4() {
                     Improvised Hop-Ups Are Prohibited
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Buckets, crates, pallets, toolboxes, cable drums, and stacked materials are{' '}
                   <strong className="text-white">never</strong> acceptable as hop-ups or improvised
                   access platforms. These items are not designed to support a person's weight and
@@ -508,7 +508,7 @@ export default function WorkingAtHeightModule2Section4() {
               <span className="text-teal-400/80 text-sm font-normal">03</span>
               Trestle Platforms
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 Trestle platforms use{' '}
                 <strong className="text-white">A-frame trestles (or split-head trestles)</strong>{' '}
@@ -519,7 +519,7 @@ export default function WorkingAtHeightModule2Section4() {
 
               <div className="bg-white/5 border border-teal-400/30 p-4 rounded-lg">
                 <h3 className="text-teal-300 font-medium mb-3">Setup Requirements</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -571,7 +571,7 @@ export default function WorkingAtHeightModule2Section4() {
                   <AlertTriangle className="h-5 w-5 text-orange-400 flex-shrink-0 mt-0.5" />
                   <h3 className="font-semibold text-orange-300">Common Trestle Platform Errors</h3>
                 </div>
-                <ul className="text-white/70 text-sm space-y-1">
+                <ul className="text-white text-sm space-y-1">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -609,7 +609,7 @@ export default function WorkingAtHeightModule2Section4() {
               <span className="text-red-400/80 text-sm font-normal">04</span>
               Roof Ladders &amp; Crawling Boards
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 Roof ladders and crawling boards are specialist access equipment used when working
                 on <strong className="text-white">sloped roofs</strong> or near{' '}
@@ -623,7 +623,7 @@ export default function WorkingAtHeightModule2Section4() {
                   <Shield className="h-5 w-5" />
                   Critical Warning: Fragile Roofs
                 </h3>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Falls through fragile roofing materials are one of the{' '}
                   <strong className="text-white">leading causes of fatal falls</strong> in the UK
                   construction industry. Materials that appear solid — such as fibre cement sheets,
@@ -640,7 +640,7 @@ export default function WorkingAtHeightModule2Section4() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="bg-white/5 border border-red-400/30 p-4 rounded-lg">
                   <h4 className="text-red-300 font-medium mb-2">Roof Ladders</h4>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>
@@ -671,7 +671,7 @@ export default function WorkingAtHeightModule2Section4() {
 
                 <div className="bg-white/5 border border-red-400/30 p-4 rounded-lg">
                   <h4 className="text-red-300 font-medium mb-2">Crawling Boards</h4>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Wider than a roof ladder — spreads weight over a greater area</span>
@@ -711,7 +711,7 @@ export default function WorkingAtHeightModule2Section4() {
               <span className="text-cyan-400/80 text-sm font-normal">05</span>
               Safety Nets
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 Safety nets are a form of{' '}
                 <strong className="text-white">collective fall protection</strong> — they protect
@@ -725,7 +725,7 @@ export default function WorkingAtHeightModule2Section4() {
                   <Info className="h-5 w-5" />
                   EN 1263 Standard
                 </h3>
-                <p className="text-white/80 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   Safety nets for construction use must comply with{' '}
                   <strong className="text-white">EN 1263-1</strong> (the net itself) and{' '}
                   <strong className="text-white">EN 1263-2</strong> (the installation requirements).
@@ -736,7 +736,7 @@ export default function WorkingAtHeightModule2Section4() {
 
               <div className="bg-white/5 border border-cyan-400/30 p-4 rounded-lg">
                 <h3 className="text-cyan-300 font-medium mb-3">Key Requirements</h3>
-                <ul className="text-white/70 space-y-2 text-sm">
+                <ul className="text-white space-y-2 text-sm">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -794,7 +794,7 @@ export default function WorkingAtHeightModule2Section4() {
               <span className="text-amber-400/80 text-sm font-normal">06</span>
               Harness Systems &amp; Temporary Edge Protection
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <h3 className="text-white font-semibold text-base">Harness Systems (Overview)</h3>
               <p>
                 Personal fall protection using harnesses, lanyards, and anchor points is covered in
@@ -804,7 +804,7 @@ export default function WorkingAtHeightModule2Section4() {
 
               <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                 <h4 className="text-amber-400 font-medium mb-2">Hierarchy Position</h4>
-                <ul className="text-white/70 text-sm space-y-2">
+                <ul className="text-white text-sm space-y-2">
                   <li className="flex items-start gap-2">
                     <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                     <span>
@@ -849,7 +849,7 @@ export default function WorkingAtHeightModule2Section4() {
                   <h4 className="text-amber-300 font-medium mb-2">
                     Free-Standing Guard Rail Systems
                   </h4>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>Counterweighted bases — no penetration of roof membrane or floor</span>
@@ -871,7 +871,7 @@ export default function WorkingAtHeightModule2Section4() {
 
                 <div className="bg-white/5 border border-amber-400/30 p-4 rounded-lg">
                   <h4 className="text-amber-300 font-medium mb-2">Other Edge Protection Types</h4>
-                  <ul className="text-white/70 space-y-2 text-sm">
+                  <ul className="text-white space-y-2 text-sm">
                     <li className="flex items-start gap-2">
                       <span className="mt-1.5 w-1 h-1 rounded-full bg-amber-400 flex-shrink-0" />
                       <span>
@@ -916,7 +916,7 @@ export default function WorkingAtHeightModule2Section4() {
               <span className="text-purple-400/80 text-sm font-normal">07</span>
               Equipment Selection Flowchart
             </h2>
-            <div className="space-y-4 text-white/80 leading-relaxed">
+            <div className="space-y-4 text-white leading-relaxed">
               <p>
                 Selecting the right access equipment is a systematic process. Start with the task
                 requirements and work through the decision points to arrive at the most suitable
@@ -936,7 +936,7 @@ export default function WorkingAtHeightModule2Section4() {
                       <Clock className="h-4 w-4 text-amber-400" />
                       <span className="text-amber-400 font-semibold text-sm">STEP 1: Duration</span>
                     </div>
-                    <p className="text-white/60 text-xs">How long will the task take?</p>
+                    <p className="text-white text-xs">How long will the task take?</p>
                   </div>
 
                   <div className="grid grid-cols-2 gap-3">
@@ -960,7 +960,7 @@ export default function WorkingAtHeightModule2Section4() {
                       <Ruler className="h-4 w-4 text-amber-400" />
                       <span className="text-amber-400 font-semibold text-sm">STEP 2: Height</span>
                     </div>
-                    <p className="text-white/60 text-xs">What working height is needed?</p>
+                    <p className="text-white text-xs">What working height is needed?</p>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
@@ -989,7 +989,7 @@ export default function WorkingAtHeightModule2Section4() {
                         STEP 3: Task Type
                       </span>
                     </div>
-                    <p className="text-white/60 text-xs">What does the work involve?</p>
+                    <p className="text-white text-xs">What does the work involve?</p>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -1015,7 +1015,7 @@ export default function WorkingAtHeightModule2Section4() {
                       <HardHat className="h-4 w-4 text-amber-400" />
                       <span className="text-amber-400 font-semibold text-sm">STEP 4: Confirm</span>
                     </div>
-                    <p className="text-white/60 text-xs leading-relaxed">
+                    <p className="text-white text-xs leading-relaxed">
                       Record selection in risk assessment / method statement. Verify equipment is
                       inspected, available, and the operator is trained.
                     </p>
@@ -1023,7 +1023,7 @@ export default function WorkingAtHeightModule2Section4() {
                 </div>
 
                 <div className="mt-4 bg-white/5 border border-white/10 rounded-lg p-3">
-                  <p className="text-white/50 text-xs text-center leading-relaxed">
+                  <p className="text-white text-xs text-center leading-relaxed">
                     This flowchart covers common scenarios. Complex tasks, restricted access,
                     fragile surfaces, or electrical hazards may require specialist assessment.
                     Always complete a full risk assessment before selecting equipment.
@@ -1073,7 +1073,7 @@ export default function WorkingAtHeightModule2Section4() {
                   ].map(({ scenario, equipment }, i) => (
                     <div key={i} className="flex items-start gap-3">
                       <ArrowRight className="h-4 w-4 text-amber-400/50 mt-0.5 flex-shrink-0" />
-                      <div className="text-white/70 leading-relaxed">
+                      <div className="text-white leading-relaxed">
                         <strong className="text-white">{scenario}:</strong> {equipment}
                       </div>
                     </div>
@@ -1088,7 +1088,7 @@ export default function WorkingAtHeightModule2Section4() {
                     Never Let Convenience Drive Selection
                   </h3>
                 </div>
-                <p className="text-white/70 text-sm leading-relaxed">
+                <p className="text-white text-sm leading-relaxed">
                   A common cause of working-at-height incidents is using whatever equipment happens
                   to be available rather than what the task actually requires. "The ladder was in
                   the van" is not a valid reason for using a ladder on a task that demands a
@@ -1109,7 +1109,7 @@ export default function WorkingAtHeightModule2Section4() {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="font-semibold text-white mb-2">{faq.question}</h3>
-                <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1125,7 +1125,7 @@ export default function WorkingAtHeightModule2Section4() {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../working-at-height-module-2-section-3">

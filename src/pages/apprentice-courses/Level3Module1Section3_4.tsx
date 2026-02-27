@@ -262,7 +262,7 @@ const Level3Module1Section3_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section3">
@@ -348,7 +348,7 @@ const Level3Module1Section3_4 = () => {
 
             <div className="my-6 p-4 rounded bg-red-500/10 border border-red-500/20">
               <p className="text-sm font-medium text-red-400 mb-2">Higher Risk Factors:</p>
-              <ul className="text-sm text-white/90 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li>Mechanical damage to cables from construction activities</li>
                 <li>Wet conditions increasing earth leakage and shock risk</li>
                 <li>Frequent connection/disconnection loosening terminals</li>
@@ -386,7 +386,7 @@ const Level3Module1Section3_4 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">TT System (Most Common)</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Local earth electrode (rod, plate, etc.)</li>
                   <li>Fault current returns via general mass of earth</li>
                   <li>Higher earth impedance than TN systems</li>
@@ -396,7 +396,7 @@ const Level3Module1Section3_4 = () => {
               </div>
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Why Not PME (TN-C-S)?</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>PEN conductor could be damaged by excavation</li>
                   <li>If broken, dangerous voltages appear on metalwork</li>
                   <li>Construction activities create high risk of cable damage</li>
@@ -408,7 +408,7 @@ const Level3Module1Section3_4 = () => {
 
             <div className="my-6 p-4 rounded bg-white/5 border-l-2 border-elec-yellow">
               <p className="text-sm font-medium text-elec-yellow mb-2">Earth Electrodes</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Common types include earth rods (driven into soil), earth plates (buried), and
                 foundation electrodes (concrete-encased). Earth rods are most practical for
                 temporary installations. Drive until acceptable resistance is achieved - soil type
@@ -417,7 +417,7 @@ const Level3Module1Section3_4 = () => {
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Trade Tip:</strong> Always test earth electrode resistance before energising
               and periodically throughout the installation's life. Soil conditions change with
               weather - an electrode that tested fine in summer may have higher resistance after a
@@ -449,7 +449,7 @@ const Level3Module1Section3_4 = () => {
             <div className="my-6 space-y-4">
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Main Protective Bonding</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   Connects main services (water, gas where metallic) and structural metalwork to the
                   main earthing terminal. On construction sites, this includes the main metalwork of
                   the installation and any services entering the distribution area. Minimum 10mm2
@@ -459,7 +459,7 @@ const Level3Module1Section3_4 = () => {
 
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Supplementary Bonding</p>
-                <p className="text-sm text-white/90">
+                <p className="text-sm text-white">
                   Connects simultaneously accessible metalwork within arm's reach. On construction
                   sites, scaffold poles near electrical equipment, metal work platforms, and
                   structural steelwork may need supplementary bonding. Uses 4mm2 minimum conductor
@@ -470,7 +470,7 @@ const Level3Module1Section3_4 = () => {
 
             <div className="my-6 p-4 rounded bg-red-500/10 border border-red-500/20">
               <p className="text-sm font-medium text-red-400 mb-2">Critical Scenario:</p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 A worker stands on steel scaffolding while drilling with a Class I power tool. A
                 fault develops in the drill, energising its metal case. Without bonding, the
                 scaffold is at earth potential while the drill case is at mains potential. The
@@ -509,7 +509,7 @@ const Level3Module1Section3_4 = () => {
             <div className="grid sm:grid-cols-2 gap-4 my-6">
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">30mA RCDs (Required)</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>All socket outlets up to 32A</li>
                   <li>All circuits supplying hand-held equipment</li>
                   <li>Provides additional shock protection</li>
@@ -518,7 +518,7 @@ const Level3Module1Section3_4 = () => {
               </div>
               <div className="p-4 rounded bg-white/5">
                 <p className="text-sm font-medium text-elec-yellow mb-2">Time-Delayed RCDs</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>100mA or 300mA at origin for fire protection</li>
                   <li>Time delay allows downstream 30mA to trip first</li>
                   <li>Provides discrimination (selective tripping)</li>
@@ -531,7 +531,7 @@ const Level3Module1Section3_4 = () => {
               <p className="text-sm font-medium text-elec-yellow mb-2">
                 Earth Electrode and RCD Coordination
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 For a 30mA RCD to provide shock protection, the earth electrode resistance should
                 ensure the touch voltage doesn't exceed 50V. The formula Ra x Ia less than or equal
                 to 50V gives Ra less than or equal to 1667 ohms for a 30mA RCD. In practice, much
@@ -539,7 +539,7 @@ const Level3Module1Section3_4 = () => {
               </p>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Trade Tip:</strong> Test RCDs at every inspection. Press the test button
               quarterly at minimum. Perform instrument tests (at various percentages of rated
               current) at formal inspection intervals. RCDs can fail - a failed RCD with a
@@ -625,7 +625,7 @@ const Level3Module1Section3_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -678,7 +678,7 @@ const Level3Module1Section3_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module1-section3-3">

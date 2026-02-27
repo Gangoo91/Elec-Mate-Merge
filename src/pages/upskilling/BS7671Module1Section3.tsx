@@ -86,7 +86,7 @@ const BS7671Module1Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/bs7671-module-1">
@@ -107,7 +107,7 @@ const BS7671Module1Section3 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Structure of BS 7671
           </h1>
-          <p className="text-white/80">Understanding Parts, Chapters, Sections, and Appendices</p>
+          <p className="text-white">Understanding Parts, Chapters, Sections, and Appendices</p>
         </header>
 
         {/* Quick Summary Boxes */}
@@ -174,7 +174,7 @@ const BS7671Module1Section3 = () => {
 
             <div className="p-4 rounded-lg bg-elec-yellow/5 border border-elec-yellow/20">
               <p className="text-sm font-medium text-elec-yellow mb-3">Hierarchical Structure</p>
-              <div className="space-y-2 text-sm text-white/90">
+              <div className="space-y-2 text-sm text-white">
                 <div className="flex items-center gap-3">
                   <span className="w-3 h-3 bg-elec-yellow rounded-full flex-shrink-0"></span>
                   <span>
@@ -206,7 +206,7 @@ const BS7671Module1Section3 = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">Numbering System</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Parts: 1, 2, 3, 4, 5, 6, 7, 8</li>
                   <li>Chapters: 11, 12, 13... within each Part</li>
                   <li>Sections: 110, 120, 130... within Chapters</li>
@@ -215,7 +215,7 @@ const BS7671Module1Section3 = () => {
               </div>
               <div className="p-4 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-white mb-2">Reference Format</p>
-                <ul className="text-sm text-white/80 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Full reference: 411.3.3</li>
                   <li>Part 4, Chapter 41, Section 411.3, Reg 3</li>
                   <li>Quick reference: Reg 411.3.3</li>
@@ -245,7 +245,7 @@ const BS7671Module1Section3 = () => {
                     <p className="font-medium text-white">
                       Part 1 - Scope, Object and Fundamental Principles
                     </p>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       Application boundaries, safety objectives, design principles
                     </p>
                   </div>
@@ -259,7 +259,7 @@ const BS7671Module1Section3 = () => {
                   </span>
                   <div>
                     <p className="font-medium text-white">Part 2 - Definitions</p>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       Technical terminology and definitions used throughout
                     </p>
                   </div>
@@ -275,7 +275,7 @@ const BS7671Module1Section3 = () => {
                     <p className="font-medium text-white">
                       Part 3 - Assessment of General Characteristics
                     </p>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       Installation assessment, external influences, compatibility
                     </p>
                   </div>
@@ -291,7 +291,7 @@ const BS7671Module1Section3 = () => {
                     <p className="font-medium text-white">
                       Part 4 - Protection for Safety (Critical)
                     </p>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       Shock, thermal, overcurrent, voltage disturbance protection
                     </p>
                     <p className="text-xs text-red-400 mt-1">
@@ -310,7 +310,7 @@ const BS7671Module1Section3 = () => {
                     <p className="font-medium text-white">
                       Part 5 - Selection and Erection of Equipment
                     </p>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       Wiring systems, earthing, equipment selection, installation methods
                     </p>
                   </div>
@@ -326,7 +326,7 @@ const BS7671Module1Section3 = () => {
                     <p className="font-medium text-white">
                       Part 6 - Inspection and Testing (Essential)
                     </p>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       Initial verification, periodic inspection, certification
                     </p>
                     <p className="text-xs text-blue-400 mt-1">Essential for all testing work</p>
@@ -343,7 +343,7 @@ const BS7671Module1Section3 = () => {
                     <p className="font-medium text-white">
                       Part 7 - Special Installations or Locations
                     </p>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       Bathrooms (701), Construction sites (704), Marinas (708), Medical (710)
                     </p>
                     <p className="text-xs text-orange-400 mt-1">
@@ -362,7 +362,7 @@ const BS7671Module1Section3 = () => {
                     <p className="font-medium text-white">
                       Part 8 - Prosumer Electrical Installations (New)
                     </p>
-                    <p className="text-sm text-white/70">
+                    <p className="text-sm text-white">
                       EV charging, energy storage, microgeneration, smart grids
                     </p>
                     <p className="text-xs text-green-400 mt-1">
@@ -394,14 +394,14 @@ const BS7671Module1Section3 = () => {
               <div className="p-3 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-elec-yellow text-sm mb-1">Appendix 1</p>
                 <p className="text-sm text-white">British Standards</p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   Referenced standards and compliance requirements
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-elec-yellow text-sm mb-1">Appendix 2</p>
                 <p className="text-sm text-white">Statutory Regulations</p>
-                <p className="text-xs text-white/60">Legal framework and H&S regulations</p>
+                <p className="text-xs text-white">Legal framework and H&S regulations</p>
               </div>
               <div className="p-3 rounded-lg bg-elec-yellow/10 border border-elec-yellow/20">
                 <p className="font-medium text-elec-yellow text-sm mb-1">Appendix 3</p>
@@ -416,14 +416,14 @@ const BS7671Module1Section3 = () => {
               <div className="p-3 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-elec-yellow text-sm mb-1">Appendix 5</p>
                 <p className="text-sm text-white">External Influences</p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   IP ratings, temperature, environmental codes
                 </p>
               </div>
               <div className="p-3 rounded-lg bg-transparent border border-white/10">
                 <p className="font-medium text-elec-yellow text-sm mb-1">Appendices 6-15</p>
                 <p className="text-sm text-white">Additional References</p>
-                <p className="text-xs text-white/60">
+                <p className="text-xs text-white">
                   Forms, energy efficiency, harmonics, guidance
                 </p>
               </div>
@@ -444,7 +444,7 @@ const BS7671Module1Section3 = () => {
               <p className="text-sm font-medium text-green-400 mb-2">
                 Professional Navigation Strategy
               </p>
-              <p className="text-sm text-white/90">
+              <p className="text-sm text-white">
                 Use the index, bookmarks, and tabbing to move between Parts and Appendices
                 effectively. During exams or on-site problem solving, being quick here is a major
                 advantage.
@@ -501,7 +501,7 @@ const BS7671Module1Section3 = () => {
               <p className="text-sm font-medium text-elec-yellow mb-3">
                 Swimming Pool Circuit EICR
               </p>
-              <div className="space-y-2 text-sm text-white/90">
+              <div className="space-y-2 text-sm text-white">
                 <p>
                   <strong>Situation:</strong> During an EICR, an engineer must check compliance for
                   a swimming pool circuit with additional bonding and enhanced RCD protection.
@@ -509,7 +509,7 @@ const BS7671Module1Section3 = () => {
                 <p>
                   <strong>Efficient Process:</strong>
                 </p>
-                <ol className="text-sm text-white/80 space-y-1 ml-4 list-decimal">
+                <ol className="text-sm text-white space-y-1 ml-4 list-decimal">
                   <li>Check contents - Part 7 for special locations</li>
                   <li>Navigate to Section 702 - Swimming pools</li>
                   <li>Cross-reference to Part 4 for basic protection</li>
@@ -532,7 +532,7 @@ const BS7671Module1Section3 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -544,7 +544,7 @@ const BS7671Module1Section3 = () => {
           <div className="grid sm:grid-cols-2 gap-4 text-xs text-white">
             <div>
               <p className="font-medium text-white mb-1">Key Parts</p>
-              <ul className="space-y-0.5 text-white/80">
+              <ul className="space-y-0.5 text-white">
                 <li>Part 4 - Protection for Safety</li>
                 <li>Part 6 - Inspection and Testing</li>
                 <li>Part 7 - Special Locations</li>
@@ -552,7 +552,7 @@ const BS7671Module1Section3 = () => {
             </div>
             <div>
               <p className="font-medium text-white mb-1">Key Appendices</p>
-              <ul className="space-y-0.5 text-white/80">
+              <ul className="space-y-0.5 text-white">
                 <li>App 3 - Time/Current Curves</li>
                 <li>App 4 - Cable Current Ratings</li>
                 <li>App 5 - External Influences</li>
@@ -571,7 +571,7 @@ const BS7671Module1Section3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/upskilling/bs7671-module-1-section-2">

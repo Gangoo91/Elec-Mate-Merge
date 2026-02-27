@@ -194,7 +194,7 @@ const Module3Section2_4: React.FC = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -216,7 +216,7 @@ const Module3Section2_4: React.FC = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Cable Tray, Basket and Ladder Systems
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding open cable containment systems, their applications and installation
             requirements for electrical installations
           </p>
@@ -286,8 +286,8 @@ const Module3Section2_4: React.FC = () => {
                 <p className="font-medium text-white text-sm mb-2">Cable Trays</p>
                 <div className="space-y-2">
                   <div>
-                    <p className="font-medium text-white/80 text-xs mb-1">Construction</p>
-                    <ul className="text-xs text-white/70 space-y-0.5">
+                    <p className="font-medium text-white text-xs mb-1">Construction</p>
+                    <ul className="text-xs text-white space-y-0.5">
                       <li>Solid or perforated steel/aluminium base</li>
                       <li>Raised sides for cable retention</li>
                       <li>Standard widths: 50-900mm</li>
@@ -295,8 +295,8 @@ const Module3Section2_4: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-white/80 text-xs mb-1">Advantages</p>
-                    <ul className="text-xs text-white/70 space-y-0.5">
+                    <p className="font-medium text-white text-xs mb-1">Advantages</p>
+                    <ul className="text-xs text-white space-y-0.5">
                       <li>Weather protection from above</li>
                       <li>Good support for mixed cable types</li>
                       <li>Load capacity: 75-300 kg/m</li>
@@ -304,8 +304,8 @@ const Module3Section2_4: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-white/80 text-xs mb-1">Applications</p>
-                    <ul className="text-xs text-white/70 space-y-0.5">
+                    <p className="font-medium text-white text-xs mb-1">Applications</p>
+                    <ul className="text-xs text-white space-y-0.5">
                       <li>General building services</li>
                       <li>Outdoor/weather exposed routes</li>
                       <li>Mixed power and control cables</li>
@@ -319,8 +319,8 @@ const Module3Section2_4: React.FC = () => {
                 <p className="font-medium text-white text-sm mb-2">Cable Baskets</p>
                 <div className="space-y-2">
                   <div>
-                    <p className="font-medium text-white/80 text-xs mb-1">Construction</p>
-                    <ul className="text-xs text-white/70 space-y-0.5">
+                    <p className="font-medium text-white text-xs mb-1">Construction</p>
+                    <ul className="text-xs text-white space-y-0.5">
                       <li>Wire mesh or grid construction</li>
                       <li>Welded or formed mesh pattern</li>
                       <li>Lightweight galvanised steel</li>
@@ -328,8 +328,8 @@ const Module3Section2_4: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-white/80 text-xs mb-1">Advantages</p>
-                    <ul className="text-xs text-white/70 space-y-0.5">
+                    <p className="font-medium text-white text-xs mb-1">Advantages</p>
+                    <ul className="text-xs text-white space-y-0.5">
                       <li>Excellent ventilation and heat dissipation</li>
                       <li>Quick installation and modification</li>
                       <li>Load capacity: 50-150 kg/m</li>
@@ -337,8 +337,8 @@ const Module3Section2_4: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-white/80 text-xs mb-1">Applications</p>
-                    <ul className="text-xs text-white/70 space-y-0.5">
+                    <p className="font-medium text-white text-xs mb-1">Applications</p>
+                    <ul className="text-xs text-white space-y-0.5">
                       <li>Data and communication cables</li>
                       <li>Areas requiring maximum ventilation</li>
                       <li>Retrofit installations</li>
@@ -352,8 +352,8 @@ const Module3Section2_4: React.FC = () => {
                 <p className="font-medium text-white text-sm mb-2">Ladder Systems</p>
                 <div className="space-y-2">
                   <div>
-                    <p className="font-medium text-white/80 text-xs mb-1">Construction</p>
-                    <ul className="text-xs text-white/70 space-y-0.5">
+                    <p className="font-medium text-white text-xs mb-1">Construction</p>
+                    <ul className="text-xs text-white space-y-0.5">
                       <li>Side rails with cross rungs</li>
                       <li>Heavy-duty galvanised steel</li>
                       <li>Welded or bolted construction</li>
@@ -361,8 +361,8 @@ const Module3Section2_4: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-white/80 text-xs mb-1">Advantages</p>
-                    <ul className="text-xs text-white/70 space-y-0.5">
+                    <p className="font-medium text-white text-xs mb-1">Advantages</p>
+                    <ul className="text-xs text-white space-y-0.5">
                       <li>Maximum load capacity: 150-500 kg/m</li>
                       <li>Long span capability (3-6m)</li>
                       <li>Excellent ventilation</li>
@@ -370,8 +370,8 @@ const Module3Section2_4: React.FC = () => {
                     </ul>
                   </div>
                   <div>
-                    <p className="font-medium text-white/80 text-xs mb-1">Applications</p>
-                    <ul className="text-xs text-white/70 space-y-0.5">
+                    <p className="font-medium text-white text-xs mb-1">Applications</p>
+                    <ul className="text-xs text-white space-y-0.5">
                       <li>Heavy power cable installations</li>
                       <li>Long span requirements</li>
                       <li>Industrial high-load applications</li>
@@ -395,7 +395,7 @@ const Module3Section2_4: React.FC = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <div className="p-4 rounded bg-white/5">
               <p className="font-medium text-white text-sm mb-2">Selection Criteria</p>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>Calculate total cable weight including 25% future capacity</li>
                 <li>Consider environmental conditions (indoor/outdoor, corrosive atmospheres)</li>
                 <li>Evaluate span requirements and available support points</li>
@@ -406,7 +406,7 @@ const Module3Section2_4: React.FC = () => {
 
             <div className="p-4 rounded bg-cyan-500/10 border border-cyan-400/20">
               <p className="font-medium text-white text-sm mb-2">Load Calculations</p>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>Total load = cable weight + system self-weight + 25% safety factor</li>
                 <li>Check manufacturer's load tables for maximum loads per support span</li>
                 <li>Consider point loads from junction boxes and equipment</li>
@@ -484,7 +484,7 @@ const Module3Section2_4: React.FC = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <div className="p-3 rounded bg-white/5">
               <p className="font-medium text-white text-sm mb-2">Installation Errors</p>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>
                   <strong>Inadequate support spacing:</strong> Causing excessive deflection and
                   cable stress
@@ -510,7 +510,7 @@ const Module3Section2_4: React.FC = () => {
 
             <div className="p-3 rounded bg-amber-500/10 border border-amber-400/20">
               <p className="font-medium text-white text-sm mb-2">Planning Oversights</p>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>
                   <strong>Ignoring thermal expansion:</strong> Not providing expansion joints in
                   long runs
@@ -543,7 +543,7 @@ const Module3Section2_4: React.FC = () => {
           <div className="text-white space-y-4 leading-relaxed">
             <div className="p-4 rounded bg-white/5">
               <p className="font-medium text-white text-sm mb-2">Key Standards and Regulations</p>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>
                   <strong>BS EN 61537:</strong> Cable management systems for electrical
                   installations
@@ -565,7 +565,7 @@ const Module3Section2_4: React.FC = () => {
 
             <div className="p-4 rounded bg-green-500/10 border border-green-400/20">
               <p className="font-medium text-white text-sm mb-2">Fire Safety Requirements</p>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>Enhanced fire performance required in escape routes</li>
                 <li>Reaction to fire classification for non-metallic systems</li>
                 <li>Smoke and toxicity emission considerations</li>
@@ -576,7 +576,7 @@ const Module3Section2_4: React.FC = () => {
 
             <div className="p-4 rounded bg-white/5">
               <p className="font-medium text-white text-sm mb-2">Compliance Testing</p>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>Earth continuity testing: less than 0.1 Ohm between all metallic sections</li>
                 <li>Load testing: Verify systems meet manufacturer's specifications</li>
                 <li>Visual inspection: Check support spacing, clearances and finish</li>
@@ -598,7 +598,7 @@ const Module3Section2_4: React.FC = () => {
               <Factory className="w-6 h-6 text-elec-yellow mt-1 flex-shrink-0" />
               <div>
                 <p className="font-medium text-white mb-2">The Project</p>
-                <p className="text-sm text-white/90 leading-relaxed">
+                <p className="text-sm text-white leading-relaxed">
                   A manufacturing facility requires cable containment for the main electrical
                   distribution. The installation includes 400A three-phase power cables, control
                   circuits, and data networks.
@@ -609,7 +609,7 @@ const Module3Section2_4: React.FC = () => {
             <div className="grid sm:grid-cols-2 gap-4">
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white text-sm mb-2">Power Distribution Route</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Cable ladder system for main 400A feeders</li>
                   <li>3m support spacing due to cable weight (85 kg/m)</li>
                   <li>Galvanised steel construction for corrosion resistance</li>
@@ -618,7 +618,7 @@ const Module3Section2_4: React.FC = () => {
               </div>
               <div className="p-3 rounded bg-white/5">
                 <p className="font-medium text-white text-sm mb-2">Control and Data Circuits</p>
-                <ul className="text-xs text-white/80 space-y-1">
+                <ul className="text-xs text-white space-y-1">
                   <li>Cable baskets for control wiring (12 kg/m total load)</li>
                   <li>1.2m support spacing for lighter loads</li>
                   <li>Separate basket for data cables (segregation)</li>
@@ -636,7 +636,7 @@ const Module3Section2_4: React.FC = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -688,7 +688,7 @@ const Module3Section2_4: React.FC = () => {
           <div className="grid sm:grid-cols-2 gap-4">
             <div className="p-4 rounded bg-green-500/10 border border-green-400/20">
               <h3 className="font-medium text-white text-sm mb-3">DO</h3>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>Calculate total loads including future capacity</li>
                 <li>Check manufacturer's load tables and specifications</li>
                 <li>Ensure all metallic sections are properly earthed</li>
@@ -701,7 +701,7 @@ const Module3Section2_4: React.FC = () => {
             </div>
             <div className="p-4 rounded bg-red-500/10 border border-red-400/20">
               <h3 className="font-medium text-white text-sm mb-3">DON'T</h3>
-              <ul className="text-xs text-white/80 space-y-1">
+              <ul className="text-xs text-white space-y-1">
                 <li>Exceed manufacturer's load ratings</li>
                 <li>Use incompatible components from different systems</li>
                 <li>Ignore thermal expansion requirements</li>
@@ -721,7 +721,7 @@ const Module3Section2_4: React.FC = () => {
           <div className="grid sm:grid-cols-3 gap-3">
             <div className="p-3 rounded bg-white/5">
               <h4 className="font-medium text-white text-sm mb-2">Cable Trays</h4>
-              <ul className="text-xs text-white/80 space-y-0.5">
+              <ul className="text-xs text-white space-y-0.5">
                 <li>Load: 75-300 kg/m</li>
                 <li>Support: 1.2-2.0m</li>
                 <li>Use: General purpose</li>
@@ -730,7 +730,7 @@ const Module3Section2_4: React.FC = () => {
             </div>
             <div className="p-3 rounded bg-green-500/10 border border-green-400/20">
               <h4 className="font-medium text-white text-sm mb-2">Cable Baskets</h4>
-              <ul className="text-xs text-white/80 space-y-0.5">
+              <ul className="text-xs text-white space-y-0.5">
                 <li>Load: 50-150 kg/m</li>
                 <li>Support: 1.0-1.5m</li>
                 <li>Use: Data/light power</li>
@@ -739,7 +739,7 @@ const Module3Section2_4: React.FC = () => {
             </div>
             <div className="p-3 rounded bg-white/5">
               <h4 className="font-medium text-white text-sm mb-2">Ladder Systems</h4>
-              <ul className="text-xs text-white/80 space-y-0.5">
+              <ul className="text-xs text-white space-y-0.5">
                 <li>Load: 150-500 kg/m</li>
                 <li>Support: 1.5-3.0m</li>
                 <li>Use: Heavy power</li>
@@ -761,21 +761,21 @@ const Module3Section2_4: React.FC = () => {
           <div className="space-y-2 text-xs">
             <div className="flex justify-between items-center p-2 rounded bg-white/5">
               <span className="text-white">BS EN 61537:2006</span>
-              <span className="text-white/70">
+              <span className="text-white">
                 Cable management systems for electrical installations
               </span>
             </div>
             <div className="flex justify-between items-center p-2 rounded bg-white/5">
               <span className="text-white">BS 7671:2018+A2:2022</span>
-              <span className="text-white/70">IET Wiring Regulations (Chapter 52)</span>
+              <span className="text-white">IET Wiring Regulations (Chapter 52)</span>
             </div>
             <div className="flex justify-between items-center p-2 rounded bg-white/5">
               <span className="text-white">BS EN 50085</span>
-              <span className="text-white/70">Cable trunking and ducting systems</span>
+              <span className="text-white">Cable trunking and ducting systems</span>
             </div>
             <div className="flex justify-between items-center p-2 rounded bg-white/5">
               <span className="text-white">Health & Safety at Work etc. Act 1974</span>
-              <span className="text-white/70">General workplace safety requirements</span>
+              <span className="text-white">General workplace safety requirements</span>
             </div>
           </div>
         </section>
@@ -793,7 +793,7 @@ const Module3Section2_4: React.FC = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[44px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../2-3">

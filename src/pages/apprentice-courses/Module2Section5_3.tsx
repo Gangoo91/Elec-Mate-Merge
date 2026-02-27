@@ -213,7 +213,7 @@ const Module2Section5_3 = () => {
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
             Factors Affecting Resistance
           </h1>
-          <p className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-white max-w-2xl mx-auto">
             Learn how length, area, temperature and material affect electrical resistance
           </p>
         </div>
@@ -590,7 +590,7 @@ const Module2Section5_3 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white/70 hover:text-white hover:bg-white/5"
+            className="w-full sm:w-auto min-h-[44px] touch-manipulation active:scale-[0.98] text-white hover:text-white hover:bg-white/5"
             asChild
           >
             <Link to="/study-centre/apprentice/level2/module2/section5/5-2">

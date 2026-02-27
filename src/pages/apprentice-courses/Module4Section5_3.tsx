@@ -142,7 +142,7 @@ const Module4Section5_3 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -160,13 +160,13 @@ const Module4Section5_3 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 5.3</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 5.3</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Terminating Twin & Earth, Singles, and Flex
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master safe cable termination techniques for reliable connections and compliance with
               BS 7671.
             </p>
@@ -174,7 +174,7 @@ const Module4Section5_3 = () => {
 
           {/* Quick Summary */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               <strong className="text-elec-yellow">Key points:</strong> Proper cable termination
               prevents loose connections and electrical faults. Different cable types require
               specific preparation and termination techniques. Poor terminations are a leading cause
@@ -188,7 +188,7 @@ const Module4Section5_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Understanding Cable Types and Applications
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Different cable types require specific termination techniques to ensure safety,
                 reliability, and compliance.
@@ -207,7 +207,7 @@ const Module4Section5_3 = () => {
                   <li>• Bare CPC (Circuit Protective Conductor) for earthing</li>
                   <li>• Common sizes: 1.0mm², 1.5mm², 2.5mm², 4.0mm², 6.0mm², 10.0mm²</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-3 p-2 bg-black/20 rounded">
+                <p className="text-xs text-white mt-3 p-2 bg-black/20 rounded">
                   Critical requirement: CPC must always be sleeved green/yellow before termination
                 </p>
               </div>
@@ -222,7 +222,7 @@ const Module4Section5_3 = () => {
                   <li>• Easier pulling through conduit and complex routes</li>
                   <li>• Better heat dissipation in trunking systems</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-3 p-2 bg-black/20 rounded">
+                <p className="text-xs text-white mt-3 p-2 bg-black/20 rounded">
                   Installation requirement: Must be installed in appropriate containment for
                   mechanical protection
                 </p>
@@ -239,7 +239,7 @@ const Module4Section5_3 = () => {
                   <li>• Class 5 stranding for maximum flexibility</li>
                   <li>• Heat-resistant and oil-resistant variants available</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-3 p-2 bg-black/20 rounded">
+                <p className="text-xs text-white mt-3 p-2 bg-black/20 rounded">
                   Termination rule: Always use ferrules or twist strands to prevent spreading in
                   terminals
                 </p>
@@ -261,7 +261,7 @@ const Module4Section5_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Cable Preparation and Stripping Techniques
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Proper preparation is essential for reliable terminations and prevents damage to
                 conductors.
@@ -285,7 +285,7 @@ const Module4Section5_3 = () => {
                   <li>• Remove inner insulation: 12-15mm for most terminals</li>
                   <li>• Apply green/yellow sleeving to CPC before connection</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-3 p-2 bg-black/20 rounded">
+                <p className="text-xs text-white mt-3 p-2 bg-black/20 rounded">
                   Quality check: Inspect stripped conductors for nicks or damaged strands before
                   terminating
                 </p>
@@ -317,7 +317,7 @@ const Module4Section5_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Termination Techniques and Best Practices
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <p>
                 Professional termination techniques ensure electrical and mechanical integrity for
                 safe, reliable operation.
@@ -337,7 +337,7 @@ const Module4Section5_3 = () => {
                   </li>
                   <li>• Verify no bare copper visible outside terminals</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-3 p-2 bg-black/20 rounded">
+                <p className="text-xs text-white mt-3 p-2 bg-black/20 rounded">
                   Critical check: Insulation should be just inside terminal with no exposed copper
                 </p>
               </div>
@@ -360,7 +360,7 @@ const Module4Section5_3 = () => {
                   <li>• Crimp using appropriate tool to manufacturer specification</li>
                   <li>• Verify all strands are secured and none protruding</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-3 p-2 bg-black/20 rounded">
+                <p className="text-xs text-white mt-3 p-2 bg-black/20 rounded">
                   Safety principle: Strain relief must support cable mechanically, not electrically
                 </p>
               </div>
@@ -381,7 +381,7 @@ const Module4Section5_3 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Testing and Quality Assurance
             </h2>
-            <div className="text-white/80 space-y-4 leading-relaxed">
+            <div className="text-white space-y-4 leading-relaxed">
               <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                 <h4 className="font-medium text-white mb-2">Mechanical Security Testing</h4>
                 <ul className="space-y-2 text-sm">
@@ -400,7 +400,7 @@ const Module4Section5_3 = () => {
                   <li>• Confirm correct polarity at all termination points</li>
                   <li>• Check no cross-connections between different circuits</li>
                 </ul>
-                <p className="text-xs text-white/60 mt-3 p-2 bg-black/20 rounded">
+                <p className="text-xs text-white mt-3 p-2 bg-black/20 rounded">
                   Critical safety check: Polarity errors can create dangerous conditions - verify
                   before energising
                 </p>
@@ -415,12 +415,12 @@ const Module4Section5_3 = () => {
               Real-World Example
             </h2>
             <div className="p-4 rounded-lg bg-blue-500/10 border border-blue-500/20">
-              <p className="text-white/80 text-sm leading-relaxed mb-3">
+              <p className="text-white text-sm leading-relaxed mb-3">
                 On a commercial lighting installation, flex cables were terminated without ferrules.
                 Over time, vibration caused the fine strands to loosen, leading to arcing,
                 intermittent faults, and damage to the terminals.
               </p>
-              <p className="text-white/80 text-sm leading-relaxed mb-3">
+              <p className="text-white text-sm leading-relaxed mb-3">
                 Investigation revealed several pendant lights had developed high-resistance
                 connections due to strand separation. This caused voltage drop, reduced light
                 output, and heat generation that could have led to fire.
@@ -438,7 +438,7 @@ const Module4Section5_3 = () => {
           {/* Summary */}
           <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50 mb-10">
             <h3 className="font-medium text-white mb-2">Summary</h3>
-            <p className="text-white/80 text-sm leading-relaxed">
+            <p className="text-white text-sm leading-relaxed">
               Correctly terminating Twin & Earth, single-core, and flexible cables is fundamental to
               electrical safety and reliability. Good terminations combine mechanical strength,
               electrical integrity, and compliance with BS 7671, ensuring safe operation for the

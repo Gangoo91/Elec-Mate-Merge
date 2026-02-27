@@ -239,19 +239,19 @@ const AM2Module8 = () => {
                 <div className="space-y-2.5 pl-1">
                   <div className="flex items-start gap-3">
                     <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-[7px] flex-shrink-0" />
-                    <p className="text-sm text-white/90">30 questions from 400 question bank</p>
+                    <p className="text-sm text-white">30 questions from 400 question bank</p>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-[7px] flex-shrink-0" />
-                    <p className="text-sm text-white/90">60 minutes (matches real AM2)</p>
+                    <p className="text-sm text-white">60 minutes (matches real AM2)</p>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-[7px] flex-shrink-0" />
-                    <p className="text-sm text-white/90">Pass mark: 60% (18/30)</p>
+                    <p className="text-sm text-white">Pass mark: 60% (18/30)</p>
                   </div>
                   <div className="flex items-start gap-3">
                     <div className="h-1.5 w-1.5 rounded-full bg-elec-yellow mt-[7px] flex-shrink-0" />
-                    <p className="text-sm text-white/90">
+                    <p className="text-sm text-white">
                       H&S, BS7671, Building Regs, Safe Isolation
                     </p>
                   </div>
@@ -693,7 +693,7 @@ const AM2Module8 = () => {
                       className={`w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 ${
                         selectedAnswers[currentQuestion] === index
                           ? 'bg-elec-yellow text-black'
-                          : 'bg-white/10 text-white/60'
+                          : 'bg-white/10 text-white'
                       }`}
                     >
                       <span className="text-xs font-bold">{String.fromCharCode(65 + index)}</span>
@@ -766,7 +766,7 @@ const AM2Module8 = () => {
                             className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
                               selectedAnswers[currentQuestion] === index
                                 ? 'bg-elec-yellow text-black font-bold'
-                                : 'bg-white/10 text-white/70'
+                                : 'bg-white/10 text-white'
                             }`}
                           >
                             <span className="text-sm font-bold">

@@ -279,7 +279,7 @@ const MOETModule7Section2_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module7-section2">
@@ -301,7 +301,7 @@ const MOETModule7Section2_4 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Control System Troubleshooting
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             PLC and relay logic fault diagnosis, signal tracing and systematic resolution for EPA
             readiness
           </p>
@@ -861,7 +861,7 @@ const MOETModule7Section2_4 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -878,7 +878,7 @@ const MOETModule7Section2_4 = () => {
             </h3>
             <div className="grid sm:grid-cols-2 gap-4">
               <div>
-                <p className="text-xs font-medium text-white/70 mb-1.5">Systematic Approach</p>
+                <p className="text-xs font-medium text-white mb-1.5">Systematic Approach</p>
                 <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                   <li>Review drawings before testing</li>
                   <li>Check power supply first</li>
@@ -889,7 +889,7 @@ const MOETModule7Section2_4 = () => {
                 </ul>
               </div>
               <div>
-                <p className="text-xs font-medium text-white/70 mb-1.5">Key Safety Rules</p>
+                <p className="text-xs font-medium text-white mb-1.5">Key Safety Rules</p>
                 <ul className="text-xs text-white space-y-1 list-disc list-outside ml-4">
                   <li>Never bypass safety interlocks</li>
                   <li>Check control voltage before touching</li>
@@ -916,7 +916,7 @@ const MOETModule7Section2_4 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/m-o-e-t-module7-section2-3">

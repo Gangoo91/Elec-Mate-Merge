@@ -99,7 +99,7 @@ const CollapsibleSection = ({
           </span>
         </div>
         <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.2 }}>
-          <ChevronDown className="h-5 w-5 text-white/40" />
+          <ChevronDown className="h-5 w-5 text-white" />
         </motion.div>
       </button>
       <AnimatePresence initial={false}>
@@ -111,7 +111,7 @@ const CollapsibleSection = ({
             transition={{ duration: 0.2 }}
             className="overflow-hidden"
           >
-            <div className="pb-4 px-1 text-sm text-white/70 leading-relaxed">{children}</div>
+            <div className="pb-4 px-1 text-sm text-white leading-relaxed">{children}</div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -134,7 +134,7 @@ const StatItem = ({
   <div className="bg-white/[0.03] rounded-xl p-3 border border-white/5">
     <div className="flex items-center gap-2 mb-1">
       <Icon className={cn('h-4 w-4', iconColor)} />
-      <span className="text-xs text-white/50">{label}</span>
+      <span className="text-xs text-white">{label}</span>
     </div>
     <p className="font-semibold text-white text-sm">{value}</p>
   </div>
@@ -169,7 +169,7 @@ const getSourceColor = (source: string) => {
     'CV Library': 'bg-orange-500/20 border-orange-500/30 text-orange-300',
     'Jobs.co.uk': 'bg-cyan-500/20 border-cyan-500/30 text-cyan-300',
   };
-  return colors[source] || 'bg-white/10 border-white/20 text-white/70';
+  return colors[source] || 'bg-white/10 border-white/20 text-white';
 };
 
 const JobDetailSheet = ({
@@ -229,7 +229,7 @@ const JobDetailSheet = ({
           {/* Close button */}
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/20 transition-colors z-10"
+            className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:text-white hover:bg-white/20 transition-colors z-10"
           >
             <X className="h-5 w-5" />
           </button>
@@ -275,7 +275,7 @@ const JobDetailSheet = ({
                 </div>
 
                 {/* Quick Info Row */}
-                <div className="flex flex-wrap items-center gap-3 text-sm text-white/60">
+                <div className="flex flex-wrap items-center gap-3 text-sm text-white">
                   <span className="flex items-center gap-1.5">
                     <MapPin className="h-4 w-4" />
                     {job.location}
@@ -387,16 +387,16 @@ const JobDetailSheet = ({
               <CollapsibleSection title="About Company" icon={Building2}>
                 <div className="space-y-3">
                   <div className="flex items-center gap-2">
-                    <Building2 className="h-4 w-4 text-white/40" />
+                    <Building2 className="h-4 w-4 text-white" />
                     <span className="font-medium text-white">{job.company}</span>
                   </div>
                   {job.source && (
                     <div className="flex items-center gap-2">
-                      <Globe className="h-4 w-4 text-white/40" />
+                      <Globe className="h-4 w-4 text-white" />
                       <span>Listed on {job.source}</span>
                     </div>
                   )}
-                  <p className="text-white/60">
+                  <p className="text-white">
                     Visit the company website or apply through the job listing to learn more about
                     this employer.
                   </p>

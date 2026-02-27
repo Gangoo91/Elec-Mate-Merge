@@ -373,7 +373,7 @@ const CVPreviewSheet = ({
               </div>
               <div>
                 <h2 className="font-bold text-white">CV Preview</h2>
-                <p className="text-xs text-white/50 capitalize">{template} Template</p>
+                <p className="text-xs text-white capitalize">{template} Template</p>
               </div>
             </div>
 
@@ -384,18 +384,18 @@ const CVPreviewSheet = ({
                   variant="ghost"
                   size="icon"
                   onClick={handleZoomOut}
-                  className="h-8 w-8 text-white/60 hover:text-white"
+                  className="h-8 w-8 text-white hover:text-white"
                 >
                   <ZoomOut className="h-4 w-4" />
                 </Button>
-                <span className="text-xs text-white/60 w-12 text-center">
+                <span className="text-xs text-white w-12 text-center">
                   {Math.round(scale * 100)}%
                 </span>
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={handleZoomIn}
-                  className="h-8 w-8 text-white/60 hover:text-white"
+                  className="h-8 w-8 text-white hover:text-white"
                 >
                   <ZoomIn className="h-4 w-4" />
                 </Button>
@@ -403,7 +403,7 @@ const CVPreviewSheet = ({
                   variant="ghost"
                   size="icon"
                   onClick={handleFitToScreen}
-                  className="h-8 w-8 text-white/60 hover:text-white"
+                  className="h-8 w-8 text-white hover:text-white"
                 >
                   <Maximize2 className="h-4 w-4" />
                 </Button>
@@ -413,7 +413,7 @@ const CVPreviewSheet = ({
                 variant="ghost"
                 size="icon"
                 onClick={onClose}
-                className="h-10 w-10 rounded-xl text-white/60 hover:text-white hover:bg-white/10"
+                className="h-10 w-10 rounded-xl text-white hover:text-white hover:bg-white/10"
               >
                 <X className="h-5 w-5" />
               </Button>
@@ -435,7 +435,7 @@ const CVPreviewSheet = ({
                     <span className={cn('text-xl font-bold', getScoreColor(validation.score))}>
                       {validation.score}%
                     </span>
-                    <span className="text-[10px] text-white/50">Complete</span>
+                    <span className="text-[10px] text-white">Complete</span>
                   </div>
 
                   {/* Incomplete Items */}
@@ -496,7 +496,7 @@ const CVPreviewSheet = ({
                     variant="ghost"
                     size="sm"
                     onClick={() => setShowValidation(false)}
-                    className="text-white/40 hover:text-white/60 -mr-2"
+                    className="text-white hover:text-white -mr-2"
                   >
                     <X className="h-4 w-4" />
                   </Button>
@@ -540,7 +540,7 @@ const CVPreviewSheet = ({
                       variant="outline"
                       size="sm"
                       onClick={() => onEditSection(section.toLowerCase().replace(' ', '-'))}
-                      className="flex-shrink-0 border-white/10 text-white/70 hover:text-white hover:bg-white/10"
+                      className="flex-shrink-0 border-white/10 text-white hover:text-white hover:bg-white/10"
                     >
                       <Edit3 className="h-3.5 w-3.5 mr-1.5" />
                       {section}

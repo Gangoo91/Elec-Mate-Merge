@@ -91,7 +91,7 @@ const DataCablingModule5SectionTemplate = ({
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/electrician/upskilling/data-cabling-module-5">
@@ -111,7 +111,7 @@ const DataCablingModule5SectionTemplate = ({
               <span>Module 5 Section {sectionNumber}</span>
             </div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">{title}</h1>
-            <p className="text-white/80">{description}</p>
+            <p className="text-white">{description}</p>
             {badges.length > 0 && (
               <div className="mt-4 flex flex-wrap justify-center gap-2">
                 {badges.map((b) => (
@@ -215,7 +215,7 @@ const DataCablingModule5SectionTemplate = ({
               <Button
                 variant="ghost"
                 size="lg"
-                className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+                className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
                 asChild
               >
                 <Link to={prev}>
@@ -227,7 +227,7 @@ const DataCablingModule5SectionTemplate = ({
               <Button
                 variant="ghost"
                 size="lg"
-                className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+                className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
                 asChild
               >
                 <Link to="/electrician/upskilling/data-cabling-module-5">

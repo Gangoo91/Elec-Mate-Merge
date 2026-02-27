@@ -255,7 +255,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
       <div className="max-w-4xl mx-auto px-4 py-6 space-y-8">
         {/* Quick Summary */}
         <div className="bg-elec-yellow/5 border-l-2 border-elec-yellow/50 rounded-r-lg p-4">
-          <p className="text-white/90 leading-relaxed">
+          <p className="text-white leading-relaxed">
             Electric motors account for{' '}
             <span className="text-elec-yellow font-semibold">
               approximately 70% of industrial electricity consumption
@@ -274,7 +274,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
           </h2>
 
           <div className="bg-white/5 rounded-xl p-5 space-y-4">
-            <p className="text-white/80">
+            <p className="text-white">
               The International Efficiency (IE) classification system, defined in IEC 60034-30-1,
               provides a standardised method for comparing motor efficiency. Understanding these
               classes is essential for specifying compliant and cost-effective motor replacements.
@@ -289,13 +289,13 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-white/20">
-                      <th className="text-left py-2 text-white/70">Class</th>
-                      <th className="text-left py-2 text-white/70">Name</th>
-                      <th className="text-left py-2 text-white/70">Typical 11kW Efficiency</th>
-                      <th className="text-left py-2 text-white/70">UK/EU Status</th>
+                      <th className="text-left py-2 text-white">Class</th>
+                      <th className="text-left py-2 text-white">Name</th>
+                      <th className="text-left py-2 text-white">Typical 11kW Efficiency</th>
+                      <th className="text-left py-2 text-white">UK/EU Status</th>
                     </tr>
                   </thead>
-                  <tbody className="text-white/80">
+                  <tbody className="text-white">
                     <tr className="border-b border-white/10">
                       <td className="py-2 text-red-400">IE1</td>
                       <td>Standard</td>
@@ -336,10 +336,10 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
                 <FileText className="w-5 h-5" />
                 UK/EU Ecodesign Regulation 2019/1781
               </h4>
-              <p className="text-white/80 text-sm mb-3">
+              <p className="text-white text-sm mb-3">
                 From July 2021, the following requirements apply:
               </p>
-              <ul className="text-white/80 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                   <span>
@@ -369,7 +369,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium mb-2">Scenario</p>
-                  <ul className="text-white/70 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>- 15kW motor, 6000 hours/year operation</li>
                     <li>- 75% average loading</li>
                     <li>- Electricity cost: £0.25/kWh</li>
@@ -377,14 +377,14 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
                 </div>
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium mb-2">Comparison</p>
-                  <ul className="text-white/70 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>- IE2 (89.2% eff): 75,673 kWh/year = £18,918</li>
                     <li>- IE4 (92.6% eff): 72,894 kWh/year = £18,224</li>
                     <li className="text-green-400">- Annual saving: £694 (2,779 kWh)</li>
                   </ul>
                 </div>
               </div>
-              <p className="text-white/60 text-xs mt-3">
+              <p className="text-white text-xs mt-3">
                 With premium motor costing ~£400 more, payback is approximately 7 months
               </p>
             </div>
@@ -408,7 +408,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
           </h2>
 
           <div className="bg-white/5 rounded-xl p-5 space-y-4">
-            <p className="text-white/80">
+            <p className="text-white">
               The affinity laws describe the relationship between speed, flow, pressure, and power
               for centrifugal pumps and fans. These relationships demonstrate why VSDs deliver
               dramatic energy savings on variable torque loads.
@@ -425,21 +425,21 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
                     Flow proportional to Speed
                   </p>
                   <p className="text-white font-mono text-lg">Q₂/Q₁ = N₂/N₁</p>
-                  <p className="text-white/60 text-sm mt-2">80% speed = 80% flow</p>
+                  <p className="text-white text-sm mt-2">80% speed = 80% flow</p>
                 </div>
                 <div className="bg-white/5 rounded p-4 text-center">
                   <p className="text-elec-yellow font-bold text-2xl mb-2">
                     Pressure proportional to Speed²
                   </p>
                   <p className="text-white font-mono text-lg">H₂/H₁ = (N₂/N₁)²</p>
-                  <p className="text-white/60 text-sm mt-2">80% speed = 64% pressure</p>
+                  <p className="text-white text-sm mt-2">80% speed = 64% pressure</p>
                 </div>
                 <div className="bg-white/5 rounded p-4 text-center">
                   <p className="text-elec-yellow font-bold text-2xl mb-2">
                     Power proportional to Speed³
                   </p>
                   <p className="text-white font-mono text-lg">P₂/P₁ = (N₂/N₁)³</p>
-                  <p className="text-white/60 text-sm mt-2 text-green-400">80% speed = 51% power</p>
+                  <p className="text-white text-sm mt-2 text-green-400">80% speed = 51% power</p>
                 </div>
               </div>
             </div>
@@ -449,13 +449,13 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/20">
-                    <th className="text-left py-2 text-white/70">Speed Reduction</th>
-                    <th className="text-center py-2 text-white/70">Flow</th>
-                    <th className="text-center py-2 text-white/70">Power</th>
+                    <th className="text-left py-2 text-white">Speed Reduction</th>
+                    <th className="text-center py-2 text-white">Flow</th>
+                    <th className="text-center py-2 text-white">Power</th>
                     <th className="text-center py-2 text-green-400">Energy Saving</th>
                   </tr>
                 </thead>
-                <tbody className="text-white/80">
+                <tbody className="text-white">
                   <tr className="border-b border-white/10">
                     <td className="py-2">10% (90% speed)</td>
                     <td className="text-center">90%</td>
@@ -492,7 +492,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-green-400 font-medium">Variable Torque (Great for VSDs)</p>
-                  <ul className="text-white/70 mt-1 space-y-1">
+                  <ul className="text-white mt-1 space-y-1">
                     <li>- Centrifugal pumps</li>
                     <li>- Centrifugal fans</li>
                     <li>- Centrifugal compressors</li>
@@ -503,7 +503,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
                   <p className="text-yellow-400 font-medium">
                     Constant Torque (Limited VSD benefit)
                   </p>
-                  <ul className="text-white/70 mt-1 space-y-1">
+                  <ul className="text-white mt-1 space-y-1">
                     <li>- Conveyors</li>
                     <li>- Positive displacement pumps</li>
                     <li>- Hoists and lifts</li>
@@ -532,7 +532,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
           </h2>
 
           <div className="bg-white/5 rounded-xl p-5 space-y-4">
-            <p className="text-white/80">
+            <p className="text-white">
               Variable Speed Drives (also called Variable Frequency Drives, Inverters, or AC Drives)
               control motor speed by varying the frequency and voltage supplied to the motor.
               Understanding their operation is essential for correct specification and installation.
@@ -547,24 +547,24 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
                 <div className="grid md:grid-cols-3 gap-4 text-sm">
                   <div className="bg-white/5 rounded p-3 text-center">
                     <p className="text-blue-400 font-semibold">1. Rectifier</p>
-                    <p className="text-white/70 mt-1">Converts AC supply to DC</p>
-                    <p className="text-white/50 text-xs mt-1">Typically 6-pulse diode bridge</p>
+                    <p className="text-white mt-1">Converts AC supply to DC</p>
+                    <p className="text-white text-xs mt-1">Typically 6-pulse diode bridge</p>
                   </div>
                   <div className="bg-white/5 rounded p-3 text-center">
                     <p className="text-elec-yellow font-semibold">2. DC Bus</p>
-                    <p className="text-white/70 mt-1">Smooths DC with capacitors</p>
-                    <p className="text-white/50 text-xs mt-1">Stores energy for dynamic loads</p>
+                    <p className="text-white mt-1">Smooths DC with capacitors</p>
+                    <p className="text-white text-xs mt-1">Stores energy for dynamic loads</p>
                   </div>
                   <div className="bg-white/5 rounded p-3 text-center">
                     <p className="text-green-400 font-semibold">3. Inverter</p>
-                    <p className="text-white/70 mt-1">Creates variable frequency AC</p>
-                    <p className="text-white/50 text-xs mt-1">PWM switching with IGBTs</p>
+                    <p className="text-white mt-1">Creates variable frequency AC</p>
+                    <p className="text-white text-xs mt-1">PWM switching with IGBTs</p>
                   </div>
                 </div>
 
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium mb-2">V/f Control (Constant Flux)</p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Motor speed is proportional to frequency. To maintain constant torque
                     capability, voltage must vary proportionally with frequency (V/f = constant). At
                     25Hz, voltage is reduced to approximately half of the 50Hz value. Below ~5Hz,
@@ -581,7 +581,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
                 Additional VSD Benefits Beyond Energy Savings
               </h3>
               <div className="grid md:grid-cols-2 gap-4 text-sm">
-                <ul className="text-white/80 space-y-2">
+                <ul className="text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                     <span>
@@ -604,7 +604,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
                     </span>
                   </li>
                 </ul>
-                <ul className="text-white/80 space-y-2">
+                <ul className="text-white space-y-2">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
                     <span>
@@ -640,7 +640,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
           </h2>
 
           <div className="bg-white/5 rounded-xl p-5 space-y-4">
-            <p className="text-white/80">
+            <p className="text-white">
               Correct installation of VSDs is critical for reliable operation and compliance with
               EMC regulations. Poor installation can cause interference, nuisance tripping, and
               premature motor failure.
@@ -656,7 +656,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
                   <p className="text-green-400 font-semibold mb-2">
                     C1 (First Environment - Residential)
                   </p>
-                  <ul className="text-white/70 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>- Lowest emission limits</li>
                     <li>- Requires integral EMC filter</li>
                     <li>- Suitable for: offices, shops, residential</li>
@@ -666,7 +666,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
                   <p className="text-yellow-400 font-semibold mb-2">
                     C3 (Second Environment - Industrial)
                   </p>
-                  <ul className="text-white/70 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li>- Higher emission limits permitted</li>
                     <li>- Basic filtering may be acceptable</li>
                     <li>- Suitable for: factories, plant rooms</li>
@@ -680,7 +680,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
                 <Wrench className="w-5 h-5" />
                 Critical Installation Requirements
               </h3>
-              <ul className="text-white/80 space-y-2 text-sm">
+              <ul className="text-white space-y-2 text-sm">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="w-4 h-4 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <span>
@@ -724,7 +724,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
                 <AlertTriangle className="w-5 h-5" />
                 BS 7671 Considerations for VSD Circuits
               </h4>
-              <ul className="text-white/80 text-sm space-y-1">
+              <ul className="text-white text-sm space-y-1">
                 <li>
                   - <strong className="text-white">RCD selection:</strong> Type B or Type B+ RCDs
                   may be required due to DC fault currents from rectifier
@@ -763,7 +763,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
           </h2>
 
           <div className="bg-white/5 rounded-xl p-5 space-y-4">
-            <p className="text-white/80">
+            <p className="text-white">
               Not all motors are suitable for VSD operation. Retrofitting a VSD to an unsuitable
               motor can result in overheating, insulation breakdown, and bearing damage.
             </p>
@@ -776,7 +776,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
               <div className="space-y-3">
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium mb-2">Insulation System</p>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>- Class F minimum recommended (155°C)</li>
                     <li>- Inverter-duty rating preferred (reinforced insulation)</li>
                     <li>- Older Class B motors at higher risk from PWM voltage spikes</li>
@@ -786,7 +786,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
 
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium mb-2">Bearing Protection</p>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>- PWM switching can cause bearing currents (EDM damage)</li>
                     <li>- Insulated bearings or ceramic bearings for larger motors (&gt;30kW)</li>
                     <li>- Shaft grounding brush as alternative solution</li>
@@ -796,7 +796,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
 
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium mb-2">Cooling at Low Speed</p>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>- Fan-cooled motors lose cooling below ~20Hz</li>
                     <li>- Derate or add forced ventilation for continuous low-speed operation</li>
                     <li>- Totally enclosed motors less affected but still derate</li>
@@ -810,7 +810,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
               <h4 className="text-elec-yellow font-semibold mb-2">
                 Motor Nameplate Information Required
               </h4>
-              <div className="grid md:grid-cols-2 gap-4 text-sm text-white/80">
+              <div className="grid md:grid-cols-2 gap-4 text-sm text-white">
                 <ul className="space-y-1">
                   <li>- Rated power (kW)</li>
                   <li>- Rated voltage and frequency</li>
@@ -836,7 +836,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
           </h2>
 
           <div className="bg-white/5 rounded-xl p-5 space-y-4">
-            <p className="text-white/80">
+            <p className="text-white">
               Accurate savings calculations are essential for building business cases and verifying
               project outcomes. Consider both direct energy savings and secondary benefits.
             </p>
@@ -849,7 +849,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
               <div className="space-y-4">
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium mb-2">System Data</p>
-                  <div className="grid md:grid-cols-2 gap-4 text-sm text-white/70">
+                  <div className="grid md:grid-cols-2 gap-4 text-sm text-white">
                     <ul className="space-y-1">
                       <li>- 22kW centrifugal pump motor</li>
                       <li>- 6,000 operating hours/year</li>
@@ -865,7 +865,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
 
                 <div className="bg-white/5 rounded p-3">
                   <p className="text-white font-medium mb-2">Calculation</p>
-                  <div className="text-sm text-white/70 space-y-2">
+                  <div className="text-sm text-white space-y-2">
                     <p>
                       <strong className="text-white">Current consumption:</strong> 22kW / 0.91 x
                       6,000h = 145,055 kWh/year (£36,264)
@@ -894,7 +894,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
               <div className="grid md:grid-cols-2 gap-4 text-sm">
                 <div>
                   <p className="text-white font-medium mb-2">Positive Factors</p>
-                  <ul className="text-white/70 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li className="flex items-center gap-2">
                       <CheckCircle2 className="w-4 h-4 text-green-500" />
                       Higher electricity prices
@@ -915,7 +915,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
                 </div>
                 <div>
                   <p className="text-white font-medium mb-2">Negative Factors</p>
-                  <ul className="text-white/70 space-y-1">
+                  <ul className="text-white space-y-1">
                     <li className="flex items-center gap-2">
                       <AlertTriangle className="w-4 h-4 text-yellow-500" />
                       VSD losses (2-4% typical)
@@ -950,7 +950,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
             <div>
               <h4 className="text-white font-semibold mb-2">IE Class Minimum Requirements</h4>
               <table className="w-full text-sm">
-                <tbody className="text-white/80">
+                <tbody className="text-white">
                   <tr className="border-b border-white/20">
                     <td className="py-1">0.75-1000kW (DOL)</td>
                     <td className="text-right text-green-400">IE3</td>
@@ -974,7 +974,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
             <div>
               <h4 className="text-white font-semibold mb-2">Affinity Law Summary</h4>
               <table className="w-full text-sm">
-                <tbody className="text-white/80">
+                <tbody className="text-white">
                   <tr className="border-b border-white/20">
                     <td className="py-1">Flow</td>
                     <td className="text-right">proportional to speed</td>
@@ -993,7 +993,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
 
             <div>
               <h4 className="text-white font-semibold mb-2">VSD Installation Checklist</h4>
-              <ul className="text-sm text-white/80 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li className="flex items-center gap-2">
                   <CheckCircle2 className="w-4 h-4 text-elec-yellow" />
                   Motor insulation Class F minimum
@@ -1019,7 +1019,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
 
             <div>
               <h4 className="text-white font-semibold mb-2">Typical Savings by Application</h4>
-              <ul className="text-sm text-white/80 space-y-1">
+              <ul className="text-sm text-white space-y-1">
                 <li className="flex items-center gap-2">
                   <Zap className="w-4 h-4 text-green-400" />
                   Centrifugal pumps: 30-50%
@@ -1053,7 +1053,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
               <div key={index} className="bg-white/5 rounded-lg overflow-hidden">
                 <div className="p-4">
                   <h3 className="font-medium text-white mb-2">{faq.question}</h3>
-                  <p className="text-white/70 text-sm leading-relaxed">{faq.answer}</p>
+                  <p className="text-white text-sm leading-relaxed">{faq.answer}</p>
                 </div>
               </div>
             ))}
@@ -1066,7 +1066,7 @@ const EnergyEfficiencyModule4Section2: React.FC = () => {
             <CheckCircle2 className="w-6 h-6" />
             Section Knowledge Check
           </h2>
-          <p className="text-white/80 mb-6">
+          <p className="text-white mb-6">
             Test your understanding of motor efficiency and VSD technology with this 10-question
             quiz.
           </p>

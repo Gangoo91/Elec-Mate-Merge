@@ -173,7 +173,7 @@ const Module3Section1_1: React.FC = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -196,7 +196,7 @@ const Module3Section1_1: React.FC = () => {
             <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
               Common Wiring Systems Overview
             </h1>
-            <p className="text-white/80">
+            <p className="text-white">
               Understanding surface wiring, conduit, trunking, SWA and flexible systems for
               practical UK installations
             </p>
@@ -275,7 +275,7 @@ const Module3Section1_1: React.FC = () => {
               <div className="grid sm:grid-cols-2 gap-4 my-6">
                 <div className="p-4 rounded-lg bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Advantages</p>
-                  <ul className="text-sm text-white/90 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Quick installation and low cost</li>
                     <li>Easy inspection and maintenance</li>
                     <li>Suitable for temporary installations</li>
@@ -285,7 +285,7 @@ const Module3Section1_1: React.FC = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-amber-500/10">
                   <p className="text-sm font-medium text-white mb-2">Limitations</p>
-                  <ul className="text-sm text-white/90 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Poor aesthetic appearance</li>
                     <li>Vulnerable to mechanical damage</li>
                     <li>Limited to certain environments</li>
@@ -297,7 +297,7 @@ const Module3Section1_1: React.FC = () => {
 
               <div className="p-4 rounded-lg bg-white/5">
                 <p className="text-sm font-medium text-white mb-2">BS 7671 Requirements:</p>
-                <ul className="text-sm text-white/90 space-y-1 ml-4">
+                <ul className="text-sm text-white space-y-1 ml-4">
                   <li>Cable clips maximum 300mm apart horizontally, 400mm vertically</li>
                   <li>Appropriate cable type for environmental conditions</li>
                   <li>Protection against mechanical damage where necessary</li>
@@ -307,7 +307,7 @@ const Module3Section1_1: React.FC = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="text-sm font-medium text-white mb-2">Typical Applications:</p>
-                <ul className="text-sm text-white/90 space-y-1 ml-4">
+                <ul className="text-sm text-white space-y-1 ml-4">
                   <li>Temporary installations and building sites</li>
                   <li>Industrial areas with easy access requirements</li>
                   <li>Retrofit installations in existing buildings</li>
@@ -341,7 +341,7 @@ const Module3Section1_1: React.FC = () => {
               <div className="grid sm:grid-cols-2 gap-4 my-6">
                 <div className="p-4 rounded-lg bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Construction Features</p>
-                  <ul className="text-sm text-white/90 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Corrosion resistant PVC material</li>
                     <li>Self-extinguishing properties</li>
                     <li>Smooth internal bore for cable pulling</li>
@@ -351,7 +351,7 @@ const Module3Section1_1: React.FC = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-green-500/10">
                   <p className="text-sm font-medium text-white mb-2">Installation Benefits</p>
-                  <ul className="text-sm text-white/90 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Easy to cut and join</li>
                     <li>Wide range of accessories</li>
                     <li>Can be bent with spring or former</li>
@@ -363,7 +363,7 @@ const Module3Section1_1: React.FC = () => {
 
               <div className="p-4 rounded-lg bg-amber-500/10">
                 <p className="text-sm font-medium text-white mb-2">Environmental Considerations:</p>
-                <ul className="text-sm text-white/90 space-y-1 ml-4">
+                <ul className="text-sm text-white space-y-1 ml-4">
                   <li>
                     <strong>Temperature:</strong> Standard PVC: -5°C to +60°C
                   </li>
@@ -396,7 +396,7 @@ const Module3Section1_1: React.FC = () => {
               <div className="grid sm:grid-cols-2 gap-4 my-6">
                 <div className="p-4 rounded-lg bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Superior Protection</p>
-                  <ul className="text-sm text-white/90 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Excellent mechanical protection</li>
                     <li>Fire resistant construction</li>
                     <li>EMC screening properties</li>
@@ -406,7 +406,7 @@ const Module3Section1_1: React.FC = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Installation Requirements</p>
-                  <ul className="text-sm text-white/90 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Continuous earth path essential</li>
                     <li>Proper coupling and bonding</li>
                     <li>Corrosion protection needed</li>
@@ -420,7 +420,7 @@ const Module3Section1_1: React.FC = () => {
                 <p className="text-sm font-medium text-white mb-2">
                   Critical Earthing Requirements:
                 </p>
-                <ul className="text-sm text-white/90 space-y-1 ml-4">
+                <ul className="text-sm text-white space-y-1 ml-4">
                   <li>All joints must maintain electrical continuity</li>
                   <li>Use proper steel conduit couplers and fittings</li>
                   <li>Test earth loop impedance through conduit</li>
@@ -458,7 +458,7 @@ const Module3Section1_1: React.FC = () => {
 
               <div className="p-4 rounded-lg bg-white/5 mb-4">
                 <p className="text-sm font-medium text-white mb-2">Cable Management Advantages</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Easy cable additions and changes</li>
                   <li>Large cable capacity</li>
                   <li>Good ventilation for heat dissipation</li>
@@ -470,7 +470,7 @@ const Module3Section1_1: React.FC = () => {
 
               <div className="p-4 rounded-lg bg-white/5 mb-4">
                 <p className="text-sm font-medium text-white mb-2">Derating Considerations</p>
-                <ul className="text-sm text-white/90 space-y-1">
+                <ul className="text-sm text-white space-y-1">
                   <li>Apply grouping factors for multiple cables</li>
                   <li>Consider thermal effects of enclosed installation</li>
                   <li>Use BS 7671 Appendix 4 derating tables</li>
@@ -483,7 +483,7 @@ const Module3Section1_1: React.FC = () => {
                 <p className="text-sm font-medium text-white mb-2">
                   Typical Commercial Applications:
                 </p>
-                <ul className="text-sm text-white/90 space-y-1 ml-4">
+                <ul className="text-sm text-white space-y-1 ml-4">
                   <li>Office buildings with changing layouts</li>
                   <li>Industrial installations requiring access</li>
                   <li>Data centres and IT environments</li>
@@ -509,7 +509,7 @@ const Module3Section1_1: React.FC = () => {
               <div className="grid sm:grid-cols-2 gap-4 my-6">
                 <div className="p-4 rounded-lg bg-cyan-500/10">
                   <p className="text-sm font-medium text-white mb-2">Construction</p>
-                  <ul className="text-sm text-white/90 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Copper or aluminium conductors</li>
                     <li>XLPE or PVC insulation</li>
                     <li>Steel wire armour protection</li>
@@ -519,7 +519,7 @@ const Module3Section1_1: React.FC = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-teal-500/10">
                   <p className="text-sm font-medium text-white mb-2">Applications</p>
-                  <ul className="text-sm text-white/90 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Underground cable runs</li>
                     <li>External building connections</li>
                     <li>Industrial harsh environments</li>
@@ -531,7 +531,7 @@ const Module3Section1_1: React.FC = () => {
 
               <div className="p-4 rounded-lg bg-cyan-500/10">
                 <p className="text-sm font-medium text-white mb-2">Installation Requirements:</p>
-                <ul className="text-sm text-white/90 space-y-1 ml-4">
+                <ul className="text-sm text-white space-y-1 ml-4">
                   <li>Appropriate glands for indoor/outdoor termination</li>
                   <li>Armour earthing at both ends (or one end with earth link)</li>
                   <li>Burial depth minimum 450mm (or protection)</li>
@@ -556,7 +556,7 @@ const Module3Section1_1: React.FC = () => {
 
               <div className="p-4 rounded-lg bg-amber-500/10 mb-4">
                 <p className="text-sm font-medium text-white mb-2">Limitations and Restrictions:</p>
-                <ul className="text-sm text-white/90 space-y-1 ml-4">
+                <ul className="text-sm text-white space-y-1 ml-4">
                   <li>Maximum length typically 2 metres</li>
                   <li>Not for permanent installation</li>
                   <li>Requires mechanical protection where at risk</li>
@@ -567,7 +567,7 @@ const Module3Section1_1: React.FC = () => {
 
               <div className="p-4 rounded-lg bg-green-500/10">
                 <p className="text-sm font-medium text-white mb-2">Appropriate Uses:</p>
-                <ul className="text-sm text-white/90 space-y-1 ml-4">
+                <ul className="text-sm text-white space-y-1 ml-4">
                   <li>Portable appliance connections</li>
                   <li>Temporary lighting and power</li>
                   <li>Extension leads and adaptors</li>
@@ -596,7 +596,7 @@ const Module3Section1_1: React.FC = () => {
                     <th className="py-3 pr-4">Best Use</th>
                   </tr>
                 </thead>
-                <tbody className="text-white/90">
+                <tbody className="text-white">
                   <tr className="border-t border-white/10">
                     <td className="py-3 pr-4 font-medium">Surface</td>
                     <td className="py-3 pr-4">Low</td>
@@ -661,10 +661,10 @@ const Module3Section1_1: React.FC = () => {
                   <Home className="w-5 h-5 text-elec-yellow mt-0.5 flex-shrink-0" />
                   <div>
                     <p className="text-sm font-medium text-white mb-2">The Challenge</p>
-                    <p className="text-sm text-white/90">
+                    <p className="text-sm text-white">
                       A restaurant kitchen needs complete electrical renovation. The space includes:
                     </p>
-                    <ul className="text-sm text-white/90 list-disc pl-6 mt-2 space-y-1">
+                    <ul className="text-sm text-white list-disc pl-6 mt-2 space-y-1">
                       <li>High-power cooking equipment (three-phase)</li>
                       <li>Wash areas with water exposure risk</li>
                       <li>Food preparation areas requiring easy cleaning</li>
@@ -678,7 +678,7 @@ const Module3Section1_1: React.FC = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-4 rounded-lg bg-green-500/10">
                   <p className="text-sm font-medium text-white mb-2">Main Distribution</p>
-                  <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-4 space-y-1">
                     <li>
                       <strong>SWA cable</strong> for supply from external meter
                     </li>
@@ -688,7 +688,7 @@ const Module3Section1_1: React.FC = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Equipment Circuits</p>
-                  <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-4 space-y-1">
                     <li>
                       <strong>Steel conduit</strong> for fixed cooking equipment
                     </li>
@@ -698,7 +698,7 @@ const Module3Section1_1: React.FC = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-white/5">
                   <p className="text-sm font-medium text-white mb-2">Lighting & Sockets</p>
-                  <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-4 space-y-1">
                     <li>
                       <strong>Trunking system</strong> above service areas
                     </li>
@@ -708,7 +708,7 @@ const Module3Section1_1: React.FC = () => {
                 </div>
                 <div className="p-4 rounded-lg bg-amber-500/10">
                   <p className="text-sm font-medium text-white mb-2">Temporary/Flexible</p>
-                  <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
+                  <ul className="text-sm text-white list-disc pl-4 space-y-1">
                     <li>
                       <strong>Armoured flexibles</strong> to mobile equipment
                     </li>
@@ -720,7 +720,7 @@ const Module3Section1_1: React.FC = () => {
 
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="text-sm font-medium text-white mb-2">Key Success Factors:</p>
-                <ul className="text-sm text-white/90 list-disc pl-6 space-y-1">
+                <ul className="text-sm text-white list-disc pl-6 space-y-1">
                   <li>Match system to specific environmental demands</li>
                   <li>Plan for future equipment changes and maintenance</li>
                   <li>Ensure compliance with food safety regulations</li>
@@ -742,7 +742,7 @@ const Module3Section1_1: React.FC = () => {
                   <AlertTriangle className="w-4 h-4" />
                   System Selection Errors
                 </p>
-                <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
+                <ul className="text-sm text-white list-disc pl-4 space-y-1">
                   <li>
                     <strong>Wrong:</strong> Using surface wiring in areas requiring concealment
                   </li>
@@ -764,7 +764,7 @@ const Module3Section1_1: React.FC = () => {
                   <AlertTriangle className="w-4 h-4" />
                   Installation Mistakes
                 </p>
-                <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
+                <ul className="text-sm text-white list-disc pl-4 space-y-1">
                   <li>
                     <strong>Wrong:</strong> Poor earthing continuity in steel conduit systems
                   </li>
@@ -785,7 +785,7 @@ const Module3Section1_1: React.FC = () => {
                   <CheckCircle2 className="w-4 h-4" />
                   Best Practice Tips
                 </p>
-                <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
+                <ul className="text-sm text-white list-disc pl-4 space-y-1">
                   <li>Always consider future access and maintenance requirements</li>
                   <li>Plan cable routes to minimise mechanical damage risk</li>
                   <li>Use appropriate IP ratings for environmental conditions</li>
@@ -806,7 +806,7 @@ const Module3Section1_1: React.FC = () => {
                 <p className="text-sm font-medium text-white mb-2">
                   Selection and Erection (Part 5)
                 </p>
-                <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
+                <ul className="text-sm text-white list-disc pl-4 space-y-1">
                   <li>Wiring systems must suit environmental conditions</li>
                   <li>Consider external influences (AD, AE, AF codes)</li>
                   <li>Maintain appropriate IP ratings</li>
@@ -818,7 +818,7 @@ const Module3Section1_1: React.FC = () => {
                 <p className="text-sm font-medium text-white mb-2">
                   Current-carrying Capacity (Appendix 4)
                 </p>
-                <ul className="text-sm text-white/90 list-disc pl-4 space-y-1">
+                <ul className="text-sm text-white list-disc pl-4 space-y-1">
                   <li>Apply grouping factors for multiple cables</li>
                   <li>Consider thermal insulation effects</li>
                   <li>Account for ambient temperature variations</li>
@@ -848,7 +848,7 @@ const Module3Section1_1: React.FC = () => {
               {faqs.map((faq, index) => (
                 <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                   <h3 className="text-sm font-medium text-white mb-1">{faq.q}</h3>
-                  <p className="text-sm text-white/90 leading-relaxed">{faq.a}</p>
+                  <p className="text-sm text-white leading-relaxed">{faq.a}</p>
                 </div>
               ))}
             </div>
@@ -884,7 +884,7 @@ const Module3Section1_1: React.FC = () => {
             <Button
               variant="ghost"
               size="lg"
-              className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+              className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
               asChild
             >
               <Link to="..">

@@ -232,7 +232,7 @@ const HNCModule4Section1_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section1">
@@ -254,7 +254,7 @@ const HNCModule4Section1_5 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Future Load Allowances
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Planning for growth, technology changes, and evolving building requirements in
             electrical system design
           </p>
@@ -413,7 +413,7 @@ const HNCModule4Section1_5 = () => {
                   <p className="text-sm font-medium text-white mb-2">
                     Marginal cost of extra capacity:
                   </p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Larger cable: +10-20%</li>
                     <li>More DB ways: +5-15%</li>
                     <li>Larger containment: +15-25%</li>
@@ -422,7 +422,7 @@ const HNCModule4Section1_5 = () => {
                 </div>
                 <div>
                   <p className="text-sm font-medium text-white mb-2">Retrofit cost multiple:</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Replace cables: 3-5× initial</li>
                     <li>New DB: 2-3× initial</li>
                     <li>New containment: 5-10× initial</li>
@@ -508,7 +508,7 @@ const HNCModule4Section1_5 = () => {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Spare Ways (fitted blanks)</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Circuit breaker position available</li>
                     <li>Busbars rated for future load</li>
                     <li>Quick addition of new circuits</li>
@@ -517,7 +517,7 @@ const HNCModule4Section1_5 = () => {
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-2">Space for Extension</p>
-                  <ul className="text-sm text-white/80 space-y-1">
+                  <ul className="text-sm text-white space-y-1">
                     <li>Physical space adjacent to DB</li>
                     <li>Busbar extension possible</li>
                     <li>Allows significant expansion</li>
@@ -731,28 +731,28 @@ const HNCModule4Section1_5 = () => {
               <div className="space-y-3">
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-1">Building Electrification</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Heat pumps replacing gas boilers significantly increases electrical demand,
                     particularly winter peak. Consider 3-5× current heating-related electrical load.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-1">On-Site Generation & Storage</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Solar PV, battery storage (BESS), and vehicle-to-building (V2B) require
                     bidirectional power flow capability and grid interface equipment.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-1">Smart Grid Interaction</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Demand response, flexible loads, and grid services require intelligent
                     monitoring, control systems, and potentially export capability.
                   </p>
                 </div>
                 <div className="p-3 rounded bg-white/5">
                   <p className="font-medium text-white mb-1">Increased IT Density</p>
-                  <p className="text-sm text-white/80">
+                  <p className="text-sm text-white">
                     Edge computing, IoT devices, and personal technology continue to increase
                     distributed power demand across buildings.
                   </p>
@@ -833,7 +833,7 @@ const HNCModule4Section1_5 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Design principle:</strong> Build infrastructure for flexibility. Specific
               equipment can be added when technologies mature; infrastructure is costly to retrofit.
             </p>
@@ -858,7 +858,7 @@ const HNCModule4Section1_5 = () => {
                 <strong>Question:</strong> A new 10,000m² office has calculated initial demand of
                 650 kVA. What supply capacity should be requested?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Initial demand: 650 kVA</p>
                 <p>Growth allowance: 25% recommended for office</p>
                 <p className="mt-2">Design capacity = 650 × 1.25 = 812 kVA</p>
@@ -866,7 +866,7 @@ const HNCModule4Section1_5 = () => {
                 <p>
                   Request: <strong>800 kVA or 1000 kVA supply</strong>
                 </p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Note: If EV charging for 100 spaces, add ~200 kVA diversified
                 </p>
               </div>
@@ -880,7 +880,7 @@ const HNCModule4Section1_5 = () => {
                 <strong>Question:</strong> A workplace has 200 parking spaces. Estimate EV charging
                 capacity with smart load management.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Parking spaces: 200</p>
                 <p>Active charge points (Part S min): 200 ÷ 5 = 40</p>
                 <p className="mt-2">Unmanaged capacity: 40 × 7kW = 280 kW</p>
@@ -890,7 +890,7 @@ const HNCModule4Section1_5 = () => {
                 <p className="mt-2">
                   Recommended allowance: <strong>150-200 kVA initially</strong>
                 </p>
-                <p className="text-white/60">Design infrastructure for 500 kVA expansion</p>
+                <p className="text-white">Design infrastructure for 500 kVA expansion</p>
               </div>
             </div>
 
@@ -902,7 +902,7 @@ const HNCModule4Section1_5 = () => {
                 <strong>Question:</strong> An office floor requires 24 circuits initially. Size the
                 distribution board.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Initial circuits: 24</p>
                 <p>Spare allowance: 25%</p>
                 <p>Total ways needed: 24 × 1.25 = 30 ways</p>
@@ -910,7 +910,7 @@ const HNCModule4Section1_5 = () => {
                 <p className="mt-2">
                   Select: <strong>36-way distribution board</strong>
                 </p>
-                <p className="text-white/60 mt-2">
+                <p className="text-white mt-2">
                   Provides 12 spare ways (33% spare) - good flexibility
                 </p>
                 <p className="text-green-400 mt-2">
@@ -992,7 +992,7 @@ const HNCModule4Section1_5 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1038,7 +1038,7 @@ const HNCModule4Section1_5 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module4-section1-4">

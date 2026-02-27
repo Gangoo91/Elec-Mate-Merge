@@ -251,7 +251,7 @@ const Level3Module3Section4_6 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="../section4">
@@ -274,7 +274,7 @@ const Level3Module3Section4_6 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
             Harmonics and Waveform Distortion
           </h1>
-          <p className="text-lg text-white/70 max-w-2xl">
+          <p className="text-lg text-white max-w-2xl">
             Harmonic content, THD calculations and the effects of non-linear loads on electrical
             installations
           </p>
@@ -290,7 +290,7 @@ const Level3Module3Section4_6 = () => {
                 <Activity className="w-4 h-4 text-purple-400" />
                 <span className="text-sm font-medium text-purple-400">Harmonic Frequency</span>
               </div>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 f_n = n times f_1 (nth harmonic = n times 50 Hz)
               </p>
             </CardContent>
@@ -301,7 +301,7 @@ const Level3Module3Section4_6 = () => {
                 <Calculator className="w-4 h-4 text-amber-400" />
                 <span className="text-sm font-medium text-amber-400">THD Formula</span>
               </div>
-              <p className="text-sm text-white/70">THD = sqrt(sum of Vn squared) / V1 x 100%</p>
+              <p className="text-sm text-white">THD = sqrt(sum of Vn squared) / V1 x 100%</p>
             </CardContent>
           </Card>
           <Card className="bg-red-500/10 border-red-500/20">
@@ -310,7 +310,7 @@ const Level3Module3Section4_6 = () => {
                 <AlertTriangle className="w-4 h-4 text-red-400" />
                 <span className="text-sm font-medium text-red-400">Neutral Overload</span>
               </div>
-              <p className="text-sm text-white/70">
+              <p className="text-sm text-white">
                 Triple-n harmonics add in neutral - up to 1.73x phase current
               </p>
             </CardContent>
@@ -329,7 +329,7 @@ const Level3Module3Section4_6 = () => {
               </div>
               <div>
                 <h2 className="text-lg font-semibold text-white mb-3">Learning Outcomes</h2>
-                <ul className="space-y-2 text-white/80">
+                <ul className="space-y-2 text-white">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="w-4 h-4 text-green-400 mt-0.5 shrink-0" />
                     <span>
@@ -369,7 +369,7 @@ const Level3Module3Section4_6 = () => {
               <h2 className="text-xl font-semibold text-white m-0">Understanding Harmonics</h2>
             </div>
 
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               Harmonics are sinusoidal voltages or currents at frequencies that are integer
               multiples of the fundamental supply frequency. In the UK, the fundamental is 50 Hz.
               Harmonics are created by non-linear loads that draw current in non-sinusoidal
@@ -391,7 +391,7 @@ const Level3Module3Section4_6 = () => {
                         <th className="text-left p-2 text-white">Effects</th>
                       </tr>
                     </thead>
-                    <tbody className="text-white/70">
+                    <tbody className="text-white">
                       <tr className="border-b border-white/10">
                         <td className="p-2">1st (Fundamental)</td>
                         <td className="p-2">50 Hz</td>
@@ -441,7 +441,7 @@ const Level3Module3Section4_6 = () => {
                   <div>
                     <h4 className="text-amber-400 font-medium mb-2">Common Harmonic Sources</h4>
                     <div className="grid md:grid-cols-2 gap-4 text-sm">
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <p className="font-medium text-white mb-1">Non-Linear Loads:</p>
                         <ul className="space-y-1">
                           <li>Variable speed drives (VSDs)</li>
@@ -450,7 +450,7 @@ const Level3Module3Section4_6 = () => {
                           <li>Fluorescent lighting with electronic ballasts</li>
                         </ul>
                       </div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <p className="font-medium text-white mb-1">Other Sources:</p>
                         <ul className="space-y-1">
                           <li>UPS systems</li>
@@ -484,7 +484,7 @@ const Level3Module3Section4_6 = () => {
               </h2>
             </div>
 
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               THD quantifies the total harmonic content of a waveform as a percentage of the
               fundamental. It is calculated as the RMS sum of all harmonic components divided by the
               fundamental component. THD can be measured for both voltage and current.
@@ -498,21 +498,21 @@ const Level3Module3Section4_6 = () => {
                   <p className="text-amber-300 font-mono text-lg mb-2">
                     THD% = sqrt(V2 squared + V3 squared + V4 squared + ... + Vn squared) / V1 x 100
                   </p>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Where V1 is fundamental and V2, V3, etc. are harmonic magnitudes
                   </p>
                 </div>
                 <div className="p-4 bg-white/5 rounded-lg">
                   <h4 className="text-white font-medium mb-2">Worked Example</h4>
-                  <p className="text-white/70 text-sm mb-3">
+                  <p className="text-white text-sm mb-3">
                     A waveform has: V1 = 230V, V3 = 23V, V5 = 15V, V7 = 10V. Calculate THD.
                   </p>
                   <div className="space-y-2 text-sm font-mono">
-                    <p className="text-white/80">
+                    <p className="text-white">
                       Harmonic RMS = sqrt(23 squared + 15 squared + 10 squared)
                     </p>
-                    <p className="text-white/80">= sqrt(529 + 225 + 100) = sqrt(854) = 29.2V</p>
-                    <p className="text-white/80">THD = 29.2 / 230 x 100 = 12.7%</p>
+                    <p className="text-white">= sqrt(529 + 225 + 100) = sqrt(854) = 29.2V</p>
+                    <p className="text-white">THD = 29.2 / 230 x 100 = 12.7%</p>
                     <p className="text-green-400 mt-2">
                       This exceeds the typical 8% voltage THD limit
                     </p>
@@ -528,7 +528,7 @@ const Level3Module3Section4_6 = () => {
                   <div>
                     <h4 className="text-blue-400 font-medium mb-2">THD Limits and Standards</h4>
                     <div className="grid md:grid-cols-2 gap-4 text-sm">
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <p className="font-medium text-white mb-1">Voltage THD Limits (G5/5):</p>
                         <ul className="space-y-1">
                           <li>LV systems: 8% maximum</li>
@@ -537,7 +537,7 @@ const Level3Module3Section4_6 = () => {
                           <li>Higher harmonics: lower limits</li>
                         </ul>
                       </div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <p className="font-medium text-white mb-1">Current THD Considerations:</p>
                         <ul className="space-y-1">
                           <li>Often 30-50% for electronic loads</li>
@@ -571,7 +571,7 @@ const Level3Module3Section4_6 = () => {
               </h2>
             </div>
 
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               Harmonics cause a range of problems in electrical installations, from increased losses
               and overheating to equipment malfunction and premature failure. Understanding these
               effects is essential for designing robust installations.
@@ -585,7 +585,7 @@ const Level3Module3Section4_6 = () => {
                 <div className="space-y-4">
                   <div className="p-4 bg-red-500/10 rounded-lg border border-red-500/20">
                     <h4 className="text-red-400 font-medium mb-2">Neutral Conductor Overload</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       In a balanced three-phase system, fundamental currents cancel in the neutral.
                       However, triple-n harmonics (3rd, 9th, 15th) are zero-sequence and add
                       arithmetically. With high 3rd harmonic content, neutral current can exceed
@@ -594,7 +594,7 @@ const Level3Module3Section4_6 = () => {
                   </div>
                   <div className="p-4 bg-amber-500/10 rounded-lg border border-amber-500/20">
                     <h4 className="text-amber-400 font-medium mb-2">Transformer Heating</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Harmonics increase eddy current and hysteresis losses in transformer cores.
                       Higher frequency harmonics cause greater skin effect in windings. Standard
                       transformers may need derating; K-rated transformers are designed for harmonic
@@ -603,7 +603,7 @@ const Level3Module3Section4_6 = () => {
                   </div>
                   <div className="p-4 bg-purple-500/10 rounded-lg border border-purple-500/20">
                     <h4 className="text-purple-400 font-medium mb-2">Capacitor Damage</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Capacitor reactance decreases with frequency (Xc = 1/2 pi fC). Harmonic
                       currents are amplified, causing overheating. Resonance between capacitors and
                       system inductance at harmonic frequencies can cause dangerous current
@@ -612,7 +612,7 @@ const Level3Module3Section4_6 = () => {
                   </div>
                   <div className="p-4 bg-blue-500/10 rounded-lg border border-blue-500/20">
                     <h4 className="text-blue-400 font-medium mb-2">Cable Derating</h4>
-                    <p className="text-white/80 text-sm">
+                    <p className="text-white text-sm">
                       Skin effect increases conductor resistance at higher frequencies. Harmonic
                       currents cause additional I squared R losses. Cables may need to be oversized
                       to account for total harmonic current, particularly the neutral.
@@ -641,7 +641,7 @@ const Level3Module3Section4_6 = () => {
               </h2>
             </div>
 
-            <p className="text-white/80 leading-relaxed">
+            <p className="text-white leading-relaxed">
               BS 7671 specifically addresses harmonic currents in Regulation 523.6.3, requiring
               increased neutral sizing when third harmonic content exceeds 15% of fundamental.
               Various mitigation techniques are available depending on the severity of the harmonic
@@ -655,7 +655,7 @@ const Level3Module3Section4_6 = () => {
                 </h3>
                 <div className="bg-gradient-to-r from-green-500/10 to-transparent p-4 rounded-lg border-l-4 border-green-500 mb-4">
                   <p className="text-white font-medium mb-2">Regulation 523.6.3 Requirements:</p>
-                  <div className="text-white/80 text-sm space-y-2">
+                  <div className="text-white text-sm space-y-2">
                     <p>Where third harmonic content exceeds 15% and up to 33%:</p>
                     <p className="font-mono text-green-300">
                       Neutral sized equal to phase conductors
@@ -675,7 +675,7 @@ const Level3Module3Section4_6 = () => {
                         <th className="text-left p-2 text-white">Based On</th>
                       </tr>
                     </thead>
-                    <tbody className="text-white/70">
+                    <tbody className="text-white">
                       <tr className="border-b border-white/10">
                         <td className="p-2">0 - 15%</td>
                         <td className="p-2">1.0</td>
@@ -709,7 +709,7 @@ const Level3Module3Section4_6 = () => {
                   <div>
                     <h4 className="text-blue-400 font-medium mb-2">Harmonic Mitigation Methods</h4>
                     <div className="grid md:grid-cols-2 gap-4 text-sm">
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <p className="font-medium text-white mb-1">Passive Solutions:</p>
                         <ul className="space-y-1">
                           <li>Passive harmonic filters (tuned LC)</li>
@@ -718,7 +718,7 @@ const Level3Module3Section4_6 = () => {
                           <li>Delta-star transformers (trap 3rd)</li>
                         </ul>
                       </div>
-                      <div className="text-white/80">
+                      <div className="text-white">
                         <p className="font-medium text-white mb-1">Active Solutions:</p>
                         <ul className="space-y-1">
                           <li>Active harmonic filters</li>
@@ -758,7 +758,7 @@ const Level3Module3Section4_6 = () => {
                         <h4 className="text-green-400 font-medium mb-2">
                           When to Suspect Harmonics
                         </h4>
-                        <ul className="text-sm text-white/80 space-y-1">
+                        <ul className="text-sm text-white space-y-1">
                           <li>Overheating neutrals or transformers</li>
                           <li>Premature capacitor failure</li>
                           <li>Unexplained circuit breaker tripping</li>
@@ -768,7 +768,7 @@ const Level3Module3Section4_6 = () => {
                       </div>
                       <div className="p-4 bg-white/5 rounded-lg">
                         <h4 className="text-green-400 font-medium mb-2">Best Practice</h4>
-                        <ul className="text-sm text-white/80 space-y-1">
+                        <ul className="text-sm text-white space-y-1">
                           <li>Measure THD before adding PFC capacitors</li>
                           <li>Use detuned reactors for harmonic-rich sites</li>
                           <li>Specify K-rated transformers for data centres</li>
@@ -800,7 +800,7 @@ const Level3Module3Section4_6 = () => {
                       <span className="text-blue-400 font-bold shrink-0">Q:</span>
                       {faq.question}
                     </h3>
-                    <p className="text-white/70 text-sm ml-6">{faq.answer}</p>
+                    <p className="text-white text-sm ml-6">{faq.answer}</p>
                   </CardContent>
                 </Card>
               ))}
@@ -827,7 +827,7 @@ const Level3Module3Section4_6 = () => {
                   <div className="grid md:grid-cols-2 gap-6">
                     <div>
                       <h4 className="text-white font-medium mb-3">Key Harmonic Frequencies</h4>
-                      <div className="space-y-2 text-sm text-white/80">
+                      <div className="space-y-2 text-sm text-white">
                         <p>3rd harmonic: 150 Hz (zero sequence)</p>
                         <p>5th harmonic: 250 Hz (negative sequence)</p>
                         <p>7th harmonic: 350 Hz (positive sequence)</p>
@@ -837,7 +837,7 @@ const Level3Module3Section4_6 = () => {
                     </div>
                     <div>
                       <h4 className="text-white font-medium mb-3">THD Limits</h4>
-                      <div className="space-y-2 text-sm text-white/80">
+                      <div className="space-y-2 text-sm text-white">
                         <p>Voltage THD at PCC: less than 8%</p>
                         <p>Individual harmonics: per G5/5</p>
                         <p>BS 7671 neutral sizing: greater than 15% 3rd</p>
@@ -846,7 +846,7 @@ const Level3Module3Section4_6 = () => {
                     </div>
                     <div>
                       <h4 className="text-white font-medium mb-3">Neutral Current Formula</h4>
-                      <div className="space-y-2 text-sm font-mono text-white/80">
+                      <div className="space-y-2 text-sm font-mono text-white">
                         <p>I_N = 3 x I_3rd (for balanced loads)</p>
                         <p>Max I_N = 1.73 x I_phase</p>
                         <p>At 33% third harmonic</p>
@@ -854,7 +854,7 @@ const Level3Module3Section4_6 = () => {
                     </div>
                     <div>
                       <h4 className="text-white font-medium mb-3">Equipment Effects</h4>
-                      <div className="space-y-2 text-sm text-white/80">
+                      <div className="space-y-2 text-sm text-white">
                         <p>Transformers: increased losses, derating</p>
                         <p>Capacitors: overheating, resonance</p>
                         <p>Cables: skin effect, additional losses</p>

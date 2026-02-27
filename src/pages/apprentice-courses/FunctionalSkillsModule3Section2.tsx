@@ -128,7 +128,7 @@ const FunctionalSkillsModule3Section2 = () => {
             to="/study-centre/apprentice/functional-skills/module3"
             className="p-2 -ml-2 touch-manipulation"
           >
-            <ArrowLeft className="w-5 h-5 text-white/60" />
+            <ArrowLeft className="w-5 h-5 text-white" />
           </Link>
           <div>
             <p className="text-[11px] font-semibold text-green-400 uppercase tracking-wider">
@@ -154,7 +154,7 @@ const FunctionalSkillsModule3Section2 = () => {
             <h2 className="text-xl sm:text-2xl font-bold text-white mb-2">
               Spreadsheets & Calculations
             </h2>
-            <p className="text-sm text-white/50 max-w-lg mx-auto">
+            <p className="text-sm text-white max-w-lg mx-auto">
               Harness the power of spreadsheets for cable sizing, material takeoffs, job costing,
               and data analysis — essential digital skills that set professional electricians apart.
             </p>
@@ -176,7 +176,7 @@ const FunctionalSkillsModule3Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Spreadsheet Fundamentals</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Spreadsheets are one of the most powerful tools available to electricians. Whether you
               use Microsoft Excel, Google Sheets (free and browser-based), or LibreOffice Calc (free
@@ -227,7 +227,7 @@ const FunctionalSkillsModule3Section2 = () => {
             </p>
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 The golden rule of spreadsheets: never type the same number in two places. Enter
                 each value once and reference it everywhere else. This eliminates inconsistencies
                 and means updating one value automatically updates all related calculations.
@@ -249,7 +249,7 @@ const FunctionalSkillsModule3Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Cable Calculation Spreadsheets</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Cable sizing is one of the most critical calculations in electrical installation work,
               and spreadsheets are the ideal tool for performing these calculations consistently and
@@ -308,7 +308,7 @@ const FunctionalSkillsModule3Section2 = () => {
             </p>
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Once you build a cable calculation spreadsheet, save it as a template. For each new
                 job, copy the template and fill in the project-specific values. Over time, you will
                 build a library of templates that cover most common installation scenarios,
@@ -344,7 +344,7 @@ const FunctionalSkillsModule3Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Material Lists & Takeoffs</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               A material takeoff (MTO) is a detailed list of all materials required for an
               electrical installation. Creating accurate material takeoffs is essential for
@@ -465,7 +465,7 @@ const FunctionalSkillsModule3Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Job Costing Templates</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Accurate job costing is the difference between a profitable electrical business and
               one that struggles. A job costing spreadsheet brings together material costs, labour
@@ -560,7 +560,7 @@ const FunctionalSkillsModule3Section2 = () => {
             </p>
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 A job costing spreadsheet is not just for quotations — it is a learning tool. By
                 comparing estimated and actual costs on every job, you develop increasingly accurate
                 estimating skills. Many successful electrical contractors attribute their
@@ -591,7 +591,7 @@ const FunctionalSkillsModule3Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Essential Formulae</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Mastering a core set of spreadsheet formulae transforms you from a basic user into a
               power user. Here are the formulae every electrician should know, with practical
@@ -748,7 +748,7 @@ const FunctionalSkillsModule3Section2 = () => {
             </ul>
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Start with SUM, AVERAGE, and IF — these three formulae cover the vast majority of
                 electrical calculation needs. As you become more comfortable, add VLOOKUP, SUMIF,
                 and COUNTIF to your repertoire. Practice by recreating your most common manual
@@ -771,7 +771,7 @@ const FunctionalSkillsModule3Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Charts & Data Visualisation</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               Charts transform raw numbers into visual stories. A well-chosen chart can communicate
               information at a glance that would take minutes to extract from a table of numbers.
@@ -843,7 +843,7 @@ const FunctionalSkillsModule3Section2 = () => {
             </p>
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 A chart included in a quotation or report looks professional and helps clients
                 understand your pricing. A simple pie chart showing the cost breakdown (materials,
                 labour, overheads, profit) builds trust by demonstrating transparency. Always label
@@ -874,7 +874,7 @@ const FunctionalSkillsModule3Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Sorting & Filtering</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               As your spreadsheets grow larger — containing dozens of circuits, hundreds of material
               lines, or months of financial data — the ability to sort and filter becomes essential.
@@ -985,7 +985,7 @@ const FunctionalSkillsModule3Section2 = () => {
             </span>
             <h3 className="text-lg font-bold text-white">Practical Spreadsheet Projects</h3>
           </div>
-          <div className="space-y-3 text-sm text-white/80 leading-relaxed">
+          <div className="space-y-3 text-sm text-white leading-relaxed">
             <p>
               The best way to learn spreadsheets is by building something useful. Here are practical
               projects that will develop your skills while creating tools you will actually use in
@@ -1071,7 +1071,7 @@ const FunctionalSkillsModule3Section2 = () => {
             </ul>
             <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4">
               <p className="text-xs font-semibold text-green-400 mb-1">Key Point</p>
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Do not try to build the perfect spreadsheet on your first attempt. Start with the
                 basics, use it on a real job, note what is missing or awkward, and improve it. Each
                 iteration makes the tool more useful. The best spreadsheets evolve over months and
@@ -1088,7 +1088,7 @@ const FunctionalSkillsModule3Section2 = () => {
         <div className="flex items-center justify-between pt-6 border-t border-white/10">
           <Link
             to="/study-centre/apprentice/functional-skills/module3/section1"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white/60 hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-medium text-white hover:text-white hover:bg-white/5 transition-colors touch-manipulation"
           >
             <ArrowLeft className="w-4 h-4" />
             Computer Basics

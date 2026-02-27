@@ -63,7 +63,7 @@ const ToolboxCard = ({
       </CardHeader>
       <CardContent className="flex flex-col flex-1 justify-between relative z-10">
         {description && (
-          <div className={`text-sm mb-4 ${comingSoon ? 'text-white/70' : 'text-white'}`}>
+          <div className={`text-sm mb-4 ${comingSoon ? 'text-white' : 'text-white'}`}>
             {description}
           </div>
         )}

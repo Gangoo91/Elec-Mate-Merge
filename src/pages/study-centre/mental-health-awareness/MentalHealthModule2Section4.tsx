@@ -249,7 +249,7 @@ const MentalHealthModule2Section4 = () => {
           </div>
           <div className="inline-block bg-purple-500/10 border border-purple-500/20 px-3 py-1 rounded-full text-sm font-semibold mb-4 ml-0">
             <span className="text-purple-400">MODULE 2</span>
-            <span className="text-white/40 mx-2">&middot;</span>
+            <span className="text-white mx-2">&middot;</span>
             <span className="text-white">SECTION 4</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">
@@ -511,7 +511,7 @@ const MentalHealthModule2Section4 = () => {
                           <CheckCircle className="h-4 w-4 text-green-400 mt-0.5 flex-shrink-0" />
                           <div>
                             <p className="text-green-300 font-medium">{phrase}</p>
-                            <p className="text-white/50 text-xs">{why}</p>
+                            <p className="text-white text-xs">{why}</p>
                           </div>
                         </div>
                       ))}
@@ -559,7 +559,7 @@ const MentalHealthModule2Section4 = () => {
                           <AlertTriangle className="h-4 w-4 text-red-400 mt-0.5 flex-shrink-0" />
                           <div>
                             <p className="text-red-300 font-medium">{phrase}</p>
-                            <p className="text-white/50 text-xs">{why}</p>
+                            <p className="text-white text-xs">{why}</p>
                           </div>
                         </div>
                       ))}
@@ -1239,7 +1239,7 @@ const MentalHealthModule2Section4 = () => {
                     </li>
                   </ul>
                 </div>
-                <p className="text-white/50 text-xs mt-3 italic">
+                <p className="text-white text-xs mt-3 italic">
                   This is why GPs always recommend tapering (gradually reducing the dose) rather
                   than stopping abruptly. If someone tells you they have stopped taking their
                   medication suddenly, encourage them to contact their GP as soon as possible.
@@ -1438,7 +1438,7 @@ const MentalHealthModule2Section4 = () => {
                     <CheckCircle className="h-4 w-4 text-violet-400 mt-1 flex-shrink-0" />
                     <div>
                       <strong className="text-white">Every Mind Matters (NHS)</strong>
-                      <span className="text-white/50">
+                      <span className="text-white">
                         {' '}
                         — personalised mental health action plan, free self-help tools, quizzes and
                         videos
@@ -1449,7 +1449,7 @@ const MentalHealthModule2Section4 = () => {
                     <CheckCircle className="h-4 w-4 text-violet-400 mt-1 flex-shrink-0" />
                     <div>
                       <strong className="text-white">Mind</strong>
-                      <span className="text-white/50">
+                      <span className="text-white">
                         {' '}
                         — comprehensive information on every mental health condition, local
                         services, legal rights at work, helpline
@@ -1460,7 +1460,7 @@ const MentalHealthModule2Section4 = () => {
                     <CheckCircle className="h-4 w-4 text-violet-400 mt-1 flex-shrink-0" />
                     <div>
                       <strong className="text-white">Anxiety UK</strong>
-                      <span className="text-white/50">
+                      <span className="text-white">
                         {' '}
                         — specialist charity for anxiety disorders, helpline, therapy access,
                         self-help resources
@@ -1471,7 +1471,7 @@ const MentalHealthModule2Section4 = () => {
                     <CheckCircle className="h-4 w-4 text-violet-400 mt-1 flex-shrink-0" />
                     <div>
                       <strong className="text-white">Samaritans (116 123)</strong>
-                      <span className="text-white/50">
+                      <span className="text-white">
                         {' '}
                         — free, confidential, 24/7 listening service for anyone in distress, not
                         just those who are suicidal
@@ -1482,7 +1482,7 @@ const MentalHealthModule2Section4 = () => {
                     <CheckCircle className="h-4 w-4 text-violet-400 mt-1 flex-shrink-0" />
                     <div>
                       <strong className="text-white">Mates in Mind</strong>
-                      <span className="text-white/50">
+                      <span className="text-white">
                         {' '}
                         — construction-industry-specific mental health charity, workplace training,
                         resources for employers and workers

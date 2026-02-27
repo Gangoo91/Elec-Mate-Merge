@@ -170,7 +170,7 @@ const ComprehensiveResultsView = ({
                 </div>
                 <div className="flex flex-col items-start">
                   <span className="font-semibold text-white">Pricing Options</span>
-                  <span className="text-xs text-white/50">3 tier pricing strategy</span>
+                  <span className="text-xs text-white">3 tier pricing strategy</span>
                 </div>
                 <Badge className="ml-auto mr-2 bg-elec-yellow/20 text-elec-yellow border-elec-yellow/30">
                   {formatCurrency(selectedAmount)}
@@ -199,7 +199,7 @@ const ComprehensiveResultsView = ({
                 </div>
                 <div className="flex flex-col items-start">
                   <span className="font-semibold text-white">Cost Breakdown</span>
-                  <span className="text-xs text-white/50">Materials, labour & overheads</span>
+                  <span className="text-xs text-white">Materials, labour & overheads</span>
                 </div>
                 <Badge className="ml-auto mr-2 bg-blue-500/20 text-blue-400 border-blue-500/30">
                   {formatCurrency(breakEven)}
@@ -234,7 +234,7 @@ const ComprehensiveResultsView = ({
                 </div>
                 <div className="flex flex-col items-start">
                   <span className="font-semibold text-white">Business Intelligence</span>
-                  <span className="text-xs text-white/50">Profit analysis, risks & confidence</span>
+                  <span className="text-xs text-white">Profit analysis, risks & confidence</span>
                 </div>
               </div>
             </AccordionTrigger>
@@ -263,7 +263,7 @@ const ComprehensiveResultsView = ({
                 </div>
                 <div className="flex flex-col items-start">
                   <span className="font-semibold text-white">Client Tools</span>
-                  <span className="text-xs text-white/50">Justification, objections & upsells</span>
+                  <span className="text-xs text-white">Justification, objections & upsells</span>
                 </div>
                 {structuredData?.upsells?.length > 0 && (
                   <Badge className="ml-auto mr-2 bg-emerald-500/20 text-emerald-400 border-emerald-500/30">
@@ -313,7 +313,7 @@ const ComprehensiveResultsView = ({
                 </div>
                 <div className="flex flex-col items-start">
                   <span className="font-semibold text-white">Job Preparation</span>
-                  <span className="text-xs text-white/50">Checklist, payment & notes</span>
+                  <span className="text-xs text-white">Checklist, payment & notes</span>
                 </div>
               </div>
             </AccordionTrigger>

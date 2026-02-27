@@ -53,7 +53,7 @@ const TalkToSomeone = () => {
               <MessageSquare className="h-6 w-6 text-blue-400" />
             </div>
             <div className="text-sm font-medium text-foreground">Message a Mate</div>
-            <div className="text-xs text-white/70">Connect with peers</div>
+            <div className="text-xs text-white">Connect with peers</div>
           </div>
         </Link>
 
@@ -67,7 +67,7 @@ const TalkToSomeone = () => {
               <User className="h-6 w-6 text-emerald-400" />
             </div>
             <div className="text-sm font-medium text-foreground">Find a Mentor</div>
-            <div className="text-xs text-white/70">Industry guidance</div>
+            <div className="text-xs text-white">Industry guidance</div>
           </div>
         </Link>
 
@@ -94,7 +94,7 @@ const TalkToSomeone = () => {
             <div className="text-sm font-medium text-foreground">
               {isRequestSubmitted ? 'Request Sent' : 'Request Counselor'}
             </div>
-            <div className="text-xs text-white/70">
+            <div className="text-xs text-white">
               {isRequestSubmitted ? "We'll contact you soon" : 'Professional support'}
             </div>
           </div>
@@ -110,7 +110,7 @@ const TalkToSomeone = () => {
               <MessageSquare className="h-6 w-6 text-green-400" />
             </div>
             <div className="text-sm font-medium text-foreground">Text SHOUT</div>
-            <div className="text-xs text-white/70">85258 - Free 24/7</div>
+            <div className="text-xs text-white">85258 - Free 24/7</div>
           </div>
         </a>
       </div>

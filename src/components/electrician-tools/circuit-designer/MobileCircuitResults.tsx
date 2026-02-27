@@ -66,7 +66,7 @@ export const MobileCircuitResults = ({
     return (
       <div className="min-h-screen bg-elec-dark flex items-center justify-center p-4">
         <div className="text-center">
-          <p className="text-white/70 mb-4">Unable to load design data</p>
+          <p className="text-white mb-4">Unable to load design data</p>
           <button onClick={onReset} className="text-elec-yellow underline">
             Start New Design
           </button>
@@ -184,7 +184,7 @@ export const MobileCircuitResults = ({
       <div className="px-4 pt-safe pb-3 bg-gradient-to-b from-elec-dark to-transparent">
         {/* Status Bar */}
         <div className="flex items-center justify-between mb-4">
-          <Badge className="bg-white/10 text-white/80 border-0 text-xs">BS 7671:2018+A3:2024</Badge>
+          <Badge className="bg-white/10 text-white border-0 text-xs">BS 7671:2018+A3:2024</Badge>
           <Badge
             className={cn(
               'border-0 font-medium',
@@ -218,7 +218,7 @@ export const MobileCircuitResults = ({
           </div>
           <div className="min-w-0 flex-1">
             <h1 className="text-xl font-bold text-white truncate">{design.projectName}</h1>
-            <p className="text-sm text-white/50 flex items-center gap-1 mt-0.5">
+            <p className="text-sm text-white flex items-center gap-1 mt-0.5">
               <span className="truncate">{design.location}</span>
             </p>
           </div>
@@ -274,7 +274,7 @@ export const MobileCircuitResults = ({
                   className={`flex-shrink-0 px-4 py-2.5 sm:px-5 sm:py-2.5 rounded-lg border-2 transition-all touch-manipulation snap-center min-h-[44px] ${
                     isActive
                       ? 'bg-elec-yellow/20 border-elec-yellow text-elec-yellow font-semibold shadow-lg shadow-elec-yellow/20'
-                      : 'bg-elec-dark/60 border-elec-yellow/20 text-elec-light/60 hover:border-elec-yellow/40'
+                      : 'bg-elec-dark/60 border-elec-yellow/20 text-elec-light hover:border-elec-yellow/40'
                   }`}
                 >
                   <div className="flex items-center gap-2">
@@ -397,7 +397,7 @@ export const MobileCircuitResults = ({
               icon={<RotateCcw className="h-5 w-5" />}
               onClick={onReset}
               className={cn(
-                'h-11 text-white/60 hover:text-white hover:bg-white/5',
+                'h-11 text-white hover:text-white hover:bg-white/5',
                 !onSendToEIC && 'col-span-2'
               )}
             >

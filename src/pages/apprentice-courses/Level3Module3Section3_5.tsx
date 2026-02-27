@@ -196,7 +196,7 @@ const Level3Module3Section3_5 = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white active:text-white p-0 -ml-1"
+            className="text-white hover:text-white active:text-white p-0 -ml-1"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section3">
@@ -215,7 +215,7 @@ const Level3Module3Section3_5 = () => {
         <h1 className="text-2xl md:text-3xl font-bold text-white mb-6">
           3.5 Motors and Generators
         </h1>
-        <p className="text-xl text-white/70 mb-8">
+        <p className="text-xl text-white mb-8">
           Understanding the principles, operation and characteristics of rotating electrical
           machines
         </p>
@@ -226,7 +226,7 @@ const Level3Module3Section3_5 = () => {
             <Zap className="w-5 h-5" />
             Quick Summary
           </h3>
-          <ul className="text-white/80 space-y-2">
+          <ul className="text-white space-y-2">
             <li>Synchronous speed: Ns = (120 x f) / p rpm</li>
             <li>Slip: s = (Ns - Nr) / Ns (typically 2-5% for induction motors)</li>
             <li>Motor action: Current-carrying conductor in magnetic field experiences force</li>
@@ -238,7 +238,7 @@ const Level3Module3Section3_5 = () => {
         {/* Learning Outcomes */}
         <div className="bg-blue-900/30 border border-blue-500/50 rounded-lg p-6 mb-8">
           <h3 className="text-lg font-semibold text-blue-400 mb-3">Learning Outcomes</h3>
-          <ul className="text-white/80 space-y-2">
+          <ul className="text-white space-y-2">
             <li className="flex items-start gap-2">
               <CheckCircle className="w-4 h-4 mt-1 text-green-400 flex-shrink-0" />
               Explain the principles of motor action and generator action
@@ -277,7 +277,7 @@ const Level3Module3Section3_5 = () => {
               Fundamental Principles
             </h2>
             <div className="bg-[#242424] rounded-lg p-6 border border-white/10">
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 Motors and generators are based on the interaction between magnetic fields and
                 current-carrying conductors. They are essentially the same machine operating in
                 reverse.
@@ -287,26 +287,26 @@ const Level3Module3Section3_5 = () => {
                 Motor Action (Fleming's Left-Hand Rule)
               </h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   When a current-carrying conductor is placed in a magnetic field, it experiences a
                   force:
                 </p>
                 <p className="text-green-400 font-mono mb-2">F = B x I x L (Newtons)</p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Where B = flux density (T), I = current (A), L = conductor length (m)
                 </p>
                 <div className="mt-4 grid grid-cols-3 gap-2 text-center text-sm">
                   <div className="bg-[#242424] p-2 rounded">
                     <p className="text-green-400 font-semibold">Thumb</p>
-                    <p className="text-white/70">Motion (Force)</p>
+                    <p className="text-white">Motion (Force)</p>
                   </div>
                   <div className="bg-[#242424] p-2 rounded">
                     <p className="text-green-400 font-semibold">First finger</p>
-                    <p className="text-white/70">Field (N to S)</p>
+                    <p className="text-white">Field (N to S)</p>
                   </div>
                   <div className="bg-[#242424] p-2 rounded">
                     <p className="text-green-400 font-semibold">Second finger</p>
-                    <p className="text-white/70">Current (+ve to -ve)</p>
+                    <p className="text-white">Current (+ve to -ve)</p>
                   </div>
                 </div>
               </div>
@@ -315,37 +315,37 @@ const Level3Module3Section3_5 = () => {
                 Generator Action (Fleming's Right-Hand Rule)
               </h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   When a conductor moves through a magnetic field, an EMF is induced:
                 </p>
                 <p className="text-green-400 font-mono mb-2">e = B x L x v (Volts)</p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Where B = flux density (T), L = conductor length (m), v = velocity (m/s)
                 </p>
                 <div className="mt-4 grid grid-cols-3 gap-2 text-center text-sm">
                   <div className="bg-[#242424] p-2 rounded">
                     <p className="text-green-400 font-semibold">Thumb</p>
-                    <p className="text-white/70">Motion</p>
+                    <p className="text-white">Motion</p>
                   </div>
                   <div className="bg-[#242424] p-2 rounded">
                     <p className="text-green-400 font-semibold">First finger</p>
-                    <p className="text-white/70">Field</p>
+                    <p className="text-white">Field</p>
                   </div>
                   <div className="bg-[#242424] p-2 rounded">
                     <p className="text-green-400 font-semibold">Second finger</p>
-                    <p className="text-white/70">EMF (induced)</p>
+                    <p className="text-white">EMF (induced)</p>
                   </div>
                 </div>
               </div>
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Back EMF in Motors</h4>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 A running motor also acts as a generator. The rotating armature generates a{' '}
                 <strong>back EMF</strong> that opposes the supply voltage:
               </p>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4 text-center">
                 <p className="text-green-400 font-mono mb-2">V = Eb + Ia x Ra</p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Supply voltage = Back EMF + Armature voltage drop
                 </p>
               </div>
@@ -368,7 +368,7 @@ const Level3Module3Section3_5 = () => {
               AC Induction Motors
             </h2>
             <div className="bg-[#242424] rounded-lg p-6 border border-white/10">
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 The <strong>3-phase induction motor</strong> is the most common industrial motor due
                 to its rugged construction, reliability and low maintenance. It works on the
                 principle of a rotating magnetic field.
@@ -376,44 +376,44 @@ const Level3Module3Section3_5 = () => {
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Rotating Magnetic Field</h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   Three-phase currents in stator windings displaced 120 degrees apart create a
                   smoothly rotating field:
                 </p>
                 <p className="text-green-400 font-mono text-lg mb-2">Ns = (120 x f) / p rpm</p>
-                <p className="text-white/80 text-sm">
+                <p className="text-white text-sm">
                   Where Ns = synchronous speed, f = frequency (Hz), p = number of poles
                 </p>
                 <div className="mt-4 grid grid-cols-4 gap-2 text-center text-sm">
                   <div className="bg-[#242424] p-2 rounded">
                     <p className="text-green-400 font-semibold">2 poles</p>
-                    <p className="text-white/70">3000 rpm</p>
+                    <p className="text-white">3000 rpm</p>
                   </div>
                   <div className="bg-[#242424] p-2 rounded">
                     <p className="text-green-400 font-semibold">4 poles</p>
-                    <p className="text-white/70">1500 rpm</p>
+                    <p className="text-white">1500 rpm</p>
                   </div>
                   <div className="bg-[#242424] p-2 rounded">
                     <p className="text-green-400 font-semibold">6 poles</p>
-                    <p className="text-white/70">1000 rpm</p>
+                    <p className="text-white">1000 rpm</p>
                   </div>
                   <div className="bg-[#242424] p-2 rounded">
                     <p className="text-green-400 font-semibold">8 poles</p>
-                    <p className="text-white/70">750 rpm</p>
+                    <p className="text-white">750 rpm</p>
                   </div>
                 </div>
               </div>
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Slip</h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   The rotor always runs slower than synchronous speed. This difference is called{' '}
                   <strong>slip</strong>:
                 </p>
                 <p className="text-green-400 font-mono mb-2">Slip s = (Ns - Nr) / Ns</p>
                 <p className="text-green-400 font-mono mb-2">Rotor speed Nr = Ns x (1 - s)</p>
                 <p className="text-green-400 font-mono mb-2">Rotor frequency fr = s x f</p>
-                <p className="text-white/80 text-sm mt-3">
+                <p className="text-white text-sm mt-3">
                   Typical slip at full load: 2-5%. Higher slip means more torque but higher losses.
                 </p>
               </div>
@@ -422,7 +422,7 @@ const Level3Module3Section3_5 = () => {
               <div className="grid md:grid-cols-2 gap-4 mb-4">
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Squirrel Cage</h5>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>Aluminium or copper bars short-circuited by end rings</li>
                     <li>Simple, rugged, low maintenance</li>
                     <li>Fixed rotor resistance</li>
@@ -432,7 +432,7 @@ const Level3Module3Section3_5 = () => {
                 </div>
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Wound Rotor</h5>
-                  <ul className="text-white/70 text-sm space-y-1">
+                  <ul className="text-white text-sm space-y-1">
                     <li>Three-phase winding connected to slip rings</li>
                     <li>External resistance for starting/speed control</li>
                     <li>High starting torque with low current</li>
@@ -460,7 +460,7 @@ const Level3Module3Section3_5 = () => {
               DC Motors
             </h2>
             <div className="bg-[#242424] rounded-lg p-6 border border-white/10">
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 DC motors offer excellent speed control and high starting torque. They consist of a
                 stationary field system and a rotating armature with a commutator.
               </p>
@@ -469,10 +469,10 @@ const Level3Module3Section3_5 = () => {
               <div className="space-y-4 mb-4">
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Series Motor</h5>
-                  <p className="text-white/70 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     Field winding in series with armature. Current through both is the same.
                   </p>
-                  <ul className="text-white/70 text-sm space-y-1 ml-4">
+                  <ul className="text-white text-sm space-y-1 ml-4">
                     <li>
                       <strong>High starting torque</strong> - torque proportional to current squared
                     </li>
@@ -487,11 +487,11 @@ const Level3Module3Section3_5 = () => {
                 </div>
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Shunt Motor</h5>
-                  <p className="text-white/70 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     Field winding in parallel with armature. Field current independent of armature
                     current.
                   </p>
-                  <ul className="text-white/70 text-sm space-y-1 ml-4">
+                  <ul className="text-white text-sm space-y-1 ml-4">
                     <li>
                       <strong>Constant speed</strong> - excellent speed regulation
                     </li>
@@ -505,10 +505,10 @@ const Level3Module3Section3_5 = () => {
                 </div>
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Compound Motor</h5>
-                  <p className="text-white/70 text-sm mb-2">
+                  <p className="text-white text-sm mb-2">
                     Has both series and shunt field windings. Combines characteristics of both.
                   </p>
-                  <ul className="text-white/70 text-sm space-y-1 ml-4">
+                  <ul className="text-white text-sm space-y-1 ml-4">
                     <li>
                       <strong>Cumulative compound:</strong> Series field aids shunt field
                     </li>
@@ -523,10 +523,10 @@ const Level3Module3Section3_5 = () => {
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Speed Control</h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   Speed equation: N proportional to (V - Ia.Ra) / Phi
                 </p>
-                <ul className="text-white/80 space-y-2">
+                <ul className="text-white space-y-2">
                   <li>
                     <strong>Armature voltage control:</strong> Reduce V to reduce speed. Maintains
                     torque. Used with thyristors/PWM.
@@ -568,35 +568,35 @@ const Level3Module3Section3_5 = () => {
               <h4 className="text-lg font-semibold text-green-400 mb-3">
                 Induction Motor Starting
               </h4>
-              <p className="text-white/80 mb-4">
+              <p className="text-white mb-4">
                 At standstill, induction motors draw 6-8 times full-load current. Starting methods
                 reduce this to acceptable levels:
               </p>
               <div className="grid md:grid-cols-2 gap-4 mb-4">
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Direct-On-Line (DOL)</h5>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Full voltage applied. Simple but high current. Only for small motors (typically
                     below 7.5 kW) or where supply can handle surge.
                   </p>
                 </div>
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Star-Delta</h5>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Starts in star (1/3 current, 1/3 torque), runs in delta. Common for larger
                     motors. Torque dip at changeover.
                   </p>
                 </div>
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Auto-transformer</h5>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Reduced voltage starting via tapped transformer. Good torque/current ratio. More
                     expensive but smooth.
                   </p>
                 </div>
                 <div className="bg-[#1a1a1a] rounded-lg p-4">
                   <h5 className="font-semibold text-white mb-2">Soft Starter / VFD</h5>
-                  <p className="text-white/70 text-sm">
+                  <p className="text-white text-sm">
                     Electronic control of voltage or frequency. Smoothest starting. VFD also
                     provides speed control and energy saving.
                   </p>
@@ -607,10 +607,10 @@ const Level3Module3Section3_5 = () => {
                 AC Generators (Alternators)
               </h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   AC generators have a rotating field (rotor) and stationary armature (stator):
                 </p>
-                <ul className="text-white/80 space-y-2">
+                <ul className="text-white space-y-2">
                   <li>
                     <strong>Frequency:</strong> f = (p x N) / 120, where N = speed in rpm
                   </li>
@@ -626,10 +626,10 @@ const Level3Module3Section3_5 = () => {
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">DC Generators</h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   DC generators use a commutator to convert the AC generated in the armature to DC:
                 </p>
-                <ul className="text-white/80 space-y-2">
+                <ul className="text-white space-y-2">
                   <li>
                     <strong>Separately excited:</strong> Field supplied from external DC source.
                     Best regulation.
@@ -646,10 +646,10 @@ const Level3Module3Section3_5 = () => {
 
               <h4 className="text-lg font-semibold text-green-400 mb-3">Synchronous Motors</h4>
               <div className="bg-[#1a1a1a] rounded-lg p-4 mb-4">
-                <p className="text-white/80 mb-3">
+                <p className="text-white mb-3">
                   Run at exactly synchronous speed with DC-excited rotor:
                 </p>
-                <ul className="text-white/80 space-y-2">
+                <ul className="text-white space-y-2">
                   <li>Constant speed regardless of load (up to pull-out torque)</li>
                   <li>Can operate at leading power factor (for PFC)</li>
                   <li>Requires starting means (damper windings or VFD)</li>
@@ -678,7 +678,7 @@ const Level3Module3Section3_5 = () => {
               <h4 className="text-lg font-semibold text-yellow-400 mb-3">
                 Motor Selection and Installation
               </h4>
-              <ul className="text-white/80 space-y-2">
+              <ul className="text-white space-y-2">
                 <li>
                   <strong>Motor rating:</strong> Select for continuous duty with margin. Consider
                   starting frequency, ambient temperature, altitude and duty cycle.
@@ -710,7 +710,7 @@ const Level3Module3Section3_5 = () => {
               {faqItems.map((faq, index) => (
                 <div key={index} className="bg-[#242424] rounded-lg p-4 border border-white/10">
                   <h4 className="font-semibold text-white mb-2">{faq.question}</h4>
-                  <p className="text-white/70 text-sm">{faq.answer}</p>
+                  <p className="text-white text-sm">{faq.answer}</p>
                 </div>
               ))}
             </div>
@@ -723,7 +723,7 @@ const Level3Module3Section3_5 = () => {
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <h4 className="font-semibold text-green-400 mb-3">Essential Formulas</h4>
-                  <ul className="text-white/70 text-sm space-y-2 font-mono">
+                  <ul className="text-white text-sm space-y-2 font-mono">
                     <li>Ns = (120 x f) / p rpm</li>
                     <li>Slip s = (Ns - Nr) / Ns</li>
                     <li>Nr = Ns x (1 - s)</li>
@@ -735,7 +735,7 @@ const Level3Module3Section3_5 = () => {
                 </div>
                 <div>
                   <h4 className="font-semibold text-green-400 mb-3">Key Values (50 Hz)</h4>
-                  <ul className="text-white/70 text-sm space-y-2">
+                  <ul className="text-white text-sm space-y-2">
                     <li>2-pole: 3000 rpm sync</li>
                     <li>4-pole: 1500 rpm sync</li>
                     <li>6-pole: 1000 rpm sync</li>
@@ -753,7 +753,7 @@ const Level3Module3Section3_5 = () => {
         {/* Quiz Section */}
         <div className="mb-12">
           <h2 className="text-xl font-semibold text-white mb-4">Test Your Knowledge</h2>
-          <p className="text-white/70 mb-4">
+          <p className="text-white mb-4">
             Complete this quiz to check your understanding of motors and generators:
           </p>
           <Quiz questions={quizQuestions} moduleId="L3M3S3.5" />

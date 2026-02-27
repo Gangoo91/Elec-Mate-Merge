@@ -126,7 +126,7 @@ const Module4Section3_4 = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-3">
           <Button
             variant="ghost"
-            className="text-white/70 hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
+            className="text-white hover:text-white hover:bg-white/5 -ml-2 min-h-[44px] touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="..">
@@ -143,13 +143,13 @@ const Module4Section3_4 = () => {
           <header className="text-center mb-12">
             <div className="inline-flex items-center gap-2 text-elec-yellow text-sm mb-3">
               <span className="px-2 py-0.5 bg-elec-yellow/10 rounded">Module 4</span>
-              <span className="text-white/40">•</span>
-              <span className="text-white/60">Section 3.4</span>
+              <span className="text-white">•</span>
+              <span className="text-white">Section 3.4</span>
             </div>
             <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 leading-tight">
               Cutting, Deburring, and Preparing Conduit Ends
             </h1>
-            <p className="text-white/70 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
+            <p className="text-white text-base sm:text-lg leading-relaxed max-w-2xl mx-auto">
               Master essential cutting, deburring, and preparation techniques for PVC and metal
               conduit to ensure BS 7671 compliance and cable protection.
             </p>
@@ -161,7 +161,7 @@ const Module4Section3_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">01</span>
               Introduction
             </h2>
-            <div className="grid sm:grid-cols-2 gap-4 text-sm text-white/80">
+            <div className="grid sm:grid-cols-2 gap-4 text-sm text-white">
               <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2">In 30 Seconds</p>
                 <ul className="list-disc pl-5 space-y-1">
@@ -193,7 +193,7 @@ const Module4Section3_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">02</span>
               Learning Outcomes
             </h2>
-            <ul className="list-disc pl-6 space-y-2 text-sm text-white/80">
+            <ul className="list-disc pl-6 space-y-2 text-sm text-white">
               <li>Select the correct cutting tools for PVC and metal conduit applications</li>
               <li>Apply proper cutting techniques to achieve clean, square cuts</li>
               <li>Remove burrs effectively to protect cables during installation</li>
@@ -208,40 +208,40 @@ const Module4Section3_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">03</span>
               Cutting Tools Selection
             </h2>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               The right tool selection is critical for achieving professional results and
               maintaining safety:
             </p>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2">PVC Conduit Tools</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Fine-toothed hacksaw (24-32 TPI), PVC conduit cutter, rotary pipe cutter, mitre
                   box for accurate angles.
                 </p>
-                <div className="text-xs text-white/60">
+                <div className="text-xs text-white">
                   <strong>Critical tip:</strong> Always support both sides of the cut to prevent
                   cracking
                 </div>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2">Metal Conduit Tools</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Hacksaw with bi-metal blade, rotary pipe cutter, band saw (high-volume),
                   reciprocating saw with metal blade.
                 </p>
-                <div className="text-xs text-white/60">
+                <div className="text-xs text-white">
                   <strong>Pro tip:</strong> Use cutting fluid to extend blade life and improve cut
                   quality
                 </div>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-elec-yellow/50">
                 <p className="font-medium text-elec-yellow mb-2">Measurement Tools</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Steel rule, engineer's square, permanent marker, measuring tape for accurate
                   marking.
                 </p>
-                <div className="text-xs text-white/60">
+                <div className="text-xs text-white">
                   <strong>Accuracy:</strong> Measure twice, cut once - mistakes are costly to
                   rectify
                 </div>
@@ -265,39 +265,39 @@ const Module4Section3_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">04</span>
               Practical Cutting Techniques
             </h2>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               Proper technique ensures clean cuts and prevents material waste:
             </p>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
                 <p className="font-medium text-green-400 mb-2">PVC Cutting Process</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Mark with permanent marker and square → Support both sides → Use steady strokes →
                   Don't force the cut → Check square with engineer's square.
                 </p>
-                <div className="text-xs text-white/60">
+                <div className="text-xs text-white">
                   <strong>Common mistakes:</strong> Rushing the cut, inadequate support, wrong blade
                   TPI
                 </div>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
                 <p className="font-medium text-green-400 mb-2">Metal Cutting Process</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Secure in pipe vice → Apply cutting fluid → Maintain consistent angle → Rotate
                   periodically → Remove swarf immediately.
                 </p>
-                <div className="text-xs text-white/60">
+                <div className="text-xs text-white">
                   <strong>Warning:</strong> Over-tightening vice can deform conduit - use just
                   enough pressure
                 </div>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-green-500/50">
                 <p className="font-medium text-green-400 mb-2">Quality Control</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Check squareness with engineer's square, test-fit in coupling, ensure clean edges
                   before proceeding.
                 </p>
-                <div className="text-xs text-white/60">
+                <div className="text-xs text-white">
                   <strong>Standard:</strong> Cuts must be within 1mm of square for professional
                   installation
                 </div>
@@ -321,37 +321,37 @@ const Module4Section3_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">05</span>
               Professional Deburring Process
             </h2>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               Deburring is critical for cable protection and must never be skipped:
             </p>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
                 <p className="font-medium text-purple-400 mb-2">External Deburring</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Use half-round file at 45° angle to chamfer outer edge. Run finger around edge -
                   should be smooth to touch.
                 </p>
-                <div className="text-xs text-white/60">
+                <div className="text-xs text-white">
                   <strong>Test:</strong> If it's smooth to your finger, it's safe for cables
                 </div>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
                 <p className="font-medium text-purple-400 mb-2">Internal Deburring</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Insert round file or deburring tool, rotate to remove burrs. Visual inspection -
                   no visible sharp edges or fragments.
                 </p>
-                <div className="text-xs text-white/60">
+                <div className="text-xs text-white">
                   <strong>Tools:</strong> Round file, tapered reamer, or dedicated deburring tool
                 </div>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-purple-500/50">
                 <p className="font-medium text-purple-400 mb-2">Final Cable Test</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Pass test cable through - should slide freely without snagging. Cable moves
                   smoothly with no resistance points.
                 </p>
-                <div className="text-xs text-white/60">
+                <div className="text-xs text-white">
                   <strong>Gold standard:</strong> If the test cable passes easily, installation
                   cables will too
                 </div>
@@ -375,38 +375,38 @@ const Module4Section3_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">06</span>
               Safety Considerations
             </h2>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               Personal protection and safe working practices prevent injuries:
             </p>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
                 <p className="font-medium text-orange-400 mb-2">Personal Protective Equipment</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Safety glasses for chip protection, work gloves for sharp edges, hearing
                   protection with power tools.
                 </p>
-                <div className="text-xs text-white/60">
+                <div className="text-xs text-white">
                   <strong>Remember:</strong> Eye protection is mandatory - metal fragments can cause
                   serious injury
                 </div>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
                 <p className="font-medium text-orange-400 mb-2">Safe Working Practices</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Secure work at comfortable height, keep cutting area clear, never force tools -
                   let them work.
                 </p>
-                <div className="text-xs text-white/60">
+                <div className="text-xs text-white">
                   <strong>Golden rule:</strong> If you're forcing it, you're doing it wrong
                 </div>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-orange-500/50">
                 <p className="font-medium text-orange-400 mb-2">Tool Maintenance</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Keep blades sharp, clean tools after use, store safely. Dull tools require more
                   force and are dangerous.
                 </p>
-                <div className="text-xs text-white/60">
+                <div className="text-xs text-white">
                   <strong>Efficiency:</strong> Sharp tools work faster and safer than dull ones
                 </div>
               </div>
@@ -419,37 +419,37 @@ const Module4Section3_4 = () => {
               <span className="text-elec-yellow/80 text-sm font-normal">07</span>
               Quality and Compliance Checks
             </h2>
-            <p className="text-sm text-white/80 mb-4">
+            <p className="text-sm text-white mb-4">
               Final verification ensures professional standards and BS 7671 compliance:
             </p>
             <div className="space-y-4">
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50">
                 <p className="font-medium text-red-400 mb-2">Cut Quality Verification</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Check cuts are square and true, clean edges without damage, correct length as
                   measured.
                 </p>
-                <div className="text-xs text-white/60">
+                <div className="text-xs text-white">
                   <strong>Standard:</strong> Cuts must fit neatly into couplings without gaps
                 </div>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50">
                 <p className="font-medium text-red-400 mb-2">Preparation Standards</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Metal threads clean and free from swarf, chamfer applied where required, all
                   debris removed.
                 </p>
-                <div className="text-xs text-white/60">
+                <div className="text-xs text-white">
                   <strong>BS 7671:</strong> Installation must protect cables from mechanical damage
                 </div>
               </div>
               <div className="p-4 rounded-lg bg-white/5 border-l-2 border-red-500/50">
                 <p className="font-medium text-red-400 mb-2">Final Documentation</p>
-                <p className="text-sm text-white/80 mb-2">
+                <p className="text-sm text-white mb-2">
                   Record preparation methods used, note any non-standard procedures, maintain
                   quality logs.
                 </p>
-                <div className="text-xs text-white/60">
+                <div className="text-xs text-white">
                   <strong>Traceability:</strong> Document your work for quality assurance and fault
                   diagnosis
                 </div>
@@ -464,7 +464,7 @@ const Module4Section3_4 = () => {
               Real-World Example
             </h2>
             <div className="p-4 rounded-lg bg-blue-500/10 border-l-2 border-blue-500/50">
-              <p className="text-sm text-white/80 mb-4">
+              <p className="text-sm text-white mb-4">
                 On a commercial lighting job, an installer rushed the conduit preparation and
                 skipped deburring. When cables were pulled, the insulation was nicked on a sharp
                 edge, causing a fault during testing. The conduit had to be dismantled, deburred,
@@ -472,7 +472,7 @@ const Module4Section3_4 = () => {
               </p>
               <div className="p-3 rounded bg-green-500/10 border-l-2 border-green-500/50">
                 <p className="font-medium text-green-400 mb-1">Lesson learned:</p>
-                <p className="text-xs text-white/70">
+                <p className="text-xs text-white">
                   Proper preparation saves time and prevents costly rework. Always deburr thoroughly
                   - the few extra minutes spent ensure cable integrity and installation success.
                 </p>
@@ -491,7 +491,7 @@ const Module4Section3_4 = () => {
                 <p className="font-medium text-white mb-1">
                   Q: Can I use an angle grinder to cut conduit?
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A: It's possible, but only with caution, correct PPE, and the right disc -
                   however, it's generally not preferred due to safety risks and potential for rough
                   cuts.
@@ -501,7 +501,7 @@ const Module4Section3_4 = () => {
                 <p className="font-medium text-white mb-1">
                   Q: Do all conduit types require deburring?
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A: Yes - whether PVC or metal, sharp edges can damage cables during installation.
                 </p>
               </div>
@@ -509,7 +509,7 @@ const Module4Section3_4 = () => {
                 <p className="font-medium text-white mb-1">
                   Q: Is a chamfer always necessary on PVC conduit?
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A: Only if solvent-welded joints are being used or where a better entry is needed
                   for cables.
                 </p>
@@ -518,7 +518,7 @@ const Module4Section3_4 = () => {
                 <p className="font-medium text-white mb-1">
                   Q: What's the best way to test if deburring is complete?
                 </p>
-                <p className="text-sm text-white/70">
+                <p className="text-sm text-white">
                   A: Pass a test cable through the conduit - it should slide freely without any
                   snagging or resistance points.
                 </p>
@@ -533,7 +533,7 @@ const Module4Section3_4 = () => {
               Summary
             </h2>
             <div className="p-4 rounded-lg bg-elec-yellow/5 border-l-2 border-elec-yellow/50">
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 Cutting, deburring, and preparing conduit ends is essential for safety, compliance,
                 and ease of installation. Correct tools, clean cuts, and smooth edges protect
                 cables, ensure secure joints, and maintain a professional standard of work. Never

@@ -299,28 +299,28 @@ const IndustrialElectricalModule5Section4: React.FC = () => {
               <div className="bg-background/50 p-3 rounded-lg border border-white/10">
                 <span className="text-red-400 font-mono font-semibold">Type 1:</span>
                 <span className="text-white ml-2">Power-Up Fault</span>
-                <p className="text-white/70 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Battery low, memory corruption, or initialisation error
                 </p>
               </div>
               <div className="bg-background/50 p-3 rounded-lg border border-white/10">
                 <span className="text-red-400 font-mono font-semibold">Type 3:</span>
                 <span className="text-white ml-2">I/O Fault</span>
-                <p className="text-white/70 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Module communication lost or hardware failure
                 </p>
               </div>
               <div className="bg-background/50 p-3 rounded-lg border border-white/10">
                 <span className="text-red-400 font-mono font-semibold">Type 4:</span>
                 <span className="text-white ml-2">Programme Fault</span>
-                <p className="text-white/70 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Instruction execution error, math overflow
                 </p>
               </div>
               <div className="bg-background/50 p-3 rounded-lg border border-white/10">
                 <span className="text-red-400 font-mono font-semibold">Type 6:</span>
                 <span className="text-white ml-2">Watchdog Fault</span>
-                <p className="text-white/70 text-xs mt-1">
+                <p className="text-white text-xs mt-1">
                   Scan time exceeded, programme loop detected
                 </p>
               </div>
@@ -626,19 +626,19 @@ const IndustrialElectricalModule5Section4: React.FC = () => {
               <div className="bg-background/50 p-3 rounded-lg text-center border border-white/10">
                 <History className="w-6 h-6 mx-auto mb-2 text-blue-400" />
                 <p className="font-medium text-foreground">Process Events</p>
-                <p className="text-white/70 text-xs">
+                <p className="text-white text-xs">
                   State changes, setpoint changes, mode changes
                 </p>
               </div>
               <div className="bg-background/50 p-3 rounded-lg text-center border border-white/10">
                 <AlertCircle className="w-6 h-6 mx-auto mb-2 text-orange-400" />
                 <p className="font-medium text-foreground">System Events</p>
-                <p className="text-white/70 text-xs">Faults, diagnostics, communication status</p>
+                <p className="text-white text-xs">Faults, diagnostics, communication status</p>
               </div>
               <div className="bg-background/50 p-3 rounded-lg text-center border border-white/10">
                 <Shield className="w-6 h-6 mx-auto mb-2 text-green-400" />
                 <p className="font-medium text-foreground">Security Events</p>
-                <p className="text-white/70 text-xs">Login attempts, access changes, downloads</p>
+                <p className="text-white text-xs">Login attempts, access changes, downloads</p>
               </div>
             </div>
           </div>

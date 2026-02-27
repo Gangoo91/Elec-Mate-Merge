@@ -207,17 +207,17 @@ export function LiveStatsCompact() {
     <div className="flex flex-wrap gap-2">
       <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.03] text-xs">
         <FileText className="h-3.5 w-3.5 text-elec-yellow" />
-        <span className="text-white/80">Quotes:</span>
+        <span className="text-white">Quotes:</span>
         <span className="font-medium text-elec-yellow">{business.activeQuotes}</span>
       </div>
       <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.03] text-xs">
         <Flame className="h-3.5 w-3.5 text-orange-500" />
-        <span className="text-white/80">Streak:</span>
+        <span className="text-white">Streak:</span>
         <span className="font-medium text-orange-500">{learning.currentStreak}d</span>
       </div>
       <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/[0.03] text-xs">
         <Award className="h-3.5 w-3.5 text-purple-500" />
-        <span className="text-white/80">Certs:</span>
+        <span className="text-white">Certs:</span>
         <span className="font-medium text-purple-500">{certificates.total}</span>
       </div>
     </div>

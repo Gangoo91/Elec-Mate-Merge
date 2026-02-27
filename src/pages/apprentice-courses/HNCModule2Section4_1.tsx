@@ -213,7 +213,7 @@ const HNCModule2Section4_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section4">
@@ -235,7 +235,7 @@ const HNCModule2Section4_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             Light and Vision
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             Understanding the electromagnetic spectrum, visual perception, and colour properties
             essential for building services lighting design
           </p>
@@ -617,19 +617,19 @@ const HNCModule2Section4_1 = () => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center text-sm">
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">CRI 60-70</p>
-                  <p className="text-white/70 text-xs">Basic (industrial)</p>
+                  <p className="text-white text-xs">Basic (industrial)</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">CRI 80</p>
-                  <p className="text-white/70 text-xs">Good (offices)</p>
+                  <p className="text-white text-xs">Good (offices)</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">CRI 90</p>
-                  <p className="text-white/70 text-xs">Excellent (retail)</p>
+                  <p className="text-white text-xs">Excellent (retail)</p>
                 </div>
                 <div className="p-3 rounded bg-black/30">
                   <p className="font-bold text-elec-yellow mb-1">CRI 95+</p>
-                  <p className="text-white/70 text-xs">Critical (colour matching)</p>
+                  <p className="text-white text-xs">Critical (colour matching)</p>
                 </div>
               </div>
             </div>
@@ -797,7 +797,7 @@ const HNCModule2Section4_1 = () => {
                 brief specifies a professional, productive atmosphere with good daylight
                 integration. What colour temperature should be specified?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Consider the requirements:</p>
                 <p>- Professional appearance: suggests cooler rather than warm</p>
                 <p>- Productive atmosphere: 4000K+ supports alertness</p>
@@ -805,7 +805,7 @@ const HNCModule2Section4_1 = () => {
                 <p className="mt-2">
                   <strong>Recommendation: 4000K neutral white</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   This balances warmth with alertness and blends well with daylight (5500-6500K)
                 </p>
               </div>
@@ -819,7 +819,7 @@ const HNCModule2Section4_1 = () => {
                 <strong>Question:</strong> A fashion retailer requires lighting for clothing
                 displays. What CRI should be specified and why?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>Retail clothing requirements:</p>
                 <p>- Colours must appear accurate (customers check fabric colours)</p>
                 <p>- Skin tones must look flattering (changing rooms)</p>
@@ -827,7 +827,7 @@ const HNCModule2Section4_1 = () => {
                 <p className="mt-2">
                   <strong>Specification: CRI 90 minimum (Ra90), R9 ≥ 50</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   R9 (saturated red) is particularly important for skin tones and warm fabric
                   colours
                 </p>
@@ -842,7 +842,7 @@ const HNCModule2Section4_1 = () => {
                 <strong>Question:</strong> A car park operates at 50 lux average. Should mesopic
                 effects be considered in the lighting design?
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
                 <p>At 50 lux with typical surface reflectances:</p>
                 <p>- Luminance ≈ 50 × 0.2 / π ≈ 3 cd/m²</p>
                 <p>- This is at the photopic/mesopic boundary</p>
@@ -850,7 +850,7 @@ const HNCModule2Section4_1 = () => {
                 <p className="mt-2">
                   <strong>Yes - consider S/P ratio</strong>
                 </p>
-                <p className="mt-2 text-white/60">
+                <p className="mt-2 text-white">
                   A 4000K LED (S/P ~1.4) will provide better peripheral visibility than 2700K (S/P
                   ~1.1) at the same photopic lux level
                 </p>
@@ -937,7 +937,7 @@ const HNCModule2Section4_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -983,7 +983,7 @@ const HNCModule2Section4_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module2-section4">

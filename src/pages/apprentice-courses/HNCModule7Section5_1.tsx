@@ -246,7 +246,7 @@ const HNCModule7Section5_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section5">
@@ -268,7 +268,7 @@ const HNCModule7Section5_1 = () => {
           <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3">
             LED Technology
           </h1>
-          <p className="text-white/80">
+          <p className="text-white">
             LED fundamentals, driver types, thermal management, lifetime prediction, and
             specification considerations
           </p>
@@ -442,19 +442,19 @@ const HNCModule7Section5_1 = () => {
               </p>
               <div className="text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Forward voltage (Vf):</span>{' '}
+                  <span className="text-white">Forward voltage (Vf):</span>{' '}
                   <span className="text-white">2.8V - 3.5V typical for white LED</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Drive current:</span>{' '}
+                  <span className="text-white">Drive current:</span>{' '}
                   <span className="text-white">350mA (1W), 700mA (3W), 1050mA (5W) typical</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Vf temperature coefficient:</span>{' '}
+                  <span className="text-white">Vf temperature coefficient:</span>{' '}
                   <span className="text-white">-2mV/°C (decreases with temperature)</span>
                 </p>
                 <p>
-                  <span className="text-white/60">Junction temperature max:</span>{' '}
+                  <span className="text-white">Junction temperature max:</span>{' '}
                   <span className="text-white">125°C typical, optimal &lt;85°C</span>
                 </p>
               </div>
@@ -712,7 +712,7 @@ const HNCModule7Section5_1 = () => {
               <p className="text-sm font-medium text-blue-400 mb-2">Thermal Calculation Example</p>
               <div className="font-mono text-sm space-y-1">
                 <p>
-                  <span className="text-white/60">Given:</span>
+                  <span className="text-white">Given:</span>
                 </p>
                 <p className="ml-4">LED power: 10W (30% converted to light, 70% = 7W heat)</p>
                 <p className="ml-4">Thermal resistance junction-to-case (Rjc): 2°C/W</p>
@@ -720,7 +720,7 @@ const HNCModule7Section5_1 = () => {
                 <p className="ml-4">Thermal resistance heatsink-to-ambient: 5°C/W</p>
                 <p className="ml-4">Ambient temperature: 25°C</p>
                 <p className="mt-2">
-                  <span className="text-white/60">Junction temperature calculation:</span>
+                  <span className="text-white">Junction temperature calculation:</span>
                 </p>
                 <p className="ml-4">Total Rth = 2 + 0.5 + 5 = 7.5°C/W</p>
                 <p className="ml-4">Temperature rise = 7W × 7.5°C/W = 52.5°C</p>
@@ -800,7 +800,7 @@ const HNCModule7Section5_1 = () => {
                 <p className="mt-2">
                   <strong>Cy (Catastrophic + Gradual):</strong> Combined failure metric
                 </p>
-                <p className="mt-2 text-white/70">
+                <p className="mt-2 text-white">
                   Example: L70B10 at 60,000 hours means after 60,000 hours, the surviving luminaires
                   (90%) will still produce at least 70% of initial lumens.
                 </p>
@@ -899,7 +899,7 @@ const HNCModule7Section5_1 = () => {
                 </p>
                 <div className="text-sm space-y-1">
                   <p>MF = LLMF × LSF × LMF × RMF</p>
-                  <p className="text-white/70 mt-2">Where:</p>
+                  <p className="text-white mt-2">Where:</p>
                   <ul className="list-disc list-outside ml-5 space-y-1">
                     <li className="pl-1">LLMF: Lamp lumen maintenance (from L-value)</li>
                     <li className="pl-1">LSF: Lamp survival factor (from B-value)</li>
@@ -941,7 +941,7 @@ const HNCModule7Section5_1 = () => {
               </ul>
             </div>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Industry guidance:</strong> SLL LG14 (Control of Electric Lighting) and CIBSE
               LG7 (Offices) provide detailed guidance on LED specification for UK building services
               applications.
@@ -967,8 +967,8 @@ const HNCModule7Section5_1 = () => {
                 <strong>Scenario:</strong> Specify driver for a 36W LED panel requiring DALI dimming
                 in an office.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Requirements:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Requirements:</p>
                 <p className="ml-4">Panel power: 36W</p>
                 <p className="ml-4">LED string: 60V nominal, 600mA</p>
                 <p className="ml-4">Control: DALI-2 addressable</p>
@@ -994,8 +994,8 @@ const HNCModule7Section5_1 = () => {
                 <strong>Scenario:</strong> Calculate MCB rating for a circuit supplying 20 LED
                 downlights.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given data:</p>
                 <p className="ml-4">Each downlight: 12W, PF 0.9</p>
                 <p className="ml-4">Driver in-rush: 25A for 0.5ms, I²t = 0.3A²s</p>
                 <p className="ml-4">Supply: 230V single phase</p>
@@ -1026,8 +1026,8 @@ const HNCModule7Section5_1 = () => {
                 <strong>Scenario:</strong> Calculate maintenance factor for LED luminaires in an
                 office with 3-year cleaning cycle.
               </p>
-              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white/90">
-                <p className="text-white/60">Given data:</p>
+              <div className="bg-black/30 p-3 rounded text-sm font-mono text-white">
+                <p className="text-white">Given data:</p>
                 <p className="ml-4">Luminaire: L80B10 at 50,000 hours</p>
                 <p className="ml-4">Operating hours: 2,500 hrs/year × 3 years = 7,500 hours</p>
                 <p className="ml-4">Room: Clean office environment</p>
@@ -1040,7 +1040,7 @@ const HNCModule7Section5_1 = () => {
                 <p className="ml-4">RMF (room): Clean office, 3-year cycle → 0.95</p>
                 <p className="mt-2">Overall maintenance factor:</p>
                 <p className="ml-4 text-green-400">MF = 0.97 × 0.99 × 0.95 × 0.95 = 0.87</p>
-                <p className="mt-2 text-white/60">Design illuminance = Maintained lux ÷ MF</p>
+                <p className="mt-2 text-white">Design illuminance = Maintained lux ÷ MF</p>
                 <p className="ml-4">For 500 lux maintained: 500 ÷ 0.87 = 575 lux initial</p>
               </div>
             </div>
@@ -1129,7 +1129,7 @@ const HNCModule7Section5_1 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -1175,7 +1175,7 @@ const HNCModule7Section5_1 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="../h-n-c-module7-section5">

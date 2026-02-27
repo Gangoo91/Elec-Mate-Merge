@@ -185,7 +185,7 @@ const Level3Module3Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="min-h-[44px] px-3 -ml-3 text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="min-h-[44px] px-3 -ml-3 text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section1">
@@ -346,7 +346,7 @@ const Level3Module3Section1_2 = () => {
               measured in joules or, more practically, kilowatt-hours (kWh).
             </p>
 
-            <p className="text-sm text-white/90 italic">
+            <p className="text-sm text-white italic">
               <strong>Example:</strong> A 3kW immersion heater running for 2 hours uses 6kWh of
               energy (3kW x 2h). At 30p per kWh, that's £1.80. The same heater running for just 10
               minutes uses 0.5kWh - only 15p. Same power, different energy consumption based on
@@ -390,15 +390,15 @@ const Level3Module3Section1_2 = () => {
             <div className="grid grid-cols-3 gap-3 my-6 text-center text-sm">
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Mega (M)</p>
-                <p className="text-white/90 text-xs">x 1,000,000</p>
+                <p className="text-white text-xs">x 1,000,000</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Kilo (k)</p>
-                <p className="text-white/90 text-xs">x 1,000</p>
+                <p className="text-white text-xs">x 1,000</p>
               </div>
               <div className="p-3 rounded bg-transparent">
                 <p className="font-medium text-white mb-1">Milli (m)</p>
-                <p className="text-white/90 text-xs">x 0.001</p>
+                <p className="text-white text-xs">x 0.001</p>
               </div>
             </div>
 
@@ -468,7 +468,7 @@ const Level3Module3Section1_2 = () => {
             {faqs.map((faq, index) => (
               <div key={index} className="pb-4 border-b border-white/5 last:border-0">
                 <h3 className="text-sm font-medium text-white mb-1">{faq.question}</h3>
-                <p className="text-sm text-white/90 leading-relaxed">{faq.answer}</p>
+                <p className="text-sm text-white leading-relaxed">{faq.answer}</p>
               </div>
             ))}
           </div>
@@ -511,7 +511,7 @@ const Level3Module3Section1_2 = () => {
           <Button
             variant="ghost"
             size="lg"
-            className="w-full sm:w-auto min-h-[48px] text-white/70 hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
+            className="w-full sm:w-auto min-h-[48px] text-white hover:text-white hover:bg-white/5 touch-manipulation active:scale-[0.98]"
             asChild
           >
             <Link to="/study-centre/apprentice/level3-module3-section1-1">
